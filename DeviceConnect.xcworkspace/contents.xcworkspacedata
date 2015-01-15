@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workspace
+   version = "1.0">
+   <FileRef
+      location = "group:dConnectDevicePlugin/dConnectDeviceSphero/dConnectDeviceSphero.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:dConnectDevicePlugin/dConnectDeviceSonyCamera/dConnectDeviceSonyCamera.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:dConnectDevicePlugin/dConnectDevicePebble/dConnectDevicePebble.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:dConnectDevicePlugin/dConnectDeviceIRKit/dConnectDeviceIRKit.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:dConnectDevicePlugin/dConnectDeviceHue/dConnectDeviceHue.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:dConnectDevicePlugin/dConnectDeviceHost/dConnectDeviceHost.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:dConnectDevicePlugin/dConnectDeviceChromeCast/dConnectChromecast.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:dConnectDevicePlugin/DCMDevicePluginSDK/DCMDevicePluginSDK.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:dConnectSDK/dConnectBrowser/dConnectBrowser.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:dConnectSDK/dConnectSDKForIOS/DConnectSDK.xcodeproj">
+   </FileRef>
+</Workspace>
