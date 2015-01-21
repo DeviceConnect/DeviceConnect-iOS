@@ -12,6 +12,6 @@
 /*!
  @brief Pebble用ファイルプロファイル。
  */
-@interface DPPebbleFileProfile : DConnectFileProfile <DConnectFileProfileDelegate>
+@interface DPPebbleCanvasProfile : DConnectCanvasProfile <DConnectCanvasProfileDelegate>
 
 @end
