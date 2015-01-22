@@ -107,7 +107,6 @@
 		C2F89D5F1920B493005F1C5F /* DConnectMediaStreamRecordingProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = C2F89D5E1920B493005F1C5F /* DConnectMediaStreamRecordingProfile.m */; };
 		C2F89D631920BB93005F1C5F /* DConnectConnectProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = C2F89D621920BB93005F1C5F /* DConnectConnectProfile.m */; };
 		C2F89D671920BCD4005F1C5F /* DConnectFileProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = C2F89D661920BCD4005F1C5F /* DConnectFileProfile.m */; };
-		D60330A51A5DF2FF004AC726 /* DConnectCanvasProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = D60330A41A5DF2FF004AC726 /* DConnectCanvasProfile.m */; };
 		D623FE6D19B6279600706448 /* LocalOAuthAccessTokenDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D623FE6C19B6279600706448 /* LocalOAuthAccessTokenDetailViewController.m */; };
 		D62622911992326E004F01E6 /* LocalOAuthClientDao.m in Sources */ = {isa = PBXBuildFile; fileRef = D626228A1992326E004F01E6 /* LocalOAuthClientDao.m */; };
 		D62622921992326E004F01E6 /* LocalOAuthProfileDao.m in Sources */ = {isa = PBXBuildFile; fileRef = D626228C1992326E004F01E6 /* LocalOAuthProfileDao.m */; };
@@ -1674,8 +1673,6 @@
 		C2F89D5E1920B493005F1C5F /* DConnectMediaStreamRecordingProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DConnectMediaStreamRecordingProfile.m; sourceTree = "<group>"; };
 		C2F89D621920BB93005F1C5F /* DConnectConnectProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DConnectConnectProfile.m; sourceTree = "<group>"; };
 		C2F89D661920BCD4005F1C5F /* DConnectFileProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DConnectFileProfile.m; sourceTree = "<group>"; };
-		D60330A41A5DF2FF004AC726 /* DConnectCanvasProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DConnectCanvasProfile.m; sourceTree = "<group>"; };
-		D60330A61A5E007B004AC726 /* DConnectCanvasProfile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DConnectCanvasProfile.h; sourceTree = "<group>"; };
 		D623FE6B19B6279600706448 /* LocalOAuthAccessTokenDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LocalOAuthAccessTokenDetailViewController.h; path = localoauth/LocalOAuthAccessTokenDetailViewController.h; sourceTree = "<group>"; };
 		D623FE6C19B6279600706448 /* LocalOAuthAccessTokenDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LocalOAuthAccessTokenDetailViewController.m; path = localoauth/LocalOAuthAccessTokenDetailViewController.m; sourceTree = "<group>"; };
 		D62622891992326E004F01E6 /* LocalOAuthClientDao.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LocalOAuthClientDao.h; path = localoauth/cache/db/dao/LocalOAuthClientDao.h; sourceTree = "<group>"; };
@@ -3524,7 +3521,6 @@
 				3056BF8C19BFE3E8003B62E1 /* DConnectAuthorizationProfile+Private.h */,
 				BE4FDFD119878014001A3C86 /* DConnectAuthorizationProfile.m */,
 				C2F89D4A19208F8E005F1C5F /* DConnectBatteryProfile.m */,
-				D60330A41A5DF2FF004AC726 /* DConnectCanvasProfile.m */,
 				C2F89D621920BB93005F1C5F /* DConnectConnectProfile.m */,
 				30953825193F3A7A00ABDD37 /* DConnectDeviceOrientationProfile.m */,
 				97AD0D5D192A149C00A1A84D /* DConnectFileDescriptorProfile.m */,
@@ -3582,7 +3578,6 @@
 				309CD47E19877B75002A5684 /* DConnectURIBuilder.h */,
 				309CD48119877C14002A5684 /* DConnectMessageFactory.h */,
 				309CD50A198A3AE1002A5684 /* DConnectEventHelper.h */,
-				D60330A61A5E007B004AC726 /* DConnectCanvasProfile.h */,
 			);
 			path = Headers;
 			sourceTree = "<group>";
@@ -4029,7 +4024,6 @@
 				D6FD02111999EC7A000DB674 /* CipherAuthSignature.m in Sources */,
 				30424D211974C3D10084371F /* DConnectInterfaceDao.m in Sources */,
 				30318AF519AAE908008A42C3 /* DConnectDevicePlugin+Private.m in Sources */,
-				D60330A51A5DF2FF004AC726 /* DConnectCanvasProfile.m in Sources */,
 				D62622E9199232BC004F01E6 /* LocalOAuthToken.m in Sources */,
 				D6FD01F4199943D9000DB674 /* LocalOAuthScope.m in Sources */,
 				D62622E7199232BC004F01E6 /* LocalOAuthSQLiteToken.m in Sources */,

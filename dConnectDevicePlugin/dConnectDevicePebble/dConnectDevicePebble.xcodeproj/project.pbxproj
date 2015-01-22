@@ -29,7 +29,7 @@
 		4450063419BD4D5100C9FF54 /* DPPebbleDevicePlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 4450060919BD4D5100C9FF54 /* DPPebbleDevicePlugin.m */; };
 		4450063619BD4D5100C9FF54 /* DPPebbleBatteryProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 4450060D19BD4D5100C9FF54 /* DPPebbleBatteryProfile.m */; };
 		4450063819BD4D5100C9FF54 /* DPPebbleDeviceOrientationProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 4450060F19BD4D5100C9FF54 /* DPPebbleDeviceOrientationProfile.m */; };
-		4450063A19BD4D5100C9FF54 /* DPPebbleCanvasProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 4450061119BD4D5100C9FF54 /* DPPebbleCanvasProfile.m */; };
+		4450063A19BD4D5100C9FF54 /* DPPebbleFileProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 4450061119BD4D5100C9FF54 /* DPPebbleFileProfile.m */; };
 		4450063E19BD4D5100C9FF54 /* DPPebbleNetworkServiceDiscoveryProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 4450061519BD4D5100C9FF54 /* DPPebbleNetworkServiceDiscoveryProfile.m */; };
 		4450064019BD4D5100C9FF54 /* DPPebbleNotificationProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 4450061719BD4D5100C9FF54 /* DPPebbleNotificationProfile.m */; };
 		4450064219BD4D5100C9FF54 /* DPPebbleSettingsProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 4450061919BD4D5100C9FF54 /* DPPebbleSettingsProfile.m */; };
@@ -107,8 +107,8 @@
 		4450060D19BD4D5100C9FF54 /* DPPebbleBatteryProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPPebbleBatteryProfile.m; sourceTree = "<group>"; };
 		4450060E19BD4D5100C9FF54 /* DPPebbleDeviceOrientationProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPPebbleDeviceOrientationProfile.h; sourceTree = "<group>"; };
 		4450060F19BD4D5100C9FF54 /* DPPebbleDeviceOrientationProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPPebbleDeviceOrientationProfile.m; sourceTree = "<group>"; };
-		4450061019BD4D5100C9FF54 /* DPPebbleCanvasProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPPebbleCanvasProfile.h; sourceTree = "<group>"; };
-		4450061119BD4D5100C9FF54 /* DPPebbleCanvasProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPPebbleCanvasProfile.m; sourceTree = "<group>"; };
+		4450061019BD4D5100C9FF54 /* DPPebbleFileProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPPebbleFileProfile.h; sourceTree = "<group>"; };
+		4450061119BD4D5100C9FF54 /* DPPebbleFileProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPPebbleFileProfile.m; sourceTree = "<group>"; };
 		4450061419BD4D5100C9FF54 /* DPPebbleNetworkServiceDiscoveryProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPPebbleNetworkServiceDiscoveryProfile.h; sourceTree = "<group>"; };
 		4450061519BD4D5100C9FF54 /* DPPebbleNetworkServiceDiscoveryProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPPebbleNetworkServiceDiscoveryProfile.m; sourceTree = "<group>"; };
 		4450061619BD4D5100C9FF54 /* DPPebbleNotificationProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPPebbleNotificationProfile.h; sourceTree = "<group>"; };
@@ -300,8 +300,8 @@
 				4450061D19BD4D5100C9FF54 /* DPPebbleVibrationProfile.m */,
 				4450061A19BD4D5100C9FF54 /* DPPebbleSystemProfile.h */,
 				4450061B19BD4D5100C9FF54 /* DPPebbleSystemProfile.m */,
-				4450061019BD4D5100C9FF54 /* DPPebbleCanvasProfile.h */,
-				4450061119BD4D5100C9FF54 /* DPPebbleCanvasProfile.m */,
+				4450061019BD4D5100C9FF54 /* DPPebbleFileProfile.h */,
+				4450061119BD4D5100C9FF54 /* DPPebbleFileProfile.m */,
 			);
 			path = profile;
 			sourceTree = "<group>";
@@ -484,7 +484,7 @@
 				4450065819BD4D5100C9FF54 /* PebbleModelController.m in Sources */,
 				4450065619BD4D5100C9FF54 /* PebbleDataViewController.m in Sources */,
 				783D47B019FA2CBB001C6CD9 /* DPPebbleProfileUtil.m in Sources */,
-				4450063A19BD4D5100C9FF54 /* DPPebbleCanvasProfile.m in Sources */,
+				4450063A19BD4D5100C9FF54 /* DPPebbleFileProfile.m in Sources */,
 				4450064E19BD4D5100C9FF54 /* PebbleSettingView03Controller.m in Sources */,
 				4450064019BD4D5100C9FF54 /* DPPebbleNotificationProfile.m in Sources */,
 			);
