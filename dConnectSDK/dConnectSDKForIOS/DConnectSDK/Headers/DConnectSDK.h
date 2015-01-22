@@ -54,6 +54,7 @@
 #import <DConnectSDK/DConnectNetworkServiceDiscoveryProfile.h>
 #import <DConnectSDK/DConnectMediaStreamRecordingProfile.h>
 #import <DConnectSDK/DConnectMediaPlayerProfile.h>
+#import <DConnectSDK/DConnectCanvasProfile.h>
 #import <DConnectSDK/DConnectFileProfile.h>
 #import <DConnectSDK/DConnectFileDescriptorProfile.h>
 #import <DConnectSDK/DConnectDeviceOrientationProfile.h>

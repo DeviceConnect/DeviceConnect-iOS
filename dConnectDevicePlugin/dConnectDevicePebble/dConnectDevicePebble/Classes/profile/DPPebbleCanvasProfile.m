@@ -1,5 +1,5 @@
 //
-//  DPPebbleFileProfile.m
+//  DPPebbleCanvasProfile.m
 //  DConnectSDK
 //
 //  Copyright (c) 2014 NTT DOCOMO, INC.
@@ -7,15 +7,15 @@
 //  http://opensource.org/licenses/mit-license.php
 //
 
-#import "DPPebbleFileProfile.h"
+#import "DPPebbleCanvasProfile.h"
 #import "DPPebbleManager.h"
 #import "DPPebbleImage.h"
 #import "DPPebbleProfileUtil.h"
 
-@interface DPPebbleFileProfile ()
+@interface DPPebbleCanvasProfile ()
 @end
 
-@implementation DPPebbleFileProfile
+@implementation DPPebbleCanvasProfile
 
 // 初期化
 - (id)init
@@ -28,15 +28,17 @@
 }
 
 
-#pragma mark - DConnectFileProfileDelegate
+#pragma mark - DConnectCanvasProfileDelegate
 
-// ファイル送信リクエストを受け取った
-- (BOOL) profile:(DConnectFileProfile *)profile didReceivePostSendRequest:(DConnectRequestMessage *)request
+// 画像描画リクエストを受け取った
+- (BOOL) profile:(DConnectFileProfile *)profile didReceivePostDrawImageRequest:(DConnectRequestMessage *)request
         response:(DConnectResponseMessage *)response
         deviceId:(NSString *)deviceId
-            path:(NSString *)path
         mimeType:(NSString *)mimeType
             data:(NSData *)data
+               x:(double)x
+               y:(double)y
+            mode:(NSString *)mode
 {
 	// パラメータチェック
 	if (data == nil) {
@@ -45,7 +47,7 @@
 	}
 	
 	// 画像変換
-	NSData *imgdata = [DPPebbleImage convertImage:data];
+    NSData *imgdata = [DPPebbleImage convertImage:data x:x y:y mode:mode];
 	if (!imgdata) {
 		[response setErrorToUnknown];
 		return YES;
