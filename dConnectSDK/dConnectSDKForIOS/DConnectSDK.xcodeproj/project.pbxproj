@@ -55,6 +55,7 @@
 		309CD48719877C9E002A5684 /* DConnectURIBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = 309CD48519877C9E002A5684 /* DConnectURIBuilder.m */; };
 		309CD50E198A3B45002A5684 /* DConnectEventHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 309CD50D198A3B45002A5684 /* DConnectEventHelper.m */; };
 		30E9A16419AC6A850013F545 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 30EF0AE419AB582800AE8FCB /* Localizable.strings */; };
+		6B2C77881A70885D00ED8F17 /* DConnectAvailabilityProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B2C77871A70885D00ED8F17 /* DConnectAvailabilityProfile.m */; };
 		971BC07B1924A8A000D21FE3 /* DConnectBatteryProfileTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 971BC07A1924A8A000D21FE3 /* DConnectBatteryProfileTest.m */; };
 		972107571920604E00529618 /* DConnectMultipartParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 972107561920604E00529618 /* DConnectMultipartParser.m */; };
 		97A999BB19545237006F8474 /* DConnectFilesProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 97A999BA19545237006F8474 /* DConnectFilesProfile.m */; };
@@ -253,6 +254,8 @@
 		30EF0AE619AB584400AE8FCB /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		30EF0AE719AB584400AE8FCB /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		30EF0AE819AB5E4300AE8FCB /* DConnectConst.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DConnectConst.h; sourceTree = "<group>"; };
+		6B2C77861A70884200ED8F17 /* DConnectAvailabilityProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DConnectAvailabilityProfile.h; sourceTree = "<group>"; };
+		6B2C77871A70885D00ED8F17 /* DConnectAvailabilityProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DConnectAvailabilityProfile.m; sourceTree = "<group>"; };
 		971BC07A1924A8A000D21FE3 /* DConnectBatteryProfileTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DConnectBatteryProfileTest.m; sourceTree = "<group>"; };
 		972107551920604E00529618 /* DConnectMultipartParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DConnectMultipartParser.h; sourceTree = "<group>"; };
 		972107561920604E00529618 /* DConnectMultipartParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DConnectMultipartParser.m; sourceTree = "<group>"; };
@@ -3518,6 +3521,7 @@
 		C29D331E191B2679001015CC /* profile */ = {
 			isa = PBXGroup;
 			children = (
+				6B2C77871A70885D00ED8F17 /* DConnectAvailabilityProfile.m */,
 				3056BF8C19BFE3E8003B62E1 /* DConnectAuthorizationProfile+Private.h */,
 				BE4FDFD119878014001A3C86 /* DConnectAuthorizationProfile.m */,
 				C2F89D4A19208F8E005F1C5F /* DConnectBatteryProfile.m */,
@@ -3542,6 +3546,7 @@
 		C29D3328191B2679001015CC /* Headers */ = {
 			isa = PBXGroup;
 			children = (
+				6B2C77861A70884200ED8F17 /* DConnectAvailabilityProfile.h */,
 				BE4FDFD319879275001A3C86 /* DConnectAuthorizationProfile.h */,
 				308FAA341946F76B00B6FA14 /* DConnectBatteryProfile.h */,
 				308FAA351946F76B00B6FA14 /* DConnectConnectProfile.h */,
@@ -3985,6 +3990,7 @@
 				D6EE82E919B38E9F008E855E /* LocalOAuthAccessTokenListViewController.m in Sources */,
 				C206C21919472BD6000737D3 /* WebSocket.m in Sources */,
 				309CD48619877C9E002A5684 /* DConnectMessageFactory.m in Sources */,
+				6B2C77881A70885D00ED8F17 /* DConnectAvailabilityProfile.m in Sources */,
 				30424CFA1973EADC0084371F /* DConnectSQLiteDatabase.m in Sources */,
 				972107571920604E00529618 /* DConnectMultipartParser.m in Sources */,
 				D623FE6D19B6279600706448 /* LocalOAuthAccessTokenDetailViewController.m in Sources */,
