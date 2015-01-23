@@ -8,7 +8,6 @@
 //
 
 #import "DPPebbleImage.h"
-#import <DConnectSDK/DConnectSDK.h>
 
 @implementation DPPebbleImage
 
@@ -19,147 +18,39 @@
 #define MaxHeight 120
 
 
-
 /*!
  @brief pebble用の画像にコンバート。
- @param data 表示する変換前の画像
- @param x x座標
- @param y y座標
- @param mode モード
+ @param　data 表示する変換前の画像
  */
-+(NSData*)convertImage: (NSData*)data
-                     x: (double)x
-                     y: (double)y
-                  mode: (NSString *)mode
++(NSData*)convertImage:(NSData*)data
 {
 	UIImage* image = [[UIImage alloc] initWithData:data];
 	if (!image) {
 		return nil;
 	}
-    
-    if (image.size.width <= 0 || image.size.height <= 0) {
-        return nil;
-    }
 	
-    /* ディスプレイサイズ */
-    CGSize displaySize = CGSizeMake(MaxWidth, MaxHeight);
-    
-    /* 描画処理開始 */
-    UIGraphicsBeginImageContextWithOptions(displaySize, NO, 1.0);
-    
-    /* モード別に描画処理を行う */
-    BOOL proc = NO;
-    if (mode == nil || [mode isEqualToString:@""]) {
-        
-        /* 等倍で(x, y)に画像を描画する */
-        [image drawInRect:CGRectMake(x, y, image.size.width, image.size.height)];
-        proc = YES;
-        
-    } else if ([mode isEqualToString: DConnectCanvasProfileModeScales]) {
-        
-        /* 画面いっぱいになるよう拡縮した画像および画像が画面中央に配置される表示座標を取得 */
-        CGFloat xForScaledImage, yForScaledImage;
-        UIImage *scaledImage = [self scaledImageInDisplayArea: image xForscaledImage: &xForScaledImage yForscaledImage: &yForScaledImage];
-        
-        /* 縮尺変更後の画像を配置して描画する */
-        [scaledImage drawInRect: CGRectMake(xForScaledImage, yForScaledImage, scaledImage.size.width, scaledImage.size.height)];
-        proc = YES;
-        
-    } else if ([mode isEqualToString: DConnectCanvasProfileModeFills]) {
-        
-        /* 等倍で画像を敷き詰めて描画する */
-        for (CGFloat y = 0; y <= displaySize.height; y += image.size.height) {
-            for (CGFloat x = 0; x <= displaySize.width; x += image.size.width) {
-                [image drawInRect:CGRectMake(x, y, image.size.width, image.size.height)];
-            }
-        }
-        proc = YES;
-    }
-    
-    /* 描画処理終了 */
-    UIImage *dstImage = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    
-    /* 処理しなかったらnilを返す */
-    if (!proc) {
-        return nil;
-    }
-    
-    // CIImageに変換
-    CIImage *dstCIImage = [CIImage imageWithCGImage:dstImage.CGImage];
-    
+	CIImage *sourceImage = [[CIImage alloc] initWithImage:image];
+	
+	// 拡縮
+	CGFloat w = image.size.width;
+	CGFloat h = image.size.height;
+	if (w==0 || h==0) {
+		return nil;
+	}
+	float scale = (w > h ? MaxWidth/w : MaxHeight/h);
+	//	scale -= 0.001;
+	CIImage *scaledImage = [sourceImage imageByApplyingTransform:CGAffineTransformMakeScale(scale, scale)];
+	
 	// 白黒フィルタ
 	CIFilter *ciFilter = [CIFilter filterWithName:@"CIPhotoEffectNoir"
-									keysAndValues:kCIInputImageKey, dstCIImage, nil];
+									keysAndValues:kCIInputImageKey, scaledImage, nil];
 	CIContext *ciContext = [CIContext contextWithOptions:nil];
 	CGImageRef cgimg = [ciContext createCGImage:[ciFilter outputImage] fromRect:[[ciFilter outputImage] extent]];
-	UIImage *monochromeImage = [UIImage imageWithCGImage:cgimg scale:1 orientation:UIImageOrientationUp];
+	image = [UIImage imageWithCGImage:cgimg scale:1 orientation:UIImageOrientationUp];
 	CGImageRelease(cgimg);
 	
-	return [DPPebbleImage convert: monochromeImage];
+	return [DPPebbleImage convert:image];
 }
-
-/*!
- @brief imageを元に、スケーリングして画面いっぱいに表示されるUIImageを作成して返す。配置座標も返す.
- @param image ディスプレイに表示される元画像
- @param xForscaledImage 拡縮した画像を画面中央に表示する座標(x)を返す領域ポインタ
- @param yForscaledImage 拡縮した画像を画面中央に表示する座標(y)を返す領域ポインタ
- @return 拡縮した画像
- */
-+ (UIImage *)scaledImageInDisplayArea: (UIImage *)image
-                      xForscaledImage: (CGFloat *)xForscaledImage
-                      yForscaledImage: (CGFloat *)yForscaledImage {
-    
-    /* ディスプレイサイズ */
-    CGSize displaySize = CGSizeMake(MaxWidth, MaxHeight);
-    
-    // 画像サイズ取得
-    CGFloat getSizeW = image.size.width;
-    CGFloat getSizeH = image.size.height;
-    
-    // 拡大率:縦横で長い方(割合で求める)が画面ピッタリになるように
-    CGFloat width = displaySize.width;
-    CGFloat height = displaySize.height;
-    CGFloat widthRatio = getSizeW / displaySize.width;
-    CGFloat heightRatio = getSizeH / displaySize.height;
-    BOOL isFitWidth = widthRatio > heightRatio ? YES : NO;
-    CGFloat scale;
-    if (isFitWidth) {
-        scale = width / getSizeW;
-    } else {
-        scale = height / getSizeH;
-    }
-    
-    // 目標の大きさ
-    int targetW = (int) ceil(scale * getSizeW);
-    int targetH = (int) ceil(scale * getSizeH);
-    
-    // 画像描写開始位置の修正
-    CGFloat startGridX = 0;
-    CGFloat startGridY = 0;
-    if (isFitWidth) {
-        startGridY = (height / 2 - targetH / 2);
-    } else {
-        startGridX = (width / 2 - targetW / 2);
-    }
-    
-    /* 描画開始 */
-    UIGraphicsBeginImageContextWithOptions(displaySize, NO, 1.0);
-    CGContextRef context = UIGraphicsGetCurrentContext();
-    
-    /* 縮尺変更して描画 (0, 0)に拡大縮小した図形を描画する */
-    CGContextScaleCTM(context, scale, scale);
-    [image drawInRect:CGRectMake(0, 0, image.size.width, image.size.height)];
-    
-    /* 描画終了 */
-    UIImage *scaledImage = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    
-    *xForscaledImage = startGridX;
-    *yForscaledImage = startGridY;
-    return scaledImage;
-}
-
 
 
 /*!
