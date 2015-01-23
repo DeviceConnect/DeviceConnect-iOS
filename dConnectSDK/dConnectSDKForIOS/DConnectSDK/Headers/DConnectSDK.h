@@ -44,6 +44,7 @@
 #import <DConnectSDK/DConnectDevicePlugin.h>
 #import <DConnectSDK/DConnectFileManager.h>
 #import <DConnectSDK/DConnectSettings.h>
+#import <DConnectSDK/DConnectCanvasProfile.h>
 
 #import <DConnectSDK/DConnectVibrationProfile.h>
 #import <DConnectSDK/DConnectSystemProfile.h>
@@ -54,12 +55,12 @@
 #import <DConnectSDK/DConnectNetworkServiceDiscoveryProfile.h>
 #import <DConnectSDK/DConnectMediaStreamRecordingProfile.h>
 #import <DConnectSDK/DConnectMediaPlayerProfile.h>
-#import <DConnectSDK/DConnectCanvasProfile.h>
 #import <DConnectSDK/DConnectFileProfile.h>
 #import <DConnectSDK/DConnectFileDescriptorProfile.h>
 #import <DConnectSDK/DConnectDeviceOrientationProfile.h>
 #import <DConnectSDK/DConnectConnectProfile.h>
 #import <DConnectSDK/DConnectBatteryProfile.h>
+#import <DConnectSDK/DConnectAvailabilityProfile.h>
 #import <DConnectSDK/DConnectAuthorizationProfile.h>
 
 #import <DConnectSDK/DConnectEvent.h>

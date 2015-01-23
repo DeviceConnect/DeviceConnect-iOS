@@ -60,6 +60,7 @@
 #import <DConnectSDK/DConnectDeviceOrientationProfile.h>
 #import <DConnectSDK/DConnectConnectProfile.h>
 #import <DConnectSDK/DConnectBatteryProfile.h>
+#import <DConnectSDK/DConnectAvailabilityProfile.h>
 #import <DConnectSDK/DConnectAuthorizationProfile.h>
 
 #import <DConnectSDK/DConnectEvent.h>
