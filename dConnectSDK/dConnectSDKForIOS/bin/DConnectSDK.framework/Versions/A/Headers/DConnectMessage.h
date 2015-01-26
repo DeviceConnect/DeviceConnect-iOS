@@ -69,6 +69,16 @@ extern NSString *const DConnectMessageErrorCode;
 extern NSString *const DConnectMessageErrorMessage;
 
 /*!
+ @brief 共通パラメータ: product。
+ */
+extern NSString *const DConnectMessageProduct;
+
+/*!
+ @brief 共通パラメータ: version。
+ */
+extern NSString *const DConnectMessageVersion;
+
+/*!
  @brief 共通パラメータ: api。
  */
 extern NSString *const DConnectMessageAPI;

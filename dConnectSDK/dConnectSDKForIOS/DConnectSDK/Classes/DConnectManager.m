@@ -24,6 +24,9 @@
 #import "DConnectConst.h"
 #import "LocalOAuth2Main.h"
 
+NSString *const DConnectManagerName = @"Device Connect Manager";
+NSString *const DConnectManagerVersion = @"1.0";
+
 NSString *const DConnectApplicationDidEnterBackground = @"DConnectApplicationDidEnterBackground";
 NSString *const DConnectApplicationWillEnterForeground = @"DConnectApplicationWillEnterForeground";
 NSString *const DConnectStoryboardName = @"DConnectSDK";
@@ -262,6 +265,8 @@ NSString *const DConnectStoryboardName = @"DConnectSDK";
 }
 
 - (void) sendResponse:(DConnectResponseMessage *)response {
+    [response setString:DConnectManagerName forKey:DConnectMessageProduct];
+    [response setString:DConnectManagerVersion forKey:DConnectMessageVersion];
     
     DConnectResponseCallbackInfo *info = nil;
     @synchronized (_mResponseBlockMap) {
@@ -316,6 +321,9 @@ NSString *const DConnectStoryboardName = @"DConnectSDK";
 }
 
 - (void) executeRequest:(DConnectRequestMessage *)request response:(DConnectResponseMessage *)response callback:(DConnectResponseBlocks)callback {
+    [request setString:DConnectManagerName forKey:DConnectMessageProduct];
+    [request setString:DConnectManagerVersion forKey:DConnectMessageVersion];
+    
     DConnectProfile *profile = [self profileWithName:[request profile]];
     
     // 各プロファイルでリクエストを処理する。
