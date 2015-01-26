@@ -1,5 +1,5 @@
 //
-//  DPPebbleDevicePlugin.h
+//  DPPebbleFileProfile.h
 //  DConnectSDK
 //
 //  Copyright (c) 2014 NTT DOCOMO, INC.
@@ -7,11 +7,11 @@
 //  http://opensource.org/licenses/mit-license.php
 //
 
-#import <Foundation/Foundation.h>
 #import <DConnectSDK/DConnectSDK.h>
 
 /*!
- @brief Pebbleデバイスプラグイン。
+ @brief Pebble用ファイルプロファイル。
  */
-@interface DPPebbleDevicePlugin : DConnectDevicePlugin
+@interface DPPebbleCanvasProfile : DConnectCanvasProfile <DConnectCanvasProfileDelegate>
+
 @end
