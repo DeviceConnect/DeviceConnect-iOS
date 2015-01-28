@@ -118,7 +118,7 @@ typedef NS_ENUM(NSUInteger, DConnectMessageErrorCodeType) {
     DConnectMessageErrorCodeNotSupportAction,         /*!< サポートされていないアクションが指定された */
     DConnectMessageErrorCodeNotSupportAttribute,      /*!< サポートされていないアトリビュート・インターフェースが指定された */
     DConnectMessageErrorCodeEmptyServiceId,            /*!< serviceIdが設定されていない */
-    DConnectMessageErrorCodeNotFoundDevice,           /*!< サービスが発見できなかった */
+    DConnectMessageErrorCodeNotFoundService,           /*!< サービスが発見できなかった */
     DConnectMessageErrorCodeTimeout,                  /*!< タイムアウトが発生した */
     DConnectMessageErrorCodeUnknownAttribute,         /*!< 未知のインターフェース・アトリビュートにアクセスされた */
     DConnectMessageErrorCodeLowBattery,               /*!< バッテリー低下で操作不能 */

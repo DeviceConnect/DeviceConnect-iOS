@@ -17,7 +17,7 @@
 [bundle localizedStringForKey:key value:@"" table:nil]
 
 #define DConnectIgnoreProfiles() \
-@[@"authorization", @"availability", @"system", @"network_service_discovery", @"files"];
+@[@"authorization", @"availability", @"system", @"files"];
 
 #define DCPutPresentedViewController(top) \
 top = [UIApplication sharedApplication].keyWindow.rootViewController; \

@@ -82,12 +82,12 @@
     [self setError:DConnectMessageErrorCodeEmptyServiceId message:message];
 }
 
-- (void) setErrorToNotFoundDevice {
-    [self setErrorToNotFoundDeviceWithMessage:@"Service was not found."];
+- (void) setErrorToNotFoundService {
+    [self setErrorToNotFoundServiceWithMessage:@"Service was not found."];
 }
 
-- (void) setErrorToNotFoundDeviceWithMessage:(NSString *)message {
-    [self setError:DConnectMessageErrorCodeNotFoundDevice message:message];
+- (void) setErrorToNotFoundServiceWithMessage:(NSString *)message {
+    [self setError:DConnectMessageErrorCodeNotFoundService message:message];
 }
 
 - (void) setErrorToTimeout {
