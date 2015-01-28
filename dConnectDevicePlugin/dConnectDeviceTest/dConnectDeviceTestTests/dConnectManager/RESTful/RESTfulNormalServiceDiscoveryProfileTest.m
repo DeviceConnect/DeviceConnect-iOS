@@ -69,13 +69,13 @@
  * @brief デバイス検知イベントのテスト.
  * <pre>
  * 【HTTP通信】
- * Method: GET and DELETE
- * Path: /servicediscovery
+ * Method: PUT and DELETE
+ * Path: /servicediscovery/onservicechange
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultに0が返ってくること。
- * ・Test Success Device」のnameを持ったサービスの通知をうけること。
+ * ・「Test Success Device」のnameを持ったサービスの通知をうけること。
  * </pre>
  */
 - (void) testHttpNormalServiceDiscoveryOnServiceChangeEvent

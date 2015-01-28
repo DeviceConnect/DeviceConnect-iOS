@@ -88,7 +88,8 @@ NSString *const TestNetworkDeviceConfig = @"test config";
         [DConnectServiceDiscoveryProfile setNetworkService:service target:event];
         [_plugin asyncSendEvent:event];
     }
-    
+
+    response.result = DConnectMessageResultTypeOk;
     return YES;
 }
 

@@ -41,7 +41,7 @@
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
     
-    CHECK_RESPONSE(@"{\"result\":0,\"supports\":[\"files\",\"system\",\"authorization\",\"servicediscovery\"]}", request);
+    CHECK_RESPONSE(@"{\"result\":0,\"supports\":[\"files\",\"system\",\"servicediscovery\",\"authorization\",\"availability\"]}", request);
 }
 
 /*!
