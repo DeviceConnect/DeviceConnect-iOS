@@ -121,9 +121,9 @@ DPIRKitManagerDetectionDelegate
 
 #pragma mark - Public Methods
 
-- (DPIRKitDevice *) deviceForDeviceId:(NSString *)deviceId {
+- (DPIRKitDevice *) deviceForServiceId:(NSString *)serviceId {
     @synchronized (_devices) {
-        return [_devices objectForKey:deviceId];
+        return [_devices objectForKey:serviceId];
     }
 }
 
@@ -161,7 +161,7 @@ DPIRKitManagerDetectionDelegate
         
         for (DConnectEvent *event in events) {
             DConnectMessage *message = [DConnectMessage message];
-            [message setString:@"" forKey:DConnectMessageDeviceId];
+            [message setString:@"" forKey:DConnectMessageServiceId];
             [message setString:DConnectNetworkServiceDiscoveryProfileName forKey:DConnectMessageProfile];
             [message setString:DConnectNetworkServiceDiscoveryProfileAttrOnServiceChange forKey:DConnectMessageAttribute];
             [message setString:event.sessionKey forKey:DConnectMessageSessionKey];
@@ -218,7 +218,7 @@ didReceiveGetGetNetworkServicesRequest:(DConnectRequestMessage *)request
 - (BOOL)                    profile:(DConnectNetworkServiceDiscoveryProfile *)profile
 didReceivePutOnServiceChangeRequest:(DConnectRequestMessage *)request
                            response:(DConnectResponseMessage *)response
-                           deviceId:(NSString *)deviceId
+                           serviceId:(NSString *)serviceId
                          sessionKey:(NSString *)sessionKey
 {
     
@@ -242,7 +242,7 @@ didReceivePutOnServiceChangeRequest:(DConnectRequestMessage *)request
 - (BOOL)                       profile:(DConnectNetworkServiceDiscoveryProfile *)profile
 didReceiveDeleteOnServiceChangeRequest:(DConnectRequestMessage *)request
                               response:(DConnectResponseMessage *)response
-                              deviceId:(NSString *)deviceId
+                              serviceId:(NSString *)serviceId
                             sessionKey:(NSString *)sessionKey
 {
     
@@ -270,14 +270,14 @@ didReceiveDeleteOnServiceChangeRequest:(DConnectRequestMessage *)request
 }
 
 - (DConnectSystemProfileConnectState) profile:(DConnectSystemProfile *)profile
-                         wifiStateForDeviceId:(NSString *)deviceId
+                         wifiStateForServiceId:(NSString *)serviceId
 {
     
     DConnectSystemProfileConnectState state = DConnectSystemProfileConnectStateOff;
     // TODO: 実際に接続を確認した方が良いかの検討
     @synchronized (_devices) {
         if (_devices.count > 0) {
-            DPIRKitDevice *device = [_devices objectForKey:deviceId];
+            DPIRKitDevice *device = [_devices objectForKey:serviceId];
             if (device) {
                 state = DConnectSystemProfileConnectStateOn;
             }

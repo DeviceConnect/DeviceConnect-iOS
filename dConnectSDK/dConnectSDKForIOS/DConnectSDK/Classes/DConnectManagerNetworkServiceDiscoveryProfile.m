@@ -58,11 +58,11 @@ didReceiveGetGetNetworkServicesRequest:(DConnectRequestMessage *)request
                 if (s && [s count] > 0) {
                     for (int i = 0; i < [s count]; i++) {
                         DConnectMessage *msg = [s messageAtIndex:i];
-                        NSString *deviceId = [msg stringForKey:DConnectNetworkServiceDiscoveryProfileParamId];
-                        if (deviceId) {
-                            // デバイスIDにデバイスプラグインのIDを付加する
-                            NSString *did = [deviceMgr deviceIdByAppedingPluginIdWithDevicePlugin:plugin
-                                                                                         deviceId:deviceId];
+                        NSString *serviceId = [msg stringForKey:DConnectNetworkServiceDiscoveryProfileParamId];
+                        if (serviceId) {
+                            // サービスIDにデバイスプラグインのIDを付加する
+                            NSString *did = [deviceMgr serviceIdByAppedingPluginIdWithDevicePlugin:plugin
+                                                                                         serviceId:serviceId];
                             [msg setString:did forKey:DConnectNetworkServiceDiscoveryProfileParamId];
                             @synchronized (services) {
                                 [services addMessage:msg];
@@ -115,7 +115,7 @@ didReceiveGetGetNetworkServicesRequest:(DConnectRequestMessage *)request
 - (BOOL)                    profile:(DConnectNetworkServiceDiscoveryProfile *)profile
 didReceivePutOnServiceChangeRequest:(DConnectRequestMessage *)request
                            response:(DConnectResponseMessage *)response
-                           deviceId:(NSString *)deviceId
+                           serviceId:(NSString *)serviceId
                          sessionKey:(NSString *)sessionKey
 {
     DConnectEventManager *mgr = [DConnectEventManager sharedManagerForClass:[DConnectManager class]];
@@ -139,7 +139,7 @@ didReceivePutOnServiceChangeRequest:(DConnectRequestMessage *)request
 - (BOOL)                       profile:(DConnectNetworkServiceDiscoveryProfile *)profile
 didReceiveDeleteOnServiceChangeRequest:(DConnectRequestMessage *)request
                               response:(DConnectResponseMessage *)response
-                              deviceId:(NSString *)deviceId
+                              serviceId:(NSString *)serviceId
                             sessionKey:(NSString *)sessionKey
 {
     DConnectEventManager *mgr = [DConnectEventManager sharedManagerForClass:[DConnectManager class]];

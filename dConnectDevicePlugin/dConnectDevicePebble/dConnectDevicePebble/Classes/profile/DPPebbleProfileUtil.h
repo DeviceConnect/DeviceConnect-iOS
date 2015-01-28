@@ -28,7 +28,7 @@
 + (void)sendMessageWithProvider:(id)provider
 						profile:(NSString *)profile
 					  attribute:(NSString *)attribute
-					   deviceID:(NSString*)deviceID
+					   serviceID:(NSString*)serviceID
 				messageCallback:(void(^)(DConnectMessage *eventMsg))messageCallback
 				 deleteCallback:(void(^)())deleteCallback;
 

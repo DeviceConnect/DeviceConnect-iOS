@@ -24,8 +24,8 @@
 {
     [super setUp];
     
-    // deviceIdを検索しておく
-    if (!self.deviceId) {
+    // serviceIdを検索しておく
+    if (!self.serviceId) {
         [self searchTestDevicePlugin];
     }
 }
@@ -85,7 +85,7 @@
     NSString *grantType = @"authorization_code";
     NSString *signature = [DConnectUtil generateSignatureWithClientId:clientId
                                                             grantType:grantType
-                                                             deviceId:nil
+                                                             serviceId:nil
                                                                scopes:scopes
                                                          clientSecret:clientSecret];
     NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/authorization/request_accesstoken?clientId=%@&grantType=%@&scope=%@&applicationName=%@&signature=%@", clientId, grantType,scopeParam, applicationName, signature]];
@@ -133,12 +133,12 @@
     for (int i = 0; i < [services count]; i++) {
         NSDictionary *s = (NSDictionary *)[services objectAtIndex:i];
         NSString *name = [s objectForKey:DConnectNetworkServiceDiscoveryProfileParamName];
-        NSString *deviceId = [s objectForKey:DConnectNetworkServiceDiscoveryProfileParamId];
+        NSString *serviceId = [s objectForKey:DConnectNetworkServiceDiscoveryProfileParamId];
         if ([@"Test Success Device" isEqualToString:name]) {
-            self.deviceId = deviceId;
+            self.serviceId = serviceId;
         }
     }
-    XCTAssertNotNil(self.deviceId, @"Can't found deviceId.");
+    XCTAssertNotNil(self.serviceId, @"Can't found serviceId.");
 }
 
 - (NSDictionary *) waitForEvent {

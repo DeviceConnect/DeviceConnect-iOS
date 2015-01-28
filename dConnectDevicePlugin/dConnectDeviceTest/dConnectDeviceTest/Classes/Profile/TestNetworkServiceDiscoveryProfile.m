@@ -10,9 +10,9 @@
 #import "TestNetworkServiceDiscoveryProfile.h"
 #import "DeviceTestPlugin.h"
 
-NSString *const TestNetworkDeviceIdSpecialCharacters = @"!#$'()-~¥@[;+:*],._/=?&%^|`\"{}<>";
+NSString *const TestNetworkServiceIdSpecialCharacters = @"!#$'()-~¥@[;+:*],._/=?&%^|`\"{}<>";
 NSString *const TestNetworkDeviceName = @"Test Success Device";
-NSString *const TestNetworkDeviceNameSpecialCharacters = @"Test Device ID Special Characters";
+NSString *const TestNetworkDeviceNameSpecialCharacters = @"Test Service ID Special Characters";
 NSString *const TestNetworkDeviceType = @"TEST";
 const BOOL TestNetworkDeviceOnline = YES;
 NSString *const TestNetworkDeviceConfig = @"test config";
@@ -42,16 +42,16 @@ NSString *const TestNetworkDeviceConfig = @"test config";
     
     // 典型的なサービス
     DConnectMessage *service = [DConnectMessage message];
-    [DConnectNetworkServiceDiscoveryProfile setId:TDPDeviceId target:service];
+    [DConnectNetworkServiceDiscoveryProfile setId:TDPServiceId target:service];
     [DConnectNetworkServiceDiscoveryProfile setName:TestNetworkDeviceName target:service];
     [DConnectNetworkServiceDiscoveryProfile setType:TestNetworkDeviceType target:service];
     [DConnectNetworkServiceDiscoveryProfile setOnline:TestNetworkDeviceOnline target:service];
     [DConnectNetworkServiceDiscoveryProfile setConfig:TestNetworkDeviceConfig target:service];
     [services addMessage:service];
     
-    // デバイスIDが特殊なサービス
+    // サービスIDが特殊なサービス
     service = [DConnectMessage message];
-    [DConnectNetworkServiceDiscoveryProfile setId:TestNetworkDeviceIdSpecialCharacters target:service];
+    [DConnectNetworkServiceDiscoveryProfile setId:TestNetworkServiceIdSpecialCharacters target:service];
     [DConnectNetworkServiceDiscoveryProfile setName:TestNetworkDeviceNameSpecialCharacters target:service];
     [DConnectNetworkServiceDiscoveryProfile setType:TestNetworkDeviceType target:service];
     [DConnectNetworkServiceDiscoveryProfile setOnline:TestNetworkDeviceOnline target:service];
@@ -68,10 +68,10 @@ NSString *const TestNetworkDeviceConfig = @"test config";
 
 
 - (BOOL) profile:(DConnectNetworkServiceDiscoveryProfile *)profile didReceivePutOnServiceChangeRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response deviceId:(NSString *)deviceId sessionKey:(NSString *)sessionKey
+        response:(DConnectResponseMessage *)response serviceId:(NSString *)serviceId sessionKey:(NSString *)sessionKey
 {
     
-    CheckDIDAndSK(response, deviceId, sessionKey) {
+    CheckDIDAndSK(response, serviceId, sessionKey) {
         DConnectMessage *event = [DConnectMessage message];
         [event setString:sessionKey forKey:DConnectMessageSessionKey];
         [event setString:self.profileName forKey:DConnectMessageProfile];
@@ -79,7 +79,7 @@ NSString *const TestNetworkDeviceConfig = @"test config";
                   forKey:DConnectMessageAttribute];
         
         DConnectMessage *service = [DConnectMessage message];
-        [DConnectNetworkServiceDiscoveryProfile setId:TDPDeviceId target:service];
+        [DConnectNetworkServiceDiscoveryProfile setId:TDPServiceId target:service];
         [DConnectNetworkServiceDiscoveryProfile setName:TestNetworkDeviceName target:service];
         [DConnectNetworkServiceDiscoveryProfile setType:TestNetworkDeviceType target:service];
         [DConnectNetworkServiceDiscoveryProfile setOnline:TestNetworkDeviceOnline target:service];
@@ -96,9 +96,9 @@ NSString *const TestNetworkDeviceConfig = @"test config";
 
 
 - (BOOL) profile:(DConnectNetworkServiceDiscoveryProfile *)profile didReceiveDeleteOnServiceChangeRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response deviceId:(NSString *)deviceId sessionKey:(NSString *)sessionKey
+        response:(DConnectResponseMessage *)response serviceId:(NSString *)serviceId sessionKey:(NSString *)sessionKey
 {
-    CheckDIDAndSK(response, deviceId, sessionKey) {
+    CheckDIDAndSK(response, serviceId, sessionKey) {
         response.result = DConnectMessageResultTypeOk;
     }
     

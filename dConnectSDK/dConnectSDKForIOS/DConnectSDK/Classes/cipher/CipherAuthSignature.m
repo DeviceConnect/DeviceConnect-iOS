@@ -142,14 +142,14 @@ NSInteger stringSortCompareInfo(id aInfo1, id aInfo2, void *context)
  *
  * @param clientId クライアントID
  * @param grantType グラントタイプ
- * @param deviceId デバイスID(UIアプリのときはnullまたは""を指定する)
+ * @param serviceId サービスID(UIアプリのときはnullまたは""を指定する)
  * @param scopes スコープ
  * @param clientSecret クライアントシークレット
  * @return Signature
  */
 + (NSString *)generateSignatureWithClientId: (NSString *)clientId
                                   grantType: (NSString *)grantType
-                                   deviceId: (NSString *)deviceId
+                                   serviceId: (NSString *)serviceId
                                      scopes: (NSArray *)scopes
                                clientSecret: (NSString *)clientSecret {
     
@@ -160,8 +160,8 @@ NSInteger stringSortCompareInfo(id aInfo1, id aInfo2, void *context)
     [authSignature put: @"clientId" forValue: clientId];
     [authSignature put: @"grantType" forValue: grantType];
     
-    if (deviceId != nil && [deviceId length] > 0) {
-        [authSignature put: @"deviceId" forValue: deviceId];
+    if (serviceId != nil && [serviceId length] > 0) {
+        [authSignature put: @"serviceId" forValue: serviceId];
     }
     
     NSMutableArray *scopes__ = [scopes mutableCopy];

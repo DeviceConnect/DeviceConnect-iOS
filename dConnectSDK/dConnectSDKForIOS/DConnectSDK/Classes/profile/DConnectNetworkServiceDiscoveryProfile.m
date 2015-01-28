@@ -71,9 +71,9 @@ NSString *const DConnectNetworkServiceDiscoveryProfileNetworkTypeBLE = @"BLE";
     
     NSString *attribute = [request attribute];
     if ([attribute isEqualToString:DConnectNetworkServiceDiscoveryProfileAttrOnServiceChange]) {
-        if ([self hasMethod:@selector(profile:didReceivePutOnServiceChangeRequest:response:deviceId:sessionKey:) response:response]) {
+        if ([self hasMethod:@selector(profile:didReceivePutOnServiceChangeRequest:response:serviceId:sessionKey:) response:response]) {
             send = [_delegate profile:self didReceivePutOnServiceChangeRequest:request response:response
-                             deviceId:[request deviceId] sessionKey:[request sessionKey]];
+                             serviceId:[request serviceId] sessionKey:[request sessionKey]];
         }
     } else {
         [response setErrorToUnknownAttribute];
@@ -92,9 +92,9 @@ NSString *const DConnectNetworkServiceDiscoveryProfileNetworkTypeBLE = @"BLE";
     
     NSString *attribute = [request attribute];
     if ([attribute isEqualToString:DConnectNetworkServiceDiscoveryProfileAttrOnServiceChange]) {
-        if ([self hasMethod:@selector(profile:didReceiveDeleteOnServiceChangeRequest:response:deviceId:sessionKey:) response:response]) {
+        if ([self hasMethod:@selector(profile:didReceiveDeleteOnServiceChangeRequest:response:serviceId:sessionKey:) response:response]) {
             send = [_delegate profile:self didReceiveDeleteOnServiceChangeRequest:request response:response
-                             deviceId:[request deviceId] sessionKey:[request sessionKey]];
+                             serviceId:[request serviceId] sessionKey:[request sessionKey]];
         }
     } else {
         [response setErrorToUnknownAttribute];

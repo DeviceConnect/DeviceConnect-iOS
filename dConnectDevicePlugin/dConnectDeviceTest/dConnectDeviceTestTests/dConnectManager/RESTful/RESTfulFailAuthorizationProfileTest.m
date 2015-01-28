@@ -152,7 +152,7 @@ NSString *GRANT_TYPE = @"authorization_code";
     XCTAssertNotNil(client[1]);
     NSString *signature = [DConnectUtil generateSignatureWithClientId:client[0]
                                                             grantType:GRANT_TYPE
-                                                             deviceId:nil
+                                                             serviceId:nil
                                                                scopes:[NSArray arrayWithObjects:@"battery", nil]
                                                          clientSecret:client[1]];
     
@@ -184,7 +184,7 @@ NSString *GRANT_TYPE = @"authorization_code";
     XCTAssertNotNil(client[1]);
     NSString *signature = [DConnectUtil generateSignatureWithClientId:client[0]
                                                             grantType:GRANT_TYPE
-                                                             deviceId:nil
+                                                             serviceId:nil
                                                                scopes:[NSArray arrayWithObjects:@"battery", nil]
                                                          clientSecret:client[1]];
     
@@ -216,7 +216,7 @@ NSString *GRANT_TYPE = @"authorization_code";
     XCTAssertNotNil(client[1]);
     NSString *signature = [DConnectUtil generateSignatureWithClientId:client[0]
                                                             grantType:GRANT_TYPE
-                                                             deviceId:nil
+                                                             serviceId:nil
                                                                scopes:[NSArray arrayWithObjects:@"battery", nil]
                                                          clientSecret:client[1]];
     
@@ -248,7 +248,7 @@ NSString *GRANT_TYPE = @"authorization_code";
     XCTAssertNotNil(client[1]);
     NSString *signature = [DConnectUtil generateSignatureWithClientId:client[0]
                                                             grantType:GRANT_TYPE
-                                                             deviceId:nil
+                                                             serviceId:nil
                                                                scopes:[NSArray arrayWithObjects:@"battery", nil]
                                                          clientSecret:client[1]];
     
@@ -281,7 +281,7 @@ NSString *GRANT_TYPE = @"authorization_code";
     XCTAssertNotNil(client[1]);
     NSString *signature = [DConnectUtil generateSignatureWithClientId:client[0]
                                                             grantType:undefined_grant_type
-                                                             deviceId:nil
+                                                             serviceId:nil
                                                                scopes:[NSArray arrayWithObjects:@"battery", nil]
                                                          clientSecret:client[1]];
 
@@ -313,7 +313,7 @@ NSString *GRANT_TYPE = @"authorization_code";
     XCTAssertNotNil(client[1]);
     NSString *signature = [DConnectUtil generateSignatureWithClientId:client[0]
                                                             grantType:GRANT_TYPE
-                                                             deviceId:nil
+                                                             serviceId:nil
                                                                scopes:[NSArray arrayWithObjects:@"battery", nil]
                                                          clientSecret:client[1]];
     
@@ -346,7 +346,7 @@ NSString *GRANT_TYPE = @"authorization_code";
     XCTAssertNotNil(client[1]);
     NSString *signature = [DConnectUtil generateSignatureWithClientId:client[0]
                                                             grantType:GRANT_TYPE
-                                                             deviceId:nil
+                                                             serviceId:nil
                                                                scopes:[NSArray arrayWithObjects:@"battery", nil]
                                                          clientSecret:client[1]];
     
@@ -378,7 +378,7 @@ NSString *GRANT_TYPE = @"authorization_code";
     XCTAssertNotNil(client[1]);
     NSString *signature = [DConnectUtil generateSignatureWithClientId:client[0]
                                                             grantType:GRANT_TYPE
-                                                             deviceId:nil
+                                                             serviceId:nil
                                                                scopes:[NSArray arrayWithObjects:@"battery", nil]
                                                          clientSecret:client[1]];
     
@@ -411,7 +411,7 @@ NSString *GRANT_TYPE = @"authorization_code";
     XCTAssertNotNil(client[1]);
     NSString *signature = [DConnectUtil generateSignatureWithClientId:client[0]
                                                             grantType:GRANT_TYPE
-                                                             deviceId:nil
+                                                             serviceId:nil
                                                                scopes:[NSArray arrayWithObjects:@"battery", nil]
                                                          clientSecret:client[1]];
     
@@ -499,7 +499,7 @@ NSString *GRANT_TYPE = @"authorization_code";
     XCTAssertNotNil(client[1]);
     NSString *signature = [DConnectUtil generateSignatureWithClientId:client[0]
                                                             grantType:GRANT_TYPE
-                                                             deviceId:nil
+                                                             serviceId:nil
                                                                scopes:[NSArray arrayWithObjects:@"battery", nil]
                                                          clientSecret:client[1]];
     
@@ -532,7 +532,7 @@ NSString *GRANT_TYPE = @"authorization_code";
     XCTAssertNotNil(client[1]);
     NSString *signature = [DConnectUtil generateSignatureWithClientId:client[0]
                                                             grantType:GRANT_TYPE
-                                                             deviceId:nil
+                                                             serviceId:nil
                                                                scopes:[NSArray arrayWithObjects:@"battery", nil]
                                                          clientSecret:client[1]];
     
@@ -565,7 +565,7 @@ NSString *GRANT_TYPE = @"authorization_code";
     XCTAssertNotNil(client[1]);
     NSString *signature = [DConnectUtil generateSignatureWithClientId:client[0]
                                                             grantType:GRANT_TYPE
-                                                             deviceId:nil
+                                                             serviceId:nil
                                                                scopes:[NSArray arrayWithObjects:@"battery", nil]
                                                          clientSecret:client[1]];
     

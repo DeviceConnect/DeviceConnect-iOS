@@ -22,8 +22,8 @@ int DConnectPort = 8080;
     // dConnectManagerのインスタンスを作成
     [DConnectManager sharedManager];
     
-    // deviceIdを検索しておく
-    if (!self.deviceId) {
+    // serviceIdを検索しておく
+    if (!self.serviceId) {
         [self searchTestDevicePlugin];
     }
 }
@@ -58,12 +58,12 @@ int DConnectPort = 8080;
     for (int i = 0; i < [services count]; i++) {
         NSDictionary *s = (NSDictionary *)[services objectAtIndex:i];
         NSString *name = [s objectForKey:DConnectNetworkServiceDiscoveryProfileParamName];
-        NSString *deviceId = [s objectForKey:DConnectNetworkServiceDiscoveryProfileParamId];
+        NSString *serviceId = [s objectForKey:DConnectNetworkServiceDiscoveryProfileParamId];
         if ([TestDevicePluginName isEqualToString:name]) {
-            self.deviceId = deviceId;
+            self.serviceId = serviceId;
         }
     }
-    XCTAssertNotNil(self.deviceId, @"Can't found deviceId.");
+    XCTAssertNotNil(self.serviceId, @"Can't found serviceId.");
 }
 
 @end

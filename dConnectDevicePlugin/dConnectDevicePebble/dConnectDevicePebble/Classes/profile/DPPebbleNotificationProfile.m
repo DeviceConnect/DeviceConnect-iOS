@@ -38,7 +38,7 @@
 - (BOOL)            profile:(DConnectNotificationProfile *)profile
 didReceivePostNotifyRequest:(DConnectRequestMessage *)request
                    response:(DConnectResponseMessage *)response
-                   deviceId:(NSString *)deviceId
+                   serviceId:(NSString *)serviceId
                        type:(NSNumber *)type
                         dir:(NSString *)dir
                        lang:(NSString *)lang
@@ -47,7 +47,7 @@ didReceivePostNotifyRequest:(DConnectRequestMessage *)request
                        icon:(NSData *)icon
 {
 	// LocalNotificationを発動させるとPebbleのNotificationに通知が行く
-	// FIXME:この方式だとDeviceID無視で全デバイスに通知が行ってしまう。
+	// FIXME:この方式だとServiceID無視で全デバイスに通知が行ってしまう。
 	UILocalNotification *notify = [[UILocalNotification alloc] init];
 	notify.fireDate = [NSDate new];
 	notify.alertBody = body.length>0 ? body : @" ";

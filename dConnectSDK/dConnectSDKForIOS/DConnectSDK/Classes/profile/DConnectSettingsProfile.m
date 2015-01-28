@@ -46,33 +46,33 @@ const double DConnectSettingsProfileMinLevel = 0.0;
     
     NSString *interface = [request interface];
     NSString *attribute = [request attribute];
-    NSString *deviceId = [request deviceId];
+    NSString *serviceId = [request serviceId];
     
     if (interface) {
         if ([interface isEqualToString:DConnectSettingsProfileInterfaceSound] &&
             [attribute isEqualToString:DConnectSettingsProfileAttrVolume])
         {
-            if ([self hasMethod:@selector(profile:didReceiveGetVolumeRequest:response:deviceId:kind:)
+            if ([self hasMethod:@selector(profile:didReceiveGetVolumeRequest:response:serviceId:kind:)
                        response:response])
             {
                 send = [_delegate profile:self didReceiveGetVolumeRequest:request response:response
-                                 deviceId:deviceId
+                                 serviceId:serviceId
                                      kind:[DConnectSettingsProfile volumeKindFromRequest:request]];
             }
         } else if ([interface isEqualToString:DConnectSettingsProfileInterfaceDisplay]) {
             if ([attribute isEqualToString:DConnectSettingsProfileAttrLight]) {
-                if ([self hasMethod:@selector(profile:didReceiveGetLightRequest:response:deviceId:)
+                if ([self hasMethod:@selector(profile:didReceiveGetLightRequest:response:serviceId:)
                            response:response])
                 {
                     send = [_delegate profile:self didReceiveGetLightRequest:request
-                                     response:response deviceId:deviceId];
+                                     response:response serviceId:serviceId];
                 }
             } else if ([attribute isEqualToString:DConnectSettingsProfileAttrSleep]) {
-                if ([self hasMethod:@selector(profile:didReceiveGetSleepRequest:response:deviceId:)
+                if ([self hasMethod:@selector(profile:didReceiveGetSleepRequest:response:serviceId:)
                            response:response])
                 {
                     send = [_delegate profile:self didReceiveGetSleepRequest:request
-                                     response:response deviceId:deviceId];
+                                     response:response serviceId:serviceId];
                 }
             } else {
                 [response setErrorToUnknownAttribute];
@@ -81,11 +81,11 @@ const double DConnectSettingsProfileMinLevel = 0.0;
             [response setErrorToUnknownAttribute];
         }
     } else if ([attribute isEqualToString:DConnectSettingsProfileAttrDate]) {
-        if ([self hasMethod:@selector(profile:didReceiveGetDateRequest:response:deviceId:)
+        if ([self hasMethod:@selector(profile:didReceiveGetDateRequest:response:serviceId:)
                    response:response])
         {
             send = [_delegate profile:self didReceiveGetDateRequest:request
-                             response:response deviceId:deviceId];
+                             response:response serviceId:serviceId];
         }
     } else {
         [response setErrorToUnknownAttribute];
@@ -104,32 +104,32 @@ const double DConnectSettingsProfileMinLevel = 0.0;
     
     NSString *interface = [request interface];
     NSString *attribute = [request attribute];
-    NSString *deviceId = [request deviceId];
+    NSString *serviceId = [request serviceId];
     
     if (interface) {
         if ([interface isEqualToString:DConnectSettingsProfileInterfaceSound] &&
             [attribute isEqualToString:DConnectSettingsProfileAttrVolume]) {
             
-            if ([self hasMethod:@selector(profile:didReceivePutVolumeRequest:response:deviceId:kind:level:)
+            if ([self hasMethod:@selector(profile:didReceivePutVolumeRequest:response:serviceId:kind:level:)
                        response:response])
             {
-                send = [_delegate profile:self didReceivePutVolumeRequest:request response:response deviceId:deviceId
+                send = [_delegate profile:self didReceivePutVolumeRequest:request response:response serviceId:serviceId
                                      kind:[DConnectSettingsProfile volumeKindFromRequest:request]
                                     level:[DConnectSettingsProfile levelFromRequest:request]];
             }
         } else if ([interface isEqualToString:DConnectSettingsProfileInterfaceDisplay]) {
             if ([attribute isEqualToString:DConnectSettingsProfileAttrLight]) {
-                if ([self hasMethod:@selector(profile:didReceivePutLightRequest:response:deviceId:level:)
+                if ([self hasMethod:@selector(profile:didReceivePutLightRequest:response:serviceId:level:)
                            response:response])
                 {
-                    send = [_delegate profile:self didReceivePutLightRequest:request response:response deviceId:deviceId
+                    send = [_delegate profile:self didReceivePutLightRequest:request response:response serviceId:serviceId
                                         level:[DConnectSettingsProfile levelFromRequest:request]];
                 }
             } else if ([attribute isEqualToString:DConnectSettingsProfileAttrSleep]) {
-                if ([self hasMethod:@selector(profile:didReceivePutSleepRequest:response:deviceId:time:)
+                if ([self hasMethod:@selector(profile:didReceivePutSleepRequest:response:serviceId:time:)
                            response:response])
                 {
-                    send = [_delegate profile:self didReceivePutSleepRequest:request response:response deviceId:deviceId
+                    send = [_delegate profile:self didReceivePutSleepRequest:request response:response serviceId:serviceId
                                          time:[DConnectSettingsProfile timeFromRequest:request]];
                 }
             } else {
@@ -139,10 +139,10 @@ const double DConnectSettingsProfileMinLevel = 0.0;
             [response setErrorToUnknownAttribute];
         }
     } else if ([attribute isEqualToString:DConnectSettingsProfileAttrDate]) {
-        if ([self hasMethod:@selector(profile:didReceivePutDateRequest:response:deviceId:date:)
+        if ([self hasMethod:@selector(profile:didReceivePutDateRequest:response:serviceId:date:)
                    response:response])
         {
-            send = [_delegate profile:self didReceivePutDateRequest:request response:response deviceId:deviceId
+            send = [_delegate profile:self didReceivePutDateRequest:request response:response serviceId:serviceId
                                  date:[DConnectSettingsProfile dateFromRequest:request]];
         }
     } else {

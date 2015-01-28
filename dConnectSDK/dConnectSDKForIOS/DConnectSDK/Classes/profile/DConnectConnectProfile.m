@@ -53,31 +53,31 @@ NSString *const DConnectConnectProfileInterfaceBluetooth = @"bluetooth";
     }
     
     NSString *attribute = [request attribute];
-    NSString *deviceId = [request deviceId];
+    NSString *serviceId = [request serviceId];
     
     if ([DConnectConnectProfileAttrWifi isEqualToString:attribute]) {
-        if ([self hasMethod:@selector(profile:didReceiveGetWifiRequest:response:deviceId:) response:response])
+        if ([self hasMethod:@selector(profile:didReceiveGetWifiRequest:response:serviceId:) response:response])
         {
             send = [_delegate profile:self didReceiveGetWifiRequest:request
-                             response:response deviceId:deviceId];
+                             response:response serviceId:serviceId];
         }
     } else if ([DConnectConnectProfileAttrBluetooth isEqualToString:attribute]) {
-        if ([self hasMethod:@selector(profile:didReceiveGetBluetoothRequest:response:deviceId:) response:response])
+        if ([self hasMethod:@selector(profile:didReceiveGetBluetoothRequest:response:serviceId:) response:response])
         {
             send = [_delegate profile:self didReceiveGetBluetoothRequest:request
-                             response:response deviceId:deviceId];
+                             response:response serviceId:serviceId];
         }
     } else if ([DConnectConnectProfileAttrNFC isEqualToString:attribute]) {
-        if ([self hasMethod:@selector(profile:didReceiveGetNFCRequest:response:deviceId:) response:response])
+        if ([self hasMethod:@selector(profile:didReceiveGetNFCRequest:response:serviceId:) response:response])
         {
             send = [_delegate profile:self didReceiveGetNFCRequest:request
-                             response:response deviceId:deviceId];
+                             response:response serviceId:serviceId];
         }
     } else if ([DConnectConnectProfileAttrBLE isEqualToString:attribute]) {
-        if ([self hasMethod:@selector(profile:didReceiveGetBLERequest:response:deviceId:) response:response])
+        if ([self hasMethod:@selector(profile:didReceiveGetBLERequest:response:serviceId:) response:response])
         {
             send = [_delegate profile:self didReceiveGetBLERequest:request
-                             response:response deviceId:deviceId];
+                             response:response serviceId:serviceId];
         }
     } else {
         [response setErrorToUnknownAttribute];
@@ -100,64 +100,64 @@ NSString *const DConnectConnectProfileInterfaceBluetooth = @"bluetooth";
     if (!interface) {
         if (attribute) {
             
-            NSString *deviceId = [request deviceId];
+            NSString *serviceId = [request serviceId];
             NSString *sessionKey = [request sessionKey];
             
             if ([attribute isEqualToString:DConnectConnectProfileAttrWifi]) {
-                if ([self hasMethod:@selector(profile:didReceivePutWiFiRequest:response:deviceId:) response:response])
+                if ([self hasMethod:@selector(profile:didReceivePutWiFiRequest:response:serviceId:) response:response])
                 {
                     send = [_delegate profile:self didReceivePutWiFiRequest:request
-                                     response:response deviceId:deviceId];
+                                     response:response serviceId:serviceId];
                 }
             } else if ([attribute isEqualToString:DConnectConnectProfileAttrBluetooth]) {
-                if ([self hasMethod:@selector(profile:didReceivePutBluetoothRequest:response:deviceId:)
+                if ([self hasMethod:@selector(profile:didReceivePutBluetoothRequest:response:serviceId:)
                            response:response])
                 {
                     send = [_delegate profile:self didReceivePutBluetoothRequest:request
-                                     response:response deviceId:deviceId];
+                                     response:response serviceId:serviceId];
                 }
                 
             } else if ([attribute isEqualToString:DConnectConnectProfileAttrNFC]) {
-                if ([self hasMethod:@selector(profile:didReceivePutNFCRequest:response:deviceId:)
+                if ([self hasMethod:@selector(profile:didReceivePutNFCRequest:response:serviceId:)
                            response:response])
                 {
                     send = [_delegate profile:self didReceivePutNFCRequest:request
-                                     response:response deviceId:deviceId];
+                                     response:response serviceId:serviceId];
                 }
             } else if ([attribute isEqualToString:DConnectConnectProfileAttrBLE]) {
-                if ([self hasMethod:@selector(profile:didReceivePutBLERequest:response:deviceId:)
+                if ([self hasMethod:@selector(profile:didReceivePutBLERequest:response:serviceId:)
                            response:response])
                 {
                     send = [_delegate profile:self didReceivePutBLERequest:request
-                                     response:response deviceId:deviceId];
+                                     response:response serviceId:serviceId];
                 }
             } else if ([attribute isEqualToString:DConnectConnectProfileAttrOnWifiChange]) {
-                if ([self hasMethod:@selector(profile:didReceivePutOnWifiChangeRequest:response:deviceId:sessionKey:)
+                if ([self hasMethod:@selector(profile:didReceivePutOnWifiChangeRequest:response:serviceId:sessionKey:)
                            response:response])
                 {
                     send = [_delegate profile:self didReceivePutOnWifiChangeRequest:request
-                                     response:response deviceId:deviceId sessionKey:sessionKey];
+                                     response:response serviceId:serviceId sessionKey:sessionKey];
                 }
             } else if ([attribute isEqualToString:DConnectConnectProfileAttrOnBluetoothChange]) {
-                if ([self hasMethod:@selector(profile:didReceivePutOnBluetoothChangeRequest:response:deviceId:sessionKey:)
+                if ([self hasMethod:@selector(profile:didReceivePutOnBluetoothChangeRequest:response:serviceId:sessionKey:)
                            response:response])
                 {
                     send = [_delegate profile:self didReceivePutOnBluetoothChangeRequest:request
-                                     response:response deviceId:deviceId sessionKey:sessionKey];
+                                     response:response serviceId:serviceId sessionKey:sessionKey];
                 }
             } else if ([attribute isEqualToString:DConnectConnectProfileAttrOnNFCChange]) {
-                if ([self hasMethod:@selector(profile:didReceivePutOnNFCChangeRequest:response:deviceId:sessionKey:)
+                if ([self hasMethod:@selector(profile:didReceivePutOnNFCChangeRequest:response:serviceId:sessionKey:)
                            response:response])
                 {
                     send = [_delegate profile:self didReceivePutOnNFCChangeRequest:request
-                                     response:response deviceId:deviceId sessionKey:sessionKey];
+                                     response:response serviceId:serviceId sessionKey:sessionKey];
                 }
             } else if ([attribute isEqualToString:DConnectConnectProfileAttrOnBLEChange]) {
-                if ([self hasMethod:@selector(profile:didReceivePutOnBLEChangeRequest:response:deviceId:sessionKey:)
+                if ([self hasMethod:@selector(profile:didReceivePutOnBLEChangeRequest:response:serviceId:sessionKey:)
                            response:response])
                 {
                     send = [_delegate profile:self didReceivePutOnBLEChangeRequest:request response:response
-                                     deviceId:deviceId sessionKey:sessionKey];
+                                     serviceId:serviceId sessionKey:sessionKey];
                 }
             } else {
                 [response setErrorToUnknownAttribute];
@@ -168,11 +168,11 @@ NSString *const DConnectConnectProfileInterfaceBluetooth = @"bluetooth";
     } else if ([interface isEqualToString:DConnectConnectProfileInterfaceBluetooth]
                && [DConnectConnectProfileAttrDiscoverable isEqualToString:attribute])
     {
-        if ([self hasMethod:@selector(profile:didReceivePutBluetoothDiscoverableRequest:response:deviceId:)
+        if ([self hasMethod:@selector(profile:didReceivePutBluetoothDiscoverableRequest:response:serviceId:)
             response:response])
         {
             send = [_delegate profile:self didReceivePutBluetoothDiscoverableRequest:request
-                             response:response deviceId:[request deviceId]];
+                             response:response serviceId:[request serviceId]];
         }
     } else {
         [response setErrorToUnknownAttribute];
@@ -192,7 +192,7 @@ NSString *const DConnectConnectProfileInterfaceBluetooth = @"bluetooth";
     
     NSString *interface = [request interface];
     NSString *attribute = [request attribute];
-    NSString *deviceId = [request deviceId];
+    NSString *serviceId = [request serviceId];
     
     if (!interface) {
         if (attribute) {
@@ -200,62 +200,62 @@ NSString *const DConnectConnectProfileInterfaceBluetooth = @"bluetooth";
             NSString *sessionKey = [request sessionKey];
             
             if ([attribute isEqualToString:DConnectConnectProfileAttrWifi]) {
-                if ([self hasMethod:@selector(profile:didReceiveDeleteWiFiRequest:response:deviceId:)
+                if ([self hasMethod:@selector(profile:didReceiveDeleteWiFiRequest:response:serviceId:)
                            response:response])
                 {
                     send = [_delegate profile:self didReceiveDeleteWiFiRequest:request
-                                     response:response deviceId:deviceId];
+                                     response:response serviceId:serviceId];
                 }
             } else if ([attribute isEqualToString:DConnectConnectProfileAttrBluetooth]) {
-                if ([self hasMethod:@selector(profile:didReceiveDeleteBluetoothRequest:response:deviceId:)
+                if ([self hasMethod:@selector(profile:didReceiveDeleteBluetoothRequest:response:serviceId:)
                            response:response])
                 {
                     send = [_delegate profile:self didReceiveDeleteBluetoothRequest:request
-                                     response:response deviceId:deviceId];
+                                     response:response serviceId:serviceId];
                 }
             } else if ([attribute isEqualToString:DConnectConnectProfileAttrNFC]) {
-                if ([self hasMethod:@selector(profile:didReceiveDeleteNFCRequest:response:deviceId:)
+                if ([self hasMethod:@selector(profile:didReceiveDeleteNFCRequest:response:serviceId:)
                            response:response])
                 {
                     send = [_delegate profile:self didReceiveDeleteNFCRequest:request
-                                     response:response deviceId:deviceId];
+                                     response:response serviceId:serviceId];
                 }
             } else if ([attribute isEqualToString:DConnectConnectProfileAttrBLE]) {
-                if ([self hasMethod:@selector(profile:didReceiveDeleteBLERequest:response:deviceId:)
+                if ([self hasMethod:@selector(profile:didReceiveDeleteBLERequest:response:serviceId:)
                            response:response])
                 {
                     send = [_delegate profile:self didReceiveDeleteBLERequest:request
-                                     response:response deviceId:deviceId];
+                                     response:response serviceId:serviceId];
                 }
                 
             } else if ([attribute isEqualToString:DConnectConnectProfileAttrOnWifiChange]) {
-                if ([self hasMethod:@selector(profile:didReceiveDeleteOnWifiChangeRequest:response:deviceId:sessionKey:)
+                if ([self hasMethod:@selector(profile:didReceiveDeleteOnWifiChangeRequest:response:serviceId:sessionKey:)
                            response:response])
                 {
                     send = [_delegate profile:self didReceiveDeleteOnWifiChangeRequest:request
-                                     response:response deviceId:deviceId sessionKey:sessionKey];
+                                     response:response serviceId:serviceId sessionKey:sessionKey];
                 }
             } else if ([attribute isEqualToString:DConnectConnectProfileAttrOnBluetoothChange]) {
-                if ([self hasMethod:@selector(profile:didReceiveDeleteOnBluetoothChangeRequest:response:deviceId:sessionKey:)
+                if ([self hasMethod:@selector(profile:didReceiveDeleteOnBluetoothChangeRequest:response:serviceId:sessionKey:)
                            response:response])
                 {
                     send = [_delegate profile:self didReceiveDeleteOnBluetoothChangeRequest:request
-                                     response:response deviceId:deviceId
+                                     response:response serviceId:serviceId
                                    sessionKey:sessionKey];
                 }
             } else if ([attribute isEqualToString:DConnectConnectProfileAttrOnNFCChange]) {
-                if ([self hasMethod:@selector(profile:didReceiveDeleteOnNFCChangeRequest:response:deviceId:sessionKey:)
+                if ([self hasMethod:@selector(profile:didReceiveDeleteOnNFCChangeRequest:response:serviceId:sessionKey:)
                            response:response])
                 {
                     send = [_delegate profile:self didReceiveDeleteOnNFCChangeRequest:request
-                                     response:response deviceId:deviceId sessionKey:sessionKey];
+                                     response:response serviceId:serviceId sessionKey:sessionKey];
                 }
             } else if ([attribute isEqualToString:DConnectConnectProfileAttrOnBLEChange]) {
-                if ([self hasMethod:@selector(profile:didReceiveDeleteOnBLEChangeRequest:response:deviceId:sessionKey:)
+                if ([self hasMethod:@selector(profile:didReceiveDeleteOnBLEChangeRequest:response:serviceId:sessionKey:)
                            response:response])
                 {
                     send = [_delegate profile:self didReceiveDeleteOnBLEChangeRequest:request
-                                     response:response deviceId:deviceId sessionKey:sessionKey];
+                                     response:response serviceId:serviceId sessionKey:sessionKey];
                 }
             } else {
                 [response setErrorToUnknownAttribute];
@@ -266,11 +266,11 @@ NSString *const DConnectConnectProfileInterfaceBluetooth = @"bluetooth";
     } else if ([interface isEqualToString:DConnectConnectProfileInterfaceBluetooth]
                && [attribute isEqualToString:DConnectConnectProfileAttrDiscoverable])
     {
-        if ([self hasMethod:@selector(profile:didReceiveDeleteBluetoothDiscoverableRequest:response:deviceId:)
+        if ([self hasMethod:@selector(profile:didReceiveDeleteBluetoothDiscoverableRequest:response:serviceId:)
                    response:response])
         {
             send = [_delegate profile:self didReceiveDeleteBluetoothDiscoverableRequest:request
-                             response:response deviceId:deviceId];
+                             response:response serviceId:serviceId];
         }
     } else {
         [response setErrorToUnknownAttribute];

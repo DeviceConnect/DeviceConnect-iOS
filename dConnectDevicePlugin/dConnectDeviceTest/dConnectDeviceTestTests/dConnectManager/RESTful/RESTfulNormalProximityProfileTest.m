@@ -25,7 +25,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /proximity/ondeviceproximity?deviceid=xxxx&session_key=xxxx
+ * Path: /proximity/ondeviceproximity?serviceId=xxxx&session_key=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -34,7 +34,7 @@
  */
 - (void) testHttpNormalProximityOnDeviceProximityPut
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/proximity/ondeviceproximity?sessionKey=%@&deviceId=%@", self.clientId, self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/proximity/ondeviceproximity?sessionKey=%@&serviceId=%@", self.clientId, self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
@@ -47,7 +47,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /proximity/ondeviceproximity?deviceid=xxxx&session_key=xxxx
+ * Path: /proximity/ondeviceproximity?serviceId=xxxx&session_key=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -56,7 +56,7 @@
  */
 - (void) testHttpNormalProximityOnDeviceProximityDelete
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/proximity/ondeviceproximity?sessionKey=%@&deviceId=%@", self.clientId, self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/proximity/ondeviceproximity?sessionKey=%@&serviceId=%@", self.clientId, self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     
@@ -69,7 +69,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /proximity/onuserproximity?deviceid=xxxx&session_key=xxxx
+ * Path: /proximity/onuserproximity?serviceId=xxxx&session_key=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -78,7 +78,7 @@
  */
 - (void) testHttpNormalProximityOnUserProximityPut
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/proximity/onuserproximity?sessionKey=%@&deviceId=%@", self.clientId, self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/proximity/onuserproximity?sessionKey=%@&serviceId=%@", self.clientId, self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
@@ -91,7 +91,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /proximity/onuserproximity?deviceid=xxxx&session_key=xxxx
+ * Path: /proximity/onuserproximity?serviceId=xxxx&session_key=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -100,7 +100,7 @@
  */
 - (void) testHttpNormalProximityOnUserProximityDelete
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/proximity/onuserproximity?sessionKey=%@&deviceId=%@", self.clientId, self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/proximity/onuserproximity?sessionKey=%@&serviceId=%@", self.clientId, self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     

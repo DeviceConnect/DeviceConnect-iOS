@@ -53,11 +53,11 @@ NSString *const DConnectCanvasProfileModeFills  = @"fills";
     NSString *attribute = [request attribute];
     if ([attribute isEqualToString:DConnectCanvasProfileAttrDrawImage]) {
         
-        if ([self hasMethod:@selector(profile:didReceivePostDrawImageRequest:response:deviceId:mimeType:data:x:y:mode:)
+        if ([self hasMethod:@selector(profile:didReceivePostDrawImageRequest:response:serviceId:mimeType:data:x:y:mode:)
                    response:response])
         {
             NSData *data = [DConnectCanvasProfile dataFromRequest:request];
-            NSString *deviceId = [request deviceId];
+            NSString *serviceId = [request serviceId];
             NSString *mimeType = [DConnectCanvasProfile mimeTypeFromRequest:request];
             NSString *strX = [DConnectCanvasProfile xFromRequest: request];
             NSString *strY = [DConnectCanvasProfile yFromRequest: request];
@@ -66,7 +66,7 @@ NSString *const DConnectCanvasProfileModeFills  = @"fills";
             NSString *mode = [DConnectCanvasProfile modeFromRequest: request];
             
             send = [_delegate profile:self didReceivePostDrawImageRequest:request response:response
-                             deviceId:deviceId mimeType:mimeType data:data x:x y:y mode:mode];
+                             serviceId:serviceId mimeType:mimeType data:data x:x y:y mode:mode];
         }
 
     } else {

@@ -134,7 +134,7 @@
 -(void) nowPlayingItemChangedInIPod:(NSNotification *)notification
 {
     // イベントの取得
-    NSArray *evts = [_eventMgr eventListForDeviceId:NetworkDiscoveryDeviceId
+    NSArray *evts = [_eventMgr eventListForServiceId:NetworkDiscoveryServiceId
                                             profile:DConnectMediaPlayerProfileName
                                           attribute:DConnectMediaPlayerProfileAttrOnStatusChange];
     
@@ -175,7 +175,7 @@
 - (void) nowPlayingItemChangedInMoviePlayer:(NSNotification *)notification
 {
     // イベントの取得
-    NSArray *evts = [_eventMgr eventListForDeviceId:NetworkDiscoveryDeviceId
+    NSArray *evts = [_eventMgr eventListForServiceId:NetworkDiscoveryServiceId
                                             profile:DConnectMediaPlayerProfileName
                                           attribute:DConnectMediaPlayerProfileAttrOnStatusChange];
     
@@ -218,7 +218,7 @@
 -(void) playbackStateChangedInIPod:(NSNotification *)notification
 {
     // イベントの取得
-    NSArray *evts = [_eventMgr eventListForDeviceId:NetworkDiscoveryDeviceId
+    NSArray *evts = [_eventMgr eventListForServiceId:NetworkDiscoveryServiceId
                                             profile:DConnectMediaPlayerProfileName
                                           attribute:DConnectMediaPlayerProfileAttrOnStatusChange];
     
@@ -265,7 +265,7 @@
 - (void) playbackStateChangedInMoviePlayer:(NSNotification *)notification
 {
     // イベントの取得
-    NSArray *evts = [_eventMgr eventListForDeviceId:NetworkDiscoveryDeviceId
+    NSArray *evts = [_eventMgr eventListForServiceId:NetworkDiscoveryServiceId
                                             profile:DConnectMediaPlayerProfileName
                                           attribute:DConnectMediaPlayerProfileAttrOnStatusChange];
     
@@ -517,7 +517,7 @@
 - (BOOL)               profile:(DConnectMediaPlayerProfile *)profile
 didReceiveGetPlayStatusRequest:(DConnectRequestMessage *)request
                       response:(DConnectResponseMessage *)response
-                      deviceId:(NSString *)deviceId
+                      serviceId:(NSString *)serviceId
 {
     NSString *status;
     switch (_currentMediaPlayer) {
@@ -571,7 +571,7 @@ didReceiveGetPlayStatusRequest:(DConnectRequestMessage *)request
 - (BOOL)          profile:(DConnectMediaPlayerProfile *)profile
 didReceiveGetMediaRequest:(DConnectRequestMessage *)request
                  response:(DConnectResponseMessage *)response
-                 deviceId:(NSString *)deviceId
+                 serviceId:(NSString *)serviceId
                   mediaId:(NSString *)mediaId
 {
     if (!mediaId) {
@@ -594,7 +594,7 @@ didReceiveGetMediaRequest:(DConnectRequestMessage *)request
 - (BOOL)              profile:(DConnectMediaPlayerProfile *)profile
 didReceiveGetMediaListRequest:(DConnectRequestMessage *)request
                      response:(DConnectResponseMessage *)response
-                     deviceId:(NSString *)deviceId
+                     serviceId:(NSString *)serviceId
                         query:(NSString *)query
                      mimeType:(NSString *)mimeType
                         order:(NSArray *)order
@@ -756,7 +756,7 @@ didReceiveGetMediaListRequest:(DConnectRequestMessage *)request
 - (BOOL)         profile:(DConnectMediaPlayerProfile *)profile
 didReceiveGetSeekRequest:(DConnectRequestMessage *)request
                 response:(DConnectResponseMessage *)response
-                deviceId:(NSString *)deviceId
+                serviceId:(NSString *)serviceId
 {
     __block NSTimeInterval pos;
     void(^block)(void) = nil;
@@ -795,7 +795,7 @@ didReceiveGetSeekRequest:(DConnectRequestMessage *)request
 - (BOOL)          profile:(DConnectMediaPlayerProfile *)profile
 didReceivePutMediaRequest:(DConnectRequestMessage *)request
                  response:(DConnectResponseMessage *)response
-                 deviceId:(NSString *)deviceId
+                 serviceId:(NSString *)serviceId
                   mediaId:(NSString *)mediaId
 {
     if (!mediaId) {
@@ -978,7 +978,7 @@ didReceivePutMediaRequest:(DConnectRequestMessage *)request
 - (BOOL)         profile:(DConnectMediaPlayerProfile *)profile
 didReceivePutPlayRequest:(DConnectRequestMessage *)request
                 response:(DConnectResponseMessage *)response
-                deviceId:(NSString *)deviceId
+                serviceId:(NSString *)serviceId
 {
     if (_currentMediaPlayer == MediaPlayerTypeIPod) {
         if ([_musicPlayer playbackState] != MPMusicPlaybackStatePlaying) {
@@ -1048,7 +1048,7 @@ didReceivePutPlayRequest:(DConnectRequestMessage *)request
 - (BOOL)         profile:(DConnectMediaPlayerProfile *)profile
 didReceivePutStopRequest:(DConnectRequestMessage *)request
                 response:(DConnectResponseMessage *)response
-                deviceId:(NSString *)deviceId
+                serviceId:(NSString *)serviceId
 {
     void(^block)(void) = nil;
     if (_currentMediaPlayer == MediaPlayerTypeIPod) {
@@ -1086,7 +1086,7 @@ didReceivePutStopRequest:(DConnectRequestMessage *)request
 - (BOOL)          profile:(DConnectMediaPlayerProfile *)profile
 didReceivePutPauseRequest:(DConnectRequestMessage *)request
                  response:(DConnectResponseMessage *)response
-                 deviceId:(NSString *)deviceId
+                 serviceId:(NSString *)serviceId
 {
     void(^block)(void) = nil;
     if (_currentMediaPlayer == MediaPlayerTypeIPod) {
@@ -1132,7 +1132,7 @@ didReceivePutPauseRequest:(DConnectRequestMessage *)request
 - (BOOL)           profile:(DConnectMediaPlayerProfile *)profile
 didReceivePutResumeRequest:(DConnectRequestMessage *)request
                   response:(DConnectResponseMessage *)response
-                  deviceId:(NSString *)deviceId
+                  serviceId:(NSString *)serviceId
 {
     if (_currentMediaPlayer == MediaPlayerTypeIPod) {
         if ([_musicPlayer playbackState] == MPMusicPlaybackStatePaused) {
@@ -1193,7 +1193,7 @@ didReceivePutResumeRequest:(DConnectRequestMessage *)request
 - (BOOL)         profile:(DConnectMediaPlayerProfile *)profile
 didReceivePutSeekRequest:(DConnectRequestMessage *)request
                 response:(DConnectResponseMessage *)response
-                deviceId:(NSString *)deviceId
+                serviceId:(NSString *)serviceId
                      pos:(NSNumber *)pos
 {
     if (!pos) {
@@ -1248,7 +1248,7 @@ didReceivePutSeekRequest:(DConnectRequestMessage *)request
 - (BOOL)                   profile:(DConnectMediaPlayerProfile *)profile
 didReceivePutOnStatusChangeRequest:(DConnectRequestMessage *)request
                           response:(DConnectResponseMessage *)response
-                          deviceId:(NSString *)deviceId
+                          serviceId:(NSString *)serviceId
                         sessionKey:(NSString *)sessionkey
 {
     switch ([_eventMgr addEventForRequest:request]) {
@@ -1273,7 +1273,7 @@ didReceivePutOnStatusChangeRequest:(DConnectRequestMessage *)request
 - (BOOL)                      profile:(DConnectMediaPlayerProfile *)profile
 didReceiveDeleteOnStatusChangeRequest:(DConnectRequestMessage *)request
                              response:(DConnectResponseMessage *)response
-                             deviceId:(NSString *)deviceId
+                             serviceId:(NSString *)serviceId
                            sessionKey:(NSString *)sessionkey
 {
     switch ([_eventMgr removeEventForRequest:request]) {

@@ -46,7 +46,7 @@ NSString *const UniqueEventProfileProfileAttributeUnique = @"unique";
     for (int i = 0; i < [count intValue]; i++) {
         DConnectMessage *event = [DConnectMessage message];
         [event setString:[request sessionKey] forKey:DConnectMessageSessionKey];
-        [event setString:[request deviceId] forKey:DConnectMessageDeviceId];
+        [event setString:[request serviceId] forKey:DConnectMessageServiceId];
         
         NSString *attribute = [request attribute];
         if ([attribute isEqualToString:UniqueEventProfileProfileAttributeUnique]) {
@@ -57,7 +57,7 @@ NSString *const UniqueEventProfileProfileAttributeUnique = @"unique";
             [event setString:DConnectNetworkServiceDiscoveryProfileAttrOnServiceChange forKey:DConnectMessageAttribute];
             
             DConnectMessage *networkService = [DConnectMessage message];
-            [DConnectNetworkServiceDiscoveryProfile setId:TDPDeviceId target:networkService];
+            [DConnectNetworkServiceDiscoveryProfile setId:TDPServiceId target:networkService];
             [DConnectNetworkServiceDiscoveryProfile setName:@"Test Success Device" target:networkService];
             [DConnectNetworkServiceDiscoveryProfile setType:@"TEST" target:networkService];
             [DConnectNetworkServiceDiscoveryProfile setState:YES target:networkService];

@@ -18,7 +18,7 @@
 	if (error) {
 		if ([error code] == 403) {
 			// 端末が見つからない
-			[response setErrorToNotFoundDevice];
+			[response setErrorToNotFoundService];
 		} else {
 			// 不明なエラー
 			[response setErrorToUnknown];
@@ -75,12 +75,12 @@
 + (void)sendMessageWithProvider:(id)provider
 						profile:(NSString *)profile
 					  attribute:(NSString *)attribute
-					   deviceID:(NSString*)deviceID
+					   serviceID:(NSString*)serviceID
 				messageCallback:(void(^)(DConnectMessage *eventMsg))messageCallback
 				 deleteCallback:(void(^)())deleteCallback
 {
 	DConnectEventManager *mgr = [DConnectEventManager sharedManagerForClass:[DPPebbleDevicePlugin class]];
-	NSArray *events  = [mgr eventListForDeviceId:deviceID
+	NSArray *events  = [mgr eventListForServiceId:serviceID
 										 profile:profile
 									   attribute:attribute];
 	if (events == 0) {

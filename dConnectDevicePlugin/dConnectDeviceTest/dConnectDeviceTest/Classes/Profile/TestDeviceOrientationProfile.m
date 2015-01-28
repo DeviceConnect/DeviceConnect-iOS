@@ -28,15 +28,15 @@
 #pragma mark Event Registration
 
 - (BOOL) profile:(DConnectDeviceOrientationProfile *)profile didReceivePutOnDeviceOrientationRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response deviceId:(NSString *)deviceId sessionKey:(NSString *)sessionKey
+        response:(DConnectResponseMessage *)response serviceId:(NSString *)serviceId sessionKey:(NSString *)sessionKey
 {
     
-    CheckDIDAndSK(response, deviceId, sessionKey) {
+    CheckDIDAndSK(response, serviceId, sessionKey) {
         response.result = DConnectMessageResultTypeOk;
         
         DConnectMessage *event = [DConnectMessage message];
         [event setString:sessionKey forKey:DConnectMessageSessionKey];
-        [event setString:deviceId forKey:DConnectMessageDeviceId];
+        [event setString:serviceId forKey:DConnectMessageServiceId];
         [event setString:self.profileName forKey:DConnectMessageProfile];
         [event setString:DConnectDeviceOrientationProfileName
                   forKey:DConnectMessageAttribute];
@@ -74,10 +74,10 @@
 #pragma mark Event Unregistration
 
 - (BOOL) profile:(DConnectDeviceOrientationProfile *)profile didReceiveDeleteOnDeviceOrientationRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response deviceId:(NSString *)deviceId sessionKey:(NSString *)sessionKey
+        response:(DConnectResponseMessage *)response serviceId:(NSString *)serviceId sessionKey:(NSString *)sessionKey
 {
     
-    CheckDIDAndSK(response, deviceId, sessionKey) {
+    CheckDIDAndSK(response, serviceId, sessionKey) {
         response.result = DConnectMessageResultTypeOk;
     }
     

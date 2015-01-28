@@ -15,8 +15,8 @@
 @interface DConnectAuthData : NSObject
 /*! @brief AuthDataのユニークID。 */
 @property (nonatomic) int id;
-/*! @brief デバイスID。 */
-@property (nonatomic) NSString *deviceId;
+/*! @brief サービスID。 */
+@property (nonatomic) NSString *serviceId;
 /*! @brief クライアントID。 */
 @property (nonatomic) NSString *clientId;
 /*! @brief クライアントシークレット。 */
@@ -37,17 +37,17 @@
 /*!
  @brief AuthDataをDBに格納する。
  
- @param[in] deviceId デバイスID
+ @param[in] serviceId サービスID
  @param[in] clientId クライアントID
  @param[in] clientSecret クライアントシークレット
  
  @retval YES DBに保存成功した場合
  @retval NO DBに保存失敗した場合
  */
-- (BOOL)addAuthDataWithDeviceId:(NSString *)deviceId clientId:(NSString *)clientId clientSecret:(NSString *)clientSecret;
+- (BOOL)addAuthDataWithServiceId:(NSString *)serviceId clientId:(NSString *)clientId clientSecret:(NSString *)clientSecret;
 
-- (DConnectAuthData *)getAuthDataByDeviceId:(NSString *)deviceId;
-- (BOOL)deleteAuthDataByDeviceId:(NSString *)deviceId;
+- (DConnectAuthData *)getAuthDataByServiceId:(NSString *)serviceId;
+- (BOOL)deleteAuthDataByServiceId:(NSString *)serviceId;
 
 - (BOOL)addAccessToken:(NSString *)accessToken withAuthData:(DConnectAuthData *)data;
 - (NSString *)getAccessTokenByAuthData:(DConnectAuthData *)data;

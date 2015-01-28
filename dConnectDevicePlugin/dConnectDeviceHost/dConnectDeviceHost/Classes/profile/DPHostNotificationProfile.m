@@ -23,7 +23,7 @@ typedef NS_ENUM(NSUInteger, NotificationIndex) {
     NotificationIndexTag,       ///< tag: 任意タグ文字列（カンマ区切りで任意個数指定）
     NotificationIndexIcon,      ///< icon: 画像データ
     NotificationIndexNotifiation, ///< Notification
-    NotificationIndexDeviceId,  ///< deviceId
+    NotificationIndexServiceId,  ///< serviceId
 };
 
 @interface DPHostNotificationProfile () {
@@ -39,21 +39,21 @@ typedef NS_ENUM(NSUInteger, NotificationIndex) {
 /*!
  OnClickイベントメッセージを送信する
  @param notificationId イベントが発生した通知の通知ID
- @param deviceId デバイスID
+ @param serviceId サービスID
  */
-- (void) sendOnClickEventWithNotificaitonId:(NSString *)notificationId deviceId:(NSString *)deviceId;
+- (void) sendOnClickEventWithNotificaitonId:(NSString *)notificationId serviceId:(NSString *)serviceId;
 /*!
  OnShowイベントメッセージを送信する
  @param notificationId イベントが発生した通知の通知ID
- @param deviceId デバイスID
+ @param serviceId サービスID
  */
-- (void) sendOnShowEventWithNotificaitonId:(NSString *)notificationId deviceId:(NSString *)deviceId;
+- (void) sendOnShowEventWithNotificaitonId:(NSString *)notificationId serviceId:(NSString *)serviceId;
 /*!
  OnCloseイベントメッセージを送信する
  @param notificationId イベントが発生した通知の通知ID
- @param deviceId デバイスID
+ @param serviceId サービスID
  */
-- (void) sendOnCloseEventWithNotificaitonId:(NSString *)notificationId deviceId:(NSString *)deviceId;
+- (void) sendOnCloseEventWithNotificaitonId:(NSString *)notificationId serviceId:(NSString *)serviceId;
 
 @end
 
@@ -88,7 +88,7 @@ typedef NS_ENUM(NSUInteger, NotificationIndex) {
 -(void)didReceiveLocalNotification:(NSNotification*)notification {
     NSDictionary *userInfo = [notification userInfo];
     if (userInfo) {
-        [self sendOnClickEventWithNotificaitonId:userInfo[@"id"] deviceId:userInfo[@"deviceId"]];
+        [self sendOnClickEventWithNotificaitonId:userInfo[@"id"] serviceId:userInfo[@"serviceId"]];
     }
 }
 
@@ -98,10 +98,10 @@ typedef NS_ENUM(NSUInteger, NotificationIndex) {
 
 
 
-- (void) sendOnClickEventWithNotificaitonId:(NSString *)notificationId deviceId:(NSString *)deviceId
+- (void) sendOnClickEventWithNotificaitonId:(NSString *)notificationId serviceId:(NSString *)serviceId
 {
     // イベントの取得
-    NSArray *evts = [_eventMgr eventListForDeviceId:NetworkDiscoveryDeviceId
+    NSArray *evts = [_eventMgr eventListForServiceId:NetworkDiscoveryServiceId
                                             profile:DConnectNotificationProfileName
                                           attribute:DConnectNotificationProfileAttrOnClick];
     // イベント送信
@@ -113,10 +113,10 @@ typedef NS_ENUM(NSUInteger, NotificationIndex) {
     }
 }
 
-- (void) sendOnShowEventWithNotificaitonId:(NSString *)notificationId deviceId:(NSString *)deviceId
+- (void) sendOnShowEventWithNotificaitonId:(NSString *)notificationId serviceId:(NSString *)serviceId
 {
     // イベントの取得
-    NSArray *evts = [_eventMgr eventListForDeviceId:NetworkDiscoveryDeviceId
+    NSArray *evts = [_eventMgr eventListForServiceId:NetworkDiscoveryServiceId
                                             profile:DConnectNotificationProfileName
                                           attribute:DConnectNotificationProfileAttrOnShow];
     // イベント送信
@@ -128,10 +128,10 @@ typedef NS_ENUM(NSUInteger, NotificationIndex) {
     }
 }
 
-- (void) sendOnCloseEventWithNotificaitonId:(NSString *)notificationId deviceId:(NSString *)deviceId
+- (void) sendOnCloseEventWithNotificaitonId:(NSString *)notificationId serviceId:(NSString *)serviceId
 {
     // イベントの取得
-    NSArray *evts = [_eventMgr eventListForDeviceId:NetworkDiscoveryDeviceId
+    NSArray *evts = [_eventMgr eventListForServiceId:NetworkDiscoveryServiceId
                                             profile:DConnectNotificationProfileName
                                           attribute:DConnectNotificationProfileAttrOnClose];
     // イベント送信
@@ -148,7 +148,7 @@ typedef NS_ENUM(NSUInteger, NotificationIndex) {
 - (BOOL)            profile:(DConnectNotificationProfile *)profile
 didReceivePostNotifyRequest:(DConnectRequestMessage *)request
                    response:(DConnectResponseMessage *)response
-                   deviceId:(NSString *)deviceId
+                   serviceId:(NSString *)serviceId
                        type:(NSNumber *)type
                         dir:(NSString *)dir
                        lang:(NSString *)lang
@@ -190,7 +190,7 @@ didReceivePostNotifyRequest:(DConnectRequestMessage *)request
             [response setErrorToInvalidRequestParameterWithMessage:@"Not support type"];
             return YES;
     }
-    notification = [self scheduleWithAlertBody:[status stringByAppendingString:body] userInfo:@{@"id":notificationId,@"deviceId":deviceId}];
+    notification = [self scheduleWithAlertBody:[status stringByAppendingString:body] userInfo:@{@"id":notificationId,@"serviceId":serviceId}];
     
     // 通知情報を生成し、notificationInfoDictにて管理
     NSMutableArray *notificationInfo =
@@ -201,10 +201,10 @@ didReceivePostNotifyRequest:(DConnectRequestMessage *)request
       tag  ? tag  : [NSNull null],
       icon ? icon : [NSNull null],
       notification,
-      deviceId].mutableCopy;
+      serviceId].mutableCopy;
     _notificationInfoDict[notificationId] = notificationInfo;
     [self sendOnShowEventWithNotificaitonId:notificationId
-                                   deviceId:_notificationInfoDict[notificationId][NotificationIndexDeviceId]];
+                                   serviceId:_notificationInfoDict[notificationId][NotificationIndexServiceId]];
     [response setString:notificationId forKey:DConnectNotificationProfileParamNotificationId];
     [response setResult:DConnectMessageResultTypeOk];
 
@@ -217,7 +217,7 @@ didReceivePostNotifyRequest:(DConnectRequestMessage *)request
 - (BOOL)            profile:(DConnectNotificationProfile *)profile
 didReceivePutOnClickRequest:(DConnectRequestMessage *)request
                    response:(DConnectResponseMessage *)response
-                   deviceId:(NSString *)deviceId
+                   serviceId:(NSString *)serviceId
                  sessionKey:(NSString *)sessionKey
 {
     switch ([_eventMgr addEventForRequest:request]) {
@@ -239,7 +239,7 @@ didReceivePutOnClickRequest:(DConnectRequestMessage *)request
 - (BOOL)           profile:(DConnectNotificationProfile *)profile
 didReceivePutOnShowRequest:(DConnectRequestMessage *)request
                   response:(DConnectResponseMessage *)response
-                  deviceId:(NSString *)deviceId
+                  serviceId:(NSString *)serviceId
                 sessionKey:(NSString *)sessionKey
 {
     switch ([_eventMgr addEventForRequest:request]) {
@@ -261,7 +261,7 @@ didReceivePutOnShowRequest:(DConnectRequestMessage *)request
 - (BOOL)            profile:(DConnectNotificationProfile *)profile
 didReceivePutOnCloseRequest:(DConnectRequestMessage *)request
                    response:(DConnectResponseMessage *)response
-                   deviceId:(NSString *)deviceId
+                   serviceId:(NSString *)serviceId
                  sessionKey:(NSString *)sessionKey
 {
     switch ([_eventMgr addEventForRequest:request]) {
@@ -285,7 +285,7 @@ didReceivePutOnCloseRequest:(DConnectRequestMessage *)request
 - (BOOL)              profile:(DConnectNotificationProfile *)profile
 didReceiveDeleteNotifyRequest:(DConnectRequestMessage *)request
                      response:(DConnectResponseMessage *)response
-                     deviceId:(NSString *)deviceId
+                     serviceId:(NSString *)serviceId
                notificationId:(NSString *)notificationId
 {
     if (!notificationId) {
@@ -300,7 +300,7 @@ didReceiveDeleteNotifyRequest:(DConnectRequestMessage *)request
 
     UILocalNotification *notification =  _notificationInfoDict[notificationId][NotificationIndexNotifiation];
     [[UIApplication sharedApplication] cancelLocalNotification:notification];
-    [self sendOnCloseEventWithNotificaitonId:notificationId deviceId:deviceId];
+    [self sendOnCloseEventWithNotificaitonId:notificationId serviceId:serviceId];
     [_notificationInfoDict removeObjectForKey:notificationId];
     [response setResult:DConnectMessageResultTypeOk];
     
@@ -311,7 +311,7 @@ didReceiveDeleteNotifyRequest:(DConnectRequestMessage *)request
 
 - (BOOL)               profile:(DConnectNotificationProfile *)profile
 didReceiveDeleteOnClickRequest:(DConnectRequestMessage *)request
-                      response:(DConnectResponseMessage *)response deviceId:(NSString *)deviceId
+                      response:(DConnectResponseMessage *)response serviceId:(NSString *)serviceId
                     sessionKey:(NSString *)sessionKey
 {
     switch ([_eventMgr removeEventForRequest:request]) {
@@ -333,7 +333,7 @@ didReceiveDeleteOnClickRequest:(DConnectRequestMessage *)request
 - (BOOL)              profile:(DConnectNotificationProfile *)profile
 didReceiveDeleteOnShowRequest:(DConnectRequestMessage *)request
                      response:(DConnectResponseMessage *)response
-                     deviceId:(NSString *)deviceId
+                     serviceId:(NSString *)serviceId
                    sessionKey:(NSString *)sessionKey
 {
     switch ([_eventMgr removeEventForRequest:request]) {
@@ -355,7 +355,7 @@ didReceiveDeleteOnShowRequest:(DConnectRequestMessage *)request
 - (BOOL)               profile:(DConnectNotificationProfile *)profile
 didReceiveDeleteOnCloseRequest:(DConnectRequestMessage *)request
                       response:(DConnectResponseMessage *)response
-                      deviceId:(NSString *)deviceId
+                      serviceId:(NSString *)serviceId
                     sessionKey:(NSString *)sessionKey
 {
     switch ([_eventMgr removeEventForRequest:request]) {

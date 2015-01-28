@@ -49,7 +49,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: GET
- * Path: /system/device?deviceid=xxxx
+ * Path: /system/device?serviceId=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -59,7 +59,7 @@
  */
 - (void) testHttpNormalSystemDeviceGet
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/system/device?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/system/device?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
     

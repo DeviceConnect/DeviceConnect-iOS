@@ -35,7 +35,7 @@
 - (BOOL)            profile:(DConnectFileProfile *)profile
 didReceiveGetReceiveRequest:(DConnectRequestMessage *)request
                    response:(DConnectResponseMessage *)response
-                   deviceId:(NSString *)deviceId
+                   serviceId:(NSString *)serviceId
                        path:(NSString *)path
 {
     if (!path || path.length == 0) {
@@ -72,7 +72,7 @@ didReceiveGetReceiveRequest:(DConnectRequestMessage *)request
 - (BOOL)         profile:(DConnectFileProfile *)profile
 didReceiveGetListRequest:(DConnectRequestMessage *)request
                 response:(DConnectResponseMessage *)response
-                deviceId:(NSString *)deviceId
+                serviceId:(NSString *)serviceId
                     path:(NSString *)path
                 mimeType:(NSString *)mimeType
                    order:(NSArray *)order
@@ -284,7 +284,7 @@ didReceiveGetListRequest:(DConnectRequestMessage *)request
 - (BOOL)          profile:(DConnectFileProfile *)profile
 didReceivePostSendRequest:(DConnectRequestMessage *)request
                  response:(DConnectResponseMessage *)response
-                 deviceId:(NSString *)deviceId
+                 serviceId:(NSString *)serviceId
                      path:(NSString *)path
                  mimeType:(NSString *)mimeType
                      data:(NSData *)data
@@ -327,7 +327,7 @@ didReceivePostSendRequest:(DConnectRequestMessage *)request
 - (BOOL)           profile:(DConnectFileProfile *)profile
 didReceivePostMkdirRequest:(DConnectRequestMessage *)request
                   response:(DConnectResponseMessage *)response
-                  deviceId:(NSString *)deviceId
+                  serviceId:(NSString *)serviceId
                       path:(NSString *)path
 {
     if (!path) {
@@ -363,7 +363,7 @@ didReceivePostMkdirRequest:(DConnectRequestMessage *)request
 - (BOOL)              profile:(DConnectFileProfile *)profile
 didReceiveDeleteRemoveRequest:(DConnectRequestMessage *)request
                      response:(DConnectResponseMessage *)response
-                     deviceId:(NSString *)deviceId
+                     serviceId:(NSString *)serviceId
                          path:(NSString *)path
 {
     if (!path || path.length == 0) {
@@ -401,7 +401,7 @@ didReceiveDeleteRemoveRequest:(DConnectRequestMessage *)request
 - (BOOL)             profile:(DConnectFileProfile *)profile
 didReceiveDeleteRmdirRequest:(DConnectRequestMessage *)request
                     response:(DConnectResponseMessage *)response
-                    deviceId:(NSString *)deviceId
+                    serviceId:(NSString *)serviceId
                         path:(NSString *)path
                        force:(BOOL)force
 {

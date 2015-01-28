@@ -52,25 +52,25 @@ NSString *const DConnectFileDescriptorProfileParamPath = @"path";
     NSString *attribute = [request attribute];
     if (attribute) {
         
-        NSString *deviceId = [request deviceId];
+        NSString *serviceId = [request serviceId];
         NSString *path = [DConnectFileDescriptorProfile pathFromRequest:request];
         
         if ([attribute isEqualToString:DConnectFileDescriptorProfileAttrOpen]) {
-            if ([self hasMethod:@selector(profile:didReceiveGetOpenRequest:response:deviceId:path:flag:)
+            if ([self hasMethod:@selector(profile:didReceiveGetOpenRequest:response:serviceId:path:flag:)
                        response:response])
             {
                 NSString *flag = [DConnectFileDescriptorProfile flagFromRequest:request];
                 send = [_delegate profile:self didReceiveGetOpenRequest:request response:response
-                                 deviceId:deviceId path:path flag:flag];
+                                 serviceId:serviceId path:path flag:flag];
             }
         } else if ([attribute isEqualToString:DConnectFileDescriptorProfileAttrRead]) {
-            if ([self hasMethod:@selector(profile:didReceiveGetReadRequest:response:deviceId:path:length:position:)
+            if ([self hasMethod:@selector(profile:didReceiveGetReadRequest:response:serviceId:path:length:position:)
                        response:response])
             {
                 NSNumber *length = [DConnectFileDescriptorProfile lengthFromRequest:request];
                 NSNumber *position = [DConnectFileDescriptorProfile positionFromRequest:request];
                 send = [_delegate profile:self didReceiveGetReadRequest:request response:response
-                                 deviceId:deviceId path:path length:length position:position];
+                                 serviceId:serviceId path:path length:length position:position];
             }
         } else {
             [response setErrorToUnknownAttribute];
@@ -94,35 +94,35 @@ NSString *const DConnectFileDescriptorProfileParamPath = @"path";
     NSString *attribute = [request attribute];
     if (attribute) {
         
-        NSString *deviceId = [request deviceId];
+        NSString *serviceId = [request serviceId];
         NSString *path = [DConnectFileDescriptorProfile pathFromRequest:request];
         
         if ([attribute isEqualToString:DConnectFileDescriptorProfileAttrClose]) {
             
-            if ([self hasMethod:@selector(profile:didReceivePutCloseRequest:response:deviceId:path:)
+            if ([self hasMethod:@selector(profile:didReceivePutCloseRequest:response:serviceId:path:)
                        response:response])
             {
                 send = [_delegate profile:self didReceivePutCloseRequest:request response:response
-                                 deviceId:deviceId path:path];
+                                 serviceId:serviceId path:path];
             }
         } else if ([attribute isEqualToString:DConnectFileDescriptorProfileAttrWrite]) {
-            if ([self hasMethod:@selector(profile:didReceivePutWriteRequest:response:deviceId:path:media:position:)
+            if ([self hasMethod:@selector(profile:didReceivePutWriteRequest:response:serviceId:path:media:position:)
                        response:response])
             {
                 NSData *media = [DConnectFileDescriptorProfile mediaFromRequest:request];
                 NSNumber *position = [DConnectFileDescriptorProfile positionFromRequest:request];
                 
                 send = [_delegate profile:self didReceivePutWriteRequest:request response:response
-                                 deviceId:deviceId path:path media:media position:position];
+                                 serviceId:serviceId path:path media:media position:position];
             }
         } else if ([attribute isEqualToString:DConnectFileDescriptorProfileAttrOnWatchFile]) {
             
-            if ([self hasMethod:@selector(profile:didReceivePutOnWatchFileRequest:response:deviceId:sessionKey:)
+            if ([self hasMethod:@selector(profile:didReceivePutOnWatchFileRequest:response:serviceId:sessionKey:)
                        response:response])
             {
                 NSString *sessionKey = [request sessionKey];
                 send = [_delegate profile:self didReceivePutOnWatchFileRequest:request response:response
-                                 deviceId:deviceId sessionKey:sessionKey];
+                                 serviceId:serviceId sessionKey:sessionKey];
             }
         } else {
             [response setErrorToUnknownAttribute];
@@ -145,13 +145,13 @@ NSString *const DConnectFileDescriptorProfileParamPath = @"path";
     
     if ([DConnectFileDescriptorProfileAttrOnWatchFile isEqualToString:attribute]) {
         
-        if ([self hasMethod:@selector(profile:didReceiveDeleteOnWatchFileRequest:response:deviceId:sessionKey:)
+        if ([self hasMethod:@selector(profile:didReceiveDeleteOnWatchFileRequest:response:serviceId:sessionKey:)
                    response:response])
         {
-            NSString *deviceId = [request deviceId];
+            NSString *serviceId = [request serviceId];
             NSString *sessionKey = [request sessionKey];
             send = [_delegate profile:self didReceiveDeleteOnWatchFileRequest:request response:response
-                             deviceId:deviceId sessionKey:sessionKey];
+                             serviceId:serviceId sessionKey:sessionKey];
         }
     } else {
         [response setErrorToUnknownAttribute];

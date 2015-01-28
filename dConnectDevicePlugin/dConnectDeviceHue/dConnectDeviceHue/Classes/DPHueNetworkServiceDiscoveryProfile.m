@@ -32,12 +32,12 @@
     DConnectArray *services = [DConnectArray array];
     DConnectMessage *service = nil;
     if (bridgesFound.count > 0) {
-        NSString * deviceId = @"";
+        NSString * serviceId = @"";
         for (id key in [bridgesFound keyEnumerator]) {
-            deviceId = [NSString stringWithFormat:@"%@_%@",[bridgesFound valueForKey:key],key];
+            serviceId = [NSString stringWithFormat:@"%@_%@",[bridgesFound valueForKey:key],key];
             service = [DConnectMessage new];
             [DConnectNetworkServiceDiscoveryProfile
-             setId:deviceId
+             setId:serviceId
              target:service];
             
             [DConnectNetworkServiceDiscoveryProfile

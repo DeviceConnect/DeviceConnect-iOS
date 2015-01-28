@@ -35,10 +35,10 @@
 //Light GET ライトのリスト取得
 - (BOOL) profile:(DCMLightProfile *)profile didReceiveGetLightRequest:(DConnectRequestMessage *)request
         response:(DConnectResponseMessage *)response
-        deviceId:(NSString *)deviceId
+        serviceId:(NSString *)serviceId
 {
     //Bridge Status Update
-    [self initHueSdk:deviceId];
+    [self initHueSdk:serviceId];
     __weak typeof(self) _self = self;
     
     _hueStatusBlock = ^(BridgeConnectState state){
@@ -72,7 +72,7 @@
 //Light Post 点灯
 - (BOOL) profile:(DCMLightProfile *)profile
     didReceivePostLightRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response deviceId:(NSString *)deviceId
+        response:(DConnectResponseMessage *)response serviceId:(NSString *)serviceId
          lightId:(NSString*) lightId
       brightness:(double)brightness
            color:(NSString*) color
@@ -92,7 +92,7 @@
 - (BOOL) profile:(DCMLightProfile *)profile
 didReceiveDeleteLightRequest:(DConnectRequestMessage *)request
         response:(DConnectResponseMessage *)response
-        deviceId:(NSString *)deviceId
+        serviceId:(NSString *)serviceId
          lightId:(NSString*) lightId
 {
     return [self turnOnOffHueLightWithResponse:response lightId:lightId isOn:NO brightness:0 color:nil];
@@ -105,7 +105,7 @@ didReceiveDeleteLightRequest:(DConnectRequestMessage *)request
 //Light Put 名前変更
 - (BOOL) profile:(DCMLightProfile *)profile didReceivePutLightRequest:(DConnectRequestMessage *)request
         response:(DConnectResponseMessage *)response
-        deviceId:(NSString *)deviceId
+        serviceId:(NSString *)serviceId
          lightId:(NSString*) lightId
             name:(NSString *)name
       brightness:(double)brightness
@@ -137,9 +137,9 @@ didReceiveDeleteLightRequest:(DConnectRequestMessage *)request
 - (BOOL)                   profile:(DCMLightProfile *)profile
     didReceiveGetLightGroupRequest:(DConnectRequestMessage *)request
                           response:(DConnectResponseMessage *)response
-                          deviceId:(NSString *)deviceId
+                          serviceId:(NSString *)serviceId
 {
-    [self initHueSdk:deviceId];
+    [self initHueSdk:serviceId];
     __weak typeof(self) _self = self;
     _hueStatusBlock = ^(BridgeConnectState state){
         if (state != STATE_CONNECT) {
@@ -195,7 +195,7 @@ didReceiveDeleteLightRequest:(DConnectRequestMessage *)request
 //Light Group Post ライトグループ点灯
 - (BOOL) profile:(DCMLightProfile *)profile didReceivePostLightGroupRequest:(DConnectRequestMessage *)request
         response:(DConnectResponseMessage *)response
-        deviceId:(NSString *)deviceId
+        serviceId:(NSString *)serviceId
          groupId:(NSString*)groupId
       brightness:(double)brightness
            color:(NSString*)color
@@ -216,7 +216,7 @@ didReceiveDeleteLightRequest:(DConnectRequestMessage *)request
 //Light Group Delete ライトグループ消灯
 - (BOOL) profile:(DCMLightProfile *)profile didReceiveDeleteLightGroupRequest:(DConnectRequestMessage *)request
         response:(DConnectResponseMessage *)response
-        deviceId:(NSString *)deviceId
+        serviceId:(NSString *)serviceId
          groupId:(NSString*)groupId
 {
     return [self turnOnOffHueLightGroupWithResponse:response groupId:groupId isOn:NO brightness:0 color:nil];
@@ -225,7 +225,7 @@ didReceiveDeleteLightRequest:(DConnectRequestMessage *)request
 //Light Group Put ライトグループ名称変更
 - (BOOL) profile:(DCMLightProfile *)profile didReceivePutLightGroupRequest:(DConnectRequestMessage *)request
         response:(DConnectResponseMessage *)response
-        deviceId:(NSString *)deviceId
+        serviceId:(NSString *)serviceId
          groupId:(NSString*) groupId
             name:(NSString *)name
       brightness:(double)brightness
@@ -255,7 +255,7 @@ didReceiveDeleteLightRequest:(DConnectRequestMessage *)request
 //Light Group Post ライトグループ作成
 - (BOOL) profile:(DCMLightProfile *)profile didReceivePostLightGroupCreateRequest:(DConnectRequestMessage *)request
         response:(DConnectResponseMessage *)response
-        deviceId:(NSString *)deviceId
+        serviceId:(NSString *)serviceId
         lightIds:(NSArray*)lightIds
        groupName:(NSString*)groupName {
     BOOL result = [[DPHueManager sharedManager] createLightGroupWithLightIds:lightIds groupName:groupName completion:^(NSString* groupId) {
@@ -279,7 +279,7 @@ didReceiveDeleteLightRequest:(DConnectRequestMessage *)request
 //Light Group Delete ライトグループ削除
 - (BOOL) profile:(DCMLightProfile *)profile didReceiveDeleteLightGroupClearRequest:(DConnectRequestMessage *)request
         response:(DConnectResponseMessage *)response
-        deviceId:(NSString *)deviceId
+        serviceId:(NSString *)serviceId
          groupId:(NSString*)groupId
 {
     BOOL result = [[DPHueManager sharedManager] removeLightGroupWithWithGroupId:groupId completion:^{
@@ -294,10 +294,10 @@ didReceiveDeleteLightRequest:(DConnectRequestMessage *)request
 #pragma mark - private method
 
 //Hue SDKの初期化
-- (void)initHueSdk:(NSString*)deviceId
+- (void)initHueSdk:(NSString*)serviceId
 {
     dispatch_sync(dispatch_get_main_queue(), ^{
-        NSArray *arr = [deviceId componentsSeparatedByString:@"_"];
+        NSArray *arr = [serviceId componentsSeparatedByString:@"_"];
         if(arr.count > 1) {
             NSString * ipAdr =  [arr objectAtIndex:0];
             NSString * macAdr = [arr objectAtIndex:1];
@@ -400,13 +400,13 @@ didReceiveDeleteLightRequest:(DConnectRequestMessage *)request
     
     switch ([DPHueManager sharedManager].bridgeConnectState) {
         case STATE_INIT:
-            [response setErrorToNotFoundDeviceWithMessage:@"Not the response from the hue"];
+            [response setErrorToNotFoundServiceWithMessage:@"Not the response from the hue"];
             break;
         case STATE_NON_CONNECT:
-            [response setErrorToNotFoundDeviceWithMessage:@"Bridge not found"];
+            [response setErrorToNotFoundServiceWithMessage:@"Bridge not found"];
             break;
         case STATE_NOT_AUTHENTICATED:
-            [response setErrorToNotFoundDeviceWithMessage:@"It is not application registration, please register from the app settings screen"];
+            [response setErrorToNotFoundServiceWithMessage:@"It is not application registration, please register from the app settings screen"];
             break;
         case STATE_ERROR_NO_NAME:
             [response setErrorToInvalidRequestParameterWithMessage:@"Name after the change has not been specified"];

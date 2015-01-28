@@ -32,7 +32,7 @@ NSString *const DPIRKitUDKeySecType = @"org.deviceconnect.ios.DPIRKit.security";
 NSString *const DPIRKitUDKeyPassword = @"org.deviceconnect.ios.DPIRKit.password";
 NSString *const DPIRKitUDKeyClientKey = @"org.deviceconnect.ios.DPIRKit.client_key";
 NSString *const DPIRKitUDKeyDeviceKey = @"org.deviceconnect.ios.DPIRKit.device_key";
-NSString *const DPIRKitUDKeyDeviceId = @"org.deviceconnect.ios.DPIRKit.device_id";
+NSString *const DPIRKitUDKeyServiceId = @"org.deviceconnect.ios.DPIRKit.device_id";
 
 struct DPIRKitCRCInfo
 {
@@ -303,7 +303,7 @@ struct DPIRKitCRCInfo
 }
 
 - (void) createNewDeviceWithClientKey:(NSString *)clientKey
-                           completion:(void (^)(NSString *deviceId, NSString *deviceKey,
+                           completion:(void (^)(NSString *serviceId, NSString *deviceKey,
                                                 DPIRKitConnectionErrorCode errorCode))completion
 {
     
@@ -311,7 +311,7 @@ struct DPIRKitCRCInfo
     
     DPIR_ASYNC_S
     
-    NSString *deviceId = nil;
+    NSString *serviceId = nil;
     NSString *deviceKey = nil;
     
     NSString *param = [NSString stringWithFormat:@"clientkey=%@", clientKey];
@@ -332,18 +332,18 @@ struct DPIRKitCRCInfo
         if ([jsonObj isKindOfClass:[NSDictionary class]]) {
             NSDictionary *json = (NSDictionary *) jsonObj;
             deviceKey = json[@"devicekey"];
-            deviceId = json[@"deviceid"];
+            serviceId = json[@"deviceid"];
         }
     }
     @catch (NSException *exception) {
         deviceKey = nil;
-        deviceId = nil;
+        serviceId = nil;
     }
     
-    if (!deviceId || !deviceKey) {
+    if (!serviceId || !deviceKey) {
         completion(nil, nil, DPIRKitConnectionErrorCodeFailed);
     } else {
-        completion(deviceId, deviceKey, DPIRKitConnectionErrorCodeNone);
+        completion(serviceId, deviceKey, DPIRKitConnectionErrorCodeNone);
     }
     
     DPIR_ASYNC_E
@@ -485,7 +485,7 @@ struct DPIRKitCRCInfo
 }
 
 - (void) checkIfIRKitIsConnectedToInternetWithClientKey:(NSString *)clientKey
-                                               deviceId:(NSString *)deviceId
+                                               serviceId:(NSString *)serviceId
                                              completion:(void (^)(BOOL))completion
 {
     
@@ -493,7 +493,7 @@ struct DPIRKitCRCInfo
     
     DPIR_ASYNC_S
     
-    NSString *param = [NSString stringWithFormat:@"clientkey=%@&deviceid=%@", clientKey, deviceId];
+    NSString *param = [NSString stringWithFormat:@"clientkey=%@&deviceid=%@", clientKey, serviceId];
     
     NSURLRequest *req = [_self createPostRequestWithHost:DPIRKitInternetHost path:@"/1/door" body:param];
     NSURLResponse *res = nil;
@@ -540,7 +540,7 @@ struct DPIRKitCRCInfo
     
     DPIR_ASYNC_S
     
-    NSString *deviceId = nil;
+    NSString *serviceId = nil;
     NSString *clientKey = nil;
     
     do {
@@ -577,11 +577,11 @@ struct DPIRKitCRCInfo
             break;
         }
         
-        deviceId = [json objectForKey:@"deviceid"];
+        serviceId = [json objectForKey:@"deviceid"];
         clientKey = [json objectForKey:@"clientkey"];
     } while (NO);
     
-    completion(deviceId, clientKey);
+    completion(serviceId, clientKey);
     
     DPIR_ASYNC_E
 }

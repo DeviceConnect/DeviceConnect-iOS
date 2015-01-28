@@ -21,25 +21,25 @@
 - (void) searchDevicePlugin;
 
 /**
- * 指定されたデバイスIDのデバイスプラグインを取得する.
+ * 指定されたサービスIDのデバイスプラグインを取得する.
  *
- * ここで指定されるdeviceIdは、appendDevicePluginで作成された
+ * ここで指定されるserviceIdは、appendDevicePluginで作成された
  * [device].[deviceplugin].dconnect
- * の形のデバイスIDになる。
+ * の形のサービスIDになる。
  *
  * この関数では、[deviceplugin]の部分を抜き出して、デバイスプラグインを見つけ出す。
  *
- * 指定されたデバイスIDのデバイスプラグインが存在しない場合にはnilを返却する。
+ * 指定されたサービスIDのデバイスプラグインが存在しない場合にはnilを返却する。
  *
- * @param[in] deviceId デバイスID
+ * @param[in] serviceId サービスID
  * @return DConnectDevicePluginのインスタンス
  */
-- (DConnectDevicePlugin *) devicePluginForDeviceId:(NSString *)deviceId;
+- (DConnectDevicePlugin *) devicePluginForServiceId:(NSString *)serviceId;
 
 
 /**
  * 指定されたプラグインIDのデバイスプラグインを取得する.
- * 指定されたデバイスIDのデバイスプラグインが存在しない場合にはnilを返却する。
+ * 指定されたサービスIDのデバイスプラグインが存在しない場合にはnilを返却する。
  *
  * @param[in] pluginId プラグインID
  * @return DConnectDevicePluginのインスタンス
@@ -53,22 +53,22 @@
 - (NSArray *) devicePluginList;
 
 /**
- * デバイスIDにデバイスプラグインのIDを付加する.
+ * サービスIDにデバイスプラグインのIDを付加する.
  *
  * [device].[deviceplugin].dconnect
  *
  * @param[in] plugin プラグイン
- * @param[in] deviceId オリジナルのデバイスID
- * @return デバイスプラグインのIDが付加されたデバイスID
+ * @param[in] serviceId オリジナルのサービスID
+ * @return デバイスプラグインのIDが付加されたサービスID
  */
-- (NSString *) deviceIdByAppedingPluginIdWithDevicePlugin:(DConnectDevicePlugin *)plugin deviceId:(NSString *)deviceId;
+- (NSString *) serviceIdByAppedingPluginIdWithDevicePlugin:(DConnectDevicePlugin *)plugin serviceId:(NSString *)serviceId;
 
 /**
- * デバイスIDからデバイスプラグインのIDを削除する.
- * @param[in] deviceId デバイスプラグインのIDが付加されたデバイスID
+ * サービスIDからデバイスプラグインのIDを削除する.
+ * @param[in] serviceId デバイスプラグインのIDが付加されたサービスID
  * @param[in] plugin プラグイン
- * @return オリジナルのデバイスID
+ * @return オリジナルのサービスID
  */
-- (NSString *) spliteDeviceId:(NSString *)deviceId byDevicePlugin:(DConnectDevicePlugin *)plugin;
+- (NSString *) spliteServiceId:(NSString *)serviceId byDevicePlugin:(DConnectDevicePlugin *)plugin;
 
 @end

@@ -76,7 +76,7 @@
     [DConnectDeviceOrientationProfile setInterval:interval target:message];
     
     DConnectEventManager *mgr = [DConnectEventManager sharedManagerForClass:[DPSpheroDevicePlugin class]];
-    NSArray *events  = [mgr eventListForDeviceId:[DPSpheroManager sharedManager].currentDeviceID profile:DConnectDeviceOrientationProfileName attribute:DConnectDeviceOrientationProfileAttrOnDeviceOrientation];
+    NSArray *events  = [mgr eventListForServiceId:[DPSpheroManager sharedManager].currentServiceID profile:DConnectDeviceOrientationProfileName attribute:DConnectDeviceOrientationProfileAttrOnDeviceOrientation];
     if (events == 0) {
         [[DPSpheroManager sharedManager] stopSensorOrientation];
     }
@@ -93,7 +93,7 @@
 
 // Orientationのイベント登録
 - (BOOL) profile:(DConnectDeviceOrientationProfile *)profile didReceivePutOnDeviceOrientationRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response deviceId:(NSString *)deviceId sessionKey:(NSString *)sessionKey
+        response:(DConnectResponseMessage *)response serviceId:(NSString *)serviceId sessionKey:(NSString *)sessionKey
 {
     // 接続確認
     CONNECT_CHECK();
@@ -106,7 +106,7 @@
 
 // Orientationのイベント解除
 - (BOOL) profile:(DConnectDeviceOrientationProfile *)profile didReceiveDeleteOnDeviceOrientationRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response deviceId:(NSString *)deviceId sessionKey:(NSString *)sessionKey
+        response:(DConnectResponseMessage *)response serviceId:(NSString *)serviceId sessionKey:(NSString *)sessionKey
 {
     // 接続確認
     CONNECT_CHECK();

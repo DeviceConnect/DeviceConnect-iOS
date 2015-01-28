@@ -77,7 +77,7 @@ static const double MotionDeviceIntervalMilliSec = 100;
 - (void) sendOnDeviceOrientationEventWithMotion:(CMDeviceMotion *)motion
 {
     // イベントの取得
-    NSArray *evts = [_eventMgr eventListForDeviceId:NetworkDiscoveryDeviceId
+    NSArray *evts = [_eventMgr eventListForServiceId:NetworkDiscoveryServiceId
                                             profile:DConnectDeviceOrientationProfileName
                                           attribute:DConnectDeviceOrientationProfileAttrOnDeviceOrientation];
     // イベント送信
@@ -121,10 +121,10 @@ static const double MotionDeviceIntervalMilliSec = 100;
 - (BOOL)                        profile:(DConnectDeviceOrientationProfile *)profile
 didReceivePutOnDeviceOrientationRequest:(DConnectRequestMessage *)request
                                response:(DConnectResponseMessage *)response
-                               deviceId:(NSString *)deviceId
+                               serviceId:(NSString *)serviceId
                              sessionKey:(NSString *)sessionKey
 {
-    NSArray *evts = [_eventMgr eventListForDeviceId:deviceId
+    NSArray *evts = [_eventMgr eventListForServiceId:serviceId
                                             profile:DConnectDeviceOrientationProfileName
                                           attribute:DConnectDeviceOrientationProfileAttrOnDeviceOrientation];
     if (evts.count == 0) {
@@ -155,7 +155,7 @@ didReceivePutOnDeviceOrientationRequest:(DConnectRequestMessage *)request
 - (BOOL)                           profile:(DConnectDeviceOrientationProfile *)profile
 didReceiveDeleteOnDeviceOrientationRequest:(DConnectRequestMessage *)request
                                   response:(DConnectResponseMessage *)response
-                                  deviceId:(NSString *)deviceId
+                                  serviceId:(NSString *)serviceId
                                 sessionKey:(NSString *)sessionKey
 {
     switch ([_eventMgr removeEventForRequest:request]) {
@@ -171,7 +171,7 @@ didReceiveDeleteOnDeviceOrientationRequest:(DConnectRequestMessage *)request
             break;
     }
     
-    NSArray *evts = [_eventMgr eventListForDeviceId:deviceId
+    NSArray *evts = [_eventMgr eventListForServiceId:serviceId
                                             profile:DConnectDeviceOrientationProfileName
                                           attribute:DConnectDeviceOrientationProfileAttrOnDeviceOrientation];
     if (evts.count == 0) {

@@ -17,18 +17,18 @@
     
     if (self) {
         self.packageName = packageName;
-        self.deviceId = nil;
+        self.serviceId = nil;
     }
     
     return self;
 }
 
-- (LocalOAuthPackageInfo *) initWithPackageNameDeviceId: (NSString *)packageName deviceId:(NSString *)deviceId {
+- (LocalOAuthPackageInfo *) initWithPackageNameServiceId: (NSString *)packageName serviceId:(NSString *)serviceId {
     
     self = [super init];
     
     self.packageName = packageName;
-    self.deviceId = deviceId;
+    self.serviceId = serviceId;
     
     return self;
 }
@@ -47,15 +47,15 @@
         isEqualPackageName = YES;
     }
     
-    BOOL isEqualDeviceId = NO;
-    if (cmp1.deviceId == nil && cmp2.deviceId == nil) {				/* 両方null */
-        isEqualDeviceId = YES;
-    } else if (cmp1.deviceId != nil && cmp2.deviceId != nil 		/* 両方同じ文字列 */
-               && [cmp1.deviceId isEqualToString: cmp2.deviceId]) {
-        isEqualDeviceId = YES;
+    BOOL isEqualServiceId = NO;
+    if (cmp1.serviceId == nil && cmp2.serviceId == nil) {				/* 両方null */
+        isEqualServiceId = YES;
+    } else if (cmp1.serviceId != nil && cmp2.serviceId != nil 		/* 両方同じ文字列 */
+               && [cmp1.serviceId isEqualToString: cmp2.serviceId]) {
+        isEqualServiceId = YES;
     }
     
-    if (isEqualPackageName && isEqualDeviceId) {
+    if (isEqualPackageName && isEqualServiceId) {
         return YES;
     }
     return NO;

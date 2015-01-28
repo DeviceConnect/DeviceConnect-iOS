@@ -11,7 +11,7 @@
 #import "NSString+Extension.h"
 
 NSString *const DConnectMessageAction = @"action";
-NSString *const DConnectMessageDeviceId = @"deviceId";
+NSString *const DConnectMessageServiceId = @"serviceId";
 NSString *const DConnectMessagePluginId = @"pluginId";
 NSString *const DConnectMessageProfile = @"profile";
 NSString *const DConnectMessageInterface = @"interface";

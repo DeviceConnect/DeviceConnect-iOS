@@ -32,9 +32,9 @@ NSString *const TestSystemVersion = @"1.0";
 
 - (BOOL) profile:(DConnectSystemProfile *)profile didReceiveGetDeviceRequest:(DConnectRequestMessage *)request
         response:(DConnectResponseMessage *)response
-        deviceId:(NSString *)deviceId
+        serviceId:(NSString *)serviceId
 {
-    CheckDID(response, deviceId) {
+    CheckDID(response, serviceId) {
         [DConnectSystemProfile setVersion:TestSystemVersion target:response];
         
         DConnectArray *supports = [DConnectArray array];

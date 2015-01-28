@@ -21,8 +21,8 @@
     /** グラントタイプ. */
     NSString *_grantType;
     
-    /** デバイスID(デバイスプラグイン用の場合のみ設定する). */
-    NSString *_deviceId;
+    /** サービスID(デバイスプラグイン用の場合のみ設定する). */
+    NSString *_serviceId;
     
     /** スコープ名(NSString*の配列). */
     NSArray * _scope;
@@ -50,8 +50,8 @@
     return self;
 }
 
-- (LocalOAuthConfirmAuthParamsBuilder *) deviceId: (NSString *)deviceId {
-    _deviceId = deviceId;
+- (LocalOAuthConfirmAuthParamsBuilder *) serviceId: (NSString *)serviceId {
+    _serviceId = serviceId;
     return self;
 }
 
@@ -71,7 +71,7 @@
     params.applicationName = _applicationName;
     params.clientId = _clientId;
     params.grantType = _grantType;
-    params.deviceId = _deviceId;
+    params.serviceId = _serviceId;
     params.scope = _scope;
     params.isForDevicePlugin = _isForDevicePlugin;
     return params;

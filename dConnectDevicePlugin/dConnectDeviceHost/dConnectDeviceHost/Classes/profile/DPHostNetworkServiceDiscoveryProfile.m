@@ -12,7 +12,7 @@
 
 #import "DPHostNetworkServiceDiscoveryProfile.h"
 
-NSString *const NetworkDiscoveryDeviceId = @"host";
+NSString *const NetworkDiscoveryServiceId = @"host";
 
 @implementation DPHostNetworkServiceDiscoveryProfile
 
@@ -39,7 +39,7 @@ didReceiveGetGetNetworkServicesRequest:(DConnectRequestMessage *)request
     DConnectArray *services = [DConnectArray array];
     
     DConnectMessage *service = [DConnectMessage message];
-    [DConnectNetworkServiceDiscoveryProfile setId:NetworkDiscoveryDeviceId target:service];
+    [DConnectNetworkServiceDiscoveryProfile setId:NetworkDiscoveryServiceId target:service];
     [DConnectNetworkServiceDiscoveryProfile setName:name target:service];
     [DConnectNetworkServiceDiscoveryProfile setOnline:YES target:service];
     NSString *config = [NSString stringWithFormat:@"{\"OS\":\"%@ %@\"}",
@@ -59,7 +59,7 @@ didReceiveGetGetNetworkServicesRequest:(DConnectRequestMessage *)request
 - (BOOL)                    profile:(DConnectNetworkServiceDiscoveryProfile *)profile
 didReceivePutOnServiceChangeRequest:(DConnectRequestMessage *)request
                            response:(DConnectResponseMessage *)response
-                           deviceId:(NSString *)deviceId
+                           serviceId:(NSString *)serviceId
                          sessionKey:(NSString *)sessionKey
 {
     if (!sessionKey) {
@@ -76,7 +76,7 @@ didReceivePutOnServiceChangeRequest:(DConnectRequestMessage *)request
 - (BOOL)                       profile:(DConnectNetworkServiceDiscoveryProfile *)profile
 didReceiveDeleteOnServiceChangeRequest:(DConnectRequestMessage *)request
                               response:(DConnectResponseMessage *)response
-                              deviceId:(NSString *)deviceId
+                              serviceId:(NSString *)serviceId
                             sessionKey:(NSString *)sessionKey
 {
     if (!sessionKey) {

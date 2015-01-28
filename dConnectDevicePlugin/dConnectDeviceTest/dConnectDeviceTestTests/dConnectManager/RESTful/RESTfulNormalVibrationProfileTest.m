@@ -25,7 +25,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /vibration/vibrate?deviceid=xxxx
+ * Path: /vibration/vibrate?serviceId=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -34,7 +34,7 @@
  */
 - (void) testHttpNormalVibrationVibratePost
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/vibration/vibrate?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/vibration/vibrate?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
@@ -46,7 +46,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /vibration/vibrate?deviceid=xxxx
+ * Path: /vibration/vibrate?serviceId=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -55,7 +55,7 @@
  */
 - (void) testHttpNormalNotificationNotifyDelete
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/vibration/vibrate?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/vibration/vibrate?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     

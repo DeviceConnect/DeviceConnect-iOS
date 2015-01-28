@@ -39,10 +39,10 @@
     return self;
 }
 
-- (DConnectDevicePlugin *) devicePluginForDeviceId:(NSString *)deviceId {
-    if (deviceId) {
+- (DConnectDevicePlugin *) devicePluginForServiceId:(NSString *)serviceId {
+    if (serviceId) {
         // TODO: .dconnectの部分が変化したときの処理がが必要
-        NSArray *domains = [deviceId componentsSeparatedByString:@"."];
+        NSArray *domains = [serviceId componentsSeparatedByString:@"."];
         if (domains == nil || [domains count] < 2) {
             return nil;
         } else if ([domains count] == 2) {
@@ -68,22 +68,22 @@
     return list;
 }
 
-- (NSString *) deviceIdByAppedingPluginIdWithDevicePlugin:(DConnectDevicePlugin *)plugin deviceId:(NSString *)deviceId
+- (NSString *) serviceIdByAppedingPluginIdWithDevicePlugin:(DConnectDevicePlugin *)plugin serviceId:(NSString *)serviceId
 {
-    return [NSString stringWithFormat:@"%@.%@", deviceId, [plugin pluginId]];
+    return [NSString stringWithFormat:@"%@.%@", serviceId, [plugin pluginId]];
 }
 
-- (NSString *) spliteDeviceId:(NSString *)deviceId byDevicePlugin:(DConnectDevicePlugin *)plugin {
-    if (deviceId) {
-        NSRange range = [deviceId rangeOfString:NSStringFromClass([plugin class])];
+- (NSString *) spliteServiceId:(NSString *)serviceId byDevicePlugin:(DConnectDevicePlugin *)plugin {
+    if (serviceId) {
+        NSRange range = [serviceId rangeOfString:NSStringFromClass([plugin class])];
         if (range.location != NSNotFound) {
             if (range.location == 0) {
                 return @"";
             } else {
-                return [deviceId substringToIndex:range.location - 1];
+                return [serviceId substringToIndex:range.location - 1];
             }
         } else {
-            return deviceId;
+            return serviceId;
         }
     }
     return nil;

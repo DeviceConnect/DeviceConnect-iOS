@@ -49,8 +49,8 @@
     [self setString:sessionKey forKey:DConnectMessageSessionKey];
 }
 
-- (void) setDeviceId:(NSString *)deviceId {
-    [self setString:deviceId forKey:DConnectMessageDeviceId];
+- (void) setServiceId:(NSString *)serviceId {
+    [self setString:serviceId forKey:DConnectMessageServiceId];
 }
 
 - (void) setPluginId:(NSString *)pluginId {
@@ -83,8 +83,8 @@
     return [self stringForKey:DConnectMessageSessionKey];
 }
 
-- (NSString *) deviceId {
-    return [self stringForKey:DConnectMessageDeviceId];
+- (NSString *) serviceId {
+    return [self stringForKey:DConnectMessageServiceId];
 }
 
 - (NSString *) pluginId {

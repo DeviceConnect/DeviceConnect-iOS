@@ -78,10 +78,10 @@ static const NSTimeInterval DPSemaphoreTimeout = 10.0;
 	// すぐは復帰できないので。
 	dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
 		// イベントハンドラの復帰
-		for (NSString *deviceID in _updateHandlerDict) {
-			PBWatch *watch = [self watchWithDeviceID:deviceID];
+		for (NSString *serviceID in _updateHandlerDict) {
+			PBWatch *watch = [self watchWithServiceID:serviceID];
 			if (watch) {
-				[self addHandler:watch deviceID:deviceID];
+				[self addHandler:watch serviceID:serviceID];
 			}
 		}
 	});
@@ -101,11 +101,11 @@ static const NSTimeInterval DPSemaphoreTimeout = 10.0;
 	return array;
 }
 
-// デバイスIDからPBWatchを取得
-- (PBWatch*)watchWithDeviceID:(NSString*)deviceID
+// サービスIDからPBWatchを取得
+- (PBWatch*)watchWithServiceID:(NSString*)serviceID
 {
 	for (PBWatch *watch in [[PBPebbleCentral defaultCentral] connectedWatches]) {
-		if ([watch.serialNumber isEqualToString:deviceID]) {
+		if ([watch.serialNumber isEqualToString:serviceID]) {
 			// 接続済みのもののみ
 			if (watch.isConnected) {
 				return watch;
@@ -121,7 +121,7 @@ static const NSTimeInterval DPSemaphoreTimeout = 10.0;
 #pragma mark - Battery
 
 // バッテリー情報取得
-- (void)fetchBatteryInfo:(NSString*)deviceID callback:(void(^)(float level, BOOL isCharging, NSError *error))callback
+- (void)fetchBatteryInfo:(NSString*)serviceID callback:(void(^)(float level, BOOL isCharging, NSError *error))callback
 {
 	if (!callback) return;
 	
@@ -129,7 +129,7 @@ static const NSTimeInterval DPSemaphoreTimeout = 10.0;
 	dic[@(KEY_PROFILE)] = @(PROFILE_BATTERY);
 	dic[@(KEY_ATTRIBUTE)] = @(BATTERY_ATTRIBUTE_ALL);
 	dic[@(KEY_ACTION)] = @(ACTION_GET);
-	[self sendCommand:deviceID request:dic callback:^(NSDictionary *data, NSError *error) {
+	[self sendCommand:serviceID request:dic callback:^(NSDictionary *data, NSError *error) {
 		// エラー
 		if (!data || error) {
 			callback(0, NO, error);
@@ -143,7 +143,7 @@ static const NSTimeInterval DPSemaphoreTimeout = 10.0;
 }
 
 // バッテリーレベル取得
-- (void)fetchBatteryLevel:(NSString*)deviceID callback:(void(^)(float level, NSError *error))callback
+- (void)fetchBatteryLevel:(NSString*)serviceID callback:(void(^)(float level, NSError *error))callback
 {
 	if (!callback) return;
 	
@@ -151,7 +151,7 @@ static const NSTimeInterval DPSemaphoreTimeout = 10.0;
 	dic[@(KEY_PROFILE)] = @(PROFILE_BATTERY);
 	dic[@(KEY_ATTRIBUTE)] = @(BATTERY_ATTRIBUTE_LEVEL);
 	dic[@(KEY_ACTION)] = @(ACTION_GET);
-	[self sendCommand:deviceID request:dic callback:^(NSDictionary *data, NSError *error) {
+	[self sendCommand:serviceID request:dic callback:^(NSDictionary *data, NSError *error) {
 		// エラー
 		if (!data || error) {
 			callback(0, error);
@@ -164,7 +164,7 @@ static const NSTimeInterval DPSemaphoreTimeout = 10.0;
 }
 
 // バッテリー充電ステータス取得
-- (void)fetchBatteryCharging:(NSString*)deviceID callback:(void(^)(BOOL isCharging, NSError *error))callback
+- (void)fetchBatteryCharging:(NSString*)serviceID callback:(void(^)(BOOL isCharging, NSError *error))callback
 {
 	if (!callback) return;
 	
@@ -172,7 +172,7 @@ static const NSTimeInterval DPSemaphoreTimeout = 10.0;
 	dic[@(KEY_PROFILE)] = @(PROFILE_BATTERY);
 	dic[@(KEY_ATTRIBUTE)] = @(BATTERY_ATTRIBUTE_CHARING);
 	dic[@(KEY_ACTION)] = @(ACTION_GET);
-	[self sendCommand:deviceID request:dic callback:^(NSDictionary *data, NSError *error) {
+	[self sendCommand:serviceID request:dic callback:^(NSDictionary *data, NSError *error) {
 		// エラー
 		if (!data || error) {
 			callback(NO, error);
@@ -185,7 +185,7 @@ static const NSTimeInterval DPSemaphoreTimeout = 10.0;
 }
 
 // 充電中のステータス変更イベント登録
-- (void)registChargingChangeEvent:(NSString*)deviceID callback:(void(^)(NSError *error))callback eventCallback:(void(^)(BOOL isCharging))eventCallback
+- (void)registChargingChangeEvent:(NSString*)serviceID callback:(void(^)(NSError *error))callback eventCallback:(void(^)(BOOL isCharging))eventCallback
 {
 	if (!callback || !eventCallback) return;
 	
@@ -193,7 +193,7 @@ static const NSTimeInterval DPSemaphoreTimeout = 10.0;
 	dic[@(KEY_PROFILE)] = @(PROFILE_BATTERY);
 	dic[@(KEY_ATTRIBUTE)] = @(BATTERY_ATTRIBUTE_ON_CHARGING_CHANGE);
 	dic[@(KEY_ACTION)] = @(ACTION_PUT);
-	[self sendCommand:deviceID request:dic callback:^(NSDictionary *data, NSError *error) {
+	[self sendCommand:serviceID request:dic callback:^(NSDictionary *data, NSError *error) {
 		// エラー
 		if (!data || error) {
 			callback(error);
@@ -211,7 +211,7 @@ static const NSTimeInterval DPSemaphoreTimeout = 10.0;
 }
 
 // 充電レベル変更イベント登録
-- (void)registBatteryLevelChangeEvent:(NSString*)deviceID callback:(void(^)(NSError *error))callback eventCallback:(void(^)(float level))eventCallback
+- (void)registBatteryLevelChangeEvent:(NSString*)serviceID callback:(void(^)(NSError *error))callback eventCallback:(void(^)(float level))eventCallback
 {
 	if (!callback || !eventCallback) return;
 	
@@ -219,7 +219,7 @@ static const NSTimeInterval DPSemaphoreTimeout = 10.0;
 	dic[@(KEY_PROFILE)] = @(PROFILE_BATTERY);
 	dic[@(KEY_ATTRIBUTE)] = @(BATTERY_ATTRIBUTE_ON_BATTERY_CHANGE);
 	dic[@(KEY_ACTION)] = @(ACTION_PUT);
-	[self sendCommand:deviceID request:dic callback:^(NSDictionary *data, NSError *error) {
+	[self sendCommand:serviceID request:dic callback:^(NSDictionary *data, NSError *error) {
 		// エラー
 		if (!data || error) {
 			callback(error);
@@ -237,22 +237,22 @@ static const NSTimeInterval DPSemaphoreTimeout = 10.0;
 }
 
 // 充電中のステータス変更イベント削除
-- (void)deleteChargingChangeEvent:(NSString*)deviceID callback:(void(^)(NSError *error))callback
+- (void)deleteChargingChangeEvent:(NSString*)serviceID callback:(void(^)(NSError *error))callback
 {
-	[self deleteEvent:deviceID profile:PROFILE_BATTERY attr:BATTERY_ATTRIBUTE_ON_CHARGING_CHANGE callback:callback];
+	[self deleteEvent:serviceID profile:PROFILE_BATTERY attr:BATTERY_ATTRIBUTE_ON_CHARGING_CHANGE callback:callback];
 }
 
 // 充電レベル変更イベント削除
-- (void)deleteBatteryLevelChangeEvent:(NSString*)deviceID callback:(void(^)(NSError *error))callback
+- (void)deleteBatteryLevelChangeEvent:(NSString*)serviceID callback:(void(^)(NSError *error))callback
 {
-	[self deleteEvent:deviceID profile:PROFILE_BATTERY attr:BATTERY_ATTRIBUTE_ON_BATTERY_CHANGE callback:callback];
+	[self deleteEvent:serviceID profile:PROFILE_BATTERY attr:BATTERY_ATTRIBUTE_ON_BATTERY_CHANGE callback:callback];
 }
 
 
 #pragma mark - DeviceOrientation
 
 // 傾きイベント登録
-- (void)registDeviceOrientationEvent:(NSString*)deviceID callback:(void(^)(NSError *error))callback eventCallback:(void(^)(float x, float y, float z, long long t))eventCallback
+- (void)registDeviceOrientationEvent:(NSString*)serviceID callback:(void(^)(NSError *error))callback eventCallback:(void(^)(float x, float y, float z, long long t))eventCallback
 {
 	if (!callback) return;
 	
@@ -260,7 +260,7 @@ static const NSTimeInterval DPSemaphoreTimeout = 10.0;
 	dic[@(KEY_PROFILE)] = @(PROFILE_DEVICE_ORIENTATION);
 	dic[@(KEY_ATTRIBUTE)] = @(DEVICE_ORIENTATION_ATTRIBUTE_ON_DEVICE_ORIENTATION);
 	dic[@(KEY_ACTION)] = @(ACTION_PUT);
-	[self sendCommand:deviceID request:dic callback:^(NSDictionary *data, NSError *error) {
+	[self sendCommand:serviceID request:dic callback:^(NSDictionary *data, NSError *error) {
 		// エラー
 		if (!data || error) {
 			callback(error);
@@ -286,16 +286,16 @@ static const NSTimeInterval DPSemaphoreTimeout = 10.0;
 }
 
 // 傾きイベント削除
-- (void)deleteDeviceOrientationEvent:(NSString*)deviceID callback:(void(^)(NSError *error))callback
+- (void)deleteDeviceOrientationEvent:(NSString*)serviceID callback:(void(^)(NSError *error))callback
 {
-	[self deleteEvent:deviceID profile:PROFILE_DEVICE_ORIENTATION attr:DEVICE_ORIENTATION_ATTRIBUTE_ON_DEVICE_ORIENTATION callback:callback];
+	[self deleteEvent:serviceID profile:PROFILE_DEVICE_ORIENTATION attr:DEVICE_ORIENTATION_ATTRIBUTE_ON_DEVICE_ORIENTATION callback:callback];
 }
 
 
 #pragma mark - Setting
 
 // 日時取得
-- (void)fetchDate:(NSString*)deviceID callback:(void(^)(NSString *date, NSError *error))callback
+- (void)fetchDate:(NSString*)serviceID callback:(void(^)(NSString *date, NSError *error))callback
 {
 	if (!callback) return;
 	
@@ -303,7 +303,7 @@ static const NSTimeInterval DPSemaphoreTimeout = 10.0;
 	dic[@(KEY_PROFILE)] = @(PROFILE_SETTING);
 	dic[@(KEY_ATTRIBUTE)] = @(SETTING_ATTRIBUTE_DATE);
 	dic[@(KEY_ACTION)] = @(ACTION_GET);
-	[self sendCommand:deviceID request:dic callback:^(NSDictionary *data, NSError *error) {
+	[self sendCommand:serviceID request:dic callback:^(NSDictionary *data, NSError *error) {
 		// エラー
 		if (!data || error) {
 			callback(nil, error);
@@ -318,7 +318,7 @@ static const NSTimeInterval DPSemaphoreTimeout = 10.0;
 #pragma mark - Vibration
 
 // バイブレーション開始
-- (void)startVibration:(NSString*)deviceID pattern:(NSArray *) pattern callback:(void(^)(NSError *error))callback
+- (void)startVibration:(NSString*)serviceID pattern:(NSArray *) pattern callback:(void(^)(NSError *error))callback
 {
 	if (!callback) return;
 	
@@ -333,7 +333,7 @@ static const NSTimeInterval DPSemaphoreTimeout = 10.0;
 		dic[@(KEY_PARAM_VIBRATION_LEN)] = @(pattarnData.length / 2);
 		dic[@(KEY_PARAM_VIBRATION_PATTERN)] = pattarnData;
 	}
-	[self sendCommand:deviceID request:dic callback:^(NSDictionary *data, NSError *error) {
+	[self sendCommand:serviceID request:dic callback:^(NSDictionary *data, NSError *error) {
 		callback(error);
 	}];
 }
@@ -356,7 +356,7 @@ static const NSTimeInterval DPSemaphoreTimeout = 10.0;
 }
 
 // バイブレーション停止
-- (void)stopVibration:(NSString*)deviceID callback:(void(^)(NSError *error))callback
+- (void)stopVibration:(NSString*)serviceID callback:(void(^)(NSError *error))callback
 {
 	if (!callback) return;
 	
@@ -364,7 +364,7 @@ static const NSTimeInterval DPSemaphoreTimeout = 10.0;
 	dic[@(KEY_PROFILE)] = @(PROFILE_VIBRATION);
 	dic[@(KEY_ATTRIBUTE)] = @(VIBRATION_ATTRIBUTE_VIBRATE);
 	dic[@(KEY_ACTION)] = @(ACTION_DELETE);
-	[self sendCommand:deviceID request:dic callback:^(NSDictionary *data, NSError *error) {
+	[self sendCommand:serviceID request:dic callback:^(NSDictionary *data, NSError *error) {
 		callback(error);
 	}];
 }
@@ -378,12 +378,12 @@ static const NSTimeInterval DPSemaphoreTimeout = 10.0;
 	if (!callback) return;
 	
 	for (NSArray *data in _eventCallbackDict.allKeys) {
-		NSString *deviceID = data[0];
+		NSString *serviceID = data[0];
 		NSMutableDictionary *dic = [NSMutableDictionary dictionary];
 		dic[@(KEY_PROFILE)] = @(PROFILE_SYSTEM);
 		dic[@(KEY_ATTRIBUTE)] = @(SYSTEM_ATTRIBUTE_EVENTS);
 		dic[@(KEY_ACTION)] = @(ACTION_DELETE);
-		[self sendCommand:deviceID request:dic callback:^(NSDictionary *data, NSError *error) {
+		[self sendCommand:serviceID request:dic callback:^(NSDictionary *data, NSError *error) {
 		}];
 	}
 	
@@ -401,7 +401,7 @@ static const NSTimeInterval DPSemaphoreTimeout = 10.0;
 #define BUF_SIZE 64
 
 // 画像データ送信
-- (void)sendImage:(NSString*)deviceID data:(NSData*)data callback:(void(^)(NSError *error))callback
+- (void)sendImage:(NSString*)serviceID data:(NSData*)data callback:(void(^)(NSError *error))callback
 {
 	if (!callback) return;
 	
@@ -409,7 +409,7 @@ static const NSTimeInterval DPSemaphoreTimeout = 10.0;
 	NSMutableDictionary *dic = [NSMutableDictionary dictionary];
 	dic[@(KEY_PROFILE)] = @(PROFILE_BINARY);
 	dic[@(KEY_PARAM_BINARY_LENGTH)] = @(data.length);
-	[self sendCommand:deviceID request:dic callback:^(NSDictionary *data2, NSError *error) {
+	[self sendCommand:serviceID request:dic callback:^(NSDictionary *data2, NSError *error) {
 		if (error) {
 			callback(error);
 		} else {
@@ -421,7 +421,7 @@ static const NSTimeInterval DPSemaphoreTimeout = 10.0;
 				__block NSError *err = nil;
 				for (int i = 0; i < count; i++) {
 					// 送信
-					[self sendImageBody:deviceID data:data index:i callback:^(NSError *error2) {
+					[self sendImageBody:serviceID data:data index:i callback:^(NSError *error2) {
 						err = error2;
 						dispatch_semaphore_signal(semaphore);
 					}];
@@ -440,7 +440,7 @@ static const NSTimeInterval DPSemaphoreTimeout = 10.0;
 }
 
 // 画像データ送信（中身）
-- (void)sendImageBody:(NSString*)deviceID data:(NSData *)data index:(int)index callback:(void(^)(NSError *error))callback
+- (void)sendImageBody:(NSString*)serviceID data:(NSData *)data index:(int)index callback:(void(^)(NSError *error))callback
 {
 	BOOL last = (data.length / BUF_SIZE == index);
 	
@@ -457,7 +457,7 @@ static const NSTimeInterval DPSemaphoreTimeout = 10.0;
 	request[@(KEY_PROFILE)] = @(PROFILE_BINARY);
 	request[@(KEY_PARAM_BINARY_INDEX)] = @(index);
 	request[@(KEY_PARAM_BINARY_BODY)] = send;
-	[self sendCommand:deviceID request:request callback:^(NSDictionary *data, NSError *error) {
+	[self sendCommand:serviceID request:request callback:^(NSDictionary *data, NSError *error) {
 		callback(error);
 	}];
 }
@@ -466,7 +466,7 @@ static const NSTimeInterval DPSemaphoreTimeout = 10.0;
 #pragma mark - Common
 
 // イベント削除共通
-- (void)deleteEvent:(NSString*)deviceID profile:(UInt32)profile attr:(UInt32)attr callback:(void(^)(NSError *error))callback
+- (void)deleteEvent:(NSString*)serviceID profile:(UInt32)profile attr:(UInt32)attr callback:(void(^)(NSError *error))callback
 {
 	if (!callback) return;
 	
@@ -474,10 +474,10 @@ static const NSTimeInterval DPSemaphoreTimeout = 10.0;
 	dic[@(KEY_PROFILE)] = @(profile);
 	dic[@(KEY_ATTRIBUTE)] = @(attr);
 	dic[@(KEY_ACTION)] = @(ACTION_DELETE);
-	[self sendCommand:deviceID request:dic callback:^(NSDictionary *data, NSError *error) {
+	[self sendCommand:serviceID request:dic callback:^(NSDictionary *data, NSError *error) {
 		callback(error);
 		// 保持していたBlockを解放
-		[_eventCallbackDict removeObjectForKey:@[deviceID, @(profile), @(attr)]];
+		[_eventCallbackDict removeObjectForKey:@[serviceID, @(profile), @(attr)]];
 	}];
 }
 
@@ -485,7 +485,7 @@ static const NSTimeInterval DPSemaphoreTimeout = 10.0;
 #pragma mark - Send Command
 
 // コマンド送信
-- (void)sendCommand:(NSString*)deviceID request:(NSMutableDictionary*)request callback:(void(^)(NSDictionary*, NSError*))callback
+- (void)sendCommand:(NSString*)serviceID request:(NSMutableDictionary*)request callback:(void(^)(NSDictionary*, NSError*))callback
 {
 	// 別スレッドで実行
 	dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
@@ -494,35 +494,35 @@ static const NSTimeInterval DPSemaphoreTimeout = 10.0;
 		// メインスレッドじゃないとPebbleコマンドが実行されない
 		dispatch_async(dispatch_get_main_queue(), ^{
 			// Callbackを保持（updateHandler:update:で使用する）
-			_callbackDict[deviceID] = callback;
+			_callbackDict[serviceID] = callback;
 			// Event用のCallbackを保持（Attribute毎にCallbackが変わるのでキーに追加）
 			NSNumber *action = request[@(KEY_ACTION)];
 			if ([action intValue] == ACTION_PUT) {
-				_eventCallbackDict[@[deviceID, request[@(KEY_PROFILE)], request[@(KEY_ATTRIBUTE)]]] = callback;
+				_eventCallbackDict[@[serviceID, request[@(KEY_PROFILE)], request[@(KEY_ATTRIBUTE)]]] = callback;
 			}
 
 			// コマンド実行
-			[self sendCommand:deviceID request:request retryCount:0];
+			[self sendCommand:serviceID request:request retryCount:0];
 		});
 	});
 }
 
 // コマンド送信（実装）
-- (void)sendCommand:(NSString*)deviceID request:(NSMutableDictionary*)request retryCount:(int)retryCount
+- (void)sendCommand:(NSString*)serviceID request:(NSMutableDictionary*)request retryCount:(int)retryCount
 {
-//	NSLog(@"sendCommand:%@ request:%@ retryCount:%d", deviceID, request, retryCount);
+//	NSLog(@"sendCommand:%@ request:%@ retryCount:%d", serviceID, request, retryCount);
 
 	// リクエストコードを作成して、リクエストに追加
 	NSNumber *requestCode = @(rand());
 	request[@(KEY_PARAM_REQUEST_CODE)] = requestCode;
 
-	// DeviceIDからWatch取得
-	PBWatch *watch = [self watchWithDeviceID:deviceID];
+	// ServiceIDからWatch取得
+	PBWatch *watch = [self watchWithServiceID:serviceID];
 	if (!watch) {
 		// セマフォ解除
 		dispatch_semaphore_signal(_semaphore);
 		// エラーをコールバック
-		void (^callback)(NSDictionary*, NSError*)  = _callbackDict[deviceID];
+		void (^callback)(NSDictionary*, NSError*)  = _callbackDict[serviceID];
 		if (callback) {
 			NSError *error = [NSError errorWithDomain:@"DPPebbleManager" code:403 userInfo:nil];
 			callback(nil, error);
@@ -532,8 +532,8 @@ static const NSTimeInterval DPSemaphoreTimeout = 10.0;
 	
 	// UpdateHandler登録（１つのWatchに１つだけ）
 	// フロー的に削除される事は無い（アプリがバックグラウンドに行った時は全てクリアされる）
-	if (!_updateHandlerDict[deviceID]) {
-		[self addHandler:watch deviceID:deviceID];
+	if (!_updateHandlerDict[serviceID]) {
+		[self addHandler:watch serviceID:serviceID];
 	}
 	
 	// メッセージ送信
@@ -544,13 +544,13 @@ static const NSTimeInterval DPSemaphoreTimeout = 10.0;
 				if (retryCount < DPMaxRetryCount) {
 					// 一定時間後に再度実行
 					dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(DPRetryInterval * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-						[self sendCommand:deviceID request:request retryCount:retryCount+1];
+						[self sendCommand:serviceID request:request retryCount:retryCount+1];
 					});
 				} else {
 					// セマフォ解除
 					dispatch_semaphore_signal(_semaphore);
 					// エラーをコールバック
-					void (^callback)(NSDictionary*, NSError*)  = _callbackDict[deviceID];
+					void (^callback)(NSDictionary*, NSError*)  = _callbackDict[serviceID];
 					if (callback) {
 						callback(nil, error);
 					}
@@ -562,7 +562,7 @@ static const NSTimeInterval DPSemaphoreTimeout = 10.0;
 				// セマフォ解除
 				dispatch_semaphore_signal(_semaphore);
 				// コールバック
-				void (^callback)(NSDictionary*, NSError*)  = _callbackDict[deviceID];
+				void (^callback)(NSDictionary*, NSError*)  = _callbackDict[serviceID];
 				if (callback) {
 					callback(nil, nil);
 				}
@@ -572,14 +572,14 @@ static const NSTimeInterval DPSemaphoreTimeout = 10.0;
 }
 
 // ハンドラ追加
-- (void)addHandler:(PBWatch*)watch deviceID:(NSString*)deviceID
+- (void)addHandler:(PBWatch*)watch serviceID:(NSString*)serviceID
 {
 	id opaqueHandle = [watch appMessagesAddReceiveUpdateHandler:^BOOL(PBWatch *watch, NSDictionary *update) {
 		// ここは一度きりの登録なのでBlockを登録する訳にはいかないのでメソッドで。
 		[self updateHandler:watch update:update];
 		return YES;
 	}];
-	_updateHandlerDict[deviceID] = opaqueHandle;
+	_updateHandlerDict[serviceID] = opaqueHandle;
 }
 
 // Updateハンドラ
@@ -593,7 +593,7 @@ static const NSTimeInterval DPSemaphoreTimeout = 10.0;
 			callback(update, nil);
 		}
 	} else {
-		// SerialNumber==DeviceIDなので、DeviceIDにキーにコールバックを呼び出す
+		// SerialNumber==ServiceIDなので、ServiceIDにキーにコールバックを呼び出す
 		void (^callback)(NSDictionary*, NSError*)  = _callbackDict[watch.serialNumber];
 		if (callback) {
 			callback(update, nil);

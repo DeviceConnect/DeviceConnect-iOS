@@ -40,7 +40,7 @@
 - (BOOL)         profile:(DConnectFileDescriptorProfile *)profile
 didReceiveGetOpenRequest:(DConnectRequestMessage *)request
                 response:(DConnectResponseMessage *)response
-                deviceId:(NSString *)deviceId
+                serviceId:(NSString *)serviceId
                     path:(NSString *)path
                     flag:(NSString *)flag
 {
@@ -105,7 +105,7 @@ didReceiveGetOpenRequest:(DConnectRequestMessage *)request
 - (BOOL)         profile:(DConnectFileDescriptorProfile *)profile
 didReceiveGetReadRequest:(DConnectRequestMessage *)request
                 response:(DConnectResponseMessage *)response
-                deviceId:(NSString *)deviceId
+                serviceId:(NSString *)serviceId
                     path:(NSString *)path
                   length:(NSNumber *)length
                 position:(NSNumber *)position
@@ -168,7 +168,7 @@ didReceiveGetReadRequest:(DConnectRequestMessage *)request
 - (BOOL)          profile:(DConnectFileDescriptorProfile *)profile
 didReceivePutCloseRequest:(DConnectRequestMessage *)request
                  response:(DConnectResponseMessage *)response
-                 deviceId:(NSString *)deviceId
+                 serviceId:(NSString *)serviceId
                      path:(NSString *)path
 {
     _openFileFlag = @"";
@@ -194,7 +194,7 @@ didReceivePutCloseRequest:(DConnectRequestMessage *)request
 - (BOOL)          profile:(DConnectFileDescriptorProfile *)profile
 didReceivePutWriteRequest:(DConnectRequestMessage *)request
                  response:(DConnectResponseMessage *)response
-                 deviceId:(NSString *)deviceId
+                 serviceId:(NSString *)serviceId
                      path:(NSString *)path
                     media:(NSData *)media
                  position:(NSNumber *)position

@@ -87,13 +87,13 @@
     CHECK_RESPONSE(@"{\"result\":0}", request);
     
     // テスト用イベント送信要求
-    uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/event?deviceId=%@&sessionKey=%@", self.deviceId, self.clientId]];
+    uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/event?serviceId=%@&sessionKey=%@", self.serviceId, self.clientId]];
     request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"POST"];
     CHECK_RESPONSE(@"{\"result\":0}", request);
     
     // 受信したイベントのチェック
-    CHECK_EVENT(@"{\"profile\":\"network_service_discovery\",\"attribute\":\"onservicechange\",\"sessionKey\":\"test_client\",\"networkService\":{\"id\":\"test_device_id.DeviceTestPlugin.dconnect\",\"name\":\"Test Success Device\",\"online\":true,\"state\":true,\"type\":\"TEST\",\"config\":\"test config\"}}");
+    CHECK_EVENT(@"{\"profile\":\"network_service_discovery\",\"attribute\":\"onservicechange\",\"sessionKey\":\"test_client\",\"networkService\":{\"id\":\"test_service_id.DeviceTestPlugin.dconnect\",\"name\":\"Test Success Device\",\"online\":true,\"state\":true,\"type\":\"TEST\",\"config\":\"test config\"}}");
     
     // イベント登録解除
     uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/network_service_discovery/onservicechange?sessionKey=%@", self.clientId]];

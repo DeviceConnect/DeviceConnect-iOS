@@ -16,7 +16,7 @@
 
 
 // 接続確認用マクロ
-#define CONNECT_CHECK()  BOOL isConnected = [[DPSpheroManager sharedManager] connectDeviceWithID:deviceId]; \
+#define CONNECT_CHECK()  BOOL isConnected = [[DPSpheroManager sharedManager] connectDeviceWithID:serviceId]; \
 if (!isConnected) { \
 [response setErrorToTimeoutWithMessage:@"Not Connected to Sphero"]; \
 return YES; \

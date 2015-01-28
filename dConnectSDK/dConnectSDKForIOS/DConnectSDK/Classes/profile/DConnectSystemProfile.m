@@ -49,29 +49,29 @@ NSString *const DConnectSystemProfileParamBLE = @"ble";
     BOOL send = YES;
     
     NSString *attribute = [request attribute];
-    NSString *deviceId = [request deviceId];
+    NSString *serviceId = [request serviceId];
     
     if (attribute && [attribute isEqualToString:DConnectSystemProfileAttrDevice]) {
-        if ([_delegate respondsToSelector:@selector(profile:didReceiveGetDeviceRequest:response:deviceId:)])
+        if ([_delegate respondsToSelector:@selector(profile:didReceiveGetDeviceRequest:response:serviceId:)])
         {
-            send = [_delegate profile:self didReceiveGetDeviceRequest:request response:response deviceId:deviceId];
+            send = [_delegate profile:self didReceiveGetDeviceRequest:request response:response serviceId:serviceId];
         } else if (_dataSource) {
             
             DConnectMessage *connect = [DConnectMessage message];
-            if ([_dataSource respondsToSelector:@selector(profile:wifiStateForDeviceId:)]) {
-                [DConnectSystemProfile setWiFiState:[_dataSource profile:self wifiStateForDeviceId:deviceId]
+            if ([_dataSource respondsToSelector:@selector(profile:wifiStateForServiceId:)]) {
+                [DConnectSystemProfile setWiFiState:[_dataSource profile:self wifiStateForServiceId:serviceId]
                                              target:connect];
             }
-            if ([_dataSource respondsToSelector:@selector(profile:bleStateForDeviceId:)]) {
-                [DConnectSystemProfile setBLEState:[_dataSource profile:self bleStateForDeviceId:deviceId]
+            if ([_dataSource respondsToSelector:@selector(profile:bleStateForServiceId:)]) {
+                [DConnectSystemProfile setBLEState:[_dataSource profile:self bleStateForServiceId:serviceId]
                                             target:connect];
             }
-            if ([_dataSource respondsToSelector:@selector(profile:bluetoothStateForDeviceId:)]) {
-                [DConnectSystemProfile setBluetoothState:[_dataSource profile:self bluetoothStateForDeviceId:deviceId]
+            if ([_dataSource respondsToSelector:@selector(profile:bluetoothStateForServiceId:)]) {
+                [DConnectSystemProfile setBluetoothState:[_dataSource profile:self bluetoothStateForServiceId:serviceId]
                                                   target:connect];
             }
-            if ([_dataSource respondsToSelector:@selector(profile:nfcStateForDeviceId:)]) {
-                [DConnectSystemProfile setNFCState:[_dataSource profile:self nfcStateForDeviceId:deviceId]
+            if ([_dataSource respondsToSelector:@selector(profile:nfcStateForServiceId:)]) {
+                [DConnectSystemProfile setNFCState:[_dataSource profile:self nfcStateForServiceId:serviceId]
                                             target:connect];
             }
             

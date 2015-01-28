@@ -142,7 +142,7 @@ extern NSString *const DConnectNetworkServiceDiscoveryProfileNetworkTypeBLE;
  @param[in] profile プロファイル
  @param[in] request リクエストパラメータ
  @param[in,out] response レスポンスパラメータ
- @param[in] deviceId デバイスID
+ @param[in] serviceId サービスID
  @param[in] sessionKey セッションキー
  
  @retval YES レスポンスパラメータを返却する。
@@ -150,7 +150,7 @@ extern NSString *const DConnectNetworkServiceDiscoveryProfileNetworkTypeBLE;
  */
 - (BOOL) profile:(DConnectNetworkServiceDiscoveryProfile *)profile didReceivePutOnServiceChangeRequest:(DConnectRequestMessage *)request
         response:(DConnectResponseMessage *)response
-        deviceId:(NSString *)deviceId
+        serviceId:(NSString *)serviceId
       sessionKey:(NSString *)sessionKey;
 
 #pragma mark - Delete Methods
@@ -169,7 +169,7 @@ extern NSString *const DConnectNetworkServiceDiscoveryProfileNetworkTypeBLE;
  @param[in] profile プロファイル
  @param[in] request リクエストパラメータ
  @param[in,out] response レスポンスパラメータ
- @param[in] deviceId デバイスID
+ @param[in] serviceId サービスID
  @param[in] sessionKey セッションキー
  
  @retval YES レスポンスパラメータを返却する。
@@ -177,7 +177,7 @@ extern NSString *const DConnectNetworkServiceDiscoveryProfileNetworkTypeBLE;
  */
 - (BOOL) profile:(DConnectNetworkServiceDiscoveryProfile *)profile didReceiveDeleteOnServiceChangeRequest:(DConnectRequestMessage *)request
         response:(DConnectResponseMessage *)response
-        deviceId:(NSString *)deviceId
+        serviceId:(NSString *)serviceId
       sessionKey:(NSString *)sessionKey;
 
 @end
@@ -218,10 +218,10 @@ extern NSString *const DConnectNetworkServiceDiscoveryProfileNetworkTypeBLE;
 + (void) setNetworkService:(DConnectMessage *)networkService target:(DConnectMessage *)message;
 
 /*!
- @brief メッセージにデバイスIDを設定する。
+ @brief メッセージにサービスIDを設定する。
  
- @param[in] id デバイスID
- @param[in,out] message デバイスIDを格納するメッセージ
+ @param[in] id サービスID
+ @param[in,out] message サービスIDを格納するメッセージ
  */
 + (void) setId:(NSString *)id target:(DConnectMessage *)message;
 

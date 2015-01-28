@@ -215,7 +215,7 @@ NSString *const DConnectStoryboardName = @"DConnectSDK";
         }
         
         // Network Service Discoveryのイベントだけは別に処理する
-        // このイベントは特殊で新規デバイス発見を通知するので、deviceIdが指定することができない。
+        // このイベントは特殊で新規デバイス発見を通知するので、serviceIdが指定することができない。
         // なので、全体的に送る必要が有る
         NSString *profile = [event stringForKey:DConnectMessageProfile];
         NSString *attribute = [event stringForKey:DConnectMessageAttribute];
@@ -224,9 +224,9 @@ NSString *const DConnectStoryboardName = @"DConnectSDK";
             
             // networkSeviceに含まれるidにデバイスプラグインIDを付加する
             DConnectMessage *service = [event messageForKey:DConnectNetworkServiceDiscoveryProfileParamNetworkService];
-            NSString *deviceId = [service stringForKey:DConnectNetworkServiceDiscoveryProfileParamId];
-            NSString *did = [_mDeviceManager deviceIdByAppedingPluginIdWithDevicePlugin:plugin
-                                                                               deviceId:deviceId];
+            NSString *serviceId = [service stringForKey:DConnectNetworkServiceDiscoveryProfileParamId];
+            NSString *did = [_mDeviceManager serviceIdByAppedingPluginIdWithDevicePlugin:plugin
+                                                                               serviceId:serviceId];
             [service setString:did forKey:DConnectNetworkServiceDiscoveryProfileParamId];;
             
             // 各イベントを送信
@@ -245,12 +245,12 @@ NSString *const DConnectStoryboardName = @"DConnectSDK";
             }
         } else {
             
-            // deviceIdにプラグインIDを付加
-            NSString *deviceId = [event stringForKey:DConnectMessageDeviceId];
-            if (deviceId) {
-                NSString *did = [_mDeviceManager deviceIdByAppedingPluginIdWithDevicePlugin:plugin
-                                                                                   deviceId:deviceId];
-                [event setString:did forKey:DConnectMessageDeviceId];
+            // serviceIdにプラグインIDを付加
+            NSString *serviceId = [event stringForKey:DConnectMessageServiceId];
+            if (serviceId) {
+                NSString *did = [_mDeviceManager serviceIdByAppedingPluginIdWithDevicePlugin:plugin
+                                                                                   serviceId:serviceId];
+                [event setString:did forKey:DConnectMessageServiceId];
             }
             
             if (hasDelegate) {

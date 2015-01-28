@@ -43,14 +43,14 @@
 }
 
 
-- (DConnectEvent *) eventForDeviceId:(NSString *)deviceId profile:(NSString *)profile
+- (DConnectEvent *) eventForServiceId:(NSString *)serviceId profile:(NSString *)profile
                            interface:(NSString *)interface attribute:(NSString *)attribute
                           sessionKey:(NSString *)sessionKey
 {
     return nil;
 }
 
-- (NSArray *) eventsForDeviceId:(NSString *)deviceId profile:(NSString *)profile
+- (NSArray *) eventsForServiceId:(NSString *)serviceId profile:(NSString *)profile
                       interface:(NSString *)interface attribute:(NSString *)attribute
 {
     return nil;

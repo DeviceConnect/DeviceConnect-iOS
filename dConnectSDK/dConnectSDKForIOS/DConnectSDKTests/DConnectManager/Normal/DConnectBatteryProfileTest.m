@@ -21,7 +21,7 @@
     [builder setHost:DConnectHost];
     [builder setPort:DConnectPort];
     [builder setProfile:DConnectBatteryProfileName];
-    [builder addParameter:self.deviceId forName:DConnectMessageDeviceId];
+    [builder addParameter:self.serviceId forName:DConnectMessageServiceId];
     
     NSURL *uri = [builder build];
     NSURLRequest *request = [NSURLRequest requestWithURL:uri];
@@ -65,7 +65,7 @@
     [builder setPort:DConnectPort];
     [builder setProfile:DConnectBatteryProfileName];
     [builder setAttribute:DConnectBatteryProfileAttrCharging];
-    [builder addParameter:self.deviceId forName:DConnectMessageDeviceId];
+    [builder addParameter:self.serviceId forName:DConnectMessageServiceId];
     
     NSURL *uri = [builder build];
     NSURLRequest *request = [NSURLRequest requestWithURL:uri];
@@ -97,7 +97,7 @@
     [builder setPort:DConnectPort];
     [builder setProfile:DConnectBatteryProfileName];
     [builder setAttribute:DConnectBatteryProfileAttrChargingTime];
-    [builder addParameter:self.deviceId forName:DConnectMessageDeviceId];
+    [builder addParameter:self.serviceId forName:DConnectMessageServiceId];
     
     NSURL *uri = [builder build];
     NSURLRequest *request = [NSURLRequest requestWithURL:uri];
@@ -129,7 +129,7 @@
     [builder setPort:DConnectPort];
     [builder setProfile:DConnectBatteryProfileName];
     [builder setAttribute:DConnectBatteryProfileAttrDischargingTime];
-    [builder addParameter:self.deviceId forName:DConnectMessageDeviceId];
+    [builder addParameter:self.serviceId forName:DConnectMessageServiceId];
     
     NSURL *uri = [builder build];
     NSURLRequest *request = [NSURLRequest requestWithURL:uri];
@@ -161,7 +161,7 @@
     [builder setPort:DConnectPort];
     [builder setProfile:DConnectBatteryProfileName];
     [builder setAttribute:DConnectBatteryProfileAttrLevel];
-    [builder addParameter:self.deviceId forName:DConnectMessageDeviceId];
+    [builder addParameter:self.serviceId forName:DConnectMessageServiceId];
     
     NSURL *uri = [builder build];
     NSURLRequest *request = [NSURLRequest requestWithURL:uri];

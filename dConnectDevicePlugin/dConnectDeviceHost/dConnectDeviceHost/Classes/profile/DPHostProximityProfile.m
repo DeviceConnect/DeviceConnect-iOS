@@ -54,7 +54,7 @@
 - (void) sendOnUserProximityEvent:(NSNotification *)notification
 {
     // イベントの取得
-    NSArray *evts = [_eventMgr eventListForDeviceId:NetworkDiscoveryDeviceId
+    NSArray *evts = [_eventMgr eventListForServiceId:NetworkDiscoveryServiceId
                                             profile:DConnectProximityProfileName
                                           attribute:DConnectProximityProfileAttrOnUserProximity];
     // イベント送信
@@ -74,10 +74,10 @@
 - (BOOL)                    profile:(DConnectProximityProfile *)profile
 didReceivePutOnUserProximityRequest:(DConnectRequestMessage *)request
                            response:(DConnectResponseMessage *)response
-                           deviceId:(NSString *)deviceId
+                           serviceId:(NSString *)serviceId
                          sessionKey:(NSString *)sessionKey
 {
-    NSArray *evts = [_eventMgr eventListForDeviceId:deviceId
+    NSArray *evts = [_eventMgr eventListForServiceId:serviceId
                                             profile:DConnectProximityProfileName
                                           attribute:DConnectProximityProfileAttrOnUserProximity];
     if (evts.count == 0) {
@@ -110,7 +110,7 @@ didReceivePutOnUserProximityRequest:(DConnectRequestMessage *)request
 - (BOOL)                       profile:(DConnectProximityProfile *)profile
 didReceiveDeleteOnUserProximityRequest:(DConnectRequestMessage *)request
                               response:(DConnectResponseMessage *)response
-                              deviceId:(NSString *)deviceId
+                              serviceId:(NSString *)serviceId
                             sessionKey:(NSString *)sessionKey
 {
     switch ([_eventMgr removeEventForRequest:request]) {
@@ -126,7 +126,7 @@ didReceiveDeleteOnUserProximityRequest:(DConnectRequestMessage *)request
             break;
     }
     
-    NSArray *evts = [_eventMgr eventListForDeviceId:deviceId
+    NSArray *evts = [_eventMgr eventListForServiceId:serviceId
                                             profile:DConnectBatteryProfileName
                                           attribute:DConnectBatteryProfileAttrOnChargingChange];
     if (evts.count == 0) {

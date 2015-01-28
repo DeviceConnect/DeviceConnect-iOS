@@ -9,7 +9,7 @@
 
 #import <DConnectSDK/DConnectNetworkServiceDiscoveryProfile.h>
 
-extern NSString *const NetworkDiscoveryDeviceId;
+extern NSString *const NetworkDiscoveryServiceId;
 
 @interface DPHostNetworkServiceDiscoveryProfile : DConnectNetworkServiceDiscoveryProfile<DConnectNetworkServiceDiscoveryProfileDelegate>
 

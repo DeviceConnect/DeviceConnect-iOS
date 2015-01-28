@@ -33,12 +33,12 @@ NSString *const TestFileDescriptorPrev = @"2014-06-01T00:00:00+0900";
 
 - (BOOL) profile:(DConnectFileDescriptorProfile *)profile didReceiveGetOpenRequest:(DConnectRequestMessage *)request
         response:(DConnectResponseMessage *)response
-        deviceId:(NSString *)deviceId
+        serviceId:(NSString *)serviceId
             path:(NSString *)path
             flag:(NSString *)flag
 {
     
-    CheckDID(response, deviceId)
+    CheckDID(response, serviceId)
     if (path == nil || flag == nil) {
         [response setErrorToInvalidRequestParameter];
     } else {
@@ -50,12 +50,12 @@ NSString *const TestFileDescriptorPrev = @"2014-06-01T00:00:00+0900";
 
 - (BOOL) profile:(DConnectFileDescriptorProfile *)profile didReceiveGetReadRequest:(DConnectRequestMessage *)request
         response:(DConnectResponseMessage *)response
-        deviceId:(NSString *)deviceId
+        serviceId:(NSString *)serviceId
             path:(NSString *)path
           length:(NSNumber *)length
         position:(NSNumber *)position
 {
-    CheckDID(response, deviceId)
+    CheckDID(response, serviceId)
     if (path == nil || length == nil || length < 0 || (position != nil && position < 0)) {
         [response setErrorToInvalidRequestParameter];
     } else {
@@ -74,11 +74,11 @@ NSString *const TestFileDescriptorPrev = @"2014-06-01T00:00:00+0900";
 
 - (BOOL) profile:(DConnectFileDescriptorProfile *)profile didReceivePutCloseRequest:(DConnectRequestMessage *)request
         response:(DConnectResponseMessage *)response
-        deviceId:(NSString *)deviceId
+        serviceId:(NSString *)serviceId
             path:(NSString *)path
 {
     
-    CheckDID(response, deviceId)
+    CheckDID(response, serviceId)
     if (path == nil) {
         [response setErrorToInvalidRequestParameter];
     } else {
@@ -90,12 +90,12 @@ NSString *const TestFileDescriptorPrev = @"2014-06-01T00:00:00+0900";
 
 - (BOOL) profile:(DConnectFileDescriptorProfile *)profile didReceivePutWriteRequest:(DConnectRequestMessage *)request
         response:(DConnectResponseMessage *)response
-        deviceId:(NSString *)deviceId
+        serviceId:(NSString *)serviceId
             path:(NSString *)path
            media:(NSData *)media
         position:(NSNumber *)position
 {
-    CheckDID(response, deviceId)
+    CheckDID(response, serviceId)
     if (path == nil || media == nil || (position != nil && position < 0)) {
         [response setErrorToInvalidRequestParameter];
     } else {
@@ -109,11 +109,11 @@ NSString *const TestFileDescriptorPrev = @"2014-06-01T00:00:00+0900";
 
 - (BOOL) profile:(DConnectFileDescriptorProfile *)profile didReceivePutOnWatchFileRequest:(DConnectRequestMessage *)request
         response:(DConnectResponseMessage *)response
-        deviceId:(NSString *)deviceId
+        serviceId:(NSString *)serviceId
       sessionKey:(NSString *)sessionKey
 {
     
-    CheckDIDAndSK(response, deviceId, sessionKey) {
+    CheckDIDAndSK(response, serviceId, sessionKey) {
         response.result = DConnectMessageResultTypeOk;
         
         DConnectMessage *event = [DConnectMessage message];
@@ -138,11 +138,11 @@ NSString *const TestFileDescriptorPrev = @"2014-06-01T00:00:00+0900";
 
 - (BOOL) profile:(DConnectFileDescriptorProfile *)profile didReceiveDeleteOnWatchFileRequest:(DConnectRequestMessage *)request
         response:(DConnectResponseMessage *)response
-        deviceId:(NSString *)deviceId
+        serviceId:(NSString *)serviceId
       sessionKey:(NSString *)sessionKey
 {
     
-    CheckDIDAndSK(response, deviceId, sessionKey) {
+    CheckDIDAndSK(response, serviceId, sessionKey) {
         response.result = DConnectMessageResultTypeOk;
     }
     

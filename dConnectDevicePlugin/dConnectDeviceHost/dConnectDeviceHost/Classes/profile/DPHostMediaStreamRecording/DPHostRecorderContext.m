@@ -333,7 +333,7 @@ const char * const VideoCaptureQueueName = "org.deviceconnect.ios.host.mediastre
 - (void) sendOnRecordingChangeEventWithStatus:(NSNotification *)notification
 {
     // イベントの取得
-    NSArray *evts = [_profile.eventMgr eventListForDeviceId:NetworkDiscoveryDeviceId
+    NSArray *evts = [_profile.eventMgr eventListForServiceId:NetworkDiscoveryServiceId
                                                     profile:DConnectMediaStreamRecordingProfileName
                                                   attribute:DConnectMediaStreamRecordingProfileAttrOnPhoto];
     // イベント送信

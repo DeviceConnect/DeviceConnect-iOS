@@ -21,7 +21,7 @@
 @implementation RESTfulFailProximityProfileTest
 
 /*!
- * @brief deviceIdが無い状態でondeviceproximity属性のコールバック登録テストを行う.
+ * @brief serviceIdが無い状態でondeviceproximity属性のコールバック登録テストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: PUT
@@ -32,7 +32,7 @@
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailProximityOnDeviceProximityPutNoDeviceId
+- (void) testHttpFailProximityOnDeviceProximityPutNoServiceId
 {
     NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/proximity/ondeviceproximity"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
@@ -42,20 +42,20 @@
 }
 
 /*!
- * @brief deviceIdが空状態でondeviceproximity属性のコールバック登録テストを行う.
+ * @brief serviceIdが空状態でondeviceproximity属性のコールバック登録テストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /proximity/ondeviceproximity?deviceId=&sessionKey=xxxx
+ * Path: /proximity/ondeviceproximity?serviceId=&sessionKey=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailProximityOnDeviceProximityPutEmptyDeviceId
+- (void) testHttpFailProximityOnDeviceProximityPutEmptyServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/proximity/ondeviceproximity?deviceId="];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/proximity/ondeviceproximity?serviceId="];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
@@ -63,20 +63,20 @@
 }
 
 /*!
- * @brief 存在しないdeviceIdでondeviceproximity属性のコールバック登録テストを行う.
+ * @brief 存在しないserviceIdでondeviceproximity属性のコールバック登録テストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /proximity/ondeviceproximity?deviceId=123456789&sessionKey=xxxx
+ * Path: /proximity/ondeviceproximity?serviceId=123456789&sessionKey=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailProximityOnDeviceProximityPutInvalidDeviceId
+- (void) testHttpFailProximityOnDeviceProximityPutInvalidServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/proximity/ondeviceproximity?deviceId=12345678"];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/proximity/ondeviceproximity?serviceId=12345678"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
@@ -88,7 +88,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /proximity/ondeviceproximity?deviceId=xxxx
+ * Path: /proximity/ondeviceproximity?serviceId=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -97,7 +97,7 @@
  */
 - (void) testHttpFailProximityOnDeviceProximityPutNoSessionKey
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/proximity/ondeviceproximity?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/proximity/ondeviceproximity?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
@@ -109,7 +109,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /proximity/ondeviceproximity?deviceId=xxxx&sessionKey=
+ * Path: /proximity/ondeviceproximity?serviceId=xxxx&sessionKey=
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -118,7 +118,7 @@
  */
 - (void) testHttpFailProximityOnDeviceProximityPutEmptySessionKey
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/proximity/ondeviceproximity?deviceId=%@&sessionKey=", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/proximity/ondeviceproximity?serviceId=%@&sessionKey=", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
@@ -126,7 +126,7 @@
 }
 
 /*!
- * @brief deviceIdが無い状態でondeviceproximity属性のコールバック解除テストを行う.
+ * @brief serviceIdが無い状態でondeviceproximity属性のコールバック解除テストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
@@ -137,7 +137,7 @@
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailProximityOnDeviceProximityDeleteNoDeviceId
+- (void) testHttpFailProximityOnDeviceProximityDeleteNoServiceId
 {
     NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/proximity/ondeviceproximity"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
@@ -147,20 +147,20 @@
 }
 
 /*!
- * @brief deviceIdが空状態でondeviceproximity属性のコールバック解除テストを行う.
+ * @brief serviceIdが空状態でondeviceproximity属性のコールバック解除テストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /proximity/ondeviceproximity?deviceId=&sessionKey=xxxx
+ * Path: /proximity/ondeviceproximity?serviceId=&sessionKey=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailProximityOnDeviceProximityDeleteEmptyDeviceId
+- (void) testHttpFailProximityOnDeviceProximityDeleteEmptyServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/proximity/ondeviceproximity?deviceId="];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/proximity/ondeviceproximity?serviceId="];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     
@@ -168,20 +168,20 @@
 }
 
 /*!
- * @brief 存在しないdeviceIdでondeviceproximity属性のコールバック解除テストを行う.
+ * @brief 存在しないserviceIdでondeviceproximity属性のコールバック解除テストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /proximity/ondeviceproximity?deviceId=123456789&sessionKey=xxxx
+ * Path: /proximity/ondeviceproximity?serviceId=123456789&sessionKey=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailProximityOnDeviceProximityDeleteInvalidDeviceId
+- (void) testHttpFailProximityOnDeviceProximityDeleteInvalidServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/proximity/ondeviceproximity?deviceId=12345678"];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/proximity/ondeviceproximity?serviceId=12345678"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     
@@ -193,7 +193,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /proximity/ondeviceproximity?deviceId=xxxx
+ * Path: /proximity/ondeviceproximity?serviceId=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -202,7 +202,7 @@
  */
 - (void) testHttpFailProximityOnDeviceProximityDeleteNoSessionKey
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/proximity/ondeviceproximity?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/proximity/ondeviceproximity?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     
@@ -214,7 +214,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /proximity/ondeviceproximity?deviceId=xxxx&sessionKey=
+ * Path: /proximity/ondeviceproximity?serviceId=xxxx&sessionKey=
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -223,7 +223,7 @@
  */
 - (void) testHttpFailProximityOnDeviceProximityDeleteEmptySessionKey
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/proximity/ondeviceproximity?deviceId=%@&sessionKey=", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/proximity/ondeviceproximity?serviceId=%@&sessionKey=", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     
@@ -235,7 +235,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: GET
- * Path: /proximity/ondeviceproximity?deviceId=xxxx&sessionKey=xxxx
+ * Path: /proximity/ondeviceproximity?serviceId=xxxx&sessionKey=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -244,7 +244,7 @@
  */
 - (void) testHttpFailProximityOnDeviceProximityEventInvalidMethodGet
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/proximity/ondeviceproximity?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/proximity/ondeviceproximity?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
     
@@ -256,7 +256,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: POST
- * Path: /proximity/ondeviceproximity?deviceId=xxxx&sessionKey=xxxx
+ * Path: /proximity/ondeviceproximity?serviceId=xxxx&sessionKey=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -265,7 +265,7 @@
  */
 - (void) testHttpFailProximityOnDeviceProximityEventInvalidMethodPost
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/proximity/ondeviceproximity?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/proximity/ondeviceproximity?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"POST"];
     
@@ -273,7 +273,7 @@
 }
 
 /*!
- * @brief deviceIdが無い状態でonuserproximity属性のコールバック登録テストを行う.
+ * @brief serviceIdが無い状態でonuserproximity属性のコールバック登録テストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: PUT
@@ -284,7 +284,7 @@
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailProximityOnUserProximityPutNoDeviceId
+- (void) testHttpFailProximityOnUserProximityPutNoServiceId
 {
     NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/proximity/onuserproximity"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
@@ -294,20 +294,20 @@
 }
 
 /*!
- * @brief deviceIdが空状態でonuserproximity属性のコールバック登録テストを行う.
+ * @brief serviceIdが空状態でonuserproximity属性のコールバック登録テストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /proximity/onuserproximity?deviceId=&sessionKey=xxxx
+ * Path: /proximity/onuserproximity?serviceId=&sessionKey=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailProximityOnUserProximityPutEmptyDeviceId
+- (void) testHttpFailProximityOnUserProximityPutEmptyServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/proximity/onuserproximity?deviceId="];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/proximity/onuserproximity?serviceId="];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
@@ -315,20 +315,20 @@
 }
 
 /*!
- * @brief 存在しないdeviceIdでonuserproximity属性のコールバック登録テストを行う.
+ * @brief 存在しないserviceIdでonuserproximity属性のコールバック登録テストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /proximity/onuserproximity?deviceId=123456789&sessionKey=xxxx
+ * Path: /proximity/onuserproximity?serviceId=123456789&sessionKey=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailProximityOnUserProximityPutInvalidDeviceId
+- (void) testHttpFailProximityOnUserProximityPutInvalidServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/proximity/onuserproximity?deviceId=12345678"];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/proximity/onuserproximity?serviceId=12345678"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
@@ -340,7 +340,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /proximity/onuserproximity?deviceId=xxxx
+ * Path: /proximity/onuserproximity?serviceId=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -349,7 +349,7 @@
  */
 - (void) testHttpFailProximityOnUserProximityPutNoSessionKey
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/proximity/onuserproximity?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/proximity/onuserproximity?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
@@ -361,7 +361,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /proximity/onuserproximity?deviceId=xxxx&sessionKey=
+ * Path: /proximity/onuserproximity?serviceId=xxxx&sessionKey=
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -370,7 +370,7 @@
  */
 - (void) testHttpFailProximityOnUserProximityPutEmptySessionKey
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/proximity/onuserproximity?deviceId=%@&sessionKey=", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/proximity/onuserproximity?serviceId=%@&sessionKey=", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
@@ -378,7 +378,7 @@
 }
 
 /*!
- * @brief deviceIdが無い状態でonuserproximity属性のコールバック解除テストを行う.
+ * @brief serviceIdが無い状態でonuserproximity属性のコールバック解除テストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
@@ -389,7 +389,7 @@
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailProximityOnUserProximityDeleteNoDeviceId
+- (void) testHttpFailProximityOnUserProximityDeleteNoServiceId
 {
     NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/proximity/onuserproximity"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
@@ -399,20 +399,20 @@
 }
 
 /*!
- * @brief deviceIdが空状態でonuserproximity属性のコールバック解除テストを行う.
+ * @brief serviceIdが空状態でonuserproximity属性のコールバック解除テストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /proximity/onuserproximity?deviceId=&sessionKey=xxxx
+ * Path: /proximity/onuserproximity?serviceId=&sessionKey=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailProximityOnUserProximityDeleteEmptyDeviceId
+- (void) testHttpFailProximityOnUserProximityDeleteEmptyServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/proximity/onuserproximity?deviceId="];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/proximity/onuserproximity?serviceId="];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     
@@ -420,20 +420,20 @@
 }
 
 /*!
- * @brief 存在しないdeviceIdでonuserproximity属性のコールバック解除テストを行う.
+ * @brief 存在しないserviceIdでonuserproximity属性のコールバック解除テストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /proximity/onuserproximity?deviceId=123456789&sessionKey=xxxx
+ * Path: /proximity/onuserproximity?serviceId=123456789&sessionKey=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailProximityOnUserProximityDeleteInvalidDeviceId
+- (void) testHttpFailProximityOnUserProximityDeleteInvalidServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/proximity/onuserproximity?deviceId=12345678"];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/proximity/onuserproximity?serviceId=12345678"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     
@@ -445,7 +445,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /proximity/onuserproximity?deviceId=xxxx
+ * Path: /proximity/onuserproximity?serviceId=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -454,7 +454,7 @@
  */
 - (void) testHttpFailProximityOnUserProximityDeleteNoSessionKey
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/proximity/onuserproximity?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/proximity/onuserproximity?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     
@@ -466,7 +466,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /proximity/onuserproximity?deviceId=xxxx&sessionKey=
+ * Path: /proximity/onuserproximity?serviceId=xxxx&sessionKey=
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -475,7 +475,7 @@
  */
 - (void) testHttpFailProximityOnUserProximityDeleteEmptySessionKey
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/proximity/onuserproximity?deviceId=%@&sessionKey=", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/proximity/onuserproximity?serviceId=%@&sessionKey=", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     
@@ -487,7 +487,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: GET
- * Path: /proximity/onuserproximity?deviceId=xxxx&sessionKey=xxxx
+ * Path: /proximity/onuserproximity?serviceId=xxxx&sessionKey=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -496,7 +496,7 @@
  */
 - (void) testHttpFailProximityOnUserProximityEventInvalidMethodGet
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/proximity/onuserproximity?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/proximity/onuserproximity?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
     
@@ -508,7 +508,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: POST
- * Path: /proximity/onuserproximity?deviceId=xxxx&sessionKey=xxxx
+ * Path: /proximity/onuserproximity?serviceId=xxxx&sessionKey=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -517,7 +517,7 @@
  */
 - (void) testHttpFailProximityOnUserProximityEventInvalidMethodPost
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/proximity/onuserproximity?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/proximity/onuserproximity?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"POST"];
     

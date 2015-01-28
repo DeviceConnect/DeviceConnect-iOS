@@ -52,7 +52,7 @@
 - (BOOL)                    profile:(DConnectNetworkServiceDiscoveryProfile *)profile
 didReceivePutOnServiceChangeRequest:(DConnectRequestMessage *)request
                            response:(DConnectResponseMessage *)response
-                           deviceId:(NSString *)deviceId
+                           serviceId:(NSString *)serviceId
                          sessionKey:(NSString *)sessionKey
 {
     [response setErrorToNotSupportProfile];
@@ -65,7 +65,7 @@ didReceivePutOnServiceChangeRequest:(DConnectRequestMessage *)request
 - (BOOL)                       profile:(DConnectNetworkServiceDiscoveryProfile *)profile
 didReceiveDeleteOnServiceChangeRequest:(DConnectRequestMessage *)request
                               response:(DConnectResponseMessage *)response
-                              deviceId:(NSString *)deviceId
+                              serviceId:(NSString *)serviceId
                             sessionKey:(NSString *)sessionKey
 {
     [response setErrorToNotSupportProfile];

@@ -28,7 +28,7 @@ static NSString * const spheroRegexDigit = @"^([0-9]*)?$";
 
 // デバイスの操作
 - (BOOL) profile:(DCMDriveControllerProfile *)profile didReceivePostDriveControllerMoveRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response deviceId:(NSString *)deviceId angle:(double)angle speed:(double)speed
+        response:(DConnectResponseMessage *)response serviceId:(NSString *)serviceId angle:(double)angle speed:(double)speed
 {
     // 接続確認
     CONNECT_CHECK();
@@ -64,7 +64,7 @@ static NSString * const spheroRegexDigit = @"^([0-9]*)?$";
 
 // デバイスの回転
 - (BOOL) profile:(DCMDriveControllerProfile *)profile didReceivePutDriveControllerRotateRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response deviceId:(NSString *)deviceId angle:(double)angle
+        response:(DConnectResponseMessage *)response serviceId:(NSString *)serviceId angle:(double)angle
 {
     // 接続確認
     CONNECT_CHECK();
@@ -90,7 +90,7 @@ static NSString * const spheroRegexDigit = @"^([0-9]*)?$";
 
 // デバイスの停止
 - (BOOL) profile:(DCMDriveControllerProfile *)profile didReceiveDeleteDriveControllerStopRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response deviceId:(NSString *)deviceId
+        response:(DConnectResponseMessage *)response serviceId:(NSString *)serviceId
 {
     // 接続確認
     CONNECT_CHECK();
