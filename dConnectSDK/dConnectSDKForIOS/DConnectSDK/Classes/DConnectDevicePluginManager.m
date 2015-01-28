@@ -10,7 +10,7 @@
 #import "DConnectDevicePluginManager.h"
 #import "DConnectDevicePlugin+Private.h"
 #import "DConnectManager+Private.h"
-#import "DConnectNetworkServiceDiscoveryProfile.h"
+#import "DConnectServiceDiscoveryProfile.h"
 #import <objc/runtime.h>
 #import <stdio.h>
 
@@ -95,13 +95,13 @@
     if (plugin) {
         [self.mDeviceMap setObject:plugin forKey:NSStringFromClass([plugin class])];
         
-        // Network Service Discoveryのイベント登録
+        // Service Discoveryのイベント登録
         // デバイスプラグインが見つかった時点で登録を行う
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             DConnectRequestMessage *request = [DConnectRequestMessage message];
             [request setAction:DConnectMessageActionTypePut];
-            [request setProfile:DConnectNetworkServiceDiscoveryProfileName];
-            [request setAttribute:DConnectNetworkServiceDiscoveryProfileAttrOnServiceChange];
+            [request setProfile:DConnectServiceDiscoveryProfileName];
+            [request setAttribute:DConnectServiceDiscoveryProfileAttrOnServiceChange];
             [request setSessionKey:NSStringFromClass([plugin class])];
             
             DConnectResponseMessage *response = [DConnectResponseMessage message];

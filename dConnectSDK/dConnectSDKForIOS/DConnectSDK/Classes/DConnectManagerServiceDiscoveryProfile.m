@@ -1,5 +1,5 @@
 //
-//  DConnectManagerNetworkServiceDiscoveryProfile.m
+//  DConnectManagerServiceDiscoveryProfile.m
 //  DConnectSDK
 //
 //  Copyright (c) 2014 NTT DOCOMO,INC.
@@ -7,14 +7,14 @@
 //  http://opensource.org/licenses/mit-license.php
 //
 
-#import "DConnectManagerNetworkServiceDiscoveryProfile.h"
+#import "DConnectManagerServiceDiscoveryProfile.h"
 #import "DConnectManager+Private.h"
 #import "DConnectEventManager.h"
 
 /** NetworkDiscoveryのタイムアウト. */
 #define DISCOVERY_TIMEOUT 8
 
-@implementation DConnectManagerNetworkServiceDiscoveryProfile
+@implementation DConnectManagerServiceDiscoveryProfile
 
 - (id) init {
     
@@ -26,9 +26,9 @@
     return self;
 }
 
-#pragma mark - DConnectNetworkServiceDiscoveryProfileDelegate
+#pragma mark - DConnectServiceDiscoveryProfileDelegate
 
-- (BOOL)                       profile:(DConnectNetworkServiceDiscoveryProfile *)profile
+- (BOOL)                       profile:(DConnectServiceDiscoveryProfile *)profile
 didReceiveGetGetNetworkServicesRequest:(DConnectRequestMessage *)request
                               response:(DConnectResponseMessage *)response
 {
@@ -54,16 +54,16 @@ didReceiveGetGetNetworkServicesRequest:(DConnectRequestMessage *)request
             
             int result = [response integerForKey:DConnectMessageResult];
             if (result == DConnectMessageResultTypeOk) {
-                DConnectArray *s = [resp arrayForKey:DConnectNetworkServiceDiscoveryProfileParamServices];
+                DConnectArray *s = [resp arrayForKey:DConnectServiceDiscoveryProfileParamServices];
                 if (s && [s count] > 0) {
                     for (int i = 0; i < [s count]; i++) {
                         DConnectMessage *msg = [s messageAtIndex:i];
-                        NSString *serviceId = [msg stringForKey:DConnectNetworkServiceDiscoveryProfileParamId];
+                        NSString *serviceId = [msg stringForKey:DConnectServiceDiscoveryProfileParamId];
                         if (serviceId) {
                             // サービスIDにデバイスプラグインのIDを付加する
                             NSString *did = [deviceMgr serviceIdByAppedingPluginIdWithDevicePlugin:plugin
                                                                                          serviceId:serviceId];
-                            [msg setString:did forKey:DConnectNetworkServiceDiscoveryProfileParamId];
+                            [msg setString:did forKey:DConnectServiceDiscoveryProfileParamId];
                             @synchronized (services) {
                                 [services addMessage:msg];
                             }
@@ -107,12 +107,12 @@ didReceiveGetGetNetworkServicesRequest:(DConnectRequestMessage *)request
     
     // レスポンスを作成
     [response setResult:DConnectMessageResultTypeOk];
-    [DConnectNetworkServiceDiscoveryProfile setServices:responseServices target:response];
+    [DConnectServiceDiscoveryProfile setServices:responseServices target:response];
     
     return YES;
 }
 
-- (BOOL)                    profile:(DConnectNetworkServiceDiscoveryProfile *)profile
+- (BOOL)                    profile:(DConnectServiceDiscoveryProfile *)profile
 didReceivePutOnServiceChangeRequest:(DConnectRequestMessage *)request
                            response:(DConnectResponseMessage *)response
                            serviceId:(NSString *)serviceId
@@ -136,7 +136,7 @@ didReceivePutOnServiceChangeRequest:(DConnectRequestMessage *)request
     return YES;
 }
 
-- (BOOL)                       profile:(DConnectNetworkServiceDiscoveryProfile *)profile
+- (BOOL)                       profile:(DConnectServiceDiscoveryProfile *)profile
 didReceiveDeleteOnServiceChangeRequest:(DConnectRequestMessage *)request
                               response:(DConnectResponseMessage *)response
                               serviceId:(NSString *)serviceId

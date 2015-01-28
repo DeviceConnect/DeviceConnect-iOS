@@ -19,7 +19,7 @@
 
 #import "DPHostDevicePlugin.h"
 #import "DPHostMediaPlayerProfile.h"
-#import "DPHostNetworkServiceDiscoveryProfile.h"
+#import "DPHostServiceDiscoveryProfile.h"
 #import "DPHostMediaContext.h"
 #import "DPHostReachability.h"
 #import "DPHostUtils.h"
@@ -134,7 +134,7 @@
 -(void) nowPlayingItemChangedInIPod:(NSNotification *)notification
 {
     // イベントの取得
-    NSArray *evts = [_eventMgr eventListForServiceId:NetworkDiscoveryServiceId
+    NSArray *evts = [_eventMgr eventListForServiceId:ServiceDiscoveryServiceId
                                             profile:DConnectMediaPlayerProfileName
                                           attribute:DConnectMediaPlayerProfileAttrOnStatusChange];
     
@@ -175,7 +175,7 @@
 - (void) nowPlayingItemChangedInMoviePlayer:(NSNotification *)notification
 {
     // イベントの取得
-    NSArray *evts = [_eventMgr eventListForServiceId:NetworkDiscoveryServiceId
+    NSArray *evts = [_eventMgr eventListForServiceId:ServiceDiscoveryServiceId
                                             profile:DConnectMediaPlayerProfileName
                                           attribute:DConnectMediaPlayerProfileAttrOnStatusChange];
     
@@ -218,7 +218,7 @@
 -(void) playbackStateChangedInIPod:(NSNotification *)notification
 {
     // イベントの取得
-    NSArray *evts = [_eventMgr eventListForServiceId:NetworkDiscoveryServiceId
+    NSArray *evts = [_eventMgr eventListForServiceId:ServiceDiscoveryServiceId
                                             profile:DConnectMediaPlayerProfileName
                                           attribute:DConnectMediaPlayerProfileAttrOnStatusChange];
     
@@ -265,7 +265,7 @@
 - (void) playbackStateChangedInMoviePlayer:(NSNotification *)notification
 {
     // イベントの取得
-    NSArray *evts = [_eventMgr eventListForServiceId:NetworkDiscoveryServiceId
+    NSArray *evts = [_eventMgr eventListForServiceId:ServiceDiscoveryServiceId
                                             profile:DConnectMediaPlayerProfileName
                                           attribute:DConnectMediaPlayerProfileAttrOnStatusChange];
     

@@ -1,5 +1,5 @@
 //
-//  DPHueNetworkServiceDiscoveryProfile.m
+//  DPHueServiceDiscoveryProfile.m
 //  DConnectSDK
 //
 //  Copyright (c) 2014 NTT DOCOMO, INC.
@@ -7,11 +7,11 @@
 //  http://opensource.org/licenses/mit-license.php
 //
 
-#import "DPHueNetworkServiceDiscoveryProfile.h"
+#import "DPHueServiceDiscoveryProfile.h"
 #import "DPHueManager.h"
 
 
-@implementation DPHueNetworkServiceDiscoveryProfile
+@implementation DPHueServiceDiscoveryProfile
 
 
 - (id)init
@@ -23,7 +23,7 @@
     return self;
 }
 
-- (BOOL)                           profile:(DConnectNetworkServiceDiscoveryProfile *)profile
+- (BOOL)                           profile:(DConnectServiceDiscoveryProfile *)profile
     didReceiveGetGetNetworkServicesRequest:(DConnectRequestMessage *)request
                                   response:(DConnectResponseMessage *)response
 {
@@ -36,26 +36,26 @@
         for (id key in [bridgesFound keyEnumerator]) {
             serviceId = [NSString stringWithFormat:@"%@_%@",[bridgesFound valueForKey:key],key];
             service = [DConnectMessage new];
-            [DConnectNetworkServiceDiscoveryProfile
+            [DConnectServiceDiscoveryProfile
              setId:serviceId
              target:service];
             
-            [DConnectNetworkServiceDiscoveryProfile
+            [DConnectServiceDiscoveryProfile
              setName:[NSString stringWithFormat:@"Hue %@", key]
              target:service];
             
-            [DConnectNetworkServiceDiscoveryProfile
-             setType:DConnectNetworkServiceDiscoveryProfileNetworkTypeWiFi
+            [DConnectServiceDiscoveryProfile
+             setType:DConnectServiceDiscoveryProfileNetworkTypeWiFi
              
              target:service];
-            [DConnectNetworkServiceDiscoveryProfile setOnline:YES target:service];
+            [DConnectServiceDiscoveryProfile setOnline:YES target:service];
             
             [services addMessage:service];
 
         }
 
     }
-    [DConnectNetworkServiceDiscoveryProfile setServices:services target:response];
+    [DConnectServiceDiscoveryProfile setServices:services target:response];
     return YES;
 }
 @end

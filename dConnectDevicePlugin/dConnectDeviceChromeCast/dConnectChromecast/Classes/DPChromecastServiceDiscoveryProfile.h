@@ -1,5 +1,5 @@
 //
-//  DPChromecastNetworkServiceDiscoveryProfile.h
+//  DPChromecastServiceDiscoveryProfile.h
 //  DConnectSDK
 //
 //  Copyright (c) 2014 NTT DOCOMO, INC.
@@ -9,6 +9,6 @@
 
 #import <DConnectSDK/DConnectSDK.h>
 
-@interface DPChromecastNetworkServiceDiscoveryProfile : DConnectNetworkServiceDiscoveryProfile<DConnectNetworkServiceDiscoveryProfileDelegate>
+@interface DPChromecastServiceDiscoveryProfile : DConnectServiceDiscoveryProfile<DConnectServiceDiscoveryProfileDelegate>
 
 @end

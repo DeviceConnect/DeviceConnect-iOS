@@ -8,7 +8,7 @@
 
 #import "DPHostConnectProfile.h"
 #import "DPHostDevicePlugin.h"
-#import "DPHostNetworkServiceDiscoveryProfile.h"
+#import "DPHostServiceDiscoveryProfile.h"
 #import "DPHostUtils.h"
 #import "DPHostReachability.h"
 /*
@@ -146,7 +146,7 @@ typedef void (^DPHostConnectStatusBlock)(BOOL status);
         __weak typeof(self) _this = self;
         __block DConnectDevicePlugin *_self = (DConnectDevicePlugin *)self.provider;
         _wifiEventBlock = ^(BOOL isStatus) {
-            NSArray *evts = [_this.eventMgr eventListForServiceId:NetworkDiscoveryServiceId
+            NSArray *evts = [_this.eventMgr eventListForServiceId:ServiceDiscoveryServiceId
                                                          profile:DConnectConnectProfileName
                                                        attribute:DConnectConnectProfileAttrOnWifiChange];
             // イベント送信
@@ -173,7 +173,7 @@ typedef void (^DPHostConnectStatusBlock)(BOOL status);
         __weak typeof(self) _this = self;
         __block DConnectDevicePlugin *_self = (DConnectDevicePlugin *)self.provider;
         _bluetoothEventBlock = ^(BOOL isStatus) {
-            NSArray *evts = [_this.eventMgr eventListForServiceId:NetworkDiscoveryServiceId
+            NSArray *evts = [_this.eventMgr eventListForServiceId:ServiceDiscoveryServiceId
                                                          profile:DConnectConnectProfileName
                                                        attribute:DConnectConnectProfileAttrOnBluetoothChange];
             // イベント送信
@@ -197,7 +197,7 @@ typedef void (^DPHostConnectStatusBlock)(BOOL status);
         __weak typeof(self) _this = self;
         __block DConnectDevicePlugin *_self = (DConnectDevicePlugin *)self.provider;
         _bleEventBlock = ^(BOOL isStatus) {
-            NSArray *evts = [_this.eventMgr eventListForServiceId:NetworkDiscoveryServiceId
+            NSArray *evts = [_this.eventMgr eventListForServiceId:ServiceDiscoveryServiceId
                                                          profile:DConnectConnectProfileName
                                                        attribute:DConnectConnectProfileAttrOnBLEChange];
             // イベント送信

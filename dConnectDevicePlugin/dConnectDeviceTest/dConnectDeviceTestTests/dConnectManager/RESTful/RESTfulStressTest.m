@@ -44,7 +44,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: GET
- * Path: /network_service_discovery/getnetworkservices
+ * Path: /servicediscovery
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -54,7 +54,7 @@
 - (void) testStress
 {
     for (int i = 0; i < 1000; i++) {
-        NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/network_service_discovery/getnetworkservices"];
+        NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/servicediscovery"];
         NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
         [request setHTTPMethod:@"GET"];
         
@@ -113,7 +113,7 @@
     const int count = 10;
     Counter *counter = [[Counter alloc] initWithCount:count];
     
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/network_service_discovery/getnetworkservices?sessionKey=%@", self.clientId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/servicediscovery?sessionKey=%@", self.clientId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     for (int i = 0; i < count; i++) {

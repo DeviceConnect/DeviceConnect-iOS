@@ -10,7 +10,7 @@
 #import "DConnectDevicePlugin.h"
 #import "DConnectManager+Private.h"
 #import "DConnectAuthorizationProfile+Private.h"
-#import "DConnectNetworkServiceDiscoveryProfile.h"
+#import "DConnectServiceDiscoveryProfile.h"
 #import "DConnectSystemProfile.h"
 #import "DConnectConst.h"
 #import "LocalOAuth2Main.h"

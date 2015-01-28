@@ -39,7 +39,7 @@
 		AB1061B919809C4F0005BB3F /* DPSpheroDeviceOrientationProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = AB1061B819809C4F0005BB3F /* DPSpheroDeviceOrientationProfile.m */; };
 		AB917003196157D80084DB70 /* DPSpheroDevicePlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = AB916FF7196157D80084DB70 /* DPSpheroDevicePlugin.m */; };
 		AB917004196157D80084DB70 /* DPSpheroProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = AB916FF8196157D80084DB70 /* DPSpheroProfile.m */; };
-		AB917005196157D80084DB70 /* DPSpheroNetworkServiceDiscoveryProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = AB916FFA196157D80084DB70 /* DPSpheroNetworkServiceDiscoveryProfile.m */; };
+		AB917005196157D80084DB70 /* DPSpheroServiceDiscoveryProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = AB916FFA196157D80084DB70 /* DPSpheroServiceDiscoveryProfile.m */; };
 		AB917006196157D80084DB70 /* DPSpheroSensorProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = AB916FFC196157D80084DB70 /* DPSpheroSensorProfile.m */; };
 		AB917008196157D80084DB70 /* DPSpheroSystemProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = AB917000196157D80084DB70 /* DPSpheroSystemProfile.m */; };
 		AB91700D196158260084DB70 /* DConnectSpheroDevicePluginTests.m in Sources */ = {isa = PBXBuildFile; fileRef = AB91700C196158260084DB70 /* DConnectSpheroDevicePluginTests.m */; };
@@ -47,7 +47,7 @@
 		AB9170131961584F0084DB70 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = AB9170111961584F0084DB70 /* InfoPlist.strings */; };
 		AB917015196158EB0084DB70 /* DPSpheroDevicePlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = AB916FF7196157D80084DB70 /* DPSpheroDevicePlugin.m */; };
 		AB917016196158EB0084DB70 /* DPSpheroProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = AB916FF8196157D80084DB70 /* DPSpheroProfile.m */; };
-		AB917018196158EB0084DB70 /* DPSpheroNetworkServiceDiscoveryProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = AB916FFA196157D80084DB70 /* DPSpheroNetworkServiceDiscoveryProfile.m */; };
+		AB917018196158EB0084DB70 /* DPSpheroServiceDiscoveryProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = AB916FFA196157D80084DB70 /* DPSpheroServiceDiscoveryProfile.m */; };
 		AB91701A196158EB0084DB70 /* DPSpheroSensorProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = AB916FFC196157D80084DB70 /* DPSpheroSensorProfile.m */; };
 		AB91701E196158EB0084DB70 /* DPSpheroSystemProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = AB917000196157D80084DB70 /* DPSpheroSystemProfile.m */; };
 		AB91707219617E940084DB70 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABE8C5C5195800E70083D672 /* CoreFoundation.framework */; };
@@ -119,8 +119,8 @@
 		AB916FF6196157D80084DB70 /* DPSpheroDevicePlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DPSpheroDevicePlugin.h; path = dConnectDeviceSphero/Classes/DPSpheroDevicePlugin.h; sourceTree = SOURCE_ROOT; };
 		AB916FF7196157D80084DB70 /* DPSpheroDevicePlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DPSpheroDevicePlugin.m; path = dConnectDeviceSphero/Classes/DPSpheroDevicePlugin.m; sourceTree = SOURCE_ROOT; };
 		AB916FF8196157D80084DB70 /* DPSpheroProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DPSpheroProfile.m; path = dConnectDeviceSphero/Classes/DPSpheroProfile.m; sourceTree = SOURCE_ROOT; };
-		AB916FF9196157D80084DB70 /* DPSpheroNetworkServiceDiscoveryProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DPSpheroNetworkServiceDiscoveryProfile.h; path = dConnectDeviceSphero/Classes/DPSpheroNetworkServiceDiscoveryProfile.h; sourceTree = SOURCE_ROOT; };
-		AB916FFA196157D80084DB70 /* DPSpheroNetworkServiceDiscoveryProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DPSpheroNetworkServiceDiscoveryProfile.m; path = dConnectDeviceSphero/Classes/DPSpheroNetworkServiceDiscoveryProfile.m; sourceTree = SOURCE_ROOT; };
+		AB916FF9196157D80084DB70 /* DPSpheroServiceDiscoveryProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DPSpheroServiceDiscoveryProfile.h; path = dConnectDeviceSphero/Classes/DPSpheroServiceDiscoveryProfile.h; sourceTree = SOURCE_ROOT; };
+		AB916FFA196157D80084DB70 /* DPSpheroServiceDiscoveryProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DPSpheroServiceDiscoveryProfile.m; path = dConnectDeviceSphero/Classes/DPSpheroServiceDiscoveryProfile.m; sourceTree = SOURCE_ROOT; };
 		AB916FFB196157D80084DB70 /* DPSpheroSensorProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DPSpheroSensorProfile.h; path = dConnectDeviceSphero/Classes/DPSpheroSensorProfile.h; sourceTree = SOURCE_ROOT; };
 		AB916FFC196157D80084DB70 /* DPSpheroSensorProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DPSpheroSensorProfile.m; path = dConnectDeviceSphero/Classes/DPSpheroSensorProfile.m; sourceTree = SOURCE_ROOT; };
 		AB916FFF196157D80084DB70 /* DPSpheroSystemProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DPSpheroSystemProfile.h; path = dConnectDeviceSphero/Classes/DPSpheroSystemProfile.h; sourceTree = SOURCE_ROOT; };
@@ -205,8 +205,8 @@
 		AB8913B41974D1C90069CDA3 /* profile */ = {
 			isa = PBXGroup;
 			children = (
-				AB916FF9196157D80084DB70 /* DPSpheroNetworkServiceDiscoveryProfile.h */,
-				AB916FFA196157D80084DB70 /* DPSpheroNetworkServiceDiscoveryProfile.m */,
+				AB916FF9196157D80084DB70 /* DPSpheroServiceDiscoveryProfile.h */,
+				AB916FFA196157D80084DB70 /* DPSpheroServiceDiscoveryProfile.m */,
 				AB916FFB196157D80084DB70 /* DPSpheroSensorProfile.h */,
 				AB916FFC196157D80084DB70 /* DPSpheroSensorProfile.m */,
 				AB916FFF196157D80084DB70 /* DPSpheroSystemProfile.h */,
@@ -506,7 +506,7 @@
 				AB1061B919809C4F0005BB3F /* DPSpheroDeviceOrientationProfile.m in Sources */,
 				6611B37F19C28A830034893E /* DPGuideViewController.m in Sources */,
 				AB917016196158EB0084DB70 /* DPSpheroProfile.m in Sources */,
-				AB917018196158EB0084DB70 /* DPSpheroNetworkServiceDiscoveryProfile.m in Sources */,
+				AB917018196158EB0084DB70 /* DPSpheroServiceDiscoveryProfile.m in Sources */,
 				AB91701A196158EB0084DB70 /* DPSpheroSensorProfile.m in Sources */,
 				6611B2F019BFF5760034893E /* DPSpheroManager.m in Sources */,
 				AB1061AE197E3B290005BB3F /* DPSpheroDriveControllerProfile.m in Sources */,
@@ -521,7 +521,7 @@
 			files = (
 				AB917006196157D80084DB70 /* DPSpheroSensorProfile.m in Sources */,
 				AB917004196157D80084DB70 /* DPSpheroProfile.m in Sources */,
-				AB917005196157D80084DB70 /* DPSpheroNetworkServiceDiscoveryProfile.m in Sources */,
+				AB917005196157D80084DB70 /* DPSpheroServiceDiscoveryProfile.m in Sources */,
 				AB917008196157D80084DB70 /* DPSpheroSystemProfile.m in Sources */,
 				AB917003196157D80084DB70 /* DPSpheroDevicePlugin.m in Sources */,
 				AB91700D196158260084DB70 /* DConnectSpheroDevicePluginTests.m in Sources */,

@@ -47,7 +47,7 @@
 		AB1815E1196A3651000BE265 /* dConnectDeviceHueTests.m in Sources */ = {isa = PBXBuildFile; fileRef = AB1815E0196A3651000BE265 /* dConnectDeviceHueTests.m */; };
 		AB1815ED196A388B000BE265 /* DPHueDevicePlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = AB1815EC196A388B000BE265 /* DPHueDevicePlugin.m */; };
 		AB1815F1196A3B72000BE265 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = AB1815F0196A3B72000BE265 /* Info.plist */; };
-		AB181668196A3E89000BE265 /* DPHueNetworkServiceDiscoveryProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = AB181665196A3E89000BE265 /* DPHueNetworkServiceDiscoveryProfile.m */; };
+		AB181668196A3E89000BE265 /* DPHueServiceDiscoveryProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = AB181665196A3E89000BE265 /* DPHueServiceDiscoveryProfile.m */; };
 		AB181669196A3E89000BE265 /* DPHueSystemProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = AB181667196A3E89000BE265 /* DPHueSystemProfile.m */; };
 		AB181677196A6916000BE265 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB181676196A6916000BE265 /* CoreFoundation.framework */; };
 		AB18167D196A6916000BE265 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = AB18167B196A6916000BE265 /* InfoPlist.strings */; };
@@ -115,8 +115,8 @@
 		AB1815EB196A388B000BE265 /* DPHueDevicePlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHueDevicePlugin.h; sourceTree = "<group>"; };
 		AB1815EC196A388B000BE265 /* DPHueDevicePlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHueDevicePlugin.m; sourceTree = "<group>"; };
 		AB1815F0196A3B72000BE265 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		AB181664196A3E89000BE265 /* DPHueNetworkServiceDiscoveryProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHueNetworkServiceDiscoveryProfile.h; sourceTree = "<group>"; };
-		AB181665196A3E89000BE265 /* DPHueNetworkServiceDiscoveryProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHueNetworkServiceDiscoveryProfile.m; sourceTree = "<group>"; };
+		AB181664196A3E89000BE265 /* DPHueServiceDiscoveryProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHueServiceDiscoveryProfile.h; sourceTree = "<group>"; };
+		AB181665196A3E89000BE265 /* DPHueServiceDiscoveryProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHueServiceDiscoveryProfile.m; sourceTree = "<group>"; };
 		AB181666196A3E89000BE265 /* DPHueSystemProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHueSystemProfile.h; sourceTree = "<group>"; };
 		AB181667196A3E89000BE265 /* DPHueSystemProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHueSystemProfile.m; sourceTree = "<group>"; };
 		AB181675196A6916000BE265 /* dConnectDeviceHue_resources.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = dConnectDeviceHue_resources.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -325,8 +325,8 @@
 		AB8913B71974D2210069CDA3 /* profile */ = {
 			isa = PBXGroup;
 			children = (
-				AB181664196A3E89000BE265 /* DPHueNetworkServiceDiscoveryProfile.h */,
-				AB181665196A3E89000BE265 /* DPHueNetworkServiceDiscoveryProfile.m */,
+				AB181664196A3E89000BE265 /* DPHueServiceDiscoveryProfile.h */,
+				AB181665196A3E89000BE265 /* DPHueServiceDiscoveryProfile.m */,
 				AB181666196A3E89000BE265 /* DPHueSystemProfile.h */,
 				AB181667196A3E89000BE265 /* DPHueSystemProfile.m */,
 				AB181735196BE431000BE265 /* DPHueLightProfile.h */,
@@ -484,7 +484,7 @@
 				64278B6119B8ABAB00AC54E5 /* DPHueSettingViewController1.m in Sources */,
 				64278B6719B8AC6C00AC54E5 /* DPHueSettingViewController3.m in Sources */,
 				64278B6419B8AC5100AC54E5 /* DPHueSettingViewController2.m in Sources */,
-				AB181668196A3E89000BE265 /* DPHueNetworkServiceDiscoveryProfile.m in Sources */,
+				AB181668196A3E89000BE265 /* DPHueServiceDiscoveryProfile.m in Sources */,
 				AB181737196BE431000BE265 /* DPHueLightProfile.m in Sources */,
 				AB181669196A3E89000BE265 /* DPHueSystemProfile.m in Sources */,
 				64A6938A19BBEBBC0084D904 /* DPHueItemBridge.m in Sources */,

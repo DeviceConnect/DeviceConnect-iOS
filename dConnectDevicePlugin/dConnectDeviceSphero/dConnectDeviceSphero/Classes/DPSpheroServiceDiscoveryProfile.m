@@ -1,5 +1,5 @@
 //
-//  DPSpheroNetworkServiceDiscoveryProfile.m
+//  DPSpheroServiceDiscoveryProfile.m
 //  DConnectSDK
 //
 //  Copyright (c) 2014 NTT DOCOMO, INC.
@@ -7,11 +7,11 @@
 //  http://opensource.org/licenses/mit-license.php
 //
 
-#import "DPSpheroNetworkServiceDiscoveryProfile.h"
+#import "DPSpheroServiceDiscoveryProfile.h"
 #import "DPSpheroDevicePlugin.h"
 #import "DPSpheroManager.h"
 
-@implementation DPSpheroNetworkServiceDiscoveryProfile
+@implementation DPSpheroServiceDiscoveryProfile
 
 // 初期化
 - (id)init
@@ -25,7 +25,7 @@
 }
 
 //  dConnect Managerに接続されている、デバイスプラグイン対応デバイス一覧を取得する。
-- (BOOL) profile:(DConnectNetworkServiceDiscoveryProfile *)profile didReceiveGetGetNetworkServicesRequest:(DConnectRequestMessage *)request response:(DConnectResponseMessage *)response
+- (BOOL) profile:(DConnectServiceDiscoveryProfile *)profile didReceiveGetGetNetworkServicesRequest:(DConnectRequestMessage *)request response:(DConnectResponseMessage *)response
 {
     DConnectArray *services = [DConnectArray array];
     
@@ -33,15 +33,15 @@
     for (NSDictionary *device in deviceList) {
         DConnectMessage *service = [DConnectMessage new];
         
-        [DConnectNetworkServiceDiscoveryProfile setId:device[@"id"] target:service];
-        [DConnectNetworkServiceDiscoveryProfile setName:device[@"name"] target:service];
-        [DConnectNetworkServiceDiscoveryProfile setType:DConnectNetworkServiceDiscoveryProfileNetworkTypeBluetooth
+        [DConnectServiceDiscoveryProfile setId:device[@"id"] target:service];
+        [DConnectServiceDiscoveryProfile setName:device[@"name"] target:service];
+        [DConnectServiceDiscoveryProfile setType:DConnectServiceDiscoveryProfileNetworkTypeBluetooth
                                                  target:service];
-        [DConnectNetworkServiceDiscoveryProfile setOnline:YES target:service];
+        [DConnectServiceDiscoveryProfile setOnline:YES target:service];
         [services addMessage:service];
     }
     [response setResult:DConnectMessageResultTypeOk];
-    [DConnectNetworkServiceDiscoveryProfile setServices:services target:response];
+    [DConnectServiceDiscoveryProfile setServices:services target:response];
     return YES;
 }
 

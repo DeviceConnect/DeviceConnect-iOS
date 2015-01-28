@@ -45,7 +45,7 @@ NSString *const TestSystemVersion = @"1.0";
         [supports addString:DConnectFileProfileName];
         [supports addString:DConnectMediaStreamRecordingProfileName];
         [supports addString:DConnectMediaPlayerProfileName];
-        [supports addString:DConnectNetworkServiceDiscoveryProfileName];
+        [supports addString:DConnectServiceDiscoveryProfileName];
         [supports addString:DConnectPhoneProfileName];
         [supports addString:DConnectProximityProfileName];
         [supports addString:DConnectSettingsProfileName];

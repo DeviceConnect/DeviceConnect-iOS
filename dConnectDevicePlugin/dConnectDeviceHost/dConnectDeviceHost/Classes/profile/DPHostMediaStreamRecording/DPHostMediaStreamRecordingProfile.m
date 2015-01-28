@@ -11,7 +11,7 @@
 #import <DConnectSDK/DConnectFileManager.h>
 
 #import "DPHostDevicePlugin.h"
-#import "DPHostNetworkServiceDiscoveryProfile.h"
+#import "DPHostServiceDiscoveryProfile.h"
 #import "DPHostMediaStreamRecordingProfile.h"
 #import "DPHostRecorderContext.h"
 #import "DPHostUtils.h"
@@ -537,7 +537,7 @@ typedef NS_ENUM(NSUInteger, OptionIndex) {
     });
     
     // イベントの取得
-    NSArray *evts = [_eventMgr eventListForServiceId:NetworkDiscoveryServiceId
+    NSArray *evts = [_eventMgr eventListForServiceId:ServiceDiscoveryServiceId
                                             profile:DConnectMediaStreamRecordingProfileName
                                           attribute:DConnectMediaStreamRecordingProfileAttrOnPhoto];
     // イベント送信
@@ -564,7 +564,7 @@ typedef NS_ENUM(NSUInteger, OptionIndex) {
                                  errorMessage:(NSString *)errorMsg
 {
     // イベントの取得
-    NSArray *evts = [_eventMgr eventListForServiceId:NetworkDiscoveryServiceId
+    NSArray *evts = [_eventMgr eventListForServiceId:ServiceDiscoveryServiceId
                                             profile:DConnectMediaStreamRecordingProfileName
                                           attribute:DConnectMediaStreamRecordingProfileAttrOnPhoto];
     // イベント送信
@@ -645,7 +645,7 @@ typedef NS_ENUM(NSUInteger, OptionIndex) {
         }
         
         // イベントの取得
-        evts = [_eventMgr eventListForServiceId:NetworkDiscoveryServiceId
+        evts = [_eventMgr eventListForServiceId:ServiceDiscoveryServiceId
                                        profile:DConnectMediaStreamRecordingProfileName
                                      attribute:DConnectMediaStreamRecordingProfileAttrOnDataAvailable];
         

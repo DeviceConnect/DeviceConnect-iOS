@@ -12,7 +12,7 @@
 
 NSString *const TestDevicePluginAppName = @"Test Device Plugin v0.1";
 
-// Network Service Discoveryの定数
+// Service Discoveryの定数
 
 NSString *const TestDevicePluginName = @"TestDevicePlugin";
 NSString *const TestDevicePluginId = @"0";
@@ -33,7 +33,7 @@ const long TestDevicePluginBatteryDischargingTime = 10000;
 const float TestDevicePluginBatteryLevel = 0.5;
 
 
-@interface TestDevicePlugin : DConnectDevicePlugin <DConnectNetworkServiceDiscoveryProfileDelegate, DConnectSystemProfileDelegate, DConnectBatteryProfileDelegate, DConnectSystemProfileDataSource>
+@interface TestDevicePlugin : DConnectDevicePlugin <DConnectServiceDiscoveryProfileDelegate, DConnectSystemProfileDelegate, DConnectBatteryProfileDelegate, DConnectSystemProfileDataSource>
 
 /*!
  * サービスIDの正当性をチェックする.
@@ -55,8 +55,8 @@ const float TestDevicePluginBatteryLevel = 0.5;
         // イベント管理クラス
         [DConnectEventManager sharedManagerForClass:[self class]];
         
-        // Network Service Discovery Profileの追加
-        DConnectNetworkServiceDiscoveryProfile *networkProfile = [DConnectNetworkServiceDiscoveryProfile new];
+        // Service Discovery Profileの追加
+        DConnectServiceDiscoveryProfile *networkProfile = [DConnectServiceDiscoveryProfile new];
         networkProfile.delegate = self;
         
         // System Profileの追加
@@ -83,24 +83,24 @@ const float TestDevicePluginBatteryLevel = 0.5;
 }
 
 
-#pragma mark - DConnectNetworkServiceDiscoveryProfileDelegate
+#pragma mark - DConnectServiceDiscoveryProfileDelegate
 
-- (BOOL)                       profile:(DConnectNetworkServiceDiscoveryProfile *)profile
+- (BOOL)                       profile:(DConnectServiceDiscoveryProfile *)profile
 didReceiveGetGetNetworkServicesRequest:(DConnectRequestMessage *)request
                               response:(DConnectResponseMessage *)response
 {
     DConnectArray *services = [DConnectArray array];
     
     DConnectMessage *service = [DConnectMessage message];
-    [DConnectNetworkServiceDiscoveryProfile setId:TestDevicePluginId target:service];
-    [DConnectNetworkServiceDiscoveryProfile setName:TestDevicePluginName target:service];
-    [DConnectNetworkServiceDiscoveryProfile setType:TestDevicePluginType
+    [DConnectServiceDiscoveryProfile setId:TestDevicePluginId target:service];
+    [DConnectServiceDiscoveryProfile setName:TestDevicePluginName target:service];
+    [DConnectServiceDiscoveryProfile setType:TestDevicePluginType
                                              target:service];
-    [DConnectNetworkServiceDiscoveryProfile setOnline:YES target:service];
+    [DConnectServiceDiscoveryProfile setOnline:YES target:service];
     [services addMessage:service];
     
     [response setInteger:DConnectMessageResultTypeOk forKey:DConnectMessageResult];
-    [response setArray:services forKey:DConnectNetworkServiceDiscoveryProfileParamServices];
+    [response setArray:services forKey:DConnectServiceDiscoveryProfileParamServices];
     
     return YES;
 }

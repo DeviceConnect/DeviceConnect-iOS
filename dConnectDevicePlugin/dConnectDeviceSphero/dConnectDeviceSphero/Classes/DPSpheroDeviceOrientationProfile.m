@@ -10,7 +10,7 @@
 #import "DPSpheroDeviceOrientationProfile.h"
 #import "DPSpheroDevicePlugin.h"
 #import "DPSpheroManager.h"
-#import "DPSpheroNetworkServiceDiscoveryProfile.h"
+#import "DPSpheroServiceDiscoveryProfile.h"
 
 @interface DPSpheroDeviceOrientationProfile() <DPSpheroManagerOrientationDelegate>
 @end

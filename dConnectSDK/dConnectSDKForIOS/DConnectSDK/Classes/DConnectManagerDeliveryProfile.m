@@ -12,7 +12,7 @@
 #import "DConnectManager+Private.h"
 #import "DConnectDevicePluginManager.h"
 #import "DConnectAuthorizationProfile.h"
-#import "DConnectNetworkServiceDiscoveryProfile.h"
+#import "DConnectServiceDiscoveryProfile.h"
 #import "DConnectSystemProfile.h"
 #import "DConnectUtil.h"
 #import "DConnectLocalOAuthDB.h"

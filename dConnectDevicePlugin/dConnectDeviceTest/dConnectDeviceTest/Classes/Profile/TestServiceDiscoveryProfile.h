@@ -1,5 +1,5 @@
 //
-//  TestNetworkServiceDiscoveryProfile.h
+//  TestServiceDiscoveryProfile.h
 //  DConnectSDK
 //
 //  Copyright (c) 2014 NTT DOCOMO, INC.
@@ -11,8 +11,8 @@
 
 @class DeviceTestPlugin;
 
-@interface TestNetworkServiceDiscoveryProfile :
-DConnectNetworkServiceDiscoveryProfile<DConnectNetworkServiceDiscoveryProfileDelegate>
+@interface TestServiceDiscoveryProfile :
+DConnectServiceDiscoveryProfile<DConnectServiceDiscoveryProfileDelegate>
 
 @property (nonatomic, strong) DeviceTestPlugin *plugin;
 - (id) initWithDevicePlugin:(DeviceTestPlugin *)plugin;

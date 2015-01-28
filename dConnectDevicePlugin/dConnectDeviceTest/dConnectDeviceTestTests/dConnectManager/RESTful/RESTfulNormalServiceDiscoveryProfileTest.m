@@ -1,5 +1,5 @@
 //
-//  RESTfulNormalNetworkServiceDiscoveryProfileTest.m
+//  RESTfulNormalServiceDiscoveryProfileTest.m
 //  DConnectSDK
 //
 //  Copyright (c) 2014 NTT DOCOMO, INC.
@@ -9,23 +9,23 @@
 
 #import "RESTfulTestCase.h"
 
-@interface RESTfulNormalNetworkServiceDiscoveryProfileTest : RESTfulTestCase
+@interface RESTfulNormalServiceDiscoveryProfileTest : RESTfulTestCase
 
 @end
 
 /*!
- * @class RESTfulNormalNetworkServiceDiscoveryProfileTest
- * @brief Network Service Discoveryプロファイルの正常系テスト.
+ * @class RESTfulNormalServiceDiscoveryProfileTest
+ * @brief Service Discoveryプロファイルの正常系テスト.
  * @author NTT DOCOMO, INC.
  */
-@implementation RESTfulNormalNetworkServiceDiscoveryProfileTest
+@implementation RESTfulNormalServiceDiscoveryProfileTest
 
 /*!
  * @brief デバイス一覧取得リクエストを送信するテスト.
  * <pre>
  * 【HTTP通信】
  * Method: GET
- * Path: /network_service_discovery/getnetworkservices
+ * Path: /servicediscovery
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -34,9 +34,9 @@
  * ・servicesの中に「Test Success Device」のnameを持ったサービスが存在すること。
  * </pre>
  */
-- (void) testHttpNormalNetworkServiceDiscoveryGetNetworkServicesGet
+- (void) testHttpNormalServiceDiscoveryGetNetworkServicesGet
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/network_service_discovery/getnetworkservices"];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/servicediscovery"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
     
@@ -52,11 +52,11 @@
                                                                      error:nil];
     XCTAssertNotNil(actualResponse);
     
-    NSArray *services = [actualResponse objectForKey:DConnectNetworkServiceDiscoveryProfileParamServices];
+    NSArray *services = [actualResponse objectForKey:DConnectServiceDiscoveryProfileParamServices];
     XCTAssertTrue(services.count > 0);
     BOOL found = NO;
     for (NSDictionary *service in services) {
-        NSString *deviceName = [service objectForKey:DConnectNetworkServiceDiscoveryProfileParamName];
+        NSString *deviceName = [service objectForKey:DConnectServiceDiscoveryProfileParamName];
         if ([deviceName isEqualToString:@"Test Success Device"]) {
             found = YES;
             break;
@@ -70,7 +70,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: GET and DELETE
- * Path: /network_service_discovery/getnetworkservices
+ * Path: /servicediscovery
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -78,10 +78,10 @@
  * ・Test Success Device」のnameを持ったサービスの通知をうけること。
  * </pre>
  */
-- (void) testHttpNormalNetworkServiceDiscoveryOnServiceChangeEvent
+- (void) testHttpNormalServiceDiscoveryOnServiceChangeEvent
 {
     // イベント登録
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/network_service_discovery/onservicechange?sessionKey=%@", self.clientId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/servicediscovery/onservicechange?sessionKey=%@", self.clientId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     CHECK_RESPONSE(@"{\"result\":0}", request);
@@ -93,10 +93,10 @@
     CHECK_RESPONSE(@"{\"result\":0}", request);
     
     // 受信したイベントのチェック
-    CHECK_EVENT(@"{\"profile\":\"network_service_discovery\",\"attribute\":\"onservicechange\",\"sessionKey\":\"test_client\",\"networkService\":{\"id\":\"test_service_id.DeviceTestPlugin.dconnect\",\"name\":\"Test Success Device\",\"online\":true,\"state\":true,\"type\":\"TEST\",\"config\":\"test config\"}}");
+    CHECK_EVENT(@"{\"profile\":\"servicediscovery\",\"attribute\":\"onservicechange\",\"sessionKey\":\"test_client\",\"networkService\":{\"id\":\"test_service_id.DeviceTestPlugin.dconnect\",\"name\":\"Test Success Device\",\"online\":true,\"state\":true,\"type\":\"TEST\",\"config\":\"test config\"}}");
     
     // イベント登録解除
-    uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/network_service_discovery/onservicechange?sessionKey=%@", self.clientId]];
+    uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/servicediscovery/onservicechange?sessionKey=%@", self.clientId]];
     request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     CHECK_RESPONSE(@"{\"result\":0}", request);

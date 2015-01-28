@@ -1,5 +1,5 @@
 //
-//  DPHostNetworkServiceDiscoveryProfile.m
+//  DPHostServiceDiscoveryProfile.m
 //  DConnectSDK
 //
 //  Copyright (c) 2014 NTT DOCOMO, INC.
@@ -10,11 +10,11 @@
 #import <UIKit/UIKit.h>
 #import <DConnectSDK/DConnectMessage.h>
 
-#import "DPHostNetworkServiceDiscoveryProfile.h"
+#import "DPHostServiceDiscoveryProfile.h"
 
-NSString *const NetworkDiscoveryServiceId = @"host";
+NSString *const ServiceDiscoveryServiceId = @"host";
 
-@implementation DPHostNetworkServiceDiscoveryProfile
+@implementation DPHostServiceDiscoveryProfile
 
 - (instancetype)init
 {
@@ -25,10 +25,10 @@ NSString *const NetworkDiscoveryServiceId = @"host";
     return self;
 }
 
-#pragma mark - DConnectNetworkServiceDiscoveryProfileDelegate
+#pragma mark - DConnectServiceDiscoveryProfileDelegate
 #pragma mark Get Methods
 
-- (BOOL)                       profile:(DConnectNetworkServiceDiscoveryProfile *)profile
+- (BOOL)                       profile:(DConnectServiceDiscoveryProfile *)profile
 didReceiveGetGetNetworkServicesRequest:(DConnectRequestMessage *)request
                               response:(DConnectResponseMessage *)response
 {
@@ -39,15 +39,15 @@ didReceiveGetGetNetworkServicesRequest:(DConnectRequestMessage *)request
     DConnectArray *services = [DConnectArray array];
     
     DConnectMessage *service = [DConnectMessage message];
-    [DConnectNetworkServiceDiscoveryProfile setId:NetworkDiscoveryServiceId target:service];
-    [DConnectNetworkServiceDiscoveryProfile setName:name target:service];
-    [DConnectNetworkServiceDiscoveryProfile setOnline:YES target:service];
+    [DConnectServiceDiscoveryProfile setId:ServiceDiscoveryServiceId target:service];
+    [DConnectServiceDiscoveryProfile setName:name target:service];
+    [DConnectServiceDiscoveryProfile setOnline:YES target:service];
     NSString *config = [NSString stringWithFormat:@"{\"OS\":\"%@ %@\"}",
                         device.systemName, device.systemVersion];
-    [DConnectNetworkServiceDiscoveryProfile setConfig:config target:service];
+    [DConnectServiceDiscoveryProfile setConfig:config target:service];
     [services addMessage:service];
 
-    [DConnectNetworkServiceDiscoveryProfile setServices:services target:response];
+    [DConnectServiceDiscoveryProfile setServices:services target:response];
     
     [response setResult:DConnectMessageResultTypeOk];
     
@@ -56,7 +56,7 @@ didReceiveGetGetNetworkServicesRequest:(DConnectRequestMessage *)request
 
 #pragma mark - Put Methods
 
-- (BOOL)                    profile:(DConnectNetworkServiceDiscoveryProfile *)profile
+- (BOOL)                    profile:(DConnectServiceDiscoveryProfile *)profile
 didReceivePutOnServiceChangeRequest:(DConnectRequestMessage *)request
                            response:(DConnectResponseMessage *)response
                            serviceId:(NSString *)serviceId
@@ -73,7 +73,7 @@ didReceivePutOnServiceChangeRequest:(DConnectRequestMessage *)request
 
 #pragma mark - Delete Methods
 
-- (BOOL)                       profile:(DConnectNetworkServiceDiscoveryProfile *)profile
+- (BOOL)                       profile:(DConnectServiceDiscoveryProfile *)profile
 didReceiveDeleteOnServiceChangeRequest:(DConnectRequestMessage *)request
                               response:(DConnectResponseMessage *)response
                               serviceId:(NSString *)serviceId

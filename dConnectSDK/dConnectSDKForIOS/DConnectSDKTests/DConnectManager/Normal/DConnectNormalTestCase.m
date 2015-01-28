@@ -34,7 +34,7 @@ int DConnectPort = 8080;
 }
 
 - (void) searchTestDevicePlugin {
-    NSURL *url = [NSURL URLWithString:@"http://localhost:8080/network_service_discovery/getnetworkservices"];
+    NSURL *url = [NSURL URLWithString:@"http://localhost:8080/servicediscovery"];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     NSURLResponse *response = nil;
     NSError *error = nil;
@@ -54,11 +54,11 @@ int DConnectPort = 8080;
     XCTAssert([result intValue] == DConnectMessageResultTypeOk);
     
     // デバイスのチェック
-    NSArray *services = [dic objectForKey:DConnectNetworkServiceDiscoveryProfileParamServices];
+    NSArray *services = [dic objectForKey:DConnectServiceDiscoveryProfileParamServices];
     for (int i = 0; i < [services count]; i++) {
         NSDictionary *s = (NSDictionary *)[services objectAtIndex:i];
-        NSString *name = [s objectForKey:DConnectNetworkServiceDiscoveryProfileParamName];
-        NSString *serviceId = [s objectForKey:DConnectNetworkServiceDiscoveryProfileParamId];
+        NSString *name = [s objectForKey:DConnectServiceDiscoveryProfileParamName];
+        NSString *serviceId = [s objectForKey:DConnectServiceDiscoveryProfileParamId];
         if ([TestDevicePluginName isEqualToString:name]) {
             self.serviceId = serviceId;
         }

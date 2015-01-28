@@ -1,5 +1,5 @@
 //
-//  DConnectNetworkServiceDiscoveryProfile.m
+//  DConnectServiceDiscoveryProfile.m
 //  dConnectManager
 //
 //  Copyright (c) 2014 NTT DOCOMO,INC.
@@ -7,38 +7,37 @@
 //  http://opensource.org/licenses/mit-license.php
 //
 
-#import "DConnectNetworkServiceDiscoveryProfile.h"
+#import "DConnectServiceDiscoveryProfile.h"
 
-NSString *const DConnectNetworkServiceDiscoveryProfileName = @"network_service_discovery";
-NSString *const DConnectNetworkServiceDiscoveryProfileAttrGetNetworkServices = @"getnetworkservices";
-NSString *const DConnectNetworkServiceDiscoveryProfileAttrOnServiceChange = @"onservicechange";
-NSString *const DConnectNetworkServiceDiscoveryProfileParamNetworkService = @"networkService";
-NSString *const DConnectNetworkServiceDiscoveryProfileParamServices = @"services";
-NSString *const DConnectNetworkServiceDiscoveryProfileParamState = @"state";
-NSString *const DConnectNetworkServiceDiscoveryProfileParamId = @"id";
-NSString *const DConnectNetworkServiceDiscoveryProfileParamName = @"name";
-NSString *const DConnectNetworkServiceDiscoveryProfileParamType = @"type";
-NSString *const DConnectNetworkServiceDiscoveryProfileParamOnline = @"online";
-NSString *const DConnectNetworkServiceDiscoveryProfileParamConfig = @"config";
+NSString *const DConnectServiceDiscoveryProfileName = @"servicediscovery";
+NSString *const DConnectServiceDiscoveryProfileAttrOnServiceChange = @"onservicechange";
+NSString *const DConnectServiceDiscoveryProfileParamNetworkService = @"networkService";
+NSString *const DConnectServiceDiscoveryProfileParamServices = @"services";
+NSString *const DConnectServiceDiscoveryProfileParamState = @"state";
+NSString *const DConnectServiceDiscoveryProfileParamId = @"id";
+NSString *const DConnectServiceDiscoveryProfileParamName = @"name";
+NSString *const DConnectServiceDiscoveryProfileParamType = @"type";
+NSString *const DConnectServiceDiscoveryProfileParamOnline = @"online";
+NSString *const DConnectServiceDiscoveryProfileParamConfig = @"config";
 
-NSString *const DConnectNetworkServiceDiscoveryProfileNetworkTypeUnknown = @"Unknown";
-NSString *const DConnectNetworkServiceDiscoveryProfileNetworkTypeWiFi = @"WiFi";
-NSString *const DConnectNetworkServiceDiscoveryProfileNetworkTypeBluetooth = @"Bluetooth";
-NSString *const DConnectNetworkServiceDiscoveryProfileNetworkTypeNFC = @"NFC";
-NSString *const DConnectNetworkServiceDiscoveryProfileNetworkTypeBLE = @"BLE";
+NSString *const DConnectServiceDiscoveryProfileNetworkTypeUnknown = @"Unknown";
+NSString *const DConnectServiceDiscoveryProfileNetworkTypeWiFi = @"WiFi";
+NSString *const DConnectServiceDiscoveryProfileNetworkTypeBluetooth = @"Bluetooth";
+NSString *const DConnectServiceDiscoveryProfileNetworkTypeNFC = @"NFC";
+NSString *const DConnectServiceDiscoveryProfileNetworkTypeBLE = @"BLE";
 
-@interface DConnectNetworkServiceDiscoveryProfile()
+@interface DConnectServiceDiscoveryProfile()
 
 - (BOOL) hasMethod:(SEL)method response:(DConnectResponseMessage *)response;
 
 @end
 
-@implementation DConnectNetworkServiceDiscoveryProfile
+@implementation DConnectServiceDiscoveryProfile
 
 #pragma mark - DConnectProfile Methods -
 
 - (NSString *) profileName {
-    return DConnectNetworkServiceDiscoveryProfileName;
+    return DConnectServiceDiscoveryProfileName;
 }
 
 - (BOOL) didReceiveGetRequest:(DConnectRequestMessage *)request response:(DConnectResponseMessage *)response {
@@ -49,8 +48,9 @@ NSString *const DConnectNetworkServiceDiscoveryProfileNetworkTypeBLE = @"BLE";
         return send;
     }
     
+    NSString *inter = [request interface];
     NSString *attribute = [request attribute];
-    if ([attribute isEqualToString:DConnectNetworkServiceDiscoveryProfileAttrGetNetworkServices]) {
+    if (!inter && !attribute) {
         if ([self hasMethod:@selector(profile:didReceiveGetGetNetworkServicesRequest:response:) response:response]) {
             send = [_delegate profile:self didReceiveGetGetNetworkServicesRequest:request response:response];
         }
@@ -70,7 +70,7 @@ NSString *const DConnectNetworkServiceDiscoveryProfileNetworkTypeBLE = @"BLE";
     }
     
     NSString *attribute = [request attribute];
-    if ([attribute isEqualToString:DConnectNetworkServiceDiscoveryProfileAttrOnServiceChange]) {
+    if ([attribute isEqualToString:DConnectServiceDiscoveryProfileAttrOnServiceChange]) {
         if ([self hasMethod:@selector(profile:didReceivePutOnServiceChangeRequest:response:serviceId:sessionKey:) response:response]) {
             send = [_delegate profile:self didReceivePutOnServiceChangeRequest:request response:response
                              serviceId:[request serviceId] sessionKey:[request sessionKey]];
@@ -91,7 +91,7 @@ NSString *const DConnectNetworkServiceDiscoveryProfileNetworkTypeBLE = @"BLE";
     }
     
     NSString *attribute = [request attribute];
-    if ([attribute isEqualToString:DConnectNetworkServiceDiscoveryProfileAttrOnServiceChange]) {
+    if ([attribute isEqualToString:DConnectServiceDiscoveryProfileAttrOnServiceChange]) {
         if ([self hasMethod:@selector(profile:didReceiveDeleteOnServiceChangeRequest:response:serviceId:sessionKey:) response:response]) {
             send = [_delegate profile:self didReceiveDeleteOnServiceChangeRequest:request response:response
                              serviceId:[request serviceId] sessionKey:[request sessionKey]];
@@ -105,35 +105,35 @@ NSString *const DConnectNetworkServiceDiscoveryProfileNetworkTypeBLE = @"BLE";
 
 #pragma mark - Setter
 + (void) setServices:(DConnectArray *)services target:(DConnectMessage *)message {
-    [message setArray:services forKey:DConnectNetworkServiceDiscoveryProfileParamServices];
+    [message setArray:services forKey:DConnectServiceDiscoveryProfileParamServices];
 }
 
 + (void) setNetworkService:(DConnectMessage *)networkService target:(DConnectMessage *)message {
-    [message setMessage:networkService forKey:DConnectNetworkServiceDiscoveryProfileParamNetworkService];
+    [message setMessage:networkService forKey:DConnectServiceDiscoveryProfileParamNetworkService];
 }
 
 + (void) setId:(NSString *)id target:(DConnectMessage *)message {
-    [message setString:id forKey:DConnectNetworkServiceDiscoveryProfileParamId];
+    [message setString:id forKey:DConnectServiceDiscoveryProfileParamId];
 }
 
 + (void) setName:(NSString *)name target:(DConnectMessage *)message {
-    [message setString:name forKey:DConnectNetworkServiceDiscoveryProfileParamName];
+    [message setString:name forKey:DConnectServiceDiscoveryProfileParamName];
 }
 
 + (void) setType:(NSString *)type target:(DConnectMessage *)message {
-    [message setString:type forKey:DConnectNetworkServiceDiscoveryProfileParamType];
+    [message setString:type forKey:DConnectServiceDiscoveryProfileParamType];
 }
 
 + (void) setOnline:(BOOL)online target:(DConnectMessage *)message {
-    [message setBool:online forKey:DConnectNetworkServiceDiscoveryProfileParamOnline];
+    [message setBool:online forKey:DConnectServiceDiscoveryProfileParamOnline];
 }
 
 + (void) setConfig:(NSString *)config target:(DConnectMessage *)message {
-    [message setString:config forKey:DConnectNetworkServiceDiscoveryProfileParamConfig];
+    [message setString:config forKey:DConnectServiceDiscoveryProfileParamConfig];
 }
 
 + (void) setState:(BOOL)state target:(DConnectMessage *)message {
-    [message setBool:state forKey:DConnectNetworkServiceDiscoveryProfileParamState];
+    [message setBool:state forKey:DConnectServiceDiscoveryProfileParamState];
 }
 
 #pragma mark - Private Methods

@@ -8,7 +8,7 @@
 //
 
 #import "DPPebbleDevicePlugin.h"
-#import "DPPebbleNetworkServiceDiscoveryProfile.h"
+#import "DPPebbleServiceDiscoveryProfile.h"
 #import "DPPebbleSystemProfile.h"
 #import "DPPebbleBatteryProfile.h"
 #import "DPPebbleFileProfile.h"
@@ -38,7 +38,7 @@
 		[[DConnectEventManager sharedManagerForClass:key] setController:[DConnectDBCacheController controllerWithClass:key]];
 		
 		// 各プロファイルの追加
-		[self addProfile:[DPPebbleNetworkServiceDiscoveryProfile new]];
+		[self addProfile:[DPPebbleServiceDiscoveryProfile new]];
 		[self addProfile:[DPPebbleNotificationProfile new]];
 		[self addProfile:[DPPebbleSystemProfile new]];
 		[self addProfile:[DPPebbleBatteryProfile new]];

@@ -9,7 +9,7 @@
 
 #import "DPHostDevicePlugin.h"
 #import "DPHostNotificationProfile.h"
-#import "DPHostNetworkServiceDiscoveryProfile.h"
+#import "DPHostServiceDiscoveryProfile.h"
 #import "DPHostUtils.h"
 
 /*!
@@ -101,7 +101,7 @@ typedef NS_ENUM(NSUInteger, NotificationIndex) {
 - (void) sendOnClickEventWithNotificaitonId:(NSString *)notificationId serviceId:(NSString *)serviceId
 {
     // イベントの取得
-    NSArray *evts = [_eventMgr eventListForServiceId:NetworkDiscoveryServiceId
+    NSArray *evts = [_eventMgr eventListForServiceId:ServiceDiscoveryServiceId
                                             profile:DConnectNotificationProfileName
                                           attribute:DConnectNotificationProfileAttrOnClick];
     // イベント送信
@@ -116,7 +116,7 @@ typedef NS_ENUM(NSUInteger, NotificationIndex) {
 - (void) sendOnShowEventWithNotificaitonId:(NSString *)notificationId serviceId:(NSString *)serviceId
 {
     // イベントの取得
-    NSArray *evts = [_eventMgr eventListForServiceId:NetworkDiscoveryServiceId
+    NSArray *evts = [_eventMgr eventListForServiceId:ServiceDiscoveryServiceId
                                             profile:DConnectNotificationProfileName
                                           attribute:DConnectNotificationProfileAttrOnShow];
     // イベント送信
@@ -131,7 +131,7 @@ typedef NS_ENUM(NSUInteger, NotificationIndex) {
 - (void) sendOnCloseEventWithNotificaitonId:(NSString *)notificationId serviceId:(NSString *)serviceId
 {
     // イベントの取得
-    NSArray *evts = [_eventMgr eventListForServiceId:NetworkDiscoveryServiceId
+    NSArray *evts = [_eventMgr eventListForServiceId:ServiceDiscoveryServiceId
                                             profile:DConnectNotificationProfileName
                                           attribute:DConnectNotificationProfileAttrOnClose];
     // イベント送信

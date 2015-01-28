@@ -1,5 +1,5 @@
 //
-//  DConnectNetworkServiceDiscoveryProfile.h
+//  DConnectServiceDiscoveryProfile.h
 //  dConnectManager
 //
 //  Copyright (c) 2014 NTT DOCOMO,INC.
@@ -9,98 +9,93 @@
 
 /*! 
  @file
- @brief Network Service Discoveryプロファイルを実装するための機能を提供する。
+ @brief Service Discoveryプロファイルを実装するための機能を提供する。
  @author NTT DOCOMO
  */
 #import <DConnectSDK/DConnectProfile.h>
 
 /*!
- @brief プロファイル名: network_service_discovery。
+ @brief プロファイル名: servicediscovery。
  */
-extern NSString *const DConnectNetworkServiceDiscoveryProfileName;
-
-/*!
- @brief アトリビュート: getnetworkservices。
- */
-extern NSString *const DConnectNetworkServiceDiscoveryProfileAttrGetNetworkServices;
+extern NSString *const DConnectServiceDiscoveryProfileName;
 
 /*!
  @brief アトリビュート: onservicechange。
  */
-extern NSString *const DConnectNetworkServiceDiscoveryProfileAttrOnServiceChange;
+extern NSString *const DConnectServiceDiscoveryProfileAttrOnServiceChange;
 
 /*!
  @brief パラメータ: networkService。
  */
 
-extern NSString *const DConnectNetworkServiceDiscoveryProfileParamNetworkService;
+extern NSString *const DConnectServiceDiscoveryProfileParamNetworkService;
 
 /*!
  @brief パラメータ: services。
  */
-extern NSString *const DConnectNetworkServiceDiscoveryProfileParamServices;
+extern NSString *const DConnectServiceDiscoveryProfileParamServices;
 
 /*!
  @brief パラメータ: state。
  */
 
-extern NSString *const DConnectNetworkServiceDiscoveryProfileParamState;
+extern NSString *const DConnectServiceDiscoveryProfileParamState;
 
 /*!
  @brief パラメータ: id。
  */
-extern NSString *const DConnectNetworkServiceDiscoveryProfileParamId;
+extern NSString *const DConnectServiceDiscoveryProfileParamId;
 
 /*!
  @brief パラメータ: name。
  */
-extern NSString *const DConnectNetworkServiceDiscoveryProfileParamName;
+extern NSString *const DConnectServiceDiscoveryProfileParamName;
 
 /*!
  @brief パラメータ: type。
  */
-extern NSString *const DConnectNetworkServiceDiscoveryProfileParamType;
+extern NSString *const DConnectServiceDiscoveryProfileParamType;
 
 /*!
  @brief パラメータ: online。
  */
-extern NSString *const DConnectNetworkServiceDiscoveryProfileParamOnline;
+extern NSString *const DConnectServiceDiscoveryProfileParamOnline;
 
 /*!
  @brief パラメータ: config。
  */
-extern NSString *const DConnectNetworkServiceDiscoveryProfileParamConfig;
+extern NSString *const DConnectServiceDiscoveryProfileParamConfig;
 
 /*!
  @brief ネットワークタイプ: unknown。
  */
-extern NSString *const DConnectNetworkServiceDiscoveryProfileNetworkTypeUnknown;
+extern NSString *const DConnectServiceDiscoveryProfileNetworkTypeUnknown;
 /*!
  @brief ネットワークタイプ: wifi。
  */
-extern NSString *const DConnectNetworkServiceDiscoveryProfileNetworkTypeWiFi;
+extern NSString *const DConnectServiceDiscoveryProfileNetworkTypeWiFi;
 /*!
  @brief ネットワークタイプ: bluetooth。
  */
-extern NSString *const DConnectNetworkServiceDiscoveryProfileNetworkTypeBluetooth;
+extern NSString *const DConnectServiceDiscoveryProfileNetworkTypeBluetooth;
 /*!
  @brief ネットワークタイプ: nfc。
  */
-extern NSString *const DConnectNetworkServiceDiscoveryProfileNetworkTypeNFC;
+extern NSString *const DConnectServiceDiscoveryProfileNetworkTypeNFC;
 /*!
  @brief ネットワークタイプ: ble。
  */
-extern NSString *const DConnectNetworkServiceDiscoveryProfileNetworkTypeBLE;
+extern NSString *const DConnectServiceDiscoveryProfileNetworkTypeBLE;
 
-@class DConnectNetworkServiceDiscoveryProfile;
+@class DConnectServiceDiscoveryProfile;
 
 /*!
- @protocol DConnectNetworkServiceDiscoveryProfileDelegate
+ @protocol DConnectServiceDiscoveryProfileDelegate
  @brief Network Service Dicovery Profileの各APIリクエスト通知用デリゲート。
  
  Network Service Dicovery Profileの各APIへのリクエスト受信通知を受け取るデリゲート。
  */
-@protocol DConnectNetworkServiceDiscoveryProfileDelegate <NSObject>
+@protocol DConnectServiceDiscoveryProfileDelegate <NSObject>
 @optional
 
 #pragma mark - Get Methods
@@ -113,7 +108,7 @@ extern NSString *const DConnectNetworkServiceDiscoveryProfileNetworkTypeBLE;
  実装されない場合には、Not supportのエラーが返却される。
  
  <p>
- [対応するAPI] Network Service Discovery API [GET]
+ [対応するAPI] Service Discovery API [GET]
  </p>
  
  @param[in] profile プロファイル
@@ -123,7 +118,7 @@ extern NSString *const DConnectNetworkServiceDiscoveryProfileNetworkTypeBLE;
  @retval YES レスポンスパラメータを返却する。
  @retval NO レスポンスパラメータを返却しないので、@link DConnectManager::sendResponse: @endlinkで返却すること。
  */
-- (BOOL) profile:(DConnectNetworkServiceDiscoveryProfile *)profile didReceiveGetGetNetworkServicesRequest:(DConnectRequestMessage *)request
+- (BOOL) profile:(DConnectServiceDiscoveryProfile *)profile didReceiveGetGetNetworkServicesRequest:(DConnectRequestMessage *)request
         response:(DConnectResponseMessage *)response;
 
 #pragma mark - Put Methods
@@ -136,7 +131,7 @@ extern NSString *const DConnectNetworkServiceDiscoveryProfileNetworkTypeBLE;
  実装されない場合には、Not supportのエラーが返却される。
  
  <p>
- [対応するAPI] Network Service Discovery Status Change Event API [PUT]
+ [対応するAPI] Service Discovery Status Change Event API [PUT]
  </p>
  
  @param[in] profile プロファイル
@@ -148,7 +143,7 @@ extern NSString *const DConnectNetworkServiceDiscoveryProfileNetworkTypeBLE;
  @retval YES レスポンスパラメータを返却する。
  @retval NO レスポンスパラメータを返却しないので、@link DConnectManager::sendResponse: @endlinkで返却すること。
  */
-- (BOOL) profile:(DConnectNetworkServiceDiscoveryProfile *)profile didReceivePutOnServiceChangeRequest:(DConnectRequestMessage *)request
+- (BOOL) profile:(DConnectServiceDiscoveryProfile *)profile didReceivePutOnServiceChangeRequest:(DConnectRequestMessage *)request
         response:(DConnectResponseMessage *)response
         serviceId:(NSString *)serviceId
       sessionKey:(NSString *)sessionKey;
@@ -163,7 +158,7 @@ extern NSString *const DConnectNetworkServiceDiscoveryProfileNetworkTypeBLE;
  実装されない場合には、Not supportのエラーが返却される。
  
  <p>
- [対応するAPI] Network Service Discovery Status Change Event API [DELETE]
+ [対応するAPI] Service Discovery Status Change Event API [DELETE]
  </p>
  
  @param[in] profile プロファイル
@@ -175,7 +170,7 @@ extern NSString *const DConnectNetworkServiceDiscoveryProfileNetworkTypeBLE;
  @retval YES レスポンスパラメータを返却する。
  @retval NO レスポンスパラメータを返却しないので、@link DConnectManager::sendResponse: @endlinkで返却すること。
  */
-- (BOOL) profile:(DConnectNetworkServiceDiscoveryProfile *)profile didReceiveDeleteOnServiceChangeRequest:(DConnectRequestMessage *)request
+- (BOOL) profile:(DConnectServiceDiscoveryProfile *)profile didReceiveDeleteOnServiceChangeRequest:(DConnectRequestMessage *)request
         response:(DConnectResponseMessage *)response
         serviceId:(NSString *)serviceId
       sessionKey:(NSString *)sessionKey;
@@ -183,21 +178,21 @@ extern NSString *const DConnectNetworkServiceDiscoveryProfileNetworkTypeBLE;
 @end
 
 /*!
- @class DConnectNetworkServiceDiscoveryProfile
- @brief NetworkServiceDiscovery プロファイル。
+ @class DConnectServiceDiscoveryProfile
+ @brief ServiceDiscovery プロファイル。
  
- Network Service Discovery Profileの各APIへのリクエストを受信する。
+ Service Discovery Profileの各APIへのリクエストを受信する。
  受信したリクエストは各API毎にデリゲートに通知される。
  */
-@interface DConnectNetworkServiceDiscoveryProfile : DConnectProfile
+@interface DConnectServiceDiscoveryProfile : DConnectProfile
 
 /*!
- @brief DConnectNetworkServiceDiscoveryProfileのデリゲートオブジェクト。
+ @brief DConnectServiceDiscoveryProfileのデリゲートオブジェクト。
  
- デリゲートは @link DConnectNetworkServiceDiscoveryProfileDelegate @endlink を実装しなくてはならない。
+ デリゲートは @link DConnectServiceDiscoveryProfileDelegate @endlink を実装しなくてはならない。
  デリゲートはretainされない。
  */
-@property (nonatomic, weak) id<DConnectNetworkServiceDiscoveryProfileDelegate> delegate;
+@property (nonatomic, weak) id<DConnectServiceDiscoveryProfileDelegate> delegate;
 
 #pragma mark - Setter
 

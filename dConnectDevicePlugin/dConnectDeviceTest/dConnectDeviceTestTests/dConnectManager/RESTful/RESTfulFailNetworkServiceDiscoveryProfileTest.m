@@ -1,5 +1,5 @@
 //
-//  RESTfulFailNetworkServiceDiscoveryProfileTest.m
+//  RESTfulFailServiceDiscoveryProfileTest.m
 //  DConnectSDK
 //
 //  Copyright (c) 2014 NTT DOCOMO, INC.
@@ -9,16 +9,16 @@
 
 #import "RESTfulTestCase.h"
 
-@interface RESTfulFailNetworkServiceDiscoveryProfileTest : RESTfulTestCase
+@interface RESTfulFailServiceDiscoveryProfileTest : RESTfulTestCase
 
 @end
 
 /*!
- * @class RESTfulFailNetworkServiceDiscoveryProfileTest
- * @brief Network Service Discovery プロファイルの異常系テスト.
+ * @class RESTfulFailServiceDiscoveryProfileTest
+ * @brief Service Discovery プロファイルの異常系テスト.
  * @author NTT DOCOMO, INC.
  */
-@implementation RESTfulFailNetworkServiceDiscoveryProfileTest
+@implementation RESTfulFailServiceDiscoveryProfileTest
 
 /*!
  * @brief POSTメソッドでgetnetworkservicesでデバイスの探索を行う.
@@ -26,7 +26,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: POST
- * Path: /network_service_discovery/getnetworkservices
+ * Path: /servicediscovery
  * </pre>
  *
  * <pre>
@@ -34,9 +34,9 @@
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailNetworkServiceDiscoveryGetNetworkServicesGetInvalidMethodPost
+- (void) testHttpFailServiceDiscoveryGetNetworkServicesGetInvalidMethodPost
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/network_service_discovery/getnetworkservices"];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/servicediscovery"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"POST"];
     
@@ -49,7 +49,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /network_service_discovery/getnetworkservices
+ * Path: /servicediscovery
  * </pre>
  *
  * <pre>
@@ -57,9 +57,9 @@
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailNetworkServiceDiscoveryGetNetworkServicesGetInvalidMethodPut
+- (void) testHttpFailServiceDiscoveryGetNetworkServicesGetInvalidMethodPut
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/network_service_discovery/getnetworkservices"];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/servicediscovery"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
@@ -72,7 +72,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /network_service_discovery/getnetworkservices
+ * Path: /servicediscovery
  * </pre>
  *
  * <pre>
@@ -80,9 +80,9 @@
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailNetworkServiceDiscoveryGetNetworkServicesGetInvalidMethodDelete
+- (void) testHttpFailServiceDiscoveryGetNetworkServicesGetInvalidMethodDelete
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/network_service_discovery/getnetworkservices"];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/servicediscovery"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     

@@ -11,7 +11,7 @@
 #import "DConnectDevicePlugin+Private.h"
 #import "DConnectURLProtocol.h"
 #import "DConnectManagerDeliveryProfile.h"
-#import "DConnectManagerNetworkServiceDiscoveryProfile.h"
+#import "DConnectManagerServiceDiscoveryProfile.h"
 #import "DConnectManagerSystemProfile.h"
 #import "DConnectFilesProfile.h"
 #import "DConnectAuthorizationProfile+Private.h"
@@ -214,20 +214,20 @@ NSString *const DConnectStoryboardName = @"DConnectSDK";
             [DConnectURLProtocol convertUri:event];
         }
         
-        // Network Service Discoveryのイベントだけは別に処理する
+        // Service Discoveryのイベントだけは別に処理する
         // このイベントは特殊で新規デバイス発見を通知するので、serviceIdが指定することができない。
         // なので、全体的に送る必要が有る
         NSString *profile = [event stringForKey:DConnectMessageProfile];
         NSString *attribute = [event stringForKey:DConnectMessageAttribute];
-        if ([profile isEqualToString:DConnectNetworkServiceDiscoveryProfileName] &&
-            [attribute isEqualToString:DConnectNetworkServiceDiscoveryProfileAttrOnServiceChange]) {
+        if ([profile isEqualToString:DConnectServiceDiscoveryProfileName] &&
+            [attribute isEqualToString:DConnectServiceDiscoveryProfileAttrOnServiceChange]) {
             
             // networkSeviceに含まれるidにデバイスプラグインIDを付加する
-            DConnectMessage *service = [event messageForKey:DConnectNetworkServiceDiscoveryProfileParamNetworkService];
-            NSString *serviceId = [service stringForKey:DConnectNetworkServiceDiscoveryProfileParamId];
+            DConnectMessage *service = [event messageForKey:DConnectServiceDiscoveryProfileParamNetworkService];
+            NSString *serviceId = [service stringForKey:DConnectServiceDiscoveryProfileParamId];
             NSString *did = [_mDeviceManager serviceIdByAppedingPluginIdWithDevicePlugin:plugin
                                                                                serviceId:serviceId];
-            [service setString:did forKey:DConnectNetworkServiceDiscoveryProfileParamId];;
+            [service setString:did forKey:DConnectServiceDiscoveryProfileParamId];;
             
             // 各イベントを送信
             DConnectEventManager *mgr = [DConnectEventManager sharedManagerForClass:[DConnectManager class]];
@@ -307,7 +307,7 @@ NSString *const DConnectStoryboardName = @"DConnectSDK";
         self.mResponseBlockMap = [NSMutableDictionary dictionary];
         
         // プロファイルの追加
-        [self addProfile:[DConnectManagerNetworkServiceDiscoveryProfile new]];
+        [self addProfile:[DConnectManagerServiceDiscoveryProfile new]];
         [self addProfile:[DConnectManagerSystemProfile new]];
         [self addProfile:[DConnectFilesProfile new]];
         [self addProfile:[[DConnectAuthorizationProfile alloc] initWithObject:self]];

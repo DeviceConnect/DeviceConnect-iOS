@@ -41,7 +41,7 @@
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
     
-    CHECK_RESPONSE(@"{\"result\":0,\"supports\":[\"files\",\"system\",\"authorization\",\"network_service_discovery\"],\"version\":\"1.0\"}", request);
+    CHECK_RESPONSE(@"{\"result\":0,\"supports\":[\"files\",\"system\",\"authorization\",\"servicediscovery\"],\"version\":\"1.0\"}", request);
 }
 
 /*!
@@ -71,7 +71,7 @@
     [supports addObject:DConnectFileProfileName];
     [supports addObject:DConnectMediaStreamRecordingProfileName];
     [supports addObject:DConnectMediaPlayerProfileName];
-    [supports addObject:DConnectNetworkServiceDiscoveryProfileName];
+    [supports addObject:DConnectServiceDiscoveryProfileName];
     [supports addObject:DConnectPhoneProfileName];
     [supports addObject:DConnectProximityProfileName];
     [supports addObject:DConnectSettingsProfileName];

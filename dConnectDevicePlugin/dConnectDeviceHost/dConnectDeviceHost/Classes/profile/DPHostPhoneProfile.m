@@ -15,7 +15,7 @@
 
 #import "DPHostDevicePlugin.h"
 #import "DPHostPhoneProfile.h"
-#import "DPHostNetworkServiceDiscoveryProfile.h"
+#import "DPHostServiceDiscoveryProfile.h"
 #import "DPHostUtils.h"
 
 @interface DPHostPhoneProfile()
@@ -74,7 +74,7 @@
             }
             
             // イベントの取得
-            NSArray *evts = [weakSelf.eventMgr eventListForServiceId:NetworkDiscoveryServiceId
+            NSArray *evts = [weakSelf.eventMgr eventListForServiceId:ServiceDiscoveryServiceId
                                                     profile:DConnectPhoneProfileName
                                                   attribute:DConnectPhoneProfileAttrOnConnect];
             // イベント送信

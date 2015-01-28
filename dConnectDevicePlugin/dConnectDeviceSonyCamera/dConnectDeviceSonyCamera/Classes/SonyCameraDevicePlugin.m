@@ -48,7 +48,7 @@ NSString *const SonyFilePrefix = @"sony";
 /*!
  @brief Sony Remote Camera用デバイスプラグイン。
  */
-@interface SonyCameraDevicePlugin () <SampleDiscoveryDelegate, DConnectNetworkServiceDiscoveryProfileDelegate, DConnectSystemProfileDelegate, DConnectSystemProfileDataSource, DConnectMediaStreamRecordingProfileDelegate, SonyCameraCameraProfileDelegate, SampleLiveviewDelegate, SonyCameraRemoteApiUtilDelegate, DConnectSettingsProfileDelegate>
+@interface SonyCameraDevicePlugin () <SampleDiscoveryDelegate, DConnectServiceDiscoveryProfileDelegate, DConnectSystemProfileDelegate, DConnectSystemProfileDataSource, DConnectMediaStreamRecordingProfileDelegate, SonyCameraCameraProfileDelegate, SampleLiveviewDelegate, SonyCameraRemoteApiUtilDelegate, DConnectSettingsProfileDelegate>
 
 /*!
  @brief SonyRemoteApi操作用.
@@ -162,8 +162,8 @@ NSString *const SonyFilePrefix = @"sony";
         Class key = [self class];
         [[DConnectEventManager sharedManagerForClass:key] setController:[DConnectMemoryCacheController new]];
 
-        // Network Service Discovery Profileの追加
-        DConnectNetworkServiceDiscoveryProfile *networkProfile = [DConnectNetworkServiceDiscoveryProfile new];
+        // Service Discovery Profileの追加
+        DConnectServiceDiscoveryProfile *networkProfile = [DConnectServiceDiscoveryProfile new];
         networkProfile.delegate = self;
         
         // System Profileの追加
@@ -361,9 +361,9 @@ NSString *const SonyFilePrefix = @"sony";
     [self.delegate didReceiveDeviceList:discovery];
 }
 
-#pragma mark - DConnectNetworkServiceDiscoveryProfileDelegate
+#pragma mark - DConnectServiceDiscoveryProfileDelegate
 
-- (BOOL)                       profile:(DConnectNetworkServiceDiscoveryProfile *)profile
+- (BOOL)                       profile:(DConnectServiceDiscoveryProfile *)profile
 didReceiveGetGetNetworkServicesRequest:(DConnectRequestMessage *)request
                               response:(DConnectResponseMessage *)response
 {
@@ -371,14 +371,14 @@ didReceiveGetGetNetworkServicesRequest:(DConnectRequestMessage *)request
     for (int i = 0; i < [DeviceList getSize]; i++) {
         NSString *serviceId = [NSString stringWithFormat:@"%d", i];
         DConnectMessage *service = [DConnectMessage message];
-        [DConnectNetworkServiceDiscoveryProfile setId:serviceId target:service];
-        [DConnectNetworkServiceDiscoveryProfile setName:SonyDeviceName target:service];
-        [DConnectNetworkServiceDiscoveryProfile setType:DConnectNetworkServiceDiscoveryProfileNetworkTypeWiFi
+        [DConnectServiceDiscoveryProfile setId:serviceId target:service];
+        [DConnectServiceDiscoveryProfile setName:SonyDeviceName target:service];
+        [DConnectServiceDiscoveryProfile setType:DConnectServiceDiscoveryProfileNetworkTypeWiFi
                                                  target:service];
-        [DConnectNetworkServiceDiscoveryProfile setOnline:YES target:service];
+        [DConnectServiceDiscoveryProfile setOnline:YES target:service];
         [services addMessage:service];
     }
-    [DConnectNetworkServiceDiscoveryProfile setServices:services target:response];
+    [DConnectServiceDiscoveryProfile setServices:services target:response];
     [response setResult:DConnectMessageResultTypeOk];
     return YES;
 }

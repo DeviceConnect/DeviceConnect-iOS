@@ -12,7 +12,7 @@
 
 #import "DPHostDevicePlugin.h"
 #import "DPHostDeviceOrientationProfile.h"
-#import "DPHostNetworkServiceDiscoveryProfile.h"
+#import "DPHostServiceDiscoveryProfile.h"
 #import "DPHostUtils.h"
 
 // CMDeviceMotionオブジェクトが配送されるインターバル（ミリ秒）
@@ -77,7 +77,7 @@ static const double MotionDeviceIntervalMilliSec = 100;
 - (void) sendOnDeviceOrientationEventWithMotion:(CMDeviceMotion *)motion
 {
     // イベントの取得
-    NSArray *evts = [_eventMgr eventListForServiceId:NetworkDiscoveryServiceId
+    NSArray *evts = [_eventMgr eventListForServiceId:ServiceDiscoveryServiceId
                                             profile:DConnectDeviceOrientationProfileName
                                           attribute:DConnectDeviceOrientationProfileAttrOnDeviceOrientation];
     // イベント送信
