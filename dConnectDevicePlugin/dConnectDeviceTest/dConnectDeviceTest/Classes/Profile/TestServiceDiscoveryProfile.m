@@ -34,7 +34,7 @@ NSString *const TestNetworkDeviceConfig = @"test config";
 
 #pragma mark - Get Methods
 
-- (BOOL) profile:(DConnectServiceDiscoveryProfile *)profile didReceiveGetGetNetworkServicesRequest:(DConnectRequestMessage *)request
+- (BOOL) profile:(DConnectServiceDiscoveryProfile *)profile didReceiveGetServicesRequest:(DConnectRequestMessage *)request
         response:(DConnectResponseMessage *)response
 {
     

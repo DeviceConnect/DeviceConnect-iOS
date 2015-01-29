@@ -66,10 +66,20 @@
     // レスポンスがどこのレイヤーで返されているかのログを見るための処理
     [response setString:@"DevicePlugin" forKey:@"debug"];
 #endif
+
+    // Service Discovery APIのパスを変換
+    NSString *profileName = [request profile];
+    if ([profileName isEqualToString:DConnectProfileNameNetworkServiceDiscovery]) {
+        profileName = DConnectProfileNameNetworkServiceDiscovery;
+        NSString *attribute = [request attribute];
+        if ([attribute isEqualToString:DConnectAttributeNameGetNetworkServices]) {
+            [request setProfile:DConnectServiceDiscoveryProfileName];
+            [request setAttribute:nil];
+        }
+    }
     
     if (self.useLocalOAuth) {
         // Local OAuthの認証を行う
-        NSString *profileName = [request profile];
         NSString *accessToken = [request accessToken];
         NSArray *scopes = DConnectIgnoreProfiles();
         LocalOAuth2Main *oauth = [LocalOAuth2Main sharedOAuthForClass:[self class]];

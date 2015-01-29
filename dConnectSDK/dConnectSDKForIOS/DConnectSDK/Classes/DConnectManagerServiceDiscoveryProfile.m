@@ -29,9 +29,13 @@
 #pragma mark - DConnectServiceDiscoveryProfileDelegate
 
 - (BOOL)                       profile:(DConnectServiceDiscoveryProfile *)profile
-didReceiveGetGetNetworkServicesRequest:(DConnectRequestMessage *)request
+didReceiveGetServicesRequest:(DConnectRequestMessage *)request
                               response:(DConnectResponseMessage *)response
 {
+    // プラグイン側のI/Fに変換
+    [request setProfile:DConnectProfileNameNetworkServiceDiscovery];
+    [request setAttribute:DConnectAttributeNameGetNetworkServices];
+    
     dispatch_time_t timeout = dispatch_time(DISPATCH_TIME_NOW, NSEC_PER_SEC * DISCOVERY_TIMEOUT);
     DConnectArray *services = [DConnectArray array];
     
@@ -78,7 +82,7 @@ didReceiveGetGetNetworkServicesRequest:(DConnectRequestMessage *)request
             }
             dispatch_semaphore_signal(sem);
         } forKey:resp.code];
-
+        
         dispatch_group_async(discoveryGroup, queue, ^{
             BOOL send = [plugin didReceiveRequest:request response:resp];
             if (send) {

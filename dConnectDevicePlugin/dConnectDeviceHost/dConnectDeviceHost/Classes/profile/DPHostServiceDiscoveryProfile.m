@@ -29,7 +29,7 @@ NSString *const ServiceDiscoveryServiceId = @"host";
 #pragma mark Get Methods
 
 - (BOOL)                       profile:(DConnectServiceDiscoveryProfile *)profile
-didReceiveGetGetNetworkServicesRequest:(DConnectRequestMessage *)request
+didReceiveGetServicesRequest:(DConnectRequestMessage *)request
                               response:(DConnectResponseMessage *)response
 {
     // ハードウェアプラットフォームを取得。

@@ -27,7 +27,7 @@
 }
 
 //  dConnect Managerに接続されている、デバイスプラグイン対応デバイス一覧を取得する。
-- (BOOL) profile:(DConnectServiceDiscoveryProfile *)profile didReceiveGetGetNetworkServicesRequest:(DConnectRequestMessage *)request response:(DConnectResponseMessage *)response
+- (BOOL) profile:(DConnectServiceDiscoveryProfile *)profile didReceiveGetServicesRequest:(DConnectRequestMessage *)request response:(DConnectResponseMessage *)response
 {
 	DConnectArray *services = [DConnectArray array];
 	

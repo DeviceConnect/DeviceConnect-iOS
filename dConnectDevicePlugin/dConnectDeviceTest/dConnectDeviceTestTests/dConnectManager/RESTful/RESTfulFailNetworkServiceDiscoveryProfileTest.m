@@ -21,7 +21,7 @@
 @implementation RESTfulFailServiceDiscoveryProfileTest
 
 /*!
- * @brief POSTメソッドでgetnetworkservicesでデバイスの探索を行う.
+ * @brief POSTメソッドでデバイスの探索を行う.
  *
  * <pre>
  * 【HTTP通信】
@@ -34,7 +34,7 @@
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailServiceDiscoveryGetNetworkServicesGetInvalidMethodPost
+- (void) testHttpFailServiceDiscoveryGetInvalidMethodPost
 {
     NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/servicediscovery"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
@@ -44,7 +44,7 @@
 }
 
 /*!
- * @brief PUTメソッドでgetnetworkservicesでデバイスの探索を行う.
+ * @brief PUTメソッドでデバイスの探索を行う.
  *
  * <pre>
  * 【HTTP通信】
@@ -57,7 +57,7 @@
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailServiceDiscoveryGetNetworkServicesGetInvalidMethodPut
+- (void) testHttpFailServiceDiscoveryGetInvalidMethodPut
 {
     NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/servicediscovery"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
@@ -67,7 +67,7 @@
 }
 
 /*!
- * @brief DELETEメソッドでgetnetworkservicesでデバイスの探索を行う.
+ * @brief DELETEメソッドでデバイスの探索を行う.
  *
  * <pre>
  * 【HTTP通信】
@@ -80,7 +80,7 @@
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailServiceDiscoveryGetNetworkServicesGetInvalidMethodDelete
+- (void) testHttpFailServiceDiscoveryServicesGetInvalidMethodDelete
 {
     NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/servicediscovery"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];

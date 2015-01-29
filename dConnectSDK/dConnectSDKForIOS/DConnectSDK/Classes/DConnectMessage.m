@@ -35,7 +35,7 @@ NSString *const DConnectMessageDefaultAPI = @"gotapi";
 
 @interface DConnectMessage ()
 @property (nonatomic) NSMutableDictionary *dictionary;
-
+- (void) setObject:obj forKey:(NSString *)aKey;
 - (NSArray *) arrayByRemovingNotJSONObject:(NSArray *)array;
 - (NSDictionary *) dictionaryByRemovingNotJsonObject:(NSDictionary *)dic;
 - (id) JSONObjectForObject:(id)object;
@@ -250,68 +250,62 @@ NSString *const DConnectMessageDefaultAPI = @"gotapi";
     return dcMessage;
 }
 
-// TODO: Dictionaryへのインサートでnilチェックが必要かの検討
+- (void) setObject:(id)obj forKey:(NSString *)aKey {
+    if (obj) {
+        [self.dictionary setObject:obj forKey:aKey];
+    } else {
+        [self.dictionary removeObjectForKey:aKey];
+    }
+}
 
 - (void) setInteger:(int)num forKey:(NSString *)aKey {
     NSNumber *value = [NSNumber numberWithInt:num];
-    if (value) {
-        [self.dictionary setObject:value forKey:aKey];
-    }
+    [self setObject:value forKey:aKey];
 }
 
 - (void) setLong:(long)num forKey:(NSString *)aKey {
     NSNumber *value = [NSNumber numberWithLong:num];
-    if (value) {
-        [self.dictionary setObject:value forKey:aKey];
-    }
+    [self setObject:value forKey:aKey];
 }
 
 - (void) setLongLong:(long long)num forKey:(NSString *)aKey {
     NSNumber *value = [NSNumber numberWithLongLong:num];
-    if (value) {
-        [self.dictionary setObject:value forKey:aKey];
-    }
+    [self setObject:value forKey:aKey];
 }
 
 - (void) setFloat:(float)num forKey:(NSString *)aKey {
     NSNumber *value = [NSNumber numberWithFloat:num];
-    if (value) {
-        [self.dictionary setObject:value forKey:aKey];
-    }
+    [self setObject:value forKey:aKey];
 }
 
 - (void) setDouble:(double)num forKey:(NSString *)aKey {
     NSNumber *value = [NSNumber numberWithDouble:num];
-    if (value) {
-        [self.dictionary setObject:value forKey:aKey];
-    }
+    [self setObject:value forKey:aKey];
 }
 
 - (void) setBool:(BOOL)num forKey:(NSString *)aKey {
     NSNumber *value = [NSNumber numberWithBool:num];
-    if (value) {
-        [self.dictionary setObject:value forKey:aKey];
-    }
+    [self setObject:value forKey:aKey];
 }
 
 - (void) setData:(NSData *)data forKey:(NSString *)aKey {
-    [self.dictionary setObject:data forKey:aKey];
+    [self setObject:data forKey:aKey];
 }
 
 - (void) setString:(NSString *)string forKey:(NSString *)aKey {
-    [self.dictionary setObject:string forKey:aKey];
+    [self setObject:string forKey:aKey];
 }
 
 - (void) setArray:(DConnectArray *)array forKey:(NSString *)aKey {
-    [self.dictionary setObject:array forKey:aKey];
+    [self setObject:array forKey:aKey];
 }
 
 - (void) setMessage:(DConnectMessage *)message forKey:(NSString *)aKey {
-    [self.dictionary setObject:message forKey:aKey];
+    [self setObject:message forKey:aKey];
 }
 
 - (void) setNumber:(NSNumber *)number forKey:(NSString *)aKey {
-    [self.dictionary setObject:number forKey:aKey];
+    [self setObject:number forKey:aKey];
 }
 
 - (int) integerForKey:(NSString *)aKey {

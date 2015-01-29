@@ -118,7 +118,7 @@ extern NSString *const DConnectServiceDiscoveryProfileNetworkTypeBLE;
  @retval YES レスポンスパラメータを返却する。
  @retval NO レスポンスパラメータを返却しないので、@link DConnectManager::sendResponse: @endlinkで返却すること。
  */
-- (BOOL) profile:(DConnectServiceDiscoveryProfile *)profile didReceiveGetGetNetworkServicesRequest:(DConnectRequestMessage *)request
+- (BOOL) profile:(DConnectServiceDiscoveryProfile *)profile didReceiveGetServicesRequest:(DConnectRequestMessage *)request
         response:(DConnectResponseMessage *)response;
 
 #pragma mark - Put Methods

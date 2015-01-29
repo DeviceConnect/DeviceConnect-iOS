@@ -24,7 +24,7 @@
 }
 
 - (BOOL)                           profile:(DConnectServiceDiscoveryProfile *)profile
-    didReceiveGetGetNetworkServicesRequest:(DConnectRequestMessage *)request
+    didReceiveGetServicesRequest:(DConnectRequestMessage *)request
                                   response:(DConnectResponseMessage *)response
 {
     [response setResult:DConnectMessageResultTypeOk];

@@ -364,7 +364,7 @@ NSString *const SonyFilePrefix = @"sony";
 #pragma mark - DConnectServiceDiscoveryProfileDelegate
 
 - (BOOL)                       profile:(DConnectServiceDiscoveryProfile *)profile
-didReceiveGetGetNetworkServicesRequest:(DConnectRequestMessage *)request
+didReceiveGetServicesRequest:(DConnectRequestMessage *)request
                               response:(DConnectResponseMessage *)response
 {
     DConnectArray *services = [DConnectArray array];

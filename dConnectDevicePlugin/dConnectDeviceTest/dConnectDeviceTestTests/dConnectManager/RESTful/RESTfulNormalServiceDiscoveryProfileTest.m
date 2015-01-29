@@ -34,7 +34,7 @@
  * ・servicesの中に「Test Success Device」のnameを持ったサービスが存在すること。
  * </pre>
  */
-- (void) testHttpNormalServiceDiscoveryGetNetworkServicesGet
+- (void) testHttpNormalServiceDiscoveryGet
 {
     NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/servicediscovery"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];

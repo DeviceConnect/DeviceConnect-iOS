@@ -51,8 +51,8 @@ NSString *const DConnectServiceDiscoveryProfileNetworkTypeBLE = @"BLE";
     NSString *inter = [request interface];
     NSString *attribute = [request attribute];
     if (!inter && !attribute) {
-        if ([self hasMethod:@selector(profile:didReceiveGetGetNetworkServicesRequest:response:) response:response]) {
-            send = [_delegate profile:self didReceiveGetGetNetworkServicesRequest:request response:response];
+        if ([self hasMethod:@selector(profile:didReceiveGetServicesRequest:response:) response:response]) {
+            send = [_delegate profile:self didReceiveGetServicesRequest:request response:response];
         }
     } else {
         [response setErrorToUnknownAttribute];

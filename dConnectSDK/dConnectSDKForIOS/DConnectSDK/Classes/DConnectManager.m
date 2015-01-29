@@ -31,6 +31,9 @@ NSString *const DConnectApplicationDidEnterBackground = @"DConnectApplicationDid
 NSString *const DConnectApplicationWillEnterForeground = @"DConnectApplicationWillEnterForeground";
 NSString *const DConnectStoryboardName = @"DConnectSDK";
 
+NSString *const DConnectProfileNameNetworkServiceDiscovery = @"networkServiceDiscovery";
+NSString *const DConnectAttributeNameGetNetworkServices = @"getNetworkServices";
+
 /*!
  @brief レスポンス用のコールバックを管理するデータクラス.
  */
@@ -171,6 +174,7 @@ NSString *const DConnectStoryboardName = @"DConnectSDK";
             // ないためネイティブからの呼び出し時のみコピーを行う。
             DConnectRequestMessage *tmpReq = isHttp ? request : [request copy];
             DConnectResponseMessage *response = [DConnectResponseMessage message];
+            
             [_self didReceiveRequest:tmpReq response:response callback:callback];
         });
     } else {
@@ -362,6 +366,11 @@ NSString *const DConnectStoryboardName = @"DConnectSDK";
     dispatch_async(_requestQueue, ^{
         // 指定されたプロファイルを取得する
         NSString *profileName = [request profile];
+        if (!profileName) {
+            [response setErrorToNotSupportProfile];
+            [_self sendResponse:response];
+            return;
+        }
         
         if (self.settings.useLocalOAuth) {
             // Local OAuthチェック
