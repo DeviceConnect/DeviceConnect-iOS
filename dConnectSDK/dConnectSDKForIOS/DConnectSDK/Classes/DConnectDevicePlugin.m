@@ -70,9 +70,9 @@
     // Service Discovery APIのパスを変換
     NSString *profileName = [request profile];
     if ([profileName isEqualToString:DConnectProfileNameNetworkServiceDiscovery]) {
-        profileName = DConnectProfileNameNetworkServiceDiscovery;
         NSString *attribute = [request attribute];
         if ([attribute isEqualToString:DConnectAttributeNameGetNetworkServices]) {
+            profileName = DConnectServiceDiscoveryProfileName;
             [request setProfile:DConnectServiceDiscoveryProfileName];
             [request setAttribute:nil];
         }
