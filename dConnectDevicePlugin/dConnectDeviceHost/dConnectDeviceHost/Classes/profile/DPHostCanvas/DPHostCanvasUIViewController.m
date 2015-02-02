@@ -8,28 +8,26 @@
 //
 
 #import "DPHostCanvasUIViewController.h"
-#import "DPHostCanvasDrawImage.h"
+#import "DPHostCanvasDrawObject.h"
 
 @interface DPHostCanvasUIViewController () {
-    DPHostCanvasDrawImage *_drawImage;
+    DPHostCanvasDrawObject *_drawObject;
 }
-
 
 @end
 
 @implementation DPHostCanvasUIViewController
 
-- (void)setDrawImage: (NSData *) data x: (double) x y: (double) y mode: (NSString *) mode {
-    _drawImage = [[DPHostCanvasDrawImage alloc] initWithParameter: data x: x y: y mode: mode];
+- (void)setDrawObject: (DPHostCanvasDrawObject *)drawObject {
+    _drawObject = drawObject;
 }
-
 
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    if (_drawImage != nil) {
-        [self.canvasView setDrawObject: _drawImage];
+    if (_drawObject != nil) {
+        [self.canvasView setDrawObject: _drawObject];
     }
 }
 

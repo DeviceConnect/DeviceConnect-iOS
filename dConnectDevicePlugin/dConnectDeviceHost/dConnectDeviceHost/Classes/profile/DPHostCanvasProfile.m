@@ -25,12 +25,6 @@ top = top.presentedViewController; \
 
 @interface DPHostCanvasProfile ()
 
-- (void)presentCanvasProfileViewController: (DConnectResponseMessage *)response
-                                      data: (NSData *)data
-                                         x: (double)x
-                                         y: (double)y
-                                      mode: (NSString *)mode;
-
 
 @end
 
@@ -64,8 +58,8 @@ top = top.presentedViewController; \
     
     /* start ViewController */
     dispatch_async(dispatch_get_main_queue(), ^{
-NSLog(data == nil ? @"didReceivePostDrawImageRequest() - data: nil" : @"didReceivePostDrawImageRequest() - data: not nil");
-        [self presentCanvasProfileViewController: response data: data x: x y: y mode: mode];
+        DPHostCanvasDrawImage *drawImage = [[DPHostCanvasDrawImage alloc] initWithParameter:data x: x y: y mode: mode];
+        [self presentCanvasProfileViewController: response drawObject: drawImage];
     });
 
     return NO;
@@ -79,12 +73,8 @@ NSLog(data == nil ? @"didReceivePostDrawImageRequest() - data: nil" : @"didRecei
 
 
 - (void)presentCanvasProfileViewController: (DConnectResponseMessage *)response
-                                      data: (NSData *)data
-                                         x: (double)x
-                                         y: (double)y
-                                      mode: (NSString *)mode
+                                drawObject: (DPHostCanvasDrawObject *)drawObject
 {
-NSLog(data == nil ? @"presentCanvasProfileViewController() - data: nil" : @"presentCanvasProfileViewController() - data: not nil");
     UIViewController *topViewController;
     PutPresentedViewController(topViewController);
     if (topViewController != nil) {
@@ -121,7 +111,7 @@ NSLog(data == nil ? @"presentCanvasProfileViewController() - data: nil" : @"pres
     if (viewController != nil) {
         viewController.delegate = self;
         
-        [viewController setDrawImage: data x: x y: y mode: mode];
+        [viewController setDrawObject: drawObject];
         
         UIViewController *rootView;
         PutPresentedViewController(rootView);

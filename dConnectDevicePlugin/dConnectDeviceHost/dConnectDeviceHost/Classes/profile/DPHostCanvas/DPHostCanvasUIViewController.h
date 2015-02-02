@@ -27,12 +27,9 @@
 
 /*!
  @brief set draw object.
- @param data image data
- @param x x
- @param y y
- @param mode mode
+ @param drawObject draw object
  */
-- (void)setDrawImage: (NSData *) data x: (double) x y: (double) y mode: (NSString *) mode;
+- (void)setDrawObject: (DPHostCanvasDrawObject *)drawObject;
 
 
 
