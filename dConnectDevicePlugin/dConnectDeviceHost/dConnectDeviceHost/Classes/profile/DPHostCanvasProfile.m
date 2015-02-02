@@ -41,7 +41,6 @@ top = top.presentedViewController; \
 
 #pragma mark - DConnect
 
-// 画像描画リクエストを受け取った
 - (BOOL) profile:(DConnectCanvasProfile *)profile didReceivePostDrawImageRequest:(DConnectRequestMessage *)request
         response:(DConnectResponseMessage *)response
         deviceId:(NSString *)deviceId
@@ -75,39 +74,11 @@ top = top.presentedViewController; \
 - (void)presentCanvasProfileViewController: (DConnectResponseMessage *)response
                                 drawObject: (DPHostCanvasDrawObject *)drawObject
 {
-    UIViewController *topViewController;
-    PutPresentedViewController(topViewController);
-    if (topViewController != nil) {
-        NSLog(@"topViewController != nil");
-    } else {
-        NSLog(@"topViewController == nil");
-    }
-    
-    //        NSBundle *bundle = DCBundle();
-    NSBundle *bundle = _Bundle();
-    if (bundle != nil) {
-        NSLog(@"bundle != nil");
-    } else {
-        NSLog(@"bundle == nil");
-    }
-    
     NSString *storyBoardName = @"dConnectDeviceHost";
-    UIStoryboard *sb = [UIStoryboard storyboardWithName:storyBoardName
-                                                 bundle: bundle];
-    if (sb != nil) {
-        NSLog(@"sb != nil");
-    } else {
-        NSLog(@"sb == nil");
-    }
+    UIStoryboard *sb = [self storyboardWithName: storyBoardName];
     
     NSString *viewControllerId = @"Canvas";
     DPHostCanvasUIViewController *viewController = [sb instantiateViewControllerWithIdentifier: viewControllerId];
-    if (viewController != nil) {
-        NSLog(@"viewController != nil");
-    } else {
-        NSLog(@"viewController == nil");
-    }
-    
     if (viewController != nil) {
         viewController.delegate = self;
         
@@ -123,6 +94,25 @@ top = top.presentedViewController; \
     
     [[DConnectManager sharedManager] sendResponse:response];
 }
+
+- (UIStoryboard *)storyboardWithName: (NSString *)storyBoardName {
+    
+    UIViewController *topViewController;
+    PutPresentedViewController(topViewController);
+    if (topViewController == nil) {
+        return nil;
+    }
+    
+    NSBundle *bundle = _Bundle();
+    if (bundle == nil) {
+        return nil;
+    }
+    
+    UIStoryboard *sb = [UIStoryboard storyboardWithName:storyBoardName
+                                                 bundle: bundle];
+    return sb;
+}
+
 
 
 @end
