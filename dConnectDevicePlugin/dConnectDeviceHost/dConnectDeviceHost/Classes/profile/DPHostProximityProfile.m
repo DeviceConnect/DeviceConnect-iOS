@@ -127,8 +127,8 @@ didReceiveDeleteOnUserProximityRequest:(DConnectRequestMessage *)request
     }
     
     NSArray *evts = [_eventMgr eventListForDeviceId:deviceId
-                                            profile:DConnectBatteryProfileName
-                                          attribute:DConnectBatteryProfileAttrOnChargingChange];
+                                            profile:DConnectProximityProfileName
+                                          attribute:DConnectProximityProfileAttrOnUserProximity];
     if (evts.count == 0) {
         // イベント受領先が存在しないなら、UIDeviceProximityStateDidChangeNotification通知の配送処理を停止する。
         [[NSNotificationCenter defaultCenter] removeObserver:self name:UIDeviceProximityStateDidChangeNotification object:nil];

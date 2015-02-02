@@ -1944,8 +1944,8 @@ didReceiveDeleteOnDataAvailableRequest:(DConnectRequestMessage *)request
     }
     
     NSArray *evts = [_eventMgr eventListForDeviceId:deviceId
-                                            profile:DConnectDeviceOrientationProfileName
-                                          attribute:DConnectDeviceOrientationProfileAttrOnDeviceOrientation];
+                                            profile:DConnectMediaStreamRecordingProfileName
+                                          attribute:DConnectMediaStreamRecordingProfileAttrOnDataAvailable];
     if (evts.count == 0) {
         // デフォルトカメラでのレコーディングを停止する。
         // TODO: 録画や録音を開始せずとも動画プレビューができる様にする。
