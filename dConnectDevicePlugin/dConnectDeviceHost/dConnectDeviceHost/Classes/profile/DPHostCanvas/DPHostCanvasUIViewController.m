@@ -2,36 +2,51 @@
 //  DPHostCanvasUIViewController.m
 //  dConnectDeviceHost
 //
-//  Created by Mitsuhiro Suzuki on 2015/01/23.
-//  Copyright (c) 2015年 NTT DOCOMO, INC. All rights reserved.
+//  Copyright (c) 2015 NTT DOCOMO, INC.
+//  Released under the MIT license
+//  http://opensource.org/licenses/mit-license.php
 //
 
 #import "DPHostCanvasUIViewController.h"
+#import "DPHostCanvasDrawImage.h"
 
-@interface DPHostCanvasUIViewController ()
+@interface DPHostCanvasUIViewController () {
+    DPHostCanvasDrawImage *_drawImage;
+}
+
 
 @end
 
 @implementation DPHostCanvasUIViewController
 
+- (void)setDrawImage: (NSData *) data x: (double) x y: (double) y mode: (NSString *) mode {
+    _drawImage = [[DPHostCanvasDrawImage alloc] initWithParameter: data x: x y: y mode: mode];
+}
+
+
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    
+    if (_drawImage != nil) {
+        [self.canvasView setDrawObject: _drawImage];
+    }
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (IBAction)onTouchUpCloseButton:(id)sender {
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
-*/
+
+
+- (void)viewWillDisappear:(BOOL)animated {
+    /* view controller closed */
+    [self.delegate disappearViewController];
+}
+
+
 
 @end
