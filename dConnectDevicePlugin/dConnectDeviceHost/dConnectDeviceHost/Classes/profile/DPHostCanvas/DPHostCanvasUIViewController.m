@@ -12,16 +12,20 @@
 
 @interface DPHostCanvasUIViewController () {
     DPHostCanvasDrawObject *_drawObject;
+    BOOL _isInitialize;
 }
 
 @end
 
 @implementation DPHostCanvasUIViewController
 
-- (void)setDrawObject: (DPHostCanvasDrawObject *)drawObject {
-    _drawObject = drawObject;
+- (instancetype)init {
+    self = [super init];
+    if (self) {
+        _isInitialize = false;
+    }
+    return self;
 }
-
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -29,6 +33,7 @@
     if (_drawObject != nil) {
         [self.canvasView setDrawObject: _drawObject];
     }
+    _isInitialize = YES;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -37,6 +42,15 @@
 
 - (IBAction)onTouchUpCloseButton:(id)sender {
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+
+- (void)setDrawObject: (DPHostCanvasDrawObject *)drawObject {
+    _drawObject = drawObject;
+    
+    if (_isInitialize) {
+        [self.canvasView setDrawObject: _drawObject];
+    }
 }
 
 

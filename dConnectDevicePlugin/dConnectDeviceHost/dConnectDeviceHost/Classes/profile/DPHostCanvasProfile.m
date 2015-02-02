@@ -23,8 +23,9 @@ top = top.presentedViewController; \
 
 
 
-@interface DPHostCanvasProfile ()
-
+@interface DPHostCanvasProfile () {
+DPHostCanvasUIViewController *_displayViewController;
+}
 
 @end
 
@@ -35,6 +36,7 @@ top = top.presentedViewController; \
     self = [super init];
     if (self) {
         self.delegate = self;
+        _displayViewController = nil;
     }
     return self;
 }
@@ -55,23 +57,28 @@ top = top.presentedViewController; \
         return YES;
     }
     
-    /* start ViewController */
-    dispatch_async(dispatch_get_main_queue(), ^{
-        DPHostCanvasDrawImage *drawImage = [[DPHostCanvasDrawImage alloc] initWithParameter:data x: x y: y mode: mode];
-        [self presentCanvasProfileViewController: response drawObject: drawImage];
-    });
+    DPHostCanvasDrawImage *drawImage = [[DPHostCanvasDrawImage alloc] initWithParameter:data x: x y: y mode: mode];
+    
+    if (_displayViewController == nil) {
+        /* start ViewController */
+        dispatch_async(dispatch_get_main_queue(), ^{
+            _displayViewController = [self presentCanvasProfileViewController: response drawObject: drawImage];
+        });
+    } else {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [_displayViewController setDrawObject: drawImage];
+        });
+    }
 
     return NO;
 }
 
 - (void) disappearViewController {
-    NSLog(@"disappearViewController");
-    
-    
+    _displayViewController = nil;
 }
 
 
-- (void)presentCanvasProfileViewController: (DConnectResponseMessage *)response
+- (DPHostCanvasUIViewController *)presentCanvasProfileViewController: (DConnectResponseMessage *)response
                                 drawObject: (DPHostCanvasDrawObject *)drawObject
 {
     NSString *storyBoardName = @"dConnectDeviceHost";
@@ -93,6 +100,8 @@ top = top.presentedViewController; \
     }
     
     [[DConnectManager sharedManager] sendResponse:response];
+    
+    return viewController;
 }
 
 - (UIStoryboard *)storyboardWithName: (NSString *)storyBoardName {
