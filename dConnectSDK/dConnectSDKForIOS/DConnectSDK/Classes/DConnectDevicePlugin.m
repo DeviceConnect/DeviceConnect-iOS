@@ -81,7 +81,7 @@
     if (self.useLocalOAuth) {
         // Local OAuthの認証を行う
         NSString *accessToken = [request accessToken];
-        NSArray *scopes = DConnectIgnoreProfiles();
+        NSArray *scopes = DConnectPluginIgnoreProfiles();
         LocalOAuth2Main *oauth = [LocalOAuth2Main sharedOAuthForClass:[self class]];
         LocalOAuthCheckAccessTokenResult *result = [oauth checkAccessTokenWithScope:profileName
                                                                       specialScopes:scopes
