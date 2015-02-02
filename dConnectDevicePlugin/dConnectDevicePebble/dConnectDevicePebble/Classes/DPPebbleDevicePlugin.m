@@ -11,11 +11,11 @@
 #import "DPPebbleServiceDiscoveryProfile.h"
 #import "DPPebbleSystemProfile.h"
 #import "DPPebbleBatteryProfile.h"
-#import "DPPebbleFileProfile.h"
 #import "DPPebbleVibrationProfile.h"
 #import "DPPebbleSettingsProfile.h"
 #import "DPPebbleDeviceOrientationProfile.h"
 #import "DPPebbleNotificationProfile.h"
+#import "DPPebbleCanvasProfile.h"
 #import "PebbleViewController.h"
 #import "DPPebbleManager.h"
 
@@ -42,10 +42,10 @@
 		[self addProfile:[DPPebbleNotificationProfile new]];
 		[self addProfile:[DPPebbleSystemProfile new]];
 		[self addProfile:[DPPebbleBatteryProfile new]];
-		[self addProfile:[DPPebbleFileProfile new]];
 		[self addProfile:[DPPebbleSettingsProfile new]];
 		[self addProfile:[DPPebbleVibrationProfile new]];
 		[self addProfile:[DPPebbleDeviceOrientationProfile new]];
+        [self addProfile:[DPPebbleCanvasProfile new]];
 		
 		dispatch_async(dispatch_get_main_queue(), ^{
 			NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
