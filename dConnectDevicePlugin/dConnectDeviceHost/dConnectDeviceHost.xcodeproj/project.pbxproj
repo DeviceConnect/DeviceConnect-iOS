@@ -51,6 +51,12 @@
 		97FE1A21192B6DA400808FA5 /* DPHostSystemProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 97FE1A20192B6DA400808FA5 /* DPHostSystemProfile.m */; };
 		ABDA3C6D1A0C58F3001F30A0 /* DPHostConnectProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = ABDA3C6C1A0C58F3001F30A0 /* DPHostConnectProfile.m */; };
 		ABDA3C701A0C743A001F30A0 /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABDA3C6F1A0C743A001F30A0 /* CoreBluetooth.framework */; };
+		D6384EA91A7625BD00384167 /* DPHostCanvasProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = D6384EA81A7625BD00384167 /* DPHostCanvasProfile.m */; };
+		D6384EAD1A7625CF00384167 /* DPHostCanvasUIViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D6384EAC1A7625CF00384167 /* DPHostCanvasUIViewController.m */; };
+		D6384EB11A762B2E00384167 /* dConnectDeviceHost.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D6384EB01A762B2E00384167 /* dConnectDeviceHost.storyboard */; };
+		D69997451A7E210D00EF934F /* DPHostCanvasView.m in Sources */ = {isa = PBXBuildFile; fileRef = D69997441A7E210D00EF934F /* DPHostCanvasView.m */; };
+		D69997481A7F1AD800EF934F /* DPHostCanvasDrawObject.m in Sources */ = {isa = PBXBuildFile; fileRef = D69997471A7F1AD800EF934F /* DPHostCanvasDrawObject.m */; };
+		D699974B1A7F264900EF934F /* DPHostCanvasDrawImage.m in Sources */ = {isa = PBXBuildFile; fileRef = D699974A1A7F264900EF934F /* DPHostCanvasDrawImage.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -118,6 +124,17 @@
 		ABDA3C6B1A0C58F3001F30A0 /* DPHostConnectProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHostConnectProfile.h; sourceTree = "<group>"; };
 		ABDA3C6C1A0C58F3001F30A0 /* DPHostConnectProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHostConnectProfile.m; sourceTree = "<group>"; };
 		ABDA3C6F1A0C743A001F30A0 /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
+		D6384EA71A7625BD00384167 /* DPHostCanvasProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHostCanvasProfile.h; sourceTree = "<group>"; };
+		D6384EA81A7625BD00384167 /* DPHostCanvasProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHostCanvasProfile.m; sourceTree = "<group>"; };
+		D6384EAB1A7625CF00384167 /* DPHostCanvasUIViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHostCanvasUIViewController.h; sourceTree = "<group>"; };
+		D6384EAC1A7625CF00384167 /* DPHostCanvasUIViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHostCanvasUIViewController.m; sourceTree = "<group>"; };
+		D6384EB01A762B2E00384167 /* dConnectDeviceHost.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = dConnectDeviceHost.storyboard; path = dConnectDeviceHost_resources/dConnectDeviceHost.storyboard; sourceTree = SOURCE_ROOT; };
+		D69997431A7E210D00EF934F /* DPHostCanvasView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHostCanvasView.h; sourceTree = "<group>"; };
+		D69997441A7E210D00EF934F /* DPHostCanvasView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHostCanvasView.m; sourceTree = "<group>"; };
+		D69997461A7F1AD800EF934F /* DPHostCanvasDrawObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHostCanvasDrawObject.h; sourceTree = "<group>"; };
+		D69997471A7F1AD800EF934F /* DPHostCanvasDrawObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHostCanvasDrawObject.m; sourceTree = "<group>"; };
+		D69997491A7F264900EF934F /* DPHostCanvasDrawImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHostCanvasDrawImage.h; sourceTree = "<group>"; };
+		D699974A1A7F264900EF934F /* DPHostCanvasDrawImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHostCanvasDrawImage.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -230,8 +247,9 @@
 		97FE19EC192B2FB400808FA5 /* dConnectDeviceHost */ = {
 			isa = PBXGroup;
 			children = (
-				97FE1A1A192B4D2400808FA5 /* Headers */,
 				97FE1A19192B4D1C00808FA5 /* Classes */,
+				97FE1A1A192B4D2400808FA5 /* Headers */,
+				D6384EAE1A76262B00384167 /* Resources */,
 				97FE19ED192B2FB400808FA5 /* Supporting Files */,
 			);
 			path = dConnectDeviceHost;
@@ -287,6 +305,9 @@
 		97FE1A1B192B5A5600808FA5 /* profile */ = {
 			isa = PBXGroup;
 			children = (
+				D6384EA71A7625BD00384167 /* DPHostCanvasProfile.h */,
+				D6384EA81A7625BD00384167 /* DPHostCanvasProfile.m */,
+				D6384EAA1A7625CF00384167 /* DPHostCanvas */,
 				ABDA3C6B1A0C58F3001F30A0 /* DPHostConnectProfile.h */,
 				ABDA3C6C1A0C58F3001F30A0 /* DPHostConnectProfile.m */,
 				25DF80D4196CCD7D003F6FF3 /* DPHostBatteryProfile.h */,
@@ -315,6 +336,29 @@
 				25DF80D8196CE622003F6FF3 /* DPHostVibrationProfile.m */,
 			);
 			path = profile;
+			sourceTree = "<group>";
+		};
+		D6384EAA1A7625CF00384167 /* DPHostCanvas */ = {
+			isa = PBXGroup;
+			children = (
+				D6384EAB1A7625CF00384167 /* DPHostCanvasUIViewController.h */,
+				D6384EAC1A7625CF00384167 /* DPHostCanvasUIViewController.m */,
+				D69997431A7E210D00EF934F /* DPHostCanvasView.h */,
+				D69997441A7E210D00EF934F /* DPHostCanvasView.m */,
+				D69997461A7F1AD800EF934F /* DPHostCanvasDrawObject.h */,
+				D69997471A7F1AD800EF934F /* DPHostCanvasDrawObject.m */,
+				D69997491A7F264900EF934F /* DPHostCanvasDrawImage.h */,
+				D699974A1A7F264900EF934F /* DPHostCanvasDrawImage.m */,
+			);
+			path = DPHostCanvas;
+			sourceTree = "<group>";
+		};
+		D6384EAE1A76262B00384167 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				D6384EB01A762B2E00384167 /* dConnectDeviceHost.storyboard */,
+			);
+			name = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -407,6 +451,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D6384EB11A762B2E00384167 /* dConnectDeviceHost.storyboard in Resources */,
 				25DAFD1E196A61E50002734B /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -467,6 +512,9 @@
 				2515192519A86FC800430980 /* DPHostMediaPlayerProfile.m in Sources */,
 				252F870619739EBB00142BAE /* DPHostFileDescriptorProfile.m in Sources */,
 				97FE19F2192B2FB400808FA5 /* DPHostDevicePlugin.m in Sources */,
+				D6384EA91A7625BD00384167 /* DPHostCanvasProfile.m in Sources */,
+				D69997451A7E210D00EF934F /* DPHostCanvasView.m in Sources */,
+				D6384EAD1A7625CF00384167 /* DPHostCanvasUIViewController.m in Sources */,
 				252F870319736DEB00142BAE /* DPHostPhoneProfile.m in Sources */,
 				25FF1DB7196A9B8000EA7F72 /* DPHostNotificationProfile.m in Sources */,
 				25F0BC41199343600095C333 /* DPHostMediaContext.m in Sources */,
@@ -478,7 +526,9 @@
 				25FF0C0E196FBECF00E8C7C3 /* DPHostProximityProfile.m in Sources */,
 				97FE1A1E192B5ACD00808FA5 /* DPHostServiceDiscoveryProfile.m in Sources */,
 				25DF80D9196CE622003F6FF3 /* DPHostVibrationProfile.m in Sources */,
+				D699974B1A7F264900EF934F /* DPHostCanvasDrawImage.m in Sources */,
 				257FC23719BAAF5200358536 /* DPHostReachability.m in Sources */,
+				D69997481A7F1AD800EF934F /* DPHostCanvasDrawObject.m in Sources */,
 				2585BB941980D89F00AAE43C /* DPHostSettingsProfile.m in Sources */,
 				ABDA3C6D1A0C58F3001F30A0 /* DPHostConnectProfile.m in Sources */,
 				25C710EB1981E578004C6484 /* DPHostMediaStreamRecordingProfile.m in Sources */,
