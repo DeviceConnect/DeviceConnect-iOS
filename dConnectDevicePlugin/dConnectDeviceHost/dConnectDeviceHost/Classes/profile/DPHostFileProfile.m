@@ -1,6 +1,6 @@
 //
 //  DPHostFileProfile.m
-//  DConnectSDK
+//  dConnectDeviceHost
 //
 //  Copyright (c) 2014 NTT DOCOMO, INC.
 //  Released under the MIT license
@@ -81,6 +81,23 @@ didReceiveGetListRequest:(DConnectRequestMessage *)request
 {
     DConnectFileManager *fileMgr = [SELF_PLUGIN fileMgr];
     NSFileManager *sysFileMgr = [NSFileManager defaultManager];
+    
+    NSString *offsetString = [request stringForKey:DConnectFileProfileParamOffset];
+    NSString *limitString = [request stringForKey:DConnectFileProfileParamLimit];
+    if (offsetString) {
+        if ([DPHostUtils isFloatWithString:offsetString]) {
+            [response setErrorToInvalidRequestParameterWithMessage:@"offset is non-float"];
+            return YES;
+        }
+    }
+    if (limitString) {
+        if ([DPHostUtils isFloatWithString:limitString]) {
+            [response setErrorToInvalidRequestParameterWithMessage:@"limit is non-float"];
+            return YES;
+        }
+    }
+    
+
     if (path) {
         // pathが絶対であれ相対であれベースURLに追加する。
         if ([path isEqualToString:@".."]) {

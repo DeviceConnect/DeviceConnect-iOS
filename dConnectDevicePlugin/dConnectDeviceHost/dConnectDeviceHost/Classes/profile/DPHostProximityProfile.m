@@ -1,6 +1,6 @@
 //
 //  DPHostProximityProfile.m
-//  DConnectSDK
+//  dConnectDeviceHost
 //
 //  Copyright (c) 2014 NTT DOCOMO, INC.
 //  Released under the MIT license
@@ -126,7 +126,7 @@ didReceiveDeleteOnUserProximityRequest:(DConnectRequestMessage *)request
             break;
     }
     
-    NSArray *evts = [_eventMgr eventListForDeviceId:deviceId
+    NSArray *evts = [_eventMgr eventListForServiceId:serviceId
                                             profile:DConnectProximityProfileName
                                           attribute:DConnectProximityProfileAttrOnUserProximity];
     if (evts.count == 0) {

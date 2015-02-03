@@ -1,6 +1,6 @@
 //
 //  DPHostUtils.h
-//  DConnectSDK
+//  dConnectDeviceHost
 //
 //  Copyright (c) 2014 NTT DOCOMO, INC.
 //  Released under the MIT license
@@ -15,5 +15,5 @@
 
 + (NSString *) randomStringWithLength:(NSUInteger)len;
 + (NSString *) percentEncodeString:(NSString *)string withEncoding:(NSStringEncoding)encoding;
-
++ (BOOL)isFloatWithString:(NSString *)numberString;
 @end

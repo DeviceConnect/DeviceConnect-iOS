@@ -1,6 +1,6 @@
 //
 //  DPHostCanvasProfile.m
-//  DConnectSDK
+//  dConnectDeviceHost
 //
 //  Copyright (c) 2015 NTT DOCOMO, INC.
 //  Released under the MIT license

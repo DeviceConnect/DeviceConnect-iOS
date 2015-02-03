@@ -1,6 +1,6 @@
 //
 //  DPHostMediaStreamRecordingProfile.m
-//  DConnectSDK
+//  dConnectDeviceHost
 //
 //  Copyright (c) 2014 NTT DOCOMO, INC.
 //  Released under the MIT license
@@ -566,7 +566,8 @@ typedef NS_ENUM(NSUInteger, OptionIndex) {
     // イベントの取得
     NSArray *evts = [_eventMgr eventListForServiceId:ServiceDiscoveryServiceId
                                             profile:DConnectMediaStreamRecordingProfileName
-                                          attribute:DConnectMediaStreamRecordingProfileAttrOnPhoto];
+                                           attribute:DConnectMediaStreamRecordingProfileAttrOnRecordingChange];
+
     // イベント送信
     for (DConnectEvent *evt in evts) {
         DConnectMessage *eventMsg = [DConnectEventManager createEventMessageWithEvent:evt];
@@ -1943,7 +1944,7 @@ didReceiveDeleteOnDataAvailableRequest:(DConnectRequestMessage *)request
             break;
     }
     
-    NSArray *evts = [_eventMgr eventListForDeviceId:deviceId
+    NSArray *evts = [_eventMgr eventListForServiceId:serviceId
                                             profile:DConnectMediaStreamRecordingProfileName
                                           attribute:DConnectMediaStreamRecordingProfileAttrOnDataAvailable];
     if (evts.count == 0) {

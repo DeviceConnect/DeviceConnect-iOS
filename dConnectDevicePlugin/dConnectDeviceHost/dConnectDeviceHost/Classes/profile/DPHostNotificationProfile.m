@@ -1,6 +1,6 @@
 //
 //  DPHostNotificationProfile.m
-//  DConnectSDK
+//  dConnectDeviceHost
 //
 //  Copyright (c) 2014 NTT DOCOMO, INC.
 //  Released under the MIT license
@@ -164,7 +164,7 @@ didReceivePostNotifyRequest:(DConnectRequestMessage *)request
         [response setErrorToInvalidRequestParameterWithMessage:@"type must be specified."];
         return YES;
     } else if (type.integerValue == DConnectNotificationProfileNotificationTypeUnknown) {
-        [response setErrorToInvalidRequestParameterWithMessage:@"Unknown type was specified."];
+        [response setError:100 message:@"Unknown type was specified."];
         return YES;
     }
     NSString *notificationId = [DPHostUtils randomStringWithLength:NotificationIdLength];

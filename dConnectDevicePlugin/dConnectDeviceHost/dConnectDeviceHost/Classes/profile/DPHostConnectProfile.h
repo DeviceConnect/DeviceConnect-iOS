@@ -1,9 +1,10 @@
 //
-//  DConnectConnectProfile+DPHostConnectProfile.h
+//  DPHostConnectProfile.h
 //  dConnectDeviceHost
 //
-//  Created by 星　貴之 on 2014/11/07.
-//  Copyright (c) 2014年 NTT DOCOMO, INC. All rights reserved.
+//  Copyright (c) 2014 NTT DOCOMO, INC.
+//  Released under the MIT license
+//  http://opensource.org/licenses/mit-license.php
 //
 
 #import <DConnectSDK/DConnectSDK.h>
