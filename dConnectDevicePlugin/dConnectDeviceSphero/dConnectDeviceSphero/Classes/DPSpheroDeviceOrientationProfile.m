@@ -71,7 +71,7 @@
     [DConnectDeviceOrientationProfile setY:accel.y * 9.81 target:accelmsg];
     [DConnectDeviceOrientationProfile setZ:accel.z * 9.81 target:accelmsg];
     
-    [DConnectDeviceOrientationProfile setAcceleration:accelmsg target:message];
+    [DConnectDeviceOrientationProfile setAccelerationIncludingGravity:accelmsg target:message];
     [DConnectDeviceOrientationProfile setRotationRate:orientmsg target:message];
     [DConnectDeviceOrientationProfile setInterval:interval target:message];
     
