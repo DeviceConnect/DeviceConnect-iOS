@@ -15,7 +15,7 @@
 
 #import "DPHostDevicePlugin.h"
 #import "DPHostPhoneProfile.h"
-#import "DPHostNetworkServiceDiscoveryProfile.h"
+#import "DPHostServiceDiscoveryProfile.h"
 #import "DPHostUtils.h"
 
 @interface DPHostPhoneProfile()
@@ -74,7 +74,7 @@
             }
             
             // イベントの取得
-            NSArray *evts = [weakSelf.eventMgr eventListForDeviceId:NetworkDiscoveryDeviceId
+            NSArray *evts = [weakSelf.eventMgr eventListForServiceId:ServiceDiscoveryServiceId
                                                     profile:DConnectPhoneProfileName
                                                   attribute:DConnectPhoneProfileAttrOnConnect];
             // イベント送信
@@ -102,7 +102,7 @@
 - (BOOL)          profile:(DConnectPhoneProfile *)profile
 didReceivePostCallRequest:(DConnectRequestMessage *)request
                  response:(DConnectResponseMessage *)response
-                 deviceId:(NSString *)deviceId
+                 serviceId:(NSString *)serviceId
               phoneNumber:(NSString *)phoneNumber
 {
     if (!phoneNumber) {
@@ -148,7 +148,7 @@ didReceivePostCallRequest:(DConnectRequestMessage *)request
 - (BOOL)              profile:(DConnectPhoneProfile *)profile
 didReceivePutOnConnectRequest:(DConnectRequestMessage *)request
                      response:(DConnectResponseMessage *)response
-                     deviceId:(NSString *)deviceId
+                     serviceId:(NSString *)serviceId
                    sessionKey:(NSString *)sessionKey
 {
     switch ([_eventMgr addEventForRequest:request]) {
@@ -173,7 +173,7 @@ didReceivePutOnConnectRequest:(DConnectRequestMessage *)request
 - (BOOL)                 profile:(DConnectPhoneProfile *)profile
 didReceiveDeleteOnConnectRequest:(DConnectRequestMessage *)request
                         response:(DConnectResponseMessage *)response
-                        deviceId:(NSString *)deviceId
+                        serviceId:(NSString *)serviceId
                       sessionKey:(NSString *)sessionKey
 {
     switch ([_eventMgr removeEventForRequest:request]) {

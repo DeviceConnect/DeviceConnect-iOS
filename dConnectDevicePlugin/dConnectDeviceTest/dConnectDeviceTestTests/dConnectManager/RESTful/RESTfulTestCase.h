@@ -54,7 +54,7 @@
 @interface RESTfulTestCase : DConnectTestCase <SRWebSocketDelegate>
 
 /**
- * デバイスプラグインのIDを検索して、deviceIdに設定する.
+ * デバイスプラグインのIDを検索して、serviceIdに設定する.
  */
 - (void) searchTestDevicePlugin;
 

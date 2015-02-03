@@ -90,7 +90,7 @@ NSString *const UniquePingProfileParamPath = @"path";
 {
     for (NSString *key in [request allKeys]) {
         // 以下の特別なパラメータはコピーしない.
-        if ([key isEqualToString:DConnectMessageDeviceId]
+        if ([key isEqualToString:DConnectMessageServiceId]
             || [key isEqualToString:DConnectMessagePluginId]
             || [key isEqualToString:DConnectMessageSessionKey]
             || [key isEqualToString:DConnectMessageAccessToken]

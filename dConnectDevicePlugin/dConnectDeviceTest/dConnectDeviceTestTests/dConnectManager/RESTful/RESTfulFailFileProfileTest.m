@@ -21,7 +21,7 @@
 @implementation RESTfulFailFileProfileTest
 
 /*!
- * @brief deviceIdが無い状態でファイル送信テストを行う.
+ * @brief serviceIdが無い状態でファイル送信テストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: GET
@@ -32,7 +32,7 @@
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailFileSendPostNoDeviceId
+- (void) testHttpFailFileSendPostNoServiceId
 {
     NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/file/send"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
@@ -42,20 +42,20 @@
 }
 
 /*!
- * @brief deviceIdが空状態でファイル送信テストを行う.
+ * @brief serviceIdが空状態でファイル送信テストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: GET
- * Path: /file/send?deviceId=&mediaId=xxxx
+ * Path: /file/send?serviceId=&mediaId=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailFileSendPostEmptyDeviceId
+- (void) testHttpFailFileSendPostEmptyServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/file/send?deviceId="];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/file/send?serviceId="];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"POST"];
     
@@ -63,20 +63,20 @@
 }
 
 /*!
- * @brief 存在しないdeviceIdでファイル送信テストを行う.
+ * @brief 存在しないserviceIdでファイル送信テストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: GET
- * Path: /file/send?deviceId=123456789&mediaId=xxxx
+ * Path: /file/send?serviceId=123456789&mediaId=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailFileSendPostInvalidDeviceId
+- (void) testHttpFailFileSendPostInvalidServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/file/send?deviceId=12345678"];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/file/send?serviceId=12345678"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"POST"];
     
@@ -88,7 +88,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: GET
- * Path: /file/send?deviceId=xxxx&mediaId=xxxx
+ * Path: /file/send?serviceId=xxxx&mediaId=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -97,7 +97,7 @@
  */
 - (void) testHttpFailFileSendPostInvalidMethodGet
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/file/send?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/file/send?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
     
@@ -109,7 +109,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /file/send?deviceId=xxxx&mediaId=xxxx
+ * Path: /file/send?serviceId=xxxx&mediaId=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -118,7 +118,7 @@
  */
 - (void) testHttpFailFileSendPostInvalidMethodPut
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/file/send?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/file/send?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
@@ -130,7 +130,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /file/send?deviceId=xxxx&mediaId=xxxx
+ * Path: /file/send?serviceId=xxxx&mediaId=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -139,7 +139,7 @@
  */
 - (void) testHttpFailFileSendPostInvalidMethodDelete
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/file/send?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/file/send?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     
@@ -147,7 +147,7 @@
 }
 
 /*!
- * @brief deviceIdが無い状態でファイル受信テストを行う.
+ * @brief serviceIdが無い状態でファイル受信テストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: GET
@@ -158,7 +158,7 @@
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailFileReceiveGetNoDeviceId
+- (void) testHttpFailFileReceiveGetNoServiceId
 {
     NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/file/receive"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
@@ -168,20 +168,20 @@
 }
 
 /*!
- * @brief deviceIdが空状態でファイル受信テストを行う.
+ * @brief serviceIdが空状態でファイル受信テストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: GET
- * Path: /file/receive?deviceId=&mediaId=xxxx
+ * Path: /file/receive?serviceId=&mediaId=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailFileReceiveGetEmptyDeviceId
+- (void) testHttpFailFileReceiveGetEmptyServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/file/receive?deviceId="];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/file/receive?serviceId="];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
     
@@ -189,20 +189,20 @@
 }
 
 /*!
- * @brief 存在しないdeviceIdでファイル受信テストを行う.
+ * @brief 存在しないserviceIdでファイル受信テストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: GET
- * Path: /file/receive?deviceId=123456789&mediaId=xxxx
+ * Path: /file/receive?serviceId=123456789&mediaId=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailFileReceiveGetInvalidDeviceId
+- (void) testHttpFailFileReceiveGetInvalidServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/file/receive?deviceId=12345678"];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/file/receive?serviceId=12345678"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
     
@@ -214,7 +214,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: POST
- * Path: /file/receive?deviceId=xxxx&mediaId=xxxx
+ * Path: /file/receive?serviceId=xxxx&mediaId=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -223,7 +223,7 @@
  */
 - (void) testHttpFailFileReceiveGetInvalidMethodPost
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/file/receive?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/file/receive?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"POST"];
     
@@ -235,7 +235,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /file/receive?deviceId=xxxx&mediaId=xxxx
+ * Path: /file/receive?serviceId=xxxx&mediaId=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -244,7 +244,7 @@
  */
 - (void) testHttpFailFileReceiveGetInvalidMethodPut
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/file/receive?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/file/receive?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
@@ -256,7 +256,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /file/receive?deviceId=xxxx&mediaId=xxxx
+ * Path: /file/receive?serviceId=xxxx&mediaId=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -265,7 +265,7 @@
  */
 - (void) testHttpFailFileReceiveGetInvalidMethodDelete
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/file/receive?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/file/receive?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     
@@ -273,7 +273,7 @@
 }
 
 /*!
- * @brief deviceIdが無い状態でファイル一覧取得テストを行う.
+ * @brief serviceIdが無い状態でファイル一覧取得テストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: GET
@@ -284,7 +284,7 @@
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailFileListGetNoDeviceId
+- (void) testHttpFailFileListGetNoServiceId
 {
     NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/file/list"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
@@ -294,20 +294,20 @@
 }
 
 /*!
- * @brief deviceIdが空状態でファイル一覧取得テストを行う.
+ * @brief serviceIdが空状態でファイル一覧取得テストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: GET
- * Path: /file/list?deviceId=
+ * Path: /file/list?serviceId=
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailFileListGetEmptyDeviceId
+- (void) testHttpFailFileListGetEmptyServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/file/list?deviceId="];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/file/list?serviceId="];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
     
@@ -315,20 +315,20 @@
 }
 
 /*!
- * @brief 存在しないdeviceIdでファイル一覧取得テストを行う.
+ * @brief 存在しないserviceIdでファイル一覧取得テストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: GET
- * Path: /file/list?deviceId=123456789
+ * Path: /file/list?serviceId=123456789
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailFileListGetInvalidDeviceId
+- (void) testHttpFailFileListGetInvalidServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/file/list?deviceId=12345678"];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/file/list?serviceId=12345678"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
     
@@ -340,7 +340,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: POST
- * Path: /file/list?deviceId=xxxx
+ * Path: /file/list?serviceId=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -349,7 +349,7 @@
  */
 - (void) testHttpFailFileListGetInvalidMethodPost
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/file/list?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/file/list?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"POST"];
     
@@ -361,7 +361,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /file/list?deviceId=xxxx
+ * Path: /file/list?serviceId=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -370,7 +370,7 @@
  */
 - (void) testHttpFailFileListGetInvalidMethodPut
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/file/list?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/file/list?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
@@ -382,7 +382,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /file/list?deviceId=xxxx
+ * Path: /file/list?serviceId=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -391,7 +391,7 @@
  */
 - (void) testHttpFailFileListGetInvalidMethodDelete
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/file/list?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/file/list?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     
@@ -399,7 +399,7 @@
 }
 
 /*!
- * @brief deviceIdが無い状態でファイル更新テストを行う.
+ * @brief serviceIdが無い状態でファイル更新テストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: GET
@@ -410,7 +410,7 @@
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailFileUpdatePutNoDeviceId
+- (void) testHttpFailFileUpdatePutNoServiceId
 {
     NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/file/update"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
@@ -420,7 +420,7 @@
 }
 
 /*!
- * @brief deviceIdが空状態でファイル更新テストを行う.
+ * @brief serviceIdが空状態でファイル更新テストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: GET
@@ -431,9 +431,9 @@
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailFileUpdatePutEmptyDeviceId
+- (void) testHttpFailFileUpdatePutEmptyServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/file/update?deviceId="];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/file/update?serviceId="];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
@@ -441,7 +441,7 @@
 }
 
 /*!
- * @brief 不正なdeviceIdでファイル更新テストを行う.
+ * @brief 不正なserviceIdでファイル更新テストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: GET
@@ -452,9 +452,9 @@
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailFileUpdatePutInvalidDeviceId
+- (void) testHttpFailFileUpdatePutInvalidServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/file/update?deviceId=12345678"];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/file/update?serviceId=12345678"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
@@ -466,7 +466,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: GET
- * Path: /file/update?deviceId=xxxx
+ * Path: /file/update?serviceId=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -475,7 +475,7 @@
  */
 - (void) testHttpFailFileUpdatePutInvalidMethodGet
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/file/update?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/file/update?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
     
@@ -487,7 +487,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: GET
- * Path: /file/update?deviceId=xxxx
+ * Path: /file/update?serviceId=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -496,7 +496,7 @@
  */
 - (void) testHttpFailFileUpdatePutInvalidMethodPost
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/file/update?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/file/update?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"POST"];
     
@@ -508,7 +508,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: GET
- * Path: /file/update?deviceId=xxxx
+ * Path: /file/update?serviceId=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -517,7 +517,7 @@
  */
 - (void) testHttpFailFileUpdatePutInvalidMethodDelete
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/file/update?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/file/update?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     
@@ -525,7 +525,7 @@
 }
 
 /*!
- * @brief deviceIdが無い状態でファイル削除テストを行う.
+ * @brief serviceIdが無い状態でファイル削除テストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: PUT
@@ -536,7 +536,7 @@
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailFileRemoveDeleteNoDeviceId
+- (void) testHttpFailFileRemoveDeleteNoServiceId
 {
     NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/file/remove"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
@@ -546,20 +546,20 @@
 }
 
 /*!
- * @brief deviceIdが空状態でファイル削除テストを行う.
+ * @brief serviceIdが空状態でファイル削除テストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /file/remove?deviceId=&mediaId=xxxx
+ * Path: /file/remove?serviceId=&mediaId=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailFileRemoveDeleteEmptyDeviceId
+- (void) testHttpFailFileRemoveDeleteEmptyServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/file/remove?deviceId="];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/file/remove?serviceId="];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     
@@ -567,20 +567,20 @@
 }
 
 /*!
- * @brief 存在しないdeviceIdでファイル削除テストを行う.
+ * @brief 存在しないserviceIdでファイル削除テストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /file/remove?deviceId=123456789&mediaId=xxxx
+ * Path: /file/remove?serviceId=123456789&mediaId=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailFileRemoveDeleteInvalidDeviceId
+- (void) testHttpFailFileRemoveDeleteInvalidServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/file/remove?deviceId=12345678"];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/file/remove?serviceId=12345678"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     
@@ -592,7 +592,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: GET
- * Path: /file/remove?deviceId=xxxx&mediaId=xxxx
+ * Path: /file/remove?serviceId=xxxx&mediaId=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -601,7 +601,7 @@
  */
 - (void) testHttpFailFileRemoveDeleteInvalidMethodGet
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/file/remove?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/file/remove?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
     
@@ -613,7 +613,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /file/remove?deviceId=xxxx&mediaId=xxxx
+ * Path: /file/remove?serviceId=xxxx&mediaId=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -622,7 +622,7 @@
  */
 - (void) testHttpFailFileRemoveDeleteInvalidMethodPost
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/file/remove?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/file/remove?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"POST"];
     
@@ -634,7 +634,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /file/remove?deviceId=xxxx&mediaId=xxxx
+ * Path: /file/remove?serviceId=xxxx&mediaId=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -643,7 +643,7 @@
  */
 - (void) testHttpFailFileRemoveDeleteInvalidMethodPut
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/file/remove?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/file/remove?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     

@@ -14,7 +14,7 @@ NSString *const LocalOAuthClientDaoTableName = @"clients";
 NSString *const LocalOAuthClientDaoId = @"id";                              /* ID */
 NSString *const LocalOAuthClientDaoClientId = @"client_id";                 /* クライアントID */
 NSString *const LocalOAuthClientDaoPackageName = @"package_name";           /* パッケージ名 */
-NSString *const LocalOAuthClientDaoDeviceId = @"device_id";                 /* デバイスID(無しのときはnull) */
+NSString *const LocalOAuthClientDaoServiceId = @"service_id";                 /* サービスID(無しのときはnull) */
 NSString *const LocalOAuthClientDaoClientSecret = @"client_secret";         /* クライアントシークレット */
 NSString *const LocalOAuthClientDaoClientType = @"client_type";             /* クライアントタイプ */
 NSString *const LocalOAuthClientDaoRegistrationDate = @"registration_date"; /* 登録日時(System.currentTimeMillis()で取得した値を格納する) */
@@ -51,7 +51,7 @@ NSString *const LocalOAuthClientDaoRegistrationDate = @"registration_date"; /* �
         LocalOAuthClientDaoId,
         LocalOAuthClientDaoClientId,
         LocalOAuthClientDaoPackageName,
-        LocalOAuthClientDaoDeviceId,
+        LocalOAuthClientDaoServiceId,
         LocalOAuthClientDaoClientSecret,
         LocalOAuthClientDaoClientType,
         LocalOAuthClientDaoRegistrationDate
@@ -72,9 +72,9 @@ NSString *const LocalOAuthClientDaoRegistrationDate = @"registration_date"; /* �
     [columns addObject: LocalOAuthClientDaoPackageName];
     [params addObject: client.packageInfo.packageName];
     
-    if (client.packageInfo.deviceId != nil) {
-        [columns addObject: LocalOAuthClientDaoDeviceId];
-        [params addObject: client.packageInfo.deviceId];
+    if (client.packageInfo.serviceId != nil) {
+        [columns addObject: LocalOAuthClientDaoServiceId];
+        [params addObject: client.packageInfo.serviceId];
     }
     
     [columns addObject: LocalOAuthClientDaoClientSecret];
@@ -173,17 +173,17 @@ NSString *const LocalOAuthClientDaoRegistrationDate = @"registration_date"; /* �
 + (LocalOAuthClient *) findClientByPackageInfo: (LocalOAuthPackageInfo *)packageInfo
                    database: (DConnectSQLiteDatabase *)database {
     
-    NSString *where = [packageInfo deviceId] != nil ?
+    NSString *where = [packageInfo serviceId] != nil ?
                 [NSString stringWithFormat: @"%@='%@' AND %@='%@'"
                  , LocalOAuthClientDaoPackageName
                  , [packageInfo packageName]
-                 , LocalOAuthClientDaoDeviceId
-                 , [packageInfo deviceId]
+                 , LocalOAuthClientDaoServiceId
+                 , [packageInfo serviceId]
                  ] :
                 [NSString stringWithFormat: @"%@='%@' AND %@ IS NULL"
                  , LocalOAuthClientDaoPackageName
                  , [packageInfo packageName]
-                 , LocalOAuthClientDaoDeviceId
+                 , LocalOAuthClientDaoServiceId
                  ];
     
     NSArray *clients = [self loadClients: where
@@ -216,7 +216,7 @@ NSString *const LocalOAuthClientDaoRegistrationDate = @"registration_date"; /* �
                      LocalOAuthClientDaoId,
                      LocalOAuthClientDaoClientId,
                      LocalOAuthClientDaoPackageName,
-                     LocalOAuthClientDaoDeviceId,
+                     LocalOAuthClientDaoServiceId,
                      LocalOAuthClientDaoClientSecret,
                      LocalOAuthClientDaoClientType,
                      LocalOAuthClientDaoRegistrationDate,
@@ -236,11 +236,11 @@ NSString *const LocalOAuthClientDaoRegistrationDate = @"registration_date"; /* �
             [sqliteClient setId: [cursor longLongValueAtIndex:0]];
             [sqliteClient setClientId: [cursor stringValueAtIndex:1]];
             NSString *packageName = [cursor stringValueAtIndex:2];
-            NSString *deviceId = [cursor stringValueAtIndex:3];
+            NSString *serviceId = [cursor stringValueAtIndex:3];
             
             [sqliteClient setPackageInfo:
-                [[LocalOAuthPackageInfo alloc] initWithPackageNameDeviceId: packageName
-                                                     deviceId: deviceId]];
+                [[LocalOAuthPackageInfo alloc] initWithPackageNameServiceId: packageName
+                                                     serviceId: serviceId]];
             [sqliteClient setClientSecret: [cursor stringValueAtIndex:4]];
             NSString *clientTypeString = [cursor stringValueAtIndex:5];
             [sqliteClient setClientType: [LocalOAuthClientTypeUtil toValue: clientTypeString]];
@@ -278,7 +278,7 @@ NSString *const LocalOAuthClientDaoRegistrationDate = @"registration_date"; /* �
         LocalOAuthClientDaoId,
         LocalOAuthClientDaoClientId,
         LocalOAuthClientDaoPackageName,
-        LocalOAuthClientDaoDeviceId,
+        LocalOAuthClientDaoServiceId,
         LocalOAuthClientDaoClientSecret,
         LocalOAuthClientDaoClientType,
         LocalOAuthClientDaoRegistrationDate

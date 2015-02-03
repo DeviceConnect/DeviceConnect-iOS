@@ -24,7 +24,7 @@
  * @brief ファイルの送信を行う.
  * <pre>
  * Method: POST
- * Path: /file/send?deviceid=xxxx&filename=xxxx
+ * Path: /file/send?serviceId=xxxx&filename=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -33,7 +33,7 @@
  */
 - (void) testHttpNormalFileSendPost
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/file/send?deviceId=%@&path=%%2Ftest%%2Ftest%%2Epng", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/file/send?serviceId=%@&path=%%2Ftest%%2Ftest%%2Epng", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"POST"];
     Multipart* multi = [Multipart new];
@@ -48,7 +48,7 @@
  * @brief 0byteのファイルの送信を行う.
  * <pre>
  * Method: POST
- * Path: /file/send?deviceid=xxxx&filename=xxxx
+ * Path: /file/send?serviceId=xxxx&filename=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -57,7 +57,7 @@
  */
 - (void) testHttpNormalFileSendPostZeroByte
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/file/send?deviceId=%@&path=%%2Ftest%%2Fzero%%2Edat", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/file/send?serviceId=%@&path=%%2Ftest%%2Fzero%%2Edat", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"POST"];
     Multipart* multi = [Multipart new];
@@ -73,7 +73,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: GET
- * Path: /file/receive?deviceid=xxxx&mediaid=xxxxx
+ * Path: /file/receive?serviceId=xxxx&mediaid=xxxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -84,7 +84,7 @@
 {
     [self testHttpNormalFileSendPost];
     
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/file/receive?deviceId=%@&path=%%2Ftest%%2Ftest%%2Epng", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/file/receive?serviceId=%@&path=%%2Ftest%%2Ftest%%2Epng", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
     
@@ -123,7 +123,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: GET
- * Path: /file/receive?deviceid=xxxx&mediaid=xxxxx
+ * Path: /file/receive?serviceId=xxxx&mediaid=xxxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -134,7 +134,7 @@
 {
     [self testHttpNormalFileSendPostZeroByte];
     
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/file/receive?deviceId=%@&path=%%2Ftest%%2Fzero%%2Edat", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/file/receive?serviceId=%@&path=%%2Ftest%%2Fzero%%2Edat", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
     
@@ -175,7 +175,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: GET
- * Path: /file/list?deviceid=xxxx
+ * Path: /file/list?serviceId=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -185,7 +185,7 @@
  */
 - (void) testHttpNormalFileListGet
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/file/list?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/file/list?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
     
@@ -196,7 +196,7 @@
  * @brief ファイルの削除を行う.
  * <pre>
  * Method: Delete
- * Path: /file/remove?deviceid=xxxx&filename=xxxx
+ * Path: /file/remove?serviceId=xxxx&filename=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -208,7 +208,7 @@
     // あとで削除するためのファイルを送信しておく.
     [self testHttpNormalFileSendPost];
     
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/file/remove?deviceId=%@&path=%%2Ftest%%2Ftest%%2Epng", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/file/remove?serviceId=%@&path=%%2Ftest%%2Ftest%%2Epng", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     

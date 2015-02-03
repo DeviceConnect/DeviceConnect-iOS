@@ -139,7 +139,7 @@ NSString *const DConnectClientDaoClmSessionKey = @"session_key";
     return client;
 }
 
-+ (NSArray *) clientsForAPIWithDeviceId:(DConnectEvent *)event
++ (NSArray *) clientsForAPIWithServiceId:(DConnectEvent *)event
                              onDatabase:(DConnectSQLiteDatabase *)database
 {
     
@@ -173,14 +173,14 @@ NSString *const DConnectClientDaoClmSessionKey = @"session_key";
               DConnectProfileDaoClmName,
               DConnectInterfaceDaoClmName,
               DConnectAttributeDaoClmName,
-              DConnectDeviceDaoClmDeviceId);
+              DConnectDeviceDaoClmServiceId);
     
     NSString *interface = (event.interface) ? event.interface : DConnectInterfaceDaoEmptyName;
-    NSString *deviceId = (event.deviceId) ? event.deviceId : DConnectDeviceDaoEmptyDeviceId;
+    NSString *serviceId = (event.serviceId) ? event.serviceId : DConnectDeviceDaoEmptyServiceId;
     
     DConnectSQLiteCursor *cursor = [database queryWithSQL:sql
                                                bindParams:@[event.profile, interface,
-                                                            event.attribute, deviceId]];
+                                                            event.attribute, serviceId]];
     
     if (!cursor) {
         return clients;

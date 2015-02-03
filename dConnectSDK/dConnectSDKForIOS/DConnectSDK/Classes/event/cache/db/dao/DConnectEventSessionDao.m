@@ -43,12 +43,12 @@ NSString *const DConnectEventSessionDaoClmCId = @"c_id";
     };
 }
 
-+ (long long) insertWithEventDeviceId:(long long)eventDeviceId
++ (long long) insertWithEventServiceId:(long long)eventServiceId
                              clientId:(long long)clientId
                            toDatabase:(DConnectSQLiteDatabase *)database
 {
     
-    NSNumber *edId = [NSNumber numberWithLongLong:eventDeviceId];
+    NSNumber *edId = [NSNumber numberWithLongLong:eventServiceId];
     NSNumber *cId = [NSNumber numberWithLongLong:clientId];
     
     long long result = -1;
@@ -180,15 +180,15 @@ NSString *const DConnectEventSessionDaoClmCId = @"c_id";
               DConnectProfileDaoClmName,
               DConnectInterfaceDaoClmName,
               DConnectAttributeDaoClmName,
-              DConnectDeviceDaoClmDeviceId,
+              DConnectDeviceDaoClmServiceId,
               DConnectClientDaoClmSessionKey);
     
     NSString *interface = (event.interface) ? event.interface : DConnectInterfaceDaoEmptyName;
-    NSString *deviceId = (event.deviceId) ? event.deviceId : DConnectDeviceDaoEmptyDeviceId;
+    NSString *serviceId = (event.serviceId) ? event.serviceId : DConnectDeviceDaoEmptyServiceId;
     
     DConnectSQLiteCursor *cursor = [database queryWithSQL:sql
                                                bindParams:@[event.profile, interface,
-                                                            event.attribute, deviceId,
+                                                            event.attribute, serviceId,
                                                             event.sessionKey]];
     
     if (!cursor) {

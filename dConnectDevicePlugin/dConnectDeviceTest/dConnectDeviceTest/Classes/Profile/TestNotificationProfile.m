@@ -28,12 +28,12 @@
 
 - (BOOL) profile:(DConnectNotificationProfile *)profile didReceivePostNotifyRequest:(DConnectRequestMessage *)request
         response:(DConnectResponseMessage *)response
-        deviceId:(NSString *)deviceId type:(NSNumber *)type
+        serviceId:(NSString *)serviceId type:(NSNumber *)type
              dir:(NSString *)dir lang:(NSString *)lang
             body:(NSString *)body tag:(NSString *)tag icon:(NSData *)icon
 {
     
-    CheckDID(response, deviceId)
+    CheckDID(response, serviceId)
     if (type == nil) {
         [response setErrorToInvalidRequestParameter];
     } else {
@@ -73,10 +73,10 @@
 #pragma mark Event Registration
 
 - (BOOL) profile:(DConnectNotificationProfile *)profile didReceivePutOnClickRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response deviceId:(NSString *)deviceId
+        response:(DConnectResponseMessage *)response serviceId:(NSString *)serviceId
       sessionKey:(NSString *)sessionKey
 {
-    CheckDIDAndSK(response, deviceId, sessionKey) {
+    CheckDIDAndSK(response, serviceId, sessionKey) {
         response.result = DConnectMessageResultTypeOk;
         
         DConnectMessage *event = [DConnectMessage message];
@@ -92,10 +92,10 @@
 }
 
 - (BOOL) profile:(DConnectNotificationProfile *)profile didReceivePutOnShowRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response deviceId:(NSString *)deviceId
+        response:(DConnectResponseMessage *)response serviceId:(NSString *)serviceId
       sessionKey:(NSString *)sessionKey
 {
-    CheckDIDAndSK(response, deviceId, sessionKey) {
+    CheckDIDAndSK(response, serviceId, sessionKey) {
         response.result = DConnectMessageResultTypeOk;
         
         DConnectMessage *event = [DConnectMessage message];
@@ -111,10 +111,10 @@
 }
 
 - (BOOL) profile:(DConnectNotificationProfile *)profile didReceivePutOnCloseRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response deviceId:(NSString *)deviceId
+        response:(DConnectResponseMessage *)response serviceId:(NSString *)serviceId
       sessionKey:(NSString *)sessionKey
 {
-    CheckDIDAndSK(response, deviceId, sessionKey) {
+    CheckDIDAndSK(response, serviceId, sessionKey) {
         response.result = DConnectMessageResultTypeOk;
         
         DConnectMessage *event = [DConnectMessage message];
@@ -130,10 +130,10 @@
 }
 
 - (BOOL) profile:(DConnectNotificationProfile *)profile didReceivePutOnErrorRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response deviceId:(NSString *)deviceId
+        response:(DConnectResponseMessage *)response serviceId:(NSString *)serviceId
       sessionKey:(NSString *)sessionKey
 {
-    CheckDIDAndSK(response, deviceId, sessionKey) {
+    CheckDIDAndSK(response, serviceId, sessionKey) {
         response.result = DConnectMessageResultTypeOk;
         
         DConnectMessage *event = [DConnectMessage message];
@@ -153,10 +153,10 @@
 
 - (BOOL) profile:(DConnectNotificationProfile *)profile didReceiveDeleteNotifyRequest:(DConnectRequestMessage *)request
         response:(DConnectResponseMessage *)response
-        deviceId:(NSString *)deviceId notificationId:(NSString *)notificationId
+        serviceId:(NSString *)serviceId notificationId:(NSString *)notificationId
 {
     
-    CheckDID(response, deviceId)
+    CheckDID(response, serviceId)
     if (notificationId == nil) {
         [response setErrorToInvalidRequestParameter];
     } else {
@@ -169,11 +169,11 @@
 #pragma mark Event Unregistration
 
 - (BOOL) profile:(DConnectNotificationProfile *)profile didReceiveDeleteOnClickRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response deviceId:(NSString *)deviceId
+        response:(DConnectResponseMessage *)response serviceId:(NSString *)serviceId
       sessionKey:(NSString *)sessionKey
 {
     
-    CheckDIDAndSK(response, deviceId, sessionKey) {
+    CheckDIDAndSK(response, serviceId, sessionKey) {
         response.result = DConnectMessageResultTypeOk;
     }
     
@@ -181,11 +181,11 @@
 }
 
 - (BOOL) profile:(DConnectNotificationProfile *)profile didReceiveDeleteOnShowRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response deviceId:(NSString *)deviceId
+        response:(DConnectResponseMessage *)response serviceId:(NSString *)serviceId
       sessionKey:(NSString *)sessionKey
 {
     
-    CheckDIDAndSK(response, deviceId, sessionKey) {
+    CheckDIDAndSK(response, serviceId, sessionKey) {
         response.result = DConnectMessageResultTypeOk;
     }
     
@@ -193,20 +193,20 @@
 }
 
 - (BOOL) profile:(DConnectNotificationProfile *)profile didReceiveDeleteOnCloseRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response deviceId:(NSString *)deviceId sessionKey:(NSString *)sessionKey
+        response:(DConnectResponseMessage *)response serviceId:(NSString *)serviceId sessionKey:(NSString *)sessionKey
 {
     
-    CheckDIDAndSK(response, deviceId, sessionKey) {
+    CheckDIDAndSK(response, serviceId, sessionKey) {
         response.result = DConnectMessageResultTypeOk;
     }
     return YES;
 }
 
 - (BOOL) profile:(DConnectNotificationProfile *)profile didReceiveDeleteOnErrorRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response deviceId:(NSString *)deviceId sessionKey:(NSString *)sessionKey
+        response:(DConnectResponseMessage *)response serviceId:(NSString *)serviceId sessionKey:(NSString *)sessionKey
 {
     
-    CheckDIDAndSK(response, deviceId, sessionKey) {
+    CheckDIDAndSK(response, serviceId, sessionKey) {
         response.result = DConnectMessageResultTypeOk;
     }
     return YES;

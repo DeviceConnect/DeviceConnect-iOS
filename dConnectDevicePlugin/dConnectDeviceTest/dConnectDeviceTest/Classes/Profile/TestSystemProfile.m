@@ -32,9 +32,9 @@ NSString *const TestSystemVersion = @"1.0";
 
 - (BOOL) profile:(DConnectSystemProfile *)profile didReceiveGetDeviceRequest:(DConnectRequestMessage *)request
         response:(DConnectResponseMessage *)response
-        deviceId:(NSString *)deviceId
+        serviceId:(NSString *)serviceId
 {
-    CheckDID(response, deviceId) {
+    CheckDID(response, serviceId) {
         [DConnectSystemProfile setVersion:TestSystemVersion target:response];
         
         DConnectArray *supports = [DConnectArray array];
@@ -45,7 +45,7 @@ NSString *const TestSystemVersion = @"1.0";
         [supports addString:DConnectFileProfileName];
         [supports addString:DConnectMediaStreamRecordingProfileName];
         [supports addString:DConnectMediaPlayerProfileName];
-        [supports addString:DConnectNetworkServiceDiscoveryProfileName];
+        [supports addString:DConnectServiceDiscoveryProfileName];
         [supports addString:DConnectPhoneProfileName];
         [supports addString:DConnectProximityProfileName];
         [supports addString:DConnectSettingsProfileName];

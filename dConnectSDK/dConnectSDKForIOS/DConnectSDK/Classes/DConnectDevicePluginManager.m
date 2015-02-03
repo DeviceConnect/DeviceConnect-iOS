@@ -10,7 +10,7 @@
 #import "DConnectDevicePluginManager.h"
 #import "DConnectDevicePlugin+Private.h"
 #import "DConnectManager+Private.h"
-#import "DConnectNetworkServiceDiscoveryProfile.h"
+#import "DConnectServiceDiscoveryProfile.h"
 #import <objc/runtime.h>
 #import <stdio.h>
 
@@ -39,10 +39,10 @@
     return self;
 }
 
-- (DConnectDevicePlugin *) devicePluginForDeviceId:(NSString *)deviceId {
-    if (deviceId) {
+- (DConnectDevicePlugin *) devicePluginForServiceId:(NSString *)serviceId {
+    if (serviceId) {
         // TODO: .dconnectの部分が変化したときの処理がが必要
-        NSArray *domains = [deviceId componentsSeparatedByString:@"."];
+        NSArray *domains = [serviceId componentsSeparatedByString:@"."];
         if (domains == nil || [domains count] < 2) {
             return nil;
         } else if ([domains count] == 2) {
@@ -68,22 +68,22 @@
     return list;
 }
 
-- (NSString *) deviceIdByAppedingPluginIdWithDevicePlugin:(DConnectDevicePlugin *)plugin deviceId:(NSString *)deviceId
+- (NSString *) serviceIdByAppedingPluginIdWithDevicePlugin:(DConnectDevicePlugin *)plugin serviceId:(NSString *)serviceId
 {
-    return [NSString stringWithFormat:@"%@.%@", deviceId, [plugin pluginId]];
+    return [NSString stringWithFormat:@"%@.%@", serviceId, [plugin pluginId]];
 }
 
-- (NSString *) spliteDeviceId:(NSString *)deviceId byDevicePlugin:(DConnectDevicePlugin *)plugin {
-    if (deviceId) {
-        NSRange range = [deviceId rangeOfString:NSStringFromClass([plugin class])];
+- (NSString *) spliteServiceId:(NSString *)serviceId byDevicePlugin:(DConnectDevicePlugin *)plugin {
+    if (serviceId) {
+        NSRange range = [serviceId rangeOfString:NSStringFromClass([plugin class])];
         if (range.location != NSNotFound) {
             if (range.location == 0) {
                 return @"";
             } else {
-                return [deviceId substringToIndex:range.location - 1];
+                return [serviceId substringToIndex:range.location - 1];
             }
         } else {
-            return deviceId;
+            return serviceId;
         }
     }
     return nil;
@@ -95,13 +95,13 @@
     if (plugin) {
         [self.mDeviceMap setObject:plugin forKey:NSStringFromClass([plugin class])];
         
-        // Network Service Discoveryのイベント登録
+        // Service Discoveryのイベント登録
         // デバイスプラグインが見つかった時点で登録を行う
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             DConnectRequestMessage *request = [DConnectRequestMessage message];
             [request setAction:DConnectMessageActionTypePut];
-            [request setProfile:DConnectNetworkServiceDiscoveryProfileName];
-            [request setAttribute:DConnectNetworkServiceDiscoveryProfileAttrOnServiceChange];
+            [request setProfile:DConnectServiceDiscoveryProfileName];
+            [request setAttribute:DConnectServiceDiscoveryProfileAttrOnServiceChange];
             [request setSessionKey:NSStringFromClass([plugin class])];
             
             DConnectResponseMessage *response = [DConnectResponseMessage message];

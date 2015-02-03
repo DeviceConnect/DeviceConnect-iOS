@@ -68,7 +68,7 @@ NSString *const DPIRKitRemoteControllerProfileParamMessage = @"message";
     } else if (_plugin) {
         
         __weak typeof(self) _self = self;
-        DPIRKitDevice *device = [_plugin deviceForDeviceId:request.deviceId];
+        DPIRKitDevice *device = [_plugin deviceForServiceId:request.serviceId];
         if (device) {
             send = NO;
             [_irkit fetchMessageWithHostName:device.hostName completion:^(NSString *message) {
@@ -82,7 +82,7 @@ NSString *const DPIRKitRemoteControllerProfileParamMessage = @"message";
                 [[DConnectManager sharedManager] sendResponse:response];
             }];
         } else {
-            [response setErrorToNotFoundDevice];
+            [response setErrorToNotFoundService];
         }
         
     } else {
@@ -100,7 +100,7 @@ NSString *const DPIRKitRemoteControllerProfileParamMessage = @"message";
         [response setErrorToUnknownAttribute];
     } else if (_plugin) {
         
-        DPIRKitDevice *device = [_plugin deviceForDeviceId:request.deviceId];
+        DPIRKitDevice *device = [_plugin deviceForServiceId:request.serviceId];
         if (device) {
             
             NSString *message = [self messageFromRequest:request];
@@ -119,7 +119,7 @@ NSString *const DPIRKitRemoteControllerProfileParamMessage = @"message";
                 }];
             }
         } else {
-            [response setErrorToNotFoundDevice];
+            [response setErrorToNotFoundService];
         }
         
     } else {

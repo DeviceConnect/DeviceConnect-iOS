@@ -38,10 +38,10 @@ NSString *const TestMediaStreamVideoPath = @"test.mp4";
 #pragma mark - Get Methods
 
 - (BOOL) profile:(DConnectMediaStreamRecordingProfile *)profile didReceiveGetMediaRecorderRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response deviceId:(NSString *)deviceId
+        response:(DConnectResponseMessage *)response serviceId:(NSString *)serviceId
 {
     
-    CheckDID(response, deviceId) {
+    CheckDID(response, serviceId) {
         response.result = DConnectMessageResultTypeOk;
         DConnectArray *recorders = [DConnectArray array];
         
@@ -63,10 +63,10 @@ NSString *const TestMediaStreamVideoPath = @"test.mp4";
 }
 
 - (BOOL) profile:(DConnectMediaStreamRecordingProfile *)profile didReceiveGetOptionsRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response deviceId:(NSString *)deviceId target:(NSString *)target
+        response:(DConnectResponseMessage *)response serviceId:(NSString *)serviceId target:(NSString *)target
 {
     
-    CheckDID(response, deviceId) {
+    CheckDID(response, serviceId) {
         response.result = DConnectMessageResultTypeOk;
         DConnectMessage *imageWidth = [DConnectMessage message];
         [DConnectMediaStreamRecordingProfile setMin:0 target:imageWidth];
@@ -89,9 +89,9 @@ NSString *const TestMediaStreamVideoPath = @"test.mp4";
 #pragma mark - Post Methods
 
 - (BOOL) profile:(DConnectMediaStreamRecordingProfile *)profile didReceivePostTakePhotoRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response deviceId:(NSString *)deviceId target:(NSString *)target
+        response:(DConnectResponseMessage *)response serviceId:(NSString *)serviceId target:(NSString *)target
 {
-    CheckDID(response, deviceId) {
+    CheckDID(response, serviceId) {
         response.result = DConnectMessageResultTypeOk;
         [DConnectMediaStreamRecordingProfile setUri:TestMediaStreamUri target:response];
         [DConnectMediaStreamRecordingProfile setPath:TestMediaStreamPhotoPath target:response];
@@ -101,11 +101,11 @@ NSString *const TestMediaStreamVideoPath = @"test.mp4";
 }
 
 - (BOOL) profile:(DConnectMediaStreamRecordingProfile *)profile didReceivePostRecordRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response deviceId:(NSString *)deviceId
+        response:(DConnectResponseMessage *)response serviceId:(NSString *)serviceId
           target:(NSString *)target timeslice:(NSNumber *)timeslice
 {
     
-    CheckDID(response, deviceId) {
+    CheckDID(response, serviceId) {
         response.result = DConnectMessageResultTypeOk;
         [DConnectMediaStreamRecordingProfile setUri:TestMediaStreamUri target:response];
         [DConnectMediaStreamRecordingProfile setPath:TestMediaStreamVideoPath target:response];
@@ -118,10 +118,10 @@ NSString *const TestMediaStreamVideoPath = @"test.mp4";
 #pragma mark - Put Methods
 
 - (BOOL) profile:(DConnectMediaStreamRecordingProfile *)profile didReceivePutPauseRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response deviceId:(NSString *)deviceId target:(NSString *)target
+        response:(DConnectResponseMessage *)response serviceId:(NSString *)serviceId target:(NSString *)target
 {
     
-    CheckDID(response, deviceId)
+    CheckDID(response, serviceId)
     if (target != nil && target.length == 0) {
         [response setErrorToInvalidRequestParameter];
     } else {
@@ -133,9 +133,9 @@ NSString *const TestMediaStreamVideoPath = @"test.mp4";
 
 
 - (BOOL) profile:(DConnectMediaStreamRecordingProfile *)profile didReceivePutResumeRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response deviceId:(NSString *)deviceId target:(NSString *) target
+        response:(DConnectResponseMessage *)response serviceId:(NSString *)serviceId target:(NSString *) target
 {
-    CheckDID(response, deviceId)
+    CheckDID(response, serviceId)
     if (target != nil && target.length == 0) {
         [response setErrorToInvalidRequestParameter];
     } else {
@@ -146,9 +146,9 @@ NSString *const TestMediaStreamVideoPath = @"test.mp4";
 }
 
 - (BOOL) profile:(DConnectMediaStreamRecordingProfile *)profile didReceivePutStopRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response deviceId:(NSString *)deviceId target:(NSString *)target
+        response:(DConnectResponseMessage *)response serviceId:(NSString *)serviceId target:(NSString *)target
 {
-    CheckDID(response, deviceId)
+    CheckDID(response, serviceId)
     if (target != nil && target.length == 0) {
         [response setErrorToInvalidRequestParameter];
     } else {
@@ -160,9 +160,9 @@ NSString *const TestMediaStreamVideoPath = @"test.mp4";
 
 
 - (BOOL) profile:(DConnectMediaStreamRecordingProfile *)profile didReceivePutMuteTrackRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response deviceId:(NSString *)deviceId target:(NSString *)target
+        response:(DConnectResponseMessage *)response serviceId:(NSString *)serviceId target:(NSString *)target
 {
-    CheckDID(response, deviceId)
+    CheckDID(response, serviceId)
     if (target != nil && target.length == 0) {
         [response setErrorToInvalidRequestParameter];
     } else {
@@ -173,9 +173,9 @@ NSString *const TestMediaStreamVideoPath = @"test.mp4";
 }
 
 - (BOOL) profile:(DConnectMediaStreamRecordingProfile *)profile didReceivePutUnmuteTrackRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response deviceId:(NSString *)deviceId target:(NSString *)target
+        response:(DConnectResponseMessage *)response serviceId:(NSString *)serviceId target:(NSString *)target
 {
-    CheckDID(response, deviceId)
+    CheckDID(response, serviceId)
     if (target != nil && target.length == 0) {
         [response setErrorToInvalidRequestParameter];
     } else {
@@ -186,12 +186,12 @@ NSString *const TestMediaStreamVideoPath = @"test.mp4";
 }
 
 - (BOOL) profile:(DConnectMediaStreamRecordingProfile *)profile didReceivePutOptionsRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response deviceId:(NSString *)deviceId
+        response:(DConnectResponseMessage *)response serviceId:(NSString *)serviceId
           target:(NSString *)target imageWidth:(NSNumber *)imageWidth
      imageHeight:(NSNumber *)imageHeight mimeType:(NSString *)mimeType
 {
     
-    CheckDID(response, deviceId)
+    CheckDID(response, serviceId)
     if (target == nil || target.length == 0
         || imageWidth == nil || imageHeight == nil
         || mimeType == nil || mimeType.length == 0)
@@ -207,13 +207,13 @@ NSString *const TestMediaStreamVideoPath = @"test.mp4";
 #pragma mark Event Registration
 
 - (BOOL) profile:(DConnectMediaStreamRecordingProfile *)profile didReceivePutOnPhotoRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response deviceId:(NSString *)deviceId sessionKey:(NSString *)sessionKey
+        response:(DConnectResponseMessage *)response serviceId:(NSString *)serviceId sessionKey:(NSString *)sessionKey
 {
-    CheckDIDAndSK(response, deviceId, sessionKey) {
+    CheckDIDAndSK(response, serviceId, sessionKey) {
         response.result = DConnectMessageResultTypeOk;
         DConnectMessage *event = [DConnectMessage message];
         [event setString:sessionKey forKey:DConnectMessageSessionKey];
-        [event setString:deviceId forKey:DConnectMessageDeviceId];
+        [event setString:serviceId forKey:DConnectMessageServiceId];
         [event setString:self.profileName forKey:DConnectMessageProfile];
         [event setString:DConnectMediaStreamRecordingProfileAttrOnPhoto forKey:DConnectMessageAttribute];
 
@@ -228,14 +228,14 @@ NSString *const TestMediaStreamVideoPath = @"test.mp4";
 }
 
 - (BOOL) profile:(DConnectMediaStreamRecordingProfile *)profile didReceivePutOnRecordingChangeRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response deviceId:(NSString *)deviceId sessionKey:(NSString *)sessionKey
+        response:(DConnectResponseMessage *)response serviceId:(NSString *)serviceId sessionKey:(NSString *)sessionKey
 {
     
-    CheckDIDAndSK(response, deviceId, sessionKey) {
+    CheckDIDAndSK(response, serviceId, sessionKey) {
         response.result = DConnectMessageResultTypeOk;
         DConnectMessage *event = [DConnectMessage message];
         [event setString:sessionKey forKey:DConnectMessageSessionKey];
-        [event setString:deviceId forKey:DConnectMessageDeviceId];
+        [event setString:serviceId forKey:DConnectMessageServiceId];
         [event setString:self.profileName forKey:DConnectMessageProfile];
         [event setString:DConnectMediaStreamRecordingProfileAttrOnRecordingChange
                   forKey:DConnectMessageAttribute];
@@ -254,13 +254,13 @@ NSString *const TestMediaStreamVideoPath = @"test.mp4";
 }
 
 - (BOOL) profile:(DConnectMediaStreamRecordingProfile *)profile didReceivePutOnDataAvailableRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response deviceId:(NSString *)deviceId sessionKey:(NSString *)sessionKey
+        response:(DConnectResponseMessage *)response serviceId:(NSString *)serviceId sessionKey:(NSString *)sessionKey
 {
-    CheckDIDAndSK(response, deviceId, sessionKey) {
+    CheckDIDAndSK(response, serviceId, sessionKey) {
         response.result = DConnectMessageResultTypeOk;
         DConnectMessage *event = [DConnectMessage message];
         [event setString:sessionKey forKey:DConnectMessageSessionKey];
-        [event setString:deviceId forKey:DConnectMessageDeviceId];
+        [event setString:serviceId forKey:DConnectMessageServiceId];
         [event setString:self.profileName forKey:DConnectMessageProfile];
         [event setString:DConnectMediaStreamRecordingProfileAttrOnDataAvailable
                   forKey:DConnectMessageAttribute];
@@ -280,10 +280,10 @@ NSString *const TestMediaStreamVideoPath = @"test.mp4";
 #pragma mark Event Unregstration
 
 - (BOOL) profile:(DConnectMediaStreamRecordingProfile *)profile didReceiveDeleteOnPhotoRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response deviceId:(NSString *)deviceId sessionKey:(NSString *)sessionKey
+        response:(DConnectResponseMessage *)response serviceId:(NSString *)serviceId sessionKey:(NSString *)sessionKey
 {
     
-    CheckDIDAndSK(response, deviceId, sessionKey) {
+    CheckDIDAndSK(response, serviceId, sessionKey) {
         response.result = DConnectMessageResultTypeOk;
     }
 
@@ -291,9 +291,9 @@ NSString *const TestMediaStreamVideoPath = @"test.mp4";
 }
 
 - (BOOL) profile:(DConnectMediaStreamRecordingProfile *)profile didReceiveDeleteOnRecordingChangeRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response deviceId:(NSString *)deviceId sessionKey:(NSString *)sessionKey
+        response:(DConnectResponseMessage *)response serviceId:(NSString *)serviceId sessionKey:(NSString *)sessionKey
 {
-    CheckDIDAndSK(response, deviceId, sessionKey) {
+    CheckDIDAndSK(response, serviceId, sessionKey) {
         response.result = DConnectMessageResultTypeOk;
     }
     
@@ -301,9 +301,9 @@ NSString *const TestMediaStreamVideoPath = @"test.mp4";
 }
 
 - (BOOL) profile:(DConnectMediaStreamRecordingProfile *)profile didReceiveDeleteOnDataAvailableRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response deviceId:(NSString *)deviceId sessionKey:(NSString *)sessionKey
+        response:(DConnectResponseMessage *)response serviceId:(NSString *)serviceId sessionKey:(NSString *)sessionKey
 {
-    CheckDIDAndSK(response, deviceId, sessionKey) {
+    CheckDIDAndSK(response, serviceId, sessionKey) {
         response.result = DConnectMessageResultTypeOk;
     }
     

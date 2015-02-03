@@ -30,6 +30,6 @@ extern NSString *const DConnectClientDaoClmSessionKey;
 + (long long) insertWithEvent:(DConnectEvent *)event toDatabase:(DConnectSQLiteDatabase *)database;
 + (NSArray *) clientsForSessionKey:(NSString *)sessionKey onDatabase:(DConnectSQLiteDatabase *)database;
 + (DConnectClient *) clientWithId:(long long) rowId onDatabase:(DConnectSQLiteDatabase *)database;
-+ (NSArray *) clientsForAPIWithDeviceId:(DConnectEvent *)event onDatabase:(DConnectSQLiteDatabase *)database;
++ (NSArray *) clientsForAPIWithServiceId:(DConnectEvent *)event onDatabase:(DConnectSQLiteDatabase *)database;
 
 @end

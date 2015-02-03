@@ -15,7 +15,7 @@
 - (LocalOAuthConfirmAuthParamsBuilder *) applicationName: (NSString *)applicationName;
 - (LocalOAuthConfirmAuthParamsBuilder *) clientId: (NSString *)clientId;
 - (LocalOAuthConfirmAuthParamsBuilder *) grantType: (NSString *)grantType;
-- (LocalOAuthConfirmAuthParamsBuilder *) deviceId: (NSString *)deviceId;
+- (LocalOAuthConfirmAuthParamsBuilder *) serviceId: (NSString *)serviceId;
 - (LocalOAuthConfirmAuthParamsBuilder *) scope: (NSArray *)scope;
 - (LocalOAuthConfirmAuthParamsBuilder *) isForDevicePlugin: (BOOL) isForDevicePlugin;
 

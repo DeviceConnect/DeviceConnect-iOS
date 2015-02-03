@@ -28,9 +28,9 @@
 
 - (BOOL) profile:(DConnectMediaPlayerProfile *)profile didReceiveGetPlayStatusRequest:(DConnectRequestMessage *)request
         response:(DConnectResponseMessage *)response
-        deviceId:(NSString *)deviceId
+        serviceId:(NSString *)serviceId
 {
-    CheckDID(response, deviceId) {
+    CheckDID(response, serviceId) {
         response.result = DConnectMessageResultTypeOk;
         [DConnectMediaPlayerProfile setStatus:DConnectMediaPlayerProfileStatusPlay target:response];
     }
@@ -40,11 +40,11 @@
 
 - (BOOL) profile:(DConnectMediaPlayerProfile *)profile didReceiveGetMediaRequest:(DConnectRequestMessage *)request
         response:(DConnectResponseMessage *)response
-        deviceId:(NSString *)deviceId
+        serviceId:(NSString *)serviceId
          mediaId:(NSString *)mediaId
 {
     
-    CheckDID(response, deviceId)
+    CheckDID(response, serviceId)
     if (mediaId == nil || mediaId.length == 0) {
         [response setErrorToInvalidRequestParameter];
     } else {
@@ -81,14 +81,14 @@
 
 - (BOOL) profile:(DConnectMediaPlayerProfile *)profile didReceiveGetMediaListRequest:(DConnectRequestMessage *)request
         response:(DConnectResponseMessage *)response
-        deviceId:(NSString *)deviceId
+        serviceId:(NSString *)serviceId
            query:(NSString *)query
         mimeType:(NSString *)mimeType
            order:(NSArray *)order
           offset:(NSNumber *)offset
            limit:(NSNumber *)limit
 {
-    CheckDID(response, deviceId) {
+    CheckDID(response, serviceId) {
         response.result = DConnectMessageResultTypeOk;
         [DConnectMediaPlayerProfile setCount:1 target:response];
         
@@ -132,9 +132,9 @@
 
 - (BOOL) profile:(DConnectMediaPlayerProfile *)profile didReceiveGetSeekRequest:(DConnectRequestMessage *)request
         response:(DConnectResponseMessage *)response
-        deviceId:(NSString *)deviceId
+        serviceId:(NSString *)serviceId
 {
-    CheckDID(response, deviceId) {
+    CheckDID(response, serviceId) {
         response.result = DConnectMessageResultTypeOk;
         [DConnectMediaPlayerProfile setPos:0 target:response];
     }
@@ -144,10 +144,10 @@
 
 - (BOOL) profile:(DConnectMediaPlayerProfile *)profile didReceiveGetVolumeRequest:(DConnectRequestMessage *)request
         response:(DConnectResponseMessage *)response
-        deviceId:(NSString *)deviceId
+        serviceId:(NSString *)serviceId
 {
     
-    CheckDID(response, deviceId) {
+    CheckDID(response, serviceId) {
         response.result = DConnectMessageResultTypeOk;
         [DConnectMediaPlayerProfile setVolume:0 target:response];
     }
@@ -157,10 +157,10 @@
 
 - (BOOL) profile:(DConnectMediaPlayerProfile *)profile didReceiveGetMuteRequest:(DConnectRequestMessage *)request
         response:(DConnectResponseMessage *)response
-        deviceId:(NSString *)deviceId
+        serviceId:(NSString *)serviceId
 {
     
-    CheckDID(response, deviceId) {
+    CheckDID(response, serviceId) {
         response.result = DConnectMessageResultTypeOk;
         [DConnectMediaPlayerProfile setMute:YES target:response];
     }
@@ -173,11 +173,11 @@
 
 - (BOOL) profile:(DConnectMediaPlayerProfile *)profile didReceivePutMediaRequest:(DConnectRequestMessage *)request
         response:(DConnectResponseMessage *)response
-        deviceId:(NSString *)deviceId
+        serviceId:(NSString *)serviceId
          mediaId:(NSString *) mediaId
 {
     
-    CheckDID(response, deviceId)
+    CheckDID(response, serviceId)
     if (mediaId == nil || mediaId.length == 0) {
         [response setErrorToInvalidRequestParameter];
     } else {
@@ -189,9 +189,9 @@
 
 - (BOOL) profile:(DConnectMediaPlayerProfile *)profile didReceivePutPlayRequest:(DConnectRequestMessage *)request
         response:(DConnectResponseMessage *)response
-        deviceId:(NSString *)deviceId
+        serviceId:(NSString *)serviceId
 {
-    CheckDID(response, deviceId) {
+    CheckDID(response, serviceId) {
         response.result = DConnectMessageResultTypeOk;
     }
     
@@ -200,9 +200,9 @@
 
 - (BOOL) profile:(DConnectMediaPlayerProfile *)profile didReceivePutStopRequest:(DConnectRequestMessage *)request
         response:(DConnectResponseMessage *)response
-        deviceId:(NSString *)deviceId
+        serviceId:(NSString *)serviceId
 {
-    CheckDID(response, deviceId) {
+    CheckDID(response, serviceId) {
         response.result = DConnectMessageResultTypeOk;
     }
     
@@ -211,9 +211,9 @@
 
 - (BOOL) profile:(DConnectMediaPlayerProfile *)profile didReceivePutPauseRequest:(DConnectRequestMessage *)request
         response:(DConnectResponseMessage *)response
-        deviceId:(NSString *)deviceId
+        serviceId:(NSString *)serviceId
 {
-    CheckDID(response, deviceId) {
+    CheckDID(response, serviceId) {
         response.result = DConnectMessageResultTypeOk;
     }
     
@@ -222,9 +222,9 @@
 
 - (BOOL) profile:(DConnectMediaPlayerProfile *)profile didReceivePutResumeRequest:(DConnectRequestMessage *)request
         response:(DConnectResponseMessage *)response
-        deviceId:(NSString *)deviceId
+        serviceId:(NSString *)serviceId
 {
-    CheckDID(response, deviceId) {
+    CheckDID(response, serviceId) {
         response.result = DConnectMessageResultTypeOk;
     }
     
@@ -234,10 +234,10 @@
 
 - (BOOL) profile:(DConnectMediaPlayerProfile *)profile didReceivePutSeekRequest:(DConnectRequestMessage *)request
         response:(DConnectResponseMessage *)response
-        deviceId:(NSString *)deviceId
+        serviceId:(NSString *)serviceId
              pos:(NSNumber *)pos
 {
-    CheckDID(response, deviceId)
+    CheckDID(response, serviceId)
     if (pos == nil || pos < 0) {
         [response setErrorToInvalidRequestParameter];
     } else {
@@ -249,15 +249,15 @@
 
 - (BOOL) profile:(DConnectMediaPlayerProfile *)profile didReceivePutOnStatusChangeRequest:(DConnectRequestMessage *)request
         response:(DConnectResponseMessage *)response
-        deviceId:(NSString *)deviceId
+        serviceId:(NSString *)serviceId
       sessionKey:(NSString *)sessionkey
 {
-    CheckDIDAndSK(response, deviceId, sessionkey) {
+    CheckDIDAndSK(response, serviceId, sessionkey) {
         response.result = DConnectMessageResultTypeOk;
         
         DConnectMessage *event = [DConnectMessage message];
         [event setString:sessionkey forKey:DConnectMessageSessionKey];
-        [event setString:deviceId forKey:DConnectMessageDeviceId];
+        [event setString:serviceId forKey:DConnectMessageServiceId];
         [event setString:self.profileName forKey:DConnectMessageProfile];
         [event setString:DConnectMediaPlayerProfileAttrOnStatusChange forKey:DConnectMessageAttribute];
         
@@ -277,10 +277,10 @@
 
 - (BOOL) profile:(DConnectMediaPlayerProfile *)profile didReceivePutVolumeRequest:(DConnectRequestMessage *)request
         response:(DConnectResponseMessage *)response
-        deviceId:(NSString *)deviceId
+        serviceId:(NSString *)serviceId
           volume:(NSNumber *)volume
 {
-    CheckDID(response, deviceId)
+    CheckDID(response, serviceId)
     if (volume == nil || [volume doubleValue] < 0.0 || [volume doubleValue] > 1.0) {
         [response setErrorToInvalidRequestParameter];
     } else {
@@ -292,10 +292,10 @@
 
 - (BOOL) profile:(DConnectMediaPlayerProfile *)profile didReceivePutMuteRequest:(DConnectRequestMessage *)request
         response:(DConnectResponseMessage *)response
-        deviceId:(NSString *)deviceId
+        serviceId:(NSString *)serviceId
 {
     
-    CheckDID(response, deviceId) {
+    CheckDID(response, serviceId) {
         response.result = DConnectMessageResultTypeOk;
     }
     
@@ -306,10 +306,10 @@
 
 - (BOOL) profile:(DConnectMediaPlayerProfile *)profile didReceiveDeleteMuteRequest:(DConnectRequestMessage *)request
         response:(DConnectResponseMessage *)response
-        deviceId:(NSString *)deviceId
+        serviceId:(NSString *)serviceId
 {
     
-    CheckDID(response, deviceId) {
+    CheckDID(response, serviceId) {
         response.result = DConnectMessageResultTypeOk;
     }
     
@@ -318,10 +318,10 @@
 
 - (BOOL) profile:(DConnectMediaPlayerProfile *)profile didReceiveDeleteOnStatusChangeRequest:(DConnectRequestMessage *)request
         response:(DConnectResponseMessage *)response
-        deviceId:(NSString *)deviceId
+        serviceId:(NSString *)serviceId
       sessionKey:(NSString *)sessionkey
 {
-    CheckDIDAndSK(response, deviceId, sessionkey) {
+    CheckDIDAndSK(response, serviceId, sessionkey) {
         response.result = DConnectMessageResultTypeOk;
     }
     

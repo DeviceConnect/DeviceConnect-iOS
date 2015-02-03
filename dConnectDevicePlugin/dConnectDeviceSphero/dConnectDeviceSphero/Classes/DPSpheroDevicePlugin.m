@@ -8,7 +8,7 @@
 //
 
 #import "DPSpheroDevicePlugin.h"
-#import "DPSpheroNetworkServiceDiscoveryProfile.h"
+#import "DPSpheroServiceDiscoveryProfile.h"
 #import "DPSpheroSensorProfile.h"
 #import "DPSpheroSystemProfile.h"
 #import "DPSpheroDriveControllerProfile.h"
@@ -32,8 +32,8 @@
         Class key = [self class];
         [[DConnectEventManager sharedManagerForClass:key] setController:[DConnectDBCacheController controllerWithClass:key]];
 
-        // Network Service Discovery Profileの追加
-        DPSpheroNetworkServiceDiscoveryProfile *networkProfile = [DPSpheroNetworkServiceDiscoveryProfile new];
+        // Service Discovery Profileの追加
+        DPSpheroServiceDiscoveryProfile *networkProfile = [DPSpheroServiceDiscoveryProfile new];
         
         // System Profileの追加
         DPSpheroSystemProfile *systemProfile = [DPSpheroSystemProfile new];

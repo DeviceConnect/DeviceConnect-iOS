@@ -24,8 +24,8 @@
 {
     [super setUp];
     
-    // deviceIdを検索しておく
-    if (!self.deviceId) {
+    // serviceIdを検索しておく
+    if (!self.serviceId) {
         [self searchTestDevicePlugin];
     }
 }
@@ -85,7 +85,7 @@
     NSString *grantType = @"authorization_code";
     NSString *signature = [DConnectUtil generateSignatureWithClientId:clientId
                                                             grantType:grantType
-                                                             deviceId:nil
+                                                             serviceId:nil
                                                                scopes:scopes
                                                          clientSecret:clientSecret];
     NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/authorization/request_accesstoken?clientId=%@&grantType=%@&scope=%@&applicationName=%@&signature=%@", clientId, grantType,scopeParam, applicationName, signature]];
@@ -109,7 +109,7 @@
 }
 
 - (void) searchTestDevicePlugin {
-    NSURL *url = [NSURL URLWithString:@"http://localhost:4035/gotapi/network_service_discovery/getnetworkservices"];
+    NSURL *url = [NSURL URLWithString:@"http://localhost:4035/gotapi/servicediscovery"];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     NSURLResponse *response = nil;
     NSError *error = nil;
@@ -129,16 +129,16 @@
     XCTAssert([result intValue] == DConnectMessageResultTypeOk);
     
     // デバイスのチェック
-    NSArray *services = [dic objectForKey:DConnectNetworkServiceDiscoveryProfileParamServices];
+    NSArray *services = [dic objectForKey:DConnectServiceDiscoveryProfileParamServices];
     for (int i = 0; i < [services count]; i++) {
         NSDictionary *s = (NSDictionary *)[services objectAtIndex:i];
-        NSString *name = [s objectForKey:DConnectNetworkServiceDiscoveryProfileParamName];
-        NSString *deviceId = [s objectForKey:DConnectNetworkServiceDiscoveryProfileParamId];
+        NSString *name = [s objectForKey:DConnectServiceDiscoveryProfileParamName];
+        NSString *serviceId = [s objectForKey:DConnectServiceDiscoveryProfileParamId];
         if ([@"Test Success Device" isEqualToString:name]) {
-            self.deviceId = deviceId;
+            self.serviceId = serviceId;
         }
     }
-    XCTAssertNotNil(self.deviceId, @"Can't found deviceId.");
+    XCTAssertNotNil(self.serviceId, @"Can't found serviceId.");
 }
 
 - (NSDictionary *) waitForEvent {

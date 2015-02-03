@@ -9,11 +9,11 @@
 
 #import "DConnectMemoryCacheController.h"
 
-NSString *const DConnectMemoryCacheControllerEmptyDeviceId = @"";
+NSString *const DConnectMemoryCacheControllerEmptyServiceId = @"";
 
 @interface DConnectMemoryCacheController()
 
-- (NSString *) deviceIdByCheckingDeviceIdIsEmpty:(NSString *)deviceId;
+- (NSString *) serviceIdByCheckingServiceIdIsEmpty:(NSString *)serviceId;
 
 @end
 @implementation DConnectMemoryCacheController
@@ -41,12 +41,12 @@ NSString *const DConnectMemoryCacheControllerEmptyDeviceId = @"";
     
     DC_SYNC_START(self);
     
-    NSString *deviceId = [self deviceIdByCheckingDeviceIdIsEmpty:event.deviceId];
-    NSMutableDictionary *events = [_eventMap objectForKey:deviceId];
+    NSString *serviceId = [self serviceIdByCheckingServiceIdIsEmpty:event.serviceId];
+    NSMutableDictionary *events = [_eventMap objectForKey:serviceId];
     
     if (!events) {
         events = [NSMutableDictionary dictionary];
-        [_eventMap setObject:events forKey:deviceId];
+        [_eventMap setObject:events forKey:serviceId];
     }
     
     NSMutableString *path = [NSMutableString stringWithString:event.profile];
@@ -109,8 +109,8 @@ NSString *const DConnectMemoryCacheControllerEmptyDeviceId = @"";
     
     DC_SYNC_START(self);
     
-    NSString *deviceId = [self deviceIdByCheckingDeviceIdIsEmpty:event.deviceId];
-    NSMutableDictionary *events = [_eventMap objectForKey:deviceId];
+    NSString *serviceId = [self serviceIdByCheckingServiceIdIsEmpty:event.serviceId];
+    NSMutableDictionary *events = [_eventMap objectForKey:serviceId];
     
     if (!events) {
         return DConnectEventErrorNotFound;
@@ -142,7 +142,7 @@ NSString *const DConnectMemoryCacheControllerEmptyDeviceId = @"";
     return DConnectEventErrorNotFound;
 }
 
-- (NSArray *) eventsForDeviceId:(NSString *)deviceId
+- (NSArray *) eventsForServiceId:(NSString *)serviceId
                         profile:(NSString *)profile
                       interface:(NSString *)interface
                       attribute:(NSString *)attribute
@@ -150,8 +150,8 @@ NSString *const DConnectMemoryCacheControllerEmptyDeviceId = @"";
     
     DC_SYNC_START(self);
     
-    deviceId = [self deviceIdByCheckingDeviceIdIsEmpty:deviceId];
-    NSMutableDictionary *events = [_eventMap objectForKey:deviceId];
+    serviceId = [self serviceIdByCheckingServiceIdIsEmpty:serviceId];
+    NSMutableDictionary *events = [_eventMap objectForKey:serviceId];
     
     if (!events) {
         return [NSArray array];
@@ -173,7 +173,7 @@ NSString *const DConnectMemoryCacheControllerEmptyDeviceId = @"";
     DC_SYNC_END;
 }
 
-- (DConnectEvent *) eventForDeviceId:(NSString *)deviceId profile:(NSString *)profile
+- (DConnectEvent *) eventForServiceId:(NSString *)serviceId profile:(NSString *)profile
                            interface:(NSString *)interface attribute:(NSString *)attribute
                           sessionKey:(NSString *)sessionKey
 {
@@ -181,7 +181,7 @@ NSString *const DConnectMemoryCacheControllerEmptyDeviceId = @"";
     DC_SYNC_START(self);
     
     do {
-        NSArray *eventList = [self eventsForDeviceId:deviceId
+        NSArray *eventList = [self eventsForServiceId:serviceId
                                              profile:profile
                                            interface:interface
                                            attribute:attribute];
@@ -208,14 +208,14 @@ NSString *const DConnectMemoryCacheControllerEmptyDeviceId = @"";
 
 #pragma mark - private
 
-- (NSString *) deviceIdByCheckingDeviceIdIsEmpty:(NSString *)deviceId
+- (NSString *) serviceIdByCheckingServiceIdIsEmpty:(NSString *)serviceId
 {
     
-    if (!deviceId || deviceId.length == 0) {
-        deviceId = DConnectMemoryCacheControllerEmptyDeviceId;
+    if (!serviceId || serviceId.length == 0) {
+        serviceId = DConnectMemoryCacheControllerEmptyServiceId;
     }
     
-    return deviceId;
+    return serviceId;
 }
 
 @end

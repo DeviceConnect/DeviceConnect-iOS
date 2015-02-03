@@ -21,7 +21,7 @@
 @implementation RESTfulFailFileDescriptorProfileTest
 
 /*!
- * @brief deviceIdが無い状態でファイルをオープンするテストを行う.
+ * @brief serviceIdが無い状態でファイルをオープンするテストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: GET
@@ -32,7 +32,7 @@
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailFileDescriptorOpenGetNoDeviceId
+- (void) testHttpFailFileDescriptorOpenGetNoServiceId
 {
     NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/file_descriptor/open?flag=r&path=/test/test.png"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
@@ -42,20 +42,20 @@
 }
 
 /*!
- * @brief deviceIdが空状態でファイルをオープンするテストを行う.
+ * @brief serviceIdが空状態でファイルをオープンするテストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: GET
- * Path: /file_descriptor/open?deviceId=&mediaId=xxxx&flag=xxxx
+ * Path: /file_descriptor/open?serviceId=&mediaId=xxxx&flag=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailFileDescriptorOpenGetEmptyDeviceId
+- (void) testHttpFailFileDescriptorOpenGetEmptyServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/file_descriptor/open?deviceId="];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/file_descriptor/open?serviceId="];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
     
@@ -63,20 +63,20 @@
 }
 
 /*!
- * @brief 存在しないdeviceIdでファイルをオープンするテストを行う.
+ * @brief 存在しないserviceIdでファイルをオープンするテストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: GET
- * Path: /file_descriptor/open?deviceId=123456789&mediaId=xxxx&flag=xxxx
+ * Path: /file_descriptor/open?serviceId=123456789&mediaId=xxxx&flag=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailFileDescriptorOpenGetInvalidDeviceId
+- (void) testHttpFailFileDescriptorOpenGetInvalidServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/file_descriptor/open?deviceId=12345678"];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/file_descriptor/open?serviceId=12345678"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
     
@@ -88,7 +88,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: POST
- * Path: /file_descriptor/open?deviceId=xxxx&mediaId=xxxx&flag=xxxx
+ * Path: /file_descriptor/open?serviceId=xxxx&mediaId=xxxx&flag=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -97,7 +97,7 @@
  */
 - (void) testHttpFailFileDescriptorOpenGetInvalidMethodPost
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/file_descriptor/open?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/file_descriptor/open?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"POST"];
     
@@ -109,7 +109,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /file_descriptor/open?deviceId=xxxx&mediaId=xxxx&flag=xxxx
+ * Path: /file_descriptor/open?serviceId=xxxx&mediaId=xxxx&flag=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -118,7 +118,7 @@
  */
 - (void) testHttpFailFileDescriptorOpenGetInvalidMethodPut
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/file_descriptor/open?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/file_descriptor/open?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
@@ -130,7 +130,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /file_descriptor/open?deviceId=xxxx&mediaId=xxxx&flag=xxxx
+ * Path: /file_descriptor/open?serviceId=xxxx&mediaId=xxxx&flag=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -139,7 +139,7 @@
  */
 - (void) testHttpFailFileDescriptorOpenGetInvalidMethodDelete
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/file_descriptor/open?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/file_descriptor/open?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     
@@ -147,7 +147,7 @@
 }
 
 /*!
- * @brief deviceIdが無い状態でファイルをクローズするテストを行う.
+ * @brief serviceIdが無い状態でファイルをクローズするテストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: PUT
@@ -158,7 +158,7 @@
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailFileDescriptorClosePutNoDeviceId
+- (void) testHttpFailFileDescriptorClosePutNoServiceId
 {
     NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/file_descriptor/close?path=/test/test.png"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
@@ -168,20 +168,20 @@
 }
 
 /*!
- * @brief deviceIdが空状態でファイルをクローズするテストを行う.
+ * @brief serviceIdが空状態でファイルをクローズするテストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /file_descriptor/close?deviceId=&mediaId=xxxx
+ * Path: /file_descriptor/close?serviceId=&mediaId=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailFileDescriptorClosePutEmptyDeviceId
+- (void) testHttpFailFileDescriptorClosePutEmptyServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/file_descriptor/close?path=/test/test.png&deviceId="];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/file_descriptor/close?path=/test/test.png&serviceId="];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
@@ -189,20 +189,20 @@
 }
 
 /*!
- * @brief 存在しないdeviceIdでファイルをクローズするテストを行う.
+ * @brief 存在しないserviceIdでファイルをクローズするテストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /file_descriptor/close?deviceId=123456789&mediaId=xxxx
+ * Path: /file_descriptor/close?serviceId=123456789&mediaId=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailFileDescriptorClosePutInvalidDeviceId
+- (void) testHttpFailFileDescriptorClosePutInvalidServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/file_descriptor/close?path=/test/test.png&deviceId=12345678"];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/file_descriptor/close?path=/test/test.png&serviceId=12345678"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
@@ -214,7 +214,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /file_descriptor/close?deviceId=xxxx&mediaId=xxxx
+ * Path: /file_descriptor/close?serviceId=xxxx&mediaId=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -223,7 +223,7 @@
  */
 - (void) testHttpFailFileDescriptorClosePutInvalidMethodGet
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/file_descriptor/close?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/file_descriptor/close?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
     
@@ -235,7 +235,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: POST
- * Path: /file_descriptor/close?deviceId=xxxx&mediaId=xxxx
+ * Path: /file_descriptor/close?serviceId=xxxx&mediaId=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -244,7 +244,7 @@
  */
 - (void) testHttpFailFileDescriptorClosePutInvalidMethodPost
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/file_descriptor/close?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/file_descriptor/close?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"POST"];
     
@@ -256,7 +256,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /file_descriptor/close?deviceId=xxxx&mediaId=xxxx
+ * Path: /file_descriptor/close?serviceId=xxxx&mediaId=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -265,7 +265,7 @@
  */
 - (void) testHttpFailFileDescriptorClosePutInvalidMethodDelete
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/file_descriptor/close?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/file_descriptor/close?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     
@@ -273,7 +273,7 @@
 }
 
 /*!
- * @brief deviceIdが無い状態でファイルから読み込むテストを行う.
+ * @brief serviceIdが無い状態でファイルから読み込むテストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: GET
@@ -284,7 +284,7 @@
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailFileDescriptorReadGetNoDeviceId
+- (void) testHttpFailFileDescriptorReadGetNoServiceId
 {
     NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/file_descriptor/read?length=1&path=/test/test.png"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
@@ -294,20 +294,20 @@
 }
 
 /*!
- * @brief deviceIdが空状態でファイルから読み込むテストを行う.
+ * @brief serviceIdが空状態でファイルから読み込むテストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: GET
- * Path: /file_descriptor/read?deviceId=&mediaId=xxxx&length=xxxx
+ * Path: /file_descriptor/read?serviceId=&mediaId=xxxx&length=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailFileDescriptorReadGetEmptyDeviceId
+- (void) testHttpFailFileDescriptorReadGetEmptyServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/file_descriptor/read?length=1&path=/test/test.png&deviceId="];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/file_descriptor/read?length=1&path=/test/test.png&serviceId="];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
     
@@ -315,20 +315,20 @@
 }
 
 /*!
- * @brief 存在しないdeviceIdでファイルから読み込むテストを行う.
+ * @brief 存在しないserviceIdでファイルから読み込むテストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: GET
- * Path: /file_descriptor/read?deviceId=123456789&mediaId=xxxx&length=xxxx
+ * Path: /file_descriptor/read?serviceId=123456789&mediaId=xxxx&length=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailFileDescriptorReadGetInvalidDeviceId
+- (void) testHttpFailFileDescriptorReadGetInvalidServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/file_descriptor/read?length=1&path=/test/test.png&deviceId=12345678"];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/file_descriptor/read?length=1&path=/test/test.png&serviceId=12345678"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
     
@@ -340,7 +340,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: POST
- * Path: /file_descriptor/read?deviceId=xxxx&mediaId=xxxx&length=xxxx
+ * Path: /file_descriptor/read?serviceId=xxxx&mediaId=xxxx&length=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -349,7 +349,7 @@
  */
 - (void) testHttpFailFileDescriptorReadGetInvalidMethodPost
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/file_descriptor/read?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/file_descriptor/read?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"POST"];
     
@@ -361,7 +361,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /file_descriptor/read?deviceId=xxxx&mediaId=xxxx&length=xxxx
+ * Path: /file_descriptor/read?serviceId=xxxx&mediaId=xxxx&length=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -370,7 +370,7 @@
  */
 - (void) testHttpFailFileDescriptorReadGetInvalidMethodPut
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/file_descriptor/read?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/file_descriptor/read?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
@@ -382,7 +382,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /file_descriptor/read?deviceId=xxxx&mediaId=xxxx&length=xxxx
+ * Path: /file_descriptor/read?serviceId=xxxx&mediaId=xxxx&length=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -391,7 +391,7 @@
  */
 - (void) testHttpFailFileDescriptorReadGetInvalidMethodDelete
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/file_descriptor/read?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/file_descriptor/read?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     
@@ -399,7 +399,7 @@
 }
 
 /*!
- * @brief deviceIdが無い状態でファイルに書き込むテストを行う.
+ * @brief serviceIdが無い状態でファイルに書き込むテストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: PUT
@@ -411,7 +411,7 @@
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailFileDescriptorWritePutNoDeviceId
+- (void) testHttpFailFileDescriptorWritePutNoServiceId
 {
     NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/file_descriptor/write"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
@@ -421,11 +421,11 @@
 }
 
 /*!
- * @brief deviceIdが空状態でファイルに書き込むテストを行う.
+ * @brief serviceIdが空状態でファイルに書き込むテストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /file_descriptor/write?deviceId=&mediaId=xxxx
+ * Path: /file_descriptor/write?serviceId=&mediaId=xxxx
  * Multipart: media
  * </pre>
  * <pre>
@@ -433,9 +433,9 @@
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailFileDescriptorWritePutEmptyDeviceId
+- (void) testHttpFailFileDescriptorWritePutEmptyServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/file_descriptor/write?deviceId="];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/file_descriptor/write?serviceId="];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
@@ -443,11 +443,11 @@
 }
 
 /*!
- * @brief 存在しないdeviceIdでファイルに書き込むテストを行う.
+ * @brief 存在しないserviceIdでファイルに書き込むテストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /file_descriptor/write?deviceId=123456789&mediId=xxxx
+ * Path: /file_descriptor/write?serviceId=123456789&mediId=xxxx
  * Multipart: media
  * </pre>
  * <pre>
@@ -455,9 +455,9 @@
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailFileDescriptorWritePutInvalidDeviceId
+- (void) testHttpFailFileDescriptorWritePutInvalidServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/file_descriptor/write?deviceId=12345678"];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/file_descriptor/write?serviceId=12345678"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
@@ -469,7 +469,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /file_descriptor/write?deviceId=xxxx&mediaId=xxxx
+ * Path: /file_descriptor/write?serviceId=xxxx&mediaId=xxxx
  * Multipart: media
  * </pre>
  * <pre>
@@ -479,7 +479,7 @@
  */
 - (void) testHttpFailFileDescriptorWritePutInvalidMethodGet
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/file_descriptor/write?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/file_descriptor/write?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
     
@@ -491,7 +491,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: POST
- * Path: /file_descriptor/write?deviceId=xxxx&mediaId=xxxx
+ * Path: /file_descriptor/write?serviceId=xxxx&mediaId=xxxx
  * Multipart: media
  * </pre>
  * <pre>
@@ -501,7 +501,7 @@
  */
 - (void) testHttpFailFileDescriptorWritePutInvalidMethodPost
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/file_descriptor/write?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/file_descriptor/write?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"POST"];
     
@@ -513,7 +513,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /file_descriptor/write?deviceId=xxxx&mediaId=xxxx
+ * Path: /file_descriptor/write?serviceId=xxxx&mediaId=xxxx
  * Multipart: media
  * </pre>
  * <pre>
@@ -523,7 +523,7 @@
  */
 - (void) testHttpFailFileDescriptorWritePutInvalidMethodDelete
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/file_descriptor/write?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/file_descriptor/write?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     
@@ -531,7 +531,7 @@
 }
 
 /*!
- * @brief deviceIdが無い状態でonwatchfile属性のコールバック解除テストを行う.
+ * @brief serviceIdが無い状態でonwatchfile属性のコールバック解除テストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: PUT
@@ -542,7 +542,7 @@
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailFileDescriptorOnWatchFilePutNoDeviceId
+- (void) testHttpFailFileDescriptorOnWatchFilePutNoServiceId
 {
     NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/file_descriptor/onwatchfile"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
@@ -552,20 +552,20 @@
 }
 
 /*!
- * @brief deviceIdが空状態でonwatchfile属性のコールバック解除テストを行う.
+ * @brief serviceIdが空状態でonwatchfile属性のコールバック解除テストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /file_descriptor/onwatchfile?deviceId=&sessionKey=xxxx
+ * Path: /file_descriptor/onwatchfile?serviceId=&sessionKey=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailFileDescriptorOnWatchFilePutEmptyDeviceId
+- (void) testHttpFailFileDescriptorOnWatchFilePutEmptyServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/file_descriptor/onwatchfile?deviceId="];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/file_descriptor/onwatchfile?serviceId="];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
@@ -573,20 +573,20 @@
 }
 
 /*!
- * @brief 存在しないdeviceIdでonwatchfile属性のコールバック解除テストを行う.
+ * @brief 存在しないserviceIdでonwatchfile属性のコールバック解除テストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /file_descriptor/onwatchfile?deviceId=123456789&sessionKey=xxxx
+ * Path: /file_descriptor/onwatchfile?serviceId=123456789&sessionKey=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailFileDescriptorOnWatchFilePutInvalidDeviceId
+- (void) testHttpFailFileDescriptorOnWatchFilePutInvalidServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/file_descriptor/onwatchfile?deviceId=12345678"];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/file_descriptor/onwatchfile?serviceId=12345678"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
@@ -598,7 +598,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /file_descriptor/onwatchfile?deviceId=123456789&sessionKey=xxxx
+ * Path: /file_descriptor/onwatchfile?serviceId=123456789&sessionKey=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -607,7 +607,7 @@
  */
 - (void) testHttpFailFileDescriptorOnWatchFilePutNoSessionKey
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/file_descriptor/onwatchfile?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/file_descriptor/onwatchfile?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
@@ -619,7 +619,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /file_descriptor/onwatchfile?deviceId=123456789&sessionKey=xxxx
+ * Path: /file_descriptor/onwatchfile?serviceId=123456789&sessionKey=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -628,7 +628,7 @@
  */
 - (void) testHttpFailFileDescriptorOnWatchFilePutEmptySessionKey
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/file_descriptor/onwatchfile?deviceId=%@&sessionKey=", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/file_descriptor/onwatchfile?serviceId=%@&sessionKey=", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
@@ -636,7 +636,7 @@
 }
 
 /*!
- * @brief deviceIdが無い状態でonwatchfile属性のコールバック解除テストを行う.
+ * @brief serviceIdが無い状態でonwatchfile属性のコールバック解除テストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
@@ -647,7 +647,7 @@
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailFileDescriptorOnWatchFileDeleteNoDeviceId
+- (void) testHttpFailFileDescriptorOnWatchFileDeleteNoServiceId
 {
     NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/file_descriptor/onwatchfile"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
@@ -657,20 +657,20 @@
 }
 
 /*!
- * @brief deviceIdが空状態でonwatchfile属性のコールバック解除テストを行う.
+ * @brief serviceIdが空状態でonwatchfile属性のコールバック解除テストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /file_descriptor/onwatchfile?deviceId=&sessionKey=xxxx
+ * Path: /file_descriptor/onwatchfile?serviceId=&sessionKey=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailFileDescriptorOnWatchFileDeleteEmptyDeviceId
+- (void) testHttpFailFileDescriptorOnWatchFileDeleteEmptyServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/file_descriptor/onwatchfile?deviceId="];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/file_descriptor/onwatchfile?serviceId="];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     
@@ -678,20 +678,20 @@
 }
 
 /*!
- * @brief 存在しないdeviceIdでonwatchfile属性のコールバック解除テストを行う.
+ * @brief 存在しないserviceIdでonwatchfile属性のコールバック解除テストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /file_descriptor/onwatchfile?deviceId=123456789&sessionKey=xxxx
+ * Path: /file_descriptor/onwatchfile?serviceId=123456789&sessionKey=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailFileDescriptorOnWatchFileDeleteInvalidDeviceId
+- (void) testHttpFailFileDescriptorOnWatchFileDeleteInvalidServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/file_descriptor/onwatchfile?deviceId=12345678"];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/file_descriptor/onwatchfile?serviceId=12345678"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     
@@ -703,7 +703,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /file_descriptor/onwatchfile?deviceId=123456789
+ * Path: /file_descriptor/onwatchfile?serviceId=123456789
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -712,7 +712,7 @@
  */
 - (void) testHttpFailFileDescriptorOnWatchFileDeleteNoSessionKey
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/file_descriptor/onwatchfile?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/file_descriptor/onwatchfile?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     
@@ -724,7 +724,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /file_descriptor/onwatchfile?deviceId=123456789&sessionKey=
+ * Path: /file_descriptor/onwatchfile?serviceId=123456789&sessionKey=
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -733,7 +733,7 @@
  */
 - (void) testHttpFailFileDescriptorOnWatchFileDeleteEmptySessionKey
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/file_descriptor/onwatchfile?deviceId=%@&sessionKey=", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/file_descriptor/onwatchfile?serviceId=%@&sessionKey=", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     
@@ -745,7 +745,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: GET
- * Path: /file_descriptor/onwatchfile?deviceId=xxxx&sessionKey=xxxx
+ * Path: /file_descriptor/onwatchfile?serviceId=xxxx&sessionKey=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -754,7 +754,7 @@
  */
 - (void) testHttpFailFileDescriptorOnWatchFileInvalidMethodGet
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/file_descriptor/onwatchfile?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/file_descriptor/onwatchfile?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
     
@@ -766,7 +766,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: POST
- * Path: /file_descriptor/onwatchfile?deviceId=xxxx&sessionKey=xxxx
+ * Path: /file_descriptor/onwatchfile?serviceId=xxxx&sessionKey=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -775,7 +775,7 @@
  */
 - (void) testHttpFailFileDescriptorOnWatchFileInvalidMethodPost
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/file_descriptor/onwatchfile?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/file_descriptor/onwatchfile?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"POST"];
     

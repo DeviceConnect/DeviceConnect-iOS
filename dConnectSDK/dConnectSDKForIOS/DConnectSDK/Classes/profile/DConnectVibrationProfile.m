@@ -52,12 +52,12 @@ const long long DConnectVibrationProfileDefaultMaxVibrationTime = 500;
     NSString *attribute = [request attribute];
     
     if ([attribute isEqualToString:DConnectVibrationProfileAttrVibrate]) {
-        if ([self hasMethod:@selector(profile:didReceivePutVibrateRequest:response:deviceId:pattern:) response:response])
+        if ([self hasMethod:@selector(profile:didReceivePutVibrateRequest:response:serviceId:pattern:) response:response])
         {
             NSString *patternStr = [DConnectVibrationProfile patternFromRequest:request];
             NSArray *pattern = [self parsePattern:patternStr];
             send = [_delegate profile:self didReceivePutVibrateRequest:request response:response
-                             deviceId:[request deviceId] pattern:pattern];
+                             serviceId:[request serviceId] pattern:pattern];
         }
     } else {
         [response setErrorToUnknownAttribute];
@@ -78,10 +78,10 @@ const long long DConnectVibrationProfileDefaultMaxVibrationTime = 500;
     NSString *attribute = [request attribute];
     
     if ([attribute isEqualToString:DConnectVibrationProfileAttrVibrate]) {
-        if ([self hasMethod:@selector(profile:didReceiveDeleteVibrateRequest:response:deviceId:) response:response])
+        if ([self hasMethod:@selector(profile:didReceiveDeleteVibrateRequest:response:serviceId:) response:response])
         {
             send = [_delegate profile:self didReceiveDeleteVibrateRequest:request response:response
-                             deviceId:[request deviceId]];
+                             serviceId:[request serviceId]];
         }
     } else {
         [response setErrorToUnknownAttribute];

@@ -54,13 +54,13 @@ NSString *const DConnectAuthorizationProfileGrantTypeAuthorizationCode = @"autho
 - (BOOL) didReceiveGetRequest:(DConnectRequestMessage *)request response:(DConnectResponseMessage *)response {
     BOOL send = YES;
     
-    NSString *deviceId = [request deviceId];
+    NSString *serviceId = [request serviceId];
     NSString *attribute = [request attribute];
     
     if (attribute) {
         if ([attribute isEqualToString:DConnectAuthorizationProfileAttrCreateClient]) {
             NSString *package = [DConnectAuthorizationProfile packageFromRequest:request];
-            send = [self didReceiveGetCreateClientRequest:request response:response deviceId:deviceId package:package];
+            send = [self didReceiveGetCreateClientRequest:request response:response serviceId:serviceId package:package];
         } else if ([attribute isEqualToString:DConnectAuthorizationProfileAttrRequestAccessToken]) {
             NSString *clientId = [DConnectAuthorizationProfile clientIdFromRequest:request];
             NSString *grantType = [DConnectAuthorizationProfile grantTypeFromRequest:request];
@@ -68,7 +68,7 @@ NSString *const DConnectAuthorizationProfileGrantTypeAuthorizationCode = @"autho
             NSArray *scopes = [DConnectAuthorizationProfile parsePattern:scope];
             NSString *applicationName = [DConnectAuthorizationProfile applicationNameFromRequest:request];
             NSString *signature = [DConnectAuthorizationProfile signatureFromRequest:request];
-            send = [self didReceiveGetRequestAccessTokenRequest:request response:response deviceId:deviceId clientId:clientId grantType:grantType scopes:scopes applicationName:applicationName signature:signature];
+            send = [self didReceiveGetRequestAccessTokenRequest:request response:response serviceId:serviceId clientId:clientId grantType:grantType scopes:scopes applicationName:applicationName signature:signature];
         } else {
             [response setErrorToUnknownAttribute];
         }
@@ -81,14 +81,14 @@ NSString *const DConnectAuthorizationProfileGrantTypeAuthorizationCode = @"autho
 
 - (BOOL) didReceiveGetCreateClientRequest:(DConnectRequestMessage *)request
                                  response:(DConnectResponseMessage *)response
-                                 deviceId:(NSString *)deviceId
+                                 serviceId:(NSString *)serviceId
                                   package:(NSString *)package
 {
     if (package == nil || package.length <= 0) {
         [response setErrorToInvalidRequestParameter];
     } else {
         LocalOAuth2Main *oauth = [LocalOAuth2Main sharedOAuthForClass:[self.object class]];
-		LocalOAuthPackageInfo *packageInfo = [[LocalOAuthPackageInfo alloc] initWithPackageNameDeviceId:package deviceId:deviceId];
+		LocalOAuthPackageInfo *packageInfo = [[LocalOAuthPackageInfo alloc] initWithPackageNameServiceId:package serviceId:serviceId];
         LocalOAuthClientData *clientData = [oauth createClientWithPackageInfo:packageInfo];
         if (clientData) {
             [response setResult:DConnectMessageResultTypeOk];
@@ -103,7 +103,7 @@ NSString *const DConnectAuthorizationProfileGrantTypeAuthorizationCode = @"autho
 
 - (BOOL) didReceiveGetRequestAccessTokenRequest:(DConnectRequestMessage *)request
                                        response:(DConnectResponseMessage *)response
-                                       deviceId:(NSString *)deviceId
+                                       serviceId:(NSString *)serviceId
                                        clientId:(NSString *)clientId
                                       grantType:(NSString *)grantType
                                          scopes:(NSArray *)scopes
@@ -128,7 +128,7 @@ NSString *const DConnectAuthorizationProfileGrantTypeAuthorizationCode = @"autho
     }
     
     LocalOAuth2Main *oauth = [LocalOAuth2Main sharedOAuthForClass:[self.object class]];
-    if ([oauth checkSignatureWithClientId:clientId grantType:grantType deviceId:deviceId scopes:scopes signature:signature]) {
+    if ([oauth checkSignatureWithClientId:clientId grantType:grantType serviceId:serviceId scopes:scopes signature:signature]) {
         
         dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
         dispatch_time_t timeout = dispatch_time(DISPATCH_TIME_NOW, NSEC_PER_SEC * 60);
@@ -137,7 +137,7 @@ NSString *const DConnectAuthorizationProfileGrantTypeAuthorizationCode = @"autho
         LocalOAuthConfirmAuthParams *params = [LocalOAuthConfirmAuthParams new];
         params.applicationName = applicationName;
         params.clientId = clientId;
-        params.deviceId = deviceId;
+        params.serviceId = serviceId;
         params.grantType = grantType;
         params.scope = scopes;
         params.isForDevicePlugin = isDevicePlugin;

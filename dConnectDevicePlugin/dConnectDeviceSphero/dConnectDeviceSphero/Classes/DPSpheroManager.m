@@ -86,8 +86,8 @@
     _isActivated = NO;
 }
 
-// 接続中のデバイスID取得
-- (NSString*)currentDeviceID
+// 接続中のサービスID取得
+- (NSString*)currentServiceID
 {
     if (!_isActivated) return nil;
     
@@ -95,7 +95,7 @@
 }
 
 // デバイスに接続
-- (BOOL)connectDeviceWithID:(NSString*)deviceID
+- (BOOL)connectDeviceWithID:(NSString*)serviceID
 {
     if (!_isActivated) return NO;
     
@@ -103,7 +103,7 @@
     NSString *oldID = [provider robot].bluetoothAddress;
     // FIXME: これをやると動きがおかしくなる
     // 接続済みチェック
-    if ([oldID isEqualToString:deviceID]) {
+    if ([oldID isEqualToString:serviceID]) {
         [provider openRobotConnection];
         return YES;
     }
@@ -113,11 +113,11 @@
     NSArray *robots = [provider robots];
     for (int i=0; i<[robots count]; i++) {
         RKRobot *robo = robots[i];
-        if ([robo.bluetoothAddress isEqualToString:deviceID]) {
+        if ([robo.bluetoothAddress isEqualToString:serviceID]) {
             if ([provider controlRobotAtIndex:i]) {
                 
                 // 現在設定されているLED色を取得
-                if (![oldID isEqualToString:deviceID]) {
+                if (![oldID isEqualToString:serviceID]) {
                     [[RKDeviceMessenger sharedMessenger] addResponseObserver:self selector:@selector(handleResponse:)];
                     [RKGetUserRGBLEDColorCommand sendCommand];
                 }

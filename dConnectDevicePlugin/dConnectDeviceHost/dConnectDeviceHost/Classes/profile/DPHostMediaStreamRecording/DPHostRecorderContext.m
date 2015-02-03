@@ -8,7 +8,7 @@
 //
 
 #import "DPHostMediaStreamRecordingProfile.h"
-#import "DPHostNetworkServiceDiscoveryProfile.h"
+#import "DPHostServiceDiscoveryProfile.h"
 #import "DPHostRecorderContext.h"
 
 const char * const AudioCaptureQueueName = "org.deviceconnect.ios.host.mediastream_recording.audio_capture";
@@ -333,7 +333,7 @@ const char * const VideoCaptureQueueName = "org.deviceconnect.ios.host.mediastre
 - (void) sendOnRecordingChangeEventWithStatus:(NSNotification *)notification
 {
     // イベントの取得
-    NSArray *evts = [_profile.eventMgr eventListForDeviceId:NetworkDiscoveryDeviceId
+    NSArray *evts = [_profile.eventMgr eventListForServiceId:ServiceDiscoveryServiceId
                                                     profile:DConnectMediaStreamRecordingProfileName
                                                   attribute:DConnectMediaStreamRecordingProfileAttrOnPhoto];
     // イベント送信

@@ -25,7 +25,7 @@
 - (BOOL)         profile:(DConnectSettingsProfile *)profile
 didReceiveGetDateRequest:(DConnectRequestMessage *)request
                 response:(DConnectResponseMessage *)response
-                deviceId:(NSString *)deviceId
+                serviceId:(NSString *)serviceId
 {
     NSDateFormatter *rfc3339DateFormatter = [[NSDateFormatter alloc] init];
     NSLocale *enUSPOSIXLocale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"];
@@ -43,7 +43,7 @@ didReceiveGetDateRequest:(DConnectRequestMessage *)request
 - (BOOL)          profile:(DConnectSettingsProfile *)profile
 didReceiveGetLightRequest:(DConnectRequestMessage *)request
                  response:(DConnectResponseMessage *)response
-                 deviceId:(NSString *)deviceId
+                 serviceId:(NSString *)serviceId
 {
     [DConnectSettingsProfile setLightLevel:[UIScreen mainScreen].brightness target:response];
     [response setResult:DConnectMessageResultTypeOk];
@@ -55,7 +55,7 @@ didReceiveGetLightRequest:(DConnectRequestMessage *)request
 - (BOOL)          profile:(DConnectSettingsProfile *)profile
 didReceivePutLightRequest:(DConnectRequestMessage *)request
                  response:(DConnectResponseMessage *)response
-                 deviceId:(NSString *)deviceId
+                 serviceId:(NSString *)serviceId
                     level:(NSNumber *)level
 {
     if (!level) {
