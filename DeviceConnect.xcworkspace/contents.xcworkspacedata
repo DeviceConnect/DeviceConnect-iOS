@@ -31,4 +31,7 @@
    <FileRef
       location = "group:dConnectSDK/dConnectSDKForIOS/DConnectSDK.xcodeproj">
    </FileRef>
+   <FileRef
+      location = "group:dConnectDevicePlugin/dConnectDeviceTest/dConnectDeviceTest.xcodeproj">
+   </FileRef>
 </Workspace>

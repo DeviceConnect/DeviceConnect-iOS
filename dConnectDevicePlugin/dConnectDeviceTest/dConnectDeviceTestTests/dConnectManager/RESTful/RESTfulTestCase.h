@@ -18,6 +18,9 @@
 // 　テスト失敗の理由がテストメソッド毎に表示されるようにするため.
 //------------------------------------------------------
 
+#define DCONNECT_MANAGER_APP_NAME @"Device Connect Manager"
+#define DCONNECT_MANAGER_VERSION_NAME @"1.0"
+
 #define CHECK_RESPONSE(expectedJson, req) {\
     NSURLResponse *response = nil; \
     NSError *error = nil; \
@@ -26,12 +29,15 @@
                                                      error:&error]; \
     XCTAssertNotNil(data); \
     XCTAssertNil(error); \
-    NSDictionary *expectedResponse = [NSJSONSerialization JSONObjectWithData:[expectedJson dataUsingEncoding:NSUTF8StringEncoding] \
+    NSMutableDictionary *expectedResponse = [NSMutableDictionary dictionaryWithDictionary:[NSJSONSerialization JSONObjectWithData:[expectedJson dataUsingEncoding:NSUTF8StringEncoding] \
                                                                      options:NSJSONReadingMutableContainers \
-                                                                       error:nil]; \
+                                                                       error:nil]]; \
+    [expectedResponse setObject:DCONNECT_MANAGER_APP_NAME forKey:DConnectMessageProduct]; \
+    [expectedResponse setObject:DCONNECT_MANAGER_VERSION_NAME forKey:DConnectMessageVersion]; \
     NSDictionary *actualResponse = [NSJSONSerialization JSONObjectWithData:data \
                                                                options:NSJSONReadingMutableContainers \
                                                                  error:nil]; \
+    NSLog(@"********** actualResponse: %@", actualResponse); \
     XCTAssertNotNil(actualResponse); \
     XCTAssertTrue([self assertDictionary:expectedResponse actual:actualResponse], "expected=%@, but actual=%@", expectedResponse, actualResponse); \
 }
