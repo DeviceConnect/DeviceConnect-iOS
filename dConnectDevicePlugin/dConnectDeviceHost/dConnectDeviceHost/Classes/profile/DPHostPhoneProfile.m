@@ -85,7 +85,7 @@
                 [DConnectPhoneProfile setState:callState target:phoneStatus];
                 [DConnectPhoneProfile setPhoneStatus:phoneStatus target:eventMsg];
                 
-                [SELF_PLUGIN sendEvent:eventMsg];
+                [((DPHostDevicePlugin *)weakSelf.provider) sendEvent:eventMsg];
             }
         };
     }
