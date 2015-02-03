@@ -20,22 +20,36 @@
 - (id) init {
     self = [super init];
     if (self) {
-        self.pluginName = @"Chromecast 1.0";
+        self.pluginName = @"Chromecast 1.0.2";
         
-        // 起動時の通知
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationdidFinishLaunching) name:UIApplicationDidFinishLaunchingNotification object:nil];
 
         // イベントマネージャの準備
         Class key = [self class];
-        [[DConnectEventManager sharedManagerForClass:key] setController:[DConnectDBCacheController controllerWithClass:key]];
+        [[DConnectEventManager sharedManagerForClass:key]
+                        setController:[DConnectDBCacheController
+                  controllerWithClass:key]];
 
         // プロファイルを追加
         [self addProfile:[DPChromecastServiceDiscoveryProfile new]];
         [self addProfile:[DPChromecastSystemProfile new]];
         [self addProfile:[DPChromecastNotificationProfile new]];
         [self addProfile:[DPChromecastMediaPlayerProfile new]];
+        __weak typeof(self) _self = self;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+            UIApplication *application = [UIApplication sharedApplication];
+            
+            [nc addObserver:_self selector:@selector(applicationdidFinishLaunching)
+                       name:UIApplicationWillEnterForegroundNotification
+                     object:application];
+            
+            [nc addObserver:_self selector:@selector(enterBackground)
+                       name:UIApplicationDidEnterBackgroundNotification
+                     object:application];
+            [[DPChromecastManager sharedManager] startScan];
+        });
     }
-    
+
     return self;
 }
 
@@ -44,6 +58,18 @@
 {
     // 通知削除
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+    // スキャン停止
+    [[DPChromecastManager sharedManager] stopScan];
+}
+
+//バックグラウンド
+- (void) enterBackground {
+    
+    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+    UIApplication *application = [UIApplication sharedApplication];
+    
+    [nc removeObserver:self name:UIApplicationDidBecomeActiveNotification object:application];
+    [nc removeObserver:self name:UIApplicationDidEnterBackgroundNotification object:application];
     // スキャン停止
     [[DPChromecastManager sharedManager] stopScan];
 }
