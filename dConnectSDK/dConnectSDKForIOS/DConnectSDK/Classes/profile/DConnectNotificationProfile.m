@@ -50,7 +50,7 @@ NSString *const DConnectNotificationProfileParamUri = @"uri";
     NSString *attribute = [request attribute];
     if ([attribute isEqualToString:DConnectNotificationProfileAttrNotify]) {
         
-        if ([self hasMethod:@selector(profile:didReceivePostNotifyRequest:response:deviceId:type:dir:lang:body:tag:icon:)
+        if ([self hasMethod:@selector(profile:didReceivePostNotifyRequest:response:serviceId:type:dir:lang:body:tag:icon:)
                    response:response])
         {
             NSData *icon = [DConnectNotificationProfile iconFromRequest:request];
@@ -59,9 +59,9 @@ NSString *const DConnectNotificationProfileParamUri = @"uri";
             NSString *lang = [DConnectNotificationProfile langFromRequest:request];
             NSString *body = [DConnectNotificationProfile bodyFromRequest:request];
             NSString *tag = [DConnectNotificationProfile tagFromRequest:request];
-            NSString *deviceId = [request deviceId];
+            NSString *serviceId = [request serviceId];
             send = [_delegate profile:self didReceivePostNotifyRequest:request response:response
-                             deviceId:deviceId type:type dir:dir
+                             serviceId:serviceId type:type dir:dir
                                  lang:lang body:body tag:tag
                                  icon:icon];
 
@@ -82,37 +82,37 @@ NSString *const DConnectNotificationProfileParamUri = @"uri";
     }
     
     NSString *attribute = [request attribute];
-    NSString *deviceId = [request deviceId];
+    NSString *serviceId = [request serviceId];
     NSString *sessionKey = [request sessionKey];
     
     if ([attribute isEqualToString:DConnectNotificationProfileAttrOnClick]) {
         
-        if ([self hasMethod:@selector(profile:didReceivePutOnClickRequest:response:deviceId:sessionKey:)
+        if ([self hasMethod:@selector(profile:didReceivePutOnClickRequest:response:serviceId:sessionKey:)
                    response:response])
         {
             send = [_delegate profile:self didReceivePutOnClickRequest:request response:response
-                             deviceId:deviceId sessionKey:sessionKey];
+                             serviceId:serviceId sessionKey:sessionKey];
         }
     } else if ([attribute isEqualToString:DConnectNotificationProfileAttrOnClose]) {
-        if ([self hasMethod:@selector(profile:didReceivePutOnCloseRequest:response:deviceId:sessionKey:)
+        if ([self hasMethod:@selector(profile:didReceivePutOnCloseRequest:response:serviceId:sessionKey:)
                    response:response])
         {
             send = [_delegate profile:self didReceivePutOnCloseRequest:request response:response
-                             deviceId:deviceId sessionKey:sessionKey];
+                             serviceId:serviceId sessionKey:sessionKey];
         }
     } else if ([attribute isEqualToString:DConnectNotificationProfileAttrOnError]) {
-        if ([self hasMethod:@selector(profile:didReceivePutOnErrorRequest:response:deviceId:sessionKey:)
+        if ([self hasMethod:@selector(profile:didReceivePutOnErrorRequest:response:serviceId:sessionKey:)
                    response:response])
         {
             send = [_delegate profile:self didReceivePutOnErrorRequest:request response:response
-                             deviceId:deviceId sessionKey:sessionKey];
+                             serviceId:serviceId sessionKey:sessionKey];
         }
     } else if ([attribute isEqualToString:DConnectNotificationProfileAttrOnShow]) {
-        if ([self hasMethod:@selector(profile:didReceivePutOnShowRequest:response:deviceId:sessionKey:)
+        if ([self hasMethod:@selector(profile:didReceivePutOnShowRequest:response:serviceId:sessionKey:)
                    response:response])
         {
             send = [_delegate profile:self didReceivePutOnShowRequest:request response:response
-                             deviceId:deviceId sessionKey:sessionKey];
+                             serviceId:serviceId sessionKey:sessionKey];
         }
     } else {
         [response setErrorToUnknownAttribute];
@@ -130,43 +130,43 @@ NSString *const DConnectNotificationProfileParamUri = @"uri";
     }
     
     NSString *attribute = [request attribute];
-    NSString *deviceId = [request deviceId];
+    NSString *serviceId = [request serviceId];
     NSString *sessionKey = [request sessionKey];
     
     if ([attribute isEqualToString:DConnectNotificationProfileAttrOnClick]) {
-        if ([self hasMethod:@selector(profile:didReceiveDeleteOnClickRequest:response:deviceId:sessionKey:)
+        if ([self hasMethod:@selector(profile:didReceiveDeleteOnClickRequest:response:serviceId:sessionKey:)
                    response:response])
         {
             send = [_delegate profile:self didReceiveDeleteOnClickRequest:request response:response
-                             deviceId:deviceId sessionKey:sessionKey];
+                             serviceId:serviceId sessionKey:sessionKey];
         }
     } else if ([attribute isEqualToString:DConnectNotificationProfileAttrOnClose]) {
-        if ([self hasMethod:@selector(profile:didReceiveDeleteOnCloseRequest:response:deviceId:sessionKey:)
+        if ([self hasMethod:@selector(profile:didReceiveDeleteOnCloseRequest:response:serviceId:sessionKey:)
                    response:response])
         {
             send = [_delegate profile:self didReceiveDeleteOnCloseRequest:request response:response
-                             deviceId:deviceId sessionKey:sessionKey];
+                             serviceId:serviceId sessionKey:sessionKey];
         }
     } else if ([attribute isEqualToString:DConnectNotificationProfileAttrOnError]) {
-        if ([self hasMethod:@selector(profile:didReceiveDeleteOnErrorRequest:response:deviceId:sessionKey:)
+        if ([self hasMethod:@selector(profile:didReceiveDeleteOnErrorRequest:response:serviceId:sessionKey:)
                    response:response])
         {
             send = [_delegate profile:self didReceiveDeleteOnErrorRequest:request response:response
-                             deviceId:deviceId sessionKey:sessionKey];
+                             serviceId:serviceId sessionKey:sessionKey];
         }
     } else if ([attribute isEqualToString:DConnectNotificationProfileAttrOnShow]) {
-        if ([self hasMethod:@selector(profile:didReceiveDeleteOnShowRequest:response:deviceId:sessionKey:)
+        if ([self hasMethod:@selector(profile:didReceiveDeleteOnShowRequest:response:serviceId:sessionKey:)
                    response:response])
         {
             send = [_delegate profile:self didReceiveDeleteOnShowRequest:request response:response
-                             deviceId:deviceId sessionKey:sessionKey];
+                             serviceId:serviceId sessionKey:sessionKey];
         }
     } else if ([attribute isEqualToString:DConnectNotificationProfileAttrNotify]) {
-        if ([self hasMethod:@selector(profile:didReceiveDeleteNotifyRequest:response:deviceId:notificationId:)
+        if ([self hasMethod:@selector(profile:didReceiveDeleteNotifyRequest:response:serviceId:notificationId:)
                    response:response])
         {
             send = [_delegate profile:self didReceiveDeleteNotifyRequest:request response:response
-                             deviceId:deviceId
+                             serviceId:serviceId
                        notificationId:[DConnectNotificationProfile notificationIdFromRequest:request]];
         }
     } else {

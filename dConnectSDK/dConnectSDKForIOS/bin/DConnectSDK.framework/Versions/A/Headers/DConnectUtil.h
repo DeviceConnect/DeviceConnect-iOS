@@ -106,7 +106,7 @@ typedef void (^DConnectAuthorizationFailBlock)(DConnectMessageErrorCodeType erro
  
  @param[in] clientId クライアントID
  @param[in] grantType グランドタイプ
- @param[in] deviceId デバイスID
+ @param[in] serviceId サービスID
  @param[in] scopes スコープ一覧
  @param[in] clientSecret クライアントシークレット
  
@@ -115,7 +115,7 @@ typedef void (^DConnectAuthorizationFailBlock)(DConnectMessageErrorCodeType erro
  */
 + (NSString *)generateSignatureWithClientId:(NSString *)clientId
                                   grantType:(NSString *)grantType
-                                   deviceId:(NSString *)deviceId
+                                   serviceId:(NSString *)serviceId
                                      scopes:(NSArray *)scopes
                                clientSecret:(NSString *)clientSecret;
 

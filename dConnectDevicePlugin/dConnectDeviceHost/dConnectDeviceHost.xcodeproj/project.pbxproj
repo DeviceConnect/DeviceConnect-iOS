@@ -24,7 +24,6 @@
 		25063A99196BF8FA007242B6 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25063A98196BF8FA007242B6 /* CoreMotion.framework */; };
 		2515192519A86FC800430980 /* DPHostMediaPlayerProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 25E029701991BD3400AFC171 /* DPHostMediaPlayerProfile.m */; };
 		252F870319736DEB00142BAE /* DPHostPhoneProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 252F870219736DEB00142BAE /* DPHostPhoneProfile.m */; };
-		252F870619739EBB00142BAE /* DPHostFileDescriptorProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 252F870519739EBB00142BAE /* DPHostFileDescriptorProfile.m */; };
 		257FC23719BAAF5200358536 /* DPHostReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 257FC23619BAAF5200358536 /* DPHostReachability.m */; };
 		2585BB941980D89F00AAE43C /* DPHostSettingsProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 2585BB931980D89F00AAE43C /* DPHostSettingsProfile.m */; };
 		25B42C6519865F1000B65E83 /* DPHostRecorderContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 25B42C6419865F1000B65E83 /* DPHostRecorderContext.m */; };
@@ -47,10 +46,18 @@
 		97FE19FF192B2FB400808FA5 /* libdConnectDeviceHost.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 97FE19E7192B2FB400808FA5 /* libdConnectDeviceHost.a */; };
 		97FE1A05192B2FB500808FA5 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 97FE1A03192B2FB500808FA5 /* InfoPlist.strings */; };
 		97FE1A07192B2FB500808FA5 /* dConnectDeviceHostTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 97FE1A06192B2FB500808FA5 /* dConnectDeviceHostTests.m */; };
-		97FE1A1E192B5ACD00808FA5 /* DPHostNetworkServiceDiscoveryProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 97FE1A1D192B5ACD00808FA5 /* DPHostNetworkServiceDiscoveryProfile.m */; };
+		97FE1A1E192B5ACD00808FA5 /* DPHostServiceDiscoveryProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 97FE1A1D192B5ACD00808FA5 /* DPHostServiceDiscoveryProfile.m */; };
 		97FE1A21192B6DA400808FA5 /* DPHostSystemProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 97FE1A20192B6DA400808FA5 /* DPHostSystemProfile.m */; };
+		AB0B13271A80A12300D655D5 /* DPHostFileDescriptorContext.m in Sources */ = {isa = PBXBuildFile; fileRef = AB0B13241A80A12300D655D5 /* DPHostFileDescriptorContext.m */; };
+		AB0B13281A80A12300D655D5 /* DPHostFileDescriptorProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = AB0B13261A80A12300D655D5 /* DPHostFileDescriptorProfile.m */; };
 		ABDA3C6D1A0C58F3001F30A0 /* DPHostConnectProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = ABDA3C6C1A0C58F3001F30A0 /* DPHostConnectProfile.m */; };
 		ABDA3C701A0C743A001F30A0 /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABDA3C6F1A0C743A001F30A0 /* CoreBluetooth.framework */; };
+		D6384EA91A7625BD00384167 /* DPHostCanvasProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = D6384EA81A7625BD00384167 /* DPHostCanvasProfile.m */; };
+		D6384EAD1A7625CF00384167 /* DPHostCanvasUIViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D6384EAC1A7625CF00384167 /* DPHostCanvasUIViewController.m */; };
+		D6384EB11A762B2E00384167 /* dConnectDeviceHost.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D6384EB01A762B2E00384167 /* dConnectDeviceHost.storyboard */; };
+		D69997451A7E210D00EF934F /* DPHostCanvasView.m in Sources */ = {isa = PBXBuildFile; fileRef = D69997441A7E210D00EF934F /* DPHostCanvasView.m */; };
+		D69997481A7F1AD800EF934F /* DPHostCanvasDrawObject.m in Sources */ = {isa = PBXBuildFile; fileRef = D69997471A7F1AD800EF934F /* DPHostCanvasDrawObject.m */; };
+		D699974B1A7F264900EF934F /* DPHostCanvasDrawImage.m in Sources */ = {isa = PBXBuildFile; fileRef = D699974A1A7F264900EF934F /* DPHostCanvasDrawImage.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -67,8 +74,6 @@
 		25063A98196BF8FA007242B6 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
 		252F870119736DEB00142BAE /* DPHostPhoneProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHostPhoneProfile.h; sourceTree = "<group>"; };
 		252F870219736DEB00142BAE /* DPHostPhoneProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHostPhoneProfile.m; sourceTree = "<group>"; };
-		252F870419739EBB00142BAE /* DPHostFileDescriptorProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHostFileDescriptorProfile.h; sourceTree = "<group>"; };
-		252F870519739EBB00142BAE /* DPHostFileDescriptorProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHostFileDescriptorProfile.m; sourceTree = "<group>"; };
 		257FC23519BAAF5200358536 /* DPHostReachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHostReachability.h; sourceTree = "<group>"; };
 		257FC23619BAAF5200358536 /* DPHostReachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHostReachability.m; sourceTree = "<group>"; };
 		2585BB921980D89F00AAE43C /* DPHostSettingsProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHostSettingsProfile.h; sourceTree = "<group>"; };
@@ -111,13 +116,28 @@
 		97FE1A02192B2FB400808FA5 /* dConnectDeviceHostTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "dConnectDeviceHostTests-Info.plist"; sourceTree = "<group>"; };
 		97FE1A04192B2FB500808FA5 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		97FE1A06192B2FB500808FA5 /* dConnectDeviceHostTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = dConnectDeviceHostTests.m; sourceTree = "<group>"; };
-		97FE1A1C192B5ACD00808FA5 /* DPHostNetworkServiceDiscoveryProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHostNetworkServiceDiscoveryProfile.h; sourceTree = "<group>"; };
-		97FE1A1D192B5ACD00808FA5 /* DPHostNetworkServiceDiscoveryProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHostNetworkServiceDiscoveryProfile.m; sourceTree = "<group>"; };
+		97FE1A1C192B5ACD00808FA5 /* DPHostServiceDiscoveryProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHostServiceDiscoveryProfile.h; sourceTree = "<group>"; };
+		97FE1A1D192B5ACD00808FA5 /* DPHostServiceDiscoveryProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHostServiceDiscoveryProfile.m; sourceTree = "<group>"; };
 		97FE1A1F192B6DA400808FA5 /* DPHostSystemProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHostSystemProfile.h; sourceTree = "<group>"; };
 		97FE1A20192B6DA400808FA5 /* DPHostSystemProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHostSystemProfile.m; sourceTree = "<group>"; };
+		AB0B13231A80A12300D655D5 /* DPHostFileDescriptorContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHostFileDescriptorContext.h; sourceTree = "<group>"; };
+		AB0B13241A80A12300D655D5 /* DPHostFileDescriptorContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHostFileDescriptorContext.m; sourceTree = "<group>"; };
+		AB0B13251A80A12300D655D5 /* DPHostFileDescriptorProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHostFileDescriptorProfile.h; sourceTree = "<group>"; };
+		AB0B13261A80A12300D655D5 /* DPHostFileDescriptorProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHostFileDescriptorProfile.m; sourceTree = "<group>"; };
 		ABDA3C6B1A0C58F3001F30A0 /* DPHostConnectProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHostConnectProfile.h; sourceTree = "<group>"; };
 		ABDA3C6C1A0C58F3001F30A0 /* DPHostConnectProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHostConnectProfile.m; sourceTree = "<group>"; };
 		ABDA3C6F1A0C743A001F30A0 /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
+		D6384EA71A7625BD00384167 /* DPHostCanvasProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHostCanvasProfile.h; sourceTree = "<group>"; };
+		D6384EA81A7625BD00384167 /* DPHostCanvasProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHostCanvasProfile.m; sourceTree = "<group>"; };
+		D6384EAB1A7625CF00384167 /* DPHostCanvasUIViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHostCanvasUIViewController.h; sourceTree = "<group>"; };
+		D6384EAC1A7625CF00384167 /* DPHostCanvasUIViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHostCanvasUIViewController.m; sourceTree = "<group>"; };
+		D6384EB01A762B2E00384167 /* dConnectDeviceHost.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = dConnectDeviceHost.storyboard; path = dConnectDeviceHost_resources/dConnectDeviceHost.storyboard; sourceTree = SOURCE_ROOT; };
+		D69997431A7E210D00EF934F /* DPHostCanvasView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHostCanvasView.h; sourceTree = "<group>"; };
+		D69997441A7E210D00EF934F /* DPHostCanvasView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHostCanvasView.m; sourceTree = "<group>"; };
+		D69997461A7F1AD800EF934F /* DPHostCanvasDrawObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHostCanvasDrawObject.h; sourceTree = "<group>"; };
+		D69997471A7F1AD800EF934F /* DPHostCanvasDrawObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHostCanvasDrawObject.m; sourceTree = "<group>"; };
+		D69997491A7F264900EF934F /* DPHostCanvasDrawImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHostCanvasDrawImage.h; sourceTree = "<group>"; };
+		D699974A1A7F264900EF934F /* DPHostCanvasDrawImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHostCanvasDrawImage.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -230,8 +250,9 @@
 		97FE19EC192B2FB400808FA5 /* dConnectDeviceHost */ = {
 			isa = PBXGroup;
 			children = (
-				97FE1A1A192B4D2400808FA5 /* Headers */,
 				97FE1A19192B4D1C00808FA5 /* Classes */,
+				97FE1A1A192B4D2400808FA5 /* Headers */,
+				D6384EAE1A76262B00384167 /* Resources */,
 				97FE19ED192B2FB400808FA5 /* Supporting Files */,
 			);
 			path = dConnectDeviceHost;
@@ -287,20 +308,22 @@
 		97FE1A1B192B5A5600808FA5 /* profile */ = {
 			isa = PBXGroup;
 			children = (
+				AB0B13221A80A07900D655D5 /* DPHostFileDescriptor */,
+				D6384EA71A7625BD00384167 /* DPHostCanvasProfile.h */,
+				D6384EA81A7625BD00384167 /* DPHostCanvasProfile.m */,
+				D6384EAA1A7625CF00384167 /* DPHostCanvas */,
 				ABDA3C6B1A0C58F3001F30A0 /* DPHostConnectProfile.h */,
 				ABDA3C6C1A0C58F3001F30A0 /* DPHostConnectProfile.m */,
 				25DF80D4196CCD7D003F6FF3 /* DPHostBatteryProfile.h */,
 				25DF80D5196CCD7D003F6FF3 /* DPHostBatteryProfile.m */,
 				25FF1DB8196AA53400EA7F72 /* DPHostDeviceOrientationProfile.h */,
 				25FF1DB9196AA53400EA7F72 /* DPHostDeviceOrientationProfile.m */,
-				252F870419739EBB00142BAE /* DPHostFileDescriptorProfile.h */,
-				252F870519739EBB00142BAE /* DPHostFileDescriptorProfile.m */,
 				25FF1DAF196A89A700EA7F72 /* DPHostFileProfile.h */,
 				25FF1DB0196A89A700EA7F72 /* DPHostFileProfile.m */,
 				25F0BC31199310C10095C333 /* DPHostMediaPlayer */,
 				25B42C6219865EC400B65E83 /* DPHostMediaStreamRecording */,
-				97FE1A1C192B5ACD00808FA5 /* DPHostNetworkServiceDiscoveryProfile.h */,
-				97FE1A1D192B5ACD00808FA5 /* DPHostNetworkServiceDiscoveryProfile.m */,
+				97FE1A1C192B5ACD00808FA5 /* DPHostServiceDiscoveryProfile.h */,
+				97FE1A1D192B5ACD00808FA5 /* DPHostServiceDiscoveryProfile.m */,
 				25FF1DB5196A9B8000EA7F72 /* DPHostNotificationProfile.h */,
 				25FF1DB6196A9B8000EA7F72 /* DPHostNotificationProfile.m */,
 				252F870119736DEB00142BAE /* DPHostPhoneProfile.h */,
@@ -315,6 +338,40 @@
 				25DF80D8196CE622003F6FF3 /* DPHostVibrationProfile.m */,
 			);
 			path = profile;
+			sourceTree = "<group>";
+		};
+		AB0B13221A80A07900D655D5 /* DPHostFileDescriptor */ = {
+			isa = PBXGroup;
+			children = (
+				AB0B13231A80A12300D655D5 /* DPHostFileDescriptorContext.h */,
+				AB0B13241A80A12300D655D5 /* DPHostFileDescriptorContext.m */,
+				AB0B13251A80A12300D655D5 /* DPHostFileDescriptorProfile.h */,
+				AB0B13261A80A12300D655D5 /* DPHostFileDescriptorProfile.m */,
+			);
+			path = DPHostFileDescriptor;
+			sourceTree = "<group>";
+		};
+		D6384EAA1A7625CF00384167 /* DPHostCanvas */ = {
+			isa = PBXGroup;
+			children = (
+				D6384EAB1A7625CF00384167 /* DPHostCanvasUIViewController.h */,
+				D6384EAC1A7625CF00384167 /* DPHostCanvasUIViewController.m */,
+				D69997431A7E210D00EF934F /* DPHostCanvasView.h */,
+				D69997441A7E210D00EF934F /* DPHostCanvasView.m */,
+				D69997461A7F1AD800EF934F /* DPHostCanvasDrawObject.h */,
+				D69997471A7F1AD800EF934F /* DPHostCanvasDrawObject.m */,
+				D69997491A7F264900EF934F /* DPHostCanvasDrawImage.h */,
+				D699974A1A7F264900EF934F /* DPHostCanvasDrawImage.m */,
+			);
+			path = DPHostCanvas;
+			sourceTree = "<group>";
+		};
+		D6384EAE1A76262B00384167 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				D6384EB01A762B2E00384167 /* dConnectDeviceHost.storyboard */,
+			);
+			name = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -407,6 +464,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D6384EB11A762B2E00384167 /* dConnectDeviceHost.storyboard in Resources */,
 				25DAFD1E196A61E50002734B /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -434,7 +492,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Environment Variables\nFRAMEWORK_NAME=${PROJECT_NAME}\nFRAMEWORK_VERSION=A\nFRAMEWORK_VERSION_NUMBER=1.0\nCONFIGURATION=\"Release\"\nFRAMEWORK_BUILD_PATH=\"${SRCROOT}/build/${CONFIGURATION}-framework\"\nFRAMEWORK_DIR=\"${FRAMEWORK_BUILD_PATH}/${FRAMEWORK_NAME}.framework\"\nSTATICLIB_BUILD_PATH=\"${SRCROOT}/build/${CONFIGURATION}-universal\"\n\n# Clean directories\nrm -rf \"${FRAMEWORK_BUILD_PATH}\"\n\n# Build simulator and device binaries.\n# A target to build a static library *must* have the name ${PROJECT_NAME}.\nxcodebuild -project ${PROJECT_NAME}.xcodeproj -sdk iphonesimulator -target ${PROJECT_NAME} -configuration ${CONFIGURATION} clean build\nxcodebuild -project ${PROJECT_NAME}.xcodeproj -sdk iphoneos -target ${PROJECT_NAME} -configuration ${CONFIGURATION} clean build\n# A target to build a bundle *must* have the name ${PROJECT_NAME}_resources. This target is optional.\nxcodebuild -project ${PROJECT_NAME}.xcodeproj -sdk iphonesimulator -target ${PROJECT_NAME}_resources -configuration ${CONFIGURATION} clean build || true\nxcodebuild -project ${PROJECT_NAME}.xcodeproj -sdk iphoneos -target ${PROJECT_NAME}_resources -configuration ${CONFIGURATION} clean build || true\n\n# create directories.\nmkdir -p ${FRAMEWORK_DIR}/Versions/${FRAMEWORK_VERSION}/Headers\n#mkdir -p ${FRAMEWORK_DIR}/Versions/${FRAMEWORK_VERSION}/Resources\nmkdir -p ${STATICLIB_BUILD_PATH}\n# create symlinks\ncd ${FRAMEWORK_DIR}\nln -s ../Versions/${FRAMEWORK_VERSION} Versions/Current\nln -s Versions/Current/Headers Headers\n#ln -s Versions/Current/Resources Resources\nln -s Versions/Current/${FRAMEWORK_NAME} ${FRAMEWORK_NAME}\ncd ${SRCROOT}\n\n# create the universal library, and strip internal symbols from it\nlipo ${SRCROOT}/build/${CONFIGURATION}-iphoneos/lib${FRAMEWORK_NAME}.a ${SRCROOT}/build/${CONFIGURATION}-iphonesimulator/lib${FRAMEWORK_NAME}.a -create -output \"${STATICLIB_BUILD_PATH}/lib${FRAMEWORK_NAME}.a\"\n#strip -x \"${STATICLIB_BUILD_PATH}/lib${FRAMEWORK_NAME}.a\"\ncp \"${STATICLIB_BUILD_PATH}/lib${FRAMEWORK_NAME}.a\" \"${FRAMEWORK_DIR}/Versions/Current/${FRAMEWORK_NAME}\"\n\n# copy files\ncp -r ${SRCROOT}/${PROJECT_NAME}/Headers/ ${FRAMEWORK_DIR}/Headers/";
+			shellScript = "# Environment Variables\nFRAMEWORK_NAME=${PROJECT_NAME}\nFRAMEWORK_VERSION=A\nFRAMEWORK_VERSION_NUMBER=1.0\nCONFIGURATION=\"Release\"\nFRAMEWORK_BUILD_PATH=\"${SRCROOT}/build/${CONFIGURATION}-framework\"\nFRAMEWORK_DIR=\"${FRAMEWORK_BUILD_PATH}/${FRAMEWORK_NAME}.framework\"\nSTATICLIB_BUILD_PATH=\"${SRCROOT}/build/${CONFIGURATION}-universal\"\n\n# Clean directories\nrm -rf \"${FRAMEWORK_BUILD_PATH}\"\n\n# Build simulator and device binaries.\n# A target to build a static library *must* have the name ${PROJECT_NAME}.\nxcodebuild -project ${PROJECT_NAME}.xcodeproj -sdk iphonesimulator -target ${PROJECT_NAME} -configuration ${CONFIGURATION} clean build\nxcodebuild -project ${PROJECT_NAME}.xcodeproj -sdk iphoneos -target ${PROJECT_NAME} -configuration ${CONFIGURATION} clean build\n# A target to build a bundle *must* have the name ${PROJECT_NAME}_resources. This target is optional.\nxcodebuild -project ${PROJECT_NAME}.xcodeproj -sdk iphonesimulator -target ${PROJECT_NAME}_resources -configuration ${CONFIGURATION} clean build || true\nxcodebuild -project ${PROJECT_NAME}.xcodeproj -sdk iphoneos -target ${PROJECT_NAME}_resources -configuration ${CONFIGURATION} clean build || true\n\n# create directories.\nmkdir -p ${FRAMEWORK_DIR}/Versions/${FRAMEWORK_VERSION}/Headers\n#mkdir -p ${FRAMEWORK_DIR}/Versions/${FRAMEWORK_VERSION}/Resources\nmkdir -p ${STATICLIB_BUILD_PATH}\n# create symlinks\ncd ${FRAMEWORK_DIR}\nln -s ../Versions/${FRAMEWORK_VERSION} Versions/Current\nln -s Versions/Current/Headers Headers\n#ln -s Versions/Current/Resources Resources\nln -s Versions/Current/${FRAMEWORK_NAME} ${FRAMEWORK_NAME}\ncd ${SRCROOT}\n\n# create the universal library, and strip internal symbols from it\nlipo ${SRCROOT}/build/${CONFIGURATION}-iphoneos/lib${FRAMEWORK_NAME}.a ${SRCROOT}/build/${CONFIGURATION}-iphonesimulator/lib${FRAMEWORK_NAME}.a -create -output \"${STATICLIB_BUILD_PATH}/lib${FRAMEWORK_NAME}.a\"\n#strip -x \"${STATICLIB_BUILD_PATH}/lib${FRAMEWORK_NAME}.a\"\ncp \"${STATICLIB_BUILD_PATH}/lib${FRAMEWORK_NAME}.a\" \"${FRAMEWORK_DIR}/Versions/Current/${FRAMEWORK_NAME}\"\n\n# copy files\ncp -r ${SRCROOT}/${PROJECT_NAME}/Headers/ ${FRAMEWORK_DIR}/Headers/\n\n# copy binary to bin folder\ncd ${SRCROOT}\nrm -rf bin\nmkdir bin\ncp -r ${FRAMEWORK_DIR} bin\ncp -r build/${CONFIGURATION}-resources/${PROJECT_NAME}_resources.bundle bin";
 		};
 		97FE1A18192B4C6800808FA5 /* Prepare Framework */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -465,8 +523,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				2515192519A86FC800430980 /* DPHostMediaPlayerProfile.m in Sources */,
-				252F870619739EBB00142BAE /* DPHostFileDescriptorProfile.m in Sources */,
 				97FE19F2192B2FB400808FA5 /* DPHostDevicePlugin.m in Sources */,
+				D6384EA91A7625BD00384167 /* DPHostCanvasProfile.m in Sources */,
+				D69997451A7E210D00EF934F /* DPHostCanvasView.m in Sources */,
+				D6384EAD1A7625CF00384167 /* DPHostCanvasUIViewController.m in Sources */,
 				252F870319736DEB00142BAE /* DPHostPhoneProfile.m in Sources */,
 				25FF1DB7196A9B8000EA7F72 /* DPHostNotificationProfile.m in Sources */,
 				25F0BC41199343600095C333 /* DPHostMediaContext.m in Sources */,
@@ -476,13 +536,17 @@
 				25B42C6519865F1000B65E83 /* DPHostRecorderContext.m in Sources */,
 				25FF1DB4196A89AD00EA7F72 /* DPHostUtils.m in Sources */,
 				25FF0C0E196FBECF00E8C7C3 /* DPHostProximityProfile.m in Sources */,
-				97FE1A1E192B5ACD00808FA5 /* DPHostNetworkServiceDiscoveryProfile.m in Sources */,
+				97FE1A1E192B5ACD00808FA5 /* DPHostServiceDiscoveryProfile.m in Sources */,
 				25DF80D9196CE622003F6FF3 /* DPHostVibrationProfile.m in Sources */,
+				D699974B1A7F264900EF934F /* DPHostCanvasDrawImage.m in Sources */,
 				257FC23719BAAF5200358536 /* DPHostReachability.m in Sources */,
+				D69997481A7F1AD800EF934F /* DPHostCanvasDrawObject.m in Sources */,
 				2585BB941980D89F00AAE43C /* DPHostSettingsProfile.m in Sources */,
 				ABDA3C6D1A0C58F3001F30A0 /* DPHostConnectProfile.m in Sources */,
 				25C710EB1981E578004C6484 /* DPHostMediaStreamRecordingProfile.m in Sources */,
+				AB0B13271A80A12300D655D5 /* DPHostFileDescriptorContext.m in Sources */,
 				97FE1A21192B6DA400808FA5 /* DPHostSystemProfile.m in Sources */,
+				AB0B13281A80A12300D655D5 /* DPHostFileDescriptorProfile.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

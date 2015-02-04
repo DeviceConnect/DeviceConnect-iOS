@@ -23,15 +23,17 @@
 /* Begin PBXBuildFile section */
 		253C9EE819C83C700013DCE1 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF65A9BD19B7183200DE9EF8 /* CoreFoundation.framework */; };
 		253C9EEE19C83C700013DCE1 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 253C9EEC19C83C700013DCE1 /* InfoPlist.strings */; };
-		253C9EF319C83CBF0013DCE1 /* img01.png in Resources */ = {isa = PBXBuildFile; fileRef = FF94396319C57441006B4A33 /* img01.png */; };
-		253C9EF419C83CBF0013DCE1 /* img02.png in Resources */ = {isa = PBXBuildFile; fileRef = FF94396419C57441006B4A33 /* img02.png */; };
-		253C9EF519C83CBF0013DCE1 /* img03.png in Resources */ = {isa = PBXBuildFile; fileRef = FF94396519C57441006B4A33 /* img03.png */; };
-		253C9EF619C83CBF0013DCE1 /* icon-cast-connected.png in Resources */ = {isa = PBXBuildFile; fileRef = FF65A9EF19B8056700DE9EF8 /* icon-cast-connected.png */; };
-		253C9EF719C83CBF0013DCE1 /* icon-cast-identified.png in Resources */ = {isa = PBXBuildFile; fileRef = FF65A9F019B8056700DE9EF8 /* icon-cast-identified.png */; };
 		6617D0EF19CBEAC600BC1E3C /* DPChromecastSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6617D0EE19CBEAC600BC1E3C /* DPChromecastSettingViewController.m */; };
 		6617D0F619CBF6CB00BC1E3C /* DPChromecastGuideViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6617D0F519CBF6CB00BC1E3C /* DPChromecastGuideViewController.m */; };
-		665022D819CD51DE00156FBC /* Chromecast_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 665022D719CD51DE00156FBC /* Chromecast_iPad.storyboard */; };
 		78D73A0C1A0C801F00D35476 /* DPChromecastManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 78D73A0B1A0C801F00D35476 /* DPChromecastManager.m */; };
+		AB0A87921A8090E40016FF77 /* icon-cast-connected.png in Resources */ = {isa = PBXBuildFile; fileRef = AB0A878B1A8090E40016FF77 /* icon-cast-connected.png */; };
+		AB0A87931A8090E40016FF77 /* icon-cast-identified.png in Resources */ = {isa = PBXBuildFile; fileRef = AB0A878C1A8090E40016FF77 /* icon-cast-identified.png */; };
+		AB0A87941A8090E40016FF77 /* img01.png in Resources */ = {isa = PBXBuildFile; fileRef = AB0A878D1A8090E40016FF77 /* img01.png */; };
+		AB0A87951A8090E40016FF77 /* img02.png in Resources */ = {isa = PBXBuildFile; fileRef = AB0A878E1A8090E40016FF77 /* img02.png */; };
+		AB0A87961A8090E40016FF77 /* img03.png in Resources */ = {isa = PBXBuildFile; fileRef = AB0A878F1A8090E40016FF77 /* img03.png */; };
+		AB0A87971A8090E40016FF77 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = AB0A87901A8090E40016FF77 /* Info.plist */; };
+		AB0A87981A8091090016FF77 /* Chromecast_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AB0A879A1A8091090016FF77 /* Chromecast_iPad.storyboard */; };
+		AB0A879D1A8091450016FF77 /* Chromecast_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AB0A879B1A8091450016FF77 /* Chromecast_iPhone.storyboard */; };
 		FF4ABE6119D0555A009BDFD9 /* DConnectSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF4ABE6019D0555A009BDFD9 /* DConnectSDK.framework */; };
 		FF65A97519B709B500DE9EF8 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF65A97419B709B500DE9EF8 /* Foundation.framework */; };
 		FF65A9A319B70A7700DE9EF8 /* DPChromecastSystemProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = FF65A9A219B70A7700DE9EF8 /* DPChromecastSystemProfile.m */; };
@@ -42,15 +44,7 @@
 		FF94393519C0613E006B4A33 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF94393419C0613E006B4A33 /* MediaPlayer.framework */; };
 		FF94393719C06152006B4A33 /* MediaAccessibility.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF94393619C06152006B4A33 /* MediaAccessibility.framework */; };
 		FF94393919C06161006B4A33 /* MediaToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF94393819C06161006B4A33 /* MediaToolbox.framework */; };
-		FF94396219C28169006B4A33 /* DPChromecastNetworkServiceDiscoveryProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = FF94396119C28169006B4A33 /* DPChromecastNetworkServiceDiscoveryProfile.m */; };
-		FF94397E19C57C82006B4A33 /* img01.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = FF94396319C57441006B4A33 /* img01.png */; };
-		FF94397F19C57C82006B4A33 /* img02.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = FF94396419C57441006B4A33 /* img02.png */; };
-		FF94398019C57C82006B4A33 /* img03.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = FF94396519C57441006B4A33 /* img03.png */; };
-		FF94398119C57C82006B4A33 /* icon-cast-connected.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = FF65A9EF19B8056700DE9EF8 /* icon-cast-connected.png */; };
-		FF94398219C57C82006B4A33 /* icon-cast-identified.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = FF65A9F019B8056700DE9EF8 /* icon-cast-identified.png */; };
-		FF94398419C57C82006B4A33 /* Info.plist in CopyFiles */ = {isa = PBXBuildFile; fileRef = FF65A9B319B717C200DE9EF8 /* Info.plist */; };
-		FFEF05CE19CA6BB200966390 /* Chromecast_iPhone.storyboard in CopyFiles */ = {isa = PBXBuildFile; fileRef = FFEF05D119CA6BB200966390 /* Chromecast_iPhone.storyboard */; };
-		FFEF05D219CA86A500966390 /* Chromecast_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FFEF05D119CA6BB200966390 /* Chromecast_iPhone.storyboard */; };
+		FF94396219C28169006B4A33 /* DPChromecastServiceDiscoveryProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = FF94396119C28169006B4A33 /* DPChromecastServiceDiscoveryProfile.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -60,13 +54,6 @@
 			dstPath = "include/$(PRODUCT_NAME)";
 			dstSubfolderSpec = 16;
 			files = (
-				FF94397E19C57C82006B4A33 /* img01.png in CopyFiles */,
-				FF94397F19C57C82006B4A33 /* img02.png in CopyFiles */,
-				FF94398019C57C82006B4A33 /* img03.png in CopyFiles */,
-				FF94398119C57C82006B4A33 /* icon-cast-connected.png in CopyFiles */,
-				FF94398219C57C82006B4A33 /* icon-cast-identified.png in CopyFiles */,
-				FFEF05CE19CA6BB200966390 /* Chromecast_iPhone.storyboard in CopyFiles */,
-				FF94398419C57C82006B4A33 /* Info.plist in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -81,9 +68,16 @@
 		6617D0EE19CBEAC600BC1E3C /* DPChromecastSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPChromecastSettingViewController.m; sourceTree = "<group>"; };
 		6617D0F419CBF6CB00BC1E3C /* DPChromecastGuideViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPChromecastGuideViewController.h; sourceTree = "<group>"; };
 		6617D0F519CBF6CB00BC1E3C /* DPChromecastGuideViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPChromecastGuideViewController.m; sourceTree = "<group>"; };
-		665022D719CD51DE00156FBC /* Chromecast_iPad.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Chromecast_iPad.storyboard; sourceTree = "<group>"; };
 		78D73A0A1A0C801F00D35476 /* DPChromecastManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPChromecastManager.h; sourceTree = "<group>"; };
 		78D73A0B1A0C801F00D35476 /* DPChromecastManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPChromecastManager.m; sourceTree = "<group>"; };
+		AB0A878B1A8090E40016FF77 /* icon-cast-connected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-cast-connected.png"; sourceTree = "<group>"; };
+		AB0A878C1A8090E40016FF77 /* icon-cast-identified.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-cast-identified.png"; sourceTree = "<group>"; };
+		AB0A878D1A8090E40016FF77 /* img01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = img01.png; sourceTree = "<group>"; };
+		AB0A878E1A8090E40016FF77 /* img02.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = img02.png; sourceTree = "<group>"; };
+		AB0A878F1A8090E40016FF77 /* img03.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = img03.png; sourceTree = "<group>"; };
+		AB0A87901A8090E40016FF77 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		AB0A87991A8091090016FF77 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/Chromecast_iPad.storyboard; sourceTree = "<group>"; };
+		AB0A879C1A8091450016FF77 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/Chromecast_iPhone.storyboard; sourceTree = "<group>"; };
 		FF4ABE6019D0555A009BDFD9 /* DConnectSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DConnectSDK.framework; path = "../../dConnectSDK/dConnectSDKForIOS/build/Release-framework/DConnectSDK.framework"; sourceTree = "<group>"; };
 		FF65A97119B709B500DE9EF8 /* libdConnectChromecast.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libdConnectChromecast.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF65A97419B709B500DE9EF8 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -93,13 +87,10 @@
 		FF65A99019B709B500DE9EF8 /* dConnectChromecastTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = dConnectChromecastTests.m; sourceTree = "<group>"; };
 		FF65A9A119B70A7700DE9EF8 /* DPChromecastSystemProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPChromecastSystemProfile.h; sourceTree = "<group>"; };
 		FF65A9A219B70A7700DE9EF8 /* DPChromecastSystemProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPChromecastSystemProfile.m; sourceTree = "<group>"; };
-		FF65A9B319B717C200DE9EF8 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FF65A9BD19B7183200DE9EF8 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		FF65A9DD19B7190B00DE9EF8 /* DPChromecastDevicePlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPChromecastDevicePlugin.h; sourceTree = "<group>"; };
 		FF65A9DE19B7190B00DE9EF8 /* DPChromecastDevicePlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPChromecastDevicePlugin.m; sourceTree = "<group>"; };
 		FF65A9EB19B8025800DE9EF8 /* GoogleCast.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleCast.framework; path = "GoogleCastFramework-2.3.0-Release/GoogleCast.framework"; sourceTree = "<group>"; };
-		FF65A9EF19B8056700DE9EF8 /* icon-cast-connected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-cast-connected.png"; sourceTree = "<group>"; };
-		FF65A9F019B8056700DE9EF8 /* icon-cast-identified.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-cast-identified.png"; sourceTree = "<group>"; };
 		FF65AA1919BD4F4F00DE9EF8 /* DPChromecastNotificationProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPChromecastNotificationProfile.h; sourceTree = "<group>"; };
 		FF65AA1A19BD4F4F00DE9EF8 /* DPChromecastNotificationProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPChromecastNotificationProfile.m; sourceTree = "<group>"; };
 		FF94393119C05976006B4A33 /* DPChromecastMediaPlayerProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPChromecastMediaPlayerProfile.h; sourceTree = "<group>"; };
@@ -107,15 +98,11 @@
 		FF94393419C0613E006B4A33 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 		FF94393619C06152006B4A33 /* MediaAccessibility.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaAccessibility.framework; path = System/Library/Frameworks/MediaAccessibility.framework; sourceTree = SDKROOT; };
 		FF94393819C06161006B4A33 /* MediaToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaToolbox.framework; path = System/Library/Frameworks/MediaToolbox.framework; sourceTree = SDKROOT; };
-		FF94396019C28169006B4A33 /* DPChromecastNetworkServiceDiscoveryProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPChromecastNetworkServiceDiscoveryProfile.h; sourceTree = "<group>"; };
-		FF94396119C28169006B4A33 /* DPChromecastNetworkServiceDiscoveryProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPChromecastNetworkServiceDiscoveryProfile.m; sourceTree = "<group>"; };
-		FF94396319C57441006B4A33 /* img01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = img01.png; sourceTree = "<group>"; };
-		FF94396419C57441006B4A33 /* img02.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = img02.png; sourceTree = "<group>"; };
-		FF94396519C57441006B4A33 /* img03.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = img03.png; sourceTree = "<group>"; };
+		FF94396019C28169006B4A33 /* DPChromecastServiceDiscoveryProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPChromecastServiceDiscoveryProfile.h; sourceTree = "<group>"; };
+		FF94396119C28169006B4A33 /* DPChromecastServiceDiscoveryProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPChromecastServiceDiscoveryProfile.m; sourceTree = "<group>"; };
 		FF94397619C57AEE006B4A33 /* dConnectChromecast_iPhone.storyboard-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "dConnectChromecast_iPhone.storyboard-Info.plist"; sourceTree = "<group>"; };
 		FF94397819C57AEE006B4A33 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		FF94397A19C57AEE006B4A33 /* dConnectChromecast_iPhone.storyboard-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "dConnectChromecast_iPhone.storyboard-Prefix.pch"; sourceTree = "<group>"; };
-		FFEF05D019CA6BB200966390 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/Chromecast_iPhone.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -175,8 +162,8 @@
 		6617D0F719CBFD3B00BC1E3C /* Profile */ = {
 			isa = PBXGroup;
 			children = (
-				FF94396019C28169006B4A33 /* DPChromecastNetworkServiceDiscoveryProfile.h */,
-				FF94396119C28169006B4A33 /* DPChromecastNetworkServiceDiscoveryProfile.m */,
+				FF94396019C28169006B4A33 /* DPChromecastServiceDiscoveryProfile.h */,
+				FF94396119C28169006B4A33 /* DPChromecastServiceDiscoveryProfile.m */,
 				FF65A9A119B70A7700DE9EF8 /* DPChromecastSystemProfile.h */,
 				FF65A9A219B70A7700DE9EF8 /* DPChromecastSystemProfile.m */,
 				FF65AA1919BD4F4F00DE9EF8 /* DPChromecastNotificationProfile.h */,
@@ -282,14 +269,14 @@
 		FF65A99C19B709E700DE9EF8 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				FF94396319C57441006B4A33 /* img01.png */,
-				FF94396419C57441006B4A33 /* img02.png */,
-				FF94396519C57441006B4A33 /* img03.png */,
-				FF65A9EF19B8056700DE9EF8 /* icon-cast-connected.png */,
-				FF65A9F019B8056700DE9EF8 /* icon-cast-identified.png */,
-				FFEF05D119CA6BB200966390 /* Chromecast_iPhone.storyboard */,
-				665022D719CD51DE00156FBC /* Chromecast_iPad.storyboard */,
-				FF65A9B319B717C200DE9EF8 /* Info.plist */,
+				AB0A879B1A8091450016FF77 /* Chromecast_iPhone.storyboard */,
+				AB0A879A1A8091090016FF77 /* Chromecast_iPad.storyboard */,
+				AB0A878B1A8090E40016FF77 /* icon-cast-connected.png */,
+				AB0A878C1A8090E40016FF77 /* icon-cast-identified.png */,
+				AB0A878D1A8090E40016FF77 /* img01.png */,
+				AB0A878E1A8090E40016FF77 /* img02.png */,
+				AB0A878F1A8090E40016FF77 /* img03.png */,
+				AB0A87901A8090E40016FF77 /* Info.plist */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -382,14 +369,15 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FFEF05D219CA86A500966390 /* Chromecast_iPhone.storyboard in Resources */,
-				253C9EF319C83CBF0013DCE1 /* img01.png in Resources */,
-				253C9EF419C83CBF0013DCE1 /* img02.png in Resources */,
-				253C9EF519C83CBF0013DCE1 /* img03.png in Resources */,
-				253C9EF619C83CBF0013DCE1 /* icon-cast-connected.png in Resources */,
-				253C9EF719C83CBF0013DCE1 /* icon-cast-identified.png in Resources */,
-				665022D819CD51DE00156FBC /* Chromecast_iPad.storyboard in Resources */,
+				AB0A87971A8090E40016FF77 /* Info.plist in Resources */,
+				AB0A87921A8090E40016FF77 /* icon-cast-connected.png in Resources */,
 				253C9EEE19C83C700013DCE1 /* InfoPlist.strings in Resources */,
+				AB0A879D1A8091450016FF77 /* Chromecast_iPhone.storyboard in Resources */,
+				AB0A87931A8090E40016FF77 /* icon-cast-identified.png in Resources */,
+				AB0A87961A8090E40016FF77 /* img03.png in Resources */,
+				AB0A87941A8090E40016FF77 /* img01.png in Resources */,
+				AB0A87981A8091090016FF77 /* Chromecast_iPad.storyboard in Resources */,
+				AB0A87951A8090E40016FF77 /* img02.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -407,7 +395,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Environment Variables\nFRAMEWORK_NAME=${PROJECT_NAME}\nFRAMEWORK_VERSION=A\nFRAMEWORK_VERSION_NUMBER=1.0\nCONFIGURATION=\"Release\"\nFRAMEWORK_BUILD_PATH=\"${SRCROOT}/build/${CONFIGURATION}-framework\"\nFRAMEWORK_DIR=\"${FRAMEWORK_BUILD_PATH}/${FRAMEWORK_NAME}.framework\"\nSTATICLIB_BUILD_PATH=\"${SRCROOT}/build/${CONFIGURATION}-universal\"\n\n# Clean directories\nrm -rf \"${FRAMEWORK_BUILD_PATH}\"\n\n# Build simulator and device binaries.\n# A target to build a static library *must* have the name ${PROJECT_NAME}.\nxcodebuild -project ${PROJECT_NAME}.xcodeproj -sdk iphonesimulator -target ${PROJECT_NAME} -configuration ${CONFIGURATION} clean build\nxcodebuild -project ${PROJECT_NAME}.xcodeproj -sdk iphoneos -target ${PROJECT_NAME} -configuration ${CONFIGURATION} clean build\n# A target to build a bundle *must* have the name ${PROJECT_NAME}_resources. This target is optional.\nxcodebuild -project ${PROJECT_NAME}.xcodeproj -sdk iphonesimulator -target ${PROJECT_NAME}_resources -configuration ${CONFIGURATION} clean build || true\nxcodebuild -project ${PROJECT_NAME}.xcodeproj -sdk iphoneos -target ${PROJECT_NAME}_resources -configuration ${CONFIGURATION} clean build || true\n\n# create directories.\nmkdir -p ${FRAMEWORK_DIR}/Versions/${FRAMEWORK_VERSION}/Headers\n#mkdir -p ${FRAMEWORK_DIR}/Versions/${FRAMEWORK_VERSION}/Resources\nmkdir -p ${STATICLIB_BUILD_PATH}\n# create symlinks\ncd ${FRAMEWORK_DIR}\nln -s ../Versions/${FRAMEWORK_VERSION} Versions/Current\nln -s Versions/Current/Headers Headers\n#ln -s Versions/Current/Resources Resources\nln -s Versions/Current/${FRAMEWORK_NAME} ${FRAMEWORK_NAME}\ncd ${SRCROOT}\n\n# create the universal library, and strip internal symbols from it\nlipo ${SRCROOT}/build/${CONFIGURATION}-iphoneos/lib${FRAMEWORK_NAME}.a ${SRCROOT}/build/${CONFIGURATION}-iphonesimulator/lib${FRAMEWORK_NAME}.a -create -output \"${STATICLIB_BUILD_PATH}/lib${FRAMEWORK_NAME}.a\"\n#strip -x \"${STATICLIB_BUILD_PATH}/lib${FRAMEWORK_NAME}.a\"\ncp \"${STATICLIB_BUILD_PATH}/lib${FRAMEWORK_NAME}.a\" \"${FRAMEWORK_DIR}/Versions/Current/${FRAMEWORK_NAME}\"\n\n# copy files\ncp -r ${SRCROOT}/${PROJECT_NAME}/Headers/ ${FRAMEWORK_DIR}/Headers/";
+			shellScript = "# Environment Variables\nFRAMEWORK_NAME=${PROJECT_NAME}\nFRAMEWORK_VERSION=A\nFRAMEWORK_VERSION_NUMBER=1.0\nCONFIGURATION=\"Release\"\nFRAMEWORK_BUILD_PATH=\"${SRCROOT}/build/${CONFIGURATION}-framework\"\nFRAMEWORK_DIR=\"${FRAMEWORK_BUILD_PATH}/${FRAMEWORK_NAME}.framework\"\nSTATICLIB_BUILD_PATH=\"${SRCROOT}/build/${CONFIGURATION}-universal\"\n\n# Clean directories\nrm -rf \"${FRAMEWORK_BUILD_PATH}\"\n\n# Build simulator and device binaries.\n# A target to build a static library *must* have the name ${PROJECT_NAME}.\nxcodebuild -project ${PROJECT_NAME}.xcodeproj -sdk iphonesimulator -target ${PROJECT_NAME} -configuration ${CONFIGURATION} clean build\nxcodebuild -project ${PROJECT_NAME}.xcodeproj -sdk iphoneos -target ${PROJECT_NAME} -configuration ${CONFIGURATION} clean build\n# A target to build a bundle *must* have the name ${PROJECT_NAME}_resources. This target is optional.\nxcodebuild -project ${PROJECT_NAME}.xcodeproj -sdk iphonesimulator -target ${PROJECT_NAME}_resources -configuration ${CONFIGURATION} clean build || true\nxcodebuild -project ${PROJECT_NAME}.xcodeproj -sdk iphoneos -target ${PROJECT_NAME}_resources -configuration ${CONFIGURATION} clean build || true\n\n# create directories.\nmkdir -p ${FRAMEWORK_DIR}/Versions/${FRAMEWORK_VERSION}/Headers\n#mkdir -p ${FRAMEWORK_DIR}/Versions/${FRAMEWORK_VERSION}/Resources\nmkdir -p ${STATICLIB_BUILD_PATH}\n# create symlinks\ncd ${FRAMEWORK_DIR}\nln -s ../Versions/${FRAMEWORK_VERSION} Versions/Current\nln -s Versions/Current/Headers Headers\n#ln -s Versions/Current/Resources Resources\nln -s Versions/Current/${FRAMEWORK_NAME} ${FRAMEWORK_NAME}\ncd ${SRCROOT}\n\n# create the universal library, and strip internal symbols from it\nlipo ${SRCROOT}/build/${CONFIGURATION}-iphoneos/lib${FRAMEWORK_NAME}.a ${SRCROOT}/build/${CONFIGURATION}-iphonesimulator/lib${FRAMEWORK_NAME}.a -create -output \"${STATICLIB_BUILD_PATH}/lib${FRAMEWORK_NAME}.a\"\n#strip -x \"${STATICLIB_BUILD_PATH}/lib${FRAMEWORK_NAME}.a\"\ncp \"${STATICLIB_BUILD_PATH}/lib${FRAMEWORK_NAME}.a\" \"${FRAMEWORK_DIR}/Versions/Current/${FRAMEWORK_NAME}\"\n\n# copy files\ncp -r ${SRCROOT}/${PROJECT_NAME}/Headers/ ${FRAMEWORK_DIR}/Headers/\n\n# copy binary to bin folder\ncd ${SRCROOT}\nrm -rf bin\nmkdir bin\ncp -r ${FRAMEWORK_DIR} bin\ncp -r build/${CONFIGURATION}-resources/${PROJECT_NAME}_resources.bundle bin";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -427,7 +415,7 @@
 				6617D0F619CBF6CB00BC1E3C /* DPChromecastGuideViewController.m in Sources */,
 				FF94393319C05976006B4A33 /* DPChromecastMediaPlayerProfile.m in Sources */,
 				FF65A9DF19B7190B00DE9EF8 /* DPChromecastDevicePlugin.m in Sources */,
-				FF94396219C28169006B4A33 /* DPChromecastNetworkServiceDiscoveryProfile.m in Sources */,
+				FF94396219C28169006B4A33 /* DPChromecastServiceDiscoveryProfile.m in Sources */,
 				FF65AA1B19BD4F4F00DE9EF8 /* DPChromecastNotificationProfile.m in Sources */,
 				6617D0EF19CBEAC600BC1E3C /* DPChromecastSettingViewController.m in Sources */,
 				FF65A9A319B70A7700DE9EF8 /* DPChromecastSystemProfile.m in Sources */,
@@ -445,6 +433,22 @@
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
+		AB0A879A1A8091090016FF77 /* Chromecast_iPad.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				AB0A87991A8091090016FF77 /* en */,
+			);
+			name = Chromecast_iPad.storyboard;
+			sourceTree = "<group>";
+		};
+		AB0A879B1A8091450016FF77 /* Chromecast_iPhone.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				AB0A879C1A8091450016FF77 /* en */,
+			);
+			name = Chromecast_iPhone.storyboard;
+			sourceTree = "<group>";
+		};
 		FF65A98D19B709B500DE9EF8 /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -459,14 +463,6 @@
 				FF94397819C57AEE006B4A33 /* en */,
 			);
 			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-		FFEF05D119CA6BB200966390 /* Chromecast_iPhone.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				FFEF05D019CA6BB200966390 /* en */,
-			);
-			name = Chromecast_iPhone.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

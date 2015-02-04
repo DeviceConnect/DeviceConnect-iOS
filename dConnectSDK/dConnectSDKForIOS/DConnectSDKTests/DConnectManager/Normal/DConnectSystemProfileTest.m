@@ -22,7 +22,7 @@
     [builder setPort:DConnectPort];
     [builder setProfile:DConnectSystemProfileName];
     [builder setAttribute:DConnectSystemProfileAttrDevice];
-    [builder addParameter:self.deviceId forKey:DConnectMessageDeviceId];
+    [builder addParameter:self.serviceId forKey:DConnectMessageServiceId];
     
     NSString *uri = [builder build];
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:uri]];

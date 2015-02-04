@@ -74,14 +74,14 @@ extern NSString *const LOCALOAUTH_AUTHORIZATION_CODE;
     (4)アプリまたはデバイスプラグインから受け取ったsignatureが、LocalOAuthで生成したsignatureと一致するかチェックする.
     @param[in] クライアントID
     @param[in] グラントタイプ
-    @param[in] デバイスID
+    @param[in] サービスID
     @param[in] スコープ
     @param[in] signature
     @return YES:一致 / NO:一致しない
  */
 - (BOOL) checkSignatureWithClientId: (NSString *)clientId
                           grantType: (NSString *)grantType
-                           deviceId: (NSString *)deviceId
+                           serviceId: (NSString *)serviceId
                              scopes: (NSArray *)scopes
                           signature: (NSString *)signature;
 
@@ -146,14 +146,14 @@ extern NSString *const LOCALOAUTH_AUTHORIZATION_CODE;
 
     @param[in] clientId クライアントID
     @param[in] grantType グラントタイプ
-    @param[in] deviceId デバイスID
+    @param[in] serviceId サービスID
     @param[in] scopes スコープ
     @param[in] clientSecret クライアントシークレット
     @return not null: 作成したSignature / null: nullは返さない。
  */
 - (NSString *) createSignatureWithClientId: (NSString *)clientId
                                  grantType: (NSString *)grantType
-                                  deviceId: (NSString *)deviceId
+                                  serviceId: (NSString *)serviceId
                                     scopes: (NSArray *)scopes
                               clientSecret: (NSString *)clientSecret;
 

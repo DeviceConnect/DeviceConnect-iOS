@@ -20,7 +20,7 @@
 @implementation RESTfulFailDeviceOrientationProfileTest
 
 /*!
- * @brief deviceIdが無い状態でondeviceorientation属性のコールバック登録テストを行う.
+ * @brief serviceIdが無い状態でondeviceorientation属性のコールバック登録テストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: PUT
@@ -31,7 +31,7 @@
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailDeviceOrientationOnDeviceOrientationPutNoDeviceId
+- (void) testHttpFailDeviceOrientationOnDeviceOrientationPutNoServiceId
 {
     NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/deviceorientation/ondeviceorientation"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
@@ -41,20 +41,20 @@
 }
 
 /*!
- * @brief deviceIdが空状態でondeviceorientation属性のコールバック登録テストを行う.
+ * @brief serviceIdが空状態でondeviceorientation属性のコールバック登録テストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /deviceorientation/ondeviceorientation?deviceId=
+ * Path: /deviceorientation/ondeviceorientation?serviceId=
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailDeviceOrientationOnDeviceOrientationPutEmptyDeviceId
+- (void) testHttpFailDeviceOrientationOnDeviceOrientationPutEmptyServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/deviceorientation/ondeviceorientation?deviceId="];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/deviceorientation/ondeviceorientation?serviceId="];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
@@ -62,20 +62,20 @@
 }
 
 /*!
- * @brief 存在しないdeviceIdでondeviceorientation属性のコールバック登録テストを行う.
+ * @brief 存在しないserviceIdでondeviceorientation属性のコールバック登録テストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /deviceorientation/ondeviceorientation?deviceId=123456789
+ * Path: /deviceorientation/ondeviceorientation?serviceId=123456789
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailDeviceOrientationOnDeviceOrientationPutInvalidDeviceId
+- (void) testHttpFailDeviceOrientationOnDeviceOrientationPutInvalidServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/deviceorientation/ondeviceorientation?deviceId=12345678"];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/deviceorientation/ondeviceorientation?serviceId=12345678"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
@@ -87,7 +87,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /deviceorientation/ondeviceorientation?deviceId=123456789
+ * Path: /deviceorientation/ondeviceorientation?serviceId=123456789
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -96,7 +96,7 @@
  */
 - (void) testHttpFailDeviceOrientationOnDeviceOrientationPutNoSessionKey
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/deviceorientation/ondeviceorientation?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/deviceorientation/ondeviceorientation?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
@@ -108,7 +108,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /deviceorientation/ondeviceorientation?deviceId=123456789
+ * Path: /deviceorientation/ondeviceorientation?serviceId=123456789
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -117,7 +117,7 @@
  */
 - (void) testHttpFailDeviceOrientationOnDeviceOrientationPutEmptySessionKey
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/deviceorientation/ondeviceorientation?deviceId=%@&sessionKey=", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/deviceorientation/ondeviceorientation?serviceId=%@&sessionKey=", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
@@ -125,7 +125,7 @@
 }
 
 /*!
- * @brief deviceIdが無い状態でondeviceorientation属性のコールバック解除テストを行う.
+ * @brief serviceIdが無い状態でondeviceorientation属性のコールバック解除テストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
@@ -136,7 +136,7 @@
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailDeviceOrientationOnDeviceOrientationDeleteNoDeviceId
+- (void) testHttpFailDeviceOrientationOnDeviceOrientationDeleteNoServiceId
 {
     NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/deviceorientation/ondeviceorientation"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
@@ -146,20 +146,20 @@
 }
 
 /*!
- * @brief deviceIdが空状態でondeviceorientation属性のコールバック解除テストを行う.
+ * @brief serviceIdが空状態でondeviceorientation属性のコールバック解除テストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /deviceorientation/ondeviceorientation?deviceId=
+ * Path: /deviceorientation/ondeviceorientation?serviceId=
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailDeviceOrientationOnDeviceOrientationDeleteEmptyDeviceId
+- (void) testHttpFailDeviceOrientationOnDeviceOrientationDeleteEmptyServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/deviceorientation/ondeviceorientation?deviceId="];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/deviceorientation/ondeviceorientation?serviceId="];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     
@@ -167,20 +167,20 @@
 }
 
 /*!
- * @brief 存在しないdeviceIdでondeviceorientation属性のコールバック解除テストを行う.
+ * @brief 存在しないserviceIdでondeviceorientation属性のコールバック解除テストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /deviceorientation/ondeviceorientation?deviceId=123456789
+ * Path: /deviceorientation/ondeviceorientation?serviceId=123456789
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailDeviceOrientationOnDeviceOrientationDeleteInvalidDeviceId
+- (void) testHttpFailDeviceOrientationOnDeviceOrientationDeleteInvalidServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/deviceorientation/ondeviceorientation?deviceId=12345678"];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/deviceorientation/ondeviceorientation?serviceId=12345678"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     
@@ -192,7 +192,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /deviceorientation/ondeviceorientation?deviceId=123456789
+ * Path: /deviceorientation/ondeviceorientation?serviceId=123456789
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -201,7 +201,7 @@
  */
 - (void) testHttpFailDeviceOrientationOnDeviceOrientationDeleteNoSessionKey
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/deviceorientation/ondeviceorientation?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/deviceorientation/ondeviceorientation?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     
@@ -213,7 +213,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /deviceorientation/ondeviceorientation?deviceId=123456789&sessionKey=
+ * Path: /deviceorientation/ondeviceorientation?serviceId=123456789&sessionKey=
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -222,7 +222,7 @@
  */
 - (void) testHttpFailDeviceOrientationOnDeviceOrientationDeleteEmptySessionKey
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/deviceorientation/ondeviceorientation?deviceId=%@&sessionKey=", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/deviceorientation/ondeviceorientation?serviceId=%@&sessionKey=", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     
@@ -234,7 +234,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: GET
- * Path: /deviceorientation/ondeviceorientation?deviceId=xxxx&sessionKey=xxxx
+ * Path: /deviceorientation/ondeviceorientation?serviceId=xxxx&sessionKey=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -243,7 +243,7 @@
  */
 - (void) testHttpFailDeviceOrientationOnDeviceOrientationEventInvalidMethodGet
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/deviceorientation/ondeviceorientation?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/deviceorientation/ondeviceorientation?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
     
@@ -255,7 +255,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: POST
- * Path: /deviceorientation/ondeviceorientation?deviceId=xxxx&sessionKey=xxxx
+ * Path: /deviceorientation/ondeviceorientation?serviceId=xxxx&sessionKey=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -264,7 +264,7 @@
  */
 - (void) testHttpFailDeviceOrientationOnDeviceOrientationEventInvalidMethodPost
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/deviceorientation/ondeviceorientation?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/deviceorientation/ondeviceorientation?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"POST"];
     

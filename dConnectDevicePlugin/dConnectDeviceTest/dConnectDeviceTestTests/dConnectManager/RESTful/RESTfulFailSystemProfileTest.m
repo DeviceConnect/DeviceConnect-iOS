@@ -84,7 +84,7 @@
 }
 
 /*!
- * @brief deviceIdを指定せずにデバイスのシステムプロファイルを取得する.
+ * @brief serviceIdを指定せずにデバイスのシステムプロファイルを取得する.
  * <pre>
  * 【HTTP通信】
  * Method: GET
@@ -95,7 +95,7 @@
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailSystemDeviceGetNoDeviceId
+- (void) testHttpFailSystemDeviceGetNoServiceId
 {
     NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/system/device"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
@@ -105,20 +105,20 @@
 }
 
 /*!
- * @brief deviceIdに空文字を指定してデバイスのシステムプロファイルを取得する.
+ * @brief serviceIdに空文字を指定してデバイスのシステムプロファイルを取得する.
  * <pre>
  * 【HTTP通信】
  * Method: GET
- * Path: /system/device?deviceId=
+ * Path: /system/device?serviceId=
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailSystemDeviceGetEmptyDeviceId
+- (void) testHttpFailSystemDeviceGetEmptyServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/system/device?deviceId="];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/system/device?serviceId="];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
     
@@ -126,20 +126,20 @@
 }
 
 /*!
- * @brief 存在しないdeviceIdを指定してデバイスのシステムプロファイルを取得する.
+ * @brief 存在しないserviceIdを指定してデバイスのシステムプロファイルを取得する.
  * <pre>
  * 【HTTP通信】
  * Method: GET
- * Path: /system/device?deviceId=123456789
+ * Path: /system/device?serviceId=123456789
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailSystemDeviceGetInvalidDeviceId
+- (void) testHttpFailSystemDeviceGetInvalidServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/system/device?deviceId=12345678"];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/system/device?serviceId=12345678"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
     
@@ -151,7 +151,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: POST
- * Path: /system/device?deviceId=123456789&deviceId=xxxx
+ * Path: /system/device?serviceId=123456789&serviceId=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -160,7 +160,7 @@
  */
 - (void) testHttpFailSystemDeviceGetInvalidMethodPost
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/system/device?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/system/device?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"POST"];
     
@@ -172,7 +172,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /system/device?deviceId=123456789&deviceId=xxxx
+ * Path: /system/device?serviceId=123456789&serviceId=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -181,7 +181,7 @@
  */
 - (void) testHttpFailSystemDeviceGetInvalidMethodPut
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/system/device?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/system/device?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
@@ -193,7 +193,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /system/device?deviceId=123456789&deviceId=xxxx
+ * Path: /system/device?serviceId=123456789&serviceId=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -202,7 +202,7 @@
  */
 - (void) testHttpFailSystemDeviceGetInvalidMethodDelete
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/system/device?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/system/device?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     

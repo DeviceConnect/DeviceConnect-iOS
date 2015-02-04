@@ -21,7 +21,7 @@
 @implementation RESTfulFailPhoneProfileTest
 
 /*!
- * @brief deviceIdを指定せずに通話発信要求を送信するテストを行う.
+ * @brief serviceIdを指定せずに通話発信要求を送信するテストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: POST
@@ -32,7 +32,7 @@
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailPhoneCallPostNoDeviceId
+- (void) testHttpFailPhoneCallPostNoServiceId
 {
     NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/phone/call?phoneNumber=090xxxxxxxx"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
@@ -42,20 +42,20 @@
 }
 
 /*!
- * @brief deviceIdが空状態で通話発信要求を送信するテストを行う.
+ * @brief serviceIdが空状態で通話発信要求を送信するテストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: POST
- * Path: /phone/call?deviceId=&phoneNumber=xxxx
+ * Path: /phone/call?serviceId=&phoneNumber=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailPhoneCallPostEmptyDeviceId
+- (void) testHttpFailPhoneCallPostEmptyServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/phone/call?phoneNumber=090xxxxxxxx&deviceId="];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/phone/call?phoneNumber=090xxxxxxxx&serviceId="];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"POST"];
     
@@ -63,20 +63,20 @@
 }
 
 /*!
- * @brief 存在しないdeviceIdで通話発信要求を送信するテストを行う.
+ * @brief 存在しないserviceIdで通話発信要求を送信するテストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: POST
- * Path: /phone/call?deviceId=123456789&phoneNumber=xxxx
+ * Path: /phone/call?serviceId=123456789&phoneNumber=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailPhoneCallPostInvalidDeviceId
+- (void) testHttpFailPhoneCallPostInvalidServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/phone/call?phoneNumber=090xxxxxxxx&deviceId=12345678"];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/phone/call?phoneNumber=090xxxxxxxx&serviceId=12345678"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"POST"];
     
@@ -88,7 +88,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: GET
- * Path: /phone/call?deviceId=xxxx&phoneNumber=xxxx
+ * Path: /phone/call?serviceId=xxxx&phoneNumber=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -97,7 +97,7 @@
  */
 - (void) testHttpFailPhoneCallInvalidMethodGet
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/phone/call?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/phone/call?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
     
@@ -109,7 +109,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /phone/call?deviceId=xxxx
+ * Path: /phone/call?serviceId=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -118,7 +118,7 @@
  */
 - (void) testHttpFailPhoneCallInvalidMethodPut
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/phone/call?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/phone/call?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
@@ -130,7 +130,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /phone/call?deviceId=xxxx
+ * Path: /phone/call?serviceId=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -139,7 +139,7 @@
  */
 - (void) testHttpFailPhoneCallInvalidMethodDelete
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/phone/call?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/phone/call?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     
@@ -147,7 +147,7 @@
 }
 
 /*!
- * @brief deviceIdを指定せずに電話設定要求を送信するテストを行う.
+ * @brief serviceIdを指定せずに電話設定要求を送信するテストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: PUT
@@ -158,7 +158,7 @@
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailPhoneSetPutNoDeviceId
+- (void) testHttpFailPhoneSetPutNoServiceId
 {
     NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/phone/set?mode=0"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
@@ -168,20 +168,20 @@
 }
 
 /*!
- * @brief deviceIdが空状態で電話設定要求を送信するテストを行う.
+ * @brief serviceIdが空状態で電話設定要求を送信するテストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /phone/call?deviceId=&phoneNumber=xxxx
+ * Path: /phone/call?serviceId=&phoneNumber=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailPhoneSetPutEmptyDeviceId
+- (void) testHttpFailPhoneSetPutEmptyServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/phone/set?deviceId=&mode=0"];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/phone/set?serviceId=&mode=0"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
@@ -189,20 +189,20 @@
 }
 
 /*!
- * @brief 存在しないdeviceIdで電話設定要求を送信するテストを行う.
+ * @brief 存在しないserviceIdで電話設定要求を送信するテストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /phone/call?deviceId=123456789&phoneNumber=xxxx
+ * Path: /phone/call?serviceId=123456789&phoneNumber=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailPhoneSetPutInvalidDeviceId
+- (void) testHttpFailPhoneSetPutInvalidServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/phone/set?deviceId=12345678&mode=0"];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/phone/set?serviceId=12345678&mode=0"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
@@ -214,7 +214,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: GET
- * Path: /phone/call?deviceId=xxxx&phoneNumber=xxxx
+ * Path: /phone/call?serviceId=xxxx&phoneNumber=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -223,7 +223,7 @@
  */
 - (void) testHttpFailPhoneSetInvalidMethodGet
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/phone/set?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/phone/set?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
     
@@ -235,7 +235,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: POST
- * Path: /phone/call?deviceId=xxxx
+ * Path: /phone/call?serviceId=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -244,7 +244,7 @@
  */
 - (void) testHttpFailPhoneSetInvalidMethodPost
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/phone/set?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/phone/set?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"POST"];
     
@@ -256,7 +256,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /phone/call?deviceId=xxxx
+ * Path: /phone/call?serviceId=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -265,7 +265,7 @@
  */
 - (void) testHttpFailPhoneSetInvalidMethodDelete
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/phone/set?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/phone/set?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     
@@ -273,7 +273,7 @@
 }
 
 /*!
- * @brief deviceIdが無い状態でonconnect属性のコールバック登録テストを行う.
+ * @brief serviceIdが無い状態でonconnect属性のコールバック登録テストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: PUT
@@ -284,7 +284,7 @@
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailPhoneOnConnectPutNoDeviceId
+- (void) testHttpFailPhoneOnConnectPutNoServiceId
 {
     NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/phone/onconnect"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
@@ -294,20 +294,20 @@
 }
 
 /*!
- * @brief deviceIdが空状態でonconnect属性のコールバック登録テストを行う.
+ * @brief serviceIdが空状態でonconnect属性のコールバック登録テストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /phone/onconnect?deviceId=&sessionKey=xxxx
+ * Path: /phone/onconnect?serviceId=&sessionKey=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailPhoneOnConnectPutEmptyDeviceId
+- (void) testHttpFailPhoneOnConnectPutEmptyServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/phone/onconnect?deviceId="];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/phone/onconnect?serviceId="];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
@@ -315,20 +315,20 @@
 }
 
 /*!
- * @brief 存在しないdeviceIdでonconnect属性のコールバック登録テストを行う.
+ * @brief 存在しないserviceIdでonconnect属性のコールバック登録テストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /phone/onconnect?deviceId=123456789&sessionKey=xxxx
+ * Path: /phone/onconnect?serviceId=123456789&sessionKey=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailPhoneOnConnectPutInvalidDeviceId
+- (void) testHttpFailPhoneOnConnectPutInvalidServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/phone/onconnect?deviceId=12345678"];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/phone/onconnect?serviceId=12345678"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
@@ -340,7 +340,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /phone/onconnect?deviceId=xxxx
+ * Path: /phone/onconnect?serviceId=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -349,7 +349,7 @@
  */
 - (void) testHttpFailPhoneOnConnectPutNoSessionKey
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/phone/onconnect?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/phone/onconnect?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
@@ -361,7 +361,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /phone/onconnect?deviceId=xxxx&sessionKey=
+ * Path: /phone/onconnect?serviceId=xxxx&sessionKey=
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -370,7 +370,7 @@
  */
 - (void) testHttpFailPhoneOnConnectPutEmptySessionKey
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/phone/onconnect?deviceId=%@&sessionKey=", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/phone/onconnect?serviceId=%@&sessionKey=", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
@@ -378,7 +378,7 @@
 }
 
 /*!
- * @brief deviceIdが無い状態でonconnect属性のコールバック解除テストを行う.
+ * @brief serviceIdが無い状態でonconnect属性のコールバック解除テストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
@@ -389,7 +389,7 @@
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailPhoneOnConnectDeleteNoDeviceId
+- (void) testHttpFailPhoneOnConnectDeleteNoServiceId
 {
     NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/phone/onconnect"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
@@ -399,20 +399,20 @@
 }
 
 /*!
- * @brief deviceIdが空状態でonconnect属性のコールバック解除テストを行う.
+ * @brief serviceIdが空状態でonconnect属性のコールバック解除テストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /phone/onconnect?deviceId=&sessionKey=xxxx
+ * Path: /phone/onconnect?serviceId=&sessionKey=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailPhoneOnConnectDeleteEmptyDeviceId
+- (void) testHttpFailPhoneOnConnectDeleteEmptyServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/phone/onconnect?deviceId="];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/phone/onconnect?serviceId="];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     
@@ -420,20 +420,20 @@
 }
 
 /*!
- * @brief 存在しないdeviceIdでonconnect属性のコールバック解除テストを行う.
+ * @brief 存在しないserviceIdでonconnect属性のコールバック解除テストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /phone/onconnect?deviceId=123456789&sessionKey=xxxx
+ * Path: /phone/onconnect?serviceId=123456789&sessionKey=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailPhoneOnConnectDeleteInvalidDeviceId
+- (void) testHttpFailPhoneOnConnectDeleteInvalidServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/phone/onconnect?deviceId=12345678"];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/phone/onconnect?serviceId=12345678"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     
@@ -445,7 +445,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /phone/onconnect?deviceId=xxxx
+ * Path: /phone/onconnect?serviceId=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -454,7 +454,7 @@
  */
 - (void) testHttpFailPhoneOnConnectDeleteNoSessionKey
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/phone/onconnect?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/phone/onconnect?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     
@@ -466,7 +466,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /phone/onconnect?deviceId=xxxx&sessionKey=
+ * Path: /phone/onconnect?serviceId=xxxx&sessionKey=
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -475,7 +475,7 @@
  */
 - (void) testHttpFailPhoneOnConnectDeleteEmptySessionKey
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/phone/onconnect?deviceId=%@&sessionKey=", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/phone/onconnect?serviceId=%@&sessionKey=", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     
@@ -487,7 +487,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: GET
- * Path: /phone/onconnect?deviceId=xxxx&sessionKey=xxxx
+ * Path: /phone/onconnect?serviceId=xxxx&sessionKey=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -496,7 +496,7 @@
  */
 - (void) testHttpFailPhoneOnConnectInvalidMethodGet
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/phone/onconnect?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/phone/onconnect?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
     
@@ -508,7 +508,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: POST
- * Path: /phone/onconnect?deviceId=xxxx&sessionKey=xxxx
+ * Path: /phone/onconnect?serviceId=xxxx&sessionKey=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -517,7 +517,7 @@
  */
 - (void) testHttpFailPhoneOnConnectInvalidMethodPost
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/phone/onconnect?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/phone/onconnect?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"POST"];
     

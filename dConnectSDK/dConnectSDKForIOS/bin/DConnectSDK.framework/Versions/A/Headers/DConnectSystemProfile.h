@@ -139,14 +139,14 @@ typedef NS_ENUM(NSInteger, DConnectSystemProfileConnectState) {
  @param[in] profile プロファイル
  @param[in] request リクエストパラメータ
  @param[in,out] response レスポンスパラメータ
- @param[in] deviceId デバイスID
+ @param[in] serviceId サービスID
  
  @retval YES レスポンスパラメータを返却する。
  @retval NO レスポンスパラメータを返却しないので、@link DConnectManager::sendResponse: @endlinkで返却すること。
  */
 - (BOOL) profile:(DConnectSystemProfile *)profile didReceiveGetDeviceRequest:(DConnectRequestMessage *)request
         response:(DConnectResponseMessage *)response
-        deviceId:(NSString *)deviceId;
+        serviceId:(NSString *)serviceId;
 
 #pragma mark - Put Methods
 
@@ -217,14 +217,14 @@ typedef NS_ENUM(NSInteger, DConnectSystemProfileConnectState) {
  実装されていない場合にはDConnectSystemProfileConnectStateNoneをレスポンスとして返却する。
  
  @param[in] profile プロファイル
- @param[in] deviceId デバイスID
+ @param[in] serviceId サービスID
  
  @retval DConnectSystemProfileConnectStateNone 非対応
  @retval DConnectSystemProfileConnectStateOn 接続ON
  @retval DConnectSystemProfileConnectStateOff 接続OFF
  */
 - (DConnectSystemProfileConnectState) profile:(DConnectSystemProfile *)profile
-                         wifiStateForDeviceId:(NSString *)deviceId;
+                         wifiStateForServiceId:(NSString *)serviceId;
 
 /*!
  @brief データソースにBluetoothの接続状態を要求する。
@@ -232,14 +232,14 @@ typedef NS_ENUM(NSInteger, DConnectSystemProfileConnectState) {
  実装されていない場合にはDConnectSystemProfileConnectStateNoneをレスポンスとして返却する。
  
  @param[in] profile プロファイル
- @param[in] deviceId デバイスID
+ @param[in] serviceId サービスID
  
  @retval DConnectSystemProfileConnectStateNone 非対応
  @retval DConnectSystemProfileConnectStateOn 接続ON
  @retval DConnectSystemProfileConnectStateOff 接続OFF
  */
 - (DConnectSystemProfileConnectState) profile:(DConnectSystemProfile *)profile
-                    bluetoothStateForDeviceId:(NSString *)deviceId;
+                    bluetoothStateForServiceId:(NSString *)serviceId;
 
 /*!
  @brief データソースにNFCの接続状態を要求する。
@@ -247,14 +247,14 @@ typedef NS_ENUM(NSInteger, DConnectSystemProfileConnectState) {
  実装されていない場合にはDConnectSystemProfileConnectStateNoneをレスポンスとして返却する。
  
  @param[in] profile プロファイル
- @param[in] deviceId デバイスID
+ @param[in] serviceId サービスID
  
  @retval DConnectSystemProfileConnectStateNone 非対応
  @retval DConnectSystemProfileConnectStateOn 接続ON
  @retval DConnectSystemProfileConnectStateOff 接続OFF
  */
 - (DConnectSystemProfileConnectState) profile:(DConnectSystemProfile *)profile
-                          nfcStateForDeviceId:(NSString *)deviceId;
+                          nfcStateForServiceId:(NSString *)serviceId;
 
 /*!
  @brief データソースにBLEの接続状態を要求する。
@@ -262,14 +262,14 @@ typedef NS_ENUM(NSInteger, DConnectSystemProfileConnectState) {
  実装されていない場合にはDConnectSystemProfileConnectStateNoneをレスポンスとして返却する。
  
  @param[in] profile プロファイル
- @param[in] deviceId デバイスID
+ @param[in] serviceId サービスID
  
  @retval DConnectSystemProfileConnectStateNone 非対応
  @retval DConnectSystemProfileConnectStateOn 接続ON
  @retval DConnectSystemProfileConnectStateOff 接続OFF
  */
 - (DConnectSystemProfileConnectState) profile:(DConnectSystemProfile *)profile
-                          bleStateForDeviceId:(NSString *)deviceId;
+                          bleStateForServiceId:(NSString *)serviceId;
 
 @required
 

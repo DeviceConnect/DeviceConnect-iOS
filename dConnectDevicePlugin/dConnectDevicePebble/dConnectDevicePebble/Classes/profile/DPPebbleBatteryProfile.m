@@ -35,9 +35,9 @@
 - (BOOL)        profile:(DConnectBatteryProfile *)profile
 didReceiveGetAllRequest:(DConnectRequestMessage *)request
                response:(DConnectResponseMessage *)response
-               deviceId:(NSString *)deviceId
+               serviceId:(NSString *)serviceId
 {
-	[[DPPebbleManager sharedManager] fetchBatteryInfo:deviceId callback:^(float level, BOOL isCharging, NSError *error) {
+	[[DPPebbleManager sharedManager] fetchBatteryInfo:serviceId callback:^(float level, BOOL isCharging, NSError *error) {
 		
 		// エラーチェック
 		if ([DPPebbleProfileUtil handleError:error response:response]) {
@@ -58,9 +58,9 @@ didReceiveGetAllRequest:(DConnectRequestMessage *)request
 - (BOOL)          profile:(DConnectBatteryProfile *)profile
 didReceiveGetLevelRequest:(DConnectRequestMessage *)request
                  response:(DConnectResponseMessage *)response
-                 deviceId:(NSString *)deviceId
+                 serviceId:(NSString *)serviceId
 {
-	[[DPPebbleManager sharedManager] fetchBatteryLevel:deviceId callback:^(float level, NSError *error) {
+	[[DPPebbleManager sharedManager] fetchBatteryLevel:serviceId callback:^(float level, NSError *error) {
 		
 		// エラーチェック
 		if ([DPPebbleProfileUtil handleError:error response:response]) {
@@ -80,9 +80,9 @@ didReceiveGetLevelRequest:(DConnectRequestMessage *)request
 - (BOOL)             profile:(DConnectBatteryProfile *)profile
 didReceiveGetChargingRequest:(DConnectRequestMessage *)request
                     response:(DConnectResponseMessage *)response
-                    deviceId:(NSString *)deviceId
+                    serviceId:(NSString *)serviceId
 {
-	[[DPPebbleManager sharedManager] fetchBatteryCharging:deviceId callback:^(BOOL isCharging, NSError *error) {
+	[[DPPebbleManager sharedManager] fetchBatteryCharging:serviceId callback:^(BOOL isCharging, NSError *error) {
 		
 		// エラーチェック
 		if ([DPPebbleProfileUtil handleError:error response:response]) {
@@ -105,7 +105,7 @@ didReceiveGetChargingRequest:(DConnectRequestMessage *)request
 - (BOOL)                     profile:(DConnectBatteryProfile *)profile
 didReceivePutOnChargingChangeRequest:(DConnectRequestMessage *)request
                             response:(DConnectResponseMessage *)response
-                            deviceId:(NSString *)deviceId
+                            serviceId:(NSString *)serviceId
                           sessionKey:(NSString *)sessionKey
 {
 	__block BOOL responseFlg = YES;
@@ -113,7 +113,7 @@ didReceivePutOnChargingChangeRequest:(DConnectRequestMessage *)request
 	[DPPebbleProfileUtil handleRequest:request response:response isRemove:NO callback:^{
 		
 		// Pebbleに登録
-		[[DPPebbleManager sharedManager] registChargingChangeEvent:deviceId callback:^(NSError *error) {
+		[[DPPebbleManager sharedManager] registChargingChangeEvent:serviceId callback:^(NSError *error) {
 			// 登録成功
 			// エラーチェック
 			[DPPebbleProfileUtil handleErrorNormal:error response:response];
@@ -128,7 +128,7 @@ didReceivePutOnChargingChangeRequest:(DConnectRequestMessage *)request
 			[DPPebbleProfileUtil sendMessageWithProvider:self.provider
 												 profile:DConnectBatteryProfileName
 											   attribute:DConnectBatteryProfileAttrOnChargingChange
-												deviceID:deviceId
+												serviceID:serviceId
 										 messageCallback:^(DConnectMessage *eventMsg)
 			 {
 				 // イベントにメッセージ追加
@@ -137,7 +137,7 @@ didReceivePutOnChargingChangeRequest:(DConnectRequestMessage *)request
 			 } deleteCallback:^
 			 {
 				 // Pebbleのイベント削除
-				 [[DPPebbleManager sharedManager] deleteChargingChangeEvent:deviceId callback:^(NSError *error) {
+				 [[DPPebbleManager sharedManager] deleteChargingChangeEvent:serviceId callback:^(NSError *error) {
 					 if (error) NSLog(@"Error:%@", error);
 				 }];
 			 }];
@@ -153,7 +153,7 @@ didReceivePutOnChargingChangeRequest:(DConnectRequestMessage *)request
 - (BOOL)                    profile:(DConnectBatteryProfile *)profile
 didReceivePutOnBatteryChangeRequest:(DConnectRequestMessage *)request
                            response:(DConnectResponseMessage *)response
-                           deviceId:(NSString *)deviceId
+                           serviceId:(NSString *)serviceId
                          sessionKey:(NSString *)sessionKey
 {
 	__block BOOL responseFlg = YES;
@@ -161,7 +161,7 @@ didReceivePutOnBatteryChangeRequest:(DConnectRequestMessage *)request
 	[DPPebbleProfileUtil handleRequest:request response:response isRemove:NO callback:^{
 		
 		// Pebbleに登録
-		[[DPPebbleManager sharedManager] registBatteryLevelChangeEvent:deviceId callback:^(NSError *error) {
+		[[DPPebbleManager sharedManager] registBatteryLevelChangeEvent:serviceId callback:^(NSError *error) {
 			// 登録成功
 			// エラーチェック
 			[DPPebbleProfileUtil handleErrorNormal:error response:response];
@@ -176,7 +176,7 @@ didReceivePutOnBatteryChangeRequest:(DConnectRequestMessage *)request
 			[DPPebbleProfileUtil sendMessageWithProvider:self.provider
 												 profile:DConnectBatteryProfileName
 											   attribute:DConnectBatteryProfileAttrOnBatteryChange
-												deviceID:deviceId
+												serviceID:serviceId
 										 messageCallback:^(DConnectMessage *eventMsg)
 			 {
 				 // イベントにメッセージ追加
@@ -185,7 +185,7 @@ didReceivePutOnBatteryChangeRequest:(DConnectRequestMessage *)request
 			 } deleteCallback:^
 			 {
 				 // Pebbleのイベント削除
-				 [[DPPebbleManager sharedManager] deleteBatteryLevelChangeEvent:deviceId callback:^(NSError *error) {
+				 [[DPPebbleManager sharedManager] deleteBatteryLevelChangeEvent:serviceId callback:^(NSError *error) {
 					 if (error) NSLog(@"Error:%@", error);
 				 }];
 			 }];
@@ -203,13 +203,13 @@ didReceivePutOnBatteryChangeRequest:(DConnectRequestMessage *)request
 - (BOOL)                        profile:(DConnectBatteryProfile *)profile
 didReceiveDeleteOnChargingChangeRequest:(DConnectRequestMessage *)request
                                response:(DConnectResponseMessage *)response
-                               deviceId:(NSString *)deviceId
+                               serviceId:(NSString *)serviceId
                              sessionKey:(NSString *)sessionKey
 {
 	// DConnectイベント削除
 	[DPPebbleProfileUtil handleRequest:request response:response isRemove:YES callback:^{
 		// Pebbleのイベント削除
-		[[DPPebbleManager sharedManager] deleteChargingChangeEvent:deviceId callback:^(NSError *error) {
+		[[DPPebbleManager sharedManager] deleteChargingChangeEvent:serviceId callback:^(NSError *error) {
 			if (error) NSLog(@"Error:%@", error);
 		}];
 	}];
@@ -220,13 +220,13 @@ didReceiveDeleteOnChargingChangeRequest:(DConnectRequestMessage *)request
 - (BOOL)                       profile:(DConnectBatteryProfile *)profile
 didReceiveDeleteOnBatteryChangeRequest:(DConnectRequestMessage *)request
                               response:(DConnectResponseMessage *)response
-                              deviceId:(NSString *)deviceId
+                              serviceId:(NSString *)serviceId
                             sessionKey:(NSString *)sessionKey
 {
 	// DConnectイベント削除
 	[DPPebbleProfileUtil handleRequest:request response:response isRemove:YES callback:^{
 		// Pebbleのイベント削除
-		[[DPPebbleManager sharedManager] deleteBatteryLevelChangeEvent:deviceId callback:^(NSError *error) {
+		[[DPPebbleManager sharedManager] deleteBatteryLevelChangeEvent:serviceId callback:^(NSError *error) {
 			if (error) NSLog(@"Error:%@", error);
 		}];
 	}];

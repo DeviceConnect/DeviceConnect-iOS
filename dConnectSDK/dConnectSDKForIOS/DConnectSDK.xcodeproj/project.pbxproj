@@ -87,7 +87,7 @@
 		C29D332D191B2679001015CC /* DConnectDevicePlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = C29D3318191B2679001015CC /* DConnectDevicePlugin.m */; };
 		C29D332E191B2679001015CC /* DConnectDevicePluginManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C29D331A191B2679001015CC /* DConnectDevicePluginManager.m */; };
 		C29D332F191B2679001015CC /* DConnectManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C29D331B191B2679001015CC /* DConnectManager.m */; };
-		C29D3333191B2679001015CC /* DConnectNetworkServiceDiscoveryProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = C29D3324191B2679001015CC /* DConnectNetworkServiceDiscoveryProfile.m */; };
+		C29D3333191B2679001015CC /* DConnectServiceDiscoveryProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = C29D3324191B2679001015CC /* DConnectServiceDiscoveryProfile.m */; };
 		C29D3334191B2679001015CC /* DConnectProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = C29D3325191B2679001015CC /* DConnectProfile.m */; };
 		C29D3335191B2679001015CC /* DConnectSystemProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = C29D3327191B2679001015CC /* DConnectSystemProfile.m */; };
 		C29D33A7191B9541001015CC /* GcovTestObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = C29D33A6191B9541001015CC /* GcovTestObserver.m */; };
@@ -104,7 +104,7 @@
 		C2F89D4B19208F8E005F1C5F /* DConnectBatteryProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = C2F89D4A19208F8E005F1C5F /* DConnectBatteryProfile.m */; };
 		C2F89D4E1920A192005F1C5F /* DConnectNotificationProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = C2F89D4D1920A192005F1C5F /* DConnectNotificationProfile.m */; };
 		C2F89D511920A8B9005F1C5F /* DConnectManagerSystemProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = C2F89D501920A8B9005F1C5F /* DConnectManagerSystemProfile.m */; };
-		C2F89D541920AAAF005F1C5F /* DConnectManagerNetworkServiceDiscoveryProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = C2F89D531920AAAF005F1C5F /* DConnectManagerNetworkServiceDiscoveryProfile.m */; };
+		C2F89D541920AAAF005F1C5F /* DConnectManagerServiceDiscoveryProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = C2F89D531920AAAF005F1C5F /* DConnectManagerServiceDiscoveryProfile.m */; };
 		C2F89D571920AB0B005F1C5F /* DConnectManagerDeliveryProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = C2F89D561920AB0B005F1C5F /* DConnectManagerDeliveryProfile.m */; };
 		C2F89D5F1920B493005F1C5F /* DConnectMediaStreamRecordingProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = C2F89D5E1920B493005F1C5F /* DConnectMediaStreamRecordingProfile.m */; };
 		C2F89D631920BB93005F1C5F /* DConnectConnectProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = C2F89D621920BB93005F1C5F /* DConnectConnectProfile.m */; };
@@ -246,6 +246,7 @@
 		97FE24BA191CBB77007C4769 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
 		AB0A87751A8067860016FF77 /* DConnectAvailabilityProfile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DConnectAvailabilityProfile.h; sourceTree = "<group>"; };
 		AB0A87761A8067860016FF77 /* DConnectCanvasProfile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DConnectCanvasProfile.h; sourceTree = "<group>"; };
+		AB0A87771A808BFC0016FF77 /* DConnectServiceDiscoveryProfile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DConnectServiceDiscoveryProfile.h; sourceTree = "<group>"; };
 		AB702E301A70FAF8002D21CB /* DConnectCanvasProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DConnectCanvasProfile.m; sourceTree = "<group>"; };
 		BE21B730197E108900BAF018 /* build-state.dat */ = {isa = PBXFileReference; lastKnownFileType = text; path = "build-state.dat"; sourceTree = "<group>"; };
 		BE21B731197E108900BAF018 /* DConnectSDK-all-target-headers.hmap */ = {isa = PBXFileReference; lastKnownFileType = file; path = "DConnectSDK-all-target-headers.hmap"; sourceTree = "<group>"; };
@@ -1648,7 +1649,7 @@
 		C29D3319191B2679001015CC /* DConnectDevicePluginManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DConnectDevicePluginManager.h; sourceTree = "<group>"; };
 		C29D331A191B2679001015CC /* DConnectDevicePluginManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DConnectDevicePluginManager.m; sourceTree = "<group>"; };
 		C29D331B191B2679001015CC /* DConnectManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DConnectManager.m; sourceTree = "<group>"; };
-		C29D3324191B2679001015CC /* DConnectNetworkServiceDiscoveryProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DConnectNetworkServiceDiscoveryProfile.m; sourceTree = "<group>"; };
+		C29D3324191B2679001015CC /* DConnectServiceDiscoveryProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DConnectServiceDiscoveryProfile.m; sourceTree = "<group>"; };
 		C29D3325191B2679001015CC /* DConnectProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DConnectProfile.m; sourceTree = "<group>"; };
 		C29D3327191B2679001015CC /* DConnectSystemProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DConnectSystemProfile.m; sourceTree = "<group>"; };
 		C29D3337191B2685001015CC /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -1672,8 +1673,8 @@
 		C2F89D4D1920A192005F1C5F /* DConnectNotificationProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DConnectNotificationProfile.m; sourceTree = "<group>"; };
 		C2F89D4F1920A8B9005F1C5F /* DConnectManagerSystemProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DConnectManagerSystemProfile.h; sourceTree = "<group>"; };
 		C2F89D501920A8B9005F1C5F /* DConnectManagerSystemProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DConnectManagerSystemProfile.m; sourceTree = "<group>"; };
-		C2F89D521920AAAF005F1C5F /* DConnectManagerNetworkServiceDiscoveryProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DConnectManagerNetworkServiceDiscoveryProfile.h; sourceTree = "<group>"; };
-		C2F89D531920AAAF005F1C5F /* DConnectManagerNetworkServiceDiscoveryProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DConnectManagerNetworkServiceDiscoveryProfile.m; sourceTree = "<group>"; };
+		C2F89D521920AAAF005F1C5F /* DConnectManagerServiceDiscoveryProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DConnectManagerServiceDiscoveryProfile.h; sourceTree = "<group>"; };
+		C2F89D531920AAAF005F1C5F /* DConnectManagerServiceDiscoveryProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DConnectManagerServiceDiscoveryProfile.m; sourceTree = "<group>"; };
 		C2F89D551920AB0B005F1C5F /* DConnectManagerDeliveryProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DConnectManagerDeliveryProfile.h; sourceTree = "<group>"; };
 		C2F89D561920AB0B005F1C5F /* DConnectManagerDeliveryProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DConnectManagerDeliveryProfile.m; sourceTree = "<group>"; };
 		C2F89D5E1920B493005F1C5F /* DConnectMediaStreamRecordingProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DConnectMediaStreamRecordingProfile.m; sourceTree = "<group>"; };
@@ -3368,6 +3369,7 @@
 		BE6F93151A70DB0400BFA51F /* DConnectSDK */ = {
 			isa = PBXGroup;
 			children = (
+				AB0A87771A808BFC0016FF77 /* DConnectServiceDiscoveryProfile.h */,
 				AB0A87751A8067860016FF77 /* DConnectAvailabilityProfile.h */,
 				AB0A87761A8067860016FF77 /* DConnectCanvasProfile.h */,
 				BE6F93161A70DB0400BFA51F /* DConnectAuthorizationProfile.h */,
@@ -3546,8 +3548,8 @@
 				97A999BA19545237006F8474 /* DConnectFilesProfile.m */,
 				C2F89D551920AB0B005F1C5F /* DConnectManagerDeliveryProfile.h */,
 				C2F89D561920AB0B005F1C5F /* DConnectManagerDeliveryProfile.m */,
-				C2F89D521920AAAF005F1C5F /* DConnectManagerNetworkServiceDiscoveryProfile.h */,
-				C2F89D531920AAAF005F1C5F /* DConnectManagerNetworkServiceDiscoveryProfile.m */,
+				C2F89D521920AAAF005F1C5F /* DConnectManagerServiceDiscoveryProfile.h */,
+				C2F89D531920AAAF005F1C5F /* DConnectManagerServiceDiscoveryProfile.m */,
 				C2F89D4F1920A8B9005F1C5F /* DConnectManagerSystemProfile.h */,
 				C2F89D501920A8B9005F1C5F /* DConnectManagerSystemProfile.m */,
 				C29D33AC191C7D1F001015CC /* DConnectMessage.m */,
@@ -3580,7 +3582,7 @@
 				C2F89D661920BCD4005F1C5F /* DConnectFileProfile.m */,
 				30056420196D113500A4E708 /* DConnectMediaPlayerProfile.m */,
 				C2F89D5E1920B493005F1C5F /* DConnectMediaStreamRecordingProfile.m */,
-				C29D3324191B2679001015CC /* DConnectNetworkServiceDiscoveryProfile.m */,
+				C29D3324191B2679001015CC /* DConnectServiceDiscoveryProfile.m */,
 				C2F89D4D1920A192005F1C5F /* DConnectNotificationProfile.m */,
 				97AD0D5B192A0BC500A1A84D /* DConnectPhoneProfile.m */,
 				309B0B801944B454001A39B6 /* DConnectProximityProfile.m */,
@@ -3919,7 +3921,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Environment Variables\nFRAMEWORK_NAME=${PROJECT_NAME}\nFRAMEWORK_VERSION=A\nFRAMEWORK_VERSION_NUMBER=1.0\nCONFIGURATION=\"Release\"\nFRAMEWORK_BUILD_PATH=\"${SRCROOT}/build/${CONFIGURATION}-framework\"\nFRAMEWORK_DIR=\"${FRAMEWORK_BUILD_PATH}/${FRAMEWORK_NAME}.framework\"\nSTATICLIB_BUILD_PATH=\"${SRCROOT}/build/${CONFIGURATION}-universal\"\n\n# Clean directories\nrm -rf \"${FRAMEWORK_BUILD_PATH}\"\n\n# Build simulator and device binaries.\n# A target to build a static library *must* have the name ${PROJECT_NAME}.\nxcodebuild -project ${PROJECT_NAME}.xcodeproj -sdk iphonesimulator -target ${PROJECT_NAME} -configuration ${CONFIGURATION} clean build\nxcodebuild -project ${PROJECT_NAME}.xcodeproj -sdk iphoneos -target ${PROJECT_NAME} -configuration ${CONFIGURATION} clean build\n# A target to build a bundle *must* have the name ${PROJECT_NAME}_resources. This target is optional.\nxcodebuild -project ${PROJECT_NAME}.xcodeproj -sdk iphonesimulator -target ${PROJECT_NAME}_resources -configuration ${CONFIGURATION} clean build || true\nxcodebuild -project ${PROJECT_NAME}.xcodeproj -sdk iphoneos -target ${PROJECT_NAME}_resources -configuration ${CONFIGURATION} clean build || true\n\n# create directories.\nmkdir -p ${FRAMEWORK_DIR}/Versions/${FRAMEWORK_VERSION}/Headers\n#mkdir -p ${FRAMEWORK_DIR}/Versions/${FRAMEWORK_VERSION}/Resources\nmkdir -p ${STATICLIB_BUILD_PATH}\n# create symlinks\ncd ${FRAMEWORK_DIR}\nln -s ../Versions/${FRAMEWORK_VERSION} Versions/Current\nln -s Versions/Current/Headers Headers\n#ln -s Versions/Current/Resources Resources\nln -s Versions/Current/${FRAMEWORK_NAME} ${FRAMEWORK_NAME}\ncd ${SRCROOT}\n\n# create the universal library, and strip internal symbols from it\nlipo ${SRCROOT}/build/${CONFIGURATION}-iphoneos/lib${FRAMEWORK_NAME}.a ${SRCROOT}/build/${CONFIGURATION}-iphonesimulator/lib${FRAMEWORK_NAME}.a -create -output \"${STATICLIB_BUILD_PATH}/lib${FRAMEWORK_NAME}.a\"\n#strip -x \"${STATICLIB_BUILD_PATH}/lib${FRAMEWORK_NAME}.a\"\ncp \"${STATICLIB_BUILD_PATH}/lib${FRAMEWORK_NAME}.a\" \"${FRAMEWORK_DIR}/Versions/Current/${FRAMEWORK_NAME}\"\n\n# copy files\ncp -r ${SRCROOT}/${PROJECT_NAME}/DConnectSDK/ ${FRAMEWORK_DIR}/Headers/";
+			shellScript = "# Environment Variables\nFRAMEWORK_NAME=${PROJECT_NAME}\nFRAMEWORK_VERSION=A\nFRAMEWORK_VERSION_NUMBER=1.0\nCONFIGURATION=\"Release\"\nFRAMEWORK_BUILD_PATH=\"${SRCROOT}/build/${CONFIGURATION}-framework\"\nFRAMEWORK_DIR=\"${FRAMEWORK_BUILD_PATH}/${FRAMEWORK_NAME}.framework\"\nSTATICLIB_BUILD_PATH=\"${SRCROOT}/build/${CONFIGURATION}-universal\"\n\n# Clean directories\nrm -rf \"${FRAMEWORK_BUILD_PATH}\"\n\n# Build simulator and device binaries.\n# A target to build a static library *must* have the name ${PROJECT_NAME}.\nxcodebuild -project ${PROJECT_NAME}.xcodeproj -sdk iphonesimulator -target ${PROJECT_NAME} -configuration ${CONFIGURATION} clean build\nxcodebuild -project ${PROJECT_NAME}.xcodeproj -sdk iphoneos -target ${PROJECT_NAME} -configuration ${CONFIGURATION} clean build\n# A target to build a bundle *must* have the name ${PROJECT_NAME}_resources. This target is optional.\nxcodebuild -project ${PROJECT_NAME}.xcodeproj -sdk iphonesimulator -target ${PROJECT_NAME}_resources -configuration ${CONFIGURATION} clean build || true\nxcodebuild -project ${PROJECT_NAME}.xcodeproj -sdk iphoneos -target ${PROJECT_NAME}_resources -configuration ${CONFIGURATION} clean build || true\n\n# create directories.\nmkdir -p ${FRAMEWORK_DIR}/Versions/${FRAMEWORK_VERSION}/Headers\n#mkdir -p ${FRAMEWORK_DIR}/Versions/${FRAMEWORK_VERSION}/Resources\nmkdir -p ${STATICLIB_BUILD_PATH}\n# create symlinks\ncd ${FRAMEWORK_DIR}\nln -s ../Versions/${FRAMEWORK_VERSION} Versions/Current\nln -s Versions/Current/Headers Headers\n#ln -s Versions/Current/Resources Resources\nln -s Versions/Current/${FRAMEWORK_NAME} ${FRAMEWORK_NAME}\ncd ${SRCROOT}\n\n# create the universal library, and strip internal symbols from it\nlipo ${SRCROOT}/build/${CONFIGURATION}-iphoneos/lib${FRAMEWORK_NAME}.a ${SRCROOT}/build/${CONFIGURATION}-iphonesimulator/lib${FRAMEWORK_NAME}.a -create -output \"${STATICLIB_BUILD_PATH}/lib${FRAMEWORK_NAME}.a\"\n#strip -x \"${STATICLIB_BUILD_PATH}/lib${FRAMEWORK_NAME}.a\"\ncp \"${STATICLIB_BUILD_PATH}/lib${FRAMEWORK_NAME}.a\" \"${FRAMEWORK_DIR}/Versions/Current/${FRAMEWORK_NAME}\"\n\n# copy files\ncp -r ${SRCROOT}/${PROJECT_NAME}/DConnectSDK/ ${FRAMEWORK_DIR}/Headers/\n\n# copy binary to bin folder\ncd ${SRCROOT}\nrm -rf bin\nmkdir bin\ncp -r ${FRAMEWORK_DIR} bin\ncp -r build/${CONFIGURATION}-resources/${PROJECT_NAME}_resources.bundle bin";
 		};
 		C29D3316191B253E001015CC /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -3979,7 +3981,7 @@
 				D62622D3199232BC004F01E6 /* LocalOAuthClient.m in Sources */,
 				97FE24BC191CBB77007C4769 /* multipart_parser.c in Sources */,
 				D62622E4199232BC004F01E6 /* LocalOAuthSampleUserManager.m in Sources */,
-				C2F89D541920AAAF005F1C5F /* DConnectManagerNetworkServiceDiscoveryProfile.m in Sources */,
+				C2F89D541920AAAF005F1C5F /* DConnectManagerServiceDiscoveryProfile.m in Sources */,
 				D62622931992326E004F01E6 /* LocalOAuthScopeDao.m in Sources */,
 				309B0B901944BCE5001A39B6 /* DConnectVibrationProfile.m in Sources */,
 				D699E72B19C094BD002F334C /* LocalOAuthConfirmAuthRequest.m in Sources */,
@@ -4020,7 +4022,7 @@
 				D626229E19923298004F01E6 /* LocalOAuthAccessTokenScope.m in Sources */,
 				97ECA16E193887E2001662D1 /* DConnectURLProtocol.m in Sources */,
 				C2F89D631920BB93005F1C5F /* DConnectConnectProfile.m in Sources */,
-				C29D3333191B2679001015CC /* DConnectNetworkServiceDiscoveryProfile.m in Sources */,
+				C29D3333191B2679001015CC /* DConnectServiceDiscoveryProfile.m in Sources */,
 				30424D1E1974C3B30084371F /* DConnectEventSessionDao.m in Sources */,
 				D62622D5199232BC004F01E6 /* LocalOAuthClientManager.m in Sources */,
 				D6FD02151999EC7A000DB674 /* CipherSignatureProcMD.m in Sources */,

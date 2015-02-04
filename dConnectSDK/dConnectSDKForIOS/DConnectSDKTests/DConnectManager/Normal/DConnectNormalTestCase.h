@@ -21,10 +21,10 @@ extern int DConnectPort;
 /**
  * テスト用のデバイスプラグインのIDを保持する.
  */
-@property (nonatomic) NSString *deviceId;
+@property (nonatomic) NSString *serviceId;
 
 /**
- * デバイスプラグインのIDを検索して、deviceIdに設定する.
+ * デバイスプラグインのIDを検索して、serviceIdに設定する.
  */
 - (void) searchTestDevicePlugin;
 

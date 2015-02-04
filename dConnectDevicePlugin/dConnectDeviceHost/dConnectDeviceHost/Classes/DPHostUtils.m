@@ -1,6 +1,6 @@
 //
 //  DPHostUtils.m
-//  DConnectSDK
+//  dConnectDeviceHost
 //
 //  Copyright (c) 2014 NTT DOCOMO, INC.
 //  Released under the MIT license
@@ -28,5 +28,18 @@
     NSCharacterSet *allowedCharSet = [[NSCharacterSet characterSetWithCharactersInString:@";/?:@&=$+{}<>., "] invertedSet];
     return [string stringByAddingPercentEncodingWithAllowedCharacters:allowedCharSet];
 }
+
++ (BOOL)isFloatWithString:(NSString *)numberString
+{
+    NSRange matchInteger = [numberString rangeOfString:@"^([0-9]*)?$" options:NSRegularExpressionSearch];
+    NSRange matchFloat = [numberString rangeOfString:@"^[-+]?([0-9]*)?(\\.)?([0-9]*)?$" options:NSRegularExpressionSearch];
+    //数値の場合
+    if(matchFloat.location != NSNotFound && matchInteger.location == NSNotFound) {
+        return YES;
+    } else {
+        return NO;
+    }
+}
+
 
 @end

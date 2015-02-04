@@ -60,7 +60,7 @@
  */
 - (void) testHttpNormalEmptyInterfaceEmptyAttribute
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/ping//?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/ping//?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
     
@@ -84,7 +84,7 @@
     NSString *reservedChars = @":/?#[]@!$&'()*+,;=";
     NSString *reservedCharsEncoded = [reservedChars stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet alphanumericCharacterSet]];
     
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/ping?key1=%@&key2=%@&deviceId=%@&key3=%@&key4=%@", reservedCharsEncoded,  reservedCharsEncoded, self.deviceId, reservedCharsEncoded, reservedCharsEncoded]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/ping?key1=%@&key2=%@&serviceId=%@&key3=%@&key4=%@", reservedCharsEncoded,  reservedCharsEncoded, self.serviceId, reservedCharsEncoded, reservedCharsEncoded]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
     
@@ -123,7 +123,7 @@
     [request setHTTPMethod:@"POST"];
     
     Multipart* multi = [Multipart new];
-    [multi addData:[self.deviceId dataUsingEncoding:NSUTF8StringEncoding] forKey:@"deviceId"];
+    [multi addData:[self.serviceId dataUsingEncoding:NSUTF8StringEncoding] forKey:@"serviceId"];
     [request setValue:multi.contentType forHTTPHeaderField:@"content-type"];
     [request setHTTPBody:multi.body];
 
@@ -149,7 +149,7 @@
     [request setHTTPMethod:@"PUT"];
     
     Multipart* multi = [Multipart new];
-    [multi addData:[self.deviceId dataUsingEncoding:NSUTF8StringEncoding] forKey:@"deviceId"];
+    [multi addData:[self.serviceId dataUsingEncoding:NSUTF8StringEncoding] forKey:@"serviceId"];
     [request setValue:multi.contentType forHTTPHeaderField:@"content-type"];
     [request setHTTPBody:multi.body];
 
@@ -170,12 +170,12 @@
  */
 - (void) testHttpNormalPostRequestParametersWithBothMultipartAndParameterPart
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/ping?deviceId=invalid"]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/ping?serviceId=invalid"]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"POST"];
     
     Multipart* multi = [Multipart new];
-    [multi addData:[self.deviceId dataUsingEncoding:NSUTF8StringEncoding] forKey:@"deviceId"];
+    [multi addData:[self.serviceId dataUsingEncoding:NSUTF8StringEncoding] forKey:@"serviceId"];
     [request setValue:multi.contentType forHTTPHeaderField:@"content-type"];
     [request setHTTPBody:multi.body];
     
@@ -197,12 +197,12 @@
  */
 - (void) testHttpNormalPutRequestParametersWithBothMultipartAndParameterPart
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/ping?deviceId=invalid"]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/ping?serviceId=invalid"]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
     Multipart* multi = [Multipart new];
-    [multi addData:[self.deviceId dataUsingEncoding:NSUTF8StringEncoding] forKey:@"deviceId"];
+    [multi addData:[self.serviceId dataUsingEncoding:NSUTF8StringEncoding] forKey:@"serviceId"];
     [request setValue:multi.contentType forHTTPHeaderField:@"content-type"];
     [request setHTTPBody:multi.body];
     

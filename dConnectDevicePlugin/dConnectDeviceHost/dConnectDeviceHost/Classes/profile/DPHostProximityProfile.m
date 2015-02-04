@@ -1,6 +1,6 @@
 //
 //  DPHostProximityProfile.m
-//  DConnectSDK
+//  dConnectDeviceHost
 //
 //  Copyright (c) 2014 NTT DOCOMO, INC.
 //  Released under the MIT license
@@ -9,7 +9,7 @@
 
 #import "DPHostDevicePlugin.h"
 #import "DPHostProximityProfile.h"
-#import "DPHostNetworkServiceDiscoveryProfile.h"
+#import "DPHostServiceDiscoveryProfile.h"
 #import "DPHostUtils.h"
 
 @interface DPHostProximityProfile ()
@@ -54,7 +54,7 @@
 - (void) sendOnUserProximityEvent:(NSNotification *)notification
 {
     // イベントの取得
-    NSArray *evts = [_eventMgr eventListForDeviceId:NetworkDiscoveryDeviceId
+    NSArray *evts = [_eventMgr eventListForServiceId:ServiceDiscoveryServiceId
                                             profile:DConnectProximityProfileName
                                           attribute:DConnectProximityProfileAttrOnUserProximity];
     // イベント送信
@@ -74,10 +74,10 @@
 - (BOOL)                    profile:(DConnectProximityProfile *)profile
 didReceivePutOnUserProximityRequest:(DConnectRequestMessage *)request
                            response:(DConnectResponseMessage *)response
-                           deviceId:(NSString *)deviceId
+                           serviceId:(NSString *)serviceId
                          sessionKey:(NSString *)sessionKey
 {
-    NSArray *evts = [_eventMgr eventListForDeviceId:deviceId
+    NSArray *evts = [_eventMgr eventListForServiceId:serviceId
                                             profile:DConnectProximityProfileName
                                           attribute:DConnectProximityProfileAttrOnUserProximity];
     if (evts.count == 0) {
@@ -110,7 +110,7 @@ didReceivePutOnUserProximityRequest:(DConnectRequestMessage *)request
 - (BOOL)                       profile:(DConnectProximityProfile *)profile
 didReceiveDeleteOnUserProximityRequest:(DConnectRequestMessage *)request
                               response:(DConnectResponseMessage *)response
-                              deviceId:(NSString *)deviceId
+                              serviceId:(NSString *)serviceId
                             sessionKey:(NSString *)sessionKey
 {
     switch ([_eventMgr removeEventForRequest:request]) {
@@ -126,9 +126,9 @@ didReceiveDeleteOnUserProximityRequest:(DConnectRequestMessage *)request
             break;
     }
     
-    NSArray *evts = [_eventMgr eventListForDeviceId:deviceId
-                                            profile:DConnectBatteryProfileName
-                                          attribute:DConnectBatteryProfileAttrOnChargingChange];
+    NSArray *evts = [_eventMgr eventListForServiceId:serviceId
+                                            profile:DConnectProximityProfileName
+                                          attribute:DConnectProximityProfileAttrOnUserProximity];
     if (evts.count == 0) {
         // イベント受領先が存在しないなら、UIDeviceProximityStateDidChangeNotification通知の配送処理を停止する。
         [[NSNotificationCenter defaultCenter] removeObserver:self name:UIDeviceProximityStateDidChangeNotification object:nil];

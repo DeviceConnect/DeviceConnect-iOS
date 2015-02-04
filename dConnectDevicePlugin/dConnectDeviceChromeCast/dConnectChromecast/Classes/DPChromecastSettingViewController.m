@@ -32,7 +32,13 @@
     pageControl.pageIndicatorTintColor = [UIColor grayColor];
     pageControl.currentPageIndicatorTintColor = [UIColor blackColor];
     pageControl.backgroundColor = [UIColor whiteColor];
-    
+    UILabel *title = [[UILabel alloc] initWithFrame:CGRectZero];
+    title.font = [UIFont boldSystemFontOfSize:16.0];
+    title.textColor = [UIColor whiteColor];
+    title.text = @"Chromecast";
+    [title sizeToFit];
+    self.navigationItem.titleView = title;
+
     // ページ準備
     _pages = @[@"ConnectionGuide", @"PowerGuide", @"SettingGuide"];
     UIViewController *startingViewController = [self viewControllerAtIndex:0 storyboard:self.storyboard];

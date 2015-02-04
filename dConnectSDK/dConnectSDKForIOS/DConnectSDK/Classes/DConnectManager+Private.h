@@ -11,6 +11,16 @@
 #import "DConnectDevicePluginManager.h"
 
 /*!
+ @brief Manager-プラグイン間のデバイス検索APIのプロファイル名。
+ */
+extern NSString *const DConnectProfileNameNetworkServiceDiscovery;
+
+/*!
+ @brief Manager-プラグイン間のデバイス検索APIのアトリビュート名。
+ */
+extern NSString *const DConnectAttributeNameGetNetworkServices;
+
+/*!
  @brief DConnectManagerの非公開用APIを定義する。
  */
 @interface DConnectManager ()

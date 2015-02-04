@@ -21,7 +21,7 @@
 @implementation RESTfulFailVibrationProfileTest
 
 /*!
- * @brief deviceIdを指定せずにバイブレーションを開始するテストを行う.
+ * @brief serviceIdを指定せずにバイブレーションを開始するテストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: PUT
@@ -32,7 +32,7 @@
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailVibrationVibratePutNoDeviceId
+- (void) testHttpFailVibrationVibratePutNoServiceId
 {
     NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/vibration/vibrate"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
@@ -42,20 +42,20 @@
 }
 
 /*!
- * @brief deviceIdが空状態でバイブレーションを開始するテストを行う.
+ * @brief serviceIdが空状態でバイブレーションを開始するテストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /vibration/vibrate?deviceId=
+ * Path: /vibration/vibrate?serviceId=
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailVibrationVibratePutEmptyDeviceId
+- (void) testHttpFailVibrationVibratePutEmptyServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/vibration/vibrate?deviceId="];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/vibration/vibrate?serviceId="];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
@@ -63,20 +63,20 @@
 }
 
 /*!
- * @brief 存在しないdeviceIdでバイブレーションを開始するテストを行う.
+ * @brief 存在しないserviceIdでバイブレーションを開始するテストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /vibration/vibrate?deviceId=123456789&mediId=xxxx
+ * Path: /vibration/vibrate?serviceId=123456789&mediId=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailVibrationVibratePutInvalidDeviceId
+- (void) testHttpFailVibrationVibratePutInvalidServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/vibration/vibrate?deviceId=12345678"];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/vibration/vibrate?serviceId=12345678"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
@@ -84,7 +84,7 @@
 }
 
 /*!
- * @brief deviceIdを指定せずにバイブレーションを停止するテストを行う.
+ * @brief serviceIdを指定せずにバイブレーションを停止するテストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
@@ -95,7 +95,7 @@
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailVibrationVibrateDeleteNoDeviceId
+- (void) testHttpFailVibrationVibrateDeleteNoServiceId
 {
     NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/vibration/vibrate"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
@@ -105,20 +105,20 @@
 }
 
 /*!
- * @brief deviceIdが空状態でバイブレーションを停止するテストを行う.
+ * @brief serviceIdが空状態でバイブレーションを停止するテストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /vibration/vibrate?deviceId=
+ * Path: /vibration/vibrate?serviceId=
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailVibrationVibrateDeleteEmptyDeviceId
+- (void) testHttpFailVibrationVibrateDeleteEmptyServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/vibration/vibrate?deviceId="];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/vibration/vibrate?serviceId="];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     
@@ -126,20 +126,20 @@
 }
 
 /*!
- * @brief 存在しないdeviceIdでバイブレーションを停止するテストを行う.
+ * @brief 存在しないserviceIdでバイブレーションを停止するテストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /vibration/vibrate?deviceId=123456789&mediId=xxxx
+ * Path: /vibration/vibrate?serviceId=123456789&mediId=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailVibrationVibrateDeleteInvalidDeviceId
+- (void) testHttpFailVibrationVibrateDeleteInvalidServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/vibration/vibrate?deviceId=12345678"];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/vibration/vibrate?serviceId=12345678"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     
@@ -151,7 +151,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /vibration/vibrate?deviceId=xxxx
+ * Path: /vibration/vibrate?serviceId=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -160,7 +160,7 @@
  */
 - (void) testHttpFailVibrationVibrateInvalidMethodGet
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/vibration/vibrate?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/vibration/vibrate?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
     
@@ -172,7 +172,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: POST
- * Path: /vibration/vibrate?deviceId=xxxx
+ * Path: /vibration/vibrate?serviceId=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -181,7 +181,7 @@
  */
 - (void) testHttpFailVibrationVibrateInvalidMethodPost
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/vibration/vibrate?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/vibration/vibrate?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"POST"];
     

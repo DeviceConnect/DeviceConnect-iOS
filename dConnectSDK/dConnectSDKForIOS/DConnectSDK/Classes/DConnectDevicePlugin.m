@@ -10,7 +10,7 @@
 #import "DConnectDevicePlugin.h"
 #import "DConnectManager+Private.h"
 #import "DConnectAuthorizationProfile+Private.h"
-#import "DConnectNetworkServiceDiscoveryProfile.h"
+#import "DConnectServiceDiscoveryProfile.h"
 #import "DConnectSystemProfile.h"
 #import "DConnectConst.h"
 #import "LocalOAuth2Main.h"
@@ -66,12 +66,22 @@
     // レスポンスがどこのレイヤーで返されているかのログを見るための処理
     [response setString:@"DevicePlugin" forKey:@"debug"];
 #endif
+
+    // Service Discovery APIのパスを変換
+    NSString *profileName = [request profile];
+    if ([profileName isEqualToString:DConnectProfileNameNetworkServiceDiscovery]) {
+        NSString *attribute = [request attribute];
+        if ([attribute isEqualToString:DConnectAttributeNameGetNetworkServices]) {
+            profileName = DConnectServiceDiscoveryProfileName;
+            [request setProfile:DConnectServiceDiscoveryProfileName];
+            [request setAttribute:nil];
+        }
+    }
     
     if (self.useLocalOAuth) {
         // Local OAuthの認証を行う
-        NSString *profileName = [request profile];
         NSString *accessToken = [request accessToken];
-        NSArray *scopes = DConnectIgnoreProfiles();
+        NSArray *scopes = DConnectPluginIgnoreProfiles();
         LocalOAuth2Main *oauth = [LocalOAuth2Main sharedOAuthForClass:[self class]];
         LocalOAuthCheckAccessTokenResult *result = [oauth checkAccessTokenWithScope:profileName
                                                                       specialScopes:scopes

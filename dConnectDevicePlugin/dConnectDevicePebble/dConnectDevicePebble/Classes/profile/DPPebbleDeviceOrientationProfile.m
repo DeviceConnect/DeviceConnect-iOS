@@ -35,7 +35,7 @@
 - (BOOL)                        profile:(DConnectDeviceOrientationProfile *)profile
 didReceivePutOnDeviceOrientationRequest:(DConnectRequestMessage *)request
                                response:(DConnectResponseMessage *)response
-                               deviceId:(NSString *)deviceId
+                               serviceId:(NSString *)serviceId
                              sessionKey:(NSString *)sessionKey
 {
 	__block BOOL responseFlg = YES;
@@ -43,7 +43,7 @@ didReceivePutOnDeviceOrientationRequest:(DConnectRequestMessage *)request
 	[DPPebbleProfileUtil handleRequest:request response:response isRemove:NO callback:^{
 		
 		// Pebbleに登録
-		[[DPPebbleManager sharedManager] registDeviceOrientationEvent:deviceId callback:^(NSError *error) {
+		[[DPPebbleManager sharedManager] registDeviceOrientationEvent:serviceId callback:^(NSError *error) {
 			// 登録成功
 			// エラーチェック
 			[DPPebbleProfileUtil handleErrorNormal:error response:response];
@@ -64,7 +64,7 @@ didReceivePutOnDeviceOrientationRequest:(DConnectRequestMessage *)request
 			[DPPebbleProfileUtil sendMessageWithProvider:self.provider
 												 profile:DConnectDeviceOrientationProfileName
 											   attribute:DConnectDeviceOrientationProfileAttrOnDeviceOrientation
-												deviceID:deviceId
+												serviceID:serviceId
 										 messageCallback:^(DConnectMessage *eventMsg)
 			 {
 				 // イベントにメッセージ追加
@@ -72,7 +72,7 @@ didReceivePutOnDeviceOrientationRequest:(DConnectRequestMessage *)request
 			 } deleteCallback:^
 			 {
 				 // Pebbleのイベント削除
-				 [[DPPebbleManager sharedManager] deleteDeviceOrientationEvent:deviceId callback:^(NSError *error) {
+				 [[DPPebbleManager sharedManager] deleteDeviceOrientationEvent:serviceId callback:^(NSError *error) {
 					 if (error) NSLog(@"Error:%@", error);
 				 }];
 			 }];
@@ -88,13 +88,13 @@ didReceivePutOnDeviceOrientationRequest:(DConnectRequestMessage *)request
 - (BOOL)                           profile:(DConnectDeviceOrientationProfile *)profile
 didReceiveDeleteOnDeviceOrientationRequest:(DConnectRequestMessage *)request
                                   response:(DConnectResponseMessage *)response
-                                  deviceId:(NSString *)deviceId
+                                  serviceId:(NSString *)serviceId
                                 sessionKey:(NSString *)sessionKey
 {
 	// DConnectイベント削除
 	[DPPebbleProfileUtil handleRequest:request response:response isRemove:YES callback:^{
 		// Pebbleのイベント削除
-		[[DPPebbleManager sharedManager] deleteDeviceOrientationEvent:deviceId callback:^(NSError *error) {
+		[[DPPebbleManager sharedManager] deleteDeviceOrientationEvent:serviceId callback:^(NSError *error) {
 			if (error) NSLog(@"Error:%@", error);
 		}];
 	}];

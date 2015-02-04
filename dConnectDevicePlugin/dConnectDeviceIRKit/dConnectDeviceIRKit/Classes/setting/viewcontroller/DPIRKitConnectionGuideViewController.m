@@ -22,7 +22,7 @@ typedef NS_ENUM(NSUInteger, DPIRKitConnectionState) {
 @interface DPIRKitConnectionGuideViewController ()<UIAlertViewDelegate>
 {
     DPIRKitConnectionState _state;
-    NSString *_deviceId;
+    NSString *_serviceId;
     NSString *_deviceKey;
     NSString *_clientKey;
     NSBundle *_bundle;
@@ -100,7 +100,7 @@ typedef NS_ENUM(NSUInteger, DPIRKitConnectionState) {
 - (void) viewDidAppear:(BOOL)animated {
     
     NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
-    _deviceId = [ud stringForKey:DPIRKitUDKeyDeviceId];
+    _serviceId = [ud stringForKey:DPIRKitUDKeyServiceId];
     _deviceKey = [ud stringForKey:DPIRKitUDKeyDeviceKey];
     _clientKey = [ud stringForKey:DPIRKitUDKeyClientKey];
     
@@ -124,7 +124,7 @@ typedef NS_ENUM(NSUInteger, DPIRKitConnectionState) {
             [self startLoading];
             [[DPIRKitManager sharedInstance]
              checkIfIRKitIsConnectedToInternetWithClientKey:_clientKey
-             deviceId:_deviceId
+             serviceId:_serviceId
              completion:^(BOOL isConnected) {
                  if (isConnected) {
                      _state = DPIRKitConnectionStateConnected;

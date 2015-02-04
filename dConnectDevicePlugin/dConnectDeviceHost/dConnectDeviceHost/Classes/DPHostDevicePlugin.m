@@ -1,6 +1,6 @@
 //
 //  DPHostDevicePlugin.m
-//  DConnectSDK
+//  dConnectDeviceHost
 //
 //  Copyright (c) 2014 NTT DOCOMO, INC.
 //  Released under the MIT license
@@ -17,7 +17,7 @@
 #import "DPHostFileProfile.h"
 #import "DPHostMediaPlayerProfile.h"
 #import "DPHostMediaStreamRecordingProfile.h"
-#import "DPHostNetworkServiceDiscoveryProfile.h"
+#import "DPHostServiceDiscoveryProfile.h"
 #import "DPHostNotificationProfile.h"
 #import "DPHostPhoneProfile.h"
 #import "DPHostProximityProfile.h"
@@ -25,6 +25,7 @@
 #import "DPHostSystemProfile.h"
 #import "DPHostVibrationProfile.h"
 #import "DPHostConnectProfile.h"
+#import "DPHostCanvasProfile.h"
 
 @implementation DPHostDevicePlugin
 
@@ -50,7 +51,7 @@
         [self addProfile:[DPHostFileProfile new]];
         [self addProfile:[DPHostMediaPlayerProfile new]];
         [self addProfile:[DPHostMediaStreamRecordingProfile new]];
-        [self addProfile:[DPHostNetworkServiceDiscoveryProfile new]];
+        [self addProfile:[DPHostServiceDiscoveryProfile new]];
         [self addProfile:[DPHostNotificationProfile new]];
         [self addProfile:[DPHostPhoneProfile new]];
         [self addProfile:[DPHostProximityProfile new]];
@@ -58,6 +59,7 @@
         [self addProfile:[DPHostSystemProfile new]];
         [self addProfile:[DPHostVibrationProfile new]];
         [self addProfile:[DPHostConnectProfile new]];
+        [self addProfile:[DPHostCanvasProfile new]];
 
     }
     return self;

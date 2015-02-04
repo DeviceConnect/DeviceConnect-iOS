@@ -11,7 +11,8 @@
 #import <GoogleCast/GoogleCast.h>
 
 static NSString *const kReceiverAppID = @"C70CD4D5";
-static NSString *const kReceiverAppNamespace = @"urn:x-cast:com.name.space.chromecast.test.receiver";
+static NSString *const kReceiverNamespace
+    = @"urn:x-cast:com.name.space.chromecast.test.receiver";
 
 // セマフォのタイムアウト
 static const NSTimeInterval DPSemaphoreTimeout = 20.0;
@@ -27,7 +28,8 @@ static const NSTimeInterval DPSemaphoreTimeout = 20.0;
 @end
 
 
-@interface DPChromecastManager () <GCKDeviceScannerListener, GCKDeviceManagerDelegate, GCKMediaControlChannelDelegate> {
+@interface DPChromecastManager () <GCKDeviceScannerListener,
+                                GCKDeviceManagerDelegate, GCKMediaControlChannelDelegate> {
 	GCKDeviceScanner *_deviceScanner;
 	NSMutableDictionary *_dataDict;
 	dispatch_semaphore_t _semaphore;
@@ -36,7 +38,6 @@ static const NSTimeInterval DPSemaphoreTimeout = 20.0;
 @end
 
 @implementation DPChromecastManager
-
 
 // 共有インスタンス
 + (instancetype)sharedManager
@@ -54,7 +55,7 @@ static const NSTimeInterval DPSemaphoreTimeout = 20.0;
 {
 	self = [super init];
 	if (self) {
-		_deviceScanner = [[GCKDeviceScanner alloc] init];
+        _deviceScanner = [GCKDeviceScanner new];
 		[_deviceScanner addListener:self];
 		_dataDict = [NSMutableDictionary dictionary];
 		_semaphore = dispatch_semaphore_create(1);
@@ -100,14 +101,12 @@ static const NSTimeInterval DPSemaphoreTimeout = 20.0;
 - (void)connectToDeviceWithID:(NSString*)deviceID
 				   completion:(void (^)(BOOL success, NSString *error))completion
 {
-	// デバイス検索
 	GCKDevice *device = nil;
 	for (device in _deviceScanner.devices) {
 		if ([device.deviceID isEqualToString:deviceID]) {
 			break;
 		}
 	}
-	
 	// デバイスが見つからない
 	if (!device) {
 		// callback
@@ -116,7 +115,8 @@ static const NSTimeInterval DPSemaphoreTimeout = 20.0;
 	}
 	
 	// コマンドが連続して送信されないようにセマフォを立てる
-	dispatch_semaphore_wait(_semaphore, dispatch_time(DISPATCH_TIME_NOW, NSEC_PER_SEC * DPSemaphoreTimeout));
+	dispatch_semaphore_wait(_semaphore,
+                            dispatch_time(DISPATCH_TIME_NOW, NSEC_PER_SEC * DPSemaphoreTimeout));
 	
 	// 接続確認
 	DPChromecastManagerData *data = _dataDict[deviceID];
@@ -143,8 +143,9 @@ static const NSTimeInterval DPSemaphoreTimeout = 20.0;
 	_dataDict[deviceID] = data;
 	
 	NSDictionary *info = [[NSBundle mainBundle] infoDictionary];
-	data.deviceManager = [[GCKDeviceManager alloc] initWithDevice:device
-												clientPackageName:[info objectForKey:@"CFBundleIdentifier"]];
+	data.deviceManager = [[GCKDeviceManager alloc]
+                          initWithDevice:device
+                       clientPackageName:info[@"CFBundleIdentifier"]];
 	data.deviceManager.delegate = self;
 	[data.deviceManager connect];
 }
@@ -209,16 +210,12 @@ static const NSTimeInterval DPSemaphoreTimeout = 20.0;
 	switch (data.ctrlChannel.mediaStatus.playerState) {
 		case GCKMediaPlayerStateIdle:
 			return @"stop";
-			break;
 		case GCKMediaPlayerStatePlaying:
 			return @"play";
-			break;
 		case GCKMediaPlayerStatePaused:
 			return @"pause";
-			break;
 		case GCKMediaPlayerStateBuffering:
 			return @"buffering";
-			break;
 		default:
 			return @"unknown";
 	}
@@ -269,24 +266,39 @@ static const NSTimeInterval DPSemaphoreTimeout = 20.0;
 // メディア読み込み
 - (NSInteger)loadMediaWithID:(NSString*)deviceID mediaID:(NSString*)mediaID
 {
-	GCKMediaMetadata *metadata = [[GCKMediaMetadata alloc] init];
-	
-	GCKMediaInformation *mediaInformation =
-	[[GCKMediaInformation alloc] initWithContentID:mediaID
-										streamType:GCKMediaStreamTypeNone
-									   contentType:@"video/mp4"
-										  metadata:metadata
-									streamDuration:123
-										customData:nil];
-	DPChromecastManagerData *data = _dataDict[deviceID];
-	return [data.ctrlChannel loadMedia:mediaInformation autoplay:NO];
+    GCKMediaMetadata *metadata = [[GCKMediaMetadata alloc] init];
+    GCKMediaInformation *mediaInformation =
+    [[GCKMediaInformation alloc] initWithContentID:mediaID
+                                        streamType:GCKMediaStreamTypeNone
+                                       contentType:@"video/mp4"
+                                          metadata:metadata
+                                    streamDuration:123
+                                        customData:nil];
+    
+    DPChromecastManagerData *data = _dataDict[deviceID];
+    return [data.ctrlChannel loadMedia:mediaInformation autoplay:NO];
 }
 
 // 再生
 - (NSInteger)playWithID:(NSString*)deviceID
 {
 	DPChromecastManagerData *data = _dataDict[deviceID];
-	return [data.ctrlChannel play];
+    NSLog(@"A");
+    if (data.ctrlChannel.mediaStatus.playerState == GCKMediaPlayerStateIdle) {
+        NSLog(@"B");
+        GCKMediaMetadata *metadata = [[GCKMediaMetadata alloc] init];
+        GCKMediaInformation *mediaInformation =
+        [[GCKMediaInformation alloc]
+                 initWithContentID:data.ctrlChannel.mediaStatus.mediaInformation.contentID
+                        streamType:GCKMediaStreamTypeNone
+                       contentType:@"video/mp4"
+                          metadata:metadata
+                    streamDuration:123
+                        customData:nil];
+        return [data.ctrlChannel loadMedia:mediaInformation autoplay:YES];
+    }
+    NSLog(@"C");
+    return [data.ctrlChannel play];
 }
 
 // 停止
@@ -342,7 +354,7 @@ didConnectToCastApplication:(GCKApplicationMetadata *)applicationMetadata
 {
 	DPChromecastManagerData *data = _dataDict[deviceManager.device.deviceID];
 	
-	data.textChannel = [[GCKCastChannel alloc] initWithNamespace:kReceiverAppNamespace];
+	data.textChannel = [[GCKCastChannel alloc] initWithNamespace:kReceiverNamespace];
 	[deviceManager addChannel:data.textChannel];
 	
 	data.ctrlChannel = [[GCKMediaControlChannel alloc] init];
@@ -390,6 +402,11 @@ didCompleteLoadWithSessionID:(NSInteger)sessionID
    requestDidCompleteWithID:(NSInteger)requestID
 {
 	[self updateEvent:mediaControlChannel];
+}
+
+- (void)mediaControlChannelDidUpdateStatus:(GCKMediaControlChannel *)mediaControlChannel
+{
+    [self updateEvent:mediaControlChannel];
 }
 
 - (void)updateEvent:(GCKMediaControlChannel *)mediaControlChannel

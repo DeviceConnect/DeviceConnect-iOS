@@ -101,18 +101,18 @@
 }
 
 - (NSArray *) eventListForProfile:(NSString *)profile interface:(NSString *)interface attribute:(NSString *)attribute {
-    return [self eventListForDeviceId:nil profile:profile interface:interface attribute:attribute];
+    return [self eventListForServiceId:nil profile:profile interface:interface attribute:attribute];
 }
 
-- (NSArray *) eventListForDeviceId:(NSString *)deviceId profile:(NSString *)profile attribute:(NSString *)attribute {
-    return [self eventListForDeviceId:deviceId profile:profile interface:nil attribute:attribute];
+- (NSArray *) eventListForServiceId:(NSString *)serviceId profile:(NSString *)profile attribute:(NSString *)attribute {
+    return [self eventListForServiceId:serviceId profile:profile interface:nil attribute:attribute];
 }
 
-- (NSArray *) eventListForDeviceId:(NSString *)deviceId profile:(NSString *)profile
+- (NSArray *) eventListForServiceId:(NSString *)serviceId profile:(NSString *)profile
                          interface:(NSString *)interface attribute:(NSString *)attribute
 {
     [self checkControllerState];
-    return [_controller eventsForDeviceId:deviceId profile:profile interface:interface attribute:attribute];
+    return [_controller eventsForServiceId:serviceId profile:profile interface:interface attribute:attribute];
 }
 
 - (void) flush {
@@ -131,8 +131,8 @@
     }
     [message setString:event.attribute forKey:DConnectMessageAttribute];
     [message setString:event.sessionKey forKey:DConnectMessageSessionKey];
-    if (event.deviceId) {
-        [message setString:event.deviceId forKey:DConnectMessageDeviceId];
+    if (event.serviceId) {
+        [message setString:event.serviceId forKey:DConnectMessageServiceId];
     }
     return message;
 }
@@ -146,7 +146,7 @@
     }
     
     DConnectEvent *event = [DConnectEvent new];
-    event.deviceId = request.deviceId;
+    event.serviceId = request.serviceId;
     event.profile = request.profile;
     event.interface = request.interface;
     event.attribute = request.attribute;

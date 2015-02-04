@@ -1,6 +1,6 @@
 //
 //  DPHostFileProfile.m
-//  DConnectSDK
+//  dConnectDeviceHost
 //
 //  Copyright (c) 2014 NTT DOCOMO, INC.
 //  Released under the MIT license
@@ -35,7 +35,7 @@
 - (BOOL)            profile:(DConnectFileProfile *)profile
 didReceiveGetReceiveRequest:(DConnectRequestMessage *)request
                    response:(DConnectResponseMessage *)response
-                   deviceId:(NSString *)deviceId
+                   serviceId:(NSString *)serviceId
                        path:(NSString *)path
 {
     if (!path || path.length == 0) {
@@ -72,7 +72,7 @@ didReceiveGetReceiveRequest:(DConnectRequestMessage *)request
 - (BOOL)         profile:(DConnectFileProfile *)profile
 didReceiveGetListRequest:(DConnectRequestMessage *)request
                 response:(DConnectResponseMessage *)response
-                deviceId:(NSString *)deviceId
+                serviceId:(NSString *)serviceId
                     path:(NSString *)path
                 mimeType:(NSString *)mimeType
                    order:(NSArray *)order
@@ -81,6 +81,23 @@ didReceiveGetListRequest:(DConnectRequestMessage *)request
 {
     DConnectFileManager *fileMgr = [SELF_PLUGIN fileMgr];
     NSFileManager *sysFileMgr = [NSFileManager defaultManager];
+    
+    NSString *offsetString = [request stringForKey:DConnectFileProfileParamOffset];
+    NSString *limitString = [request stringForKey:DConnectFileProfileParamLimit];
+    if (offsetString) {
+        if ([DPHostUtils isFloatWithString:offsetString]) {
+            [response setErrorToInvalidRequestParameterWithMessage:@"offset is non-float"];
+            return YES;
+        }
+    }
+    if (limitString) {
+        if ([DPHostUtils isFloatWithString:limitString]) {
+            [response setErrorToInvalidRequestParameterWithMessage:@"limit is non-float"];
+            return YES;
+        }
+    }
+    
+
     if (path) {
         // pathが絶対であれ相対であれベースURLに追加する。
         if ([path isEqualToString:@".."]) {
@@ -284,7 +301,7 @@ didReceiveGetListRequest:(DConnectRequestMessage *)request
 - (BOOL)          profile:(DConnectFileProfile *)profile
 didReceivePostSendRequest:(DConnectRequestMessage *)request
                  response:(DConnectResponseMessage *)response
-                 deviceId:(NSString *)deviceId
+                 serviceId:(NSString *)serviceId
                      path:(NSString *)path
                  mimeType:(NSString *)mimeType
                      data:(NSData *)data
@@ -327,7 +344,7 @@ didReceivePostSendRequest:(DConnectRequestMessage *)request
 - (BOOL)           profile:(DConnectFileProfile *)profile
 didReceivePostMkdirRequest:(DConnectRequestMessage *)request
                   response:(DConnectResponseMessage *)response
-                  deviceId:(NSString *)deviceId
+                  serviceId:(NSString *)serviceId
                       path:(NSString *)path
 {
     if (!path) {
@@ -363,7 +380,7 @@ didReceivePostMkdirRequest:(DConnectRequestMessage *)request
 - (BOOL)              profile:(DConnectFileProfile *)profile
 didReceiveDeleteRemoveRequest:(DConnectRequestMessage *)request
                      response:(DConnectResponseMessage *)response
-                     deviceId:(NSString *)deviceId
+                     serviceId:(NSString *)serviceId
                          path:(NSString *)path
 {
     if (!path || path.length == 0) {
@@ -401,7 +418,7 @@ didReceiveDeleteRemoveRequest:(DConnectRequestMessage *)request
 - (BOOL)             profile:(DConnectFileProfile *)profile
 didReceiveDeleteRmdirRequest:(DConnectRequestMessage *)request
                     response:(DConnectResponseMessage *)response
-                    deviceId:(NSString *)deviceId
+                    serviceId:(NSString *)serviceId
                         path:(NSString *)path
                        force:(BOOL)force
 {

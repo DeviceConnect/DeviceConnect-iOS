@@ -1,6 +1,6 @@
 //
 //  DPHostVibrationProfile.m
-//  DConnectSDK
+//  dConnectDeviceHost
 //
 //  Copyright (c) 2014 NTT DOCOMO, INC.
 //  Released under the MIT license
@@ -47,7 +47,7 @@
         NSString *patternStr = [DConnectVibrationProfile patternFromRequest:request];
         NSArray *pattern = patternStr ? [self parsePattern:patternStr] : nil;
         send = [self profile:self didReceivePutVibrateRequest:request response:response
-                    deviceId:[request deviceId] pattern:pattern];
+                    serviceId:[request serviceId] pattern:pattern];
     } else {
         [response setErrorToUnknownAttribute];
     }
@@ -58,7 +58,7 @@
 - (BOOL)            profile:(DConnectVibrationProfile *)profile
 didReceivePutVibrateRequest:(DConnectRequestMessage *)request
                    response:(DConnectResponseMessage *)response
-                   deviceId:(NSString *)deviceId
+                   serviceId:(NSString *)serviceId
                     pattern:(NSArray *) pattern
 {
     if (!pattern) {
@@ -74,7 +74,7 @@ didReceivePutVibrateRequest:(DConnectRequestMessage *)request
 - (BOOL)               profile:(DConnectVibrationProfile *)profile
 didReceiveDeleteVibrateRequest:(DConnectRequestMessage *)request
                       response:(DConnectResponseMessage *)response
-                      deviceId:(NSString *)deviceId
+                      serviceId:(NSString *)serviceId
 {
     // MARK: AudioServicesPlaySystemSound()が1つのサウンドしか再生できない実装仕様を再生停止に利用できないか。
     // 例えば、AudioServicesPlaySystemSound()への引数に0を指定したら止まったりするか？もしくは長さ0のサウンドファイルを指定すると止まる
