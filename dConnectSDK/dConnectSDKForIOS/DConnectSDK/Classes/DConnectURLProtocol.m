@@ -512,7 +512,7 @@ int getDConnectMethod(NSString *httpMethod) {
 - (void)addParametersFromHTTPBodyToRequestMessage:(DConnectRequestMessage *)requestMessage
 {
     NSString *contentType = [self valueForHTTPHeaderField:@"content-type"];
-    if ([contentType rangeOfString:@"multipart/form-data"
+    if (contentType && [contentType rangeOfString:@"multipart/form-data"
                            options:NSCaseInsensitiveSearch].location != NSNotFound)
     {
         [self addParametersFromMultipartToRequestMessage:requestMessage];
