@@ -160,7 +160,9 @@
  */
 - (void) testHttpFailSystemDeviceGetInvalidMethodPost
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/system/device?serviceId=%@", self.serviceId]];
+    NSURL *uri = [NSURL URLWithString:
+                  [NSString stringWithFormat:@"http://localhost:4035/gotapi/system/device?serviceId=%@",
+                   self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"POST"];
     
@@ -181,7 +183,9 @@
  */
 - (void) testHttpFailSystemDeviceGetInvalidMethodPut
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/system/device?serviceId=%@", self.serviceId]];
+    NSURL *uri = [NSURL URLWithString:
+                  [NSString stringWithFormat:@"http://localhost:4035/gotapi/system/device?serviceId=%@",
+                   self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
@@ -202,7 +206,9 @@
  */
 - (void) testHttpFailSystemDeviceGetInvalidMethodDelete
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/system/device?serviceId=%@", self.serviceId]];
+    NSURL *uri = [NSURL URLWithString:
+                  [NSString stringWithFormat:@"http://localhost:4035/gotapi/system/device?serviceId=%@",
+                   self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     
@@ -286,7 +292,8 @@
  */
 - (void) testHttpFailSystemDeviceWakeupPutInvalidMethodGet
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/system/device/wakeup?pluginId=DeviceTestPlugin.dconnect"];
+    NSURL *uri = [NSURL URLWithString:
+                  @"http://localhost:4035/gotapi/system/device/wakeup?pluginId=DeviceTestPlugin.dconnect"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
     
@@ -307,7 +314,8 @@
  */
 - (void) testHttpFailSystemDeviceWakeupPutInvalidMethodPost
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/system/device/wakeup?pluginId=DeviceTestPlugin.dconnect"];
+    NSURL *uri = [NSURL URLWithString:
+                  @"http://localhost:4035/gotapi/system/device/wakeup?pluginId=DeviceTestPlugin.dconnect"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"POST"];
     
@@ -328,7 +336,8 @@
  */
 - (void) testHttpFailSystemDeviceWakeupPutInvalidMethodDelete
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/system/device/wakeup?pluginId=DeviceTestPlugin.dconnect"];
+    NSURL *uri = [NSURL URLWithString:
+                  @"http://localhost:4035/gotapi/system/device/wakeup?pluginId=DeviceTestPlugin.dconnect"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     

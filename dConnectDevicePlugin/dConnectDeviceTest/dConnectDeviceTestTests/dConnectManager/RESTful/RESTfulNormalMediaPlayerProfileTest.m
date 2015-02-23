@@ -387,7 +387,8 @@
 - (void) testHttpNormalMediaPlayerOnStatusChangePut
 {
     NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:
-                                       @"http://localhost:4035/gotapi/media_player/onstatuschange?sessionKey=%@&serviceId=%@",
+                                       @"http://localhost:4035/gotapi/media_player/onstatuschange?"
+                                       "sessionKey=%@&serviceId=%@",
                                        self.clientId, self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
@@ -412,7 +413,8 @@
 - (void) testHttpNormalMediaPlayerOnStatusChangeDelete
 {
     NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:
-                                       @"http://localhost:4035/gotapi/media_player/onstatuschange?sessionKey=%@&serviceId=%@",
+                                       @"http://localhost:4035/gotapi/media_player/onstatuschange?"
+                                       "sessionKey=%@&serviceId=%@",
                                        self.clientId, self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];

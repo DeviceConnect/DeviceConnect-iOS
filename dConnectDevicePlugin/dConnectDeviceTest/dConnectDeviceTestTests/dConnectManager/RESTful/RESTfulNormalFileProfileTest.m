@@ -33,7 +33,9 @@
  */
 - (void) testHttpNormalFileSendPost
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/file/send?serviceId=%@&path=%%2Ftest%%2Ftest%%2Epng", self.serviceId]];
+    NSURL *uri = [NSURL URLWithString:
+                  [NSString stringWithFormat:@"http://localhost:4035/gotapi/file/send?serviceId=%@&path=%%2Ftest%%2Ftest%%2Epng",
+                   self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"POST"];
     Multipart* multi = [Multipart new];
@@ -57,7 +59,9 @@
  */
 - (void) testHttpNormalFileSendPostZeroByte
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/file/send?serviceId=%@&path=%%2Ftest%%2Fzero%%2Edat", self.serviceId]];
+    NSURL *uri = [NSURL URLWithString:
+                  [NSString stringWithFormat:@"http://localhost:4035/gotapi/file/send?serviceId=%@&path=%%2Ftest%%2Fzero%%2Edat",
+                   self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"POST"];
     Multipart* multi = [Multipart new];
@@ -84,7 +88,9 @@
 {
     [self testHttpNormalFileSendPost];
     
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/file/receive?serviceId=%@&path=%%2Ftest%%2Ftest%%2Epng", self.serviceId]];
+    NSURL *uri = [NSURL URLWithString:
+                  [NSString stringWithFormat:@"http://localhost:4035/gotapi/file/receive?serviceId=%@&path=%%2Ftest%%2Ftest%%2Epng",
+                   self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
     
@@ -96,17 +102,19 @@
                                                      error:&error];
     XCTAssertNotNil(data);
     XCTAssertNil(error);
-    NSDictionary *expectedResponse = [NSJSONSerialization JSONObjectWithData:[expectedJson dataUsingEncoding:NSUTF8StringEncoding]
+    NSDictionary *expectedResponse = [NSJSONSerialization JSONObjectWithData:
+                                      [expectedJson dataUsingEncoding:NSUTF8StringEncoding]
                                                                      options:NSJSONReadingMutableContainers
                                                                        error:nil];
     NSDictionary *actualResponse = [NSJSONSerialization JSONObjectWithData:data
                                                                    options:NSJSONReadingMutableContainers
                                                                      error:nil];
     XCTAssertNotNil(actualResponse);
-    XCTAssertTrue([self assertDictionary:expectedResponse actual:actualResponse], "expected=%@, but actual=%@", expectedResponse, actualResponse);
+    XCTAssertTrue([self assertDictionary:expectedResponse actual:actualResponse],
+                  "expected=%@, but actual=%@", expectedResponse, actualResponse);
     
     // uriのチェック
-    NSString *paramUri = [actualResponse objectForKey:@"uri"];
+    NSString *paramUri = actualResponse[@"uri"];
     XCTAssertNotNil(paramUri);
     XCTAssertTrue([paramUri hasPrefix:@"http://localhost:4035/gotapi/files?uri="], @"Invalid uri: %@", paramUri);
     request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString: paramUri]];
@@ -134,7 +142,10 @@
 {
     [self testHttpNormalFileSendPostZeroByte];
     
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/file/receive?serviceId=%@&path=%%2Ftest%%2Fzero%%2Edat", self.serviceId]];
+    NSURL *uri = [NSURL URLWithString:
+                  [NSString stringWithFormat:
+                    @"http://localhost:4035/gotapi/file/receive?serviceId=%@&path=%%2Ftest%%2Fzero%%2Edat",
+                   self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
     
@@ -146,17 +157,19 @@
                                                      error:&error];
     XCTAssertNotNil(data);
     XCTAssertNil(error);
-    NSDictionary *expectedResponse = [NSJSONSerialization JSONObjectWithData:[expectedJson dataUsingEncoding:NSUTF8StringEncoding]
+    NSDictionary *expectedResponse = [NSJSONSerialization JSONObjectWithData:
+                                      [expectedJson dataUsingEncoding:NSUTF8StringEncoding]
                                                                      options:NSJSONReadingMutableContainers
                                                                        error:nil];
     NSDictionary *actualResponse = [NSJSONSerialization JSONObjectWithData:data
                                                                    options:NSJSONReadingMutableContainers
                                                                      error:nil];
     XCTAssertNotNil(actualResponse);
-    XCTAssertTrue([self assertDictionary:expectedResponse actual:actualResponse], "expected=%@, but actual=%@", expectedResponse, actualResponse);
+    XCTAssertTrue([self assertDictionary:expectedResponse actual:actualResponse],
+                  "expected=%@, but actual=%@", expectedResponse, actualResponse);
     
     // uriのチェック
-    NSString *paramUri = [actualResponse objectForKey:@"uri"];
+    NSString *paramUri = actualResponse[@"uri"];
     XCTAssertNotNil(paramUri);
     XCTAssertTrue([paramUri hasPrefix:@"http://localhost:4035/gotapi/files?uri="], @"Invalid uri: %@", paramUri);
     request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString: paramUri]];
@@ -185,11 +198,15 @@
  */
 - (void) testHttpNormalFileListGet
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/file/list?serviceId=%@", self.serviceId]];
+    NSURL *uri = [NSURL URLWithString:
+                  [NSString stringWithFormat:@"http://localhost:4035/gotapi/file/list?serviceId=%@",
+                   self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
     
-    CHECK_RESPONSE(@"{\"files\":[{\"fileSize\":64000,\"fileType\":0,\"fileName\":\"test.png\",\"path\":\"/test.png\",\"mimeType\":\"image/png\"}],\"result\":0,\"count\":1}", request);
+    CHECK_RESPONSE(@"{\"files\":[{\"fileSize\":64000,\"fileType\":0,\"fileName\":\"test.png\","
+                   "\"path\":\"/test.png\",\"mimeType\":\"image/png\"}],\"result\":0,\"count\":1}",
+                   request);
 }
 
 /*!
@@ -208,7 +225,9 @@
     // あとで削除するためのファイルを送信しておく.
     [self testHttpNormalFileSendPost];
     
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/file/remove?serviceId=%@&path=%%2Ftest%%2Ftest%%2Epng", self.serviceId]];
+    NSURL *uri = [NSURL URLWithString:
+                  [NSString stringWithFormat:@"http://localhost:4035/gotapi/file/remove?"
+                   "serviceId=%@&path=%%2Ftest%%2Ftest%%2Epng", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     
