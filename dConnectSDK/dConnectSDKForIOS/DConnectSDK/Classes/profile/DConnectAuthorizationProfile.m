@@ -128,14 +128,26 @@ NSString *const DConnectAuthorizationProfileGrantTypeAuthorizationCode = @"autho
     } else if (clientId == nil) {
         [response setErrorToInvalidRequestParameterWithMessage:@"clientId is nil."];
         return YES;
+    } else if (clientId.length <= 0) {
+        [response setErrorToInvalidRequestParameterWithMessage:@"clientId is empty."];
+        return YES;
     } else if (grantType == nil) {
         [response setErrorToInvalidRequestParameterWithMessage:@"grantType is nil."];
+        return YES;
+    } else if (grantType.length <= 0) {
+        [response setErrorToInvalidRequestParameterWithMessage:@"grantType is empty."];
         return YES;
     } else if (scopes == nil) {
         [response setErrorToInvalidRequestParameterWithMessage:@"scope is nil."];
         return YES;
+    } else if (scopes.count <= 0) {
+        [response setErrorToInvalidRequestParameterWithMessage:@"scope is empty."];
+        return YES;
     } else if (applicationName == nil) {
-        [response setErrorToInvalidRequestParameterWithMessage:@"applicationName is nil"];
+        [response setErrorToInvalidRequestParameterWithMessage:@"applicationName is nil."];
+        return YES;
+    } else if (applicationName.length <= 0) {
+        [response setErrorToInvalidRequestParameterWithMessage:@"applicationName is empty."];
         return YES;
     }
     
