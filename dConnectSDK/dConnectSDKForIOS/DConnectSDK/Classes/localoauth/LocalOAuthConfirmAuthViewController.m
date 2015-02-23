@@ -37,7 +37,8 @@ static const int LocalOAuthConfirmAuthViewControllerCellLabelTag = 1;
     秒単位の時間を{日、時間、分、秒}の表記の文字列に変換する.
 
     @param[in] sec 秒単位の時間
-    @return secが0秒以上なら{日、時間、分、秒}の表記に変換した時間 / secがマイナス値なら""
+    @return secが0秒以上なら{日、時間、分、秒}
+            の表記に変換した時間 / secがマイナス値なら""
  */
 - (NSString *) toTimespanString: (long long) sec;
 
@@ -72,14 +73,18 @@ static const int LocalOAuthConfirmAuthViewControllerCellLabelTag = 1;
     
     
     /* 言語環境(書式)の設定に合わせたフォーマットで日付文字列を取得 */
-    NSDate *expirePeriod = [NSDate dateWithTimeIntervalSinceNow: LocalOAuth2Settings_DEFAULT_TOKEN_EXPIRE_PERIOD];
+    NSDate *expirePeriod = [NSDate dateWithTimeIntervalSinceNow:
+                            LocalOAuth2Settings_DEFAULT_TOKEN_EXPIRE_PERIOD];
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     dateFormatter.dateStyle = NSDateFormatterMediumStyle;
     dateFormatter.timeStyle = NSDateFormatterNoStyle;
     NSString *formattedDateString = [dateFormatter stringFromDate: expirePeriod];
     
-    NSBundle *b = DCBundle();
-    NSString *strExpirePeriod = [NSString stringWithFormat:DCLocalizedString(b, @"token_default_expiration_date"), formattedDateString];
+    NSBundle *bundle = DCBundle();
+    NSString *strExpirePeriod = [NSString
+                                    stringWithFormat:DCLocalizedString(bundle,
+                                                @"token_default_expiration_date"),
+                                                    formattedDateString];
     
     [_labelApplicationName setText: [_confirmAuthParams applicationName]];
     [_labelExpirePeriod setText:strExpirePeriod];
@@ -135,7 +140,7 @@ static const int LocalOAuthConfirmAuthViewControllerCellLabelTag = 1;
     
     static NSString *cellIdentifier = @"cell";
     
-    NSString *displayScope = [_displayScopes objectAtIndex: indexPath.row];
+    NSString *displayScope = _displayScopes[indexPath.row];
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     if (cell == nil) {
@@ -150,36 +155,36 @@ static const int LocalOAuthConfirmAuthViewControllerCellLabelTag = 1;
 }
 
 - (NSString *) toTimespanString: (long long) sec {
-    long long d = sec / DAY;
-    sec -= d * DAY;
-    long long h = sec / HOUR;
-    sec -= h * HOUR;
-    long long m = sec / MINUTE;
-    sec -= m * MINUTE;
+    long long secOfDay = sec / DAY;
+    sec -= secOfDay * DAY;
+    long long secOfHour = sec / HOUR;
+    sec -= secOfHour * HOUR;
+    long long minute = sec / MINUTE;
+    sec -= minute * MINUTE;
     
-    NSNumber *num_d = [NSNumber numberWithLongLong:d];
-    NSNumber *num_h = [NSNumber numberWithLongLong:h];
-    NSNumber *num_m = [NSNumber numberWithLongLong:m];
-    NSNumber *num_sec = [NSNumber numberWithLongLong:sec];
+    NSNumber *numOfDay = [NSNumber numberWithLongLong:secOfDay];
+    NSNumber *numOfHour = [NSNumber numberWithLongLong:secOfHour];
+    NSNumber *numOfMinute = [NSNumber numberWithLongLong:minute];
+    NSNumber *numOfSec = [NSNumber numberWithLongLong:sec];
     
-    NSMutableString *t = [NSMutableString string];
-    if (d > 0) {
-        [t appendString: [num_d stringValue]];
-        [t appendString: @"日"];
+    NSMutableString *expiredTime = [NSMutableString string];
+    if (secOfDay > 0) {
+        [expiredTime appendString: [numOfDay stringValue]];
+        [expiredTime appendString: @"日"];
     }
-    if (h > 0) {
-        [t appendString: [num_h stringValue]];
-        [t appendString: @"時間"];
+    if (secOfHour > 0) {
+        [expiredTime appendString: [numOfHour stringValue]];
+        [expiredTime appendString: @"時間"];
     }
-    if (m > 0) {
-        [t appendString: [num_m stringValue]];
-        [t appendString: @"分"];
+    if (minute > 0) {
+        [expiredTime appendString: [numOfMinute stringValue]];
+        [expiredTime appendString: @"分"];
     }
-    if (sec > 0 || (t == nil && sec == 0)) {
-        [t appendString: [num_sec stringValue]];
-        [t appendString: @"秒"];
+    if (sec > 0 || (expiredTime == nil && sec == 0)) {
+        [expiredTime appendString: [numOfSec stringValue]];
+        [expiredTime appendString: @"秒"];
     }
-    return t;
+    return expiredTime;
 }
 
 -(void)autoTestProc:(NSTimer*)timer{

@@ -1,6 +1,6 @@
 //
 //  DPPebbleImage.h
-//  DConnectSDK
+//  dConnectDevicePebble
 //
 //  Copyright (c) 2014 NTT DOCOMO, INC.
 //  Released under the MIT license
@@ -20,8 +20,8 @@
  @param mode モード
  */
 +(NSData*)convertImage: (NSData*)data
-                     x: (double)x
-                     y: (double)y
+                     imageX: (double)imageX
+                     imageY: (double)imageY
                   mode: (NSString *)mode;
 
 @end

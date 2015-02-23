@@ -1,6 +1,6 @@
 //
 //  RESTfulNormalMediaPlayerProfileTest.m
-//  DConnectSDK
+//  dConnectDeviceTest
 //
 //  Copyright (c) 2014 NTT DOCOMO, INC.
 //  Released under the MIT license
@@ -34,7 +34,9 @@
  */
 - (void) testHttpNormalMediaPlayerMediaPut
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/media_player/media?serviceId=%@&mediaId=0", self.serviceId]];
+    NSURL *uri = [NSURL URLWithString:
+                  [NSString stringWithFormat:
+                   @"http://localhost:4035/gotapi/media_player/media?serviceId=%@&mediaId=0", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
@@ -55,11 +57,16 @@
  */
 - (void) testHttpNormalMediaPlayerMediaGet
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/media_player/media?serviceId=%@&mediaId=0", self.serviceId]];
+    NSURL *uri = [NSURL URLWithString:
+                  [NSString stringWithFormat:
+                     @"http://localhost:4035/gotapi/media_player/media?serviceId=%@&mediaId=0", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
     
-    CHECK_RESPONSE(@"{\"creators\":[{\"role\":\"test composer\",\"creator\":\"test creator\"}],\"result\":0,\"duration\":60000,\"title\":\"test title\",\"keywords\":[\"keyword1\",\"keyword2\"],\"genres\":[\"test1\",\"test2\"],\"description\":\"test description\",\"language\":\"ja\",\"type\":\"test type\",\"mimeType\":\"audio/mp3\"}", request);
+    CHECK_RESPONSE(@"{\"creators\":[{\"role\":\"test composer\",\"creator\":\"test creator\"}],"
+                 "\"result\":0,\"duration\":60000,\"title\":\"test title\",\"keywords\":[\"keyword1\",\"keyword2\"],"
+                  "\"genres\":[\"test1\",\"test2\"],\"description\":\"test description\","
+                   "\"language\":\"ja\",\"type\":\"test type\",\"mimeType\":\"audio/mp3\"}", request);
 }
 
 /*!
@@ -76,11 +83,17 @@
  */
 - (void) testHttpNormalMediaPlayerMediaListGet
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/media_player/media_list?serviceId=%@", self.serviceId]];
+    NSURL *uri = [NSURL URLWithString:
+                  [NSString stringWithFormat:
+                   @"http://localhost:4035/gotapi/media_player/media_list?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
     
-    CHECK_RESPONSE(@"{\"result\":0,\"count\":1,\"media\":[{\"creators\":[{\"role\":\"test composer\",\"creator\":\"test creator\"}],\"duration\":60000,\"title\":\"test title\",\"keywords\":[\"keyword1\",\"keyword2\"],\"genres\":[\"test1\",\"test2\"],\"description\":\"test description\",\"language\":\"ja\",\"type\":\"test type\",\"mimeType\":\"audio/mp3\"}]}", request);
+    CHECK_RESPONSE(@"{\"result\":0,\"count\":1,\"media\":[{\"creators\":[{\"role\":\"test composer\","
+                  "\"creator\":\"test creator\"}],\"duration\":60000,\"title\":\"test title\","
+                   "\"keywords\":[\"keyword1\",\"keyword2\"],\"genres\":[\"test1\",\"test2\"],"
+                   "\"description\":\"test description\",\"language\":\"ja\",\"type\":\"test type\""
+                   ",\"mimeType\":\"audio/mp3\"}]}", request);
 }
 
 /*!
@@ -97,7 +110,9 @@
  */
 - (void) testHttpNormalMediaPlayerPlayStatusGet
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/media_player/play_status?serviceId=%@", self.serviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:
+                                       @"http://localhost:4035/gotapi/media_player/play_status?serviceId=%@",
+                                       self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
     
@@ -118,7 +133,9 @@
  */
 - (void) testHttpNormalMediaPlayerPlayPut
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/media_player/play?serviceId=%@", self.serviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:
+                                    @"http://localhost:4035/gotapi/media_player/play?serviceId=%@",
+                                       self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
@@ -139,7 +156,9 @@
  */
 - (void) testHttpNormalMediaPlayerStopPut
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/media_player/stop?serviceId=%@", self.serviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:
+                                       @"http://localhost:4035/gotapi/media_player/stop?serviceId=%@",
+                                       self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
@@ -160,7 +179,9 @@
  */
 - (void) testHttpNormalMediaPlayerPausePut
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/media_player/pause?serviceId=%@", self.serviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:
+                                       @"http://localhost:4035/gotapi/media_player/pause?serviceId=%@",
+                                       self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
@@ -181,7 +202,9 @@
  */
 - (void) testHttpNormalMediaPlayerResumePut
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/media_player/resume?serviceId=%@", self.serviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:
+                                       @"http://localhost:4035/gotapi/media_player/resume?serviceId=%@",
+                                       self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
@@ -202,7 +225,9 @@
  */
 - (void) testHttpNormalMediaPlayerSeekPut
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/media_player/seek?serviceId=%@&pos=0", self.serviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:
+                                       @"http://localhost:4035/gotapi/media_player/seek?serviceId=%@&pos=0",
+                                       self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
@@ -223,7 +248,9 @@
  */
 - (void) testHttpNormalMediaPlayerSeekGet
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/media_player/seek?serviceId=%@", self.serviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:
+                                       @"http://localhost:4035/gotapi/media_player/seek?serviceId=%@",
+                                       self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
     
@@ -244,7 +271,9 @@
  */
 - (void) testHttpNormalMediaPlayerVolumePut
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/media_player/volume?serviceId=%@&volume=0", self.serviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:
+                                       @"http://localhost:4035/gotapi/media_player/volume?serviceId=%@&volume=0",
+                                       self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
@@ -265,7 +294,9 @@
  */
 - (void) testHttpNormalMediaPlayerVolumeGet
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/media_player/volume?serviceId=%@", self.serviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:
+                                       @"http://localhost:4035/gotapi/media_player/volume?serviceId=%@",
+                                       self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
     
@@ -286,7 +317,9 @@
  */
 - (void) testHttpNormalMediaPlayerMutePut
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/media_player/mute?serviceId=%@", self.serviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:
+                                       @"http://localhost:4035/gotapi/media_player/mute?serviceId=%@",
+                                       self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
@@ -307,7 +340,9 @@
  */
 - (void) testHttpNormalMediaPlayerMuteDelete
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/media_player/mute?serviceId=%@", self.serviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:
+                                       @"http://localhost:4035/gotapi/media_player/mute?serviceId=%@",
+                                       self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     
@@ -328,7 +363,9 @@
  */
 - (void) testHttpNormalMediaPlayerMuteGet
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/media_player/mute?serviceId=%@", self.serviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:
+                                       @"http://localhost:4035/gotapi/media_player/mute?serviceId=%@",
+                                       self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
     
@@ -349,12 +386,15 @@
  */
 - (void) testHttpNormalMediaPlayerOnStatusChangePut
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/media_player/onstatuschange?sessionKey=%@&serviceId=%@", self.clientId, self.serviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:
+                                       @"http://localhost:4035/gotapi/media_player/onstatuschange?sessionKey=%@&serviceId=%@",
+                                       self.clientId, self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
     CHECK_RESPONSE(@"{\"result\":0}", request);
-    CHECK_EVENT(@"{\"mediaPlayer\":{\"mediaId\":\"test.mp4\",\"status\":\"play\",\"volume\":0.5,\"mimeType\":\"video/mp4\",\"pos\":0}}");
+    CHECK_EVENT(@"{\"mediaPlayer\":{\"mediaId\":\"test.mp4\",\"status\":\"play\","
+                "\"volume\":0.5,\"mimeType\":\"video/mp4\",\"pos\":0}}");
 }
 
 /*!
@@ -371,7 +411,9 @@
  */
 - (void) testHttpNormalMediaPlayerOnStatusChangeDelete
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/media_player/onstatuschange?sessionKey=%@&serviceId=%@", self.clientId, self.serviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:
+                                       @"http://localhost:4035/gotapi/media_player/onstatuschange?sessionKey=%@&serviceId=%@",
+                                       self.clientId, self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     

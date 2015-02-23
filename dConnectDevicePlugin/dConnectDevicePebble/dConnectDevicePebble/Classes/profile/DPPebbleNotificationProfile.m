@@ -1,6 +1,6 @@
 //
 //  DPPebbleNotificationProfile.m
-//  DConnectSDK
+//  dConnectDevicePebble
 //
 //  Copyright (c) 2014 NTT DOCOMO, INC.
 //  Released under the MIT license
@@ -24,7 +24,10 @@
 		// 通知許可を得る
 		UIApplication *application = [UIApplication sharedApplication];
 		if ([application respondsToSelector:@selector(registerUserNotificationSettings:)]) {
-			UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeAlert|UIUserNotificationTypeSound categories:nil];
+			UIUserNotificationSettings *settings
+                            = [UIUserNotificationSettings
+                                settingsForTypes:UIUserNotificationTypeAlert|UIUserNotificationTypeSound
+                                      categories:nil];
 			[application registerUserNotificationSettings:settings];
 		}
 	}

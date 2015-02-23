@@ -93,7 +93,9 @@ typedef NS_ENUM(NSUInteger, NotificationIndex) {
 }
 
 - (void)dealloc {
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"UIApplicationDidReceiveLocalNotification" object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:@"UIApplicationDidReceiveLocalNotification"
+                                                  object:nil];
 }
 
 
@@ -190,7 +192,8 @@ didReceivePostNotifyRequest:(DConnectRequestMessage *)request
             [response setErrorToInvalidRequestParameterWithMessage:@"Not support type"];
             return YES;
     }
-    notification = [self scheduleWithAlertBody:[status stringByAppendingString:body] userInfo:@{@"id":notificationId,@"serviceId":serviceId}];
+    notification = [self scheduleWithAlertBody:[status stringByAppendingString:body]
+                                      userInfo:@{@"id":notificationId,@"serviceId":serviceId}];
     
     // 通知情報を生成し、notificationInfoDictにて管理
     NSMutableArray *notificationInfo =

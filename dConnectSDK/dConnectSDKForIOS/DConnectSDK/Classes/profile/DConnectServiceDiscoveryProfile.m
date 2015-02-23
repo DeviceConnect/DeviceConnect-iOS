@@ -71,9 +71,17 @@ NSString *const DConnectServiceDiscoveryProfileNetworkTypeBLE = @"BLE";
     
     NSString *attribute = [request attribute];
     if ([attribute isEqualToString:DConnectServiceDiscoveryProfileAttrOnServiceChange]) {
-        if ([self hasMethod:@selector(profile:didReceivePutOnServiceChangeRequest:response:serviceId:sessionKey:) response:response]) {
-            send = [_delegate profile:self didReceivePutOnServiceChangeRequest:request response:response
-                             serviceId:[request serviceId] sessionKey:[request sessionKey]];
+        if ([self hasMethod:@selector(profile:
+                                      didReceivePutOnServiceChangeRequest:
+                                      response:
+                                      serviceId:
+                                      sessionKey:)
+                   response:response]) {
+            send = [_delegate                       profile:self
+                        didReceivePutOnServiceChangeRequest:request
+                                                   response:response
+                                                  serviceId:[request serviceId]
+                                                 sessionKey:[request sessionKey]];
         }
     } else {
         [response setErrorToUnknownAttribute];
@@ -92,8 +100,14 @@ NSString *const DConnectServiceDiscoveryProfileNetworkTypeBLE = @"BLE";
     
     NSString *attribute = [request attribute];
     if ([attribute isEqualToString:DConnectServiceDiscoveryProfileAttrOnServiceChange]) {
-        if ([self hasMethod:@selector(profile:didReceiveDeleteOnServiceChangeRequest:response:serviceId:sessionKey:) response:response]) {
-            send = [_delegate profile:self didReceiveDeleteOnServiceChangeRequest:request response:response
+        if ([self hasMethod:@selector(profile:
+                                      didReceiveDeleteOnServiceChangeRequest:
+                                      response:
+                                      serviceId:
+                                      sessionKey:)
+                   response:response]) {
+            send = [_delegate                          profile:self
+                        didReceiveDeleteOnServiceChangeRequest:request response:response
                              serviceId:[request serviceId] sessionKey:[request sessionKey]];
         }
     } else {
@@ -112,8 +126,8 @@ NSString *const DConnectServiceDiscoveryProfileNetworkTypeBLE = @"BLE";
     [message setMessage:networkService forKey:DConnectServiceDiscoveryProfileParamNetworkService];
 }
 
-+ (void) setId:(NSString *)id target:(DConnectMessage *)message {
-    [message setString:id forKey:DConnectServiceDiscoveryProfileParamId];
++ (void) setId:(NSString *)serviceId target:(DConnectMessage *)message {
+    [message setString:serviceId forKey:DConnectServiceDiscoveryProfileParamId];
 }
 
 + (void) setName:(NSString *)name target:(DConnectMessage *)message {

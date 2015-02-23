@@ -68,20 +68,20 @@
 
 - (void)parserDidStartDocument:(NSXMLParser *)parser
 {
-//    NSLog(@"SampleDeviceDiscovery File found and parsing started");
 }
 
 - (void)parser:(NSXMLParser *)parser parseErrorOccurred:(NSError *)parseError
 {
     
-//    NSString *errorString = [NSString stringWithFormat:@"Error code %li", (long)[parseError code]];
-//    NSLog(@"SampleDeviceDiscovery Error parsing XML: %@", errorString);
     _isErrorParsing=YES;
 }
 
-- (void)parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName attributes:(NSDictionary *)attributeDict
+- (void)     parser:(NSXMLParser *)parser
+    didStartElement:(NSString *)elementName
+       namespaceURI:(NSString *)namespaceURI
+      qualifiedName:(NSString *)qName
+         attributes:(NSDictionary *)attributeDict
 {
-    BOOL isLog = NO; // change to YES to see the log
     if ([elementName isEqualToString:@"device"])
     {
         _deviceInfo = [[DeviceInfo alloc] init];
@@ -107,16 +107,10 @@
     {
         _parseStatus = 3;
     }
-    if(isLog)
-    {
-//        NSLog(@"SampleDeviceDiscovery didStartElement, %@, %@, %@, %@", elementName, namespaceURI, qName, attributeDict);
-    }
 }
 
 - (void)parser:(NSXMLParser *)parser foundCharacters:(NSString *)string
 {
-    // Note that it's a irresponsible rule for the sample application.
-    BOOL isLog = NO; // change to YES to see the log
     if(_parseStatus == 0)
     {
         [_deviceInfo setFriendlyName:string];
@@ -138,15 +132,13 @@
         [_deviceInfo addService:_currentServiceName :[string copy]];
         _currentServiceName = nil;
     }
-    if(isLog)
-    {
-//        NSLog(@"SampleDeviceDiscovery foundCharacters, %@", string);
-    }
 }
 
-- (void)parser:(NSXMLParser *)parser didEndElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName
+- (void)   parser:(NSXMLParser *)parser
+    didEndElement:(NSString *)elementName
+     namespaceURI:(NSString *)namespaceURI
+    qualifiedName:(NSString *)qName
 {
-    BOOL isLog = NO; // change to YES to see the log
     if ([elementName isEqualToString:@"device"])
     {
         if(_isCameraDevice)
@@ -175,22 +167,10 @@
     {
         _parseStatus = -1;
     }
-    if(isLog)
-    {
-//        NSLog(@"SampleDeviceDiscovery didEndElement, %@, %@, %@", elementName, namespaceURI, qName);
-    }
 }
 
 - (void)parserDidEndDocument:(NSXMLParser *)parser
 {
-//    NSLog(@"SampleDeviceDiscovery parserDidEndDocument");
-    if (_isErrorParsing == NO)
-    {
-//        NSLog(@"SampleDeviceDiscovery XML processing done!");
-    } else
-    {
-//        NSLog(@"SampleDeviceDiscovery Error occurred during XML processing");
-    }
     if([DeviceList getSize] > 0)
     {
         [_viewDelegate didReceiveDeviceList:YES];

@@ -1,6 +1,6 @@
 //
 //  dConnectDeviceHue.m
-//  DConnectSDK
+//  dConnectDeviceHue
 //
 //  Copyright (c) 2014 NTT DOCOMO, INC.
 //  Released under the MIT license
@@ -45,14 +45,14 @@ NSString *const DPHueBundleName = @"dConnectDeviceHue_resources";
         [self addProfile:hueProfile];
         __weak typeof(self) _self = self;
         dispatch_async(dispatch_get_main_queue(), ^{
-            NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+            NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
             UIApplication *application = [UIApplication sharedApplication];
             
-            [nc addObserver:_self selector:@selector(enterForeground)
+            [notificationCenter addObserver:_self selector:@selector(enterForeground)
                        name:UIApplicationWillEnterForegroundNotification
                      object:application];
             
-            [nc addObserver:_self selector:@selector(enterBackground)
+            [notificationCenter addObserver:_self selector:@selector(enterBackground)
                        name:UIApplicationDidEnterBackgroundNotification
                      object:application];
         });
@@ -63,11 +63,11 @@ NSString *const DPHueBundleName = @"dConnectDeviceHue_resources";
 
 - (void) dealloc {
     
-    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+    NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
     UIApplication *application = [UIApplication sharedApplication];
     
-    [nc removeObserver:self name:UIApplicationDidBecomeActiveNotification object:application];
-    [nc removeObserver:self name:UIApplicationDidEnterBackgroundNotification object:application];
+    [notificationCenter removeObserver:self name:UIApplicationDidBecomeActiveNotification object:application];
+    [notificationCenter removeObserver:self name:UIApplicationDidEnterBackgroundNotification object:application];
 }
 /*!
  @brief バックグラウンドに回ったときの処理

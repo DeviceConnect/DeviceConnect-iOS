@@ -50,10 +50,9 @@ NSString *const LOCALOAUTH_USERNAME = @"username";
     NSString *selfUserId = self.userId;
     NSString *objUserId = objUser.userId;
     
-    if (selfUserId != nil && objUserId != nil) {
-        if ([selfUserId isEqualToString:objUserId]) {
-            return YES;
-        }
+    if ((selfUserId != nil && objUserId != nil)
+        && [selfUserId isEqualToString:objUserId]) {
+        return YES;
     }
     return NO;
 }

@@ -1,6 +1,6 @@
 //
 //  TestFileDescriptorProfile.m
-//  DConnectSDK
+//  dConnectDeviceTest
 //
 //  Copyright (c) 2014 NTT DOCOMO, INC.
 //  Released under the MIT license
@@ -107,10 +107,11 @@ NSString *const TestFileDescriptorPrev = @"2014-06-01T00:00:00+0900";
 
 #pragma mark Event Registration
 
-- (BOOL) profile:(DConnectFileDescriptorProfile *)profile didReceivePutOnWatchFileRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response
-        serviceId:(NSString *)serviceId
-      sessionKey:(NSString *)sessionKey
+- (BOOL)                    profile:(DConnectFileDescriptorProfile *)profile
+    didReceivePutOnWatchFileRequest:(DConnectRequestMessage *)request
+                           response:(DConnectResponseMessage *)response
+                          serviceId:(NSString *)serviceId
+                         sessionKey:(NSString *)sessionKey
 {
     
     CheckDIDAndSK(response, serviceId, sessionKey) {
@@ -136,10 +137,11 @@ NSString *const TestFileDescriptorPrev = @"2014-06-01T00:00:00+0900";
 #pragma mark - Delete Methods
 #pragma mark Event Unregistration
 
-- (BOOL) profile:(DConnectFileDescriptorProfile *)profile didReceiveDeleteOnWatchFileRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response
-        serviceId:(NSString *)serviceId
-      sessionKey:(NSString *)sessionKey
+- (BOOL)                       profile:(DConnectFileDescriptorProfile *)profile
+    didReceiveDeleteOnWatchFileRequest:(DConnectRequestMessage *)request
+                              response:(DConnectResponseMessage *)response
+                             serviceId:(NSString *)serviceId
+                            sessionKey:(NSString *)sessionKey
 {
     
     CheckDIDAndSK(response, serviceId, sessionKey) {

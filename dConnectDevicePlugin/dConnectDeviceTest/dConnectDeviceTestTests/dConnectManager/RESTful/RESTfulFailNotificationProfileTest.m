@@ -1,6 +1,6 @@
 //
 //  RESTfulFailNotificationProfileTest.m
-//  DConnectSDK
+//  dConnectDeviceTest
 //
 //  Copyright (c) 2014 NTT DOCOMO, INC.
 //  Released under the MIT license
@@ -76,7 +76,8 @@
  */
 - (void) testHttpFailNotificationNotifyPostInvalidServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/notification/notify?notificationId=1&serviceId=12345678"];
+    NSURL *uri = [NSURL URLWithString:
+                  @"http://localhost:4035/gotapi/notification/notify?notificationId=1&serviceId=12345678"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"POST"];
     
@@ -160,7 +161,9 @@
  */
 - (void) testHttpFailNotificationNotifyDeleteInvalidMethodGet
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/notification/notify?serviceId=%@", self.serviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:
+                                       @"http://localhost:4035/gotapi/notification/notify?serviceId=%@",
+                                       self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
     
@@ -181,7 +184,9 @@
  */
 - (void) testHttpFailNotificationNotifyDeleteInvalidMethodPut
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/notification/notify?serviceId=%@", self.serviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:
+                                       @"http://localhost:4035/gotapi/notification/notify?serviceId=%@",
+                                       self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
@@ -265,7 +270,8 @@
  */
 - (void) testHttpFailNotificationOnClickPutNoSessionKey
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/notification/onclick?serviceId=%@", self.serviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:
+                                       @"http://localhost:4035/gotapi/notification/onclick?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     

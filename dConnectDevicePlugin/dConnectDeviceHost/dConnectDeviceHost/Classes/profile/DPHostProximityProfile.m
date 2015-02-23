@@ -81,7 +81,6 @@ didReceivePutOnUserProximityRequest:(DConnectRequestMessage *)request
                                             profile:DConnectProximityProfileName
                                           attribute:DConnectProximityProfileAttrOnUserProximity];
     if (evts.count == 0) {
-        // UIDeviceProximityStateDidChangeNotification通知の配送が開始されていないのなら、開始する。
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(sendOnUserProximityEvent:)
                                                      name:UIDeviceProximityStateDidChangeNotification
@@ -130,8 +129,10 @@ didReceiveDeleteOnUserProximityRequest:(DConnectRequestMessage *)request
                                             profile:DConnectProximityProfileName
                                           attribute:DConnectProximityProfileAttrOnUserProximity];
     if (evts.count == 0) {
-        // イベント受領先が存在しないなら、UIDeviceProximityStateDidChangeNotification通知の配送処理を停止する。
-        [[NSNotificationCenter defaultCenter] removeObserver:self name:UIDeviceProximityStateDidChangeNotification object:nil];
+        [[NSNotificationCenter defaultCenter]
+            removeObserver:self
+                      name:UIDeviceProximityStateDidChangeNotification
+         object:nil];
     }
     
     return YES;

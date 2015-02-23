@@ -1,6 +1,6 @@
 //
 //  DPIRKitConnectionGuideViewController.m
-//  DConnectSDK
+//  dConnectDeviceIRKit
 //
 //  Copyright (c) 2014 NTT DOCOMO, INC.
 //  Released under the MIT license
@@ -63,10 +63,10 @@ typedef NS_ENUM(NSUInteger, DPIRKitConnectionState) {
     _sendButton.enabled = NO;
     __weak typeof(self) _self = self;
     
-    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
-    NSString *ssid = [ud stringForKey:DPIRKitUDKeySSID];
-    DPIRKitWiFiSecurityType type = [ud integerForKey:DPIRKitUDKeySecType];
-    NSString *password = [ud stringForKey:DPIRKitUDKeyPassword];
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    NSString *ssid = [userDefaults stringForKey:DPIRKitUDKeySSID];
+    DPIRKitWiFiSecurityType type = [userDefaults integerForKey:DPIRKitUDKeySecType];
+    NSString *password = [userDefaults stringForKey:DPIRKitUDKeyPassword];
     
     @synchronized (self) {
         _state = DPIRKitConnectionStateConnectingToIRKit;
@@ -99,10 +99,10 @@ typedef NS_ENUM(NSUInteger, DPIRKitConnectionState) {
 
 - (void) viewDidAppear:(BOOL)animated {
     
-    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
-    _serviceId = [ud stringForKey:DPIRKitUDKeyServiceId];
-    _deviceKey = [ud stringForKey:DPIRKitUDKeyDeviceKey];
-    _clientKey = [ud stringForKey:DPIRKitUDKeyClientKey];
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    _serviceId = [userDefaults stringForKey:DPIRKitUDKeyServiceId];
+    _deviceKey = [userDefaults stringForKey:DPIRKitUDKeyDeviceKey];
+    _clientKey = [userDefaults stringForKey:DPIRKitUDKeyClientKey];
     
     UIApplication *application = [UIApplication sharedApplication];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(enterForeground)
@@ -112,8 +112,8 @@ typedef NS_ENUM(NSUInteger, DPIRKitConnectionState) {
 
 - (void) viewDidDisappear:(BOOL)animated {
     UIApplication *application = [UIApplication sharedApplication];
-    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
-    [nc removeObserver:self name:UIApplicationWillEnterForegroundNotification object:application];
+    NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
+    [notificationCenter removeObserver:self name:UIApplicationWillEnterForegroundNotification object:application];
 }
 
 - (void) enterForeground {

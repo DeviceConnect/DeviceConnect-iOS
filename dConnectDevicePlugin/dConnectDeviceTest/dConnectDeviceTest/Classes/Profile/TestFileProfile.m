@@ -1,6 +1,6 @@
 //
 //  TestFileProfile.m
-//  DConnectSDK
+//  dConnectDeviceTest
 //
 //  Copyright (c) 2014 NTT DOCOMO, INC.
 //  Released under the MIT license
@@ -179,7 +179,7 @@ NSString *const TestFilePath = @"/test.png";
         return path;
     }
     
-    return (NSString *) [components objectAtIndex:components.count - 1];
+    return (NSString *) components[components.count - 1];
 }
 
 

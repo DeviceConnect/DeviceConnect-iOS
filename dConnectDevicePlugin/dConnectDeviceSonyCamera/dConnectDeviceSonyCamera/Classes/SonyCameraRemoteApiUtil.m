@@ -1,6 +1,6 @@
 //
 //  SonyCameraRemoteApiUtil.m
-//  DConnectSDK
+//  dConnectDeviceSonyCamera
 //
 //  Copyright (c) 2014 NTT DOCOMO, INC.
 //  Released under the MIT license
@@ -55,8 +55,8 @@ NSString *const SonyCameraShootModePicture = @"still";
         self.zoomPosition = -1;
         
         // SonyCameraの監視を開始する.
-        SampleCameraEventObserver *ob = [SampleCameraEventObserver getInstance];
-        [ob start:self];
+        SampleCameraEventObserver *observer = [SampleCameraEventObserver getInstance];
+        [observer start:self];
     }
     return self;
 }
@@ -75,18 +75,16 @@ NSString *const SonyCameraShootModePicture = @"still";
 	}
     
     NSDictionary *dict = [self.responseDic objectForKey:API_getAvailableApiList];
-    if (time >= TIMEOUT) {
-        return ;
-	} else {
+    if (time <= TIMEOUT) {
         [self.responseDic removeObjectForKey:API_getAvailableApiList];
         
         NSString *errorMessage = @"";
         NSInteger errorCode = -1;
-        NSArray *resultArray = [dict objectForKey:@"result"];
-        NSArray *errorArray = [dict objectForKey:@"error"];
+        NSArray *resultArray = dict[@"result"];
+        NSArray *errorArray = dict[@"error"];
         if (errorArray && errorArray.count > 0) {
-            errorCode = (NSInteger) [errorArray objectAtIndex:0];
-            errorMessage = [errorArray objectAtIndex:1];
+            errorCode = (NSInteger) errorArray[0];
+            errorMessage = errorArray[1];
         }
 
         // サポートしているAPI
@@ -118,18 +116,16 @@ NSString *const SonyCameraShootModePicture = @"still";
 	}
     
     NSDictionary *dict = [self.responseDic objectForKey:API_startLiveview];
-    if (time >= TIMEOUT) {
-        return NO;
-	} else {
+    if (time <= TIMEOUT) {
         [self.responseDic removeObjectForKey:API_startLiveview];
         
         NSString *errorMessage = @"";
         NSInteger errorCode = -1;
-        NSArray *resultArray = [dict objectForKey:@"result"];
-        NSArray *errorArray = [dict objectForKey:@"error"];
+        NSArray *resultArray = dict[@"result"];
+        NSArray *errorArray = dict[@"error"];
         if (errorArray && errorArray.count > 0) {
-            errorCode = (NSInteger) [errorArray objectAtIndex:0];
-            errorMessage = [errorArray objectAtIndex:1];
+            errorCode = (NSInteger) errorArray[0];
+            errorMessage = errorArray[1];
         }
 
         if (resultArray.count > 0 && errorCode < 0) {
@@ -140,6 +136,7 @@ NSString *const SonyCameraShootModePicture = @"still";
         }
         return YES;
     }
+    return NO;
 }
 
 - (BOOL) actStopLiveView
@@ -161,21 +158,20 @@ NSString *const SonyCameraShootModePicture = @"still";
     
     // 撮影モード切り替えの結果を取得
     NSDictionary *dict = [self.responseDic objectForKey:API_setShootMode];
-    if (time >= TIMEOUT) {
-        return NO;
-	} else {
+    if (time <= TIMEOUT) {
         [self.responseDic removeObjectForKey:API_setShootMode];
         
         NSString *errorMessage = @"";
         NSInteger errorCode = -1;
-        NSArray *resultArray = [dict objectForKey:@"result"];
-        NSArray *errorArray = [dict objectForKey:@"error"];
+        NSArray *resultArray = dict[@"result"];
+        NSArray *errorArray = dict[@"error"];
         if (errorArray && errorArray.count > 0) {
-            errorCode = (NSInteger) [errorArray objectAtIndex:0];
-            errorMessage = [errorArray objectAtIndex:1];
+            errorCode = (NSInteger) errorArray[0];
+            errorMessage = errorArray[1];
         }
         return (resultArray.count > 0 && errorCode == 0);
     }
+    return NO;
 }
 
 - (NSDictionary *) actTakePicture
@@ -191,12 +187,11 @@ NSString *const SonyCameraShootModePicture = @"still";
     
     // 撮影結果を取得
     NSDictionary *dict = [self.responseDic objectForKey:API_actTakePicture];
-    if (time >= TIMEOUT) {
-        return nil;
-	} else {
+    if (time <= TIMEOUT) {
         [self.responseDic removeObjectForKey:API_actTakePicture];
         return dict;
     }
+    return nil;
 }
 
 - (NSDictionary *) startMovieRec
@@ -212,12 +207,11 @@ NSString *const SonyCameraShootModePicture = @"still";
     
     // 撮影結果を取得
     NSDictionary *dict = [self.responseDic objectForKey:API_startRecMode];
-    if (time >= TIMEOUT) {
-        return nil;
-	} else {
+    if (time <= TIMEOUT) {
         [self.responseDic removeObjectForKey:API_startRecMode];
         return dict;
     }
+    return nil;
 }
 
 
@@ -235,12 +229,11 @@ NSString *const SonyCameraShootModePicture = @"still";
     
     // 撮影結果を取得
     NSDictionary *dict = [self.responseDic objectForKey:API_stopRecMode];
-    if (time >= TIMEOUT) {
-        return nil;
-	} else {
+    if (time <= TIMEOUT) {
         [self.responseDic removeObjectForKey:API_stopRecMode];
         return dict;
     }
+    return nil;
 }
 
 
@@ -257,12 +250,11 @@ NSString *const SonyCameraShootModePicture = @"still";
     
     // ズーム結果を取得
     NSDictionary *dict = [self.responseDic objectForKey:API_actZoom];
-    if (time >= TIMEOUT) {
-        return nil;
-	} else {
+    if (time <= TIMEOUT) {
         [self.responseDic removeObjectForKey:API_actZoom];
         return dict;
     }
+    return nil;
 }
 
 - (NSDictionary *) getStillSize
@@ -278,12 +270,11 @@ NSString *const SonyCameraShootModePicture = @"still";
     
     // ズーム結果を取得
     NSDictionary *dict = [self.responseDic objectForKey:API_getStillSize];
-    if (time >= TIMEOUT) {
-        return nil;
-	} else {
+    if (time <= TIMEOUT) {
         [self.responseDic removeObjectForKey:API_getStillSize];
         return dict;
     }
+    return nil;
 }
 
 - (BOOL) setDate:(NSString *)date {
@@ -297,21 +288,20 @@ NSString *const SonyCameraShootModePicture = @"still";
     
     // 時間設定の結果を取得
     NSDictionary *dict = [self.responseDic objectForKey:API_setCurrentTime];
-    if (time >= TIMEOUT) {
-        return NO;
-	} else {
+    if (time <= TIMEOUT) {
         [self.responseDic removeObjectForKey:API_setCurrentTime];
         
         NSString *errorMessage = @"";
         NSInteger errorCode = -1;
-        NSArray *resultArray = [dict objectForKey:@"result"];
-        NSArray *errorArray = [dict objectForKey:@"error"];
+        NSArray *resultArray = dict[@"result"];
+        NSArray *errorArray = dict[@"error"];
         if (errorArray && errorArray.count > 0) {
-            errorCode = (NSInteger) [errorArray objectAtIndex:0];
-            errorMessage = [errorArray objectAtIndex:1];
+            errorCode = (NSInteger) errorArray[0];
+            errorMessage = errorArray[1];
         }
         return (resultArray.count > 0 && errorCode == 0);
     }
+    return NO;
 }
 
 
@@ -327,33 +317,26 @@ NSString *const SonyCameraShootModePicture = @"still";
 	NSArray *resultArray = [NSArray new];
 	NSString* errorMessage = @"";
 	NSInteger errorCode = -1;
-    NSInteger id = -1;
+    NSInteger apiId = -1;
 	if (error) {
         NSLog(@"QX10DevicePlugin parseMessage error parsing JSON string");
 	} else {
-        id = (NSInteger) [dict objectForKey:@"id"];
-		resultArray = [dict objectForKey:@"result"];
-		NSArray *errorArray = [dict objectForKey:@"error"];
+        apiId = (NSInteger) dict[@"id"];
+		resultArray = dict[@"result"];
+		NSArray *errorArray = dict[@"error"];
 		if (errorArray && errorArray.count > 0) {
-			errorCode = (NSInteger) [errorArray objectAtIndex:0];
-			errorMessage = [errorArray objectAtIndex:1];
+			errorCode = (NSInteger) errorArray[0];
+			errorMessage = errorArray[1];
 		}
 	}
 	
     // レスポンス格納用のdictionaryにデータをつめる
 	if([apiName isEqualToString:API_getAvailableApiList]) {
         [self.responseDic setObject:dict forKey:API_getAvailableApiList];
-	} else if([apiName isEqualToString:API_getApplicationInfo]) {
-    } else if([apiName isEqualToString:API_getShootMode]) {
 	} else if([apiName isEqualToString:API_setShootMode]) {
         [self.responseDic setObject:dict forKey:API_setShootMode];
-	} else if([apiName isEqualToString:API_getAvailableShootMode]) {
-	} else if([apiName isEqualToString:API_getSupportedShootMode]) {
 	} else if([apiName isEqualToString:API_startLiveview]) {
         [self.responseDic setObject:dict forKey:API_startLiveview];
-	} else if([apiName isEqualToString:API_stopLiveview]) {
-	} else if([apiName isEqualToString:API_startRecMode]) {
-	} else if([apiName isEqualToString:API_stopRecMode]) {
 	} else if([apiName isEqualToString:API_actTakePicture]) {
         [self.responseDic setObject:dict forKey:API_actTakePicture];
 	} else if([apiName isEqualToString:API_startMovieRec]) {

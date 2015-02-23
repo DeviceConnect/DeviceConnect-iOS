@@ -1,6 +1,6 @@
 //
 //  DPHueConst.h
-//  DConnectSDK
+//  dConnectDeviceHue
 //
 //  Copyright (c) 2014 NTT DOCOMO, INC.
 //  Released under the MIT license
@@ -72,8 +72,9 @@ NSString *const DPHueBridgeListName = @"org.deviceconnect.ios.DPHue.ip";
     notificationManager = [PHNotificationManager defaultManager];
     if (localConnectionSuccessSelector) {
         //接続成功
-        [notificationManager registerObject:registerReceiver withSelector:localConnectionSuccessSelector forNotification:
-         LOCAL_CONNECTION_NOTIFICATION];
+        [notificationManager registerObject:registerReceiver
+                               withSelector:localConnectionSuccessSelector
+                            forNotification:LOCAL_CONNECTION_NOTIFICATION];
     }
     if (noLocalConnection) {
         //ブリッジに接続できません
@@ -108,15 +109,21 @@ pushlinkAuthenticationSuccessSelector:(SEL)pushlinkAuthenticationSuccessSelector
     notificationManager = [PHNotificationManager defaultManager];
     if (pushlinkAuthenticationSuccessSelector) {
         //PUSHLINK認証成功
-        [notificationManager registerObject:registerReceiver withSelector:pushlinkAuthenticationSuccessSelector forNotification:PUSHLINK_LOCAL_AUTHENTICATION_SUCCESS_NOTIFICATION];
+        [notificationManager registerObject:registerReceiver
+                               withSelector:pushlinkAuthenticationSuccessSelector
+                            forNotification:PUSHLINK_LOCAL_AUTHENTICATION_SUCCESS_NOTIFICATION];
     }
     if (pushlinkAuthenticationFailedSelector) {
         //PUSHLINK認証失敗
-        [notificationManager registerObject:registerReceiver withSelector:pushlinkAuthenticationFailedSelector forNotification:PUSHLINK_LOCAL_AUTHENTICATION_FAILED_NOTIFICATION];
+        [notificationManager registerObject:registerReceiver
+                               withSelector:pushlinkAuthenticationFailedSelector
+                            forNotification:PUSHLINK_LOCAL_AUTHENTICATION_FAILED_NOTIFICATION];
     }
     if (pushlinkNoLocalConnectionSelector) {
         //PUSHLINKブリッジに接続できない
-        [notificationManager registerObject:registerReceiver withSelector:pushlinkNoLocalConnectionSelector forNotification:PUSHLINK_NO_LOCAL_CONNECTION_NOTIFICATION];
+        [notificationManager registerObject:registerReceiver
+                               withSelector:pushlinkNoLocalConnectionSelector
+                            forNotification:PUSHLINK_NO_LOCAL_CONNECTION_NOTIFICATION];
     }
     if (pushlinkNoLocalBridgeSelector) {
         //PUSHLINKブリッジが見つからない
@@ -126,7 +133,9 @@ pushlinkAuthenticationSuccessSelector:(SEL)pushlinkAuthenticationSuccessSelector
     }
     if (pushlinkButtonNotPressedSelector) {
         //PUSHLINKブリッジのボタンが押されていない
-        [notificationManager registerObject:registerReceiver withSelector:pushlinkButtonNotPressedSelector forNotification:PUSHLINK_BUTTON_NOT_PRESSED_NOTIFICATION];
+        [notificationManager registerObject:registerReceiver
+                               withSelector:pushlinkButtonNotPressedSelector
+                            forNotification:PUSHLINK_BUTTON_NOT_PRESSED_NOTIFICATION];
     }
     [phHueSDK startPushlinkAuthentication];
 }
@@ -145,22 +154,14 @@ pushlinkAuthenticationSuccessSelector:(SEL)pushlinkAuthenticationSuccessSelector
                         color:(NSString*)color
 {
     
-    return YES;//[self changeLightStatus:response lightId:lightId lightState:lightState];
+    return YES;
 }
 
 //ライトの消灯
 -(BOOL)setLightOffWithResponse:(DConnectResponseMessage*)response
                        lightId:(NSString*)lightId
 {
-    
-    //lightState取得
-    PHLightState *lightState = [self getLightStateIsOn:NO brightness:0 color:nil];
-    if (lightState == nil) {
-        return YES;
-    }
-    
-//    return [self changeLightStatus:response lightId:lightId lightState:lightState];
-    
+    [self getLightStateIsOn:NO brightness:0 color:nil];
     return YES;
 }
 
@@ -267,7 +268,7 @@ pushlinkAuthenticationSuccessSelector:(SEL)pushlinkAuthenticationSuccessSelector
     for (PHLight *light in cache.lights.allValues) {
         for (NSString *lightId in lightIds) {
             if ([lightId isEqualToString:light.identifier]) {
-                [lightArray setObject:light forKey:light.identifier];
+                lightArray[light.identifier] = light;
             }
         }
     }
@@ -289,7 +290,9 @@ pushlinkAuthenticationSuccessSelector:(SEL)pushlinkAuthenticationSuccessSelector
     //メインスレッドで動作させる
     dispatch_sync(dispatch_get_main_queue(), ^{
         
-        [bridgeSendAPI createGroupWithName:groupName lightIds:[lightArray allKeys] completionHandler:^(NSString *groupIdentifier, NSArray *errors) {
+        [bridgeSendAPI createGroupWithName:groupName
+                                  lightIds:[lightArray allKeys]
+                         completionHandler:^(NSString *groupIdentifier, NSArray *errors) {
             if (errors != nil) {
                 _bridgeConnectState = STATE_ERROR_CREATE_FAIL_GROUP;
             } else {
@@ -442,7 +445,8 @@ pushlinkAuthenticationSuccessSelector:(SEL)pushlinkAuthenticationSuccessSelector
     
     //valueが指定されてない場合はエラーで返す
     if (param == nil) {
-        param = @"";
+        _bridgeConnectState = errorState;
+        return NO;
     }
     if (param.length == 0) {
         _bridgeConnectState = errorState;
@@ -621,10 +625,9 @@ pushlinkAuthenticationSuccessSelector:(SEL)pushlinkAuthenticationSuccessSelector
     //数値の場合
     if(match.location != NSNotFound) {
         return YES;
-    } else {
-        _bridgeConnectState = STATE_ERROR_INVALID_BRIGHTNESS;
-        return NO;
     }
+    _bridgeConnectState = STATE_ERROR_INVALID_BRIGHTNESS;
+    return NO;
 }
 
 
@@ -637,45 +640,43 @@ pushlinkAuthenticationSuccessSelector:(SEL)pushlinkAuthenticationSuccessSelector
 - (CGPoint) convRgbToXy:(NSString *)color
 {
     
-    NSString *r = [color substringWithRange:NSMakeRange(0, 2)];
-    NSString *g = [color substringWithRange:NSMakeRange(2, 2)];
-    NSString *b = [color substringWithRange:NSMakeRange(4, 2)];
+    NSString *redString = [color substringWithRange:NSMakeRange(0, 2)];
+    NSString *greenString = [color substringWithRange:NSMakeRange(2, 2)];
+    NSString *blueString = [color substringWithRange:NSMakeRange(4, 2)];
     
-    NSScanner *scan = [NSScanner scannerWithString:r];
+    NSScanner *scan = [NSScanner scannerWithString:redString];
     
-    unsigned int rr, gg, bb;
+    unsigned int redValue, greenValue, blueValue;
     
-    if (![scan scanHexInt:&rr]) {
+    if (![scan scanHexInt:&redValue]) {
         return CGPointMake(FLT_MIN, FLT_MIN);
     }
-    scan = [NSScanner scannerWithString:g];
-    if (![scan scanHexInt:&gg]) {
+    scan = [NSScanner scannerWithString:greenString];
+    if (![scan scanHexInt:&greenValue]) {
         return CGPointMake(FLT_MIN, FLT_MIN);
     }
-    scan = [NSScanner scannerWithString:b];
-    if (![scan scanHexInt:&bb]) {
+    scan = [NSScanner scannerWithString:blueString];
+    if (![scan scanHexInt:&blueValue]) {
         return CGPointMake(FLT_MIN, FLT_MIN);
     }
-    float fRR = (float)(rr/255.0);
-    float fGG = (float)(gg/255.0);
-    float fBB = (float)(bb/255.0);
+    float fRR = (float)(redValue/255.0);
+    float fGG = (float)(greenValue/255.0);
+    float fBB = (float)(blueValue/255.0);
     UIColor *uicolor = [UIColor colorWithRed:fRR green:fGG blue:fBB alpha:1.0f];
     
-    CGPoint xyPoint = [PHUtilities calculateXY:uicolor forModel:@""];
-    
-    return xyPoint;
+    return [PHUtilities calculateXY:uicolor forModel:@""];
 }
 
 
 -(void)saveBridgeList {
-    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
-    [ud setObject:_hueBridgeList forKey:DPHueBridgeListName];
-    [ud synchronize];
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults setObject:_hueBridgeList forKey:DPHueBridgeListName];
+    [userDefaults synchronize];
 }
 
 
 -(void)readBridgeList {
-    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
-    _hueBridgeList = [ud dictionaryForKey:DPHueBridgeListName].mutableCopy;
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    _hueBridgeList = [userDefaults dictionaryForKey:DPHueBridgeListName].mutableCopy;
 }
 @end

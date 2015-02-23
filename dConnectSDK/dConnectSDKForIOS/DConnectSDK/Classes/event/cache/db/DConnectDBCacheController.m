@@ -43,8 +43,8 @@ NSString *const DConnectDBCacheControllerDBName = @"__dconnect_event.db";
         _helper = [DConnectSQLiteOpenHelper helperWithDBName:name version:DCONNECT_EVENT_DB_VERSION];
         _helper.delegate = self;
         // databaseを呼び出すとDBを作成するのでここで作成しておく。
-        DConnectSQLiteDatabase *db = [_helper database];
-        [db close];
+        DConnectSQLiteDatabase *sqlDB = [_helper database];
+        [sqlDB close];
     }
     
     return self;
@@ -318,7 +318,6 @@ NSString *const DConnectDBCacheControllerDBName = @"__dconnect_event.db";
 }
 
 - (void) flush {
-    // do nothing.
 }
 
 #pragma mark - DConnectSQLiteOpenHelperDelegate
@@ -342,10 +341,10 @@ NSString *const DConnectDBCacheControllerDBName = @"__dconnect_event.db";
         // 作成に失敗したらDBを削除。
         NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
                                                              NSUserDomainMask, YES);
-        NSString *path = [paths objectAtIndex:0];
+        NSString *path = paths[0];
         NSString *dbFilePath = [path stringByAppendingPathComponent:database.dbName];
-        NSFileManager *fm = [NSFileManager defaultManager];
-        [fm removeItemAtPath:dbFilePath error:nil];
+        NSFileManager *fileManager = [NSFileManager defaultManager];
+        [fileManager removeItemAtPath:dbFilePath error:nil];
         
         @throw @"ERROR: Could not create DB.";
     }

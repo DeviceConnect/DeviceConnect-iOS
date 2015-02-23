@@ -1,6 +1,6 @@
 //
 //  DPPebbleImage.m
-//  DConnectSDK
+//  dConnectDevicePebble
 //
 //  Copyright (c) 2014 NTT DOCOMO, INC.
 //  Released under the MIT license
@@ -23,13 +23,13 @@ const NSInteger MaxHeight = 120;
 /*!
  @brief pebble用の画像にコンバート。
  @param data 表示する変換前の画像
- @param x x座標
- @param y y座標
+ @param imageX x座標
+ @param imageY y座標
  @param mode モード
  */
 +(NSData*)convertImage: (NSData*)data
-                     x: (double)x
-                     y: (double)y
+                imageX:(double)imageX
+                imageY:(double)imageY
                   mode: (NSString *)mode
 {
     UIImage* image = [[UIImage alloc] initWithData:data];
@@ -52,7 +52,7 @@ const NSInteger MaxHeight = 120;
     if (mode == nil || [mode isEqualToString:@""]) {
         
         // same scale
-        [image drawInRect:CGRectMake(x, y, image.size.width, image.size.height)];
+        [image drawInRect:CGRectMake(imageX, imageY, image.size.width, image.size.height)];
         proc = YES;
         
     } else if ([mode isEqualToString: DConnectCanvasProfileModeScales]) {
@@ -64,7 +64,10 @@ const NSInteger MaxHeight = 120;
                                               yForscaledImage: &yForScaledImage];
         
         // draw fill image
-        [scaledImage drawInRect: CGRectMake(xForScaledImage, yForScaledImage, scaledImage.size.width, scaledImage.size.height)];
+        [scaledImage drawInRect: CGRectMake(xForScaledImage,
+                                            yForScaledImage,
+                                            scaledImage.size.width,
+                                            scaledImage.size.height)];
         proc = YES;
         
     } else if ([mode isEqualToString: DConnectCanvasProfileModeFills]) {
@@ -96,15 +99,19 @@ const NSInteger MaxHeight = 120;
     CIFilter *ciFilter = [CIFilter filterWithName:@"CIPhotoEffectNoir"
                                     keysAndValues:kCIInputImageKey, dstCIImage, nil];
     CIContext *ciContext = [CIContext contextWithOptions:nil];
-    CGImageRef cgimg = [ciContext createCGImage:[ciFilter outputImage] fromRect:[[ciFilter outputImage] extent]];
-    UIImage *monochromeImage = [UIImage imageWithCGImage:cgimg scale:1 orientation:UIImageOrientationUp];
+    CGImageRef cgimg = [ciContext createCGImage:[ciFilter outputImage]
+                                       fromRect:[[ciFilter outputImage] extent]];
+    UIImage *monochromeImage = [UIImage imageWithCGImage:cgimg
+                                                   scale:1
+                                             orientation:UIImageOrientationUp];
     CGImageRelease(cgimg);
     
     return [DPPebbleImage convert: monochromeImage];
 }
 
 /*!
- @brief imageを元に、スケーリングして画面いっぱいに表示されるUIImageを作成して返す。配置座標も返す.
+ @brief imageを元に、スケーリングして画面いっぱいに表示されるUIImageを作成して返す。
+        配置座標も返す.
  @param image ディスプレイに表示される元画像
  @param xForscaledImage 拡縮した画像を画面中央に表示する座標(x)を返す領域ポインタ
  @param yForscaledImage 拡縮した画像を画面中央に表示する座標(y)を返す領域ポインタ
@@ -126,7 +133,7 @@ const NSInteger MaxHeight = 120;
     CGFloat height = displaySize.height;
     CGFloat widthRatio = getSizeW / displaySize.width;
     CGFloat heightRatio = getSizeH / displaySize.height;
-    BOOL isFitWidth = widthRatio > heightRatio ? YES : NO;
+    BOOL isFitWidth = widthRatio > heightRatio;
     CGFloat scale;
     if (isFitWidth) {
         scale = width / getSizeW;
@@ -173,11 +180,11 @@ const NSInteger MaxHeight = 120;
 + (NSData*)convert:(UIImage*)image
 {
     NSMutableData *data = [NSMutableData data];
-    int w = image.size.width;
-    int h = image.size.height;
+    int width = image.size.width;
+    int height = image.size.height;
     
     // row_size_bytes
-    int row_size_bytes = (w + 31) / 32;
+    int row_size_bytes = (width + 31) / 32;
     row_size_bytes *= 4;
     [data appendBytes:&row_size_bytes length:2];
     
@@ -190,7 +197,7 @@ const NSInteger MaxHeight = 120;
     [data appendBytes:pos length:4];
     
     // size
-    UInt16 size[2] = {w, h};
+    UInt16 size[2] = {width, height};
     [data appendBytes:size length:4];
     
     // image data
@@ -199,29 +206,27 @@ const NSInteger MaxHeight = 120;
     const UInt8 *rawData = CFDataGetBytePtr(pixelData);
     
     // データ書き込み
-    for (int y = 0; y < h; ++y) {
+    for (int y = 0; y < height; ++y) {
         int currentBit = 0;
         Byte buff = 0;
         for (int x = 0; x < row_size_bytes * 8; ++x) {
-            if (x < w) {
+            if (x < width) {
                 int pixelInfo = (int)bytesPerRow * y + x * 4; // The image is png
-                UInt8 r = rawData[pixelInfo];
+                UInt8 red = rawData[pixelInfo];
                 //UInt8 g = rawData[pixelInfo+1];
                 //UInt8 b = rawData[pixelInfo+2];
-                UInt8 a = rawData[pixelInfo+3];
+                UInt8 alpha = rawData[pixelInfo+3];
                 
-                if (a < 127) {
+                if (alpha < 127) {
                     // 透明
                     buff = buff | (0x01 << currentBit);
                 } else {
-                    // 白黒（白黒フィルタがかかっているのでrでOK!）
+                    // 白黒（白黒フィルタがかかっているのでOK!）
                     // ランダムディザ
-                    if (r>150) {
+                    if (red>150) {
                         buff = buff | (0x01 << currentBit);
-                    } else if (r>110) {
-                        if (rand()%255<r) {
-                            buff = buff | (0x01 << currentBit);
-                        }
+                    } else if (red>110 && rand() % 255 < red) {
+                        buff = buff | (0x01 << currentBit);
                     }
                 }
             }

@@ -1,6 +1,6 @@
 //
 //  SonyCameraCameraProfile.m
-//  DConnectSDK
+//  dConnectDeviceSonyCamera
 //
 //  Copyright (c) 2014 NTT DOCOMO, INC.
 //  Released under the MIT license
@@ -37,8 +37,20 @@ NSString *const SonyCameraCameraProfileParamZoomdiameter = @"zoomdiameter";
         if ([attribute isEqualToString:SonyCameraCameraProfileAttrZoom]) {
             NSString *direction = [request stringForKey:SonyCameraCameraProfileParamDirection];
             NSString *movement = [request stringForKey:SonyCameraCameraProfileParamMovement];
-            if ([self hasMethod:@selector(profile:didReceivePutZoomRequest:response:serviceId:direction:movement:) response:response]) {
-                send = [_delegate profile:self didReceivePutZoomRequest:request response:response serviceId:serviceId direction:direction movement:movement];
+            if ([self hasMethod:
+                    @selector(profile:
+                              didReceivePutZoomRequest:
+                              response:
+                              serviceId:
+                              direction:
+                              movement:)
+                    response:response]) {
+                send = [_delegate        profile:self
+                        didReceivePutZoomRequest:request
+                                        response:response
+                                       serviceId:serviceId
+                                       direction:direction
+                                        movement:movement];
             }
         } else {
             [response setErrorToUnknownAttribute];
@@ -58,8 +70,15 @@ NSString *const SonyCameraCameraProfileParamZoomdiameter = @"zoomdiameter";
     
     if (attribute) {
         if ([attribute isEqualToString:SonyCameraCameraProfileAttrZoom]) {
-            if ([self hasMethod:@selector(profile:didReceiveGetZoomRequest:response:serviceId:) response:response]) {
-                send = [_delegate profile:self didReceiveGetZoomRequest:request response:response serviceId:serviceId];
+            if ([self hasMethod:@selector(profile:
+                                          didReceiveGetZoomRequest:
+                                          response:
+                                          serviceId:)
+                       response:response]) {
+                send = [_delegate        profile:self
+                        didReceiveGetZoomRequest:request
+                                        response:response
+                                       serviceId:serviceId];
             }
         } else {
             [response setErrorToUnknownAttribute];

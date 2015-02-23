@@ -29,16 +29,19 @@
  @retval アクセストークン
  @retval nil 認証失敗
  */
-- (NSString *) authorizationToDevicePlugin:(DConnectDevicePlugin *)plugin serviceId:(NSString *)serviceId;
+- (NSString *) authorizationToDevicePlugin:(DConnectDevicePlugin *)plugin
+                                 serviceId:(NSString *)serviceId;
 
 /*!
  @brief クライアントデータを作成する。
  
  @param[in] plugin デバイスプラグイン
+ @param[in] serviceId サービスID
  
  @retval レスポンス
  */
-- (DConnectResponseMessage *) createClientToDevicePlugin:(DConnectDevicePlugin *)plugin;
+- (DConnectResponseMessage *) createClientToDevicePlugin:(DConnectDevicePlugin *)plugin
+                                               serviceId:(NSString*)serviceId;
 
 /*!
  @brief アクセストークンを要求する。
@@ -50,7 +53,10 @@
  
  @retval デバイスプラグインからのレスポンス
  */
-- (DConnectResponseMessage *) requestAccessTokenToDevicePlugin:(DConnectDevicePlugin *)plugin serviceId:(NSString *)serviceId clinetId:(NSString *)clientId clinetSecret:(NSString *)clientSecret;
+- (DConnectResponseMessage *) requestAccessTokenToDevicePlugin:(DConnectDevicePlugin *)plugin
+                                                     serviceId:(NSString *)serviceId
+                                                      clinetId:(NSString *)clientId
+                                                  clinetSecret:(NSString *)clientSecret;
 
 /*!
  @brief 使用するプロファイル一覧を取得する。
@@ -99,13 +105,14 @@
             // セッションキーにデバイスプラグインIDを付加する
             NSString *sessionKey = [request stringForKey:DConnectMessageSessionKey];
             if (sessionKey) {
-                NSMutableString *s = [NSMutableString stringWithString:sessionKey];
-                [s appendString:@"."];
-                [s appendString:NSStringFromClass([plugin class])];
-                [request setString:s forKey:DConnectMessageSessionKey];
+                NSMutableString *session = [NSMutableString stringWithString:sessionKey];
+                [session appendString:@"."];
+                [session appendString:NSStringFromClass([plugin class])];
+                [request setString:session forKey:DConnectMessageSessionKey];
             }
             
-            // サービスIDからデバイスプラグインIDを削除してから、各デバイスプラグインに配送する
+            // サービスIDからデバイスプラグインIDを削除してから、
+            // 各デバイスプラグインに配送する
             NSString *did = [mgr.mDeviceManager spliteServiceId:serviceId byDevicePlugin:plugin];
             DConnectRequestMessage *copyRequest = [request copy];
             [copyRequest setString:did forKey:DConnectMessageServiceId];
@@ -127,34 +134,29 @@
 
             // 実際にデバイスプラグインに送信
             BOOL send = [plugin didReceiveRequest:copyRequest response:response];
-            if (send) {
-                if ([response result] == DConnectMessageResultTypeError) {
-                    // エラーレスポンスの場合にはエラーコードをみてアクセストークンをリフレッシュするなど
-                    // して再度アクセスするようにする。
-                    DConnectLocalOAuthDB *authDB = [DConnectLocalOAuthDB sharedLocalOAuthDB];
-                    if ([response errorCode] == DConnectMessageErrorCodeNotFoundClientId) {
-                        [authDB deleteAuthDataByServiceId:serviceId];
-                    } else if ([response errorCode] == DConnectMessageErrorCodeExpiredAccessToken) {
-                        [authDB deleteAccessToken:accessToken];
-                    } else {
-                        return YES;
-                    }
-                    // アクセストークンの再取得
-                    accessToken = [self authorizationToDevicePlugin:plugin serviceId:serviceId];
-                    if (accessToken) {
-                        [copyRequest setString:accessToken forKey:DConnectMessageAccessToken];
-                        [[response internalDictionary] removeAllObjects];
-                        send = [plugin didReceiveRequest:copyRequest response:response];
-                    } else {
-                        [response setErrorToAuthorization];
-                        return YES;
-                    }
+            if (send && [response result] == DConnectMessageResultTypeError) {
+                DConnectLocalOAuthDB *authDB = [DConnectLocalOAuthDB sharedLocalOAuthDB];
+                if ([response errorCode] == DConnectMessageErrorCodeNotFoundClientId) {
+                    [authDB deleteAuthDataByServiceId:serviceId];
+                } else if ([response errorCode] == DConnectMessageErrorCodeExpiredAccessToken) {
+                    [authDB deleteAccessToken:accessToken];
+                } else {
+                    return YES;
+                }
+                // アクセストークンの再取得
+                accessToken = [self authorizationToDevicePlugin:plugin serviceId:serviceId];
+                if (accessToken) {
+                    [copyRequest setString:accessToken forKey:DConnectMessageAccessToken];
+                    [[response internalDictionary] removeAllObjects];
+                    send = [plugin didReceiveRequest:copyRequest response:response];
+                } else {
+                    [response setErrorToAuthorization];
+                    return YES;
                 }
             }
             return send;
-        } else {
-            [response setErrorToNotFoundService];
         }
+        [response setErrorToNotFoundService];
     }
     return YES;
 }
@@ -195,7 +197,9 @@
     return accessToken;
 }
 
-- (DConnectResponseMessage *) createClientToDevicePlugin:(DConnectDevicePlugin *)plugin  serviceId:(NSString*)serviceId{
+- (DConnectResponseMessage *) createClientToDevicePlugin:(DConnectDevicePlugin *)plugin
+                                               serviceId:(NSString*)serviceId
+{
     DConnectRequestMessage *request = [DConnectRequestMessage message];
     [request setAction:DConnectMessageActionTypeGet];
     [request setProfile:DConnectAuthorizationProfileName];
@@ -212,7 +216,11 @@
     return response;
 }
 
-- (DConnectResponseMessage *) requestAccessTokenToDevicePlugin:(DConnectDevicePlugin *)plugin serviceId:(NSString *)serviceId clinetId:(NSString *)clientId clinetSecret:(NSString *)clientSecret {
+- (DConnectResponseMessage *) requestAccessTokenToDevicePlugin:(DConnectDevicePlugin *)plugin
+                                                     serviceId:(NSString *)serviceId
+                                                      clinetId:(NSString *)clientId
+                                                  clinetSecret:(NSString *)clientSecret
+{
     NSArray *scopes = [self getScopeFromDevicePlugin:plugin];
     NSString *sig = [DConnectUtil generateSignatureWithClientId:clientId
                                                       grantType:DConnectAuthorizationProfileGrantTypeAuthorizationCode
@@ -226,7 +234,8 @@
     [request setProfile:DConnectAuthorizationProfileName];
     [request setAttribute:DConnectAuthorizationProfileAttrRequestAccessToken];
     [request setString:clientId forKey:DConnectAuthorizationProfileParamClientId];
-    [request setString:DConnectAuthorizationProfileGrantTypeAuthorizationCode forKey:DConnectAuthorizationProfileParamGrantType];
+    [request setString:DConnectAuthorizationProfileGrantTypeAuthorizationCode
+                        forKey:DConnectAuthorizationProfileParamGrantType];
     [request setString:@"manager" forKey:DConnectAuthorizationProfileParamApplicationName];
     [request setString:scope forKey:DConnectAuthorizationProfileParamScope];
     [request setString:sig forKey:DConnectAuthorizationProfileParamSignature];

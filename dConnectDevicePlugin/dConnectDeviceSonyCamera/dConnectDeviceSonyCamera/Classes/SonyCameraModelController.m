@@ -1,6 +1,6 @@
 //
 //  SonyCameraModelController.m
-//  DConnectSDK
+//  dConnectDeviceSonyCamera
 //
 //  Copyright (c) 2014 NTT DOCOMO, INC.
 //  Released under the MIT license
@@ -14,10 +14,16 @@
 /*
  A controller object that manages a simple model -- a collection of month names.
  
- The controller serves as the data source for the page view controller; it therefore implements pageViewController:viewControllerBeforeViewController: and pageViewController:viewControllerAfterViewController:.
- It also implements a custom method, viewControllerAtIndex: which is useful in the implementation of the data source methods, and in the initial configuration of the application.
+ The controller serves as the data source for the page view controller;
+ it therefore implements pageViewController:viewControllerBeforeViewController:
+ and pageViewController:viewControllerAfterViewController:.
+ It also implements a custom method, viewControllerAtIndex:
+ which is useful in the implementation of the data source methods,
+ and in the initial configuration of the application.
  
- There is no need to actually create view controllers for each page in advance -- indeed doing so incurs unnecessary overhead. Given the data model, these methods create, configure, and return a new view controller on demand.
+ There is no need to actually create view controllers for each page in advance
+ -- indeed doing so incurs unnecessary overhead. Given the data model, these methods create,
+ configure, and return a new view controller on demand.
  */
 
 @interface SonyCameraModelController()
@@ -54,7 +60,8 @@
     NSString *viewId = [NSString stringWithFormat:@"SonyCameraSettingView0%dController", (int)(index + 1)];
     
     // Create a new view controller and pass suitable data.
-    SonyCameraDataViewController *SonyCameraDataViewController = [storyboard instantiateViewControllerWithIdentifier:viewId];
+    SonyCameraDataViewController *SonyCameraDataViewController
+            = [storyboard instantiateViewControllerWithIdentifier:viewId];
     SonyCameraDataViewController.objectIndex = index;
     SonyCameraDataViewController.deviceplugin = self.deviceplugin;
     return SonyCameraDataViewController;
@@ -63,13 +70,15 @@
 - (NSUInteger)indexOfViewController:(SonyCameraDataViewController *)viewController
 {   
      // Return the index of the given data view controller.
-     // For simplicity, this implementation uses a static array of model objects and the view controller stores the model object; you can therefore use the model object to identify the index.
+     // For simplicity, this implementation uses a static array of model objects
+     // and the view controller stores the model object; you can therefore use the model object to identify the index.
     return viewController.objectIndex;
 }
 
 #pragma mark - Page View Controller Data Source
 
-- (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(UIViewController *)viewController
+- (UIViewController *)pageViewController:(UIPageViewController *)pageViewController
+      viewControllerBeforeViewController:(UIViewController *)viewController
 {
     NSUInteger index = [self indexOfViewController:(SonyCameraDataViewController *)viewController];
     if (index == 0) {
@@ -80,7 +89,8 @@
     return [self viewControllerAtIndex:index storyboard:viewController.storyboard];
 }
 
-- (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerAfterViewController:(UIViewController *)viewController
+- (UIViewController *)pageViewController:(UIPageViewController *)pageViewController
+       viewControllerAfterViewController:(UIViewController *)viewController
 {
     NSUInteger index = [self indexOfViewController:(SonyCameraDataViewController *)viewController];
     

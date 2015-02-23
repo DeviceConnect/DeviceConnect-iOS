@@ -1,6 +1,6 @@
 //
 //  DPHueSystemProfile.m
-//  DConnectSDK
+//  dConnectDeviceHue
 //
 //  Copyright (c) 2014 NTT DOCOMO, INC.
 //  Released under the MIT license
@@ -32,16 +32,13 @@
     NSString *bundlePath = [[NSBundle mainBundle] pathForResource:@"dConnectDeviceHue_resources" ofType:@"bundle"];
     NSBundle *bundle = [NSBundle bundleWithPath:bundlePath];
     
-    UIStoryboard *sb;
+    UIStoryboard *storyBoard;
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
-        sb = [UIStoryboard storyboardWithName:@"HueSetting_iPhone" bundle:bundle];
+        storyBoard = [UIStoryboard storyboardWithName:@"HueSetting_iPhone" bundle:bundle];
     } else{
-        sb = [UIStoryboard storyboardWithName:@"HueSetting_iPad" bundle:bundle];
+        storyBoard = [UIStoryboard storyboardWithName:@"HueSetting_iPad" bundle:bundle];
     }
-    UINavigationController *nc = [sb instantiateInitialViewController];
-    
-    return nc;
-
+    return [storyBoard instantiateInitialViewController];
 }
 
 @end

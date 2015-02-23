@@ -6,10 +6,23 @@
 	objectVersion = 46;
 	objects = {
 
+/* Begin PBXAggregateTarget section */
+		AB0E2E481A942DE500A46DE1 /* dConnectBrowser_OCLint */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = AB0E2E4B1A942DE500A46DE1 /* Build configuration list for PBXAggregateTarget "dConnectBrowser_OCLint" */;
+			buildPhases = (
+				AB0E2E4C1A942DF100A46DE1 /* ShellScript */,
+			);
+			dependencies = (
+			);
+			name = dConnectBrowser_OCLint;
+			productName = dConnectBrowser_OCLint;
+		};
+/* End PBXAggregateTarget section */
+
 /* Begin PBXBuildFile section */
 		2518284419B9537E0042C95A /* dConnectDeviceIRKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2518284219B9537E0042C95A /* dConnectDeviceIRKit.framework */; };
 		25262487196E5BB000AE4F1F /* DConnectSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25262486196E5BB000AE4F1F /* DConnectSDK.framework */; };
-		254111A119C2C2BA00F74C31 /* dConnectChromecast.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2541119F19C2C2BA00F74C31 /* dConnectChromecast.framework */; };
 		254111A419C2CC0F00F74C31 /* icon_512px.png in Resources */ = {isa = PBXBuildFile; fileRef = 254111A319C2CC0F00F74C31 /* icon_512px.png */; };
 		254111A619C2CD7D00F74C31 /* GoogleCast.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 254111A519C2CD7D00F74C31 /* GoogleCast.framework */; };
 		254111A819C2CDAD00F74C31 /* MediaAccessibility.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 254111A719C2CDAD00F74C31 /* MediaAccessibility.framework */; };
@@ -22,7 +35,6 @@
 		2562A2C719C3F2F80032EF17 /* dConnectDeviceHue_resources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 2562A2C619C3F2F80032EF17 /* dConnectDeviceHue_resources.bundle */; };
 		259F7CE219C33D7700F66D93 /* dConnectDeviceSphero_resources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 259F7CE119C33D7700F66D93 /* dConnectDeviceSphero_resources.bundle */; };
 		259F7CE419C33DA800F66D93 /* DConnectSDK_resources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 259F7CE319C33DA800F66D93 /* DConnectSDK_resources.bundle */; };
-		259F7CE619C3409100F66D93 /* dConnectChromecast_resources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 259F7CE519C3409100F66D93 /* dConnectChromecast_resources.bundle */; };
 		259F7CE819C343CE00F66D93 /* dConnectDeviceHost_resources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 259F7CE719C343CE00F66D93 /* dConnectDeviceHost_resources.bundle */; };
 		25D555431977E13D002AA492 /* dConnectDeviceHue.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25D555351977E13C002AA492 /* dConnectDeviceHue.framework */; };
 		25D5554B1977E13D002AA492 /* dConnectDeviceSonyCamera.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25D5553D1977E13C002AA492 /* dConnectDeviceSonyCamera.framework */; };
@@ -112,6 +124,8 @@
 		9044F33F1A1A21DA0072F241 /* HueSDK_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9044F33E1A1A21DA0072F241 /* HueSDK_iOS.framework */; };
 		9700DDE71998E0DD00209D1A /* dConnectDeviceHost.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9700DDE61998E0DD00209D1A /* dConnectDeviceHost.framework */; };
 		AB08A05E19908B410024C996 /* DCMDevicePluginSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB08A05D19908B410024C996 /* DCMDevicePluginSDK.framework */; };
+		AB5B2B4E1A9ABAEE0038CCF6 /* dConnectDeviceChromecast_resources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = AB5B2B4C1A9ABAEE0038CCF6 /* dConnectDeviceChromecast_resources.bundle */; };
+		AB5B2B4F1A9ABAEE0038CCF6 /* dConnectDeviceChromecast.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB5B2B4D1A9ABAEE0038CCF6 /* dConnectDeviceChromecast.framework */; };
 		ABBD5F0019861CFA00B81007 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABBD5EFD19861CFA00B81007 /* CoreFoundation.framework */; };
 		ABBD5F0119861CFA00B81007 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABBD5EFE19861CFA00B81007 /* CoreMotion.framework */; };
 		ABBD5F0219861CFA00B81007 /* ExternalAccessory.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABBD5EFF19861CFA00B81007 /* ExternalAccessory.framework */; };
@@ -120,7 +134,6 @@
 /* Begin PBXFileReference section */
 		2518284219B9537E0042C95A /* dConnectDeviceIRKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = dConnectDeviceIRKit.framework; path = ../../dConnectDevicePlugin/dConnectDeviceIRKit/bin/dConnectDeviceIRKit.framework; sourceTree = "<group>"; };
 		25262486196E5BB000AE4F1F /* DConnectSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DConnectSDK.framework; path = ../dConnectSDKForIOS/bin/DConnectSDK.framework; sourceTree = "<group>"; };
-		2541119F19C2C2BA00F74C31 /* dConnectChromecast.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = dConnectChromecast.framework; path = ../../dConnectDevicePlugin/dConnectDeviceChromeCast/bin/dConnectChromecast.framework; sourceTree = "<group>"; };
 		254111A319C2CC0F00F74C31 /* icon_512px.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_512px.png; sourceTree = "<group>"; };
 		254111A519C2CD7D00F74C31 /* GoogleCast.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleCast.framework; path = "../../dConnectDevicePlugin/dConnectDeviceChromeCast/GoogleCastFramework-2.3.0-Release/GoogleCast.framework"; sourceTree = "<group>"; };
 		254111A719C2CDAD00F74C31 /* MediaAccessibility.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaAccessibility.framework; path = System/Library/Frameworks/MediaAccessibility.framework; sourceTree = SDKROOT; };
@@ -133,7 +146,6 @@
 		2562A2C619C3F2F80032EF17 /* dConnectDeviceHue_resources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = dConnectDeviceHue_resources.bundle; path = ../../dConnectDevicePlugin/dConnectDeviceHue/bin/dConnectDeviceHue_resources.bundle; sourceTree = "<group>"; };
 		259F7CE119C33D7700F66D93 /* dConnectDeviceSphero_resources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = dConnectDeviceSphero_resources.bundle; path = ../../dConnectDevicePlugin/dConnectDeviceSphero/bin/dConnectDeviceSphero_resources.bundle; sourceTree = "<group>"; };
 		259F7CE319C33DA800F66D93 /* DConnectSDK_resources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = DConnectSDK_resources.bundle; path = ../dConnectSDKForIOS/bin/DConnectSDK_resources.bundle; sourceTree = "<group>"; };
-		259F7CE519C3409100F66D93 /* dConnectChromecast_resources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = dConnectChromecast_resources.bundle; path = ../../dConnectDevicePlugin/dConnectDeviceChromeCast/bin/dConnectChromecast_resources.bundle; sourceTree = "<group>"; };
 		259F7CE719C343CE00F66D93 /* dConnectDeviceHost_resources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = dConnectDeviceHost_resources.bundle; path = ../../dConnectDevicePlugin/dConnectDeviceHost/bin/dConnectDeviceHost_resources.bundle; sourceTree = "<group>"; };
 		25D555351977E13C002AA492 /* dConnectDeviceHue.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = dConnectDeviceHue.framework; path = ../../dConnectDevicePlugin/dConnectDeviceHue/bin/dConnectDeviceHue.framework; sourceTree = "<group>"; };
 		25D5553D1977E13C002AA492 /* dConnectDeviceSonyCamera.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = dConnectDeviceSonyCamera.framework; path = ../../dConnectDevicePlugin/dConnectDeviceSonyCamera/bin/dConnectDeviceSonyCamera.framework; sourceTree = "<group>"; };
@@ -282,6 +294,8 @@
 		9044F33E1A1A21DA0072F241 /* HueSDK_iOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HueSDK_iOS.framework; path = ../../dConnectDevicePlugin/dConnectDeviceHue/HueSDK_iOS.framework; sourceTree = "<group>"; };
 		9700DDE61998E0DD00209D1A /* dConnectDeviceHost.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = dConnectDeviceHost.framework; path = ../../dConnectDevicePlugin/dConnectDeviceHost/bin/dConnectDeviceHost.framework; sourceTree = "<group>"; };
 		AB08A05D19908B410024C996 /* DCMDevicePluginSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DCMDevicePluginSDK.framework; path = ../../dConnectDevicePlugin/DCMDevicePluginSDK/bin/DCMDevicePluginSDK.framework; sourceTree = "<group>"; };
+		AB5B2B4C1A9ABAEE0038CCF6 /* dConnectDeviceChromecast_resources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = dConnectDeviceChromecast_resources.bundle; path = ../../dConnectDevicePlugin/dConnectDeviceChromeCast/bin/dConnectDeviceChromecast_resources.bundle; sourceTree = "<group>"; };
+		AB5B2B4D1A9ABAEE0038CCF6 /* dConnectDeviceChromecast.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = dConnectDeviceChromecast.framework; path = ../../dConnectDevicePlugin/dConnectDeviceChromeCast/bin/dConnectDeviceChromecast.framework; sourceTree = "<group>"; };
 		ABBD5EFD19861CFA00B81007 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		ABBD5EFE19861CFA00B81007 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
 		ABBD5EFF19861CFA00B81007 /* ExternalAccessory.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ExternalAccessory.framework; path = System/Library/Frameworks/ExternalAccessory.framework; sourceTree = SDKROOT; };
@@ -306,13 +320,13 @@
 				ABBD5F0119861CFA00B81007 /* CoreMotion.framework in Frameworks */,
 				ABBD5F0219861CFA00B81007 /* ExternalAccessory.framework in Frameworks */,
 				25D555431977E13D002AA492 /* dConnectDeviceHue.framework in Frameworks */,
+				AB5B2B4F1A9ABAEE0038CCF6 /* dConnectDeviceChromecast.framework in Frameworks */,
 				AB08A05E19908B410024C996 /* DCMDevicePluginSDK.framework in Frameworks */,
 				2562A2B519C3E2480032EF17 /* dConnectDevicePebble.framework in Frameworks */,
 				25D5554B1977E13D002AA492 /* dConnectDeviceSonyCamera.framework in Frameworks */,
 				25D5554D1977E13D002AA492 /* dConnectDeviceSphero.framework in Frameworks */,
 				2562A2B819C3E2AC0032EF17 /* PebbleKit.framework in Frameworks */,
 				25D555501977E13D002AA492 /* RobotUIKit.framework in Frameworks */,
-				254111A119C2C2BA00F74C31 /* dConnectChromecast.framework in Frameworks */,
 				25D5554F1977E13D002AA492 /* RobotKit.framework in Frameworks */,
 				25262487196E5BB000AE4F1F /* DConnectSDK.framework in Frameworks */,
 				8E9A145F196257680004DDB3 /* CoreData.framework in Frameworks */,
@@ -485,6 +499,8 @@
 		8E2C5B371960FF36005DFCDC /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				AB5B2B4C1A9ABAEE0038CCF6 /* dConnectDeviceChromecast_resources.bundle */,
+				AB5B2B4D1A9ABAEE0038CCF6 /* dConnectDeviceChromecast.framework */,
 				9044F33E1A1A21DA0072F241 /* HueSDK_iOS.framework */,
 				AB08A05D19908B410024C996 /* DCMDevicePluginSDK.framework */,
 				259F7CE719C343CE00F66D93 /* dConnectDeviceHost_resources.bundle */,
@@ -499,8 +515,6 @@
 				25D5553D1977E13C002AA492 /* dConnectDeviceSonyCamera.framework */,
 				2562A2C619C3F2F80032EF17 /* dConnectDeviceHue_resources.bundle */,
 				25D555351977E13C002AA492 /* dConnectDeviceHue.framework */,
-				259F7CE519C3409100F66D93 /* dConnectChromecast_resources.bundle */,
-				2541119F19C2C2BA00F74C31 /* dConnectChromecast.framework */,
 				259F7CE319C33DA800F66D93 /* DConnectSDK_resources.bundle */,
 				25262486196E5BB000AE4F1F /* DConnectSDK.framework */,
 				2562A2B619C3E2AC0032EF17 /* PebbleKit.framework */,
@@ -759,8 +773,13 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = "";
-				LastUpgradeCheck = 0510;
+				LastUpgradeCheck = 0610;
 				ORGANIZATIONNAME = "NTT DOCOMO, INC.";
+				TargetAttributes = {
+					AB0E2E481A942DE500A46DE1 = {
+						CreatedOnToolsVersion = 6.1.1;
+					};
+				};
 			};
 			buildConfigurationList = 8E2C5B301960FF36005DFCDC /* Build configuration list for PBXProject "dConnectBrowser" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -777,6 +796,7 @@
 			projectRoot = "";
 			targets = (
 				8E2C5B341960FF36005DFCDC /* dConnectBrowser */,
+				AB0E2E481A942DE500A46DE1 /* dConnectBrowser_OCLint */,
 			);
 		};
 /* End PBXProject section */
@@ -799,11 +819,11 @@
 				8EE935C0197E3525000F9DA2 /* setting@2x.png in Resources */,
 				8E2C5B541960FF36005DFCDC /* Images.xcassets in Resources */,
 				8E3E254D1973ABAE00438C00 /* Popup.storyboard in Resources */,
-				259F7CE619C3409100F66D93 /* dConnectChromecast_resources.bundle in Resources */,
 				8E2C5B4C1960FF36005DFCDC /* Main_iPhone.storyboard in Resources */,
 				8E2C5B431960FF36005DFCDC /* InfoPlist.strings in Resources */,
 				8E9A145D19624F7B0004DDB3 /* GHHeaderView.xib in Resources */,
 				2562A2BB19C3E6600032EF17 /* dConnectDeviceIRKit_resources.bundle in Resources */,
+				AB5B2B4E1A9ABAEE0038CCF6 /* dConnectDeviceChromecast_resources.bundle in Resources */,
 				8E9A14C3196291EC0004DDB3 /* LICENSE in Resources */,
 				8EEC171C1985E43C004EB5DC /* cancel@2x.png in Resources */,
 				8E24D0181964F8BD008D9C10 /* GHPageViewCell.xib in Resources */,
@@ -839,6 +859,19 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "#!/bin/bash\nbuildNumber=$(/usr/libexec/PlistBuddy -c \"Print CFBundleVersion\" \"$INFOPLIST_FILE\")\nbuildNumber=$(($buildNumber + 1))\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"$INFOPLIST_FILE\"";
+		};
+		AB0E2E4C1A942DF100A46DE1 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "XCTOOL=/usr/local\nexport PATH=$XCTOOL/bin:$PATH\nOCLINT_HOME=${HOME}/bin/oclint-0.8.1\nexport PATH=$OCLINT_HOME/bin:$PATH\n\ncd ${SRCROOT}\nxctool -project ${PROJECT}.xcodeproj -scheme ${PROJECT} -reporter json-compilation-database:compile_commands.json clean\nxctool -project ${PROJECT}.xcodeproj -scheme ${PROJECT} -reporter json-compilation-database:compile_commands.json build\n\noclint-json-compilation-database oclint_args oclint_args \"-disable-rule=UnusedMethodParameter -disable-rule=InvertedLogic -disable-rule=DoubleNegative -disable-rule=MultipleUnaryOperator -disable-rule=MustOverrideHashWithIsEqual -disable-rule=BitwiseOperatorInConditional -disable-rule=IvarAssignmentOutsideAccessorsOrInit -disable-rule=SwitchStatementsDon\\'TNeedDefaultWhenFullyCovered -rc LONG_LINE=120 -rc MAXIMUM_IF_LENGTH=50 -rc NCSS_METHOD=50 -rc LONG_METHOD=500 -rc LONG_CLASS=2000 -rc NCSS_METHOD=100 -rc LONG_VARIABLE_NAME=100 -rc CYCLOMATIC_COMPLEXITY=100 -rc NPATH_COMPLEXITY=5000 -rc NESTED_BLOCK_DEPTH=10 -rc TOO_MANY_METHODS=50\" | sed 's/\\(.*\\.\\m\\{1,2\\}:[0-9]*:[0-9]*:\\)/\\1 warning:/'";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -964,7 +997,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -995,6 +1027,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-lstdc++",
@@ -1012,7 +1045,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -1115,6 +1147,20 @@
 			};
 			name = Release;
 		};
+		AB0E2E491A942DE500A46DE1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		AB0E2E4A1A942DE500A46DE1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1132,6 +1178,15 @@
 			buildConfigurations = (
 				8E2C5B6B1960FF37005DFCDC /* Debug */,
 				8E2C5B6C1960FF37005DFCDC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AB0E2E4B1A942DE500A46DE1 /* Build configuration list for PBXAggregateTarget "dConnectBrowser_OCLint" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AB0E2E491A942DE500A46DE1 /* Debug */,
+				AB0E2E4A1A942DE500A46DE1 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

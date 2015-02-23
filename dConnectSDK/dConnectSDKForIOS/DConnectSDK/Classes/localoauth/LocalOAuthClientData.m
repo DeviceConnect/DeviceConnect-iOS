@@ -16,10 +16,11 @@
 */
 + (id)init {
     @throw @"Can't use ClientData default constructor.";
-    return nil;
 }
 
-+ (LocalOAuthClientData *) clientDataWithClientIdClientSecret: (NSString *)clientId clientSecret: (NSString *)clientSecret {
++ (LocalOAuthClientData *) clientDataWithClientIdClientSecret:(NSString *)clientId
+                                                 clientSecret: (NSString *)clientSecret
+{
     
     LocalOAuthClientData *clientData = [[LocalOAuthClientData alloc]init];
     

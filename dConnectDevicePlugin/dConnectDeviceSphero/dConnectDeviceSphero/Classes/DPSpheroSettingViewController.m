@@ -1,6 +1,6 @@
 //
 //  DPSpheroSettingViewController.m
-//  DConnectSDK
+//  dConnectDeviceSphero
 //
 //  Copyright (c) 2014 NTT DOCOMO, INC.
 //  Released under the MIT license
@@ -9,13 +9,13 @@
 
 #import "DPSpheroSettingViewController.h"
 
-@interface DPSpheroSettingViewController () <UIPageViewControllerDataSource>{
-    NSArray *_pages;
-}
-
+@interface DPSpheroSettingViewController () <UIPageViewControllerDataSource>
 @end
 
 @implementation DPSpheroSettingViewController
+
+//Guide Pages Name
+NSArray *_pages;
 
 // Viewロード時
 - (void)viewDidLoad
@@ -24,18 +24,27 @@
     // 背景白
     self.view.backgroundColor = [UIColor whiteColor];
     // 閉じるボタン追加
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"＜CLOSE" style:UIBarButtonItemStylePlain target:self action:@selector(closeButtonAction:) ];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]
+                                            initWithTitle:@"＜CLOSE"
+                                                    style:UIBarButtonItemStylePlain
+                                                   target:self
+                                                   action:@selector(closeButtonAction:) ];
     self.navigationItem.leftBarButtonItem.tintColor = [UIColor whiteColor];
     NSString *bundlePath = [[NSBundle mainBundle] pathForResource:@"dConnectDeviceSphero_resources" ofType:@"bundle"];
     NSBundle *bundle = [NSBundle bundleWithPath:bundlePath];
-    NSString *settingsTitle = [bundle localizedStringForKey:@"SpheroSettingsTitle" value:@"Settings" table:@"Localizable"];
+    NSString *settingsTitle = [bundle localizedStringForKey:@"SpheroSettingsTitle"
+                                                      value:@"Settings" table:@"Localizable"];
     UILabel *title = [[UILabel alloc] initWithFrame:CGRectZero];
     title.font = [UIFont boldSystemFontOfSize:16.0];
     title.textColor = [UIColor whiteColor];
     title.text = settingsTitle;
     [title sizeToFit];
     self.navigationItem.titleView = title;
-    self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:0.00 green:0.63 blue:0.91 alpha:1.0]; ;  // バー背景色
+    // バー背景色
+    self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:0.00
+                                                                           green:0.63
+                                                                            blue:0.91
+                                                                           alpha:1.0];
 
     // 下のドットの色
     UIPageControl *pageControl = [UIPageControl appearanceWhenContainedIn:[self class], nil];
@@ -44,11 +53,13 @@
     pageControl.backgroundColor = [UIColor whiteColor];
 
     // ページ準備
-//    _pages = @[@"PowerGuide", @"ConnectionGuide", @"ActivateGuide"];
     _pages = @[@"PowerGuide", @"ConnectionGuide"];
     UIViewController *startingViewController = [self viewControllerAtIndex:0 storyboard:self.storyboard];
     NSArray *viewControllers = @[startingViewController];
-    [self setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
+    [self setViewControllers:viewControllers
+                   direction:UIPageViewControllerNavigationDirectionForward
+                    animated:NO
+                  completion:nil];
     self.dataSource = self;
 }
 
@@ -83,7 +94,8 @@
 #pragma mark - Page View Controller Data Source
 
 // 前のページ
-- (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(UIViewController *)viewController
+- (UIViewController *)pageViewController:(UIPageViewController *)pageViewController
+      viewControllerBeforeViewController:(UIViewController *)viewController
 {
     NSUInteger index = [self indexOfViewController:viewController];
     if ((index == 0) || (index == NSNotFound)) {
@@ -95,7 +107,8 @@
 }
 
 // 次のページ
-- (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerAfterViewController:(UIViewController *)viewController
+- (UIViewController *)pageViewController:(UIPageViewController *)pageViewController
+       viewControllerAfterViewController:(UIViewController *)viewController
 {
     NSUInteger index = [self indexOfViewController:viewController];
     if (index == NSNotFound) {

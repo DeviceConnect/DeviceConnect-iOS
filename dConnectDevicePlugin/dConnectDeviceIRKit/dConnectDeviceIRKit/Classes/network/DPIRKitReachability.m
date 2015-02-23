@@ -1,6 +1,6 @@
 //
 //  DPIRKitReachability.m
-//  DConnectSDK
+//  dConnectDeviceIRKit
 //
 //  Copyright (c) 2014 NTT DOCOMO, INC.
 //  Released under the MIT license
@@ -84,7 +84,9 @@ static void ReachabilityCallback(SCNetworkReachabilityRef target, SCNetworkReach
 
 + (instancetype)reachabilityWithAddress:(const struct sockaddr_in *)hostAddress
 {
-    SCNetworkReachabilityRef reachability = SCNetworkReachabilityCreateWithAddress(kCFAllocatorDefault, (const struct sockaddr *)hostAddress);
+    SCNetworkReachabilityRef reachability
+            = SCNetworkReachabilityCreateWithAddress(kCFAllocatorDefault,
+                                                     (const struct sockaddr *)hostAddress);
     
     DPIRKitReachability* returnValue = NULL;
     
@@ -140,14 +142,11 @@ static void ReachabilityCallback(SCNetworkReachabilityRef target, SCNetworkReach
     BOOL returnValue = NO;
     SCNetworkReachabilityContext context = {0, (__bridge void *)(self), NULL, NULL, NULL};
     
-    if (SCNetworkReachabilitySetCallback(_reachabilityRef, ReachabilityCallback, &context))
+    if (SCNetworkReachabilitySetCallback(_reachabilityRef, ReachabilityCallback, &context)
+        && SCNetworkReachabilityScheduleWithRunLoop(_reachabilityRef, CFRunLoopGetCurrent(), kCFRunLoopDefaultMode))
     {
-        if (SCNetworkReachabilityScheduleWithRunLoop(_reachabilityRef, CFRunLoopGetCurrent(), kCFRunLoopDefaultMode))
-        {
-            returnValue = YES;
-        }
+        returnValue = YES;
     }
-    
     return returnValue;
 }
 
@@ -201,25 +200,20 @@ static void ReachabilityCallback(SCNetworkReachabilityRef target, SCNetworkReach
     if ((flags & kSCNetworkReachabilityFlagsConnectionRequired) == 0)
     {
         /*
-         If the target host is reachable and no connection is required then we'll assume (for now) that you're on Wi-Fi...
+         If the target host is reachable and no connection
+         is required then we'll assume (for now) that you're on Wi-Fi...
          */
         returnValue = DPIRKitReachableViaWiFi;
     }
     
-    if ((((flags & kSCNetworkReachabilityFlagsConnectionOnDemand ) != 0) ||
-         (flags & kSCNetworkReachabilityFlagsConnectionOnTraffic) != 0))
+    if (((flags & kSCNetworkReachabilityFlagsConnectionOnDemand ) != 0
+         || (flags & kSCNetworkReachabilityFlagsConnectionOnTraffic) != 0)
+        && (flags & kSCNetworkReachabilityFlagsInterventionRequired) == 0)
     {
         /*
-         ... and the connection is on-demand (or on-traffic) if the calling application is using the CFSocketStream or higher APIs...
+         ... and no [user] intervention is needed...
          */
-        
-        if ((flags & kSCNetworkReachabilityFlagsInterventionRequired) == 0)
-        {
-            /*
-             ... and no [user] intervention is needed...
-             */
-            returnValue = DPIRKitReachableViaWiFi;
-        }
+        returnValue = DPIRKitReachableViaWiFi;
     }
     
     if ((flags & kSCNetworkReachabilityFlagsIsWWAN) == kSCNetworkReachabilityFlagsIsWWAN)

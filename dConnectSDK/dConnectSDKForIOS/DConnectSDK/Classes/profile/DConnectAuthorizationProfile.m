@@ -60,7 +60,10 @@ NSString *const DConnectAuthorizationProfileGrantTypeAuthorizationCode = @"autho
     if (attribute) {
         if ([attribute isEqualToString:DConnectAuthorizationProfileAttrCreateClient]) {
             NSString *package = [DConnectAuthorizationProfile packageFromRequest:request];
-            send = [self didReceiveGetCreateClientRequest:request response:response serviceId:serviceId package:package];
+            send = [self didReceiveGetCreateClientRequest:request
+                                                 response:response
+                                                serviceId:serviceId
+                                                  package:package];
         } else if ([attribute isEqualToString:DConnectAuthorizationProfileAttrRequestAccessToken]) {
             NSString *clientId = [DConnectAuthorizationProfile clientIdFromRequest:request];
             NSString *grantType = [DConnectAuthorizationProfile grantTypeFromRequest:request];
@@ -68,7 +71,14 @@ NSString *const DConnectAuthorizationProfileGrantTypeAuthorizationCode = @"autho
             NSArray *scopes = [DConnectAuthorizationProfile parsePattern:scope];
             NSString *applicationName = [DConnectAuthorizationProfile applicationNameFromRequest:request];
             NSString *signature = [DConnectAuthorizationProfile signatureFromRequest:request];
-            send = [self didReceiveGetRequestAccessTokenRequest:request response:response serviceId:serviceId clientId:clientId grantType:grantType scopes:scopes applicationName:applicationName signature:signature];
+            send = [self didReceiveGetRequestAccessTokenRequest:request
+                                                       response:response
+                                                      serviceId:serviceId
+                                                       clientId:clientId
+                                                      grantType:grantType
+                                                         scopes:scopes
+                                                applicationName:applicationName
+                                                      signature:signature];
         } else {
             [response setErrorToUnknownAttribute];
         }
@@ -88,7 +98,9 @@ NSString *const DConnectAuthorizationProfileGrantTypeAuthorizationCode = @"autho
         [response setErrorToInvalidRequestParameter];
     } else {
         LocalOAuth2Main *oauth = [LocalOAuth2Main sharedOAuthForClass:[self.object class]];
-		LocalOAuthPackageInfo *packageInfo = [[LocalOAuthPackageInfo alloc] initWithPackageNameServiceId:package serviceId:serviceId];
+		LocalOAuthPackageInfo *packageInfo
+                = [[LocalOAuthPackageInfo alloc] initWithPackageNameServiceId:package
+                                                                    serviceId:serviceId];
         LocalOAuthClientData *clientData = [oauth createClientWithPackageInfo:packageInfo];
         if (clientData) {
             [response setResult:DConnectMessageResultTypeOk];
@@ -128,7 +140,11 @@ NSString *const DConnectAuthorizationProfileGrantTypeAuthorizationCode = @"autho
     }
     
     LocalOAuth2Main *oauth = [LocalOAuth2Main sharedOAuthForClass:[self.object class]];
-    if ([oauth checkSignatureWithClientId:clientId grantType:grantType serviceId:serviceId scopes:scopes signature:signature]) {
+    if ([oauth checkSignatureWithClientId:clientId
+                                grantType:grantType
+                                serviceId:serviceId
+                                   scopes:scopes
+                                signature:signature]) {
         
         dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
         dispatch_time_t timeout = dispatch_time(DISPATCH_TIME_NOW, NSEC_PER_SEC * 60);
@@ -146,10 +162,13 @@ NSString *const DConnectAuthorizationProfileGrantTypeAuthorizationCode = @"autho
         [oauth confirmPublishAccessTokenWithParams:params
                         receiveAccessTokenCallback:^(LocalOAuthAccessTokenData *accessTokenData) {
                             if (accessTokenData) {
-                                NSString *chkSignature = [oauth createSignatureWithAccessToken:accessTokenData._accessToken clientId:clientId];
+                                NSString *chkSignature
+                                    = [oauth createSignatureWithAccessToken:accessTokenData._accessToken
+                                                                   clientId:clientId];
                                 
                                 [response setResult:DConnectMessageResultTypeOk];
-                                [DConnectAuthorizationProfile setAccessToken:accessTokenData._accessToken target:response];
+                                [DConnectAuthorizationProfile setAccessToken:accessTokenData._accessToken
+                                                                      target:response];
                                 [DConnectAuthorizationProfile setSignature:chkSignature target:response];
                                 
                                 DConnectArray *arr = [DConnectArray array];

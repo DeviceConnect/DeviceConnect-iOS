@@ -39,11 +39,11 @@ NSString *const DConnectSQLiteExceptionRase = @"DConnectSQLiteException";
 
 + (DConnectSQLiteDatabase *) openDatabaseWithDBName:(NSString *)name {
     
-    DConnectSQLiteDatabase *db = [[DConnectSQLiteDatabase alloc] initWithName:name];
-    BOOL isOpened = [db open];
+    DConnectSQLiteDatabase *sqliteDB = [[DConnectSQLiteDatabase alloc] initWithName:name];
+    BOOL isOpened = [sqliteDB open];
     
     if (isOpened) {
-        return db;
+        return sqliteDB;
     }
     return nil;
 }
@@ -152,7 +152,7 @@ NSString *const DConnectSQLiteExceptionRase = @"DConnectSQLiteException";
     id param;
     
     for (int i = 0; i < bindCount; i++) {
-        param = [params objectAtIndex:i];
+        param = params[i];
         [self bindParam:param index:i + 1 statement:stmt];
     }
     DCLogD(@"sql : %@ %@", sql, params);
@@ -194,7 +194,7 @@ NSString *const DConnectSQLiteExceptionRase = @"DConnectSQLiteException";
     int bindCount = sqlite3_bind_parameter_count(stmt);
     id param;
     for (int i = 0; i < bindCount; i++) {
-        param = [params objectAtIndex:i];
+        param = params[i];
         [self bindParam:param index:i + 1 statement:stmt];
     }
     
@@ -229,7 +229,7 @@ NSString *const DConnectSQLiteExceptionRase = @"DConnectSQLiteException";
     
     int last = (int) columns.count - 1;
     for (int i = 0; i < columns.count; i++) {
-        [sql appendString:[columns objectAtIndex:i]];
+        [sql appendString:columns[i]];
         [paramSql appendString:@"?"];
         if (i == last) {
             [paramSql appendString:@");"];
@@ -243,8 +243,7 @@ NSString *const DConnectSQLiteExceptionRase = @"DConnectSQLiteException";
     BOOL result = [self execSQL:sql bindParams:params error:error];
     
     if (result) {
-        long long rowId = sqlite3_last_insert_rowid(_db);
-        return rowId;
+        return (long long) sqlite3_last_insert_rowid(_db);
     }
     
     return -1;
@@ -281,11 +280,11 @@ NSString *const DConnectSQLiteExceptionRase = @"DConnectSQLiteException";
                                      error:(NSError *__autoreleasing *)error
 {
     NSMutableString *sql = [NSMutableString stringWithString:@"SELECT "];
-    int i = 1;
+    int index = 1;
     for (NSString *column in columns) {
         [sql appendString:column];
         
-        if (i == columns.count) {
+        if (index == columns.count) {
             if (where) {
                 [sql appendFormat:@" FROM %@ WHERE %@", table, where];
             } else {
@@ -294,7 +293,7 @@ NSString *const DConnectSQLiteExceptionRase = @"DConnectSQLiteException";
         } else {
             [sql appendString:@", "];
         }
-        i++;
+        index++;
     }
     
     DConnectSQLiteCursor *cursor = [self queryWithSQL:sql bindParams:params error:error];
@@ -317,12 +316,12 @@ NSString *const DConnectSQLiteExceptionRase = @"DConnectSQLiteException";
 {
     NSMutableString *sql = [NSMutableString stringWithFormat:@"UPDATE %@ SET ", table];
     
-    int i = 1;
+    int index = 1;
     for (NSString *column in columns) {
         [sql appendString:column];
         [sql appendString:@" = ?"];
         
-        if (i == columns.count) {
+        if (index == columns.count) {
             if (where) {
                 [sql appendFormat:@" WHERE %@;", where];
             } else {
@@ -331,7 +330,7 @@ NSString *const DConnectSQLiteExceptionRase = @"DConnectSQLiteException";
         } else {
             [sql appendString:@", "];
         }
-        i++;
+        index++;
     }
     
     BOOL result = [self execSQL:sql bindParams:params error:error];
@@ -357,7 +356,7 @@ NSString *const DConnectSQLiteExceptionRase = @"DConnectSQLiteException";
     
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
                                                          NSUserDomainMask, YES);
-    NSString *path = [paths objectAtIndex:0];
+    NSString *path = paths[0];
     NSString *dbFilePath = [path stringByAppendingPathComponent:self.dbName];
     
     int result = sqlite3_open([dbFilePath UTF8String], &_db);

@@ -51,7 +51,7 @@ NSString *const DConnectSystemProfileParamBLE = @"ble";
     NSString *attribute = [request attribute];
     NSString *serviceId = [request serviceId];
     
-    if (attribute && [attribute isEqualToString:DConnectSystemProfileAttrDevice]) {
+    if ([attribute isEqualToString:DConnectSystemProfileAttrDevice]) {
         if ([_delegate respondsToSelector:@selector(profile:didReceiveGetDeviceRequest:response:serviceId:)])
         {
             send = [_delegate profile:self didReceiveGetDeviceRequest:request response:response serviceId:serviceId];
@@ -120,7 +120,7 @@ NSString *const DConnectSystemProfileParamBLE = @"ble";
             [[DConnectManager sharedManager] sendResponse:response];
         });
         send = NO;
-    } else if (attribute && [attribute isEqualToString:DConnectSystemProfileAttrKeyword]) {
+    } else if ([attribute isEqualToString:DConnectSystemProfileAttrKeyword]) {
         if (_delegate && [_delegate respondsToSelector:@selector(profile:didReceivePutKeywordRequest:response:)])
         {
             send = [_delegate profile:self didReceivePutKeywordRequest:request response:response];
@@ -145,8 +145,14 @@ NSString *const DConnectSystemProfileParamBLE = @"ble";
     
     NSString *attribute = [request attribute];
     if ([DConnectSystemProfileAttrEvents isEqualToString:attribute]) {
-        if ([_delegate respondsToSelector:@selector(profile:didReceiveDeleteEventsRequest:response:sessionKey:)]) {
-            [_delegate profile:self didReceiveDeleteEventsRequest:request response:response sessionKey:[request sessionKey]];
+        if ([_delegate respondsToSelector:@selector(profile:
+                                                    didReceiveDeleteEventsRequest:
+                                                    response:
+                                                    sessionKey:)]) {
+            [_delegate                    profile:self
+                    didReceiveDeleteEventsRequest:request
+                                         response:response
+                                       sessionKey:[request sessionKey]];
         } else {
             [response setErrorToNotSupportAttribute];
         }
@@ -218,15 +224,10 @@ NSString *const DConnectSystemProfileParamBLE = @"ble";
 + (void) message:(DConnectMessage *)message setConnectionState:(DConnectSystemProfileConnectState)state
           forKey:(NSString *)aKey
 {
-    switch (state) {
-        case DConnectSystemProfileConnectStateOn:
-            [message setBool:YES forKey:aKey];
-            break;
-        case DConnectSystemProfileConnectStateOff:
-            [message setBool:NO forKey:aKey];
-            break;
-        default:
-            break;
+    if (state == DConnectSystemProfileConnectStateOn) {
+        [message setBool:YES forKey:aKey];
+    } else if (state == DConnectSystemProfileConnectStateOff) {
+        [message setBool:NO forKey:aKey];
     }
 }
 

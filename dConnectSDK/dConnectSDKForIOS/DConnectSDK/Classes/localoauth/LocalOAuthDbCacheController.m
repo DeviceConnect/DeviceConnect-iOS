@@ -40,11 +40,15 @@ static NSString *const LocalOAuthDbCacheControllerDBName = @"__dconnect_localoau
 - (NSArray *)scopesToAccessTokenScopes: (NSArray *)scopes;
 
 /*!
-    プロファイル配列に指定されたプロファイル名のデータが存在すればそのデータを返す.
+    プロファイル配列に指定されたプロファイル名の
+    データが存在すればそのデータを返す.
  
     @param[in] profiles プロファイルデータ配列
     @param[in] profileName プロファイル名
-    @return not null: プロファイル名が一致するプロファイルデータが存在すればそのポインタを返す。 null: 存在しない。
+    @return
+        not null: プロファイル名が一致するプロファイルデータが
+                    存在すればそのポインタを返す。
+        null: 存在しない。
  */
 - (LocalOAuthSQLiteProfile *) findProfileByProfileName: (NSArray *)profiles
                                            profileName: (NSString *)profileName;
@@ -61,15 +65,21 @@ static NSString *const LocalOAuthDbCacheControllerDBName = @"__dconnect_localoau
 
 /*!
     長時間利用されていないクライアントをクリーンアップする.<br>
-    (1)clientsテーブルにあるがtokensテーブルにトークンが無い場合、clientsの登録日時がしきい値を越えていたら削除する。<br>
-    (2)clientsテーブルにあるがtokensテーブルにトークンが有る場合、tokensの登録日時がしきい値を越えていたら削除する。<br>
+    (1)clientsテーブルにあるがtokensテーブルにトークンが
+        無い場合、clientsの登録日時がしきい値を
+        越えていたら削除する。<br>
+    (2)clientsテーブルにあるがtokensテーブルにトークンが
+        有る場合、tokensの登録日時がしきい値を
+        越えていたら削除する。<br>
     ※(2)の場合、トークンの有効期限内なら削除しない。
     @param[in] clientCleanupTime     クライアントをクリーンアップする未アクセス時間[sec].
  */
-- (void) clientManager_cleanupClient: (int)clientCleanupTime database:(DConnectSQLiteDatabase *)database;
+- (void) clientManager_cleanupClient:(int)clientCleanupTime
+                            database:(DConnectSQLiteDatabase *)database;
 
 - (int) clientManager_countClients: (DConnectSQLiteDatabase *)database ;
-- (LocalOAuthClient *) clientManager_findByPackageInfo: (LocalOAuthPackageInfo *)packageInfo database:(DConnectSQLiteDatabase *)database;
+- (LocalOAuthClient *) clientManagerFindByPackageInfo:(LocalOAuthPackageInfo *)packageInfo
+                                             database:(DConnectSQLiteDatabase *)database;
 
 /*!
     クライアント作成.
@@ -138,8 +148,8 @@ static NSString *const LocalOAuthDbCacheControllerDBName = @"__dconnect_localoau
         _helper = [DConnectSQLiteOpenHelper helperWithDBName:name version:DCONNECT_LOCALOAUTH_DB_VERSION];
         _helper.delegate = self;
         // databaseを呼び出すとDBを作成するのでここで作成しておく。
-        DConnectSQLiteDatabase *db = [_helper database];
-        [db close];
+        DConnectSQLiteDatabase *dbCache = [_helper database];
+        [dbCache close];
     }
     
     return self;
@@ -154,7 +164,10 @@ static NSString *const LocalOAuthDbCacheControllerDBName = @"__dconnect_localoau
 
     __block LocalOAuthClientData *clientData = nil;
     
-    /* 長時間使用されていなかったclientIdをクリーンアップする(DBアクセスしたついでに有効クライアント数も取得する) */
+    /*
+     長時間使用されていなかったclientIdをクリーンアップする
+     (DBアクセスしたついでに有効クライアント数も取得する) 
+     */
     int clientCount = [self cleanupClient];
     
     /* クライアント数が上限まで使用されていれば例外発生 */
@@ -175,7 +188,7 @@ static NSString *const LocalOAuthDbCacheControllerDBName = @"__dconnect_localoau
             
             
             /* パッケージ情報に対応するクライアントIDがすでに登録済なら破棄する */
-            LocalOAuthClient *client = [self clientManager_findByPackageInfo: packageInfo database:database];
+            LocalOAuthClient *client = [self clientManagerFindByPackageInfo: packageInfo database:database];
             if (client != nil) {
                 NSString *clientId = [client clientId];
                 
@@ -325,11 +338,15 @@ static NSString *const LocalOAuthDbCacheControllerDBName = @"__dconnect_localoau
             if (client != nil) {
                 
                 /* クライアントからトークンを取得する */
-                LocalOAuthToken *token = [LocalOAuthTokenDao findToken: client username:LOCALOAUTH_USERNAME database:database];
+                LocalOAuthToken *token = [LocalOAuthTokenDao findToken:client
+                                                              username:LOCALOAUTH_USERNAME
+                                                              database:database];
                 if (token != nil) {
                     NSString *accessToken = [token accessToken];
                     NSArray *accessTokenScopes = [self scopesToAccessTokenScopes: [token scope]];
-                    acccessTokenData = [LocalOAuthAccessTokenData accessTokenDataWithAccessToken:accessToken scopes:accessTokenScopes];
+                    acccessTokenData = [LocalOAuthAccessTokenData
+                                                accessTokenDataWithAccessToken:accessToken
+                                                                        scopes:accessTokenScopes];
                 }
             }
             
@@ -484,7 +501,7 @@ static NSString *const LocalOAuthDbCacheControllerDBName = @"__dconnect_localoau
             [database beginTransaction];
             
             LocalOAuthClient *client =
-                    [self clientManager_findByPackageInfo: packageInfo
+                    [self clientManagerFindByPackageInfo: packageInfo
                                                  database: database];
             
             [self tokenManager_revokeAllTokens: client database: database];
@@ -607,47 +624,34 @@ static NSString *const LocalOAuthDbCacheControllerDBName = @"__dconnect_localoau
         if (!database) {
             return;
         }
-        
         do {
             [database beginTransaction];
-    
             /* scopesのtimestampを現在時刻に設定する */
             long long currentTime = [LocalOAuthUtils getCurrentTimeInMillis];
             int scopeCount = [scopes count];
             for (int i = 0; i < scopeCount; i++) {
-                LocalOAuthScope *s = [scopes objectAtIndex: i];
-                s.timestamp = currentTime;
+                LocalOAuthScope *scope = scopes[i];
+                scope.timestamp = currentTime;
             }
             
             /* すでに発行されているトークンが存在するか */
             token = [self tokenManager_findTokenByClientUsername: client
                                                         username: username
                                                         database: database];
-
-            
-            /* DBのprofilesテーブルに登録されていないprofilesがscopeに指定されていればそれを追加する */
             NSMutableArray *profiles = [[LocalOAuthProfileDao load: database] mutableCopy];
             if (profiles == nil) {
                 profiles = [NSMutableArray array];
             }
             for (int i = 0; i < scopeCount; i ++) {
-                LocalOAuthScope *s = [scopes objectAtIndex: i];
-                
-                if ([self findProfileByProfileName:profiles profileName:[s scope]] == nil) {
-                    
+                LocalOAuthScope *scope = scopes[i];
+                if ([self findProfileByProfileName:profiles profileName:[scope scope]] == nil) {
                     LocalOAuthSQLiteProfile *profile = [[LocalOAuthSQLiteProfile alloc]init];
-                    profile.profileName = [s scope];
-                    
-                    /* DBに1件追加(失敗したらSQLiteException発生) */
+                    profile.profileName = [scope scope];
                     profile.id_ = [LocalOAuthProfileDao insertWithName: profile.profileName toDatabase:database];
                     [profiles addObject: profile];
                 }
             }
-            
-            /* 発行されているtokenがなければ登録する(失敗したらSQLiteException発生) */
             if (token == nil) {
-                
-                /* トークンデータを登録 */
                 LocalOAuthSQLiteToken *sqliteToken = [[LocalOAuthSQLiteToken alloc]init];
                 [sqliteToken setClientId: [client clientId]];
                 [sqliteToken setUsername: username];
@@ -665,28 +669,28 @@ static NSString *const LocalOAuthDbCacheControllerDBName = @"__dconnect_localoau
                 /* スコープデータを登録 */
                 long long tokensTokenId = [sqliteToken id_];
                 for (int i = 0; i < scopeCount; i++) {
-                    LocalOAuthScope *scope = [scopes objectAtIndex: i];
-                    LocalOAuthSQLiteProfile *profile = [self findProfileByProfileName:profiles profileName:[scope scope]];
+                    LocalOAuthScope *scope = scopes[i];
+                    LocalOAuthSQLiteProfile *profile
+                                            = [self findProfileByProfileName:profiles
+                                                                 profileName:[scope scope]];
                     
-                    LocalOAuthSQLiteScopeDb *sc = [[LocalOAuthSQLiteScopeDb alloc]init: tokensTokenId
+                    LocalOAuthSQLiteScopeDb *scopeDB = [[LocalOAuthSQLiteScopeDb alloc]init:tokensTokenId
                                                                      profilesProfileId: profile.id_
                                                                              timestamp: [scope timestamp]
                                                                           expirePeriod: scope.expirePeriod];
-                    [LocalOAuthScopeDao insertWithScopeData: sc
+                    [LocalOAuthScopeDao insertWithScopeData: scopeDB
                                                  toDatabase: database];
                 }
                 
             } else { /* 既存のtokenにscopeを追加し、トークンの有効期限を更新する */
-                
-                /* DBのscopesテーブルに登録されているデータを読み込む */
                 LocalOAuthSQLiteToken *sqliteToken = (LocalOAuthSQLiteToken *)token.delegate;
-                NSArray *grantScopeInfos = [LocalOAuthScopeDao loadScopes:[sqliteToken id_] database:database]; /* SQLiteScopeInfo[] */
-                
-                /* DB未登録のスコープデータを取得する */
+                NSArray *grantScopeInfos
+                            = [LocalOAuthScopeDao loadScopes:[sqliteToken id_]
+                                                    database:database]; /* SQLiteScopeInfo[] */
                 NSMutableArray *addScopes = [NSMutableArray array];     /* SQLiteScopeInfo[] */
                 NSMutableArray *existScopes = [NSMutableArray array];   /* SQLiteScopeInfo[] */
                 for (NSUInteger i = 0; i < scopeCount; i++) {
-                    LocalOAuthScope *scope = [scopes objectAtIndex: i];
+                    LocalOAuthScope *scope = scopes[i];
                     
                     /* grantScopesに登録されているか */
                     LocalOAuthSQLiteScopeInfo *scopeInfo = [self findScopeInfoByProfileName: grantScopeInfos
@@ -739,16 +743,11 @@ static NSString *const LocalOAuthDbCacheControllerDBName = @"__dconnect_localoau
                                               profileId: [existScope profilesProfileId]
                                                database: database];
                 }
-                
-                /* DB更新(内部でアクセス時間を更新、失敗したらSQLiteException発生) */
                 [LocalOAuthTokenDao updateAccessTime: [sqliteToken id_] database:database];
-                
             }
-            
             result = DConnectEventErrorNone;
             
         } while (NO);
-        
         if (result == DConnectEventErrorNone) {
             [database commit];
         } else {
@@ -761,8 +760,11 @@ static NSString *const LocalOAuthDbCacheControllerDBName = @"__dconnect_localoau
 
 #pragma mark - LocalOAuthDbCacheController(private)
 
-/* private */
-/* 長時間使用されていなかったclientIdをクリーンアップする(DBアクセスしたついでに有効クライアント数も取得する) */
+
+/* 
+ 長時間使用されていなかったclientIdをクリーンアップする
+ (DBアクセスしたついでに有効クライアント数も取得する)
+ */
 - (int) cleanupClient {
 
     __block DConnectEventError result = DConnectEventErrorFailed;
@@ -810,7 +812,7 @@ static NSString *const LocalOAuthDbCacheControllerDBName = @"__dconnect_localoau
                   database: (DConnectSQLiteDatabase *)database {
     
     NSArray *redirectURIs = @[DUMMY_REDIRECTURI];
-    NSDictionary *params = [NSDictionary dictionary];
+    NSDictionary *params = @{};
     
     LocalOAuthClient *client =
     [self clientManager_createClient: packageInfo
@@ -833,7 +835,7 @@ static NSString *const LocalOAuthDbCacheControllerDBName = @"__dconnect_localoau
         NSMutableArray *accessTokenScopes = [NSMutableArray array]; /* AccessTokenScopeの配列 */
         int scopeCount = [scopes count];
         for (int i = 0; i < scopeCount; i++) {
-            LocalOAuthScope *scope = [scopes objectAtIndex: i];
+            LocalOAuthScope *scope = scopes[i];
             
             LocalOAuthAccessTokenScope *accessTokenScope =
                 [LocalOAuthAccessTokenScope accessTokenScopeWithScope:[scope scope]
@@ -858,9 +860,10 @@ static NSString *const LocalOAuthDbCacheControllerDBName = @"__dconnect_localoau
 /**
  * パッケージ情報をキーにDB検索し該当するクライアントを返す。(追加).
  * @param	packageInfo	パッケージ情報
- * @return	not null: パッケージ情報が一致するクライアント / null: パッケージ情報が一致するクライアント無し
+ * @return	not null: パッケージ情報が一致するクライアント
+            / null: パッケージ情報が一致するクライアント無し
  */
-- (LocalOAuthClient *) clientManager_findByPackageInfo: (LocalOAuthPackageInfo *)packageInfo
+- (LocalOAuthClient *) clientManagerFindByPackageInfo: (LocalOAuthPackageInfo *)packageInfo
                                     database:(DConnectSQLiteDatabase *)database {
     
     LocalOAuthClient *client = [LocalOAuthClientDao findClientByPackageInfo:packageInfo database:database];
@@ -882,8 +885,7 @@ static NSString *const LocalOAuthDbCacheControllerDBName = @"__dconnect_localoau
  * @return 有効なclientsレコード数
  */
 - (int) clientManager_countClients: (DConnectSQLiteDatabase *)database {
-    int count = [LocalOAuthClientDao countClients: database];
-    return count;
+    return [LocalOAuthClientDao countClients: database];
 }
 
 
@@ -914,12 +916,11 @@ static NSString *const LocalOAuthDbCacheControllerDBName = @"__dconnect_localoau
      * clients utilizing the implicit grant type. (3.1.2.2. Registration
      * Requirements)
      */
-    if (clientType == CLIENT_TYPE_PUBLIC
-        || (clientType == CLIENT_TYPE_CONFIDENTIAL &&
-            [flows containsObject: [LocalOAuthResponseTypeUtil toString: RESPONSE_TYPE_TOKEN]])) {
-        if (redirectURIs == nil || [redirectURIs count] == 0) {
-            @throw @"RedirectionURI(s) required.";
-        }
+    if ((clientType == CLIENT_TYPE_PUBLIC
+         || (clientType == CLIENT_TYPE_CONFIDENTIAL &&
+             [flows containsObject: [LocalOAuthResponseTypeUtil toString: RESPONSE_TYPE_TOKEN]]))
+         && (redirectURIs == nil || [redirectURIs count] == 0)) {
+        @throw @"RedirectionURI(s) required.";
     }
     
     NSString *clientId = [[[NSUUID alloc] init]UUIDString];
@@ -960,9 +961,8 @@ static NSString *const LocalOAuthDbCacheControllerDBName = @"__dconnect_localoau
         return DEFAULT_SUPPORTED_FLOWS_PUBLIC;
     } else if (clientType == CLIENT_TYPE_CONFIDENTIAL) {
         return DEFAULT_SUPPORTED_FLOWS_CONFIDENTIAL;
-    } else {
-        @throw @"clientType is unknown.";
     }
+    @throw @"clientType is unknown.";
 }
 
 
@@ -1071,9 +1071,9 @@ static NSString *const LocalOAuthDbCacheControllerDBName = @"__dconnect_localoau
     @param byteCount 生成するバイト数(1バイトあたり2文字分生成する)
     @return BASE64でランダムに生成した文字列(文字数=byteCount*2)
  */
-- (NSString *) base64RandomValue: (int)byteCount {
+- (NSString *)base64RandomValue: (int)byteCount {
     
-    NSMutableString *str = [NSMutableString string];
+    NSMutableString *strBase64 = [NSMutableString string];
     int loopCount = byteCount * 2;
     for (int i = 0; i < loopCount; i++) {
         /*  0 -  9: '0' - '9' */
@@ -1081,25 +1081,25 @@ static NSString *const LocalOAuthDbCacheControllerDBName = @"__dconnect_localoau
         /* 36 - 61: 'a' - 'z' */
         /*      62: '+' */
         /*      63: '/' */
-        NSString *c = nil;
-        int r = arc4random() % 64;
-        if (0 <= r && r <= 9) {
-            c = [NSString stringWithFormat: @"%d", r];
-        } else if (10 <= r && r <= 35) {
-            unichar cc = 'a' + (r - 10);
-            c = [[NSString alloc]initWithCharacters:&cc length:1];
-        } else if (36 <= r && r <= 61) {
-            unichar cc = 'A' + (r - 36);
-            c = [[NSString alloc]initWithCharacters:&cc length:1];
-        } else if (r == 62) {
-            c = @"+";
-        } else if (r == 63) {
-            c = @"/";
+        NSString *charBase64 = nil;
+        int randomSeed = arc4random() % 64;
+        if (0 <= randomSeed && randomSeed <= 9) {
+            charBase64 = [NSString stringWithFormat: @"%d", randomSeed];
+        } else if (10 <= randomSeed && randomSeed <= 35) {
+            unichar seed = 'a' + (randomSeed - 10);
+            charBase64 = [[NSString alloc]initWithCharacters:&seed length:1];
+        } else if (36 <= randomSeed && randomSeed <= 61) {
+            unichar seed = 'A' + (randomSeed - 36);
+            charBase64 = [[NSString alloc]initWithCharacters:&seed length:1];
+        } else if (randomSeed == 62) {
+            charBase64 = @"+";
+        } else if (randomSeed == 63) {
+            charBase64 = @"/";
         }
-        [str appendString: c];
+        [strBase64 appendString: charBase64];
     }
     
-    return str;
+    return strBase64;
 }
 
 /*!
@@ -1109,15 +1109,15 @@ static NSString *const LocalOAuthDbCacheControllerDBName = @"__dconnect_localoau
  */
 - (NSString *) hexRandomValue: (int)byteCount {
     
-    NSMutableString *str = [NSMutableString string];
+    NSMutableString *strHex = [NSMutableString string];
     for (int i = 0; i < byteCount; i++) {
         /* 乱数を取得して2桁の文字列を出力 */
-        int r = arc4random() % 256;
-        NSString *c = [NSString stringWithFormat: @"%02x", r];
-        [str appendString: c];
+        int randomSeed = arc4random() % 256;
+        NSString *charHex = [NSString stringWithFormat: @"%02x", randomSeed];
+        [strHex appendString: charHex];
     }
     
-    return str;
+    return strHex;
 }
 
 /* private */
@@ -1126,7 +1126,7 @@ static NSString *const LocalOAuthDbCacheControllerDBName = @"__dconnect_localoau
                                            profileName: (NSString *)profileName {
     NSInteger profileCount = [profiles count];
     for (NSInteger i = 0; i < profileCount; i++) {
-        LocalOAuthSQLiteProfile *profile = [profiles objectAtIndex: i];
+        LocalOAuthSQLiteProfile *profile = profiles[i];
         
         if ([profileName isEqualToString: [profile profileName]]) {
             return profile;
@@ -1141,7 +1141,7 @@ static NSString *const LocalOAuthDbCacheControllerDBName = @"__dconnect_localoau
     
     NSUInteger scopeInfoCount = [scopeInfos count];
     for (NSUInteger i = 0; i < scopeInfoCount; i++) {
-        LocalOAuthSQLiteScopeInfo *scopeInfo = [scopeInfos objectAtIndex: i];
+        LocalOAuthSQLiteScopeInfo *scopeInfo = scopeInfos[i];
         
         if ([[scopeInfo profileName] isEqualToString: profileName]) {
             return scopeInfo;
@@ -1173,10 +1173,10 @@ static NSString *const LocalOAuthDbCacheControllerDBName = @"__dconnect_localoau
         // 作成に失敗したらDBを削除。
         NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
                                                              NSUserDomainMask, YES);
-        NSString *path = [paths objectAtIndex:0];
+        NSString *path = paths[0];
         NSString *dbFilePath = [path stringByAppendingPathComponent:database.dbName];
-        NSFileManager *fm = [NSFileManager defaultManager];
-        [fm removeItemAtPath:dbFilePath error:nil];
+        NSFileManager *fileManager = [NSFileManager defaultManager];
+        [fileManager removeItemAtPath:dbFilePath error:nil];
         
         @throw @"ERROR: Could not create DB.";
     }

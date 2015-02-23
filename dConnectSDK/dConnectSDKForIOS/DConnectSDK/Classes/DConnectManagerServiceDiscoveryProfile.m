@@ -58,10 +58,10 @@ didReceiveGetServicesRequest:(DConnectRequestMessage *)request
             
             int result = [response integerForKey:DConnectMessageResult];
             if (result == DConnectMessageResultTypeOk) {
-                DConnectArray *s = [resp arrayForKey:DConnectServiceDiscoveryProfileParamServices];
-                if (s && [s count] > 0) {
-                    for (int i = 0; i < [s count]; i++) {
-                        DConnectMessage *msg = [s messageAtIndex:i];
+                DConnectArray *services = [resp arrayForKey:DConnectServiceDiscoveryProfileParamServices];
+                if ([services count] > 0) {
+                    for (int i = 0; i < [services count]; i++) {
+                        DConnectMessage *msg = [services messageAtIndex:i];
                         NSString *serviceId = [msg stringForKey:DConnectServiceDiscoveryProfileParamId];
                         if (serviceId) {
                             // サービスIDにデバイスプラグインのIDを付加する
@@ -97,7 +97,8 @@ didReceiveGetServicesRequest:(DConnectRequestMessage *)request
     DConnectArray *responseServices = nil;
     if (result != 0) {
         @synchronized (services) {
-            // タイムアウトした場合はあとから処理されたものが追加されないようにコピーにしておく。
+            // タイムアウトした場合はあとから
+            // 処理されたものが追加されないようにコピーにしておく。
             responseServices = [services copy];
         }
         

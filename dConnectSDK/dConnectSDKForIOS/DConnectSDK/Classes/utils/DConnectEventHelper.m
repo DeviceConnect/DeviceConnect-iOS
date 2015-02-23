@@ -72,7 +72,7 @@
             DC_SYNC_START(_handlers)
             DConnectEventHandlerHolder *holder = [DConnectEventHandlerHolder new];
             holder.handler = messageHandler;
-            [_handlers setObject:holder forKey:[_self keyForMessage:request]];
+            _handlers[[_self keyForMessage:request]] = holder;
             DC_SYNC_END
         }
         
@@ -106,9 +106,9 @@
 - (void) unregisterAllEventsWithAccessToken:(NSString *)accessToken
 {
     
-    DConnectManager *dm = [DConnectManager sharedManager];
+    DConnectManager *dconnectManager = [DConnectManager sharedManager];
     
-    if (dm.settings.useLocalOAuth && [self isEmptyString:accessToken]) {
+    if (dconnectManager.settings.useLocalOAuth && [self isEmptyString:accessToken]) {
         @throw @"AccessToken is needed.";
     }
     
@@ -145,7 +145,7 @@
             req.sessionKey = sessionKey;
             req.accessToken = accessToken;
             
-            [dm sendRequest:req callback:nil];
+            [dconnectManager sendRequest:req callback:nil];
         }
         
         [_handlers removeObjectForKey:key];

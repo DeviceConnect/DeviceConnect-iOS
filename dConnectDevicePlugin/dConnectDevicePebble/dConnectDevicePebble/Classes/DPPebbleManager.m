@@ -1,6 +1,6 @@
 //
 //  DPPebbleManager.m
-//  DConnectSDK
+//  dConnectDevicePebble
 //
 //  Copyright (c) 2014 NTT DOCOMO, INC.
 //  Released under the MIT license
@@ -185,7 +185,9 @@ static const NSTimeInterval DPSemaphoreTimeout = 10.0;
 }
 
 // 充電中のステータス変更イベント登録
-- (void)registChargingChangeEvent:(NSString*)serviceID callback:(void(^)(NSError *error))callback eventCallback:(void(^)(BOOL isCharging))eventCallback
+- (void)registChargingChangeEvent:(NSString*)serviceID
+                         callback:(void(^)(NSError *error))callback
+                    eventCallback:(void(^)(BOOL isCharging))eventCallback
 {
 	if (!callback || !eventCallback) return;
 	
@@ -211,7 +213,9 @@ static const NSTimeInterval DPSemaphoreTimeout = 10.0;
 }
 
 // 充電レベル変更イベント登録
-- (void)registBatteryLevelChangeEvent:(NSString*)serviceID callback:(void(^)(NSError *error))callback eventCallback:(void(^)(float level))eventCallback
+- (void)registBatteryLevelChangeEvent:(NSString*)serviceID
+                             callback:(void(^)(NSError *error))callback
+                        eventCallback:(void(^)(float level))eventCallback
 {
 	if (!callback || !eventCallback) return;
 	
@@ -252,7 +256,12 @@ static const NSTimeInterval DPSemaphoreTimeout = 10.0;
 #pragma mark - DeviceOrientation
 
 // 傾きイベント登録
-- (void)registDeviceOrientationEvent:(NSString*)serviceID callback:(void(^)(NSError *error))callback eventCallback:(void(^)(float x, float y, float z, long long t))eventCallback
+- (void)registDeviceOrientationEvent:(NSString*)serviceID
+                            callback:(void(^)(NSError *error))callback
+                       eventCallback:(void(^)(float orientationX,
+                                              float orientationY,
+                                              float orientationZ,
+                                              long long interval))eventCallback
 {
 	if (!callback) return;
 	
@@ -269,16 +278,16 @@ static const NSTimeInterval DPSemaphoreTimeout = 10.0;
 		// レベルを0~1で返す
 		NSNumber *action = data[@(KEY_ACTION)];
 		if ([action intValue] == ACTION_EVENT) {
-			NSNumber *xx = data[@(KEY_PARAM_DEVICE_ORIENTATION_X)];
-			NSNumber *yy = data[@(KEY_PARAM_DEVICE_ORIENTATION_Y)];
-			NSNumber *zz = data[@(KEY_PARAM_DEVICE_ORIENTATION_Z)];
+			NSNumber *orientationX = data[@(KEY_PARAM_DEVICE_ORIENTATION_X)];
+			NSNumber *orientationY = data[@(KEY_PARAM_DEVICE_ORIENTATION_Y)];
+			NSNumber *orientationZ = data[@(KEY_PARAM_DEVICE_ORIENTATION_Z)];
 			NSNumber *intervalX = data[@(KEY_PARAM_DEVICE_ORIENTATION_INTERVAL)];
 			
-			float fx = xx.intValue * G_TO_MS2_COEFFICIENT;
-			float fy = yy.intValue * G_TO_MS2_COEFFICIENT;
-			float fz = zz.intValue * G_TO_MS2_COEFFICIENT;
+			float orientationXms2 = orientationX.intValue * G_TO_MS2_COEFFICIENT;
+			float orientationYms2 = orientationY.intValue * G_TO_MS2_COEFFICIENT;
+			float orientationZms2 = orientationZ.intValue * G_TO_MS2_COEFFICIENT;
 			
-			eventCallback(fx, fy, fz, intervalX.longLongValue);
+			eventCallback(orientationXms2, orientationYms2, orientationZms2, intervalX.longLongValue);
 		} else {
 			callback(nil);
 		}
@@ -286,16 +295,21 @@ static const NSTimeInterval DPSemaphoreTimeout = 10.0;
 }
 
 // 傾きイベント削除
-- (void)deleteDeviceOrientationEvent:(NSString*)serviceID callback:(void(^)(NSError *error))callback
+- (void)deleteDeviceOrientationEvent:(NSString*)serviceID
+                            callback:(void(^)(NSError *error))callback
 {
-	[self deleteEvent:serviceID profile:PROFILE_DEVICE_ORIENTATION attr:DEVICE_ORIENTATION_ATTRIBUTE_ON_DEVICE_ORIENTATION callback:callback];
+	[self deleteEvent:serviceID
+              profile:PROFILE_DEVICE_ORIENTATION
+                 attr:DEVICE_ORIENTATION_ATTRIBUTE_ON_DEVICE_ORIENTATION
+             callback:callback];
 }
 
 
 #pragma mark - Setting
 
 // 日時取得
-- (void)fetchDate:(NSString*)serviceID callback:(void(^)(NSString *date, NSError *error))callback
+- (void)fetchDate:(NSString*)serviceID
+         callback:(void(^)(NSString *date, NSError *error))callback
 {
 	if (!callback) return;
 	
@@ -318,7 +332,9 @@ static const NSTimeInterval DPSemaphoreTimeout = 10.0;
 #pragma mark - Vibration
 
 // バイブレーション開始
-- (void)startVibration:(NSString*)serviceID pattern:(NSArray *) pattern callback:(void(^)(NSError *error))callback
+- (void)startVibration:(NSString*)serviceID
+               pattern:(NSArray *)pattern
+              callback:(void(^)(NSError *error))callback
 {
 	if (!callback) return;
 	
@@ -340,19 +356,18 @@ static const NSTimeInterval DPSemaphoreTimeout = 10.0;
 
 // バイブのパターン情報をコンバート
 - (NSData*)convertVibrationPattern:(NSArray *)pattern {
-	if (pattern == nil || pattern.count == 0) {
-		return nil;
-	} else {
+	if (pattern != nil || pattern.count != 0) {
 		NSMutableData *data = [NSMutableData data];
 		for (NSNumber *value in pattern) {
-			int v = [value intValue];
+			int iValue = [value intValue];
 			char buf[2];
-			buf[0] = (char) (v >> 8) & 0xff;
-			buf[1] = (char) (v & 0xff);
+			buf[0] = (char) (iValue >> 8) & 0xff;
+			buf[1] = (char) (iValue & 0xff);
 			[data appendBytes:buf length:2];
 		}
 		return data;
 	}
+    return nil;
 }
 
 // バイブレーション停止
@@ -397,11 +412,14 @@ static const NSTimeInterval DPSemaphoreTimeout = 10.0;
 #pragma mark - Image
 
 
-// 分割サイズ（Pebbleアプリ側でも定義してあるので大きくする場合には、Pebbleアプリ側の定義も修正すること）
+// 分割サイズ（Pebbleアプリ側でも定義してあるので大きくする場合には、
+// Pebbleアプリ側の定義も修正すること）
 #define BUF_SIZE 64
 
 // 画像データ送信
-- (void)sendImage:(NSString*)serviceID data:(NSData*)data callback:(void(^)(NSError *error))callback
+- (void)sendImage:(NSString*)serviceID
+             data:(NSData*)data
+         callback:(void(^)(NSError *error))callback
 {
 	if (!callback) return;
 	
@@ -440,7 +458,10 @@ static const NSTimeInterval DPSemaphoreTimeout = 10.0;
 }
 
 // 画像データ送信（中身）
-- (void)sendImageBody:(NSString*)serviceID data:(NSData *)data index:(int)index callback:(void(^)(NSError *error))callback
+- (void)sendImageBody:(NSString*)serviceID
+                 data:(NSData *)data
+                index:(int)index
+             callback:(void(^)(NSError *error))callback
 {
 	BOOL last = (data.length / BUF_SIZE == index);
 	
@@ -466,7 +487,10 @@ static const NSTimeInterval DPSemaphoreTimeout = 10.0;
 #pragma mark - Common
 
 // イベント削除共通
-- (void)deleteEvent:(NSString*)serviceID profile:(UInt32)profile attr:(UInt32)attr callback:(void(^)(NSError *error))callback
+- (void)deleteEvent:(NSString*)serviceID
+            profile:(UInt32)profile
+               attr:(UInt32)attr
+           callback:(void(^)(NSError *error))callback
 {
 	if (!callback) return;
 	
@@ -485,7 +509,9 @@ static const NSTimeInterval DPSemaphoreTimeout = 10.0;
 #pragma mark - Send Command
 
 // コマンド送信
-- (void)sendCommand:(NSString*)serviceID request:(NSMutableDictionary*)request callback:(void(^)(NSDictionary*, NSError*))callback
+- (void)sendCommand:(NSString*)serviceID
+            request:(NSMutableDictionary*)request
+           callback:(void(^)(NSDictionary*, NSError*))callback
 {
 	// 別スレッドで実行
 	dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
@@ -508,7 +534,9 @@ static const NSTimeInterval DPSemaphoreTimeout = 10.0;
 }
 
 // コマンド送信（実装）
-- (void)sendCommand:(NSString*)serviceID request:(NSMutableDictionary*)request retryCount:(int)retryCount
+- (void)sendCommand:(NSString*)serviceID
+            request:(NSMutableDictionary*)request
+         retryCount:(int)retryCount
 {
 //	NSLog(@"sendCommand:%@ request:%@ retryCount:%d", serviceID, request, retryCount);
 
@@ -531,7 +559,8 @@ static const NSTimeInterval DPSemaphoreTimeout = 10.0;
 	}
 	
 	// UpdateHandler登録（１つのWatchに１つだけ）
-	// フロー的に削除される事は無い（アプリがバックグラウンドに行った時は全てクリアされる）
+	// フロー的に削除される事は無い
+    // （アプリがバックグラウンドに行った時は全てクリアされる）
 	if (!_updateHandlerDict[serviceID]) {
 		[self addHandler:watch serviceID:serviceID];
 	}
@@ -543,7 +572,9 @@ static const NSTimeInterval DPSemaphoreTimeout = 10.0;
 			[watch appMessagesLaunch:^(PBWatch *watch, NSError *error2) {
 				if (retryCount < DPMaxRetryCount) {
 					// 一定時間後に再度実行
-					dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(DPRetryInterval * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+					dispatch_after(dispatch_time(DISPATCH_TIME_NOW,
+                                                    (int64_t)(DPRetryInterval * NSEC_PER_SEC)),
+                                                        dispatch_get_main_queue(), ^{
 						[self sendCommand:serviceID request:request retryCount:retryCount+1];
 					});
 				} else {
@@ -588,7 +619,9 @@ static const NSTimeInterval DPSemaphoreTimeout = 10.0;
 	NSNumber *action = update[@(KEY_ACTION)];
 	if ([action intValue] == ACTION_EVENT) {
 		// Eventのアップデート
-		void (^callback)(NSDictionary*, NSError*)  = _eventCallbackDict[@[watch.serialNumber, update[@(KEY_PROFILE)], update[@(KEY_ATTRIBUTE)]]];
+		void (^callback)(NSDictionary*, NSError*)
+                = _eventCallbackDict[@[watch.serialNumber,
+                                update[@(KEY_PROFILE)], update[@(KEY_ATTRIBUTE)]]];
 		if (callback) {
 			callback(update, nil);
 		}

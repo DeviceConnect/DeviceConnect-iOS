@@ -1,6 +1,6 @@
 //
 //  pebble_device_plugin_defines.h
-//  DConnectSDK
+//  dConnectDevicePebble
 //
 //  Copyright (c) 2014 NTT DOCOMO, INC.
 //  Released under the MIT license

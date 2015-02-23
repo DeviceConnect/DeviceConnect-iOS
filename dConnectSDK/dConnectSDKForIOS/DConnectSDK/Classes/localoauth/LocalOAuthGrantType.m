@@ -26,9 +26,8 @@ static NSString *const STRING_GRANT_TYPE_REFRESH_TOKEN = @"refresh_token";
         return STRING_GRANT_TYPE_CLIENT_CREDENTIALS;
     } else if (grantType == GRANT_TYPE_REFRESH_TOKEN) {
         return STRING_GRANT_TYPE_REFRESH_TOKEN;
-    } else {
-        @throw @"grantType unknown value. ";
     }
+    @throw @"grantType unknown value. ";
 }
 
 + (LocalOAuthGrantType) toValue: (NSString *) str {
@@ -41,9 +40,8 @@ static NSString *const STRING_GRANT_TYPE_REFRESH_TOKEN = @"refresh_token";
         return GRANT_TYPE_CLIENT_CREDENTIALS;
     } else if ([str isEqualToString: STRING_GRANT_TYPE_REFRESH_TOKEN]) {
         return GRANT_TYPE_REFRESH_TOKEN;
-    } else {
-        @throw @"str(GrantType) unknown value. ";
     }
+    @throw @"str(GrantType) unknown value. ";
 }
 
 @end

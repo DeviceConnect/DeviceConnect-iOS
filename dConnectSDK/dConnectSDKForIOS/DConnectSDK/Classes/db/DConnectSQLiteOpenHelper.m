@@ -71,7 +71,11 @@
                 } else if (new > old) {
                     [_delegate openHelper:self didUpgradeDatabase:_db oldVersion:old newVersion:new];
                 } else if (new < old
-                           && [_delegate respondsToSelector:@selector(openHelper:didDowngradeDatabase:oldVersion:newVersion:)])
+                           && [_delegate respondsToSelector:
+                                    @selector(openHelper:
+                                              didDowngradeDatabase:
+                                              oldVersion:
+                                              newVersion:)])
                 {
                     [_delegate openHelper:self didDowngradeDatabase:_db oldVersion:old newVersion:new];
                 }

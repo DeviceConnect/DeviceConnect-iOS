@@ -62,7 +62,7 @@
                           @"multipart/form-data; boundary=%@", boundary] forHTTPHeaderField:@"Content-Type"];
         
         
-        NSData *rn = _DC_S2D(@"\r\n");
+        NSData *lineBreak = _DC_S2D(@"\r\n");
         NSData *boundaryData = _DC_S2D(@"--%@\r\n", boundary);
         
         NSMutableData *body = [NSMutableData data];
@@ -101,7 +101,7 @@
                                          key, data)];
                 
             }
-            [body appendData:rn];
+            [body appendData:lineBreak];
         }
         if (body.length > 0) {
             [body appendData:_DC_S2D(@"--%@--\r\n", boundary)];
@@ -189,13 +189,13 @@
 + (DConnectMessageActionType) actionForMethod:(NSString *)method {
     
     DConnectMessageActionType action;
-    method = [method uppercaseString];
+    NSString* httpMethod = [method uppercaseString];
     
-    if ([@"DELETE" isEqualToString:method]) {
+    if ([@"DELETE" isEqualToString:httpMethod]) {
         action = DConnectMessageActionTypeDelete;
-    } else if ([@"POST" isEqualToString:method]) {
+    } else if ([@"POST" isEqualToString:httpMethod]) {
         action = DConnectMessageActionTypePost;
-    } else if ([@"PUT" isEqualToString:method]) {
+    } else if ([@"PUT" isEqualToString:httpMethod]) {
         action = DConnectMessageActionTypePut;
     } else {
         // 無い場合もデフォルトでGETにしておく。
@@ -209,7 +209,7 @@
 
     NSArray *keys = [json allKeys];
     for (NSString *key in keys) {
-        id obj = [json objectForKey:key];
+        id obj = json[key];
         if ([obj isKindOfClass:[NSDictionary class]]) {
             DConnectMessage *msg = [DConnectMessage message];
             [self convertJSON:(NSDictionary *)obj toMessage:msg];
