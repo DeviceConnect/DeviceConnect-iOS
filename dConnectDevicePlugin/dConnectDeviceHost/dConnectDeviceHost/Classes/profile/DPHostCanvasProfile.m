@@ -48,8 +48,8 @@ DPHostCanvasUIViewController *_displayViewController;
         serviceId:(NSString *)deviceId
         mimeType:(NSString *)mimeType
             data:(NSData *)data
-               imageX:(double)imageX
-               imageY:(double)imageY
+          imageX:(double)imageX
+          imageY:(double)imageY
             mode:(NSString *)mode
 {
     if (data == nil) {
