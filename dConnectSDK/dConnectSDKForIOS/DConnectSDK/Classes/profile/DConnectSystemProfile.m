@@ -13,7 +13,6 @@
 
 NSString *const DConnectSystemProfileName = @"system";
 
-NSString *const DConnectSystemProfileAttrDevice = @"device";
 NSString *const DConnectSystemProfileInterfaceDevice = @"device";
 NSString *const DConnectSystemProfileAttrWakeUp = @"wakeup";
 NSString *const DConnectSystemProfileAttrKeyword = @"keyword";
@@ -25,76 +24,15 @@ NSString *const DConnectSystemProfileParamPluginId = @"pluginId";
 NSString *const DConnectSystemProfileParamId = @"id";
 NSString *const DConnectSystemProfileParamName = @"name";
 
-NSString *const DConnectSystemProfileParamVersion = @"version";
-NSString *const DConnectSystemProfileParamConnect = @"connect";
-NSString *const DConnectSystemProfileParamWiFi = @"wifi";
-NSString *const DConnectSystemProfileParamBluetooth = @"bluetooth";
-NSString *const DConnectSystemProfileParamNFC = @"nfc";
-NSString *const DConnectSystemProfileParamBLE = @"ble";
-
 @interface DConnectSystemProfile()
 
 - (BOOL) hasMethod:(SEL)method response:(DConnectResponseMessage *)response;
-+ (void) message:(DConnectMessage *)message setConnectionState:(DConnectSystemProfileConnectState)state
-          forKey:(NSString *)aKey;
 @end
 
 @implementation DConnectSystemProfile
 
 - (NSString *) profileName {
     return DConnectSystemProfileName;
-}
-
-- (BOOL) didReceiveGetRequest:(DConnectRequestMessage *)request response:(DConnectResponseMessage *)response {
-    BOOL send = YES;
-    
-    NSString *attribute = [request attribute];
-    NSString *serviceId = [request serviceId];
-    
-    if (attribute && [attribute isEqualToString:DConnectSystemProfileAttrDevice]) {
-        if ([_delegate respondsToSelector:@selector(profile:didReceiveGetDeviceRequest:response:serviceId:)])
-        {
-            send = [_delegate profile:self didReceiveGetDeviceRequest:request response:response serviceId:serviceId];
-        } else if (_dataSource) {
-            
-            DConnectMessage *connect = [DConnectMessage message];
-            if ([_dataSource respondsToSelector:@selector(profile:wifiStateForServiceId:)]) {
-                [DConnectSystemProfile setWiFiState:[_dataSource profile:self wifiStateForServiceId:serviceId]
-                                             target:connect];
-            }
-            if ([_dataSource respondsToSelector:@selector(profile:bleStateForServiceId:)]) {
-                [DConnectSystemProfile setBLEState:[_dataSource profile:self bleStateForServiceId:serviceId]
-                                            target:connect];
-            }
-            if ([_dataSource respondsToSelector:@selector(profile:bluetoothStateForServiceId:)]) {
-                [DConnectSystemProfile setBluetoothState:[_dataSource profile:self bluetoothStateForServiceId:serviceId]
-                                                  target:connect];
-            }
-            if ([_dataSource respondsToSelector:@selector(profile:nfcStateForServiceId:)]) {
-                [DConnectSystemProfile setNFCState:[_dataSource profile:self nfcStateForServiceId:serviceId]
-                                            target:connect];
-            }
-            
-            [DConnectSystemProfile setConnect:connect target:response];
-            [DConnectSystemProfile setVersion:[_dataSource versionOfSystemProfile:self] target:response];
-            
-            DConnectArray *supports = [DConnectArray array];
-            NSArray *profiles = [self.provider profiles];
-            
-            for (DConnectProfile *profile in profiles) {
-                [supports addString:[profile profileName]];
-            }
-            
-            [DConnectSystemProfile setSupports:supports target:response];
-            [response setResult:DConnectMessageResultTypeOk];
-        } else {
-            [response setErrorToNotSupportAction];
-        }
-    } else {
-        [response setErrorToUnknownAttribute];
-    }
-    
-    return send;
 }
 
 - (BOOL) didReceivePutRequest:(DConnectRequestMessage *)request response:(DConnectResponseMessage *)response {
@@ -159,36 +97,12 @@ NSString *const DConnectSystemProfileParamBLE = @"ble";
 
 #pragma mark - Setter
 
-+ (void) setVersion:(NSString *)version target:(DConnectMessage *)message {
-    [message setString:version forKey:DConnectSystemProfileParamVersion];
-}
-
 + (void) setSupports:(DConnectArray *)supports target:(DConnectMessage *)message {
     [message setArray:supports forKey:DConnectSystemProfileParamSupports];
 }
 
 + (void) setPlugins:(DConnectArray *)plugins target:(DConnectMessage *)message {
     [message setArray:plugins forKey:DConnectSystemProfileParamPlugins];
-}
-
-+ (void) setConnect:(DConnectMessage *)connect target:(DConnectMessage *)message {
-    [message setMessage:connect forKey:DConnectSystemProfileParamConnect];
-}
-
-+ (void) setWiFiState:(DConnectSystemProfileConnectState)state target:(DConnectMessage *)message {
-    [DConnectSystemProfile message:message setConnectionState:state forKey:DConnectSystemProfileParamWiFi];
-}
-
-+ (void) setBluetoothState:(DConnectSystemProfileConnectState)state target:(DConnectMessage *)message {
-    [DConnectSystemProfile message:message setConnectionState:state forKey:DConnectSystemProfileParamBluetooth];
-}
-
-+ (void) setNFCState:(DConnectSystemProfileConnectState)state target:(DConnectMessage *)message {
-    [DConnectSystemProfile message:message setConnectionState:state forKey:DConnectSystemProfileParamNFC];
-}
-
-+ (void) setBLEState:(DConnectSystemProfileConnectState)state target:(DConnectMessage *)message {
-    [DConnectSystemProfile message:message setConnectionState:state forKey:DConnectSystemProfileParamBLE];
 }
 
 + (void) setId:(NSString *)pluginId target:(DConnectMessage *)message {
@@ -213,21 +127,6 @@ NSString *const DConnectSystemProfileParamBLE = @"ble";
         [response setErrorToNotSupportAttribute];
     }
     return result;
-}
-
-+ (void) message:(DConnectMessage *)message setConnectionState:(DConnectSystemProfileConnectState)state
-          forKey:(NSString *)aKey
-{
-    switch (state) {
-        case DConnectSystemProfileConnectStateOn:
-            [message setBool:YES forKey:aKey];
-            break;
-        case DConnectSystemProfileConnectStateOff:
-            [message setBool:NO forKey:aKey];
-            break;
-        default:
-            break;
-    }
 }
 
 @end
