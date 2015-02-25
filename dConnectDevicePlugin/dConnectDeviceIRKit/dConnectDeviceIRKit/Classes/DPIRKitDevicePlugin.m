@@ -119,9 +119,9 @@ DPIRKitManagerDetectionDelegate
     BOOL hit = NO;
     @synchronized (_devices) {
         
-        DPIRKitDevice *device = [_devices objectForKey:device.name];
+        DPIRKitDevice *irkit = _devices[device.name];
         
-        if (device) {
+        if (irkit) {
             hit = YES;
             if (!online) {
                 [_devices removeObjectForKey:device.name];
