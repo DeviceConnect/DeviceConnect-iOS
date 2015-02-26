@@ -1,6 +1,6 @@
 //
 //  TestConnectProfile.m
-//  DConnectSDK
+//  dConnectDeviceTest
 //
 //  Copyright (c) 2014 NTT DOCOMO, INC.
 //  Released under the MIT license
@@ -28,8 +28,10 @@
 #pragma mark - DConnectConnectProfileDelegate
 #pragma mark - Get Methods
 
-- (BOOL) profile:(DConnectConnectProfile *)profile didReceiveGetWifiRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response serviceId:(NSString *)serviceId
+- (BOOL)             profile:(DConnectConnectProfile *)profile
+    didReceiveGetWifiRequest:(DConnectRequestMessage *)request
+                    response:(DConnectResponseMessage *)response
+                   serviceId:(NSString *)serviceId
 {
     
     CheckDID(response, serviceId) {
@@ -40,8 +42,10 @@
     return YES;
 }
 
-- (BOOL) profile:(DConnectConnectProfile *)profile didReceiveGetBluetoothRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response serviceId:(NSString *)serviceId
+- (BOOL)                  profile:(DConnectConnectProfile *)profile
+    didReceiveGetBluetoothRequest:(DConnectRequestMessage *)request
+                         response:(DConnectResponseMessage *)response
+                        serviceId:(NSString *)serviceId
 {
     CheckDID(response, serviceId) {
         response.result = DConnectMessageResultTypeOk;
@@ -50,8 +54,10 @@
     return YES;
 }
 
-- (BOOL) profile:(DConnectConnectProfile *)profile didReceiveGetBLERequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response serviceId:(NSString *)serviceId
+- (BOOL)            profile:(DConnectConnectProfile *)profile
+    didReceiveGetBLERequest:(DConnectRequestMessage *)request
+                   response:(DConnectResponseMessage *)response
+                  serviceId:(NSString *)serviceId
 {
     CheckDID(response, serviceId) {
         response.result = DConnectMessageResultTypeOk;
@@ -61,8 +67,10 @@
     return YES;
 }
 
-- (BOOL) profile:(DConnectConnectProfile *)profile didReceiveGetNFCRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response serviceId:(NSString *)serviceId
+- (BOOL)            profile:(DConnectConnectProfile *)profile
+    didReceiveGetNFCRequest:(DConnectRequestMessage *)request
+                   response:(DConnectResponseMessage *)response
+                  serviceId:(NSString *)serviceId
 {
     CheckDID(response, serviceId) {
         response.result = DConnectMessageResultTypeOk;
@@ -73,8 +81,10 @@
 
 #pragma mark - Put Methods
 
-- (BOOL) profile:(DConnectConnectProfile *)profile didReceivePutWiFiRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response serviceId:(NSString *)serviceId
+- (BOOL)             profile:(DConnectConnectProfile *)profile
+    didReceivePutWiFiRequest:(DConnectRequestMessage *)request
+                    response:(DConnectResponseMessage *)response
+                   serviceId:(NSString *)serviceId
 {
     CheckDID(response, serviceId) {
         response.result = DConnectMessageResultTypeOk;
@@ -83,8 +93,10 @@
     return YES;
 }
 
-- (BOOL) profile:(DConnectConnectProfile *)profile didReceivePutBluetoothRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response serviceId:(NSString *)serviceId
+- (BOOL)                  profile:(DConnectConnectProfile *)profile
+    didReceivePutBluetoothRequest:(DConnectRequestMessage *)request
+                         response:(DConnectResponseMessage *)response
+                        serviceId:(NSString *)serviceId
 {
     CheckDID(response, serviceId) {
         response.result = DConnectMessageResultTypeOk;
@@ -92,8 +104,10 @@
     return YES;
 }
 
-- (BOOL) profile:(DConnectConnectProfile *)profile didReceivePutBluetoothDiscoverableRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response serviceId:(NSString *)serviceId
+- (BOOL)                              profile:(DConnectConnectProfile *)profile
+    didReceivePutBluetoothDiscoverableRequest:(DConnectRequestMessage *)request
+                                     response:(DConnectResponseMessage *)response
+                                    serviceId:(NSString *)serviceId
 {
     CheckDID(response, serviceId) {
         response.result = DConnectMessageResultTypeOk;
@@ -101,8 +115,10 @@
     return YES;
 }
 
-- (BOOL) profile:(DConnectConnectProfile *)profile didReceivePutBLERequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response serviceId:(NSString *)serviceId
+- (BOOL)            profile:(DConnectConnectProfile *)profile
+    didReceivePutBLERequest:(DConnectRequestMessage *)request
+                   response:(DConnectResponseMessage *)response
+                  serviceId:(NSString *)serviceId
 {
     CheckDID(response, serviceId) {
         response.result = DConnectMessageResultTypeOk;
@@ -110,8 +126,10 @@
     return YES;
 }
 
-- (BOOL) profile:(DConnectConnectProfile *)profile didReceivePutNFCRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response serviceId:(NSString *)serviceId
+- (BOOL)            profile:(DConnectConnectProfile *)profile
+    didReceivePutNFCRequest:(DConnectRequestMessage *)request
+                   response:(DConnectResponseMessage *)response
+                  serviceId:(NSString *)serviceId
 {
     CheckDID(response, serviceId) {
         response.result = DConnectMessageResultTypeOk;
@@ -122,8 +140,11 @@
 
 #pragma mark Event Registration
 
-- (BOOL) profile:(DConnectConnectProfile *)profile didReceivePutOnWifiChangeRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response serviceId:(NSString *)serviceId sessionKey:(NSString *)sessionKey
+- (BOOL)                     profile:(DConnectConnectProfile *)profile
+    didReceivePutOnWifiChangeRequest:(DConnectRequestMessage *)request
+                            response:(DConnectResponseMessage *)response
+                           serviceId:(NSString *)serviceId
+                          sessionKey:(NSString *)sessionKey
 {
     
     CheckDIDAndSK(response, serviceId, sessionKey) {
@@ -146,8 +167,11 @@
     return YES;
 }
 
-- (BOOL) profile:(DConnectConnectProfile *)profile didReceivePutOnBluetoothChangeRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response serviceId:(NSString *)serviceId sessionKey:(NSString *)sessionKey
+- (BOOL)                          profile:(DConnectConnectProfile *)profile
+    didReceivePutOnBluetoothChangeRequest:(DConnectRequestMessage *)request
+                                 response:(DConnectResponseMessage *)response
+                                serviceId:(NSString *)serviceId
+                               sessionKey:(NSString *)sessionKey
 {
     
     CheckDIDAndSK(response, serviceId, sessionKey) {
@@ -171,8 +195,11 @@
 }
 
 
-- (BOOL) profile:(DConnectConnectProfile *)profile didReceivePutOnBLEChangeRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response serviceId:(NSString *)serviceId sessionKey:(NSString *)sessionKey
+- (BOOL)                    profile:(DConnectConnectProfile *)profile
+    didReceivePutOnBLEChangeRequest:(DConnectRequestMessage *)request
+                           response:(DConnectResponseMessage *)response
+                          serviceId:(NSString *)serviceId
+                         sessionKey:(NSString *)sessionKey
 {
     
     CheckDIDAndSK(response, serviceId, sessionKey) {
@@ -195,8 +222,11 @@
     return YES;
 }
 
-- (BOOL) profile:(DConnectConnectProfile *)profile didReceivePutOnNFCChangeRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response serviceId:(NSString *)serviceId sessionKey:(NSString *)sessionKey
+- (BOOL)                    profile:(DConnectConnectProfile *)profile
+    didReceivePutOnNFCChangeRequest:(DConnectRequestMessage *)request
+                           response:(DConnectResponseMessage *)response
+                          serviceId:(NSString *)serviceId
+                         sessionKey:(NSString *)sessionKey
 {
     
     CheckDIDAndSK(response, serviceId, sessionKey) {
@@ -221,8 +251,10 @@
 
 #pragma mark - Delete Methods
 
-- (BOOL) profile:(DConnectConnectProfile *)profile didReceiveDeleteWiFiRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response serviceId:(NSString *)serviceId
+- (BOOL)                profile:(DConnectConnectProfile *)profile
+    didReceiveDeleteWiFiRequest:(DConnectRequestMessage *)request
+                       response:(DConnectResponseMessage *)response
+                      serviceId:(NSString *)serviceId
 {
     CheckDID(response, serviceId) {
         response.result = DConnectMessageResultTypeOk;
@@ -232,8 +264,10 @@
 }
 
 
-- (BOOL) profile:(DConnectConnectProfile *)profile didReceiveDeleteBluetoothRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response serviceId:(NSString *)serviceId
+- (BOOL)                     profile:(DConnectConnectProfile *)profile
+    didReceiveDeleteBluetoothRequest:(DConnectRequestMessage *)request
+                            response:(DConnectResponseMessage *)response
+                           serviceId:(NSString *)serviceId
 {
     
     CheckDID(response, serviceId) {
@@ -244,9 +278,10 @@
 }
 
 
-- (BOOL) profile:(DConnectConnectProfile *)profile didReceiveDeleteBluetoothDiscoverableRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response
-        serviceId:(NSString *)serviceId
+- (BOOL)                                 profile:(DConnectConnectProfile *)profile
+    didReceiveDeleteBluetoothDiscoverableRequest:(DConnectRequestMessage *)request
+                                        response:(DConnectResponseMessage *)response
+                                       serviceId:(NSString *)serviceId
 {
     CheckDID(response, serviceId) {
         response.result = DConnectMessageResultTypeOk;
@@ -255,8 +290,10 @@
     return YES;
 }
 
-- (BOOL) profile:(DConnectConnectProfile *)profile didReceiveDeleteBLERequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response serviceId:(NSString *)serviceId
+- (BOOL)               profile:(DConnectConnectProfile *)profile
+    didReceiveDeleteBLERequest:(DConnectRequestMessage *)request
+                      response:(DConnectResponseMessage *)response
+                     serviceId:(NSString *)serviceId
 {
     CheckDID(response, serviceId) {
         response.result = DConnectMessageResultTypeOk;
@@ -265,9 +302,10 @@
     return YES;
 }
 
-- (BOOL) profile:(DConnectConnectProfile *)profile didReceiveDeleteNFCRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response
-        serviceId:(NSString *)serviceId
+- (BOOL)               profile:(DConnectConnectProfile *)profile
+    didReceiveDeleteNFCRequest:(DConnectRequestMessage *)request
+                      response:(DConnectResponseMessage *)response
+                     serviceId:(NSString *)serviceId
 {
     CheckDID(response, serviceId) {
         response.result = DConnectMessageResultTypeOk;
@@ -278,8 +316,11 @@
 
 #pragma mark Event Unregistration
 
-- (BOOL) profile:(DConnectConnectProfile *)profile didReceiveDeleteOnWifiChangeRequest:(DConnectRequestMessage *)request response:(DConnectResponseMessage *)response
-        serviceId:(NSString *)serviceId sessionKey:(NSString *)sessionKey
+- (BOOL)                        profile:(DConnectConnectProfile *)profile
+    didReceiveDeleteOnWifiChangeRequest:(DConnectRequestMessage *)request
+                               response:(DConnectResponseMessage *)response
+                              serviceId:(NSString *)serviceId
+                             sessionKey:(NSString *)sessionKey
 {
     CheckDIDAndSK(response, serviceId, sessionKey) {
         response.result = DConnectMessageResultTypeOk;
@@ -287,8 +328,11 @@
     
     return YES;
 }
-- (BOOL) profile:(DConnectConnectProfile *)profile didReceiveDeleteOnBluetoothChangeRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response serviceId:(NSString *)serviceId sessionKey:(NSString *)sessionKey
+- (BOOL)                             profile:(DConnectConnectProfile *)profile
+    didReceiveDeleteOnBluetoothChangeRequest:(DConnectRequestMessage *)request
+                                    response:(DConnectResponseMessage *)response
+                                   serviceId:(NSString *)serviceId
+                                  sessionKey:(NSString *)sessionKey
 {
     CheckDIDAndSK(response, serviceId, sessionKey) {
         response.result = DConnectMessageResultTypeOk;
@@ -297,8 +341,11 @@
     return YES;
 }
 
-- (BOOL) profile:(DConnectConnectProfile *)profile didReceiveDeleteOnBLEChangeRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response serviceId:(NSString *)serviceId sessionKey:(NSString *)sessionKey
+- (BOOL)                       profile:(DConnectConnectProfile *)profile
+    didReceiveDeleteOnBLEChangeRequest:(DConnectRequestMessage *)request
+                              response:(DConnectResponseMessage *)response
+                             serviceId:(NSString *)serviceId
+                            sessionKey:(NSString *)sessionKey
 {
     CheckDIDAndSK(response, serviceId, sessionKey) {
         response.result = DConnectMessageResultTypeOk;
@@ -306,8 +353,11 @@
     return YES;
 }
 
-- (BOOL) profile:(DConnectConnectProfile *)profile didReceiveDeleteOnNFCChangeRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response serviceId:(NSString *)serviceId sessionKey:(NSString *)sessionKey
+- (BOOL)                       profile:(DConnectConnectProfile *)profile
+    didReceiveDeleteOnNFCChangeRequest:(DConnectRequestMessage *)request
+                              response:(DConnectResponseMessage *)response
+                             serviceId:(NSString *)serviceId
+                            sessionKey:(NSString *)sessionKey
 {
     CheckDIDAndSK(response, serviceId, sessionKey) {
         response.result = DConnectMessageResultTypeOk;

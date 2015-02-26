@@ -48,11 +48,9 @@ NSString *const LocalOAuthProfileDaoDescription = @"description";
 
 + (long long) insertWithName:(NSString *)name toDatabase:(DConnectSQLiteDatabase *)database
 {
-    long long result = [database insertIntoTable:LocalOAuthProfileDaoTableName
+    return (long long) [database insertIntoTable:LocalOAuthProfileDaoTableName
                                columns:@[LocalOAuthProfileDaoProfileName]
                                 params:@[name]];
-    
-    return result;
 }
 
 /* public */
@@ -75,9 +73,8 @@ NSString *const LocalOAuthProfileDaoDescription = @"description";
         return nil;
     } else if ([profiles count] == 1) {
         return profiles[0];
-    } else {
-        @throw @"同じプロファイル名が2件以上のプロファイルデータに設定されています。";
     }
+    @throw @"同じプロファイル名が2件以上のプロファイルデータに設定されています。";
 }
 
 

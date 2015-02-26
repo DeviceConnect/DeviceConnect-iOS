@@ -1,6 +1,6 @@
 //
 //  TestProximityProfile.m
-//  DConnectSDK
+//  dConnectDeviceTest
 //
 //  Copyright (c) 2014 NTT DOCOMO, INC.
 //  Released under the MIT license
@@ -28,9 +28,11 @@
 #pragma mark Event Registration
 
 
-- (BOOL) profile:(DConnectProximityProfile *)profile didReceivePutOnDeviceProximityRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response serviceId:(NSString *)serviceId
-      sessionKey:(NSString *)sessionKey
+- (BOOL)                          profile:(DConnectProximityProfile *)profile
+    didReceivePutOnDeviceProximityRequest:(DConnectRequestMessage *)request
+                                 response:(DConnectResponseMessage *)response
+                                serviceId:(NSString *)serviceId
+                               sessionKey:(NSString *)sessionKey
 {
     
     CheckDIDAndSK(response, serviceId, sessionKey) {
@@ -54,9 +56,11 @@
     return YES;
 }
 
-- (BOOL) profile:(DConnectProximityProfile *)profile didReceivePutOnUserProximityRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response serviceId:(NSString *)serviceId
-      sessionKey:(NSString *)sessionKey
+- (BOOL)                        profile:(DConnectProximityProfile *)profile
+    didReceivePutOnUserProximityRequest:(DConnectRequestMessage *)request
+                               response:(DConnectResponseMessage *)response
+                              serviceId:(NSString *)serviceId
+                             sessionKey:(NSString *)sessionKey
 {
     CheckDIDAndSK(response, serviceId, sessionKey) {
         response.result = DConnectMessageResultTypeOk;
@@ -79,9 +83,11 @@
 #pragma mark - Delete Methods
 #pragma mark Event Unregistration
 
-- (BOOL) profile:(DConnectProximityProfile *)profile didReceiveDeleteOnDeviceProximityRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response serviceId:(NSString *)serviceId
-      sessionKey:(NSString *)sessionKey
+- (BOOL)                             profile:(DConnectProximityProfile *)profile
+    didReceiveDeleteOnDeviceProximityRequest:(DConnectRequestMessage *)request
+                                    response:(DConnectResponseMessage *)response
+                                   serviceId:(NSString *)serviceId
+                                  sessionKey:(NSString *)sessionKey
 {
     CheckDIDAndSK(response, serviceId, sessionKey) {
         response.result = DConnectMessageResultTypeOk;
@@ -89,9 +95,11 @@
 
     return YES;
 }
-- (BOOL) profile:(DConnectProximityProfile *)profile didReceiveDeleteOnUserProximityRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response serviceId:(NSString *)serviceId
-      sessionKey:(NSString *)sessionKey
+- (BOOL)                           profile:(DConnectProximityProfile *)profile
+    didReceiveDeleteOnUserProximityRequest:(DConnectRequestMessage *)request
+                                  response:(DConnectResponseMessage *)response
+                                 serviceId:(NSString *)serviceId
+                                sessionKey:(NSString *)sessionKey
 {
     CheckDIDAndSK(response, serviceId, sessionKey) {
         response.result = DConnectMessageResultTypeOk;

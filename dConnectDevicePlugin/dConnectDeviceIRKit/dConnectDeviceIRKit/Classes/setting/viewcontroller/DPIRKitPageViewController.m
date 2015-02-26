@@ -1,6 +1,6 @@
 //
 //  DPIRKitPageViewController.m
-//  DConnectSDK
+//  dConnectDeviceIRKit
 //
 //  Copyright (c) 2014 NTT DOCOMO, INC.
 //  Released under the MIT license
@@ -67,7 +67,8 @@
 }
 
 // View回転時
-- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
+                                duration:(NSTimeInterval)duration
 {
     [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
     [self rotateOrientation:toInterfaceOrientation];

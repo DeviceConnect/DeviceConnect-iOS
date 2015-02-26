@@ -35,7 +35,7 @@
     @param o	比較対象のオブジェクト
     @return YES: 同じ値を持つオブジェクトである。 / NO: 異なる値を持っている。
  */
-- (BOOL) equals: (LocalOAuthPackageInfo *) o;
+- (BOOL) equals: (LocalOAuthPackageInfo *) info;
 
 
 

@@ -11,7 +11,7 @@
 
 @implementation DConnectEvent
 
-- (BOOL) isEqual:(id)object {
+- (BOOL)isEqual:(id)object {
     
     if (![object isKindOfClass:[DConnectEvent class]]) {
         return NO;

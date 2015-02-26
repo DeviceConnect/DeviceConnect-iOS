@@ -1,6 +1,6 @@
 //
 //  DPIRKitManager.m
-//  DConnectSDK
+//  dConnectDeviceIRKit
 //
 //  Copyright (c) 2014 NTT DOCOMO, INC.
 //  Released under the MIT license
@@ -73,7 +73,8 @@ struct DPIRKitCRCInfo
     self = [super init];
     
     if (self) {
-        _browser = [NSNetServiceBrowser new]; // UIスレッドで生成しないといけないため、使用側でUIスレッドで作成する。
+        // UIスレッドで生成しないといけないため、使用側でUIスレッドで作成する。
+        _browser = [NSNetServiceBrowser new];
         _browser.delegate = self;
         _services = [NSMutableDictionary dictionary];
     }
@@ -132,16 +133,12 @@ struct DPIRKitCRCInfo
 
 #pragma mark Serialize
 - (NSString *) securityCodeForType:(DPIRKitWiFiSecurityType)type {
-    
-    switch (type) {
-        case DPIRKitWiFiSecurityTypeNone:
-            return @"0";
-        case DPIRKitWiFiSecurityTypeWEP:
-            return @"2";
-        case DPIRKitWiFiSecurityTypeWPA2:
-        default:
-            return @"8";
+    if (type == DPIRKitWiFiSecurityTypeNone) {
+        return @"0";
+    } else if (type == DPIRKitWiFiSecurityTypeWEP) {
+        return @"2";
     }
+    return @"8";
 }
 
 - (NSString *)regdomain {
@@ -156,8 +153,7 @@ struct DPIRKitCRCInfo
     }
     if ([countryCode isEqualToString: @"JP"]) {
         regdomain = @"2";
-    }
-    else if ([@[@"CA", @"MX", @"US", @"AU", @"HK", @"IN", @"MY",
+    } else if ([@[@"CA", @"MX", @"US", @"AU", @"HK", @"IN", @"MY",
                 @"NZ", @"PH", @"TW", @"RU", @"AR", @"BR", @"CL",
                 @"CO", @"CR", @"DO", @"DM", @"EC", @"PA", @"PY",
                 @"PE", @"PR", @"VE"] containsObject : countryCode])
@@ -172,14 +168,14 @@ struct DPIRKitCRCInfo
 
 - (uint8_t) crc8WithData:(uint8_t *)data size:(uint16_t)size {
     
-    uint8_t crc, i;
+    uint8_t crc;
     
     crc = 0x00;
     
     while (size--) {
         crc ^= *data++;
         
-        for (i = 0; i < 8; i++) {
+        for (uint8_t i = 0; i < 8; i++) {
             if (crc & 0x80) {
                 crc = (crc << 1) ^ 0x31;
             }
@@ -557,7 +553,7 @@ struct DPIRKitCRCInfo
             break;
         }
         
-        NSString *clientToken = [json objectForKey:@"clienttoken"];
+        NSString *clientToken = json[@"clienttoken"];
         if (!clientToken) {
             break;
         }
@@ -577,8 +573,8 @@ struct DPIRKitCRCInfo
             break;
         }
         
-        serviceId = [json objectForKey:@"deviceid"];
-        clientKey = [json objectForKey:@"clientkey"];
+        serviceId = json[@"deviceid"];
+        clientKey = json[@"clientkey"];
     } while (NO);
     
     completion(serviceId, clientKey);
@@ -597,7 +593,7 @@ struct DPIRKitCRCInfo
         aNetService.delegate = self;
         [aNetService resolveWithTimeout:DPIRKitResolveTimeout];
         
-        [_services setObject:aNetService forKey:aNetService.name];
+        _services[aNetService.name] = aNetService;
     }
 }
 
@@ -607,7 +603,8 @@ struct DPIRKitCRCInfo
 {
     if (_detectionDelegate) {
         DPIRKitDevice *device = [DPIRKitDevice new];
-        device.name = [aNetService.name uppercaseString]; // 検索の度に大文字、小文字が変化するので統一しておく。
+         // 検索の度に大文字、小文字が変化するので統一しておく。
+        device.name = [aNetService.name uppercaseString];
         [_detectionDelegate manager:self didLoseDevice:device];
     }
 }
@@ -626,7 +623,8 @@ struct DPIRKitCRCInfo
 
 - (void) netServiceDidResolveAddress:(NSNetService *)sender {
     DPIRKitDevice *device = [DPIRKitDevice new];
-    device.name = [sender.name uppercaseString]; // 検索の度に大文字、小文字が変化するので統一しておく。
+     // 検索の度に大文字、小文字が変化するので統一しておく。
+    device.name = [sender.name uppercaseString];
     device.hostName = sender.hostName;
     
     [_detectionDelegate manager:self didFindDevice:device];

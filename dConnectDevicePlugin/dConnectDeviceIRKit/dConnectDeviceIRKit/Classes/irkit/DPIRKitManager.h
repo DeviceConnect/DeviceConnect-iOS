@@ -1,6 +1,6 @@
 //
 //  DPIRKitManager.h
-//  DConnectSDK
+//  dConnectDeviceIRKit
 //
 //  Copyright (c) 2014 NTT DOCOMO, INC.
 //  Released under the MIT license

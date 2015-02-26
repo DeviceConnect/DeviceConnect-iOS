@@ -125,7 +125,9 @@ static NSString *scheme = @"http";
              // レスポンスあり；成功。
              
              // レスポンスを返す。
-             [[weakSelf client] URLProtocol:weakSelf didReceiveResponse:responseCtx.response cacheStoragePolicy:NSURLCacheStorageNotAllowed];
+             [[weakSelf client] URLProtocol:weakSelf
+                         didReceiveResponse:responseCtx.response
+                         cacheStoragePolicy:NSURLCacheStorageNotAllowed];
              // レスポンスのデータを返す。
              [[weakSelf client] URLProtocol:weakSelf didLoadData:responseCtx.data];
          } else {
@@ -159,16 +161,16 @@ static NSString *scheme = @"http";
     return scheme;
 }
 
-+ (void) setHost:(NSString *)h {
-    host = h;
++ (void) setHost:(NSString *)hostName {
+    host = hostName;
 }
 
-+ (void) setPort:(int)p {
-    port = p;
++ (void) setPort:(int)portNumber {
+    port = portNumber;
 }
 
-+ (void) setScheme:(NSString *)s {
-    scheme = s;
++ (void) setScheme:(NSString *)schemeName {
+    scheme = schemeName;
 }
 
 + (DConnectRequestMessage *) requestMessageWithHTTPReqeust:(NSURLRequest *)request
@@ -188,38 +190,39 @@ static NSString *scheme = @"http";
                             toRequestMessage:requestMessage
                              percentDecoding:YES];
     
-    // URLのパスセグメントの数から、プロファイル・属性・インターフェースが何なのかを判定する。
+    // URLのパスセグメントの数から、
+    // プロファイル・属性・インターフェースが何なのかを判定する。
     NSString *api, *profile, *attr, *interface;
     api = profile = attr = interface = nil;
     
     if ([pathComponentArr count] == 1 &&
         [pathComponentArr[0] length] != 0)
     {
-        api = [pathComponentArr objectAtIndex:0];
+        api = pathComponentArr[0];
     } else if ([pathComponentArr count] == 2 &&
                [pathComponentArr[0] length] != 0 &&
                [pathComponentArr[1] length] != 0)
     {
-        api = [pathComponentArr objectAtIndex:0];
-        profile = [pathComponentArr objectAtIndex:1];
+        api = pathComponentArr[0];
+        profile = pathComponentArr[1];
     } else if ([pathComponentArr count] == 3 &&
                [pathComponentArr[0] length] != 0 &&
                [pathComponentArr[1] length] != 0 &&
                [pathComponentArr[2] length] != 0)
     {
-        api = [pathComponentArr objectAtIndex:0];
-        profile = [pathComponentArr objectAtIndex:1];
-        attr = [pathComponentArr objectAtIndex:2];
+        api = pathComponentArr[0];
+        profile = pathComponentArr[1];
+        attr = pathComponentArr[2];
     } else if ([pathComponentArr count] == 4 &&
                [pathComponentArr[0] length] != 0 &&
                [pathComponentArr[1] length] != 0 &&
                [pathComponentArr[2] length] != 0 &&
                [pathComponentArr[3] length] != 0)
     {
-        api = [pathComponentArr objectAtIndex:0];
-        profile = [pathComponentArr objectAtIndex:1];
-        interface = [pathComponentArr objectAtIndex:2];
-        attr = [pathComponentArr objectAtIndex:3];
+        api = pathComponentArr[0];
+        profile = pathComponentArr[1];
+        interface = pathComponentArr[2];
+        attr = pathComponentArr[3];
     }
     
     if (api == nil || ![api isEqualToString:DConnectMessageDefaultAPI]) {
@@ -232,7 +235,8 @@ static NSString *scheme = @"http";
                     format:@"No valid profile was detected in URL."];
     }
     
-    // リクエストメッセージにHTTPリクエストのメソッドに対応するアクション名を格納する
+    // リクエストメッセージにHTTPリクエストの
+    // メソッドに対応するアクション名を格納する
     int methodId = getDConnectMethod([request HTTPMethod]);
     if (methodId == -1) {
         [NSException raise:NOT_SUPPORT_ACTION_EXCEPTION
@@ -240,7 +244,8 @@ static NSString *scheme = @"http";
     }
     [requestMessage setAction:methodId];
     
-    // リクエストメッセージにプロファイル・インターフェース・属性・パラメータ各種を突っ込む。
+    // リクエストメッセージにプロファイル・
+    // インターフェース・属性・パラメータ各種を突っ込む。
     requestMessage.api = api;
     requestMessage.profile = profile;
     
@@ -252,7 +257,8 @@ static NSString *scheme = @"http";
         requestMessage.attribute = attr;
     }
     
-    // パラメータがHTTPボディに記述されているなら、解析しリクエストメッセージに追加する。
+    // パラメータがHTTPボディに記述されているなら、
+    // 解析しリクエストメッセージに追加する。
     [request addParametersFromHTTPBodyToRequestMessage:requestMessage];
     
     return requestMessage;
@@ -279,33 +285,15 @@ static NSString *scheme = @"http";
         responseCtx.data = nil;
         
         callback(responseCtx);
-    }
-    else {
-        // dConnectのホスト&ポートへのリクエストであれば、d-ConnectのRESTful APIへのアクセス有り。
-        //
-        // [android]リクエストとレスポンスの1対1対応を取る為のユニークなリクエストIDを生成
-        // [ios]リクエストとレスポンスの1対1対応を取る、レスポンス返却用コールバックの用意
-        
+    } else {
         @try {
-            // HTTPリクエストを解析して、dconnectのリクエストに変換
+            // HTTPリクエストを解析して、DeviceConnectのリクエストに変換
             DConnectRequestMessage *requestMessage = [DConnectURLProtocol requestMessageWithHTTPReqeust:request];
             
-            // [android] DConnectServiceのextraにおいて、リクエストIDを指定し、かつ内部用タイプをHTTPに指定し、
-            // DConnectServiceを開始する。
-            // [ios] NSDictionaryにおいて、内部用タイプをHTTPに指定し、DConnectManagerにリクエストと
-            // レスポンスを渡す。
             [requestMessage setString:EXTRA_TYPE_HTTP forKey:EXTRA_INNER_TYPE];
             [[DConnectManager sharedManager] sendRequest:requestMessage
                                                   isHttp:YES
                                                 callback:^(DConnectResponseMessage *responseMessage) {
-                // ##############################################
-                // dconnectのレスポンスをHTTPレスポンスに変換
-                // ##############################################
-                
-                // [android] Map上のリクエストに対するレスポンスIntentのエントリを削除
-                // [ios] 非同期での実装を行わず、同期的に関数の返り値・引数経由でのNSDictionary返却を受け付けていれば、
-                // 特にリクエスト=レスポンス間の相互関連Mapを保持する必要なし。
-                
                 // HTTPレスポンスを作成
                 [DConnectURLProtocol responseContextWithResponseMessage:responseMessage
                                                    precedingHTTPRequest:request
@@ -334,7 +322,8 @@ static NSString *scheme = @"http";
                                                                    statusCode:200
                                                                   HTTPVersion:@"HTTP/1.1"
                                                                  headerFields:headerDict];
-                const char *rawData = "{\"result\":1,\"errorCode\":2,\"errorMessage\":\"Non-supported Profile was accessed.\"}";
+                const char *rawData = "{\"result\":1,\"errorCode\":2,"
+                            "\"errorMessage\":\"Non-supported Profile was accessed.\"}";
                 responseCtx.data = [NSData dataWithBytes:rawData length:strlen(rawData)];
             } else if ([name isEqualToString:NOT_SUPPORT_ACTION_EXCEPTION]) {
                 responseCtx.response = [[NSHTTPURLResponse alloc] initWithURL:[request URL]
@@ -347,7 +336,8 @@ static NSString *scheme = @"http";
                                                                    statusCode:200
                                                                   HTTPVersion:@"HTTP/1.1"
                                                                  headerFields:headerDict];
-                const char *rawData = "{\"result\":1,\"errorCode\":1,\"errorMessage\":\"Unknown error was encountered.\"}";
+                const char *rawData = "{\"result\":1,\"errorCode\":1,"
+                                "\"errorMessage\":\"Unknown error was encountered.\"}";
                 responseCtx.data = [NSData dataWithBytes:rawData length:strlen(rawData)];
             }
             callback(responseCtx);
@@ -366,22 +356,18 @@ static NSString *scheme = @"http";
     NSInteger statusCode = 200;
     
     if ([requestMessage.profile isEqualToString:DConnectFilesProfileName]) {
-        // 特殊処理：DConnectResponseMessageからHTTPレスポンス/ファイルデータ（任意MIMEタイプ）を生成する
+        // 特殊処理：DConnectResponseMessageからHTTPレスポンス
+        // /ファイルデータ（任意MIMEタイプ）を生成する
         // HTTPレスポンスのボディ（任意コンテンツ）を用意
 
-        switch ([responseMessage result]) {
-            case DConnectMessageResultTypeOk:
-                responseCtx.data = [responseMessage dataForKey:DConnectFilesProfileParamData];
-                mimeType = [responseMessage stringForKey:DConnectFilesProfileParamMimeType];
-                processed = YES;
-                break;
-            case DConnectMessageResultTypeError:
-                // エラーのJSONを返す；HTTPステータスコードを404（Not Found）に変えておく。
-                statusCode = 404;
-                break;
-                
-            default:
-                break;
+        if ([responseMessage result] == DConnectMessageResultTypeOk) {
+            responseCtx.data = [responseMessage dataForKey:DConnectFilesProfileParamData];
+            mimeType = [responseMessage stringForKey:DConnectFilesProfileParamMimeType];
+            processed = YES;
+            
+        } else if ([responseMessage result] ==  DConnectMessageResultTypeError) {
+            // エラーのJSONを返す；HTTPステータスコードを404（Not Found）に変えておく。
+            statusCode = 404;
         }
     }
     if (!processed) {
@@ -394,7 +380,8 @@ static NSString *scheme = @"http";
             // レスポンスメッセージからのJSON生成失敗；エラー用データを用意する。
             // 原因不明エラーで、メッセージにJSON生成失敗の旨を記す。
             NSString *dataStr =
-            [NSString stringWithFormat:@"{\"%@\":%lu,\"%@\":%lu,\"%@\":\"Failed to generate a JSON body.\"}",
+            [NSString stringWithFormat:
+                    @"{\"%@\":%lu,\"%@\":%lu,\"%@\":\"Failed to generate a JSON body.\"}",
              DConnectMessageResult, (unsigned long)DConnectMessageResultTypeError,
              DConnectMessageErrorCode, (unsigned long)DConnectMessageErrorCodeUnknown,
              DConnectMessageErrorMessage];
@@ -428,11 +415,15 @@ static NSString *scheme = @"http";
             
             // http, httpsで指定されているURLは直接アクセスできるのでFilesAPIを利用しない
             NSString *pattern = @"^https?://.+";
-            NSRegularExpression *re = [NSRegularExpression regularExpressionWithPattern:pattern options:0 error:nil];
-            NSTextCheckingResult *result = [re firstMatchInString:uri options:0 range:NSMakeRange(0, uri.length)];
+            NSRegularExpression *expression = [NSRegularExpression regularExpressionWithPattern:pattern
+                                                                                options:0 error:nil];
+            NSTextCheckingResult *result = [expression firstMatchInString:uri
+                                                                  options:0
+                                                                    range:NSMakeRange(0, uri.length)];
             
             if (!result || result.numberOfRanges < 1) {
-                // http, https以外の場合はuriパラメータ値をdConnectManager Files API向けURLに置き換える。
+                // http, https以外の場合はuriパラメータ値を
+                // DeviceConnectManager Files API向けURLに置き換える。
                 DConnectURIBuilder *builder = [DConnectURIBuilder new];
                 [builder setProfile:DConnectFilesProfileName];
                 [builder addParameter:uri forName:DConnectFilesProfileParamUri];
@@ -443,9 +434,9 @@ static NSString *scheme = @"http";
         } else if ([obj isKindOfClass:[DConnectArray class]]) {
             DConnectArray *arr = (DConnectArray *) obj;
             for (int i = 0; i < arr.count; i++) {
-                NSObject *a = [arr objectAtIndex:i];
-                if ([a isKindOfClass:[DConnectMessage class]]) {
-                    [self convertUri:(DConnectMessage *) a];
+                NSObject *message = [arr objectAtIndex:i];
+                if ([message isKindOfClass:[DConnectMessage class]]) {
+                    [self convertUri:(DConnectMessage *) message];
                 }
             }
         }
@@ -479,15 +470,17 @@ static NSString *scheme = @"http";
 
 + (NSString *) percentEncodeString:(NSString *)string withEncoding:(NSStringEncoding)encoding
 {
-    NSCharacterSet *allowedCharSet = [[NSCharacterSet characterSetWithCharactersInString:@"%;/?:@&=$+{}<>., "] invertedSet];
+    NSCharacterSet *allowedCharSet
+            = [[NSCharacterSet characterSetWithCharactersInString:@"%;/?:@&=$+{}<>., "]
+                    invertedSet];
     return [string stringByAddingPercentEncodingWithAllowedCharacters:allowedCharSet];
 }
 
 + (NSString *) stringByURLDecodingWithString:(NSString *)string {
-    string = [string stringByReplacingOccurrencesOfString:@"+" withString:@" "];
-    string = [string stringByRemovingPercentEncoding];
+    NSString *url = [string stringByReplacingOccurrencesOfString:@"+" withString:@" "];
+    url = [url stringByRemovingPercentEncoding];
     
-    return string;
+    return url;
 }
 
 int getDConnectMethod(NSString *httpMethod) {
@@ -519,26 +512,17 @@ int getDConnectMethod(NSString *httpMethod) {
 - (void)addParametersFromHTTPBodyToRequestMessage:(DConnectRequestMessage *)requestMessage
 {
     NSString *contentType = [self valueForHTTPHeaderField:@"content-type"];
-    if (contentType &&
-        [contentType rangeOfString:@"multipart/form-data"
+    if (contentType && [contentType rangeOfString:@"multipart/form-data"
                            options:NSCaseInsensitiveSearch].location != NSNotFound)
     {
-        // MIME Multipartかどうかの判定を行い、MultipartならMultipart解析する。
-        // ファイルアップロード用HTMLフォームから送られてくるMultipartなリクエストを解析できる様な感じで
-        // やっている。
-        //
-        // Content-Dispositionヘッダは「name」や「filename」といったパラメータを用いるので留意。
-        // http://www.w3.org/TR/html401/interact/forms.html#h-17.13.4.2
-        
         [self addParametersFromMultipartToRequestMessage:requestMessage];
     } else if (self.body && self.body.length > 0) {
-        // Content-Typeが"applicaiton/x-www-form-urlencoded"の場合、%エスケープをデコードする必要あり。
         BOOL doDecode = [contentType isEqualToString:@"application/x-www-form-urlencoded"];
-        
-        // Multipartでなければ、ボディ内にKey-Value形式でパラメータが記述されているかもしれないので、
-        // それの解析。
-        [NSURLRequest addURLParametersFromString:[[NSString alloc] initWithData:[self body] encoding:NSUTF8StringEncoding]
-                                toRequestMessage:requestMessage percentDecoding:doDecode];
+        [NSURLRequest addURLParametersFromString:[[NSString alloc]
+                                                  initWithData:[self body]
+                                                      encoding:NSUTF8StringEncoding]
+                                toRequestMessage:requestMessage
+                                 percentDecoding:doDecode];
     }
 }
 
@@ -562,7 +546,9 @@ int getDConnectMethod(NSString *httpMethod) {
 #if DEBUG_LEVEL > 3
          // valが無くkeyのみのパラメータ
          if ([keyValArr count] == 1) {
-             key = doDecode ? [DConnectURLProtocol stringByURLDecodingWithString:(NSString *)keyValArr[0]] : keyValArr[0];
+             key = doDecode ?
+                    [DConnectURLProtocol stringByURLDecodingWithString:(NSString *)keyValArr[0]]
+                        : keyValArr[0];
              DCLogD(@"Key-only URL query parameter \"%@\" will be ignored.", key);
          }
 #endif

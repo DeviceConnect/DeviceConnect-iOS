@@ -1,6 +1,6 @@
 //
 //  RESTfulFailPhoneProfileTest.m
-//  DConnectSDK
+//  dConnectDeviceTest
 //
 //  Copyright (c) 2014 NTT DOCOMO, INC.
 //  Released under the MIT license
@@ -76,7 +76,8 @@
  */
 - (void) testHttpFailPhoneCallPostInvalidServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/phone/call?phoneNumber=090xxxxxxxx&serviceId=12345678"];
+    NSURL *uri = [NSURL URLWithString:
+                  @"http://localhost:4035/gotapi/phone/call?phoneNumber=090xxxxxxxx&serviceId=12345678"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"POST"];
     
@@ -97,7 +98,9 @@
  */
 - (void) testHttpFailPhoneCallInvalidMethodGet
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/phone/call?serviceId=%@", self.serviceId]];
+    NSURL *uri = [NSURL URLWithString:
+                  [NSString stringWithFormat:@"http://localhost:4035/gotapi/phone/call?serviceId=%@",
+                   self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
     
@@ -118,7 +121,9 @@
  */
 - (void) testHttpFailPhoneCallInvalidMethodPut
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/phone/call?serviceId=%@", self.serviceId]];
+    NSURL *uri = [NSURL URLWithString:
+                  [NSString stringWithFormat:@"http://localhost:4035/gotapi/phone/call?serviceId=%@",
+                   self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
@@ -139,7 +144,9 @@
  */
 - (void) testHttpFailPhoneCallInvalidMethodDelete
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/phone/call?serviceId=%@", self.serviceId]];
+    NSURL *uri = [NSURL URLWithString:
+                  [NSString stringWithFormat:@"http://localhost:4035/gotapi/phone/call?serviceId=%@",
+                   self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     
@@ -223,7 +230,9 @@
  */
 - (void) testHttpFailPhoneSetInvalidMethodGet
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/phone/set?serviceId=%@", self.serviceId]];
+    NSURL *uri = [NSURL URLWithString:
+                  [NSString stringWithFormat:@"http://localhost:4035/gotapi/phone/set?serviceId=%@",
+                   self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
     
@@ -244,7 +253,9 @@
  */
 - (void) testHttpFailPhoneSetInvalidMethodPost
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/phone/set?serviceId=%@", self.serviceId]];
+    NSURL *uri = [NSURL URLWithString:
+                  [NSString stringWithFormat:@"http://localhost:4035/gotapi/phone/set?serviceId=%@",
+                   self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"POST"];
     
@@ -265,7 +276,9 @@
  */
 - (void) testHttpFailPhoneSetInvalidMethodDelete
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/phone/set?serviceId=%@", self.serviceId]];
+    NSURL *uri = [NSURL URLWithString:
+                  [NSString stringWithFormat:@"http://localhost:4035/gotapi/phone/set?serviceId=%@",
+                   self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     
@@ -349,7 +362,9 @@
  */
 - (void) testHttpFailPhoneOnConnectPutNoSessionKey
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/phone/onconnect?serviceId=%@", self.serviceId]];
+    NSURL *uri = [NSURL URLWithString:
+                  [NSString stringWithFormat:@"http://localhost:4035/gotapi/phone/onconnect?serviceId=%@",
+                   self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
@@ -370,7 +385,10 @@
  */
 - (void) testHttpFailPhoneOnConnectPutEmptySessionKey
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/phone/onconnect?serviceId=%@&sessionKey=", self.serviceId]];
+    NSURL *uri = [NSURL URLWithString:
+                    [NSString stringWithFormat:
+                        @"http://localhost:4035/gotapi/phone/onconnect?serviceId=%@&sessionKey=",
+                            elf.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     

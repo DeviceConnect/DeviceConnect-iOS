@@ -120,10 +120,8 @@
         }
         
         return output;
-    } else {
-        /* 対応していない */
-        return nil;
     }
+    return nil;
 }
 
 @end

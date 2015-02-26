@@ -63,25 +63,31 @@ NSString *const DConnectMessageDefaultAPI = @"gotapi";
 
 #pragma mark - NSFastEnumeration
 
--(NSUInteger)countByEnumeratingWithState:(NSFastEnumerationState *)state objects:(__unsafe_unretained id [])buffer count:(NSUInteger)len {
+-(NSUInteger)countByEnumeratingWithState:(NSFastEnumerationState *)state
+                                 objects:(__unsafe_unretained id [])buffer
+                                   count:(NSUInteger)len {
     NSUInteger bufferIndex = 0;
     
     // state->stateは次の列挙位置が格納されている。初回の呼び出し時には0。
     NSUInteger listIndex = state->state;
-    // 列挙したいリストの長さを設定します. ここではこのクラス自体がArrayではないので、_arrayの長さを設定
+    // 列挙したいリストの長さを設定します.
+    // ここではこのクラス自体がArrayではないので、_arrayの長さを設定
     NSUInteger listLength = _array.count;
     
     // リストのサイズ分までbufferにオブジェクトを格納する.
     while (bufferIndex < len)
     {
         // ただし、保持しているリストを全て列挙できたら終了する。
-        // かならずしも全部の列挙が、１回で完了するわけではないので、whileだけではぴったり終われない。
+        // かならずしも全部の列挙が、
+        // １回で完了するわけではないので、
+        //whileだけではぴったり終われない。
         if (listIndex >= listLength) {
             break;
         }
         
         // バッファに実際に渡したいオブジェクトを格納する.
-        // 実際にはどれが入っているかわからないので、arrayに格納されているclassをみて返すオブジェクトを変える必要がある.
+        // 実際にはどれが入っているかわからないので、
+        // arrayに格納されているclassをみて返すオブジェクトを変える必要がある.
         NSObject* obj = [_array objectAtIndex:listIndex];
         // 各プリミティブに関してはNSNumberでのみ返す.
         if([obj isKindOfClass:[NSNumber class]]) {
@@ -100,7 +106,8 @@ NSString *const DConnectMessageDefaultAPI = @"gotapi";
         
     }
     
-    // このデリゲートは何回も呼び出される可能性がある（buffer/lenのサイズが16らしい)ので現在の状態をstate構造体に保存する.
+    // このデリゲートは何回も呼び出される可能性がある
+    // （buffer/lenのサイズが16らしい)ので現在の状態をstate構造体に保存する.
     state->state = listIndex;
     state->itemsPtr = buffer;
     state->mutationsPtr = (unsigned long*)(__bridge void*)self;
@@ -191,9 +198,8 @@ NSString *const DConnectMessageDefaultAPI = @"gotapi";
     
     if ([value isKindOfClass:[NSString class]]) {
         return [NSNumber numberWithDouble:[((NSString *) value) doubleValue]];
-    } else {
-        return (NSNumber *) value;
     }
+    return (NSNumber *) value;
 }
 
 - (DConnectMessage *) messageAtIndex:(NSUInteger)index {
@@ -363,9 +369,12 @@ NSString *const DConnectMessageDefaultAPI = @"gotapi";
         
         return data;
     } else if ([data isKindOfClass:[NSString class]]) {
-        // 通常の文字列データの場合は文字列として取り出すので、要求に応じてNSDataに変換する。
+        // 通常の文字列データの場合は文字列として取り出すので
+        // 要求に応じてNSDataに変換する。
         
-        return [NSData dataWithBytes:[(NSString*)data UTF8String] length:[(NSString*)data length]];
+        return [NSData dataWithBytes:[(NSString*)data
+                                                UTF8String]
+                              length:[(NSString*)data length]];
     }
     return nil;
 }
@@ -386,9 +395,8 @@ NSString *const DConnectMessageDefaultAPI = @"gotapi";
     id obj = [self.dictionary objectForKey:aKey];
     if ([obj isKindOfClass:[NSString class]]) {
         return [NSNumber numberWithDouble:[((NSString *) obj) doubleValue]];
-    } else {
-        return (NSNumber *) [self.dictionary objectForKey:aKey];
     }
+    return (NSNumber *) [self.dictionary objectForKey:aKey];
 }
 
 - (id) objectForKey:(NSString *)aKey {
@@ -429,11 +437,16 @@ NSString *const DConnectMessageDefaultAPI = @"gotapi";
         return nil;
     }
     
-    // フォワードスラッシュ（/）のエスケープを外す（JSONの仕様によればフォワードスラッシュのエスケープは任意）
-    NSMutableString *dataStr = [NSMutableString stringWithUTF8StringAddingNullTermination:[jsonData bytes]
-                                                                                   length:[jsonData length]];
+    // フォワードスラッシュ（/）のエスケープを外す
+    // （JSONの仕様によればフォワードスラッシュのエスケープは任意）
+    NSMutableString *dataStr
+            = [NSMutableString stringWithUTF8StringAddingNullTermination:[jsonData bytes]
+                                                                  length:[jsonData length]];
     
-    [dataStr replaceOccurrencesOfString:@"\\/" withString:@"/" options:0 range:NSMakeRange(0, dataStr.length)];
+    [dataStr replaceOccurrencesOfString:@"\\/"
+                             withString:@"/"
+                                options:0
+                                  range:NSMakeRange(0, dataStr.length)];
     return dataStr;
 }
 
@@ -470,10 +483,10 @@ NSString *const DConnectMessageDefaultAPI = @"gotapi";
             continue;
         }
         
-        id value = [dic objectForKey:key];
+        id value = dic[key];
         id obj = [self JSONObjectForObject:value];
         if (obj) {
-            [jsonObject setObject:obj forKey:key];
+            jsonObject[key] = obj;
         }
     }
     
@@ -505,8 +518,8 @@ NSString *const DConnectMessageDefaultAPI = @"gotapi";
     if ([object isKindOfClass:[DConnectMessage class]]) {
         json = [self dictionaryByRemovingNotJsonObject:((DConnectMessage *) object).dictionary];
     } else if ([object isKindOfClass:[DConnectArray class]]) {
-        DConnectArray *da = (DConnectArray *) object;
-        json = [self arrayByRemovingNotJSONObject:da.array];
+        DConnectArray *dconnectArray = (DConnectArray *) object;
+        json = [self arrayByRemovingNotJSONObject:dconnectArray.array];
     } else if ([object isKindOfClass:[NSDictionary class]]) {
         json = [self dictionaryByRemovingNotJsonObject:(NSDictionary *) object];
     } else if ([object isKindOfClass:[NSArray class]]) {

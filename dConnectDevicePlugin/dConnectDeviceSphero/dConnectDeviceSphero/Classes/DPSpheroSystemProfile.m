@@ -1,6 +1,6 @@
 //
 //  DPSpheroSystemProfile.m
-//  DConnectSDK
+//  dConnectDeviceSphero
 //
 //  Copyright (c) 2014 NTT DOCOMO, INC.
 //  Released under the MIT license
@@ -39,27 +39,24 @@
     NSString *bundlePath = [[NSBundle mainBundle] pathForResource:@"dConnectDeviceSphero_resources" ofType:@"bundle"];
     NSBundle *bundle = [NSBundle bundleWithPath:bundlePath];
     
-    UIStoryboard *sb;
+    UIStoryboard *storyBoard;
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
-        sb = [UIStoryboard storyboardWithName:@"SpheroDevicePlugin_iPhone" bundle:bundle];
+        storyBoard = [UIStoryboard storyboardWithName:@"SpheroDevicePlugin_iPhone" bundle:bundle];
     } else{
-        sb = [UIStoryboard storyboardWithName:@"SpheroDevicePlugin_iPad" bundle:bundle];
+        storyBoard = [UIStoryboard storyboardWithName:@"SpheroDevicePlugin_iPad" bundle:bundle];
     }
-    return [sb instantiateInitialViewController];
+    return [storyBoard instantiateInitialViewController];
 }
 
 // イベント一括解除リクエストを受け取った
-- (BOOL) profile:(DConnectSystemProfile *)profile didReceiveDeleteEventsRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response
-      sessionKey:(NSString *)sessionKey
+- (BOOL)                  profile:(DConnectSystemProfile *)profile
+    didReceiveDeleteEventsRequest:(DConnectRequestMessage *)request
+                         response:(DConnectResponseMessage *)response
+                       sessionKey:(NSString *)sessionKey
 {
     DConnectEventManager *eventMgr = [DConnectEventManager sharedManagerForClass:[DPSpheroDevicePlugin class]];
     if ([eventMgr removeEventsForSessionKey:sessionKey]) {
         [response setResult:DConnectMessageResultTypeOk];
-        // 全センサーストップ すべてではなく、各自eventのリストが0になったら停止するようにした
-//        [[DPSpheroManager sharedManager] stopAllSensor];
-//        
-//        [response setResult:DConnectMessageResultTypeOk];
     } else {
         [response setErrorToUnknownWithMessage:
          @"Failed to remove events associated with the specified session key."];

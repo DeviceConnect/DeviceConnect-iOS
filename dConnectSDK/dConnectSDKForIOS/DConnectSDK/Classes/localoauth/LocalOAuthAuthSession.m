@@ -14,7 +14,7 @@
 
 int const DEFAULT_TIMEOUT_SEC = 600;
 
-NSString *const ID = @"id";
+NSString *const SESSION_ID = @"id";
 
 NSString *const CLIENT_ID = @"client_id";
 
@@ -77,8 +77,7 @@ NSString *const APPLICATION_NAME = @"application_name";
     
     LocalOAuthAuthSession *objSession = (LocalOAuthAuthSession *)obj;
     
-    BOOL result = [self.attribs isEqualToDictionary: objSession.attribs];
-    return result;
+    return [self.attribs isEqualToDictionary: objSession.attribs];
 }
 
 /**
@@ -96,7 +95,7 @@ NSString *const APPLICATION_NAME = @"application_name";
     
     
     NSNumber *currentTimeInMillis = [NSNumber numberWithLongLong: [LocalOAuthUtils getCurrentTimeInMillis]];
-    [session setAttribute: ID value: sessionId];
+    [session setAttribute: SESSION_ID value: sessionId];
     [session setAttribute:LAST_ACTIVITY value: currentTimeInMillis];
     [session setSessionTimeout: DEFAULT_TIMEOUT_SEC];
     return session;
@@ -128,7 +127,7 @@ NSString *const APPLICATION_NAME = @"application_name";
 }
 
 - (NSString *) getId {
-    return (NSString *) [self getAttribute: ID];
+    return (NSString *) [self getAttribute: SESSION_ID];
 }
 
 /**
@@ -247,8 +246,8 @@ NSString *const APPLICATION_NAME = @"application_name";
 - (void) setRedirectionURI: (LocalOAuthRedirectionURI *) uri {
     // Normalize
     NSMutableDictionary *map = [NSMutableDictionary dictionary];
-    [map setObject: [uri getURI] forKey:@"uri"];
-    [map setObject: [NSNumber numberWithBool:[uri isDynamicConfigured]] forKey:@"dynamic"];
+    map[@"uri"] = [uri getURI];
+    map[@"dynamic"] =  @([uri isDynamicConfigured]);
     [self setAttribute: CALLBACK value: map];
 }
 
@@ -267,7 +266,9 @@ NSString *const APPLICATION_NAME = @"application_name";
     NSString *uri = [map objectForKey: @"uri"];
     BOOL dynamic = [[map objectForKey: @"dynamic"] boolValue];
  
-    LocalOAuthRedirectionURI *redirectionURI = [LocalOAuthRedirectionURI initWithdynamicConfigured:uri dynamicConfigured:dynamic];
+    LocalOAuthRedirectionURI *redirectionURI
+                = [LocalOAuthRedirectionURI initWithdynamicConfigured:uri
+                                                    dynamicConfigured:dynamic];
     
     return redirectionURI;
 }

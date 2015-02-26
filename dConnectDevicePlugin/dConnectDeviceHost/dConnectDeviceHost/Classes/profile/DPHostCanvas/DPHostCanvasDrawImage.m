@@ -21,11 +21,14 @@
 
 @implementation DPHostCanvasDrawImage
 
-- (id)initWithParameter: (NSData *)data x: (double)x y: (double)y mode: (NSString *)mode {
+- (id)initWithParameter:(NSData *)data
+                 imageX:(double)imageX
+                 imageY:(double)imageY
+                   mode:(NSString *)mode {
     
     _data = data;
-    _x = x;
-    _y = y;
+    _x = imageX;
+    _y = imageY;
     _mode = mode;
     
     if (self = [super init]) {
@@ -67,7 +70,10 @@
                                                   displaySize: displaySize];
         
         // draw fill image
-        [scaledImage drawInRect: CGRectMake(xForScaledImage, yForScaledImage, scaledImage.size.width, scaledImage.size.height)];
+        [scaledImage drawInRect: CGRectMake(xForScaledImage,
+                                            yForScaledImage,
+                                            scaledImage.size.width,
+                                            scaledImage.size.height)];
         proc = YES;
         
     } else if ([_mode isEqualToString: DConnectCanvasProfileModeFills]) {
@@ -85,7 +91,8 @@
 }
 
 /*!
- @brief imageを元に、スケーリングして画面いっぱいに表示されるUIImageを作成して返す。配置座標も返す.
+ @brief imageを元に、スケーリングして画面いっぱいに表示されるUIImageを作成して返す。
+        配置座標も返す.
  @param image ディスプレイに表示される元画像
  @param xForscaledImage 拡縮した画像を画面中央に表示する座標(x)を返す領域ポインタ
  @param yForscaledImage 拡縮した画像を画面中央に表示する座標(y)を返す領域ポインタ
@@ -106,7 +113,7 @@
     CGFloat height = displaySize.height;
     CGFloat widthRatio = getSizeW / displaySize.width;
     CGFloat heightRatio = getSizeH / displaySize.height;
-    BOOL isFitWidth = widthRatio > heightRatio ? YES : NO;
+    BOOL isFitWidth = widthRatio > heightRatio;
     CGFloat scale;
     if (isFitWidth) {
         scale = width / getSizeW;

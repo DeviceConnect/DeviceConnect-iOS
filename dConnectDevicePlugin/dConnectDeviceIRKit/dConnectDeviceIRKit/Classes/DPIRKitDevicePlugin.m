@@ -1,6 +1,6 @@
 //
 //  DPIRKitDevicePlugin.m
-//  DConnectSDK
+//  dConnectDeviceIRKit
 //
 //  Copyright (c) 2014 NTT DOCOMO, INC.
 //  Released under the MIT license
@@ -53,54 +53,39 @@ DPIRKitManagerDetectionDelegate
     self = [super init];
     
     if (self) {
-        DConnectServiceDiscoveryProfile *np = [DConnectServiceDiscoveryProfile new];
-        DConnectSystemProfile *sp = [DConnectSystemProfile new];
-        DPIRKitRemoteControllerProfile *rcp = [[DPIRKitRemoteControllerProfile alloc] initWithDevicePlugin:self];
-        
-        np.delegate = self;
-        sp.dataSource = self;
-        
-        [self addProfile:np];
-        [self addProfile:sp];
-        [self addProfile:rcp];
-        
+        DConnectServiceDiscoveryProfile *serviceDiscoveryProfile = [DConnectServiceDiscoveryProfile new];
+        DConnectSystemProfile *systemProfile = [DConnectSystemProfile new];
+        DPIRKitRemoteControllerProfile *remoteControllerProfile
+                            = [[DPIRKitRemoteControllerProfile alloc] initWithDevicePlugin:self];
+        serviceDiscoveryProfile.delegate = self;
+        systemProfile.dataSource = self;
+        [self addProfile:serviceDiscoveryProfile];
+        [self addProfile:systemProfile];
+        [self addProfile:remoteControllerProfile];
         _devices = [NSMutableDictionary dictionary];
-        
         id<DConnectEventCacheController> controller = [[DConnectMemoryCacheController alloc] init];
         _eventManager = [DConnectEventManager sharedManagerForClass:[DPIRKitDevicePlugin class]];
         [_eventManager setController:controller];
-        
-        NSBundle *bundle = DPIRBundle();
-        NSString* path = [bundle pathForResource:DPIRKitInfoPlistName ofType:@"plist"];
+        NSString* path = [DPIRBundle() pathForResource:DPIRKitInfoPlistName ofType:@"plist"];
         NSDictionary *info = [NSDictionary dictionaryWithContentsOfFile:path];
-        _version = [info objectForKey:DPIRKitInfoVersion];
-        
+        _version = info[DPIRKitInfoVersion];
         __weak typeof(self) _self = self;
         dispatch_async(dispatch_get_main_queue(), ^{
-            
-            NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+            NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
             UIApplication *application = [UIApplication sharedApplication];
-            
-            [nc addObserver:_self selector:@selector(startObeservation)
+            [notificationCenter addObserver:_self selector:@selector(startObeservation)
                        name:UIApplicationWillEnterForegroundNotification
                      object:application];
-            
-            [nc addObserver:_self selector:@selector(stopObeservation)
+            [notificationCenter addObserver:_self selector:@selector(stopObeservation)
                        name:UIApplicationDidEnterBackgroundNotification
                      object:application];
-            
-            // NSNetServiceBrowserはUIスレッドで生成する必要があるためUIスレッドで実行する。
             DPIRKitManager *manager = [DPIRKitManager sharedInstance];
-            manager.apiKey = [info objectForKey:DPIRKitInfoAPIKey];
+            manager.apiKey = info[DPIRKitInfoAPIKey];
             manager.detectionDelegate = _self;
             
             [_self startObeservation];
         });
-        
-        DPIRLog(@"== info ==");
-        DPIRLog(@"%@", info);
-        
-        self.pluginName = DPIRKitPluginName;//[NSString stringWithFormat:@"%@ %@", DPIRKitPluginName, _version];
+        self.pluginName = DPIRKitPluginName;
     }
     
     return self;
@@ -110,11 +95,11 @@ DPIRKitManagerDetectionDelegate
     _devices = nil;
     _eventManager = nil;
     
-    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+    NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
     UIApplication *application = [UIApplication sharedApplication];
     
-    [nc removeObserver:self name:UIApplicationDidBecomeActiveNotification object:application];
-    [nc removeObserver:self name:UIApplicationDidEnterBackgroundNotification object:application];
+    [notificationCenter removeObserver:self name:UIApplicationDidBecomeActiveNotification object:application];
+    [notificationCenter removeObserver:self name:UIApplicationDidEnterBackgroundNotification object:application];
 
     [self stopObeservation];
 }
@@ -134,15 +119,15 @@ DPIRKitManagerDetectionDelegate
     BOOL hit = NO;
     @synchronized (_devices) {
         
-        DPIRKitDevice *d = [_devices objectForKey:device.name];
+        DPIRKitDevice *irkit = _devices[device.name];
         
-        if (d) {
+        if (irkit) {
             hit = YES;
             if (!online) {
                 [_devices removeObjectForKey:device.name];
             }
         } else if (online) {
-            [_devices setObject:device forKey:device.name];
+            _devices[device.name] = device;
         }
     }
     
@@ -223,19 +208,14 @@ didReceivePutOnServiceChangeRequest:(DConnectRequestMessage *)request
 {
     
     DConnectEventError error = [_eventManager addEventForRequest:request];
-    switch (error) {
-        case DConnectEventErrorNone:
-            response.result = DConnectMessageResultTypeOk;
-            DPIRLog(@"Register ServiceChange Event. %@", sessionKey);
-            break;
-        case DConnectEventErrorInvalidParameter:
-            [response setErrorToInvalidRequestParameter];
-            break;
-        default:
-            [response setErrorToUnknown];
-            break;
+    if (error == DConnectEventErrorNone) {
+        response.result = DConnectMessageResultTypeOk;
+        DPIRLog(@"Register ServiceChange Event. %@", sessionKey);
+    } else if (error == DConnectEventErrorInvalidParameter) {
+        [response setErrorToInvalidRequestParameter];
+    } else {
+        [response setErrorToUnknown];
     }
-    
     return YES;
 }
 
@@ -247,19 +227,14 @@ didReceiveDeleteOnServiceChangeRequest:(DConnectRequestMessage *)request
 {
     
     DConnectEventError error = [_eventManager removeEventForRequest:request];
-    switch (error) {
-        case DConnectEventErrorNone:
-            response.result = DConnectMessageResultTypeOk;
-            DPIRLog(@"Unregister ServiceChange Event. %@", sessionKey);
-            break;
-        case DConnectEventErrorInvalidParameter:
-            [response setErrorToInvalidRequestParameter];
-            break;
-        default:
-            [response setErrorToUnknown];
-            break;
+    if (error == DConnectEventErrorNone) {
+        response.result = DConnectMessageResultTypeOk;
+        DPIRLog(@"Unregister ServiceChange Event. %@", sessionKey);
+    } else if (error == DConnectEventErrorInvalidParameter) {
+        [response setErrorToInvalidRequestParameter];
+    } else {
+        [response setErrorToUnknown];
     }
-    
     return YES;
 }
 
@@ -294,16 +269,16 @@ didReceiveDeleteOnServiceChangeRequest:(DConnectRequestMessage *)request
     NSBundle *bundle = DPIRBundle();
     
     // iphoneとipadでストーリーボードを切り替える
-    UIStoryboard *sb;
+    UIStoryboard *storyBoard;
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
-        sb = [UIStoryboard storyboardWithName:[NSString stringWithFormat:@"%@iPhone", DPIRKitStoryBoardName]
+        storyBoard = [UIStoryboard storyboardWithName:[NSString stringWithFormat:@"%@iPhone", DPIRKitStoryBoardName]
                                        bundle:bundle];
     } else{
-        sb = [UIStoryboard storyboardWithName:[NSString stringWithFormat:@"%@iPad", DPIRKitStoryBoardName]
+        storyBoard = [UIStoryboard storyboardWithName:[NSString stringWithFormat:@"%@iPad", DPIRKitStoryBoardName]
                                        bundle:bundle];
     }
-    UINavigationController *vc = [sb instantiateInitialViewController];
-    return vc;
+    UINavigationController *viewController = [storyBoard instantiateInitialViewController];
+    return viewController;
 }
 
 #pragma mark - DPIRKitManagerDetectionDelegate

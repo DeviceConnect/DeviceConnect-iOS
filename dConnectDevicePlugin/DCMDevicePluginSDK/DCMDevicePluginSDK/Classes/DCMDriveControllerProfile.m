@@ -1,6 +1,6 @@
 //
 //  DCMDriveControllerProfileName.m
-//  DConnectSDK
+//  DCMDevicePluginSDK
 //
 //  Copyright (c) 2014 NTT DOCOMO, INC.
 //  Released under the MIT license
@@ -56,12 +56,22 @@ NSString *const DCMDriveControllerProfileParamSpeed = @"speed";
         if ([profile isEqualToString:DCMDriveControllerProfileName]
             && attribute != nil
             && [attribute isEqualToString:DCMDriveControllerProfileAttrMove]
-            && [self hasMethod:@selector(profile:didReceivePostDriveControllerMoveRequest:response:serviceId:angle:speed:) response:response])
+            && [self hasMethod:@selector(profile:
+                                         didReceivePostDriveControllerMoveRequest:
+                                         response:
+                                         serviceId:
+                                         angle:
+                                         speed:)
+                      response:response])
         {
             double angle = [request doubleForKey:DCMDriveControllerProfileParamAngle];
             double speed = [request doubleForKey:DCMDriveControllerProfileParamSpeed];
-            send = [_delegate profile:self didReceivePostDriveControllerMoveRequest:request response:response serviceId:serviceId
-                                angle:angle speed:speed];
+            send = [_delegate                profile:self
+            didReceivePostDriveControllerMoveRequest:request
+                                            response:response
+                                           serviceId:serviceId
+                                               angle:angle
+                                               speed:speed];
 
         } else {
             [response setErrorToNotSupportAttribute];
@@ -94,10 +104,19 @@ NSString *const DCMDriveControllerProfileParamSpeed = @"speed";
         if ([profile isEqualToString:DCMDriveControllerProfileName]
             && attribute != nil
             && [attribute isEqualToString:DCMDriveControllerProfileAttrRotate]
-            && [self hasMethod:@selector(profile:didReceivePutDriveControllerRotateRequest:response:serviceId:angle:) response:response])
+            && [self hasMethod:@selector(profile:
+                                         didReceivePutDriveControllerRotateRequest:
+                                         response:
+                                         serviceId:
+                                         angle:)
+                      response:response])
         {
             double angle = [request doubleForKey:DCMDriveControllerProfileParamAngle];
-            send = [_delegate profile:self didReceivePutDriveControllerRotateRequest:request response:response serviceId:serviceId angle:angle];
+            send = [_delegate                 profile:self
+            didReceivePutDriveControllerRotateRequest:request
+                                             response:response
+                                            serviceId:serviceId
+                                                angle:angle];
         } else {
             [response setErrorToNotSupportAttribute];
         }
@@ -128,10 +147,17 @@ NSString *const DCMDriveControllerProfileParamSpeed = @"speed";
         if ([profile isEqualToString:DCMDriveControllerProfileName]
             && attribute != nil
             && [attribute isEqualToString:DCMDriveControllerProfileAttrStop]
-            && [self hasMethod:@selector(profile:didReceiveDeleteDriveControllerStopRequest:response:serviceId:) response:response])
+            && [self hasMethod:@selector(profile:
+                                         didReceiveDeleteDriveControllerStopRequest:
+                                         response:
+                                         serviceId:)
+                      response:response])
         {
             
-            send = [_delegate profile:self didReceiveDeleteDriveControllerStopRequest:request response:response serviceId:serviceId];
+            send = [_delegate             profile:self
+       didReceiveDeleteDriveControllerStopRequest:request
+                                         response:response
+                                        serviceId:serviceId];
 
         } else {
             [response setErrorToNotSupportAttribute];

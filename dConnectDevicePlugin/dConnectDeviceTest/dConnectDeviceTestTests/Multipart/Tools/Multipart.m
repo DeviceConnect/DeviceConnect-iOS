@@ -1,6 +1,6 @@
 //
 //  Multipart.m
-//  DConnectSDK
+//  dConnectDeviceTest
 //
 //  Copyright (c) 2014 NTT DOCOMO, INC.
 //  Released under the MIT license
@@ -46,9 +46,13 @@
     NSMutableData *data = [NSMutableData data];
     for (id key in items) {
         NSData *value = [items objectForKey:key];
-        [data appendData:[[NSString stringWithFormat:@"--%@\r\n", bound] dataUsingEncoding:NSUTF8StringEncoding]];
-        [data appendData:[[NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n", key] dataUsingEncoding:NSUTF8StringEncoding]];
-        [data appendData:[[NSString stringWithFormat:@"Content-Length: %lu\r\n", [value length]] dataUsingEncoding:NSUTF8StringEncoding]];
+        [data appendData:[[NSString stringWithFormat:@"--%@\r\n", bound]
+                                        dataUsingEncoding:NSUTF8StringEncoding]];
+        [data appendData:[[NSString
+                           stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n", key]
+                        dataUsingEncoding:NSUTF8StringEncoding]];
+        [data appendData:[[NSString stringWithFormat:@"Content-Length: %lu\r\n",
+                           (unsigned long) [value length]] dataUsingEncoding:NSUTF8StringEncoding]];
         [data appendData:[@"\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
         [data appendData:value];
         [data appendData:[@"\r\n" dataUsingEncoding:NSUTF8StringEncoding]];

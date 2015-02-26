@@ -66,8 +66,6 @@ didReceivePutOnServiceChangeRequest:(DConnectRequestMessage *)request
         [response setErrorToInvalidRequestParameterWithMessage:@"sessionKey must be specified."];
         return YES;
     }
-    
-    // このデバイスプラグインは常駐；常に接続していて、接続が失われることも無いので、イベントの送信は行わない。
     return YES;
 }
 
@@ -83,8 +81,6 @@ didReceiveDeleteOnServiceChangeRequest:(DConnectRequestMessage *)request
         [response setErrorToInvalidRequestParameterWithMessage:@"sessionKey must be specified."];
         return YES;
     }
-    
-    // このデバイスプラグインは常駐；常に接続していて、接続が失われることも無いので、イベントの送信は行わない。
     return YES;
 }
 
@@ -92,7 +88,6 @@ didReceiveDeleteOnServiceChangeRequest:(DConnectRequestMessage *)request
 
 - (BOOL) unregisterAllEventsWithSessionkey:(NSString *)sessionKey
 {
-    // このデバイスプラグインは常駐；常に接続していて、接続が失われることも無いので、イベントの送信は行わない。
     return YES;
 }
 

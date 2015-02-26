@@ -45,11 +45,11 @@ DPHostCanvasUIViewController *_displayViewController;
 
 - (BOOL) profile:(DConnectCanvasProfile *)profile didReceivePostDrawImageRequest:(DConnectRequestMessage *)request
         response:(DConnectResponseMessage *)response
-        deviceId:(NSString *)deviceId
+        serviceId:(NSString *)deviceId
         mimeType:(NSString *)mimeType
             data:(NSData *)data
-               x:(double)x
-               y:(double)y
+          imageX:(double)imageX
+          imageY:(double)imageY
             mode:(NSString *)mode
 {
     if (data == nil) {
@@ -57,7 +57,11 @@ DPHostCanvasUIViewController *_displayViewController;
         return YES;
     }
     
-    DPHostCanvasDrawImage *drawImage = [[DPHostCanvasDrawImage alloc] initWithParameter:data x: x y: y mode: mode];
+    DPHostCanvasDrawImage *drawImage = [[DPHostCanvasDrawImage alloc]
+                                            initWithParameter:data
+                                                       imageX:imageX
+                                                       imageY:imageY
+                                                         mode:mode];
     
     if (_displayViewController == nil) {
         /* start ViewController */
@@ -82,10 +86,11 @@ DPHostCanvasUIViewController *_displayViewController;
                                 drawObject: (DPHostCanvasDrawObject *)drawObject
 {
     NSString *storyBoardName = @"dConnectDeviceHost";
-    UIStoryboard *sb = [self storyboardWithName: storyBoardName];
+    UIStoryboard *storyBoard = [self storyboardWithName: storyBoardName];
     
     NSString *viewControllerId = @"Canvas";
-    DPHostCanvasUIViewController *viewController = [sb instantiateViewControllerWithIdentifier: viewControllerId];
+    DPHostCanvasUIViewController *viewController
+        = [storyBoard instantiateViewControllerWithIdentifier:viewControllerId];
     if (viewController != nil) {
         viewController.delegate = self;
         
@@ -117,9 +122,8 @@ DPHostCanvasUIViewController *_displayViewController;
         return nil;
     }
     
-    UIStoryboard *sb = [UIStoryboard storyboardWithName:storyBoardName
+    return [UIStoryboard storyboardWithName:storyBoardName
                                                  bundle: bundle];
-    return sb;
 }
 
 

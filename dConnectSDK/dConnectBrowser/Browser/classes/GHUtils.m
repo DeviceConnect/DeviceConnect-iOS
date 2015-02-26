@@ -1,6 +1,6 @@
 //
 //  GHUtils.m
-//  Browser
+//  dConnectBrowser
 //
 //  Copyright (c) 2014 NTT DOCOMO,INC.
 //  Released under the MIT license
@@ -55,8 +55,8 @@
 //--------------------------------------------------------------//
 + (void)postNotification:(NSDictionary*)userinfo withKey:(NSString*)key
 {
-    NSNotification *n = [NSNotification notificationWithName:key object:nil userInfo:userinfo];
-    [[NSNotificationCenter defaultCenter] postNotification:n];
+    NSNotification *notificationCenter = [NSNotification notificationWithName:key object:nil userInfo:userinfo];
+    [[NSNotificationCenter defaultCenter] postNotification:notificationCenter];
 }
 
 
@@ -67,12 +67,7 @@
 //--------------------------------------------------------------//
 + (BOOL)isiPad
 {
-    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-        // this device is iPad
-        return YES;
-    } else {
-        return NO;
-    }
+    return (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad);
 }
 
 
@@ -104,11 +99,7 @@
     NSHTTPCookieStorage *cookieStorage = [NSHTTPCookieStorage sharedHTTPCookieStorage];
     NSHTTPCookieAcceptPolicy policy = [cookieStorage cookieAcceptPolicy];
     
-    if (policy == NSHTTPCookieAcceptPolicyNever) {
-        return NO;
-    }else{
-        return YES;
-    }
+    return (policy != NSHTTPCookieAcceptPolicyNever);
 }
 
 
@@ -133,11 +124,7 @@
     NSString* savedir = [NSString stringWithFormat:@"%@/%@",dir, [self convertURLString:url]];
 
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
-        if ([pngData writeToFile:savedir atomically:YES]) {
-//            LOG(@"saveImage OK");
-        } else {
-//            LOG(@"save Image Error");
-        }
+        [pngData writeToFile:savedir atomically:YES];
     });
 }
 
@@ -195,7 +182,7 @@
     NSString* imgdir = [NSString stringWithFormat:@"%@/%@",dir, [self convertURLString:url]];
     if([[NSFileManager defaultManager]fileExistsAtPath:imgdir]){
         return [UIImage imageWithContentsOfFile:imgdir];
-    }else{
+    } else {
         LOG(@"画像無し");
         return nil;
     }

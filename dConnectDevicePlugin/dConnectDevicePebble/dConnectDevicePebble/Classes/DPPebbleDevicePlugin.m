@@ -1,6 +1,6 @@
 //
 //  DPPebbleDevicePlugin.m
-//  DConnectSDK
+//  dConnectDevicePebble
 //
 //  Copyright (c) 2014 NTT DOCOMO, INC.
 //  Released under the MIT license
@@ -48,14 +48,14 @@
         [self addProfile:[DPPebbleCanvasProfile new]];
 		
 		dispatch_async(dispatch_get_main_queue(), ^{
-			NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+			NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
 			UIApplication *application = [UIApplication sharedApplication];
 			
-			[nc addObserver:self selector:@selector(enterForeground)
+			[notificationCenter addObserver:self selector:@selector(enterForeground)
 					   name:UIApplicationWillEnterForegroundNotification
 					 object:application];
 			
-			[nc addObserver:self selector:@selector(enterBackground)
+			[notificationCenter addObserver:self selector:@selector(enterBackground)
 					   name:UIApplicationDidEnterBackgroundNotification
 					 object:application];
 		});
@@ -66,10 +66,10 @@
 
 - (void) dealloc
 {
-	NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+	NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
 	UIApplication *application = [UIApplication sharedApplication];
-	[nc removeObserver:self name:UIApplicationDidBecomeActiveNotification object:application];
-	[nc removeObserver:self name:UIApplicationDidEnterBackgroundNotification object:application];
+	[notificationCenter removeObserver:self name:UIApplicationDidBecomeActiveNotification object:application];
+	[notificationCenter removeObserver:self name:UIApplicationDidEnterBackgroundNotification object:application];
 }
 
 - (void)enterBackground

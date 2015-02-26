@@ -1,6 +1,6 @@
 //
 //  SonyCameraDevicePlugin.m
-//  DConnectSDK
+//  dConnectDeviceSonyCamera
 //
 //  Copyright (c) 2014 NTT DOCOMO, INC.
 //  Released under the MIT license
@@ -48,7 +48,15 @@ NSString *const SonyFilePrefix = @"sony";
 /*!
  @brief Sony Remote Camera用デバイスプラグイン。
  */
-@interface SonyCameraDevicePlugin () <SampleDiscoveryDelegate, DConnectServiceDiscoveryProfileDelegate, DConnectSystemProfileDelegate, DConnectSystemProfileDataSource, DConnectMediaStreamRecordingProfileDelegate, SonyCameraCameraProfileDelegate, SampleLiveviewDelegate, SonyCameraRemoteApiUtilDelegate, DConnectSettingsProfileDelegate>
+@interface SonyCameraDevicePlugin () <SampleDiscoveryDelegate,
+                            DConnectServiceDiscoveryProfileDelegate,
+                            DConnectSystemProfileDelegate,
+                            DConnectSystemProfileDataSource,
+                            DConnectMediaStreamRecordingProfileDelegate,
+                            SonyCameraCameraProfileDelegate,
+                            SampleLiveviewDelegate,
+                            SonyCameraRemoteApiUtilDelegate,
+                            DConnectSettingsProfileDelegate>
 
 /*!
  @brief SonyRemoteApi操作用.
@@ -140,78 +148,41 @@ NSString *const SonyFilePrefix = @"sony";
 - (instancetype) init {
     self = [super init];
     if (self) {
-        // プラグイン名を設定
         self.pluginName = [NSString stringWithFormat:@"Sony Camera %@", SonyDevicePluginVersion];
-        
-        // タイムスライスのデフォルト
         self.timeslice = 200;
-        
-        // タイムスライスカウント開始時刻の初期化
         self.previewStart = 0;
-        
-        // SonyRemoteApiの初期化
         self.remoteApi = nil;
-        
-        // サーチフラグ
         self.searchFlag = NO;
-        
-        // ファイル管理クラスの初期化
         self.mFileManager = [DConnectFileManager fileManagerForPlugin:self];
-        
-        // EventManagerの初期化
         Class key = [self class];
         [[DConnectEventManager sharedManagerForClass:key] setController:[DConnectMemoryCacheController new]];
-
-        // Service Discovery Profileの追加
         DConnectServiceDiscoveryProfile *networkProfile = [DConnectServiceDiscoveryProfile new];
         networkProfile.delegate = self;
-        
-        // System Profileの追加
         DConnectSystemProfile *systemProfile = [DConnectSystemProfile new];
         systemProfile.delegate = self;
         systemProfile.dataSource = self;
-        
-        // MediaStreamRecording Profileの追加
         DConnectMediaStreamRecordingProfile *mediaProfile = [DConnectMediaStreamRecordingProfile new];
         mediaProfile.delegate = self;
-        
-        // Settings Profileの追加
         DConnectSettingsProfile *settingsProfile = [DConnectSettingsProfile new];
         settingsProfile.delegate = self;
-        
-        // Camera Profileの追加
         SonyCameraCameraProfile *cameraProfile = [SonyCameraCameraProfile new];
         cameraProfile.delegate = self;
-        
-        // 各プロファイルの追加
         [self addProfile:networkProfile];
         [self addProfile:systemProfile];
         [self addProfile:mediaProfile];
         [self addProfile:cameraProfile];
-        
-        // Settingsプロファイルは、QX10のファームウェアを
-        // アップデートしないと使用できない。
-        // また、アップデートしてもAPIにバグがあるので、
-        // 今回は非サポートとする。
-        //[self addProfile:settingsProfile];
-        
-        // SSIDがSony Cameraの場合には接続確認を行う
         if ([self checkSSID]) {
             [self searchSonyCameraDevice];
         }
-        
         __weak typeof(self) _self = self;
         dispatch_async(dispatch_get_main_queue(), ^{
-            NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+            NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
             UIApplication *application = [UIApplication sharedApplication];
             
-            [nc addObserver:_self selector:@selector(applicationWillEnterForeground)
+            [notificationCenter addObserver:_self selector:@selector(applicationWillEnterForeground)
                        name:UIApplicationWillEnterForegroundNotification
                      object:application];
             
-            [nc addObserver:_self selector:@selector(applicationDidEnterBackground)
-                       name:UIApplicationDidEnterBackgroundNotification
-                     object:application];
         });
     }
     return self;
@@ -248,11 +219,6 @@ NSString *const SonyFilePrefix = @"sony";
 }
 
 #pragma mark - Private Methods -
-
-- (void) applicationDidEnterBackground
-{
-    // バックグラウンドに入ったときの処理
-}
 
 - (void) applicationWillEnterForeground
 {
@@ -300,7 +266,10 @@ NSString *const SonyFilePrefix = @"sony";
     if (dicRef) {
         NSString *ssid = CFDictionaryGetValue(dicRef, kCNNetworkInfoKeySSID);
         if ([ssid hasPrefix:@"DIRECT-"]) {
-            NSArray *array = @[@"HDR-AS100", @"ILCE-6000", @"DSC-HC60V", @"DSC-HX400", @"ILCE-5000", @"DSC-QX10", @"DSC-QX100", @"HDR-AS15", @"HDR-AS30", @"HDR-MV1", @"NEX-5R", @"NEX-5T", @"NEX-6", @"ILCE-7R/B", @"ILCE-7/B"];
+            NSArray *array = @[@"HDR-AS100", @"ILCE-6000", @"DSC-HC60V", @"DSC-HX400",
+                               @"ILCE-5000", @"DSC-QX10", @"DSC-QX100", @"HDR-AS15",
+                               @"HDR-AS30", @"HDR-MV1", @"NEX-5R", @"NEX-5T", @"NEX-6",
+                               @"ILCE-7R/B", @"ILCE-7/B"];
             for (NSString *name in array) {
                 NSRange searchResult = [ssid rangeOfString:name];
                 if (searchResult.location != NSNotFound) {
@@ -350,13 +319,9 @@ NSString *const SonyFilePrefix = @"sony";
         self.remoteApi.delegate = self;
         
         // プレビューイベントを持っている場合は、プレビューを再開させる
-        if ([self hasDataAvaiableEvent]) {
-            if (![self.remoteApi isStartedLiveView]) {
-                [self.remoteApi actStartLiveView:self];
-            }
+        if ([self hasDataAvaiableEvent] && ![self.remoteApi isStartedLiveView]) {
+            [self.remoteApi actStartLiveView:self];
         }
-    } else {
-        // 見つからない
     }
     [self.delegate didReceiveDeviceList:discovery];
 }
@@ -364,7 +329,7 @@ NSString *const SonyFilePrefix = @"sony";
 #pragma mark - DConnectServiceDiscoveryProfileDelegate
 
 - (BOOL)                       profile:(DConnectServiceDiscoveryProfile *)profile
-didReceiveGetServicesRequest:(DConnectRequestMessage *)request
+          didReceiveGetServicesRequest:(DConnectRequestMessage *)request
                               response:(DConnectResponseMessage *)response
 {
     DConnectArray *services = [DConnectArray array];
@@ -398,10 +363,8 @@ didReceiveDeleteEventsRequest:(DConnectRequestMessage *)request
             [response setResult:DConnectMessageResultTypeOk];
             
             // 削除した時にイベントが残っていなければ、プレビューを止める
-            if (![self hasDataAvaiableEvent]) {
-                if ([self.remoteApi isStartedLiveView]) {
-                    [self.remoteApi actStopLiveView];
-                }
+            if (![self hasDataAvaiableEvent] && [self.remoteApi isStartedLiveView]) {
+                [self.remoteApi actStopLiveView];
             }
         } else {
             [response setErrorToUnknownWithMessage:@"Cannot delete events."];
@@ -419,26 +382,28 @@ didReceiveDeleteEventsRequest:(DConnectRequestMessage *)request
 - (UIViewController *) profile:(DConnectSystemProfile *)sender
          settingPageForRequest:(DConnectRequestMessage *)request
 {
-    NSString *bundlePath = [[NSBundle mainBundle] pathForResource:@"dConnectDeviceSonyCamera_resources" ofType:@"bundle"];
+    NSString *bundlePath = [[NSBundle mainBundle]
+                            pathForResource:@"dConnectDeviceSonyCamera_resources"
+                                     ofType:@"bundle"];
     NSBundle *bundle = [NSBundle bundleWithPath:bundlePath];
     
     // iphoneとipadでストーリーボードを切り替える
-    UIStoryboard *sb;
+    UIStoryboard *storyBoard;
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
-        sb = [UIStoryboard storyboardWithName:@"SonyCameraDevicePlugin_iPhone" bundle:bundle];
+        storyBoard = [UIStoryboard storyboardWithName:@"SonyCameraDevicePlugin_iPhone" bundle:bundle];
     } else{
-        sb = [UIStoryboard storyboardWithName:@"SonyCameraDevicePlugin_iPad" bundle:bundle];
+        storyBoard = [UIStoryboard storyboardWithName:@"SonyCameraDevicePlugin_iPad" bundle:bundle];
     }
-    UINavigationController *vc = [sb instantiateInitialViewController];
-    for (int i = 0; i < vc.viewControllers.count; i++) {
-        UIViewController *ctl = vc.viewControllers[i];
+    UINavigationController *viewController = [storyBoard instantiateInitialViewController];
+    for (int i = 0; i < viewController.viewControllers.count; i++) {
+        UIViewController *ctl = viewController.viewControllers[i];
         NSString *className = NSStringFromClass([ctl class]);
         if ([className isEqualToString:@"SonyCameraViewController"]) {
             SonyCameraViewController *scvc = (SonyCameraViewController *) ctl;
             scvc.deviceplugin = self;
         }
     }
-    return vc;
+    return viewController;
 }
 
 #pragma mark - DConnectMediaStreamRecordingProfileDelegate
@@ -462,15 +427,15 @@ didReceiveGetMediaRecorderRequest:(DConnectRequestMessage *)request
     // MEMO: getStillSizeは、QX10は最新のファームウェアでないとサポートしていない
     NSDictionary *dic = [self.remoteApi getStillSize];
     if (dic) {
-        NSString *aspect = [dic objectForKey:@"aspect"];
-        NSString *size = [dic objectForKey:@"size"];
+        NSString *aspect = dic[@"aspect"];
+        NSString *size = dic[@"size"];
         
         NSArray *sizes = [aspect componentsSeparatedByString:@":"];
-        NSString *w = sizes[0];
-        NSString *h = sizes[1];
+        NSString *widthString = sizes[0];
+        NSString *heightString = sizes[1];
         int stillSize = 0;
-        int width = [w intValue];
-        int height = [h intValue];
+        int width = [widthString intValue];
+        int height = [heightString intValue];
         
         if ([aspect isEqualToString:@"1:1"]) {
             if ([size isEqualToString:@"3.7M"]) {
@@ -571,11 +536,10 @@ didReceivePostTakePhotoRequest:(DConnectRequestMessage *)request
     }
     
     // 動画撮影モード切り替え
-    if (![SonyCameraShootModePicture isEqualToString:self.remoteApi.shootMode]) {
-        if (![self.remoteApi actSetShootMode:SonyCameraShootModePicture]) {
-            [response setErrorToIllegalDeviceState];
-            return YES;
-        }
+    if (![SonyCameraShootModePicture isEqualToString:self.remoteApi.shootMode]
+        && ![self.remoteApi actSetShootMode:SonyCameraShootModePicture]) {
+        [response setErrorToIllegalDeviceState];
+        return YES;
     }
     
     __weak typeof(self) _self = self;
@@ -588,11 +552,11 @@ didReceivePostTakePhotoRequest:(DConnectRequestMessage *)request
         } else {
             NSString *errorMessage = @"";
             NSInteger errorCode = -1;
-            NSArray *resultArray = [dict objectForKey:@"result"];
-            NSArray *errorArray = [dict objectForKey:@"error"];
+            NSArray *resultArray = dict[@"result"];
+            NSArray *errorArray = dict[@"error"];
             if (errorArray && errorArray.count > 0) {
-                errorCode = (NSInteger) [errorArray objectAtIndex:0];
-                errorMessage = [errorArray objectAtIndex:1];
+                errorCode = (NSInteger) errorArray[0];
+                errorMessage = errorArray[1];
             }
             
             // レスポンス作成
@@ -651,11 +615,10 @@ didReceivePostRecordRequest:(DConnectRequestMessage *)request
     }
     
     // 動画撮影モード切り替え
-    if (![SonyCameraShootModeMovie isEqualToString:self.remoteApi.shootMode]) {
-        if (![self.remoteApi actSetShootMode:SonyCameraShootModeMovie]) {
-            [response setErrorToIllegalDeviceState];
-            return YES;
-        }
+    if (![SonyCameraShootModeMovie isEqualToString:self.remoteApi.shootMode]
+        && ![self.remoteApi actSetShootMode:SonyCameraShootModeMovie]) {
+        [response setErrorToIllegalDeviceState];
+        return YES;
     }
     
     __weak typeof(self) _self = self;
@@ -734,18 +697,12 @@ didReceivePutOnPhotoRequest:(DConnectRequestMessage *)request
 
     DConnectEventManager *mgr = [DConnectEventManager sharedManagerForClass:[self class]];
     DConnectEventError error = [mgr addEventForRequest:request];
-    switch (error) {
-        case DConnectEventErrorNone:
-            [response setResult:DConnectMessageResultTypeOk];
-            break;
-        case DConnectEventErrorInvalidParameter:
-            [response setErrorToInvalidRequestParameter];
-            break;
-        case DConnectEventErrorNotFound:
-        case DConnectEventErrorFailed:
-        default:
-            [response setErrorToUnknown];
-            break;
+    if (error == DConnectEventErrorNone) {
+        [response setResult:DConnectMessageResultTypeOk];
+    } else if (error == DConnectEventErrorInvalidParameter) {
+        [response setErrorToInvalidRequestParameter];
+    } else {
+        [response setErrorToUnknown];
     }
     return YES;
 }
@@ -769,18 +726,13 @@ didReceiveDeleteOnPhotoRequest:(DConnectRequestMessage *)request
 
     DConnectEventManager *mgr = [DConnectEventManager sharedManagerForClass:[self class]];
     DConnectEventError error = [mgr removeEventForRequest:request];
-    switch (error) {
-        case DConnectEventErrorNone:
-            [response setResult:DConnectMessageResultTypeOk];
-            break;
-        case DConnectEventErrorInvalidParameter:
-        case DConnectEventErrorNotFound:
-            [response setErrorToInvalidRequestParameter];
-            break;
-        case DConnectEventErrorFailed:
-        default:
-            [response setErrorToUnknown];
-            break;
+    if (error == DConnectEventErrorNone) {
+        [response setResult:DConnectMessageResultTypeOk];
+    } else if (error == DConnectEventErrorInvalidParameter
+               || error == DConnectEventErrorNotFound) {
+        [response setErrorToInvalidRequestParameter];
+    } else {
+        [response setErrorToUnknown];
     }
     return YES;
 }
@@ -811,22 +763,16 @@ didReceivePutOnDataAvailableRequest:(DConnectRequestMessage *)request
     
     DConnectEventManager *mgr = [DConnectEventManager sharedManagerForClass:[self class]];
     DConnectEventError error = [mgr addEventForRequest:request];
-    switch (error) {
-    case DConnectEventErrorNone:
+    if (error == DConnectEventErrorNone) {
         [response setResult:DConnectMessageResultTypeOk];
         // プレビュー開始
         if (![self.remoteApi isStartedLiveView]) {
             [self.remoteApi actStartLiveView:self];
         }
-        break;
-    case DConnectEventErrorInvalidParameter:
+    } else if (error == DConnectEventErrorInvalidParameter) {
         [response setErrorToInvalidRequestParameter];
-        break;
-    case DConnectEventErrorNotFound:
-    case DConnectEventErrorFailed:
-    default:
+    } else {
         [response setErrorToUnknown];
-        break;
     }
     return YES;
 }
@@ -857,23 +803,18 @@ didReceiveDeleteOnDataAvailableRequest:(DConnectRequestMessage *)request
     
     DConnectEventManager *mgr = [DConnectEventManager sharedManagerForClass:[self class]];
     DConnectEventError error = [mgr removeEventForRequest:request];
-    switch (error) {
-    case DConnectEventErrorNone: {
+    if (error == DConnectEventErrorNone) {
         [response setResult:DConnectMessageResultTypeOk];
-            
+        
         // プレビュー停止
         if ([self.remoteApi isStartedLiveView] && ![self hasDataAvaiableEvent]) {
             [self.remoteApi actStopLiveView];
         }
-    }   break;
-    case DConnectEventErrorInvalidParameter:
-    case DConnectEventErrorNotFound:
+    } else if (error == DConnectEventErrorInvalidParameter
+               && error == DConnectEventErrorNotFound) {
         [response setErrorToInvalidRequestParameter];
-        break;
-    case DConnectEventErrorFailed:
-    default:
+    } else {
         [response setErrorToUnknown];
-        break;
     }
     return YES;
 }
@@ -884,11 +825,11 @@ didReceiveDeleteOnDataAvailableRequest:(DConnectRequestMessage *)request
 - (void) didReceivedData:(NSData *)imageData
 {
     // プレビューのタイムスライス時間に満たない場合には無視する
-    UInt64 t = [self getEpochMilliSeconds];
-    if (t - self.previewStart < self.timeslice) {
+    UInt64 time = [self getEpochMilliSeconds];
+    if (time - self.previewStart < self.timeslice) {
         return;
     }
-    self.previewStart = t;
+    self.previewStart = time;
     
     self.mPreviewCount++;
     self.mPreviewCount %= 10;
@@ -1053,11 +994,11 @@ didReceivePutZoomRequest:(DConnectRequestMessage *)request
         } else {
             NSString *errorMessage = @"";
             NSInteger errorCode = -1;
-            NSArray *resultArray = [dict objectForKey:@"result"];
-            NSArray *errorArray = [dict objectForKey:@"error"];
+            NSArray *resultArray = dict[@"result"];
+            NSArray *errorArray = dict[@"error"];
             if (errorArray && errorArray.count > 0) {
-                errorCode = (NSInteger) [errorArray objectAtIndex:0];
-                errorMessage = [errorArray objectAtIndex:1];
+                errorCode = (NSInteger) errorArray[0];
+                errorMessage = errorArray[1];
             }
             
             // レスポンス作成

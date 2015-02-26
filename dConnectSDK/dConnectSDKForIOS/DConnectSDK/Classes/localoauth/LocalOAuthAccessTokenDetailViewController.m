@@ -81,14 +81,14 @@
     
     if (_scopes != nil) {
         
-        LocalOAuthScope *s = [_scopes objectAtIndex: indexPath.row];
+        LocalOAuthScope *oauthScope = _scopes[indexPath.row];
         
         /* スコープ名 */
-        scope = [self displayScope: [s scope]];
+        scope = [self displayScope: [oauthScope scope]];
         
         /* 有効期限 */
         expirePeriod = [NSString stringWithFormat:DCLocalizedString(_bundle, @"token_expiration_date"),
-                        [s getStrExpirePeriod]];
+                        [oauthScope getStrExpirePeriod]];
     }
     
     /* セルに値を設定する */
