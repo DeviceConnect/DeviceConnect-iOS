@@ -388,7 +388,7 @@
     NSURL *uri = [NSURL URLWithString:
                     [NSString stringWithFormat:
                         @"http://localhost:4035/gotapi/phone/onconnect?serviceId=%@&sessionKey=",
-                            elf.serviceId]];
+                            self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
