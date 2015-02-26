@@ -25,6 +25,7 @@ NSString *const DPIRKitInfoPlistName = @"dConnectDeviceIRKit-Info";
 <
 // プロファイルデリゲート
 DConnectServiceDiscoveryProfileDelegate,
+DConnectServiceInformationProfileDataSource,
 DConnectSystemProfileDataSource,
 
 // デバイス検知デリゲート
@@ -54,12 +55,15 @@ DPIRKitManagerDetectionDelegate
     
     if (self) {
         DConnectServiceDiscoveryProfile *serviceDiscoveryProfile = [DConnectServiceDiscoveryProfile new];
+        DConnectServiceInformationProfile *serviceInformationProfile = [DConnectServiceInformationProfile new];
         DConnectSystemProfile *systemProfile = [DConnectSystemProfile new];
         DPIRKitRemoteControllerProfile *remoteControllerProfile
                             = [[DPIRKitRemoteControllerProfile alloc] initWithDevicePlugin:self];
         serviceDiscoveryProfile.delegate = self;
         systemProfile.dataSource = self;
+        serviceInformationProfile.dataSource = self;
         [self addProfile:serviceDiscoveryProfile];
+        [self addProfile:serviceInformationProfile];
         [self addProfile:systemProfile];
         [self addProfile:remoteControllerProfile];
         _devices = [NSMutableDictionary dictionary];
@@ -244,24 +248,6 @@ didReceiveDeleteOnServiceChangeRequest:(DConnectRequestMessage *)request
     return _version;
 }
 
-- (DConnectSystemProfileConnectState) profile:(DConnectSystemProfile *)profile
-                         wifiStateForServiceId:(NSString *)serviceId
-{
-    
-    DConnectSystemProfileConnectState state = DConnectSystemProfileConnectStateOff;
-    // TODO: 実際に接続を確認した方が良いかの検討
-    @synchronized (_devices) {
-        if (_devices.count > 0) {
-            DPIRKitDevice *device = [_devices objectForKey:serviceId];
-            if (device) {
-                state = DConnectSystemProfileConnectStateOn;
-            }
-        }
-    }
-    
-    return state;
-}
-
 - (UIViewController *) profile:(DConnectSystemProfile *)sender
          settingPageForRequest:(DConnectRequestMessage *)request
 {
@@ -279,6 +265,26 @@ didReceiveDeleteOnServiceChangeRequest:(DConnectRequestMessage *)request
     }
     UINavigationController *viewController = [storyBoard instantiateInitialViewController];
     return viewController;
+}
+
+#pragma mark DConnectSystemProfileDataSource
+
+- (DConnectServiceInformationProfileConnectState) profile:(DConnectServiceInformationProfile *)profile
+                        wifiStateForServiceId:(NSString *)serviceId
+{
+    
+    DConnectServiceInformationProfileConnectState state = DConnectServiceInformationProfileConnectStateOff;
+    // TODO: 実際に接続を確認した方が良いかの検討
+    @synchronized (_devices) {
+        if (_devices.count > 0) {
+            DPIRKitDevice *device = [_devices objectForKey:serviceId];
+            if (device) {
+                state = DConnectServiceInformationProfileConnectStateOn;
+            }
+        }
+    }
+    
+    return state;
 }
 
 #pragma mark - DPIRKitManagerDetectionDelegate

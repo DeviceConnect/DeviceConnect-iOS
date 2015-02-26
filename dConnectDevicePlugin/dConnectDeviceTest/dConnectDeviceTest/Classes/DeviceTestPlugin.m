@@ -26,6 +26,9 @@
 #import "TestUniqueTimeoutProfile.h"
 #import "TestUniqueEventProfile.h"
 
+@interface DeviceTestPlugin() <DConnectServiceInformationProfileDataSource>
+@end
+
 @implementation DeviceTestPlugin
 
 - (id) init {
@@ -37,6 +40,9 @@
         
         [[DConnectEventManager sharedManagerForClass:[self class]]
          setController:[DConnectMemoryCacheController new]];
+        
+        DConnectServiceInformationProfile *sip = [DConnectServiceInformationProfile new];
+        sip.dataSource = self;
 
         [self addProfile:[[TestBatteryProfile alloc] initWithDevicePlugin:self]];
         [self addProfile:[[TestConnectProfile alloc] initWithDevicePlugin:self]];
@@ -49,6 +55,7 @@
         [self addProfile:[[TestNotificationProfile alloc] initWithDevicePlugin:self]];
         [self addProfile:[[TestPhoneProfile alloc] initWithDevicePlugin:self]];
         [self addProfile:[[TestProximityProfile alloc] initWithDevicePlugin:self]];
+        [self addProfile:sip];
         [self addProfile:[[TestSettingsProfile alloc] initWithDevicePlugin:self]];
         [self addProfile:[TestSystemProfile new]];
         [self addProfile:[TestVibrationProfile new]];
@@ -73,6 +80,32 @@
         [_self sendEvent:event];
     });
 
+}
+
+#pragma mark DConnectServiceInformationProfileDataSource
+
+- (DConnectServiceInformationProfileConnectState) profile:(DConnectServiceInformationProfile *)profile
+                                    wifiStateForServiceId:(NSString *)serviceId
+{
+    return DConnectServiceInformationProfileConnectStateOff;
+}
+
+- (DConnectServiceInformationProfileConnectState) profile:(DConnectServiceInformationProfile *)profile
+                                    bluetoothStateForServiceId:(NSString *)serviceId
+{
+    return DConnectServiceInformationProfileConnectStateOff;
+}
+
+- (DConnectServiceInformationProfileConnectState) profile:(DConnectServiceInformationProfile *)profile
+                                    nfcStateForServiceId:(NSString *)serviceId
+{
+    return DConnectServiceInformationProfileConnectStateOff;
+}
+
+- (DConnectServiceInformationProfileConnectState) profile:(DConnectServiceInformationProfile *)profile
+                                    bleStateForServiceId:(NSString *)serviceId
+{
+    return DConnectServiceInformationProfileConnectStateOff;
 }
 
 @end

@@ -141,7 +141,6 @@
     }
     
     [response setResult:DConnectMessageResultTypeOk];
-    [DConnectSystemProfile setVersion:@"1.0" target:response];
     [DConnectSystemProfile setSupports:supports target:response];
     [DConnectSystemProfile setPlugins:plugins target:response];
     return YES;

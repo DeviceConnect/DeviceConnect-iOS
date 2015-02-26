@@ -60,7 +60,7 @@
         [self addProfile:[DPHostVibrationProfile new]];
         [self addProfile:[DPHostConnectProfile new]];
         [self addProfile:[DPHostCanvasProfile new]];
-
+        [self addProfile:[DConnectServiceInformationProfile new]];
     }
     return self;
 }

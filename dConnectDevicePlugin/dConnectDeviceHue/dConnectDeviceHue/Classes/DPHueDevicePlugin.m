@@ -43,6 +43,7 @@ NSString *const DPHueBundleName = @"dConnectDeviceHue_resources";
         [self addProfile:networkProfile];
         [self addProfile:systemProfile];
         [self addProfile:hueProfile];
+        [self addProfile:[DConnectServiceInformationProfile new]];
         __weak typeof(self) _self = self;
         dispatch_async(dispatch_get_main_queue(), ^{
             NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];

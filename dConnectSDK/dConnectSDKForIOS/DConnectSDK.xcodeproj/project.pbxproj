@@ -67,6 +67,7 @@
 		309CD50E198A3B45002A5684 /* DConnectEventHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 309CD50D198A3B45002A5684 /* DConnectEventHelper.m */; };
 		30E9A16419AC6A850013F545 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 30EF0AE419AB582800AE8FCB /* Localizable.strings */; };
 		6B2C77881A70885D00ED8F17 /* DConnectAvailabilityProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B2C77871A70885D00ED8F17 /* DConnectAvailabilityProfile.m */; };
+		6B9695A01A9DCBEC00D25A4B /* DConnectServiceInformationProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B96959F1A9DCBEC00D25A4B /* DConnectServiceInformationProfile.m */; };
 		971BC07B1924A8A000D21FE3 /* DConnectBatteryProfileTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 971BC07A1924A8A000D21FE3 /* DConnectBatteryProfileTest.m */; };
 		972107571920604E00529618 /* DConnectMultipartParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 972107561920604E00529618 /* DConnectMultipartParser.m */; };
 		97A999BB19545237006F8474 /* DConnectFilesProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 97A999BA19545237006F8474 /* DConnectFilesProfile.m */; };
@@ -240,6 +241,8 @@
 		30EF0AE719AB584400AE8FCB /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		30EF0AE819AB5E4300AE8FCB /* DConnectConst.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DConnectConst.h; sourceTree = "<group>"; };
 		6B2C77871A70885D00ED8F17 /* DConnectAvailabilityProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DConnectAvailabilityProfile.m; sourceTree = "<group>"; };
+		6B96959E1A9DCB5200D25A4B /* DConnectServiceInformationProfile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DConnectServiceInformationProfile.h; sourceTree = "<group>"; };
+		6B96959F1A9DCBEC00D25A4B /* DConnectServiceInformationProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DConnectServiceInformationProfile.m; sourceTree = "<group>"; };
 		971BC07A1924A8A000D21FE3 /* DConnectBatteryProfileTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DConnectBatteryProfileTest.m; sourceTree = "<group>"; };
 		972107551920604E00529618 /* DConnectMultipartParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DConnectMultipartParser.h; sourceTree = "<group>"; };
 		972107561920604E00529618 /* DConnectMultipartParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DConnectMultipartParser.m; sourceTree = "<group>"; };
@@ -3413,6 +3416,7 @@
 				BE6F93311A70DB0400BFA51F /* DConnectRequestMessage.h */,
 				BE6F93321A70DB0400BFA51F /* DConnectResponseMessage.h */,
 				BE6F93331A70DB0400BFA51F /* DConnectSDK.h */,
+				6B96959E1A9DCB5200D25A4B /* DConnectServiceInformationProfile.h */,
 				BE6F93341A70DB0400BFA51F /* DConnectSettings.h */,
 				BE6F93351A70DB0400BFA51F /* DConnectSettingsProfile.h */,
 				BE6F93361A70DB0400BFA51F /* DConnectSystemProfile.h */,
@@ -3599,6 +3603,7 @@
 				309B0B801944B454001A39B6 /* DConnectProximityProfile.m */,
 				C29D3325191B2679001015CC /* DConnectProfile.m */,
 				309B0B8C1944BCE5001A39B6 /* DConnectSettingsProfile.m */,
+				6B96959F1A9DCBEC00D25A4B /* DConnectServiceInformationProfile.m */,
 				C29D3327191B2679001015CC /* DConnectSystemProfile.m */,
 				309B0B8D1944BCE5001A39B6 /* DConnectVibrationProfile.m */,
 			);
@@ -4049,6 +4054,7 @@
 				D646C7B919A5BDC500C2D91B /* LocalOAuthUtils.m in Sources */,
 				D699E71F19C070C3002F334C /* LocalOAuthScopeUtil.m in Sources */,
 				D62622DA199232BC004F01E6 /* LocalOAuthGrantType.m in Sources */,
+				6B9695A01A9DCBEC00D25A4B /* DConnectServiceInformationProfile.m in Sources */,
 				D626229E19923298004F01E6 /* LocalOAuthAccessTokenScope.m in Sources */,
 				97ECA16E193887E2001662D1 /* DConnectURLProtocol.m in Sources */,
 				C2F89D631920BB93005F1C5F /* DConnectConnectProfile.m in Sources */,
