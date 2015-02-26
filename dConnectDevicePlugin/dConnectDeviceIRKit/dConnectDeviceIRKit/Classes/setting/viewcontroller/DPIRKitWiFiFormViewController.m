@@ -1,6 +1,6 @@
 //
 //  DPIRKitWiFiFormViewController.m
-//  DConnectSDK
+//  dConnectDeviceIRKit
 //
 //  Copyright (c) 2014 NTT DOCOMO, INC.
 //  Released under the MIT license
@@ -30,26 +30,23 @@
     NSString *defaultSSID = (currentSSID != nil) ? currentSSID : @"";
     
     // 保存してある値を設定
-    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
-    [ud registerDefaults:@{
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults registerDefaults:@{
                            DPIRKitUDKeySecType: @(DPIRKitWiFiSecurityTypeWPA2),
                            DPIRKitUDKeySSID: defaultSSID
                            }
      ];
     
-    _ssidField.text = [ud stringForKey:DPIRKitUDKeySSID];
-    _passwordField.text = [ud stringForKey:DPIRKitUDKeyPassword];
-    switch ([ud integerForKey:DPIRKitUDKeySecType]) {
-        case DPIRKitWiFiSecurityTypeNone:
-            _secTypeFiled.selectedSegmentIndex = 0;
-            break;
-        case DPIRKitWiFiSecurityTypeWEP:
-            _secTypeFiled.selectedSegmentIndex = 1;
-            break;
-        default:
-            _secTypeFiled.selectedSegmentIndex = 2;
-            break;
+    _ssidField.text = [userDefaults stringForKey:DPIRKitUDKeySSID];
+    _passwordField.text = [userDefaults stringForKey:DPIRKitUDKeyPassword];
+    if ([userDefaults integerForKey:DPIRKitUDKeySecType] == DPIRKitWiFiSecurityTypeNone) {
+        _secTypeFiled.selectedSegmentIndex = 0;
+    } else if ([userDefaults integerForKey:DPIRKitUDKeySecType] == DPIRKitWiFiSecurityTypeWEP) {
+        _secTypeFiled.selectedSegmentIndex = 1;
+    } else {
+        _secTypeFiled.selectedSegmentIndex = 2;
     }
+
 }
 
 - (void) viewWillDisappear:(BOOL)animated
@@ -71,11 +68,11 @@
             break;
     }
 
-    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
-    [ud setObject:ssid forKey:DPIRKitUDKeySSID];
-    [ud setInteger:type forKey:DPIRKitUDKeySecType];
-    [ud setObject:password forKey:DPIRKitUDKeyPassword];
-    [ud synchronize];
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults setObject:ssid forKey:DPIRKitUDKeySSID];
+    [userDefaults setInteger:type forKey:DPIRKitUDKeySecType];
+    [userDefaults setObject:password forKey:DPIRKitUDKeyPassword];
+    [userDefaults synchronize];
 }
 
 

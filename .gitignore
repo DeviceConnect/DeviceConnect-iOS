@@ -4,6 +4,8 @@
 # Built application files
 *.apk
 *.ap_
+compile_commands.json
+
 
 # Files for the Dalvik VM
 *.dex

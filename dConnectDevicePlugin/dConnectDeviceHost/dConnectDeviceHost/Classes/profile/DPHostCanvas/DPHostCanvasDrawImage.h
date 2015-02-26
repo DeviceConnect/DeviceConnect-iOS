@@ -19,7 +19,7 @@
  @param y y
  @param mode mode
  */
-- (id)initWithParameter: (NSData *)data x: (double)x y: (double)y mode: (NSString *)mode;
+- (id)initWithParameter: (NSData *)data imageX: (double)imageX imageY: (double)imageY mode: (NSString *)mode;
 
 
 @end

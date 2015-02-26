@@ -121,13 +121,13 @@ int header_value(multipart_parser* p, const char *at, size_t length) {
             // キーと値のペアになっている。
             if (keyVal.count == 2) {
                 NSString *key =
-                [[keyVal objectAtIndex:0] stringByTrimmingCharactersInSet:
+                [keyVal[0] stringByTrimmingCharactersInSet:
                  [NSCharacterSet whitespaceCharacterSet]];
                 NSMutableCharacterSet *charSet = [NSMutableCharacterSet whitespaceCharacterSet];
                 [charSet formUnionWithCharacterSet:
                  [NSMutableCharacterSet characterSetWithCharactersInString:@"\"'"]];
                 NSString *val =
-                [[keyVal objectAtIndex:1] stringByTrimmingCharactersInSet:charSet];
+                [keyVal[1] stringByTrimmingCharactersInSet:charSet];
                 if ([key isEqualToString:@"name"]) {
                     userData.name = val;
                 } else if ([key isEqualToString:@"filename"]) {
@@ -189,13 +189,7 @@ int part_data_end(multipart_parser* p)
     return 0;
 }
 
-//int body_end(multipart_parser* p) {
-//    // ユーザデータを取得
-//    UserData *userData =
-//    (__bridge UserData *)multipart_parser_get_data(p);
-//
-//    return 0;
-//}
+
 
 @end
 
@@ -214,7 +208,7 @@ int part_data_end(multipart_parser* p)
     NSMutableString *boundaryRegex = bcharsRegex.mutableCopy;
     [boundaryRegex appendString:@"{0,69}"];
     [boundaryRegex appendString:bcharsnospaceRegex];
-    // パラメータboundaryの値を正規表現でキャプチャ：ダブルクオートされていようがいまいが。
+    // パラメータboundaryの値を正規表現でキャプチャ
     NSMutableString *boundaryParamRegex = @"boundary=((?:\"".mutableCopy;
     [boundaryParamRegex appendString:boundaryRegex];
     [boundaryParamRegex appendString:@"\")|(?:"];
@@ -230,9 +224,10 @@ int part_data_end(multipart_parser* p)
                       options:NSMatchingReportProgress
                         range:NSMakeRange(0, contentType.length)];
     
-    // 正規表現全体一致+boundaryパラメータ値キャプチャ用括弧の一致、計2つの一致があるはず
+
     if (result.numberOfRanges < 2) {
-        @throw @"valid boundary parameter was not found in Content-Type \"multipart/*\"!";
+        @throw @"valid boundary parameter was not "
+                "found in Content-Type \"multipart/*\"!";
     }
     
     return [contentType substringWithRange:[result rangeAtIndex:1]];

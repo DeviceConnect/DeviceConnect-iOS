@@ -1,6 +1,6 @@
 //
 //  TestUniqueEventProfile.m
-//  DConnectSDK
+//  dConnectDeviceTest
 //
 //  Copyright (c) 2014 NTT DOCOMO, INC.
 //  Released under the MIT license
@@ -40,7 +40,7 @@ NSString *const UniqueEventProfileProfileAttributeUnique = @"unique";
     
     NSNumber *count = [request objectForKey:@"count"];
     if (!count) {
-        count = [NSNumber numberWithInt:1];
+        count = @1;
     }
     [NSThread sleepForTimeInterval:1.0];
     for (int i = 0; i < [count intValue]; i++) {

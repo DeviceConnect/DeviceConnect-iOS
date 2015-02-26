@@ -28,7 +28,11 @@ NSString *const DConnectEventSessionDaoClmCId = @"c_id";
 
 + (void) createWithDatabase:(DConnectSQLiteDatabase *)database {
     
-    NSString *sql = DCEForm(@"CREATE TABLE %@ (%@ INTEGER PRIMARY KEY AUTOINCREMENT, %@ INTEGER NOT NULL, %@ INTEGER NOT NULL, %@ INTEGER NOT NULL, %@ INTEGER NOT NULL, UNIQUE(%@, %@));",
+    NSString *sql = DCEForm(@"CREATE TABLE %@ "
+                            "(%@ INTEGER PRIMARY KEY AUTOINCREMENT, "
+                            "%@ INTEGER NOT NULL, %@ INTEGER NOT NULL, "
+                            "%@ INTEGER NOT NULL, %@ INTEGER NOT NULL, "
+                            "UNIQUE(%@, %@));",
                             DConnectEventSessionDaoTableName,
                             DConnectEventDaoClmId,
                             DConnectEventSessionDaoClmEDId,
@@ -83,21 +87,21 @@ NSString *const DConnectEventSessionDaoClmCId = @"c_id";
                         onDatabase:(DConnectSQLiteDatabase *)database
 {
     
-    DConnectEventSession *es = [DConnectEventSessionDao eventSessionForEvent:event onDatabase:database];
-    if (!es) {
+    DConnectEventSession *eventSession = [DConnectEventSessionDao eventSessionForEvent:event onDatabase:database];
+    if (!eventSession) {
         return DConnectEventErrorNotFound;
     }
     
     int count = [database deleteFromTable:DConnectEventSessionDaoTableName
                                     where:DCEForm(@"%@=?", DConnectEventDaoClmId)
-                               bindParams:@[[NSNumber numberWithLongLong:es.rowId]]];
+                               bindParams:@[[NSNumber numberWithLongLong:eventSession.rowId]]];
     if (count == 0) {
         return DConnectEventErrorNotFound;
     } else if (count != 1) {
         return DConnectEventErrorFailed;
     }
     
-    NSNumber *edId = [NSNumber numberWithLongLong:es.edId];
+    NSNumber *edId = [NSNumber numberWithLongLong:eventSession.edId];
     DConnectSQLiteCursor *cursor = [database selectFromTable:DConnectEventSessionDaoTableName
                                                      columns:@[DConnectEventDaoClmId]
                                                        where:DCEForm(@"%@=?", DConnectEventSessionDaoClmEDId)
@@ -109,7 +113,7 @@ NSString *const DConnectEventSessionDaoClmCId = @"c_id";
     
     if (cursor.count == 0) {
         // デバイスに紐づくセッション情報がなくなったので削除
-        count = [DConnectEventDeviceDao deleteWithId:es.edId onDatabase:database];
+        count = [DConnectEventDeviceDao deleteWithId:eventSession.edId onDatabase:database];
         if (count != 1) {
             [cursor close];
             return DConnectEventErrorFailed;
@@ -152,7 +156,13 @@ NSString *const DConnectEventSessionDaoClmCId = @"c_id";
 {
     DConnectEventSession *eventSession = nil;
     NSString *sql
-    = DCEForm(@"SELECT es.%@, es.%@, es.%@, es.%@, es.%@ FROM %@ AS p INNER JOIN %@ AS i ON p.%@ = i.%@ INNER JOIN %@ AS a ON i.%@ = a.%@ INNER JOIN %@ AS ed ON a.%@ = ed.%@ INNER JOIN %@ AS d ON ed.%@ = d.%@ INNER JOIN %@ AS es ON es.%@ = ed.%@ INNER JOIN %@ AS c ON es.%@ = c.%@ WHERE p.%@ = ? AND i.%@ = ? AND a.%@ = ? AND d.%@ = ? AND c.%@ = ?;",
+    = DCEForm(@"SELECT es.%@, es.%@, "
+              "es.%@, es.%@, es.%@ FROM %@ AS p INNER JOIN "
+              "%@ AS i ON p.%@ = i.%@ INNER JOIN %@ AS a ON "
+              "i.%@ = a.%@ INNER JOIN %@ AS ed ON a.%@ = ed.%@ INNER JOIN "
+              "%@ AS d ON ed.%@ = d.%@ INNER JOIN %@ AS es ON "
+              "es.%@ = ed.%@ INNER JOIN %@ AS c ON es.%@ = c.%@ WHERE "
+              "p.%@ = ? AND i.%@ = ? AND a.%@ = ? AND d.%@ = ? AND c.%@ = ?;",
               DConnectEventDaoClmId,
               DConnectEventSessionDaoClmEDId,
               DConnectEventSessionDaoClmCId,

@@ -30,14 +30,17 @@ NSString *const LOCALOAUTH_AUTHORIZATION_CODE =@"authorization_code";
 /** 例外メッセージ(初期化されていない) */
 NSString *const EXCEPTON_NOT_BEEN_INITIALIZED = @"Not been initialized.";
 
-
-
-
-
-/** LocalOAuth2Mainインスタンスを格納する(key:クラス名(NSString*), value:インスタンス(LocalOAuth2Main*)) */
+/** 
+ LocalOAuth2Mainインスタンスを格納する(key:クラス名(NSString*),
+ value:インスタンス(LocalOAuth2Main*))
+ */
 static NSMutableDictionary *_instanceArray = nil;
 
-/** 承認確認画面リクエストキュー(LocalOAuthConfirmAuthRequest*型の配列、アクセスする際はsynchronizedが必要). */
+/** 
+ 承認確認画面リクエストキュー
+ (LocalOAuthConfirmAuthRequest*型の配列、
+ アクセスする際はsynchronizedが必要).
+ */
 static NSMutableArray *_requestQueue = nil;
 
 /** 承認確認画面リクエストキュー用Lockオブジェクト. */
@@ -72,9 +75,11 @@ static NSObject *_lockForRequstQueue = nil;
  アクセストークン発行処理.
  
  @param[in] params 承認確認画面のパラメータ
- @return アクセストークンデータ(アクセストークン, 有効期間(アクセストークン発行時間から使用可能な時間。単位:ミリ秒) を返す。<br>
+ @return アクセストークンデータ(アクセストークン,
+        　有効期間(アクセストークン発行時間から使用可能な時間。
+        　単位:ミリ秒) を返す。<br>
  */
-- (LocalOAuthAccessTokenData *)publishAccessTokenWithParams:  (LocalOAuthConfirmAuthParams *)params;
+- (LocalOAuthAccessTokenData *)publishAccessTokenWithParams:(LocalOAuthConfirmAuthParams *)params;
 
 /*!
  トークン生成
@@ -85,11 +90,11 @@ static NSObject *_lockForRequstQueue = nil;
  @param[in] applicationName
  @return トークン
  */
-- (LocalOAuthToken *)generateToken: (LocalOAuthDbCacheController *)db
-                            client: (LocalOAuthClient *)client
-                          username: (NSString *)username
-                            scopes: (NSArray *) scopes
-                   applicationName: (NSString *)applicationName;
+- (LocalOAuthToken *)generateToken:(LocalOAuthDbCacheController *)dbCache
+                            client:(LocalOAuthClient *)client
+                          username:(NSString *)username
+                            scopes:(NSArray *) scopes
+                   applicationName:(NSString *)applicationName;
 
 /*!
  Scope[]からAccessTokenScope[]に変換して返す.
@@ -105,8 +110,8 @@ static NSObject *_lockForRequstQueue = nil;
  @param[in] confirmAuthParams パラメータ
  @return クライアントデータ
  */
-- (LocalOAuthClient *) findClientByParams: (LocalOAuthDbCacheController *)db
-                        confirmAuthParams: (LocalOAuthConfirmAuthParams *)confirmAuthParams;
+- (LocalOAuthClient *) findClientByParams:(LocalOAuthDbCacheController *)dbCache
+                        confirmAuthParams:(LocalOAuthConfirmAuthParams *)confirmAuthParams;
 
 /*!
  承認確認画面リクエスト数を取得.
@@ -127,11 +132,20 @@ static NSObject *_lockForRequstQueue = nil;
 - (LocalOAuthConfirmAuthRequest *) pickupRequest;
 
 /*!
- threadIdが一致する承認確認画面リクエストをキューから取得する。(キューから削除することも可能).
- @param isDeleteRequest[in] true: スレッドIDが一致したリクエストを返すと同時にキューから削除する。 / false: 削除しない。
- @return not null: 取り出されたリクエスト / null: 該当するデータなし(存在しないthreadIdが渡された、またはキューにデータ無し)
+ threadIdが一致する承認確認画面リクエストをキューから取得する。
+ (キューから削除することも可能).
+ @param isDeleteRequest[in] 
+    true: スレッドIDが一致したリクエストを返す
+          と同時にキューから削除する。
+   false: 削除しない。
+ @return 
+    not null: 取り出されたリクエスト
+        null: 該当するデータなし
+            (存在しないthreadIdが渡された、
+                    またはキューにデータ無し)
  */
-- (LocalOAuthConfirmAuthRequest *) dequeueRequest: (long long)threadId isDeleteRequest: (BOOL)isDeleteRequest;
+- (LocalOAuthConfirmAuthRequest *) dequeueRequest:(long long)threadId
+                                  isDeleteRequest: (BOOL)isDeleteRequest;
 
 /*!
  アクセストークン発行確認画面を表示.
@@ -176,18 +190,16 @@ static NSObject *_lockForRequstQueue = nil;
     
 
     
-    LocalOAuth2Main *instance = [_instanceArray objectForKey: key];
+    LocalOAuth2Main *instance = _instanceArray[key];
     if (instance != nil) {
         /* classに対応するインスタンスが存在すればそれを返す */
         return instance;
         
-    } else {
-        /* classに対応するインスタンスが無ければインスタンス作成して追加する */
-        LocalOAuth2Main *instance = [[LocalOAuth2Main alloc]initWithKey: key];
-        [_instanceArray setObject:instance forKey:key];
-        
-        return instance;
     }
+    /* classに対応するインスタンスが無ければインスタンス作成して追加する */
+    instance = [[LocalOAuth2Main alloc] initWithKey: key];
+    _instanceArray[key] = instance;
+    return instance;
 }
 
 
@@ -251,8 +263,8 @@ static NSObject *_lockForRequstQueue = nil;
     /* クライアント追加 */
     LocalOAuthClientData *clientData = nil;
     @synchronized(self) {
-        LocalOAuthDbCacheController *db = [[LocalOAuthDbCacheController alloc]initWithKey: _key];
-        clientData = [db createClient: packageInfo];
+        LocalOAuthDbCacheController *dbCache = [[LocalOAuthDbCacheController alloc]initWithKey: _key];
+        clientData = [dbCache createClient: packageInfo];
     }
     return clientData;
 }
@@ -289,8 +301,8 @@ static NSObject *_lockForRequstQueue = nil;
     /* LocalOAuthが保持しているクライアントシークレットを取得 */
     LocalOAuthClient *client = nil;
     @synchronized(self) {
-        LocalOAuthDbCacheController *db = [[LocalOAuthDbCacheController alloc]initWithKey: _key];
-        client = [db findClientByClientId: clientId];
+        LocalOAuthDbCacheController *dbCache = [[LocalOAuthDbCacheController alloc]initWithKey: _key];
+        client = [dbCache findClientByClientId: clientId];
     }
     if (client != nil) {
         NSString *clientSecret = [client clientSecret];
@@ -316,7 +328,7 @@ static NSObject *_lockForRequstQueue = nil;
                 if (i > 0) {
                     [strScopes appendString: @","];
                 }
-                [strScopes appendString: [scopes objectAtIndex: i]];
+                [strScopes appendString: scopes[i]];
             }
             DCLogD(@"checkSignature() - signature not equal.");
             DCLogD(@" - signature: %@", signature);
@@ -395,24 +407,29 @@ static NSObject *_lockForRequstQueue = nil;
     }
     
     /* トークンの状態取得 */
-    BOOL isExpiredAccessToken = NO;  /* YES: 有効期限切れ / NO: 有効期限内 */
-    BOOL isIncludeScope = NO;        /* YES: 要求スコープが全て含まれている / NO: 一部または全部含まれていない */
+    /* YES: 有効期限切れ / NO: 有効期限内 */
+    BOOL isExpiredAccessToken = NO;
+    /* YES: 要求スコープが全て含まれている / NO: 一部または全部含まれていない */
+    BOOL isIncludeScope = NO;
     
     LocalOAuthToken *token = nil;
     @synchronized(self) {
-        LocalOAuthDbCacheController *db = [[LocalOAuthDbCacheController alloc]initWithKey: _key];
+        LocalOAuthDbCacheController *dbCache = [[LocalOAuthDbCacheController alloc]initWithKey: _key];
         
         /* クライアントをDBから読み込み */
-        LocalOAuthClient *client = [self findClientByParams: db
+        LocalOAuthClient *client = [self findClientByParams: dbCache
                                  confirmAuthParams: confirmAuthParams];
         
         /* トークンをDBから読み込み */
-        token = [db findTokenByClientUsername: client
+        token = [dbCache findTokenByClientUsername: client
                                                       username: LOCALOAUTH_USERNAME];
     }
     
     if (token != nil) {
-        /* アクセストークンが存在するか確認(全スコープの有効期限が切れていたら有効期限切れとみなす) */
+        /*
+         アクセストークンが存在するか確認
+         (全スコープの有効期限が切れていたら有効期限切れとみなす)
+         */
         LocalOAuthSQLiteToken *sqliteToken = token.delegate;
         if ([sqliteToken isExpired]) {
             isExpiredAccessToken = YES;
@@ -435,7 +452,11 @@ static NSObject *_lockForRequstQueue = nil;
         NSMutableArray *displayScopes = [NSMutableArray array];
         for (NSString *scope in scopes) {
             
-            /* 表示用スコープ名取得(標準名称またはデバイスプラグインが提供する名称、取れなければそのまま返す) */
+            /*
+             表示用スコープ名取得
+             (標準名称またはデバイスプラグインが提供する名称、
+             取れなければそのまま返す)
+             */
             NSString *displayScope = [LocalOAuthScopeUtil displayScope: scope
                                                           devicePlugin: devicePlugin];
             
@@ -453,11 +474,17 @@ static NSObject *_lockForRequstQueue = nil;
                                                             currentTime: currentTime
                                                           displayScopes: displayScopes];
         
-        /* キューが空なら、リクエストをキューに追加した後すぐにViewControllerを起動する */
+        /* 
+         キューが空なら、リクエストをキューに追加した後
+         すぐにViewControllerを起動する
+         */
         if ([self countRequest] <= 0) {
             [self enqueueRequest: request];
             [self startConfirmAuthViewController: request];
-        /* 空で無ければ、リクエストをキューに追加して先の処理が完了した後に処理する */
+        /*
+         空で無ければ、リクエストをキューに追加して
+         先の処理が完了した後に処理する
+         */
         } else {
             [self enqueueRequest: request];
         }
@@ -476,8 +503,9 @@ static NSObject *_lockForRequstQueue = nil;
     /* クライアント追加 */
     LocalOAuthAccessTokenData *acccessTokenData = nil;
     @synchronized(self) {
-        LocalOAuthDbCacheController *db = [[LocalOAuthDbCacheController alloc]initWithKey: _key];
-        acccessTokenData = [db findAccessToken: packageInfo];
+        LocalOAuthDbCacheController *dbCache
+                                = [[LocalOAuthDbCacheController alloc]initWithKey: _key];
+        acccessTokenData = [dbCache findAccessToken: packageInfo];
     }
     
     return acccessTokenData;
@@ -493,7 +521,7 @@ static NSObject *_lockForRequstQueue = nil;
     }
     
     // 指定されたスコープの場合には無視する
-    if (specialScopes && [specialScopes containsObject:scope]) {
+    if ([specialScopes containsObject:scope]) {
         
         LocalOAuthCheckAccessTokenResult *result =
         [LocalOAuthCheckAccessTokenResult checkAccessTokenResultWithFlags: YES
@@ -503,88 +531,99 @@ static NSObject *_lockForRequstQueue = nil;
         return result;
     }
     
-    BOOL isExistClientId = NO; /*
+    BOOL existClientId = NO; /*
                                 * YES: アクセストークンを発行したクライアントIDあり /
                                 * NO: アクセストークンを発行したクライアントIDなし.
                                 */
-    BOOL isExistAccessToken = NO; /*
+    BOOL existAccessToken = NO; /*
                                    * YES: アクセストークンあり / NO:
                                    * アクセストークンなし
                                    */
-    BOOL isExistScope = NO; /* YES: スコープあり / NO: スコープなし */
-    BOOL isNotExpired = NO; /* YES: 有効期限内 / NO: 有効期限切れ */
+    BOOL existScope = NO; /* YES: スコープあり / NO: スコープなし */
+    BOOL notExpired = NO; /* YES: 有効期限内 / NO: 有効期限切れ */
     @synchronized(self) {
-        LocalOAuthDbCacheController *db = [[LocalOAuthDbCacheController alloc]initWithKey: _key];
+        LocalOAuthDbCacheController *dbCache
+                    = [[LocalOAuthDbCacheController alloc]
+                                        initWithKey: _key];
         
         /* アクセストークンを元にトークンを検索する */
-        LocalOAuthToken *t = [db findTokenByAccessToken: accessToken];
-        LocalOAuthSQLiteToken *token = (LocalOAuthSQLiteToken *)t.delegate;
+        LocalOAuthToken *oauthToken = [dbCache findTokenByAccessToken: accessToken];
+        LocalOAuthSQLiteToken *token = (LocalOAuthSQLiteToken *)oauthToken.delegate;
         if (token != nil) {
-            isExistAccessToken = YES; /* アクセストークンあり */
+            existAccessToken = YES; /* アクセストークンあり */
 
             NSArray *scopes = [token scope]; /* Scope[] */
             NSUInteger scopeCount = [scopes count];
             for (NSUInteger i = 0; i < scopeCount; i++) {
-                LocalOAuthScope *s = [scopes objectAtIndex: i];
+                LocalOAuthScope *oauthScope = scopes[i];
                 
                 // リリースビルド時には無効になる
 #ifdef DEBUG
                 /* token.scopeに"*"が含まれていたら、どんなスコープにもアクセスできる */
-                if ([[s scope] isEqualToString: @"*"]) {
-                    isExistScope = YES; /* スコープあり */
-                    isNotExpired = YES; /* 有効期限 */
+                if ([[oauthScope scope] isEqualToString: @"*"]) {
+                    existScope = YES; /* スコープあり */
+                    notExpired = YES; /* 有効期限 */
                     break;
                 }
 #endif
-                if ([[s scope] isEqualToString: scope]) {
-                    isExistScope = YES; /* スコープあり */
-                    if ([s expirePeriod] == 0) {
-                        /* 有効期限0の場合は、トークン発行から1分以内の初回アクセスなら有効期限内とする */
-                        long long t = [LocalOAuthUtils getCurrentTimeInMillis] - [token registrationDate];
-                        if (0 <= t && t <= (LocalOAuth2Settings_ACCESS_TOKEN_GRACE_TIME * MSEC)
+                if ([[oauthScope scope] isEqualToString: scope]) {
+                    existScope = YES; /* スコープあり */
+                    if ([oauthScope expirePeriod] == 0) {
+                        /* 
+                         有効期限0の場合は、トークン発行から1分以内の
+                         初回アクセスなら有効期限内とする
+                         */
+                        long long expiredTime
+                                = [LocalOAuthUtils getCurrentTimeInMillis]
+                                            - [token registrationDate];
+                        if (0 <= expiredTime && expiredTime
+                                    <= (LocalOAuth2Settings_ACCESS_TOKEN_GRACE_TIME * MSEC)
                             && [token isFirstAccess]) {
-                            isNotExpired = YES;
+                            notExpired = YES;
                         }
-                    } else if ([s expirePeriod] > 0) {
-                        /* 有効期限1以上の場合は、トークン発行からの経過時間が有効期限内かを判定して返す */
-                        isNotExpired = ![s isExpired];
+                    } else if ([oauthScope expirePeriod] > 0) {
+                        /* 
+                         有効期限1以上の場合は、
+                         トークン発行からの経過時間が有効期限内かを判定して返す
+                         */
+                        notExpired = ![oauthScope isExpired];
                     } else {
                         /* 有効期限にマイナス値が設定されていたら、有効期限切れとみなす */
-                        isNotExpired = NO;
+                        notExpired = NO;
                     }
                     break;
                 }
             }
 
             /* specialScopesに登録されていればスコープチェックOKとする */
-            if (!isExistScope && specialScopes != nil) {
+            if (!existScope && specialScopes != nil) {
                 NSUInteger specialScopeCount = [specialScopes count];
                 for (NSUInteger i = 0; i < specialScopeCount; i++) {
-                    NSString *s = [specialScopes objectAtIndex: i];
+                    NSString *specialScope = specialScopes[i];
                     
-                    if ([scope isEqualToString:s]) {
-                        isExistScope = YES; /* スコープあり */
-                        isNotExpired = YES; /* 有効期限 */
+                    if ([scope isEqualToString:specialScope]) {
+                        existScope = YES; /* スコープあり */
+                        notExpired = YES; /* 有効期限 */
                         break;
                     }
                 }
             }
 
             /* このトークンを発行したクライアントIDが存在するかチェック */
-            if ([db findClientByClientId: [token clientId]] != nil) {
-                isExistClientId = YES;
+            if ([dbCache findClientByClientId: [token clientId]] != nil) {
+                existClientId = YES;
             }
             
             /* トークンのアクセス時間更新 */
-            [db updateTokenAccessTime: token];
+            [dbCache updateTokenAccessTime: token];
         }
     }
     
     LocalOAuthCheckAccessTokenResult *result =
-    [LocalOAuthCheckAccessTokenResult checkAccessTokenResultWithFlags: isExistClientId
-                                 isExistAccessToken: isExistAccessToken
-                                       isExistScope: isExistScope
-                                       isNotExpired: isNotExpired];
+    [LocalOAuthCheckAccessTokenResult checkAccessTokenResultWithFlags: existClientId
+                                 isExistAccessToken: existAccessToken
+                                       isExistScope: existScope
+                                       isNotExpired: notExpired];
     if (![result checkResult]) {
         DCLogD(@"checkAccessToken() - error.");
         DCLogD(@" - isExistClientId: %d", isExistClientId);
@@ -637,8 +676,9 @@ static NSObject *_lockForRequstQueue = nil;
     /* クライアントIDを元にをクライアントデータを検索する */
     LocalOAuthClient *client = nil;
     @synchronized(self) {
-        LocalOAuthDbCacheController *db = [[LocalOAuthDbCacheController alloc]initWithKey: _key];
-        client = [db findClientByClientId: clientId];
+        LocalOAuthDbCacheController *dbCache
+                            = [[LocalOAuthDbCacheController alloc]initWithKey: _key];
+        client = [dbCache findClientByClientId: clientId];
     }
     NSString *clientSecret = nil;
     if (client != nil) {
@@ -663,8 +703,9 @@ static NSObject *_lockForRequstQueue = nil;
     }
     
     @synchronized(self) {
-        LocalOAuthDbCacheController *db = [[LocalOAuthDbCacheController alloc]initWithKey: _key];
-        [db destroyAccessToken: (LocalOAuthPackageInfo *)packageInfo];
+        LocalOAuthDbCacheController *dbCache
+                                = [[LocalOAuthDbCacheController alloc]initWithKey: _key];
+        [dbCache destroyAccessToken: (LocalOAuthPackageInfo *)packageInfo];
     }
 }
 
@@ -679,16 +720,18 @@ static NSObject *_lockForRequstQueue = nil;
     LocalOAuthClientPackageInfo *clientPackageInfo = nil;
 
     @synchronized(self) {
-        LocalOAuthDbCacheController *db = [[LocalOAuthDbCacheController alloc]initWithKey: _key];
-        LocalOAuthToken *t = [db findTokenByAccessToken: accessToken];
-        LocalOAuthSQLiteToken *token = (LocalOAuthSQLiteToken *)t.delegate ;
+        LocalOAuthDbCacheController *dbCache
+                    = [[LocalOAuthDbCacheController alloc]initWithKey: _key];
+        LocalOAuthToken *token = [dbCache findTokenByAccessToken: accessToken];
+        LocalOAuthSQLiteToken *sqliteToken = (LocalOAuthSQLiteToken *)token.delegate ;
         if (token != nil) {
-            NSString *clientId = [token clientId];
+            NSString *clientId = [sqliteToken clientId];
             if (clientId != nil) {
-                LocalOAuthClient *client = [db findClientByClientId: clientId];
+                LocalOAuthClient *client = [dbCache findClientByClientId: clientId];
                 if (client != nil) {
-                    clientPackageInfo = [[LocalOAuthClientPackageInfo alloc] initWithPackageInfo: [client packageInfo]
-                                                                                        clientId: clientId];
+                    clientPackageInfo = [[LocalOAuthClientPackageInfo alloc]
+                                                initWithPackageInfo:[client packageInfo]
+                                                           clientId: clientId];
                 }
             }
         }
@@ -712,17 +755,19 @@ static NSObject *_lockForRequstQueue = nil;
     
     dispatch_async(dispatch_get_main_queue(), ^{
         NSBundle *bundle = DCBundle();
-        UIStoryboard *sb;
+        UIStoryboard *storyBoard;
         
         if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
-            sb = [UIStoryboard storyboardWithName:[NSString stringWithFormat:@"%@-iPhone", DConnectStoryboardName]
+            storyBoard = [UIStoryboard storyboardWithName:[NSString stringWithFormat:@"%@-iPhone",
+                                                           DConnectStoryboardName]
                                            bundle:bundle];
         } else{
-            sb = [UIStoryboard storyboardWithName:[NSString stringWithFormat:@"%@-iPad", DConnectStoryboardName]
+            storyBoard = [UIStoryboard storyboardWithName:[NSString stringWithFormat:@"%@-iPad",
+                                                           DConnectStoryboardName]
                                            bundle:bundle];
         }
         
-        UINavigationController *top = [sb instantiateViewControllerWithIdentifier:@"TokenList"];
+        UINavigationController *top = [storyBoard instantiateViewControllerWithIdentifier:@"TokenList"];
         LocalOAuthAccessTokenListViewController *accessTokenListViewController
         = (LocalOAuthAccessTokenListViewController *) top.viewControllers[0];
         
@@ -740,8 +785,9 @@ static NSObject *_lockForRequstQueue = nil;
     
     /* LocalOAuthが保持しているクライアントシークレットを取得 */
     @synchronized(self) {
-        LocalOAuthDbCacheController *db = [[LocalOAuthDbCacheController alloc]initWithKey: _key];
-        tokens = [db findTokensByUsername: LOCALOAUTH_USERNAME];
+        LocalOAuthDbCacheController *dbCache
+                        = [[LocalOAuthDbCacheController alloc]initWithKey: _key];
+        tokens = [dbCache findTokensByUsername: LOCALOAUTH_USERNAME];
     }
     
     return tokens;
@@ -750,16 +796,18 @@ static NSObject *_lockForRequstQueue = nil;
 - (void) destroyAccessTokenByTokenId: (long long)tokenId {
     
     @synchronized(self) {
-        LocalOAuthDbCacheController *db = [[LocalOAuthDbCacheController alloc]initWithKey: _key];
-        [db revokeToken: tokenId];
+        LocalOAuthDbCacheController *dbCache
+                = [[LocalOAuthDbCacheController alloc]initWithKey: _key];
+        [dbCache revokeToken: tokenId];
     }
 }
 
 - (void) destroyAllAccessTokens {
     
     @synchronized(self) {
-        LocalOAuthDbCacheController *db = [[LocalOAuthDbCacheController alloc]initWithKey: _key];
-        [db revokeAllTokens: LOCALOAUTH_USERNAME];
+        LocalOAuthDbCacheController *dbCache
+                    = [[LocalOAuthDbCacheController alloc]initWithKey: _key];
+        [dbCache revokeAllTokens: LOCALOAUTH_USERNAME];
     }
 }
 
@@ -767,8 +815,8 @@ static NSObject *_lockForRequstQueue = nil;
     
     LocalOAuthClient *client = nil;
     @synchronized(self) {
-        LocalOAuthDbCacheController *db = [[LocalOAuthDbCacheController alloc]initWithKey: _key];
-        client = [db findClientByClientId: clientId];
+        LocalOAuthDbCacheController *dbCache = [[LocalOAuthDbCacheController alloc]initWithKey: _key];
+        client = [dbCache findClientByClientId: clientId];
     }
     return client;
 }
@@ -776,17 +824,17 @@ static NSObject *_lockForRequstQueue = nil;
 -(void) removeClientByClientId: (NSString *)clientId {
     
     @synchronized(self) {
-        LocalOAuthDbCacheController *db = [[LocalOAuthDbCacheController alloc]initWithKey: _key];
-        [db removeClientData: clientId];
+        LocalOAuthDbCacheController *dbCache = [[LocalOAuthDbCacheController alloc]initWithKey: _key];
+        [dbCache removeClientData: clientId];
     }
 }
 
 - (LocalOAuthAccessTokenData *)publishAccessTokenWithParams:  (LocalOAuthConfirmAuthParams *)params {
 
     @synchronized(self) {
-        LocalOAuthDbCacheController *db = [[LocalOAuthDbCacheController alloc]initWithKey: _key];
+        LocalOAuthDbCacheController *dbCache = [[LocalOAuthDbCacheController alloc]initWithKey: _key];
         NSString *clientId = [params clientId];
-        LocalOAuthClient *client = [db findClientByClientId: clientId];
+        LocalOAuthClient *client = [dbCache findClientByClientId: clientId];
         if (client != nil) {
             NSArray *scopes = [params scope];    /* (NSString *)[] */
 
@@ -798,10 +846,13 @@ static NSObject *_lockForRequstQueue = nil;
                 for (NSString *scope in scopes) {
                     DConnectProfile *profile = [devicePlugin profileWithName: scope];
                     if (profile) {
-                        /* デバイスプラグインから分単位の有効期限を受け取り、秒単位に変換して保持する */
+                        /* 
+                         デバイスプラグインから分単位の有効期限を受け取り、
+                         秒単位に変換して保持する
+                         */
                         long long expirePeriod = profile.expirePeriod * MINUTE;
-                        NSNumber *e = [NSNumber numberWithLongLong: expirePeriod];
-                        [supportProfiles setObject:e forKey:scope];
+                        NSNumber *expired = [NSNumber numberWithLongLong: expirePeriod];
+                        supportProfiles[scope] = expired;
                     }
                 }
             }
@@ -810,27 +861,30 @@ static NSObject *_lockForRequstQueue = nil;
             NSMutableArray *settingScopes = [NSMutableArray array]; /* (LocalOAuthScope*)[] */
             for (NSString *scope in scopes) {
                 
-                /* デバイスプラグインならxmlファイルに有効期限が存在すれば取得して使用する(無ければデフォルト値) */
+                /* 
+                 デバイスプラグインならxmlファイルに有効期限が
+                 存在すれば取得して使用する(無ければデフォルト値)
+                 */
                 long long expirePeriod = LocalOAuth2Settings_DEFAULT_TOKEN_EXPIRE_PERIOD;
                 if (supportProfiles != nil) {
-                    NSNumber *e = [supportProfiles objectForKey:scope];
-                    if (e != nil) {
-                        expirePeriod = [e longLongValue];
+                    NSNumber *expired = [supportProfiles objectForKey:scope];
+                    if (expired != nil) {
+                        expirePeriod = [expired longLongValue];
                     }
                 }
                 
-                LocalOAuthScope *s =
+                LocalOAuthScope *oauthScope =
                         [[LocalOAuthScope alloc]initWithScope:scope
                                                     timestamp:[LocalOAuthUtils getCurrentTimeInMillis]
                                                  expirePeriod:expirePeriod];
-                [settingScopes addObject: s];
+                [settingScopes addObject: oauthScope];
             }
             
             NSString *username = LOCALOAUTH_USERNAME;
             NSString *applicationName = [params applicationName];
             
             LocalOAuthToken *token =
-                    [self generateToken: db
+                    [self generateToken: dbCache
                                  client: (LocalOAuthClient *)client
                                username: (NSString *)username
                                  scopes: (NSArray *) settingScopes
@@ -850,13 +904,13 @@ static NSObject *_lockForRequstQueue = nil;
     return nil;
 }
 
-- (LocalOAuthToken *)generateToken: (LocalOAuthDbCacheController *)db
+- (LocalOAuthToken *)generateToken: (LocalOAuthDbCacheController *)dbCache
                             client: (LocalOAuthClient *)client
                           username: (NSString *)username
                             scopes: (NSArray *) scopes
                    applicationName: (NSString *)applicationName {
     
-    LocalOAuthToken *token = [db generateToken: client
+    LocalOAuthToken *token = [dbCache generateToken: client
                                       username: username
                                         scopes: scopes
                                applicationName: applicationName];
@@ -871,7 +925,7 @@ static NSObject *_lockForRequstQueue = nil;
         
         NSUInteger scopeCount = [scopes count];
         for (NSUInteger i = 0; i < scopeCount; i++) {
-            LocalOAuthScope *scope = [scopes objectAtIndex: i];
+            LocalOAuthScope *scope = scopes[i];
             LocalOAuthAccessTokenScope *accessTokenScope =
             [LocalOAuthAccessTokenScope accessTokenScopeWithScope: [scope scope]
                                          expirePeriod: [scope expirePeriod]
@@ -883,9 +937,9 @@ static NSObject *_lockForRequstQueue = nil;
     return nil;
 }
 
-- (LocalOAuthClient *) findClientByParams: (LocalOAuthDbCacheController *)db
+- (LocalOAuthClient *) findClientByParams: (LocalOAuthDbCacheController *)dbCache
                         confirmAuthParams: (LocalOAuthConfirmAuthParams *)confirmAuthParams {
-    LocalOAuthClient *client = [db findClientByClientId: [confirmAuthParams clientId]];
+    LocalOAuthClient *client = [dbCache findClientByClientId: [confirmAuthParams clientId]];
     if (client == nil) {
         @throw @"AuthorizatonException.CLIENT_NOT_FOUND";
     }
@@ -968,17 +1022,19 @@ static NSObject *_lockForRequstQueue = nil;
         UIViewController *topViewController;
         DCPutPresentedViewController(topViewController);
         NSBundle *bundle = DCBundle();
-        UIStoryboard *sb;
+        UIStoryboard *storyBoard;
         
         if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
-            sb = [UIStoryboard storyboardWithName:[NSString stringWithFormat:@"%@-iPhone", DConnectStoryboardName]
+            storyBoard = [UIStoryboard storyboardWithName:[NSString stringWithFormat:@"%@-iPhone",
+                                                           DConnectStoryboardName]
                                            bundle:bundle];
         } else{
-            sb = [UIStoryboard storyboardWithName:[NSString stringWithFormat:@"%@-iPad", DConnectStoryboardName]
+            storyBoard = [UIStoryboard storyboardWithName:[NSString stringWithFormat:@"%@-iPad",
+                                                           DConnectStoryboardName]
                                            bundle:bundle];
         }
         
-        UIViewController *viewController = [sb instantiateViewControllerWithIdentifier:@"Confirm"];
+        UIViewController *viewController = [storyBoard instantiateViewControllerWithIdentifier:@"Confirm"];
         LocalOAuthConfirmAuthViewController *confirmAuthViewController
         = (LocalOAuthConfirmAuthViewController *)[((UINavigationController *)viewController) viewControllers][0];
         
@@ -1003,8 +1059,11 @@ static NSObject *_lockForRequstQueue = nil;
                          /* 承認された */
                          [request receiveAccessTokenCallback](accessTokenData);
                          
-                         /* キューにリクエストが残っていれば、次のキューを取得してActivityを起動する */
-                         LocalOAuthConfirmAuthRequest *nextRequest = [self pickupRequest];
+                         /* キューにリクエストが残っていれば、
+                          次のキューを取得してActivityを起動する
+                          */
+                         LocalOAuthConfirmAuthRequest *nextRequest
+                                    = [self pickupRequest];
                          if (nextRequest != nil) {
                              [self startConfirmAuthViewController: nextRequest];
                          }
@@ -1032,8 +1091,7 @@ static NSObject *_lockForRequstQueue = nil;
 }
 
 - (LocalOAuthThreadId) getThreadId {
-    LocalOAuthThreadId threadId = pthread_mach_thread_np(pthread_self());
-    return threadId;
+    return pthread_mach_thread_np(pthread_self());
 }
 
 @end

@@ -1,6 +1,6 @@
 //
 //  RESTfulNormalVibrationProfileTest.m
-//  DConnectSDK
+//  dConnectDeviceTest
 //
 //  Copyright (c) 2014 NTT DOCOMO, INC.
 //  Released under the MIT license
@@ -34,7 +34,10 @@
  */
 - (void) testHttpNormalVibrationVibratePost
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/vibration/vibrate?serviceId=%@", self.serviceId]];
+    NSURL *uri = [NSURL URLWithString:
+                    [NSString stringWithFormat:
+                        @"http://localhost:4035/gotapi/vibration/vibrate?serviceId=%@",
+                            self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
@@ -55,7 +58,10 @@
  */
 - (void) testHttpNormalNotificationNotifyDelete
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/vibration/vibrate?serviceId=%@", self.serviceId]];
+    NSURL *uri = [NSURL URLWithString:
+                    [NSString stringWithFormat:
+                        @"http://localhost:4035/gotapi/vibration/vibrate?serviceId=%@",
+                                self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     

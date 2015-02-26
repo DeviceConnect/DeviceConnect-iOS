@@ -58,7 +58,7 @@ NSString *const DConnectSystemProfileParamName = @"name";
             [[DConnectManager sharedManager] sendResponse:response];
         });
         send = NO;
-    } else if (attribute && [attribute isEqualToString:DConnectSystemProfileAttrKeyword]) {
+    } else if ([attribute isEqualToString:DConnectSystemProfileAttrKeyword]) {
         if (_delegate && [_delegate respondsToSelector:@selector(profile:didReceivePutKeywordRequest:response:)])
         {
             send = [_delegate profile:self didReceivePutKeywordRequest:request response:response];
@@ -83,8 +83,14 @@ NSString *const DConnectSystemProfileParamName = @"name";
     
     NSString *attribute = [request attribute];
     if ([DConnectSystemProfileAttrEvents isEqualToString:attribute]) {
-        if ([_delegate respondsToSelector:@selector(profile:didReceiveDeleteEventsRequest:response:sessionKey:)]) {
-            [_delegate profile:self didReceiveDeleteEventsRequest:request response:response sessionKey:[request sessionKey]];
+        if ([_delegate respondsToSelector:@selector(profile:
+                                                    didReceiveDeleteEventsRequest:
+                                                    response:
+                                                    sessionKey:)]) {
+            [_delegate                    profile:self
+                    didReceiveDeleteEventsRequest:request
+                                         response:response
+                                       sessionKey:[request sessionKey]];
         } else {
             [response setErrorToNotSupportAttribute];
         }

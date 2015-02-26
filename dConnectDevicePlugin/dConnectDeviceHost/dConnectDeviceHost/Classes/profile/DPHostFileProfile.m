@@ -69,136 +69,76 @@ didReceiveGetReceiveRequest:(DConnectRequestMessage *)request
     return YES;
 }
 
-- (BOOL)         profile:(DConnectFileProfile *)profile
-didReceiveGetListRequest:(DConnectRequestMessage *)request
-                response:(DConnectResponseMessage *)response
-                serviceId:(NSString *)serviceId
-                    path:(NSString *)path
-                mimeType:(NSString *)mimeType
-                   order:(NSArray *)order
-                  offset:(NSNumber *)offset
-                   limit:(NSNumber *)limit
+/*!
+ @brief /file/listのパラメータチェック.
+ */
+- (NSString *)checkParameters:(DConnectRequestMessage *)request
+                     response:(DConnectResponseMessage *)response
+                         path:(NSString *)path
+                      fileMgr:(DConnectFileManager *)fileMgr
+                   sysFileMgr:(NSFileManager *)sysFileMgr
+                  sortOrder:(NSString **)sortOrder_p
+                 sortTarget:(NSString **)sortTarget_p
+                        order:(NSArray *)order
 {
-    DConnectFileManager *fileMgr = [SELF_PLUGIN fileMgr];
-    NSFileManager *sysFileMgr = [NSFileManager defaultManager];
-    
     NSString *offsetString = [request stringForKey:DConnectFileProfileParamOffset];
     NSString *limitString = [request stringForKey:DConnectFileProfileParamLimit];
-    if (offsetString) {
-        if ([DPHostUtils isFloatWithString:offsetString]) {
-            [response setErrorToInvalidRequestParameterWithMessage:@"offset is non-float"];
-            return YES;
-        }
+    if (offsetString && [DPHostUtils isFloatWithString:offsetString]) {
+        [response setErrorToInvalidRequestParameterWithMessage:@"offset is non-float"];
+        return nil;
     }
-    if (limitString) {
-        if ([DPHostUtils isFloatWithString:limitString]) {
-            [response setErrorToInvalidRequestParameterWithMessage:@"limit is non-float"];
-            return YES;
-        }
+    if (limitString && [DPHostUtils isFloatWithString:limitString]) {
+        [response setErrorToInvalidRequestParameterWithMessage:@"limit is non-float"];
+        return nil;
     }
     
-
-    if (path) {
+    NSString* listPath = path;
+    if (listPath) {
         // pathが絶対であれ相対であれベースURLに追加する。
-        if ([path isEqualToString:@".."]) {
-            path = @"/";
+        if ([listPath isEqualToString:@".."]) {
+            listPath = @"/";
         }
-        NSString *dstPath = [SELF_PLUGIN pathByAppendingPathComponent:path];
+        NSString *dstPath = [SELF_PLUGIN pathByAppendingPathComponent:listPath];
         if (![self checkPath:dstPath]) {
-            path = dstPath;
+            listPath = dstPath;
         }
-        if (![sysFileMgr fileExistsAtPath:path]) {
+        if (![sysFileMgr fileExistsAtPath:listPath]) {
             [response setErrorToInvalidRequestParameterWithMessage:@"path is invalid"];
-            return YES;
+            return nil;
         }
     } else {
-        path = fileMgr.URL.path;
+        listPath = fileMgr.URL.path;
     }
-    NSString *sortTarget;
-    NSString *sortOrder;
+    
+    
     if (order) {
         if (order.count != 2) {
             [response setErrorToInvalidRequestParameterWithMessage:@"order is invalid."];
-            return YES;
+            return nil;
         }
         
-        sortTarget = order[0];
-        sortOrder = order[1];
+        *sortTarget_p = order[0];
+        *sortOrder_p = order[1];
         
-        if (!sortTarget || !sortOrder) {
+        if (!(*sortTarget_p) || !(*sortOrder_p)) {
             [response setErrorToInvalidRequestParameterWithMessage:@"order is invalid."];
-            return YES;
+            return nil;
         }
     } else {
-        sortTarget = DConnectFileProfileParamPath;
-        sortOrder = DConnectFileProfileOrderASC;
+        *sortTarget_p = DConnectFileProfileParamPath;
+        *sortOrder_p = DConnectFileProfileOrderASC;
     }
-    
-    // ソート対象の文字列表現を返却するブロックを用意する。
-    __block id (^accessor)(id);
-    if ([sortTarget isEqualToString:DConnectFileProfileParamPath]) {
-        accessor = ^id(id obj) {
-            return [(DConnectMessage *)obj stringForKey:DConnectFileProfileParamPath];
-        };
-    } else if ([sortTarget isEqualToString:DConnectFileProfileParamFileName]) {
-        accessor = ^id(id obj) {
-            return [(DConnectMessage *)obj stringForKey:DConnectFileProfileParamFileName];
-        };
-    } else if ([sortTarget isEqualToString:DConnectFileProfileParamMIMEType]) {
-        accessor = ^id(id obj) {
-            return [(DConnectMessage *)obj stringForKey:DConnectFileProfileParamMIMEType];
-        };
-    } else if ([sortTarget isEqualToString:DConnectFileProfileParamUpdateDate]) {
-        accessor = ^id(id obj) {
-            return [(DConnectMessage *)obj stringForKey:DConnectFileProfileParamUpdateDate];
-        };
-    } else if ([sortTarget isEqualToString:DConnectFileProfileParamFileSize]) {
-        accessor = ^id(id obj) {
-            return [[(DConnectMessage *)obj objectForKey:DConnectFileProfileParamFileSize]
-                    descriptionWithLocale:nil];
-        };
-    } else if ([sortTarget isEqualToString:DConnectFileProfileParamFileType]) {
-        accessor = ^id(id obj) {
-            return [[(DConnectMessage *)obj objectForKey:DConnectFileProfileParamFileType]
-                    descriptionWithLocale:nil];
-        };
-    } else {
-        [response setErrorToInvalidRequestParameterWithMessage:@"order is invalid."];
-        return YES;
-    }
-    
-    NSComparator comp;
-    if ([sortOrder isEqualToString:DConnectFileProfileOrderASC]) {
-        comp = ^NSComparisonResult(id obj1, id obj2) {
-            id obj1Tmp = accessor(obj1);
-            id obj2Tmp = accessor(obj2);
-            return [obj1Tmp localizedCaseInsensitiveCompare:obj2Tmp];
-        };
-    } else if ([sortOrder isEqualToString:DConnectFileProfileOrderDESC]) {
-        comp = ^NSComparisonResult(id obj1, id obj2) {
-            id obj1Tmp = accessor(obj1);
-            id obj2Tmp = accessor(obj2);
-            return [obj2Tmp localizedCaseInsensitiveCompare:obj1Tmp];
-        };
-    } else {
-        [response setErrorToInvalidRequestParameterWithMessage:@"order is invalid."];
-        return YES;
-    }
-    
-    if (offset) {
-        if (offset.integerValue < 0) {
-            [response setErrorToInvalidRequestParameterWithMessage:@"offset must be a non-negative value."];
-            return YES;
-        }
-    }
-    
-    if (limit) {
-        if (limit.integerValue < 0) {
-            [response setErrorToInvalidRequestParameterWithMessage:@"limit must be a positive value."];
-            return YES;
-        }
-    }
-    
+    return listPath;
+}
+
+/**!
+ @brief Fileの検索.
+ */
+- (NSMutableArray *)searchFilesWithFileManager:(DConnectFileManager *)fileMgr
+                                      listPath:(NSString *)listPath
+                                    sysFileMgr:(NSFileManager *)sysFileMgr
+                                      mimeType:(NSString *)mimeType
+{
     NSMutableArray *fileArr = [NSMutableArray array];
     
     // # NSDirectoryEnumeratorからプロパティを取得する方法
@@ -208,10 +148,9 @@ didReceiveGetListRequest:(DConnectRequestMessage *)request
     NSString *rootPath = [@"/private" stringByAppendingString:fileMgr.URL.path];
     BOOL mkBackRoot = NO;
     NSDirectoryEnumerator *dirIter =
-    [fileMgr enumeratorWithOptions:NSDirectoryEnumerationSkipsSubdirectoryDescendants dirPath:path];
+    [fileMgr enumeratorWithOptions:NSDirectoryEnumerationSkipsSubdirectoryDescendants dirPath:listPath];
     NSURL *url;
-    while ((url = dirIter.nextObject))
-    {
+    while ((url = dirIter.nextObject)) {
         NSString *pathItr = url.path;
         // MIMEタイプ検索
         if (mimeType) {
@@ -242,7 +181,6 @@ didReceiveGetListRequest:(DConnectRequestMessage *)request
         
         NSString *pluginRootPath = [pathItr stringByReplacingOccurrencesOfString:rootPath withString:@""];
         NSArray *dirCount = [pluginRootPath componentsSeparatedByString:@"/"];
-        //rootディレクトリでなければ、一つ上のディレクトリに戻るためのディレクトリを追加する。
         if (dirCount.count > 2 && !mkBackRoot) {
             DConnectMessage *upDir = [DConnectMessage message];
             [DConnectFileProfile setPath:rootPath target:upDir];
@@ -260,22 +198,125 @@ didReceiveGetListRequest:(DConnectRequestMessage *)request
             [DConnectFileProfile setMIMEType:@"dir/folder" target:file];
             [DConnectFileProfile setFileType:1 target:file];
         } else {
-            NSString *mimeType = [DConnectFileManager searchMimeTypeForExtension:url.pathExtension.lowercaseString];
-            if (!mimeType) {
-                mimeType = [DConnectFileManager mimeTypeForArbitraryData];
+            NSString *mimeTypes = [DConnectFileManager searchMimeTypeForExtension:url.pathExtension.lowercaseString];
+            if (!mimeTypes) {
+                mimeTypes = [DConnectFileManager mimeTypeForArbitraryData];
             }
-            [DConnectFileProfile setMIMEType:mimeType target:file];
+            [DConnectFileProfile setMIMEType:mimeTypes target:file];
             [DConnectFileProfile setFileType:0 target:file];
         }
         
         [fileArr addObject:file];
     }
+    return fileArr;
+}
+
+- (void)compareOrderWithResponse:(DConnectResponseMessage *)response
+                      sortTarget:(NSString *)sortTarget
+                          comp_p:(NSComparator *)comp_p
+                       sortOrder:(NSString *)sortOrder
+{
+    // ソート対象の文字列表現を返却するブロックを用意する。
+    __block id (^accessor)(id);
+    if ([sortTarget isEqualToString:DConnectFileProfileParamPath]) {
+        accessor = ^id(id obj) {
+            return [(DConnectMessage *)obj stringForKey:DConnectFileProfileParamPath];
+        };
+    } else if ([sortTarget isEqualToString:DConnectFileProfileParamFileName]) {
+        accessor = ^id(id obj) {
+            return [(DConnectMessage *)obj stringForKey:DConnectFileProfileParamFileName];
+        };
+    } else if ([sortTarget isEqualToString:DConnectFileProfileParamMIMEType]) {
+        accessor = ^id(id obj) {
+            return [(DConnectMessage *)obj stringForKey:DConnectFileProfileParamMIMEType];
+        };
+    } else if ([sortTarget isEqualToString:DConnectFileProfileParamUpdateDate]) {
+        accessor = ^id(id obj) {
+            return [(DConnectMessage *)obj stringForKey:DConnectFileProfileParamUpdateDate];
+        };
+    } else if ([sortTarget isEqualToString:DConnectFileProfileParamFileSize]) {
+        accessor = ^id(id obj) {
+            return [[(DConnectMessage *)obj objectForKey:DConnectFileProfileParamFileSize]
+                    descriptionWithLocale:nil];
+        };
+    } else if ([sortTarget isEqualToString:DConnectFileProfileParamFileType]) {
+        accessor = ^id(id obj) {
+            return [[(DConnectMessage *)obj objectForKey:DConnectFileProfileParamFileType]
+                    descriptionWithLocale:nil];
+        };
+    } else {
+        [response setErrorToInvalidRequestParameterWithMessage:@"order is invalid."];
+        return;
+    }
     
-    if (offset) {
-        if (offset.integerValue >= fileArr.count) {
-            [response setErrorToInvalidRequestParameterWithMessage:@"offset exceeds the size of the media list."];
-            return YES;
-        }
+    
+    if ([sortOrder isEqualToString:DConnectFileProfileOrderASC]) {
+        *comp_p = ^NSComparisonResult(id obj1, id obj2) {
+            id obj1Tmp = accessor(obj1);
+            id obj2Tmp = accessor(obj2);
+            return [obj1Tmp localizedCaseInsensitiveCompare:obj2Tmp];
+        };
+    } else if ([sortOrder isEqualToString:DConnectFileProfileOrderDESC]) {
+        *comp_p = ^NSComparisonResult(id obj1, id obj2) {
+            id obj1Tmp = accessor(obj1);
+            id obj2Tmp = accessor(obj2);
+            return [obj2Tmp localizedCaseInsensitiveCompare:obj1Tmp];
+        };
+    } else {
+        [response setErrorToInvalidRequestParameterWithMessage:@"order is invalid."];
+        return;
+    }
+}
+
+- (BOOL)         profile:(DConnectFileProfile *)profile
+didReceiveGetListRequest:(DConnectRequestMessage *)request
+                response:(DConnectResponseMessage *)response
+                serviceId:(NSString *)serviceId
+                    path:(NSString *)path
+                mimeType:(NSString *)mimeType
+                   order:(NSArray *)order
+                  offset:(NSNumber *)offset
+                   limit:(NSNumber *)limit
+{
+    DConnectFileManager *fileMgr = [SELF_PLUGIN fileMgr];
+    NSFileManager *sysFileMgr = [NSFileManager defaultManager];
+    
+    NSString *listPath;
+    NSString *sortTarget;
+    NSString *sortOrder;
+    listPath = [self checkParameters:request
+                            response:response
+                                path:path
+                             fileMgr:fileMgr
+                          sysFileMgr:sysFileMgr
+                         sortOrder:&sortOrder
+                        sortTarget:&sortTarget
+                               order:order];
+    if (!listPath) {
+        return YES;
+    }
+    NSComparator comp;
+    [self compareOrderWithResponse:response sortTarget:sortTarget comp_p:&comp sortOrder:sortOrder];
+    if ([response integerForKey:DConnectMessageResult] == DConnectMessageResultTypeError) {
+        return YES;
+    }
+    
+    if (offset && offset.integerValue < 0) {
+        [response setErrorToInvalidRequestParameterWithMessage:@"offset must be a non-negative value."];
+        return YES;
+    }
+    
+    if (limit && limit.integerValue < 0) {
+        [response setErrorToInvalidRequestParameterWithMessage:@"limit must be a positive value."];
+        return YES;
+    }
+    
+    NSMutableArray *fileArr;
+    fileArr = [self searchFilesWithFileManager:fileMgr listPath:listPath sysFileMgr:sysFileMgr mimeType:mimeType];
+    
+    if (offset && offset.integerValue >= fileArr.count) {
+        [response setErrorToInvalidRequestParameterWithMessage:@"offset exceeds the size of the media list."];
+        return YES;
     }
     
     // 並び替えを実行
@@ -485,10 +526,6 @@ didReceiveDeleteRmdirRequest:(DConnectRequestMessage *)request
             target = NSMakeRange(from, end);
         }
     }
-    if ([results count] >= 2) {
-        return YES;
-    } else {
-        return NO;
-    }
+    return [results count] >= 2;
 }
 @end

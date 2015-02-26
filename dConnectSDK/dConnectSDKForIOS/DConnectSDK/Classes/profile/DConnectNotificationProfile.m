@@ -50,7 +50,16 @@ NSString *const DConnectNotificationProfileParamUri = @"uri";
     NSString *attribute = [request attribute];
     if ([attribute isEqualToString:DConnectNotificationProfileAttrNotify]) {
         
-        if ([self hasMethod:@selector(profile:didReceivePostNotifyRequest:response:serviceId:type:dir:lang:body:tag:icon:)
+        if ([self hasMethod:@selector(profile:
+                                      didReceivePostNotifyRequest:
+                                      response:
+                                      serviceId:
+                                      type:
+                                      dir:
+                                      lang:
+                                      body:
+                                      tag:
+                                      icon:)
                    response:response])
         {
             NSData *icon = [DConnectNotificationProfile iconFromRequest:request];

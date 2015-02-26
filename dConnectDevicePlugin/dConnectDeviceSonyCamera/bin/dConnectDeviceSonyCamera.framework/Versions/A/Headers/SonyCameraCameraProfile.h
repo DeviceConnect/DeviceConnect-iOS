@@ -1,6 +1,6 @@
 //
 //  SonyCameraCameraProfile.h
-//  DConnectSDK
+//  dConnectDeviceSonyCamera
 //
 //  Copyright (c) 2014 NTT DOCOMO, INC.
 //  Released under the MIT license

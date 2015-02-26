@@ -1,6 +1,6 @@
 //
 //  DPIRKitModelController.m
-//  DConnectSDK
+//  dConnectDeviceIRKit
 //
 //  Copyright (c) 2014 NTT DOCOMO, INC.
 //  Released under the MIT license
@@ -39,7 +39,8 @@
         return nil;
     }
 
-    DPIRKitPageViewController *controller = [storyboard instantiateViewControllerWithIdentifier:[_pages objectAtIndex:index]];
+    DPIRKitPageViewController *controller
+            = [storyboard instantiateViewControllerWithIdentifier:_pages[index]];
     controller.index = index;
     controller.root = _root;
     
@@ -58,7 +59,8 @@
 
 #pragma mark - UIPageViewControllerDataSource
 
-- (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(UIViewController *)viewController
+- (UIViewController *)pageViewController:(UIPageViewController *)pageViewController
+      viewControllerBeforeViewController:(UIViewController *)viewController
 {
     
     NSUInteger index = [self indexOfViewController:viewController];
@@ -71,7 +73,8 @@
     return [self viewControllerAtIndex:index storyboard:viewController.storyboard];
 }
 
-- (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerAfterViewController:(UIViewController *)viewController
+- (UIViewController *)pageViewController:(UIPageViewController *)pageViewController
+       viewControllerAfterViewController:(UIViewController *)viewController
 {
     
     NSUInteger index = [self indexOfViewController:viewController];

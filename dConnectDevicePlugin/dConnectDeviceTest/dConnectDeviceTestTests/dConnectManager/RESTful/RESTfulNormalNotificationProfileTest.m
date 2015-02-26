@@ -1,6 +1,6 @@
 //
 //  RESTfulNormalNotificationProfileTest.m
-//  DConnectSDK
+//  dConnectDeviceTest
 //
 //  Copyright (c) 2014 NTT DOCOMO, INC.
 //  Released under the MIT license
@@ -38,7 +38,9 @@
  */
 - (void) testHttpNormalNotificationNotifyPost
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/notification/notify?serviceId=%@&type=0", self.serviceId]];
+    NSURL *uri = [NSURL URLWithString:
+                  [NSString stringWithFormat:@"http://localhost:4035/gotapi/notification/notify?serviceId=%@&type=0",
+                   self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"POST"];
     
@@ -61,7 +63,9 @@
  */
 - (void) testHttpNormalNotificationNotifyDelete
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/notification/notify?serviceId=%@&notificationId=1", self.serviceId]];
+    NSURL *uri = [NSURL URLWithString:
+                  [NSString stringWithFormat:@"http://localhost:4035/gotapi/notification/notify?serviceId=%@&notificationId=1",
+                   self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     
@@ -85,7 +89,9 @@
  */
 - (void) testHttpNormalNotificationOnClickPut
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/notification/onclick?sessionKey=%@&serviceId=%@", self.clientId, self.serviceId]];
+    NSURL *uri = [NSURL URLWithString:
+                  [NSString stringWithFormat:@"http://localhost:4035/gotapi/notification/onclick?sessionKey=%@&serviceId=%@",
+                   self.clientId, self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
@@ -109,7 +115,9 @@
  */
 - (void) testHttpNormalNotificationOnClickDelete
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/notification/onclick?sessionKey=%@&serviceId=%@", self.clientId, self.serviceId]];
+    NSURL *uri = [NSURL URLWithString:
+                  [NSString stringWithFormat:@"http://localhost:4035/gotapi/notification/onclick?sessionKey=%@&serviceId=%@",
+                   self.clientId, self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     
@@ -134,7 +142,9 @@
  */
 - (void) testHttpNormalNotificationOnShowPut
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/notification/onshow?sessionKey=%@&serviceId=%@", self.clientId, self.serviceId]];
+    NSURL *uri = [NSURL URLWithString:
+                  [NSString stringWithFormat:@"http://localhost:4035/gotapi/notification/onshow?sessionKey=%@&serviceId=%@",
+                   self.clientId, self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
@@ -158,7 +168,9 @@
  */
 - (void) testHttpNormalNotificationOnShowDelete
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/notification/onshow?sessionKey=%@&serviceId=%@", self.clientId, self.serviceId]];
+    NSURL *uri = [NSURL URLWithString:
+                  [NSString stringWithFormat:@"http://localhost:4035/gotapi/notification/onshow?sessionKey=%@&serviceId=%@",
+                   self.clientId, self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     
@@ -183,7 +195,9 @@
  */
 - (void) testHttpNormalNotificationOnClosePut
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/notification/onclose?sessionKey=%@&serviceId=%@", self.clientId, self.serviceId]];
+    NSURL *uri = [NSURL URLWithString:
+                  [NSString stringWithFormat:@"http://localhost:4035/gotapi/notification/onclose?sessionKey=%@&serviceId=%@",
+                   self.clientId, self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
@@ -207,7 +221,9 @@
  */
 - (void) testHttpNormalNotificationOnCloseDelete
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/notification/onclose?sessionKey=%@&serviceId=%@", self.clientId, self.serviceId]];
+    NSURL *uri = [NSURL URLWithString:
+                  [NSString stringWithFormat:@"http://localhost:4035/gotapi/notification/onclose?sessionKey=%@&serviceId=%@",
+                   self.clientId, self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     
@@ -232,7 +248,9 @@
  */
 - (void) testHttpNormalNotificationOnErrorPut
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/notification/onerror?sessionKey=%@&serviceId=%@", self.clientId, self.serviceId]];
+    NSURL *uri = [NSURL URLWithString:
+                  [NSString stringWithFormat:@"http://localhost:4035/gotapi/notification/onerror?sessionKey=%@&serviceId=%@",
+                   self.clientId, self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
@@ -256,7 +274,9 @@
  */
 - (void) testHttpNormalNotificationOnErrorDelete
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/notification/onerror?sessionKey=%@&serviceId=%@", self.clientId, self.serviceId]];
+    NSURL *uri = [NSURL URLWithString:
+                  [NSString stringWithFormat:@"http://localhost:4035/gotapi/notification/onerror?sessionKey=%@&serviceId=%@",
+                   self.clientId, self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     

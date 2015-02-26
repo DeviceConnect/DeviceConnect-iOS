@@ -16,7 +16,10 @@
                clientType:(LocalOAuthClientType)clientType
              redirectURIs:(NSArray *)redirectURIs
                properties:(NSDictionary *)properties {
-    LocalOAuthClient *client = [_delegate createClient:packageInfo clientType:clientType redirectURIs:redirectURIs properties:properties];
+    LocalOAuthClient *client = [_delegate createClient:packageInfo
+                                            clientType:clientType
+                                          redirectURIs:redirectURIs
+                                            properties:properties];
     return client;
 }
 

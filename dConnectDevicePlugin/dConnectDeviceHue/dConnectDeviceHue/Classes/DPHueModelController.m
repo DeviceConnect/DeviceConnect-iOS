@@ -1,6 +1,6 @@
 //
 //  DPHueModelController.m
-//  DConnectSDK
+//  dConnectDeviceHue
 //
 //  Copyright (c) 2014 NTT DOCOMO, INC.
 //  Released under the MIT license
@@ -47,13 +47,13 @@
     NSString *viewId = [NSString stringWithFormat:@"DPHueSettingViewController%lu", (unsigned long)(index + 1)];
     
     // Create a new view controller and pass suitable data.
-    DPHueSettingViewControllerBase *vc = [storyboard instantiateViewControllerWithIdentifier:viewId];
+    DPHueSettingViewControllerBase *viewController = [storyboard instantiateViewControllerWithIdentifier:viewId];
     
-    vc.objectIndex = index;
+    viewController.objectIndex = index;
     
-    vc.hueViewController = self.hueViewController;
+    viewController.hueViewController = self.hueViewController;
 
-    return vc;
+    return viewController;
 }
 
 - (NSUInteger)indexOfViewController:(DPHueSettingViewControllerBase *)viewController
@@ -61,12 +61,14 @@
     return viewController.objectIndex;
 }
 
-- (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(UIViewController *)viewController
+- (UIViewController *)pageViewController:(UIPageViewController *)pageViewController
+      viewControllerBeforeViewController:(UIViewController *)viewController
 {
     return nil;
 }
 
-- (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerAfterViewController:(UIViewController *)viewController
+- (UIViewController *)pageViewController:(UIPageViewController *)pageViewController
+       viewControllerAfterViewController:(UIViewController *)viewController
 {
     return nil;
 }
