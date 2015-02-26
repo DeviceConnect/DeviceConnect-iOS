@@ -15,6 +15,7 @@
 #import "DConnectManagerSystemProfile.h"
 #import "DConnectFilesProfile.h"
 #import "DConnectAuthorizationProfile+Private.h"
+#import "DConnectAvailabilityProfile.h"
 #import "DConnectWebSocket.h"
 #import "DConnectMessage+Private.h"
 #import "DConnectSettings.h"
@@ -305,6 +306,7 @@ NSString *const DConnectStoryboardName = @"DConnectSDK";
         [self addProfile:[DConnectManagerSystemProfile new]];
         [self addProfile:[DConnectFilesProfile new]];
         [self addProfile:[[DConnectAuthorizationProfile alloc] initWithObject:self]];
+        [self addProfile:[DConnectAvailabilityProfile new]];
         
         // デバイスプラグイン配送用プロファイル
         self.mDeliveryProfile = [DConnectManagerDeliveryProfile new];
