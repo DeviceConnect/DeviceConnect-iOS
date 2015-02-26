@@ -44,39 +44,35 @@ NSString *const DConnectServiceInformationProfileParamBLE = @"ble";
         if ([_delegate respondsToSelector:@selector(profile:didReceiveGetInformationRequest:response:serviceId:)])
         {
             send = [_delegate profile:self didReceiveGetInformationRequest:request response:response serviceId:serviceId];
-        } else if (_dataSource) {
-            
+        } else {
             DConnectMessage *connect = [DConnectMessage message];
-            if ([_dataSource respondsToSelector:@selector(profile:wifiStateForServiceId:)]) {
-                [DConnectServiceInformationProfile setWiFiState:[_dataSource profile:self wifiStateForServiceId:serviceId]
+            if (_dataSource) {
+                if ([_dataSource respondsToSelector:@selector(profile:wifiStateForServiceId:)]) {
+                    [DConnectServiceInformationProfile setWiFiState:[_dataSource profile:self wifiStateForServiceId:serviceId]
                                              target:connect];
-            }
-            if ([_dataSource respondsToSelector:@selector(profile:bleStateForServiceId:)]) {
-                [DConnectServiceInformationProfile setBLEState:[_dataSource profile:self bleStateForServiceId:serviceId]
+                }
+                if ([_dataSource respondsToSelector:@selector(profile:bleStateForServiceId:)]) {
+                    [DConnectServiceInformationProfile setBLEState:[_dataSource profile:self bleStateForServiceId:serviceId]
                                             target:connect];
-            }
-            if ([_dataSource respondsToSelector:@selector(profile:bluetoothStateForServiceId:)]) {
-                [DConnectServiceInformationProfile setBluetoothState:[_dataSource profile:self bluetoothStateForServiceId:serviceId]
+                }
+                if ([_dataSource respondsToSelector:@selector(profile:bluetoothStateForServiceId:)]) {
+                    [DConnectServiceInformationProfile setBluetoothState:[_dataSource profile:self bluetoothStateForServiceId:serviceId]
                                                   target:connect];
-            }
-            if ([_dataSource respondsToSelector:@selector(profile:nfcStateForServiceId:)]) {
-                [DConnectServiceInformationProfile setNFCState:[_dataSource profile:self nfcStateForServiceId:serviceId]
+                }
+                if ([_dataSource respondsToSelector:@selector(profile:nfcStateForServiceId:)]) {
+                    [DConnectServiceInformationProfile setNFCState:[_dataSource profile:self nfcStateForServiceId:serviceId]
                                             target:connect];
+                }
             }
-            
             [DConnectServiceInformationProfile setConnect:connect target:response];
             
             DConnectArray *supports = [DConnectArray array];
             NSArray *profiles = [self.provider profiles];
-            
             for (DConnectProfile *profile in profiles) {
                 [supports addString:[profile profileName]];
             }
-            
             [DConnectServiceInformationProfile setSupports:supports target:response];
             [response setResult:DConnectMessageResultTypeOk];
-        } else {
-            [response setErrorToNotSupportAction];
         }
     } else {
         [response setErrorToUnknownAttribute];

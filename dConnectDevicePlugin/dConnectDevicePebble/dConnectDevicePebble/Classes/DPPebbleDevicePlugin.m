@@ -46,6 +46,7 @@
 		[self addProfile:[DPPebbleVibrationProfile new]];
 		[self addProfile:[DPPebbleDeviceOrientationProfile new]];
         [self addProfile:[DPPebbleCanvasProfile new]];
+        [self addProfile:[DConnectServiceInformationProfile new]];
 		
 		dispatch_async(dispatch_get_main_queue(), ^{
 			NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];

@@ -171,6 +171,7 @@ NSString *const SonyFilePrefix = @"sony";
         [self addProfile:systemProfile];
         [self addProfile:mediaProfile];
         [self addProfile:cameraProfile];
+        [self addProfile:[DConnectServiceInformationProfile new]];
         if ([self checkSSID]) {
             [self searchSonyCameraDevice];
         }

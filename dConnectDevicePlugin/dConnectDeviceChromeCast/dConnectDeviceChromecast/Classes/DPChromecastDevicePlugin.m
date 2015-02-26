@@ -34,6 +34,7 @@
         [self addProfile:[DPChromecastSystemProfile new]];
         [self addProfile:[DPChromecastNotificationProfile new]];
         [self addProfile:[DPChromecastMediaPlayerProfile new]];
+        [self addProfile:[DConnectServiceInformationProfile new]];
         __weak typeof(self) _self = self;
         dispatch_async(dispatch_get_main_queue(), ^{
             NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
