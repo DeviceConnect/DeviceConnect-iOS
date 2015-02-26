@@ -20,6 +20,7 @@
     #define DPIRLog(...) 
 #endif
 
-#define DPIR_ASYNC_S dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+#define DPIR_ASYNC_S dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{\
+[self startDetection];
 #define DPIR_ASYNC_E sleep(0.5); \
 });
