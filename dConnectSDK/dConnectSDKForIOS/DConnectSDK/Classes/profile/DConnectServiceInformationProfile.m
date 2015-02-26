@@ -43,24 +43,29 @@ NSString *const DConnectServiceInformationProfileParamBLE = @"ble";
     if (!interface && !attribute) {
         if ([_delegate respondsToSelector:@selector(profile:didReceiveGetInformationRequest:response:serviceId:)])
         {
-            send = [_delegate profile:self didReceiveGetInformationRequest:request response:response serviceId:serviceId];
+            send = [_delegate profile:self didReceiveGetInformationRequest:request
+                             response:response serviceId:serviceId];
         } else {
             DConnectMessage *connect = [DConnectMessage message];
             if (_dataSource) {
                 if ([_dataSource respondsToSelector:@selector(profile:wifiStateForServiceId:)]) {
-                    [DConnectServiceInformationProfile setWiFiState:[_dataSource profile:self wifiStateForServiceId:serviceId]
+                    [DConnectServiceInformationProfile setWiFiState:
+                        [_dataSource profile:self wifiStateForServiceId:serviceId]
                                              target:connect];
                 }
                 if ([_dataSource respondsToSelector:@selector(profile:bleStateForServiceId:)]) {
-                    [DConnectServiceInformationProfile setBLEState:[_dataSource profile:self bleStateForServiceId:serviceId]
+                    [DConnectServiceInformationProfile setBLEState:
+                        [_dataSource profile:self bleStateForServiceId:serviceId]
                                             target:connect];
                 }
                 if ([_dataSource respondsToSelector:@selector(profile:bluetoothStateForServiceId:)]) {
-                    [DConnectServiceInformationProfile setBluetoothState:[_dataSource profile:self bluetoothStateForServiceId:serviceId]
+                    [DConnectServiceInformationProfile setBluetoothState:
+                        [_dataSource profile:self bluetoothStateForServiceId:serviceId]
                                                   target:connect];
                 }
                 if ([_dataSource respondsToSelector:@selector(profile:nfcStateForServiceId:)]) {
-                    [DConnectServiceInformationProfile setNFCState:[_dataSource profile:self nfcStateForServiceId:serviceId]
+                    [DConnectServiceInformationProfile setNFCState:
+                        [_dataSource profile:self nfcStateForServiceId:serviceId]
                                             target:connect];
                 }
             }
@@ -92,19 +97,27 @@ NSString *const DConnectServiceInformationProfileParamBLE = @"ble";
 }
 
 + (void) setWiFiState:(DConnectServiceInformationProfileConnectState)state target:(DConnectMessage *)message {
-    [DConnectServiceInformationProfile message:message setConnectionState:state forKey:DConnectServiceInformationProfileParamWiFi];
+    [DConnectServiceInformationProfile message:message
+                            setConnectionState:state
+                                        forKey:DConnectServiceInformationProfileParamWiFi];
 }
 
 + (void) setBluetoothState:(DConnectServiceInformationProfileConnectState)state target:(DConnectMessage *)message {
-    [DConnectServiceInformationProfile message:message setConnectionState:state forKey:DConnectServiceInformationProfileParamBluetooth];
+    [DConnectServiceInformationProfile message:message
+                            setConnectionState:state
+                                        forKey:DConnectServiceInformationProfileParamBluetooth];
 }
 
 + (void) setNFCState:(DConnectServiceInformationProfileConnectState)state target:(DConnectMessage *)message {
-    [DConnectServiceInformationProfile message:message setConnectionState:state forKey:DConnectServiceInformationProfileParamNFC];
+    [DConnectServiceInformationProfile message:message
+                            setConnectionState:state
+                                        forKey:DConnectServiceInformationProfileParamNFC];
 }
 
 + (void) setBLEState:(DConnectServiceInformationProfileConnectState)state target:(DConnectMessage *)message {
-    [DConnectServiceInformationProfile message:message setConnectionState:state forKey:DConnectServiceInformationProfileParamBLE];
+    [DConnectServiceInformationProfile message:message
+                            setConnectionState:state
+                                        forKey:DConnectServiceInformationProfileParamBLE];
 }
 
 #pragma mark - Private Methods
@@ -125,6 +138,9 @@ NSString *const DConnectServiceInformationProfileParamBLE = @"ble";
             [message setBool:YES forKey:aKey];
             break;
         case DConnectServiceInformationProfileConnectStateOff:
+            [message setBool:NO forKey:aKey];
+            break;
+        case DConnectServiceInformationProfileConnectStateNone:
             [message setBool:NO forKey:aKey];
             break;
         default:
