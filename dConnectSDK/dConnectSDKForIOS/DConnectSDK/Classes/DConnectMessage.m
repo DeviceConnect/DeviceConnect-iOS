@@ -23,6 +23,8 @@ NSString *const DConnectMessageAPI = @"api";
 NSString *const DConnectMessageResult = @"result";
 NSString *const DConnectMessageErrorCode = @"errorCode";
 NSString *const DConnectMessageErrorMessage = @"errorMessage";
+NSString *const DConnectMessageProduct = @"product";
+NSString *const DConnectMessageVersion = @"version";
 
 NSString *const DConnectMessageDefaultAPI = @"gotapi";
 
