@@ -144,7 +144,7 @@
  */
 - (void) testHttpNormalEmptyProfile
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi//ping/ping?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi//ping/ping?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
     
@@ -173,7 +173,7 @@
  */
 - (void) testHttpNormalEmptyInterface
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/ping//ping?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/ping//ping?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
     
@@ -202,7 +202,7 @@
  */
 - (void) testHttpNormalEmptyAttribute
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/ping/ping/?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/ping/ping/?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
     
@@ -223,7 +223,7 @@
  */
 - (void) testHttpNormalEmptyProfileEmptyInterface
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi///ping?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi///ping?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
     
@@ -252,7 +252,7 @@
  */
 - (void) testHttpNormalEmptyProfileEmptyAttribute
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi//ping/?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi//ping/?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
     
@@ -341,7 +341,7 @@
  */
 - (void) testNoProfileInvalidApiValidPath
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/not_gotapi/ping/?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/not_gotapi/ping/?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
     
@@ -386,7 +386,7 @@
 
 //- (void) testHttpNormalSyncResponseTimout
 //{
-//    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/timeout/sync?deviceId=%@", self.deviceId]];
+//    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/timeout/sync?serviceId=%@", self.serviceId]];
 //    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
 //    [request setHTTPMethod:@"GET"];
 //    [request setTimeoutInterval:DCONNECT_RESPONSE_TIMEOUT_SEC * 2];
@@ -396,7 +396,7 @@
 //
 //- (void) testHttpNormalAyncResponseTimout
 //{
-//    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/timeout/async?deviceId=%@", self.deviceId]];
+//    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/timeout/async?serviceId=%@", self.serviceId]];
 //    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
 //    [request setHTTPMethod:@"GET"];
 //    [request setTimeoutInterval:DCONNECT_RESPONSE_TIMEOUT_SEC * 2];

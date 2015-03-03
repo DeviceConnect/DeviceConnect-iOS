@@ -119,7 +119,7 @@
         NSArray *params = [key componentsSeparatedByString:@" "];
         if ([params count] == 5) {
             
-            NSString *deviceId = [params[0] stringByRemovingPercentEncoding];
+            NSString *serviceId = [params[0] stringByRemovingPercentEncoding];
             NSString *sessionKey = [params[1] stringByRemovingPercentEncoding];
             NSString *profile = [params[2] stringByRemovingPercentEncoding];
             NSString *interface = [params[3] stringByRemovingPercentEncoding];
@@ -128,8 +128,8 @@
             DConnectRequestMessage *req = [DConnectRequestMessage message];
             req.action = DConnectMessageActionTypeDelete;
             
-            if (![self isEmptyString:deviceId]) {
-                req.deviceId = deviceId;
+            if (![self isEmptyString:serviceId]) {
+                req.serviceId = serviceId;
             }
             
             req.profile = profile;
@@ -160,8 +160,8 @@
     
     NSMutableString *key = [NSMutableString string];
     
-    if (![self isEmptyString:[message stringForKey:DConnectMessageDeviceId]]) {
-        [key appendString:[[message stringForKey:DConnectMessageDeviceId]
+    if (![self isEmptyString:[message stringForKey:DConnectMessageServiceId]]) {
+        [key appendString:[[message stringForKey:DConnectMessageServiceId]
                            stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
     }
     

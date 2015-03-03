@@ -26,17 +26,17 @@
         interfaceMatch = YES;
     }
     
-    BOOL deviceIdMatch = NO;
-    if ((_deviceId == nil && other.deviceId == nil)
-        || (_deviceId != nil && [_deviceId isEqualToString:other.deviceId]))
+    BOOL serviceIdMatch = NO;
+    if ((_serviceId == nil && other.serviceId == nil)
+        || (_serviceId != nil && [_serviceId isEqualToString:other.serviceId]))
     {
-        deviceIdMatch = YES;
+        serviceIdMatch = YES;
     }
     
     return ([_profile isEqualToString:other.profile] &&
             interfaceMatch &&
             [_attribute isEqualToString:other.attribute] &&
-            deviceIdMatch &&
+            serviceIdMatch &&
             [_sessionKey isEqualToString:other.sessionKey]);
     
 }
@@ -47,7 +47,7 @@
     [aCoder encodeObject:_profile forKey:@"profile"];
     [aCoder encodeObject:_interface forKey:@"interface"];
     [aCoder encodeObject:_attribute forKey:@"attribute"];
-    [aCoder encodeObject:_deviceId forKey:@"deviceId"];
+    [aCoder encodeObject:_serviceId forKey:@"serviceId"];
     [aCoder encodeObject:_accessToken forKey:@"accessToken"];
     [aCoder encodeObject:_sessionKey forKey:@"sessionKey"];
     [aCoder encodeObject:_createDate forKey:@"createDate"];
@@ -62,7 +62,7 @@
         _profile = [aDecode decodeObjectOfClass:[NSString class] forKey:@"profile"];
         _interface = [aDecode decodeObjectOfClass:[NSString class] forKey:@"interface"];
         _attribute = [aDecode decodeObjectOfClass:[NSString class] forKey:@"attribute"];
-        _deviceId = [aDecode decodeObjectOfClass:[NSString class] forKey:@"deviceId"];
+        _serviceId = [aDecode decodeObjectOfClass:[NSString class] forKey:@"serviceId"];
         _accessToken = [aDecode decodeObjectOfClass:[NSString class] forKey:@"accessToken"];
         _sessionKey = [aDecode decodeObjectOfClass:[NSString class] forKey:@"sessionKey"];
         _createDate = [aDecode decodeObjectOfClass:[NSDate class] forKey:@"createDate"];

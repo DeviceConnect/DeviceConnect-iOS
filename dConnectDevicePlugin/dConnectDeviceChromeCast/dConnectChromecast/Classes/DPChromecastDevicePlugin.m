@@ -9,7 +9,7 @@
 
 #import "DPChromecastDevicePlugin.h"
 #import "DPChromecastSystemProfile.h"
-#import "DPChromecastNetworkServiceDiscoveryProfile.h"
+#import "DPChromecastServiceDiscoveryProfile.h"
 #import "DPChromecastNotificationProfile.h"
 #import "DPChromecastMediaPlayerProfile.h"
 #import "DPChromecastManager.h"
@@ -30,7 +30,7 @@
         [[DConnectEventManager sharedManagerForClass:key] setController:[DConnectDBCacheController controllerWithClass:key]];
 
         // プロファイルを追加
-        [self addProfile:[DPChromecastNetworkServiceDiscoveryProfile new]];
+        [self addProfile:[DPChromecastServiceDiscoveryProfile new]];
         [self addProfile:[DPChromecastSystemProfile new]];
         [self addProfile:[DPChromecastNotificationProfile new]];
         [self addProfile:[DPChromecastMediaPlayerProfile new]];

@@ -17,7 +17,7 @@
 #import "DPHostFileProfile.h"
 #import "DPHostMediaPlayerProfile.h"
 #import "DPHostMediaStreamRecordingProfile.h"
-#import "DPHostNetworkServiceDiscoveryProfile.h"
+#import "DPHostServiceDiscoveryProfile.h"
 #import "DPHostNotificationProfile.h"
 #import "DPHostPhoneProfile.h"
 #import "DPHostProximityProfile.h"
@@ -50,7 +50,7 @@
         [self addProfile:[DPHostFileProfile new]];
         [self addProfile:[DPHostMediaPlayerProfile new]];
         [self addProfile:[DPHostMediaStreamRecordingProfile new]];
-        [self addProfile:[DPHostNetworkServiceDiscoveryProfile new]];
+        [self addProfile:[DPHostServiceDiscoveryProfile new]];
         [self addProfile:[DPHostNotificationProfile new]];
         [self addProfile:[DPHostPhoneProfile new]];
         [self addProfile:[DPHostProximityProfile new]];

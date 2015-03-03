@@ -9,7 +9,7 @@
 #import "DPSpheroSensorProfile.h"
 #import "DPSpheroDevicePlugin.h"
 #import "DPSpheroManager.h"
-#import "DPSpheroNetworkServiceDiscoveryProfile.h"
+#import "DPSpheroServiceDiscoveryProfile.h"
 
 @interface DPSpheroSensorProfile() <DPSpheroManagerSensorDelegate>
 @end
@@ -34,7 +34,7 @@
               param:(NSString*)param
 {
     DConnectEventManager *mgr = [DConnectEventManager sharedManagerForClass:[DPSpheroDevicePlugin class]];
-    NSArray *events  = [mgr eventListForDeviceId:[DPSpheroManager sharedManager].currentDeviceID
+    NSArray *events  = [mgr eventListForServiceId:[DPSpheroManager sharedManager].currentServiceID
                                          profile:DPSpheroProfileName
                                        interface:interface
                                        attribute:attribute];
@@ -151,7 +151,7 @@
 
 // Quaternionのイベントを登録
 - (BOOL) profile:(DPSpheroProfile *)profile didReceivePutOnQuaternionRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response deviceId:(NSString *)deviceId sessionKey:(NSString *)sessionKey
+        response:(DConnectResponseMessage *)response serviceId:(NSString *)serviceId sessionKey:(NSString *)sessionKey
 {
     // 接続確認
     CONNECT_CHECK();
@@ -164,7 +164,7 @@
 
 // Quaternionのイベント登録を解除
 - (BOOL) profile:(DPSpheroProfile *)profile didReceiveDeleteOnQuaternionRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response deviceId:(NSString *)deviceId sessionKey:(NSString *)sessionKey
+        response:(DConnectResponseMessage *)response serviceId:(NSString *)serviceId sessionKey:(NSString *)sessionKey
 {
     // 接続確認
     CONNECT_CHECK();
@@ -180,7 +180,7 @@
 
 // Locatorのイベントを登録
 - (BOOL) profile:(DPSpheroProfile *)profile didReceivePutOnLocatorRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response deviceId:(NSString *)deviceId sessionKey:(NSString *)sessionKey
+        response:(DConnectResponseMessage *)response serviceId:(NSString *)serviceId sessionKey:(NSString *)sessionKey
 {
     // 接続確認
     CONNECT_CHECK();
@@ -193,7 +193,7 @@
 
 // Locatorのイベント登録を解除
 - (BOOL) profile:(DPSpheroProfile *)profile didReceiveDeleteOnLocatorRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response deviceId:(NSString *)deviceId sessionKey:(NSString *)sessionKey
+        response:(DConnectResponseMessage *)response serviceId:(NSString *)serviceId sessionKey:(NSString *)sessionKey
 {
     // 接続確認
     CONNECT_CHECK();
@@ -209,7 +209,7 @@
 
 // Collisionのイベントを登録
 - (BOOL) profile:(DPSpheroProfile *)profile didReceivePutOnCollisionRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response deviceId:(NSString *)deviceId sessionKey:(NSString *)sessionKey
+        response:(DConnectResponseMessage *)response serviceId:(NSString *)serviceId sessionKey:(NSString *)sessionKey
 {
     // 接続確認
     CONNECT_CHECK();
@@ -222,7 +222,7 @@
 
 // Collisionのイベント登録を解除
 - (BOOL) profile:(DPSpheroProfile *)profile didReceiveDeleteOnCollisionRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response deviceId:(NSString *)deviceId sessionKey:(NSString *)sessionKey
+        response:(DConnectResponseMessage *)response serviceId:(NSString *)serviceId sessionKey:(NSString *)sessionKey
 {
     // 接続確認
     CONNECT_CHECK();

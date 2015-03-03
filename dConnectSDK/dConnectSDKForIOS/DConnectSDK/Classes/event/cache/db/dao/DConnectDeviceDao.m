@@ -11,9 +11,9 @@
 #import "DConnectEventDao.h"
 
 NSString *const DConnectDeviceDaoTableName = @"Device";
-NSString *const DConnectDeviceDaoClmDeviceId = @"device_id";
+NSString *const DConnectDeviceDaoClmServiceId = @"service_id";
 
-NSString *const DConnectDeviceDaoEmptyDeviceId = @"";
+NSString *const DConnectDeviceDaoEmptyServiceId = @"";
 
 @implementation DConnectDeviceDao
 
@@ -22,25 +22,25 @@ NSString *const DConnectDeviceDaoEmptyDeviceId = @"";
     NSString *sql = DCEForm(@"CREATE TABLE %@ (%@ INTEGER PRIMARY KEY AUTOINCREMENT, %@ TEXT NOT NULL, %@ INTEGER NOT NULL, %@ INTEGER NOT NULL, UNIQUE(%@));",
                             DConnectDeviceDaoTableName,
                             DConnectEventDaoClmId,
-                            DConnectDeviceDaoClmDeviceId,
+                            DConnectDeviceDaoClmServiceId,
                             DConnectEventDaoClmCreateDate,
                             DConnectEventDaoClmUpdateDate,
-                            DConnectDeviceDaoClmDeviceId);
+                            DConnectDeviceDaoClmServiceId);
     
     if (![database execSQL:sql]) {
         @throw @"error";
     }
 }
 
-+ (long long) insertWithDeviceId:(NSString *)deviceId toDatabase:(DConnectSQLiteDatabase *)database {
++ (long long) insertWithServiceId:(NSString *)serviceId toDatabase:(DConnectSQLiteDatabase *)database {
     
-    deviceId = (deviceId != nil) ? deviceId : DConnectDeviceDaoEmptyDeviceId;
+    serviceId = (serviceId != nil) ? serviceId : DConnectDeviceDaoEmptyServiceId;
     long long result = -1;
     DConnectSQLiteCursor *cursor
     = [database selectFromTable:DConnectDeviceDaoTableName
                         columns:@[DConnectEventDaoClmId]
-                          where:DCEForm(@"%@=?", DConnectDeviceDaoClmDeviceId)
-                     bindParams:@[deviceId]];
+                          where:DCEForm(@"%@=?", DConnectDeviceDaoClmServiceId)
+                     bindParams:@[serviceId]];
     
     if (!cursor) {
         return result;
@@ -49,9 +49,9 @@ NSString *const DConnectDeviceDaoEmptyDeviceId = @"";
     if (cursor.count == 0) {
         NSNumber *current = [NSNumber numberWithLongLong:getCurrentTimeInMillis()];
         result = [database insertIntoTable:DConnectDeviceDaoTableName
-                                   columns:@[DConnectDeviceDaoClmDeviceId, DConnectEventDaoClmCreateDate,
+                                   columns:@[DConnectDeviceDaoClmServiceId, DConnectEventDaoClmCreateDate,
                                              DConnectEventDaoClmUpdateDate]
-                                    params:@[deviceId, current, current]];
+                                    params:@[serviceId, current, current]];
     } else if ([cursor moveToFirst]) {
         result = [cursor longLongValueAtIndex:0];
     }

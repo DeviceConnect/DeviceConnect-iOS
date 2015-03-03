@@ -12,7 +12,7 @@
 
 NSString *const TestDevicePluginAppName = @"Test Device Plugin v0.1";
 
-// Network Service Discoveryの定数
+// Service Discoveryの定数
 
 NSString *const TestDevicePluginName = @"TestDevicePlugin";
 NSString *const TestDevicePluginId = @"0";
@@ -33,14 +33,14 @@ const long TestDevicePluginBatteryDischargingTime = 10000;
 const float TestDevicePluginBatteryLevel = 0.5;
 
 
-@interface TestDevicePlugin : DConnectDevicePlugin <DConnectNetworkServiceDiscoveryProfileDelegate, DConnectSystemProfileDelegate, DConnectBatteryProfileDelegate, DConnectSystemProfileDataSource>
+@interface TestDevicePlugin : DConnectDevicePlugin <DConnectServiceDiscoveryProfileDelegate, DConnectSystemProfileDelegate, DConnectBatteryProfileDelegate, DConnectSystemProfileDataSource>
 
 /*!
- * デバイスIDの正当性をチェックする.
- * @param deviceId デバイスID
+ * サービスIDの正当性をチェックする.
+ * @param serviceId サービスID
  * @return 正常な場合はtrue、それ以外はfalse
  */
-- (BOOL) checkDeviceId:(NSString *)deviceId;
+- (BOOL) checkServiceId:(NSString *)serviceId;
 
 @end
 
@@ -55,8 +55,8 @@ const float TestDevicePluginBatteryLevel = 0.5;
         // イベント管理クラス
         [DConnectEventManager sharedManagerForClass:[self class]];
         
-        // Network Service Discovery Profileの追加
-        DConnectNetworkServiceDiscoveryProfile *networkProfile = [DConnectNetworkServiceDiscoveryProfile new];
+        // Service Discovery Profileの追加
+        DConnectServiceDiscoveryProfile *networkProfile = [DConnectServiceDiscoveryProfile new];
         networkProfile.delegate = self;
         
         // System Profileの追加
@@ -78,29 +78,29 @@ const float TestDevicePluginBatteryLevel = 0.5;
 
 #pragma mark - Public Methods -
 
-- (BOOL) checkDeviceId:(NSString *)deviceId {
-    return [TestDevicePluginId isEqualToString:deviceId];
+- (BOOL) checkServiceId:(NSString *)serviceId {
+    return [TestDevicePluginId isEqualToString:serviceId];
 }
 
 
-#pragma mark - DConnectNetworkServiceDiscoveryProfileDelegate
+#pragma mark - DConnectServiceDiscoveryProfileDelegate
 
-- (BOOL)                       profile:(DConnectNetworkServiceDiscoveryProfile *)profile
-didReceiveGetGetNetworkServicesRequest:(DConnectRequestMessage *)request
+- (BOOL)                       profile:(DConnectServiceDiscoveryProfile *)profile
+didReceiveGetServicesRequest:(DConnectRequestMessage *)request
                               response:(DConnectResponseMessage *)response
 {
     DConnectArray *services = [DConnectArray array];
     
     DConnectMessage *service = [DConnectMessage message];
-    [DConnectNetworkServiceDiscoveryProfile setId:TestDevicePluginId target:service];
-    [DConnectNetworkServiceDiscoveryProfile setName:TestDevicePluginName target:service];
-    [DConnectNetworkServiceDiscoveryProfile setType:TestDevicePluginType
+    [DConnectServiceDiscoveryProfile setId:TestDevicePluginId target:service];
+    [DConnectServiceDiscoveryProfile setName:TestDevicePluginName target:service];
+    [DConnectServiceDiscoveryProfile setType:TestDevicePluginType
                                              target:service];
-    [DConnectNetworkServiceDiscoveryProfile setOnline:YES target:service];
+    [DConnectServiceDiscoveryProfile setOnline:YES target:service];
     [services addMessage:service];
     
     [response setInteger:DConnectMessageResultTypeOk forKey:DConnectMessageResult];
-    [response setArray:services forKey:DConnectNetworkServiceDiscoveryProfileParamServices];
+    [response setArray:services forKey:DConnectServiceDiscoveryProfileParamServices];
     
     return YES;
 }
@@ -125,12 +125,12 @@ didReceiveGetGetNetworkServicesRequest:(DConnectRequestMessage *)request
 - (BOOL)        profile:(DConnectBatteryProfile *)profile
 didReceiveGetAllRequest:(DConnectRequestMessage *)request
                response:(DConnectResponseMessage *)response
-               deviceId:(NSString *)deviceId
+               serviceId:(NSString *)serviceId
 {
-    if (!deviceId) {
-        [response setErrorToEmptyDeviceId];
-    } else if (![self checkDeviceId:deviceId]) {
-        [response setErrorToNotFoundDevice];
+    if (!serviceId) {
+        [response setErrorToEmptyServiceId];
+    } else if (![self checkServiceId:serviceId]) {
+        [response setErrorToNotFoundService];
     } else {
         [response setResult:DConnectMessageResultTypeOk];
         [DConnectBatteryProfile setCharging:TestDevicePluginBatteryCharging target:response];
@@ -144,12 +144,12 @@ didReceiveGetAllRequest:(DConnectRequestMessage *)request
 - (BOOL)          profile:(DConnectBatteryProfile *)profile
 didReceiveGetLevelRequest:(DConnectRequestMessage *)request
                  response:(DConnectResponseMessage *)response
-                 deviceId:(NSString *)deviceId
+                 serviceId:(NSString *)serviceId
 {
-    if (!deviceId) {
-        [response setErrorToEmptyDeviceId];
-    } else if (![self checkDeviceId:deviceId]) {
-        [response setErrorToNotFoundDevice];
+    if (!serviceId) {
+        [response setErrorToEmptyServiceId];
+    } else if (![self checkServiceId:serviceId]) {
+        [response setErrorToNotFoundService];
     } else {
         [response setResult:DConnectMessageResultTypeOk];
         [DConnectBatteryProfile setLevel:TestDevicePluginBatteryLevel target:response];
@@ -160,12 +160,12 @@ didReceiveGetLevelRequest:(DConnectRequestMessage *)request
 - (BOOL)             profile:(DConnectBatteryProfile *)profile
 didReceiveGetChargingRequest:(DConnectRequestMessage *)request
                     response:(DConnectResponseMessage *)response
-                    deviceId:(NSString *)deviceId
+                    serviceId:(NSString *)serviceId
 {
-    if (!deviceId) {
-        [response setErrorToEmptyDeviceId];
-    } else if (![self checkDeviceId:deviceId]) {
-        [response setErrorToNotFoundDevice];
+    if (!serviceId) {
+        [response setErrorToEmptyServiceId];
+    } else if (![self checkServiceId:serviceId]) {
+        [response setErrorToNotFoundService];
     } else {
         [response setResult:DConnectMessageResultTypeOk];
         [DConnectBatteryProfile setCharging:TestDevicePluginBatteryCharging target:response];
@@ -176,12 +176,12 @@ didReceiveGetChargingRequest:(DConnectRequestMessage *)request
 - (BOOL)                 profile:(DConnectBatteryProfile *)profile
 didReceiveGetChargingTimeRequest:(DConnectRequestMessage *)request
                         response:(DConnectResponseMessage *)response
-                        deviceId:(NSString *)deviceId
+                        serviceId:(NSString *)serviceId
 {
-    if (!deviceId) {
-        [response setErrorToEmptyDeviceId];
-    } else if (![self checkDeviceId:deviceId]) {
-        [response setErrorToNotFoundDevice];
+    if (!serviceId) {
+        [response setErrorToEmptyServiceId];
+    } else if (![self checkServiceId:serviceId]) {
+        [response setErrorToNotFoundService];
     } else {
         [response setResult:DConnectMessageResultTypeOk];
         [DConnectBatteryProfile setChargingTime:TestDevicePluginBatteryChargingTime target:response];
@@ -192,12 +192,12 @@ didReceiveGetChargingTimeRequest:(DConnectRequestMessage *)request
 - (BOOL)                    profile:(DConnectBatteryProfile *)profile
 didReceiveGetDischargingTimeRequest:(DConnectRequestMessage *)request
                            response:(DConnectResponseMessage *)response
-                           deviceId:(NSString *)deviceId
+                           serviceId:(NSString *)serviceId
 {
-    if (!deviceId) {
-        [response setErrorToEmptyDeviceId];
-    } else if (![self checkDeviceId:deviceId]) {
-        [response setErrorToNotFoundDevice];
+    if (!serviceId) {
+        [response setErrorToEmptyServiceId];
+    } else if (![self checkServiceId:serviceId]) {
+        [response setErrorToNotFoundService];
     } else {
         [response setResult:DConnectMessageResultTypeOk];
         [DConnectBatteryProfile setDischargingTime:TestDevicePluginBatteryDischargingTime target:response];
@@ -210,7 +210,7 @@ didReceiveGetDischargingTimeRequest:(DConnectRequestMessage *)request
 - (BOOL)                     profile:(DConnectBatteryProfile *)profile
 didReceivePutOnChargingChangeRequest:(DConnectRequestMessage *)request
                             response:(DConnectResponseMessage *)response
-                            deviceId:(NSString *)deviceId
+                            serviceId:(NSString *)serviceId
                           sessionKey:(NSString *)sessionKey
 {
     return YES;
@@ -219,7 +219,7 @@ didReceivePutOnChargingChangeRequest:(DConnectRequestMessage *)request
 - (BOOL)                    profile:(DConnectBatteryProfile *)profile
 didReceivePutOnBatteryChangeRequest:(DConnectRequestMessage *)request
                            response:(DConnectResponseMessage *)response
-                           deviceId:(NSString *)deviceId
+                           serviceId:(NSString *)serviceId
                          sessionKey:(NSString *)sessionKey
 {
     return YES;
@@ -230,7 +230,7 @@ didReceivePutOnBatteryChangeRequest:(DConnectRequestMessage *)request
 - (BOOL)                        profile:(DConnectBatteryProfile *)profile
 didReceiveDeleteOnChargingChangeRequest:(DConnectRequestMessage *)request
                                response:(DConnectResponseMessage *)response
-                               deviceId:(NSString *)deviceId
+                               serviceId:(NSString *)serviceId
                              sessionKey:(NSString *)sessionKey
 {
     return YES;
@@ -239,7 +239,7 @@ didReceiveDeleteOnChargingChangeRequest:(DConnectRequestMessage *)request
 - (BOOL)                       profile:(DConnectBatteryProfile *)profile
 didReceiveDeleteOnBatteryChangeRequest:(DConnectRequestMessage *)request
                               response:(DConnectResponseMessage *)response
-                              deviceId:(NSString *)deviceId
+                              serviceId:(NSString *)serviceId
                             sessionKey:(NSString *)sessionKey
 {
     return YES;

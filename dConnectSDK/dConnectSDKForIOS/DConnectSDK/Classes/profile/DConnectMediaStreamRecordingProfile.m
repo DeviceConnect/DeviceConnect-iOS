@@ -81,22 +81,22 @@ NSString *const DConnectMediaStreamRecordingProfileRecordingStateWarning = @"war
     }
     
     NSString *attribute = [request attribute];
-    NSString *deviceId = [request deviceId];
+    NSString *serviceId = [request serviceId];
     
     if ([attribute isEqualToString:DConnectMediaStreamRecordingProfileAttrMediaRecorder]) {
-        if ([self hasMethod:@selector(profile:didReceiveGetMediaRecorderRequest:response:deviceId:)
+        if ([self hasMethod:@selector(profile:didReceiveGetMediaRecorderRequest:response:serviceId:)
                    response:response])
         {
             send = [_delegate profile:self didReceiveGetMediaRecorderRequest:request
-                             response:response deviceId:deviceId];
+                             response:response serviceId:serviceId];
         }
     } else if ([attribute isEqualToString:DConnectMediaStreamRecordingProfileAttrOptions]) {
-        if ([self hasMethod:@selector(profile:didReceiveGetOptionsRequest:response:deviceId:target:)
+        if ([self hasMethod:@selector(profile:didReceiveGetOptionsRequest:response:serviceId:target:)
                    response:response])
         {
             NSString *target = [DConnectMediaStreamRecordingProfile targetFromRequest:request];
             send = [_delegate profile:self didReceiveGetOptionsRequest:request response:response
-                             deviceId:deviceId target:target];
+                             serviceId:serviceId target:target];
         }
     } else {
         [response setErrorToUnknownAttribute];
@@ -115,22 +115,22 @@ NSString *const DConnectMediaStreamRecordingProfileRecordingStateWarning = @"war
     }
     
     NSString *attribute = [request attribute];
-    NSString *deviceId = [request deviceId];
+    NSString *serviceId = [request serviceId];
     NSString *target = [DConnectMediaStreamRecordingProfile targetFromRequest:request];
     
     if ([attribute isEqualToString:DConnectMediaStreamRecordingProfileAttrTakePhoto]) {
-        if ([self hasMethod:@selector(profile:didReceivePostTakePhotoRequest:response:deviceId:target:)
+        if ([self hasMethod:@selector(profile:didReceivePostTakePhotoRequest:response:serviceId:target:)
                    response:response])
         {
             send = [_delegate profile:self didReceivePostTakePhotoRequest:request
-                             response:response deviceId:deviceId target:target];
+                             response:response serviceId:serviceId target:target];
         }
     } else if ([attribute isEqualToString:DConnectMediaStreamRecordingProfileAttrRecord]) {
-        if ([self hasMethod:@selector(profile:didReceivePostRecordRequest:response:deviceId:target:timeslice:)
+        if ([self hasMethod:@selector(profile:didReceivePostRecordRequest:response:serviceId:target:timeslice:)
                    response:response])
         {
             NSNumber *timeslice = [DConnectMediaStreamRecordingProfile timesliceFromRequest:request];
-            send = [_delegate profile:self didReceivePostRecordRequest:request response:response deviceId:deviceId
+            send = [_delegate profile:self didReceivePostRecordRequest:request response:response serviceId:serviceId
                                target:target timeslice:timeslice];
         }
     } else {
@@ -149,49 +149,49 @@ NSString *const DConnectMediaStreamRecordingProfileRecordingStateWarning = @"war
     }
     
     NSString *attribute = [request attribute];
-    NSString *deviceId = [request deviceId];
+    NSString *serviceId = [request serviceId];
     NSString *target = [DConnectMediaStreamRecordingProfile targetFromRequest:request];
     NSString *sessionKey = [request sessionKey];
     
     if ([attribute isEqualToString:DConnectMediaStreamRecordingProfileAttrPause]) {
-        if ([self hasMethod:@selector(profile:didReceivePutPauseRequest:response:deviceId:target:)
+        if ([self hasMethod:@selector(profile:didReceivePutPauseRequest:response:serviceId:target:)
                    response:response])
         {
             send = [_delegate profile:self didReceivePutPauseRequest:request
-                             response:response deviceId:deviceId target:target];
+                             response:response serviceId:serviceId target:target];
         }
     } else if ([attribute isEqualToString:DConnectMediaStreamRecordingProfileAttrResume]) {
-        if ([self hasMethod:@selector(profile:didReceivePutResumeRequest:response:deviceId:target:)
+        if ([self hasMethod:@selector(profile:didReceivePutResumeRequest:response:serviceId:target:)
                    response:response])
         {
             send = [_delegate profile:self didReceivePutResumeRequest:request
-                             response:response deviceId:deviceId target:target];
+                             response:response serviceId:serviceId target:target];
         }
     } else if ([attribute isEqualToString:DConnectMediaStreamRecordingProfileAttrStop]) {
-        if ([self hasMethod:@selector(profile:didReceivePutStopRequest:response:deviceId:target:)
+        if ([self hasMethod:@selector(profile:didReceivePutStopRequest:response:serviceId:target:)
                    response:response])
         {
             send = [_delegate profile:self didReceivePutStopRequest:request
-                             response:response deviceId:deviceId target:target];
+                             response:response serviceId:serviceId target:target];
         }
         
     } else if ([attribute isEqualToString:DConnectMediaStreamRecordingProfileAttrMuteTrack]) {
-        if ([self hasMethod:@selector(profile:didReceivePutMuteTrackRequest:response:deviceId:target:)
+        if ([self hasMethod:@selector(profile:didReceivePutMuteTrackRequest:response:serviceId:target:)
                    response:response])
         {
             send = [_delegate profile:self didReceivePutMuteTrackRequest:request
-                             response:response deviceId:deviceId target:target];
+                             response:response serviceId:serviceId target:target];
         }
     } else if ([attribute isEqualToString:DConnectMediaStreamRecordingProfileAttrUnmuteTrack]) {
-        if ([self hasMethod:@selector(profile:didReceivePutUnmuteTrackRequest:response:deviceId:target:)
+        if ([self hasMethod:@selector(profile:didReceivePutUnmuteTrackRequest:response:serviceId:target:)
                    response:response])
         {
             send = [_delegate profile:self didReceivePutUnmuteTrackRequest:request
-                             response:response deviceId:deviceId target:target];
+                             response:response serviceId:serviceId target:target];
         }
     } else if ([attribute isEqualToString:DConnectMediaStreamRecordingProfileAttrOptions]) {
         if ([self hasMethod:
-             @selector(profile:didReceivePutOptionsRequest:response:deviceId:target:imageWidth:imageHeight:mimeType:)
+             @selector(profile:didReceivePutOptionsRequest:response:serviceId:target:imageWidth:imageHeight:mimeType:)
                    response:response])
         {
             NSString *target = [DConnectMediaStreamRecordingProfile targetFromRequest:request];
@@ -199,31 +199,31 @@ NSString *const DConnectMediaStreamRecordingProfileRecordingStateWarning = @"war
             NSNumber *imageHeight = [DConnectMediaStreamRecordingProfile imageHeightFromRequest:request];
             NSString *mimeType = [DConnectMediaStreamRecordingProfile mimeTypeFromRequest:request];
             send = [_delegate profile:self didReceivePutOptionsRequest:request response:response
-                             deviceId:deviceId target:target
+                             serviceId:serviceId target:target
                            imageWidth:imageWidth imageHeight:imageHeight
                              mimeType:mimeType];
             
         }
     } else if ([attribute isEqualToString:DConnectMediaStreamRecordingProfileAttrOnPhoto]) {
-        if ([self hasMethod:@selector(profile:didReceivePutOnPhotoRequest:response:deviceId:sessionKey:)
+        if ([self hasMethod:@selector(profile:didReceivePutOnPhotoRequest:response:serviceId:sessionKey:)
                    response:response])
         {
             send = [_delegate profile:self didReceivePutOnPhotoRequest:request response:response
-                             deviceId:deviceId sessionKey:sessionKey];
+                             serviceId:serviceId sessionKey:sessionKey];
         }
     } else if ([attribute isEqualToString:DConnectMediaStreamRecordingProfileAttrOnRecordingChange]) {
-        if ([self hasMethod:@selector(profile:didReceivePutOnRecordingChangeRequest:response:deviceId:sessionKey:)
+        if ([self hasMethod:@selector(profile:didReceivePutOnRecordingChangeRequest:response:serviceId:sessionKey:)
                    response:response])
         {
             send = [_delegate profile:self didReceivePutOnRecordingChangeRequest:request response:response
-                             deviceId:deviceId sessionKey:sessionKey];
+                             serviceId:serviceId sessionKey:sessionKey];
         }
     } else if ([attribute isEqualToString:DConnectMediaStreamRecordingProfileAttrOnDataAvailable]) {
-        if ([self hasMethod:@selector(profile:didReceivePutOnDataAvailableRequest:response:deviceId:sessionKey:)
+        if ([self hasMethod:@selector(profile:didReceivePutOnDataAvailableRequest:response:serviceId:sessionKey:)
                    response:response])
         {
             send = [_delegate profile:self didReceivePutOnDataAvailableRequest:request response:response
-                             deviceId:deviceId sessionKey:sessionKey];
+                             serviceId:serviceId sessionKey:sessionKey];
         }
     } else {
         [response setErrorToUnknownAttribute];
@@ -235,30 +235,30 @@ NSString *const DConnectMediaStreamRecordingProfileRecordingStateWarning = @"war
 - (BOOL) didReceiveDeleteRequest:(DConnectRequestMessage *)request response:(DConnectResponseMessage *)response {
     BOOL send = YES;
     NSString *attribute = [request attribute];
-    NSString *deviceId = [request deviceId];
+    NSString *serviceId = [request serviceId];
     NSString *sessionKey = [request sessionKey];
     
     if ([attribute isEqualToString:DConnectMediaStreamRecordingProfileAttrOnPhoto]) {
-        if ([self hasMethod:@selector(profile:didReceiveDeleteOnPhotoRequest:response:deviceId:sessionKey:)
+        if ([self hasMethod:@selector(profile:didReceiveDeleteOnPhotoRequest:response:serviceId:sessionKey:)
                    response:response])
         {
             send = [_delegate profile:self didReceiveDeleteOnPhotoRequest:request response:response
-                             deviceId:deviceId sessionKey:sessionKey];
+                             serviceId:serviceId sessionKey:sessionKey];
         }
 
     } else if ([attribute isEqualToString:DConnectMediaStreamRecordingProfileAttrOnRecordingChange]) {
-        if ([self hasMethod:@selector(profile:didReceiveDeleteOnRecordingChangeRequest:response:deviceId:sessionKey:)
+        if ([self hasMethod:@selector(profile:didReceiveDeleteOnRecordingChangeRequest:response:serviceId:sessionKey:)
                    response:response])
         {
             send = [_delegate profile:self didReceiveDeleteOnRecordingChangeRequest:request response:response
-                             deviceId:deviceId sessionKey:sessionKey];
+                             serviceId:serviceId sessionKey:sessionKey];
         }
     } else if ([attribute isEqualToString:DConnectMediaStreamRecordingProfileAttrOnDataAvailable]) {
-        if ([self hasMethod:@selector(profile:didReceiveDeleteOnDataAvailableRequest:response:deviceId:sessionKey:)
+        if ([self hasMethod:@selector(profile:didReceiveDeleteOnDataAvailableRequest:response:serviceId:sessionKey:)
                    response:response])
         {
             send = [_delegate profile:self didReceiveDeleteOnDataAvailableRequest:request response:response
-                             deviceId:deviceId sessionKey:sessionKey];
+                             serviceId:serviceId sessionKey:sessionKey];
         }
     } else {
         [response setErrorToUnknownAttribute];

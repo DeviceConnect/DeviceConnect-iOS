@@ -74,20 +74,20 @@
     [self setError:DConnectMessageErrorCodeNotSupportAttribute message:message];
 }
 
-- (void) setErrorToEmptyDeviceId {
-    [self setErrorToEmptyDeviceIdWithMessage:@"Device ID is required."];
+- (void) setErrorToEmptyServiceId {
+    [self setErrorToEmptyServiceIdWithMessage:@"Service ID is required."];
 }
 
-- (void) setErrorToEmptyDeviceIdWithMessage:(NSString *)message {
-    [self setError:DConnectMessageErrorCodeEmptyDeviceId message:message];
+- (void) setErrorToEmptyServiceIdWithMessage:(NSString *)message {
+    [self setError:DConnectMessageErrorCodeEmptyServiceId message:message];
 }
 
-- (void) setErrorToNotFoundDevice {
-    [self setErrorToNotFoundDeviceWithMessage:@"Device was not found."];
+- (void) setErrorToNotFoundService {
+    [self setErrorToNotFoundServiceWithMessage:@"Service was not found."];
 }
 
-- (void) setErrorToNotFoundDeviceWithMessage:(NSString *)message {
-    [self setError:DConnectMessageErrorCodeNotFoundDevice message:message];
+- (void) setErrorToNotFoundServiceWithMessage:(NSString *)message {
+    [self setError:DConnectMessageErrorCodeNotFoundService message:message];
 }
 
 - (void) setErrorToTimeout {

@@ -46,11 +46,11 @@ NSString *const DCMTemperatureProfileParamType = @"type";
     NSString *profile = [request profile];
     
     if ([profile isEqualToString:DCMTemperatureProfileName]
-        && [self hasMethod:@selector(profile:didReceiveGetTemperatureRequest:response:deviceId:) response:response])
+        && [self hasMethod:@selector(profile:didReceiveGetTemperatureRequest:response:serviceId:) response:response])
     {
-        NSString *deviceId = [request deviceId];
+        NSString *serviceId = [request serviceId];
         send = [_delegate profile:self didReceiveGetTemperatureRequest:request response:response
-                         deviceId:deviceId];
+                         serviceId:serviceId];
     } else {
         [response setErrorToUnknownAttribute];
     }

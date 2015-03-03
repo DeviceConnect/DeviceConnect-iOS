@@ -21,7 +21,7 @@
 @implementation RESTfulFailNotificationProfileTest
 
 /*!
- * @brief deviceIdを指定せずに通知を送信するテストを行う.
+ * @brief serviceIdを指定せずに通知を送信するテストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: POST
@@ -32,7 +32,7 @@
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailNotificationNotifyPostNoDeviceId
+- (void) testHttpFailNotificationNotifyPostNoServiceId
 {
     NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/notification/notify?notificationId=1"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
@@ -42,20 +42,20 @@
 }
 
 /*!
- * @brief deviceIdが空状態で通知を送信するテストを行う.
+ * @brief serviceIdが空状態で通知を送信するテストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: POST
- * Path: /notification/notify?deviceId=&type=0
+ * Path: /notification/notify?serviceId=&type=0
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailNotificationNotifyPostEmptyDeviceId
+- (void) testHttpFailNotificationNotifyPostEmptyServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/notification/notify?notificationId=1&deviceId="];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/notification/notify?notificationId=1&serviceId="];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"POST"];
     
@@ -63,20 +63,20 @@
 }
 
 /*!
- * @brief 存在しないdeviceIdで通知を送信するテストを行う.
+ * @brief 存在しないserviceIdで通知を送信するテストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: POST
- * Path: /notification/notify?deviceId=123456789&type=0
+ * Path: /notification/notify?serviceId=123456789&type=0
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailNotificationNotifyPostInvalidDeviceId
+- (void) testHttpFailNotificationNotifyPostInvalidServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/notification/notify?notificationId=1&deviceId=12345678"];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/notification/notify?notificationId=1&serviceId=12345678"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"POST"];
     
@@ -84,7 +84,7 @@
 }
 
 /*!
- * @brief deviceIdを指定せずに通知を削除するテストを行う.
+ * @brief serviceIdを指定せずに通知を削除するテストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
@@ -95,7 +95,7 @@
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailNotificationNotifyDeleteNoDeviceId
+- (void) testHttpFailNotificationNotifyDeleteNoServiceId
 {
     NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/notification/notify"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
@@ -105,20 +105,20 @@
 }
 
 /*!
- * @brief deviceIdが空状態で通知を削除するテストを行う.
+ * @brief serviceIdが空状態で通知を削除するテストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /notification/notify?deviceId=&notificationId=xxxx
+ * Path: /notification/notify?serviceId=&notificationId=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailNotificationNotifyDeleteEmptyDeviceId
+- (void) testHttpFailNotificationNotifyDeleteEmptyServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/notification/notify?deviceId="];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/notification/notify?serviceId="];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     
@@ -126,20 +126,20 @@
 }
 
 /*!
- * @brief 存在しないdeviceIdで通知を削除するテストを行う.
+ * @brief 存在しないserviceIdで通知を削除するテストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /notification/notify?deviceId=123456789&notificationId=xxxx
+ * Path: /notification/notify?serviceId=123456789&notificationId=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailNotificationNotifyDeleteInvalidDeviceId
+- (void) testHttpFailNotificationNotifyDeleteInvalidServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/notification/notify?deviceId=12345678"];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/notification/notify?serviceId=12345678"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     
@@ -151,7 +151,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: GET
- * Path: /notification/notify?deviceId=xxxx&type=0
+ * Path: /notification/notify?serviceId=xxxx&type=0
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -160,7 +160,7 @@
  */
 - (void) testHttpFailNotificationNotifyDeleteInvalidMethodGet
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/notification/notify?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/notification/notify?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
     
@@ -172,7 +172,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /notification/notify?deviceId=xxxx
+ * Path: /notification/notify?serviceId=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -181,7 +181,7 @@
  */
 - (void) testHttpFailNotificationNotifyDeleteInvalidMethodPut
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/notification/notify?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/notification/notify?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
@@ -189,7 +189,7 @@
 }
 
 /*!
- * @brief deviceIdが無い状態でonclick属性のコールバック登録テストを行う.
+ * @brief serviceIdが無い状態でonclick属性のコールバック登録テストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: PUT
@@ -200,7 +200,7 @@
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailNotificationOnClickPutNoDeviceId
+- (void) testHttpFailNotificationOnClickPutNoServiceId
 {
     NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/notification/onclick"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
@@ -210,20 +210,20 @@
 }
 
 /*!
- * @brief deviceIdが空状態でonclick属性のコールバック登録テストを行う.
+ * @brief serviceIdが空状態でonclick属性のコールバック登録テストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /notification/onclick?deviceId=&sessionKey=xxxx
+ * Path: /notification/onclick?serviceId=&sessionKey=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailNotificationOnClickPutEmptyDeviceId
+- (void) testHttpFailNotificationOnClickPutEmptyServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/notification/onclick?deviceId="];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/notification/onclick?serviceId="];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
@@ -231,20 +231,20 @@
 }
 
 /*!
- * @brief 存在しないdeviceIdでonclick属性のコールバック登録テストを行う.
+ * @brief 存在しないserviceIdでonclick属性のコールバック登録テストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /notification/onclick?deviceId=123456789&sessionKey=xxxx
+ * Path: /notification/onclick?serviceId=123456789&sessionKey=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailNotificationOnClickPutInvalidDeviceId
+- (void) testHttpFailNotificationOnClickPutInvalidServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/notification/onclick?deviceId=12345678"];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/notification/onclick?serviceId=12345678"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
@@ -252,7 +252,7 @@
 }
 
 /*!
- * @brief deviceIdが無い状態でonclick属性のコールバック登録テストを行う.
+ * @brief serviceIdが無い状態でonclick属性のコールバック登録テストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: PUT
@@ -265,7 +265,7 @@
  */
 - (void) testHttpFailNotificationOnClickPutNoSessionKey
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/notification/onclick?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/notification/onclick?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
@@ -277,7 +277,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /notification/onclick?sessionKey=&deviceId=xxxx
+ * Path: /notification/onclick?sessionKey=&serviceId=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -286,7 +286,7 @@
  */
 - (void) testHttpFailNotificationOnClickPutEmptySessionKey
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/notification/onclick?deviceId=%@&sessionKey=", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/notification/onclick?serviceId=%@&sessionKey=", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
@@ -294,7 +294,7 @@
 }
 
 /*!
- * @brief deviceIdが無い状態でonclick属性のコールバック解除テストを行う.
+ * @brief serviceIdが無い状態でonclick属性のコールバック解除テストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
@@ -305,7 +305,7 @@
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailNotificationOnClickDeleteNoDeviceId
+- (void) testHttpFailNotificationOnClickDeleteNoServiceId
 {
     NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/notification/onclick"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
@@ -315,20 +315,20 @@
 }
 
 /*!
- * @brief deviceIdが空状態でonclick属性のコールバック解除テストを行う.
+ * @brief serviceIdが空状態でonclick属性のコールバック解除テストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /notification/onclick?deviceId=&sessionKey=xxxx
+ * Path: /notification/onclick?serviceId=&sessionKey=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailNotificationOnClickDeleteEmptyDeviceId
+- (void) testHttpFailNotificationOnClickDeleteEmptyServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/notification/onclick?deviceId="];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/notification/onclick?serviceId="];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     
@@ -336,20 +336,20 @@
 }
 
 /*!
- * @brief 存在しないdeviceIdでonclick属性のコールバック解除テストを行う.
+ * @brief 存在しないserviceIdでonclick属性のコールバック解除テストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /notification/onclick?deviceId=123456789&sessionKey=xxxx
+ * Path: /notification/onclick?serviceId=123456789&sessionKey=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailNotificationOnClickDeleteInvalidDeviceId
+- (void) testHttpFailNotificationOnClickDeleteInvalidServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/notification/onclick?deviceId=12345678"];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/notification/onclick?serviceId=12345678"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     
@@ -361,7 +361,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /notification/onclick?deviceId=xxxx
+ * Path: /notification/onclick?serviceId=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -370,7 +370,7 @@
  */
 - (void) testHttpFailNotificationOnClickDeleteNoSessionKey
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/notification/onclick?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/notification/onclick?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     
@@ -382,7 +382,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /notification/onclick?deviceId=xxxx&sessionKey=
+ * Path: /notification/onclick?serviceId=xxxx&sessionKey=
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -391,7 +391,7 @@
  */
 - (void) testHttpFailNotificationOnClickDeleteEmptySessionKey
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/notification/onclick?deviceId=%@&sessionKey=", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/notification/onclick?serviceId=%@&sessionKey=", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     
@@ -403,7 +403,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: GET
- * Path: /notification/onclick?deviceId=xxxx&sessionKey=xxxx
+ * Path: /notification/onclick?serviceId=xxxx&sessionKey=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -412,7 +412,7 @@
  */
 - (void) testHttpFailNotificationOnClickInvalidMethodGet
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/notification/onclick?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/notification/onclick?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
     
@@ -424,7 +424,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: POST
- * Path: /notification/onclick?deviceId=xxxx&sessionKey=xxxx
+ * Path: /notification/onclick?serviceId=xxxx&sessionKey=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -433,7 +433,7 @@
  */
 - (void) testHttpFailNotificationOnClickInvalidMethodPost
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/notification/onclick?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/notification/onclick?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"POST"];
     
@@ -441,7 +441,7 @@
 }
 
 /*!
- * @brief deviceIdが無い状態でonshow属性のコールバック登録テストを行う.
+ * @brief serviceIdが無い状態でonshow属性のコールバック登録テストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: PUT
@@ -452,7 +452,7 @@
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailNotificationOnShowPutNoDeviceId
+- (void) testHttpFailNotificationOnShowPutNoServiceId
 {
     NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/notification/onshow"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
@@ -462,20 +462,20 @@
 }
 
 /*!
- * @brief deviceIdが空状態でonshow属性のコールバック登録テストを行う.
+ * @brief serviceIdが空状態でonshow属性のコールバック登録テストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /notification/onshow?deviceId=&sessionKey=xxxx
+ * Path: /notification/onshow?serviceId=&sessionKey=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailNotificationOnShowPutEmptyDeviceId
+- (void) testHttpFailNotificationOnShowPutEmptyServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/notification/onshow?deviceId="];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/notification/onshow?serviceId="];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
@@ -483,20 +483,20 @@
 }
 
 /*!
- * @brief 存在しないdeviceIdでonshow属性のコールバック登録テストを行う.
+ * @brief 存在しないserviceIdでonshow属性のコールバック登録テストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /notification/onshow?deviceId=123456789&sessionKey=xxxx
+ * Path: /notification/onshow?serviceId=123456789&sessionKey=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailNotificationOnShowPutInvalidDeviceId
+- (void) testHttpFailNotificationOnShowPutInvalidServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/notification/onshow?deviceId=12345678"];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/notification/onshow?serviceId=12345678"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
@@ -508,7 +508,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /notification/onshow?deviceId=xxxx
+ * Path: /notification/onshow?serviceId=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -517,7 +517,7 @@
  */
 - (void) testHttpFailNotificationOnShowPutNoSessionKey
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/notification/onshow?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/notification/onshow?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
@@ -529,7 +529,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /notification/onshow?deviceId=xxxx&sessionKey=
+ * Path: /notification/onshow?serviceId=xxxx&sessionKey=
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -538,7 +538,7 @@
  */
 - (void) testHttpFailNotificationOnShowPutEmptySessionKey
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/notification/onshow?deviceId=%@&sessionKey=", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/notification/onshow?serviceId=%@&sessionKey=", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
@@ -546,7 +546,7 @@
 }
 
 /*!
- * @brief deviceIdが無い状態でonshow属性のコールバック解除テストを行う.
+ * @brief serviceIdが無い状態でonshow属性のコールバック解除テストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
@@ -557,7 +557,7 @@
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailNotificationOnShowDeleteNoDeviceId
+- (void) testHttpFailNotificationOnShowDeleteNoServiceId
 {
     NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/notification/onshow"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
@@ -567,20 +567,20 @@
 }
 
 /*!
- * @brief deviceIdが空状態でonshow属性のコールバック解除テストを行う.
+ * @brief serviceIdが空状態でonshow属性のコールバック解除テストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /notification/onshow?deviceId=&sessionKey=xxxx
+ * Path: /notification/onshow?serviceId=&sessionKey=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailNotificationOnShowDeleteEmptyDeviceId
+- (void) testHttpFailNotificationOnShowDeleteEmptyServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/notification/onshow?deviceId="];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/notification/onshow?serviceId="];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     
@@ -588,20 +588,20 @@
 }
 
 /*!
- * @brief 存在しないdeviceIdでonshow属性のコールバック解除テストを行う.
+ * @brief 存在しないserviceIdでonshow属性のコールバック解除テストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /notification/onshow?deviceId=123456789&sessionKey=xxxx
+ * Path: /notification/onshow?serviceId=123456789&sessionKey=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailNotificationOnShowDeleteInvalidDeviceId
+- (void) testHttpFailNotificationOnShowDeleteInvalidServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/notification/onshow?deviceId=12345678"];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/notification/onshow?serviceId=12345678"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     
@@ -613,7 +613,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /notification/onshow?deviceId=xxxx
+ * Path: /notification/onshow?serviceId=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -622,7 +622,7 @@
  */
 - (void) testHttpFailNotificationOnShowDeleteNoSessionKey
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/notification/onshow?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/notification/onshow?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     
@@ -634,7 +634,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /notification/onshow?deviceId=xxxx&sessionKey=
+ * Path: /notification/onshow?serviceId=xxxx&sessionKey=
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -643,7 +643,7 @@
  */
 - (void) testHttpFailNotificationOnShowDeleteEmptySessionKey
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/notification/onshow?deviceId=%@&sessionKey=", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/notification/onshow?serviceId=%@&sessionKey=", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     
@@ -655,7 +655,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: GET
- * Path: /notification/onshow?deviceId=xxxx&sessionKey=xxxx
+ * Path: /notification/onshow?serviceId=xxxx&sessionKey=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -664,7 +664,7 @@
  */
 - (void) testHttpFailNotificationOnShowInvalidMethodGet
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/notification/onshow?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/notification/onshow?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
     
@@ -676,7 +676,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: POST
- * Path: /notification/onshow?deviceId=xxxx&sessionKey=xxxx
+ * Path: /notification/onshow?serviceId=xxxx&sessionKey=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -685,7 +685,7 @@
  */
 - (void) testHttpFailNotificationOnShowInvalidMethodPost
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/notification/onshow?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/notification/onshow?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"POST"];
     
@@ -693,7 +693,7 @@
 }
 
 /*!
- * @brief deviceIdが無い状態でonclose属性のコールバック登録テストを行う.
+ * @brief serviceIdが無い状態でonclose属性のコールバック登録テストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: PUT
@@ -704,7 +704,7 @@
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailNotificationOnClosePutNoDeviceId
+- (void) testHttpFailNotificationOnClosePutNoServiceId
 {
     NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/notification/onclose"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
@@ -714,20 +714,20 @@
 }
 
 /*!
- * @brief deviceIdが空状態でonclose属性のコールバック登録テストを行う.
+ * @brief serviceIdが空状態でonclose属性のコールバック登録テストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /notification/onclose?deviceId=&sessionKey=xxxx
+ * Path: /notification/onclose?serviceId=&sessionKey=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailNotificationOnClosePutEmptyDeviceId
+- (void) testHttpFailNotificationOnClosePutEmptyServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/notification/onclose?deviceId="];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/notification/onclose?serviceId="];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
@@ -735,20 +735,20 @@
 }
 
 /*!
- * @brief 存在しないdeviceIdでonclose属性のコールバック登録テストを行う.
+ * @brief 存在しないserviceIdでonclose属性のコールバック登録テストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /notification/onclose?deviceId=123456789&sessionKey=xxxx
+ * Path: /notification/onclose?serviceId=123456789&sessionKey=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailNotificationOnClosePutInvalidDeviceId
+- (void) testHttpFailNotificationOnClosePutInvalidServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/notification/onclose?deviceId=12345678"];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/notification/onclose?serviceId=12345678"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
@@ -760,7 +760,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /notification/onclose?deviceId=xxxx
+ * Path: /notification/onclose?serviceId=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -769,7 +769,7 @@
  */
 - (void) testHttpFailNotificationOnClosePutNoSessionKey
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/notification/onclose?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/notification/onclose?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
@@ -781,7 +781,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /notification/onclose?deviceId=&deviceId=xxxx
+ * Path: /notification/onclose?serviceId=&serviceId=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -790,7 +790,7 @@
  */
 - (void) testHttpFailNotificationOnClosePutEmptySessionKey
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/notification/onclose?deviceId=%@&sessionKey=", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/notification/onclose?serviceId=%@&sessionKey=", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
@@ -798,7 +798,7 @@
 }
 
 /*!
- * @brief deviceIdが無い状態でonclose属性のコールバック解除テストを行う.
+ * @brief serviceIdが無い状態でonclose属性のコールバック解除テストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
@@ -809,7 +809,7 @@
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailNotificationOnCloseDeleteNoDeviceId
+- (void) testHttpFailNotificationOnCloseDeleteNoServiceId
 {
     NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/notification/onclose"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
@@ -819,20 +819,20 @@
 }
 
 /*!
- * @brief deviceIdが空状態でonclose属性のコールバック解除テストを行う.
+ * @brief serviceIdが空状態でonclose属性のコールバック解除テストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /notification/onclose?deviceId=&sessionKey=xxxx
+ * Path: /notification/onclose?serviceId=&sessionKey=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailNotificationOnCloseDeleteEmptyDeviceId
+- (void) testHttpFailNotificationOnCloseDeleteEmptyServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/notification/onclose?deviceId="];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/notification/onclose?serviceId="];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     
@@ -840,20 +840,20 @@
 }
 
 /*!
- * @brief 存在しないdeviceIdでonclose属性のコールバック解除テストを行う.
+ * @brief 存在しないserviceIdでonclose属性のコールバック解除テストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /notification/onclose?deviceId=123456789&sessionKey=xxxx
+ * Path: /notification/onclose?serviceId=123456789&sessionKey=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailNotificationOnCloseDeleteInvalidDeviceId
+- (void) testHttpFailNotificationOnCloseDeleteInvalidServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/notification/onclose?deviceId=12345678"];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/notification/onclose?serviceId=12345678"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     
@@ -865,7 +865,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /notification/onclose?deviceId=xxxx
+ * Path: /notification/onclose?serviceId=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -874,7 +874,7 @@
  */
 - (void) testHttpFailNotificationOnCloseDeleteNoSessionKey
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/notification/onclose?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/notification/onclose?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     
@@ -886,7 +886,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /notification/onclose?deviceId=xxxx&sessionKey=
+ * Path: /notification/onclose?serviceId=xxxx&sessionKey=
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -895,7 +895,7 @@
  */
 - (void) testHttpFailNotificationOnCloseDeleteEmptySessionKey
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/notification/onclose?deviceId=%@&sessionKey=", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/notification/onclose?serviceId=%@&sessionKey=", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     
@@ -907,7 +907,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: GET
- * Path: /notification/onclose?deviceId=xxxx&sessionKey=xxxx
+ * Path: /notification/onclose?serviceId=xxxx&sessionKey=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -916,7 +916,7 @@
  */
 - (void) testHttpFailNotificationOnCloseInvalidMethodGet
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/notification/onclose?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/notification/onclose?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
     
@@ -928,7 +928,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: POST
- * Path: /notification/onclose?deviceId=xxxx&sessionKey=xxxx
+ * Path: /notification/onclose?serviceId=xxxx&sessionKey=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -937,7 +937,7 @@
  */
 - (void) testHttpFailNotificationOnCloseInvalidMethodPost
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/notification/onclose?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/notification/onclose?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"POST"];
     
@@ -945,7 +945,7 @@
 }
 
 /*!
- * @brief deviceIdが無い状態でonerror属性のコールバック登録テストを行う.
+ * @brief serviceIdが無い状態でonerror属性のコールバック登録テストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: PUT
@@ -956,7 +956,7 @@
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailNotificationOnErrorPutNoDeviceId
+- (void) testHttpFailNotificationOnErrorPutNoServiceId
 {
     NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/notification/onerror"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
@@ -966,20 +966,20 @@
 }
 
 /*!
- * @brief deviceIdが空状態でonerror属性のコールバック登録テストを行う.
+ * @brief serviceIdが空状態でonerror属性のコールバック登録テストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /notification/onerror?deviceId=&sessionKey=xxxx
+ * Path: /notification/onerror?serviceId=&sessionKey=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailNotificationOnErrorPutEmptyDeviceId
+- (void) testHttpFailNotificationOnErrorPutEmptyServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/notification/onerror?deviceId="];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/notification/onerror?serviceId="];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
@@ -987,20 +987,20 @@
 }
 
 /*!
- * @brief 存在しないdeviceIdでonerror属性のコールバック登録テストを行う.
+ * @brief 存在しないserviceIdでonerror属性のコールバック登録テストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /notification/onerror?deviceId=123456789&sessionKey=xxxx
+ * Path: /notification/onerror?serviceId=123456789&sessionKey=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailNotificationOnErrorPutInvalidDeviceId
+- (void) testHttpFailNotificationOnErrorPutInvalidServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/notification/onerror?deviceId=12345678"];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/notification/onerror?serviceId=12345678"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
@@ -1012,7 +1012,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /notification/onerror?deviceId=xxxx
+ * Path: /notification/onerror?serviceId=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -1021,7 +1021,7 @@
  */
 - (void) testHttpFailNotificationOnErrorPutNoSessionKey
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/notification/onerror?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/notification/onerror?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
@@ -1033,7 +1033,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /notification/onerror?deviceId=xxxx&sessionKey=
+ * Path: /notification/onerror?serviceId=xxxx&sessionKey=
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -1042,7 +1042,7 @@
  */
 - (void) testHttpFailNotificationOnErrorPutEmptySessionKey
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/notification/onerror?deviceId=%@&sessionKey=", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/notification/onerror?serviceId=%@&sessionKey=", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
@@ -1050,7 +1050,7 @@
 }
 
 /*!
- * @brief deviceIdが無い状態でonerror属性のコールバック解除テストを行う.
+ * @brief serviceIdが無い状態でonerror属性のコールバック解除テストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
@@ -1061,7 +1061,7 @@
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailNotificationOnErrorDeleteNoDeviceId
+- (void) testHttpFailNotificationOnErrorDeleteNoServiceId
 {
     NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/notification/onerror"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
@@ -1071,20 +1071,20 @@
 }
 
 /*!
- * @brief deviceIdが空状態でonerror属性のコールバック解除テストを行う.
+ * @brief serviceIdが空状態でonerror属性のコールバック解除テストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /notification/onerror?deviceId=&sessionKey=xxxx
+ * Path: /notification/onerror?serviceId=&sessionKey=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailNotificationOnErrorDeleteEmptyDeviceId
+- (void) testHttpFailNotificationOnErrorDeleteEmptyServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/notification/onerror?deviceId="];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/notification/onerror?serviceId="];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     
@@ -1092,20 +1092,20 @@
 }
 
 /*!
- * @brief 存在しないdeviceIdでonerror属性のコールバック解除テストを行う.
+ * @brief 存在しないserviceIdでonerror属性のコールバック解除テストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /notification/onerror?deviceId=123456789&sessionKey=xxxx
+ * Path: /notification/onerror?serviceId=123456789&sessionKey=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailNotificationOnErrorDeleteInvalidDeviceId
+- (void) testHttpFailNotificationOnErrorDeleteInvalidServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/notification/onerror?deviceId=12345678"];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/notification/onerror?serviceId=12345678"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     
@@ -1117,7 +1117,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /notification/onerror?deviceId=xxxx
+ * Path: /notification/onerror?serviceId=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -1126,7 +1126,7 @@
  */
 - (void) testHttpFailNotificationOnErrorDeleteNoSessionKey
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/notification/onerror?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/notification/onerror?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     
@@ -1138,7 +1138,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /notification/onerror?deviceId=xxxx&sessionKey=
+ * Path: /notification/onerror?serviceId=xxxx&sessionKey=
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -1147,7 +1147,7 @@
  */
 - (void) testHttpFailNotificationOnErrorDeleteEmptySessionKey
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/notification/onerror?deviceId=%@&sessionKey=", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/notification/onerror?serviceId=%@&sessionKey=", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     
@@ -1159,7 +1159,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: GET
- * Path: /notification/onerror?deviceId=xxxx&sessionKey=xxxx
+ * Path: /notification/onerror?serviceId=xxxx&sessionKey=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -1168,7 +1168,7 @@
  */
 - (void) testHttpFailNotificationOnErrorInvalidMethodGet
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/notification/onerror?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/notification/onerror?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
     
@@ -1180,7 +1180,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: POST
- * Path: /notification/onerror?deviceId=xxxx&sessionKey=xxxx
+ * Path: /notification/onerror?serviceId=xxxx&sessionKey=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -1189,7 +1189,7 @@
  */
 - (void) testHttpFailNotificationOnErrorInvalidMethodPost
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/notification/onerror?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/notification/onerror?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"POST"];
     

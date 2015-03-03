@@ -27,7 +27,7 @@ NSString *const SonyDevicePluginVersion = @"1.0";
 /*!
  @brief IDのプレフィックス。
  */
-NSString *const SonyDeviceId = @"sony_camera_";
+NSString *const SonyServiceId = @"sony_camera_";
 
 /*!
  @brief デバイス名。
@@ -40,15 +40,15 @@ NSString *const SonyDeviceName = @"Sony Camera";
 NSString *const SonyFilePrefix = @"sony";
 
 /*!
- @define デバイスID.
+ @define サービスID.
  */
-#define DEVICE_ID @"0"
+#define SERVICE_ID @"0"
 
 
 /*!
  @brief Sony Remote Camera用デバイスプラグイン。
  */
-@interface SonyCameraDevicePlugin () <SampleDiscoveryDelegate, DConnectNetworkServiceDiscoveryProfileDelegate, DConnectSystemProfileDelegate, DConnectSystemProfileDataSource, DConnectMediaStreamRecordingProfileDelegate, SonyCameraCameraProfileDelegate, SampleLiveviewDelegate, SonyCameraRemoteApiUtilDelegate, DConnectSettingsProfileDelegate>
+@interface SonyCameraDevicePlugin () <SampleDiscoveryDelegate, DConnectServiceDiscoveryProfileDelegate, DConnectSystemProfileDelegate, DConnectSystemProfileDataSource, DConnectMediaStreamRecordingProfileDelegate, SonyCameraCameraProfileDelegate, SampleLiveviewDelegate, SonyCameraRemoteApiUtilDelegate, DConnectSettingsProfileDelegate>
 
 /*!
  @brief SonyRemoteApi操作用.
@@ -115,13 +115,13 @@ NSString *const SonyFilePrefix = @"sony";
 - (BOOL) checkSSID;
 
 /*!
- @brief 選択されたデバイスIDに対応するカメラを選択する.
- @param deviceId デバイスID
+ @brief 選択されたサービスIDに対応するカメラを選択する.
+ @param serviceId サービスID
  @param response レスポンス
  @retval YES 選択できた場合
  @retval NO 選択できなかった場合
  */
-- (BOOL) selectDeviceId:(NSString *)deviceId response:(DConnectResponseMessage *)response;
+- (BOOL) selectServiceId:(NSString *)serviceId response:(DConnectResponseMessage *)response;
 
 /*!
  @brief プレビューイベントを持っているかをチェックする.
@@ -162,8 +162,8 @@ NSString *const SonyFilePrefix = @"sony";
         Class key = [self class];
         [[DConnectEventManager sharedManagerForClass:key] setController:[DConnectMemoryCacheController new]];
 
-        // Network Service Discovery Profileの追加
-        DConnectNetworkServiceDiscoveryProfile *networkProfile = [DConnectNetworkServiceDiscoveryProfile new];
+        // Service Discovery Profileの追加
+        DConnectServiceDiscoveryProfile *networkProfile = [DConnectServiceDiscoveryProfile new];
         networkProfile.delegate = self;
         
         // System Profileの追加
@@ -312,21 +312,21 @@ NSString *const SonyFilePrefix = @"sony";
     return NO;
 }
 
-- (BOOL) selectDeviceId:(NSString *)deviceId response:(DConnectResponseMessage *)response {
-    // デバイスIDの存在チェック
-    if (!deviceId) {
-        [response setErrorToEmptyDeviceId];
+- (BOOL) selectServiceId:(NSString *)serviceId response:(DConnectResponseMessage *)response {
+    // サービスIDの存在チェック
+    if (!serviceId) {
+        [response setErrorToEmptyServiceId];
         return NO;
     }
     
     // デバイスが存在しない
     if ([DeviceList getSize] <= 0) {
-        [response setErrorToNotFoundDevice];
+        [response setErrorToNotFoundService];
         return NO;
     }
     
     // デバイス選択
-    NSInteger idx = [deviceId integerValue];
+    NSInteger idx = [serviceId integerValue];
     [DeviceList selectDeviceAt:idx];
 
     return YES;
@@ -334,7 +334,7 @@ NSString *const SonyFilePrefix = @"sony";
 
 - (BOOL) hasDataAvaiableEvent {
     DConnectEventManager *mgr = [DConnectEventManager sharedManagerForClass:[self class]];
-    NSArray *evts = [mgr eventListForDeviceId:DEVICE_ID
+    NSArray *evts = [mgr eventListForServiceId:SERVICE_ID
                                       profile:DConnectMediaStreamRecordingProfileName
                                     attribute:DConnectMediaStreamRecordingProfileAttrOnDataAvailable];
     return evts.count > 0;
@@ -361,24 +361,24 @@ NSString *const SonyFilePrefix = @"sony";
     [self.delegate didReceiveDeviceList:discovery];
 }
 
-#pragma mark - DConnectNetworkServiceDiscoveryProfileDelegate
+#pragma mark - DConnectServiceDiscoveryProfileDelegate
 
-- (BOOL)                       profile:(DConnectNetworkServiceDiscoveryProfile *)profile
-didReceiveGetGetNetworkServicesRequest:(DConnectRequestMessage *)request
+- (BOOL)                       profile:(DConnectServiceDiscoveryProfile *)profile
+didReceiveGetServicesRequest:(DConnectRequestMessage *)request
                               response:(DConnectResponseMessage *)response
 {
     DConnectArray *services = [DConnectArray array];
     for (int i = 0; i < [DeviceList getSize]; i++) {
-        NSString *deviceId = [NSString stringWithFormat:@"%d", i];
+        NSString *serviceId = [NSString stringWithFormat:@"%d", i];
         DConnectMessage *service = [DConnectMessage message];
-        [DConnectNetworkServiceDiscoveryProfile setId:deviceId target:service];
-        [DConnectNetworkServiceDiscoveryProfile setName:SonyDeviceName target:service];
-        [DConnectNetworkServiceDiscoveryProfile setType:DConnectNetworkServiceDiscoveryProfileNetworkTypeWiFi
+        [DConnectServiceDiscoveryProfile setId:serviceId target:service];
+        [DConnectServiceDiscoveryProfile setName:SonyDeviceName target:service];
+        [DConnectServiceDiscoveryProfile setType:DConnectServiceDiscoveryProfileNetworkTypeWiFi
                                                  target:service];
-        [DConnectNetworkServiceDiscoveryProfile setOnline:YES target:service];
+        [DConnectServiceDiscoveryProfile setOnline:YES target:service];
         [services addMessage:service];
     }
-    [DConnectNetworkServiceDiscoveryProfile setServices:services target:response];
+    [DConnectServiceDiscoveryProfile setServices:services target:response];
     [response setResult:DConnectMessageResultTypeOk];
     return YES;
 }
@@ -446,10 +446,10 @@ didReceiveDeleteEventsRequest:(DConnectRequestMessage *)request
 - (BOOL)                  profile:(DConnectMediaStreamRecordingProfile *)profile
 didReceiveGetMediaRecorderRequest:(DConnectRequestMessage *)request
                          response:(DConnectResponseMessage *)response
-                         deviceId:(NSString *)deviceId
+                         serviceId:(NSString *)serviceId
 {
-    // デバイスIDのチェック
-    if (![self selectDeviceId:deviceId response:response]) {
+    // サービスIDのチェック
+    if (![self selectServiceId:serviceId response:response]) {
         return YES;
     }
     
@@ -527,7 +527,7 @@ didReceiveGetMediaRecorderRequest:(DConnectRequestMessage *)request
             height = height * stillSize;
             
             DConnectMessage *recorder = [DConnectMessage message];
-            [DConnectMediaStreamRecordingProfile setRecorderId:DEVICE_ID target:recorder];
+            [DConnectMediaStreamRecordingProfile setRecorderId:SERVICE_ID target:recorder];
             [DConnectMediaStreamRecordingProfile setRecorderName:@"SonyCamera" target:recorder];
             [DConnectMediaStreamRecordingProfile setRecorderState:status target:recorder];
             [DConnectMediaStreamRecordingProfile setRecorderMIMEType:@"image/png" target:recorder];
@@ -550,11 +550,11 @@ didReceiveGetMediaRecorderRequest:(DConnectRequestMessage *)request
 - (BOOL)               profile:(DConnectMediaStreamRecordingProfile *)profile
 didReceivePostTakePhotoRequest:(DConnectRequestMessage *)request
                       response:(DConnectResponseMessage *)response
-                      deviceId:(NSString *)deviceId
+                      serviceId:(NSString *)serviceId
                         target:(NSString *)target
 {
-    // デバイスIDのチェック
-    if (![self selectDeviceId:deviceId response:response]) {
+    // サービスIDのチェック
+    if (![self selectServiceId:serviceId response:response]) {
         return YES;
     }
     
@@ -629,12 +629,12 @@ didReceivePostTakePhotoRequest:(DConnectRequestMessage *)request
 - (BOOL)            profile:(DConnectMediaStreamRecordingProfile *)profile
 didReceivePostRecordRequest:(DConnectRequestMessage *)request
                    response:(DConnectResponseMessage *)response
-                   deviceId:(NSString *)deviceId
+                   serviceId:(NSString *)serviceId
                      target:(NSString *)target
                   timeslice:(NSNumber *)timeslice
 {
-    // デバイスIDのチェック
-    if (![self selectDeviceId:deviceId response:response]) {
+    // サービスIDのチェック
+    if (![self selectServiceId:serviceId response:response]) {
         return YES;
     }
     
@@ -678,11 +678,11 @@ didReceivePostRecordRequest:(DConnectRequestMessage *)request
 - (BOOL)         profile:(DConnectMediaStreamRecordingProfile *)profile
 didReceivePutStopRequest:(DConnectRequestMessage *)request
                 response:(DConnectResponseMessage *)response
-                deviceId:(NSString *)deviceId
+                serviceId:(NSString *)serviceId
                   target:(NSString *)target
 {
-    // デバイスIDのチェック
-    if (![self selectDeviceId:deviceId response:response]) {
+    // サービスIDのチェック
+    if (![self selectServiceId:serviceId response:response]) {
         return YES;
     }
     
@@ -718,11 +718,11 @@ didReceivePutStopRequest:(DConnectRequestMessage *)request
 - (BOOL)            profile:(DConnectMediaStreamRecordingProfile *)profile
 didReceivePutOnPhotoRequest:(DConnectRequestMessage *)request
                    response:(DConnectResponseMessage *)response
-                   deviceId:(NSString *)deviceId
+                   serviceId:(NSString *)serviceId
                  sessionKey:(NSString *)sessionKey
 {
-    // デバイスIDのチェック
-    if (![self selectDeviceId:deviceId response:response]) {
+    // サービスIDのチェック
+    if (![self selectServiceId:serviceId response:response]) {
         return YES;
     }
     
@@ -753,11 +753,11 @@ didReceivePutOnPhotoRequest:(DConnectRequestMessage *)request
 - (BOOL)               profile:(DConnectMediaStreamRecordingProfile *)profile
 didReceiveDeleteOnPhotoRequest:(DConnectRequestMessage *)request
                       response:(DConnectResponseMessage *)response
-                      deviceId:(NSString *)deviceId
+                      serviceId:(NSString *)serviceId
                     sessionKey:(NSString *)sessionKey
 {
-    // デバイスIDのチェック
-    if (![self selectDeviceId:deviceId response:response]) {
+    // サービスIDのチェック
+    if (![self selectServiceId:serviceId response:response]) {
         return YES;
     }
     
@@ -789,11 +789,11 @@ didReceiveDeleteOnPhotoRequest:(DConnectRequestMessage *)request
 - (BOOL)                    profile:(DConnectMediaStreamRecordingProfile *)profile
 didReceivePutOnDataAvailableRequest:(DConnectRequestMessage *)request
                            response:(DConnectResponseMessage *)response
-                           deviceId:(NSString *)deviceId
+                           serviceId:(NSString *)serviceId
                          sessionKey:(NSString *)sessionKey
 {
-    // デバイスIDのチェック
-    if (![self selectDeviceId:deviceId response:response]) {
+    // サービスIDのチェック
+    if (![self selectServiceId:serviceId response:response]) {
         return YES;
     }
     
@@ -835,11 +835,11 @@ didReceivePutOnDataAvailableRequest:(DConnectRequestMessage *)request
 - (BOOL)                       profile:(DConnectMediaStreamRecordingProfile *)profile
 didReceiveDeleteOnDataAvailableRequest:(DConnectRequestMessage *)request
                               response:(DConnectResponseMessage *)response
-                              deviceId:(NSString *)deviceId
+                              serviceId:(NSString *)serviceId
                             sessionKey:(NSString *)sessionKey
 {
-    // デバイスIDのチェック
-    if (![self selectDeviceId:deviceId response:response]) {
+    // サービスIDのチェック
+    if (![self selectServiceId:serviceId response:response]) {
         return YES;
     }
     
@@ -905,7 +905,7 @@ didReceiveDeleteOnDataAvailableRequest:(DConnectRequestMessage *)request
         
         // イベントの取得
         DConnectEventManager *mgr = [DConnectEventManager sharedManagerForClass:[self class]];
-        NSArray *evts = [mgr eventListForDeviceId:DEVICE_ID
+        NSArray *evts = [mgr eventListForServiceId:SERVICE_ID
                                           profile:DConnectMediaStreamRecordingProfileName
                                         attribute:DConnectMediaStreamRecordingProfileAttrOnDataAvailable];
         // イベント送信
@@ -945,7 +945,7 @@ didReceiveDeleteOnDataAvailableRequest:(DConnectRequestMessage *)request
             
             // イベントの取得
             DConnectEventManager *mgr = [DConnectEventManager sharedManagerForClass:[self class]];
-            NSArray *evts = [mgr eventListForDeviceId:DEVICE_ID
+            NSArray *evts = [mgr eventListForServiceId:SERVICE_ID
                                               profile:DConnectMediaStreamRecordingProfileName
                                             attribute:DConnectMediaStreamRecordingProfileAttrOnPhoto];
             // イベント送信
@@ -963,11 +963,11 @@ didReceiveDeleteOnDataAvailableRequest:(DConnectRequestMessage *)request
 - (BOOL)         profile:(DConnectSettingsProfile *)profile
 didReceivePutDateRequest:(DConnectRequestMessage *)request
                 response:(DConnectResponseMessage *)response
-                deviceId:(NSString *)deviceId
+                serviceId:(NSString *)serviceId
                     date:(NSString *)date
 {
-    // デバイスIDのチェック
-    if (![self selectDeviceId:deviceId response:response]) {
+    // サービスIDのチェック
+    if (![self selectServiceId:serviceId response:response]) {
         return YES;
     }
 
@@ -1000,10 +1000,10 @@ didReceivePutDateRequest:(DConnectRequestMessage *)request
  @brief Zoom
  */
 - (BOOL) profile:(SonyCameraCameraProfile *)profile didReceiveGetZoomRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response deviceId:(NSString *)deviceId
+        response:(DConnectResponseMessage *)response serviceId:(NSString *)serviceId
 {
-    // デバイスIDのチェック
-    if (![self selectDeviceId:deviceId response:response]) {
+    // サービスIDのチェック
+    if (![self selectServiceId:serviceId response:response]) {
         return YES;
     }
     
@@ -1029,12 +1029,12 @@ didReceivePutDateRequest:(DConnectRequestMessage *)request
 - (BOOL)         profile:(SonyCameraCameraProfile *)profile
 didReceivePutZoomRequest:(DConnectRequestMessage *)request
                 response:(DConnectResponseMessage *)response
-                deviceId:(NSString *)deviceId
+                serviceId:(NSString *)serviceId
                direction:(NSString *)direction
                 movement:(NSString *)movement
 {
-    // デバイスIDのチェック
-    if (![self selectDeviceId:deviceId response:response]) {
+    // サービスIDのチェック
+    if (![self selectServiceId:serviceId response:response]) {
         return YES;
     }
     

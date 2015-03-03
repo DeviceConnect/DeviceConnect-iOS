@@ -57,7 +57,7 @@ typedef NS_ENUM(NSUInteger, DPIRKitConnectionErrorCode) {
 - (void) fetchClientKeyWithCompletion:(void (^)(NSString *clientKey, DPIRKitConnectionErrorCode errorCode))completion;
 
 - (void) createNewDeviceWithClientKey:(NSString *)clientKey
-                           completion:(void (^)(NSString *deviceId, NSString *deviceKey,
+                           completion:(void (^)(NSString *serviceId, NSString *deviceKey,
                                                 DPIRKitConnectionErrorCode errorCode))completion;
 
 - (void) checkIfCurrentSSIDIsIRKitWithCompletion:(void (^)(BOOL isIRKit, NSError *error)) callback;
@@ -78,11 +78,11 @@ typedef NS_ENUM(NSUInteger, DPIRKitConnectionErrorCode) {
  WiFi認証が完了し、IRKitがインターネットにつながったかをチェックする。
  */
 - (void) checkIfIRKitIsConnectedToInternetWithClientKey:(NSString *)clientKey
-                                               deviceId:(NSString *)deviceId
+                                               serviceId:(NSString *)serviceId
                                              completion:(void (^)(BOOL isConnected))completion;
 
 - (void) fetchDeviceInfoWithDeviceHost:(NSString *)host
-                        withCompletion:(void (^)(NSString *deviceId, NSString *clientKey))completion;
+                        withCompletion:(void (^)(NSString *serviceId, NSString *clientKey))completion;
 
 /**
  赤外線データを取得する。

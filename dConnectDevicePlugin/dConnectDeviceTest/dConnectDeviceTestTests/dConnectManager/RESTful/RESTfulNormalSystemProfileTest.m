@@ -41,7 +41,7 @@
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
     
-    CHECK_RESPONSE(@"{\"result\":0,\"supports\":[\"files\",\"system\",\"authorization\",\"network_service_discovery\"],\"version\":\"1.0\"}", request);
+    CHECK_RESPONSE(@"{\"result\":0,\"supports\":[\"files\",\"system\",\"servicediscovery\",\"authorization\",\"availability\"]}", request);
 }
 
 /*!
@@ -49,7 +49,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: GET
- * Path: /system/device?deviceid=xxxx
+ * Path: /system/device?serviceId=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -59,7 +59,7 @@
  */
 - (void) testHttpNormalSystemDeviceGet
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/system/device?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/system/device?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
     
@@ -71,7 +71,7 @@
     [supports addObject:DConnectFileProfileName];
     [supports addObject:DConnectMediaStreamRecordingProfileName];
     [supports addObject:DConnectMediaPlayerProfileName];
-    [supports addObject:DConnectNetworkServiceDiscoveryProfileName];
+    [supports addObject:DConnectServiceDiscoveryProfileName];
     [supports addObject:DConnectPhoneProfileName];
     [supports addObject:DConnectProximityProfileName];
     [supports addObject:DConnectSettingsProfileName];

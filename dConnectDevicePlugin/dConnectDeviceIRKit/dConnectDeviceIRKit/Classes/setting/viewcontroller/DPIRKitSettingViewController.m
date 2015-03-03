@@ -77,7 +77,7 @@
     [ud removeObjectForKey:DPIRKitUDKeySecType];
     [ud removeObjectForKey:DPIRKitUDKeyPassword];
     [ud removeObjectForKey:DPIRKitUDKeyDeviceKey];
-    [ud removeObjectForKey:DPIRKitUDKeyDeviceId];
+    [ud removeObjectForKey:DPIRKitUDKeyServiceId];
     [ud synchronize];
 }
 

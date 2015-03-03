@@ -33,7 +33,7 @@
  
  @param[in] requst リクエストパラメータ
  @param[in,out] response レスポンスパラメータ
- @param[in] deviceId デバイスID
+ @param[in] serviceId サービスID
  @param[in] package パッケージ
  
  @retval YES レスポンスパラメータを返却する。
@@ -41,7 +41,7 @@
  */
 - (BOOL) didReceiveGetCreateClientRequest:(DConnectRequestMessage *)request
                                  response:(DConnectResponseMessage *)response
-                                 deviceId:(NSString *)deviceId
+                                 serviceId:(NSString *)serviceId
                                   package:(NSString *)package;
 
 /*!
@@ -50,7 +50,7 @@
  
  @param[in] requst リクエストパラメータ
  @param[in,out] response レスポンスパラメータ
- @param[in] deviceId デバイスID
+ @param[in] serviceId サービスID
  @param[in] clientId クライアントID
  @param[in] grantType グラントタイプ
  @param[in] scopes 要求されるプロファイルの一覧
@@ -62,7 +62,7 @@
  */
 - (BOOL) didReceiveGetRequestAccessTokenRequest:(DConnectRequestMessage *)request
                                        response:(DConnectResponseMessage *)response
-                                       deviceId:(NSString *)deviceId
+                                       serviceId:(NSString *)serviceId
                                        clientId:(NSString *)clientId
                                       grantType:(NSString *)grantType
                                          scopes:(NSArray *)scopes

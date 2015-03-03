@@ -84,7 +84,7 @@ extern NSString *const DConnectCanvasProfileModeFills;
  @param[in] profile このイベントを通知するDConnectCanvasProfileのオブジェクト
  @param[in] request リクエスト
  @param[in,out] response レスポンス
- @param[in] deviceId デバイスID
+ @param[in] serviceId サービスID
  @param[in] mimeType マイムタイプ。省略された場合はnil。
  @param[in] data ファイルのバイナリデータ
  @param[in] x X座標
@@ -95,7 +95,7 @@ extern NSString *const DConnectCanvasProfileModeFills;
  */
 - (BOOL) profile:(DConnectCanvasProfile *)profile didReceivePostDrawImageRequest:(DConnectRequestMessage *)request
         response:(DConnectResponseMessage *)response
-        deviceId:(NSString *)deviceId
+        serviceId:(NSString *)serviceId
         mimeType:(NSString *)mimeType
             data:(NSData *)data
                x:(double)x

@@ -13,6 +13,6 @@
 
 @interface DPIRKitDevicePlugin : DConnectDevicePlugin
 
-- (DPIRKitDevice *) deviceForDeviceId:(NSString *)deviceId;
+- (DPIRKitDevice *) deviceForServiceId:(NSString *)serviceId;
 
 @end

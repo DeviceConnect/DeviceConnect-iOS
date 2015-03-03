@@ -14,8 +14,8 @@
 /** パッケージ名. */
 @property NSString *packageName;
     
-/** デバイスID(アプリの場合はnilを設定する). */
-@property NSString *deviceId;
+/** サービスID(アプリの場合はnilを設定する). */
+@property NSString *serviceId;
 
 /*!
     コンストラクタ(アプリを指定する場合).
@@ -26,9 +26,9 @@
 /*!
     コンストラクタ(デバイスプラグインを指定する場合).
     @param[in] packageName	パッケージ名.
-    @param[in] deviceId		デバイスID.
+    @param[in] serviceId		サービスID.
  */
-- (LocalOAuthPackageInfo *) initWithPackageNameDeviceId: (NSString *)packageName deviceId:(NSString *)deviceId;
+- (LocalOAuthPackageInfo *) initWithPackageNameServiceId: (NSString *)packageName serviceId:(NSString *)serviceId;
 
 /*!
     オブジェクト比較.

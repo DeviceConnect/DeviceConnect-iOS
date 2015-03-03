@@ -29,9 +29,9 @@ NSString *const TestSettingsDate = @"2014-01-01T01:01:01+09:00";
 
 - (BOOL) profile:(DConnectSettingsProfile *)profile didReceiveGetVolumeRequest:(DConnectRequestMessage *)request
         response:(DConnectResponseMessage *)response
-        deviceId:(NSString *)deviceId kind:(DConnectSettingsProfileVolumeKind)kind
+        serviceId:(NSString *)serviceId kind:(DConnectSettingsProfileVolumeKind)kind
 {
-    CheckDID(response, deviceId)
+    CheckDID(response, serviceId)
     if (kind == DConnectSettingsProfileVolumeKindUnknown) {
         [response setErrorToInvalidRequestParameter];
     } else {
@@ -43,10 +43,10 @@ NSString *const TestSettingsDate = @"2014-01-01T01:01:01+09:00";
 }
 - (BOOL) profile:(DConnectSettingsProfile *)profile didReceiveGetDateRequest:(DConnectRequestMessage *)request
         response:(DConnectResponseMessage *)response
-        deviceId:(NSString *)deviceId
+        serviceId:(NSString *)serviceId
 {
     
-    CheckDID(response, deviceId) {
+    CheckDID(response, serviceId) {
         response.result = DConnectMessageResultTypeOk;
         [DConnectSettingsProfile setDate:TestSettingsDate target:response];
     }
@@ -54,9 +54,9 @@ NSString *const TestSettingsDate = @"2014-01-01T01:01:01+09:00";
     return YES;
 }
 - (BOOL) profile:(DConnectSettingsProfile *)profile didReceiveGetLightRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response deviceId:(NSString *)deviceId
+        response:(DConnectResponseMessage *)response serviceId:(NSString *)serviceId
 {
-    CheckDID(response, deviceId) {
+    CheckDID(response, serviceId) {
         response.result = DConnectMessageResultTypeOk;
         [DConnectSettingsProfile setLightLevel:TestSettingsLevel target:response];
     }
@@ -65,9 +65,9 @@ NSString *const TestSettingsDate = @"2014-01-01T01:01:01+09:00";
 }
 
 - (BOOL) profile:(DConnectSettingsProfile *)profile didReceiveGetSleepRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response deviceId:(NSString *)deviceId
+        response:(DConnectResponseMessage *)response serviceId:(NSString *)serviceId
 {
-    CheckDID(response, deviceId) {
+    CheckDID(response, serviceId) {
         response.result = DConnectMessageResultTypeOk;
         [DConnectSettingsProfile setTime:1 target:response];
     }
@@ -79,10 +79,10 @@ NSString *const TestSettingsDate = @"2014-01-01T01:01:01+09:00";
 
 - (BOOL) profile:(DConnectSettingsProfile *)profile didReceivePutVolumeRequest:(DConnectRequestMessage *)request
         response:(DConnectResponseMessage *)response
-        deviceId:(NSString *)deviceId kind:(DConnectSettingsProfileVolumeKind)kind
+        serviceId:(NSString *)serviceId kind:(DConnectSettingsProfileVolumeKind)kind
            level:(NSNumber *)level
 {
-    CheckDID(response, deviceId)
+    CheckDID(response, serviceId)
     if (kind == DConnectSettingsProfileVolumeKindUnknown
         || level == nil || [level doubleValue] < DConnectSettingsProfileMinLevel
         || [level doubleValue] > DConnectSettingsProfileMaxLevel)
@@ -97,10 +97,10 @@ NSString *const TestSettingsDate = @"2014-01-01T01:01:01+09:00";
 
 - (BOOL) profile:(DConnectSettingsProfile *)profile didReceivePutDateRequest:(DConnectRequestMessage *)request
         response:(DConnectResponseMessage *)response
-        deviceId:(NSString *)deviceId date:(NSString *)date
+        serviceId:(NSString *)serviceId date:(NSString *)date
 {
     
-    CheckDID(response, deviceId)
+    CheckDID(response, serviceId)
     if (date == nil) {
         [response setErrorToInvalidRequestParameter];
     } else {
@@ -112,10 +112,10 @@ NSString *const TestSettingsDate = @"2014-01-01T01:01:01+09:00";
 
 - (BOOL) profile:(DConnectSettingsProfile *)profile didReceivePutLightRequest:(DConnectRequestMessage *)request
         response:(DConnectResponseMessage *)response
-        deviceId:(NSString *)deviceId level:(NSNumber *)level
+        serviceId:(NSString *)serviceId level:(NSNumber *)level
 {
     
-    CheckDID(response, deviceId)
+    CheckDID(response, serviceId)
     if (level == nil || [level doubleValue] < DConnectSettingsProfileMinLevel
         || [level doubleValue] > DConnectSettingsProfileMaxLevel)
     {
@@ -129,9 +129,9 @@ NSString *const TestSettingsDate = @"2014-01-01T01:01:01+09:00";
 
 - (BOOL) profile:(DConnectSettingsProfile *)profile didReceivePutSleepRequest:(DConnectRequestMessage *)request
         response:(DConnectResponseMessage *)response
-        deviceId:(NSString *)deviceId time:(NSNumber *)time
+        serviceId:(NSString *)serviceId time:(NSNumber *)time
 {
-    CheckDID(response, deviceId)
+    CheckDID(response, serviceId)
     if (time == nil) {
         [response setErrorToInvalidRequestParameter];
     } else {

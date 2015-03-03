@@ -17,7 +17,7 @@
 "display_scope_vcr" = "操作イベント受信";
 "display_scope_media_player" = "メディア再生";
 "display_scope_mediastream_recording" = "写真動画撮影／音声録音";
-"display_scope_network_service_discovery" = "デバイス検索";
+"display_scope_servicediscovery" = "デバイス検索";
 "display_scope_notification" = "通知";
 "display_scope_phone" = "電話";
 "display_scope_proximity" = "近接";

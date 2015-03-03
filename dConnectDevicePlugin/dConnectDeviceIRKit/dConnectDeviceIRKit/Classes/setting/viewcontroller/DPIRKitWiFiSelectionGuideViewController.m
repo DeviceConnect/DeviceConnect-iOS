@@ -146,12 +146,12 @@ typedef NS_ENUM(NSUInteger, DPIRKitSelectionState) {
     __weak typeof(self) _self = self;
     
     [[DPIRKitManager sharedInstance] createNewDeviceWithClientKey:clientKey
-                                                       completion:^(NSString *deviceId, NSString *deviceKey, DPIRKitConnectionErrorCode errorCode)
+                                                       completion:^(NSString *serviceId, NSString *deviceKey, DPIRKitConnectionErrorCode errorCode)
      {
-         if (deviceKey && deviceId) {
+         if (deviceKey && serviceId) {
              NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
              [ud setValue:deviceKey forKey:DPIRKitUDKeyDeviceKey];
-             [ud setValue:deviceId forKey:DPIRKitUDKeyDeviceId];
+             [ud setValue:serviceId forKey:DPIRKitUDKeyServiceId];
              [ud synchronize];
              
              @synchronized (_self) {

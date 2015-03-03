@@ -34,13 +34,13 @@ NSString *const DConnectEventDeviceDaoClmDId = @"d_id";
 }
 
 + (long long) insertWithAttributeId:(long long)attributeId
-                           deviceId:(long long)deviceId
+                           serviceId:(long long)serviceId
                          toDatabase:(DConnectSQLiteDatabase *)database
 {
     long long result = -1;
     
     NSNumber *aid = [NSNumber numberWithLongLong:attributeId];
-    NSNumber *did = [NSNumber numberWithLongLong:deviceId];
+    NSNumber *did = [NSNumber numberWithLongLong:serviceId];
     
     DConnectSQLiteCursor *cursor
     = [database selectFromTable:DConnectEventDeviceDaoTableName

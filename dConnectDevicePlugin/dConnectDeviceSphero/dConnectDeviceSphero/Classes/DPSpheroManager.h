@@ -119,9 +119,9 @@ typedef struct DPAttitude_ {
 @property (nonatomic, readonly) BOOL isLEDOn;
 
 /*!
- @brief 接続中のデバイスID取得。
+ @brief 接続中のサービスID取得。
  */
-@property (nonatomic, readonly) NSString *currentDeviceID;
+@property (nonatomic, readonly) NSString *currentServiceID;
 
 /*!
  @brief 接続可能なデバイスリスト取得。
@@ -164,7 +164,7 @@ typedef struct DPAttitude_ {
 /*!
  @brief デバイスに接続。
  */
-- (BOOL)connectDeviceWithID:(NSString*)deviceID;
+- (BOOL)connectDeviceWithID:(NSString*)serviceID;
 
 /*!
  @brief 移動。

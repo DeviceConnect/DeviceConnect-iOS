@@ -21,7 +21,7 @@
 @implementation RESTfulFailSettingsProfileTest
 
 /*!
- * @brief deviceIdを指定せずに音量取得要求を送信するテストを行う.
+ * @brief serviceIdを指定せずに音量取得要求を送信するテストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: GET
@@ -32,7 +32,7 @@
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailSettingsSoundVolumeGetNoDeviceId
+- (void) testHttpFailSettingsSoundVolumeGetNoServiceId
 {
     NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/settings/sound/volume?kind=1"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
@@ -42,20 +42,20 @@
 }
 
 /*!
- * @brief deviceIdが空状態で音量取得要求を送信するテストを行う.
+ * @brief serviceIdが空状態で音量取得要求を送信するテストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: GET
- * Path: /settings/sound/volume?deviceId=&kind=xxxx
+ * Path: /settings/sound/volume?serviceId=&kind=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailSettingsSoundVolumeGetEmptyDeviceId
+- (void) testHttpFailSettingsSoundVolumeGetEmptyServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/settings/sound/volume?kind=1&deviceId="];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/settings/sound/volume?kind=1&serviceId="];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
     
@@ -63,20 +63,20 @@
 }
 
 /*!
- * @brief 存在しないdeviceIdで音量取得要求を送信するテストを行う.
+ * @brief 存在しないserviceIdで音量取得要求を送信するテストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: GET
- * Path: /settings/sound/volume?deviceId=123456789&kind=xxxx
+ * Path: /settings/sound/volume?serviceId=123456789&kind=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailSettingsSoundVolumeGetInvalidDeviceId
+- (void) testHttpFailSettingsSoundVolumeGetInvalidServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/settings/sound/volume?kind=1&deviceId=12345678"];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/settings/sound/volume?kind=1&serviceId=12345678"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
     
@@ -84,7 +84,7 @@
 }
 
 /*!
- * @brief deviceIdを指定せずに音量取得要求を送信するテストを行う.
+ * @brief serviceIdを指定せずに音量取得要求を送信するテストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: PUT
@@ -95,7 +95,7 @@
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailSettingsSoundVolumePutNoDeviceId
+- (void) testHttpFailSettingsSoundVolumePutNoServiceId
 {
     NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/settings/sound/volume?level=0.5&kind=1"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
@@ -105,20 +105,20 @@
 }
 
 /*!
- * @brief deviceIdが空状態で音量取得要求を送信するテストを行う.
+ * @brief serviceIdが空状態で音量取得要求を送信するテストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /settings/sound/volume?deviceId=&kind=xxxx
+ * Path: /settings/sound/volume?serviceId=&kind=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailSettingsSoundVolumePutEmptyDeviceId
+- (void) testHttpFailSettingsSoundVolumePutEmptyServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/settings/sound/volume?level=0.5&kind=1&deviceId="];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/settings/sound/volume?level=0.5&kind=1&serviceId="];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
@@ -126,20 +126,20 @@
 }
 
 /*!
- * @brief 存在しないdeviceIdで音量取得要求を送信するテストを行う.
+ * @brief 存在しないserviceIdで音量取得要求を送信するテストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /settings/sound/volume?deviceId=123456789&kind=xxxx
+ * Path: /settings/sound/volume?serviceId=123456789&kind=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailSettingsSoundVolumePutInvalidDeviceId
+- (void) testHttpFailSettingsSoundVolumePutInvalidServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/settings/sound/volume?level=0.5&kind=1&deviceId=12345678"];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/settings/sound/volume?level=0.5&kind=1&serviceId=12345678"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
@@ -151,7 +151,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: POST
- * Path: /settings/sound/volume?deviceId=xxxx&kind=xxxx
+ * Path: /settings/sound/volume?serviceId=xxxx&kind=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -160,7 +160,7 @@
  */
 - (void) testHttpFailSettingsSoundVolumeInvalidMethodPost
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/settings/sound/volume?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/settings/sound/volume?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"POST"];
     
@@ -172,7 +172,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /settings/sound/volume?deviceId=xxxx&kind=xxxx
+ * Path: /settings/sound/volume?serviceId=xxxx&kind=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -181,7 +181,7 @@
  */
 - (void) testHttpFailSettingsSoundVolumePutInvalidMethodDelete
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/settings/sound/volume?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/settings/sound/volume?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     
@@ -189,7 +189,7 @@
 }
 
 /*!
- * @brief deviceIdを指定せずに日時取得要求を送信するテストを行う.
+ * @brief serviceIdを指定せずに日時取得要求を送信するテストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: GET
@@ -200,7 +200,7 @@
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailSettingsDateGetNoDeviceId
+- (void) testHttpFailSettingsDateGetNoServiceId
 {
     NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/settings/date"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
@@ -210,20 +210,20 @@
 }
 
 /*!
- * @brief deviceIdが空状態で日時取得要求を送信するテストを行う.
+ * @brief serviceIdが空状態で日時取得要求を送信するテストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: GET
- * Path: /settings/date?deviceId=&kind=xxxx
+ * Path: /settings/date?serviceId=&kind=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailSettingsDateGetEmptyDeviceId
+- (void) testHttpFailSettingsDateGetEmptyServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/settings/date?deviceId="];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/settings/date?serviceId="];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
     
@@ -231,20 +231,20 @@
 }
 
 /*!
- * @brief 存在しないdeviceIdで日時取得要求を送信するテストを行う.
+ * @brief 存在しないserviceIdで日時取得要求を送信するテストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: GET
- * Path: /settings/date?deviceId=123456789&kind=xxxx
+ * Path: /settings/date?serviceId=123456789&kind=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailSettingsDateGetInvalidDeviceId
+- (void) testHttpFailSettingsDateGetInvalidServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/settings/date?deviceId=12345678"];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/settings/date?serviceId=12345678"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
     
@@ -252,7 +252,7 @@
 }
 
 /*!
- * @brief deviceIdを指定せずに日時取得要求を送信するテストを行う.
+ * @brief serviceIdを指定せずに日時取得要求を送信するテストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: PUT
@@ -263,7 +263,7 @@
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailSettingsDatePutNoDeviceId
+- (void) testHttpFailSettingsDatePutNoServiceId
 {
     NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/settings/date"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
@@ -273,20 +273,20 @@
 }
 
 /*!
- * @brief deviceIdが空状態で日時取得要求を送信するテストを行う.
+ * @brief serviceIdが空状態で日時取得要求を送信するテストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /settings/date?deviceId=&kind=xxxx
+ * Path: /settings/date?serviceId=&kind=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailSettingsDatePutEmptyDeviceId
+- (void) testHttpFailSettingsDatePutEmptyServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/settings/date?deviceId="];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/settings/date?serviceId="];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
@@ -294,20 +294,20 @@
 }
 
 /*!
- * @brief 存在しないdeviceIdで日時取得要求を送信するテストを行う.
+ * @brief 存在しないserviceIdで日時取得要求を送信するテストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /settings/date?deviceId=123456789&kind=xxxx
+ * Path: /settings/date?serviceId=123456789&kind=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailSettingsDatePutInvalidDeviceId
+- (void) testHttpFailSettingsDatePutInvalidServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/settings/date?deviceId=12345678"];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/settings/date?serviceId=12345678"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
@@ -319,7 +319,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: POST
- * Path: /settings/date?deviceId=xxxx&kind=xxxx
+ * Path: /settings/date?serviceId=xxxx&kind=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -328,7 +328,7 @@
  */
 - (void) testHttpFailSettingsDateInvalidMethodPost
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/settings/date?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/settings/date?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"POST"];
     
@@ -340,7 +340,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /settings/date?deviceId=xxxx&kind=xxxx
+ * Path: /settings/date?serviceId=xxxx&kind=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -349,7 +349,7 @@
  */
 - (void) testHttpFailSettingsDateInvalidMethodDelete
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/settings/date?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/settings/date?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     
@@ -357,7 +357,7 @@
 }
 
 /*!
- * @brief deviceIdを指定せずにバックライト明度取得要求を送信するテストを行う.
+ * @brief serviceIdを指定せずにバックライト明度取得要求を送信するテストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: GET
@@ -368,7 +368,7 @@
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailSettingsDisplayLightGetNoDeviceId
+- (void) testHttpFailSettingsDisplayLightGetNoServiceId
 {
     NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/settings/display/light"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
@@ -378,20 +378,20 @@
 }
 
 /*!
- * @brief deviceIdが空状態でバックライト明度取得要求を送信するテストを行う.
+ * @brief serviceIdが空状態でバックライト明度取得要求を送信するテストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: GET
- * Path: /settings/display/light?deviceId=&kind=xxxx
+ * Path: /settings/display/light?serviceId=&kind=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailSettingsDisplayLightGetEmptyDeviceId
+- (void) testHttpFailSettingsDisplayLightGetEmptyServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/settings/display/light?deviceId="];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/settings/display/light?serviceId="];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
     
@@ -399,20 +399,20 @@
 }
 
 /*!
- * @brief 存在しないdeviceIdでバックライト明度取得要求を送信するテストを行う.
+ * @brief 存在しないserviceIdでバックライト明度取得要求を送信するテストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: GET
- * Path: /settings/display/light?deviceId=123456789&kind=xxxx
+ * Path: /settings/display/light?serviceId=123456789&kind=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailSettingsDisplayLightGetInvalidDeviceId
+- (void) testHttpFailSettingsDisplayLightGetInvalidServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/settings/display/light?deviceId=12345678"];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/settings/display/light?serviceId=12345678"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
     
@@ -420,7 +420,7 @@
 }
 
 /*!
- * @brief deviceIdを指定せずにバックライト明度取得要求を送信するテストを行う.
+ * @brief serviceIdを指定せずにバックライト明度取得要求を送信するテストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: PUT
@@ -431,7 +431,7 @@
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailSettingsDisplayLightPutNoDeviceId
+- (void) testHttpFailSettingsDisplayLightPutNoServiceId
 {
     NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/settings/display/light?level=0.5"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
@@ -441,20 +441,20 @@
 }
 
 /*!
- * @brief deviceIdが空状態でバックライト明度取得要求を送信するテストを行う.
+ * @brief serviceIdが空状態でバックライト明度取得要求を送信するテストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /settings/display/light?deviceId=&kind=xxxx
+ * Path: /settings/display/light?serviceId=&kind=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailSettingsDisplayLightPutEmptyDeviceId
+- (void) testHttpFailSettingsDisplayLightPutEmptyServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/settings/display/light?level=0.5&deviceId="];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/settings/display/light?level=0.5&serviceId="];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
@@ -462,20 +462,20 @@
 }
 
 /*!
- * @brief 存在しないdeviceIdでバックライト明度取得要求を送信するテストを行う.
+ * @brief 存在しないserviceIdでバックライト明度取得要求を送信するテストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /settings/display/light?deviceId=123456789&kind=xxxx
+ * Path: /settings/display/light?serviceId=123456789&kind=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailSettingsDisplayLightPutInvalidDeviceId
+- (void) testHttpFailSettingsDisplayLightPutInvalidServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/settings/display/light?level=0.5&deviceId=12345678"];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/settings/display/light?level=0.5&serviceId=12345678"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
@@ -487,7 +487,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: POST
- * Path: /settings/display/light?deviceId=xxxx&kind=xxxx
+ * Path: /settings/display/light?serviceId=xxxx&kind=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -496,7 +496,7 @@
  */
 - (void) testHttpFailSettingsDisplayLightInvalidMethodPost
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/settings/display/light?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/settings/display/light?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"POST"];
     
@@ -508,7 +508,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /settings/display/light?deviceId=xxxx&kind=xxxx
+ * Path: /settings/display/light?serviceId=xxxx&kind=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -517,7 +517,7 @@
  */
 - (void) testHttpFailSettingsDisplayLightInvalidMethodDelete
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/settings/display/light?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/settings/display/light?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     
@@ -525,7 +525,7 @@
 }
 
 /*!
- * @brief deviceIdを指定せずにバックライト明度取得要求を送信するテストを行う.
+ * @brief serviceIdを指定せずにバックライト明度取得要求を送信するテストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: GET
@@ -536,7 +536,7 @@
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailSettingsDisplaySleepGetNoDeviceId
+- (void) testHttpFailSettingsDisplaySleepGetNoServiceId
 {
     NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/settings/display/sleep"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
@@ -546,20 +546,20 @@
 }
 
 /*!
- * @brief deviceIdが空状態でバックライト明度取得要求を送信するテストを行う.
+ * @brief serviceIdが空状態でバックライト明度取得要求を送信するテストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: GET
- * Path: /settings/display/sleep?deviceId=&kind=xxxx
+ * Path: /settings/display/sleep?serviceId=&kind=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailSettingsDisplaySleepGetEmptyDeviceId
+- (void) testHttpFailSettingsDisplaySleepGetEmptyServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/settings/display/sleep?deviceId="];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/settings/display/sleep?serviceId="];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
     
@@ -567,20 +567,20 @@
 }
 
 /*!
- * @brief 存在しないdeviceIdでバックライト明度取得要求を送信するテストを行う.
+ * @brief 存在しないserviceIdでバックライト明度取得要求を送信するテストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: GET
- * Path: /settings/display/sleep?deviceId=123456789&kind=xxxx
+ * Path: /settings/display/sleep?serviceId=123456789&kind=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailSettingsDisplaySleepGetInvalidDeviceId
+- (void) testHttpFailSettingsDisplaySleepGetInvalidServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/settings/display/sleep?deviceId=12345678"];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/settings/display/sleep?serviceId=12345678"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
     
@@ -588,7 +588,7 @@
 }
 
 /*!
- * @brief deviceIdを指定せずにバックライト明度取得要求を送信するテストを行う.
+ * @brief serviceIdを指定せずにバックライト明度取得要求を送信するテストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: PUT
@@ -599,7 +599,7 @@
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailSettingsDisplaySleepPutNoDeviceId
+- (void) testHttpFailSettingsDisplaySleepPutNoServiceId
 {
     NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/settings/display/sleep?time=1"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
@@ -609,20 +609,20 @@
 }
 
 /*!
- * @brief deviceIdが空状態でバックライト明度取得要求を送信するテストを行う.
+ * @brief serviceIdが空状態でバックライト明度取得要求を送信するテストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /settings/display/sleep?deviceId=&kind=xxxx
+ * Path: /settings/display/sleep?serviceId=&kind=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailSettingsDisplaySleepPutEmptyDeviceId
+- (void) testHttpFailSettingsDisplaySleepPutEmptyServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/settings/display/sleep?time=1&deviceId="];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/settings/display/sleep?time=1&serviceId="];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
@@ -630,20 +630,20 @@
 }
 
 /*!
- * @brief 存在しないdeviceIdでバックライト明度取得要求を送信するテストを行う.
+ * @brief 存在しないserviceIdでバックライト明度取得要求を送信するテストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /settings/display/sleep?deviceId=123456789&kind=xxxx
+ * Path: /settings/display/sleep?serviceId=123456789&kind=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailSettingsDisplaySleepPutInvalidDeviceId
+- (void) testHttpFailSettingsDisplaySleepPutInvalidServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/settings/display/sleep?time=1&deviceId=12345678"];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/settings/display/sleep?time=1&serviceId=12345678"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
@@ -655,7 +655,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: POST
- * Path: /settings/display/sleep?deviceId=xxxx&kind=xxxx
+ * Path: /settings/display/sleep?serviceId=xxxx&kind=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -664,7 +664,7 @@
  */
 - (void) testHttpFailSettingsDisplaySleepPutInvalidMethodPost
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/settings/display/sleep?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/settings/display/sleep?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"POST"];
     
@@ -676,7 +676,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /settings/display/sleep?deviceId=xxxx&kind=xxxx
+ * Path: /settings/display/sleep?serviceId=xxxx&kind=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -685,7 +685,7 @@
  */
 - (void) testHttpFailSettingsDisplaySleepPutInvalidMethodDelete
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/settings/display/sleep?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/settings/display/sleep?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     

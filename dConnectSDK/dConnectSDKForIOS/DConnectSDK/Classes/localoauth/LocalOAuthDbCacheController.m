@@ -492,8 +492,8 @@ static NSString *const LocalOAuthDbCacheControllerDBName = @"__dconnect_localoau
             DCLogD(@"destroyAccessToken()");
             DCLogD(@" - clientId: %@", [client clientId]);
             DCLogD(@" - packageName: %@", [packageInfo packageName]);
-            if ([packageInfo deviceId] != nil) {
-                DCLogD(@" - deviceId: %@", [packageInfo deviceId]);
+            if ([packageInfo serviceId] != nil) {
+                DCLogD(@" - serviceId: %@", [packageInfo serviceId]);
             }
             
             result = DConnectEventErrorNone;

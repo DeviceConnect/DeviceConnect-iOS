@@ -41,22 +41,22 @@ NSString *const DConnectProximityProfileParamNear = @"near";
     }
     
     NSString *attribute = [request attribute];
-    NSString *deviceId = [request deviceId];
+    NSString *serviceId = [request serviceId];
     NSString *sessionKey = [request sessionKey];
     
     if ([attribute isEqualToString:DConnectProximityProfileAttrOnDeviceProximity]) {
-        if ([self hasMethod:@selector(profile:didReceivePutOnDeviceProximityRequest:response:deviceId:sessionKey:)
+        if ([self hasMethod:@selector(profile:didReceivePutOnDeviceProximityRequest:response:serviceId:sessionKey:)
                    response:response])
         {
             send = [_delegate profile:self didReceivePutOnDeviceProximityRequest:request response:response
-                             deviceId:deviceId sessionKey:sessionKey];
+                             serviceId:serviceId sessionKey:sessionKey];
         }
     } else if ([attribute isEqualToString:DConnectProximityProfileAttrOnUserProximity]) {
-        if ([self hasMethod:@selector(profile:didReceivePutOnUserProximityRequest:response:deviceId:sessionKey:)
+        if ([self hasMethod:@selector(profile:didReceivePutOnUserProximityRequest:response:serviceId:sessionKey:)
                    response:response])
         {
             send = [_delegate profile:self didReceivePutOnUserProximityRequest:request response:response
-                             deviceId:deviceId sessionKey:sessionKey];
+                             serviceId:serviceId sessionKey:sessionKey];
         }
     } else {
         [response setErrorToUnknownAttribute];
@@ -76,22 +76,22 @@ NSString *const DConnectProximityProfileParamNear = @"near";
     }
     
     NSString *attribute = [request attribute];
-    NSString *deviceId = [request deviceId];
+    NSString *serviceId = [request serviceId];
     NSString *sessionKey = [request sessionKey];
     
     if ([attribute isEqualToString:DConnectProximityProfileAttrOnDeviceProximity]) {
-        if ([self hasMethod:@selector(profile:didReceiveDeleteOnDeviceProximityRequest:response:deviceId:sessionKey:)
+        if ([self hasMethod:@selector(profile:didReceiveDeleteOnDeviceProximityRequest:response:serviceId:sessionKey:)
                    response:response])
         {
             send = [_delegate profile:self didReceiveDeleteOnDeviceProximityRequest:request response:response
-                             deviceId:deviceId sessionKey:sessionKey];
+                             serviceId:serviceId sessionKey:sessionKey];
         }
     } else if ([attribute isEqualToString:DConnectProximityProfileAttrOnUserProximity]) {
-        if ([self hasMethod:@selector(profile:didReceiveDeleteOnUserProximityRequest:response:deviceId:sessionKey:)
+        if ([self hasMethod:@selector(profile:didReceiveDeleteOnUserProximityRequest:response:serviceId:sessionKey:)
                    response:response])
         {
             send = [_delegate profile:self didReceiveDeleteOnUserProximityRequest:request response:response
-                             deviceId:deviceId sessionKey:sessionKey];
+                             serviceId:serviceId sessionKey:sessionKey];
         }
     } else {
         [response setErrorToUnknownAttribute];

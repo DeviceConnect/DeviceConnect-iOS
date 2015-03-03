@@ -17,7 +17,7 @@ extern NSString *const DPIRKitUDKeySSID;
 extern NSString *const DPIRKitUDKeySecType;
 extern NSString *const DPIRKitUDKeyPassword;
 extern NSString *const DPIRKitUDKeyDeviceKey;
-extern NSString *const DPIRKitUDKeyDeviceId;
+extern NSString *const DPIRKitUDKeyServiceId;
 
 #define DPIRBundle() \
 [NSBundle bundleWithPath:[[NSBundle mainBundle] pathForResource:DPIRKitBundleName ofType:@"bundle"]]

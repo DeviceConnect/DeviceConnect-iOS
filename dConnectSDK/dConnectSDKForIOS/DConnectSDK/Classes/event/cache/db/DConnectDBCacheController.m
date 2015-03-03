@@ -85,13 +85,13 @@ NSString *const DConnectDBCacheControllerDBName = @"__dconnect_event.db";
                 break;
             }
             
-            long long dId = [DConnectDeviceDao insertWithDeviceId:event.deviceId toDatabase:database];
+            long long dId = [DConnectDeviceDao insertWithServiceId:event.serviceId toDatabase:database];
             if (dId <= 0) {
                 break;
             }
             
             long long edId = [DConnectEventDeviceDao insertWithAttributeId:aId
-                                                                  deviceId:dId toDatabase:database];
+                                                                  serviceId:dId toDatabase:database];
             if (edId <= 0) {
                 break;
             }
@@ -101,7 +101,7 @@ NSString *const DConnectDBCacheControllerDBName = @"__dconnect_event.db";
                 break;
             }
             
-            long long esId = [DConnectEventSessionDao insertWithEventDeviceId:edId
+            long long esId = [DConnectEventSessionDao insertWithEventServiceId:edId
                                                                      clientId:cId
                                                                    toDatabase:database];
             if (esId <= 0) {
@@ -223,7 +223,7 @@ NSString *const DConnectDBCacheControllerDBName = @"__dconnect_event.db";
 }
 
 
-- (DConnectEvent *) eventForDeviceId:(NSString *)deviceId profile:(NSString *)profile
+- (DConnectEvent *) eventForServiceId:(NSString *)serviceId profile:(NSString *)profile
                            interface:(NSString *)interface attribute:(NSString *)attribute
                           sessionKey:(NSString *)sessionKey
 {
@@ -238,7 +238,7 @@ NSString *const DConnectDBCacheControllerDBName = @"__dconnect_event.db";
         }
         
         DConnectEvent *search = [DConnectEvent new];
-        search.deviceId = deviceId;
+        search.serviceId = serviceId;
         search.profile = profile;
         search.interface = interface;
         search.attribute = attribute;
@@ -271,7 +271,7 @@ NSString *const DConnectDBCacheControllerDBName = @"__dconnect_event.db";
     return event;
 }
 
-- (NSArray *) eventsForDeviceId:(NSString *)deviceId profile:(NSString *)profile
+- (NSArray *) eventsForServiceId:(NSString *)serviceId profile:(NSString *)profile
                       interface:(NSString *)interface attribute:(NSString *)attribute
 {
     
@@ -285,7 +285,7 @@ NSString *const DConnectDBCacheControllerDBName = @"__dconnect_event.db";
         }
         
         DConnectEvent *search = [DConnectEvent new];
-        search.deviceId = deviceId;
+        search.serviceId = serviceId;
         search.profile = profile;
         search.interface = interface;
         search.attribute = attribute;
@@ -295,14 +295,14 @@ NSString *const DConnectDBCacheControllerDBName = @"__dconnect_event.db";
             return;
         }
         
-        NSArray *clients = [DConnectClientDao clientsForAPIWithDeviceId:search onDatabase:database];
+        NSArray *clients = [DConnectClientDao clientsForAPIWithServiceId:search onDatabase:database];
         if (!clients) {
             return;
         }
         
         for (DConnectClient *client in clients) {
             DConnectEvent *event = [DConnectEvent new];
-            event.deviceId = deviceId;
+            event.serviceId = serviceId;
             event.profile = profile;
             event.interface = interface;
             event.attribute = attribute;

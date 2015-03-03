@@ -31,24 +31,24 @@
 // 共通リクエスト処理
 - (BOOL)handleRequest:(DConnectRequestMessage *)request
              response:(DConnectResponseMessage *)response
-             deviceId:(NSString *)deviceId
+             serviceId:(NSString *)serviceId
              callback:(void(^)())callback
 {
     // パラメータチェック
-    if (deviceId == nil) {
-        [response setErrorToEmptyDeviceId];
+    if (serviceId == nil) {
+        [response setErrorToEmptyServiceId];
         return YES;
     }
     
     // 接続＆メッセージクリア
     DPChromecastManager *mgr = [DPChromecastManager sharedManager];
-    [mgr connectToDeviceWithID:deviceId completion:^(BOOL success, NSString *error) {
+    [mgr connectToDeviceWithID:serviceId completion:^(BOOL success, NSString *error) {
         if (success) {
             callback();
             [response setResult:DConnectMessageResultTypeOk];
         } else {
             // エラー
-            [response setErrorToNotFoundDevice];
+            [response setErrorToNotFoundService];
         }
         [[DConnectManager sharedManager] sendResponse:response];
     }];
@@ -62,16 +62,16 @@
 - (BOOL)               profile:(DConnectMediaPlayerProfile *)profile
 didReceiveGetPlayStatusRequest:(DConnectRequestMessage *)request
                       response:(DConnectResponseMessage *)response
-                      deviceId:(NSString *)deviceId
+                      serviceId:(NSString *)serviceId
 {
     // リクエスト処理
     return [self handleRequest:request
                       response:response
-                      deviceId:deviceId
+                      serviceId:serviceId
                       callback:
             ^{
                 // 再生状態取得
-                NSString *status = [[DPChromecastManager sharedManager] mediaPlayerStateWithID:deviceId];
+                NSString *status = [[DPChromecastManager sharedManager] mediaPlayerStateWithID:serviceId];
                 [response setString:status forKey:@"status"];
             }];
 }
@@ -80,7 +80,7 @@ didReceiveGetPlayStatusRequest:(DConnectRequestMessage *)request
 - (BOOL)          profile:(DConnectMediaPlayerProfile *)profile
 didReceiveGetMediaRequest:(DConnectRequestMessage *)request
                  response:(DConnectResponseMessage *)response
-                 deviceId:(NSString *)deviceId
+                 serviceId:(NSString *)serviceId
                   mediaId:(NSString *)mediaId
 {
     response.result = DConnectMessageResultTypeOk;
@@ -117,7 +117,7 @@ didReceiveGetMediaRequest:(DConnectRequestMessage *)request
 - (BOOL)              profile:(DConnectMediaPlayerProfile *)profile
 didReceiveGetMediaListRequest:(DConnectRequestMessage *)request
                      response:(DConnectResponseMessage *)response
-                     deviceId:(NSString *)deviceId
+                     serviceId:(NSString *)serviceId
                         query:(NSString *)query
                      mimeType:(NSString *)mimeType
                         order:(NSString *)order
@@ -167,16 +167,16 @@ didReceiveGetMediaListRequest:(DConnectRequestMessage *)request
 - (BOOL)         profile:(DConnectMediaPlayerProfile *)profile
 didReceiveGetSeekRequest:(DConnectRequestMessage *)request
                 response:(DConnectResponseMessage *)response
-                deviceId:(NSString *)deviceId
+                serviceId:(NSString *)serviceId
 {
     // リクエスト処理
     return [self handleRequest:request
                       response:response
-                      deviceId:deviceId
+                      serviceId:serviceId
                       callback:
             ^{
                 // 再生位置取得
-                NSTimeInterval pos = [[DPChromecastManager sharedManager] streamPositionWithID:deviceId];
+                NSTimeInterval pos = [[DPChromecastManager sharedManager] streamPositionWithID:serviceId];
                 [response setDouble:pos forKey:@"pos"];
             }];
 }
@@ -185,16 +185,16 @@ didReceiveGetSeekRequest:(DConnectRequestMessage *)request
 - (BOOL)           profile:(DConnectMediaPlayerProfile *)profile
 didReceiveGetVolumeRequest:(DConnectRequestMessage *)request
                   response:(DConnectResponseMessage *)response
-                  deviceId:(NSString *)deviceId
+                  serviceId:(NSString *)serviceId
 {
     // リクエスト処理
     return [self handleRequest:request
                       response:response
-                      deviceId:deviceId
+                      serviceId:serviceId
                       callback:
             ^{
                 // 音量取得
-                float vol = [[DPChromecastManager sharedManager] volumeWithID:deviceId];
+                float vol = [[DPChromecastManager sharedManager] volumeWithID:serviceId];
                 [response setDouble:vol forKey:@"volume"];
             }];
 }
@@ -203,16 +203,16 @@ didReceiveGetVolumeRequest:(DConnectRequestMessage *)request
 - (BOOL)         profile:(DConnectMediaPlayerProfile *)profile
 didReceiveGetMuteRequest:(DConnectRequestMessage *)request
                 response:(DConnectResponseMessage *)response
-                deviceId:(NSString *)deviceId
+                serviceId:(NSString *)serviceId
 {
     // リクエスト処理
     return [self handleRequest:request
                       response:response
-                      deviceId:deviceId
+                      serviceId:serviceId
                       callback:
             ^{
                 // ミュート状態取得
-                BOOL mute = [[DPChromecastManager sharedManager] isMutedWithID:deviceId];
+                BOOL mute = [[DPChromecastManager sharedManager] isMutedWithID:serviceId];
                 [response setBool:mute forKey:@"mute"];
             }];
 }
@@ -224,7 +224,7 @@ didReceiveGetMuteRequest:(DConnectRequestMessage *)request
 - (BOOL)            profile:(DConnectMediaPlayerProfile *)profile
   didReceivePutMediaRequest:(DConnectRequestMessage *)request
                    response:(DConnectResponseMessage *)response
-                   deviceId:(NSString *)deviceId
+                   serviceId:(NSString *)serviceId
                     mediaId:(NSString *)mediaId
 {
     // パラメータチェック
@@ -236,11 +236,11 @@ didReceiveGetMuteRequest:(DConnectRequestMessage *)request
     // リクエスト処理
     return [self handleRequest:request
                       response:response
-                      deviceId:deviceId
+                      serviceId:serviceId
                       callback:
             ^{
                 // ロード
-				NSInteger requestId = [[DPChromecastManager sharedManager] loadMediaWithID:deviceId mediaID:mediaId];
+				NSInteger requestId = [[DPChromecastManager sharedManager] loadMediaWithID:serviceId mediaID:mediaId];
                 //リクエストを送信できなかった
                 if(requestId == kGCKInvalidRequestID){
                     [response setString:@"mediaId is not exist" forKey:@"value"];
@@ -252,10 +252,10 @@ didReceiveGetMuteRequest:(DConnectRequestMessage *)request
 - (BOOL)         profile:(DConnectMediaPlayerProfile *)profile
 didReceivePutPlayRequest:(DConnectRequestMessage *)request
                 response:(DConnectResponseMessage *)response
-                deviceId:(NSString *)deviceId
+                serviceId:(NSString *)serviceId
 {
     //パラメータチェック
-	NSString *status = [[DPChromecastManager sharedManager] mediaPlayerStateWithID:deviceId];
+	NSString *status = [[DPChromecastManager sharedManager] mediaPlayerStateWithID:serviceId];
 	
     if([status  isEqual: @"play"]){
         [response setErrorToIllegalDeviceStateWithMessage:@"Playstate is not idle"];
@@ -265,11 +265,11 @@ didReceivePutPlayRequest:(DConnectRequestMessage *)request
     // リクエスト処理
     return [self handleRequest:request
                       response:response
-                      deviceId:deviceId
+                      serviceId:serviceId
                       callback:
             ^{
                 // 再生
-                NSInteger requestId = [[DPChromecastManager sharedManager] playWithID:deviceId];
+                NSInteger requestId = [[DPChromecastManager sharedManager] playWithID:serviceId];
                 //リクエストを送信できなかった
                 if(requestId == kGCKInvalidRequestID){
                     [response setErrorToInvalidRequestParameterWithMessage:@"Media is not selected"];
@@ -281,10 +281,10 @@ didReceivePutPlayRequest:(DConnectRequestMessage *)request
 - (BOOL)         profile:(DConnectMediaPlayerProfile *)profile
 didReceivePutStopRequest:(DConnectRequestMessage *)request
                 response:(DConnectResponseMessage *)response
-                deviceId:(NSString *)deviceId
+                serviceId:(NSString *)serviceId
 {
     //パラメータチェック
-    NSString *status = [[DPChromecastManager sharedManager] mediaPlayerStateWithID:deviceId];
+    NSString *status = [[DPChromecastManager sharedManager] mediaPlayerStateWithID:serviceId];
     
     if(![status  isEqual: @"play"]){
         [response setErrorToIllegalDeviceStateWithMessage:@"Playstate is not playing"];
@@ -294,11 +294,11 @@ didReceivePutStopRequest:(DConnectRequestMessage *)request
     // リクエスト処理
     return [self handleRequest:request
                       response:response
-                      deviceId:deviceId
+                      serviceId:serviceId
                       callback:
             ^{
                 // 停止
-                NSInteger requestId = [[DPChromecastManager sharedManager] stopWithID:deviceId];
+                NSInteger requestId = [[DPChromecastManager sharedManager] stopWithID:serviceId];
                 // リクエストを送信できなかった
                 if(requestId == kGCKInvalidRequestID){
                     [response setErrorToInvalidRequestParameterWithMessage:@"Media is not selected"];
@@ -310,10 +310,10 @@ didReceivePutStopRequest:(DConnectRequestMessage *)request
 - (BOOL)          profile:(DConnectMediaPlayerProfile *)profile
 didReceivePutPauseRequest:(DConnectRequestMessage *)request
                  response:(DConnectResponseMessage *)response
-                 deviceId:(NSString *)deviceId
+                 serviceId:(NSString *)serviceId
 {
     //パラメータチェック
-    NSString *status = [[DPChromecastManager sharedManager] mediaPlayerStateWithID:deviceId];
+    NSString *status = [[DPChromecastManager sharedManager] mediaPlayerStateWithID:serviceId];
     
     if(![status  isEqual: @"play"]){
         [response setErrorToIllegalDeviceStateWithMessage:@"Playstate is not playing"];
@@ -323,11 +323,11 @@ didReceivePutPauseRequest:(DConnectRequestMessage *)request
     // リクエスト処理
     return [self handleRequest:request
                       response:response
-                      deviceId:deviceId
+                      serviceId:serviceId
                       callback:
             ^{
                 // 一時停止
-                NSInteger requestId = [[DPChromecastManager sharedManager] pauseWithID:deviceId];
+                NSInteger requestId = [[DPChromecastManager sharedManager] pauseWithID:serviceId];
                 //リクエストを送信できなかった
                 if(requestId == kGCKInvalidRequestID){
                     [response setErrorToInvalidRequestParameterWithMessage:@"Media is not selected"];
@@ -339,10 +339,10 @@ didReceivePutPauseRequest:(DConnectRequestMessage *)request
 - (BOOL)           profile:(DConnectMediaPlayerProfile *)profile
 didReceivePutResumeRequest:(DConnectRequestMessage *)request
                   response:(DConnectResponseMessage *)response
-                  deviceId:(NSString *)deviceId
+                  serviceId:(NSString *)serviceId
 {
     // 再生状態取得
-    NSString *status = [[DPChromecastManager sharedManager] mediaPlayerStateWithID:deviceId];
+    NSString *status = [[DPChromecastManager sharedManager] mediaPlayerStateWithID:serviceId];
 
     if(![status  isEqual: @"pause"]){
         [response setErrorToIllegalDeviceStateWithMessage:@"Playstate is not paused"];
@@ -352,11 +352,11 @@ didReceivePutResumeRequest:(DConnectRequestMessage *)request
     // リクエスト処理
     return [self handleRequest:request
                       response:response
-                      deviceId:deviceId
+                      serviceId:serviceId
                       callback:
             ^{
                 // 再生
-                NSInteger requestId = [[DPChromecastManager sharedManager] playWithID:deviceId];
+                NSInteger requestId = [[DPChromecastManager sharedManager] playWithID:serviceId];
                 //リクエストを送信できなかった
                 if(requestId == kGCKInvalidRequestID){
                     [response setErrorToInvalidRequestParameterWithMessage:@"Media is not selected"];
@@ -368,13 +368,13 @@ didReceivePutResumeRequest:(DConnectRequestMessage *)request
 - (BOOL)         profile:(DConnectMediaPlayerProfile *)profile
 didReceivePutSeekRequest:(DConnectRequestMessage *)request
                 response:(DConnectResponseMessage *)response
-                deviceId:(NSString *)deviceId
+                serviceId:(NSString *)serviceId
                      pos:(NSNumber *)pos
 {
     DPChromecastManager *mgr = [DPChromecastManager sharedManager];
     
     // パラメータチェック
-    if (pos == nil || [pos doubleValue] < 0 || [mgr durationWithID:deviceId] <[pos doubleValue]) {
+    if (pos == nil || [pos doubleValue] < 0 || [mgr durationWithID:serviceId] <[pos doubleValue]) {
         [response setErrorToInvalidRequestParameter];
         return YES;
     }
@@ -382,11 +382,11 @@ didReceivePutSeekRequest:(DConnectRequestMessage *)request
     // リクエスト処理
     return [self handleRequest:request
                       response:response
-                      deviceId:deviceId
+                      serviceId:serviceId
                       callback:
             ^{
                 // 再生位置変更
-                [[DPChromecastManager sharedManager] setStreamPositionWithID:deviceId position:[pos doubleValue]];
+                [[DPChromecastManager sharedManager] setStreamPositionWithID:serviceId position:[pos doubleValue]];
             }];
 }
 
@@ -394,7 +394,7 @@ didReceivePutSeekRequest:(DConnectRequestMessage *)request
 - (BOOL)           profile:(DConnectMediaPlayerProfile *)profile
 didReceivePutVolumeRequest:(DConnectRequestMessage *)request
                   response:(DConnectResponseMessage *)response
-                  deviceId:(NSString *)deviceId
+                  serviceId:(NSString *)serviceId
                     volume:(NSNumber *)volume
 {
     // パラメータチェック
@@ -407,11 +407,11 @@ didReceivePutVolumeRequest:(DConnectRequestMessage *)request
     // リクエスト処理
     return [self handleRequest:request
                       response:response
-                      deviceId:deviceId
+                      serviceId:serviceId
                       callback:
             ^{
                 // 音量変更
-                [[DPChromecastManager sharedManager] setVolumeWithID:deviceId volume:vol];
+                [[DPChromecastManager sharedManager] setVolumeWithID:serviceId volume:vol];
             }];
 }
 
@@ -419,16 +419,16 @@ didReceivePutVolumeRequest:(DConnectRequestMessage *)request
 - (BOOL)         profile:(DConnectMediaPlayerProfile *)profile
 didReceivePutMuteRequest:(DConnectRequestMessage *)request
                 response:(DConnectResponseMessage *)response
-                deviceId:(NSString *)deviceId
+                serviceId:(NSString *)serviceId
 {
     // リクエスト処理
     return [self handleRequest:request
                       response:response
-                      deviceId:deviceId
+                      serviceId:serviceId
                       callback:
             ^{
                 // ミュート有効化
-                [[DPChromecastManager sharedManager] setIsMutedWithID:deviceId muted:YES];
+                [[DPChromecastManager sharedManager] setIsMutedWithID:serviceId muted:YES];
             }];
 }
 
@@ -439,16 +439,16 @@ didReceivePutMuteRequest:(DConnectRequestMessage *)request
 - (BOOL)            profile:(DConnectMediaPlayerProfile *)profile
 didReceiveDeleteMuteRequest:(DConnectRequestMessage *)request
                    response:(DConnectResponseMessage *)response
-                   deviceId:(NSString *)deviceId
+                   serviceId:(NSString *)serviceId
 {
     // リクエスト処理
     return [self handleRequest:request
                       response:response
-                      deviceId:deviceId
+                      serviceId:serviceId
                       callback:
             ^{
                 // ミュート無効化
-				[[DPChromecastManager sharedManager] setIsMutedWithID:deviceId muted:NO];
+				[[DPChromecastManager sharedManager] setIsMutedWithID:serviceId muted:NO];
             }];
 }
 
@@ -488,32 +488,32 @@ didReceiveDeleteMuteRequest:(DConnectRequestMessage *)request
 - (BOOL)                   profile:(DConnectMediaPlayerProfile *)profile
 didReceivePutOnStatusChangeRequest:(DConnectRequestMessage *)request
                           response:(DConnectResponseMessage *)response
-                          deviceId:(NSString *)deviceId
+                          serviceId:(NSString *)serviceId
                         sessionKey:(NSString *)sessionkey
 {
 	[self handleEventRequest:request response:response isRemove:NO callback:^{
-		[self addMediaEvent:deviceId];
+		[self addMediaEvent:serviceId];
 	}];
     return YES;
 }
 
 // イベント追加
-- (void) addMediaEvent:(NSString *)deviceId
+- (void) addMediaEvent:(NSString *)serviceId
 {
 	__block DConnectDevicePlugin *_self = (DConnectDevicePlugin *)self.provider;
 	
 	DConnectEventManager *evtMgr = [DConnectEventManager sharedManagerForClass:[DPChromecastDevicePlugin class]];
 	
-	[[DPChromecastManager sharedManager] setEventCallbackWithID:deviceId callback:^(NSString *mediaID) {
+	[[DPChromecastManager sharedManager] setEventCallbackWithID:serviceId callback:^(NSString *mediaID) {
 		DPChromecastManager *mgr = [DPChromecastManager sharedManager];
 		DConnectMessage *message = [DConnectMessage message];
 		[DConnectMediaPlayerProfile setMediaId:mediaID target:message];
 		[DConnectMediaPlayerProfile setMIMEType:@"video/mp4" target:message];
-		[DConnectMediaPlayerProfile setStatus:[mgr mediaPlayerStateWithID:deviceId] target:message];
-		[DConnectMediaPlayerProfile setPos:[mgr streamPositionWithID:deviceId] target:message];
-		[DConnectMediaPlayerProfile setVolume:[mgr volumeWithID:deviceId] target:message];
+		[DConnectMediaPlayerProfile setStatus:[mgr mediaPlayerStateWithID:serviceId] target:message];
+		[DConnectMediaPlayerProfile setPos:[mgr streamPositionWithID:serviceId] target:message];
+		[DConnectMediaPlayerProfile setVolume:[mgr volumeWithID:serviceId] target:message];
 		
-		NSArray *evts = [evtMgr eventListForDeviceId:deviceId
+		NSArray *evts = [evtMgr eventListForServiceId:serviceId
 											 profile:DConnectMediaPlayerProfileName
 										   attribute:DConnectMediaPlayerProfileAttrOnStatusChange];
 		for (DConnectEvent *evt in evts) {
@@ -528,7 +528,7 @@ didReceivePutOnStatusChangeRequest:(DConnectRequestMessage *)request
 - (BOOL)                      profile:(DConnectMediaPlayerProfile *)profile
 didReceiveDeleteOnStatusChangeRequest:(DConnectRequestMessage *)request
                              response:(DConnectResponseMessage *)response
-                             deviceId:(NSString *)deviceId
+                             serviceId:(NSString *)serviceId
                            sessionKey:(NSString *)sessionkey
 {
 	// DConnectイベント削除

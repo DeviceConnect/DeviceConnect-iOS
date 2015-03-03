@@ -12,7 +12,7 @@
 extern NSString *const TestDevicePluginAppName;
 
 
-// Network Service Discovery Profileの定数
+// Service Discovery Profileの定数
 
 /*! デバイスプラグイン名. */
 extern NSString *const TestDevicePluginName;

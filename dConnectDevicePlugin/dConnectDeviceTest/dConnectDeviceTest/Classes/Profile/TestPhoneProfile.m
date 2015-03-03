@@ -26,9 +26,9 @@
 #pragma mark - Post Methods
 
 - (BOOL) profile:(DConnectPhoneProfile *)profile didReceivePostCallRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response deviceId:(NSString *)deviceId phoneNumber:(NSString *)phoneNumber
+        response:(DConnectResponseMessage *)response serviceId:(NSString *)serviceId phoneNumber:(NSString *)phoneNumber
 {
-    CheckDID(response, deviceId)
+    CheckDID(response, serviceId)
     if (phoneNumber == nil || phoneNumber.length == 0) {
         [response setErrorToInvalidRequestParameter];
     } else {
@@ -40,10 +40,10 @@
 
 #pragma mark - Put Methods
 - (BOOL) profile:(DConnectPhoneProfile *)profile didReceivePutSetRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response deviceId:(NSString *)deviceId
+        response:(DConnectResponseMessage *)response serviceId:(NSString *)serviceId
             mode:(NSNumber *)mode
 {
-    CheckDID(response, deviceId)
+    CheckDID(response, serviceId)
     if (mode == nil || [mode intValue] == DConnectPhoneProfilePhoneModeUnknown) {
         [response setErrorToInvalidRequestParameter];
     } else {
@@ -56,16 +56,16 @@
 #pragma mark Event Registration
 
 - (BOOL) profile:(DConnectPhoneProfile *)profile didReceivePutOnConnectRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response deviceId:(NSString *)deviceId
+        response:(DConnectResponseMessage *)response serviceId:(NSString *)serviceId
       sessionKey:(NSString *)sessionKey
 {
-    CheckDIDAndSK(response, deviceId, sessionKey) {
+    CheckDIDAndSK(response, serviceId, sessionKey) {
         response.result = DConnectMessageResultTypeOk;
         
         DConnectMessage *event = [DConnectMessage message];
         [event setString:sessionKey forKey:DConnectMessageSessionKey];
         [event setString:self.profileName forKey:DConnectMessageProfile];
-        [event setString:deviceId forKey:DConnectMessageDeviceId];
+        [event setString:serviceId forKey:DConnectMessageServiceId];
         [event setString:DConnectPhoneProfileAttrOnConnect forKey:DConnectMessageAttribute];
         
         DConnectMessage *phoneStatus = [DConnectMessage message];
@@ -83,10 +83,10 @@
 #pragma mark Event Unregistration
 
 - (BOOL) profile:(DConnectPhoneProfile *)profile didReceiveDeleteOnConnectRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response deviceId:(NSString *)deviceId
+        response:(DConnectResponseMessage *)response serviceId:(NSString *)serviceId
       sessionKey:(NSString *)sessionKey
 {
-    CheckDIDAndSK(response, deviceId, sessionKey) {
+    CheckDIDAndSK(response, serviceId, sessionKey) {
         response.result = DConnectMessageResultTypeOk;
     }
 
