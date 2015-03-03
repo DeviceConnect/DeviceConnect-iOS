@@ -11,7 +11,7 @@
 #import <DConnectSDK/DConnectFileManager.h>
 
 #import "DPHostDevicePlugin.h"
-#import "DPHostNetworkServiceDiscoveryProfile.h"
+#import "DPHostServiceDiscoveryProfile.h"
 #import "DPHostMediaStreamRecordingProfile.h"
 #import "DPHostRecorderContext.h"
 #import "DPHostUtils.h"
@@ -537,7 +537,7 @@ typedef NS_ENUM(NSUInteger, OptionIndex) {
     });
     
     // イベントの取得
-    NSArray *evts = [_eventMgr eventListForDeviceId:NetworkDiscoveryDeviceId
+    NSArray *evts = [_eventMgr eventListForServiceId:ServiceDiscoveryServiceId
                                             profile:DConnectMediaStreamRecordingProfileName
                                           attribute:DConnectMediaStreamRecordingProfileAttrOnPhoto];
     // イベント送信
@@ -564,7 +564,7 @@ typedef NS_ENUM(NSUInteger, OptionIndex) {
                                  errorMessage:(NSString *)errorMsg
 {
     // イベントの取得
-    NSArray *evts = [_eventMgr eventListForDeviceId:NetworkDiscoveryDeviceId
+    NSArray *evts = [_eventMgr eventListForServiceId:ServiceDiscoveryServiceId
                                             profile:DConnectMediaStreamRecordingProfileName
                                           attribute:DConnectMediaStreamRecordingProfileAttrOnPhoto];
     // イベント送信
@@ -645,7 +645,7 @@ typedef NS_ENUM(NSUInteger, OptionIndex) {
         }
         
         // イベントの取得
-        evts = [_eventMgr eventListForDeviceId:NetworkDiscoveryDeviceId
+        evts = [_eventMgr eventListForServiceId:ServiceDiscoveryServiceId
                                        profile:DConnectMediaStreamRecordingProfileName
                                      attribute:DConnectMediaStreamRecordingProfileAttrOnDataAvailable];
         
@@ -1014,7 +1014,7 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
 - (BOOL)                  profile:(DConnectMediaStreamRecordingProfile *)profile
 didReceiveGetMediaRecorderRequest:(DConnectRequestMessage *)request
                          response:(DConnectResponseMessage *)response
-                         deviceId:(NSString *)deviceId
+                         serviceId:(NSString *)serviceId
 {
     DConnectArray *recorders = [DConnectArray array];
     for (size_t i = 0; i < _recorderArr.count; ++i) {
@@ -1069,7 +1069,7 @@ didReceiveGetMediaRecorderRequest:(DConnectRequestMessage *)request
 - (BOOL)               profile:(DConnectMediaStreamRecordingProfile *)profile
 didReceivePostTakePhotoRequest:(DConnectRequestMessage *)request
                       response:(DConnectResponseMessage *)response
-                      deviceId:(NSString *)deviceId
+                      serviceId:(NSString *)serviceId
                         target:(NSString *)target
 {
     unsigned long long idx;
@@ -1255,7 +1255,7 @@ didReceivePostTakePhotoRequest:(DConnectRequestMessage *)request
 - (BOOL)            profile:(DConnectMediaStreamRecordingProfile *)profile
 didReceivePostRecordRequest:(DConnectRequestMessage *)request
                    response:(DConnectResponseMessage *)response
-                   deviceId:(NSString *)deviceId
+                   serviceId:(NSString *)serviceId
                      target:(NSString *)target
                   timeslice:(NSNumber *)timeslice
 {
@@ -1393,7 +1393,7 @@ didReceivePostRecordRequest:(DConnectRequestMessage *)request
 - (BOOL)          profile:(DConnectMediaStreamRecordingProfile *)profile
 didReceivePutPauseRequest:(DConnectRequestMessage *)request
                  response:(DConnectResponseMessage *)response
-                 deviceId:(NSString *)deviceId
+                 serviceId:(NSString *)serviceId
                    target:(NSString *)target
 {
     unsigned long long idx;
@@ -1470,7 +1470,7 @@ didReceivePutPauseRequest:(DConnectRequestMessage *)request
 - (BOOL)           profile:(DConnectMediaStreamRecordingProfile *)profile
 didReceivePutResumeRequest:(DConnectRequestMessage *)request
                   response:(DConnectResponseMessage *)response
-                  deviceId:(NSString *)deviceId
+                  serviceId:(NSString *)serviceId
                     target:(NSString *)target
 {
     unsigned long long idx;
@@ -1545,7 +1545,7 @@ didReceivePutResumeRequest:(DConnectRequestMessage *)request
 - (BOOL)         profile:(DConnectMediaStreamRecordingProfile *)profile
 didReceivePutStopRequest:(DConnectRequestMessage *)request
                 response:(DConnectResponseMessage *)response
-                deviceId:(NSString *)deviceId
+                serviceId:(NSString *)serviceId
                   target:(NSString *)target
 {
     unsigned long long idx;
@@ -1665,7 +1665,7 @@ didReceivePutStopRequest:(DConnectRequestMessage *)request
 - (BOOL)              profile:(DConnectMediaStreamRecordingProfile *)profile
 didReceivePutMuteTrackRequest:(DConnectRequestMessage *)request
                      response:(DConnectResponseMessage *)response
-                     deviceId:(NSString *)deviceId
+                     serviceId:(NSString *)serviceId
                        target:(NSString *)target
 {
     unsigned long long idx;
@@ -1731,7 +1731,7 @@ didReceivePutMuteTrackRequest:(DConnectRequestMessage *)request
 - (BOOL)                profile:(DConnectMediaStreamRecordingProfile *)profile
 didReceivePutUnmuteTrackRequest:(DConnectRequestMessage *)request
                        response:(DConnectResponseMessage *)response
-                       deviceId:(NSString *)deviceId
+                       serviceId:(NSString *)serviceId
                          target:(NSString *)target
 {
     unsigned long long idx;
@@ -1799,7 +1799,7 @@ didReceivePutUnmuteTrackRequest:(DConnectRequestMessage *)request
 - (BOOL)            profile:(DConnectMediaStreamRecordingProfile *)profile
 didReceivePutOnPhotoRequest:(DConnectRequestMessage *)request
                    response:(DConnectResponseMessage *)response
-                   deviceId:(NSString *)deviceId
+                   serviceId:(NSString *)serviceId
                  sessionKey:(NSString *)sessionKey
 {
     switch ([_eventMgr addEventForRequest:request]) {
@@ -1821,7 +1821,7 @@ didReceivePutOnPhotoRequest:(DConnectRequestMessage *)request
 - (BOOL)                      profile:(DConnectMediaStreamRecordingProfile *)profile
 didReceivePutOnRecordingChangeRequest:(DConnectRequestMessage *)request
                              response:(DConnectResponseMessage *)response
-                             deviceId:(NSString *)deviceId
+                             serviceId:(NSString *)serviceId
                            sessionKey:(NSString *)sessionKey
 {
     switch ([_eventMgr addEventForRequest:request]) {
@@ -1843,10 +1843,10 @@ didReceivePutOnRecordingChangeRequest:(DConnectRequestMessage *)request
 - (BOOL)                    profile:(DConnectMediaStreamRecordingProfile *)profile
 didReceivePutOnDataAvailableRequest:(DConnectRequestMessage *)request
                            response:(DConnectResponseMessage *)response
-                           deviceId:(NSString *)deviceId
+                           serviceId:(NSString *)serviceId
                          sessionKey:(NSString *)sessionKey
 {
-    NSArray *evts = [_eventMgr eventListForDeviceId:deviceId
+    NSArray *evts = [_eventMgr eventListForServiceId:serviceId
                                             profile:DConnectMediaStreamRecordingProfileName
                                           attribute:DConnectMediaStreamRecordingProfileAttrOnDataAvailable];
     if (evts.count == 0) {
@@ -1855,7 +1855,7 @@ didReceivePutOnDataAvailableRequest:(DConnectRequestMessage *)request
         //（恐らく動画や音声等の入力ソースであるDPHostRecorderDataSourceを排他的に管理することをやめなければならない
         // 事を暗示している）
         [self profile:profile didReceivePostRecordRequest:nil response:[response copy]
-             deviceId:deviceId target:nil timeslice:nil];
+             serviceId:serviceId target:nil timeslice:nil];
         
         // プレビュー画像URIの配送処理が開始されていないのなら、開始する。
         _sendPreview = YES;
@@ -1883,7 +1883,7 @@ didReceivePutOnDataAvailableRequest:(DConnectRequestMessage *)request
 - (BOOL)               profile:(DConnectMediaStreamRecordingProfile *)profile
 didReceiveDeleteOnPhotoRequest:(DConnectRequestMessage *)request
                       response:(DConnectResponseMessage *)response
-                      deviceId:(NSString *)deviceId
+                      serviceId:(NSString *)serviceId
                     sessionKey:(NSString *)sessionKey
 {
     switch ([_eventMgr removeEventForRequest:request]) {
@@ -1905,7 +1905,7 @@ didReceiveDeleteOnPhotoRequest:(DConnectRequestMessage *)request
 - (BOOL)                         profile:(DConnectMediaStreamRecordingProfile *)profile
 didReceiveDeleteOnRecordingChangeRequest:(DConnectRequestMessage *)request
                                 response:(DConnectResponseMessage *)response
-                                deviceId:(NSString *)deviceId
+                                serviceId:(NSString *)serviceId
                               sessionKey:(NSString *)sessionKey
 {
     switch ([_eventMgr removeEventForRequest:request]) {
@@ -1927,7 +1927,7 @@ didReceiveDeleteOnRecordingChangeRequest:(DConnectRequestMessage *)request
 - (BOOL)                       profile:(DConnectMediaStreamRecordingProfile *)profile
 didReceiveDeleteOnDataAvailableRequest:(DConnectRequestMessage *)request
                               response:(DConnectResponseMessage *)response
-                              deviceId:(NSString *)deviceId
+                              serviceId:(NSString *)serviceId
                             sessionKey:(NSString *)sessionKey
 {
     switch ([_eventMgr removeEventForRequest:request]) {
@@ -1943,7 +1943,7 @@ didReceiveDeleteOnDataAvailableRequest:(DConnectRequestMessage *)request
             break;
     }
     
-    NSArray *evts = [_eventMgr eventListForDeviceId:deviceId
+    NSArray *evts = [_eventMgr eventListForServiceId:serviceId
                                             profile:DConnectDeviceOrientationProfileName
                                           attribute:DConnectDeviceOrientationProfileAttrOnDeviceOrientation];
     if (evts.count == 0) {
@@ -1952,7 +1952,7 @@ didReceiveDeleteOnDataAvailableRequest:(DConnectRequestMessage *)request
         //（恐らく動画や音声等の入力ソースであるDPHostRecorderDataSourceを排他的に管理することをやめなければならない
         // 事を暗示している）
         [self profile:profile didReceivePutStopRequest:nil response:[response copy]
-             deviceId:deviceId target:nil];
+             serviceId:serviceId target:nil];
         
         // イベント受領先が存在しないなら、プレビュー画像URIの配送処理を停止する。
         _sendPreview = NO;

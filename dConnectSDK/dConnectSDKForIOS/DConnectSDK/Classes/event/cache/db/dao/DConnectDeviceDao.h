@@ -10,13 +10,13 @@
 #import "DConnectSQLite.h"
 
 extern NSString *const DConnectDeviceDaoTableName;
-extern NSString *const DConnectDeviceDaoClmDeviceId;
+extern NSString *const DConnectDeviceDaoClmServiceId;
 
-extern NSString *const DConnectDeviceDaoEmptyDeviceId;
+extern NSString *const DConnectDeviceDaoEmptyServiceId;
 
 @interface DConnectDeviceDao : NSObject
 
 + (void) createWithDatabase:(DConnectSQLiteDatabase *)database;
-+ (long long) insertWithDeviceId:(NSString *)deviceId toDatabase:(DConnectSQLiteDatabase *)database;
++ (long long) insertWithServiceId:(NSString *)serviceId toDatabase:(DConnectSQLiteDatabase *)database;
 
 @end

@@ -28,7 +28,7 @@
 		44407C321998BE4E00E9B751 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 44407C301998BE4E00E9B751 /* InfoPlist.strings */; };
 		4450063619BD4D5100C9FF54 /* DPPebbleBatteryProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 4450060D19BD4D5100C9FF54 /* DPPebbleBatteryProfile.m */; };
 		4450063819BD4D5100C9FF54 /* DPPebbleDeviceOrientationProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 4450060F19BD4D5100C9FF54 /* DPPebbleDeviceOrientationProfile.m */; };
-		4450063E19BD4D5100C9FF54 /* DPPebbleNetworkServiceDiscoveryProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 4450061519BD4D5100C9FF54 /* DPPebbleNetworkServiceDiscoveryProfile.m */; };
+		4450063E19BD4D5100C9FF54 /* DPPebbleServiceDiscoveryProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 4450061519BD4D5100C9FF54 /* DPPebbleServiceDiscoveryProfile.m */; };
 		4450064019BD4D5100C9FF54 /* DPPebbleNotificationProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 4450061719BD4D5100C9FF54 /* DPPebbleNotificationProfile.m */; };
 		4450064219BD4D5100C9FF54 /* DPPebbleSettingsProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 4450061919BD4D5100C9FF54 /* DPPebbleSettingsProfile.m */; };
 		4450064419BD4D5100C9FF54 /* DPPebbleSystemProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 4450061B19BD4D5100C9FF54 /* DPPebbleSystemProfile.m */; };
@@ -51,10 +51,10 @@
 		44A4A9F619C1986C0050A0AA /* img05.png in Resources */ = {isa = PBXBuildFile; fileRef = 44A4A9F119C1986C0050A0AA /* img05.png */; };
 		44A4A9F819C198930050A0AA /* Download_on_the_App_Store_Badge_US-UK_135x40.png in Resources */ = {isa = PBXBuildFile; fileRef = 44A4A9F719C198930050A0AA /* Download_on_the_App_Store_Badge_US-UK_135x40.png */; };
 		783D47B019FA2CBB001C6CD9 /* DPPebbleProfileUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 783D47AF19FA2CBB001C6CD9 /* DPPebbleProfileUtil.m */; };
-		AB702E261A70FAD4002D21CB /* DPPebbleCanvasProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = AB702E251A70FAD4002D21CB /* DPPebbleCanvasProfile.m */; };
-		AB702E2D1A70FAE9002D21CB /* DPPebbleDevicePlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = AB702E281A70FAE9002D21CB /* DPPebbleDevicePlugin.m */; };
-		AB702E2E1A70FAE9002D21CB /* DPPebbleImage.m in Sources */ = {isa = PBXBuildFile; fileRef = AB702E2A1A70FAE9002D21CB /* DPPebbleImage.m */; };
-		AB702E2F1A70FAE9002D21CB /* DPPebbleManager.m in Sources */ = {isa = PBXBuildFile; fileRef = AB702E2C1A70FAE9002D21CB /* DPPebbleManager.m */; };
+		AB33D7701A7605330073A1BA /* DPPebbleCanvasProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = AB33D76F1A7605330073A1BA /* DPPebbleCanvasProfile.m */; };
+		AB33D7771A7605540073A1BA /* DPPebbleDevicePlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = AB33D7721A7605540073A1BA /* DPPebbleDevicePlugin.m */; };
+		AB33D7781A7605540073A1BA /* DPPebbleImage.m in Sources */ = {isa = PBXBuildFile; fileRef = AB33D7741A7605540073A1BA /* DPPebbleImage.m */; };
+		AB33D7791A7605540073A1BA /* DPPebbleManager.m in Sources */ = {isa = PBXBuildFile; fileRef = AB33D7761A7605540073A1BA /* DPPebbleManager.m */; };
 		ABCE5F5819AB38C00040EE10 /* PebbleKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABCE5F5719AB38C00040EE10 /* PebbleKit.framework */; };
 		BE066B5919A8532700CBED07 /* dConnectDevicePebble_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BE066B5819A8532700CBED07 /* dConnectDevicePebble_iPhone.storyboard */; };
 		BE066B5B19A8537A00CBED07 /* dConnectDevicePebble_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BE066B5A19A8537A00CBED07 /* dConnectDevicePebble_iPad.storyboard */; };
@@ -105,8 +105,8 @@
 		4450060D19BD4D5100C9FF54 /* DPPebbleBatteryProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPPebbleBatteryProfile.m; sourceTree = "<group>"; };
 		4450060E19BD4D5100C9FF54 /* DPPebbleDeviceOrientationProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPPebbleDeviceOrientationProfile.h; sourceTree = "<group>"; };
 		4450060F19BD4D5100C9FF54 /* DPPebbleDeviceOrientationProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPPebbleDeviceOrientationProfile.m; sourceTree = "<group>"; };
-		4450061419BD4D5100C9FF54 /* DPPebbleNetworkServiceDiscoveryProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPPebbleNetworkServiceDiscoveryProfile.h; sourceTree = "<group>"; };
-		4450061519BD4D5100C9FF54 /* DPPebbleNetworkServiceDiscoveryProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPPebbleNetworkServiceDiscoveryProfile.m; sourceTree = "<group>"; };
+		4450061419BD4D5100C9FF54 /* DPPebbleServiceDiscoveryProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPPebbleServiceDiscoveryProfile.h; sourceTree = "<group>"; };
+		4450061519BD4D5100C9FF54 /* DPPebbleServiceDiscoveryProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPPebbleServiceDiscoveryProfile.m; sourceTree = "<group>"; };
 		4450061619BD4D5100C9FF54 /* DPPebbleNotificationProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPPebbleNotificationProfile.h; sourceTree = "<group>"; };
 		4450061719BD4D5100C9FF54 /* DPPebbleNotificationProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPPebbleNotificationProfile.m; sourceTree = "<group>"; };
 		4450061819BD4D5100C9FF54 /* DPPebbleSettingsProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPPebbleSettingsProfile.h; sourceTree = "<group>"; };
@@ -143,14 +143,14 @@
 		44A4A9F719C198930050A0AA /* Download_on_the_App_Store_Badge_US-UK_135x40.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Download_on_the_App_Store_Badge_US-UK_135x40.png"; sourceTree = "<group>"; };
 		783D47AE19FA2CBB001C6CD9 /* DPPebbleProfileUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPPebbleProfileUtil.h; sourceTree = "<group>"; };
 		783D47AF19FA2CBB001C6CD9 /* DPPebbleProfileUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPPebbleProfileUtil.m; sourceTree = "<group>"; };
-		AB702E241A70FAD4002D21CB /* DPPebbleCanvasProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPPebbleCanvasProfile.h; sourceTree = "<group>"; };
-		AB702E251A70FAD4002D21CB /* DPPebbleCanvasProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPPebbleCanvasProfile.m; sourceTree = "<group>"; };
-		AB702E271A70FAE9002D21CB /* DPPebbleDevicePlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPPebbleDevicePlugin.h; sourceTree = "<group>"; };
-		AB702E281A70FAE9002D21CB /* DPPebbleDevicePlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPPebbleDevicePlugin.m; sourceTree = "<group>"; };
-		AB702E291A70FAE9002D21CB /* DPPebbleImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPPebbleImage.h; sourceTree = "<group>"; };
-		AB702E2A1A70FAE9002D21CB /* DPPebbleImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPPebbleImage.m; sourceTree = "<group>"; };
-		AB702E2B1A70FAE9002D21CB /* DPPebbleManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPPebbleManager.h; sourceTree = "<group>"; };
-		AB702E2C1A70FAE9002D21CB /* DPPebbleManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPPebbleManager.m; sourceTree = "<group>"; };
+		AB33D76E1A7605330073A1BA /* DPPebbleCanvasProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPPebbleCanvasProfile.h; sourceTree = "<group>"; };
+		AB33D76F1A7605330073A1BA /* DPPebbleCanvasProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPPebbleCanvasProfile.m; sourceTree = "<group>"; };
+		AB33D7711A7605540073A1BA /* DPPebbleDevicePlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPPebbleDevicePlugin.h; sourceTree = "<group>"; };
+		AB33D7721A7605540073A1BA /* DPPebbleDevicePlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPPebbleDevicePlugin.m; sourceTree = "<group>"; };
+		AB33D7731A7605540073A1BA /* DPPebbleImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPPebbleImage.h; sourceTree = "<group>"; };
+		AB33D7741A7605540073A1BA /* DPPebbleImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPPebbleImage.m; sourceTree = "<group>"; };
+		AB33D7751A7605540073A1BA /* DPPebbleManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPPebbleManager.h; sourceTree = "<group>"; };
+		AB33D7761A7605540073A1BA /* DPPebbleManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPPebbleManager.m; sourceTree = "<group>"; };
 		ABCE5F5719AB38C00040EE10 /* PebbleKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = PebbleKit.framework; sourceTree = "<group>"; };
 		BE066B5819A8532700CBED07 /* dConnectDevicePebble_iPhone.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = dConnectDevicePebble_iPhone.storyboard; sourceTree = "<group>"; };
 		BE066B5A19A8537A00CBED07 /* dConnectDevicePebble_iPad.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = dConnectDevicePebble_iPad.storyboard; sourceTree = "<group>"; };
@@ -269,12 +269,12 @@
 		4450060719BD4D5100C9FF54 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				AB702E271A70FAE9002D21CB /* DPPebbleDevicePlugin.h */,
-				AB702E281A70FAE9002D21CB /* DPPebbleDevicePlugin.m */,
-				AB702E291A70FAE9002D21CB /* DPPebbleImage.h */,
-				AB702E2A1A70FAE9002D21CB /* DPPebbleImage.m */,
-				AB702E2B1A70FAE9002D21CB /* DPPebbleManager.h */,
-				AB702E2C1A70FAE9002D21CB /* DPPebbleManager.m */,
+				AB33D7711A7605540073A1BA /* DPPebbleDevicePlugin.h */,
+				AB33D7721A7605540073A1BA /* DPPebbleDevicePlugin.m */,
+				AB33D7731A7605540073A1BA /* DPPebbleImage.h */,
+				AB33D7741A7605540073A1BA /* DPPebbleImage.m */,
+				AB33D7751A7605540073A1BA /* DPPebbleManager.h */,
+				AB33D7761A7605540073A1BA /* DPPebbleManager.m */,
 				4450060B19BD4D5100C9FF54 /* profile */,
 				4450061E19BD4D5100C9FF54 /* settings */,
 			);
@@ -284,12 +284,12 @@
 		4450060B19BD4D5100C9FF54 /* profile */ = {
 			isa = PBXGroup;
 			children = (
-				AB702E241A70FAD4002D21CB /* DPPebbleCanvasProfile.h */,
-				AB702E251A70FAD4002D21CB /* DPPebbleCanvasProfile.m */,
+				AB33D76E1A7605330073A1BA /* DPPebbleCanvasProfile.h */,
+				AB33D76F1A7605330073A1BA /* DPPebbleCanvasProfile.m */,
 				783D47AE19FA2CBB001C6CD9 /* DPPebbleProfileUtil.h */,
 				783D47AF19FA2CBB001C6CD9 /* DPPebbleProfileUtil.m */,
-				4450061419BD4D5100C9FF54 /* DPPebbleNetworkServiceDiscoveryProfile.h */,
-				4450061519BD4D5100C9FF54 /* DPPebbleNetworkServiceDiscoveryProfile.m */,
+				4450061419BD4D5100C9FF54 /* DPPebbleServiceDiscoveryProfile.h */,
+				4450061519BD4D5100C9FF54 /* DPPebbleServiceDiscoveryProfile.m */,
 				4450060C19BD4D5100C9FF54 /* DPPebbleBatteryProfile.h */,
 				4450060D19BD4D5100C9FF54 /* DPPebbleBatteryProfile.m */,
 				4450060E19BD4D5100C9FF54 /* DPPebbleDeviceOrientationProfile.h */,
@@ -457,7 +457,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Environment Variables\nFRAMEWORK_NAME=${PROJECT_NAME}\nFRAMEWORK_VERSION=A\nFRAMEWORK_VERSION_NUMBER=1.0\nCONFIGURATION=\"Release\"\nFRAMEWORK_BUILD_PATH=\"${SRCROOT}/build/${CONFIGURATION}-framework\"\nFRAMEWORK_DIR=\"${FRAMEWORK_BUILD_PATH}/${FRAMEWORK_NAME}.framework\"\nSTATICLIB_BUILD_PATH=\"${SRCROOT}/build/${CONFIGURATION}-universal\"\n\n# Clean directories\nrm -rf \"${FRAMEWORK_BUILD_PATH}\"\n\n# Build simulator and device binaries.\n# A target to build a static library *must* have the name ${PROJECT_NAME}.\nxcodebuild -project ${PROJECT_NAME}.xcodeproj -sdk iphonesimulator -target ${PROJECT_NAME} -configuration ${CONFIGURATION} clean build\nxcodebuild -project ${PROJECT_NAME}.xcodeproj -sdk iphoneos -target ${PROJECT_NAME} -configuration ${CONFIGURATION} clean build\n# A target to build a bundle *must* have the name ${PROJECT_NAME}_resources. This target is optional.\nxcodebuild -project ${PROJECT_NAME}.xcodeproj -sdk iphonesimulator -target ${PROJECT_NAME}_resources -configuration ${CONFIGURATION} clean build || true\nxcodebuild -project ${PROJECT_NAME}.xcodeproj -sdk iphoneos -target ${PROJECT_NAME}_resources -configuration ${CONFIGURATION} clean build || true\n\n# create directories.\nmkdir -p ${FRAMEWORK_DIR}/Versions/${FRAMEWORK_VERSION}/Headers\n#mkdir -p ${FRAMEWORK_DIR}/Versions/${FRAMEWORK_VERSION}/Resources\nmkdir -p ${STATICLIB_BUILD_PATH}\n# create symlinks\ncd ${FRAMEWORK_DIR}\nln -s ../Versions/${FRAMEWORK_VERSION} Versions/Current\nln -s Versions/Current/Headers Headers\n#ln -s Versions/Current/Resources Resources\nln -s Versions/Current/${FRAMEWORK_NAME} ${FRAMEWORK_NAME}\ncd ${SRCROOT}\n\n# create the universal library, and strip internal symbols from it\nlipo ${SRCROOT}/build/${CONFIGURATION}-iphoneos/lib${FRAMEWORK_NAME}.a ${SRCROOT}/build/${CONFIGURATION}-iphonesimulator/lib${FRAMEWORK_NAME}.a -create -output \"${STATICLIB_BUILD_PATH}/lib${FRAMEWORK_NAME}.a\"\n#strip -x \"${STATICLIB_BUILD_PATH}/lib${FRAMEWORK_NAME}.a\"\ncp \"${STATICLIB_BUILD_PATH}/lib${FRAMEWORK_NAME}.a\" \"${FRAMEWORK_DIR}/Versions/Current/${FRAMEWORK_NAME}\"\n\n# copy files\ncp -r ${SRCROOT}/${PROJECT_NAME}/Headers/ ${FRAMEWORK_DIR}/Headers/";
+			shellScript = "# Environment Variables\nFRAMEWORK_NAME=${PROJECT_NAME}\nFRAMEWORK_VERSION=A\nFRAMEWORK_VERSION_NUMBER=1.0\nCONFIGURATION=\"Release\"\nFRAMEWORK_BUILD_PATH=\"${SRCROOT}/build/${CONFIGURATION}-framework\"\nFRAMEWORK_DIR=\"${FRAMEWORK_BUILD_PATH}/${FRAMEWORK_NAME}.framework\"\nSTATICLIB_BUILD_PATH=\"${SRCROOT}/build/${CONFIGURATION}-universal\"\n\n# Clean directories\nrm -rf \"${FRAMEWORK_BUILD_PATH}\"\n\n# Build simulator and device binaries.\n# A target to build a static library *must* have the name ${PROJECT_NAME}.\nxcodebuild -project ${PROJECT_NAME}.xcodeproj -sdk iphonesimulator -target ${PROJECT_NAME} -configuration ${CONFIGURATION} clean build\nxcodebuild -project ${PROJECT_NAME}.xcodeproj -sdk iphoneos -target ${PROJECT_NAME} -configuration ${CONFIGURATION} clean build\n# A target to build a bundle *must* have the name ${PROJECT_NAME}_resources. This target is optional.\nxcodebuild -project ${PROJECT_NAME}.xcodeproj -sdk iphonesimulator -target ${PROJECT_NAME}_resources -configuration ${CONFIGURATION} clean build || true\nxcodebuild -project ${PROJECT_NAME}.xcodeproj -sdk iphoneos -target ${PROJECT_NAME}_resources -configuration ${CONFIGURATION} clean build || true\n\n# create directories.\nmkdir -p ${FRAMEWORK_DIR}/Versions/${FRAMEWORK_VERSION}/Headers\n#mkdir -p ${FRAMEWORK_DIR}/Versions/${FRAMEWORK_VERSION}/Resources\nmkdir -p ${STATICLIB_BUILD_PATH}\n# create symlinks\ncd ${FRAMEWORK_DIR}\nln -s ../Versions/${FRAMEWORK_VERSION} Versions/Current\nln -s Versions/Current/Headers Headers\n#ln -s Versions/Current/Resources Resources\nln -s Versions/Current/${FRAMEWORK_NAME} ${FRAMEWORK_NAME}\ncd ${SRCROOT}\n\n# create the universal library, and strip internal symbols from it\nlipo ${SRCROOT}/build/${CONFIGURATION}-iphoneos/lib${FRAMEWORK_NAME}.a ${SRCROOT}/build/${CONFIGURATION}-iphonesimulator/lib${FRAMEWORK_NAME}.a -create -output \"${STATICLIB_BUILD_PATH}/lib${FRAMEWORK_NAME}.a\"\n#strip -x \"${STATICLIB_BUILD_PATH}/lib${FRAMEWORK_NAME}.a\"\ncp \"${STATICLIB_BUILD_PATH}/lib${FRAMEWORK_NAME}.a\" \"${FRAMEWORK_DIR}/Versions/Current/${FRAMEWORK_NAME}\"\n\n# copy files\ncp -r ${SRCROOT}/${PROJECT_NAME}/Headers/ ${FRAMEWORK_DIR}/Headers/\n\n# copy binary to bin folder\ncd ${SRCROOT}\nrm -rf bin\nmkdir bin\ncp -r ${FRAMEWORK_DIR} bin\ncp -r build/${CONFIGURATION}-resources/${PROJECT_NAME}_resources.bundle bin";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -467,24 +467,24 @@
 			buildActionMask = 2147483647;
 			files = (
 				4450063819BD4D5100C9FF54 /* DPPebbleDeviceOrientationProfile.m in Sources */,
-				4450063E19BD4D5100C9FF54 /* DPPebbleNetworkServiceDiscoveryProfile.m in Sources */,
+				4450063E19BD4D5100C9FF54 /* DPPebbleServiceDiscoveryProfile.m in Sources */,
 				4450064219BD4D5100C9FF54 /* DPPebbleSettingsProfile.m in Sources */,
 				4450064419BD4D5100C9FF54 /* DPPebbleSystemProfile.m in Sources */,
-				AB702E2D1A70FAE9002D21CB /* DPPebbleDevicePlugin.m in Sources */,
+				AB33D7771A7605540073A1BA /* DPPebbleDevicePlugin.m in Sources */,
 				4450065A19BD4D5100C9FF54 /* PebbleViewController.m in Sources */,
 				4450065219BD4D5100C9FF54 /* PebbleSettingView05Controller.m in Sources */,
 				4450064A19BD4D5100C9FF54 /* PebbleSettingView01Controller.m in Sources */,
 				4450064619BD4D5100C9FF54 /* DPPebbleVibrationProfile.m in Sources */,
 				4450063619BD4D5100C9FF54 /* DPPebbleBatteryProfile.m in Sources */,
 				4450064C19BD4D5100C9FF54 /* PebbleSettingView02Controller.m in Sources */,
-				AB702E2F1A70FAE9002D21CB /* DPPebbleManager.m in Sources */,
-				AB702E2E1A70FAE9002D21CB /* DPPebbleImage.m in Sources */,
+				AB33D7791A7605540073A1BA /* DPPebbleManager.m in Sources */,
+				AB33D7781A7605540073A1BA /* DPPebbleImage.m in Sources */,
 				4450065419BD4D5100C9FF54 /* PebbleSettingView06Controller.m in Sources */,
 				4450065019BD4D5100C9FF54 /* PebbleSettingView04Controller.m in Sources */,
 				4450065819BD4D5100C9FF54 /* PebbleModelController.m in Sources */,
 				4450065619BD4D5100C9FF54 /* PebbleDataViewController.m in Sources */,
-				AB702E261A70FAD4002D21CB /* DPPebbleCanvasProfile.m in Sources */,
 				783D47B019FA2CBB001C6CD9 /* DPPebbleProfileUtil.m in Sources */,
+				AB33D7701A7605330073A1BA /* DPPebbleCanvasProfile.m in Sources */,
 				4450064E19BD4D5100C9FF54 /* PebbleSettingView03Controller.m in Sources */,
 				4450064019BD4D5100C9FF54 /* DPPebbleNotificationProfile.m in Sources */,
 			);

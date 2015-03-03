@@ -8,7 +8,7 @@
 //
 
 #import "DPHueDevicePlugin.h"
-#import "DPHueNetworkServiceDiscoveryProfile.h"
+#import "DPHueServiceDiscoveryProfile.h"
 #import "DPHueSystemProfile.h"
 #import "DPHueLightProfile.h"
 #import "DPHueManager.h"
@@ -31,8 +31,8 @@ NSString *const DPHueBundleName = @"dConnectDeviceHue_resources";
         
         self.pluginName = [NSString stringWithFormat:@"hue 1.0.1"];
         
-        // Network Service Discovery Profileの追加
-        DPHueNetworkServiceDiscoveryProfile *networkProfile = [DPHueNetworkServiceDiscoveryProfile new];
+        // Service Discovery Profileの追加
+        DPHueServiceDiscoveryProfile *networkProfile = [DPHueServiceDiscoveryProfile new];
         
         // System Profileの追加
         DPHueSystemProfile *systemProfile = [DPHueSystemProfile new];

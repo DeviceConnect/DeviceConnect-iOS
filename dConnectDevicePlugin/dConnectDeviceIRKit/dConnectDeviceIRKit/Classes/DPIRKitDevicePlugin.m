@@ -24,7 +24,7 @@ NSString *const DPIRKitInfoPlistName = @"dConnectDeviceIRKit-Info";
 @interface DPIRKitDevicePlugin()
 <
 // プロファイルデリゲート
-DConnectNetworkServiceDiscoveryProfileDelegate,
+DConnectServiceDiscoveryProfileDelegate,
 DConnectSystemProfileDataSource,
 
 // デバイス検知デリゲート
@@ -53,7 +53,7 @@ DPIRKitManagerDetectionDelegate
     self = [super init];
     
     if (self) {
-        DConnectNetworkServiceDiscoveryProfile *np = [DConnectNetworkServiceDiscoveryProfile new];
+        DConnectServiceDiscoveryProfile *np = [DConnectServiceDiscoveryProfile new];
         DConnectSystemProfile *sp = [DConnectSystemProfile new];
         DPIRKitRemoteControllerProfile *rcp = [[DPIRKitRemoteControllerProfile alloc] initWithDevicePlugin:self];
         
@@ -121,9 +121,9 @@ DPIRKitManagerDetectionDelegate
 
 #pragma mark - Public Methods
 
-- (DPIRKitDevice *) deviceForDeviceId:(NSString *)deviceId {
+- (DPIRKitDevice *) deviceForServiceId:(NSString *)serviceId {
     @synchronized (_devices) {
-        return [_devices objectForKey:deviceId];
+        return [_devices objectForKey:serviceId];
     }
 }
 
@@ -149,23 +149,23 @@ DPIRKitManagerDetectionDelegate
     if ((!hit && online) || (hit && !online)) {
         
         DConnectMessage *networkService = [DConnectMessage message];
-        [DConnectNetworkServiceDiscoveryProfile setId:device.name target:networkService];
-        [DConnectNetworkServiceDiscoveryProfile setName:device.name target:networkService];
-        [DConnectNetworkServiceDiscoveryProfile setType:DConnectNetworkServiceDiscoveryProfileNetworkTypeWiFi
+        [DConnectServiceDiscoveryProfile setId:device.name target:networkService];
+        [DConnectServiceDiscoveryProfile setName:device.name target:networkService];
+        [DConnectServiceDiscoveryProfile setType:DConnectServiceDiscoveryProfileNetworkTypeWiFi
                                                  target:networkService];
-        [DConnectNetworkServiceDiscoveryProfile setState:online target:networkService];
-        [DConnectNetworkServiceDiscoveryProfile setOnline:online target:networkService];
+        [DConnectServiceDiscoveryProfile setState:online target:networkService];
+        [DConnectServiceDiscoveryProfile setOnline:online target:networkService];
         
-        NSArray *events = [_eventManager eventListForProfile:DConnectNetworkServiceDiscoveryProfileName
-                                                   attribute:DConnectNetworkServiceDiscoveryProfileAttrOnServiceChange];
+        NSArray *events = [_eventManager eventListForProfile:DConnectServiceDiscoveryProfileName
+                                                   attribute:DConnectServiceDiscoveryProfileAttrOnServiceChange];
         
         for (DConnectEvent *event in events) {
             DConnectMessage *message = [DConnectMessage message];
-            [message setString:@"" forKey:DConnectMessageDeviceId];
-            [message setString:DConnectNetworkServiceDiscoveryProfileName forKey:DConnectMessageProfile];
-            [message setString:DConnectNetworkServiceDiscoveryProfileAttrOnServiceChange forKey:DConnectMessageAttribute];
+            [message setString:@"" forKey:DConnectMessageServiceId];
+            [message setString:DConnectServiceDiscoveryProfileName forKey:DConnectMessageProfile];
+            [message setString:DConnectServiceDiscoveryProfileAttrOnServiceChange forKey:DConnectMessageAttribute];
             [message setString:event.sessionKey forKey:DConnectMessageSessionKey];
-            [DConnectNetworkServiceDiscoveryProfile setNetworkService:networkService target:message];
+            [DConnectServiceDiscoveryProfile setNetworkService:networkService target:message];
             [self sendEvent:message];
         }
     }
@@ -185,10 +185,10 @@ DPIRKitManagerDetectionDelegate
 }
 
 #pragma mark - Profile Delegate
-#pragma mark DConnectNetworkServiceDiscoveryProfileDelegate
+#pragma mark DConnectServiceDiscoveryProfileDelegate
 
-- (BOOL)                       profile:(DConnectNetworkServiceDiscoveryProfile *)profile
-didReceiveGetGetNetworkServicesRequest:(DConnectRequestMessage *)request
+- (BOOL)                       profile:(DConnectServiceDiscoveryProfile *)profile
+didReceiveGetServicesRequest:(DConnectRequestMessage *)request
                               response:(DConnectResponseMessage *)response
 {
     
@@ -198,27 +198,27 @@ didReceiveGetGetNetworkServicesRequest:(DConnectRequestMessage *)request
         
         for (DPIRKitDevice *device in _devices.allValues) {
             DConnectMessage *service = [DConnectMessage message];
-            [DConnectNetworkServiceDiscoveryProfile setId:device.name target:service];
-            [DConnectNetworkServiceDiscoveryProfile setName:device.name target:service];
+            [DConnectServiceDiscoveryProfile setId:device.name target:service];
+            [DConnectServiceDiscoveryProfile setName:device.name target:service];
             // WiFiでのみ接続するので常にWiFi。
-            [DConnectNetworkServiceDiscoveryProfile setType:DConnectNetworkServiceDiscoveryProfileNetworkTypeWiFi
+            [DConnectServiceDiscoveryProfile setType:DConnectServiceDiscoveryProfileNetworkTypeWiFi
                                                      target:service];
             // 見つかっている時点でWiFiにつながっているので常にYES。
-            [DConnectNetworkServiceDiscoveryProfile setOnline:YES target:service];
+            [DConnectServiceDiscoveryProfile setOnline:YES target:service];
             [services addMessage:service];
         }
     }
     
     response.result = DConnectMessageResultTypeOk;
-    [DConnectNetworkServiceDiscoveryProfile setServices:services target:response];
+    [DConnectServiceDiscoveryProfile setServices:services target:response];
     
     return YES;
 }
 
-- (BOOL)                    profile:(DConnectNetworkServiceDiscoveryProfile *)profile
+- (BOOL)                    profile:(DConnectServiceDiscoveryProfile *)profile
 didReceivePutOnServiceChangeRequest:(DConnectRequestMessage *)request
                            response:(DConnectResponseMessage *)response
-                           deviceId:(NSString *)deviceId
+                           serviceId:(NSString *)serviceId
                          sessionKey:(NSString *)sessionKey
 {
     
@@ -239,10 +239,10 @@ didReceivePutOnServiceChangeRequest:(DConnectRequestMessage *)request
     return YES;
 }
 
-- (BOOL)                       profile:(DConnectNetworkServiceDiscoveryProfile *)profile
+- (BOOL)                       profile:(DConnectServiceDiscoveryProfile *)profile
 didReceiveDeleteOnServiceChangeRequest:(DConnectRequestMessage *)request
                               response:(DConnectResponseMessage *)response
-                              deviceId:(NSString *)deviceId
+                              serviceId:(NSString *)serviceId
                             sessionKey:(NSString *)sessionKey
 {
     
@@ -270,14 +270,14 @@ didReceiveDeleteOnServiceChangeRequest:(DConnectRequestMessage *)request
 }
 
 - (DConnectSystemProfileConnectState) profile:(DConnectSystemProfile *)profile
-                         wifiStateForDeviceId:(NSString *)deviceId
+                         wifiStateForServiceId:(NSString *)serviceId
 {
     
     DConnectSystemProfileConnectState state = DConnectSystemProfileConnectStateOff;
     // TODO: 実際に接続を確認した方が良いかの検討
     @synchronized (_devices) {
         if (_devices.count > 0) {
-            DPIRKitDevice *device = [_devices objectForKey:deviceId];
+            DPIRKitDevice *device = [_devices objectForKey:serviceId];
             if (device) {
                 state = DConnectSystemProfileConnectStateOn;
             }

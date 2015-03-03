@@ -25,7 +25,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: GET
- * Path: /battery?deviceid=xxxx
+ * Path: /battery?serviceId=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -38,7 +38,7 @@
  */
 - (void) testHttpNormalBatteryGet
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/battery?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/battery?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
     
@@ -50,7 +50,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: GET
- * Path: /battery/charging?deviceid=xxxx
+ * Path: /battery/charging?serviceId=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -60,7 +60,7 @@
  */
 - (void) testHttpNormalBatteryChargingGet
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/battery/charging?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/battery/charging?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
     
@@ -72,7 +72,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: GET
- * Path: /battery/chargingtime?deviceid=xxxx
+ * Path: /battery/chargingtime?serviceId=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -82,7 +82,7 @@
  */
 - (void) testHttpNormalBatteryChargingTimeGet
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/battery/chargingTime?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/battery/chargingTime?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
     
@@ -94,7 +94,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: GET
- * Path: /battery/dischargingtime?deviceid=xxxx
+ * Path: /battery/dischargingtime?serviceId=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -104,7 +104,7 @@
  */
 - (void) testHttpNormalBatteryDischargingTimeGet
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/battery/dischargingTime?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/battery/dischargingTime?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
     
@@ -116,7 +116,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: GET
- * Path: /battery/level?deviceid=xxxx
+ * Path: /battery/level?serviceId=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -126,7 +126,7 @@
  */
 - (void) testHttpNormalBatteryLevelGet
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/battery/level?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/battery/level?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
     
@@ -138,7 +138,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /battery/onchargingchange?deviceid=xxxx&session_key=xxxx
+ * Path: /battery/onchargingchange?serviceId=xxxx&session_key=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -147,7 +147,7 @@
  */
 - (void) testHttpNormalBatteryOnChargingChangePut
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/battery/onchargingchange?sessionKey=%@&deviceId=%@", self.clientId, self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/battery/onchargingchange?sessionKey=%@&serviceId=%@", self.clientId, self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
@@ -160,7 +160,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /battery/onchargingchange?deviceid=xxxx&session_key=xxxx
+ * Path: /battery/onchargingchange?serviceId=xxxx&session_key=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -169,7 +169,7 @@
  */
 - (void) testHttpNormalBatteryOnChargingChangeDelete
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/battery/onchargingchange?sessionKey=%@&deviceId=%@", self.clientId, self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/battery/onchargingchange?sessionKey=%@&serviceId=%@", self.clientId, self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     
@@ -182,7 +182,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /battery/onbatterychange?deviceid=xxxx&session_key=xxxx
+ * Path: /battery/onbatterychange?serviceId=xxxx&session_key=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -191,7 +191,7 @@
  */
 - (void) testHttpNormalBatteryOnBatteryChangePut
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/battery/onbatterychange?sessionKey=%@&deviceId=%@", self.clientId, self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/battery/onbatterychange?sessionKey=%@&serviceId=%@", self.clientId, self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
@@ -204,7 +204,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /battery/onbatterychange?deviceid=xxxx&session_key=xxxx
+ * Path: /battery/onbatterychange?serviceId=xxxx&session_key=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -213,7 +213,7 @@
  */
 - (void) testHttpNormalBatteryOnBatteryChangeDelete
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/battery/onbatterychange?sessionKey=%@&deviceId=%@", self.clientId, self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/battery/onbatterychange?sessionKey=%@&serviceId=%@", self.clientId, self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     

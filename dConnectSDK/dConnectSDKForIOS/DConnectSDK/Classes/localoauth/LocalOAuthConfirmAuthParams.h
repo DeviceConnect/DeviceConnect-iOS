@@ -20,8 +20,8 @@
 /** グラントタイプ. */
 @property NSString *grantType;
 
-/** デバイスID(デバイスプラグイン用の場合のみ設定する). */
-@property NSString *deviceId;
+/** サービスID(デバイスプラグイン用の場合のみ設定する). */
+@property NSString *serviceId;
 
 /** スコープ名(NSString*の配列). */
 @property NSArray * scope;

@@ -8,7 +8,7 @@
 
 #import "DPHostConnectProfile.h"
 #import "DPHostDevicePlugin.h"
-#import "DPHostNetworkServiceDiscoveryProfile.h"
+#import "DPHostServiceDiscoveryProfile.h"
 #import "DPHostUtils.h"
 #import "DPHostReachability.h"
 /*
@@ -89,7 +89,7 @@ typedef void (^DPHostConnectStatusBlock)(BOOL status);
 #pragma mark - GET
 
 - (BOOL) profile:(DConnectConnectProfile *)profile didReceiveGetWifiRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response deviceId:(NSString *)deviceId {
+        response:(DConnectResponseMessage *)response serviceId:(NSString *)serviceId {
     [self scanForWifi];
     NetworkStatus netStatus = [_wifiReachability currentReachabilityStatus];
     if (netStatus == NotReachable) {
@@ -102,7 +102,7 @@ typedef void (^DPHostConnectStatusBlock)(BOOL status);
 }
 
 - (BOOL) profile:(DConnectConnectProfile *)profile didReceiveGetBluetoothRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response deviceId:(NSString *)deviceId {
+        response:(DConnectResponseMessage *)response serviceId:(NSString *)serviceId {
     __weak typeof(self) _self = self;
     DPHostConnectStatusBlock block = ^(BOOL isStatus) {
         [DConnectConnectProfile setEnable:isStatus target:response];
@@ -119,7 +119,7 @@ typedef void (^DPHostConnectStatusBlock)(BOOL status);
 }
 
 - (BOOL) profile:(DConnectConnectProfile *)profile didReceiveGetBLERequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response deviceId:(NSString *)deviceId {
+        response:(DConnectResponseMessage *)response serviceId:(NSString *)serviceId {
     __weak typeof(self) _self = self;
     DPHostConnectStatusBlock block = ^(BOOL isStatus) {
         [DConnectConnectProfile setEnable:isStatus target:response];
@@ -140,13 +140,13 @@ typedef void (^DPHostConnectStatusBlock)(BOOL status);
 
 
 - (BOOL) profile:(DConnectConnectProfile *)profile didReceivePutOnWifiChangeRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response deviceId:(NSString *)deviceId sessionKey:(NSString *)sessionKey {
+        response:(DConnectResponseMessage *)response serviceId:(NSString *)serviceId sessionKey:(NSString *)sessionKey {
     BOOL result = [self registerEventWithRequest:request response:response];
     if (result) {
         __weak typeof(self) _this = self;
         __block DConnectDevicePlugin *_self = (DConnectDevicePlugin *)self.provider;
         _wifiEventBlock = ^(BOOL isStatus) {
-            NSArray *evts = [_this.eventMgr eventListForDeviceId:NetworkDiscoveryDeviceId
+            NSArray *evts = [_this.eventMgr eventListForServiceId:ServiceDiscoveryServiceId
                                                          profile:DConnectConnectProfileName
                                                        attribute:DConnectConnectProfileAttrOnWifiChange];
             // イベント送信
@@ -167,13 +167,13 @@ typedef void (^DPHostConnectStatusBlock)(BOOL status);
 
 
 - (BOOL) profile:(DConnectConnectProfile *)profile didReceivePutOnBluetoothChangeRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response deviceId:(NSString *)deviceId sessionKey:(NSString *)sessionKey {
+        response:(DConnectResponseMessage *)response serviceId:(NSString *)serviceId sessionKey:(NSString *)sessionKey {
     BOOL result = [self registerEventWithRequest:request response:response];
     if (result) {
         __weak typeof(self) _this = self;
         __block DConnectDevicePlugin *_self = (DConnectDevicePlugin *)self.provider;
         _bluetoothEventBlock = ^(BOOL isStatus) {
-            NSArray *evts = [_this.eventMgr eventListForDeviceId:NetworkDiscoveryDeviceId
+            NSArray *evts = [_this.eventMgr eventListForServiceId:ServiceDiscoveryServiceId
                                                          profile:DConnectConnectProfileName
                                                        attribute:DConnectConnectProfileAttrOnBluetoothChange];
             // イベント送信
@@ -191,13 +191,13 @@ typedef void (^DPHostConnectStatusBlock)(BOOL status);
 }
 
 - (BOOL) profile:(DConnectConnectProfile *)profile didReceivePutOnBLEChangeRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response deviceId:(NSString *)deviceId sessionKey:(NSString *)sessionKey {
+        response:(DConnectResponseMessage *)response serviceId:(NSString *)serviceId sessionKey:(NSString *)sessionKey {
     BOOL result = [self registerEventWithRequest:request response:response];
     if (result) {
         __weak typeof(self) _this = self;
         __block DConnectDevicePlugin *_self = (DConnectDevicePlugin *)self.provider;
         _bleEventBlock = ^(BOOL isStatus) {
-            NSArray *evts = [_this.eventMgr eventListForDeviceId:NetworkDiscoveryDeviceId
+            NSArray *evts = [_this.eventMgr eventListForServiceId:ServiceDiscoveryServiceId
                                                          profile:DConnectConnectProfileName
                                                        attribute:DConnectConnectProfileAttrOnBLEChange];
             // イベント送信
@@ -224,7 +224,7 @@ typedef void (^DPHostConnectStatusBlock)(BOOL status);
 #pragma mark - DELETE
 - (BOOL) profile:(DConnectConnectProfile *)profile didReceiveDeleteOnWifiChangeRequest:(DConnectRequestMessage *)request
         response:(DConnectResponseMessage *)response
-        deviceId:(NSString *)deviceId
+        serviceId:(NSString *)serviceId
       sessionKey:(NSString *)sessionKey {
     BOOL result = [self unregisterEventWithRequest:request response:response];
     if (result) {
@@ -236,7 +236,7 @@ typedef void (^DPHostConnectStatusBlock)(BOOL status);
 
 - (BOOL) profile:(DConnectConnectProfile *)profile didReceiveDeleteOnBluetoothChangeRequest:(DConnectRequestMessage *)request
         response:(DConnectResponseMessage *)response
-        deviceId:(NSString *)deviceId
+        serviceId:(NSString *)serviceId
       sessionKey:(NSString *)sessionKey {
     BOOL result = [self unregisterEventWithRequest:request response:response];
     if (result) {
@@ -248,7 +248,7 @@ typedef void (^DPHostConnectStatusBlock)(BOOL status);
 
 - (BOOL) profile:(DConnectConnectProfile *)profile didReceiveDeleteOnBLEChangeRequest:(DConnectRequestMessage *)request
         response:(DConnectResponseMessage *)response
-        deviceId:(NSString *)deviceId
+        serviceId:(NSString *)serviceId
       sessionKey:(NSString *)sessionKey {
     BOOL result = [self unregisterEventWithRequest:request response:response];
     if (result) {

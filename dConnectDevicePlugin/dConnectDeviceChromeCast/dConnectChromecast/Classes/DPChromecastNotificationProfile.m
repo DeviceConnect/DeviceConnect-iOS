@@ -29,24 +29,24 @@
 // 共通リクエスト処理
 - (BOOL)handleRequest:(DConnectRequestMessage *)request
              response:(DConnectResponseMessage *)response
-             deviceId:(NSString *)deviceId
+             serviceId:(NSString *)serviceId
              callback:(void(^)())callback
 {
     // パラメータチェック
-    if (deviceId == nil) {
-        [response setErrorToEmptyDeviceId];
+    if (serviceId == nil) {
+        [response setErrorToEmptyServiceId];
         return YES;
     }
     
     // 接続＆メッセージクリア
     DPChromecastManager *mgr = [DPChromecastManager sharedManager];
-    [mgr connectToDeviceWithID:deviceId completion:^(BOOL success, NSString *error) {
+    [mgr connectToDeviceWithID:serviceId completion:^(BOOL success, NSString *error) {
         if (success) {
             callback();
             [response setResult:DConnectMessageResultTypeOk];
         } else {
             // エラー
-            [response setErrorToNotFoundDevice];
+            [response setErrorToNotFoundService];
         }
         [[DConnectManager sharedManager] sendResponse:response];
     }];
@@ -61,7 +61,7 @@
 - (BOOL)            profile:(DConnectNotificationProfile *)profile
 didReceivePostNotifyRequest:(DConnectRequestMessage *)request
                    response:(DConnectResponseMessage *)response
-                   deviceId:(NSString *)deviceId
+                   serviceId:(NSString *)serviceId
                        type:(NSNumber *)type
                         dir:(NSString *)dir
                        lang:(NSString *)lang
@@ -82,12 +82,12 @@ didReceivePostNotifyRequest:(DConnectRequestMessage *)request
     // リクエスト処理
     return [self handleRequest:request
                       response:response
-                      deviceId:deviceId
+                      serviceId:serviceId
                       callback:
             ^{
                 // メッセージ送信
                 DPChromecastManager *mgr = [DPChromecastManager sharedManager];
-                [mgr sendMessageWithID:deviceId message:body type:[type intValue]];
+                [mgr sendMessageWithID:serviceId message:body type:[type intValue]];
             }];
 }
 
@@ -98,18 +98,18 @@ didReceivePostNotifyRequest:(DConnectRequestMessage *)request
 - (BOOL)              profile:(DConnectNotificationProfile *)profile
 didReceiveDeleteNotifyRequest:(DConnectRequestMessage *)request
                      response:(DConnectResponseMessage *)response
-                     deviceId:(NSString *)deviceId
+                     serviceId:(NSString *)serviceId
                notificationId:(NSString *)notificationId
 {
     // リクエスト処理
     return [self handleRequest:request
                       response:response
-                      deviceId:deviceId
+                      serviceId:serviceId
                       callback:
             ^{
                 // メッセージクリア
                 DPChromecastManager *mgr = [DPChromecastManager sharedManager];
-				[mgr clearMessageWithID:deviceId];
+				[mgr clearMessageWithID:serviceId];
             }];
 }
 

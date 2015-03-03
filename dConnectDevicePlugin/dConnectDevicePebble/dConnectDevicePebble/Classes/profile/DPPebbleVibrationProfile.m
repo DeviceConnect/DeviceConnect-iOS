@@ -36,11 +36,11 @@
 - (BOOL)            profile:(DConnectVibrationProfile *)profile
 didReceivePutVibrateRequest:(DConnectRequestMessage *)request
                    response:(DConnectResponseMessage *)response
-                   deviceId:(NSString *)deviceId
+                   serviceId:(NSString *)serviceId
                     pattern:(NSArray *) pattern
 {
 	// Pebbleに通知
-	[[DPPebbleManager sharedManager] startVibration:deviceId
+	[[DPPebbleManager sharedManager] startVibration:serviceId
 											pattern:pattern
 										   callback:^(NSError *error)
 	{
@@ -54,10 +54,10 @@ didReceivePutVibrateRequest:(DConnectRequestMessage *)request
 - (BOOL)               profile:(DConnectVibrationProfile *)profile
 didReceiveDeleteVibrateRequest:(DConnectRequestMessage *)request
                       response:(DConnectResponseMessage *)response
-                      deviceId:(NSString *)deviceId
+                      serviceId:(NSString *)serviceId
 {
 	// Pebbleに通知
-	[[DPPebbleManager sharedManager] stopVibration:deviceId
+	[[DPPebbleManager sharedManager] stopVibration:serviceId
 										  callback:^(NSError *error)
 	 {
 		 // エラーチェック

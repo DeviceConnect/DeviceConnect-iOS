@@ -96,7 +96,7 @@ NSString *const DPSpheroProfileParamImpactTimestamp = @"impactTimestamp";
         return send;
     }
     
-    NSString *deviceId = [request deviceId];
+    NSString *serviceId = [request serviceId];
     NSString *sessionKey = [request sessionKey];
     NSString *profile = [request profile];
     NSString *interface = [request interface];
@@ -106,21 +106,21 @@ NSString *const DPSpheroProfileParamImpactTimestamp = @"impactTimestamp";
         //Quaternion
         if ([interface isEqualToString:DPSpheroProfileInterfaceQuaternion]
             && [attribute isEqualToString:DPSpheroProfileAttrOnQuaternion]
-            && [self hasMethod:@selector(profile:didReceivePutOnQuaternionRequest:response:deviceId:sessionKey:) response:response])
+            && [self hasMethod:@selector(profile:didReceivePutOnQuaternionRequest:response:serviceId:sessionKey:) response:response])
         {
-            send = [_delegate profile:self didReceivePutOnQuaternionRequest:request response:response deviceId:deviceId sessionKey:sessionKey];
+            send = [_delegate profile:self didReceivePutOnQuaternionRequest:request response:response serviceId:serviceId sessionKey:sessionKey];
         //Locator
         } else if ([interface isEqualToString:DPSpheroProfileInterfaceLocator]
                            && [attribute isEqualToString:DPSpheroProfileAttrOnLocator]
-                   && [self hasMethod:@selector(profile:didReceivePutOnLocatorRequest:response:deviceId:sessionKey:) response:response])
+                   && [self hasMethod:@selector(profile:didReceivePutOnLocatorRequest:response:serviceId:sessionKey:) response:response])
         {
-            send = [_delegate profile:self didReceivePutOnLocatorRequest:request response:response deviceId:deviceId sessionKey:sessionKey ];
+            send = [_delegate profile:self didReceivePutOnLocatorRequest:request response:response serviceId:serviceId sessionKey:sessionKey ];
         //Collision
         } else if ([interface isEqualToString:DPSpheroProfileInterfaceCollision]
                    && [attribute isEqualToString:DPSpheroProfileAttrOnCollision]
-                   && [self hasMethod:@selector(profile:didReceivePutOnCollisionRequest:response:deviceId:sessionKey:) response:response])
+                   && [self hasMethod:@selector(profile:didReceivePutOnCollisionRequest:response:serviceId:sessionKey:) response:response])
         {
-            send = [_delegate profile:self didReceivePutOnCollisionRequest:request response:response deviceId:deviceId sessionKey:sessionKey];
+            send = [_delegate profile:self didReceivePutOnCollisionRequest:request response:response serviceId:serviceId sessionKey:sessionKey];
         } else {
             [response setErrorToNotSupportAttribute];
         }
@@ -144,7 +144,7 @@ NSString *const DPSpheroProfileParamImpactTimestamp = @"impactTimestamp";
         return send;
     }
     
-    NSString *deviceId = [request deviceId];
+    NSString *serviceId = [request serviceId];
     NSString *sessionKey = [request sessionKey];
     NSString *profile = [request profile];
     NSString *interface = [request interface];
@@ -154,21 +154,21 @@ NSString *const DPSpheroProfileParamImpactTimestamp = @"impactTimestamp";
         // Quaternion
         if ([interface isEqualToString:DPSpheroProfileInterfaceQuaternion]
             && [attribute isEqualToString:DPSpheroProfileAttrOnQuaternion]
-            && [self hasMethod:@selector(profile:didReceiveDeleteOnQuaternionRequest:response:deviceId:sessionKey:) response:response])
+            && [self hasMethod:@selector(profile:didReceiveDeleteOnQuaternionRequest:response:serviceId:sessionKey:) response:response])
         {
-            send = [_delegate profile:self didReceiveDeleteOnQuaternionRequest:request response:response deviceId:deviceId sessionKey:sessionKey];
+            send = [_delegate profile:self didReceiveDeleteOnQuaternionRequest:request response:response serviceId:serviceId sessionKey:sessionKey];
         //Locator
         } else if ([interface isEqualToString:DPSpheroProfileInterfaceLocator]
                    && [attribute isEqualToString:DPSpheroProfileAttrOnLocator]
-                   && [self hasMethod:@selector(profile:didReceiveDeleteOnLocatorRequest:response:deviceId:sessionKey:) response:response])
+                   && [self hasMethod:@selector(profile:didReceiveDeleteOnLocatorRequest:response:serviceId:sessionKey:) response:response])
         {
-            send = [_delegate profile:self didReceiveDeleteOnLocatorRequest:request response:response deviceId:deviceId sessionKey:sessionKey];
+            send = [_delegate profile:self didReceiveDeleteOnLocatorRequest:request response:response serviceId:serviceId sessionKey:sessionKey];
         //Collision
         } else if ([interface isEqualToString:DPSpheroProfileInterfaceCollision]
                    && [attribute isEqualToString:DPSpheroProfileAttrOnCollision]
-                   && [self hasMethod:@selector(profile:didReceiveDeleteOnCollisionRequest:response:deviceId:sessionKey:) response:response])
+                   && [self hasMethod:@selector(profile:didReceiveDeleteOnCollisionRequest:response:serviceId:sessionKey:) response:response])
         {
-            send = [_delegate profile:self didReceiveDeleteOnCollisionRequest:request response:response deviceId:deviceId sessionKey:sessionKey];
+            send = [_delegate profile:self didReceiveDeleteOnCollisionRequest:request response:response serviceId:serviceId sessionKey:sessionKey];
         } else {
             [response setErrorToNotSupportAttribute];
         }

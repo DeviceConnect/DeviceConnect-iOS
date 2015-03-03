@@ -9,7 +9,7 @@
 
 #import "DPHostDevicePlugin.h"
 #import "DPHostBatteryProfile.h"
-#import "DPHostNetworkServiceDiscoveryProfile.h"
+#import "DPHostServiceDiscoveryProfile.h"
 #import "DPHostUtils.h"
 
 @interface DPHostBatteryProfile ()
@@ -61,7 +61,7 @@
 - (void) sendOnChargingChangeEvent:(NSNotification *)notification
 {
     // イベントの取得
-    NSArray *evts = [_eventMgr eventListForDeviceId:NetworkDiscoveryDeviceId
+    NSArray *evts = [_eventMgr eventListForServiceId:ServiceDiscoveryServiceId
                                             profile:DConnectBatteryProfileName
                                           attribute:DConnectBatteryProfileAttrOnChargingChange];
     // イベント送信
@@ -92,7 +92,7 @@
 - (void) sendOnBatteryChangeEvent:(NSNotification *)notification
 {
     // イベントの取得
-    NSArray *evts = [_eventMgr eventListForDeviceId:NetworkDiscoveryDeviceId
+    NSArray *evts = [_eventMgr eventListForServiceId:ServiceDiscoveryServiceId
                                             profile:DConnectBatteryProfileName
                                           attribute:DConnectBatteryProfileAttrOnBatteryChange];
     // イベント送信
@@ -116,7 +116,7 @@
 - (BOOL)        profile:(DConnectBatteryProfile *)profile
 didReceiveGetAllRequest:(DConnectRequestMessage *)request
                response:(DConnectResponseMessage *)response
-               deviceId:(NSString *)deviceId
+               serviceId:(NSString *)serviceId
 {
     float level = [[UIDevice currentDevice] batteryLevel];
     NSNumber *charging;
@@ -152,7 +152,7 @@ didReceiveGetAllRequest:(DConnectRequestMessage *)request
 - (BOOL)          profile:(DConnectBatteryProfile *)profile
 didReceiveGetLevelRequest:(DConnectRequestMessage *)request
                  response:(DConnectResponseMessage *)response
-                 deviceId:(NSString *)deviceId
+                 serviceId:(NSString *)serviceId
 {
     float level = [[UIDevice currentDevice] batteryLevel];
     if (level < 0 || level > 1) {
@@ -168,7 +168,7 @@ didReceiveGetLevelRequest:(DConnectRequestMessage *)request
 - (BOOL)             profile:(DConnectBatteryProfile *)profile
 didReceiveGetChargingRequest:(DConnectRequestMessage *)request
                     response:(DConnectResponseMessage *)response
-                    deviceId:(NSString *)deviceId
+                    serviceId:(NSString *)serviceId
 {
     NSNumber *charging;
     switch ([[UIDevice currentDevice] batteryState]) {
@@ -196,7 +196,7 @@ didReceiveGetChargingRequest:(DConnectRequestMessage *)request
 - (BOOL)                     profile:(DConnectBatteryProfile *)profile
 didReceivePutOnChargingChangeRequest:(DConnectRequestMessage *)request
                             response:(DConnectResponseMessage *)response
-                            deviceId:(NSString *)deviceId
+                            serviceId:(NSString *)serviceId
                           sessionKey:(NSString *)sessionKey
 {
     switch ([_eventMgr addEventForRequest:request]) {
@@ -218,7 +218,7 @@ didReceivePutOnChargingChangeRequest:(DConnectRequestMessage *)request
 - (BOOL)                    profile:(DConnectBatteryProfile *)profile
 didReceivePutOnBatteryChangeRequest:(DConnectRequestMessage *)request
                            response:(DConnectResponseMessage *)response
-                           deviceId:(NSString *)deviceId
+                           serviceId:(NSString *)serviceId
                          sessionKey:(NSString *)sessionKey
 {
     switch ([_eventMgr addEventForRequest:request]) {
@@ -243,7 +243,7 @@ didReceivePutOnBatteryChangeRequest:(DConnectRequestMessage *)request
 - (BOOL)                        profile:(DConnectBatteryProfile *)profile
 didReceiveDeleteOnChargingChangeRequest:(DConnectRequestMessage *)request
                                response:(DConnectResponseMessage *)response
-                               deviceId:(NSString *)deviceId
+                               serviceId:(NSString *)serviceId
                              sessionKey:(NSString *)sessionKey
 {
     switch ([_eventMgr removeEventForRequest:request]) {
@@ -265,7 +265,7 @@ didReceiveDeleteOnChargingChangeRequest:(DConnectRequestMessage *)request
 - (BOOL)                       profile:(DConnectBatteryProfile *)profile
 didReceiveDeleteOnBatteryChangeRequest:(DConnectRequestMessage *)request
                               response:(DConnectResponseMessage *)response
-                              deviceId:(NSString *)deviceId
+                              serviceId:(NSString *)serviceId
                             sessionKey:(NSString *)sessionKey
 {
     switch ([_eventMgr removeEventForRequest:request]) {

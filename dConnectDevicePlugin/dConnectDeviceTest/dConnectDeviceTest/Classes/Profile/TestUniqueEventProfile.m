@@ -46,24 +46,24 @@ NSString *const UniqueEventProfileProfileAttributeUnique = @"unique";
     for (int i = 0; i < [count intValue]; i++) {
         DConnectMessage *event = [DConnectMessage message];
         [event setString:[request sessionKey] forKey:DConnectMessageSessionKey];
-        [event setString:[request deviceId] forKey:DConnectMessageDeviceId];
+        [event setString:[request serviceId] forKey:DConnectMessageServiceId];
         
         NSString *attribute = [request attribute];
         if ([attribute isEqualToString:UniqueEventProfileProfileAttributeUnique]) {
             [event setString:UniqueEventProfileProfileName forKey:DConnectMessageProfile];
             [event setString:UniqueEventProfileProfileAttributeUnique forKey:DConnectMessageAttribute];
         } else {
-            [event setString:DConnectNetworkServiceDiscoveryProfileName forKey:DConnectMessageProfile];
-            [event setString:DConnectNetworkServiceDiscoveryProfileAttrOnServiceChange forKey:DConnectMessageAttribute];
+            [event setString:DConnectServiceDiscoveryProfileName forKey:DConnectMessageProfile];
+            [event setString:DConnectServiceDiscoveryProfileAttrOnServiceChange forKey:DConnectMessageAttribute];
             
             DConnectMessage *networkService = [DConnectMessage message];
-            [DConnectNetworkServiceDiscoveryProfile setId:TDPDeviceId target:networkService];
-            [DConnectNetworkServiceDiscoveryProfile setName:@"Test Success Device" target:networkService];
-            [DConnectNetworkServiceDiscoveryProfile setType:@"TEST" target:networkService];
-            [DConnectNetworkServiceDiscoveryProfile setState:YES target:networkService];
-            [DConnectNetworkServiceDiscoveryProfile setOnline:YES target:networkService];
-            [DConnectNetworkServiceDiscoveryProfile setConfig:@"test config" target:networkService];
-            [DConnectNetworkServiceDiscoveryProfile setNetworkService:networkService target:event];
+            [DConnectServiceDiscoveryProfile setId:TDPServiceId target:networkService];
+            [DConnectServiceDiscoveryProfile setName:@"Test Success Device" target:networkService];
+            [DConnectServiceDiscoveryProfile setType:@"TEST" target:networkService];
+            [DConnectServiceDiscoveryProfile setState:YES target:networkService];
+            [DConnectServiceDiscoveryProfile setOnline:YES target:networkService];
+            [DConnectServiceDiscoveryProfile setConfig:@"test config" target:networkService];
+            [DConnectServiceDiscoveryProfile setNetworkService:networkService target:event];
         }
         
         [_plugin asyncSendEvent:event];

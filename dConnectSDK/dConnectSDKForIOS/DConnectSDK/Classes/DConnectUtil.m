@@ -119,7 +119,7 @@
     
     NSString *signature = [CipherAuthSignature generateSignatureWithClientId:clientId
                                                                    grantType:LOCALOAUTH_AUTHORIZATION_CODE
-                                                                    deviceId:nil
+                                                                    serviceId:nil
                                                                       scopes:scopes
                                                                 clientSecret:clientSecret];
     
@@ -147,13 +147,13 @@
 
 + (NSString *)generateSignatureWithClientId: (NSString *)clientId
                                   grantType: (NSString *)grantType
-                                   deviceId: (NSString *)deviceId
+                                   serviceId: (NSString *)serviceId
                                      scopes: (NSArray *)scopes
                                clientSecret: (NSString *)clientSecret
 {
     return [CipherAuthSignature generateSignatureWithClientId:clientId
                                                     grantType:grantType
-                                                     deviceId:deviceId
+                                                     serviceId:serviceId
                                                        scopes:scopes
                                                  clientSecret:clientSecret];
 }

@@ -47,13 +47,13 @@ NSString *const DConnectDeviceOrientationProfileParamAccelerationIncludingGravit
     NSString *attribute = [request attribute];
     
     if ([attribute isEqualToString:DConnectDeviceOrientationProfileAttrOnDeviceOrientation]) {
-        if ([self hasMethod:@selector(profile:didReceivePutOnDeviceOrientationRequest:response:deviceId:sessionKey:)
+        if ([self hasMethod:@selector(profile:didReceivePutOnDeviceOrientationRequest:response:serviceId:sessionKey:)
                    response:response])
         {
-            NSString *deviceId = [request deviceId];
+            NSString *serviceId = [request serviceId];
             NSString *sessionKey = [request sessionKey];
             send = [_delegate profile:self didReceivePutOnDeviceOrientationRequest:request
-                             response:response deviceId:deviceId sessionKey:sessionKey];
+                             response:response serviceId:serviceId sessionKey:sessionKey];
         }
     } else {
         [response setErrorToUnknownAttribute];
@@ -76,13 +76,13 @@ NSString *const DConnectDeviceOrientationProfileParamAccelerationIncludingGravit
     
     if ([attribute isEqualToString:DConnectDeviceOrientationProfileAttrOnDeviceOrientation]) {
         
-        if ([self hasMethod:@selector(profile:didReceiveDeleteOnDeviceOrientationRequest:response:deviceId:sessionKey:)
+        if ([self hasMethod:@selector(profile:didReceiveDeleteOnDeviceOrientationRequest:response:serviceId:sessionKey:)
                    response:response])
         {
-            NSString *deviceId = [request deviceId];
+            NSString *serviceId = [request serviceId];
             NSString *sessionKey = [request sessionKey];
             send = [_delegate profile:self didReceiveDeleteOnDeviceOrientationRequest:request response:response
-                             deviceId:deviceId sessionKey:sessionKey];
+                             serviceId:serviceId sessionKey:sessionKey];
         }
     } else {
         [response setErrorToUnknownAttribute];

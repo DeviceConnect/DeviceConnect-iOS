@@ -34,9 +34,9 @@
 - (BOOL)         profile:(DConnectSettingsProfile *)profile
 didReceiveGetDateRequest:(DConnectRequestMessage *)request
                 response:(DConnectResponseMessage *)response
-                deviceId:(NSString *)deviceId
+                serviceId:(NSString *)serviceId
 {
-	[[DPPebbleManager sharedManager] fetchDate:deviceId callback:^(NSString *date, NSError *error) {
+	[[DPPebbleManager sharedManager] fetchDate:serviceId callback:^(NSString *date, NSError *error) {
 		
 		// エラーチェック
 		if ([DPPebbleProfileUtil handleError:error response:response]) {

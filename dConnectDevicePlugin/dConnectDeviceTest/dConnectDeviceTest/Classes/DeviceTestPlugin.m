@@ -10,7 +10,7 @@
 #import "DeviceTestPlugin.h"
 #import "TestBatteryProfile.h"
 #import "TestConnectProfile.h"
-#import "TestNetworkServiceDiscoveryProfile.h"
+#import "TestServiceDiscoveryProfile.h"
 #import "TestDeviceOrientationProfile.h"
 #import "TestFileDescriptorProfile.h"
 #import "TestFileProfile.h"
@@ -41,7 +41,7 @@
         [self addProfile:[[TestBatteryProfile alloc] initWithDevicePlugin:self]];
         [self addProfile:[[TestConnectProfile alloc] initWithDevicePlugin:self]];
         [self addProfile:[[TestDeviceOrientationProfile alloc] initWithDevicePlugin:self]];
-        [self addProfile:[[TestNetworkServiceDiscoveryProfile alloc] initWithDevicePlugin:self]];
+        [self addProfile:[[TestServiceDiscoveryProfile alloc] initWithDevicePlugin:self]];
         [self addProfile:[[TestFileDescriptorProfile alloc] initWithDevicePlugin:self]];
         [self addProfile:[[TestFileProfile alloc] initWithDevicePlugin:self]];
         [self addProfile:[[TestMediaPlayerProfile alloc] initWithDevicePlugin:self]];

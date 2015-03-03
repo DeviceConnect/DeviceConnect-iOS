@@ -33,7 +33,7 @@ NSString *const SpheroCalibrationName = @"Sphero CalibrationLED";
 
 // デバイスのライトのステータスを取得する
 - (BOOL) profile:(DCMLightProfile *)profile didReceiveGetLightRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response deviceId:(NSString *)deviceId
+        response:(DConnectResponseMessage *)response serviceId:(NSString *)serviceId
 {
     // 接続確認
     CONNECT_CHECK();
@@ -66,7 +66,7 @@ NSString *const SpheroCalibrationName = @"Sphero CalibrationLED";
 
 // デバイスのライトを点灯する
 - (BOOL) profile:(DCMLightProfile *)profile didReceivePostLightRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response deviceId:(NSString *)deviceId
+        response:(DConnectResponseMessage *)response serviceId:(NSString *)serviceId
          lightId:(NSString*) lightId brightness:(double)brightness color:(NSString*) color flashing:(NSArray*) flashing
 {
     // 接続確認
@@ -142,7 +142,7 @@ NSString *const SpheroCalibrationName = @"Sphero CalibrationLED";
 
 // デバイスのライトのステータスを変更する
 - (BOOL) profile:(DCMLightProfile *)profile didReceivePutLightRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response deviceId:(NSString *)deviceId
+        response:(DConnectResponseMessage *)response serviceId:(NSString *)serviceId
          lightId:(NSString*) lightId name:(NSString *)name brightness:(double)brightness color:(NSString*) color flashing:(NSArray*) flashing
 {
     [response setErrorToNotSupportAction];
@@ -151,7 +151,7 @@ NSString *const SpheroCalibrationName = @"Sphero CalibrationLED";
 
 // デバイスのライトを消灯させる
 - (BOOL) profile:(DCMLightProfile *)profile didReceiveDeleteLightRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response deviceId:(NSString *)deviceId
+        response:(DConnectResponseMessage *)response serviceId:(NSString *)serviceId
          lightId:(NSString*) lightId
 {
     // 接続確認

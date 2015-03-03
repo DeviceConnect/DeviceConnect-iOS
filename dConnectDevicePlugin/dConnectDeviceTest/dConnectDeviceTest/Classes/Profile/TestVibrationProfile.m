@@ -25,9 +25,9 @@
 
 - (BOOL) profile:(DConnectVibrationProfile *)profile didReceivePutVibrateRequest:(DConnectRequestMessage *)request
         response:(DConnectResponseMessage *)response
-        deviceId:(NSString *)deviceId pattern:(NSArray *) pattern
+        serviceId:(NSString *)serviceId pattern:(NSArray *) pattern
 {
-    CheckDID(response, deviceId) {
+    CheckDID(response, serviceId) {
         response.result = DConnectMessageResultTypeOk;
     }
     
@@ -38,10 +38,10 @@
 
 - (BOOL) profile:(DConnectVibrationProfile *)profile didReceiveDeleteVibrateRequest:(DConnectRequestMessage *)request
         response:(DConnectResponseMessage *)response
-        deviceId:(NSString *)deviceId
+        serviceId:(NSString *)serviceId
 {
     
-    CheckDID(response, deviceId) {
+    CheckDID(response, serviceId) {
         response.result = DConnectMessageResultTypeOk;
     }
     

@@ -21,7 +21,7 @@
 @implementation RESTfulFailMediaPlayerProfileTest
 
 /*!
- * @brief deviceIdを指定せずに再生コンテンツの変更要求を送信するテスト.
+ * @brief serviceIdを指定せずに再生コンテンツの変更要求を送信するテスト.
  * <pre>
  * 【HTTP通信】
  * Method: PUT
@@ -32,7 +32,7 @@
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailMediaPlayerMediaPutNoDeviceId
+- (void) testHttpFailMediaPlayerMediaPutNoServiceId
 {
     NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/media_player/media?mediaId=1"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
@@ -42,20 +42,20 @@
 }
 
 /*!
- * @brief deviceIdが空状態で再生コンテンツの変更要求を送信するテスト.
+ * @brief serviceIdが空状態で再生コンテンツの変更要求を送信するテスト.
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /media_player/media?deviceId=&mediaId=xxxx
+ * Path: /media_player/media?serviceId=&mediaId=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailMediaPlayerMediaPutEmptyDeviceId
+- (void) testHttpFailMediaPlayerMediaPutEmptyServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/media_player/media?mediaId=1&deviceId="];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/media_player/media?mediaId=1&serviceId="];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
 
@@ -63,20 +63,20 @@
 }
 
 /*!
- * @brief 存在しないdeviceIdで再生コンテンツの変更要求を送信するテスト.
+ * @brief 存在しないserviceIdで再生コンテンツの変更要求を送信するテスト.
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /media_player/media?deviceId=123456789&mediaId=xxxx
+ * Path: /media_player/media?serviceId=123456789&mediaId=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailMediaPlayerMediaPutInvalidDeviceId
+- (void) testHttpFailMediaPlayerMediaPutInvalidServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/media_player/media?mediaId=1&deviceId=12345678"];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/media_player/media?mediaId=1&serviceId=12345678"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
 
@@ -84,7 +84,7 @@
 }
 
 /*!
- * @brief deviceIdを指定せずに再生コンテンツの変更要求を送信するテスト.
+ * @brief serviceIdを指定せずに再生コンテンツの変更要求を送信するテスト.
  * <pre>
  * 【HTTP通信】
  * Method: GET
@@ -95,7 +95,7 @@
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailMediaPlayerMediaGetNoDeviceId
+- (void) testHttpFailMediaPlayerMediaGetNoServiceId
 {
     NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/media_player/media?mediaId=1"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
@@ -105,20 +105,20 @@
 }
 
 /*!
- * @brief deviceIdが空状態で再生コンテンツの変更要求を送信するテスト.
+ * @brief serviceIdが空状態で再生コンテンツの変更要求を送信するテスト.
  * <pre>
  * 【HTTP通信】
  * Method: GET
- * Path: /media_player/media?deviceId=
+ * Path: /media_player/media?serviceId=
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailMediaPlayerMediaGetEmptyDeviceId
+- (void) testHttpFailMediaPlayerMediaGetEmptyServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/media_player/media?mediaId=1&deviceId="];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/media_player/media?mediaId=1&serviceId="];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
 
@@ -126,20 +126,20 @@
 }
 
 /*!
- * @brief 存在しないdeviceIdで再生コンテンツの変更要求を送信するテスト.
+ * @brief 存在しないserviceIdで再生コンテンツの変更要求を送信するテスト.
  * <pre>
  * 【HTTP通信】
  * Method: GET
- * Path: /media_player/media?deviceId=123456789
+ * Path: /media_player/media?serviceId=123456789
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailMediaPlayerMediaGetInvalidDeviceId
+- (void) testHttpFailMediaPlayerMediaGetInvalidServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/media_player/media?mediaId=1&deviceId=12345678"];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/media_player/media?mediaId=1&serviceId=12345678"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
 
@@ -151,7 +151,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: POST
- * Path: /media_player/media?deviceId=xxxx
+ * Path: /media_player/media?serviceId=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -160,7 +160,7 @@
  */
 - (void) testHttpFailMediaPlayerMediaInvalidMethodPost
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/media_player/media?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/media_player/media?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"POST"];
 
@@ -172,7 +172,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /media_player/media?deviceId=xxxx
+ * Path: /media_player/media?serviceId=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -181,7 +181,7 @@
  */
 - (void) testHttpFailMediaPlayerMediaInvalidMethodDelete
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/media_player/media?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/media_player/media?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
 
@@ -189,7 +189,7 @@
 }
 
 /*!
- * @brief deviceIdを指定せずに再生コンテンツ一覧の取得要求を送信するテスト.
+ * @brief serviceIdを指定せずに再生コンテンツ一覧の取得要求を送信するテスト.
  * <pre>
  * 【HTTP通信】
  * Method: GET
@@ -200,7 +200,7 @@
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailMediaPlayerMediaListGetNoDeviceId
+- (void) testHttpFailMediaPlayerMediaListGetNoServiceId
 {
     NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/media_player/media_list"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
@@ -210,20 +210,20 @@
 }
 
 /*!
- * @brief deviceIdが空状態で再生コンテンツ一覧の取得要求を送信するテスト.
+ * @brief serviceIdが空状態で再生コンテンツ一覧の取得要求を送信するテスト.
  * <pre>
  * 【HTTP通信】
  * Method: GET
- * Path: /media_player/media_list?deviceId=
+ * Path: /media_player/media_list?serviceId=
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailMediaPlayerMediaListGetEmptyDeviceId
+- (void) testHttpFailMediaPlayerMediaListGetEmptyServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/media_player/media_list?deviceId="];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/media_player/media_list?serviceId="];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
 
@@ -231,20 +231,20 @@
 }
 
 /*!
- * @brief 存在しないdeviceIdで再生コンテンツ一覧の取得要求を送信するテスト.
+ * @brief 存在しないserviceIdで再生コンテンツ一覧の取得要求を送信するテスト.
  * <pre>
  * 【HTTP通信】
  * Method: GET
- * Path: /media_player/media_list?deviceId=123456789
+ * Path: /media_player/media_list?serviceId=123456789
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailMediaPlayerMediaListGetInvalidDeviceId
+- (void) testHttpFailMediaPlayerMediaListGetInvalidServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/media_player/media_list?deviceId=12345678"];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/media_player/media_list?serviceId=12345678"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
 
@@ -256,7 +256,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: POST
- * Path: /media_player/media_list?deviceId=xxxx
+ * Path: /media_player/media_list?serviceId=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -265,7 +265,7 @@
  */
 - (void) testHttpFailMediaPlayerMediaListInvalidMethodPost
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/media_player/media_list?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/media_player/media_list?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"POST"];
 
@@ -277,7 +277,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /media_player/media_list?deviceId=xxxx
+ * Path: /media_player/media_list?serviceId=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -286,7 +286,7 @@
  */
 - (void) testHttpFailMediaPlayerMediaListInvalidMethodPut
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/media_player/media_list?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/media_player/media_list?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
 
@@ -298,7 +298,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /media_player/media_list?deviceId=xxxx
+ * Path: /media_player/media_list?serviceId=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -307,7 +307,7 @@
  */
 - (void) testHttpFailMediaPlayerMediaListInvalidMethodDelete
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/media_player/media_list?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/media_player/media_list?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
 
@@ -315,7 +315,7 @@
 }
 
 /*!
- * @brief deviceIdを指定せずにコンテンツ再生状態の変更要求を送信するテスト.
+ * @brief serviceIdを指定せずにコンテンツ再生状態の変更要求を送信するテスト.
  * <pre>
  * 【HTTP通信】
  * Method: PUT
@@ -326,7 +326,7 @@
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailMediaPlayerPlayStatusGetNoDeviceId
+- (void) testHttpFailMediaPlayerPlayStatusGetNoServiceId
 {
     NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/media_player/play_status"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
@@ -336,20 +336,20 @@
 }
 
 /*!
- * @brief deviceIdが空状態でコンテンツ再生状態の変更要求を送信するテスト.
+ * @brief serviceIdが空状態でコンテンツ再生状態の変更要求を送信するテスト.
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /media_player/play_status?deviceId=&mediaId=xxxx&status=xxxx
+ * Path: /media_player/play_status?serviceId=&mediaId=xxxx&status=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailMediaPlayerPlayStatusGetEmptyDeviceId
+- (void) testHttpFailMediaPlayerPlayStatusGetEmptyServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/media_player/play_status?deviceId="];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/media_player/play_status?serviceId="];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
 
@@ -357,20 +357,20 @@
 }
 
 /*!
- * @brief 存在しないdeviceIdでコンテンツ再生状態の変更要求を送信するテスト.
+ * @brief 存在しないserviceIdでコンテンツ再生状態の変更要求を送信するテスト.
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /media_player/play_status?deviceId=123456789&mediaId=xxxx&status=xxxx
+ * Path: /media_player/play_status?serviceId=123456789&mediaId=xxxx&status=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailMediaPlayerPlayStatusGetInvalidDeviceId
+- (void) testHttpFailMediaPlayerPlayStatusGetInvalidServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/media_player/play_status?deviceId=12345678"];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/media_player/play_status?serviceId=12345678"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
 
@@ -382,7 +382,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: POST
- * Path: /media_player/play_status?deviceId=xxxx
+ * Path: /media_player/play_status?serviceId=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -391,7 +391,7 @@
  */
 - (void) testHttpFailMediaPlayerPlayStatusInvalidMethodPost
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/media_player/play_status?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/media_player/play_status?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"POST"];
 
@@ -403,7 +403,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /media_player/play_status?deviceId=xxxx
+ * Path: /media_player/play_status?serviceId=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -412,7 +412,7 @@
  */
 - (void) testHttpFailMediaPlayerPlayStatusInvalidMethodPut
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/media_player/play_status?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/media_player/play_status?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
 
@@ -424,7 +424,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /media_player/play_status?deviceId=xxxx
+ * Path: /media_player/play_status?serviceId=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -433,7 +433,7 @@
  */
 - (void) testHttpFailMediaPlayerPlayStatusInvalidMethodDelete
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/media_player/play_status?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/media_player/play_status?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
 
@@ -441,7 +441,7 @@
 }
 
 /*!
- * @brief deviceIdを指定せずに再生要求を送信するテスト.
+ * @brief serviceIdを指定せずに再生要求を送信するテスト.
  * <pre>
  * 【HTTP通信】
  * Method: PUT
@@ -452,7 +452,7 @@
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailMediaPlayerPlayPutNoDeviceId
+- (void) testHttpFailMediaPlayerPlayPutNoServiceId
 {
     NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/media_player/play"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
@@ -462,20 +462,20 @@
 }
 
 /*!
- * @brief deviceIdが空状態で再生要求を送信するテスト.
+ * @brief serviceIdが空状態で再生要求を送信するテスト.
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /media_player/play?deviceId=
+ * Path: /media_player/play?serviceId=
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailMediaPlayerPlayPutEmptyDeviceId
+- (void) testHttpFailMediaPlayerPlayPutEmptyServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/media_player/play?deviceId="];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/media_player/play?serviceId="];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
 
@@ -483,20 +483,20 @@
 }
 
 /*!
- * @brief 存在しないdeviceIdで再生要求を送信するテスト.
+ * @brief 存在しないserviceIdで再生要求を送信するテスト.
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /media_player/play?deviceId=123456789
+ * Path: /media_player/play?serviceId=123456789
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailMediaPlayerPlayPutInvalidDeviceId
+- (void) testHttpFailMediaPlayerPlayPutInvalidServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/media_player/play?deviceId=12345678"];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/media_player/play?serviceId=12345678"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
 
@@ -508,7 +508,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: GET
- * Path: /media_player/play?deviceId=123456789
+ * Path: /media_player/play?serviceId=123456789
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -517,7 +517,7 @@
  */
 - (void) testHttpFailMediaPlayerPlayPutInvalidMethodGet
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/media_player/play?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/media_player/play?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
 
@@ -529,7 +529,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: POST
- * Path: /media_player/play?deviceId=123456789
+ * Path: /media_player/play?serviceId=123456789
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -538,7 +538,7 @@
  */
 - (void) testHttpFailMediaPlayerPlayPutInvalidMethodPost
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/media_player/play?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/media_player/play?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"POST"];
 
@@ -550,7 +550,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /media_player/play?deviceId=123456789
+ * Path: /media_player/play?serviceId=123456789
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -559,7 +559,7 @@
  */
 - (void) testHttpFailMediaPlayerPlayPutInvalidMethodDelete
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/media_player/play?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/media_player/play?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
 
@@ -567,7 +567,7 @@
 }
 
 /*!
- * @brief deviceIdを指定せずに停止要求を送信するテスト.
+ * @brief serviceIdを指定せずに停止要求を送信するテスト.
  * <pre>
  * 【HTTP通信】
  * Method: PUT
@@ -578,7 +578,7 @@
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailMediaPlayerStopPutNoDeviceId
+- (void) testHttpFailMediaPlayerStopPutNoServiceId
 {
     NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/media_player/stop"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
@@ -588,20 +588,20 @@
 }
 
 /*!
- * @brief deviceIdが空状態で停止要求を送信するテスト.
+ * @brief serviceIdが空状態で停止要求を送信するテスト.
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /media_player/stop?deviceId=
+ * Path: /media_player/stop?serviceId=
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailMediaPlayerStopPutEmptyDeviceId
+- (void) testHttpFailMediaPlayerStopPutEmptyServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/media_player/stop?deviceId="];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/media_player/stop?serviceId="];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
 
@@ -609,20 +609,20 @@
 }
 
 /*!
- * @brief 存在しないdeviceIdで停止要求を送信するテスト.
+ * @brief 存在しないserviceIdで停止要求を送信するテスト.
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /media_player/stop?deviceId=123456789
+ * Path: /media_player/stop?serviceId=123456789
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailMediaPlayerStopPutInvalidDeviceId
+- (void) testHttpFailMediaPlayerStopPutInvalidServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/media_player/stop?deviceId=12345678"];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/media_player/stop?serviceId=12345678"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
 
@@ -634,7 +634,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: GET
- * Path: /media_player/stop?deviceId=123456789
+ * Path: /media_player/stop?serviceId=123456789
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -643,7 +643,7 @@
  */
 - (void) testHttpFailMediaPlayerStopPutInvalidMethodGet
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/media_player/stop?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/media_player/stop?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
 
@@ -655,7 +655,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: POST
- * Path: /media_player/stop?deviceId=123456789
+ * Path: /media_player/stop?serviceId=123456789
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -664,7 +664,7 @@
  */
 - (void) testHttpFailMediaPlayerStopPutInvalidMethodPost
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/media_player/stop?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/media_player/stop?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"POST"];
 
@@ -676,7 +676,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /media_player/stop?deviceId=123456789
+ * Path: /media_player/stop?serviceId=123456789
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -685,7 +685,7 @@
  */
 - (void) testHttpFailMediaPlayerStopPutInvalidMethodDelete
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/media_player/stop?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/media_player/stop?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
 
@@ -693,7 +693,7 @@
 }
 
 /*!
- * @brief deviceIdを指定せずに一時停止要求を送信するテスト.
+ * @brief serviceIdを指定せずに一時停止要求を送信するテスト.
  * <pre>
  * 【HTTP通信】
  * Method: PUT
@@ -704,7 +704,7 @@
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailMediaPlayerPausePutNoDeviceId
+- (void) testHttpFailMediaPlayerPausePutNoServiceId
 {
     NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/media_player/pause"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
@@ -714,20 +714,20 @@
 }
 
 /*!
- * @brief deviceIdが空状態で一時停止要求を送信するテスト.
+ * @brief serviceIdが空状態で一時停止要求を送信するテスト.
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /media_player/pause?deviceId=
+ * Path: /media_player/pause?serviceId=
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailMediaPlayerPausePutEmptyDeviceId
+- (void) testHttpFailMediaPlayerPausePutEmptyServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/media_player/pause?deviceId="];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/media_player/pause?serviceId="];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
 
@@ -735,20 +735,20 @@
 }
 
 /*!
- * @brief 存在しないdeviceIdで一時停止要求を送信するテスト.
+ * @brief 存在しないserviceIdで一時停止要求を送信するテスト.
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /media_player/pause?deviceId=123456789
+ * Path: /media_player/pause?serviceId=123456789
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailMediaPlayerPausePutInvalidDeviceId
+- (void) testHttpFailMediaPlayerPausePutInvalidServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/media_player/pause?deviceId=12345678"];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/media_player/pause?serviceId=12345678"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
 
@@ -760,7 +760,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: GET
- * Path: /media_player/pause?deviceId=123456789
+ * Path: /media_player/pause?serviceId=123456789
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -769,7 +769,7 @@
  */
 - (void) testHttpFailMediaPlayerPausePutInvalidMethodGet
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/media_player/pause?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/media_player/pause?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
 
@@ -781,7 +781,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: POST
- * Path: /media_player/pause?deviceId=123456789
+ * Path: /media_player/pause?serviceId=123456789
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -790,7 +790,7 @@
  */
 - (void) testHttpFailMediaPlayerPausePutInvalidMethodPost
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/media_player/pause?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/media_player/pause?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"POST"];
 
@@ -802,7 +802,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /media_player/pause?deviceId=123456789
+ * Path: /media_player/pause?serviceId=123456789
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -811,7 +811,7 @@
  */
 - (void) testHttpFailMediaPlayerPausePutInvalidMethodDelete
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/media_player/pause?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/media_player/pause?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
 
@@ -819,7 +819,7 @@
 }
 
 /*!
- * @brief deviceIdを指定せずに一時停止解除要求を送信するテスト.
+ * @brief serviceIdを指定せずに一時停止解除要求を送信するテスト.
  * <pre>
  * 【HTTP通信】
  * Method: PUT
@@ -830,7 +830,7 @@
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailMediaPlayerResumePutNoDeviceId
+- (void) testHttpFailMediaPlayerResumePutNoServiceId
 {
     NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/media_player/resume"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
@@ -840,20 +840,20 @@
 }
 
 /*!
- * @brief deviceIdが空状態で一時停止解除要求を送信するテスト.
+ * @brief serviceIdが空状態で一時停止解除要求を送信するテスト.
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /media_player/resume?deviceId=
+ * Path: /media_player/resume?serviceId=
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailMediaPlayerResumePutEmptyDeviceId
+- (void) testHttpFailMediaPlayerResumePutEmptyServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/media_player/resume?deviceId="];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/media_player/resume?serviceId="];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
 
@@ -861,20 +861,20 @@
 }
 
 /*!
- * @brief 存在しないdeviceIdで一時停止解除要求を送信するテスト.
+ * @brief 存在しないserviceIdで一時停止解除要求を送信するテスト.
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /media_player/resume?deviceId=123456789
+ * Path: /media_player/resume?serviceId=123456789
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailMediaPlayerResumePutInvalidDeviceId
+- (void) testHttpFailMediaPlayerResumePutInvalidServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/media_player/resume?deviceId=12345678"];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/media_player/resume?serviceId=12345678"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
 
@@ -886,7 +886,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: GET
- * Path: /media_player/resume?deviceId=123456789
+ * Path: /media_player/resume?serviceId=123456789
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -895,7 +895,7 @@
  */
 - (void) testHttpFailMediaPlayerResumeInvalidMethodGet
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/media_player/resume?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/media_player/resume?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
 
@@ -907,7 +907,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: POST
- * Path: /media_player/resume?deviceId=123456789
+ * Path: /media_player/resume?serviceId=123456789
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -916,7 +916,7 @@
  */
 - (void) testHttpFailMediaPlayerResumeInvalidMethodPost
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/media_player/resume?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/media_player/resume?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"POST"];
 
@@ -928,7 +928,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /media_player/resume?deviceId=123456789
+ * Path: /media_player/resume?serviceId=123456789
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -937,7 +937,7 @@
  */
 - (void) testHttpFailMediaPlayerResumeInvalidMethodDelete
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/media_player/resume?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/media_player/resume?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
 
@@ -945,7 +945,7 @@
 }
 
 /*!
- * @brief deviceIdを指定せずに再生位置の変更要求を送信するテスト.
+ * @brief serviceIdを指定せずに再生位置の変更要求を送信するテスト.
  * <pre>
  * 【HTTP通信】
  * Method: PUT
@@ -956,7 +956,7 @@
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailMediaPlayerSeekPutNoDeviceId
+- (void) testHttpFailMediaPlayerSeekPutNoServiceId
 {
     NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/media_player/seek?pos=0"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
@@ -966,20 +966,20 @@
 }
 
 /*!
- * @brief deviceIdが空状態で再生位置の変更要求を送信するテスト.
+ * @brief serviceIdが空状態で再生位置の変更要求を送信するテスト.
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /media_player/seek?deviceId=&pos=xxxx
+ * Path: /media_player/seek?serviceId=&pos=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailMediaPlayerSeekPutEmptyDeviceId
+- (void) testHttpFailMediaPlayerSeekPutEmptyServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/media_player/seek?deviceId=&pos=0"];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/media_player/seek?serviceId=&pos=0"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
 
@@ -987,20 +987,20 @@
 }
 
 /*!
- * @brief 存在しないdeviceIdで再生位置の変更要求を送信するテスト.
+ * @brief 存在しないserviceIdで再生位置の変更要求を送信するテスト.
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /media_player/seek?deviceId=123456789&pos=xxxx
+ * Path: /media_player/seek?serviceId=123456789&pos=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailMediaPlayerSeekPutInvalidDeviceId
+- (void) testHttpFailMediaPlayerSeekPutInvalidServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/media_player/seek?deviceId=12345678&pos=0"];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/media_player/seek?serviceId=12345678&pos=0"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
 
@@ -1008,7 +1008,7 @@
 }
 
 /*!
- * @brief deviceIdを指定せずに再生位置の変更要求を送信するテスト.
+ * @brief serviceIdを指定せずに再生位置の変更要求を送信するテスト.
  * <pre>
  * 【HTTP通信】
  * Method: GET
@@ -1019,7 +1019,7 @@
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailMediaPlayerSeekGetNoDeviceId
+- (void) testHttpFailMediaPlayerSeekGetNoServiceId
 {
     NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/media_player/seek"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
@@ -1029,20 +1029,20 @@
 }
 
 /*!
- * @brief deviceIdが空状態で再生位置の変更要求を送信するテスト.
+ * @brief serviceIdが空状態で再生位置の変更要求を送信するテスト.
  * <pre>
  * 【HTTP通信】
  * Method: GET
- * Path: /media_player/seek?deviceId=
+ * Path: /media_player/seek?serviceId=
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailMediaPlayerSeekGetEmptyDeviceId
+- (void) testHttpFailMediaPlayerSeekGetEmptyServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/media_player/seek?deviceId="];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/media_player/seek?serviceId="];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
 
@@ -1050,20 +1050,20 @@
 }
 
 /*!
- * @brief 存在しないdeviceIdで再生位置の変更要求を送信するテスト.
+ * @brief 存在しないserviceIdで再生位置の変更要求を送信するテスト.
  * <pre>
  * 【HTTP通信】
  * Method: GET
- * Path: /media_player/seek?deviceId=123456789
+ * Path: /media_player/seek?serviceId=123456789
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailMediaPlayerSeekInvalidDeviceId
+- (void) testHttpFailMediaPlayerSeekInvalidServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/media_player/seek?deviceId=12345678"];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/media_player/seek?serviceId=12345678"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
 
@@ -1075,7 +1075,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /media_player/seek?deviceId=xxxx
+ * Path: /media_player/seek?serviceId=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -1084,7 +1084,7 @@
  */
 - (void) testHttpFailMediaPlayerSeekInvalidMethodPost
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/media_player/seek?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/media_player/seek?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"POST"];
 
@@ -1096,7 +1096,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /media_player/seek?deviceId=xxxx
+ * Path: /media_player/seek?serviceId=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -1105,7 +1105,7 @@
  */
 - (void) testHttpFailMediaPlayerSeekInvalidMethodDelete
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/media_player/seek?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/media_player/seek?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
 
@@ -1113,7 +1113,7 @@
 }
 
 /*!
- * @brief deviceIdを指定せずに再生音量の変更要求を送信するテスト.
+ * @brief serviceIdを指定せずに再生音量の変更要求を送信するテスト.
  * <pre>
  * 【HTTP通信】
  * Method: PUT
@@ -1124,7 +1124,7 @@
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailMediaPlayerVolumePutNoDeviceId
+- (void) testHttpFailMediaPlayerVolumePutNoServiceId
 {
     NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/media_player/volume?pos=0"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
@@ -1134,20 +1134,20 @@
 }
 
 /*!
- * @brief deviceIdが空状態で再生音量の変更要求を送信するテスト.
+ * @brief serviceIdが空状態で再生音量の変更要求を送信するテスト.
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /media_player/volume?deviceId=&volume=xxxx
+ * Path: /media_player/volume?serviceId=&volume=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailMediaPlayerVolumePutEmptyDeviceId
+- (void) testHttpFailMediaPlayerVolumePutEmptyServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/media_player/volume?deviceId=&pos=0"];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/media_player/volume?serviceId=&pos=0"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
 
@@ -1155,20 +1155,20 @@
 }
 
 /*!
- * @brief 存在しないdeviceIdで再生音量の変更要求を送信するテスト.
+ * @brief 存在しないserviceIdで再生音量の変更要求を送信するテスト.
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /media_player/volume?deviceId=123456789&volume=xxxx
+ * Path: /media_player/volume?serviceId=123456789&volume=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailMediaPlayerVolumePutInvalidDeviceId
+- (void) testHttpFailMediaPlayerVolumePutInvalidServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/media_player/volume?deviceId=12345678&pos=0"];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/media_player/volume?serviceId=12345678&pos=0"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
 
@@ -1176,7 +1176,7 @@
 }
 
 /*!
- * @brief deviceIdを指定せずに再生音量の取得要求を送信するテスト.
+ * @brief serviceIdを指定せずに再生音量の取得要求を送信するテスト.
  * <pre>
  * 【HTTP通信】
  * Method: GET
@@ -1187,7 +1187,7 @@
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailMediaPlayerVolumeGetNoDeviceId
+- (void) testHttpFailMediaPlayerVolumeGetNoServiceId
 {
     NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/media_player/volume"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
@@ -1197,20 +1197,20 @@
 }
 
 /*!
- * @brief deviceIdが空状態で再生音量の取得要求を送信するテスト.
+ * @brief serviceIdが空状態で再生音量の取得要求を送信するテスト.
  * <pre>
  * 【HTTP通信】
  * Method: GET
- * Path: /media_player/volume?deviceId=&volume=xxxx
+ * Path: /media_player/volume?serviceId=&volume=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailMediaPlayerVolumeGetEmptyDeviceId
+- (void) testHttpFailMediaPlayerVolumeGetEmptyServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/media_player/volume?deviceId="];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/media_player/volume?serviceId="];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
 
@@ -1218,20 +1218,20 @@
 }
 
 /*!
- * @brief 存在しないdeviceIdで再生音量の取得要求を送信するテスト.
+ * @brief 存在しないserviceIdで再生音量の取得要求を送信するテスト.
  * <pre>
  * 【HTTP通信】
  * Method: GET
- * Path: /media_player/volume?deviceId=123456789&volume=xxxx
+ * Path: /media_player/volume?serviceId=123456789&volume=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailMediaPlayerVolumeInvalidDeviceId
+- (void) testHttpFailMediaPlayerVolumeInvalidServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/media_player/volume?deviceId=12345678"];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/media_player/volume?serviceId=12345678"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
 
@@ -1243,7 +1243,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: POST
- * Path: /media_player/volume?deviceId=xxxx
+ * Path: /media_player/volume?serviceId=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -1252,7 +1252,7 @@
  */
 - (void) testHttpFailMediaPlayerVolumeInvalidMethodPost
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/media_player/volume?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/media_player/volume?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"POST"];
 
@@ -1264,7 +1264,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /media_player/volume?deviceId=xxxx
+ * Path: /media_player/volume?serviceId=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -1273,7 +1273,7 @@
  */
 - (void) testHttpFailMediaPlayerVolumeInvalidMethodDelete
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/media_player/volume?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/media_player/volume?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
 
@@ -1281,7 +1281,7 @@
 }
 
 /*!
- * @brief deviceIdを指定せずに再生音量のミュート要求を送信するテスト.
+ * @brief serviceIdを指定せずに再生音量のミュート要求を送信するテスト.
  * <pre>
  * 【HTTP通信】
  * Method: PUT
@@ -1292,7 +1292,7 @@
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailMediaPlayerMutePutNoDeviceId
+- (void) testHttpFailMediaPlayerMutePutNoServiceId
 {
     NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/media_player/mute?pos=0"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
@@ -1302,20 +1302,20 @@
 }
 
 /*!
- * @brief deviceIdが空状態で再生音量のミュート要求を送信するテスト.
+ * @brief serviceIdが空状態で再生音量のミュート要求を送信するテスト.
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /media_player/mute?deviceId=&pos=0
+ * Path: /media_player/mute?serviceId=&pos=0
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailMediaPlayerMutePutEmptyDeviceId
+- (void) testHttpFailMediaPlayerMutePutEmptyServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/media_player/mute?deviceId=&pos=0"];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/media_player/mute?serviceId=&pos=0"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
 
@@ -1323,20 +1323,20 @@
 }
 
 /*!
- * @brief 存在しないdeviceIdで再生音量のミュート要求を送信するテスト.
+ * @brief 存在しないserviceIdで再生音量のミュート要求を送信するテスト.
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /media_player/mute?deviceId=12345678&pos=0
+ * Path: /media_player/mute?serviceId=12345678&pos=0
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailMediaPlayerMutePutInvalidDeviceId
+- (void) testHttpFailMediaPlayerMutePutInvalidServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/media_player/mute?deviceId=12345678&pos=0"];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/media_player/mute?serviceId=12345678&pos=0"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
 
@@ -1344,7 +1344,7 @@
 }
 
 /*!
- * @brief deviceIdを指定せずに再生音量のミュート状態取得要求を送信するテスト.
+ * @brief serviceIdを指定せずに再生音量のミュート状態取得要求を送信するテスト.
  * <pre>
  * 【HTTP通信】
  * Method: GET
@@ -1355,7 +1355,7 @@
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailMediaPlayerMuteGetNoDeviceId
+- (void) testHttpFailMediaPlayerMuteGetNoServiceId
 {
     NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/media_player/mute"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
@@ -1365,20 +1365,20 @@
 }
 
 /*!
- * @brief deviceIdが空状態で再生音量のミュート状態取得要求を送信するテスト.
+ * @brief serviceIdが空状態で再生音量のミュート状態取得要求を送信するテスト.
  * <pre>
  * 【HTTP通信】
  * Method: GET
- * Path: /media_player/mute?deviceId=
+ * Path: /media_player/mute?serviceId=
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailMediaPlayerMuteGetEmptyDeviceId
+- (void) testHttpFailMediaPlayerMuteGetEmptyServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/media_player/mute?deviceId="];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/media_player/mute?serviceId="];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
 
@@ -1386,20 +1386,20 @@
 }
 
 /*!
- * @brief 存在しないdeviceIdで再生音量のミュート状態取得要求を送信するテスト.
+ * @brief 存在しないserviceIdで再生音量のミュート状態取得要求を送信するテスト.
  * <pre>
  * 【HTTP通信】
  * Method: GET
- * Path: /media_player/mute?deviceId=12345678
+ * Path: /media_player/mute?serviceId=12345678
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailMediaPlayerMuteGetInvalidDeviceId
+- (void) testHttpFailMediaPlayerMuteGetInvalidServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/media_player/mute?deviceId=12345678"];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/media_player/mute?serviceId=12345678"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
 
@@ -1407,7 +1407,7 @@
 }
 
 /*!
- * @brief deviceIdを指定せずに再生音量のミュート解除要求を送信するテスト.
+ * @brief serviceIdを指定せずに再生音量のミュート解除要求を送信するテスト.
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
@@ -1418,7 +1418,7 @@
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailMediaPlayerMuteDeleteNoDeviceId
+- (void) testHttpFailMediaPlayerMuteDeleteNoServiceId
 {
     NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/media_player/mute"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
@@ -1428,20 +1428,20 @@
 }
 
 /*!
- * @brief deviceIdが空状態で再生音量のミュート解除要求を送信するテスト.
+ * @brief serviceIdが空状態で再生音量のミュート解除要求を送信するテスト.
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /media_player/mute?deviceId=
+ * Path: /media_player/mute?serviceId=
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailMediaPlayerMuteDeleteEmptyDeviceId
+- (void) testHttpFailMediaPlayerMuteDeleteEmptyServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/media_player/mute?deviceId="];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/media_player/mute?serviceId="];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     
@@ -1449,7 +1449,7 @@
 }
 
 /*!
- * @brief 存在しないdeviceIdで再生音量のミュート解除要求を送信するテスト.
+ * @brief 存在しないserviceIdで再生音量のミュート解除要求を送信するテスト.
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
@@ -1460,9 +1460,9 @@
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailMediaPlayerMuteDeleteInvalidDeviceId
+- (void) testHttpFailMediaPlayerMuteDeleteInvalidServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/media_player/mute?deviceId=12345678"];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/media_player/mute?serviceId=12345678"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     
@@ -1483,7 +1483,7 @@
  */
 - (void) testHttpFailMediaPlayerMuteInvalidMethodPost
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/media_player/mute?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/media_player/mute?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"POST"];
 
@@ -1491,7 +1491,7 @@
 }
 
 /*!
- * @brief deviceIdを指定せずにコンテンツ再生状態の変化通知要求を送信するテスト.
+ * @brief serviceIdを指定せずにコンテンツ再生状態の変化通知要求を送信するテスト.
  * <pre>
  * 【HTTP通信】
  * Method: PUT
@@ -1502,7 +1502,7 @@
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailMediaPlayerOnStatusChangePutNoDeviceId
+- (void) testHttpFailMediaPlayerOnStatusChangePutNoServiceId
 {
     NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/media_player/onstatuschange"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
@@ -1512,20 +1512,20 @@
 }
 
 /*!
- * @brief deviceIdが空状態でコンテンツ再生状態の変化通知要求を送信するテスト.
+ * @brief serviceIdが空状態でコンテンツ再生状態の変化通知要求を送信するテスト.
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /media_player/onstatuschange?deviceId=
+ * Path: /media_player/onstatuschange?serviceId=
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailMediaPlayerOnStatusChangePutEmptyDeviceId
+- (void) testHttpFailMediaPlayerOnStatusChangePutEmptyServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/media_player/onstatuschange?deviceId="];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/media_player/onstatuschange?serviceId="];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
 
@@ -1533,20 +1533,20 @@
 }
 
 /*!
- * @brief 存在しないdeviceIdでコンテンツ再生状態の変化通知要求を送信するテスト.
+ * @brief 存在しないserviceIdでコンテンツ再生状態の変化通知要求を送信するテスト.
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /media_player/onstatuschange?deviceId=12345678
+ * Path: /media_player/onstatuschange?serviceId=12345678
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailMediaPlayerOnStatusChangePutInvalidDeviceId
+- (void) testHttpFailMediaPlayerOnStatusChangePutInvalidServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/media_player/onstatuschange?deviceId=12345678"];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/media_player/onstatuschange?serviceId=12345678"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
 
@@ -1558,7 +1558,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /media_player/onstatuschange?deviceId=xxx
+ * Path: /media_player/onstatuschange?serviceId=xxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -1567,7 +1567,7 @@
  */
 - (void) testHttpFailMediaPlayerOnStatusChangePutNoSessionKey
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/media_player/onstatuschange?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/media_player/onstatuschange?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
 
@@ -1579,7 +1579,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /media_player/onstatuschange?deviceId=xxx
+ * Path: /media_player/onstatuschange?serviceId=xxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -1588,7 +1588,7 @@
  */
 - (void) testHttpFailMediaPlayerOnStatusChangePutEmptySessionKey
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/media_player/onstatuschange?deviceId=%@&sessionKey=", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/media_player/onstatuschange?serviceId=%@&sessionKey=", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
 
@@ -1596,7 +1596,7 @@
 }
 
 /*!
- * @brief deviceIdを指定せずコンテンツ再生状態の変化通知解除要求を送信するテスト.
+ * @brief serviceIdを指定せずコンテンツ再生状態の変化通知解除要求を送信するテスト.
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
@@ -1607,7 +1607,7 @@
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailMediaPlayerOnStatusChangeDeleteNoDeviceId
+- (void) testHttpFailMediaPlayerOnStatusChangeDeleteNoServiceId
 {
     NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/media_player/onstatuschange"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
@@ -1617,20 +1617,20 @@
 }
 
 /*!
- * @brief deviceIdが空状態でコンテンツ再生状態の変化通知解除要求を送信するテスト.
+ * @brief serviceIdが空状態でコンテンツ再生状態の変化通知解除要求を送信するテスト.
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /media_player/onstatuschange?deviceId=
+ * Path: /media_player/onstatuschange?serviceId=
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailMediaPlayerOnStatusChangeDeleteEmptyDeviceId
+- (void) testHttpFailMediaPlayerOnStatusChangeDeleteEmptyServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/media_player/onstatuschange?deviceId="];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/media_player/onstatuschange?serviceId="];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
 
@@ -1638,20 +1638,20 @@
 }
 
 /*!
- * @brief 存在しないdeviceIdでコンテンツ再生状態の変化通知解除要求を送信するテスト.
+ * @brief 存在しないserviceIdでコンテンツ再生状態の変化通知解除要求を送信するテスト.
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /media_player/onstatuschange?deviceId=12345678
+ * Path: /media_player/onstatuschange?serviceId=12345678
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailMediaPlayerOnStatusChangeDeleteInvalidDeviceId
+- (void) testHttpFailMediaPlayerOnStatusChangeDeleteInvalidServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/media_player/onstatuschange?deviceId=12345678"];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/media_player/onstatuschange?serviceId=12345678"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
 
@@ -1663,7 +1663,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /media_player/onstatuschange?deviceId=xxx
+ * Path: /media_player/onstatuschange?serviceId=xxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -1672,7 +1672,7 @@
  */
 - (void) testHttpFailMediaPlayerOnStatusChangeDeleteNoSessionKey
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/media_player/onstatuschange?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/media_player/onstatuschange?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
 
@@ -1684,7 +1684,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /media_player/onstatuschange?deviceId=xxx&sessionKey=
+ * Path: /media_player/onstatuschange?serviceId=xxx&sessionKey=
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -1693,7 +1693,7 @@
  */
 - (void) testHttpFailMediaPlayerOnStatusChangeDeleteEmptySessionKey
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/media_player/onstatuschange?deviceId=%@&sessionKey=", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/media_player/onstatuschange?serviceId=%@&sessionKey=", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
 
@@ -1705,7 +1705,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: GET
- * Path: /media_player/onstatuschange?deviceId=xxx&sessionKey=xxx
+ * Path: /media_player/onstatuschange?serviceId=xxx&sessionKey=xxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -1714,7 +1714,7 @@
  */
 - (void) testHttpFailMediaPlayerOnStatusChangeInvalidMethodGet
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/media_player/onstatuschange?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/media_player/onstatuschange?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
 
@@ -1726,7 +1726,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: POST
- * Path: /media_player/onstatuschange?deviceId=xxx&sessionKey=xxx
+ * Path: /media_player/onstatuschange?serviceId=xxx&sessionKey=xxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -1735,7 +1735,7 @@
  */
 - (void) testHttpFailMediaPlayerOnStatusChangeInvalidMethodPost
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/media_player/onstatuschange?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/media_player/onstatuschange?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"POST"];
 

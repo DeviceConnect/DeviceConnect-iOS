@@ -269,7 +269,7 @@ static NSObject *_lockForRequstQueue = nil;
 
 - (BOOL) checkSignatureWithClientId: (NSString *)clientId
                           grantType: (NSString *)grantType
-                           deviceId: (NSString *)deviceId
+                           serviceId: (NSString *)serviceId
                              scopes: (NSArray *)scopes
                           signature: (NSString *)signature {
     
@@ -302,7 +302,7 @@ static NSObject *_lockForRequstQueue = nil;
         NSString *innerSignature =
         [CipherAuthSignature generateSignatureWithClientId: clientId
                                                  grantType: grantType
-                                                  deviceId: deviceId
+                                                  serviceId: serviceId
                                                     scopes: scopes
                                               clientSecret: clientSecret];
         
@@ -323,7 +323,7 @@ static NSObject *_lockForRequstQueue = nil;
             DCLogD(@" - innerSignature:%@", innerSignature);
             DCLogD(@" - clientId:%@", clientId);
             DCLogD(@" - grantType:%@", grantType);
-            DCLogD(@" - deviceId:%@", deviceId);
+            DCLogD(@" - serviceId:%@", serviceId);
             DCLogD(@" - scopes:%@", strScopes);
             DCLogD(@" - clientSecret:%@", clientSecret);
         }
@@ -600,7 +600,7 @@ static NSObject *_lockForRequstQueue = nil;
 
 - (NSString *) createSignatureWithClientId: (NSString *)clientId
                                  grantType: (NSString *)grantType
-                                  deviceId: (NSString *)deviceId
+                                  serviceId: (NSString *)serviceId
                                     scopes: (NSArray *)scopes
                               clientSecret: (NSString *)clientSecret {
     
@@ -618,7 +618,7 @@ static NSObject *_lockForRequstQueue = nil;
     NSString *signature =
     [CipherAuthSignature generateSignatureWithClientId: clientId
                                              grantType: grantType
-                                              deviceId: deviceId
+                                              serviceId: serviceId
                                                 scopes: scopes
                                           clientSecret: clientSecret];
     return signature;

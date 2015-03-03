@@ -27,7 +27,7 @@ extern NSString *const DConnectEventSessionDaoClmCId;
 @interface DConnectEventSessionDao : NSObject
 
 + (void) createWithDatabase:(DConnectSQLiteDatabase *)database;
-+ (long long) insertWithEventDeviceId:(long long)eventDeviceId
++ (long long) insertWithEventServiceId:(long long)eventServiceId
                              clientId:(long long)clientId
                            toDatabase:(DConnectSQLiteDatabase *)database;
 

@@ -17,7 +17,7 @@ extern NSString *const DConnectEventDeviceDaoClmDId;
 
 + (void) createWithDatabase:(DConnectSQLiteDatabase *)database;
 + (long long) insertWithAttributeId:(long long)attributeId
-                           deviceId:(long long)deviceId
+                           serviceId:(long long)serviceId
                          toDatabase:(DConnectSQLiteDatabase *)database;
 
 + (int) deleteWithId:(long long)rowId onDatabase:(DConnectSQLiteDatabase *)database;

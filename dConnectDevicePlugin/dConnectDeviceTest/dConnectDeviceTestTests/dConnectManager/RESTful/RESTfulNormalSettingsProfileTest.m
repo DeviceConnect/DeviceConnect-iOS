@@ -25,7 +25,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: GET
- * Path: /settings/volume?deviceid=xxxx&kind=1
+ * Path: /settings/volume?serviceId=xxxx&kind=1
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -35,7 +35,7 @@
  */
 - (void) testHttpNormalSettingsSoundVolumeGet
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/settings/sound/volume?deviceId=%@&kind=1", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/settings/sound/volume?serviceId=%@&kind=1", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
     
@@ -47,7 +47,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /settings/volume?deviceid=xxxx&kind=1&level=xxx
+ * Path: /settings/volume?serviceId=xxxx&kind=1&level=xxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -56,7 +56,7 @@
  */
 - (void) testHttpNormalSettingsSoundVolumePut
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/settings/sound/volume?deviceId=%@&level=0.5&kind=1", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/settings/sound/volume?serviceId=%@&level=0.5&kind=1", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
@@ -68,7 +68,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: GET
- * Path: /settings/date?deviceid=xxxx
+ * Path: /settings/date?serviceId=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -78,7 +78,7 @@
  */
 - (void) testHttpNormalSettingsDateGet
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/settings/date?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/settings/date?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
     
@@ -90,7 +90,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /settings/date?deviceid=xxxx&date=xxxx
+ * Path: /settings/date?serviceId=xxxx&date=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -99,7 +99,7 @@
  */
 - (void) testHttpNormalSettingsDatePut
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/settings/date?deviceId=%@&date=2014-01-01T01:01:01+09:00", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/settings/date?serviceId=%@&date=2014-01-01T01:01:01+09:00", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
@@ -111,7 +111,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: GET
- * Path: /settings/display/light?deviceid=xxxx
+ * Path: /settings/display/light?serviceId=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -121,7 +121,7 @@
  */
 - (void) testHttpNormalSettingsDisplayLightGet
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/settings/display/light?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/settings/display/light?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
     
@@ -133,7 +133,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /settings/display/light?deviceid=xxxx&level=xxxx
+ * Path: /settings/display/light?serviceId=xxxx&level=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -142,7 +142,7 @@
  */
 - (void) testHttpNormalSettingsDisplayLightPut
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/settings/display/light?deviceId=%@&level=0.5", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/settings/display/light?serviceId=%@&level=0.5", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
@@ -154,7 +154,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: GET
- * Path: /settings/display/sleep?deviceid=xxxx
+ * Path: /settings/display/sleep?serviceId=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -164,7 +164,7 @@
  */
 - (void) testHttpNormalSettingsDisplaySleepGet
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/settings/display/sleep?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/settings/display/sleep?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
     
@@ -176,7 +176,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /settings/display/sleep?deviceid=xxxx&kind=1&level=xxxx
+ * Path: /settings/display/sleep?serviceId=xxxx&kind=1&level=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -185,7 +185,7 @@
  */
 - (void) testHttpNormalSettingsDisplaySleepPut
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/settings/display/sleep?deviceId=%@&time=1", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/settings/display/sleep?serviceId=%@&time=1", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     

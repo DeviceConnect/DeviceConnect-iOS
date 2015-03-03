@@ -32,9 +32,9 @@
 #define DConnectAccessTokenTbl @"access_token_tbl"
 
 /*!
- @define AuthDataのデバイスIDを格納するカラム名を定義。
+ @define AuthDataのサービスIDを格納するカラム名を定義。
  */
-#define DConnectDeviceId @"device_id"
+#define DConnectServiceId @"service_id"
 
 /*!
  @define AuthDataのクライアントIDを格納するカラム名を定義。
@@ -81,7 +81,7 @@
 /*!
  @brief AuthDataにデータを格納する。
  
- @param[in] deviceId デバイスID
+ @param[in] serviceId サービスID
  @param[in] clientId クライアントID
  @param[in] clientSecret クライアントシークレット
  @param[in] database 操作するデータベース
@@ -89,21 +89,21 @@
  @retval YES データの挿入に成功
  @retval NO データの挿入に失敗
  */
-- (BOOL)insertAuthDataWithDeviceId:(NSString *)deviceId
+- (BOOL)insertAuthDataWithServiceId:(NSString *)serviceId
                           clientId:(NSString *)clientId
                       clientSecret:(NSString *)clientSecret
                         toDatabase:(DConnectSQLiteDatabase *)database;
 
 /*!
- @brief 指定されたデバイスIDのAuthDataを取得する。
+ @brief 指定されたサービスIDのAuthDataを取得する。
  
- @param[in] deviceId デバイスID
+ @param[in] serviceId サービスID
  @param[in] database 操作するデータベース
  
- @retval デバイスIDに対応したAuthData
+ @retval サービスIDに対応したAuthData
  @retval nil DBにデータが存在しない場合
  */
-- (DConnectAuthData *)selectAuthDataByDeviceId:(NSString *)deviceId
+- (DConnectAuthData *)selectAuthDataByServiceId:(NSString *)serviceId
                                   fromDatabase:(DConnectSQLiteDatabase *)database;
 
 /*!
@@ -154,18 +154,18 @@
     return self;
 }
 
-- (DConnectAuthData *)getAuthDataByDeviceId:(NSString *)deviceId {
+- (DConnectAuthData *)getAuthDataByServiceId:(NSString *)serviceId {
     __block DConnectAuthData *auth = nil;
     [_helper execQueryInQueue:^(DConnectSQLiteDatabase *database) {
         if (!database) {
             return;
         }
-        auth = [self selectAuthDataByDeviceId:deviceId fromDatabase:database];
+        auth = [self selectAuthDataByServiceId:serviceId fromDatabase:database];
     }];
     return auth;
 }
 
-- (BOOL)deleteAuthDataByDeviceId:(NSString *)deviceId {
+- (BOOL)deleteAuthDataByServiceId:(NSString *)serviceId {
     __block BOOL result = NO;
     [_helper execQueryInQueue:^(DConnectSQLiteDatabase *database) {
         if (!database) {
@@ -173,7 +173,7 @@
         }
         
         NSString *where = [NSString stringWithFormat:@"%@='%@'",
-                           DConnectDeviceId, deviceId];
+                           DConnectServiceId, serviceId];
         int count = [database deleteFromTable:DConnectAuthDataTbl
                                         where:where
                                    bindParams:nil];
@@ -183,7 +183,7 @@
 }
 
 
-- (BOOL)addAuthDataWithDeviceId:(NSString *)deviceId
+- (BOOL)addAuthDataWithServiceId:(NSString *)serviceId
                        clientId:(NSString *)clientId
                    clientSecret:(NSString *)clientSecret {
     __block BOOL result = NO;
@@ -193,7 +193,7 @@
         }
         
         [database beginTransaction];
-        result = [self insertAuthDataWithDeviceId:deviceId
+        result = [self insertAuthDataWithServiceId:serviceId
                                          clientId:clientId
                                      clientSecret:clientSecret
                                        toDatabase:database];
@@ -275,7 +275,7 @@
 #pragma mark - Private Method
 
 - (void) createAuthDataTable:(DConnectSQLiteDatabase *) database {
-    NSString *sql = DCEForm(@"CREATE TABLE %@ (id INTEGER PRIMARY KEY AUTOINCREMENT, %@ TEXT NOT NULL, %@ TEXT NOT NULL, %@ TEXT NOT NULL);", DConnectAuthDataTbl, DConnectDeviceId, DConnectClientId, DConnectClientSecret);
+    NSString *sql = DCEForm(@"CREATE TABLE %@ (id INTEGER PRIMARY KEY AUTOINCREMENT, %@ TEXT NOT NULL, %@ TEXT NOT NULL, %@ TEXT NOT NULL);", DConnectAuthDataTbl, DConnectServiceId, DConnectClientId, DConnectClientSecret);
     if (![database execSQL:sql]) {
         @throw @"error";
     }
@@ -288,26 +288,26 @@
     }
 }
 
-- (BOOL)insertAuthDataWithDeviceId:(NSString *)deviceId
+- (BOOL)insertAuthDataWithServiceId:(NSString *)serviceId
                           clientId:(NSString *)clientId
                       clientSecret:(NSString *)clientSecret
                         toDatabase:(DConnectSQLiteDatabase *)database {
     long long result = [database insertIntoTable:DConnectAuthDataTbl
-                               columns:@[DConnectDeviceId, DConnectClientId, DConnectClientSecret]
-                                params:@[deviceId, clientId, clientSecret]];
+                               columns:@[DConnectServiceId, DConnectClientId, DConnectClientSecret]
+                                params:@[serviceId, clientId, clientSecret]];
     return (result > 0);
 }
 
-- (DConnectAuthData *)selectAuthDataByDeviceId:(NSString *)deviceId
+- (DConnectAuthData *)selectAuthDataByServiceId:(NSString *)serviceId
                                   fromDatabase:(DConnectSQLiteDatabase *)database
 {
-    NSString *sql = DCEForm(@"SELECT %@,%@,%@ FROM %@ WHERE %@='%@';", @"id", DConnectClientId, DConnectClientSecret, DConnectAuthDataTbl, DConnectDeviceId, deviceId);
+    NSString *sql = DCEForm(@"SELECT %@,%@,%@ FROM %@ WHERE %@='%@';", @"id", DConnectClientId, DConnectClientSecret, DConnectAuthDataTbl, DConnectServiceId, serviceId);
     
     DConnectAuthData *auth = nil;
     DConnectSQLiteCursor *cursor = [database queryWithSQL:sql];
     if ([cursor moveToFirst]) {
         auth = [DConnectAuthData new];
-        auth.deviceId = deviceId;
+        auth.serviceId = serviceId;
         auth.id = [cursor longLongValueAtIndex:0];
         auth.clientId = [cursor stringValueAtIndex:1];
         auth.clientSecret = [cursor stringValueAtIndex:2];

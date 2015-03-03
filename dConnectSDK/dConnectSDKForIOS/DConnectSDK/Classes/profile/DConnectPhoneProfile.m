@@ -43,11 +43,11 @@ NSString *const DConnectPhoneProfileParamState = @"state";
     NSString *attribute = [request attribute];
     
     if ([attribute isEqualToString:DConnectPhoneProfileAttrCall]) {
-        if ([self hasMethod:@selector(profile:didReceivePostCallRequest:response:deviceId:phoneNumber:)
+        if ([self hasMethod:@selector(profile:didReceivePostCallRequest:response:serviceId:phoneNumber:)
                    response:response])
         {
             send = [_delegate profile:self didReceivePostCallRequest:request response:response
-                             deviceId:[request deviceId]
+                             serviceId:[request serviceId]
                           phoneNumber:[DConnectPhoneProfile phoneNumberFromRequest:request]];
         }
     } else {
@@ -65,22 +65,22 @@ NSString *const DConnectPhoneProfileParamState = @"state";
     }
     
     NSString *attribute = [request attribute];
-    NSString *deviceId = [request deviceId];
+    NSString *serviceId = [request serviceId];
     if ([attribute isEqualToString:DConnectPhoneProfileAttrSet]) {
-        if ([self hasMethod:@selector(profile:didReceivePutSetRequest:response:deviceId:mode:)
+        if ([self hasMethod:@selector(profile:didReceivePutSetRequest:response:serviceId:mode:)
                    response:response])
         {
             NSNumber *mode = [DConnectPhoneProfile modeFromRequest:request];
             send = [_delegate profile:self didReceivePutSetRequest:request response:response
-                             deviceId:deviceId mode:mode];
+                             serviceId:serviceId mode:mode];
         }
     } else if ([attribute isEqualToString:DConnectPhoneProfileAttrOnConnect]) {
-        if ([self hasMethod:@selector(profile:didReceivePutOnConnectRequest:response:deviceId:sessionKey:)
+        if ([self hasMethod:@selector(profile:didReceivePutOnConnectRequest:response:serviceId:sessionKey:)
                    response:response])
         {
             NSString *sessionKey = [request sessionKey];
             send = [_delegate profile:self didReceivePutOnConnectRequest:request response:response
-                             deviceId:deviceId sessionKey:sessionKey];
+                             serviceId:serviceId sessionKey:sessionKey];
         }
     } else {
         [response setErrorToUnknownAttribute];
@@ -100,13 +100,13 @@ NSString *const DConnectPhoneProfileParamState = @"state";
     NSString *attribute = [request attribute];
     
     if ([attribute isEqualToString:DConnectPhoneProfileAttrOnConnect]) {
-        if ([self hasMethod:@selector(profile:didReceiveDeleteOnConnectRequest:response:deviceId:sessionKey:)
+        if ([self hasMethod:@selector(profile:didReceiveDeleteOnConnectRequest:response:serviceId:sessionKey:)
                    response:response])
         {
-            NSString *deviceId = [request deviceId];
+            NSString *serviceId = [request serviceId];
             NSString *sessionKey = [request sessionKey];
             send = [_delegate profile:self didReceiveDeleteOnConnectRequest:request response:response
-                             deviceId:deviceId sessionKey:sessionKey];
+                             serviceId:serviceId sessionKey:sessionKey];
         }
     } else {
         [response setErrorToUnknownAttribute];

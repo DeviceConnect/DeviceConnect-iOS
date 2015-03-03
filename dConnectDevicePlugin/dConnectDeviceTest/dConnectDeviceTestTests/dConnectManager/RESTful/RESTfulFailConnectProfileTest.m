@@ -20,7 +20,7 @@
 @implementation RESTfulFailConnectProfileTest
 
 /*!
- * @brief deviceIdが無い状態でWiFi機能有効状態(ON/OFF)取得テストを行う.
+ * @brief serviceIdが無い状態でWiFi機能有効状態(ON/OFF)取得テストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: GET
@@ -31,7 +31,7 @@
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailConnectWifiGetNoDeviceId
+- (void) testHttpFailConnectWifiGetNoServiceId
 {
     NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/connect/wifi"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
@@ -41,20 +41,20 @@
 }
 
 /*!
- * @brief deviceIdが空状態でWiFi機能有効状態(ON/OFF)取得テストを行う.
+ * @brief serviceIdが空状態でWiFi機能有効状態(ON/OFF)取得テストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: GET
- * Path: /connect/wifi?deviceId=
+ * Path: /connect/wifi?serviceId=
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailConnectWifiGetEmptyDeviceId
+- (void) testHttpFailConnectWifiGetEmptyServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/connect/wifi?deviceId="];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/connect/wifi?serviceId="];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
     
@@ -62,20 +62,20 @@
 }
 
 /*!
- * @brief 存在しないdeviceIdでWiFi機能有効状態(ON/OFF)取得テストを行う.
+ * @brief 存在しないserviceIdでWiFi機能有効状態(ON/OFF)取得テストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: GET
- * Path: /connect/wifi?deviceId=123456789
+ * Path: /connect/wifi?serviceId=123456789
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailConnectWifiGetInvalidDeviceId
+- (void) testHttpFailConnectWifiGetInvalidServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/connect/wifi?deviceId=12345678"];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/connect/wifi?serviceId=12345678"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
     
@@ -87,7 +87,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: POST
- * Path: /connect/wifi?deviceId=xxxx
+ * Path: /connect/wifi?serviceId=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -96,7 +96,7 @@
  */
 - (void) testHttpFailConnectWifiInvalidMethodPost
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/connect/wifi?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/connect/wifi?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"POST"];
     
@@ -104,7 +104,7 @@
 }
 
 /*!
- * @brief deviceIdが無い状態でonwifichange属性のコールバック登録テストを行う.
+ * @brief serviceIdが無い状態でonwifichange属性のコールバック登録テストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: PUT
@@ -115,7 +115,7 @@
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailConnectOnWifiChangePutNoDeviceId
+- (void) testHttpFailConnectOnWifiChangePutNoServiceId
 {
     NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/connect/onwifichange"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
@@ -125,20 +125,20 @@
 }
 
 /*!
- * @brief deviceIdが空状態でonwifichange属性のコールバック登録テストを行う.
+ * @brief serviceIdが空状態でonwifichange属性のコールバック登録テストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /connect/onwifichange?deviceId=
+ * Path: /connect/onwifichange?serviceId=
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailConnectOnWifiChangePutEmptyDeviceId
+- (void) testHttpFailConnectOnWifiChangePutEmptyServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/connect/onwifichange?deviceId="];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/connect/onwifichange?serviceId="];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
@@ -146,20 +146,20 @@
 }
 
 /*!
- * @brief 存在しないdeviceIdでonwifichange属性のコールバック登録テストを行う.
+ * @brief 存在しないserviceIdでonwifichange属性のコールバック登録テストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /connect/onwifichange?deviceId=123456789
+ * Path: /connect/onwifichange?serviceId=123456789
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailConnectOnWifiChangePutInvalidDeviceId
+- (void) testHttpFailConnectOnWifiChangePutInvalidServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/connect/onwifichange?deviceId=12345678"];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/connect/onwifichange?serviceId=12345678"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
@@ -171,7 +171,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /connect/onwifichange?deviceId=123456789
+ * Path: /connect/onwifichange?serviceId=123456789
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -180,7 +180,7 @@
  */
 - (void) testHttpFailConnectOnWifiChangePutNoSessionKey
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/connect/onwifichange?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/connect/onwifichange?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
@@ -192,7 +192,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /connect/onwifichange?deviceId=123456789&sessionKey=
+ * Path: /connect/onwifichange?serviceId=123456789&sessionKey=
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -201,7 +201,7 @@
  */
 - (void) testHttpFailConnectOnWifiChangePutEmptySessionKey
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/connect/onwifichange?deviceId=%@&sessionKey=", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/connect/onwifichange?serviceId=%@&sessionKey=", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
@@ -209,7 +209,7 @@
 }
 
 /*!
- * @brief deviceIdが無い状態でonwifichange属性のコールバック解除テストを行う.
+ * @brief serviceIdが無い状態でonwifichange属性のコールバック解除テストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
@@ -220,7 +220,7 @@
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailConnectOnWifiChangeDeleteNoDeviceId
+- (void) testHttpFailConnectOnWifiChangeDeleteNoServiceId
 {
     NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/connect/onwifichange"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
@@ -230,20 +230,20 @@
 }
 
 /*!
- * @brief deviceIdが空状態でonwifichange属性のコールバック解除テストを行う.
+ * @brief serviceIdが空状態でonwifichange属性のコールバック解除テストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /connect/onwifichange?deviceId=
+ * Path: /connect/onwifichange?serviceId=
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailConnectOnWifiChangeDeleteEmptyDeviceId
+- (void) testHttpFailConnectOnWifiChangeDeleteEmptyServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/connect/onwifichange?deviceId="];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/connect/onwifichange?serviceId="];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     
@@ -251,20 +251,20 @@
 }
 
 /*!
- * @brief 存在しないdeviceIdでonwifichange属性のコールバック解除テストを行う.
+ * @brief 存在しないserviceIdでonwifichange属性のコールバック解除テストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /connect/onwifichange?deviceId=123456789
+ * Path: /connect/onwifichange?serviceId=123456789
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailConnectOnWifiChangeDeleteInvalidDeviceId
+- (void) testHttpFailConnectOnWifiChangeDeleteInvalidServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/connect/onwifichange?deviceId=12345678"];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/connect/onwifichange?serviceId=12345678"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     
@@ -276,7 +276,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /connect/onwifichange?deviceId=123456789
+ * Path: /connect/onwifichange?serviceId=123456789
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -285,7 +285,7 @@
  */
 - (void) testHttpFailConnectOnWifiChangeDeleteNoSessionKey
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/connect/onwifichange?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/connect/onwifichange?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     
@@ -297,7 +297,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /connect/onwifichange?deviceId=123456789&sessionKey=
+ * Path: /connect/onwifichange?serviceId=123456789&sessionKey=
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -306,7 +306,7 @@
  */
 - (void) testHttpFailConnectOnWifiChangeDeleteEmptySessionKey
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/connect/onwifichange?deviceId=%@&sessionKey=", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/connect/onwifichange?serviceId=%@&sessionKey=", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     
@@ -318,7 +318,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: GET
- * Path: /connect/onwifichange?deviceId=xxxx&sessionKey=xxxx
+ * Path: /connect/onwifichange?serviceId=xxxx&sessionKey=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -327,7 +327,7 @@
  */
 - (void) testHttpFailConnectOnWifiChangeEventInvalidMethodGet
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/connect/onwifichange?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/connect/onwifichange?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
     
@@ -339,7 +339,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: POST
- * Path: /connect/onwifichange?deviceId=xxxx&sessionKey=xxxx
+ * Path: /connect/onwifichange?serviceId=xxxx&sessionKey=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -348,7 +348,7 @@
  */
 - (void) testHttpFailConnectOnWifiChangeEventInvalidMethodPost
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/connect/onwifichange?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/connect/onwifichange?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"POST"];
     
@@ -356,7 +356,7 @@
 }
 
 /*!
- * @brief deviceIdが無い状態でBluetooth機能有効状態(ON/OFF)取得テストを行う.
+ * @brief serviceIdが無い状態でBluetooth機能有効状態(ON/OFF)取得テストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: GET
@@ -367,7 +367,7 @@
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailConnectBluetoothGetNoDeviceId
+- (void) testHttpFailConnectBluetoothGetNoServiceId
 {
     NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/connect/bluetooth"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
@@ -377,20 +377,20 @@
 }
 
 /*!
- * @brief deviceIdが空状態でBluetooth機能有効状態(ON/OFF)取得テストを行う.
+ * @brief serviceIdが空状態でBluetooth機能有効状態(ON/OFF)取得テストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: GET
- * Path: /connect/bluetooth?deviceId=
+ * Path: /connect/bluetooth?serviceId=
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailConnectBluetoothGetEmptyDeviceId
+- (void) testHttpFailConnectBluetoothGetEmptyServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/connect/bluetooth?deviceId="];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/connect/bluetooth?serviceId="];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
     
@@ -398,20 +398,20 @@
 }
 
 /*!
- * @brief 存在しないdeviceIdでBluetooth機能有効状態(ON/OFF)取得テストを行う.
+ * @brief 存在しないserviceIdでBluetooth機能有効状態(ON/OFF)取得テストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: GET
- * Path: /connect/bluetooth?deviceId=123456789
+ * Path: /connect/bluetooth?serviceId=123456789
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailConnectBluetoothGetInvalidDeviceId
+- (void) testHttpFailConnectBluetoothGetInvalidServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/connect/bluetooth?deviceId=12345678"];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/connect/bluetooth?serviceId=12345678"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
     
@@ -423,7 +423,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: POST
- * Path: /connect/bluetooth?deviceId=xxxx
+ * Path: /connect/bluetooth?serviceId=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -432,7 +432,7 @@
  */
 - (void) testHttpFailConnectBluetoothInvalidMethodPost
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/connect/bluetooth?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/connect/bluetooth?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"POST"];
     
@@ -440,7 +440,7 @@
 }
 
 /*!
- * @brief deviceIdが無い状態でdiscoverable属性のテストを行う.
+ * @brief serviceIdが無い状態でdiscoverable属性のテストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: PUT
@@ -451,7 +451,7 @@
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailConnectBluetoothDiscoverablePutNoDeviceId
+- (void) testHttpFailConnectBluetoothDiscoverablePutNoServiceId
 {
     NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/connect/bluetooth/discoverable"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
@@ -461,7 +461,7 @@
 }
 
 /*!
- * @brief deviceIdが空状態でdiscoverable属性のテストを行う.
+ * @brief serviceIdが空状態でdiscoverable属性のテストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: PUT
@@ -472,9 +472,9 @@
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailConnectBluetoothDiscoverablePutEmptyDeviceId
+- (void) testHttpFailConnectBluetoothDiscoverablePutEmptyServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/connect/bluetooth/discoverable?deviceId="];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/connect/bluetooth/discoverable?serviceId="];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
@@ -482,7 +482,7 @@
 }
 
 /*!
- * @brief 存在しないdeviceIdでdiscoverable属性のテストを行う.
+ * @brief 存在しないserviceIdでdiscoverable属性のテストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: PUT
@@ -493,9 +493,9 @@
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailConnectBluetoothDiscoverablePutInvalidDeviceId
+- (void) testHttpFailConnectBluetoothDiscoverablePutInvalidServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/connect/bluetooth/discoverable?deviceId=12345678"];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/connect/bluetooth/discoverable?serviceId=12345678"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
@@ -503,7 +503,7 @@
 }
 
 /*!
- * @brief deviceIdが無い状態でdiscoverable属性のテストを行う.
+ * @brief serviceIdが無い状態でdiscoverable属性のテストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
@@ -514,7 +514,7 @@
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailConnectBluetoothDiscoverableDeleteNoDeviceId
+- (void) testHttpFailConnectBluetoothDiscoverableDeleteNoServiceId
 {
     NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/connect/bluetooth/discoverable"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
@@ -524,7 +524,7 @@
 }
 
 /*!
- * @brief deviceIdが空状態でdiscoverable属性のテストを行う.
+ * @brief serviceIdが空状態でdiscoverable属性のテストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
@@ -535,9 +535,9 @@
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailConnectBluetoothDiscoverableDeleteEmptyDeviceId
+- (void) testHttpFailConnectBluetoothDiscoverableDeleteEmptyServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/connect/bluetooth/discoverable?deviceId="];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/connect/bluetooth/discoverable?serviceId="];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     
@@ -545,7 +545,7 @@
 }
 
 /*!
- * @brief 存在しないdeviceIdでdiscoverable属性のテストを行う.
+ * @brief 存在しないserviceIdでdiscoverable属性のテストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
@@ -556,9 +556,9 @@
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailConnectBluetoothDiscoverableDeleteInvalidDeviceId
+- (void) testHttpFailConnectBluetoothDiscoverableDeleteInvalidServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/connect/bluetooth/discoverable?deviceId=12345678"];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/connect/bluetooth/discoverable?serviceId=12345678"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     
@@ -570,7 +570,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: GET
- * Path: /connect/bluetooth/discoverable?deviceId=xxxx
+ * Path: /connect/bluetooth/discoverable?serviceId=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -579,7 +579,7 @@
  */
 - (void) testHttpFailConnectBluetoothDiscoverableInvalidMethodGet
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/connect/bluetooth/discoverable?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/connect/bluetooth/discoverable?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
     
@@ -591,7 +591,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: POST
- * Path: /connect/bluetooth/discoverable?deviceId=xxxx
+ * Path: /connect/bluetooth/discoverable?serviceId=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -600,7 +600,7 @@
  */
 - (void) testHttpFailConnectBluetoothDiscoverableInvalidMethodPost
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/connect/bluetooth/discoverable?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/connect/bluetooth/discoverable?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"POST"];
     
@@ -608,7 +608,7 @@
 }
 
 /*!
- * @brief deviceIdが無い状態でonbluetoothchange属性のコールバック登録テストを行う.
+ * @brief serviceIdが無い状態でonbluetoothchange属性のコールバック登録テストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: PUT
@@ -619,7 +619,7 @@
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailConnectOnBluetoothChangePutNoDeviceId
+- (void) testHttpFailConnectOnBluetoothChangePutNoServiceId
 {
     NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/connect/onbluetoothchange"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
@@ -629,20 +629,20 @@
 }
 
 /*!
- * @brief deviceIdが空状態でonbluetoothchange属性のコールバック登録テストを行う.
+ * @brief serviceIdが空状態でonbluetoothchange属性のコールバック登録テストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /connect/onbluetoothchange?deviceId=
+ * Path: /connect/onbluetoothchange?serviceId=
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailConnectOnBluetoothChangePutEmptyDeviceId
+- (void) testHttpFailConnectOnBluetoothChangePutEmptyServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/connect/onbluetoothchange?deviceId="];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/connect/onbluetoothchange?serviceId="];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
@@ -650,20 +650,20 @@
 }
 
 /*!
- * @brief 存在しないdeviceIdでonbluetoothchange属性のコールバック登録テストを行う.
+ * @brief 存在しないserviceIdでonbluetoothchange属性のコールバック登録テストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /connect/onbluetoothchange?deviceId=123456789
+ * Path: /connect/onbluetoothchange?serviceId=123456789
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailConnectOnBluetoothChangePutInvalidDeviceId
+- (void) testHttpFailConnectOnBluetoothChangePutInvalidServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/connect/onbluetoothchange?deviceId=12345678"];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/connect/onbluetoothchange?serviceId=12345678"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
@@ -675,7 +675,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /connect/onbluetoothchange?deviceId=123456789
+ * Path: /connect/onbluetoothchange?serviceId=123456789
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -684,7 +684,7 @@
  */
 - (void) testHttpFailConnectOnBluetoothChangePutNoSessionKey
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/connect/onbluetoothchange?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/connect/onbluetoothchange?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
@@ -696,7 +696,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /connect/onbluetoothchange?deviceId=123456789&sessionKey=
+ * Path: /connect/onbluetoothchange?serviceId=123456789&sessionKey=
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -705,7 +705,7 @@
  */
 - (void) testHttpFailConnectOnBluetoothChangePutEmptySessionKey
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/connect/onbluetoothchange?deviceId=%@&sessionKey=", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/connect/onbluetoothchange?serviceId=%@&sessionKey=", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
@@ -713,7 +713,7 @@
 }
 
 /*!
- * @brief deviceIdが無い状態でonbluetoothchange属性のコールバック解除テストを行う.
+ * @brief serviceIdが無い状態でonbluetoothchange属性のコールバック解除テストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
@@ -724,7 +724,7 @@
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailConnectOnBluetoothChangeDeleteNoDeviceId
+- (void) testHttpFailConnectOnBluetoothChangeDeleteNoServiceId
 {
     NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/connect/onbluetoothchange"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
@@ -734,20 +734,20 @@
 }
 
 /*!
- * @brief deviceIdが空状態でonbluetoothchange属性のコールバック解除テストを行う.
+ * @brief serviceIdが空状態でonbluetoothchange属性のコールバック解除テストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /connect/onbluetoothchange?deviceId=
+ * Path: /connect/onbluetoothchange?serviceId=
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailConnectOnBluetoothChangeDeleteEmptyDeviceId
+- (void) testHttpFailConnectOnBluetoothChangeDeleteEmptyServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/connect/onbluetoothchange?deviceId="];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/connect/onbluetoothchange?serviceId="];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     
@@ -755,20 +755,20 @@
 }
 
 /*!
- * @brief 存在しないdeviceIdでonbluetoothchange属性のコールバック解除テストを行う.
+ * @brief 存在しないserviceIdでonbluetoothchange属性のコールバック解除テストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /connect/onbluetoothchange?deviceId=123456789
+ * Path: /connect/onbluetoothchange?serviceId=123456789
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailConnectOnBluetoothChangeDeleteInvalidDeviceId
+- (void) testHttpFailConnectOnBluetoothChangeDeleteInvalidServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/connect/onbluetoothchange?deviceId=12345678"];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/connect/onbluetoothchange?serviceId=12345678"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     
@@ -780,7 +780,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /connect/onbluetoothchange?deviceId=123456789
+ * Path: /connect/onbluetoothchange?serviceId=123456789
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -789,7 +789,7 @@
  */
 - (void) testHttpFailConnectOnBluetoothChangeDeleteNoSessionKey
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/connect/onbluetoothchange?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/connect/onbluetoothchange?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     
@@ -801,7 +801,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /connect/onbluetoothchange?deviceId=123456789
+ * Path: /connect/onbluetoothchange?serviceId=123456789
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -810,7 +810,7 @@
  */
 - (void) testHttpFailConnectOnBluetoothChangeDeleteEmptySessionKey
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/connect/onbluetoothchange?deviceId=%@&sessionKey=", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/connect/onbluetoothchange?serviceId=%@&sessionKey=", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     
@@ -822,7 +822,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: GET
- * Path: /connect/onbluetoothchange?deviceId=xxxx&sessionKey=xxxx
+ * Path: /connect/onbluetoothchange?serviceId=xxxx&sessionKey=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -831,7 +831,7 @@
  */
 - (void) testHttpFailConnectOnBluetoothChangeEventInvalidMethodGet
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/connect/onbluetoothchange?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/connect/onbluetoothchange?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
     
@@ -843,7 +843,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: POST
- * Path: /connect/onbluetoothchange?deviceId=xxxx&sessionKey=xxxx
+ * Path: /connect/onbluetoothchange?serviceId=xxxx&sessionKey=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -852,7 +852,7 @@
  */
 - (void) testHttpFailConnectOnBluetoothChangeEventInvalidMethodPost
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/connect/onbluetoothchange?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/connect/onbluetoothchange?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"POST"];
     
@@ -860,7 +860,7 @@
 }
 
 /*!
- * @brief deviceIdが無い状態でNFC機能有効状態(ON/OFF)取得テストを行う.
+ * @brief serviceIdが無い状態でNFC機能有効状態(ON/OFF)取得テストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: GET
@@ -871,7 +871,7 @@
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailConnectNFCGetNoDeviceId
+- (void) testHttpFailConnectNFCGetNoServiceId
 {
     NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/connect/nfc"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
@@ -881,20 +881,20 @@
 }
 
 /*!
- * @brief deviceIdが空状態でNFC機能有効状態(ON/OFF)取得テストを行う.
+ * @brief serviceIdが空状態でNFC機能有効状態(ON/OFF)取得テストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: GET
- * Path: /connect/nfc?deviceId=
+ * Path: /connect/nfc?serviceId=
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailConnectNFCGetEmptyDeviceId
+- (void) testHttpFailConnectNFCGetEmptyServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/connect/nfc?deviceId="];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/connect/nfc?serviceId="];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
     
@@ -902,20 +902,20 @@
 }
 
 /*!
- * @brief 存在しないdeviceIdでNFC機能有効状態(ON/OFF)取得テストを行う.
+ * @brief 存在しないserviceIdでNFC機能有効状態(ON/OFF)取得テストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: GET
- * Path: /connect/nfc?deviceId=123456789
+ * Path: /connect/nfc?serviceId=123456789
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailConnectNFCGetInvalidDeviceId
+- (void) testHttpFailConnectNFCGetInvalidServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/connect/nfc?deviceId=12345678"];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/connect/nfc?serviceId=12345678"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
     
@@ -927,7 +927,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: POST
- * Path: /connect/nfc?deviceId=xxxx
+ * Path: /connect/nfc?serviceId=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -936,7 +936,7 @@
  */
 - (void) testHttpFailConnectNFCInvalidMethodPost
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/connect/nfc?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/connect/nfc?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"POST"];
     
@@ -944,7 +944,7 @@
 }
 
 /*!
- * @brief deviceIdが無い状態でonnfcchange属性のコールバック登録テストを行う.
+ * @brief serviceIdが無い状態でonnfcchange属性のコールバック登録テストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: PUT
@@ -955,7 +955,7 @@
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailConnectOnNFCChangePutNoDeviceId
+- (void) testHttpFailConnectOnNFCChangePutNoServiceId
 {
     NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/connect/onnfcchange"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
@@ -965,20 +965,20 @@
 }
 
 /*!
- * @brief deviceIdが空状態でonnfcchange属性のコールバック登録テストを行う.
+ * @brief serviceIdが空状態でonnfcchange属性のコールバック登録テストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /connect/onnfcchange?deviceId=
+ * Path: /connect/onnfcchange?serviceId=
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailConnectOnNFCChangePutEmptyDeviceId
+- (void) testHttpFailConnectOnNFCChangePutEmptyServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/connect/onnfcchange?deviceId="];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/connect/onnfcchange?serviceId="];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
@@ -986,20 +986,20 @@
 }
 
 /*!
- * @brief 存在しないdeviceIdでonnfcchange属性のコールバック登録テストを行う.
+ * @brief 存在しないserviceIdでonnfcchange属性のコールバック登録テストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /connect/onnfcchange?deviceId=123456789
+ * Path: /connect/onnfcchange?serviceId=123456789
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailConnectOnNFCChangePutInvalidDeviceId
+- (void) testHttpFailConnectOnNFCChangePutInvalidServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/connect/onnfcchange?deviceId=12345678"];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/connect/onnfcchange?serviceId=12345678"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
@@ -1011,7 +1011,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /connect/onnfcchange?deviceId=123456789
+ * Path: /connect/onnfcchange?serviceId=123456789
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -1020,7 +1020,7 @@
  */
 - (void) testHttpFailConnectOnNFCChangePutNoSessionKey
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/connect/onnfcchange?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/connect/onnfcchange?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
@@ -1032,7 +1032,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /connect/onnfcchange?deviceId=123456789&sessionKey=
+ * Path: /connect/onnfcchange?serviceId=123456789&sessionKey=
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -1041,7 +1041,7 @@
  */
 - (void) testHttpFailConnectOnNFCChangePutEmptySessionKey
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/connect/onnfcchange?deviceId=%@&sessionKey=", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/connect/onnfcchange?serviceId=%@&sessionKey=", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
@@ -1049,7 +1049,7 @@
 }
 
 /*!
- * @brief deviceIdが無い状態でonnfcchange属性のコールバック解除テストを行う.
+ * @brief serviceIdが無い状態でonnfcchange属性のコールバック解除テストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
@@ -1060,7 +1060,7 @@
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailConnectOnNFCChangeDeleteNoDeviceId
+- (void) testHttpFailConnectOnNFCChangeDeleteNoServiceId
 {
     NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/connect/onnfcchange"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
@@ -1070,20 +1070,20 @@
 }
 
 /*!
- * @brief deviceIdが空状態でonnfcchange属性のコールバック解除テストを行う.
+ * @brief serviceIdが空状態でonnfcchange属性のコールバック解除テストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /connect/onnfcchange?deviceId=
+ * Path: /connect/onnfcchange?serviceId=
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailConnectOnNFCChangeDeleteEmptyDeviceId
+- (void) testHttpFailConnectOnNFCChangeDeleteEmptyServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/connect/onnfcchange?deviceId="];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/connect/onnfcchange?serviceId="];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     
@@ -1091,20 +1091,20 @@
 }
 
 /*!
- * @brief 存在しないdeviceIdでonnfcchange属性のコールバック解除テストを行う.
+ * @brief 存在しないserviceIdでonnfcchange属性のコールバック解除テストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /connect/onnfcchange?deviceId=123456789
+ * Path: /connect/onnfcchange?serviceId=123456789
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailConnectOnNFCChangeDeleteInvalidDeviceId
+- (void) testHttpFailConnectOnNFCChangeDeleteInvalidServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/connect/onnfcchange?deviceId=12345678"];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/connect/onnfcchange?serviceId=12345678"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     
@@ -1116,7 +1116,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /connect/onnfcchange?deviceId=123456789
+ * Path: /connect/onnfcchange?serviceId=123456789
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -1125,7 +1125,7 @@
  */
 - (void) testHttpFailConnectOnNFCChangeDeleteNoSessionKey
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/connect/onnfcchange?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/connect/onnfcchange?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     
@@ -1137,7 +1137,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /connect/onnfcchange?deviceId=123456789
+ * Path: /connect/onnfcchange?serviceId=123456789
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -1146,7 +1146,7 @@
  */
 - (void) testHttpFailConnectOnNFCChangeDeleteEmptySessionKey
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/connect/onnfcchange?deviceId=%@&sessionKey=", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/connect/onnfcchange?serviceId=%@&sessionKey=", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     
@@ -1158,7 +1158,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: GET
- * Path: /connect/onnfcchange?deviceId=xxxx&sessionKey=xxxx
+ * Path: /connect/onnfcchange?serviceId=xxxx&sessionKey=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -1167,7 +1167,7 @@
  */
 - (void) testHttpFailConnectOnNFCChangeEventInvalidMethodGet
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/connect/onnfcchange?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/connect/onnfcchange?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
     
@@ -1179,7 +1179,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: POST
- * Path: /connect/onnfcchange?deviceId=xxxx&sessionKey=xxxx
+ * Path: /connect/onnfcchange?serviceId=xxxx&sessionKey=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -1188,7 +1188,7 @@
  */
 - (void) testHttpFailConnectOnNFCChangeEventInvalidMethodPost
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/connect/onnfcchange?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/connect/onnfcchange?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"POST"];
     
@@ -1196,7 +1196,7 @@
 }
 
 /*!
- * @brief deviceIdが無い状態でBLE機能有効状態(ON/OFF)取得テストを行う.
+ * @brief serviceIdが無い状態でBLE機能有効状態(ON/OFF)取得テストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: GET
@@ -1207,7 +1207,7 @@
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailConnectBLEGetNoDeviceId
+- (void) testHttpFailConnectBLEGetNoServiceId
 {
     NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/connect/ble"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
@@ -1217,20 +1217,20 @@
 }
 
 /*!
- * @brief deviceIdが空状態でBLE機能有効状態(ON/OFF)取得テストを行う.
+ * @brief serviceIdが空状態でBLE機能有効状態(ON/OFF)取得テストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: GET
- * Path: /connect/ble?deviceId=
+ * Path: /connect/ble?serviceId=
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailConnectBLEGetEmptyDeviceId
+- (void) testHttpFailConnectBLEGetEmptyServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/connect/ble?deviceId="];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/connect/ble?serviceId="];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
     
@@ -1238,20 +1238,20 @@
 }
 
 /*!
- * @brief 存在しないdeviceIdでBLE機能有効状態(ON/OFF)取得テストを行う.
+ * @brief 存在しないserviceIdでBLE機能有効状態(ON/OFF)取得テストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: GET
- * Path: /connect/ble?deviceId=123456789
+ * Path: /connect/ble?serviceId=123456789
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailConnectBLEGetInvalidDeviceId
+- (void) testHttpFailConnectBLEGetInvalidServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/connect/ble?deviceId=12345678"];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/connect/ble?serviceId=12345678"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
     
@@ -1263,7 +1263,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: POST
- * Path: /connect/ble?deviceId=xxxx
+ * Path: /connect/ble?serviceId=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -1272,7 +1272,7 @@
  */
 - (void) testHttpFailConnectBLEInvalidMethodPost
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/connect/ble?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/connect/ble?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"POST"];
     
@@ -1280,7 +1280,7 @@
 }
 
 /*!
- * @brief deviceIdが無い状態でonblechange属性のコールバック登録テストを行う.
+ * @brief serviceIdが無い状態でonblechange属性のコールバック登録テストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: PUT
@@ -1291,7 +1291,7 @@
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailConnectOnBLEChangePutNoDeviceId
+- (void) testHttpFailConnectOnBLEChangePutNoServiceId
 {
     NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/connect/onblechange"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
@@ -1301,20 +1301,20 @@
 }
 
 /*!
- * @brief deviceIdが空状態でonblechange属性のコールバック登録テストを行う.
+ * @brief serviceIdが空状態でonblechange属性のコールバック登録テストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /connect/onblechange?deviceId=
+ * Path: /connect/onblechange?serviceId=
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailConnectOnBLEChangePutEmptyDeviceId
+- (void) testHttpFailConnectOnBLEChangePutEmptyServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/connect/onblechange?deviceId="];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/connect/onblechange?serviceId="];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
@@ -1322,20 +1322,20 @@
 }
 
 /*!
- * @brief 存在しないdeviceIdでonblechange属性のコールバック登録テストを行う.
+ * @brief 存在しないserviceIdでonblechange属性のコールバック登録テストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /connect/onblechange?deviceId=123456789
+ * Path: /connect/onblechange?serviceId=123456789
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailConnectOnBLEChangePutInvalidDeviceId
+- (void) testHttpFailConnectOnBLEChangePutInvalidServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/connect/onblechange?deviceId=12345678"];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/connect/onblechange?serviceId=12345678"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
@@ -1347,7 +1347,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /connect/onblechange?deviceId=123456789
+ * Path: /connect/onblechange?serviceId=123456789
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -1356,7 +1356,7 @@
  */
 - (void) testHttpFailConnectOnBLEChangePutNoSessionKey
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/connect/onblechange?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/connect/onblechange?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
@@ -1368,7 +1368,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /connect/onblechange?deviceId=123456789
+ * Path: /connect/onblechange?serviceId=123456789
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -1377,7 +1377,7 @@
  */
 - (void) testHttpFailConnectOnBLEChangePutEmptySessionKey
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/connect/onblechange?deviceId=%@&sessionKey=", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/connect/onblechange?serviceId=%@&sessionKey=", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
@@ -1385,7 +1385,7 @@
 }
 
 /*!
- * @brief deviceIdが無い状態でonblechange属性のコールバック解除テストを行う.
+ * @brief serviceIdが無い状態でonblechange属性のコールバック解除テストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
@@ -1396,7 +1396,7 @@
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailConnectOnBLEChangeDeleteNoDeviceId
+- (void) testHttpFailConnectOnBLEChangeDeleteNoServiceId
 {
     NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/connect/onblechange"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
@@ -1406,20 +1406,20 @@
 }
 
 /*!
- * @brief deviceIdが空状態でonblechange属性のコールバック解除テストを行う.
+ * @brief serviceIdが空状態でonblechange属性のコールバック解除テストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /connect/onblechange?deviceId=
+ * Path: /connect/onblechange?serviceId=
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailConnectOnBLEChangeDeleteEmptyDeviceId
+- (void) testHttpFailConnectOnBLEChangeDeleteEmptyServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/connect/onblechange?deviceId="];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/connect/onblechange?serviceId="];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     
@@ -1427,20 +1427,20 @@
 }
 
 /*!
- * @brief 存在しないdeviceIdでonblechange属性のコールバック解除テストを行う.
+ * @brief 存在しないserviceIdでonblechange属性のコールバック解除テストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /connect/onblechange?deviceId=123456789
+ * Path: /connect/onblechange?serviceId=123456789
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailConnectOnBLEChangeDeleteInvalidDeviceId
+- (void) testHttpFailConnectOnBLEChangeDeleteInvalidServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/connect/onblechange?deviceId=12345678"];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/connect/onblechange?serviceId=12345678"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     
@@ -1453,7 +1453,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /connect/onblechange?deviceId=123456789
+ * Path: /connect/onblechange?serviceId=123456789
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -1462,7 +1462,7 @@
  */
 - (void) testHttpFailConnectOnBLEChangeDeleteNoSessionKey
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/connect/onblechange?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/connect/onblechange?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     
@@ -1474,7 +1474,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /connect/onblechange?deviceId=123456789
+ * Path: /connect/onblechange?serviceId=123456789
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -1483,7 +1483,7 @@
  */
 - (void) testHttpFailConnectOnBLEChangeDeleteEmptySessionKey
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/connect/onblechange?deviceId=%@&sessionKey=", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/connect/onblechange?serviceId=%@&sessionKey=", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     
@@ -1495,7 +1495,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: GET
- * Path: /connect/onblechange?deviceId=xxxx&sessionKey=xxxx
+ * Path: /connect/onblechange?serviceId=xxxx&sessionKey=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -1504,7 +1504,7 @@
  */
 - (void) testHttpFailConnectOnBLEChangeEventInvalidMethodGet
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/connect/onblechange?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/connect/onblechange?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
     
@@ -1516,7 +1516,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: POST
- * Path: /connect/onblechange?deviceId=xxxx&sessionKey=xxxx
+ * Path: /connect/onblechange?serviceId=xxxx&sessionKey=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -1525,7 +1525,7 @@
  */
 - (void) testHttpFailConnectOnBLEChangeEventInvalidMethodPost
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/connect/onblechange?deviceId=%@", self.deviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/connect/onblechange?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"POST"];
     

@@ -22,7 +22,7 @@ extern int DConnectPort;
 /**
  * テスト用のデバイスプラグインのIDを保持する.
  */
-@property (nonatomic) NSString *deviceId;
+@property (nonatomic) NSString *serviceId;
 
 /**
  * テスト用のクライアントIDを保持する.

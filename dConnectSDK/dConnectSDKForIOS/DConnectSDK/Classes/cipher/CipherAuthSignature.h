@@ -13,7 +13,7 @@
 
 + (NSString *)generateSignatureWithClientId: (NSString *)clientId
                                   grantType: (NSString *)grantType
-                                   deviceId: (NSString *)deviceId
+                                   serviceId: (NSString *)serviceId
                                      scopes: (NSArray *)scopes
                                clientSecret: (NSString *)clientSecret;
 
