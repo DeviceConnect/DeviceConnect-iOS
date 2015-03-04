@@ -1,6 +1,6 @@
 //
 //  DPSpheroLightProfile.m
-//  DConnectSDK
+//  dConnectDeviceSphero
 //
 //  Copyright (c) 2014 NTT DOCOMO, INC.
 //  Released under the MIT license
@@ -65,9 +65,14 @@ NSString *const SpheroCalibrationName = @"Sphero CalibrationLED";
 
 
 // デバイスのライトを点灯する
-- (BOOL) profile:(DCMLightProfile *)profile didReceivePostLightRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response serviceId:(NSString *)serviceId
-         lightId:(NSString*) lightId brightness:(double)brightness color:(NSString*) color flashing:(NSArray*) flashing
+- (BOOL)               profile:(DCMLightProfile *)profile
+    didReceivePostLightRequest:(DConnectRequestMessage *)request
+                      response:(DConnectResponseMessage *)response
+                     serviceId:(NSString *)serviceId
+                       lightId:(NSString*)lightId
+                    brightness:(double)brightness
+                         color:(NSString*)color
+                      flashing:(NSArray*)flashing
 {
     // 接続確認
     CONNECT_CHECK();
@@ -102,28 +107,28 @@ NSString *const SpheroCalibrationName = @"Sphero CalibrationLED";
                 [response setErrorToInvalidRequestParameter];
                 return YES;
             }
-            unsigned int rr, gg, bb;
-            NSString *r = [color substringWithRange:NSMakeRange(0, 2)];
-            NSString *g = [color substringWithRange:NSMakeRange(2, 2)];
-            NSString *b = [color substringWithRange:NSMakeRange(4, 2)];
-            NSScanner *scan = [NSScanner scannerWithString:r];
+            unsigned int redValue, greenValue, blueValue;
+            NSString *redString = [color substringWithRange:NSMakeRange(0, 2)];
+            NSString *greenString = [color substringWithRange:NSMakeRange(2, 2)];
+            NSString *blueString = [color substringWithRange:NSMakeRange(4, 2)];
+            NSScanner *scan = [NSScanner scannerWithString:redString];
             
-            if (![scan scanHexInt:&rr]) {
+            if (![scan scanHexInt:&redValue]) {
                 [response setErrorToInvalidRequestParameter];
                 return YES;
             }
-            scan = [NSScanner scannerWithString:g];
-            if (![scan scanHexInt:&gg]) {
+            scan = [NSScanner scannerWithString:greenString];
+            if (![scan scanHexInt:&greenValue]) {
                 [response setErrorToInvalidRequestParameter];
                 return YES;
             }
-            scan = [NSScanner scannerWithString:b];
-            if (![scan scanHexInt:&bb]) {
+            scan = [NSScanner scannerWithString:blueString];
+            if (![scan scanHexInt:&blueValue]) {
                 [response setErrorToInvalidRequestParameter];
                 return YES;
             }
             
-            ledColor = [UIColor colorWithRed:rr/255. green:gg/255. blue:bb/255. alpha:brightness];
+            ledColor = [UIColor colorWithRed:redValue/255. green:greenValue/255. blue:blueValue/255. alpha:brightness];
         } else {
             ledColor = [UIColor colorWithRed:255. green:255. blue:255. alpha:brightness];
         }
@@ -141,9 +146,15 @@ NSString *const SpheroCalibrationName = @"Sphero CalibrationLED";
 }
 
 // デバイスのライトのステータスを変更する
-- (BOOL) profile:(DCMLightProfile *)profile didReceivePutLightRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response serviceId:(NSString *)serviceId
-         lightId:(NSString*) lightId name:(NSString *)name brightness:(double)brightness color:(NSString*) color flashing:(NSArray*) flashing
+- (BOOL)              profile:(DCMLightProfile *)profile
+    didReceivePutLightRequest:(DConnectRequestMessage *)request
+                     response:(DConnectResponseMessage *)response
+                    serviceId:(NSString *)serviceId
+                      lightId:(NSString*)lightId
+                         name:(NSString *)name
+                   brightness:(double)brightness
+                        color:(NSString*)color
+                     flashing:(NSArray*)flashing
 {
     [response setErrorToNotSupportAction];
     return YES;

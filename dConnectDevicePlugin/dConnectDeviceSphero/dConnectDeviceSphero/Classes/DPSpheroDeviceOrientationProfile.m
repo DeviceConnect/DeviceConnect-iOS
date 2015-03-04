@@ -1,6 +1,6 @@
 //
 //  DPSpheroDeviceOrientationProfile.m
-//  DConnectSDK
+//  dConnectDeviceSphero
 //
 //  Copyright (c) 2014 NTT DOCOMO, INC.
 //  Released under the MIT license
@@ -39,19 +39,14 @@
     } else {
         error = [mgr addEventForRequest:request];
     }
-    switch (error) {
-        case DConnectEventErrorNone:
-            callback();
-            [response setResult:DConnectMessageResultTypeOk];
-            break;
-        case DConnectEventErrorInvalidParameter:
-            [response setErrorToInvalidRequestParameterWithMessage:@"sessionKey must be specified."];
-            break;
-        case DConnectEventErrorFailed:
-        case DConnectEventErrorNotFound:
-        default:
-            [response setErrorToUnknown];
-            break;
+    
+    if (error == DConnectEventErrorNone) {
+        callback();
+        [response setResult:DConnectMessageResultTypeOk];
+    } else if (error == DConnectEventErrorInvalidParameter) {
+        [response setErrorToInvalidRequestParameterWithMessage:@"sessionKey must be specified."];
+    } else {
+        [response setErrorToUnknown];
     }
 }
 
@@ -59,7 +54,9 @@
 #pragma mark - DPSpheroManagerOrientationDelegate
 
 // Orientationのイベント処理
-- (void)spheroManagerStreamingOrientation:(DPAttitude)attitude accel:(DPPoint3D)accel interval:(int)interval
+- (void)spheroManagerStreamingOrientation:(DPAttitude)attitude
+                                    accel:(DPPoint3D)accel
+                                 interval:(int)interval
 {
     DConnectMessage *message = [DConnectMessage message];
     DConnectMessage *orientmsg = [DConnectMessage message];
@@ -71,12 +68,14 @@
     [DConnectDeviceOrientationProfile setY:accel.y * 9.81 target:accelmsg];
     [DConnectDeviceOrientationProfile setZ:accel.z * 9.81 target:accelmsg];
     
-    [DConnectDeviceOrientationProfile setAcceleration:accelmsg target:message];
+    [DConnectDeviceOrientationProfile setAccelerationIncludingGravity:accelmsg target:message];
     [DConnectDeviceOrientationProfile setRotationRate:orientmsg target:message];
     [DConnectDeviceOrientationProfile setInterval:interval target:message];
     
     DConnectEventManager *mgr = [DConnectEventManager sharedManagerForClass:[DPSpheroDevicePlugin class]];
-    NSArray *events  = [mgr eventListForServiceId:[DPSpheroManager sharedManager].currentServiceID profile:DConnectDeviceOrientationProfileName attribute:DConnectDeviceOrientationProfileAttrOnDeviceOrientation];
+    NSArray *events  = [mgr eventListForServiceId:[DPSpheroManager sharedManager].currentServiceID
+                                          profile:DConnectDeviceOrientationProfileName
+                                        attribute:DConnectDeviceOrientationProfileAttrOnDeviceOrientation];
     if (events == 0) {
         [[DPSpheroManager sharedManager] stopSensorOrientation];
     }
@@ -92,8 +91,11 @@
 #pragma mark - DConnectDeviceOrientationProfileDelegate
 
 // Orientationのイベント登録
-- (BOOL) profile:(DConnectDeviceOrientationProfile *)profile didReceivePutOnDeviceOrientationRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response serviceId:(NSString *)serviceId sessionKey:(NSString *)sessionKey
+- (BOOL)                            profile:(DConnectDeviceOrientationProfile *)profile
+    didReceivePutOnDeviceOrientationRequest:(DConnectRequestMessage *)request
+                                   response:(DConnectResponseMessage *)response
+                                  serviceId:(NSString *)serviceId
+                                 sessionKey:(NSString *)sessionKey
 {
     // 接続確認
     CONNECT_CHECK();
@@ -105,8 +107,11 @@
 }
 
 // Orientationのイベント解除
-- (BOOL) profile:(DConnectDeviceOrientationProfile *)profile didReceiveDeleteOnDeviceOrientationRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response serviceId:(NSString *)serviceId sessionKey:(NSString *)sessionKey
+- (BOOL)                               profile:(DConnectDeviceOrientationProfile *)profile
+    didReceiveDeleteOnDeviceOrientationRequest:(DConnectRequestMessage *)request
+                                      response:(DConnectResponseMessage *)response
+                                     serviceId:(NSString *)serviceId
+                                    sessionKey:(NSString *)sessionKey
 {
     // 接続確認
     CONNECT_CHECK();

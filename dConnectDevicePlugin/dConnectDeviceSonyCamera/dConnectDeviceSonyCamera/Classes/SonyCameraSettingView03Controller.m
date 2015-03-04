@@ -1,6 +1,6 @@
 //
 //  SonyCameraSettingView03Controller.m
-//  DConnectSDK
+//  dConnectDeviceSonyCamera
 //
 //  Copyright (c) 2014 NTT DOCOMO, INC.
 //  Released under the MIT license
@@ -18,9 +18,6 @@
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
     return self;
 }
 

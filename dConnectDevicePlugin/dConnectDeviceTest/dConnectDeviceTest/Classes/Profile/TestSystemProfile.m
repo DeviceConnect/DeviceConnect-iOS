@@ -1,6 +1,6 @@
 //
 //  TestSystemProfile.m
-//  DConnectSDK
+//  dConnectDeviceTest
 //
 //  Copyright (c) 2014 NTT DOCOMO, INC.
 //  Released under the MIT license
@@ -27,44 +27,6 @@ NSString *const TestSystemVersion = @"1.0";
 
 
 #pragma mark - DConnectSystemProfileDelegate
-
-#pragma mark - Get Methods
-
-- (BOOL) profile:(DConnectSystemProfile *)profile didReceiveGetDeviceRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response
-        serviceId:(NSString *)serviceId
-{
-    CheckDID(response, serviceId) {
-        [DConnectSystemProfile setVersion:TestSystemVersion target:response];
-        
-        DConnectArray *supports = [DConnectArray array];
-        [supports addString:DConnectBatteryProfileName];
-        [supports addString:DConnectConnectProfileName];
-        [supports addString:DConnectDeviceOrientationProfileName];
-        [supports addString:DConnectFileDescriptorProfileName];
-        [supports addString:DConnectFileProfileName];
-        [supports addString:DConnectMediaStreamRecordingProfileName];
-        [supports addString:DConnectMediaPlayerProfileName];
-        [supports addString:DConnectServiceDiscoveryProfileName];
-        [supports addString:DConnectPhoneProfileName];
-        [supports addString:DConnectProximityProfileName];
-        [supports addString:DConnectSettingsProfileName];
-        [supports addString:DConnectSystemProfileName];
-        [supports addString:DConnectVibrationProfileName];
-        [DConnectSystemProfile setSupports:supports target:response];
-        
-        DConnectMessage *connect = [DConnectMessage message];
-        [DConnectSystemProfile setWiFiState:DConnectSystemProfileConnectStateOff target:connect];
-        [DConnectSystemProfile setBluetoothState:DConnectSystemProfileConnectStateOff target:connect];
-        [DConnectSystemProfile setBLEState:DConnectSystemProfileConnectStateOff target:connect];
-        [DConnectSystemProfile setNFCState:DConnectSystemProfileConnectStateOff target:connect];
-        
-        [DConnectSystemProfile setConnect:connect target:response];
-        response.result = DConnectMessageResultTypeOk;
-    }
-    
-    return YES;
-}
 
 #pragma mark - Delete Methods
 

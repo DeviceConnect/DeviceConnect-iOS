@@ -1,6 +1,6 @@
 //
 //  TestServiceDiscoveryProfile.m
-//  DConnectSDK
+//  dConnectDeviceTest
 //
 //  Copyright (c) 2014 NTT DOCOMO, INC.
 //  Released under the MIT license
@@ -34,8 +34,9 @@ NSString *const TestNetworkDeviceConfig = @"test config";
 
 #pragma mark - Get Methods
 
-- (BOOL) profile:(DConnectServiceDiscoveryProfile *)profile didReceiveGetServicesRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response
+- (BOOL)                 profile:(DConnectServiceDiscoveryProfile *)profile
+    didReceiveGetServicesRequest:(DConnectRequestMessage *)request
+                        response:(DConnectResponseMessage *)response
 {
     
     DConnectArray *services = [DConnectArray array];
@@ -67,8 +68,11 @@ NSString *const TestNetworkDeviceConfig = @"test config";
 #pragma mark - Put Methods
 
 
-- (BOOL) profile:(DConnectServiceDiscoveryProfile *)profile didReceivePutOnServiceChangeRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response serviceId:(NSString *)serviceId sessionKey:(NSString *)sessionKey
+- (BOOL)                        profile:(DConnectServiceDiscoveryProfile *)profile
+    didReceivePutOnServiceChangeRequest:(DConnectRequestMessage *)request
+                               response:(DConnectResponseMessage *)response
+                              serviceId:(NSString *)serviceId
+                             sessionKey:(NSString *)sessionKey
 {
     
     CheckDIDAndSK(response, serviceId, sessionKey) {
@@ -96,8 +100,11 @@ NSString *const TestNetworkDeviceConfig = @"test config";
 #pragma mark - Delete Methods
 
 
-- (BOOL) profile:(DConnectServiceDiscoveryProfile *)profile didReceiveDeleteOnServiceChangeRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response serviceId:(NSString *)serviceId sessionKey:(NSString *)sessionKey
+- (BOOL)                           profile:(DConnectServiceDiscoveryProfile *)profile
+    didReceiveDeleteOnServiceChangeRequest:(DConnectRequestMessage *)request
+                                  response:(DConnectResponseMessage *)response
+                                 serviceId:(NSString *)serviceId
+                                sessionKey:(NSString *)sessionKey
 {
     CheckDIDAndSK(response, serviceId, sessionKey) {
         response.result = DConnectMessageResultTypeOk;

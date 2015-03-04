@@ -115,11 +115,11 @@
 
 #pragma mark - WebSocketDelegate Methods -
 
-- (void)webSocketDidOpen:(WebSocket *)ws {
-    [self.websocketList addObject:ws];
+- (void)webSocketDidOpen:(WebSocket *)webSocket {
+    [self.websocketList addObject:webSocket];
 }
 
-- (void)webSocket:(WebSocket *)ws didReceiveMessage:(NSString *)msg {
+- (void)webSocket:(WebSocket *)webSocket didReceiveMessage:(NSString *)msg {
     NSData *jsonData = [msg dataUsingEncoding:NSUnicodeStringEncoding];
     if (jsonData) {
         // JSONをNSDictionaryに変換する
@@ -128,20 +128,20 @@
                                                             options:NSJSONReadingAllowFragments
                                                               error:&error];
         if (!error) {
-            NSString *sessionKey = [dic objectForKey:DConnectMessageSessionKey];
+            NSString *sessionKey = dic[DConnectMessageSessionKey];
             if (sessionKey) {
-                [self.websocketDic setObject:ws forKey:sessionKey];
+                [self.websocketDic setObject:webSocket forKey:sessionKey];
             }
         }
     }
 }
 
-- (void)webSocketDidClose:(WebSocket *)ws {
-    [self.websocketList removeObject:ws];
+- (void)webSocketDidClose:(WebSocket *)webSocket {
+    [self.websocketList removeObject:webSocket];
     
     for (id key in [self.websocketDic keyEnumerator]) {
         WebSocket *socket = [self.websocketDic objectForKey:key];
-        if (ws == socket) {
+        if (webSocket == socket) {
             [self.websocketDic removeObjectForKey:key];
             return;
         }
@@ -176,9 +176,7 @@
 - (void)socket:(GCDAsyncSocket *)socket didReadData:(NSData *)data withTag:(long)tag {
     if (tag == HTTP_REQUEST_HEADER) {
 		BOOL result = [self.request appendData:data];
-		if (!result) {
-            // データの追加に失敗
-		} else if (![self.request isHeaderComplete]) {
+        if (result && ![self.request isHeaderComplete]) {
             [socket readDataToData:[GCDAsyncSocket CRLFData]
                        withTimeout:TIMEOUT_READ_SUBSEQUENT_HEADER_LINE
                          maxLength:MAX_HEADER_LINE_LENGTH
@@ -188,8 +186,6 @@
                 WebSocket *websocket = [[WebSocket alloc] initWithRequest:self.request socket:socket];
                 websocket.delegate = self;
                 [websocket start];
-            } else {
-                // Websocket以外
             }
         }
     }

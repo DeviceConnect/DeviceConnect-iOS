@@ -112,14 +112,14 @@
  */
 - (IBAction)deleteAllAccessToken:(id)sender {
     
-    NSBundle *b = DCBundle();
+    NSBundle *bundle = DCBundle();
     
     _accessTokenAllDeleteAlertView =
-    [[UIAlertView alloc] initWithTitle:DCLocalizedString(b, @"alert_title_all_delete")
-                               message:DCLocalizedString(b, @"alert_message_all_delete")
+    [[UIAlertView alloc] initWithTitle:DCLocalizedString(bundle, @"alert_title_all_delete")
+                               message:DCLocalizedString(bundle, @"alert_message_all_delete")
                               delegate:self
-                     cancelButtonTitle:DCLocalizedString(b, @"alert_btn_cancel")
-                     otherButtonTitles:DCLocalizedString(b, @"alert_btn_delete"), nil];
+                     cancelButtonTitle:DCLocalizedString(bundle, @"alert_btn_cancel")
+                     otherButtonTitles:DCLocalizedString(bundle, @"alert_btn_delete"), nil];
     [_accessTokenAllDeleteAlertView show];
 }
 
@@ -179,20 +179,21 @@
     
     if (sqliteToken != nil) {
         applicationName = [sqliteToken applicationName];
-        NSArray *s = [sqliteToken scope];
-        if (s != nil) {
-            int sc = [s count];
-            if (sc == 1) {
-                LocalOAuthScope *ss = [s
-                                       objectAtIndex: 0];
-                scopes = [LocalOAuthScopeUtil displayScope: [ss scope] devicePlugin: nil];
-            } else if (sc >= 2) {
+        NSArray *scope = [sqliteToken scope];
+        if (scope != nil) {
+            int scopeCount = [scope count];
+            if (scopeCount == 1) {
+                LocalOAuthScope *oauthScope = scope[0];
+                scopes = [LocalOAuthScopeUtil displayScope: [oauthScope scope] devicePlugin: nil];
+            } else if (scopeCount >= 2) {
                 
-                NSBundle *b = DCBundle();
-                LocalOAuthScope *ss = [s objectAtIndex: 0];
+                NSBundle *bundle = DCBundle();
+                LocalOAuthScope *oauthScope = scope[0];
                 scopes =
-                [NSString stringWithFormat:DCLocalizedString(b, @"token_list_scopes"),
-                 [LocalOAuthScopeUtil displayScope: [ss scope] devicePlugin: nil], (sc - 1)];
+                    [NSString stringWithFormat:DCLocalizedString(bundle, @"token_list_scopes"),
+                            [LocalOAuthScopeUtil displayScope:[oauthScope scope]
+                                                 devicePlugin: nil],
+                                                    (scopeCount - 1)];
             }
         }
     }
@@ -201,7 +202,9 @@
     static NSString *CellIdentifier = @"tableCell";
     
     LocalOAuthAccessTokenListCell *cell =
-    (LocalOAuthAccessTokenListCell *) [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+            (LocalOAuthAccessTokenListCell *) [tableView
+                                                dequeueReusableCellWithIdentifier:CellIdentifier
+                                                                    forIndexPath:indexPath];
     
     // セルの値を設定
     cell.tableCellApplicationName.text = applicationName;
@@ -252,15 +255,15 @@
         LocalOAuthToken *token = [_accessTokens objectAtIndex: indexPath.row];
         LocalOAuthSQLiteToken *sqliteToken = token.delegate;
         
-        NSBundle *b = DCBundle();
+        NSBundle *bundle = DCBundle();
         
         _accessTokenDeleteAlertViewDataIndex = indexPath.row;
         _accessTokenDeleteAlertView =
         [[UIAlertView alloc] initWithTitle:[sqliteToken applicationName]
-                                   message:DCLocalizedString(b, @"alert_message_delete")
+                                   message:DCLocalizedString(bundle, @"alert_message_delete")
                                   delegate:self
-                         cancelButtonTitle:DCLocalizedString(b, @"alert_btn_cancel")
-                         otherButtonTitles:DCLocalizedString(b, @"alert_btn_delete"), nil];
+                         cancelButtonTitle:DCLocalizedString(bundle, @"alert_btn_cancel")
+                         otherButtonTitles:DCLocalizedString(bundle, @"alert_btn_delete"), nil];
         [_accessTokenDeleteAlertView show];
     }
 }
@@ -278,17 +281,12 @@
         }
         
         /* アクセストークン個別削除確認画面からの応答 */
-    } else if (_accessTokenDeleteAlertView == alertView) {
-        
-        /* 確認画面で削除ボタンが押された＆indexが範囲内 */
-        
-        if (buttonIndex == 1
-            && _accessTokenDeleteAlertViewDataIndex < [_accessTokens count]) {
+    } else if (_accessTokenDeleteAlertView == alertView
+            && (buttonIndex == 1
+            && _accessTokenDeleteAlertViewDataIndex < [_accessTokens count])) {
             
             /* トークン削除 */
             [self deleteToken: _accessTokenDeleteAlertViewDataIndex];
-        }
-        
     }
 }
 

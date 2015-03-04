@@ -33,9 +33,9 @@
 
 - (LocalOAuthSampleUser *) findUserById: (NSString *) userId {
     
-    NSUInteger c = [_mUserSet count];
-    for (NSUInteger i = 0; i < c; i++) {
-        LocalOAuthSampleUser * user = [_mUserSet objectAtIndex: i];
+    NSUInteger idCount = [_mUserSet count];
+    for (NSUInteger i = 0; i < idCount; i++) {
+        LocalOAuthSampleUser * user = _mUserSet[i];
         
         if ([userId isEqualToString: [user userId]]) {
             return user;

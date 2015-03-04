@@ -1,10 +1,12 @@
 //
-//  DConnectConnectProfile+DPHostConnectProfile.m
+//  DPHostConnectProfile.m
 //  dConnectDeviceHost
 //
-//  Created by 星　貴之 on 2014/11/07.
-//  Copyright (c) 2014年 NTT DOCOMO, INC. All rights reserved.
+//  Copyright (c) 2014 NTT DOCOMO, INC.
+//  Released under the MIT license
+//  http://opensource.org/licenses/mit-license.php
 //
+
 
 #import "DPHostConnectProfile.h"
 #import "DPHostDevicePlugin.h"
@@ -74,7 +76,11 @@ typedef void (^DPHostConnectStatusBlock)(BOOL status);
         _wifiEventBlock = nil;
         __weak typeof(self) _self = self;
         dispatch_async(dispatch_get_main_queue(), ^{
-            [[NSNotificationCenter defaultCenter] addObserver:_self selector:@selector(reachabilityChanged:) name:kReachabilityChangedNotification object:nil];
+            [[NSNotificationCenter defaultCenter]
+                    addObserver:_self
+                       selector:@selector(reachabilityChanged:)
+                           name:kReachabilityChangedNotification
+                         object:nil];
         });
 
     }
@@ -166,8 +172,12 @@ typedef void (^DPHostConnectStatusBlock)(BOOL status);
 }
 
 
-- (BOOL) profile:(DConnectConnectProfile *)profile didReceivePutOnBluetoothChangeRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response serviceId:(NSString *)serviceId sessionKey:(NSString *)sessionKey {
+- (BOOL)                          profile:(DConnectConnectProfile *)profile
+    didReceivePutOnBluetoothChangeRequest:(DConnectRequestMessage *)request
+                                 response:(DConnectResponseMessage *)response
+                                serviceId:(NSString *)serviceId
+                               sessionKey:(NSString *)sessionKey
+{
     BOOL result = [self registerEventWithRequest:request response:response];
     if (result) {
         __weak typeof(self) _this = self;
@@ -234,10 +244,12 @@ typedef void (^DPHostConnectStatusBlock)(BOOL status);
     return YES;
 }
 
-- (BOOL) profile:(DConnectConnectProfile *)profile didReceiveDeleteOnBluetoothChangeRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response
-        serviceId:(NSString *)serviceId
-      sessionKey:(NSString *)sessionKey {
+- (BOOL)                             profile:(DConnectConnectProfile *)profile
+    didReceiveDeleteOnBluetoothChangeRequest:(DConnectRequestMessage *)request
+                                    response:(DConnectResponseMessage *)response
+                                   serviceId:(NSString *)serviceId
+                                  sessionKey:(NSString *)sessionKey
+{
     BOOL result = [self unregisterEventWithRequest:request response:response];
     if (result) {
         _bluetoothEventBlock = nil;
@@ -262,13 +274,8 @@ typedef void (^DPHostConnectStatusBlock)(BOOL status);
 
 - (void)centralManagerDidUpdateState:(CBCentralManager *)central
 {
-    BOOL isStatus = NO;
-    if (central.state == CBCentralManagerStatePoweredOn) {
-        isStatus = YES;
-    } else {
-        isStatus = NO;
-    }
-    
+    BOOL isStatus = (central.state == CBCentralManagerStatePoweredOn);
+
     NSArray *bluetoothBlocks = _bluetoothStatusBlocks;
     if (bluetoothBlocks) {
         for (DPHostConnectStatusBlock bluetoothBlock in bluetoothBlocks) {
@@ -301,12 +308,7 @@ typedef void (^DPHostConnectStatusBlock)(BOOL status);
 - (void) reachabilityChanged:(NSNotification *)note
 {
     DPHostReachability* curReach = [note object];
-    BOOL isStatus = NO;
-    if ([curReach currentReachabilityStatus] == NotReachable) {
-        isStatus = NO;
-    } else {
-        isStatus = YES;
-    }
+    BOOL isStatus = ([curReach currentReachabilityStatus] == NotReachable);
     NSArray *wifiBlocks = _wifiStatusBlocks;
     if (wifiBlocks) {
         for (DPHostConnectStatusBlock wifiBlock in wifiBlocks) {
@@ -331,9 +333,8 @@ typedef void (^DPHostConnectStatusBlock)(BOOL status);
     _centralManager = [[CBCentralManager alloc] initWithDelegate:self queue:nil];
     _centralManager.delegate = self;
 
-    NSArray *services = [NSArray arrayWithObjects:nil, nil];
-    NSDictionary *options = [NSDictionary dictionaryWithObject:[NSNumber numberWithBool:NO]
-                                                        forKey:CBCentralManagerScanOptionAllowDuplicatesKey];
+    NSArray *services = @[];
+    NSDictionary *options = @{CBCentralManagerScanOptionAllowDuplicatesKey:@(NO)};
     [_centralManager scanForPeripheralsWithServices:services options:options];
 }
 

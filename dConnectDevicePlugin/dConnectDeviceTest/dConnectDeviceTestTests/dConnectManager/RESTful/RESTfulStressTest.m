@@ -1,6 +1,6 @@
 //
 //  RESTfulStressTest.m
-//  DConnectSDK
+//  dConnectDeviceTest
 //
 //  Copyright (c) 2014 NTT DOCOMO, INC.
 //  Released under the MIT license
@@ -58,7 +58,13 @@
         NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
         [request setHTTPMethod:@"GET"];
         
-        CHECK_RESPONSE(@"{\"services\":[{\"config\":\"test config\",\"id\":\"test_service_id.DeviceTestPlugin.dconnect\",\"name\":\"Test Success Device\",\"online\":true,\"type\":\"TEST\"},{\"config\":\"test config\",\"id\":\"!#$'()-~¥@[;+:*],._/=?&%^|`\\\"{}<>.DeviceTestPlugin.dconnect\",\"name\":\"Test Service ID Special Characters\",\"online\":true,\"type\":\"TEST\"}]}", request);
+        CHECK_RESPONSE(@"{\"services\":[{\"config\":\"test config\","
+                       "\"id\":\"test_service_id.DeviceTestPlugin.dconnect\","
+                       "\"name\":\"Test Success Device\",\"online\":true,\"type\":\"TEST\"},"
+                       "{\"config\":\"test config\",\"id\":\"!#$'()-~¥@[;+:*],"
+                       "._/=?&%^|`\\\"{}<>.DeviceTestPlugin.dconnect\","
+                       "\"name\":\"Test Service ID Special Characters\",\"online\":true,\"type\":\"TEST\"}]}",
+                       request);
     }
 }
 
@@ -80,7 +86,9 @@
     Counter *counter = [[Counter alloc] initWithCount:count];
     [counter openWebSocketWithClientId:self.clientId];
     
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/event/unique?serviceId=%@&sessionKey=%@&count=%d", self.serviceId, self.clientId, count]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:
+                                       @"http://localhost:4035/gotapi/event/unique?serviceId=%@&sessionKey=%@&count=%d",
+                                       self.serviceId, self.clientId, count]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"POST"];
     CHECK_RESPONSE(@"{\"result\":0}", request);
@@ -113,7 +121,9 @@
     const int count = 10;
     Counter *counter = [[Counter alloc] initWithCount:count];
     
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/servicediscovery?sessionKey=%@", self.clientId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:
+                                       @"http://localhost:4035/gotapi/servicediscovery?sessionKey=%@",
+                                       self.clientId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     for (int i = 0; i < count; i++) {
@@ -140,12 +150,14 @@
                                                                          error:nil];
         
         XCTAssertNotNil(actualResponse);
-        NSDictionary *expectedResponse = [NSJSONSerialization JSONObjectWithData:[expectedJson dataUsingEncoding:NSUTF8StringEncoding]
+        NSDictionary *expectedResponse = [NSJSONSerialization JSONObjectWithData:
+                                          [expectedJson dataUsingEncoding:NSUTF8StringEncoding]
                                                                          options:NSJSONReadingMutableContainers
                                                                            error:nil];
         
         XCTAssertNotNil(actualResponse);
-        XCTAssertTrue([self assertDictionary:expectedResponse actual:actualResponse], "expected=%@, but actual=%@", expectedResponse, actualResponse);
+        XCTAssertTrue([self assertDictionary:expectedResponse actual:actualResponse],
+                      "expected=%@, but actual=%@", expectedResponse, actualResponse);
     }
 }
 
@@ -181,7 +193,8 @@
 - (void) openWebSocketWithClientId:(NSString*) clientId
 {
     _clientId = clientId;
-    _webSocket = [[SRWebSocket new] initWithURLRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"ws://localhost:4035/gotapi/websocket"]]];
+    _webSocket = [[SRWebSocket new] initWithURLRequest:[NSURLRequest requestWithURL:
+                                  [NSURL URLWithString:@"ws://localhost:4035/gotapi/websocket"]]];
     [_webSocket setDelegateOperationQueue:[NSOperationQueue new]];
     [_webSocket setDelegate:self];
     [_webSocket open];
@@ -206,7 +219,10 @@
     
 }
 
-- (void) webSocket:(SRWebSocket *)webSocket didCloseWithCode:(NSInteger)code reason:(NSString *)reason wasClean:(BOOL)wasClean {
+- (void) webSocket:(SRWebSocket *)webSocket
+  didCloseWithCode:(NSInteger)code
+            reason:(NSString *)reason
+          wasClean:(BOOL)wasClean {
     
 }
 

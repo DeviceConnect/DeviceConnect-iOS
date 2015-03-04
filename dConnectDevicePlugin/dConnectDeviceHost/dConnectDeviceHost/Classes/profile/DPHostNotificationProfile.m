@@ -1,6 +1,6 @@
 //
 //  DPHostNotificationProfile.m
-//  DConnectSDK
+//  dConnectDeviceHost
 //
 //  Copyright (c) 2014 NTT DOCOMO, INC.
 //  Released under the MIT license
@@ -93,7 +93,9 @@ typedef NS_ENUM(NSUInteger, NotificationIndex) {
 }
 
 - (void)dealloc {
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"UIApplicationDidReceiveLocalNotification" object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:@"UIApplicationDidReceiveLocalNotification"
+                                                  object:nil];
 }
 
 
@@ -164,7 +166,7 @@ didReceivePostNotifyRequest:(DConnectRequestMessage *)request
         [response setErrorToInvalidRequestParameterWithMessage:@"type must be specified."];
         return YES;
     } else if (type.integerValue == DConnectNotificationProfileNotificationTypeUnknown) {
-        [response setErrorToInvalidRequestParameterWithMessage:@"Unknown type was specified."];
+        [response setError:100 message:@"Unknown type was specified."];
         return YES;
     }
     NSString *notificationId = [DPHostUtils randomStringWithLength:NotificationIdLength];
@@ -190,7 +192,8 @@ didReceivePostNotifyRequest:(DConnectRequestMessage *)request
             [response setErrorToInvalidRequestParameterWithMessage:@"Not support type"];
             return YES;
     }
-    notification = [self scheduleWithAlertBody:[status stringByAppendingString:body] userInfo:@{@"id":notificationId,@"serviceId":serviceId}];
+    notification = [self scheduleWithAlertBody:[status stringByAppendingString:body]
+                                      userInfo:@{@"id":notificationId,@"serviceId":serviceId}];
     
     // 通知情報を生成し、notificationInfoDictにて管理
     NSMutableArray *notificationInfo =

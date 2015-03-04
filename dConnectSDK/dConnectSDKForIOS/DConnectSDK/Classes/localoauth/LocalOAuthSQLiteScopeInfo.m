@@ -11,16 +11,20 @@
 
 @implementation LocalOAuthSQLiteScopeInfo
 
-- (LocalOAuthSQLiteScopeInfo *)initWithParameter: (long long)tokensTokenId
-  profilesProfileId: (long long)profilesProfileId
-          timestamp: (long long)timestamp
-       expirePeriod: (long long)expirePeriod
-        profileName: (NSString *)profileName_ {
+- (LocalOAuthSQLiteScopeInfo *)initWithParameter:(long long)tokensTokenId
+                               profilesProfileId:(long long)profilesProfileId
+                                       timestamp:(long long)timestamp
+                                    expirePeriod:(long long)expirePeriod
+                                     profileName:(NSString *)profileName
+{
     
-    self = [super init: tokensTokenId profilesProfileId:profilesProfileId timestamp:timestamp expirePeriod:expirePeriod];
+    self = [super        init:tokensTokenId
+            profilesProfileId:profilesProfileId
+                    timestamp:timestamp
+                 expirePeriod:expirePeriod];
     
     if (self) {
-        self.profileName = profileName_;
+        self.profileName = profileName;
     }
     
     return self;

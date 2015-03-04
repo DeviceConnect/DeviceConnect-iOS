@@ -25,6 +25,7 @@
 "display_scope_settings" = "settings";
 "display_scope_system" = "system";
 "display_scope_vibration" = "vibration";
+"display_scope_canvas" = "canvas";
 
 // Wording
 "token_list_scopes" = "%@ and %d others.";

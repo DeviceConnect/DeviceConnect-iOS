@@ -52,7 +52,12 @@ const long long DConnectVibrationProfileDefaultMaxVibrationTime = 500;
     NSString *attribute = [request attribute];
     
     if ([attribute isEqualToString:DConnectVibrationProfileAttrVibrate]) {
-        if ([self hasMethod:@selector(profile:didReceivePutVibrateRequest:response:serviceId:pattern:) response:response])
+        if ([self hasMethod:@selector(profile:
+                                      didReceivePutVibrateRequest:
+                                      response:
+                                      serviceId:
+                                      pattern:)
+                   response:response])
         {
             NSString *patternStr = [DConnectVibrationProfile patternFromRequest:request];
             NSArray *pattern = [self parsePattern:patternStr];

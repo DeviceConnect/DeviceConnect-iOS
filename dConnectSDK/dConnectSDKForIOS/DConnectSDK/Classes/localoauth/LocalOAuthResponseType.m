@@ -19,9 +19,8 @@ static NSString *const STRING_RESPONSE_TYPE_TOKEN = @"token";
         return STRING_RESPONSE_TYPE_CODE;
     } else if (responseType == RESPONSE_TYPE_TOKEN) {
         return STRING_RESPONSE_TYPE_TOKEN;
-    } else {
-        @throw @"responseType unknown value. ";
     }
+    @throw @"responseType unknown value. ";
 }
 
 + (LocalOAuthResponseType) toValue: (NSString *)str {
@@ -29,9 +28,8 @@ static NSString *const STRING_RESPONSE_TYPE_TOKEN = @"token";
         return RESPONSE_TYPE_CODE;
     } else if ([str isEqualToString: STRING_RESPONSE_TYPE_TOKEN]) {
         return RESPONSE_TYPE_TOKEN;
-    } else {
-        @throw @"str(ResponseType) unknown value. ";
     }
+    @throw @"str(ResponseType) unknown value. ";
 }
 
 @end

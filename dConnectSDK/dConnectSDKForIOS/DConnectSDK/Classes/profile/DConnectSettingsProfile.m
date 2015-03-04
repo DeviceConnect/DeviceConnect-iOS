@@ -122,15 +122,23 @@ const double DConnectSettingsProfileMinLevel = 0.0;
                 if ([self hasMethod:@selector(profile:didReceivePutLightRequest:response:serviceId:level:)
                            response:response])
                 {
-                    send = [_delegate profile:self didReceivePutLightRequest:request response:response serviceId:serviceId
-                                        level:[DConnectSettingsProfile levelFromRequest:request]];
+                    send = [_delegate             profile:self
+                                didReceivePutLightRequest:request
+                                                 response:response
+                                                serviceId:serviceId
+                                                    level:[DConnectSettingsProfile
+                                                           levelFromRequest:request]];
                 }
             } else if ([attribute isEqualToString:DConnectSettingsProfileAttrSleep]) {
                 if ([self hasMethod:@selector(profile:didReceivePutSleepRequest:response:serviceId:time:)
                            response:response])
                 {
-                    send = [_delegate profile:self didReceivePutSleepRequest:request response:response serviceId:serviceId
-                                         time:[DConnectSettingsProfile timeFromRequest:request]];
+                    send = [_delegate             profile:self
+                                didReceivePutSleepRequest:request
+                                                 response:response
+                                                serviceId:serviceId
+                                                     time:[DConnectSettingsProfile
+                                                           timeFromRequest:request]];
                 }
             } else {
                 [response setErrorToUnknownAttribute];

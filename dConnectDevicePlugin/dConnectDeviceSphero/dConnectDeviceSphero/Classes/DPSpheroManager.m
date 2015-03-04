@@ -1,7 +1,7 @@
 //
 //
 //  DPSpheroManager.m
-//  DConnectSDK
+//  dConnectDeviceSphero
 //
 //  Copyright (c) 2014 NTT DOCOMO, INC.
 //  Released under the MIT license
@@ -18,14 +18,14 @@
 #define kSensorDivisor 40
 
 
-@interface DPSpheroManager () {
-    NSDate *_prevDate;
-    RKDataStreamingMask _streamingMask;
-    BOOL _startedCollisionSensor;
-}
+@interface DPSpheroManager ()
+
 @end
 
 @implementation DPSpheroManager
+NSDate *_prevDate;
+RKDataStreamingMask _streamingMask;
+BOOL _startedCollisionSensor;
 
 // 共有インスタンス
 + (instancetype)sharedManager
@@ -33,7 +33,7 @@
     static id sharedInstance;
     static dispatch_once_t onceSpheroToken;
     dispatch_once(&onceSpheroToken, ^{
-        sharedInstance = [[self alloc] init];
+        sharedInstance = [self new];
     });
     return sharedInstance;
 }
@@ -44,7 +44,7 @@
     self = [super init];
     if (self) {
         // 初期状態で有効化済み
-        _isActivated = YES;
+       _isActivated = YES;
     }
     return self;
 }
@@ -72,18 +72,13 @@
 // 有効化
 - (BOOL)activate
 {
-    if ([[[RKRobotProvider sharedRobotProvider] robots] count] > 0) {
-        _isActivated = YES;
-    } else {
-        _isActivated = NO;
-    }
-    return _isActivated;
+    return [[[RKRobotProvider sharedRobotProvider] robots] count] > 0;
 }
 
 // 無効化
 - (void)deactivate
 {
-    _isActivated = NO;
+   _isActivated = NO;
 }
 
 // 接続中のサービスID取得
@@ -113,22 +108,24 @@
     NSArray *robots = [provider robots];
     for (int i=0; i<[robots count]; i++) {
         RKRobot *robo = robots[i];
-        if ([robo.bluetoothAddress isEqualToString:serviceID]) {
-            if ([provider controlRobotAtIndex:i]) {
-                
-                // 現在設定されているLED色を取得
-                if (![oldID isEqualToString:serviceID]) {
-                    [[RKDeviceMessenger sharedMessenger] addResponseObserver:self selector:@selector(handleResponse:)];
-                    [RKGetUserRGBLEDColorCommand sendCommand];
-                }
-                // キャリブレーションLEDの明るさをリセット
-                // FIXME: キャリブレーションLEDの明るさを取得する命令がないので、LEDを付けたまま接続するとズレが生じる。
-                _calibrationLightBright = 0;
-                _streamingMask = 0;
-                _startedCollisionSensor = NO;
-
-                return YES;
+        if ([robo.bluetoothAddress isEqualToString:serviceID]
+            && [provider controlRobotAtIndex:i]) {
+            
+            // 現在設定されているLED色を取得
+            if (![oldID isEqualToString:serviceID]) {
+                [[RKDeviceMessenger sharedMessenger] addResponseObserver:self
+                                                                selector:
+                                                @selector(handleResponse:)];
+                [RKGetUserRGBLEDColorCommand sendCommand];
             }
+            // キャリブレーションLEDの明るさをリセット
+            // FIXME: キャリブレーションLEDの明るさを取得する命令がないので、
+            // LEDを付けたまま接続するとズレが生じる。
+            _calibrationLightBright = 0;
+            _streamingMask = 0;
+            _startedCollisionSensor = NO;
+
+            return YES;
         }
     }
     return NO;
@@ -149,7 +146,6 @@
     return array;
 }
 
-
 #pragma mark - Observer
 
 // レスポンスハンドラ
@@ -160,12 +156,11 @@
     //NSLog(@"handleResponse:%@", response);
     // LEDライトの色を取得
     if ([NSStringFromClass([response class]) isEqualToString:@"RKGetUserRGBLEDColorResponse"]) {
-        Byte r, g, b;
-        [response.responseData getBytes:&r range:NSMakeRange(0, 1)];
-        [response.responseData getBytes:&g range:NSMakeRange(1, 1)];
-        [response.responseData getBytes:&b range:NSMakeRange(2, 1)];
-        _LEDLightColor = [UIColor colorWithRed:r/255. green:g/255. blue:b/255. alpha:1.0];
-        //NSLog(@"*rgb:%d, %d, %d", r, g, b);
+        Byte red, green, blue;
+        [response.responseData getBytes:&red range:NSMakeRange(0, 1)];
+        [response.responseData getBytes:&green range:NSMakeRange(1, 1)];
+        [response.responseData getBytes:&blue range:NSMakeRange(2, 1)];
+        _LEDLightColor = [UIColor colorWithRed:red/255. green:green/255. blue:blue/255. alpha:1.0];
     }
 }
 
@@ -185,40 +180,37 @@
         // Orientation
         RKAccelerometerData *accelerometerData = sensorsData.accelerometerData;
         RKAttitudeData *attitudeData = sensorsData.attitudeData;
-        if (accelerometerData || attitudeData) {
-            if ([_orientationDelegate respondsToSelector:@selector(spheroManagerStreamingOrientation:accel:interval:)]) {
-                DPAttitude attitude;
-                attitude.yaw = attitudeData.yaw;
-                attitude.roll = attitudeData.roll;
-                attitude.pitch = attitudeData.pitch;
-                DPPoint3D accel;
-                accel.x = accelerometerData.acceleration.x;
-                accel.y = accelerometerData.acceleration.y;
-                accel.z = accelerometerData.acceleration.z;
-                [_orientationDelegate spheroManagerStreamingOrientation:attitude accel:accel interval:interval];
-            }
+        if ((accelerometerData || attitudeData)
+            && [_orientationDelegate respondsToSelector:@selector(spheroManagerStreamingOrientation:accel:interval:)]) {
+            DPAttitude attitude;
+            attitude.yaw = attitudeData.yaw;
+            attitude.roll = attitudeData.roll;
+            attitude.pitch = attitudeData.pitch;
+            DPPoint3D accel;
+            accel.x = accelerometerData.acceleration.x;
+            accel.y = accelerometerData.acceleration.y;
+            accel.z = accelerometerData.acceleration.z;
+            [_orientationDelegate spheroManagerStreamingOrientation:attitude accel:accel interval:interval];
         }
         // Quaternion
         RKQuaternionData *quaternionData = sensorsData.quaternionData;
-        if (quaternionData) {
-            if ([_sensorDelegate respondsToSelector:@selector(spheroManagerStreamingQuaternion:interval:)]) {
-                DPQuaternion qt;
-                qt.q0 = quaternionData.quaternions.q0;
-                qt.q1 = quaternionData.quaternions.q1;
-                qt.q2 = quaternionData.quaternions.q2;
-                qt.q3 = quaternionData.quaternions.q3;
-                [_sensorDelegate spheroManagerStreamingQuaternion:qt interval:interval];
-                //NSLog(@"qt:%f,%f,%f,%f", qt.q0, qt.q1, qt.q2, qt.q3);
-            }
+        if (quaternionData
+            && [_sensorDelegate respondsToSelector:@selector(spheroManagerStreamingQuaternion:interval:)]) {
+            DPQuaternion quaternion;
+            quaternion.q0 = quaternionData.quaternions.q0;
+            quaternion.q1 = quaternionData.quaternions.q1;
+            quaternion.q2 = quaternionData.quaternions.q2;
+            quaternion.q3 = quaternionData.quaternions.q3;
+            [_sensorDelegate spheroManagerStreamingQuaternion:quaternion interval:interval];
+            //NSLog(@"qt:%f,%f,%f,%f", qt.q0, qt.q1, qt.q2, qt.q3);
         }
         // Locator
         RKLocatorData *locatorData = sensorsData.locatorData;
-        if (locatorData) {
-            if ([_sensorDelegate respondsToSelector:@selector(spheroManagerStreamingLocatorPos:velocity:interval:)]) {
-                CGPoint pos = CGPointMake(locatorData.position.x, locatorData.position.y);
-                CGPoint vel = CGPointMake(locatorData.velocity.x, locatorData.velocity.y);
-                [_sensorDelegate spheroManagerStreamingLocatorPos:pos velocity:vel interval:interval];
-            }
+        if (locatorData
+            && [_sensorDelegate respondsToSelector:@selector(spheroManagerStreamingLocatorPos:velocity:interval:)]) {
+            CGPoint pos = CGPointMake(locatorData.position.x, locatorData.position.y);
+            CGPoint vel = CGPointMake(locatorData.velocity.x, locatorData.velocity.y);
+            [_sensorDelegate spheroManagerStreamingLocatorPos:pos velocity:vel interval:interval];
         }
         
         _prevDate = [NSDate date];
@@ -226,18 +218,22 @@
     } else if ([asyncData isKindOfClass:[RKCollisionDetectedAsyncData class]]) {
         // Collision
         RKCollisionDetectedAsyncData *collisionData = (RKCollisionDetectedAsyncData *)asyncData;
-        if (collisionData) {
-            if ([_sensorDelegate respondsToSelector:@selector(spheroManagerStreamingCollisionImpactAcceleration:axis:power:speed:time:)]) {
-                DPPoint3D accel;
-                accel.x = collisionData.impactAcceleration.x;
-                accel.y = collisionData.impactAcceleration.y;
-                accel.z = collisionData.impactAcceleration.z;
-                CGPoint axis = CGPointMake(collisionData.impactAxis.x, collisionData.impactAxis.y);
-                CGPoint power = CGPointMake(collisionData.impactPower.x, collisionData.impactPower.y);
-                float speed = collisionData.impactSpeed;
-                NSTimeInterval time = collisionData.timeStamp;
-                [_sensorDelegate spheroManagerStreamingCollisionImpactAcceleration:accel axis:axis power:power speed:speed time:time];
-            }
+        if (collisionData
+            && [_sensorDelegate respondsToSelector:
+                @selector(spheroManagerStreamingCollisionImpactAcceleration:axis:power:speed:time:)]) {
+            DPPoint3D accel;
+            accel.x = collisionData.impactAcceleration.x;
+            accel.y = collisionData.impactAcceleration.y;
+            accel.z = collisionData.impactAcceleration.z;
+            CGPoint axis = CGPointMake(collisionData.impactAxis.x, collisionData.impactAxis.y);
+            CGPoint power = CGPointMake(collisionData.impactPower.x, collisionData.impactPower.y);
+            float speed = collisionData.impactSpeed;
+            NSTimeInterval time = collisionData.timeStamp;
+            [_sensorDelegate spheroManagerStreamingCollisionImpactAcceleration:accel
+                                                                          axis:axis
+                                                                         power:power
+                                                                         speed:speed
+                                                                          time:time];
         }
     }
 }
@@ -260,9 +256,12 @@
     if (!_isActivated) return;
     
     _LEDLightColor = color;
-    CGFloat r, g, b, a;
-    [color getRed:&r green:&g blue:&b alpha:&a];
-    [RKRGBLEDOutputCommand sendCommandWithRed:r*a green:g*a blue:b*a userDefault:YES];
+    CGFloat red, green, blue, alpha;
+    [color getRed:&red green:&green blue:&blue alpha:&alpha];
+    [RKRGBLEDOutputCommand sendCommandWithRed:red * alpha
+                                        green:green * alpha
+                                         blue:blue * alpha
+                                  userDefault:YES];
     //NSLog(@"rgb:%f, %f, %f", r, g, b);
 }
 
@@ -272,14 +271,15 @@
 {
     if (!_isActivated) return NO;
     
-    CGFloat r, g, b, a;
-    [_LEDLightColor getRed:&r green:&g blue:&b alpha:&a];
+    CGFloat red, green, blue, alpha;
+    [_LEDLightColor getRed:&red green:&green blue:&blue alpha:&alpha];
     //NSLog(@"led:%f, %f, %f", r, g, b);
-    return r>0 && g>0 && b>0 && a>0;
+    return red > 0 && green > 0 && blue > 0 && alpha > 0;
 }
 
 // キャリブレーションライトの点滅
-- (void)flashLightWithBrightness:(float)brightness flashData:(NSArray*)flashData
+- (void)flashLightWithBrightness:(float)brightness
+                       flashData:(NSArray*)flashData
 {
     
     RKMacroObject *macro = [RKMacroObject new];
@@ -306,9 +306,12 @@
         int delay = [flashData[i] intValue];
         if (i%2==0) {
             // 点灯
-            CGFloat r, g, b, a;
-            [color getRed:&r green:&g blue:&b alpha:&a];
-            [macro addCommand:[RKMCRGB commandWithRed:r*a green:g*a blue:b*a delay:delay]];
+            CGFloat red, green, blue, alpha;
+            [color getRed:&red green:&green blue:&blue alpha:&alpha];
+            [macro addCommand:[RKMCRGB commandWithRed:red * alpha
+                                                green:green * alpha
+                                                 blue:blue * alpha
+                                                delay:delay]];
         } else {
             // 消灯
             [macro addCommand:[RKMCRGB commandWithRed:0 green:0 blue:0 delay:delay]];
@@ -454,20 +457,21 @@
 {
     if (!_isActivated) return;
     
+    RKDataStreamingMask streamingMask = mask;
     // 指定のセンサーを外す
-    if (mask) {
+    if (streamingMask) {
         //NSLog(@"stopSensor_pre:%llx", mask);
-        mask = [RKSetDataStreamingCommand currentMask] & (0xFFFFFFFFFFFFFFFF^mask);
+        streamingMask = [RKSetDataStreamingCommand currentMask] & (0xFFFFFFFFFFFFFFFF^mask);
         //NSLog(@"stopSensor_after:%llx", mask);
     }
     
-    if (!(mask & RKDataStreamingMaskAccelerometerFilteredAll) &&
-        !(mask & RKDataStreamingMaskQuaternionAll)) {
+    if (!(streamingMask & RKDataStreamingMaskAccelerometerFilteredAll) &&
+        !(streamingMask & RKDataStreamingMaskQuaternionAll)) {
         // 姿勢センサーとクォータニオンセンサーが無い場合はスタビライザーを再開
         [RKStabilizationCommand sendCommandWithState:RKStabilizationStateOn];
     }
 
-    if (mask==RKDataStreamingMaskOff) {
+    if (streamingMask == RKDataStreamingMaskOff) {
         if (!_startedCollisionSensor) {
             // Turn off data streaming
             [RKSetDataStreamingCommand sendCommandStopStreaming];
@@ -478,7 +482,7 @@
         }
     } else {
         // まだセンサーが残ってる
-        [self startSensor:mask divisor:kSensorDivisor];
+        [self startSensor:streamingMask divisor:kSensorDivisor];
     }
 }
 

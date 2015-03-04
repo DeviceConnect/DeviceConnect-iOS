@@ -1,6 +1,6 @@
 //
 //  DPHueLightProfile.m
-//  DConnectSDK
+//  dConnectDeviceHue
 //
 //  Copyright (c) 2014 NTT DOCOMO, INC.
 //  Released under the MIT license
@@ -79,13 +79,16 @@
         flashing:(NSArray*) flashing
 {
     NSString* brightnessString = [request stringForKey:DCMLightProfileParamBrightness];
-    if (brightnessString) {
-        if (![[DPHueManager sharedManager] isDigitWithString:brightnessString]) {
-            [self setErrRespose:response];
-            return YES;
-        }
+    if (brightnessString
+        && ![[DPHueManager sharedManager] isDigitWithString:brightnessString]) {
+        [self setErrRespose:response];
+        return YES;
     }
-    return [self turnOnOffHueLightWithResponse:response lightId:lightId isOn:YES brightness:brightness color:color];
+    return [self turnOnOffHueLightWithResponse:response
+                                       lightId:lightId
+                                          isOn:YES
+                                    brightness:brightness
+                                         color:color];
 }
 
 //Light Delete 消灯
@@ -154,12 +157,12 @@ didReceiveDeleteLightRequest:(DConnectRequestMessage *)request
         
         for (PHGroup *group in groupList.allValues) {
             
-            DConnectMessage *g = [DConnectMessage new];
-            [g setString:group.identifier forKey:DCMLightProfileParamGroupId];
+            DConnectMessage *groupResponse = [DConnectMessage new];
+            [groupResponse setString:group.identifier forKey:DCMLightProfileParamGroupId];
             if (group.name) {
-                [g setString:group.name forKey:DCMLightProfileParamName];
+                [groupResponse setString:group.name forKey:DCMLightProfileParamName];
             } else {
-                [g setString:@"" forKey:DCMLightProfileParamName];
+                [groupResponse setString:@"" forKey:DCMLightProfileParamName];
             }
             //キャッシュにあるライトの一覧からライトを取り出す
             NSArray *lightIds = group.lightIdentifiers;
@@ -180,8 +183,8 @@ didReceiveDeleteLightRequest:(DConnectRequestMessage *)request
                 }
             }
             
-            [g setArray:lights forKey:DCMLightProfileParamLights];
-            [groups addMessage:g];
+            [groupResponse setArray:lights forKey:DCMLightProfileParamLights];
+            [groups addMessage:groupResponse];
         }
         [response setResult:DConnectMessageResultTypeOk];
         [response setArray:groups forKey:DCMLightProfileParamLightGroups];
@@ -202,14 +205,17 @@ didReceiveDeleteLightRequest:(DConnectRequestMessage *)request
         flashing:(NSArray*)flashing
 {
     NSString* brightnessString = [request stringForKey:DCMLightProfileParamBrightness];
-    if (brightnessString) {
-        if (![[DPHueManager sharedManager] isDigitWithString:brightnessString]) {
-            [self setErrRespose:response];
-            return YES;
-        }
+    if (brightnessString
+        && ![[DPHueManager sharedManager] isDigitWithString:brightnessString]) {
+        [self setErrRespose:response];
+        return YES;
     }
 
-    return [self turnOnOffHueLightGroupWithResponse:response groupId:groupId isOn:YES brightness:brightness color:color];
+    return [self turnOnOffHueLightGroupWithResponse:response
+                                            groupId:groupId
+                                               isOn:YES
+                                         brightness:brightness
+                                              color:color];
 }
 
 
@@ -258,7 +264,9 @@ didReceiveDeleteLightRequest:(DConnectRequestMessage *)request
         serviceId:(NSString *)serviceId
         lightIds:(NSArray*)lightIds
        groupName:(NSString*)groupName {
-    BOOL result = [[DPHueManager sharedManager] createLightGroupWithLightIds:lightIds groupName:groupName completion:^(NSString* groupId) {
+    BOOL result = [[DPHueManager sharedManager] createLightGroupWithLightIds:lightIds
+                                                                   groupName:groupName
+                                                                  completion:^(NSString* groupId) {
         if (groupId) {
             [response setString:groupId forKey:DCMLightProfileParamGroupId];
             [DPHueManager sharedManager].bridgeConnectState = STATE_CONNECT;
@@ -299,8 +307,8 @@ didReceiveDeleteLightRequest:(DConnectRequestMessage *)request
     dispatch_sync(dispatch_get_main_queue(), ^{
         NSArray *arr = [serviceId componentsSeparatedByString:@"_"];
         if(arr.count > 1) {
-            NSString * ipAdr =  [arr objectAtIndex:0];
-            NSString * macAdr = [arr objectAtIndex:1];
+            NSString * ipAdr =  arr[0];
+            NSString * macAdr = arr[1];
             [[DPHueManager sharedManager] initHue];
             [[DPHueManager sharedManager] startAuthenticateBridgeWithIpAddress:ipAdr
                                                                     macAddress:macAdr
@@ -406,7 +414,8 @@ didReceiveDeleteLightRequest:(DConnectRequestMessage *)request
             [response setErrorToNotFoundServiceWithMessage:@"Bridge not found"];
             break;
         case STATE_NOT_AUTHENTICATED:
-            [response setErrorToNotFoundServiceWithMessage:@"It is not application registration, please register from the app settings screen"];
+            [response setErrorToNotFoundServiceWithMessage:
+                @"It is not application registration, please register from the app settings screen"];
             break;
         case STATE_ERROR_NO_NAME:
             [response setErrorToInvalidRequestParameterWithMessage:@"Name after the change has not been specified"];
@@ -421,7 +430,8 @@ didReceiveDeleteLightRequest:(DConnectRequestMessage *)request
             [response setErrorToInvalidRequestParameterWithMessage:@"brightness is invalid"];
             break;
         case STATE_ERROR_LIMIT_GROUP:
-            [response setErrorToUnknownAttributeWithMessage:@"Hue has reached the upper limit to which the group can create"];
+            [response setErrorToUnknownAttributeWithMessage:
+                @"Hue has reached the upper limit to which the group can create"];
             break;
         case STATE_ERROR_CREATE_FAIL_GROUP:
             [response setErrorToUnknownWithMessage:@"Failed to create a group"];
@@ -457,7 +467,7 @@ didReceiveDeleteLightRequest:(DConnectRequestMessage *)request
             [response setResult:DConnectMessageResultTypeOk];
             break;
         default:
-            [response setResult:DConnectMessageResultTypeError];
+            [response setErrorToUnknown];
             break;
     }
 }

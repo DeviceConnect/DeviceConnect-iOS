@@ -1,6 +1,6 @@
 //
 //  TestDeviceOrientationProfile.h
-//  DConnectSDK
+//  dConnectDeviceTest
 //
 //  Copyright (c) 2014 NTT DOCOMO, INC.
 //  Released under the MIT license
@@ -27,8 +27,11 @@
 #pragma mark - Put Methods
 #pragma mark Event Registration
 
-- (BOOL) profile:(DConnectDeviceOrientationProfile *)profile didReceivePutOnDeviceOrientationRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response serviceId:(NSString *)serviceId sessionKey:(NSString *)sessionKey
+- (BOOL)                            profile:(DConnectDeviceOrientationProfile *)profile
+    didReceivePutOnDeviceOrientationRequest:(DConnectRequestMessage *)request
+                                   response:(DConnectResponseMessage *)response
+                                  serviceId:(NSString *)serviceId
+                                 sessionKey:(NSString *)sessionKey
 {
     
     CheckDIDAndSK(response, serviceId, sessionKey) {
@@ -43,24 +46,25 @@
         
         DConnectMessage *orientation = [DConnectMessage message];
         
-        DConnectMessage *a1 = [DConnectMessage message];
-        [DConnectDeviceOrientationProfile setX:0 target:a1];
-        [DConnectDeviceOrientationProfile setY:0 target:a1];
-        [DConnectDeviceOrientationProfile setZ:0 target:a1];
+        DConnectMessage *acceleration = [DConnectMessage message];
+        [DConnectDeviceOrientationProfile setX:0 target:acceleration];
+        [DConnectDeviceOrientationProfile setY:0 target:acceleration];
+        [DConnectDeviceOrientationProfile setZ:0 target:acceleration];
         
-        DConnectMessage *a2 = [DConnectMessage message];
-        [DConnectDeviceOrientationProfile setX:0 target:a2];
-        [DConnectDeviceOrientationProfile setY:0 target:a2];
-        [DConnectDeviceOrientationProfile setZ:0 target:a2];
+        DConnectMessage *accelerationIncludingGravity = [DConnectMessage message];
+        [DConnectDeviceOrientationProfile setX:0 target:accelerationIncludingGravity];
+        [DConnectDeviceOrientationProfile setY:0 target:accelerationIncludingGravity];
+        [DConnectDeviceOrientationProfile setZ:0 target:accelerationIncludingGravity];
 
-        DConnectMessage *r = [DConnectMessage message];
-        [DConnectDeviceOrientationProfile setAlpha:0 target:r];
-        [DConnectDeviceOrientationProfile setBeta:0 target:r];
-        [DConnectDeviceOrientationProfile setGamma:0 target:r];
+        DConnectMessage *rotationRate = [DConnectMessage message];
+        [DConnectDeviceOrientationProfile setAlpha:0 target:rotationRate];
+        [DConnectDeviceOrientationProfile setBeta:0 target:rotationRate];
+        [DConnectDeviceOrientationProfile setGamma:0 target:rotationRate];
         
-        [DConnectDeviceOrientationProfile setAcceleration:a1 target:orientation];
-        [DConnectDeviceOrientationProfile setAccelerationIncludingGravity:a2 target:orientation];
-        [DConnectDeviceOrientationProfile setRotationRate:r target:orientation];
+        [DConnectDeviceOrientationProfile setAcceleration:acceleration target:orientation];
+        [DConnectDeviceOrientationProfile setAccelerationIncludingGravity:accelerationIncludingGravity
+                                                                   target:orientation];
+        [DConnectDeviceOrientationProfile setRotationRate:rotationRate target:orientation];
         [DConnectDeviceOrientationProfile setInterval:0 target:orientation];
         
         [DConnectDeviceOrientationProfile setOrientation:orientation target:event];
@@ -73,8 +77,11 @@
 #pragma mark - Delete Methods
 #pragma mark Event Unregistration
 
-- (BOOL) profile:(DConnectDeviceOrientationProfile *)profile didReceiveDeleteOnDeviceOrientationRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response serviceId:(NSString *)serviceId sessionKey:(NSString *)sessionKey
+- (BOOL)                               profile:(DConnectDeviceOrientationProfile *)profile
+    didReceiveDeleteOnDeviceOrientationRequest:(DConnectRequestMessage *)request
+                                      response:(DConnectResponseMessage *)response
+                                     serviceId:(NSString *)serviceId
+                                    sessionKey:(NSString *)sessionKey
 {
     
     CheckDIDAndSK(response, serviceId, sessionKey) {

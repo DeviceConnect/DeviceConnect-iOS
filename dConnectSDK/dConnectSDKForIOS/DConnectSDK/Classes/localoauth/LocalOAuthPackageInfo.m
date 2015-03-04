@@ -33,24 +33,24 @@
     return self;
 }
 
-- (BOOL) equals: (LocalOAuthPackageInfo *) o {
+- (BOOL)equals:(LocalOAuthPackageInfo *)info {
     
     LocalOAuthPackageInfo *cmp1 = self;
-    LocalOAuthPackageInfo *cmp2 = o;
+    LocalOAuthPackageInfo *cmp2 = info;
     
     BOOL isEqualPackageName = NO;
-    if (cmp1.packageName == nil && cmp2.packageName == nil) {         /* 両方null */
+    if (cmp1.packageName == nil && cmp2.packageName == nil) {
         isEqualPackageName = YES;
-    } else if (cmp1.packageName != nil && cmp2.packageName
-                != nil 	/* 両方同じ文字列 */
+    } else if (cmp1.packageName != nil
+               && cmp2.packageName != nil
                && [cmp1.packageName isEqualToString: cmp2.packageName] ) {
         isEqualPackageName = YES;
     }
     
     BOOL isEqualServiceId = NO;
-    if (cmp1.serviceId == nil && cmp2.serviceId == nil) {				/* 両方null */
+    if (cmp1.serviceId == nil && cmp2.serviceId == nil) {
         isEqualServiceId = YES;
-    } else if (cmp1.serviceId != nil && cmp2.serviceId != nil 		/* 両方同じ文字列 */
+    } else if (cmp1.serviceId != nil && cmp2.serviceId != nil
                && [cmp1.serviceId isEqualToString: cmp2.serviceId]) {
         isEqualServiceId = YES;
     }

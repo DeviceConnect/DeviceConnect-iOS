@@ -19,7 +19,10 @@ NSString *const DConnectDeviceDaoEmptyServiceId = @"";
 
 + (void) createWithDatabase:(DConnectSQLiteDatabase *)database {
     
-    NSString *sql = DCEForm(@"CREATE TABLE %@ (%@ INTEGER PRIMARY KEY AUTOINCREMENT, %@ TEXT NOT NULL, %@ INTEGER NOT NULL, %@ INTEGER NOT NULL, UNIQUE(%@));",
+    NSString *sql = DCEForm(@"CREATE TABLE %@ "
+                            "(%@ INTEGER PRIMARY KEY AUTOINCREMENT, "
+                            "%@ TEXT NOT NULL, %@ INTEGER NOT NULL, "
+                            "%@ INTEGER NOT NULL, UNIQUE(%@));",
                             DConnectDeviceDaoTableName,
                             DConnectEventDaoClmId,
                             DConnectDeviceDaoClmServiceId,
@@ -34,13 +37,13 @@ NSString *const DConnectDeviceDaoEmptyServiceId = @"";
 
 + (long long) insertWithServiceId:(NSString *)serviceId toDatabase:(DConnectSQLiteDatabase *)database {
     
-    serviceId = (serviceId != nil) ? serviceId : DConnectDeviceDaoEmptyServiceId;
+    NSString* sId = (serviceId != nil) ? serviceId : DConnectDeviceDaoEmptyServiceId;
     long long result = -1;
     DConnectSQLiteCursor *cursor
     = [database selectFromTable:DConnectDeviceDaoTableName
                         columns:@[DConnectEventDaoClmId]
                           where:DCEForm(@"%@=?", DConnectDeviceDaoClmServiceId)
-                     bindParams:@[serviceId]];
+                     bindParams:@[sId]];
     
     if (!cursor) {
         return result;
@@ -51,7 +54,7 @@ NSString *const DConnectDeviceDaoEmptyServiceId = @"";
         result = [database insertIntoTable:DConnectDeviceDaoTableName
                                    columns:@[DConnectDeviceDaoClmServiceId, DConnectEventDaoClmCreateDate,
                                              DConnectEventDaoClmUpdateDate]
-                                    params:@[serviceId, current, current]];
+                                    params:@[sId, current, current]];
     } else if ([cursor moveToFirst]) {
         result = [cursor longLongValueAtIndex:0];
     }

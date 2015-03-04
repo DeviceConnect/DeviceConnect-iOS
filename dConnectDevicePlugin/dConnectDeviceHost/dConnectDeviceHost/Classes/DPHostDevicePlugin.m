@@ -1,6 +1,6 @@
 //
 //  DPHostDevicePlugin.m
-//  DConnectSDK
+//  dConnectDeviceHost
 //
 //  Copyright (c) 2014 NTT DOCOMO, INC.
 //  Released under the MIT license
@@ -25,6 +25,7 @@
 #import "DPHostSystemProfile.h"
 #import "DPHostVibrationProfile.h"
 #import "DPHostConnectProfile.h"
+#import "DPHostCanvasProfile.h"
 
 @implementation DPHostDevicePlugin
 
@@ -58,7 +59,8 @@
         [self addProfile:[DPHostSystemProfile new]];
         [self addProfile:[DPHostVibrationProfile new]];
         [self addProfile:[DPHostConnectProfile new]];
-
+        [self addProfile:[DPHostCanvasProfile new]];
+        [self addProfile:[DConnectServiceInformationProfile new]];
     }
     return self;
 }

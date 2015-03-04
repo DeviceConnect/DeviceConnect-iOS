@@ -18,6 +18,17 @@
 			name = dConnectDeviceTestFramework;
 			productName = dConnectDeviceTestFramework;
 		};
+		AB5B2B501A9ABEA40038CCF6 /* dConnectDeviceTest_OCLint */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = AB5B2B531A9ABEA40038CCF6 /* Build configuration list for PBXAggregateTarget "dConnectDeviceTest_OCLint" */;
+			buildPhases = (
+				AB5B2B541A9ABEA90038CCF6 /* ShellScript */,
+			);
+			dependencies = (
+			);
+			name = dConnectDeviceTest_OCLint;
+			productName = dConnectDeviceTest_OCLint;
+		};
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
@@ -44,6 +55,8 @@
 		6B19E86E1A6FBBB900161F21 /* RESTfulNormalAvailabilityProfileTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B19E86D1A6FBBB900161F21 /* RESTfulNormalAvailabilityProfileTest.m */; };
 		6B2C778C1A708AEC00ED8F17 /* libdConnectDeviceTest.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 309CD518198B2CCE002A5684 /* libdConnectDeviceTest.a */; };
 		6B2C778F1A708E2800ED8F17 /* DConnectSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABF842BB19E3E07300B8AC46 /* DConnectSDK.framework */; };
+		6BD1F6F01A9EBE65005956F5 /* RESTfulNormalServiceInformationProfileTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BD1F6EF1A9EBE65005956F5 /* RESTfulNormalServiceInformationProfileTest.m */; };
+		6BD1F6F21A9EC6B2005956F5 /* RESTfulFailServiceInformationProfileTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BD1F6F11A9EC6B2005956F5 /* RESTfulFailServiceInformationProfileTest.m */; };
 		840DC9C919A6D7AC00CA2EA0 /* RESTfulFailSettingsProfileTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 840DC9C819A6D7AC00CA2EA0 /* RESTfulFailSettingsProfileTest.m */; };
 		840DC9CB19A6FD7200CA2EA0 /* RESTfulFailPhoneProfileTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 840DC9CA19A6FD7200CA2EA0 /* RESTfulFailPhoneProfileTest.m */; };
 		840DC9CD19A70FF500CA2EA0 /* RESTfulFailNotificationProfileTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 840DC9CC19A70FF500CA2EA0 /* RESTfulFailNotificationProfileTest.m */; };
@@ -158,6 +171,8 @@
 		309CD569198F5FEE002A5684 /* TestMediaStreamRecordingProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestMediaStreamRecordingProfile.h; sourceTree = "<group>"; };
 		309CD56A198F5FEE002A5684 /* TestMediaStreamRecordingProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestMediaStreamRecordingProfile.m; sourceTree = "<group>"; };
 		6B19E86D1A6FBBB900161F21 /* RESTfulNormalAvailabilityProfileTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RESTfulNormalAvailabilityProfileTest.m; path = dConnectManager/RESTful/RESTfulNormalAvailabilityProfileTest.m; sourceTree = "<group>"; };
+		6BD1F6EF1A9EBE65005956F5 /* RESTfulNormalServiceInformationProfileTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RESTfulNormalServiceInformationProfileTest.m; path = dConnectManager/RESTful/RESTfulNormalServiceInformationProfileTest.m; sourceTree = "<group>"; };
+		6BD1F6F11A9EC6B2005956F5 /* RESTfulFailServiceInformationProfileTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RESTfulFailServiceInformationProfileTest.m; path = dConnectManager/RESTful/RESTfulFailServiceInformationProfileTest.m; sourceTree = "<group>"; };
 		840DC9C819A6D7AC00CA2EA0 /* RESTfulFailSettingsProfileTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RESTfulFailSettingsProfileTest.m; path = dConnectManager/RESTful/RESTfulFailSettingsProfileTest.m; sourceTree = "<group>"; };
 		840DC9CA19A6FD7200CA2EA0 /* RESTfulFailPhoneProfileTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RESTfulFailPhoneProfileTest.m; path = dConnectManager/RESTful/RESTfulFailPhoneProfileTest.m; sourceTree = "<group>"; };
 		840DC9CC19A70FF500CA2EA0 /* RESTfulFailNotificationProfileTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RESTfulFailNotificationProfileTest.m; path = dConnectManager/RESTful/RESTfulFailNotificationProfileTest.m; sourceTree = "<group>"; };
@@ -409,6 +424,7 @@
 				8428953819A2002500D9ECFF /* RESTfulNormalNotificationProfileTest.m */,
 				8428953919A2002500D9ECFF /* RESTfulNormalPhoneProfileTest.m */,
 				8428953A19A2002500D9ECFF /* RESTfulNormalProximityProfileTest.m */,
+				6BD1F6EF1A9EBE65005956F5 /* RESTfulNormalServiceInformationProfileTest.m */,
 				8428953B19A2002500D9ECFF /* RESTfulNormalSettingsProfileTest.m */,
 				8428953C19A2002500D9ECFF /* RESTfulNormalSystemProfileTest.m */,
 				8428953D19A2002500D9ECFF /* RESTfulNormalVibrationProfileTest.m */,
@@ -427,6 +443,7 @@
 				84FA976219A61A890053B2FD /* RESTfulFailProximityProfileTest.m */,
 				840DC9C819A6D7AC00CA2EA0 /* RESTfulFailSettingsProfileTest.m */,
 				8490A34D19A488350031FD1E /* RESTfulFailSystemProfileTest.m */,
+				6BD1F6F11A9EC6B2005956F5 /* RESTfulFailServiceInformationProfileTest.m */,
 				84FA976019A615400053B2FD /* RESTfulFailVibrationProfileTest.m */,
 				84FA974C19A4CF430053B2FD /* RESTfulStressTest.m */,
 			);
@@ -510,6 +527,11 @@
 			attributes = {
 				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = "NTT DOCOMO, INC";
+				TargetAttributes = {
+					AB5B2B501A9ABEA40038CCF6 = {
+						CreatedOnToolsVersion = 6.1.1;
+					};
+				};
 			};
 			buildConfigurationList = 309CD513198B2CCE002A5684 /* Build configuration list for PBXProject "dConnectDeviceTest" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -526,6 +548,7 @@
 				309CD517198B2CCE002A5684 /* dConnectDeviceTest */,
 				309CD527198B2CCF002A5684 /* dConnectDeviceTestTests */,
 				300D50251990BD81007C9EDD /* dConnectDeviceTestFramework */,
+				AB5B2B501A9ABEA40038CCF6 /* dConnectDeviceTest_OCLint */,
 			);
 		};
 /* End PBXProject section */
@@ -554,7 +577,20 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Environment Variables\nFRAMEWORK_NAME=${PROJECT_NAME}\nFRAMEWORK_VERSION=A\nFRAMEWORK_VERSION_NUMBER=1.0\nCONFIGURATION=\"Release\"\nFRAMEWORK_BUILD_PATH=\"${SRCROOT}/build/${CONFIGURATION}-framework\"\nFRAMEWORK_DIR=\"${FRAMEWORK_BUILD_PATH}/${FRAMEWORK_NAME}.framework\"\nSTATICLIB_BUILD_PATH=\"${SRCROOT}/build/${CONFIGURATION}-universal\"\n\n# Clean directories\nrm -rf \"${FRAMEWORK_BUILD_PATH}\"\n\n# Build simulator and device binaries.\n# Main target *must* have the same name as ${PROJECT_NAME}.\nxcodebuild -project ${PROJECT_NAME}.xcodeproj -sdk iphonesimulator -target ${PROJECT_NAME} -configuration ${CONFIGURATION} clean build\nxcodebuild -project ${PROJECT_NAME}.xcodeproj -sdk iphoneos -target ${PROJECT_NAME} -configuration ${CONFIGURATION} clean build\n\n# create directories.\nmkdir -p ${FRAMEWORK_DIR}/Versions/${FRAMEWORK_VERSION}\nmkdir -p ${STATICLIB_BUILD_PATH}\n# create symlinks\ncd ${FRAMEWORK_DIR}\nln -s ../Versions/${FRAMEWORK_VERSION} Versions/Current\nln -s Versions/Current/${FRAMEWORK_NAME} ${FRAMEWORK_NAME}\ncd ${SRCROOT}\n\n# create the universal library, and strip internal symbols from it\nlipo ${SRCROOT}/build/${CONFIGURATION}-iphoneos/lib${FRAMEWORK_NAME}.a ${SRCROOT}/build/${CONFIGURATION}-iphonesimulator/lib${FRAMEWORK_NAME}.a -create -output \"${STATICLIB_BUILD_PATH}/lib${FRAMEWORK_NAME}.a\"\n#strip -x \"${STATICLIB_BUILD_PATH}/lib${FRAMEWORK_NAME}.a\"\ncp \"${STATICLIB_BUILD_PATH}/lib${FRAMEWORK_NAME}.a\" \"${FRAMEWORK_DIR}/Versions/Current/${FRAMEWORK_NAME}\"\n\n# copy files\nrm -rf ${PROJECT_NAME}/${FRAMEWORK_NAME}.framework\ncp -fa $FRAMEWORK_DIR ${PROJECT_NAME}/";
+			shellScript = "# Environment Variables\nFRAMEWORK_NAME=${PROJECT_NAME}\nFRAMEWORK_VERSION=A\nFRAMEWORK_VERSION_NUMBER=1.0\nCONFIGURATION=\"Release\"\nFRAMEWORK_BUILD_PATH=\"${SRCROOT}/build/${CONFIGURATION}-framework\"\nFRAMEWORK_DIR=\"${FRAMEWORK_BUILD_PATH}/${FRAMEWORK_NAME}.framework\"\nSTATICLIB_BUILD_PATH=\"${SRCROOT}/build/${CONFIGURATION}-universal\"\nARCHS_SIM=\"i386\"\nVALID_ARCHS_SIM=\"i386\"\n\n# Clean directories\nrm -rf \"${FRAMEWORK_BUILD_PATH}\"\n\n# Build simulator and device binaries.\n# Main target *must* have the same name as ${PROJECT_NAME}.\nxcodebuild -project ${PROJECT_NAME}.xcodeproj -sdk iphonesimulator ARCHS=${ARCHS_SIM} VALID_ARCHS=${VALID_ARCHS_SIM} -target ${PROJECT_NAME} -configuration ${CONFIGURATION} clean build\nxcodebuild -project ${PROJECT_NAME}.xcodeproj -sdk iphoneos -target ${PROJECT_NAME} -configuration ${CONFIGURATION} clean build\n\n# create directories.\nmkdir -p ${FRAMEWORK_DIR}/Versions/${FRAMEWORK_VERSION}\nmkdir -p ${STATICLIB_BUILD_PATH}\n# create symlinks\ncd ${FRAMEWORK_DIR}\nln -s ../Versions/${FRAMEWORK_VERSION} Versions/Current\nln -s Versions/Current/${FRAMEWORK_NAME} ${FRAMEWORK_NAME}\ncd ${SRCROOT}\n\n# create the universal library, and strip internal symbols from it\nlipo ${SRCROOT}/build/${CONFIGURATION}-iphoneos/lib${FRAMEWORK_NAME}.a ${SRCROOT}/build/${CONFIGURATION}-iphonesimulator/lib${FRAMEWORK_NAME}.a -create -output \"${STATICLIB_BUILD_PATH}/lib${FRAMEWORK_NAME}.a\"\n#strip -x \"${STATICLIB_BUILD_PATH}/lib${FRAMEWORK_NAME}.a\"\ncp \"${STATICLIB_BUILD_PATH}/lib${FRAMEWORK_NAME}.a\" \"${FRAMEWORK_DIR}/Versions/Current/${FRAMEWORK_NAME}\"\n\n# copy files\nrm -rf ${PROJECT_NAME}/${FRAMEWORK_NAME}.framework\ncp -fa $FRAMEWORK_DIR ${PROJECT_NAME}/";
+		};
+		AB5B2B541A9ABEA90038CCF6 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "XCTOOL=/usr/local\nexport PATH=$XCTOOL/bin:$PATH\nOCLINT_HOME=${HOME}/bin/oclint-0.8.1\nexport PATH=$OCLINT_HOME/bin:$PATH\n\ncd ${SRCROOT}\nxctool -project ${PROJECT}.xcodeproj -scheme ${PROJECT} -reporter json-compilation-database:compile_commands.json clean\nxctool -project ${PROJECT}.xcodeproj -scheme ${PROJECT} -reporter json-compilation-database:compile_commands.json build\n\noclint-json-compilation-database oclint_args oclint_args \"-disable-rule=UnusedMethodParameter -disable-rule=InvertedLogic -disable-rule=DoubleNegative -disable-rule=MultipleUnaryOperator -disable-rule=MustOverrideHashWithIsEqual -disable-rule=BitwiseOperatorInConditional -disable-rule=IvarAssignmentOutsideAccessorsOrInit -disable-rule=SwitchStatementsDon\\'TNeedDefaultWhenFullyCovered -rc LONG_LINE=120 -rc MAXIMUM_IF_LENGTH=50 -rc NCSS_METHOD=50 -rc LONG_METHOD=500 -rc LONG_CLASS=2000 -rc NCSS_METHOD=100 -rc LONG_VARIABLE_NAME=100 -rc CYCLOMATIC_COMPLEXITY=100 -rc NPATH_COMPLEXITY=5000 -rc NESTED_BLOCK_DEPTH=10 -rc TOO_MANY_METHODS=100\" | sed 's/\\(.*\\.\\m\\{1,2\\}:[0-9]*:[0-9]*:\\)/\\1 warning:/'";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -602,6 +638,7 @@
 				8428954519A2002500D9ECFF /* RESTfulNormalSettingsProfileTest.m in Sources */,
 				84FA975219A59CBD0053B2FD /* RESTfulFailCommonTest.m in Sources */,
 				8490A35019A488350031FD1E /* RESTfulFailNetworkServiceDiscoveryProfileTest.m in Sources */,
+				6BD1F6F21A9EC6B2005956F5 /* RESTfulFailServiceInformationProfileTest.m in Sources */,
 				845458AE1998E9D50017F06D /* SRWebSocket.m in Sources */,
 				840DC9D519A7303200CA2EA0 /* RESTfulFailMediaStreamRecordingProfileTest.m in Sources */,
 				845458B91999A4EB0017F06D /* RESTfulTestCase.m in Sources */,
@@ -626,6 +663,7 @@
 				845458C319A199F50017F06D /* RESTfulNormalConnectProfileTest.m in Sources */,
 				8428954319A2002500D9ECFF /* RESTfulNormalPhoneProfileTest.m in Sources */,
 				84FA976119A615400053B2FD /* RESTfulFailVibrationProfileTest.m in Sources */,
+				6BD1F6F01A9EBE65005956F5 /* RESTfulNormalServiceInformationProfileTest.m in Sources */,
 				840DC9C919A6D7AC00CA2EA0 /* RESTfulFailSettingsProfileTest.m in Sources */,
 				840DC9CF19A717A600CA2EA0 /* RESTfulFailFileDescriptorProfileTest.m in Sources */,
 			);
@@ -756,6 +794,7 @@
 					"$(PROJECT_DIR)",
 					"$(PROJECT_DIR)/../../dConnectSDK/dConnectSDKForIOS/bin",
 				);
+				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -849,6 +888,20 @@
 			};
 			name = Release;
 		};
+		AB5B2B511A9ABEA40038CCF6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		AB5B2B521A9ABEA40038CCF6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -884,6 +937,15 @@
 			buildConfigurations = (
 				309CD53F198B2CCF002A5684 /* Debug */,
 				309CD540198B2CCF002A5684 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AB5B2B531A9ABEA40038CCF6 /* Build configuration list for PBXAggregateTarget "dConnectDeviceTest_OCLint" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AB5B2B511A9ABEA40038CCF6 /* Debug */,
+				AB5B2B521A9ABEA40038CCF6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

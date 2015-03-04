@@ -1,6 +1,6 @@
 //
 //  DPIRKitWiFiSelectionGuideViewController.m
-//  DConnectSDK
+//  dConnectDeviceIRKit
 //
 //  Copyright (c) 2014 NTT DOCOMO, INC.
 //  Released under the MIT license
@@ -98,34 +98,36 @@ typedef NS_ENUM(NSUInteger, DPIRKitSelectionState) {
 - (void) viewDidAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+    NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
     UIApplication *application = [UIApplication sharedApplication];
     
-    [nc addObserver:self selector:@selector(enterForground)
+    [notificationCenter addObserver:self selector:@selector(enterForground)
                name:UIApplicationWillEnterForegroundNotification
              object:application];
     
-    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
-    NSString *clientKey = [ud stringForKey:DPIRKitUDKeyClientKey];
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    NSString *clientKey = [userDefaults stringForKey:DPIRKitUDKeyClientKey];
     
     if (!clientKey) {
         
-        DPIRKitReachability *r = [DPIRKitReachability reachabilityForInternetConnection];
-        DPIRKitNetworkStatus s = [r currentReachabilityStatus];
+        DPIRKitReachability *reachability = [DPIRKitReachability reachabilityForInternetConnection];
+        DPIRKitNetworkStatus status = [reachability currentReachabilityStatus];
         
-        if (s == DPIRKitNotReachable) {
+        if (status == DPIRKitNotReachable) {
             [self showNoNetworkError];
         } else {
             
             [self startLoading];
             __weak typeof(self) _self = self;
             
-            [[DPIRKitManager sharedInstance] fetchClientKeyWithCompletion:^(NSString *clientKey, DPIRKitConnectionErrorCode errorCode) {
+            [[DPIRKitManager sharedInstance]
+                fetchClientKeyWithCompletion:^(NSString *clientKey,
+                                               DPIRKitConnectionErrorCode errorCode) {
                 
                 if (clientKey) {
-                    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
-                    [ud setObject:clientKey forKey:DPIRKitUDKeyClientKey];
-                    [ud synchronize];
+                    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+                    [userDefaults setObject:clientKey forKey:DPIRKitUDKeyClientKey];
+                    [userDefaults synchronize];
                     [_self createNewDeviceWithClientKey:clientKey];
                 } else {
                     [_self showNoNetworkError];
@@ -133,7 +135,7 @@ typedef NS_ENUM(NSUInteger, DPIRKitSelectionState) {
             }];
         }
     } else {
-        NSString *deviceKey = [ud stringForKey:DPIRKitUDKeyDeviceKey];
+        NSString *deviceKey = [userDefaults stringForKey:DPIRKitUDKeyDeviceKey];
         if (!deviceKey) {
             [self startLoading];
             [self createNewDeviceWithClientKey:clientKey];
@@ -146,13 +148,15 @@ typedef NS_ENUM(NSUInteger, DPIRKitSelectionState) {
     __weak typeof(self) _self = self;
     
     [[DPIRKitManager sharedInstance] createNewDeviceWithClientKey:clientKey
-                                                       completion:^(NSString *serviceId, NSString *deviceKey, DPIRKitConnectionErrorCode errorCode)
+                                                       completion:^(NSString *serviceId,
+                                                                    NSString *deviceKey,
+                                                                    DPIRKitConnectionErrorCode errorCode)
      {
          if (deviceKey && serviceId) {
-             NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
-             [ud setValue:deviceKey forKey:DPIRKitUDKeyDeviceKey];
-             [ud setValue:serviceId forKey:DPIRKitUDKeyServiceId];
-             [ud synchronize];
+             NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+             [userDefaults setValue:deviceKey forKey:DPIRKitUDKeyDeviceKey];
+             [userDefaults setValue:serviceId forKey:DPIRKitUDKeyServiceId];
+             [userDefaults synchronize];
              
              @synchronized (_self) {
                  _state = DPIRKitSelectionStateGotDeviceKey;
@@ -170,9 +174,9 @@ typedef NS_ENUM(NSUInteger, DPIRKitSelectionState) {
 }
 
 - (void) viewDidDisappear:(BOOL)animated {
-    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+    NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
     UIApplication *application = [UIApplication sharedApplication];
-    [nc removeObserver:self name:UIApplicationWillEnterForegroundNotification object:application];
+    [notificationCenter removeObserver:self name:UIApplicationWillEnterForegroundNotification object:application];
 }
 
 - (void) enterForground {

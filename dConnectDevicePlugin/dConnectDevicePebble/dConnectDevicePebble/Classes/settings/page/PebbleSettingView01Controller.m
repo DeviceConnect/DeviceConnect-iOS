@@ -1,6 +1,6 @@
 //
 //  PebbleSettingView01Controller.m
-//  DConnectSDK
+//  dConnectDevicePebble
 //
 //  Copyright (c) 2014 NTT DOCOMO, INC.
 //  Released under the MIT license
@@ -24,22 +24,17 @@ textHeight;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
     return self;
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 - (BOOL)shouldAutorotate
 {
@@ -52,34 +47,25 @@ textHeight;
 	//縦だけサポートする
     return UIInterfaceOrientationMaskPortrait;
 }
-/*
- #pragma mark - Navigation
- 
- // In a storyboard-based application, you will often want to do a little preparation before navigation
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
- {
- // Get the new view controller using [segue destinationViewController].
- // Pass the selected object to the new view controller.
- }
- */
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [self setPage:[UIApplication sharedApplication].statusBarOrientation == UIInterfaceOrientationPortrait];
 }
 
-- (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation duration:(NSTimeInterval)duration
+- (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+                                         duration:(NSTimeInterval)duration
 {
     
     [self setPage:UIInterfaceOrientationIsPortrait(interfaceOrientation)];
 }
 -(void)setPage:(BOOL)isPortrait{
     int iphon4_h=IPONE4_H;
-    CGRect r = [[UIScreen mainScreen] bounds];
-    int h = (int)r.size.height;
+    CGRect rect = [[UIScreen mainScreen] bounds];
+    int height = (int)rect.size.height;
     int margin=0;
-    if(h>iphon4_h){
-        margin=(h-iphon4_h);
+    if(height>iphon4_h){
+        margin=(height-iphon4_h);
         
     }
     

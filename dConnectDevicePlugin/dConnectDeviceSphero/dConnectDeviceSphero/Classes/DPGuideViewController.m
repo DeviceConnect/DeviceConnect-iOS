@@ -1,6 +1,6 @@
 //
 //  DPGuideViewController.m
-//  DConnectSDK
+//  dConnectDeviceSphero
 //
 //  Copyright (c) 2014 NTT DOCOMO, INC.
 //  Released under the MIT license
@@ -10,9 +10,7 @@
 #import "DPGuideViewController.h"
 #import "DPSpheroManager.h"
 
-@interface DPGuideViewController () {
-    NSLayoutConstraint *_space;
-}
+@interface DPGuideViewController ()
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *verticalSpace;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *horizontalSpace;
 @property (weak, nonatomic) IBOutlet UISwitch *activateSwitch;
@@ -22,6 +20,9 @@
 @end
 
 @implementation DPGuideViewController
+// Guide Pages Space
+NSLayoutConstraint *_space;
+
 
 // View読み込み中
 - (void)viewDidLoad
@@ -38,7 +39,8 @@
 }
 
 // View回転時
-- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
+                                duration:(NSTimeInterval)duration
 {
     [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
     [self rotateOrientation:toInterfaceOrientation];
@@ -49,8 +51,8 @@
 {
     if (!_horizontalSpace) return;
     
-	if (toInterfaceOrientation == UIInterfaceOrientationPortrait |
-        toInterfaceOrientation == UIInterfaceOrientationPortraitUpsideDown) {
+	if (toInterfaceOrientation == UIInterfaceOrientationPortrait
+        | toInterfaceOrientation == UIInterfaceOrientationPortraitUpsideDown) {
         // 上下のスペーサー復活
         if (![[self.view constraints] containsObject:_space]) {
             [self.view addConstraint:_space];

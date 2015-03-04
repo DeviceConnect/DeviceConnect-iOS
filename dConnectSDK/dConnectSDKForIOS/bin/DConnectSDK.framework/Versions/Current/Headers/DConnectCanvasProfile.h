@@ -98,8 +98,8 @@ extern NSString *const DConnectCanvasProfileModeFills;
         serviceId:(NSString *)serviceId
         mimeType:(NSString *)mimeType
             data:(NSData *)data
-               x:(double)x
-               y:(double)y
+               imageX:(double)imageX
+               imageY:(double)imageY
             mode:(NSString *)mode;
 
 @end

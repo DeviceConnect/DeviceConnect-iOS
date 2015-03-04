@@ -1,6 +1,6 @@
 //
 //  DCMLightProfileName.m
-//  DConnectSDK
+//  DCMDevicePluginSDK
 //
 //  Copyright (c) 2014 NTT DOCOMO, INC.
 //  Released under the MIT license
@@ -70,9 +70,16 @@ NSString *const DCMLightProfileParamGroupName = @"groupName";
         } else if ([profile isEqualToString:DCMLightProfileName]
                    && attribute
                    && [attribute isEqualToString:DCMLightProfileInterfaceGroup]
-                   && [self hasMethod:@selector(profile:didReceiveGetLightRequest:response:serviceId:) response:response])
+                   && [self hasMethod:@selector(profile:
+                                                didReceiveGetLightRequest:
+                                                response:
+                                                serviceId:)
+                             response:response])
         {
-            send = [_delegate profile:self didReceiveGetLightGroupRequest:request response:response serviceId:serviceId];
+            send = [_delegate profile:self
+       didReceiveGetLightGroupRequest:request
+                             response:response
+                            serviceId:serviceId];
         } else {
             [response setErrorToNotSupportAttribute];
         }
@@ -104,7 +111,15 @@ NSString *const DCMLightProfileParamGroupName = @"groupName";
         if ([profile isEqualToString:DCMLightProfileName]
             && !interface
             && !attribute
-            && [self hasMethod:@selector(profile:didReceivePostLightRequest:response:serviceId:lightId:brightness:color:flashing:) response:response])
+            && [self hasMethod:@selector(profile:
+                                         didReceivePostLightRequest:
+                                         response:
+                                         serviceId:
+                                         lightId:
+                                         brightness:
+                                         color:
+                                         flashing:)
+                      response:response])
         {
             NSString *lightId = [request stringForKey:DCMLightProfileParamLightId];
             double brightness = 1.0;
@@ -114,12 +129,27 @@ NSString *const DCMLightProfileParamGroupName = @"groupName";
             NSString *color = [request stringForKey:DCMLightProfileParamColor];
             NSArray *flashing = [self parsePattern:[request stringForKey:DCMLightProfileParamFlashing]];
             
-            send = [_delegate profile:self didReceivePostLightRequest:request response:response serviceId:serviceId lightId:lightId brightness:brightness color:color flashing:flashing];
+            send = [_delegate profile:self
+           didReceivePostLightRequest:request
+                             response:response
+                            serviceId:serviceId
+                              lightId:lightId
+                           brightness:brightness
+                                color:color
+                             flashing:flashing];
         } else if ([profile isEqualToString:DCMLightProfileName]
                    && !interface
                    && attribute
                    && [attribute isEqualToString:DCMLightProfileInterfaceGroup]
-                   && [self hasMethod:@selector(profile:didReceivePostLightGroupRequest:response:serviceId:groupId:brightness:color:flashing:) response:response])
+                   && [self hasMethod:@selector(profile:
+                                                didReceivePostLightGroupRequest:
+                                                response:
+                                                serviceId:
+                                                groupId:
+                                                brightness:
+                                                color:
+                                                flashing:)
+                             response:response])
         {
             NSString *groupId = [request stringForKey:DCMLightProfileParamGroupId];
             double brightness = 1.0;
@@ -129,18 +159,36 @@ NSString *const DCMLightProfileParamGroupName = @"groupName";
             NSString *color = [request stringForKey:DCMLightProfileParamColor];
             NSArray *flashing = [self parsePattern:[request stringForKey:DCMLightProfileParamFlashing]];
             
-            send = [_delegate profile:self didReceivePostLightGroupRequest:request response:response serviceId:serviceId groupId:groupId brightness:brightness color:color flashing:flashing];
+            send = [_delegate profile:self
+      didReceivePostLightGroupRequest:request
+                             response:response
+                            serviceId:serviceId
+                              groupId:groupId
+                           brightness:brightness
+                                color:color
+                             flashing:flashing];
         } else if ([profile isEqualToString:DCMLightProfileName]
                    && interface
                    && attribute
                    && [interface isEqualToString:DCMLightProfileInterfaceGroup]
                    && [attribute isEqualToString:DCMLightProfileAttrCreate]
-                   && [self hasMethod:@selector(profile:didReceivePostLightGroupCreateRequest:response:serviceId:lightIds:groupName:) response:response])
+                   && [self hasMethod:@selector(profile:
+                                                didReceivePostLightGroupCreateRequest:
+                                                response:
+                                                serviceId:
+                                                lightIds:
+                                                groupName:)
+                             response:response])
         {
             NSString *lightIds = [request stringForKey:DCMLightProfileParamLightIds];
             NSString *groupName = [request stringForKey:DCMLightProfileParamGroupName];
             NSArray *pattern = [self parsePattern:lightIds];
-            send = [_delegate profile:self didReceivePostLightGroupCreateRequest:request response:response serviceId:serviceId lightIds:pattern groupName:groupName];
+            send = [_delegate profile:self
+didReceivePostLightGroupCreateRequest:request
+                             response:response
+                            serviceId:serviceId
+                             lightIds:pattern
+                            groupName:groupName];
         } else {
             [response setErrorToNotSupportAttribute];
         }
@@ -173,7 +221,16 @@ NSString *const DCMLightProfileParamGroupName = @"groupName";
         if ([profile isEqualToString:DCMLightProfileName]
             && !interface
             && !attribute
-            && [self hasMethod:@selector(profile:didReceivePutLightRequest:response:serviceId:lightId:name:brightness:color:flashing:) response:response])
+            && [self hasMethod:@selector(profile:
+                                         didReceivePutLightRequest:
+                                         response:
+                                         serviceId:
+                                         lightId:
+                                         name:
+                                         brightness:
+                                         color:
+                                         flashing:)
+                      response:response])
         {
             NSString *lightId = [request stringForKey:DCMLightProfileParamLightId];
             double brightness = 1.0;
@@ -184,12 +241,29 @@ NSString *const DCMLightProfileParamGroupName = @"groupName";
             NSString *color = [request stringForKey:DCMLightProfileParamColor];
             NSArray *flashing = [self parsePattern:[request stringForKey:DCMLightProfileParamFlashing]];
             
-            send = [_delegate profile:self didReceivePutLightRequest:request response:response serviceId:serviceId lightId:lightId name:name brightness:brightness color:color flashing:flashing];
+            send = [_delegate profile:self
+            didReceivePutLightRequest:request
+                             response:response
+                            serviceId:serviceId
+                              lightId:lightId
+                                 name:name
+                           brightness:brightness
+                                color:color
+                             flashing:flashing];
         } else if ([profile isEqualToString:DCMLightProfileName]
                    && !interface
                    && attribute
                    && [attribute isEqualToString:DCMLightProfileInterfaceGroup]
-                   && [self hasMethod:@selector(profile:didReceivePutLightGroupRequest:response:serviceId:groupId:name:brightness:color:flashing:) response:response])
+                   && [self hasMethod:@selector(profile:
+                                                didReceivePutLightGroupRequest:
+                                                response:
+                                                serviceId:
+                                                groupId:
+                                                name:
+                                                brightness:
+                                                color:
+                                                flashing:)
+                             response:response])
         {
             NSString *groupId = [request stringForKey:DCMLightProfileParamGroupId];
             double brightness = 1.0;
@@ -200,7 +274,15 @@ NSString *const DCMLightProfileParamGroupName = @"groupName";
             NSString *color = [request stringForKey:DCMLightProfileParamColor];
             NSArray *flashing = [self parsePattern:[request stringForKey:DCMLightProfileParamFlashing]];
             
-            send = [_delegate profile:self didReceivePutLightGroupRequest:request response:response serviceId:serviceId groupId:groupId name:name brightness:brightness color:color flashing:flashing];
+            send = [_delegate profile:self
+       didReceivePutLightGroupRequest:request
+                             response:response
+                            serviceId:serviceId
+                              groupId:groupId
+                                 name:name
+                           brightness:brightness
+                                color:color
+                             flashing:flashing];
         } else {
             [response setErrorToNotSupportAttribute];
         }
@@ -232,27 +314,53 @@ NSString *const DCMLightProfileParamGroupName = @"groupName";
         if ([profile isEqualToString:DCMLightProfileName]
             && !interface
             && !attribute
-            && [self hasMethod:@selector(profile:didReceiveDeleteLightRequest:response:serviceId:lightId:) response:response])
+            && [self hasMethod:@selector(profile:
+                                         didReceiveDeleteLightRequest:
+                                         response:
+                                         serviceId:
+                                         lightId:)
+                      response:response])
         {
             NSString *lightId = [request stringForKey:DCMLightProfileParamLightId];
-            send = [_delegate profile:self didReceiveDeleteLightRequest:request response:response serviceId:serviceId lightId:lightId];
+            send = [_delegate profile:self
+         didReceiveDeleteLightRequest:request
+                             response:response
+                            serviceId:serviceId
+                              lightId:lightId];
         } else if ([profile isEqualToString:DCMLightProfileName]
                    && !interface
                    && attribute
                    && [attribute isEqualToString:DCMLightProfileInterfaceGroup]
-                   && [self hasMethod:@selector(profile:didReceiveDeleteLightGroupRequest:response:serviceId:groupId:) response:response])
+                   && [self hasMethod:@selector(profile:
+                                                didReceiveDeleteLightGroupRequest:
+                                                response:
+                                                serviceId:
+                                                groupId:)
+                             response:response])
         {
             NSString *groupId = [request stringForKey:DCMLightProfileParamGroupId];
-            send = [_delegate profile:self didReceiveDeleteLightGroupRequest:request response:response serviceId:serviceId groupId:groupId];
+            send = [_delegate profile:self
+    didReceiveDeleteLightGroupRequest:request
+                             response:response
+                            serviceId:serviceId
+                              groupId:groupId];
         } else if ([profile isEqualToString:DCMLightProfileName]
                    && interface
                    && attribute
                    && [interface isEqualToString:DCMLightProfileInterfaceGroup]
                    && [attribute isEqualToString:DCMLightProfileAttrClear]
-                   && [self hasMethod:@selector(profile:didReceiveDeleteLightGroupClearRequest:response:serviceId:groupId:) response:response])
+                   && [self hasMethod:@selector(profile:
+                                                didReceiveDeleteLightGroupClearRequest:
+                                                response:
+                                                serviceId:
+                                                groupId:) response:response])
         {
             NSString *groupId = [request stringForKey:DCMLightProfileParamGroupId];
-            send = [_delegate profile:self didReceiveDeleteLightGroupClearRequest:request response:response serviceId:serviceId groupId:groupId];
+            send = [_delegate          profile:self
+        didReceiveDeleteLightGroupClearRequest:request
+                                      response:response
+                                     serviceId:serviceId
+                                       groupId:groupId];
         } else {
             [response setErrorToNotSupportAttribute];
         }

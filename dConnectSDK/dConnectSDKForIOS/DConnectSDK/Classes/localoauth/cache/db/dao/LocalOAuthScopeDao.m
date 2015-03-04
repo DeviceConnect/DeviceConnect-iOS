@@ -12,13 +12,18 @@
 #import "LocalOAuthUtils.h"
 #import "LocalOAuthProfileDao.h"
 #import "LocalOAuthSQLiteScopeInfo.h"
-
+/* scope */
 NSString *const LocalOAuthScopeDaoTableName = @"scopes";
-NSString *const LocalOAuthScopeDaoId = @"id";   /* id(PK) */
-NSString *const LocalOAuthScopeDaoTokenId = @"tokens_tokenid";  /* Tokens.id(FK) */
-NSString *const LocalOAuthScopeDaoProfileId = @"profiles_profileid";    /* profiles.id(FK) */
-NSString *const LocalOAuthScopeDaoTimestamp = @"timestamp"; /* アクセス承認時間(System.currentTimeMills()で取得した時間) */
-NSString *const LocalOAuthScopeDaoExpirePeriod = @"expire_period";  /* 有効期限[sec]({timestamp + expire_period * 1000} が有効期限が切れる時間) */
+ /* id(PK) */
+NSString *const LocalOAuthScopeDaoId = @"id";
+/* Tokens.id(FK) */
+NSString *const LocalOAuthScopeDaoTokenId = @"tokens_tokenid";
+/* profiles.id(FK) */
+NSString *const LocalOAuthScopeDaoProfileId = @"profiles_profileid";
+/* アクセス承認時間(System.currentTimeMills()で取得した時間) */
+NSString *const LocalOAuthScopeDaoTimestamp = @"timestamp";
+/* 有効期限[sec]({timestamp + expire_period * 1000} が有効期限が切れる時間) */
+NSString *const LocalOAuthScopeDaoExpirePeriod = @"expire_period";
 
 @implementation LocalOAuthScopeDao
 
@@ -58,12 +63,10 @@ NSString *const LocalOAuthScopeDaoExpirePeriod = @"expire_period";  /* 有効期
                         [NSNumber numberWithLongLong: scope.expirePeriod]
                         ];
     
-    long long result = [database insertIntoTable:LocalOAuthScopeDaoTableName
+    return (long long) [database insertIntoTable:LocalOAuthScopeDaoTableName
                                          columns:columns
                                           params:params
                         ];
-    
-    return result;
 }
 
 + (void) updateTimestamp: (long long)tokenId

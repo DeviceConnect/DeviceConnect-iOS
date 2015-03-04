@@ -1,6 +1,6 @@
 //
 //  GHMainViewController.m
-//  Browser
+//  dConnectBrowser
 //
 //  Copyright (c) 2014 NTT DOCOMO,INC.
 //  Released under the MIT license
@@ -74,9 +74,6 @@ typedef enum{
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-       
-    }
     return self;
 }
 
@@ -110,9 +107,11 @@ typedef enum{
     // foregroundに来た事を検知した時点では、このアプリを起動したカスタムURLを取得できない。
     // なので、カスタムURLを取得するGHAppDelegateにカスタムURLを引数に取って処理を行うコールバックを渡しておく。
     
-    id<UIApplicationDelegate> appDelegate = [UIApplication sharedApplication].delegate;
+    id<UIApplicationDelegate> appDelegate
+            = [UIApplication sharedApplication].delegate;
     if ([appDelegate isKindOfClass:[GHAppDelegate class]]) {
-        [(GHAppDelegate *)appDelegate setURLLoadingCallback:^(NSURL* redirectURL){
+        [(GHAppDelegate *)appDelegate
+                setURLLoadingCallback:^(NSURL* redirectURL){
             if (redirectURL) {
                 [self loadHtml:redirectURL.absoluteString];
                 
@@ -169,8 +168,6 @@ typedef enum{
     CGRect barFrame = CGRectMake(0, navigaitonBarBounds.size.height - progressBarHeight, navigaitonBarBounds.size.width, progressBarHeight);
     _progressView = [[NJKWebViewProgressView alloc] initWithFrame:barFrame];
     _progressView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin;
-    
-    
     //ブックマーク追加通知
     [[NSNotificationCenter defaultCenter]addObserver:self
                                             selector:@selector(addBookmark)

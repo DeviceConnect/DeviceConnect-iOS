@@ -37,9 +37,16 @@
         [self addProfile:[[DConnectAuthorizationProfile alloc] initWithObject:self]];
         
         // イベント登録
-        NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
-        [nc addObserver:self selector:@selector(applicationDidEnterBackground) name:DConnectApplicationDidEnterBackground object:nil];
-        [nc addObserver:self selector:@selector(applicationWillEnterForeground) name:DConnectApplicationWillEnterForeground object:nil];
+        NSNotificationCenter *notificationCenter
+                                = [NSNotificationCenter defaultCenter];
+        [notificationCenter addObserver:self
+                               selector:@selector(applicationDidEnterBackground)
+                                   name:DConnectApplicationDidEnterBackground
+                                 object:nil];
+        [notificationCenter addObserver:self
+                               selector:@selector(applicationWillEnterForeground)
+                                   name:DConnectApplicationWillEnterForeground
+                                 object:nil];
     }
     return self;
 }
@@ -88,29 +95,27 @@
                                                                         accessToken:accessToken];
         if ([result checkResult]) {
             return [self executeRequest:request response:response];
-        } else {
-            // Local OAuth認証失敗
-            if (accessToken == nil) {
-                [response setErrorToEmptyAccessToken];
-            } else if (![result isExistAccessToken]) {
-                [response setErrorToNotFoundClientId];
-            } else if (![result isExistClientId]) {
-                [response setErrorToNotFoundClientId];
-            } else if (![result isExistScope]) {
-                [response setErrorToScope];
-            } else if (![result isExistNotExpired]) {
-                [response setErrorToExpiredAccessToken];
-            } else {
-                [response setErrorToAuthorization];
-            }
-            // DConnectManagerDeliveryProfileで認証エラー結果を同期で待つので
-            // エラーを返却する場合には、返り値をYESで行うこと。
-            // 認証エラーでアクセストークンの期限切れの場合にはリトライを行う。
-            return YES;
         }
-    } else {
-        return [self executeRequest:request response:response];
+        // Local OAuth認証失敗
+        if (accessToken == nil) {
+            [response setErrorToEmptyAccessToken];
+        } else if (![result isExistAccessToken]) {
+            [response setErrorToNotFoundClientId];
+        } else if (![result isExistClientId]) {
+            [response setErrorToNotFoundClientId];
+        } else if (![result isExistScope]) {
+            [response setErrorToScope];
+        } else if (![result isExistNotExpired]) {
+            [response setErrorToExpiredAccessToken];
+        } else {
+            [response setErrorToAuthorization];
+        }
+        // DConnectManagerDeliveryProfileで認証エラー結果を同期で待つので
+        // エラーを返却する場合には、返り値をYESで行うこと。
+        // 認証エラーでアクセストークンの期限切れの場合にはリトライを行う。
+        return YES;
     }
+    return [self executeRequest:request response:response];
 }
 
 - (BOOL) sendEvent:(DConnectMessage *)event {

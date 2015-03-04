@@ -1,6 +1,6 @@
 //
 //  DPPebbleServiceDiscoveryProfile.m
-//  DConnectSDK
+//  dConnectDevicePebble
 //
 //  Copyright (c) 2014 NTT DOCOMO, INC.
 //  Released under the MIT license
@@ -27,7 +27,9 @@
 }
 
 //  dConnect Managerに接続されている、デバイスプラグイン対応デバイス一覧を取得する。
-- (BOOL) profile:(DConnectServiceDiscoveryProfile *)profile didReceiveGetServicesRequest:(DConnectRequestMessage *)request response:(DConnectResponseMessage *)response
+- (BOOL)                 profile:(DConnectServiceDiscoveryProfile *)profile
+    didReceiveGetServicesRequest:(DConnectRequestMessage *)request
+                        response:(DConnectResponseMessage *)response
 {
 	DConnectArray *services = [DConnectArray array];
 	
