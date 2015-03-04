@@ -45,15 +45,19 @@ DPHostCanvasUIViewController *_displayViewController;
 
 - (BOOL) profile:(DConnectCanvasProfile *)profile didReceivePostDrawImageRequest:(DConnectRequestMessage *)request
         response:(DConnectResponseMessage *)response
-        serviceId:(NSString *)deviceId
+        serviceId:(NSString *)serviceId
         mimeType:(NSString *)mimeType
             data:(NSData *)data
           imageX:(double)imageX
           imageY:(double)imageY
             mode:(NSString *)mode
 {
-    if (data == nil) {
+    if (data == nil || [data length] <= 0) {
         [response setErrorToInvalidRequestParameterWithMessage:@"data is not specied to update a file."];
+        return YES;
+    }
+    if (serviceId == nil || [serviceId length] <= 0) {
+        [response setErrorToEmptyServiceId];
         return YES;
     }
     
