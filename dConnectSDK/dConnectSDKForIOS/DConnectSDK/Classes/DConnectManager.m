@@ -106,7 +106,9 @@ NSString *const DConnectAttributeNameGetNetworkServices = @"getNetworkServices";
  @param[in,out] response レスポンス
  @param[in] callback コールバック
  */
-- (void) executeRequest:(DConnectRequestMessage *)request response:(DConnectResponseMessage *)response callback:(DConnectResponseBlocks)callback;
+- (void) executeRequest:(DConnectRequestMessage *)request
+               response:(DConnectResponseMessage *)response
+               callback:(DConnectResponseBlocks)callback;
 
 /**
  * タイムアウトのレスポンスを返す.
@@ -161,16 +163,23 @@ NSString *const DConnectAttributeNameGetNetworkServices = @"getNetworkServices";
     return self.mStartFlag;
 }
 
-- (void) sendRequest:(DConnectRequestMessage *)request isHttp:(BOOL)isHttp callback:(DConnectResponseBlocks)callback
+- (void) sendRequest:(DConnectRequestMessage *)request
+              isHttp:(BOOL)isHttp
+            callback:(DConnectResponseBlocks)callback
 {
     if (request) {
         __weak DConnectManager *_self = self;
-        // iOS Message APIリクエストの実行をUIスレッドで行うと、タイムアウト用のスレッド制御処理の影響でデバイスプラグインで
+        // iOS Message APIリクエストの実行をUIスレッドで行うと、
+        // タイムアウト用のスレッド制御処理の影響でデバイスプラグインで
         // UIスレッドが使用できなくなるため、常に非同期で行う。
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            // DConnectManagerではsessionKeyにプラグインIDを付与するなどリクエストデータを書き換える処理が
-            // 発生するため、呼び出し元でデータの齟齬が無いようにリクエストデータをコピーする。
-            // Webからのリクエストの場合は呼び出しもとで当メソッドの呼び出し後にリクエストデータを参照することが
+        dispatch_async(
+                dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            // DConnectManagerではsessionKeyにプラグインIDを
+            // 付与するなどリクエストデータを書き換える処理が
+            // 発生するため、呼び出し元でデータの齟齬が
+            // 無いようにリクエストデータをコピーする。
+            // Webからのリクエストの場合は呼び出しもとで
+            // 当メソッドの呼び出し後にリクエストデータを参照することが
             // ないためネイティブからの呼び出し時のみコピーを行う。
             DConnectRequestMessage *tmpReq = isHttp ? request : [request copy];
             DConnectResponseMessage *response = [DConnectResponseMessage message];
@@ -187,26 +196,71 @@ NSString *const DConnectAttributeNameGetNetworkServices = @"getNetworkServices";
     [self sendRequest:request isHttp:NO callback:callback];
 }
 
+- (void)makeEventMessage:(DConnectMessage *)event
+                     key:(NSString *)key
+             hasDelegate:(BOOL)hasDelegate
+                  plugin:(DConnectDevicePlugin *)plugin
+{
+    NSString *profile = [event stringForKey:DConnectMessageProfile];
+    NSString *attribute = [event stringForKey:DConnectMessageAttribute];
+    if ([profile isEqualToString:DConnectServiceDiscoveryProfileName] &&
+        [attribute isEqualToString:DConnectServiceDiscoveryProfileAttrOnServiceChange]) {
+        
+        // サービスIDを付加する
+        DConnectMessage *service = [event messageForKey:DConnectServiceDiscoveryProfileParamNetworkService];
+        NSString *serviceId = [service stringForKey:DConnectServiceDiscoveryProfileParamId];
+        NSString *did = [_mDeviceManager serviceIdByAppedingPluginIdWithDevicePlugin:plugin
+                                                                           serviceId:serviceId];
+        [service setString:did forKey:DConnectServiceDiscoveryProfileParamId];
+        DConnectEventManager *mgr = [DConnectEventManager sharedManagerForClass:[DConnectManager class]];
+        NSArray *evts = [mgr eventListForProfile:profile attribute:attribute];
+        
+        for (DConnectEvent *evt in evts) {
+            [event setString:evt.sessionKey forKey:DConnectMessageSessionKey];
+            
+            if (hasDelegate) {
+                [self.delegate manager:self didReceiveDConnectMessage:event];
+            } else {
+                NSString *json = [event convertToJSONString];
+                [self.mWebsocket sendEvent:json forSessionKey:evt.sessionKey];
+            }
+        }
+    } else {
+        
+        // serviceIdにプラグインIDを付加
+        NSString *serviceId = [event stringForKey:DConnectMessageServiceId];
+        if (serviceId) {
+            NSString *did = [_mDeviceManager serviceIdByAppedingPluginIdWithDevicePlugin:plugin
+                                                                               serviceId:serviceId];
+            [event setString:did forKey:DConnectMessageServiceId];
+        }
+        
+        if (hasDelegate) {
+            [self.delegate manager:self didReceiveDConnectMessage:event];
+        } else {
+            NSString *json = [event convertToJSONString];
+            [self.mWebsocket sendEvent:json forSessionKey:key];
+        }
+    }
+}
+
 - (BOOL) sendEvent:(DConnectMessage *)event {
     NSString *sessionKey = [event stringForKey:DConnectMessageSessionKey];
     if (sessionKey) {
-        
-        // セッションキーからデバイスプラグインIDを取得
-        // また、セッションキーからデバイスプラグインIDを削除する
         NSArray *names = [sessionKey componentsSeparatedByString:@"."];
         NSString *pluginId = names[names.count - 1];
         NSRange range = [sessionKey rangeOfString:pluginId];
-        NSString *s;
+        NSString *key;
         if (range.location != NSNotFound) {
             if (range.location == 0) {
-                s = sessionKey;
+                key = sessionKey;
             } else {
-                s = [sessionKey substringToIndex:range.location - 1];
+                key = [sessionKey substringToIndex:range.location - 1];
             }
         } else {
-            s = sessionKey;
+            key = sessionKey;
         }
-        [event setString:s forKey:DConnectMessageSessionKey];
+        [event setString:key forKey:DConnectMessageSessionKey];
 
         DConnectDevicePlugin *plugin = [_mDeviceManager devicePluginForPluginId:pluginId];
         
@@ -217,53 +271,7 @@ NSString *const DConnectAttributeNameGetNetworkServices = @"getNetworkServices";
             // イベントのJSONにあるURIをFilesプロファイルに変換
             [DConnectURLProtocol convertUri:event];
         }
-        
-        // Service Discoveryのイベントだけは別に処理する
-        // このイベントは特殊で新規デバイス発見を通知するので、serviceIdが指定することができない。
-        // なので、全体的に送る必要が有る
-        NSString *profile = [event stringForKey:DConnectMessageProfile];
-        NSString *attribute = [event stringForKey:DConnectMessageAttribute];
-        if ([profile isEqualToString:DConnectServiceDiscoveryProfileName] &&
-            [attribute isEqualToString:DConnectServiceDiscoveryProfileAttrOnServiceChange]) {
-            
-            // networkSeviceに含まれるidにデバイスプラグインIDを付加する
-            DConnectMessage *service = [event messageForKey:DConnectServiceDiscoveryProfileParamNetworkService];
-            NSString *serviceId = [service stringForKey:DConnectServiceDiscoveryProfileParamId];
-            NSString *did = [_mDeviceManager serviceIdByAppedingPluginIdWithDevicePlugin:plugin
-                                                                               serviceId:serviceId];
-            [service setString:did forKey:DConnectServiceDiscoveryProfileParamId];;
-            
-            // 各イベントを送信
-            DConnectEventManager *mgr = [DConnectEventManager sharedManagerForClass:[DConnectManager class]];
-            NSArray *evts = [mgr eventListForProfile:profile attribute:attribute];
-            
-            for (DConnectEvent *evt in evts) {
-                [event setString:evt.sessionKey forKey:DConnectMessageSessionKey];
-                
-                if (hasDelegate) {
-                    [self.delegate manager:self didReceiveDConnectMessage:event];
-                } else {
-                    NSString *json = [event convertToJSONString];
-                    [self.mWebsocket sendEvent:json forSessionKey:evt.sessionKey];
-                }
-            }
-        } else {
-            
-            // serviceIdにプラグインIDを付加
-            NSString *serviceId = [event stringForKey:DConnectMessageServiceId];
-            if (serviceId) {
-                NSString *did = [_mDeviceManager serviceIdByAppedingPluginIdWithDevicePlugin:plugin
-                                                                                   serviceId:serviceId];
-                [event setString:did forKey:DConnectMessageServiceId];
-            }
-            
-            if (hasDelegate) {
-                [self.delegate manager:self didReceiveDConnectMessage:event];
-            } else {
-                NSString *json = [event convertToJSONString];
-                [self.mWebsocket sendEvent:json forSessionKey:s];
-            }
-        }
+        [self makeEventMessage:event key:key hasDelegate:hasDelegate plugin:plugin];
     }
     return NO;
 }
@@ -304,7 +312,10 @@ NSString *const DConnectAttributeNameGetNetworkServices = @"getNetworkServices";
         
         // イベント管理クラス
         Class key = [self class];
-        [[DConnectEventManager sharedManagerForClass:key] setController:[DConnectDBCacheController controllerWithClass:key]];
+        [[DConnectEventManager sharedManagerForClass:key]
+                                setController:
+                                    [DConnectDBCacheController
+                                            controllerWithClass:key]];
 
         self.mDeviceManager = [DConnectDevicePluginManager new];
         self.mProfileMap = [NSMutableDictionary dictionary];
@@ -324,7 +335,9 @@ NSString *const DConnectAttributeNameGetNetworkServices = @"getNetworkServices";
     return self;
 }
 
-- (void) executeRequest:(DConnectRequestMessage *)request response:(DConnectResponseMessage *)response callback:(DConnectResponseBlocks)callback {
+- (void) executeRequest:(DConnectRequestMessage *)request
+               response:(DConnectResponseMessage *)response
+               callback:(DConnectResponseBlocks)callback {
     [request setString:DConnectManagerName forKey:DConnectMessageProduct];
     [request setString:DConnectManagerVersion forKey:DConnectMessageVersion];
     
@@ -337,7 +350,8 @@ NSString *const DConnectAttributeNameGetNetworkServices = @"getNetworkServices";
         processed = [profile didReceiveRequest:request response:response];
     }
     
-    // 未だresponseが処理済みでなければ、送られてきたリクエストをデバイスプラグインに送る。
+    // 未だresponseが処理済みでなければ、
+    // 送られてきたリクエストをデバイスプラグインに送る。
     if (!processed) {
         processed = [self.mDeliveryProfile didReceiveRequest:request response:response];
     }
@@ -400,11 +414,14 @@ NSString *const DConnectAttributeNameGetNetworkServices = @"getNetworkServices";
                 [_self sendResponse:response];
             }
         } else {
-            [_self executeRequest:request response:response callback:callback];
+            [_self executeRequest:request
+                         response:response
+                         callback:callback];
         }
     });
     
-    // 非同期で各プロファイルの処理を出来るようにするため、sendResponseされるまで待つ。
+    // 非同期で各プロファイルの処理を出来るようにするため、
+    // sendResponseされるまで待つ。
     // タイムアウトの場合はタイムアウトエラーをレスポンスとして返す。
     long result = dispatch_semaphore_wait(semaphore, timeout);
     if (result != 0) {
@@ -422,7 +439,7 @@ NSString *const DConnectAttributeNameGetNetworkServices = @"getNetworkServices";
     @synchronized (_mResponseBlockMap) {
         DConnectResponseCallbackInfo *info = [[DConnectResponseCallbackInfo alloc] initWithCallback:callback
                                                                                           semaphore:semaphore];
-        [_mResponseBlockMap setObject:info forKey:key];
+        _mResponseBlockMap[key] = info;
     }
 }
 

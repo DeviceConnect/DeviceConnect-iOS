@@ -46,7 +46,7 @@ NSString *const DConnectMemoryCacheControllerEmptyServiceId = @"";
     
     if (!events) {
         events = [NSMutableDictionary dictionary];
-        [_eventMap setObject:events forKey:serviceId];
+        _eventMap[serviceId] = events;
     }
     
     NSMutableString *path = [NSMutableString stringWithString:event.profile];
@@ -58,7 +58,7 @@ NSString *const DConnectMemoryCacheControllerEmptyServiceId = @"";
     NSMutableArray *eventList = [events objectForKey:path];
     if (!eventList) {
         eventList = [NSMutableArray array];
-        [events setObject:eventList forKey:path];
+        events[path] = eventList;
     }
     
     for (DConnectEvent *e in eventList) {
@@ -150,11 +150,11 @@ NSString *const DConnectMemoryCacheControllerEmptyServiceId = @"";
     
     DC_SYNC_START(self);
     
-    serviceId = [self serviceIdByCheckingServiceIdIsEmpty:serviceId];
-    NSMutableDictionary *events = [_eventMap objectForKey:serviceId];
+    NSString* sId = [self serviceIdByCheckingServiceIdIsEmpty:serviceId];
+    NSMutableDictionary *events = [_eventMap objectForKey:sId];
     
     if (!events) {
-        return [NSArray array];
+        return @[];
     }
     
     NSMutableString *path = [NSMutableString stringWithString:profile];
@@ -166,7 +166,7 @@ NSString *const DConnectMemoryCacheControllerEmptyServiceId = @"";
     
     NSMutableArray *eventList = [events objectForKey:path];
     if (!eventList) {
-        return [NSArray array];
+        return @[];
     }
     
     return eventList;
@@ -210,12 +210,12 @@ NSString *const DConnectMemoryCacheControllerEmptyServiceId = @"";
 
 - (NSString *) serviceIdByCheckingServiceIdIsEmpty:(NSString *)serviceId
 {
-    
-    if (!serviceId || serviceId.length == 0) {
-        serviceId = DConnectMemoryCacheControllerEmptyServiceId;
+    NSString* sId = serviceId;
+    if (!sId || sId.length == 0) {
+        sId = DConnectMemoryCacheControllerEmptyServiceId;
     }
     
-    return serviceId;
+    return sId;
 }
 
 @end

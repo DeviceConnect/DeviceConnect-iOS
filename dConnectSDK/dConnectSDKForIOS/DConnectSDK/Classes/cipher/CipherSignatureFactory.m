@@ -21,9 +21,8 @@
     if ([CipherSignatureProcMD isSupport: signatureKind]) {
         CipherSignatureProcMD *signatureProc = [CipherSignatureProcMD allocWithSignatureKind: signatureKind];
         return signatureProc;
-    } else {
-        @throw @"signatureKind is not support.";
     }
+    @throw @"signatureKind is not support.";
 }
 
 

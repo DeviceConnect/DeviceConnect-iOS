@@ -17,7 +17,10 @@ NSString *const DConnectProfileDaoClmName = @"name";
 
 + (void) createWithDatabase:(DConnectSQLiteDatabase *)database {
     
-    NSString *sql = DCEForm(@"CREATE TABLE %@ (%@ INTEGER PRIMARY KEY AUTOINCREMENT, %@ TEXT NOT NULL, %@ INTEGER NOT NULL, %@ INTEGER NOT NULL, UNIQUE(%@));",
+    NSString *sql = DCEForm(@"CREATE TABLE %@ "
+                            "(%@ INTEGER PRIMARY KEY AUTOINCREMENT, "
+                            "%@ TEXT NOT NULL, %@ INTEGER NOT NULL, "
+                            "%@ INTEGER NOT NULL, UNIQUE(%@));",
                             DConnectProfileDaoTableName,
                             DConnectEventDaoClmId,
                             DConnectProfileDaoClmName,

@@ -1,6 +1,6 @@
 //
 //  DPHostMediaStreamRecordingProfile.m
-//  DConnectSDK
+//  dConnectDeviceHost
 //
 //  Copyright (c) 2014 NTT DOCOMO, INC.
 //  Released under the MIT license
@@ -33,12 +33,14 @@ typedef NS_ENUM(NSUInteger, OptionIndex) {
 @property NSDictionary *cameraInfoDict;
 /*!
  デフォルトの静止画レコーダーのID
- iOSデバイスによっては背面カメラが無かったりと差異があるので、ランタイム時にデフォルトのレコーダーを決定する処理を行う。
+ iOSデバイスによっては背面カメラが無かったりと差異があるので、
+ ランタイム時にデフォルトのレコーダーを決定する処理を行う。
  */
 @property (nonatomic) NSNumber *defaultPhotoRecorderId;
 /*!
  デフォルトの動画レコーダーのID
- iOSデバイスによっては背面カメラが無かったりと差異があるので、ランタイム時にデフォルトのレコーダーを決定する処理を行う。
+ iOSデバイスによっては背面カメラが無かったりと差異があるので、
+ ランタイム時にデフォルトのレコーダーを決定する処理を行う。
  */
 @property (nonatomic) NSNumber *defaultVideoRecorderId;
 /*!
@@ -64,9 +66,11 @@ typedef NS_ENUM(NSUInteger, OptionIndex) {
 /*!
  @brief iOSデバイスの向き
  画面が天井や地面を向いた際は、無視して以前の向き情報を保持する。
- UIDeviceOrientationPortraitUpsideDown: この場合、iOSデバイスを正面に見据えて、デバイスを反時計回りに180°回転し、
+ UIDeviceOrientationPortraitUpsideDown: 
+ この場合、iOSデバイスを正面に見据えて、デバイスを反時計回りに180°回転し、
  Homeボタンが上方向にある状態。
- UIDeviceOrientationLandscapeLeft: この場合、iOSデバイスを正面に見据えて、デバイスを反時計回りに90°回転し、
+ UIDeviceOrientationLandscapeLeft: 
+ この場合、iOSデバイスを正面に見据えて、デバイスを反時計回りに90°回転し、
  Homeボタンが右方向にある状態。
  */
 @property (nonatomic) UIDeviceOrientation referenceOrientation;
@@ -127,7 +131,9 @@ typedef NS_ENUM(NSUInteger, OptionIndex) {
  サンプルデータを書き込む。
  @param sampleBuffer オーディオもしくはビデオのサンプルデータ
  @param recorderCtx AssetWriterInputを保持するレコーダー管理オブジェクト
- @param isAudio <code>YES</code>ならばオーディオAssetWriterInputに、<code>NO</code>ならばビデオAssetWriterInputに<code>sampleBuffer</code>を追加
+ @param isAudio <code>YES</code>ならばオーディオAssetWriterInputに、
+        <code>NO</code>ならばビデオAssetWriterInputに
+        <code>sampleBuffer</code>を追加
  @retval YES <code>sampleBuffer</code>のAssetWriterInputへの書き込みに成功。
  @retval NO <code>sampleBuffer</code>のAssetWriterInputへの書き込みに失敗。
  */
@@ -145,34 +151,20 @@ typedef NS_ENUM(NSUInteger, OptionIndex) {
     self = [super init];
     if (self) {
         self.delegate = self;
-        
-        // イベントマネージャを取得
         self.eventMgr = [DConnectEventManager sharedManagerForClass:[DPHostDevicePlugin class]];
         
         self.recorderArr = [NSMutableArray array];
-        
-        // iOSデバイスの向きを常に参照できる様にする
         NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
         [notificationCenter addObserver:self selector:@selector(deviceOrientationDidChange)
                                    name:UIDeviceOrientationDidChangeNotification object:nil];
         [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
-        
-        // プレビュー画像名に付加する連番は0から発番する。
         self.curPreviewImageEnumerator = 0;
         self.currentRecorderId = nil;
-        // Data Available Event APIでおおよそ、1秒毎に5フレームのプレビューを送る様に設定。
         self.secPerFrame = CMTimeMake(2, 1000);
-        // 未だプレビューを送った事は無いので、無効値を設定しておく。
         self.lastPreviewTimestamp = kCMTimeInvalid;
-        
-        // ポーズ関連の変数を初期化
         self.lastSampleTimestamp = kCMTimeInvalid;
         self.totalPauseDuration = kCMTimeInvalid;
         self.needRecalculationOfTotalPauseDuration = NO;
-        
-        //
-        // 各種レコーダーが保持することになる入力データソースを初期化する。
-        //
         DPHostRecorderDataSource *recCtx;
         AVCaptureSession *session;
         self.photoDataSourceArr = [NSMutableArray array];
@@ -192,26 +184,19 @@ typedef NS_ENUM(NSUInteger, OptionIndex) {
                 [self.audioDataSourceArr addObject:recCtx];
             }
         }
-        
         for (AVCaptureDevice *videoDev in videoDevArr) {
-            // 出力：写真
             session = [AVCaptureSession new];
             recCtx = [DPHostRecorderDataSource recorderDataSourceForPhotoWithVideoDevice:videoDev];
             
             if (recCtx) {
                 recCtx.position = videoDev.position;
-                // TODO: 写真の縦横サイズは撮影後なら取得できるが、撮影前には取得できないし、設定もできない感じ。
                 [self.photoDataSourceArr addObject:recCtx];
             }
-            
-            // 出力：動画
             session = [AVCaptureSession new];
             recCtx = [DPHostRecorderDataSource recorderDataSourceForVideoWithVideoDevice:videoDev];
             
             if (recCtx) {
                 recCtx.position = videoDev.position;
-                
-                // TODO: configで各種設定情報（設定項目、設定可能な値、現在の設定値など）を表示させる。
                 NSMutableArray *dimensionArr =
                 @[
                   AVCaptureSessionPreset352x288,
@@ -246,21 +231,11 @@ typedef NS_ENUM(NSUInteger, OptionIndex) {
                 [self.videoDataSourceArr addObject:recCtx];
             }
         }
-        
-        //
-        // 入力データソースの組み合わせでレコーダー（写真用 or 動画用）を定義する。
-        //
-        // RecorderDataSourceType ⇒ RecorderType
-        // Photo                  ⇒ Photo
-        // Audio and/or Video     ⇒ Movie
-        //
         unsigned long videoNormalCount = 0;
         unsigned long videoBackCount = 0;
         unsigned long videoFrontCount = 0;
         for (DPHostRecorderDataSource *dataSrc in self.photoDataSourceArr) {
-            // 写真
             if ([dataSrc.uniqueId isEqualToString:defaultVideoDevUId]) {
-                // デフォルトビデオであれば、この静止画レコーダーをデフォルト静止画レコーダーにする。
                 self.defaultPhotoRecorderId = [NSNumber numberWithUnsignedInteger:self.recorderArr.count];
             }
             
@@ -300,8 +275,6 @@ typedef NS_ENUM(NSUInteger, OptionIndex) {
         for (DPHostRecorderDataSource *videoDataSrc in self.videoDataSourceArr) {
             // 動画（ビデオのみ）
             if (self.audioDataSourceArr.count == 0 && [videoDataSrc.uniqueId isEqualToString:defaultVideoDevUId]) {
-                // 音声レコーダーが無い場合は、ビデオのみ・音声抜きのレコーダーをデフォルトにする。
-                // デフォルトビデオであれば、この動画レコーダーをデフォルト動画レコーダーにする。
                 self.defaultVideoRecorderId = [NSNumber numberWithUnsignedInteger:self.recorderArr.count];
             }
             DPHostRecorderContext *recorder;
@@ -310,7 +283,6 @@ typedef NS_ENUM(NSUInteger, OptionIndex) {
             for (DPHostRecorderDataSource *audioDataSrc in self.audioDataSourceArr) {
                 // 動画（動画・音声）
                 if ([videoDataSrc.uniqueId isEqualToString:defaultVideoDevUId]) {
-                    // デフォルトビデオであれば、この動画レコーダーをデフォルト動画レコーダーにする。
                     self.defaultVideoRecorderId = [NSNumber numberWithUnsignedInteger:self.recorderArr.count];
                 }
                 
@@ -387,13 +359,14 @@ typedef NS_ENUM(NSUInteger, OptionIndex) {
         return NO;
     }
     
-    const AudioStreamBasicDescription *currentASBD = CMAudioFormatDescriptionGetStreamBasicDescription(currentFormatDescription);
+    const AudioStreamBasicDescription *currentASBD
+            = CMAudioFormatDescriptionGetStreamBasicDescription(currentFormatDescription);
     
     size_t aclSize = 0;
-    const AudioChannelLayout *currentChannelLayout = CMAudioFormatDescriptionGetChannelLayout(currentFormatDescription, &aclSize);
+    const AudioChannelLayout *currentChannelLayout
+            = CMAudioFormatDescriptionGetChannelLayout(currentFormatDescription, &aclSize);
     NSData *currentChannelLayoutData = nil;
     
-    // AVChannelLayoutKey must be specified, but if we don't know any better give an empty data and let AVAssetWriter decide.
     if ( currentChannelLayout && aclSize > 0 )
         currentChannelLayoutData = [NSData dataWithBytes:currentChannelLayout length:aclSize];
     else
@@ -566,7 +539,8 @@ typedef NS_ENUM(NSUInteger, OptionIndex) {
     // イベントの取得
     NSArray *evts = [_eventMgr eventListForServiceId:ServiceDiscoveryServiceId
                                             profile:DConnectMediaStreamRecordingProfileName
-                                          attribute:DConnectMediaStreamRecordingProfileAttrOnPhoto];
+                                           attribute:DConnectMediaStreamRecordingProfileAttrOnRecordingChange];
+
     // イベント送信
     for (DConnectEvent *evt in evts) {
         DConnectMessage *eventMsg = [DConnectEventManager createEventMessageWithEvent:evt];
@@ -609,7 +583,10 @@ typedef NS_ENUM(NSUInteger, OptionIndex) {
     
     // Create a bitmap graphics context with the sample buffer data
     CGContextRef context = CGBitmapContextCreate(baseAddress, width, height, 8,
-                                                 bytesPerRow, colorSpace, kCGBitmapByteOrder32Little | kCGImageAlphaPremultipliedFirst);
+                                                 bytesPerRow,
+                                                 colorSpace,
+                                                 kCGBitmapByteOrder32Little
+                                                 | kCGImageAlphaPremultipliedFirst);
     // Create a Quartz image from the pixel data in the bitmap graphics context
     CGImageRef quartzImage = CGBitmapContextCreateImage(context);
     // Unlock the pixel buffer
@@ -632,8 +609,6 @@ typedef NS_ENUM(NSUInteger, OptionIndex) {
 {
     NSURL *fileURL;
     NSArray *evts;
-    // OpenGL周り（恐らくテクスチャバッファ？）の変数が乱立するなどしてメモリ不足でアプリが落ちる問題への対処。
-    // http://stackoverflow.com/questions/22131595/ciimage-memory-leak#answer-22132523
     @autoreleasepool {
         CVImageBufferRef imageBuffer = CMSampleBufferGetImageBuffer(sampleBuffer);
         if (!imageBuffer) {
@@ -694,16 +669,11 @@ typedef NS_ENUM(NSUInteger, OptionIndex) {
 
 #pragma mark - AVCapture{Audio,Video}DataOutputSampleBufferDelegate
 
-// MARK: -captureOutput:didOutputSampleBuffer:fromConnection: はDPHostRecorderContext毎で実装すべきか？
-// キャプチャーセッションやアセットライターを用意するのはDPHostRecorderContextなので、そっちがデリゲートになった方が
-// 簡単にDPHostRecorderContext自体にアクセスできて良い気がする。
-// サンプルをもらう入り口が1つ（現状）か、それとも複数か（DPHostRecorderContext毎）か。最終的には
-// サンプルをレコーディングを行いかつ同じ入力デバイスを持っているDPHostRecorderContextにサンプルを分配しているので、
-// だったら複数のサンプル受け取り口でもいいのかなぁと思う。
 - (void)captureOutput:(AVCaptureOutput *)captureOutput
 didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
        fromConnection:(AVCaptureConnection *)connection
 {
+    CMSampleBufferRef buffer = sampleBuffer;
     // オーディオ・ビデオのどちらからデータが来たかのフラグ
     BOOL isAudio;
     if ([captureOutput isKindOfClass:[AVCaptureAudioDataOutput class]]) {
@@ -715,7 +685,7 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
         return;
     }
     
-    CMTime originalSampleBufferTimestamp = CMSampleBufferGetPresentationTimeStamp(sampleBuffer);
+    CMTime originalSampleBufferTimestamp = CMSampleBufferGetPresentationTimeStamp(buffer);
     if (!CMTIME_IS_NUMERIC(originalSampleBufferTimestamp)) {
         NSLog(@"Invalid %@ timestamp; could not append the sample.", isAudio ? @"audio" : @"video");
         return;
@@ -725,19 +695,15 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
     BOOL adjustTimestamp = YES;
     BOOL initMuteSample = YES;
     BOOL requireRelease = NO;
-    CMFormatDescriptionRef formatDescription = CMSampleBufferGetFormatDescription(sampleBuffer);
+    CMFormatDescriptionRef formatDescription = CMSampleBufferGetFormatDescription(buffer);
     for (DPHostRecorderContext *recorder in _recorderArr) {
-        // レコーダーをイテレートし、レコーディングサンプルを書き込む必要の有るレコーダーを探す。
         if (recorder.state != RecorderStateRecording) {
-            // レコード中でなければ、このレコーダーはスキップする。
             continue;
         }
         
         if (isAudio) {
             // オーディオ
             if (recorder.audioConnection != connection) {
-                // このレコーダーのオーディオ録画デバイスと紐づけられたconnectionではないので、
-                // sampleBufferは関係ないレコーディングサンプル；レコーダーをスキップする。
                 continue;
             }
             if (!recorder.audioReady &&
@@ -748,10 +714,10 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
                 [recorder.session stopRunning];
                 
                 [recorder.response setErrorToUnknownWithMessage:
-                 [NSString stringWithFormat:@"Failed to add an audio input to an asset writer for recorder \"%@\".", recorder.name]];
+                 [NSString stringWithFormat:
+                    @"Failed to add an audio input to an asset writer for recorder \"%@\".",
+                        recorder.name]];
                 [recorder sendResponse];
-                
-                // TODO: レコーダーの初期化コードを関数化
                 recorder.state = RecorderStateInactive;
                 recorder.audioReady = recorder.videoReady = NO;
                 recorder.writer = nil;
@@ -762,8 +728,6 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
         } else {
             // ビデオ
             if (recorder.videoConnection != connection) {
-                // このレコーダーのビデオ録画デバイスと紐づけられたconnectionではないので、
-                // sampleBufferは関係ないレコーディングサンプル；レコーダーをスキップする。
                 continue;
             }
             if (!recorder.videoReady &&
@@ -774,7 +738,9 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
                 [recorder.session stopRunning];
                 
                 [recorder.response setErrorToUnknownWithMessage:
-                 [NSString stringWithFormat:@"Failed to add an video input to an asset writer for recorder \"%@\".", recorder.name]];
+                 [NSString stringWithFormat:
+                    @"Failed to add an video input to an asset writer for recorder \"%@\".",
+                        recorder.name]];
                 [recorder sendResponse];
                 
                 // TODO: レコーダーの初期化コードを関数化
@@ -789,16 +755,7 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
         
         if ((!recorder.audioDevice || recorder.audioReady) &&
             (!recorder.videoDevice || recorder.videoReady)) {
-            // 使用するレコーディングデバイス全てのレコーディング準備が整ったので、
-            // レコーディングサンプルのファイル書き出しを始める。
-            
             if (_needRecalculationOfTotalPauseDuration) {
-                // レコーディングをする機器が確認できた上で、ポーズの累計期間を再計算（直近のポーズの期間を追加）する。
-                // ひょっとするとポーズ状態になった後でサンプルが遅れてやってくるかもしれず、そこで
-                // ポーズの累計期間の再計算が行われると間違った計算が行われ、タイミング修正ロジックが破綻してしまう；
-                // それを避ける為にも RecorderStateRecording である事、実際にサンプルを書き込む為の準備ができている事
-                // を確認しない事には再計算を行わない様にした。
-                
                 if (!isAudio) {
                     return;
                 }
@@ -821,33 +778,25 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
             }
             
             if (adjustTimestamp) {
-                CFRetain(sampleBuffer);
+                CFRetain(buffer);
                 
                 // ポーズの累計期間に応じたサンプルのタイミング修正を行う。
                 if (CMTIME_IS_NUMERIC(_totalPauseDuration) && _totalPauseDuration.value != 0) {
                     // タイムスタンプのタイムスタンプをポーズの累計期間に応じて調整する
                     CMSampleBufferRef tmp = [self sampleBufferByAdjustingTimestamp:sampleBuffer by:_totalPauseDuration];
                     CFRelease(sampleBuffer);
-                    sampleBuffer = tmp;
+                    buffer = tmp;
                 }
                 adjustTimestamp = NO;
                 requireRelease = YES;
             }
             
             if (isAudio && recorder.isMuted && initMuteSample) {
-                // ミュートの場合に、音声サンプルの音量を0に設定する。
-                // 音声のAVCaptureSessionやAVCaptureConnectionを無効化して音声サンプルがこない様にする実装だが、
-                // 有効化して再度サンプルを受け取り始めた場合、サンプルが追加される時間的位置が本来の位置（有効化された時）
-                // でなく、無効化された直後に追加されてしまうので「ミュートの間は無音」という結果を実現できない。
-                // なので音声サンプルは依然として受け取る様にして、その時間的位置を利用しながらも音量だけは0にする対応を採っている。
-                //
-                // TODO: 内蔵マイク以外からの音声入力、特にチャンネル数が2つ以上な物にも対応しているか要検証。
-                // 多チャンネル音声ファイルからCMSampleBufferRefを取得して、どうやってデータを弄るべきか調べるなど。
-                CMBlockBufferRef buffer = CMSampleBufferGetDataBuffer(sampleBuffer);
+                CMBlockBufferRef buf = CMSampleBufferGetDataBuffer(buffer);
                 size_t length;
                 size_t totalLength;
                 char* data;
-                if (CMBlockBufferGetDataPointer(buffer, 0, &length, &totalLength, &data) != noErr) {
+                if (CMBlockBufferGetDataPointer(buf, 0, &length, &totalLength, &data) != noErr) {
                     NSLog(@"Failed to set audio amplitude to 0 for muting.");
                 } else {
                     for (size_t i = 0; i < length; ++i) {
@@ -871,22 +820,15 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
                         [self sendOnDataAvailableEventWithSampleBuffer:sampleBuffer];
                     }
                 } else {
-                    // lastPreviewTimestampが invalid・±infinity・indefiniteな場合；バグ？
-                    // 取り敢えずsampleBufferのタイムスタンプで上書きしておく。
                     _lastPreviewTimestamp = originalSampleBufferTimestamp;
                 }
             }
             
             if (isAudio && updateLastSampleTimestamp) {
                 // サンプルのタイムスタンプを保持しておく
-                CMTime sampleBufferTimestamp = CMSampleBufferGetPresentationTimeStamp(sampleBuffer);
+                CMTime sampleBufferTimestamp = CMSampleBufferGetPresentationTimeStamp(buffer);
                 CMTime duration = CMSampleBufferGetDuration(sampleBuffer);
-                // 音声サンプルには時間的長さがあり、動画サンプルには時間的長さが無かったりする；動画サンプルのduration
-                // が数値として無効な値かもしれず、加算を行うとNaNになってしまうので、その対処。
-                //        if (CMTIME_IS_NUMERIC(duration) && duration.value > 0) {
                 if (duration.value > 0) {
-                    // サンプルに時間的長さがあり数値的に妥当な場合は「サンプルの開始時間（タイムスタンプ）」+「長さ」⇔「サンプルの終了時間」を
-                    // 直前のサンプルのタイムスタンプとする。
                     _lastSampleTimestamp = CMTimeAdd(sampleBufferTimestamp, duration);
                 } else {
                     // 「サンプルの開始時間（タイムスタンプ）」と「サンプルの終了時間」が同義。
@@ -906,13 +848,7 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
 - (BOOL) appendSampleBuffer:(CMSampleBufferRef)sampleBuffer recorderContext:(DPHostRecorderContext *)recorderCtx isAudio:(BOOL)isAudio
 {
     @synchronized(recorderCtx) {
-        // この後行われるアセットライターの書き出しが失敗するか成功するかによって、
-        // レコーダーコンテキストのプロパティやフラグの切り替えが発生しうるので、排他処理にしておく。
-        
         if (!recorderCtx.writer) {
-            // サンプルを受け取ってから処理されるまでの間にレコーディングを停止させられたか、何らかのエラーでレコーディングが
-            // 中止させられた場合は、サンプルを処理せずに終了。
-            
             return NO;
         }
         
@@ -935,7 +871,9 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
                     [recorderCtx.session stopRunning];
                     
                     // Record APIのHTTPレスポンスでエラーを返却する。
-                    [recorderCtx.response setErrorToUnknownWithMessage:[NSString stringWithFormat:@"Failed to start a session for an asset writer: %@", recorderCtx.writer.error.localizedDescription]];
+                    [recorderCtx.response setErrorToUnknownWithMessage:
+                            [NSString stringWithFormat:@"Failed to start a session for an asset writer: %@",
+                                recorderCtx.writer.error.localizedDescription]];
                     [recorderCtx sendResponse];
                     
                     // TODO: レコーダーの初期化コードを関数化
@@ -1103,23 +1041,18 @@ didReceivePostTakePhotoRequest:(DConnectRequestMessage *)request
         return YES;
     }
     
-    // 入力デバイスが既に他のレコーダーで使われていないかをチェックする
-    // 動画のキャプチャが進行中に呼び出すと、写真撮影のタイミング以降で動画中の画像がおかしくなるので、動画撮影中は
-    // 写真を撮らせない様にした。
     for (DPHostRecorderContext *recorderItr in _recorderArr) {
         if (recorderItr == recorder) {
             continue;
         }
-        if (recorderItr.state == RecorderStateRecording) {
-            if (recorder.videoDevice && recorderItr.videoDevice &&
-                [recorder.videoDevice.uniqueId isEqualToString:recorderItr.videoDevice.uniqueId]) {
-                // ビデオ入力デバイスが既に他のコンテキストで使われている。
-                [response setErrorToUnknownWithMessage:
-                 [NSString stringWithFormat:@"Video device is currently used by %@.",
-                  recorderItr.name]];
-                return YES;
-            }
-            
+        if ((recorderItr.state == RecorderStateRecording)
+            && recorder.videoDevice && recorderItr.videoDevice &&
+            [recorder.videoDevice.uniqueId isEqualToString:recorderItr.videoDevice.uniqueId]) {
+            // ビデオ入力デバイスが既に他のコンテキストで使われている。
+            [response setErrorToUnknownWithMessage:
+             [NSString stringWithFormat:@"Video device is currently used by %@.",
+              recorderItr.name]];
+            return YES;
         }
     }
     
@@ -1128,7 +1061,8 @@ didReceivePostTakePhotoRequest:(DConnectRequestMessage *)request
     [recorder performWriting:
      ^{
          if (recorder.type != RecorderTypePhoto) {
-             [response setErrorToInvalidRequestParameterWithMessage:@"target is not a video device; it is not capable of taking a photo."];
+             [response setErrorToInvalidRequestParameterWithMessage:
+                    @"target is not a video device; it is not capable of taking a photo."];
              isSync = YES;
              return;
          }
@@ -1181,11 +1115,6 @@ didReceivePostTakePhotoRequest:(DConnectRequestMessage *)request
              }
              [captureDevice unlockForConfiguration];
              
-             // 露光やフォーカスの調整の為に少し待つ；いきなり撮影すると、大抵は薄暗くてピンぼけの写真しか仕上がらない。
-             // 0.25秒: いきなり撮影するよりはましだが、露光もフォーカスも少し足りない。
-             //
-             // 露光やフォーカス等の補正処理を、先んじて独立して実行できる様にすれば、特にカメラの姿勢と被写体が動かない場合等、
-             // 補正処理は一度行えばそれ以降必要なくなったりと、毎回補正処理を待つ必要の無いケースで活かせるのに。
              [NSThread sleepForTimeInterval:0.5];
          }
          
@@ -1383,8 +1312,6 @@ didReceivePostRecordRequest:(DConnectRequestMessage *)request
          }
      }];
     
-    // -appendSampleBuffer:recorderContext:isAudio: でAVAssetWriterが無事に書き出しを開始したのを確認した
-    // 上でレスポンスを返却する。
     return NO;
 }
 
@@ -1455,7 +1382,6 @@ didReceivePutPauseRequest:(DConnectRequestMessage *)request
         [self sendOnRecordingChangeEventWithStatus:DConnectMediaStreamRecordingProfileRecordingStatePause
                                               path:nil mimeType:nil errorMessage:nil];
         
-        // ポーズが解除された時、つまり次回キャプチャーサンプルが得られた時、ポーズの累計期間を再計算させる。
         _needRecalculationOfTotalPauseDuration = YES;
         
         [response setResult:DConnectMessageResultTypeOk];
@@ -1586,8 +1512,6 @@ didReceivePutStopRequest:(DConnectRequestMessage *)request
         [response setErrorToInvalidRequestParameterWithMessage:message];
         return YES;
     }
-    
-    // コレ以降は状態を変える事前提の処理なので、- enterOrWaitUntilTimeout:の排他処理を必要としない。
     if (recorder.state == RecorderStateInactive) {
         [response setErrorToIllegalDeviceStateWithMessage:@"target is not recording."];
         return YES;
@@ -1631,19 +1555,15 @@ didReceivePutStopRequest:(DConnectRequestMessage *)request
                   [response setErrorToUnknownWithMessage:@"Failed to save a movie to camera roll (1)."];
                   [[DConnectManager sharedManager] sendResponse:response];
                   return;
-              }
-              else if (!assetURL) {
+              } else if (!assetURL) {
                   [response setErrorToUnknownWithMessage:@"Failed to save a movie to camera roll (2)."];
                   [[DConnectManager sharedManager] sendResponse:response];
                   return;
               }
-              else {
-                  NSFileManager *fileMgr = [NSFileManager defaultManager];
-                  if ([fileMgr fileExistsAtPath:[fileUrl path]]) {
-                      if (![fileMgr removeItemAtURL:fileUrl error:nil]) {
-                          NSLog(@"Failed to remove a movie file.");
-                      }
-                  }
+              NSFileManager *fileMgr = [NSFileManager defaultManager];
+              if ([fileMgr fileExistsAtPath:[fileUrl path]]
+                  && ![fileMgr removeItemAtURL:fileUrl error:nil]) {
+                  NSLog(@"Failed to remove a movie file.");
               }
               
               [DConnectMediaStreamRecordingProfile setUri:[assetURL absoluteString] target:response];
@@ -1850,10 +1770,6 @@ didReceivePutOnDataAvailableRequest:(DConnectRequestMessage *)request
                                             profile:DConnectMediaStreamRecordingProfileName
                                           attribute:DConnectMediaStreamRecordingProfileAttrOnDataAvailable];
     if (evts.count == 0) {
-        // デフォルトカメラでのレコーディングを開始する。
-        // TODO: 録画や録音を開始せずとも動画プレビューができる様にする。
-        //（恐らく動画や音声等の入力ソースであるDPHostRecorderDataSourceを排他的に管理することをやめなければならない
-        // 事を暗示している）
         [self profile:profile didReceivePostRecordRequest:nil response:[response copy]
              serviceId:serviceId target:nil timeslice:nil];
         
@@ -1944,13 +1860,9 @@ didReceiveDeleteOnDataAvailableRequest:(DConnectRequestMessage *)request
     }
     
     NSArray *evts = [_eventMgr eventListForServiceId:serviceId
-                                            profile:DConnectDeviceOrientationProfileName
-                                          attribute:DConnectDeviceOrientationProfileAttrOnDeviceOrientation];
+                                            profile:DConnectMediaStreamRecordingProfileName
+                                          attribute:DConnectMediaStreamRecordingProfileAttrOnDataAvailable];
     if (evts.count == 0) {
-        // デフォルトカメラでのレコーディングを停止する。
-        // TODO: 録画や録音を開始せずとも動画プレビューができる様にする。
-        //（恐らく動画や音声等の入力ソースであるDPHostRecorderDataSourceを排他的に管理することをやめなければならない
-        // 事を暗示している）
         [self profile:profile didReceivePutStopRequest:nil response:[response copy]
              serviceId:serviceId target:nil];
         

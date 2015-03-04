@@ -1,6 +1,6 @@
 //
 //  RESTfulNormalServiceDiscoveryProfileTest.m
-//  DConnectSDK
+//  dConnectDeviceTest
 //
 //  Copyright (c) 2014 NTT DOCOMO, INC.
 //  Released under the MIT license
@@ -52,11 +52,11 @@
                                                                      error:nil];
     XCTAssertNotNil(actualResponse);
     
-    NSArray *services = [actualResponse objectForKey:DConnectServiceDiscoveryProfileParamServices];
+    NSArray *services = actualResponse[DConnectServiceDiscoveryProfileParamServices];
     XCTAssertTrue(services.count > 0);
     BOOL found = NO;
     for (NSDictionary *service in services) {
-        NSString *deviceName = [service objectForKey:DConnectServiceDiscoveryProfileParamName];
+        NSString *deviceName = service[DConnectServiceDiscoveryProfileParamName];
         if ([deviceName isEqualToString:@"Test Success Device"]) {
             found = YES;
             break;
@@ -81,22 +81,35 @@
 - (void) testHttpNormalServiceDiscoveryOnServiceChangeEvent
 {
     // イベント登録
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/servicediscovery/onservicechange?sessionKey=%@", self.clientId]];
+    NSURL *uri = [NSURL URLWithString:
+                    [NSString stringWithFormat:
+                        @"http://localhost:4035/gotapi/servicediscovery/onservicechange?sessionKey=%@",
+                            self.clientId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     CHECK_RESPONSE(@"{\"result\":0}", request);
     
     // テスト用イベント送信要求
-    uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/event?serviceId=%@&sessionKey=%@", self.serviceId, self.clientId]];
+    uri = [NSURL URLWithString:
+            [NSString stringWithFormat:
+                @"http://localhost:4035/gotapi/event?serviceId=%@&sessionKey=%@",
+                    self.serviceId, self.clientId]];
     request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"POST"];
     CHECK_RESPONSE(@"{\"result\":0}", request);
     
     // 受信したイベントのチェック
-    CHECK_EVENT(@"{\"profile\":\"servicediscovery\",\"attribute\":\"onservicechange\",\"sessionKey\":\"test_client\",\"networkService\":{\"id\":\"test_service_id.DeviceTestPlugin.dconnect\",\"name\":\"Test Success Device\",\"online\":true,\"state\":true,\"type\":\"TEST\",\"config\":\"test config\"}}");
+    CHECK_EVENT(@"{\"profile\":\"servicediscovery\","
+                 "\"attribute\":\"onservicechange\",\"sessionKey\":\"test_client\","
+                 "\"networkService\":{\"id\":\"test_service_id.DeviceTestPlugin.dconnect\","
+                 "\"name\":\"Test Success Device\",\"online\":true,\"state\":true,\"type\":\"TEST\","
+                 "\"config\":\"test config\"}}");
     
     // イベント登録解除
-    uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/servicediscovery/onservicechange?sessionKey=%@", self.clientId]];
+    uri = [NSURL URLWithString:
+            [NSString stringWithFormat:
+                @"http://localhost:4035/gotapi/servicediscovery/onservicechange?sessionKey=%@",
+                    self.clientId]];
     request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     CHECK_RESPONSE(@"{\"result\":0}", request);

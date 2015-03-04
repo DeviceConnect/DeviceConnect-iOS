@@ -27,7 +27,11 @@ NSString *const DConnectClientDaoClmSessionKey = @"session_key";
 
 + (void) createWithDatabase:(DConnectSQLiteDatabase *)database {
     
-    NSString *sql = DCEForm(@"CREATE TABLE %@ (%@ INTEGER PRIMARY KEY AUTOINCREMENT, %@ TEXT NOT NULL, %@ TEXT, %@ INTEGER NOT NULL, %@ INTEGER NOT NULL, UNIQUE(%@));",
+    NSString *sql = DCEForm(@"CREATE TABLE %@"
+                            "(%@ INTEGER PRIMARY KEY AUTOINCREMENT,"
+                            "%@ TEXT NOT NULL, %@ TEXT,"
+                            "%@ INTEGER NOT NULL,"
+                            "%@ INTEGER NOT NULL, UNIQUE(%@));",
                             DConnectClientDaoTableName,
                             DConnectEventDaoClmId,
                             DConnectClientDaoClmSessionKey,
@@ -83,12 +87,15 @@ NSString *const DConnectClientDaoClmSessionKey = @"session_key";
     return result;
 }
 
-+ (NSArray *) clientsForSessionKey:(NSString *)sessionKey onDatabase:(DConnectSQLiteDatabase *)database {
++ (NSArray *) clientsForSessionKey:(NSString *)sessionKey
+                        onDatabase:(DConnectSQLiteDatabase *)database {
     
     NSMutableArray *clients = nil;
     DConnectSQLiteCursor *cursor
     = [database selectFromTable:DConnectClientDaoTableName
-                        columns:@[DConnectEventDaoClmId, DConnectClientDaoClmSessionKey, DConnectClientDaoClmAccessToken]
+                        columns:@[DConnectEventDaoClmId,
+                                  DConnectClientDaoClmSessionKey,
+                                  DConnectClientDaoClmAccessToken]
                           where:DCEForm(@"%@=?", DConnectClientDaoClmSessionKey)
                      bindParams:@[sessionKey]];
     
@@ -145,7 +152,13 @@ NSString *const DConnectClientDaoClmSessionKey = @"session_key";
     
     NSMutableArray *clients = nil;
     NSString *sql
-    = DCEForm(@"SELECT c.%@, c.%@, c.%@, es.%@, es.%@ FROM %@ AS p INNER JOIN %@ AS i ON p.%@ = i.%@ INNER JOIN %@ AS a ON i.%@ = a.%@ INNER JOIN %@ AS ed ON a.%@ = ed.%@ INNER JOIN %@ AS d ON ed.%@ = d.%@ INNER JOIN %@ AS es ON es.%@ = ed.%@ INNER JOIN %@ AS c ON es.%@ = c.%@ WHERE p.%@ = ? AND i.%@ = ? AND a.%@ = ? AND d.%@ = ?;",
+    = DCEForm(@"SELECT c.%@, c.%@, c.%@, es.%@, es.%@ "
+              "FROM %@ AS p INNER JOIN %@ AS i ON p.%@ = i.%@ "
+              "INNER JOIN %@ AS a ON i.%@ = a.%@ INNER JOIN "
+              "%@ AS ed ON a.%@ = ed.%@ INNER JOIN %@ AS d ON "
+              "ed.%@ = d.%@ INNER JOIN %@ AS es ON es.%@ = ed.%@ "
+              "INNER JOIN %@ AS c ON es.%@ = c.%@ WHERE p.%@ = ? "
+              "AND i.%@ = ? AND a.%@ = ? AND d.%@ = ?;",
               DConnectEventDaoClmId,
               DConnectClientDaoClmSessionKey,
               DConnectClientDaoClmAccessToken,

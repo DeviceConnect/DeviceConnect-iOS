@@ -10,14 +10,22 @@
 #import "LocalOAuthClientDao.h"
 #import "LocalOAuthUtils.h"
 
+/* Clients*/
 NSString *const LocalOAuthClientDaoTableName = @"clients";
-NSString *const LocalOAuthClientDaoId = @"id";                              /* ID */
-NSString *const LocalOAuthClientDaoClientId = @"client_id";                 /* クライアントID */
-NSString *const LocalOAuthClientDaoPackageName = @"package_name";           /* パッケージ名 */
-NSString *const LocalOAuthClientDaoServiceId = @"service_id";                 /* サービスID(無しのときはnull) */
-NSString *const LocalOAuthClientDaoClientSecret = @"client_secret";         /* クライアントシークレット */
-NSString *const LocalOAuthClientDaoClientType = @"client_type";             /* クライアントタイプ */
-NSString *const LocalOAuthClientDaoRegistrationDate = @"registration_date"; /* 登録日時(System.currentTimeMillis()で取得した値を格納する) */
+/* ID */
+NSString *const LocalOAuthClientDaoId = @"id";
+/* クライアントID */
+NSString *const LocalOAuthClientDaoClientId = @"client_id";
+/* パッケージ名 */
+NSString *const LocalOAuthClientDaoPackageName = @"package_name";
+ /* サービスID(無しのときはnull) */
+NSString *const LocalOAuthClientDaoServiceId = @"service_id";
+ /* クライアントシークレット */
+NSString *const LocalOAuthClientDaoClientSecret = @"client_secret";
+ /* クライアントタイプ */
+NSString *const LocalOAuthClientDaoClientType = @"client_type";
+/* 登録日時(System.currentTimeMillis()で取得した値を格納する) */
+NSString *const LocalOAuthClientDaoRegistrationDate = @"registration_date";
 
 
 @interface LocalOAuthClientDao() {
@@ -136,10 +144,15 @@ NSString *const LocalOAuthClientDaoRegistrationDate = @"registration_date"; /* �
     @"and (scopes.timestamp + scopes.expire_period) > %lld)", cleanupTimeMSec];
     [database execSQL: sql2];
     
-    /* (2)で削除されたclientsのtokensレコードを削除する(clientsがリンク切れしたtokensとscopesを削除する) */
-    NSString *sql3 = [NSString stringWithFormat:@"delete from scopes where not exists ("
+    /* 
+     (2)で削除されたclientsのtokensレコードを削除する
+     (clientsがリンク切れしたtokensとscopesを削除する)
+     */
+    NSString *sql3 = [NSString stringWithFormat:@"delete from scopes "
+                      "where not exists ("
                       @"select * from tokens, clients "
-                      @"where scopes.tokens_tokenid = tokens.id and tokens.client_id = clients.client_id)"];
+                      @"where scopes.tokens_tokenid = tokens.id and "
+                      "tokens.client_id = clients.client_id)"];
     [database execSQL: sql3];
     
     NSString *sql4 = [NSString stringWithFormat:@"delete from tokens where not exists ("
@@ -165,9 +178,8 @@ NSString *const LocalOAuthClientDaoRegistrationDate = @"registration_date"; /* �
         return nil;
     } else if ([clients count] == 1) {
         return clients[0];
-    } else {
-        @throw @"クライアントIDが2件以上のクライアントデータに設定されています。";
     }
+    @throw @"クライアントIDが2件以上のクライアントデータに設定されています。";
 }
 
 + (LocalOAuthClient *) findClientByPackageInfo: (LocalOAuthPackageInfo *)packageInfo
@@ -193,9 +205,8 @@ NSString *const LocalOAuthClientDaoRegistrationDate = @"registration_date"; /* �
         return nil;
     } else if ([clients count] == 1) {
         return clients[0];
-    } else {
-        @throw @"クライアントIDが2件以上のクライアントデータに設定されています。";
     }
+    @throw @"クライアントIDが2件以上のクライアントデータに設定されています。";
 }
 
 + (NSArray *) loadClients: (NSString *)where

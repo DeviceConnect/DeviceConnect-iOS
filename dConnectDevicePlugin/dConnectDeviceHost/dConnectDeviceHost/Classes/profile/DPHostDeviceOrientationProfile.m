@@ -1,6 +1,6 @@
 //
 //  DPHostDeviceOrientationProfile.m
-//  DConnectSDK
+//  dConnectDeviceHost
 //
 //  Copyright (c) 2014 NTT DOCOMO, INC.
 //  Released under the MIT license
@@ -40,21 +40,15 @@ static const double MotionDeviceIntervalMilliSec = 100;
 {
     CMMotionManager *motionMgr = [CMMotionManager new];
     if (!motionMgr.accelerometerAvailable && !motionMgr.gyroAvailable) {
-        // 加速度センサーとジャイロセンサー（角速度センサー）両方が使用不可；本プロファイルが使用不可
         return nil;
     }
     
     self = [super init];
     if (self) {
-        // 加速度センサーもしくはジャイロセンサー（角速度センサー）が使用可能；本プロファイルが使用可能
-        
         self.delegate = self;
-        
-        // イベントマネージャを取得
         self.eventMgr = [DConnectEventManager sharedManagerForClass:[DPHostDevicePlugin class]];
         
         _motionManager = motionMgr;
-        // CMDeviceMotionオブジェクトが配送されるインターバル（ミリ秒→秒）
         _motionManager.deviceMotionUpdateInterval = MotionDeviceIntervalMilliSec/1000.0;
         _deviceOrientationOpQueue = [NSOperationQueue new];
         __unsafe_unretained typeof(self) weakSelf = self;
@@ -94,10 +88,14 @@ static const double MotionDeviceIntervalMilliSec = 100;
             [DConnectDeviceOrientationProfile setAcceleration:acceleration target:orientation];
             
             DConnectMessage *accelerationIncludingGravity = [DConnectMessage message];
-            [DConnectDeviceOrientationProfile setX:motion.userAcceleration.x+motion.gravity.x target:accelerationIncludingGravity];
-            [DConnectDeviceOrientationProfile setY:motion.userAcceleration.y+motion.gravity.y target:accelerationIncludingGravity];
-            [DConnectDeviceOrientationProfile setZ:motion.userAcceleration.z+motion.gravity.z target:accelerationIncludingGravity];
-            [DConnectDeviceOrientationProfile setAccelerationIncludingGravity:accelerationIncludingGravity target:orientation];
+            [DConnectDeviceOrientationProfile setX:motion.userAcceleration.x+motion.gravity.x
+                                            target:accelerationIncludingGravity];
+            [DConnectDeviceOrientationProfile setY:motion.userAcceleration.y+motion.gravity.y
+                                            target:accelerationIncludingGravity];
+            [DConnectDeviceOrientationProfile setZ:motion.userAcceleration.z+motion.gravity.z
+                                            target:accelerationIncludingGravity];
+            [DConnectDeviceOrientationProfile setAccelerationIncludingGravity:accelerationIncludingGravity
+                                                                       target:orientation];
         }
         // 角速度系
         if (_motionManager.gyroAvailable) {
@@ -175,7 +173,6 @@ didReceiveDeleteOnDeviceOrientationRequest:(DConnectRequestMessage *)request
                                             profile:DConnectDeviceOrientationProfileName
                                           attribute:DConnectDeviceOrientationProfileAttrOnDeviceOrientation];
     if (evts.count == 0) {
-        // イベント受領先が存在しないなら、UIDeviceBatteryStateDidChangeNotification通知の配送処理を停止する。
         [[NSNotificationCenter defaultCenter]
          removeObserver:self name:UIDeviceBatteryStateDidChangeNotification object:nil];
     }

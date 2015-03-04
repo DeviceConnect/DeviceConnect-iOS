@@ -275,14 +275,24 @@
 #pragma mark - Private Method
 
 - (void) createAuthDataTable:(DConnectSQLiteDatabase *) database {
-    NSString *sql = DCEForm(@"CREATE TABLE %@ (id INTEGER PRIMARY KEY AUTOINCREMENT, %@ TEXT NOT NULL, %@ TEXT NOT NULL, %@ TEXT NOT NULL);", DConnectAuthDataTbl, DConnectServiceId, DConnectClientId, DConnectClientSecret);
+    NSString *sql = DCEForm(@"CREATE TABLE %@ "
+                            "(id INTEGER PRIMARY KEY AUTOINCREMENT, %@ "
+                            "TEXT NOT NULL, %@ TEXT NOT NULL, %@ TEXT NOT NULL);",
+                            DConnectAuthDataTbl,
+                            DConnectServiceId,
+                            DConnectClientId,
+                            DConnectClientSecret);
     if (![database execSQL:sql]) {
         @throw @"error";
     }
 }
 
 - (void) createAccessTokenTable:(DConnectSQLiteDatabase *) database {
-    NSString *sql = DCEForm(@"CREATE TABLE %@ (%@ INTEGER, %@ TEXT NOT NULL);", DConnectAccessTokenTbl, DConnectAuthId, DConnectAccessToken);
+    NSString *sql = DCEForm(@"CREATE TABLE %@ "
+                            "(%@ INTEGER, %@ TEXT NOT NULL);",
+                            DConnectAccessTokenTbl,
+                            DConnectAuthId,
+                            DConnectAccessToken);
     if (![database execSQL:sql]) {
         @throw @"error";
     }
@@ -301,7 +311,9 @@
 - (DConnectAuthData *)selectAuthDataByServiceId:(NSString *)serviceId
                                   fromDatabase:(DConnectSQLiteDatabase *)database
 {
-    NSString *sql = DCEForm(@"SELECT %@,%@,%@ FROM %@ WHERE %@='%@';", @"id", DConnectClientId, DConnectClientSecret, DConnectAuthDataTbl, DConnectServiceId, serviceId);
+    NSString *sql = DCEForm(@"SELECT %@,%@,%@ FROM %@ WHERE %@='%@';",
+                            @"id", DConnectClientId, DConnectClientSecret,
+                            DConnectAuthDataTbl, DConnectServiceId, serviceId);
     
     DConnectAuthData *auth = nil;
     DConnectSQLiteCursor *cursor = [database queryWithSQL:sql];
@@ -327,9 +339,11 @@
     return (result > 0);
 }
 
-- (NSString *)selectAccessTokenByAuthId:(int)authId fromDatabase:(DConnectSQLiteDatabase *)database
+- (NSString *)selectAccessTokenByAuthId:(int)authId
+                           fromDatabase:(DConnectSQLiteDatabase *)database
 {
-    NSString *sql = DCEForm(@"SELECT %@ FROM %@ WHERE %@=%d;", DConnectAccessToken, DConnectAccessTokenTbl, DConnectAuthId, authId);
+    NSString *sql = DCEForm(@"SELECT %@ FROM %@ WHERE %@=%d;",
+                            DConnectAccessToken, DConnectAccessTokenTbl, DConnectAuthId, authId);
     
     NSString *accessToken = nil;
     DConnectSQLiteCursor *cursor = [database queryWithSQL:sql];

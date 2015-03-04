@@ -1,6 +1,6 @@
 //
 //  DPHostBatteryProfile.m
-//  DConnectSDK
+//  dConnectDeviceHost
 //
 //  Copyright (c) 2014 NTT DOCOMO, INC.
 //  Released under the MIT license
@@ -33,16 +33,11 @@
         // イベントマネージャを取得
         self.eventMgr = [DConnectEventManager sharedManagerForClass:[DPHostDevicePlugin class]];
         
-        // 一度YESにしたらずっとYESにしておく。
-        // MARK: イベント配送の有無をみて、動的にYES/NOを切り替える実装の方が良いだろうか？
         [UIDevice currentDevice].batteryMonitoringEnabled = YES;
-        
-        // UIDeviceBatteryLevelDidChangeNotification通知の配送が開始されていないのなら、開始する。
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(sendOnBatteryChangeEvent:)
                                                      name:UIDeviceBatteryLevelDidChangeNotification
                                                    object:nil];
-        // UIDeviceBatteryStateDidChangeNotification通知の配送が開始されていないのなら、開始する。
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(sendOnChargingChangeEvent:)
                                                      name:UIDeviceBatteryStateDidChangeNotification

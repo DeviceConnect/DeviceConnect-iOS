@@ -1,6 +1,6 @@
 //
 //  DPIRKitSettingViewController.m
-//  DConnectSDK
+//  dConnectDeviceIRKit
 //
 //  Copyright (c) 2014 NTT DOCOMO, INC.
 //  Released under the MIT license
@@ -30,9 +30,12 @@
     [super viewDidLoad];
     [self removeUserDefaults];
     
-    NSString *bundlePath = [[NSBundle mainBundle] pathForResource:@"dConnectDeviceIRKit_resources" ofType:@"bundle"];
+    NSString *bundlePath = [[NSBundle mainBundle] pathForResource:@"dConnectDeviceIRKit_resources"
+                                                           ofType:@"bundle"];
     NSBundle *bundle = [NSBundle bundleWithPath:bundlePath];
-    NSString *settingsTitle = [bundle localizedStringForKey:@"IRKitSettingsTitle" value:@"Settings" table:@"Localizable"];
+    NSString *settingsTitle = [bundle localizedStringForKey:@"IRKitSettingsTitle"
+                                                      value:@"Settings"
+                                                      table:@"Localizable"];
     UILabel *title = [[UILabel alloc] initWithFrame:CGRectZero];
     title.font = [UIFont boldSystemFontOfSize:16.0];
     title.textColor = [UIColor whiteColor];
@@ -72,13 +75,13 @@
 }
 
 - (void) removeUserDefaults {
-    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
-    [ud removeObjectForKey:DPIRKitUDKeySSID];
-    [ud removeObjectForKey:DPIRKitUDKeySecType];
-    [ud removeObjectForKey:DPIRKitUDKeyPassword];
-    [ud removeObjectForKey:DPIRKitUDKeyDeviceKey];
-    [ud removeObjectForKey:DPIRKitUDKeyServiceId];
-    [ud synchronize];
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults removeObjectForKey:DPIRKitUDKeySSID];
+    [userDefaults removeObjectForKey:DPIRKitUDKeySecType];
+    [userDefaults removeObjectForKey:DPIRKitUDKeyPassword];
+    [userDefaults removeObjectForKey:DPIRKitUDKeyDeviceKey];
+    [userDefaults removeObjectForKey:DPIRKitUDKeyServiceId];
+    [userDefaults synchronize];
 }
 
 - (IBAction)closeBtnDidPushed:(id)sender {
@@ -88,11 +91,15 @@
 
 #pragma mark - UIPageViewControllerDelegate
 
-- (UIPageViewControllerSpineLocation)pageViewController:(UIPageViewController *)pageViewController spineLocationForInterfaceOrientation:(UIInterfaceOrientation)orientation
+- (UIPageViewControllerSpineLocation)pageViewController:(UIPageViewController *)pageViewController
+                   spineLocationForInterfaceOrientation:(UIInterfaceOrientation)orientation
 {
     UIViewController *currentViewController = _pageViewController.viewControllers[0];
     NSArray *viewControllers = @[currentViewController];
-    [_pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:YES completion:nil];
+    [_pageViewController setViewControllers:viewControllers
+                                  direction:UIPageViewControllerNavigationDirectionForward
+                                   animated:YES
+                                 completion:nil];
     
     _pageViewController.doubleSided = NO;
     return UIPageViewControllerSpineLocationMin;

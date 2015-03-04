@@ -1,6 +1,6 @@
 //
 //  DPSpheroSensorProfile.m
-//  DConnectSDK
+//  dConnectDeviceSphero
 //
 //  Copyright (c) 2014 NTT DOCOMO, INC.
 //  Released under the MIT license
@@ -69,19 +69,13 @@
     } else {
         error = [mgr addEventForRequest:request];
     }
-    switch (error) {
-        case DConnectEventErrorNone:
-            callback();
-            [response setResult:DConnectMessageResultTypeOk];
-            break;
-        case DConnectEventErrorInvalidParameter:
-            [response setErrorToInvalidRequestParameterWithMessage:@"sessionKey must be specified."];
-            break;
-        case DConnectEventErrorFailed:
-        case DConnectEventErrorNotFound:
-        default:
-            [response setErrorToUnknown];
-            break;
+    if (error == DConnectEventErrorNone) {
+        callback();
+        [response setResult:DConnectMessageResultTypeOk];
+    } else if (error == DConnectEventErrorInvalidParameter) {
+        [response setErrorToInvalidRequestParameterWithMessage:@"sessionKey must be specified."];
+    } else {
+        [response setErrorToUnknown];
     }
 }
 
@@ -89,7 +83,8 @@
 #pragma mark - DPSpheroManagerSensorDelegate
 
 // Quaternionのイベント処理
-- (void)spheroManagerStreamingQuaternion:(DPQuaternion)quaternion interval:(int)interval;
+- (void)spheroManagerStreamingQuaternion:(DPQuaternion)quaternion
+                                interval:(int)interval;
 {
     DConnectMessage *msg = [DConnectMessage message];
     [msg setDouble:quaternion.q0 forKey:DPSpheroProfileParamQ0];
@@ -104,7 +99,9 @@
 }
 
 // Locatorのイベント処理
-- (void)spheroManagerStreamingLocatorPos:(CGPoint)pos velocity:(CGPoint)velocity interval:(int)interval
+- (void)spheroManagerStreamingLocatorPos:(CGPoint)pos
+                                velocity:(CGPoint)velocity
+                                interval:(int)interval
 {
     DConnectMessage *msg = [DConnectMessage message];
     [msg setDouble:pos.x forKey:DPSpheroProfileParamPositionX];
@@ -119,7 +116,11 @@
 }
 
 // Collisionのイベント処理
-- (void)spheroManagerStreamingCollisionImpactAcceleration:(DPPoint3D)accel axis:(CGPoint)axis power:(CGPoint)power speed:(float)speed time:(NSTimeInterval)time
+- (void)spheroManagerStreamingCollisionImpactAcceleration:(DPPoint3D)accel
+                                                     axis:(CGPoint)axis
+                                                    power:(CGPoint)power
+                                                    speed:(float)speed
+                                                     time:(NSTimeInterval)time
 {
     DConnectMessage *msg = [DConnectMessage message];
     DConnectMessage *impactAcceleration = [DConnectMessage message];
@@ -150,8 +151,10 @@
 #pragma mark - Quaternion
 
 // Quaternionのイベントを登録
-- (BOOL) profile:(DPSpheroProfile *)profile didReceivePutOnQuaternionRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response serviceId:(NSString *)serviceId sessionKey:(NSString *)sessionKey
+- (BOOL)                     profile:(DPSpheroProfile *)profile
+    didReceivePutOnQuaternionRequest:(DConnectRequestMessage *)request
+                            response:(DConnectResponseMessage *)response
+                           serviceId:(NSString *)serviceId sessionKey:(NSString *)sessionKey
 {
     // 接続確認
     CONNECT_CHECK();
@@ -163,8 +166,11 @@
 }
 
 // Quaternionのイベント登録を解除
-- (BOOL) profile:(DPSpheroProfile *)profile didReceiveDeleteOnQuaternionRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response serviceId:(NSString *)serviceId sessionKey:(NSString *)sessionKey
+- (BOOL)                        profile:(DPSpheroProfile *)profile
+    didReceiveDeleteOnQuaternionRequest:(DConnectRequestMessage *)request
+                               response:(DConnectResponseMessage *)response
+                              serviceId:(NSString *)serviceId
+                             sessionKey:(NSString *)sessionKey
 {
     // 接続確認
     CONNECT_CHECK();
@@ -179,8 +185,11 @@
 #pragma mark - Locator
 
 // Locatorのイベントを登録
-- (BOOL) profile:(DPSpheroProfile *)profile didReceivePutOnLocatorRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response serviceId:(NSString *)serviceId sessionKey:(NSString *)sessionKey
+- (BOOL)                  profile:(DPSpheroProfile *)profile
+    didReceivePutOnLocatorRequest:(DConnectRequestMessage *)request
+                         response:(DConnectResponseMessage *)response
+                        serviceId:(NSString *)serviceId
+                       sessionKey:(NSString *)sessionKey
 {
     // 接続確認
     CONNECT_CHECK();
@@ -192,8 +201,11 @@
 }
 
 // Locatorのイベント登録を解除
-- (BOOL) profile:(DPSpheroProfile *)profile didReceiveDeleteOnLocatorRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response serviceId:(NSString *)serviceId sessionKey:(NSString *)sessionKey
+- (BOOL)                     profile:(DPSpheroProfile *)profile
+    didReceiveDeleteOnLocatorRequest:(DConnectRequestMessage *)request
+                            response:(DConnectResponseMessage *)response
+                           serviceId:(NSString *)serviceId
+                          sessionKey:(NSString *)sessionKey
 {
     // 接続確認
     CONNECT_CHECK();
@@ -208,8 +220,11 @@
 #pragma mark - Collision
 
 // Collisionのイベントを登録
-- (BOOL) profile:(DPSpheroProfile *)profile didReceivePutOnCollisionRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response serviceId:(NSString *)serviceId sessionKey:(NSString *)sessionKey
+- (BOOL)                    profile:(DPSpheroProfile *)profile
+    didReceivePutOnCollisionRequest:(DConnectRequestMessage *)request
+                           response:(DConnectResponseMessage *)response
+                          serviceId:(NSString *)serviceId
+                         sessionKey:(NSString *)sessionKey
 {
     // 接続確認
     CONNECT_CHECK();
@@ -221,8 +236,11 @@
 }
 
 // Collisionのイベント登録を解除
-- (BOOL) profile:(DPSpheroProfile *)profile didReceiveDeleteOnCollisionRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response serviceId:(NSString *)serviceId sessionKey:(NSString *)sessionKey
+- (BOOL)                       profile:(DPSpheroProfile *)profile
+    didReceiveDeleteOnCollisionRequest:(DConnectRequestMessage *)request
+                              response:(DConnectResponseMessage *)response
+                             serviceId:(NSString *)serviceId
+                            sessionKey:(NSString *)sessionKey
 {
     // 接続確認
     CONNECT_CHECK();

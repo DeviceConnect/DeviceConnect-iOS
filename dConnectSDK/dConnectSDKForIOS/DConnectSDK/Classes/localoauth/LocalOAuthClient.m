@@ -27,9 +27,8 @@ NSString *const STRING_CLIENT_TYPE_PUBLIC = @"PUBLIC";
         return STRING_CLIENT_TYPE_CONFIDENTIAL;
     } else if (clientType == CLIENT_TYPE_PUBLIC) {
         return STRING_CLIENT_TYPE_PUBLIC;
-    } else {
-        @throw @"Invalid value.(clientType)";
     }
+    @throw @"Invalid value.(clientType)";
 }
 
 + (LocalOAuthClientType) toValue: (NSString *)clientTypeString {
@@ -37,9 +36,8 @@ NSString *const STRING_CLIENT_TYPE_PUBLIC = @"PUBLIC";
         return CLIENT_TYPE_CONFIDENTIAL;
     } else if ([clientTypeString isEqual: STRING_CLIENT_TYPE_PUBLIC]) {
             return CLIENT_TYPE_PUBLIC;
-    } else {
-        @throw @"Invalid value.(clientTypeNumber)";
     }
+    @throw @"Invalid value.(clientTypeNumber)";
 }
 
 @end
@@ -75,20 +73,14 @@ NSString *const STRING_CLIENT_TYPE_PUBLIC = @"PUBLIC";
 
 
 - (BOOL) isResponseTypeAllowed: (LocalOAuthResponseType)responseType {
-    BOOL result = [_delegate isResponseTypeAllowed: responseType];
-    return result;
+    return [_delegate isResponseTypeAllowed: responseType];
 }
 
 - (BOOL) isGrantTypeAllowed: (LocalOAuthGrantType)grantType {
-    BOOL result = [_delegate isGrantTypeAllowed: grantType];
-    return result;
+    return [_delegate isGrantTypeAllowed: grantType];
 }
 
 - (LocalOAuthClientType) clientType {
-    LocalOAuthClientType clientType_ = [_delegate clientType];
-    return clientType_;
+    return [_delegate clientType];
 }
-
-
-
 @end

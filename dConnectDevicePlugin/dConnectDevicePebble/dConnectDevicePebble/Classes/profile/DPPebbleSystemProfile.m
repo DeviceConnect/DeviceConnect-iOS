@@ -1,6 +1,6 @@
 //
 //  DPPebbleSystemProfile.m
-//  DConnectSDK
+//  dConnectDevicePebble
 //
 //  Copyright (c) 2014 NTT DOCOMO, INC.
 //  Released under the MIT license
@@ -44,15 +44,15 @@
 	NSBundle *bundle = [NSBundle bundleWithPath:bundlePath];
 
 	// iphoneとipadでストーリーボードを切り替える
-	UIStoryboard *sb;
+	UIStoryboard *storyBoard;
 	if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
-		sb = [UIStoryboard storyboardWithName:@"dConnectDevicePebble_iPhone" bundle:bundle];
+		storyBoard = [UIStoryboard storyboardWithName:@"dConnectDevicePebble_iPhone" bundle:bundle];
 	} else{
-		sb = [UIStoryboard storyboardWithName:@"dConnectDevicePebble_iPad" bundle:bundle];
+		storyBoard = [UIStoryboard storyboardWithName:@"dConnectDevicePebble_iPad" bundle:bundle];
 	}
-	UINavigationController *vc = [sb instantiateInitialViewController];
+	UINavigationController *viewController = [storyBoard instantiateInitialViewController];
 
-	return vc;
+	return viewController;
 }
 
 

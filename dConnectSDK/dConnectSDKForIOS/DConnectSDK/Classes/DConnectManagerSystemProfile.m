@@ -12,7 +12,8 @@
 
 @implementation DConnectManagerSystemProfile
 
-- (BOOL) didReceiveRequest:(DConnectRequestMessage *)request response:(DConnectResponseMessage *)response {
+- (BOOL) didReceiveRequest:(DConnectRequestMessage *)request
+                  response:(DConnectResponseMessage *)response {
     NSUInteger action = [request integerForKey:DConnectMessageAction];
     BOOL send = NO;
     
@@ -29,7 +30,8 @@
     return send;
 }
 
-- (BOOL) didReceiveGetRequest:(DConnectRequestMessage *)request response:(DConnectResponseMessage *)response
+- (BOOL) didReceiveGetRequest:(DConnectRequestMessage *)request
+                     response:(DConnectResponseMessage *)response
 {
     NSString *attribute = [request attribute];
     NSString *interface = [request interface];
@@ -48,7 +50,8 @@
 }
 
 
-- (BOOL) didReceivePutRequest:(DConnectRequestMessage *)request response:(DConnectResponseMessage *)response
+- (BOOL) didReceivePutRequest:(DConnectRequestMessage *)request
+                     response:(DConnectResponseMessage *)response
 {
     NSString *attribute = [request attribute];
     NSString *interface = [request interface];
@@ -62,11 +65,13 @@
         [response setErrorToNotSupportAction];
         return YES;
     }
-    // 属性やインターフェースが存在する場合には、未処理扱いにして各デバイスプラグインに配送する
+    // 属性やインターフェースが存在する場合には、
+    // 未処理扱いにして各デバイスプラグインに配送する
     return NO;
 }
 
-- (BOOL) didReceivePostRequest:(DConnectRequestMessage *)request response:(DConnectResponseMessage *)response
+- (BOOL) didReceivePostRequest:(DConnectRequestMessage *)request
+                      response:(DConnectResponseMessage *)response
 {
     NSString *attribute = [request attribute];
     NSString *interface = [request interface];
@@ -80,11 +85,13 @@
         [response setErrorToNotSupportAction];
         return YES;
     }
-    // 属性やインターフェースが存在する場合には、未処理扱いにして各デバイスプラグインに配送する
+    // 属性やインターフェースが存在する場合には、
+    // 未処理扱いにして各デバイスプラグインに配送する
     return NO;
 }
 
-- (BOOL) didReceiveDeleteRequest:(DConnectRequestMessage *)request response:(DConnectResponseMessage *)response
+- (BOOL) didReceiveDeleteRequest:(DConnectRequestMessage *)request
+                        response:(DConnectResponseMessage *)response
 {
     NSString *attribute = [request attribute];
     NSString *interface = [request interface];
@@ -96,9 +103,12 @@
         return YES;
     } else  if ([attribute isEqualToString:DConnectSystemProfileAttrEvents]) {
         NSString *sessionKey = [request sessionKey];
-        return [self profile:self didReceiveDeleteEventsRequest:request response:response sessionKey:sessionKey];
+        return [self profile:self didReceiveDeleteEventsRequest:request
+                    response:response
+                  sessionKey:sessionKey];
     }
-    // 属性やインターフェースが存在する場合には、未処理扱いにして各デバイスプラグインに配送する
+    // 属性やインターフェースが存在する場合には、
+    // 未処理扱いにして各デバイスプラグインに配送する
     return NO;
 }
 
@@ -114,24 +124,23 @@
     
     // サポートするプロファイル一覧
     DConnectArray *supports = [DConnectArray array];
-    for (DConnectProfile *p in profiles) {
-        [supports addString:[p profileName]];
+    for (DConnectProfile *plugin in profiles) {
+        [supports addString:[plugin profileName]];
     }
     
     // デバイスプラグイン一覧
     DConnectArray *plugins = [DConnectArray array];
-    for (DConnectDevicePlugin *p in deviceplugins) {
-        DConnectMessage *m = [DConnectMessage new];
-        NSString *className = NSStringFromClass([p class]);
+    for (DConnectDevicePlugin *plugin in deviceplugins) {
+        DConnectMessage *message = [DConnectMessage new];
+        NSString *className = NSStringFromClass([plugin class]);
         NSString *pluginId = [NSString stringWithFormat:@"%@.dconnect", className];
-        NSString *pluginName = [p pluginName];
-        [m setString:pluginId forKey:DConnectSystemProfileParamId];
-        [m setString:pluginName forKey:DConnectSystemProfileParamName];
-        [plugins addMessage:m];
+        NSString *pluginName = [plugin pluginName];
+        [message setString:pluginId forKey:DConnectSystemProfileParamId];
+        [message setString:pluginName forKey:DConnectSystemProfileParamName];
+        [plugins addMessage:message];
     }
     
     [response setResult:DConnectMessageResultTypeOk];
-    [DConnectSystemProfile setVersion:@"1.0" target:response];
     [DConnectSystemProfile setSupports:supports target:response];
     [DConnectSystemProfile setPlugins:plugins target:response];
     return YES;
@@ -150,18 +159,18 @@ didReceiveDeleteEventsRequest:(DConnectRequestMessage *)request
         DConnectDevicePluginManager *pluginMgr = mgr.mDeviceManager;
         
         NSArray *deviceplugins = [pluginMgr devicePluginList];
-        for (DConnectDevicePlugin *p in deviceplugins) {
+        for (DConnectDevicePlugin *plugin in deviceplugins) {
             DConnectRequestMessage *copyRequest = [request copy];
             DConnectResponseMessage *dummyResponse = [DConnectResponseMessage message];
             
             // sessionkeyのコンバート
-            NSMutableString *s = [NSMutableString stringWithString:sessionKey];
-            [s appendString:@"."];
-            [s appendString:NSStringFromClass([p class])];
-            [copyRequest setString:s forKey:DConnectMessageSessionKey];
+            NSMutableString *key = [NSMutableString stringWithString:sessionKey];
+            [key appendString:@"."];
+            [key appendString:NSStringFromClass([plugin class])];
+            [copyRequest setString:key forKey:DConnectMessageSessionKey];
             
             // デバイスプラグインに配送
-            [p didReceiveRequest:copyRequest response:dummyResponse];
+            [plugin didReceiveRequest:copyRequest response:dummyResponse];
         }
         
         [response setResult:DConnectMessageResultTypeOk];

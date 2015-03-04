@@ -1,6 +1,6 @@
 //
 //  DPPebbleProfileUtil.m
-//  DConnectSDK
+//  dConnectDevicePebble
 //
 //  Copyright (c) 2014 NTT DOCOMO, INC.
 //  Released under the MIT license
@@ -55,20 +55,14 @@
 	} else {
 		error = [mgr addEventForRequest:request];
 	}
-	switch (error) {
-		case DConnectEventErrorNone:
-			[response setResult:DConnectMessageResultTypeOk];
-			callback();
-			break;
-		case DConnectEventErrorInvalidParameter:
-			[response setErrorToInvalidRequestParameterWithMessage:@"sessionKey must be specified."];
-			break;
-		case DConnectEventErrorFailed:
-		case DConnectEventErrorNotFound:
-		default:
-			[response setErrorToUnknown];
-			break;
-	}
+    if (error == DConnectEventErrorNone) {
+        [response setResult:DConnectMessageResultTypeOk];
+        callback();
+    } else if (error == DConnectEventErrorInvalidParameter) {
+        [response setErrorToInvalidRequestParameterWithMessage:@"sessionKey must be specified."];
+    } else {
+        [response setErrorToUnknown];
+    }
 }
 
 // 共通イベントメッセージ送信

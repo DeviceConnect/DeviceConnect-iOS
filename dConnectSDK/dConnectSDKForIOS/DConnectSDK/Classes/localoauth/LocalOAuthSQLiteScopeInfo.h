@@ -26,7 +26,7 @@
                                profilesProfileId: (long long)profilesProfileId
                                        timestamp: (long long)timestamp
                                     expirePeriod: (long long)expirePeriod
-                                     profileName: (NSString *)profileName_;
+                                     profileName: (NSString *)profileName;
 
 
 @end

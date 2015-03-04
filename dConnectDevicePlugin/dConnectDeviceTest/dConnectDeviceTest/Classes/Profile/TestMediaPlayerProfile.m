@@ -1,6 +1,6 @@
 //
 //  TestMediaPlayerProfile.m
-//  DConnectSDK
+//  dConnectDeviceTest
 //
 //  Copyright (c) 2014 NTT DOCOMO, INC.
 //  Released under the MIT license
@@ -26,9 +26,10 @@
 #pragma mark - Get Methods
 
 
-- (BOOL) profile:(DConnectMediaPlayerProfile *)profile didReceiveGetPlayStatusRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response
-        serviceId:(NSString *)serviceId
+- (BOOL)                   profile:(DConnectMediaPlayerProfile *)profile
+    didReceiveGetPlayStatusRequest:(DConnectRequestMessage *)request
+                          response:(DConnectResponseMessage *)response
+                         serviceId:(NSString *)serviceId
 {
     CheckDID(response, serviceId) {
         response.result = DConnectMessageResultTypeOk;
@@ -38,10 +39,11 @@
     return YES;
 }
 
-- (BOOL) profile:(DConnectMediaPlayerProfile *)profile didReceiveGetMediaRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response
-        serviceId:(NSString *)serviceId
-         mediaId:(NSString *)mediaId
+- (BOOL)              profile:(DConnectMediaPlayerProfile *)profile
+    didReceiveGetMediaRequest:(DConnectRequestMessage *)request
+                     response:(DConnectResponseMessage *)response
+                    serviceId:(NSString *)serviceId
+                      mediaId:(NSString *)mediaId
 {
     
     CheckDID(response, serviceId)
@@ -79,14 +81,15 @@
     return YES;
 }
 
-- (BOOL) profile:(DConnectMediaPlayerProfile *)profile didReceiveGetMediaListRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response
-        serviceId:(NSString *)serviceId
-           query:(NSString *)query
-        mimeType:(NSString *)mimeType
-           order:(NSArray *)order
-          offset:(NSNumber *)offset
-           limit:(NSNumber *)limit
+- (BOOL)                  profile:(DConnectMediaPlayerProfile *)profile
+    didReceiveGetMediaListRequest:(DConnectRequestMessage *)request
+                         response:(DConnectResponseMessage *)response
+                        serviceId:(NSString *)serviceId
+                            query:(NSString *)query
+                         mimeType:(NSString *)mimeType
+                            order:(NSArray *)order
+                           offset:(NSNumber *)offset
+                            limit:(NSNumber *)limit
 {
     CheckDID(response, serviceId) {
         response.result = DConnectMessageResultTypeOk;
@@ -130,9 +133,10 @@
     return YES;
 }
 
-- (BOOL) profile:(DConnectMediaPlayerProfile *)profile didReceiveGetSeekRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response
-        serviceId:(NSString *)serviceId
+- (BOOL)             profile:(DConnectMediaPlayerProfile *)profile
+    didReceiveGetSeekRequest:(DConnectRequestMessage *)request
+                    response:(DConnectResponseMessage *)response
+                   serviceId:(NSString *)serviceId
 {
     CheckDID(response, serviceId) {
         response.result = DConnectMessageResultTypeOk;
@@ -142,9 +146,10 @@
     return YES;
 }
 
-- (BOOL) profile:(DConnectMediaPlayerProfile *)profile didReceiveGetVolumeRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response
-        serviceId:(NSString *)serviceId
+- (BOOL)               profile:(DConnectMediaPlayerProfile *)profile
+    didReceiveGetVolumeRequest:(DConnectRequestMessage *)request
+                      response:(DConnectResponseMessage *)response
+                     serviceId:(NSString *)serviceId
 {
     
     CheckDID(response, serviceId) {
@@ -155,9 +160,10 @@
     return YES;
 }
 
-- (BOOL) profile:(DConnectMediaPlayerProfile *)profile didReceiveGetMuteRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response
-        serviceId:(NSString *)serviceId
+- (BOOL)             profile:(DConnectMediaPlayerProfile *)profile
+    didReceiveGetMuteRequest:(DConnectRequestMessage *)request
+                    response:(DConnectResponseMessage *)response
+                   serviceId:(NSString *)serviceId
 {
     
     CheckDID(response, serviceId) {
@@ -171,10 +177,11 @@
 #pragma mark - Put Methods
 
 
-- (BOOL) profile:(DConnectMediaPlayerProfile *)profile didReceivePutMediaRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response
-        serviceId:(NSString *)serviceId
-         mediaId:(NSString *) mediaId
+- (BOOL)              profile:(DConnectMediaPlayerProfile *)profile
+    didReceivePutMediaRequest:(DConnectRequestMessage *)request
+                     response:(DConnectResponseMessage *)response
+                    serviceId:(NSString *)serviceId
+                      mediaId:(NSString *) mediaId
 {
     
     CheckDID(response, serviceId)
@@ -187,9 +194,10 @@
     return YES;
 }
 
-- (BOOL) profile:(DConnectMediaPlayerProfile *)profile didReceivePutPlayRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response
-        serviceId:(NSString *)serviceId
+- (BOOL)             profile:(DConnectMediaPlayerProfile *)profile
+    didReceivePutPlayRequest:(DConnectRequestMessage *)request
+                    response:(DConnectResponseMessage *)response
+                   serviceId:(NSString *)serviceId
 {
     CheckDID(response, serviceId) {
         response.result = DConnectMessageResultTypeOk;
@@ -198,9 +206,10 @@
     return YES;
 }
 
-- (BOOL) profile:(DConnectMediaPlayerProfile *)profile didReceivePutStopRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response
-        serviceId:(NSString *)serviceId
+- (BOOL)             profile:(DConnectMediaPlayerProfile *)profile
+    didReceivePutStopRequest:(DConnectRequestMessage *)request
+                    response:(DConnectResponseMessage *)response
+                   serviceId:(NSString *)serviceId
 {
     CheckDID(response, serviceId) {
         response.result = DConnectMessageResultTypeOk;
@@ -209,9 +218,10 @@
     return YES;
 }
 
-- (BOOL) profile:(DConnectMediaPlayerProfile *)profile didReceivePutPauseRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response
-        serviceId:(NSString *)serviceId
+- (BOOL)              profile:(DConnectMediaPlayerProfile *)profile
+    didReceivePutPauseRequest:(DConnectRequestMessage *)request
+                     response:(DConnectResponseMessage *)response
+                    serviceId:(NSString *)serviceId
 {
     CheckDID(response, serviceId) {
         response.result = DConnectMessageResultTypeOk;
@@ -220,9 +230,10 @@
     return YES;
 }
 
-- (BOOL) profile:(DConnectMediaPlayerProfile *)profile didReceivePutResumeRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response
-        serviceId:(NSString *)serviceId
+- (BOOL)               profile:(DConnectMediaPlayerProfile *)profile
+    didReceivePutResumeRequest:(DConnectRequestMessage *)request
+                      response:(DConnectResponseMessage *)response
+                     serviceId:(NSString *)serviceId
 {
     CheckDID(response, serviceId) {
         response.result = DConnectMessageResultTypeOk;
@@ -232,10 +243,11 @@
 }
 
 
-- (BOOL) profile:(DConnectMediaPlayerProfile *)profile didReceivePutSeekRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response
-        serviceId:(NSString *)serviceId
-             pos:(NSNumber *)pos
+- (BOOL)             profile:(DConnectMediaPlayerProfile *)profile
+    didReceivePutSeekRequest:(DConnectRequestMessage *)request
+                    response:(DConnectResponseMessage *)response
+                   serviceId:(NSString *)serviceId
+                         pos:(NSNumber *)pos
 {
     CheckDID(response, serviceId)
     if (pos == nil || pos < 0) {
@@ -247,10 +259,11 @@
     return YES;
 }
 
-- (BOOL) profile:(DConnectMediaPlayerProfile *)profile didReceivePutOnStatusChangeRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response
-        serviceId:(NSString *)serviceId
-      sessionKey:(NSString *)sessionkey
+- (BOOL)                       profile:(DConnectMediaPlayerProfile *)profile
+    didReceivePutOnStatusChangeRequest:(DConnectRequestMessage *)request
+                              response:(DConnectResponseMessage *)response
+                             serviceId:(NSString *)serviceId
+                            sessionKey:(NSString *)sessionkey
 {
     CheckDIDAndSK(response, serviceId, sessionkey) {
         response.result = DConnectMessageResultTypeOk;
@@ -275,10 +288,11 @@
     return YES;
 }
 
-- (BOOL) profile:(DConnectMediaPlayerProfile *)profile didReceivePutVolumeRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response
-        serviceId:(NSString *)serviceId
-          volume:(NSNumber *)volume
+- (BOOL)               profile:(DConnectMediaPlayerProfile *)profile
+    didReceivePutVolumeRequest:(DConnectRequestMessage *)request
+                      response:(DConnectResponseMessage *)response
+                     serviceId:(NSString *)serviceId
+                        volume:(NSNumber *)volume
 {
     CheckDID(response, serviceId)
     if (volume == nil || [volume doubleValue] < 0.0 || [volume doubleValue] > 1.0) {
@@ -290,9 +304,10 @@
     return YES;
 }
 
-- (BOOL) profile:(DConnectMediaPlayerProfile *)profile didReceivePutMuteRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response
-        serviceId:(NSString *)serviceId
+- (BOOL)             profile:(DConnectMediaPlayerProfile *)profile
+    didReceivePutMuteRequest:(DConnectRequestMessage *)request
+                    response:(DConnectResponseMessage *)response
+                   serviceId:(NSString *)serviceId
 {
     
     CheckDID(response, serviceId) {
@@ -304,9 +319,10 @@
 
 #pragma mark - Delete Methods
 
-- (BOOL) profile:(DConnectMediaPlayerProfile *)profile didReceiveDeleteMuteRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response
-        serviceId:(NSString *)serviceId
+- (BOOL)                profile:(DConnectMediaPlayerProfile *)profile
+    didReceiveDeleteMuteRequest:(DConnectRequestMessage *)request
+                       response:(DConnectResponseMessage *)response
+                      serviceId:(NSString *)serviceId
 {
     
     CheckDID(response, serviceId) {
@@ -316,10 +332,11 @@
     return YES;
 }
 
-- (BOOL) profile:(DConnectMediaPlayerProfile *)profile didReceiveDeleteOnStatusChangeRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response
-        serviceId:(NSString *)serviceId
-      sessionKey:(NSString *)sessionkey
+- (BOOL)                          profile:(DConnectMediaPlayerProfile *)profile
+    didReceiveDeleteOnStatusChangeRequest:(DConnectRequestMessage *)request
+                                 response:(DConnectResponseMessage *)response
+                                serviceId:(NSString *)serviceId
+                               sessionKey:(NSString *)sessionkey
 {
     CheckDIDAndSK(response, serviceId, sessionkey) {
         response.result = DConnectMessageResultTypeOk;

@@ -1,6 +1,6 @@
 //
 //  DPHostRecorderContext.m
-//  DConnectSDK
+//  dConnectDeviceHost
 //
 //  Copyright (c) 2014 NTT DOCOMO, INC.
 //  Released under the MIT license
@@ -83,19 +83,6 @@ const char * const VideoCaptureQueueName = "org.deviceconnect.ios.host.mediastre
 
 @implementation DPHostRecorderContext
 
-//- (instancetype)init
-//{
-//    self = [super init];
-//    if (self) {
-//        self.isMuted = NO;
-//        self.videoOrientation = AVCaptureVideoOrientationPortrait;
-//
-//        self.session = [AVCaptureSession new];
-//
-//        self.queue = dispatch_queue_create(NULL, DISPATCH_QUEUE_CONCURRENT);
-//    }
-//    return self;
-//}
 
 - (instancetype)initWithProfile:(DPHostMediaStreamRecordingProfile *)profile
 {
@@ -109,9 +96,6 @@ const char * const VideoCaptureQueueName = "org.deviceconnect.ios.host.mediastre
         
         self.queue = dispatch_queue_create(NULL, DISPATCH_QUEUE_CONCURRENT);
         
-        // エラーをイベントとして通知する。
-        // レコーダー毎のコンテキストが欲しいので、DPHostMediaStreamRecordingProfileをオブザーバーにせず、DPHostRecorderContextの方を
-        // オブザーバーにする。
         NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
         [notificationCenter addObserver:self selector:@selector(sendOnRecordingChangeEventWithStatus:)
                                    name:AVCaptureSessionRuntimeErrorNotification object:self.session];
@@ -142,11 +126,10 @@ const char * const VideoCaptureQueueName = "org.deviceconnect.ios.host.mediastre
         BOOL found = NO;
         for (AVCaptureInputPort *inputPort in [connection inputPorts]) {
             AVCaptureInput *input = [inputPort input];
-            if ([input isKindOfClass:[AVCaptureDeviceInput class]]) {
-                if ([[(AVCaptureDeviceInput *)input device].uniqueID isEqualToString:device.uniqueID]) {
-                    found = YES;
-                    break;
-                }
+            if ([input isKindOfClass:[AVCaptureDeviceInput class]]
+                && [[(AVCaptureDeviceInput *)input device].uniqueID isEqualToString:device.uniqueID]) {
+                found = YES;
+                break;
             }
         }
         if (found) {
@@ -240,7 +223,6 @@ const char * const VideoCaptureQueueName = "org.deviceconnect.ios.host.mediastre
             }
             
             AVCaptureAudioDataOutput *audioOut = [AVCaptureAudioDataOutput new];
-            // delegateがAVCaptureAudioDataOutputSampleBufferDelegateプロトコルに対応しているかチェックすべき？
             [audioOut setSampleBufferDelegate:delegate queue:dataSrc.captureQueue];
             if ([_session canAddOutput:audioOut]) {
                 [_session addOutput:audioOut];
@@ -278,13 +260,11 @@ const char * const VideoCaptureQueueName = "org.deviceconnect.ios.host.mediastre
             }
             
             AVCaptureVideoDataOutput *videoOut = [AVCaptureVideoDataOutput new];
-            // MARK: 初回処理が遅い場合は YES が良いらしいが、iOS7以降のiOSデバイスでは気にする必要なし？
             [videoOut setAlwaysDiscardsLateVideoFrames:NO];
             [videoOut setVideoSettings:
              @{
-               (id)kCVPixelBufferPixelFormatTypeKey : [NSNumber numberWithInt:kCVPixelFormatType_32BGRA]
+               (id)kCVPixelBufferPixelFormatTypeKey : @(kCVPixelFormatType_32BGRA)
                }];
-            // delegateがAVCaptureVideoDataOutputSampleBufferDelegateプロトコルに対応しているかチェックすべき？
             [videoOut setSampleBufferDelegate:delegate queue:dataSrc.captureQueue];
             if ([_session canAddOutput:videoOut]) {
                 [_session addOutput:videoOut];
@@ -302,9 +282,6 @@ const char * const VideoCaptureQueueName = "org.deviceconnect.ios.host.mediastre
             _videoDevice = dataSrc;
             break;
         }
-            
-        default:
-            break;
     }
 }
 
@@ -312,11 +289,12 @@ const char * const VideoCaptureQueueName = "org.deviceconnect.ios.host.mediastre
 {
     // AVAssetWriterの初期化および書き出し成功を確認した際に用いるHTTPレスポンス。
     _response = response;
-    NSString *fileName = [NSString stringWithFormat:@"%@_%@", [[NSProcessInfo processInfo] globallyUniqueString], @"movie.mp4"];
+    NSString *fileName = [NSString stringWithFormat:@"%@_%@",
+                          [[NSProcessInfo processInfo] globallyUniqueString],
+                          @"movie.mp4"];
     NSURL *fileURL = [NSURL fileURLWithPath:[NSTemporaryDirectory() stringByAppendingPathComponent:fileName]];
     _writer = [AVAssetWriter assetWriterWithURL:fileURL fileType:AVFileTypeQuickTimeMovie error:nil];
     
-    // エラードメイン「AVFoundationErrorDomain」コード「-11823」メッセージ「Cannot Save」（ファイルが既に存在する）が出る問題への対処
     [[NSFileManager defaultManager] removeItemAtURL:_writer.outputURL error:nil];
     
     return _writer != nil;

@@ -132,14 +132,21 @@ NSString *const DConnectConnectProfileInterfaceBluetooth = @"bluetooth";
                                      response:response serviceId:serviceId];
                 }
             } else if ([attribute isEqualToString:DConnectConnectProfileAttrOnWifiChange]) {
-                if ([self hasMethod:@selector(profile:didReceivePutOnWifiChangeRequest:response:serviceId:sessionKey:)
+                if ([self hasMethod:@selector(profile:
+                                              didReceivePutOnWifiChangeRequest:
+                                              response:
+                                              serviceId:
+                                              sessionKey:)
                            response:response])
                 {
                     send = [_delegate profile:self didReceivePutOnWifiChangeRequest:request
                                      response:response serviceId:serviceId sessionKey:sessionKey];
                 }
             } else if ([attribute isEqualToString:DConnectConnectProfileAttrOnBluetoothChange]) {
-                if ([self hasMethod:@selector(profile:didReceivePutOnBluetoothChangeRequest:response:serviceId:sessionKey:)
+                if ([self hasMethod:@selector(profile:didReceivePutOnBluetoothChangeRequest:
+                                              response:
+                                              serviceId:
+                                              sessionKey:)
                            response:response])
                 {
                     send = [_delegate profile:self didReceivePutOnBluetoothChangeRequest:request
@@ -229,14 +236,22 @@ NSString *const DConnectConnectProfileInterfaceBluetooth = @"bluetooth";
                 }
                 
             } else if ([attribute isEqualToString:DConnectConnectProfileAttrOnWifiChange]) {
-                if ([self hasMethod:@selector(profile:didReceiveDeleteOnWifiChangeRequest:response:serviceId:sessionKey:)
+                if ([self hasMethod:@selector(profile:
+                                              didReceiveDeleteOnWifiChangeRequest:
+                                              response:
+                                              serviceId:
+                                              sessionKey:)
                            response:response])
                 {
                     send = [_delegate profile:self didReceiveDeleteOnWifiChangeRequest:request
                                      response:response serviceId:serviceId sessionKey:sessionKey];
                 }
             } else if ([attribute isEqualToString:DConnectConnectProfileAttrOnBluetoothChange]) {
-                if ([self hasMethod:@selector(profile:didReceiveDeleteOnBluetoothChangeRequest:response:serviceId:sessionKey:)
+                if ([self hasMethod:@selector(profile:
+                                              didReceiveDeleteOnBluetoothChangeRequest:
+                                              response:
+                                              serviceId:
+                                              sessionKey:)
                            response:response])
                 {
                     send = [_delegate profile:self didReceiveDeleteOnBluetoothChangeRequest:request

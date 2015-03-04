@@ -1,6 +1,6 @@
 //
 //  RESTfulFailSystemProfileTest.m
-//  DConnectSDK
+//  dConnectDeviceTest
 //
 //  Copyright (c) 2014 NTT DOCOMO, INC.
 //  Released under the MIT license
@@ -84,132 +84,6 @@
 }
 
 /*!
- * @brief serviceIdを指定せずにデバイスのシステムプロファイルを取得する.
- * <pre>
- * 【HTTP通信】
- * Method: GET
- * Path: /system/device
- * </pre>
- * <pre>
- * 【期待する動作】
- * ・resultに1が返ってくること。
- * </pre>
- */
-- (void) testHttpFailSystemDeviceGetNoServiceId
-{
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/system/device"];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
-    [request setHTTPMethod:@"GET"];
-    
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":5}", request);
-}
-
-/*!
- * @brief serviceIdに空文字を指定してデバイスのシステムプロファイルを取得する.
- * <pre>
- * 【HTTP通信】
- * Method: GET
- * Path: /system/device?serviceId=
- * </pre>
- * <pre>
- * 【期待する動作】
- * ・resultに1が返ってくること。
- * </pre>
- */
-- (void) testHttpFailSystemDeviceGetEmptyServiceId
-{
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/system/device?serviceId="];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
-    [request setHTTPMethod:@"GET"];
-    
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":5}", request);
-}
-
-/*!
- * @brief 存在しないserviceIdを指定してデバイスのシステムプロファイルを取得する.
- * <pre>
- * 【HTTP通信】
- * Method: GET
- * Path: /system/device?serviceId=123456789
- * </pre>
- * <pre>
- * 【期待する動作】
- * ・resultに1が返ってくること。
- * </pre>
- */
-- (void) testHttpFailSystemDeviceGetInvalidServiceId
-{
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/system/device?serviceId=12345678"];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
-    [request setHTTPMethod:@"GET"];
-    
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":6}", request);
-}
-
-/*!
- * @brief POSTメソッドでデバイスのシステムプロファイルを取得する.
- * <pre>
- * 【HTTP通信】
- * Method: POST
- * Path: /system/device?serviceId=123456789&serviceId=xxxx
- * </pre>
- * <pre>
- * 【期待する動作】
- * ・resultに1が返ってくること。
- * </pre>
- */
-- (void) testHttpFailSystemDeviceGetInvalidMethodPost
-{
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/system/device?serviceId=%@", self.serviceId]];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
-    [request setHTTPMethod:@"POST"];
-    
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":3}", request);
-}
-
-/*!
- * @brief PUTメソッドでデバイスのシステムプロファイルを取得する.
- * <pre>
- * 【HTTP通信】
- * Method: PUT
- * Path: /system/device?serviceId=123456789&serviceId=xxxx
- * </pre>
- * <pre>
- * 【期待する動作】
- * ・resultに1が返ってくること。
- * </pre>
- */
-- (void) testHttpFailSystemDeviceGetInvalidMethodPut
-{
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/system/device?serviceId=%@", self.serviceId]];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
-    [request setHTTPMethod:@"PUT"];
-    
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":8}", request);
-}
-
-/*!
- * @brief DELETEメソッドでデバイスのシステムプロファイルを取得する.
- * <pre>
- * 【HTTP通信】
- * Method: DELETE
- * Path: /system/device?serviceId=123456789&serviceId=xxxx
- * </pre>
- * <pre>
- * 【期待する動作】
- * ・resultに1が返ってくること。
- * </pre>
- */
-- (void) testHttpFailSystemDeviceGetInvalidMethodDelete
-{
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/system/device?serviceId=%@", self.serviceId]];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
-    [request setHTTPMethod:@"DELETE"];
-    
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":8}", request);
-}
-
-/*!
  * @brief pluginId無しで/system/device/wakeupにアクセスする.
  * <pre>
  * 【HTTP通信】
@@ -248,7 +122,7 @@
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":10}", request);
+    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":6}", request);
 }
 
 /*!
@@ -286,11 +160,12 @@
  */
 - (void) testHttpFailSystemDeviceWakeupPutInvalidMethodGet
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/system/device/wakeup?pluginId=DeviceTestPlugin.dconnect"];
+    NSURL *uri = [NSURL URLWithString:
+                  @"http://localhost:4035/gotapi/system/device/wakeup?pluginId=DeviceTestPlugin.dconnect"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
     
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":8}", request);
+    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":3}", request);
 }
 
 /*!
@@ -307,7 +182,8 @@
  */
 - (void) testHttpFailSystemDeviceWakeupPutInvalidMethodPost
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/system/device/wakeup?pluginId=DeviceTestPlugin.dconnect"];
+    NSURL *uri = [NSURL URLWithString:
+                  @"http://localhost:4035/gotapi/system/device/wakeup?pluginId=DeviceTestPlugin.dconnect"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"POST"];
     
@@ -328,7 +204,8 @@
  */
 - (void) testHttpFailSystemDeviceWakeupPutInvalidMethodDelete
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/system/device/wakeup?pluginId=DeviceTestPlugin.dconnect"];
+    NSURL *uri = [NSURL URLWithString:
+                  @"http://localhost:4035/gotapi/system/device/wakeup?pluginId=DeviceTestPlugin.dconnect"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     

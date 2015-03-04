@@ -1,6 +1,6 @@
 //
 //  TestBatteryProfile.m
-//  DConnectSDK
+//  dConnectDeviceTest
 //
 //  Copyright (c) 2014 NTT DOCOMO, INC.
 //  Released under the MIT license
@@ -30,8 +30,10 @@ const BOOL TestBatteryCharging = NO;
 
 #pragma mark - DConnectBatteryProfileDelegate
 
-- (BOOL) profile:(DConnectBatteryProfile *)profile didReceiveGetAllRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response serviceId:(NSString *)serviceId
+- (BOOL)            profile:(DConnectBatteryProfile *)profile
+    didReceiveGetAllRequest:(DConnectRequestMessage *)request
+                   response:(DConnectResponseMessage *)response
+                  serviceId:(NSString *)serviceId
 {
     
     CheckDID(response, serviceId) {
@@ -45,8 +47,10 @@ const BOOL TestBatteryCharging = NO;
     return YES;
 }
 
-- (BOOL) profile:(DConnectBatteryProfile *)profile didReceiveGetLevelRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response serviceId:(NSString *)serviceId
+- (BOOL)              profile:(DConnectBatteryProfile *)profile
+    didReceiveGetLevelRequest:(DConnectRequestMessage *)request
+                     response:(DConnectResponseMessage *)response
+                    serviceId:(NSString *)serviceId
 {
     CheckDID(response, serviceId) {
         response.result = DConnectMessageResultTypeOk;
@@ -56,8 +60,10 @@ const BOOL TestBatteryCharging = NO;
     return YES;
 }
 
-- (BOOL) profile:(DConnectBatteryProfile *)profile didReceiveGetChargingRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response serviceId:(NSString *)serviceId
+- (BOOL)                 profile:(DConnectBatteryProfile *)profile
+    didReceiveGetChargingRequest:(DConnectRequestMessage *)request
+                        response:(DConnectResponseMessage *)response
+                       serviceId:(NSString *)serviceId
 {
     
     CheckDID(response, serviceId) {
@@ -68,8 +74,10 @@ const BOOL TestBatteryCharging = NO;
     return YES;
 }
 
-- (BOOL) profile:(DConnectBatteryProfile *)profile didReceiveGetChargingTimeRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response serviceId:(NSString *)serviceId
+- (BOOL)                     profile:(DConnectBatteryProfile *)profile
+    didReceiveGetChargingTimeRequest:(DConnectRequestMessage *)request
+                            response:(DConnectResponseMessage *)response
+                           serviceId:(NSString *)serviceId
 {
     CheckDID(response, serviceId) {
         response.result = DConnectMessageResultTypeOk;
@@ -79,8 +87,10 @@ const BOOL TestBatteryCharging = NO;
     return YES;
 }
 
-- (BOOL) profile:(DConnectBatteryProfile *)profile didReceiveGetDischargingTimeRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response serviceId:(NSString *)serviceId
+- (BOOL)                        profile:(DConnectBatteryProfile *)profile
+    didReceiveGetDischargingTimeRequest:(DConnectRequestMessage *)request
+                               response:(DConnectResponseMessage *)response
+                              serviceId:(NSString *)serviceId
 {
     CheckDID(response, serviceId) {
         response.result = DConnectMessageResultTypeOk;
@@ -93,9 +103,11 @@ const BOOL TestBatteryCharging = NO;
 #pragma mark - Put Methods
 #pragma mark Event Registration
 
-- (BOOL) profile:(DConnectBatteryProfile *)profile didReceivePutOnChargingChangeRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response serviceId:(NSString *)serviceId
-      sessionKey:(NSString *)sessionKey
+- (BOOL)                         profile:(DConnectBatteryProfile *)profile
+    didReceivePutOnChargingChangeRequest:(DConnectRequestMessage *)request
+                                response:(DConnectResponseMessage *)response
+                               serviceId:(NSString *)serviceId
+                              sessionKey:(NSString *)sessionKey
 {
     
     CheckDIDAndSK(response, serviceId, sessionKey) {
@@ -117,8 +129,11 @@ const BOOL TestBatteryCharging = NO;
     return YES;
 }
 
-- (BOOL) profile:(DConnectBatteryProfile *)profile didReceivePutOnBatteryChangeRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response serviceId:(NSString *)serviceId sessionKey:(NSString *)sessionKey
+- (BOOL)                        profile:(DConnectBatteryProfile *)profile
+    didReceivePutOnBatteryChangeRequest:(DConnectRequestMessage *)request
+                               response:(DConnectResponseMessage *)response
+                              serviceId:(NSString *)serviceId
+                             sessionKey:(NSString *)sessionKey
 {
     CheckDIDAndSK(response, serviceId, sessionKey) {
         response.result = DConnectMessageResultTypeOk;
@@ -145,8 +160,11 @@ const BOOL TestBatteryCharging = NO;
 
 #pragma mark - Delete Methods
 
-- (BOOL) profile:(DConnectBatteryProfile *)profile didReceiveDeleteOnChargingChangeRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response serviceId:(NSString *)serviceId sessionKey:(NSString *)sessionKey
+- (BOOL)                            profile:(DConnectBatteryProfile *)profile
+    didReceiveDeleteOnChargingChangeRequest:(DConnectRequestMessage *)request
+                                   response:(DConnectResponseMessage *)response
+                                  serviceId:(NSString *)serviceId
+                                 sessionKey:(NSString *)sessionKey
 {
     
     CheckDIDAndSK(response, serviceId, sessionKey) {
@@ -155,8 +173,11 @@ const BOOL TestBatteryCharging = NO;
     
     return YES;
 }
-- (BOOL) profile:(DConnectBatteryProfile *)profile didReceiveDeleteOnBatteryChangeRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response serviceId:(NSString *)serviceId sessionKey:(NSString *)sessionKey
+- (BOOL)                           profile:(DConnectBatteryProfile *)profile
+    didReceiveDeleteOnBatteryChangeRequest:(DConnectRequestMessage *)request
+                                  response:(DConnectResponseMessage *)response
+                                 serviceId:(NSString *)serviceId
+                                sessionKey:(NSString *)sessionKey
 {
     
     CheckDIDAndSK(response, serviceId, sessionKey) {

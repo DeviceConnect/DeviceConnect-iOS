@@ -1,6 +1,6 @@
 //
 //  SonyCameraDataViewController.m
-//  DConnectSDK
+//  dConnectDeviceSonyCamera
 //
 //  Copyright (c) 2014 NTT DOCOMO, INC.
 //  Released under the MIT license
@@ -19,8 +19,8 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
 
-    UIScrollView *sv = (UIScrollView *)self.mainView;
-    sv.contentInset = UIEdgeInsetsMake(64, 0.0, 0.0, 0);
+    UIScrollView *scrollView = (UIScrollView *)self.mainView;
+    scrollView.contentInset = UIEdgeInsetsMake(64, 0.0, 0.0, 0);
 }
 
 - (void)didReceiveMemoryWarning

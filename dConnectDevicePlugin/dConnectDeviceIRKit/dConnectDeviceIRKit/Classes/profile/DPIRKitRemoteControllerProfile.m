@@ -1,6 +1,6 @@
 //
 //  DPIRKitRemoteControllerProfile.m
-//  DConnectSDK
+//  dConnectDeviceIRKit
 //
 //  Copyright (c) 2014 NTT DOCOMO, INC.
 //  Released under the MIT license
@@ -86,7 +86,6 @@ NSString *const DPIRKitRemoteControllerProfileParamMessage = @"message";
         }
         
     } else {
-        // デバイスプラグインがnilになっているという状態は通常ありえないので不明なエラーを返しておく。
         [response setErrorToUnknown];
     }
     
@@ -123,7 +122,6 @@ NSString *const DPIRKitRemoteControllerProfileParamMessage = @"message";
         }
         
     } else {
-        // デバイスプラグインがnilになっているという状態は通常ありえないので不明なエラーを返しておく。
         [response setErrorToUnknown];
     }
     

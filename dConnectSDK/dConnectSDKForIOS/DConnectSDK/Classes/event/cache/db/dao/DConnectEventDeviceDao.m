@@ -18,7 +18,11 @@ NSString *const DConnectEventDeviceDaoClmDId = @"d_id";
 
 + (void) createWithDatabase:(DConnectSQLiteDatabase *)database {
     
-    NSString *sql = DCEForm(@"CREATE TABLE %@ (%@ INTEGER PRIMARY KEY AUTOINCREMENT, %@ INTEGER NOT NULL, %@ INTEGER NOT NULL, %@ INTEGER NOT NULL, %@ INTEGER NOT NULL, UNIQUE(%@, %@));",
+    NSString *sql = DCEForm(@"CREATE TABLE %@ "
+                            "(%@ INTEGER PRIMARY KEY AUTOINCREMENT,"
+                            "%@ INTEGER NOT NULL, %@ INTEGER NOT NULL, "
+                            "%@ INTEGER NOT NULL, %@ INTEGER NOT NULL, "
+                            "UNIQUE(%@, %@));",
                             DConnectEventDeviceDaoTableName,
                             DConnectEventDaoClmId,
                             DConnectEventDeviceDaoClmAId,
@@ -56,8 +60,10 @@ NSString *const DConnectEventDeviceDaoClmDId = @"d_id";
     if (cursor.count == 0) {
         NSNumber *current = [NSNumber numberWithLongLong:getCurrentTimeInMillis()];
         result = [database insertIntoTable:DConnectEventDeviceDaoTableName
-                                   columns:@[DConnectEventDeviceDaoClmAId, DConnectEventDeviceDaoClmDId,
-                                             DConnectEventDaoClmCreateDate, DConnectEventDaoClmUpdateDate]
+                                   columns:@[DConnectEventDeviceDaoClmAId,
+                                             DConnectEventDeviceDaoClmDId,
+                                             DConnectEventDaoClmCreateDate,
+                                             DConnectEventDaoClmUpdateDate]
                                     params:@[aid, did, current, current]];
     } else if ([cursor moveToFirst]) {
         result = [cursor longLongValueAtIndex:0];

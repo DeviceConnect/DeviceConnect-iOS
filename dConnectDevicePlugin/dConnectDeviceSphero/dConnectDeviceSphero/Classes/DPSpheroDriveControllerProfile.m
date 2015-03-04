@@ -1,6 +1,6 @@
 //
 //  DPSpheroDriveControllerProfile.m
-//  DConnectSDK
+//  dConnectDeviceSphero
 //
 //  Copyright (c) 2014 NTT DOCOMO, INC.
 //  Released under the MIT license
@@ -27,8 +27,12 @@ static NSString * const spheroRegexDigit = @"^([0-9]*)?$";
 }
 
 // デバイスの操作
-- (BOOL) profile:(DCMDriveControllerProfile *)profile didReceivePostDriveControllerMoveRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response serviceId:(NSString *)serviceId angle:(double)angle speed:(double)speed
+- (BOOL)                             profile:(DCMDriveControllerProfile *)profile
+    didReceivePostDriveControllerMoveRequest:(DConnectRequestMessage *)request
+                                    response:(DConnectResponseMessage *)response
+                                   serviceId:(NSString *)serviceId
+                                       angle:(double)angle
+                                       speed:(double)speed
 {
     // 接続確認
     CONNECT_CHECK();
@@ -63,8 +67,11 @@ static NSString * const spheroRegexDigit = @"^([0-9]*)?$";
 
 
 // デバイスの回転
-- (BOOL) profile:(DCMDriveControllerProfile *)profile didReceivePutDriveControllerRotateRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response serviceId:(NSString *)serviceId angle:(double)angle
+- (BOOL)                              profile:(DCMDriveControllerProfile *)profile
+    didReceivePutDriveControllerRotateRequest:(DConnectRequestMessage *)request
+                                     response:(DConnectResponseMessage *)response
+                                    serviceId:(NSString *)serviceId
+                                        angle:(double)angle
 {
     // 接続確認
     CONNECT_CHECK();
@@ -89,8 +96,10 @@ static NSString * const spheroRegexDigit = @"^([0-9]*)?$";
 }
 
 // デバイスの停止
-- (BOOL) profile:(DCMDriveControllerProfile *)profile didReceiveDeleteDriveControllerStopRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response serviceId:(NSString *)serviceId
+- (BOOL)                               profile:(DCMDriveControllerProfile *)profile
+    didReceiveDeleteDriveControllerStopRequest:(DConnectRequestMessage *)request
+                                      response:(DConnectResponseMessage *)response
+                                     serviceId:(NSString *)serviceId
 {
     // 接続確認
     CONNECT_CHECK();
@@ -101,16 +110,13 @@ static NSString * const spheroRegexDigit = @"^([0-9]*)?$";
     [response setResult:DConnectMessageResultTypeOk];
     return YES;
 }
+
 /*
  数値判定。
  */
 - (BOOL)isDigitWithString:(NSString *)numberString Regex:(NSString*)regex {
     NSRange match = [numberString rangeOfString:regex options:NSRegularExpressionSearch];
     //数値の場合
-    if(match.location != NSNotFound) {
-        return YES;
-    } else {
-        return NO;
-    }
+    return match.location != NSNotFound;
 }
 @end

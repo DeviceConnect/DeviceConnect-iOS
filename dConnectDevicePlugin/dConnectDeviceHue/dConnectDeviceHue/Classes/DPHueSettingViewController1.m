@@ -1,6 +1,6 @@
 //
 //  DPHueSettingViewController1.m
-//  DConnectSDK
+//  dConnectDeviceHue
 //
 //  Copyright (c) 2014 NTT DOCOMO, INC.
 //  Released under the MIT license
@@ -45,9 +45,6 @@
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-
-    }
     return self;
 }
 

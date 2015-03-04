@@ -1,6 +1,6 @@
 //
 //  DPHostMediaContext.m
-//  DConnectSDK
+//  dConnectDeviceHost
 //
 //  Copyright (c) 2014 NTT DOCOMO, INC.
 //  Released under the MIT license
@@ -61,9 +61,8 @@ static NSMutableArray *contextCacheVal;
     NSUInteger index = [contextCacheKey indexOfObject:mediaId];
     if (index != NSNotFound) {
         return contextCacheVal[index];
-    } else {
-        return nil;
     }
+    return nil;
 }
 
 + (NSNumber *) persistentIdWithMediaIdURL:(NSURL *)mediaIdURL
@@ -84,7 +83,8 @@ static NSMutableArray *contextCacheVal;
         return ctx;
     }
     
-    if ([url.scheme isEqualToString:MediaContextMediaIdSchemeIPodAudio] || [url.scheme isEqualToString:MediaContextMediaIdSchemeIPodMovie]) {
+    if ([url.scheme isEqualToString:MediaContextMediaIdSchemeIPodAudio]
+        || [url.scheme isEqualToString:MediaContextMediaIdSchemeIPodMovie]) {
         NSNumber *persistentId = [DPHostMediaContext persistentIdWithMediaIdURL:url];
         
         MPMediaQuery *mediaQuery = [MPMediaQuery new];
@@ -97,10 +97,10 @@ static NSMutableArray *contextCacheVal;
         NSArray *items = [mediaQuery items];
         
         MPMediaItem *mediaItem;
-        if (items.count == 0) {
-            return nil;
-        } else {
+        if (items.count != 0) {
             mediaItem = items[0];
+        } else {
+            return nil;
         }
         
         ctx = [DPHostMediaContext contextWithMediaItem:mediaItem];
@@ -147,10 +147,10 @@ static NSMutableArray *contextCacheVal;
         NSArray *items = [mediaQuery items];
         
         MPMediaItem *mediaItem;
-        if (items.count == 0) {
-            return nil;
-        } else {
+        if (items.count != 0) {
             mediaItem = items[0];
+        } else {
+            return nil;
         }
         
         ctx = [DPHostMediaContext contextWithMediaItem:mediaItem];
@@ -159,6 +159,92 @@ static NSMutableArray *contextCacheVal;
     }
     
     return ctx;
+}
+
++ (void)checkParameterWithAsset:(ALAsset *)asset
+                            url:(NSURL *)url
+                       context:(DPHostMediaContext *)context
+{
+    ALAssetRepresentation *defaultRep = asset.defaultRepresentation;
+    NSDictionary *metadata = defaultRep.metadata;
+    NSDictionary *exifDict = metadata[(NSString *)kCGImagePropertyExifDictionary];
+    NSDictionary *iptcDict = metadata[(NSString *)kCGImagePropertyIPTCDictionary];
+    NSDictionary *pngDict = metadata[(NSString *)kCGImagePropertyPNGDictionary];
+    NSDictionary *tiffDict = metadata[(NSString *)kCGImagePropertyTIFFDictionary];
+    NSDictionary *ciffDict = metadata[(NSString *)kCGImagePropertyCIFFDictionary];
+    NSDictionary *canonDict = metadata[(NSString *)kCGImagePropertyMakerCanonDictionary];
+    
+    context.media = [AVAsset assetWithURL:url];
+    
+    // ===== mediaId =====
+    context.mediaId = url.absoluteString;
+    
+    // ===== mimeType =====
+    NSString *mimeType = [DConnectFileManager searchMimeTypeForExtension:defaultRep.filename.pathExtension];
+    if (!mimeType) {
+        mimeType = [DConnectFileManager mimeTypeForArbitraryData];
+    }
+    context.mimeType = mimeType;
+    
+    // ===== title =====
+    // kCGImagePropertyPNGTitle
+    NSString *title = pngDict[(NSString *)kCGImagePropertyPNGTitle];
+    // kCGImagePropertyTIFFDocumentName
+    if (!title) {
+        title = tiffDict[(NSString *)kCGImagePropertyTIFFDocumentName];
+    }
+    // kCGImagePropertyCIFFImageName
+    if (!title) {
+        title = ciffDict[(NSString *)kCGImagePropertyCIFFImageName];
+    }
+    if (!title) {
+        title = defaultRep.filename;
+    }
+    context.title = title;
+    
+    // ===== description =====
+    // kCGImagePropertyExifUserComment
+    NSString *description = exifDict[(NSString *)kCGImagePropertyExifUserComment];
+    // kCGImagePropertyPNGDescription
+    if (!description) {
+        description = pngDict[(NSString *)kCGImagePropertyPNGDescription];
+    }
+    // kCGImagePropertyCIFFDescription
+    if (!description) {
+        description = ciffDict[(NSString *)kCGImagePropertyCIFFDescription];
+    }
+    context.desc = description;
+    context.duration = [asset valueForProperty:ALAssetPropertyDuration];
+    NSString *creator = exifDict[(NSString *)kCGImagePropertyExifCameraOwnerName];
+    if (!creator) {
+        creator = pngDict[(NSString *)kCGImagePropertyPNGAuthor];
+    }
+    if (!creator) {
+        creator = tiffDict[(NSString *)kCGImagePropertyTIFFArtist];
+    }
+    if (!creator) {
+        creator = ciffDict[(NSString *)kCGImagePropertyCIFFOwnerName];
+    }
+    if (!creator) {
+        creator = canonDict[(NSString *)kCGImagePropertyMakerCanonOwnerName];
+    }
+    if (creator) {
+        DConnectArray *creators = [DConnectArray array];
+        DConnectMessage *message = [DConnectMessage message];
+        [DConnectMediaPlayerProfile setCreator:creator target:message];
+        [DConnectMediaPlayerProfile setRole:@"Owner" target:message];
+        [creators addMessage:message];
+        context.creators = creators;
+    }
+    
+    NSString *keywordsStr = iptcDict[(NSString *)kCGImagePropertyIPTCKeywords];
+    if (keywordsStr) {
+        DConnectArray *keywords =
+        [DConnectArray initWithArray:
+         [keywordsStr componentsSeparatedByCharactersInSet:
+          (NSCharacterSet *)[NSCharacterSet characterSetWithCharactersInString:@",;"]]];
+        context.keywords = keywords;
+    }
 }
 
 + (instancetype)contextWithAsset:(ALAsset *)asset
@@ -185,110 +271,10 @@ static NSMutableArray *contextCacheVal;
         
         NSURL *url = [asset valueForProperty:ALAssetPropertyAssetURL];
         if (!url) {
-            // 現在のApple IDとは別のIDに紐づけられた曲（つまり他人が購入したiTunes曲）だったり、
-            // Purchaseにはあるけど、まだダウンロードされていない曲はURLが無く、MoviePlayerから再生できない。
             return nil;
         }
         
-        ALAssetRepresentation *defaultRep = asset.defaultRepresentation;
-        // 各種の使用するかもしれないメタデータ
-        NSDictionary *metadata = defaultRep.metadata;
-        NSDictionary *exifDict = metadata[(NSString *)kCGImagePropertyExifDictionary];
-        NSDictionary *iptcDict = metadata[(NSString *)kCGImagePropertyIPTCDictionary];
-        NSDictionary *pngDict = metadata[(NSString *)kCGImagePropertyPNGDictionary];
-        NSDictionary *tiffDict = metadata[(NSString *)kCGImagePropertyTIFFDictionary];
-        NSDictionary *ciffDict = metadata[(NSString *)kCGImagePropertyCIFFDictionary];
-        NSDictionary *canonDict = metadata[(NSString *)kCGImagePropertyMakerCanonDictionary];
-        
-        instance.media = [AVAsset assetWithURL:url];
-        
-        // ===== mediaId =====
-        instance.mediaId = url.absoluteString;
-        
-        // ===== mimeType =====
-        NSString *mimeType = [DConnectFileManager searchMimeTypeForExtension:defaultRep.filename.pathExtension];
-        if (!mimeType) {
-            mimeType = [DConnectFileManager mimeTypeForArbitraryData];
-        }
-        instance.mimeType = mimeType;
-        
-        // ===== title =====
-        // kCGImagePropertyPNGTitle
-        NSString *title = pngDict[(NSString *)kCGImagePropertyPNGTitle];
-        // kCGImagePropertyTIFFDocumentName
-        if (!title) {
-            title = tiffDict[(NSString *)kCGImagePropertyTIFFDocumentName];
-        }
-        // kCGImagePropertyCIFFImageName
-        if (!title) {
-            title = ciffDict[(NSString *)kCGImagePropertyCIFFImageName];
-        }
-        if (!title) {
-            title = defaultRep.filename;
-        }
-        instance.title = title;
-        
-        // ===== description =====
-        // kCGImagePropertyExifUserComment
-        NSString *description = exifDict[(NSString *)kCGImagePropertyExifUserComment];
-        // kCGImagePropertyPNGDescription
-        if (!description) {
-            description = pngDict[(NSString *)kCGImagePropertyPNGDescription];
-        }
-        // kCGImagePropertyCIFFDescription
-        if (!description) {
-            description = ciffDict[(NSString *)kCGImagePropertyCIFFDescription];
-        }
-        instance.desc = description;
-        
-        // TODO: サムネイルの提供の仕方を考える。Data URI？それとも一時ファイルとして画像を用意しておくとか（一時ファイルは面倒なのでやりたくない）？
-        //    CGImageRef thumbnail = asset.thumbnail;
-        //    instance.imageUri
-        
-        // ===== duration =====
-        instance.duration = [asset valueForProperty:ALAssetPropertyDuration];
-        
-        // ===== creators-+-creator =====
-        // =====          +-role    =====
-        // kCGImagePropertyExifCameraOwnerName
-        NSString *creator = exifDict[(NSString *)kCGImagePropertyExifCameraOwnerName];
-        // kCGImagePropertyPNGAuthor
-        if (!creator) {
-            creator = pngDict[(NSString *)kCGImagePropertyPNGAuthor];
-        }
-        // kCGImagePropertyTIFFArtist
-        if (!creator) {
-            creator = tiffDict[(NSString *)kCGImagePropertyTIFFArtist];
-        }
-        // kCGImagePropertyCIFFOwnerName
-        if (!creator) {
-            creator = ciffDict[(NSString *)kCGImagePropertyCIFFOwnerName];
-        }
-        // kCGImagePropertyMakerCanonOwnerName
-        if (!creator) {
-            creator = canonDict[(NSString *)kCGImagePropertyMakerCanonOwnerName];
-        }
-        if (creator) {
-            DConnectArray *creators = [DConnectArray array];
-            DConnectMessage *message = [DConnectMessage message];
-            [DConnectMediaPlayerProfile setCreator:creator target:message];
-            [DConnectMediaPlayerProfile setRole:@"Owner" target:message];
-            [creators addMessage:message];
-            instance.creators = creators;
-        }
-        
-        // ===== keywords =====
-        // kCGImagePropertyIPTCKeywords
-        // IPTCのドキュメントによれば、Keywordsはフリーフォームの文字らしい。区切り文字はカンマもしくはセミコロン。
-        // https://www.iptc.org/std/photometadata/documentation/GenericGuidelines/index.htm#!Documents/iptccorecontentsection.htm
-        NSString *keywordsStr = iptcDict[(NSString *)kCGImagePropertyIPTCKeywords];
-        if (keywordsStr) {
-            DConnectArray *keywords =
-            [DConnectArray initWithArray:
-             [keywordsStr componentsSeparatedByCharactersInSet:
-              (NSCharacterSet *)[NSCharacterSet characterSetWithCharactersInString:@",;"]]];
-            instance.keywords = keywords;
-        }
+        [self checkParameterWithAsset:asset url:url context:instance];
     }
     
     // キャッシュする。
@@ -311,8 +297,6 @@ static NSMutableArray *contextCacheVal;
         
         NSNumber *persistentId = [mediaItem valueForProperty:MPMediaItemPropertyPersistentID];
         if (!persistentId) {
-            // 現在のApple IDとは別のApple IDに紐づけられた曲（つまり他人が購入したiTunes曲）だったり、
-            // Purchaseにはあるけど、まだダウンロードされていない曲はMPMusicPlayerControllerから再生できない。
             return nil;
         }
         

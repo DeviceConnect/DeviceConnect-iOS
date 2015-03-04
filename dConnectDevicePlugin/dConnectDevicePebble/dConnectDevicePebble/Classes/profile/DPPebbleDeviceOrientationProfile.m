@@ -1,6 +1,6 @@
 //
 //  DPPebbleDeviceOrientationProfile.m
-//  DConnectSDK
+//  dConnectDevicePebble
 //
 //  Copyright (c) 2014 NTT DOCOMO, INC.
 //  Released under the MIT license
@@ -48,17 +48,17 @@ didReceivePutOnDeviceOrientationRequest:(DConnectRequestMessage *)request
 			// エラーチェック
 			[DPPebbleProfileUtil handleErrorNormal:error response:response];
 			
-		} eventCallback:^(float x, float y, float z, long long t) {
+		} eventCallback:^(float accelX, float accelY, float accelZ, long long interval) {
 			// イベントコールバック
 			// DConnectメッセージ作成
 			DConnectMessage *message = [DConnectMessage message];
 			DConnectMessage *accelerationIncludingGravity = [DConnectMessage message];
-			[DConnectDeviceOrientationProfile setX:x target:accelerationIncludingGravity];
-			[DConnectDeviceOrientationProfile setY:y target:accelerationIncludingGravity];
-			[DConnectDeviceOrientationProfile setZ:z target:accelerationIncludingGravity];
+			[DConnectDeviceOrientationProfile setX:accelX target:accelerationIncludingGravity];
+			[DConnectDeviceOrientationProfile setY:accelY target:accelerationIncludingGravity];
+			[DConnectDeviceOrientationProfile setZ:accelZ target:accelerationIncludingGravity];
 			
 			[DConnectDeviceOrientationProfile setAccelerationIncludingGravity:accelerationIncludingGravity target:message];
-			[DConnectDeviceOrientationProfile setInterval:t target:message];
+			[DConnectDeviceOrientationProfile setInterval:interval target:message];
 			
 			// DConnectにイベント送信
 			[DPPebbleProfileUtil sendMessageWithProvider:self.provider

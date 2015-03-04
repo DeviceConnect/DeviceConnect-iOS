@@ -1,6 +1,6 @@
 //
 //  DPHostVibrationProfile.m
-//  DConnectSDK
+//  dConnectDeviceHost
 //
 //  Copyright (c) 2014 NTT DOCOMO, INC.
 //  Released under the MIT license
@@ -30,8 +30,6 @@
 
 #pragma mark - Put Methods
 
-// iOS SDKのバイブレーションで振動時間を指定できないので、patternが指定されたらエラーを返す様にしたいのだが、dConnect側が
-// 強制的にpatternを非nilにしてしまう。なので、処理を迂回してpattern文字列がnilならnilを受け取れる様にする。
 - (BOOL) didReceivePutRequest:(DConnectRequestMessage *)request response:(DConnectResponseMessage *)response {
     
     BOOL send = YES;
@@ -65,7 +63,8 @@ didReceivePutVibrateRequest:(DConnectRequestMessage *)request
         AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
         [response setResult:DConnectMessageResultTypeOk];
     } else {
-        [response setErrorToInvalidRequestParameterWithMessage:@"pattern is not supported; This parameter must be ommited."];
+        [response setErrorToInvalidRequestParameterWithMessage:
+            @"pattern is not supported; This parameter must be ommited."];
     }
     return YES;
 }
@@ -76,8 +75,6 @@ didReceiveDeleteVibrateRequest:(DConnectRequestMessage *)request
                       response:(DConnectResponseMessage *)response
                       serviceId:(NSString *)serviceId
 {
-    // MARK: AudioServicesPlaySystemSound()が1つのサウンドしか再生できない実装仕様を再生停止に利用できないか。
-    // 例えば、AudioServicesPlaySystemSound()への引数に0を指定したら止まったりするか？もしくは長さ0のサウンドファイルを指定すると止まる
     [response setErrorToNotSupportProfileWithMessage:@"Vibration Stop API is not supported."];
     return YES;
 }

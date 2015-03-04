@@ -1,6 +1,6 @@
 //
 //  DPPebbleCanvasProfile.m
-//  DConnectSDK
+//  dConnectDevicePebble
 //
 //  Copyright (c) 2014 NTT DOCOMO, INC.
 //  Released under the MIT license
@@ -33,11 +33,11 @@
 // 画像描画リクエストを受け取った
 - (BOOL) profile:(DConnectFileProfile *)profile didReceivePostDrawImageRequest:(DConnectRequestMessage *)request
         response:(DConnectResponseMessage *)response
-        deviceId:(NSString *)deviceId
+        serviceId:(NSString *)deviceId
         mimeType:(NSString *)mimeType
             data:(NSData *)data
-               x:(double)x
-               y:(double)y
+               imageX:(double)imageX
+               imageY:(double)imageY
             mode:(NSString *)mode
 {
 	// パラメータチェック
@@ -47,7 +47,7 @@
 	}
 	
 	// 画像変換
-    NSData *imgdata = [DPPebbleImage convertImage:data x:x y:y mode:mode];
+    NSData *imgdata = [DPPebbleImage convertImage:data imageX:imageX imageY:imageY mode:mode];
 	if (!imgdata) {
 		[response setErrorToUnknown];
 		return YES;
