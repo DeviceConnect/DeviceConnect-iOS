@@ -29,7 +29,7 @@ extern int DConnectPort;
  */
 @property (nonatomic) NSString *clientId;
 
-- (NSArray*) createClientForPackage:(NSString*)package;
+- (NSArray*) createClient;
 
 - (AccessToken*) requestAccessTokenWithClientId:(NSString*)clientId
                                    clientSecret:(NSString*)clientSecret

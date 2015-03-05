@@ -30,13 +30,6 @@ NSString *const DConnectAuthorizationProfileParamAccessToken = @"accessToken";
 NSString *const DConnectAuthorizationProfileGrantTypeAuthorizationCode = @"authorization_code";
 
 
-@interface DConnectAuthorizationProfile ()
-
-@property (nonatomic) id object;
-
-@end
-
-
 @implementation DConnectAuthorizationProfile
 
 - (id) initWithObject:(id)object {
@@ -59,11 +52,9 @@ NSString *const DConnectAuthorizationProfileGrantTypeAuthorizationCode = @"autho
     
     if (attribute) {
         if ([attribute isEqualToString:DConnectAuthorizationProfileAttrCreateClient]) {
-            NSString *package = [DConnectAuthorizationProfile packageFromRequest:request];
             send = [self didReceiveGetCreateClientRequest:request
                                                  response:response
-                                                serviceId:serviceId
-                                                  package:package];
+                                                serviceId:serviceId];
         } else if ([attribute isEqualToString:DConnectAuthorizationProfileAttrRequestAccessToken]) {
             NSString *clientId = [DConnectAuthorizationProfile clientIdFromRequest:request];
             NSString *grantType = [DConnectAuthorizationProfile grantTypeFromRequest:request];
@@ -92,8 +83,8 @@ NSString *const DConnectAuthorizationProfileGrantTypeAuthorizationCode = @"autho
 - (BOOL) didReceiveGetCreateClientRequest:(DConnectRequestMessage *)request
                                  response:(DConnectResponseMessage *)response
                                  serviceId:(NSString *)serviceId
-                                  package:(NSString *)package
 {
+    NSString *package = [DConnectAuthorizationProfile packageFromRequest:request];
     if (package == nil || package.length <= 0) {
         [response setErrorToInvalidRequestParameter];
     } else {

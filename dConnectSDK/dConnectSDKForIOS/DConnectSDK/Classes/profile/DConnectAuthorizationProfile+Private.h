@@ -15,6 +15,9 @@
  */
 @interface DConnectAuthorizationProfile : DConnectProfile
 
+@property (nonatomic) id object;
+
+
 /*!
  @brief 任意のオブジェクトを指定してAuthorizationProfileを初期化する。
  オブジェクトはDConnectDevicePluginもしくはDConnectManagerのインスタンスでなければならない。
@@ -34,15 +37,13 @@
  @param[in] requst リクエストパラメータ
  @param[in,out] response レスポンスパラメータ
  @param[in] serviceId サービスID
- @param[in] package パッケージ
  
  @retval YES レスポンスパラメータを返却する。
  @retval NO レスポンスパラメータを返却しないので、@link DConnectManager::sendResponse: @endlinkで返却すること。
  */
 - (BOOL) didReceiveGetCreateClientRequest:(DConnectRequestMessage *)request
                                  response:(DConnectResponseMessage *)response
-                                 serviceId:(NSString *)serviceId
-                                  package:(NSString *)package;
+                                serviceId:(NSString *)serviceId;
 
 /*!
  

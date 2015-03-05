@@ -29,7 +29,7 @@
     });
 }
 
-- (NSArray*) createClientForPackage:(NSString *)package
+- (NSArray*) createClient
 {
     return nil;
 }
