@@ -40,50 +40,50 @@ typedef void (^DConnectAuthorizationFailBlock)(DConnectMessageErrorCodeType erro
  @brief 非同期的に認証処理を行う。
  
  <p>
- packageNameにはアプリを一意に識別するための値を格納する。iOSではBundle Identifierなどを格納する。<br/>
+ originにはアプリのオリジンを格納する。iOSではBundle Identifierを格納する。<br/>
  appNameは認証確認ダイアログに表示されるアプリ名を指定する。<br/>
  scopesには、アプリで使用するプロファイルの一覧を指定する。ここに指定の無いプロファイルは使用することができない。<br/>
  </p>
  
  <p>
- 既にクライアントが作成されている場合に再度同じpackageNameで作成しようとした場合には、新規でクライアントを作成する。
+ 既にクライアントが作成されている場合に再度同じoriginで作成しようとした場合には、新規でクライアントを作成する。
  以前のクライアントは使用できなくなるので、注意が必要。
  </p>
- @param[in] packageName パッケージ名
+ @param[in] origin オリジン
  @param[in] appName アプリ名
  @param[in] scopes 使用するプロファイル一覧
  @param[in] success 認証成功通知コールバック
  @param[in] error 認証失敗通知コールバック
  */
-+ (void) asyncAuthorizeWithPackageName:(NSString *)packageName
-                               appName:(NSString *)appName
-                                scopes:(NSArray *)scopes
-                               success:(DConnectAuthorizationSuccessBlock)success
-                                 error:(DConnectAuthorizationFailBlock)error;
++ (void) asyncAuthorizeWithOrigin:(NSString *)origin
+                          appName:(NSString *)appName
+                           scopes:(NSArray *)scopes
+                          success:(DConnectAuthorizationSuccessBlock)success
+                            error:(DConnectAuthorizationFailBlock)error;
 
 /*!
  @brief 同期的に認証処理を行う。
  
  <p>
- packageNameにはアプリを一意に識別するための値を格納する。iOSではBundle Identifierなどを格納する。<br/>
+ originにはアプリのオリジンを格納する。iOSではBundle Identifierを格納する。<br/>
  appNameは認証確認ダイアログに表示されるアプリ名を指定する。<br/>
  scopesには、アプリで使用するプロファイルの一覧を指定する。ここに指定の無いプロファイルは使用することができない。<br/>
  </p>
  <p>
- 既にクライアントが作成されている場合に再度同じpackageNameで作成しようとした場合には、新規でクライアントを作成する。
+ 既にクライアントが作成されている場合に再度同じoriginで作成しようとした場合には、新規でクライアントを作成する。
  以前のクライアントは使用できなくなるので、注意が必要。
  </p>
- @param[in] packageName パッケージ名
+ @param[in] origin オリジン
  @param[in] appName アプリ名
  @param[in] scopes 使用するプロファイル一覧
  @param[in] success 認証成功通知コールバック
  @param[in] error 認証失敗通知コールバック
  */
-+ (void) authorizeWithPackageName:(NSString *)packageName
-                          appName:(NSString *)appName
-                           scopes:(NSArray *)scopes
-                          success:(DConnectAuthorizationSuccessBlock)success
-                            error:(DConnectAuthorizationFailBlock)error;
++ (void) authorizeWithOrigin:(NSString *)origin
+                     appName:(NSString *)appName
+                      scopes:(NSArray *)scopes
+                     success:(DConnectAuthorizationSuccessBlock)success
+                       error:(DConnectAuthorizationFailBlock)error;
 
 /*!
  @brief 同期的にアクセストークンをリフレッシュする。

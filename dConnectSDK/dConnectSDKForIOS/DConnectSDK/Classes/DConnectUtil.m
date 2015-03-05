@@ -23,11 +23,11 @@
 
 #pragma mark - Authorization
 
-+ (void) authorizeWithPackageName:(NSString *)packageName
-                          appName:(NSString *)appName
-                           scopes:(NSArray *)scopes
-                          success:(DConnectAuthorizationSuccessBlock)success
-                            error:(DConnectAuthorizationFailBlock)error
++ (void) authorizeWithOrigin:(NSString *)origin
+                     appName:(NSString *)appName
+                      scopes:(NSArray *)scopes
+                     success:(DConnectAuthorizationSuccessBlock)success
+                       error:(DConnectAuthorizationFailBlock)error
 {
     
     if (!appName) {
@@ -48,7 +48,7 @@
     req.action = DConnectMessageActionTypeGet;
     req.profile = DConnectAuthorizationProfileName;
     req.attribute = DConnectAuthorizationProfileAttrCreateClient;
-    [req setString:packageName forKey:DConnectAuthorizationProfileParamPackage];
+    [req setString:origin forKey:DConnectMessageOrigin];
     
     DConnectResponseMessage *res = [self executeRequest:req];
     
@@ -71,18 +71,18 @@
     
 }
 
-+ (void) asyncAuthorizeWithPackageName:(NSString *)packageName
-                               appName:(NSString *)appName
-                                scopes:(NSArray *)scopes
-                               success:(DConnectAuthorizationSuccessBlock)success
-                                 error:(DConnectAuthorizationFailBlock)error
++ (void) asyncAuthorizeWithOrigin:(NSString *)origin
+                          appName:(NSString *)appName
+                           scopes:(NSArray *)scopes
+                          success:(DConnectAuthorizationSuccessBlock)success
+                            error:(DConnectAuthorizationFailBlock)error
 {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        [DConnectUtil authorizeWithPackageName:packageName
-                                       appName:appName
-                                        scopes:scopes
-                                       success:success
-                                         error:error];
+        [DConnectUtil authorizeWithOrigin:origin
+                                  appName:appName
+                                   scopes:scopes
+                                  success:success
+                                    error:error];
     });
 }
 
