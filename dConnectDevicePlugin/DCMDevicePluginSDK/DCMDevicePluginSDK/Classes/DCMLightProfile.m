@@ -60,18 +60,21 @@ NSString *const DCMLightProfileParamGroupName = @"groupName";
     NSString *serviceId = [request serviceId];
     NSString *profile = [request profile];
     NSString *attribute = [request attribute];
-    
     if (profile) {
         if ([profile isEqualToString:DCMLightProfileName]
             && !attribute
             && [self hasMethod:@selector(profile:didReceiveGetLightRequest:response:serviceId:) response:response])
         {
-            send = [_delegate profile:self didReceiveGetLightRequest:request response:response serviceId:serviceId];
+
+            send = [_delegate profile:self
+            didReceiveGetLightRequest:request
+                             response:response
+                            serviceId:serviceId];
         } else if ([profile isEqualToString:DCMLightProfileName]
                    && attribute
                    && [attribute isEqualToString:DCMLightProfileInterfaceGroup]
                    && [self hasMethod:@selector(profile:
-                                                didReceiveGetLightRequest:
+                                                didReceiveGetLightGroupRequest:
                                                 response:
                                                 serviceId:)
                              response:response])
