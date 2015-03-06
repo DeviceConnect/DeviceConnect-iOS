@@ -85,6 +85,13 @@
         }
     }
     
+    // プロファイルの有無をチェックする
+    DConnectProfile *profile = [self profileWithName:[request profile]];
+    if (profile == nil) {
+        [response setErrorToNotSupportProfile];
+        return YES;
+    }
+    
     if (self.useLocalOAuth) {
         // Local OAuthの認証を行う
         NSString *accessToken = [request accessToken];
