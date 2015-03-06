@@ -99,10 +99,11 @@ DPHostCanvasUIViewController *_displayViewController;
         viewController.delegate = self;
         
         [viewController setDrawObject: drawObject];
-        
-        UIViewController *rootView;
-        PutPresentedViewController(rootView);
-        [rootView presentViewController:viewController animated:YES completion:nil];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            UIViewController *rootView;
+            PutPresentedViewController(rootView);
+            [rootView presentViewController:viewController animated:YES completion:nil];
+        });
         [response setResult:DConnectMessageResultTypeOk];
     } else {
         [response setErrorToNotSupportAttribute];

@@ -840,7 +840,7 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
             [self appendSampleBuffer:sampleBuffer recorderContext:recorder isAudio:isAudio];
         }
     }
-    if (requireRelease) {
+    if (requireRelease && sampleBuffer) {
         CFRelease(sampleBuffer);
     }
 }
