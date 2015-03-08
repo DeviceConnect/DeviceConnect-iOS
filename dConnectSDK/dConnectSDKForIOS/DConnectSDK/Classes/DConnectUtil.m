@@ -47,7 +47,7 @@
     DConnectRequestMessage *req = [DConnectRequestMessage message];
     req.action = DConnectMessageActionTypeGet;
     req.profile = DConnectAuthorizationProfileName;
-    req.attribute = DConnectAuthorizationProfileAttrCreateClient;
+    req.attribute = DConnectAuthorizationProfileAttrGrant;
     [req setString:origin forKey:DConnectMessageOrigin];
     
     DConnectResponseMessage *res = [self executeRequest:req];
@@ -58,12 +58,11 @@
     }
     
     NSString *clientId = [res stringForKey:DConnectAuthorizationProfileParamClientId];
-    NSString *clientSecret = [res stringForKey:DConnectAuthorizationProfileParamClientSecret];
     
-    if (!clientId || !clientSecret) {
+    if (!clientId) {
         error(DConnectMessageErrorCodeUnknown);
     } else {
-        [self refreshAccessTokenWithClientId:clientId clientSecret:clientSecret
+        [self refreshAccessTokenWithClientId:clientId
                                      appName:appName scopes:scopes
                                      success:success error:error];
     }
@@ -88,7 +87,6 @@
 
 
 + (void) refreshAccessTokenWithClientId:(NSString *)clientId
-                           clientSecret:(NSString *)clientSecret
                                 appName:(NSString *)appName
                                  scopes:(NSArray *)scopes
                                 success:(DConnectAuthorizationSuccessBlock)success
@@ -98,10 +96,6 @@
     if (!clientId) {
         @throw [NSException exceptionWithName:NSInvalidArgumentException
                                        reason:@"Client ID is nil."
-                                     userInfo:nil];
-    } else if (!clientSecret) {
-        @throw [NSException exceptionWithName:NSInvalidArgumentException
-                                       reason:@"Client secret is nil."
                                      userInfo:nil];
     } else if (!appName) {
         @throw [NSException exceptionWithName:NSInvalidArgumentException
@@ -117,22 +111,12 @@
                                      userInfo:nil];
     }
     
-    NSString *signature = [CipherAuthSignature generateSignatureWithClientId:clientId
-                                                                   grantType:LOCALOAUTH_AUTHORIZATION_CODE
-                                                                    serviceId:nil
-                                                                      scopes:scopes
-                                                                clientSecret:clientSecret];
-    
     DConnectRequestMessage *req = [DConnectRequestMessage message];
     req.action = DConnectMessageActionTypeGet;
     req.profile = DConnectAuthorizationProfileName;
-    req.attribute = DConnectAuthorizationProfileAttrRequestAccessToken;
+    req.attribute = DConnectAuthorizationProfileAttrAccessToken;
     [DConnectAuthorizationProfile setClientId:clientId target:req];
-    [DConnectAuthorizationProfile setClientSceret:clientSecret target:req];
     [DConnectAuthorizationProfile setScope:[self combineScopes:scopes] target:req];
-    [req setString:DConnectAuthorizationProfileGrantTypeAuthorizationCode
-            forKey:DConnectAuthorizationProfileParamGrantType];
-    [DConnectAuthorizationProfile setSignature:signature target:req];
     [req setString:appName forKey:DConnectAuthorizationProfileParamApplicationName];
     
     DConnectResponseMessage *res = [self executeRequest:req];
@@ -141,28 +125,8 @@
         error([res integerForKey:DConnectMessageErrorCode]);
     } else {
         NSString *accessToken = [res stringForKey:DConnectAuthorizationProfileParamAccessToken];
-        success(clientId, clientSecret, accessToken);
+        success(clientId, accessToken);
     }
-}
-
-+ (NSString *)generateSignatureWithClientId: (NSString *)clientId
-                                  grantType: (NSString *)grantType
-                                   serviceId: (NSString *)serviceId
-                                     scopes: (NSArray *)scopes
-                               clientSecret: (NSString *)clientSecret
-{
-    return [CipherAuthSignature generateSignatureWithClientId:clientId
-                                                    grantType:grantType
-                                                     serviceId:serviceId
-                                                       scopes:scopes
-                                                 clientSecret:clientSecret];
-}
-
-+ (NSString *)generateSignatureWithAccessToken: (NSString *)accessToken
-                                  clientSecret: (NSString *)clientSecret
-{
-    return [CipherAuthSignature generateSignatureWithAccessToken:accessToken
-                                                    clientSecret:clientSecret];
 }
 
 + (NSString *) combineScopes:(NSArray *)scopes {

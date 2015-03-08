@@ -18,10 +18,9 @@
  @brief 認証成功通知コールバック。
  
  @param[in] clientId クライアントID
- @param[in] clientSecret クライアントシークレット
  @param[in] accessToken アクセストークン
  */
-typedef void (^DConnectAuthorizationSuccessBlock)(NSString *clientId, NSString *clientSecret, NSString *accessToken);
+typedef void (^DConnectAuthorizationSuccessBlock)(NSString *clientId, NSString *accessToken);
 
 /*!
  @brief 認証失敗通知コールバック。
@@ -89,47 +88,16 @@ typedef void (^DConnectAuthorizationFailBlock)(DConnectMessageErrorCodeType erro
  @brief 同期的にアクセストークンをリフレッシュする。
  
  @param[in] clientId クライアントID
- @param[in] clientSecret クライアントシークレット
  @param[in] appName アプリ名
  @param[in] scopes 使用するプロファイル一覧
  @param[in] success 認証成功通知コールバック
  @param[in] error 認証失敗通知コールバック
  */
 + (void) refreshAccessTokenWithClientId:(NSString *)clientId
-                           clientSecret:(NSString *)clientSecret
                                 appName:(NSString *)appName
                                  scopes:(NSArray *)scopes
                                 success:(DConnectAuthorizationSuccessBlock)success
                                   error:(DConnectAuthorizationFailBlock)error;
-/*!
- @brief 認証用に渡すシグネチャを作成する。
- 
- @param[in] clientId クライアントID
- @param[in] grantType グランドタイプ
- @param[in] serviceId サービスID
- @param[in] scopes スコープ一覧
- @param[in] clientSecret クライアントシークレット
- 
- @retval シグネチャ文字列
- @retval nil 作成に失敗
- */
-+ (NSString *)generateSignatureWithClientId:(NSString *)clientId
-                                  grantType:(NSString *)grantType
-                                   serviceId:(NSString *)serviceId
-                                     scopes:(NSArray *)scopes
-                               clientSecret:(NSString *)clientSecret;
-
-/*!
- @brief 取得したアクセストークンが正しいかをチェックするためのシグネチャを作成する。
- 
- @param[in] accessToken アクセストークン
- @param[in] clientSecret クライアントシークレット
-
- @retval シグネチャ文字列
- @retval nil 作成に失敗
-*/
-+ (NSString *)generateSignatureWithAccessToken: (NSString *)accessToken
-                                  clientSecret: (NSString *)clientSecret;
 
 /*!
  @brief 指定されたNSArrayを連結した文字列に変換する。

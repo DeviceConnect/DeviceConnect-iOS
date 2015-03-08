@@ -13,17 +13,14 @@
 #import "DConnectDevicePlugin+Private.h"
 
 NSString *const DConnectAuthorizationProfileName = @"authorization";
-NSString *const DConnectAuthorizationProfileAttrCreateClient = @"create_client";
-NSString *const DConnectAuthorizationProfileAttrRequestAccessToken = @"request_accesstoken";
+NSString *const DConnectAuthorizationProfileAttrGrant = @"grant";
+NSString *const DConnectAuthorizationProfileAttrAccessToken = @"accesstoken";
 
 NSString *const DConnectAuthorizationProfileParamPackage = @"package";
 NSString *const DConnectAuthorizationProfileParamClientId = @"clientId";
-NSString *const DConnectAuthorizationProfileParamClientSecret = @"clientSecret";
-NSString *const DConnectAuthorizationProfileParamGrantType = @"grantType";
 NSString *const DConnectAuthorizationProfileParamScope = @"scope";
 NSString *const DConnectAuthorizationProfileParamScopes = @"scopes";
 NSString *const DConnectAuthorizationProfileParamApplicationName = @"applicationName";
-NSString *const DConnectAuthorizationProfileParamSignature = @"signature";
 NSString *const DConnectAuthorizationProfileParamExpirePeriod = @"expirePeriod";
 NSString *const DConnectAuthorizationProfileParamAccessToken = @"accessToken";
 
@@ -47,29 +44,15 @@ NSString *const DConnectAuthorizationProfileGrantTypeAuthorizationCode = @"autho
 - (BOOL) didReceiveGetRequest:(DConnectRequestMessage *)request response:(DConnectResponseMessage *)response {
     BOOL send = YES;
     
-    NSString *serviceId = [request serviceId];
     NSString *attribute = [request attribute];
     
     if (attribute) {
-        if ([attribute isEqualToString:DConnectAuthorizationProfileAttrCreateClient]) {
+        if ([attribute isEqualToString:DConnectAuthorizationProfileAttrGrant]) {
             send = [self didReceiveGetCreateClientRequest:request
-                                                 response:response
-                                                serviceId:serviceId];
-        } else if ([attribute isEqualToString:DConnectAuthorizationProfileAttrRequestAccessToken]) {
-            NSString *clientId = [DConnectAuthorizationProfile clientIdFromRequest:request];
-            NSString *grantType = [DConnectAuthorizationProfile grantTypeFromRequest:request];
-            NSString *scope = [DConnectAuthorizationProfile scopeFromeFromRequest:request];
-            NSArray *scopes = [DConnectAuthorizationProfile parsePattern:scope];
-            NSString *applicationName = [DConnectAuthorizationProfile applicationNameFromRequest:request];
-            NSString *signature = [DConnectAuthorizationProfile signatureFromRequest:request];
+                                                 response:response];
+        } else if ([attribute isEqualToString:DConnectAuthorizationProfileAttrAccessToken]) {
             send = [self didReceiveGetRequestAccessTokenRequest:request
-                                                       response:response
-                                                      serviceId:serviceId
-                                                       clientId:clientId
-                                                      grantType:grantType
-                                                         scopes:scopes
-                                                applicationName:applicationName
-                                                      signature:signature];
+                                                       response:response];
         } else {
             [response setErrorToUnknownAttribute];
         }
@@ -82,9 +65,10 @@ NSString *const DConnectAuthorizationProfileGrantTypeAuthorizationCode = @"autho
 
 - (BOOL) didReceiveGetCreateClientRequest:(DConnectRequestMessage *)request
                                  response:(DConnectResponseMessage *)response
-                                 serviceId:(NSString *)serviceId
 {
+    NSString *serviceId = [request serviceId];
     NSString *package = [DConnectAuthorizationProfile packageFromRequest:request];
+    
     if (package == nil || package.length <= 0) {
         [response setErrorToInvalidRequestParameter];
     } else {
@@ -96,7 +80,6 @@ NSString *const DConnectAuthorizationProfileGrantTypeAuthorizationCode = @"autho
         if (clientData) {
             [response setResult:DConnectMessageResultTypeOk];
             [DConnectAuthorizationProfile setClientId:clientData.clientId target:response];
-            [DConnectAuthorizationProfile setClientSceret:clientData.clientSecret target:response];
         } else {
             [response setErrorToUnknown];
         }
@@ -106,27 +89,19 @@ NSString *const DConnectAuthorizationProfileGrantTypeAuthorizationCode = @"autho
 
 - (BOOL) didReceiveGetRequestAccessTokenRequest:(DConnectRequestMessage *)request
                                        response:(DConnectResponseMessage *)response
-                                       serviceId:(NSString *)serviceId
-                                       clientId:(NSString *)clientId
-                                      grantType:(NSString *)grantType
-                                         scopes:(NSArray *)scopes
-                                applicationName:(NSString *)applicationName
-                                      signature:(NSString *)signature
 {
-    if (signature == nil) {
-        [response setErrorToInvalidRequestParameterWithMessage:@"signature is nil."];
-        return YES;
-    } else if (clientId == nil) {
+    NSString *serviceId = [request serviceId];
+    NSString *package = [DConnectAuthorizationProfile packageFromRequest:request];
+    NSString *clientId = [DConnectAuthorizationProfile clientIdFromRequest:request];
+    NSString *scope = [DConnectAuthorizationProfile scopeFromeFromRequest:request];
+    NSArray *scopes = [DConnectAuthorizationProfile parsePattern:scope];
+    NSString *applicationName = @"Device Connect Manager";
+    
+    if (clientId == nil) {
         [response setErrorToInvalidRequestParameterWithMessage:@"clientId is nil."];
         return YES;
     } else if (clientId.length <= 0) {
         [response setErrorToInvalidRequestParameterWithMessage:@"clientId is empty."];
-        return YES;
-    } else if (grantType == nil) {
-        [response setErrorToInvalidRequestParameterWithMessage:@"grantType is nil."];
-        return YES;
-    } else if (grantType.length <= 0) {
-        [response setErrorToInvalidRequestParameterWithMessage:@"grantType is empty."];
         return YES;
     } else if (scopes == nil) {
         [response setErrorToInvalidRequestParameterWithMessage:@"scope is nil."];
@@ -134,71 +109,57 @@ NSString *const DConnectAuthorizationProfileGrantTypeAuthorizationCode = @"autho
     } else if (scopes.count <= 0) {
         [response setErrorToInvalidRequestParameterWithMessage:@"scope is empty."];
         return YES;
-    } else if (applicationName == nil) {
-        [response setErrorToInvalidRequestParameterWithMessage:@"applicationName is nil."];
+    } else if (package == nil) {
+        [response setErrorToInvalidRequestParameterWithMessage:@"package is nil."];
         return YES;
-    } else if (applicationName.length <= 0) {
-        [response setErrorToInvalidRequestParameterWithMessage:@"applicationName is empty."];
+    } else if (package.length <= 0) {
+        [response setErrorToInvalidRequestParameterWithMessage:@"package is empty."];
         return YES;
     }
     
     LocalOAuth2Main *oauth = [LocalOAuth2Main sharedOAuthForClass:[self.object class]];
-    if ([oauth checkSignatureWithClientId:clientId
-                                grantType:grantType
-                                serviceId:serviceId
-                                   scopes:scopes
-                                signature:signature]) {
-        
-        dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
-        dispatch_time_t timeout = dispatch_time(DISPATCH_TIME_NOW, NSEC_PER_SEC * 60);
-        BOOL isDevicePlugin = [_object isKindOfClass:[DConnectDevicePlugin class]];
-        
-        LocalOAuthConfirmAuthParams *params = [LocalOAuthConfirmAuthParams new];
-        params.applicationName = applicationName;
-        params.clientId = clientId;
-        params.serviceId = serviceId;
-        params.grantType = grantType;
-        params.scope = scopes;
-        params.isForDevicePlugin = isDevicePlugin;
-        params.object = _object;
-        
-        [oauth confirmPublishAccessTokenWithParams:params
-                        receiveAccessTokenCallback:^(LocalOAuthAccessTokenData *accessTokenData) {
-                            if (accessTokenData) {
-                                NSString *chkSignature
-                                    = [oauth createSignatureWithAccessToken:accessTokenData._accessToken
-                                                                   clientId:clientId];
-                                
-                                [response setResult:DConnectMessageResultTypeOk];
-                                [DConnectAuthorizationProfile setAccessToken:accessTokenData._accessToken
-                                                                      target:response];
-                                [DConnectAuthorizationProfile setSignature:chkSignature target:response];
-                                
-                                DConnectArray *arr = [DConnectArray array];
-                                NSArray *scopes = accessTokenData._scopes;
-                                for (LocalOAuthAccessTokenScope *s in scopes) {
-                                    DConnectMessage *msg = [DConnectMessage message];
-                                    [DConnectAuthorizationProfile setScope:s._scope target:msg];
-                                    [DConnectAuthorizationProfile setExpirePriod:s._expirePeriod target:msg];
-                                    [arr addMessage:msg];
-                                }
-                                [DConnectAuthorizationProfile setScopes:arr target:response];
-                            } else {
-                                [response setErrorToAuthorizationWithMessage:@"Cannot create a access token."];
+    dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
+    dispatch_time_t timeout = dispatch_time(DISPATCH_TIME_NOW, NSEC_PER_SEC * 60);
+    BOOL isDevicePlugin = [_object isKindOfClass:[DConnectDevicePlugin class]];
+    
+    LocalOAuthConfirmAuthParams *params = [LocalOAuthConfirmAuthParams new];
+    params.applicationName = applicationName;
+    params.clientId = clientId;
+    params.serviceId = serviceId;
+    params.scope = scopes;
+    params.isForDevicePlugin = isDevicePlugin;
+    params.object = _object;
+    
+    [oauth confirmPublishAccessTokenWithParams:params
+                    receiveAccessTokenCallback:^(LocalOAuthAccessTokenData *accessTokenData) {
+                        if (accessTokenData) {
+                            
+                            [response setResult:DConnectMessageResultTypeOk];
+                            [DConnectAuthorizationProfile setAccessToken:accessTokenData._accessToken
+                                                                  target:response];
+                            
+                            DConnectArray *arr = [DConnectArray array];
+                            NSArray *scopes = accessTokenData._scopes;
+                            for (LocalOAuthAccessTokenScope *s in scopes) {
+                                DConnectMessage *msg = [DConnectMessage message];
+                                [DConnectAuthorizationProfile setScope:s._scope target:msg];
+                                [DConnectAuthorizationProfile setExpirePriod:s._expirePeriod target:msg];
+                                [arr addMessage:msg];
                             }
-                            dispatch_semaphore_signal(semaphore);
+                            [DConnectAuthorizationProfile setScopes:arr target:response];
+                        } else {
+                            [response setErrorToAuthorizationWithMessage:@"Cannot create a access token."];
                         }
-                          receiveExceptionCallback:^(NSString *exceptionMessage) {
-                              [response setErrorToAuthorizationWithMessage:@"Cannot create a access token."];
-                              dispatch_semaphore_signal(semaphore);
-                          }];
- 
-        long result = dispatch_semaphore_wait(semaphore, timeout);
-        if (result != 0) {
-            [response setErrorToAuthorizationWithMessage:@"timeout"];
-        }
-    } else {
-        [response setErrorToAuthorizationWithMessage:@"signature does not match."];
+                        dispatch_semaphore_signal(semaphore);
+                    }
+                      receiveExceptionCallback:^(NSString *exceptionMessage) {
+                          [response setErrorToAuthorizationWithMessage:@"Cannot create a access token."];
+                          dispatch_semaphore_signal(semaphore);
+                      }];
+    
+    long result = dispatch_semaphore_wait(semaphore, timeout);
+    if (result != 0) {
+        [response setErrorToAuthorizationWithMessage:@"timeout"];
     }
     return YES;
 }
@@ -209,16 +170,8 @@ NSString *const DConnectAuthorizationProfileGrantTypeAuthorizationCode = @"autho
     [message setString:clientId forKey:DConnectAuthorizationProfileParamClientId];
 }
 
-+ (void) setClientSceret:(NSString *)clientSceret target:(DConnectMessage *)message {
-    [message setString:clientSceret forKey:DConnectAuthorizationProfileParamClientSecret];
-}
-
 + (void) setAccessToken:(NSString *)accessToken target:(DConnectMessage *)message {
     [message setString:accessToken forKey:DConnectAuthorizationProfileParamAccessToken];
-}
-
-+ (void) setSignature:(NSString *)signature target:(DConnectMessage *)message {
-    [message setString:signature forKey:DConnectAuthorizationProfileParamSignature];
 }
 
 + (void) setScopes:(DConnectArray *)scopes target:(DConnectMessage *)message {
@@ -243,10 +196,6 @@ NSString *const DConnectAuthorizationProfileGrantTypeAuthorizationCode = @"autho
     return [request stringForKey:DConnectAuthorizationProfileParamClientId];
 }
 
-+ (NSString *) grantTypeFromRequest:(DConnectRequestMessage *)request {
-    return [request stringForKey:DConnectAuthorizationProfileParamGrantType];
-}
-
 + (NSString *) scopeFromeFromRequest:(DConnectRequestMessage *)request {
     return [request stringForKey:DConnectAuthorizationProfileParamScope];
 }
@@ -257,10 +206,6 @@ NSString *const DConnectAuthorizationProfileGrantTypeAuthorizationCode = @"autho
 
 + (NSString *) applicationNameFromRequest:(DConnectRequestMessage *)request {
     return [request stringForKey:DConnectAuthorizationProfileParamApplicationName];
-}
-
-+ (NSString *) signatureFromRequest:(DConnectRequestMessage *)request{
-    return [request stringForKey:DConnectAuthorizationProfileParamSignature];
 }
 
 @end

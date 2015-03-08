@@ -36,14 +36,12 @@
  
  @param[in] requst リクエストパラメータ
  @param[in,out] response レスポンスパラメータ
- @param[in] serviceId サービスID
  
  @retval YES レスポンスパラメータを返却する。
  @retval NO レスポンスパラメータを返却しないので、@link DConnectManager::sendResponse: @endlinkで返却すること。
  */
 - (BOOL) didReceiveGetCreateClientRequest:(DConnectRequestMessage *)request
-                                 response:(DConnectResponseMessage *)response
-                                serviceId:(NSString *)serviceId;
+                                 response:(DConnectResponseMessage *)response;
 
 /*!
  
@@ -51,24 +49,12 @@
  
  @param[in] requst リクエストパラメータ
  @param[in,out] response レスポンスパラメータ
- @param[in] serviceId サービスID
- @param[in] clientId クライアントID
- @param[in] grantType グラントタイプ
- @param[in] scopes 要求されるプロファイルの一覧
- @param[in] applicationName アプリケーション名
- @param[in] signature シグネチャ
  
  @retval YES レスポンスパラメータを返却する。
  @retval NO レスポンスパラメータを返却しないので、@link DConnectManager::sendResponse: @endlinkで返却すること。
  */
 - (BOOL) didReceiveGetRequestAccessTokenRequest:(DConnectRequestMessage *)request
-                                       response:(DConnectResponseMessage *)response
-                                       serviceId:(NSString *)serviceId
-                                       clientId:(NSString *)clientId
-                                      grantType:(NSString *)grantType
-                                         scopes:(NSArray *)scopes
-                                applicationName:(NSString *)applicationName
-                                      signature:(NSString *)signature;
+                                       response:(DConnectResponseMessage *)response;
 
 #pragma mark - Setter
 
@@ -79,22 +65,10 @@
 + (void) setClientId:(NSString *)clientId target:(DConnectMessage *)message;
 
 /*!
- @brief メッセージにクライアントシークレットを設定する。
- @param[in] clientSecret クライアントシークレット
- */
-+ (void) setClientSceret:(NSString *)clientSceret target:(DConnectMessage *)message;
-
-/*!
  @brief メッセージにアクセストークンを設定する。
  @param[in] accessToken アクセストークン
  */
 + (void) setAccessToken:(NSString *)accessToken target:(DConnectMessage *)message;
-
-/*!
- @brief メッセージにシグネチャーを設定する。
- @param[in] signature シグネチャー
- */
-+ (void) setSignature:(NSString *)signature target:(DConnectMessage *)message;
 
 /*!
  @brief メッセージにスコープ一覧を設定する。
@@ -131,13 +105,6 @@
 + (NSString *) clientIdFromRequest:(DConnectRequestMessage *)request;
 
 /*!
- @brief リクエストからグラントタイプを取得する。
- @retval グラントタイプ
- @retval nil リクエストにグラントタイプが指定されていない場合
- */
-+ (NSString *) grantTypeFromRequest:(DConnectRequestMessage *)request;
-
-/*!
  @brief リクエストからスコープを取得する。
  @retval スコープ
  @retval nil リクエストにスコープが指定されていない場合
@@ -157,12 +124,5 @@
  @retval nil リクエストにアプリケーション名が指定されていない場合
  */
 + (NSString *) applicationNameFromRequest:(DConnectRequestMessage *)request;
-
-/*!
- @brief リクエストからシグネチャーを取得する。
- @retval シグネチャー
- @retval nil リクエストにシグネチャーが指定されていない場合
- */
-+ (NSString *) signatureFromRequest:(DConnectRequestMessage *)request;
 
 @end

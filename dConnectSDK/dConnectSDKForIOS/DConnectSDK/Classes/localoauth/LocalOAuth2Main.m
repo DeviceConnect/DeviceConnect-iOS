@@ -246,9 +246,6 @@ static NSObject *_lockForRequstQueue = nil;
     [sampleUser setPassword: pass];
 }
 
-
-
-
 - (LocalOAuthClientData *)createClientWithPackageInfo: (LocalOAuthPackageInfo *)packageInfo {
     
     /* 引数チェック */
@@ -279,131 +276,25 @@ static NSObject *_lockForRequstQueue = nil;
     [self removeClientByClientId: clientId];
 }
 
-- (BOOL) checkSignatureWithClientId: (NSString *)clientId
-                          grantType: (NSString *)grantType
-                           serviceId: (NSString *)serviceId
-                             scopes: (NSArray *)scopes
-                          signature: (NSString *)signature {
-    
-    /* 引数チェック */
-    if (signature == nil) {
-        @throw @"signature is null.";
-    } else if (clientId == nil) {
-        @throw @"clientId is null.";
-    } else if (grantType == nil) {
-        @throw @"grantType is null.";
-    } else if (scopes == nil) {
-        @throw @"scopes is null.";
-    }
-    
-    BOOL result = NO;
-    
-    /* LocalOAuthが保持しているクライアントシークレットを取得 */
-    LocalOAuthClient *client = nil;
-    @synchronized(self) {
-        LocalOAuthDbCacheController *dbCache = [[LocalOAuthDbCacheController alloc]initWithKey: _key];
-        client = [dbCache findClientByClientId: clientId];
-    }
-    if (client != nil) {
-        NSString *clientSecret = [client clientSecret];
-        
-        /*
-         * LocalOAuthが保持しているclientSecretとリクエストのclient_id, grant_type,
-         * scopesを結合して暗号化しsignature作成
-         */
-        NSString *innerSignature =
-        [CipherAuthSignature generateSignatureWithClientId: clientId
-                                                 grantType: grantType
-                                                  serviceId: serviceId
-                                                    scopes: scopes
-                                              clientSecret: clientSecret];
-        
-        /* Signature一致判定 */
-        if ([innerSignature isEqualToString: signature]) {
-            result = YES;
-        } else {
-            NSMutableString *strScopes = [NSMutableString string];
-            int scopeCount = [scopes count];
-            for (int i = 0; i < scopeCount; i++) {
-                if (i > 0) {
-                    [strScopes appendString: @","];
-                }
-                [strScopes appendString: scopes[i]];
-            }
-            DCLogD(@"checkSignature() - signature not equal.");
-            DCLogD(@" - signature: %@", signature);
-            DCLogD(@" - innerSignature:%@", innerSignature);
-            DCLogD(@" - clientId:%@", clientId);
-            DCLogD(@" - grantType:%@", grantType);
-            DCLogD(@" - serviceId:%@", serviceId);
-            DCLogD(@" - scopes:%@", strScopes);
-            DCLogD(@" - clientSecret:%@", clientSecret);
-        }
-    } else {
-        DCLogD(@"client not found.  clientId: %@", clientId);
-    }
-    
-    return result;
-}
-
-- (BOOL) checkSignatureWithAccessToken: (NSString *)accessToken
-                          clientSecret: (NSString *)clientSecret
-                             signature: (NSString *)signature {
-    
-    /* 引数チェック */
-    if (signature == nil) {
-        @throw @"signature is null.";
-    } else if (accessToken == nil) {
-        @throw @"accessToken is null.";
-    } else if (clientSecret == nil) {
-        @throw @"clientSecret is null.";
-    }
-    
-    /* Signature作成 */
-    NSString *innerSignature =
-    [CipherAuthSignature generateSignatureWithAccessToken: accessToken
-                                             clientSecret: clientSecret];
-    
-    /* Signatureが一致するか */
-    BOOL result = [signature isEqualToString: innerSignature];
-    if (!result) {
-        DCLogD(@"checkSignature() - signature not equal.");
-        DCLogD(@" - signature: %@", signature);
-        DCLogD(@" - innerSignature:%@", innerSignature);
-        DCLogD(@" - accessToken:%@", accessToken);
-        DCLogD(@" - clientSecret:%@", clientSecret);
-    }
-    
-    return result;
-}
-
 - (void) confirmPublishAccessTokenWithParams: (LocalOAuthConfirmAuthParams *)confirmAuthParams
                   receiveAccessTokenCallback: (ReceiveAccessTokenCallback)receiveAccessTokenCallback
                     receiveExceptionCallback: (ReceiveExceptionCallback)receiveExceptionCallback {
     
     /* 引数チェック */
     if (confirmAuthParams == nil) {
-        @throw @"confirmAuthParams is null.";
+        @throw @"confirmAuthParams is nil.";
     } else if (receiveAccessTokenCallback == nil) {
-        @throw @"receiveAccessTokenCallback is null.";
+        @throw @"receiveAccessTokenCallback is nil.";
     } else if (receiveExceptionCallback == nil) {
-        @throw @"receiveExceptionCallback is null.";
+        @throw @"receiveExceptionCallback is nil.";
     } else if ([confirmAuthParams applicationName] == nil || [[confirmAuthParams applicationName] length] <= 0) {
-        @throw @"ApplicationName is null.";
+        @throw @"ApplicationName is nil.";
     } else if ([confirmAuthParams clientId] == nil || [[confirmAuthParams clientId] length] <= 0) {
-        @throw @"ClientId is null.";
-    } else if ([confirmAuthParams grantType] == nil || [[confirmAuthParams grantType] length] <= 0) {
-        @throw @"GrantType is null.";
-    } else if ([confirmAuthParams scope] == nil || [[confirmAuthParams scope] count] <= 0) {
-        @throw @"Scope is null.";
+        @throw @"ClientId is nil.";
+    } else if ([confirmAuthParams scope] == nil) {
+        @throw @"Scope is nil.";
     } else if ([confirmAuthParams object] == nil) {
-        @throw @"Object is null.";
-    }
-    
-    /* 対応していないgrantTypeなら例外通知 */
-    if (![[confirmAuthParams grantType] isEqualToString: LOCALOAUTH_AUTHORIZATION_CODE]) {
-        receiveExceptionCallback(@"GrantType is unknown value.");
-        return;
+        @throw @"Object is nil.";
     }
     
     /* トークンの状態取得 */
@@ -635,62 +526,6 @@ static NSObject *_lockForRequstQueue = nil;
     }
     
     return result;
-}
-
-- (NSString *) createSignatureWithClientId: (NSString *)clientId
-                                 grantType: (NSString *)grantType
-                                  serviceId: (NSString *)serviceId
-                                    scopes: (NSArray *)scopes
-                              clientSecret: (NSString *)clientSecret {
-    
-    /* 引数チェック */
-    if (clientId == nil) {
-        @throw @"clientId is null.";
-    } else if (grantType == nil) {
-        @throw @"grantType is null.";
-    } else if (scopes == nil) {
-        @throw @"scopes is null.";
-    } else if (clientSecret == nil) {
-        @throw @"clientSecret is null.";
-    }
-    
-    NSString *signature =
-    [CipherAuthSignature generateSignatureWithClientId: clientId
-                                             grantType: grantType
-                                              serviceId: serviceId
-                                                scopes: scopes
-                                          clientSecret: clientSecret];
-    return signature;
-}
-
-- (NSString *) createSignatureWithAccessToken: (NSString *)accessToken
-                                     clientId: (NSString *)clientId {
-    
-    /* 引数チェック */
-    if (accessToken == nil) {
-        @throw @"accessToken is null.";
-    } else if (clientId == nil) {
-        @throw @"clientId is null.";
-    }
-    
-    /* クライアントIDを元にをクライアントデータを検索する */
-    LocalOAuthClient *client = nil;
-    @synchronized(self) {
-        LocalOAuthDbCacheController *dbCache
-                            = [[LocalOAuthDbCacheController alloc]initWithKey: _key];
-        client = [dbCache findClientByClientId: clientId];
-    }
-    NSString *clientSecret = nil;
-    if (client != nil) {
-        clientSecret = [client clientSecret];
-    } else {
-        @throw @"AuthorizatonException.CLIENT_NOT_FOUND";
-    }
-    
-    /* Signature作成 */
-    NSString *signature = [CipherAuthSignature generateSignatureWithAccessToken: accessToken
-                                                                   clientSecret: clientSecret];
-    return signature;
 }
 
 - (void)destroyAccessTokenByPackageInfo: (LocalOAuthPackageInfo *)packageInfo {

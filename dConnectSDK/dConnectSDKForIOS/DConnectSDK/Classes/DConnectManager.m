@@ -33,6 +33,8 @@ NSString *const DConnectStoryboardName = @"DConnectSDK";
 
 NSString *const DConnectProfileNameNetworkServiceDiscovery = @"networkServiceDiscovery";
 NSString *const DConnectAttributeNameGetNetworkServices = @"getNetworkServices";
+NSString *const DConnectAttributeNameCreateClient = @"createClient";
+NSString *const DConnectAttributeNameRequestAccessToken = @"requestAccessToken";
 
 /*!
  @brief レスポンス用のコールバックを管理するデータクラス.
