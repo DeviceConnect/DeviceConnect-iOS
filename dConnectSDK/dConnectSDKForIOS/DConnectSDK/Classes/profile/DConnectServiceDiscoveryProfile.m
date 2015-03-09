@@ -19,6 +19,7 @@ NSString *const DConnectServiceDiscoveryProfileParamName = @"name";
 NSString *const DConnectServiceDiscoveryProfileParamType = @"type";
 NSString *const DConnectServiceDiscoveryProfileParamOnline = @"online";
 NSString *const DConnectServiceDiscoveryProfileParamConfig = @"config";
+NSString *const DConnectServiceDiscoveryProfileParamScopes = @"scopes";
 
 NSString *const DConnectServiceDiscoveryProfileNetworkTypeUnknown = @"Unknown";
 NSString *const DConnectServiceDiscoveryProfileNetworkTypeWiFi = @"WiFi";
@@ -144,6 +145,20 @@ NSString *const DConnectServiceDiscoveryProfileNetworkTypeBLE = @"BLE";
 
 + (void) setConfig:(NSString *)config target:(DConnectMessage *)message {
     [message setString:config forKey:DConnectServiceDiscoveryProfileParamConfig];
+}
+
++ (void) setScopesWithProvider:(id<DConnectProfileProvider>)provider
+                        target:(DConnectMessage *)message
+{
+    NSArray *profiles = [provider profiles];
+    if (profiles) {
+        NSMutableArray *names = [NSMutableArray array];
+        for (int i = 0; i < profiles.count; i++) {
+            DConnectProfile *profile = (DConnectProfile *) profiles[i];
+            [names addObject:profile.profileName];
+        }
+        [message setValue:names forKey:DConnectServiceDiscoveryProfileParamScopes];
+    }
 }
 
 + (void) setState:(BOOL)state target:(DConnectMessage *)message {

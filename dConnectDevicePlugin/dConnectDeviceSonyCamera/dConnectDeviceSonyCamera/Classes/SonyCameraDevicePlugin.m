@@ -342,6 +342,8 @@ NSString *const SonyFilePrefix = @"sony";
         [DConnectServiceDiscoveryProfile setType:DConnectServiceDiscoveryProfileNetworkTypeWiFi
                                                  target:service];
         [DConnectServiceDiscoveryProfile setOnline:YES target:service];
+        [DConnectServiceDiscoveryProfile setScopesWithProvider:self
+                                                        target:service];
         [services addMessage:service];
     }
     [DConnectServiceDiscoveryProfile setServices:services target:response];
