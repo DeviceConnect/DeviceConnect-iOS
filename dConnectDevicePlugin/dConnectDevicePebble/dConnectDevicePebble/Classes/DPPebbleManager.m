@@ -484,6 +484,102 @@ static const NSTimeInterval DPSemaphoreTimeout = 10.0;
 }
 
 
+#pragma mark - KeyEvent
+
+// KeyEvent OnDown event registration.
+- (void)registOnDownEvent:(NSString*)serviceID
+                 callback:(void(^)(NSError *error))callback
+            eventCallback:(void(^)(long attr,
+                                   int keyId,
+                                   int keyType))eventCallback
+{
+    if (!callback) return;
+    
+    NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+    dic[@(KEY_PROFILE)] = @(PROFILE_KEY_EVENT);
+    dic[@(KEY_ATTRIBUTE)] = @(KEY_EVENT_ATTRIBUTE_ON_DOWN);
+    dic[@(KEY_ACTION)] = @(ACTION_PUT);
+    [self sendCommand:serviceID request:dic callback:^(NSDictionary *data, NSError *error) {
+        // Error.
+        if (!data || error) {
+            callback(error);
+            return;
+        }
+        // Set KeyEvent data.
+        NSNumber *action = data[@(KEY_ACTION)];
+        if ([action intValue] == ACTION_EVENT) {
+            NSNumber *Attr = data[@(KEY_ATTRIBUTE)];
+            NSNumber *KeyId = data[@(KEY_PARAM_KEY_EVENT_ID)];
+            NSNumber *KeyType = data[@(KEY_PARAM_KEY_EVENT_KEY_TYPE)];
+            
+            long attr = Attr.longValue;
+            int keyId = KeyId.intValue;
+            int keyType = KeyType.intValue;
+            
+            eventCallback(attr, keyId, keyType);
+        } else {
+            callback(nil);
+        }
+    }];
+}
+
+// KeyEvent OnUp event registration.
+- (void)registOnUpEvent:(NSString*)serviceID
+                 callback:(void(^)(NSError *error))callback
+            eventCallback:(void(^)(long attr,
+                                   int keyId,
+                                   int keyType))eventCallback
+{
+    if (!callback) return;
+    
+    NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+    dic[@(KEY_PROFILE)] = @(PROFILE_KEY_EVENT);
+    dic[@(KEY_ATTRIBUTE)] = @(KEY_EVENT_ATTRIBUTE_ON_UP);
+    dic[@(KEY_ACTION)] = @(ACTION_PUT);
+    [self sendCommand:serviceID request:dic callback:^(NSDictionary *data, NSError *error) {
+        // Error.
+        if (!data || error) {
+            callback(error);
+            return;
+        }
+        // Set KeyEvent data.
+        NSNumber *action = data[@(KEY_ACTION)];
+        if ([action intValue] == ACTION_EVENT) {
+            NSNumber *Attr = data[@(KEY_ATTRIBUTE)];
+            NSNumber *KeyId = data[@(KEY_PARAM_KEY_EVENT_ID)];
+            NSNumber *KeyType = data[@(KEY_PARAM_KEY_EVENT_KEY_TYPE)];
+            
+            long attr = Attr.longValue;
+            int keyId = KeyId.intValue;
+            int keyType = KeyType.intValue;
+            
+            eventCallback(attr, keyId, keyType);
+        } else {
+            callback(nil);
+        }
+    }];
+}
+
+// KeyEvent OnDown event unregistration.
+- (void)deleteOnDownEvent:(NSString*)serviceID
+                 callback:(void(^)(NSError *error))callback
+{
+    [self deleteEvent:serviceID
+              profile:PROFILE_KEY_EVENT
+                 attr:KEY_EVENT_ATTRIBUTE_ON_DOWN
+             callback:callback];
+}
+
+// KeyEvent OnUp event unregistration.
+- (void)deleteOnUpEvent:(NSString*)serviceID
+               callback:(void(^)(NSError *error))callback
+{
+    [self deleteEvent:serviceID
+              profile:PROFILE_KEY_EVENT
+                 attr:KEY_EVENT_ATTRIBUTE_ON_UP
+             callback:callback];
+}
+
 #pragma mark - Common
 
 // イベント削除共通

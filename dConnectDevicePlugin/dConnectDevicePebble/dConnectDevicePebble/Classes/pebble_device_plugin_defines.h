@@ -57,6 +57,12 @@
 #define KEY_PARAM_VIBRATION_LEN 500
 #define KEY_PARAM_VIBRATION_PATTERN 501
 
+///////// key event
+/** Key number of KeyID.*/
+#define KEY_PARAM_KEY_EVENT_ID 700
+/** Key number of KeyType.*/
+#define KEY_PARAM_KEY_EVENT_KEY_TYPE 701
+
 ///////////////////////////////////////////////////////////////////
 
 /*! @define GETアクション。 */
@@ -83,6 +89,8 @@
 #define PROFILE_SETTING 4
 /*! @define Systemプロファイル。 */
 #define PROFILE_SYSTEM 5
+/**! @define Numeric value that represents the key event profile. */
+#define PROFILE_KEY_EVENT 6
 /*! バイナリを送るためのプロファイル。 */
 #define PROFILE_BINARY 255
 
@@ -120,6 +128,43 @@
 ////////// vibration
 
 #define VIBRATION_ATTRIBUTE_VIBRATE 1
+
+///////// key event
+/** key event attribute ondown. */
+#define KEY_EVENT_ATTRIBUTE_ON_DOWN 1
+
+/** key event attribute onup. */
+#define KEY_EVENT_ATTRIBUTE_ON_UP 2
+
+/** key event action down. */
+#define KEY_EVENT_ACTION_DOWN 1
+
+/** key event action up. */
+#define KEY_EVENT_ACTION_UP 2
+
+/** key event key ID up. */
+#define KEY_EVENT_KEY_ID_UP 1
+
+/** key event key ID select. */
+#define KEY_EVENT_KEY_ID_SELECT 2
+
+/** key event key ID down. */
+#define KEY_EVENT_KEY_ID_DOWN 3
+
+/** key event key ID back. */
+#define KEY_EVENT_KEY_ID_BACK 4
+
+/** key event key type STD_KEY. */
+#define KEY_EVENT_KEY_TYPE_STD_KEY 1
+
+/** key event key type MEDIA. */
+#define KEY_EVENT_KEY_TYPE_MEDIA 2
+
+/** key event key type DPAD_BUTTON. */
+#define KEY_EVENT_KEY_TYPE_DPAD_BUTTON 3
+
+/** key event key type USER. */
+#define KEY_EVENT_KEY_TYPE_USER 4
 
 ///////////////////////////////////////////////////////////////////
 
