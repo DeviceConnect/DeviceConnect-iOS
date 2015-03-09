@@ -14,6 +14,10 @@ NSString *const DConnectKeyEventProfileAttrKeyEvent = @"keyeven";
 NSString *const DConnectKeyEventProfileParamKeyEvent = @"keyevent";
 NSString *const DConnectKeyEventProfileParamId = @"id";
 NSString *const DConnectKeyEventProfileParamConfig = @"config";
+int const DConnectKeyEventProfileKeyTypeStdKey = 0x00000000;
+int const DConnectKeyEventProfileKeyTypeMediaCtrl = 0x00000200;
+int const DConnectKeyEventProfileKeyTypeDpadButton = 0x00000400;
+int const DConnectKeyEventProfileKeyTypeUser = 0x00000800;
 
 @interface DConnectKeyEventProfile()
 

@@ -44,6 +44,27 @@ extern NSString *const DConnectKeyEventProfileParamId;
  */
 extern NSString *const DConnectKeyEventProfileParamConfig;
 
+/*!
+ @brief Parameter: Key Type(KEYTYPE_STD_KEY).
+ */
+extern int const DConnectKeyEventProfileKeyTypeStdKey;
+
+/*!
+ @brief Parameter: Key Type(KEYTYPE_MEDIA_CTRL).
+ */
+extern int const DConnectKeyEventProfileKeyTypeMediaCtrl;
+
+/*!
+ @brief Parameter: Key Type(KEYTYPE_DPAD_BUTTON).
+ */
+extern int const DConnectKeyEventProfileKeyTypeDpadButton;
+
+/*!
+ @brief Parameter: Key Type(KEYTYPE_USER).
+ */
+extern int const DConnectKeyEventProfileKeyTypeUser;
+
+
 @class DConnectKeyEventProfile;
 
 /*!
