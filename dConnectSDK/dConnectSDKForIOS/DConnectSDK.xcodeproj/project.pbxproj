@@ -167,6 +167,7 @@
 		D6FD02131999EC7A000DB674 /* CipherSignatureFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = D6FD020B1999EC7A000DB674 /* CipherSignatureFactory.m */; };
 		D6FD02141999EC7A000DB674 /* CipherSignatureProc.m in Sources */ = {isa = PBXBuildFile; fileRef = D6FD020E1999EC7A000DB674 /* CipherSignatureProc.m */; };
 		D6FD02151999EC7A000DB674 /* CipherSignatureProcMD.m in Sources */ = {isa = PBXBuildFile; fileRef = D6FD02101999EC7A000DB674 /* CipherSignatureProcMD.m */; };
+		EF8B64941AAC78D7007C590B /* DConnectKeyEventProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = EF8B64931AAC78D7007C590B /* DConnectKeyEventProfile.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1784,6 +1785,8 @@
 		D6FD02281999FED3000DB674 /* LocalOAuthSQLiteClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LocalOAuthSQLiteClient.h; path = localoauth/LocalOAuthSQLiteClient.h; sourceTree = "<group>"; };
 		D6FD02291999FED3000DB674 /* LocalOAuthToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LocalOAuthToken.h; path = localoauth/LocalOAuthToken.h; sourceTree = "<group>"; };
 		D6FD022A1999FED3000DB674 /* LocalOAuthTokenManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LocalOAuthTokenManager.h; path = localoauth/LocalOAuthTokenManager.h; sourceTree = "<group>"; };
+		EF8B64931AAC78D7007C590B /* DConnectKeyEventProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DConnectKeyEventProfile.m; sourceTree = "<group>"; };
+		EF8B64951AAC78F2007C590B /* DConnectKeyEventProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DConnectKeyEventProfile.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -3383,6 +3386,7 @@
 		BE6F93151A70DB0400BFA51F /* DConnectSDK */ = {
 			isa = PBXGroup;
 			children = (
+				EF8B64951AAC78F2007C590B /* DConnectKeyEventProfile.h */,
 				AB0A87771A808BFC0016FF77 /* DConnectServiceDiscoveryProfile.h */,
 				AB0A87751A8067860016FF77 /* DConnectAvailabilityProfile.h */,
 				AB0A87761A8067860016FF77 /* DConnectCanvasProfile.h */,
@@ -3586,6 +3590,7 @@
 		C29D331E191B2679001015CC /* profile */ = {
 			isa = PBXGroup;
 			children = (
+				EF8B64931AAC78D7007C590B /* DConnectKeyEventProfile.m */,
 				AB702E301A70FAF8002D21CB /* DConnectCanvasProfile.m */,
 				6B2C77871A70885D00ED8F17 /* DConnectAvailabilityProfile.m */,
 				3056BF8C19BFE3E8003B62E1 /* DConnectAuthorizationProfile+Private.h */,
@@ -4051,6 +4056,7 @@
 				C29D332F191B2679001015CC /* DConnectManager.m in Sources */,
 				D62622D7199232BC004F01E6 /* LocalOAuthConfirmAuthParams.m in Sources */,
 				D62622D4199232BC004F01E6 /* LocalOAuthClientData.m in Sources */,
+				EF8B64941AAC78D7007C590B /* DConnectKeyEventProfile.m in Sources */,
 				D646C7B919A5BDC500C2D91B /* LocalOAuthUtils.m in Sources */,
 				D699E71F19C070C3002F334C /* LocalOAuthScopeUtil.m in Sources */,
 				D62622DA199232BC004F01E6 /* LocalOAuthGrantType.m in Sources */,
