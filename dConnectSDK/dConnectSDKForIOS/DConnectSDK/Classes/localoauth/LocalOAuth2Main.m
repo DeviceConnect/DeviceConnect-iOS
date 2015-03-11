@@ -731,8 +731,11 @@ static NSObject *_lockForRequstQueue = nil;
             NSString *accessToken = [token accessToken];
             NSArray *accessTokenScopes =    /* AccessTokenScope[] */
                     [self accessTokenScopesWithScopes: [token scope]];
+            long long timestamp = [token registrationDate];
             LocalOAuthAccessTokenData *acccessTokenData =
-            [LocalOAuthAccessTokenData accessTokenDataWithAccessToken:accessToken  scopes:accessTokenScopes];
+            [LocalOAuthAccessTokenData accessTokenDataWithAccessToken:accessToken
+                                                               scopes:accessTokenScopes
+                                                            timestamp:timestamp];
             return acccessTokenData;
         }
     }

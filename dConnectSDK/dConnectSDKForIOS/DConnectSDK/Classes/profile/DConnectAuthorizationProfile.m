@@ -22,6 +22,7 @@ NSString *const DConnectAuthorizationProfileParamScope = @"scope";
 NSString *const DConnectAuthorizationProfileParamScopes = @"scopes";
 NSString *const DConnectAuthorizationProfileParamApplicationName = @"applicationName";
 NSString *const DConnectAuthorizationProfileParamExpirePeriod = @"expirePeriod";
+NSString *const DConnectAuthorizationProfileParamExpire = @"expire";
 NSString *const DConnectAuthorizationProfileParamAccessToken = @"accessToken";
 
 NSString *const DConnectAuthorizationProfileGrantTypeAuthorizationCode = @"authorization_code";
@@ -140,11 +141,23 @@ NSString *const DConnectAuthorizationProfileGrantTypeAuthorizationCode = @"autho
                             
                             DConnectArray *arr = [DConnectArray array];
                             NSArray *scopes = accessTokenData._scopes;
+                            LocalOAuthAccessTokenScope *minScope = nil;
                             for (LocalOAuthAccessTokenScope *s in scopes) {
                                 DConnectMessage *msg = [DConnectMessage message];
                                 [DConnectAuthorizationProfile setScope:s._scope target:msg];
                                 [DConnectAuthorizationProfile setExpirePriod:s._expirePeriod target:msg];
                                 [arr addMessage:msg];
+                                
+                                // 最短の有効期限を取得する
+                                if (minScope == nil
+                                    || s._expirePeriod < minScope._expirePeriod) {
+                                    minScope = s;
+                                }
+                            }
+                            if (minScope) {
+                                long expirePeriod = minScope._expirePeriod;
+                                long long expire = accessTokenData._timestamp + (expirePeriod * 1000LL);
+                                [DConnectAuthorizationProfile setExpire:expire target:response];
                             }
                             [DConnectAuthorizationProfile setScopes:arr target:response];
                         } else {
@@ -184,6 +197,10 @@ NSString *const DConnectAuthorizationProfileGrantTypeAuthorizationCode = @"autho
 
 + (void) setExpirePriod:(long long)priod target:(DConnectMessage *)message {
     [message setLongLong:priod forKey:DConnectAuthorizationProfileParamExpirePeriod];
+}
+
++ (void) setExpire:(long long)expire target:(DConnectMessage *)message {
+    [message setLongLong:expire forKey:DConnectAuthorizationProfileParamExpire];
 }
 
 #pragma mark - Getter

@@ -88,6 +88,12 @@
  */
 + (void) setExpirePriod:(long long)priod target:(DConnectMessage *)message;
 
+/*!
+ @brief メッセージにアクセストークンの失効日時を設定する。
+ @param[in] priod アクセストークンの失効日時 (UNIX時間)
+ */
++ (void) setExpire:(long long)expire target:(DConnectMessage *)message;
+
 #pragma mark - Getter
 
 /*!

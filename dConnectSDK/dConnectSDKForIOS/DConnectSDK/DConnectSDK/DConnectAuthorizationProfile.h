@@ -60,6 +60,11 @@ extern NSString *const DConnectAuthorizationProfileParamApplicationName;
 extern NSString *const DConnectAuthorizationProfileParamExpirePeriod;
 
 /*!
+ @brief パラメータ: expire。
+ */
+extern NSString *const DConnectAuthorizationProfileParamExpire;
+
+/*!
  @brief パラメータ: accessToken。
  */
 extern NSString *const DConnectAuthorizationProfileParamAccessToken;

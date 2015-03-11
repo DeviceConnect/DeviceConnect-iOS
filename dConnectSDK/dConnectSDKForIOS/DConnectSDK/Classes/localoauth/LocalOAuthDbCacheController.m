@@ -341,9 +341,11 @@ static NSString *const LocalOAuthDbCacheControllerDBName = @"__dconnect_localoau
                 if (token != nil) {
                     NSString *accessToken = [token accessToken];
                     NSArray *accessTokenScopes = [self scopesToAccessTokenScopes: [token scope]];
+                    long long timestamp = [token registrationDate];
                     acccessTokenData = [LocalOAuthAccessTokenData
                                                 accessTokenDataWithAccessToken:accessToken
-                                                                        scopes:accessTokenScopes];
+                                                                        scopes:accessTokenScopes
+                                                                     timestamp:timestamp];
                 }
             }
             

@@ -152,12 +152,12 @@ NSString *const DConnectServiceDiscoveryProfileNetworkTypeBLE = @"BLE";
 {
     NSArray *profiles = [provider profiles];
     if (profiles) {
-        NSMutableArray *names = [NSMutableArray array];
+        DConnectArray *names = [DConnectArray array];
         for (int i = 0; i < profiles.count; i++) {
             DConnectProfile *profile = (DConnectProfile *) profiles[i];
-            [names addObject:profile.profileName];
+            [names addString:profile.profileName];
         }
-        [message setValue:names forKey:DConnectServiceDiscoveryProfileParamScopes];
+        [message setArray:names forKey:DConnectServiceDiscoveryProfileParamScopes];
     }
 }
 
