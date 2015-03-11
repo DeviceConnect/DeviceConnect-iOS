@@ -14,7 +14,7 @@
 #import "DConnectManagerServiceDiscoveryProfile.h"
 #import "DConnectManagerSystemProfile.h"
 #import "DConnectFilesProfile.h"
-#import "DConnectAuthorizationProfile+Private.h"
+#import "DConnectManagerAuthorizationProfile.h"
 #import "DConnectAvailabilityProfile.h"
 #import "DConnectWebSocket.h"
 #import "DConnectMessage+Private.h"
@@ -33,6 +33,8 @@ NSString *const DConnectStoryboardName = @"DConnectSDK";
 
 NSString *const DConnectProfileNameNetworkServiceDiscovery = @"networkServiceDiscovery";
 NSString *const DConnectAttributeNameGetNetworkServices = @"getNetworkServices";
+NSString *const DConnectAttributeNameCreateClient = @"createClient";
+NSString *const DConnectAttributeNameRequestAccessToken = @"requestAccessToken";
 
 /*!
  @brief レスポンス用のコールバックを管理するデータクラス.
@@ -325,7 +327,7 @@ NSString *const DConnectAttributeNameGetNetworkServices = @"getNetworkServices";
         [self addProfile:[DConnectManagerServiceDiscoveryProfile new]];
         [self addProfile:[DConnectManagerSystemProfile new]];
         [self addProfile:[DConnectFilesProfile new]];
-        [self addProfile:[[DConnectAuthorizationProfile alloc] initWithObject:self]];
+        [self addProfile:[[DConnectManagerAuthorizationProfile alloc] initWithObject:self]];
         [self addProfile:[DConnectAvailabilityProfile new]];
         
         // デバイスプラグイン配送用プロファイル

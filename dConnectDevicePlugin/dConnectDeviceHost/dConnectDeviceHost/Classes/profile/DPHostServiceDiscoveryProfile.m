@@ -42,6 +42,8 @@ didReceiveGetServicesRequest:(DConnectRequestMessage *)request
     [DConnectServiceDiscoveryProfile setId:ServiceDiscoveryServiceId target:service];
     [DConnectServiceDiscoveryProfile setName:name target:service];
     [DConnectServiceDiscoveryProfile setOnline:YES target:service];
+    [DConnectServiceDiscoveryProfile setScopesWithProvider:self.provider
+                                                    target:service];
     NSString *config = [NSString stringWithFormat:@"{\"OS\":\"%@ %@\"}",
                         device.systemName, device.systemVersion];
     [DConnectServiceDiscoveryProfile setConfig:config target:service];

@@ -16,7 +16,6 @@ extern NSString *const LocalOAuthClientDaoId;
 extern NSString *const LocalOAuthClientDaoClientId;
 extern NSString *const LocalOAuthClientDaoPackageName;
 extern NSString *const LocalOAuthClientDaoServiceId;
-extern NSString *const LocalOAuthClientDaoClientSecret;
 extern NSString *const LocalOAuthClientDaoClientType;
 extern NSString *const LocalOAuthClientDaoRegistrationDate;
 

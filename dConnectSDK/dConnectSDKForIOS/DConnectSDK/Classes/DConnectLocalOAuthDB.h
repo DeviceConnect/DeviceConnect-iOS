@@ -19,8 +19,6 @@
 @property (nonatomic) NSString *serviceId;
 /*! @brief クライアントID。 */
 @property (nonatomic) NSString *clientId;
-/*! @brief クライアントシークレット。 */
-@property (nonatomic) NSString *clientSecret;
 @end
 
 
@@ -39,12 +37,11 @@
  
  @param[in] serviceId サービスID
  @param[in] clientId クライアントID
- @param[in] clientSecret クライアントシークレット
  
  @retval YES DBに保存成功した場合
  @retval NO DBに保存失敗した場合
  */
-- (BOOL)addAuthDataWithServiceId:(NSString *)serviceId clientId:(NSString *)clientId clientSecret:(NSString *)clientSecret;
+- (BOOL)addAuthDataWithServiceId:(NSString *)serviceId clientId:(NSString *)clientId;
 
 - (DConnectAuthData *)getAuthDataByServiceId:(NSString *)serviceId;
 - (BOOL)deleteAuthDataByServiceId:(NSString *)serviceId;

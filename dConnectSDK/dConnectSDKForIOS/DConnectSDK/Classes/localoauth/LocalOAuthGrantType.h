@@ -9,7 +9,7 @@
 
 #import <Foundation/Foundation.h>
 
-/** クライアントタイプ. */
+/** グラントタイプ. */
 typedef NS_ENUM(NSUInteger, LocalOAuthGrantType) {
     
     /**

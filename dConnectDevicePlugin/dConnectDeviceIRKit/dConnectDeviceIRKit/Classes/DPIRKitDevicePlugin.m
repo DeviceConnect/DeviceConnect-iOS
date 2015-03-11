@@ -144,6 +144,8 @@ DPIRKitManagerDetectionDelegate
                                                  target:networkService];
         [DConnectServiceDiscoveryProfile setState:online target:networkService];
         [DConnectServiceDiscoveryProfile setOnline:online target:networkService];
+        [DConnectServiceDiscoveryProfile setScopesWithProvider:self
+                                                        target:networkService];
         
         NSArray *events = [_eventManager eventListForProfile:DConnectServiceDiscoveryProfileName
                                                    attribute:DConnectServiceDiscoveryProfileAttrOnServiceChange];
