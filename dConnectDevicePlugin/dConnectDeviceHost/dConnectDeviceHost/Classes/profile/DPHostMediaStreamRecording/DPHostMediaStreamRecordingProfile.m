@@ -900,13 +900,15 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
             if (recorderCtx.writer.status == AVAssetWriterStatusWriting) {
                 AVAssetWriterInput *writerInput =
                 isAudio ? recorderCtx.audioWriterInput : recorderCtx.videoWriterInput;
-                if (!writerInput.readyForMoreMediaData) {
-                    return NO;
-                }
-                if ([writerInput appendSampleBuffer:sampleBuffer]) {
-                    return YES;
-                } else if (recorderCtx.writer.status == AVAssetWriterStatusFailed) {
-                    return NO;
+                if (writerInput && sampleBuffer) {
+                    if (!writerInput.readyForMoreMediaData) {
+                        return NO;
+                    }
+                    if ([writerInput appendSampleBuffer:sampleBuffer]) {
+                        return YES;
+                    } else if (recorderCtx.writer.status == AVAssetWriterStatusFailed) {
+                        return NO;
+                    }
                 }
             }
             
