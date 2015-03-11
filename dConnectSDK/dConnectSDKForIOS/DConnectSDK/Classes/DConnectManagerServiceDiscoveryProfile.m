@@ -32,7 +32,8 @@
 didReceiveGetServicesRequest:(DConnectRequestMessage *)request
                               response:(DConnectResponseMessage *)response
 {
-    // プラグイン側のI/Fに変換
+    // GotAPI対応: プラグイン側のI/Fに変換
+    //    GET /servicediscovery -> GET /networkServiceDiscovery/getNetworkServices
     [request setProfile:DConnectProfileNameNetworkServiceDiscovery];
     [request setAttribute:DConnectAttributeNameGetNetworkServices];
     

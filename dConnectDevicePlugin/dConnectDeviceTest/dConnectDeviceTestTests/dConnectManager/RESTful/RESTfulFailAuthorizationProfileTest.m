@@ -23,55 +23,11 @@ NSString *GRANT_TYPE = @"authorization_code";
 
 /*!
  * @brief
- * packageが無い状態でクライアント作成を行う.
- * <pre>
- * 【HTTP通信】
- * Method: GET
- * Path: /authorization/create_client
- * </pre>
- * <pre>
- * 【期待する動作】
- * ・resultに1が返ってくること。
- * </pre>
- */
-- (void) testHttpFailCreateClientGetNoPackage
-{
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/authorization/create_client"];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
-    [request setHTTPMethod:@"GET"];
-
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":10}", request);
-}
-
-/*!
- * @brief
- * packageが空状態でクライアント作成を行う.
- * <pre>
- * 【HTTP通信】
- * Method: GET
- * Path: /authorization/create_client?package=
- * </pre>
- * <pre>
- * 【期待する動作】
- * ・resultに1が返ってくること。
- * </pre>
- */
-- (void) testHttpFailCreateClientGetEmptyPackage
-{
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/authorization/create_client?package="];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
-    [request setHTTPMethod:@"GET"];
-    
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":10}", request);
-}
-
-/*!
- * @brief
  * メソッドにPOSTを指定してクライアント作成を行う.
  * <pre>
  * 【HTTP通信】
  * Method: POST
- * Path: /authorization/create_client?package=xxxx
+ * Path: /authorization/create_client
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -80,7 +36,7 @@ NSString *GRANT_TYPE = @"authorization_code";
  */
 - (void) testHttpFailCreateClientGetInvalidMethodPost
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/authorization/create_client?package=abc"];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/authorization/create_client"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"POST"];
     
@@ -93,7 +49,7 @@ NSString *GRANT_TYPE = @"authorization_code";
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /authorization/create_client?package=xxxx
+ * Path: /authorization/create_client
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -102,7 +58,7 @@ NSString *GRANT_TYPE = @"authorization_code";
  */
 - (void) testHttpFailCreateClientGetInvalidMethodPut
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/authorization/create_client?package=abc"];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/authorization/create_client"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
@@ -115,7 +71,7 @@ NSString *GRANT_TYPE = @"authorization_code";
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /authorization/create_client?package=xxxx
+ * Path: /authorization/create_client
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -124,7 +80,7 @@ NSString *GRANT_TYPE = @"authorization_code";
  */
 - (void) testHttpFailCreateClientGetInvalidMethodDelete
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/authorization/create_client?package=abc"];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/authorization/create_client"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     
@@ -146,7 +102,7 @@ NSString *GRANT_TYPE = @"authorization_code";
  */
 - (void) testHttpFailRequestAccessTokenGetNoClientId
 {
-    NSArray *client = [self createClientForPackage:@"abc"];
+    NSArray *client = [self createClient];
     XCTAssertNotNil(client);
     XCTAssertNotNil(client[0]);
     XCTAssertNotNil(client[1]);
@@ -182,7 +138,7 @@ NSString *GRANT_TYPE = @"authorization_code";
  */
 - (void) testHttpFailRequestAccessTokenGetEmptyClientId
 {
-    NSArray *client = [self createClientForPackage:@"abc"];
+    NSArray *client = [self createClient];
     XCTAssertNotNil(client);
     XCTAssertNotNil(client[0]);
     XCTAssertNotNil(client[1]);
@@ -218,7 +174,7 @@ NSString *GRANT_TYPE = @"authorization_code";
  */
 - (void) testHttpFailRequestAccessTokenGetNoGrantType
 {
-    NSArray *client = [self createClientForPackage:@"abc"];
+    NSArray *client = [self createClient];
     XCTAssertNotNil(client);
     XCTAssertNotNil(client[0]);
     XCTAssertNotNil(client[1]);
@@ -254,7 +210,7 @@ NSString *GRANT_TYPE = @"authorization_code";
  */
 - (void) testHttpFailRequestAccessTokenGetEmptyGrantType
 {
-    NSArray *client = [self createClientForPackage:@"abc"];
+    NSArray *client = [self createClient];
     XCTAssertNotNil(client);
     XCTAssertNotNil(client[0]);
     XCTAssertNotNil(client[1]);
@@ -291,7 +247,7 @@ NSString *GRANT_TYPE = @"authorization_code";
 - (void) testHttpFailRequestAccessTokenGetInvalidGrantType
 {
     NSString *const undefined_grant_type = @"undefined_grant_type";
-    NSArray *client = [self createClientForPackage:@"abc"];
+    NSArray *client = [self createClient];
     XCTAssertNotNil(client);
     XCTAssertNotNil(client[0]);
     XCTAssertNotNil(client[1]);
@@ -327,7 +283,7 @@ NSString *GRANT_TYPE = @"authorization_code";
  */
 - (void) testHttpFailRequestAccessTokenGetNoScope
 {
-    NSArray *client = [self createClientForPackage:@"abc"];
+    NSArray *client = [self createClient];
     XCTAssertNotNil(client);
     XCTAssertNotNil(client[0]);
     XCTAssertNotNil(client[1]);
@@ -364,7 +320,7 @@ NSString *GRANT_TYPE = @"authorization_code";
  */
 - (void) testHttpFailRequestAccessTokenGetEmptyScope
 {
-    NSArray *client = [self createClientForPackage:@"abc"];
+    NSArray *client = [self createClient];
     XCTAssertNotNil(client);
     XCTAssertNotNil(client[0]);
     XCTAssertNotNil(client[1]);
@@ -400,7 +356,7 @@ NSString *GRANT_TYPE = @"authorization_code";
  */
 - (void) testHttpFailRequestAccessTokenGetNoApplicationName
 {
-    NSArray *client = [self createClientForPackage:@"abc"];
+    NSArray *client = [self createClient];
     XCTAssertNotNil(client);
     XCTAssertNotNil(client[0]);
     XCTAssertNotNil(client[1]);
@@ -437,7 +393,7 @@ NSString *GRANT_TYPE = @"authorization_code";
  */
 - (void) testHttpFailRequestAccessTokenGetEmptyApplicationName
 {
-    NSArray *client = [self createClientForPackage:@"abc"];
+    NSArray *client = [self createClient];
     XCTAssertNotNil(client);
     XCTAssertNotNil(client[0]);
     XCTAssertNotNil(client[1]);
@@ -473,7 +429,7 @@ NSString *GRANT_TYPE = @"authorization_code";
  */
 - (void) testHttpFailRequestAccessTokenGetNoSignature
 {
-    NSArray *client = [self createClientForPackage:@"abc"];
+    NSArray *client = [self createClient];
     XCTAssertNotNil(client);
     XCTAssertNotNil(client[0]);
     XCTAssertNotNil(client[1]);
@@ -503,7 +459,7 @@ NSString *GRANT_TYPE = @"authorization_code";
  */
 - (void) testHttpFailRequestAccessTokenGetEmptySignature
 {
-    NSArray *client = [self createClientForPackage:@"abc"];
+    NSArray *client = [self createClient];
     XCTAssertNotNil(client);
     XCTAssertNotNil(client[0]);
     XCTAssertNotNil(client[1]);
@@ -535,7 +491,7 @@ NSString *GRANT_TYPE = @"authorization_code";
  */
 - (void) testHttpFailRequestAccessTokenGetInvalidMethodPost
 {
-    NSArray *client = [self createClientForPackage:@"abc"];
+    NSArray *client = [self createClient];
     XCTAssertNotNil(client);
     XCTAssertNotNil(client[0]);
     XCTAssertNotNil(client[1]);
@@ -572,7 +528,7 @@ NSString *GRANT_TYPE = @"authorization_code";
  */
 - (void) testHttpFailRequestAccessTokenGetInvalidMethodPut
 {
-    NSArray *client = [self createClientForPackage:@"abc"];
+    NSArray *client = [self createClient];
     XCTAssertNotNil(client);
     XCTAssertNotNil(client[0]);
     XCTAssertNotNil(client[1]);
@@ -609,7 +565,7 @@ NSString *GRANT_TYPE = @"authorization_code";
  */
 - (void) testHttpFailRequestAccessTokenGetInvalidMethodDelete
 {
-    NSArray *client = [self createClientForPackage:@"abc"];
+    NSArray *client = [self createClient];
     XCTAssertNotNil(client);
     XCTAssertNotNil(client[0]);
     XCTAssertNotNil(client[1]);

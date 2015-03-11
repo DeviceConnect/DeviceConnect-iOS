@@ -63,18 +63,6 @@ redirectURIs:(NSArray *)redirectURIs
 - (void) setPackageInfo: (LocalOAuthPackageInfo *) packageInfo;
 
 /*!
-    クライアントシークレット取得.
-    @return クライアントシークレット
- */
-- (NSString *) clientSecret;
-
-/*!
-    クライアントシークレット設定.
-    @param[in] clientSecret クライアントシークレット
- */
-- (void) setClientSecret: (NSString *)clientSecret;
-
-/*!
     リダイレクトURIs取得.
     @return リダイレクトURIs(NSString *の配列)
  */
