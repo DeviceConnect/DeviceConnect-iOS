@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="1Ej-BJ-DZG">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6751" systemVersion="14C1510" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="1Ej-BJ-DZG">
     <dependencies>
-        <deployment defaultVersion="1536" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
     </dependencies>
     <scenes>
         <!--Navigation Controller-->
@@ -24,7 +24,7 @@
             </objects>
             <point key="canvasLocation" x="-1255" y="1399"/>
         </scene>
-        <!--Pebble View Controller - Pebble-->
+        <!--Pebble-->
         <scene sceneID="PnN-hn-8TR">
             <objects>
                 <viewController id="b4c-ZI-6aM" customClass="PebbleViewController" sceneMemberID="viewController">
@@ -66,13 +66,11 @@
                         <subviews>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="5. Pebble接続設定完了" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1kw-vI-ev4">
                                 <rect key="frame" x="20" y="84" width="280" height="21"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" image="img05.png" translatesAutoresizingMaskIntoConstraints="NO" id="dnY-Gu-Wy3">
                                 <rect key="frame" x="85" y="135" width="150" height="120"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="150" id="J8Y-tZ-pj2"/>
                                     <constraint firstAttribute="height" constant="120" id="h8P-Zu-wZO"/>
@@ -80,7 +78,6 @@
                             </imageView>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="以上でPebbleとの接続設定は完了です。" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="t06-W9-gnv">
                                 <rect key="frame" x="40" y="263" width="260" height="67"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="67" id="D9Q-6L-E9B"/>
                                     <constraint firstAttribute="width" constant="260" id="adx-sV-fUo"/>
@@ -126,7 +123,6 @@
                         <subviews>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3. Pebble管理アプリの実行" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u9N-RB-HzC">
                                 <rect key="frame" x="20" y="79" width="280" height="21"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="280" id="3sm-uq-lxO"/>
                                     <constraint firstAttribute="height" constant="21" id="GhM-fG-7Hx"/>
@@ -136,7 +132,6 @@
                             </label>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1) AppleStoreからPebble社の管理アプリをインストールして、アプリの指示に従いPebbleと端末を接続してください。  2) 接続が完了できたなら、4ページに進み手続きを続けてください。" lineBreakMode="tailTruncation" numberOfLines="7" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="280" translatesAutoresizingMaskIntoConstraints="NO" id="fY6-gu-eiH">
                                 <rect key="frame" x="20" y="283" width="280" height="112"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="280" id="Qim-ae-Qsm"/>
                                     <constraint firstAttribute="height" constant="112" id="xlS-5N-f3P"/>
@@ -146,7 +141,6 @@
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="411-YE-KjL">
                                 <rect key="frame" x="80" y="404" width="161" height="42"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="42" id="MnV-a3-wqT"/>
                                     <constraint firstAttribute="width" constant="161" id="YHB-OB-vsl"/>
@@ -160,7 +154,6 @@
                             </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="img03.png" translatesAutoresizingMaskIntoConstraints="NO" id="SXA-EC-BWN">
                                 <rect key="frame" x="90" y="108" width="130" height="120"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="130" id="2fG-8Y-cxr"/>
                                     <constraint firstAttribute="height" constant="120" id="nJB-XW-qJq"/>
@@ -207,7 +200,6 @@
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iv5-lp-Gzc">
                                 <rect key="frame" x="115" y="355" width="90" height="30"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="4Th-RE-9Gx"/>
                                     <constraint firstAttribute="width" constant="90" id="z1g-Tk-26x"/>
@@ -221,13 +213,11 @@
                             </button>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="4. Pebble側アプリのインストール" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fai-2k-J8T">
                                 <rect key="frame" x="20" y="79" width="280" height="21"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pebble側アプリのインストールを行います。インストールボタンをタップし &quot;Pebble&quot;で開く を選択、インストールを実行して下さい。" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="280" translatesAutoresizingMaskIntoConstraints="NO" id="fxO-nG-hq3">
                                 <rect key="frame" x="20" y="266" width="280" height="70"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="70" id="UCf-W0-9Jy"/>
                                     <constraint firstAttribute="width" constant="280" id="g5g-Kz-rhd"/>
@@ -238,7 +228,6 @@
                             </label>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="img04.png" translatesAutoresizingMaskIntoConstraints="NO" id="yDp-QL-7YS">
                                 <rect key="frame" x="99" y="115" width="123" height="118"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="123" id="KLj-wF-4Qk"/>
                                     <constraint firstAttribute="height" constant="118" id="vla-Rv-roB"/>
@@ -283,7 +272,6 @@
                         <subviews>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2. Pebbleとペアリング操作" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Cc-nb-n7G">
                                 <rect key="frame" x="54" y="79" width="212" height="27"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="212" id="mxE-O7-mPd"/>
                                     <constraint firstAttribute="height" constant="27" id="qAr-gC-9Wv"/>
@@ -293,7 +281,6 @@
                             </label>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="端末のBluetooth設定画面上よりPebbleとのペアリングを実行してください。" lineBreakMode="tailTruncation" numberOfLines="6" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="280" translatesAutoresizingMaskIntoConstraints="NO" id="4WA-q9-vc5">
                                 <rect key="frame" x="20" y="226" width="280" height="46"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="46" id="dC0-US-d96"/>
                                     <constraint firstAttribute="width" constant="280" id="hML-G9-gXg"/>
@@ -303,18 +290,9 @@
                             </label>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="img02.png" translatesAutoresizingMaskIntoConstraints="NO" id="CGC-mG-1M5">
                                 <rect key="frame" x="104" y="114" width="113" height="104"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="113" id="ToQ-sC-GNU"/>
                                     <constraint firstAttribute="height" constant="104" id="vcS-eY-Bh5"/>
-                                </constraints>
-                            </imageView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pebble.png" translatesAutoresizingMaskIntoConstraints="NO" id="1dd-rk-4jt">
-                                <rect key="frame" x="20" y="278" width="280" height="128"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="128" id="KZv-d1-L9D"/>
-                                    <constraint firstAttribute="width" constant="280" id="bEt-sk-rgV"/>
                                 </constraints>
                             </imageView>
                         </subviews>
@@ -322,10 +300,8 @@
                             <constraint firstItem="CGC-mG-1M5" firstAttribute="top" secondItem="7Cc-nb-n7G" secondAttribute="bottom" constant="8" id="311-Wg-No1"/>
                             <constraint firstAttribute="trailing" secondItem="7Cc-nb-n7G" secondAttribute="trailing" constant="54" id="GWc-oR-Q2z"/>
                             <constraint firstItem="7Cc-nb-n7G" firstAttribute="top" secondItem="P7n-9d-rW5" secondAttribute="top" constant="79" id="Kkg-ba-5bZ"/>
-                            <constraint firstItem="4WA-q9-vc5" firstAttribute="leading" secondItem="1dd-rk-4jt" secondAttribute="leading" id="aAM-nF-jI0"/>
                             <constraint firstItem="7Cc-nb-n7G" firstAttribute="leading" secondItem="P7n-9d-rW5" secondAttribute="leading" constant="54" id="cAL-F5-H3b"/>
                             <constraint firstAttribute="trailing" secondItem="4WA-q9-vc5" secondAttribute="trailing" constant="20" id="j41-OH-EsB"/>
-                            <constraint firstItem="1dd-rk-4jt" firstAttribute="top" secondItem="4WA-q9-vc5" secondAttribute="bottom" constant="6" id="kJL-2u-vDW"/>
                             <constraint firstAttribute="bottom" secondItem="4WA-q9-vc5" secondAttribute="bottom" constant="208" id="psW-NA-qVk"/>
                             <constraint firstItem="CGC-mG-1M5" firstAttribute="leading" secondItem="P7n-9d-rW5" secondAttribute="leading" constant="104" id="xaH-0Y-rVA"/>
                         </constraints>
@@ -356,7 +332,6 @@
                         <subviews>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1. Pebbleを検出可能にする" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="O8V-YZ-NYc">
                                 <rect key="frame" x="21" y="84" width="277" height="27"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="277" id="Ga7-31-H2K"/>
                                     <constraint firstAttribute="height" constant="27" id="nzc-e6-reC"/>
@@ -368,7 +343,6 @@
                             </label>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="img01.png" translatesAutoresizingMaskIntoConstraints="NO" id="S7f-d3-Tzm">
                                 <rect key="frame" x="102" y="131" width="116" height="118"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="116" id="O6m-g1-Rj1"/>
                                     <constraint firstAttribute="height" constant="118" id="R28-dS-OBX"/>
@@ -376,7 +350,6 @@
                             </imageView>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1) 既にペアリングが終了している場合、3ページに進んでください。  2) Pebbleのsettingを選択してください。  3) settingのBuletoothを選択してください。  4) BuletoothをONにしてください。" lineBreakMode="tailTruncation" numberOfLines="20" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="279" translatesAutoresizingMaskIntoConstraints="NO" id="B4l-lq-Fp7">
                                 <rect key="frame" x="20" y="269" width="279" height="151"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="279" id="W5h-rZ-nmx"/>
                                     <constraint firstAttribute="height" constant="151" id="ic2-Mw-XYA"/>
@@ -416,7 +389,6 @@
         <image name="img03.png" width="560" height="500"/>
         <image name="img04.png" width="560" height="500"/>
         <image name="img05.png" width="560" height="500"/>
-        <image name="pebble.png" width="620" height="631"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
