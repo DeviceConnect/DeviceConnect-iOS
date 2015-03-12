@@ -89,7 +89,7 @@ NSString *const DConnectCanvasProfileModeFills  = @"fills";
     NSString *attribute = [request attribute];
     if ([attribute isEqualToString:DConnectCanvasProfileAttrDrawImage]) {
         
-        if ([self hasMethod:@selector(profile:didReceiveDeleteDrawImageRequest:response:serviceId)
+        if ([self hasMethod:@selector(profile:didReceiveDeleteDrawImageRequest:response:serviceId:)
                    response:response])
         {
             NSString *serviceId = [request serviceId];
