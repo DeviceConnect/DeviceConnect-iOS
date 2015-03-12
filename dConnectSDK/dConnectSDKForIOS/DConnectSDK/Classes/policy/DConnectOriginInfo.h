@@ -2,8 +2,9 @@
 //  DConnectOriginInfo.h
 //  DConnectSDK
 //
-//  Created by Masaru Takano on 2015/03/10.
-//  Copyright (c) 2015年 NTT DOCOMO, INC. All rights reserved.
+//  Copyright (c) 2014 NTT DOCOMO,INC.
+//  Released under the MIT license
+//  http://opensource.org/licenses/mit-license.php
 //
 
 #import "DConnectOrigin.h"

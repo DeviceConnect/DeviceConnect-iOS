@@ -2,8 +2,9 @@
 //  DConnectWhitelist.m
 //  DConnectSDK
 //
-//  Created by Masaru Takano on 2015/03/10.
-//  Copyright (c) 2015年 NTT DOCOMO, INC. All rights reserved.
+//  Copyright (c) 2014 NTT DOCOMO,INC.
+//  Released under the MIT license
+//  http://opensource.org/licenses/mit-license.php
 //
 
 #import "DConnectWhitelist.h"
@@ -32,6 +33,16 @@ const int DCONNECT_WHITELIST_DB_VERSION = 1;
         [sqlDB close];
     }
     return self;
+}
+
++ (DConnectWhitelist *) sharedWhitelist
+{
+    static DConnectWhitelist *sharedWhitelist = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        sharedWhitelist = [[DConnectWhitelist alloc] init];
+    });
+    return sharedWhitelist;
 }
 
 - (NSArray *) origins
@@ -66,8 +77,8 @@ const int DCONNECT_WHITELIST_DB_VERSION = 1;
             return;
         }
         originInfo = [DConnectOriginDao insertWithOrigin:origin
-                                               title:title
-                                          toDatabase:database];
+                                                   title:title
+                                              toDatabase:database];
     }];
     return originInfo;
 }
@@ -97,7 +108,6 @@ const int DCONNECT_WHITELIST_DB_VERSION = 1;
 #pragma mark - DConnectSQLiteOpenHelperDelegate
 
 - (void) openHelper:(DConnectSQLiteOpenHelper *)helper didCreateDatabase:(DConnectSQLiteDatabase *)database {
-    
     @try {
         [DConnectOriginDao createWithDatabase:database];
     }

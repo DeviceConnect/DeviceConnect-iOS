@@ -1,5 +1,5 @@
 //
-//  DConnectOriginParser.h
+//  DConnectWhitelistUtil.h
 //  DConnectSDK
 //
 //  Copyright (c) 2014 NTT DOCOMO,INC.
@@ -7,10 +7,8 @@
 //  http://opensource.org/licenses/mit-license.php
 //
 
-#import "DConnectOrigin.h"
+@interface DConnectWhitelistUtil : NSObject
 
-@interface DConnectOriginParser : NSObject
-
-+ (id<DConnectOrigin>) parse:(NSString *)originExp;
++ (void) showOriginWhitelist;
 
 @end

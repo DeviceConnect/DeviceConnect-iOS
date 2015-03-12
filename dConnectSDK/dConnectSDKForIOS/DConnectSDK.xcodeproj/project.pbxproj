@@ -74,7 +74,9 @@
 		6B4EEF631AB06E2B00A92E0D /* DConnectOriginParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B4EEF621AB06E2B00A92E0D /* DConnectOriginParser.m */; };
 		6B4EEF6A1AB0823B00A92E0D /* DConnectWhitelistViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B4EEF691AB0823B00A92E0D /* DConnectWhitelistViewController.m */; };
 		6B9695A01A9DCBEC00D25A4B /* DConnectServiceInformationProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B96959F1A9DCBEC00D25A4B /* DConnectServiceInformationProfile.m */; };
+		6BC64F771AB199C80095BFC9 /* DConnectWhitelistUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BC64F761AB199C80095BFC9 /* DConnectWhitelistUtil.m */; };
 		6BD474901AAF0B2D0014FB15 /* DConnectWebAppOrigin.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BD4748F1AAF0B2D0014FB15 /* DConnectWebAppOrigin.m */; };
+		6BF7458C1AB1B423001D8FBF /* DConnectAddOriginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BF7458B1AB1B423001D8FBF /* DConnectAddOriginViewController.m */; };
 		971BC07B1924A8A000D21FE3 /* DConnectBatteryProfileTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 971BC07A1924A8A000D21FE3 /* DConnectBatteryProfileTest.m */; };
 		972107571920604E00529618 /* DConnectMultipartParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 972107561920604E00529618 /* DConnectMultipartParser.m */; };
 		97A999BB19545237006F8474 /* DConnectFilesProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 97A999BA19545237006F8474 /* DConnectFilesProfile.m */; };
@@ -258,14 +260,17 @@
 		6B4EEF5F1AAFEB7000A92E0D /* DConnectOriginDao.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DConnectOriginDao.h; path = policy/DConnectOriginDao.h; sourceTree = "<group>"; };
 		6B4EEF601AAFF06700A92E0D /* DConnectOriginDao.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DConnectOriginDao.m; path = policy/DConnectOriginDao.m; sourceTree = "<group>"; };
 		6B4EEF621AB06E2B00A92E0D /* DConnectOriginParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DConnectOriginParser.m; path = policy/DConnectOriginParser.m; sourceTree = "<group>"; };
-		6B4EEF651AB0748400A92E0D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = "Base.lproj/DConnectWhitelist-iPhone.storyboard"; sourceTree = "<group>"; };
 		6B4EEF681AB081B100A92E0D /* DConnectWhitelistViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DConnectWhitelistViewController.h; path = policy/DConnectWhitelistViewController.h; sourceTree = "<group>"; };
 		6B4EEF691AB0823B00A92E0D /* DConnectWhitelistViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DConnectWhitelistViewController.m; path = policy/DConnectWhitelistViewController.m; sourceTree = "<group>"; };
 		6B96959E1A9DCB5200D25A4B /* DConnectServiceInformationProfile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DConnectServiceInformationProfile.h; sourceTree = "<group>"; };
 		6B96959F1A9DCBEC00D25A4B /* DConnectServiceInformationProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DConnectServiceInformationProfile.m; sourceTree = "<group>"; };
+		6BC64F751AB199C80095BFC9 /* DConnectWhitelistUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DConnectWhitelistUtil.h; path = policy/DConnectWhitelistUtil.h; sourceTree = "<group>"; };
+		6BC64F761AB199C80095BFC9 /* DConnectWhitelistUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DConnectWhitelistUtil.m; path = policy/DConnectWhitelistUtil.m; sourceTree = "<group>"; };
 		6BD474891AAF060E0014FB15 /* DConnectOrigin.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DConnectOrigin.h; path = policy/DConnectOrigin.h; sourceTree = "<group>"; };
 		6BD4748E1AAF0AD40014FB15 /* DConnectWebAppOrigin.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DConnectWebAppOrigin.h; path = policy/DConnectWebAppOrigin.h; sourceTree = "<group>"; };
 		6BD4748F1AAF0B2D0014FB15 /* DConnectWebAppOrigin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DConnectWebAppOrigin.m; path = policy/DConnectWebAppOrigin.m; sourceTree = "<group>"; };
+		6BF7458A1AB1B423001D8FBF /* DConnectAddOriginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DConnectAddOriginViewController.h; path = policy/DConnectAddOriginViewController.h; sourceTree = "<group>"; };
+		6BF7458B1AB1B423001D8FBF /* DConnectAddOriginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DConnectAddOriginViewController.m; path = policy/DConnectAddOriginViewController.m; sourceTree = "<group>"; };
 		971BC07A1924A8A000D21FE3 /* DConnectBatteryProfileTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DConnectBatteryProfileTest.m; sourceTree = "<group>"; };
 		972107551920604E00529618 /* DConnectMultipartParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DConnectMultipartParser.h; sourceTree = "<group>"; };
 		972107561920604E00529618 /* DConnectMultipartParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DConnectMultipartParser.m; sourceTree = "<group>"; };
@@ -1933,12 +1938,16 @@
 				6B4EEF561AAF248000A92E0D /* DConnectOriginInfo.m */,
 				6B4EEF591AAF262700A92E0D /* DConnectOriginParser.h */,
 				6B4EEF621AB06E2B00A92E0D /* DConnectOriginParser.m */,
-				6B4EEF5A1AAF269400A92E0D /* DConnectWhitelist.h */,
-				6B4EEF5B1AAF2A1800A92E0D /* DConnectWhitelist.m */,
 				6B4EEF5F1AAFEB7000A92E0D /* DConnectOriginDao.h */,
 				6B4EEF601AAFF06700A92E0D /* DConnectOriginDao.m */,
+				6B4EEF5A1AAF269400A92E0D /* DConnectWhitelist.h */,
+				6B4EEF5B1AAF2A1800A92E0D /* DConnectWhitelist.m */,
+				6BC64F751AB199C80095BFC9 /* DConnectWhitelistUtil.h */,
+				6BC64F761AB199C80095BFC9 /* DConnectWhitelistUtil.m */,
 				6B4EEF681AB081B100A92E0D /* DConnectWhitelistViewController.h */,
 				6B4EEF691AB0823B00A92E0D /* DConnectWhitelistViewController.m */,
+				6BF7458A1AB1B423001D8FBF /* DConnectAddOriginViewController.h */,
+				6BF7458B1AB1B423001D8FBF /* DConnectAddOriginViewController.m */,
 			);
 			name = policy;
 			sourceTree = "<group>";
@@ -3663,7 +3672,6 @@
 				3056BF0F19BC340D003B62E1 /* DConnectSDK-iPhone.storyboard */,
 				C29D3337191B2685001015CC /* Info.plist */,
 				30EF0AE419AB582800AE8FCB /* Localizable.strings */,
-				6B4EEF641AB0748400A92E0D /* DConnectWhitelist-iPhone.storyboard */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -4070,6 +4078,7 @@
 				309B0B901944BCE5001A39B6 /* DConnectVibrationProfile.m in Sources */,
 				D699E72B19C094BD002F334C /* LocalOAuthConfirmAuthRequest.m in Sources */,
 				C29D33AD191C7D1F001015CC /* DConnectMessage.m in Sources */,
+				6BF7458C1AB1B423001D8FBF /* DConnectAddOriginViewController.m in Sources */,
 				C29D332D191B2679001015CC /* DConnectDevicePlugin.m in Sources */,
 				C2F89D5F1920B493005F1C5F /* DConnectMediaStreamRecordingProfile.m in Sources */,
 				C2CDE1B0194693DE001453A2 /* DConnectWebSocket.m in Sources */,
@@ -4086,6 +4095,7 @@
 				30424CFA1973EADC0084371F /* DConnectSQLiteDatabase.m in Sources */,
 				6B4EEF6A1AB0823B00A92E0D /* DConnectWhitelistViewController.m in Sources */,
 				972107571920604E00529618 /* DConnectMultipartParser.m in Sources */,
+				6BC64F771AB199C80095BFC9 /* DConnectWhitelistUtil.m in Sources */,
 				D623FE6D19B6279600706448 /* LocalOAuthAccessTokenDetailViewController.m in Sources */,
 				97AD0D5E192A149C00A1A84D /* DConnectFileDescriptorProfile.m in Sources */,
 				30424D241974C3EB0084371F /* DConnectProfileDao.m in Sources */,
@@ -4209,14 +4219,6 @@
 				30EF0AE519AB584400AE8FCB /* ja */,
 			);
 			name = Localizable.strings;
-			sourceTree = "<group>";
-		};
-		6B4EEF641AB0748400A92E0D /* DConnectWhitelist-iPhone.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				6B4EEF651AB0748400A92E0D /* Base */,
-			);
-			name = "DConnectWhitelist-iPhone.storyboard";
 			sourceTree = "<group>";
 		};
 		C29D3304191B202A001015CC /* InfoPlist.strings */ = {

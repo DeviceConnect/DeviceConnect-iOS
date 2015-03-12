@@ -2,8 +2,9 @@
 //  DConnectOriginDao.m
 //  DConnectSDK
 //
-//  Created by Masaru Takano on 2015/03/11.
-//  Copyright (c) 2015年 NTT DOCOMO, INC. All rights reserved.
+//  Copyright (c) 2014 NTT DOCOMO,INC.
+//  Released under the MIT license
+//  http://opensource.org/licenses/mit-license.php
 //
 
 #import "DConnectOriginDao.h"
@@ -15,10 +16,6 @@ NSString *const DConnectOriginDaoClmId = @"o_id";
 NSString *const DConnectOriginDaoClmOrigin = @"origin";
 NSString *const DConnectOriginDaoClmTitle = @"title";
 NSString *const DConnectOriginDaoClmDate = @"date";
-
-long long getCurrentTimeInMillis() {
-    return (long long) [[NSDate date] timeIntervalSince1970];
-}
 
 @implementation DConnectOriginDao
 
@@ -43,16 +40,15 @@ long long getCurrentTimeInMillis() {
 
 + (NSArray *) originsWithDatabase:(DConnectSQLiteDatabase *)database
 {
-    NSString *sql = DCEForm(@"SELECT %@ %@ %@ %@ FROM %@;",
+    NSString *sql = DCEForm(@"SELECT %@, %@, %@, %@ FROM %@",
                             DConnectOriginDaoClmId,
                             DConnectOriginDaoClmOrigin,
                             DConnectOriginDaoClmTitle,
                             DConnectOriginDaoClmDate,
                             DConnectOriginDaoTableName);
-    DConnectSQLiteCursor *cursor = [database queryWithSQL:sql
-                                               bindParams:@[]];
+    DConnectSQLiteCursor *cursor = [database queryWithSQL:sql];
+    NSMutableArray *result = [NSMutableArray array];
     if ([cursor moveToFirst]) {
-        NSMutableArray *result = [NSMutableArray array];
         do {
             DConnectOriginInfo *info = [DConnectOriginInfo new];
             info.rowId = [cursor longLongValueAtIndex:0];
@@ -61,10 +57,9 @@ long long getCurrentTimeInMillis() {
             info.date = [cursor longLongValueAtIndex:3];
             [result addObject:info];
         } while ([cursor moveToNext]);
-        return result;
-    } else {
-        @throw @"error";
     }
+    [cursor close];
+    return result;
 }
 
 + (DConnectOriginInfo *) insertWithOrigin:(id<DConnectOrigin>)origin
@@ -72,7 +67,7 @@ long long getCurrentTimeInMillis() {
                                toDatabase:(DConnectSQLiteDatabase *)database
 {
     [database beginTransaction];
-    long long current = getCurrentTimeInMillis();
+    long long current = (long long) [[NSDate date] timeIntervalSince1970];
     long long result = [database insertIntoTable:DConnectOriginDaoTableName
                                          columns:@[DConnectOriginDaoClmOrigin,
                                                    DConnectOriginDaoClmTitle,
@@ -98,7 +93,7 @@ long long getCurrentTimeInMillis() {
                    onDatabase:(DConnectSQLiteDatabase *)database
 {
     [database beginTransaction];
-    NSNumber *current = [NSNumber numberWithLongLong:getCurrentTimeInMillis()];
+    NSNumber *current = [NSNumber numberWithLongLong:(long long) [[NSDate date] timeIntervalSince1970]];
     int result = [database updateTable:DConnectOriginDaoTableName
                                columns:@[DConnectOriginDaoClmOrigin,
                                          DConnectOriginDaoClmTitle,

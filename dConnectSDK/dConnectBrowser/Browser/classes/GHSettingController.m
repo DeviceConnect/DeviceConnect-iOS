@@ -142,7 +142,7 @@
                 
             case 3:
                 //dConnectmanagerのアクセストークン削除
-                [DConnectUtil showAccessTokenList];
+                [DConnectUtil showOriginWhitelist]; // TODO showAccessTokenListに戻す
                 break;
                 
             default:
