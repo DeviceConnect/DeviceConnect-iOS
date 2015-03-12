@@ -483,6 +483,18 @@ static const NSTimeInterval DPSemaphoreTimeout = 10.0;
 	}];
 }
 
+- (void)deleteImage:(NSString *)serviceId callback:(void(^)(NSError *error))callback
+{
+    if (!callback) return;
+    
+    NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+    dic[@(KEY_PROFILE)] = @(PROFILE_CANVAS);
+    dic[@(KEY_ATTRIBUTE)] = @(CANVAS_DRAW_IMAGE);
+    dic[@(KEY_ACTION)] = @(ACTION_DELETE);
+    [self sendCommand:serviceId request:dic callback:^(NSDictionary *data, NSError *error) {
+        callback(error);
+    }];
+}
 
 #pragma mark - Common
 
