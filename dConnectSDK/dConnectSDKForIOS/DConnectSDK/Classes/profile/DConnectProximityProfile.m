@@ -31,6 +31,39 @@ NSString *const DConnectProximityProfileParamNear = @"near";
     return DConnectProximityProfileName;
 }
 
+- (BOOL) didReceiveGetRequest:(DConnectRequestMessage *)request response:(DConnectResponseMessage *)response {
+    
+    BOOL send = YES;
+    
+    if (!_delegate) {
+        [response setErrorToNotSupportAction];
+        return send;
+    }
+    
+    NSString *attribute = [request attribute];
+    NSString *serviceId = [request serviceId];
+    
+    if ([attribute isEqualToString:DConnectProximityProfileAttrOnDeviceProximity]) {
+        if ([self hasMethod:@selector(profile:didReceiveGetOnDeviceProximityRequest:response:serviceId:)
+                   response:response])
+        {
+            send = [_delegate profile:self didReceiveGetOnDeviceProximityRequest:request response:response
+                            serviceId:serviceId];
+        }
+    } else if ([attribute isEqualToString:DConnectProximityProfileAttrOnUserProximity]) {
+        if ([self hasMethod:@selector(profile:didReceiveGetOnUserProximityRequest:response:serviceId:)
+                   response:response])
+        {
+            send = [_delegate profile:self didReceiveGetOnUserProximityRequest:request response:response
+                            serviceId:serviceId];
+        }
+    } else {
+        [response setErrorToUnknownAttribute];
+    }
+    
+    return send;
+}
+
 - (BOOL) didReceivePutRequest:(DConnectRequestMessage *)request response:(DConnectResponseMessage *)response {
     
     BOOL send = YES;
