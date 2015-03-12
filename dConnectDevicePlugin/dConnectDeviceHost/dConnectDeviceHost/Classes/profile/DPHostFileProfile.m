@@ -77,8 +77,8 @@ didReceiveGetReceiveRequest:(DConnectRequestMessage *)request
                          path:(NSString *)path
                       fileMgr:(DConnectFileManager *)fileMgr
                    sysFileMgr:(NSFileManager *)sysFileMgr
-                  sortOrder:(NSString **)sortOrder_p
-                 sortTarget:(NSString **)sortTarget_p
+                  sortOrder:(NSString **)sortOrder
+                 sortTarget:(NSString **)sortTarget
                         order:(NSArray *)order
 {
     NSString *offsetString = [request stringForKey:DConnectFileProfileParamOffset];
@@ -117,16 +117,16 @@ didReceiveGetReceiveRequest:(DConnectRequestMessage *)request
             return nil;
         }
         
-        *sortTarget_p = order[0];
-        *sortOrder_p = order[1];
+        *sortTarget = order[0];
+        *sortOrder = order[1];
         
-        if (!(*sortTarget_p) || !(*sortOrder_p)) {
+        if (!(*sortTarget) || !(*sortOrder)) {
             [response setErrorToInvalidRequestParameterWithMessage:@"order is invalid."];
             return nil;
         }
     } else {
-        *sortTarget_p = DConnectFileProfileParamPath;
-        *sortOrder_p = DConnectFileProfileOrderASC;
+        *sortTarget = DConnectFileProfileParamPath;
+        *sortOrder = DConnectFileProfileOrderASC;
     }
     return listPath;
 }

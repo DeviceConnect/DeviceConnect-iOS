@@ -1614,6 +1614,12 @@ didReceivePutMuteTrackRequest:(DConnectRequestMessage *)request
          @"target was not specified, and no default target was set; please specify an existing target."];
         return YES;
     }
+    if (_recorderArr.count < idx) {
+        [response setErrorToInvalidRequestParameterWithMessage:
+         @"target was not specified, and no default target was set; please specify an existing target."];
+        return YES;
+    }
+
     _currentRecorderId = [NSNumber numberWithUnsignedLongLong:idx];
     DPHostRecorderContext *recorder;
     @try {
@@ -1676,6 +1682,11 @@ didReceivePutUnmuteTrackRequest:(DConnectRequestMessage *)request
         // target省略時はデフォルトのレコーダーを指定する。
         idx = [_defaultVideoRecorderId unsignedLongLongValue];
     } else {
+        [response setErrorToInvalidRequestParameterWithMessage:
+         @"target was not specified, and no default target was set; please specify an existing target."];
+        return YES;
+    }
+    if (_recorderArr.count < idx) {
         [response setErrorToInvalidRequestParameterWithMessage:
          @"target was not specified, and no default target was set; please specify an existing target."];
         return YES;
