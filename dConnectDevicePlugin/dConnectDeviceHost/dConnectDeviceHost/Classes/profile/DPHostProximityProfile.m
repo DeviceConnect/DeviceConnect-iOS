@@ -12,10 +12,15 @@
 #import "DPHostServiceDiscoveryProfile.h"
 #import "DPHostUtils.h"
 
+typedef void (^DPHostProximityBlock)(DConnectMessage *);
+
 @interface DPHostProximityProfile ()
 
 /// @brief イベントマネージャ
 @property DConnectEventManager *eventMgr;
+
+@property id proximityBlock;
+@property id onceProximityBlock;
 
 - (void) sendOnUserProximityEvent:(NSNotification *)notification;
 
@@ -38,6 +43,8 @@
         
         // YESを設定してYES；近接センサーがサポートされている。
         self.delegate = self;
+        self.proximityBlock = nil;
+        self.onceProximityBlock = nil;
         
         // イベントマネージャを取得
         self.eventMgr = [DConnectEventManager sharedManagerForClass:[DPHostDevicePlugin class]];
@@ -51,21 +58,61 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
+- (BOOL) hasUserProximityEventList:(NSString *)serviceId
+{
+    NSArray *evts = [_eventMgr eventListForServiceId:serviceId
+                                             profile:DConnectProximityProfileName
+                                           attribute:DConnectProximityProfileAttrOnUserProximity];
+    return evts && evts.count > 0;
+}
+
 - (void) sendOnUserProximityEvent:(NSNotification *)notification
 {
-    // イベントの取得
-    NSArray *evts = [_eventMgr eventListForServiceId:ServiceDiscoveryServiceId
-                                            profile:DConnectProximityProfileName
-                                          attribute:DConnectProximityProfileAttrOnUserProximity];
-    // イベント送信
-    for (DConnectEvent *evt in evts) {
-        DConnectMessage *eventMsg = [DConnectEventManager createEventMessageWithEvent:evt];
-        DConnectMessage *proximity = [DConnectMessage message];
-        [DConnectProximityProfile setNear:[notification.object proximityState] target:proximity];
-        [DConnectProximityProfile setProximity:proximity target:eventMsg];
-        
-        [SELF_PLUGIN sendEvent:eventMsg];
+    DConnectMessage *proximity = [DConnectMessage message];
+    [DConnectProximityProfile setNear:[notification.object proximityState] target:proximity];
+
+    if (self.proximityBlock) {
+        DPHostProximityBlock block = self.proximityBlock;
+        block(proximity);
     }
+    
+    if (self.onceProximityBlock) {
+        DPHostProximityBlock block = self.onceProximityBlock;
+        block(proximity);
+    }
+}
+
+#pragma mark - Get Methods
+
+- (BOOL)                    profile:(DConnectProximityProfile *)profile
+didReceiveGetOnUserProximityRequest:(DConnectRequestMessage *)request
+                           response:(DConnectResponseMessage *)response
+                          serviceId:(NSString *)serviceId
+{
+    __unsafe_unretained typeof(self) weakSelf = self;
+    
+    self.onceProximityBlock = ^(DConnectMessage *message) {
+        [response setResult:DConnectMessageResultTypeOk];
+        [DConnectProximityProfile setProximity:message target:response];
+
+        [[DConnectManager sharedManager] sendResponse:response];
+        
+        weakSelf.onceProximityBlock = nil;
+        
+        if (![weakSelf hasUserProximityEventList:serviceId]) {
+            [[NSNotificationCenter defaultCenter] removeObserver:weakSelf
+                                                            name:UIDeviceProximityStateDidChangeNotification
+                                                          object:nil];
+        }
+    };
+    
+    if (![self hasUserProximityEventList:serviceId]) {
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(sendOnUserProximityEvent:)
+                                                     name:UIDeviceProximityStateDidChangeNotification
+                                                   object:nil];
+    }
+    return NO;
 }
 
 #pragma mark - Put Methods
@@ -77,10 +124,27 @@ didReceivePutOnUserProximityRequest:(DConnectRequestMessage *)request
                            serviceId:(NSString *)serviceId
                          sessionKey:(NSString *)sessionKey
 {
+    __unsafe_unretained typeof(self) weakSelf = self;
+
     NSArray *evts = [_eventMgr eventListForServiceId:serviceId
                                             profile:DConnectProximityProfileName
                                           attribute:DConnectProximityProfileAttrOnUserProximity];
     if (evts.count == 0) {
+        self.proximityBlock = ^(DConnectMessage *message) {
+            // イベントの取得
+            NSArray *evts = [weakSelf.eventMgr eventListForServiceId:ServiceDiscoveryServiceId
+                                                             profile:DConnectProximityProfileName
+                                                           attribute:DConnectProximityProfileAttrOnUserProximity];
+            
+            DPHostDevicePlugin *plugin = (DPHostDevicePlugin *)weakSelf.provider;
+            // イベント送信
+            for (DConnectEvent *evt in evts) {
+                DConnectMessage *eventMsg = [DConnectEventManager createEventMessageWithEvent:evt];
+                [DConnectProximityProfile setProximity:message target:eventMsg];
+                [plugin sendEvent:eventMsg];
+            }
+        };
+
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(sendOnUserProximityEvent:)
                                                      name:UIDeviceProximityStateDidChangeNotification
@@ -129,10 +193,10 @@ didReceiveDeleteOnUserProximityRequest:(DConnectRequestMessage *)request
                                             profile:DConnectProximityProfileName
                                           attribute:DConnectProximityProfileAttrOnUserProximity];
     if (evts.count == 0) {
-        [[NSNotificationCenter defaultCenter]
-            removeObserver:self
-                      name:UIDeviceProximityStateDidChangeNotification
-         object:nil];
+        [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                        name:UIDeviceProximityStateDidChangeNotification
+                                                      object:nil];
+        self.proximityBlock = nil;
     }
     
     return YES;
