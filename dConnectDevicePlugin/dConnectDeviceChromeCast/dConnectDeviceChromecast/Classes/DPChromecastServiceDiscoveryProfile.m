@@ -40,6 +40,8 @@
         [DConnectServiceDiscoveryProfile setType:DConnectServiceDiscoveryProfileNetworkTypeWiFi
                                                  target:service];
         [DConnectServiceDiscoveryProfile setOnline:YES target:service];
+        [DConnectServiceDiscoveryProfile setScopesWithProvider:self.provider
+                                                        target:service];
         [services addMessage:service];
     }
     [response setResult:DConnectMessageResultTypeOk];

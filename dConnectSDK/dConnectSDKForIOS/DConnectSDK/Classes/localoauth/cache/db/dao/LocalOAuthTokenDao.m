@@ -197,9 +197,9 @@ NSString *const LocalOAuthTokenDaoApplicationName = @"application_name"; /* ア�
             [sqliteToken setScope: nil];
             [sqliteToken setClientId: [cursor stringValueAtIndex:3]];
             [sqliteToken setUsername: nil];
-            [sqliteToken setRegistrationDate: [cursor longLongValueAtIndex:5]];
-            [sqliteToken setAccessDate: [cursor longLongValueAtIndex:6]];
-            [sqliteToken setApplicationName: [cursor stringValueAtIndex:7]];
+            [sqliteToken setRegistrationDate: [cursor longLongValueAtIndex:4]];
+            [sqliteToken setAccessDate: [cursor longLongValueAtIndex:5]];
+            [sqliteToken setApplicationName: [cursor stringValueAtIndex:6]];
             
             /* LocalOAuthTokenのdelegateに入れて配列に格納する */
             LocalOAuthToken *token = [[LocalOAuthToken alloc]init];

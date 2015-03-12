@@ -25,7 +25,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: GET
- * Path: /authorization/create_client?packageName=xxxx
+ * Path: /authorization/create_client
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -36,7 +36,7 @@
  */
 - (void) testHttpNormalCreateClient
 {
-    NSArray *client = [self createClientForPackage:@"abc"];
+    NSArray *client = [self createClient];
     XCTAssertNotNil(client[0], @"clientId must not be nil.");
     XCTAssertNotNil(client[1], @"clientSecret must not be nil.");
 }
@@ -47,7 +47,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: GET
- * Path: /authorization/create_client?packageName=xxxx
+ * Path: /authorization/create_client
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -58,11 +58,10 @@
  */
 - (void) testHttpNormalCreateClientOverwrite
 {
-    NSString *package = @"abc";
-    NSArray *client = [self createClientForPackage:package];
+    NSArray *client = [self createClient];
     XCTAssertNotNil(client[0], @"clientId must not be nil.");
     XCTAssertNotNil(client[1], @"clientSecret must not be nil.");
-    NSArray *newClient = [self createClientForPackage:package];
+    NSArray *newClient = [self createClient];
     XCTAssertNotNil(newClient[0], @"clientId must not be nil.");
     XCTAssertNotNil(newClient[1], @"clientSecret must not be nil.");
     XCTAssertNotEqual(client[0], newClient[0]);
@@ -72,8 +71,7 @@
 // MEMO: 以下のテストは手動で行う.
 //- (void) testHttpRequestAccessToken
 //{
-//    NSString *package = @"abc";
-//    NSArray *client = [self createClientForPackage:package];
+//    NSArray *client = [self createClient];
 //    XCTAssertNotNil(client[0], @"clientId must not be nil.");
 //    XCTAssertNotNil(client[1], @"clientSecret must not be nil.");
 //    
@@ -90,8 +88,7 @@
 // MEMO: 以下のテストは手動で行う.
 //- (void) testHttpRequestAccessTokenMultiScope
 //{
-//    NSString *package = @"abc";
-//    NSArray *client = [self createClientForPackage:package];
+//    NSArray *client = [self createClient];
 //    XCTAssertNotNil(client[0], @"clientId must not be nil.");
 //    XCTAssertNotNil(client[1], @"clientSecret must not be nil.");
 //    

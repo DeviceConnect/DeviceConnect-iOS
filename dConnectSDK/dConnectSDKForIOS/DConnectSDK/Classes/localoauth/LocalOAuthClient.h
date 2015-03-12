@@ -52,13 +52,6 @@ typedef NS_ENUM(NSUInteger, LocalOAuthClientType) {
  */
 - (NSString *) clientId;
 
-/*!
-    Client secret that the client has registered at the auth provider.
-
-    @return the stored client secret
- */
-- (NSString *) clientSecret;
-
 /**
     Redirect URL that the client has registered at the auth provider.
 
@@ -76,8 +69,6 @@ typedef NS_ENUM(NSUInteger, LocalOAuthClientType) {
  */
 - (BOOL) isResponseTypeAllowed: (LocalOAuthResponseType)responseType;
 
-- (BOOL) isGrantTypeAllowed: (LocalOAuthGrantType)grantType;
-
 - (LocalOAuthClientType) clientType;
 
 
@@ -92,11 +83,9 @@ typedef NS_ENUM(NSUInteger, LocalOAuthClientType) {
 
 - (LocalOAuthPackageInfo *) packageInfo;
 - (NSString *) clientId;
-- (NSString *) clientSecret;
 - (NSArray *) redirectURIs;
 - (NSArray *) properties;
 - (BOOL) isResponseTypeAllowed: (LocalOAuthResponseType)responseType;
-- (BOOL) isGrantTypeAllowed: (LocalOAuthGrantType)grantType;
 - (LocalOAuthClientType) clientType;
 
 

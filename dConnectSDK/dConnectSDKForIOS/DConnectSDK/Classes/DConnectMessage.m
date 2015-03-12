@@ -18,6 +18,7 @@ NSString *const DConnectMessageInterface = @"interface";
 NSString *const DConnectMessageAttribute = @"attribute";
 NSString *const DConnectMessageSessionKey = @"sessionKey";
 NSString *const DConnectMessageAccessToken = @"accessToken";
+NSString *const DConnectMessageOrigin = @"origin";
 NSString *const DConnectMessageAPI = @"api";
 
 NSString *const DConnectMessageResult = @"result";
@@ -27,6 +28,8 @@ NSString *const DConnectMessageProduct = @"product";
 NSString *const DConnectMessageVersion = @"version";
 
 NSString *const DConnectMessageDefaultAPI = @"gotapi";
+
+NSString *const DConnectMessageHeaderGotAPIOrigin = @"X-GotAPI-Origin";
 
 
 @interface DConnectArray ()
