@@ -88,8 +88,10 @@ didReceiveDeleteDrawImageRequest:(DConnectRequestMessage *)request
 {
     if (_displayViewController) {
         [_displayViewController dismissViewControllerAnimated:YES completion:nil];
+        [response setResult:DConnectMessageResultTypeOk];
+    } else {
+        [response setErrorToIllegalDeviceStateWithMessage:@"the canvas is not displayed."];
     }
-    [response setResult:DConnectMessageResultTypeOk];
     return YES;
 }
 
