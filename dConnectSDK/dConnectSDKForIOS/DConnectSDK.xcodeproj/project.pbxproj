@@ -68,6 +68,7 @@
 		30E9A16419AC6A850013F545 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 30EF0AE419AB582800AE8FCB /* Localizable.strings */; };
 		6B2C77881A70885D00ED8F17 /* DConnectAvailabilityProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B2C77871A70885D00ED8F17 /* DConnectAvailabilityProfile.m */; };
 		6B9695A01A9DCBEC00D25A4B /* DConnectServiceInformationProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B96959F1A9DCBEC00D25A4B /* DConnectServiceInformationProfile.m */; };
+		6BD8C45C1AA8060900198676 /* DConnectManagerAuthorizationProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BD8C45B1AA8060900198676 /* DConnectManagerAuthorizationProfile.m */; };
 		971BC07B1924A8A000D21FE3 /* DConnectBatteryProfileTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 971BC07A1924A8A000D21FE3 /* DConnectBatteryProfileTest.m */; };
 		972107571920604E00529618 /* DConnectMultipartParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 972107561920604E00529618 /* DConnectMultipartParser.m */; };
 		97A999BB19545237006F8474 /* DConnectFilesProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 97A999BA19545237006F8474 /* DConnectFilesProfile.m */; };
@@ -243,6 +244,8 @@
 		6B2C77871A70885D00ED8F17 /* DConnectAvailabilityProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DConnectAvailabilityProfile.m; sourceTree = "<group>"; };
 		6B96959E1A9DCB5200D25A4B /* DConnectServiceInformationProfile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DConnectServiceInformationProfile.h; sourceTree = "<group>"; };
 		6B96959F1A9DCBEC00D25A4B /* DConnectServiceInformationProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DConnectServiceInformationProfile.m; sourceTree = "<group>"; };
+		6BD8C45A1AA8050700198676 /* DConnectManagerAuthorizationProfile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DConnectManagerAuthorizationProfile.h; sourceTree = "<group>"; };
+		6BD8C45B1AA8060900198676 /* DConnectManagerAuthorizationProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DConnectManagerAuthorizationProfile.m; sourceTree = "<group>"; };
 		971BC07A1924A8A000D21FE3 /* DConnectBatteryProfileTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DConnectBatteryProfileTest.m; sourceTree = "<group>"; };
 		972107551920604E00529618 /* DConnectMultipartParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DConnectMultipartParser.h; sourceTree = "<group>"; };
 		972107561920604E00529618 /* DConnectMultipartParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DConnectMultipartParser.m; sourceTree = "<group>"; };
@@ -1619,7 +1622,6 @@
 		BE6F93281A70DB0400BFA51F /* DConnectMemoryCacheController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DConnectMemoryCacheController.h; sourceTree = "<group>"; };
 		BE6F93291A70DB0400BFA51F /* DConnectMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DConnectMessage.h; sourceTree = "<group>"; };
 		BE6F932A1A70DB0400BFA51F /* DConnectMessageFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DConnectMessageFactory.h; sourceTree = "<group>"; };
-		BE6F932B1A70DB0400BFA51F /* DConnectNetworkServiceDiscoveryProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DConnectNetworkServiceDiscoveryProfile.h; sourceTree = "<group>"; };
 		BE6F932C1A70DB0400BFA51F /* DConnectNotificationProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DConnectNotificationProfile.h; sourceTree = "<group>"; };
 		BE6F932D1A70DB0400BFA51F /* DConnectPhoneProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DConnectPhoneProfile.h; sourceTree = "<group>"; };
 		BE6F932E1A70DB0400BFA51F /* DConnectProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DConnectProfile.h; sourceTree = "<group>"; };
@@ -3407,7 +3409,6 @@
 				BE6F93281A70DB0400BFA51F /* DConnectMemoryCacheController.h */,
 				BE6F93291A70DB0400BFA51F /* DConnectMessage.h */,
 				BE6F932A1A70DB0400BFA51F /* DConnectMessageFactory.h */,
-				BE6F932B1A70DB0400BFA51F /* DConnectNetworkServiceDiscoveryProfile.h */,
 				BE6F932C1A70DB0400BFA51F /* DConnectNotificationProfile.h */,
 				BE6F932D1A70DB0400BFA51F /* DConnectPhoneProfile.h */,
 				BE6F932E1A70DB0400BFA51F /* DConnectProfile.h */,
@@ -3561,6 +3562,8 @@
 				BE31742719A7266200E33B21 /* DConnectSettings.m */,
 				97A999B919545237006F8474 /* DConnectFilesProfile.h */,
 				97A999BA19545237006F8474 /* DConnectFilesProfile.m */,
+				6BD8C45A1AA8050700198676 /* DConnectManagerAuthorizationProfile.h */,
+				6BD8C45B1AA8060900198676 /* DConnectManagerAuthorizationProfile.m */,
 				C2F89D551920AB0B005F1C5F /* DConnectManagerDeliveryProfile.h */,
 				C2F89D561920AB0B005F1C5F /* DConnectManagerDeliveryProfile.m */,
 				C2F89D521920AAAF005F1C5F /* DConnectManagerServiceDiscoveryProfile.h */,
@@ -3956,7 +3959,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Environment Variables\nFRAMEWORK_NAME=${PROJECT_NAME}\nFRAMEWORK_VERSION=A\nFRAMEWORK_VERSION_NUMBER=1.0\nCONFIGURATION=\"Release\"\nFRAMEWORK_BUILD_PATH=\"${SRCROOT}/build/${CONFIGURATION}-framework\"\nFRAMEWORK_DIR=\"${FRAMEWORK_BUILD_PATH}/${FRAMEWORK_NAME}.framework\"\nSTATICLIB_BUILD_PATH=\"${SRCROOT}/build/${CONFIGURATION}-universal\"\n\n# Clean directories\nrm -rf \"${FRAMEWORK_BUILD_PATH}\"\n\n# Build simulator and device binaries.\n# A target to build a static library *must* have the name ${PROJECT_NAME}.\nxcodebuild -project ${PROJECT_NAME}.xcodeproj -sdk iphonesimulator -target ${PROJECT_NAME} -configuration ${CONFIGURATION} clean build\nxcodebuild -project ${PROJECT_NAME}.xcodeproj -sdk iphoneos -target ${PROJECT_NAME} -configuration ${CONFIGURATION} clean build\n# A target to build a bundle *must* have the name ${PROJECT_NAME}_resources. This target is optional.\nxcodebuild -project ${PROJECT_NAME}.xcodeproj -sdk iphonesimulator -target ${PROJECT_NAME}_resources -configuration ${CONFIGURATION} clean build || true\nxcodebuild -project ${PROJECT_NAME}.xcodeproj -sdk iphoneos -target ${PROJECT_NAME}_resources -configuration ${CONFIGURATION} clean build || true\n\n# create directories.\nmkdir -p ${FRAMEWORK_DIR}/Versions/${FRAMEWORK_VERSION}/Headers\n#mkdir -p ${FRAMEWORK_DIR}/Versions/${FRAMEWORK_VERSION}/Resources\nmkdir -p ${STATICLIB_BUILD_PATH}\n# create symlinks\ncd ${FRAMEWORK_DIR}\nln -s ../Versions/${FRAMEWORK_VERSION} Versions/Current\nln -s Versions/Current/Headers Headers\n#ln -s Versions/Current/Resources Resources\nln -s Versions/Current/${FRAMEWORK_NAME} ${FRAMEWORK_NAME}\ncd ${SRCROOT}\n\n# create the universal library, and strip internal symbols from it\nlipo ${SRCROOT}/build/${CONFIGURATION}-iphoneos/lib${FRAMEWORK_NAME}.a ${SRCROOT}/build/${CONFIGURATION}-iphonesimulator/lib${FRAMEWORK_NAME}.a -create -output \"${STATICLIB_BUILD_PATH}/lib${FRAMEWORK_NAME}.a\"\n#strip -x \"${STATICLIB_BUILD_PATH}/lib${FRAMEWORK_NAME}.a\"\ncp \"${STATICLIB_BUILD_PATH}/lib${FRAMEWORK_NAME}.a\" \"${FRAMEWORK_DIR}/Versions/Current/${FRAMEWORK_NAME}\"\n\n# copy files\ncp -r ${SRCROOT}/${PROJECT_NAME}/DConnectSDK/ ${FRAMEWORK_DIR}/Headers/\n\n# copy binary to bin folder\ncd ${SRCROOT}\nrm -rf bin\nmkdir bin\ncp -r ${FRAMEWORK_DIR} bin\ncp -r build/${CONFIGURATION}-resources/${PROJECT_NAME}_resources.bundle bin";
+			shellScript = "# Environment Variables\nFRAMEWORK_NAME=${PROJECT_NAME}\nFRAMEWORK_VERSION=A\nFRAMEWORK_VERSION_NUMBER=1.0\nCONFIGURATION=\"Release\"\nFRAMEWORK_BUILD_PATH=\"${SRCROOT}/build/${CONFIGURATION}-framework\"\nFRAMEWORK_DIR=\"${FRAMEWORK_BUILD_PATH}/${FRAMEWORK_NAME}.framework\"\nSTATICLIB_BUILD_PATH=\"${SRCROOT}/build/${CONFIGURATION}-universal\"\n\n# Clean directories\nrm -rf \"${FRAMEWORK_BUILD_PATH}\"\n\n# Build simulator and device binaries.\n# A target to build a static library *must* have the name ${PROJECT_NAME}.\nxcodebuild -project ${PROJECT_NAME}.xcodeproj -sdk iphonesimulator -target ${PROJECT_NAME} -configuration ${CONFIGURATION} clean build\nxcodebuild -project ${PROJECT_NAME}.xcodeproj -sdk iphoneos -target ${PROJECT_NAME} -configuration ${CONFIGURATION} clean build\n# A target to build a bundle *must* have the name ${PROJECT_NAME}_resources. This target is optional.\nxcodebuild -project ${PROJECT_NAME}.xcodeproj -sdk iphonesimulator -target ${PROJECT_NAME}_resources -configuration ${CONFIGURATION} clean build || true\nxcodebuild -project ${PROJECT_NAME}.xcodeproj -sdk iphoneos -target ${PROJECT_NAME}_resources -configuration ${CONFIGURATION} clean build || true\n\n# create directories.\nmkdir -p ${FRAMEWORK_DIR}/Versions/${FRAMEWORK_VERSION}/Headers\n#mkdir -p ${FRAMEWORK_DIR}/Versions/${FRAMEWORK_VERSION}/Resources\nmkdir -p ${STATICLIB_BUILD_PATH}\n# create symlinks\ncd ${FRAMEWORK_DIR}\nln -s ../Versions/${FRAMEWORK_VERSION} Versions/Current\nln -s Versions/Current/Headers Headers\n#ln -s Versions/Current/Resources Resources\nln -s Versions/Current/${FRAMEWORK_NAME} ${FRAMEWORK_NAME}\ncd ${SRCROOT}\n\n# create the universal library, and strip internal symbols from it\nlipo ${SRCROOT}/build/${CONFIGURATION}-iphoneos/lib${FRAMEWORK_NAME}.a ${SRCROOT}/build/${CONFIGURATION}-iphonesimulator/lib${FRAMEWORK_NAME}.a -create -output \"${STATICLIB_BUILD_PATH}/lib${FRAMEWORK_NAME}.a\"\n#strip -x \"${STATICLIB_BUILD_PATH}/lib${FRAMEWORK_NAME}.a\"\ncp \"${STATICLIB_BUILD_PATH}/lib${FRAMEWORK_NAME}.a\" \"${FRAMEWORK_DIR}/Versions/Current/${FRAMEWORK_NAME}\"\n\n# copy files\ncp -r ${SRCROOT}/${PROJECT_NAME}/DConnectSDK/ ${FRAMEWORK_DIR}/Headers/\n\n# copy binary to bin folder\ncd ${SRCROOT}\n\ncd bin\nls | grep -v -E '.gitignore$' | xargs rm -rf\ncd ..\ncp -r ${FRAMEWORK_DIR} bin\ncp -r build/${CONFIGURATION}-resources/${PROJECT_NAME}_resources.bundle bin";
 		};
 		C29D3316191B253E001015CC /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -4056,6 +4059,7 @@
 				D62622DA199232BC004F01E6 /* LocalOAuthGrantType.m in Sources */,
 				6B9695A01A9DCBEC00D25A4B /* DConnectServiceInformationProfile.m in Sources */,
 				D626229E19923298004F01E6 /* LocalOAuthAccessTokenScope.m in Sources */,
+				6BD8C45C1AA8060900198676 /* DConnectManagerAuthorizationProfile.m in Sources */,
 				97ECA16E193887E2001662D1 /* DConnectURLProtocol.m in Sources */,
 				C2F89D631920BB93005F1C5F /* DConnectConnectProfile.m in Sources */,
 				C29D3333191B2679001015CC /* DConnectServiceDiscoveryProfile.m in Sources */,

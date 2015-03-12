@@ -83,6 +83,13 @@
             [request setProfile:DConnectServiceDiscoveryProfileName];
             [request setAttribute:nil];
         }
+    } else if ([profileName isEqualToString:DConnectAuthorizationProfileName]) {
+        NSString *attribute = [request attribute];
+        if ([attribute isEqualToString:DConnectAttributeNameCreateClient]) {
+            [request setAttribute:DConnectAuthorizationProfileAttrGrant];
+        } else if ([attribute isEqualToString:DConnectAttributeNameRequestAccessToken]) {
+            [request setAttribute:DConnectAuthorizationProfileAttrAccessToken];
+        }
     }
     
     if (self.useLocalOAuth) {

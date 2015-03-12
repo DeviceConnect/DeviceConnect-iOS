@@ -29,13 +29,12 @@
     });
 }
 
-- (NSArray*) createClientForPackage:(NSString *)package
+- (NSArray*) createClient
 {
     return nil;
 }
 
 - (AccessToken*) requestAccessTokenWithClientId:(NSString*)clientId
-                                   clientSecret:(NSString*)clientSecret
                                          scopes:(NSArray*)scopes
                                 applicationName:(NSString*)applicationName
 {

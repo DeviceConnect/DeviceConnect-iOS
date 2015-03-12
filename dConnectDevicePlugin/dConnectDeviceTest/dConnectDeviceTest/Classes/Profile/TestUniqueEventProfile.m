@@ -63,6 +63,8 @@ NSString *const UniqueEventProfileProfileAttributeUnique = @"unique";
             [DConnectServiceDiscoveryProfile setState:YES target:networkService];
             [DConnectServiceDiscoveryProfile setOnline:YES target:networkService];
             [DConnectServiceDiscoveryProfile setConfig:@"test config" target:networkService];
+            [DConnectServiceDiscoveryProfile setScopesWithProvider:self.provider
+                                                            target:networkService];
             [DConnectServiceDiscoveryProfile setNetworkService:networkService target:event];
         }
         

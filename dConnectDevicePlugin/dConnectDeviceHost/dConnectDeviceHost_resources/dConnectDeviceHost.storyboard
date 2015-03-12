@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
@@ -14,40 +14,34 @@
                         <viewControllerLayoutGuide type="top" id="VKG-3Q-CfN"/>
                         <viewControllerLayoutGuide type="bottom" id="e7E-Im-giU"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="WDl-lR-s4k">
+                    <view key="view" contentMode="scaleToFill" id="WDl-lR-s4k" customClass="DPHostCanvasView">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZFi-Kw-0MP">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="60"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JX3-cg-Xgg">
+                                <rect key="frame" x="564" y="28" width="30" height="30"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="60" id="4hf-Uh-RFe"/>
+                                    <constraint firstAttribute="height" constant="30" id="7cS-le-RCV"/>
+                                    <constraint firstAttribute="width" constant="30" id="YqH-c8-Bub"/>
                                 </constraints>
-                                <state key="normal" title="Tap to close.">
+                                <state key="normal" backgroundImage="close_small_button_normal.png">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <state key="selected" backgroundImage="close_small_button_focus.png"/>
+                                <state key="highlighted" backgroundImage="close_small_button_push.png"/>
                                 <connections>
-                                    <action selector="onTouchUpCloseButton:" destination="RC9-Gh-4JK" eventType="touchUpInside" id="uIS-Yw-GfZ"/>
+                                    <action selector="onTouchUpCloseButton:" destination="RC9-Gh-4JK" eventType="touchUpInside" id="wLb-dc-rqU"/>
                                 </connections>
                             </button>
-                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jy4-xO-9yQ" customClass="DPHostCanvasView">
-                                <rect key="frame" x="0.0" y="76" width="600" height="496"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="jy4-xO-9yQ" firstAttribute="leading" secondItem="WDl-lR-s4k" secondAttribute="leadingMargin" constant="-16" id="Blu-EL-nd5"/>
-                            <constraint firstItem="ZFi-Kw-0MP" firstAttribute="leading" secondItem="WDl-lR-s4k" secondAttribute="leadingMargin" constant="-16" id="VwU-z9-FR5"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="jy4-xO-9yQ" secondAttribute="trailing" constant="-16" id="oNh-sK-VxC"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="ZFi-Kw-0MP" secondAttribute="trailing" constant="-16" id="rtS-kN-cvl"/>
-                            <constraint firstItem="ZFi-Kw-0MP" firstAttribute="top" secondItem="WDl-lR-s4k" secondAttribute="topMargin" id="rta-qe-MLq"/>
-                            <constraint firstItem="jy4-xO-9yQ" firstAttribute="top" secondItem="ZFi-Kw-0MP" secondAttribute="bottom" id="tiY-dU-bc5"/>
-                            <constraint firstItem="e7E-Im-giU" firstAttribute="top" secondItem="jy4-xO-9yQ" secondAttribute="bottom" constant="28" id="wte-DF-QAb"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="JX3-cg-Xgg" secondAttribute="trailing" constant="-10" id="3AJ-ex-IZZ"/>
+                            <constraint firstItem="JX3-cg-Xgg" firstAttribute="top" secondItem="VKG-3Q-CfN" secondAttribute="bottom" constant="8" id="Vra-OT-PyZ"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="canvasView" destination="jy4-xO-9yQ" id="BGJ-QR-j4v"/>
+                        <outlet property="canvasView" destination="WDl-lR-s4k" id="xgP-fe-cb0"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fZp-7Y-Ab3" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -55,4 +49,9 @@
             <point key="canvasLocation" x="151" y="202"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="close_small_button_focus.png" width="20" height="20"/>
+        <image name="close_small_button_normal.png" width="20" height="20"/>
+        <image name="close_small_button_push.png" width="20" height="20"/>
+    </resources>
 </document>

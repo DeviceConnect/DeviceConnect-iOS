@@ -20,8 +20,6 @@ NSString *const LocalOAuthClientDaoClientId = @"client_id";
 NSString *const LocalOAuthClientDaoPackageName = @"package_name";
  /* サービスID(無しのときはnull) */
 NSString *const LocalOAuthClientDaoServiceId = @"service_id";
- /* クライアントシークレット */
-NSString *const LocalOAuthClientDaoClientSecret = @"client_secret";
  /* クライアントタイプ */
 NSString *const LocalOAuthClientDaoClientType = @"client_type";
 /* 登録日時(System.currentTimeMillis()で取得した値を格納する) */
@@ -52,7 +50,6 @@ NSString *const LocalOAuthClientDaoRegistrationDate = @"registration_date";
         @", %@ TEXT"
         @", %@ TEXT"
         @", %@ TEXT"
-        @", %@ TEXT"
         @", %@ INTEGER"
         @");",
         LocalOAuthClientDaoTableName,
@@ -60,7 +57,6 @@ NSString *const LocalOAuthClientDaoRegistrationDate = @"registration_date";
         LocalOAuthClientDaoClientId,
         LocalOAuthClientDaoPackageName,
         LocalOAuthClientDaoServiceId,
-        LocalOAuthClientDaoClientSecret,
         LocalOAuthClientDaoClientType,
         LocalOAuthClientDaoRegistrationDate
     ];
@@ -84,9 +80,6 @@ NSString *const LocalOAuthClientDaoRegistrationDate = @"registration_date";
         [columns addObject: LocalOAuthClientDaoServiceId];
         [params addObject: client.packageInfo.serviceId];
     }
-    
-    [columns addObject: LocalOAuthClientDaoClientSecret];
-    [params addObject: client.clientSecret];
     
     [columns addObject: LocalOAuthClientDaoClientType];
     [params addObject: [LocalOAuthClientTypeUtil toString: client.clientType]];
@@ -221,14 +214,12 @@ NSString *const LocalOAuthClientDaoRegistrationDate = @"registration_date";
                      @", %@"
                      @", %@"
                      @", %@"
-                     @", %@"
                      @" from %@"
                      @" where %@",
                      LocalOAuthClientDaoId,
                      LocalOAuthClientDaoClientId,
                      LocalOAuthClientDaoPackageName,
                      LocalOAuthClientDaoServiceId,
-                     LocalOAuthClientDaoClientSecret,
                      LocalOAuthClientDaoClientType,
                      LocalOAuthClientDaoRegistrationDate,
                      LocalOAuthClientDaoTableName,
@@ -252,10 +243,9 @@ NSString *const LocalOAuthClientDaoRegistrationDate = @"registration_date";
             [sqliteClient setPackageInfo:
                 [[LocalOAuthPackageInfo alloc] initWithPackageNameServiceId: packageName
                                                      serviceId: serviceId]];
-            [sqliteClient setClientSecret: [cursor stringValueAtIndex:4]];
-            NSString *clientTypeString = [cursor stringValueAtIndex:5];
+            NSString *clientTypeString = [cursor stringValueAtIndex:4];
             [sqliteClient setClientType: [LocalOAuthClientTypeUtil toValue: clientTypeString]];
-            [sqliteClient setRegistrationDate: [cursor longLongValueAtIndex:6]];
+            [sqliteClient setRegistrationDate: [cursor longLongValueAtIndex:5]];
             
             /* LocalOAuthClientのdelegateに入れて配列に格納する */
             LocalOAuthClient *client = [[LocalOAuthClient alloc]init];
@@ -290,7 +280,6 @@ NSString *const LocalOAuthClientDaoRegistrationDate = @"registration_date";
         LocalOAuthClientDaoClientId,
         LocalOAuthClientDaoPackageName,
         LocalOAuthClientDaoServiceId,
-        LocalOAuthClientDaoClientSecret,
         LocalOAuthClientDaoClientType,
         LocalOAuthClientDaoRegistrationDate
     ];

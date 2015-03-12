@@ -21,7 +21,7 @@
 
 @property (nonatomic, assign) id<DPHostCanvasViewControllerDelegate> delegate;
 
-@property (weak, nonatomic) IBOutlet DPHostCanvasView *canvasView;
+@property (strong, nonatomic) IBOutlet DPHostCanvasView *canvasView;
 
 
 

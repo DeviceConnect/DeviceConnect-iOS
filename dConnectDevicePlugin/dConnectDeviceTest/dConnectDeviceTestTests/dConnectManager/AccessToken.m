@@ -14,7 +14,6 @@
 - (id) initWithResponse:(NSDictionary *)response
 {
     self.token = [response objectForKey:@"accessToken"];
-    self.signature = [response objectForKey:@"signature"];
     NSArray *array = [response objectForKey:@"scopes"];
     if (array) {
         self.expirePeriods = [NSMutableDictionary new];

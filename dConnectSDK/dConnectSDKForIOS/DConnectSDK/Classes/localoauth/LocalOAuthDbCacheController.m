@@ -85,7 +85,6 @@ static NSString *const LocalOAuthDbCacheControllerDBName = @"__dconnect_localoau
     クライアント作成.
     @param[in] packageInfo パッケージ情報
     @param[in] clientId クライアントID
-    @param[in] clientSecret クライアントシークレット
     @param[in] clientType クライアントタイプ
     @param[in] redirectURIs リダイレクトURIs
     @param[in] properties プロパティ
@@ -93,11 +92,11 @@ static NSString *const LocalOAuthDbCacheControllerDBName = @"__dconnect_localoau
  */
 - (LocalOAuthClient *) clientManager_createClient: (LocalOAuthPackageInfo *) packageInfo
                                clientId: (NSString *)clientId
-                           clientSecret: (NSString *)clientSecret
                              clientType: (LocalOAuthClientType)clientType
                            redirectURIs: (NSArray *)redirectURIs
                              properties: (NSDictionary *)properties
                                database: (DConnectSQLiteDatabase *)database;
+
 - (LocalOAuthClient *) clientManager_createClient: (LocalOAuthPackageInfo *)packageInfo
                              clientType: (LocalOAuthClientType)clientType
                            redirectURIs: (NSArray *)redirectURIs
@@ -119,7 +118,6 @@ static NSString *const LocalOAuthDbCacheControllerDBName = @"__dconnect_localoau
 
 
 - (BOOL)isIssueClientSecretToPublicClients;
-- (NSString *) generateClientSecret: (int) byteCount;
 - (NSString *) base64RandomValue: (int) byteCount;
 - (NSString *) hexRandomValue: (int) byteCount;
 - (NSString *) generateRawToken;
@@ -201,9 +199,8 @@ static NSString *const LocalOAuthDbCacheControllerDBName = @"__dconnect_localoau
             /* クライアントデータを新規生成して返す */
             client = [self addClientData: packageInfo database:database];
             NSString *clientId = [client clientId];
-            NSString *clientSecret = [client clientSecret];
             
-            clientData = [LocalOAuthClientData clientDataWithClientIdClientSecret:clientId clientSecret: clientSecret];
+            clientData = [LocalOAuthClientData clientDataWithClientId:clientId];
             
             result = DConnectEventErrorNone;
             
@@ -344,9 +341,11 @@ static NSString *const LocalOAuthDbCacheControllerDBName = @"__dconnect_localoau
                 if (token != nil) {
                     NSString *accessToken = [token accessToken];
                     NSArray *accessTokenScopes = [self scopesToAccessTokenScopes: [token scope]];
+                    long long timestamp = [token registrationDate];
                     acccessTokenData = [LocalOAuthAccessTokenData
                                                 accessTokenDataWithAccessToken:accessToken
-                                                                        scopes:accessTokenScopes];
+                                                                        scopes:accessTokenScopes
+                                                                     timestamp:timestamp];
                 }
             }
             
@@ -924,17 +923,10 @@ static NSString *const LocalOAuthDbCacheControllerDBName = @"__dconnect_localoau
     }
     
     NSString *clientId = [[[NSUUID alloc] init]UUIDString];
-    NSString *clientSecret = nil;
-    if (clientType == CLIENT_TYPE_CONFIDENTIAL
-        || (clientType == CLIENT_TYPE_PUBLIC && [self isIssueClientSecretToPublicClients])) {
-        // Issue a client secret to the confidential client.
-        clientSecret = [self generateClientSecret: 20];
-    }
     
     LocalOAuthClient *client =
         [self clientManager_createClient: packageInfo
                                 clientId: clientId
-                            clientSecret: clientSecret
                               clientType: clientType
                             redirectURIs: redirectURIs
                               properties: mutableProperties
@@ -969,7 +961,6 @@ static NSString *const LocalOAuthDbCacheControllerDBName = @"__dconnect_localoau
 /* private */
 - (LocalOAuthClient *) clientManager_createClient: (LocalOAuthPackageInfo *) packageInfo
                                          clientId: (NSString *)clientId
-                                     clientSecret: (NSString *)clientSecret
                                        clientType: (LocalOAuthClientType)clientType
                                      redirectURIs: (NSArray *)redirectURIs
                                        properties: (NSDictionary *)properties
@@ -982,9 +973,6 @@ static NSString *const LocalOAuthDbCacheControllerDBName = @"__dconnect_localoau
                        clientType: clientType
                      redirectURIs: redirectURIs
                        properties: properties];
-    if (clientSecret != nil) {
-        [sqliteClient setClientSecret: clientSecret];
-    }
     
     /* DBに1件追加(失敗したらSQLiteException発生) */
     [LocalOAuthClientDao insertWithClientData: sqliteClient toDatabase:database];
@@ -1054,16 +1042,6 @@ static NSString *const LocalOAuthDbCacheControllerDBName = @"__dconnect_localoau
 // AbstractClientManager.isIssueClientSecretToPublicClients()
 - (BOOL)isIssueClientSecretToPublicClients {
     return NO;
-}
-
-/*!
-    clientSecret値を生成する(BASE64で生成する)
-    @param byteCount 生成するバイト数(1バイトあたり2文字分生成する)
-    @return clientSecret値(BASE64でランダムに生成した文字列(文字数=byteCount*2))
- */
-- (NSString *) generateClientSecret: (int)byteCount {
-    NSString *clientSecret = [self base64RandomValue: byteCount];
-    return clientSecret;
 }
 
 /*!

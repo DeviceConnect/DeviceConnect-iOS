@@ -21,6 +21,16 @@ extern NSString *const DConnectProfileNameNetworkServiceDiscovery;
 extern NSString *const DConnectAttributeNameGetNetworkServices;
 
 /*!
+ @brief Manager-プラグイン間のクライアント作成APIのアトリビュート名。
+ */
+extern NSString *const DConnectAttributeNameCreateClient;
+
+/*
+ @brief Manager-プラグイン間のアクセストークン取得APIのアトリビュート名。
+ */
+extern NSString *const DConnectAttributeNameRequestAccessToken;
+
+/*!
  @brief DConnectManagerの非公開用APIを定義する。
  */
 @interface DConnectManager ()
