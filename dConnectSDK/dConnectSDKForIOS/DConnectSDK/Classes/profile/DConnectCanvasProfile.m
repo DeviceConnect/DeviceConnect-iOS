@@ -77,6 +77,34 @@ NSString *const DConnectCanvasProfileModeFills  = @"fills";
 }
 
 
+- (BOOL) didReceiveDeleteRequest:(DConnectRequestMessage *)request response:(DConnectResponseMessage *)response
+{
+    BOOL send = YES;
+    
+    if (!_delegate) {
+        [response setErrorToNotSupportAction];
+        return send;
+    }
+    
+    NSString *attribute = [request attribute];
+    if ([attribute isEqualToString:DConnectCanvasProfileAttrDrawImage]) {
+        
+        if ([self hasMethod:@selector(profile:didReceiveDeleteDrawImageRequest:response:serviceId)
+                   response:response])
+        {
+            NSString *serviceId = [request serviceId];
+            send = [_delegate profile:self didReceiveDeleteDrawImageRequest:request
+                             response:response
+                            serviceId:serviceId];
+        }
+        
+    } else {
+        [response setErrorToUnknownAttribute];
+    }
+    
+    return send;
+}
+
 #pragma mark - Setter
 
 + (void) setMIMEType:(NSString *)mimeType target:(DConnectMessage *)message {
