@@ -18,10 +18,8 @@
 
 @end
 
+@interface DConnectOriginBlockingCell : UITableViewCell
 
-@interface DConnectWhitelistCell : UITableViewCell
-
-@property IBOutlet UILabel *titleLabel;
-@property IBOutlet UILabel *originLabel;
+@property IBOutlet UISwitch *blockingSwitch;
 
 @end

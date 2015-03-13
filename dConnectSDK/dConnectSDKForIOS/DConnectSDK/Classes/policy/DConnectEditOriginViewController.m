@@ -7,16 +7,25 @@
 //  http://opensource.org/licenses/mit-license.php
 //
 
-#import "DConnectAddOriginViewController.h"
+#import "DConnectEditOriginViewController.h"
 #import "DConnectOrigin.h"
 #import "DConnectOriginParser.h"
 #import "DConnectWhitelist.h"
 
-@interface DConnectAddOriginViewController ()
+@interface DConnectEditOriginViewController ()
 
 @end
 
-@implementation DConnectAddOriginViewController
+@implementation DConnectEditOriginViewController
+
+- (void) viewDidLoad
+{
+    [super viewDidLoad];
+    if (_originInfo) {
+        [_titleField setText:_originInfo.title];
+        [_originField setText:[_originInfo.origin stringify]];
+    }
+}
 
 - (BOOL) shouldPerformSegueWithIdentifier:(NSString *)identifier
                                    sender:(id)sender
@@ -30,8 +39,14 @@
         title = originExp;
     }
     id<DConnectOrigin> origin = [DConnectOriginParser parse:originExp];
+    _originInfo.origin = origin;
+    _originInfo.title = title;
     DConnectWhitelist *whitelist = [DConnectWhitelist sharedWhitelist];
-    [whitelist addOrigin:origin title:title];
+    if (_mode == DConnectEditOriginModeChange) {
+        [whitelist updateOrigin:_originInfo];
+    } else {
+        [whitelist addOrigin:origin title:title];
+    }
     return YES;
 }
 

@@ -391,7 +391,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" restorationIdentifier="blockingSwitchCell" selectionStyle="default" indentationWidth="10" reuseIdentifier="blockingSwitchCell" rowHeight="50" id="cNz-Vw-xCq" customClass="DConnectOriginBlockingCell">
+                            <tableViewCell contentMode="scaleToFill" restorationIdentifier="blockingSwitchCell" selectionStyle="default" indentationWidth="10" reuseIdentifier="blockingSwitchCell" rowHeight="50" id="cNz-Vw-xCq">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="cNz-Vw-xCq" id="N6y-Gv-LBc">
@@ -408,9 +408,6 @@
                                         </switch>
                                     </subviews>
                                 </tableViewCellContentView>
-                                <connections>
-                                    <outlet property="blockingSwitch" destination="joV-6m-dKf" id="ysr-3M-lZH"/>
-                                </connections>
                             </tableViewCell>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="originCell" textLabel="TaA-XX-XBn" detailTextLabel="9GK-7d-Pup" rowHeight="50" style="IBUITableViewCellStyleSubtitle" id="p4B-vu-jYq">
                                 <autoresizingMask key="autoresizingMask"/>
@@ -457,6 +454,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="addButton" destination="YgS-Y2-daX" id="oxj-VW-xor"/>
+                        <outlet property="blockingSwitch" destination="joV-6m-dKf" id="FAU-rT-Mxq"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uYb-r7-fkb" userLabel="First Responder" sceneMemberID="firstResponder"/>

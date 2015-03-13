@@ -8,10 +8,18 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "DConnectOriginInfo.h"
 
-@interface DConnectAddOriginViewController : UIViewController
+typedef NS_ENUM(NSUInteger, DConnectEditOriginMode) {
+    DConnectEditOriginModeNew,
+    DConnectEditOriginModeChange
+};
+
+@interface DConnectEditOriginViewController : UIViewController
 
 @property IBOutlet UITextField *titleField;
 @property IBOutlet UITextField *originField;
+@property DConnectOriginInfo *originInfo;
+@property DConnectEditOriginMode mode;
 
 @end

@@ -33,7 +33,8 @@
         self.datasource = @[@[@"Cookieの削除",
                               @"Cookie設定(ON/OFF)",
                               @"履歴の削除",
-                              @"アクセストークン削除"]
+                              @"アクセストークン削除",
+                              @"ホワイトリスト管理"]
                             ];
         
         self.title = @"設定";
@@ -141,10 +142,13 @@
                 break;
                 
             case 3:
-                //dConnectmanagerのアクセストークン削除
-                [DConnectUtil showOriginWhitelist]; // TODO showAccessTokenListに戻す
+                //Device Connect Managerのアクセストークン削除
+                [DConnectUtil showAccessTokenList];
                 break;
-                
+            case 4:
+                //ホワイトリスト管理
+                [DConnectUtil showOriginWhitelist];
+                break;
             default:
                 break;
         }
@@ -190,10 +194,13 @@
                 break;
                 
             case 3:
-                //dConnectmanagerのアクセストークン削除
+                //Device Connect Managerのアクセストークン削除
                 cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
                 break;
-                
+            case 4:
+                //ホワイトリスト管理
+                cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+                break;
             default:
                 break;
         }

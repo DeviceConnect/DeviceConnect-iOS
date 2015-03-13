@@ -103,7 +103,7 @@ NSString *const DConnectOriginDaoClmDate = @"date";
                                          info.title,
                                          current,
                                          [NSNumber numberWithLongLong:info.rowId]]];
-    if (result != 1) {
+    if (result == 1) {
         [database commit];
     } else {
         [database rollback];
@@ -118,7 +118,7 @@ NSString *const DConnectOriginDaoClmDate = @"date";
     int result = [database deleteFromTable:DConnectOriginDaoTableName
                                      where:DCEForm(@"%@=?", DConnectOriginDaoClmId)
                                 bindParams:@[[NSNumber numberWithLongLong:info.rowId]]];
-    if (result != 1) {
+    if (result == 1) {
         [database commit];
     } else {
         [database rollback];
