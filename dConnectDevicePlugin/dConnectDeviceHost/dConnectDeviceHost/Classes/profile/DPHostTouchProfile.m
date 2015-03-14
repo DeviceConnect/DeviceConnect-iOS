@@ -48,7 +48,9 @@ top = top.presentedViewController; \
     DConnectMessage *mOnTouchCancelCache;
     // Touch profile OnTouchCancel cache time.
     UInt64 mOnTouchCancelCacheTime;
-    
+    // Touch event management flag.
+    long mTouchEventManageFlag;
+
     DPHostTouchUIViewController *_displayViewController;
 }
 
@@ -60,6 +62,13 @@ top = top.presentedViewController; \
 
 // Touch profile cache retention time (mSec).
 static const UInt64 CACHE_RETENTION_TIME = 10000;
+// Touch event management flag.
+static const long FLAG_ON_TOUCH = 0x00000001;
+static const long FLAG_ON_TOUCH_START = 0x00000002;
+static const long FLAG_ON_TOUCH_END = 0x00000004;
+static const long FLAG_ON_DOUBLE_TAP = 0x00000008;
+static const long FLAG_ON_TOUCH_MOVE = 0x00000010;
+static const long FLAG_ON_TOUCH_CANCEL = 0x00000020;
 
 - (instancetype)init
 {
@@ -80,6 +89,7 @@ static const UInt64 CACHE_RETENTION_TIME = 10000;
         mOnTouchMoveCacheTime = 0;
         mOnTouchCancelCache = nil;
         mOnTouchCancelCacheTime = 0;
+        mTouchEventManageFlag = 0;
         
         // Get event manager.
         self.eventMgr = [DConnectEventManager sharedManagerForClass:[DPHostDevicePlugin class]];
@@ -109,6 +119,37 @@ static const UInt64 CACHE_RETENTION_TIME = 10000;
         [rootView presentViewController:viewController animated:YES completion:nil];
     }
     return viewController;
+}
+
+- (void)showTouchView {
+    if (_displayViewController) {
+        UIViewController *rootView;
+        PutPresentedViewController(rootView);
+        [rootView presentViewController:_displayViewController animated:YES completion:nil];
+    }
+}
+
+- (void)startTouchView {
+    if (mTouchEventManageFlag == 0) {
+        if (_displayViewController == nil) {
+            /* start ViewController */
+            dispatch_async(dispatch_get_main_queue(), ^{
+                _displayViewController = [self presentTouchProfileViewController];
+            });
+        } else {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self showTouchView];
+            });
+        }
+    }
+}
+
+- (void)closeTouchView {
+    if (mTouchEventManageFlag == 0) {
+        if (_displayViewController) {
+            [_displayViewController dismissViewControllerAnimated:YES completion:nil];
+        }
+    }
 }
 
 - (UIStoryboard *)storyboardWithName: (NSString *)storyBoardName {
@@ -292,12 +333,8 @@ didReceivePutOnTouchRequest:(DConnectRequestMessage *)request
     switch ([_eventMgr addEventForRequest:request]) {
         case DConnectEventErrorNone:             // No error.
             [response setResult:DConnectMessageResultTypeOk];
-            if (_displayViewController == nil) {
-                /* start ViewController */
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    _displayViewController = [self presentTouchProfileViewController];
-                });
-            }
+            [self startTouchView];
+            mTouchEventManageFlag |= FLAG_ON_TOUCH;
             break;
         case DConnectEventErrorInvalidParameter: // Invalid Parameter.
             [response setErrorToInvalidRequestParameter];
@@ -320,12 +357,8 @@ didReceivePutOnTouchStartRequest:(DConnectRequestMessage *)request
     switch ([_eventMgr addEventForRequest:request]) {
         case DConnectEventErrorNone:             // No error.
             [response setResult:DConnectMessageResultTypeOk];
-            if (_displayViewController == nil) {
-                /* start ViewController */
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    _displayViewController = [self presentTouchProfileViewController];
-                });
-            }
+            [self startTouchView];
+            mTouchEventManageFlag |= FLAG_ON_TOUCH_START;
             break;
         case DConnectEventErrorInvalidParameter: // Invalid Parameter.
             [response setErrorToInvalidRequestParameter];
@@ -348,12 +381,8 @@ didReceivePutOnTouchEndRequest:(DConnectRequestMessage *)request
     switch ([_eventMgr addEventForRequest:request]) {
         case DConnectEventErrorNone:             // No error.
             [response setResult:DConnectMessageResultTypeOk];
-            if (_displayViewController == nil) {
-                /* start ViewController */
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    _displayViewController = [self presentTouchProfileViewController];
-                });
-            }
+            [self startTouchView];
+            mTouchEventManageFlag |= FLAG_ON_TOUCH_END;
             break;
         case DConnectEventErrorInvalidParameter: // Invalid Parameter.
             [response setErrorToInvalidRequestParameter];
@@ -376,12 +405,8 @@ didReceivePutOnDoubleTapRequest:(DConnectRequestMessage *)request
     switch ([_eventMgr addEventForRequest:request]) {
         case DConnectEventErrorNone:             // No error.
             [response setResult:DConnectMessageResultTypeOk];
-            if (_displayViewController == nil) {
-                /* start ViewController */
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    _displayViewController = [self presentTouchProfileViewController];
-                });
-            }
+            [self startTouchView];
+            mTouchEventManageFlag |= FLAG_ON_DOUBLE_TAP;
             break;
         case DConnectEventErrorInvalidParameter: // Invalid Parameter.
             [response setErrorToInvalidRequestParameter];
@@ -404,12 +429,8 @@ didReceivePutOnTouchMoveRequest:(DConnectRequestMessage *)request
     switch ([_eventMgr addEventForRequest:request]) {
         case DConnectEventErrorNone:             // No error.
             [response setResult:DConnectMessageResultTypeOk];
-            if (_displayViewController == nil) {
-                /* start ViewController */
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    _displayViewController = [self presentTouchProfileViewController];
-                });
-            }
+            [self startTouchView];
+            mTouchEventManageFlag |= FLAG_ON_TOUCH_MOVE;
             break;
         case DConnectEventErrorInvalidParameter: // Invalid Parameter.
             [response setErrorToInvalidRequestParameter];
@@ -432,12 +453,8 @@ didReceivePutOnTouchCancelRequest:(DConnectRequestMessage *)request
     switch ([_eventMgr addEventForRequest:request]) {
         case DConnectEventErrorNone:             // No error.
             [response setResult:DConnectMessageResultTypeOk];
-            if (_displayViewController == nil) {
-                /* start ViewController */
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    _displayViewController = [self presentTouchProfileViewController];
-                });
-            }
+            [self startTouchView];
+            mTouchEventManageFlag |= FLAG_ON_TOUCH_CANCEL;
             break;
         case DConnectEventErrorInvalidParameter: // Invalid Parameter.
             [response setErrorToInvalidRequestParameter];
@@ -463,6 +480,8 @@ didReceiveDeleteOnTouchRequest:(DConnectRequestMessage *)request
     switch ([_eventMgr removeEventForRequest:request]) {
         case DConnectEventErrorNone:             // No error.
             [response setResult:DConnectMessageResultTypeOk];
+            mTouchEventManageFlag &= ~(FLAG_ON_TOUCH);
+            [self closeTouchView];
             break;
         case DConnectEventErrorInvalidParameter: // Invalid Parameter.
             [response setErrorToInvalidRequestParameter];
@@ -485,6 +504,8 @@ didReceiveDeleteOnTouchStartRequest:(DConnectRequestMessage *)request
     switch ([_eventMgr removeEventForRequest:request]) {
         case DConnectEventErrorNone:             // No error.
             [response setResult:DConnectMessageResultTypeOk];
+            mTouchEventManageFlag &= ~(FLAG_ON_TOUCH_START);
+            [self closeTouchView];
             break;
         case DConnectEventErrorInvalidParameter: // Invalid Parameter.
             [response setErrorToInvalidRequestParameter];
@@ -507,6 +528,8 @@ didReceiveDeleteOnTouchEndRequest:(DConnectRequestMessage *)request
     switch ([_eventMgr removeEventForRequest:request]) {
         case DConnectEventErrorNone:             // No error.
             [response setResult:DConnectMessageResultTypeOk];
+            mTouchEventManageFlag &= ~(FLAG_ON_TOUCH_END);
+            [self closeTouchView];
             break;
         case DConnectEventErrorInvalidParameter: // Invalid Parameter.
             [response setErrorToInvalidRequestParameter];
@@ -529,6 +552,8 @@ didReceiveDeleteOnDoubleTapRequest:(DConnectRequestMessage *)request
     switch ([_eventMgr removeEventForRequest:request]) {
         case DConnectEventErrorNone:             // No error.
             [response setResult:DConnectMessageResultTypeOk];
+            mTouchEventManageFlag &= ~(FLAG_ON_DOUBLE_TAP);
+            [self closeTouchView];
             break;
         case DConnectEventErrorInvalidParameter: // Invalid Parameter.
             [response setErrorToInvalidRequestParameter];
@@ -551,6 +576,8 @@ didReceiveDeleteOnTouchMoveRequest:(DConnectRequestMessage *)request
     switch ([_eventMgr removeEventForRequest:request]) {
         case DConnectEventErrorNone:             // No error.
             [response setResult:DConnectMessageResultTypeOk];
+            mTouchEventManageFlag &= ~(FLAG_ON_TOUCH_MOVE);
+            [self closeTouchView];
             break;
         case DConnectEventErrorInvalidParameter: // Invalid Parameter.
             [response setErrorToInvalidRequestParameter];
@@ -573,6 +600,8 @@ didReceiveDeleteOnTouchCancelRequest:(DConnectRequestMessage *)request
     switch ([_eventMgr removeEventForRequest:request]) {
         case DConnectEventErrorNone:             // No error.
             [response setResult:DConnectMessageResultTypeOk];
+            mTouchEventManageFlag &= ~(FLAG_ON_TOUCH_CANCEL);
+            [self closeTouchView];
             break;
         case DConnectEventErrorInvalidParameter: // Invalid Parameter.
             [response setErrorToInvalidRequestParameter];
@@ -585,7 +614,5 @@ didReceiveDeleteOnTouchCancelRequest:(DConnectRequestMessage *)request
     
     return YES;
 }
-
-
 
 @end

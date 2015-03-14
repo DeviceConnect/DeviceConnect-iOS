@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6751" systemVersion="14C1510" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
@@ -62,8 +63,17 @@
                             <view multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fKZ-vO-g6v" customClass="DPHostTouchView">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kwl-E2-Gc3">
+                                        <rect key="frame" x="562" y="25" width="30" height="30"/>
+                                        <state key="normal" backgroundImage="close_small_button_normal.png">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="actionUpTouchViewCloseButton:" destination="TAt-PD-qKD" eventType="touchUpInside" id="c2W-do-teg"/>
+                                        </connections>
+                                    </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Touch View" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TlU-ak-bVS">
-                                        <rect key="frame" x="8" y="8" width="87" height="21"/>
+                                        <rect key="frame" x="18" y="25" width="87" height="21"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
@@ -78,6 +88,7 @@
                     </view>
                     <connections>
                         <outlet property="HostTouchViewLavel" destination="TlU-ak-bVS" id="UlQ-Zq-6Re"/>
+                        <outlet property="TouchViewCloseButton" destination="kwl-E2-Gc3" id="aa2-iC-Chw"/>
                         <outlet property="hostTouchView" destination="fKZ-vO-g6v" id="G8R-eR-2gm"/>
                     </connections>
                 </viewController>

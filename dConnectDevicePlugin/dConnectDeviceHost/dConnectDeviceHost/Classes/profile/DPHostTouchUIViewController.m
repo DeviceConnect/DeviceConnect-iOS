@@ -15,9 +15,14 @@
 
 
 @property (unsafe_unretained, nonatomic) IBOutlet UILabel *HostTouchViewLavel;
+@property (weak, nonatomic) IBOutlet UIButton *TouchViewCloseButton;
 @end
 
 @implementation DPHostTouchUIViewController
+
+- (IBAction)actionUpTouchViewCloseButton:(UIButton *)sender {
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
 
 - (instancetype)init {
     self = [super init];
