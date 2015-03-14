@@ -57,7 +57,6 @@
         [_blockingSW setOn:settings.useOriginBlocking animated:NO];
         [_blockingSW addTarget:self action:@selector(changeBlockingSwitch:) forControlEvents:UIControlEventValueChanged];
         cell.accessoryView = _blockingSW;
-        cell.textLabel.text = @"Origin Blocking";
         return cell;
     } else if (indexPath.section == 1) {
         DConnectOriginInfo *info = _origins[indexPath.row];
@@ -116,8 +115,9 @@
 
 - (void) changeBlockingSwitch:(id)sender
 {
+    BOOL isOn = [sender isOn];
     DConnectSettings *settings = [[DConnectManager sharedManager] settings];
-    [settings setUseOriginBlocking:[sender isOn]];
+    [settings setUseOriginBlocking:isOn];
 }
 
 @end

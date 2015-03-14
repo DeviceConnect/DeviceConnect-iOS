@@ -6,10 +6,10 @@
 "3Du-Iy-sag.text" = "Label";
 
 /* Class = "IBUILabel"; text = "Title"; ObjectID = "3JR-E1-h9D"; */
-"3JR-E1-h9D.text" = "Title";
+"3JR-E1-h9D.text" = "Originブロック機能";
 
 /* Class = "IBUIBarButtonItem"; title = "Close"; ObjectID = "7pQ-H3-EUa"; */
-"7pQ-H3-EUa.title" = "Close";
+"7pQ-H3-EUa.title" = "閉じる";
 
 /* Class = "IBUILabel"; text = "Subtitle"; ObjectID = "9GK-7d-Pup"; */
 "9GK-7d-Pup.text" = "Subtitle";
@@ -18,13 +18,13 @@
 "Cl0-oZ-6xy.text" = "このアプリは次への権限が必要です。";
 
 /* Class = "IBUINavigationItem"; title = "Whitelist"; ObjectID = "JPN-YQ-AbA"; */
-"JPN-YQ-AbA.title" = "Whitelist";
+"JPN-YQ-AbA.title" = "ホワイトリスト";
 
 /* Class = "IBUILabel"; text = "Label"; ObjectID = "LW1-hD-zYZ"; */
 "LW1-hD-zYZ.text" = "このアプリは次への権限が必要";
 
 /* Class = "IBUIBarButtonItem"; title = "Back"; ObjectID = "M36-ZG-aoV"; */
-"M36-ZG-aoV.title" = "Back";
+"M36-ZG-aoV.title" = "戻る";
 
 /* Class = "IBUILabel"; text = "Label"; ObjectID = "NuG-7S-1dW"; */
 "NuG-7S-1dW.text" = "Label";
@@ -42,7 +42,7 @@
 "bdy-w9-NGq.text" = "Label";
 
 /* Class = "IBUITextField"; placeholder = "Title"; ObjectID = "hE2-rk-dkp"; */
-"hE2-rk-dkp.placeholder" = "Title";
+"hE2-rk-dkp.placeholder" = "タイトル";
 
 /* Class = "IBUIButton"; normalTitle = "Button"; ObjectID = "jyU-cg-FMy"; */
 "jyU-cg-FMy.normalTitle" = "同意する";
@@ -51,7 +51,7 @@
 "k4I-eC-7pV.text" = "Label";
 
 /* Class = "IBUITextField"; placeholder = "Origin (e.g. http://example.org:8080)"; ObjectID = "nVb-gN-zQp"; */
-"nVb-gN-zQp.placeholder" = "Origin (e.g. http://example.org:8080)";
+"nVb-gN-zQp.placeholder" = "オリジン (例: http://example.org:8080)";
 
 /* Class = "IBUIBarButtonItem"; title = "Item"; ObjectID = "o7V-W2-zYv"; */
 "o7V-W2-zYv.title" = "Item";
