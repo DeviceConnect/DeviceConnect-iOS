@@ -81,6 +81,20 @@ DPHostCanvasUIViewController *_displayViewController;
     return NO;
 }
 
+- (BOOL)                 profile:(DConnectCanvasProfile *)profile
+didReceiveDeleteDrawImageRequest:(DConnectRequestMessage *)request
+                        response:(DConnectResponseMessage *)response
+                       serviceId:(NSString *)serviceId
+{
+    if (_displayViewController) {
+        [_displayViewController dismissViewControllerAnimated:YES completion:nil];
+        [response setResult:DConnectMessageResultTypeOk];
+    } else {
+        [response setErrorToIllegalDeviceStateWithMessage:@"the canvas is not displayed."];
+    }
+    return YES;
+}
+
 - (void) disappearViewController {
     _displayViewController = nil;
 }

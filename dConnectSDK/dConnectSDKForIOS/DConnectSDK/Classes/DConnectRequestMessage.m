@@ -99,4 +99,8 @@
     return [self stringForKey:DConnectMessageAccessToken];
 }
 
+- (NSString *) origin {
+    return [self stringForKey:DConnectMessageOrigin];
+}
+
 @end

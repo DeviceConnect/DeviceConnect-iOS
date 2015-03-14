@@ -17,9 +17,3 @@
 - (IBAction) didEnteredNewOriginForSegue:(UIStoryboardSegue *)segue;
 
 @end
-
-@interface DConnectOriginBlockingCell : UITableViewCell
-
-@property IBOutlet UISwitch *blockingSwitch;
-
-@end

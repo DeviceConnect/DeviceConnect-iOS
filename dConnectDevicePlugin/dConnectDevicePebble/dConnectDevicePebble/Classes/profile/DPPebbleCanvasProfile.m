@@ -33,7 +33,7 @@
 // 画像描画リクエストを受け取った
 - (BOOL) profile:(DConnectFileProfile *)profile didReceivePostDrawImageRequest:(DConnectRequestMessage *)request
         response:(DConnectResponseMessage *)response
-        serviceId:(NSString *)deviceId
+        serviceId:(NSString *)serviceId
         mimeType:(NSString *)mimeType
             data:(NSData *)data
                imageX:(double)imageX
@@ -53,11 +53,23 @@
 		return YES;
 	}
 	
-	[[DPPebbleManager sharedManager] sendImage:deviceId data:imgdata callback:^(NSError *error) {
+	[[DPPebbleManager sharedManager] sendImage:serviceId data:imgdata callback:^(NSError *error) {
 		// エラーチェック
 		[DPPebbleProfileUtil handleErrorNormal:error response:response];
 	}];
 	return NO;
+}
+
+- (BOOL)                 profile:(DConnectCanvasProfile *)profile
+didReceiveDeleteDrawImageRequest:(DConnectRequestMessage *)request
+                        response:(DConnectResponseMessage *)response
+                       serviceId:(NSString *)serviceId
+{
+    [[DPPebbleManager sharedManager] deleteImage:serviceId callback:^(NSError *error) {
+        // エラーチェック
+        [DPPebbleProfileUtil handleErrorNormal:error response:response];
+    }];
+    return NO;
 }
 
 @end

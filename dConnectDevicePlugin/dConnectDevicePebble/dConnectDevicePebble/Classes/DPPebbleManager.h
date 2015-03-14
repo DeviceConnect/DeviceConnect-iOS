@@ -58,5 +58,7 @@
 // 画像データ送信
 - (void)sendImage:(NSString*)serviceID data:(NSData*)data callback:(void(^)(NSError *error))callback;
 
+// 画像データ削除
+- (void)deleteImage:(NSString *)serviceId callback:(void(^)(NSError *error))callback;
 
 @end

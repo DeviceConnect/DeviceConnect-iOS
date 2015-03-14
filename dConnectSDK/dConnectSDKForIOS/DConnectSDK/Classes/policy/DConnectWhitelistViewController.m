@@ -17,6 +17,7 @@
 @interface DConnectWhitelistViewController()
 {
     NSArray *_origins;
+    UISwitch *_blockingSW;
 }
 - (IBAction) handleLongPress:(id)sender;
 @end
@@ -39,23 +40,31 @@
     return section == 1 ? _origins.count : 1;
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 60;
+}
+
 - (UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.section == 0) {
-        
-        
-        DConnectOriginBlockingCell *cell = [tableView dequeueReusableCellWithIdentifier:@"blockingSwitchCell"
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"blockingSwitchCell"
                                                                 forIndexPath:indexPath];
-        
-        [cell.blockingSwitch addTarget:self action:@selector(changeBlockingSwitch:) forControlEvents:UIControlEventValueChanged];
+        DConnectSettings *settings = [[DConnectManager sharedManager] settings];
+        if (!_blockingSW) {
+            _blockingSW = [UISwitch new];
+        }
+        [_blockingSW setOn:settings.useOriginBlocking animated:NO];
+        [_blockingSW addTarget:self action:@selector(changeBlockingSwitch:) forControlEvents:UIControlEventValueChanged];
+        cell.accessoryView = _blockingSW;
+        cell.textLabel.text = @"Origin Blocking";
         return cell;
     } else if (indexPath.section == 1) {
-        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"originCell"
-                                                                      forIndexPath:indexPath];
-        
         DConnectOriginInfo *info = _origins[indexPath.row];
-        [cell.textLabel setText:info.title];
-        [cell.detailTextLabel setText:[info.origin stringify]];
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"originCell"
+                                                                forIndexPath:indexPath];
+        cell.textLabel.text = info.title;
+        cell.detailTextLabel.text = [info.origin stringify];
         return cell;
     } else {
         return nil;
@@ -111,7 +120,4 @@
     [settings setUseOriginBlocking:[sender isOn]];
 }
 
-@end
-
-@implementation DConnectOriginBlockingCell
 @end

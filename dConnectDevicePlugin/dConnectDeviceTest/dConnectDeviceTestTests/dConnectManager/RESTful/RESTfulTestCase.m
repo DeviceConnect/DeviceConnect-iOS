@@ -41,11 +41,13 @@
     [super tearDown];
 }
 
-- (NSArray*) createClientForPackage:(NSString *)package
+- (NSArray*) createClient
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/authorization/create_client?package=%@", package]];
+    NSURL *uri = [NSURL URLWithString:
+                  @"http://localhost:4035/gotapi/authorization/create_client"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
+    [request addValue:@"dConnectDeviceTest" forHTTPHeaderField:@"X-GotAPI-Origin"];
     
     NSURLResponse *response = nil;
     NSError *error = nil;

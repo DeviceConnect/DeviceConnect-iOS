@@ -30,9 +30,6 @@
         }
         
         UINavigationController *top = [storyBoard instantiateViewControllerWithIdentifier:@"OriginWhitelist"];
-        DConnectWhitelistViewController *whitelistViewController
-        = (DConnectWhitelistViewController *) top.viewControllers[0];
-        
         UIViewController *rootView;
         DCPutPresentedViewController(rootView);
         [rootView presentViewController:top animated:YES completion:nil];

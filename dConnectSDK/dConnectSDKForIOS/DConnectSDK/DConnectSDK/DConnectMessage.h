@@ -54,6 +54,11 @@ extern NSString *const DConnectMessageSessionKey;
 extern NSString *const DConnectMessageAccessToken;
 
 /*!
+ @brief 共通パラメータ: origin。
+ */
+extern NSString *const DConnectMessageOrigin;
+
+/*!
  @brief 共通パラメータ: result。
  */
 extern NSString *const DConnectMessageResult;
@@ -87,6 +92,11 @@ extern NSString *const DConnectMessageAPI;
  @brief デフォルトAPI名: gotapi。
  */
 extern NSString *const DConnectMessageDefaultAPI;
+
+/*!
+ @brief HTTPリクエストヘッダに指定するiOSネイティブアプリのオリジン。
+ */
+extern NSString *const DConnectMessageHeaderGotAPIOrigin;
 
 /*!
  @enum DConnectMessageActionType
@@ -130,6 +140,7 @@ typedef NS_ENUM(NSUInteger, DConnectMessageErrorCodeType) {
     DConnectMessageErrorCodeNotFoundClientId,         /*!< 認証時にclientIdが発見できなかった */
     DConnectMessageErrorCodeIllegalDeviceState,       /*!< デバイスの状態異常エラー */
     DConnectMessageErrorCodeIllegalServerState,       /*!< サーバーの状態異常エラー */
+    DConnectMessageErrorCodeInvalidOrigin,            /*!< 不正なオリジンからリクエストを受信した */
 };
 
 @class DConnectResponseMessage;

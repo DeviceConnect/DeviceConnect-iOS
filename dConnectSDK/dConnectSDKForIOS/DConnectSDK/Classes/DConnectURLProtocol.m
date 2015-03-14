@@ -43,7 +43,11 @@
  */
 #define MIME_TYPE_JSON @"application/json; charset=UTF-8"
 
-
+typedef NS_ENUM(NSInteger, DConnectOriginHeaderError) {
+    NONE,
+    EMPTY,
+    NOT_UNIQUE,
+};
 
 @implementation ResponseContext
 
@@ -256,6 +260,9 @@ static NSString *scheme = @"http";
     if (attr) {
         requestMessage.attribute = attr;
     }
+    
+    // HTTPリクエストヘッダの解析
+    [request addParametersFromHTTPHeaderToRequestMessage:requestMessage];
     
     // パラメータがHTTPボディに記述されているなら、
     // 解析しリクエストメッセージに追加する。
@@ -500,7 +507,22 @@ int getDConnectMethod(NSString *httpMethod) {
 
 @implementation NSURLRequest (DConnect)
 
-- (void)addParametersFromMultipartToRequestMessage:(DConnectMessage *)requestMessage {
+- (void)addParametersFromHTTPHeaderToRequestMessage:(DConnectRequestMessage *)requestMessage
+{
+    // オリジンの解析
+    NSString *webOrigin = [self valueForHTTPHeaderField:@"origin"];
+    NSString *nativeOrigin = [self valueForHTTPHeaderField:DConnectMessageHeaderGotAPIOrigin];
+    if (nativeOrigin) {
+        [requestMessage setString:nativeOrigin forKey:DConnectMessageOrigin];
+    } else if (webOrigin) {
+        [requestMessage setString:webOrigin forKey:DConnectMessageOrigin];
+    } else {
+        DCLogW(@"origin of request is not specified.");
+    }
+}
+
+- (void)addParametersFromMultipartToRequestMessage:(DConnectMessage *)requestMessage
+{
     UserData *userData = [UserData userDataWithRequest:requestMessage];
     DConnectMultipartParser *multiParser =
     [DConnectMultipartParser multipartParserWithURL:self
