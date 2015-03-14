@@ -67,6 +67,8 @@
 + (NSString *) percentEncodeString:(NSString *)string withEncoding:(NSStringEncoding)encoding;
 + (NSString *) stringByURLDecodingWithString:(NSString *)string;
 
++ (void) parseHeaders:(NSURLRequest *) request requestMessage:(DConnectRequestMessage *) reqeustMessage;
+
 /*!
  HTTPメソッド名からDevice Connect で定義されたメソッド名を取得する。
  @param httpMethod HTTPメソッド名
@@ -257,12 +259,29 @@ static NSString *scheme = @"http";
         requestMessage.attribute = attr;
     }
     
+    // HTTPリクエストヘッダの解析
+    [DConnectURLProtocol parseHeaders:request requestMessage:requestMessage];
+    
     // パラメータがHTTPボディに記述されているなら、
     // 解析しリクエストメッセージに追加する。
     [request addParametersFromHTTPBodyToRequestMessage:requestMessage];
     
     return requestMessage;
 }
+
++ (void) parseHeaders:(NSURLRequest *) request requestMessage:(DConnectRequestMessage *) reqeustMessage
+{
+    NSString *webOrigin = [request valueForHTTPHeaderField:@"origin"];
+    NSString *nativeOrigin = [request valueForHTTPHeaderField:DConnectMessageHeaderGotAPIOrigin];
+    if (nativeOrigin) {
+        [reqeustMessage setString:nativeOrigin forKey:DConnectMessageOrigin];
+    } else if (webOrigin) {
+        [reqeustMessage setString:webOrigin forKey:DConnectMessageOrigin];
+    } else {
+        DCLogW(@"origin of request is not specified.");
+    }
+}
+     
 
 + (void) responseContextWithHTTPRequest:(NSURLRequest *)request
                                callback:(void(^)(ResponseContext* responseCtx))callback

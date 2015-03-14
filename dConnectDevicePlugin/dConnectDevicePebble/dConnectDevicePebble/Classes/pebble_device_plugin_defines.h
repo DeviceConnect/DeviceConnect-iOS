@@ -89,8 +89,10 @@
 #define PROFILE_SETTING 4
 /*! @define Systemプロファイル。 */
 #define PROFILE_SYSTEM 5
+/*! @define Canvas プロファイル。canvas 用. */
+#define PROFILE_CANVAS 6
 /**! @define Numeric value that represents the key event profile. */
-#define PROFILE_KEY_EVENT 6
+#define PROFILE_KEY_EVENT 7
 /*! バイナリを送るためのプロファイル。 */
 #define PROFILE_BINARY 255
 
@@ -128,6 +130,10 @@
 ////////// vibration
 
 #define VIBRATION_ATTRIBUTE_VIBRATE 1
+
+////////// canvas
+
+#define CANVAS_DRAW_IMAGE 1
 
 ///////// key event
 /** key event attribute ondown. */

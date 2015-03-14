@@ -13,6 +13,7 @@
  @author NTT DOCOMO
  */
 #import <DConnectSDK/DConnectProfile.h>
+#import <DConnectSDK/DConnectProfileProvider.h>
 
 /*!
  @brief プロファイル名: servicediscovery。
@@ -65,6 +66,21 @@ extern NSString *const DConnectServiceDiscoveryProfileParamOnline;
  @brief パラメータ: config。
  */
 extern NSString *const DConnectServiceDiscoveryProfileParamConfig;
+
+/*!
+ @brief パラメータ: scopes。
+ */
+extern NSString *const DConnectServiceDiscoveryProfileParamScopes;
+
+/*!
+ @brief パラメータ: manufacturer。
+ */
+extern NSString *const DConnectServiceDiscoveryProfileParamManufacturer;
+
+/*!
+ @brief パラメータ: version。
+ */
+extern NSString *const DConnectServiceDiscoveryProfileParamVersion;
 
 /*!
  @brief ネットワークタイプ: unknown。
@@ -251,6 +267,15 @@ extern NSString *const DConnectServiceDiscoveryProfileNetworkTypeBLE;
  @param[in,out] message デバイスの設定情報を格納するメッセージ
  */
 + (void) setConfig:(NSString *)config target:(DConnectMessage *)message;
+
+/*!
+ @brief メッセージにサポートするプロファイル名の配列を設定する。
+ 
+ @param[in, out] message デバイスの設定情報を格納するメッセージ
+ @param[in] プロファイルプロバイダー
+ */
++ (void) setScopesWithProvider:(id<DConnectProfileProvider>)provider
+                        target:(DConnectMessage *)message;
 
 /*!
  @brief メッセージにデバイスの接続状態を設定する。

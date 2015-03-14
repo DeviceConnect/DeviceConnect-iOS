@@ -18,15 +18,13 @@
     @throw @"Can't use ClientData default constructor.";
 }
 
-+ (LocalOAuthClientData *) clientDataWithClientIdClientSecret:(NSString *)clientId
-                                                 clientSecret: (NSString *)clientSecret
++ (LocalOAuthClientData *) clientDataWithClientId:(NSString *)clientId
 {
     
     LocalOAuthClientData *clientData = [[LocalOAuthClientData alloc]init];
     
     if (clientData) {
         clientData.clientId = clientId;
-        clientData.clientSecret = clientSecret;
     }
     
     return clientData;

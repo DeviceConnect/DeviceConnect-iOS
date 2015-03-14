@@ -18,13 +18,18 @@
 /** スコープ配列. */
 @property NSArray *_scopes;
 
+/** タイムスタンプ. */
+@property long long _timestamp;
+
 
 /*!
     @brief コンストラクタ.
     @param[in] accessToken アクセストークン
     @param[in] scopes スコープ毎の有効期限の配列
  */
-+ (LocalOAuthAccessTokenData *)accessTokenDataWithAccessToken: (NSString *)accessToken scopes:(NSArray *)scopes_;
++ (LocalOAuthAccessTokenData *)accessTokenDataWithAccessToken:(NSString *)accessToken
+                                                       scopes:(NSArray *)scopes_
+                                                    timestamp:(long long)timestamp;
 
     
     

@@ -36,7 +36,7 @@
 		
 		// EventManagerの初期化
 		Class key = [self class];
-		[[DConnectEventManager sharedManagerForClass:key] setController:[DConnectDBCacheController controllerWithClass:key]];
+		[[DConnectEventManager sharedManagerForClass:key] setController:[DConnectMemoryCacheController new]];
 		
 		// 各プロファイルの追加
 		[self addProfile:[DPPebbleServiceDiscoveryProfile new]];

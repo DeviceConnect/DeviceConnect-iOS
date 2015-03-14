@@ -34,5 +34,9 @@
     return scope;
 }
 
+-(long long) registrationDate {
+    long long registrationDate = [_delegate registrationDate];
+    return registrationDate;
+}
 
 @end

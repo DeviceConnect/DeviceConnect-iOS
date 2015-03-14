@@ -47,6 +47,12 @@
  */
 - (NSArray *) scope;
 
+/**
+ * The registration date.
+ *
+ * @return the registration date
+ */
+- (long long) registrationDate;
 
 @optional
 
@@ -65,5 +71,6 @@
 - (NSString *) tokenType;
 - (NSString *) refreshToken;
 - (NSArray *) scope;
+- (long long) registrationDate;
 
 @end

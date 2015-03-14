@@ -58,6 +58,9 @@
 // 画像データ送信
 - (void)sendImage:(NSString*)serviceID data:(NSData*)data callback:(void(^)(NSError *error))callback;
 
+// 画像データ削除
+- (void)deleteImage:(NSString *)serviceId callback:(void(^)(NSError *error))callback;
+
 // KeyEvent onDown event registration.
 - (void)registOnDownEvent:(NSString*)serviceID callback:(void(^)(NSError *error))callback eventCallback:(void(^)(long attr, int keyId, int keyType))eventCallback;
 
