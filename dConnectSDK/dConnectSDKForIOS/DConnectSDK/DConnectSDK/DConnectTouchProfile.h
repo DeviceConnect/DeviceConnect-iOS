@@ -516,7 +516,7 @@ extern NSString *const DConnectTouchProfileParamY;
  @param[in] touches touch coordinate information.
  @param[in,out] message message for storing touch coordinate information.
  */
-+ (void) setTouches:(DConnectMessage *)touches target:(DConnectMessage *)message;
++ (void) setTouches:(DConnectArray *)touches target:(DConnectMessage *)message;
 
 /*!
  @brief Set the identification number to message.

@@ -286,8 +286,8 @@ NSString *const DConnectTouchProfileParamY = @"y";
     [message setMessage:touch forKey:DConnectTouchProfileParamTouch];
 }
 
-+ (void) setTouches:(DConnectMessage *)touches target:(DConnectMessage *)message {
-    [message setMessage:touches forKey:DConnectTouchProfileParamTouches];
++ (void) setTouches:(DConnectArray *)touches target:(DConnectMessage *)message {
+    [message setArray:touches forKey:DConnectTouchProfileParamTouches];
 }
 
 + (void) setId:(int)id target:(DConnectMessage *)message {
