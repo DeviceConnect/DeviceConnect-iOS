@@ -11,9 +11,6 @@
 /* Class = "IBUILabel"; text = "Label"; ObjectID = "90Z-r2-3rO"; */
 "90Z-r2-3rO.text" = "Label";
 
-/* Class = "IBUILabel"; text = "Origin Blocking"; ObjectID = "BGN-eX-O35"; */
-"BGN-eX-O35.text" = "Originブロック機能";
-
 /* Class = "IBUILabel"; text = "このアプリは次への権限が必要です。"; ObjectID = "Cl0-oZ-6xy"; */
 "Cl0-oZ-6xy.text" = "このアプリは次への権限が必要です。";
 

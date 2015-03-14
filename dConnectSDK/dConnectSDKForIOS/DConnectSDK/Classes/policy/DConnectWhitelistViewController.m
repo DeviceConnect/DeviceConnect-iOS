@@ -17,7 +17,6 @@
 @interface DConnectWhitelistViewController()
 {
     NSArray *_origins;
-    UISwitch *_blockingSW;
 }
 - (IBAction) handleLongPress:(id)sender;
 @end
@@ -32,12 +31,12 @@
 
 - (NSInteger) numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 2;
+    return 1;
 }
 
 - (NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return section == 1 ? _origins.count : 1;
+    return _origins.count;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -47,32 +46,17 @@
 
 - (UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.section == 0) {
-        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"blockingSwitchCell"
-                                                                forIndexPath:indexPath];
-        DConnectSettings *settings = [[DConnectManager sharedManager] settings];
-        if (!_blockingSW) {
-            _blockingSW = [UISwitch new];
-        }
-        [_blockingSW setOn:settings.useOriginBlocking animated:NO];
-        [_blockingSW addTarget:self action:@selector(changeBlockingSwitch:) forControlEvents:UIControlEventValueChanged];
-        cell.accessoryView = _blockingSW;
-        return cell;
-    } else if (indexPath.section == 1) {
-        DConnectOriginInfo *info = _origins[indexPath.row];
-        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"originCell"
-                                                                forIndexPath:indexPath];
-        cell.textLabel.text = info.title;
-        cell.detailTextLabel.text = [info.origin stringify];
-        return cell;
-    } else {
-        return nil;
-    }
+    DConnectOriginInfo *info = _origins[indexPath.row];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"originCell"
+                                                            forIndexPath:indexPath];
+    cell.textLabel.text = info.title;
+    cell.detailTextLabel.text = [info.origin stringify];
+    return cell;
 }
 
 - (BOOL) tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return indexPath.section == 1;
+    return indexPath.section == 0;
 }
 
 - (void)            tableView:(UITableView *)tableView
@@ -111,13 +95,6 @@
         editView.mode = DConnectEditOriginModeChange;
         [self.navigationController pushViewController:editView animated:YES];
     }
-}
-
-- (void) changeBlockingSwitch:(id)sender
-{
-    BOOL isOn = [sender isOn];
-    DConnectSettings *settings = [[DConnectManager sharedManager] settings];
-    [settings setUseOriginBlocking:isOn];
 }
 
 @end
