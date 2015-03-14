@@ -42,11 +42,6 @@
 #define DConnectClientId @"client_id"
 
 /*!
- @define AuthDataのクライアントシークレットを格納するカラム名を定義。
- */
-#define DConnectClientSecret @"client_secret"
-
-/*!
  @define AccessTokenのAuthDataのIDを格納するカラム名を定義。
  */
 #define DConnectAuthId @"oauth_id"
@@ -83,7 +78,6 @@
  
  @param[in] serviceId サービスID
  @param[in] clientId クライアントID
- @param[in] clientSecret クライアントシークレット
  @param[in] database 操作するデータベース
  
  @retval YES データの挿入に成功
@@ -91,7 +85,6 @@
  */
 - (BOOL)insertAuthDataWithServiceId:(NSString *)serviceId
                           clientId:(NSString *)clientId
-                      clientSecret:(NSString *)clientSecret
                         toDatabase:(DConnectSQLiteDatabase *)database;
 
 /*!
@@ -184,8 +177,7 @@
 
 
 - (BOOL)addAuthDataWithServiceId:(NSString *)serviceId
-                       clientId:(NSString *)clientId
-                   clientSecret:(NSString *)clientSecret {
+                       clientId:(NSString *)clientId {
     __block BOOL result = NO;
     [_helper execQueryInQueue:^(DConnectSQLiteDatabase *database) {
         if (!database) {
@@ -195,7 +187,6 @@
         [database beginTransaction];
         result = [self insertAuthDataWithServiceId:serviceId
                                          clientId:clientId
-                                     clientSecret:clientSecret
                                        toDatabase:database];
         if (result) {
             [database commit];
@@ -277,11 +268,10 @@
 - (void) createAuthDataTable:(DConnectSQLiteDatabase *) database {
     NSString *sql = DCEForm(@"CREATE TABLE %@ "
                             "(id INTEGER PRIMARY KEY AUTOINCREMENT, %@ "
-                            "TEXT NOT NULL, %@ TEXT NOT NULL, %@ TEXT NOT NULL);",
+                            "TEXT NOT NULL, %@ TEXT NOT NULL);",
                             DConnectAuthDataTbl,
                             DConnectServiceId,
-                            DConnectClientId,
-                            DConnectClientSecret);
+                            DConnectClientId);
     if (![database execSQL:sql]) {
         @throw @"error";
     }
@@ -300,19 +290,18 @@
 
 - (BOOL)insertAuthDataWithServiceId:(NSString *)serviceId
                           clientId:(NSString *)clientId
-                      clientSecret:(NSString *)clientSecret
                         toDatabase:(DConnectSQLiteDatabase *)database {
     long long result = [database insertIntoTable:DConnectAuthDataTbl
-                               columns:@[DConnectServiceId, DConnectClientId, DConnectClientSecret]
-                                params:@[serviceId, clientId, clientSecret]];
+                               columns:@[DConnectServiceId, DConnectClientId]
+                                params:@[serviceId, clientId]];
     return (result > 0);
 }
 
 - (DConnectAuthData *)selectAuthDataByServiceId:(NSString *)serviceId
                                   fromDatabase:(DConnectSQLiteDatabase *)database
 {
-    NSString *sql = DCEForm(@"SELECT %@,%@,%@ FROM %@ WHERE %@='%@';",
-                            @"id", DConnectClientId, DConnectClientSecret,
+    NSString *sql = DCEForm(@"SELECT %@,%@ FROM %@ WHERE %@='%@';",
+                            @"id", DConnectClientId,
                             DConnectAuthDataTbl, DConnectServiceId, serviceId);
     
     DConnectAuthData *auth = nil;
@@ -322,7 +311,6 @@
         auth.serviceId = serviceId;
         auth.id = [cursor longLongValueAtIndex:0];
         auth.clientId = [cursor stringValueAtIndex:1];
-        auth.clientSecret = [cursor stringValueAtIndex:2];
     }
     [cursor close];
     

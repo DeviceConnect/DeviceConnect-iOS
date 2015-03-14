@@ -48,6 +48,8 @@ NSString *const TestNetworkDeviceConfig = @"test config";
     [DConnectServiceDiscoveryProfile setType:TestNetworkDeviceType target:service];
     [DConnectServiceDiscoveryProfile setOnline:TestNetworkDeviceOnline target:service];
     [DConnectServiceDiscoveryProfile setConfig:TestNetworkDeviceConfig target:service];
+    [DConnectServiceDiscoveryProfile setScopesWithProvider:self.provider
+                                                    target:service];
     [services addMessage:service];
     
     // サービスIDが特殊なサービス
@@ -57,6 +59,8 @@ NSString *const TestNetworkDeviceConfig = @"test config";
     [DConnectServiceDiscoveryProfile setType:TestNetworkDeviceType target:service];
     [DConnectServiceDiscoveryProfile setOnline:TestNetworkDeviceOnline target:service];
     [DConnectServiceDiscoveryProfile setConfig:TestNetworkDeviceConfig target:service];
+    [DConnectServiceDiscoveryProfile setScopesWithProvider:self.provider
+                                                    target:service];
     [services addMessage:service];
     
     response.result = DConnectMessageResultTypeOk;
@@ -88,6 +92,8 @@ NSString *const TestNetworkDeviceConfig = @"test config";
         [DConnectServiceDiscoveryProfile setType:TestNetworkDeviceType target:service];
         [DConnectServiceDiscoveryProfile setOnline:TestNetworkDeviceOnline target:service];
         [DConnectServiceDiscoveryProfile setConfig:TestNetworkDeviceConfig target:service];
+        [DConnectServiceDiscoveryProfile setScopesWithProvider:self.provider
+                                                        target:service];
 
         [DConnectServiceDiscoveryProfile setNetworkService:service target:event];
         [_plugin asyncSendEvent:event];

@@ -31,7 +31,7 @@
 
         Class key = [self class];
         [[DConnectEventManager sharedManagerForClass:key]
-                setController:[DConnectDBCacheController controllerWithClass:key]];
+                setController:[DConnectMemoryCacheController new]];
 
         // Service Discovery Profileの追加
         DPSpheroServiceDiscoveryProfile *networkProfile = [DPSpheroServiceDiscoveryProfile new];

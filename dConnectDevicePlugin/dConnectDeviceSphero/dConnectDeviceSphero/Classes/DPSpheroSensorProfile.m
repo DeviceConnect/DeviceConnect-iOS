@@ -11,7 +11,23 @@
 #import "DPSpheroManager.h"
 #import "DPSpheroServiceDiscoveryProfile.h"
 
+
+typedef void (^QuaternionBlock)(DConnectMessage *);
+typedef void (^LocatorBlock)(DConnectMessage *);
+typedef void (^CollisionBlock)(DConnectMessage *);
+
+
 @interface DPSpheroSensorProfile() <DPSpheroManagerSensorDelegate>
+
+@property id quaternionBlock;
+@property id quaternionOnceBlock;
+
+@property id locatorBlock;
+@property id locatorOnceBlock;
+
+@property id collisionBlock;
+@property id collisionOnceBlock;
+
 @end
 
 @implementation DPSpheroSensorProfile
@@ -22,7 +38,33 @@
     self = [super init];
     if (self) {
         self.delegate = self;
+        self.quaternionOnceBlock = nil;
+        self.locatorOnceBlock = nil;
+        self.collisionOnceBlock = nil;
         [DPSpheroManager sharedManager].sensorDelegate = self;
+        
+        __unsafe_unretained typeof(self) weakSelf = self;
+
+        self.quaternionBlock = ^(DConnectMessage *msg) {
+            [weakSelf sendMessage:msg
+                        interface:DPSpheroProfileInterfaceQuaternion
+                        attribute:DPSpheroProfileAttrOnQuaternion
+                            param:DPSpheroProfileParamQuaternion];
+        };
+        
+        self.locatorBlock = ^(DConnectMessage *msg) {
+            [weakSelf sendMessage:msg
+                        interface:DPSpheroProfileInterfaceLocator
+                        attribute:DPSpheroProfileAttrOnLocator
+                            param:DPSpheroProfileParamLocator];
+        };
+        
+        self.collisionBlock = ^(DConnectMessage *msg) {
+            [weakSelf sendMessage:msg
+                        interface:DPSpheroProfileInterfaceCollision
+                        attribute:DPSpheroProfileAttrOnCollision
+                            param:DPSpheroProfileParamCollision];
+        };
     }
     return self;
 }
@@ -79,6 +121,35 @@
     }
 }
 
+- (BOOL)hasQuaternionEventList
+{
+    DConnectEventManager *mgr = [DConnectEventManager sharedManagerForClass:[DPSpheroDevicePlugin class]];
+    NSArray *events  = [mgr eventListForServiceId:[DPSpheroManager sharedManager].currentServiceID
+                                          profile:DPSpheroProfileName
+                                        interface:DPSpheroProfileInterfaceQuaternion
+                                        attribute:DPSpheroProfileAttrOnQuaternion];
+    return events && events.count > 0;
+}
+
+- (BOOL)hasLocatorEventList
+{
+    DConnectEventManager *mgr = [DConnectEventManager sharedManagerForClass:[DPSpheroDevicePlugin class]];
+    NSArray *events  = [mgr eventListForServiceId:[DPSpheroManager sharedManager].currentServiceID
+                                          profile:DPSpheroProfileName
+                                        interface:DPSpheroProfileInterfaceLocator
+                                        attribute:DPSpheroProfileAttrOnLocator];
+    return events && events.count > 0;
+}
+
+- (BOOL)hasCollisionEventList
+{
+    DConnectEventManager *mgr = [DConnectEventManager sharedManagerForClass:[DPSpheroDevicePlugin class]];
+    NSArray *events  = [mgr eventListForServiceId:[DPSpheroManager sharedManager].currentServiceID
+                                          profile:DPSpheroProfileName
+                                        interface:DPSpheroProfileInterfaceCollision
+                                        attribute:DPSpheroProfileAttrOnCollision];
+    return events && events.count > 0;
+}
 
 #pragma mark - DPSpheroManagerSensorDelegate
 
@@ -92,10 +163,16 @@
     [msg setDouble:quaternion.q2 forKey:DPSpheroProfileParamQ2];
     [msg setDouble:quaternion.q3 forKey:DPSpheroProfileParamQ3];
     [msg setInteger:interval forKey:DPSpheroProfileParamInterval];
-    [self sendMessage:msg
-            interface:DPSpheroProfileInterfaceQuaternion
-            attribute:DPSpheroProfileAttrOnQuaternion
-                param:DPSpheroProfileParamQuaternion];
+    
+    if (self.quaternionBlock) {
+        QuaternionBlock block = self.quaternionBlock;
+        block(msg);
+    }
+
+    if (self.quaternionOnceBlock) {
+        QuaternionBlock block = self.quaternionOnceBlock;
+        block(msg);
+    }
 }
 
 // Locatorのイベント処理
@@ -109,10 +186,17 @@
     [msg setDouble:velocity.x forKey:DPSpheroProfileParamVelocityX];
     [msg setDouble:velocity.y forKey:DPSpheroProfileParamVelocityY];
     [msg setInteger:interval forKey:DPSpheroProfileParamInterval];
-    [self sendMessage:msg
-            interface:DPSpheroProfileInterfaceLocator
-            attribute:DPSpheroProfileAttrOnLocator
-                param:DPSpheroProfileParamLocator];
+    
+    
+    if (self.locatorBlock) {
+        LocatorBlock block = self.locatorBlock;
+        block(msg);
+    }
+    
+    if (self.locatorOnceBlock) {
+        LocatorBlock block = self.locatorOnceBlock;
+        block(msg);
+    }
 }
 
 // Collisionのイベント処理
@@ -141,14 +225,50 @@
     [msg setDouble:speed forKey:DPSpheroProfileParamImpactSpeed];
     [msg setDouble:time forKey:DPSpheroProfileParamImpactTimestamp];
     
-    [self sendMessage:msg
-            interface:DPSpheroProfileInterfaceCollision
-            attribute:DPSpheroProfileAttrOnCollision
-                param:DPSpheroProfileParamCollision];
+    if (self.collisionBlock) {
+        CollisionBlock block = self.collisionBlock;
+        block(msg);
+    }
+    
+    if (self.collisionOnceBlock) {
+        CollisionBlock block = self.collisionOnceBlock;
+        block(msg);
+    }
 }
 
 
 #pragma mark - Quaternion
+
+- (BOOL)                     profile:(DPSpheroProfile *)profile
+    didReceiveGetOnQuaternionRequest:(DConnectRequestMessage *)request
+                            response:(DConnectResponseMessage *)response
+                           serviceId:(NSString *)serviceId
+{
+    // 接続確認
+    CONNECT_CHECK();
+
+    __unsafe_unretained typeof(self) weakSelf = self;
+    
+    self.quaternionOnceBlock = ^(DConnectMessage *msg) {
+        [response setResult:DConnectMessageResultTypeOk];
+        [response setMessage:msg forKey:DPSpheroProfileParamQuaternion];
+
+        [[DConnectManager sharedManager] sendResponse:response];
+        
+        weakSelf.quaternionOnceBlock = nil;
+
+        if (![weakSelf hasQuaternionEventList]) {
+            [[DPSpheroManager sharedManager] stopSensorQuaternion];
+        }
+    };
+    
+    if (![self hasQuaternionEventList]) {
+        [[DPSpheroManager sharedManager] startSensorQuaternion];
+    }
+    
+    return NO;
+}
+
 
 // Quaternionのイベントを登録
 - (BOOL)                     profile:(DPSpheroProfile *)profile
@@ -186,6 +306,38 @@
 
 // Locatorのイベントを登録
 - (BOOL)                  profile:(DPSpheroProfile *)profile
+    didReceiveGetOnLocatorRequest:(DConnectRequestMessage *)request
+                         response:(DConnectResponseMessage *)response
+                        serviceId:(NSString *)serviceId
+{
+    // 接続確認
+    CONNECT_CHECK();
+    
+    __unsafe_unretained typeof(self) weakSelf = self;
+    
+    self.locatorOnceBlock = ^(DConnectMessage *msg) {
+        [response setResult:DConnectMessageResultTypeOk];
+        [response setMessage:msg forKey:DPSpheroProfileParamLocator];
+        
+        [[DConnectManager sharedManager] sendResponse:response];
+        
+        weakSelf.locatorOnceBlock = nil;
+        
+        if (![weakSelf hasLocatorEventList]) {
+            [[DPSpheroManager sharedManager] stopSensorLocator];
+        }
+    };
+    
+    if (![self hasLocatorEventList]) {
+        [[DPSpheroManager sharedManager] startSensorLocator];
+    }
+    
+    return NO;
+}
+
+
+// Locatorのイベントを登録
+- (BOOL)                  profile:(DPSpheroProfile *)profile
     didReceivePutOnLocatorRequest:(DConnectRequestMessage *)request
                          response:(DConnectResponseMessage *)response
                         serviceId:(NSString *)serviceId
@@ -218,6 +370,36 @@
 
 
 #pragma mark - Collision
+
+- (BOOL)                    profile:(DPSpheroProfile *)profile
+    didReceiveGetOnCollisionRequest:(DConnectRequestMessage *)request
+                           response:(DConnectResponseMessage *)response
+                          serviceId:(NSString *)serviceId
+{
+    // 接続確認
+    CONNECT_CHECK();
+    
+    __unsafe_unretained typeof(self) weakSelf = self;
+    
+    self.collisionOnceBlock = ^(DConnectMessage *msg) {
+        [response setResult:DConnectMessageResultTypeOk];
+        [response setMessage:msg forKey:DPSpheroProfileParamCollision];
+        
+        [[DConnectManager sharedManager] sendResponse:response];
+        
+        weakSelf.collisionOnceBlock = nil;
+        
+        if (![weakSelf hasCollisionEventList]) {
+            [[DPSpheroManager sharedManager] stopSensorCollision];
+        }
+    };
+    
+    if (![self hasCollisionEventList]) {
+        [[DPSpheroManager sharedManager] startSensorCollision];
+    }
+    
+    return NO;
+}
 
 // Collisionのイベントを登録
 - (BOOL)                    profile:(DPSpheroProfile *)profile

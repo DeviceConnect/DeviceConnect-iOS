@@ -69,33 +69,6 @@ extern NSString *const LOCALOAUTH_AUTHORIZATION_CODE;
  */
 - (void)destroyClientWithClientId: (NSString *)clientId;
 
-
-/*!
-    (4)アプリまたはデバイスプラグインから受け取ったsignatureが、LocalOAuthで生成したsignatureと一致するかチェックする.
-    @param[in] クライアントID
-    @param[in] グラントタイプ
-    @param[in] サービスID
-    @param[in] スコープ
-    @param[in] signature
-    @return YES:一致 / NO:一致しない
- */
-- (BOOL) checkSignatureWithClientId: (NSString *)clientId
-                          grantType: (NSString *)grantType
-                           serviceId: (NSString *)serviceId
-                             scopes: (NSArray *)scopes
-                          signature: (NSString *)signature;
-
-/*!
-    (4)-2.d-Connect Managerから受け取ったアクセストークン受信用signatureが、アプリで生成したsignatureと一致するかチェックする.
-    @param[in] アクセストークン
-    @param[in] クライアントシークレット
-    @param[in] signature
-    @return YES:一致 / NO:一致しない
- */
-- (BOOL) checkSignatureWithAccessToken: (NSString *)accessToken
-                          clientSecret: (NSString *)clientSecret
-                             signature: (NSString *)signature;
-
 /*!
     (5)アクセストークン発行承認確認画面表示.
 
@@ -140,32 +113,6 @@ extern NSString *const LOCALOAUTH_AUTHORIZATION_CODE;
                                          specialScopes: (NSArray *)specialScopes
                                                     accessToken: (NSString *)accessToken
 ;
-
-/*!
-    (8)Signatureを作成する.
-
-    @param[in] clientId クライアントID
-    @param[in] grantType グラントタイプ
-    @param[in] serviceId サービスID
-    @param[in] scopes スコープ
-    @param[in] clientSecret クライアントシークレット
-    @return not null: 作成したSignature / null: nullは返さない。
- */
-- (NSString *) createSignatureWithClientId: (NSString *)clientId
-                                 grantType: (NSString *)grantType
-                                  serviceId: (NSString *)serviceId
-                                    scopes: (NSArray *)scopes
-                              clientSecret: (NSString *)clientSecret;
-
-/**
- * (8)-2.アクセストークンを返却する際に添付するSignatureを作成する.
- *
- * @param[in] accessToken アクセストークン
- * @param[in] clientId クライアントId
- * @return not null: 作成したSignature / null: nullは返さない。
- */
-- (NSString *) createSignatureWithAccessToken: (NSString *)accessToken
-                                     clientId: (NSString *)clientId;
 
 /*!
     (9)クライアントが発行したアクセストークンを破棄して利用できないようにする.<br>

@@ -13,7 +13,6 @@
 
 @property (nonatomic) NSString *token;
 @property (nonatomic) NSMutableDictionary *expirePeriods;
-@property (nonatomic) NSString *signature;
 
 - (id) initWithResponse:(NSDictionary*)response;
 

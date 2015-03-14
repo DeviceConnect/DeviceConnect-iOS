@@ -102,6 +102,30 @@ extern NSString *const DConnectCanvasProfileModeFills;
                imageY:(double)imageY
             mode:(NSString *)mode;
 
+
+#pragma mark - Delete Methods
+
+/*!
+ @brief 画像描画削除リクエストを受け取ったことをデリゲートに通知する。
+ 
+ profileが画像描画削除リクエストを受け取ったことをデリゲートに通知する。<br>
+ 実装されない場合には、Not supportのエラーが返却される。
+ 
+ <p>
+ [対応するAPI] Canvas DrawImage API [DELETE]
+ </p>
+ 
+ @param[in] profile このイベントを通知するDConnectCanvasProfileのオブジェクト
+ @param[in] request リクエスト
+ @param[in,out] response レスポンス
+ @param[in] serviceId サービスID
+ @retval YES レスポンスパラメータを返却する
+ @retval NO レスポンスパラメータを返却しないので、@link DConnectManager::sendResponse: @endlink で返却すること。
+ */
+- (BOOL) profile:(DConnectCanvasProfile *)profile didReceiveDeleteDrawImageRequest:(DConnectRequestMessage *)request
+        response:(DConnectResponseMessage *)response
+       serviceId:(NSString *)serviceId;
+
 @end
 
 

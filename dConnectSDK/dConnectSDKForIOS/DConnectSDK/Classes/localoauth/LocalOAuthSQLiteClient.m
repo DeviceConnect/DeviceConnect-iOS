@@ -90,14 +90,6 @@
     _packageInfo = packageInfo;
 }
 
-- (NSString *) clientSecret {
-    return _clientSecret;
-}
-
-- (void) setClientSecret: (NSString *)clientSecret {
-    _clientSecret = clientSecret;
-}
-
 - (NSArray *) redirectURIs {
     NSArray * redirectURIs = @[DUMMY_REDIRECTURI];
     return redirectURIs;

@@ -56,11 +56,6 @@ NSString *const STRING_CLIENT_TYPE_PUBLIC = @"PUBLIC";
     return clientId_;
 }
 
-- (NSString *) clientSecret {
-    NSString *clientSecret_ = [_delegate clientSecret];
-    return clientSecret_;
-}
-
 - (NSArray *) redirectURIs {
     NSArray *redirectURIs_ = [_delegate redirectURIs];
     return redirectURIs_;
@@ -74,10 +69,6 @@ NSString *const STRING_CLIENT_TYPE_PUBLIC = @"PUBLIC";
 
 - (BOOL) isResponseTypeAllowed: (LocalOAuthResponseType)responseType {
     return [_delegate isResponseTypeAllowed: responseType];
-}
-
-- (BOOL) isGrantTypeAllowed: (LocalOAuthGrantType)grantType {
-    return [_delegate isGrantTypeAllowed: grantType];
 }
 
 - (LocalOAuthClientType) clientType {

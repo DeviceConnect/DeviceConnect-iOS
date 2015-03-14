@@ -13,9 +13,6 @@
 
 /** クライアントID. */
 @property NSString *clientId;
-    
-/** クライアントシークレット. */
-@property NSString *clientSecret;
 
 + (id)init;
 
@@ -23,10 +20,9 @@
     コンストラクタ.
 
     @param[in] clientId クライアントID
-    @param[in] clientSecret クライアントシークレット
     @return ClientDataオブジェクト
  */
-+ (LocalOAuthClientData *) clientDataWithClientIdClientSecret: (NSString *)clientId clientSecret: (NSString *)clientSecret_;
++ (LocalOAuthClientData *) clientDataWithClientId: (NSString *)clientId;
 
 
 

@@ -16,7 +16,7 @@
 const NSInteger MaxWidth = 144;
 
 // pebble表示用の画像サイズ(h)
-const NSInteger MaxHeight = 120;
+const NSInteger MaxHeight = 168;
 
 
 

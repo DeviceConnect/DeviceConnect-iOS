@@ -83,6 +83,9 @@
 #define PROFILE_SETTING 4
 /*! @define Systemプロファイル。 */
 #define PROFILE_SYSTEM 5
+/*! @define Canvas プロファイル。canvas 用. */
+#define PROFILE_CANVAS 6
+
 /*! バイナリを送るためのプロファイル。 */
 #define PROFILE_BINARY 255
 
@@ -120,6 +123,10 @@
 ////////// vibration
 
 #define VIBRATION_ATTRIBUTE_VIBRATE 1
+
+////////// canvas
+
+#define CANVAS_DRAW_IMAGE 1
 
 ///////////////////////////////////////////////////////////////////
 
