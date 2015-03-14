@@ -26,6 +26,7 @@
 #import "DPHostVibrationProfile.h"
 #import "DPHostConnectProfile.h"
 #import "DPHostCanvasProfile.h"
+#import "DPHostTouchProfile.h"
 
 @implementation DPHostDevicePlugin
 
@@ -61,6 +62,7 @@
         [self addProfile:[DPHostConnectProfile new]];
         [self addProfile:[DPHostCanvasProfile new]];
         [self addProfile:[DConnectServiceInformationProfile new]];
+        [self addProfile:[DPHostTouchProfile new]];
     }
     return self;
 }
