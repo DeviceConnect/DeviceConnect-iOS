@@ -9,8 +9,10 @@
 
 #import "DConnectKeyEventProfile.h"
 
-NSString *const DConnectKeyEventProfileName = @"button";
-NSString *const DConnectKeyEventProfileAttrKeyEvent = @"keyeven";
+NSString *const DConnectKeyEventProfileName = @"keyevent";
+NSString *const DConnectKeyEventProfileAttrKeyEvent = @"keyevent";
+NSString *const DConnectKeyEventProfileAttrOnDown = @"ondown";
+NSString *const DConnectKeyEventProfileAttrOnUp = @"onup";
 NSString *const DConnectKeyEventProfileParamKeyEvent = @"keyevent";
 NSString *const DConnectKeyEventProfileParamId = @"id";
 NSString *const DConnectKeyEventProfileParamConfig = @"config";
