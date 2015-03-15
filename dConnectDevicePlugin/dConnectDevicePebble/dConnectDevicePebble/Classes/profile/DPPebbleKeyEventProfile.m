@@ -15,14 +15,18 @@
 
 @interface DPPebbleKeyEventProfile ()
 {
-    DConnectMessage *mKeyEventOnDownCache;
-    DConnectMessage *mKeyEventOnUpCache;
+    DConnectMessage *mOnDownCache;
+    UInt64 mOnDownCacheTime;
+    DConnectMessage *mOnUpCache;
+    UInt64 mOnUpCacheTime;
 }
 
 @end
 
 @implementation DPPebbleKeyEventProfile
 
+// Touch profile cache retention time (mSec).
+static const UInt64 CACHE_RETENTION_TIME = 10000;
 
 // initialize.
 - (id)init
@@ -30,11 +34,54 @@
     self = [super init];
     if (self) {
         self.delegate = self;
-        self->mKeyEventOnDownCache = nil;
-        self->mKeyEventOnUpCache = nil;
+        mOnDownCache = nil;
+        mOnDownCacheTime = 0;
+        mOnUpCache = nil;
+        mOnUpCacheTime = 0;
     }
     return self;
     
+}
+
+/*!
+ @brief Get KeyEvent cache data.
+ @param attr Attribute.
+ @return KeyEvent cache data.
+ */
+- (DConnectMessage *) getKeyEventCache:(NSString *)attr {
+    UInt64 CurrentTime = (UInt64)floor((CFAbsoluteTimeGetCurrent() + kCFAbsoluteTimeIntervalSince1970) * 1000.0);
+    if ([attr isEqualToString:DConnectKeyEventProfileAttrOnDown]) {
+        if (CurrentTime - mOnDownCacheTime <= CACHE_RETENTION_TIME) {
+            return mOnDownCache;
+        } else {
+            return nil;
+        }
+    } else if ([attr isEqualToString:DConnectKeyEventProfileAttrOnUp]) {
+        if (CurrentTime - mOnUpCacheTime <= CACHE_RETENTION_TIME) {
+            return mOnUpCache;
+        } else {
+            return nil;
+        }
+    } else {
+        return nil;
+    }
+}
+
+/*!
+ @brief Set KeyEvent data to cache.
+ @param attr Attribute.
+ @param keyeventData Touch data.
+ */
+- (void) setKeyEventCache:(NSString *)attr
+             keyeventData:(DConnectMessage *)keyeventData {
+    UInt64 CurrentTime = (UInt64)floor((CFAbsoluteTimeGetCurrent() + kCFAbsoluteTimeIntervalSince1970) * 1000.0);
+    if ([attr isEqualToString:DConnectKeyEventProfileAttrOnDown]) {
+        mOnDownCache = keyeventData;
+        mOnDownCacheTime = CurrentTime;
+    } else if ([attr isEqualToString:DConnectKeyEventProfileAttrOnUp]) {
+        mOnUpCache = keyeventData;
+        mOnUpCacheTime = CurrentTime;
+    }
 }
 
 /**
@@ -133,7 +180,9 @@ didReceiveGetOnDownRequest:(DConnectRequestMessage *)request
                   response:(DConnectResponseMessage *)response
                  serviceId:(NSString *)serviceId
 {
-    [DConnectKeyEventProfile setKeyEvent:self->mKeyEventOnDownCache target:response];
+    [response setResult:DConnectMessageResultTypeOk];
+    DConnectMessage *keyevent = [self getKeyEventCache:DConnectKeyEventProfileAttrOnDown];
+    [DConnectKeyEventProfile setKeyEvent:keyevent target:response];
     return YES;
 }
 
@@ -143,7 +192,9 @@ didReceiveGetOnUpRequest:(DConnectRequestMessage *)request
                 response:(DConnectResponseMessage *)response
                serviceId:(NSString *)serviceId
 {
-    [DConnectKeyEventProfile setKeyEvent:self->mKeyEventOnUpCache target:response];
+    [response setResult:DConnectMessageResultTypeOk];
+    DConnectMessage *keyevent = [self getKeyEventCache:DConnectKeyEventProfileAttrOnUp];
+    [DConnectKeyEventProfile setKeyEvent:keyevent target:response];
     return YES;
 }
 
@@ -169,18 +220,19 @@ didReceivePutOnDownRequest:(DConnectRequestMessage *)request
             DConnectMessage *message = [DConnectMessage message];
             [DConnectKeyEventProfile setId:keyId + [self getKeyTypeFlagValue:keyId] target:message];
             [DConnectKeyEventProfile setConfig:[self getConfig:keyType KeyCode:keyId] target:message];
-            
+
+            [self setKeyEventCache:(NSString *)DConnectKeyEventProfileAttrOnDown
+                      keyeventData:(DConnectMessage *)message];
+
             // Send event to DConnect.
             [DPPebbleProfileUtil sendMessageWithProvider:self.provider
                                                  profile:DConnectKeyEventProfileName
                                                attribute:DConnectKeyEventProfileAttrOnDown
                                                serviceID:serviceId
-                                         messageCallback:^(DConnectMessage *eventMsg)
-             {
+                                         messageCallback:^(DConnectMessage *eventMsg) {
                  // Add message to event.
                  [DConnectKeyEventProfile setKeyEvent:message target:eventMsg];
-             } deleteCallback:^
-             {
+             } deleteCallback:^ {
                  // Remove Pebble of events.
                  [[DPPebbleManager sharedManager] deleteOnDownEvent:serviceId callback:^(NSError *error) {
                      if (error) NSLog(@"Error:%@", error);
@@ -216,6 +268,9 @@ didReceivePutOnUpRequest:(DConnectRequestMessage *)request
             DConnectMessage *message = [DConnectMessage message];
             [DConnectKeyEventProfile setId:keyId + [self getKeyTypeFlagValue:keyId] target:message];
             [DConnectKeyEventProfile setConfig:[self getConfig:keyType KeyCode:keyId] target:message];
+            
+            [self setKeyEventCache:(NSString *)DConnectKeyEventProfileAttrOnUp
+                      keyeventData:(DConnectMessage *)message];
             
             // Send event to DConnect.
             [DPPebbleProfileUtil sendMessageWithProvider:self.provider
