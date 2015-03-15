@@ -127,7 +127,7 @@
         
         if (_delegate) {
             [_delegate sendTouchEvent:(DConnectMessage *)eventMsg];
-            [_delegate setTouchCache:(NSString *)evt.attribute touchData:(DConnectMessage *)eventMsg];
+            [_delegate setTouchCache:(NSString *)evt.attribute touchData:(DConnectMessage *)touch];
         }
     }
 }
