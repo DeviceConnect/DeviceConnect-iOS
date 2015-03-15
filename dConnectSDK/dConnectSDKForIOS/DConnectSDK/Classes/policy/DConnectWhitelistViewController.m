@@ -17,7 +17,10 @@
 @interface DConnectWhitelistViewController()
 {
     NSArray *_origins;
+    NSBundle *_bundle;
+    BOOL _isEditing;
 }
+- (void) updateToolbar;
 - (IBAction) handleLongPress:(id)sender;
 @end
 
@@ -27,6 +30,44 @@
 {
     [super viewDidLoad];
     _origins = [[DConnectWhitelist sharedWhitelist] origins];
+    _bundle = DCBundle();
+    _isEditing = NO;
+    [self updateToolbar];
+}
+
+- (void) viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    self.navigationController.toolbarHidden = NO;
+}
+
+- (void) viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    self.navigationController.toolbarHidden = YES;
+}
+
+- (IBAction) edit:(id)sender
+{
+    _isEditing = !_isEditing;
+    [self updateToolbar];
+    
+}
+
+- (void) updateToolbar
+{
+    [self setEditing:_isEditing animated:YES];
+    if (_isEditing) {
+        [self.editButton setTitle:DCLocalizedString(_bundle, @"whitelist_ui_button_done")];
+    } else {
+        [self.editButton setTitle:DCLocalizedString(_bundle, @"whitelist_ui_button_edit")];
+    }
+    [self.editButton setEnabled:(_origins.count > 0)];
+}
+
+- (BOOL)tableView:(UITableView *)tableView shouldHighlightRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return !_isEditing;
 }
 
 - (NSInteger) numberOfSectionsInTableView:(UITableView *)tableView
@@ -68,6 +109,10 @@
         [whitelist removeOrigin:_origins[indexPath.row]];
         _origins = [whitelist origins];
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:YES];
+        
+        // 編集ボタンの表示更新
+        _isEditing = NO;
+        [self updateToolbar];
     }
 }
 
@@ -80,6 +125,10 @@
 {
     _origins = [[DConnectWhitelist sharedWhitelist] origins];
     [self.tableView reloadData];
+
+    // 編集ボタンの表示更新
+    _isEditing = NO;
+    [self updateToolbar];
 }
 
 - (IBAction) handleLongPress:(id)sender

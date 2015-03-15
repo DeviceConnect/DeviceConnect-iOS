@@ -422,6 +422,14 @@
                             <outlet property="delegate" destination="NCI-g6-GrP" id="JYT-wS-A2T"/>
                         </connections>
                     </tableView>
+                    <toolbarItems>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="el4-PQ-96J"/>
+                        <barButtonItem title="Item" id="w8e-f6-3zp">
+                            <connections>
+                                <action selector="edit:" destination="NCI-g6-GrP" id="FRb-uG-3pX"/>
+                            </connections>
+                        </barButtonItem>
+                    </toolbarItems>
                     <navigationItem key="navigationItem" title="Whitelist" id="JPN-YQ-AbA">
                         <barButtonItem key="backBarButtonItem" title="Back" id="M36-ZG-aoV"/>
                         <barButtonItem key="leftBarButtonItem" title="Close" id="7pQ-H3-EUa">
@@ -435,8 +443,10 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="addButton" destination="YgS-Y2-daX" id="oxj-VW-xor"/>
+                        <outlet property="editButton" destination="w8e-f6-3zp" id="g8q-gb-78l"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uYb-r7-fkb" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -445,13 +455,6 @@
                         <action selector="handleLongPress:" destination="NCI-g6-GrP" id="Ke9-5D-ga2"/>
                     </connections>
                 </pongPressGestureRecognizer>
-                <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="0aG-uC-FkV">
-                    <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                    <items>
-                        <barButtonItem title="Item" id="o7V-W2-zYv"/>
-                    </items>
-                </toolbar>
             </objects>
             <point key="canvasLocation" x="864" y="1205"/>
         </scene>

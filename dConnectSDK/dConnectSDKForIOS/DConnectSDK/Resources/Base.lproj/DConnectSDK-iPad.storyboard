@@ -424,6 +424,13 @@
                             <outlet property="delegate" destination="cQX-Zy-grq" id="InE-dQ-gdH"/>
                         </connections>
                     </tableView>
+                    <toolbarItems>
+                        <barButtonItem title="Item" id="L33-EP-TFg">
+                            <connections>
+                                <action selector="edit:" destination="cQX-Zy-grq" id="73e-cU-wSI"/>
+                            </connections>
+                        </barButtonItem>
+                    </toolbarItems>
                     <navigationItem key="navigationItem" title="Whitelist" id="nOX-x6-vsa">
                         <barButtonItem key="backBarButtonItem" title="Back" id="zJT-r6-EpN"/>
                         <barButtonItem key="leftBarButtonItem" title="Close" id="aEB-1X-Zky">
@@ -437,8 +444,10 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="addButton" destination="8bb-C2-tKP" id="GzX-ML-Ryd"/>
+                        <outlet property="editButton" destination="L33-EP-TFg" id="EOu-nm-fvx"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6M3-FZ-7vl" userLabel="First Responder" sceneMemberID="firstResponder"/>

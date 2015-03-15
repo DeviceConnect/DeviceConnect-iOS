@@ -13,6 +13,9 @@
 
 @property IBOutlet UIBarButtonItem *addButton;
 
+@property IBOutlet UIBarButtonItem *editButton;
+
+- (IBAction) edit:(id)sender;
 - (IBAction) closeAction:(id) sender;
 - (IBAction) didEnteredNewOriginForSegue:(UIStoryboardSegue *)segue;
 
