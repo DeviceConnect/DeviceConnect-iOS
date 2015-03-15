@@ -17,6 +17,7 @@
         self.host = @"localhost";
         self.port = 4035;
         self.useLocalOAuth = YES;
+        self.useOriginBlocking = NO;
     }
     return self;
 }

@@ -116,4 +116,15 @@
     return YES;
 }
 
+- (void) didReceiveInvalidOriginRequest:(DConnectRequestMessage *)request
+                               response:(DConnectResponseMessage *)response
+{
+    NSString *attribute = [request attribute];
+    if ([attribute isEqualToString:DConnectAuthorizationProfileAttrGrant]) {
+        [response setString:@"" forKey:DConnectAuthorizationProfileParamClientId];
+    } else if ([attribute isEqualToString:DConnectAuthorizationProfileAttrAccessToken]) {
+        [response setString:@"" forKey:DConnectAuthorizationProfileParamAccessToken];
+    }
+}
+
 @end

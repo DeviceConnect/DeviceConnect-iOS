@@ -16,6 +16,9 @@
 #define DCLocalizedString(bundle, key) \
 [bundle localizedStringForKey:key value:@"" table:nil]
 
+#define DConnectIgnoreOrigins() \
+@[@"file://"];
+
 #define DConnectIgnoreProfiles() \
 @[@"authorization", @"availability", @"system", @"files"];
 
