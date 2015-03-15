@@ -63,8 +63,8 @@
                             <view multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fKZ-vO-g6v" customClass="DPHostTouchView">
                                 <rect key="frame" x="0.0" y="20" width="600" height="560"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kwl-E2-Gc3">
-                                        <rect key="frame" x="562" y="8" width="30" height="30"/>
+                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kwl-E2-Gc3">
+                                        <rect key="frame" x="556" y="8" width="36" height="36"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="30" id="5dg-qo-Ens"/>
                                             <constraint firstAttribute="width" constant="30" id="YP6-AG-x6b"/>

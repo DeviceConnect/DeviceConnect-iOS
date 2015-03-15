@@ -112,11 +112,10 @@ static const long FLAG_ON_TOUCH_CANCEL = 0x00000020;
     DPHostTouchUIViewController *viewController
     = [storyBoard instantiateViewControllerWithIdentifier:viewControllerId];
     if (viewController != nil) {
-        viewController.hostTouchView.delegate = self;
-        
         UIViewController *rootView;
         PutPresentedViewController(rootView);
         [rootView presentViewController:viewController animated:YES completion:nil];
+        viewController.hostTouchView.delegate = self;
     }
     return viewController;
 }
@@ -263,6 +262,7 @@ didReceiveGetOnTouchRequest:(DConnectRequestMessage *)request
 {
     DConnectMessage *touch = [self getTouchCache:DConnectTouchProfileAttrOnTouch];
     [DConnectTouchProfile setTouch:touch target:response];
+    [response setResult:DConnectMessageResultTypeOk];
     return YES;
 }
 
@@ -274,6 +274,7 @@ didReceiveGetOnTouchStartRequest:(DConnectRequestMessage *)request
 {
     DConnectMessage *touch = [self getTouchCache:DConnectTouchProfileAttrOnTouchStart];
     [DConnectTouchProfile setTouch:touch target:response];
+    [response setResult:DConnectMessageResultTypeOk];
     return YES;
 }
 
@@ -285,6 +286,7 @@ didReceiveGetOnTouchEndRequest:(DConnectRequestMessage *)request
 {
     DConnectMessage *touch = [self getTouchCache:DConnectTouchProfileAttrOnTouchEnd];
     [DConnectTouchProfile setTouch:touch target:response];
+    [response setResult:DConnectMessageResultTypeOk];
     return YES;
 }
 
@@ -296,6 +298,7 @@ didReceiveGetOnDoubleTapRequest:(DConnectRequestMessage *)request
 {
     DConnectMessage *touch = [self getTouchCache:DConnectTouchProfileAttrOnDoubleTap];
     [DConnectTouchProfile setTouch:touch target:response];
+    [response setResult:DConnectMessageResultTypeOk];
     return YES;
 }
 
@@ -307,6 +310,7 @@ didReceiveGetOnTouchMoveRequest:(DConnectRequestMessage *)request
 {
     DConnectMessage *touch = [self getTouchCache:DConnectTouchProfileAttrOnTouchMove];
     [DConnectTouchProfile setTouch:touch target:response];
+    [response setResult:DConnectMessageResultTypeOk];
     return YES;
 }
 
@@ -318,6 +322,7 @@ didReceiveGetOnTouchCancelRequest:(DConnectRequestMessage *)request
 {
     DConnectMessage *touch = [self getTouchCache:DConnectTouchProfileAttrOnTouchCancel];
     [DConnectTouchProfile setTouch:touch target:response];
+    [response setResult:DConnectMessageResultTypeOk];
     return YES;
 }
 

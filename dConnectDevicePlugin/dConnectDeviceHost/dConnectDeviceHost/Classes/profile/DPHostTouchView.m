@@ -22,15 +22,13 @@
 
 @implementation DPHostTouchView
 
-- (instancetype)initWithFrame:(CGRect)frame {
+- (instancetype)initWithCoder:(NSCoder *)aDecoder {
     
-    self = [super initWithFrame:frame];
+    self = [super initWithCoder:aDecoder];
     if (self) {
+        // Get event manager.
+        self.eventMgr = [DConnectEventManager sharedManagerForClass:[DPHostDevicePlugin class]];
     }
-
-    // Get event manager.
-    self.eventMgr = [DConnectEventManager sharedManagerForClass:[DPHostDevicePlugin class]];
-
     return self;
 }
 
@@ -40,16 +38,19 @@
     NSArray *evtsTouch = [_eventMgr eventListForServiceId:ServiceDiscoveryServiceId
                                                   profile:DConnectTouchProfileName
                                                 attribute:DConnectTouchProfileAttrOnTouch];
-    
-    // Send event.
-    [self sendEventData:touches evts:evtsTouch];
+    if (evtsTouch != nil) {
+        // Send event.
+        [self sendEventData:touches evts:evtsTouch];
+    }
     
     // Get event (ontouchstart).
     NSArray *evtsTouchStart = [_eventMgr eventListForServiceId:ServiceDiscoveryServiceId
                                                        profile:DConnectTouchProfileName
                                                      attribute:DConnectTouchProfileAttrOnTouchStart];
-    // Send event.
-    [self sendEventData:touches evts:evtsTouchStart];
+    if (evtsTouchStart != nil) {
+        // Send event.
+        [self sendEventData:touches evts:evtsTouchStart];
+    }
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
@@ -60,15 +61,19 @@
             NSArray *evtsDoubleTap = [_eventMgr eventListForServiceId:ServiceDiscoveryServiceId
                                                               profile:DConnectTouchProfileName
                                                             attribute:DConnectTouchProfileAttrOnDoubleTap];
-            // Send event.
-            [self sendEventData:touches evts:evtsDoubleTap];
+            if (evtsDoubleTap != nil) {
+                // Send event.
+                [self sendEventData:touches evts:evtsDoubleTap];
+            }
         } else {
             // Get event (ontouchend).
             NSArray *evtsTouchEnd = [_eventMgr eventListForServiceId:ServiceDiscoveryServiceId
                                                              profile:DConnectTouchProfileName
                                                            attribute:DConnectTouchProfileAttrOnTouchEnd];
-            // Send event.
-            [self sendEventData:touches evts:evtsTouchEnd];
+            if (evtsTouchEnd != nil) {
+                // Send event.
+                [self sendEventData:touches evts:evtsTouchEnd];
+            }
         }
     }
 }
@@ -76,21 +81,25 @@
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
     // Get event (ontouchmove).
-    NSArray *evts = [_eventMgr eventListForServiceId:ServiceDiscoveryServiceId
-                                             profile:DConnectTouchProfileName
-                                           attribute:DConnectTouchProfileAttrOnTouchMove];
-    // Send event.
-    [self sendEventData:touches evts:evts];
+    NSArray *evtsMove = [_eventMgr eventListForServiceId:ServiceDiscoveryServiceId
+                                                 profile:DConnectTouchProfileName
+                                               attribute:DConnectTouchProfileAttrOnTouchMove];
+    if (evtsMove != nil) {
+        // Send event.
+        [self sendEventData:touches evts:evtsMove];
+    }
 }
 
 - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event
 {
     // Get event (ontouchcancel).
-    NSArray *evts = [_eventMgr eventListForServiceId:ServiceDiscoveryServiceId
-                                             profile:DConnectTouchProfileName
-                                           attribute:DConnectTouchProfileAttrOnTouchCancel];
-    // Send event.
-    [self sendEventData:touches evts:evts];
+    NSArray *evtsCancel = [_eventMgr eventListForServiceId:ServiceDiscoveryServiceId
+                                                   profile:DConnectTouchProfileName
+                                                 attribute:DConnectTouchProfileAttrOnTouchCancel];
+    if (evtsCancel != nil) {
+        // Send event.
+        [self sendEventData:touches evts:evtsCancel];
+    }
 }
 
 - (void) sendEventData:(NSSet *)allTouches
@@ -118,6 +127,7 @@
         
         if (_delegate) {
             [_delegate sendTouchEvent:(DConnectMessage *)eventMsg];
+            [_delegate setTouchCache:(NSString *)evt.attribute touchData:(DConnectMessage *)eventMsg];
         }
     }
 }

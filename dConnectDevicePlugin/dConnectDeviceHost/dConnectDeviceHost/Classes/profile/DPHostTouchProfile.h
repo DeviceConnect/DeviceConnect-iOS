@@ -12,5 +12,7 @@
 @interface DPHostTouchProfile : DConnectTouchProfile<DConnectTouchProfileDelegate>
 
 - (void) sendTouchEvent:(DConnectMessage *)eventMsg;
+- (void) setTouchCache:(NSString *)attr
+             touchData:(DConnectMessage *)touchData;
 
 @end
