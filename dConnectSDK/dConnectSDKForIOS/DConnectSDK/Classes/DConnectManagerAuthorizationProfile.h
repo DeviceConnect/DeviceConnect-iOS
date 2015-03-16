@@ -14,4 +14,7 @@
  */
 @interface DConnectManagerAuthorizationProfile : DConnectAuthorizationProfile
 
+- (void) didReceiveInvalidOriginRequest:(DConnectRequestMessage *)request
+                               response:(DConnectResponseMessage *)response;
+
 @end

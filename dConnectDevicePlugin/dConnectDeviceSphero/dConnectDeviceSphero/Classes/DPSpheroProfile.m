@@ -84,6 +84,72 @@ NSString *const DPSpheroProfileParamImpactTimestamp = @"impactTimestamp";
 
 #pragma mark - DConnectProfile Method
 
+- (BOOL) didReceiveGetRequest:(DConnectRequestMessage *)request
+                     response:(DConnectResponseMessage *)response {
+    BOOL send = YES;
+    
+    if (!_delegate) {
+        [response setErrorToNotSupportAction];
+        return send;
+    }
+    
+    NSString *serviceId = [request serviceId];
+    NSString *profile = [request profile];
+    NSString *interface = [request interface];
+    NSString *attribute = [request attribute];
+    
+    if (profile && interface && attribute) {
+        //Quaternion
+        if ([interface isEqualToString:DPSpheroProfileInterfaceQuaternion]
+            && [attribute isEqualToString:DPSpheroProfileAttrOnQuaternion]
+            && [self hasMethod:
+                @selector(profile:
+                          didReceiveGetOnQuaternionRequest:
+                          response:serviceId:)
+                      response:response])
+        {
+            send = [_delegate                    profile:self
+                        didReceiveGetOnQuaternionRequest:request
+                                                response:response
+                                               serviceId:serviceId];
+            //Locator
+        } else if ([interface isEqualToString:DPSpheroProfileInterfaceLocator]
+                   && [attribute isEqualToString:DPSpheroProfileAttrOnLocator]
+                   && [self hasMethod:
+                       @selector(profile:
+                                 didReceiveGetOnLocatorRequest:
+                                 response:serviceId:)
+                             response:response])
+        {
+            send = [_delegate             profile:self
+                    didReceiveGetOnLocatorRequest:request
+                                         response:response
+                                        serviceId:serviceId];
+            //Collision
+        } else if ([interface isEqualToString:DPSpheroProfileInterfaceCollision]
+                   && [attribute isEqualToString:DPSpheroProfileAttrOnCollision]
+                   && [self hasMethod:
+                       @selector(profile:
+                                 didReceiveGetOnCollisionRequest:
+                                 response:
+                                 serviceId:)
+                             response:response])
+        {
+            send = [_delegate               profile:self
+                    didReceiveGetOnCollisionRequest:request
+                                           response:response
+                                          serviceId:serviceId];
+        } else {
+            [response setErrorToNotSupportAttribute];
+        }
+        
+    } else {
+        [response setErrorToNotSupportProfile];
+    }
+    
+    return send;
+}
+
 /*
  PUTリクエストを受け付ける。
  */

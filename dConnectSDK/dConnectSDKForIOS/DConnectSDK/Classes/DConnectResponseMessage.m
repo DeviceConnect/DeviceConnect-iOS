@@ -178,4 +178,12 @@
     [self setError:DConnectMessageErrorCodeIllegalServerState message:message];
 }
 
+- (void) setErrorToInvalidOrigin {
+    [self setErrorToInvalidOriginWithMessage:@"Origin of request is invalid."];
+}
+
+- (void) setErrorToInvalidOriginWithMessage:(NSString *)message {
+    [self setError:DConnectMessageErrorCodeInvalidOrigin message:message];
+}
+
 @end

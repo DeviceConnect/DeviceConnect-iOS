@@ -14,6 +14,7 @@
 @interface GHSettingController ()
 @property (nonatomic, strong) NSArray* datasource;
 @property (nonatomic, strong) UISwitch* cookieSW;
+@property (nonatomic, strong) UISwitch* blockSW;
 @end
 
 
@@ -33,7 +34,9 @@
         self.datasource = @[@[@"Cookieの削除",
                               @"Cookie設定(ON/OFF)",
                               @"履歴の削除",
-                              @"アクセストークン削除"]
+                              @"アクセストークン削除",
+                              @"Originホワイトリスト管理",
+                              @"Originブロック機能"]
                             ];
         
         self.title = @"設定";
@@ -89,17 +92,25 @@
     
 }
 
+//--------------------------------------------------------------//
+#pragma mark - Originブロック機能のON/OFF
+//--------------------------------------------------------------//
+- (void)updateOriginBlockingSwitch:(UISwitch*)sender
+{
+    [DConnectManager sharedManager].settings.useOriginBlocking = sender.isOn;
+}
+
 ///スイッチの状態を保存
 - (void)updateSwitchState
 {
     NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
     [def setObject:@(self.cookieSW.isOn) forKey:IS_COOKIE_ACCEPT];
+    [def setObject:@(self.blockSW.isOn) forKey:IS_ORIGIN_BLOCKING];
     [def synchronize];
     
     //Cookie許可設定
     [GHUtils setCookieAccept:self.cookieSW.isOn];
 }
-
 
 //--------------------------------------------------------------//
 #pragma mark - Table view data source
@@ -141,10 +152,13 @@
                 break;
                 
             case 3:
-                //dConnectmanagerのアクセストークン削除
+                //Device Connect Managerのアクセストークン削除
                 [DConnectUtil showAccessTokenList];
                 break;
-                
+            case 4:
+                //ホワイトリスト管理
+                [DConnectUtil showOriginWhitelist];
+                break;
             default:
                 break;
         }
@@ -190,10 +204,31 @@
                 break;
                 
             case 3:
-                //dConnectmanagerのアクセストークン削除
+                //Device Connect Managerのアクセストークン削除
                 cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
                 break;
+            case 4:
+                //ホワイトリスト管理
+                cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+                break;
+            case 5:
+            {
+                //Originブロック機能 ON/OFF
+                if (!self.blockSW ) {
+                    self.blockSW = [[UISwitch alloc]init];
+                    [self.blockSW addTarget:self action:@selector(updateOriginBlockingSwitch:) forControlEvents:UIControlEventValueChanged];
+                    
+                    //スイッチの状態セット
+                    NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
+                    BOOL sw = [def boolForKey:IS_ORIGIN_BLOCKING];
+                    [self.blockSW setOn:sw animated:NO];
+                    
+                    cell.accessoryView = self.blockSW;
+                }
                 
+                cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            }
+                break;
             default:
                 break;
         }

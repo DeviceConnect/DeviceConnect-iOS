@@ -35,6 +35,30 @@ NSString *const DConnectDeviceOrientationProfileParamAccelerationIncludingGravit
     return DConnectDeviceOrientationProfileName;
 }
 
+- (BOOL) didReceiveGetRequest:(DConnectRequestMessage *)request response:(DConnectResponseMessage *)response {
+    BOOL send = YES;
+    
+    if (!_delegate) {
+        [response setErrorToNotSupportAction];
+        return send;
+    }
+    
+    NSString *attribute = [request attribute];
+    
+    if ([attribute isEqualToString:DConnectDeviceOrientationProfileAttrOnDeviceOrientation]) {
+        if ([self hasMethod:@selector(profile:didReceiveGetOnDeviceOrientationRequest:response:serviceId:)
+                   response:response]) {
+            NSString *serviceId = [request serviceId];
+            send = [_delegate profile:self didReceiveGetOnDeviceOrientationRequest:request
+                             response:response serviceId:serviceId];
+        }
+    } else {
+        [response setErrorToUnknownAttribute];
+    }
+    
+    return send;
+}
+
 - (BOOL) didReceivePutRequest:(DConnectRequestMessage *)request response:(DConnectResponseMessage *)response {
     
     BOOL send = YES;
