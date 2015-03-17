@@ -83,14 +83,8 @@
             [scopeParam appendString:scopes[i]];
         }
     }
-    
-    NSString *grantType = @"authorization_code";
-    NSString *signature = [DConnectUtil generateSignatureWithClientId:clientId
-                                                            grantType:grantType
-                                                             serviceId:nil
-                                                               scopes:scopes
-                                                         clientSecret:clientSecret];
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/authorization/request_accesstoken?clientId=%@&grantType=%@&scope=%@&applicationName=%@&signature=%@", clientId, grantType,scopeParam, applicationName, signature]];
+
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/authorization/request_accesstoken?clientId=%@&scope=%@&applicationName=%@", clientId, scopeParam, applicationName]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
     

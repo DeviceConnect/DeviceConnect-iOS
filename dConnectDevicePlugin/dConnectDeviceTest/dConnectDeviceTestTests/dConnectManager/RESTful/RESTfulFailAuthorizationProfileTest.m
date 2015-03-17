@@ -93,7 +93,7 @@ NSString *GRANT_TYPE = @"authorization_code";
  * <pre>
  * 【HTTP通信】
  * Method: GET
- * Path: /authorization/request_accesstoken?grantType=xxxx&scope=xxxx&applicationName=xxxx&signature=xxxx
+ * Path: /authorization/request_accesstoken?gscope=xxxx&applicationName=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -106,17 +106,10 @@ NSString *GRANT_TYPE = @"authorization_code";
     XCTAssertNotNil(client);
     XCTAssertNotNil(client[0]);
     XCTAssertNotNil(client[1]);
-    NSString *signature = [DConnectUtil generateSignatureWithClientId:client[0]
-                                                            grantType:GRANT_TYPE
-                                                             serviceId:nil
-                                                               scopes:@[@"battery"]
-                                                         clientSecret:client[1]];
     
     NSURL *uri = [NSURL URLWithString:
-                  [NSString stringWithFormat:
-                        @"http://localhost:4035/gotapi/authorization/request_accesstoken?"
-                            "grantType=%@&scope=battery&applicationName=test&signature=%@",
-                                GRANT_TYPE, signature]];
+                  @"http://localhost:4035/gotapi/authorization/request_accesstoken?"
+                  "scope=battery&applicationName=test"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
     
@@ -129,7 +122,7 @@ NSString *GRANT_TYPE = @"authorization_code";
  * <pre>
  * 【HTTP通信】
  * Method: GET
- * Path: /authorization/request_accesstoken?clintId=&grantType=xxxx&scope=xxxx&applicationName=xxxx&signature=xxxx
+ * Path: /authorization/request_accesstoken?clintId=&scope=xxxx&applicationName=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -142,130 +135,14 @@ NSString *GRANT_TYPE = @"authorization_code";
     XCTAssertNotNil(client);
     XCTAssertNotNil(client[0]);
     XCTAssertNotNil(client[1]);
-    NSString *signature = [DConnectUtil generateSignatureWithClientId:client[0]
-                                                            grantType:GRANT_TYPE
-                                                             serviceId:nil
-                                                               scopes:@[@"battery"]
-                                                         clientSecret:client[1]];
     
     NSURL *uri = [NSURL URLWithString:
-                  [NSString stringWithFormat:
-                    @"http://localhost:4035/gotapi/authorization/request_accesstoken?"
-                    "clientId=&grantType=%@&scope=battery&applicationName=test&signature=%@",
-                            GRANT_TYPE, signature]];
+                  @"http://localhost:4035/gotapi/authorization/request_accesstoken?"
+                  "clientId=&scope=battery&applicationName=test"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
     
     CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":10}", request);
-}
-
-/*!
- * @brief
- * grantTypeを指定なしにした状態でアクセストークン作成を行う.
- * <pre>
- * 【HTTP通信】
- * Method: GET
- * Path: /authorization/request_accesstoken?clintId=xxxx&grantType=&scope=xxxx&applicationName=xxxx&signature=xxxx
- * </pre>
- * <pre>
- * 【期待する動作】
- * ・resultに1が返ってくること。
- * </pre>
- */
-- (void) testHttpFailRequestAccessTokenGetNoGrantType
-{
-    NSArray *client = [self createClient];
-    XCTAssertNotNil(client);
-    XCTAssertNotNil(client[0]);
-    XCTAssertNotNil(client[1]);
-    NSString *signature = [DConnectUtil generateSignatureWithClientId:client[0]
-                                                            grantType:GRANT_TYPE
-                                                             serviceId:nil
-                                                               scopes:@[@"battery"]
-                                                         clientSecret:client[1]];
-    
-    NSURL *uri = [NSURL URLWithString:
-                    [NSString stringWithFormat:
-                        @"http://localhost:4035/gotapi/authorization/request_accesstoken?"
-                            "clientId=%@&scope=battery&applicationName=test&signature=%@",
-                                    client[0], signature]];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
-    [request setHTTPMethod:@"GET"];
-    
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":10}", request);
-}
-
-/*!
- * @brief
- * grantTypeに空文字を指定した状態でアクセストークン作成を行う.
- * <pre>
- * 【HTTP通信】
- * Method: GET
- * Path: /authorization/request_accesstoken?clintId=xxxx&grantType=&scope=xxxx&applicationName=xxxx&signature=xxxx
- * </pre>
- * <pre>
- * 【期待する動作】
- * ・resultに1が返ってくること。
- * </pre>
- */
-- (void) testHttpFailRequestAccessTokenGetEmptyGrantType
-{
-    NSArray *client = [self createClient];
-    XCTAssertNotNil(client);
-    XCTAssertNotNil(client[0]);
-    XCTAssertNotNil(client[1]);
-    NSString *signature = [DConnectUtil generateSignatureWithClientId:client[0]
-                                                            grantType:GRANT_TYPE
-                                                             serviceId:nil
-                                                               scopes:@[@"battery"]
-                                                         clientSecret:client[1]];
-    
-    NSURL *uri = [NSURL URLWithString:
-                    [NSString stringWithFormat:
-                        @"http://localhost:4035/gotapi/authorization/request_accesstoken?"
-                            "clientId=%@&grantType=&scope=battery&applicationName=test&signature=%@",
-                                client[0], signature]];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
-    [request setHTTPMethod:@"GET"];
-    
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":10}", request);
-}
-
-/*!
- * @brief
- * 不正なgrantTypeを指定した状態でアクセストークン作成を行う.
- * <pre>
- * 【HTTP通信】
- * Method: GET
- * Path: /authorization/request_accesstoken?grantType=xxxx&scope=xxxx&applicationName=xxxx&signature=xxxx
- * </pre>
- * <pre>
- * 【期待する動作】
- * ・resultに1が返ってくること。
- * </pre>
- */
-- (void) testHttpFailRequestAccessTokenGetInvalidGrantType
-{
-    NSString *const undefined_grant_type = @"undefined_grant_type";
-    NSArray *client = [self createClient];
-    XCTAssertNotNil(client);
-    XCTAssertNotNil(client[0]);
-    XCTAssertNotNil(client[1]);
-    NSString *signature = [DConnectUtil generateSignatureWithClientId:client[0]
-                                                            grantType:undefined_grant_type
-                                                             serviceId:nil
-                                                               scopes:@[@"battery"]
-                                                         clientSecret:client[1]];
-
-    NSURL *uri = [NSURL URLWithString:
-                    [NSString stringWithFormat:
-                        @"http://localhost:4035/gotapi/authorization/request_accesstoken?"
-                            "clientId=%@&grantType=%@&scope=battery&applicationName=test&signature=%@",
-                            client[0], undefined_grant_type, signature]];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
-    [request setHTTPMethod:@"GET"];
-
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":11}", request);
 }
 
 /*!
@@ -274,7 +151,7 @@ NSString *GRANT_TYPE = @"authorization_code";
  * <pre>
  * 【HTTP通信】
  * Method: GET
- * Path: /authorization/request_accesstoken?clientId=xxxx&grantType=xxxx&applicationName=xxxx&signature=xxxx
+ * Path: /authorization/request_accesstoken?clientId=xxxx&applicationName=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -287,17 +164,12 @@ NSString *GRANT_TYPE = @"authorization_code";
     XCTAssertNotNil(client);
     XCTAssertNotNil(client[0]);
     XCTAssertNotNil(client[1]);
-    NSString *signature = [DConnectUtil generateSignatureWithClientId:client[0]
-                                                            grantType:GRANT_TYPE
-                                                             serviceId:nil
-                                                               scopes:@[@"battery"]
-                                                         clientSecret:client[1]];
     
     NSURL *uri = [NSURL URLWithString:
                     [NSString stringWithFormat:
                         @"http://localhost:4035/gotapi/authorization/request_accesstoken?"
-                            "clientId=%@&grantType=%@&applicationName=test&signature=%@",
-                                client[0], GRANT_TYPE, signature]];
+                            "clientId=%@&applicationName=test",
+                                client[0]]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
     
@@ -324,17 +196,12 @@ NSString *GRANT_TYPE = @"authorization_code";
     XCTAssertNotNil(client);
     XCTAssertNotNil(client[0]);
     XCTAssertNotNil(client[1]);
-    NSString *signature = [DConnectUtil generateSignatureWithClientId:client[0]
-                                                            grantType:GRANT_TYPE
-                                                             serviceId:nil
-                                                               scopes:@[@"battery"]
-                                                         clientSecret:client[1]];
     
     NSURL *uri = [NSURL URLWithString:
                     [NSString stringWithFormat:
                             @"http://localhost:4035/gotapi/authorization/request_accesstoken?"
-                                "clientId=%@&grantType=%@&scope=&applicationName=test&signature=%@",
-                                    client[0], GRANT_TYPE, signature]];
+                                "clientId=%@&scope=&applicationName=test",
+                                    client[0]]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
     
@@ -347,7 +214,7 @@ NSString *GRANT_TYPE = @"authorization_code";
  * <pre>
  * 【HTTP通信】
  * Method: GET
- * Path: /authorization/request_accesstoken?clientId=xxxx&grantType=xxxx&scope=xxxx&signature=xxxx
+ * Path: /authorization/request_accesstoken?clientId=xxxx&scope=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -360,17 +227,12 @@ NSString *GRANT_TYPE = @"authorization_code";
     XCTAssertNotNil(client);
     XCTAssertNotNil(client[0]);
     XCTAssertNotNil(client[1]);
-    NSString *signature = [DConnectUtil generateSignatureWithClientId:client[0]
-                                                            grantType:GRANT_TYPE
-                                                             serviceId:nil
-                                                               scopes:@[@"battery"]
-                                                         clientSecret:client[1]];
     
     NSURL *uri = [NSURL URLWithString:
                     [NSString stringWithFormat:
                         @"http://localhost:4035/gotapi/authorization/request_accesstoken?"
-                             "clientId=%@&grantType=%@&signature=%@",
-                     client[0], GRANT_TYPE, signature]];
+                             "clientId=%@&scope=battery",
+                        client[0]]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
     
@@ -384,7 +246,7 @@ NSString *GRANT_TYPE = @"authorization_code";
  * 【HTTP通信】
  * Method: GET
  * Path: /authorization/request_accesstoken?
- *           clientId=xxxx&grantType=authorization_code&scope=&applicationName=&signature=xxxx
+ *           clientId=xxxx&scope=xxxx&applicationName=
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -397,78 +259,12 @@ NSString *GRANT_TYPE = @"authorization_code";
     XCTAssertNotNil(client);
     XCTAssertNotNil(client[0]);
     XCTAssertNotNil(client[1]);
-    NSString *signature = [DConnectUtil generateSignatureWithClientId:client[0]
-                                                            grantType:GRANT_TYPE
-                                                             serviceId:nil
-                                                               scopes:@[@"battery"]
-                                                         clientSecret:client[1]];
     
     NSURL *uri = [NSURL URLWithString:
                     [NSString stringWithFormat:
                         @"http://localhost:4035/gotapi/authorization/request_accesstoken?"
-                            "clientId=%@&grantType=%@&scope=battery&applicationName=&signature=%@",
-                                client[0], GRANT_TYPE, signature]];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
-    [request setHTTPMethod:@"GET"];
-    
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":10}", request);
-}
-
-/*!
- * @brief
- * signatureが無い状態でアクセストークン作成を行う.
- * <pre>
- * 【HTTP通信】
- * Method: GET
- * Path: /authorization/request_accesstoken?clientId=xxxx&grantType=xxxx&scope=xxxx&applicationName=xxxx
- * </pre>
- * <pre>
- * 【期待する動作】
- * ・resultに1が返ってくること。
- * </pre>
- */
-- (void) testHttpFailRequestAccessTokenGetNoSignature
-{
-    NSArray *client = [self createClient];
-    XCTAssertNotNil(client);
-    XCTAssertNotNil(client[0]);
-    XCTAssertNotNil(client[1]);
-    
-    NSURL *uri = [NSURL URLWithString:
-                    [NSString stringWithFormat:@"http://localhost:4035/gotapi/authorization/request_accesstoken?"
-                        "clientId=%@&grantType=%@", client[0], GRANT_TYPE]];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
-    [request setHTTPMethod:@"GET"];
-    
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":10}", request);
-}
-
-/*!
- * @brief
- * signatureに空文字を指定した状態でアクセストークン作成を行う.
- * <pre>
- * 【HTTP通信】
- * Method: GET
- * Path: /authorization/request_accesstoken?
- *           clientId=xxxx&grantType=authorization_code&scope=xxxx&applicationName=xxxx&signature=
- * </pre>
- * <pre>
- * 【期待する動作】
- * ・resultに1が返ってくること。
- * </pre>
- */
-- (void) testHttpFailRequestAccessTokenGetEmptySignature
-{
-    NSArray *client = [self createClient];
-    XCTAssertNotNil(client);
-    XCTAssertNotNil(client[0]);
-    XCTAssertNotNil(client[1]);
-    
-    NSURL *uri = [NSURL URLWithString:
-                    [NSString stringWithFormat:
-                        @"http://localhost:4035/gotapi/authorization/request_accesstoken?"
-                            "clientId=%@&grantType=%@&scope=battery&applicationName=test&signature=",
-                                    client[0], GRANT_TYPE]];
+                            "clientId=%@&scope=battery&applicationName=",
+                                client[0]]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
     
@@ -482,7 +278,7 @@ NSString *GRANT_TYPE = @"authorization_code";
  * 【HTTP通信】
  * Method: POST
  * Path: /authorization/request_accesstoken?
- *           clientId=xxxx&grantType=xxxx&scope=xxxx&applicationName=xxxxsignature=xxxx
+ *           clientId=xxxx&scope=xxxx&applicationName=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -495,17 +291,12 @@ NSString *GRANT_TYPE = @"authorization_code";
     XCTAssertNotNil(client);
     XCTAssertNotNil(client[0]);
     XCTAssertNotNil(client[1]);
-    NSString *signature = [DConnectUtil generateSignatureWithClientId:client[0]
-                                                            grantType:GRANT_TYPE
-                                                             serviceId:nil
-                                                               scopes:@[@"battery"]
-                                                         clientSecret:client[1]];
     
     NSURL *uri = [NSURL URLWithString:
                     [NSString stringWithFormat:
                             @"http://localhost:4035/gotapi/authorization/request_accesstoken?"
-                                "clientId=%@&grantType=%@&scope=battery&applicationName=test&signature=%@",
-                                    client[0], GRANT_TYPE, signature]];
+                                "clientId=%@&scope=battery&applicationName=test",
+                                    client[0]]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"POST"];
     
@@ -519,7 +310,7 @@ NSString *GRANT_TYPE = @"authorization_code";
  * 【HTTP通信】
  * Method: PUT
  * Path: /authorization/request_accesstoken?
- *           clientId=xxxx&grantType=xxxx&scope=xxxx&applicationName=xxxxsignature=xxxx
+ *           clientId=xxxx&scope=xxxx&applicationName=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -532,17 +323,12 @@ NSString *GRANT_TYPE = @"authorization_code";
     XCTAssertNotNil(client);
     XCTAssertNotNil(client[0]);
     XCTAssertNotNil(client[1]);
-    NSString *signature = [DConnectUtil generateSignatureWithClientId:client[0]
-                                                            grantType:GRANT_TYPE
-                                                             serviceId:nil
-                                                               scopes:@[@"battery"]
-                                                         clientSecret:client[1]];
     
     NSURL *uri = [NSURL URLWithString:
                         [NSString stringWithFormat:
                                 @"http://localhost:4035/gotapi/authorization/request_accesstoken?"
-                                    "clientId=%@&grantType=%@&scope=battery&applicationName=test&signature=%@",
-                                        client[0], GRANT_TYPE, signature]];
+                                    "clientId=%@&scope=battery&applicationName=test",
+                                        client[0]]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
@@ -569,17 +355,12 @@ NSString *GRANT_TYPE = @"authorization_code";
     XCTAssertNotNil(client);
     XCTAssertNotNil(client[0]);
     XCTAssertNotNil(client[1]);
-    NSString *signature = [DConnectUtil generateSignatureWithClientId:client[0]
-                                                            grantType:GRANT_TYPE
-                                                             serviceId:nil
-                                                               scopes:@[@"battery"]
-                                                         clientSecret:client[1]];
     
     NSURL *uri = [NSURL URLWithString:
                     [NSString stringWithFormat:
                             @"http://localhost:4035/gotapi/authorization/request_accesstoken?"
-                                "clientId=%@&grantType=%@&scope=battery&applicationName=test&signature=%@",
-                                    client[0], GRANT_TYPE, signature]];
+                                "clientId=%@&scope=battery&applicationName=test",
+                                    client[0]]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     
