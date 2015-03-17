@@ -39,6 +39,7 @@
     NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/servicediscovery"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
+    [request setValue:@"org.deviceconnect.test" forHTTPHeaderField:@"X-GotAPI-Origin"];
     
     NSURLResponse *response = nil;
     NSError *error = nil;

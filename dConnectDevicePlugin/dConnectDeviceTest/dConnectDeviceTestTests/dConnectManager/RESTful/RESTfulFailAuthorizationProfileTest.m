@@ -27,7 +27,7 @@ NSString *GRANT_TYPE = @"authorization_code";
  * <pre>
  * 【HTTP通信】
  * Method: POST
- * Path: /authorization/create_client
+ * Path: /authorization/grant
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -36,7 +36,7 @@ NSString *GRANT_TYPE = @"authorization_code";
  */
 - (void) testHttpFailCreateClientGetInvalidMethodPost
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/authorization/create_client"];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/authorization/grant"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"POST"];
     
@@ -49,7 +49,7 @@ NSString *GRANT_TYPE = @"authorization_code";
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /authorization/create_client
+ * Path: /authorization/grant
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -58,7 +58,7 @@ NSString *GRANT_TYPE = @"authorization_code";
  */
 - (void) testHttpFailCreateClientGetInvalidMethodPut
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/authorization/create_client"];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/authorization/grant"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
@@ -71,7 +71,7 @@ NSString *GRANT_TYPE = @"authorization_code";
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /authorization/create_client
+ * Path: /authorization/grant
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -80,7 +80,7 @@ NSString *GRANT_TYPE = @"authorization_code";
  */
 - (void) testHttpFailCreateClientGetInvalidMethodDelete
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/authorization/create_client"];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/authorization/grant"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     
@@ -93,7 +93,7 @@ NSString *GRANT_TYPE = @"authorization_code";
  * <pre>
  * 【HTTP通信】
  * Method: GET
- * Path: /authorization/request_accesstoken?gscope=xxxx&applicationName=xxxx
+ * Path: /authorization/accesstoken?gscope=xxxx&applicationName=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -105,10 +105,9 @@ NSString *GRANT_TYPE = @"authorization_code";
     NSArray *client = [self createClient];
     XCTAssertNotNil(client);
     XCTAssertNotNil(client[0]);
-    XCTAssertNotNil(client[1]);
     
     NSURL *uri = [NSURL URLWithString:
-                  @"http://localhost:4035/gotapi/authorization/request_accesstoken?"
+                  @"http://localhost:4035/gotapi/authorization/accesstoken?"
                   "scope=battery&applicationName=test"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
@@ -122,7 +121,7 @@ NSString *GRANT_TYPE = @"authorization_code";
  * <pre>
  * 【HTTP通信】
  * Method: GET
- * Path: /authorization/request_accesstoken?clintId=&scope=xxxx&applicationName=xxxx
+ * Path: /authorization/accesstoken?clintId=&scope=xxxx&applicationName=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -134,10 +133,9 @@ NSString *GRANT_TYPE = @"authorization_code";
     NSArray *client = [self createClient];
     XCTAssertNotNil(client);
     XCTAssertNotNil(client[0]);
-    XCTAssertNotNil(client[1]);
     
     NSURL *uri = [NSURL URLWithString:
-                  @"http://localhost:4035/gotapi/authorization/request_accesstoken?"
+                  @"http://localhost:4035/gotapi/authorization/accesstoken?"
                   "clientId=&scope=battery&applicationName=test"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
@@ -151,7 +149,7 @@ NSString *GRANT_TYPE = @"authorization_code";
  * <pre>
  * 【HTTP通信】
  * Method: GET
- * Path: /authorization/request_accesstoken?clientId=xxxx&applicationName=xxxx
+ * Path: /authorization/accesstoken?clientId=xxxx&applicationName=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -163,11 +161,10 @@ NSString *GRANT_TYPE = @"authorization_code";
     NSArray *client = [self createClient];
     XCTAssertNotNil(client);
     XCTAssertNotNil(client[0]);
-    XCTAssertNotNil(client[1]);
     
     NSURL *uri = [NSURL URLWithString:
                     [NSString stringWithFormat:
-                        @"http://localhost:4035/gotapi/authorization/request_accesstoken?"
+                        @"http://localhost:4035/gotapi/authorization/accesstoken?"
                             "clientId=%@&applicationName=test",
                                 client[0]]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
@@ -182,7 +179,7 @@ NSString *GRANT_TYPE = @"authorization_code";
  * <pre>
  * 【HTTP通信】
  * Method: GET
- * Path: /authorization/request_accesstoken?
+ * Path: /authorization/accesstoken?
  *           clientId=xxxx&grantType=authorization_code&scope=&applicationName=xxxx&signature=xxxx
  * </pre>
  * <pre>
@@ -195,11 +192,10 @@ NSString *GRANT_TYPE = @"authorization_code";
     NSArray *client = [self createClient];
     XCTAssertNotNil(client);
     XCTAssertNotNil(client[0]);
-    XCTAssertNotNil(client[1]);
     
     NSURL *uri = [NSURL URLWithString:
                     [NSString stringWithFormat:
-                            @"http://localhost:4035/gotapi/authorization/request_accesstoken?"
+                            @"http://localhost:4035/gotapi/authorization/accesstoken?"
                                 "clientId=%@&scope=&applicationName=test",
                                     client[0]]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
@@ -214,7 +210,7 @@ NSString *GRANT_TYPE = @"authorization_code";
  * <pre>
  * 【HTTP通信】
  * Method: GET
- * Path: /authorization/request_accesstoken?clientId=xxxx&scope=xxxx
+ * Path: /authorization/accesstoken?clientId=xxxx&scope=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -226,11 +222,10 @@ NSString *GRANT_TYPE = @"authorization_code";
     NSArray *client = [self createClient];
     XCTAssertNotNil(client);
     XCTAssertNotNil(client[0]);
-    XCTAssertNotNil(client[1]);
     
     NSURL *uri = [NSURL URLWithString:
                     [NSString stringWithFormat:
-                        @"http://localhost:4035/gotapi/authorization/request_accesstoken?"
+                        @"http://localhost:4035/gotapi/authorization/accesstoken?"
                              "clientId=%@&scope=battery",
                         client[0]]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
@@ -245,7 +240,7 @@ NSString *GRANT_TYPE = @"authorization_code";
  * <pre>
  * 【HTTP通信】
  * Method: GET
- * Path: /authorization/request_accesstoken?
+ * Path: /authorization/accesstoken?
  *           clientId=xxxx&scope=xxxx&applicationName=
  * </pre>
  * <pre>
@@ -258,11 +253,10 @@ NSString *GRANT_TYPE = @"authorization_code";
     NSArray *client = [self createClient];
     XCTAssertNotNil(client);
     XCTAssertNotNil(client[0]);
-    XCTAssertNotNil(client[1]);
     
     NSURL *uri = [NSURL URLWithString:
                     [NSString stringWithFormat:
-                        @"http://localhost:4035/gotapi/authorization/request_accesstoken?"
+                        @"http://localhost:4035/gotapi/authorization/accesstoken?"
                             "clientId=%@&scope=battery&applicationName=",
                                 client[0]]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
@@ -277,7 +271,7 @@ NSString *GRANT_TYPE = @"authorization_code";
  * <pre>
  * 【HTTP通信】
  * Method: POST
- * Path: /authorization/request_accesstoken?
+ * Path: /authorization/accesstoken?
  *           clientId=xxxx&scope=xxxx&applicationName=xxxx
  * </pre>
  * <pre>
@@ -290,11 +284,10 @@ NSString *GRANT_TYPE = @"authorization_code";
     NSArray *client = [self createClient];
     XCTAssertNotNil(client);
     XCTAssertNotNil(client[0]);
-    XCTAssertNotNil(client[1]);
     
     NSURL *uri = [NSURL URLWithString:
                     [NSString stringWithFormat:
-                            @"http://localhost:4035/gotapi/authorization/request_accesstoken?"
+                            @"http://localhost:4035/gotapi/authorization/accesstoken?"
                                 "clientId=%@&scope=battery&applicationName=test",
                                     client[0]]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
@@ -309,7 +302,7 @@ NSString *GRANT_TYPE = @"authorization_code";
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /authorization/request_accesstoken?
+ * Path: /authorization/accesstoken?
  *           clientId=xxxx&scope=xxxx&applicationName=xxxx
  * </pre>
  * <pre>
@@ -322,11 +315,10 @@ NSString *GRANT_TYPE = @"authorization_code";
     NSArray *client = [self createClient];
     XCTAssertNotNil(client);
     XCTAssertNotNil(client[0]);
-    XCTAssertNotNil(client[1]);
     
     NSURL *uri = [NSURL URLWithString:
                         [NSString stringWithFormat:
-                                @"http://localhost:4035/gotapi/authorization/request_accesstoken?"
+                                @"http://localhost:4035/gotapi/authorization/accesstoken?"
                                     "clientId=%@&scope=battery&applicationName=test",
                                         client[0]]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
@@ -341,7 +333,7 @@ NSString *GRANT_TYPE = @"authorization_code";
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /authorization/request_accesstoken?
+ * Path: /authorization/accesstoken?
  *           clientId=xxxx&grantType=xxxx&scope=xxxx&applicationName=xxxxsignature=xxxx
  * </pre>
  * <pre>
@@ -354,11 +346,10 @@ NSString *GRANT_TYPE = @"authorization_code";
     NSArray *client = [self createClient];
     XCTAssertNotNil(client);
     XCTAssertNotNil(client[0]);
-    XCTAssertNotNil(client[1]);
     
     NSURL *uri = [NSURL URLWithString:
                     [NSString stringWithFormat:
-                            @"http://localhost:4035/gotapi/authorization/request_accesstoken?"
+                            @"http://localhost:4035/gotapi/authorization/accesstoken?"
                                 "clientId=%@&scope=battery&applicationName=test",
                                     client[0]]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];

@@ -22,6 +22,7 @@
 #define DCONNECT_MANAGER_VERSION_NAME @"1.0"
 
 #define CHECK_RESPONSE(expectedJson, req) {\
+    [req setValue:@"org.deviceconnect.test" forHTTPHeaderField:@"X-GotAPI-Origin"]; \
     NSURLResponse *response = nil; \
     NSError *error = nil; \
     NSData *data = [NSURLConnection sendSynchronousRequest:req \
