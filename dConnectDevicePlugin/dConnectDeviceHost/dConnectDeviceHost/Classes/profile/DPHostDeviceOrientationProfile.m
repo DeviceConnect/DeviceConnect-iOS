@@ -101,9 +101,10 @@ static const double MotionDeviceIntervalMilliSec = 100;
     // 角速度系
     if (_motionManager.gyroAvailable) {
         DConnectMessage *rotationRate = [DConnectMessage message];
-        [DConnectDeviceOrientationProfile setAlpha:motion.rotationRate.x target:rotationRate];
-        [DConnectDeviceOrientationProfile setBeta:motion.rotationRate.y  target:rotationRate];
-        [DConnectDeviceOrientationProfile setGamma:motion.rotationRate.z target:rotationRate];
+        double coef = 180 / M_PI;
+        [DConnectDeviceOrientationProfile setAlpha:(coef * motion.rotationRate.x) target:rotationRate];
+        [DConnectDeviceOrientationProfile setBeta:(coef * motion.rotationRate.y)  target:rotationRate];
+        [DConnectDeviceOrientationProfile setGamma:(coef * motion.rotationRate.z) target:rotationRate];
         [DConnectDeviceOrientationProfile setRotationRate:rotationRate target:orientation];
     }
     // インターバル（ミリ秒）

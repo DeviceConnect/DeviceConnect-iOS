@@ -12,6 +12,7 @@
 #import "DConnectResponseMessage.h"
 #import "DConnectAuthorizationProfile+Private.h"
 #import "DConnectManager+Private.h"
+#import "DConnectWhitelistUtil.h"
 #import "CipherAuthSignature.h"
 #import "LocalOAuth2Main.h"
 
@@ -157,6 +158,10 @@
 
 + (void) showAccessTokenList {
     [[LocalOAuth2Main sharedOAuthForClass:[DConnectManager class]] startAccessTokenListActivity];
+}
+
++ (void) showOriginWhitelist {
+    [DConnectWhitelistUtil showOriginWhitelist];
 }
 
 @end

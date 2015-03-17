@@ -25,11 +25,11 @@ typedef struct DPQuaternion_ {
 } DPQuaternion;
 
 /*!
- @brief 姿勢構造体
+ @brief ジャイロデータ構造体
  */
-typedef struct DPAttitude_ {
-    float pitch, roll, yaw;
-} DPAttitude;
+typedef struct DPGyroData_ {
+    double x, y, z;
+} DPGyroData;
 
 /*!
  @brief Spheroのセンサー処理用デリゲート。
@@ -77,12 +77,12 @@ typedef struct DPAttitude_ {
 @protocol DPSpheroManagerOrientationDelegate <NSObject>
 
 /*!
- @brief Spheroの加速度・傾きセンサーを通知する。
- @param[in] attitude 姿勢構造体
+ @brief Spheroの加速度・ジャイロセンサーを通知する。
+ @param[in]  ジャイロデータ構造体
  @param[in] accel 加速度
  @param[in] interval このセンサー値を通知する間隔
  */
-- (void)spheroManagerStreamingOrientation:(DPAttitude)attitude
+- (void)spheroManagerStreamingOrientation:(DPGyroData)gyroData
                                     accel:(DPPoint3D)accel
                                  interval:(int)interval;
 @end

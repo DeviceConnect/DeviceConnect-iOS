@@ -140,6 +140,7 @@ typedef NS_ENUM(NSUInteger, DConnectMessageErrorCodeType) {
     DConnectMessageErrorCodeNotFoundClientId,         /*!< 認証時にclientIdが発見できなかった */
     DConnectMessageErrorCodeIllegalDeviceState,       /*!< デバイスの状態異常エラー */
     DConnectMessageErrorCodeIllegalServerState,       /*!< サーバーの状態異常エラー */
+    DConnectMessageErrorCodeInvalidOrigin,            /*!< 不正なオリジンからリクエストを受信した */
 };
 
 @class DConnectResponseMessage;

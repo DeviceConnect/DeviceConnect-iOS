@@ -10,6 +10,7 @@
 #import "DConnectManager+Private.h"
 #import "DConnectDevicePlugin+Private.h"
 #import "DConnectURLProtocol.h"
+#import "DConnectManagerAuthorizationProfile.h"
 #import "DConnectManagerDeliveryProfile.h"
 #import "DConnectManagerServiceDiscoveryProfile.h"
 #import "DConnectManagerSystemProfile.h"
@@ -22,6 +23,8 @@
 #import "DConnectEventManager.h"
 #import "DConnectDBCacheController.h"
 #import "DConnectConst.h"
+#import "DConnectWhitelist.h"
+#import "DConnectOriginParser.h"
 #import "LocalOAuth2Main.h"
 
 NSString *const DConnectManagerName = @"Device Connect Manager";
@@ -118,6 +121,8 @@ NSString *const DConnectAttributeNameRequestAccessToken = @"requestAccessToken";
  * @param[in] key レスポンスのコード
  */
 - (void) sendTimeoutResponseForKey:(NSString *)key;
+
+- (BOOL) allowsOriginOfRequest:(DConnectRequestMessage *)requestMessage;
 
 @end
 
@@ -382,6 +387,19 @@ NSString *const DConnectAttributeNameRequestAccessToken = @"requestAccessToken";
     dispatch_async(_requestQueue, ^{
         // 指定されたプロファイルを取得する
         NSString *profileName = [request profile];
+        
+        if (![_self allowsOriginOfRequest:request]) {
+            [response setErrorToInvalidOrigin];
+            DConnectProfile *profile = [_self profileWithName:profileName];
+            if (profile && [profile isKindOfClass:[DConnectManagerAuthorizationProfile class]]) {
+                DConnectManagerAuthorizationProfile *authProfile =
+                (DConnectManagerAuthorizationProfile *) profile;
+                [authProfile didReceiveInvalidOriginRequest:request response:response];
+            }
+            [_self sendResponse:response];
+            return;
+        }
+        
         if (!profileName) {
             [response setErrorToNotSupportProfile];
             [_self sendResponse:response];
@@ -498,6 +516,22 @@ NSString *const DConnectAttributeNameRequestAccessToken = @"requestAccessToken";
             info.callback(timeoutResponse);   
         }
     }
+}
+
+- (BOOL) allowsOriginOfRequest:(DConnectRequestMessage *)requestMessage{
+    NSString *originExp = [requestMessage origin];
+    if (!originExp) {
+        return NO;
+    }
+    if (![self.settings useOriginBlocking]) {
+        return YES;
+    }
+    NSArray *ignores = DConnectIgnoreOrigins();
+    if ([ignores containsObject:originExp]) {
+        return YES;
+    }
+    id<DConnectOrigin> origin = [DConnectOriginParser parse:originExp];
+    return [[DConnectWhitelist sharedWhitelist] allows:origin];
 }
 
 @end
