@@ -110,6 +110,9 @@ NSString *const DConnectAuthorizationProfileGrantTypeAuthorizationCode = @"autho
     } else if (scopes.count <= 0) {
         [response setErrorToInvalidRequestParameterWithMessage:@"scope is empty."];
         return YES;
+    } else if (scope.length <= 0) {
+        [response setErrorToInvalidRequestParameterWithMessage:@"scope is empty."];
+        return YES;
     } else if (package == nil) {
         [response setErrorToInvalidRequestParameterWithMessage:@"package is nil."];
         return YES;

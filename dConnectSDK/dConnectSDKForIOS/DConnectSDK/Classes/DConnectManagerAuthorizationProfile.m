@@ -61,6 +61,9 @@
     } else if (scopes.count <= 0) {
         [response setErrorToInvalidRequestParameterWithMessage:@"scope is empty."];
         return YES;
+    } else if (scope.length <= 0) {
+        [response setErrorToInvalidRequestParameterWithMessage:@"scope is empty."];
+        return YES;
     } else if (applicationName == nil) {
         [response setErrorToInvalidRequestParameterWithMessage:@"applicationName is nil."];
         return YES;

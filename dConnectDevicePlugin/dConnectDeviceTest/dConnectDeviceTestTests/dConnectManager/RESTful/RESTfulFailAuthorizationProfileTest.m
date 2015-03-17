@@ -180,7 +180,7 @@ NSString *GRANT_TYPE = @"authorization_code";
  * 【HTTP通信】
  * Method: GET
  * Path: /authorization/accesstoken?
- *           clientId=xxxx&grantType=authorization_code&scope=&applicationName=xxxx&signature=xxxx
+ *           clientId=xxxx&scope=&applicationName=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
