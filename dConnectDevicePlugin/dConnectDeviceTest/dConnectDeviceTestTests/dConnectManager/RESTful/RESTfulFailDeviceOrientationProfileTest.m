@@ -104,27 +104,6 @@
 }
 
 /*!
- * @brief 空文字のsessionKeyでondeviceorientation属性のコールバック登録テストを行う.
- * <pre>
- * 【HTTP通信】
- * Method: PUT
- * Path: /deviceorientation/ondeviceorientation?serviceId=123456789
- * </pre>
- * <pre>
- * 【期待する動作】
- * ・resultに1が返ってくること。
- * </pre>
- */
-- (void) testHttpFailDeviceOrientationOnDeviceOrientationPutEmptySessionKey
-{
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/deviceorientation/ondeviceorientation?serviceId=%@&sessionKey=", self.serviceId]];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
-    [request setHTTPMethod:@"PUT"];
-    
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":10}", request);
-}
-
-/*!
  * @brief serviceIdが無い状態でondeviceorientation属性のコールバック解除テストを行う.
  * <pre>
  * 【HTTP通信】
@@ -202,27 +181,6 @@
 - (void) testHttpFailDeviceOrientationOnDeviceOrientationDeleteNoSessionKey
 {
     NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/deviceorientation/ondeviceorientation?serviceId=%@", self.serviceId]];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
-    [request setHTTPMethod:@"DELETE"];
-    
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":10}", request);
-}
-
-/*!
- * @brief 空文字のsessionKeyでondeviceorientation属性のコールバック解除テストを行う.
- * <pre>
- * 【HTTP通信】
- * Method: DELETE
- * Path: /deviceorientation/ondeviceorientation?serviceId=123456789&sessionKey=
- * </pre>
- * <pre>
- * 【期待する動作】
- * ・resultに1が返ってくること。
- * </pre>
- */
-- (void) testHttpFailDeviceOrientationOnDeviceOrientationDeleteEmptySessionKey
-{
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/deviceorientation/ondeviceorientation?serviceId=%@&sessionKey=", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     
