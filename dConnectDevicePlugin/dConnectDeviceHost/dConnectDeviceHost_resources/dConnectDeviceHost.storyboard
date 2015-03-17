@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6751" systemVersion="14C1510" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
@@ -47,6 +47,81 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fZp-7Y-Ab3" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="151" y="202"/>
+        </scene>
+        <!--Host TouchUI View Controller-->
+        <scene sceneID="X78-qy-Uy1">
+            <objects>
+                <viewController storyboardIdentifier="Touch" id="TAt-PD-qKD" customClass="DPHostTouchUIViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="IKU-ss-Ura"/>
+                        <viewControllerLayoutGuide type="bottom" id="gSL-ng-OJr"/>
+                    </layoutGuides>
+                    <view key="view" multipleTouchEnabled="YES" contentMode="scaleToFill" id="MNj-ZI-WJx">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fKZ-vO-g6v" customClass="DPHostTouchView">
+                                <rect key="frame" x="0.0" y="20" width="600" height="560"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kwl-E2-Gc3">
+                                        <rect key="frame" x="556" y="8" width="36" height="36"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="5dg-qo-Ens"/>
+                                            <constraint firstAttribute="width" constant="30" id="YP6-AG-x6b"/>
+                                        </constraints>
+                                        <state key="normal" backgroundImage="close_small_button_normal.png">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="actionUpTouchViewCloseButton:" destination="TAt-PD-qKD" eventType="touchUpInside" id="c2W-do-teg"/>
+                                        </connections>
+                                    </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Touch View" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TlU-ak-bVS">
+                                        <rect key="frame" x="8" y="8" width="87" height="21"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="21" id="WfC-CW-OBP"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <gestureRecognizers/>
+                                <constraints>
+                                    <constraint firstItem="kwl-E2-Gc3" firstAttribute="trailing" secondItem="fKZ-vO-g6v" secondAttribute="trailingMargin" id="6cy-en-Zxh"/>
+                                    <constraint firstItem="kwl-E2-Gc3" firstAttribute="top" secondItem="fKZ-vO-g6v" secondAttribute="topMargin" id="Rkl-L8-6aA"/>
+                                    <constraint firstItem="TlU-ak-bVS" firstAttribute="leading" secondItem="fKZ-vO-g6v" secondAttribute="leadingMargin" id="TU1-WX-eTs"/>
+                                    <constraint firstItem="TlU-ak-bVS" firstAttribute="top" secondItem="kwl-E2-Gc3" secondAttribute="top" id="zHB-qk-8AX"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <gestureRecognizers/>
+                        <constraints>
+                            <constraint firstItem="fKZ-vO-g6v" firstAttribute="top" secondItem="IKU-ss-Ura" secondAttribute="bottom" id="6Wg-oY-7tl"/>
+                            <constraint firstItem="fKZ-vO-g6v" firstAttribute="leading" secondItem="MNj-ZI-WJx" secondAttribute="leading" id="VMI-ar-P30"/>
+                            <constraint firstItem="fKZ-vO-g6v" firstAttribute="leading" secondItem="MNj-ZI-WJx" secondAttribute="leading" id="dUV-FU-6R0"/>
+                            <constraint firstAttribute="bottom" secondItem="fKZ-vO-g6v" secondAttribute="bottom" constant="20" symbolic="YES" id="k5F-JY-QyF"/>
+                            <constraint firstAttribute="trailing" secondItem="fKZ-vO-g6v" secondAttribute="trailing" id="piG-gT-M0L"/>
+                            <constraint firstAttribute="trailing" secondItem="fKZ-vO-g6v" secondAttribute="trailing" id="wnY-fa-AUG"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="dUV-FU-6R0"/>
+                                <exclude reference="piG-gT-M0L"/>
+                            </mask>
+                        </variation>
+                    </view>
+                    <connections>
+                        <outlet property="HostTouchViewLavel" destination="TlU-ak-bVS" id="UlQ-Zq-6Re"/>
+                        <outlet property="TouchViewCloseButton" destination="kwl-E2-Gc3" id="aa2-iC-Chw"/>
+                        <outlet property="hostTouchView" destination="fKZ-vO-g6v" id="G8R-eR-2gm"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="xP8-ez-kFk" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="151" y="880"/>
         </scene>
     </scenes>
     <resources>
