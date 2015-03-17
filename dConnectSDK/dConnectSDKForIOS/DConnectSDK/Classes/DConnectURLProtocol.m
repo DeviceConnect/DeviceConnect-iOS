@@ -43,7 +43,11 @@
  */
 #define MIME_TYPE_JSON @"application/json; charset=UTF-8"
 
-
+typedef NS_ENUM(NSInteger, DConnectOriginHeaderError) {
+    NONE,
+    EMPTY,
+    NOT_UNIQUE,
+};
 
 @implementation ResponseContext
 
@@ -66,8 +70,6 @@
 
 + (NSString *) percentEncodeString:(NSString *)string withEncoding:(NSStringEncoding)encoding;
 + (NSString *) stringByURLDecodingWithString:(NSString *)string;
-
-+ (void) parseHeaders:(NSURLRequest *) request requestMessage:(DConnectRequestMessage *) reqeustMessage;
 
 /*!
  HTTPメソッド名からDevice Connect で定義されたメソッド名を取得する。
@@ -260,7 +262,7 @@ static NSString *scheme = @"http";
     }
     
     // HTTPリクエストヘッダの解析
-    [DConnectURLProtocol parseHeaders:request requestMessage:requestMessage];
+    [request addParametersFromHTTPHeaderToRequestMessage:requestMessage];
     
     // パラメータがHTTPボディに記述されているなら、
     // 解析しリクエストメッセージに追加する。
@@ -268,20 +270,6 @@ static NSString *scheme = @"http";
     
     return requestMessage;
 }
-
-+ (void) parseHeaders:(NSURLRequest *) request requestMessage:(DConnectRequestMessage *) reqeustMessage
-{
-    NSString *webOrigin = [request valueForHTTPHeaderField:@"origin"];
-    NSString *nativeOrigin = [request valueForHTTPHeaderField:DConnectMessageHeaderGotAPIOrigin];
-    if (nativeOrigin) {
-        [reqeustMessage setString:nativeOrigin forKey:DConnectMessageOrigin];
-    } else if (webOrigin) {
-        [reqeustMessage setString:webOrigin forKey:DConnectMessageOrigin];
-    } else {
-        DCLogW(@"origin of request is not specified.");
-    }
-}
-     
 
 + (void) responseContextWithHTTPRequest:(NSURLRequest *)request
                                callback:(void(^)(ResponseContext* responseCtx))callback
@@ -519,7 +507,22 @@ int getDConnectMethod(NSString *httpMethod) {
 
 @implementation NSURLRequest (DConnect)
 
-- (void)addParametersFromMultipartToRequestMessage:(DConnectMessage *)requestMessage {
+- (void)addParametersFromHTTPHeaderToRequestMessage:(DConnectRequestMessage *)requestMessage
+{
+    // オリジンの解析
+    NSString *webOrigin = [self valueForHTTPHeaderField:@"origin"];
+    NSString *nativeOrigin = [self valueForHTTPHeaderField:DConnectMessageHeaderGotAPIOrigin];
+    if (nativeOrigin) {
+        [requestMessage setString:nativeOrigin forKey:DConnectMessageOrigin];
+    } else if (webOrigin) {
+        [requestMessage setString:webOrigin forKey:DConnectMessageOrigin];
+    } else {
+        DCLogW(@"origin of request is not specified.");
+    }
+}
+
+- (void)addParametersFromMultipartToRequestMessage:(DConnectMessage *)requestMessage
+{
     UserData *userData = [UserData userDataWithRequest:requestMessage];
     DConnectMultipartParser *multiParser =
     [DConnectMultipartParser multipartParserWithURL:self

@@ -17,15 +17,17 @@
 "display_scope_vcr" = "vcr";
 "display_scope_media_player" = "media_player";
 "display_scope_mediastream_recording" = "mediastream_recording";
-"display_scope_servicediscovery" = "servicediscovery";
 "display_scope_notification" = "notification";
 "display_scope_phone" = "phone";
 "display_scope_proximity" = "proximity";
 "display_scope_rssi" = "rssi";
+"display_scope_servicediscovery" = "servicediscovery";
+"display_scope_serviceinformation" = "serviceinformation";
 "display_scope_settings" = "settings";
 "display_scope_system" = "system";
 "display_scope_vibration" = "vibration";
 "display_scope_canvas" = "canvas";
+"display_scope_touch" = "touch";
 "display_scope_keyevent" = "keyevent";
 
 // Wording
@@ -43,3 +45,7 @@
 // Alert Button
 "alert_btn_cancel" = "Cancel";
 "alert_btn_delete" = "Delete";
+
+// Whitelist
+"whitelist_ui_button_edit" = "Edit";
+"whitelist_ui_button_done" = "Done";

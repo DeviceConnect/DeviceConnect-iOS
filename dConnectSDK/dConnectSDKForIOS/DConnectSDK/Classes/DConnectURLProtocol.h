@@ -21,6 +21,12 @@
 
 @interface NSURLRequest (DConnect)
 /*!
+ HTTPリクエストヘッダを解析し、パラメータをリクエストメッセージに追加する。
+ @param[in,out] requestMessage リクエストヘッダの値を追加するリクエストメッセージ
+ */
+- (void)addParametersFromHTTPHeaderToRequestMessage:(DConnectRequestMessage *)requestMessage;
+
+/*!
  URLパラメータが記述されたマルチパートボディを解析し、パラメータをリクエストメッセージに追加する。
  @param[in,out] requestMessage URLパラメータを追加するリクエストメッセージ
  */

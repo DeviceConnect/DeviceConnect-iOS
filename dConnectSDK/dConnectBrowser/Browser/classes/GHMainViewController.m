@@ -1266,6 +1266,10 @@ typedef enum{
     DConnectManager *mgr = [DConnectManager sharedManager];
     [mgr start];
     [mgr startWebsocket];
+
+    NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
+    BOOL isOriginBlock = [def boolForKey:IS_ORIGIN_BLOCKING];
+    mgr.settings.useOriginBlocking = isOriginBlock;
 }
 
 
@@ -1316,7 +1320,10 @@ typedef enum{
 {
     [super viewWillDisappear:animated];
     [_progressView removeFromSuperview];
-    
+
+    DConnectManager *mgr = [DConnectManager sharedManager];
+    NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
+    [def setBool:mgr.settings.useOriginBlocking forKey:IS_ORIGIN_BLOCKING];
 }
 
 - (void)didReceiveMemoryWarning
