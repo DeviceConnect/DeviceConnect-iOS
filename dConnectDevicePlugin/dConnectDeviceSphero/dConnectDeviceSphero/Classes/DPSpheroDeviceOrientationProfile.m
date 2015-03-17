@@ -12,7 +12,7 @@
 #import "DPSpheroManager.h"
 #import "DPSpheroServiceDiscoveryProfile.h"
 
-typedef void (^OrientationBlock)(DPAttitude attitude, DPPoint3D accel, int interval);
+typedef void (^OrientationBlock)(DPGyroData gyroData, DPPoint3D accel, int interval);
 
 @interface DPSpheroDeviceOrientationProfile() <DPSpheroManagerOrientationDelegate>
 
@@ -39,8 +39,8 @@ typedef void (^OrientationBlock)(DPAttitude attitude, DPPoint3D accel, int inter
         
         __unsafe_unretained typeof(self) weakSelf = self;
 
-        OrientationBlock blk = ^(DPAttitude attitude, DPPoint3D accel, int interval) {
-            DConnectMessage *message = [weakSelf createOrientationWithAttitude:attitude accel:accel interval:interval];
+        OrientationBlock blk = ^(DPGyroData gyroData, DPPoint3D accel, int interval) {
+            DConnectMessage *message = [weakSelf createOrientationWithAttitude:gyroData accel:accel interval:interval];
             
             DConnectEventManager *mgr = [DConnectEventManager sharedManagerForClass:[DPSpheroDevicePlugin class]];
             
@@ -86,15 +86,16 @@ typedef void (^OrientationBlock)(DPAttitude attitude, DPPoint3D accel, int inter
     }
 }
 
-- (DConnectMessage *)createOrientationWithAttitude:(DPAttitude)attitude
+- (DConnectMessage *)createOrientationWithAttitude:(DPGyroData)gyroData
                                              accel:(DPPoint3D)accel
                                           interval:(int)interval
 {
     DConnectMessage *message = [DConnectMessage message];
+    
     DConnectMessage *orientmsg = [DConnectMessage message];
-    [DConnectDeviceOrientationProfile setAlpha:attitude.yaw target:orientmsg];
-    [DConnectDeviceOrientationProfile setBeta:attitude.roll target:orientmsg];
-    [DConnectDeviceOrientationProfile setGamma:attitude.pitch target:orientmsg];
+    [DConnectDeviceOrientationProfile setAlpha:gyroData.x target:orientmsg];
+    [DConnectDeviceOrientationProfile setBeta:gyroData.y target:orientmsg];
+    [DConnectDeviceOrientationProfile setGamma:gyroData.z target:orientmsg];
     DConnectMessage *accelmsg = [DConnectMessage message];
     [DConnectDeviceOrientationProfile setX:accel.x * 9.81 target:accelmsg];
     [DConnectDeviceOrientationProfile setY:accel.y * 9.81 target:accelmsg];
@@ -117,12 +118,12 @@ typedef void (^OrientationBlock)(DPAttitude attitude, DPPoint3D accel, int inter
 #pragma mark - DPSpheroManagerOrientationDelegate
 
 // Orientationのイベント処理
-- (void)spheroManagerStreamingOrientation:(DPAttitude)attitude
+- (void)spheroManagerStreamingOrientation:(DPGyroData)gyroData
                                     accel:(DPPoint3D)accel
                                  interval:(int)interval
 {
     for (OrientationBlock blk in self.orientationBlkArray) {
-        blk(attitude, accel, interval);
+        blk(gyroData, accel, interval);
     }
 }
 
@@ -138,8 +139,8 @@ didReceiveGetOnDeviceOrientationRequest:(DConnectRequestMessage *)request
 
     __unsafe_unretained typeof(self) weakSelf = self;
 
-    __block OrientationBlock blk = ^(DPAttitude attitude, DPPoint3D accel, int interval) {
-        DConnectMessage *orientation = [weakSelf createOrientationWithAttitude:attitude accel:accel interval:interval];
+    __block OrientationBlock blk = ^(DPGyroData gyroData, DPPoint3D accel, int interval) {
+        DConnectMessage *orientation = [weakSelf createOrientationWithAttitude:gyroData accel:accel interval:interval];
         [response setResult:DConnectMessageResultTypeOk];
         [DConnectDeviceOrientationProfile setOrientation:orientation target:response];
 
