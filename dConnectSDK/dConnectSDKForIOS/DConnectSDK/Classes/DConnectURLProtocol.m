@@ -317,6 +317,10 @@ static NSString *scheme = @"http";
                                                                                   data:responseCtx.data];
             // 各exceptionに合わせてエラーメッセージを設定
             NSString *name = [exception name];
+            DConnectResponseMessage * response = [DConnectResponseMessage new];
+            [response setResult:DConnectMessageResultTypeError];
+            [response setVersion:DConnectManagerVersion];
+            [response setProduct:DConnectManagerName];
             if ([name isEqualToString:HAVE_NO_API_EXCEPTION]) {
                 responseCtx.response = [[NSHTTPURLResponse alloc] initWithURL:[request URL]
                                                                    statusCode:404
@@ -329,8 +333,8 @@ static NSString *scheme = @"http";
                                                                    statusCode:200
                                                                   HTTPVersion:@"HTTP/1.1"
                                                                  headerFields:headerDict];
-                const char *rawData = "{\"result\":1,\"errorCode\":2,"
-                            "\"errorMessage\":\"Non-supported Profile was accessed.\"}";
+                [response setErrorToNotSupportProfile];
+                const char *rawData = [[response convertToJSONString] UTF8String];
                 responseCtx.data = [NSData dataWithBytes:rawData length:strlen(rawData)];
             } else if ([name isEqualToString:NOT_SUPPORT_ACTION_EXCEPTION]) {
                 responseCtx.response = [[NSHTTPURLResponse alloc] initWithURL:[request URL]
@@ -343,8 +347,8 @@ static NSString *scheme = @"http";
                                                                    statusCode:200
                                                                   HTTPVersion:@"HTTP/1.1"
                                                                  headerFields:headerDict];
-                const char *rawData = "{\"result\":1,\"errorCode\":1,"
-                                "\"errorMessage\":\"Unknown error was encountered.\"}";
+                [response setErrorToUnknown];
+                const char *rawData = [[response convertToJSONString] UTF8String];
                 responseCtx.data = [NSData dataWithBytes:rawData length:strlen(rawData)];
             }
             callback(responseCtx);

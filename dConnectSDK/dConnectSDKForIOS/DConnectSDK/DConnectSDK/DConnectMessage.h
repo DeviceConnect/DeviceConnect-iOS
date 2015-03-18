@@ -562,6 +562,37 @@ typedef void (^DConnectResponseBlocks)(DConnectResponseMessage *response);
  */
 - (NSArray *) allKeys;
 
+#pragma mark - Common Parameters
+
+/*!
+ @brief レスポンスにDeviceConnectManagerのバージョン名を設定する。
+ 
+ @param[in] version DeviceConnectManagerのバージョン名
+ */
+- (void) setVersion:(NSString *) version;
+
+/*!
+ @brief DeviceConnectManagerのバージョン名を取得する。
+ 
+ @return result DeviceConnectManagerのバージョン名
+ */
+- (NSString *) version;
+
+/*!
+ @brief レスポンスにDeviceConnectManagerの名前を設定する。
+ 
+ @param[in] product DeviceConnectManagerの名前
+ */
+- (void) setProduct:(NSString *) product;
+
+/*!
+ @brief DeviceConnectManagerの名前を取得する。
+ 
+ @return result DeviceConnectManagerの名前
+ */
+- (NSString *) product;
+
+
 @end
 
 /*!
