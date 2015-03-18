@@ -61,7 +61,8 @@ NSString *const DConnectCanvasProfileModeFills  = @"fills";
             NSString *mimeType = [DConnectCanvasProfile mimeTypeFromRequest:request];
             NSString *strX = [DConnectCanvasProfile xFromRequest: request];
             NSString *strY = [DConnectCanvasProfile yFromRequest: request];
-            if (mimeType != nil && ![self checkMimeTypeFormat: mimeType]) {
+            
+            if (mimeType != nil && ![self isMimeTypeWithString: mimeType]) {
                 [response setErrorToInvalidRequestParameterWithMessage: @"mimeType format is incorrect."];
                 return send;
             }
@@ -172,9 +173,8 @@ NSString *const DConnectCanvasProfileModeFills  = @"fills";
     return result;
 }
 
-- (BOOL) checkMimeTypeFormat: (NSString *)mimeType {
-    
-    NSRange match = [mimeType rangeOfString:@"^([a-z]+/[a-z])+$"
+- (BOOL) isMimeTypeWithString: (NSString *)mimeTypeString {
+    NSRange match = [mimeTypeString rangeOfString:@"^(([a-z]*)?/?([a-z])*)?$"
                                     options:NSRegularExpressionSearch];
     BOOL result = match.location != NSNotFound ? YES: NO;
     return result;
