@@ -61,6 +61,18 @@ NSString *const DConnectCanvasProfileModeFills  = @"fills";
             NSString *mimeType = [DConnectCanvasProfile mimeTypeFromRequest:request];
             NSString *strX = [DConnectCanvasProfile xFromRequest: request];
             NSString *strY = [DConnectCanvasProfile yFromRequest: request];
+            if (mimeType != nil && ![self checkMimeTypeFormat: mimeType]) {
+                [response setErrorToInvalidRequestParameterWithMessage: @"mimeType format is incorrect."];
+                return send;
+            }
+            if (strX != nil && ![self isFloatWithString: strX]) {
+                [response setErrorToInvalidRequestParameterWithMessage: @"x is different type."];
+                return send;
+            }
+            if (strY != nil && ![self isFloatWithString: strY]) {
+                [response setErrorToInvalidRequestParameterWithMessage: @"y is different type."];
+                return send;
+            }
             double x = strX.doubleValue;
             double y = strY.doubleValue;
             NSString *mode = [DConnectCanvasProfile modeFromRequest: request];
@@ -157,6 +169,24 @@ NSString *const DConnectCanvasProfileModeFills  = @"fills";
     if (!result) {
         [response setErrorToNotSupportAttribute];
     }
+    return result;
+}
+
+- (BOOL) checkMimeTypeFormat: (NSString *)mimeType {
+    
+    NSRange match = [mimeType rangeOfString:@"^([a-z]+/[a-z])+$"
+                                    options:NSRegularExpressionSearch];
+    BOOL result = match.location != NSNotFound ? YES: NO;
+    return result;
+}
+
+- (BOOL)isFloatWithString:(NSString *)numberString
+{
+    NSRange matchInteger = [numberString rangeOfString:@"^([0-9]*)?$"
+                                               options:NSRegularExpressionSearch];
+    NSRange matchFloat = [numberString rangeOfString:@"^[-+]?([0-9]*)?(\\.)?([0-9]*)?$"
+                                             options:NSRegularExpressionSearch];
+    BOOL result = (matchFloat.location != NSNotFound || matchInteger.location != NSNotFound) ? YES: NO;
     return result;
 }
 
