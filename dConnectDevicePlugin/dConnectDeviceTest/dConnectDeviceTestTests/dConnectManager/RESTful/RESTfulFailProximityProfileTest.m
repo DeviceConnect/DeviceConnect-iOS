@@ -189,27 +189,6 @@
 }
 
 /*!
- * @brief メソッドにGETを指定してondeviceproximity属性のリクエストテストを行う.
- * <pre>
- * 【HTTP通信】
- * Method: GET
- * Path: /proximity/ondeviceproximity?serviceId=xxxx&sessionKey=xxxx
- * </pre>
- * <pre>
- * 【期待する動作】
- * ・resultに1が返ってくること。
- * </pre>
- */
-- (void) testHttpFailProximityOnDeviceProximityEventInvalidMethodGet
-{
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/proximity/ondeviceproximity?serviceId=%@", self.serviceId]];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
-    [request setHTTPMethod:@"GET"];
-    
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":6}", request);
-}
-
-/*!
  * @brief メソッドにPOSTを指定してondeviceproximity属性のリクエストテストを行う.
  * <pre>
  * 【HTTP通信】
@@ -396,27 +375,6 @@
     [request setHTTPMethod:@"DELETE"];
     
     CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":10}", request);
-}
-
-/*!
- * @brief メソッドにGETを指定してonuserproximity属性のリクエストテストを行う.
- * <pre>
- * 【HTTP通信】
- * Method: GET
- * Path: /proximity/onuserproximity?serviceId=xxxx&sessionKey=xxxx
- * </pre>
- * <pre>
- * 【期待する動作】
- * ・resultに1が返ってくること。
- * </pre>
- */
-- (void) testHttpFailProximityOnUserProximityEventInvalidMethodGet
-{
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/proximity/onuserproximity?serviceId=%@", self.serviceId]];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
-    [request setHTTPMethod:@"GET"];
-    
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":3}", request);
 }
 
 /*!

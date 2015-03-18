@@ -188,27 +188,6 @@
 }
 
 /*!
- * @brief メソッドをGETに指定して/deviceorientation/ondeviceorientationにアクセスするテストを行う.
- * <pre>
- * 【HTTP通信】
- * Method: GET
- * Path: /deviceorientation/ondeviceorientation?serviceId=xxxx&sessionKey=xxxx
- * </pre>
- * <pre>
- * 【期待する動作】
- * ・resultに1が返ってくること。
- * </pre>
- */
-- (void) testHttpFailDeviceOrientationOnDeviceOrientationEventInvalidMethodGet
-{
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/deviceorientation/ondeviceorientation?serviceId=%@", self.serviceId]];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
-    [request setHTTPMethod:@"GET"];
-    
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":3}", request);
-}
-
-/*!
  * @brief メソッドをPOSTに指定して/deviceorientation/ondeviceorientationにアクセスするテストを行う.
  * <pre>
  * 【HTTP通信】

@@ -93,6 +93,7 @@
                    self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
+    [request setValue:@"org.devicecconnect.test" forHTTPHeaderField:@"X-GotAPI-Origin"];
     
     NSString *expectedJson = @"{\"result\":0,\"mimeType\":\"image/png\"}";
     NSURLResponse *response = nil;
@@ -119,6 +120,7 @@
     XCTAssertTrue([paramUri hasPrefix:@"http://localhost:4035/gotapi/files?uri="], @"Invalid uri: %@", paramUri);
     request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString: paramUri]];
     [request setHTTPMethod:@"GET"];
+    [request setValue:@"org.devicecconnect.test" forHTTPHeaderField:@"X-GotAPI-Origin"];
     data = [NSURLConnection sendSynchronousRequest:request
                                  returningResponse:&response
                                              error:&error];
@@ -148,6 +150,7 @@
                    self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
+    [request setValue:@"org.devicecconnect.test" forHTTPHeaderField:@"X-GotAPI-Origin"];
     
     NSString *expectedJson = @"{\"result\":0}";
     NSURLResponse *response = nil;
@@ -174,6 +177,7 @@
     XCTAssertTrue([paramUri hasPrefix:@"http://localhost:4035/gotapi/files?uri="], @"Invalid uri: %@", paramUri);
     request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString: paramUri]];
     [request setHTTPMethod:@"GET"];
+    [request setValue:@"org.devicecconnect.test" forHTTPHeaderField:@"X-GotAPI-Origin"];
     data = [NSURLConnection sendSynchronousRequest:request
                                  returningResponse:&response
                                              error:&error];

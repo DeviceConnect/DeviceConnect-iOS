@@ -21,6 +21,27 @@
 @implementation RESTfulNormalProximityProfileTest
 
 /*!
+ * @brief メソッドにGETを指定してondeviceproximity属性のリクエストテストを行う.
+ * <pre>
+ * 【HTTP通信】
+ * Method: GET
+ * Path: /proximity/ondeviceproximity?serviceId=xxxx
+ * </pre>
+ * <pre>
+ * 【期待する動作】
+ * ・resultに0が返ってくること。
+ * </pre>
+ */
+- (void) testHttpNormalProximityOnDeviceProximityGet
+{
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/proximity/ondeviceproximity?serviceId=%@", self.serviceId]];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
+    [request setHTTPMethod:@"GET"];
+    
+    CHECK_RESPONSE(@"{\"proximity\":{\"min\":0,\"max\":0,\"value\":0,\"threshold\":0}}", request);
+}
+
+/*!
  * @brief 近接センサーによる物の検知のコールバック登録テストを行う.
  * <pre>
  * 【HTTP通信】
@@ -66,6 +87,27 @@
     
     CHECK_RESPONSE(@"{\"result\":0}", request);
     
+}
+
+/*!
+ * @brief メソッドにGETを指定してonuserproximity属性のリクエストテストを行う.
+ * <pre>
+ * 【HTTP通信】
+ * Method: GET
+ * Path: /proximity/onuserproximity?serviceId=xxxx
+ * </pre>
+ * <pre>
+ * 【期待する動作】
+ * ・resultに0が返ってくること。
+ * </pre>
+ */
+- (void) testHttpNormalProximityOnUserProximityGet
+{
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/proximity/onuserproximity?serviceId=%@", self.serviceId]];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
+    [request setHTTPMethod:@"GET"];
+    
+    CHECK_RESPONSE(@"{\"proximity\":{\"near\":true}}", request);
 }
 
 /*!

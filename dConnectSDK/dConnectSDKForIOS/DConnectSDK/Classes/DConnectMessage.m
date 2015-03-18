@@ -537,4 +537,22 @@ NSString *const DConnectMessageHeaderGotAPIOrigin = @"X-GotAPI-Origin";
     return json;
 }
 
+#pragma mark - Common Parameters
+
+- (void) setVersion:(NSString *) version {
+    [self setString:version forKey:DConnectMessageVersion];
+}
+
+- (NSString *) version {
+    return [self stringForKey:DConnectMessageVersion];
+}
+
+- (void) setProduct:(NSString *) product {
+    [self setString:product forKey:DConnectMessageProduct];
+}
+
+- (NSString *) product {
+    return [self stringForKey:DConnectMessageProduct];
+}
+
 @end
