@@ -9,10 +9,15 @@
 
 #import "DPChromecastManager.h"
 #import <GoogleCast/GoogleCast.h>
+#import "GCIPUtil.h"
+#import "HTTPServer.h"
 
-static NSString *const kReceiverAppID = @"C70CD4D5";
+static NSString *const kReceiverAppID = @"A24AC057";//@"C70CD4D5";
 static NSString *const kReceiverNamespace
     = @"urn:x-cast:com.name.space.chromecast.test.receiver";
+static NSString * const kDPCrhomeRegexDecimalPoint = @"^[-+]?([0-9]*)?(\\.)?([0-9]*)?$";
+static NSString * const kDPChromeRegexDigit = @"^([0-9]*)?$";
+static NSString * const kDPChromeMimeType = @"^([a-zA-Z]*)(/)([a-zA-Z]*)?$";
 
 // セマフォのタイムアウト
 static const NSTimeInterval DPSemaphoreTimeout = 20.0;
@@ -33,6 +38,7 @@ static const NSTimeInterval DPSemaphoreTimeout = 20.0;
 	GCKDeviceScanner *_deviceScanner;
 	NSMutableDictionary *_dataDict;
 	dispatch_semaphore_t _semaphore;
+    HTTPServer *_httpServer;
 }
 
 @end
@@ -59,6 +65,14 @@ static const NSTimeInterval DPSemaphoreTimeout = 20.0;
 		[_deviceScanner addListener:self];
 		_dataDict = [NSMutableDictionary dictionary];
 		_semaphore = dispatch_semaphore_create(1);
+        // HTTP Server Activate.
+        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+        NSString *documentsDirectory = [paths objectAtIndex:0];
+        
+        _httpServer = [HTTPServer new];
+        [_httpServer setType:@"_http._tcp."];
+        [_httpServer setPort:38088];
+        [_httpServer setDocumentRoot:documentsDirectory];
 	}
 	return self;
 }
@@ -73,6 +87,24 @@ static const NSTimeInterval DPSemaphoreTimeout = 20.0;
 - (void)stopScan
 {
 	[_deviceScanner stopScan];
+}
+
+
+// Http Server Start
+- (void)startHttpServer {
+    [_httpServer start:NULL];
+}
+
+// Http Server Stop
+- (void)stopHttpServer {
+    [_httpServer stop];
+}
+
+// Get Server Host Name
+- (NSString *)getIPString {
+    NSString *ip = [GCIPUtil myIPAddress];
+    UInt16 port = [_httpServer listeningPort];
+    return [NSString stringWithFormat:@"%@:%hu", ip, port];
 }
 
 // デバイスリスト
@@ -193,6 +225,28 @@ static const NSTimeInterval DPSemaphoreTimeout = 20.0;
 	[self sendJsonWithID:deviceID json:@{@"function": @"clear"}];
 }
 
+
+// Canvasの送信
+- (void)sendCanvasWithID:(NSString*)deviceID
+                imageURL:(NSString*)imageURL
+                  imageX:(double)imageX
+                  imageY:(double)imageY
+                    mode:(NSString*)mode {
+    NSDictionary *messageDict = @{@"function": @"canvas_draw",
+                                  @"url": imageURL,
+                                  @"x": @(imageX),
+                                  @"y": @(imageY),
+                                  @"mode": mode};
+    [self sendJsonWithID:deviceID json:messageDict];
+    
+}
+// Canvasのクリア
+- (void)clearCanvasWithID:(NSString*)deviceID {
+    [self sendJsonWithID:deviceID json:@{@"function": @"canvas_delete"}];
+}
+
+
+
 // JSONの送信
 - (void)sendJsonWithID:(NSString*)deviceID json:(NSDictionary *)json
 {
@@ -283,9 +337,7 @@ static const NSTimeInterval DPSemaphoreTimeout = 20.0;
 - (NSInteger)playWithID:(NSString*)deviceID
 {
 	DPChromecastManagerData *data = _dataDict[deviceID];
-    NSLog(@"A");
     if (data.ctrlChannel.mediaStatus.playerState == GCKMediaPlayerStateIdle) {
-        NSLog(@"B");
         GCKMediaMetadata *metadata = [[GCKMediaMetadata alloc] init];
         GCKMediaInformation *mediaInformation =
         [[GCKMediaInformation alloc]
@@ -297,7 +349,6 @@ static const NSTimeInterval DPSemaphoreTimeout = 20.0;
                         customData:nil];
         return [data.ctrlChannel loadMedia:mediaInformation autoplay:YES];
     }
-    NSLog(@"C");
     return [data.ctrlChannel play];
 }
 
@@ -322,6 +373,25 @@ static const NSTimeInterval DPSemaphoreTimeout = 20.0;
 	return data.ctrlChannel.mediaStatus.mediaInformation.streamDuration;
 }
 
+
+// directoryPath内のextension(拡張子)と一致する全てのファイル名
+- (void)removeFileForfileNamesAtDirectoryPath:(NSString*)directoryPath
+                                    extension:(NSString*)extension
+{
+    NSFileManager *fileManager = [NSFileManager new];
+    NSArray *allFileName = [fileManager contentsOfDirectoryAtPath:directoryPath
+                                                            error:NULL];
+    for (NSString *fileName in allFileName) {
+        NSRange range = [fileName rangeOfString:@"dConnectDeviceChromecast"];
+        if ([[fileName pathExtension] isEqualToString:extension]
+            && range.location != NSNotFound) {
+            [fileManager removeItemAtPath:[directoryPath
+                                           stringByAppendingFormat:@"/%@",
+                                           fileName]
+                                    error:NULL];
+        }
+    }
+}
 
 #pragma mark - GCKDeviceManagerDelegate
 
@@ -419,6 +489,30 @@ didCompleteLoadWithSessionID:(NSInteger)sessionID
 			break;
 		}
 	}
+}
+
+/*
+ 数値判定。
+ */
+- (BOOL)existNumberWithString:(NSString *)numberString Regex:(NSString*)regex {
+    NSRange match = [numberString rangeOfString:regex options:NSRegularExpressionSearch];
+    //数値の場合
+    return match.location != NSNotFound;
+}
+
+// 整数かどうかを判定する。 true:存在する
+- (BOOL)existDigitWithString:(NSString*)digit {
+    return [self existNumberWithString:digit Regex:kDPChromeRegexDigit];
+}
+
+// 少数かどうかを判定する。
+- (BOOL)existDecimalWithString:(NSString*)decimal {
+    return [self existNumberWithString:decimal Regex:kDPCrhomeRegexDecimalPoint];
+}
+
+// MimeTypeの判定をする。
+- (BOOL)existMimeTypeWithString:(NSString*)mimeType {
+    return [self existNumberWithString:mimeType Regex:kDPChromeMimeType];
 }
 
 @end

@@ -12,6 +12,7 @@
 #import "DPChromecastServiceDiscoveryProfile.h"
 #import "DPChromecastNotificationProfile.h"
 #import "DPChromecastMediaPlayerProfile.h"
+#import "DPChromecastCanvasProfile.h"
 #import "DPChromecastManager.h"
 
 
@@ -35,6 +36,7 @@
         [self addProfile:[DPChromecastNotificationProfile new]];
         [self addProfile:[DPChromecastMediaPlayerProfile new]];
         [self addProfile:[DConnectServiceInformationProfile new]];
+        [self addProfile:[DPChromecastCanvasProfile new]];
         __weak typeof(self) _self = self;
         dispatch_async(dispatch_get_main_queue(), ^{
             NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
@@ -47,7 +49,10 @@
             [notificationCenter addObserver:_self selector:@selector(enterBackground)
                        name:UIApplicationDidEnterBackgroundNotification
                      object:application];
-            [[DPChromecastManager sharedManager] startScan];
+            DPChromecastManager *mgr = [DPChromecastManager sharedManager];
+            [mgr startScan];
+            [mgr startHttpServer];
+
         });
     }
 
@@ -57,29 +62,33 @@
 // 後始末
 - (void)dealloc
 {
-    // 通知削除
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-    // スキャン停止
-    [[DPChromecastManager sharedManager] stopScan];
-}
-
-//バックグラウンド
-- (void) enterBackground {
-    
     NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
     UIApplication *application = [UIApplication sharedApplication];
     
     [notificationCenter removeObserver:self name:UIApplicationDidBecomeActiveNotification object:application];
     [notificationCenter removeObserver:self name:UIApplicationDidEnterBackgroundNotification object:application];
+    DPChromecastManager *mgr = [DPChromecastManager sharedManager];
+    [mgr stopScan];
+    [mgr stopHttpServer];
+
+}
+
+//バックグラウンド
+- (void) enterBackground {
+    
     // スキャン停止
-    [[DPChromecastManager sharedManager] stopScan];
+    DPChromecastManager *mgr = [DPChromecastManager sharedManager];
+    [mgr stopScan];
+    [mgr stopHttpServer];
 }
 
 // 起動時
 - (void)applicationdidFinishLaunching
 {
     // スキャン開始
-    [[DPChromecastManager sharedManager] startScan];
+    DPChromecastManager *mgr = [DPChromecastManager sharedManager];
+    [mgr startScan];
+    [mgr startHttpServer];
 }
 
 @end

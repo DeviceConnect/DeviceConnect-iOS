@@ -33,7 +33,7 @@
         settingPageForRequest:(DConnectRequestMessage *)request
 {
     // 設定画面用のViewControllerをStoryboardから生成する
-    NSString *bundlePath = [[NSBundle mainBundle] pathForResource:@"dConnectChromecast_resources" ofType:@"bundle"];
+    NSString *bundlePath = [[NSBundle mainBundle] pathForResource:@"dConnectDeviceChromecast_resources" ofType:@"bundle"];
     NSBundle *bundle = [NSBundle bundleWithPath:bundlePath];
     
     UIStoryboard *storyBoard;

@@ -10,10 +10,13 @@
 #import "DPChromecastManager.h"
 #import "DPChromecastMediaPlayerProfile.h"
 #import "DPChromecastDevicePlugin.h"
+#import "DPChromecastMediaContext.h"
 #import <GoogleCast/GoogleCast.h>
 
 
 @interface DPChromecastMediaPlayerProfile()
+/// アセットライブラリ検索用のロック
+@property NSObject *lockAssetsLibraryQuerying;
 
 @end
 
@@ -27,6 +30,100 @@
     }
     return self;
 }
+
+
+- (NSArray *)contextsBySearchingAssetsLibraryWithQuery:(NSString *)query
+                                              mimeType:(NSString *)mimeType
+{
+    NSAssert(![NSThread isMainThread],
+             @"%s can not be invoked from the main queue; please invoke it from the other.", __PRETTY_FUNCTION__);
+    
+    __block BOOL failed = NO;
+    __block NSMutableArray *ctxArr = [NSMutableArray new];
+    
+    @synchronized(_lockAssetsLibraryQuerying) {
+        // アセットライブラリへのクエリ処理を排他にする。
+        
+        dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
+        dispatch_time_t timeout = dispatch_time(DISPATCH_TIME_NOW, NSEC_PER_SEC * 30);
+        
+        ALAssetsLibrary *library = [ALAssetsLibrary new];
+        NSUInteger groupTypes = ALAssetsGroupAll;
+        NSString *mimeTypeLowercase = mimeType.lowercaseString;
+        id mainLoopBlock = ^(ALAssetsGroup *group, BOOL *stop1)
+        {
+            if (failed) {
+                // 失敗状態になっているのなら、処理を切り上げる。
+                *stop1 = YES;
+                return;
+            }
+            
+            if(group != nil) {
+                [group enumerateAssetsUsingBlock:^(ALAsset *result, NSUInteger index, BOOL *stop2)
+                 {
+                     if (failed) {
+                         // 失敗状態になっているのなら、処理を切り上げる。
+                         *stop2 = YES;
+                         return;
+                     }
+                     
+                     if (result) {
+                         DPChromecastMediaContext *ctx = [DPChromecastMediaContext contextWithAsset:result];
+                         if (!ctx) {
+                             // コンテキスト作成失敗；スキップ
+                             return;
+                         }
+                         
+                         // クエリー検索
+                         if (query) {
+                             // クエリーのマッチングはファイル名に対して行う。
+                             NSRange result = [ctx.title rangeOfString:query];
+                             if (result.location == NSNotFound && result.length == 0) {
+                                 // クエリーにマッチせず；スキップ。
+                                 return;
+                             }
+                         }
+                         // MIMEタイプ検索
+                         if (mimeType) {
+                             NSRange result = [ctx.mimeType rangeOfString:mimeTypeLowercase];
+                             if (result.location == NSNotFound && result.length == 0) {
+                                 // MIMEタイプにマッチせず；スキップ。
+                                 return;
+                             }
+                         }
+                         
+                         @synchronized(ctxArr) {
+                             [ctxArr addObject:ctx];
+                         }
+                     }
+                 }];
+            } else {
+                // group == nil ⇒ イテレーション終了
+                dispatch_semaphore_signal(semaphore);
+            }
+        };
+        id failBlock = ^(NSError *error)
+        {
+            failed = YES;
+            return;
+        };
+        
+        [library enumerateGroupsWithTypes:groupTypes
+                               usingBlock:mainLoopBlock
+                             failureBlock:failBlock];
+        
+        // ライブラリのクエリー（非同期）が終わる、もしくはタイムアウトするまで待つ
+        long result = dispatch_semaphore_wait(semaphore, timeout);
+        if (result != 0) {
+            // タイムアウト
+            failed = YES;
+        }
+    }
+    
+    return failed ? nil : ctxArr;
+}
+
+
 
 // 共通リクエスト処理
 - (BOOL)handleRequest:(DConnectRequestMessage *)request
@@ -53,6 +150,63 @@
         [[DConnectManager sharedManager] sendResponse:response];
     }];
     return NO;
+}
+
+
+- (void)saveMovie:(DPChromecastMediaContext *)ctx
+              callback:(void (^)(NSString* url))callback
+{
+    NSDateFormatter *dateFormatter = [NSDateFormatter new];
+    dateFormatter.dateStyle = NSDateFormatterMediumStyle;
+    dateFormatter.timeStyle = NSDateFormatterNoStyle;
+    dateFormatter.dateFormat = @"yyyyMMddHHmmss";
+    NSString *formattedDateString = [dateFormatter stringFromDate:[NSDate date]];
+    
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0];
+    NSString *fileName = [@"dConnectDeviceChromecastMovie_" stringByAppendingFormat:@"%@.MOV", formattedDateString];
+    
+    NSString *dataPath = [documentsDirectory stringByAppendingPathComponent:fileName];
+    __block NSFileManager *fileManager = [NSFileManager defaultManager];
+    __block NSString* url = [@"http://" stringByAppendingFormat:@"%@/%@",
+                                 [[DPChromecastManager sharedManager] getIPString],
+                                 fileName];
+
+    AVAssetExportSession *exportSession = [AVAssetExportSession exportSessionWithAsset:ctx.media
+                                                               presetName:AVAssetExportPresetLowQuality];
+    exportSession.outputURL = [NSURL fileURLWithPath:dataPath];
+    exportSession.outputFileType = AVFileTypeQuickTimeMovie;
+    [exportSession exportAsynchronouslyWithCompletionHandler:^{
+        switch ([exportSession status]) {
+            case AVAssetExportSessionStatusCompleted:
+            {
+                NSData *compressedData = [NSData dataWithContentsOfURL:exportSession.outputURL];
+                BOOL success = [fileManager fileExistsAtPath:dataPath];
+                if (success) {
+                    compressedData = [NSData dataWithContentsOfFile:dataPath];
+                } else {
+                    [compressedData writeToFile:dataPath atomically:YES];
+                }
+                callback(url);
+                return;
+            }
+            case AVAssetExportSessionStatusFailed:
+            {
+                break;
+            }
+            case AVAssetExportSessionStatusCancelled:
+            {
+                break;
+            }
+            default:
+            {
+                break;
+            }
+            callback(nil);
+        }
+        
+    }];
+    
 }
 
 
@@ -83,35 +237,171 @@ didReceiveGetMediaRequest:(DConnectRequestMessage *)request
                  serviceId:(NSString *)serviceId
                   mediaId:(NSString *)mediaId
 {
-    response.result = DConnectMessageResultTypeOk;
-    [DConnectMediaPlayerProfile setMIMEType:@"video/mov" target:response];
-    [DConnectMediaPlayerProfile setTitle:@"test title" target:response];
-    [DConnectMediaPlayerProfile setType:@"test type" target:response];
-    [DConnectMediaPlayerProfile setLanguage:@"ja" target:response];
-    [DConnectMediaPlayerProfile setDescription:@"test description" target:response];
-    [DConnectMediaPlayerProfile setDuration:60000 target:response];
+    if (!mediaId) {
+        [response setErrorToInvalidRequestParameterWithMessage:@"mediaId must be specified."];
+        return YES;
+    }
+    DPChromecastMediaContext *ctx = [DPChromecastMediaContext contextWithURL:
+                                     [NSURL URLWithString:mediaId]];
+    if (!ctx) {
+        [response setErrorToInvalidRequestParameterWithMessage:@"mediaId must be specified."];
+        return YES;
+    }
+
     
-    DConnectMessage *creator = [DConnectMessage message];
-    [DConnectMediaPlayerProfile setCreator:@"test creator" target:creator];
-    [DConnectMediaPlayerProfile setRole:@"test composer" target:creator];
-    
-    DConnectArray *creators = [DConnectArray array];
-    [creators addMessage:creator];
-    
-    DConnectArray *keywords = [DConnectArray array];
-    [keywords addString:@"keyword1"];
-    [keywords addString:@"keyword2"];
-    
-    DConnectArray *genres = [DConnectArray array];
-    [genres addString:@"test1"];
-    [genres addString:@"test2"];
-    
-    [DConnectMediaPlayerProfile setCreators:creators target:response];
-    [DConnectMediaPlayerProfile setKeywords:keywords target:response];
-    [DConnectMediaPlayerProfile setGenres:genres target:response];
+    if ([mediaId isEqualToString:
+         @"https://github.com/DeviceConnect/DeviceConnect-Android/wiki/sphero_demo.MOV"]) {
+        [response setResult:DConnectMessageResultTypeOk];
+        [DConnectMediaPlayerProfile setMIMEType:@"video/quicktime" target:response];
+        [DConnectMediaPlayerProfile setTitle:@"Title: Sample" target:response];
+        [DConnectMediaPlayerProfile setType:@"test type" target:response];
+        [DConnectMediaPlayerProfile setLanguage:@"ja" target:response];
+        [DConnectMediaPlayerProfile setDescription:@"test description" target:response];
+        [DConnectMediaPlayerProfile setDuration:60000 target:response];
+        
+        DConnectMessage *creator = [DConnectMessage message];
+        [DConnectMediaPlayerProfile setCreator:@"test creator" target:creator];
+        [DConnectMediaPlayerProfile setRole:@"test composer" target:creator];
+        
+        DConnectArray *creators = [DConnectArray array];
+        [creators addMessage:creator];
+        
+        DConnectArray *keywords = [DConnectArray array];
+        [keywords addString:@"keyword1"];
+        [keywords addString:@"keyword2"];
+        
+        DConnectArray *genres = [DConnectArray array];
+        [genres addString:@"test1"];
+        [genres addString:@"test2"];
+        
+        [DConnectMediaPlayerProfile setCreators:creators target:response];
+        [DConnectMediaPlayerProfile setKeywords:keywords target:response];
+        [DConnectMediaPlayerProfile setGenres:genres target:response];
+
+    } else {
+        NSURL *url = [NSURL URLWithString:mediaId];
+        DPChromecastMediaContext *ctx = [DPChromecastMediaContext contextWithURL:url];
+        if (ctx) {
+            [ctx setVariousMetadataToMessage:response omitMediaId:YES];
+            [response setResult:DConnectMessageResultTypeOk];
+        } else {
+            [response setErrorToUnknownWithMessage:@"Failed to obtain a media context."];
+        }
+    }
     
     return YES;
 }
+
+
+- (void)checkOrder:(NSString **)sortOrder
+        sortTarget:(NSString **)sortTarget
+          response:(DConnectResponseMessage *)response
+             order:(NSArray *)order
+{
+    
+    
+    if (order) {
+        *sortTarget = order[0];
+        if (order.count >= 2) {
+            *sortOrder = order[1];
+            
+            if (!(*sortTarget) || !(*sortOrder)) {
+                [response setErrorToInvalidRequestParameterWithMessage:@"order is invalid."];
+            }
+        }
+    } else {
+        *sortTarget = DConnectMediaPlayerProfileParamTitle;
+        *sortOrder = DConnectMediaPlayerProfileOrderASC;
+    }
+}
+
+- (void)compareOrderWithResponse:(DConnectResponseMessage *)response
+                      sortTarget:(NSString *)sortTarget
+                       sortOrder:(NSString *)sortOrder
+                      comparator:(NSComparator *)comparator
+{
+    // ソート対象のNSStringもしくはNSNumberを返却するブロックを用意する。
+    id (^accessor)(id);
+    NSComparisonResult (^innerComp)(id, id);
+    if ([sortTarget isEqualToString:DConnectMediaPlayerProfileParamMediaId]) {
+        accessor = ^id(id obj) {
+            return [(DPChromecastMediaContext *)obj mediaId];
+        };
+        innerComp = ^NSComparisonResult(id obj1, id obj2) {
+            return [obj1 localizedCaseInsensitiveCompare: obj2];
+        };
+    } else if ([sortTarget isEqualToString:DConnectMediaPlayerProfileParamMIMEType]) {
+        accessor = ^id(id obj) {
+            return [(DPChromecastMediaContext *)obj mimeType];
+        };
+        innerComp = ^NSComparisonResult(id obj1, id obj2) {
+            return [obj1 localizedCaseInsensitiveCompare: obj2];
+        };
+    } else if ([sortTarget isEqualToString:DConnectMediaPlayerProfileParamTitle]) {
+        accessor = ^id(id obj) {
+            return [(DPChromecastMediaContext *)obj title];
+        };
+        innerComp = ^NSComparisonResult(id obj1, id obj2) {
+            return [obj1 localizedCaseInsensitiveCompare: obj2];
+        };
+    } else if ([sortTarget isEqualToString:DConnectMediaPlayerProfileParamType]) {
+        accessor = ^id(id obj) {
+            return [(DPChromecastMediaContext *)obj type];
+        };
+        innerComp = ^NSComparisonResult(id obj1, id obj2) {
+            return [obj1 localizedCaseInsensitiveCompare: obj2];
+        };
+    } else if ([sortTarget isEqualToString:DConnectMediaPlayerProfileParamLanguage]) {
+        accessor = ^id(id obj) {
+            return [(DPChromecastMediaContext *)obj language];
+        };
+        innerComp = ^NSComparisonResult(id obj1, id obj2) {
+            return [obj1 localizedCaseInsensitiveCompare: obj2];
+        };
+    } else if ([sortTarget isEqualToString:DConnectMediaPlayerProfileParamDescription]) {
+        accessor = ^id(id obj) {
+            return [(DPChromecastMediaContext *)obj description];
+        };
+        innerComp = ^NSComparisonResult(id obj1, id obj2) {
+            return [obj1 localizedCaseInsensitiveCompare: obj2];
+        };
+    } else if ([sortTarget isEqualToString:DConnectMediaPlayerProfileParamDuration]) {
+        accessor = ^id(id obj) {
+            return [(DPChromecastMediaContext *)obj duration];
+        };
+        innerComp = ^NSComparisonResult(id obj1, id obj2) {
+            return [obj1 compare: obj2];
+        };
+    } else if ([sortTarget isEqualToString:DConnectMediaPlayerProfileParamImageURI]) {
+        accessor = ^id(id obj) {
+            return[(DPChromecastMediaContext *)obj imageUri].absoluteString;
+        };
+        innerComp = ^NSComparisonResult(id obj1, id obj2) {
+            return [obj1 localizedCaseInsensitiveCompare: obj2];
+        };
+    } else {
+        [response setErrorToInvalidRequestParameterWithMessage:@"order is invalid."];
+    }
+    
+    
+    if ([sortOrder isEqualToString:DConnectMediaPlayerProfileOrderASC]) {
+        *comparator = ^NSComparisonResult(id obj1, id obj2) {
+            id obj1Tmp = accessor(obj1);
+            id obj2Tmp = accessor(obj2);
+            return innerComp(obj1Tmp, obj2Tmp);
+        };
+    } else if ([sortOrder isEqualToString:DConnectMediaPlayerProfileOrderDESC]) {
+        *comparator = ^NSComparisonResult(id obj1, id obj2) {
+            id obj1Tmp = accessor(obj1);
+            id obj2Tmp = accessor(obj2);
+            return innerComp(obj2Tmp, obj1Tmp);
+        };
+    } else if (![sortOrder isEqualToString:DConnectMediaPlayerProfileOrderASC]
+               && ![sortOrder isEqualToString:DConnectMediaPlayerProfileOrderDESC]) {
+        [response setErrorToInvalidRequestParameterWithMessage:@"order is invalid."];
+    }
+}
+
 
 // コンテンツ情報取得リクエストを受け取った
 - (BOOL)              profile:(DConnectMediaPlayerProfile *)profile
@@ -120,19 +410,49 @@ didReceiveGetMediaListRequest:(DConnectRequestMessage *)request
                      serviceId:(NSString *)serviceId
                         query:(NSString *)query
                      mimeType:(NSString *)mimeType
-                        order:(NSString *)order
+                        order:(NSArray *)order
                        offset:(NSNumber *)offset
                         limit:(NSNumber *)limit
 {
-    response.result = DConnectMessageResultTypeOk;
-    [DConnectMediaPlayerProfile setCount:1 target:response];
+    NSString *sortTarget;
+    NSString *sortOrder;
+    [self checkOrder:&sortOrder sortTarget:&sortTarget response:response order:order];
+    if ([response integerForKey:DConnectMessageResult] == DConnectMessageResultTypeError) {
+        return YES;
+    }
+    NSComparator comp;
+    [self compareOrderWithResponse:response sortTarget:sortTarget sortOrder:sortOrder comparator:&comp];
+    if ([response integerForKey:DConnectMessageResult] == DConnectMessageResultTypeError) {
+        return YES;
+    }
+    
+    if (offset && offset.integerValue < 0) {
+        [response setErrorToInvalidRequestParameterWithMessage:@"offset must be a non-negative value."];
+        return YES;
+    }
+    NSString *offsetString = [request stringForKey:DConnectMediaPlayerProfileParamOffset];
+    NSString *limitString = [request stringForKey:DConnectMediaPlayerProfileParamLimit];
+    if (![[DPChromecastManager sharedManager] existDecimalWithString:offsetString]) {
+        [response setErrorToInvalidRequestParameterWithMessage:@"offset is Invalid."];
+        return YES;
+    }
+    if (limit && limit.integerValue <= 0) {
+        [response setErrorToInvalidRequestParameterWithMessage:@"limit must be a positive value."];
+        return YES;
+    }
+    if (![[DPChromecastManager sharedManager] existDecimalWithString:limitString]) {
+        [response setErrorToInvalidRequestParameterWithMessage:@"limit is Invalid."];
+        return YES;
+    }
+    //サンプルムービの追加
+    [response setResult:DConnectMessageResultTypeOk];
     
     DConnectMessage *medium = [DConnectMessage message];
     [DConnectMediaPlayerProfile setMediaId:
-        @"https://raw.githubusercontent.com/DeviceConnect/DeviceConnect/master/sphero_demo.MOV"
+        @"https://github.com/DeviceConnect/DeviceConnect-Android/wiki/sphero_demo.MOV"
                                     target:medium];
-    [DConnectMediaPlayerProfile setMIMEType:@"video/mov" target:medium];
-    [DConnectMediaPlayerProfile setTitle:@"test title" target:medium];
+    [DConnectMediaPlayerProfile setMIMEType:@"video/quicktime" target:medium];
+    [DConnectMediaPlayerProfile setTitle:@"Title: Sample" target:medium];
     [DConnectMediaPlayerProfile setType:@"test type" target:medium];
     [DConnectMediaPlayerProfile setLanguage:@"ja" target:medium];
     [DConnectMediaPlayerProfile setDescription:@"test description" target:medium];
@@ -160,7 +480,36 @@ didReceiveGetMediaListRequest:(DConnectRequestMessage *)request
     DConnectArray *media = [DConnectArray array];
     [media addMessage:medium];
     
+    
+    NSMutableArray *ctxArr = [NSMutableArray array];
+    [ctxArr addObjectsFromArray:[self contextsBySearchingAssetsLibraryWithQuery:query mimeType:mimeType]];
+    if (offset && offset.integerValue >= ctxArr.count) {
+        [response setErrorToInvalidRequestParameterWithMessage:@"offset exceeds the size of the media list."];
+        return YES;
+    }
+    
+    // 並び替えを実行
+    NSArray *tmpArr = [ctxArr sortedArrayUsingComparator:comp];
+    
+    // ページングのために配列の一部分だけ抜き出し
+    if (offset || limit) {
+        NSUInteger offsetVal = offset ? offset.unsignedIntegerValue : 0;
+        NSUInteger limitVal = limit ? limit.unsignedIntegerValue : ctxArr.count;
+        tmpArr = [tmpArr subarrayWithRange:
+                  NSMakeRange(offset.unsignedIntegerValue,
+                              MIN(ctxArr.count - offsetVal, limitVal))];
+    }
+    
+    [DConnectMediaPlayerProfile setCount:(int)tmpArr.count target:response];
+    for (DPChromecastMediaContext *ctx in tmpArr) {
+        DConnectMessage *medium = [DConnectMessage message];
+        [ctx setVariousMetadataToMessage:medium omitMediaId:NO];
+        [media addMessage:medium];
+    }
+    
     [DConnectMediaPlayerProfile setMedia:media target:response];
+    [DConnectMediaPlayerProfile setCount:media.count target:response];
+
     
     return YES;
 }
@@ -229,25 +578,54 @@ didReceiveGetMuteRequest:(DConnectRequestMessage *)request
                    serviceId:(NSString *)serviceId
                     mediaId:(NSString *)mediaId
 {
-    // パラメータチェック
-    if (mediaId == nil) {
-        [response setErrorToInvalidRequestParameterWithMessage:@"Content ID cannot be empty"];
+    if (!mediaId) {
+        [response setErrorToInvalidRequestParameterWithMessage:@"mediaId must be specified."];
         return YES;
     }
-    
-    // リクエスト処理
-    return [self handleRequest:request
-                      response:response
-                      serviceId:serviceId
-                      callback:
-            ^{
-                // ロード
-				NSInteger requestId = [[DPChromecastManager sharedManager] loadMediaWithID:serviceId mediaID:mediaId];
-                //リクエストを送信できなかった
-                if(requestId == kGCKInvalidRequestID){
-                    [response setString:@"mediaId is not exist" forKey:@"value"];
-                }
-            }];
+    if ([mediaId isEqualToString:
+         @"https://github.com/DeviceConnect/DeviceConnect-Android/wiki/sphero_demo.MOV"]) {
+        return [self handleRequest:request
+                          response:response
+                         serviceId:serviceId
+                          callback:
+                ^{
+                    // ロード
+                    NSInteger requestId = [[DPChromecastManager sharedManager] loadMediaWithID:serviceId
+                                                                                       mediaID:mediaId];
+                    //リクエストを送信できなかった
+                    if(requestId == kGCKInvalidRequestID){
+                        [response setString:@"mediaId is not exist" forKey:@"value"];
+                    }
+                }];
+    } else {
+        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+        NSString *documentsDirectory = [paths objectAtIndex:0];
+        [[DPChromecastManager sharedManager] removeFileForfileNamesAtDirectoryPath:documentsDirectory
+                                                                         extension:@"MOV"];
+        
+        DPChromecastMediaContext *ctx = [DPChromecastMediaContext contextWithURL:
+                                            [NSURL URLWithString:mediaId]];
+        if (!ctx) {
+            [response setErrorToInvalidRequestParameterWithMessage:@"mediaId must be specified."];
+            return YES;
+        }
+        [self saveMovie:ctx
+               callback:^(NSString *url) {
+                   if (url) {
+                       DPChromecastManager *mgr = [DPChromecastManager sharedManager];
+                       NSInteger requestId = [mgr loadMediaWithID:serviceId mediaID:url];
+                       if(requestId == kGCKInvalidRequestID){
+                           [response setErrorToIllegalServerStateWithMessage:@"mediaId is not exist"];
+                       } else {
+                           [response setResult:DConnectMessageResultTypeOk];
+                       }
+                   } else {
+                       [response setErrorToNotFoundService];
+                   }
+                   [[DConnectManager sharedManager] sendResponse:response];
+               }];
+        return NO;
+    }
 }
 
 // 再生開始リクエストを受け取った
@@ -376,8 +754,13 @@ didReceivePutSeekRequest:(DConnectRequestMessage *)request
     DPChromecastManager *mgr = [DPChromecastManager sharedManager];
     
     // パラメータチェック
-    if (pos == nil || [pos doubleValue] < 0 || [mgr durationWithID:serviceId] <[pos doubleValue]) {
+    if (pos == nil || [pos doubleValue] < 0 || [mgr durationWithID:serviceId] < [pos doubleValue]) {
         [response setErrorToInvalidRequestParameter];
+        return YES;
+    }
+    NSString *posString = [request stringForKey:DConnectMediaPlayerProfileParamPos];
+    if (![[DPChromecastManager sharedManager] existDecimalWithString:posString]) {
+        [response setErrorToInvalidRequestParameterWithMessage:@"pos is Invalid."];
         return YES;
     }
     
@@ -405,7 +788,12 @@ didReceivePutVolumeRequest:(DConnectRequestMessage *)request
         [response setErrorToInvalidRequestParameter];
         return YES;
     }
-    
+    NSString *volString = [request stringForKey:DConnectMediaPlayerProfileParamPos];
+    if (![[DPChromecastManager sharedManager] existDecimalWithString:volString]) {
+        [response setErrorToInvalidRequestParameterWithMessage:@"Volume is Invalid."];
+        return YES;
+    }
+
     // リクエスト処理
     return [self handleRequest:request
                       response:response
