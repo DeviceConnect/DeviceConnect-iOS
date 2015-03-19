@@ -218,7 +218,7 @@ didReceivePutOnDownRequest:(DConnectRequestMessage *)request
         } eventCallback:^(long attr, int keyId, int keyType) {
             // Create DConnect message
             DConnectMessage *message = [DConnectMessage message];
-            [DConnectKeyEventProfile setId:keyId + [self getKeyTypeFlagValue:keyId] target:message];
+            [DConnectKeyEventProfile setId:keyId + [self getKeyTypeFlagValue:keyType] target:message];
             [DConnectKeyEventProfile setConfig:[self getConfig:keyType KeyCode:keyId] target:message];
 
             [self setKeyEventCache:(NSString *)DConnectKeyEventProfileAttrOnDown
@@ -266,7 +266,7 @@ didReceivePutOnUpRequest:(DConnectRequestMessage *)request
         } eventCallback:^(long attr, int keyId, int keyType) {
             // Create DConnect message
             DConnectMessage *message = [DConnectMessage message];
-            [DConnectKeyEventProfile setId:keyId + [self getKeyTypeFlagValue:keyId] target:message];
+            [DConnectKeyEventProfile setId:keyId + [self getKeyTypeFlagValue:keyType] target:message];
             [DConnectKeyEventProfile setConfig:[self getConfig:keyType KeyCode:keyId] target:message];
             
             [self setKeyEventCache:(NSString *)DConnectKeyEventProfileAttrOnUp
