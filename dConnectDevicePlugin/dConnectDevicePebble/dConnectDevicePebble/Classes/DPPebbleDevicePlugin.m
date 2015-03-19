@@ -16,6 +16,7 @@
 #import "DPPebbleDeviceOrientationProfile.h"
 #import "DPPebbleNotificationProfile.h"
 #import "DPPebbleCanvasProfile.h"
+#import "DPPebbleKeyEventProfile.h"
 #import "PebbleViewController.h"
 #import "DPPebbleManager.h"
 
@@ -47,6 +48,7 @@
 		[self addProfile:[DPPebbleDeviceOrientationProfile new]];
         [self addProfile:[DPPebbleCanvasProfile new]];
         [self addProfile:[DConnectServiceInformationProfile new]];
+        [self addProfile:[DPPebbleKeyEventProfile new]];
 		
 		dispatch_async(dispatch_get_main_queue(), ^{
 			NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];

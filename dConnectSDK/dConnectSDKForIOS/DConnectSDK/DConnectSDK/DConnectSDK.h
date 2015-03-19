@@ -64,6 +64,7 @@
 #import <DConnectSDK/DConnectAvailabilityProfile.h>
 #import <DConnectSDK/DConnectAuthorizationProfile.h>
 #import <DConnectSDK/DConnectTouchProfile.h>
+#import <DConnectSDK/DConnectKeyEventProfile.h>
 
 #import <DConnectSDK/DConnectEvent.h>
 #import <DConnectSDK/DConnectEventCacheController.h>
