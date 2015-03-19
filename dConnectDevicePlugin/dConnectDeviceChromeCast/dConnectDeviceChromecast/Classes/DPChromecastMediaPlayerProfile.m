@@ -788,7 +788,7 @@ didReceivePutVolumeRequest:(DConnectRequestMessage *)request
         [response setErrorToInvalidRequestParameter];
         return YES;
     }
-    NSString *volString = [request stringForKey:DConnectMediaPlayerProfileParamPos];
+    NSString *volString = [request stringForKey:DConnectMediaPlayerProfileParamVolume];
     if (![[DPChromecastManager sharedManager] existDecimalWithString:volString]) {
         [response setErrorToInvalidRequestParameterWithMessage:@"Volume is Invalid."];
         return YES;
