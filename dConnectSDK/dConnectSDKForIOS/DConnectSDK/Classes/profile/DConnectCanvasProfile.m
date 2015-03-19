@@ -174,10 +174,31 @@ NSString *const DConnectCanvasProfileModeFills  = @"fills";
 }
 
 - (BOOL) isMimeTypeWithString: (NSString *)mimeTypeString {
-    NSRange match = [mimeTypeString rangeOfString:@"^(([a-z]*)?/?([a-z])*)?$"
-                                    options:NSRegularExpressionSearch];
-    BOOL result = match.location != NSNotFound ? YES: NO;
-    return result;
+
+    // create characterset
+    NSMutableCharacterSet *characterSet = [NSMutableCharacterSet alphanumericCharacterSet];
+    [characterSet addCharactersInString: @"-_."];
+    
+    // check
+    NSArray *splits = [mimeTypeString componentsSeparatedByString:@"/"];
+    if (splits != nil) {
+        NSInteger count = [splits count];
+        if (count >= 2) {
+            for (int i = 0; i < count; i++) {
+                NSString *split = [splits objectAtIndex: i];
+                NSCharacterSet *charsetSplit = [NSCharacterSet characterSetWithCharactersInString: split];
+                
+                if (![characterSet isSupersetOfSet: charsetSplit]) {
+                    return NO;
+                }
+            }
+            return YES;
+        } else {
+            return NO;
+        }
+    } else {
+        return NO;
+    }
 }
 
 - (BOOL)isFloatWithString:(NSString *)numberString
