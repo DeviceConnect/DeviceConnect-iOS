@@ -12,7 +12,7 @@
 #import "GCIPUtil.h"
 #import "HTTPServer.h"
 
-static NSString *const kReceiverAppID = @"A24AC057";//@"[YOUR APPLICATION ID]";
+static NSString *const kReceiverAppID = @"[YOUR APPLICATION ID]";
 static NSString *const kReceiverNamespace
     = @"urn:x-cast:com.name.space.chromecast.test.receiver";
 static NSString * const kDPCrhomeRegexDecimalPoint = @"^[-+]?([0-9]*)?(\\.)?([0-9]*)?$";
