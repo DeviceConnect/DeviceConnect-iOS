@@ -103,6 +103,17 @@ NSString *const DPIRKitRemoteControllerProfileParamMessage = @"message";
         if (device) {
             
             NSString *message = [self messageFromRequest:request];
+            if (message) {
+                NSData *jsonData = [message dataUsingEncoding:NSUnicodeStringEncoding];
+                id jsonObj = [NSJSONSerialization JSONObjectWithData:jsonData
+                                                        options:NSJSONReadingAllowFragments
+                                                          error:NULL];
+                if (![NSJSONSerialization isValidJSONObject:jsonObj]) {
+                    [response setErrorToInvalidRequestParameter];
+                    return YES;
+                }
+            }
+            
             if (!message) {
                 [response setErrorToInvalidRequestParameter];
             } else {
