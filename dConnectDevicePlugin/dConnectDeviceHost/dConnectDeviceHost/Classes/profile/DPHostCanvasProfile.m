@@ -75,6 +75,8 @@ DPHostCanvasUIViewController *_displayViewController;
     } else {
         dispatch_async(dispatch_get_main_queue(), ^{
             [_displayViewController setDrawObject: drawImage];
+            [response setResult:DConnectMessageResultTypeOk];
+            [[DConnectManager sharedManager] sendResponse:response];
         });
     }
 
