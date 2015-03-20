@@ -840,7 +840,7 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
             [self appendSampleBuffer:sampleBuffer recorderContext:recorder isAudio:isAudio];
         }
     }
-    if (requireRelease) {
+    if (requireRelease && sampleBuffer) {
         CFRelease(sampleBuffer);
     }
 }
@@ -900,13 +900,15 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
             if (recorderCtx.writer.status == AVAssetWriterStatusWriting) {
                 AVAssetWriterInput *writerInput =
                 isAudio ? recorderCtx.audioWriterInput : recorderCtx.videoWriterInput;
-                if (!writerInput.readyForMoreMediaData) {
-                    return NO;
-                }
-                if ([writerInput appendSampleBuffer:sampleBuffer]) {
-                    return YES;
-                } else if (recorderCtx.writer.status == AVAssetWriterStatusFailed) {
-                    return NO;
+                if (writerInput && sampleBuffer) {
+                    if (!writerInput.readyForMoreMediaData) {
+                        return NO;
+                    }
+                    if ([writerInput appendSampleBuffer:sampleBuffer]) {
+                        return YES;
+                    } else if (recorderCtx.writer.status == AVAssetWriterStatusFailed) {
+                        return NO;
+                    }
                 }
             }
             
@@ -1612,6 +1614,12 @@ didReceivePutMuteTrackRequest:(DConnectRequestMessage *)request
          @"target was not specified, and no default target was set; please specify an existing target."];
         return YES;
     }
+    if (_recorderArr.count < idx) {
+        [response setErrorToInvalidRequestParameterWithMessage:
+         @"target was not specified, and no default target was set; please specify an existing target."];
+        return YES;
+    }
+
     _currentRecorderId = [NSNumber numberWithUnsignedLongLong:idx];
     DPHostRecorderContext *recorder;
     @try {
@@ -1674,6 +1682,11 @@ didReceivePutUnmuteTrackRequest:(DConnectRequestMessage *)request
         // target省略時はデフォルトのレコーダーを指定する。
         idx = [_defaultVideoRecorderId unsignedLongLongValue];
     } else {
+        [response setErrorToInvalidRequestParameterWithMessage:
+         @"target was not specified, and no default target was set; please specify an existing target."];
+        return YES;
+    }
+    if (_recorderArr.count < idx) {
         [response setErrorToInvalidRequestParameterWithMessage:
          @"target was not specified, and no default target was set; please specify an existing target."];
         return YES;

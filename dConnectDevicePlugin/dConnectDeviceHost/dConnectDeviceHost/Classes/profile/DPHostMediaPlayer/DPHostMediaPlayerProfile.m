@@ -533,21 +533,22 @@ didReceiveGetMediaRequest:(DConnectRequestMessage *)request
 }
 
 - (void)checkOrder:(NSString **)sortOrder
-      sortTarget:(NSString **)sortTarget_p
+      sortTarget:(NSString **)sortTarget
           response:(DConnectResponseMessage *)response
              order:(NSArray *)order
 {
     
     
     if (order) {
-        *sortTarget_p = order[0];
-        *sortOrder = order[1];
-        
-        if (!(*sortTarget_p) || !(*sortOrder)) {
+        *sortTarget = order[0];
+        if (order.count >= 2) {
+            *sortOrder = order[1];
+        }
+        if (!(*sortTarget) || !(*sortOrder)) {
             [response setErrorToInvalidRequestParameterWithMessage:@"order is invalid."];
         }
     } else {
-        *sortTarget_p = DConnectMediaPlayerProfileParamTitle;
+        *sortTarget = DConnectMediaPlayerProfileParamTitle;
         *sortOrder = DConnectMediaPlayerProfileOrderASC;
     }
 }

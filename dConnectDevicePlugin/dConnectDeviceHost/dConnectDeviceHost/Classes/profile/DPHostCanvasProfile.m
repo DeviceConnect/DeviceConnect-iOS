@@ -114,7 +114,6 @@ didReceiveDeleteDrawImageRequest:(DConnectRequestMessage *)request
         viewController.delegate = self;
         
         [viewController setDrawObject: drawObject];
-        
         UIViewController *rootView;
         PutPresentedViewController(rootView);
         [rootView presentViewController:viewController animated:YES completion:^() {
