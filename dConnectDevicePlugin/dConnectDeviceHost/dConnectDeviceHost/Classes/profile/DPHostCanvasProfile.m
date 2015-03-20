@@ -101,7 +101,6 @@ didReceiveDeleteDrawImageRequest:(DConnectRequestMessage *)request
     _displayViewController = nil;
 }
 
-
 - (DPHostCanvasUIViewController *)presentCanvasProfileViewController: (DConnectResponseMessage *)response
                                 drawObject: (DPHostCanvasDrawObject *)drawObject
 {
@@ -118,13 +117,14 @@ didReceiveDeleteDrawImageRequest:(DConnectRequestMessage *)request
         
         UIViewController *rootView;
         PutPresentedViewController(rootView);
-        [rootView presentViewController:viewController animated:YES completion:nil];
-        [response setResult:DConnectMessageResultTypeOk];
+        [rootView presentViewController:viewController animated:YES completion:^() {
+            [response setResult:DConnectMessageResultTypeOk];
+            [[DConnectManager sharedManager] sendResponse:response];
+        }];
     } else {
         [response setErrorToNotSupportAttribute];
+        [[DConnectManager sharedManager] sendResponse:response];
     }
-    
-    [[DConnectManager sharedManager] sendResponse:response];
     
     return viewController;
 }
