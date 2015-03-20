@@ -55,10 +55,10 @@ NSString *const DConnectAuthorizationProfileGrantTypeAuthorizationCode = @"autho
             send = [self didReceiveGetRequestAccessTokenRequest:request
                                                        response:response];
         } else {
-            [response setErrorToUnknownAttribute];
+            [response setErrorToNotSupportProfile];
         }
     } else {
-        [response setErrorToUnknownAttribute];
+        [response setErrorToNotSupportProfile];
     }
     
     return send;

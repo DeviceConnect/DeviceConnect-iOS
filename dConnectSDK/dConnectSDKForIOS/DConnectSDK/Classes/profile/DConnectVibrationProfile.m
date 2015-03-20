@@ -65,7 +65,7 @@ const long long DConnectVibrationProfileDefaultMaxVibrationTime = 500;
                              serviceId:[request serviceId] pattern:pattern];
         }
     } else {
-        [response setErrorToUnknownAttribute];
+        [response setErrorToNotSupportProfile];
     }
     
     return send;
@@ -89,7 +89,7 @@ const long long DConnectVibrationProfileDefaultMaxVibrationTime = 500;
                              serviceId:[request serviceId]];
         }
     } else {
-        [response setErrorToUnknownAttribute];
+        [response setErrorToNotSupportProfile];
     }
     
     return send;

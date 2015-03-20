@@ -70,7 +70,10 @@ didReceivePostNotifyRequest:(DConnectRequestMessage *)request
                        icon:(NSData *)icon
 {
     // パラメータチェック
-    if (!type || type.intValue<0 || 2<type.intValue) {
+    NSString *typeString = [request stringForKey:DConnectNotificationProfileParamType];
+
+    if (!type || type.intValue < 0 || 3 < type.intValue
+        || (type && ![[DPChromecastManager sharedManager] existDigitWithString:typeString])) {
         [response setErrorToInvalidRequestParameterWithMessage:@"type is null or invalid"];
         return YES;
     }
@@ -79,6 +82,8 @@ didReceivePostNotifyRequest:(DConnectRequestMessage *)request
         return YES;
     }
     
+    [DConnectNotificationProfile setNotificationId:@"dConnectDeviceChromeCast"
+                                            target:response];
     // リクエスト処理
     return [self handleRequest:request
                       response:response
@@ -101,16 +106,27 @@ didReceiveDeleteNotifyRequest:(DConnectRequestMessage *)request
                      serviceId:(NSString *)serviceId
                notificationId:(NSString *)notificationId
 {
-    // リクエスト処理
-    return [self handleRequest:request
-                      response:response
-                      serviceId:serviceId
-                      callback:
-            ^{
-                // メッセージクリア
-                DPChromecastManager *mgr = [DPChromecastManager sharedManager];
-				[mgr clearMessageWithID:serviceId];
-            }];
+    if (!notificationId
+        || (notificationId &&
+        ![notificationId isEqualToString:@"dConnectDeviceChromeCast"])) {
+        [response setErrorToInvalidRequestParameterWithMessage:@"NotificationId is invalid"];
+        return YES;
+    } else if (notificationId &&
+               [notificationId isEqualToString:@"dConnectDeviceChromeCast"]) {
+        // リクエスト処理
+        return [self handleRequest:request
+                          response:response
+                          serviceId:serviceId
+                          callback:
+                ^{
+                    // メッセージクリア
+                    DPChromecastManager *mgr = [DPChromecastManager sharedManager];
+                    [mgr clearMessageWithID:serviceId];
+                }];
+    } else {
+        [response setErrorToUnknown];
+        return YES;
+    }
 }
 
 @end

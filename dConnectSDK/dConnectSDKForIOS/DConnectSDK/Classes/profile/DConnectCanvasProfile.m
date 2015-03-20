@@ -83,7 +83,7 @@ NSString *const DConnectCanvasProfileModeFills  = @"fills";
         }
 
     } else {
-        [response setErrorToUnknownAttribute];
+        [response setErrorToNotSupportProfile];
     }
     
     return send;
@@ -112,7 +112,7 @@ NSString *const DConnectCanvasProfileModeFills  = @"fills";
         }
         
     } else {
-        [response setErrorToUnknownAttribute];
+        [response setErrorToNotSupportProfile];
     }
     
     return send;

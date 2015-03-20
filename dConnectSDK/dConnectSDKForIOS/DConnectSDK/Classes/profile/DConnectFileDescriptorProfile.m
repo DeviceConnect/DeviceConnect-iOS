@@ -73,10 +73,10 @@ NSString *const DConnectFileDescriptorProfileParamPath = @"path";
                                  serviceId:serviceId path:path length:length position:position];
             }
         } else {
-            [response setErrorToUnknownAttribute];
+            [response setErrorToNotSupportProfile];
         }
     } else {
-        [response setErrorToUnknownAttribute];
+        [response setErrorToNotSupportProfile];
     }
     
     return send;
@@ -125,10 +125,10 @@ NSString *const DConnectFileDescriptorProfileParamPath = @"path";
                                  serviceId:serviceId sessionKey:sessionKey];
             }
         } else {
-            [response setErrorToUnknownAttribute];
+            [response setErrorToNotSupportProfile];
         }
     } else {
-        [response setErrorToUnknownAttribute];
+        [response setErrorToNotSupportProfile];
     }
     return send;
 }
@@ -154,7 +154,7 @@ NSString *const DConnectFileDescriptorProfileParamPath = @"path";
                              serviceId:serviceId sessionKey:sessionKey];
         }
     } else {
-        [response setErrorToUnknownAttribute];
+        [response setErrorToNotSupportProfile];
     }
     return send;
 }

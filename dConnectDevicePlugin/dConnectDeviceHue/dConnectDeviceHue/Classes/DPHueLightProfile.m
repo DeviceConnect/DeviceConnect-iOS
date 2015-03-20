@@ -430,7 +430,7 @@ didReceiveDeleteLightRequest:(DConnectRequestMessage *)request
             [response setErrorToInvalidRequestParameterWithMessage:@"brightness is invalid"];
             break;
         case STATE_ERROR_LIMIT_GROUP:
-            [response setErrorToUnknownAttributeWithMessage:
+            [response setErrorToNotSupportProfileWithMessage:
                 @"Hue has reached the upper limit to which the group can create"];
             break;
         case STATE_ERROR_CREATE_FAIL_GROUP:
