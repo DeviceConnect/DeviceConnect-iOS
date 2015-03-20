@@ -430,7 +430,7 @@ didReceiveGetMediaListRequest:(DConnectRequestMessage *)request
         sampleCtx.language = @"ja";
         sampleCtx.desc = @"Sample Movie";
         NSMutableArray *ctxArr = [NSMutableArray array];
-        NSRange range = [str rangeOfString:@"video"];
+        NSRange range = [mimeType rangeOfString:@"video"];
         if (range.location != NSNotFound) {
             [ctxArr addObject:sampleCtx];
         }
