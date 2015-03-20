@@ -91,7 +91,7 @@ NSString *const DConnectFileProfileOrderDESC = @"desc";
                                 order:order offset:offset limit:limit];
         }
     } else {
-        [response setErrorToUnknownAttribute];
+        [response setErrorToNotSupportProfile];
     }
     
     return send;
@@ -131,7 +131,7 @@ NSString *const DConnectFileProfileOrderDESC = @"desc";
                                  path:path];
         }
     } else {
-        [response setErrorToUnknownAttribute];
+        [response setErrorToNotSupportProfile];
     }
     
     
@@ -173,7 +173,7 @@ NSString *const DConnectFileProfileOrderDESC = @"desc";
         }
         
     } else {
-        [response setErrorToUnknownAttribute];
+        [response setErrorToNotSupportProfile];
     }
     
     return send;

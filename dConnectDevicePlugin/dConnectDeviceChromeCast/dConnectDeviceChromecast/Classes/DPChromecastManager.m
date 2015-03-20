@@ -12,12 +12,12 @@
 #import "GCIPUtil.h"
 #import "HTTPServer.h"
 
-static NSString *const kReceiverAppID = @"A24AC057";//@"C70CD4D5";
+static NSString *const kReceiverAppID = @"A24AC057";//@"[YOUR APPLICATION ID]";
 static NSString *const kReceiverNamespace
     = @"urn:x-cast:com.name.space.chromecast.test.receiver";
 static NSString * const kDPCrhomeRegexDecimalPoint = @"^[-+]?([0-9]*)?(\\.)?([0-9]*)?$";
 static NSString * const kDPChromeRegexDigit = @"^([0-9]*)?$";
-static NSString * const kDPChromeMimeType = @"^([a-zA-Z]*)(/)([a-zA-Z]*)?$";
+static NSString * const kDPChromeMimeType = @"^([a-zA-Z]*)(/)([a-zA-Z]+)$";
 
 // セマフォのタイムアウト
 static const NSTimeInterval DPSemaphoreTimeout = 20.0;
@@ -343,7 +343,7 @@ static const NSTimeInterval DPSemaphoreTimeout = 20.0;
         [[GCKMediaInformation alloc]
                  initWithContentID:data.ctrlChannel.mediaStatus.mediaInformation.contentID
                         streamType:GCKMediaStreamTypeNone
-                       contentType:@"video/mp4"
+                       contentType:@"video/quicktime"
                           metadata:metadata
                     streamDuration:123
                         customData:nil];

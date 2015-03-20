@@ -66,7 +66,7 @@ NSString *const DConnectSystemProfileParamName = @"name";
             [response setErrorToNotSupportAttribute];
         }
     } else {
-        [response setErrorToUnknownAttribute];
+        [response setErrorToNotSupportProfile];
     }
     
     return send;
@@ -95,7 +95,7 @@ NSString *const DConnectSystemProfileParamName = @"name";
             [response setErrorToNotSupportAttribute];
         }
     } else {
-        [response setErrorToUnknownAttribute];
+        [response setErrorToNotSupportProfile];
     }
     
     return send;

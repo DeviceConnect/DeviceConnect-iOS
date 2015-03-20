@@ -56,7 +56,7 @@ NSString *const DConnectServiceDiscoveryProfileNetworkTypeBLE = @"BLE";
             send = [_delegate profile:self didReceiveGetServicesRequest:request response:response];
         }
     } else {
-        [response setErrorToUnknownAttribute];
+        [response setErrorToNotSupportProfile];
     }
     
     return send;
@@ -85,7 +85,7 @@ NSString *const DConnectServiceDiscoveryProfileNetworkTypeBLE = @"BLE";
                                                  sessionKey:[request sessionKey]];
         }
     } else {
-        [response setErrorToUnknownAttribute];
+        [response setErrorToNotSupportProfile];
     }
     
     return send;
@@ -112,7 +112,7 @@ NSString *const DConnectServiceDiscoveryProfileNetworkTypeBLE = @"BLE";
                              serviceId:[request serviceId] sessionKey:[request sessionKey]];
         }
     } else {
-        [response setErrorToUnknownAttribute];
+        [response setErrorToNotSupportProfile];
     }
     
     return send;

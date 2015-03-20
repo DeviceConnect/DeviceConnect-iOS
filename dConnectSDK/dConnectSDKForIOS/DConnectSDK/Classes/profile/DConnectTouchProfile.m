@@ -53,7 +53,7 @@ NSString *const DConnectTouchProfileParamY = @"y";
             send = [_delegate profile:self didReceiveGetOnTouchRequest:request
                              response:response serviceId:serviceId];
         } else {
-            [response setErrorToUnknownAttribute];
+            [response setErrorToNotSupportProfile];
         }
     } else if ([attribute isEqualToString:DConnectTouchProfileAttrOnTouchStart]) {
         if ([self hasMethod:@selector(profile:didReceiveGetOnTouchStartRequest:response:serviceId:)
@@ -63,7 +63,7 @@ NSString *const DConnectTouchProfileParamY = @"y";
             send = [_delegate profile:self didReceiveGetOnTouchStartRequest:request
                              response:response serviceId:serviceId];
         } else {
-            [response setErrorToUnknownAttribute];
+            [response setErrorToNotSupportProfile];
         }
     } else if ([attribute isEqualToString:DConnectTouchProfileAttrOnTouchEnd]) {
         if ([self hasMethod:@selector(profile:didReceiveGetOnTouchEndRequest:response:serviceId:)
@@ -73,7 +73,7 @@ NSString *const DConnectTouchProfileParamY = @"y";
             send = [_delegate profile:self didReceiveGetOnTouchEndRequest:request
                              response:response serviceId:serviceId];
         } else {
-            [response setErrorToUnknownAttribute];
+            [response setErrorToNotSupportProfile];
         }
     } else if ([attribute isEqualToString:DConnectTouchProfileAttrOnDoubleTap]) {
         if ([self hasMethod:@selector(profile:didReceiveGetOnDoubleTapRequest:response:serviceId:)
@@ -83,7 +83,7 @@ NSString *const DConnectTouchProfileParamY = @"y";
             send = [_delegate profile:self didReceiveGetOnDoubleTapRequest:request
                              response:response serviceId:serviceId];
         } else {
-            [response setErrorToUnknownAttribute];
+            [response setErrorToNotSupportProfile];
         }
     } else if ([attribute isEqualToString:DConnectTouchProfileAttrOnTouchMove]) {
         if ([self hasMethod:@selector(profile:didReceiveGetOnTouchMoveRequest:response:serviceId:)
@@ -93,7 +93,7 @@ NSString *const DConnectTouchProfileParamY = @"y";
             send = [_delegate profile:self didReceiveGetOnTouchMoveRequest:request
                              response:response serviceId:serviceId];
         } else {
-            [response setErrorToUnknownAttribute];
+            [response setErrorToNotSupportProfile];
         }
     } else if ([attribute isEqualToString:DConnectTouchProfileAttrOnTouchCancel]) {
         if ([self hasMethod:@selector(profile:didReceiveGetOnTouchCancelRequest:response:serviceId:)
@@ -103,10 +103,10 @@ NSString *const DConnectTouchProfileParamY = @"y";
             send = [_delegate profile:self didReceiveGetOnTouchCancelRequest:request
                              response:response serviceId:serviceId];
         } else {
-            [response setErrorToUnknownAttribute];
+            [response setErrorToNotSupportProfile];
         }
     } else {
-        [response setErrorToUnknownAttribute];
+        [response setErrorToNotSupportProfile];
     }
     
     return send;
@@ -132,7 +132,7 @@ NSString *const DConnectTouchProfileParamY = @"y";
             send = [_delegate profile:self didReceivePutOnTouchRequest:request
                              response:response serviceId:serviceId sessionKey:sessionKey];
         } else {
-            [response setErrorToUnknownAttribute];
+            [response setErrorToNotSupportProfile];
         }
     } else if ([attribute isEqualToString:DConnectTouchProfileAttrOnTouchStart]) {
         if ([self hasMethod:@selector(profile:didReceivePutOnTouchStartRequest:response:serviceId:sessionKey:)
@@ -143,7 +143,7 @@ NSString *const DConnectTouchProfileParamY = @"y";
             send = [_delegate profile:self didReceivePutOnTouchStartRequest:request
                              response:response serviceId:serviceId sessionKey:sessionKey];
         } else {
-            [response setErrorToUnknownAttribute];
+            [response setErrorToNotSupportProfile];
         }
     } else if ([attribute isEqualToString:DConnectTouchProfileAttrOnTouchEnd]) {
         if ([self hasMethod:@selector(profile:didReceivePutOnTouchEndRequest:response:serviceId:sessionKey:)
@@ -154,7 +154,7 @@ NSString *const DConnectTouchProfileParamY = @"y";
             send = [_delegate profile:self didReceivePutOnTouchEndRequest:request
                              response:response serviceId:serviceId sessionKey:sessionKey];
         } else {
-            [response setErrorToUnknownAttribute];
+            [response setErrorToNotSupportProfile];
         }
     } else if ([attribute isEqualToString:DConnectTouchProfileAttrOnDoubleTap]) {
         if ([self hasMethod:@selector(profile:didReceivePutOnDoubleTapRequest:response:serviceId:sessionKey:)
@@ -165,7 +165,7 @@ NSString *const DConnectTouchProfileParamY = @"y";
             send = [_delegate profile:self didReceivePutOnDoubleTapRequest:request
                              response:response serviceId:serviceId sessionKey:sessionKey];
         } else {
-            [response setErrorToUnknownAttribute];
+            [response setErrorToNotSupportProfile];
         }
     } else if ([attribute isEqualToString:DConnectTouchProfileAttrOnTouchMove]) {
         if ([self hasMethod:@selector(profile:didReceivePutOnTouchMoveRequest:response:serviceId:sessionKey:)
@@ -176,7 +176,7 @@ NSString *const DConnectTouchProfileParamY = @"y";
             send = [_delegate profile:self didReceivePutOnTouchMoveRequest:request
                              response:response serviceId:serviceId sessionKey:sessionKey];
         } else {
-            [response setErrorToUnknownAttribute];
+            [response setErrorToNotSupportProfile];
         }
     } else if ([attribute isEqualToString:DConnectTouchProfileAttrOnTouchCancel]) {
         if ([self hasMethod:@selector(profile:didReceivePutOnTouchCancelRequest:response:serviceId:sessionKey:)
@@ -187,10 +187,10 @@ NSString *const DConnectTouchProfileParamY = @"y";
             send = [_delegate profile:self didReceivePutOnTouchCancelRequest:request
                              response:response serviceId:serviceId sessionKey:sessionKey];
         } else {
-            [response setErrorToUnknownAttribute];
+            [response setErrorToNotSupportProfile];
         }
     } else {
-        [response setErrorToUnknownAttribute];
+        [response setErrorToNotSupportProfile];
     }
     
     return send;
@@ -217,7 +217,7 @@ NSString *const DConnectTouchProfileParamY = @"y";
             send = [_delegate profile:self didReceiveDeleteOnTouchRequest:request response:response
                              serviceId:serviceId sessionKey:sessionKey];
         } else {
-            [response setErrorToUnknownAttribute];
+            [response setErrorToNotSupportProfile];
         }
     } else if ([attribute isEqualToString:DConnectTouchProfileAttrOnTouchStart]) {
         if ([self hasMethod:@selector(profile:didReceiveDeleteOnTouchStartRequest:response:serviceId:sessionKey:)
@@ -228,7 +228,7 @@ NSString *const DConnectTouchProfileParamY = @"y";
             send = [_delegate profile:self didReceiveDeleteOnTouchStartRequest:request response:response
                              serviceId:serviceId sessionKey:sessionKey];
         } else {
-            [response setErrorToUnknownAttribute];
+            [response setErrorToNotSupportProfile];
         }
     } else if ([attribute isEqualToString:DConnectTouchProfileAttrOnTouchEnd]) {
         if ([self hasMethod:@selector(profile:didReceiveDeleteOnTouchEndRequest:response:serviceId:sessionKey:)
@@ -239,7 +239,7 @@ NSString *const DConnectTouchProfileParamY = @"y";
             send = [_delegate profile:self didReceiveDeleteOnTouchEndRequest:request response:response
                              serviceId:serviceId sessionKey:sessionKey];
         } else {
-            [response setErrorToUnknownAttribute];
+            [response setErrorToNotSupportProfile];
         }
     } else if ([attribute isEqualToString:DConnectTouchProfileAttrOnDoubleTap]) {
         if ([self hasMethod:@selector(profile:didReceiveDeleteOnDoubleTapRequest:response:serviceId:sessionKey:)
@@ -250,7 +250,7 @@ NSString *const DConnectTouchProfileParamY = @"y";
             send = [_delegate profile:self didReceiveDeleteOnDoubleTapRequest:request response:response
                              serviceId:serviceId sessionKey:sessionKey];
         } else {
-            [response setErrorToUnknownAttribute];
+            [response setErrorToNotSupportProfile];
         }
     } else if ([attribute isEqualToString:DConnectTouchProfileAttrOnTouchMove]) {
         if ([self hasMethod:@selector(profile:didReceiveDeleteOnTouchMoveRequest:response:serviceId:sessionKey:)
@@ -261,7 +261,7 @@ NSString *const DConnectTouchProfileParamY = @"y";
             send = [_delegate profile:self didReceiveDeleteOnTouchMoveRequest:request response:response
                              serviceId:serviceId sessionKey:sessionKey];
         } else {
-            [response setErrorToUnknownAttribute];
+            [response setErrorToNotSupportProfile];
         }
     } else if ([attribute isEqualToString:DConnectTouchProfileAttrOnTouchCancel]) {
         if ([self hasMethod:@selector(profile:didReceiveDeleteOnTouchCancelRequest:response:serviceId:sessionKey:)
@@ -272,10 +272,10 @@ NSString *const DConnectTouchProfileParamY = @"y";
             send = [_delegate profile:self didReceiveDeleteOnTouchCancelRequest:request response:response
                              serviceId:serviceId sessionKey:sessionKey];
         } else {
-            [response setErrorToUnknownAttribute];
+            [response setErrorToNotSupportProfile];
         }
     } else {
-        [response setErrorToUnknownAttribute];
+        [response setErrorToNotSupportProfile];
     }
     
     return send;

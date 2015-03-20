@@ -80,7 +80,7 @@ NSString *const DConnectConnectProfileInterfaceBluetooth = @"bluetooth";
                              response:response serviceId:serviceId];
         }
     } else {
-        [response setErrorToUnknownAttribute];
+        [response setErrorToNotSupportProfile];
     }
     
     return send;
@@ -167,10 +167,10 @@ NSString *const DConnectConnectProfileInterfaceBluetooth = @"bluetooth";
                                      serviceId:serviceId sessionKey:sessionKey];
                 }
             } else {
-                [response setErrorToUnknownAttribute];
+                [response setErrorToNotSupportProfile];
             }
         } else {
-            [response setErrorToUnknownAttribute];
+            [response setErrorToNotSupportProfile];
         }
     } else if ([interface isEqualToString:DConnectConnectProfileInterfaceBluetooth]
                && [DConnectConnectProfileAttrDiscoverable isEqualToString:attribute])
@@ -182,7 +182,7 @@ NSString *const DConnectConnectProfileInterfaceBluetooth = @"bluetooth";
                              response:response serviceId:[request serviceId]];
         }
     } else {
-        [response setErrorToUnknownAttribute];
+        [response setErrorToNotSupportProfile];
     }
     
     return send;
@@ -273,10 +273,10 @@ NSString *const DConnectConnectProfileInterfaceBluetooth = @"bluetooth";
                                      response:response serviceId:serviceId sessionKey:sessionKey];
                 }
             } else {
-                [response setErrorToUnknownAttribute];
+                [response setErrorToNotSupportProfile];
             }
         } else {
-            [response setErrorToUnknownAttribute];
+            [response setErrorToNotSupportProfile];
         }
     } else if ([interface isEqualToString:DConnectConnectProfileInterfaceBluetooth]
                && [attribute isEqualToString:DConnectConnectProfileAttrDiscoverable])
@@ -288,7 +288,7 @@ NSString *const DConnectConnectProfileInterfaceBluetooth = @"bluetooth";
                              response:response serviceId:serviceId];
         }
     } else {
-        [response setErrorToUnknownAttribute];
+        [response setErrorToNotSupportProfile];
     }
     
     return send;

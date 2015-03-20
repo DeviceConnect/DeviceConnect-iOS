@@ -106,23 +106,27 @@ didReceiveDeleteNotifyRequest:(DConnectRequestMessage *)request
                      serviceId:(NSString *)serviceId
                notificationId:(NSString *)notificationId
 {
-    if (notificationId &&
-        ![notificationId isEqualToString:@"dConnectDeviceChromeCast"]) {
+    if (!notificationId
+        || (notificationId &&
+        ![notificationId isEqualToString:@"dConnectDeviceChromeCast"])) {
         [response setErrorToInvalidRequestParameterWithMessage:@"NotificationId is invalid"];
         return YES;
+    } else if (notificationId &&
+               [notificationId isEqualToString:@"dConnectDeviceChromeCast"]) {
+        // リクエスト処理
+        return [self handleRequest:request
+                          response:response
+                          serviceId:serviceId
+                          callback:
+                ^{
+                    // メッセージクリア
+                    DPChromecastManager *mgr = [DPChromecastManager sharedManager];
+                    [mgr clearMessageWithID:serviceId];
+                }];
+    } else {
+        [response setErrorToUnknown];
+        return YES;
     }
-    
-    
-    // リクエスト処理
-    return [self handleRequest:request
-                      response:response
-                      serviceId:serviceId
-                      callback:
-            ^{
-                // メッセージクリア
-                DPChromecastManager *mgr = [DPChromecastManager sharedManager];
-				[mgr clearMessageWithID:serviceId];
-            }];
 }
 
 @end

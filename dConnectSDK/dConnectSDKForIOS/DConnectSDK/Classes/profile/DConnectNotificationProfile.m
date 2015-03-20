@@ -76,7 +76,7 @@ NSString *const DConnectNotificationProfileParamUri = @"uri";
 
         }
     } else {
-        [response setErrorToUnknownAttribute];
+        [response setErrorToNotSupportProfile];
     }
     
     return send;
@@ -124,7 +124,7 @@ NSString *const DConnectNotificationProfileParamUri = @"uri";
                              serviceId:serviceId sessionKey:sessionKey];
         }
     } else {
-        [response setErrorToUnknownAttribute];
+        [response setErrorToNotSupportProfile];
     }
     
     return send;
@@ -179,7 +179,7 @@ NSString *const DConnectNotificationProfileParamUri = @"uri";
                        notificationId:[DConnectNotificationProfile notificationIdFromRequest:request]];
         }
     } else {
-        [response setErrorToUnknownAttribute];
+        [response setErrorToNotSupportProfile];
     }
     
     return send;
