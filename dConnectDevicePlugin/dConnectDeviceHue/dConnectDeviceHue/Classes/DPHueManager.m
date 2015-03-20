@@ -255,6 +255,11 @@ pushlinkAuthenticationSuccessSelector:(SEL)pushlinkAuthenticationSuccessSelector
                           groupName:(NSString*)groupName
                          completion:(void(^)(NSString* groupId))completion
 {
+    if (!groupName) {
+        _bridgeConnectState = STATE_ERROR_NO_NAME;
+        return YES;
+    }
+    
     if (lightIds.count <= 0) {
         _bridgeConnectState = STATE_ERROR_NO_LIGHTID;
         return YES;
