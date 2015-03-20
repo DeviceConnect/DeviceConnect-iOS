@@ -53,7 +53,7 @@ NSString *const DConnectDeviceOrientationProfileParamAccelerationIncludingGravit
                              response:response serviceId:serviceId];
         }
     } else {
-        [response setErrorToUnknownAttribute];
+        [response setErrorToNotSupportProfile];
     }
     
     return send;
@@ -80,7 +80,7 @@ NSString *const DConnectDeviceOrientationProfileParamAccelerationIncludingGravit
                              response:response serviceId:serviceId sessionKey:sessionKey];
         }
     } else {
-        [response setErrorToUnknownAttribute];
+        [response setErrorToNotSupportProfile];
     }
     
     return send;
@@ -109,7 +109,7 @@ NSString *const DConnectDeviceOrientationProfileParamAccelerationIncludingGravit
                              serviceId:serviceId sessionKey:sessionKey];
         }
     } else {
-        [response setErrorToUnknownAttribute];
+        [response setErrorToNotSupportProfile];
     }
 
     return send;

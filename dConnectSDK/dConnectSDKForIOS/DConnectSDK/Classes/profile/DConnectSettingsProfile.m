@@ -75,10 +75,10 @@ const double DConnectSettingsProfileMinLevel = 0.0;
                                      response:response serviceId:serviceId];
                 }
             } else {
-                [response setErrorToUnknownAttribute];
+                [response setErrorToNotSupportProfile];
             }
         } else {
-            [response setErrorToUnknownAttribute];
+            [response setErrorToNotSupportProfile];
         }
     } else if ([attribute isEqualToString:DConnectSettingsProfileAttrDate]) {
         if ([self hasMethod:@selector(profile:didReceiveGetDateRequest:response:serviceId:)
@@ -88,7 +88,7 @@ const double DConnectSettingsProfileMinLevel = 0.0;
                              response:response serviceId:serviceId];
         }
     } else {
-        [response setErrorToUnknownAttribute];
+        [response setErrorToNotSupportProfile];
     }
     
     return send;
@@ -141,10 +141,10 @@ const double DConnectSettingsProfileMinLevel = 0.0;
                                                            timeFromRequest:request]];
                 }
             } else {
-                [response setErrorToUnknownAttribute];
+                [response setErrorToNotSupportProfile];
             }
         } else {
-            [response setErrorToUnknownAttribute];
+            [response setErrorToNotSupportProfile];
         }
     } else if ([attribute isEqualToString:DConnectSettingsProfileAttrDate]) {
         if ([self hasMethod:@selector(profile:didReceivePutDateRequest:response:serviceId:date:)
@@ -154,7 +154,7 @@ const double DConnectSettingsProfileMinLevel = 0.0;
                                  date:[DConnectSettingsProfile dateFromRequest:request]];
         }
     } else {
-        [response setErrorToUnknownAttribute];
+        [response setErrorToNotSupportProfile];
     }
     
     return send;

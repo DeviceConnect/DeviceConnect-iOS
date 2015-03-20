@@ -47,7 +47,7 @@
         send = [self profile:self didReceivePutVibrateRequest:request response:response
                     serviceId:[request serviceId] pattern:pattern];
     } else {
-        [response setErrorToUnknownAttribute];
+        [response setErrorToNotSupportProfile];
     }
     
     return send;

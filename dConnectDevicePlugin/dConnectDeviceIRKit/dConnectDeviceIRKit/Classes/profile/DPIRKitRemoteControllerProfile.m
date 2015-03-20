@@ -64,7 +64,7 @@ NSString *const DPIRKitRemoteControllerProfileParamMessage = @"message";
     
     BOOL send = YES;
     if ([request.attribute length] != 0) {
-        [response setErrorToUnknownAttribute];
+        [response setErrorToNotSupportProfile];
     } else if (_plugin) {
         
         __weak typeof(self) _self = self;
@@ -96,7 +96,7 @@ NSString *const DPIRKitRemoteControllerProfileParamMessage = @"message";
     
     BOOL send = YES;
     if ([request.attribute length] != 0) {
-        [response setErrorToUnknownAttribute];
+        [response setErrorToNotSupportProfile];
     } else if (_plugin) {
         
         DPIRKitDevice *device = [_plugin deviceForServiceId:request.serviceId];

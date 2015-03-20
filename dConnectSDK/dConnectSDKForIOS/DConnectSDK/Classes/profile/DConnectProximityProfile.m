@@ -58,7 +58,7 @@ NSString *const DConnectProximityProfileParamNear = @"near";
                             serviceId:serviceId];
         }
     } else {
-        [response setErrorToUnknownAttribute];
+        [response setErrorToNotSupportProfile];
     }
     
     return send;
@@ -92,7 +92,7 @@ NSString *const DConnectProximityProfileParamNear = @"near";
                              serviceId:serviceId sessionKey:sessionKey];
         }
     } else {
-        [response setErrorToUnknownAttribute];
+        [response setErrorToNotSupportProfile];
     }
     
     
@@ -127,7 +127,7 @@ NSString *const DConnectProximityProfileParamNear = @"near";
                              serviceId:serviceId sessionKey:sessionKey];
         }
     } else {
-        [response setErrorToUnknownAttribute];
+        [response setErrorToNotSupportProfile];
     }
     
     
