@@ -15,7 +15,10 @@
 
 
 // センサー監視間隔（400Hz/kSensorDivisor）
-#define kSensorDivisor 40
+static int const kSensorDivisor = 40;
+static NSString * const kDPSpheroRegexDecimalPoint = @"^[-+]?([0-9]*)?(\\.)?([0-9]*)?$";
+static NSString * const kDPSpheroRegexDigit = @"^([0-9]*)?$";
+static NSString * const kDPSpheroMimeType = @"^([a-zA-Z]*)(/)([a-zA-Z]+)$";
 
 
 @interface DPSpheroManager ()
@@ -521,5 +524,25 @@ BOOL _startedCollisionSensor;
     [[RKDeviceMessenger sharedMessenger] addDataStreamingObserver:self selector:@selector(handleDataStreaming:)];
     
 }
+
+/*
+ 数値判定。
+ */
+- (BOOL)existNumberWithString:(NSString *)numberString Regex:(NSString*)regex {
+    NSRange match = [numberString rangeOfString:regex options:NSRegularExpressionSearch];
+    //数値の場合
+    return match.location != NSNotFound;
+}
+
+// 整数かどうかを判定する。 true:存在する
+- (BOOL)existDigitWithString:(NSString*)digit {
+    return [self existNumberWithString:digit Regex:kDPSpheroRegexDigit];
+}
+
+// 少数かどうかを判定する。
+- (BOOL)existDecimalWithString:(NSString*)decimal {
+    return [self existNumberWithString:decimal Regex:kDPSpheroRegexDecimalPoint];
+}
+
 
 @end

@@ -139,7 +139,7 @@ didReceiveGetOnDeviceOrientationRequest:(DConnectRequestMessage *)request
 
     __unsafe_unretained typeof(self) weakSelf = self;
 
-    __block OrientationBlock blk = ^(DPGyroData gyroData, DPPoint3D accel, int interval) {
+    OrientationBlock blk = ^(DPGyroData gyroData, DPPoint3D accel, int interval) {
         DConnectMessage *orientation = [weakSelf createOrientationWithAttitude:gyroData accel:accel interval:interval];
         [response setResult:DConnectMessageResultTypeOk];
         [DConnectDeviceOrientationProfile setOrientation:orientation target:response];

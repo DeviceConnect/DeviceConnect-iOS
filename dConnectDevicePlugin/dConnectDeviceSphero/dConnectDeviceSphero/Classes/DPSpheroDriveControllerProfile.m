@@ -10,8 +10,6 @@
 #import "DPSpheroDevicePlugin.h"
 #import "DPSpheroManager.h"
 
-static NSString * const spheroRegexDecimalPoint = @"^[-+]?([0-9]*)?(\\.)?([0-9]*)?$";
-static NSString * const spheroRegexDigit = @"^([0-9]*)?$";
 
 @implementation DPSpheroDriveControllerProfile
 
@@ -45,7 +43,7 @@ static NSString * const spheroRegexDigit = @"^([0-9]*)?$";
         [response setErrorToInvalidRequestParameterWithMessage:@"invalid angle value."];
         return YES;
     }
-    if (![self isDigitWithString:angleString Regex:spheroRegexDigit] || angle < 0 || angle > 360 ) {
+    if (![[DPSpheroManager sharedManager] existDigitWithString:angleString] || angle < 0 || angle > 360 ) {
         [response setErrorToInvalidRequestParameterWithMessage:@"invalid angle value."];
         return YES;
     }
@@ -53,7 +51,8 @@ static NSString * const spheroRegexDigit = @"^([0-9]*)?$";
         [response setErrorToInvalidRequestParameterWithMessage:@"invalid speed value."];
         return YES;
     }
-    if (![self isDigitWithString:speedString Regex:spheroRegexDecimalPoint] || speed < 0 || speed > 1.0) {
+    if (![[DPSpheroManager sharedManager] existDecimalWithString:speedString]
+                || speed < 0 || speed > 1.0) {
         [response setErrorToInvalidRequestParameterWithMessage:@"invalid speed value."];
         return YES;
     }
@@ -82,7 +81,8 @@ static NSString * const spheroRegexDigit = @"^([0-9]*)?$";
         [response setErrorToInvalidRequestParameterWithMessage:@"invalid angle value."];
         return YES;
     }
-    if(![self isDigitWithString:angleString Regex:spheroRegexDigit] || angle < 0 || angle > 360) {
+    if(![[DPSpheroManager sharedManager] existDigitWithString:angleString]
+        || angle < 0 || angle > 360) {
         [response setErrorToInvalidRequestParameterWithMessage:@"invalid angle value."];
         return YES;
     }
@@ -111,12 +111,4 @@ static NSString * const spheroRegexDigit = @"^([0-9]*)?$";
     return YES;
 }
 
-/*
- 数値判定。
- */
-- (BOOL)isDigitWithString:(NSString *)numberString Regex:(NSString*)regex {
-    NSRange match = [numberString rangeOfString:regex options:NSRegularExpressionSearch];
-    //数値の場合
-    return match.location != NSNotFound;
-}
 @end

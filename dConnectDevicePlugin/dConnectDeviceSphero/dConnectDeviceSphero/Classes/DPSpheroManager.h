@@ -239,4 +239,14 @@ typedef struct DPGyroData_ {
  */
 - (void)stopAllSensor;
 
+/*!
+ @brief 整数かどうかを判定する。
+ */
+- (BOOL)existDigitWithString:(NSString*)digit;
+
+/*!
+ @brief 少数かどうかを判定する。
+ */
+- (BOOL)existDecimalWithString:(NSString*)decimal;
+
 @end
