@@ -73,4 +73,12 @@
 // KeyEvent onUp event unregistration.
 - (void)deleteOnUpEvent:(NSString*)serviceID callback:(void(^)(NSError *error))callback;
 
+// Determined whether or not the decimal.
+- (BOOL)existDigitWithString:(NSString*)digit;
+
+// Determined whether or not the decimal point.
+- (BOOL)existDecimalWithString:(NSString*)decimal;
+
+// Determined whether or not the comma-separated.
+- (BOOL)existCSVWithString:(NSString*)csv;
 @end

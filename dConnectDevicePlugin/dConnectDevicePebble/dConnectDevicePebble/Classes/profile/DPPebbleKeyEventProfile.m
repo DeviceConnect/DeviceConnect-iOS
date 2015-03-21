@@ -53,18 +53,12 @@ static const UInt64 CACHE_RETENTION_TIME = 10000;
     if ([attr isEqualToString:DConnectKeyEventProfileAttrOnDown]) {
         if (CurrentTime - mOnDownCacheTime <= CACHE_RETENTION_TIME) {
             return mOnDownCache;
-        } else {
-            return nil;
         }
-    } else if ([attr isEqualToString:DConnectKeyEventProfileAttrOnUp]) {
-        if (CurrentTime - mOnUpCacheTime <= CACHE_RETENTION_TIME) {
-            return mOnUpCache;
-        } else {
-            return nil;
-        }
-    } else {
-        return nil;
+    } else if ([attr isEqualToString:DConnectKeyEventProfileAttrOnUp]
+               && (CurrentTime - mOnUpCacheTime <= CACHE_RETENTION_TIME)) {
+        return mOnUpCache;
     }
+    return nil;
 }
 
 /*!

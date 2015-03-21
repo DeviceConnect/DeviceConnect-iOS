@@ -15,7 +15,7 @@
 static NSString *const kReceiverAppID = @"[YOUR APPLICATION ID]";
 static NSString *const kReceiverNamespace
     = @"urn:x-cast:com.name.space.chromecast.test.receiver";
-static NSString * const kDPCrhomeRegexDecimalPoint = @"^[-+]?([0-9]*)?(\\.)?([0-9]*)?$";
+static NSString * const kDPChromeRegexDecimalPoint = @"^[-+]?([0-9]*)?(\\.)?([0-9]*)?$";
 static NSString * const kDPChromeRegexDigit = @"^([0-9]*)?$";
 static NSString * const kDPChromeMimeType = @"^([a-zA-Z]*)(/)([a-zA-Z]+)$";
 
@@ -507,7 +507,7 @@ didCompleteLoadWithSessionID:(NSInteger)sessionID
 
 // 少数かどうかを判定する。
 - (BOOL)existDecimalWithString:(NSString*)decimal {
-    return [self existNumberWithString:decimal Regex:kDPCrhomeRegexDecimalPoint];
+    return [self existNumberWithString:decimal Regex:kDPChromeRegexDecimalPoint];
 }
 
 // MimeTypeの判定をする。

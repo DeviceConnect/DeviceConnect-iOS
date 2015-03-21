@@ -9,6 +9,7 @@
 
 
 #import "DPPebbleNotificationProfile.h"
+#import "DPPebbleManager.h"
 
 @interface DPPebbleNotificationProfile ()
 @end
@@ -49,6 +50,19 @@ didReceivePostNotifyRequest:(DConnectRequestMessage *)request
                         tag:(NSString *)tag
                        icon:(NSData *)icon
 {
+    
+    // パラメータチェック
+    NSString *typeString = [request stringForKey:DConnectNotificationProfileParamType];
+    
+    if (!type || type.intValue < 0 || 3 < type.intValue
+        || (type && ![[DPPebbleManager sharedManager] existDigitWithString:typeString])) {
+        [response setErrorToInvalidRequestParameterWithMessage:@"type is null or invalid"];
+        return YES;
+    }
+    if (!body) {
+        [response setErrorToInvalidRequestParameterWithMessage:@"body is null"];
+        return YES;
+    }
 	// LocalNotificationを発動させるとPebbleのNotificationに通知が行く
 	// FIXME:この方式だとServiceID無視で全デバイスに通知が行ってしまう。
 	UILocalNotification *notify = [[UILocalNotification alloc] init];

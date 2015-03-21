@@ -24,6 +24,10 @@ static const NSTimeInterval DPRetryInterval = 1.0;
 // セマフォのタイムアウト
 static const NSTimeInterval DPSemaphoreTimeout = 10.0;
 
+static NSString * const kDPPebbleRegexDecimalPoint = @"^[-+]?([0-9]*)?(\\.)?([0-9]*)?$";
+static NSString * const kDPPebbleRegexDigit = @"^([0-9]*)?$";
+static NSString * const kDPPebbleRegexCSV = @"^([^,]*,)+";
+
 
 @interface DPPebbleManager () <PBPebbleCentralDelegate> {
 	NSMutableDictionary *_updateHandlerDict;
@@ -744,4 +748,21 @@ static const NSTimeInterval DPSemaphoreTimeout = 10.0;
 	}
 }
 
+- (BOOL)existNumberWithString:(NSString *)numberString Regex:(NSString*)regex {
+    NSRange match = [numberString rangeOfString:regex options:NSRegularExpressionSearch];
+    //数値の場合
+    return match.location != NSNotFound;
+}
+
+- (BOOL)existDigitWithString:(NSString*)digit {
+    return [self existNumberWithString:digit Regex:kDPPebbleRegexDigit];
+}
+
+- (BOOL)existDecimalWithString:(NSString*)decimal {
+    return [self existNumberWithString:decimal Regex:kDPPebbleRegexDecimalPoint];
+}
+
+- (BOOL)existCSVWithString:(NSString *)csv {
+    return [self existNumberWithString:csv Regex:kDPPebbleRegexCSV];
+}
 @end
