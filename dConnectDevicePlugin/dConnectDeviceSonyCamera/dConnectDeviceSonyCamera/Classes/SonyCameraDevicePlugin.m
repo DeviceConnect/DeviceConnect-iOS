@@ -545,6 +545,10 @@ didReceivePostTakePhotoRequest:(DConnectRequestMessage *)request
         return YES;
     }
     
+    if (target && ![target isEqualToString:@"SonyCamera"]) {
+        [response setErrorToInvalidRequestParameter];
+        return YES;
+    }
     __weak typeof(self) _self = self;
     
     // 写真撮影をバックグランドでAPIなどを実行
@@ -1006,7 +1010,7 @@ didReceivePutZoomRequest:(DConnectRequestMessage *)request
             
             // レスポンス作成
             if (resultArray.count <= 0 && errorCode >= 0) {
-                [response setErrorToUnknown];
+                [response setErrorToInvalidRequestParameter];
             } else {
                 [response setResult:DConnectMessageResultTypeOk];
             }

@@ -114,8 +114,10 @@ static const long FLAG_ON_TOUCH_CANCEL = 0x00000020;
     if (viewController != nil) {
         UIViewController *rootView;
         PutPresentedViewController(rootView);
-        [rootView presentViewController:viewController animated:YES completion:nil];
-        viewController.hostTouchView.delegate = self;
+        if (![rootView isKindOfClass:[DPHostTouchUIViewController class]]) {
+            [rootView presentViewController:viewController animated:YES completion:nil];
+            viewController.hostTouchView.delegate = self;
+        }
     }
     return viewController;
 }
@@ -124,7 +126,9 @@ static const long FLAG_ON_TOUCH_CANCEL = 0x00000020;
     if (_displayViewController) {
         UIViewController *rootView;
         PutPresentedViewController(rootView);
-        [rootView presentViewController:_displayViewController animated:YES completion:nil];
+        if (![rootView isKindOfClass:[DPHostTouchUIViewController class]]) {
+            [rootView presentViewController:_displayViewController animated:YES completion:nil];
+        }
     }
 }
 
@@ -146,7 +150,9 @@ static const long FLAG_ON_TOUCH_CANCEL = 0x00000020;
 - (void)closeTouchView {
     if (mTouchEventManageFlag == 0) {
         if (_displayViewController) {
-            [_displayViewController dismissViewControllerAnimated:YES completion:nil];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [_displayViewController dismissViewControllerAnimated:YES completion:nil];
+            });
         }
     }
 }

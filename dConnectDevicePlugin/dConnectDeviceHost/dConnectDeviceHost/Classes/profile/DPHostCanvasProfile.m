@@ -89,7 +89,9 @@ didReceiveDeleteDrawImageRequest:(DConnectRequestMessage *)request
                        serviceId:(NSString *)serviceId
 {
     if (_displayViewController) {
-        [_displayViewController dismissViewControllerAnimated:YES completion:nil];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [_displayViewController dismissViewControllerAnimated:YES completion:nil];
+        });
         [response setResult:DConnectMessageResultTypeOk];
     } else {
         [response setErrorToIllegalDeviceStateWithMessage:@"the canvas is not displayed."];

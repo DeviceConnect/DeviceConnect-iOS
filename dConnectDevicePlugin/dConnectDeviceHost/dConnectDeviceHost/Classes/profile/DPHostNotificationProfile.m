@@ -162,11 +162,10 @@ didReceivePostNotifyRequest:(DConnectRequestMessage *)request
         [response setError:100 message:@"body is nill"];
         return YES;
     }
-    if (!type) {
-        [response setErrorToInvalidRequestParameterWithMessage:@"type must be specified."];
-        return YES;
-    } else if (type.integerValue == DConnectNotificationProfileNotificationTypeUnknown) {
-        [response setError:100 message:@"Unknown type was specified."];
+    NSString *typeString = [request stringForKey:DConnectNotificationProfileParamType];
+    if (!type || type.intValue < 0 || 3 < type.intValue
+        || (type && ![DPHostUtils existDigitWithString:typeString])) {
+        [response setErrorToInvalidRequestParameterWithMessage:@"type is null or invalid"];
         return YES;
     }
     NSString *notificationId = [DPHostUtils randomStringWithLength:NotificationIdLength];

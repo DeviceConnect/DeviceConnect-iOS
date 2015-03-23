@@ -15,5 +15,9 @@
 
 + (NSString *) randomStringWithLength:(NSUInteger)len;
 + (NSString *) percentEncodeString:(NSString *)string withEncoding:(NSStringEncoding)encoding;
-+ (BOOL)isFloatWithString:(NSString *)numberString;
++ (BOOL)existFloatWithString:(NSString *)numberString;
++ (BOOL)existDigitWithString:(NSString*)digit;
++ (BOOL)existDecimalWithString:(NSString*)decimal;
++ (BOOL)existCSVWithString:(NSString *)csv;
+
 @end

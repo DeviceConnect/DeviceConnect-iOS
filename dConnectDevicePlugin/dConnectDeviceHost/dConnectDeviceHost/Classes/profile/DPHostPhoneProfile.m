@@ -86,7 +86,8 @@ didReceivePostCallRequest:(DConnectRequestMessage *)request
                  serviceId:(NSString *)serviceId
               phoneNumber:(NSString *)phoneNumber
 {
-    if (!phoneNumber) {
+    if (!phoneNumber || phoneNumber.length > 11
+        || ![DPHostUtils existDigitWithString:phoneNumber]) {
         [response setErrorToInvalidRequestParameterWithMessage:@"phoneNumber must be specified."];
         return YES;
     }

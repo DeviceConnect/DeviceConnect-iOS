@@ -51,7 +51,7 @@ didReceiveGetReceiveRequest:(DConnectRequestMessage *)request
     NSFileManager *sysFileMgr = [NSFileManager defaultManager];
     BOOL isDirectory;
     if (![sysFileMgr fileExistsAtPath:dstPath isDirectory:&isDirectory]) {
-        [response setErrorToUnknownWithMessage:@"File does not exists."];
+        [response setErrorToInvalidRequestParameterWithMessage:@"File does not exists."];
         return YES;
     } else if (isDirectory) {
         [response setErrorToUnknownWithMessage:@"Directory can not be specified."];
@@ -83,11 +83,11 @@ didReceiveGetReceiveRequest:(DConnectRequestMessage *)request
 {
     NSString *offsetString = [request stringForKey:DConnectFileProfileParamOffset];
     NSString *limitString = [request stringForKey:DConnectFileProfileParamLimit];
-    if (offsetString && [DPHostUtils isFloatWithString:offsetString]) {
+    if (offsetString && [DPHostUtils existFloatWithString:offsetString]) {
         [response setErrorToInvalidRequestParameterWithMessage:@"offset is non-float"];
         return nil;
     }
-    if (limitString && [DPHostUtils isFloatWithString:limitString]) {
+    if (limitString && [DPHostUtils existFloatWithString:limitString]) {
         [response setErrorToInvalidRequestParameterWithMessage:@"limit is non-float"];
         return nil;
     }
@@ -402,7 +402,7 @@ didReceivePostMkdirRequest:(DConnectRequestMessage *)request
     }
     if ([sysFileMgr fileExistsAtPath:dstPath]) {
         // ディレクトリが既に存在している
-        [response setErrorToUnknownWithMessage:
+        [response setErrorToInvalidRequestParameterWithMessage:
          @"File/directory already exists at the specified path."];
     } else {
         BOOL result = [sysFileMgr createDirectoryAtPath:dstPath
@@ -484,7 +484,7 @@ didReceiveDeleteRmdirRequest:(DConnectRequestMessage *)request
         if (isDirectory) {
             NSArray *contents = [sysFileMgr contentsOfDirectoryAtPath:dstPath error:nil];
             if (contents.count != 0 && !force) {
-                [response setErrorToUnknownWithMessage:
+                [response setErrorToIllegalDeviceStateWithMessage:
                  @"Could not delete a directory containing files; set force to YES for a recursive deletion."];
             } else {
                 BOOL result = [sysFileMgr removeItemAtPath:dstPath error:nil];
@@ -496,7 +496,7 @@ didReceiveDeleteRmdirRequest:(DConnectRequestMessage *)request
             }
         } else {
             // パスでしていされた項目がディレクトリではない
-            [response setErrorToUnknownWithMessage:
+            [response setErrorToIllegalDeviceStateWithMessage:
              @"File specified by path is not a directory."];
         }
     }

@@ -154,8 +154,6 @@ static NSMutableArray *contextCacheVal;
         }
         
         ctx = [DPHostMediaContext contextWithMediaItem:mediaItem];
-    } else {
-        NSLog(@"Unknown media URL scheme.");
     }
     
     return ctx;

@@ -17,7 +17,7 @@
 @interface DPChromecastMediaPlayerProfile()
 /// アセットライブラリ検索用のロック
 @property NSObject *lockAssetsLibraryQuerying;
-
+@property ALAssetsLibrary *library;
 @end
 
 @implementation DPChromecastMediaPlayerProfile
@@ -27,6 +27,7 @@
     self = [super init];
     if (self) {
         self.delegate = self;
+        _library = [ALAssetsLibrary new];
     }
     return self;
 }
@@ -47,7 +48,6 @@
         dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
         dispatch_time_t timeout = dispatch_time(DISPATCH_TIME_NOW, NSEC_PER_SEC * 30);
         
-        ALAssetsLibrary *library = [ALAssetsLibrary new];
         NSUInteger groupTypes = ALAssetsGroupAll;
         NSString *mimeTypeLowercase = mimeType.lowercaseString;
         id mainLoopBlock = ^(ALAssetsGroup *group, BOOL *stop1)
@@ -108,7 +108,7 @@
             return;
         };
         
-        [library enumerateGroupsWithTypes:groupTypes
+        [_library enumerateGroupsWithTypes:groupTypes
                                usingBlock:mainLoopBlock
                              failureBlock:failBlock];
         

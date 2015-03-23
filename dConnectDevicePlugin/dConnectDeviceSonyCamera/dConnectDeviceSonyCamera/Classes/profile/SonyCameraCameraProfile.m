@@ -13,7 +13,7 @@ NSString *const SonyCameraCameraProfileName = @"camera";
 NSString *const SonyCameraCameraProfileAttrZoom = @"zoom";
 NSString *const SonyCameraCameraProfileParamDirection = @"direction";
 NSString *const SonyCameraCameraProfileParamMovement = @"movement";
-NSString *const SonyCameraCameraProfileParamZoomdiameter = @"zoomdiameter";
+NSString *const SonyCameraCameraProfileParamZoomdiameter = @"zoomPosition";
 
 @interface SonyCameraCameraProfile()
 

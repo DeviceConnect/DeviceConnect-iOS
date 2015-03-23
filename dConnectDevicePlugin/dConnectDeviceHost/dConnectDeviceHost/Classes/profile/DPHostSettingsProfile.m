@@ -8,6 +8,7 @@
 //
 
 #import "DPHostSettingsProfile.h"
+#import "DPHostUtils.h"
 
 @implementation DPHostSettingsProfile
 
@@ -62,7 +63,9 @@ didReceivePutLightRequest:(DConnectRequestMessage *)request
         [response setErrorToInvalidRequestParameterWithMessage:@"level must be specified."];
         return YES;
     }
-    if ([level compare:@0] == NSOrderedAscending || [level compare:@1] == NSOrderedDescending) {
+    NSString *levelString = [request stringForKey:DConnectSettingsProfileParamLevel];
+    if ([level compare:@0] == NSOrderedAscending || [level compare:@1] == NSOrderedDescending
+        || !levelString || ![DPHostUtils existFloatWithString:levelString]) {
         [response setErrorToInvalidRequestParameterWithMessage:@"level must be within range of [0, 1.0]."];
         return YES;
     }

@@ -10,6 +10,7 @@
 #import <AudioToolbox/AudioToolbox.h>
 
 #import "DPHostVibrationProfile.h"
+#import "DPHostUtils.h"
 
 @implementation DPHostVibrationProfile
 
@@ -52,20 +53,47 @@
     
     return send;
 }
+- (BOOL)existNumberInArray:(NSArray*)pattern
+{
+    if (pattern) {
+        for (NSNumber *pat in pattern) {
+            if (![DPHostUtils existDigitWithString:pat.stringValue]
+                || pat.intValue < 0) {
+                return NO;
+            }
+        }
+        return YES;
+    }
+    return NO;
+}
 
+#pragma mark - DConnectVibrationProfileDelegate
+
+// バイブ鳴動開始リクエストを受け取った
 - (BOOL)            profile:(DConnectVibrationProfile *)profile
 didReceivePutVibrateRequest:(DConnectRequestMessage *)request
                    response:(DConnectResponseMessage *)response
-                   serviceId:(NSString *)serviceId
+                  serviceId:(NSString *)serviceId
                     pattern:(NSArray *) pattern
 {
-    if (!pattern) {
-        AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
-        [response setResult:DConnectMessageResultTypeOk];
-    } else {
-        [response setErrorToInvalidRequestParameterWithMessage:
-            @"pattern is not supported; This parameter must be ommited."];
+    NSString *patternString = [request stringForKey:DConnectVibrationProfileParamPattern];
+    if ((patternString
+         && ![DPHostUtils existCSVWithString:patternString]
+         && ![DPHostUtils existDigitWithString:patternString])
+        || (patternString
+            && [DPHostUtils existCSVWithString:patternString]
+            && ![self existNumberInArray:pattern])
+        || (patternString
+            && [DPHostUtils existCSVWithString:patternString]
+            && ![DPHostUtils existDigitWithString:patternString]
+            && ![self existNumberInArray:pattern])
+        ) {
+        [response setErrorToInvalidRequestParameter];
+        return YES;
     }
+    AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
+    [response setResult:DConnectMessageResultTypeOk];
+
     return YES;
 }
 
