@@ -83,11 +83,11 @@ didReceiveGetReceiveRequest:(DConnectRequestMessage *)request
 {
     NSString *offsetString = [request stringForKey:DConnectFileProfileParamOffset];
     NSString *limitString = [request stringForKey:DConnectFileProfileParamLimit];
-    if (offsetString && [DPHostUtils existFloatWithString:offsetString]) {
+    if (offsetString && [DPHostUtils existDigitWithString:offsetString]) {
         [response setErrorToInvalidRequestParameterWithMessage:@"offset is non-float"];
         return nil;
     }
-    if (limitString && [DPHostUtils existFloatWithString:limitString]) {
+    if (limitString && [DPHostUtils existDigitWithString:limitString]) {
         [response setErrorToInvalidRequestParameterWithMessage:@"limit is non-float"];
         return nil;
     }
@@ -102,6 +102,7 @@ didReceiveGetReceiveRequest:(DConnectRequestMessage *)request
         if (![self checkPath:dstPath]) {
             listPath = dstPath;
         }
+        NSLog(@"path:%@", listPath);
         if (![sysFileMgr fileExistsAtPath:listPath]) {
             [response setErrorToInvalidRequestParameterWithMessage:@"path is invalid"];
             return nil;
@@ -508,7 +509,7 @@ didReceiveDeleteRmdirRequest:(DConnectRequestMessage *)request
 -(BOOL)checkPath:(NSString*)dstPath {
     NSMutableArray *results = [NSMutableArray array];
     NSRange target = NSMakeRange(0, [dstPath length]);
-    NSString *word = @"/var/mobile/Applications";
+    NSString *word = @"/var/mobile";
     
     // 全件検索
     while (target.location != NSNotFound) {
@@ -526,6 +527,6 @@ didReceiveDeleteRmdirRequest:(DConnectRequestMessage *)request
             target = NSMakeRange(from, end);
         }
     }
-    return [results count] >= 2;
+    return ([results count] >= 2);
 }
 @end
