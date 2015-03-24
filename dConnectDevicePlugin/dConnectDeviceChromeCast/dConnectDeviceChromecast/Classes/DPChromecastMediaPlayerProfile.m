@@ -516,6 +516,7 @@ didReceiveGetMuteRequest:(DConnectRequestMessage *)request
             ^{
                 // ミュート状態取得
                 BOOL mute = [[DPChromecastManager sharedManager] isMutedWithID:serviceId];
+
                 [response setBool:mute forKey:@"mute"];
             }];
 }
@@ -586,13 +587,7 @@ didReceivePutPlayRequest:(DConnectRequestMessage *)request
                 response:(DConnectResponseMessage *)response
                 serviceId:(NSString *)serviceId
 {
-    //パラメータチェック
-	NSString *status = [[DPChromecastManager sharedManager] mediaPlayerStateWithID:serviceId];
-	
-    if([status isEqualToString: @"play"]){
-        [response setErrorToIllegalDeviceStateWithMessage:@"Playstate is not idle"];
-        return YES;
-    }
+
     
     // リクエスト処理
     return [self handleRequest:request
@@ -615,12 +610,7 @@ didReceivePutStopRequest:(DConnectRequestMessage *)request
                 response:(DConnectResponseMessage *)response
                 serviceId:(NSString *)serviceId
 {
-    //パラメータチェック
-    NSString *status = [[DPChromecastManager sharedManager] mediaPlayerStateWithID:serviceId];
-    if(![status  isEqualToString: @"play"]){
-        [response setErrorToIllegalDeviceStateWithMessage:@"Playstate is not playing"];
-        return YES;
-    }
+
     
     // リクエスト処理
     return [self handleRequest:request
@@ -643,13 +633,6 @@ didReceivePutPauseRequest:(DConnectRequestMessage *)request
                  response:(DConnectResponseMessage *)response
                  serviceId:(NSString *)serviceId
 {
-    //パラメータチェック
-    NSString *status = [[DPChromecastManager sharedManager] mediaPlayerStateWithID:serviceId];
-    
-    if(![status  isEqualToString: @"play"]){
-        [response setErrorToIllegalDeviceStateWithMessage:@"Playstate is not playing"];
-        return YES;
-    }
     
     // リクエスト処理
     return [self handleRequest:request
@@ -672,14 +655,6 @@ didReceivePutResumeRequest:(DConnectRequestMessage *)request
                   response:(DConnectResponseMessage *)response
                   serviceId:(NSString *)serviceId
 {
-    // 再生状態取得
-    NSString *status = [[DPChromecastManager sharedManager] mediaPlayerStateWithID:serviceId];
-
-    if(![status  isEqual: @"pause"]){
-        [response setErrorToIllegalDeviceStateWithMessage:@"Playstate is not paused"];
-        return YES;
-    }
-    
     // リクエスト処理
     return [self handleRequest:request
                       response:response

@@ -354,7 +354,7 @@ typedef NS_ENUM(NSUInteger, OptionIndex) {
 - (BOOL) setupAssetWriterAudioInputForRecorderContext:(DPHostRecorderContext *)recorderCtx
                                           description:(CMFormatDescriptionRef)currentFormatDescription
 {
-    if (!recorderCtx.writer || !recorderCtx.audioWriterInput) {
+    if (!recorderCtx.writer) {
         NSLog(@"assetWriter must be specified.");
         return NO;
     }
@@ -405,7 +405,7 @@ typedef NS_ENUM(NSUInteger, OptionIndex) {
 - (BOOL) setupAssetWriterVideoInputForRecorderContext:(DPHostRecorderContext *)recorderCtx
                                           description:(CMFormatDescriptionRef)currentFormatDescription
 {
-    if (!recorderCtx.writer || !recorderCtx.videoWriterInput) {
+    if (!recorderCtx.writer) {
         NSLog(@"assetWriter must be specified.");
         return NO;
     }
@@ -844,7 +844,9 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
     }
 }
 
-- (BOOL) appendSampleBuffer:(CMSampleBufferRef)sampleBuffer recorderContext:(DPHostRecorderContext *)recorderCtx isAudio:(BOOL)isAudio
+- (BOOL) appendSampleBuffer:(CMSampleBufferRef)sampleBuffer
+            recorderContext:(DPHostRecorderContext *)recorderCtx
+                    isAudio:(BOOL)isAudio
 {
     @synchronized(recorderCtx) {
         if (!recorderCtx.writer) {
@@ -1012,7 +1014,7 @@ didReceivePostTakePhotoRequest:(DConnectRequestMessage *)request
                         target:(NSString *)target
 {
     unsigned long long idx;
-    if (target || target.length <= 0) {
+    if (target) {
         if ([target isEqualToString:@"video"]) {
             idx = [_defaultVideoRecorderId unsignedLongLongValue];
         } else if ([target isEqualToString:@"audio"]) {
@@ -1212,7 +1214,7 @@ didReceivePostRecordRequest:(DConnectRequestMessage *)request
     }
     
     unsigned long long idx;
-    if (target || target.length <= 0) {
+    if (target) {
         if ([target isEqualToString:@"video"]) {
             idx = [_defaultVideoRecorderId unsignedLongLongValue];
         } else if ([target isEqualToString:@"audio"]) {
@@ -1346,18 +1348,18 @@ didReceivePutPauseRequest:(DConnectRequestMessage *)request
                    target:(NSString *)target
 {
     unsigned long long idx;
-    if (target || target.length <= 0) {
+    if (target) {
         if ([target isEqualToString:@"video"]) {
             idx = [_defaultVideoRecorderId unsignedLongLongValue];
         } else if ([target isEqualToString:@"audio"]) {
             idx = [_defaultAudioRecorderId unsignedLongLongValue];
         } else {
             idx = [_currentRecorderId unsignedLongLongValue];
-//            BOOL success = [[NSScanner scannerWithString:target] scanUnsignedLongLong:&idx];
-//            if (!success) {
-//                [response setErrorToInvalidRequestParameterWithMessage:@"target is invalid."];
-//                return YES;
-//            }
+            BOOL success = [[NSScanner scannerWithString:target] scanUnsignedLongLong:&idx];
+            if (!success) {
+                [response setErrorToInvalidRequestParameterWithMessage:@"target is invalid."];
+                return YES;
+            }
         }
     } else if (_currentRecorderId) {
         idx = [_currentRecorderId unsignedLongLongValue];
@@ -1429,18 +1431,18 @@ didReceivePutResumeRequest:(DConnectRequestMessage *)request
                     target:(NSString *)target
 {
     unsigned long long idx;
-    if (target || target.length <= 0) {
+    if (target) {
         if ([target isEqualToString:@"video"]) {
             idx = [_defaultVideoRecorderId unsignedLongLongValue];
         } else if ([target isEqualToString:@"audio"]) {
             idx = [_defaultAudioRecorderId unsignedLongLongValue];
         } else {
             idx = [_currentRecorderId unsignedLongLongValue];
-//            BOOL success = [[NSScanner scannerWithString:target] scanUnsignedLongLong:&idx];
-//            if (!success) {
-//                [response setErrorToInvalidRequestParameterWithMessage:@"target is invalid."];
-//                return YES;
-//            }
+            BOOL success = [[NSScanner scannerWithString:target] scanUnsignedLongLong:&idx];
+            if (!success) {
+                [response setErrorToInvalidRequestParameterWithMessage:@"target is invalid."];
+                return YES;
+            }
         }
     } else if (_currentRecorderId) {
         idx = [_currentRecorderId unsignedLongLongValue];
@@ -1511,18 +1513,18 @@ didReceivePutStopRequest:(DConnectRequestMessage *)request
                   target:(NSString *)target
 {
     unsigned long long idx;
-    if (target || target.length <= 0) {
+    if (target) {
         if ([target isEqualToString:@"video"]) {
             idx = [_defaultVideoRecorderId unsignedLongLongValue];
         } else if ([target isEqualToString:@"audio"]) {
             idx = [_defaultAudioRecorderId unsignedLongLongValue];
         } else {
             idx = [_currentRecorderId unsignedLongLongValue];
-//            BOOL success = [[NSScanner scannerWithString:target] scanUnsignedLongLong:&idx];
-//            if (!success) {
-//                [response setErrorToInvalidRequestParameterWithMessage:@"target is invalid."];
-//                return YES;
-//            }
+            BOOL success = [[NSScanner scannerWithString:target] scanUnsignedLongLong:&idx];
+            if (!success) {
+                [response setErrorToInvalidRequestParameterWithMessage:@"target is invalid."];
+                return YES;
+            }
         }
     } else if (_currentRecorderId) {
         idx = [_currentRecorderId unsignedLongLongValue];
@@ -1642,18 +1644,18 @@ didReceivePutMuteTrackRequest:(DConnectRequestMessage *)request
                        target:(NSString *)target
 {
     unsigned long long idx;
-    if (target || target.length <= 0) {
+    if (target) {
         if ([target isEqualToString:@"video"]) {
             idx = [_defaultVideoRecorderId unsignedLongLongValue];
         } else if ([target isEqualToString:@"audio"]) {
             idx = [_defaultAudioRecorderId unsignedLongLongValue];
         } else {
             idx = [_currentRecorderId unsignedLongLongValue];
-//            BOOL success = [[NSScanner scannerWithString:target] scanUnsignedLongLong:&idx];
-//            if (!success) {
-//                [response setErrorToInvalidRequestParameterWithMessage:@"target is invalid."];
-//                return YES;
-//            }
+            BOOL success = [[NSScanner scannerWithString:target] scanUnsignedLongLong:&idx];
+            if (!success) {
+                [response setErrorToInvalidRequestParameterWithMessage:@"target is invalid."];
+                return YES;
+            }
         }
     } else if (_currentRecorderId) {
         idx = [_currentRecorderId unsignedLongLongValue];
@@ -1715,18 +1717,18 @@ didReceivePutUnmuteTrackRequest:(DConnectRequestMessage *)request
                          target:(NSString *)target
 {
     unsigned long long idx;
-    if (target || target.length <= 0) {
+    if (target) {
         if ([target isEqualToString:@"video"]) {
             idx = [_defaultVideoRecorderId unsignedLongLongValue];
         } else if ([target isEqualToString:@"audio"]) {
             idx = [_defaultAudioRecorderId unsignedLongLongValue];
         } else {
             idx = [_currentRecorderId unsignedLongLongValue];
-//            BOOL success = [[NSScanner scannerWithString:target] scanUnsignedLongLong:&idx];
-//            if (!success) {
-//                [response setErrorToInvalidRequestParameterWithMessage:@"target is invalid."];
-//                return YES;
-//            }
+            BOOL success = [[NSScanner scannerWithString:target] scanUnsignedLongLong:&idx];
+            if (!success) {
+                [response setErrorToInvalidRequestParameterWithMessage:@"target is invalid."];
+                return YES;
+            }
         }
     } else if (_currentRecorderId) {
         idx = [_currentRecorderId unsignedLongLongValue];
