@@ -33,7 +33,7 @@
 
 // デバイスプラグインのバージョン
 - (NSString *) versionOfSystemProfile:(DConnectSystemProfile *)profile {
-	return @"1.0";
+	return @"2.0.0";
 }
 
 // 設定画面用のUIViewController

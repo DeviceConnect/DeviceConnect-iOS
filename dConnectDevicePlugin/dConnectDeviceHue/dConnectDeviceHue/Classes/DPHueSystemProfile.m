@@ -22,7 +22,7 @@
 
 - (NSString *) versionOfSystemProfile:(DConnectSystemProfile *)profile
 {
-    return @"1.0";
+    return @"2.0.0";
 }
 
 - (UIViewController *) profile:(DConnectSystemProfile *)sender

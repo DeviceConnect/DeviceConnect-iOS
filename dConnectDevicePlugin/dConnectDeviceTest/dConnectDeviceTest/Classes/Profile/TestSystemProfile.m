@@ -9,7 +9,7 @@
 
 #import "TestSystemProfile.h"
 
-NSString *const TestSystemVersion = @"1.0";
+NSString *const TestSystemVersion = @"2.0.0";
 
 @implementation TestSystemProfile
 
@@ -40,7 +40,7 @@ NSString *const TestSystemVersion = @"1.0";
 #pragma mark - DConnectSystemProfileDataSource
 
 - (NSString *) versionOfSystemProfile:(DConnectSystemProfile *)profile {
-    return @"1.0";
+    return @"2.0.0";
 }
 
 - (UIViewController *) profile:(DConnectSystemProfile *)sender settingPageForRequest:(DConnectRequestMessage *)request {
