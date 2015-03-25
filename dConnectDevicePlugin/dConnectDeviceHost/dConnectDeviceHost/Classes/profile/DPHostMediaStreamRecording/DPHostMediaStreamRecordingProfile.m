@@ -844,9 +844,7 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
         }
     }
     if (requireRelease) {
-        CMSampleBufferInvalidate(sampleBuffer);
-        CFRelease(sampleBuffer);
-        sampleBuffer = NULL;
+        CFRelease(buffer);
     }
 }
 
@@ -1218,7 +1216,7 @@ didReceivePostRecordRequest:(DConnectRequestMessage *)request
     }
     
     unsigned long long idx;
-    if (target || (target && target.length <= 0)) {
+    if (target) {
         if ([target isEqualToString:@"video"]) {
             idx = [_defaultVideoRecorderId unsignedLongLongValue];
         } else if ([target isEqualToString:@"audio"]) {
@@ -1240,8 +1238,9 @@ didReceivePostRecordRequest:(DConnectRequestMessage *)request
          @"target was not specified, and no default target was set; please specify an existing target."];
         return YES;
     }
-    if (!_recorderArr || _recorderArr.count > idx) {
-        idx = [_defaultVideoRecorderId unsignedLongLongValue];
+    if (!_recorderArr || _recorderArr.count < idx) {
+        [response setErrorToInvalidRequestParameterWithMessage:@"target is invalid."];
+        return YES;
     }
     _currentRecorderId = [NSNumber numberWithUnsignedLongLong:idx];
     DPHostRecorderContext *recorder;
@@ -1350,7 +1349,7 @@ didReceivePutPauseRequest:(DConnectRequestMessage *)request
                    target:(NSString *)target
 {
     unsigned long long idx;
-    if (target || (target && target.length <= 0)) {
+    if (target) {
         if ([target isEqualToString:@"video"]) {
             idx = [_defaultVideoRecorderId unsignedLongLongValue];
         } else if ([target isEqualToString:@"audio"]) {
@@ -1373,8 +1372,9 @@ didReceivePutPauseRequest:(DConnectRequestMessage *)request
          @"target was not specified, and no default target was set; please specify an existing target."];
         return YES;
     }
-    if (!_recorderArr || _recorderArr.count > idx) {
-        idx = [_defaultVideoRecorderId unsignedLongLongValue];
+    if (!_recorderArr || _recorderArr.count < idx) {
+        [response setErrorToInvalidRequestParameterWithMessage:@"target is invalid."];
+        return YES;
     }
 
     _currentRecorderId = [NSNumber numberWithUnsignedLongLong:idx];
@@ -1431,7 +1431,7 @@ didReceivePutResumeRequest:(DConnectRequestMessage *)request
                     target:(NSString *)target
 {
     unsigned long long idx;
-    if (target || (target && target.length <= 0)) {
+    if (target) {
         if ([target isEqualToString:@"video"]) {
             idx = [_defaultVideoRecorderId unsignedLongLongValue];
         } else if ([target isEqualToString:@"audio"]) {
@@ -1455,8 +1455,9 @@ didReceivePutResumeRequest:(DConnectRequestMessage *)request
          @"target was not specified, and no default target was set; please specify an existing target."];
         return YES;
     }
-    if (!_recorderArr || _recorderArr.count > idx) {
-        idx = [_defaultVideoRecorderId unsignedLongLongValue];
+    if (!_recorderArr || _recorderArr.count < idx) {
+        [response setErrorToInvalidRequestParameterWithMessage:@"target is invalid."];
+        return YES;
     }
     _currentRecorderId = [NSNumber numberWithUnsignedLongLong:idx];
     DPHostRecorderContext *recorder;
@@ -1506,7 +1507,7 @@ didReceivePutStopRequest:(DConnectRequestMessage *)request
                   target:(NSString *)target
 {
     unsigned long long idx;
-    if (target || (target && target.length <= 0)) {
+    if (target) {
         if ([target isEqualToString:@"video"]) {
             idx = [_defaultVideoRecorderId unsignedLongLongValue];
         } else if ([target isEqualToString:@"audio"]) {
@@ -1529,8 +1530,9 @@ didReceivePutStopRequest:(DConnectRequestMessage *)request
          @"target was not specified, and no default target was set; please specify an existing target."];
         return YES;
     }
-    if (!_recorderArr || _recorderArr.count > idx) {
-        idx = [_defaultVideoRecorderId unsignedLongLongValue];
+    if (!_recorderArr || _recorderArr.count < idx) {
+        [response setErrorToInvalidRequestParameterWithMessage:@"target is invalid."];
+        return YES;
     }
 
     _currentRecorderId = [NSNumber numberWithUnsignedLongLong:idx];
@@ -1546,6 +1548,10 @@ didReceivePutStopRequest:(DConnectRequestMessage *)request
             message = @"Exception encountered while trying to access the recorder ID list.";
         }
         [response setErrorToInvalidRequestParameterWithMessage:message];
+        return YES;
+    }
+    if (recorder.state == RecorderStateInactive) {
+        [response setErrorToIllegalDeviceStateWithMessage:@"target is not recording."];
         return YES;
     }
 
@@ -1628,7 +1634,7 @@ didReceivePutMuteTrackRequest:(DConnectRequestMessage *)request
                        target:(NSString *)target
 {
     unsigned long long idx;
-    if (target || (target && target.length <= 0)) {
+    if (target) {
         if ([target isEqualToString:@"video"]) {
             idx = [_defaultVideoRecorderId unsignedLongLongValue];
         } else if ([target isEqualToString:@"audio"]) {
@@ -1652,8 +1658,9 @@ didReceivePutMuteTrackRequest:(DConnectRequestMessage *)request
          @"target was not specified, and no default target was set; please specify an existing target."];
         return YES;
     }
-    if (!_recorderArr || _recorderArr.count > idx) {
-        idx = [_defaultVideoRecorderId unsignedLongLongValue];
+    if (!_recorderArr || _recorderArr.count < idx) {
+        [response setErrorToInvalidRequestParameterWithMessage:@"target is invalid."];
+        return YES;
     }
 
     _currentRecorderId = [NSNumber numberWithUnsignedLongLong:idx];
@@ -1699,7 +1706,7 @@ didReceivePutUnmuteTrackRequest:(DConnectRequestMessage *)request
                          target:(NSString *)target
 {
     unsigned long long idx;
-    if (target || (target && target.length <= 0)) {
+    if (target) {
         if ([target isEqualToString:@"video"]) {
             idx = [_defaultVideoRecorderId unsignedLongLongValue];
         } else if ([target isEqualToString:@"audio"]) {
@@ -1723,8 +1730,9 @@ didReceivePutUnmuteTrackRequest:(DConnectRequestMessage *)request
          @"target was not specified, and no default target was set; please specify an existing target."];
         return YES;
     }
-    if (!_recorderArr || _recorderArr.count > idx) {
-        idx = [_defaultVideoRecorderId unsignedLongLongValue];
+    if (!_recorderArr || _recorderArr.count < idx) {
+        [response setErrorToInvalidRequestParameterWithMessage:@"target is invalid."];
+        return YES;
     }
     _currentRecorderId = [NSNumber numberWithUnsignedLongLong:idx];
     DPHostRecorderContext *recorder;

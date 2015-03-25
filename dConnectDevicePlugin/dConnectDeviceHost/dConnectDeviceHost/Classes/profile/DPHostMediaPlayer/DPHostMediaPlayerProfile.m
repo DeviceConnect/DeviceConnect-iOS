@@ -1283,7 +1283,7 @@ didReceivePutSeekRequest:(DConnectRequestMessage *)request
                      pos:(NSNumber *)pos
 {
     NSString *posString = [request stringForKey:DConnectMediaPlayerProfileParamPos];
-    if (!pos || ![DPHostUtils existDigitWithString:posString]) {
+    if (!pos || (pos && ![DPHostUtils existDigitWithString:posString])) {
         [response setErrorToInvalidRequestParameterWithMessage:@"pos must be specified."];
         return YES;
     }
@@ -1292,7 +1292,7 @@ didReceivePutSeekRequest:(DConnectRequestMessage *)request
     if (_currentMediaPlayer == MediaPlayerTypeIPod) {
         MPMediaItem *nowPlayingItem = _musicPlayer.nowPlayingItem;
         NSNumber *playbackDuration = [nowPlayingItem valueForProperty:MPMediaItemPropertyPlaybackDuration];
-        if ([playbackDuration compare:pos] == NSOrderedAscending) {
+        if ([playbackDuration unsignedIntegerValue] < [pos unsignedIntegerValue]) {
             [response setErrorToInvalidRequestParameterWithMessage:@"pos exceeds the playback duration."];
             return YES;
         }
