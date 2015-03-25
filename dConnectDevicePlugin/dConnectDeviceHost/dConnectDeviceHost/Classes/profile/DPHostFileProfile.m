@@ -486,7 +486,7 @@ didReceiveDeleteRmdirRequest:(DConnectRequestMessage *)request
         if (isDirectory) {
             NSArray *contents = [sysFileMgr contentsOfDirectoryAtPath:dstPath error:nil];
             if (contents.count != 0 && !force) {
-                [response setErrorToIllegalDeviceStateWithMessage:
+                [response setErrorToInvalidRequestParameterWithMessage:
                  @"Could not delete a directory containing files; set force to YES for a recursive deletion."];
             } else {
                 BOOL result = [sysFileMgr removeItemAtPath:dstPath error:nil];
@@ -498,7 +498,7 @@ didReceiveDeleteRmdirRequest:(DConnectRequestMessage *)request
             }
         } else {
             // パスでしていされた項目がディレクトリではない
-            [response setErrorToIllegalDeviceStateWithMessage:
+            [response setErrorToInvalidRequestParameterWithMessage:
              @"File specified by path is not a directory."];
         }
     }
