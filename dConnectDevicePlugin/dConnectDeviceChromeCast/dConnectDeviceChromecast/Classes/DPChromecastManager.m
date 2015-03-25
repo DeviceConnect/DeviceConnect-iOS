@@ -12,7 +12,7 @@
 #import "GCIPUtil.h"
 #import "HTTPServer.h"
 
-static NSString *const kReceiverAppID = @"A24AC057";
+static NSString *const kReceiverAppID = @"1F0ABF07";
 static NSString *const kReceiverNamespace
     = @"urn:x-cast:com.name.space.chromecast.test.receiver";
 static NSString * const kDPChromeRegexDecimalPoint = @"^[-+]?([0-9]*)?(\\.)?([0-9]*)?$";
@@ -29,7 +29,7 @@ static const NSTimeInterval DPSemaphoreTimeout = 20.0;
 @property (nonatomic, copy) void (^connectCallback)(BOOL success, NSString *error);
 @property (nonatomic, copy) void (^eventCallback)(NSString *mediaID);
 @end
-@implementation DPChromecastManagerDataz
+@implementation DPChromecastManagerData
 @end
 
 
