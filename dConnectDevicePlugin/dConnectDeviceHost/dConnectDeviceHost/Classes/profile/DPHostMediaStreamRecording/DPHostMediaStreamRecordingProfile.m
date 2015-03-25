@@ -1549,10 +1549,6 @@ didReceivePutStopRequest:(DConnectRequestMessage *)request
         return YES;
     }
 
-    if (recorder.state == RecorderStateInactive) {
-        [response setErrorToIllegalDeviceStateWithMessage:@"target is not recording."];
-        return YES;
-    }
     [recorder performWriting:
      ^{
          // レコーディングサンプルの配信を停止する。
@@ -1690,7 +1686,7 @@ didReceivePutMuteTrackRequest:(DConnectRequestMessage *)request
         
         [response setResult:DConnectMessageResultTypeOk];
     } else {
-        [response setErrorToUnknownWithMessage:@"The specified recorder is already muted."];
+        [response setErrorToIllegalDeviceStateWithMessage:@"The specified recorder is already muted."];
     }
     
     return YES;
@@ -1752,17 +1748,17 @@ didReceivePutUnmuteTrackRequest:(DConnectRequestMessage *)request
         return YES;
     }
     
-//    if (recorder.isMuted) {
+    if (recorder.isMuted) {
         recorder.isMuted = NO;
         
         [self sendOnRecordingChangeEventWithStatus:DConnectMediaStreamRecordingProfileRecordingStateUnmutetrack
                                               path:nil mimeType:nil errorMessage:nil];
         
         [response setResult:DConnectMessageResultTypeOk];
-//    } else {
-//        [response setErrorToUnknownWithMessage:@"The specified recorder is not muted."];
-//    }
-    
+    } else {
+        [response setErrorToIllegalDeviceStateWithMessage:@"The specified recorder is not muted."];
+    }
+
     return YES;
 }
 

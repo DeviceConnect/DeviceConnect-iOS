@@ -441,7 +441,7 @@ didReceiveDeleteRemoveRequest:(DConnectRequestMessage *)request
     }
     BOOL isDirectory;
     if (![sysFileMgr fileExistsAtPath:dstPath isDirectory:&isDirectory]) {
-        [response setErrorToUnknownWithMessage:@"File does not exist."];
+        [response setErrorToInvalidRequestParameterWithMessage:@"File does not exist."];
         return YES;
     } else if (isDirectory) {
         [response setErrorToUnknownWithMessage:@"Directory can not be specified; use Remove Directory API instead."];
@@ -486,7 +486,7 @@ didReceiveDeleteRmdirRequest:(DConnectRequestMessage *)request
         if (isDirectory) {
             NSArray *contents = [sysFileMgr contentsOfDirectoryAtPath:dstPath error:nil];
             if (contents.count != 0 && !force) {
-                [response setErrorToInvalidRequestParameterWithMessage:
+                [response setErrorToIllegalDeviceStateWithMessage:
                  @"Could not delete a directory containing files; set force to YES for a recursive deletion."];
             } else {
                 BOOL result = [sysFileMgr removeItemAtPath:dstPath error:nil];

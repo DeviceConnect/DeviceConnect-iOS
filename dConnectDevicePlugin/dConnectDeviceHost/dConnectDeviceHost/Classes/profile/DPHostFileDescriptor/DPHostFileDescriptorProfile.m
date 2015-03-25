@@ -170,7 +170,7 @@ didReceiveGetReadRequest:(DConnectRequestMessage *)request
         }
         [response setResult:DConnectMessageResultTypeOk];
     } else {
-        [response setErrorToIllegalDeviceStateWithMessage:
+        [response setErrorToInvalidRequestParameterWithMessage:
          @"The file specified by path is not opened; use File Descriptor Open API first to open it."];
     }
     
@@ -204,7 +204,7 @@ didReceivePutCloseRequest:(DConnectRequestMessage *)request
              @"The file specified by path is not opened; use File Descriptor Open API first to open it."];
         }
     } else {
-        [response setErrorToIllegalDeviceStateWithMessage:
+        [response setErrorToInvalidRequestParameterWithMessage:
          @"The file specified by path is not opened; use File Descriptor Open API first to open it."];
     }
     
@@ -266,7 +266,7 @@ didReceivePutWriteRequest:(DConnectRequestMessage *)request
                     }
                     [response setResult:DConnectMessageResultTypeOk];
                 } else {
-                    [response setErrorToIllegalDeviceStateWithMessage:
+                    [response setErrorToInvalidRequestParameterWithMessage:
                      @"The file specified by path is not opened; use File Descriptor Open API first to open it."];
                 }
             } else {
@@ -276,7 +276,7 @@ didReceivePutWriteRequest:(DConnectRequestMessage *)request
             [response setErrorToIllegalDeviceStateWithMessage:@"Invalid Flag state"];
         }
     } else {
-        [response setErrorToIllegalDeviceStateWithMessage:
+        [response setErrorToInvalidRequestParameterWithMessage:
          @"The file specified by path is not opened; use File Descriptor Open API first to open it."];
     }
     return YES;
