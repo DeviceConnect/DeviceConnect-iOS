@@ -13,6 +13,10 @@
 
 @end
 
+/*!
+ * @class RESTfulNormalCommonTest
+ * @brief 各プロファイルの共通部分についての正常系テスト.
+ */
 @implementation RESTfulNormalCommonTest
 
 /**

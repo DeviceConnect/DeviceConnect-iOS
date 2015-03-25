@@ -15,6 +15,10 @@
 
 @end
 
+/*!
+ * @class RESTfulFailCommonTest
+ * @brief 各プロファイルの共通部分についての異常系テスト.
+ */
 @implementation RESTfulFailCommonTest
 
 /**
