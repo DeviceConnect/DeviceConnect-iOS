@@ -441,7 +441,7 @@ didReceiveDeleteRemoveRequest:(DConnectRequestMessage *)request
     }
     BOOL isDirectory;
     if (![sysFileMgr fileExistsAtPath:dstPath isDirectory:&isDirectory]) {
-        [response setErrorToUnknownWithMessage:@"File does not exist."];
+        [response setErrorToInvalidRequestParameterWithMessage:@"File does not exist."];
         return YES;
     } else if (isDirectory) {
         [response setErrorToUnknownWithMessage:@"Directory can not be specified; use Remove Directory API instead."];
@@ -498,7 +498,7 @@ didReceiveDeleteRmdirRequest:(DConnectRequestMessage *)request
             }
         } else {
             // パスでしていされた項目がディレクトリではない
-            [response setErrorToIllegalDeviceStateWithMessage:
+            [response setErrorToInvalidRequestParameterWithMessage:
              @"File specified by path is not a directory."];
         }
     }

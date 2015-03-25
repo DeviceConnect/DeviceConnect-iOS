@@ -170,7 +170,7 @@ didReceiveGetReadRequest:(DConnectRequestMessage *)request
         }
         [response setResult:DConnectMessageResultTypeOk];
     } else {
-        [response setErrorToIllegalDeviceStateWithMessage:
+        [response setErrorToInvalidRequestParameterWithMessage:
          @"The file specified by path is not opened; use File Descriptor Open API first to open it."];
     }
     
@@ -200,11 +200,11 @@ didReceivePutCloseRequest:(DConnectRequestMessage *)request
             [_fileHandleDict removeObjectForKey:path];
             [response setResult:DConnectMessageResultTypeOk];
         } else {
-            [response setErrorToIllegalDeviceStateWithMessage:
+            [response setErrorToInvalidRequestParameterWithMessage:
              @"The file specified by path is not opened; use File Descriptor Open API first to open it."];
         }
     } else {
-        [response setErrorToIllegalDeviceStateWithMessage:
+        [response setErrorToInvalidRequestParameterWithMessage:
          @"The file specified by path is not opened; use File Descriptor Open API first to open it."];
     }
     
@@ -228,7 +228,7 @@ didReceivePutWriteRequest:(DConnectRequestMessage *)request
         [response setErrorToInvalidRequestParameterWithMessage:@"path must be specified."];
         return YES;
     }
-    NSString *positionString = [request stringForKey:DConnectFileDescriptorProfileParamLength];
+    NSString *positionString = [request stringForKey:DConnectFileDescriptorProfileParamPosition];
     if (positionString && ![DPHostUtils existDigitWithString:positionString]) {
         [response setErrorToInvalidRequestParameterWithMessage:@"position is non-float"];
         return YES;
@@ -266,7 +266,7 @@ didReceivePutWriteRequest:(DConnectRequestMessage *)request
                     }
                     [response setResult:DConnectMessageResultTypeOk];
                 } else {
-                    [response setErrorToIllegalDeviceStateWithMessage:
+                    [response setErrorToInvalidRequestParameterWithMessage:
                      @"The file specified by path is not opened; use File Descriptor Open API first to open it."];
                 }
             } else {
@@ -276,7 +276,7 @@ didReceivePutWriteRequest:(DConnectRequestMessage *)request
             [response setErrorToIllegalDeviceStateWithMessage:@"Invalid Flag state"];
         }
     } else {
-        [response setErrorToIllegalDeviceStateWithMessage:
+        [response setErrorToInvalidRequestParameterWithMessage:
          @"The file specified by path is not opened; use File Descriptor Open API first to open it."];
     }
     return YES;

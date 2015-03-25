@@ -683,7 +683,6 @@ didReceivePutSeekRequest:(DConnectRequestMessage *)request
         [response setErrorToInvalidRequestParameterWithMessage:@"pos is Invalid."];
         return YES;
     }
-    // パラメータチェック
     if (pos == nil || [pos doubleValue] < 0 || [mgr durationWithID:serviceId] < [pos doubleValue]) {
         [response setErrorToInvalidRequestParameter];
         return YES;
@@ -736,7 +735,6 @@ didReceivePutMuteRequest:(DConnectRequestMessage *)request
                 response:(DConnectResponseMessage *)response
                 serviceId:(NSString *)serviceId
 {
-    // リクエスト処理
     return [self handleRequest:request
                       response:response
                       serviceId:serviceId
