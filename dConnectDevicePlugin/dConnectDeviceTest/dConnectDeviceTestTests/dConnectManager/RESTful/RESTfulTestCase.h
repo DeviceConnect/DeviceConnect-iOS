@@ -19,7 +19,7 @@
 //------------------------------------------------------
 
 #define DCONNECT_MANAGER_APP_NAME @"Device Connect Manager"
-#define DCONNECT_MANAGER_VERSION_NAME @"1.0"
+#define DCONNECT_MANAGER_VERSION_NAME @"2.0.0"
 
 #define CHECK_RESPONSE(expectedJson, req) {\
     [req setValue:@"org.deviceconnect.test" forHTTPHeaderField:@"X-GotAPI-Origin"]; \
