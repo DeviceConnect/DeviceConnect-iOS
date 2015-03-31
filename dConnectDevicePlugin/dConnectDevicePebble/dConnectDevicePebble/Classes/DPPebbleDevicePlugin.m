@@ -32,7 +32,7 @@
 	self = [super init];
 	if (self) {
 		// プラグイン名を設定
-		self.pluginName = [NSString stringWithFormat:@"Pebble 1.0"];
+		self.pluginName = [NSString stringWithFormat:@"Pebble 2.0.0"];
 		
 		// EventManagerの初期化
 		Class key = [self class];

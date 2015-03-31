@@ -28,7 +28,7 @@
 #import "LocalOAuth2Main.h"
 
 NSString *const DConnectManagerName = @"Device Connect Manager";
-NSString *const DConnectManagerVersion = @"1.0";
+NSString *const DConnectManagerVersion = @"2.0.0";
 
 NSString *const DConnectApplicationDidEnterBackground = @"DConnectApplicationDidEnterBackground";
 NSString *const DConnectApplicationWillEnterForeground = @"DConnectApplicationWillEnterForeground";

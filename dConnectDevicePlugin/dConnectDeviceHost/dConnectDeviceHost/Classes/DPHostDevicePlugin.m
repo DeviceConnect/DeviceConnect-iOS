@@ -43,7 +43,7 @@
     if (self) {
         self.fileMgr = [DConnectFileManager fileManagerForPlugin:self];
         
-        self.pluginName = @"Host 1.0.1";
+        self.pluginName = @"Host 2.0.0";
         
         // プロファイルを追加
         [self addProfile:[DPHostBatteryProfile new]];

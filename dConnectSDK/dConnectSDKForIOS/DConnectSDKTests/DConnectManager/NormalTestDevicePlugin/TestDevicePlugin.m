@@ -20,7 +20,7 @@ NSString *const TestDevicePluginType = @"TEST";
 
 // System Profileの定数
 
-NSString *const TestDevicePluginSystemVersion = @"1.0";
+NSString *const TestDevicePluginSystemVersion = @"2.0.0";
 
 
 /** デバイスプラグインのバッテリーチャージフラグを定義. */

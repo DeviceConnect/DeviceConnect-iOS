@@ -1,6 +1,6 @@
 //
 //  DPChromecastManager.m
-//  DConnectSDK
+//  dConnectDeviceChromeCast
 //
 //  Copyright (c) 2014 NTT DOCOMO, INC.
 //  Released under the MIT license
@@ -323,14 +323,14 @@ static const NSTimeInterval DPSemaphoreTimeout = 20.0;
     GCKMediaMetadata *metadata = [[GCKMediaMetadata alloc] init];
     GCKMediaInformation *mediaInformation =
     [[GCKMediaInformation alloc] initWithContentID:mediaID
-                                        streamType:GCKMediaStreamTypeNone
-                                       contentType:@"video/mp4"
+                                        streamType:GCKMediaStreamTypeBuffered
+                                       contentType:@"video/qucktime"
                                           metadata:metadata
                                     streamDuration:123
                                         customData:nil];
     
     DPChromecastManagerData *data = _dataDict[deviceID];
-    return [data.ctrlChannel loadMedia:mediaInformation autoplay:NO];
+    return [data.ctrlChannel loadMedia:mediaInformation autoplay:YES];
 }
 
 // 再生
@@ -342,7 +342,7 @@ static const NSTimeInterval DPSemaphoreTimeout = 20.0;
         GCKMediaInformation *mediaInformation =
         [[GCKMediaInformation alloc]
                  initWithContentID:data.ctrlChannel.mediaStatus.mediaInformation.contentID
-                        streamType:GCKMediaStreamTypeNone
+                        streamType:GCKMediaStreamTypeBuffered
                        contentType:@"video/quicktime"
                           metadata:metadata
                     streamDuration:123

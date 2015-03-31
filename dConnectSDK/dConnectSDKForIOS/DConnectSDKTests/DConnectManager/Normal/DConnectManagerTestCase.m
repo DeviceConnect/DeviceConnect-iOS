@@ -58,7 +58,7 @@
     
     XCTAssertNotNil(version, @"version is nil.\"%s\"", __PRETTY_FUNCTION__);
     XCTAssertNotNil(support, @"support is nil.\"%s\"", __PRETTY_FUNCTION__);
-    XCTAssert([version isEqualToString:@"1.0"], @"Failed to get version.\"%s\"", __PRETTY_FUNCTION__);
+    XCTAssert([version isEqualToString:@"2.0.0"], @"Failed to get version.\"%s\"", __PRETTY_FUNCTION__);
     XCTAssert([support count] > 0, @"support is empty.\"%s\"", __PRETTY_FUNCTION__);
 }
 

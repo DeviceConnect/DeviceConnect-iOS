@@ -22,7 +22,7 @@
 /*!
  @brief バージョン。
  */
-NSString *const SonyDevicePluginVersion = @"1.0";
+NSString *const SonyDevicePluginVersion = @"2.0.0";
 
 /*!
  @brief IDのプレフィックス。

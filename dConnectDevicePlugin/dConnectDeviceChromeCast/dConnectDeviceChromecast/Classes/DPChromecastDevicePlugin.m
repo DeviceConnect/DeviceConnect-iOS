@@ -1,6 +1,6 @@
 //
 //  DPChromecastDevicePlugin.m
-//  DConnectSDK
+//  dConnectDeviceChromeCast
 //
 //  Copyright (c) 2014 NTT DOCOMO, INC.
 //  Released under the MIT license
@@ -21,7 +21,7 @@
 - (id) init {
     self = [super init];
     if (self) {
-        self.pluginName = @"Chromecast 1.0.2";
+        self.pluginName = @"Chromecast 2.0.0";
         
 
         // イベントマネージャの準備

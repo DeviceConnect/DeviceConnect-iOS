@@ -101,7 +101,7 @@
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
     
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":8}", request);
+    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":2}", request);
 }
 
 /*!
@@ -143,7 +143,7 @@
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":8}", request);
+    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":2}", request);
 }
 
 /*!
@@ -227,7 +227,7 @@
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"POST"];
     
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":8}", request);
+    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":2}", request);
 }
 
 /*!
@@ -269,7 +269,7 @@
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":8}", request);
+    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":2}", request);
 }
 
 /*!
@@ -353,7 +353,7 @@
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"POST"];
     
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":8}", request);
+    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":2}", request);
 }
 
 /*!
@@ -394,8 +394,8 @@
     NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/file/list?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
-    
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":8}", request);
+
+    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":2}", request);
 }
 
 /*!
@@ -479,7 +479,7 @@
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
     
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":8}", request);
+    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":2}", request);
 }
 
 /*!
@@ -500,7 +500,7 @@
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"POST"];
     
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":8}", request);
+    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":2}", request);
 }
 
 /*!
@@ -521,7 +521,7 @@
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":8}", request);
+    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":2}", request);
 }
 
 /*!
@@ -605,7 +605,7 @@
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
     
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":8}", request);
+    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":2}", request);
 }
 
 /*!
@@ -626,7 +626,7 @@
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"POST"];
     
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":8}", request);
+    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":2}", request);
 }
 
 /*!
