@@ -58,7 +58,7 @@
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
     
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":5}", request);
+    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":6}", request);
 }
 
 /*!
@@ -142,7 +142,7 @@
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":5}", request);
+    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":6}", request);
 }
 
 /*!
@@ -188,27 +188,6 @@
 }
 
 /*!
- * @brief 空文字のsessionKeyでonwifichange属性のコールバック登録テストを行う.
- * <pre>
- * 【HTTP通信】
- * Method: PUT
- * Path: /connect/onwifichange?serviceId=123456789&sessionKey=
- * </pre>
- * <pre>
- * 【期待する動作】
- * ・resultに1が返ってくること。
- * </pre>
- */
-- (void) testHttpFailConnectOnWifiChangePutEmptySessionKey
-{
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/connect/onwifichange?serviceId=%@&sessionKey=", self.serviceId]];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
-    [request setHTTPMethod:@"PUT"];
-    
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":10}", request);
-}
-
-/*!
  * @brief serviceIdが無い状態でonwifichange属性のコールバック解除テストを行う.
  * <pre>
  * 【HTTP通信】
@@ -247,7 +226,7 @@
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":5}", request);
+    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":6}", request);
 }
 
 /*!
@@ -293,27 +272,6 @@
 }
 
 /*!
- * @brief 空文字のsessionkeyでonwifichange属性のコールバック解除テストを行う.
- * <pre>
- * 【HTTP通信】
- * Method: DELETE
- * Path: /connect/onwifichange?serviceId=123456789&sessionKey=
- * </pre>
- * <pre>
- * 【期待する動作】
- * ・resultに1が返ってくること。
- * </pre>
- */
-- (void) testHttpFailConnectOnWifiChangeDeleteEmptySessionKey
-{
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/connect/onwifichange?serviceId=%@&sessionKey=", self.serviceId]];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
-    [request setHTTPMethod:@"DELETE"];
-    
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":10}", request);
-}
-
-/*!
  * @brief メソッドをGETに指定して/connect/onwifichangeにアクセスするテストを行う.
  * <pre>
  * 【HTTP通信】
@@ -331,7 +289,7 @@
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
     
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":8}", request);
+    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":2}", request);
 }
 
 /*!
@@ -394,7 +352,7 @@
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
     
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":5}", request);
+    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":6}", request);
 }
 
 /*!
@@ -478,7 +436,7 @@
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":5}", request);
+    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":6}", request);
 }
 
 /*!
@@ -541,7 +499,7 @@
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":5}", request);
+    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":6}", request);
 }
 
 /*!
@@ -583,7 +541,7 @@
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
     
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":8}", request);
+    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":2}", request);
 }
 
 /*!
@@ -646,7 +604,7 @@
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":5}", request);
+    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":6}", request);
 }
 
 /*!
@@ -692,27 +650,6 @@
 }
 
 /*!
- * @brief 空文字のsessionKeyでonbluetoothchange属性のコールバック登録テストを行う.
- * <pre>
- * 【HTTP通信】
- * Method: PUT
- * Path: /connect/onbluetoothchange?serviceId=123456789&sessionKey=
- * </pre>
- * <pre>
- * 【期待する動作】
- * ・resultに1が返ってくること。
- * </pre>
- */
-- (void) testHttpFailConnectOnBluetoothChangePutEmptySessionKey
-{
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/connect/onbluetoothchange?serviceId=%@&sessionKey=", self.serviceId]];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
-    [request setHTTPMethod:@"PUT"];
-    
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":10}", request);
-}
-
-/*!
  * @brief serviceIdが無い状態でonbluetoothchange属性のコールバック解除テストを行う.
  * <pre>
  * 【HTTP通信】
@@ -751,7 +688,7 @@
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":5}", request);
+    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":6}", request);
 }
 
 /*!
@@ -797,27 +734,6 @@
 }
 
 /*!
- * @brief 空文字のsessionKeyでonbluetoothchange属性のコールバック解除テストを行う.
- * <pre>
- * 【HTTP通信】
- * Method: DELETE
- * Path: /connect/onbluetoothchange?serviceId=123456789
- * </pre>
- * <pre>
- * 【期待する動作】
- * ・resultに1が返ってくること。
- * </pre>
- */
-- (void) testHttpFailConnectOnBluetoothChangeDeleteEmptySessionKey
-{
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/connect/onbluetoothchange?serviceId=%@&sessionKey=", self.serviceId]];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
-    [request setHTTPMethod:@"DELETE"];
-    
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":10}", request);
-}
-
-/*!
  * @brief メソッドをGETに指定して/connect/onbluetoothchangeにアクセスするテストを行う.
  * <pre>
  * 【HTTP通信】
@@ -835,7 +751,7 @@
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
     
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":8}", request);
+    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":2}", request);
 }
 
 /*!
@@ -898,7 +814,7 @@
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
     
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":5}", request);
+    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":6}", request);
 }
 
 /*!
@@ -982,7 +898,7 @@
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":5}", request);
+    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":6}", request);
 }
 
 /*!
@@ -1028,27 +944,6 @@
 }
 
 /*!
- * @brief 空文字のsessionKeyでonnfcchange属性のコールバック登録テストを行う.
- * <pre>
- * 【HTTP通信】
- * Method: PUT
- * Path: /connect/onnfcchange?serviceId=123456789&sessionKey=
- * </pre>
- * <pre>
- * 【期待する動作】
- * ・resultに1が返ってくること。
- * </pre>
- */
-- (void) testHttpFailConnectOnNFCChangePutEmptySessionKey
-{
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/connect/onnfcchange?serviceId=%@&sessionKey=", self.serviceId]];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
-    [request setHTTPMethod:@"PUT"];
-    
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":10}", request);
-}
-
-/*!
  * @brief serviceIdが無い状態でonnfcchange属性のコールバック解除テストを行う.
  * <pre>
  * 【HTTP通信】
@@ -1087,7 +982,7 @@
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":5}", request);
+    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":6}", request);
 }
 
 /*!
@@ -1133,27 +1028,6 @@
 }
 
 /*!
- * @brief 空文字のsessionKeyでonnfcchange属性のコールバック解除テストを行う.
- * <pre>
- * 【HTTP通信】
- * Method: DELETE
- * Path: /connect/onnfcchange?serviceId=123456789
- * </pre>
- * <pre>
- * 【期待する動作】
- * ・resultに1が返ってくること。
- * </pre>
- */
-- (void) testHttpFailConnectOnNFCChangeDeleteEmptySessionKey
-{
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/connect/onnfcchange?serviceId=%@&sessionKey=", self.serviceId]];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
-    [request setHTTPMethod:@"DELETE"];
-    
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":10}", request);
-}
-
-/*!
  * @brief メソッドをGETに指定して/connect/onnfcchangeにアクセスするテストを行う.
  * <pre>
  * 【HTTP通信】
@@ -1171,7 +1045,7 @@
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
     
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":8}", request);
+    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":2}", request);
 }
 
 /*!
@@ -1234,7 +1108,7 @@
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
     
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":5}", request);
+    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":6}", request);
 }
 
 /*!
@@ -1318,7 +1192,7 @@
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":5}", request);
+    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":6}", request);
 }
 
 /*!
@@ -1364,27 +1238,6 @@
 }
 
 /*!
- * @brief 空文字のsessionKeyでonblechange属性のコールバック登録テストを行う.
- * <pre>
- * 【HTTP通信】
- * Method: PUT
- * Path: /connect/onblechange?serviceId=123456789
- * </pre>
- * <pre>
- * 【期待する動作】
- * ・resultに1が返ってくること。
- * </pre>
- */
-- (void) testHttpFailConnectOnBLEChangePutEmptySessionKey
-{
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/connect/onblechange?serviceId=%@&sessionKey=", self.serviceId]];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
-    [request setHTTPMethod:@"PUT"];
-    
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":10}", request);
-}
-
-/*!
  * @brief serviceIdが無い状態でonblechange属性のコールバック解除テストを行う.
  * <pre>
  * 【HTTP通信】
@@ -1423,7 +1276,7 @@
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":5}", request);
+    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":6}", request);
 }
 
 /*!
@@ -1470,27 +1323,6 @@
 }
 
 /*!
- * @brief 空文字のsessionKeyでonblechange属性のコールバック解除テストを行う.
- * <pre>
- * 【HTTP通信】
- * Method: DELETE
- * Path: /connect/onblechange?serviceId=123456789
- * </pre>
- * <pre>
- * 【期待する動作】
- * ・resultに1が返ってくること。
- * </pre>
- */
-- (void) testHttpFailConnectOnBLEChangeDeleteEmptySessionKey
-{
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/connect/onblechange?serviceId=%@&sessionKey=", self.serviceId]];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
-    [request setHTTPMethod:@"DELETE"];
-    
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":10}", request);
-}
-
-/*!
  * @brief メソッドをGETに指定して/connect/onblechangeにアクセスするテストを行う.
  * <pre>
  * 【HTTP通信】
@@ -1508,7 +1340,7 @@
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
     
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":8}", request);
+    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":2}", request);
 }
 
 /*!

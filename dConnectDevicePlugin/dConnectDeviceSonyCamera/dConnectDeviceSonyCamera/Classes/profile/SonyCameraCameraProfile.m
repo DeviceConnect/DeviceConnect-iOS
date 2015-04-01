@@ -13,7 +13,7 @@ NSString *const SonyCameraCameraProfileName = @"camera";
 NSString *const SonyCameraCameraProfileAttrZoom = @"zoom";
 NSString *const SonyCameraCameraProfileParamDirection = @"direction";
 NSString *const SonyCameraCameraProfileParamMovement = @"movement";
-NSString *const SonyCameraCameraProfileParamZoomdiameter = @"zoomdiameter";
+NSString *const SonyCameraCameraProfileParamZoomdiameter = @"zoomPosition";
 
 @interface SonyCameraCameraProfile()
 
@@ -53,10 +53,10 @@ NSString *const SonyCameraCameraProfileParamZoomdiameter = @"zoomdiameter";
                                         movement:movement];
             }
         } else {
-            [response setErrorToUnknownAttribute];
+            [response setErrorToNotSupportProfile];
         }
     } else {
-        [response setErrorToUnknownAttribute];
+        [response setErrorToNotSupportProfile];
     }
     
     return send;
@@ -81,10 +81,10 @@ NSString *const SonyCameraCameraProfileParamZoomdiameter = @"zoomdiameter";
                                        serviceId:serviceId];
             }
         } else {
-            [response setErrorToUnknownAttribute];
+            [response setErrorToNotSupportProfile];
         }
     } else {
-        [response setErrorToUnknownAttribute];
+        [response setErrorToNotSupportProfile];
     }
     
     return send;

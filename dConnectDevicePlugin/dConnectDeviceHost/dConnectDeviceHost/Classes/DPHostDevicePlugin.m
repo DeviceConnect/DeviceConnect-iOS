@@ -26,6 +26,7 @@
 #import "DPHostVibrationProfile.h"
 #import "DPHostConnectProfile.h"
 #import "DPHostCanvasProfile.h"
+#import "DPHostTouchProfile.h"
 
 @implementation DPHostDevicePlugin
 
@@ -42,7 +43,7 @@
     if (self) {
         self.fileMgr = [DConnectFileManager fileManagerForPlugin:self];
         
-        self.pluginName = @"Host 1.0.1";
+        self.pluginName = @"Host 2.0.0";
         
         // プロファイルを追加
         [self addProfile:[DPHostBatteryProfile new]];
@@ -61,6 +62,7 @@
         [self addProfile:[DPHostConnectProfile new]];
         [self addProfile:[DPHostCanvasProfile new]];
         [self addProfile:[DConnectServiceInformationProfile new]];
+        [self addProfile:[DPHostTouchProfile new]];
     }
     return self;
 }

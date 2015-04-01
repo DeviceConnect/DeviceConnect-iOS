@@ -59,7 +59,7 @@
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
     
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":5}", request);
+    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":6}", request);
 }
 
 /*!
@@ -122,7 +122,7 @@
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":8}", request);
+    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":2}", request);
 }
 
 /*!
@@ -143,7 +143,7 @@
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":8}", request);
+    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":2}", request);
 }
 
 /*!
@@ -185,7 +185,7 @@
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":5}", request);
+    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":6}", request);
 }
 
 /*!
@@ -227,7 +227,7 @@
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
     
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":8}", request);
+    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":2}", request);
 }
 
 /*!
@@ -269,7 +269,7 @@
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":8}", request);
+    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":2}", request);
 }
 
 /*!
@@ -311,7 +311,7 @@
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
     
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":5}", request);
+    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":6}", request);
 }
 
 /*!
@@ -374,7 +374,7 @@
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":8}", request);
+    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":2}", request);
 }
 
 /*!
@@ -395,7 +395,7 @@
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":8}", request);
+    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":2}", request);
 }
 
 /*!
@@ -439,7 +439,7 @@
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":5}", request);
+    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":6}", request);
 }
 
 /*!
@@ -483,7 +483,7 @@
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
     
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":8}", request);
+    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":2}", request);
 }
 
 /*!
@@ -527,7 +527,7 @@
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":8}", request);
+    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":2}", request);
 }
 
 /*!
@@ -569,7 +569,7 @@
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":5}", request);
+    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":6}", request);
 }
 
 /*!
@@ -615,27 +615,6 @@
 }
 
 /*!
- * @brief 空文字のsessionKeyでonwatchfile属性のコールバック解除テストを行う.
- * <pre>
- * 【HTTP通信】
- * Method: PUT
- * Path: /file_descriptor/onwatchfile?serviceId=123456789&sessionKey=xxxx
- * </pre>
- * <pre>
- * 【期待する動作】
- * ・resultに1が返ってくること。
- * </pre>
- */
-- (void) testHttpFailFileDescriptorOnWatchFilePutEmptySessionKey
-{
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/file_descriptor/onwatchfile?serviceId=%@&sessionKey=", self.serviceId]];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
-    [request setHTTPMethod:@"PUT"];
-    
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":10}", request);
-}
-
-/*!
  * @brief serviceIdが無い状態でonwatchfile属性のコールバック解除テストを行う.
  * <pre>
  * 【HTTP通信】
@@ -674,7 +653,7 @@
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":5}", request);
+    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":6}", request);
 }
 
 /*!
@@ -720,27 +699,6 @@
 }
 
 /*!
- * @brief 空文字のsessionKeyでonwatchfile属性のコールバック解除テストを行う.
- * <pre>
- * 【HTTP通信】
- * Method: DELETE
- * Path: /file_descriptor/onwatchfile?serviceId=123456789&sessionKey=
- * </pre>
- * <pre>
- * 【期待する動作】
- * ・resultに1が返ってくること。
- * </pre>
- */
-- (void) testHttpFailFileDescriptorOnWatchFileDeleteEmptySessionKey
-{
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/file_descriptor/onwatchfile?serviceId=%@&sessionKey=", self.serviceId]];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
-    [request setHTTPMethod:@"DELETE"];
-    
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":10}", request);
-}
-
-/*!
  * @brief メソッドにGETを指定してonwatchfile属性のリクエストテストを行う.
  * <pre>
  * 【HTTP通信】
@@ -758,7 +716,7 @@
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
     
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":8}", request);
+    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":2}", request);
 }
 
 /*!

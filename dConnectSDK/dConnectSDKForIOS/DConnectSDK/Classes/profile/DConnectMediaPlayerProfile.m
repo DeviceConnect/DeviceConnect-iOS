@@ -149,10 +149,10 @@ NSString *const DConnectMediaPlayerProfileOrderDESC = @"desc";
                                  response:response serviceId:serviceId];
             }
         } else {
-            [response setErrorToUnknownAttribute];
+            [response setErrorToNotSupportProfile];
         }
     } else {
-        [response setErrorToUnknownAttribute];
+        [response setErrorToNotSupportProfile];
     }
     
     return send;
@@ -243,11 +243,11 @@ NSString *const DConnectMediaPlayerProfileOrderDESC = @"desc";
                                sessionKey:request.sessionKey];
             }
         } else {
-            [response setErrorToUnknownAttribute];
+            [response setErrorToNotSupportProfile];
         }
         
     } else {
-        [response setErrorToUnknownAttribute];
+        [response setErrorToNotSupportProfile];
     }
     
     return send;
@@ -280,10 +280,10 @@ NSString *const DConnectMediaPlayerProfileOrderDESC = @"desc";
                                  serviceId:request.serviceId sessionKey:request.sessionKey];
             }
         } else {
-            [response setErrorToUnknownAttribute];
+            [response setErrorToNotSupportProfile];
         }
     } else {
-        [response setErrorToUnknownAttribute];
+        [response setErrorToNotSupportProfile];
     }
     
     return send;

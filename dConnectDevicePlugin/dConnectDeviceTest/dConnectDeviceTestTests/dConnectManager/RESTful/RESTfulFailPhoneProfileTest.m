@@ -59,7 +59,7 @@
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"POST"];
     
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":5}", request);
+    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":6}", request);
 }
 
 /*!
@@ -127,7 +127,7 @@
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":8}", request);
+    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":2}", request);
 }
 
 /*!
@@ -150,7 +150,7 @@
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":8}", request);
+    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":2}", request);
 }
 
 /*!
@@ -192,7 +192,7 @@
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":5}", request);
+    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":6}", request);
 }
 
 /*!
@@ -259,7 +259,7 @@
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"POST"];
     
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":8}", request);
+    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":2}", request);
 }
 
 /*!
@@ -282,7 +282,7 @@
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":8}", request);
+    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":2}", request);
 }
 
 /*!
@@ -324,7 +324,7 @@
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":5}", request);
+    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":6}", request);
 }
 
 /*!
@@ -372,30 +372,6 @@
 }
 
 /*!
- * @brief sessionKeyが空状態でonconnect属性のコールバック登録テストを行う.
- * <pre>
- * 【HTTP通信】
- * Method: PUT
- * Path: /phone/onconnect?serviceId=xxxx&sessionKey=
- * </pre>
- * <pre>
- * 【期待する動作】
- * ・resultに1が返ってくること。
- * </pre>
- */
-- (void) testHttpFailPhoneOnConnectPutEmptySessionKey
-{
-    NSURL *uri = [NSURL URLWithString:
-                    [NSString stringWithFormat:
-                        @"http://localhost:4035/gotapi/phone/onconnect?serviceId=%@&sessionKey=",
-                            self.serviceId]];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
-    [request setHTTPMethod:@"PUT"];
-    
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":10}", request);
-}
-
-/*!
  * @brief serviceIdが無い状態でonconnect属性のコールバック解除テストを行う.
  * <pre>
  * 【HTTP通信】
@@ -434,7 +410,7 @@
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":5}", request);
+    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":6}", request);
 }
 
 /*!
@@ -480,27 +456,6 @@
 }
 
 /*!
- * @brief sessionKeyが空状態でonconnect属性のコールバック解除テストを行う.
- * <pre>
- * 【HTTP通信】
- * Method: DELETE
- * Path: /phone/onconnect?serviceId=xxxx&sessionKey=
- * </pre>
- * <pre>
- * 【期待する動作】
- * ・resultに1が返ってくること。
- * </pre>
- */
-- (void) testHttpFailPhoneOnConnectDeleteEmptySessionKey
-{
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/phone/onconnect?serviceId=%@&sessionKey=", self.serviceId]];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
-    [request setHTTPMethod:@"DELETE"];
-    
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":10}", request);
-}
-
-/*!
  * @brief メソッドにGETを指定してonconnect属性のリクエストテストを行う.
  * <pre>
  * 【HTTP通信】
@@ -539,7 +494,7 @@
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"POST"];
     
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":8}", request);
+    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":2}", request);
 }
 
 @end

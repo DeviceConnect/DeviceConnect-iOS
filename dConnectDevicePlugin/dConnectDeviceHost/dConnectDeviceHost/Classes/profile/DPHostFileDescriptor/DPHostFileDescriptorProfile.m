@@ -51,7 +51,8 @@ didReceiveGetOpenRequest:(DConnectRequestMessage *)request
     // pathが絶対であれ相対であれベースURLに追加する。
     path = [SELF_PLUGIN pathByAppendingPathComponent:path];
     
-    if (!flag || flag.length == 0) {
+    if (!flag || flag.length == 0 || !([flag isEqualToString:@"r"] || [flag isEqualToString:@"w"]
+                                      || [flag isEqualToString:@"rw"])) {
         [response setErrorToInvalidRequestParameterWithMessage:@"flag must be specified."];
         return YES;
     }
@@ -122,29 +123,25 @@ didReceiveGetReadRequest:(DConnectRequestMessage *)request
     path = [SELF_PLUGIN pathByAppendingPathComponent:path];
     NSString *lengthString = [request stringForKey:DConnectFileDescriptorProfileParamLength];
     NSString *positionString = [request stringForKey:DConnectFileDescriptorProfileParamLength];
-    if (lengthString) {
-        if ([DPHostUtils isFloatWithString:lengthString]) {
-            [response setErrorToInvalidRequestParameterWithMessage:@"length is non-float"];
-            return YES;
-        }
+    if (lengthString && ![DPHostUtils existDigitWithString:lengthString]) {
+        [response setErrorToInvalidRequestParameterWithMessage:@"length is non-float"];
+        return YES;
     }
-    if (positionString) {
-        if ([DPHostUtils isFloatWithString:positionString]) {
-            [response setErrorToInvalidRequestParameterWithMessage:@"position is non-float"];
-            return YES;
-        }
+    if (positionString && ![DPHostUtils existDigitWithString:positionString]) {
+        [response setErrorToInvalidRequestParameterWithMessage:@"position is non-float"];
+        return YES;
     }
 
     if (!length) {
         [response setErrorToInvalidRequestParameterWithMessage:@"length must be specified."];
         return YES;
     }
-    if ([length compare:@0] == NSOrderedSame || [length compare:@0] == NSOrderedAscending) {
+    if (length && length < 0) {
         [response setErrorToInvalidRequestParameterWithMessage:@"length must be greater than 0."];
         return YES;
     }
     
-    if (position && [position compare:@0] == NSOrderedAscending) {
+    if (position && position.intValue < 0) {
         [response setErrorToInvalidRequestParameterWithMessage:@"position must be a non-negative value."];
         return YES;
     }
@@ -173,7 +170,7 @@ didReceiveGetReadRequest:(DConnectRequestMessage *)request
         }
         [response setResult:DConnectMessageResultTypeOk];
     } else {
-        [response setErrorToIllegalDeviceStateWithMessage:
+        [response setErrorToInvalidRequestParameterWithMessage:
          @"The file specified by path is not opened; use File Descriptor Open API first to open it."];
     }
     
@@ -203,11 +200,11 @@ didReceivePutCloseRequest:(DConnectRequestMessage *)request
             [_fileHandleDict removeObjectForKey:path];
             [response setResult:DConnectMessageResultTypeOk];
         } else {
-            [response setErrorToIllegalDeviceStateWithMessage:
+            [response setErrorToInvalidRequestParameterWithMessage:
              @"The file specified by path is not opened; use File Descriptor Open API first to open it."];
         }
     } else {
-        [response setErrorToIllegalDeviceStateWithMessage:
+        [response setErrorToInvalidRequestParameterWithMessage:
          @"The file specified by path is not opened; use File Descriptor Open API first to open it."];
     }
     
@@ -231,18 +228,16 @@ didReceivePutWriteRequest:(DConnectRequestMessage *)request
         [response setErrorToInvalidRequestParameterWithMessage:@"path must be specified."];
         return YES;
     }
-    NSString *positionString = [request stringForKey:DConnectFileDescriptorProfileParamLength];
-    if (positionString) {
-        if ([DPHostUtils isFloatWithString:positionString]) {
-            [response setErrorToInvalidRequestParameterWithMessage:@"position is non-float"];
-            return YES;
-        }
+    NSString *positionString = [request stringForKey:DConnectFileDescriptorProfileParamPosition];
+    if (positionString && ![DPHostUtils existDigitWithString:positionString]) {
+        [response setErrorToInvalidRequestParameterWithMessage:@"position is non-float"];
+        return YES;
     }
 
     // pathが絶対であれ相対であれベースURLに追加する。
     path = [SELF_PLUGIN pathByAppendingPathComponent:path];
     
-    if (position && [position compare:@0] == NSOrderedAscending) {
+    if (position && position.intValue < 0) {
         [response setErrorToInvalidRequestParameterWithMessage:@"position must be a non-negative value."];
         return YES;
     }
@@ -271,7 +266,7 @@ didReceivePutWriteRequest:(DConnectRequestMessage *)request
                     }
                     [response setResult:DConnectMessageResultTypeOk];
                 } else {
-                    [response setErrorToIllegalDeviceStateWithMessage:
+                    [response setErrorToInvalidRequestParameterWithMessage:
                      @"The file specified by path is not opened; use File Descriptor Open API first to open it."];
                 }
             } else {
@@ -281,7 +276,7 @@ didReceivePutWriteRequest:(DConnectRequestMessage *)request
             [response setErrorToIllegalDeviceStateWithMessage:@"Invalid Flag state"];
         }
     } else {
-        [response setErrorToIllegalDeviceStateWithMessage:
+        [response setErrorToInvalidRequestParameterWithMessage:
          @"The file specified by path is not opened; use File Descriptor Open API first to open it."];
     }
     return YES;

@@ -99,7 +99,7 @@ NSString *const DConnectMediaStreamRecordingProfileRecordingStateWarning = @"war
                              serviceId:serviceId target:target];
         }
     } else {
-        [response setErrorToUnknownAttribute];
+        [response setErrorToNotSupportProfile];
     }
     
     return send;
@@ -134,7 +134,7 @@ NSString *const DConnectMediaStreamRecordingProfileRecordingStateWarning = @"war
                                target:target timeslice:timeslice];
         }
     } else {
-        [response setErrorToUnknownAttribute];
+        [response setErrorToNotSupportProfile];
     }
     
     return send;
@@ -226,7 +226,7 @@ NSString *const DConnectMediaStreamRecordingProfileRecordingStateWarning = @"war
                              serviceId:serviceId sessionKey:sessionKey];
         }
     } else {
-        [response setErrorToUnknownAttribute];
+        [response setErrorToNotSupportProfile];
     }
     
     return send;
@@ -261,7 +261,7 @@ NSString *const DConnectMediaStreamRecordingProfileRecordingStateWarning = @"war
                              serviceId:serviceId sessionKey:sessionKey];
         }
     } else {
-        [response setErrorToUnknownAttribute];
+        [response setErrorToNotSupportProfile];
     }
     
     return send;

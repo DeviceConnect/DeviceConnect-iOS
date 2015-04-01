@@ -61,4 +61,24 @@
 // 画像データ削除
 - (void)deleteImage:(NSString *)serviceId callback:(void(^)(NSError *error))callback;
 
+// KeyEvent onDown event registration.
+- (void)registOnDownEvent:(NSString*)serviceID callback:(void(^)(NSError *error))callback eventCallback:(void(^)(long attr, int keyId, int keyType))eventCallback;
+
+// KeyEvent onUp event registration.
+- (void)registOnUpEvent:(NSString*)serviceID callback:(void(^)(NSError *error))callback eventCallback:(void(^)(long attr, int keyId, int keyType))eventCallback;
+
+// KeyEvent onDown event unregistration.
+- (void)deleteOnDownEvent:(NSString*)serviceID callback:(void(^)(NSError *error))callback;
+
+// KeyEvent onUp event unregistration.
+- (void)deleteOnUpEvent:(NSString*)serviceID callback:(void(^)(NSError *error))callback;
+
+// Determined whether or not the decimal.
+- (BOOL)existDigitWithString:(NSString*)digit;
+
+// Determined whether or not the decimal point.
+- (BOOL)existDecimalWithString:(NSString*)decimal;
+
+// Determined whether or not the comma-separated.
+- (BOOL)existCSVWithString:(NSString*)csv;
 @end

@@ -22,7 +22,7 @@
 /*!
  @brief バージョン。
  */
-NSString *const SonyDevicePluginVersion = @"1.0";
+NSString *const SonyDevicePluginVersion = @"2.0.0";
 
 /*!
  @brief IDのプレフィックス。
@@ -545,6 +545,10 @@ didReceivePostTakePhotoRequest:(DConnectRequestMessage *)request
         return YES;
     }
     
+    if (target && ![target isEqualToString:@"SonyCamera"]) {
+        [response setErrorToInvalidRequestParameter];
+        return YES;
+    }
     __weak typeof(self) _self = self;
     
     // 写真撮影をバックグランドでAPIなどを実行
@@ -1006,7 +1010,7 @@ didReceivePutZoomRequest:(DConnectRequestMessage *)request
             
             // レスポンス作成
             if (resultArray.count <= 0 && errorCode >= 0) {
-                [response setErrorToUnknown];
+                [response setErrorToInvalidRequestParameter];
             } else {
                 [response setResult:DConnectMessageResultTypeOk];
             }

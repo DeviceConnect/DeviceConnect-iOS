@@ -44,52 +44,6 @@
     CHECK_RESPONSE(@"{\"result\":0,\"supports\":[\"files\",\"system\",\"servicediscovery\",\"authorization\",\"availability\"]}", request);
 }
 
-/*!
- * @brief デバイスのシステムプロファイルを取得する.
- * <pre>
- * 【HTTP通信】
- * Method: GET
- * Path: /system/device?serviceId=xxxx
- * </pre>
- * <pre>
- * 【期待する動作】
- * ・resultに0が返ってくること。
- * ・versionにStringが返ってくること。
- * </pre>
- */
-- (void) testHttpNormalSystemDeviceGet
-{
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/system/device?serviceId=%@", self.serviceId]];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
-    [request setHTTPMethod:@"GET"];
-    
-    NSMutableArray *supports = [NSMutableArray array];
-    [supports addObject:DConnectBatteryProfileName];
-    [supports addObject:DConnectConnectProfileName];
-    [supports addObject:DConnectDeviceOrientationProfileName];
-    [supports addObject:DConnectFileDescriptorProfileName];
-    [supports addObject:DConnectFileProfileName];
-    [supports addObject:DConnectMediaStreamRecordingProfileName];
-    [supports addObject:DConnectMediaPlayerProfileName];
-    [supports addObject:DConnectServiceDiscoveryProfileName];
-    [supports addObject:DConnectPhoneProfileName];
-    [supports addObject:DConnectProximityProfileName];
-    [supports addObject:DConnectSettingsProfileName];
-    [supports addObject:DConnectSystemProfileName];
-    [supports addObject:DConnectVibrationProfileName];
-    NSMutableString *paramSupports = [NSMutableString string];
-    [paramSupports appendString:@"["];
-    for (int i = 0; i < supports.count; i++) {
-        if (i > 0) {
-            [paramSupports appendString:@","];
-        }
-        [paramSupports appendString:[NSString stringWithFormat:@"\"%@\"", supports[i]]];
-    }
-    [paramSupports appendString:@"]"];
-    NSString *expectedJson = [NSString stringWithFormat:@"{\"result\":0,\"supports\":%@,\"version\":\"1.0\"}", paramSupports];
-    CHECK_RESPONSE(expectedJson, request);
-}
-
 // MEMO: 下記のテストは手動で行う.
 //- (void) testHttpNormalSystemDeviceWakeupPut
 //{

@@ -51,7 +51,7 @@ NSString *const DConnectPhoneProfileParamState = @"state";
                           phoneNumber:[DConnectPhoneProfile phoneNumberFromRequest:request]];
         }
     } else {
-        [response setErrorToUnknownAttribute];
+        [response setErrorToNotSupportProfile];
     }
     return send;
 }
@@ -83,7 +83,7 @@ NSString *const DConnectPhoneProfileParamState = @"state";
                              serviceId:serviceId sessionKey:sessionKey];
         }
     } else {
-        [response setErrorToUnknownAttribute];
+        [response setErrorToNotSupportProfile];
     }
     
     return send;
@@ -109,7 +109,7 @@ NSString *const DConnectPhoneProfileParamState = @"state";
                              serviceId:serviceId sessionKey:sessionKey];
         }
     } else {
-        [response setErrorToUnknownAttribute];
+        [response setErrorToNotSupportProfile];
     }
     
     return send;

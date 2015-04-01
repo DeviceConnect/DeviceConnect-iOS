@@ -79,7 +79,7 @@ NSString *const DConnectBatteryProfileParamBattery         = @"battery";
                                  response:response serviceId:serviceId];
             }
         } else {
-            [response setErrorToUnknownAttribute];
+            [response setErrorToNotSupportProfile];
         }
     } else if ([self hasMethod:@selector(profile:didReceiveGetAllRequest:response:serviceId:) response:response])
     {
@@ -122,10 +122,10 @@ NSString *const DConnectBatteryProfileParamBattery         = @"battery";
             }
             
         } else {
-            [response setErrorToUnknownAttribute];
+            [response setErrorToNotSupportProfile];
         }
     } else {
-        [response setErrorToUnknownAttribute];
+        [response setErrorToNotSupportProfile];
     }
     
     return send;
@@ -161,7 +161,7 @@ NSString *const DConnectBatteryProfileParamBattery         = @"battery";
                              serviceId:serviceId sessionKey:sessionKey];
         }
     } else {
-        [response setErrorToUnknownAttribute];
+        [response setErrorToNotSupportProfile];
     }
     return send;
 }

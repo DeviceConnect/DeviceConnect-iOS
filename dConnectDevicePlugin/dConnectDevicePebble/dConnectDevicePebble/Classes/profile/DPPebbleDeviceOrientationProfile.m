@@ -88,34 +88,33 @@ didReceiveGetOnDeviceOrientationRequest:(DConnectRequestMessage *)request
             [response setErrorToIllegalDeviceStateWithMessage:@"device is not ready."];
         }
         return YES;
-    } else {
-        __unsafe_unretained typeof(self) weakSelf = self;
-
-        [[DPPebbleManager sharedManager] registDeviceOrientationEvent:serviceId callback:^(NSError *error) {
-            if (error) {
-                [response setErrorToIllegalDeviceStateWithMessage:@"device is not ready."];
-                [[DConnectManager sharedManager] sendResponse:response];
-            }
-        } eventCallback:^(float accelX, float accelY, float accelZ, long long interval) {
-            DConnectMessage * orientation = [self createOrientationWithAccelX:accelX
-                                                                       accelY:accelY
-                                                                       accelZ:accelZ
-                                                                     interval:interval];
-            [response setResult:DConnectMessageResultTypeOk];
-            [DConnectDeviceOrientationProfile setOrientation:orientation target:response];
-            
-            [[DConnectManager sharedManager] sendResponse:response];
-            
-            if (![weakSelf hasEventList:serviceId]) {
-                [[DPPebbleManager sharedManager] deleteDeviceOrientationEvent:serviceId callback:^(NSError *error) {
-                    if (error) {
-                        NSLog(@"Error:%@", error);
-                    }
-                }];
-            }
-        }];
-        return NO;
     }
+    __unsafe_unretained typeof(self) weakSelf = self;
+
+    [[DPPebbleManager sharedManager] registDeviceOrientationEvent:serviceId callback:^(NSError *error) {
+        if (error) {
+            [response setErrorToIllegalDeviceStateWithMessage:@"device is not ready."];
+            [[DConnectManager sharedManager] sendResponse:response];
+        }
+    } eventCallback:^(float accelX, float accelY, float accelZ, long long interval) {
+        DConnectMessage * orientation = [self createOrientationWithAccelX:accelX
+                                                                   accelY:accelY
+                                                                   accelZ:accelZ
+                                                                 interval:interval];
+        [response setResult:DConnectMessageResultTypeOk];
+        [DConnectDeviceOrientationProfile setOrientation:orientation target:response];
+        
+        [[DConnectManager sharedManager] sendResponse:response];
+        
+        if (![weakSelf hasEventList:serviceId]) {
+            [[DPPebbleManager sharedManager] deleteDeviceOrientationEvent:serviceId callback:^(NSError *error) {
+                if (error) {
+                    NSLog(@"Error:%@", error);
+                }
+            }];
+        }
+    }];
+    return NO;
 }
 
 // ondeviceorientationイベント登録リクエストを受け取った

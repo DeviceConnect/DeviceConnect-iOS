@@ -43,7 +43,7 @@
 /// iPodライブラリ検索用のロック
 @property NSObject *lockIPodLibraryQuerying;
 @property NSString *nowPlayingMediaId;
-
+@property ALAssetsLibrary *library;
 
 -(void) nowPlayingItemChangedInIPod:(NSNotification *)notification;
 - (void) nowPlayingItemChangedInMoviePlayer:(NSNotification *)notification;
@@ -103,7 +103,7 @@
         [self.defaultMediaQuery addFilterPredicate:
          [MPMediaPropertyPredicate predicateWithValue:[NSNumber numberWithInteger:TargetMPMediaType]
                                           forProperty:MPMediaItemPropertyMediaType]];
-        
+        self.library = [ALAssetsLibrary new];
         
         // 初期はiPodミュージックプレイヤーを設定しておく。
         _currentMediaPlayer = MediaPlayerTypeIPod;
@@ -266,7 +266,7 @@
         dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
         dispatch_time_t timeout = dispatch_time(DISPATCH_TIME_NOW, NSEC_PER_SEC * 30);
         
-        ALAssetsLibrary *library = [ALAssetsLibrary new];
+        
         NSUInteger groupTypes = ALAssetsGroupAll;
         NSString *mimeTypeLowercase = mimeType.lowercaseString;
         id mainLoopBlock = ^(ALAssetsGroup *group, BOOL *stop1)
@@ -327,7 +327,7 @@
             return;
         };
         
-        [library enumerateGroupsWithTypes:groupTypes
+        [_library enumerateGroupsWithTypes:groupTypes
                                usingBlock:mainLoopBlock
                              failureBlock:failBlock];
         
@@ -533,21 +533,22 @@ didReceiveGetMediaRequest:(DConnectRequestMessage *)request
 }
 
 - (void)checkOrder:(NSString **)sortOrder
-      sortTarget:(NSString **)sortTarget_p
+      sortTarget:(NSString **)sortTarget
           response:(DConnectResponseMessage *)response
              order:(NSArray *)order
 {
     
     
     if (order) {
-        *sortTarget_p = order[0];
-        *sortOrder = order[1];
-        
-        if (!(*sortTarget_p) || !(*sortOrder)) {
+        if (order.count >= 2) {
+            *sortTarget = order[0];
+            *sortOrder = order[1];
+        }
+        if (!(*sortTarget) || !(*sortOrder)) {
             [response setErrorToInvalidRequestParameterWithMessage:@"order is invalid."];
         }
     } else {
-        *sortTarget_p = DConnectMediaPlayerProfileParamTitle;
+        *sortTarget = DConnectMediaPlayerProfileParamTitle;
         *sortOrder = DConnectMediaPlayerProfileOrderASC;
     }
 }
@@ -665,11 +666,20 @@ didReceiveGetMediaListRequest:(DConnectRequestMessage *)request
         [response setErrorToInvalidRequestParameterWithMessage:@"offset must be a non-negative value."];
         return YES;
     }
-    if (limit && limit.integerValue <= 0) {
+    if (limit && limit.integerValue < 0) {
         [response setErrorToInvalidRequestParameterWithMessage:@"limit must be a positive value."];
         return YES;
     }
-
+    NSString *limitString = [request stringForKey:DConnectMediaPlayerProfileParamLimit];
+    NSString *offsetString = [request stringForKey:DConnectMediaPlayerProfileParamOffset];
+    if (![DPHostUtils existDigitWithString:limitString]) {
+        [response setErrorToInvalidRequestParameterWithMessage:@"limit must be a digit number."];
+        return YES;
+    }
+    if (![DPHostUtils existDigitWithString:offsetString]) {
+        [response setErrorToInvalidRequestParameterWithMessage:@"offset must be a digit number."];
+        return YES;
+    }
     NSMutableArray *ctxArr = [NSMutableArray array];
     [ctxArr addObjectsFromArray:[self contextsBySearchingAssetsLibraryWithQuery:query mimeType:mimeType]];
     [ctxArr addObjectsFromArray:[self contextsBySearchingIPodLibraryWithQuery:query mimeType:mimeType]];
@@ -904,10 +914,13 @@ didReceivePutMediaRequest:(DConnectRequestMessage *)request
         [response setErrorToInvalidRequestParameterWithMessage:@"mediaId must be specified."];
         return YES;
     }
-    _nowPlayingMediaId = mediaId;
     NSURL *url = [NSURL URLWithString:mediaId];
-    [DPHostMediaContext contextWithURL:url];
-    
+    DPHostMediaContext *ctx = [DPHostMediaContext contextWithURL:url];
+    if (!ctx) {
+        [response setErrorToInvalidRequestParameterWithMessage:@"MediaId is Invalid."];
+        return YES;
+    }
+    _nowPlayingMediaId = mediaId;
     NSNumber *persistentId;
     MPMediaItem *mediaItem;
     BOOL isIPodAudioMedia = [url.scheme isEqualToString:MediaContextMediaIdSchemeIPodAudio];
@@ -1062,6 +1075,10 @@ didReceivePutStopRequest:(DConnectRequestMessage *)request
     __weak typeof(self) _self = self;
     void(^block)(void) = nil;
     if (_currentMediaPlayer == MediaPlayerTypeIPod) {
+        if (_musicPlayer.playbackState == MPMusicPlaybackStateStopped) {
+            [response setErrorToIllegalServerState];
+            return YES;
+        }
         block = ^{
             // iTunes関連の通知の削除
             NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
@@ -1080,6 +1097,10 @@ didReceivePutStopRequest:(DConnectRequestMessage *)request
             [response setResult:DConnectMessageResultTypeOk];
         };
     } else if (_currentMediaPlayer == MediaPlayerTypeMoviePlayer) {
+        if (_viewController.moviePlayer.playbackState == MPMoviePlaybackStateStopped) {
+            [response setErrorToIllegalServerState];
+            return YES;            
+        }
         if (![self moviePlayerViewControllerIsPresented]) {
             [response setErrorToUnknownWithMessage:
                 @"Movie player view controller is not presented;"
@@ -1261,7 +1282,8 @@ didReceivePutSeekRequest:(DConnectRequestMessage *)request
                 serviceId:(NSString *)serviceId
                      pos:(NSNumber *)pos
 {
-    if (!pos) {
+    NSString *posString = [request stringForKey:DConnectMediaPlayerProfileParamPos];
+    if (!pos || (pos && ![DPHostUtils existDigitWithString:posString])) {
         [response setErrorToInvalidRequestParameterWithMessage:@"pos must be specified."];
         return YES;
     }
@@ -1270,7 +1292,7 @@ didReceivePutSeekRequest:(DConnectRequestMessage *)request
     if (_currentMediaPlayer == MediaPlayerTypeIPod) {
         MPMediaItem *nowPlayingItem = _musicPlayer.nowPlayingItem;
         NSNumber *playbackDuration = [nowPlayingItem valueForProperty:MPMediaItemPropertyPlaybackDuration];
-        if ([playbackDuration compare:pos] == NSOrderedAscending) {
+        if ([playbackDuration unsignedIntegerValue] < [pos unsignedIntegerValue]) {
             [response setErrorToInvalidRequestParameterWithMessage:@"pos exceeds the playback duration."];
             return YES;
         }

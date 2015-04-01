@@ -15,6 +15,10 @@
 
 @end
 
+/*!
+ * @class RESTfulFailCommonTest
+ * @brief 各プロファイルの共通部分についての異常系テスト.
+ */
 @implementation RESTfulFailCommonTest
 
 /**
@@ -34,6 +38,7 @@
     NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
+    [request setValue:@"org.deviceconnect.test" forHTTPHeaderField:@"X-GotAPI-Origin"];
     
     CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":2}", request);
 }
@@ -118,6 +123,7 @@
     NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/profile/interface/attribute/extra"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
+    [request setValue:@"org.deviceconnect.test" forHTTPHeaderField:@"X-GotAPI-Origin"];
     
     NSURLResponse *response = nil;
     NSError *error = nil;
@@ -147,6 +153,7 @@
     NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi//ping/ping?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
+    [request setValue:@"org.deviceconnect.test" forHTTPHeaderField:@"X-GotAPI-Origin"];
     
     NSURLResponse *response = nil;
     NSError *error = nil;
@@ -176,6 +183,7 @@
     NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/ping//ping?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
+    [request setValue:@"org.deviceconnect.test" forHTTPHeaderField:@"X-GotAPI-Origin"];
     
     NSURLResponse *response = nil;
     NSError *error = nil;
@@ -226,6 +234,7 @@
     NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi///ping?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
+    [request setValue:@"org.deviceconnect.test" forHTTPHeaderField:@"X-GotAPI-Origin"];
     
     NSURLResponse *response = nil;
     NSError *error = nil;
@@ -255,6 +264,7 @@
     NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi//ping/?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
+    [request setValue:@"org.deviceconnect.test" forHTTPHeaderField:@"X-GotAPI-Origin"];
     
     NSURLResponse *response = nil;
     NSError *error = nil;
@@ -284,6 +294,7 @@
     NSURL *uri = [NSURL URLWithString:@"http://localhost:4035"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
+    [request setValue:@"org.deviceconnect.test" forHTTPHeaderField:@"X-GotAPI-Origin"];
     
     NSURLResponse *response = nil;
     NSError *error = nil;
@@ -314,6 +325,7 @@
     NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/not_gotapi"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
+    [request setValue:@"org.deviceconnect.test" forHTTPHeaderField:@"X-GotAPI-Origin"];
     
     NSURLResponse *response = nil;
     NSError *error = nil;
@@ -344,6 +356,7 @@
     NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/not_gotapi/ping/?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
+    [request setValue:@"org.deviceconnect.test" forHTTPHeaderField:@"X-GotAPI-Origin"];
     
     NSURLResponse *response = nil;
     NSError *error = nil;
@@ -373,6 +386,7 @@
     NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/files?uri=file:///path/to/file_not_found"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
+    [request setValue:@"org.deviceconnect.test" forHTTPHeaderField:@"X-GotAPI-Origin"];
     
     NSURLResponse *response = nil;
     [NSURLConnection sendSynchronousRequest:request

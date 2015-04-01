@@ -51,7 +51,7 @@ didReceiveGetReceiveRequest:(DConnectRequestMessage *)request
     NSFileManager *sysFileMgr = [NSFileManager defaultManager];
     BOOL isDirectory;
     if (![sysFileMgr fileExistsAtPath:dstPath isDirectory:&isDirectory]) {
-        [response setErrorToUnknownWithMessage:@"File does not exists."];
+        [response setErrorToInvalidRequestParameterWithMessage:@"File does not exists."];
         return YES;
     } else if (isDirectory) {
         [response setErrorToUnknownWithMessage:@"Directory can not be specified."];
@@ -77,17 +77,17 @@ didReceiveGetReceiveRequest:(DConnectRequestMessage *)request
                          path:(NSString *)path
                       fileMgr:(DConnectFileManager *)fileMgr
                    sysFileMgr:(NSFileManager *)sysFileMgr
-                  sortOrder:(NSString **)sortOrder_p
-                 sortTarget:(NSString **)sortTarget_p
+                  sortOrder:(NSString **)sortOrder
+                 sortTarget:(NSString **)sortTarget
                         order:(NSArray *)order
 {
     NSString *offsetString = [request stringForKey:DConnectFileProfileParamOffset];
     NSString *limitString = [request stringForKey:DConnectFileProfileParamLimit];
-    if (offsetString && [DPHostUtils isFloatWithString:offsetString]) {
+    if (offsetString && ![DPHostUtils existDigitWithString:offsetString]) {
         [response setErrorToInvalidRequestParameterWithMessage:@"offset is non-float"];
         return nil;
     }
-    if (limitString && [DPHostUtils isFloatWithString:limitString]) {
+    if (limitString && ![DPHostUtils existDigitWithString:limitString]) {
         [response setErrorToInvalidRequestParameterWithMessage:@"limit is non-float"];
         return nil;
     }
@@ -117,16 +117,16 @@ didReceiveGetReceiveRequest:(DConnectRequestMessage *)request
             return nil;
         }
         
-        *sortTarget_p = order[0];
-        *sortOrder_p = order[1];
+        *sortTarget = order[0];
+        *sortOrder = order[1];
         
-        if (!(*sortTarget_p) || !(*sortOrder_p)) {
+        if (!(*sortTarget) || !(*sortOrder)) {
             [response setErrorToInvalidRequestParameterWithMessage:@"order is invalid."];
             return nil;
         }
     } else {
-        *sortTarget_p = DConnectFileProfileParamPath;
-        *sortOrder_p = DConnectFileProfileOrderASC;
+        *sortTarget = DConnectFileProfileParamPath;
+        *sortOrder = DConnectFileProfileOrderASC;
     }
     return listPath;
 }
@@ -213,7 +213,7 @@ didReceiveGetReceiveRequest:(DConnectRequestMessage *)request
 
 - (void)compareOrderWithResponse:(DConnectResponseMessage *)response
                       sortTarget:(NSString *)sortTarget
-                          comp_p:(NSComparator *)comp_p
+                            comp:(NSComparator *)comp
                        sortOrder:(NSString *)sortOrder
 {
     // ソート対象の文字列表現を返却するブロックを用意する。
@@ -251,13 +251,13 @@ didReceiveGetReceiveRequest:(DConnectRequestMessage *)request
     
     
     if ([sortOrder isEqualToString:DConnectFileProfileOrderASC]) {
-        *comp_p = ^NSComparisonResult(id obj1, id obj2) {
+        *comp = ^NSComparisonResult(id obj1, id obj2) {
             id obj1Tmp = accessor(obj1);
             id obj2Tmp = accessor(obj2);
             return [obj1Tmp localizedCaseInsensitiveCompare:obj2Tmp];
         };
     } else if ([sortOrder isEqualToString:DConnectFileProfileOrderDESC]) {
-        *comp_p = ^NSComparisonResult(id obj1, id obj2) {
+        *comp = ^NSComparisonResult(id obj1, id obj2) {
             id obj1Tmp = accessor(obj1);
             id obj2Tmp = accessor(obj2);
             return [obj2Tmp localizedCaseInsensitiveCompare:obj1Tmp];
@@ -293,11 +293,13 @@ didReceiveGetListRequest:(DConnectRequestMessage *)request
                         sortTarget:&sortTarget
                                order:order];
     if (!listPath) {
+        [response setErrorToInvalidRequestParameter];
         return YES;
     }
     NSComparator comp;
-    [self compareOrderWithResponse:response sortTarget:sortTarget comp_p:&comp sortOrder:sortOrder];
+    [self compareOrderWithResponse:response sortTarget:sortTarget comp:&comp sortOrder:sortOrder];
     if ([response integerForKey:DConnectMessageResult] == DConnectMessageResultTypeError) {
+        [response setErrorToInvalidRequestParameter];
         return YES;
     }
     
@@ -402,7 +404,7 @@ didReceivePostMkdirRequest:(DConnectRequestMessage *)request
     }
     if ([sysFileMgr fileExistsAtPath:dstPath]) {
         // ディレクトリが既に存在している
-        [response setErrorToUnknownWithMessage:
+        [response setErrorToInvalidRequestParameterWithMessage:
          @"File/directory already exists at the specified path."];
     } else {
         BOOL result = [sysFileMgr createDirectoryAtPath:dstPath
@@ -439,7 +441,7 @@ didReceiveDeleteRemoveRequest:(DConnectRequestMessage *)request
     }
     BOOL isDirectory;
     if (![sysFileMgr fileExistsAtPath:dstPath isDirectory:&isDirectory]) {
-        [response setErrorToUnknownWithMessage:@"File does not exist."];
+        [response setErrorToInvalidRequestParameterWithMessage:@"File does not exist."];
         return YES;
     } else if (isDirectory) {
         [response setErrorToUnknownWithMessage:@"Directory can not be specified; use Remove Directory API instead."];
@@ -484,7 +486,7 @@ didReceiveDeleteRmdirRequest:(DConnectRequestMessage *)request
         if (isDirectory) {
             NSArray *contents = [sysFileMgr contentsOfDirectoryAtPath:dstPath error:nil];
             if (contents.count != 0 && !force) {
-                [response setErrorToUnknownWithMessage:
+                [response setErrorToIllegalDeviceStateWithMessage:
                  @"Could not delete a directory containing files; set force to YES for a recursive deletion."];
             } else {
                 BOOL result = [sysFileMgr removeItemAtPath:dstPath error:nil];
@@ -496,7 +498,7 @@ didReceiveDeleteRmdirRequest:(DConnectRequestMessage *)request
             }
         } else {
             // パスでしていされた項目がディレクトリではない
-            [response setErrorToUnknownWithMessage:
+            [response setErrorToInvalidRequestParameterWithMessage:
              @"File specified by path is not a directory."];
         }
     }
@@ -508,7 +510,7 @@ didReceiveDeleteRmdirRequest:(DConnectRequestMessage *)request
 -(BOOL)checkPath:(NSString*)dstPath {
     NSMutableArray *results = [NSMutableArray array];
     NSRange target = NSMakeRange(0, [dstPath length]);
-    NSString *word = @"/var/mobile/Applications";
+    NSString *word = @"/var/mobile";
     
     // 全件検索
     while (target.location != NSNotFound) {
@@ -526,6 +528,6 @@ didReceiveDeleteRmdirRequest:(DConnectRequestMessage *)request
             target = NSMakeRange(from, end);
         }
     }
-    return [results count] >= 2;
+    return ([results count] >= 2);
 }
 @end

@@ -16,6 +16,7 @@
 #import "DPPebbleDeviceOrientationProfile.h"
 #import "DPPebbleNotificationProfile.h"
 #import "DPPebbleCanvasProfile.h"
+#import "DPPebbleKeyEventProfile.h"
 #import "PebbleViewController.h"
 #import "DPPebbleManager.h"
 
@@ -31,7 +32,7 @@
 	self = [super init];
 	if (self) {
 		// プラグイン名を設定
-		self.pluginName = [NSString stringWithFormat:@"Pebble 1.0"];
+		self.pluginName = [NSString stringWithFormat:@"Pebble 2.0.0"];
 		
 		// EventManagerの初期化
 		Class key = [self class];
@@ -47,6 +48,7 @@
 		[self addProfile:[DPPebbleDeviceOrientationProfile new]];
         [self addProfile:[DPPebbleCanvasProfile new]];
         [self addProfile:[DConnectServiceInformationProfile new]];
+        [self addProfile:[DPPebbleKeyEventProfile new]];
 		
 		dispatch_async(dispatch_get_main_queue(), ^{
 			NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];

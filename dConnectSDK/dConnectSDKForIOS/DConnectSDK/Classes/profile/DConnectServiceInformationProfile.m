@@ -80,7 +80,7 @@ NSString *const DConnectServiceInformationProfileParamBLE = @"ble";
             [response setResult:DConnectMessageResultTypeOk];
         }
     } else {
-        [response setErrorToUnknownAttribute];
+        [response setErrorToNotSupportProfile];
     }
     
     return send;

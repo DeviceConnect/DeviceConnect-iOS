@@ -27,6 +27,8 @@
 "display_scope_system" = "システム";
 "display_scope_vibration" = "バイブレーション";
 "display_scope_canvas" = "キャンバス";
+"display_scope_touch" = "タッチ";
+"display_scope_keyevent" = "キーイベント";
 
 
 // Wording

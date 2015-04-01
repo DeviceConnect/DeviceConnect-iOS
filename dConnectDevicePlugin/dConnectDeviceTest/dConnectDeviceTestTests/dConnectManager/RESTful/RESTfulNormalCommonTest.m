@@ -13,6 +13,10 @@
 
 @end
 
+/*!
+ * @class RESTfulNormalCommonTest
+ * @brief 各プロファイルの共通部分についての正常系テスト.
+ */
 @implementation RESTfulNormalCommonTest
 
 /**
@@ -87,6 +91,7 @@
     NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/ping?key1=%@&key2=%@&serviceId=%@&key3=%@&key4=%@", reservedCharsEncoded,  reservedCharsEncoded, self.serviceId, reservedCharsEncoded, reservedCharsEncoded]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
+    [request setValue:@"org.deviceconnect.test" forHTTPHeaderField:@"X-GotAPI-Origin"];
     
     NSURLResponse *response = nil;
     NSError *error = nil;

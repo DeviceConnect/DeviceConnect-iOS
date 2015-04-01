@@ -83,9 +83,10 @@ NSString *const SpheroCalibrationName = @"Sphero CalibrationLED";
         [response setErrorToInvalidRequestParameterWithMessage:@"lightId is Invalid."];
         return YES;
     }
-    
-    // パラメータチェック
-    if (brightness < 0 || brightness > 1) {
+    NSString *brightnessString = [request stringForKey:DCMLightProfileParamBrightness];
+    if (brightnessString &&
+        (![[DPSpheroManager sharedManager] existDecimalWithString:brightnessString]
+         || brightness < 0 || brightness > 1.0)) {
         [response setErrorToInvalidRequestParameterWithMessage:@"invalid brightness value."];
         return YES;
     }

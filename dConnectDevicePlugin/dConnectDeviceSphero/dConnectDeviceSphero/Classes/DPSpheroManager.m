@@ -15,7 +15,10 @@
 
 
 // センサー監視間隔（400Hz/kSensorDivisor）
-#define kSensorDivisor 40
+static int const kSensorDivisor = 40;
+static NSString * const kDPSpheroRegexDecimalPoint = @"^[-+]?([0-9]*)?(\\.)?([0-9]*)?$";
+static NSString * const kDPSpheroRegexDigit = @"^([0-9]*)?$";
+static NSString * const kDPSpheroMimeType = @"^([a-zA-Z]*)(/)([a-zA-Z]+)$";
 
 
 @interface DPSpheroManager ()
@@ -179,18 +182,18 @@ BOOL _startedCollisionSensor;
 
         // Orientation
         RKAccelerometerData *accelerometerData = sensorsData.accelerometerData;
-        RKAttitudeData *attitudeData = sensorsData.attitudeData;
-        if ((accelerometerData || attitudeData)
+        RKGyroData *sensorGyroData = sensorsData.gyroData;
+        if ((accelerometerData || sensorGyroData)
             && [_orientationDelegate respondsToSelector:@selector(spheroManagerStreamingOrientation:accel:interval:)]) {
-            DPAttitude attitude;
-            attitude.yaw = attitudeData.yaw;
-            attitude.roll = attitudeData.roll;
-            attitude.pitch = attitudeData.pitch;
+            DPGyroData gyroData;
+            gyroData.x = 0.1 * ((double) sensorGyroData.rotationRate.x);
+            gyroData.y = 0.1 * ((double) sensorGyroData.rotationRate.y);
+            gyroData.z = 0.1 * ((double) sensorGyroData.rotationRate.z);
             DPPoint3D accel;
             accel.x = accelerometerData.acceleration.x;
             accel.y = accelerometerData.acceleration.y;
             accel.z = accelerometerData.acceleration.z;
-            [_orientationDelegate spheroManagerStreamingOrientation:attitude accel:accel interval:interval];
+            [_orientationDelegate spheroManagerStreamingOrientation:gyroData accel:accel interval:interval];
         }
         // Quaternion
         RKQuaternionData *quaternionData = sensorsData.quaternionData;
@@ -353,7 +356,11 @@ BOOL _startedCollisionSensor;
 {
     if (!_isActivated) return;
     
-    RKDataStreamingMask mask = RKDataStreamingMaskAccelerometerFilteredAll | RKDataStreamingMaskIMUAnglesFilteredAll;
+    RKDataStreamingMask mask = RKDataStreamingMaskAccelerometerFilteredAll
+        | RKDataStreamingMaskIMUAnglesFilteredAll
+        | RKDataStreamingMaskGyroXFiltered
+        | RKDataStreamingMaskGyroYFiltered
+        | RKDataStreamingMaskGyroZFiltered;
     mask = [RKSetDataStreamingCommand currentMask] | mask;
     [self startSensor:mask divisor:kSensorDivisor];
 }
@@ -363,7 +370,12 @@ BOOL _startedCollisionSensor;
 {
     if (!_isActivated) return;
     
-    [self stopSensor:RKDataStreamingMaskAccelerometerFilteredAll | RKDataStreamingMaskIMUAnglesFilteredAll];
+    RKDataStreamingMask mask = RKDataStreamingMaskAccelerometerFilteredAll
+    | RKDataStreamingMaskIMUAnglesFilteredAll
+    | RKDataStreamingMaskGyroXFiltered
+    | RKDataStreamingMaskGyroYFiltered
+    | RKDataStreamingMaskGyroZFiltered;
+    [self stopSensor:mask];
 }
 
 // クォータニオンセンサー開始
@@ -512,5 +524,25 @@ BOOL _startedCollisionSensor;
     [[RKDeviceMessenger sharedMessenger] addDataStreamingObserver:self selector:@selector(handleDataStreaming:)];
     
 }
+
+/*
+ 数値判定。
+ */
+- (BOOL)existNumberWithString:(NSString *)numberString Regex:(NSString*)regex {
+    NSRange match = [numberString rangeOfString:regex options:NSRegularExpressionSearch];
+    //数値の場合
+    return match.location != NSNotFound;
+}
+
+// 整数かどうかを判定する。 true:存在する
+- (BOOL)existDigitWithString:(NSString*)digit {
+    return [self existNumberWithString:digit Regex:kDPSpheroRegexDigit];
+}
+
+// 少数かどうかを判定する。
+- (BOOL)existDecimalWithString:(NSString*)decimal {
+    return [self existNumberWithString:decimal Regex:kDPSpheroRegexDecimalPoint];
+}
+
 
 @end

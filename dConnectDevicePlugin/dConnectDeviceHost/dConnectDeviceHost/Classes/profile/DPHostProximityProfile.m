@@ -100,6 +100,7 @@ didReceiveGetOnUserProximityRequest:(DConnectRequestMessage *)request
         weakSelf.onceProximityBlock = nil;
         
         if (![weakSelf hasUserProximityEventList:serviceId]) {
+            [UIDevice currentDevice].proximityMonitoringEnabled = NO;
             [[NSNotificationCenter defaultCenter] removeObserver:weakSelf
                                                             name:UIDeviceProximityStateDidChangeNotification
                                                           object:nil];
@@ -107,10 +108,13 @@ didReceiveGetOnUserProximityRequest:(DConnectRequestMessage *)request
     };
     
     if (![self hasUserProximityEventList:serviceId]) {
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(sendOnUserProximityEvent:)
-                                                     name:UIDeviceProximityStateDidChangeNotification
-                                                   object:nil];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [UIDevice currentDevice].proximityMonitoringEnabled = YES;
+            [[NSNotificationCenter defaultCenter] addObserver:self
+                                                     selector:@selector(sendOnUserProximityEvent:)
+                                                         name:UIDeviceProximityStateDidChangeNotification
+                                                       object:nil];
+        });
     }
     return NO;
 }
@@ -144,11 +148,14 @@ didReceivePutOnUserProximityRequest:(DConnectRequestMessage *)request
                 [plugin sendEvent:eventMsg];
             }
         };
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [UIDevice currentDevice].proximityMonitoringEnabled = YES;
 
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(sendOnUserProximityEvent:)
-                                                     name:UIDeviceProximityStateDidChangeNotification
-                                                   object:nil];
+            [[NSNotificationCenter defaultCenter] addObserver:self
+                                                     selector:@selector(sendOnUserProximityEvent:)
+                                                         name:UIDeviceProximityStateDidChangeNotification
+                                                       object:nil];
+        });
     }
     
     switch ([_eventMgr addEventForRequest:request]) {
@@ -193,6 +200,8 @@ didReceiveDeleteOnUserProximityRequest:(DConnectRequestMessage *)request
                                             profile:DConnectProximityProfileName
                                           attribute:DConnectProximityProfileAttrOnUserProximity];
     if (evts.count == 0) {
+        [UIDevice currentDevice].proximityMonitoringEnabled = NO;
+
         [[NSNotificationCenter defaultCenter] removeObserver:self
                                                         name:UIDeviceProximityStateDidChangeNotification
                                                       object:nil];

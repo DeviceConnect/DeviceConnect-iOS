@@ -64,7 +64,7 @@ NSString *const DPIRKitRemoteControllerProfileParamMessage = @"message";
     
     BOOL send = YES;
     if ([request.attribute length] != 0) {
-        [response setErrorToUnknownAttribute];
+        [response setErrorToNotSupportProfile];
     } else if (_plugin) {
         
         __weak typeof(self) _self = self;
@@ -96,13 +96,24 @@ NSString *const DPIRKitRemoteControllerProfileParamMessage = @"message";
     
     BOOL send = YES;
     if ([request.attribute length] != 0) {
-        [response setErrorToUnknownAttribute];
+        [response setErrorToNotSupportProfile];
     } else if (_plugin) {
         
         DPIRKitDevice *device = [_plugin deviceForServiceId:request.serviceId];
         if (device) {
             
             NSString *message = [self messageFromRequest:request];
+            if (message) {
+                NSData *jsonData = [message dataUsingEncoding:NSUnicodeStringEncoding];
+                id jsonObj = [NSJSONSerialization JSONObjectWithData:jsonData
+                                                        options:NSJSONReadingAllowFragments
+                                                          error:NULL];
+                if (![NSJSONSerialization isValidJSONObject:jsonObj]) {
+                    [response setErrorToInvalidRequestParameter];
+                    return YES;
+                }
+            }
+            
             if (!message) {
                 [response setErrorToInvalidRequestParameter];
             } else {

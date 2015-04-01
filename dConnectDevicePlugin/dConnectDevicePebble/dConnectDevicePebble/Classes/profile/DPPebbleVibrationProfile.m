@@ -29,6 +29,19 @@
 	
 }
 
+- (BOOL)existNumberInArray:(NSArray*)pattern
+{
+    if (pattern) {
+        for (NSNumber *pat in pattern) {
+            if (![[DPPebbleManager sharedManager] existDigitWithString:pat.stringValue]
+                || pat.intValue < 0) {
+                return NO;
+            }
+        }
+        return YES;
+    }
+    return NO;
+}
 
 #pragma mark - DConnectVibrationProfileDelegate
 
@@ -39,6 +52,21 @@ didReceivePutVibrateRequest:(DConnectRequestMessage *)request
                    serviceId:(NSString *)serviceId
                     pattern:(NSArray *) pattern
 {
+    NSString *patternString = [request stringForKey:DConnectVibrationProfileParamPattern];
+    if ((patternString
+               && ![[DPPebbleManager sharedManager] existCSVWithString:patternString]
+               && ![[DPPebbleManager sharedManager] existDigitWithString:patternString])
+        || (patternString
+            && [[DPPebbleManager sharedManager] existCSVWithString:patternString]
+            && ![self existNumberInArray:pattern])
+        || (patternString
+               && [[DPPebbleManager sharedManager] existCSVWithString:patternString]
+               && ![[DPPebbleManager sharedManager] existDigitWithString:patternString]
+               && ![self existNumberInArray:pattern])
+        ) {
+        [response setErrorToInvalidRequestParameter];
+        return YES;        
+    }
 	// Pebbleに通知
 	[[DPPebbleManager sharedManager] startVibration:serviceId
 											pattern:pattern

@@ -52,7 +52,7 @@ NSString *const DCMTemperatureProfileParamType = @"type";
         send = [_delegate profile:self didReceiveGetTemperatureRequest:request response:response
                          serviceId:serviceId];
     } else {
-        [response setErrorToUnknownAttribute];
+        [response setErrorToNotSupportProfile];
     }
     
     return send;

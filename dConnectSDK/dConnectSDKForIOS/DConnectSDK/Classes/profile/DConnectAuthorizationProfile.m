@@ -55,10 +55,10 @@ NSString *const DConnectAuthorizationProfileGrantTypeAuthorizationCode = @"autho
             send = [self didReceiveGetRequestAccessTokenRequest:request
                                                        response:response];
         } else {
-            [response setErrorToUnknownAttribute];
+            [response setErrorToNotSupportProfile];
         }
     } else {
-        [response setErrorToUnknownAttribute];
+        [response setErrorToNotSupportProfile];
     }
     
     return send;
@@ -108,6 +108,9 @@ NSString *const DConnectAuthorizationProfileGrantTypeAuthorizationCode = @"autho
         [response setErrorToInvalidRequestParameterWithMessage:@"scope is nil."];
         return YES;
     } else if (scopes.count <= 0) {
+        [response setErrorToInvalidRequestParameterWithMessage:@"scope is empty."];
+        return YES;
+    } else if (scope.length <= 0) {
         [response setErrorToInvalidRequestParameterWithMessage:@"scope is empty."];
         return YES;
     } else if (package == nil) {

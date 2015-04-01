@@ -1,6 +1,6 @@
 //
 //  DPChromecastSystemProfile.m
-//  DConnectSDK
+//  dConnectDeviceChromeCast
 //
 //  Copyright (c) 2014 NTT DOCOMO, INC.
 //  Released under the MIT license
@@ -25,7 +25,7 @@
 // デバイスプラグインのバージョン
 -(NSString *) versionOfSystemProfile:(DConnectSystemProfile *)profile
 {
-    return @"1.0";
+    return @"2.0.0";
 }
 
 // デバイスプラグインの設定画面用のUIViewControllerを要求する
@@ -33,7 +33,7 @@
         settingPageForRequest:(DConnectRequestMessage *)request
 {
     // 設定画面用のViewControllerをStoryboardから生成する
-    NSString *bundlePath = [[NSBundle mainBundle] pathForResource:@"dConnectChromecast_resources" ofType:@"bundle"];
+    NSString *bundlePath = [[NSBundle mainBundle] pathForResource:@"dConnectDeviceChromecast_resources" ofType:@"bundle"];
     NSBundle *bundle = [NSBundle bundleWithPath:bundlePath];
     
     UIStoryboard *storyBoard;

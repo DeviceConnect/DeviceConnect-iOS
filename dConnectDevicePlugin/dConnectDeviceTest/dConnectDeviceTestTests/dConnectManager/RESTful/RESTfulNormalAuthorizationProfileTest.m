@@ -25,7 +25,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: GET
- * Path: /authorization/create_client
+ * Path: /authorization/grant
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -38,7 +38,6 @@
 {
     NSArray *client = [self createClient];
     XCTAssertNotNil(client[0], @"clientId must not be nil.");
-    XCTAssertNotNil(client[1], @"clientSecret must not be nil.");
 }
 
 /*!
@@ -47,7 +46,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: GET
- * Path: /authorization/create_client
+ * Path: /authorization/grant
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -60,12 +59,9 @@
 {
     NSArray *client = [self createClient];
     XCTAssertNotNil(client[0], @"clientId must not be nil.");
-    XCTAssertNotNil(client[1], @"clientSecret must not be nil.");
     NSArray *newClient = [self createClient];
     XCTAssertNotNil(newClient[0], @"clientId must not be nil.");
-    XCTAssertNotNil(newClient[1], @"clientSecret must not be nil.");
     XCTAssertNotEqual(client[0], newClient[0]);
-    XCTAssertNotEqual(client[1], newClient[1]);
 }
 
 // MEMO: 以下のテストは手動で行う.

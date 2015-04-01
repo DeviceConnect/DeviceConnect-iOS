@@ -44,10 +44,10 @@
 - (NSArray*) createClient
 {
     NSURL *uri = [NSURL URLWithString:
-                  @"http://localhost:4035/gotapi/authorization/create_client"];
+                  @"http://localhost:4035/gotapi/authorization/grant"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
-    [request addValue:@"dConnectDeviceTest" forHTTPHeaderField:@"X-GotAPI-Origin"];
+    [request addValue:@"org.deviceconnect.test" forHTTPHeaderField:@"X-GotAPI-Origin"];
     
     NSURLResponse *response = nil;
     NSError *error = nil;
@@ -62,9 +62,9 @@
     NSNumber *result = [actualResponse objectForKey:@"result"];
     XCTAssertNotNil(result);
     XCTAssertEqual(0, [result intValue]);
+    NSLog(@"********** actualResponse: %@", actualResponse);
     NSMutableArray *client = [NSMutableArray array];
     [client addObject:[actualResponse objectForKey:@"clientId"]];
-    [client addObject:[actualResponse objectForKey:@"clientSecret"]];
     return client;
 }
 
@@ -83,14 +83,8 @@
             [scopeParam appendString:scopes[i]];
         }
     }
-    
-    NSString *grantType = @"authorization_code";
-    NSString *signature = [DConnectUtil generateSignatureWithClientId:clientId
-                                                            grantType:grantType
-                                                             serviceId:nil
-                                                               scopes:scopes
-                                                         clientSecret:clientSecret];
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/authorization/request_accesstoken?clientId=%@&grantType=%@&scope=%@&applicationName=%@&signature=%@", clientId, grantType,scopeParam, applicationName, signature]];
+
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/authorization/accesstoken?clientId=%@&scope=%@&applicationName=%@", clientId, scopeParam, applicationName]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
     
@@ -112,7 +106,8 @@
 
 - (void) searchTestDevicePlugin {
     NSURL *url = [NSURL URLWithString:@"http://localhost:4035/gotapi/servicediscovery"];
-    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    [request setValue:@"org.deviceconnect.test" forHTTPHeaderField:@"X-GotAPI-Origin"];
     NSURLResponse *response = nil;
     NSError *error = nil;
     NSData *data = [NSURLConnection sendSynchronousRequest:request
@@ -129,6 +124,9 @@
     // resultのチェック
     NSNumber *result = [dic objectForKey:DConnectMessageResult];
     XCTAssert([result intValue] == DConnectMessageResultTypeOk);
+    if ([result intValue] == DConnectMessageResultTypeError) {
+        NSLog(@"errorMessage: %@", [dic objectForKey:DConnectMessageErrorMessage]);
+    }
     
     // デバイスのチェック
     NSArray *services = [dic objectForKey:DConnectServiceDiscoveryProfileParamServices];
