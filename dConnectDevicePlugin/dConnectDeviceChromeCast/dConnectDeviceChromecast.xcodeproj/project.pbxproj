@@ -32,6 +32,7 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		AB3463E21ACD559400B38567 /* GoogleCast.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB3463E11ACD559400B38567 /* GoogleCast.framework */; };
 		AB596B5D1AB7EDB000A56E27 /* DPChromecastMediaContext.m in Sources */ = {isa = PBXBuildFile; fileRef = AB596B5C1AB7EDAF00A56E27 /* DPChromecastMediaContext.m */; };
 		ABC5E3E41A973741003D2634 /* DPChromecastDevicePlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = ABC5E3E11A973741003D2634 /* DPChromecastDevicePlugin.m */; };
 		ABC5E3EA1A97375D003D2634 /* DPChromecastGuideViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABC5E3E71A97375D003D2634 /* DPChromecastGuideViewController.m */; };
@@ -65,7 +66,6 @@
 		ABCB4A5C1AB5415700805F25 /* Chromecast_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ABCB4A5A1AB5415700805F25 /* Chromecast_iPad.storyboard */; };
 		ABCB4A5D1AB5415700805F25 /* Chromecast_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ABCB4A5B1AB5415700805F25 /* Chromecast_iPhone.storyboard */; };
 		FF65A97519B709B500DE9EF8 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF65A97419B709B500DE9EF8 /* Foundation.framework */; };
-		FF65A9EC19B8025800DE9EF8 /* GoogleCast.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF65A9EB19B8025800DE9EF8 /* GoogleCast.framework */; };
 		FF94393519C0613E006B4A33 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF94393419C0613E006B4A33 /* MediaPlayer.framework */; };
 		FF94393719C06152006B4A33 /* MediaAccessibility.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF94393619C06152006B4A33 /* MediaAccessibility.framework */; };
 		FF94393919C06161006B4A33 /* MediaToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF94393819C06161006B4A33 /* MediaToolbox.framework */; };
@@ -84,6 +84,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		AB3463E11ACD559400B38567 /* GoogleCast.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleCast.framework; path = "GoogleCastSDK-2.6.0-Release/GoogleCast.framework"; sourceTree = "<group>"; };
 		AB596B5B1AB7EDAF00A56E27 /* DPChromecastMediaContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DPChromecastMediaContext.h; path = dConnectDeviceChromecast/Classes/DPChromecastMediaContext.h; sourceTree = SOURCE_ROOT; };
 		AB596B5C1AB7EDAF00A56E27 /* DPChromecastMediaContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DPChromecastMediaContext.m; path = dConnectDeviceChromecast/Classes/DPChromecastMediaContext.m; sourceTree = SOURCE_ROOT; };
 		AB596B5E1AB95F7500A56E27 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
@@ -159,7 +160,6 @@
 		FF65A97119B709B500DE9EF8 /* libdConnectDeviceChromecast.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libdConnectDeviceChromecast.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF65A97419B709B500DE9EF8 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		FF65A9BD19B7183200DE9EF8 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
-		FF65A9EB19B8025800DE9EF8 /* GoogleCast.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleCast.framework; path = "GoogleCastFramework-2.3.0-Release/GoogleCast.framework"; sourceTree = "<group>"; };
 		FF94393419C0613E006B4A33 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 		FF94393619C06152006B4A33 /* MediaAccessibility.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaAccessibility.framework; path = System/Library/Frameworks/MediaAccessibility.framework; sourceTree = SDKROOT; };
 		FF94393819C06161006B4A33 /* MediaToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaToolbox.framework; path = System/Library/Frameworks/MediaToolbox.framework; sourceTree = SDKROOT; };
@@ -185,7 +185,7 @@
 				FF94393919C06161006B4A33 /* MediaToolbox.framework in Frameworks */,
 				FF94393719C06152006B4A33 /* MediaAccessibility.framework in Frameworks */,
 				FF94393519C0613E006B4A33 /* MediaPlayer.framework in Frameworks */,
-				FF65A9EC19B8025800DE9EF8 /* GoogleCast.framework in Frameworks */,
+				AB3463E21ACD559400B38567 /* GoogleCast.framework in Frameworks */,
 				FF65A97519B709B500DE9EF8 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -357,13 +357,13 @@
 		FF65A97319B709B500DE9EF8 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				AB3463E11ACD559400B38567 /* GoogleCast.framework */,
 				AB596B5E1AB95F7500A56E27 /* MobileCoreServices.framework */,
 				ABCB4A3C1AB4480D00805F25 /* DConnectSDK.framework */,
 				ABCB49C41AB4176800805F25 /* UIKit.framework */,
 				ABCB49B21AB416D600805F25 /* MessageUI.framework */,
 				ABCB49B01AB416CD00805F25 /* CFNetwork.framework */,
 				ABCB49AE1AB416C700805F25 /* libz.dylib */,
-				FF65A9EB19B8025800DE9EF8 /* GoogleCast.framework */,
 				FF94393819C06161006B4A33 /* MediaToolbox.framework */,
 				FF94393619C06152006B4A33 /* MediaAccessibility.framework */,
 				FF94393419C0613E006B4A33 /* MediaPlayer.framework */,
@@ -774,8 +774,8 @@
 				DSTROOT = /tmp/dConnectChromecast.dst;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/GoogleCastFramework-2.3.0-Release",
 					"$(PROJECT_DIR)/../../dConnectSDK/dConnectSDKForIOS/bin",
+					"$(PROJECT_DIR)/GoogleCastSDK-2.6.0-Release",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "dConnectDeviceChromecast/dConnectDeviceChromecast-Prefix.pch";
@@ -791,8 +791,8 @@
 				DSTROOT = /tmp/dConnectChromecast.dst;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/GoogleCastFramework-2.3.0-Release",
 					"$(PROJECT_DIR)/../../dConnectSDK/dConnectSDKForIOS/bin",
+					"$(PROJECT_DIR)/GoogleCastSDK-2.6.0-Release",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "dConnectDeviceChromecast/dConnectDeviceChromecast-Prefix.pch";

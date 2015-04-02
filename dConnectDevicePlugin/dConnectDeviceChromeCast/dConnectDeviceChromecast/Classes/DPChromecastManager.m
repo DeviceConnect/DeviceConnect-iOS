@@ -112,9 +112,7 @@ static const NSTimeInterval DPSemaphoreTimeout = 20.0;
 {
 	NSMutableArray *array = [NSMutableArray array];
 	for (GCKDevice *device in _deviceScanner.devices) {
-        if (![device.friendlyName isEqualToString:@"付近の端末"]) {
-            [array addObject:@{@"name": device.friendlyName, @"id": device.deviceID}];
-        }
+        [array addObject:@{@"name": device.friendlyName, @"id": device.deviceID}];
 	}
 	return array;
 }
