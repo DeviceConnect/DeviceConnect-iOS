@@ -24,7 +24,6 @@
 		2518284419B9537E0042C95A /* dConnectDeviceIRKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2518284219B9537E0042C95A /* dConnectDeviceIRKit.framework */; };
 		25262487196E5BB000AE4F1F /* DConnectSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25262486196E5BB000AE4F1F /* DConnectSDK.framework */; };
 		254111A419C2CC0F00F74C31 /* icon_512px.png in Resources */ = {isa = PBXBuildFile; fileRef = 254111A319C2CC0F00F74C31 /* icon_512px.png */; };
-		254111A619C2CD7D00F74C31 /* GoogleCast.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 254111A519C2CD7D00F74C31 /* GoogleCast.framework */; };
 		254111A819C2CDAD00F74C31 /* MediaAccessibility.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 254111A719C2CDAD00F74C31 /* MediaAccessibility.framework */; };
 		2562A2A519C3DA410032EF17 /* dConnectDeviceSonyCamera_resources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 2562A2A419C3DA410032EF17 /* dConnectDeviceSonyCamera_resources.bundle */; };
 		2562A2B419C3E2480032EF17 /* dConnectDevicePebble_resources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 2562A2B219C3E2470032EF17 /* dConnectDevicePebble_resources.bundle */; };
@@ -41,6 +40,7 @@
 		25D5554D1977E13D002AA492 /* dConnectDeviceSphero.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25D5553F1977E13C002AA492 /* dConnectDeviceSphero.framework */; };
 		25D5554F1977E13D002AA492 /* RobotKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25D555411977E13C002AA492 /* RobotKit.framework */; };
 		25D555501977E13D002AA492 /* RobotUIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25D555421977E13C002AA492 /* RobotUIKit.framework */; };
+		6B6F584A1ACE68F90027A21F /* GoogleCast.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B6F58491ACE68F90027A21F /* GoogleCast.framework */; };
 		8E182FCA197507D700F9B131 /* GHURLLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E182FC9197507D700F9B131 /* GHURLLabel.m */; };
 		8E24CFFA1964EC25008D9C10 /* arrow-back@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E24CFF41964EC25008D9C10 /* arrow-back@2x.png */; };
 		8E24CFFB1964EC25008D9C10 /* arrow-next@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E24CFF51964EC25008D9C10 /* arrow-next@2x.png */; };
@@ -152,6 +152,7 @@
 		25D5553F1977E13C002AA492 /* dConnectDeviceSphero.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = dConnectDeviceSphero.framework; path = ../../dConnectDevicePlugin/dConnectDeviceSphero/bin/dConnectDeviceSphero.framework; sourceTree = "<group>"; };
 		25D555411977E13C002AA492 /* RobotKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RobotKit.framework; path = ../../dConnectDevicePlugin/dConnectDeviceSphero/RobotKit.framework; sourceTree = "<group>"; };
 		25D555421977E13C002AA492 /* RobotUIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RobotUIKit.framework; path = ../../dConnectDevicePlugin/dConnectDeviceSphero/RobotUIKit.framework; sourceTree = "<group>"; };
+		6B6F58491ACE68F90027A21F /* GoogleCast.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleCast.framework; path = "../../dConnectDevicePlugin/dConnectDeviceChromeCast/GoogleCastSDK-2.6.0-Release/GoogleCast.framework"; sourceTree = "<group>"; };
 		8E182FC8197507D700F9B131 /* GHURLLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GHURLLabel.h; path = classes/GHURLLabel.h; sourceTree = "<group>"; };
 		8E182FC9197507D700F9B131 /* GHURLLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GHURLLabel.m; path = classes/GHURLLabel.m; sourceTree = "<group>"; };
 		8E24CFF41964EC25008D9C10 /* arrow-back@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "arrow-back@2x.png"; sourceTree = "<group>"; };
@@ -312,9 +313,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6B6F584A1ACE68F90027A21F /* GoogleCast.framework in Frameworks */,
 				254111A819C2CDAD00F74C31 /* MediaAccessibility.framework in Frameworks */,
 				9700DDE71998E0DD00209D1A /* dConnectDeviceHost.framework in Frameworks */,
-				254111A619C2CD7D00F74C31 /* GoogleCast.framework in Frameworks */,
 				2518284419B9537E0042C95A /* dConnectDeviceIRKit.framework in Frameworks */,
 				ABBD5F0019861CFA00B81007 /* CoreFoundation.framework in Frameworks */,
 				ABBD5F0119861CFA00B81007 /* CoreMotion.framework in Frameworks */,
@@ -499,6 +500,7 @@
 		8E2C5B371960FF36005DFCDC /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				6B6F58491ACE68F90027A21F /* GoogleCast.framework */,
 				AB5B2B4C1A9ABAEE0038CCF6 /* dConnectDeviceChromecast_resources.bundle */,
 				AB5B2B4D1A9ABAEE0038CCF6 /* dConnectDeviceChromecast.framework */,
 				9044F33E1A1A21DA0072F241 /* HueSDK_iOS.framework */,
@@ -1101,7 +1103,7 @@
 					"$(PROJECT_DIR)/../../dConnectDevicePlugin/DCMDevicePluginSDK/bin",
 					"$(PROJECT_DIR)/../../dConnectDevicePlugin/dConnectDeviceIRKit/bin",
 					"$(PROJECT_DIR)/../../dConnectDevicePlugin/dConnectDeviceChromeCast/bin",
-					"$(PROJECT_DIR)/../../dConnectDevicePlugin/dConnectDeviceChromeCast/GoogleCastFramework-2.3.0-Release",
+					"$(PROJECT_DIR)/../../dConnectDevicePlugin/dConnectDeviceChromeCast/GoogleCastSDK-2.6.0-Release",
 					"$(PROJECT_DIR)/../../dConnectDevicePlugin/dConnectDevicePebble/bin",
 					"$(PROJECT_DIR)/../../dConnectDevicePlugin/dConnectDevicePebble",
 				);
@@ -1133,7 +1135,7 @@
 					"$(PROJECT_DIR)/../../dConnectDevicePlugin/DCMDevicePluginSDK/bin",
 					"$(PROJECT_DIR)/../../dConnectDevicePlugin/dConnectDeviceIRKit/bin",
 					"$(PROJECT_DIR)/../../dConnectDevicePlugin/dConnectDeviceChromeCast/bin",
-					"$(PROJECT_DIR)/../../dConnectDevicePlugin/dConnectDeviceChromeCast/GoogleCastFramework-2.3.0-Release",
+					"$(PROJECT_DIR)/../../dConnectDevicePlugin/dConnectDeviceChromeCast/GoogleCastSDK-2.6.0-Release",
 					"$(PROJECT_DIR)/../../dConnectDevicePlugin/dConnectDevicePebble/bin",
 					"$(PROJECT_DIR)/../../dConnectDevicePlugin/dConnectDevicePebble",
 				);
