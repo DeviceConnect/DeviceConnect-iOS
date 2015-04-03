@@ -150,27 +150,25 @@ static const NSTimeInterval DPSemaphoreTimeout = 20.0;
 	dispatch_semaphore_wait(_semaphore,
                             dispatch_time(DISPATCH_TIME_NOW, NSEC_PER_SEC * DPSemaphoreTimeout));
 	
+    // GCKDeviceManagerへのアクセスはメインスレッド上で実行する
+    dispatch_async(dispatch_get_main_queue(), ^(void) {
 	// 接続確認
-	DPChromecastManagerData *data = _dataDict[deviceID];
-	if (data) {
-		GCKDeviceManager *deviceManager = data.deviceManager;
-		// コールバック保持
-		data.connectCallback = completion;
-		// 既に接続済み
+        DPChromecastManagerData *cache = _dataDict[deviceID];
+        if (cache) {
+            GCKDeviceManager *deviceManager = cache.deviceManager;
+            cache.connectCallback = completion;
 		if (deviceManager.isConnected) {
-			// セマフォ解除
 			dispatch_semaphore_signal(_semaphore);
-			// callback
 			completion(YES, nil);
 		} else {
-			// 再接続
+                // 切断されていた場合は再接続
 			[deviceManager connect];
 		}
 		return;
 	}
 	
-	// 接続
-	data = [[DPChromecastManagerData alloc] init];
+        // 新規接続
+        DPChromecastManagerData *data = [[DPChromecastManagerData alloc] init];
 	data.connectCallback = completion;
 	_dataDict[deviceID] = data;
 	
@@ -180,6 +178,7 @@ static const NSTimeInterval DPSemaphoreTimeout = 20.0;
                        clientPackageName:info[@"CFBundleIdentifier"]];
 	data.deviceManager.delegate = self;
 	[data.deviceManager connect];
+    });
 }
 
 // イベントコールバックを設定
