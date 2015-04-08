@@ -153,6 +153,7 @@
 }
 
 
+
 - (void)saveMovie:(DPChromecastMediaContext *)ctx
               callback:(void (^)(NSString* url))callback
 {
@@ -562,21 +563,32 @@ didReceiveGetMuteRequest:(DConnectRequestMessage *)request
             [response setErrorToInvalidRequestParameterWithMessage:@"mediaId must be specified."];
             return YES;
         }
-        [self saveMovie:ctx
-               callback:^(NSString *url) {
-                   if (url) {
-                       DPChromecastManager *mgr = [DPChromecastManager sharedManager];
-                       NSInteger requestId = [mgr loadMediaWithID:serviceId mediaID:url];
-                       if(requestId == kGCKInvalidRequestID){
-                           [response setErrorToIllegalServerStateWithMessage:@"mediaId is not exist"];
-                       } else {
-                           [response setResult:DConnectMessageResultTypeOk];
-                       }
-                   } else {
-                       [response setErrorToNotFoundService];
-                   }
-                   [[DConnectManager sharedManager] sendResponse:response];
-               }];
+        DPChromecastManager *mgr = [DPChromecastManager sharedManager];
+        [mgr connectToDeviceWithID:serviceId completion:^(BOOL success, NSString *error) {
+            if (success) {
+                [self saveMovie:ctx
+                       callback:^(NSString *url) {
+                           if (url) {
+                               DPChromecastManager *mgr = [DPChromecastManager sharedManager];
+                               NSInteger requestId = [mgr loadMediaWithID:serviceId
+                                                                  mediaID:url];
+                               if(requestId == kGCKInvalidRequestID){
+                                   [response setErrorToIllegalServerStateWithMessage:
+                                    @"mediaId is not exist"];
+                               } else {
+                                   [response setResult:DConnectMessageResultTypeOk];
+                               }
+                           } else {
+                               [response setErrorToNotFoundService];
+                           }
+                           [[DConnectManager sharedManager] sendResponse:response];
+                       }];
+            } else {
+                // エラー
+                [response setErrorToNotFoundService];
+                [[DConnectManager sharedManager] sendResponse:response];
+            }
+        }];
         return NO;
     }
 }
@@ -587,8 +599,6 @@ didReceivePutPlayRequest:(DConnectRequestMessage *)request
                 response:(DConnectResponseMessage *)response
                 serviceId:(NSString *)serviceId
 {
-
-    
     // リクエスト処理
     return [self handleRequest:request
                       response:response
@@ -819,7 +829,7 @@ didReceivePutOnStatusChangeRequest:(DConnectRequestMessage *)request
 	
 	[[DPChromecastManager sharedManager] setEventCallbackWithID:serviceId callback:^(NSString *mediaID) {
 		DPChromecastManager *mgr = [DPChromecastManager sharedManager];
-		DConnectMessage *message = [DConnectMessage message];
+        DConnectMessage *message = [DConnectMessage message];
 		[DConnectMediaPlayerProfile setMediaId:mediaID target:message];
 		[DConnectMediaPlayerProfile setMIMEType:@"video/quicktime" target:message];
 		[DConnectMediaPlayerProfile setStatus:[mgr mediaPlayerStateWithID:serviceId] target:message];

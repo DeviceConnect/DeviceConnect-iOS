@@ -26,7 +26,8 @@ static const NSTimeInterval DPSemaphoreTimeout = 20.0;
 @property (nonatomic) GCKDeviceManager *deviceManager;
 @property (nonatomic) GCKCastChannel *textChannel;
 @property (nonatomic) GCKMediaControlChannel *ctrlChannel;
-@property (nonatomic, copy) void (^connectCallback)(BOOL success, NSString *error);
+@property (nonatomic) NSString *mediaID;
+@property (nonatomic) NSMutableArray *connectCallbacks;
 @property (nonatomic, copy) void (^eventCallback)(NSString *mediaID);
 @end
 @implementation DPChromecastManagerData
@@ -34,7 +35,8 @@ static const NSTimeInterval DPSemaphoreTimeout = 20.0;
 
 
 @interface DPChromecastManager () <GCKDeviceScannerListener,
-                                GCKDeviceManagerDelegate, GCKMediaControlChannelDelegate> {
+                                GCKDeviceManagerDelegate, GCKMediaControlChannelDelegate,
+                                    GCKLoggerDelegate> {
 	GCKDeviceScanner *_deviceScanner;
 	NSMutableDictionary *_dataDict;
 	dispatch_semaphore_t _semaphore;
@@ -73,10 +75,16 @@ static const NSTimeInterval DPSemaphoreTimeout = 20.0;
         [_httpServer setType:@"_http._tcp."];
         [_httpServer setPort:38088];
         [_httpServer setDocumentRoot:documentsDirectory];
+        [GCKLogger sharedInstance].delegate = self;
 	}
 	return self;
 }
 
+#pragma mark - GCKLoggerDelegate
+
+- (void)logFromFunction:(const char *)function message:(NSString *)message {
+//    NSLog(@"%s - %@", function, message);
+}
 // スキャン開始
 - (void)startScan
 {
@@ -88,6 +96,7 @@ static const NSTimeInterval DPSemaphoreTimeout = 20.0;
 {
 	[_deviceScanner stopScan];
 }
+
 
 
 // Http Server Start
@@ -152,32 +161,33 @@ static const NSTimeInterval DPSemaphoreTimeout = 20.0;
 	
     // GCKDeviceManagerへのアクセスはメインスレッド上で実行する
     dispatch_async(dispatch_get_main_queue(), ^(void) {
-	// 接続確認
-        DPChromecastManagerData *cache = _dataDict[deviceID];
+        // 接続確認
+            DPChromecastManagerData *cache = _dataDict[deviceID];
         if (cache) {
             GCKDeviceManager *deviceManager = cache.deviceManager;
-            cache.connectCallback = completion;
-		if (deviceManager.isConnected) {
-			dispatch_semaphore_signal(_semaphore);
-			completion(YES, nil);
-		} else {
+            [cache.connectCallbacks addObject:completion];
+            if (deviceManager.isConnected) {
+                dispatch_semaphore_signal(_semaphore);
+                completion(YES, nil);
+            } else {
                 // 切断されていた場合は再接続
-			[deviceManager connect];
-		}
-		return;
-	}
-	
+                [deviceManager connect];
+            }
+            return;
+        }
+
         // 新規接続
-        DPChromecastManagerData *data = [[DPChromecastManagerData alloc] init];
-	data.connectCallback = completion;
-	_dataDict[deviceID] = data;
-	
-	NSDictionary *info = [[NSBundle mainBundle] infoDictionary];
-	data.deviceManager = [[GCKDeviceManager alloc]
-                          initWithDevice:device
-                       clientPackageName:info[@"CFBundleIdentifier"]];
-	data.deviceManager.delegate = self;
-	[data.deviceManager connect];
+        DPChromecastManagerData *data = [DPChromecastManagerData new];
+        data.connectCallbacks = [NSMutableArray array];
+        [data.connectCallbacks addObject:completion];
+        _dataDict[deviceID] = data;
+
+        NSDictionary *info = [[NSBundle mainBundle] infoDictionary];
+        data.deviceManager = [[GCKDeviceManager alloc]
+                              initWithDevice:device
+                           clientPackageName:info[@"CFBundleIdentifier"]];
+        data.deviceManager.delegate = self;
+        [data.deviceManager connect];
     });
 }
 
@@ -202,9 +212,14 @@ static const NSTimeInterval DPSemaphoreTimeout = 20.0;
 	if (data) {
 		[data.deviceManager stopApplication];
 		[data.deviceManager disconnect];
+        [data.deviceManager removeChannel:data.ctrlChannel];
+        [data.deviceManager removeChannel:data.textChannel];
+        
 		data.deviceManager = nil;
 		data.ctrlChannel = nil;
 		data.textChannel = nil;
+        data.eventCallback = nil;
+        data.connectCallbacks = nil;
 		[_dataDict removeObjectForKey:deviceID];
 	}
 }
@@ -319,7 +334,7 @@ static const NSTimeInterval DPSemaphoreTimeout = 20.0;
 // メディア読み込み
 - (NSInteger)loadMediaWithID:(NSString*)deviceID mediaID:(NSString*)mediaID
 {
-    GCKMediaMetadata *metadata = [[GCKMediaMetadata alloc] init];
+    GCKMediaMetadata *metadata = [GCKMediaMetadata new];
     GCKMediaInformation *mediaInformation =
     [[GCKMediaInformation alloc] initWithContentID:mediaID
                                         streamType:GCKMediaStreamTypeBuffered
@@ -329,7 +344,8 @@ static const NSTimeInterval DPSemaphoreTimeout = 20.0;
                                         customData:nil];
     
     DPChromecastManagerData *data = _dataDict[deviceID];
-    return [data.ctrlChannel loadMedia:mediaInformation autoplay:YES];
+    data.mediaID = mediaID;
+    return [data.ctrlChannel loadMedia:mediaInformation autoplay:NO];
 }
 
 // 再生
@@ -337,10 +353,10 @@ static const NSTimeInterval DPSemaphoreTimeout = 20.0;
 {
 	DPChromecastManagerData *data = _dataDict[deviceID];
     if (data.ctrlChannel.mediaStatus.playerState == GCKMediaPlayerStateIdle) {
-        GCKMediaMetadata *metadata = [[GCKMediaMetadata alloc] init];
+        GCKMediaMetadata *metadata = [GCKMediaMetadata new];
         GCKMediaInformation *mediaInformation =
         [[GCKMediaInformation alloc]
-                 initWithContentID:data.ctrlChannel.mediaStatus.mediaInformation.contentID
+                 initWithContentID:data.mediaID
                         streamType:GCKMediaStreamTypeBuffered
                        contentType:@"video/quicktime"
                           metadata:metadata
@@ -401,18 +417,28 @@ static const NSTimeInterval DPSemaphoreTimeout = 20.0;
 	[deviceManager launchApplication:kReceiverAppID];
 }
 
+- (void)disconnectApplicationForDeviceManager:(GCKDeviceManager *)deviceManager
+                   didFailToConnectWithError:(NSError *)error
+
+{
+    
+    DPChromecastManagerData *data = _dataDict[deviceManager.device.deviceID];
+    for (DPChromeCastCallback callback in data.connectCallbacks) {
+        callback(NO, [GCKError enumDescriptionForCode:error.code]);
+    }
+    [self disconnectDeviceWithID:deviceManager.device.deviceID];
+    // セマフォ解除
+    dispatch_semaphore_signal(_semaphore);
+
+}
+
+
 // デバイス接続に失敗
 - (void)deviceManager:(GCKDeviceManager *)deviceManager
 didFailToConnectWithError:(GCKError *)error
 {
-	// セマフォ解除
-	dispatch_semaphore_signal(_semaphore);
-
-	DPChromecastManagerData *data = _dataDict[deviceManager.device.deviceID];
-	if (data.connectCallback) {
-		data.connectCallback(NO, [GCKError enumDescriptionForCode:error.code]);
-	}
-	[self disconnectDeviceWithID:deviceManager.device.deviceID];
+    [self disconnectApplicationForDeviceManager:deviceManager
+        didFailToConnectWithError:error];
 }
 
 // アプリケーションに接続
@@ -421,43 +447,44 @@ didConnectToCastApplication:(GCKApplicationMetadata *)applicationMetadata
 			sessionID:(NSString *)sessionID
   launchedApplication:(BOOL)launchedApplication
 {
-	DPChromecastManagerData *data = _dataDict[deviceManager.device.deviceID];
+    DPChromecastManagerData *data = _dataDict[deviceManager.device.deviceID];
 	
 	data.textChannel = [[GCKCastChannel alloc] initWithNamespace:kReceiverNamespace];
 	[deviceManager addChannel:data.textChannel];
 	
-	data.ctrlChannel = [[GCKMediaControlChannel alloc] init];
+	data.ctrlChannel = [GCKMediaControlChannel new];
 	data.ctrlChannel.delegate = self;
 	[deviceManager addChannel:data.ctrlChannel];
 	
-	if (data.connectCallback) {
-		data.connectCallback(YES, nil);
-	}
-	
-	// セマフォ解除
-	dispatch_semaphore_signal(_semaphore);
+    for (DPChromeCastCallback callback in data.connectCallbacks) {
+        callback(YES, nil);
+    }
+    // セマフォ解除
+    dispatch_semaphore_signal(_semaphore);
 }
 
 // アプリケーションに接続失敗
 - (void)deviceManager:(GCKDeviceManager *)deviceManager
 didFailToConnectToApplicationWithError:(NSError *)error
 {
-	// セマフォ解除
-	dispatch_semaphore_signal(_semaphore);
-	
-	DPChromecastManagerData *data = _dataDict[deviceManager.device.deviceID];
-	if (data.connectCallback) {
-		data.connectCallback(NO, [GCKError enumDescriptionForCode:error.code]);
-	}
-	[self disconnectDeviceWithID:deviceManager.device.deviceID];
+    [self disconnectApplicationForDeviceManager:deviceManager
+                     didFailToConnectWithError:error];
 }
+
+- (void)deviceManager:(GCKDeviceManager *)deviceManager
+didDisconnectFromApplicationWithError:(NSError *)error
+{
+    [self disconnectApplicationForDeviceManager:deviceManager
+                     didFailToConnectWithError:error];
+}
+
 
 - (void)deviceManager:(GCKDeviceManager *)deviceManager
 didReceiveStatusForApplication:(GCKApplicationMetadata *)applicationMetadata;
 {
 	DPChromecastManagerData *data = _dataDict[deviceManager.device.deviceID];
 	if (data.eventCallback) {
-		data.eventCallback(data.ctrlChannel.mediaStatus.mediaInformation.contentID);
+		data.eventCallback(data.mediaID);
 	}
 }
 
@@ -483,7 +510,7 @@ didCompleteLoadWithSessionID:(NSInteger)sessionID
 	for (DPChromecastManagerData *data in _dataDict.allValues) {
 		if (data.ctrlChannel == mediaControlChannel) {
 			if (data.eventCallback) {
-				data.eventCallback(data.ctrlChannel.mediaStatus.mediaInformation.contentID);
+				data.eventCallback(data.mediaID);
 			}
 			break;
 		}

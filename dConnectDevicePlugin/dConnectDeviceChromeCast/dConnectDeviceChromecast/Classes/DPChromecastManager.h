@@ -14,6 +14,9 @@
 // 接続可能なデバイスリスト取得
 @property (nonatomic, readonly) NSArray *deviceList;
 
+// ChromeCastの接続完了後のリクエスト処理を行うためのコールバック
+typedef void (^DPChromeCastCallback)(BOOL success, NSString *error);
+
 // 共有インスタンス
 + (instancetype)sharedManager;
 
