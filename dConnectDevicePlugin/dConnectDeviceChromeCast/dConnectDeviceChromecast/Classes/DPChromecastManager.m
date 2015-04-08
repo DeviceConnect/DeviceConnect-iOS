@@ -35,8 +35,7 @@ static const NSTimeInterval DPSemaphoreTimeout = 20.0;
 
 
 @interface DPChromecastManager () <GCKDeviceScannerListener,
-                                GCKDeviceManagerDelegate, GCKMediaControlChannelDelegate,
-                                    GCKLoggerDelegate> {
+                                GCKDeviceManagerDelegate, GCKMediaControlChannelDelegate> {
 	GCKDeviceScanner *_deviceScanner;
 	NSMutableDictionary *_dataDict;
 	dispatch_semaphore_t _semaphore;
@@ -75,16 +74,12 @@ static const NSTimeInterval DPSemaphoreTimeout = 20.0;
         [_httpServer setType:@"_http._tcp."];
         [_httpServer setPort:38088];
         [_httpServer setDocumentRoot:documentsDirectory];
-        [GCKLogger sharedInstance].delegate = self;
 	}
 	return self;
 }
 
 #pragma mark - GCKLoggerDelegate
 
-- (void)logFromFunction:(const char *)function message:(NSString *)message {
-//    NSLog(@"%s - %@", function, message);
-}
 // スキャン開始
 - (void)startScan
 {
