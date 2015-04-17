@@ -349,11 +349,11 @@
     
     @synchronized(_lockIPodLibraryQuerying) {
         // iTunes Media
-        MPMediaPropertyPredicate *predicate =
-        [MPMediaPropertyPredicate predicateWithValue:@(TargetMPMediaType)
-                                         forProperty:MPMediaItemPropertyMediaType];
         MPMediaQuery *mediaQuery = [MPMediaQuery new];
-        [mediaQuery addFilterPredicate:predicate];
+		[mediaQuery addFilterPredicate:[MPMediaPropertyPredicate predicateWithValue:@(TargetMPMediaType)
+																		forProperty:MPMediaItemPropertyMediaType]];
+		[mediaQuery addFilterPredicate:[MPMediaPropertyPredicate predicateWithValue:@(NO)
+																		forProperty:MPMediaItemPropertyIsCloudItem]];
         NSArray *items = [mediaQuery items];
         
         NSString *mimeTypeLowsercase = mimeType.lowercaseString;
