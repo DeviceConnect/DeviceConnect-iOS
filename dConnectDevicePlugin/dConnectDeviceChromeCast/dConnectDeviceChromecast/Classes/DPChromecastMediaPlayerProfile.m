@@ -84,13 +84,13 @@
                              }
                          }
                          // MIMEタイプ検索
-                         if (mimeType) {
-                             NSRange result = [ctx.mimeType rangeOfString:mimeTypeLowercase];
-                             if (result.location == NSNotFound && result.length == 0) {
-                                 // MIMEタイプにマッチせず；スキップ。
-                                 return;
-                             }
-                         }
+//                         if (mimeType) {
+//                             NSRange result = [ctx.mimeType rangeOfString:mimeTypeLowercase];
+//                             if (result.location == NSNotFound && result.length == 0) {
+//                                 // MIMEタイプにマッチせず；スキップ。
+//                                 return;
+//                             }
+//                         }
                          
                          @synchronized(ctxArr) {
                              [ctxArr addObject:ctx];
@@ -141,7 +141,9 @@
     DPChromecastManager *mgr = [DPChromecastManager sharedManager];
     [mgr connectToDeviceWithID:serviceId completion:^(BOOL success, NSString *error) {
         if (success) {
-            callback();
+            if (callback) {
+                callback();
+            }
             [response setResult:DConnectMessageResultTypeOk];
         } else {
             // エラー
@@ -250,7 +252,7 @@ didReceiveGetMediaRequest:(DConnectRequestMessage *)request
         [DConnectMediaPlayerProfile setTitle:@"Title: Sample" target:response];
         [DConnectMediaPlayerProfile setLanguage:@"ja" target:response];
         [DConnectMediaPlayerProfile setDescription:@"Sample Movie" target:response];
-        [DConnectMediaPlayerProfile setDuration:60000 target:response];
+        [DConnectMediaPlayerProfile setDuration:9999 target:response];
 
     } else {
         NSURL *url = [NSURL URLWithString:mediaId];
@@ -427,14 +429,11 @@ didReceiveGetMediaListRequest:(DConnectRequestMessage *)request
         sampleCtx.mediaId = @"https://github.com/DeviceConnect/DeviceConnect-Android/wiki/sphero_demo.MOV";
         sampleCtx.mimeType = @"video/quicktime";
         sampleCtx.title = @"Title: Sample";
-        sampleCtx.duration = @(60000);
+        sampleCtx.duration = @(9999);
         sampleCtx.language = @"ja";
         sampleCtx.desc = @"Sample Movie";
         NSMutableArray *ctxArr = [NSMutableArray array];
-        NSRange range = [mimeType rangeOfString:@"video"];
-        if (range.location != NSNotFound) {
-            [ctxArr addObject:sampleCtx];
-        }
+        [ctxArr addObject:sampleCtx];
         [ctxArr addObjectsFromArray:[self contextsBySearchingAssetsLibraryWithQuery:query mimeType:mimeType]];
         if (offset && offset.integerValue >= ctxArr.count) {
             [response setErrorToInvalidRequestParameterWithMessage:@"offset exceeds the size of the media list."];
@@ -458,13 +457,15 @@ didReceiveGetMediaListRequest:(DConnectRequestMessage *)request
             [ctx setVariousMetadataToMessage:medium omitMediaId:NO];
             [media addMessage:medium];
         }
-
         [DConnectMediaPlayerProfile setMedia:media target:response];
         [DConnectMediaPlayerProfile setCount:media.count target:response];
 
     }
     
-    return YES;
+    return [self handleRequest:request
+                      response:response
+                     serviceId:serviceId
+                      callback:nil];
 }
 
 // 再生位置取得リクエストを受け取った

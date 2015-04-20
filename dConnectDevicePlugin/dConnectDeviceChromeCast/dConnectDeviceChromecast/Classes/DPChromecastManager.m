@@ -139,7 +139,8 @@ static const NSTimeInterval DPSemaphoreTimeout = 20.0;
 {
 	GCKDevice *device = nil;
 	for (device in _deviceScanner.devices) {
-		if ([device.deviceID isEqualToString:deviceID]) {
+        NSString *dID = [NSString stringWithFormat:@"%@",device.deviceID];
+		if ([dID isEqualToString:deviceID]) {
 			break;
 		}
 	}
@@ -217,6 +218,7 @@ static const NSTimeInterval DPSemaphoreTimeout = 20.0;
         data.connectCallbacks = nil;
 		[_dataDict removeObjectForKey:deviceID];
 	}
+    [self stopScan];
 }
 
 // テキストの送信

@@ -30,6 +30,9 @@
                         response:(DConnectResponseMessage *)response
 {
     DConnectArray *services = [DConnectArray array];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [[DPChromecastManager sharedManager] startScan];
+    });
     NSArray *deviceList = [DPChromecastManager sharedManager].deviceList;
     for (NSDictionary *device in deviceList) {
         DConnectMessage *service = [DConnectMessage new];
