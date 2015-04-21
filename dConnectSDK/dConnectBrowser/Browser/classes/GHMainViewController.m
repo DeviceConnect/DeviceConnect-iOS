@@ -620,6 +620,7 @@ typedef enum{
     //ポップアップするviewのサイズ調整
     CGRect frame = cont.view.frame;
     frame.size.width = 320;
+    
     //PopOver表示
     [self presentMultipleLayeredPopoverWithViewController:cont
                                               contentSize:frame.size
@@ -796,15 +797,17 @@ typedef enum{
     GHAddBookmarkActivity *activity = [[GHAddBookmarkActivity alloc] init];
     GHPrintActivity *printactivity  = [[GHPrintActivity alloc] init];
     UIActivityViewController *avc = [[UIActivityViewController alloc] initWithActivityItems:items
-        applicationActivities:@[activity, printactivity]];
+                                                                      applicationActivities:@[activity, printactivity]];
     
     //リーディングリストを外す
     avc.excludedActivityTypes =  @[UIActivityTypeAddToReadingList];
-    avc.popoverPresentationController.sourceView = self.view;
-    avc.popoverPresentationController.sourceRect = CGRectMake(
-                                                        avc.view.frame.size.width - 100,
-                                                               50.0, 20.0, 20.0);
-
+    if ([GHUtils isiPad]) {
+        avc.popoverPresentationController.sourceView = self.view;
+        avc.popoverPresentationController.sourceRect = CGRectMake(
+                                            avc.view.frame.size.width - 100,
+                                            50.0, 20.0, 20.0);
+    }
+    
     [self presentViewController:avc animated:YES completion:nil];
     
 }
@@ -1317,7 +1320,6 @@ typedef enum{
         isLaunched = YES;
         [self showLastPage];
     }
-
 }
 
 - (void)viewWillDisappear:(BOOL)animated
