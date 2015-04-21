@@ -801,6 +801,12 @@ typedef enum{
     
     //リーディングリストを外す
     avc.excludedActivityTypes =  @[UIActivityTypeAddToReadingList];
+    if ([GHUtils isiPad]) {
+        avc.popoverPresentationController.sourceView = self.view;
+        avc.popoverPresentationController.sourceRect = CGRectMake(
+                                            avc.view.frame.size.width - 100,
+                                            50.0, 20.0, 20.0);
+    }
     
     [self presentViewController:avc animated:YES completion:nil];
     
