@@ -31,9 +31,21 @@
     //Cookieの初期設定を更新
     NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
     [def setObject:@([GHUtils isCookieAccept]) forKey:IS_COOKIE_ACCEPT];
+    
+    float osVersion = [[[UIDevice currentDevice] systemVersion] floatValue];
+    if (osVersion > 8.0) {
+        UIUserNotificationType types =  UIUserNotificationTypeBadge|
+        UIUserNotificationTypeSound|
+        UIUserNotificationTypeAlert;
+        
+        UIUserNotificationSettings *mySettings = [UIUserNotificationSettings settingsForTypes:types
+                                                                                   categories:nil];
+        
+        [application registerUserNotificationSettings:mySettings];
+    }
     return YES;
 }
-							
+
 - (void)applicationWillResignActive:(UIApplication *)application
 {
 
