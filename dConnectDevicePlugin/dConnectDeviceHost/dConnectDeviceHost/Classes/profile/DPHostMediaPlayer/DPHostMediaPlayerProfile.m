@@ -358,6 +358,10 @@
         
         NSString *mimeTypeLowsercase = mimeType.lowercaseString;
         for (MPMediaItem *mediaItem in items) {
+			if (!(mediaItem.mediaType == MPMediaTypeMusic |
+				mediaItem.mediaType == MPMediaTypeHomeVideo)) {
+				continue;
+			}
             DPHostMediaContext *ctx = [DPHostMediaContext contextWithMediaItem:mediaItem];
             if (!ctx) {
                 // コンテキスト作成失敗；スキップ

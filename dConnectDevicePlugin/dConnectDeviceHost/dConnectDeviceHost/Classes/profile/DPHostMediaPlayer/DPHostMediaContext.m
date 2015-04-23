@@ -17,7 +17,7 @@ NSString *MediaContextMediaIdSchemeIPodMovie = @"ipod-movie";
 NSString *MediaContextMediaIdSchemeAssetsLibrary = @"assets-library";
 NSString *MediaContextMediaIdSchemeIPodLibrary = @"ipod-library";
 
-const MPMediaType TargetMPMediaType = MPMediaTypeAny;
+const MPMediaType TargetMPMediaType = MPMediaTypeMusic | MPMediaTypeHomeVideo;
 
 static NSUInteger contextCacheCountMax = 100000;
 static NSMutableArray *contextCacheKey;
