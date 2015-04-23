@@ -358,7 +358,7 @@
     LOG(@"index:%d", index);
     
     if (index < 0 && index >= [self.histroyBack count]) {
-        LOG(@"indexが変");
+        LOG(@"index is invalid");
         return nil;
     }
     
