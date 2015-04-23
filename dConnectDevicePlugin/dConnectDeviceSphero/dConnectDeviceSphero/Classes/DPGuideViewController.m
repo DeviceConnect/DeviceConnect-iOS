@@ -8,34 +8,20 @@
 //
 
 #import "DPGuideViewController.h"
-#import "DPSpheroManager.h"
-
 @interface DPGuideViewController ()
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *verticalSpace;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *horizontalSpace;
-@property (weak, nonatomic) IBOutlet UISwitch *activateSwitch;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *topSpace;
-- (IBAction)switchValueChanged:(id)sender;
 
 @end
 
 @implementation DPGuideViewController
-// Guide Pages Space
-NSLayoutConstraint *_space;
-
-
-// View読み込み中
-- (void)viewDidLoad
-{
-    _space = _verticalSpace;
-}
 
 // View表示時
 - (void)viewWillAppear:(BOOL)animated
 {
-	[super viewWillAppear:animated];
+    [super viewWillAppear:animated];
     [self rotateOrientation:[[UIApplication sharedApplication] statusBarOrientation]];
-    _activateSwitch.on = [[DPSpheroManager sharedManager] isActivated];
 }
 
 // View回転時
@@ -50,45 +36,25 @@ NSLayoutConstraint *_space;
 - (void)rotateOrientation:(UIInterfaceOrientation)toInterfaceOrientation
 {
     if (!_horizontalSpace) return;
-    
-	if (toInterfaceOrientation == UIInterfaceOrientationPortrait
+    if (toInterfaceOrientation == UIInterfaceOrientationPortrait
         | toInterfaceOrientation == UIInterfaceOrientationPortraitUpsideDown) {
         // 上下のスペーサー復活
-        if (![[self.view constraints] containsObject:_space]) {
-            [self.view addConstraint:_space];
+        if (![[self.view constraints] containsObject:_verticalSpace]
+            && [_verticalSpace isKindOfClass:[NSLayoutConstraint class]]) {
+            [self.view addConstraint:_verticalSpace];
         }
         // 下の位置
-		_horizontalSpace.constant = 239;
-	} else {
-        // 上下のスペーサー除去
-        [self.view removeConstraint:_space];
-        // 右の位置
-		_horizontalSpace.constant = -10;
-	}
-    // Topからの位置
-    _topSpace.constant = self.navigationController.navigationBar.frame.size.height +31;
-}
-
-// スイッチ操作
-- (IBAction)switchValueChanged:(id)sender
-{
-    if (_activateSwitch.on) {
-        // 有効化
-        if ([[DPSpheroManager sharedManager] activate]) {
-            // 成功
-            [self showAlertWithTitleKey:@"SpheroConnectMessage" messageKey:@"SpheroConnectedMessage"];
-
-        } else {
-            // 失敗
-            _activateSwitch.on = NO;
-            [self showAlertWithTitleKey:@"SpheroDisconnecMessage" messageKey:@"SpheroFailMessage"];
-
-        }
+        _horizontalSpace.constant = 239;
     } else {
-        // 無効化
-        [[DPSpheroManager sharedManager] deactivate];
-        [self showAlertWithTitleKey:@"SpheroDisconnecMessage" messageKey:@"SpheroDisconnectedMessage"];
+        // 上下のスペーサー除去
+        if ([_verticalSpace isKindOfClass:[NSLayoutConstraint class]]) {
+            [self.view removeConstraint:_verticalSpace];
+        }
+        // 右の位置
+        _horizontalSpace.constant = -10;
     }
+    // Topからの位置
+    _topSpace.constant = self.navigationController.navigationBar.frame.size.height + 31;
 }
 
 // メッセージ表示
