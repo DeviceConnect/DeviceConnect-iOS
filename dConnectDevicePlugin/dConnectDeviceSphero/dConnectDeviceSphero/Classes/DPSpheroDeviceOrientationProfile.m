@@ -122,7 +122,7 @@ typedef void (^OrientationBlock)(DPGyroData gyroData, DPPoint3D accel, int inter
                                     accel:(DPPoint3D)accel
                                  interval:(int)interval
 {
-    for (OrientationBlock blk in self.orientationBlkArray) {
+    for (OrientationBlock blk in [self.orientationBlkArray reverseObjectEnumerator]) {
         blk(gyroData, accel, interval);
     }
 }
@@ -146,9 +146,7 @@ didReceiveGetOnDeviceOrientationRequest:(DConnectRequestMessage *)request
 
         DConnectManager *mgr = [DConnectManager sharedManager];
         [mgr sendResponse:response];
-
         [weakSelf.orientationBlkArray removeObject:blk];
-
         if (![weakSelf hasEventList]) {
             [[DPSpheroManager sharedManager] stopSensorOrientation];
         }
