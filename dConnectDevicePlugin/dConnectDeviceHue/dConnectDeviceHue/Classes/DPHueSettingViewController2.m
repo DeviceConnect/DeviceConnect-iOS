@@ -23,7 +23,7 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *searchButtonXConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *bridgeInfoYConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *bridgeInfoXConstraint;
-
+@property (nonatomic) id hueStatusBlock;
 @end
 
 @implementation DPHueSettingViewController2
@@ -69,15 +69,41 @@
 - (void)didPushlinkAuthenticationSuccess
 {
     [self stopIndicator];
-    [manager searchLightWithCompletion:nil];
-    _authorizeStateLabel.text = DPHueLocalizedString(_bundle, @"HueBridgeAuthorized");
     [manager disableHeartbeat];
-    [self stopIndicator];
-    [self showAleart:DPHueLocalizedString(_bundle, @"HueRegisterApp")];
+    _authorizeStateLabel.text = DPHueLocalizedString(_bundle, @"HueBridgeAuthorized");
+    [manager searchLightWithCompletion:^(NSArray *errors) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self  initHueSdk];
+        });
+    }];
 
-    [self showLightSearchPage];
 
 }
+
+- (void)initHueSdk
+{
+    DPHueItemBridge *item = [self getSelectedItemBridge];    
+    [[DPHueManager sharedManager] initHue];
+    [[DPHueManager sharedManager] startAuthenticateBridgeWithIpAddress:item.ipAddress
+                                                            macAddress:item.macAddress
+                                                              receiver:self
+                                        localConnectionSuccessSelector:@selector(didBridgeAuthenticationSuccess)
+                                                     noLocalConnection:@selector(didFailed)
+                                                      notAuthenticated:@selector(didFailed)];
+}
+
+- (void)didBridgeAuthenticationSuccess
+{
+    [self showAleart:DPHueLocalizedString(_bundle, @"HueRegisterApp")];
+    [self showLightSearchPage];
+}
+
+- (void)didFailed
+{
+    
+    [self showLightSearchPage];
+}
+
 
 - (void)didPushlinkAuthenticationFailed
 {
@@ -112,6 +138,9 @@
 {
     //nop
 }
+
+
+
 
 //縦向き座標調整
 - (void)setLayoutConstraintPortrait
