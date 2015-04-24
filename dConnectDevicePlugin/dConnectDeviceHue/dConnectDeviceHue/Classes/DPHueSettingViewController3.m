@@ -22,6 +22,7 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *lightSearchDescriptionYConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *lightSearchDescriptionXConstraint;
 
+
 @end
 
 @implementation DPHueSettingViewController3
@@ -36,8 +37,9 @@
 {
     [super viewDidLoad];
     [manager deallocPHNotificationManagerWithReceiver:self];
-
+    [manager deallocHueSDK];
 }
+
 
 - (IBAction)searchLight:(id)sender
 {
@@ -50,6 +52,8 @@
     [self searchLight];
     
 }
+
+
 
 //ライト検索
 - (void)searchLight
@@ -64,12 +68,15 @@
             _lightOffIconImageView.hidden = YES;
             
             [self showAleart:DPHueLocalizedString(_bundle, @"HueSearchLight")];
-        }
-        else {
+        } else {
             [self showAleart:DPHueLocalizedString(_bundle, @"HueSearchLightError")];
         }
+        NSDictionary* dic = [[DPHueManager sharedManager] getLightStatus];
+        
     }];
 }
+
+
 
 //縦向き座標調整
 - (void)setLayoutConstraintPortrait
