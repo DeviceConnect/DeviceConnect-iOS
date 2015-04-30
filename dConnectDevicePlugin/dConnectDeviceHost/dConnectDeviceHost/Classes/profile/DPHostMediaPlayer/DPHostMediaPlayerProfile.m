@@ -349,15 +349,19 @@
     
     @synchronized(_lockIPodLibraryQuerying) {
         // iTunes Media
-        MPMediaPropertyPredicate *predicate =
-        [MPMediaPropertyPredicate predicateWithValue:@(TargetMPMediaType)
-                                         forProperty:MPMediaItemPropertyMediaType];
         MPMediaQuery *mediaQuery = [MPMediaQuery new];
-        [mediaQuery addFilterPredicate:predicate];
+		[mediaQuery addFilterPredicate:[MPMediaPropertyPredicate predicateWithValue:@(TargetMPMediaType)
+																		forProperty:MPMediaItemPropertyMediaType]];
+		[mediaQuery addFilterPredicate:[MPMediaPropertyPredicate predicateWithValue:@(NO)
+																		forProperty:MPMediaItemPropertyIsCloudItem]];
         NSArray *items = [mediaQuery items];
         
         NSString *mimeTypeLowsercase = mimeType.lowercaseString;
         for (MPMediaItem *mediaItem in items) {
+			if (!(mediaItem.mediaType == MPMediaTypeMusic |
+				mediaItem.mediaType == MPMediaTypeHomeVideo)) {
+				continue;
+			}
             DPHostMediaContext *ctx = [DPHostMediaContext contextWithMediaItem:mediaItem];
             if (!ctx) {
                 // コンテキスト作成失敗；スキップ
@@ -1076,7 +1080,8 @@ didReceivePutStopRequest:(DConnectRequestMessage *)request
     void(^block)(void) = nil;
     if (_currentMediaPlayer == MediaPlayerTypeIPod) {
         if (_musicPlayer.playbackState == MPMusicPlaybackStateStopped) {
-            [response setErrorToIllegalServerState];
+            //[response setErrorToIllegalServerState];
+			[response setResult:DConnectMessageResultTypeOk];
             return YES;
         }
         block = ^{
@@ -1098,8 +1103,9 @@ didReceivePutStopRequest:(DConnectRequestMessage *)request
         };
     } else if (_currentMediaPlayer == MediaPlayerTypeMoviePlayer) {
         if (_viewController.moviePlayer.playbackState == MPMoviePlaybackStateStopped) {
-            [response setErrorToIllegalServerState];
-            return YES;            
+            //[response setErrorToIllegalServerState];
+			[response setResult:DConnectMessageResultTypeOk];
+            return YES;
         }
         if (![self moviePlayerViewControllerIsPresented]) {
             [response setErrorToUnknownWithMessage:
