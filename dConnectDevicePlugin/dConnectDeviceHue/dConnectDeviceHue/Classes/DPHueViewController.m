@@ -205,6 +205,8 @@
     }else{
         // 完了ボタンを押したときに閉じるように設定
         [self dismissViewControllerAnimated:YES completion:nil];
+        [[DPHueManager sharedManager] deallocPHNotificationManagerWithReceiver:self];
+
         [[DPHueManager sharedManager] deallocHueSDK];
     }
 }
