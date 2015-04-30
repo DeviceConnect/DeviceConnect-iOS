@@ -862,7 +862,6 @@ typedef enum{
         return;
     }
     
-    
     if (self.beginScrollOffsetY < [scrollView contentOffset].y
         && !self.toolView.hidden) {
         
@@ -880,8 +879,7 @@ typedef enum{
             self.toolViewScrollStatus = GHToolViewScrollStatusInit;
         }];
     } else if ([scrollView contentOffset].y < self.beginScrollOffsetY
-               && self.toolView.hidden
-               && 0.0 != self.beginScrollOffsetY) {
+               && self.toolView.hidden) {
         
         if (self.toolView.frame.origin.y < (self.view.frame.size.height)) {
             //なぜかツールバー1個分ズレることがある
