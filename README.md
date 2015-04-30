@@ -5,7 +5,7 @@ https://github.com/DeviceConnect/DeviceConnect-iOS/blob/master/readme.ja.md
 # About DeviceConnect WebAPI
 "DeviceConnect WebAPI" is WebAPI which operates as a virtual server on a smart phone. It can use easily various wearable devices and an IoT device by unific description from a web browser or an application. 
 
-# DeviceConnect iOS について
+# About DeviceConnect iOS
 
 
 Device Connect WebAPI in WebAPI which operates as a virtual server on the smartphone, it can be easy to use in a uniform description of various wearable devices and IoT devices from a Web browser and apps.
@@ -60,7 +60,7 @@ In this guide I will continue to discuss the following.
 
 
 # <a name="section3">Operation check</a>
- To dConnectBrowser the address bar "http: // localhost: 4035 / gotapi / availability" Please enter the.<br>
+ To dConnectBrowser the address bar 'http://localhost:4035/gotapi/availability' Please enter the.<br>
 If this response is returned in the following, such as JSON, you will be able to make sure that DeviceConnect is running.<br>
  
  <center><a href="https://raw.githubusercontent.com/wiki/DeviceConnect/DeviceConnect-iOS/imageX.PNG" target="_blank">
