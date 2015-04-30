@@ -60,7 +60,7 @@ In this guide I will continue to discuss the following.
 
 
 # <a name="section3">Operation check</a>
- To dConnectBrowser the address bar 'http://localhost:4035/gotapi/availability' Please enter the.<br>
+ To dConnectBrowser the address bar `http://localhost:4035/gotapi/availability` Please enter the.<br>
 If this response is returned in the following, such as JSON, you will be able to make sure that DeviceConnect is running.<br>
  
  <center><a href="https://raw.githubusercontent.com/wiki/DeviceConnect/DeviceConnect-iOS/imageX.PNG" target="_blank">

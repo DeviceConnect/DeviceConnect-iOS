@@ -53,7 +53,7 @@ Device Connect iOSはiOS版のDeviceConnectのプラットフォームになり�
 
 
 # <a name="section3">動作確認</a>
- dConnectBrowserのアドレスバーに「http://localhost:4035/gotapi/availability」を入力してください。<br>
+ dConnectBrowserのアドレスバーに`http://localhost:4035/gotapi/availability`を入力してください。<br>
 以下のようなJSONのレスポンスが返って来れば、DeviceConnectが動作していることを確認することができます。<br>
  
  <center><a href="https://raw.githubusercontent.com/wiki/DeviceConnect/DeviceConnect-iOS/imageX.PNG" target="_blank">
