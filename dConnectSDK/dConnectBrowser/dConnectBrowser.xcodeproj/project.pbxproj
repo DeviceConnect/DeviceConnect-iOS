@@ -23,7 +23,6 @@
 /* Begin PBXBuildFile section */
 		2518284419B9537E0042C95A /* dConnectDeviceIRKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2518284219B9537E0042C95A /* dConnectDeviceIRKit.framework */; };
 		25262487196E5BB000AE4F1F /* DConnectSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25262486196E5BB000AE4F1F /* DConnectSDK.framework */; };
-		254111A419C2CC0F00F74C31 /* icon_512px.png in Resources */ = {isa = PBXBuildFile; fileRef = 254111A319C2CC0F00F74C31 /* icon_512px.png */; };
 		254111A619C2CD7D00F74C31 /* GoogleCast.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 254111A519C2CD7D00F74C31 /* GoogleCast.framework */; };
 		254111A819C2CDAD00F74C31 /* MediaAccessibility.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 254111A719C2CDAD00F74C31 /* MediaAccessibility.framework */; };
 		2562A2A519C3DA410032EF17 /* dConnectDeviceSonyCamera_resources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 2562A2A419C3DA410032EF17 /* dConnectDeviceSonyCamera_resources.bundle */; };
@@ -126,6 +125,7 @@
 		AB08A05E19908B410024C996 /* DCMDevicePluginSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB08A05D19908B410024C996 /* DCMDevicePluginSDK.framework */; };
 		AB5B2B4E1A9ABAEE0038CCF6 /* dConnectDeviceChromecast_resources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = AB5B2B4C1A9ABAEE0038CCF6 /* dConnectDeviceChromecast_resources.bundle */; };
 		AB5B2B4F1A9ABAEE0038CCF6 /* dConnectDeviceChromecast.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB5B2B4D1A9ABAEE0038CCF6 /* dConnectDeviceChromecast.framework */; };
+		AB722AA21AF22FC000395C70 /* icon_512px.png in Resources */ = {isa = PBXBuildFile; fileRef = AB722AA11AF22FC000395C70 /* icon_512px.png */; };
 		ABBD5F0019861CFA00B81007 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABBD5EFD19861CFA00B81007 /* CoreFoundation.framework */; };
 		ABBD5F0119861CFA00B81007 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABBD5EFE19861CFA00B81007 /* CoreMotion.framework */; };
 		ABBD5F0219861CFA00B81007 /* ExternalAccessory.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABBD5EFF19861CFA00B81007 /* ExternalAccessory.framework */; };
@@ -134,7 +134,6 @@
 /* Begin PBXFileReference section */
 		2518284219B9537E0042C95A /* dConnectDeviceIRKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = dConnectDeviceIRKit.framework; path = ../../dConnectDevicePlugin/dConnectDeviceIRKit/bin/dConnectDeviceIRKit.framework; sourceTree = "<group>"; };
 		25262486196E5BB000AE4F1F /* DConnectSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DConnectSDK.framework; path = ../dConnectSDKForIOS/bin/DConnectSDK.framework; sourceTree = "<group>"; };
-		254111A319C2CC0F00F74C31 /* icon_512px.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_512px.png; sourceTree = "<group>"; };
 		254111A519C2CD7D00F74C31 /* GoogleCast.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleCast.framework; path = "../../dConnectDevicePlugin/dConnectDeviceChromeCast/GoogleCastFramework-2.3.0-Release/GoogleCast.framework"; sourceTree = "<group>"; };
 		254111A719C2CDAD00F74C31 /* MediaAccessibility.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaAccessibility.framework; path = System/Library/Frameworks/MediaAccessibility.framework; sourceTree = SDKROOT; };
 		2562A2A419C3DA410032EF17 /* dConnectDeviceSonyCamera_resources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = dConnectDeviceSonyCamera_resources.bundle; path = ../../dConnectDevicePlugin/dConnectDeviceSonyCamera/bin/dConnectDeviceSonyCamera_resources.bundle; sourceTree = "<group>"; };
@@ -296,6 +295,7 @@
 		AB08A05D19908B410024C996 /* DCMDevicePluginSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DCMDevicePluginSDK.framework; path = ../../dConnectDevicePlugin/DCMDevicePluginSDK/bin/DCMDevicePluginSDK.framework; sourceTree = "<group>"; };
 		AB5B2B4C1A9ABAEE0038CCF6 /* dConnectDeviceChromecast_resources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = dConnectDeviceChromecast_resources.bundle; path = ../../dConnectDevicePlugin/dConnectDeviceChromeCast/bin/dConnectDeviceChromecast_resources.bundle; sourceTree = "<group>"; };
 		AB5B2B4D1A9ABAEE0038CCF6 /* dConnectDeviceChromecast.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = dConnectDeviceChromecast.framework; path = ../../dConnectDevicePlugin/dConnectDeviceChromeCast/bin/dConnectDeviceChromecast.framework; sourceTree = "<group>"; };
+		AB722AA11AF22FC000395C70 /* icon_512px.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_512px.png; sourceTree = "<group>"; };
 		ABBD5EFD19861CFA00B81007 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		ABBD5EFE19861CFA00B81007 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
 		ABBD5EFF19861CFA00B81007 /* ExternalAccessory.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ExternalAccessory.framework; path = System/Library/Frameworks/ExternalAccessory.framework; sourceTree = SDKROOT; };
@@ -460,8 +460,8 @@
 		8E24CFF31964EC25008D9C10 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				AB722AA11AF22FC000395C70 /* icon_512px.png */,
 				8E445B3019AEB51B00206904 /* print@2x.png */,
-				254111A319C2CC0F00F74C31 /* icon_512px.png */,
 				8EEC171A1985E43C004EB5DC /* cancel@2x.png */,
 				8EEC171B1985E43C004EB5DC /* reload@2x.png */,
 				8EE935BF197E3525000F9DA2 /* setting@2x.png */,
@@ -821,6 +821,7 @@
 				8E3E254D1973ABAE00438C00 /* Popup.storyboard in Resources */,
 				8E2C5B4C1960FF36005DFCDC /* Main_iPhone.storyboard in Resources */,
 				8E2C5B431960FF36005DFCDC /* InfoPlist.strings in Resources */,
+				AB722AA21AF22FC000395C70 /* icon_512px.png in Resources */,
 				8E9A145D19624F7B0004DDB3 /* GHHeaderView.xib in Resources */,
 				2562A2BB19C3E6600032EF17 /* dConnectDeviceIRKit_resources.bundle in Resources */,
 				AB5B2B4E1A9ABAEE0038CCF6 /* dConnectDeviceChromecast_resources.bundle in Resources */,
@@ -832,7 +833,6 @@
 				8E426CA6198B86DB00BA9C66 /* Bookmark.storyboard in Resources */,
 				8E9A14C2196291EC0004DDB3 /* GTMNSString-HTML.podspec in Resources */,
 				2562A2B419C3E2480032EF17 /* dConnectDevicePebble_resources.bundle in Resources */,
-				254111A419C2CC0F00F74C31 /* icon_512px.png in Resources */,
 				8E24CFFD1964EC25008D9C10 /* folder@2x.png in Resources */,
 				8E24CFFE1964EC25008D9C10 /* history@2x.png in Resources */,
 				8EEC171D1985E43C004EB5DC /* reload@2x.png in Resources */,
