@@ -468,46 +468,81 @@ pushlinkAuthenticationSuccessSelector:(SEL)pushlinkAuthenticationSuccessSelector
                           color:(NSString *)color
 {
     PHLightState *lightState = [[PHLightState alloc] init];
-    
+
     [lightState setOnBool:isOn];
-    
+
     if (isOn) {
+        double dBlightness = 0;
+        unsigned int redValue, greenValue, blueValue;
+        NSString *redString = nil;
+        NSString *greenString = nil;
+        NSString *blueString = nil;
+        NSScanner *scan = nil;
+
+        if (brightness == DBL_MIN ||
+            (brightness != DBL_MIN && brightness > 1.0) ||
+            (brightness != DBL_MIN && brightness < 0.0) ) {
+            dBlightness = 1.0;
+        } else {
+            dBlightness = brightness;
+        }
+
         if (color) {
             if (color.length != 6) {
                 _bridgeConnectState = STATE_ERROR_INVALID_COLOR;
                 return nil;
             }
-            
-            CGPoint xyPoint = [self convRgbToXy:color];
-            if (xyPoint.x != FLT_MIN && xyPoint.y != FLT_MIN) {
-                [lightState setX:[NSNumber numberWithFloat:xyPoint.x]];
-                [lightState setY:[NSNumber numberWithFloat:xyPoint.y]];
-            } else {
+
+            redString = [color substringWithRange:NSMakeRange(0, 2)];
+            greenString = [color substringWithRange:NSMakeRange(2, 2)];
+            blueString = [color substringWithRange:NSMakeRange(4, 2)];
+            scan = [NSScanner scannerWithString:redString];
+            if (![scan scanHexInt:&redValue]) {
                 _bridgeConnectState = STATE_ERROR_INVALID_COLOR;
                 return nil;
             }
+            scan = [NSScanner scannerWithString:greenString];
+            if (![scan scanHexInt:&greenValue]) {
+                _bridgeConnectState = STATE_ERROR_INVALID_COLOR;
+                return nil;
+            }
+            scan = [NSScanner scannerWithString:blueString];
+            if (![scan scanHexInt:&blueValue]) {
+                _bridgeConnectState = STATE_ERROR_INVALID_COLOR;
+                return nil;
+            }
+
+            redValue = (unsigned int)round(redValue * dBlightness);
+            greenValue = (unsigned int)round(greenValue * dBlightness);
+            blueValue = (unsigned int)round(blueValue * dBlightness);
         }else{
-            
-            CGPoint xyPoint = [self convRgbToXy:@"FFFFFF"];
-            
+            redValue = (unsigned int)round(255 * dBlightness);
+            greenValue = (unsigned int)round(255 * dBlightness);
+            blueValue = (unsigned int)round(255 * dBlightness);
+        }
+
+        int myBlightness = MAX(redValue, greenValue);
+        myBlightness = MAX(myBlightness, blueValue);
+        NSString *uicolor = [NSString stringWithFormat:@"%02X%02X%02X",redValue, greenValue, blueValue];
+
+        CGPoint xyPoint = [self convRgbToXy:uicolor];
+        if (xyPoint.x != FLT_MIN && xyPoint.y != FLT_MIN) {
             [lightState setX:[NSNumber numberWithFloat:xyPoint.x]];
             [lightState setY:[NSNumber numberWithFloat:xyPoint.y]];
-            
+        } else {
+            _bridgeConnectState = STATE_ERROR_INVALID_COLOR;
+            return nil;
         }
-        
-        if (brightness != DBL_MIN) {
-            int myBlightness = brightness * 255;
-            
-            if (myBlightness < 0) {
-                myBlightness = 0;
-            }
-            if (myBlightness > 254) {
-                myBlightness = 254;
-            }
-            [lightState setBrightness:[NSNumber numberWithInt:(int)myBlightness]];
+
+        if (myBlightness < 1) {
+            myBlightness = 1;
         }
+        if (myBlightness > 254) {
+            myBlightness = 254;
+        }
+        [lightState setBrightness:[NSNumber numberWithInt:(int)myBlightness]];
     }
-    
+
     return lightState;
 }
 
@@ -669,7 +704,7 @@ pushlinkAuthenticationSuccessSelector:(SEL)pushlinkAuthenticationSuccessSelector
     float fBB = (float)(blueValue/255.0);
     UIColor *uicolor = [UIColor colorWithRed:fRR green:fGG blue:fBB alpha:1.0f];
     
-    return [PHUtilities calculateXY:uicolor forModel:@""];
+    return [PHUtilities calculateXY:uicolor forModel:@"LCT001"];
 }
 
 
