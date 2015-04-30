@@ -2,9 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:dConnectSDK/dConnectBrowser/dConnectBrowser.xcodeproj">
-   </FileRef>
-   <FileRef
       location = "group:dConnectDevicePlugin/dConnectDeviceChromeCast/dConnectDeviceChromecast.xcodeproj">
    </FileRef>
    <FileRef
@@ -27,6 +24,9 @@
    </FileRef>
    <FileRef
       location = "group:dConnectDevicePlugin/DCMDevicePluginSDK/DCMDevicePluginSDK.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:dConnectSDK/dConnectBrowser/dConnectBrowser.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:dConnectSDK/dConnectSDKForIOS/DConnectSDK.xcodeproj">
