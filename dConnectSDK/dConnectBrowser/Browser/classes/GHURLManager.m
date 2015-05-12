@@ -350,12 +350,11 @@
     if (type == webview_NavigationType_goback) {
         index = (int)_currentIndex - 2;
     } else if(type == webview_NavigationType_goforward){
-        index = (int)_currentIndex - 1;
+        index = (int)_currentIndex;
     }
     LOG(@"index:%d", index);
     if (index < 0 || index >= [self.histroyBack count]) {
         LOG(@"index is invalid");
-        
         return nil;
     }
     
@@ -489,7 +488,6 @@
     }
     
     LOG(@"navigationType:%@", type);
-    [self debug];
 #endif
 }
 

@@ -1028,16 +1028,15 @@ typedef enum{
             //画面幅の半分以上移動で成立
             if (self.view.frame.size.width/2 < location.x) {
                 [self goBack];
-                
                 [UIView animateWithDuration:0.3
                                  animations:^{
                                      CGRect frame = self.swipeView.frame;
                                      frame.origin.x = self.view.frame.size.width + 10;
                                      self.swipeView.frame = frame;
                                  } completion:^(BOOL finished) {
-                                     self.webview.hidden = NO;
                                      [self removeSwipeImages];
                                      [self updateLayout];
+                                     self.webview.hidden = NO;
                                  }];
                 
             }else{
@@ -1048,10 +1047,9 @@ typedef enum{
                                      frame.origin.x = 0;
                                      self.swipeView.frame = frame;
                                  } completion:^(BOOL finished) {
-                                     self.webview.hidden = NO;
                                      [self removeSwipeImages];
                                      [self updateLayout];
-
+                                     self.webview.hidden = NO;
                                  }];
             }
             
@@ -1105,9 +1103,9 @@ typedef enum{
                                      frame.origin.x = - (self.view.frame.size.width + 10);
                                      self.swipeView.frame = frame;
                                  } completion:^(BOOL finished) {
-                                     self.webview.hidden = NO;
                                      [self removeSwipeImages];
                                      [self updateLayout];
+                                     self.webview.hidden = NO;
 
                                  }];
                 
@@ -1120,9 +1118,9 @@ typedef enum{
                                      frame.origin.x = 0;
                                      self.swipeView.frame = frame;
                                  } completion:^(BOOL finished) {
-                                     self.webview.hidden = NO;
                                      [self removeSwipeImages];
                                      [self updateLayout];
+                                     self.webview.hidden = NO;
 
                                  }];
                 
@@ -1150,32 +1148,6 @@ typedef enum{
 {
     [self removeImages];
     
-    NSString* url;
-    //履歴から過去の画像を表示
-    if (direction == SwipeDirection_back) {
-        //戻る
-        url = [self.manager nextPageURL:webview_NavigationType_goback];
-    }else{
-        //進む
-        url = [self.manager nextPageURL:webview_NavigationType_goforward];
-    }
-    
-    //履歴が見つかった場合
-    if (url) {
-        UIImage* img = [GHUtils previewImage:url];
-        //画面サイズが違う場合はセットしない
-        
-        CGFloat scale = [UIScreen mainScreen].scale;
-        CGSize size = self.webview.frame.size;
-        
-        if (img && (img.size.width == size.width * scale)) {
-            self.swipeBGView = [[UIImageView alloc]initWithImage:img];
-            self.swipeBGView.frame = CGRectMake(0, self.webview.frame.origin.y, img.size.width / scale, img.size.height/scale);
-            [self.view insertSubview:self.swipeBGView aboveSubview:self.webview];
-        }
-    }
-    
-    
     //表示中のviewをキャプチャ
     self.swipeView = [self.webview snapshotViewAfterScreenUpdates:YES];
     
@@ -1202,15 +1174,15 @@ typedef enum{
 
 - (void)removeImages
 {
+    if (self.swipeBGView) {
+        [self.swipeBGView removeFromSuperview];
+        self.swipeBGView = nil;
+    }
     if (self.swipeView) {
         [self.swipeView removeFromSuperview];
         self.swipeView = nil;
     }
     
-    if (self.swipeBGView) {
-        [self.swipeBGView removeFromSuperview];
-        self.swipeBGView = nil;
-    }
 }
 
 //--------------------------------------------------------------//
