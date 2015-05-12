@@ -33,6 +33,7 @@ typedef enum{
 - (NSString*)htmlTitle:(UIWebView*)webview;
 - (NSString*)htmlURL:(UIWebView *)webview;
 - (NSInteger)historyLength:(UIWebView *)webview;
+
 - (NSString*)createSearchURL:(NSString*)str;
 - (Page *)latestPage;
 

@@ -395,6 +395,12 @@ typedef enum{
     if (tag == kMenuTag_settingbtn) {
         [self showSetting];
     }
+    dispatch_queue_t updateQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    dispatch_async(updateQueue, ^{
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [self updateLayout];
+        });
+    });
 }
 
 
@@ -425,6 +431,7 @@ typedef enum{
     }
     
     isSwiping = NO;
+
     
     self.manager.navigationType = webview_NavigationType_goforward;
     loadingCount = 0;
@@ -646,18 +653,15 @@ typedef enum{
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request
  navigationType:(UIWebViewNavigationType)navigationType
 {
-    
-    //    LOG(@"navigationType:%d", navigationType);
-    //    LOG(@"%@", [[request URL]absoluteString]);
-    //    [self.manager navigationTypeDebug];
+//        LOG(@"navigationType:%d", navigationType);
+//        LOG(@"--%@--", [[request URL]absoluteString]);
+//        [self.manager navigationTypeDebug];
     
     //about:blankは無視
     if ([@"about:blank" isEqualToString:[[request URL]absoluteString]] ) {
         return NO;
     }
-    
-    
-    
+
     if(navigationType == UIWebViewNavigationTypeOther){
         //アドレス入力した場合
         if (self.manager.navigationType == webview_NavigationType_undefined) {
@@ -690,12 +694,21 @@ typedef enum{
         //初回のリクエストの場合はrequestを保持
         self.firstRequest = request;
     }
+    dispatch_queue_t mainQueue = dispatch_get_main_queue();
+    dispatch_queue_t updateQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
     
+    dispatch_async(updateQueue, ^{
+        dispatch_async(mainQueue, ^{
+            [self updateLayout];
+        });
+    });
+
     return YES;
 }
 
 - (void)webViewDidStartLoad:(UIWebView *)webView
 {
+
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
     [self.headerView setReloadBtn:NO];
     
@@ -710,6 +723,7 @@ typedef enum{
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
+
     LOG_METHOD
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
     
@@ -718,7 +732,7 @@ typedef enum{
         [self.manager addPage:webView request:self.firstRequest];
         self.firstRequest = nil;
     }
-    
+
     webViewLoads--;
     
     //履歴を保存（ローディングが完了してから）
@@ -733,17 +747,17 @@ typedef enum{
         [self createPreview:self.webview];
         [_progressView setProgress:100 animated:YES];
         self.manager.navigationType = webview_NavigationType_undefined;
-        
         [self.manager finishLoading:self.webview];
+        [self updateLayout];
     }
     
     self.myRequest = nil;
     
-    [self updateLayout];
-    [self.headerView setReloadBtn:YES];
     
     //スワイプで遷移の場合、読み込み完了まで待つ
     [self removeSwipeImages];
+    [self.headerView setReloadBtn:YES];
+
 }
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
@@ -991,9 +1005,9 @@ typedef enum{
     if (!self.webview.canGoBack) {
         return;
     }
-    
     CGPoint location = [recognizer locationInView:self.view];
     if (recognizer.state == UIGestureRecognizerStateBegan) {
+        //戻る
         if (self.webview.canGoBack) {
             [self.webview stopLoading];
             
@@ -1014,14 +1028,15 @@ typedef enum{
             //画面幅の半分以上移動で成立
             if (self.view.frame.size.width/2 < location.x) {
                 [self goBack];
-                
                 [UIView animateWithDuration:0.3
                                  animations:^{
                                      CGRect frame = self.swipeView.frame;
                                      frame.origin.x = self.view.frame.size.width + 10;
                                      self.swipeView.frame = frame;
                                  } completion:^(BOOL finished) {
-                                     //
+                                     [self removeSwipeImages];
+                                     [self updateLayout];
+                                     self.webview.hidden = NO;
                                  }];
                 
             }else{
@@ -1032,8 +1047,9 @@ typedef enum{
                                      frame.origin.x = 0;
                                      self.swipeView.frame = frame;
                                  } completion:^(BOOL finished) {
-                                     self.webview.hidden = NO;
                                      [self removeSwipeImages];
+                                     [self updateLayout];
+                                     self.webview.hidden = NO;
                                  }];
             }
             
@@ -1056,9 +1072,9 @@ typedef enum{
     if (!self.webview.canGoForward) {
         return;
     }
-    
     CGPoint location = [recognizer locationInView:self.view];
     if (recognizer.state == UIGestureRecognizerStateBegan) {
+
         if (self.webview.canGoForward) {
             [self.webview stopLoading];
             
@@ -1087,6 +1103,10 @@ typedef enum{
                                      frame.origin.x = - (self.view.frame.size.width + 10);
                                      self.swipeView.frame = frame;
                                  } completion:^(BOOL finished) {
+                                     [self removeSwipeImages];
+                                     [self updateLayout];
+                                     self.webview.hidden = NO;
+
                                  }];
                 
                 
@@ -1098,8 +1118,10 @@ typedef enum{
                                      frame.origin.x = 0;
                                      self.swipeView.frame = frame;
                                  } completion:^(BOOL finished) {
-                                     self.webview.hidden = NO;
                                      [self removeSwipeImages];
+                                     [self updateLayout];
+                                     self.webview.hidden = NO;
+
                                  }];
                 
             }
@@ -1125,32 +1147,6 @@ typedef enum{
 - (void)setSwipeImages:(SwipeDirection)direction
 {
     [self removeImages];
-    
-    NSString* url;
-    //履歴から過去の画像を表示
-    if (direction == SwipeDirection_back) {
-        //戻る
-        url = [self.manager nextPageURL:webview_NavigationType_goback];
-    }else{
-        //進む
-        url = [self.manager nextPageURL:webview_NavigationType_goforward];
-    }
-    
-    //履歴が見つかった場合
-    if (url) {
-        UIImage* img = [GHUtils previewImage:url];
-        //画面サイズが違う場合はセットしない
-        
-        CGFloat scale = [UIScreen mainScreen].scale;
-        CGSize size = self.webview.frame.size;
-        
-        if (img && (img.size.width == size.width * scale)) {
-            self.swipeBGView = [[UIImageView alloc]initWithImage:img];
-            self.swipeBGView.frame = CGRectMake(0, self.webview.frame.origin.y, img.size.width / scale, img.size.height/scale);
-            [self.view insertSubview:self.swipeBGView aboveSubview:self.webview];
-        }
-    }
-    
     
     //表示中のviewをキャプチャ
     self.swipeView = [self.webview snapshotViewAfterScreenUpdates:YES];
@@ -1178,15 +1174,15 @@ typedef enum{
 
 - (void)removeImages
 {
+    if (self.swipeBGView) {
+        [self.swipeBGView removeFromSuperview];
+        self.swipeBGView = nil;
+    }
     if (self.swipeView) {
         [self.swipeView removeFromSuperview];
         self.swipeView = nil;
     }
     
-    if (self.swipeBGView) {
-        [self.swipeBGView removeFromSuperview];
-        self.swipeBGView = nil;
-    }
 }
 
 //--------------------------------------------------------------//

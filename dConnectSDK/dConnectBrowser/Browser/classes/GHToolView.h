@@ -38,6 +38,7 @@ enum {
 - (void)setBtnEnabled:(BOOL)isEnabled;
 - (void)updateBtn;
 
+
 - (IBAction)longpressBack:(UIGestureRecognizer*)gest;
 - (IBAction)longpressNext:(UIGestureRecognizer*)gest;
 @end

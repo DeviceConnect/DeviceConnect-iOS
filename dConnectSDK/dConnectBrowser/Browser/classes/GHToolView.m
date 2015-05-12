@@ -68,13 +68,13 @@
 {
     if (self.webview.canGoBack) {
         self.backbtn.enabled = YES;
-    }else{
+    } else{
         self.backbtn.enabled = NO;
     }
     
-    if (self.webview.canGoForward) {
+    if (self.webview.canGoForward){
         self.nextbtn.enabled = YES;
-    }else{
+    } else {
         self.nextbtn.enabled = NO;
     }
 }
