@@ -1561,10 +1561,14 @@ didReceivePutStopRequest:(DConnectRequestMessage *)request
          [recorder.session stopRunning];
 
          if (recorder.audioWriterInput) {
-             [recorder.audioWriterInput markAsFinished];
+			 if (recorder.writer.status != AVAssetWriterStatusUnknown) {
+				 [recorder.audioWriterInput markAsFinished];
+			 }
          }
          if (recorder.videoWriterInput) {
-             [recorder.videoWriterInput markAsFinished];
+			 if (recorder.writer.status != AVAssetWriterStatusUnknown) {
+				 [recorder.videoWriterInput markAsFinished];
+			 }
          }
 
          recorder.state = RecorderStateInactive;

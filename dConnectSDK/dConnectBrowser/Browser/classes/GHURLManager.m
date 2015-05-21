@@ -46,18 +46,20 @@
 //--------------------------------------------------------------//
 - (NSString*)isURLString:(NSString*)str
 {
+    NSString *urlString = [str stringByReplacingOccurrencesOfString:@"#/" withString:@""];
     //URLか判定
     NSDataDetector *dataDetector = [NSDataDetector dataDetectorWithTypes:NSTextCheckingTypeLink error:nil];
-    NSArray *resultArray = [dataDetector matchesInString:[str stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]
+    NSArray *resultArray = [dataDetector matchesInString:
+                            [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]
                                                  options:0
-                                                   range:NSMakeRange(0,[str length])];
+                                                   range:NSMakeRange(0,[urlString length])];
     
     for (NSTextCheckingResult *result in resultArray){
         if ([result resultType] == NSTextCheckingTypeLink){
             NSURL *url = [result URL];
             LOG(@"url:%@",[url description]);
             
-            return [url description];
+            return str;
         }
     }
     
@@ -101,7 +103,6 @@
     return [history integerValue];
 }
 
-
 - (NSString*)jumpHistory:(Page*)page index:(NSInteger)index
 {
     //ジャンプ遷移の場合
@@ -129,8 +130,6 @@
     }
     
     NSString* url =  [self htmlURL:webview];
-    
-//    LOG(@"URL:%@", url);
     
     //最後に登録したURLと同じ場合は無視。
     //NOTE:ページによりリダイレクトで同じURLを再度読み込む場合がある
@@ -277,7 +276,8 @@
              _navigationType == webview_NavigationType_goback_jump){
         //進む・戻る履歴から遷移
         LOG(@"_currentIndex:%d", (int)_currentIndex );
-    }else{
+    } else {
+    
         //新しい履歴ラインになる
         //現在位置より先にある履歴は削除
         if (_currentIndex < [self.histroyBack count]) {
@@ -291,7 +291,6 @@
         _currentIndex++;
         [self.histroyBack addObject:model];
     }
-    
 }
 
 ///戻る履歴一覧
@@ -350,18 +349,14 @@
     int index = -1;
     if (type == webview_NavigationType_goback) {
         index = (int)_currentIndex - 2;
-    }else if(type == webview_NavigationType_goforward){
+    } else if(type == webview_NavigationType_goforward){
         index = (int)_currentIndex;
     }
-    
-    
     LOG(@"index:%d", index);
-    
-    if (index < 0 && index >= [self.histroyBack count]) {
-        LOG(@"indexが変");
+    if (index < 0 || index >= [self.histroyBack count]) {
+        LOG(@"index is invalid");
         return nil;
     }
-    
     
     GHPageModel* model = (GHPageModel*)[self.histroyBack objectAtIndex:index];
     
@@ -401,6 +396,7 @@
     //ずれを調整
     if (count != length) {
         int diff = count - length;
+        
         for (int i = count - 2 ; i > count - diff - 2; i--) {
             [self.histroyBack removeObjectAtIndex:i];
         }
@@ -421,6 +417,7 @@
 }
 
 
+
 ///現在表示しているURLとcurrentIndexが指しているモデルが同じかチェック
 - (void)checkHistoryAndURL:(NSString*)url
 {
@@ -437,7 +434,7 @@
                 [array addObject:@(idx)];
             }
         }];
-        
+    
         //結果がある場合は一番最後を選択
         if ([array count] > 0) {
             _currentIndex = [[array lastObject] integerValue] + 1;
@@ -457,9 +454,9 @@
     int i = 1;
     for (GHPageModel* model in self.histroyBack) {
         if (i == _currentIndex) {
-            LOG(@"->[%d]:%@", i, model.title );
+            LOG(@"->[%d]:%@", i, model.url );
         }else{
-            LOG(@"  [%d]:%@", i, model.title );
+            LOG(@"  [%d]:%@", i, model.url );
         }
         
         i++;

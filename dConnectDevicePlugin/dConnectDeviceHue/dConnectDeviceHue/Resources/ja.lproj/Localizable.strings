@@ -12,10 +12,10 @@
 "HueBridgeConnecting" = "hueに接続中";
 "HueNotConnectingBridge" = "ブリッジに接続できません。";
 "HueBridgeAuthorized" = "認証済み";
-"HueRegisterApp" = "アプリ登録に成功しました。\nライト検索に進みます。";
+"HueRegisterApp" = "アプリ登録に成功しました。";
 "HueFailAuthorize" = "認証失敗";
 "HueFailRegisterApp" = "アプリ登録に失敗しました。";
 "HueNotConnectingBridge" = "ブリッジに接続できません。";
 "HueNotFoundBridge" = "ブリッジが見つかりません。";
-"HueSearchLight" = "ライト検索開始しました。\n３０秒お待ちください。";
+"HueSearchLight" = "ライトが見つかりました。";
 "HueSearchLightError" = "ライト検索でエラーが発生しました。";

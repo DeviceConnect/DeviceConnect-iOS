@@ -137,6 +137,12 @@
         NSString *pluginName = [plugin pluginName];
         [message setString:pluginId forKey:DConnectSystemProfileParamId];
         [message setString:pluginName forKey:DConnectSystemProfileParamName];
+        DConnectArray *profileNames = [DConnectArray new];
+        NSArray *profiles = [plugin profiles];
+        for (DConnectProfile *profile in profiles) {
+            [profileNames addString:[profile profileName]];
+        }
+        [DConnectSystemProfile setSupports:profileNames target:message];
         [plugins addMessage:message];
     }
     
