@@ -30,13 +30,16 @@
                         response:(DConnectResponseMessage *)response
 {
     DConnectArray *services = [DConnectArray array];
-    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [[DPChromecastManager sharedManager] startScan];
+    });
     NSArray *deviceList = [DPChromecastManager sharedManager].deviceList;
     for (NSDictionary *device in deviceList) {
         DConnectMessage *service = [DConnectMessage new];
         
         [DConnectServiceDiscoveryProfile setId:device[@"id"] target:service];
-        [DConnectServiceDiscoveryProfile setName:device[@"name"] target:service];
+        [DConnectServiceDiscoveryProfile setName:[NSString stringWithFormat:@"Chromecast(%@)", device[@"name"]]
+                                          target:service];
         [DConnectServiceDiscoveryProfile setType:DConnectServiceDiscoveryProfileNetworkTypeWiFi
                                                  target:service];
         [DConnectServiceDiscoveryProfile setOnline:YES target:service];
