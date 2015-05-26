@@ -21,6 +21,7 @@ typedef void (^DPHostProximityBlock)(DConnectMessage *);
 
 @property id proximityBlock;
 @property id onceProximityBlock;
+@property BOOL proximityState;
 
 - (void) sendOnUserProximityEvent:(NSNotification *)notification;
 
@@ -45,9 +46,20 @@ typedef void (^DPHostProximityBlock)(DConnectMessage *);
         self.delegate = self;
         self.proximityBlock = nil;
         self.onceProximityBlock = nil;
-        
+        self.proximityState = NO;
         // イベントマネージャを取得
         self.eventMgr = [DConnectEventManager sharedManagerForClass:[DPHostDevicePlugin class]];
+        __unsafe_unretained typeof(self) weakSelf = self;
+
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [UIDevice currentDevice].proximityMonitoringEnabled = YES;
+            
+            [[NSNotificationCenter defaultCenter] addObserver:weakSelf
+                                                     selector:@selector(sendOnUserProximityEvent:)
+                                                         name:UIDeviceProximityStateDidChangeNotification
+                                                       object:nil];
+        });
+
     }
     return self;
 }
@@ -69,6 +81,7 @@ typedef void (^DPHostProximityBlock)(DConnectMessage *);
 - (void) sendOnUserProximityEvent:(NSNotification *)notification
 {
     DConnectMessage *proximity = [DConnectMessage message];
+    self.proximityState = [notification.object proximityState];
     [DConnectProximityProfile setNear:[notification.object proximityState] target:proximity];
 
     if (self.proximityBlock) {
@@ -76,10 +89,6 @@ typedef void (^DPHostProximityBlock)(DConnectMessage *);
         block(proximity);
     }
     
-    if (self.onceProximityBlock) {
-        DPHostProximityBlock block = self.onceProximityBlock;
-        block(proximity);
-    }
 }
 
 #pragma mark - Get Methods
@@ -89,34 +98,13 @@ didReceiveGetOnUserProximityRequest:(DConnectRequestMessage *)request
                            response:(DConnectResponseMessage *)response
                           serviceId:(NSString *)serviceId
 {
-    __unsafe_unretained typeof(self) weakSelf = self;
-    
-    self.onceProximityBlock = ^(DConnectMessage *message) {
-        [response setResult:DConnectMessageResultTypeOk];
-        [DConnectProximityProfile setProximity:message target:response];
+    DConnectMessage *proximity = [DConnectMessage message];
+    [response setResult:DConnectMessageResultTypeOk];
 
-        [[DConnectManager sharedManager] sendResponse:response];
-        
-        weakSelf.onceProximityBlock = nil;
-        
-        if (![weakSelf hasUserProximityEventList:serviceId]) {
-            [UIDevice currentDevice].proximityMonitoringEnabled = NO;
-            [[NSNotificationCenter defaultCenter] removeObserver:weakSelf
-                                                            name:UIDeviceProximityStateDidChangeNotification
-                                                          object:nil];
-        }
-    };
-    
-    if (![self hasUserProximityEventList:serviceId]) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [UIDevice currentDevice].proximityMonitoringEnabled = YES;
-            [[NSNotificationCenter defaultCenter] addObserver:self
-                                                     selector:@selector(sendOnUserProximityEvent:)
-                                                         name:UIDeviceProximityStateDidChangeNotification
-                                                       object:nil];
-        });
-    }
-    return NO;
+    [DConnectProximityProfile setNear:self.proximityState target:proximity];
+    [DConnectProximityProfile setProximity:proximity target:response];
+
+    return YES;
 }
 
 #pragma mark - Put Methods
@@ -151,7 +139,7 @@ didReceivePutOnUserProximityRequest:(DConnectRequestMessage *)request
         dispatch_async(dispatch_get_main_queue(), ^{
             [UIDevice currentDevice].proximityMonitoringEnabled = YES;
 
-            [[NSNotificationCenter defaultCenter] addObserver:self
+            [[NSNotificationCenter defaultCenter] addObserver:weakSelf
                                                      selector:@selector(sendOnUserProximityEvent:)
                                                          name:UIDeviceProximityStateDidChangeNotification
                                                        object:nil];
