@@ -33,18 +33,6 @@
      @brief NSBundle。
      */
     NSBundle *_bundle;
-    /*!
-     @brief ServiceID。
-     */
-    NSString *_service;
-    /*!
-     @brief AccessToken。
-     */
-    NSString *_accessToken;
-    /*!
-     @brief ライトのリスト。
-     */
-    DConnectArray *_lightList;
     
 }
 /*!

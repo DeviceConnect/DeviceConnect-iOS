@@ -19,8 +19,6 @@ static DPHueItemBridge *mSelectedItemBridge;
     manager = [DPHueManager sharedManager];
     [manager initHue];
     _bundle = DPHueBundle();
-    _service = nil;
-    _accessToken = nil;
 }
 
 - (void)viewWillAppear:(BOOL)animated
