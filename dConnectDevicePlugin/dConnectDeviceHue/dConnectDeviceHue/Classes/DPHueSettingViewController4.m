@@ -134,7 +134,7 @@
         
         textField.placeholder = DPHueLocalizedString(_bundle, @"HueSerialNoHint");
         textField.delegate = self;
-        textField.keyboardType = UIKeyboardTypeASCIICapable;
+        textField.keyboardType = UIKeyboardTypeAlphabet;
     }];
     [self presentViewController:serialAlert animated:YES completion:nil];
 }
