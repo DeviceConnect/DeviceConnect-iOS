@@ -341,6 +341,19 @@ pushlinkAuthenticationSuccessSelector:(SEL)pushlinkAuthenticationSuccessSelector
     [bridgeSendAPI searchForNewLights:completion];
 }
 
+
+//Serialを指定してライトを登録する
+-(void)registerLightForSerialNo:(NSArray*)serialNos
+                     completion:
+(PHBridgeSendErrorArrayCompletionHandler)completion
+{
+    
+    PHBridgeSendAPI *bridgeSendAPI = [[PHBridgeSendAPI alloc] init];
+    [bridgeSendAPI searchForNewLightsWithSerials:serialNos completionHandler:completion];
+    
+}
+
+
 //ハートビートの有効化
 -(void)enableHeartbeat {
     PHBridgeResourcesCache *cache = [PHBridgeResourcesReader readBridgeResourcesCache];

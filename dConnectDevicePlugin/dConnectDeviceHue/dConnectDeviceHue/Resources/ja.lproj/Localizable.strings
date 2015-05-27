@@ -19,3 +19,10 @@
 "HueNotFoundBridge" = "ブリッジが見つかりません。";
 "HueSearchLight" = "ライトが見つかりました。";
 "HueSearchLightError" = "ライト検索でエラーが発生しました。";
+
+"HueSerialNoTitle" = "シリアルナンバー入力";
+"HueSerialNoDesc" = "hueのデバイスに記載されているシリアルナンバーを入力してください。
+以下のように記載されています。
+- S/N: xxxxxxx
+- serial no: xxxxxxxx";
+"HueSerialNoHint" = "シリアルナンバー";

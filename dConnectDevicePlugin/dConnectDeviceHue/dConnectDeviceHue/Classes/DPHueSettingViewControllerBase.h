@@ -29,7 +29,23 @@
       @brief Hueとの設定を行うためのインスタンス。
       */
     DPHueManager *manager;
+    /*!
+     @brief NSBundle。
+     */
     NSBundle *_bundle;
+    /*!
+     @brief ServiceID。
+     */
+    NSString *_service;
+    /*!
+     @brief AccessToken。
+     */
+    NSString *_accessToken;
+    /*!
+     @brief ライトのリスト。
+     */
+    DConnectArray *_lightList;
+    
 }
 /*!
  @brief 設定画面を表示するViewController。
@@ -125,5 +141,13 @@
  @brief Hueのライトを検索するページを表示する。
  */
 - (void)showLightSearchPage;
+
+
+/*!
+ @brief Hueのライトを一覧を表示する。
+ */
+- (void)showLightListPage;
+
+
 
 @end

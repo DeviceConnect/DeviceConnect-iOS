@@ -12,12 +12,15 @@
 
 static DPHueItemBridge *mSelectedItemBridge;
 
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     manager = [DPHueManager sharedManager];
     [manager initHue];
     _bundle = DPHueBundle();
+    _service = nil;
+    _accessToken = nil;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -163,6 +166,13 @@ static DPHueItemBridge *mSelectedItemBridge;
 - (void)showLightSearchPage
 {
     [self showPage:2];
+}
+
+
+//ライト一覧ページを開く
+- (void)showLightListPage
+{
+    [self showPage:3];
 }
 
 @end
