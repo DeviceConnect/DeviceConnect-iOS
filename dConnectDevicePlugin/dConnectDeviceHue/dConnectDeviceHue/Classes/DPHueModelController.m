@@ -76,7 +76,7 @@
 
 - (NSInteger)presentationCountForPageViewController:(UIPageViewController *)pageViewController
 {
-    return 3;
+    return DPHUE_SETTING_PAGE_COUNT_IPHONE;
 }
 
 - (NSInteger)presentationIndexForPageViewController:(UIPageViewController *)pageViewController
