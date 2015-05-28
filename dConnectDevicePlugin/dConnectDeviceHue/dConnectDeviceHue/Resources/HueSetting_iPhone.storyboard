@@ -3,7 +3,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--Navigation Controller-->
@@ -430,7 +429,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RlS-jF-fia">
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RlS-jF-fia">
                                 <rect key="frame" x="53" y="72" width="60" height="30"/>
                                 <state key="normal" title="自動検索">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -439,7 +438,7 @@
                                     <action selector="searchAutomatic:" destination="Gde-dV-7f5" eventType="touchUpInside" id="YEE-GD-o0u"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KY6-se-HEz">
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KY6-se-HEz">
                                 <rect key="frame" x="196" y="72" width="60" height="30"/>
                                 <state key="normal" title="手動検索">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -448,13 +447,9 @@
                                     <action selector="searchManual:" destination="Gde-dV-7f5" eventType="touchUpInside" id="sao-bW-Rkd"/>
                                 </connections>
                             </button>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="cellLight" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="KaE-N8-LGQ">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" restorationIdentifier="cellLight" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="KaE-N8-LGQ">
                                 <rect key="frame" x="3" y="110" width="312" height="414"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="414" id="To8-dM-7eI"/>
-                                    <constraint firstAttribute="width" constant="312" id="pTZ-uj-SQZ"/>
-                                </constraints>
                             </tableView>
                             <view hidden="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="D91-nA-g9j">
                                 <rect key="frame" x="4" y="267" width="312" height="35"/>
@@ -473,15 +468,6 @@
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="KaE-N8-LGQ" firstAttribute="top" secondItem="RlS-jF-fia" secondAttribute="bottom" constant="8" symbolic="YES" id="WxN-oB-bLj"/>
-                            <constraint firstItem="RlS-jF-fia" firstAttribute="leading" secondItem="mvl-PP-Tzz" secondAttribute="leadingMargin" constant="37" id="aGG-gw-ahp"/>
-                            <constraint firstItem="RlS-jF-fia" firstAttribute="top" secondItem="acq-oe-7q9" secondAttribute="bottom" constant="8" id="cEH-CU-Iul"/>
-                            <constraint firstItem="KaE-N8-LGQ" firstAttribute="leading" secondItem="mvl-PP-Tzz" secondAttribute="leadingMargin" constant="-13" id="gkx-Dd-M3A"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="KY6-se-HEz" secondAttribute="trailing" constant="48" id="kDZ-9r-hwb"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="KaE-N8-LGQ" secondAttribute="trailing" constant="-11" id="khf-XO-ukX"/>
-                            <constraint firstItem="KY6-se-HEz" firstAttribute="top" secondItem="acq-oe-7q9" secondAttribute="bottom" constant="8" id="rWD-M7-h5g"/>
-                        </constraints>
                     </view>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
