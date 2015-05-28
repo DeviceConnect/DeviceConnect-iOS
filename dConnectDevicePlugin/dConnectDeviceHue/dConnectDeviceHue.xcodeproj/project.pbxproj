@@ -63,6 +63,9 @@
 		AB181677196A6916000BE265 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB181676196A6916000BE265 /* CoreFoundation.framework */; };
 		AB18167D196A6916000BE265 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = AB18167B196A6916000BE265 /* InfoPlist.strings */; };
 		AB181737196BE431000BE265 /* DPHueLightProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = AB181736196BE431000BE265 /* DPHueLightProfile.m */; };
+		AB3A3FC91B14088100C40A88 /* DPHueSettingViewController4.m in Sources */ = {isa = PBXBuildFile; fileRef = AB3A3FC81B14088100C40A88 /* DPHueSettingViewController4.m */; };
+		AB3A3FCB1B142C8200C40A88 /* hue_small_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = AB3A3FCA1B142C8200C40A88 /* hue_small_icon.png */; };
+		AB3A3FCC1B145B5000C40A88 /* hue_small_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = AB3A3FCA1B142C8200C40A88 /* hue_small_icon.png */; };
 		AB4E025319EE4C9900F385D0 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = AB4E025519EE4C9900F385D0 /* Localizable.strings */; };
 		AB85126B19E77C760038AD54 /* DPHueManager.m in Sources */ = {isa = PBXBuildFile; fileRef = AB85126A19E77C760038AD54 /* DPHueManager.m */; };
 /* End PBXBuildFile section */
@@ -137,6 +140,9 @@
 		AB18167E196A6916000BE265 /* dConnectDeviceHue_resources-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "dConnectDeviceHue_resources-Prefix.pch"; sourceTree = "<group>"; };
 		AB181735196BE431000BE265 /* DPHueLightProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHueLightProfile.h; sourceTree = "<group>"; };
 		AB181736196BE431000BE265 /* DPHueLightProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHueLightProfile.m; sourceTree = "<group>"; };
+		AB3A3FC71B14088100C40A88 /* DPHueSettingViewController4.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHueSettingViewController4.h; sourceTree = "<group>"; };
+		AB3A3FC81B14088100C40A88 /* DPHueSettingViewController4.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHueSettingViewController4.m; sourceTree = "<group>"; };
+		AB3A3FCA1B142C8200C40A88 /* hue_small_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hue_small_icon.png; sourceTree = "<group>"; };
 		AB4E025419EE4C9900F385D0 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		AB4E025619EE4CB000F385D0 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
 		AB4E025719EE4CB000F385D0 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -192,6 +198,8 @@
 				64278B6319B8AC5100AC54E5 /* DPHueSettingViewController2.m */,
 				64278B6519B8AC6C00AC54E5 /* DPHueSettingViewController3.h */,
 				64278B6619B8AC6C00AC54E5 /* DPHueSettingViewController3.m */,
+				AB3A3FC71B14088100C40A88 /* DPHueSettingViewController4.h */,
+				AB3A3FC81B14088100C40A88 /* DPHueSettingViewController4.m */,
 			);
 			name = SettingPage;
 			sourceTree = "<group>";
@@ -303,6 +311,7 @@
 		AB1815EF196A3B3B000BE265 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				AB3A3FCA1B142C8200C40A88 /* hue_small_icon.png */,
 				AB08A0E719920C860024C996 /* hue001.png */,
 				AB08A0E819920C860024C996 /* hue002.png */,
 				AB08A0E919920C860024C996 /* hue003.png */,
@@ -451,6 +460,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AB3A3FCB1B142C8200C40A88 /* hue_small_icon.png in Resources */,
 				AB1815F1196A3B72000BE265 /* Info.plist in Resources */,
 				AB1815DF196A3651000BE265 /* InfoPlist.strings in Resources */,
 			);
@@ -460,6 +470,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AB3A3FCC1B145B5000C40A88 /* hue_small_icon.png in Resources */,
 				AB4E025319EE4C9900F385D0 /* Localizable.strings in Resources */,
 				64278B5C19B896D500AC54E5 /* HueSetting_iPad.storyboard in Resources */,
 				AB08A0FE19930F260024C996 /* Info.plist in Resources */,
@@ -513,6 +524,7 @@
 				64278B6A19B8AEA800AC54E5 /* DPHueViewController.m in Sources */,
 				64278B6119B8ABAB00AC54E5 /* DPHueSettingViewController1.m in Sources */,
 				64278B6719B8AC6C00AC54E5 /* DPHueSettingViewController3.m in Sources */,
+				AB3A3FC91B14088100C40A88 /* DPHueSettingViewController4.m in Sources */,
 				64278B6419B8AC5100AC54E5 /* DPHueSettingViewController2.m in Sources */,
 				AB181668196A3E89000BE265 /* DPHueServiceDiscoveryProfile.m in Sources */,
 				AB181737196BE431000BE265 /* DPHueLightProfile.m in Sources */,

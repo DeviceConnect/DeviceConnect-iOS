@@ -341,6 +341,19 @@ pushlinkAuthenticationSuccessSelector:(SEL)pushlinkAuthenticationSuccessSelector
     [bridgeSendAPI searchForNewLights:completion];
 }
 
+
+//Serialを指定してライトを登録する
+-(void)registerLightForSerialNo:(NSArray*)serialNos
+                     completion:
+(PHBridgeSendErrorArrayCompletionHandler)completion
+{
+    
+    PHBridgeSendAPI *bridgeSendAPI = [[PHBridgeSendAPI alloc] init];
+    [bridgeSendAPI searchForNewLightsWithSerials:serialNos completionHandler:completion];
+    
+}
+
+
 //ハートビートの有効化
 -(void)enableHeartbeat {
     PHBridgeResourcesCache *cache = [PHBridgeResourcesReader readBridgeResourcesCache];
@@ -364,8 +377,11 @@ pushlinkAuthenticationSuccessSelector:(SEL)pushlinkAuthenticationSuccessSelector
         registerReceiver = self;
     }
 
-    if (notificationManager != nil) {
+    if (notificationManager) {
         [notificationManager deregisterObjectForAllNotifications:registerReceiver];
+        [notificationManager deregisterObject:registerReceiver forNotification:LOCAL_CONNECTION_NOTIFICATION];
+        [notificationManager deregisterObject:registerReceiver forNotification:NO_LOCAL_CONNECTION_NOTIFICATION];
+        [notificationManager deregisterObject:registerReceiver forNotification:NO_LOCAL_AUTHENTICATION_NOTIFICATION];
         notificationManager = nil;
     }
 }

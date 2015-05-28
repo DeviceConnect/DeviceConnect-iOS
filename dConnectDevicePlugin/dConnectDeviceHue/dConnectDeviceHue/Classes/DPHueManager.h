@@ -126,6 +126,16 @@ pushlinkAuthenticationSuccessSelector:(SEL)pushlinkAuthenticationSuccessSelector
  */
 -(void)searchLightWithCompletion:(PHBridgeSendErrorArrayCompletionHandler)completion;
 
+
+/*!
+ @brief シリアルNoを指定したライトの登録。
+ @param[in] serialNos ライトのシリアルNoの配列。
+ @param[out] completionHandler ライトの検索結果を通知するブロック。
+ */
+
+-(void)registerLightForSerialNo:(NSArray*)serialNos
+                     completion:
+(PHBridgeSendErrorArrayCompletionHandler)completion;
 /*!
  @brief ライトステータスの取得。
  @param[out] response DeviceConnectにレスポンスを返すためのインスタンス。

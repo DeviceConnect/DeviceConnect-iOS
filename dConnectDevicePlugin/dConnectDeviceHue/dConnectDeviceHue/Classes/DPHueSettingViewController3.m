@@ -36,47 +36,17 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [manager deallocPHNotificationManagerWithReceiver:self];
-    [manager deallocHueSDK];
+
 }
+
+
 
 
 - (IBAction)searchLight:(id)sender
 {
-    
-    if (![self isSelectedItemBridge]) {
-        return;
-    }
-
-    [self startIndicator];
-    [self searchLight];
+    [self showLightListPage];
     
 }
-
-
-
-//ライト検索
-- (void)searchLight
-{
-    [self startIndicator];
-    [manager searchLightWithCompletion:^(NSArray *errors) {
-        
-        [self stopIndicator];
-        
-        if (!errors) {
-            _lightOnIconImageView.hidden = NO;
-            _lightOffIconImageView.hidden = YES;
-            
-            [self showAleart:DPHueLocalizedString(_bundle, @"HueSearchLight")];
-        } else {
-            [self showAleart:DPHueLocalizedString(_bundle, @"HueSearchLightError")];
-        }
-        NSDictionary* dic = [[DPHueManager sharedManager] getLightStatus];
-        
-    }];
-}
-
-
 
 //縦向き座標調整
 - (void)setLayoutConstraintPortrait

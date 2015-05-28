@@ -17,5 +17,14 @@
 "HueFailRegisterApp" = "アプリ登録に失敗しました。";
 "HueNotConnectingBridge" = "ブリッジに接続できません。";
 "HueNotFoundBridge" = "ブリッジが見つかりません。";
-"HueSearchLight" = "ライトが見つかりました。";
+"HueSearchLight" = "ライトの検索が完了しました。";
+"HueSearchLightOld" = "新規ライトが見つかりませんでした。";
+
 "HueSearchLightError" = "ライト検索でエラーが発生しました。";
+"HueSearchHitLight" = "%d個のライトが見つかりました。";
+"HueSerialNoTitle" = "シリアルナンバー入力";
+"HueSerialNoDesc" = "hueのデバイスに記載されているシリアルナンバーを入力してください。
+以下のように記載されています。
+- S/N: xxxxxxx
+- serial no: xxxxxxxx";
+"HueSerialNoHint" = "シリアルナンバー";
