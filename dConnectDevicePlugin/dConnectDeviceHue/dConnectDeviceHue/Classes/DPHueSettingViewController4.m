@@ -145,7 +145,7 @@
                                               cancelButtonTitle:@"Cancel"
                                               otherButtonTitles:@"OK", nil];
         alert.delegate       = self;
-        alert.alertViewStyle = UIKeyboardTypeAlphabet;
+        alert.alertViewStyle = UIAlertViewStylePlainTextInput;
         [alert textFieldAtIndex:0].placeholder = DPHueLocalizedString(_bundle, @"HueSerialNoHint");
         [alert textFieldAtIndex:0].delegate = self;
         [alert textFieldAtIndex:0].keyboardType = UIKeyboardTypeAlphabet;
