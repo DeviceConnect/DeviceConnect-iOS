@@ -448,7 +448,7 @@
                                     <action selector="searchManual:" destination="Gde-dV-7f5" eventType="touchUpInside" id="sao-bW-Rkd"/>
                                 </connections>
                             </button>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" restorationIdentifier="cellLight" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="KaE-N8-LGQ">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="cellLight" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="KaE-N8-LGQ">
                                 <rect key="frame" x="3" y="110" width="312" height="414"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
@@ -474,6 +474,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="KaE-N8-LGQ" firstAttribute="top" secondItem="RlS-jF-fia" secondAttribute="bottom" constant="8" symbolic="YES" id="WxN-oB-bLj"/>
                             <constraint firstItem="RlS-jF-fia" firstAttribute="leading" secondItem="mvl-PP-Tzz" secondAttribute="leadingMargin" constant="37" id="aGG-gw-ahp"/>
                             <constraint firstItem="RlS-jF-fia" firstAttribute="top" secondItem="acq-oe-7q9" secondAttribute="bottom" constant="8" id="cEH-CU-Iul"/>
                             <constraint firstItem="KaE-N8-LGQ" firstAttribute="leading" secondItem="mvl-PP-Tzz" secondAttribute="leadingMargin" constant="-13" id="gkx-Dd-M3A"/>
