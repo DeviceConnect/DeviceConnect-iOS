@@ -43,7 +43,6 @@
             return nil;
         }
     }
-    
     NSString *viewId = [NSString stringWithFormat:@"DPHueSettingViewController%lu", (unsigned long)(index + 1)];
     
     // Create a new view controller and pass suitable data.

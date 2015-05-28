@@ -227,17 +227,42 @@ canEditRowAtIndexPath:(NSIndexPath *)indexPath {
 
 -(void)didLocalConnectionSuccess {
     [self stopIndicator];
+    dispatch_queue_t updateQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    dispatch_async(updateQueue, ^{
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [[DPHueManager sharedManager] deallocPHNotificationManagerWithReceiver:self];
+            [[DPHueManager sharedManager] deallocHueSDK];
+        });
+    });
+
     //接続できたのでライト検索へ飛ぶ
     [self showLightSearchPage];
+    
 }
 
 - (void)didNoLocalConnection {
     [self stopIndicator];
+    dispatch_queue_t updateQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    dispatch_async(updateQueue, ^{
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [[DPHueManager sharedManager] deallocPHNotificationManagerWithReceiver:self];
+            [[DPHueManager sharedManager] deallocHueSDK];
+        });
+    });
+
     [self showAleart:DPHueLocalizedString(_bundle, @"HueNotConnectingBridge")];
 }
 
 -(void)didNotAuthenticated {
     [self stopIndicator];
+    dispatch_queue_t updateQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    dispatch_async(updateQueue, ^{
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [[DPHueManager sharedManager] deallocPHNotificationManagerWithReceiver:self];
+            [[DPHueManager sharedManager] deallocHueSDK];
+        });
+    });
+
     [self showAuthPage];
 }
 

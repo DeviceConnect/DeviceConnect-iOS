@@ -7,12 +7,19 @@
 //  http://opensource.org/licenses/mit-license.php
 //
 #import "DPHueSettingViewController4.h"
-@interface DPHueSettingViewController4 ()
+
+
+@interface DPHueSettingViewController4 () {
+    int lightCount;
+    int retryCount;
+}
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *lightSearchingIndicator;
+@property (weak, nonatomic) IBOutlet UIView *indicator;
 
 @property (weak, nonatomic) IBOutlet UITableView *foundLightListView;
 @property (strong, nonatomic) NSString *serial;
 @property (weak, nonatomic) UIAlertAction *okAction;
+
 - (IBAction)searchAutomatic:(id)sender;
 - (IBAction)searchManual:(id)sender;
 
@@ -91,17 +98,14 @@
 
 
 - (IBAction)searchAutomatic:(id)sender {
+    _indicator.hidden = NO;
+    retryCount = 2;
     [self startIndicator];
     [manager searchLightWithCompletion:^(NSArray *errors) {
-
-        [self stopIndicator];
-        
-        if (!errors) {
-            [self showAleart:DPHueLocalizedString(_bundle, @"HueSearchLight")];
-        } else {
-            [self showAleart:DPHueLocalizedString(_bundle, @"HueSearchLightError")];
-        }
-        [_foundLightListView reloadData];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            lightCount = (int) [[DPHueManager sharedManager] getLightStatus].allValues.count;
+            [self reloadHue];
+        });
     }];
 }
 
@@ -113,18 +117,13 @@
     UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleDestructive handler:nil];
     [serialAlert addAction:cancelAction];
     _okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        _indicator.hidden = NO;
         [self startIndicator];
         NSArray *serials = @[_serial];
         [manager registerLightForSerialNo:serials completion:^(NSArray *errors) {
-            [self stopIndicator];
-            
-            if (!errors) {
-                [self showAleart:DPHueLocalizedString(_bundle, @"HueSearchLight")];
-            } else {
-                [self showAleart:DPHueLocalizedString(_bundle, @"HueSearchLightError")];
-            }
-            [_foundLightListView reloadData];
-
+            retryCount = 2;
+            lightCount = (int) [[DPHueManager sharedManager] getLightStatus].allValues.count;
+            [self  reloadHue];
         }];
     }];
     _okAction.enabled = NO;
@@ -151,4 +150,63 @@ shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)strin
     }
     return ([text length] <= 6);
 }
+
+
+- (void)reloadHue
+{
+    
+    DPHueItemBridge *item = [self getSelectedItemBridge];
+    [[DPHueManager sharedManager] initHue];
+    [[DPHueManager sharedManager] startAuthenticateBridgeWithIpAddress:item.ipAddress
+                                                            macAddress:item.macAddress
+                                                              receiver:self
+                                        localConnectionSuccessSelector:@selector(didBridgeSuccess)
+                                                     noLocalConnection:@selector(didBridgeFailed)
+                                                      notAuthenticated:@selector(didBridgeFailed)];
+}
+
+- (void)didBridgeSuccess
+{
+    [[DPHueManager sharedManager] deallocPHNotificationManagerWithReceiver:self];
+    [[DPHueManager sharedManager] deallocHueSDK];
+    dispatch_queue_t updateQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    dispatch_async(updateQueue, ^{
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(30 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            if (retryCount < 0 || lightCount < [[DPHueManager sharedManager] getLightStatus].allValues.count) {
+                [_foundLightListView reloadData];
+                _indicator.hidden = YES;
+                [self stopIndicator];
+                if (lightCount < [[DPHueManager sharedManager] getLightStatus].allValues.count) {
+                    NSString *successMessage = [DPHueLocalizedString(_bundle, @"HueSearchLight")
+                                                stringByAppendingFormat:DPHueLocalizedString(_bundle, @"HueSearchHitLight"),
+                                                [[DPHueManager sharedManager] getLightStatus].allValues.count - lightCount];
+                    [self showAleart:successMessage];
+                } else {
+                    [self showAleart:DPHueLocalizedString(_bundle, @"HueSearchLightOld")];
+                }
+            } else {
+                retryCount--;
+                [self reloadHue];
+            }
+        });
+    });
+}
+
+- (void)didBridgeFailed
+{
+    [[DPHueManager sharedManager] deallocPHNotificationManagerWithReceiver:self];
+    [[DPHueManager sharedManager] deallocHueSDK];
+    dispatch_queue_t updateQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    dispatch_async(updateQueue, ^{
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            [[DPHueManager sharedManager] deallocPHNotificationManagerWithReceiver:self];
+            [[DPHueManager sharedManager] deallocHueSDK];
+            [_foundLightListView reloadData];
+            _indicator.hidden = YES;
+            [self stopIndicator];
+            [self showAleart:DPHueLocalizedString(_bundle, @"HueSearchLightError")];
+        });
+    });
+}
+
 @end

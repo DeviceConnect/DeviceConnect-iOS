@@ -377,8 +377,11 @@ pushlinkAuthenticationSuccessSelector:(SEL)pushlinkAuthenticationSuccessSelector
         registerReceiver = self;
     }
 
-    if (notificationManager != nil) {
+    if (notificationManager) {
         [notificationManager deregisterObjectForAllNotifications:registerReceiver];
+        [notificationManager deregisterObject:registerReceiver forNotification:LOCAL_CONNECTION_NOTIFICATION];
+        [notificationManager deregisterObject:registerReceiver forNotification:NO_LOCAL_CONNECTION_NOTIFICATION];
+        [notificationManager deregisterObject:registerReceiver forNotification:NO_LOCAL_AUTHENTICATION_NOTIFICATION];
         notificationManager = nil;
     }
 }
