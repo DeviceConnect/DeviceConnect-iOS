@@ -65,7 +65,7 @@
 		AB33D7771A7605540073A1BA /* DPPebbleDevicePlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = AB33D7721A7605540073A1BA /* DPPebbleDevicePlugin.m */; };
 		AB33D7781A7605540073A1BA /* DPPebbleImage.m in Sources */ = {isa = PBXBuildFile; fileRef = AB33D7741A7605540073A1BA /* DPPebbleImage.m */; };
 		AB33D7791A7605540073A1BA /* DPPebbleManager.m in Sources */ = {isa = PBXBuildFile; fileRef = AB33D7761A7605540073A1BA /* DPPebbleManager.m */; };
-		AB8C40831AC3F16000BFB572 /* dConnectDevicePebble.pbw in Resources */ = {isa = PBXBuildFile; fileRef = AB8C40821AC3F15300BFB572 /* dConnectDevicePebble.pbw */; };
+		AB3A3FD21B17115E00C40A88 /* dConnectDevicePebble.pbw in Resources */ = {isa = PBXBuildFile; fileRef = AB3A3FD11B17115400C40A88 /* dConnectDevicePebble.pbw */; };
 		ABCE5F5819AB38C00040EE10 /* PebbleKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABCE5F5719AB38C00040EE10 /* PebbleKit.framework */; };
 		BE066B5919A8532700CBED07 /* dConnectDevicePebble_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BE066B5819A8532700CBED07 /* dConnectDevicePebble_iPhone.storyboard */; };
 		BE066B5B19A8537A00CBED07 /* dConnectDevicePebble_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BE066B5A19A8537A00CBED07 /* dConnectDevicePebble_iPad.storyboard */; };
@@ -162,7 +162,7 @@
 		AB33D7741A7605540073A1BA /* DPPebbleImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPPebbleImage.m; sourceTree = "<group>"; };
 		AB33D7751A7605540073A1BA /* DPPebbleManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPPebbleManager.h; sourceTree = "<group>"; };
 		AB33D7761A7605540073A1BA /* DPPebbleManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPPebbleManager.m; sourceTree = "<group>"; };
-		AB8C40821AC3F15300BFB572 /* dConnectDevicePebble.pbw */ = {isa = PBXFileReference; lastKnownFileType = file; path = dConnectDevicePebble.pbw; sourceTree = "<group>"; };
+		AB3A3FD11B17115400C40A88 /* dConnectDevicePebble.pbw */ = {isa = PBXFileReference; lastKnownFileType = file; path = dConnectDevicePebble.pbw; sourceTree = "<group>"; };
 		ABCE5F5719AB38C00040EE10 /* PebbleKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = PebbleKit.framework; sourceTree = "<group>"; };
 		BE066B5819A8532700CBED07 /* dConnectDevicePebble_iPhone.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = dConnectDevicePebble_iPhone.storyboard; sourceTree = "<group>"; };
 		BE066B5A19A8537A00CBED07 /* dConnectDevicePebble_iPad.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = dConnectDevicePebble_iPad.storyboard; sourceTree = "<group>"; };
@@ -261,7 +261,7 @@
 		44407C2D1998BE4E00E9B751 /* dConnectDevicePebble_resources */ = {
 			isa = PBXGroup;
 			children = (
-				AB8C40821AC3F15300BFB572 /* dConnectDevicePebble.pbw */,
+				AB3A3FD11B17115400C40A88 /* dConnectDevicePebble.pbw */,
 				44ECCD2819AF42EC00EED0D8 /* images */,
 				BE066B5819A8532700CBED07 /* dConnectDevicePebble_iPhone.storyboard */,
 				BE066B5A19A8537A00CBED07 /* dConnectDevicePebble_iPad.storyboard */,
@@ -452,7 +452,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AB8C40831AC3F16000BFB572 /* dConnectDevicePebble.pbw in Resources */,
+				AB3A3FD21B17115E00C40A88 /* dConnectDevicePebble.pbw in Resources */,
 				44A4A9F619C1986C0050A0AA /* img05.png in Resources */,
 				BE066B5B19A8537A00CBED07 /* dConnectDevicePebble_iPad.storyboard in Resources */,
 				44A4A9F219C1986C0050A0AA /* img01.png in Resources */,
