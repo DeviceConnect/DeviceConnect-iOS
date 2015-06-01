@@ -778,23 +778,19 @@ didReceiveGetSeekRequest:(DConnectRequestMessage *)request
         dispatch_sync(dispatch_get_main_queue(), block);
     }
     
-    if ([_musicPlayer.nowPlayingItem isEqual:mediaItem]) {
-        [response setResult:DConnectMessageResultTypeOk];
-        
-        if (_currentMediaPlayer == MediaPlayerTypeMoviePlayer) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                DConnectMessage *mediaPlayer = [DConnectMessage message];
-                NSString *status = DConnectMediaPlayerProfileStatusMedia;
-                [DConnectMediaPlayerProfile setStatus:status target:mediaPlayer];
-                [_self sendEventMusicWithMessage:mediaPlayer];
-                
-                
-                [_viewController.moviePlayer pause];
-                [_viewController dismissMoviePlayerViewControllerAnimated];
-            });
-        }
-    } else {
-        [response setErrorToUnknownWithMessage:@"Failed to change the playing media item."];
+    [response setResult:DConnectMessageResultTypeOk];
+
+    if (_currentMediaPlayer == MediaPlayerTypeMoviePlayer) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            DConnectMessage *mediaPlayer = [DConnectMessage message];
+            NSString *status = DConnectMediaPlayerProfileStatusMedia;
+            [DConnectMediaPlayerProfile setStatus:status target:mediaPlayer];
+            [_self sendEventMusicWithMessage:mediaPlayer];
+            
+            
+            [_viewController.moviePlayer pause];
+            [_viewController dismissMoviePlayerViewControllerAnimated];
+        });
     }
     
     _currentMediaPlayer = MediaPlayerTypeIPod;
@@ -878,20 +874,15 @@ didReceiveGetSeekRequest:(DConnectRequestMessage *)request
          }
          __weak typeof(self) _self = self;
          void(^block)(void) = ^{
-             if ([(_viewController.moviePlayer.contentURL = url) isEqual:url]) {
-                 _viewController.moviePlayer.movieSourceType = MPMovieSourceTypeFile;
-                 // 再生項目変更は、2度目以降ではprepareToPlayする
-                 [_viewController.moviePlayer prepareToPlay];
-                 [response setResult:DConnectMessageResultTypeOk];
-                 _currentMediaPlayer = MediaPlayerTypeMoviePlayer;
-                 DConnectMessage *mediaPlayer = [DConnectMessage message];
-                 NSString *status = DConnectMediaPlayerProfileStatusMedia;
-                 [DConnectMediaPlayerProfile setStatus:status target:mediaPlayer];
-                 [_self sendEventMovieWithMessage:mediaPlayer];
-             } else {
-                 [response setErrorToUnknownWithMessage:
-                  @"Failed to change the playing media item."];
-             }
+             _viewController.moviePlayer.movieSourceType = MPMovieSourceTypeFile;
+             // 再生項目変更は、2度目以降ではprepareToPlayする
+             [_viewController.moviePlayer prepareToPlay];
+             [response setResult:DConnectMessageResultTypeOk];
+             _currentMediaPlayer = MediaPlayerTypeMoviePlayer;
+             DConnectMessage *mediaPlayer = [DConnectMessage message];
+             NSString *status = DConnectMediaPlayerProfileStatusMedia;
+             [DConnectMediaPlayerProfile setStatus:status target:mediaPlayer];
+             [_self sendEventMovieWithMessage:mediaPlayer];
              [[DConnectManager sharedManager] sendResponse:response];
          };
          if ([self moviePlayerViewControllerIsPresented]) {
@@ -959,65 +950,57 @@ didReceivePutPlayRequest:(DConnectRequestMessage *)request
                 serviceId:(NSString *)serviceId
 {
     if (_currentMediaPlayer == MediaPlayerTypeIPod) {
-        if ([_musicPlayer playbackState] != MPMusicPlaybackStatePlaying) {
-            MPMediaItem *mediaItem = _musicPlayer.nowPlayingItem;
-            if ((!mediaItem || _nowPlayingMediaId) && [_musicPlayer playbackState] == MPMusicPlaybackStateStopped) {
-                [self             profile:profile
-                didReceivePutMediaRequest:request
-                                 response:response
-                                serviceId:serviceId
-                                  mediaId:_nowPlayingMediaId];
-                mediaItem = _musicPlayer.nowPlayingItem;
-            }
-            if (mediaItem) {
-                NSNumber *isCloudItem = [mediaItem valueForProperty:MPMediaItemPropertyIsCloudItem];
-                if (isCloudItem) {
-                    DPHostReachability *networkReachability
-                            = [DPHostReachability reachabilityForInternetConnection];
-                    NetworkStatus networkStatus = [networkReachability currentReachabilityStatus];
-                    if ([isCloudItem boolValue] && networkStatus == NotReachable) {
-                        // iCloud上の音楽項目
-                        // （つまりiOSデバイス側にまだダウンロードされていない）で、
-                        // 尚かつインターネット接続が無い場合は
-                        // 再生できない。
-                        [response setErrorToUnknownWithMessage:
-                         @"Internet is not reachable; the specified audio media item "
-                         "is an iClould item and its playback requires an Internet connection."];
-                        return YES;
-                    }
-                }
-                __weak typeof(self) _self = self;
-                void(^block)(void) = ^{
-                    DConnectMessage *mediaPlayer = [DConnectMessage message];
-                    NSString *status = DConnectMediaPlayerProfileStatusPlay;
-                    [DConnectMediaPlayerProfile setStatus:status target:mediaPlayer];
-                    [_self sendEventMusicWithMessage:mediaPlayer];
-                    [_musicPlayer setCurrentPlaybackTime:0.0f];
-                    [_musicPlayer play];
-                    
-                    NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
-                    // 現在再生中の曲が変わった時の通知
-                    [notificationCenter addObserver:_self
-                                           selector:@selector(nowPlayingItemChangedInIPod:)
-                                               name:MPMusicPlayerControllerNowPlayingItemDidChangeNotification
-                                             object:_musicPlayer];
-                    
-                    // 通知開始
-                    [_musicPlayer beginGeneratingPlaybackNotifications];
-
-                };
-                if ([NSThread isMainThread]) {
-                    block();
-                } else {
-                    dispatch_sync(dispatch_get_main_queue(), block);
-                }
-                [response setResult:DConnectMessageResultTypeOk];
-            } else {
-                [response setErrorToUnknownWithMessage:@"Media cannot be played; media is not specified."];
-            }
-        } else {
-            [response setErrorToUnknownWithMessage:@"Media cannot be played; it is already playing."];
+        MPMediaItem *mediaItem = _musicPlayer.nowPlayingItem;
+        if ((!mediaItem || _nowPlayingMediaId) && [_musicPlayer playbackState] == MPMusicPlaybackStateStopped) {
+            [self             profile:profile
+            didReceivePutMediaRequest:request
+                             response:response
+                            serviceId:serviceId
+                              mediaId:_nowPlayingMediaId];
+            mediaItem = _musicPlayer.nowPlayingItem;
         }
+            NSNumber *isCloudItem = [mediaItem valueForProperty:MPMediaItemPropertyIsCloudItem];
+            if (isCloudItem) {
+                DPHostReachability *networkReachability
+                        = [DPHostReachability reachabilityForInternetConnection];
+                NetworkStatus networkStatus = [networkReachability currentReachabilityStatus];
+                if ([isCloudItem boolValue] && networkStatus == NotReachable) {
+                    // iCloud上の音楽項目
+                    // （つまりiOSデバイス側にまだダウンロードされていない）で、
+                    // 尚かつインターネット接続が無い場合は
+                    // 再生できない。
+                    [response setErrorToUnknownWithMessage:
+                     @"Internet is not reachable; the specified audio media item "
+                     "is an iClould item and its playback requires an Internet connection."];
+                    return YES;
+                }
+            }
+            __weak typeof(self) _self = self;
+            void(^block)(void) = ^{
+                DConnectMessage *mediaPlayer = [DConnectMessage message];
+                NSString *status = DConnectMediaPlayerProfileStatusPlay;
+                [DConnectMediaPlayerProfile setStatus:status target:mediaPlayer];
+                [_self sendEventMusicWithMessage:mediaPlayer];
+                [_musicPlayer setCurrentPlaybackTime:0.0f];
+                [_musicPlayer play];
+                
+                NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
+                // 現在再生中の曲が変わった時の通知
+                [notificationCenter addObserver:_self
+                                       selector:@selector(nowPlayingItemChangedInIPod:)
+                                           name:MPMusicPlayerControllerNowPlayingItemDidChangeNotification
+                                         object:_musicPlayer];
+                
+                // 通知開始
+                [_musicPlayer beginGeneratingPlaybackNotifications];
+
+            };
+            if ([NSThread isMainThread]) {
+                block();
+            } else {
+                dispatch_sync(dispatch_get_main_queue(), block);
+            }
+            [response setResult:DConnectMessageResultTypeOk];
     } else if (_currentMediaPlayer == MediaPlayerTypeMoviePlayer) {
         if (_nowPlayingMediaId && _viewController.moviePlayer.playbackState == MPMoviePlaybackStateStopped) {
             [self                 profile:profile
@@ -1289,7 +1272,7 @@ didReceivePutSeekRequest:(DConnectRequestMessage *)request
                      pos:(NSNumber *)pos
 {
     NSString *posString = [request stringForKey:DConnectMediaPlayerProfileParamPos];
-    if (!pos || (pos && ![DPHostUtils existDigitWithString:posString])) {
+    if ((pos && ![DPHostUtils existDigitWithString:posString])) {
         [response setErrorToInvalidRequestParameterWithMessage:@"pos must be specified."];
         return YES;
     }
