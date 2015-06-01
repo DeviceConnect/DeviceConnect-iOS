@@ -12,6 +12,7 @@
 
 static DPHueItemBridge *mSelectedItemBridge;
 
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -163,6 +164,13 @@ static DPHueItemBridge *mSelectedItemBridge;
 - (void)showLightSearchPage
 {
     [self showPage:2];
+}
+
+
+//ライト一覧ページを開く
+- (void)showLightListPage
+{
+    [self showPage:3];
 }
 
 @end

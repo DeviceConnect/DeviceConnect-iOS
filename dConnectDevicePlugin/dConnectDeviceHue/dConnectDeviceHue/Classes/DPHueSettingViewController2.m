@@ -94,13 +94,28 @@
 
 - (void)didBridgeAuthenticationSuccess
 {
+
     [self showAleart:DPHueLocalizedString(_bundle, @"HueRegisterApp")];
+    NSLog(@"success");
+    dispatch_queue_t updateQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    dispatch_async(updateQueue, ^{
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [[DPHueManager sharedManager] deallocPHNotificationManagerWithReceiver:self];
+            [[DPHueManager sharedManager] deallocHueSDK];
+        });
+    });
     [self showLightSearchPage];
 }
 
 - (void)didFailed
 {
-    
+    dispatch_queue_t updateQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    dispatch_async(updateQueue, ^{
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [[DPHueManager sharedManager] deallocPHNotificationManagerWithReceiver:self];
+            [[DPHueManager sharedManager] deallocHueSDK];
+        });
+    });
     [self showLightSearchPage];
 }
 

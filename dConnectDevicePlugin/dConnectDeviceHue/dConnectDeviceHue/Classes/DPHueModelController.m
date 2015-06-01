@@ -43,7 +43,6 @@
             return nil;
         }
     }
-    
     NSString *viewId = [NSString stringWithFormat:@"DPHueSettingViewController%lu", (unsigned long)(index + 1)];
     
     // Create a new view controller and pass suitable data.
@@ -77,7 +76,7 @@
 
 - (NSInteger)presentationCountForPageViewController:(UIPageViewController *)pageViewController
 {
-    return 3;
+    return DPHUE_SETTING_PAGE_COUNT_IPHONE;
 }
 
 - (NSInteger)presentationIndexForPageViewController:(UIPageViewController *)pageViewController
