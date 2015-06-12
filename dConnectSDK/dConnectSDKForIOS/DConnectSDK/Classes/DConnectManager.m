@@ -407,30 +407,36 @@ NSString *const DConnectAttributeNameRequestAccessToken = @"requestAccessToken";
         }
         
         if (self.settings.useLocalOAuth) {
-            // Local OAuthチェック
-            NSArray *scopes = DConnectIgnoreProfiles();
-            NSString *accessToken = [request accessToken];
-            LocalOAuth2Main *oauth = [LocalOAuth2Main sharedOAuthForClass:[DConnectManager class]];
-            LocalOAuthCheckAccessTokenResult *result = [oauth checkAccessTokenWithScope:profileName
-                                                                          specialScopes:scopes
-                                                                            accessToken:accessToken];
-            if ([result checkResult]) {
-                [_self executeRequest:request response:response callback:callback];
-            } else {
-                // Local OAuth認証失敗
-                if (accessToken == nil) {
-                    [response setErrorToEmptyAccessToken];
-                } else if (![result isExistAccessToken]) {
-                    [response setErrorToNotFoundClientId];
-                } else if (![result isExistClientId]) {
-                    [response setErrorToNotFoundClientId];
-                } else if (![result isExistScope]) {
-                    [response setErrorToScope];
-                } else if (![result isExistNotExpired]) {
-                    [response setErrorToExpiredAccessToken];
+            @try {
+                // Local OAuthチェック
+                NSArray *scopes = DConnectIgnoreProfiles();
+                NSString *accessToken = [request accessToken];
+                LocalOAuth2Main *oauth = [LocalOAuth2Main sharedOAuthForClass:[DConnectManager class]];
+                LocalOAuthCheckAccessTokenResult *result = [oauth checkAccessTokenWithScope:profileName
+                                                                              specialScopes:scopes
+                                                                                accessToken:accessToken];
+                if ([result checkResult]) {
+                    
+                    [_self executeRequest:request response:response callback:callback];
                 } else {
-                    [response setErrorToAuthorization];
+                    // Local OAuth認証失敗
+                    if (accessToken == nil) {
+                        [response setErrorToEmptyAccessToken];
+                    } else if (![result isExistAccessToken]) {
+                        [response setErrorToNotFoundClientId];
+                    } else if (![result isExistClientId]) {
+                        [response setErrorToNotFoundClientId];
+                    } else if (![result isExistScope]) {
+                        [response setErrorToScope];
+                    } else if (![result isExistNotExpired]) {
+                        [response setErrorToExpiredAccessToken];
+                    } else {
+                        [response setErrorToAuthorization];
+                    }
+                    [_self sendResponse:response];
                 }
+            } @catch (NSString *exception) {
+                [response setErrorToInvalidRequestParameterWithMessage:exception];
                 [_self sendResponse:response];
             }
         } else {
