@@ -22,6 +22,8 @@
 #import "GHHistoryViewController.h"
 #import "GHAppDelegate.h"
 
+NSString *const GHMainViewControllerDefaultPageUrl = @"http://www.gclue.io/dwa";
+
 typedef enum {
     GHToolViewScrollStatusInit = 0,
     GHToolViewScrollStatusAnimation ,
@@ -277,20 +279,22 @@ typedef enum{
 //--------------------------------------------------------------//
 
 ///初回起動時に最後に表示したページを表示(履歴のデータ）
+// 履歴が無い場合はデフォルトのページを表示
 - (void)showLastPage
 {
     Page *page = [self.manager latestPage];
     NSString* url = page.url;
-    if (url) {
-        [self loadHtml:url];
-        
-        //URLを表示
-        NSURLRequest *req = [NSURLRequest requestWithURL:[NSURL URLWithString:url]
-                                             cachePolicy:NSURLRequestReloadIgnoringLocalCacheData
-                                         timeoutInterval:TIMEOUT];
-        
-        [self updateDisplayURL:req];
+    if (!url) {
+        url = GHMainViewControllerDefaultPageUrl;
     }
+    [self loadHtml:url];
+    
+    //URLを表示
+    NSURLRequest *req = [NSURLRequest requestWithURL:[NSURL URLWithString:url]
+                                         cachePolicy:NSURLRequestReloadIgnoringLocalCacheData
+                                     timeoutInterval:TIMEOUT];
+    
+    [self updateDisplayURL:req];
 }
 
 
