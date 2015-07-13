@@ -766,7 +766,7 @@ typedef enum{
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
 {
-    //    LOG(@"error[%d]:%@",(int)[error code], [error localizedDescription]);
+    //    LOG(@"didFailLoadWithError [%d]:%@",(int)[error code], [error localizedDescription]);
     
     //"Frame load interrupted"は無視
     if([error code] == 102){
@@ -791,9 +791,31 @@ typedef enum{
     [self.webview loadRequest:req];
 }
 
-- (void)didFailWithError:(NSError *)error
+- (void)URL:(NSURL*)URL didFailWithError:(NSError *)error
 {
+    //    LOG(@"didFailWithError [%d]:%@",(int)[error code], [error localizedDescription]);
     
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"error.html" ofType:nil];
+    NSError *fileError = nil;
+    NSString *html = [NSString stringWithContentsOfFile:path
+                                               encoding:NSUTF8StringEncoding
+                                                  error:&fileError];
+    if (html) {
+        NSString *message = @"";
+        switch (error.code) {
+            case NSURLErrorNotConnectedToInternet:
+                message = @"インターネットに接続していません。";
+                break;
+            case NSURLErrorCannotFindHost:
+                message = @"サーバが見つかりません。";
+                break;
+            default:
+                break;
+        }
+        html = [html stringByReplacingOccurrencesOfString:@"{{reason}}"
+                                               withString:message];
+        [self.webview loadHTMLString:html baseURL:URL];
+    }
 }
 
 
