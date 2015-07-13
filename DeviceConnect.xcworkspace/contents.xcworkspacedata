@@ -2,6 +2,12 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:dConnectDevicePlugin/dConnectDeviceTheta/dConnectDeviceTheta.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:dConnectSDK/dConnectSDKForIOS/DConnectSDK.xcodeproj">
+   </FileRef>
+   <FileRef
       location = "group:dConnectSDK/dConnectBrowser/dConnectBrowser.xcodeproj">
    </FileRef>
    <FileRef
@@ -27,9 +33,6 @@
    </FileRef>
    <FileRef
       location = "group:dConnectDevicePlugin/DCMDevicePluginSDK/DCMDevicePluginSDK.xcodeproj">
-   </FileRef>
-   <FileRef
-      location = "group:dConnectSDK/dConnectSDKForIOS/DConnectSDK.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:dConnectDevicePlugin/dConnectDeviceTest/dConnectDeviceTest.xcodeproj">
