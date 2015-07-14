@@ -44,18 +44,21 @@
                         <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="1.概要" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2yc-4T-uMC">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="1.概要" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2yc-4T-uMC">
                                 <rect key="frame" x="16" y="72" width="93" height="41"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="30"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="21" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="17x-Mw-UkD">
-                                <rect key="frame" x="120" y="683" width="529" height="224"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="theta.png" translatesAutoresizingMaskIntoConstraints="NO" id="ViW-GZ-l0q">
+                                <rect key="frame" x="192" y="142" width="384" height="333"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="224" id="JJS-Vf-cvx"/>
-                                    <constraint firstAttribute="width" constant="529" id="cW8-7m-OkH"/>
+                                    <constraint firstAttribute="width" constant="384" id="0Af-sx-Qfj"/>
+                                    <constraint firstAttribute="height" constant="333" id="sZO-b6-7tx"/>
                                 </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" lineBreakMode="tailTruncation" numberOfLines="21" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="17x-Mw-UkD">
+                                <rect key="frame" x="40" y="524" width="686" height="419"/>
                                 <string key="text">ThetaとのWiFi接続を行います。
 
 接続するThetaのSSIDとパスワードを確認してください。
@@ -69,8 +72,15 @@ Thetaの底面にある型番がパスワードになります。</string>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="S2j-Qb-Dko" firstAttribute="top" secondItem="17x-Mw-UkD" secondAttribute="bottom" constant="117" id="aBj-Xj-ZDg"/>
-                            <constraint firstAttribute="centerX" secondItem="17x-Mw-UkD" secondAttribute="centerX" id="k3c-KU-IYP"/>
+                            <constraint firstItem="17x-Mw-UkD" firstAttribute="top" secondItem="ViW-GZ-l0q" secondAttribute="bottom" constant="49" id="9rD-qo-WJm"/>
+                            <constraint firstItem="17x-Mw-UkD" firstAttribute="leading" secondItem="OGY-fg-KFU" secondAttribute="leadingMargin" constant="24" id="CLM-Jm-GO8"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="17x-Mw-UkD" secondAttribute="trailing" constant="26" id="OGY-J3-DYc"/>
+                            <constraint firstItem="S2j-Qb-Dko" firstAttribute="top" relation="greaterThanOrEqual" secondItem="17x-Mw-UkD" secondAttribute="bottom" constant="55" id="QQX-Nb-wCO"/>
+                            <constraint firstAttribute="centerX" secondItem="ViW-GZ-l0q" secondAttribute="centerX" id="m2h-Yf-o3i"/>
+                            <constraint firstItem="ViW-GZ-l0q" firstAttribute="top" secondItem="OGY-fg-KFU" secondAttribute="topMargin" constant="142" id="mKK-SW-nXF"/>
+                            <constraint firstItem="17x-Mw-UkD" firstAttribute="top" secondItem="ViW-GZ-l0q" secondAttribute="bottom" constant="49" id="pKX-f0-3iR"/>
+                            <constraint firstItem="2yc-4T-uMC" firstAttribute="top" secondItem="OGY-fg-KFU" secondAttribute="topMargin" constant="72" id="qHT-KO-VQl"/>
+                            <constraint firstItem="2yc-4T-uMC" firstAttribute="leading" secondItem="OGY-fg-KFU" secondAttribute="leadingMargin" id="tTP-Ub-5I6"/>
                         </constraints>
                     </view>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
@@ -112,7 +122,7 @@ Thetaの底面にある型番がパスワードになります。</string>
                                 <color key="textColor" red="0.99542297980000005" green="0.1420126149" blue="0.088783746580000003" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="WiFiTheta.png" translatesAutoresizingMaskIntoConstraints="NO" id="V4p-yc-5Qm">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="WiFiTheta.png" translatesAutoresizingMaskIntoConstraints="NO" id="V4p-yc-5Qm">
                                 <rect key="frame" x="162" y="140" width="445" height="323"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="445" id="3zN-tB-XIl"/>
@@ -125,10 +135,12 @@ Thetaの底面にある型番がパスワードになります。</string>
                             <constraint firstItem="6oh-sT-USU" firstAttribute="top" secondItem="dm0-ZR-8u9" secondAttribute="bottom" constant="24" id="5Ge-me-X2n"/>
                             <constraint firstItem="eHp-Ue-XUE" firstAttribute="top" secondItem="6oh-sT-USU" secondAttribute="bottom" constant="115" id="8ck-ek-dup"/>
                             <constraint firstItem="OwR-Up-nlC" firstAttribute="top" secondItem="bQ4-mm-TUm" secondAttribute="bottom" constant="8" id="BqT-fg-aVx"/>
+                            <constraint firstItem="V4p-yc-5Qm" firstAttribute="top" secondItem="iNO-q2-jN3" secondAttribute="topMargin" constant="140" id="ISX-rP-j0y"/>
                             <constraint firstItem="OwR-Up-nlC" firstAttribute="leading" secondItem="iNO-q2-jN3" secondAttribute="leadingMargin" id="RI7-oM-nKu"/>
                             <constraint firstAttribute="centerX" secondItem="V4p-yc-5Qm" secondAttribute="centerX" id="SwC-pQ-4lo"/>
                             <constraint firstItem="V4p-yc-5Qm" firstAttribute="top" secondItem="OwR-Up-nlC" secondAttribute="bottom" constant="34" id="Zde-ec-mev"/>
                             <constraint firstAttribute="centerX" secondItem="dm0-ZR-8u9" secondAttribute="centerX" id="dtt-fn-9A3"/>
+                            <constraint firstItem="OwR-Up-nlC" firstAttribute="top" secondItem="iNO-q2-jN3" secondAttribute="topMargin" constant="72" id="nho-hG-x4g"/>
                             <constraint firstAttribute="centerX" secondItem="6oh-sT-USU" secondAttribute="centerX" id="zSW-eu-FRm"/>
                         </constraints>
                     </view>
@@ -150,17 +162,11 @@ Thetaの底面にある型番がパスワードになります。</string>
                         <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="5.接続確認" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zoE-Y9-fMF">
-                                <rect key="frame" x="16" y="72" width="178" height="38"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="下に表示されているカメラ検索ボタンを押下してください。" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ixF-7N-YAd">
-                                <rect key="frame" x="173" y="687" width="423" height="107"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I7d-Ka-CDm">
+                                <rect key="frame" x="178" y="863" width="413" height="71"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="107" id="65i-jy-lbv"/>
-                                    <constraint firstAttribute="width" constant="423" id="wLI-mo-lXQ"/>
+                                    <constraint firstAttribute="width" constant="413" id="VE6-Pc-rdi"/>
+                                    <constraint firstAttribute="height" constant="71" id="bnX-4E-rut"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -180,17 +186,23 @@ Thetaの底面にある型番がパスワードになります。</string>
                                     <action selector="searchBtnDidPushed:" destination="uQJ-7l-WYb" eventType="touchUpInside" id="sBg-Vj-NL3"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I7d-Ka-CDm">
-                                <rect key="frame" x="178" y="863" width="413" height="71"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="下に表示されているカメラ検索ボタンを押下してください。" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ixF-7N-YAd">
+                                <rect key="frame" x="173" y="687" width="423" height="107"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="413" id="VE6-Pc-rdi"/>
-                                    <constraint firstAttribute="height" constant="71" id="bnX-4E-rut"/>
+                                    <constraint firstAttribute="height" constant="107" id="65i-jy-lbv"/>
+                                    <constraint firstAttribute="width" constant="423" id="wLI-mo-lXQ"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <view hidden="YES" alpha="0.69999998807907104" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="R4H-QQ-OmV">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="5.接続確認" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zoE-Y9-fMF">
+                                <rect key="frame" x="16" y="72" width="178" height="38"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view hidden="YES" alpha="0.69999998807907104" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="R4H-QQ-OmV">
                                 <rect key="frame" x="240" y="466" width="261" height="202"/>
                                 <subviews>
                                     <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="fXR-iH-TWA">
@@ -198,19 +210,34 @@ Thetaの底面にある型番がパスワードになります。</string>
                                     </activityIndicatorView>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="261" id="M4u-CO-OaQ"/>
+                                    <constraint firstAttribute="height" constant="202" id="tUo-wr-o7O"/>
+                                </constraints>
                             </view>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="thetaStandby.png" translatesAutoresizingMaskIntoConstraints="NO" id="9Pt-0x-9Eg">
+                                <rect key="frame" x="219" y="118" width="330" height="279"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="279" id="Q3p-FN-VTu"/>
+                                    <constraint firstAttribute="width" constant="330" id="TIq-PL-NYx"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="I7d-Ka-CDm" firstAttribute="top" secondItem="ixF-7N-YAd" secondAttribute="bottom" constant="69" id="05i-o4-k4j"/>
                             <constraint firstItem="zoE-Y9-fMF" firstAttribute="top" secondItem="Ifk-ms-LM0" secondAttribute="bottom" constant="8" id="1TL-dO-Hjm"/>
-                            <constraint firstAttribute="centerY" secondItem="R4H-QQ-OmV" secondAttribute="centerY" id="6lF-qz-a6p"/>
                             <constraint firstItem="I7d-Ka-CDm" firstAttribute="top" secondItem="5SA-db-p93" secondAttribute="bottom" constant="8" id="6p8-bh-Leh"/>
                             <constraint firstItem="6Vj-en-zor" firstAttribute="top" secondItem="I7d-Ka-CDm" secondAttribute="bottom" constant="90" id="8JA-B0-5Vh"/>
                             <constraint firstAttribute="centerX" secondItem="I7d-Ka-CDm" secondAttribute="centerX" id="C5z-ku-RiW"/>
+                            <constraint firstItem="zoE-Y9-fMF" firstAttribute="top" secondItem="jEC-M5-iXv" secondAttribute="topMargin" constant="72" id="Gf8-HC-7CF"/>
                             <constraint firstAttribute="centerX" secondItem="ixF-7N-YAd" secondAttribute="centerX" id="JkQ-Ld-KGu"/>
+                            <constraint firstAttribute="centerX" secondItem="R4H-QQ-OmV" secondAttribute="centerX" id="Obn-bh-hzR"/>
+                            <constraint firstAttribute="centerX" secondItem="9Pt-0x-9Eg" secondAttribute="centerX" id="WDK-jq-t4j"/>
+                            <constraint firstItem="9Pt-0x-9Eg" firstAttribute="top" secondItem="Ifk-ms-LM0" secondAttribute="bottom" constant="54" id="Ype-TP-id4"/>
+                            <constraint firstAttribute="centerY" secondItem="R4H-QQ-OmV" secondAttribute="centerY" id="b0P-gX-aNO"/>
                             <constraint firstItem="zoE-Y9-fMF" firstAttribute="leading" secondItem="jEC-M5-iXv" secondAttribute="leadingMargin" id="ezz-Zb-GgG"/>
-                            <constraint firstAttribute="centerX" secondItem="R4H-QQ-OmV" secondAttribute="centerX" id="rsW-Kk-OzX"/>
+                            <constraint firstItem="9Pt-0x-9Eg" firstAttribute="top" secondItem="jEC-M5-iXv" secondAttribute="topMargin" constant="118" id="st4-z8-c9e"/>
                             <constraint firstAttribute="centerX" secondItem="5SA-db-p93" secondAttribute="centerX" id="uEU-1H-yzh"/>
                         </constraints>
                     </view>
@@ -244,12 +271,15 @@ Thetaの底面にある型番がパスワードになります。</string>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" lineBreakMode="tailTruncation" numberOfLines="21" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tXB-FX-blb">
-                                <rect key="frame" x="95" y="659" width="595" height="294"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="thetaMovie.png" translatesAutoresizingMaskIntoConstraints="NO" id="tMa-mo-o9O">
+                                <rect key="frame" x="187" y="118" width="394" height="350"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="294" id="snR-Q0-bTu"/>
-                                    <constraint firstAttribute="width" constant="595" id="zI8-d4-vDS"/>
+                                    <constraint firstAttribute="height" constant="350" id="ECJ-JL-MLj"/>
+                                    <constraint firstAttribute="width" constant="394" id="PA6-eM-qzS"/>
                                 </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" lineBreakMode="tailTruncation" numberOfLines="21" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tXB-FX-blb">
+                                <rect key="frame" x="80" y="504" width="609" height="460"/>
                                 <string key="text">WiFiボタンを押しながら、電源ボタンを押すと動画モードで起動します。
 
 電源がONになると、側面の電源ボタンが青色に点滅します。
@@ -265,8 +295,14 @@ Thetaの底面にある型番がパスワードになります。</string>
                         <constraints>
                             <constraint firstItem="2YI-Om-LNe" firstAttribute="top" secondItem="Cpe-wE-dL6" secondAttribute="bottom" constant="8" id="1kg-Cj-NKl"/>
                             <constraint firstItem="2YI-Om-LNe" firstAttribute="leading" secondItem="27Y-hN-SA8" secondAttribute="leadingMargin" id="7aE-X8-D21"/>
-                            <constraint firstItem="xHx-eX-c5w" firstAttribute="top" secondItem="tXB-FX-blb" secondAttribute="bottom" constant="71" id="O4T-Y3-hRv"/>
-                            <constraint firstAttribute="centerX" secondItem="tXB-FX-blb" secondAttribute="centerX" id="fQF-O6-Djh"/>
+                            <constraint firstItem="tXB-FX-blb" firstAttribute="top" secondItem="tMa-mo-o9O" secondAttribute="bottom" constant="36" id="8gH-JS-LsY"/>
+                            <constraint firstItem="tMa-mo-o9O" firstAttribute="top" secondItem="27Y-hN-SA8" secondAttribute="topMargin" constant="118" id="C5L-Jt-zyq"/>
+                            <constraint firstAttribute="centerX" secondItem="tMa-mo-o9O" secondAttribute="centerX" id="KeP-fn-QPo"/>
+                            <constraint firstItem="2YI-Om-LNe" firstAttribute="top" secondItem="27Y-hN-SA8" secondAttribute="topMargin" constant="72" id="N7L-Y7-3LP"/>
+                            <constraint firstItem="xHx-eX-c5w" firstAttribute="top" relation="greaterThanOrEqual" secondItem="tXB-FX-blb" secondAttribute="bottom" constant="50" id="PT3-tD-sJ2"/>
+                            <constraint firstItem="tXB-FX-blb" firstAttribute="leading" secondItem="27Y-hN-SA8" secondAttribute="leadingMargin" constant="64" id="Urf-LI-xUp"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="tXB-FX-blb" secondAttribute="trailing" constant="63" id="jYs-Ta-nXB"/>
+                            <constraint firstItem="tMa-mo-o9O" firstAttribute="top" secondItem="2YI-Om-LNe" secondAttribute="bottom" constant="8" id="z6N-Zf-gnm"/>
                         </constraints>
                     </view>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
@@ -288,17 +324,20 @@ Thetaの底面にある型番がパスワードになります。</string>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="2.写真モード" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bWX-x3-koL">
-                                <rect key="frame" x="16" y="72" width="210" height="41"/>
+                                <rect key="frame" x="16" y="72" width="736" height="41"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="30"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="21" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vdl-kh-dYE">
-                                <rect key="frame" x="95" y="665" width="579" height="277"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="thetaOn.png" translatesAutoresizingMaskIntoConstraints="NO" id="Lr9-jm-YXm">
+                                <rect key="frame" x="208" y="121" width="352" height="311"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="579" id="UwV-g7-SFk"/>
-                                    <constraint firstAttribute="height" constant="277" id="s17-gT-Tg4"/>
+                                    <constraint firstAttribute="width" constant="352" id="0wI-Tn-T1O"/>
+                                    <constraint firstAttribute="height" constant="311" id="34m-ON-uJy"/>
                                 </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" lineBreakMode="tailTruncation" numberOfLines="21" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vdl-kh-dYE">
+                                <rect key="frame" x="46" y="483" width="689" height="487"/>
                                 <string key="text">Thetaの電源ボタンを押すと写真モードで起動します。
 
 電源がONになると、側面の電源ボタンが青色に点灯します。
@@ -313,10 +352,12 @@ Thetaの底面にある型番がパスワードになります。</string>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="bWX-x3-koL" firstAttribute="top" secondItem="T6B-OH-teC" secondAttribute="bottom" constant="8" id="0Vi-GX-e0Z"/>
-                            <constraint firstItem="bWX-x3-koL" firstAttribute="leading" secondItem="k4T-aZ-GfL" secondAttribute="leadingMargin" id="8Gp-P0-Kw5"/>
-                            <constraint firstAttribute="centerX" secondItem="Vdl-kh-dYE" secondAttribute="centerX" id="nMI-6y-MFs"/>
-                            <constraint firstItem="CEf-AS-HjJ" firstAttribute="top" secondItem="Vdl-kh-dYE" secondAttribute="bottom" constant="82" id="yTz-sy-M1b"/>
+                            <constraint firstAttribute="centerX" secondItem="Lr9-jm-YXm" secondAttribute="centerX" id="8CB-zI-Nk5"/>
+                            <constraint firstItem="bWX-x3-koL" firstAttribute="top" secondItem="T6B-OH-teC" secondAttribute="bottom" constant="8" id="AAr-6O-cUf"/>
+                            <constraint firstItem="Lr9-jm-YXm" firstAttribute="top" secondItem="k4T-aZ-GfL" secondAttribute="topMargin" constant="121" id="AZn-nb-ekq"/>
+                            <constraint firstItem="bWX-x3-koL" firstAttribute="leading" secondItem="k4T-aZ-GfL" secondAttribute="leadingMargin" id="KHb-Ic-fEJ"/>
+                            <constraint firstItem="bWX-x3-koL" firstAttribute="top" secondItem="k4T-aZ-GfL" secondAttribute="topMargin" constant="72" id="KNj-RU-l7S"/>
+                            <constraint firstItem="CEf-AS-HjJ" firstAttribute="top" relation="greaterThanOrEqual" secondItem="Vdl-kh-dYE" secondAttribute="bottom" constant="54" id="MeA-Z9-xh5"/>
                         </constraints>
                     </view>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
@@ -328,6 +369,10 @@ Thetaの底面にある型番がパスワードになります。</string>
     </scenes>
     <resources>
         <image name="WiFiTheta.png" width="640" height="578"/>
+        <image name="theta.png" width="480" height="480"/>
+        <image name="thetaMovie.png" width="480" height="480"/>
+        <image name="thetaOn.png" width="480" height="480"/>
+        <image name="thetaStandby.png" width="480" height="480"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>

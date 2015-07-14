@@ -74,50 +74,42 @@ static int const _timeout = 500;
 -(void)ptpip_eventReceived:(int)code :(uint32_t)param1 :(uint32_t)param2 :(uint32_t)param3
 {
     // PTP/IP-Event callback.
-    switch (code) {
-        default:
-        {
-            for (id key in [_onStatusEventList keyEnumerator]) {
-                DPThetaOnStatusChangeCallback callback = _onStatusEventList[key];
-                if (callback) {
-                    callback(nil, @"recording", nil);
+    if (code == PTPIP_OBJECT_ADDED) {
+        [_ptpConnection operateSession:^(PtpIpSession *session) {
+            PtpIpObjectInfo *objectInfo = [self loadObject:param1 session:session];
+            if (objectInfo.object_format == PTPIP_FORMAT_JPEG) {
+                NSString *filePath = [self saveImageFileWithPtpIpObjectInfo:objectInfo
+                                                                    session:session];
+                if (_imageCallback) {
+                    _imageCallback(filePath, objectInfo.filename);
+                    _imageCallback = nil;
+                }
+                //OnPhotoのコールバック
+                for (id key in [_onPhotoEventList keyEnumerator]) {
+                    DPThetaBlock callback = _onPhotoEventList[key];
+                    if (callback) {
+                        callback(filePath, objectInfo.filename);
+                    }
+                }
+            } else {
+                //OnStatusChangeのコールバック
+                for (id key in [_onStatusEventList keyEnumerator]) {
+                    DPThetaOnStatusChangeCallback callback = _onStatusEventList[key];
+                    if (callback) {
+                        callback(objectInfo, @"stop", nil);
+                    }
                 }
             }
-        }
-            break;
             
-        case PTPIP_OBJECT_ADDED:
-        {
-            // It will be receive when the camera has taken a new photo.
-            [_ptpConnection operateSession:^(PtpIpSession *session) {
-                PtpIpObjectInfo *objectInfo = [self loadObject:param1 session:session];
-                if (objectInfo.object_format == PTPIP_FORMAT_JPEG) {
-                    NSString *filePath = [self saveImageFileWithPtpIpObjectInfo:objectInfo
-                                                                        session:session];
-                    if (_imageCallback) {
-                        _imageCallback(filePath, objectInfo.filename);
-                        _imageCallback = nil;
-                    }
-                    //OnPhotoのコールバック
-                    for (id key in [_onPhotoEventList keyEnumerator]) {
-                        DPThetaBlock callback = _onPhotoEventList[key];
-                        if (callback) {
-                            callback(filePath, objectInfo.filename);
-                        }
-                    }
-                } else {
-                    //OnStatusChangeのコールバック
-                    for (id key in [_onStatusEventList keyEnumerator]) {
-                        DPThetaOnStatusChangeCallback callback = _onStatusEventList[key];
-                        if (callback) {
-                            callback(objectInfo, @"stop", nil);
-                        }
-                    }
-                }
-
-            }];
+        }];
+        
+    } else {
+        for (id key in [_onStatusEventList keyEnumerator]) {
+            DPThetaOnStatusChangeCallback callback = _onStatusEventList[key];
+            if (callback) {
+                callback(nil, @"recording", nil);
+            }
         }
-            break;
     }
 }
 
@@ -128,9 +120,9 @@ static int const _timeout = 500;
     
     // If libptpip closed the socket, `closed` is non-zero.
     BOOL closed = PTP_CONNECTION_CLOSED(err);
-    
+    int error = err;
     // PTPIP_PROTOCOL_*** or POSIX error number (errno()).
-    err = PTP_ORIGINAL_PTPIPERROR(err);
+    error = PTP_ORIGINAL_PTPIPERROR(err);
     
     NSArray* errTexts = @[@"Socket closed",              // PTPIP_PROTOCOL_SOCKET_CLOSED
                           @"Brocken packet",             // PTPIP_PROTOCOL_BROCKEN_PACKET
@@ -142,11 +134,9 @@ static int const _timeout = 500;
                           @"Invalid data length",        // PTPIP_PROTOCOL_INVALID_DATA_LENGTH
                           @"Watchdog expired",           // PTPIP_PROTOCOL_WATCHDOG_EXPIRED
                           ];
-    NSString* desc;
-    if ((PTPIP_PROTOCOL_SOCKET_CLOSED<=err) && (err<=PTPIP_PROTOCOL_WATCHDOG_EXPIRED)) {
-        desc = [errTexts objectAtIndex:err-PTPIP_PROTOCOL_SOCKET_CLOSED];
-    } else {
-        desc = [NSString stringWithUTF8String:strerror(err)];
+    NSString* desc = @(strerror(error));
+    if ((PTPIP_PROTOCOL_SOCKET_CLOSED<=error) && (err<=PTPIP_PROTOCOL_WATCHDOG_EXPIRED)) {
+        desc = errTexts[error - PTPIP_PROTOCOL_SOCKET_CLOSED];
     }
     
     if (closed) {
@@ -180,12 +170,7 @@ static int const _timeout = 500;
     dispatch_time_t timeout = dispatch_time(DISPATCH_TIME_NOW, NSEC_PER_SEC * 100);
 
     [_ptpConnection connect:^(BOOL connected) {
-        
-        if (connected) {
-            result = YES;
-        } else {
-            result = NO;
-        }
+        result = connected;
         dispatch_semaphore_signal(semaphore);
 
     }];
@@ -411,16 +396,12 @@ static int const _timeout = 500;
     NSString *dstPath = [self pathByAppendingPathComponent:path];
     if ([sysFileMgr fileExistsAtPath:dstPath]) {
         return nil;
-    } else {
-        NSData *data = [self getDataWithPtpObject:ptpIp
-                        session:session];
-        NSString *resultPath = [self.fileMgr createFileForPath:dstPath contents:data];
-        
-        if (resultPath) {
-            return resultPath;
-        }
     }
-    return nil;
+    NSData *data = [self getDataWithPtpObject:ptpIp
+                    session:session];
+    NSString *resultPath = [self.fileMgr createFileForPath:dstPath contents:data];
+    
+    return resultPath;
 }
 
 
@@ -467,13 +448,11 @@ static int const _timeout = 500;
         for (NSNumber* it in objectHandles) {
             uint32_t objectHandle = (uint32_t)it.integerValue;
             PtpIpObjectInfo *obj = [self loadObject:objectHandle session:session];
-            if (obj) {
-                if ([fileName isEqualToString:obj.filename]) {
-                    [session deleteObject: objectHandle];
-                    dispatch_semaphore_signal(semaphore);
-                    isSuccess = YES;
-                    return;
-                }
+            if ([fileName isEqualToString:obj.filename]) {
+                [session deleteObject: objectHandle];
+                dispatch_semaphore_signal(semaphore);
+                isSuccess = YES;
+                return;
             }
         }
         dispatch_semaphore_signal(semaphore);
@@ -497,15 +476,13 @@ static int const _timeout = 500;
         for (NSNumber* it in objectHandles) {
             uint32_t objectHandle = (uint32_t)it.integerValue;
             PtpIpObjectInfo *obj = [self loadObject:objectHandle session:session];
-            if (obj) {
-                if ([fileName isEqualToString:obj.filename]) {
-                    ptpInfo = obj;
-                    path = [self saveImageFileWithPtpIpObjectInfo:ptpInfo
-                                      session:session];
+            if ([fileName isEqualToString:obj.filename]) {
+                ptpInfo = obj;
+                path = [self saveImageFileWithPtpIpObjectInfo:ptpInfo
+                                  session:session];
 
-                    dispatch_semaphore_signal(semaphore);
-                    return;
-                }
+                dispatch_semaphore_signal(semaphore);
+                return;
             }
         }
         dispatch_semaphore_signal(semaphore);

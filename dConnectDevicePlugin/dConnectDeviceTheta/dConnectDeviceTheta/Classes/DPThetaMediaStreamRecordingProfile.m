@@ -54,24 +54,25 @@ static NSString *const DPThetaMovieMimeType = @"video/mov";
 
 #pragma mark - Get Methods
 
-- (BOOL) profile:(DConnectMediaStreamRecordingProfile *)profile didReceiveGetMediaRecorderRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response
-       serviceId:(NSString *)serviceId
+- (BOOL)                  profile:(DConnectMediaStreamRecordingProfile *)profile
+didReceiveGetMediaRecorderRequest:(DConnectRequestMessage *)request
+                         response:(DConnectResponseMessage *)response
+                        serviceId:(NSString *)serviceId
 {
     CONNECT_CHECK();
     DConnectArray *recorders = [DConnectArray new];
     DConnectMessage *recorder = [DConnectMessage new];
     [DConnectMediaStreamRecordingProfile setRecorderId:@"0" target:recorder];
     [DConnectMediaStreamRecordingProfile setRecorderName:@"Theta" target:recorder];
-    switch ([[DPThetaManager sharedManager] getCameraStatus]) {
-        case 1:
-            [DConnectMediaStreamRecordingProfile setRecorderState:DConnectMediaStreamRecordingProfileRecorderStateRecording
-                                                   target:recorder];
-            break;
-        default:
-            [DConnectMediaStreamRecordingProfile setRecorderState:DConnectMediaStreamRecordingProfileRecorderStateInactive
-                                                   target:recorder];
-            break;
+    if ([[DPThetaManager sharedManager] getCameraStatus] == 1) {
+        [DConnectMediaStreamRecordingProfile
+         setRecorderState:DConnectMediaStreamRecordingProfileRecorderStateRecording
+                                                       target:recorder];
+    } else {
+        [DConnectMediaStreamRecordingProfile
+         setRecorderState:DConnectMediaStreamRecordingProfileRecorderStateInactive
+         target:recorder];
+        
     }
     [DConnectMediaStreamRecordingProfile setRecorderMIMEType:DPThetaImageMimeType
                                                       target:recorder];
@@ -85,10 +86,11 @@ static NSString *const DPThetaMovieMimeType = @"video/mov";
 }
 
 
-- (BOOL) profile:(DConnectMediaStreamRecordingProfile *)profile didReceiveGetOptionsRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response
-       serviceId:(NSString *)serviceId
-          target:(NSString *)target
+- (BOOL)            profile:(DConnectMediaStreamRecordingProfile *)profile
+didReceiveGetOptionsRequest:(DConnectRequestMessage *)request
+                   response:(DConnectResponseMessage *)response
+                  serviceId:(NSString *)serviceId
+                     target:(NSString *)target
 {
     CONNECT_CHECK();
     DConnectMessage *imageWidth = [DConnectMessage new];
@@ -109,10 +111,11 @@ static NSString *const DPThetaMovieMimeType = @"video/mov";
 #pragma mark - Post Methods
 
 
-- (BOOL) profile:(DConnectMediaStreamRecordingProfile *)profile didReceivePostTakePhotoRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response
-       serviceId:(NSString *)serviceId
-          target:(NSString *)target
+- (BOOL)               profile:(DConnectMediaStreamRecordingProfile *)profile
+didReceivePostTakePhotoRequest:(DConnectRequestMessage *)request
+                      response:(DConnectResponseMessage *)response
+                     serviceId:(NSString *)serviceId
+                        target:(NSString *)target
 {
     CONNECT_CHECK();
     BOOL isSuccess = [[DPThetaManager sharedManager] takePictureWithCompletion:^(NSString *uri, NSString* path) {
@@ -131,9 +134,10 @@ static NSString *const DPThetaMovieMimeType = @"video/mov";
     return !isSuccess;
 }
 
-- (BOOL) profile:(DConnectMediaStreamRecordingProfile *)profile didReceivePostRecordRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response serviceId:(NSString *)serviceId
-          target:(NSString *)target timeslice:(NSNumber *)timeslice
+- (BOOL)            profile:(DConnectMediaStreamRecordingProfile *)profile
+didReceivePostRecordRequest:(DConnectRequestMessage *)request
+                   response:(DConnectResponseMessage *)response serviceId:(NSString *)serviceId
+                     target:(NSString *)target timeslice:(NSNumber *)timeslice
 {
     CONNECT_CHECK();
     BOOL isSuccess = [[DPThetaManager sharedManager] recordingMovie];
@@ -150,10 +154,11 @@ static NSString *const DPThetaMovieMimeType = @"video/mov";
 #pragma mark - Put Methods
 
 
-- (BOOL) profile:(DConnectMediaStreamRecordingProfile *)profile didReceivePutStopRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response
-       serviceId:(NSString *)serviceId
-          target:(NSString *)target
+- (BOOL)         profile:(DConnectMediaStreamRecordingProfile *)profile
+didReceivePutStopRequest:(DConnectRequestMessage *)request
+                response:(DConnectResponseMessage *)response
+               serviceId:(NSString *)serviceId
+                  target:(NSString *)target
 {
     CONNECT_CHECK();
     BOOL isSuccess = [[DPThetaManager sharedManager] stopMovie];
@@ -167,13 +172,14 @@ static NSString *const DPThetaMovieMimeType = @"video/mov";
 }
 
 
-- (BOOL) profile:(DConnectMediaStreamRecordingProfile *)profile didReceivePutOptionsRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response
-       serviceId:(NSString *)serviceId
-          target:(NSString *)target
-      imageWidth:(NSNumber *)imageWidth
-     imageHeight:(NSNumber *)imageHeight
-        mimeType:(NSString *)mimeType
+- (BOOL)            profile:(DConnectMediaStreamRecordingProfile *)profile
+didReceivePutOptionsRequest:(DConnectRequestMessage *)request
+                   response:(DConnectResponseMessage *)response
+                  serviceId:(NSString *)serviceId
+                     target:(NSString *)target
+                 imageWidth:(NSNumber *)imageWidth
+                imageHeight:(NSNumber *)imageHeight
+                   mimeType:(NSString *)mimeType
 {
     CONNECT_CHECK();
     if ((([imageWidth floatValue] == DPThetaMaxWidth) && ([imageHeight floatValue] == DPThetaMaxHeight))
@@ -190,10 +196,11 @@ static NSString *const DPThetaMovieMimeType = @"video/mov";
 #pragma mark Event Registration
 
 
-- (BOOL) profile:(DConnectMediaStreamRecordingProfile *)profile didReceivePutOnPhotoRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response
-       serviceId:(NSString *)serviceId
-      sessionKey:(NSString *)sessionKey
+- (BOOL)            profile:(DConnectMediaStreamRecordingProfile *)profile
+didReceivePutOnPhotoRequest:(DConnectRequestMessage *)request
+                   response:(DConnectResponseMessage *)response
+                  serviceId:(NSString *)serviceId
+                 sessionKey:(NSString *)sessionKey
 {
     CONNECT_CHECK();
     [self handleEventRequest:request response:response isRemove:NO callback:^{
@@ -207,14 +214,18 @@ static NSString *const DPThetaMovieMimeType = @"video/mov";
 }
 
 
-- (BOOL) profile:(DConnectMediaStreamRecordingProfile *)profile didReceivePutOnRecordingChangeRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response
-       serviceId:(NSString *)serviceId
-      sessionKey:(NSString *)sessionKey
+- (BOOL)                      profile:(DConnectMediaStreamRecordingProfile *)profile
+didReceivePutOnRecordingChangeRequest:(DConnectRequestMessage *)request
+                             response:(DConnectResponseMessage *)response
+                            serviceId:(NSString *)serviceId
+                           sessionKey:(NSString *)sessionKey
 {
     CONNECT_CHECK();
     [self handleEventRequest:request response:response isRemove:NO callback:^{
-        [[DPThetaManager sharedManager] addOnStatusEventCallbackWithID:serviceId callback:^(PtpIpObjectInfo *object, NSString *status, NSString *message) {
+        [[DPThetaManager sharedManager] addOnStatusEventCallbackWithID:serviceId
+                                                              callback:^(PtpIpObjectInfo *object,
+                                                                         NSString *status,
+                                                                         NSString *message) {
             NSString *path = nil;
             if (object) {
                 path = object.filename;
@@ -246,10 +257,11 @@ static NSString *const DPThetaMovieMimeType = @"video/mov";
 }
 
 
-- (BOOL) profile:(DConnectMediaStreamRecordingProfile *)profile didReceiveDeleteOnRecordingChangeRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response
-       serviceId:(NSString *)serviceId
-      sessionKey:(NSString *)sessionKey
+- (BOOL)                         profile:(DConnectMediaStreamRecordingProfile *)profile
+didReceiveDeleteOnRecordingChangeRequest:(DConnectRequestMessage *)request
+                                response:(DConnectResponseMessage *)response
+                               serviceId:(NSString *)serviceId
+                              sessionKey:(NSString *)sessionKey
 {
     CONNECT_CHECK();
     [self handleEventRequest:request response:response isRemove:YES callback:^{
