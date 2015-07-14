@@ -12,7 +12,7 @@
 @protocol GHConnectionManagerDelegate <NSObject>
 
 - (void)didReceiveResponse:(NSString*)url;
-- (void)didFailWithError:(NSError *)error;
+- (void)URL:(NSURL*)URL didFailWithError:(NSError *)error;
 
 @end
 

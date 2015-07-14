@@ -47,7 +47,7 @@
 {
     self.myConnection = nil;
     if (self.delegate) {
-        [self.delegate didFailWithError:error];
+        [self.delegate URL:connection.originalRequest.URL didFailWithError:error];
     }
 }
 

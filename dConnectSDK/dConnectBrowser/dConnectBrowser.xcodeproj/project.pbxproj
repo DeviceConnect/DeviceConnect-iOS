@@ -42,6 +42,7 @@
 		25D5554F1977E13D002AA492 /* RobotKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25D555411977E13C002AA492 /* RobotKit.framework */; };
 		25D555501977E13D002AA492 /* RobotUIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25D555421977E13C002AA492 /* RobotUIKit.framework */; };
 		6B6F584A1ACE68F90027A21F /* GoogleCast.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B6F58491ACE68F90027A21F /* GoogleCast.framework */; };
+		6BAD8CCC1B535581005A9B4A /* error.html in Resources */ = {isa = PBXBuildFile; fileRef = 6BAD8CCB1B535581005A9B4A /* error.html */; };
 		8E182FCA197507D700F9B131 /* GHURLLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E182FC9197507D700F9B131 /* GHURLLabel.m */; };
 		8E24CFFA1964EC25008D9C10 /* arrow-back@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E24CFF41964EC25008D9C10 /* arrow-back@2x.png */; };
 		8E24CFFB1964EC25008D9C10 /* arrow-next@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E24CFF51964EC25008D9C10 /* arrow-next@2x.png */; };
@@ -154,6 +155,7 @@
 		25D555411977E13C002AA492 /* RobotKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RobotKit.framework; path = ../../dConnectDevicePlugin/dConnectDeviceSphero/RobotKit.framework; sourceTree = "<group>"; };
 		25D555421977E13C002AA492 /* RobotUIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RobotUIKit.framework; path = ../../dConnectDevicePlugin/dConnectDeviceSphero/RobotUIKit.framework; sourceTree = "<group>"; };
 		6B6F58491ACE68F90027A21F /* GoogleCast.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleCast.framework; path = "../../dConnectDevicePlugin/dConnectDeviceChromeCast/GoogleCastSDK-2.6.0-Release/GoogleCast.framework"; sourceTree = "<group>"; };
+		6BAD8CCB1B535581005A9B4A /* error.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = error.html; sourceTree = "<group>"; };
 		8E182FC8197507D700F9B131 /* GHURLLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GHURLLabel.h; path = classes/GHURLLabel.h; sourceTree = "<group>"; };
 		8E182FC9197507D700F9B131 /* GHURLLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GHURLLabel.m; path = classes/GHURLLabel.m; sourceTree = "<group>"; };
 		8E24CFF41964EC25008D9C10 /* arrow-back@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "arrow-back@2x.png"; sourceTree = "<group>"; };
@@ -351,6 +353,14 @@
 			name = DevicePlugins;
 			sourceTree = "<group>";
 		};
+		6BAD8CCA1B535581005A9B4A /* html */ = {
+			isa = PBXGroup;
+			children = (
+				6BAD8CCB1B535581005A9B4A /* error.html */,
+			);
+			path = html;
+			sourceTree = "<group>";
+		};
 		8E24CFE81964E7E7008D9C10 /* bookmark */ = {
 			isa = PBXGroup;
 			children = (
@@ -455,6 +465,7 @@
 		8E24CFF21964EC1B008D9C10 /* resources */ = {
 			isa = PBXGroup;
 			children = (
+				6BAD8CCA1B535581005A9B4A /* html */,
 				8E24CFF31964EC25008D9C10 /* images */,
 			);
 			name = resources;
@@ -813,6 +824,7 @@
 				8EC7B4561999BA6F0052A1B6 /* SVProgressHUD.bundle in Resources */,
 				8E24CFFC1964EC25008D9C10 /* bookmark@2x.png in Resources */,
 				259F7CE419C33DA800F66D93 /* DConnectSDK_resources.bundle in Resources */,
+				6BAD8CCC1B535581005A9B4A /* error.html in Resources */,
 				8E445B3119AEB51B00206904 /* print@2x.png in Resources */,
 				2562A2A519C3DA410032EF17 /* dConnectDeviceSonyCamera_resources.bundle in Resources */,
 				8E24D03019653525008D9C10 /* GHBookmarkTitleCell.xib in Resources */,
