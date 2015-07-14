@@ -319,8 +319,8 @@ static NSString *scheme = @"http";
             NSString *name = [exception name];
             DConnectResponseMessage * response = [DConnectResponseMessage new];
             [response setResult:DConnectMessageResultTypeError];
-            [response setVersion:DConnectManagerVersion];
-            [response setProduct:DConnectManagerName];
+            [response setVersion:[DConnectManager sharedManager].versionName];
+            [response setProduct:[DConnectManager sharedManager].productName];
             if ([name isEqualToString:HAVE_NO_API_EXCEPTION]) {
                 responseCtx.response = [[NSHTTPURLResponse alloc] initWithURL:[request URL]
                                                                    statusCode:404
