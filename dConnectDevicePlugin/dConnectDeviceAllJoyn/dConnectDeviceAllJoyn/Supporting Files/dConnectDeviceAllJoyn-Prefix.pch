@@ -1,0 +1,24 @@
+//
+//  dConnectDeviceAllJoyn-Prefix.pch
+//  dConnectDeviceAllJoyn
+//
+//  Copyright (c) 2015 NTT DOCOMO, INC.
+//  Released under the MIT license
+//  http://opensource.org/licenses/mit-license.php
+//
+
+#ifndef dConnectDeviceAllJoyn_dConnectDeviceAllJoyn_Prefix_pch
+#define dConnectDeviceAllJoyn_dConnectDeviceAllJoyn_Prefix_pch
+
+//
+// The contents of this file are implicitly included at the beginning of every source file.
+//
+// Include any system framework and library headers here that should be included in all compilation units.
+// You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
+//
+
+#ifdef __OBJC__
+@import Foundation;
+#endif
+
+#endif
