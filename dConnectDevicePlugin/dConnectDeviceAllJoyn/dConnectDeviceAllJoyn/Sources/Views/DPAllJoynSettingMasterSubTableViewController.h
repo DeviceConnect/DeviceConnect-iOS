@@ -1,5 +1,5 @@
 //
-//  DPAllJoynDevicePlugin.h
+//  DPAllJoynSettingMasterSubTableViewController.h
 //  dConnectDeviceAllJoyn
 //
 //  Copyright (c) 2015 NTT DOCOMO, INC.
@@ -7,8 +7,8 @@
 //  http://opensource.org/licenses/mit-license.php
 //
 
-#import <DConnectSDK/DConnectSDK.h>
+@import UIKit;
 
+@interface DPAllJoynSettingMasterSubTableViewController : UITableViewController
 
-@interface DPAllJoynDevicePlugin : DConnectDevicePlugin
 @end

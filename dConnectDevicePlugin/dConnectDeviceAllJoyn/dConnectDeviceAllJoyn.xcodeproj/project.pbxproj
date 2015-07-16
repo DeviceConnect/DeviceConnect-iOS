@@ -36,11 +36,22 @@
 		25851BB71B5739B600CB732E /* DPAllJoynServiceInformationProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 25851BB51B5739B600CB732E /* DPAllJoynServiceInformationProfile.m */; };
 		25851BBA1B573C3100CB732E /* DConnectSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25851BB91B573C3100CB732E /* DConnectSDK.framework */; };
 		25851BBC1B573C9A00CB732E /* DCMDevicePluginSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25851BBB1B573C9A00CB732E /* DCMDevicePluginSDK.framework */; };
+		25851BBD1B57409500CB732E /* Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 25851BBF1B57409500CB732E /* Storyboard.storyboard */; };
+		25851BC61B57455D00CB732E /* DPAllJoynSettingTableViewCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 25851BC41B57455D00CB732E /* DPAllJoynSettingTableViewCell.h */; };
+		25851BC71B57455D00CB732E /* DPAllJoynSettingTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 25851BC51B57455D00CB732E /* DPAllJoynSettingTableViewCell.m */; };
+		25851BCA1B574A9F00CB732E /* DPAllJoynSettingMasterSubTableViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 25851BC81B574A9F00CB732E /* DPAllJoynSettingMasterSubTableViewController.h */; };
+		25851BCB1B574A9F00CB732E /* DPAllJoynSettingMasterSubTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25851BC91B574A9F00CB732E /* DPAllJoynSettingMasterSubTableViewController.m */; };
+		25851BD71B575F2700CB732E /* DPAllJoynSettingDetailLIFXViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 25851BD51B575F2700CB732E /* DPAllJoynSettingDetailLIFXViewController.h */; };
+		25851BD81B575F2700CB732E /* DPAllJoynSettingDetailLIFXViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25851BD61B575F2700CB732E /* DPAllJoynSettingDetailLIFXViewController.m */; };
+		25851BE41B57929100CB732E /* CALayer+StoryboardUserDefinedRuntimeAttributes.h in Headers */ = {isa = PBXBuildFile; fileRef = 25851BE21B57929100CB732E /* CALayer+StoryboardUserDefinedRuntimeAttributes.h */; };
+		25851BE51B57929100CB732E /* CALayer+StoryboardUserDefinedRuntimeAttributes.m in Sources */ = {isa = PBXBuildFile; fileRef = 25851BE31B57929100CB732E /* CALayer+StoryboardUserDefinedRuntimeAttributes.m */; };
+		25851BF11B57C47900CB732E /* LIFX_Logo@2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 25851BF01B57C47900CB732E /* LIFX_Logo@2.jpg */; };
+		25851BF71B57CDC000CB732E /* back-arrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 25851BF61B57CDC000CB732E /* back-arrow@2x.png */; };
+		25851BFA1B57CF3D00CB732E /* Download_on_the_App_Store_Badge_US-UK_135x40@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 25851BF81B57CF3D00CB732E /* Download_on_the_App_Store_Badge_US-UK_135x40@2x.png */; };
+		25851BFB1B57CF3D00CB732E /* Download_on_the_App_Store_JP_135x40@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 25851BF91B57CF3D00CB732E /* Download_on_the_App_Store_JP_135x40@2x.png */; };
 		25A06C081B562C08005B6F8A /* dConnectDeviceAllJoyn.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25A06BFC1B562C07005B6F8A /* dConnectDeviceAllJoyn.framework */; };
 		25A06C0F1B562C08005B6F8A /* dConnectDeviceAllJoynTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 25A06C0E1B562C08005B6F8A /* dConnectDeviceAllJoynTests.m */; };
-		25A06C311B564742005B6F8A /* DPAllJoynSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25A06C301B564742005B6F8A /* DPAllJoynSettingViewController.m */; };
-		25A06C711B5660BC005B6F8A /* Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 25A06C291B5641C3005B6F8A /* Storyboard.storyboard */; };
-		25A06C721B5660BC005B6F8A /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 25A06C2B1B564426005B6F8A /* Media.xcassets */; };
+		25A06C311B564742005B6F8A /* DPAllJoynSettingMasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25A06C301B564742005B6F8A /* DPAllJoynSettingMasterViewController.m */; };
 		25A06C761B5667E1005B6F8A /* DPAllJoynDevicePlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 25A06C751B5667E1005B6F8A /* DPAllJoynDevicePlugin.m */; };
 		25A06C781B566AAA005B6F8A /* DPAllJoynServiceDiscoveryProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 25A06C771B566AAA005B6F8A /* DPAllJoynServiceDiscoveryProfile.m */; };
 		25A06C7C1B566AD0005B6F8A /* DPAllJoynSystemProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 25A06C7B1B566AD0005B6F8A /* DPAllJoynSystemProfile.m */; };
@@ -63,16 +74,28 @@
 		25851BB51B5739B600CB732E /* DPAllJoynServiceInformationProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPAllJoynServiceInformationProfile.m; sourceTree = "<group>"; };
 		25851BB91B573C3100CB732E /* DConnectSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DConnectSDK.framework; path = ../../dConnectSDK/dConnectSDKForIOS/bin/DConnectSDK.framework; sourceTree = "<group>"; };
 		25851BBB1B573C9A00CB732E /* DCMDevicePluginSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DCMDevicePluginSDK.framework; path = ../DCMDevicePluginSDK/bin/DCMDevicePluginSDK.framework; sourceTree = "<group>"; };
+		25851BC11B5740B500CB732E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Storyboard.storyboard; sourceTree = "<group>"; };
+		25851BC41B57455D00CB732E /* DPAllJoynSettingTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPAllJoynSettingTableViewCell.h; sourceTree = "<group>"; };
+		25851BC51B57455D00CB732E /* DPAllJoynSettingTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPAllJoynSettingTableViewCell.m; sourceTree = "<group>"; };
+		25851BC81B574A9F00CB732E /* DPAllJoynSettingMasterSubTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPAllJoynSettingMasterSubTableViewController.h; sourceTree = "<group>"; };
+		25851BC91B574A9F00CB732E /* DPAllJoynSettingMasterSubTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPAllJoynSettingMasterSubTableViewController.m; sourceTree = "<group>"; };
+		25851BD51B575F2700CB732E /* DPAllJoynSettingDetailLIFXViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DPAllJoynSettingDetailLIFXViewController.h; path = Tutorials/DPAllJoynSettingDetailLIFXViewController.h; sourceTree = "<group>"; };
+		25851BD61B575F2700CB732E /* DPAllJoynSettingDetailLIFXViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DPAllJoynSettingDetailLIFXViewController.m; path = Tutorials/DPAllJoynSettingDetailLIFXViewController.m; sourceTree = "<group>"; };
+		25851BE21B57929100CB732E /* CALayer+StoryboardUserDefinedRuntimeAttributes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CALayer+StoryboardUserDefinedRuntimeAttributes.h"; sourceTree = "<group>"; };
+		25851BE31B57929100CB732E /* CALayer+StoryboardUserDefinedRuntimeAttributes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CALayer+StoryboardUserDefinedRuntimeAttributes.m"; sourceTree = "<group>"; };
+		25851BED1B579DD000CB732E /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/Storyboard.storyboard; sourceTree = "<group>"; };
+		25851BF01B57C47900CB732E /* LIFX_Logo@2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "LIFX_Logo@2.jpg"; sourceTree = "<group>"; };
+		25851BF61B57CDC000CB732E /* back-arrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "back-arrow@2x.png"; path = "bin/dConnectDeviceAllJoyn_resources.bundle/back-arrow@2x.png"; sourceTree = SOURCE_ROOT; };
+		25851BF81B57CF3D00CB732E /* Download_on_the_App_Store_Badge_US-UK_135x40@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Download_on_the_App_Store_Badge_US-UK_135x40@2x.png"; sourceTree = "<group>"; };
+		25851BF91B57CF3D00CB732E /* Download_on_the_App_Store_JP_135x40@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Download_on_the_App_Store_JP_135x40@2x.png"; sourceTree = "<group>"; };
 		25A06BFC1B562C07005B6F8A /* dConnectDeviceAllJoyn.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = dConnectDeviceAllJoyn.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		25A06C001B562C07005B6F8A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		25A06C071B562C08005B6F8A /* dConnectDeviceAllJoynTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = dConnectDeviceAllJoynTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		25A06C0D1B562C08005B6F8A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		25A06C0E1B562C08005B6F8A /* dConnectDeviceAllJoynTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = dConnectDeviceAllJoynTests.m; sourceTree = "<group>"; };
 		25A06C281B563C21005B6F8A /* dConnectDeviceAllJoyn-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "dConnectDeviceAllJoyn-Prefix.pch"; sourceTree = "<group>"; };
-		25A06C291B5641C3005B6F8A /* Storyboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Storyboard.storyboard; sourceTree = "<group>"; };
-		25A06C2B1B564426005B6F8A /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
-		25A06C2E1B564704005B6F8A /* DPAllJoynSettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DPAllJoynSettingViewController.h; path = ViewControllers/DPAllJoynSettingViewController.h; sourceTree = "<group>"; };
-		25A06C301B564742005B6F8A /* DPAllJoynSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DPAllJoynSettingViewController.m; path = ViewControllers/DPAllJoynSettingViewController.m; sourceTree = "<group>"; };
+		25A06C2E1B564704005B6F8A /* DPAllJoynSettingMasterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPAllJoynSettingMasterViewController.h; sourceTree = "<group>"; };
+		25A06C301B564742005B6F8A /* DPAllJoynSettingMasterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPAllJoynSettingMasterViewController.m; sourceTree = "<group>"; };
 		25A06C6A1B565ED2005B6F8A /* dConnectDeviceAllJoyn_resources.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = dConnectDeviceAllJoyn_resources.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		25A06C6D1B565ED2005B6F8A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		25A06C741B5667AA005B6F8A /* DPAllJoynDevicePlugin.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DPAllJoynDevicePlugin.h; sourceTree = "<group>"; };
@@ -120,6 +143,24 @@
 				25851BB91B573C3100CB732E /* DConnectSDK.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		25851BD41B575EE200CB732E /* Tutorials */ = {
+			isa = PBXGroup;
+			children = (
+				25851BD51B575F2700CB732E /* DPAllJoynSettingDetailLIFXViewController.h */,
+				25851BD61B575F2700CB732E /* DPAllJoynSettingDetailLIFXViewController.m */,
+			);
+			name = Tutorials;
+			sourceTree = "<group>";
+		};
+		25851BE01B57923500CB732E /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				25851BE21B57929100CB732E /* CALayer+StoryboardUserDefinedRuntimeAttributes.h */,
+				25851BE31B57929100CB732E /* CALayer+StoryboardUserDefinedRuntimeAttributes.m */,
+			);
+			path = Utilities;
 			sourceTree = "<group>";
 		};
 		25A06BF21B562C07005B6F8A = {
@@ -184,7 +225,8 @@
 			isa = PBXGroup;
 			children = (
 				25A06C731B56675B005B6F8A /* Profiles */,
-				25A06C2D1B564698005B6F8A /* ViewControllers */,
+				25851BE01B57923500CB732E /* Utilities */,
+				25A06C2D1B564698005B6F8A /* Views */,
 				25A06C741B5667AA005B6F8A /* DPAllJoynDevicePlugin.h */,
 				25A06C751B5667E1005B6F8A /* DPAllJoynDevicePlugin.m */,
 			);
@@ -201,8 +243,11 @@
 		25A06C261B5637DB005B6F8A /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				25A06C291B5641C3005B6F8A /* Storyboard.storyboard */,
-				25A06C2B1B564426005B6F8A /* Media.xcassets */,
+				25851BBF1B57409500CB732E /* Storyboard.storyboard */,
+				25851BF61B57CDC000CB732E /* back-arrow@2x.png */,
+				25851BF01B57C47900CB732E /* LIFX_Logo@2.jpg */,
+				25851BF81B57CF3D00CB732E /* Download_on_the_App_Store_Badge_US-UK_135x40@2x.png */,
+				25851BF91B57CF3D00CB732E /* Download_on_the_App_Store_JP_135x40@2x.png */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -215,13 +260,18 @@
 			path = Sources;
 			sourceTree = "<group>";
 		};
-		25A06C2D1B564698005B6F8A /* ViewControllers */ = {
+		25A06C2D1B564698005B6F8A /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				25A06C2E1B564704005B6F8A /* DPAllJoynSettingViewController.h */,
-				25A06C301B564742005B6F8A /* DPAllJoynSettingViewController.m */,
+				25851BD41B575EE200CB732E /* Tutorials */,
+				25851BC81B574A9F00CB732E /* DPAllJoynSettingMasterSubTableViewController.h */,
+				25851BC91B574A9F00CB732E /* DPAllJoynSettingMasterSubTableViewController.m */,
+				25A06C2E1B564704005B6F8A /* DPAllJoynSettingMasterViewController.h */,
+				25A06C301B564742005B6F8A /* DPAllJoynSettingMasterViewController.m */,
+				25851BC41B57455D00CB732E /* DPAllJoynSettingTableViewCell.h */,
+				25851BC51B57455D00CB732E /* DPAllJoynSettingTableViewCell.m */,
 			);
-			name = ViewControllers;
+			path = Views;
 			sourceTree = "<group>";
 		};
 		25A06C6B1B565ED2005B6F8A /* dConnectDeviceAllJoyn_resources */ = {
@@ -262,8 +312,12 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				25851BCA1B574A9F00CB732E /* DPAllJoynSettingMasterSubTableViewController.h in Headers */,
+				25851BD71B575F2700CB732E /* DPAllJoynSettingDetailLIFXViewController.h in Headers */,
+				25851BE41B57929100CB732E /* CALayer+StoryboardUserDefinedRuntimeAttributes.h in Headers */,
 				25A06C7F1B566C86005B6F8A /* DPAllJoynLightProfile.h in Headers */,
 				25851BB61B5739B600CB732E /* DPAllJoynServiceInformationProfile.h in Headers */,
+				25851BC61B57455D00CB732E /* DPAllJoynSettingTableViewCell.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -355,6 +409,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				Base,
 			);
 			mainGroup = 25A06BF21B562C07005B6F8A;
 			productRefGroup = 25A06BFD1B562C07005B6F8A /* Products */;
@@ -389,8 +444,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				25A06C711B5660BC005B6F8A /* Storyboard.storyboard in Resources */,
-				25A06C721B5660BC005B6F8A /* Media.xcassets in Resources */,
+				25851BFB1B57CF3D00CB732E /* Download_on_the_App_Store_JP_135x40@2x.png in Resources */,
+				25851BF71B57CDC000CB732E /* back-arrow@2x.png in Resources */,
+				25851BF11B57C47900CB732E /* LIFX_Logo@2.jpg in Resources */,
+				25851BFA1B57CF3D00CB732E /* Download_on_the_App_Store_Badge_US-UK_135x40@2x.png in Resources */,
+				25851BBD1B57409500CB732E /* Storyboard.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -433,11 +491,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				25A06C781B566AAA005B6F8A /* DPAllJoynServiceDiscoveryProfile.m in Sources */,
+				25851BCB1B574A9F00CB732E /* DPAllJoynSettingMasterSubTableViewController.m in Sources */,
 				25A06C7C1B566AD0005B6F8A /* DPAllJoynSystemProfile.m in Sources */,
 				25A06C761B5667E1005B6F8A /* DPAllJoynDevicePlugin.m in Sources */,
-				25A06C311B564742005B6F8A /* DPAllJoynSettingViewController.m in Sources */,
+				25851BC71B57455D00CB732E /* DPAllJoynSettingTableViewCell.m in Sources */,
+				25A06C311B564742005B6F8A /* DPAllJoynSettingMasterViewController.m in Sources */,
 				25A06C801B566C86005B6F8A /* DPAllJoynLightProfile.m in Sources */,
+				25851BD81B575F2700CB732E /* DPAllJoynSettingDetailLIFXViewController.m in Sources */,
 				25851BB71B5739B600CB732E /* DPAllJoynServiceInformationProfile.m in Sources */,
+				25851BE51B57929100CB732E /* CALayer+StoryboardUserDefinedRuntimeAttributes.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -465,6 +527,18 @@
 			targetProxy = 25A06C091B562C08005B6F8A /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		25851BBF1B57409500CB732E /* Storyboard.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				25851BC11B5740B500CB732E /* Base */,
+				25851BED1B579DD000CB732E /* en */,
+			);
+			name = Storyboard.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		25A06C101B562C08005B6F8A /* Debug */ = {

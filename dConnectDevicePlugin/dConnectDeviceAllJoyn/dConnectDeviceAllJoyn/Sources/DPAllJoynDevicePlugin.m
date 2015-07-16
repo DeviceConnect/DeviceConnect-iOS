@@ -11,20 +11,24 @@
 
 #import <DConnectSDK/DConnectServiceInformationProfile.h>
 #import "DPAllJoynServiceDiscoveryProfile.h"
+#import "DPAllJoynServiceInformationProfile.h"
 #import "DPAllJoynSystemProfile.h"
 
 
-@implementation DPHostDevicePlugin
+static NSString *const VERSION = @"1.0.0";
+
+
+@implementation DPAllJoynDevicePlugin
 
 - (instancetype) init {
     self = [super init];
     if (self) {
-        self.pluginName = @"AllJoyn 1.0.0";
+        self.pluginName = [NSString stringWithFormat:@"AllJoyn %@", VERSION];
         
-        // プロファイルを追加
+        // Add profiles.
         [self addProfile:[DPAllJoynServiceDiscoveryProfile new]];
-        [self addProfile:[DPAllJoynSystemProfile new]];
-        [self addProfile:[DConnectServiceInformationProfile new]];
+        [self addProfile:[DPAllJoynSystemProfile systemProfileWithVersion:VERSION]];
+        [self addProfile:[DPAllJoynServiceInformationProfile new]];
     }
     return self;
 }
