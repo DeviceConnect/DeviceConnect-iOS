@@ -32,13 +32,20 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
-		25A06C021B562C07005B6F8A /* DummyClass.h in Headers */ = {isa = PBXBuildFile; fileRef = 25A06C011B562C07005B6F8A /* DummyClass.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		25851BB61B5739B600CB732E /* DPAllJoynServiceInformationProfile.h in Headers */ = {isa = PBXBuildFile; fileRef = 25851BB41B5739B600CB732E /* DPAllJoynServiceInformationProfile.h */; };
+		25851BB71B5739B600CB732E /* DPAllJoynServiceInformationProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 25851BB51B5739B600CB732E /* DPAllJoynServiceInformationProfile.m */; };
+		25851BBA1B573C3100CB732E /* DConnectSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25851BB91B573C3100CB732E /* DConnectSDK.framework */; };
+		25851BBC1B573C9A00CB732E /* DCMDevicePluginSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25851BBB1B573C9A00CB732E /* DCMDevicePluginSDK.framework */; };
 		25A06C081B562C08005B6F8A /* dConnectDeviceAllJoyn.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25A06BFC1B562C07005B6F8A /* dConnectDeviceAllJoyn.framework */; };
 		25A06C0F1B562C08005B6F8A /* dConnectDeviceAllJoynTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 25A06C0E1B562C08005B6F8A /* dConnectDeviceAllJoynTests.m */; };
-		25A06C191B562C34005B6F8A /* DummyClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 25A06C181B562C34005B6F8A /* DummyClass.m */; };
 		25A06C311B564742005B6F8A /* DPAllJoynSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25A06C301B564742005B6F8A /* DPAllJoynSettingViewController.m */; };
 		25A06C711B5660BC005B6F8A /* Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 25A06C291B5641C3005B6F8A /* Storyboard.storyboard */; };
 		25A06C721B5660BC005B6F8A /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 25A06C2B1B564426005B6F8A /* Media.xcassets */; };
+		25A06C761B5667E1005B6F8A /* DPAllJoynDevicePlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 25A06C751B5667E1005B6F8A /* DPAllJoynDevicePlugin.m */; };
+		25A06C781B566AAA005B6F8A /* DPAllJoynServiceDiscoveryProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 25A06C771B566AAA005B6F8A /* DPAllJoynServiceDiscoveryProfile.m */; };
+		25A06C7C1B566AD0005B6F8A /* DPAllJoynSystemProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 25A06C7B1B566AD0005B6F8A /* DPAllJoynSystemProfile.m */; };
+		25A06C7F1B566C86005B6F8A /* DPAllJoynLightProfile.h in Headers */ = {isa = PBXBuildFile; fileRef = 25A06C7D1B566C86005B6F8A /* DPAllJoynLightProfile.h */; };
+		25A06C801B566C86005B6F8A /* DPAllJoynLightProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 25A06C7E1B566C86005B6F8A /* DPAllJoynLightProfile.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,13 +59,15 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		25851BB41B5739B600CB732E /* DPAllJoynServiceInformationProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPAllJoynServiceInformationProfile.h; sourceTree = "<group>"; };
+		25851BB51B5739B600CB732E /* DPAllJoynServiceInformationProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPAllJoynServiceInformationProfile.m; sourceTree = "<group>"; };
+		25851BB91B573C3100CB732E /* DConnectSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DConnectSDK.framework; path = ../../dConnectSDK/dConnectSDKForIOS/bin/DConnectSDK.framework; sourceTree = "<group>"; };
+		25851BBB1B573C9A00CB732E /* DCMDevicePluginSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DCMDevicePluginSDK.framework; path = ../DCMDevicePluginSDK/bin/DCMDevicePluginSDK.framework; sourceTree = "<group>"; };
 		25A06BFC1B562C07005B6F8A /* dConnectDeviceAllJoyn.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = dConnectDeviceAllJoyn.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		25A06C001B562C07005B6F8A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		25A06C011B562C07005B6F8A /* DummyClass.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DummyClass.h; sourceTree = "<group>"; };
 		25A06C071B562C08005B6F8A /* dConnectDeviceAllJoynTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = dConnectDeviceAllJoynTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		25A06C0D1B562C08005B6F8A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		25A06C0E1B562C08005B6F8A /* dConnectDeviceAllJoynTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = dConnectDeviceAllJoynTests.m; sourceTree = "<group>"; };
-		25A06C181B562C34005B6F8A /* DummyClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DummyClass.m; sourceTree = "<group>"; };
 		25A06C281B563C21005B6F8A /* dConnectDeviceAllJoyn-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "dConnectDeviceAllJoyn-Prefix.pch"; sourceTree = "<group>"; };
 		25A06C291B5641C3005B6F8A /* Storyboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Storyboard.storyboard; sourceTree = "<group>"; };
 		25A06C2B1B564426005B6F8A /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
@@ -66,6 +75,14 @@
 		25A06C301B564742005B6F8A /* DPAllJoynSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DPAllJoynSettingViewController.m; path = ViewControllers/DPAllJoynSettingViewController.m; sourceTree = "<group>"; };
 		25A06C6A1B565ED2005B6F8A /* dConnectDeviceAllJoyn_resources.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = dConnectDeviceAllJoyn_resources.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		25A06C6D1B565ED2005B6F8A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		25A06C741B5667AA005B6F8A /* DPAllJoynDevicePlugin.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DPAllJoynDevicePlugin.h; sourceTree = "<group>"; };
+		25A06C751B5667E1005B6F8A /* DPAllJoynDevicePlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPAllJoynDevicePlugin.m; sourceTree = "<group>"; };
+		25A06C771B566AAA005B6F8A /* DPAllJoynServiceDiscoveryProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPAllJoynServiceDiscoveryProfile.m; sourceTree = "<group>"; };
+		25A06C791B566AB3005B6F8A /* DPAllJoynServiceDiscoveryProfile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DPAllJoynServiceDiscoveryProfile.h; sourceTree = "<group>"; };
+		25A06C7A1B566AC6005B6F8A /* DPAllJoynSystemProfile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DPAllJoynSystemProfile.h; sourceTree = "<group>"; };
+		25A06C7B1B566AD0005B6F8A /* DPAllJoynSystemProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPAllJoynSystemProfile.m; sourceTree = "<group>"; };
+		25A06C7D1B566C86005B6F8A /* DPAllJoynLightProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPAllJoynLightProfile.h; sourceTree = "<group>"; };
+		25A06C7E1B566C86005B6F8A /* DPAllJoynLightProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPAllJoynLightProfile.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,6 +90,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				25851BBC1B573C9A00CB732E /* DCMDevicePluginSDK.framework in Frameworks */,
+				25851BBA1B573C3100CB732E /* DConnectSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -94,12 +113,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		25851BB81B573BFC00CB732E /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				25851BBB1B573C9A00CB732E /* DCMDevicePluginSDK.framework */,
+				25851BB91B573C3100CB732E /* DConnectSDK.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		25A06BF21B562C07005B6F8A = {
 			isa = PBXGroup;
 			children = (
 				25A06BFE1B562C07005B6F8A /* dConnectDeviceAllJoyn */,
 				25A06C0B1B562C08005B6F8A /* dConnectDeviceAllJoynTests */,
 				25A06C6B1B565ED2005B6F8A /* dConnectDeviceAllJoyn_resources */,
+				25851BB81B573BFC00CB732E /* Frameworks */,
 				25A06BFD1B562C07005B6F8A /* Products */,
 			);
 			sourceTree = "<group>";
@@ -154,8 +183,10 @@
 		25A06C241B5637CB005B6F8A /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				25A06C731B56675B005B6F8A /* Profiles */,
 				25A06C2D1B564698005B6F8A /* ViewControllers */,
-				25A06C181B562C34005B6F8A /* DummyClass.m */,
+				25A06C741B5667AA005B6F8A /* DPAllJoynDevicePlugin.h */,
+				25A06C751B5667E1005B6F8A /* DPAllJoynDevicePlugin.m */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -163,7 +194,6 @@
 		25A06C251B5637D2005B6F8A /* Headers */ = {
 			isa = PBXGroup;
 			children = (
-				25A06C011B562C07005B6F8A /* DummyClass.h */,
 			);
 			path = Headers;
 			sourceTree = "<group>";
@@ -210,6 +240,21 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		25A06C731B56675B005B6F8A /* Profiles */ = {
+			isa = PBXGroup;
+			children = (
+				25A06C7D1B566C86005B6F8A /* DPAllJoynLightProfile.h */,
+				25A06C7E1B566C86005B6F8A /* DPAllJoynLightProfile.m */,
+				25A06C791B566AB3005B6F8A /* DPAllJoynServiceDiscoveryProfile.h */,
+				25A06C771B566AAA005B6F8A /* DPAllJoynServiceDiscoveryProfile.m */,
+				25851BB41B5739B600CB732E /* DPAllJoynServiceInformationProfile.h */,
+				25851BB51B5739B600CB732E /* DPAllJoynServiceInformationProfile.m */,
+				25A06C7A1B566AC6005B6F8A /* DPAllJoynSystemProfile.h */,
+				25A06C7B1B566AD0005B6F8A /* DPAllJoynSystemProfile.m */,
+			);
+			path = Profiles;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -217,7 +262,8 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				25A06C021B562C07005B6F8A /* DummyClass.h in Headers */,
+				25A06C7F1B566C86005B6F8A /* DPAllJoynLightProfile.h in Headers */,
+				25851BB61B5739B600CB732E /* DPAllJoynServiceInformationProfile.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -386,8 +432,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				25A06C781B566AAA005B6F8A /* DPAllJoynServiceDiscoveryProfile.m in Sources */,
+				25A06C7C1B566AD0005B6F8A /* DPAllJoynSystemProfile.m in Sources */,
+				25A06C761B5667E1005B6F8A /* DPAllJoynDevicePlugin.m in Sources */,
 				25A06C311B564742005B6F8A /* DPAllJoynSettingViewController.m in Sources */,
-				25A06C191B562C34005B6F8A /* DummyClass.m in Sources */,
+				25A06C801B566C86005B6F8A /* DPAllJoynLightProfile.m in Sources */,
+				25851BB71B5739B600CB732E /* DPAllJoynServiceInformationProfile.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -443,6 +493,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"${PROJECT_DIR}/../../dConnectSDK/dConnectSDKForIOS/bin",
+					"$(PROJECT_DIR)/../DCMDevicePluginSDK/bin",
 				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_GENERATE_TEST_COVERAGE_FILES = YES;
@@ -503,6 +554,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"${PROJECT_DIR}/../../dConnectSDK/dConnectSDKForIOS/bin",
+					"$(PROJECT_DIR)/../DCMDevicePluginSDK/bin",
 				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -535,6 +587,11 @@
 				CURRENT_PROJECT_VERSION = "";
 				DEFINES_MODULE = YES;
 				DYLIB_INSTALL_NAME_BASE = "";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Users/fukui/Documents/Dev/2015/DeviceConnect/Workspace/iOS/DeviceConnect-iOS/dConnectSDK/dConnectSDKForIOS/bin",
+					"/Users/fukui/Documents/Dev/2015/DeviceConnect/Workspace/iOS/DeviceConnect-iOS/dConnectDevicePlugin/DCMDevicePluginSDK/bin",
+				);
 				INFOPLIST_FILE = "dConnectDeviceAllJoyn/Supporting Files/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_DYLIB_INSTALL_NAME = "";
@@ -553,6 +610,11 @@
 				CURRENT_PROJECT_VERSION = "";
 				DEFINES_MODULE = YES;
 				DYLIB_INSTALL_NAME_BASE = "";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Users/fukui/Documents/Dev/2015/DeviceConnect/Workspace/iOS/DeviceConnect-iOS/dConnectSDK/dConnectSDKForIOS/bin",
+					"/Users/fukui/Documents/Dev/2015/DeviceConnect/Workspace/iOS/DeviceConnect-iOS/dConnectDevicePlugin/DCMDevicePluginSDK/bin",
+				);
 				INFOPLIST_FILE = "dConnectDeviceAllJoyn/Supporting Files/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_DYLIB_INSTALL_NAME = "";
@@ -707,6 +769,7 @@
 				25A06C6F1B565ED2005B6F8A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
