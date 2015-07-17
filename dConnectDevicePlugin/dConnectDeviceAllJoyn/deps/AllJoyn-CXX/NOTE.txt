@@ -1,0 +1,1 @@
+Created from AllJoyn 14.12.00b OSX/iOS SDK distribution.

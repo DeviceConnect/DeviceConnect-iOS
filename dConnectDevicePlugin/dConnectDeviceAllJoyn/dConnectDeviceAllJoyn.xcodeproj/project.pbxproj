@@ -49,6 +49,8 @@
 		25851BF71B57CDC000CB732E /* back-arrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 25851BF61B57CDC000CB732E /* back-arrow@2x.png */; };
 		25851BFA1B57CF3D00CB732E /* Download_on_the_App_Store_Badge_US-UK_135x40@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 25851BF81B57CF3D00CB732E /* Download_on_the_App_Store_Badge_US-UK_135x40@2x.png */; };
 		25851BFB1B57CF3D00CB732E /* Download_on_the_App_Store_JP_135x40@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 25851BF91B57CF3D00CB732E /* Download_on_the_App_Store_JP_135x40@2x.png */; };
+		25856D051B58965E00B1C2DC /* DPAllJoynHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = 25856D031B58965E00B1C2DC /* DPAllJoynHandler.h */; };
+		25856D061B58965E00B1C2DC /* DPAllJoynHandler.mm in Sources */ = {isa = PBXBuildFile; fileRef = 25856D041B58965E00B1C2DC /* DPAllJoynHandler.mm */; };
 		25A06C081B562C08005B6F8A /* dConnectDeviceAllJoyn.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25A06BFC1B562C07005B6F8A /* dConnectDeviceAllJoyn.framework */; };
 		25A06C0F1B562C08005B6F8A /* dConnectDeviceAllJoynTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 25A06C0E1B562C08005B6F8A /* dConnectDeviceAllJoynTests.m */; };
 		25A06C311B564742005B6F8A /* DPAllJoynSettingMasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25A06C301B564742005B6F8A /* DPAllJoynSettingMasterViewController.m */; };
@@ -88,6 +90,8 @@
 		25851BF61B57CDC000CB732E /* back-arrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "back-arrow@2x.png"; path = "bin/dConnectDeviceAllJoyn_resources.bundle/back-arrow@2x.png"; sourceTree = SOURCE_ROOT; };
 		25851BF81B57CF3D00CB732E /* Download_on_the_App_Store_Badge_US-UK_135x40@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Download_on_the_App_Store_Badge_US-UK_135x40@2x.png"; sourceTree = "<group>"; };
 		25851BF91B57CF3D00CB732E /* Download_on_the_App_Store_JP_135x40@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Download_on_the_App_Store_JP_135x40@2x.png"; sourceTree = "<group>"; };
+		25856D031B58965E00B1C2DC /* DPAllJoynHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPAllJoynHandler.h; sourceTree = "<group>"; };
+		25856D041B58965E00B1C2DC /* DPAllJoynHandler.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DPAllJoynHandler.mm; sourceTree = "<group>"; };
 		25A06BFC1B562C07005B6F8A /* dConnectDeviceAllJoyn.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = dConnectDeviceAllJoyn.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		25A06C001B562C07005B6F8A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		25A06C071B562C08005B6F8A /* dConnectDeviceAllJoynTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = dConnectDeviceAllJoynTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -229,6 +233,8 @@
 				25A06C2D1B564698005B6F8A /* Views */,
 				25A06C741B5667AA005B6F8A /* DPAllJoynDevicePlugin.h */,
 				25A06C751B5667E1005B6F8A /* DPAllJoynDevicePlugin.m */,
+				25856D031B58965E00B1C2DC /* DPAllJoynHandler.h */,
+				25856D041B58965E00B1C2DC /* DPAllJoynHandler.mm */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -315,6 +321,7 @@
 				25851BCA1B574A9F00CB732E /* DPAllJoynSettingMasterSubTableViewController.h in Headers */,
 				25851BD71B575F2700CB732E /* DPAllJoynSettingDetailLIFXViewController.h in Headers */,
 				25851BE41B57929100CB732E /* CALayer+StoryboardUserDefinedRuntimeAttributes.h in Headers */,
+				25856D051B58965E00B1C2DC /* DPAllJoynHandler.h in Headers */,
 				25A06C7F1B566C86005B6F8A /* DPAllJoynLightProfile.h in Headers */,
 				25851BB61B5739B600CB732E /* DPAllJoynServiceInformationProfile.h in Headers */,
 				25851BC61B57455D00CB732E /* DPAllJoynSettingTableViewCell.h in Headers */,
@@ -328,6 +335,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 25A06C121B562C08005B6F8A /* Build configuration list for PBXNativeTarget "dConnectDeviceAllJoyn" */;
 			buildPhases = (
+				25856D111B58B6AD00B1C2DC /* Resove dependencies by CocoaPods */,
 				25A06BF71B562C07005B6F8A /* Sources */,
 				25A06BF81B562C07005B6F8A /* Frameworks */,
 				25A06BF91B562C07005B6F8A /* Headers */,
@@ -455,6 +463,20 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		25856D111B58B6AD00B1C2DC /* Resove dependencies by CocoaPods */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Resove dependencies by CocoaPods";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "export PATH=/usr/local/bin:$PATH\n\ncd ${PROJECT_DIR}/deps/CocoaPods\npod install --no-integrate";
+		};
 		25A06C1E1B562D18005B6F8A /* Prepare Framework */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -497,6 +519,7 @@
 				25851BC71B57455D00CB732E /* DPAllJoynSettingTableViewCell.m in Sources */,
 				25A06C311B564742005B6F8A /* DPAllJoynSettingMasterViewController.m in Sources */,
 				25A06C801B566C86005B6F8A /* DPAllJoynLightProfile.m in Sources */,
+				25856D061B58965E00B1C2DC /* DPAllJoynHandler.mm in Sources */,
 				25851BD81B575F2700CB732E /* DPAllJoynSettingDetailLIFXViewController.m in Sources */,
 				25851BB71B5739B600CB732E /* DPAllJoynServiceInformationProfile.m in Sources */,
 				25851BE51B57929100CB732E /* CALayer+StoryboardUserDefinedRuntimeAttributes.m in Sources */,
@@ -566,7 +589,7 @@
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"${PROJECT_DIR}/../../dConnectSDK/dConnectSDKForIOS/bin",
+					"$(PROJECT_DIR)/../../dConnectSDK/dConnectSDKForIOS/bin",
 					"$(PROJECT_DIR)/../DCMDevicePluginSDK/bin",
 				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -590,12 +613,26 @@
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"\"$(PROJECT_DIR)/Pods/OpenSSL-Static/lib-ios\"",
+					"$(PROJECT_DIR)/deps/AllJoyn-CXX/inc/cpp",
+					"$(PROJECT_DIR)/deps/AllJoyn-ObjC/inc",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				"LIBRARY_SEARCH_PATHS[sdk=iphoneos*]" = (
+					"$(PROJECT_DIR)/deps/AllJoyn-CXX/arm/iphoneos/debug/dist/cpp/lib",
+					"$(PROJECT_DIR)/deps/AllJoyn-ObjC/lib-$(CONFIGURATION)",
+					"$(PROJECT_DIR)/deps/CocoaPods/Pods/OpenSSL-Static/lib-ios",
+				);
+				"LIBRARY_SEARCH_PATHS[sdk=iphonesimulator*]" = (
+					"$(PROJECT_DIR)/deps/AllJoyn-CXX/i386/iphonesimulator/debug/dist/cpp/lib",
+					"$(PROJECT_DIR)/deps/AllJoyn-ObjC/lib-$(CONFIGURATION)",
+					"$(PROJECT_DIR)/deps/CocoaPods/Pods/OpenSSL-Static/lib-ios",
+				);
 				MTL_ENABLE_DEBUG_INFO = YES;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/dConnectDeviceAllJoyn/Headers";
+				VALID_ARCHS = "armv7 armv7s i386";
 				VERSIONING_SYSTEM = "";
 				VERSION_INFO_PREFIX = "";
 			};
@@ -627,7 +664,7 @@
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"${PROJECT_DIR}/../../dConnectSDK/dConnectSDKForIOS/bin",
+					"$(PROJECT_DIR)/../../dConnectSDK/dConnectSDKForIOS/bin",
 					"$(PROJECT_DIR)/../DCMDevicePluginSDK/bin",
 				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -643,13 +680,27 @@
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"\"$(PROJECT_DIR)/Pods/OpenSSL-Static/lib-ios\"",
+					"$(PROJECT_DIR)/deps/AllJoyn-CXX/inc/cpp",
+					"$(PROJECT_DIR)/deps/AllJoyn-ObjC/inc",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				"LIBRARY_SEARCH_PATHS[sdk=iphoneos*]" = (
+					"$(PROJECT_DIR)/deps/AllJoyn-CXX/arm/iphoneos/release/dist/cpp/lib",
+					"$(PROJECT_DIR)/deps/AllJoyn-ObjC/lib-$(CONFIGURATION)",
+					"$(PROJECT_DIR)/deps/CocoaPods/Pods/OpenSSL-Static/lib-ios",
+				);
+				"LIBRARY_SEARCH_PATHS[sdk=iphonesimulator*]" = (
+					"$(PROJECT_DIR)/deps/AllJoyn-CXX/i386/iphonesimulator/release/dist/cpp/lib",
+					"$(PROJECT_DIR)/deps/AllJoyn-ObjC/lib-$(CONFIGURATION)",
+					"$(PROJECT_DIR)/deps/CocoaPods/Pods/OpenSSL-Static/lib-ios",
+				);
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/dConnectDeviceAllJoyn/Headers";
 				VALIDATE_PRODUCT = YES;
+				VALID_ARCHS = "armv7 armv7s i386";
 				VERSIONING_SYSTEM = "";
 				VERSION_INFO_PREFIX = "";
 			};
@@ -661,17 +712,25 @@
 				CURRENT_PROJECT_VERSION = "";
 				DEFINES_MODULE = YES;
 				DYLIB_INSTALL_NAME_BASE = "";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"/Users/fukui/Documents/Dev/2015/DeviceConnect/Workspace/iOS/DeviceConnect-iOS/dConnectSDK/dConnectSDKForIOS/bin",
-					"/Users/fukui/Documents/Dev/2015/DeviceConnect/Workspace/iOS/DeviceConnect-iOS/dConnectDevicePlugin/DCMDevicePluginSDK/bin",
-				);
 				INFOPLIST_FILE = "dConnectDeviceAllJoyn/Supporting Files/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_DYLIB_INSTALL_NAME = "";
 				LD_RUNPATH_SEARCH_PATHS = "";
 				MACH_O_TYPE = staticlib;
-				OTHER_LDFLAGS = "-ObjC";
+				OTHER_CFLAGS = (
+					"-DQCC_OS_GROUP_POSIX",
+					"-DQCC_OS_DARWIN",
+				);
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-lAllJoynFramework_iOS",
+					"-lalljoyn",
+					"-lajrouter",
+					"-lBundledRouter.o",
+					"-lssl",
+					"-lcrypto",
+				);
+				OTHER_LIBTOOLFLAGS = "-lAllJoynFramework_iOS -lalljoyn -lajrouter -lBundledRouter.o -lssl -lcrypto";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				STRIP_STYLE = "non-global";
@@ -684,17 +743,26 @@
 				CURRENT_PROJECT_VERSION = "";
 				DEFINES_MODULE = YES;
 				DYLIB_INSTALL_NAME_BASE = "";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"/Users/fukui/Documents/Dev/2015/DeviceConnect/Workspace/iOS/DeviceConnect-iOS/dConnectSDK/dConnectSDKForIOS/bin",
-					"/Users/fukui/Documents/Dev/2015/DeviceConnect/Workspace/iOS/DeviceConnect-iOS/dConnectDevicePlugin/DCMDevicePluginSDK/bin",
-				);
 				INFOPLIST_FILE = "dConnectDeviceAllJoyn/Supporting Files/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_DYLIB_INSTALL_NAME = "";
 				LD_RUNPATH_SEARCH_PATHS = "";
 				MACH_O_TYPE = staticlib;
-				OTHER_LDFLAGS = "-ObjC";
+				OTHER_CFLAGS = (
+					"-DNS_BLOCK_ASSERTIONS=1",
+					"-DQCC_OS_GROUP_POSIX",
+					"-DQCC_OS_DARWIN",
+				);
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-lAllJoynFramework_iOS",
+					"-lalljoyn",
+					"-lajrouter",
+					"-lBundledRouter.o",
+					"-lssl",
+					"-lcrypto",
+				);
+				OTHER_LIBTOOLFLAGS = "-lAllJoynFramework_iOS -lalljoyn -lajrouter -lBundledRouter.o -lssl -lcrypto";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				STRIP_STYLE = "non-global";

@@ -23,7 +23,7 @@
                          withExtension:@"bundle"]])
 
 #ifdef __OBJC__
-@import Foundation;
+#import <Foundation/Foundation.h>
 #endif
 
 #endif

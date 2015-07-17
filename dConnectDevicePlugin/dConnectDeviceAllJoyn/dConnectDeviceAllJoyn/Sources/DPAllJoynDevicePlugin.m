@@ -10,6 +10,7 @@
 #import "DPAllJoynDevicePlugin.h"
 
 #import <DConnectSDK/DConnectServiceInformationProfile.h>
+#import "DPAllJoynHandler.h"
 #import "DPAllJoynServiceDiscoveryProfile.h"
 #import "DPAllJoynServiceInformationProfile.h"
 #import "DPAllJoynSystemProfile.h"
@@ -18,7 +19,9 @@
 static NSString *const VERSION = @"1.0.0";
 
 
-@implementation DPAllJoynDevicePlugin
+@implementation DPAllJoynDevicePlugin {
+    DPAllJoynHandler *handler;
+}
 
 - (instancetype) init {
     self = [super init];
@@ -29,6 +32,13 @@ static NSString *const VERSION = @"1.0.0";
         [self addProfile:[DPAllJoynServiceDiscoveryProfile new]];
         [self addProfile:[DPAllJoynSystemProfile systemProfileWithVersion:VERSION]];
         [self addProfile:[DPAllJoynServiceInformationProfile new]];
+        
+        handler = [DPAllJoynHandler new];
+        [handler initAllJoynContextWithBlock:^(BOOL result) {
+            NSLog(@"%@",
+                  [NSString stringWithFormat:@"#### RESULT: %@",
+                   (result ? @"succeeded" : @"failed")]);
+        }];//DEBUG
     }
     return self;
 }
