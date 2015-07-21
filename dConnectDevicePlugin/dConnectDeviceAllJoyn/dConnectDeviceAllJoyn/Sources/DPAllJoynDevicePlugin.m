@@ -20,7 +20,7 @@ static NSString *const VERSION = @"1.0.0";
 
 
 @implementation DPAllJoynDevicePlugin {
-    DPAllJoynHandler *handler;
+    DPAllJoynHandler *_handler;
 }
 
 - (instancetype) init {
@@ -28,17 +28,25 @@ static NSString *const VERSION = @"1.0.0";
     if (self) {
         self.pluginName = [NSString stringWithFormat:@"AllJoyn %@", VERSION];
         
+        _handler = [DPAllJoynHandler new];
+        
         // Add profiles.
-        [self addProfile:[DPAllJoynServiceDiscoveryProfile new]];
+        [self addProfile:[[DPAllJoynServiceDiscoveryProfile alloc]
+                          initWithHandler:_handler]];
         [self addProfile:[DPAllJoynSystemProfile systemProfileWithVersion:VERSION]];
         [self addProfile:[DPAllJoynServiceInformationProfile new]];
         
-        handler = [DPAllJoynHandler new];
-        [handler initAllJoynContextWithBlock:^(BOOL result) {
-            NSLog(@"%@",
-                  [NSString stringWithFormat:@"#### RESULT: %@",
-                   (result ? @"succeeded" : @"failed")]);
-        }];//DEBUG
+        id block;
+        block = ^(BOOL result) {
+            if (!result) {
+                NSLog(@"%s: AllJoyn init failed, retrying...",
+                      class_getName([self class]));
+                [_handler postBlock:^{
+                    [_handler initAllJoynContextWithBlock:block];
+                } withDelay:5000];
+            }
+        };
+        [_handler initAllJoynContextWithBlock:block];
     }
     return self;
 }

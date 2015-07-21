@@ -10,6 +10,8 @@
 #import "DPAllJoynHandler.h"
 
 #import <AllJoynFramework_iOS.h>
+#import "DPAllJoynSynchronizedMutableDictionary.h"
+#import "DPAllJoynServiceEntity.h"
 
 
 NSArray *const DPAllJoynSingleLampInterfaceSet =
@@ -38,6 +40,9 @@ NSArray *const DPAllJoynSupportedInterfaceSets =
     ];
 
 static NSString *const VERSION = @"1.0.0";
+static int const PING_TIMEOUT = 5000;
+static int const PING_INTERVAL = 20;
+static int const DISCOVER_INTERVAL = 30;
 
 
 @protocol AboutClientDelegate <NSObject>
@@ -51,7 +56,10 @@ static NSString *const VERSION = @"1.0.0";
 <AJNBusListener, AJNSessionListener, AJNAboutListener>
 {
 @private
-    dispatch_queue_t handlerQueue;
+    dispatch_queue_t _handlerQueue;
+    DPAllJoynSynchronizedMutableDictionary *_discoveredServices;
+    NSTimer *_pingTimer;
+    NSTimer *_discoverTimer;
 }
 
 @property (nonatomic, strong) AJNBusAttachment *bus;
@@ -71,9 +79,10 @@ static NSString *const VERSION = @"1.0.0";
 - (instancetype) init {
     self = [super init];
     if (self) {
-        handlerQueue =
+        _handlerQueue =
         dispatch_queue_create("org.deviceconnect.deviceplugin.handlerQueue",
-                              NULL);
+                              DISPATCH_QUEUE_SERIAL);
+        _discoveredServices = [DPAllJoynSynchronizedMutableDictionary new];
     }
     return self;
 }
@@ -87,7 +96,7 @@ static NSString *const VERSION = @"1.0.0";
         return;
     }
     
-    dispatch_async(handlerQueue, ^{
+    dispatch_async(_handlerQueue, ^{
         if (!self.bus) {
             QStatus status;
             
@@ -123,7 +132,24 @@ static NSString *const VERSION = @"1.0.0";
                 return;
             }
             
-            [self.bus whoImplementsInterface:@"*"];
+            _pingTimer =
+            [NSTimer timerWithTimeInterval:PING_INTERVAL
+                                    target:self
+                                  selector:@selector(pingTimerMethod:)
+                                  userInfo:nil
+                                   repeats:YES];
+            [[NSRunLoop mainRunLoop] addTimer:_pingTimer
+                                      forMode:NSDefaultRunLoopMode];
+            
+            _discoverTimer =
+            [NSTimer timerWithTimeInterval:DISCOVER_INTERVAL
+                                    target:self
+                                  selector:@selector(discoverTimerMethod:)
+                                  userInfo:nil
+                                   repeats:YES];
+            [[NSRunLoop mainRunLoop] addTimer:_discoverTimer
+                                      forMode:NSDefaultRunLoopMode];
+            [_discoverTimer fire];
         }
         
         block(YES);
@@ -131,7 +157,7 @@ static NSString *const VERSION = @"1.0.0";
 }
 
 
-- (void)doDestroyAllJoynContextWithBlock:(void(^)(BOOL result))block
+- (void)destroyAllJoynContextWithBlock:(void(^)(BOOL result))block
 {
     NSLog(@"%s: destroy", __PRETTY_FUNCTION__);
     if (!block) {
@@ -139,7 +165,16 @@ static NSString *const VERSION = @"1.0.0";
         return;
     }
     
-    dispatch_async(handlerQueue, ^{
+    dispatch_async(_handlerQueue, ^{
+        if (_pingTimer) {
+            [_pingTimer invalidate];
+            _pingTimer = nil;
+        }
+        if (_discoverTimer) {
+            [_discoverTimer invalidate];
+            _discoverTimer = nil;
+        }
+        
         if (_bus) {
             [_bus disconnectWithArguments:@"null"];
             [_bus stop];
@@ -150,7 +185,7 @@ static NSString *const VERSION = @"1.0.0";
 }
 
 
-- (void)doDiscover:(void(^)(BOOL result))block
+- (void)discoverServices:(void(^)(BOOL result))block
 {
     NSLog(@"%s: discover", __PRETTY_FUNCTION__);
     if (!block) {
@@ -158,7 +193,12 @@ static NSString *const VERSION = @"1.0.0";
         return;
     }
     
-    dispatch_async(handlerQueue, ^{
+    dispatch_async(_handlerQueue, ^{
+        // NOTE: the effect of whoImplementsInterface: for specific interfaces
+        // can stack up, and unless all stacked-up effects are canceled, service
+        // discovery for the specific interfaces can not be re-performed.
+        // So the number of calls for whoImplementsInterface and
+        // cancelWhoImplements must be balanced.
         static BOOL firstTime = YES;
         if (!firstTime) {
             for (NSArray *ifaceSet in DPAllJoynSupportedInterfaceSets) {
@@ -166,10 +206,11 @@ static NSString *const VERSION = @"1.0.0";
                     [_bus cancelWhoImplements:iface];
                 }
             }
+//            [_bus cancelWhoImplements:@"*"];
         } else {
             firstTime = NO;
         }
-        
+
         // To realize fine-grained API availability for DeviceConnect,
         // query each AllJoyn interface separately.
         for (NSArray *ifaceSet : DPAllJoynSupportedInterfaceSets) {
@@ -177,13 +218,14 @@ static NSString *const VERSION = @"1.0.0";
                 [_bus whoImplementsInterface:iface];
             }
         }
+//        [self.bus whoImplementsInterface:@"*"];
     });
 }
 
 
-- (void)doJoinSessionWithBusName:(NSString *)busName
-                            port:(AJNSessionPort)port
-                           block:(void(^)(NSNumber *sessionId))block
+- (void)joinSessionWithBusName:(NSString *)busName
+                          port:(AJNSessionPort)port
+                         block:(void(^)(NSNumber *sessionId))block
 {
     NSLog(@"%s: joinSession", __PRETTY_FUNCTION__);
     if (!busName) {
@@ -195,7 +237,7 @@ static NSString *const VERSION = @"1.0.0";
         return;
     }
     
-    dispatch_async(handlerQueue, ^{
+    dispatch_async(_handlerQueue, ^{
         AJNSessionOptions *sessionOptions =
         [[AJNSessionOptions alloc] initWithTrafficType:kAJNTrafficMessages
                                     supportsMultipoint:NO
@@ -213,8 +255,8 @@ static NSString *const VERSION = @"1.0.0";
 }
 
 
-- (void)doLeaveSessionWithSessionId:(AJNSessionId)sessionId
-                              block:(void(^)(BOOL result))block
+- (void)leaveSessionWithSessionId:(AJNSessionId)sessionId
+                            block:(void(^)(BOOL result))block
 {
     NSLog(@"%s: leaveSession", __PRETTY_FUNCTION__);
     if (!block) {
@@ -222,16 +264,127 @@ static NSString *const VERSION = @"1.0.0";
         return;
     }
     
-    dispatch_async(handlerQueue, ^{
+    dispatch_async(_handlerQueue, ^{
         QStatus status = [self.bus leaveSession:sessionId];
         block(ER_OK == status);
     });
 }
 
 
+- (void)pingWithBunName:(NSString *)busName
+                  block:(void(^)(BOOL result)) block
+{
+    NSLog(@"%s: Ping the service with bus name \"%@\"",
+          class_getName([self class]), busName);
+    if (!block) {
+        NSLog(@"%s: block can not be nil.", __PRETTY_FUNCTION__);
+        return;
+    }
+    
+    dispatch_async(_handlerQueue, ^{
+        QStatus status = [self.bus pingPeer:busName withTimeout:5000];
+        block(ER_OK == status);
+    });
+}
+
+
+- (void)pingTimerMethod:(NSTimer *)timer
+{
+    NSLog(@"%s: Sending pings to discovered services...",
+          class_getName([self class]));
+    
+    for (DPAllJoynServiceEntity *serviceEntity in
+         [_discoveredServices cloneDictionary].allValues) {
+        [self pingWithBunName:serviceEntity.busName
+                        block:^(BOOL result)
+         {
+             if (!result) {
+                 NSLog(@"No ping from the service with bus name \"%@\"."
+                       " Removing it from discovered services...",
+                       serviceEntity.serviceName);
+                 [_discoveredServices removeObjectForKey:serviceEntity.busName];
+             }
+         }];
+    }
+}
+
+
+- (void)discoverTimerMethod:(NSTimer *)timer
+{
+    [self discoverServices:^(BOOL result) {
+    }];
+}
+
+
+- (NSDictionary *)discoveredAllJoynServices
+{
+    return [_discoveredServices cloneDictionary];
+}
+
+
+- (void)postBlock:(void(^)())block withDelay:(int64_t)delayMillis
+{
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW,
+                                 (int64_t)(delayMillis * NSEC_PER_MSEC)), dispatch_get_main_queue(), block);
+}
+
+
++ (BOOL) isSupported:(AJNMessageArgument *)busObjectDescriptions
+{
+    NSMutableSet *interfaces = [NSMutableSet new];
+    
+    QStatus status;
+    size_t size;
+    MsgArg *entries;
+    status = [busObjectDescriptions value:@"a(oas)", &size, &entries];
+    if (ER_OK != status) {
+        NSLog(@"Failed to parse bus object descriptions.");
+        return NO;
+    }
+    for (size_t i = 0; i < size; ++i) {
+        char *objPath;
+        size_t size2;
+        MsgArg *entries2;
+        status = entries[i].Get("(oas)", &objPath, &size2, &entries2);
+        if (ER_OK != status) {
+            NSLog(@"Failed to parse a bus object description. Skipping it...");
+            continue;
+        }
+        for (size_t j = 0; j < size2; ++j) {
+            char *iface;
+            status = entries2[j].Get("s", &iface);
+            if (ER_OK != status) {
+                NSLog(@"Failed to parse a supported interface in a bus object."
+                      " Skipping it...");
+                continue;
+            }
+            [interfaces addObject:@(iface)];
+        }
+    }
+    
+    // Each supported AllJoyn interface set represents a collection of required AllJoyn
+    // interfaces to realize a certain DeviceConnect profile (e.g. AllJoyn Lamp service
+    // interfaces are required for the DeviceConnect Light profile).
+    // If AllJoyn bus object in question contains any of supported interface sets, then
+    // assumedly this bus object is able to become a DeviceConect service.
+    for (NSArray *supportedInterfaceSet : DPAllJoynSupportedInterfaceSets) {
+        BOOL allSupported = YES;
+        for (NSString *supportedInterface : supportedInterfaceSet) {
+            if (![interfaces containsObject:supportedInterface]) {
+                allSupported = NO;
+                break;
+            }
+        }
+        if (allSupported) {
+            return YES;
+        }
+    }
+    return NO;
+}
+
+
 // =========================================================
 #pragma mark - AJNAboutListener
-
 
 - (void)didReceiveAnnounceOnBus:(NSString *)busName
                     withVersion:(uint16_t)version
@@ -243,37 +396,22 @@ static NSString *const VERSION = @"1.0.0";
           __PRETTY_FUNCTION__,
           busName, version, port, objectDescriptionArg, aboutDataArg);
     
-    [self doJoinSessionWithBusName:busName
-                              port:port
-                             block:
-     ^(NSNumber *sessionIdObj) {
-         if (!sessionIdObj) {
-             NSLog(@"#### Failed to join a session.");
-             return;
-         }
-         AJNSessionId sessionId = sessionIdObj.unsignedIntValue;
-         
-         // Create AboutProxy
-         AJNAboutProxy *aboutProxy =
-         [[AJNAboutProxy alloc] initWithBusAttachment:self.bus
-                                              busName:busName
-                                            sessionId:sessionId];
-         
-         // Make a call to GetAboutData and GetVersion
-         uint16_t aboutVersion;
-         NSMutableDictionary *aboutData;
-         [aboutProxy getVersion:&aboutVersion];
-         [aboutProxy getAboutDataForLanguage:@"en"
-                             usingDictionary:&aboutData];
-         NSLog(@"#### Version: %d", version);
-         NSLog(@"#### AboutData:\n%@", aboutData.description);
-         
-         [self doLeaveSessionWithSessionId:sessionId
-                                     block:
-          ^(BOOL result) {
-              
-          }];
-     }];
+    DPAllJoynServiceEntity *service =
+    [[DPAllJoynServiceEntity alloc] initWithBusName:busName
+                                               port:port
+                                          aboutData:aboutDataArg
+                                       proxyObjects:objectDescriptionArg];
+    
+    NSLog(@"%s: Service found: %@", class_getName([self class]), service.serviceName);
+    
+    if (![DPAllJoynHandler isSupported:objectDescriptionArg]) {
+        NSLog(@"Required I/Fs are missing. Ignoring \"%@\" ...",
+              service.serviceName);
+        return;
+    }
+    
+    [_discoveredServices setObject:service
+                            forKey:busName];
 }
 
 

@@ -17,14 +17,17 @@ extern NSArray *const DPAllJoynSupportedInterfaceSets;
 
 @interface DPAllJoynHandler : NSObject
 
-//- (void)run;
 - (void)initAllJoynContextWithBlock:(void(^)(BOOL result))block;
-- (void)doDestroyAllJoynContextWithBlock:(void(^)(BOOL result))block;
-- (void)doDiscover:(void(^)(BOOL result))block;
-- (void)doJoinSessionWithBusName:(NSString *)busName
-                            port:(AJNSessionPort)port
-                           block:(void(^)(NSNumber *sessionId))block;
-- (void)doLeaveSessionWithSessionId:(AJNSessionId)sessionId
-                              block:(void(^)(BOOL result))block;
+- (void)destroyAllJoynContextWithBlock:(void(^)(BOOL result))block;
+- (void)discoverServices:(void(^)(BOOL result))block;
+- (void)joinSessionWithBusName:(NSString *)busName
+                          port:(AJNSessionPort)port
+                         block:(void(^)(NSNumber *sessionId))block;
+- (void)leaveSessionWithSessionId:(AJNSessionId)sessionId
+                            block:(void(^)(BOOL result))block;
+- (NSDictionary *)discoveredAllJoynServices;
+
+- (void)postBlock:(void(^)())block
+        withDelay:(int64_t)delayMillis;
 
 @end

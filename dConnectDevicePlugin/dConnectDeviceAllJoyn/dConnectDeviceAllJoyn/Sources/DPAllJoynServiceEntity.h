@@ -1,0 +1,49 @@
+//
+//  DPAllJoynServiceEntity.h
+//  dConnectDeviceAllJoyn
+//
+//  Copyright (c) 2015 NTT DOCOMO, INC.
+//  Released under the MIT license
+//  http://opensource.org/licenses/mit-license.php
+//
+
+#import <AJNSessionOptions.h>
+#import <AllJoynFramework_iOS.h>
+
+
+@interface DPAllJoynServiceEntity : NSObject
+
+/**
+ * Human-friendly service name.
+ */
+@property NSString *serviceName;
+@property NSString *busName; // @NonNull
+@property AJNSessionPort port;
+@property AJNMessageArgument *aboutData;
+
+// Flattened data from aboutData
+@property NSData *appId;
+@property NSString *defaultLanguage;
+@property NSString *deviceName;
+@property NSString *deviceId;
+@property NSString *appName;
+@property NSString *manufacturer;
+@property NSString *modelNumber;
+@property NSArray *supportedLanguages;
+@property NSString *aboutDescription;
+@property NSString *dateOfManufacture;
+@property NSString *softwareVersion;
+@property NSString *ajSoftwareVersion;
+@property NSString *hardwareVersion;
+@property NSString *supportUrl;
+//
+@property AJNMessageArgument *proxyObjects; // @NonNull
+
+- (instancetype) init NS_UNAVAILABLE;
+- (instancetype) initWithBusName:(NSString *)busName
+                            port:(AJNSessionPort)port
+                       aboutData:(AJNMessageArgument *)aboutData
+                    proxyObjects:(AJNMessageArgument *)proxyObjects
+NS_DESIGNATED_INITIALIZER;
+
+@end
