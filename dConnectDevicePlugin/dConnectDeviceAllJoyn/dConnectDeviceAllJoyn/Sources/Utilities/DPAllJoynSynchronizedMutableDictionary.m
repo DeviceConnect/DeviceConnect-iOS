@@ -46,7 +46,10 @@
 
 - (NSUInteger) count
 {
-    return _internalDictionary.count;
+    [_lock lock];
+    NSUInteger count = _internalDictionary.count;
+    [_lock unlock];
+    return count;
 }
 
 
