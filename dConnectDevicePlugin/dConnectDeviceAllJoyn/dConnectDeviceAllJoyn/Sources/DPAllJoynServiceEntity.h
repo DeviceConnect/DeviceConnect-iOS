@@ -7,7 +7,6 @@
 //  http://opensource.org/licenses/mit-license.php
 //
 
-#import <AJNSessionOptions.h>
 #import <AllJoynFramework_iOS.h>
 
 

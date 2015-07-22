@@ -1,5 +1,5 @@
 //
-//  DPAllJoynServiceEntity.m
+//  DPAllJoynServiceEntity.mm
 //  dConnectDeviceAllJoyn
 //
 //  Copyright (c) 2015 NTT DOCOMO, INC.

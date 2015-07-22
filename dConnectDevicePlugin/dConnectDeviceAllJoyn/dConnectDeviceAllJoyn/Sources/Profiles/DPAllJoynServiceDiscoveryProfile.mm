@@ -1,5 +1,5 @@
 //
-//  DPAllJoynServiceDiscoveryProfile.m
+//  DPAllJoynServiceDiscoveryProfile.mm
 //  dConnectDeviceAllJoyn
 //
 //  Copyright (c) 2015 NTT DOCOMO, INC.
@@ -37,8 +37,8 @@
 }
 
 
+// =========================================================
 #pragma mark - DConnectServiceDiscoveryProfileDelegate
-#pragma mark Get Methods
 
 
 - (BOOL)             profile:(DConnectServiceDiscoveryProfile *)profile
