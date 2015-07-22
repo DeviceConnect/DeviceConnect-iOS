@@ -34,7 +34,9 @@ static NSString *const VERSION = @"1.0.0";
         [self addProfile:[[DPAllJoynServiceDiscoveryProfile alloc]
                           initWithHandler:_handler]];
         [self addProfile:[DPAllJoynSystemProfile systemProfileWithVersion:VERSION]];
-        [self addProfile:[DPAllJoynServiceInformationProfile new]];
+        [self addProfile:[[DPAllJoynServiceInformationProfile alloc]
+                          initWithProvider:self handler:_handler
+                          version:VERSION]];
         
         id block;
         block = ^(BOOL result) {

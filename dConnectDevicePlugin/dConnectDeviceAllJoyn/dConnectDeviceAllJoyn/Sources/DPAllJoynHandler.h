@@ -10,11 +10,6 @@
 #import <AJNSessionOptions.h>
 
 
-extern NSArray *const DPAllJoynSingleLampInterfaceSet;
-extern NSArray *const DPAllJoynLampControllerInterfaceSet;
-extern NSArray *const DPAllJoynSupportedInterfaceSets;
-
-
 @interface DPAllJoynHandler : NSObject
 
 - (void)initAllJoynContextWithBlock:(void(^)(BOOL result))block;

@@ -1,5 +1,5 @@
 //
-//  DPAllJoynServiceInformationProfile.m
+//  NSArray+Query.h
 //  dConnectDeviceAllJoyn
 //
 //  Copyright (c) 2015 NTT DOCOMO, INC.
@@ -7,8 +7,8 @@
 //  http://opensource.org/licenses/mit-license.php
 //
 
-#import "DPAllJoynServiceInformationProfile.h"
+@interface NSArray (Query)
 
-@implementation DPAllJoynServiceInformationProfile
+- (BOOL)containsAll:(NSArray *)array;
 
 @end

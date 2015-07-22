@@ -1,5 +1,5 @@
 //
-//  DPAllJoynHandler.m
+//  DPAllJoynHandler.mm
 //  dConnectDeviceAllJoyn
 //
 //  Copyright (c) 2015 NTT DOCOMO, INC.
@@ -9,37 +9,12 @@
 
 #import "DPAllJoynHandler.h"
 
-#import <AllJoynFramework_iOS.h>
-#import "DPAllJoynSynchronizedMutableDictionary.h"
+#import "DPAllJoynConst.h"
 #import "DPAllJoynServiceEntity.h"
+#import "DPAllJoynSupportCheck.h"
+#import "DPAllJoynSynchronizedMutableDictionary.h"
 
 
-NSArray *const DPAllJoynSingleLampInterfaceSet =
-  @[
-    // AllJoyn Lighting service framework, Lamp service
-    @"org.allseen.LSF.LampDetails"
-    , @"org.allseen.LSF.LampParameters"
-    , @"org.allseen.LSF.LampService"
-    , @"org.allseen.LSF.LampState"
-    ];
-NSArray *const DPAllJoynLampControllerInterfaceSet =
-  @[
-    //                    // AllJoyn Lighting service framework, Controller Service
-    @"org.allseen.LSF.ControllerService"
-    , @"org.allseen.LSF.ControllerService.Lamp"
-    //                    , @"org.allseen.LSF.ControllerService.LampGroup"
-    //                    , @"org.allseen.LSF.ControllerService.Preset"
-    //                    , @"org.allseen.LSF.ControllerService.Scene"
-    //                    , @"org.allseen.LSF.ControllerService.MasterScene"
-    //                    , @"org.allseen.LeaderElectionAndStateSync"
-    ];
-NSArray *const DPAllJoynSupportedInterfaceSets =
-  @[
-    DPAllJoynSingleLampInterfaceSet
-    , DPAllJoynLampControllerInterfaceSet
-    ];
-
-static NSString *const VERSION = @"1.0.0";
 static int const PING_TIMEOUT = 5000;
 static int const PING_INTERVAL = 20;
 static int const DISCOVER_INTERVAL = 30;
@@ -329,60 +304,6 @@ static int const DISCOVER_INTERVAL = 30;
 }
 
 
-+ (BOOL) isSupported:(AJNMessageArgument *)busObjectDescriptions
-{
-    NSMutableSet *interfaces = [NSMutableSet new];
-    
-    QStatus status;
-    size_t size;
-    MsgArg *entries;
-    status = [busObjectDescriptions value:@"a(oas)", &size, &entries];
-    if (ER_OK != status) {
-        NSLog(@"Failed to parse bus object descriptions.");
-        return NO;
-    }
-    for (size_t i = 0; i < size; ++i) {
-        char *objPath;
-        size_t size2;
-        MsgArg *entries2;
-        status = entries[i].Get("(oas)", &objPath, &size2, &entries2);
-        if (ER_OK != status) {
-            NSLog(@"Failed to parse a bus object description. Skipping it...");
-            continue;
-        }
-        for (size_t j = 0; j < size2; ++j) {
-            char *iface;
-            status = entries2[j].Get("s", &iface);
-            if (ER_OK != status) {
-                NSLog(@"Failed to parse a supported interface in a bus object."
-                      " Skipping it...");
-                continue;
-            }
-            [interfaces addObject:@(iface)];
-        }
-    }
-    
-    // Each supported AllJoyn interface set represents a collection of required AllJoyn
-    // interfaces to realize a certain DeviceConnect profile (e.g. AllJoyn Lamp service
-    // interfaces are required for the DeviceConnect Light profile).
-    // If AllJoyn bus object in question contains any of supported interface sets, then
-    // assumedly this bus object is able to become a DeviceConect service.
-    for (NSArray *supportedInterfaceSet : DPAllJoynSupportedInterfaceSets) {
-        BOOL allSupported = YES;
-        for (NSString *supportedInterface : supportedInterfaceSet) {
-            if (![interfaces containsObject:supportedInterface]) {
-                allSupported = NO;
-                break;
-            }
-        }
-        if (allSupported) {
-            return YES;
-        }
-    }
-    return NO;
-}
-
-
 // =========================================================
 #pragma mark - AJNAboutListener
 
@@ -404,7 +325,7 @@ static int const DISCOVER_INTERVAL = 30;
     
     NSLog(@"%s: Service found: %@", class_getName([self class]), service.serviceName);
     
-    if (![DPAllJoynHandler isSupported:objectDescriptionArg]) {
+    if (![DPAllJoynSupportCheck isSupported:objectDescriptionArg]) {
         NSLog(@"Required I/Fs are missing. Ignoring \"%@\" ...",
               service.serviceName);
         return;
