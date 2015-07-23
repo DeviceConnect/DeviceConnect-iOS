@@ -56,9 +56,22 @@ didReceiveGetListRequest:(DConnectRequestMessage *)request
                    limit:(NSNumber *)limit
 {
     CONNECT_CHECK();
+    if (path) {
+        [response setErrorToInvalidRequestParameter];
+        return YES;
+    }
+
+    
     NSString *sortTarget;
     NSString *sortOrder;
-    
+    if (![self checkParameters:request
+                            response:response
+                           sortOrder:&sortOrder
+                          sortTarget:&sortTarget
+                        order:order]) {
+        [response setErrorToInvalidRequestParameter];
+        return YES;
+    }
     NSComparator comp;
     [self compareOrderWithResponse:response sortTarget:sortTarget comp:&comp sortOrder:sortOrder];
     if ([response integerForKey:DConnectMessageResult] == DConnectMessageResultTypeError) {
@@ -152,6 +165,47 @@ didReceiveDeleteRemoveRequest:(DConnectRequestMessage *)request
 }
 
 
+/*!
+ @brief /file/listのパラメータチェック.
+ */
+- (BOOL)checkParameters:(DConnectRequestMessage *)request
+                     response:(DConnectResponseMessage *)response
+                    sortOrder:(NSString **)sortOrder
+                   sortTarget:(NSString **)sortTarget
+                        order:(NSArray *)order
+{
+    NSString *offsetString = [request stringForKey:DConnectFileProfileParamOffset];
+    NSString *limitString = [request stringForKey:DConnectFileProfileParamLimit];
+    if (offsetString && ![DPThetaManager existDigitWithString:offsetString]) {
+        [response setErrorToInvalidRequestParameterWithMessage:@"offset is non-float"];
+        return NO;
+    }
+    if (limitString && ![DPThetaManager existDigitWithString:limitString]) {
+        [response setErrorToInvalidRequestParameterWithMessage:@"limit is non-float"];
+        return NO;
+    }
+    
+    if (order) {
+        if (order.count != 2) {
+            [response setErrorToInvalidRequestParameterWithMessage:@"order is invalid."];
+            return NO;
+        }
+        
+        *sortTarget = order[0];
+        *sortOrder = order[1];
+        
+        if (!(*sortTarget) || !(*sortOrder)) {
+            [response setErrorToInvalidRequestParameterWithMessage:@"order is invalid."];
+            return NO;
+        }
+    } else {
+        *sortTarget = DConnectFileProfileParamPath;
+        *sortOrder = DConnectFileProfileOrderASC;
+    }
+    return YES;
+}
+
+
 // ソート要素を決める
 - (void)compareOrderWithResponse:(DConnectResponseMessage *)response
                       sortTarget:(NSString *)sortTarget
@@ -186,10 +240,12 @@ didReceiveDeleteRemoveRequest:(DConnectRequestMessage *)request
             return [[(DConnectMessage *)obj objectForKey:DConnectFileProfileParamFileType]
                     descriptionWithLocale:nil];
         };
-    } else {
+    } else if (!sortOrder) {
         return;
+    } else {
+            [response setErrorToInvalidRequestParameterWithMessage:@"order is invalid."];
+            return;
     }
-    
     
     if ([sortOrder isEqualToString:DConnectFileProfileOrderASC]) {
         *comp = ^NSComparisonResult(id obj1, id obj2) {

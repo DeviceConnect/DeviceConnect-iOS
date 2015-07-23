@@ -192,4 +192,12 @@ typedef void (^DPThetaOnStatusChangeCallback)(PtpIpObjectInfo *object, NSString 
  */
 - (void)applicationWillEnterForeground;
 
+/*
+ 数値判定。
+ */
++ (BOOL)existNumberWithString:(NSString *)numberString Regex:(NSString*)regex;
+// 整数かどうかを判定する。 true:存在する
++(BOOL)existDigitWithString:(NSString*)digit;
+// 少数かどうかを判定する。
++(BOOL)existDecimalWithString:(NSString*)decimal;
 @end

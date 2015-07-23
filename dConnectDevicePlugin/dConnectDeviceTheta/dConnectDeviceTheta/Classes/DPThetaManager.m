@@ -12,6 +12,10 @@
 #import "PtpConnection.h"
 #import "PtpLogging.h"
 
+static NSString * const DPThetaRegexDecimalPoint = @"^[-+]?([0-9]*)?(\\.)?([0-9]*)?$";
+static NSString * const DPThetaRegexDigit = @"^([0-9]*)?$";
+static NSString * const DPThetaRegexCSV = @"^([^,]*,)+";
+
 @interface DPThetaManager()<PtpIpEventListener>
 {
     PtpConnection* _ptpConnection;
@@ -553,6 +557,26 @@ static int const _timeout = 500;
     NSCharacterSet *allowedCharSet
     = [[NSCharacterSet characterSetWithCharactersInString:@";/?:@&=$+{}<>., "] invertedSet];
     return [string stringByAddingPercentEncodingWithAllowedCharacters:allowedCharSet];
+}
+
+
+/*
+ 数値判定。
+ */
++ (BOOL)existNumberWithString:(NSString *)numberString Regex:(NSString*)regex {
+    NSRange match = [numberString rangeOfString:regex options:NSRegularExpressionSearch];
+    //数値の場合
+    return match.location != NSNotFound;
+}
+
+// 整数かどうかを判定する。 true:存在する
++ (BOOL)existDigitWithString:(NSString*)digit {
+    return [self existNumberWithString:digit Regex:DPThetaRegexDigit];
+}
+
+// 少数かどうかを判定する。
++ (BOOL)existDecimalWithString:(NSString*)decimal {
+    return [self existNumberWithString:decimal Regex:DPThetaRegexDecimalPoint];
 }
 
 @end

@@ -118,6 +118,10 @@ didReceivePostTakePhotoRequest:(DConnectRequestMessage *)request
                         target:(NSString *)target
 {
     CONNECT_CHECK();
+    if (target && ![target isEqualToString:@"0"]) {
+        [response setErrorToInvalidRequestParameterWithMessage:@"Invalid target"];
+        return YES;
+    }
     BOOL isSuccess = [[DPThetaManager sharedManager] takePictureWithCompletion:^(NSString *uri, NSString* path) {
         [response setResult:DConnectMessageResultTypeOk];
 
@@ -136,15 +140,28 @@ didReceivePostTakePhotoRequest:(DConnectRequestMessage *)request
 
 - (BOOL)            profile:(DConnectMediaStreamRecordingProfile *)profile
 didReceivePostRecordRequest:(DConnectRequestMessage *)request
-                   response:(DConnectResponseMessage *)response serviceId:(NSString *)serviceId
-                     target:(NSString *)target timeslice:(NSNumber *)timeslice
+                   response:(DConnectResponseMessage *)response
+                  serviceId:(NSString *)serviceId
+                     target:(NSString *)target
+                  timeslice:(NSNumber *)timeslice
 {
     CONNECT_CHECK();
+    if (target && ![target isEqualToString:@"0"]) {
+        [response setErrorToInvalidRequestParameterWithMessage:@"Invalid target"];
+        return YES;
+    }
+    NSString *timesliceString = [request stringForKey:DConnectMediaStreamRecordingProfileParamTimeSlice];
+    if (![DPThetaManager existDigitWithString:timesliceString]
+        || (timeslice && timeslice < 0) || (timesliceString && timesliceString.length <= 0)) {
+        [response setErrorToInvalidRequestParameterWithMessage:
+         @"timeslice is not supported; please omit this parameter."];
+        return YES;
+    }
     BOOL isSuccess = [[DPThetaManager sharedManager] recordingMovie];
     if (isSuccess) {
         [response setResult:DConnectMessageResultTypeOk];
     } else {
-        [response setErrorToIllegalServerStateWithMessage:@"Failed to record movie start"];
+        [response setErrorToIllegalDeviceStateWithMessage:@"Failed to record movie start"];
     }
     
     return YES;
@@ -165,7 +182,7 @@ didReceivePutStopRequest:(DConnectRequestMessage *)request
     if (isSuccess) {
         [response setResult:DConnectMessageResultTypeOk];
     } else {
-        [response setErrorToIllegalServerStateWithMessage:@"Failed to record movie stop"];
+        [response setErrorToIllegalDeviceStateWithMessage:@"Failed to record movie stop"];
     }
  
     return YES;
@@ -186,10 +203,8 @@ didReceivePutOptionsRequest:(DConnectRequestMessage *)request
         || (([imageWidth floatValue] == DPThetaMinWidth) && ([imageHeight floatValue] == DPThetaMinHeight))) {
         [[DPThetaManager sharedManager] setImageSize:CGSizeMake([imageWidth floatValue],
                                                                 [imageHeight floatValue])];
-        [response setResult:DConnectMessageResultTypeOk];
-    } else {
-        [response setErrorToInvalidRequestParameterWithMessage:@"Invalid image size"];
     }
+    [response setResult:DConnectMessageResultTypeOk];
     return YES;
 }
 
