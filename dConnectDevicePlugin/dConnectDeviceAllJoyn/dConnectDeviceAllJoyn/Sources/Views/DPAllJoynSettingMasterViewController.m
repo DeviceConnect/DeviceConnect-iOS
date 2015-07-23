@@ -14,15 +14,12 @@
 
 @interface DPAllJoynSettingMasterViewController ()
 
-
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *backButtonItem;
-
 
 @end
 
 
 @implementation DPAllJoynSettingMasterViewController
-
 
 - (void)viewDidLoad
 {
@@ -44,6 +41,7 @@
     self.navigationItem.leftBarButtonItem = _backButtonItem;
 }
 
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -53,7 +51,5 @@
 - (IBAction)didBackButtonItemTapped:(id)sender {
     [self.navigationController dismissViewControllerAnimated:YES completion:nil];
 }
-
-
 
 @end

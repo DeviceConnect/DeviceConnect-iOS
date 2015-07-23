@@ -11,7 +11,4 @@
 
 
 @implementation DPAllJoynSettingTableViewCell
-
-
-
 @end

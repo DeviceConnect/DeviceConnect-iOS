@@ -9,6 +9,6 @@
 
 @import UIKit;
 
-@interface DPAllJoynSettingDetailLIFXViewController : UIViewController
 
+@interface DPAllJoynSettingDetailLIFXViewController : UIViewController
 @end

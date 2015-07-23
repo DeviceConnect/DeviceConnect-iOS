@@ -41,7 +41,6 @@ static int const DISCOVER_INTERVAL = 30;
 }
 
 @property (nonatomic, strong) AJNBusAttachment *bus;
-@property (nonatomic, strong) NSCondition *joinedSessionCondition;
 @property (nonatomic) AJNSessionId sessionId;
 @property (nonatomic, strong) NSString *foundServiceName;
 //@property (nonatomic, strong) BasicObjectProxy *basicObjectProxy;

@@ -9,6 +9,6 @@
 
 @import UIKit;
 
-@interface DPAllJoynSettingMasterSubTableViewController : UITableViewController
 
+@interface DPAllJoynSettingMasterSubTableViewController : UITableViewController
 @end

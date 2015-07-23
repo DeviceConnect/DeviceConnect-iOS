@@ -9,6 +9,6 @@
 
 @import UIKit;
 
-@interface DPAllJoynSettingMasterViewController : UIViewController
 
+@interface DPAllJoynSettingMasterViewController : UIViewController
 @end

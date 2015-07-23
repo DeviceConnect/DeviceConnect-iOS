@@ -9,14 +9,15 @@
 
 #import "DPAllJoynSystemProfile.h"
 
+
 @interface DPAllJoynSystemProfile () <DConnectSystemProfileDataSource>
 
 @property NSString *const version;
 
 @end
 
-@implementation DPAllJoynSystemProfile
 
+@implementation DPAllJoynSystemProfile
 
 - (instancetype) initWithVersion:(NSString *)version
 {
@@ -60,6 +61,5 @@
     //    }
     return [storyBoard instantiateInitialViewController];
 }
-
 
 @end

@@ -20,7 +20,6 @@
 
 @interface DPAllJoynSettingMasterSubTableViewController ()
 <UITableViewDataSource, UITableViewDelegate>
-
 @end
 
 
@@ -149,7 +148,6 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath
      performSegueWithIdentifier:data.segueID sender:nil];
 }
 
-
 @end
 
 
@@ -158,7 +156,6 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 
 
 @implementation DPAllJoynSettingMasterTutorialData
-
 
 + (instancetype) dataWithCellImageName:(NSString *)cellImageName
                     cellImageExtension:(NSString *)cellImageExt
@@ -173,6 +170,4 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath
     return instance;
 }
 
-
 @end
-

@@ -9,6 +9,7 @@
 
 #import <DConnectSDK/DConnectSDK.h>
 
+
 @interface DPAllJoynSystemProfile : DConnectSystemProfile
 
 @property (readonly) NSString *const version;

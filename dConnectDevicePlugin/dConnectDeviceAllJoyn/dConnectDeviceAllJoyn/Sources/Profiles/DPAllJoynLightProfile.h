@@ -9,6 +9,7 @@
 
 #import <DCMDevicePluginSDK/DCMLightProfile.h>
 
+
 @interface DPAllJoynLightProfile : DCMLightProfile
 
 @end

@@ -8,7 +8,6 @@
 //
 
 @import UIKit;
-@import QuartzCore;
 
 
 @interface CALayer (StoryboardUserDefinedRuntimeAttributes)

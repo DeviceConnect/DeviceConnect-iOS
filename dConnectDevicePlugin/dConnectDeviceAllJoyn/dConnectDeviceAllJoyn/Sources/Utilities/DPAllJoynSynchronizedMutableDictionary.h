@@ -7,10 +7,6 @@
 //  http://opensource.org/licenses/mit-license.php
 //
 
-#import <UIKit/UIKit.h>
-#import <QuartzCore/QuartzCore.h>
-
-
 @interface DPAllJoynSynchronizedMutableDictionary : NSObject
 
 @property(readonly) NSUInteger count;

@@ -22,6 +22,7 @@
 }
 @end
 
+
 @implementation DPAllJoynServiceInformationProfile
 
 - (instancetype)initWithProvider:(id<DConnectProfileProvider>)provider

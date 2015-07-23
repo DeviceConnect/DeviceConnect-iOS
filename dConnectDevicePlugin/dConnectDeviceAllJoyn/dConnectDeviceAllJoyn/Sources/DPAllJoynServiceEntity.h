@@ -7,7 +7,10 @@
 //  http://opensource.org/licenses/mit-license.php
 //
 
-#import <AllJoynFramework_iOS.h>
+#import <AJNSessionOptions.h>
+
+
+@class AJNMessageArgument;
 
 
 @interface DPAllJoynServiceEntity : NSObject

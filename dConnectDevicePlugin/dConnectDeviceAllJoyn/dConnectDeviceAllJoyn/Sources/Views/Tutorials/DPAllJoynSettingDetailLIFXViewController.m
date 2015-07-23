@@ -12,15 +12,12 @@
 
 @interface DPAllJoynSettingDetailLIFXViewController ()
 
-
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
-
 
 @end
 
 
 @implementation DPAllJoynSettingDetailLIFXViewController
-
 
 - (void)viewDidLoad
 {
@@ -48,6 +45,5 @@
      openURL:[NSURL URLWithString:
               @"itms-apps://geo.itunes.apple.com/app/lifx/id657758311?mt=8"]];
 }
-
 
 @end
