@@ -7,6 +7,17 @@
 	objects = {
 
 /* Begin PBXAggregateTarget section */
+		2584989A1B6088EC0063552E /* dConnectDeviceAllJoyn_CodeGeneration */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 2584989B1B6088EC0063552E /* Build configuration list for PBXAggregateTarget "dConnectDeviceAllJoyn_CodeGeneration" */;
+			buildPhases = (
+				2584989E1B6089000063552E /* Generate boilerplate code for AllJoyn I/Fs */,
+			);
+			dependencies = (
+			);
+			name = dConnectDeviceAllJoyn_CodeGeneration;
+			productName = dConnectDeviceAllJoyn_CodeGeneration;
+		};
 		25A06C1A1B562D13005B6F8A /* dConnectDeviceAllJoyn_framework */ = {
 			isa = PBXAggregateTarget;
 			buildConfigurationList = 25A06C1B1B562D13005B6F8A /* Build configuration list for PBXAggregateTarget "dConnectDeviceAllJoyn_framework" */;
@@ -32,6 +43,14 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		258498A81B609A3F0063552E /* AJNLSFControllerService.h in Headers */ = {isa = PBXBuildFile; fileRef = 258498A01B609A3F0063552E /* AJNLSFControllerService.h */; };
+		258498A91B609A3F0063552E /* AJNLSFControllerService.mm in Sources */ = {isa = PBXBuildFile; fileRef = 258498A11B609A3F0063552E /* AJNLSFControllerService.mm */; };
+		258498AA1B609A3F0063552E /* AJNLSFLamp.h in Headers */ = {isa = PBXBuildFile; fileRef = 258498A21B609A3F0063552E /* AJNLSFLamp.h */; };
+		258498AB1B609A3F0063552E /* AJNLSFLamp.mm in Sources */ = {isa = PBXBuildFile; fileRef = 258498A31B609A3F0063552E /* AJNLSFLamp.mm */; };
+		258498AC1B609A3F0063552E /* LSFControllerService.h in Headers */ = {isa = PBXBuildFile; fileRef = 258498A41B609A3F0063552E /* LSFControllerService.h */; };
+		258498AD1B609A3F0063552E /* LSFControllerService.m in Sources */ = {isa = PBXBuildFile; fileRef = 258498A51B609A3F0063552E /* LSFControllerService.m */; };
+		258498AE1B609A3F0063552E /* LSFLamp.h in Headers */ = {isa = PBXBuildFile; fileRef = 258498A61B609A3F0063552E /* LSFLamp.h */; };
+		258498AF1B609A3F0063552E /* LSFLamp.m in Sources */ = {isa = PBXBuildFile; fileRef = 258498A71B609A3F0063552E /* LSFLamp.m */; };
 		25851BB61B5739B600CB732E /* DPAllJoynServiceInformationProfile.h in Headers */ = {isa = PBXBuildFile; fileRef = 25851BB41B5739B600CB732E /* DPAllJoynServiceInformationProfile.h */; };
 		25851BB71B5739B600CB732E /* DPAllJoynServiceInformationProfile.mm in Sources */ = {isa = PBXBuildFile; fileRef = 25851BB51B5739B600CB732E /* DPAllJoynServiceInformationProfile.mm */; };
 		25851BBA1B573C3100CB732E /* DConnectSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25851BB91B573C3100CB732E /* DConnectSDK.framework */; };
@@ -82,6 +101,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		258498A01B609A3F0063552E /* AJNLSFControllerService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AJNLSFControllerService.h; path = AJInterfaces/AJNLSFControllerService.h; sourceTree = "<group>"; };
+		258498A11B609A3F0063552E /* AJNLSFControllerService.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AJNLSFControllerService.mm; path = AJInterfaces/AJNLSFControllerService.mm; sourceTree = "<group>"; };
+		258498A21B609A3F0063552E /* AJNLSFLamp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AJNLSFLamp.h; path = AJInterfaces/AJNLSFLamp.h; sourceTree = "<group>"; };
+		258498A31B609A3F0063552E /* AJNLSFLamp.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AJNLSFLamp.mm; path = AJInterfaces/AJNLSFLamp.mm; sourceTree = "<group>"; };
+		258498A41B609A3F0063552E /* LSFControllerService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LSFControllerService.h; path = AJInterfaces/LSFControllerService.h; sourceTree = "<group>"; };
+		258498A51B609A3F0063552E /* LSFControllerService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LSFControllerService.m; path = AJInterfaces/LSFControllerService.m; sourceTree = "<group>"; };
+		258498A61B609A3F0063552E /* LSFLamp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LSFLamp.h; path = AJInterfaces/LSFLamp.h; sourceTree = "<group>"; };
+		258498A71B609A3F0063552E /* LSFLamp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LSFLamp.m; path = AJInterfaces/LSFLamp.m; sourceTree = "<group>"; };
 		25851BB41B5739B600CB732E /* DPAllJoynServiceInformationProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPAllJoynServiceInformationProfile.h; sourceTree = "<group>"; };
 		25851BB51B5739B600CB732E /* DPAllJoynServiceInformationProfile.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DPAllJoynServiceInformationProfile.mm; sourceTree = "<group>"; };
 		25851BB91B573C3100CB732E /* DConnectSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DConnectSDK.framework; path = ../../dConnectSDK/dConnectSDKForIOS/bin/DConnectSDK.framework; sourceTree = "<group>"; };
@@ -110,6 +137,8 @@
 		258843C61B5F3A3F003E5257 /* DPAllJoynConst.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DPAllJoynConst.mm; sourceTree = "<group>"; };
 		258843C91B5F43F9003E5257 /* NSArray+Query.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+Query.h"; sourceTree = "<group>"; };
 		258843CA1B5F43F9003E5257 /* NSArray+Query.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+Query.m"; sourceTree = "<group>"; };
+		258843CE1B5F942D003E5257 /* LSFLamp.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = LSFLamp.xml; sourceTree = "<group>"; };
+		258843D01B5F95B9003E5257 /* LSFControllerService.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = LSFControllerService.xml; sourceTree = "<group>"; };
 		25A06BFC1B562C07005B6F8A /* dConnectDeviceAllJoyn.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = dConnectDeviceAllJoyn.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		25A06C001B562C07005B6F8A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		25A06C071B562C08005B6F8A /* dConnectDeviceAllJoynTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = dConnectDeviceAllJoynTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -160,6 +189,21 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2584989F1B609A2F0063552E /* AJInterfaces */ = {
+			isa = PBXGroup;
+			children = (
+				258498A01B609A3F0063552E /* AJNLSFControllerService.h */,
+				258498A11B609A3F0063552E /* AJNLSFControllerService.mm */,
+				258498A21B609A3F0063552E /* AJNLSFLamp.h */,
+				258498A31B609A3F0063552E /* AJNLSFLamp.mm */,
+				258498A41B609A3F0063552E /* LSFControllerService.h */,
+				258498A51B609A3F0063552E /* LSFControllerService.m */,
+				258498A61B609A3F0063552E /* LSFLamp.h */,
+				258498A71B609A3F0063552E /* LSFLamp.m */,
+			);
+			name = AJInterfaces;
+			sourceTree = "<group>";
+		};
 		25851BB81B573BFC00CB732E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -189,6 +233,15 @@
 				258843CA1B5F43F9003E5257 /* NSArray+Query.m */,
 			);
 			path = Utilities;
+			sourceTree = "<group>";
+		};
+		258843CD1B5F942D003E5257 /* AllJoynIntrospectionXML */ = {
+			isa = PBXGroup;
+			children = (
+				258843D01B5F95B9003E5257 /* LSFControllerService.xml */,
+				258843CE1B5F942D003E5257 /* LSFLamp.xml */,
+			);
+			path = AllJoynIntrospectionXML;
 			sourceTree = "<group>";
 		};
 		25A06BF21B562C07005B6F8A = {
@@ -252,6 +305,7 @@
 		25A06C241B5637CB005B6F8A /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				2584989F1B609A2F0063552E /* AJInterfaces */,
 				25A06C731B56675B005B6F8A /* Profiles */,
 				25851BE01B57923500CB732E /* Utilities */,
 				25A06C2D1B564698005B6F8A /* Views */,
@@ -279,11 +333,12 @@
 		25A06C261B5637DB005B6F8A /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				25851BBF1B57409500CB732E /* Storyboard.storyboard */,
+				258843CD1B5F942D003E5257 /* AllJoynIntrospectionXML */,
 				25851BF61B57CDC000CB732E /* back-arrow@2x.png */,
-				25851BF01B57C47900CB732E /* LIFX_Logo@2.jpg */,
+				25851BBF1B57409500CB732E /* Storyboard.storyboard */,
 				25851BF81B57CF3D00CB732E /* Download_on_the_App_Store_Badge_US-UK_135x40@2x.png */,
 				25851BF91B57CF3D00CB732E /* Download_on_the_App_Store_JP_135x40@2x.png */,
+				25851BF01B57C47900CB732E /* LIFX_Logo@2.jpg */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -350,16 +405,20 @@
 			files = (
 				25851BCA1B574A9F00CB732E /* DPAllJoynSettingMasterSubTableViewController.h in Headers */,
 				25851BD71B575F2700CB732E /* DPAllJoynSettingDetailLIFXViewController.h in Headers */,
+				258498AE1B609A3F0063552E /* LSFLamp.h in Headers */,
 				258843C71B5F3A3F003E5257 /* DPAllJoynConst.h in Headers */,
 				25851BE41B57929100CB732E /* CALayer+StoryboardUserDefinedRuntimeAttributes.h in Headers */,
 				258843C31B5F336A003E5257 /* DPAllJoynSupportCheck.h in Headers */,
 				258843CB1B5F43F9003E5257 /* NSArray+Query.h in Headers */,
+				258498AC1B609A3F0063552E /* LSFControllerService.h in Headers */,
 				25E1A0711B5DE05A00308AFC /* DPAllJoynSynchronizedMutableDictionary.h in Headers */,
 				25856D051B58965E00B1C2DC /* DPAllJoynHandler.h in Headers */,
 				25856D191B59091000B1C2DC /* DPAllJoynServiceEntity.h in Headers */,
 				25A06C7F1B566C86005B6F8A /* DPAllJoynLightProfile.h in Headers */,
 				25851BB61B5739B600CB732E /* DPAllJoynServiceInformationProfile.h in Headers */,
 				25851BC61B57455D00CB732E /* DPAllJoynSettingTableViewCell.h in Headers */,
+				258498AA1B609A3F0063552E /* AJNLSFLamp.h in Headers */,
+				258498A81B609A3F0063552E /* AJNLSFControllerService.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -370,7 +429,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 25A06C121B562C08005B6F8A /* Build configuration list for PBXNativeTarget "dConnectDeviceAllJoyn" */;
 			buildPhases = (
-				25856D111B58B6AD00B1C2DC /* Resove dependencies by CocoaPods */,
+				25856D111B58B6AD00B1C2DC /* Resolve dependencies by CocoaPods */,
 				25A06BF71B562C07005B6F8A /* Sources */,
 				25A06BF81B562C07005B6F8A /* Frameworks */,
 				25A06BF91B562C07005B6F8A /* Headers */,
@@ -429,6 +488,9 @@
 				LastUpgradeCheck = 0640;
 				ORGANIZATIONNAME = "NTT DOCOMO, INC.";
 				TargetAttributes = {
+					2584989A1B6088EC0063552E = {
+						CreatedOnToolsVersion = 6.4;
+					};
 					25A06BFB1B562C07005B6F8A = {
 						CreatedOnToolsVersion = 6.4;
 					};
@@ -464,6 +526,7 @@
 				25A06C1A1B562D13005B6F8A /* dConnectDeviceAllJoyn_framework */,
 				25A06C691B565ED2005B6F8A /* dConnectDeviceAllJoyn_resources */,
 				25A06C1F1B563527005B6F8A /* dConnectDeviceAllJoyn_OCLint */,
+				2584989A1B6088EC0063552E /* dConnectDeviceAllJoyn_CodeGeneration */,
 			);
 		};
 /* End PBXProject section */
@@ -498,14 +561,28 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		25856D111B58B6AD00B1C2DC /* Resove dependencies by CocoaPods */ = {
+		2584989E1B6089000063552E /* Generate boilerplate code for AllJoyn I/Fs */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Resove dependencies by CocoaPods";
+			name = "Generate boilerplate code for AllJoyn I/Fs";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/bash;
+			shellScript = "GENERATOR=${PROJECT_DIR}/tools/AllJoynCodeGenerator/AllJoynCodeGenerator\nXML_DIR_PATH=${PROJECT_DIR}/dConnectDeviceAllJoyn/Resources/AllJoynIntrospectionXML\ngenerate() {\n    local baseName=$(basename \"$1\")\n    baseName=\"${baseName%.xml}\"\n    ${GENERATOR} $1 $baseName\n}\n\nfor f in $(ls ${XML_DIR_PATH}/*.xml); do\n    generate $f\ndone\n# Done. Boilerplate files (.h, .m, .mm) should be generated under Resources directory.";
+		};
+		25856D111B58B6AD00B1C2DC /* Resolve dependencies by CocoaPods */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Resolve dependencies by CocoaPods";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -558,11 +635,15 @@
 				25E1A0721B5DE05A00308AFC /* DPAllJoynSynchronizedMutableDictionary.m in Sources */,
 				25856D061B58965E00B1C2DC /* DPAllJoynHandler.mm in Sources */,
 				25856D1A1B59091000B1C2DC /* DPAllJoynServiceEntity.mm in Sources */,
+				258498A91B609A3F0063552E /* AJNLSFControllerService.mm in Sources */,
+				258498AB1B609A3F0063552E /* AJNLSFLamp.mm in Sources */,
 				25851BD81B575F2700CB732E /* DPAllJoynSettingDetailLIFXViewController.m in Sources */,
 				25851BB71B5739B600CB732E /* DPAllJoynServiceInformationProfile.mm in Sources */,
 				258843C81B5F3A3F003E5257 /* DPAllJoynConst.mm in Sources */,
 				258843C41B5F336A003E5257 /* DPAllJoynSupportCheck.mm in Sources */,
 				25851BE51B57929100CB732E /* CALayer+StoryboardUserDefinedRuntimeAttributes.m in Sources */,
+				258498AD1B609A3F0063552E /* LSFControllerService.m in Sources */,
+				258498AF1B609A3F0063552E /* LSFLamp.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -604,6 +685,20 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		2584989C1B6088EC0063552E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		2584989D1B6088EC0063552E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 		25A06C101B562C08005B6F8A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -752,6 +847,7 @@
 				CURRENT_PROJECT_VERSION = "";
 				DEFINES_MODULE = YES;
 				DYLIB_INSTALL_NAME_BASE = "";
+				GCC_ENABLE_CPP_RTTI = NO;
 				INFOPLIST_FILE = "dConnectDeviceAllJoyn/Supporting Files/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_DYLIB_INSTALL_NAME = "";
@@ -761,16 +857,8 @@
 					"-DQCC_OS_GROUP_POSIX",
 					"-DQCC_OS_DARWIN",
 				);
-				OTHER_LDFLAGS = (
-					"-ObjC",
-					"-lAllJoynFramework_iOS",
-					"-lalljoyn",
-					"-lajrouter",
-					"-lBundledRouter.o",
-					"-lssl",
-					"-lcrypto",
-				);
-				OTHER_LIBTOOLFLAGS = "-lAllJoynFramework_iOS -lalljoyn -lajrouter -lBundledRouter.o -lssl -lcrypto";
+				OTHER_CPLUSPLUSFLAGS = "$(OTHER_CFLAGS)";
+				OTHER_LIBTOOLFLAGS = "-lalljoyn -lajrouter -lBundledRouter.o -lAllJoynFramework_iOS -lssl -lcrypto";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				STRIP_STYLE = "non-global";
@@ -783,6 +871,7 @@
 				CURRENT_PROJECT_VERSION = "";
 				DEFINES_MODULE = YES;
 				DYLIB_INSTALL_NAME_BASE = "";
+				GCC_ENABLE_CPP_RTTI = NO;
 				INFOPLIST_FILE = "dConnectDeviceAllJoyn/Supporting Files/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_DYLIB_INSTALL_NAME = "";
@@ -793,16 +882,8 @@
 					"-DQCC_OS_GROUP_POSIX",
 					"-DQCC_OS_DARWIN",
 				);
-				OTHER_LDFLAGS = (
-					"-ObjC",
-					"-lAllJoynFramework_iOS",
-					"-lalljoyn",
-					"-lajrouter",
-					"-lBundledRouter.o",
-					"-lssl",
-					"-lcrypto",
-				);
-				OTHER_LIBTOOLFLAGS = "-lAllJoynFramework_iOS -lalljoyn -lajrouter -lBundledRouter.o -lssl -lcrypto";
+				OTHER_CPLUSPLUSFLAGS = "$(OTHER_CFLAGS)";
+				OTHER_LIBTOOLFLAGS = "-lalljoyn -lajrouter -lBundledRouter.o -lAllJoynFramework_iOS -lssl -lcrypto";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				STRIP_STYLE = "non-global";
@@ -899,6 +980,14 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		2584989B1B6088EC0063552E /* Build configuration list for PBXAggregateTarget "dConnectDeviceAllJoyn_CodeGeneration" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2584989C1B6088EC0063552E /* Debug */,
+				2584989D1B6088EC0063552E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
 		25A06BF61B562C07005B6F8A /* Build configuration list for PBXProject "dConnectDeviceAllJoyn" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

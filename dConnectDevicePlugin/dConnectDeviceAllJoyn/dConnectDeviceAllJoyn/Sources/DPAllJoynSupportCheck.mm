@@ -12,6 +12,7 @@
 #import <AllJoynFramework_iOS.h>
 #import <DCMDevicePluginSDK/DCMDevicePluginSDK.h>
 #import "DPAllJoynConst.h"
+#import "DPAllJoynServiceEntity.h"
 #import "NSArray+Query.h"
 
 
@@ -53,6 +54,7 @@
     
     return interfaces;
 }
+
 
 + (BOOL)isSupported:(AJNMessageArgument *)busObjectDescriptions
 {
@@ -114,6 +116,20 @@
     }
     
     return supportedProfileNames;
+}
+
+
++ (BOOL)areAJInterfacesSupported:(NSArray *)ifaces
+                     withService:(DPAllJoynServiceEntity *)service
+{
+    if (!ifaces || !service.proxyObjects) {
+        return false;
+    }
+    
+    NSSet *supportedInterfaces =
+    [self allInterfaceNamesFromBusObjectDescriptions:service.proxyObjects];
+    
+    return [supportedInterfaces.allObjects containsAll:ifaces];
 }
 
 @end

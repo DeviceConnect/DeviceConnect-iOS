@@ -9,6 +9,9 @@
 
 #import "DPAllJoynHandler.h"
 
+#import <AllJoynFramework_iOS.h>
+#import "AJNLSFControllerService.h"
+#import "AJNLSFLamp.h"
 #import "DPAllJoynConst.h"
 #import "DPAllJoynServiceEntity.h"
 #import "DPAllJoynSupportCheck.h"
@@ -246,7 +249,32 @@ static int const DISCOVER_INTERVAL = 30;
 }
 
 
-- (void)pingWithBunName:(NSString *)busName
+- (void)performOneShotSessionWithBusName:(DPAllJoynServiceEntity *)service
+                                   block:(void(^)(DPAllJoynServiceEntity *service,
+                                                  NSNumber *sessionId))block
+{
+    if (!block) {
+        NSLog(@"block can not be nil.");
+        return;
+    }
+    if (!service) {
+        NSLog(@"service can not be nil.");
+        block(nil, nil);
+        return;
+    }
+    
+    [self joinSessionWithBusName:service.busName
+                            port:service.port
+                           block:^(NSNumber *sessionId)
+     {
+         block(service, sessionId);
+         [self leaveSessionWithSessionId:sessionId.unsignedIntValue
+                                   block:^(BOOL result) {}];
+     }];
+}
+
+
+- (void)pingWithBusName:(NSString *)busName
                   block:(void(^)(BOOL result)) block
 {
     NSLog(@"%s: Ping the service with bus name \"%@\"",
@@ -270,7 +298,7 @@ static int const DISCOVER_INTERVAL = 30;
     
     for (DPAllJoynServiceEntity *serviceEntity in
          [_discoveredServices cloneDictionary].allValues) {
-        [self pingWithBunName:serviceEntity.busName
+        [self pingWithBusName:serviceEntity.busName
                         block:^(BOOL result)
          {
              if (!result) {
@@ -331,8 +359,63 @@ static int const DISCOVER_INTERVAL = 30;
         return;
     }
     
-    [_discoveredServices setObject:service
-                            forKey:busName];
+    [_discoveredServices setObject:service forKey:busName];
+    
+    // TENTATIVE
+    [self performOneShotSessionWithBusName:service
+                                     block:
+     ^(DPAllJoynServiceEntity *service, NSNumber *sessionId)
+     {
+         if (!sessionId) {
+             NSLog(@"Failed to join a session.");
+             return;
+         }
+         
+         if ([DPAllJoynSupportCheck
+              areAJInterfacesSupported:@[@"org.allseen.LSF.LampState"]
+              withService:service]) {
+             
+             LSFLampObjectProxy *proxy =
+             [[LSFLampObjectProxy alloc]
+              initWithBusAttachment:self.bus serviceName:service.busName
+              objectPath:@"/org/allseen/LSF/Lamp"
+              sessionId:sessionId.unsignedIntValue];
+             QStatus status = [proxy introspectRemoteObject];
+             if (ER_OK != status) {
+                 NSLog(@"Failed to introspect a remote bus object.");
+                 return;
+             }
+             
+             NSLog(@"Version: %@", proxy.LampServiceInterfaceVersion);
+             
+             
+//             NSURL *dataURL =
+//             [DPAllJoynResourceBundle() URLForResource:@"org_allseen_LSF_Lamp"
+//                                         withExtension:@"xml"];
+//             NSData *data = [NSData dataWithContentsOfURL:dataURL];
+//             NSString *xml =
+//             [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+//             QStatus status = [self.bus createInterfacesFromXml:xml];
+//             if (ER_OK != status) {
+//                 NSLog(@"Failed to parse an introspection XML.");
+//                 return;
+//             }
+//             AJNInterfaceDescription *iface =
+//             [self.bus interfaceWithName:@"org.allseen.LSF.LampState"];
+//             
+//             NSArray *members = [iface members];
+//             NSLog(@"single_lamp members: %@", members.description);
+         } else if ([DPAllJoynSupportCheck
+                     areAJInterfacesSupported:@[@"org.allseen.LSF.ControllerService.Lamp"]
+                     withService:service]) {
+             AJNInterfaceDescription *iface =
+             [self.bus interfaceWithName:@"org.allseen.LSF.ControllerService.Lamp"];
+             NSArray *members = [iface members];
+             NSLog(@"lamp_controller members: %@", members.description);
+         } else {
+             NSLog(@"Lamp is not supported");
+         }
+     }];
 }
 
 

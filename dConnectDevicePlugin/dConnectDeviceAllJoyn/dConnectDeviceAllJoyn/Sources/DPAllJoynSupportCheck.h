@@ -8,8 +8,10 @@
 //
 
 #import <DConnectSDK/DConnectSDK.h>
-#import "DPAllJoynServiceEntity.h"
 
+
+@class AJNMessageArgument;
+@class DPAllJoynServiceEntity;
 
 
 @interface DPAllJoynSupportCheck : NSObject
@@ -18,8 +20,22 @@
 + (instancetype)allocWithZone:(struct _NSZone *)zone NS_UNAVAILABLE;
 + (instancetype)new NS_UNAVAILABLE;
 
+/*!
+ @retval YES AllJoyn service can be a Device Connect service.
+ @retval NO AllJoyn service can not be a Device Connect service.
+ */
 + (BOOL)isSupported:(AJNMessageArgument *)busObjectDescriptions;
+/*!
+ Returns names of Device Connect profiles that can be implemented using a
+ specified AllJoyn service.
+ */
 + (NSArray *)supportedProfileNamesWithProvider:(id<DConnectProfileProvider>)provider
                                        service:(DPAllJoynServiceEntity *)service;
+/*!
+ @retval YES AllJoyn interfaces are supported in the AllJoyn service.
+ @retval NO AllJoyn interfaces are not supported in the AllJoyn service.
+ */
++ (BOOL)areAJInterfacesSupported:(NSArray *)ifaces
+                     withService:(DPAllJoynServiceEntity *)service;
 
 @end

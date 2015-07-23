@@ -10,6 +10,9 @@
 #import <AJNSessionOptions.h>
 
 
+@class DPAllJoynServiceEntity;
+
+
 @interface DPAllJoynHandler : NSObject
 
 - (void)initAllJoynContextWithBlock:(void(^)(BOOL result))block;
@@ -20,6 +23,11 @@
                          block:(void(^)(NSNumber *sessionId))block;
 - (void)leaveSessionWithSessionId:(AJNSessionId)sessionId
                             block:(void(^)(BOOL result))block;
+- (void)performOneShotSessionWithBusName:(DPAllJoynServiceEntity *)service
+                                   block:(void(^)(DPAllJoynServiceEntity *service,
+                                                  NSNumber *sessionId))block;
+- (void)pingWithBusName:(NSString *)busName
+                  block:(void(^)(BOOL result)) block;
 - (NSDictionary *)discoveredAllJoynServices;
 
 - (void)postBlock:(void(^)())block
