@@ -101,14 +101,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		258498A01B609A3F0063552E /* AJNLSFControllerService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AJNLSFControllerService.h; path = AJInterfaces/AJNLSFControllerService.h; sourceTree = "<group>"; };
-		258498A11B609A3F0063552E /* AJNLSFControllerService.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AJNLSFControllerService.mm; path = AJInterfaces/AJNLSFControllerService.mm; sourceTree = "<group>"; };
-		258498A21B609A3F0063552E /* AJNLSFLamp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AJNLSFLamp.h; path = AJInterfaces/AJNLSFLamp.h; sourceTree = "<group>"; };
-		258498A31B609A3F0063552E /* AJNLSFLamp.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AJNLSFLamp.mm; path = AJInterfaces/AJNLSFLamp.mm; sourceTree = "<group>"; };
-		258498A41B609A3F0063552E /* LSFControllerService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LSFControllerService.h; path = AJInterfaces/LSFControllerService.h; sourceTree = "<group>"; };
-		258498A51B609A3F0063552E /* LSFControllerService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LSFControllerService.m; path = AJInterfaces/LSFControllerService.m; sourceTree = "<group>"; };
-		258498A61B609A3F0063552E /* LSFLamp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LSFLamp.h; path = AJInterfaces/LSFLamp.h; sourceTree = "<group>"; };
-		258498A71B609A3F0063552E /* LSFLamp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LSFLamp.m; path = AJInterfaces/LSFLamp.m; sourceTree = "<group>"; };
+		258498A01B609A3F0063552E /* AJNLSFControllerService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AJNLSFControllerService.h; sourceTree = "<group>"; };
+		258498A11B609A3F0063552E /* AJNLSFControllerService.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AJNLSFControllerService.mm; sourceTree = "<group>"; };
+		258498A21B609A3F0063552E /* AJNLSFLamp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AJNLSFLamp.h; sourceTree = "<group>"; };
+		258498A31B609A3F0063552E /* AJNLSFLamp.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AJNLSFLamp.mm; sourceTree = "<group>"; };
+		258498A41B609A3F0063552E /* LSFControllerService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LSFControllerService.h; sourceTree = "<group>"; };
+		258498A51B609A3F0063552E /* LSFControllerService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LSFControllerService.m; sourceTree = "<group>"; };
+		258498A61B609A3F0063552E /* LSFLamp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LSFLamp.h; sourceTree = "<group>"; };
+		258498A71B609A3F0063552E /* LSFLamp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LSFLamp.m; sourceTree = "<group>"; };
 		25851BB41B5739B600CB732E /* DPAllJoynServiceInformationProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPAllJoynServiceInformationProfile.h; sourceTree = "<group>"; };
 		25851BB51B5739B600CB732E /* DPAllJoynServiceInformationProfile.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DPAllJoynServiceInformationProfile.mm; sourceTree = "<group>"; };
 		25851BB91B573C3100CB732E /* DConnectSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DConnectSDK.framework; path = ../../dConnectSDK/dConnectSDKForIOS/bin/DConnectSDK.framework; sourceTree = "<group>"; };
@@ -124,7 +124,7 @@
 		25851BE31B57929100CB732E /* CALayer+StoryboardUserDefinedRuntimeAttributes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CALayer+StoryboardUserDefinedRuntimeAttributes.m"; sourceTree = "<group>"; };
 		25851BED1B579DD000CB732E /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/Storyboard.storyboard; sourceTree = "<group>"; };
 		25851BF01B57C47900CB732E /* LIFX_Logo@2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "LIFX_Logo@2.jpg"; sourceTree = "<group>"; };
-		25851BF61B57CDC000CB732E /* back-arrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "back-arrow@2x.png"; path = "bin/dConnectDeviceAllJoyn_resources.bundle/back-arrow@2x.png"; sourceTree = SOURCE_ROOT; };
+		25851BF61B57CDC000CB732E /* back-arrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "back-arrow@2x.png"; sourceTree = "<group>"; };
 		25851BF81B57CF3D00CB732E /* Download_on_the_App_Store_Badge_US-UK_135x40@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Download_on_the_App_Store_Badge_US-UK_135x40@2x.png"; sourceTree = "<group>"; };
 		25851BF91B57CF3D00CB732E /* Download_on_the_App_Store_JP_135x40@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Download_on_the_App_Store_JP_135x40@2x.png"; sourceTree = "<group>"; };
 		25856D031B58965E00B1C2DC /* DPAllJoynHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPAllJoynHandler.h; sourceTree = "<group>"; };
@@ -201,7 +201,7 @@
 				258498A61B609A3F0063552E /* LSFLamp.h */,
 				258498A71B609A3F0063552E /* LSFLamp.m */,
 			);
-			name = AJInterfaces;
+			path = AJInterfaces;
 			sourceTree = "<group>";
 		};
 		25851BB81B573BFC00CB732E /* Frameworks */ = {
