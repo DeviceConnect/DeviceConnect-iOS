@@ -183,11 +183,11 @@ static int const DISCOVER_INTERVAL = 30;
                     [_bus cancelWhoImplements:iface];
                 }
             }
-//            [_bus cancelWhoImplements:@"*"];
+            //            [_bus cancelWhoImplements:@"*"];
         } else {
             firstTime = NO;
         }
-
+        
         // To realize fine-grained API availability for DeviceConnect,
         // query each AllJoyn interface separately.
         for (NSArray *ifaceSet : DPAllJoynSupportedInterfaceSets) {
@@ -195,7 +195,7 @@ static int const DISCOVER_INTERVAL = 30;
                 [_bus whoImplementsInterface:iface];
             }
         }
-//        [self.bus whoImplementsInterface:@"*"];
+        //        [self.bus whoImplementsInterface:@"*"];
     });
 }
 
@@ -221,7 +221,10 @@ static int const DISCOVER_INTERVAL = 30;
                                              proximity:kAJNProximityAny
                                          transportMask:kAJNTransportMaskAny];
         [self.bus enableConcurrentCallbacks];
-        AJNSessionId sessionId = [self.bus joinSessionWithName:busName onPort:port withDelegate:self options:sessionOptions];
+        AJNSessionId sessionId = [self.bus joinSessionWithName:busName
+                                                        onPort:port
+                                                  withDelegate:self
+                                                       options:sessionOptions];
         
         if(sessionId != 0 && sessionId != -1) {
             block(@(sessionId));
@@ -357,12 +360,14 @@ static int const DISCOVER_INTERVAL = 30;
 - (void)postBlock:(void(^)())block withDelay:(int64_t)delayMillis
 {
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW,
-                                 (int64_t)(delayMillis * NSEC_PER_MSEC)), dispatch_get_main_queue(), block);
+                                 (int64_t)(delayMillis * NSEC_PER_MSEC)),
+                   dispatch_get_main_queue(), block);
 }
 
 
-// =========================================================
+// =============================================================================
 #pragma mark - AJNAboutListener
+
 
 - (void)didReceiveAnnounceOnBus:(NSString *)busName
                     withVersion:(uint16_t)version
@@ -416,7 +421,7 @@ static int const DISCOVER_INTERVAL = 30;
 }
 
 
-// =========================================================
+// =============================================================================
 #pragma mark - AJNBusListener
 
 
@@ -471,7 +476,7 @@ static int const DISCOVER_INTERVAL = 30;
 }
 
 
-// =========================================================
+// =============================================================================
 #pragma mark - AJNSessionListener methods
 
 
