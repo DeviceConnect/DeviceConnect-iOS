@@ -62,7 +62,7 @@ didReceiveGetMediaRecorderRequest:(DConnectRequestMessage *)request
     CONNECT_CHECK();
     DConnectArray *recorders = [DConnectArray new];
     DConnectMessage *recorder = [DConnectMessage new];
-    [DConnectMediaStreamRecordingProfile setRecorderId:@"0" target:recorder];
+    [DConnectMediaStreamRecordingProfile setRecorderId:@"video" target:recorder];
     [DConnectMediaStreamRecordingProfile setRecorderName:@"Theta" target:recorder];
     if ([[DPThetaManager sharedManager] getCameraStatus] == 1) {
         [DConnectMediaStreamRecordingProfile
@@ -146,7 +146,7 @@ didReceivePostRecordRequest:(DConnectRequestMessage *)request
                   timeslice:(NSNumber *)timeslice
 {
     CONNECT_CHECK();
-    if (target && ![target isEqualToString:@"0"]) {
+    if (target && ![target isEqualToString:@"video"]) {
         [response setErrorToInvalidRequestParameterWithMessage:@"Invalid target"];
         return YES;
     }

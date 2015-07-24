@@ -165,14 +165,16 @@ typedef void (^DPThetaOnStatusChangeCallback)(PtpIpObjectInfo *object, NSString 
  @param[in] fileName 削除するファイル名
  @return 削除成功
  */
-- (BOOL)removeFileWithName:(NSString*)fileName;
+- (BOOL)removeFileWithName:(NSString*)fileName
+                   fileMgr:(DConnectFileManager*)fileMgr;
 
 /*!
  @brief 画像ファイルを取得する。
  @param[in] fileName ファイル名
  @return ファイルのパス
  */
-- (NSString*)receiveImageFileWithFileName:(NSString *)fileName;
+- (NSString*)receiveImageFileWithFileName:(NSString *)fileName
+                                  fileMgr:(DConnectFileManager*)fileMgr;
 
 
 /*!

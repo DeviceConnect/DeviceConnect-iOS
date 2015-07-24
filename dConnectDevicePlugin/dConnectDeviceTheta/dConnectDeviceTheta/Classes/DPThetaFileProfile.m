@@ -33,7 +33,8 @@ didReceiveGetReceiveRequest:(DConnectRequestMessage *)request
         return YES;
     }
     
-    NSString *uri = [[DPThetaManager sharedManager] receiveImageFileWithFileName:path];
+    NSString *uri = [[DPThetaManager sharedManager] receiveImageFileWithFileName:path
+                                                                         fileMgr:[SELF_PLUGIN fileMgr]];
     if (uri) {
         [DConnectFileProfile setURI:uri target:response];
         [DConnectFileProfile setMIMEType:@"image/jpeg" target:response];
@@ -56,7 +57,7 @@ didReceiveGetListRequest:(DConnectRequestMessage *)request
                    limit:(NSNumber *)limit
 {
     CONNECT_CHECK();
-    if (path) {
+    if (path && ![path isEqualToString:@"/"]) {
         [response setErrorToInvalidRequestParameter];
         return YES;
     }
@@ -131,7 +132,8 @@ didReceiveDeleteRemoveRequest:(DConnectRequestMessage *)request
         [response setErrorToInvalidRequestParameterWithMessage:@"path must be specified."];
         return YES;
     }
-    BOOL isSuccess = [[DPThetaManager sharedManager] removeFileWithName:path];
+    BOOL isSuccess = [[DPThetaManager sharedManager] removeFileWithName:path
+                                                                fileMgr:[SELF_PLUGIN fileMgr]];
     if (isSuccess) {
         [response setResult:DConnectMessageResultTypeOk];
     } else {
@@ -240,8 +242,6 @@ didReceiveDeleteRemoveRequest:(DConnectRequestMessage *)request
             return [[(DConnectMessage *)obj objectForKey:DConnectFileProfileParamFileType]
                     descriptionWithLocale:nil];
         };
-    } else if (!sortOrder) {
-        return;
     } else {
             [response setErrorToInvalidRequestParameterWithMessage:@"order is invalid."];
             return;

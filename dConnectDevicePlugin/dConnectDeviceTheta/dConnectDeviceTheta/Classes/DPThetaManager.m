@@ -441,7 +441,10 @@ static int const _timeout = 500;
 
 // ファイルを削除する
 - (BOOL)removeFileWithName:(NSString*)fileName
+                   fileMgr:(DConnectFileManager*)fileMgr
+
 {
+    self.fileMgr = fileMgr;
     __block BOOL isSuccess = NO;
     dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
     dispatch_time_t timeout = dispatch_time(DISPATCH_TIME_NOW, NSEC_PER_SEC * _timeout);
@@ -468,7 +471,9 @@ static int const _timeout = 500;
 
 
 - (NSString*)receiveImageFileWithFileName:(NSString *)fileName
+                                  fileMgr:(DConnectFileManager*)fileMgr
 {
+    self.fileMgr = fileMgr;
     __block PtpIpObjectInfo *ptpInfo;
     __block NSString *path = nil;
     dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
