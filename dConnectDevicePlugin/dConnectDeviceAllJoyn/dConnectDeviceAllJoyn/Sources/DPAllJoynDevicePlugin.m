@@ -11,6 +11,7 @@
 
 #import <DConnectSDK/DConnectServiceInformationProfile.h>
 #import "DPAllJoynHandler.h"
+#import "DPAllJoynLightProfile.h"
 #import "DPAllJoynServiceDiscoveryProfile.h"
 #import "DPAllJoynServiceInformationProfile.h"
 #import "DPAllJoynSystemProfile.h"
@@ -37,6 +38,8 @@ static NSString *const VERSION = @"1.0.0";
         [self addProfile:[[DPAllJoynServiceInformationProfile alloc]
                           initWithProvider:self handler:_handler
                           version:VERSION]];
+        [self addProfile:[[DPAllJoynLightProfile alloc]
+                          initWithHandler:_handler]];
         
         id block;
         block = ^(BOOL result) {
