@@ -2038,6 +2038,10 @@ QStatus LSFControllerServiceObjectImpl::SendLampsLost(MsgArg* lampIDs, const cha
     
         
     *responseCode = [NSNumber numberWithUnsignedInt:reply->GetArg()->v_uint32];
+    
+    *lampIDs = [[AJNMessageArgument alloc]
+                initWithHandle:(AJNHandle)new MsgArg(*(reply->GetArg(1)))
+                shouldDeleteHandleOnDealloc:YES];
         
 
 }
@@ -2073,8 +2077,13 @@ QStatus LSFControllerServiceObjectImpl::SendLampsLost(MsgArg* lampIDs, const cha
         
     *responseCode = [NSNumber numberWithUnsignedInt:reply->GetArg()->v_uint32];
         
-    *lampIDOut = [NSString stringWithCString:reply->GetArg()->v_string.str encoding:NSUTF8StringEncoding];
-        
+    *lampIDOut = [NSString stringWithCString:reply->GetArg(1)->v_string.str encoding:NSUTF8StringEncoding];
+    
+    *supportedLanguages =
+    [[AJNMessageArgument alloc]
+     initWithHandle:(AJNHandle)new MsgArg(*(reply->GetArg(2)))
+     shouldDeleteHandleOnDealloc:YES];
+    
 
 }
 
@@ -2111,11 +2120,11 @@ QStatus LSFControllerServiceObjectImpl::SendLampsLost(MsgArg* lampIDs, const cha
         
     *responseCode = [NSNumber numberWithUnsignedInt:reply->GetArg()->v_uint32];
         
-    *lampIDOut = [NSString stringWithCString:reply->GetArg()->v_string.str encoding:NSUTF8StringEncoding];
+    *lampIDOut = [NSString stringWithCString:reply->GetArg(1)->v_string.str encoding:NSUTF8StringEncoding];
         
-    *languageOut = [NSString stringWithCString:reply->GetArg()->v_string.str encoding:NSUTF8StringEncoding];
+    *languageOut = [NSString stringWithCString:reply->GetArg(2)->v_string.str encoding:NSUTF8StringEncoding];
         
-    *manufacturer = [NSString stringWithCString:reply->GetArg()->v_string.str encoding:NSUTF8StringEncoding];
+    *manufacturer = [NSString stringWithCString:reply->GetArg(3)->v_string.str encoding:NSUTF8StringEncoding];
         
 
 }
@@ -2153,11 +2162,11 @@ QStatus LSFControllerServiceObjectImpl::SendLampsLost(MsgArg* lampIDs, const cha
         
     *responseCode = [NSNumber numberWithUnsignedInt:reply->GetArg()->v_uint32];
         
-    *lampIDOut = [NSString stringWithCString:reply->GetArg()->v_string.str encoding:NSUTF8StringEncoding];
+    *lampIDOut = [NSString stringWithCString:reply->GetArg(1)->v_string.str encoding:NSUTF8StringEncoding];
         
-    *languageOut = [NSString stringWithCString:reply->GetArg()->v_string.str encoding:NSUTF8StringEncoding];
+    *languageOut = [NSString stringWithCString:reply->GetArg(2)->v_string.str encoding:NSUTF8StringEncoding];
         
-    *lampName = [NSString stringWithCString:reply->GetArg()->v_string.str encoding:NSUTF8StringEncoding];
+    *lampName = [NSString stringWithCString:reply->GetArg(3)->v_string.str encoding:NSUTF8StringEncoding];
         
 
 }
@@ -2197,9 +2206,9 @@ QStatus LSFControllerServiceObjectImpl::SendLampsLost(MsgArg* lampIDs, const cha
         
     *responseCode = [NSNumber numberWithUnsignedInt:reply->GetArg()->v_uint32];
         
-    *lampIDOut = [NSString stringWithCString:reply->GetArg()->v_string.str encoding:NSUTF8StringEncoding];
+    *lampIDOut = [NSString stringWithCString:reply->GetArg(1)->v_string.str encoding:NSUTF8StringEncoding];
         
-    *languageOut = [NSString stringWithCString:reply->GetArg()->v_string.str encoding:NSUTF8StringEncoding];
+    *languageOut = [NSString stringWithCString:reply->GetArg(2)->v_string.str encoding:NSUTF8StringEncoding];
         
 
 }
@@ -2235,7 +2244,11 @@ QStatus LSFControllerServiceObjectImpl::SendLampsLost(MsgArg* lampIDs, const cha
         
     *responseCode = [NSNumber numberWithUnsignedInt:reply->GetArg()->v_uint32];
         
-    *lampIDOut = [NSString stringWithCString:reply->GetArg()->v_string.str encoding:NSUTF8StringEncoding];
+    *lampIDOut = [NSString stringWithCString:reply->GetArg(1)->v_string.str encoding:NSUTF8StringEncoding];
+    
+    *lampDetails = [[AJNMessageArgument alloc]
+                    initWithHandle:(AJNHandle)new MsgArg(*(reply->GetArg(2)))
+                    shouldDeleteHandleOnDealloc:YES];
         
 
 }
@@ -2271,7 +2284,11 @@ QStatus LSFControllerServiceObjectImpl::SendLampsLost(MsgArg* lampIDs, const cha
         
     *responseCode = [NSNumber numberWithUnsignedInt:reply->GetArg()->v_uint32];
         
-    *lampIDOut = [NSString stringWithCString:reply->GetArg()->v_string.str encoding:NSUTF8StringEncoding];
+    *lampIDOut = [NSString stringWithCString:reply->GetArg(1)->v_string.str encoding:NSUTF8StringEncoding];
+    
+    *lampParameters = [[AJNMessageArgument alloc]
+                       initWithHandle:(AJNHandle)new MsgArg(*(reply->GetArg(2)))
+                       shouldDeleteHandleOnDealloc:YES];
         
 
 }
@@ -2309,11 +2326,11 @@ QStatus LSFControllerServiceObjectImpl::SendLampsLost(MsgArg* lampIDs, const cha
         
     *responseCode = [NSNumber numberWithUnsignedInt:reply->GetArg()->v_uint32];
         
-    *lampIDOut = [NSString stringWithCString:reply->GetArg()->v_string.str encoding:NSUTF8StringEncoding];
+    *lampIDOut = [NSString stringWithCString:reply->GetArg(1)->v_string.str encoding:NSUTF8StringEncoding];
         
-    *lampParameterFieldNameOut = [NSString stringWithCString:reply->GetArg()->v_string.str encoding:NSUTF8StringEncoding];
+    *lampParameterFieldNameOut = [NSString stringWithCString:reply->GetArg(2)->v_string.str encoding:NSUTF8StringEncoding];
         
-    *lampParameterFieldValue = [NSString stringWithCString:reply->GetArg()->v_string.str encoding:NSUTF8StringEncoding];
+    *lampParameterFieldValue = [NSString stringWithCString:reply->GetArg(3)->v_string.str encoding:NSUTF8StringEncoding];
         
 
 }
@@ -2349,8 +2366,12 @@ QStatus LSFControllerServiceObjectImpl::SendLampsLost(MsgArg* lampIDs, const cha
         
     *responseCode = [NSNumber numberWithUnsignedInt:reply->GetArg()->v_uint32];
         
-    *lampIDOut = [NSString stringWithCString:reply->GetArg()->v_string.str encoding:NSUTF8StringEncoding];
-        
+    *lampIDOut = [NSString stringWithCString:reply->GetArg(1)->v_string.str encoding:NSUTF8StringEncoding];
+    
+    *lampState = [[AJNMessageArgument alloc]
+                  initWithHandle:(AJNHandle)new MsgArg(*(reply->GetArg(2)))
+                  shouldDeleteHandleOnDealloc:YES];
+    
 
 }
 
@@ -2387,11 +2408,11 @@ QStatus LSFControllerServiceObjectImpl::SendLampsLost(MsgArg* lampIDs, const cha
         
     *responseCode = [NSNumber numberWithUnsignedInt:reply->GetArg()->v_uint32];
         
-    *lampIDOut = [NSString stringWithCString:reply->GetArg()->v_string.str encoding:NSUTF8StringEncoding];
+    *lampIDOut = [NSString stringWithCString:reply->GetArg(1)->v_string.str encoding:NSUTF8StringEncoding];
         
-    *lampStateFieldNameOut = [NSString stringWithCString:reply->GetArg()->v_string.str encoding:NSUTF8StringEncoding];
+    *lampStateFieldNameOut = [NSString stringWithCString:reply->GetArg(2)->v_string.str encoding:NSUTF8StringEncoding];
         
-    *lampStateFieldValue = [NSString stringWithCString:reply->GetArg()->v_string.str encoding:NSUTF8StringEncoding];
+    *lampStateFieldValue = [NSString stringWithCString:reply->GetArg(3)->v_string.str encoding:NSUTF8StringEncoding];
         
 
 }
@@ -2431,7 +2452,7 @@ QStatus LSFControllerServiceObjectImpl::SendLampsLost(MsgArg* lampIDs, const cha
         
     *responseCode = [NSNumber numberWithUnsignedInt:reply->GetArg()->v_uint32];
         
-    *lampIDOut = [NSString stringWithCString:reply->GetArg()->v_string.str encoding:NSUTF8StringEncoding];
+    *lampIDOut = [NSString stringWithCString:reply->GetArg(1)->v_string.str encoding:NSUTF8StringEncoding];
         
 
 }
@@ -2477,7 +2498,7 @@ QStatus LSFControllerServiceObjectImpl::SendLampsLost(MsgArg* lampIDs, const cha
         
     *responseCode = [NSNumber numberWithUnsignedInt:reply->GetArg()->v_uint32];
         
-    *lampIDOut = [NSString stringWithCString:reply->GetArg()->v_string.str encoding:NSUTF8StringEncoding];
+    *lampIDOut = [NSString stringWithCString:reply->GetArg(1)->v_string.str encoding:NSUTF8StringEncoding];
         
 
 }
@@ -2523,7 +2544,7 @@ QStatus LSFControllerServiceObjectImpl::SendLampsLost(MsgArg* lampIDs, const cha
         
     *responseCode = [NSNumber numberWithUnsignedInt:reply->GetArg()->v_uint32];
         
-    *lampIDOut = [NSString stringWithCString:reply->GetArg()->v_string.str encoding:NSUTF8StringEncoding];
+    *lampIDOut = [NSString stringWithCString:reply->GetArg(1)->v_string.str encoding:NSUTF8StringEncoding];
         
 
 }
@@ -2563,7 +2584,7 @@ QStatus LSFControllerServiceObjectImpl::SendLampsLost(MsgArg* lampIDs, const cha
         
     *responseCode = [NSNumber numberWithUnsignedInt:reply->GetArg()->v_uint32];
         
-    *lampIDOut = [NSString stringWithCString:reply->GetArg()->v_string.str encoding:NSUTF8StringEncoding];
+    *lampIDOut = [NSString stringWithCString:reply->GetArg(1)->v_string.str encoding:NSUTF8StringEncoding];
         
 
 }
@@ -2605,9 +2626,9 @@ QStatus LSFControllerServiceObjectImpl::SendLampsLost(MsgArg* lampIDs, const cha
         
     *responseCode = [NSNumber numberWithUnsignedInt:reply->GetArg()->v_uint32];
         
-    *lampIDOut = [NSString stringWithCString:reply->GetArg()->v_string.str encoding:NSUTF8StringEncoding];
+    *lampIDOut = [NSString stringWithCString:reply->GetArg(1)->v_string.str encoding:NSUTF8StringEncoding];
         
-    *lampStateFieldNameOut = [NSString stringWithCString:reply->GetArg()->v_string.str encoding:NSUTF8StringEncoding];
+    *lampStateFieldNameOut = [NSString stringWithCString:reply->GetArg(2)->v_string.str encoding:NSUTF8StringEncoding];
         
 
 }
@@ -2643,7 +2664,7 @@ QStatus LSFControllerServiceObjectImpl::SendLampsLost(MsgArg* lampIDs, const cha
         
     *responseCode = [NSNumber numberWithUnsignedInt:reply->GetArg()->v_uint32];
         
-    *lampIDOut = [NSString stringWithCString:reply->GetArg()->v_string.str encoding:NSUTF8StringEncoding];
+    *lampIDOut = [NSString stringWithCString:reply->GetArg(1)->v_string.str encoding:NSUTF8StringEncoding];
         
 
 }
@@ -2681,9 +2702,9 @@ QStatus LSFControllerServiceObjectImpl::SendLampsLost(MsgArg* lampIDs, const cha
         
     *responseCode = [NSNumber numberWithUnsignedInt:reply->GetArg()->v_uint32];
         
-    *lampIDOut = [NSString stringWithCString:reply->GetArg()->v_string.str encoding:NSUTF8StringEncoding];
+    *lampIDOut = [NSString stringWithCString:reply->GetArg(1)->v_string.str encoding:NSUTF8StringEncoding];
         
-    *lampStateFieldNameOut = [NSString stringWithCString:reply->GetArg()->v_string.str encoding:NSUTF8StringEncoding];
+    *lampStateFieldNameOut = [NSString stringWithCString:reply->GetArg(2)->v_string.str encoding:NSUTF8StringEncoding];
         
 
 }
@@ -2719,7 +2740,11 @@ QStatus LSFControllerServiceObjectImpl::SendLampsLost(MsgArg* lampIDs, const cha
         
     *responseCode = [NSNumber numberWithUnsignedInt:reply->GetArg()->v_uint32];
         
-    *lampIDOut = [NSString stringWithCString:reply->GetArg()->v_string.str encoding:NSUTF8StringEncoding];
+    *lampIDOut = [NSString stringWithCString:reply->GetArg(1)->v_string.str encoding:NSUTF8StringEncoding];
+    
+    *lampFaults = [[AJNMessageArgument alloc]
+                   initWithHandle:(AJNHandle)new MsgArg(*(reply->GetArg(2)))
+                   shouldDeleteHandleOnDealloc:YES];
         
 
 }
@@ -2757,9 +2782,9 @@ QStatus LSFControllerServiceObjectImpl::SendLampsLost(MsgArg* lampIDs, const cha
         
     *responseCode = [NSNumber numberWithUnsignedInt:reply->GetArg()->v_uint32];
         
-    *lampIDOut = [NSString stringWithCString:reply->GetArg()->v_string.str encoding:NSUTF8StringEncoding];
+    *lampIDOut = [NSString stringWithCString:reply->GetArg(1)->v_string.str encoding:NSUTF8StringEncoding];
         
-    *lampFaultOut = [NSNumber numberWithUnsignedInt:reply->GetArg()->v_uint32];
+    *lampFaultOut = [NSNumber numberWithUnsignedInt:reply->GetArg(2)->v_uint32];
         
 
 }
@@ -2795,9 +2820,9 @@ QStatus LSFControllerServiceObjectImpl::SendLampsLost(MsgArg* lampIDs, const cha
         
     *responseCode = [NSNumber numberWithUnsignedInt:reply->GetArg()->v_uint32];
         
-    *lampIDOut = [NSString stringWithCString:reply->GetArg()->v_string.str encoding:NSUTF8StringEncoding];
+    *lampIDOut = [NSString stringWithCString:reply->GetArg(1)->v_string.str encoding:NSUTF8StringEncoding];
         
-    *lampServiceVersion = [NSNumber numberWithUnsignedInt:reply->GetArg()->v_uint32];
+    *lampServiceVersion = [NSNumber numberWithUnsignedInt:reply->GetArg(2)->v_uint32];
         
 
 }

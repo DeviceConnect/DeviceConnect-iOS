@@ -1745,7 +1745,7 @@ QStatus LSFLampObjectImpl::SendLampStateChanged(const char * LampID, const char*
         
     *LampResponseCode = [NSNumber numberWithUnsignedInt:reply->GetArg()->v_uint32];
         
-    *LampFaultCodeOut = [NSNumber numberWithUnsignedInt:reply->GetArg()->v_uint32];
+    *LampFaultCodeOut = [NSNumber numberWithUnsignedInt:reply->GetArg(1)->v_uint32];
         
 
 }
