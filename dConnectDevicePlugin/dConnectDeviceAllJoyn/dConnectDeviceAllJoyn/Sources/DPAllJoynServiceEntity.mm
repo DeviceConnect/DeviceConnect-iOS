@@ -21,14 +21,15 @@ static NSString *const DPAllJoynAboutDataException =
 - (instancetype) initWithBusName:(NSString *)busName
                             port:(AJNSessionPort)port
                        aboutData:(AJNMessageArgument *)aboutData
-                    proxyObjects:(AJNMessageArgument *)proxyObjects
+           busObjectDescriptions:(AJNMessageArgument *)busObjectDescriptionArg
 {
     if (!busName) {
         NSLog(@"%s: busName can not be nil.", __PRETTY_FUNCTION__);
         return nil;
     }
-    if (!proxyObjects) {
-        NSLog(@"%s: proxyObjects can not be nil.", __PRETTY_FUNCTION__);
+    if (!busObjectDescriptionArg) {
+        NSLog(@"%s: busObjectDescriptionArg can not be nil.",
+              __PRETTY_FUNCTION__);
         return nil;
     }
     
@@ -37,9 +38,10 @@ static NSString *const DPAllJoynAboutDataException =
         self.busName = busName;
         self.port = port;
         self.aboutData = aboutData;
-        self.proxyObjects = proxyObjects;
+        self.busObjectDescriptionArg = busObjectDescriptionArg;
         
         [self flattenAboutData];
+        self.busObjectDescriptions = [self remapProxyObjectsToDictionary];
         
         [self determineServiceName];
     }
@@ -145,6 +147,46 @@ static NSString *const DPAllJoynAboutDataException =
             NSLog(@"%@. About key: %@.", ex.reason, key);
         }
     }
+}
+
+
+- (NSDictionary *)remapProxyObjectsToDictionary
+{
+    QStatus status;
+    NSMutableDictionary *dict;
+    size_t size1;
+    MsgArg *entries1;
+    status = [_busObjectDescriptionArg value:@"a(oas)", &size1, &entries1];
+    if (ER_OK != status) {
+        NSLog(@"Failed to parse bus object descriptions.");
+        return nil;
+    }
+    dict = [NSMutableDictionary dictionaryWithCapacity:size1];
+    for (size_t i = 0; i < size1; ++i) {
+        char *objPath;
+        NSMutableArray *ifaces;
+        size_t size2;
+        MsgArg *entries2;
+        status = entries1[i].Get("(oas)", &objPath, &size2, &entries2);
+        if (ER_OK != status) {
+            NSLog(@"Failed to parse a bus object description. Skipping it...");
+            continue;
+        }
+        ifaces = [NSMutableArray arrayWithCapacity:size2];
+        for (size_t j = 0; j < size2; ++j) {
+            char *iface;
+            status = entries2[j].Get("s", &iface);
+            if (ER_OK != status) {
+                NSLog(@"Failed to parse a supported interface in a bus object"
+                      " description. Skipping it...");
+                continue;
+            }
+            [ifaces addObject:@(iface)];
+        }
+        dict[@(objPath)] = ifaces;
+    }
+    
+    return dict;
 }
 
 

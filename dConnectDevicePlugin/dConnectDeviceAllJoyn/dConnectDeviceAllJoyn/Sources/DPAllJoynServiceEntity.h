@@ -21,8 +21,8 @@
 @property NSString *serviceName;
 @property NSString *busName; // @NonNull
 @property AJNSessionPort port;
-@property AJNMessageArgument *aboutData;
 
+@property AJNMessageArgument *aboutData;
 // Flattened data from aboutData
 @property NSData *appId;
 @property NSString *defaultLanguage;
@@ -38,14 +38,17 @@
 @property NSString *ajSoftwareVersion;
 @property NSString *hardwareVersion;
 @property NSString *supportUrl;
-//
-@property AJNMessageArgument *proxyObjects; // @NonNull
+
+@property AJNMessageArgument *busObjectDescriptionArg; // @NonNull
+// Remapped data from busObjectDescriptionArg
+// object path -> key, interfaces -> value
+@property NSDictionary *busObjectDescriptions;
 
 - (instancetype) init NS_UNAVAILABLE;
 - (instancetype) initWithBusName:(NSString *)busName
                             port:(AJNSessionPort)port
                        aboutData:(AJNMessageArgument *)aboutData
-                    proxyObjects:(AJNMessageArgument *)proxyObjects
+           busObjectDescriptions:(AJNMessageArgument *)busObjectDescriptionArg
 NS_DESIGNATED_INITIALIZER;
 
 @end

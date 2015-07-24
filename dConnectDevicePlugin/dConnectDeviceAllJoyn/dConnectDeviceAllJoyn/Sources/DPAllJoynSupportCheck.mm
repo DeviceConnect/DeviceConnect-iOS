@@ -18,6 +18,7 @@
 
 @implementation DPAllJoynSupportCheck
 
+
 + (NSSet *)allInterfaceNamesFromBusObjectDescriptions:
 (AJNMessageArgument *)busObjectDescriptions
 {
@@ -56,6 +57,22 @@
 }
 
 
++ (NSSet *)allInterfaceNamesFromService:(DPAllJoynServiceEntity *)service
+{
+    NSMutableSet *interfaces = [NSMutableSet new];
+    
+    for (NSArray *ifacesInObjPath in service.busObjectDescriptions.allValues) {
+        [interfaces addObjectsFromArray:ifacesInObjPath];
+    }
+    
+    return interfaces;
+}
+
+
+// =============================================================================
+#pragma mark - Support check not considering object path.
+
+
 + (BOOL)isSupported:(AJNMessageArgument *)busObjectDescriptions
 {
     if (!busObjectDescriptions) {
@@ -91,8 +108,7 @@
     }
     
     NSSet *interfaces =
-    [DPAllJoynSupportCheck allInterfaceNamesFromBusObjectDescriptions:
-     service.proxyObjects];
+    [DPAllJoynSupportCheck allInterfaceNamesFromService:service];
     
     NSMutableArray *supportedProfileNames = [NSMutableArray array];
     
@@ -111,7 +127,7 @@
                 || [interfaces.allObjects
                     containsAll:DPAllJoynSingleLampInterfaceSet]) {
                     [supportedProfileNames addObject:profile.profileName];
-            }
+                }
         }
     }
     
@@ -122,14 +138,39 @@
 + (BOOL)areAJInterfacesSupported:(NSArray *)ifaces
                      withService:(DPAllJoynServiceEntity *)service
 {
-    if (!ifaces || !service.proxyObjects) {
+    if (!ifaces || ifaces.count == 0 || !service.busObjectDescriptions
+        || service.busObjectDescriptions.count == 0) {
         return false;
     }
     
     NSSet *supportedInterfaces =
-    [self allInterfaceNamesFromBusObjectDescriptions:service.proxyObjects];
+    [DPAllJoynSupportCheck allInterfaceNamesFromService:service];
     
     return [supportedInterfaces.allObjects containsAll:ifaces];
+}
+
+
+// =============================================================================
+#pragma mark - Support check considering object path.
+
+
++ (NSDictionary *)objectPathDescriptionsWithInterface:(NSArray *)ifaces
+                                              service:(DPAllJoynServiceEntity *)service
+{
+    if (!ifaces || ifaces.count == 0 || !service.busObjectDescriptions
+        || service.busObjectDescriptions.count == 0) {
+        return nil;
+    }
+    
+    NSMutableDictionary *busObjectDescriptions = [NSMutableDictionary dictionary];
+    for (NSString *objPath in service.busObjectDescriptions) {
+        NSArray *ifacesInObjPath = service.busObjectDescriptions[objPath];
+        if ([ifacesInObjPath containsAll:ifaces]) {
+            busObjectDescriptions[objPath] = ifacesInObjPath;
+        }
+    }
+    
+    return busObjectDescriptions;
 }
 
 @end

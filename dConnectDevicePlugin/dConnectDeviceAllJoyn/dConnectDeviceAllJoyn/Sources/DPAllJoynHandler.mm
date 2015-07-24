@@ -289,6 +289,36 @@ static int const DISCOVER_INTERVAL = 30;
     });
 }
 
+- (AJNProxyBusObject *)proxyObjectWithService:(DPAllJoynServiceEntity *)service
+                             proxyObjectClass:(Class)proxyObjectClass
+                                    interface:(NSString *)interface
+                                    sessionID:(AJNSessionId)sessionID
+{
+    NSDictionary *objPathDesc =
+    [DPAllJoynSupportCheck objectPathDescriptionsWithInterface:@[interface]
+                                                       service:service];
+    
+    if (objPathDesc.count != 0) {
+        // TODO: Handling of multiple object paths with the same interfaces.
+        // For the time being, use the first object path. Should these object
+        // paths be arranged as separate Device Connect services that can be
+        // accessed independently?
+        AJNProxyBusObject *proxy =
+        [[proxyObjectClass alloc]
+         initWithBusAttachment:self.bus serviceName:service.busName
+         objectPath:objPathDesc.allKeys[0] sessionId:sessionID];
+        QStatus status = [proxy introspectRemoteObject];
+        if (ER_OK != status) {
+            NSLog(@"Failed to introspect a remote bus object.");
+            return nil;
+        }
+        return proxy;
+    } else {
+        NSLog(@"Specified interface \"%@\" was not found.", interface);
+        return nil;
+    }
+}
+
 
 - (void)pingTimerMethod:(NSTimer *)timer
 {
@@ -348,7 +378,7 @@ static int const DISCOVER_INTERVAL = 30;
     [[DPAllJoynServiceEntity alloc] initWithBusName:busName
                                                port:port
                                           aboutData:aboutDataArg
-                                       proxyObjects:objectDescriptionArg];
+                              busObjectDescriptions:objectDescriptionArg];
     
     NSLog(@"%s: Service found: %@", class_getName([self class]), service.serviceName);
     
@@ -370,50 +400,18 @@ static int const DISCOVER_INTERVAL = 30;
              return;
          }
          
-         if ([DPAllJoynSupportCheck
-              areAJInterfacesSupported:@[@"org.allseen.LSF.LampState"]
-              withService:service]) {
-             
-             LSFLampObjectProxy *proxy =
-             [[LSFLampObjectProxy alloc]
-              initWithBusAttachment:self.bus serviceName:service.busName
-              objectPath:@"/org/allseen/LSF/Lamp"
-              sessionId:sessionId.unsignedIntValue];
-             QStatus status = [proxy introspectRemoteObject];
-             if (ER_OK != status) {
-                 NSLog(@"Failed to introspect a remote bus object.");
-                 return;
-             }
-             
-             NSLog(@"Version: %@", proxy.LampServiceInterfaceVersion);
-             
-             
-//             NSURL *dataURL =
-//             [DPAllJoynResourceBundle() URLForResource:@"org_allseen_LSF_Lamp"
-//                                         withExtension:@"xml"];
-//             NSData *data = [NSData dataWithContentsOfURL:dataURL];
-//             NSString *xml =
-//             [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-//             QStatus status = [self.bus createInterfacesFromXml:xml];
-//             if (ER_OK != status) {
-//                 NSLog(@"Failed to parse an introspection XML.");
-//                 return;
-//             }
-//             AJNInterfaceDescription *iface =
-//             [self.bus interfaceWithName:@"org.allseen.LSF.LampState"];
-//             
-//             NSArray *members = [iface members];
-//             NSLog(@"single_lamp members: %@", members.description);
-         } else if ([DPAllJoynSupportCheck
-                     areAJInterfacesSupported:@[@"org.allseen.LSF.ControllerService.Lamp"]
-                     withService:service]) {
-             AJNInterfaceDescription *iface =
-             [self.bus interfaceWithName:@"org.allseen.LSF.ControllerService.Lamp"];
-             NSArray *members = [iface members];
-             NSLog(@"lamp_controller members: %@", members.description);
-         } else {
-             NSLog(@"Lamp is not supported");
+         LSFLampObjectProxy *proxy = (LSFLampObjectProxy *)
+         [self proxyObjectWithService:service
+                     proxyObjectClass:LSFLampObjectProxy.class
+                            interface:@"org.allseen.LSF.LampState"
+                            sessionID:sessionId.unsignedIntValue];;
+         QStatus status = [proxy introspectRemoteObject];
+         if (ER_OK != status) {
+             NSLog(@"Failed to introspect a remote bus object.");
+             return;
          }
+         
+         NSLog(@"Version: %@", proxy.LampServiceInterfaceVersion);
      }];
 }
 

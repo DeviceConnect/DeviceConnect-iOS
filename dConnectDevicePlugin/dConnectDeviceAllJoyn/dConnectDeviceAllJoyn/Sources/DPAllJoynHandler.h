@@ -10,6 +10,7 @@
 #import <AJNSessionOptions.h>
 
 
+@class AJNProxyBusObject;
 @class DPAllJoynServiceEntity;
 
 
@@ -28,6 +29,10 @@
                                                   NSNumber *sessionId))block;
 - (void)pingWithBusName:(NSString *)busName
                   block:(void(^)(BOOL result)) block;
+- (AJNProxyBusObject *)proxyObjectWithService:(DPAllJoynServiceEntity *)service
+                             proxyObjectClass:(Class)proxyObjectClass
+                                    interface:(NSString *)interface
+                                    sessionID:(AJNSessionId)sessionID;
 - (NSDictionary *)discoveredAllJoynServices;
 
 - (void)postBlock:(void(^)())block

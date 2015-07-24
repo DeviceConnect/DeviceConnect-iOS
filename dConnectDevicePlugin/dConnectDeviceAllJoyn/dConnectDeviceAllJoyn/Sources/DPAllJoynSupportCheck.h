@@ -38,4 +38,11 @@
 + (BOOL)areAJInterfacesSupported:(NSArray *)ifaces
                      withService:(DPAllJoynServiceEntity *)service;
 
+/*!
+ Returns a dictionary supporting specified interfaces where key and value are
+ object path and interfaces respectively.
+ */
++ (NSDictionary *)objectPathDescriptionsWithInterface:(NSArray *)ifaces
+                                              service:(DPAllJoynServiceEntity *)service;
+
 @end
