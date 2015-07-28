@@ -62,24 +62,36 @@ didReceiveGetMediaRecorderRequest:(DConnectRequestMessage *)request
     CONNECT_CHECK();
     DConnectArray *recorders = [DConnectArray new];
     DConnectMessage *recorder = [DConnectMessage new];
-    [DConnectMediaStreamRecordingProfile setRecorderId:@"video" target:recorder];
+    [DConnectMediaStreamRecordingProfile setRecorderId:@"0" target:recorder];
     [DConnectMediaStreamRecordingProfile setRecorderName:@"Theta" target:recorder];
-    if ([[DPThetaManager sharedManager] getCameraStatus] == 1) {
-        [DConnectMediaStreamRecordingProfile
-         setRecorderState:DConnectMediaStreamRecordingProfileRecorderStateRecording
-                                                       target:recorder];
-    } else {
-        [DConnectMediaStreamRecordingProfile
-         setRecorderState:DConnectMediaStreamRecordingProfileRecorderStateInactive
-         target:recorder];
-        
-    }
+    [DConnectMediaStreamRecordingProfile
+     setRecorderState:DConnectMediaStreamRecordingProfileRecorderStateInactive
+     target:recorder];
     [DConnectMediaStreamRecordingProfile setRecorderMIMEType:DPThetaImageMimeType
                                                       target:recorder];
     [DConnectMediaStreamRecordingProfile setRecorderImageWidth:DPThetaMaxWidth target:recorder];
     [DConnectMediaStreamRecordingProfile setRecorderImageHeight:DPThetaMaxHeight target:recorder];
     [DConnectMediaStreamRecordingProfile setRecorderConfig:@"[]" target:recorder];
     [recorders addMessage:recorder];
+    DConnectMessage *video = [DConnectMessage new];
+    [DConnectMediaStreamRecordingProfile setRecorderId:@"1" target:video];
+    [DConnectMediaStreamRecordingProfile setRecorderName:@"Theta" target:video];
+    if ([[DPThetaManager sharedManager] getCameraStatus] == 1) {
+        [DConnectMediaStreamRecordingProfile
+         setRecorderState:DConnectMediaStreamRecordingProfileRecorderStateRecording
+         target:video];
+    } else {
+        [DConnectMediaStreamRecordingProfile
+         setRecorderState:DConnectMediaStreamRecordingProfileRecorderStateInactive
+         target:video];
+        
+    }
+    [DConnectMediaStreamRecordingProfile setRecorderMIMEType:DPThetaMovieMimeType
+                                                      target:video];
+    [DConnectMediaStreamRecordingProfile setRecorderImageWidth:DPThetaMaxWidth target:video];
+    [DConnectMediaStreamRecordingProfile setRecorderImageHeight:DPThetaMaxHeight target:video];
+    [DConnectMediaStreamRecordingProfile setRecorderConfig:@"[]" target:video];
+    [recorders addMessage:video];
     [DConnectMediaStreamRecordingProfile setRecorders:recorders target:response];
     [response setResult:DConnectMessageResultTypeOk];
     return YES;
@@ -146,7 +158,7 @@ didReceivePostRecordRequest:(DConnectRequestMessage *)request
                   timeslice:(NSNumber *)timeslice
 {
     CONNECT_CHECK();
-    if (target && ![target isEqualToString:@"video"]) {
+    if (target && ![target isEqualToString:@"1"]) {
         [response setErrorToInvalidRequestParameterWithMessage:@"Invalid target"];
         return YES;
     }
