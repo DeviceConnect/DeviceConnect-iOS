@@ -95,6 +95,7 @@ typedef NS_ENUM(NSUInteger, DPIRKitConnectionErrorCode) {
         withHostName:(NSString *)hostName
           completion:(void (^)(BOOL success))completion;
 
+- (NSArray *)devicesAll;
 #pragma mark - Static Methods
 
 + (DPIRKitManager *) sharedInstance;

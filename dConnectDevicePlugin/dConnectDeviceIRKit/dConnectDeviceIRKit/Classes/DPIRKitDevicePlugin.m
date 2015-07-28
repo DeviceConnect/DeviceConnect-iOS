@@ -244,6 +244,7 @@ didReceiveDeleteOnServiceChangeRequest:(DConnectRequestMessage *)request
     return YES;
 }
 
+
 #pragma mark DConnectSystemProfileDataSource
 
 - (NSString *) versionOfSystemProfile:(DConnectSystemProfile *)profile {

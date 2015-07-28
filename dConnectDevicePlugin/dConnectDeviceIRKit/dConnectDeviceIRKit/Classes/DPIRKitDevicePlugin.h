@@ -14,5 +14,4 @@
 @interface DPIRKitDevicePlugin : DConnectDevicePlugin
 
 - (DPIRKitDevice *) deviceForServiceId:(NSString *)serviceId;
-
 @end
