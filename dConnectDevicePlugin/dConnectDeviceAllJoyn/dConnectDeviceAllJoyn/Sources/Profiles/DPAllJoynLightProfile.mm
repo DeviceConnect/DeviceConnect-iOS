@@ -10,6 +10,7 @@
 #import "DPAllJoynLightProfile.h"
 
 #import <AllJoynFramework_iOS.h>
+#import "DPAllJoynColorUtility.h"
 #import "AJNLSFControllerService.h"
 #import "AJNLSFLamp.h"
 #import "DPAllJoynLightingResponseCode.h"
@@ -30,6 +31,9 @@ typedef NS_ENUM(NSUInteger, DPAllJoynLightServiceType) {
 @end
 
 
+// TODO: Change the type of parameter 'brightness' to NSNumber.
+// Though brightness is optional, it has a valid value (1.0) even if it
+// was omitted. It should be nullable.
 @implementation DPAllJoynLightProfile
 
 - (instancetype)initWithHandler:(DPAllJoynHandler *)handler
@@ -44,6 +48,96 @@ typedef NS_ENUM(NSUInteger, DPAllJoynLightServiceType) {
         _handler = handler;
     }
     return self;
+}
+
+
+/*!
+ Check if certain API fuctionality in AllJoyn Lighting service framework are available.
+ - Dimmable: brightness can be variably changed.
+ - Color: color of the light can be variably changed.
+ @return A dictionary with availability check results. If availability check failed, nil will be returned.
+ */
+- (NSDictionary *)checkFunctionalityWithService:(DPAllJoynServiceEntity *)service
+                                      sessionID:(AJNSessionId)sessionID
+                                        lightID:(NSString *)lightID
+                                           type:(DPAllJoynLightServiceType)type
+{
+    switch (type) {
+        case DPAllJoynLightServiceTypeSingleLamp: {
+            QStatus status;
+            LSFLampObjectProxy *proxy = (LSFLampObjectProxy *)
+            [_handler proxyObjectWithService:service
+                            proxyObjectClass:LSFLampObjectProxy.class
+                                   interface:@"org.allseen.LSF.LampDetails"
+                                   sessionID:sessionID];;
+            status = [proxy introspectRemoteObject];
+            if (ER_OK != status) {
+                NSLog(@"Failed to perform AllJoyn API parameter availability check.");
+                return nil;
+            }
+            
+            return @{@"Dimmable" : @(proxy.Dimmable),
+                     @"Color" : @(proxy.Color)};
+        }
+        case DPAllJoynLightServiceTypeLampController: {
+            QStatus status;
+            LSFControllerServiceObjectProxy *proxy =
+            (LSFControllerServiceObjectProxy *)
+            [_handler proxyObjectWithService:service
+                            proxyObjectClass:LSFControllerServiceObjectProxy.class
+                                   interface:@"org.allseen.LSF.ControllerService.Lamp"
+                                   sessionID:sessionID];;
+            status = [proxy introspectRemoteObject];
+            if (ER_OK != status) {
+                NSLog(@"Failed to perform AllJoyn API parameter availability check.");
+                return nil;
+            }
+            
+            NSNumber *responseCode;
+            NSString *ignored;
+            AJNMessageArgument *details;
+            [proxy getLampDetailsWithLampID:lightID
+                               responseCode:&responseCode
+                                     lampID:&ignored
+                                lampDetails:&details];
+            
+            if (!responseCode
+                || responseCode.unsignedIntValue != DPAllJoynLightResponseCodeOK) {
+                return nil;
+            }
+
+            NSMutableDictionary *functionalities =
+            [NSMutableDictionary dictionary];
+            if (details) {
+                size_t size;
+                MsgArg *detailArr;
+                status = [details value:@"a{sv}", &size, &detailArr];
+                if (ER_OK != status) {
+                    NSLog(@"Failed to obtain light details.");
+                    return nil;
+                }
+                for (size_t i = 0; i < size; ++i) {
+                    char *keyCStr;
+                    NSString *key;
+                    MsgArg valArg;
+                    status = detailArr[i].Get("{sv}", &keyCStr, &valArg);
+                    if (ER_OK != status) {
+                        NSLog(@"Failed to obtain a key-value pair.");
+                        continue;
+                    }
+                    key = @(keyCStr);
+                    if ([key isEqualToString:@"Dimmable"] ||
+                        [key isEqualToString:@"Color"]) {
+                        functionalities[key] = @(valArg.v_bool);
+                    }
+                }
+            }
+            return functionalities;
+        }
+            
+        default:
+            return nil;
+    }
 }
 
 
@@ -271,6 +365,640 @@ typedef NS_ENUM(NSUInteger, DPAllJoynLightServiceType) {
 }
 
 
+- (void) didReceivePostLightRequestForSingleLampWithResponse:(DConnectResponseMessage *)response
+                                                     service:(DPAllJoynServiceEntity *)service
+                                                     lightId:(NSString*)lightId
+                                                  brightness:(double)brightness
+                                                       color:(NSString*)color
+                                                    flashing:(NSArray*)flashing
+{
+    [_handler performOneShotSessionWithBusName:service
+                                         block:
+     ^(DPAllJoynServiceEntity *service, NSNumber *sessionId)
+     {
+         //////////////////////////////////////////////////
+         // Validity check
+         //
+         if (!sessionId) {
+             NSString *msg = @"Failed to join a session.";
+             NSLog(@"%@", msg);
+             [response setErrorToUnknownWithMessage:msg];
+             [[DConnectManager sharedManager] sendResponse:response];
+             return;
+         }
+         if (![lightId isEqualToString:@"self"]) {
+             [response setErrorToInvalidRequestParameterWithMessage:
+              @"lightId not found."];
+             [[DConnectManager sharedManager] sendResponse:response];
+             return;
+         }
+         if (brightness < 0 || brightness > 1) {
+             NSString *msg = @"Parameter 'brightness' must be within range [0, 1].";
+             NSLog(@"%@", msg);
+             [response setErrorToInvalidRequestParameterWithMessage:msg];
+             [[DConnectManager sharedManager] sendResponse:response];
+             return;
+         }
+         if (color
+             && ((color.length != 6 && color.length != 8)
+                 || ![[NSScanner scannerWithString:color] scanHexInt:nil]))
+         {
+             NSString *msg = @"Parameter 'color' must be a string representing "
+             "an RGB hexadecimal (e.g. 0xFF0000, ff0000).";
+             NSLog(@"%@", msg);
+             [response setErrorToInvalidRequestParameterWithMessage:msg];
+             [[DConnectManager sharedManager] sendResponse:response];
+             return;
+         }
+         if (flashing) {
+             NSLog(@"Parameter 'flashing' is not supported. Ignored...");
+             //             [response setErrorToNotSupportActionWithMessage:@"Parameter 'flashing' is not supported."];
+             //             [[DConnectManager sharedManager] sendResponse:response];
+             //             return;
+         }
+         
+         //////////////////////////////////////////////////
+         // Querying
+         //
+         QStatus status;
+         LSFLampObjectProxy *proxyState = (LSFLampObjectProxy *)
+         [_handler proxyObjectWithService:service
+                         proxyObjectClass:LSFLampObjectProxy.class
+                                interface:@"org.allseen.LSF.LampState"
+                                sessionID:sessionId.unsignedIntValue];;
+         status = [proxyState introspectRemoteObject];
+         if (ER_OK != status) {
+             NSString *msg = @"Failed to introspect a remote bus object.";
+             NSLog(@"%@", msg);
+             [response setErrorToUnknownWithMessage:msg];
+             [[DConnectManager sharedManager] sendResponse:response];
+             return;
+         }
+         
+         NSDictionary *functionality =
+         [self checkFunctionalityWithService:service
+                                   sessionID:sessionId.unsignedIntValue
+                                     lightID:lightId
+                                        type:DPAllJoynLightServiceTypeSingleLamp];
+
+         // MsgArg lacks copy operator, so std::vector can not be used for
+         // storing new states...
+         MsgArg newStates[4];
+         size_t count = 0;
+         MsgArg tmp1;
+         MsgArg tmp2 = MsgArg("b", YES);
+         tmp1.Set("{sv}", "OnOff", &tmp2);
+         newStates[count] = tmp1;
+         ++count;
+
+         if (functionality[@"Dimmable"]) {
+             double brightnessScaled = brightness * 0xffffffffL;
+             tmp1 = MsgArg();
+             tmp2 = MsgArg("u", (uint32_t)brightnessScaled);
+             tmp1.Set("{sv}", "Brightness", &tmp2);
+             newStates[count] = tmp1;
+             ++count;
+         } else {
+             NSLog(@"Light dimming is not supported in this AllJoyn service. "
+                   "Parameter 'brightness' is ignored.");
+         }
+         
+         if (functionality[@"Color"]) {
+             if (color) {
+                 NSDictionary *hsb = [DPAllJoynColorUtility HSBFromRGB:color];
+                 
+                 tmp1 = MsgArg();
+                 tmp2 = MsgArg("u", [hsb[@"hue"] unsignedIntValue]);
+                 tmp1.Set("{sv}", "Hue", &tmp2);
+                 newStates[count] = tmp1;
+                 ++count;
+
+                 tmp1 = MsgArg();
+                 tmp2 = MsgArg("u", [hsb[@"saturation"] unsignedIntValue]);
+                 tmp1.Set("{sv}", "Saturation", &tmp2);
+                 newStates[count] = tmp1;
+                 ++count;
+             }
+         } else {
+             NSLog(@"Light coloring is not supported in this AllJoyn service. "
+                   "Parameter 'color' is ignored.");
+         }
+         
+         MsgArg newStateArg("a{sv}", count, newStates);
+         AJNMessageArgument *newState =
+         [[AJNMessageArgument alloc] initWithHandle:&newStateArg];
+         NSNumber *responseCode =
+         [proxyState transitionLamsStateWithTimestamp:@0
+                                             newState:newState
+                                     transitionPeriod:@10];
+         if (responseCode
+             && responseCode.unsignedIntValue == DPAllJoynLightResponseCodeOK) {
+             [response setResult:DConnectMessageResultTypeOk];
+         } else {
+             [response setErrorToUnknownWithMessage:@"Failed to change status."];
+         }
+         
+         [[DConnectManager sharedManager] sendResponse:response];
+     }];
+}
+
+
+- (void) didReceivePostLightRequestForLampControllerWithResponse:(DConnectResponseMessage *)response
+                                                         service:(DPAllJoynServiceEntity *)service
+                                                         lightId:(NSString*)lightId
+                                                      brightness:(double)brightness
+                                                           color:(NSString*)color
+                                                        flashing:(NSArray*)flashing
+{
+    [_handler performOneShotSessionWithBusName:service
+                                         block:
+     ^(DPAllJoynServiceEntity *service, NSNumber *sessionId)
+     {
+         //////////////////////////////////////////////////
+         // Validity check
+         //
+         if (!sessionId) {
+             NSString *msg = @"Failed to join a session.";
+             NSLog(@"%@", msg);
+             [response setErrorToUnknownWithMessage:msg];
+             [[DConnectManager sharedManager] sendResponse:response];
+             return;
+         }
+         if (!lightId) {
+             [response setErrorToInvalidRequestParameterWithMessage:
+              @"lightId must be specified."];
+             [[DConnectManager sharedManager] sendResponse:response];
+             return;
+         }
+         
+         //////////////////////////////////////////////////
+         // Querying
+         //
+         QStatus status;
+         LSFControllerServiceObjectProxy *proxy =
+         (LSFControllerServiceObjectProxy *)
+         [_handler proxyObjectWithService:service
+                         proxyObjectClass:LSFControllerServiceObjectProxy.class
+                                interface:@"org.allseen.LSF.ControllerService"
+                                sessionID:sessionId.unsignedIntValue];;
+         status = [proxy introspectRemoteObject];
+         if (ER_OK != status) {
+             NSString *msg = @"Failed to introspect a remote bus object.";
+             NSLog(@"%@", msg);
+             [response setErrorToUnknownWithMessage:msg];
+             [[DConnectManager sharedManager] sendResponse:response];
+             return;
+         }
+         
+         NSDictionary *functionality =
+         [self checkFunctionalityWithService:service
+                                   sessionID:sessionId.unsignedIntValue
+                                     lightID:lightId
+                                        type:DPAllJoynLightServiceTypeLampController];
+         
+         // MsgArg lacks copy operator, so std::vector can not be used for
+         // storing new states...
+         MsgArg newStates[3];
+         size_t count = 0;
+         MsgArg tmp1;
+         MsgArg tmp2 = MsgArg("b", YES);
+         tmp1.Set("{sv}", "OnOff", &tmp2);
+         newStates[count] = tmp1;
+         ++count;
+         
+         if (functionality[@"Dimmable"]) {
+             double brightnessScaled = brightness * 0xffffffffL;
+             tmp1 = MsgArg();
+             tmp2 = MsgArg("u", (uint32_t)brightnessScaled);
+             tmp1.Set("{sv}", "Brightness", &tmp2);
+             newStates[count] = tmp1;
+             ++count;
+         } else {
+             NSLog(@"Light dimming is not supported in this AllJoyn service. "
+                   "Parameter 'brightness' is ignored.");
+         }
+         
+         if (functionality[@"Color"]) {
+             if (color) {
+                 NSDictionary *hsb = [DPAllJoynColorUtility HSBFromRGB:color];
+                 
+                 tmp1 = MsgArg();
+                 tmp2 = MsgArg("u", [hsb[@"hue"] unsignedIntValue]);
+                 tmp1.Set("{sv}", "Hue", &tmp2);
+                 newStates[count] = tmp1;
+                 ++count;
+                 
+                 tmp1 = MsgArg();
+                 tmp2 = MsgArg("u", [hsb[@"saturation"] unsignedIntValue]);
+                 tmp1.Set("{sv}", "Saturation", &tmp2);
+                 newStates[count] = tmp1;
+                 ++count;
+             }
+         } else {
+             NSLog(@"Light coloring is not supported in this AllJoyn service. "
+                   "Parameter 'color' is ignored.");
+         }
+         
+         MsgArg newStateArg("a{sv}", count, newStates);
+         AJNMessageArgument *newState =
+         [[AJNMessageArgument alloc] initWithHandle:&newStateArg];
+         NSNumber *responseCode;
+         NSString *ignored;
+         [proxy transitionLampStateWithLampID:lightId
+                                    lampState:newState
+                             transitionPeriod:@10
+                                 responseCode:&responseCode
+                                       lampID:&ignored];
+         if (responseCode
+             && responseCode.unsignedIntValue == DPAllJoynLightResponseCodeOK) {
+             [response setResult:DConnectMessageResultTypeOk];
+         } else {
+             [response setErrorToUnknownWithMessage:@"Failed to change status."];
+         }
+         
+         [[DConnectManager sharedManager] sendResponse:response];
+     }];
+}
+
+
+- (void) didReceivePutLightRequestForSingleLampWithResponse:(DConnectResponseMessage *)response
+                                                    service:(DPAllJoynServiceEntity *)service
+                                                    lightId:(NSString*)lightId
+                                                       name:(NSString*)name
+                                                 brightness:(double)brightness
+                                                      color:(NSString*)color
+                                                   flashing:(NSArray*)flashing
+{
+    [_handler performOneShotSessionWithBusName:service
+                                         block:
+     ^(DPAllJoynServiceEntity *service, NSNumber *sessionId)
+     {
+         //////////////////////////////////////////////////
+         // Validity check
+         //
+         if (!sessionId) {
+             NSString *msg = @"Failed to join a session.";
+             NSLog(@"%@", msg);
+             [response setErrorToUnknownWithMessage:msg];
+             [[DConnectManager sharedManager] sendResponse:response];
+             return;
+         }
+         if (![lightId isEqualToString:@"self"]) {
+             [response setErrorToInvalidRequestParameterWithMessage:
+              @"lightId not found."];
+             [[DConnectManager sharedManager] sendResponse:response];
+             return;
+         }
+         if (brightness < 0 || brightness > 1) {
+             NSString *msg = @"Parameter 'brightness' must be within range [0, 1].";
+             NSLog(@"%@", msg);
+             [response setErrorToInvalidRequestParameterWithMessage:msg];
+             [[DConnectManager sharedManager] sendResponse:response];
+             return;
+         }
+         if (color
+             && ((color.length != 6 && color.length != 8)
+                 || ![[NSScanner scannerWithString:color] scanHexInt:nil]))
+         {
+             NSString *msg = @"Parameter 'color' must be a string representing "
+             "an RGB hexadecimal (e.g. 0xFF0000, ff0000).";
+             NSLog(@"%@", msg);
+             [response setErrorToInvalidRequestParameterWithMessage:msg];
+             [[DConnectManager sharedManager] sendResponse:response];
+             return;
+         }
+         if (flashing) {
+             NSLog(@"Parameter 'flashing' is not supported. Ignored...");
+             //             [response setErrorToNotSupportActionWithMessage:@"Parameter 'flashing' is not supported."];
+             //             [[DConnectManager sharedManager] sendResponse:response];
+             //             return;
+         }
+     
+         //////////////////////////////////////////////////
+         // Querying
+         //
+         QStatus status;
+         LSFLampObjectProxy *proxyState = (LSFLampObjectProxy *)
+         [_handler proxyObjectWithService:service
+                         proxyObjectClass:LSFLampObjectProxy.class
+                                interface:@"org.allseen.LSF.LampState"
+                                sessionID:sessionId.unsignedIntValue];;
+         status = [proxyState introspectRemoteObject];
+         if (ER_OK != status) {
+             NSString *msg = @"Failed to introspect a remote bus object.";
+             NSLog(@"%@", msg);
+             [response setErrorToUnknownWithMessage:msg];
+             [[DConnectManager sharedManager] sendResponse:response];
+             return;
+         }
+
+         NSDictionary *functionality =
+         [self checkFunctionalityWithService:service
+                                   sessionID:sessionId.unsignedIntValue
+                                     lightID:lightId
+                                        type:DPAllJoynLightServiceTypeSingleLamp];
+
+         // MsgArg lacks copy operator, so std::vector can not be used for
+         // storing new states...
+         MsgArg newStates[3];
+         size_t count = 0;
+         MsgArg tmp1;
+         MsgArg tmp2;
+         
+         if (functionality[@"Dimmable"]) {
+             double brightnessScaled = brightness * 0xffffffffL;
+             tmp1 = MsgArg();
+             tmp2 = MsgArg("u", (uint32_t)brightnessScaled);
+             tmp1.Set("{sv}", "Brightness", &tmp2);
+             newStates[count] = tmp1;
+             ++count;
+         } else {
+             NSLog(@"Light dimming is not supported in this AllJoyn service. "
+                   "Parameter 'brightness' is ignored.");
+         }
+         
+         if (functionality[@"Color"]) {
+             if (color) {
+                 NSDictionary *hsb = [DPAllJoynColorUtility HSBFromRGB:color];
+                 
+                 tmp1 = MsgArg();
+                 tmp2 = MsgArg("u", [hsb[@"hue"] unsignedIntValue]);
+                 tmp1.Set("{sv}", "Hue", &tmp2);
+                 newStates[count] = tmp1;
+                 ++count;
+                 
+                 tmp1 = MsgArg();
+                 tmp2 = MsgArg("u", [hsb[@"saturation"] unsignedIntValue]);
+                 tmp1.Set("{sv}", "Saturation", &tmp2);
+                 newStates[count] = tmp1;
+                 ++count;
+             }
+         } else {
+             NSLog(@"Light coloring is not supported in this AllJoyn service. "
+                   "Parameter 'color' is ignored.");
+         }
+         
+         MsgArg newStateArg("a{sv}", count, newStates);
+         AJNMessageArgument *newState =
+         [[AJNMessageArgument alloc] initWithHandle:&newStateArg];
+         NSNumber *responseCode =
+         [proxyState transitionLamsStateWithTimestamp:@0
+                                             newState:newState
+                                     transitionPeriod:@10];
+         if (responseCode
+             && responseCode.unsignedIntValue == DPAllJoynLightResponseCodeOK) {
+             [response setResult:DConnectMessageResultTypeOk];
+         } else {
+             [response setErrorToUnknownWithMessage:@"Failed to change status."];
+         }
+         
+         [[DConnectManager sharedManager] sendResponse:response];
+     }];
+}
+
+
+- (void) didReceivePutLightRequestForLampControllerWithResponse:(DConnectResponseMessage *)response
+                                                        service:(DPAllJoynServiceEntity *)service
+                                                        lightId:(NSString*)lightId
+                                                           name:(NSString*)name
+                                                     brightness:(double)brightness
+                                                          color:(NSString*)color
+                                                       flashing:(NSArray*)flashing
+{
+    [_handler performOneShotSessionWithBusName:service
+                                         block:
+     ^(DPAllJoynServiceEntity *service, NSNumber *sessionId)
+     {
+         //////////////////////////////////////////////////
+         // Validity check
+         //
+         if (!sessionId) {
+             NSString *msg = @"Failed to join a session.";
+             NSLog(@"%@", msg);
+             [response setErrorToUnknownWithMessage:msg];
+             [[DConnectManager sharedManager] sendResponse:response];
+             return;
+         }
+         if (!lightId) {
+             [response setErrorToInvalidRequestParameterWithMessage:
+              @"lightId must be specified."];
+             [[DConnectManager sharedManager] sendResponse:response];
+             return;
+         }
+         
+         //////////////////////////////////////////////////
+         // Querying
+         //
+         QStatus status;
+         LSFControllerServiceObjectProxy *proxy =
+         (LSFControllerServiceObjectProxy *)
+         [_handler proxyObjectWithService:service
+                         proxyObjectClass:LSFControllerServiceObjectProxy.class
+                                interface:@"org.allseen.LSF.ControllerService"
+                                sessionID:sessionId.unsignedIntValue];;
+         status = [proxy introspectRemoteObject];
+         if (ER_OK != status) {
+             NSString *msg = @"Failed to introspect a remote bus object.";
+             NSLog(@"%@", msg);
+             [response setErrorToUnknownWithMessage:msg];
+             [[DConnectManager sharedManager] sendResponse:response];
+             return;
+         }
+         
+         NSDictionary *functionality =
+         [self checkFunctionalityWithService:service
+                                   sessionID:sessionId.unsignedIntValue
+                                     lightID:lightId
+                                        type:DPAllJoynLightServiceTypeLampController];
+         
+         // MsgArg lacks copy operator, so std::vector can not be used for
+         // storing new states...
+         MsgArg newStates[3];
+         size_t count = 0;
+         MsgArg tmp1;
+         MsgArg tmp2;
+         
+         if (functionality[@"Dimmable"]) {
+             double brightnessScaled = brightness * 0xffffffffL;
+             tmp1 = MsgArg();
+             tmp2 = MsgArg("u", (uint32_t)brightnessScaled);
+             tmp1.Set("{sv}", "Brightness", &tmp2);
+             newStates[count] = tmp1;
+             ++count;
+         } else {
+             NSLog(@"Light dimming is not supported in this AllJoyn service. "
+                   "Parameter 'brightness' is ignored.");
+         }
+         
+         if (functionality[@"Color"]) {
+             if (color) {
+                 NSDictionary *hsb = [DPAllJoynColorUtility HSBFromRGB:color];
+                 
+                 tmp1 = MsgArg();
+                 tmp2 = MsgArg("u", [hsb[@"hue"] unsignedIntValue]);
+                 tmp1.Set("{sv}", "Hue", &tmp2);
+                 newStates[count] = tmp1;
+                 ++count;
+                 
+                 tmp1 = MsgArg();
+                 tmp2 = MsgArg("u", [hsb[@"saturation"] unsignedIntValue]);
+                 tmp1.Set("{sv}", "Saturation", &tmp2);
+                 newStates[count] = tmp1;
+                 ++count;
+             }
+         } else {
+             NSLog(@"Light coloring is not supported in this AllJoyn service. "
+                   "Parameter 'color' is ignored.");
+         }
+         
+         MsgArg newStateArg("a{sv}", count, newStates);
+         AJNMessageArgument *newState =
+         [[AJNMessageArgument alloc] initWithHandle:&newStateArg];
+         NSNumber *responseCode;
+         NSString *ignored;
+         [proxy transitionLampStateWithLampID:lightId
+                                    lampState:newState
+                             transitionPeriod:@10
+                                 responseCode:&responseCode
+                                       lampID:&ignored];
+         if (responseCode
+             && responseCode.unsignedIntValue == DPAllJoynLightResponseCodeOK) {
+             [response setResult:DConnectMessageResultTypeOk];
+         } else {
+             [response setErrorToUnknownWithMessage:@"Failed to change status."];
+         }
+         
+         [[DConnectManager sharedManager] sendResponse:response];
+     }];
+}
+
+
+- (void) didReceiveDeleteLightRequestForSingleLampWithResponse:(DConnectResponseMessage *)response
+                                                       service:(DPAllJoynServiceEntity *)service
+                                                       lightId:(NSString*)lightId
+{
+    [_handler performOneShotSessionWithBusName:service
+                                         block:
+     ^(DPAllJoynServiceEntity *service, NSNumber *sessionId)
+     {
+         //////////////////////////////////////////////////
+         // Validity check
+         //
+         if (!sessionId) {
+             NSString *msg = @"Failed to join a session.";
+             NSLog(@"%@", msg);
+             [response setErrorToUnknownWithMessage:msg];
+             [[DConnectManager sharedManager] sendResponse:response];
+             return;
+         }
+         if (![lightId isEqualToString:@"self"]) {
+             [response setErrorToInvalidRequestParameterWithMessage:
+              @"lightId not found."];
+             [[DConnectManager sharedManager] sendResponse:response];
+             return;
+         }
+         
+         //////////////////////////////////////////////////
+         // Querying
+         //
+         QStatus status;
+         LSFLampObjectProxy *proxy = (LSFLampObjectProxy *)
+         [_handler proxyObjectWithService:service
+                         proxyObjectClass:LSFLampObjectProxy.class
+                                interface:@"org.allseen.LSF.LampState"
+                                sessionID:sessionId.unsignedIntValue];;
+         status = [proxy introspectRemoteObject];
+         if (ER_OK != status) {
+             NSString *msg = @"Failed to introspect a remote bus object.";
+             NSLog(@"%@", msg);
+             [response setErrorToUnknownWithMessage:msg];
+             [[DConnectManager sharedManager] sendResponse:response];
+             return;
+         }
+         
+         proxy.OnOff = NO;
+
+         [response setResult:DConnectMessageResultTypeOk];
+         [[DConnectManager sharedManager] sendResponse:response];
+     }];
+}
+
+
+- (void) didReceiveDeleteLightRequestForLampControllerWithResponse:(DConnectResponseMessage *)response
+                                                           service:(DPAllJoynServiceEntity *)service
+                                                           lightId:(NSString*)lightId
+{
+    [_handler performOneShotSessionWithBusName:service
+                                         block:
+     ^(DPAllJoynServiceEntity *service, NSNumber *sessionId)
+     {
+         //////////////////////////////////////////////////
+         // Validity check
+         //
+         if (!sessionId) {
+             NSString *msg = @"Failed to join a session.";
+             NSLog(@"%@", msg);
+             [response setErrorToUnknownWithMessage:msg];
+             [[DConnectManager sharedManager] sendResponse:response];
+             return;
+         }
+         if (!lightId) {
+             [response setErrorToInvalidRequestParameterWithMessage:
+              @"lightId must be specified."];
+             [[DConnectManager sharedManager] sendResponse:response];
+             return;
+         }
+         
+         //////////////////////////////////////////////////
+         // Querying
+         //
+         QStatus status;
+         LSFControllerServiceObjectProxy *proxy =
+         (LSFControllerServiceObjectProxy *)
+         [_handler proxyObjectWithService:service
+                         proxyObjectClass:LSFControllerServiceObjectProxy.class
+                                interface:@"org.allseen.LSF.ControllerService"
+                                sessionID:sessionId.unsignedIntValue];;
+         status = [proxy introspectRemoteObject];
+         if (ER_OK != status) {
+             NSString *msg = @"Failed to introspect a remote bus object.";
+             NSLog(@"%@", msg);
+             [response setErrorToUnknownWithMessage:msg];
+             [[DConnectManager sharedManager] sendResponse:response];
+             return;
+         }
+         
+         MsgArg newStates[1];
+         MsgArg tmp1;
+         MsgArg tmp2("b", NO);
+         tmp1.Set("{sv}", "OnOff", &tmp2);
+         newStates[0] = tmp1;
+         MsgArg newStateArg("a{sv}", 1, newStates);
+         AJNMessageArgument *newState =
+         [[AJNMessageArgument alloc] initWithHandle:&newStateArg];
+         
+         NSNumber *responseCode;
+         NSString *ignored;
+         [proxy transitionLampStateWithLampID:lightId
+                                    lampState:newState
+                             transitionPeriod:@10
+                                 responseCode:&responseCode
+                                       lampID:&ignored];
+         
+         if (responseCode
+             && responseCode.unsignedIntValue == DPAllJoynLightResponseCodeOK) {
+             [response setResult:DConnectMessageResultTypeOk];
+         } else {
+             [response setErrorToUnknownWithMessage:
+              [NSString stringWithFormat:
+               @"Failed to turn off the light with lightID \"%@\".", lightId]];
+         }
+         
+         [[DConnectManager sharedManager] sendResponse:response];
+     }];
+}
+
+
 // =============================================================================
 #pragma mark - DCMLightProfileDelegate
 
@@ -344,10 +1072,18 @@ typedef NS_ENUM(NSUInteger, DPAllJoynLightServiceType) {
     switch ([self serviceTypeFromService:service]) {
             
         case DPAllJoynLightServiceTypeSingleLamp: {
+            [self
+             didReceivePostLightRequestForSingleLampWithResponse:response
+             service:service lightId:lightId brightness:brightness
+             color:color flashing:flashing];
             return NO;
         }
             
         case DPAllJoynLightServiceTypeLampController: {
+            [self
+             didReceivePostLightRequestForLampControllerWithResponse:response
+             service:service lightId:lightId brightness:brightness
+             color:color flashing:flashing];
             return NO;
         }
             
@@ -387,10 +1123,18 @@ typedef NS_ENUM(NSUInteger, DPAllJoynLightServiceType) {
     switch ([self serviceTypeFromService:service]) {
             
         case DPAllJoynLightServiceTypeSingleLamp: {
+            [self
+             didReceivePutLightRequestForSingleLampWithResponse:response
+             service:service lightId:lightId name:name brightness:brightness
+             color:color flashing:flashing];
             return NO;
         }
             
         case DPAllJoynLightServiceTypeLampController: {
+            [self
+             didReceivePutLightRequestForLampControllerWithResponse:response
+             service:service lightId:lightId name:name brightness:brightness
+             color:color flashing:flashing];
             return NO;
         }
             
@@ -426,10 +1170,16 @@ typedef NS_ENUM(NSUInteger, DPAllJoynLightServiceType) {
     switch ([self serviceTypeFromService:service]) {
             
         case DPAllJoynLightServiceTypeSingleLamp: {
+            [self
+             didReceiveDeleteLightRequestForSingleLampWithResponse:response
+             service:service lightId:lightId];
             return NO;
         }
             
         case DPAllJoynLightServiceTypeLampController: {
+            [self
+             didReceiveDeleteLightRequestForLampControllerWithResponse:response
+             service:service lightId:lightId];
             return NO;
         }
             
@@ -448,8 +1198,32 @@ typedef NS_ENUM(NSUInteger, DPAllJoynLightServiceType) {
                        response:(DConnectResponseMessage *)response
                       serviceId:(NSString *)serviceId
 {
-    [response setErrorToNotSupportAction];
-    return YES;
+    if (!serviceId) {
+        [response setErrorToEmptyServiceId];
+        return YES;
+    }
+    
+    DPAllJoynServiceEntity *service =
+    _handler.discoveredAllJoynServices[serviceId];
+    
+    if (!service) {
+        [response setErrorToNotFoundService];
+        return YES;
+    }
+    
+    switch ([self serviceTypeFromService:service]) {
+            
+        case DPAllJoynLightServiceTypeLampController: {
+        }
+            
+        case DPAllJoynLightServiceTypeSingleLamp:
+        case DPAllJoynLightServiceTypeUnknown:
+        default: {
+            [response setErrorToNotSupportAction];
+            return YES;
+        }
+            
+    }
 }
 
 
@@ -462,9 +1236,32 @@ didReceivePostLightGroupRequest:(DConnectRequestMessage *)request
                           color:(NSString*)color
                        flashing:(NSArray*)flashing
 {
-    [response setErrorToNotSupportAction];
-    return YES;
-
+    if (!serviceId) {
+        [response setErrorToEmptyServiceId];
+        return YES;
+    }
+    
+    DPAllJoynServiceEntity *service =
+    _handler.discoveredAllJoynServices[serviceId];
+    
+    if (!service) {
+        [response setErrorToNotFoundService];
+        return YES;
+    }
+    
+    switch ([self serviceTypeFromService:service]) {
+            
+        case DPAllJoynLightServiceTypeLampController: {
+        }
+            
+        case DPAllJoynLightServiceTypeSingleLamp:
+        case DPAllJoynLightServiceTypeUnknown:
+        default: {
+            [response setErrorToNotSupportAction];
+            return YES;
+        }
+            
+    }
 }
 
 
@@ -478,8 +1275,32 @@ didReceivePostLightGroupRequest:(DConnectRequestMessage *)request
                           color:(NSString*)color
                        flashing:(NSArray*)flashing
 {
-    [response setErrorToNotSupportAction];
-    return YES;
+    if (!serviceId) {
+        [response setErrorToEmptyServiceId];
+        return YES;
+    }
+    
+    DPAllJoynServiceEntity *service =
+    _handler.discoveredAllJoynServices[serviceId];
+    
+    if (!service) {
+        [response setErrorToNotFoundService];
+        return YES;
+    }
+    
+    switch ([self serviceTypeFromService:service]) {
+            
+        case DPAllJoynLightServiceTypeLampController: {
+        }
+            
+        case DPAllJoynLightServiceTypeSingleLamp:
+        case DPAllJoynLightServiceTypeUnknown:
+        default: {
+            [response setErrorToNotSupportAction];
+            return YES;
+        }
+            
+    }
 }
 
 
@@ -489,8 +1310,32 @@ didReceivePostLightGroupRequest:(DConnectRequestMessage *)request
                           serviceId:(NSString *)serviceId
                             groupId:(NSString*)groupId
 {
-    [response setErrorToNotSupportAction];
-    return YES;
+    if (!serviceId) {
+        [response setErrorToEmptyServiceId];
+        return YES;
+    }
+    
+    DPAllJoynServiceEntity *service =
+    _handler.discoveredAllJoynServices[serviceId];
+    
+    if (!service) {
+        [response setErrorToNotFoundService];
+        return YES;
+    }
+    
+    switch ([self serviceTypeFromService:service]) {
+            
+        case DPAllJoynLightServiceTypeLampController: {
+        }
+            
+        case DPAllJoynLightServiceTypeSingleLamp:
+        case DPAllJoynLightServiceTypeUnknown:
+        default: {
+            [response setErrorToNotSupportAction];
+            return YES;
+        }
+            
+    }
 }
 
 
@@ -501,8 +1346,32 @@ didReceivePostLightGroupRequest:(DConnectRequestMessage *)request
                                lightIds:(NSArray*)lightIds
                               groupName:(NSString*)groupName
 {
-    [response setErrorToNotSupportAction];
-    return YES;
+    if (!serviceId) {
+        [response setErrorToEmptyServiceId];
+        return YES;
+    }
+    
+    DPAllJoynServiceEntity *service =
+    _handler.discoveredAllJoynServices[serviceId];
+    
+    if (!service) {
+        [response setErrorToNotFoundService];
+        return YES;
+    }
+    
+    switch ([self serviceTypeFromService:service]) {
+            
+        case DPAllJoynLightServiceTypeLampController: {
+        }
+            
+        case DPAllJoynLightServiceTypeSingleLamp:
+        case DPAllJoynLightServiceTypeUnknown:
+        default: {
+            [response setErrorToNotSupportAction];
+            return YES;
+        }
+            
+    }
 }
 
 
@@ -512,8 +1381,32 @@ didReceivePostLightGroupRequest:(DConnectRequestMessage *)request
                               serviceId:(NSString *)serviceId
                                 groupId:(NSString*)groupId
 {
-    [response setErrorToNotSupportAction];
-    return YES;
+    if (!serviceId) {
+        [response setErrorToEmptyServiceId];
+        return YES;
+    }
+    
+    DPAllJoynServiceEntity *service =
+    _handler.discoveredAllJoynServices[serviceId];
+    
+    if (!service) {
+        [response setErrorToNotFoundService];
+        return YES;
+    }
+    
+    switch ([self serviceTypeFromService:service]) {
+            
+        case DPAllJoynLightServiceTypeLampController: {
+        }
+            
+        case DPAllJoynLightServiceTypeSingleLamp:
+        case DPAllJoynLightServiceTypeUnknown:
+        default: {
+            [response setErrorToNotSupportAction];
+            return YES;
+        }
+            
+    }
 }
 
 @end
