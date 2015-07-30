@@ -163,16 +163,87 @@
 
 ////////////////////////////////////////////////////////////////////////////////
 //
+// LSFControllerServiceLampGroupDelegate Bus Interface
+//
+////////////////////////////////////////////////////////////////////////////////
+
+@protocol LSFControllerServiceLampGroupDelegate <AJNBusInterface>
+
+
+// properties
+//
+@property (nonatomic, readonly) NSNumber* LampGroupVersion;
+
+// methods
+//
+- (void)getAllLampGroupIDsWithResponseCode:(NSNumber**)responseCode lampGroupIDs:(AJNMessageArgument**)lampGroupIDs message:(AJNMessage *)methodCallMessage;
+- (void)getLampGroupNameWithLampGroupID:(NSString*)lampGroupID language:(NSString*)language responseCode:(NSNumber**)responseCode lampIDGroupID:(NSString**)lampGroupIDOut language:(NSString**)languageOut lampGroupName:(NSString**)lampGroupName message:(AJNMessage *)methodCallMessage;
+- (void)setLampGroupNameWithLampID:(NSString*)lampGroupID lampName:(NSString*)lampName language:(NSString*)language responseCode:(NSNumber**)responseCode lampID:(NSString**)lampID language:(NSString**)languageOut message:(AJNMessage *)methodCallMessage;
+- (void)createLampGroupWithLampIDs:(AJNMessageArgument*)lampIDs lampGroupIDs:(AJNMessageArgument*)lampGroupIDs lampGroupName:(NSString*)lampGroupName language:(NSString*)language responseCode:(NSNumber**)responseCode lampGroupID:(NSString**)lampGroupID message:(AJNMessage *)methodCallMessage;
+- (void)updateLampGroupWithLampGroupID:(NSString*)lampGroupID lampIDs:(AJNMessageArgument*)lampIDs lampGroupIDs:(AJNMessageArgument*)lampGroupIDs responseCode:(NSNumber**)responseCode lampGroupID:(NSString**)lampGroupIDOut message:(AJNMessage *)methodCallMessage;
+- (void)deleteLampGroupWithLampGroupID:(NSString*)lampGroupID responseCode:(NSNumber**)responseCode lampGroupID:(NSString**)lampGroupIDOut message:(AJNMessage *)methodCallMessage;
+- (void)getLampGroupWithLampGroupID:(NSString*)lampGroupID responseCode:(NSNumber**)responseCode lampGroupID:(NSString**)lampGroupIDOut lampID:(AJNMessageArgument**)lampID lampGroupIDs:(AJNMessageArgument**)lampGroupIDs message:(AJNMessage *)methodCallMessage;
+- (void)transitionLampGroupStateWithLampGroupID:(NSString*)lampGroupID lampState:(AJNMessageArgument*)lampState transitionPeriod:(NSNumber*)transitionPeriod responseCode:(NSNumber**)responseCode lampGroupID:(NSString**)lampGroupIDOut message:(AJNMessage *)methodCallMessage;
+- (void)pulseLampGroupWithStateWithLampGroupID:(NSString*)lampGroupID fromState:(AJNMessageArgument*)fromLampState toState:(AJNMessageArgument*)toLampState period:(NSNumber*)period duration:(NSNumber*)duration numPulses:(NSNumber*)numPulses responseCode:(NSNumber**)responseCode lampGroupID:(NSString**)lampGroupIDOut message:(AJNMessage *)methodCallMessage;
+- (void)pulseLampGroupWithPresetWithLampGroupID:(NSString*)lampGroupID fromPresetID:(NSNumber*)fromPresetID toPresetID:(NSNumber*)toPresetID period:(NSNumber*)period duration:(NSNumber*)duration numPulses:(NSNumber*)numPulses responseCode:(NSNumber**)responseCode lampGroupID:(NSString**)lampGroupIDOut message:(AJNMessage *)methodCallMessage;
+- (void)transitionLampGroupStateToPresetWithLampGroupID:(NSString*)lampGroupID presetID:(NSNumber*)presetID transitionPeriod:(NSNumber*)transitionPeriod responseCode:(NSNumber**)responseCode lampGroupID:(NSString**)lampGroupIDOut message:(AJNMessage *)methodCallMessage;
+- (void)transitionLampGroupStateFieldWithLampGroupID:(NSString*)lampGroupID groupStateFieldName:(NSString*)lampGroupStateFieldName groupStateFieldValue:(NSString*)lampGroupStateFieldValue transitionPeriod:(NSNumber*)transitionPeriod responseCode:(NSNumber**)responseCode lampGroupID:(NSString**)lampGroupIDOut groupStateFieldName:(NSString**)lampGroupStateFieldNameOut message:(AJNMessage *)methodCallMessage;
+- (void)resetLampGroupStateWithLampGroupID:(NSString*)lampGroupID responseCode:(NSNumber**)responseCode lampGroupID:(NSString**)lampGroupIDOut message:(AJNMessage *)methodCallMessage;
+- (void)resetLampGroupStateFieldWithLampGroupID:(NSString*)lampGroupID groupStateFieldName:(NSString*)lampGroupStateFieldName responseCode:(NSNumber**)responseCode lampID:(NSString**)lampGroupIDOut groupStateFieldName:(NSString**)lampGroupStateFieldNameOut message:(AJNMessage *)methodCallMessage;
+
+// signals
+//
+- (void)sendlampGroupNamesDidChangeForLampGroupIDs:(NSString*)lampGroupsIDs inSession:(AJNSessionId)sessionId toDestination:(NSString*)destinationPath;
+- (void)senddidCreateLampGroups:(NSString*)lampGroupsIDs inSession:(AJNSessionId)sessionId toDestination:(NSString*)destinationPath;
+- (void)senddidUpdateLampGroups:(NSString*)lampGroupsIDs inSession:(AJNSessionId)sessionId toDestination:(NSString*)destinationPath;
+- (void)senddidDeleteLampGroups:(AJNMessageArgument*)lampGroupsIDs inSession:(AJNSessionId)sessionId toDestination:(NSString*)destinationPath;
+
+
+@end
+
+////////////////////////////////////////////////////////////////////////////////
+
+    
+////////////////////////////////////////////////////////////////////////////////
+//
+// LSFControllerServiceLampGroupDelegate Signal Handler Protocol
+//
+////////////////////////////////////////////////////////////////////////////////
+
+@protocol LSFControllerServiceLampGroupDelegateSignalHandler <AJNSignalHandler>
+
+// signals
+//
+- (void)didReceivelampGroupNamesDidChangeForLampGroupIDs:(NSString*)lampGroupsIDs inSession:(AJNSessionId)sessionId message:(AJNMessage *)signalMessage;
+- (void)didReceivedidCreateLampGroups:(NSString*)lampGroupsIDs inSession:(AJNSessionId)sessionId message:(AJNMessage *)signalMessage;
+- (void)didReceivedidUpdateLampGroups:(NSString*)lampGroupsIDs inSession:(AJNSessionId)sessionId message:(AJNMessage *)signalMessage;
+- (void)didReceivedidDeleteLampGroups:(AJNMessageArgument*)lampGroupsIDs inSession:(AJNSessionId)sessionId message:(AJNMessage *)signalMessage;
+
+
+@end
+
+@interface AJNBusAttachment(LSFControllerServiceLampGroupDelegate)
+
+- (void)registerLSFControllerServiceLampGroupDelegateSignalHandler:(id<LSFControllerServiceLampGroupDelegateSignalHandler>)signalHandler;
+
+@end
+
+////////////////////////////////////////////////////////////////////////////////
+    
+
+////////////////////////////////////////////////////////////////////////////////
+//
 //  AJNLSFControllerServiceObject Bus Object superclass
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-@interface AJNLSFControllerServiceObject : AJNBusObject<LSFControllerServiceDelegate, LSFControllerServiceLampDelegate>
+@interface AJNLSFControllerServiceObject : AJNBusObject<LSFControllerServiceDelegate, LSFControllerServiceLampDelegate, LSFControllerServiceLampGroupDelegate>
 
 // properties
 //
 @property (nonatomic, readonly) NSNumber* ControllerServiceVersion;
 @property (nonatomic, readonly) NSNumber* LampVersion;
+@property (nonatomic, readonly) NSNumber* LampGroupVersion;
 
 
 // methods
@@ -199,6 +270,20 @@
 - (void)getLampFaultsWithLampID:(NSString*)lampID responseCode:(NSNumber**)responseCode lampID:(NSString**)lampIDOut lampFaults:(AJNMessageArgument**)lampFaults message:(AJNMessage *)methodCallMessage;
 - (void)clearLampFaultsWithLampID:(NSString*)lampID lampFault:(NSNumber*)lampFault responseCode:(NSNumber**)responseCode lampID:(NSString**)lampIDOut lampFault:(NSNumber**)lampFaultOut message:(AJNMessage *)methodCallMessage;
 - (void)getLampServiceVersionWithLampID:(NSString*)lampID responseCode:(NSNumber**)responseCode lampID:(NSString**)lampIDOut version:(NSNumber**)lampServiceVersion message:(AJNMessage *)methodCallMessage;
+- (void)getAllLampGroupIDsWithResponseCode:(NSNumber**)responseCode lampGroupIDs:(AJNMessageArgument**)lampGroupIDs message:(AJNMessage *)methodCallMessage;
+- (void)getLampGroupNameWithLampGroupID:(NSString*)lampGroupID language:(NSString*)language responseCode:(NSNumber**)responseCode lampIDGroupID:(NSString**)lampGroupIDOut language:(NSString**)language lampGroupName:(NSString**)lampGroupName message:(AJNMessage *)methodCallMessage;
+- (void)setLampGroupNameWithLampID:(NSString*)lampGroupID lampName:(NSString*)lampName language:(NSString*)language responseCode:(NSNumber**)responseCode lampID:(NSString**)lampID language:(NSString**)languageOut message:(AJNMessage *)methodCallMessage;
+- (void)createLampGroupWithLampIDs:(AJNMessageArgument*)lampIDs lampGroupIDs:(AJNMessageArgument*)lampGroupIDs lampGroupName:(NSString*)lampGroupName language:(NSString*)language responseCode:(NSNumber**)responseCode lampGroupID:(NSString**)lampGroupID message:(AJNMessage *)methodCallMessage;
+- (void)updateLampGroupWithLampGroupID:(NSString*)lampGroupID lampIDs:(AJNMessageArgument*)lampIDs lampGroupIDs:(AJNMessageArgument*)lampGroupIDs responseCode:(NSNumber**)responseCode lampGroupID:(NSString**)lampGroupIDOut message:(AJNMessage *)methodCallMessage;
+- (void)deleteLampGroupWithLampGroupID:(NSString*)lampGroupID responseCode:(NSNumber**)responseCode lampGroupID:(NSString**)lampGroupIDOut message:(AJNMessage *)methodCallMessage;
+- (void)getLampGroupWithLampGroupID:(NSString*)lampGroupID responseCode:(NSNumber**)responseCode lampGroupID:(NSString**)lampGroupIDOut lampID:(AJNMessageArgument**)lampID lampGroupIDs:(AJNMessageArgument**)lampGroupIDs message:(AJNMessage *)methodCallMessage;
+- (void)transitionLampGroupStateWithLampGroupID:(NSString*)lampGroupID lampState:(AJNMessageArgument*)lampState transitionPeriod:(NSNumber*)transitionPeriod responseCode:(NSNumber**)responseCode lampGroupID:(NSString**)lampGroupIDOut message:(AJNMessage *)methodCallMessage;
+- (void)pulseLampGroupWithStateWithLampGroupID:(NSString*)lampGroupID fromState:(AJNMessageArgument*)fromLampState toState:(AJNMessageArgument*)toLampState period:(NSNumber*)period duration:(NSNumber*)duration numPulses:(NSNumber*)numPulses responseCode:(NSNumber**)responseCode lampGroupID:(NSString**)lampGroupIDOut message:(AJNMessage *)methodCallMessage;
+- (void)pulseLampGroupWithPresetWithLampGroupID:(NSString*)lampGroupID fromPresetID:(NSNumber*)fromPresetID toPresetID:(NSNumber*)toPresetID period:(NSNumber*)period duration:(NSNumber*)duration numPulses:(NSNumber*)numPulses responseCode:(NSNumber**)responseCode lampGroupID:(NSString**)lampGroupIDOut message:(AJNMessage *)methodCallMessage;
+- (void)transitionLampGroupStateToPresetWithLampGroupID:(NSString*)lampGroupID presetID:(NSNumber*)presetID transitionPeriod:(NSNumber*)transitionPeriod responseCode:(NSNumber**)responseCode lampGroupID:(NSString**)lampGroupIDOut message:(AJNMessage *)methodCallMessage;
+- (void)transitionLampGroupStateFieldWithLampGroupID:(NSString*)lampGroupID groupStateFieldName:(NSString*)lampGroupStateFieldName groupStateFieldValue:(NSString*)lampGroupStateFieldValue transitionPeriod:(NSNumber*)transitionPeriod responseCode:(NSNumber**)responseCode lampGroupID:(NSString**)lampGroupIDOut groupStateFieldName:(NSString**)lampGroupStateFieldNameOut message:(AJNMessage *)methodCallMessage;
+- (void)resetLampGroupStateWithLampGroupID:(NSString*)lampGroupID responseCode:(NSNumber**)responseCode lampGroupID:(NSString**)lampGroupIDOut message:(AJNMessage *)methodCallMessage;
+- (void)resetLampGroupStateFieldWithLampGroupID:(NSString*)lampGroupID groupStateFieldName:(NSString*)lampGroupStateFieldName responseCode:(NSNumber**)responseCode lampID:(NSString**)lampGroupIDOut groupStateFieldName:(NSString**)lampGroupStateFieldNameOut message:(AJNMessage *)methodCallMessage;
 
 
 // signals
@@ -208,6 +293,10 @@
 - (void)sendlampStateDidChangeForLampID:(NSString*)LampID lampName:(NSString*)lampName inSession:(AJNSessionId)sessionId toDestination:(NSString*)destinationPath;
 - (void)senddidFindLamp:(NSString*)LampID inSession:(AJNSessionId)sessionId toDestination:(NSString*)destinationPath;
 - (void)senddidLoseLamps:(AJNMessageArgument*)lampIDs inSession:(AJNSessionId)sessionId toDestination:(NSString*)destinationPath;
+- (void)sendlampGroupNamesDidChangeForLampGroupIDs:(NSString*)lampGroupsIDs inSession:(AJNSessionId)sessionId toDestination:(NSString*)destinationPath;
+- (void)senddidCreateLampGroups:(NSString*)lampGroupsIDs inSession:(AJNSessionId)sessionId toDestination:(NSString*)destinationPath;
+- (void)senddidUpdateLampGroups:(NSString*)lampGroupsIDs inSession:(AJNSessionId)sessionId toDestination:(NSString*)destinationPath;
+- (void)senddidDeleteLampGroups:(AJNMessageArgument*)lampGroupsIDs inSession:(AJNSessionId)sessionId toDestination:(NSString*)destinationPath;
 
 
 @end
@@ -227,6 +316,7 @@
 //
 @property (nonatomic, readonly) NSNumber* ControllerServiceVersion;
 @property (nonatomic, readonly) NSNumber* LampVersion;
+@property (nonatomic, readonly) NSNumber* LampGroupVersion;
 
 
 // methods
@@ -253,6 +343,20 @@
 - (void)getLampFaultsWithLampID:(NSString*)lampID responseCode:(NSNumber**)responseCode lampID:(NSString**)lampIDOut lampFaults:(AJNMessageArgument**)lampFaults;
 - (void)clearLampFaultsWithLampID:(NSString*)lampID lampFault:(NSNumber*)lampFault responseCode:(NSNumber**)responseCode lampID:(NSString**)lampIDOut lampFault:(NSNumber**)lampFaultOut;
 - (void)getLampServiceVersionWithLampID:(NSString*)lampID responseCode:(NSNumber**)responseCode lampID:(NSString**)lampIDOut version:(NSNumber**)lampServiceVersion;
+- (void)getAllLampGroupIDsWithResponseCode:(NSNumber**)responseCode lampGroupIDs:(AJNMessageArgument**)lampGroupIDs;
+- (void)getLampGroupNameWithLampGroupID:(NSString*)lampGroupID language:(NSString*)language responseCode:(NSNumber**)responseCode lampIDGroupID:(NSString**)lampGroupIDOut language:(NSString**)languageOut lampGroupName:(NSString**)lampGroupName;
+- (void)setLampGroupNameWithLampID:(NSString*)lampGroupID lampName:(NSString*)lampName language:(NSString*)language responseCode:(NSNumber**)responseCode lampID:(NSString**)lampID language:(NSString**)languageOut;
+- (void)createLampGroupWithLampIDs:(AJNMessageArgument*)lampIDs lampGroupIDs:(AJNMessageArgument*)lampGroupIDs lampGroupName:(NSString*)lampGroupName language:(NSString*)language responseCode:(NSNumber**)responseCode lampGroupID:(NSString**)lampGroupID;
+- (void)updateLampGroupWithLampGroupID:(NSString*)lampGroupID lampIDs:(AJNMessageArgument*)lampIDs lampGroupIDs:(AJNMessageArgument*)lampGroupIDs responseCode:(NSNumber**)responseCode lampGroupID:(NSString**)lampGroupIDOut;
+- (void)deleteLampGroupWithLampGroupID:(NSString*)lampGroupID responseCode:(NSNumber**)responseCode lampGroupID:(NSString**)lampGroupIDOut;
+- (void)getLampGroupWithLampGroupID:(NSString*)lampGroupID responseCode:(NSNumber**)responseCode lampGroupID:(NSString**)lampGroupIDOut lampID:(AJNMessageArgument**)lampID lampGroupIDs:(AJNMessageArgument**)lampGroupIDs;
+- (void)transitionLampGroupStateWithLampGroupID:(NSString*)lampGroupID lampState:(AJNMessageArgument*)lampState transitionPeriod:(NSNumber*)transitionPeriod responseCode:(NSNumber**)responseCode lampGroupID:(NSString**)lampGroupIDOut;
+- (void)pulseLampGroupWithStateWithLampGroupID:(NSString*)lampGroupID fromState:(AJNMessageArgument*)fromLampState toState:(AJNMessageArgument*)toLampState period:(NSNumber*)period duration:(NSNumber*)duration numPulses:(NSNumber*)numPulses responseCode:(NSNumber**)responseCode lampGroupID:(NSString**)lampGroupIDOut;
+- (void)pulseLampGroupWithPresetWithLampGroupID:(NSString*)lampGroupID fromPresetID:(NSNumber*)fromPresetID toPresetID:(NSNumber*)toPresetID period:(NSNumber*)period duration:(NSNumber*)duration numPulses:(NSNumber*)numPulses responseCode:(NSNumber**)responseCode lampGroupID:(NSString**)lampGroupIDOut;
+- (void)transitionLampGroupStateToPresetWithLampGroupID:(NSString*)lampGroupID presetID:(NSNumber*)presetID transitionPeriod:(NSNumber*)transitionPeriod responseCode:(NSNumber**)responseCode lampGroupID:(NSString**)lampGroupIDOut;
+- (void)transitionLampGroupStateFieldWithLampGroupID:(NSString*)lampGroupID groupStateFieldName:(NSString*)lampGroupStateFieldName groupStateFieldValue:(NSString*)lampGroupStateFieldValue transitionPeriod:(NSNumber*)transitionPeriod responseCode:(NSNumber**)responseCode lampGroupID:(NSString**)lampGroupIDOut groupStateFieldName:(NSString**)lampGroupStateFieldNameOut;
+- (void)resetLampGroupStateWithLampGroupID:(NSString*)lampGroupID responseCode:(NSNumber**)responseCode lampGroupID:(NSString**)lampGroupIDOut;
+- (void)resetLampGroupStateFieldWithLampGroupID:(NSString*)lampGroupID groupStateFieldName:(NSString*)lampGroupStateFieldName responseCode:(NSNumber**)responseCode lampID:(NSString**)lampGroupIDOut groupStateFieldName:(NSString**)lampGroupStateFieldNameOut;
 
 
 @end

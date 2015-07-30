@@ -187,6 +187,104 @@
      @throw([NSException exceptionWithName:@"NotImplementedException" reason:@"You must implement this method" userInfo:nil]);   
 }
 
+- (void)getAllLampGroupIDsWithResponseCode:(NSNumber**)responseCode lampGroupIDs:(AJNMessageArgument**)lampGroupIDs message:(AJNMessage *)methodCallMessage
+{
+    // TODO: complete the implementation of this method
+    //
+     @throw([NSException exceptionWithName:@"NotImplementedException" reason:@"You must implement this method" userInfo:nil]);   
+}
+
+- (void)getLampGroupNameWithLampGroupID:(NSString*)lampGroupID language:(NSString*)language responseCode:(NSNumber**)responseCode lampIDGroupID:(NSString**)lampGroupIDOut language:(NSString**)languageOut lampGroupName:(NSString**)lampGroupName message:(AJNMessage *)methodCallMessage
+{
+    // TODO: complete the implementation of this method
+    //
+     @throw([NSException exceptionWithName:@"NotImplementedException" reason:@"You must implement this method" userInfo:nil]);   
+}
+
+- (void)setLampGroupNameWithLampID:(NSString*)lampGroupID lampName:(NSString*)lampName language:(NSString*)language responseCode:(NSNumber**)responseCode lampID:(NSString**)lampID language:(NSString**)languageOut message:(AJNMessage *)methodCallMessage
+{
+    // TODO: complete the implementation of this method
+    //
+     @throw([NSException exceptionWithName:@"NotImplementedException" reason:@"You must implement this method" userInfo:nil]);   
+}
+
+- (void)createLampGroupWithLampIDs:(AJNMessageArgument*)lampIDs lampGroupIDs:(AJNMessageArgument*)lampGroupIDs lampGroupName:(NSString*)lampGroupName language:(NSString*)language responseCode:(NSNumber**)responseCode lampGroupID:(NSString**)lampGroupID message:(AJNMessage *)methodCallMessage
+{
+    // TODO: complete the implementation of this method
+    //
+     @throw([NSException exceptionWithName:@"NotImplementedException" reason:@"You must implement this method" userInfo:nil]);   
+}
+
+- (void)updateLampGroupWithLampGroupID:(NSString*)lampGroupID lampIDs:(AJNMessageArgument*)lampIDs lampGroupIDs:(AJNMessageArgument*)lampGroupIDs responseCode:(NSNumber**)responseCode lampGroupID:(NSString**)lampGroupIDOut message:(AJNMessage *)methodCallMessage
+{
+    // TODO: complete the implementation of this method
+    //
+     @throw([NSException exceptionWithName:@"NotImplementedException" reason:@"You must implement this method" userInfo:nil]);   
+}
+
+- (void)deleteLampGroupWithLampGroupID:(NSString*)lampGroupID responseCode:(NSNumber**)responseCode lampGroupID:(NSString**)lampGroupIDOut message:(AJNMessage *)methodCallMessage
+{
+    // TODO: complete the implementation of this method
+    //
+     @throw([NSException exceptionWithName:@"NotImplementedException" reason:@"You must implement this method" userInfo:nil]);   
+}
+
+- (void)getLampGroupWithLampGroupID:(NSString*)lampGroupID responseCode:(NSNumber**)responseCode lampGroupID:(NSString**)lampGroupIDOut lampID:(AJNMessageArgument**)lampID lampGroupIDs:(AJNMessageArgument**)lampGroupIDs message:(AJNMessage *)methodCallMessage
+{
+    // TODO: complete the implementation of this method
+    //
+     @throw([NSException exceptionWithName:@"NotImplementedException" reason:@"You must implement this method" userInfo:nil]);   
+}
+
+- (void)transitionLampGroupStateWithLampGroupID:(NSString*)lampGroupID lampState:(AJNMessageArgument*)lampState transitionPeriod:(NSNumber*)transitionPeriod responseCode:(NSNumber**)responseCode lampGroupID:(NSString**)lampGroupIDOut message:(AJNMessage *)methodCallMessage
+{
+    // TODO: complete the implementation of this method
+    //
+     @throw([NSException exceptionWithName:@"NotImplementedException" reason:@"You must implement this method" userInfo:nil]);   
+}
+
+- (void)pulseLampGroupWithStateWithLampGroupID:(NSString*)lampGroupID fromState:(AJNMessageArgument*)fromLampState toState:(AJNMessageArgument*)toLampState period:(NSNumber*)period duration:(NSNumber*)duration numPulses:(NSNumber*)numPulses responseCode:(NSNumber**)responseCode lampGroupID:(NSString**)lampGroupIDOut message:(AJNMessage *)methodCallMessage
+{
+    // TODO: complete the implementation of this method
+    //
+     @throw([NSException exceptionWithName:@"NotImplementedException" reason:@"You must implement this method" userInfo:nil]);   
+}
+
+- (void)pulseLampGroupWithPresetWithLampGroupID:(NSString*)lampGroupID fromPresetID:(NSNumber*)fromPresetID toPresetID:(NSNumber*)toPresetID period:(NSNumber*)period duration:(NSNumber*)duration numPulses:(NSNumber*)numPulses responseCode:(NSNumber**)responseCode lampGroupID:(NSString**)lampGroupIDOut message:(AJNMessage *)methodCallMessage
+{
+    // TODO: complete the implementation of this method
+    //
+     @throw([NSException exceptionWithName:@"NotImplementedException" reason:@"You must implement this method" userInfo:nil]);   
+}
+
+- (void)transitionLampGroupStateToPresetWithLampGroupID:(NSString*)lampGroupID presetID:(NSNumber*)presetID transitionPeriod:(NSNumber*)transitionPeriod responseCode:(NSNumber**)responseCode lampGroupID:(NSString**)lampGroupIDOut message:(AJNMessage *)methodCallMessage
+{
+    // TODO: complete the implementation of this method
+    //
+     @throw([NSException exceptionWithName:@"NotImplementedException" reason:@"You must implement this method" userInfo:nil]);   
+}
+
+- (void)transitionLampGroupStateFieldWithLampGroupID:(NSString*)lampGroupID groupStateFieldName:(NSString*)lampGroupStateFieldName groupStateFieldValue:(NSString*)lampGroupStateFieldValue transitionPeriod:(NSNumber*)transitionPeriod responseCode:(NSNumber**)responseCode lampGroupID:(NSString**)lampGroupIDOut groupStateFieldName:(NSString**)lampGroupStateFieldNameOut message:(AJNMessage *)methodCallMessage
+{
+    // TODO: complete the implementation of this method
+    //
+     @throw([NSException exceptionWithName:@"NotImplementedException" reason:@"You must implement this method" userInfo:nil]);   
+}
+
+- (void)resetLampGroupStateWithLampGroupID:(NSString*)lampGroupID responseCode:(NSNumber**)responseCode lampGroupID:(NSString**)lampGroupIDOut message:(AJNMessage *)methodCallMessage
+{
+    // TODO: complete the implementation of this method
+    //
+     @throw([NSException exceptionWithName:@"NotImplementedException" reason:@"You must implement this method" userInfo:nil]);   
+}
+
+- (void)resetLampGroupStateFieldWithLampGroupID:(NSString*)lampGroupID groupStateFieldName:(NSString*)lampGroupStateFieldName responseCode:(NSNumber**)responseCode lampID:(NSString**)lampGroupIDOut groupStateFieldName:(NSString**)lampGroupStateFieldNameOut message:(AJNMessage *)methodCallMessage
+{
+    // TODO: complete the implementation of this method
+    //
+     @throw([NSException exceptionWithName:@"NotImplementedException" reason:@"You must implement this method" userInfo:nil]);   
+}
+
 
 @end
 
