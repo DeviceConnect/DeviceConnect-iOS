@@ -43,6 +43,8 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		2579E9601B69BA99000CA047 /* DPAllJoynMessageConverter.h in Headers */ = {isa = PBXBuildFile; fileRef = 2579E95E1B69BA99000CA047 /* DPAllJoynMessageConverter.h */; };
+		2579E9611B69BA99000CA047 /* DPAllJoynMessageConverter.mm in Sources */ = {isa = PBXBuildFile; fileRef = 2579E95F1B69BA99000CA047 /* DPAllJoynMessageConverter.mm */; };
 		258498A81B609A3F0063552E /* AJNLSFControllerService.h in Headers */ = {isa = PBXBuildFile; fileRef = 258498A01B609A3F0063552E /* AJNLSFControllerService.h */; };
 		258498A91B609A3F0063552E /* AJNLSFControllerService.mm in Sources */ = {isa = PBXBuildFile; fileRef = 258498A11B609A3F0063552E /* AJNLSFControllerService.mm */; };
 		258498AA1B609A3F0063552E /* AJNLSFLamp.h in Headers */ = {isa = PBXBuildFile; fileRef = 258498A21B609A3F0063552E /* AJNLSFLamp.h */; };
@@ -104,6 +106,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2579E95E1B69BA99000CA047 /* DPAllJoynMessageConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPAllJoynMessageConverter.h; sourceTree = "<group>"; };
+		2579E95F1B69BA99000CA047 /* DPAllJoynMessageConverter.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DPAllJoynMessageConverter.mm; sourceTree = "<group>"; };
 		258498A01B609A3F0063552E /* AJNLSFControllerService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AJNLSFControllerService.h; sourceTree = "<group>"; };
 		258498A11B609A3F0063552E /* AJNLSFControllerService.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AJNLSFControllerService.mm; sourceTree = "<group>"; };
 		258498A21B609A3F0063552E /* AJNLSFLamp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AJNLSFLamp.h; sourceTree = "<group>"; };
@@ -324,6 +328,8 @@
 				25A06C751B5667E1005B6F8A /* DPAllJoynDevicePlugin.m */,
 				25856D031B58965E00B1C2DC /* DPAllJoynHandler.h */,
 				25856D041B58965E00B1C2DC /* DPAllJoynHandler.mm */,
+				2579E95E1B69BA99000CA047 /* DPAllJoynMessageConverter.h */,
+				2579E95F1B69BA99000CA047 /* DPAllJoynMessageConverter.mm */,
 				25856D171B59091000B1C2DC /* DPAllJoynServiceEntity.h */,
 				25856D181B59091000B1C2DC /* DPAllJoynServiceEntity.mm */,
 				258843C11B5F336A003E5257 /* DPAllJoynSupportCheck.h */,
@@ -421,6 +427,7 @@
 				258843C31B5F336A003E5257 /* DPAllJoynSupportCheck.h in Headers */,
 				258843CB1B5F43F9003E5257 /* NSArray+Query.h in Headers */,
 				258498AC1B609A3F0063552E /* LSFControllerService.h in Headers */,
+				2579E9601B69BA99000CA047 /* DPAllJoynMessageConverter.h in Headers */,
 				25E1A0711B5DE05A00308AFC /* DPAllJoynSynchronizedMutableDictionary.h in Headers */,
 				25856D051B58965E00B1C2DC /* DPAllJoynHandler.h in Headers */,
 				25856D191B59091000B1C2DC /* DPAllJoynServiceEntity.h in Headers */,
@@ -655,6 +662,7 @@
 				258843C41B5F336A003E5257 /* DPAllJoynSupportCheck.mm in Sources */,
 				25851BE51B57929100CB732E /* CALayer+StoryboardUserDefinedRuntimeAttributes.m in Sources */,
 				258498AD1B609A3F0063552E /* LSFControllerService.m in Sources */,
+				2579E9611B69BA99000CA047 /* DPAllJoynMessageConverter.mm in Sources */,
 				258498AF1B609A3F0063552E /* LSFLamp.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
