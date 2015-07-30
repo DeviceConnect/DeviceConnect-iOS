@@ -89,6 +89,8 @@
 		25A06C801B566C86005B6F8A /* DPAllJoynLightProfile.mm in Sources */ = {isa = PBXBuildFile; fileRef = 25A06C7E1B566C86005B6F8A /* DPAllJoynLightProfile.mm */; };
 		25E1A0711B5DE05A00308AFC /* DPAllJoynSynchronizedMutableDictionary.h in Headers */ = {isa = PBXBuildFile; fileRef = 25E1A06F1B5DE05A00308AFC /* DPAllJoynSynchronizedMutableDictionary.h */; };
 		25E1A0721B5DE05A00308AFC /* DPAllJoynSynchronizedMutableDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 25E1A0701B5DE05A00308AFC /* DPAllJoynSynchronizedMutableDictionary.m */; };
+		25F136491B67112600ADD8CB /* DPAllJoynColorUtility.h in Headers */ = {isa = PBXBuildFile; fileRef = 25F136471B67112600ADD8CB /* DPAllJoynColorUtility.h */; };
+		25F1364A1B67112600ADD8CB /* DPAllJoynColorUtility.mm in Sources */ = {isa = PBXBuildFile; fileRef = 25F136481B67112600ADD8CB /* DPAllJoynColorUtility.mm */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -161,6 +163,8 @@
 		25A06C7E1B566C86005B6F8A /* DPAllJoynLightProfile.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DPAllJoynLightProfile.mm; sourceTree = "<group>"; };
 		25E1A06F1B5DE05A00308AFC /* DPAllJoynSynchronizedMutableDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPAllJoynSynchronizedMutableDictionary.h; sourceTree = "<group>"; };
 		25E1A0701B5DE05A00308AFC /* DPAllJoynSynchronizedMutableDictionary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPAllJoynSynchronizedMutableDictionary.m; sourceTree = "<group>"; };
+		25F136471B67112600ADD8CB /* DPAllJoynColorUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPAllJoynColorUtility.h; sourceTree = "<group>"; };
+		25F136481B67112600ADD8CB /* DPAllJoynColorUtility.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DPAllJoynColorUtility.mm; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -312,6 +316,8 @@
 				25A06C731B56675B005B6F8A /* Profiles */,
 				25851BE01B57923500CB732E /* Utilities */,
 				25A06C2D1B564698005B6F8A /* Views */,
+				25F136471B67112600ADD8CB /* DPAllJoynColorUtility.h */,
+				25F136481B67112600ADD8CB /* DPAllJoynColorUtility.mm */,
 				258843C51B5F3A3F003E5257 /* DPAllJoynConst.h */,
 				258843C61B5F3A3F003E5257 /* DPAllJoynConst.mm */,
 				25A06C741B5667AA005B6F8A /* DPAllJoynDevicePlugin.h */,
@@ -419,6 +425,7 @@
 				25856D051B58965E00B1C2DC /* DPAllJoynHandler.h in Headers */,
 				25856D191B59091000B1C2DC /* DPAllJoynServiceEntity.h in Headers */,
 				25A06C7F1B566C86005B6F8A /* DPAllJoynLightProfile.h in Headers */,
+				25F136491B67112600ADD8CB /* DPAllJoynColorUtility.h in Headers */,
 				25851BB61B5739B600CB732E /* DPAllJoynServiceInformationProfile.h in Headers */,
 				25851BC61B57455D00CB732E /* DPAllJoynSettingTableViewCell.h in Headers */,
 				258498AA1B609A3F0063552E /* AJNLSFLamp.h in Headers */,
@@ -631,6 +638,7 @@
 				25A06C781B566AAA005B6F8A /* DPAllJoynServiceDiscoveryProfile.mm in Sources */,
 				25851BCB1B574A9F00CB732E /* DPAllJoynSettingMasterSubTableViewController.m in Sources */,
 				258843CC1B5F43F9003E5257 /* NSArray+Query.m in Sources */,
+				25F1364A1B67112600ADD8CB /* DPAllJoynColorUtility.mm in Sources */,
 				25A06C7C1B566AD0005B6F8A /* DPAllJoynSystemProfile.m in Sources */,
 				25A06C761B5667E1005B6F8A /* DPAllJoynDevicePlugin.m in Sources */,
 				25851BC71B57455D00CB732E /* DPAllJoynSettingTableViewCell.m in Sources */,
