@@ -18,7 +18,7 @@
 #import "DPAllJoynSynchronizedMutableDictionary.h"
 
 
-static int const PING_TIMEOUT = 5000;
+static int const PING_TIMEOUT = 15000;
 static int const PING_INTERVAL = 20;
 static int const DISCOVER_INTERVAL = 30;
 
@@ -287,8 +287,10 @@ static int const DISCOVER_INTERVAL = 30;
     }
     
     dispatch_async(_handlerQueue, ^{
-        QStatus status = [self.bus pingPeer:busName withTimeout:5000];
-        block(ER_OK == status);
+        [self.bus pingPeerAsync:busName withTimeout:PING_TIMEOUT completionBlock:
+         ^(QStatus status, void *context) {
+             block(ER_OK == status);
+         } context:nil];
     });
 }
 
@@ -333,8 +335,11 @@ static int const DISCOVER_INTERVAL = 30;
         [self pingWithBusName:serviceEntity.busName
                         block:^(BOOL result)
          {
-             if (!result) {
-                 NSLog(@"No ping from the service with bus name \"%@\"."
+             if (result) {
+                 NSLog(@"Ping success: %@", serviceEntity.serviceName);
+             }
+             else {
+                 NSLog(@"Ping failed: %@."
                        " Removing it from discovered services...",
                        serviceEntity.serviceName);
                  [_discoveredServices removeObjectForKey:serviceEntity.busName];
