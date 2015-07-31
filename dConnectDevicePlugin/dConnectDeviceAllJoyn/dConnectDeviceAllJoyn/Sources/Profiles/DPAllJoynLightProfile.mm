@@ -1042,6 +1042,525 @@ typedef NS_ENUM(NSUInteger, DPAllJoynLightServiceType) {
 }
 
 
+- (void)didReceiveGetLightGroupRequestForLampControllerWithResponse:(DConnectResponseMessage *)response
+                                                            service:(DPAllJoynServiceEntity *)service
+{
+    [_handler performOneShotSessionWithBusName:service
+                                         block:
+     ^(DPAllJoynServiceEntity *service, NSNumber *sessionId)
+     {
+         if (!sessionId) {
+             NSString *msg = @"Failed to join a session.";
+             NSLog(@"%@", msg);
+             [response setErrorToUnknownWithMessage:msg];
+             [[DConnectManager sharedManager] sendResponse:response];
+             return;
+         }
+         
+         QStatus status;
+         LSFControllerServiceObjectProxy *proxy =
+         (LSFControllerServiceObjectProxy *)
+         [_handler proxyObjectWithService:service
+                         proxyObjectClass:LSFControllerServiceObjectProxy.class
+                                interface:@"org.allseen.LSF.ControllerService"
+                                sessionID:sessionId.unsignedIntValue];
+         status = [proxy introspectRemoteObject];
+         if (ER_OK != status) {
+             NSString *msg = @"Failed to introspect a remote bus object.";
+             NSLog(@"%@", msg);
+             [response setErrorToUnknownWithMessage:msg];
+             [[DConnectManager sharedManager] sendResponse:response];
+             return;
+         }
+         
+         NSNumber *responseCode;
+         NSArray *lampGroupIDArr;
+         {
+             AJNMessageArgument *lampGroupIDs;
+             [proxy getAllLampGroupIDsWithResponseCode:&responseCode
+                                          lampGroupIDs:&lampGroupIDs];
+             if (!responseCode
+                 || responseCode.unsignedIntValue != DPAllJoynLightResponseCodeOK) {
+                 [response setErrorToUnknownWithMessage:
+                  @"Failed to obtain light group IDs (1)."];
+                 [[DConnectManager sharedManager] sendResponse:response];
+                 return;
+             }
+             lampGroupIDArr =
+             [DPAllJoynMessageConverter
+              objectWithAJNMessageArgument:lampGroupIDs];
+         }
+         
+         //////////////////////////////////////////////////
+         // Obtain lamp group info.
+         //
+         NSMutableDictionary *lampGroups = [NSMutableDictionary dictionary];
+         for (size_t i = 0; i < lampGroupIDArr.count; ++i, responseCode = nil) {
+             DPAllJoynLampGroup *lampGroup = [DPAllJoynLampGroup new];
+             
+             lampGroup.groupID = lampGroupIDArr[i];
+             
+             {
+                 NSString *lampGroupName;
+                 NSString *ignored;
+                 [proxy getLampGroupNameWithLampGroupID:lampGroup.groupID
+                                               language:service.defaultLanguage
+                                           responseCode:&responseCode
+                                          lampIDGroupID:&ignored
+                                               language:&ignored
+                                          lampGroupName:&lampGroupName];
+                 if (!responseCode
+                     || responseCode.intValue != DPAllJoynLightResponseCodeOK) {
+                     NSLog(@"Failed to obtain lamp group name. Skipping this lamp group...");
+                     continue;
+                 }
+                 responseCode = nil;
+                 lampGroup.name = lampGroupName;
+             }
+             
+             AJNMessageArgument *lampIDs;
+             AJNMessageArgument *lampGroupIDs;
+             NSString *ignored;
+             [proxy getLampGroupWithLampGroupID:lampGroup.groupID
+                                   responseCode:&responseCode
+                                    lampGroupID:&ignored
+                                         lampID:&lampIDs
+                                   lampGroupIDs:&lampGroupIDs];
+             
+             if (!responseCode
+                 || responseCode.intValue != DPAllJoynLightResponseCodeOK) {
+                 NSLog(@"Failed to obtain IDs of lamps and lamp groups contained in a lamp group. Skipping this lamp group...");
+                 continue;
+             }
+             responseCode = nil;
+             lampGroup.lampIDs =
+             [NSMutableSet setWithArray:
+              [DPAllJoynMessageConverter
+               objectWithAJNMessageArgument:lampIDs]];
+             lampGroup.lampGroupIDs =
+             [NSMutableSet setWithArray:
+              [DPAllJoynMessageConverter
+               objectWithAJNMessageArgument:lampGroupIDs]];
+             
+             lampGroup.config = @"";
+             
+             lampGroups[lampGroup.groupID] = lampGroup;
+         }
+         
+         //////////////////////////////////////////////////
+         // Expand lamp IDs contained in lamp groups.
+         //
+         for (DPAllJoynLampGroup *searchTarget in lampGroups.allValues) {
+             for (DPAllJoynLampGroup *expandTarget in lampGroups.allValues) {
+                 if ([searchTarget.groupID isEqualToString:expandTarget.groupID]) {
+                     continue;
+                 }
+                 if ([expandTarget.lampGroupIDs containsObject:searchTarget.groupID]) {
+                     [expandTarget.lampIDs addObjectsFromArray:searchTarget.lampIDs.allObjects];
+                     [expandTarget.lampGroupIDs addObjectsFromArray:searchTarget.lampGroupIDs.allObjects];
+                     [expandTarget.lampGroupIDs removeObject:searchTarget.groupID];
+                 }
+             }
+         }
+         
+         //////////////////////////////////////////////////
+         // Obtain lamp info.
+         //
+         NSMutableDictionary *lamps = [NSMutableDictionary dictionary];
+         for (DPAllJoynLampGroup *lampGroup in lampGroups.allValues) {
+             for (NSString *lampID in lampGroup.lampIDs) {
+                 if (lamps[lampID]) {
+                     continue;
+                 }
+                 
+                 DPAllJoynLamp *lamp = [DPAllJoynLamp new];
+                 NSString *ignored;
+                 
+                 NSString *name;
+                 [proxy getLampNameWithLampID:lampID
+                                     language:service.defaultLanguage
+                                 responseCode:&responseCode
+                                       lampID:&ignored
+                                     language:&ignored
+                                     lampName:&name];
+                 if (!responseCode
+                     || responseCode.unsignedIntValue != DPAllJoynLightResponseCodeOK) {
+                     NSLog(@"%@", @"Failed to obtain lamp name. Skipping this lamp...");
+                 } else {
+                     lamp.name = name;
+                 }
+                 responseCode = nil;
+                 
+                 AJNMessageArgument *lampState;
+                 [proxy getLampStateWithLampID:lampID
+                                  responseCode:&responseCode
+                                        lampID:&ignored
+                                     lampState:&lampState];
+                 if (!responseCode
+                     || responseCode.unsignedIntValue != DPAllJoynLightResponseCodeOK) {
+                     NSLog(@"%@", @"Failed to obtain lamp state. Skipping this lamp...");
+                 } else {
+                     NSDictionary *states =
+                     [DPAllJoynMessageConverter
+                      objectWithAJNMessageArgument:lampState];
+                     if (!states[@"OnOff"]) {
+                         NSLog(@"Failed to obtain on/off state."
+                               " Skipping this lamp...");
+                     } else {
+                         lamp.on = states[@"OnOff"];
+                     }
+                 }
+                 responseCode = nil;
+                 
+                 lamp.config = @"";
+                 
+                 lamps[lampID] = lamp;
+             }
+         }
+         
+         DConnectArray *lightGroups = [DConnectArray array];
+         for (DPAllJoynLampGroup *lampGroup in lampGroups.allValues) {
+             DConnectMessage *lightGroupMsg = [DConnectMessage message];
+             [lightGroupMsg setString:lampGroup.groupID forKey:DCMLightProfileParamGroupId];
+             [lightGroupMsg setString:lampGroup.name forKey:DCMLightProfileParamName];
+             DConnectArray *lights = [DConnectArray array];
+             for (NSString *lampID in lampGroup.lampIDs) {
+                 DPAllJoynLamp *lamp = lamps[lampID];
+                 
+                 DConnectMessage *light = [DConnectMessage message];
+                 [light setString:lamp.ID forKey:DCMLightProfileParamLightId];
+                 if (lamp.name) {
+                     [light setString:lamp.name forKey:DCMLightProfileParamName];
+                 }
+                 if (lamp.on) {
+                     [light setBool:lamp.on.boolValue forKey:DCMLightProfileParamOn];
+                 }
+                 [lightGroupMsg setString:lamp.config forKey:DCMLightProfileParamConfig];
+                 [lights addMessage:light];
+             }
+             [lightGroupMsg setArray:lights forKey:DCMLightProfileParamLights];
+             [lightGroupMsg setString:lampGroup.config forKey:DCMLightProfileParamConfig];
+             [lightGroups addMessage:lightGroupMsg];
+         }
+         [response setArray:lightGroups forKey:DCMLightProfileParamLightGroups];
+         
+         [response setResult:DConnectMessageResultTypeOk];
+         [[DConnectManager sharedManager] sendResponse:response];
+     }];
+}
+
+
+- (void)didReceivePostLightGroupRequestForLampControllerWithResponse:(DConnectResponseMessage *)response
+                                                             service:(DPAllJoynServiceEntity *)service
+                                                             groupID:(NSString *)groupId
+                                                          brightness:(double)brightness
+                                                               color:(NSString *)color
+                                                            flashing:(NSArray *)flashing
+{
+    [_handler performOneShotSessionWithBusName:service
+                                         block:
+     ^(DPAllJoynServiceEntity *service, NSNumber *sessionId)
+     {
+         if (!sessionId) {
+             NSString *msg = @"Failed to join a session.";
+             NSLog(@"%@", msg);
+             [response setErrorToUnknownWithMessage:msg];
+             [[DConnectManager sharedManager] sendResponse:response];
+             return;
+         }
+         
+         QStatus status;
+         LSFControllerServiceObjectProxy *proxy =
+         (LSFControllerServiceObjectProxy *)
+         [_handler proxyObjectWithService:service
+                         proxyObjectClass:LSFControllerServiceObjectProxy.class
+                                interface:@"org.allseen.LSF.ControllerService"
+                                sessionID:sessionId.unsignedIntValue];
+         status = [proxy introspectRemoteObject];
+         if (ER_OK != status) {
+             NSString *msg = @"Failed to introspect a remote bus object.";
+             NSLog(@"%@", msg);
+             [response setErrorToUnknownWithMessage:msg];
+             [[DConnectManager sharedManager] sendResponse:response];
+             return;
+         }
+         
+         MsgArg newStates[3];
+         size_t count = 0;
+         MsgArg tmp1;
+         MsgArg tmp2 = MsgArg("b", YES);
+         tmp1.Set("{sv}", "OnOff", &tmp2);
+         newStates[count] = tmp1;
+         ++count;
+         
+         double brightnessScaled = brightness * 0xffffffffL;
+         tmp1 = MsgArg();
+         tmp2 = MsgArg("u", (uint32_t)brightnessScaled);
+         tmp1.Set("{sv}", "Brightness", &tmp2);
+         newStates[count] = tmp1;
+         ++count;
+         
+         if (color) {
+             NSDictionary *hsb = [DPAllJoynColorUtility HSBFromRGB:color];
+             
+             tmp1 = MsgArg();
+             tmp2 = MsgArg("u", [hsb[@"hue"] unsignedIntValue]);
+             tmp1.Set("{sv}", "Hue", &tmp2);
+             newStates[count] = tmp1;
+             ++count;
+             
+             tmp1 = MsgArg();
+             tmp2 = MsgArg("u", [hsb[@"saturation"] unsignedIntValue]);
+             tmp1.Set("{sv}", "Saturation", &tmp2);
+             newStates[count] = tmp1;
+             ++count;
+         }
+         
+         MsgArg newStateArg("a{sv}", count, newStates);
+         AJNMessageArgument *newState =
+         [[AJNMessageArgument alloc] initWithHandle:&newStateArg];
+         NSNumber *responseCode;
+         NSString *ignored;
+         [proxy transitionLampGroupStateWithLampGroupID:groupId
+                                              lampState:newState
+                                       transitionPeriod:@10
+                                           responseCode:&responseCode
+                                            lampGroupID:&ignored];
+         if (responseCode
+             && responseCode.unsignedIntValue == DPAllJoynLightResponseCodeOK) {
+             [response setResult:DConnectMessageResultTypeOk];
+         } else {
+             [response setErrorToUnknownWithMessage:@"Failed to change group state."];
+         }
+         
+         [[DConnectManager sharedManager] sendResponse:response];
+     }];
+}
+
+
+- (void)didReceivePutLightGroupRequestForLampControllerWithResponse:(DConnectResponseMessage *)response
+                                                            service:(DPAllJoynServiceEntity *)service
+                                                            groupID:(NSString*)groupId
+                                                               name:(NSString*)name
+                                                         brightness:(double)brightness
+                                                              color:(NSString*)color
+                                                           flashing:(NSArray*)flashing
+{
+    [_handler performOneShotSessionWithBusName:service
+                                         block:
+     ^(DPAllJoynServiceEntity *service, NSNumber *sessionId)
+     {
+         if (!sessionId) {
+             NSString *msg = @"Failed to join a session.";
+             NSLog(@"%@", msg);
+             [response setErrorToUnknownWithMessage:msg];
+             [[DConnectManager sharedManager] sendResponse:response];
+             return;
+         }
+         
+         QStatus status;
+         LSFControllerServiceObjectProxy *proxy =
+         (LSFControllerServiceObjectProxy *)
+         [_handler proxyObjectWithService:service
+                         proxyObjectClass:LSFControllerServiceObjectProxy.class
+                                interface:@"org.allseen.LSF.ControllerService"
+                                sessionID:sessionId.unsignedIntValue];
+         status = [proxy introspectRemoteObject];
+         if (ER_OK != status) {
+             NSString *msg = @"Failed to introspect a remote bus object.";
+             NSLog(@"%@", msg);
+             [response setErrorToUnknownWithMessage:msg];
+             [[DConnectManager sharedManager] sendResponse:response];
+             return;
+         }
+         
+         MsgArg newStates[2];
+         size_t count = 0;
+         MsgArg tmp1;
+         MsgArg tmp2;
+         
+         double brightnessScaled = brightness * 0xffffffffL;
+         tmp1 = MsgArg();
+         tmp2 = MsgArg("u", (uint32_t)brightnessScaled);
+         tmp1.Set("{sv}", "Brightness", &tmp2);
+         newStates[count] = tmp1;
+         ++count;
+         
+         if (color) {
+             NSDictionary *hsb = [DPAllJoynColorUtility HSBFromRGB:color];
+             
+             tmp1 = MsgArg();
+             tmp2 = MsgArg("u", [hsb[@"hue"] unsignedIntValue]);
+             tmp1.Set("{sv}", "Hue", &tmp2);
+             newStates[count] = tmp1;
+             ++count;
+             
+             tmp1 = MsgArg();
+             tmp2 = MsgArg("u", [hsb[@"saturation"] unsignedIntValue]);
+             tmp1.Set("{sv}", "Saturation", &tmp2);
+             newStates[count] = tmp1;
+             ++count;
+         }
+         
+         MsgArg newStateArg("a{sv}", count, newStates);
+         AJNMessageArgument *newState =
+         [[AJNMessageArgument alloc] initWithHandle:&newStateArg];
+         NSNumber *responseCode;
+         NSString *ignored;
+         [proxy transitionLampGroupStateWithLampGroupID:groupId
+                                              lampState:newState
+                                       transitionPeriod:@10
+                                           responseCode:&responseCode
+                                            lampGroupID:&ignored];
+         if (!responseCode
+             || responseCode.unsignedIntValue != DPAllJoynLightResponseCodeOK) {
+             [response setErrorToUnknownWithMessage:@"Failed to change group state."];
+             [[DConnectManager sharedManager] sendResponse:response];
+             return;
+         }
+         
+         if (name) {
+             [proxy setLampGroupNameWithLampID:groupId
+                                      lampName:name
+                                      language:service.defaultLanguage
+                                  responseCode:&responseCode
+                                        lampID:&ignored
+                                      language:&ignored];
+             if (!responseCode
+                 || responseCode.unsignedIntValue != DPAllJoynLightResponseCodeOK) {
+                 [response setErrorToUnknownWithMessage:@"Failed to change group name."];
+                 [[DConnectManager sharedManager] sendResponse:response];
+                 return;
+             }
+         }
+         
+         [response setResult:DConnectMessageResultTypeOk];
+         [[DConnectManager sharedManager] sendResponse:response];
+     }];
+}
+
+
+- (void)didReceiveDeleteLightGroupRequestForLampControllerWithResponse:(DConnectResponseMessage *)response
+                                                               service:(DPAllJoynServiceEntity *)service
+                                                               groupID:(NSString*)groupID
+{
+    [_handler performOneShotSessionWithBusName:service
+                                         block:
+     ^(DPAllJoynServiceEntity *service, NSNumber *sessionId)
+     {
+         if (!sessionId) {
+             NSString *msg = @"Failed to join a session.";
+             NSLog(@"%@", msg);
+             [response setErrorToUnknownWithMessage:msg];
+             [[DConnectManager sharedManager] sendResponse:response];
+             return;
+         }
+         
+         QStatus status;
+         LSFControllerServiceObjectProxy *proxy =
+         (LSFControllerServiceObjectProxy *)
+         [_handler proxyObjectWithService:service
+                         proxyObjectClass:LSFControllerServiceObjectProxy.class
+                                interface:@"org.allseen.LSF.ControllerService"
+                                sessionID:sessionId.unsignedIntValue];
+         status = [proxy introspectRemoteObject];
+         if (ER_OK != status) {
+             NSString *msg = @"Failed to introspect a remote bus object.";
+             NSLog(@"%@", msg);
+             [response setErrorToUnknownWithMessage:msg];
+             [[DConnectManager sharedManager] sendResponse:response];
+             return;
+         }
+         
+         MsgArg newStates[1];
+         size_t count = 0;
+         MsgArg tmp1;
+         MsgArg tmp2 = MsgArg("b", NO);
+         tmp1.Set("{sv}", "OnOff", &tmp2);
+         newStates[count] = tmp1;
+         ++count;
+         
+         MsgArg newStateArg("a{sv}", count, newStates);
+         AJNMessageArgument *newState =
+         [[AJNMessageArgument alloc] initWithHandle:&newStateArg];
+         NSNumber *responseCode;
+         NSString *ignored;
+         [proxy transitionLampGroupStateWithLampGroupID:groupID
+                                              lampState:newState
+                                       transitionPeriod:@10
+                                           responseCode:&responseCode
+                                            lampGroupID:&ignored];
+         if (responseCode
+             && responseCode.unsignedIntValue == DPAllJoynLightResponseCodeOK) {
+             [response setResult:DConnectMessageResultTypeOk];
+         } else {
+             [response setErrorToUnknownWithMessage:@"Failed to change group state."];
+         }
+         
+         [[DConnectManager sharedManager] sendResponse:response];
+     }];
+}
+
+
+- (void)didReceivePostLightGroupCreateRequestForLampControllerWithResponse:(DConnectResponseMessage *)response
+                                                                   service:(DPAllJoynServiceEntity *)service
+                                                                  lightIDs:(NSArray *)lightIDs
+                                                                 groupName:(NSString *)groupName
+{
+    [_handler performOneShotSessionWithBusName:service
+                                         block:
+     ^(DPAllJoynServiceEntity *service, NSNumber *sessionId)
+     {
+         if (!sessionId) {
+             NSString *msg = @"Failed to join a session.";
+             NSLog(@"%@", msg);
+             [response setErrorToUnknownWithMessage:msg];
+             [[DConnectManager sharedManager] sendResponse:response];
+             return;
+         }
+         
+         QStatus status;
+         LSFControllerServiceObjectProxy *proxy =
+         (LSFControllerServiceObjectProxy *)
+         [_handler proxyObjectWithService:service
+                         proxyObjectClass:LSFControllerServiceObjectProxy.class
+                                interface:@"org.allseen.LSF.ControllerService"
+                                sessionID:sessionId.unsignedIntValue];
+         status = [proxy introspectRemoteObject];
+         if (ER_OK != status) {
+             NSString *msg = @"Failed to introspect a remote bus object.";
+             NSLog(@"%@", msg);
+             [response setErrorToUnknownWithMessage:msg];
+             [[DConnectManager sharedManager] sendResponse:response];
+             return;
+         }
+         
+         NSNumber *responseCode;
+         NSString *lampGroupID;
+         AJNMessageArgument *lampIDsArg =
+         [DPAllJoynMessageConverter AJNMessageArgumentWithObject:lightIDs
+                                                       signature:@"as"];
+         AJNMessageArgument *lampGroupIDsArg =
+         [DPAllJoynMessageConverter AJNMessageArgumentWithObject:@[]
+                                                       signature:@"as"];
+         [proxy createLampGroupWithLampIDs:lampIDsArg
+                              lampGroupIDs:lampGroupIDsArg
+                             lampGroupName:groupName
+                                  language:service.defaultLanguage
+                              responseCode:&responseCode
+                               lampGroupID:&lampGroupID];
+         if (responseCode
+             && responseCode.unsignedIntValue == DPAllJoynLightResponseCodeOK) {
+             [response setResult:DConnectMessageResultTypeOk];
+         } else {
+             [response setErrorToUnknownWithMessage:@"Failed to create a light group."];
+         }
+         
+         [[DConnectManager sharedManager] sendResponse:response];
+     }];
+}
+
+
 - (void)didReceiveDeleteLightGroupClearRequestForLampControllerWithResponse:(DConnectResponseMessage *)response
                                                                     service:(DPAllJoynServiceEntity *)service
                                                                     groupID:(NSString*)groupID
@@ -1309,206 +1828,9 @@ typedef NS_ENUM(NSUInteger, DPAllJoynLightServiceType) {
     switch ([self serviceTypeFromService:service]) {
             
         case DPAllJoynLightServiceTypeLampController: {
-            [_handler performOneShotSessionWithBusName:service
-                                                 block:
-             ^(DPAllJoynServiceEntity *service, NSNumber *sessionId)
-             {
-                 if (!sessionId) {
-                     NSString *msg = @"Failed to join a session.";
-                     NSLog(@"%@", msg);
-                     [response setErrorToUnknownWithMessage:msg];
-                     [[DConnectManager sharedManager] sendResponse:response];
-                     return;
-                 }
-                 
-                 QStatus status;
-                 LSFControllerServiceObjectProxy *proxy =
-                 (LSFControllerServiceObjectProxy *)
-                 [_handler proxyObjectWithService:service
-                                 proxyObjectClass:LSFControllerServiceObjectProxy.class
-                                        interface:@"org.allseen.LSF.ControllerService"
-                                        sessionID:sessionId.unsignedIntValue];
-                 status = [proxy introspectRemoteObject];
-                 if (ER_OK != status) {
-                     NSString *msg = @"Failed to introspect a remote bus object.";
-                     NSLog(@"%@", msg);
-                     [response setErrorToUnknownWithMessage:msg];
-                     [[DConnectManager sharedManager] sendResponse:response];
-                     return;
-                 }
-                 
-                 NSNumber *responseCode;
-                 AJNMessageArgument *lampGroupIDs;
-                 [proxy getAllLampGroupIDsWithResponseCode:&responseCode
-                                              lampGroupIDs:&lampGroupIDs];
-                 if (!responseCode
-                     || responseCode.unsignedIntValue != DPAllJoynLightResponseCodeOK) {
-                     [response setErrorToUnknownWithMessage:
-                      @"Failed to obtain light group IDs (1)."];
-                     [[DConnectManager sharedManager] sendResponse:response];
-                     return;
-                 }
-                 NSArray *lampGroupIDArr =
-                 [DPAllJoynMessageConverter
-                  objectWithAJNMessageArgument:lampGroupIDs];
-                 
-                 //////////////////////////////////////////////////
-                 // Obtain lamp group info.
-                 //
-                 NSMutableDictionary *lampGroups = [NSMutableDictionary dictionary];
-                 for (size_t i = 0; i < lampGroupIDArr.count; ++i, responseCode = nil) {
-                     DPAllJoynLampGroup *lampGroup = [DPAllJoynLampGroup new];
-                     
-                     lampGroup.groupID = lampGroupIDArr[i];
-                     
-                     {
-                         NSString *lampGroupName;
-                         NSString *ignored;
-                         [proxy getLampGroupNameWithLampGroupID:lampGroup.groupID
-                                                       language:service.defaultLanguage
-                                                   responseCode:&responseCode
-                                                  lampIDGroupID:&ignored
-                                                       language:&ignored
-                                                  lampGroupName:&lampGroupName];
-                         if (!responseCode
-                             || responseCode.intValue != DPAllJoynLightResponseCodeOK) {
-                             NSLog(@"Failed to obtain lamp group name. Skipping this lamp group...");
-                             continue;
-                         }
-                         responseCode = nil;
-                         lampGroup.name = lampGroupName;
-                     }
-                     
-                     AJNMessageArgument *lampIDs;
-                     NSString *ignored;
-                     [proxy getLampGroupWithLampGroupID:lampGroup.groupID
-                                           responseCode:&responseCode
-                                            lampGroupID:&ignored
-                                                 lampID:&lampIDs
-                                           lampGroupIDs:&lampGroupIDs];
-                     
-                     if (!responseCode
-                         || responseCode.intValue != DPAllJoynLightResponseCodeOK) {
-                         NSLog(@"Failed to obtain IDs of lamps and lamp groups contained in a lamp group. Skipping this lamp group...");
-                         continue;
-                     }
-                     responseCode = nil;
-                     lampGroup.lampIDs =
-                     [NSMutableSet setWithArray:
-                      [DPAllJoynMessageConverter
-                       objectWithAJNMessageArgument:lampIDs]];
-                     lampGroup.lampGroupIDs =
-                     [NSMutableSet setWithArray:
-                      [DPAllJoynMessageConverter
-                       objectWithAJNMessageArgument:lampGroupIDs]];
-                     
-                     lampGroup.config = @"";
-                     
-                     lampGroups[lampGroup.groupID] = lampGroup;
-                 }
-                 
-                 //////////////////////////////////////////////////
-                 // Expand lamp IDs contained in lamp groups.
-                 //
-                 {
-                     for (DPAllJoynLampGroup *searchTarget in lampGroups.allValues) {
-                         for (DPAllJoynLampGroup *expandTarget in lampGroups.allValues) {
-                             if ([searchTarget.groupID isEqualToString:expandTarget.groupID]) {
-                                 continue;
-                             }
-                             if ([expandTarget.lampGroupIDs containsObject:searchTarget.groupID]) {
-                                 [expandTarget.lampIDs addObjectsFromArray:searchTarget.lampIDs.allObjects];
-                                 [expandTarget.lampGroupIDs removeObject:searchTarget.groupID];
-                                 [expandTarget.lampGroupIDs addObjectsFromArray:searchTarget.lampGroupIDs.allObjects];
-                             }
-                         }
-                     }
-                 }
-                 
-                 //////////////////////////////////////////////////
-                 // Obtain lamp info.
-                 //
-                 NSMutableDictionary *lamps = [NSMutableDictionary dictionary];
-                 {
-                     for (DPAllJoynLampGroup *lampGroup in lampGroups.allValues) {
-                         for (NSString *lampID in lampGroup.lampIDs) {
-                             if (lamps[lampID]) {
-                                 continue;
-                             }
-                             
-                             DPAllJoynLamp *lamp = [DPAllJoynLamp new];
-                             NSString *ignored;
-                             
-                             NSString *name;
-                             [proxy getLampNameWithLampID:lampID
-                                                 language:service.defaultLanguage
-                                             responseCode:&responseCode
-                                                   lampID:&ignored
-                                                 language:&ignored
-                                                 lampName:&name];
-                             if (!responseCode
-                                 || responseCode.unsignedIntValue != DPAllJoynLightResponseCodeOK) {
-                                 NSLog(@"%@", @"Failed to obtain lamp name. Skipping this lamp...");
-                             } else {
-                                 lamp.name = name;
-                             }
-                             responseCode = nil;
-                             
-                             AJNMessageArgument *lampState;
-                             [proxy getLampStateWithLampID:lampID
-                                              responseCode:&responseCode
-                                                    lampID:&ignored
-                                                 lampState:&lampState];
-                             if (!responseCode
-                                 || responseCode.unsignedIntValue != DPAllJoynLightResponseCodeOK) {
-                                 NSLog(@"%@", @"Failed to obtain lamp state. Skipping this lamp...");
-                             } else {
-                                 NSDictionary *states =
-                                 [DPAllJoynMessageConverter
-                                  objectWithAJNMessageArgument:lampState];
-                                 if (!states[@"OnOff"]) {
-                                     NSLog(@"Failed to obtain on/off state."
-                                           " Skipping this lamp...");
-                                 } else {
-                                     lamp.on = states[@"OnOff"];
-                                 }
-                             }
-                             responseCode = nil;
-
-                             lamps[lampID] = lamp;
-                         }
-                     }
-                 }
-
-                 DConnectArray *lightGroups = [DConnectArray array];
-                 for (DPAllJoynLampGroup *lampGroup in lampGroups.allValues) {
-                     DConnectMessage *lightGroupMsg = [DConnectMessage message];
-                     [lightGroupMsg setString:lampGroup.groupID forKey:DCMLightProfileParamGroupId];
-                     [lightGroupMsg setString:lampGroup.name forKey:DCMLightProfileParamName];
-                     DConnectArray *lights = [DConnectArray array];
-                     for (NSString *lampID in lampGroup.lampIDs) {
-                         DPAllJoynLamp *lamp = lamps[lampID];
-
-                         DConnectMessage *light = [DConnectMessage message];
-                         [light setString:lamp.ID forKey:DCMLightProfileParamLightId];
-                         if (lamp.name) {
-                             [light setString:lamp.name forKey:DCMLightProfileParamName];
-                         }
-                         if (lamp.on) {
-                             [light setBool:lamp.on.boolValue forKey:DCMLightProfileParamOn];
-                         }
-                         [lightGroupMsg setString:@"" forKey:DCMLightProfileParamConfig];
-                         [lights addMessage:light];
-                     }
-                     [lightGroupMsg setArray:lights forKey:DCMLightProfileParamLights];
-                     [lightGroupMsg setString:@"" forKey:DCMLightProfileParamConfig];
-                     [lightGroups addMessage:lightGroupMsg];
-                 }
-                 [response setArray:lightGroups forKey:DCMLightProfileParamLightGroups];
-                 
-                 [response setResult:DConnectMessageResultTypeOk];
-                 [[DConnectManager sharedManager] sendResponse:response];
-             }];
+            [self
+             didReceiveGetLightGroupRequestForLampControllerWithResponse:response
+             service:service];
             return NO;
         }
             
@@ -1558,87 +1880,10 @@ didReceivePostLightGroupRequest:(DConnectRequestMessage *)request
                 return YES;
             }
             
-            //////////////////////////////////////////////////
-            // Querying
-            //
-            [_handler performOneShotSessionWithBusName:service
-                                                 block:
-             ^(DPAllJoynServiceEntity *service, NSNumber *sessionId)
-             {
-                 if (!sessionId) {
-                     NSString *msg = @"Failed to join a session.";
-                     NSLog(@"%@", msg);
-                     [response setErrorToUnknownWithMessage:msg];
-                     [[DConnectManager sharedManager] sendResponse:response];
-                     return;
-                 }
-                 
-                 QStatus status;
-                 LSFControllerServiceObjectProxy *proxy =
-                 (LSFControllerServiceObjectProxy *)
-                 [_handler proxyObjectWithService:service
-                                 proxyObjectClass:LSFControllerServiceObjectProxy.class
-                                        interface:@"org.allseen.LSF.ControllerService"
-                                        sessionID:sessionId.unsignedIntValue];
-                 status = [proxy introspectRemoteObject];
-                 if (ER_OK != status) {
-                     NSString *msg = @"Failed to introspect a remote bus object.";
-                     NSLog(@"%@", msg);
-                     [response setErrorToUnknownWithMessage:msg];
-                     [[DConnectManager sharedManager] sendResponse:response];
-                     return;
-                 }
-                 
-                 MsgArg newStates[3];
-                 size_t count = 0;
-                 MsgArg tmp1;
-                 MsgArg tmp2 = MsgArg("b", YES);
-                 tmp1.Set("{sv}", "OnOff", &tmp2);
-                 newStates[count] = tmp1;
-                 ++count;
-                 
-                 double brightnessScaled = brightness * 0xffffffffL;
-                 tmp1 = MsgArg();
-                 tmp2 = MsgArg("u", (uint32_t)brightnessScaled);
-                 tmp1.Set("{sv}", "Brightness", &tmp2);
-                 newStates[count] = tmp1;
-                 ++count;
-                 
-                 if (color) {
-                     NSDictionary *hsb = [DPAllJoynColorUtility HSBFromRGB:color];
-                     
-                     tmp1 = MsgArg();
-                     tmp2 = MsgArg("u", [hsb[@"hue"] unsignedIntValue]);
-                     tmp1.Set("{sv}", "Hue", &tmp2);
-                     newStates[count] = tmp1;
-                     ++count;
-                     
-                     tmp1 = MsgArg();
-                     tmp2 = MsgArg("u", [hsb[@"saturation"] unsignedIntValue]);
-                     tmp1.Set("{sv}", "Saturation", &tmp2);
-                     newStates[count] = tmp1;
-                     ++count;
-                 }
-                 
-                 MsgArg newStateArg("a{sv}", count, newStates);
-                 AJNMessageArgument *newState =
-                 [[AJNMessageArgument alloc] initWithHandle:&newStateArg];
-                 NSNumber *responseCode;
-                 NSString *ignored;
-                 [proxy transitionLampGroupStateWithLampGroupID:groupId
-                                                      lampState:newState
-                                               transitionPeriod:@10
-                                                   responseCode:&responseCode
-                                                    lampGroupID:&ignored];
-                 if (responseCode
-                     && responseCode.unsignedIntValue == DPAllJoynLightResponseCodeOK) {
-                     [response setResult:DConnectMessageResultTypeOk];
-                 } else {
-                     [response setErrorToUnknownWithMessage:@"Failed to change group state."];
-                 }
-                 
-                 [[DConnectManager sharedManager] sendResponse:response];
-             }];
+            [self
+             didReceivePostLightGroupRequestForLampControllerWithResponse:response
+             service:service groupID:groupId brightness:brightness
+             color:color flashing:flashing];
             return NO;
         }
             
@@ -1689,98 +1934,10 @@ didReceivePostLightGroupRequest:(DConnectRequestMessage *)request
                 return YES;
             }
             
-            //////////////////////////////////////////////////
-            // Querying
-            //
-            [_handler performOneShotSessionWithBusName:service
-                                                 block:
-             ^(DPAllJoynServiceEntity *service, NSNumber *sessionId)
-             {
-                 if (!sessionId) {
-                     NSString *msg = @"Failed to join a session.";
-                     NSLog(@"%@", msg);
-                     [response setErrorToUnknownWithMessage:msg];
-                     [[DConnectManager sharedManager] sendResponse:response];
-                     return;
-                 }
-                 
-                 QStatus status;
-                 LSFControllerServiceObjectProxy *proxy =
-                 (LSFControllerServiceObjectProxy *)
-                 [_handler proxyObjectWithService:service
-                                 proxyObjectClass:LSFControllerServiceObjectProxy.class
-                                        interface:@"org.allseen.LSF.ControllerService"
-                                        sessionID:sessionId.unsignedIntValue];
-                 status = [proxy introspectRemoteObject];
-                 if (ER_OK != status) {
-                     NSString *msg = @"Failed to introspect a remote bus object.";
-                     NSLog(@"%@", msg);
-                     [response setErrorToUnknownWithMessage:msg];
-                     [[DConnectManager sharedManager] sendResponse:response];
-                     return;
-                 }
-                 
-                 MsgArg newStates[2];
-                 size_t count = 0;
-                 MsgArg tmp1;
-                 MsgArg tmp2;
-                 
-                 double brightnessScaled = brightness * 0xffffffffL;
-                 tmp1 = MsgArg();
-                 tmp2 = MsgArg("u", (uint32_t)brightnessScaled);
-                 tmp1.Set("{sv}", "Brightness", &tmp2);
-                 newStates[count] = tmp1;
-                 ++count;
-                 
-                 if (color) {
-                     NSDictionary *hsb = [DPAllJoynColorUtility HSBFromRGB:color];
-                     
-                     tmp1 = MsgArg();
-                     tmp2 = MsgArg("u", [hsb[@"hue"] unsignedIntValue]);
-                     tmp1.Set("{sv}", "Hue", &tmp2);
-                     newStates[count] = tmp1;
-                     ++count;
-                     
-                     tmp1 = MsgArg();
-                     tmp2 = MsgArg("u", [hsb[@"saturation"] unsignedIntValue]);
-                     tmp1.Set("{sv}", "Saturation", &tmp2);
-                     newStates[count] = tmp1;
-                     ++count;
-                 }
-                 
-                 MsgArg newStateArg("a{sv}", count, newStates);
-                 AJNMessageArgument *newState =
-                 [[AJNMessageArgument alloc] initWithHandle:&newStateArg];
-                 NSNumber *responseCode;
-                 NSString *ignored;
-                 [proxy transitionLampGroupStateWithLampGroupID:groupId
-                                                      lampState:newState
-                                               transitionPeriod:@10
-                                                   responseCode:&responseCode
-                                                    lampGroupID:&ignored];
-                 if (!responseCode
-                     || responseCode.unsignedIntValue != DPAllJoynLightResponseCodeOK) {
-                     [response setErrorToUnknownWithMessage:@"Failed to change group state."];
-                     [[DConnectManager sharedManager] sendResponse:response];
-                     return;
-                 }
-                 
-                 [proxy setLampGroupNameWithLampID:groupId
-                                          lampName:name
-                                          language:service.defaultLanguage
-                                      responseCode:&responseCode
-                                            lampID:&ignored
-                                          language:&ignored];
-                 if (!responseCode
-                     || responseCode.unsignedIntValue != DPAllJoynLightResponseCodeOK) {
-                     [response setErrorToUnknownWithMessage:@"Failed to change group name."];
-                     [[DConnectManager sharedManager] sendResponse:response];
-                     return;
-                 }
-                 
-                 [response setResult:DConnectMessageResultTypeOk];
-                 [[DConnectManager sharedManager] sendResponse:response];
-             }];
+            [self
+             didReceivePutLightGroupRequestForLampControllerWithResponse:response
+             service:service groupID:groupId name:name brightness:brightness
+             color:color flashing:flashing];
             return NO;
         }
             
@@ -1827,64 +1984,9 @@ didReceivePostLightGroupRequest:(DConnectRequestMessage *)request
                 return YES;
             }
             
-            //////////////////////////////////////////////////
-            // Querying
-            //
-            [_handler performOneShotSessionWithBusName:service
-                                                 block:
-             ^(DPAllJoynServiceEntity *service, NSNumber *sessionId)
-             {
-                 if (!sessionId) {
-                     NSString *msg = @"Failed to join a session.";
-                     NSLog(@"%@", msg);
-                     [response setErrorToUnknownWithMessage:msg];
-                     [[DConnectManager sharedManager] sendResponse:response];
-                     return;
-                 }
-                 
-                 QStatus status;
-                 LSFControllerServiceObjectProxy *proxy =
-                 (LSFControllerServiceObjectProxy *)
-                 [_handler proxyObjectWithService:service
-                                 proxyObjectClass:LSFControllerServiceObjectProxy.class
-                                        interface:@"org.allseen.LSF.ControllerService"
-                                        sessionID:sessionId.unsignedIntValue];
-                 status = [proxy introspectRemoteObject];
-                 if (ER_OK != status) {
-                     NSString *msg = @"Failed to introspect a remote bus object.";
-                     NSLog(@"%@", msg);
-                     [response setErrorToUnknownWithMessage:msg];
-                     [[DConnectManager sharedManager] sendResponse:response];
-                     return;
-                 }
-                 
-                 MsgArg newStates[1];
-                 size_t count = 0;
-                 MsgArg tmp1;
-                 MsgArg tmp2 = MsgArg("b", NO);
-                 tmp1.Set("{sv}", "OnOff", &tmp2);
-                 newStates[count] = tmp1;
-                 ++count;
-                 
-                 MsgArg newStateArg("a{sv}", count, newStates);
-                 AJNMessageArgument *newState =
-                 [[AJNMessageArgument alloc] initWithHandle:&newStateArg];
-                 NSNumber *responseCode;
-                 NSString *ignored;
-                 [proxy transitionLampGroupStateWithLampGroupID:groupId
-                                                      lampState:newState
-                                               transitionPeriod:@10
-                                                   responseCode:&responseCode
-                                                    lampGroupID:&ignored];
-                 if (responseCode
-                     && responseCode.unsignedIntValue == DPAllJoynLightResponseCodeOK) {
-                     [response setResult:DConnectMessageResultTypeOk];
-                 } else {
-                     [response setErrorToUnknownWithMessage:@"Failed to change group state."];
-                 }
-                 
-                 [[DConnectManager sharedManager] sendResponse:response];
-             }];
+            [self
+             didReceiveDeleteLightGroupRequestForLampControllerWithResponse:response
+             service:service groupID:groupId];
             return NO;
         }
             
@@ -1938,60 +2040,9 @@ didReceivePostLightGroupRequest:(DConnectRequestMessage *)request
                 return YES;
             }
             
-            //////////////////////////////////////////////////
-            // Querying
-            //
-            [_handler performOneShotSessionWithBusName:service
-                                                 block:
-             ^(DPAllJoynServiceEntity *service, NSNumber *sessionId)
-             {
-                 if (!sessionId) {
-                     NSString *msg = @"Failed to join a session.";
-                     NSLog(@"%@", msg);
-                     [response setErrorToUnknownWithMessage:msg];
-                     [[DConnectManager sharedManager] sendResponse:response];
-                     return;
-                 }
-                 
-                 QStatus status;
-                 LSFControllerServiceObjectProxy *proxy =
-                 (LSFControllerServiceObjectProxy *)
-                 [_handler proxyObjectWithService:service
-                                 proxyObjectClass:LSFControllerServiceObjectProxy.class
-                                        interface:@"org.allseen.LSF.ControllerService"
-                                        sessionID:sessionId.unsignedIntValue];
-                 status = [proxy introspectRemoteObject];
-                 if (ER_OK != status) {
-                     NSString *msg = @"Failed to introspect a remote bus object.";
-                     NSLog(@"%@", msg);
-                     [response setErrorToUnknownWithMessage:msg];
-                     [[DConnectManager sharedManager] sendResponse:response];
-                     return;
-                 }
-                 
-                 NSNumber *responseCode;
-                 NSString *lampGroupID;
-                 AJNMessageArgument *lampIDsArg =
-                 [DPAllJoynMessageConverter AJNMessageArgumentWithObject:lightIds
-                                                               signature:@"as"];
-                 AJNMessageArgument *lampGroupIDsArg =
-                 [DPAllJoynMessageConverter AJNMessageArgumentWithObject:@[]
-                                                               signature:@"as"];
-                 [proxy createLampGroupWithLampIDs:lampIDsArg
-                                      lampGroupIDs:lampGroupIDsArg
-                                     lampGroupName:groupName
-                                          language:service.defaultLanguage
-                                      responseCode:&responseCode
-                                       lampGroupID:&lampGroupID];
-                 if (responseCode
-                     && responseCode.unsignedIntValue == DPAllJoynLightResponseCodeOK) {
-                     [response setResult:DConnectMessageResultTypeOk];
-                 } else {
-                     [response setErrorToUnknownWithMessage:@"Failed to create a light group."];
-                 }
-                                  
-                 [[DConnectManager sharedManager] sendResponse:response];
-             }];
+            [self
+             didReceivePostLightGroupCreateRequestForLampControllerWithResponse:response
+             service:service lightIDs:lightIds groupName:groupName];
             return NO;
         }
             
