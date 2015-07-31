@@ -358,13 +358,47 @@ typedef NS_ENUM(NSUInteger, DPAllJoynLightServiceType) {
                                                        color:(NSString*)color
                                                     flashing:(NSArray*)flashing
 {
+    //////////////////////////////////////////////////
+    // Validity check
+    //
+    if (![lightId isEqualToString:@"self"]) {
+        [response setErrorToInvalidRequestParameterWithMessage:
+         @"lightId not found."];
+        [[DConnectManager sharedManager] sendResponse:response];
+        return;
+    }
+    if (brightness < 0 || brightness > 1) {
+        NSString *msg = @"Parameter 'brightness' must be within range [0, 1].";
+        NSLog(@"%@", msg);
+        [response setErrorToInvalidRequestParameterWithMessage:msg];
+        [[DConnectManager sharedManager] sendResponse:response];
+        return;
+    }
+    if (color
+        && ((color.length != 6 && color.length != 8)
+            || ![[NSScanner scannerWithString:color] scanHexInt:nil]))
+    {
+        NSString *msg = @"Parameter 'color' must be a string representing "
+        "an RGB hexadecimal (e.g. 0xFF0000, ff0000).";
+        NSLog(@"%@", msg);
+        [response setErrorToInvalidRequestParameterWithMessage:msg];
+        [[DConnectManager sharedManager] sendResponse:response];
+        return;
+    }
+    if (flashing) {
+        NSLog(@"Parameter 'flashing' is not supported. Ignored...");
+        //             [response setErrorToNotSupportActionWithMessage:@"Parameter 'flashing' is not supported."];
+        //             [[DConnectManager sharedManager] sendResponse:response];
+        //             return;
+    }
+    
+    //////////////////////////////////////////////////
+    // Querying
+    //
     [_handler performOneShotSessionWithBusName:service
                                          block:
      ^(DPAllJoynServiceEntity *service, NSNumber *sessionId)
      {
-         //////////////////////////////////////////////////
-         // Validity check
-         //
          if (!sessionId) {
              NSString *msg = @"Failed to join a session.";
              NSLog(@"%@", msg);
@@ -372,40 +406,7 @@ typedef NS_ENUM(NSUInteger, DPAllJoynLightServiceType) {
              [[DConnectManager sharedManager] sendResponse:response];
              return;
          }
-         if (![lightId isEqualToString:@"self"]) {
-             [response setErrorToInvalidRequestParameterWithMessage:
-              @"lightId not found."];
-             [[DConnectManager sharedManager] sendResponse:response];
-             return;
-         }
-         if (brightness < 0 || brightness > 1) {
-             NSString *msg = @"Parameter 'brightness' must be within range [0, 1].";
-             NSLog(@"%@", msg);
-             [response setErrorToInvalidRequestParameterWithMessage:msg];
-             [[DConnectManager sharedManager] sendResponse:response];
-             return;
-         }
-         if (color
-             && ((color.length != 6 && color.length != 8)
-                 || ![[NSScanner scannerWithString:color] scanHexInt:nil]))
-         {
-             NSString *msg = @"Parameter 'color' must be a string representing "
-             "an RGB hexadecimal (e.g. 0xFF0000, ff0000).";
-             NSLog(@"%@", msg);
-             [response setErrorToInvalidRequestParameterWithMessage:msg];
-             [[DConnectManager sharedManager] sendResponse:response];
-             return;
-         }
-         if (flashing) {
-             NSLog(@"Parameter 'flashing' is not supported. Ignored...");
-             //             [response setErrorToNotSupportActionWithMessage:@"Parameter 'flashing' is not supported."];
-             //             [[DConnectManager sharedManager] sendResponse:response];
-             //             return;
-         }
          
-         //////////////////////////////////////////////////
-         // Querying
-         //
          QStatus status;
          LSFLampObjectProxy *proxyState = (LSFLampObjectProxy *)
          [_handler proxyObjectWithService:service
@@ -496,13 +497,47 @@ typedef NS_ENUM(NSUInteger, DPAllJoynLightServiceType) {
                                                            color:(NSString*)color
                                                         flashing:(NSArray*)flashing
 {
+    //////////////////////////////////////////////////
+    // Validity check
+    //
+    if (!lightId) {
+        [response setErrorToInvalidRequestParameterWithMessage:
+         @"Parameter 'lightId' must be specified."];
+        [[DConnectManager sharedManager] sendResponse:response];
+        return;
+    }
+    if (brightness < 0 || brightness > 1) {
+        NSString *msg = @"Parameter 'brightness' must be within range [0, 1].";
+        NSLog(@"%@", msg);
+        [response setErrorToInvalidRequestParameterWithMessage:msg];
+        [[DConnectManager sharedManager] sendResponse:response];
+        return;
+    }
+    if (color
+        && (color.length != 6
+            || ![[NSScanner scannerWithString:color] scanHexInt:nil]))
+    {
+        NSString *msg = @"Parameter 'color' must be a string representing "
+        "an RGB hexadecimal (e.g. ff0000).";
+        NSLog(@"%@", msg);
+        [response setErrorToInvalidRequestParameterWithMessage:msg];
+        [[DConnectManager sharedManager] sendResponse:response];
+        return;
+    }
+    if (flashing) {
+        NSLog(@"Parameter 'flashing' is not supported. Ignored...");
+        //             [response setErrorToNotSupportActionWithMessage:@"Parameter 'flashing' is not supported."];
+        //             [[DConnectManager sharedManager] sendResponse:response];
+        //             return;
+    }
+    
+    //////////////////////////////////////////////////
+    // Querying
+    //
     [_handler performOneShotSessionWithBusName:service
                                          block:
      ^(DPAllJoynServiceEntity *service, NSNumber *sessionId)
      {
-         //////////////////////////////////////////////////
-         // Validity check
-         //
          if (!sessionId) {
              NSString *msg = @"Failed to join a session.";
              NSLog(@"%@", msg);
@@ -510,16 +545,7 @@ typedef NS_ENUM(NSUInteger, DPAllJoynLightServiceType) {
              [[DConnectManager sharedManager] sendResponse:response];
              return;
          }
-         if (!lightId) {
-             [response setErrorToInvalidRequestParameterWithMessage:
-              @"lightId must be specified."];
-             [[DConnectManager sharedManager] sendResponse:response];
-             return;
-         }
          
-         //////////////////////////////////////////////////
-         // Querying
-         //
          QStatus status;
          LSFControllerServiceObjectProxy *proxy =
          (LSFControllerServiceObjectProxy *)
@@ -615,13 +641,50 @@ typedef NS_ENUM(NSUInteger, DPAllJoynLightServiceType) {
                                                       color:(NSString*)color
                                                    flashing:(NSArray*)flashing
 {
+    //////////////////////////////////////////////////
+    // Validity check
+    //
+    if (![lightId isEqualToString:@"self"]) {
+        [response setErrorToInvalidRequestParameterWithMessage:
+         @"lightId not found."];
+        [[DConnectManager sharedManager] sendResponse:response];
+        return;
+    }
+    if (name) {
+        NSLog(@"Parameter 'name' is not supported. Ignored...");
+    }
+    if (brightness < 0 || brightness > 1) {
+        NSString *msg = @"Parameter 'brightness' must be within range [0, 1].";
+        NSLog(@"%@", msg);
+        [response setErrorToInvalidRequestParameterWithMessage:msg];
+        [[DConnectManager sharedManager] sendResponse:response];
+        return;
+    }
+    if (color
+        && ((color.length != 6 && color.length != 8)
+            || ![[NSScanner scannerWithString:color] scanHexInt:nil]))
+    {
+        NSString *msg = @"Parameter 'color' must be a string representing "
+        "an RGB hexadecimal (e.g. 0xFF0000, ff0000).";
+        NSLog(@"%@", msg);
+        [response setErrorToInvalidRequestParameterWithMessage:msg];
+        [[DConnectManager sharedManager] sendResponse:response];
+        return;
+    }
+    if (flashing) {
+        NSLog(@"Parameter 'flashing' is not supported. Ignored...");
+        //             [response setErrorToNotSupportActionWithMessage:@"Parameter 'flashing' is not supported."];
+        //             [[DConnectManager sharedManager] sendResponse:response];
+        //             return;
+    }
+    
+    //////////////////////////////////////////////////
+    // Querying
+    //
     [_handler performOneShotSessionWithBusName:service
                                          block:
      ^(DPAllJoynServiceEntity *service, NSNumber *sessionId)
      {
-         //////////////////////////////////////////////////
-         // Validity check
-         //
          if (!sessionId) {
              NSString *msg = @"Failed to join a session.";
              NSLog(@"%@", msg);
@@ -629,40 +692,7 @@ typedef NS_ENUM(NSUInteger, DPAllJoynLightServiceType) {
              [[DConnectManager sharedManager] sendResponse:response];
              return;
          }
-         if (![lightId isEqualToString:@"self"]) {
-             [response setErrorToInvalidRequestParameterWithMessage:
-              @"lightId not found."];
-             [[DConnectManager sharedManager] sendResponse:response];
-             return;
-         }
-         if (brightness < 0 || brightness > 1) {
-             NSString *msg = @"Parameter 'brightness' must be within range [0, 1].";
-             NSLog(@"%@", msg);
-             [response setErrorToInvalidRequestParameterWithMessage:msg];
-             [[DConnectManager sharedManager] sendResponse:response];
-             return;
-         }
-         if (color
-             && ((color.length != 6 && color.length != 8)
-                 || ![[NSScanner scannerWithString:color] scanHexInt:nil]))
-         {
-             NSString *msg = @"Parameter 'color' must be a string representing "
-             "an RGB hexadecimal (e.g. 0xFF0000, ff0000).";
-             NSLog(@"%@", msg);
-             [response setErrorToInvalidRequestParameterWithMessage:msg];
-             [[DConnectManager sharedManager] sendResponse:response];
-             return;
-         }
-         if (flashing) {
-             NSLog(@"Parameter 'flashing' is not supported. Ignored...");
-             //             [response setErrorToNotSupportActionWithMessage:@"Parameter 'flashing' is not supported."];
-             //             [[DConnectManager sharedManager] sendResponse:response];
-             //             return;
-         }
-     
-         //////////////////////////////////////////////////
-         // Querying
-         //
+         
          QStatus status;
          LSFLampObjectProxy *proxyState = (LSFLampObjectProxy *)
          [_handler proxyObjectWithService:service
@@ -751,13 +781,47 @@ typedef NS_ENUM(NSUInteger, DPAllJoynLightServiceType) {
                                                           color:(NSString*)color
                                                        flashing:(NSArray*)flashing
 {
+    //////////////////////////////////////////////////
+    // Validity check
+    //
+    if (!lightId) {
+        [response setErrorToInvalidRequestParameterWithMessage:
+         @"Parameter 'lightId' must be specified."];
+        [[DConnectManager sharedManager] sendResponse:response];
+        return;
+    }
+    if (brightness < 0 || brightness > 1) {
+        NSString *msg = @"Parameter 'brightness' must be within range [0, 1].";
+        NSLog(@"%@", msg);
+        [response setErrorToInvalidRequestParameterWithMessage:msg];
+        [[DConnectManager sharedManager] sendResponse:response];
+        return;
+    }
+    if (color
+        && ((color.length != 6 && color.length != 8)
+            || ![[NSScanner scannerWithString:color] scanHexInt:nil]))
+    {
+        NSString *msg = @"Parameter 'color' must be a string representing "
+        "an RGB hexadecimal (e.g. 0xFF0000, ff0000).";
+        NSLog(@"%@", msg);
+        [response setErrorToInvalidRequestParameterWithMessage:msg];
+        [[DConnectManager sharedManager] sendResponse:response];
+        return;
+    }
+    if (flashing) {
+        NSLog(@"Parameter 'flashing' is not supported. Ignored...");
+        //             [response setErrorToNotSupportActionWithMessage:@"Parameter 'flashing' is not supported."];
+        //             [[DConnectManager sharedManager] sendResponse:response];
+        //             return;
+    }
+    
+    //////////////////////////////////////////////////
+    // Querying
+    //
     [_handler performOneShotSessionWithBusName:service
                                          block:
      ^(DPAllJoynServiceEntity *service, NSNumber *sessionId)
      {
-         //////////////////////////////////////////////////
-         // Validity check
-         //
          if (!sessionId) {
              NSString *msg = @"Failed to join a session.";
              NSLog(@"%@", msg);
@@ -765,16 +829,7 @@ typedef NS_ENUM(NSUInteger, DPAllJoynLightServiceType) {
              [[DConnectManager sharedManager] sendResponse:response];
              return;
          }
-         if (!lightId) {
-             [response setErrorToInvalidRequestParameterWithMessage:
-              @"lightId must be specified."];
-             [[DConnectManager sharedManager] sendResponse:response];
-             return;
-         }
          
-         //////////////////////////////////////////////////
-         // Querying
-         //
          QStatus status;
          LSFControllerServiceObjectProxy *proxy =
          (LSFControllerServiceObjectProxy *)
@@ -863,13 +918,23 @@ typedef NS_ENUM(NSUInteger, DPAllJoynLightServiceType) {
                                                        service:(DPAllJoynServiceEntity *)service
                                                        lightId:(NSString*)lightId
 {
+    //////////////////////////////////////////////////
+    // Validity check
+    //
+    if (![lightId isEqualToString:@"self"]) {
+        [response setErrorToInvalidRequestParameterWithMessage:
+         @"lightId not found."];
+        [[DConnectManager sharedManager] sendResponse:response];
+        return;
+    }
+    
+    //////////////////////////////////////////////////
+    // Querying
+    //
     [_handler performOneShotSessionWithBusName:service
                                          block:
      ^(DPAllJoynServiceEntity *service, NSNumber *sessionId)
      {
-         //////////////////////////////////////////////////
-         // Validity check
-         //
          if (!sessionId) {
              NSString *msg = @"Failed to join a session.";
              NSLog(@"%@", msg);
@@ -877,16 +942,7 @@ typedef NS_ENUM(NSUInteger, DPAllJoynLightServiceType) {
              [[DConnectManager sharedManager] sendResponse:response];
              return;
          }
-         if (![lightId isEqualToString:@"self"]) {
-             [response setErrorToInvalidRequestParameterWithMessage:
-              @"lightId not found."];
-             [[DConnectManager sharedManager] sendResponse:response];
-             return;
-         }
          
-         //////////////////////////////////////////////////
-         // Querying
-         //
          QStatus status;
          LSFLampObjectProxy *proxy = (LSFLampObjectProxy *)
          [_handler proxyObjectWithService:service
@@ -914,13 +970,23 @@ typedef NS_ENUM(NSUInteger, DPAllJoynLightServiceType) {
                                                            service:(DPAllJoynServiceEntity *)service
                                                            lightId:(NSString*)lightId
 {
+    //////////////////////////////////////////////////
+    // Validity check
+    //
+    if (!lightId) {
+        [response setErrorToInvalidRequestParameterWithMessage:
+         @"Parameter 'lightId' must be specified."];
+        [[DConnectManager sharedManager] sendResponse:response];
+        return;
+    }
+    
+    //////////////////////////////////////////////////
+    // Querying
+    //
     [_handler performOneShotSessionWithBusName:service
                                          block:
      ^(DPAllJoynServiceEntity *service, NSNumber *sessionId)
      {
-         //////////////////////////////////////////////////
-         // Validity check
-         //
          if (!sessionId) {
              NSString *msg = @"Failed to join a session.";
              NSLog(@"%@", msg);
@@ -928,16 +994,7 @@ typedef NS_ENUM(NSUInteger, DPAllJoynLightServiceType) {
              [[DConnectManager sharedManager] sendResponse:response];
              return;
          }
-         if (!lightId) {
-             [response setErrorToInvalidRequestParameterWithMessage:
-              @"lightId must be specified."];
-             [[DConnectManager sharedManager] sendResponse:response];
-             return;
-         }
          
-         //////////////////////////////////////////////////
-         // Querying
-         //
          QStatus status;
          LSFControllerServiceObjectProxy *proxy =
          (LSFControllerServiceObjectProxy *)
