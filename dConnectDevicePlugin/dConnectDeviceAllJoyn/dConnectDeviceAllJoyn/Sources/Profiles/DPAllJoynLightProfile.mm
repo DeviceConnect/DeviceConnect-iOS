@@ -633,6 +633,7 @@ typedef NS_ENUM(NSUInteger, DPAllJoynLightServiceType) {
 }
 
 
+// TODO: Implement name change functionality using AllJoyn Config service.
 - (void) didReceivePutLightRequestForSingleLampWithResponse:(DConnectResponseMessage *)response
                                                     service:(DPAllJoynServiceEntity *)service
                                                     lightId:(NSString*)lightId
@@ -907,6 +908,23 @@ typedef NS_ENUM(NSUInteger, DPAllJoynLightServiceType) {
              [response setResult:DConnectMessageResultTypeOk];
          } else {
              [response setErrorToUnknownWithMessage:@"Failed to change status."];
+         }
+         
+         if (name) {
+             NSString *ignored;
+             [proxy setLampNameWithLampID:lightId
+                                 lampName:name
+                                 language:service.defaultLanguage
+                             responseCode:&responseCode
+                                   lampID:&ignored
+                                 language:&ignored];
+             
+             if (responseCode
+                 && responseCode.unsignedIntValue == DPAllJoynLightResponseCodeOK) {
+                 [response setResult:DConnectMessageResultTypeOk];
+             } else {
+                 [response setErrorToUnknownWithMessage:@"Failed to change name."];
+             }
          }
          
          [[DConnectManager sharedManager] sendResponse:response];
