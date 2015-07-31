@@ -151,26 +151,13 @@ typedef NS_ENUM(NSUInteger, DPAllJoynLightServiceType) {
             NSMutableDictionary *functionalities =
             [NSMutableDictionary dictionary];
             if (details) {
-                size_t size;
-                MsgArg *detailArr;
-                status = [details value:@"a{sv}", &size, &detailArr];
-                if (ER_OK != status) {
-                    NSLog(@"Failed to obtain light details.");
-                    return nil;
-                }
-                for (size_t i = 0; i < size; ++i) {
-                    char *keyCStr;
-                    NSString *key;
-                    MsgArg valArg;
-                    status = detailArr[i].Get("{sv}", &keyCStr, &valArg);
-                    if (ER_OK != status) {
-                        NSLog(@"Failed to obtain a key-value pair.");
-                        continue;
-                    }
-                    key = @(keyCStr);
-                    if ([key isEqualToString:@"Dimmable"] ||
-                        [key isEqualToString:@"Color"]) {
-                        functionalities[key] = @(valArg.v_bool);
+                NSDictionary *detailsDict = (NSDictionary *)
+                [DPAllJoynMessageConverter objectWithAJNMessageArgument:details];
+                if (detailsDict) {
+                    for (NSString *key in @[@"Dimmable", @"Color"]) {
+                        if (detailsDict[key]) {
+                            functionalities[key] = detailsDict[key];
+                        }
                     }
                 }
             }
@@ -280,37 +267,25 @@ typedef NS_ENUM(NSUInteger, DPAllJoynLightServiceType) {
          AJNMessageArgument *lampIDs;
          [proxy getAllLampIDsWithResponseCode:&responseCode lampIDs:&lampIDs];
          if (!responseCode || responseCode.intValue != DPAllJoynLightResponseCodeOK) {
-             NSString *msg = @"Failed to obtain lamp IDs.";
+             NSString *msg = @"Failed to obtain lamp IDs (1).";
              NSLog(@"%@", msg);
              [response setErrorToUnknownWithMessage:msg];
              [[DConnectManager sharedManager] sendResponse:response];
              return;
          }
          responseCode = nil;
-
-         size_t size1;
-         MsgArg *entries1;
-         status = [lampIDs value:@"as", &size1, &entries1];
-         if (ER_OK != status) {
-             NSString *msg = @"Failed to parse lamp IDs.";
+         
+         NSArray *lampIDArr =
+         [DPAllJoynMessageConverter objectWithAJNMessageArgument:lampIDs];
+         if (!lampIDArr) {
+             NSString *msg = @"Failed to obtain lamp IDs (2).";
              NSLog(@"%@", msg);
              [response setErrorToUnknownWithMessage:msg];
              [[DConnectManager sharedManager] sendResponse:response];
              return;
          }
-         for (size_t i = 0; i < size1; ++i) {
+         for (NSString *lampID in lampIDArr) {
              
-             //////////////////////////////////////////////////
-             // Obtain lamp ID.
-             //
-             char *lampIDCStr;
-             status = entries1[i].Get("s", &lampIDCStr);
-             if (ER_OK != status) {
-                 NSLog(@"Failed to parse a lamp ID. Skipping this lamp...");
-                 continue;
-             }
-             NSString *lampID = @(lampIDCStr);
-
              //////////////////////////////////////////////////
              // Obtain lamp name.
              //
@@ -335,7 +310,7 @@ typedef NS_ENUM(NSUInteger, DPAllJoynLightServiceType) {
              //////////////////////////////////////////////////
              // Obtain lamp on/off state.
              //
-             NSNumber *onOffState;
+             BOOL onOffState;
              {
                  NSString *lampIDOut;
                  AJNMessageArgument *onOffStateArg;
@@ -345,58 +320,27 @@ typedef NS_ENUM(NSUInteger, DPAllJoynLightServiceType) {
                                      lampState:&onOffStateArg];
                  if (!responseCode
                      || responseCode.intValue != DPAllJoynLightResponseCodeOK) {
-                     NSLog(@"Failed to obtain lamp states (1)."
+                     NSLog(@"Failed to obtain lamp states."
                            " Skipping this lamp...");
                      continue;
                  }
                  responseCode = nil;
-                 size_t size2;
-                 MsgArg *entries2;
-                 status = [onOffStateArg value:@"a{sv}", &size2, &entries2];
-                 if (ER_OK != status) {
-                     NSLog(@"Failed to obtain lamp states (2)."
+                 
+                 NSDictionary *states =
+                 [DPAllJoynMessageConverter objectWithAJNMessageArgument:onOffStateArg];
+                 if (!states[@"OnOff"]) {
+                     NSLog(@"Failed to obtain on/off state."
                            " Skipping this lamp...");
                      continue;
                  }
-                 BOOL shouldContinue = NO;
-                 for (size_t j = 0; j < size2; ++j) {
-                     char *keyCStr;
-                     MsgArg *valArg;
-                     status = entries2[j].Get("{sv}", &keyCStr, &valArg);
-                     if (ER_OK != status) {
-                         NSLog(@"Failed to obtain a lamp state."
-                               " Skipping this lamp...");
-                         shouldContinue = YES;
-                         break;
-                     }
-                     NSString *key = @(keyCStr);
-                     if ([key isEqualToString:@"OnOff"]) {
-                         BOOL onOffStateBool;
-                         status = valArg->Get("b", &onOffStateBool);
-                         if (ER_OK != status) {
-                             NSLog(@"Failed to obtain on/off state (1)."
-                                   " Skipping this lamp...");
-                             shouldContinue = YES;
-                             break;
-                         }
-                         onOffState = @(onOffStateBool);
-                     }
-                 }
-                 if (shouldContinue) {
-                     continue;
-                 }
-                 if (!onOffState) {
-                     NSLog(@"Failed to obtain on/off state (2)."
-                           " Skipping this lamp...");
-                     continue;
-                 }
+                 onOffState = [states[@"OnOff"] boolValue];
              }
              
              DConnectMessage *light = [DConnectMessage message];
              [light setString:lampID forKey:DCMLightProfileParamLightId];
              [light setString:lampName forKey:DCMLightProfileParamName];
              [light setString:@"" forKey:DCMLightProfileParamConfig];
-             [light setBool:onOffState.boolValue forKey:DCMLightProfileParamOn];
+             [light setBool:onOffState forKey:DCMLightProfileParamOn];
              [lights addMessage:light];
          }
          
