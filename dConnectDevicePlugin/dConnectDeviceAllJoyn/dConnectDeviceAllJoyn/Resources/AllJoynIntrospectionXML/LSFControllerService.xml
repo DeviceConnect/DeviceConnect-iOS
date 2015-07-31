@@ -674,17 +674,17 @@
             </arg>
         </method>
         <signal name="LampGroupsNameChanged">
-            <arg name="lampGroupsIDs" type="s">
+            <arg name="lampGroupsIDs" type="as">
                 <annotation name="org.alljoyn.lang.objc" value="lampGroupNamesDidChangeForLampGroupIDs:"/>
             </arg>
         </signal>
         <signal name="LampGroupsCreated">
-            <arg name="lampGroupsIDs" type="s">
+            <arg name="lampGroupsIDs" type="as">
                 <annotation name="org.alljoyn.lang.objc" value="didCreateLampGroups:"/>
             </arg>
         </signal>
         <signal name="LampGroupsUpdated">
-            <arg name="lampGroupsIDs" type="s">
+            <arg name="lampGroupsIDs" type="as">
                 <annotation name="org.alljoyn.lang.objc" value="didUpdateLampGroups:"/>
             </arg>
         </signal>

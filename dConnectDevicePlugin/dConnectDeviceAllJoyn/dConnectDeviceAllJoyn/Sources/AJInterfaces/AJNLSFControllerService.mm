@@ -125,9 +125,9 @@ public:
 	QStatus SendLampStateChanged(const char * LampID,const char * lampName, const char* destination, SessionId sessionId, uint16_t timeToLive = 0, uint8_t flags = 0);
 	QStatus SendLampsFound(const char * LampID, const char* destination, SessionId sessionId, uint16_t timeToLive = 0, uint8_t flags = 0);
 	QStatus SendLampsLost(MsgArg* lampIDs, const char* destination, SessionId sessionId, uint16_t timeToLive = 0, uint8_t flags = 0);
-	QStatus SendLampGroupsNameChanged(const char * lampGroupsIDs, const char* destination, SessionId sessionId, uint16_t timeToLive = 0, uint8_t flags = 0);
-	QStatus SendLampGroupsCreated(const char * lampGroupsIDs, const char* destination, SessionId sessionId, uint16_t timeToLive = 0, uint8_t flags = 0);
-	QStatus SendLampGroupsUpdated(const char * lampGroupsIDs, const char* destination, SessionId sessionId, uint16_t timeToLive = 0, uint8_t flags = 0);
+	QStatus SendLampGroupsNameChanged(MsgArg* lampGroupsIDs, const char* destination, SessionId sessionId, uint16_t timeToLive = 0, uint8_t flags = 0);
+	QStatus SendLampGroupsCreated(MsgArg* lampGroupsIDs, const char* destination, SessionId sessionId, uint16_t timeToLive = 0, uint8_t flags = 0);
+	QStatus SendLampGroupsUpdated(MsgArg* lampGroupsIDs, const char* destination, SessionId sessionId, uint16_t timeToLive = 0, uint8_t flags = 0);
 	QStatus SendLampGroupsDeleted(MsgArg* lampGroupsIDs, const char* destination, SessionId sessionId, uint16_t timeToLive = 0, uint8_t flags = 0);
 
 };
@@ -2159,39 +2159,39 @@ void LSFControllerServiceObjectImpl::ResetLampGroupStateField(const InterfaceDes
     }
 }
 
-QStatus LSFControllerServiceObjectImpl::SendLampGroupsNameChanged(const char * lampGroupsIDs, const char* destination, SessionId sessionId, uint16_t timeToLive, uint8_t flags)
+QStatus LSFControllerServiceObjectImpl::SendLampGroupsNameChanged(MsgArg* lampGroupsIDs, const char* destination, SessionId sessionId, uint16_t timeToLive, uint8_t flags)
 {
 
     MsgArg args[1];
 
     
-            args[0].Set( "s", lampGroupsIDs );
+    args[0] = *lampGroupsIDs;
         
 
     return Signal(destination, sessionId, *LampGroupsNameChangedSignalMember, args, 1, timeToLive, flags);
 }
 
 
-QStatus LSFControllerServiceObjectImpl::SendLampGroupsCreated(const char * lampGroupsIDs, const char* destination, SessionId sessionId, uint16_t timeToLive, uint8_t flags)
+QStatus LSFControllerServiceObjectImpl::SendLampGroupsCreated(MsgArg* lampGroupsIDs, const char* destination, SessionId sessionId, uint16_t timeToLive, uint8_t flags)
 {
 
     MsgArg args[1];
 
     
-            args[0].Set( "s", lampGroupsIDs );
+    args[0] = *lampGroupsIDs;
         
 
     return Signal(destination, sessionId, *LampGroupsCreatedSignalMember, args, 1, timeToLive, flags);
 }
 
 
-QStatus LSFControllerServiceObjectImpl::SendLampGroupsUpdated(const char * lampGroupsIDs, const char* destination, SessionId sessionId, uint16_t timeToLive, uint8_t flags)
+QStatus LSFControllerServiceObjectImpl::SendLampGroupsUpdated(MsgArg* lampGroupsIDs, const char* destination, SessionId sessionId, uint16_t timeToLive, uint8_t flags)
 {
 
     MsgArg args[1];
 
     
-            args[0].Set( "s", lampGroupsIDs );
+    args[0] = *lampGroupsIDs;
         
 
     return Signal(destination, sessionId, *LampGroupsUpdatedSignalMember, args, 1, timeToLive, flags);
@@ -2975,25 +2975,25 @@ QStatus LSFControllerServiceObjectImpl::SendLampGroupsDeleted(MsgArg* lampGroups
     self.busObject->SendLampsLost([lampIDs msgArg], [destinationPath UTF8String], sessionId);
         
 }
-- (void)sendlampGroupNamesDidChangeForLampGroupIDs:(NSString*)lampGroupsIDs inSession:(AJNSessionId)sessionId toDestination:(NSString*)destinationPath
+- (void)sendlampGroupNamesDidChangeForLampGroupIDs:(AJNMessageArgument*)lampGroupsIDs inSession:(AJNSessionId)sessionId toDestination:(NSString*)destinationPath
 
 {
     
-    self.busObject->SendLampGroupsNameChanged([lampGroupsIDs UTF8String], [destinationPath UTF8String], sessionId);
+    self.busObject->SendLampGroupsNameChanged([lampGroupsIDs msgArg], [destinationPath UTF8String], sessionId);
         
 }
-- (void)senddidCreateLampGroups:(NSString*)lampGroupsIDs inSession:(AJNSessionId)sessionId toDestination:(NSString*)destinationPath
+- (void)senddidCreateLampGroups:(AJNMessageArgument*)lampGroupsIDs inSession:(AJNSessionId)sessionId toDestination:(NSString*)destinationPath
 
 {
     
-    self.busObject->SendLampGroupsCreated([lampGroupsIDs UTF8String], [destinationPath UTF8String], sessionId);
+    self.busObject->SendLampGroupsCreated([lampGroupsIDs msgArg], [destinationPath UTF8String], sessionId);
         
 }
-- (void)senddidUpdateLampGroups:(NSString*)lampGroupsIDs inSession:(AJNSessionId)sessionId toDestination:(NSString*)destinationPath
+- (void)senddidUpdateLampGroups:(AJNMessageArgument*)lampGroupsIDs inSession:(AJNSessionId)sessionId toDestination:(NSString*)destinationPath
 
 {
     
-    self.busObject->SendLampGroupsUpdated([lampGroupsIDs UTF8String], [destinationPath UTF8String], sessionId);
+    self.busObject->SendLampGroupsUpdated([lampGroupsIDs msgArg], [destinationPath UTF8String], sessionId);
         
 }
 - (void)senddidDeleteLampGroups:(AJNMessageArgument*)lampGroupsIDs inSession:(AJNSessionId)sessionId toDestination:(NSString*)destinationPath
