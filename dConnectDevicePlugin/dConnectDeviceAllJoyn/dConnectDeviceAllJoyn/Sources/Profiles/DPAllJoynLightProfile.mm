@@ -26,10 +26,20 @@ typedef NS_ENUM(NSUInteger, DPAllJoynLightServiceType) {
 };
 
 
+// #############################################################################
+// Interfaces
+// #############################################################################
+#pragma mark - Interfaces
+
+
 @interface DPAllJoynLightProfile () <DCMLightProfileDelegate> {
     DPAllJoynHandler *_handler;
 }
 @end
+
+
+// #############################################################################
+#pragma mark -
 
 
 @interface DPAllJoynLampGroup : NSObject
@@ -43,6 +53,10 @@ typedef NS_ENUM(NSUInteger, DPAllJoynLightServiceType) {
 @end
 
 
+// #############################################################################
+#pragma mark -
+
+
 @interface DPAllJoynLamp : NSObject
 
 @property NSString *ID;
@@ -51,6 +65,12 @@ typedef NS_ENUM(NSUInteger, DPAllJoynLightServiceType) {
 @property NSString *config;
 
 @end
+
+
+// #############################################################################
+// Implementations
+// #############################################################################
+#pragma mark - Implementations
 
 
 // TODO: Change the type of parameter 'brightness' to NSNumber.
@@ -91,7 +111,7 @@ typedef NS_ENUM(NSUInteger, DPAllJoynLightServiceType) {
             [_handler proxyObjectWithService:service
                             proxyObjectClass:LSFLampObjectProxy.class
                                    interface:@"org.allseen.LSF.LampDetails"
-                                   sessionID:sessionID];;
+                                   sessionID:sessionID];
             status = [proxy introspectRemoteObject];
             if (ER_OK != status) {
                 NSLog(@"Failed to perform AllJoyn API parameter availability check.");
@@ -108,7 +128,7 @@ typedef NS_ENUM(NSUInteger, DPAllJoynLightServiceType) {
             [_handler proxyObjectWithService:service
                             proxyObjectClass:LSFControllerServiceObjectProxy.class
                                    interface:@"org.allseen.LSF.ControllerService.Lamp"
-                                   sessionID:sessionID];;
+                                   sessionID:sessionID];
             status = [proxy introspectRemoteObject];
             if (ER_OK != status) {
                 NSLog(@"Failed to perform AllJoyn API parameter availability check.");
@@ -127,7 +147,7 @@ typedef NS_ENUM(NSUInteger, DPAllJoynLightServiceType) {
                 || responseCode.unsignedIntValue != DPAllJoynLightResponseCodeOK) {
                 return nil;
             }
-
+            
             NSMutableDictionary *functionalities =
             [NSMutableDictionary dictionary];
             if (details) {
@@ -199,7 +219,7 @@ typedef NS_ENUM(NSUInteger, DPAllJoynLightServiceType) {
          [_handler proxyObjectWithService:service
                          proxyObjectClass:LSFLampObjectProxy.class
                                 interface:@"org.allseen.LSF.LampState"
-                                sessionID:sessionId.unsignedIntValue];;
+                                sessionID:sessionId.unsignedIntValue];
          QStatus status = [proxy introspectRemoteObject];
          if (ER_OK != status) {
              NSString *msg = @"Failed to introspect a remote bus object.";
@@ -246,7 +266,7 @@ typedef NS_ENUM(NSUInteger, DPAllJoynLightServiceType) {
          [_handler proxyObjectWithService:service
                          proxyObjectClass:LSFControllerServiceObjectProxy.class
                                 interface:@"org.allseen.LSF.ControllerService.Lamp"
-                                sessionID:sessionId.unsignedIntValue];;
+                                sessionID:sessionId.unsignedIntValue];
          status = [proxy introspectRemoteObject];
          if (ER_OK != status) {
              NSString *msg = @"Failed to introspect a remote bus object.";
@@ -447,7 +467,7 @@ typedef NS_ENUM(NSUInteger, DPAllJoynLightServiceType) {
          [_handler proxyObjectWithService:service
                          proxyObjectClass:LSFLampObjectProxy.class
                                 interface:@"org.allseen.LSF.LampState"
-                                sessionID:sessionId.unsignedIntValue];;
+                                sessionID:sessionId.unsignedIntValue];
          status = [proxyState introspectRemoteObject];
          if (ER_OK != status) {
              NSString *msg = @"Failed to introspect a remote bus object.";
@@ -462,7 +482,7 @@ typedef NS_ENUM(NSUInteger, DPAllJoynLightServiceType) {
                                    sessionID:sessionId.unsignedIntValue
                                      lightID:lightId
                                         type:DPAllJoynLightServiceTypeSingleLamp];
-
+         
          // MsgArg lacks copy operator, so std::vector can not be used for
          // storing new states...
          MsgArg newStates[4];
@@ -472,7 +492,7 @@ typedef NS_ENUM(NSUInteger, DPAllJoynLightServiceType) {
          tmp1.Set("{sv}", "OnOff", &tmp2);
          newStates[count] = tmp1;
          ++count;
-
+         
          if (functionality[@"Dimmable"]) {
              double brightnessScaled = brightness * 0xffffffffL;
              tmp1 = MsgArg();
@@ -494,7 +514,7 @@ typedef NS_ENUM(NSUInteger, DPAllJoynLightServiceType) {
                  tmp1.Set("{sv}", "Hue", &tmp2);
                  newStates[count] = tmp1;
                  ++count;
-
+                 
                  tmp1 = MsgArg();
                  tmp2 = MsgArg("u", [hsb[@"saturation"] unsignedIntValue]);
                  tmp1.Set("{sv}", "Saturation", &tmp2);
@@ -562,7 +582,7 @@ typedef NS_ENUM(NSUInteger, DPAllJoynLightServiceType) {
          [_handler proxyObjectWithService:service
                          proxyObjectClass:LSFControllerServiceObjectProxy.class
                                 interface:@"org.allseen.LSF.ControllerService"
-                                sessionID:sessionId.unsignedIntValue];;
+                                sessionID:sessionId.unsignedIntValue];
          status = [proxy introspectRemoteObject];
          if (ER_OK != status) {
              NSString *msg = @"Failed to introspect a remote bus object.";
@@ -704,7 +724,7 @@ typedef NS_ENUM(NSUInteger, DPAllJoynLightServiceType) {
          [_handler proxyObjectWithService:service
                          proxyObjectClass:LSFLampObjectProxy.class
                                 interface:@"org.allseen.LSF.LampState"
-                                sessionID:sessionId.unsignedIntValue];;
+                                sessionID:sessionId.unsignedIntValue];
          status = [proxyState introspectRemoteObject];
          if (ER_OK != status) {
              NSString *msg = @"Failed to introspect a remote bus object.";
@@ -713,13 +733,13 @@ typedef NS_ENUM(NSUInteger, DPAllJoynLightServiceType) {
              [[DConnectManager sharedManager] sendResponse:response];
              return;
          }
-
+         
          NSDictionary *functionality =
          [self checkFunctionalityWithService:service
                                    sessionID:sessionId.unsignedIntValue
                                      lightID:lightId
                                         type:DPAllJoynLightServiceTypeSingleLamp];
-
+         
          // MsgArg lacks copy operator, so std::vector can not be used for
          // storing new states...
          MsgArg newStates[3];
@@ -817,7 +837,7 @@ typedef NS_ENUM(NSUInteger, DPAllJoynLightServiceType) {
          [_handler proxyObjectWithService:service
                          proxyObjectClass:LSFControllerServiceObjectProxy.class
                                 interface:@"org.allseen.LSF.ControllerService"
-                                sessionID:sessionId.unsignedIntValue];;
+                                sessionID:sessionId.unsignedIntValue];
          status = [proxy introspectRemoteObject];
          if (ER_OK != status) {
              NSString *msg = @"Failed to introspect a remote bus object.";
@@ -928,7 +948,7 @@ typedef NS_ENUM(NSUInteger, DPAllJoynLightServiceType) {
          [_handler proxyObjectWithService:service
                          proxyObjectClass:LSFLampObjectProxy.class
                                 interface:@"org.allseen.LSF.LampState"
-                                sessionID:sessionId.unsignedIntValue];;
+                                sessionID:sessionId.unsignedIntValue];
          status = [proxy introspectRemoteObject];
          if (ER_OK != status) {
              NSString *msg = @"Failed to introspect a remote bus object.";
@@ -939,7 +959,7 @@ typedef NS_ENUM(NSUInteger, DPAllJoynLightServiceType) {
          }
          
          proxy.OnOff = NO;
-
+         
          [response setResult:DConnectMessageResultTypeOk];
          [[DConnectManager sharedManager] sendResponse:response];
      }];
@@ -980,7 +1000,7 @@ typedef NS_ENUM(NSUInteger, DPAllJoynLightServiceType) {
          [_handler proxyObjectWithService:service
                          proxyObjectClass:LSFControllerServiceObjectProxy.class
                                 interface:@"org.allseen.LSF.ControllerService"
-                                sessionID:sessionId.unsignedIntValue];;
+                                sessionID:sessionId.unsignedIntValue];
          status = [proxy introspectRemoteObject];
          if (ER_OK != status) {
              NSString *msg = @"Failed to introspect a remote bus object.";
@@ -1022,7 +1042,7 @@ typedef NS_ENUM(NSUInteger, DPAllJoynLightServiceType) {
 
 
 // =============================================================================
-#pragma mark - DCMLightProfileDelegate
+#pragma mark DCMLightProfileDelegate
 
 
 - (BOOL)              profile:(DCMLightProfile *)profile
@@ -1044,21 +1064,21 @@ typedef NS_ENUM(NSUInteger, DPAllJoynLightServiceType) {
     }
     
     switch ([self serviceTypeFromService:service]) {
-        
+            
         case DPAllJoynLightServiceTypeSingleLamp: {
             [self
              didReceiveGetLightRequestForSingleLampWithResponse:response
              service:service];
             return NO;
         }
-        
+            
         case DPAllJoynLightServiceTypeLampController: {
             [self
              didReceiveGetLightRequestForLampControllerWithResponse:response
              service:service];
             return NO;
         }
-        
+            
         case DPAllJoynLightServiceTypeUnknown:
         default: {
             [response setErrorToNotSupportAction];

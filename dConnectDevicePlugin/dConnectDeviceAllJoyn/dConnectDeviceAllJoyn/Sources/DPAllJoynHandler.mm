@@ -414,14 +414,13 @@ static int const DISCOVER_INTERVAL = 30;
          [self proxyObjectWithService:service
                      proxyObjectClass:LSFLampObjectProxy.class
                             interface:@"org.allseen.LSF.LampState"
-                            sessionID:sessionId.unsignedIntValue];;
+                            sessionID:sessionId.unsignedIntValue];
          QStatus status = [proxy introspectRemoteObject];
          if (ER_OK != status) {
              NSLog(@"Failed to introspect a remote bus object.");
              return;
          }
          
-         NSLog(@"Version: %@", proxy.LampServiceInterfaceVersion);
      }];
 }
 
