@@ -1042,6 +1042,55 @@ typedef NS_ENUM(NSUInteger, DPAllJoynLightServiceType) {
 }
 
 
+- (void)didReceiveDeleteLightGroupClearRequestForLampControllerWithResponse:(DConnectResponseMessage *)response
+                                                                    service:(DPAllJoynServiceEntity *)service
+                                                                    groupID:(NSString*)groupID
+{
+    [_handler performOneShotSessionWithBusName:service
+                                         block:
+     ^(DPAllJoynServiceEntity *service, NSNumber *sessionId)
+     {
+         if (!sessionId) {
+             NSString *msg = @"Failed to join a session.";
+             NSLog(@"%@", msg);
+             [response setErrorToUnknownWithMessage:msg];
+             [[DConnectManager sharedManager] sendResponse:response];
+             return;
+         }
+         
+         QStatus status;
+         LSFControllerServiceObjectProxy *proxy =
+         (LSFControllerServiceObjectProxy *)
+         [_handler proxyObjectWithService:service
+                         proxyObjectClass:LSFControllerServiceObjectProxy.class
+                                interface:@"org.allseen.LSF.ControllerService"
+                                sessionID:sessionId.unsignedIntValue];
+         status = [proxy introspectRemoteObject];
+         if (ER_OK != status) {
+             NSString *msg = @"Failed to introspect a remote bus object.";
+             NSLog(@"%@", msg);
+             [response setErrorToUnknownWithMessage:msg];
+             [[DConnectManager sharedManager] sendResponse:response];
+             return;
+         }
+         
+         NSNumber *responseCode;
+         NSString *ignored;
+         [proxy deleteLampGroupWithLampGroupID:groupID
+                                  responseCode:&responseCode
+                                   lampGroupID:&ignored];
+         if (responseCode
+             && responseCode.unsignedIntValue == DPAllJoynLightResponseCodeOK) {
+             [response setResult:DConnectMessageResultTypeOk];
+         } else {
+             [response setErrorToUnknownWithMessage:@"Failed to delete the light group."];
+         }
+         
+         [[DConnectManager sharedManager] sendResponse:response];
+     }];
+}
+
+
 // =============================================================================
 #pragma mark DCMLightProfileDelegate
 
@@ -1979,6 +2028,20 @@ didReceivePostLightGroupRequest:(DConnectRequestMessage *)request
     switch ([self serviceTypeFromService:service]) {
             
         case DPAllJoynLightServiceTypeLampController: {
+            //////////////////////////////////////////////////
+            // Validity check
+            //
+            if (!groupId) {
+                [response setErrorToInvalidRequestParameterWithMessage:
+                 @"Parameter 'groupId' must be specified."];
+                [[DConnectManager sharedManager] sendResponse:response];
+                return YES;
+            }
+            
+            [self
+             didReceiveDeleteLightGroupClearRequestForLampControllerWithResponse:response
+             service:service groupID:groupId];
+            return NO;
         }
             
         case DPAllJoynLightServiceTypeSingleLamp:
