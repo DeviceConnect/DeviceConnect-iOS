@@ -86,7 +86,6 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if (!_isRemoved) {
-        [tableView deselectRowAtIndexPath:indexPath animated:NO];
         [self performSegueWithIdentifier:@"showProfile" sender:self];
     } else {
         // 選択の外れたセルを取得する
