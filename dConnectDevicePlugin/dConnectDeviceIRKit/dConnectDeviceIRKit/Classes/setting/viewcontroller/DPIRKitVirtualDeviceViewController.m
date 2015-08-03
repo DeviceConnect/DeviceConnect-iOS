@@ -41,6 +41,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    _virtualDeviceList.allowsMultipleSelection = NO;
+
     _isRemoved = NO;
     // 背景白
     self.view.backgroundColor = [UIColor whiteColor];
@@ -167,11 +169,6 @@
 
 - (IBAction)deleteVirtualDevice:(id)sender {
     if (!_isRemoved) {
-        if (_virtualDeviceList.allowsMultipleSelection) {
-            _virtualDeviceList.allowsMultipleSelection = NO;
-        } else {
-            _virtualDeviceList.allowsMultipleSelection = YES;
-        }
         [self switchButton];
     } else {
         NSArray *cells = [_virtualDeviceList indexPathsForSelectedRows];
@@ -194,6 +191,7 @@
 
 - (void)switchButton {
     if (!_isRemoved) {
+        _virtualDeviceList.allowsMultipleSelection = YES;
         self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:0.93
                                                                                green:0.65
                                                                                 blue:0.70
@@ -204,6 +202,8 @@
         [_rightButton setTitle:@"削除"];
         _isRemoved = YES;
     } else {
+        _virtualDeviceList.allowsMultipleSelection = NO;
+
         self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:0.00
                                                                                green:0.63
                                                                                 blue:0.91
