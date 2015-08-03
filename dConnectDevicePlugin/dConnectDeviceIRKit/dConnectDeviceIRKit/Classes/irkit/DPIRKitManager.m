@@ -644,4 +644,8 @@ struct DPIRKitCRCInfo
     return [_devices allValues];
 }
 
+- (DPIRKitDevice *)deviceForServiceId:(NSString *)serviceId {
+    return _devices[serviceId];
+}
+
 @end

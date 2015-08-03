@@ -2,21 +2,27 @@
 //  DPIRKitCategorySelectDialog.m
 //  dConnectDeviceIRKit
 //
-//  Copyright (c) 2014 NTT DOCOMO, INC.
+//  Copyright (c) 2015 NTT DOCOMO, INC.
 //  Released under the MIT license
 //  http://opensource.org/licenses/mit-license.php
 //
 #import "DPIRKitCategorySelectDialog.h"
+#import "DPIRKitVirtualDeviceCreateDialog.h"
 #import <objc/runtime.h>
 #import "DPIRKitConst.h"
 
-static const char kAssocKey_Window;
+static NSString *_DPIRKitVirtualDeviceServiceId;
 
 @interface DPIRKitCategorySelectDialog ()
 @property (unsafe_unretained, nonatomic) IBOutlet UIButton *closeButton;
 @property (unsafe_unretained, nonatomic) IBOutlet UIButton *tvButton;
 @property (unsafe_unretained, nonatomic) IBOutlet UIButton *lightButton;
 @property (unsafe_unretained, nonatomic) IBOutlet UIView *containerView;
+- (IBAction)closeDialog:(id)sender;
+
+- (IBAction)selectTVCategory:(id)sender;
+- (IBAction)selectLightCategory:(id)sender;
+
 @end
 
 @interface DPIRKitCategorySelect : UIWindow
@@ -27,7 +33,6 @@ static const char kAssocKey_Window;
 
 -(void)dealloc
 {
-    NSLog(@"%@ dealloc", NSStringFromClass([self class]));
 }
 
 @end
@@ -42,6 +47,7 @@ static const char kAssocKey_Window;
     }
     return self;
 }
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     void (^roundCorner)(UIView*) = ^void(UIView *v) {
@@ -57,11 +63,22 @@ static const char kAssocKey_Window;
 
 }
 
-+ (void) show {
++ (void) showWithServiceId:(NSString*)serviceId {
+    _DPIRKitVirtualDeviceServiceId = serviceId;
     [super doShowForWindow:[[DPIRKitCategorySelect alloc] initWithFrame:[UIScreen mainScreen].bounds]
             storyboardName:@"CategorySelectDialog"];
 }
-+ (void)close {
-    [super doClose];
+- (IBAction)closeDialog:(id)sender {
+    [DPIRKitDialog doClose];
+}
+
+- (IBAction)selectTVCategory:(id)sender {
+    [DPIRKitVirtualDeviceCreateDialog showWithServiceId:_DPIRKitVirtualDeviceServiceId
+                                               categoryName:DPIRKitCategoryTV];
+}
+
+- (IBAction)selectLightCategory:(id)sender {
+    [DPIRKitVirtualDeviceCreateDialog showWithServiceId:_DPIRKitVirtualDeviceServiceId
+                                               categoryName:DPIRKitCategoryLight];
 }
 @end

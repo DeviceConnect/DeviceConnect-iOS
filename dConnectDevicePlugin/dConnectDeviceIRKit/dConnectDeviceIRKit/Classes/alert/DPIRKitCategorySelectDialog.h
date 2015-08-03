@@ -2,7 +2,7 @@
 //  DPIRKitCategorySelectDialog.h
 //  dConnectDeviceIRKit
 //
-//  Copyright (c) 2014 NTT DOCOMO, INC.
+//  Copyright (c) 2015 NTT DOCOMO, INC.
 //  Released under the MIT license
 //  http://opensource.org/licenses/mit-license.php
 //
@@ -11,6 +11,6 @@
 
 @interface DPIRKitCategorySelectDialog : DPIRKitDialog
 
-+(void)show;
++ (void)showWithServiceId:(NSString*)serviceId;
 
 @end

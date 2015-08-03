@@ -26,3 +26,4 @@ extern NSString *const DPIRKitUDKeyServiceId;
 [bundle localizedStringForKey:key value:@"" table:nil]
 
 #define IPHONE4_H 480
+

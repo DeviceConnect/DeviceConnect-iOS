@@ -96,6 +96,7 @@ typedef NS_ENUM(NSUInteger, DPIRKitConnectionErrorCode) {
           completion:(void (^)(BOOL success))completion;
 
 - (NSArray *)devicesAll;
+- (DPIRKitDevice *)deviceForServiceId:(NSString *)serviceId;
 #pragma mark - Static Methods
 
 + (DPIRKitManager *) sharedInstance;

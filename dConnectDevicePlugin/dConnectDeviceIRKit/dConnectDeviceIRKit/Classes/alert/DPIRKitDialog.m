@@ -2,7 +2,7 @@
 //  DPIRKitDialog.m
 //  dConnectDeviceIRKit
 //
-//  Copyright (c) 2014 NTT DOCOMO, INC.
+//  Copyright (c) 2015 NTT DOCOMO, INC.
 //  Released under the MIT license
 //  http://opensource.org/licenses/mit-license.php
 //
@@ -11,6 +11,10 @@
 #import <objc/runtime.h>
 
 static const char kAssocKey_Window;
+
+NSString *const DPIRKitCategoryLight = @"ライト";
+NSString *const DPIRKitCategoryTV = @"テレビ";
+
 
 @implementation DPIRKitDialog
 
@@ -70,4 +74,5 @@ static const char kAssocKey_Window;
                         [nextWindow makeKeyAndVisible];
                     }];
 }
+
 @end

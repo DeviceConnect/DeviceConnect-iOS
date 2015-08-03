@@ -28,11 +28,28 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.view.backgroundColor = [UIColor colorWithRed:0.00
-                                                green:0.63
-                                                 blue:0.91
-                                                alpha:1.0];
     bundle = DPIRBundle();
+    // 背景白
+    self.view.backgroundColor = [UIColor whiteColor];
+    // 閉じるボタン追加
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]
+                                             initWithTitle:@"＜CLOSE"
+                                             style:UIBarButtonItemStylePlain
+                                             target:self
+                                             action:@selector(closeSettings:) ];
+    self.navigationItem.leftBarButtonItem.tintColor = [UIColor whiteColor];
+    UILabel *title = [[UILabel alloc] initWithFrame:CGRectZero];
+    title.font = [UIFont boldSystemFontOfSize:16.0];
+    title.textColor = [UIColor whiteColor];
+    title.text = @"IRKit一覧";
+    [title sizeToFit];
+    self.navigationItem.titleView = title;
+    // バー背景色
+    self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:0.00
+                                                                           green:0.63
+                                                                            blue:0.91
+                                                                           alpha:1.0];
+
     _foundIRKitList.delegate = self;
     _foundIRKitList.dataSource = self;
     [_foundIRKitList registerClass:[UITableViewCell class] forCellReuseIdentifier:@"cellIRKit"];
@@ -50,15 +67,9 @@
     if ([[segue identifier] isEqualToString:@"showDetail"]) {
         NSIndexPath *indexPath = [_foundIRKitList indexPathForSelectedRow];
         DPIRKitVirtualDeviceViewController *controller =
-            (DPIRKitVirtualDeviceViewController *)[segue destinationViewController];
-        int i = 0;
-        for (DPIRKitDevice *device in [[DPIRKitManager sharedInstance] devicesAll]) {
-            if (indexPath.row == i) {
-                [controller setDetailItem:device];
-                break;
-            }
-            i++;
-        }
+            (DPIRKitVirtualDeviceViewController *)[segue destinationViewController] ;
+        NSArray *devices = [[DPIRKitManager sharedInstance] devicesAll];
+        [controller setDetailItem:devices[indexPath.row]];
     }
 }
 
@@ -72,7 +83,8 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    [self performSegueWithIdentifier:@"showDetail" sender:self];
+    [tableView deselectRowAtIndexPath:indexPath animated:NO];
+   [self performSegueWithIdentifier:@"showDetail" sender:self];
 }
 
 // セルの生成と設定
@@ -87,15 +99,9 @@
     cell.accessoryView.exclusiveTouch = YES;
     NSString * path = [bundle pathForResource:@"irkit10" ofType:@"png"];
     cell.imageView.image = [UIImage imageWithContentsOfFile:path];
-    int i = 0;
-    for (DPIRKitDevice *device in [[DPIRKitManager sharedInstance] devicesAll]) {
-        if (indexPath.row == i) {
-            
-            cell.textLabel.text = device.name;
-            break;
-        }
-        i++;
-    }
+    NSArray *devices = [[DPIRKitManager sharedInstance] devicesAll];
+    DPIRKitDevice *device = devices[indexPath.row];
+    cell.textLabel.text = device.name;
     return cell;
 }
 
