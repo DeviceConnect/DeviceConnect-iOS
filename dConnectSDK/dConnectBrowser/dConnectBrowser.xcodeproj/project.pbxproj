@@ -33,6 +33,8 @@
 		2562A2B919C3E2AC0032EF17 /* PebbleVendor.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2562A2B719C3E2AC0032EF17 /* PebbleVendor.framework */; };
 		2562A2BB19C3E6600032EF17 /* dConnectDeviceIRKit_resources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 2562A2BA19C3E6600032EF17 /* dConnectDeviceIRKit_resources.bundle */; };
 		2562A2C719C3F2F80032EF17 /* dConnectDeviceHue_resources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 2562A2C619C3F2F80032EF17 /* dConnectDeviceHue_resources.bundle */; };
+		25851BDC1B57756F00CB732E /* dConnectDeviceAllJoyn.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25851BDB1B57756F00CB732E /* dConnectDeviceAllJoyn.framework */; };
+		25851BDE1B57776800CB732E /* dConnectDeviceAllJoyn_resources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 25851BDD1B57776800CB732E /* dConnectDeviceAllJoyn_resources.bundle */; };
 		259F7CE219C33D7700F66D93 /* dConnectDeviceSphero_resources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 259F7CE119C33D7700F66D93 /* dConnectDeviceSphero_resources.bundle */; };
 		259F7CE419C33DA800F66D93 /* DConnectSDK_resources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 259F7CE319C33DA800F66D93 /* DConnectSDK_resources.bundle */; };
 		259F7CE819C343CE00F66D93 /* dConnectDeviceHost_resources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 259F7CE719C343CE00F66D93 /* dConnectDeviceHost_resources.bundle */; };
@@ -146,6 +148,8 @@
 		2562A2B719C3E2AC0032EF17 /* PebbleVendor.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PebbleVendor.framework; path = ../../dConnectDevicePlugin/dConnectDevicePebble/PebbleVendor.framework; sourceTree = "<group>"; };
 		2562A2BA19C3E6600032EF17 /* dConnectDeviceIRKit_resources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = dConnectDeviceIRKit_resources.bundle; path = ../../dConnectDevicePlugin/dConnectDeviceIRKit/bin/dConnectDeviceIRKit_resources.bundle; sourceTree = "<group>"; };
 		2562A2C619C3F2F80032EF17 /* dConnectDeviceHue_resources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = dConnectDeviceHue_resources.bundle; path = ../../dConnectDevicePlugin/dConnectDeviceHue/bin/dConnectDeviceHue_resources.bundle; sourceTree = "<group>"; };
+		25851BDB1B57756F00CB732E /* dConnectDeviceAllJoyn.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = dConnectDeviceAllJoyn.framework; path = "../../dConnectDevicePlugin/dConnectDeviceAllJoyn/build/Debug-iphoneos/dConnectDeviceAllJoyn.framework"; sourceTree = "<group>"; };
+		25851BDD1B57776800CB732E /* dConnectDeviceAllJoyn_resources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = dConnectDeviceAllJoyn_resources.bundle; path = ../../dConnectDevicePlugin/dConnectDeviceAllJoyn/bin/dConnectDeviceAllJoyn_resources.bundle; sourceTree = "<group>"; };
 		259F7CE119C33D7700F66D93 /* dConnectDeviceSphero_resources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = dConnectDeviceSphero_resources.bundle; path = ../../dConnectDevicePlugin/dConnectDeviceSphero/bin/dConnectDeviceSphero_resources.bundle; sourceTree = "<group>"; };
 		259F7CE319C33DA800F66D93 /* DConnectSDK_resources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = DConnectSDK_resources.bundle; path = ../dConnectSDKForIOS/bin/DConnectSDK_resources.bundle; sourceTree = "<group>"; };
 		259F7CE719C343CE00F66D93 /* dConnectDeviceHost_resources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = dConnectDeviceHost_resources.bundle; path = ../../dConnectDevicePlugin/dConnectDeviceHost/bin/dConnectDeviceHost_resources.bundle; sourceTree = "<group>"; };
@@ -317,6 +321,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				25851BDC1B57756F00CB732E /* dConnectDeviceAllJoyn.framework in Frameworks */,
 				6B6F584A1ACE68F90027A21F /* GoogleCast.framework in Frameworks */,
 				254111A819C2CDAD00F74C31 /* MediaAccessibility.framework in Frameworks */,
 				9700DDE71998E0DD00209D1A /* dConnectDeviceHost.framework in Frameworks */,
@@ -518,6 +523,8 @@
 				AB5B2B4D1A9ABAEE0038CCF6 /* dConnectDeviceChromecast.framework */,
 				9044F33E1A1A21DA0072F241 /* HueSDK_iOS.framework */,
 				AB08A05D19908B410024C996 /* DCMDevicePluginSDK.framework */,
+				25851BDB1B57756F00CB732E /* dConnectDeviceAllJoyn.framework */,
+				25851BDD1B57776800CB732E /* dConnectDeviceAllJoyn_resources.bundle */,
 				259F7CE719C343CE00F66D93 /* dConnectDeviceHost_resources.bundle */,
 				9700DDE61998E0DD00209D1A /* dConnectDeviceHost.framework */,
 				2562A2B219C3E2470032EF17 /* dConnectDevicePebble_resources.bundle */,
@@ -821,6 +828,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				25851BDE1B57776800CB732E /* dConnectDeviceAllJoyn_resources.bundle in Resources */,
 				8EC7B4561999BA6F0052A1B6 /* SVProgressHUD.bundle in Resources */,
 				8E24CFFC1964EC25008D9C10 /* bookmark@2x.png in Resources */,
 				259F7CE419C33DA800F66D93 /* DConnectSDK_resources.bundle in Resources */,
@@ -1047,6 +1055,7 @@
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-lstdc++",
+					"-lc++",
 					"-all_load",
 					"-lsqlite3",
 				);
@@ -1088,6 +1097,7 @@
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-lstdc++",
+					"-lc++",
 					"-all_load",
 					"-lsqlite3",
 				);
@@ -1120,6 +1130,7 @@
 					"$(PROJECT_DIR)/../../dConnectDevicePlugin/dConnectDeviceChromeCast/GoogleCastSDK-2.6.0-Release",
 					"$(PROJECT_DIR)/../../dConnectDevicePlugin/dConnectDevicePebble/bin",
 					"$(PROJECT_DIR)/../../dConnectDevicePlugin/dConnectDevicePebble",
+					"$(PROJECT_DIR)/../../dConnectDevicePlugin/dConnectDeviceAllJoyn/bin",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Browser/Browser-Prefix.pch";
@@ -1152,6 +1163,7 @@
 					"$(PROJECT_DIR)/../../dConnectDevicePlugin/dConnectDeviceChromeCast/GoogleCastSDK-2.6.0-Release",
 					"$(PROJECT_DIR)/../../dConnectDevicePlugin/dConnectDevicePebble/bin",
 					"$(PROJECT_DIR)/../../dConnectDevicePlugin/dConnectDevicePebble",
+					"$(PROJECT_DIR)/../../dConnectDevicePlugin/dConnectDeviceAllJoyn/bin",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Browser/Browser-Prefix.pch";
