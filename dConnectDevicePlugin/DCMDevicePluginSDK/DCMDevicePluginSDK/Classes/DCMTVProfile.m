@@ -25,7 +25,7 @@ NSString *const DCMTVProfileAttrEnlproperty = @"enlproperty";
 
 NSString *const DCMTVProfileParamTVId = @"tvId";
 
-NSString *const DCMTVProfileParamAction = @"action";
+NSString *const DCMTVProfileParamControl = @"control";
 
 NSString *const DCMTVProfileParamTuning = @"tuning";
 
@@ -141,17 +141,14 @@ NSString *const DCMTVProfileBroadcastwaveCS = @"CS";
         [response setErrorToNotSupportAction];
         return send;
     }
-    NSLog(@"put");
     NSString *serviceId = [request serviceId];
     NSString *tvId = [request stringForKey:DCMTVProfileParamTVId];
     NSString *tuning = [request stringForKey:DCMTVProfileParamTuning];
-    NSString *action = [request stringForKey:DCMTVProfileParamAction];
+    NSString *control = [request stringForKey:DCMTVProfileParamControl];
     NSString *select = [request stringForKey:DCMTVProfileParamSelect];
     NSString *epc = [request stringForKey:DCMTVProfileParamEPC];
     NSString *value = [request stringForKey:DCMTVProfileParamValue];
-    
     NSString *profile = [request profile];
-    NSString *interface = [request interface];
     NSString *attribute = [request attribute];
     
     if (profile) {
@@ -178,7 +175,7 @@ NSString *const DCMTVProfileBroadcastwaveCS = @"CS";
                                                 serviceId:
                                                 tvId:
                                                 tuning:
-                                                action:)
+                                                control:)
                              response:response])
         {
             send = [_delegate profile:self
@@ -187,7 +184,7 @@ NSString *const DCMTVProfileBroadcastwaveCS = @"CS";
                             serviceId:serviceId
                                  tvId:tvId
                                tuning:tuning
-                           action:action];
+                           control:control];
         } else if ([profile isEqualToString:DCMTVProfileName]
                    && attribute
                    && [attribute isEqualToString:DCMTVProfileAttrVolume]
@@ -196,7 +193,7 @@ NSString *const DCMTVProfileBroadcastwaveCS = @"CS";
                                                 response:
                                                 serviceId:
                                                 tvId:
-                                                action:)
+                                                control:)
                              response:response])
         {
             send = [_delegate profile:self
@@ -204,7 +201,7 @@ NSString *const DCMTVProfileBroadcastwaveCS = @"CS";
                              response:response
                             serviceId:serviceId
                                  tvId:tvId
-                               action:action];
+                               control:control];
         } else if ([profile isEqualToString:DCMTVProfileName]
                    && attribute
                    && [attribute isEqualToString:DCMTVProfileAttrBroadcastwave]
@@ -281,7 +278,6 @@ NSString *const DCMTVProfileBroadcastwaveCS = @"CS";
     NSString *serviceId = [request serviceId];
     NSString *tvId = [request stringForKey:DCMTVProfileParamTVId];
     NSString *profile = [request profile];
-    NSString *interface = [request interface];
     NSString *attribute = [request attribute];
     
     if (profile) {

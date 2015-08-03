@@ -66,12 +66,13 @@
                               serviceId:(NSString *)serviceId
                                    tvId:(NSString *)tvId
                                  tuning:(NSString *)tuning
-                                 action:(NSString *)action
+                                 control:(NSString *)control
 {
-    NSString *uri = [NSString stringWithFormat:@"/%@/%@?action=%@",
+    NSString *uri = [NSString stringWithFormat:@"/%@/%@?%@=%@",
                                                  [request profile],
                                                  [request attribute],
-                                                  action];
+                                                 DCMTVProfileParamControl,
+                                                  control];
     
     return [self sendTVIRRequestWithServiceId:serviceId
                                        method:@"PUT"
@@ -86,12 +87,13 @@
                                response:(DConnectResponseMessage *)response
                               serviceId:(NSString *)serviceId
                                    tvId:(NSString *)tvId
-                                 action:(NSString *)action
+                                 control:(NSString *)control
 {
-    NSString *uri = [NSString stringWithFormat:@"/%@/%@?action=%@",
+    NSString *uri = [NSString stringWithFormat:@"/%@/%@?%@=%@",
                      [request profile],
                      [request attribute],
-                     action];
+                     DCMTVProfileParamControl,
+                     control];
     
     return [self sendTVIRRequestWithServiceId:serviceId
                                        method:@"PUT"
@@ -108,9 +110,10 @@
                                    tvId:(NSString *)tvId
                                  select:(NSString *)select
 {
-    NSString *uri = [NSString stringWithFormat:@"/%@/%@?select=%@",
+    NSString *uri = [NSString stringWithFormat:@"/%@/%@?%@=%@",
                      [request profile],
                      [request attribute],
+                     DCMTVProfileParamSelect,
                      select];
     
     return [self sendTVIRRequestWithServiceId:serviceId

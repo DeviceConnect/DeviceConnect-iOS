@@ -34,10 +34,10 @@ NSUInteger const DPIRKitLightProfileCount = 2;
 NSString *const DPIRKitTVProfileNames[] = {@"TV電源ON", @"TV電源OFF", @"チャンネル+",
                                          @"チャンネル-", @"音量+", @"音量-",
                                          @"地デジ", @"BS", @"CS"};
-NSString *const DPIRKitTVProfileURIs[] = {@"/tv", @"/tv", @"/tv/channel?action=next",
-                                        @"/tv/channel?action=previous",
-                                        @"/tv/volume?action=up",
-                                        @"/tv/volume?action=down",
+NSString *const DPIRKitTVProfileURIs[] = {@"/tv", @"/tv", @"/tv/channel?control=next",
+                                        @"/tv/channel?control=previous",
+                                        @"/tv/volume?control=up",
+                                        @"/tv/volume?control=down",
                                         @"/tv/broadcastwave?select=DTV",
                                         @"/tv/broadcastwave?select=BS",
                                         @"/tv/broadcastwave?select=CS"};

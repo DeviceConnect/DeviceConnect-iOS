@@ -50,9 +50,9 @@ extern NSString *const DCMTVProfileAttrEnlproperty;
 extern NSString *const DCMTVProfileParamTVId;
 
 /*!
- @brief パラメータ: action。
+ @brief パラメータ: control。
  */
-extern NSString *const DCMTVProfileParamAction;
+extern NSString *const DCMTVProfileParamControl;
 
 /*!
  @brief パラメータ: tuning。
@@ -223,7 +223,7 @@ extern NSString *const DCMTVProfileBroadcastwaveCS;
  @param[in] serviceId サービスID
  @param[in] tvId TVID
  @param[in] tuning チャンネル番号
- @param[in] action チャンネルを前か次に送る
+ @param[in] control チャンネルを前か次に送る
  @retval YES レスポンスパラメータを返却する
  @retval NO レスポンスパラメータを返却しないので、@link DConnectManager::sendResponse: @endlinkで返却すること。
  */
@@ -233,7 +233,7 @@ extern NSString *const DCMTVProfileBroadcastwaveCS;
                               serviceId:(NSString *)serviceId
                                    tvId:(NSString *)tvId
                                  tuning:(NSString *)tuning
-                                 action:(NSString *)action;
+                                 control:(NSString *)control;
 
 
 /*!
@@ -248,7 +248,7 @@ extern NSString *const DCMTVProfileBroadcastwaveCS;
  @param[in,out] response レスポンス
  @param[in] serviceId サービスID
  @param[in] tvId TVID
- @param[in] action 音量をあげるかさげるか
+ @param[in] control 音量をあげるかさげるか
  @retval YES レスポンスパラメータを返却する
  @retval NO レスポンスパラメータを返却しないので、@link DConnectManager::sendResponse: @endlinkで返却すること。
  */
@@ -257,7 +257,7 @@ extern NSString *const DCMTVProfileBroadcastwaveCS;
                                response:(DConnectResponseMessage *)response
                               serviceId:(NSString *)serviceId
                                    tvId:(NSString *)tvId
-                                 action:(NSString *)action;
+                                 control:(NSString *)control;
 
 /*!
  @brief 放送波を変える。
