@@ -110,15 +110,13 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
 {
     switch (type) {
         case DPAllJoynLightServiceTypeSingleLamp: {
-            QStatus status;
             LSFLampObjectProxy *proxy = (LSFLampObjectProxy *)
             [_handler proxyObjectWithService:service
                             proxyObjectClass:LSFLampObjectProxy.class
                                    interface:@"org.allseen.LSF.LampDetails"
                                    sessionID:sessionID];
-            status = [proxy introspectRemoteObject];
-            if (ER_OK != status) {
-                NSLog(@"Failed to perform AllJoyn API parameter availability check.");
+            if (!proxy) {
+                NSLog(@"Failed to perform AllJoyn API parameter availability check (1).");
                 return nil;
             }
             
@@ -126,16 +124,14 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
                      @"Color" : @(proxy.Color)};
         }
         case DPAllJoynLightServiceTypeLampController: {
-            QStatus status;
             LSFControllerServiceObjectProxy *proxy =
             (LSFControllerServiceObjectProxy *)
             [_handler proxyObjectWithService:service
                             proxyObjectClass:LSFControllerServiceObjectProxy.class
                                    interface:@"org.allseen.LSF.ControllerService.Lamp"
                                    sessionID:sessionID];
-            status = [proxy introspectRemoteObject];
-            if (ER_OK != status) {
-                NSLog(@"Failed to perform AllJoyn API parameter availability check.");
+            if (!proxy) {
+                NSLog(@"Failed to perform AllJoyn API parameter availability check (2).");
                 return nil;
             }
             
@@ -211,9 +207,9 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
                          proxyObjectClass:LSFLampObjectProxy.class
                                 interface:@"org.allseen.LSF.LampState"
                                 sessionID:sessionId.unsignedIntValue];
-         QStatus status = [proxy introspectRemoteObject];
-         if (ER_OK != status) {
-             NSString *msg = @"Failed to introspect a remote bus object.";
+         if (!proxy) {
+             NSString *msg =
+             @"Failed to obtain a proxy object for org.allseen.LSF.LampState .";
              NSLog(@"%@", msg);
              [response setErrorToUnknownWithMessage:msg];
              [[DConnectManager sharedManager] sendResponse:response];
@@ -251,16 +247,15 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
          }
          
          NSNumber *responseCode = nil;
-         QStatus status;
          LSFControllerServiceObjectProxy *proxy =
          (LSFControllerServiceObjectProxy *)
          [_handler proxyObjectWithService:service
                          proxyObjectClass:LSFControllerServiceObjectProxy.class
                                 interface:@"org.allseen.LSF.ControllerService.Lamp"
                                 sessionID:sessionId.unsignedIntValue];
-         status = [proxy introspectRemoteObject];
-         if (ER_OK != status) {
-             NSString *msg = @"Failed to introspect a remote bus object.";
+         if (!proxy) {
+             NSString *msg =
+             @"Failed to obtain a proxy object for org.allseen.LSF.ControllerService.Lamp .";
              NSLog(@"%@", msg);
              [response setErrorToUnknownWithMessage:msg];
              [[DConnectManager sharedManager] sendResponse:response];
@@ -387,15 +382,14 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
              return;
          }
          
-         QStatus status;
-         LSFLampObjectProxy *proxyState = (LSFLampObjectProxy *)
+         LSFLampObjectProxy *proxy = (LSFLampObjectProxy *)
          [_handler proxyObjectWithService:service
                          proxyObjectClass:LSFLampObjectProxy.class
                                 interface:@"org.allseen.LSF.LampState"
                                 sessionID:sessionId.unsignedIntValue];
-         status = [proxyState introspectRemoteObject];
-         if (ER_OK != status) {
-             NSString *msg = @"Failed to introspect a remote bus object.";
+         if (!proxy) {
+             NSString *msg =
+             @"Failed to obtain a proxy object for org.allseen.LSF.LampState .";
              NSLog(@"%@", msg);
              [response setErrorToUnknownWithMessage:msg];
              [[DConnectManager sharedManager] sendResponse:response];
@@ -457,9 +451,9 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
          AJNMessageArgument *newState =
          [[AJNMessageArgument alloc] initWithHandle:&newStateArg];
          NSNumber *responseCode =
-         [proxyState transitionLamsStateWithTimestamp:@0
-                                             newState:newState
-                                     transitionPeriod:@10];
+         [proxy transitionLamsStateWithTimestamp:@0
+                                        newState:newState
+                                transitionPeriod:@10];
          if (!responseCode) {
              [response setErrorToUnknownWithMessage:@"Failed to change status."];
          }
@@ -499,16 +493,15 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
              return;
          }
          
-         QStatus status;
          LSFControllerServiceObjectProxy *proxy =
          (LSFControllerServiceObjectProxy *)
          [_handler proxyObjectWithService:service
                          proxyObjectClass:LSFControllerServiceObjectProxy.class
                                 interface:@"org.allseen.LSF.ControllerService"
                                 sessionID:sessionId.unsignedIntValue];
-         status = [proxy introspectRemoteObject];
-         if (ER_OK != status) {
-             NSString *msg = @"Failed to introspect a remote bus object.";
+         if (!proxy) {
+             NSString *msg =
+             @"Failed to obtain a proxy object for org.allseen.LSF.ControllerService .";
              NSLog(@"%@", msg);
              [response setErrorToUnknownWithMessage:msg];
              [[DConnectManager sharedManager] sendResponse:response];
@@ -652,15 +645,14 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
              return;
          }
          
-         QStatus status;
-         LSFLampObjectProxy *proxyState = (LSFLampObjectProxy *)
+         LSFLampObjectProxy *proxy = (LSFLampObjectProxy *)
          [_handler proxyObjectWithService:service
                          proxyObjectClass:LSFLampObjectProxy.class
                                 interface:@"org.allseen.LSF.LampState"
                                 sessionID:sessionId.unsignedIntValue];
-         status = [proxyState introspectRemoteObject];
-         if (ER_OK != status) {
-             NSString *msg = @"Failed to introspect a remote bus object.";
+         if (!proxy) {
+             NSString *msg =
+             @"Failed to obtain a proxy object for org.allseen.LSF.LampState .";
              NSLog(@"%@", msg);
              [response setErrorToUnknownWithMessage:msg];
              [[DConnectManager sharedManager] sendResponse:response];
@@ -719,9 +711,9 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
          AJNMessageArgument *newState =
          [[AJNMessageArgument alloc] initWithHandle:&newStateArg];
          NSNumber *responseCode =
-         [proxyState transitionLamsStateWithTimestamp:@0
-                                             newState:newState
-                                     transitionPeriod:@10];
+         [proxy transitionLamsStateWithTimestamp:@0
+                                        newState:newState
+                                transitionPeriod:@10];
          if (!responseCode) {
              [response setErrorToUnknownWithMessage:@"Failed to change status."];
          }
@@ -762,16 +754,15 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
              return;
          }
          
-         QStatus status;
          LSFControllerServiceObjectProxy *proxy =
          (LSFControllerServiceObjectProxy *)
          [_handler proxyObjectWithService:service
                          proxyObjectClass:LSFControllerServiceObjectProxy.class
                                 interface:@"org.allseen.LSF.ControllerService"
                                 sessionID:sessionId.unsignedIntValue];
-         status = [proxy introspectRemoteObject];
-         if (ER_OK != status) {
-             NSString *msg = @"Failed to introspect a remote bus object.";
+         if (!proxy) {
+             NSString *msg =
+             @"Failed to obtain a proxy object for org.allseen.LSF.ControllerService .";
              NSLog(@"%@", msg);
              [response setErrorToUnknownWithMessage:msg];
              [[DConnectManager sharedManager] sendResponse:response];
@@ -925,15 +916,14 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
              return;
          }
          
-         QStatus status;
          LSFLampObjectProxy *proxy = (LSFLampObjectProxy *)
          [_handler proxyObjectWithService:service
                          proxyObjectClass:LSFLampObjectProxy.class
                                 interface:@"org.allseen.LSF.LampState"
                                 sessionID:sessionId.unsignedIntValue];
-         status = [proxy introspectRemoteObject];
-         if (ER_OK != status) {
-             NSString *msg = @"Failed to introspect a remote bus object.";
+         if (!proxy) {
+             NSString *msg =
+             @"Failed to obtain a proxy object for org.allseen.LSF.LampState .";
              NSLog(@"%@", msg);
              [response setErrorToUnknownWithMessage:msg];
              [[DConnectManager sharedManager] sendResponse:response];
@@ -967,16 +957,15 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
              return;
          }
          
-         QStatus status;
          LSFControllerServiceObjectProxy *proxy =
          (LSFControllerServiceObjectProxy *)
          [_handler proxyObjectWithService:service
                          proxyObjectClass:LSFControllerServiceObjectProxy.class
                                 interface:@"org.allseen.LSF.ControllerService"
                                 sessionID:sessionId.unsignedIntValue];
-         status = [proxy introspectRemoteObject];
-         if (ER_OK != status) {
-             NSString *msg = @"Failed to introspect a remote bus object.";
+         if (!proxy) {
+             NSString *msg =
+             @"Failed to obtain a proxy object for org.allseen.LSF.ControllerService .";
              NSLog(@"%@", msg);
              [response setErrorToUnknownWithMessage:msg];
              [[DConnectManager sharedManager] sendResponse:response];
@@ -1057,16 +1046,15 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
              return;
          }
          
-         QStatus status;
          LSFControllerServiceObjectProxy *proxy =
          (LSFControllerServiceObjectProxy *)
          [_handler proxyObjectWithService:service
                          proxyObjectClass:LSFControllerServiceObjectProxy.class
                                 interface:@"org.allseen.LSF.ControllerService"
                                 sessionID:sessionId.unsignedIntValue];
-         status = [proxy introspectRemoteObject];
-         if (ER_OK != status) {
-             NSString *msg = @"Failed to introspect a remote bus object.";
+         if (!proxy) {
+             NSString *msg =
+             @"Failed to obtain a proxy object for org.allseen.LSF.ControllerService .";
              NSLog(@"%@", msg);
              [response setErrorToUnknownWithMessage:msg];
              [[DConnectManager sharedManager] sendResponse:response];
@@ -1272,16 +1260,15 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
              return;
          }
          
-         QStatus status;
          LSFControllerServiceObjectProxy *proxy =
          (LSFControllerServiceObjectProxy *)
          [_handler proxyObjectWithService:service
                          proxyObjectClass:LSFControllerServiceObjectProxy.class
                                 interface:@"org.allseen.LSF.ControllerService"
                                 sessionID:sessionId.unsignedIntValue];
-         status = [proxy introspectRemoteObject];
-         if (ER_OK != status) {
-             NSString *msg = @"Failed to introspect a remote bus object.";
+         if (!proxy) {
+             NSString *msg =
+             @"Failed to obtain a proxy object for org.allseen.LSF.ControllerService .";
              NSLog(@"%@", msg);
              [response setErrorToUnknownWithMessage:msg];
              [[DConnectManager sharedManager] sendResponse:response];
@@ -1394,16 +1381,15 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
              return;
          }
          
-         QStatus status;
          LSFControllerServiceObjectProxy *proxy =
          (LSFControllerServiceObjectProxy *)
          [_handler proxyObjectWithService:service
                          proxyObjectClass:LSFControllerServiceObjectProxy.class
                                 interface:@"org.allseen.LSF.ControllerService"
                                 sessionID:sessionId.unsignedIntValue];
-         status = [proxy introspectRemoteObject];
-         if (ER_OK != status) {
-             NSString *msg = @"Failed to introspect a remote bus object.";
+         if (!proxy) {
+             NSString *msg =
+             @"Failed to obtain a proxy object for org.allseen.LSF.ControllerService .";
              NSLog(@"%@", msg);
              [response setErrorToUnknownWithMessage:msg];
              [[DConnectManager sharedManager] sendResponse:response];
@@ -1520,16 +1506,15 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
              return;
          }
          
-         QStatus status;
          LSFControllerServiceObjectProxy *proxy =
          (LSFControllerServiceObjectProxy *)
          [_handler proxyObjectWithService:service
                          proxyObjectClass:LSFControllerServiceObjectProxy.class
                                 interface:@"org.allseen.LSF.ControllerService"
                                 sessionID:sessionId.unsignedIntValue];
-         status = [proxy introspectRemoteObject];
-         if (ER_OK != status) {
-             NSString *msg = @"Failed to introspect a remote bus object.";
+         if (!proxy) {
+             NSString *msg =
+             @"Failed to obtain a proxy object for org.allseen.LSF.ControllerService .";
              NSLog(@"%@", msg);
              [response setErrorToUnknownWithMessage:msg];
              [[DConnectManager sharedManager] sendResponse:response];
@@ -1611,16 +1596,15 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
              return;
          }
          
-         QStatus status;
          LSFControllerServiceObjectProxy *proxy =
          (LSFControllerServiceObjectProxy *)
          [_handler proxyObjectWithService:service
                          proxyObjectClass:LSFControllerServiceObjectProxy.class
                                 interface:@"org.allseen.LSF.ControllerService"
                                 sessionID:sessionId.unsignedIntValue];
-         status = [proxy introspectRemoteObject];
-         if (ER_OK != status) {
-             NSString *msg = @"Failed to introspect a remote bus object.";
+         if (!proxy) {
+             NSString *msg =
+             @"Failed to obtain a proxy object for org.allseen.LSF.ControllerService .";
              NSLog(@"%@", msg);
              [response setErrorToUnknownWithMessage:msg];
              [[DConnectManager sharedManager] sendResponse:response];
@@ -1677,16 +1661,15 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
              return;
          }
          
-         QStatus status;
          LSFControllerServiceObjectProxy *proxy =
          (LSFControllerServiceObjectProxy *)
          [_handler proxyObjectWithService:service
                          proxyObjectClass:LSFControllerServiceObjectProxy.class
                                 interface:@"org.allseen.LSF.ControllerService"
                                 sessionID:sessionId.unsignedIntValue];
-         status = [proxy introspectRemoteObject];
-         if (ER_OK != status) {
-             NSString *msg = @"Failed to introspect a remote bus object.";
+         if (!proxy) {
+             NSString *msg =
+             @"Failed to obtain a proxy object for org.allseen.LSF.ControllerService .";
              NSLog(@"%@", msg);
              [response setErrorToUnknownWithMessage:msg];
              [[DConnectManager sharedManager] sendResponse:response];

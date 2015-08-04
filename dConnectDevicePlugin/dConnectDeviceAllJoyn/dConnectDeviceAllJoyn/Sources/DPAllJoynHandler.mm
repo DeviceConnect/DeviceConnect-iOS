@@ -332,7 +332,6 @@ static size_t const DPAllJoynJoinRetryMax = 5;
         }
         return proxy;
     } else {
-        NSLog(@"Specified interface \"%@\" was not found.", interface);
         return nil;
     }
 }
