@@ -239,7 +239,7 @@ static size_t const DPAllJoynJoinRetryMax = 5;
 - (void)leaveSessionWithSessionId:(AJNSessionId)sessionId
                             block:(void(^)(BOOL result))block
 {
-    NSLog(@"%s: leaveSession", __PRETTY_FUNCTION__);
+    NSLog(@"%s: leaveSession: %u", __PRETTY_FUNCTION__, sessionId);
     if (!block) {
         NSLog(@"%s: block can not be nil.", __PRETTY_FUNCTION__);
         return;

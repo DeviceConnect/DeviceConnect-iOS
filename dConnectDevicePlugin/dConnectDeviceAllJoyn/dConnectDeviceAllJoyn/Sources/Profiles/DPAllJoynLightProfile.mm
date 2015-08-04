@@ -1014,7 +1014,7 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
              [response setErrorToUnknownWithMessage:
               [NSString stringWithFormat:
                @"Failed to turn off the light with lightID \"%@\".", lightId]];
-
+             
          }
          else if (responseCode.unsignedIntValue != DPAllJoynLightResponseCodeOK) {
              [response setErrorToUnknownWithMessage:
