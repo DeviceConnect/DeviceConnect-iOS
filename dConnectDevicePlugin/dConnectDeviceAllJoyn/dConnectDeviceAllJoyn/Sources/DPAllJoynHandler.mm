@@ -18,9 +18,10 @@
 #import "DPAllJoynSynchronizedMutableDictionary.h"
 
 
-static int const PING_TIMEOUT = 15000;
-static int const PING_INTERVAL = 20;
-static int const DISCOVER_INTERVAL = 30;
+static int const DPAllJoynPingTimeout = 5000;
+static int const DPAllJoynPingInterval = 20;
+static int const DPAllJoynDiscoverInterval = 30;
+static size_t const DPAllJoynJoinRetryMax = 5;
 
 
 @protocol AboutClientDelegate <NSObject>
@@ -110,7 +111,7 @@ static int const DISCOVER_INTERVAL = 30;
             }
             
             _pingTimer =
-            [NSTimer timerWithTimeInterval:PING_INTERVAL
+            [NSTimer timerWithTimeInterval:DPAllJoynPingInterval
                                     target:self
                                   selector:@selector(pingTimerMethod:)
                                   userInfo:nil
@@ -119,7 +120,7 @@ static int const DISCOVER_INTERVAL = 30;
                                       forMode:NSDefaultRunLoopMode];
             
             _discoverTimer =
-            [NSTimer timerWithTimeInterval:DISCOVER_INTERVAL
+            [NSTimer timerWithTimeInterval:DPAllJoynDiscoverInterval
                                     target:self
                                   selector:@selector(discoverTimerMethod:)
                                   userInfo:nil
@@ -265,14 +266,26 @@ static int const DISCOVER_INTERVAL = 30;
         return;
     }
     
+    __block size_t failedCount = 0;
+    id resultBlock;
+    resultBlock = ^(NSNumber *sessionId)
+    {
+        if (sessionId) {
+            block(service, sessionId);
+            [self leaveSessionWithSessionId:sessionId.unsignedIntValue
+                                      block:^(BOOL result) {}];
+        } else if (failedCount <= DPAllJoynJoinRetryMax) {
+            ++failedCount;
+            [self joinSessionWithBusName:service.busName
+                                    port:service.port
+                                   block:resultBlock];
+        } else {
+            block(service, nil);
+        }
+    };
     [self joinSessionWithBusName:service.busName
                             port:service.port
-                           block:^(NSNumber *sessionId)
-     {
-         block(service, sessionId);
-         [self leaveSessionWithSessionId:sessionId.unsignedIntValue
-                                   block:^(BOOL result) {}];
-     }];
+                           block:resultBlock];
 }
 
 
@@ -287,7 +300,7 @@ static int const DISCOVER_INTERVAL = 30;
     }
     
     dispatch_async(_handlerQueue, ^{
-        [self.bus pingPeerAsync:busName withTimeout:PING_TIMEOUT completionBlock:
+        [self.bus pingPeerAsync:busName withTimeout:DPAllJoynPingTimeout completionBlock:
          ^(QStatus status, void *context) {
              block(ER_OK == status);
          } context:nil];
