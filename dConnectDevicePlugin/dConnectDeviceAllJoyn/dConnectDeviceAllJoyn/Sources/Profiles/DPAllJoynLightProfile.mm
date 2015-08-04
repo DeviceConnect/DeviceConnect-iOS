@@ -477,19 +477,6 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
                                                            color:(NSString *)color
                                                         flashing:(NSArray *)flashing
 {
-    //////////////////////////////////////////////////
-    // Validity check
-    //
-    if (!lightId) {
-        [response setErrorToInvalidRequestParameterWithMessage:
-         @"Parameter 'lightId' must be specified."];
-        [[DConnectManager sharedManager] sendResponse:response];
-        return;
-    }
-    
-    //////////////////////////////////////////////////
-    // Querying
-    //
     [_handler performOneShotSessionWithBusName:service
                                          block:
      ^(DPAllJoynServiceEntity *service, NSNumber *sessionId)
@@ -739,19 +726,6 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
                                                           color:(NSString *)color
                                                        flashing:(NSArray *)flashing
 {
-    //////////////////////////////////////////////////
-    // Validity check
-    //
-    if (!lightId) {
-        [response setErrorToInvalidRequestParameterWithMessage:
-         @"Parameter 'lightId' must be specified."];
-        [[DConnectManager sharedManager] sendResponse:response];
-        return;
-    }
-    
-    //////////////////////////////////////////////////
-    // Querying
-    //
     [_handler performOneShotSessionWithBusName:service
                                          block:
      ^(DPAllJoynServiceEntity *service, NSNumber *sessionId)
@@ -946,19 +920,6 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
                                                            service:(DPAllJoynServiceEntity *)service
                                                            lightId:(NSString *)lightId
 {
-    //////////////////////////////////////////////////
-    // Validity check
-    //
-    if (!lightId) {
-        [response setErrorToInvalidRequestParameterWithMessage:
-         @"Parameter 'lightId' must be specified."];
-        [[DConnectManager sharedManager] sendResponse:response];
-        return;
-    }
-    
-    //////////////////////////////////////////////////
-    // Querying
-    //
     [_handler performOneShotSessionWithBusName:service
                                          block:
      ^(DPAllJoynServiceEntity *service, NSNumber *sessionId)
