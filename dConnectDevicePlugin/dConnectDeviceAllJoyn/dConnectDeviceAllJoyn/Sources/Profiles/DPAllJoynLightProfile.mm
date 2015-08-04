@@ -36,7 +36,7 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
 #pragma mark - Interfaces
 
 
-@interface DPAllJoynLightProfile () <DCMLightProfileDelegate> {
+@interface DPAllJoynLightProfile () <DCMLightProfileAltDelegate> {
     DPAllJoynHandler *_handler;
 }
 @end
@@ -358,7 +358,7 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
 - (void) didReceivePostLightRequestForSingleLampWithResponse:(DConnectResponseMessage *)response
                                                      service:(DPAllJoynServiceEntity *)service
                                                      lightId:(NSString *)lightId
-                                                  brightness:(double)brightness
+                                                  brightness:(NSNumber *)brightness
                                                        color:(NSString *)color
                                                     flashing:(NSArray *)flashing
 {
@@ -419,12 +419,14 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
          ++count;
          
          if (functionality[@"Dimmable"]) {
-             double brightnessScaled = brightness * 0xffffffffL;
-             tmp1 = MsgArg();
-             tmp2 = MsgArg("u", (uint32_t)brightnessScaled);
-             tmp1.Set("{sv}", "Brightness", &tmp2);
-             newStates[count] = tmp1;
-             ++count;
+             if (brightness) {
+                 double brightnessScaled = brightness.doubleValue * 0xffffffffL;
+                 tmp1 = MsgArg();
+                 tmp2 = MsgArg("u", (uint32_t)brightnessScaled);
+                 tmp1.Set("{sv}", "Brightness", &tmp2);
+                 newStates[count] = tmp1;
+                 ++count;
+             }
          } else {
              NSLog(@"Light dimming is not supported in this AllJoyn service. "
                    "Parameter 'brightness' is ignored.");
@@ -458,11 +460,16 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
          [proxyState transitionLamsStateWithTimestamp:@0
                                              newState:newState
                                      transitionPeriod:@10];
-         if (responseCode
-             && responseCode.unsignedIntValue == DPAllJoynLightResponseCodeOK) {
-             [response setResult:DConnectMessageResultTypeOk];
-         } else {
+         if (!responseCode) {
              [response setErrorToUnknownWithMessage:@"Failed to change status."];
+         }
+         else if (responseCode.unsignedIntValue != DPAllJoynLightResponseCodeOK) {
+             [response setErrorToUnknownWithMessage:
+              [NSString stringWithFormat:@"Failed to change status (code: %@).",
+               responseCode]];
+         }
+         else {
+             [response setResult:DConnectMessageResultTypeOk];
          }
          
          [[DConnectManager sharedManager] sendResponse:response];
@@ -473,7 +480,7 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
 - (void) didReceivePostLightRequestForLampControllerWithResponse:(DConnectResponseMessage *)response
                                                          service:(DPAllJoynServiceEntity *)service
                                                          lightId:(NSString *)lightId
-                                                      brightness:(double)brightness
+                                                      brightness:(NSNumber *)brightness
                                                            color:(NSString *)color
                                                         flashing:(NSArray *)flashing
 {
@@ -549,12 +556,14 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
          ++count;
          
          if (functionality[@"Dimmable"]) {
-             double brightnessScaled = brightness * 0xffffffffL;
-             tmp1 = MsgArg();
-             tmp2 = MsgArg("u", (uint32_t)brightnessScaled);
-             tmp1.Set("{sv}", "Brightness", &tmp2);
-             newStates[count] = tmp1;
-             ++count;
+             if (brightness) {
+                 double brightnessScaled = brightness.doubleValue * 0xffffffffL;
+                 tmp1 = MsgArg();
+                 tmp2 = MsgArg("u", (uint32_t)brightnessScaled);
+                 tmp1.Set("{sv}", "Brightness", &tmp2);
+                 newStates[count] = tmp1;
+                 ++count;
+             }
          } else {
              NSLog(@"Light dimming is not supported in this AllJoyn service. "
                    "Parameter 'brightness' is ignored.");
@@ -589,11 +598,16 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
                              transitionPeriod:@10
                                  responseCode:&responseCode
                                        lampID:&ignored];
-         if (responseCode
-             && responseCode.unsignedIntValue == DPAllJoynLightResponseCodeOK) {
-             [response setResult:DConnectMessageResultTypeOk];
-         } else {
+         if (!responseCode) {
              [response setErrorToUnknownWithMessage:@"Failed to change status."];
+         }
+         else if (responseCode.unsignedIntValue != DPAllJoynLightResponseCodeOK) {
+             [response setErrorToUnknownWithMessage:
+              [NSString stringWithFormat:@"Failed to change status (code: %@).",
+               responseCode]];
+         }
+         else {
+             [response setResult:DConnectMessageResultTypeOk];
          }
          
          [[DConnectManager sharedManager] sendResponse:response];
@@ -606,7 +620,7 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
                                                     service:(DPAllJoynServiceEntity *)service
                                                     lightId:(NSString *)lightId
                                                        name:(NSString *)name
-                                                 brightness:(double)brightness
+                                                 brightness:(NSNumber *)brightness
                                                       color:(NSString *)color
                                                    flashing:(NSArray *)flashing
 {
@@ -667,12 +681,14 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
          MsgArg tmp2;
          
          if (functionality[@"Dimmable"]) {
-             double brightnessScaled = brightness * 0xffffffffL;
-             tmp1 = MsgArg();
-             tmp2 = MsgArg("u", (uint32_t)brightnessScaled);
-             tmp1.Set("{sv}", "Brightness", &tmp2);
-             newStates[count] = tmp1;
-             ++count;
+             if (brightness) {
+                 double brightnessScaled = brightness.doubleValue * 0xffffffffL;
+                 tmp1 = MsgArg();
+                 tmp2 = MsgArg("u", (uint32_t)brightnessScaled);
+                 tmp1.Set("{sv}", "Brightness", &tmp2);
+                 newStates[count] = tmp1;
+                 ++count;
+             }
          } else {
              NSLog(@"Light dimming is not supported in this AllJoyn service. "
                    "Parameter 'brightness' is ignored.");
@@ -706,11 +722,16 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
          [proxyState transitionLamsStateWithTimestamp:@0
                                              newState:newState
                                      transitionPeriod:@10];
-         if (responseCode
-             && responseCode.unsignedIntValue == DPAllJoynLightResponseCodeOK) {
-             [response setResult:DConnectMessageResultTypeOk];
-         } else {
+         if (!responseCode) {
              [response setErrorToUnknownWithMessage:@"Failed to change status."];
+         }
+         else if (responseCode.unsignedIntValue != DPAllJoynLightResponseCodeOK) {
+             [response setErrorToUnknownWithMessage:
+              [NSString stringWithFormat:@"Failed to change status (code: %@).",
+               responseCode]];
+         }
+         else {
+             [response setResult:DConnectMessageResultTypeOk];
          }
          
          [[DConnectManager sharedManager] sendResponse:response];
@@ -722,7 +743,7 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
                                                         service:(DPAllJoynServiceEntity *)service
                                                         lightId:(NSString *)lightId
                                                            name:(NSString *)name
-                                                     brightness:(double)brightness
+                                                     brightness:(NSNumber *)brightness
                                                           color:(NSString *)color
                                                        flashing:(NSArray *)flashing
 {
@@ -795,12 +816,14 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
          MsgArg tmp2;
          
          if (functionality[@"Dimmable"]) {
-             double brightnessScaled = brightness * 0xffffffffL;
-             tmp1 = MsgArg();
-             tmp2 = MsgArg("u", (uint32_t)brightnessScaled);
-             tmp1.Set("{sv}", "Brightness", &tmp2);
-             newStates[count] = tmp1;
-             ++count;
+             if (brightness) {
+                 double brightnessScaled = brightness.doubleValue * 0xffffffffL;
+                 tmp1 = MsgArg();
+                 tmp2 = MsgArg("u", (uint32_t)brightnessScaled);
+                 tmp1.Set("{sv}", "Brightness", &tmp2);
+                 newStates[count] = tmp1;
+                 ++count;
+             }
          } else {
              NSLog(@"Light dimming is not supported in this AllJoyn service. "
                    "Parameter 'brightness' is ignored.");
@@ -835,11 +858,16 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
                              transitionPeriod:@10
                                  responseCode:&responseCode
                                        lampID:&ignored];
-         if (responseCode
-             && responseCode.unsignedIntValue == DPAllJoynLightResponseCodeOK) {
-             [response setResult:DConnectMessageResultTypeOk];
-         } else {
+         if (!responseCode) {
              [response setErrorToUnknownWithMessage:@"Failed to change status."];
+         }
+         else if (responseCode.unsignedIntValue != DPAllJoynLightResponseCodeOK) {
+             [response setErrorToUnknownWithMessage:
+              [NSString stringWithFormat:@"Failed to change status (code: %@).",
+               responseCode]];
+         }
+         else {
+             [response setResult:DConnectMessageResultTypeOk];
          }
          
          if (name) {
@@ -850,12 +878,16 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
                              responseCode:&responseCode
                                    lampID:&ignored
                                  language:&ignored];
-             
-             if (responseCode
-                 && responseCode.unsignedIntValue == DPAllJoynLightResponseCodeOK) {
-                 [response setResult:DConnectMessageResultTypeOk];
-             } else {
+             if (!responseCode) {
                  [response setErrorToUnknownWithMessage:@"Failed to change name."];
+             }
+             else if (responseCode.unsignedIntValue != DPAllJoynLightResponseCodeOK) {
+                 [response setErrorToUnknownWithMessage:
+                  [NSString stringWithFormat:@"Failed to change name (code: %@).",
+                   responseCode]];
+             }
+             else {
+                 [response setResult:DConnectMessageResultTypeOk];
              }
          }
          
@@ -989,14 +1021,20 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
                              transitionPeriod:@10
                                  responseCode:&responseCode
                                        lampID:&ignored];
-         
-         if (responseCode
-             && responseCode.unsignedIntValue == DPAllJoynLightResponseCodeOK) {
-             [response setResult:DConnectMessageResultTypeOk];
-         } else {
+         if (!responseCode) {
              [response setErrorToUnknownWithMessage:
               [NSString stringWithFormat:
                @"Failed to turn off the light with lightID \"%@\".", lightId]];
+
+         }
+         else if (responseCode.unsignedIntValue != DPAllJoynLightResponseCodeOK) {
+             [response setErrorToUnknownWithMessage:
+              [NSString stringWithFormat:
+               @"Failed to turn off the light with lightID \"%@\" (code: %@).",
+               lightId, responseCode]];
+         }
+         else {
+             [response setResult:DConnectMessageResultTypeOk];
          }
          
          [[DConnectManager sharedManager] sendResponse:response];
@@ -1215,7 +1253,7 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
 - (void)didReceivePostLightGroupRequestForLampControllerWithResponse:(DConnectResponseMessage *)response
                                                              service:(DPAllJoynServiceEntity *)service
                                                              groupID:(NSString *)groupId
-                                                          brightness:(double)brightness
+                                                          brightness:(NSNumber *)brightness
                                                                color:(NSString *)color
                                                             flashing:(NSArray *)flashing
 {
@@ -1283,12 +1321,14 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
          newStates[count] = tmp1;
          ++count;
          
-         double brightnessScaled = brightness * 0xffffffffL;
-         tmp1 = MsgArg();
-         tmp2 = MsgArg("u", (uint32_t)brightnessScaled);
-         tmp1.Set("{sv}", "Brightness", &tmp2);
-         newStates[count] = tmp1;
-         ++count;
+         if (brightness) {
+             double brightnessScaled = brightness.doubleValue * 0xffffffffL;
+             tmp1 = MsgArg();
+             tmp2 = MsgArg("u", (uint32_t)brightnessScaled);
+             tmp1.Set("{sv}", "Brightness", &tmp2);
+             newStates[count] = tmp1;
+             ++count;
+         }
          
          if (color) {
              NSDictionary *hsb = [DPAllJoynColorUtility HSBFromRGB:color];
@@ -1314,11 +1354,16 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
                                        transitionPeriod:@10
                                            responseCode:&responseCode
                                             lampGroupID:&ignored];
-         if (responseCode
-             && responseCode.unsignedIntValue == DPAllJoynLightResponseCodeOK) {
-             [response setResult:DConnectMessageResultTypeOk];
-         } else {
+         if (!responseCode) {
              [response setErrorToUnknownWithMessage:@"Failed to change group state."];
+         }
+         else if (responseCode.unsignedIntValue != DPAllJoynLightResponseCodeOK) {
+             [response setErrorToUnknownWithMessage:
+              [NSString stringWithFormat:@"Failed to change group state (code: %@).",
+               responseCode]];
+         }
+         else {
+             [response setResult:DConnectMessageResultTypeOk];
          }
          
          [[DConnectManager sharedManager] sendResponse:response];
@@ -1330,7 +1375,7 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
                                                             service:(DPAllJoynServiceEntity *)service
                                                             groupID:(NSString *)groupId
                                                                name:(NSString *)name
-                                                         brightness:(double)brightness
+                                                         brightness:(NSNumber *)brightness
                                                               color:(NSString *)color
                                                            flashing:(NSArray *)flashing
 {
@@ -1395,12 +1440,14 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
          MsgArg tmp1;
          MsgArg tmp2;
          
-         double brightnessScaled = brightness * 0xffffffffL;
-         tmp1 = MsgArg();
-         tmp2 = MsgArg("u", (uint32_t)brightnessScaled);
-         tmp1.Set("{sv}", "Brightness", &tmp2);
-         newStates[count] = tmp1;
-         ++count;
+         if (brightness) {
+             double brightnessScaled = brightness.doubleValue * 0xffffffffL;
+             tmp1 = MsgArg();
+             tmp2 = MsgArg("u", (uint32_t)brightnessScaled);
+             tmp1.Set("{sv}", "Brightness", &tmp2);
+             newStates[count] = tmp1;
+             ++count;
+         }
          
          if (color) {
              NSDictionary *hsb = [DPAllJoynColorUtility HSBFromRGB:color];
@@ -1530,11 +1577,16 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
                                        transitionPeriod:@10
                                            responseCode:&responseCode
                                             lampGroupID:&ignored];
-         if (responseCode
-             && responseCode.unsignedIntValue == DPAllJoynLightResponseCodeOK) {
-             [response setResult:DConnectMessageResultTypeOk];
-         } else {
+         if (!responseCode) {
              [response setErrorToUnknownWithMessage:@"Failed to change group state."];
+         }
+         else if (responseCode.unsignedIntValue != DPAllJoynLightResponseCodeOK) {
+             [response setErrorToUnknownWithMessage:
+              [NSString stringWithFormat:@"Failed to change group state (code: %@).",
+               responseCode]];
+         }
+         else {
+             [response setResult:DConnectMessageResultTypeOk];
          }
          
          [[DConnectManager sharedManager] sendResponse:response];
@@ -1589,11 +1641,16 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
                                   language:service.defaultLanguage
                               responseCode:&responseCode
                                lampGroupID:&lampGroupID];
-         if (responseCode
-             && responseCode.unsignedIntValue == DPAllJoynLightResponseCodeOK) {
-             [response setResult:DConnectMessageResultTypeOk];
-         } else {
+         if (!responseCode) {
              [response setErrorToUnknownWithMessage:@"Failed to create a light group."];
+         }
+         else if (responseCode.unsignedIntValue != DPAllJoynLightResponseCodeOK) {
+             [response setErrorToUnknownWithMessage:
+              [NSString stringWithFormat:@"Failed to create a light group (code: %@).",
+               responseCode]];
+         }
+         else {
+             [response setResult:DConnectMessageResultTypeOk];
          }
          
          [[DConnectManager sharedManager] sendResponse:response];
@@ -1611,7 +1668,7 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
      {
          NSNumber *responseCode;
          NSString *ignored;
-
+         
          if (!sessionId) {
              NSString *msg = @"Failed to join a session.";
              NSLog(@"%@", msg);
@@ -1664,11 +1721,16 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
          [proxy deleteLampGroupWithLampGroupID:groupID
                                   responseCode:&responseCode
                                    lampGroupID:&ignored];
-         if (responseCode
-             && responseCode.unsignedIntValue == DPAllJoynLightResponseCodeOK) {
-             [response setResult:DConnectMessageResultTypeOk];
-         } else {
+         if (!responseCode) {
              [response setErrorToUnknownWithMessage:@"Failed to delete the light group."];
+         }
+         else if (responseCode.unsignedIntValue != DPAllJoynLightResponseCodeOK) {
+             [response setErrorToUnknownWithMessage:
+              [NSString stringWithFormat:@"Failed to delete the light group (code: %@).",
+               responseCode]];
+         }
+         else {
+             [response setResult:DConnectMessageResultTypeOk];
          }
          
          [[DConnectManager sharedManager] sendResponse:response];
@@ -1729,7 +1791,7 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
                    response:(DConnectResponseMessage *)response
                   serviceId:(NSString *)serviceId
                     lightId:(NSString *)lightId
-                 brightness:(double)brightness
+                 brightness:(NSNumber *)brightness
                       color:(NSString *)color
                    flashing:(NSArray *)flashing
 {
@@ -1752,7 +1814,8 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
         return YES;
     }
     
-    if (brightness < 0 || brightness > 1) {
+    if (brightness
+        && (brightness.doubleValue < 0 || brightness.doubleValue > 1)) {
         [response setErrorToInvalidRequestParameterWithMessage:
          @"Parameter 'brightness' must be a value between 0 and 1.0 ."];
         [[DConnectManager sharedManager] sendResponse:response];
@@ -1769,7 +1832,7 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
         return YES;
     }
     
-    if (flashing) {
+    if (flashing && flashing.count > 0) {
         [response setErrorToInvalidRequestParameterWithMessage:
          @"Parameter 'flashing' is not supported."];
         return YES;
@@ -1809,7 +1872,7 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
                   serviceId:(NSString *)serviceId
                     lightId:(NSString *)lightId
                        name:(NSString *)name
-                 brightness:(double)brightness
+                 brightness:(NSNumber *)brightness
                       color:(NSString *)color
                    flashing:(NSArray *)flashing
 {
@@ -1832,7 +1895,8 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
         return YES;
     }
     
-    if (brightness < 0 || brightness > 1) {
+    if (brightness
+        && (brightness.doubleValue < 0 || brightness.doubleValue > 1)) {
         [response setErrorToInvalidRequestParameterWithMessage:
          @"Parameter 'brightness' must be a value between 0 and 1.0 ."];
         [[DConnectManager sharedManager] sendResponse:response];
@@ -1849,7 +1913,7 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
         return YES;
     }
     
-    if (flashing) {
+    if (flashing && flashing.count > 0) {
         [response setErrorToInvalidRequestParameterWithMessage:
          @"Parameter 'flashing' is not supported."];
         return YES;
@@ -1980,7 +2044,7 @@ didReceivePostLightGroupRequest:(DConnectRequestMessage *)request
                        response:(DConnectResponseMessage *)response
                       serviceId:(NSString *)serviceId
                         groupId:(NSString *)groupId
-                     brightness:(double)brightness
+                     brightness:(NSNumber *)brightness
                           color:(NSString *)color
                        flashing:(NSArray *)flashing
 {
@@ -2003,7 +2067,8 @@ didReceivePostLightGroupRequest:(DConnectRequestMessage *)request
         return YES;
     }
     
-    if (brightness < 0 || brightness > 1) {
+    if (brightness
+        && (brightness.doubleValue < 0 || brightness.doubleValue > 1)) {
         [response setErrorToInvalidRequestParameterWithMessage:
          @"Parameter 'brightness' must be a value between 0 and 1.0 ."];
         [[DConnectManager sharedManager] sendResponse:response];
@@ -2020,7 +2085,7 @@ didReceivePostLightGroupRequest:(DConnectRequestMessage *)request
         return YES;
     }
     
-    if (flashing) {
+    if (flashing && flashing.count > 0) {
         [response setErrorToInvalidRequestParameterWithMessage:
          @"Parameter 'flashing' is not supported."];
         return YES;
@@ -2053,7 +2118,7 @@ didReceivePostLightGroupRequest:(DConnectRequestMessage *)request
                       serviceId:(NSString *)serviceId
                         groupId:(NSString *)groupId
                            name:(NSString *)name
-                     brightness:(double)brightness
+                     brightness:(NSNumber *)brightness
                           color:(NSString *)color
                        flashing:(NSArray *)flashing
 {
@@ -2076,7 +2141,8 @@ didReceivePostLightGroupRequest:(DConnectRequestMessage *)request
         return YES;
     }
     
-    if (brightness < 0 || brightness > 1) {
+    if (brightness
+        && (brightness.doubleValue < 0 || brightness.doubleValue > 1)) {
         [response setErrorToInvalidRequestParameterWithMessage:
          @"Parameter 'brightness' must be a value between 0 and 1.0 ."];
         [[DConnectManager sharedManager] sendResponse:response];
@@ -2093,7 +2159,7 @@ didReceivePostLightGroupRequest:(DConnectRequestMessage *)request
         return YES;
     }
     
-    if (flashing) {
+    if (flashing && flashing.count > 0) {
         [response setErrorToInvalidRequestParameterWithMessage:
          @"Parameter 'flashing' is not supported."];
         return YES;

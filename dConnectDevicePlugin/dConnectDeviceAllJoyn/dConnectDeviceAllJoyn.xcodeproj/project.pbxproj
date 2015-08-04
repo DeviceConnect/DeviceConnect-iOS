@@ -80,6 +80,8 @@
 		258843C81B5F3A3F003E5257 /* DPAllJoynConst.mm in Sources */ = {isa = PBXBuildFile; fileRef = 258843C61B5F3A3F003E5257 /* DPAllJoynConst.mm */; };
 		258843CB1B5F43F9003E5257 /* NSArray+Query.h in Headers */ = {isa = PBXBuildFile; fileRef = 258843C91B5F43F9003E5257 /* NSArray+Query.h */; };
 		258843CC1B5F43F9003E5257 /* NSArray+Query.m in Sources */ = {isa = PBXBuildFile; fileRef = 258843CA1B5F43F9003E5257 /* NSArray+Query.m */; };
+		2588A2721B707E3E0015B668 /* DCMLightProfileAlt.m in Sources */ = {isa = PBXBuildFile; fileRef = 2588A2711B707E3E0015B668 /* DCMLightProfileAlt.m */; };
+		2588A2741B707E810015B668 /* DCMLightProfileAlt.h in Headers */ = {isa = PBXBuildFile; fileRef = 2588A2731B707E810015B668 /* DCMLightProfileAlt.h */; };
 		2589F0621B61F32200C7B4C0 /* DPAllJoynLightingResponseCode.h in Headers */ = {isa = PBXBuildFile; fileRef = 2589F0611B61F06300C7B4C0 /* DPAllJoynLightingResponseCode.h */; };
 		25A06C081B562C08005B6F8A /* dConnectDeviceAllJoyn.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25A06BFC1B562C07005B6F8A /* dConnectDeviceAllJoyn.framework */; };
 		25A06C0F1B562C08005B6F8A /* dConnectDeviceAllJoynTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 25A06C0E1B562C08005B6F8A /* dConnectDeviceAllJoynTests.m */; };
@@ -146,6 +148,8 @@
 		258843CA1B5F43F9003E5257 /* NSArray+Query.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+Query.m"; sourceTree = "<group>"; };
 		258843CE1B5F942D003E5257 /* LSFLamp.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = LSFLamp.xml; sourceTree = "<group>"; };
 		258843D01B5F95B9003E5257 /* LSFControllerService.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = LSFControllerService.xml; sourceTree = "<group>"; };
+		2588A2711B707E3E0015B668 /* DCMLightProfileAlt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DCMLightProfileAlt.m; sourceTree = "<group>"; };
+		2588A2731B707E810015B668 /* DCMLightProfileAlt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DCMLightProfileAlt.h; sourceTree = "<group>"; };
 		2589F0611B61F06300C7B4C0 /* DPAllJoynLightingResponseCode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DPAllJoynLightingResponseCode.h; sourceTree = "<group>"; };
 		25A06BFC1B562C07005B6F8A /* dConnectDeviceAllJoyn.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = dConnectDeviceAllJoyn.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		25A06C001B562C07005B6F8A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -399,6 +403,8 @@
 		25A06C731B56675B005B6F8A /* Profiles */ = {
 			isa = PBXGroup;
 			children = (
+				2588A2731B707E810015B668 /* DCMLightProfileAlt.h */,
+				2588A2711B707E3E0015B668 /* DCMLightProfileAlt.m */,
 				25A06C7D1B566C86005B6F8A /* DPAllJoynLightProfile.h */,
 				25A06C7E1B566C86005B6F8A /* DPAllJoynLightProfile.mm */,
 				25A06C791B566AB3005B6F8A /* DPAllJoynServiceDiscoveryProfile.h */,
@@ -418,6 +424,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2588A2741B707E810015B668 /* DCMLightProfileAlt.h in Headers */,
 				2589F0621B61F32200C7B4C0 /* DPAllJoynLightingResponseCode.h in Headers */,
 				25851BCA1B574A9F00CB732E /* DPAllJoynSettingMasterSubTableViewController.h in Headers */,
 				25851BD71B575F2700CB732E /* DPAllJoynSettingDetailLIFXViewController.h in Headers */,
@@ -654,6 +661,7 @@
 				25E1A0721B5DE05A00308AFC /* DPAllJoynSynchronizedMutableDictionary.m in Sources */,
 				25856D061B58965E00B1C2DC /* DPAllJoynHandler.mm in Sources */,
 				25856D1A1B59091000B1C2DC /* DPAllJoynServiceEntity.mm in Sources */,
+				2588A2721B707E3E0015B668 /* DCMLightProfileAlt.m in Sources */,
 				258498A91B609A3F0063552E /* AJNLSFControllerService.mm in Sources */,
 				258498AB1B609A3F0063552E /* AJNLSFLamp.mm in Sources */,
 				25851BD81B575F2700CB732E /* DPAllJoynSettingDetailLIFXViewController.m in Sources */,
