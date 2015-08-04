@@ -89,11 +89,6 @@
             if (ER_OK != status) {
                 return nil;
             }
-            if ([@(keyCStr) isEqualToString:@"Version"]) {
-                uint32_t version;
-                status = valArg->Get("u", &version);
-                NSLog(@"");
-            }
             
             id val = [DPAllJoynMessageConverter objectWithMsArg:valArg];
             if (val) {
