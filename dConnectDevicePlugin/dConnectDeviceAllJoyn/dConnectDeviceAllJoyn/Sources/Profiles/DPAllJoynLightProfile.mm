@@ -26,6 +26,10 @@ typedef NS_ENUM(NSUInteger, DPAllJoynLightServiceType) {
 };
 
 
+// TODO: Use property LampID in org.allseen.LSF.LampDetails instead.
+static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
+
+
 // #############################################################################
 // Interfaces
 // #############################################################################
@@ -218,7 +222,7 @@ typedef NS_ENUM(NSUInteger, DPAllJoynLightServiceType) {
          
          DConnectArray *lights = [DConnectArray array];
          DConnectMessage *light = [DConnectMessage message];
-         [light setString:@"self" forKey:DCMLightProfileParamLightId];
+         [light setString:DPAllJoynLightProfileLightIDSelf forKey:DCMLightProfileParamLightId];
          [light setString:service.serviceName forKey:DCMLightProfileParamName];
          [light setString:@"" forKey:DCMLightProfileParamConfig];
          [light setBool:proxy.OnOff forKey:DCMLightProfileParamOn];
@@ -361,9 +365,9 @@ typedef NS_ENUM(NSUInteger, DPAllJoynLightServiceType) {
     //////////////////////////////////////////////////
     // Validity check
     //
-    if (![lightId isEqualToString:@"self"]) {
+    if (![lightId isEqualToString:DPAllJoynLightProfileLightIDSelf]) {
         [response setErrorToInvalidRequestParameterWithMessage:
-         @"lightId not found."];
+         @"A light with ID specified by 'lightId' not found."];
         [[DConnectManager sharedManager] sendResponse:response];
         return;
     }
@@ -490,6 +494,9 @@ typedef NS_ENUM(NSUInteger, DPAllJoynLightServiceType) {
                                          block:
      ^(DPAllJoynServiceEntity *service, NSNumber *sessionId)
      {
+         NSNumber *responseCode = nil;
+         NSString *ignored;
+         
          if (!sessionId) {
              NSString *msg = @"Failed to join a session.";
              NSLog(@"%@", msg);
@@ -513,6 +520,30 @@ typedef NS_ENUM(NSUInteger, DPAllJoynLightServiceType) {
              [[DConnectManager sharedManager] sendResponse:response];
              return;
          }
+         
+         AJNMessageArgument *lampIDsArg;
+         [proxy getAllLampIDsWithResponseCode:&responseCode lampIDs:&lampIDsArg];
+         if (!responseCode) {
+             [response setErrorToUnknownWithMessage:@"Failed to obtain lamp IDs."];
+             [[DConnectManager sharedManager] sendResponse:response];
+             return;
+         }
+         else if (responseCode.unsignedIntValue != DPAllJoynLightResponseCodeOK) {
+             [response setErrorToUnknownWithMessage:
+              [NSString stringWithFormat:@"Failed to obtain lamp IDs (code: %@).",
+               responseCode]];
+             [[DConnectManager sharedManager] sendResponse:response];
+             return;
+         }
+         NSArray *lampIDs =
+         [DPAllJoynMessageConverter objectWithAJNMessageArgument:lampIDsArg];
+         if (!lampIDs || ![lampIDs containsObject:lightId]) {
+             [response setErrorToInvalidRequestParameterWithMessage:
+              @"A light with ID specified by 'lightId' not found."];
+             [[DConnectManager sharedManager] sendResponse:response];
+             return;
+         }
+         responseCode = nil;
          
          NSDictionary *functionality =
          [self checkFunctionalityWithService:service
@@ -566,8 +597,6 @@ typedef NS_ENUM(NSUInteger, DPAllJoynLightServiceType) {
          MsgArg newStateArg("a{sv}", count, newStates);
          AJNMessageArgument *newState =
          [[AJNMessageArgument alloc] initWithHandle:&newStateArg];
-         NSNumber *responseCode;
-         NSString *ignored;
          [proxy transitionLampStateWithLampID:lightId
                                     lampState:newState
                              transitionPeriod:@10
@@ -597,9 +626,9 @@ typedef NS_ENUM(NSUInteger, DPAllJoynLightServiceType) {
     //////////////////////////////////////////////////
     // Validity check
     //
-    if (![lightId isEqualToString:@"self"]) {
+    if (![lightId isEqualToString:DPAllJoynLightProfileLightIDSelf]) {
         [response setErrorToInvalidRequestParameterWithMessage:
-         @"lightId not found."];
+         @"A light with ID specified by 'lightId' not found."];
         [[DConnectManager sharedManager] sendResponse:response];
         return;
     }
@@ -727,6 +756,9 @@ typedef NS_ENUM(NSUInteger, DPAllJoynLightServiceType) {
                                          block:
      ^(DPAllJoynServiceEntity *service, NSNumber *sessionId)
      {
+         NSNumber *responseCode = nil;
+         NSString *ignored;
+         
          if (!sessionId) {
              NSString *msg = @"Failed to join a session.";
              NSLog(@"%@", msg);
@@ -750,6 +782,30 @@ typedef NS_ENUM(NSUInteger, DPAllJoynLightServiceType) {
              [[DConnectManager sharedManager] sendResponse:response];
              return;
          }
+         
+         AJNMessageArgument *lampIDsArg;
+         [proxy getAllLampIDsWithResponseCode:&responseCode lampIDs:&lampIDsArg];
+         if (!responseCode) {
+             [response setErrorToUnknownWithMessage:@"Failed to obtain lamp IDs."];
+             [[DConnectManager sharedManager] sendResponse:response];
+             return;
+         }
+         else if (responseCode.unsignedIntValue != DPAllJoynLightResponseCodeOK) {
+             [response setErrorToUnknownWithMessage:
+              [NSString stringWithFormat:@"Failed to obtain lamp IDs (code: %@).",
+               responseCode]];
+             [[DConnectManager sharedManager] sendResponse:response];
+             return;
+         }
+         NSArray *lampIDs =
+         [DPAllJoynMessageConverter objectWithAJNMessageArgument:lampIDsArg];
+         if (!lampIDs || ![lampIDs containsObject:lightId]) {
+             [response setErrorToInvalidRequestParameterWithMessage:
+              @"A light with ID specified by 'lightId' not found."];
+             [[DConnectManager sharedManager] sendResponse:response];
+             return;
+         }
+         responseCode = nil;
          
          NSDictionary *functionality =
          [self checkFunctionalityWithService:service
@@ -800,8 +856,6 @@ typedef NS_ENUM(NSUInteger, DPAllJoynLightServiceType) {
          MsgArg newStateArg("a{sv}", count, newStates);
          AJNMessageArgument *newState =
          [[AJNMessageArgument alloc] initWithHandle:&newStateArg];
-         NSNumber *responseCode;
-         NSString *ignored;
          [proxy transitionLampStateWithLampID:lightId
                                     lampState:newState
                              transitionPeriod:@10
@@ -843,9 +897,9 @@ typedef NS_ENUM(NSUInteger, DPAllJoynLightServiceType) {
     //////////////////////////////////////////////////
     // Validity check
     //
-    if (![lightId isEqualToString:@"self"]) {
+    if (![lightId isEqualToString:DPAllJoynLightProfileLightIDSelf]) {
         [response setErrorToInvalidRequestParameterWithMessage:
-         @"lightId not found."];
+         @"A light with ID specified by 'lightId' not found."];
         [[DConnectManager sharedManager] sendResponse:response];
         return;
     }
@@ -909,6 +963,9 @@ typedef NS_ENUM(NSUInteger, DPAllJoynLightServiceType) {
                                          block:
      ^(DPAllJoynServiceEntity *service, NSNumber *sessionId)
      {
+         NSNumber *responseCode;
+         NSString *ignored;
+         
          if (!sessionId) {
              NSString *msg = @"Failed to join a session.";
              NSLog(@"%@", msg);
@@ -933,6 +990,30 @@ typedef NS_ENUM(NSUInteger, DPAllJoynLightServiceType) {
              return;
          }
          
+         AJNMessageArgument *lampIDsArg;
+         [proxy getAllLampIDsWithResponseCode:&responseCode lampIDs:&lampIDsArg];
+         if (!responseCode) {
+             [response setErrorToUnknownWithMessage:@"Failed to obtain lamp IDs."];
+             [[DConnectManager sharedManager] sendResponse:response];
+             return;
+         }
+         else if (responseCode.unsignedIntValue != DPAllJoynLightResponseCodeOK) {
+             [response setErrorToUnknownWithMessage:
+              [NSString stringWithFormat:@"Failed to obtain lamp IDs (code: %@).",
+               responseCode]];
+             [[DConnectManager sharedManager] sendResponse:response];
+             return;
+         }
+         NSArray *lampIDs =
+         [DPAllJoynMessageConverter objectWithAJNMessageArgument:lampIDsArg];
+         if (!lampIDs || ![lampIDs containsObject:lightId]) {
+             [response setErrorToInvalidRequestParameterWithMessage:
+              @"A light with ID specified by 'lightId' not found."];
+             [[DConnectManager sharedManager] sendResponse:response];
+             return;
+         }
+         responseCode = nil;
+         
          MsgArg newStates[1];
          MsgArg tmp1;
          MsgArg tmp2("b", NO);
@@ -942,8 +1023,6 @@ typedef NS_ENUM(NSUInteger, DPAllJoynLightServiceType) {
          AJNMessageArgument *newState =
          [[AJNMessageArgument alloc] initWithHandle:&newStateArg];
          
-         NSNumber *responseCode;
-         NSString *ignored;
          [proxy transitionLampStateWithLampID:lightId
                                     lampState:newState
                              transitionPeriod:@10
@@ -1183,6 +1262,9 @@ typedef NS_ENUM(NSUInteger, DPAllJoynLightServiceType) {
                                          block:
      ^(DPAllJoynServiceEntity *service, NSNumber *sessionId)
      {
+         NSNumber *responseCode;
+         NSString *ignored;
+         
          if (!sessionId) {
              NSString *msg = @"Failed to join a session.";
              NSLog(@"%@", msg);
@@ -1206,6 +1288,31 @@ typedef NS_ENUM(NSUInteger, DPAllJoynLightServiceType) {
              [[DConnectManager sharedManager] sendResponse:response];
              return;
          }
+         
+         AJNMessageArgument *lampGroupIDsArg;
+         [proxy getAllLampGroupIDsWithResponseCode:&responseCode
+                                      lampGroupIDs:&lampGroupIDsArg];
+         if (!responseCode) {
+             [response setErrorToUnknownWithMessage:@"Failed to obtain lamp group IDs."];
+             [[DConnectManager sharedManager] sendResponse:response];
+             return;
+         }
+         else if (responseCode.unsignedIntValue != DPAllJoynLightResponseCodeOK) {
+             [response setErrorToUnknownWithMessage:
+              [NSString stringWithFormat:@"Failed to obtain lamp group IDs (code: %@).",
+               responseCode]];
+             [[DConnectManager sharedManager] sendResponse:response];
+             return;
+         }
+         NSArray *lampGroupIDs =
+         [DPAllJoynMessageConverter objectWithAJNMessageArgument:lampGroupIDsArg];
+         if (!lampGroupIDs || ![lampGroupIDs containsObject:groupId]) {
+             [response setErrorToInvalidRequestParameterWithMessage:
+              @"A light group with ID specified by 'groupId' not found."];
+             [[DConnectManager sharedManager] sendResponse:response];
+             return;
+         }
+         responseCode = nil;
          
          MsgArg newStates[3];
          size_t count = 0;
@@ -1241,8 +1348,6 @@ typedef NS_ENUM(NSUInteger, DPAllJoynLightServiceType) {
          MsgArg newStateArg("a{sv}", count, newStates);
          AJNMessageArgument *newState =
          [[AJNMessageArgument alloc] initWithHandle:&newStateArg];
-         NSNumber *responseCode;
-         NSString *ignored;
          [proxy transitionLampGroupStateWithLampGroupID:groupId
                                               lampState:newState
                                        transitionPeriod:@10
@@ -1272,6 +1377,9 @@ typedef NS_ENUM(NSUInteger, DPAllJoynLightServiceType) {
                                          block:
      ^(DPAllJoynServiceEntity *service, NSNumber *sessionId)
      {
+         NSNumber *responseCode;
+         NSString *ignored;
+         
          if (!sessionId) {
              NSString *msg = @"Failed to join a session.";
              NSLog(@"%@", msg);
@@ -1295,6 +1403,31 @@ typedef NS_ENUM(NSUInteger, DPAllJoynLightServiceType) {
              [[DConnectManager sharedManager] sendResponse:response];
              return;
          }
+         
+         AJNMessageArgument *lampGroupIDsArg;
+         [proxy getAllLampGroupIDsWithResponseCode:&responseCode
+                                      lampGroupIDs:&lampGroupIDsArg];
+         if (!responseCode) {
+             [response setErrorToUnknownWithMessage:@"Failed to obtain lamp group IDs."];
+             [[DConnectManager sharedManager] sendResponse:response];
+             return;
+         }
+         else if (responseCode.unsignedIntValue != DPAllJoynLightResponseCodeOK) {
+             [response setErrorToUnknownWithMessage:
+              [NSString stringWithFormat:@"Failed to obtain lamp group IDs (code: %@).",
+               responseCode]];
+             [[DConnectManager sharedManager] sendResponse:response];
+             return;
+         }
+         NSArray *lampGroupIDs =
+         [DPAllJoynMessageConverter objectWithAJNMessageArgument:lampGroupIDsArg];
+         if (!lampGroupIDs || ![lampGroupIDs containsObject:groupId]) {
+             [response setErrorToInvalidRequestParameterWithMessage:
+              @"A light group with ID specified by 'groupId' not found."];
+             [[DConnectManager sharedManager] sendResponse:response];
+             return;
+         }
+         responseCode = nil;
          
          MsgArg newStates[2];
          size_t count = 0;
@@ -1327,8 +1460,6 @@ typedef NS_ENUM(NSUInteger, DPAllJoynLightServiceType) {
          MsgArg newStateArg("a{sv}", count, newStates);
          AJNMessageArgument *newState =
          [[AJNMessageArgument alloc] initWithHandle:&newStateArg];
-         NSNumber *responseCode;
-         NSString *ignored;
          [proxy transitionLampGroupStateWithLampGroupID:groupId
                                               lampState:newState
                                        transitionPeriod:@10
@@ -1370,6 +1501,9 @@ typedef NS_ENUM(NSUInteger, DPAllJoynLightServiceType) {
                                          block:
      ^(DPAllJoynServiceEntity *service, NSNumber *sessionId)
      {
+         NSNumber *responseCode;
+         NSString *ignored;
+         
          if (!sessionId) {
              NSString *msg = @"Failed to join a session.";
              NSLog(@"%@", msg);
@@ -1394,6 +1528,31 @@ typedef NS_ENUM(NSUInteger, DPAllJoynLightServiceType) {
              return;
          }
          
+         AJNMessageArgument *lampGroupIDsArg;
+         [proxy getAllLampGroupIDsWithResponseCode:&responseCode
+                                      lampGroupIDs:&lampGroupIDsArg];
+         if (!responseCode) {
+             [response setErrorToUnknownWithMessage:@"Failed to obtain lamp group IDs."];
+             [[DConnectManager sharedManager] sendResponse:response];
+             return;
+         }
+         else if (responseCode.unsignedIntValue != DPAllJoynLightResponseCodeOK) {
+             [response setErrorToUnknownWithMessage:
+              [NSString stringWithFormat:@"Failed to obtain lamp group IDs (code: %@).",
+               responseCode]];
+             [[DConnectManager sharedManager] sendResponse:response];
+             return;
+         }
+         NSArray *lampGroupIDs =
+         [DPAllJoynMessageConverter objectWithAJNMessageArgument:lampGroupIDsArg];
+         if (!lampGroupIDs || ![lampGroupIDs containsObject:groupID]) {
+             [response setErrorToInvalidRequestParameterWithMessage:
+              @"A light group with ID specified by 'groupId' not found."];
+             [[DConnectManager sharedManager] sendResponse:response];
+             return;
+         }
+         responseCode = nil;
+         
          MsgArg newStates[1];
          size_t count = 0;
          MsgArg tmp1;
@@ -1405,8 +1564,6 @@ typedef NS_ENUM(NSUInteger, DPAllJoynLightServiceType) {
          MsgArg newStateArg("a{sv}", count, newStates);
          AJNMessageArgument *newState =
          [[AJNMessageArgument alloc] initWithHandle:&newStateArg];
-         NSNumber *responseCode;
-         NSString *ignored;
          [proxy transitionLampGroupStateWithLampGroupID:groupID
                                               lampState:newState
                                        transitionPeriod:@10
@@ -1491,6 +1648,9 @@ typedef NS_ENUM(NSUInteger, DPAllJoynLightServiceType) {
                                          block:
      ^(DPAllJoynServiceEntity *service, NSNumber *sessionId)
      {
+         NSNumber *responseCode;
+         NSString *ignored;
+
          if (!sessionId) {
              NSString *msg = @"Failed to join a session.";
              NSLog(@"%@", msg);
@@ -1515,8 +1675,31 @@ typedef NS_ENUM(NSUInteger, DPAllJoynLightServiceType) {
              return;
          }
          
-         NSNumber *responseCode;
-         NSString *ignored;
+         AJNMessageArgument *lampGroupIDsArg;
+         [proxy getAllLampGroupIDsWithResponseCode:&responseCode
+                                      lampGroupIDs:&lampGroupIDsArg];
+         if (!responseCode) {
+             [response setErrorToUnknownWithMessage:@"Failed to obtain lamp group IDs."];
+             [[DConnectManager sharedManager] sendResponse:response];
+             return;
+         }
+         else if (responseCode.unsignedIntValue != DPAllJoynLightResponseCodeOK) {
+             [response setErrorToUnknownWithMessage:
+              [NSString stringWithFormat:@"Failed to obtain lamp group IDs (code: %@).",
+               responseCode]];
+             [[DConnectManager sharedManager] sendResponse:response];
+             return;
+         }
+         NSArray *lampGroupIDs =
+         [DPAllJoynMessageConverter objectWithAJNMessageArgument:lampGroupIDsArg];
+         if (!lampGroupIDs || ![lampGroupIDs containsObject:groupID]) {
+             [response setErrorToInvalidRequestParameterWithMessage:
+              @"A light group with ID specified by 'groupId' not found."];
+             [[DConnectManager sharedManager] sendResponse:response];
+             return;
+         }
+         responseCode = nil;
+         
          [proxy deleteLampGroupWithLampGroupID:groupID
                                   responseCode:&responseCode
                                    lampGroupID:&ignored];
