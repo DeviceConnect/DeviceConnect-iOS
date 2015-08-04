@@ -367,30 +367,6 @@ typedef NS_ENUM(NSUInteger, DPAllJoynLightServiceType) {
         [[DConnectManager sharedManager] sendResponse:response];
         return;
     }
-    if (brightness < 0 || brightness > 1) {
-        NSString *msg = @"Parameter 'brightness' must be within range [0, 1].";
-        NSLog(@"%@", msg);
-        [response setErrorToInvalidRequestParameterWithMessage:msg];
-        [[DConnectManager sharedManager] sendResponse:response];
-        return;
-    }
-    if (color
-        && ((color.length != 6 && color.length != 8)
-            || ![[NSScanner scannerWithString:color] scanHexInt:nil]))
-    {
-        NSString *msg = @"Parameter 'color' must be a string representing "
-        "an RGB hexadecimal (e.g. 0xFF0000, ff0000).";
-        NSLog(@"%@", msg);
-        [response setErrorToInvalidRequestParameterWithMessage:msg];
-        [[DConnectManager sharedManager] sendResponse:response];
-        return;
-    }
-    if (flashing) {
-        NSLog(@"Parameter 'flashing' is not supported. Ignored...");
-        //             [response setErrorToNotSupportActionWithMessage:@"Parameter 'flashing' is not supported."];
-        //             [[DConnectManager sharedManager] sendResponse:response];
-        //             return;
-    }
     
     //////////////////////////////////////////////////
     // Querying
@@ -505,30 +481,6 @@ typedef NS_ENUM(NSUInteger, DPAllJoynLightServiceType) {
          @"Parameter 'lightId' must be specified."];
         [[DConnectManager sharedManager] sendResponse:response];
         return;
-    }
-    if (brightness < 0 || brightness > 1) {
-        NSString *msg = @"Parameter 'brightness' must be within range [0, 1].";
-        NSLog(@"%@", msg);
-        [response setErrorToInvalidRequestParameterWithMessage:msg];
-        [[DConnectManager sharedManager] sendResponse:response];
-        return;
-    }
-    if (color
-        && (color.length != 6
-            || ![[NSScanner scannerWithString:color] scanHexInt:nil]))
-    {
-        NSString *msg = @"Parameter 'color' must be a string representing "
-        "an RGB hexadecimal (e.g. ff0000).";
-        NSLog(@"%@", msg);
-        [response setErrorToInvalidRequestParameterWithMessage:msg];
-        [[DConnectManager sharedManager] sendResponse:response];
-        return;
-    }
-    if (flashing) {
-        NSLog(@"Parameter 'flashing' is not supported. Ignored...");
-        //             [response setErrorToNotSupportActionWithMessage:@"Parameter 'flashing' is not supported."];
-        //             [[DConnectManager sharedManager] sendResponse:response];
-        //             return;
     }
     
     //////////////////////////////////////////////////
@@ -654,30 +606,6 @@ typedef NS_ENUM(NSUInteger, DPAllJoynLightServiceType) {
     if (name) {
         NSLog(@"Parameter 'name' is not supported. Ignored...");
     }
-    if (brightness < 0 || brightness > 1) {
-        NSString *msg = @"Parameter 'brightness' must be within range [0, 1].";
-        NSLog(@"%@", msg);
-        [response setErrorToInvalidRequestParameterWithMessage:msg];
-        [[DConnectManager sharedManager] sendResponse:response];
-        return;
-    }
-    if (color
-        && ((color.length != 6 && color.length != 8)
-            || ![[NSScanner scannerWithString:color] scanHexInt:nil]))
-    {
-        NSString *msg = @"Parameter 'color' must be a string representing "
-        "an RGB hexadecimal (e.g. 0xFF0000, ff0000).";
-        NSLog(@"%@", msg);
-        [response setErrorToInvalidRequestParameterWithMessage:msg];
-        [[DConnectManager sharedManager] sendResponse:response];
-        return;
-    }
-    if (flashing) {
-        NSLog(@"Parameter 'flashing' is not supported. Ignored...");
-        //             [response setErrorToNotSupportActionWithMessage:@"Parameter 'flashing' is not supported."];
-        //             [[DConnectManager sharedManager] sendResponse:response];
-        //             return;
-    }
     
     //////////////////////////////////////////////////
     // Querying
@@ -790,30 +718,6 @@ typedef NS_ENUM(NSUInteger, DPAllJoynLightServiceType) {
          @"Parameter 'lightId' must be specified."];
         [[DConnectManager sharedManager] sendResponse:response];
         return;
-    }
-    if (brightness < 0 || brightness > 1) {
-        NSString *msg = @"Parameter 'brightness' must be within range [0, 1].";
-        NSLog(@"%@", msg);
-        [response setErrorToInvalidRequestParameterWithMessage:msg];
-        [[DConnectManager sharedManager] sendResponse:response];
-        return;
-    }
-    if (color
-        && ((color.length != 6 && color.length != 8)
-            || ![[NSScanner scannerWithString:color] scanHexInt:nil]))
-    {
-        NSString *msg = @"Parameter 'color' must be a string representing "
-        "an RGB hexadecimal (e.g. 0xFF0000, ff0000).";
-        NSLog(@"%@", msg);
-        [response setErrorToInvalidRequestParameterWithMessage:msg];
-        [[DConnectManager sharedManager] sendResponse:response];
-        return;
-    }
-    if (flashing) {
-        NSLog(@"Parameter 'flashing' is not supported. Ignored...");
-        //             [response setErrorToNotSupportActionWithMessage:@"Parameter 'flashing' is not supported."];
-        //             [[DConnectManager sharedManager] sendResponse:response];
-        //             return;
     }
     
     //////////////////////////////////////////////////
@@ -1698,6 +1602,35 @@ typedef NS_ENUM(NSUInteger, DPAllJoynLightServiceType) {
         return YES;
     }
     
+    if (!lightId) {
+        [response setErrorToInvalidRequestParameterWithMessage:
+         @"Parameter 'lightId' must be specified."];
+        return YES;
+    }
+    
+    if (brightness < 0 || brightness > 1) {
+        [response setErrorToInvalidRequestParameterWithMessage:
+         @"Parameter 'brightness' must be a value between 0 and 1.0 ."];
+        [[DConnectManager sharedManager] sendResponse:response];
+        return YES;
+    }
+    
+    if (color
+        && (color.length != 6
+            || ![[NSScanner scannerWithString:color] scanHexInt:nil]))
+    {
+        [response setErrorToInvalidRequestParameterWithMessage:
+         @"Parameter 'color' is invalid."];
+        [[DConnectManager sharedManager] sendResponse:response];
+        return YES;
+    }
+    
+    if (flashing) {
+        [response setErrorToInvalidRequestParameterWithMessage:
+         @"Parameter 'flashing' is not supported."];
+        return YES;
+    }
+    
     switch ([self serviceTypeFromService:service]) {
             
         case DPAllJoynLightServiceTypeSingleLamp: {
@@ -1749,6 +1682,35 @@ typedef NS_ENUM(NSUInteger, DPAllJoynLightServiceType) {
         return YES;
     }
     
+    if (!lightId) {
+        [response setErrorToInvalidRequestParameterWithMessage:
+         @"Parameter 'lightId' must be specified."];
+        return YES;
+    }
+    
+    if (brightness < 0 || brightness > 1) {
+        [response setErrorToInvalidRequestParameterWithMessage:
+         @"Parameter 'brightness' must be a value between 0 and 1.0 ."];
+        [[DConnectManager sharedManager] sendResponse:response];
+        return YES;
+    }
+    
+    if (color
+        && (color.length != 6
+            || ![[NSScanner scannerWithString:color] scanHexInt:nil]))
+    {
+        [response setErrorToInvalidRequestParameterWithMessage:
+         @"Parameter 'color' is invalid."];
+        [[DConnectManager sharedManager] sendResponse:response];
+        return YES;
+    }
+    
+    if (flashing) {
+        [response setErrorToInvalidRequestParameterWithMessage:
+         @"Parameter 'flashing' is not supported."];
+        return YES;
+    }
+    
     switch ([self serviceTypeFromService:service]) {
             
         case DPAllJoynLightServiceTypeSingleLamp: {
@@ -1793,6 +1755,12 @@ typedef NS_ENUM(NSUInteger, DPAllJoynLightServiceType) {
     
     if (!service) {
         [response setErrorToNotFoundService];
+        return YES;
+    }
+    
+    if (!lightId) {
+        [response setErrorToInvalidRequestParameterWithMessage:
+         @"Parameter 'lightId' must be specified."];
         return YES;
     }
     
@@ -1885,19 +1853,38 @@ didReceivePostLightGroupRequest:(DConnectRequestMessage *)request
         return YES;
     }
     
+    if (!groupId) {
+        [response setErrorToInvalidRequestParameterWithMessage:
+         @"Parameter 'groupId' must be specified."];
+        return YES;
+    }
+    
+    if (brightness < 0 || brightness > 1) {
+        [response setErrorToInvalidRequestParameterWithMessage:
+         @"Parameter 'brightness' must be a value between 0 and 1.0 ."];
+        [[DConnectManager sharedManager] sendResponse:response];
+        return YES;
+    }
+    
+    if (color
+        && (color.length != 6
+            || ![[NSScanner scannerWithString:color] scanHexInt:nil]))
+    {
+        [response setErrorToInvalidRequestParameterWithMessage:
+         @"Parameter 'color' is invalid."];
+        [[DConnectManager sharedManager] sendResponse:response];
+        return YES;
+    }
+    
+    if (flashing) {
+        [response setErrorToInvalidRequestParameterWithMessage:
+         @"Parameter 'flashing' is not supported."];
+        return YES;
+    }
+    
     switch ([self serviceTypeFromService:service]) {
             
         case DPAllJoynLightServiceTypeLampController: {
-            //////////////////////////////////////////////////
-            // Validity check
-            //
-            if (!groupId) {
-                [response setErrorToInvalidRequestParameterWithMessage:
-                 @"Parameter 'groupId' must be specified."];
-                [[DConnectManager sharedManager] sendResponse:response];
-                return YES;
-            }
-            
             [self
              didReceivePostLightGroupRequestForLampControllerWithResponse:response
              service:service groupID:groupId brightness:brightness
@@ -1939,19 +1926,38 @@ didReceivePostLightGroupRequest:(DConnectRequestMessage *)request
         return YES;
     }
     
+    if (!groupId) {
+        [response setErrorToInvalidRequestParameterWithMessage:
+         @"Parameter 'groupId' must be specified."];
+        return YES;
+    }
+    
+    if (brightness < 0 || brightness > 1) {
+        [response setErrorToInvalidRequestParameterWithMessage:
+         @"Parameter 'brightness' must be a value between 0 and 1.0 ."];
+        [[DConnectManager sharedManager] sendResponse:response];
+        return YES;
+    }
+    
+    if (color
+        && (color.length != 6
+            || ![[NSScanner scannerWithString:color] scanHexInt:nil]))
+    {
+        [response setErrorToInvalidRequestParameterWithMessage:
+         @"Parameter 'color' is invalid."];
+        [[DConnectManager sharedManager] sendResponse:response];
+        return YES;
+    }
+    
+    if (flashing) {
+        [response setErrorToInvalidRequestParameterWithMessage:
+         @"Parameter 'flashing' is not supported."];
+        return YES;
+    }
+    
     switch ([self serviceTypeFromService:service]) {
             
         case DPAllJoynLightServiceTypeLampController: {
-            //////////////////////////////////////////////////
-            // Validity check
-            //
-            if (!groupId) {
-                [response setErrorToInvalidRequestParameterWithMessage:
-                 @"Parameter 'groupId' must be specified."];
-                [[DConnectManager sharedManager] sendResponse:response];
-                return YES;
-            }
-            
             [self
              didReceivePutLightGroupRequestForLampControllerWithResponse:response
              service:service groupID:groupId name:name brightness:brightness
@@ -1989,19 +1995,15 @@ didReceivePostLightGroupRequest:(DConnectRequestMessage *)request
         return YES;
     }
     
+    if (!groupId) {
+        [response setErrorToInvalidRequestParameterWithMessage:
+         @"Parameter 'groupId' must be specified."];
+        return YES;
+    }
+    
     switch ([self serviceTypeFromService:service]) {
             
         case DPAllJoynLightServiceTypeLampController: {
-            //////////////////////////////////////////////////
-            // Validity check
-            //
-            if (!groupId) {
-                [response setErrorToInvalidRequestParameterWithMessage:
-                 @"Parameter 'groupId' must be specified."];
-                [[DConnectManager sharedManager] sendResponse:response];
-                return YES;
-            }
-            
             [self
              didReceiveDeleteLightGroupRequestForLampControllerWithResponse:response
              service:service groupID:groupId];
@@ -2039,25 +2041,21 @@ didReceivePostLightGroupRequest:(DConnectRequestMessage *)request
         return YES;
     }
     
+    if (!lightIds) {
+        [response setErrorToInvalidRequestParameterWithMessage:
+         @"Parameter 'lightIds' must be specified."];
+        return YES;
+    }
+    
+    if (!groupName) {
+        [response setErrorToInvalidRequestParameterWithMessage:
+         @"Parameter 'groupName' must be specified."];
+        return YES;
+    }
+    
     switch ([self serviceTypeFromService:service]) {
             
         case DPAllJoynLightServiceTypeLampController: {
-            //////////////////////////////////////////////////
-            // Validity check
-            //
-            if (!lightIds) {
-                [response setErrorToInvalidRequestParameterWithMessage:
-                 @"Parameter 'groupId' must be specified."];
-                [[DConnectManager sharedManager] sendResponse:response];
-                return YES;
-            }
-            if (!groupName) {
-                [response setErrorToInvalidRequestParameterWithMessage:
-                 @"Parameter 'groupName' must be specified."];
-                [[DConnectManager sharedManager] sendResponse:response];
-                return YES;
-            }
-            
             [self
              didReceivePostLightGroupCreateRequestForLampControllerWithResponse:response
              service:service lightIDs:lightIds groupName:groupName];
@@ -2094,19 +2092,15 @@ didReceivePostLightGroupRequest:(DConnectRequestMessage *)request
         return YES;
     }
     
+    if (!groupId) {
+        [response setErrorToInvalidRequestParameterWithMessage:
+         @"Parameter 'groupId' must be specified."];
+        return YES;
+    }
+    
     switch ([self serviceTypeFromService:service]) {
             
         case DPAllJoynLightServiceTypeLampController: {
-            //////////////////////////////////////////////////
-            // Validity check
-            //
-            if (!groupId) {
-                [response setErrorToInvalidRequestParameterWithMessage:
-                 @"Parameter 'groupId' must be specified."];
-                [[DConnectManager sharedManager] sendResponse:response];
-                return YES;
-            }
-            
             [self
              didReceiveDeleteLightGroupClearRequestForLampControllerWithResponse:response
              service:service groupID:groupId];
