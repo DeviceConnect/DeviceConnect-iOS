@@ -44,6 +44,8 @@
 // object path -> key, interfaces -> value
 @property NSDictionary *busObjectDescriptions;
 
+@property NSDate *lastAlive;
+
 - (instancetype) init NS_UNAVAILABLE;
 - (instancetype) initWithBusName:(NSString *)busName
                             port:(AJNSessionPort)port

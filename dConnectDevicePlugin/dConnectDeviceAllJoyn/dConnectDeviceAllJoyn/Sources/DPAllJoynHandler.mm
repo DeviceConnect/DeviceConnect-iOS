@@ -18,6 +18,7 @@
 #import "DPAllJoynSynchronizedMutableDictionary.h"
 
 
+static int const DPAllJoynAliveTimeout = 90000;
 static int const DPAllJoynPingTimeout = 5000;
 static int const DPAllJoynPingInterval = 20;
 static int const DPAllJoynDiscoverInterval = 30;
@@ -349,13 +350,17 @@ static size_t const DPAllJoynJoinRetryMax = 5;
                         block:^(BOOL result)
          {
              if (result) {
-                 NSLog(@"Ping success: %@", serviceEntity.serviceName);
+                 NSLog(@"Ping succeeded: %@", serviceEntity.serviceName);
+                 serviceEntity.lastAlive = [NSDate date];
              }
              else {
-                 NSLog(@"Ping failed: %@."
-                       " Removing it from discovered services...",
-                       serviceEntity.serviceName);
-                 [_discoveredServices removeObjectForKey:serviceEntity.busName];
+                 if (serviceEntity.lastAlive.timeIntervalSinceNow
+                     > DPAllJoynAliveTimeout) {
+                     NSLog(@"Ping failed: %@."
+                           " Removing it from discovered services...",
+                           serviceEntity.serviceName);
+                     [_discoveredServices removeObjectForKey:serviceEntity.busName];
+                 }
              }
          }];
     }

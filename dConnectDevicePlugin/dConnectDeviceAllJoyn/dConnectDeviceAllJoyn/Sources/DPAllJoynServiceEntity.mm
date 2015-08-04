@@ -39,6 +39,7 @@ static NSString *const DPAllJoynAboutDataException =
         self.port = port;
         self.aboutData = aboutData;
         self.busObjectDescriptionArg = busObjectDescriptionArg;
+        self.lastAlive = [NSDate date];
         
         [self flattenAboutData];
         self.busObjectDescriptions = [self remapProxyObjectsToDictionary];
