@@ -222,7 +222,6 @@ static size_t const DPAllJoynJoinRetryMax = 5;
                                     supportsMultipoint:NO
                                              proximity:kAJNProximityAny
                                          transportMask:kAJNTransportMaskAny];
-        [self.bus enableConcurrentCallbacks];
         AJNSessionId sessionId = [self.bus joinSessionWithName:busName
                                                         onPort:port
                                                   withDelegate:self
