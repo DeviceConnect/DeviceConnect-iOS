@@ -114,14 +114,14 @@
     
     for (DConnectProfile *profile in [provider profiles]) {
         // Prerequisite profiles.
-        if ([profile isKindOfClass:DConnectServiceDiscoveryProfile.class]
-            || [profile isKindOfClass:DConnectServiceInformationProfile.class]
-            || [profile isKindOfClass:DConnectSystemProfile.class]
+        if ([profile.profileName isEqualToString:DConnectServiceDiscoveryProfileName]
+            || [profile.profileName isEqualToString:DConnectServiceInformationProfileName]
+            || [profile.profileName isEqualToString:DConnectSystemProfileName]
             ) {
             [supportedProfileNames addObject:profile.profileName];
         }
         // Optional profiles.
-        else if ([profile isKindOfClass:DCMLightProfile.class]) {
+        else if ([profile.profileName isEqualToString:DCMLightProfileName]) {
             if ([interfaces.allObjects
                  containsAll:DPAllJoynLampControllerInterfaceSet]
                 || [interfaces.allObjects
