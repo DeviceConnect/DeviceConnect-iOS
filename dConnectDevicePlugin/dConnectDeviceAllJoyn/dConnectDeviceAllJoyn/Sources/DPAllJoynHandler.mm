@@ -413,29 +413,6 @@ static size_t const DPAllJoynJoinRetryMax = 5;
     }
     
     [_discoveredServices setObject:service forKey:service.appId];
-    
-    // TENTATIVE
-    [self performOneShotSessionWithBusName:service
-                                     block:
-     ^(DPAllJoynServiceEntity *service, NSNumber *sessionId)
-     {
-         if (!sessionId) {
-             NSLog(@"Failed to join a session.");
-             return;
-         }
-         
-         LSFLampObjectProxy *proxy = (LSFLampObjectProxy *)
-         [self proxyObjectWithService:service
-                     proxyObjectClass:LSFLampObjectProxy.class
-                            interface:@"org.allseen.LSF.LampState"
-                            sessionID:sessionId.unsignedIntValue];
-         QStatus status = [proxy introspectRemoteObject];
-         if (ER_OK != status) {
-             NSLog(@"Failed to introspect a remote bus object.");
-             return;
-         }
-         
-     }];
 }
 
 
