@@ -51,7 +51,7 @@ didReceiveGetServicesRequest:(DConnectRequestMessage *)request
          _handler.discoveredAllJoynServices.allValues) {
         
         DConnectMessage *service = [DConnectMessage message];
-        [DConnectServiceDiscoveryProfile setId:serviceEntity.busName
+        [DConnectServiceDiscoveryProfile setId:serviceEntity.appId
                                         target:service];
         [DConnectServiceDiscoveryProfile setName:serviceEntity.serviceName
                                           target:service];

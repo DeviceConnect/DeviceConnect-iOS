@@ -357,7 +357,7 @@ static size_t const DPAllJoynJoinRetryMax = 5;
                      NSLog(@"Ping failed: %@."
                            " Removing it from discovered services...",
                            serviceEntity.serviceName);
-                     [_discoveredServices removeObjectForKey:serviceEntity.busName];
+                     [_discoveredServices removeObjectForKey:serviceEntity.appId];
                  }
              }
          }];
@@ -414,7 +414,7 @@ static size_t const DPAllJoynJoinRetryMax = 5;
         return;
     }
     
-    [_discoveredServices setObject:service forKey:busName];
+    [_discoveredServices setObject:service forKey:service.appId];
     
     // TENTATIVE
     [self performOneShotSessionWithBusName:service

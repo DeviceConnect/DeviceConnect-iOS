@@ -95,11 +95,11 @@ static NSString *const DPAllJoynAboutDataException =
                 uint8_t *appId;
                 status = val->Get("ay", &length, &appId);
                 if (ER_OK != status) {
-                    NSLog(@"Failed to obtain a string value. About key: %@.", key);
+                    NSLog(@"Failed to obtain a byte array. About key: %@.", key);
                 } else {
-                    _appId = [NSData dataWithBytes:appId
-                                            length:length];
-//                    _appId = appId;
+                    _appId =
+                    [DPAllJoynServiceEntity hexadecimalStringWithData:
+                     [NSData dataWithBytes:appId length:length]];
                 }
             } else if ([key isEqualToString:@"DefaultLanguage"]) {
                 ////             If default language is not specified, set it to English.
@@ -214,6 +214,24 @@ static NSString *const DPAllJoynAboutDataException =
         _serviceName =
         [NSString stringWithFormat:@"Alljoyn service (%d)", _busName.hash];
     }
+}
+
++ (NSString *)hexadecimalStringWithData:(NSData *)data
+{
+    const unsigned char *bytes = (const unsigned char *)data.bytes;
+    
+    if (!bytes) {
+        return nil;
+    }
+    
+    NSUInteger dataLength = data.length;
+    NSMutableString *hexString = [NSMutableString stringWithCapacity:dataLength * 2];
+    
+    for (int i = 0; i < dataLength; ++i) {
+        [hexString appendFormat:@"%02x", (unsigned int)bytes[i]];
+    }
+    
+    return [NSString stringWithString:hexString];
 }
 
 @end

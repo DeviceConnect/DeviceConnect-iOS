@@ -24,7 +24,7 @@
 
 @property AJNMessageArgument *aboutData;
 // Flattened data from aboutData
-@property NSData *appId;
+@property NSString *appId;
 @property NSString *defaultLanguage;
 @property NSString *deviceName;
 @property NSString *deviceId;
