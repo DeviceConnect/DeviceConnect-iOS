@@ -18,9 +18,9 @@
 #import "DPAllJoynSynchronizedMutableDictionary.h"
 
 
-static int const DPAllJoynAliveTimeout = 90000;
+static int const DPAllJoynAliveTimeout = 30000;
 static int const DPAllJoynPingTimeout = 5000;
-static int const DPAllJoynPingInterval = 20;
+static int const DPAllJoynPingInterval = 10;
 static int const DPAllJoynDiscoverInterval = 30;
 static size_t const DPAllJoynJoinRetryMax = 5;
 
