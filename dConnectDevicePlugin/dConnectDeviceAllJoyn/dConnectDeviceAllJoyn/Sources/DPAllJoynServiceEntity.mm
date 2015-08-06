@@ -24,12 +24,11 @@ static NSString *const DPAllJoynAboutDataException =
            busObjectDescriptions:(AJNMessageArgument *)busObjectDescriptionArg
 {
     if (!busName) {
-        NSLog(@"%s: busName can not be nil.", __PRETTY_FUNCTION__);
+        DCLogError(@"busName can not be nil.");
         return nil;
     }
     if (!busObjectDescriptionArg) {
-        NSLog(@"%s: busObjectDescriptionArg can not be nil.",
-              __PRETTY_FUNCTION__);
+        DCLogError(@"busObjectDescriptionArg can not be nil.");
         return nil;
     }
     
@@ -71,7 +70,7 @@ static NSString *const DPAllJoynAboutDataException =
     status = [_aboutData value:@"a{sv}", &size, &entries];
     
     if (ER_OK != status) {
-        NSLog(@"Failed to parse about data.");
+        DCLogError(@"Failed to parse about data.");
         return;
     }
     if (size == 0) {
@@ -84,7 +83,7 @@ static NSString *const DPAllJoynAboutDataException =
         NSString *key;
         status = entries[i].Get("{sv}", &keyCStr, &val);
         if (ER_OK != status) {
-            NSLog(@"Failed to obtain a value.");
+            DCLogError(@"Failed to obtain a value.");
             continue;
         }
         key = @(keyCStr);
@@ -95,7 +94,7 @@ static NSString *const DPAllJoynAboutDataException =
                 uint8_t *appId;
                 status = val->Get("ay", &length, &appId);
                 if (ER_OK != status) {
-                    NSLog(@"Failed to obtain a byte array. About key: %@.", key);
+                    DCLogError(@"Failed to obtain a byte array. About key: %@.", key);
                 } else {
                     _appId =
                     [DPAllJoynServiceEntity hexadecimalStringWithData:
@@ -119,7 +118,7 @@ static NSString *const DPAllJoynAboutDataException =
                 char **supportedLanguages;
                 QStatus status = val->Get("as", &length, &supportedLanguages);
                 if (ER_OK != status) {
-                    NSLog(@"Failed to obtain a string value. About key: %@.", key);
+                    DCLogError(@"Failed to obtain a string value. About key: %@.", key);
                 } else {
                     if (length == 0) {
                         continue;
@@ -145,7 +144,7 @@ static NSString *const DPAllJoynAboutDataException =
             }
         }
         @catch (NSException *ex) {
-            NSLog(@"%@. About key: %@.", ex.reason, key);
+            DCLogError(@"%@. About key: %@.", ex.reason, key);
         }
     }
 }
@@ -159,7 +158,7 @@ static NSString *const DPAllJoynAboutDataException =
     MsgArg *entries1;
     status = [_busObjectDescriptionArg value:@"a(oas)", &size1, &entries1];
     if (ER_OK != status) {
-        NSLog(@"Failed to parse bus object descriptions.");
+        DCLogError(@"Failed to parse bus object descriptions.");
         return nil;
     }
     dict = [NSMutableDictionary dictionaryWithCapacity:size1];
@@ -170,7 +169,7 @@ static NSString *const DPAllJoynAboutDataException =
         MsgArg *entries2;
         status = entries1[i].Get("(oas)", &objPath, &size2, &entries2);
         if (ER_OK != status) {
-            NSLog(@"Failed to parse a bus object description. Skipping it...");
+            DCLogError(@"Failed to parse a bus object description. Skipping it...");
             continue;
         }
         ifaces = [NSMutableArray arrayWithCapacity:size2];
@@ -178,8 +177,8 @@ static NSString *const DPAllJoynAboutDataException =
             char *iface;
             status = entries2[j].Get("s", &iface);
             if (ER_OK != status) {
-                NSLog(@"Failed to parse a supported interface in a bus object"
-                      " description. Skipping it...");
+                DCLogError(@"Failed to parse a supported interface in a bus object"
+                           " description. Skipping it...");
                 continue;
             }
             [ifaces addObject:@(iface)];

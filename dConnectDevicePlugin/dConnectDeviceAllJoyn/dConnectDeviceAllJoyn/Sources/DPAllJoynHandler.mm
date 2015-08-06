@@ -69,9 +69,9 @@ static size_t const DPAllJoynJoinRetryMax = 5;
 
 - (void)initAllJoynContextWithBlock:(void(^)(BOOL result))block
 {
-    NSLog(@"%s: init", __PRETTY_FUNCTION__);
+    DCLogInfo(@"init");
     if (!block) {
-        NSLog(@"%s: block can not be nil.", __PRETTY_FUNCTION__);
+        DCLogError(@"%s: block can not be nil.", __PRETTY_FUNCTION__);
         return;
     }
     
@@ -96,7 +96,7 @@ static size_t const DPAllJoynJoinRetryMax = 5;
             status = [self.bus start];
             
             if (ER_OK != status) {
-                NSLog(@"Bus start failed.");
+                DCLogError(@"Bus start failed.");
                 block(NO);
                 return;
             }
@@ -106,7 +106,7 @@ static size_t const DPAllJoynJoinRetryMax = 5;
             status = [self.bus connectWithArguments:@"null:"];
             
             if (ER_OK != status) {
-                NSLog(@"Bus connect failed.");
+                DCLogError(@"Bus connect failed.");
                 block(NO);
                 return;
             }
@@ -138,9 +138,9 @@ static size_t const DPAllJoynJoinRetryMax = 5;
 
 - (void)destroyAllJoynContextWithBlock:(void(^)(BOOL result))block
 {
-    NSLog(@"%s: destroy", __PRETTY_FUNCTION__);
+    DCLogInfo(@"destroy");
     if (!block) {
-        NSLog(@"%s: block can not be nil.", __PRETTY_FUNCTION__);
+        DCLogError(@"%s: block can not be nil.", __PRETTY_FUNCTION__);
         return;
     }
     
@@ -166,9 +166,9 @@ static size_t const DPAllJoynJoinRetryMax = 5;
 
 - (void)discoverServices:(void(^)(BOOL result))block
 {
-    NSLog(@"%s: discover", __PRETTY_FUNCTION__);
+    DCLogInfo(@"discover");
     if (!block) {
-        NSLog(@"%s: block can not be nil.", __PRETTY_FUNCTION__);
+        DCLogError(@"%s: block can not be nil.", __PRETTY_FUNCTION__);
         return;
     }
     
@@ -206,13 +206,14 @@ static size_t const DPAllJoynJoinRetryMax = 5;
                           port:(AJNSessionPort)port
                          block:(void(^)(NSNumber *sessionId))block
 {
-    NSLog(@"%s: joinSession", __PRETTY_FUNCTION__);
-    if (!busName) {
-        NSLog(@"%s: busName can not be nil.", __PRETTY_FUNCTION__);
+    DCLogInfo(@"joinSession");
+    if (!block) {
+        DCLogError(@"%s: block can not be nil.", __PRETTY_FUNCTION__);
         return;
     }
-    if (!block) {
-        NSLog(@"%s: block can not be nil.", __PRETTY_FUNCTION__);
+    if (!busName) {
+        DCLogError(@"%s: busName can not be nil.", __PRETTY_FUNCTION__);
+        block(nil);
         return;
     }
     
@@ -239,9 +240,9 @@ static size_t const DPAllJoynJoinRetryMax = 5;
 - (void)leaveSessionWithSessionId:(AJNSessionId)sessionId
                             block:(void(^)(BOOL result))block
 {
-    NSLog(@"%s: leaveSession: %u", __PRETTY_FUNCTION__, sessionId);
+    DCLogInfo(@"leaveSession: %u", sessionId);
     if (!block) {
-        NSLog(@"%s: block can not be nil.", __PRETTY_FUNCTION__);
+        DCLogError(@"%s: block can not be nil.", __PRETTY_FUNCTION__);
         return;
     }
     
@@ -257,11 +258,11 @@ static size_t const DPAllJoynJoinRetryMax = 5;
                                                   NSNumber *sessionId))block
 {
     if (!block) {
-        NSLog(@"block can not be nil.");
+        DCLogError(@"%s: block can not be nil.", __PRETTY_FUNCTION__);
         return;
     }
     if (!service) {
-        NSLog(@"service can not be nil.");
+        DCLogError(@"%s: service can not be nil.", __PRETTY_FUNCTION__);
         block(nil, nil);
         return;
     }
@@ -292,10 +293,9 @@ static size_t const DPAllJoynJoinRetryMax = 5;
 - (void)pingWithBusName:(NSString *)busName
                   block:(void(^)(BOOL result)) block
 {
-    NSLog(@"%s: Ping the service with bus name \"%@\"",
-          class_getName([self class]), busName);
+    DCLogInfo(@"Ping the service with bus name \"%@\"", busName);
     if (!block) {
-        NSLog(@"%s: block can not be nil.", __PRETTY_FUNCTION__);
+        DCLogError(@"%s: block can not be nil.", __PRETTY_FUNCTION__);
         return;
     }
     
@@ -327,7 +327,7 @@ static size_t const DPAllJoynJoinRetryMax = 5;
          objectPath:objPathDesc.allKeys[0] sessionId:sessionID];
         QStatus status = [proxy introspectRemoteObject];
         if (ER_OK != status) {
-            NSLog(@"Failed to introspect a remote bus object.");
+            DCLogError(@"Failed to introspect a remote bus object.");
             return nil;
         }
         return proxy;
@@ -339,8 +339,7 @@ static size_t const DPAllJoynJoinRetryMax = 5;
 
 - (void)pingTimerMethod:(NSTimer *)timer
 {
-    NSLog(@"%s: Sending pings to discovered services...",
-          class_getName([self class]));
+    DCLogInfo(@"Sending pings to discovered services...");
     
     for (DPAllJoynServiceEntity *serviceEntity in
          [_discoveredServices cloneDictionary].allValues) {
@@ -348,15 +347,15 @@ static size_t const DPAllJoynJoinRetryMax = 5;
                         block:^(BOOL result)
          {
              if (result) {
-                 NSLog(@"Ping succeeded: %@", serviceEntity.serviceName);
+                 DCLogInfo(@"Ping succeeded: %@", serviceEntity.serviceName);
                  serviceEntity.lastAlive = [NSDate date];
              }
              else {
                  if (serviceEntity.lastAlive.timeIntervalSinceNow
                      > DPAllJoynAliveTimeout) {
-                     NSLog(@"Ping failed: %@."
-                           " Removing it from discovered services...",
-                           serviceEntity.serviceName);
+                     DCLogInfo(@"Ping failed: %@."
+                               " Removing it from discovered services...",
+                               serviceEntity.serviceName);
                      [_discoveredServices removeObjectForKey:serviceEntity.appId];
                  }
              }
@@ -396,9 +395,8 @@ static size_t const DPAllJoynJoinRetryMax = 5;
           withObjectDescription:(AJNMessageArgument *)objectDescriptionArg
                withAboutDataArg:(AJNMessageArgument *)aboutDataArg
 {
-    NSLog(@"%s: busName:%@ version:%u port:%u\nobjectDescriptionArg:%@\naboutDataArg:%@",
-          __PRETTY_FUNCTION__,
-          busName, version, port, objectDescriptionArg, aboutDataArg);
+    DCLogInfo(@"busName:%@ version:%u port:%u\nobjectDescriptionArg:%@\naboutDataArg:%@",
+              busName, version, port, objectDescriptionArg, aboutDataArg);
     
     DPAllJoynServiceEntity *service =
     [[DPAllJoynServiceEntity alloc] initWithBusName:busName
@@ -406,11 +404,11 @@ static size_t const DPAllJoynJoinRetryMax = 5;
                                           aboutData:aboutDataArg
                               busObjectDescriptions:objectDescriptionArg];
     
-    NSLog(@"%s: Service found: %@", class_getName([self class]), service.serviceName);
+    DCLogInfo(@"Service found: %@", service.serviceName);
     
     if (![DPAllJoynSupportCheck isSupported:objectDescriptionArg]) {
-        NSLog(@"Required I/Fs are missing. Ignoring \"%@\" ...",
-              service.serviceName);
+        DCLogInfo(@"Required I/Fs are missing. Ignoring \"%@\" ...",
+                  service.serviceName);
         return;
     }
     
@@ -447,13 +445,13 @@ static size_t const DPAllJoynJoinRetryMax = 5;
 
 - (void)listenerDidRegisterWithBus:(AJNBusAttachment*)busAttachment
 {
-    NSLog(@"%s: busAttachment:%@", __PRETTY_FUNCTION__, busAttachment);
+    DCLogInfo(@"busAttachment:%@", busAttachment);
 }
 
 
 - (void)listenerDidUnregisterWithBus:(AJNBusAttachment*)busAttachment
 {
-    NSLog(@"%s: busAttachment:%@", __PRETTY_FUNCTION__, busAttachment);
+    DCLogInfo(@"busAttachment:%@", busAttachment);
 }
 
 
@@ -461,8 +459,8 @@ static size_t const DPAllJoynJoinRetryMax = 5;
             withTransportMask:(AJNTransportMask)transport
                    namePrefix:(NSString*)namePrefix
 {
-    NSLog(@"%s: name:%@ transport:%u namePrefix:%@", __PRETTY_FUNCTION__,
-          name, transport, namePrefix);
+    DCLogInfo(@"name:%@ transport:%u namePrefix:%@",
+              name, transport, namePrefix);
 }
 
 
@@ -470,8 +468,8 @@ static size_t const DPAllJoynJoinRetryMax = 5;
             withTransportMask:(AJNTransportMask)transport
                    namePrefix:(NSString*)namePrefix
 {
-    NSLog(@"%s: name:%@ transport:%u namePrefix:%@", __PRETTY_FUNCTION__,
-          name, transport, namePrefix);
+    DCLogInfo(@"name:%@ transport:%u namePrefix:%@",
+              name, transport, namePrefix);
 }
 
 
@@ -479,20 +477,20 @@ static size_t const DPAllJoynJoinRetryMax = 5;
                       to:(NSString*)newOwner
                     from:(NSString*)previousOwner
 {
-    NSLog(@"%s: name:%@ newOwner:%@ previousOwner:%@", __PRETTY_FUNCTION__,
-          name, newOwner, previousOwner);
+    DCLogInfo(@"name:%@ newOwner:%@ previousOwner:%@",
+              name, newOwner, previousOwner);
 }
 
 
 - (void)busWillStop
 {
-    NSLog(@"%s", __PRETTY_FUNCTION__);
+    DCLogInfo();
 }
 
 
 - (void)busDidDisconnect
 {
-    NSLog(@"%s", __PRETTY_FUNCTION__);
+    DCLogInfo();
 }
 
 
@@ -503,24 +501,21 @@ static size_t const DPAllJoynJoinRetryMax = 5;
 - (void)sessionWasLost:(AJNSessionId)sessionId
              forReason:(AJNSessionLostReason)reason
 {
-    NSLog(@"%s: sessionId:%u forReason:%u", __PRETTY_FUNCTION__,
-          sessionId, reason);
+    DCLogInfo(@"sessionId:%u forReason:%u", sessionId, reason);
 }
 
 
 - (void)didAddMemberNamed:(NSString*)memberName
                 toSession:(AJNSessionId)sessionId
 {
-    NSLog(@"%s: memberName:%@ sessionId:%u", __PRETTY_FUNCTION__,
-          memberName, sessionId);
+    DCLogInfo(@"memberName:%@ sessionId:%u", memberName, sessionId);
 }
 
 
 - (void)didRemoveMemberNamed:(NSString*)memberName
                  fromSession:(AJNSessionId)sessionId
 {
-    NSLog(@"%s: memberName:%@ fromSession:%u", __PRETTY_FUNCTION__,
-          memberName, sessionId);
+    DCLogInfo(@"memberName:%@ fromSession:%u", memberName, sessionId);
 }
 
 @end

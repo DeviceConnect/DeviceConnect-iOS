@@ -95,7 +95,7 @@
                 dict[@(keyCStr)] = val;
             } else {
                 // return nil;
-                NSLog(@"Failed to obtain an object.");
+                DCLogWarn(@"Failed to obtain an object.");
                 continue;
             }
         }

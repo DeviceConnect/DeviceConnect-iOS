@@ -116,7 +116,7 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
                                    interface:@"org.allseen.LSF.LampDetails"
                                    sessionID:sessionID];
             if (!proxy) {
-                NSLog(@"Failed to perform AllJoyn API parameter availability check (1).");
+                DCLogError(@"Failed to perform AllJoyn API parameter availability check (1).");
                 return nil;
             }
             
@@ -131,7 +131,7 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
                                    interface:@"org.allseen.LSF.ControllerService.Lamp"
                                    sessionID:sessionID];
             if (!proxy) {
-                NSLog(@"Failed to perform AllJoyn API parameter availability check (2).");
+                DCLogError(@"Failed to perform AllJoyn API parameter availability check (2).");
                 return nil;
             }
             
@@ -195,9 +195,7 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
      ^(DPAllJoynServiceEntity *service, NSNumber *sessionId)
      {
          if (!sessionId) {
-             NSString *msg = @"Failed to join a session.";
-             NSLog(@"%@", msg);
-             [response setErrorToUnknownWithMessage:msg];
+             [response setErrorToUnknownWithMessage:@"Failed to join a session."];
              [[DConnectManager sharedManager] sendResponse:response];
              return;
          }
@@ -208,10 +206,8 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
                                 interface:@"org.allseen.LSF.LampState"
                                 sessionID:sessionId.unsignedIntValue];
          if (!proxy) {
-             NSString *msg =
-             @"Failed to obtain a proxy object for org.allseen.LSF.LampState .";
-             NSLog(@"%@", msg);
-             [response setErrorToUnknownWithMessage:msg];
+             [response setErrorToUnknownWithMessage:
+              @"Failed to obtain a proxy object for org.allseen.LSF.LampState ."];
              [[DConnectManager sharedManager] sendResponse:response];
              return;
          }
@@ -239,9 +235,7 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
      ^(DPAllJoynServiceEntity *service, NSNumber *sessionId)
      {
          if (!sessionId) {
-             NSString *msg = @"Failed to join a session.";
-             NSLog(@"%@", msg);
-             [response setErrorToUnknownWithMessage:msg];
+             [response setErrorToUnknownWithMessage:@"Failed to join a session."];
              [[DConnectManager sharedManager] sendResponse:response];
              return;
          }
@@ -254,10 +248,8 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
                                 interface:@"org.allseen.LSF.ControllerService.Lamp"
                                 sessionID:sessionId.unsignedIntValue];
          if (!proxy) {
-             NSString *msg =
-             @"Failed to obtain a proxy object for org.allseen.LSF.ControllerService.Lamp .";
-             NSLog(@"%@", msg);
-             [response setErrorToUnknownWithMessage:msg];
+             [response setErrorToUnknownWithMessage:
+              @"Failed to obtain a proxy object for org.allseen.LSF.ControllerService.Lamp ."];
              [[DConnectManager sharedManager] sendResponse:response];
              return;
          }
@@ -266,9 +258,8 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
          AJNMessageArgument *lampIDs;
          [proxy getAllLampIDsWithResponseCode:&responseCode lampIDs:&lampIDs];
          if (!responseCode || responseCode.intValue != DPAllJoynLightResponseCodeOK) {
-             NSString *msg = @"Failed to obtain lamp IDs (1).";
-             NSLog(@"%@", msg);
-             [response setErrorToUnknownWithMessage:msg];
+             [response setErrorToUnknownWithMessage:
+              @"Failed to obtain lamp IDs (1)."];
              [[DConnectManager sharedManager] sendResponse:response];
              return;
          }
@@ -277,9 +268,8 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
          NSArray *lampIDArr =
          [DPAllJoynMessageConverter objectWithAJNMessageArgument:lampIDs];
          if (!lampIDArr) {
-             NSString *msg = @"Failed to obtain lamp IDs (2).";
-             NSLog(@"%@", msg);
-             [response setErrorToUnknownWithMessage:msg];
+             [response setErrorToUnknownWithMessage:
+              @"Failed to obtain lamp IDs (2)."];
              [[DConnectManager sharedManager] sendResponse:response];
              return;
          }
@@ -300,7 +290,8 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
                                      lampName:&lampName];
                  if (!responseCode
                      || responseCode.intValue != DPAllJoynLightResponseCodeOK) {
-                     NSLog(@"Failed to obtain lamp name. Skipping this lamp...");
+                     DCLogWarn2(@"LightProfile:GET:lightReqForLampController",
+                                @"Failed to obtain lamp name. Skipping this lamp...");
                      continue;
                  }
                  responseCode = nil;
@@ -319,8 +310,9 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
                                      lampState:&onOffStateArg];
                  if (!responseCode
                      || responseCode.intValue != DPAllJoynLightResponseCodeOK) {
-                     NSLog(@"Failed to obtain lamp states."
-                           " Skipping this lamp...");
+                     DCLogWarn2(@"LightProfile:GET:lightReqForLampController",
+                                @"Failed to obtain lamp states."
+                                " Skipping this lamp...");
                      continue;
                  }
                  responseCode = nil;
@@ -328,8 +320,9 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
                  NSDictionary *states =
                  [DPAllJoynMessageConverter objectWithAJNMessageArgument:onOffStateArg];
                  if (!states[@"OnOff"]) {
-                     NSLog(@"Failed to obtain on/off state."
-                           " Skipping this lamp...");
+                     DCLogWarn2(@"LightProfile:GET:lightReqForLampController",
+                                @"Failed to obtain on/off state."
+                                " Skipping this lamp...");
                      continue;
                  }
                  onOffState = [states[@"OnOff"] boolValue];
@@ -375,9 +368,7 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
      ^(DPAllJoynServiceEntity *service, NSNumber *sessionId)
      {
          if (!sessionId) {
-             NSString *msg = @"Failed to join a session.";
-             NSLog(@"%@", msg);
-             [response setErrorToUnknownWithMessage:msg];
+             [response setErrorToUnknownWithMessage:@"Failed to join a session."];
              [[DConnectManager sharedManager] sendResponse:response];
              return;
          }
@@ -388,10 +379,8 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
                                 interface:@"org.allseen.LSF.LampState"
                                 sessionID:sessionId.unsignedIntValue];
          if (!proxy) {
-             NSString *msg =
-             @"Failed to obtain a proxy object for org.allseen.LSF.LampState .";
-             NSLog(@"%@", msg);
-             [response setErrorToUnknownWithMessage:msg];
+             [response setErrorToUnknownWithMessage:
+              @"Failed to obtain a proxy object for org.allseen.LSF.LampState ."];
              [[DConnectManager sharedManager] sendResponse:response];
              return;
          }
@@ -412,22 +401,23 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
          newStates[count] = tmp1;
          ++count;
          
-         if (functionality[@"Dimmable"]) {
-             if (brightness) {
+         if (brightness) {
+             if (functionality[@"Dimmable"]) {
                  double brightnessScaled = brightness.doubleValue * 0xffffffffL;
                  tmp1 = MsgArg();
                  tmp2 = MsgArg("u", (uint32_t)brightnessScaled);
                  tmp1.Set("{sv}", "Brightness", &tmp2);
                  newStates[count] = tmp1;
                  ++count;
+             } else {
+                 DCLogWarn2(@"LightProfile:POST:lightReqForSingleLamp",
+                            @"Light dimming is not supported in this AllJoyn service. "
+                            "Parameter 'brightness' is ignored.");
              }
-         } else {
-             NSLog(@"Light dimming is not supported in this AllJoyn service. "
-                   "Parameter 'brightness' is ignored.");
          }
          
-         if (functionality[@"Color"]) {
-             if (color) {
+         if (color) {
+             if (functionality[@"Color"]) {
                  NSDictionary *hsb = [DPAllJoynColorUtility HSBFromRGB:color];
                  
                  tmp1 = MsgArg();
@@ -441,10 +431,11 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
                  tmp1.Set("{sv}", "Saturation", &tmp2);
                  newStates[count] = tmp1;
                  ++count;
+             } else {
+                 DCLogWarn2(@"LightProfile:POST:lightReqForSingleLamp",
+                            @"Light coloring is not supported in this AllJoyn service. "
+                            "Parameter 'color' is ignored.");
              }
-         } else {
-             NSLog(@"Light coloring is not supported in this AllJoyn service. "
-                   "Parameter 'color' is ignored.");
          }
          
          MsgArg newStateArg("a{sv}", count, newStates);
@@ -486,9 +477,7 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
          NSString *ignored;
          
          if (!sessionId) {
-             NSString *msg = @"Failed to join a session.";
-             NSLog(@"%@", msg);
-             [response setErrorToUnknownWithMessage:msg];
+             [response setErrorToUnknownWithMessage:@"Failed to join a session."];
              [[DConnectManager sharedManager] sendResponse:response];
              return;
          }
@@ -500,10 +489,8 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
                                 interface:@"org.allseen.LSF.ControllerService"
                                 sessionID:sessionId.unsignedIntValue];
          if (!proxy) {
-             NSString *msg =
-             @"Failed to obtain a proxy object for org.allseen.LSF.ControllerService .";
-             NSLog(@"%@", msg);
-             [response setErrorToUnknownWithMessage:msg];
+             [response setErrorToUnknownWithMessage:
+              @"Failed to obtain a proxy object for org.allseen.LSF.ControllerService ."];
              [[DConnectManager sharedManager] sendResponse:response];
              return;
          }
@@ -548,22 +535,23 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
          newStates[count] = tmp1;
          ++count;
          
-         if (functionality[@"Dimmable"]) {
-             if (brightness) {
+         if (brightness) {
+             if (functionality[@"Dimmable"]) {
                  double brightnessScaled = brightness.doubleValue * 0xffffffffL;
                  tmp1 = MsgArg();
                  tmp2 = MsgArg("u", (uint32_t)brightnessScaled);
                  tmp1.Set("{sv}", "Brightness", &tmp2);
                  newStates[count] = tmp1;
                  ++count;
+             } else {
+                 DCLogWarn2(@"LightProfile:POST:lightReqForSingleLamp",
+                            @"Light dimming is not supported in this AllJoyn service. "
+                            "Parameter 'brightness' is ignored.");
              }
-         } else {
-             NSLog(@"Light dimming is not supported in this AllJoyn service. "
-                   "Parameter 'brightness' is ignored.");
          }
          
-         if (functionality[@"Color"]) {
-             if (color) {
+         if (color) {
+             if (functionality[@"Color"]) {
                  NSDictionary *hsb = [DPAllJoynColorUtility HSBFromRGB:color];
                  
                  tmp1 = MsgArg();
@@ -577,10 +565,11 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
                  tmp1.Set("{sv}", "Saturation", &tmp2);
                  newStates[count] = tmp1;
                  ++count;
+             } else {
+                 DCLogWarn2(@"LightProfile:POST:lightReqForSingleLamp",
+                            @"Light coloring is not supported in this AllJoyn service. "
+                            "Parameter 'color' is ignored.");
              }
-         } else {
-             NSLog(@"Light coloring is not supported in this AllJoyn service. "
-                   "Parameter 'color' is ignored.");
          }
          
          MsgArg newStateArg("a{sv}", count, newStates);
@@ -627,7 +616,7 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
         return;
     }
     if (name) {
-        NSLog(@"Parameter 'name' is not supported. Ignored...");
+        DCLogWarn(@"Parameter 'name' is not supported. Ignored...");
     }
     
     //////////////////////////////////////////////////
@@ -638,9 +627,7 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
      ^(DPAllJoynServiceEntity *service, NSNumber *sessionId)
      {
          if (!sessionId) {
-             NSString *msg = @"Failed to join a session.";
-             NSLog(@"%@", msg);
-             [response setErrorToUnknownWithMessage:msg];
+             [response setErrorToUnknownWithMessage:@"Failed to join a session."];
              [[DConnectManager sharedManager] sendResponse:response];
              return;
          }
@@ -651,10 +638,8 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
                                 interface:@"org.allseen.LSF.LampState"
                                 sessionID:sessionId.unsignedIntValue];
          if (!proxy) {
-             NSString *msg =
-             @"Failed to obtain a proxy object for org.allseen.LSF.LampState .";
-             NSLog(@"%@", msg);
-             [response setErrorToUnknownWithMessage:msg];
+             [response setErrorToUnknownWithMessage:
+              @"Failed to obtain a proxy object for org.allseen.LSF.LampState ."];
              [[DConnectManager sharedManager] sendResponse:response];
              return;
          }
@@ -672,22 +657,23 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
          MsgArg tmp1;
          MsgArg tmp2;
          
-         if (functionality[@"Dimmable"]) {
-             if (brightness) {
+         if (brightness) {
+             if (functionality[@"Dimmable"]) {
                  double brightnessScaled = brightness.doubleValue * 0xffffffffL;
                  tmp1 = MsgArg();
                  tmp2 = MsgArg("u", (uint32_t)brightnessScaled);
                  tmp1.Set("{sv}", "Brightness", &tmp2);
                  newStates[count] = tmp1;
                  ++count;
+             } else {
+                 DCLogWarn2(@"LightProfile:PUT:lightReqForSingleLamp",
+                            @"Light dimming is not supported in this AllJoyn service. "
+                            "Parameter 'brightness' is ignored.");
              }
-         } else {
-             NSLog(@"Light dimming is not supported in this AllJoyn service. "
-                   "Parameter 'brightness' is ignored.");
          }
          
-         if (functionality[@"Color"]) {
-             if (color) {
+         if (color) {
+             if (functionality[@"Color"]) {
                  NSDictionary *hsb = [DPAllJoynColorUtility HSBFromRGB:color];
                  
                  tmp1 = MsgArg();
@@ -701,10 +687,11 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
                  tmp1.Set("{sv}", "Saturation", &tmp2);
                  newStates[count] = tmp1;
                  ++count;
+             } else {
+                 DCLogWarn2(@"LightProfile:PUT:lightReqForSingleLamp",
+                            @"Light coloring is not supported in this AllJoyn service. "
+                            "Parameter 'color' is ignored.");
              }
-         } else {
-             NSLog(@"Light coloring is not supported in this AllJoyn service. "
-                   "Parameter 'color' is ignored.");
          }
          
          MsgArg newStateArg("a{sv}", count, newStates);
@@ -747,9 +734,7 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
          NSString *ignored;
          
          if (!sessionId) {
-             NSString *msg = @"Failed to join a session.";
-             NSLog(@"%@", msg);
-             [response setErrorToUnknownWithMessage:msg];
+             [response setErrorToUnknownWithMessage:@"Failed to join a session."];
              [[DConnectManager sharedManager] sendResponse:response];
              return;
          }
@@ -761,10 +746,8 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
                                 interface:@"org.allseen.LSF.ControllerService"
                                 sessionID:sessionId.unsignedIntValue];
          if (!proxy) {
-             NSString *msg =
-             @"Failed to obtain a proxy object for org.allseen.LSF.ControllerService .";
-             NSLog(@"%@", msg);
-             [response setErrorToUnknownWithMessage:msg];
+             [response setErrorToUnknownWithMessage:
+              @"Failed to obtain a proxy object for org.allseen.LSF.ControllerService ."];
              [[DConnectManager sharedManager] sendResponse:response];
              return;
          }
@@ -806,22 +789,23 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
          MsgArg tmp1;
          MsgArg tmp2;
          
-         if (functionality[@"Dimmable"]) {
-             if (brightness) {
+         if (brightness) {
+             if (functionality[@"Dimmable"]) {
                  double brightnessScaled = brightness.doubleValue * 0xffffffffL;
                  tmp1 = MsgArg();
                  tmp2 = MsgArg("u", (uint32_t)brightnessScaled);
                  tmp1.Set("{sv}", "Brightness", &tmp2);
                  newStates[count] = tmp1;
                  ++count;
+             } else {
+                 DCLogWarn2(@"LightProfile:PUT:lightReqForSingleLamp",
+                            @"Light dimming is not supported in this AllJoyn service. "
+                            "Parameter 'brightness' is ignored.");
              }
-         } else {
-             NSLog(@"Light dimming is not supported in this AllJoyn service. "
-                   "Parameter 'brightness' is ignored.");
          }
          
-         if (functionality[@"Color"]) {
-             if (color) {
+         if (color) {
+             if (functionality[@"Color"]) {
                  NSDictionary *hsb = [DPAllJoynColorUtility HSBFromRGB:color];
                  
                  tmp1 = MsgArg();
@@ -835,10 +819,11 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
                  tmp1.Set("{sv}", "Saturation", &tmp2);
                  newStates[count] = tmp1;
                  ++count;
+             } else {
+                 DCLogWarn2(@"LightProfile:PUT:lightReqForSingleLamp",
+                            @"Light coloring is not supported in this AllJoyn service. "
+                            "Parameter 'color' is ignored.");
              }
-         } else {
-             NSLog(@"Light coloring is not supported in this AllJoyn service. "
-                   "Parameter 'color' is ignored.");
          }
          
          MsgArg newStateArg("a{sv}", count, newStates);
@@ -909,9 +894,7 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
      ^(DPAllJoynServiceEntity *service, NSNumber *sessionId)
      {
          if (!sessionId) {
-             NSString *msg = @"Failed to join a session.";
-             NSLog(@"%@", msg);
-             [response setErrorToUnknownWithMessage:msg];
+             [response setErrorToUnknownWithMessage:@"Failed to join a session."];
              [[DConnectManager sharedManager] sendResponse:response];
              return;
          }
@@ -922,10 +905,8 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
                                 interface:@"org.allseen.LSF.LampState"
                                 sessionID:sessionId.unsignedIntValue];
          if (!proxy) {
-             NSString *msg =
-             @"Failed to obtain a proxy object for org.allseen.LSF.LampState .";
-             NSLog(@"%@", msg);
-             [response setErrorToUnknownWithMessage:msg];
+             [response setErrorToUnknownWithMessage:
+              @"Failed to obtain a proxy object for org.allseen.LSF.LampState ."];
              [[DConnectManager sharedManager] sendResponse:response];
              return;
          }
@@ -950,9 +931,7 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
          NSString *ignored;
          
          if (!sessionId) {
-             NSString *msg = @"Failed to join a session.";
-             NSLog(@"%@", msg);
-             [response setErrorToUnknownWithMessage:msg];
+             [response setErrorToUnknownWithMessage:@"Failed to join a session."];
              [[DConnectManager sharedManager] sendResponse:response];
              return;
          }
@@ -964,10 +943,8 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
                                 interface:@"org.allseen.LSF.ControllerService"
                                 sessionID:sessionId.unsignedIntValue];
          if (!proxy) {
-             NSString *msg =
-             @"Failed to obtain a proxy object for org.allseen.LSF.ControllerService .";
-             NSLog(@"%@", msg);
-             [response setErrorToUnknownWithMessage:msg];
+             [response setErrorToUnknownWithMessage:
+              @"Failed to obtain a proxy object for org.allseen.LSF.ControllerService ."];
              [[DConnectManager sharedManager] sendResponse:response];
              return;
          }
@@ -1039,9 +1016,7 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
      ^(DPAllJoynServiceEntity *service, NSNumber *sessionId)
      {
          if (!sessionId) {
-             NSString *msg = @"Failed to join a session.";
-             NSLog(@"%@", msg);
-             [response setErrorToUnknownWithMessage:msg];
+             [response setErrorToUnknownWithMessage:@"Failed to join a session."];
              [[DConnectManager sharedManager] sendResponse:response];
              return;
          }
@@ -1053,10 +1028,8 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
                                 interface:@"org.allseen.LSF.ControllerService"
                                 sessionID:sessionId.unsignedIntValue];
          if (!proxy) {
-             NSString *msg =
-             @"Failed to obtain a proxy object for org.allseen.LSF.ControllerService .";
-             NSLog(@"%@", msg);
-             [response setErrorToUnknownWithMessage:msg];
+             [response setErrorToUnknownWithMessage:
+              @"Failed to obtain a proxy object for org.allseen.LSF.ControllerService ."];
              [[DConnectManager sharedManager] sendResponse:response];
              return;
          }
@@ -1099,7 +1072,9 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
                                           lampGroupName:&lampGroupName];
                  if (!responseCode
                      || responseCode.intValue != DPAllJoynLightResponseCodeOK) {
-                     NSLog(@"Failed to obtain lamp group name. Skipping this lamp group...");
+                     DCLogWarn2(@"LightProfile:GET:lightGroupReqForLampController",
+                                @"Failed to obtain lamp group name. "
+                                "Skipping this lamp group...");
                      continue;
                  }
                  responseCode = nil;
@@ -1117,7 +1092,10 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
              
              if (!responseCode
                  || responseCode.intValue != DPAllJoynLightResponseCodeOK) {
-                 NSLog(@"Failed to obtain IDs of lamps and lamp groups contained in a lamp group. Skipping this lamp group...");
+                 DCLogWarn2(@"LightProfile:GET:lightGroupReqForLampController",
+                            @"Failed to obtain IDs of lamps and lamp groups "
+                            "contained in a lamp group. "
+                            "Skipping this lamp group...");
                  continue;
              }
              responseCode = nil;
@@ -1173,7 +1151,8 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
                                      lampName:&name];
                  if (!responseCode
                      || responseCode.unsignedIntValue != DPAllJoynLightResponseCodeOK) {
-                     NSLog(@"%@", @"Failed to obtain lamp name. Skipping this lamp...");
+                     DCLogWarn2(@"LightProfile:GET:lightGroupReqForLampController",
+                                @"Failed to obtain lamp name. Skipping this lamp...");
                  } else {
                      lamp.name = name;
                  }
@@ -1186,14 +1165,16 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
                                      lampState:&lampState];
                  if (!responseCode
                      || responseCode.unsignedIntValue != DPAllJoynLightResponseCodeOK) {
-                     NSLog(@"%@", @"Failed to obtain lamp state. Skipping this lamp...");
+                     DCLogWarn2(@"LightProfile:GET:lightGroupReqForLampController",
+                                @"Failed to obtain lamp state. Skipping this lamp...");
                  } else {
                      NSDictionary *states =
                      [DPAllJoynMessageConverter
                       objectWithAJNMessageArgument:lampState];
                      if (!states[@"OnOff"]) {
-                         NSLog(@"Failed to obtain on/off state."
-                               " Skipping this lamp...");
+                         DCLogWarn2(@"LightProfile:GET:lightGroupReqForLampController",
+                                    @"Failed to obtain on/off state."
+                                    " Skipping this lamp...");
                      } else {
                          lamp.on = states[@"OnOff"];
                      }
@@ -1253,9 +1234,7 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
          NSString *ignored;
          
          if (!sessionId) {
-             NSString *msg = @"Failed to join a session.";
-             NSLog(@"%@", msg);
-             [response setErrorToUnknownWithMessage:msg];
+             [response setErrorToUnknownWithMessage:@"Failed to join a session."];
              [[DConnectManager sharedManager] sendResponse:response];
              return;
          }
@@ -1267,10 +1246,8 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
                                 interface:@"org.allseen.LSF.ControllerService"
                                 sessionID:sessionId.unsignedIntValue];
          if (!proxy) {
-             NSString *msg =
-             @"Failed to obtain a proxy object for org.allseen.LSF.ControllerService .";
-             NSLog(@"%@", msg);
-             [response setErrorToUnknownWithMessage:msg];
+             [response setErrorToUnknownWithMessage:
+              @"Failed to obtain a proxy object for org.allseen.LSF.ControllerService ."];
              [[DConnectManager sharedManager] sendResponse:response];
              return;
          }
@@ -1374,9 +1351,7 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
          NSString *ignored;
          
          if (!sessionId) {
-             NSString *msg = @"Failed to join a session.";
-             NSLog(@"%@", msg);
-             [response setErrorToUnknownWithMessage:msg];
+             [response setErrorToUnknownWithMessage:@"Failed to join a session."];
              [[DConnectManager sharedManager] sendResponse:response];
              return;
          }
@@ -1388,10 +1363,8 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
                                 interface:@"org.allseen.LSF.ControllerService"
                                 sessionID:sessionId.unsignedIntValue];
          if (!proxy) {
-             NSString *msg =
-             @"Failed to obtain a proxy object for org.allseen.LSF.ControllerService .";
-             NSLog(@"%@", msg);
-             [response setErrorToUnknownWithMessage:msg];
+             [response setErrorToUnknownWithMessage:
+              @"Failed to obtain a proxy object for org.allseen.LSF.ControllerService ."];
              [[DConnectManager sharedManager] sendResponse:response];
              return;
          }
@@ -1499,9 +1472,7 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
          NSString *ignored;
          
          if (!sessionId) {
-             NSString *msg = @"Failed to join a session.";
-             NSLog(@"%@", msg);
-             [response setErrorToUnknownWithMessage:msg];
+             [response setErrorToUnknownWithMessage:@"Failed to join a session."];
              [[DConnectManager sharedManager] sendResponse:response];
              return;
          }
@@ -1513,10 +1484,8 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
                                 interface:@"org.allseen.LSF.ControllerService"
                                 sessionID:sessionId.unsignedIntValue];
          if (!proxy) {
-             NSString *msg =
-             @"Failed to obtain a proxy object for org.allseen.LSF.ControllerService .";
-             NSLog(@"%@", msg);
-             [response setErrorToUnknownWithMessage:msg];
+             [response setErrorToUnknownWithMessage:
+              @"Failed to obtain a proxy object for org.allseen.LSF.ControllerService ."];
              [[DConnectManager sharedManager] sendResponse:response];
              return;
          }
@@ -1589,9 +1558,7 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
      ^(DPAllJoynServiceEntity *service, NSNumber *sessionId)
      {
          if (!sessionId) {
-             NSString *msg = @"Failed to join a session.";
-             NSLog(@"%@", msg);
-             [response setErrorToUnknownWithMessage:msg];
+             [response setErrorToUnknownWithMessage:@"Failed to join a session."];
              [[DConnectManager sharedManager] sendResponse:response];
              return;
          }
@@ -1603,10 +1570,8 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
                                 interface:@"org.allseen.LSF.ControllerService"
                                 sessionID:sessionId.unsignedIntValue];
          if (!proxy) {
-             NSString *msg =
-             @"Failed to obtain a proxy object for org.allseen.LSF.ControllerService .";
-             NSLog(@"%@", msg);
-             [response setErrorToUnknownWithMessage:msg];
+             [response setErrorToUnknownWithMessage:
+              @"Failed to obtain a proxy object for org.allseen.LSF.ControllerService ."];
              [[DConnectManager sharedManager] sendResponse:response];
              return;
          }
@@ -1654,9 +1619,7 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
          NSString *ignored;
          
          if (!sessionId) {
-             NSString *msg = @"Failed to join a session.";
-             NSLog(@"%@", msg);
-             [response setErrorToUnknownWithMessage:msg];
+             [response setErrorToUnknownWithMessage:@"Failed to join a session."];
              [[DConnectManager sharedManager] sendResponse:response];
              return;
          }
@@ -1668,10 +1631,8 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
                                 interface:@"org.allseen.LSF.ControllerService"
                                 sessionID:sessionId.unsignedIntValue];
          if (!proxy) {
-             NSString *msg =
-             @"Failed to obtain a proxy object for org.allseen.LSF.ControllerService .";
-             NSLog(@"%@", msg);
-             [response setErrorToUnknownWithMessage:msg];
+             [response setErrorToUnknownWithMessage:
+              @"Failed to obtain a proxy object for org.allseen.LSF.ControllerService ."];
              [[DConnectManager sharedManager] sendResponse:response];
              return;
          }

@@ -29,7 +29,7 @@
     MsgArg *entries;
     status = [busObjectDescriptions value:@"a(oas)", &size, &entries];
     if (ER_OK != status) {
-        NSLog(@"Failed to parse bus object descriptions.");
+        DCLogError(@"Failed to parse bus object descriptions.");
         return nil;
     }
     for (size_t i = 0; i < size; ++i) {
@@ -38,15 +38,15 @@
         MsgArg *entries2;
         status = entries[i].Get("(oas)", &objPath, &size2, &entries2);
         if (ER_OK != status) {
-            NSLog(@"Failed to parse a bus object description. Skipping it...");
+            DCLogError(@"Failed to parse a bus object description. Skipping it...");
             continue;
         }
         for (size_t j = 0; j < size2; ++j) {
             char *iface;
             status = entries2[j].Get("s", &iface);
             if (ER_OK != status) {
-                NSLog(@"Failed to parse a supported interface in a bus object."
-                      " Skipping it...");
+                DCLogError(@"Failed to parse a supported interface in a bus object."
+                           " Skipping it...");
                 continue;
             }
             [interfaces addObject:@(iface)];

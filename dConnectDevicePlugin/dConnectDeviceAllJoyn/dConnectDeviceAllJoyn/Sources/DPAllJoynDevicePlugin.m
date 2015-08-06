@@ -44,8 +44,7 @@ static NSString *const VERSION = @"1.0.0";
         id block;
         block = ^(BOOL result) {
             if (!result) {
-                NSLog(@"%s: AllJoyn init failed, retrying...",
-                      class_getName([self class]));
+                DCLogWarn2(@"DPAllJoynDevicePlugin:init", @"AllJoyn init failed, retrying...");
                 [_handler postBlock:^{
                     [_handler initAllJoynContextWithBlock:block];
                 } withDelay:5000];
