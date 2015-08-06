@@ -163,9 +163,9 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
             }
             return functionalities;
         }
-        
+            
         default:
-        return nil;
+            return nil;
     }
 }
 
@@ -1744,27 +1744,27 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
     }
     
     switch ([self serviceTypeFromService:service]) {
-        
+            
         case DPAllJoynLightServiceTypeSingleLamp: {
             [self
              didReceiveGetLightRequestForSingleLampWithResponse:response
              service:service];
             return NO;
         }
-        
+            
         case DPAllJoynLightServiceTypeLampController: {
             [self
              didReceiveGetLightRequestForLampControllerWithResponse:response
              service:service];
             return NO;
         }
-        
+            
         case DPAllJoynLightServiceTypeUnknown:
         default: {
             [response setErrorToNotSupportAction];
             return YES;
         }
-        
+            
     }
 }
 
@@ -1822,7 +1822,7 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
     }
     
     switch ([self serviceTypeFromService:service]) {
-        
+            
         case DPAllJoynLightServiceTypeSingleLamp: {
             [self
              didReceivePostLightRequestForSingleLampWithResponse:response
@@ -1830,7 +1830,7 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
              color:color flashing:flashing];
             return NO;
         }
-        
+            
         case DPAllJoynLightServiceTypeLampController: {
             [self
              didReceivePostLightRequestForLampControllerWithResponse:response
@@ -1838,13 +1838,13 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
              color:color flashing:flashing];
             return NO;
         }
-        
+            
         case DPAllJoynLightServiceTypeUnknown:
         default: {
             [response setErrorToNotSupportAction];
             return YES;
         }
-        
+            
     }
 }
 
@@ -1903,7 +1903,7 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
     }
     
     switch ([self serviceTypeFromService:service]) {
-        
+            
         case DPAllJoynLightServiceTypeSingleLamp: {
             [self
              didReceivePutLightRequestForSingleLampWithResponse:response
@@ -1911,7 +1911,7 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
              color:color flashing:flashing];
             return NO;
         }
-        
+            
         case DPAllJoynLightServiceTypeLampController: {
             [self
              didReceivePutLightRequestForLampControllerWithResponse:response
@@ -1919,13 +1919,13 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
              color:color flashing:flashing];
             return NO;
         }
-        
+            
         case DPAllJoynLightServiceTypeUnknown:
         default: {
             [response setErrorToNotSupportAction];
             return YES;
         }
-        
+            
     }
 }
 
@@ -1956,27 +1956,27 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
     }
     
     switch ([self serviceTypeFromService:service]) {
-        
+            
         case DPAllJoynLightServiceTypeSingleLamp: {
             [self
              didReceiveDeleteLightRequestForSingleLampWithResponse:response
              service:service lightId:lightId];
             return NO;
         }
-        
+            
         case DPAllJoynLightServiceTypeLampController: {
             [self
              didReceiveDeleteLightRequestForLampControllerWithResponse:response
              service:service lightId:lightId];
             return NO;
         }
-        
+            
         case DPAllJoynLightServiceTypeUnknown:
         default: {
             [response setErrorToNotSupportAction];
             return YES;
         }
-        
+            
     }
 }
 
@@ -2003,21 +2003,21 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
     }
     
     switch ([self serviceTypeFromService:service]) {
-        
+            
         case DPAllJoynLightServiceTypeLampController: {
             [self
              didReceiveGetLightGroupRequestForLampControllerWithResponse:response
              service:service];
             return NO;
         }
-        
+            
         case DPAllJoynLightServiceTypeSingleLamp:
         case DPAllJoynLightServiceTypeUnknown:
         default: {
             [response setErrorToNotSupportAction];
             return YES;
         }
-        
+            
     }
 }
 
@@ -2075,7 +2075,7 @@ didReceivePostLightGroupRequest:(DConnectRequestMessage *)request
     }
     
     switch ([self serviceTypeFromService:service]) {
-        
+            
         case DPAllJoynLightServiceTypeLampController: {
             [self
              didReceivePostLightGroupRequestForLampControllerWithResponse:response
@@ -2083,14 +2083,14 @@ didReceivePostLightGroupRequest:(DConnectRequestMessage *)request
              color:color flashing:flashing];
             return NO;
         }
-        
+            
         case DPAllJoynLightServiceTypeSingleLamp:
         case DPAllJoynLightServiceTypeUnknown:
         default: {
             [response setErrorToNotSupportAction];
             return YES;
         }
-        
+            
     }
 }
 
@@ -2149,7 +2149,7 @@ didReceivePostLightGroupRequest:(DConnectRequestMessage *)request
     }
     
     switch ([self serviceTypeFromService:service]) {
-        
+            
         case DPAllJoynLightServiceTypeLampController: {
             [self
              didReceivePutLightGroupRequestForLampControllerWithResponse:response
@@ -2157,14 +2157,14 @@ didReceivePostLightGroupRequest:(DConnectRequestMessage *)request
              color:color flashing:flashing];
             return NO;
         }
-        
+            
         case DPAllJoynLightServiceTypeSingleLamp:
         case DPAllJoynLightServiceTypeUnknown:
         default: {
             [response setErrorToNotSupportAction];
             return YES;
         }
-        
+            
     }
 }
 
@@ -2195,21 +2195,21 @@ didReceivePostLightGroupRequest:(DConnectRequestMessage *)request
     }
     
     switch ([self serviceTypeFromService:service]) {
-        
+            
         case DPAllJoynLightServiceTypeLampController: {
             [self
              didReceiveDeleteLightGroupRequestForLampControllerWithResponse:response
              service:service groupID:groupId];
             return NO;
         }
-        
+            
         case DPAllJoynLightServiceTypeSingleLamp:
         case DPAllJoynLightServiceTypeUnknown:
         default: {
             [response setErrorToNotSupportAction];
             return YES;
         }
-        
+            
     }
 }
 
@@ -2247,21 +2247,21 @@ didReceivePostLightGroupRequest:(DConnectRequestMessage *)request
     }
     
     switch ([self serviceTypeFromService:service]) {
-        
+            
         case DPAllJoynLightServiceTypeLampController: {
             [self
              didReceivePostLightGroupCreateRequestForLampControllerWithResponse:response
              service:service lightIDs:lightIds groupName:groupName];
             return NO;
         }
-        
+            
         case DPAllJoynLightServiceTypeSingleLamp:
         case DPAllJoynLightServiceTypeUnknown:
         default: {
             [response setErrorToNotSupportAction];
             return YES;
         }
-        
+            
     }
 }
 
@@ -2292,21 +2292,21 @@ didReceivePostLightGroupRequest:(DConnectRequestMessage *)request
     }
     
     switch ([self serviceTypeFromService:service]) {
-        
+            
         case DPAllJoynLightServiceTypeLampController: {
             [self
              didReceiveDeleteLightGroupClearRequestForLampControllerWithResponse:response
              service:service groupID:groupId];
             return NO;
         }
-        
+            
         case DPAllJoynLightServiceTypeSingleLamp:
         case DPAllJoynLightServiceTypeUnknown:
         default: {
             [response setErrorToNotSupportAction];
             return YES;
         }
-        
+            
     }
 }
 
