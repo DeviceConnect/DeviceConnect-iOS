@@ -18,6 +18,17 @@
 			name = dConnectDeviceAllJoyn_CodeGeneration;
 			productName = dConnectDeviceAllJoyn_CodeGeneration;
 		};
+		2586CC1D1B749F0100E260FD /* dConnectDeviceAllJoyn_DependencyResolution */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 2586CC201B749F0100E260FD /* Build configuration list for PBXAggregateTarget "dConnectDeviceAllJoyn_DependencyResolution" */;
+			buildPhases = (
+				2586CC211B749F0400E260FD /* Resolve dependencies by CocoaPods */,
+			);
+			dependencies = (
+			);
+			name = dConnectDeviceAllJoyn_DependencyResolution;
+			productName = dConnectDeviceAllJoyn_DependencyResolution;
+		};
 		25A06C1A1B562D13005B6F8A /* dConnectDeviceAllJoyn_framework */ = {
 			isa = PBXAggregateTarget;
 			buildConfigurationList = 25A06C1B1B562D13005B6F8A /* Build configuration list for PBXAggregateTarget "dConnectDeviceAllJoyn_framework" */;
@@ -454,7 +465,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 25A06C121B562C08005B6F8A /* Build configuration list for PBXNativeTarget "dConnectDeviceAllJoyn" */;
 			buildPhases = (
-				25856D111B58B6AD00B1C2DC /* Resolve dependencies by CocoaPods */,
 				25A06BF71B562C07005B6F8A /* Sources */,
 				25A06BF81B562C07005B6F8A /* Frameworks */,
 				25A06BF91B562C07005B6F8A /* Headers */,
@@ -516,6 +526,9 @@
 					2584989A1B6088EC0063552E = {
 						CreatedOnToolsVersion = 6.4;
 					};
+					2586CC1D1B749F0100E260FD = {
+						CreatedOnToolsVersion = 6.4;
+					};
 					25A06BFB1B562C07005B6F8A = {
 						CreatedOnToolsVersion = 6.4;
 					};
@@ -552,6 +565,7 @@
 				25A06C691B565ED2005B6F8A /* dConnectDeviceAllJoyn_resources */,
 				25A06C1F1B563527005B6F8A /* dConnectDeviceAllJoyn_OCLint */,
 				2584989A1B6088EC0063552E /* dConnectDeviceAllJoyn_CodeGeneration */,
+				2586CC1D1B749F0100E260FD /* dConnectDeviceAllJoyn_DependencyResolution */,
 			);
 		};
 /* End PBXProject section */
@@ -600,7 +614,7 @@
 			shellPath = /bin/bash;
 			shellScript = "GENERATOR=${PROJECT_DIR}/tools/AllJoynCodeGenerator/AllJoynCodeGenerator\nXML_DIR_PATH=${PROJECT_DIR}/dConnectDeviceAllJoyn/Resources/AllJoynIntrospectionXML\ngenerate() {\n    local baseName=$(basename \"$1\")\n    baseName=\"${baseName%.xml}\"\n    ${GENERATOR} $1 $baseName\n}\n\nfor f in $(ls ${XML_DIR_PATH}/*.xml); do\n    generate $f\ndone\n# Done. Boilerplate files (.h, .m, .mm) should be generated under Resources directory.";
 		};
-		25856D111B58B6AD00B1C2DC /* Resolve dependencies by CocoaPods */ = {
+		2586CC211B749F0400E260FD /* Resolve dependencies by CocoaPods */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -721,6 +735,20 @@
 			name = Debug;
 		};
 		2584989D1B6088EC0063552E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		2586CC1E1B749F0100E260FD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		2586CC1F1B749F0100E260FD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1013,6 +1041,15 @@
 			buildConfigurations = (
 				2584989C1B6088EC0063552E /* Debug */,
 				2584989D1B6088EC0063552E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2586CC201B749F0100E260FD /* Build configuration list for PBXAggregateTarget "dConnectDeviceAllJoyn_DependencyResolution" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2586CC1E1B749F0100E260FD /* Debug */,
+				2586CC1F1B749F0100E260FD /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 		};
