@@ -37,8 +37,8 @@
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aj2-ft-8d5">
                                 <rect key="frame" x="36" y="94" width="528" height="41"/>
-                                <string key="text">AllJoyn製品には初回設定が必要なものがあります。
-下記から当該製品の初回設定チュートリアルを選択してください。</string>
+                                <string key="text">Certain AllJoyn products require initial setup.
+Please select setup tutorials for these products listed below:</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
