@@ -184,6 +184,9 @@ After the app was launched, follow instructions to setup WiFi of a LIFX product.
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="AllJoyn" id="cNd-jd-Byw"/>
+                    <connections>
+                        <outlet property="imageView" destination="bYF-re-A4g" id="GBu-jn-u70"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ggf-WA-Yyw" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
