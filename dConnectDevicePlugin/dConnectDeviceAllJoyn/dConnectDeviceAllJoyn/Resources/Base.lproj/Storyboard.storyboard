@@ -152,6 +152,9 @@
                             </label>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Download_on_the_App_Store_JP_135x40.png" translatesAutoresizingMaskIntoConstraints="NO" id="sAR-wz-ZFj">
                                 <rect key="frame" x="232" y="226" width="135" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="Emh-pG-NT2"/>
+                                </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="LIFX製品のWiFi設定の後、AllJoynデバイスプラグインからLIFX製品にアクセスすることが可能となります。" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eZT-bz-egs">
                                 <rect key="frame" x="35.5" y="296" width="528" height="41"/>
