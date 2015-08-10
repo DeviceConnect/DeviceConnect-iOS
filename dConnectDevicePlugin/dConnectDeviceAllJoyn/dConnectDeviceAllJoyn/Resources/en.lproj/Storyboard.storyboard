@@ -23,7 +23,7 @@
             </objects>
             <point key="canvasLocation" x="-54" y="372"/>
         </scene>
-        <!--Settings-->
+        <!--AllJoyn-->
         <scene sceneID="Ncu-Ra-vd2">
             <objects>
                 <viewController id="kNr-xJ-Lka" customClass="DPAllJoynSettingMasterViewController" sceneMemberID="viewController">
@@ -78,11 +78,8 @@ Please select setup tutorials for these products listed below:</string>
                         </variation>
                     </view>
                     <toolbarItems/>
-                    <navigationItem key="navigationItem" title="Settings" id="JrU-yS-hoJ">
-                        <barButtonItem key="leftBarButtonItem" id="F4i-PI-wYi">
-                            <string key="title" base64-UTF8="YES">
-CEJhY2s
-</string>
+                    <navigationItem key="navigationItem" title="AllJoyn" id="JrU-yS-hoJ">
+                        <barButtonItem key="leftBarButtonItem" title="＜CLOSE" id="F4i-PI-wYi" userLabel="CLOSE">
                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                             <connections>
                                 <action selector="didBackButtonItemTapped:" destination="kNr-xJ-Lka" id="bxR-RR-vTx"/>

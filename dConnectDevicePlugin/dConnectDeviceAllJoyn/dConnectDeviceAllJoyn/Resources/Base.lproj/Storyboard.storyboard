@@ -23,7 +23,7 @@
             </objects>
             <point key="canvasLocation" x="-54" y="372"/>
         </scene>
-        <!--設定-->
+        <!--AllJoyn-->
         <scene sceneID="Ncu-Ra-vd2">
             <objects>
                 <viewController id="kNr-xJ-Lka" customClass="DPAllJoynSettingMasterViewController" sceneMemberID="viewController">
@@ -70,7 +70,14 @@
                         </constraints>
                     </view>
                     <toolbarItems/>
-                    <navigationItem key="navigationItem" title="設定" id="JrU-yS-hoJ"/>
+                    <navigationItem key="navigationItem" title="AllJoyn" id="JrU-yS-hoJ">
+                        <barButtonItem key="leftBarButtonItem" title="＜CLOSE" style="plain" id="8BM-30-usF" userLabel="CLOSE">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                            <connections>
+                                <action selector="didBackButtonItemTapped:" destination="kNr-xJ-Lka" id="X9C-ZY-NIA"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="backButtonItem" destination="8BM-30-usF" id="K41-CB-EDp"/>
@@ -78,12 +85,6 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fYK-bD-jK9" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <barButtonItem title="戻る" id="8BM-30-usF">
-                    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                    <connections>
-                        <action selector="didBackButtonItemTapped:" destination="kNr-xJ-Lka" id="X9C-ZY-NIA"/>
-                    </connections>
-                </barButtonItem>
             </objects>
             <point key="canvasLocation" x="682" y="372"/>
         </scene>
