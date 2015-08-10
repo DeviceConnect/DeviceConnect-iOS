@@ -1,5 +1,5 @@
 //
-//  DPAllJoynLightProfile.m
+//  DPAllJoynLightProfile.mm
 //  dConnectDeviceAllJoyn
 //
 //  Copyright (c) 2015 NTT DOCOMO, INC.

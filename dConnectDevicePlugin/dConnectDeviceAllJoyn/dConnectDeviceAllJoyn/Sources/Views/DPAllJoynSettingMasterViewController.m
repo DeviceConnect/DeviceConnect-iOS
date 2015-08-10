@@ -33,12 +33,12 @@
     // previous view controller. So, add a custom Back button.
     //
     _backButtonItem.tintColor = [UIColor whiteColor];
-    NSBundle *bundle = DPAllJoynResourceBundle();
-    NSString *path = [bundle pathForResource:@"back-arrow@2x"
-                                      ofType:@"png"];
-    _backButtonItem.image = [UIImage imageWithContentsOfFile:path];
-//    _backButtonItem.title = @"aaa";
-    self.navigationItem.leftBarButtonItem = _backButtonItem;
+    
+    // TODO: Append a back arrow icon without ellipsizing title
+//    NSBundle *bundle = DPAllJoynResourceBundle();
+//    NSString *path = [bundle pathForResource:@"back-arrow@2x"
+//                                      ofType:@"png"];
+//    _backButtonItem.image = [UIImage imageWithContentsOfFile:path];
 }
 
 

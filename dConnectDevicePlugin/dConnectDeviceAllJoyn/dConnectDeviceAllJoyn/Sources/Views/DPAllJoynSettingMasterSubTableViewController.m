@@ -64,7 +64,8 @@
     if ([self.tableView respondsToSelector:@selector(setLayoutMargins:)]) {
         self.tableView.layoutMargins = UIEdgeInsetsZero;
     }
-
+    
+    self.tableView.estimatedRowHeight = 55;
 }
 
 
@@ -102,8 +103,12 @@
     NSBundle *bundle = DPAllJoynResourceBundle();
     NSString *path = [bundle pathForResource:data.cellImageName
                                       ofType:data.cellImageExtension];
+    cell.contentView.autoresizingMask = UIViewAutoresizingFlexibleRightMargin;
     cell.mainImageView.image = [UIImage imageWithContentsOfFile:path];
-//    [cell.mainImageView sizeToFit];
+    
+//    [cell updateConstraintsIfNeeded];
+    [cell.mainImageView sizeToFit];
+    [cell.mainImageView layoutIfNeeded];
     
     // Fix a strange, extra left margin of table view's separator.
     //

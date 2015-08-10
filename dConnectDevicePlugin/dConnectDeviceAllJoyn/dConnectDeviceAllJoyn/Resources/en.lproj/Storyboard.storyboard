@@ -105,25 +105,24 @@ Please select setup tutorials for these products listed below:</string>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="imageItem" rowHeight="50" id="OZl-If-NOB" customClass="DPAllJoynSettingTableViewCell">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="imageItem" rowHeight="50" id="dIR-eX-rYI" customClass="DPAllJoynSettingTableViewCell">
                                 <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="OZl-If-NOB" id="zM4-OK-cgd">
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="dIR-eX-rYI" id="e3f-db-yAg">
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="uRf-5T-z9L">
-                                            <rect key="frame" x="8" y="8" width="512" height="33.5"/>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="FqU-pp-0Nx">
+                                            <rect key="frame" x="8" y="8.5" width="512" height="33"/>
                                         </imageView>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="uRf-5T-z9L" firstAttribute="top" secondItem="zM4-OK-cgd" secondAttribute="topMargin" id="bqe-lF-hev"/>
-                                        <constraint firstAttribute="trailingMargin" secondItem="uRf-5T-z9L" secondAttribute="trailing" id="hHP-cc-mNk"/>
-                                        <constraint firstItem="uRf-5T-z9L" firstAttribute="bottom" secondItem="zM4-OK-cgd" secondAttribute="bottomMargin" id="hsj-iC-OsE"/>
-                                        <constraint firstItem="uRf-5T-z9L" firstAttribute="leading" secondItem="zM4-OK-cgd" secondAttribute="leadingMargin" id="zMJ-h6-KKu"/>
+                                        <constraint firstItem="FqU-pp-0Nx" firstAttribute="top" secondItem="e3f-db-yAg" secondAttribute="topMargin" id="Ad3-Jj-8vb"/>
+                                        <constraint firstItem="FqU-pp-0Nx" firstAttribute="leading" secondItem="e3f-db-yAg" secondAttribute="leadingMargin" id="YJO-jB-8uf"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="FqU-pp-0Nx" secondAttribute="bottom" id="atE-bX-dXF"/>
+                                        <constraint firstItem="FqU-pp-0Nx" firstAttribute="trailing" secondItem="e3f-db-yAg" secondAttribute="trailingMargin" id="rwd-pH-6nI"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <outlet property="imageView" destination="uRf-5T-z9L" id="YaF-kW-e4L"/>
-                                    <outlet property="mainImageView" destination="uRf-5T-z9L" id="sap-Ot-gT0"/>
+                                    <outlet property="mainImageView" destination="FqU-pp-0Nx" id="B55-zL-NpU"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
