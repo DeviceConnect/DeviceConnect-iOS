@@ -153,7 +153,7 @@ Please select setup tutorials for these products listed below:</string>
                                 <rect key="frame" x="36" y="94" width="528" height="101.5"/>
                                 <string key="text">Please install LIFX app from AppStore.
 
-After the app was launched, follow instructions to setup WiFi of a LIFX product. As for a WiFi network the LIFX product connects to, select the one this Android device is connected to.</string>
+After the app was launched, follow instructions to setup WiFi of a LIFX product. As for a WiFi network the LIFX product connects to, select the one this iOS device is connected to.</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>

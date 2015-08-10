@@ -145,7 +145,7 @@
                                 <rect key="frame" x="36" y="94" width="528" height="101.5"/>
                                 <string key="text">AppStoreからLIFXアプリをインストールしてください。
 
-アプリ起動後、指示に従いLIFX製品のWiFi設定を行ってください。LIFX製品の接続先ネットワークにはこのAndroid端が接続しているのと同一のものを選択してください。</string>
+アプリ起動後、指示に従いLIFX製品のWiFi設定を行ってください。LIFX製品の接続先ネットワークにはこのiOS端末が接続しているのと同一のものを選択してください。</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
