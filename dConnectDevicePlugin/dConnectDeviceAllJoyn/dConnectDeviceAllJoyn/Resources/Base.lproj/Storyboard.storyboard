@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="rvV-vi-BML">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <scenes>
+        <!--Navigation Controller-->
+        <scene sceneID="L0H-fk-FvI">
+            <objects>
+                <navigationController id="rvV-vi-BML" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" id="Ehm-Mn-QrB">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" red="0.0" green="0.62745098040000002" blue="0.91372549020000005" alpha="1" colorSpace="calibratedRGB"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="kNr-xJ-Lka" kind="relationship" relationship="rootViewController" id="OuI-XE-GfW"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Lpr-Gv-HS8" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-54" y="372"/>
+        </scene>
+        <!--AllJoyn-->
+        <scene sceneID="Ncu-Ra-vd2">
+            <objects>
+                <viewController id="kNr-xJ-Lka" customClass="DPAllJoynSettingMasterViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="YH6-dw-q34"/>
+                        <viewControllerLayoutGuide type="bottom" id="KWP-sr-GZK"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="3dd-7n-40j">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aj2-ft-8d5">
+                                <rect key="frame" x="36" y="94" width="528" height="41"/>
+                                <string key="text">AllJoyn製品には初回設定が必要なものがあります。
+下記から当該製品の初回設定チュートリアルを選択してください。</string>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cgJ-uo-GHY">
+                                <rect key="frame" x="36" y="165" width="528" height="361"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.borderWidth">
+                                        <real key="value" value="0.5"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="layer.borderColorFromUIColor">
+                                        <color key="value" red="0.30980392156862746" green="0.6470588235294118" blue="0.83529411764705885" alpha="1" colorSpace="calibratedRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <segue destination="hkJ-qi-dHa" kind="embed" id="9bf-vB-TRI"/>
+                                </connections>
+                            </containerView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="aj2-ft-8d5" firstAttribute="leading" secondItem="3dd-7n-40j" secondAttribute="leadingMargin" constant="20" id="1IB-yI-Bc6"/>
+                            <constraint firstItem="aj2-ft-8d5" firstAttribute="top" secondItem="YH6-dw-q34" secondAttribute="bottom" constant="30" id="Ics-7c-DSC"/>
+                            <constraint firstItem="cgJ-uo-GHY" firstAttribute="top" secondItem="aj2-ft-8d5" secondAttribute="bottom" constant="30" id="JAa-Em-5oD"/>
+                            <constraint firstItem="cgJ-uo-GHY" firstAttribute="width" secondItem="aj2-ft-8d5" secondAttribute="width" id="LdQ-DC-5cw"/>
+                            <constraint firstItem="cgJ-uo-GHY" firstAttribute="centerX" secondItem="aj2-ft-8d5" secondAttribute="centerX" id="O3e-G6-9hv"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="aj2-ft-8d5" secondAttribute="trailing" constant="20" id="fW5-th-i6p"/>
+                            <constraint firstItem="KWP-sr-GZK" firstAttribute="top" secondItem="cgJ-uo-GHY" secondAttribute="bottom" constant="30" id="kKt-WF-1vP"/>
+                        </constraints>
+                    </view>
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" title="AllJoyn" id="JrU-yS-hoJ">
+                        <barButtonItem key="leftBarButtonItem" title="＜CLOSE" style="plain" id="8BM-30-usF" userLabel="CLOSE">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                            <connections>
+                                <action selector="didBackButtonItemTapped:" destination="kNr-xJ-Lka" id="X9C-ZY-NIA"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="backButtonItem" destination="8BM-30-usF" id="K41-CB-EDp"/>
+                        <segue destination="YLl-tT-DJu" kind="show" identifier="tutorialLIFX" id="fmM-5S-Eeg"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="fYK-bD-jK9" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="682" y="372"/>
+        </scene>
+        <!--All Joyn Setting Master Sub Table View Controller-->
+        <scene sceneID="ZD9-3E-YaL">
+            <objects>
+                <tableViewController automaticallyAdjustsScrollViewInsets="NO" id="hkJ-qi-dHa" customClass="DPAllJoynSettingMasterSubTableViewController" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="5Tb-G6-QS6">
+                        <rect key="frame" x="0.0" y="0.0" width="528" height="361"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="imageItem" rowHeight="50" id="OZl-If-NOB" customClass="DPAllJoynSettingTableViewCell">
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="OZl-If-NOB" id="zM4-OK-cgd">
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="uRf-5T-z9L">
+                                            <rect key="frame" x="8" y="8.5" width="512" height="33"/>
+                                        </imageView>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="uRf-5T-z9L" firstAttribute="trailing" secondItem="zM4-OK-cgd" secondAttribute="trailingMargin" id="92A-7B-lv0"/>
+                                        <constraint firstItem="uRf-5T-z9L" firstAttribute="leading" secondItem="zM4-OK-cgd" secondAttribute="leadingMargin" id="GFy-9y-aek"/>
+                                        <constraint firstItem="uRf-5T-z9L" firstAttribute="top" secondItem="zM4-OK-cgd" secondAttribute="topMargin" id="Uc6-iU-5CK"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="uRf-5T-z9L" secondAttribute="bottom" id="mPt-az-A8K"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="mainImageView" destination="uRf-5T-z9L" id="HSr-Hl-Xoy"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="hkJ-qi-dHa" id="qBp-eZ-MiI"/>
+                            <outlet property="delegate" destination="hkJ-qi-dHa" id="qZH-4U-BPG"/>
+                        </connections>
+                    </tableView>
+                    <extendedEdge key="edgesForExtendedLayout"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="l63-ZI-NBw" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="682" y="1014"/>
+        </scene>
+        <!--AllJoyn-->
+        <scene sceneID="eVY-UI-4LH">
+            <objects>
+                <viewController id="YLl-tT-DJu" customClass="DPAllJoynSettingDetailLIFXViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="UWL-qF-I87"/>
+                        <viewControllerLayoutGuide type="bottom" id="AJh-BR-lLB"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="JD1-4C-1PL">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Mf-zH-MX7">
+                                <rect key="frame" x="36" y="94" width="528" height="101.5"/>
+                                <string key="text">AppStoreからLIFXアプリをインストールしてください。
+
+アプリ起動後、指示に従いLIFX製品のWiFi設定を行ってください。LIFX製品の接続先ネットワークにはこのiOS端末が接続しているのと同一のものを選択してください。</string>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Download_on_the_App_Store_JP_135x40.png" translatesAutoresizingMaskIntoConstraints="NO" id="sAR-wz-ZFj">
+                                <rect key="frame" x="232" y="226" width="135" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="Emh-pG-NT2"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="LIFX製品のWiFi設定の後、AllJoynデバイスプラグインからLIFX製品にアクセスすることが可能となります。" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eZT-bz-egs">
+                                <rect key="frame" x="35.5" y="296" width="528" height="41"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="eZT-bz-egs" firstAttribute="top" secondItem="sAR-wz-ZFj" secondAttribute="bottom" constant="30" id="GRf-ZD-C0U"/>
+                            <constraint firstItem="eZT-bz-egs" firstAttribute="width" secondItem="4Mf-zH-MX7" secondAttribute="width" id="Kdu-gd-bEi"/>
+                            <constraint firstItem="eZT-bz-egs" firstAttribute="centerX" secondItem="sAR-wz-ZFj" secondAttribute="centerX" id="Kdy-eV-99B"/>
+                            <constraint firstItem="4Mf-zH-MX7" firstAttribute="top" secondItem="UWL-qF-I87" secondAttribute="bottom" constant="30" id="Zlt-pf-gn9"/>
+                            <constraint firstItem="sAR-wz-ZFj" firstAttribute="top" secondItem="4Mf-zH-MX7" secondAttribute="bottom" constant="30" id="chC-3i-oOU"/>
+                            <constraint firstItem="sAR-wz-ZFj" firstAttribute="centerX" secondItem="4Mf-zH-MX7" secondAttribute="centerX" id="iZp-Zc-hYJ"/>
+                            <constraint firstItem="4Mf-zH-MX7" firstAttribute="leading" secondItem="JD1-4C-1PL" secondAttribute="leadingMargin" constant="20" id="j8m-UU-R18"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="4Mf-zH-MX7" secondAttribute="trailing" constant="20" id="jNM-vO-v96"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="AllJoyn" id="cNd-jd-Byw"/>
+                    <connections>
+                        <outlet property="imageView" destination="sAR-wz-ZFj" id="EhF-0u-3Ms"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ggf-WA-Yyw" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1459" y="372"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="Download_on_the_App_Store_JP_135x40.png" width="135" height="40"/>
+    </resources>
+</document>

@@ -1,0 +1,1127 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXAggregateTarget section */
+		2584989A1B6088EC0063552E /* dConnectDeviceAllJoyn_CodeGeneration */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 2584989B1B6088EC0063552E /* Build configuration list for PBXAggregateTarget "dConnectDeviceAllJoyn_CodeGeneration" */;
+			buildPhases = (
+				2584989E1B6089000063552E /* Generate boilerplate code for AllJoyn I/Fs */,
+			);
+			dependencies = (
+			);
+			name = dConnectDeviceAllJoyn_CodeGeneration;
+			productName = dConnectDeviceAllJoyn_CodeGeneration;
+		};
+		2586CC1D1B749F0100E260FD /* dConnectDeviceAllJoyn_DependencyResolution */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 2586CC201B749F0100E260FD /* Build configuration list for PBXAggregateTarget "dConnectDeviceAllJoyn_DependencyResolution" */;
+			buildPhases = (
+				2586CC211B749F0400E260FD /* Resolve dependencies by CocoaPods */,
+			);
+			dependencies = (
+			);
+			name = dConnectDeviceAllJoyn_DependencyResolution;
+			productName = dConnectDeviceAllJoyn_DependencyResolution;
+		};
+		25A06C1A1B562D13005B6F8A /* dConnectDeviceAllJoyn_framework */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 25A06C1B1B562D13005B6F8A /* Build configuration list for PBXAggregateTarget "dConnectDeviceAllJoyn_framework" */;
+			buildPhases = (
+				25A06C1E1B562D18005B6F8A /* Prepare Framework */,
+			);
+			dependencies = (
+			);
+			name = dConnectDeviceAllJoyn_framework;
+			productName = dConnectDeviceAllJoyn_framework;
+		};
+		25A06C1F1B563527005B6F8A /* dConnectDeviceAllJoyn_OCLint */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 25A06C201B563528005B6F8A /* Build configuration list for PBXAggregateTarget "dConnectDeviceAllJoyn_OCLint" */;
+			buildPhases = (
+				25A06C231B56352D005B6F8A /* Run OCLint */,
+			);
+			dependencies = (
+			);
+			name = dConnectDeviceAllJoyn_OCLint;
+			productName = dConnectDeviceAllJoyn_OCLint;
+		};
+/* End PBXAggregateTarget section */
+
+/* Begin PBXBuildFile section */
+		2579E9601B69BA99000CA047 /* DPAllJoynMessageConverter.h in Headers */ = {isa = PBXBuildFile; fileRef = 2579E95E1B69BA99000CA047 /* DPAllJoynMessageConverter.h */; };
+		2579E9611B69BA99000CA047 /* DPAllJoynMessageConverter.mm in Sources */ = {isa = PBXBuildFile; fileRef = 2579E95F1B69BA99000CA047 /* DPAllJoynMessageConverter.mm */; };
+		258498A81B609A3F0063552E /* AJNLSFControllerService.h in Headers */ = {isa = PBXBuildFile; fileRef = 258498A01B609A3F0063552E /* AJNLSFControllerService.h */; };
+		258498A91B609A3F0063552E /* AJNLSFControllerService.mm in Sources */ = {isa = PBXBuildFile; fileRef = 258498A11B609A3F0063552E /* AJNLSFControllerService.mm */; };
+		258498AA1B609A3F0063552E /* AJNLSFLamp.h in Headers */ = {isa = PBXBuildFile; fileRef = 258498A21B609A3F0063552E /* AJNLSFLamp.h */; };
+		258498AB1B609A3F0063552E /* AJNLSFLamp.mm in Sources */ = {isa = PBXBuildFile; fileRef = 258498A31B609A3F0063552E /* AJNLSFLamp.mm */; };
+		258498AC1B609A3F0063552E /* LSFControllerService.h in Headers */ = {isa = PBXBuildFile; fileRef = 258498A41B609A3F0063552E /* LSFControllerService.h */; };
+		258498AD1B609A3F0063552E /* LSFControllerService.m in Sources */ = {isa = PBXBuildFile; fileRef = 258498A51B609A3F0063552E /* LSFControllerService.m */; };
+		258498AE1B609A3F0063552E /* LSFLamp.h in Headers */ = {isa = PBXBuildFile; fileRef = 258498A61B609A3F0063552E /* LSFLamp.h */; };
+		258498AF1B609A3F0063552E /* LSFLamp.m in Sources */ = {isa = PBXBuildFile; fileRef = 258498A71B609A3F0063552E /* LSFLamp.m */; };
+		25851BB61B5739B600CB732E /* DPAllJoynServiceInformationProfile.h in Headers */ = {isa = PBXBuildFile; fileRef = 25851BB41B5739B600CB732E /* DPAllJoynServiceInformationProfile.h */; };
+		25851BB71B5739B600CB732E /* DPAllJoynServiceInformationProfile.mm in Sources */ = {isa = PBXBuildFile; fileRef = 25851BB51B5739B600CB732E /* DPAllJoynServiceInformationProfile.mm */; };
+		25851BBA1B573C3100CB732E /* DConnectSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25851BB91B573C3100CB732E /* DConnectSDK.framework */; };
+		25851BBC1B573C9A00CB732E /* DCMDevicePluginSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25851BBB1B573C9A00CB732E /* DCMDevicePluginSDK.framework */; };
+		25851BBD1B57409500CB732E /* Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 25851BBF1B57409500CB732E /* Storyboard.storyboard */; };
+		25851BC61B57455D00CB732E /* DPAllJoynSettingTableViewCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 25851BC41B57455D00CB732E /* DPAllJoynSettingTableViewCell.h */; };
+		25851BC71B57455D00CB732E /* DPAllJoynSettingTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 25851BC51B57455D00CB732E /* DPAllJoynSettingTableViewCell.m */; };
+		25851BCA1B574A9F00CB732E /* DPAllJoynSettingMasterSubTableViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 25851BC81B574A9F00CB732E /* DPAllJoynSettingMasterSubTableViewController.h */; };
+		25851BCB1B574A9F00CB732E /* DPAllJoynSettingMasterSubTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25851BC91B574A9F00CB732E /* DPAllJoynSettingMasterSubTableViewController.m */; };
+		25851BD71B575F2700CB732E /* DPAllJoynSettingDetailLIFXViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 25851BD51B575F2700CB732E /* DPAllJoynSettingDetailLIFXViewController.h */; };
+		25851BD81B575F2700CB732E /* DPAllJoynSettingDetailLIFXViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25851BD61B575F2700CB732E /* DPAllJoynSettingDetailLIFXViewController.m */; };
+		25851BE41B57929100CB732E /* CALayer+StoryboardUserDefinedRuntimeAttributes.h in Headers */ = {isa = PBXBuildFile; fileRef = 25851BE21B57929100CB732E /* CALayer+StoryboardUserDefinedRuntimeAttributes.h */; };
+		25851BE51B57929100CB732E /* CALayer+StoryboardUserDefinedRuntimeAttributes.m in Sources */ = {isa = PBXBuildFile; fileRef = 25851BE31B57929100CB732E /* CALayer+StoryboardUserDefinedRuntimeAttributes.m */; };
+		25851BF11B57C47900CB732E /* LIFX_Logo@2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 25851BF01B57C47900CB732E /* LIFX_Logo@2.jpg */; };
+		25851BF71B57CDC000CB732E /* back-arrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 25851BF61B57CDC000CB732E /* back-arrow@2x.png */; };
+		25851BFA1B57CF3D00CB732E /* Download_on_the_App_Store_Badge_US-UK_135x40@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 25851BF81B57CF3D00CB732E /* Download_on_the_App_Store_Badge_US-UK_135x40@2x.png */; };
+		25851BFB1B57CF3D00CB732E /* Download_on_the_App_Store_JP_135x40@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 25851BF91B57CF3D00CB732E /* Download_on_the_App_Store_JP_135x40@2x.png */; };
+		25856D051B58965E00B1C2DC /* DPAllJoynHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = 25856D031B58965E00B1C2DC /* DPAllJoynHandler.h */; };
+		25856D061B58965E00B1C2DC /* DPAllJoynHandler.mm in Sources */ = {isa = PBXBuildFile; fileRef = 25856D041B58965E00B1C2DC /* DPAllJoynHandler.mm */; };
+		25856D191B59091000B1C2DC /* DPAllJoynServiceEntity.h in Headers */ = {isa = PBXBuildFile; fileRef = 25856D171B59091000B1C2DC /* DPAllJoynServiceEntity.h */; };
+		25856D1A1B59091000B1C2DC /* DPAllJoynServiceEntity.mm in Sources */ = {isa = PBXBuildFile; fileRef = 25856D181B59091000B1C2DC /* DPAllJoynServiceEntity.mm */; };
+		258843C31B5F336A003E5257 /* DPAllJoynSupportCheck.h in Headers */ = {isa = PBXBuildFile; fileRef = 258843C11B5F336A003E5257 /* DPAllJoynSupportCheck.h */; };
+		258843C41B5F336A003E5257 /* DPAllJoynSupportCheck.mm in Sources */ = {isa = PBXBuildFile; fileRef = 258843C21B5F336A003E5257 /* DPAllJoynSupportCheck.mm */; };
+		258843C71B5F3A3F003E5257 /* DPAllJoynConst.h in Headers */ = {isa = PBXBuildFile; fileRef = 258843C51B5F3A3F003E5257 /* DPAllJoynConst.h */; };
+		258843C81B5F3A3F003E5257 /* DPAllJoynConst.mm in Sources */ = {isa = PBXBuildFile; fileRef = 258843C61B5F3A3F003E5257 /* DPAllJoynConst.mm */; };
+		258843CB1B5F43F9003E5257 /* NSArray+Query.h in Headers */ = {isa = PBXBuildFile; fileRef = 258843C91B5F43F9003E5257 /* NSArray+Query.h */; };
+		258843CC1B5F43F9003E5257 /* NSArray+Query.m in Sources */ = {isa = PBXBuildFile; fileRef = 258843CA1B5F43F9003E5257 /* NSArray+Query.m */; };
+		2588A2721B707E3E0015B668 /* DCMLightProfileAlt.m in Sources */ = {isa = PBXBuildFile; fileRef = 2588A2711B707E3E0015B668 /* DCMLightProfileAlt.m */; };
+		2588A2741B707E810015B668 /* DCMLightProfileAlt.h in Headers */ = {isa = PBXBuildFile; fileRef = 2588A2731B707E810015B668 /* DCMLightProfileAlt.h */; };
+		2589F0621B61F32200C7B4C0 /* DPAllJoynLightingResponseCode.h in Headers */ = {isa = PBXBuildFile; fileRef = 2589F0611B61F06300C7B4C0 /* DPAllJoynLightingResponseCode.h */; };
+		258FD3C71B78CF3E00F6EA35 /* libAllJoynFramework_iOS_fix.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 258FD3C61B78CF3E00F6EA35 /* libAllJoynFramework_iOS_fix.a */; };
+		258FD3CA1B78CF4F00F6EA35 /* liballjoyn_about_cpp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 258FD3C81B78CF4F00F6EA35 /* liballjoyn_about_cpp.a */; };
+		258FD3CB1B78CF4F00F6EA35 /* liballjoyn_about_objc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 258FD3C91B78CF4F00F6EA35 /* liballjoyn_about_objc.a */; };
+		258FD3CE1B78CF5A00F6EA35 /* libajrouter.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 258FD3CC1B78CF5A00F6EA35 /* libajrouter.a */; };
+		258FD3CF1B78CF5A00F6EA35 /* liballjoyn.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 258FD3CD1B78CF5A00F6EA35 /* liballjoyn.a */; };
+		25A06C081B562C08005B6F8A /* dConnectDeviceAllJoyn.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25A06BFC1B562C07005B6F8A /* dConnectDeviceAllJoyn.framework */; };
+		25A06C0F1B562C08005B6F8A /* dConnectDeviceAllJoynTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 25A06C0E1B562C08005B6F8A /* dConnectDeviceAllJoynTests.m */; };
+		25A06C311B564742005B6F8A /* DPAllJoynSettingMasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25A06C301B564742005B6F8A /* DPAllJoynSettingMasterViewController.m */; };
+		25A06C761B5667E1005B6F8A /* DPAllJoynDevicePlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 25A06C751B5667E1005B6F8A /* DPAllJoynDevicePlugin.m */; };
+		25A06C781B566AAA005B6F8A /* DPAllJoynServiceDiscoveryProfile.mm in Sources */ = {isa = PBXBuildFile; fileRef = 25A06C771B566AAA005B6F8A /* DPAllJoynServiceDiscoveryProfile.mm */; };
+		25A06C7C1B566AD0005B6F8A /* DPAllJoynSystemProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 25A06C7B1B566AD0005B6F8A /* DPAllJoynSystemProfile.m */; };
+		25A06C7F1B566C86005B6F8A /* DPAllJoynLightProfile.h in Headers */ = {isa = PBXBuildFile; fileRef = 25A06C7D1B566C86005B6F8A /* DPAllJoynLightProfile.h */; };
+		25A06C801B566C86005B6F8A /* DPAllJoynLightProfile.mm in Sources */ = {isa = PBXBuildFile; fileRef = 25A06C7E1B566C86005B6F8A /* DPAllJoynLightProfile.mm */; };
+		25E1A0711B5DE05A00308AFC /* DPAllJoynSynchronizedMutableDictionary.h in Headers */ = {isa = PBXBuildFile; fileRef = 25E1A06F1B5DE05A00308AFC /* DPAllJoynSynchronizedMutableDictionary.h */; };
+		25E1A0721B5DE05A00308AFC /* DPAllJoynSynchronizedMutableDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 25E1A0701B5DE05A00308AFC /* DPAllJoynSynchronizedMutableDictionary.m */; };
+		25F136491B67112600ADD8CB /* DPAllJoynColorUtility.h in Headers */ = {isa = PBXBuildFile; fileRef = 25F136471B67112600ADD8CB /* DPAllJoynColorUtility.h */; };
+		25F1364A1B67112600ADD8CB /* DPAllJoynColorUtility.mm in Sources */ = {isa = PBXBuildFile; fileRef = 25F136481B67112600ADD8CB /* DPAllJoynColorUtility.mm */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		25A06C091B562C08005B6F8A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 25A06BF31B562C07005B6F8A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 25A06BFB1B562C07005B6F8A;
+			remoteInfo = dConnectDeviceAllJoyn;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		2579E95E1B69BA99000CA047 /* DPAllJoynMessageConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPAllJoynMessageConverter.h; sourceTree = "<group>"; };
+		2579E95F1B69BA99000CA047 /* DPAllJoynMessageConverter.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DPAllJoynMessageConverter.mm; sourceTree = "<group>"; };
+		258498A01B609A3F0063552E /* AJNLSFControllerService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AJNLSFControllerService.h; sourceTree = "<group>"; };
+		258498A11B609A3F0063552E /* AJNLSFControllerService.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AJNLSFControllerService.mm; sourceTree = "<group>"; };
+		258498A21B609A3F0063552E /* AJNLSFLamp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AJNLSFLamp.h; sourceTree = "<group>"; };
+		258498A31B609A3F0063552E /* AJNLSFLamp.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AJNLSFLamp.mm; sourceTree = "<group>"; };
+		258498A41B609A3F0063552E /* LSFControllerService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LSFControllerService.h; sourceTree = "<group>"; };
+		258498A51B609A3F0063552E /* LSFControllerService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LSFControllerService.m; sourceTree = "<group>"; };
+		258498A61B609A3F0063552E /* LSFLamp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LSFLamp.h; sourceTree = "<group>"; };
+		258498A71B609A3F0063552E /* LSFLamp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LSFLamp.m; sourceTree = "<group>"; };
+		25851BB41B5739B600CB732E /* DPAllJoynServiceInformationProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPAllJoynServiceInformationProfile.h; sourceTree = "<group>"; };
+		25851BB51B5739B600CB732E /* DPAllJoynServiceInformationProfile.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DPAllJoynServiceInformationProfile.mm; sourceTree = "<group>"; };
+		25851BB91B573C3100CB732E /* DConnectSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DConnectSDK.framework; path = ../../dConnectSDK/dConnectSDKForIOS/bin/DConnectSDK.framework; sourceTree = "<group>"; };
+		25851BBB1B573C9A00CB732E /* DCMDevicePluginSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DCMDevicePluginSDK.framework; path = ../DCMDevicePluginSDK/bin/DCMDevicePluginSDK.framework; sourceTree = "<group>"; };
+		25851BC11B5740B500CB732E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Storyboard.storyboard; sourceTree = "<group>"; };
+		25851BC41B57455D00CB732E /* DPAllJoynSettingTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPAllJoynSettingTableViewCell.h; sourceTree = "<group>"; };
+		25851BC51B57455D00CB732E /* DPAllJoynSettingTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPAllJoynSettingTableViewCell.m; sourceTree = "<group>"; };
+		25851BC81B574A9F00CB732E /* DPAllJoynSettingMasterSubTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPAllJoynSettingMasterSubTableViewController.h; sourceTree = "<group>"; };
+		25851BC91B574A9F00CB732E /* DPAllJoynSettingMasterSubTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPAllJoynSettingMasterSubTableViewController.m; sourceTree = "<group>"; };
+		25851BD51B575F2700CB732E /* DPAllJoynSettingDetailLIFXViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DPAllJoynSettingDetailLIFXViewController.h; path = Tutorials/DPAllJoynSettingDetailLIFXViewController.h; sourceTree = "<group>"; };
+		25851BD61B575F2700CB732E /* DPAllJoynSettingDetailLIFXViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DPAllJoynSettingDetailLIFXViewController.m; path = Tutorials/DPAllJoynSettingDetailLIFXViewController.m; sourceTree = "<group>"; };
+		25851BE21B57929100CB732E /* CALayer+StoryboardUserDefinedRuntimeAttributes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CALayer+StoryboardUserDefinedRuntimeAttributes.h"; sourceTree = "<group>"; };
+		25851BE31B57929100CB732E /* CALayer+StoryboardUserDefinedRuntimeAttributes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CALayer+StoryboardUserDefinedRuntimeAttributes.m"; sourceTree = "<group>"; };
+		25851BED1B579DD000CB732E /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/Storyboard.storyboard; sourceTree = "<group>"; };
+		25851BF01B57C47900CB732E /* LIFX_Logo@2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "LIFX_Logo@2.jpg"; sourceTree = "<group>"; };
+		25851BF61B57CDC000CB732E /* back-arrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "back-arrow@2x.png"; sourceTree = "<group>"; };
+		25851BF81B57CF3D00CB732E /* Download_on_the_App_Store_Badge_US-UK_135x40@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Download_on_the_App_Store_Badge_US-UK_135x40@2x.png"; sourceTree = "<group>"; };
+		25851BF91B57CF3D00CB732E /* Download_on_the_App_Store_JP_135x40@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Download_on_the_App_Store_JP_135x40@2x.png"; sourceTree = "<group>"; };
+		25856D031B58965E00B1C2DC /* DPAllJoynHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPAllJoynHandler.h; sourceTree = "<group>"; };
+		25856D041B58965E00B1C2DC /* DPAllJoynHandler.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DPAllJoynHandler.mm; sourceTree = "<group>"; };
+		25856D171B59091000B1C2DC /* DPAllJoynServiceEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPAllJoynServiceEntity.h; sourceTree = "<group>"; };
+		25856D181B59091000B1C2DC /* DPAllJoynServiceEntity.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DPAllJoynServiceEntity.mm; sourceTree = "<group>"; };
+		258843C11B5F336A003E5257 /* DPAllJoynSupportCheck.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPAllJoynSupportCheck.h; sourceTree = "<group>"; };
+		258843C21B5F336A003E5257 /* DPAllJoynSupportCheck.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DPAllJoynSupportCheck.mm; sourceTree = "<group>"; };
+		258843C51B5F3A3F003E5257 /* DPAllJoynConst.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPAllJoynConst.h; sourceTree = "<group>"; };
+		258843C61B5F3A3F003E5257 /* DPAllJoynConst.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DPAllJoynConst.mm; sourceTree = "<group>"; };
+		258843C91B5F43F9003E5257 /* NSArray+Query.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+Query.h"; sourceTree = "<group>"; };
+		258843CA1B5F43F9003E5257 /* NSArray+Query.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+Query.m"; sourceTree = "<group>"; };
+		258843CE1B5F942D003E5257 /* LSFLamp.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = LSFLamp.xml; sourceTree = "<group>"; };
+		258843D01B5F95B9003E5257 /* LSFControllerService.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = LSFControllerService.xml; sourceTree = "<group>"; };
+		2588A2711B707E3E0015B668 /* DCMLightProfileAlt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DCMLightProfileAlt.m; sourceTree = "<group>"; };
+		2588A2731B707E810015B668 /* DCMLightProfileAlt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DCMLightProfileAlt.h; sourceTree = "<group>"; };
+		2589F0611B61F06300C7B4C0 /* DPAllJoynLightingResponseCode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DPAllJoynLightingResponseCode.h; sourceTree = "<group>"; };
+		258FD3C61B78CF3E00F6EA35 /* libAllJoynFramework_iOS_fix.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libAllJoynFramework_iOS_fix.a; path = "deps/AllJoynIOS_libc++/Release/libAllJoynFramework_iOS_fix.a"; sourceTree = "<group>"; };
+		258FD3C81B78CF4F00F6EA35 /* liballjoyn_about_cpp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = liballjoyn_about_cpp.a; path = deps/AllJoyn/darwin/arm/iphoneos/release/dist/about/lib/liballjoyn_about_cpp.a; sourceTree = "<group>"; };
+		258FD3C91B78CF4F00F6EA35 /* liballjoyn_about_objc.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = liballjoyn_about_objc.a; path = deps/AllJoyn/darwin/arm/iphoneos/release/dist/about/lib/liballjoyn_about_objc.a; sourceTree = "<group>"; };
+		258FD3CC1B78CF5A00F6EA35 /* libajrouter.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libajrouter.a; path = deps/AllJoyn/darwin/arm/iphoneos/release/dist/cpp/lib/libajrouter.a; sourceTree = "<group>"; };
+		258FD3CD1B78CF5A00F6EA35 /* liballjoyn.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = liballjoyn.a; path = deps/AllJoyn/darwin/arm/iphoneos/release/dist/cpp/lib/liballjoyn.a; sourceTree = "<group>"; };
+		25A06BFC1B562C07005B6F8A /* dConnectDeviceAllJoyn.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = dConnectDeviceAllJoyn.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		25A06C001B562C07005B6F8A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		25A06C071B562C08005B6F8A /* dConnectDeviceAllJoynTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = dConnectDeviceAllJoynTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		25A06C0D1B562C08005B6F8A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		25A06C0E1B562C08005B6F8A /* dConnectDeviceAllJoynTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = dConnectDeviceAllJoynTests.m; sourceTree = "<group>"; };
+		25A06C281B563C21005B6F8A /* dConnectDeviceAllJoyn-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "dConnectDeviceAllJoyn-Prefix.pch"; sourceTree = "<group>"; };
+		25A06C2E1B564704005B6F8A /* DPAllJoynSettingMasterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPAllJoynSettingMasterViewController.h; sourceTree = "<group>"; };
+		25A06C301B564742005B6F8A /* DPAllJoynSettingMasterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPAllJoynSettingMasterViewController.m; sourceTree = "<group>"; };
+		25A06C6A1B565ED2005B6F8A /* dConnectDeviceAllJoyn_resources.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = dConnectDeviceAllJoyn_resources.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		25A06C6D1B565ED2005B6F8A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		25A06C741B5667AA005B6F8A /* DPAllJoynDevicePlugin.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DPAllJoynDevicePlugin.h; sourceTree = "<group>"; };
+		25A06C751B5667E1005B6F8A /* DPAllJoynDevicePlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPAllJoynDevicePlugin.m; sourceTree = "<group>"; };
+		25A06C771B566AAA005B6F8A /* DPAllJoynServiceDiscoveryProfile.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DPAllJoynServiceDiscoveryProfile.mm; sourceTree = "<group>"; };
+		25A06C791B566AB3005B6F8A /* DPAllJoynServiceDiscoveryProfile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DPAllJoynServiceDiscoveryProfile.h; sourceTree = "<group>"; };
+		25A06C7A1B566AC6005B6F8A /* DPAllJoynSystemProfile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DPAllJoynSystemProfile.h; sourceTree = "<group>"; };
+		25A06C7B1B566AD0005B6F8A /* DPAllJoynSystemProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPAllJoynSystemProfile.m; sourceTree = "<group>"; };
+		25A06C7D1B566C86005B6F8A /* DPAllJoynLightProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPAllJoynLightProfile.h; sourceTree = "<group>"; };
+		25A06C7E1B566C86005B6F8A /* DPAllJoynLightProfile.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DPAllJoynLightProfile.mm; sourceTree = "<group>"; };
+		25E1A06F1B5DE05A00308AFC /* DPAllJoynSynchronizedMutableDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPAllJoynSynchronizedMutableDictionary.h; sourceTree = "<group>"; };
+		25E1A0701B5DE05A00308AFC /* DPAllJoynSynchronizedMutableDictionary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPAllJoynSynchronizedMutableDictionary.m; sourceTree = "<group>"; };
+		25F136471B67112600ADD8CB /* DPAllJoynColorUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPAllJoynColorUtility.h; sourceTree = "<group>"; };
+		25F136481B67112600ADD8CB /* DPAllJoynColorUtility.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DPAllJoynColorUtility.mm; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		25A06BF81B562C07005B6F8A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				25851BBC1B573C9A00CB732E /* DCMDevicePluginSDK.framework in Frameworks */,
+				25851BBA1B573C3100CB732E /* DConnectSDK.framework in Frameworks */,
+				258FD3C71B78CF3E00F6EA35 /* libAllJoynFramework_iOS_fix.a in Frameworks */,
+				258FD3CA1B78CF4F00F6EA35 /* liballjoyn_about_cpp.a in Frameworks */,
+				258FD3CB1B78CF4F00F6EA35 /* liballjoyn_about_objc.a in Frameworks */,
+				258FD3CE1B78CF5A00F6EA35 /* libajrouter.a in Frameworks */,
+				258FD3CF1B78CF5A00F6EA35 /* liballjoyn.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		25A06C041B562C08005B6F8A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				25A06C081B562C08005B6F8A /* dConnectDeviceAllJoyn.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		25A06C671B565ED2005B6F8A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		2584989F1B609A2F0063552E /* AJInterfaces */ = {
+			isa = PBXGroup;
+			children = (
+				258498A01B609A3F0063552E /* AJNLSFControllerService.h */,
+				258498A11B609A3F0063552E /* AJNLSFControllerService.mm */,
+				258498A21B609A3F0063552E /* AJNLSFLamp.h */,
+				258498A31B609A3F0063552E /* AJNLSFLamp.mm */,
+				2589F0611B61F06300C7B4C0 /* DPAllJoynLightingResponseCode.h */,
+				258498A41B609A3F0063552E /* LSFControllerService.h */,
+				258498A51B609A3F0063552E /* LSFControllerService.m */,
+				258498A61B609A3F0063552E /* LSFLamp.h */,
+				258498A71B609A3F0063552E /* LSFLamp.m */,
+			);
+			path = AJInterfaces;
+			sourceTree = "<group>";
+		};
+		25851BB81B573BFC00CB732E /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				258FD3CC1B78CF5A00F6EA35 /* libajrouter.a */,
+				258FD3CD1B78CF5A00F6EA35 /* liballjoyn.a */,
+				258FD3C81B78CF4F00F6EA35 /* liballjoyn_about_cpp.a */,
+				258FD3C91B78CF4F00F6EA35 /* liballjoyn_about_objc.a */,
+				258FD3C61B78CF3E00F6EA35 /* libAllJoynFramework_iOS_fix.a */,
+				25851BBB1B573C9A00CB732E /* DCMDevicePluginSDK.framework */,
+				25851BB91B573C3100CB732E /* DConnectSDK.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		25851BD41B575EE200CB732E /* Tutorials */ = {
+			isa = PBXGroup;
+			children = (
+				25851BD51B575F2700CB732E /* DPAllJoynSettingDetailLIFXViewController.h */,
+				25851BD61B575F2700CB732E /* DPAllJoynSettingDetailLIFXViewController.m */,
+			);
+			name = Tutorials;
+			sourceTree = "<group>";
+		};
+		25851BE01B57923500CB732E /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				25851BE21B57929100CB732E /* CALayer+StoryboardUserDefinedRuntimeAttributes.h */,
+				25851BE31B57929100CB732E /* CALayer+StoryboardUserDefinedRuntimeAttributes.m */,
+				25E1A06F1B5DE05A00308AFC /* DPAllJoynSynchronizedMutableDictionary.h */,
+				25E1A0701B5DE05A00308AFC /* DPAllJoynSynchronizedMutableDictionary.m */,
+				258843C91B5F43F9003E5257 /* NSArray+Query.h */,
+				258843CA1B5F43F9003E5257 /* NSArray+Query.m */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		258843CD1B5F942D003E5257 /* AllJoynIntrospectionXML */ = {
+			isa = PBXGroup;
+			children = (
+				258843D01B5F95B9003E5257 /* LSFControllerService.xml */,
+				258843CE1B5F942D003E5257 /* LSFLamp.xml */,
+			);
+			path = AllJoynIntrospectionXML;
+			sourceTree = "<group>";
+		};
+		25A06BF21B562C07005B6F8A = {
+			isa = PBXGroup;
+			children = (
+				25A06BFE1B562C07005B6F8A /* dConnectDeviceAllJoyn */,
+				25A06C0B1B562C08005B6F8A /* dConnectDeviceAllJoynTests */,
+				25A06C6B1B565ED2005B6F8A /* dConnectDeviceAllJoyn_resources */,
+				25851BB81B573BFC00CB732E /* Frameworks */,
+				25A06BFD1B562C07005B6F8A /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		25A06BFD1B562C07005B6F8A /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				25A06BFC1B562C07005B6F8A /* dConnectDeviceAllJoyn.framework */,
+				25A06C071B562C08005B6F8A /* dConnectDeviceAllJoynTests.xctest */,
+				25A06C6A1B565ED2005B6F8A /* dConnectDeviceAllJoyn_resources.bundle */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		25A06BFE1B562C07005B6F8A /* dConnectDeviceAllJoyn */ = {
+			isa = PBXGroup;
+			children = (
+				25A06C251B5637D2005B6F8A /* Headers */,
+				25A06C241B5637CB005B6F8A /* Sources */,
+				25A06C261B5637DB005B6F8A /* Resources */,
+				25A06BFF1B562C07005B6F8A /* Supporting Files */,
+			);
+			path = dConnectDeviceAllJoyn;
+			sourceTree = "<group>";
+		};
+		25A06BFF1B562C07005B6F8A /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				25A06C001B562C07005B6F8A /* Info.plist */,
+				25A06C281B563C21005B6F8A /* dConnectDeviceAllJoyn-Prefix.pch */,
+			);
+			path = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		25A06C0B1B562C08005B6F8A /* dConnectDeviceAllJoynTests */ = {
+			isa = PBXGroup;
+			children = (
+				25A06C271B5637F7005B6F8A /* Sources */,
+				25A06C0C1B562C08005B6F8A /* Supporting Files */,
+			);
+			path = dConnectDeviceAllJoynTests;
+			sourceTree = "<group>";
+		};
+		25A06C0C1B562C08005B6F8A /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				25A06C0D1B562C08005B6F8A /* Info.plist */,
+			);
+			path = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		25A06C241B5637CB005B6F8A /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				2584989F1B609A2F0063552E /* AJInterfaces */,
+				25A06C731B56675B005B6F8A /* Profiles */,
+				25851BE01B57923500CB732E /* Utilities */,
+				25A06C2D1B564698005B6F8A /* Views */,
+				25F136471B67112600ADD8CB /* DPAllJoynColorUtility.h */,
+				25F136481B67112600ADD8CB /* DPAllJoynColorUtility.mm */,
+				258843C51B5F3A3F003E5257 /* DPAllJoynConst.h */,
+				258843C61B5F3A3F003E5257 /* DPAllJoynConst.mm */,
+				25A06C741B5667AA005B6F8A /* DPAllJoynDevicePlugin.h */,
+				25A06C751B5667E1005B6F8A /* DPAllJoynDevicePlugin.m */,
+				25856D031B58965E00B1C2DC /* DPAllJoynHandler.h */,
+				25856D041B58965E00B1C2DC /* DPAllJoynHandler.mm */,
+				2579E95E1B69BA99000CA047 /* DPAllJoynMessageConverter.h */,
+				2579E95F1B69BA99000CA047 /* DPAllJoynMessageConverter.mm */,
+				25856D171B59091000B1C2DC /* DPAllJoynServiceEntity.h */,
+				25856D181B59091000B1C2DC /* DPAllJoynServiceEntity.mm */,
+				258843C11B5F336A003E5257 /* DPAllJoynSupportCheck.h */,
+				258843C21B5F336A003E5257 /* DPAllJoynSupportCheck.mm */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
+		25A06C251B5637D2005B6F8A /* Headers */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Headers;
+			sourceTree = "<group>";
+		};
+		25A06C261B5637DB005B6F8A /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				258843CD1B5F942D003E5257 /* AllJoynIntrospectionXML */,
+				25851BF61B57CDC000CB732E /* back-arrow@2x.png */,
+				25851BBF1B57409500CB732E /* Storyboard.storyboard */,
+				25851BF81B57CF3D00CB732E /* Download_on_the_App_Store_Badge_US-UK_135x40@2x.png */,
+				25851BF91B57CF3D00CB732E /* Download_on_the_App_Store_JP_135x40@2x.png */,
+				25851BF01B57C47900CB732E /* LIFX_Logo@2.jpg */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		25A06C271B5637F7005B6F8A /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				25A06C0E1B562C08005B6F8A /* dConnectDeviceAllJoynTests.m */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
+		25A06C2D1B564698005B6F8A /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				25851BD41B575EE200CB732E /* Tutorials */,
+				25851BC81B574A9F00CB732E /* DPAllJoynSettingMasterSubTableViewController.h */,
+				25851BC91B574A9F00CB732E /* DPAllJoynSettingMasterSubTableViewController.m */,
+				25A06C2E1B564704005B6F8A /* DPAllJoynSettingMasterViewController.h */,
+				25A06C301B564742005B6F8A /* DPAllJoynSettingMasterViewController.m */,
+				25851BC41B57455D00CB732E /* DPAllJoynSettingTableViewCell.h */,
+				25851BC51B57455D00CB732E /* DPAllJoynSettingTableViewCell.m */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		25A06C6B1B565ED2005B6F8A /* dConnectDeviceAllJoyn_resources */ = {
+			isa = PBXGroup;
+			children = (
+				25A06C6C1B565ED2005B6F8A /* Supporting Files */,
+			);
+			path = dConnectDeviceAllJoyn_resources;
+			sourceTree = "<group>";
+		};
+		25A06C6C1B565ED2005B6F8A /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				25A06C6D1B565ED2005B6F8A /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		25A06C731B56675B005B6F8A /* Profiles */ = {
+			isa = PBXGroup;
+			children = (
+				2588A2731B707E810015B668 /* DCMLightProfileAlt.h */,
+				2588A2711B707E3E0015B668 /* DCMLightProfileAlt.m */,
+				25A06C7D1B566C86005B6F8A /* DPAllJoynLightProfile.h */,
+				25A06C7E1B566C86005B6F8A /* DPAllJoynLightProfile.mm */,
+				25A06C791B566AB3005B6F8A /* DPAllJoynServiceDiscoveryProfile.h */,
+				25A06C771B566AAA005B6F8A /* DPAllJoynServiceDiscoveryProfile.mm */,
+				25851BB41B5739B600CB732E /* DPAllJoynServiceInformationProfile.h */,
+				25851BB51B5739B600CB732E /* DPAllJoynServiceInformationProfile.mm */,
+				25A06C7A1B566AC6005B6F8A /* DPAllJoynSystemProfile.h */,
+				25A06C7B1B566AD0005B6F8A /* DPAllJoynSystemProfile.m */,
+			);
+			path = Profiles;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		25A06BF91B562C07005B6F8A /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2588A2741B707E810015B668 /* DCMLightProfileAlt.h in Headers */,
+				2589F0621B61F32200C7B4C0 /* DPAllJoynLightingResponseCode.h in Headers */,
+				25851BCA1B574A9F00CB732E /* DPAllJoynSettingMasterSubTableViewController.h in Headers */,
+				25851BD71B575F2700CB732E /* DPAllJoynSettingDetailLIFXViewController.h in Headers */,
+				258498AE1B609A3F0063552E /* LSFLamp.h in Headers */,
+				258843C71B5F3A3F003E5257 /* DPAllJoynConst.h in Headers */,
+				25851BE41B57929100CB732E /* CALayer+StoryboardUserDefinedRuntimeAttributes.h in Headers */,
+				258843C31B5F336A003E5257 /* DPAllJoynSupportCheck.h in Headers */,
+				258843CB1B5F43F9003E5257 /* NSArray+Query.h in Headers */,
+				258498AC1B609A3F0063552E /* LSFControllerService.h in Headers */,
+				2579E9601B69BA99000CA047 /* DPAllJoynMessageConverter.h in Headers */,
+				25E1A0711B5DE05A00308AFC /* DPAllJoynSynchronizedMutableDictionary.h in Headers */,
+				25856D051B58965E00B1C2DC /* DPAllJoynHandler.h in Headers */,
+				25856D191B59091000B1C2DC /* DPAllJoynServiceEntity.h in Headers */,
+				25A06C7F1B566C86005B6F8A /* DPAllJoynLightProfile.h in Headers */,
+				25F136491B67112600ADD8CB /* DPAllJoynColorUtility.h in Headers */,
+				25851BB61B5739B600CB732E /* DPAllJoynServiceInformationProfile.h in Headers */,
+				25851BC61B57455D00CB732E /* DPAllJoynSettingTableViewCell.h in Headers */,
+				258498AA1B609A3F0063552E /* AJNLSFLamp.h in Headers */,
+				258498A81B609A3F0063552E /* AJNLSFControllerService.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		25A06BFB1B562C07005B6F8A /* dConnectDeviceAllJoyn */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 25A06C121B562C08005B6F8A /* Build configuration list for PBXNativeTarget "dConnectDeviceAllJoyn" */;
+			buildPhases = (
+				25A06BF71B562C07005B6F8A /* Sources */,
+				25A06BF81B562C07005B6F8A /* Frameworks */,
+				25A06BF91B562C07005B6F8A /* Headers */,
+				25A06BFA1B562C07005B6F8A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = dConnectDeviceAllJoyn;
+			productName = dConnectDeviceAllJoyn;
+			productReference = 25A06BFC1B562C07005B6F8A /* dConnectDeviceAllJoyn.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		25A06C061B562C08005B6F8A /* dConnectDeviceAllJoynTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 25A06C151B562C08005B6F8A /* Build configuration list for PBXNativeTarget "dConnectDeviceAllJoynTests" */;
+			buildPhases = (
+				25A06C031B562C08005B6F8A /* Sources */,
+				25A06C041B562C08005B6F8A /* Frameworks */,
+				25A06C051B562C08005B6F8A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				25A06C0A1B562C08005B6F8A /* PBXTargetDependency */,
+			);
+			name = dConnectDeviceAllJoynTests;
+			productName = dConnectDeviceAllJoynTests;
+			productReference = 25A06C071B562C08005B6F8A /* dConnectDeviceAllJoynTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		25A06C691B565ED2005B6F8A /* dConnectDeviceAllJoyn_resources */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 25A06C701B565ED2005B6F8A /* Build configuration list for PBXNativeTarget "dConnectDeviceAllJoyn_resources" */;
+			buildPhases = (
+				25A06C661B565ED2005B6F8A /* Sources */,
+				25A06C671B565ED2005B6F8A /* Frameworks */,
+				25A06C681B565ED2005B6F8A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = dConnectDeviceAllJoyn_resources;
+			productName = dConnectDeviceAllJoyn_resources;
+			productReference = 25A06C6A1B565ED2005B6F8A /* dConnectDeviceAllJoyn_resources.bundle */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		25A06BF31B562C07005B6F8A /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0640;
+				ORGANIZATIONNAME = "NTT DOCOMO, INC.";
+				TargetAttributes = {
+					2584989A1B6088EC0063552E = {
+						CreatedOnToolsVersion = 6.4;
+					};
+					2586CC1D1B749F0100E260FD = {
+						CreatedOnToolsVersion = 6.4;
+					};
+					25A06BFB1B562C07005B6F8A = {
+						CreatedOnToolsVersion = 6.4;
+					};
+					25A06C061B562C08005B6F8A = {
+						CreatedOnToolsVersion = 6.4;
+					};
+					25A06C1A1B562D13005B6F8A = {
+						CreatedOnToolsVersion = 6.4;
+					};
+					25A06C1F1B563527005B6F8A = {
+						CreatedOnToolsVersion = 6.4;
+					};
+					25A06C691B565ED2005B6F8A = {
+						CreatedOnToolsVersion = 6.4;
+					};
+				};
+			};
+			buildConfigurationList = 25A06BF61B562C07005B6F8A /* Build configuration list for PBXProject "dConnectDeviceAllJoyn" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 25A06BF21B562C07005B6F8A;
+			productRefGroup = 25A06BFD1B562C07005B6F8A /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				25A06BFB1B562C07005B6F8A /* dConnectDeviceAllJoyn */,
+				25A06C061B562C08005B6F8A /* dConnectDeviceAllJoynTests */,
+				25A06C1A1B562D13005B6F8A /* dConnectDeviceAllJoyn_framework */,
+				25A06C691B565ED2005B6F8A /* dConnectDeviceAllJoyn_resources */,
+				25A06C1F1B563527005B6F8A /* dConnectDeviceAllJoyn_OCLint */,
+				2584989A1B6088EC0063552E /* dConnectDeviceAllJoyn_CodeGeneration */,
+				2586CC1D1B749F0100E260FD /* dConnectDeviceAllJoyn_DependencyResolution */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		25A06BFA1B562C07005B6F8A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		25A06C051B562C08005B6F8A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		25A06C681B565ED2005B6F8A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				25851BFB1B57CF3D00CB732E /* Download_on_the_App_Store_JP_135x40@2x.png in Resources */,
+				25851BF71B57CDC000CB732E /* back-arrow@2x.png in Resources */,
+				25851BF11B57C47900CB732E /* LIFX_Logo@2.jpg in Resources */,
+				25851BFA1B57CF3D00CB732E /* Download_on_the_App_Store_Badge_US-UK_135x40@2x.png in Resources */,
+				25851BBD1B57409500CB732E /* Storyboard.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		2584989E1B6089000063552E /* Generate boilerplate code for AllJoyn I/Fs */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Generate boilerplate code for AllJoyn I/Fs";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/bash;
+			shellScript = "GENERATOR=${PROJECT_DIR}/tools/AllJoynCodeGenerator/AllJoynCodeGenerator\nXML_DIR_PATH=${PROJECT_DIR}/dConnectDeviceAllJoyn/Resources/AllJoynIntrospectionXML\ngenerate() {\n    local baseName=$(basename \"$1\")\n    baseName=\"${baseName%.xml}\"\n    ${GENERATOR} $1 $baseName\n}\n\nfor f in $(ls ${XML_DIR_PATH}/*.xml); do\n    generate $f\ndone\n# Done. Boilerplate files (.h, .m, .mm) should be generated under Resources directory.";
+		};
+		2586CC211B749F0400E260FD /* Resolve dependencies by CocoaPods */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Resolve dependencies by CocoaPods";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "export PATH=/usr/local/bin:$PATH\n\ncd ${PROJECT_DIR}/deps/CocoaPods\npod install --no-integrate";
+		};
+		25A06C1E1B562D18005B6F8A /* Prepare Framework */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Prepare Framework";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Environment variables\nFRAMEWORK_NAME=${PROJECT_NAME}\nFRAMEWORK_VERSION=A\nFRAMEWORK_VERSION_NUMBER=1.0\nCONFIGURATION=\"Release\"\nFRAMEWORK_BUILD_PATH=\"${SRCROOT}/build/${CONFIGURATION}-framework\"\nFRAMEWORK_DIR=\"${FRAMEWORK_BUILD_PATH}/${FRAMEWORK_NAME}.framework\"\n\n# Clean directories\nrm -rf \"${FRAMEWORK_BUILD_PATH}\"\nmkdir -p \"${FRAMEWORK_BUILD_PATH}\"\n\n# Build frameworks for simulator and iOS device.\n# A target to build a framework *must* have the name ${PROJECT_NAME}.\nxcodebuild -project ${PROJECT_NAME}.xcodeproj -sdk iphonesimulator -target ${PROJECT_NAME} -configuration ${CONFIGURATION} clean build\nxcodebuild -project ${PROJECT_NAME}.xcodeproj -sdk iphoneos -target ${PROJECT_NAME} -configuration ${CONFIGURATION} clean build\n# A target to build a bundle *must* have the name ${PROJECT_NAME}_resources. This target is optional.\n#xcodebuild -project ${PROJECT_NAME}.xcodeproj -sdk iphonesimulator -target ${PROJECT_NAME}_resources -configuration ${CONFIGURATION} clean build || true\nxcodebuild -project ${PROJECT_NAME}.xcodeproj -sdk iphoneos -target ${PROJECT_NAME}_resources -configuration ${CONFIGURATION} clean build || true\n\n# Create a \"fat\" framework, and strip internal symbols from it\ncp -r \"${SRCROOT}/build/${CONFIGURATION}-iphoneos/${FRAMEWORK_NAME}.framework\" \"${FRAMEWORK_DIR}\"\nlipo \"${SRCROOT}/build/${CONFIGURATION}-iphoneos/${FRAMEWORK_NAME}.framework/${FRAMEWORK_NAME}\" \"${SRCROOT}/build/${CONFIGURATION}-iphonesimulator/${FRAMEWORK_NAME}.framework/${FRAMEWORK_NAME}\" -create -output \"${FRAMEWORK_DIR}/${FRAMEWORK_NAME}\"\n#strip -x \"${STATICLIB_BUILD_PATH}/lib${FRAMEWORK_NAME}.a\"\n\n# Copy binaries to bin folder\ncd \"${SRCROOT}/bin\"\nls | grep -v -E '.gitignore$' | xargs rm -rf\ncd \"${SRCROOT}\"\ncp -r \"${FRAMEWORK_DIR}\" bin\ncp -r build/${CONFIGURATION}-resources/${PROJECT_NAME}_resources.bundle bin";
+		};
+		25A06C231B56352D005B6F8A /* Run OCLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 12;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Run OCLint";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "XCTOOL=/usr/local\nexport PATH=$XCTOOL/bin:$PATH\nOCLINT_HOME=${HOME}/bin/oclint-0.8.1\nexport PATH=$OCLINT_HOME/bin:$PATH\n\ncd ${SRCROOT}\nxctool -project ${PROJECT}.xcodeproj -scheme ${PROJECT} -reporter json-compilation-database:compile_commands.json clean\nxctool -project ${PROJECT}.xcodeproj -scheme ${PROJECT} -reporter json-compilation-database:compile_commands.json build\n\noclint-json-compilation-database oclint_args \"-disable-rule=UnusedMethodParameter -disable-rule=InvertedLogic -disable-rule=DoubleNegative -disable-rule=MultipleUnaryOperator -disable-rule=MustOverrideHashWithIsEqual -disable-rule=BitwiseOperatorInConditional -disable-rule=IvarAssignmentOutsideAccessorsOrInit -disable-rule=SwitchStatementsDon\\'TNeedDefaultWhenFullyCovered -rc LONG_LINE=120 -rc MAXIMUM_IF_LENGTH=50 -rc NCSS_METHOD=50 -rc LONG_METHOD=500 -rc LONG_CLASS=2000 -rc NCSS_METHOD=100 -rc LONG_VARIABLE_NAME=100 -rc CYCLOMATIC_COMPLEXITY=100 -rc NPATH_COMPLEXITY=5000 -rc NESTED_BLOCK_DEPTH=10 -rc TOO_MANY_METHODS=100\" | sed 's/\\(.*\\.\\m\\{1,2\\}:[0-9]*:[0-9]*:\\)/\\1 warning:/'";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		25A06BF71B562C07005B6F8A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				25A06C781B566AAA005B6F8A /* DPAllJoynServiceDiscoveryProfile.mm in Sources */,
+				25851BCB1B574A9F00CB732E /* DPAllJoynSettingMasterSubTableViewController.m in Sources */,
+				258843CC1B5F43F9003E5257 /* NSArray+Query.m in Sources */,
+				25F1364A1B67112600ADD8CB /* DPAllJoynColorUtility.mm in Sources */,
+				25A06C7C1B566AD0005B6F8A /* DPAllJoynSystemProfile.m in Sources */,
+				25A06C761B5667E1005B6F8A /* DPAllJoynDevicePlugin.m in Sources */,
+				25851BC71B57455D00CB732E /* DPAllJoynSettingTableViewCell.m in Sources */,
+				25A06C311B564742005B6F8A /* DPAllJoynSettingMasterViewController.m in Sources */,
+				25A06C801B566C86005B6F8A /* DPAllJoynLightProfile.mm in Sources */,
+				25E1A0721B5DE05A00308AFC /* DPAllJoynSynchronizedMutableDictionary.m in Sources */,
+				25856D061B58965E00B1C2DC /* DPAllJoynHandler.mm in Sources */,
+				25856D1A1B59091000B1C2DC /* DPAllJoynServiceEntity.mm in Sources */,
+				2588A2721B707E3E0015B668 /* DCMLightProfileAlt.m in Sources */,
+				258498A91B609A3F0063552E /* AJNLSFControllerService.mm in Sources */,
+				258498AB1B609A3F0063552E /* AJNLSFLamp.mm in Sources */,
+				25851BD81B575F2700CB732E /* DPAllJoynSettingDetailLIFXViewController.m in Sources */,
+				25851BB71B5739B600CB732E /* DPAllJoynServiceInformationProfile.mm in Sources */,
+				258843C81B5F3A3F003E5257 /* DPAllJoynConst.mm in Sources */,
+				258843C41B5F336A003E5257 /* DPAllJoynSupportCheck.mm in Sources */,
+				25851BE51B57929100CB732E /* CALayer+StoryboardUserDefinedRuntimeAttributes.m in Sources */,
+				258498AD1B609A3F0063552E /* LSFControllerService.m in Sources */,
+				2579E9611B69BA99000CA047 /* DPAllJoynMessageConverter.mm in Sources */,
+				258498AF1B609A3F0063552E /* LSFLamp.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		25A06C031B562C08005B6F8A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				25A06C0F1B562C08005B6F8A /* dConnectDeviceAllJoynTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		25A06C661B565ED2005B6F8A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		25A06C0A1B562C08005B6F8A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 25A06BFB1B562C07005B6F8A /* dConnectDeviceAllJoyn */;
+			targetProxy = 25A06C091B562C08005B6F8A /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		25851BBF1B57409500CB732E /* Storyboard.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				25851BC11B5740B500CB732E /* Base */,
+				25851BED1B579DD000CB732E /* en */,
+			);
+			name = Storyboard.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		2584989C1B6088EC0063552E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		2584989D1B6088EC0063552E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		2586CC1E1B749F0100E260FD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		2586CC1F1B749F0100E260FD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		25A06C101B562C08005B6F8A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CONFIGURATION_BUILD_DIR = "$(SRCROOT)/build/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
+				CONFIGURATION_TEMP_DIR = "$(SRCROOT)/build/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/../../dConnectSDK/dConnectSDKForIOS/bin",
+					"$(PROJECT_DIR)/../DCMDevicePluginSDK/bin",
+				);
+				GCC_GENERATE_TEST_COVERAGE_FILES = YES;
+				GCC_INSTRUMENT_PROGRAM_FLOW_ARCS = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "dConnectDeviceAllJoyn/Supporting Files/dConnectDeviceAllJoyn-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"\"$(PROJECT_DIR)/Pods/OpenSSL-Static/lib-ios\"",
+					"$(PROJECT_DIR)/deps/AllJoyn/darwin/arm/$(PLATFORM_NAME)/$(CONFIGURATION)/dist/cpp/inc/alljoyn",
+					"$(PROJECT_DIR)/deps/AllJoyn/darwin/arm/$(PLATFORM_NAME)/$(CONFIGURATION)/dist/cpp/inc",
+					"$(PROJECT_DIR)/deps/AllJoyn/darwin/$(CURRENT_ARCH)/$(PLATFORM_NAME)/$(CONFIGURATION)/dist/cpp/inc",
+					"$(PROJECT_DIR)/deps/AllJoyn/darwin/$(CURRENT_ARCH)/$(PLATFORM_NAME)/$(CONFIGURATION)/dist/cpp/inc/alljoyn",
+					"$(PROJECT_DIR)/deps/AllJoynFramework",
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/deps/CocoaPods/Pods/OpenSSL-Static/lib-ios",
+					"$(PROJECT_DIR)/deps/AllJoyn/darwin/arm/$(PLATFORM_NAME)/$(CONFIGURATION)/dist/about/lib",
+					"$(PROJECT_DIR)/deps/AllJoyn/darwin/$(CURRENT_ARCH)/$(PLATFORM_NAME)/$(CONFIGURATION)/dist/cpp/lib",
+					"$(PROJECT_DIR)/deps/AllJoynIOS_libc++/$(CONFIGURATION)",
+				);
+				MTL_ENABLE_DEBUG_INFO = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/dConnectDeviceAllJoyn/Headers";
+				VALID_ARCHS = "armv7 armv7s i386";
+				VERSIONING_SYSTEM = "";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		25A06C111B562C08005B6F8A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CONFIGURATION_BUILD_DIR = "$(SRCROOT)/build/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
+				CONFIGURATION_TEMP_DIR = "$(SRCROOT)/build/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/../../dConnectSDK/dConnectSDKForIOS/bin",
+					"$(PROJECT_DIR)/../DCMDevicePluginSDK/bin",
+				);
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "dConnectDeviceAllJoyn/Supporting Files/dConnectDeviceAllJoyn-Prefix.pch";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"\"$(PROJECT_DIR)/Pods/OpenSSL-Static/lib-ios\"",
+					"$(PROJECT_DIR)/deps/AllJoyn/darwin/arm/$(PLATFORM_NAME)/$(CONFIGURATION)/dist/cpp/inc/alljoyn",
+					"$(PROJECT_DIR)/deps/AllJoyn/darwin/arm/$(PLATFORM_NAME)/$(CONFIGURATION)/dist/cpp/inc",
+					"$(PROJECT_DIR)/deps/AllJoyn/darwin/$(CURRENT_ARCH)/$(PLATFORM_NAME)/$(CONFIGURATION)/dist/cpp/inc",
+					"$(PROJECT_DIR)/deps/AllJoyn/darwin/$(CURRENT_ARCH)/$(PLATFORM_NAME)/$(CONFIGURATION)/dist/cpp/inc/alljoyn",
+					"$(PROJECT_DIR)/deps/AllJoynFramework",
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/deps/CocoaPods/Pods/OpenSSL-Static/lib-ios",
+					"$(PROJECT_DIR)/deps/AllJoyn/darwin/arm/$(PLATFORM_NAME)/$(CONFIGURATION)/dist/about/lib",
+					"$(PROJECT_DIR)/deps/AllJoyn/darwin/$(CURRENT_ARCH)/$(PLATFORM_NAME)/$(CONFIGURATION)/dist/cpp/lib",
+					"$(PROJECT_DIR)/deps/AllJoynIOS_libc++/$(CONFIGURATION)",
+				);
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/dConnectDeviceAllJoyn/Headers";
+				VALIDATE_PRODUCT = YES;
+				VALID_ARCHS = "armv7 armv7s i386";
+				VERSIONING_SYSTEM = "";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		25A06C131B562C08005B6F8A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CURRENT_PROJECT_VERSION = "";
+				DEFINES_MODULE = YES;
+				DYLIB_INSTALL_NAME_BASE = "";
+				GCC_ENABLE_CPP_RTTI = NO;
+				INFOPLIST_FILE = "dConnectDeviceAllJoyn/Supporting Files/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_DYLIB_INSTALL_NAME = "";
+				LD_RUNPATH_SEARCH_PATHS = "";
+				MACH_O_TYPE = staticlib;
+				OTHER_CFLAGS = (
+					"-DQCC_OS_GROUP_POSIX",
+					"-DQCC_OS_DARWIN",
+				);
+				OTHER_CPLUSPLUSFLAGS = "$(OTHER_CFLAGS)";
+				OTHER_LIBTOOLFLAGS = "-lssl -lcrypto";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				STRIP_STYLE = "non-global";
+			};
+			name = Debug;
+		};
+		25A06C141B562C08005B6F8A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CURRENT_PROJECT_VERSION = "";
+				DEFINES_MODULE = YES;
+				DYLIB_INSTALL_NAME_BASE = "";
+				GCC_ENABLE_CPP_RTTI = NO;
+				INFOPLIST_FILE = "dConnectDeviceAllJoyn/Supporting Files/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_DYLIB_INSTALL_NAME = "";
+				LD_RUNPATH_SEARCH_PATHS = "";
+				MACH_O_TYPE = staticlib;
+				OTHER_CFLAGS = (
+					"-DNS_BLOCK_ASSERTIONS=1",
+					"-DQCC_OS_GROUP_POSIX",
+					"-DQCC_OS_DARWIN",
+				);
+				OTHER_CPLUSPLUSFLAGS = "$(OTHER_CFLAGS)";
+				OTHER_LIBTOOLFLAGS = "-lssl -lcrypto";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				STRIP_STYLE = "non-global";
+			};
+			name = Release;
+		};
+		25A06C161B562C08005B6F8A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "dConnectDeviceAllJoynTests/Supporting Files/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		25A06C171B562C08005B6F8A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = "dConnectDeviceAllJoynTests/Supporting Files/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		25A06C1C1B562D13005B6F8A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		25A06C1D1B562D13005B6F8A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		25A06C211B563528005B6F8A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		25A06C221B563528005B6F8A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		25A06C6E1B565ED2005B6F8A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				CONFIGURATION_BUILD_DIR = "$(SRCROOT)/build/$(CONFIGURATION)-resources";
+				CONFIGURATION_TEMP_DIR = "$(SRCROOT)/build/$(CONFIGURATION)-resources";
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = dConnectDeviceAllJoyn_resources/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				WRAPPER_EXTENSION = bundle;
+			};
+			name = Debug;
+		};
+		25A06C6F1B565ED2005B6F8A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				CONFIGURATION_BUILD_DIR = "$(SRCROOT)/build/$(CONFIGURATION)-resources";
+				CONFIGURATION_TEMP_DIR = "$(SRCROOT)/build/$(CONFIGURATION)-resources";
+				INFOPLIST_FILE = dConnectDeviceAllJoyn_resources/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				WRAPPER_EXTENSION = bundle;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		2584989B1B6088EC0063552E /* Build configuration list for PBXAggregateTarget "dConnectDeviceAllJoyn_CodeGeneration" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2584989C1B6088EC0063552E /* Debug */,
+				2584989D1B6088EC0063552E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2586CC201B749F0100E260FD /* Build configuration list for PBXAggregateTarget "dConnectDeviceAllJoyn_DependencyResolution" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2586CC1E1B749F0100E260FD /* Debug */,
+				2586CC1F1B749F0100E260FD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		25A06BF61B562C07005B6F8A /* Build configuration list for PBXProject "dConnectDeviceAllJoyn" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				25A06C101B562C08005B6F8A /* Debug */,
+				25A06C111B562C08005B6F8A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		25A06C121B562C08005B6F8A /* Build configuration list for PBXNativeTarget "dConnectDeviceAllJoyn" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				25A06C131B562C08005B6F8A /* Debug */,
+				25A06C141B562C08005B6F8A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		25A06C151B562C08005B6F8A /* Build configuration list for PBXNativeTarget "dConnectDeviceAllJoynTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				25A06C161B562C08005B6F8A /* Debug */,
+				25A06C171B562C08005B6F8A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		25A06C1B1B562D13005B6F8A /* Build configuration list for PBXAggregateTarget "dConnectDeviceAllJoyn_framework" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				25A06C1C1B562D13005B6F8A /* Debug */,
+				25A06C1D1B562D13005B6F8A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		25A06C201B563528005B6F8A /* Build configuration list for PBXAggregateTarget "dConnectDeviceAllJoyn_OCLint" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				25A06C211B563528005B6F8A /* Debug */,
+				25A06C221B563528005B6F8A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		25A06C701B565ED2005B6F8A /* Build configuration list for PBXNativeTarget "dConnectDeviceAllJoyn_resources" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				25A06C6E1B565ED2005B6F8A /* Debug */,
+				25A06C6F1B565ED2005B6F8A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 25A06BF31B562C07005B6F8A /* Project object */;
+}

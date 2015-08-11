@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="rvV-vi-BML">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <scenes>
+        <!--Navigation Controller-->
+        <scene sceneID="L0H-fk-FvI">
+            <objects>
+                <navigationController id="rvV-vi-BML" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" id="Ehm-Mn-QrB">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" red="0.0" green="0.62745098040000002" blue="0.91372549020000005" alpha="1" colorSpace="calibratedRGB"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="kNr-xJ-Lka" kind="relationship" relationship="rootViewController" id="OuI-XE-GfW"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Lpr-Gv-HS8" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-54" y="372"/>
+        </scene>
+        <!--AllJoyn-->
+        <scene sceneID="Ncu-Ra-vd2">
+            <objects>
+                <viewController id="kNr-xJ-Lka" customClass="DPAllJoynSettingMasterViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="YH6-dw-q34"/>
+                        <viewControllerLayoutGuide type="bottom" id="KWP-sr-GZK"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="3dd-7n-40j">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aj2-ft-8d5">
+                                <rect key="frame" x="36" y="94" width="528" height="41"/>
+                                <string key="text">Certain AllJoyn products require initial setup.
+Please select setup tutorials for these products listed below:</string>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cgJ-uo-GHY">
+                                <rect key="frame" x="36" y="165" width="528" height="361"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.borderWidth">
+                                        <real key="value" value="0.5"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="layer.borderColorFromUIColor">
+                                        <color key="value" red="0.30980392156862746" green="0.6470588235294118" blue="0.83529411764705885" alpha="1" colorSpace="calibratedRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <segue destination="hkJ-qi-dHa" kind="embed" id="9bf-vB-TRI"/>
+                                </connections>
+                            </containerView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="aj2-ft-8d5" firstAttribute="leading" secondItem="3dd-7n-40j" secondAttribute="leadingMargin" constant="20" id="1IB-yI-Bc6"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="cgJ-uo-GHY" secondAttribute="trailing" constant="30" id="EBW-YU-5bF"/>
+                            <constraint firstItem="aj2-ft-8d5" firstAttribute="top" secondItem="YH6-dw-q34" secondAttribute="bottom" constant="30" id="Ics-7c-DSC"/>
+                            <constraint firstItem="cgJ-uo-GHY" firstAttribute="top" secondItem="aj2-ft-8d5" secondAttribute="bottom" constant="30" id="JAa-Em-5oD"/>
+                            <constraint firstItem="aj2-ft-8d5" firstAttribute="centerX" secondItem="cgJ-uo-GHY" secondAttribute="centerX" id="LJg-X2-Ysa"/>
+                            <constraint firstItem="aj2-ft-8d5" firstAttribute="width" secondItem="cgJ-uo-GHY" secondAttribute="width" id="TCM-q4-j0z"/>
+                            <constraint firstItem="cgJ-uo-GHY" firstAttribute="leading" secondItem="3dd-7n-40j" secondAttribute="leadingMargin" constant="30" id="VDZ-Nj-DqN"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="aj2-ft-8d5" secondAttribute="trailing" constant="20" id="fW5-th-i6p"/>
+                            <constraint firstItem="KWP-sr-GZK" firstAttribute="top" secondItem="cgJ-uo-GHY" secondAttribute="bottom" constant="30" id="kKt-WF-1vP"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="EBW-YU-5bF"/>
+                                <exclude reference="VDZ-Nj-DqN"/>
+                            </mask>
+                        </variation>
+                    </view>
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" title="AllJoyn" id="JrU-yS-hoJ">
+                        <barButtonItem key="leftBarButtonItem" title="＜CLOSE" id="F4i-PI-wYi" userLabel="CLOSE">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                            <connections>
+                                <action selector="didBackButtonItemTapped:" destination="kNr-xJ-Lka" id="bxR-RR-vTx"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="backButtonItem" destination="F4i-PI-wYi" id="ae7-PK-qwy"/>
+                        <segue destination="YLl-tT-DJu" kind="show" identifier="tutorialLIFX" id="fmM-5S-Eeg"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="fYK-bD-jK9" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="682" y="372"/>
+        </scene>
+        <!--All Joyn Setting Master Sub Table View Controller-->
+        <scene sceneID="ZD9-3E-YaL">
+            <objects>
+                <tableViewController id="hkJ-qi-dHa" customClass="DPAllJoynSettingMasterSubTableViewController" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="5Tb-G6-QS6">
+                        <rect key="frame" x="0.0" y="0.0" width="528" height="361"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="imageItem" rowHeight="50" id="dIR-eX-rYI" customClass="DPAllJoynSettingTableViewCell">
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="dIR-eX-rYI" id="e3f-db-yAg">
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="FqU-pp-0Nx">
+                                            <rect key="frame" x="8" y="8.5" width="512" height="33"/>
+                                        </imageView>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="FqU-pp-0Nx" firstAttribute="top" secondItem="e3f-db-yAg" secondAttribute="topMargin" id="Ad3-Jj-8vb"/>
+                                        <constraint firstItem="FqU-pp-0Nx" firstAttribute="leading" secondItem="e3f-db-yAg" secondAttribute="leadingMargin" id="YJO-jB-8uf"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="FqU-pp-0Nx" secondAttribute="bottom" id="atE-bX-dXF"/>
+                                        <constraint firstItem="FqU-pp-0Nx" firstAttribute="trailing" secondItem="e3f-db-yAg" secondAttribute="trailingMargin" id="rwd-pH-6nI"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="mainImageView" destination="FqU-pp-0Nx" id="B55-zL-NpU"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="hkJ-qi-dHa" id="qBp-eZ-MiI"/>
+                            <outlet property="delegate" destination="hkJ-qi-dHa" id="qZH-4U-BPG"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="l63-ZI-NBw" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="682" y="1014"/>
+        </scene>
+        <!--AllJoyn-->
+        <scene sceneID="eVY-UI-4LH">
+            <objects>
+                <viewController id="YLl-tT-DJu" customClass="DPAllJoynSettingDetailLIFXViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="UWL-qF-I87"/>
+                        <viewControllerLayoutGuide type="bottom" id="AJh-BR-lLB"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="z9R-xZ-OkR">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="R6r-Ga-0Cd">
+                                <rect key="frame" x="36" y="94" width="528" height="101.5"/>
+                                <string key="text">Please install LIFX app from AppStore.
+
+After the app was launched, follow instructions to setup WiFi of a LIFX product. As for a WiFi network the LIFX product connects to, select the one this iOS device is connected to.</string>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="After the WiFi setup, LIFX products are made accessible from this AllJoyn device plugin." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oo1-Mt-nqe">
+                                <rect key="frame" x="36" y="295" width="528" height="41"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Download_on_the_App_Store_Badge_US-UK_135x40.png" translatesAutoresizingMaskIntoConstraints="NO" id="bYF-re-A4g">
+                                <rect key="frame" x="159.5" y="225" width="281" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="v0d-1U-AwZ"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailingMargin" secondItem="R6r-Ga-0Cd" secondAttribute="trailing" constant="20" id="4Nc-a1-aCM"/>
+                            <constraint firstItem="bYF-re-A4g" firstAttribute="top" secondItem="R6r-Ga-0Cd" secondAttribute="bottom" constant="30" id="FX0-qm-NHx"/>
+                            <constraint firstItem="oo1-Mt-nqe" firstAttribute="centerX" secondItem="R6r-Ga-0Cd" secondAttribute="centerX" id="YW9-Gi-Jrf"/>
+                            <constraint firstItem="R6r-Ga-0Cd" firstAttribute="top" secondItem="UWL-qF-I87" secondAttribute="bottom" constant="30" id="c1H-zj-UjI"/>
+                            <constraint firstItem="oo1-Mt-nqe" firstAttribute="top" secondItem="bYF-re-A4g" secondAttribute="bottom" constant="30" id="l8b-Bt-810"/>
+                            <constraint firstAttribute="centerX" secondItem="bYF-re-A4g" secondAttribute="centerX" id="pUl-Ng-0XM"/>
+                            <constraint firstItem="oo1-Mt-nqe" firstAttribute="width" secondItem="R6r-Ga-0Cd" secondAttribute="width" id="qdf-XY-O6K"/>
+                            <constraint firstItem="R6r-Ga-0Cd" firstAttribute="leading" secondItem="z9R-xZ-OkR" secondAttribute="leadingMargin" constant="20" id="ulP-Yz-ggn"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="AllJoyn" id="cNd-jd-Byw"/>
+                    <connections>
+                        <outlet property="imageView" destination="bYF-re-A4g" id="GBu-jn-u70"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ggf-WA-Yyw" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1459" y="372"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="Download_on_the_App_Store_Badge_US-UK_135x40.png" width="281" height="83"/>
+    </resources>
+</document>
