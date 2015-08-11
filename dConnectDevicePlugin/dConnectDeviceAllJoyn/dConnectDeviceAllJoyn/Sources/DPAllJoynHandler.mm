@@ -351,7 +351,7 @@ static size_t const DPAllJoynJoinRetryMax = 5;
                  serviceEntity.lastAlive = [NSDate date];
              }
              else {
-                 if (serviceEntity.lastAlive.timeIntervalSinceNow
+                 if (-serviceEntity.lastAlive.timeIntervalSinceNow * 1000
                      > DPAllJoynAliveTimeout) {
                      DCLogInfo(@"Ping failed: %@."
                                " Removing it from discovered services...",
