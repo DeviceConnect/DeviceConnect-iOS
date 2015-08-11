@@ -412,6 +412,11 @@ static size_t const DPAllJoynJoinRetryMax = 5;
         return;
     }
     
+    DPAllJoynServiceEntity *oldService =
+    [_discoveredServices objectForKey:service.appId];
+    if (oldService) {
+        service.lastAlive = oldService.lastAlive;
+    }
     [_discoveredServices setObject:service forKey:service.appId];
 }
 
