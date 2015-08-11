@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="6fd-t2-lwx">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="6fd-t2-lwx">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
@@ -130,12 +130,6 @@ QXの場合は、バッテリーカバーの裏に書かれています。他の
                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="sonycamera_img03.png" translatesAutoresizingMaskIntoConstraints="NO" id="4pa-sn-lQ0">
                                         <rect key="frame" x="23" y="16" width="275" height="185"/>
                                     </imageView>
-                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" editable="NO" text="下に表示されているカメラ検索ボタンを押下してください。" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GpB-FN-PSA">
-                                        <rect key="frame" x="33" y="219" width="254" height="62"/>
-                                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                    </textView>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1Cm-hN-h9a">
                                         <rect key="frame" x="23" y="289" width="275" height="41"/>
                                         <color key="backgroundColor" red="0.066666666669999999" green="0.54901960780000003" blue="0.89019607840000003" alpha="1" colorSpace="calibratedRGB"/>
@@ -161,6 +155,12 @@ QXの場合は、バッテリーカバーの裏に書かれています。他の
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" editable="NO" text="下に表示されているカメラ検索ボタンを押下してください。" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GpB-FN-PSA">
+                                        <rect key="frame" x="33" y="219" width="254" height="62"/>
+                                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                    </textView>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                             </view>

@@ -1,0 +1,382 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES" initialViewController="COM-1V-UTc">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <scenes>
+        <!--Navigation Controller-->
+        <scene sceneID="0bo-dv-XDJ">
+            <objects>
+                <navigationController id="COM-1V-UTc" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="8ee-Rs-FvA">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="JTQ-Wq-sGb" kind="relationship" relationship="rootViewController" id="E6W-XO-zkV"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="kbU-Z6-O7N" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-794.88" y="537.60000000000002"/>
+        </scene>
+        <!--Theta Setting View Controller-->
+        <scene sceneID="BFC-F1-U30">
+            <objects>
+                <pageViewController autoresizesArchivedViewToFullSize="NO" transitionStyle="scroll" navigationOrientation="horizontal" spineLocation="none" id="JTQ-Wq-sGb" customClass="DPThetaSettingViewController" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="gg8-eT-IaZ"/>
+                </pageViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="fn4-l8-Jmj" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="83" y="530"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="Qn3-lV-RwS">
+            <objects>
+                <viewController storyboardIdentifier="AbstractGuide" id="tNB-r5-IGo" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="fff-pO-reS"/>
+                        <viewControllerLayoutGuide type="bottom" id="S2j-Qb-Dko"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="OGY-fg-KFU">
+                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="1.概要" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2yc-4T-uMC">
+                                <rect key="frame" x="16" y="72" width="93" height="41"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="theta.png" translatesAutoresizingMaskIntoConstraints="NO" id="ViW-GZ-l0q">
+                                <rect key="frame" x="192" y="142" width="384" height="333"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="384" id="0Af-sx-Qfj"/>
+                                    <constraint firstAttribute="height" constant="333" id="sZO-b6-7tx"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" lineBreakMode="tailTruncation" numberOfLines="21" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="17x-Mw-UkD">
+                                <rect key="frame" x="40" y="524" width="686" height="419"/>
+                                <string key="text">ThetaとのWiFi接続を行います。
+
+接続するThetaのSSIDとパスワードを確認してください。
+
+Thetaの底面にある型番がパスワードになります。</string>
+                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                                <size key="shadowOffset" width="0.0" height="-2"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="17x-Mw-UkD" firstAttribute="top" secondItem="ViW-GZ-l0q" secondAttribute="bottom" constant="49" id="9rD-qo-WJm"/>
+                            <constraint firstItem="17x-Mw-UkD" firstAttribute="leading" secondItem="OGY-fg-KFU" secondAttribute="leadingMargin" constant="24" id="CLM-Jm-GO8"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="17x-Mw-UkD" secondAttribute="trailing" constant="26" id="OGY-J3-DYc"/>
+                            <constraint firstItem="S2j-Qb-Dko" firstAttribute="top" relation="greaterThanOrEqual" secondItem="17x-Mw-UkD" secondAttribute="bottom" constant="55" id="QQX-Nb-wCO"/>
+                            <constraint firstAttribute="centerX" secondItem="ViW-GZ-l0q" secondAttribute="centerX" id="m2h-Yf-o3i"/>
+                            <constraint firstItem="ViW-GZ-l0q" firstAttribute="top" secondItem="OGY-fg-KFU" secondAttribute="topMargin" constant="142" id="mKK-SW-nXF"/>
+                            <constraint firstItem="17x-Mw-UkD" firstAttribute="top" secondItem="ViW-GZ-l0q" secondAttribute="bottom" constant="49" id="pKX-f0-3iR"/>
+                            <constraint firstItem="2yc-4T-uMC" firstAttribute="top" secondItem="OGY-fg-KFU" secondAttribute="topMargin" constant="72" id="qHT-KO-VQl"/>
+                            <constraint firstItem="2yc-4T-uMC" firstAttribute="leading" secondItem="OGY-fg-KFU" secondAttribute="leadingMargin" id="tTP-Ub-5I6"/>
+                        </constraints>
+                    </view>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="KYp-ab-eDE" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="875" y="530"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="ACf-zZ-vjy">
+            <objects>
+                <viewController storyboardIdentifier="WifiGuide" id="bUE-c7-5h7" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="bQ4-mm-TUm"/>
+                        <viewControllerLayoutGuide type="bottom" id="eHp-Ue-XUE"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="iNO-q2-jN3">
+                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="4.WiFi接続" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OwR-Up-nlC">
+                                <rect key="frame" x="16" y="72" width="204" height="34"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" lineBreakMode="tailTruncation" numberOfLines="21" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dm0-ZR-8u9">
+                                <rect key="frame" x="174" y="665" width="420" height="136"/>
+                                <string key="text">iOSの設定画面からWiFiを有効にします。
+ネットワークを選択からThetaのSSIDを選択します。</string>
+                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                                <size key="shadowOffset" width="0.0" height="-2"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="注意）モバイルデータ通信をオフにしてください。" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6oh-sT-USU">
+                                <rect key="frame" x="181" y="825" width="407" height="84"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                <color key="textColor" red="0.99542297980000005" green="0.1420126149" blue="0.088783746580000003" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="WiFiTheta.png" translatesAutoresizingMaskIntoConstraints="NO" id="V4p-yc-5Qm">
+                                <rect key="frame" x="162" y="140" width="445" height="323"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="445" id="3zN-tB-XIl"/>
+                                    <constraint firstAttribute="height" constant="323" id="pfN-a2-6OQ"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="6oh-sT-USU" firstAttribute="top" secondItem="dm0-ZR-8u9" secondAttribute="bottom" constant="24" id="5Ge-me-X2n"/>
+                            <constraint firstItem="eHp-Ue-XUE" firstAttribute="top" secondItem="6oh-sT-USU" secondAttribute="bottom" constant="115" id="8ck-ek-dup"/>
+                            <constraint firstItem="OwR-Up-nlC" firstAttribute="top" secondItem="bQ4-mm-TUm" secondAttribute="bottom" constant="8" id="BqT-fg-aVx"/>
+                            <constraint firstItem="V4p-yc-5Qm" firstAttribute="top" secondItem="iNO-q2-jN3" secondAttribute="topMargin" constant="140" id="ISX-rP-j0y"/>
+                            <constraint firstItem="OwR-Up-nlC" firstAttribute="leading" secondItem="iNO-q2-jN3" secondAttribute="leadingMargin" id="RI7-oM-nKu"/>
+                            <constraint firstAttribute="centerX" secondItem="V4p-yc-5Qm" secondAttribute="centerX" id="SwC-pQ-4lo"/>
+                            <constraint firstItem="V4p-yc-5Qm" firstAttribute="top" secondItem="OwR-Up-nlC" secondAttribute="bottom" constant="34" id="Zde-ec-mev"/>
+                            <constraint firstAttribute="centerX" secondItem="dm0-ZR-8u9" secondAttribute="centerX" id="dtt-fn-9A3"/>
+                            <constraint firstItem="OwR-Up-nlC" firstAttribute="top" secondItem="iNO-q2-jN3" secondAttribute="topMargin" constant="72" id="nho-hG-x4g"/>
+                            <constraint firstAttribute="centerX" secondItem="6oh-sT-USU" secondAttribute="centerX" id="zSW-eu-FRm"/>
+                        </constraints>
+                    </view>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="U58-qh-pUW" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3242" y="530"/>
+        </scene>
+        <!--Theta Guide View Controller-->
+        <scene sceneID="1s6-r4-xSh">
+            <objects>
+                <viewController storyboardIdentifier="ConnectedGuide" id="uQJ-7l-WYb" customClass="DPThetaGuideViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Ifk-ms-LM0"/>
+                        <viewControllerLayoutGuide type="bottom" id="6Vj-en-zor"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="jEC-M5-iXv">
+                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I7d-Ka-CDm">
+                                <rect key="frame" x="178" y="863" width="413" height="71"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="413" id="VE6-Pc-rdi"/>
+                                    <constraint firstAttribute="height" constant="71" id="bnX-4E-rut"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5SA-db-p93">
+                                <rect key="frame" x="286" y="790" width="196" height="65"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="65" id="rcX-YS-Y9e"/>
+                                    <constraint firstAttribute="width" constant="196" id="yEo-Ca-1lm"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                <state key="normal" title="カメラ検索">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="searchBtnDidPushed:" destination="uQJ-7l-WYb" eventType="touchUpInside" id="sBg-Vj-NL3"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="下に表示されているカメラ検索ボタンを押下してください。" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ixF-7N-YAd">
+                                <rect key="frame" x="173" y="687" width="423" height="107"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="107" id="65i-jy-lbv"/>
+                                    <constraint firstAttribute="width" constant="423" id="wLI-mo-lXQ"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="5.接続確認" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zoE-Y9-fMF">
+                                <rect key="frame" x="16" y="72" width="178" height="38"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view hidden="YES" alpha="0.69999998807907104" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="R4H-QQ-OmV">
+                                <rect key="frame" x="240" y="466" width="261" height="202"/>
+                                <subviews>
+                                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="fXR-iH-TWA">
+                                        <rect key="frame" x="112" y="88" width="37" height="37"/>
+                                    </activityIndicatorView>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="261" id="M4u-CO-OaQ"/>
+                                    <constraint firstAttribute="height" constant="202" id="tUo-wr-o7O"/>
+                                </constraints>
+                            </view>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="thetaStandby.png" translatesAutoresizingMaskIntoConstraints="NO" id="9Pt-0x-9Eg">
+                                <rect key="frame" x="219" y="118" width="330" height="279"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="279" id="Q3p-FN-VTu"/>
+                                    <constraint firstAttribute="width" constant="330" id="TIq-PL-NYx"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="I7d-Ka-CDm" firstAttribute="top" secondItem="ixF-7N-YAd" secondAttribute="bottom" constant="69" id="05i-o4-k4j"/>
+                            <constraint firstItem="zoE-Y9-fMF" firstAttribute="top" secondItem="Ifk-ms-LM0" secondAttribute="bottom" constant="8" id="1TL-dO-Hjm"/>
+                            <constraint firstItem="I7d-Ka-CDm" firstAttribute="top" secondItem="5SA-db-p93" secondAttribute="bottom" constant="8" id="6p8-bh-Leh"/>
+                            <constraint firstItem="6Vj-en-zor" firstAttribute="top" secondItem="I7d-Ka-CDm" secondAttribute="bottom" constant="90" id="8JA-B0-5Vh"/>
+                            <constraint firstAttribute="centerX" secondItem="I7d-Ka-CDm" secondAttribute="centerX" id="C5z-ku-RiW"/>
+                            <constraint firstItem="zoE-Y9-fMF" firstAttribute="top" secondItem="jEC-M5-iXv" secondAttribute="topMargin" constant="72" id="Gf8-HC-7CF"/>
+                            <constraint firstAttribute="centerX" secondItem="ixF-7N-YAd" secondAttribute="centerX" id="JkQ-Ld-KGu"/>
+                            <constraint firstAttribute="centerX" secondItem="R4H-QQ-OmV" secondAttribute="centerX" id="Obn-bh-hzR"/>
+                            <constraint firstAttribute="centerX" secondItem="9Pt-0x-9Eg" secondAttribute="centerX" id="WDK-jq-t4j"/>
+                            <constraint firstItem="9Pt-0x-9Eg" firstAttribute="top" secondItem="Ifk-ms-LM0" secondAttribute="bottom" constant="54" id="Ype-TP-id4"/>
+                            <constraint firstAttribute="centerY" secondItem="R4H-QQ-OmV" secondAttribute="centerY" id="b0P-gX-aNO"/>
+                            <constraint firstItem="zoE-Y9-fMF" firstAttribute="leading" secondItem="jEC-M5-iXv" secondAttribute="leadingMargin" id="ezz-Zb-GgG"/>
+                            <constraint firstItem="9Pt-0x-9Eg" firstAttribute="top" secondItem="jEC-M5-iXv" secondAttribute="topMargin" constant="118" id="st4-z8-c9e"/>
+                            <constraint firstAttribute="centerX" secondItem="5SA-db-p93" secondAttribute="centerX" id="uEU-1H-yzh"/>
+                        </constraints>
+                    </view>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                    <connections>
+                        <outlet property="indicator" destination="fXR-iH-TWA" id="DGf-4b-Ad4"/>
+                        <outlet property="progressView" destination="R4H-QQ-OmV" id="6cK-oq-06b"/>
+                        <outlet property="searchBtn" destination="5SA-db-p93" id="3A1-m6-h1A"/>
+                        <outlet property="ssidLabel" destination="I7d-Ka-CDm" id="niR-uY-Ght"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="zwN-HQ-vKO" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4030" y="530"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="t6h-MR-ttX">
+            <objects>
+                <viewController storyboardIdentifier="MovieModeGuide" id="dS2-1o-vmg" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Cpe-wE-dL6"/>
+                        <viewControllerLayoutGuide type="bottom" id="xHx-eX-c5w"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="27Y-hN-SA8">
+                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="3.動画モード" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2YI-Om-LNe">
+                                <rect key="frame" x="16" y="72" width="231" height="38"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="thetaMovie.png" translatesAutoresizingMaskIntoConstraints="NO" id="tMa-mo-o9O">
+                                <rect key="frame" x="187" y="118" width="394" height="350"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="350" id="ECJ-JL-MLj"/>
+                                    <constraint firstAttribute="width" constant="394" id="PA6-eM-qzS"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" lineBreakMode="tailTruncation" numberOfLines="21" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tXB-FX-blb">
+                                <rect key="frame" x="80" y="504" width="609" height="460"/>
+                                <string key="text">WiFiボタンを押しながら、電源ボタンを押すと動画モードで起動します。
+
+電源がONになると、側面の電源ボタンが青色に点滅します。
+
+この状態では写真の撮影は行えません。一度電源を切り、前の手順を行う必要があります。</string>
+                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                                <size key="shadowOffset" width="0.0" height="-2"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="2YI-Om-LNe" firstAttribute="top" secondItem="Cpe-wE-dL6" secondAttribute="bottom" constant="8" id="1kg-Cj-NKl"/>
+                            <constraint firstItem="2YI-Om-LNe" firstAttribute="leading" secondItem="27Y-hN-SA8" secondAttribute="leadingMargin" id="7aE-X8-D21"/>
+                            <constraint firstItem="tXB-FX-blb" firstAttribute="top" secondItem="tMa-mo-o9O" secondAttribute="bottom" constant="36" id="8gH-JS-LsY"/>
+                            <constraint firstItem="tMa-mo-o9O" firstAttribute="top" secondItem="27Y-hN-SA8" secondAttribute="topMargin" constant="118" id="C5L-Jt-zyq"/>
+                            <constraint firstAttribute="centerX" secondItem="tMa-mo-o9O" secondAttribute="centerX" id="KeP-fn-QPo"/>
+                            <constraint firstItem="2YI-Om-LNe" firstAttribute="top" secondItem="27Y-hN-SA8" secondAttribute="topMargin" constant="72" id="N7L-Y7-3LP"/>
+                            <constraint firstItem="xHx-eX-c5w" firstAttribute="top" relation="greaterThanOrEqual" secondItem="tXB-FX-blb" secondAttribute="bottom" constant="50" id="PT3-tD-sJ2"/>
+                            <constraint firstItem="tXB-FX-blb" firstAttribute="leading" secondItem="27Y-hN-SA8" secondAttribute="leadingMargin" constant="64" id="Urf-LI-xUp"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="tXB-FX-blb" secondAttribute="trailing" constant="63" id="jYs-Ta-nXB"/>
+                            <constraint firstItem="tMa-mo-o9O" firstAttribute="top" secondItem="2YI-Om-LNe" secondAttribute="bottom" constant="8" id="z6N-Zf-gnm"/>
+                        </constraints>
+                    </view>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="eMo-IL-H3j" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2457" y="530"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="klw-vh-VU9">
+            <objects>
+                <viewController storyboardIdentifier="PictureModeGuide" id="iMf-8w-JYK" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="T6B-OH-teC"/>
+                        <viewControllerLayoutGuide type="bottom" id="CEf-AS-HjJ"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="k4T-aZ-GfL">
+                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="2.写真モード" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bWX-x3-koL">
+                                <rect key="frame" x="16" y="72" width="736" height="41"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="thetaOn.png" translatesAutoresizingMaskIntoConstraints="NO" id="Lr9-jm-YXm">
+                                <rect key="frame" x="208" y="121" width="352" height="311"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="352" id="0wI-Tn-T1O"/>
+                                    <constraint firstAttribute="height" constant="311" id="34m-ON-uJy"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" lineBreakMode="tailTruncation" numberOfLines="21" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vdl-kh-dYE">
+                                <rect key="frame" x="46" y="483" width="689" height="487"/>
+                                <string key="text">Thetaの電源ボタンを押すと写真モードで起動します。
+
+電源がONになると、側面の電源ボタンが青色に点灯します。
+
+この状態では動画の撮影は行えません。
+一度電源を切り、次の手順を行う必要があります。</string>
+                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                                <size key="shadowOffset" width="0.0" height="-2"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="centerX" secondItem="Lr9-jm-YXm" secondAttribute="centerX" id="8CB-zI-Nk5"/>
+                            <constraint firstItem="bWX-x3-koL" firstAttribute="top" secondItem="T6B-OH-teC" secondAttribute="bottom" constant="8" id="AAr-6O-cUf"/>
+                            <constraint firstItem="Lr9-jm-YXm" firstAttribute="top" secondItem="k4T-aZ-GfL" secondAttribute="topMargin" constant="121" id="AZn-nb-ekq"/>
+                            <constraint firstItem="bWX-x3-koL" firstAttribute="leading" secondItem="k4T-aZ-GfL" secondAttribute="leadingMargin" id="KHb-Ic-fEJ"/>
+                            <constraint firstItem="bWX-x3-koL" firstAttribute="top" secondItem="k4T-aZ-GfL" secondAttribute="topMargin" constant="72" id="KNj-RU-l7S"/>
+                            <constraint firstItem="CEf-AS-HjJ" firstAttribute="top" relation="greaterThanOrEqual" secondItem="Vdl-kh-dYE" secondAttribute="bottom" constant="54" id="MeA-Z9-xh5"/>
+                        </constraints>
+                    </view>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Gnk-Mo-Ztl" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1667" y="530"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="WiFiTheta.png" width="640" height="578"/>
+        <image name="theta.png" width="480" height="480"/>
+        <image name="thetaMovie.png" width="480" height="480"/>
+        <image name="thetaOn.png" width="480" height="480"/>
+        <image name="thetaStandby.png" width="480" height="480"/>
+    </resources>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination"/>
+    </simulatedMetricsContainer>
+</document>
