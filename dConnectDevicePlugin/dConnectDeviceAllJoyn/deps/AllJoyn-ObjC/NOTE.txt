@@ -1,4 +1,0 @@
-Created from AllJoyn 14.12.00b OSX/iOS SDK distribution.
-
-Header files were extracted manually.
-Static libraries were created from libraries of different architectures and configurations with "lipo" tool.

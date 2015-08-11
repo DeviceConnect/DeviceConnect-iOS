@@ -9,6 +9,7 @@
 
 #import "DPAllJoynDevicePlugin.h"
 
+#import "AJNInit.h"
 #import <DConnectSDK/DConnectServiceInformationProfile.h>
 #import "DPAllJoynHandler.h"
 #import "DPAllJoynLightProfile.h"
@@ -25,6 +26,16 @@ static NSString *const VERSION = @"1.0.0";
 }
 
 - (instancetype) init {
+    if ([AJNInit alljoynInit] != ER_OK) {
+        DCLogError(@"AllJoyn global init failed.");
+        return nil;
+    }
+    if ([AJNInit alljoynRouterInit] != ER_OK) {
+        DCLogError(@"AllJoyn global router init failed.");
+        [AJNInit alljoynShutdown];
+        return nil;
+    }
+    
     self = [super init];
     if (self) {
         self.pluginName = [NSString stringWithFormat:@"AllJoyn %@", VERSION];
@@ -53,6 +64,13 @@ static NSString *const VERSION = @"1.0.0";
         [_handler initAllJoynContextWithBlock:block];
     }
     return self;
+}
+
+
+- (void)dealloc
+{
+    [AJNInit alljoynRouterShutdown];
+    [AJNInit alljoynShutdown];
 }
 
 @end

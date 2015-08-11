@@ -94,6 +94,11 @@
 		2588A2721B707E3E0015B668 /* DCMLightProfileAlt.m in Sources */ = {isa = PBXBuildFile; fileRef = 2588A2711B707E3E0015B668 /* DCMLightProfileAlt.m */; };
 		2588A2741B707E810015B668 /* DCMLightProfileAlt.h in Headers */ = {isa = PBXBuildFile; fileRef = 2588A2731B707E810015B668 /* DCMLightProfileAlt.h */; };
 		2589F0621B61F32200C7B4C0 /* DPAllJoynLightingResponseCode.h in Headers */ = {isa = PBXBuildFile; fileRef = 2589F0611B61F06300C7B4C0 /* DPAllJoynLightingResponseCode.h */; };
+		258FD3C71B78CF3E00F6EA35 /* libAllJoynFramework_iOS_fix.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 258FD3C61B78CF3E00F6EA35 /* libAllJoynFramework_iOS_fix.a */; };
+		258FD3CA1B78CF4F00F6EA35 /* liballjoyn_about_cpp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 258FD3C81B78CF4F00F6EA35 /* liballjoyn_about_cpp.a */; };
+		258FD3CB1B78CF4F00F6EA35 /* liballjoyn_about_objc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 258FD3C91B78CF4F00F6EA35 /* liballjoyn_about_objc.a */; };
+		258FD3CE1B78CF5A00F6EA35 /* libajrouter.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 258FD3CC1B78CF5A00F6EA35 /* libajrouter.a */; };
+		258FD3CF1B78CF5A00F6EA35 /* liballjoyn.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 258FD3CD1B78CF5A00F6EA35 /* liballjoyn.a */; };
 		25A06C081B562C08005B6F8A /* dConnectDeviceAllJoyn.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25A06BFC1B562C07005B6F8A /* dConnectDeviceAllJoyn.framework */; };
 		25A06C0F1B562C08005B6F8A /* dConnectDeviceAllJoynTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 25A06C0E1B562C08005B6F8A /* dConnectDeviceAllJoynTests.m */; };
 		25A06C311B564742005B6F8A /* DPAllJoynSettingMasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25A06C301B564742005B6F8A /* DPAllJoynSettingMasterViewController.m */; };
@@ -162,6 +167,11 @@
 		2588A2711B707E3E0015B668 /* DCMLightProfileAlt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DCMLightProfileAlt.m; sourceTree = "<group>"; };
 		2588A2731B707E810015B668 /* DCMLightProfileAlt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DCMLightProfileAlt.h; sourceTree = "<group>"; };
 		2589F0611B61F06300C7B4C0 /* DPAllJoynLightingResponseCode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DPAllJoynLightingResponseCode.h; sourceTree = "<group>"; };
+		258FD3C61B78CF3E00F6EA35 /* libAllJoynFramework_iOS_fix.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libAllJoynFramework_iOS_fix.a; path = "deps/AllJoynIOS_libc++/Release/libAllJoynFramework_iOS_fix.a"; sourceTree = "<group>"; };
+		258FD3C81B78CF4F00F6EA35 /* liballjoyn_about_cpp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = liballjoyn_about_cpp.a; path = deps/AllJoyn/darwin/arm/iphoneos/release/dist/about/lib/liballjoyn_about_cpp.a; sourceTree = "<group>"; };
+		258FD3C91B78CF4F00F6EA35 /* liballjoyn_about_objc.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = liballjoyn_about_objc.a; path = deps/AllJoyn/darwin/arm/iphoneos/release/dist/about/lib/liballjoyn_about_objc.a; sourceTree = "<group>"; };
+		258FD3CC1B78CF5A00F6EA35 /* libajrouter.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libajrouter.a; path = deps/AllJoyn/darwin/arm/iphoneos/release/dist/cpp/lib/libajrouter.a; sourceTree = "<group>"; };
+		258FD3CD1B78CF5A00F6EA35 /* liballjoyn.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = liballjoyn.a; path = deps/AllJoyn/darwin/arm/iphoneos/release/dist/cpp/lib/liballjoyn.a; sourceTree = "<group>"; };
 		25A06BFC1B562C07005B6F8A /* dConnectDeviceAllJoyn.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = dConnectDeviceAllJoyn.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		25A06C001B562C07005B6F8A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		25A06C071B562C08005B6F8A /* dConnectDeviceAllJoynTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = dConnectDeviceAllJoynTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -193,6 +203,11 @@
 			files = (
 				25851BBC1B573C9A00CB732E /* DCMDevicePluginSDK.framework in Frameworks */,
 				25851BBA1B573C3100CB732E /* DConnectSDK.framework in Frameworks */,
+				258FD3C71B78CF3E00F6EA35 /* libAllJoynFramework_iOS_fix.a in Frameworks */,
+				258FD3CA1B78CF4F00F6EA35 /* liballjoyn_about_cpp.a in Frameworks */,
+				258FD3CB1B78CF4F00F6EA35 /* liballjoyn_about_objc.a in Frameworks */,
+				258FD3CE1B78CF5A00F6EA35 /* libajrouter.a in Frameworks */,
+				258FD3CF1B78CF5A00F6EA35 /* liballjoyn.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -233,6 +248,11 @@
 		25851BB81B573BFC00CB732E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				258FD3CC1B78CF5A00F6EA35 /* libajrouter.a */,
+				258FD3CD1B78CF5A00F6EA35 /* liballjoyn.a */,
+				258FD3C81B78CF4F00F6EA35 /* liballjoyn_about_cpp.a */,
+				258FD3C91B78CF4F00F6EA35 /* liballjoyn_about_objc.a */,
+				258FD3C61B78CF3E00F6EA35 /* libAllJoynFramework_iOS_fix.a */,
 				25851BBB1B573C9A00CB732E /* DCMDevicePluginSDK.framework */,
 				25851BB91B573C3100CB732E /* DConnectSDK.framework */,
 			);
@@ -759,8 +779,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
@@ -783,7 +801,6 @@
 					"$(PROJECT_DIR)/../../dConnectSDK/dConnectSDKForIOS/bin",
 					"$(PROJECT_DIR)/../DCMDevicePluginSDK/bin",
 				);
-				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_GENERATE_TEST_COVERAGE_FILES = YES;
 				GCC_INSTRUMENT_PROGRAM_FLOW_ARCS = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -805,19 +822,19 @@
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"\"$(PROJECT_DIR)/Pods/OpenSSL-Static/lib-ios\"",
-					"$(PROJECT_DIR)/deps/AllJoyn-CXX/inc/cpp",
-					"$(PROJECT_DIR)/deps/AllJoyn-ObjC/inc",
+					"$(PROJECT_DIR)/deps/AllJoyn/darwin/arm/$(PLATFORM_NAME)/$(CONFIGURATION)/dist/cpp/inc/alljoyn",
+					"$(PROJECT_DIR)/deps/AllJoyn/darwin/arm/$(PLATFORM_NAME)/$(CONFIGURATION)/dist/cpp/inc",
+					"$(PROJECT_DIR)/deps/AllJoyn/darwin/$(CURRENT_ARCH)/$(PLATFORM_NAME)/$(CONFIGURATION)/dist/cpp/inc",
+					"$(PROJECT_DIR)/deps/AllJoyn/darwin/$(CURRENT_ARCH)/$(PLATFORM_NAME)/$(CONFIGURATION)/dist/cpp/inc/alljoyn",
+					"$(PROJECT_DIR)/deps/AllJoynFramework",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
-				"LIBRARY_SEARCH_PATHS[sdk=iphoneos*]" = (
-					"$(PROJECT_DIR)/deps/AllJoyn-CXX/arm/iphoneos/debug/dist/cpp/lib",
-					"$(PROJECT_DIR)/deps/AllJoyn-ObjC/lib-$(CONFIGURATION)",
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
 					"$(PROJECT_DIR)/deps/CocoaPods/Pods/OpenSSL-Static/lib-ios",
-				);
-				"LIBRARY_SEARCH_PATHS[sdk=iphonesimulator*]" = (
-					"$(PROJECT_DIR)/deps/AllJoyn-CXX/i386/iphonesimulator/debug/dist/cpp/lib",
-					"$(PROJECT_DIR)/deps/AllJoyn-ObjC/lib-$(CONFIGURATION)",
-					"$(PROJECT_DIR)/deps/CocoaPods/Pods/OpenSSL-Static/lib-ios",
+					"$(PROJECT_DIR)/deps/AllJoyn/darwin/arm/$(PLATFORM_NAME)/$(CONFIGURATION)/dist/about/lib",
+					"$(PROJECT_DIR)/deps/AllJoyn/darwin/$(CURRENT_ARCH)/$(PLATFORM_NAME)/$(CONFIGURATION)/dist/cpp/lib",
+					"$(PROJECT_DIR)/deps/AllJoynIOS_libc++/$(CONFIGURATION)",
 				);
 				MTL_ENABLE_DEBUG_INFO = YES;
 				SDKROOT = iphoneos;
@@ -833,8 +850,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
@@ -858,7 +873,6 @@
 					"$(PROJECT_DIR)/../../dConnectSDK/dConnectSDKForIOS/bin",
 					"$(PROJECT_DIR)/../DCMDevicePluginSDK/bin",
 				);
-				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "dConnectDeviceAllJoyn/Supporting Files/dConnectDeviceAllJoyn-Prefix.pch";
@@ -872,19 +886,19 @@
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"\"$(PROJECT_DIR)/Pods/OpenSSL-Static/lib-ios\"",
-					"$(PROJECT_DIR)/deps/AllJoyn-CXX/inc/cpp",
-					"$(PROJECT_DIR)/deps/AllJoyn-ObjC/inc",
+					"$(PROJECT_DIR)/deps/AllJoyn/darwin/arm/$(PLATFORM_NAME)/$(CONFIGURATION)/dist/cpp/inc/alljoyn",
+					"$(PROJECT_DIR)/deps/AllJoyn/darwin/arm/$(PLATFORM_NAME)/$(CONFIGURATION)/dist/cpp/inc",
+					"$(PROJECT_DIR)/deps/AllJoyn/darwin/$(CURRENT_ARCH)/$(PLATFORM_NAME)/$(CONFIGURATION)/dist/cpp/inc",
+					"$(PROJECT_DIR)/deps/AllJoyn/darwin/$(CURRENT_ARCH)/$(PLATFORM_NAME)/$(CONFIGURATION)/dist/cpp/inc/alljoyn",
+					"$(PROJECT_DIR)/deps/AllJoynFramework",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
-				"LIBRARY_SEARCH_PATHS[sdk=iphoneos*]" = (
-					"$(PROJECT_DIR)/deps/AllJoyn-CXX/arm/iphoneos/release/dist/cpp/lib",
-					"$(PROJECT_DIR)/deps/AllJoyn-ObjC/lib-$(CONFIGURATION)",
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
 					"$(PROJECT_DIR)/deps/CocoaPods/Pods/OpenSSL-Static/lib-ios",
-				);
-				"LIBRARY_SEARCH_PATHS[sdk=iphonesimulator*]" = (
-					"$(PROJECT_DIR)/deps/AllJoyn-CXX/i386/iphonesimulator/release/dist/cpp/lib",
-					"$(PROJECT_DIR)/deps/AllJoyn-ObjC/lib-$(CONFIGURATION)",
-					"$(PROJECT_DIR)/deps/CocoaPods/Pods/OpenSSL-Static/lib-ios",
+					"$(PROJECT_DIR)/deps/AllJoyn/darwin/arm/$(PLATFORM_NAME)/$(CONFIGURATION)/dist/about/lib",
+					"$(PROJECT_DIR)/deps/AllJoyn/darwin/$(CURRENT_ARCH)/$(PLATFORM_NAME)/$(CONFIGURATION)/dist/cpp/lib",
+					"$(PROJECT_DIR)/deps/AllJoynIOS_libc++/$(CONFIGURATION)",
 				);
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
@@ -914,7 +928,7 @@
 					"-DQCC_OS_DARWIN",
 				);
 				OTHER_CPLUSPLUSFLAGS = "$(OTHER_CFLAGS)";
-				OTHER_LIBTOOLFLAGS = "-lalljoyn -lajrouter -lBundledRouter.o -lAllJoynFramework_iOS -lssl -lcrypto";
+				OTHER_LIBTOOLFLAGS = "-lssl -lcrypto";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				STRIP_STYLE = "non-global";
@@ -939,7 +953,7 @@
 					"-DQCC_OS_DARWIN",
 				);
 				OTHER_CPLUSPLUSFLAGS = "$(OTHER_CFLAGS)";
-				OTHER_LIBTOOLFLAGS = "-lalljoyn -lajrouter -lBundledRouter.o -lAllJoynFramework_iOS -lssl -lcrypto";
+				OTHER_LIBTOOLFLAGS = "-lssl -lcrypto";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				STRIP_STYLE = "non-global";
