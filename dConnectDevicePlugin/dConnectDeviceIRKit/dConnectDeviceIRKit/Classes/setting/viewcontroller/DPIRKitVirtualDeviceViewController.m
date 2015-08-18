@@ -41,6 +41,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    bundle = DPIRBundle();
     _virtualDeviceList.allowsMultipleSelection = NO;
 
     _isRemoved = NO;
@@ -130,6 +131,12 @@
     cell.exclusiveTouch = YES;
     cell.accessoryView.exclusiveTouch = YES;
     DPIRKitVirtualDevice * device = _devices[indexPath.row];
+    NSString * path = [bundle pathForResource:@"light" ofType:@"png"];
+    if ([device.categoryName isEqualToString:@"テレビ"]) {
+        path = [bundle pathForResource:@"tv" ofType:@"png"];
+    }
+    cell.imageView.image = [UIImage imageWithContentsOfFile:path];
+
     if (!_isRemoved) {
         cell.accessoryType = UITableViewCellAccessoryNone;
     }
