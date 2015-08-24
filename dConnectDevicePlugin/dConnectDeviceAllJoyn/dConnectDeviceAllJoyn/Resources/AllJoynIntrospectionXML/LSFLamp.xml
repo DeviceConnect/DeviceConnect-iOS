@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<node name="/org/allseen/LSF/Lamp" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://allseenalliance.org/schemas/introspect.xsd">
+    <annotation name="org.alljoyn.lang.objc" value="LSFLampObject"/>
+<!--    <interface name="org.freedesktop.DBus.Properties">-->
+<!--        <method name="Get">-->
+<!--            <arg type="s" direction="in"/>-->
+<!--            <arg type="s" direction="in"/>-->
+<!--            <arg type="v" direction="out"/>-->
+<!--        </method>-->
+<!--        <method name="Set">-->
+<!--            <arg type="s" direction="in"/>-->
+<!--            <arg type="s" direction="in"/>-->
+<!--            <arg type="v" direction="in"/>-->
+<!--        </method>-->
+<!--        <method name="GetAll">-->
+<!--            <arg type="s" direction="in"/>-->
+<!--            <arg type="a{sv}" direction="out"/>-->
+<!--        </method>-->
+<!--    </interface>-->
+    <interface name="org.allseen.LSF.LampService">
+        <annotation name="org.alljoyn.lang.objc" value="LSFLampServiceDelegate"/>
+        <!-- "Version" conflicts with other I/Fs' instances of Version. -->
+        <property name="LampServiceInterfaceVersion" type="u" access="read"/>
+        <property name="LampServiceVersion" type="u" access="read"/>
+        <method name="ClearLampFault">
+            <arg name="LampFaultCode" type="u" direction="in">
+                <annotation name="org.alljoyn.lang.objc" value="clearLampFaultWithFaultCode:"/>
+            </arg>
+            <arg name="LampResponseCode" type="u" direction="out">
+                <annotation name="org.alljoyn.lang.objc" value=" responseCode:"/>
+            </arg>
+            <arg name="LampFaultCode" type="u" direction="out">
+                <annotation name="org.alljoyn.lang.objc" value="faultCode:"/>
+            </arg>
+        </method>
+        <property name="LampFaults" type="au" access="read"/>
+    </interface>
+    <interface name="org.allseen.LSF.LampParameters">
+        <annotation name="org.alljoyn.lang.objc" value="LSFLampParametersDelegate"/>
+        <!-- "Version" conflicts with other I/Fs' instances of Version. -->
+        <property name="LampParametersVersion" type="u" access="read"/>
+        <property name="Energy_Usage_Milliwatts" type="u" access="read"/>
+        <property name="Brightness_Lumens" type="u" access="read"/>
+    </interface>
+    <interface name="org.allseen.LSF.LampDetails">
+        <annotation name="org.alljoyn.lang.objc" value="LSFLampDetailsDelegate"/>
+        <!-- "Version" conflicts with other I/Fs' instances of Version. -->
+        <property name="LampDetailsVersion" type="u" access="read"/>
+        <property name="Make" type="u" access="read"/>
+        <property name="Model" type="u" access="read"/>
+        <property name="Type" type="u" access="read"/>
+        <property name="LampType" type="u" access="read"/>
+        <property name="LampBaseType" type="u" access="read"/>
+        <property name="LampBeamAngle" type="u" access="read"/>
+        <property name="Dimmable" type="b" access="read"/>
+        <property name="Color" type="b" access="read"/>
+        <property name="VariableColorTemp" type="b" access="read"/>
+        <property name="HasEffects" type="b" access="read"/>
+        <property name="MinVoltage" type="u" access="read"/>
+        <property name="MaxVoltage" type="u" access="read"/>
+        <property name="Wattage" type="u" access="read"/>
+        <property name="IncandescentEquivalent" type="u" access="read"/>
+        <property name="MaxLumens" type="u" access="read"/>
+        <property name="MinTemperature" type="u" access="read"/>
+        <property name="MaxTemperature" type="u" access="read"/>
+        <property name="ColorRenderingIndex" type="u" access="read"/>
+        <property name="LampID" type="s" access="read"/>
+    </interface>
+    <interface name="org.allseen.LSF.LampState">
+        <annotation name="org.alljoyn.lang.objc" value="LSFLampStateDelegate"/>
+        <!-- "Version" conflicts with other I/Fs' instances of Version. -->
+        <property name="LampStateVersion" type="u" access="read"/>
+        <method name="TransitionLampState">
+            <arg name="Timestamp" type="t" direction="in">
+                <annotation name="org.alljoyn.lang.objc" value="transitionLamsStateWithTimestamp:"/>
+            </arg>
+            <arg name="NewState" type="a{sv}" direction="in">
+                <annotation name="org.alljoyn.lang.objc" value="newState:"/>
+            </arg>
+            <arg name="TransitionPeriod" type="u" direction="in">
+                <annotation name="org.alljoyn.lang.objc" value="transitionPeriod:"/>
+            </arg>
+            <arg name="LampResponseCode" type="u" direction="out">
+                <annotation name="org.alljoyn.lang.objc" value="responseCode:"/>
+            </arg>
+        </method>
+        <method name="ApplyPulseEffect">
+            <arg name="FromState" type="a{sv}" direction="in">
+                <annotation name="org.alljoyn.lang.objc" value="applyPulseEffectWithFromState:"/>
+            </arg>
+            <arg name="ToState" type="a{sv}" direction="in">
+                <annotation name="org.alljoyn.lang.objc" value="toState:"/>
+            </arg>
+            <arg name="period" type="u" direction="in">
+                <annotation name="org.alljoyn.lang.objc" value="period:"/>
+            </arg>
+            <arg name="duration" type="u" direction="in">
+                <annotation name="org.alljoyn.lang.objc" value="duration:"/>
+            </arg>
+            <arg name="numPulses" type="u" direction="in">
+                <annotation name="org.alljoyn.lang.objc" value="numPulses:"/>
+            </arg>
+            <arg name="timestamp" type="t" direction="in">
+                <annotation name="org.alljoyn.lang.objc" value="timestamp:"/>
+            </arg>
+            <arg name="LampResponseCode" type="u" direction="out">
+                <annotation name="org.alljoyn.lang.objc" value="responseCode:"/>
+            </arg>
+        </method>
+        <signal name="LampStateChanged">
+            <arg name="LampID" type="s">
+                <annotation name="org.alljoyn.lang.objc" value="lampStateDidChangedForLampID:"/>
+            </arg>
+        </signal>
+        <property name="OnOff" type="b" access="readwrite"/>
+        <property name="Hue" type="u" access="readwrite"/>
+        <property name="Saturation" type="u" access="readwrite"/>
+        <property name="ColorTemp" type="u" access="readwrite"/>
+        <property name="Brightness" type="u" access="readwrite"/>
+    </interface>
+</node>

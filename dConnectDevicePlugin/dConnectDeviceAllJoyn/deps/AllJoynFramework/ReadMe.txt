@@ -1,0 +1,1 @@
+AllJoyn 15.04.00b OSX/iOS SDK distribution.

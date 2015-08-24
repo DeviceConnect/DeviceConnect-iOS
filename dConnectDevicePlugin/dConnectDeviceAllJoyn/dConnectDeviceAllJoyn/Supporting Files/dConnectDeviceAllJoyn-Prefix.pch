@@ -1,0 +1,45 @@
+//
+//  dConnectDeviceAllJoyn-Prefix.pch
+//  dConnectDeviceAllJoyn
+//
+//  Copyright (c) 2015 NTT DOCOMO, INC.
+//  Released under the MIT license
+//  http://opensource.org/licenses/mit-license.php
+//
+
+//
+// The contents of this file are implicitly included at the beginning of every source file.
+//
+// Include any system framework and library headers here that should be included in all compilation units.
+// You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
+//
+
+#ifdef __OBJC__
+#import <Foundation/Foundation.h>
+#import <objc/runtime.h>
+#endif
+
+#define DPAllJoynResourceBundle() \
+([NSBundle bundleWithURL: \
+[[NSBundle mainBundle] URLForResource:@"dConnectDeviceAllJoyn_resources" \
+withExtension:@"bundle"]])
+
+#ifdef DEBUG
+#define DCLogInfo(fmt, ...) NSLog((@"%s:INFO: " fmt), class_getName([self class]), ##__VA_ARGS__)
+#define DCLogInfo2(tag, fmt, ...) NSLog((@"%@:INFO: " fmt), (tag), ##__VA_ARGS__)
+#else
+#define DCLogInfo(...)
+#define DCLogInfo2(...)
+#endif
+
+#ifdef DEBUG
+#define DCLogWarn(fmt, ...) NSLog((@"%s:WARN: " fmt), class_getName([self class]), ##__VA_ARGS__)
+#define DCLogWarn2(tag, fmt, ...) NSLog((@"%@:WARN: " fmt), (tag), ##__VA_ARGS__)
+#else
+#define DCLogWarn(...)
+#define DCLogWarn2(...)
+#endif
+
+#define DCLogError(fmt, ...) NSLog((@"%s:ERROR: " fmt), class_getName([self class]), ##__VA_ARGS__)
+#define DCLogError2(tag, fmt, ...) NSLog((@"%@:ERROR: " fmt), (tag), ##__VA_ARGS__)
+

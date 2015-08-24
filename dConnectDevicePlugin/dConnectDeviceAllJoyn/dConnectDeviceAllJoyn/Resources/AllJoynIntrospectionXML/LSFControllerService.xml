@@ -1,0 +1,697 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<node name="/org/allseen/LSF/ControllerService" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://allseenalliance.org/schemas/introspect.xsd">
+    <annotation name="org.alljoyn.lang.objc" value="LSFControllerServiceObject"/>
+    <!--    <interface name="org.freedesktop.DBus.Properties">-->
+    <!--        <method name="Get">-->
+    <!--            <arg type="s" direction="in">
+     </arg>-->
+    <!--            <arg type="s" direction="in">
+     </arg>-->
+    <!--            <arg type="v" direction="out">
+     </arg>-->
+    <!--        </method>-->
+    <!--        <method name="Set">-->
+    <!--            <arg type="s" direction="in">
+     </arg>-->
+    <!--            <arg type="s" direction="in">
+     </arg>-->
+    <!--            <arg type="v" direction="in">
+     </arg>-->
+    <!--        </method>-->
+    <!--        <method name="GetAll">-->
+    <!--            <arg type="s" direction="in">
+     </arg>-->
+    <!--            <arg type="a{sv}" direction="out">
+     </arg>-->
+    <!--        </method>-->
+    <!--    </interface>-->
+    <interface name="org.allseen.LSF.ControllerService">
+        <annotation name="org.alljoyn.lang.objc" value="LSFControllerServiceDelegate"/>
+        <!-- "Version" conflicts with org.allseen.LSF.ControllerService.Lamp#Version. -->
+        <property name="ControllerServiceVersion" type="u" access="read"/>
+        <method name="LightingResetControllerService">
+            <arg name="responseCode" type="u" direction="out">
+                <annotation name="org.alljoyn.lang.objc" value="resetControllerServiceWithResponseCode:"/>
+            </arg>
+        </method>
+        <method name="GetControllerServiceVersion">
+            <arg name="version" type="u" direction="out">
+                <annotation name="org.alljoyn.lang.objc" value="getControllerServiceVersion:"/>
+            </arg>
+        </method>
+        <signal name="ControllerServiceLightingReset">
+            <annotation name="org.alljoyn.lang.objc" value="didResetControllerService"/>
+        </signal>
+    </interface>
+    <interface name="org.allseen.LSF.ControllerService.Lamp">
+        <annotation name="org.alljoyn.lang.objc" value="LSFControllerServiceLampDelegate"/>
+        <!-- "Version" conflicts with org.allseen.LSF.ControllerService#Version. -->
+        <property name="LampVersion" type="u" access="read"/>
+        <method name="GetAllLampIDs">
+            <arg name="responseCode" type="u" direction="out">
+                <annotation name="org.alljoyn.lang.objc" value="getAllLampIDsWithResponseCode:"/>
+            </arg>
+            <arg name="lampIDs" type="as" direction="out">
+                <annotation name="org.alljoyn.lang.objc" value="lampIDs:"/>
+            </arg>
+        </method>
+        <method name="GetLampSupportedLanguages">
+            <arg name="lampID" type="s" direction="in">
+                <annotation name="org.alljoyn.lang.objc" value="getLampSupportedLangueagesWithLampID:"/>
+            </arg>
+            <arg name="responseCode" type="u" direction="out">
+                <annotation name="org.alljoyn.lang.objc" value="responseCode:"/>
+            </arg>
+            <arg name="lampID" type="s" direction="out">
+                <annotation name="org.alljoyn.lang.objc" value="lampID:"/>
+            </arg>
+            <arg name="supportedLanguages" type="as" direction="out">
+                <annotation name="org.alljoyn.lang.objc" value="supportedLanguages:"/>
+            </arg>
+        </method>
+        <method name="GetLampManufacturer">
+            <arg name="lampID" type="s" direction="in">
+                <annotation name="org.alljoyn.lang.objc" value="getLampManufacturerWithLampID:"/>
+            </arg>
+            <arg name="language" type="s" direction="in">
+                <annotation name="org.alljoyn.lang.objc" value="language:"/>
+            </arg>
+            <arg name="responseCode" type="u" direction="out">
+                <annotation name="org.alljoyn.lang.objc" value="responseCode:"/>
+            </arg>
+            <arg name="lampID" type="s" direction="out">
+                <annotation name="org.alljoyn.lang.objc" value="lampID:"/>
+            </arg>
+            <arg name="language" type="s" direction="out">
+                <annotation name="org.alljoyn.lang.objc" value="language:"/>
+            </arg>
+            <arg name="manufacturer" type="s" direction="out">
+                <annotation name="org.alljoyn.lang.objc" value="manufacturer:"/>
+            </arg>
+        </method>
+        <method name="GetLampName">
+            <arg name="lampID" type="s" direction="in">
+                <annotation name="org.alljoyn.lang.objc" value="getLampNameWithLampID:"/>
+            </arg>
+            <arg name="language" type="s" direction="in">
+                <annotation name="org.alljoyn.lang.objc" value="language:"/>
+            </arg>
+            <arg name="responseCode" type="u" direction="out">
+                <annotation name="org.alljoyn.lang.objc" value="responseCode:"/>
+            </arg>
+            <arg name="lampID" type="s" direction="out">
+                <annotation name="org.alljoyn.lang.objc" value="lampID:"/>
+            </arg>
+            <arg name="language" type="s" direction="out">
+                <annotation name="org.alljoyn.lang.objc" value="language:"/>
+            </arg>
+            <arg name="lampName" type="s" direction="out">
+                <annotation name="org.alljoyn.lang.objc" value="lampName:"/>
+            </arg>
+        </method>
+        <method name="SetLampName">
+            <arg name="lampID" type="s" direction="in">
+                <annotation name="org.alljoyn.lang.objc" value="setLampNameWithLampID:"/>
+            </arg>
+            <arg name="lampName" type="s" direction="in">
+                <annotation name="org.alljoyn.lang.objc" value="lampName:"/>
+            </arg>
+            <arg name="language" type="s" direction="in">
+                <annotation name="org.alljoyn.lang.objc" value="language:"/>
+            </arg>
+            <arg name="responseCode" type="u" direction="out">
+                <annotation name="org.alljoyn.lang.objc" value="responseCode:"/>
+            </arg>
+            <arg name="lampID" type="s" direction="out">
+                <annotation name="org.alljoyn.lang.objc" value="lampID:"/>
+            </arg>
+            <arg name="language" type="s" direction="out">
+                <annotation name="org.alljoyn.lang.objc" value="language:"/>
+            </arg>
+        </method>
+        <method name="GetLampDetails">
+            <arg name="lampID" type="s" direction="in">
+                <annotation name="org.alljoyn.lang.objc" value="getLampDetailsWithLampID:"/>
+            </arg>
+            <arg name="responseCode" type="u" direction="out">
+                <annotation name="org.alljoyn.lang.objc" value="responseCode:"/>
+            </arg>
+            <arg name="lampID" type="s" direction="out">
+                <annotation name="org.alljoyn.lang.objc" value="lampID:"/>
+            </arg>
+            <arg name="lampDetails" type="a{sv}" direction="out">
+                <annotation name="org.alljoyn.lang.objc" value="lampDetails:"/>
+            </arg>
+        </method>
+        <method name="GetLampParameters">
+            <arg name="lampID" type="s" direction="in">
+                <annotation name="org.alljoyn.lang.objc" value="getLampParametersWithLampID:"/>
+            </arg>
+            <arg name="responseCode" type="u" direction="out">
+                <annotation name="org.alljoyn.lang.objc" value="responseCode:"/>
+            </arg>
+            <arg name="lampID" type="s" direction="out">
+                <annotation name="org.alljoyn.lang.objc" value="lampID:"/>
+            </arg>
+            <arg name="lampParameters" type="a{sv}" direction="out">
+                <annotation name="org.alljoyn.lang.objc" value="lampParameters:"/>
+            </arg>
+        </method>
+        <method name="GetLampParametersField">
+            <arg name="lampID" type="s" direction="in">
+                <annotation name="org.alljoyn.lang.objc" value="getLampParametersFieldWithLampID:"/>
+            </arg>
+            <arg name="lampParameterFieldName" type="s" direction="in">
+                <annotation name="org.alljoyn.lang.objc" value="parameterFieldName:"/>
+            </arg>
+            <arg name="responseCode" type="u" direction="out">
+                <annotation name="org.alljoyn.lang.objc" value="responseCode:"/>
+            </arg>
+            <arg name="lampID" type="s" direction="out">
+                <annotation name="org.alljoyn.lang.objc" value="lampID:"/>
+            </arg>
+            <arg name="lampParameterFieldName" type="s" direction="out">
+                <annotation name="org.alljoyn.lang.objc" value="parameterFieldName:"/>
+            </arg>
+            <arg name="lampParameterFieldValue" type="s" direction="out">
+                <annotation name="org.alljoyn.lang.objc" value="parameterFieldValue:"/>
+            </arg>
+        </method>
+        <method name="GetLampState">
+            <arg name="lampID" type="s" direction="in">
+                <annotation name="org.alljoyn.lang.objc" value="getLampStateWithLampID:"/>
+            </arg>
+            <arg name="responseCode" type="u" direction="out">
+                <annotation name="org.alljoyn.lang.objc" value="responseCode:"/>
+            </arg>
+            <arg name="lampID" type="s" direction="out">
+                <annotation name="org.alljoyn.lang.objc" value="lampID:"/>
+            </arg>
+            <arg name="lampState" type="a{sv}" direction="out">
+                <annotation name="org.alljoyn.lang.objc" value="lampState:"/>
+            </arg>
+        </method>
+        <method name="GetLampStateField">
+            <arg name="lampID" type="s" direction="in">
+                <annotation name="org.alljoyn.lang.objc" value="getLampStateFieldWithLampID:"/>
+            </arg>
+            <arg name="lampStateFieldName" type="s" direction="in">
+                <annotation name="org.alljoyn.lang.objc" value="stateFieldName:"/>
+            </arg>
+            <arg name="responseCode" type="u" direction="out">
+                <annotation name="org.alljoyn.lang.objc" value="responseCode:"/>
+            </arg>
+            <arg name="lampID" type="s" direction="out">
+                <annotation name="org.alljoyn.lang.objc" value="lampID:"/>
+            </arg>
+            <arg name="lampStateFieldName" type="s" direction="out">
+                <annotation name="org.alljoyn.lang.objc" value="stateFieldName:"/>
+            </arg>
+            <arg name="lampStateFieldValue" type="s" direction="out">
+                <annotation name="org.alljoyn.lang.objc" value="stateFieldValue:"/>
+            </arg>
+        </method>
+        <method name="TransitionLampState">
+            <arg name="lampID" type="s" direction="in">
+                <annotation name="org.alljoyn.lang.objc" value="transitionLampStateWithLampID:"/>
+            </arg>
+            <arg name="lampState" type="a{sv}" direction="in">
+                <annotation name="org.alljoyn.lang.objc" value="lampState:"/>
+            </arg>
+            <arg name="transitionPeriod" type="u" direction="in">
+                <annotation name="org.alljoyn.lang.objc" value="transitionPeriod:"/>
+            </arg>
+            <arg name="responseCode" type="u" direction="out">
+                <annotation name="org.alljoyn.lang.objc" value="responseCode:"/>
+            </arg>
+            <arg name="lampID" type="s" direction="out">
+                <annotation name="org.alljoyn.lang.objc" value="lampID:"/>
+            </arg>
+        </method>
+        <method name="PulseLampWithState">
+            <arg name="lampID" type="s" direction="in">
+                <annotation name="org.alljoyn.lang.objc" value="pulseLampWithStateWithLampID:"/>
+            </arg>
+            <arg name="fromLampState" type="a{sv}" direction="in">
+                <annotation name="org.alljoyn.lang.objc" value="fromState:"/>
+            </arg>
+            <arg name="toLampState" type="a{sv}" direction="in">
+                <annotation name="org.alljoyn.lang.objc" value="toState:"/>
+            </arg>
+            <arg name="period" type="u" direction="in">
+                <annotation name="org.alljoyn.lang.objc" value="period:"/>
+            </arg>
+            <arg name="duration" type="u" direction="in">
+                <annotation name="org.alljoyn.lang.objc" value="duration:"/>
+            </arg>
+            <arg name="numPulses" type="u" direction="in">
+                <annotation name="org.alljoyn.lang.objc" value="numPulses:"/>
+            </arg>
+            <arg name="responseCode" type="u" direction="out">
+                <annotation name="org.alljoyn.lang.objc" value="responseCode:"/>
+            </arg>
+            <arg name="lampID" type="s" direction="out">
+                <annotation name="org.alljoyn.lang.objc" value="lampID:"/>
+            </arg>
+        </method>
+        <method name="PulseLampWithPreset">
+            <arg name="lampID" type="s" direction="in">
+                <annotation name="org.alljoyn.lang.objc" value="pulseLampWithPresetWithLampID:"/>
+            </arg>
+            <arg name="fromPresetID" type="u" direction="in">
+                <annotation name="org.alljoyn.lang.objc" value="fromPresetID:"/>
+            </arg>
+            <arg name="toPresetID" type="u" direction="in">
+                <annotation name="org.alljoyn.lang.objc" value="toPresetID:"/>
+            </arg>
+            <arg name="period" type="u" direction="in">
+                <annotation name="org.alljoyn.lang.objc" value="period:"/>
+            </arg>
+            <arg name="duration" type="u" direction="in">
+                <annotation name="org.alljoyn.lang.objc" value="duration:"/>
+            </arg>
+            <arg name="numPulses" type="u" direction="in">
+                <annotation name="org.alljoyn.lang.objc" value="numPulses:"/>
+            </arg>
+            <arg name="responseCode" type="u" direction="out">
+                <annotation name="org.alljoyn.lang.objc" value="responseCode:"/>
+            </arg>
+            <arg name="lampID" type="s" direction="out">
+                <annotation name="org.alljoyn.lang.objc" value="lampID:"/>
+            </arg>
+        </method>
+        <method name="TransitionLampStateToPreset">
+            <arg name="lampID" type="s" direction="in">
+                <annotation name="org.alljoyn.lang.objc" value="transitionLampStateToPresetWithLampID:"/>
+            </arg>
+            <arg name="presetID" type="u" direction="in">
+                <annotation name="org.alljoyn.lang.objc" value="presetID:"/>
+            </arg>
+            <arg name="transitionPeriod" type="u" direction="in">
+                <annotation name="org.alljoyn.lang.objc" value="transitionPeriod:"/>
+            </arg>
+            <arg name="responseCode" type="u" direction="out">
+                <annotation name="org.alljoyn.lang.objc" value="responseCode:"/>
+            </arg>
+            <arg name="lampID" type="s" direction="out">
+                <annotation name="org.alljoyn.lang.objc" value="lampID:"/>
+            </arg>
+        </method>
+        <method name="TransitionLampStateField">
+            <arg name="lampID" type="s" direction="in">
+                <annotation name="org.alljoyn.lang.objc" value="transitionLampStateFieldWithLampID:"/>
+            </arg>
+            <arg name="lampStateFieldName" type="s" direction="in">
+                <annotation name="org.alljoyn.lang.objc" value="stateFieldName:"/>
+            </arg>
+            <arg name="lampStateFieldValue" type="s" direction="in">
+                <annotation name="org.alljoyn.lang.objc" value="stateFieldValue:"/>
+            </arg>
+            <arg name="transitionPeriod" type="u" direction="in">
+                <annotation name="org.alljoyn.lang.objc" value="transitionPeriod:"/>
+            </arg>
+            <arg name="responseCode" type="u" direction="out">
+                <annotation name="org.alljoyn.lang.objc" value="responseCode:"/>
+            </arg>
+            <arg name="lampID" type="s" direction="out">
+                <annotation name="org.alljoyn.lang.objc" value="lampID:"/>
+            </arg>
+            <arg name="lampStateFieldName" type="s" direction="out">
+                <annotation name="org.alljoyn.lang.objc" value="lampStateFieldName:"/>
+            </arg>
+        </method>
+        <method name="ResetLampState">
+            <arg name="lampID" type="s" direction="in">
+                <annotation name="org.alljoyn.lang.objc" value="resetLampStateWithLampID:"/>
+            </arg>
+            <arg name="responseCode" type="u" direction="out">
+                <annotation name="org.alljoyn.lang.objc" value="responseCode:"/>
+            </arg>
+            <arg name="lampID" type="s" direction="out">
+                <annotation name="org.alljoyn.lang.objc" value="lampID:"/>
+            </arg>
+        </method>
+        <method name="ResetLampStateField">
+            <arg name="lampID" type="s" direction="in">
+                <annotation name="org.alljoyn.lang.objc" value="resetLampStateFieldWithLampID:"/>
+            </arg>
+            <arg name="lampStateFieldName" type="s" direction="in">
+                <annotation name="org.alljoyn.lang.objc" value="stateFieldName:"/>
+            </arg>
+            <arg name="responseCode" type="u" direction="out">
+                <annotation name="org.alljoyn.lang.objc" value="responseCode:"/>
+            </arg>
+            <arg name="lampID" type="s" direction="out">
+                <annotation name="org.alljoyn.lang.objc" value="lampID:"/>
+            </arg>
+            <arg name="lampStateFieldName" type="s" direction="out">
+                <annotation name="org.alljoyn.lang.objc" value="stateFieldName:"/>
+            </arg>
+        </method>
+        <method name="GetLampFaults">
+            <arg name="lampID" type="s" direction="in">
+                <annotation name="org.alljoyn.lang.objc" value="getLampFaultsWithLampID:"/>
+            </arg>
+            <arg name="responseCode" type="u" direction="out">
+                <annotation name="org.alljoyn.lang.objc" value="responseCode:"/>
+            </arg>
+            <arg name="lampID" type="s" direction="out">
+                <annotation name="org.alljoyn.lang.objc" value="lampID:"/>
+            </arg>
+            <arg name="lampFaults" type="au" direction="out">
+                <annotation name="org.alljoyn.lang.objc" value="lampFaults:"/>
+            </arg>
+        </method>
+        <method name="ClearLampFaults">
+            <arg name="lampID" type="s" direction="in">
+                <annotation name="org.alljoyn.lang.objc" value="clearLampFaultsWithLampID:"/>
+            </arg>
+            <arg name="lampFault" type="u" direction="in">
+                <annotation name="org.alljoyn.lang.objc" value="lampFault:"/>
+            </arg>
+            <arg name="responseCode" type="u" direction="out">
+                <annotation name="org.alljoyn.lang.objc" value="responseCode:"/>
+            </arg>
+            <arg name="lampID" type="s" direction="out">
+                <annotation name="org.alljoyn.lang.objc" value="lampID:"/>
+            </arg>
+            <arg name="lampFault" type="u" direction="out">
+                <annotation name="org.alljoyn.lang.objc" value="lampFault:"/>
+            </arg>
+        </method>
+        <method name="GetLampServiceVersion">
+            <arg name="lampID" type="s" direction="in">
+                <annotation name="org.alljoyn.lang.objc" value="getLampServiceVersionWithLampID:"/>
+            </arg>
+            <arg name="responseCode" type="u" direction="out">
+                <annotation name="org.alljoyn.lang.objc" value="responseCode:"/>
+            </arg>
+            <arg name="lampID" type="s" direction="out">
+                <annotation name="org.alljoyn.lang.objc" value="lampID:"/>
+            </arg>
+            <arg name="lampServiceVersion" type="u" direction="out">
+                <annotation name="org.alljoyn.lang.objc" value="version:"/>
+            </arg>
+        </method>
+        <signal name="LampNameChanged">
+            <arg name="LampID" type="s">
+                <annotation name="org.alljoyn.lang.objc" value="lampNameDidChangeForLampID:"/>
+            </arg>
+            <arg name="lampName" type="s">
+                <annotation name="org.alljoyn.lang.objc" value="lampName:"/>
+            </arg>
+        </signal>
+        <signal name="LampStateChanged">
+            <arg name="LampID" type="s">
+                <annotation name="org.alljoyn.lang.objc" value="lampStateDidChangeForLampID:"/>
+            </arg>
+            <arg name="lampName" type="s">
+                <annotation name="org.alljoyn.lang.objc" value="lampName:"/>
+            </arg>
+        </signal>
+        <signal name="LampsFound">
+            <arg name="LampID" type="s">
+                <annotation name="org.alljoyn.lang.objc" value="didFindLamp:"/>
+            </arg>
+        </signal>
+        <signal name="LampsLost">
+            <arg name="lampIDs" type="as">
+                <annotation name="org.alljoyn.lang.objc" value="didLoseLamps:"/>
+            </arg>
+        </signal>
+    </interface>
+    <interface name="org.allseen.LSF.ControllerService.LampGroup">
+        <annotation name="org.alljoyn.lang.objc" value="LSFControllerServiceLampGroupDelegate"/>
+        <property name="LampGroupVersion" type="u" access="read"/>
+        <method name="GetAllLampGroupIDs">
+            <arg name="responseCode" type="u" direction="out">
+                <annotation name="org.alljoyn.lang.objc" value="getAllLampGroupIDsWithResponseCode:"/>
+            </arg>
+            <arg name="lampGroupIDs" type="as" direction="out">
+                <annotation name="org.alljoyn.lang.objc" value="lampGroupIDs:"/>
+            </arg>
+        </method>
+        <method name="GetLampGroupName">
+            <arg name="lampGroupID" type="s" direction="in">
+                <annotation name="org.alljoyn.lang.objc" value="getLampGroupNameWithLampGroupID:"/>
+            </arg>
+            <arg name="language" type="s" direction="in">
+                <annotation name="org.alljoyn.lang.objc" value="language:"/>
+            </arg>
+            <arg name="responseCode" type="u" direction="out">
+                <annotation name="org.alljoyn.lang.objc" value="responseCode:"/>
+            </arg>
+            <arg name="lampGroupID" type="s" direction="out">
+                <annotation name="org.alljoyn.lang.objc" value="lampIDGroupID:"/>
+            </arg>
+            <arg name="language" type="s" direction="out">
+                <annotation name="org.alljoyn.lang.objc" value="language:"/>
+            </arg>
+            <arg name="lampGroupName" type="s" direction="out">
+                <annotation name="org.alljoyn.lang.objc" value="lampGroupName:"/>
+            </arg>
+        </method>
+        <method name="SetLampGroupName">
+            <arg name="lampGroupID" type="s" direction="in">
+                <annotation name="org.alljoyn.lang.objc" value="setLampGroupNameWithLampID:"/>
+            </arg>
+            <arg name="lampName" type="s" direction="in">
+                <annotation name="org.alljoyn.lang.objc" value="lampName:"/>
+            </arg>
+            <arg name="language" type="s" direction="in">
+                <annotation name="org.alljoyn.lang.objc" value="language:"/>
+            </arg>
+            <arg name="responseCode" type="u" direction="out">
+                <annotation name="org.alljoyn.lang.objc" value="responseCode:"/>
+            </arg>
+            <arg name="lampID" type="s" direction="out">
+                <annotation name="org.alljoyn.lang.objc" value="lampID:"/>
+            </arg>
+            <arg name="language" type="s" direction="out">
+                <annotation name="org.alljoyn.lang.objc" value="language:"/>
+            </arg>
+        </method>
+        <method name="CreateLampGroup">
+            <arg name="lampIDs" type="as" direction="in">
+                <annotation name="org.alljoyn.lang.objc" value="createLampGroupWithLampIDs:"/>
+            </arg>
+            <arg name="lampGroupIDs" type="as" direction="in">
+                <annotation name="org.alljoyn.lang.objc" value="lampGroupIDs:"/>
+            </arg>
+            <arg name="lampGroupName" type="s" direction="in">
+                <annotation name="org.alljoyn.lang.objc" value="lampGroupName:"/>
+            </arg>
+            <arg name="language" type="s" direction="in">
+                <annotation name="org.alljoyn.lang.objc" value="language:"/>
+            </arg>
+            <arg name="responseCode" type="u" direction="out">
+                <annotation name="org.alljoyn.lang.objc" value="responseCode:"/>
+            </arg>
+            <arg name="lampGroupID" type="s" direction="out">
+                <annotation name="org.alljoyn.lang.objc" value="lampGroupID:"/>
+            </arg>
+        </method>
+        <method name="UpdateLampGroup">
+            <arg name="lampGroupID" type="s" direction="in">
+                <annotation name="org.alljoyn.lang.objc" value="updateLampGroupWithLampGroupID:"/>
+            </arg>
+            <arg name="lampIDs" type="as" direction="in">
+                <annotation name="org.alljoyn.lang.objc" value="lampIDs:"/>
+            </arg>
+            <arg name="lampGroupIDs" type="as" direction="in">
+                <annotation name="org.alljoyn.lang.objc" value="lampGroupIDs:"/>
+            </arg>
+            <arg name="responseCode" type="u" direction="out">
+                <annotation name="org.alljoyn.lang.objc" value="responseCode:"/>
+            </arg>
+            <arg name="lampGroupID" type="s" direction="out">
+                <annotation name="org.alljoyn.lang.objc" value="lampGroupID:"/>
+            </arg>
+        </method>
+        <method name="DeleteLampGroup">
+            <arg name="lampGroupID" type="s" direction="in">
+                <annotation name="org.alljoyn.lang.objc" value="deleteLampGroupWithLampGroupID:"/>
+            </arg>
+            <arg name="responseCode" type="u" direction="out">
+                <annotation name="org.alljoyn.lang.objc" value="responseCode:"/>
+            </arg>
+            <arg name="lampGroupID" type="s" direction="out">
+                <annotation name="org.alljoyn.lang.objc" value="lampGroupID:"/>
+            </arg>
+        </method>
+        <method name="GetLampGroup">
+            <arg name="lampGroupID" type="s" direction="in">
+                <annotation name="org.alljoyn.lang.objc" value="getLampGroupWithLampGroupID:"/>
+            </arg>
+            <arg name="responseCode" type="u" direction="out">
+                <annotation name="org.alljoyn.lang.objc" value="responseCode:"/>
+            </arg>
+            <arg name="lampGroupID" type="s" direction="out">
+                <annotation name="org.alljoyn.lang.objc" value="lampGroupID:"/>
+            </arg>
+            <arg name="lampID" type="as" direction="out">
+                <annotation name="org.alljoyn.lang.objc" value="lampID:"/>
+            </arg>
+            <arg name="lampGroupIDs" type="as" direction="out">
+                <annotation name="org.alljoyn.lang.objc" value="lampGroupIDs:"/>
+            </arg>
+        </method>
+        <method name="TransitionLampGroupState">
+            <arg name="lampGroupID" type="s" direction="in">
+                <annotation name="org.alljoyn.lang.objc" value="transitionLampGroupStateWithLampGroupID:"/>
+            </arg>
+            <arg name="lampState" type="a{sv}" direction="in">
+                <annotation name="org.alljoyn.lang.objc" value="lampState:"/>
+            </arg>
+            <arg name="transitionPeriod" type="u" direction="in">
+                <annotation name="org.alljoyn.lang.objc" value="transitionPeriod:"/>
+            </arg>
+            <arg name="responseCode" type="u" direction="out">
+                <annotation name="org.alljoyn.lang.objc" value="responseCode:"/>
+            </arg>
+            <arg name="lampGroupID" type="s" direction="out">
+                <annotation name="org.alljoyn.lang.objc" value="lampGroupID:"/>
+            </arg>
+        </method>
+        <method name="PulseLampGroupWithState">
+            <arg name="lampGroupID" type="s" direction="in">
+                <annotation name="org.alljoyn.lang.objc" value="pulseLampGroupWithStateWithLampGroupID:"/>
+            </arg>
+            <arg name="fromLampState" type="a{sv}" direction="in">
+                <annotation name="org.alljoyn.lang.objc" value="fromState:"/>
+            </arg>
+            <arg name="toLampState" type="a{sv}" direction="in">
+                <annotation name="org.alljoyn.lang.objc" value="toState:"/>
+            </arg>
+            <arg name="period" type="u" direction="in">
+                <annotation name="org.alljoyn.lang.objc" value="period:"/>
+            </arg>
+            <arg name="duration" type="u" direction="in">
+                <annotation name="org.alljoyn.lang.objc" value="duration:"/>
+            </arg>
+            <arg name="numPulses" type="u" direction="in">
+                <annotation name="org.alljoyn.lang.objc" value="numPulses:"/>
+            </arg>
+            <arg name="responseCode" type="u" direction="out">
+                <annotation name="org.alljoyn.lang.objc" value="responseCode:"/>
+            </arg>
+            <arg name="lampGroupID" type="s" direction="out">
+                <annotation name="org.alljoyn.lang.objc" value="lampGroupID:"/>
+            </arg>
+        </method>
+        <method name="PulseLampGroupWithPreset">
+            <arg name="lampGroupID" type="s" direction="in">
+                <annotation name="org.alljoyn.lang.objc" value="pulseLampGroupWithPresetWithLampGroupID:"/>
+            </arg>
+            <arg name="fromPresetID" type="u" direction="in">
+                <annotation name="org.alljoyn.lang.objc" value="fromPresetID:"/>
+            </arg>
+            <arg name="toPresetID" type="u" direction="in">
+                <annotation name="org.alljoyn.lang.objc" value="toPresetID:"/>
+            </arg>
+            <arg name="period" type="u" direction="in">
+                <annotation name="org.alljoyn.lang.objc" value="period:"/>
+            </arg>
+            <arg name="duration" type="u" direction="in">
+                <annotation name="org.alljoyn.lang.objc" value="duration:"/>
+            </arg>
+            <arg name="numPulses" type="u" direction="in">
+                <annotation name="org.alljoyn.lang.objc" value="numPulses:"/>
+            </arg>
+            <arg name="responseCode" type="u" direction="out">
+                <annotation name="org.alljoyn.lang.objc" value="responseCode:"/>
+            </arg>
+            <arg name="lampGroupID" type="s" direction="out">
+                <annotation name="org.alljoyn.lang.objc" value="lampGroupID:"/>
+            </arg>
+        </method>
+        <method name="TransitionLampGroupStateToPreset">
+            <arg name="lampGroupID" type="s" direction="in">
+                <annotation name="org.alljoyn.lang.objc" value="transitionLampGroupStateToPresetWithLampGroupID:"/>
+            </arg>
+            <arg name="presetID" type="u" direction="in">
+                <annotation name="org.alljoyn.lang.objc" value="presetID:"/>
+            </arg>
+            <arg name="transitionPeriod" type="u" direction="in">
+                <annotation name="org.alljoyn.lang.objc" value="transitionPeriod:"/>
+            </arg>
+            <arg name="responseCode" type="u" direction="out">
+                <annotation name="org.alljoyn.lang.objc" value="responseCode:"/>
+            </arg>
+            <arg name="lampGroupID" type="s" direction="out">
+                <annotation name="org.alljoyn.lang.objc" value="lampGroupID:"/>
+            </arg>
+        </method>
+        <method name="TransitionLampGroupStateField">
+            <arg name="lampGroupID" type="s" direction="in">
+                <annotation name="org.alljoyn.lang.objc" value="transitionLampGroupStateFieldWithLampGroupID:"/>
+            </arg>
+            <arg name="lampGroupStateFieldName" type="s" direction="in">
+                <annotation name="org.alljoyn.lang.objc" value="groupStateFieldName:"/>
+            </arg>
+            <arg name="lampGroupStateFieldValue" type="s" direction="in">
+                <annotation name="org.alljoyn.lang.objc" value="groupStateFieldValue:"/>
+            </arg>
+            <arg name="transitionPeriod" type="u" direction="in">
+                <annotation name="org.alljoyn.lang.objc" value="transitionPeriod:"/>
+            </arg>
+            <arg name="responseCode" type="u" direction="out">
+                <annotation name="org.alljoyn.lang.objc" value="responseCode:"/>
+            </arg>
+            <arg name="lampGroupID" type="s" direction="out">
+                <annotation name="org.alljoyn.lang.objc" value="lampGroupID:"/>
+            </arg>
+            <arg name="lampGroupStateFieldName" type="s" direction="out">
+                <annotation name="org.alljoyn.lang.objc" value="groupStateFieldName:"/>
+            </arg>
+        </method>
+        <method name="ResetLampGroupState">
+            <arg name="lampGroupID" type="s" direction="in">
+                <annotation name="org.alljoyn.lang.objc" value="resetLampGroupStateWithLampGroupID:"/>
+            </arg>
+            <arg name="responseCode" type="u" direction="out">
+                <annotation name="org.alljoyn.lang.objc" value="responseCode:"/>
+            </arg>
+            <arg name="lampGroupID" type="s" direction="out">
+                <annotation name="org.alljoyn.lang.objc" value="lampGroupID:"/>
+            </arg>
+        </method>
+        <method name="ResetLampGroupStateField">
+            <arg name="lampGroupID" type="s" direction="in">
+                <annotation name="org.alljoyn.lang.objc" value="resetLampGroupStateFieldWithLampGroupID:"/>
+            </arg>
+            <arg name="lampGroupStateFieldName" type="s" direction="in">
+                <annotation name="org.alljoyn.lang.objc" value="groupStateFieldName:"/>
+            </arg>
+            <arg name="responseCode" type="u" direction="out">
+                <annotation name="org.alljoyn.lang.objc" value="responseCode:"/>
+            </arg>
+            <arg name="lampGroupID" type="s" direction="out">
+                <annotation name="org.alljoyn.lang.objc" value="lampID:"/>
+            </arg>
+            <arg name="lampGroupStateFieldName" type="s" direction="out">
+                <annotation name="org.alljoyn.lang.objc" value="groupStateFieldName:"/>
+            </arg>
+        </method>
+        <signal name="LampGroupsNameChanged">
+            <arg name="lampGroupsIDs" type="as">
+                <annotation name="org.alljoyn.lang.objc" value="lampGroupNamesDidChangeForLampGroupIDs:"/>
+            </arg>
+        </signal>
+        <signal name="LampGroupsCreated">
+            <arg name="lampGroupsIDs" type="as">
+                <annotation name="org.alljoyn.lang.objc" value="didCreateLampGroups:"/>
+            </arg>
+        </signal>
+        <signal name="LampGroupsUpdated">
+            <arg name="lampGroupsIDs" type="as">
+                <annotation name="org.alljoyn.lang.objc" value="didUpdateLampGroups:"/>
+            </arg>
+        </signal>
+        <signal name="LampGroupsDeleted">
+            <arg name="lampGroupsIDs" type="as">
+                <annotation name="org.alljoyn.lang.objc" value="didDeleteLampGroups:"/>
+            </arg>
+        </signal>
+    </interface>
+</node>
