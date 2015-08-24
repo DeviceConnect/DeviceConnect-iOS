@@ -30,6 +30,7 @@
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>dconnect</string>
+				<string>gotapi</string>
 			</array>
 		</dict>
 	</array>

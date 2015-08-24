@@ -72,7 +72,7 @@
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
 {
-    if (![url.scheme isEqualToString:@"dconnect"]) {
+    if (![url.scheme isEqualToString:@"dconnect"] || ![url.scheme isEqualToString:@"gotapi"]) {
         return NO;
     }
     
@@ -81,7 +81,7 @@
 
     if (_URLLoadingCallback && redirectURL) {
         // UIApplicationWillEnterForegroundNotification通知オブザベーションによりコールバックが呼ばれた場合、
-        // NSURLを引数に取るコールバックが保持される。その上で「dconnect」URLスキーム経由でリダイレクト先URLが飛んできたのなら、
+        // NSURLを引数に取るコールバックが保持される。その上で「dconnect」または「gotapi」URLスキーム経由でリダイレクト先URLが飛んできたのなら、
         // このコールバックにコールバックURLを渡す。
 
         _URLLoadingCallback(redirectURL);
