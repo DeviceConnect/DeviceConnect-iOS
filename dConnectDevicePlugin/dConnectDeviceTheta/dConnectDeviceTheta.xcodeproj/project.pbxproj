@@ -32,6 +32,7 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		AB055EA31B8AAB1D0078128B /* DPOmnidirectionalImageProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = AB055EA21B8AAB1D0078128B /* DPOmnidirectionalImageProfile.m */; };
 		AB39FEB01B4D0FE200A8139E /* DPThetaFileProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = AB39FEAF1B4D0FE200A8139E /* DPThetaFileProfile.m */; };
 		AB39FEE61B4F4D0500A8139E /* DPThetaGuideViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB39FEE31B4F4D0500A8139E /* DPThetaGuideViewController.m */; };
 		AB39FEE71B4F4D0500A8139E /* DPThetaSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB39FEE51B4F4D0500A8139E /* DPThetaSettingViewController.m */; };
@@ -72,7 +73,23 @@
 		AB50D0EC1B40F0C300EB9F94 /* DPThetaServiceDiscoveryProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = AB50D0E81B40F0C300EB9F94 /* DPThetaServiceDiscoveryProfile.m */; };
 		AB50D0ED1B40F0C300EB9F94 /* DPThetatSystemProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = AB50D0EA1B40F0C300EB9F94 /* DPThetatSystemProfile.m */; };
 		AB50D0F01B40F32B00EB9F94 /* DPThetaManager.m in Sources */ = {isa = PBXBuildFile; fileRef = AB50D0EF1B40F32B00EB9F94 /* DPThetaManager.m */; };
+		AB585CB31B7B0BF700253141 /* DPThetaMixedReplaceMediaServer.m in Sources */ = {isa = PBXBuildFile; fileRef = AB585CB21B7B0BF700253141 /* DPThetaMixedReplaceMediaServer.m */; };
+		AB585CB51B7B5ECB00253141 /* poi.jpg in Resources */ = {isa = PBXBuildFile; fileRef = AB585CB41B7B5ECB00253141 /* poi.jpg */; };
+		AB585CBA1B7C18EA00253141 /* DPThetaGLRenderView.m in Sources */ = {isa = PBXBuildFile; fileRef = AB585CB71B7C18E900253141 /* DPThetaGLRenderView.m */; };
+		AB585CBB1B7C18EA00253141 /* DPThetaUVSphere.m in Sources */ = {isa = PBXBuildFile; fileRef = AB585CB91B7C18EA00253141 /* DPThetaUVSphere.m */; };
+		AB585CBD1B7C1A8100253141 /* r.jpg in Resources */ = {isa = PBXBuildFile; fileRef = AB585CBC1B7C1A8100253141 /* r.jpg */; };
+		AB585CBF1B7C1B4800253141 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB585CBE1B7C1B4800253141 /* OpenGLES.framework */; };
+		AB585CC11B7C1B4F00253141 /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB585CC01B7C1B4F00253141 /* GLKit.framework */; };
 		ABBC3F851B4680A0004845EB /* Theta_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ABBC3F841B468084004845EB /* Theta_iPhone.storyboard */; };
+		ABC2D39D1B845E3A0033AE4A /* DPThetaVector3D.m in Sources */ = {isa = PBXBuildFile; fileRef = ABC2D39C1B845E390033AE4A /* DPThetaVector3D.m */; };
+		ABC2D3A31B84703C0033AE4A /* DPThetaQuaternion.m in Sources */ = {isa = PBXBuildFile; fileRef = ABC2D3A21B84703C0033AE4A /* DPThetaQuaternion.m */; };
+		ABC2D3AA1B84812E0033AE4A /* DPThetaCamera.m in Sources */ = {isa = PBXBuildFile; fileRef = ABC2D3A91B84812E0033AE4A /* DPThetaCamera.m */; };
+		ABC2D3AD1B84866E0033AE4A /* DPThetaCameraBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = ABC2D3AC1B84866E0033AE4A /* DPThetaCameraBuilder.m */; };
+		ABC2D3B01B8571420033AE4A /* DPThetaParam.m in Sources */ = {isa = PBXBuildFile; fileRef = ABC2D3AF1B8571420033AE4A /* DPThetaParam.m */; };
+		ABC2D3B41B85D6230033AE4A /* DPThetaOmnidirectionalImage.m in Sources */ = {isa = PBXBuildFile; fileRef = ABC2D3B31B85D6230033AE4A /* DPThetaOmnidirectionalImage.m */; };
+		ABC2D3B81B86B03E0033AE4A /* DPThetaRoiDeliveryContext.m in Sources */ = {isa = PBXBuildFile; fileRef = ABC2D3B71B86B03E0033AE4A /* DPThetaRoiDeliveryContext.m */; };
+		ABC2D3BA1B86E39A0033AE4A /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABC2D3B91B86E39A0033AE4A /* CoreMotion.framework */; };
+		ABC2D3C21B8735030033AE4A /* DPThetaOmnidirectionalImageProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = ABC2D3C11B8735030033AE4A /* DPThetaOmnidirectionalImageProfile.m */; };
 		ABCA99A11B44F73E001C2AA1 /* DPThetaMediaStreamRecordingProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = ABCA99A01B44F73E001C2AA1 /* DPThetaMediaStreamRecordingProfile.m */; };
 		ABDC9AAD1B53528C002AF9DD /* Theta_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AB39FEEA1B4FAE0100A8139E /* Theta_iPad.storyboard */; };
 		ABDC9AB81B549119002AF9DD /* theta.png in Resources */ = {isa = PBXBuildFile; fileRef = ABDC9AB31B549119002AF9DD /* theta.png */; };
@@ -100,6 +117,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		AB055EA21B8AAB1D0078128B /* DPOmnidirectionalImageProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPOmnidirectionalImageProfile.m; sourceTree = "<group>"; };
 		AB39FEAE1B4D0FE200A8139E /* DPThetaFileProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPThetaFileProfile.h; sourceTree = "<group>"; };
 		AB39FEAF1B4D0FE200A8139E /* DPThetaFileProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPThetaFileProfile.m; sourceTree = "<group>"; };
 		AB39FEE21B4F4D0500A8139E /* DPThetaGuideViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPThetaGuideViewController.h; sourceTree = "<group>"; };
@@ -187,7 +205,37 @@
 		AB50D0EE1B40F32B00EB9F94 /* DPThetaManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPThetaManager.h; sourceTree = "<group>"; };
 		AB50D0EF1B40F32B00EB9F94 /* DPThetaManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPThetaManager.m; sourceTree = "<group>"; };
 		AB50D0F41B414DF100EB9F94 /* DConnectSDK_resources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = DConnectSDK_resources.bundle; path = ../../dConnectSDK/dConnectSDKForIOS/bin/DConnectSDK_resources.bundle; sourceTree = "<group>"; };
+		AB585CB11B7B0BF700253141 /* DPThetaMixedReplaceMediaServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPThetaMixedReplaceMediaServer.h; sourceTree = "<group>"; };
+		AB585CB21B7B0BF700253141 /* DPThetaMixedReplaceMediaServer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPThetaMixedReplaceMediaServer.m; sourceTree = "<group>"; };
+		AB585CB41B7B5ECB00253141 /* poi.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = poi.jpg; sourceTree = "<group>"; };
+		AB585CB61B7C18E900253141 /* DPThetaGLRenderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPThetaGLRenderView.h; sourceTree = "<group>"; };
+		AB585CB71B7C18E900253141 /* DPThetaGLRenderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPThetaGLRenderView.m; sourceTree = "<group>"; };
+		AB585CB81B7C18EA00253141 /* DPThetaUVSphere.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPThetaUVSphere.h; sourceTree = "<group>"; };
+		AB585CB91B7C18EA00253141 /* DPThetaUVSphere.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPThetaUVSphere.m; sourceTree = "<group>"; };
+		AB585CBC1B7C1A8100253141 /* r.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = r.jpg; sourceTree = "<group>"; };
+		AB585CBE1B7C1B4800253141 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
+		AB585CC01B7C1B4F00253141 /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
 		ABBC3F841B468084004845EB /* Theta_iPhone.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Theta_iPhone.storyboard; sourceTree = "<group>"; };
+		ABC2D39B1B845E390033AE4A /* DPThetaVector3D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPThetaVector3D.h; sourceTree = "<group>"; };
+		ABC2D39C1B845E390033AE4A /* DPThetaVector3D.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPThetaVector3D.m; sourceTree = "<group>"; };
+		ABC2D3A11B84703C0033AE4A /* DPThetaQuaternion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPThetaQuaternion.h; sourceTree = "<group>"; };
+		ABC2D3A21B84703C0033AE4A /* DPThetaQuaternion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPThetaQuaternion.m; sourceTree = "<group>"; };
+		ABC2D3A81B84812E0033AE4A /* DPThetaCamera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPThetaCamera.h; sourceTree = "<group>"; };
+		ABC2D3A91B84812E0033AE4A /* DPThetaCamera.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPThetaCamera.m; sourceTree = "<group>"; };
+		ABC2D3AB1B84866E0033AE4A /* DPThetaCameraBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPThetaCameraBuilder.h; sourceTree = "<group>"; };
+		ABC2D3AC1B84866E0033AE4A /* DPThetaCameraBuilder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPThetaCameraBuilder.m; sourceTree = "<group>"; };
+		ABC2D3AE1B8571420033AE4A /* DPThetaParam.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPThetaParam.h; sourceTree = "<group>"; };
+		ABC2D3AF1B8571420033AE4A /* DPThetaParam.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPThetaParam.m; sourceTree = "<group>"; };
+		ABC2D3B11B85A1720033AE4A /* GCDAsyncSocket.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GCDAsyncSocket.h; sourceTree = "<group>"; };
+		ABC2D3B21B85D6230033AE4A /* DPThetaOmnidirectionalImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPThetaOmnidirectionalImage.h; sourceTree = "<group>"; };
+		ABC2D3B31B85D6230033AE4A /* DPThetaOmnidirectionalImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPThetaOmnidirectionalImage.m; sourceTree = "<group>"; };
+		ABC2D3B51B86AE8A0033AE4A /* DPThetaROI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DPThetaROI.h; sourceTree = "<group>"; };
+		ABC2D3B61B86B03E0033AE4A /* DPThetaRoiDeliveryContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPThetaRoiDeliveryContext.h; sourceTree = "<group>"; };
+		ABC2D3B71B86B03E0033AE4A /* DPThetaRoiDeliveryContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPThetaRoiDeliveryContext.m; sourceTree = "<group>"; };
+		ABC2D3B91B86E39A0033AE4A /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
+		ABC2D3BF1B8707EE0033AE4A /* DPOmnidirectionalImageProfile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DPOmnidirectionalImageProfile.h; sourceTree = "<group>"; };
+		ABC2D3C01B8735030033AE4A /* DPThetaOmnidirectionalImageProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPThetaOmnidirectionalImageProfile.h; sourceTree = "<group>"; };
+		ABC2D3C11B8735030033AE4A /* DPThetaOmnidirectionalImageProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPThetaOmnidirectionalImageProfile.m; sourceTree = "<group>"; };
 		ABCA999F1B44F73E001C2AA1 /* DPThetaMediaStreamRecordingProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPThetaMediaStreamRecordingProfile.h; sourceTree = "<group>"; };
 		ABCA99A01B44F73E001C2AA1 /* DPThetaMediaStreamRecordingProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPThetaMediaStreamRecordingProfile.m; sourceTree = "<group>"; };
 		ABDC9AB31B549119002AF9DD /* theta.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = theta.png; sourceTree = "<group>"; };
@@ -207,6 +255,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ABC2D3BA1B86E39A0033AE4A /* CoreMotion.framework in Frameworks */,
+				AB585CC11B7C1B4F00253141 /* GLKit.framework in Frameworks */,
+				AB585CBF1B7C1B4800253141 /* OpenGLES.framework in Frameworks */,
 				AB50D03F1B40DA0D00EB9F94 /* libiconv.dylib in Frameworks */,
 				AB50D0411B40DA1C00EB9F94 /* ImageIO.framework in Frameworks */,
 				AB50D0E41B40E70E00EB9F94 /* DConnectSDK.framework in Frameworks */,
@@ -223,6 +274,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		AB055EA11B8AAB100078128B /* Extention */ = {
+			isa = PBXGroup;
+			children = (
+				AB055EA21B8AAB1D0078128B /* DPOmnidirectionalImageProfile.m */,
+			);
+			name = Extention;
+			sourceTree = "<group>";
+		};
 		AB50CFEA1B40CDCF00EB9F94 = {
 			isa = PBXGroup;
 			children = (
@@ -272,6 +331,7 @@
 		AB50D00F1B40D66F00EB9F94 /* Headers */ = {
 			isa = PBXGroup;
 			children = (
+				ABC2D3BF1B8707EE0033AE4A /* DPOmnidirectionalImageProfile.h */,
 			);
 			path = Headers;
 			sourceTree = "<group>";
@@ -279,6 +339,8 @@
 		AB50D0101B40D67D00EB9F94 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				AB055EA11B8AAB100078128B /* Extention */,
+				AB585CA81B7AFEE600253141 /* Omnidirectional */,
 				AB50D0D71B40E21700EB9F94 /* Setting */,
 				AB50D0D81B40E22200EB9F94 /* Profile */,
 				AB50D0481B40DD3700EB9F94 /* lib */,
@@ -417,6 +479,9 @@
 		AB50D0D61B40E0DD00EB9F94 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				ABC2D3B91B86E39A0033AE4A /* CoreMotion.framework */,
+				AB585CC01B7C1B4F00253141 /* GLKit.framework */,
+				AB585CBE1B7C1B4800253141 /* OpenGLES.framework */,
 				AB50D0F41B414DF100EB9F94 /* DConnectSDK_resources.bundle */,
 				AB50D0E21B40E70E00EB9F94 /* DConnectSDK.framework */,
 				AB50D0401B40DA1C00EB9F94 /* ImageIO.framework */,
@@ -449,13 +514,62 @@
 				ABCA99A01B44F73E001C2AA1 /* DPThetaMediaStreamRecordingProfile.m */,
 				AB39FEAE1B4D0FE200A8139E /* DPThetaFileProfile.h */,
 				AB39FEAF1B4D0FE200A8139E /* DPThetaFileProfile.m */,
+				ABC2D3C01B8735030033AE4A /* DPThetaOmnidirectionalImageProfile.h */,
+				ABC2D3C11B8735030033AE4A /* DPThetaOmnidirectionalImageProfile.m */,
 			);
 			name = Profile;
+			sourceTree = "<group>";
+		};
+		AB585CA81B7AFEE600253141 /* Omnidirectional */ = {
+			isa = PBXGroup;
+			children = (
+				ABC2D3A71B8480430033AE4A /* ROI */,
+				ABC2D39A1B845D800033AE4A /* Utils */,
+				AB585CB61B7C18E900253141 /* DPThetaGLRenderView.h */,
+				AB585CB71B7C18E900253141 /* DPThetaGLRenderView.m */,
+				AB585CB81B7C18EA00253141 /* DPThetaUVSphere.h */,
+				AB585CB91B7C18EA00253141 /* DPThetaUVSphere.m */,
+				AB585CB11B7B0BF700253141 /* DPThetaMixedReplaceMediaServer.h */,
+				AB585CB21B7B0BF700253141 /* DPThetaMixedReplaceMediaServer.m */,
+			);
+			name = Omnidirectional;
+			sourceTree = "<group>";
+		};
+		ABC2D39A1B845D800033AE4A /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				ABC2D3B11B85A1720033AE4A /* GCDAsyncSocket.h */,
+				ABC2D39B1B845E390033AE4A /* DPThetaVector3D.h */,
+				ABC2D39C1B845E390033AE4A /* DPThetaVector3D.m */,
+				ABC2D3A11B84703C0033AE4A /* DPThetaQuaternion.h */,
+				ABC2D3A21B84703C0033AE4A /* DPThetaQuaternion.m */,
+				ABC2D3A81B84812E0033AE4A /* DPThetaCamera.h */,
+				ABC2D3A91B84812E0033AE4A /* DPThetaCamera.m */,
+				ABC2D3AB1B84866E0033AE4A /* DPThetaCameraBuilder.h */,
+				ABC2D3AC1B84866E0033AE4A /* DPThetaCameraBuilder.m */,
+				ABC2D3AE1B8571420033AE4A /* DPThetaParam.h */,
+				ABC2D3AF1B8571420033AE4A /* DPThetaParam.m */,
+				ABC2D3B51B86AE8A0033AE4A /* DPThetaROI.h */,
+			);
+			name = Utils;
+			sourceTree = "<group>";
+		};
+		ABC2D3A71B8480430033AE4A /* ROI */ = {
+			isa = PBXGroup;
+			children = (
+				ABC2D3B21B85D6230033AE4A /* DPThetaOmnidirectionalImage.h */,
+				ABC2D3B31B85D6230033AE4A /* DPThetaOmnidirectionalImage.m */,
+				ABC2D3B61B86B03E0033AE4A /* DPThetaRoiDeliveryContext.h */,
+				ABC2D3B71B86B03E0033AE4A /* DPThetaRoiDeliveryContext.m */,
+			);
+			name = ROI;
 			sourceTree = "<group>";
 		};
 		ABCA999E1B44ED5A001C2AA1 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				AB585CBC1B7C1A8100253141 /* r.jpg */,
+				AB585CB41B7B5ECB00253141 /* poi.jpg */,
 				ABDC9AC71B54987B002AF9DD /* theta@2x.png */,
 				ABDC9AC81B54987B002AF9DD /* thetaMovie@2x.png */,
 				ABDC9AC91B54987B002AF9DD /* thetaOn@2x.png */,
@@ -562,8 +676,10 @@
 				ABDC9AAD1B53528C002AF9DD /* Theta_iPad.storyboard in Resources */,
 				ABDC9AB91B549119002AF9DD /* thetaOn.png in Resources */,
 				ABDC9ACC1B54987B002AF9DD /* theta@2x.png in Resources */,
+				AB585CBD1B7C1A8100253141 /* r.jpg in Resources */,
 				ABDC9ACD1B54987B002AF9DD /* thetaMovie@2x.png in Resources */,
 				ABDC9ACE1B54987B002AF9DD /* thetaOn@2x.png in Resources */,
+				AB585CB51B7B5ECB00253141 /* poi.jpg in Resources */,
 				ABDC9ABA1B549119002AF9DD /* thetaStandby.png in Resources */,
 				ABDC9ACF1B54987B002AF9DD /* thetaStandby@2x.png in Resources */,
 				ABBC3F851B4680A0004845EB /* Theta_iPhone.storyboard in Resources */,
@@ -611,29 +727,37 @@
 			buildActionMask = 2147483647;
 			files = (
 				AB50D0AA1B40DE1600EB9F94 /* ExifRawData.mm in Sources */,
+				ABC2D3C21B8735030033AE4A /* DPThetaOmnidirectionalImageProfile.m in Sources */,
 				AB50D0AB1B40DE1600EB9F94 /* ExifTags.m in Sources */,
 				AB50D0AC1B40DE1600EB9F94 /* RicohEXIF.mm in Sources */,
 				AB50D0AD1B40DE1600EB9F94 /* LibLogging.mm in Sources */,
 				AB50D0AE1B40DE1600EB9F94 /* logger.cpp in Sources */,
 				ABCA99A11B44F73E001C2AA1 /* DPThetaMediaStreamRecordingProfile.m in Sources */,
 				AB50D0AF1B40DE1600EB9F94 /* ObjcLogger.mm in Sources */,
+				AB055EA31B8AAB1D0078128B /* DPOmnidirectionalImageProfile.m in Sources */,
 				AB50D0B01B40DE1600EB9F94 /* basictypes.cpp in Sources */,
+				AB585CB31B7B0BF700253141 /* DPThetaMixedReplaceMediaServer.m in Sources */,
 				AB50D0B11B40DE1600EB9F94 /* bufferedsock.cpp in Sources */,
 				AB50D0B21B40DE1600EB9F94 /* bytestream.cpp in Sources */,
 				AB50D0B31B40DE1600EB9F94 /* exceptions.cpp in Sources */,
+				ABC2D3AA1B84812E0033AE4A /* DPThetaCamera.m in Sources */,
 				AB50D0B41B40DE1600EB9F94 /* int128_t.cpp in Sources */,
 				AB50D0B51B40DE1600EB9F94 /* ptp_packets.cpp in Sources */,
 				AB50D0B61B40DE1600EB9F94 /* ptpip.cpp in Sources */,
+				ABC2D3B41B85D6230033AE4A /* DPThetaOmnidirectionalImage.m in Sources */,
 				AB50D0B71B40DE1600EB9F94 /* ptpip_impl.cpp in Sources */,
 				AB50D0B81B40DE1600EB9F94 /* ptpip_packets.cpp in Sources */,
 				AB50D0F01B40F32B00EB9F94 /* DPThetaManager.m in Sources */,
 				AB50D0B91B40DE1600EB9F94 /* ptpip_packets_impl.cpp in Sources */,
 				AB39FEE61B4F4D0500A8139E /* DPThetaGuideViewController.m in Sources */,
 				AB50D0BA1B40DE1600EB9F94 /* PtpIpDeviceInfo.mm in Sources */,
+				ABC2D39D1B845E3A0033AE4A /* DPThetaVector3D.m in Sources */,
 				AB50D0BB1B40DE1600EB9F94 /* PtpIpDevicePropDesc.mm in Sources */,
 				AB50D0BC1B40DE1600EB9F94 /* PtpIpInitiator.mm in Sources */,
 				AB50D0EB1B40F0C300EB9F94 /* DPThetaBatteryProfile.m in Sources */,
 				AB50D0BD1B40DE1600EB9F94 /* PtpIpObjectContainer.mm in Sources */,
+				ABC2D3A31B84703C0033AE4A /* DPThetaQuaternion.m in Sources */,
+				AB585CBA1B7C18EA00253141 /* DPThetaGLRenderView.m in Sources */,
 				AB50D0BE1B40DE1600EB9F94 /* PtpIpObjectInfo.mm in Sources */,
 				AB50D0BF1B40DE1600EB9F94 /* PtpIpSession+dcf.mm in Sources */,
 				AB39FEE71B4F4D0500A8139E /* DPThetaSettingViewController.m in Sources */,
@@ -646,7 +770,11 @@
 				AB50D0C41B40DE1600EB9F94 /* PtpLogging.mm in Sources */,
 				AB50D0C51B40DE1600EB9F94 /* PtpOperator.m in Sources */,
 				AB50D0141B40D6EB00EB9F94 /* DPThetaDevicePlugin.m in Sources */,
+				ABC2D3B81B86B03E0033AE4A /* DPThetaRoiDeliveryContext.m in Sources */,
+				ABC2D3B01B8571420033AE4A /* DPThetaParam.m in Sources */,
 				AB50D0EC1B40F0C300EB9F94 /* DPThetaServiceDiscoveryProfile.m in Sources */,
+				ABC2D3AD1B84866E0033AE4A /* DPThetaCameraBuilder.m in Sources */,
+				AB585CBB1B7C18EA00253141 /* DPThetaUVSphere.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -908,6 +1036,7 @@
 				ABDC9AB01B53B60C002AF9DD /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

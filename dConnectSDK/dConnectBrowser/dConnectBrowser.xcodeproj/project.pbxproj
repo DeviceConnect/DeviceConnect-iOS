@@ -1215,7 +1215,7 @@
 				8E2C5B691960FF37005DFCDC /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 		8E2C5B6A1960FF37005DFCDC /* Build configuration list for PBXNativeTarget "dConnectBrowser" */ = {
 			isa = XCConfigurationList;
@@ -1224,7 +1224,7 @@
 				8E2C5B6C1960FF37005DFCDC /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 		AB0E2E4B1A942DE500A46DE1 /* Build configuration list for PBXAggregateTarget "dConnectBrowser_OCLint" */ = {
 			isa = XCConfigurationList;
@@ -1233,7 +1233,7 @@
 				AB0E2E4A1A942DE500A46DE1 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 /* End XCConfigurationList section */
 

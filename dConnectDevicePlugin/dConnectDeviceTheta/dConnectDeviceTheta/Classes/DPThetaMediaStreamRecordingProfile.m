@@ -12,6 +12,7 @@
 #import "DPThetaManager.h"
 #import "PtpIpObjectInfo.h"
 #import "DPThetaServiceDiscoveryProfile.h"
+#import "DPThetaMixedReplaceMediaServer.h"
 
 
 //Thetaの画像の最大の高さ
@@ -36,6 +37,7 @@ static NSString *const DPThetaMovieMimeType = @"video/mov";
 @interface DPThetaMediaStreamRecordingProfile()
 /// @brief イベントマネージャ
 @property DConnectEventManager *eventMgr;
+@property DPThetaMixedReplaceMediaServer *server;
 
 @end
 @implementation DPThetaMediaStreamRecordingProfile
@@ -48,6 +50,7 @@ static NSString *const DPThetaMovieMimeType = @"video/mov";
         
         // イベントマネージャを取得
         self.eventMgr = [DConnectEventManager sharedManagerForClass:[DPThetaDevicePlugin class]];
+        self.server = [DPThetaMixedReplaceMediaServer new];
     }
     return self;
 }
@@ -266,7 +269,19 @@ didReceivePutOnRecordingChangeRequest:(DConnectRequestMessage *)request
     return YES;
 }
 
-
+- (BOOL)            profile:(DConnectMediaStreamRecordingProfile *)profile
+didReceivePutPreviewRequest:(DConnectRequestMessage *)request
+                   response:(DConnectResponseMessage *)response
+                  serviceId:(NSString *)serviceId
+{
+    CONNECT_CHECK();
+    [response setResult:DConnectMessageResultTypeOk];
+    [DConnectMediaStreamRecordingProfile setUri:[NSString stringWithFormat:@"%@/teeeeee",[_server getUrl]]
+                                         target:response];
+    [_server offerMediaWithData:nil segment:@"/teeeeee"];
+    [_server startStopServer];
+    return YES;
+}
 #pragma mark - Delete Methods
 #pragma mark Event Unregstration
 
@@ -297,6 +312,17 @@ didReceiveDeleteOnRecordingChangeRequest:(DConnectRequestMessage *)request
     return YES;
 }
 
+
+- (BOOL)               profile:(DConnectMediaStreamRecordingProfile *)profile
+didReceiveDeletePreviewRequest:(DConnectRequestMessage *)request
+                      response:(DConnectResponseMessage *)response
+                     serviceId:(NSString *)serviceId
+{
+    CONNECT_CHECK();
+    [response setResult:DConnectMessageResultTypeOk];
+    [_server startStopServer];
+    return YES;
+}
 
 #pragma mark - Event Method
 
