@@ -129,7 +129,7 @@ static const double DPThetaMotionDeviceIntervalMilliSec = 100;
         float dT = (motion.timestamp - _lastEventTimestamp);
         vGyroscope[0] = motion.rotationRate.x;
         vGyroscope[1] = motion.rotationRate.y;
-        vGyroscope[2] = motion.rotationRate.z - 1;
+        vGyroscope[2] = motion.rotationRate.z * -1;
         float omegaMagnitude = (float) sqrt(pow(vGyroscope[0], 2) + pow(vGyroscope[1], 2) + pow(vGyroscope[2], 2));
         if (omegaMagnitude > EPSILON) {
             vGyroscope[0] /= omegaMagnitude;
