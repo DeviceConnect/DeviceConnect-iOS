@@ -2,9 +2,11 @@
 //  DPThetaOmnidirectionalImageProfile.m
 //  dConnectDeviceTheta
 //
-//  Created by 星　貴之 on 2015/08/21.
-//  Copyright (c) 2015年 DOCOMO. All rights reserved.
+//  Copyright (c) 2015 NTT DOCOMO, INC.
+//  Released under the MIT license
+//  http://opensource.org/licenses/mit-license.php
 //
+
 
 #import "DPThetaOmnidirectionalImageProfile.h"
 #import "DPThetaROI.h"
@@ -114,17 +116,19 @@
         NSRange range = [[uri stringByRemovingPercentEncoding] rangeOfString:@"file://"];
         NSUInteger index = range.location;
 
-        NSLog(@"source:%@", [uri stringByRemovingPercentEncoding]);
         if (index != NSNotFound) {
-            NSString *path = [uri stringByReplacingOccurrencesOfString:@"uri=" withString:@""];
-            NSData* imageData =[NSData dataWithContentsOfFile:path];
-            NSLog(@"size: %d", (int) imageData.length);
+            omniImage = [DPThetaOmnidirectionalImage new];
+            NSString *path = [[[uri stringByRemovingPercentEncoding]
+                                stringByReplacingOccurrencesOfString:@"uri=file://" withString:@""]
+                                stringByReplacingOccurrencesOfString:@"%20" withString:@" "];
+            NSData* imageData = [NSData dataWithContentsOfFile:path];
+            UIImage *image = [[UIImage alloc] initWithData:imageData];
             omniImage.image = imageData;
+
         } else {
             NSURL *url = [NSURL URLWithString:source];
             dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
             dispatch_time_t timeout = dispatch_time(DISPATCH_TIME_NOW, NSEC_PER_SEC * 500);
-            NSLog(@"uuuuri:%@", url);
             dispatch_async(dispatch_get_main_queue(), ^{
                 omniImage = [[DPThetaOmnidirectionalImage alloc] initWithURL:url origin:origin callback:^() {
                     dispatch_semaphore_signal(semaphore);
@@ -165,7 +169,6 @@
 {
     NSRange range = [uri rangeOfString:@"?"];
     NSUInteger index = range.location;
-    NSLog(@"omit param index: %lu", (unsigned long) index);
     if (index != NSNotFound) {
         NSString *param = [uri substringFromIndex:index + 1];
         NSLog(@"substring uri: %@", param);
@@ -216,6 +219,7 @@
     param.imageHeight = height;
     return param;
 }
+
 
 
 #pragma mark - delegate method

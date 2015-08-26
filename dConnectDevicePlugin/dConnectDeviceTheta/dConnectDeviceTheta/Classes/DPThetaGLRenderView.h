@@ -1,6 +1,12 @@
-/*
- * Copyright Ricoh Company, Ltd. All rights reserved.
- */
+//
+//  DPThetaGLRenderView.h
+//  dConnectDeviceTheta
+//
+//
+//  Copyright (c) 2015 NTT DOCOMO, INC.
+//  Released under the MIT license
+//  http://opensource.org/licenses/mit-license.php
+//
 
 #import <Foundation/Foundation.h>
 #import <OpenGLES/ES1/gl.h>
@@ -18,8 +24,7 @@
 
 -(void) draw;
 
--(void) setTexture:(NSData*)data yaw:(float)yaw pitch:(float)pitch roll:(float)roll;
--(void) setInertia:(int)kind;
+-(void) setTexture:(NSData*)data;
 
 - (void)setSphereRadius:(float)radius;
 - (void)rotateCameraWithQuaterion:(DPThetaQuaternion *)quaternion;

@@ -1,6 +1,13 @@
-/*
- * Copyright Ricoh Company, Ltd. All rights reserved.
- */
+//
+//  DPThetaUVSphere.h
+//  dConnectDeviceTheta
+//
+//
+//  Copyright (c) 2015 NTT DOCOMO, INC.
+//  Released under the MIT license
+//  http://opensource.org/licenses/mit-license.php
+//
+
 
 #import <Foundation/Foundation.h>
 #import <OpenGLES/ES1/gl.h>
@@ -9,9 +16,6 @@
 #import <GLKit/GLKTextureLoader.h>
 #import "DPThetaUVSphere.h"
 
-/**
- * UV sphere creation class
- */
 @interface DPThetaUVSphere (){
     
     GLfloat **vertexArray;
@@ -23,15 +27,6 @@
 
 @implementation DPThetaUVSphere
 
-/**
- * Method for UV sphere creation
- * Sphere is created at the specified radius centered on the origin. 
- * UV sphere and corresponding texture UV coordinates are created by creating a divide/2 band
- * in the longitudinal direction and dividing the band by the divide number.
- *
- * @param radius Radius
- * @param divide Polygon partition parameter
- */
 -(id) init:(GLfloat)radius divide:(int)divide {
 
     int i;
@@ -85,14 +80,6 @@
 }
 
 
-/**
- * Method for drawing spheres
- * Variables connected to the shader are used for drawing.
- * It is assumed that shader variables are activated.
- * 
- * @param posLocation Attribute compatibility variable for shader connected to the position
- * @param uvLocation Attribute compatibility variable for shader connected to the UV space
- */
 -(void) draw:(GLint) posLocation uv:(GLint) uvLocation {
     
     GLfloat *vertices;

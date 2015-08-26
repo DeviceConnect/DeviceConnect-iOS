@@ -2,8 +2,9 @@
 //  DPThetaMixedReplaceMediaServer.m
 //  dConnectDeviceTheta
 //
-//  Created by 星　貴之 on 2015/08/12.
-//  Copyright (c) 2015年 DOCOMO. All rights reserved.
+//  Copyright (c) 2015 NTT DOCOMO, INC.
+//  Released under the MIT license
+//  http://opensource.org/licenses/mit-license.php
 //
 
 #import "DPThetaMixedReplaceMediaServer.h"
@@ -87,9 +88,6 @@ static int const DPThetaTagHeader = 0;
         dispatch_source_set_event_handler(_timerSource, ^{
             dispatch_async(dispatch_get_main_queue(), ^{
                 for (NSString *key in _connectedSockets.allKeys) {
-//                    NSLog(@"socket:%@", segment);
-//                    [_glRenderView draw];
-//                    _jpegData = [[NSData alloc] initWithData:UIImageJPEGRepresentation([_glRenderView snapshot], 1.0)];
                     _jpegData = _broadcastROIImages[key];
                     GCDAsyncSocket *sock = _connectedSockets[key];
                     @synchronized (_connectedSockets) {
@@ -100,7 +98,7 @@ static int const DPThetaTagHeader = 0;
         });
         // インターバル等を設定
         dispatch_source_set_timer(_timerSource, dispatch_time(DISPATCH_TIME_NOW, 0),
-                                  NSEC_PER_SEC * 0.3, NSEC_PER_SEC);
+                                  NSEC_PER_SEC * 0.1, NSEC_PER_SEC);
         // タイマー開始
         dispatch_resume(_timerSource);
     } else {
@@ -114,9 +112,6 @@ static int const DPThetaTagHeader = 0;
             }
         }
         _isRunning = NO;
-        
-//        [_glRenderView removeFromSuperview];
-//        _glRenderView = NULL;
     }
 }
 
@@ -129,18 +124,6 @@ static int const DPThetaTagHeader = 0;
 
 - (void)offerMediaWithData:(NSData*)data segment:(NSString *)segment
 {
-//    NSBundle *bundle = [NSBundle bundleWithPath:[[NSBundle mainBundle] pathForResource:@"dConnectDeviceTheta_resources"
-//                                                                                ofType:@"bundle"]];
-//    NSString * path = [bundle pathForResource:@"r" ofType:@"jpg"];
-//    if (_isTume) {
-//        path = [bundle pathForResource:@"poi" ofType:@"jpg"];
-//        _isTume = NO;
-//    } else {
-//        _isTume = YES;
-//    }
-//    UIImage *thumb = [UIImage imageWithContentsOfFile:path];
-    
-//    [_broadcastROIImages setObject:[[NSData alloc] initWithData:UIImageJPEGRepresentation(thumb, 1.0)] forKey:segment];
     [_broadcastROIImages setObject:data forKey:[NSString stringWithFormat:@"/%@", segment]];
 }
 
@@ -162,24 +145,6 @@ static int const DPThetaTagHeader = 0;
         @synchronized(_connectedSockets)
         {
             [_connectedSockets setObject:sock forKey:segment];
-            // タイマーイベントハンドラ
-//            dispatch_async(dispatch_get_main_queue(), ^{
-//                for (NSData *thumb in _broadcastROIImages.allValues) {
-//                    _glRenderView = [[DPThetaGLRenderView alloc] initWithFrame:CGRectMake(0, 0, 100, 100)];
-//                    [_glRenderView setTexture:thumb
-//                                          yaw:0.0f
-//                                        pitch:0.0f
-//                                         roll:0.0f];
-//                    UIViewController *rootView = [UIApplication sharedApplication].keyWindow.rootViewController;
-//                    while (rootView.presentedViewController) {
-//                        rootView = rootView.presentedViewController;
-//                    }
-//                    [rootView.view addSubview:_glRenderView];
-//                    [[UIApplication sharedApplication].keyWindow makeKeyAndVisible];
-//                    _glRenderView.hidden = YES;
-//                }
-//            });
-
         }
     }
 }

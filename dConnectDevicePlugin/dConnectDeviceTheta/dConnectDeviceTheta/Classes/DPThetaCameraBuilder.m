@@ -2,9 +2,11 @@
 //  DPThetaCameraBuilder.m
 //  dConnectDeviceTheta
 //
-//  Created by 星　貴之 on 2015/08/19.
-//  Copyright (c) 2015年 DOCOMO. All rights reserved.
+//  Copyright (c) 2015 NTT DOCOMO, INC.
+//  Released under the MIT license
+//  http://opensource.org/licenses/mit-license.php
 //
+
 
 #import "DPThetaCameraBuilder.h"
 
@@ -20,6 +22,9 @@
         _frontDirection = [[DPThetaVector3D alloc] initWithVector3D:camera.frontDirection];
         _upperDirection = [[DPThetaVector3D alloc] initWithVector3D:camera.upperDirection];
         _rightDirection = [[DPThetaVector3D alloc] initWithVector3D:camera.rightDirection];
+        if (camera.attitude) {
+            _attitude = [[DPThetaQuaternion alloc] initWithQuaternion:camera.attitude];
+        }
     }
     return self;
 }
@@ -35,7 +40,8 @@
                                            position:_position
                                      frontDirection:_frontDirection
                                      upperDirection:_upperDirection
-                                     rightDirection:_rightDirection];
+                                     rightDirection:_rightDirection
+                                           attitude:_attitude];
 }
 
 - (void)slideHorizontalWithDelta:(float)delta

@@ -2,9 +2,11 @@
 //  DPThetaVector3D.m
 //  dConnectDeviceTheta
 //
-//  Created by 星　貴之 on 2015/08/19.
-//  Copyright (c) 2015年 DOCOMO. All rights reserved.
+//  Copyright (c) 2015 NTT DOCOMO, INC.
+//  Released under the MIT license
+//  http://opensource.org/licenses/mit-license.php
 //
+
 
 #import "DPThetaVector3D.h"
 
@@ -31,6 +33,16 @@ static int const DPThetaVector3DSize = 3;
     return self;
 }
 
+
+- (instancetype)initWithFloatArray:(NSMutableArray *)coords
+{
+    return [[DPThetaVector3D alloc] initWithX:[coords[0] floatValue]
+                                            y:[coords[1] floatValue]
+                                            z:[coords[2] floatValue]];
+}
+
+
+
 - (instancetype)initWithVector3D:(DPThetaVector3D *)vector
 {
     return [[DPThetaVector3D alloc] initWithX:[vector x]
@@ -52,7 +64,10 @@ static int const DPThetaVector3DSize = 3;
     return  [_coords[2] floatValue];
 }
 
-- (float)length
+
+
+
+- (float)norm
 {
     float v = 0;
     for (int i = 0; i < DPThetaVector3DSize; i++) {
@@ -60,6 +75,22 @@ static int const DPThetaVector3DSize = 3;
     }
     return (float) sqrt(v);
 }
+
+
+- (DPThetaVector3D*)normalize
+{
+    float norm = [self norm];
+    if (norm == 0) {
+        return self;
+    }
+    NSMutableArray *coords = [[NSMutableArray alloc] initWithCapacity:3];
+    for (int i = 0; i < _coords.count; i++) {
+        coords[i] = [NSNumber numberWithFloat: (float) ([_coords[i] floatValue] / norm)];
+    }
+    
+    return [[DPThetaVector3D alloc] initWithFloatArray:coords];
+}
+
 
 - (DPThetaVector3D*)addWithVector3D:(DPThetaVector3D *)vector
 {

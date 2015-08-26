@@ -74,10 +74,8 @@
 		AB50D0ED1B40F0C300EB9F94 /* DPThetatSystemProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = AB50D0EA1B40F0C300EB9F94 /* DPThetatSystemProfile.m */; };
 		AB50D0F01B40F32B00EB9F94 /* DPThetaManager.m in Sources */ = {isa = PBXBuildFile; fileRef = AB50D0EF1B40F32B00EB9F94 /* DPThetaManager.m */; };
 		AB585CB31B7B0BF700253141 /* DPThetaMixedReplaceMediaServer.m in Sources */ = {isa = PBXBuildFile; fileRef = AB585CB21B7B0BF700253141 /* DPThetaMixedReplaceMediaServer.m */; };
-		AB585CB51B7B5ECB00253141 /* poi.jpg in Resources */ = {isa = PBXBuildFile; fileRef = AB585CB41B7B5ECB00253141 /* poi.jpg */; };
 		AB585CBA1B7C18EA00253141 /* DPThetaGLRenderView.m in Sources */ = {isa = PBXBuildFile; fileRef = AB585CB71B7C18E900253141 /* DPThetaGLRenderView.m */; };
 		AB585CBB1B7C18EA00253141 /* DPThetaUVSphere.m in Sources */ = {isa = PBXBuildFile; fileRef = AB585CB91B7C18EA00253141 /* DPThetaUVSphere.m */; };
-		AB585CBD1B7C1A8100253141 /* r.jpg in Resources */ = {isa = PBXBuildFile; fileRef = AB585CBC1B7C1A8100253141 /* r.jpg */; };
 		AB585CBF1B7C1B4800253141 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB585CBE1B7C1B4800253141 /* OpenGLES.framework */; };
 		AB585CC11B7C1B4F00253141 /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB585CC01B7C1B4F00253141 /* GLKit.framework */; };
 		ABBC3F851B4680A0004845EB /* Theta_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ABBC3F841B468084004845EB /* Theta_iPhone.storyboard */; };
@@ -207,12 +205,10 @@
 		AB50D0F41B414DF100EB9F94 /* DConnectSDK_resources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = DConnectSDK_resources.bundle; path = ../../dConnectSDK/dConnectSDKForIOS/bin/DConnectSDK_resources.bundle; sourceTree = "<group>"; };
 		AB585CB11B7B0BF700253141 /* DPThetaMixedReplaceMediaServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPThetaMixedReplaceMediaServer.h; sourceTree = "<group>"; };
 		AB585CB21B7B0BF700253141 /* DPThetaMixedReplaceMediaServer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPThetaMixedReplaceMediaServer.m; sourceTree = "<group>"; };
-		AB585CB41B7B5ECB00253141 /* poi.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = poi.jpg; sourceTree = "<group>"; };
 		AB585CB61B7C18E900253141 /* DPThetaGLRenderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPThetaGLRenderView.h; sourceTree = "<group>"; };
 		AB585CB71B7C18E900253141 /* DPThetaGLRenderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPThetaGLRenderView.m; sourceTree = "<group>"; };
 		AB585CB81B7C18EA00253141 /* DPThetaUVSphere.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPThetaUVSphere.h; sourceTree = "<group>"; };
 		AB585CB91B7C18EA00253141 /* DPThetaUVSphere.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPThetaUVSphere.m; sourceTree = "<group>"; };
-		AB585CBC1B7C1A8100253141 /* r.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = r.jpg; sourceTree = "<group>"; };
 		AB585CBE1B7C1B4800253141 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		AB585CC01B7C1B4F00253141 /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
 		ABBC3F841B468084004845EB /* Theta_iPhone.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Theta_iPhone.storyboard; sourceTree = "<group>"; };
@@ -568,8 +564,6 @@
 		ABCA999E1B44ED5A001C2AA1 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				AB585CBC1B7C1A8100253141 /* r.jpg */,
-				AB585CB41B7B5ECB00253141 /* poi.jpg */,
 				ABDC9AC71B54987B002AF9DD /* theta@2x.png */,
 				ABDC9AC81B54987B002AF9DD /* thetaMovie@2x.png */,
 				ABDC9AC91B54987B002AF9DD /* thetaOn@2x.png */,
@@ -676,10 +670,8 @@
 				ABDC9AAD1B53528C002AF9DD /* Theta_iPad.storyboard in Resources */,
 				ABDC9AB91B549119002AF9DD /* thetaOn.png in Resources */,
 				ABDC9ACC1B54987B002AF9DD /* theta@2x.png in Resources */,
-				AB585CBD1B7C1A8100253141 /* r.jpg in Resources */,
 				ABDC9ACD1B54987B002AF9DD /* thetaMovie@2x.png in Resources */,
 				ABDC9ACE1B54987B002AF9DD /* thetaOn@2x.png in Resources */,
-				AB585CB51B7B5ECB00253141 /* poi.jpg in Resources */,
 				ABDC9ABA1B549119002AF9DD /* thetaStandby.png in Resources */,
 				ABDC9ACF1B54987B002AF9DD /* thetaStandby@2x.png in Resources */,
 				ABBC3F851B4680A0004845EB /* Theta_iPhone.storyboard in Resources */,

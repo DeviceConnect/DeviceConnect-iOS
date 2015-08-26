@@ -2,14 +2,14 @@
 //  DPThetaCameraBuilder.h
 //  dConnectDeviceTheta
 //
-//  Created by 星　貴之 on 2015/08/19.
-//  Copyright (c) 2015年 DOCOMO. All rights reserved.
+//  Copyright (c) 2015 NTT DOCOMO, INC.
+//  Released under the MIT license
+//  http://opensource.org/licenses/mit-license.php
 //
 
+
 #import <Foundation/Foundation.h>
-#import "DPThetaCamera.h"
-#import "DPThetaVector3D.h"
-#import "DPThetaQuaternion.h"
+#import "DPThetaROI.h"
 
 @interface DPThetaCameraBuilder : NSObject
 @property (nonatomic) float fovDegree;
@@ -17,6 +17,7 @@
 @property (nonatomic) DPThetaVector3D *frontDirection;
 @property (nonatomic) DPThetaVector3D *upperDirection;
 @property (nonatomic) DPThetaVector3D *rightDirection;
+@property (nonatomic) DPThetaQuaternion *attitude;
 
 
 - (instancetype)initWithCamera:(DPThetaCamera*)camera;

@@ -2,9 +2,11 @@
 //  DPThetaQuaternion.m
 //  dConnectDeviceTheta
 //
-//  Created by 星　貴之 on 2015/08/19.
-//  Copyright (c) 2015年 DOCOMO. All rights reserved.
+//  Copyright (c) 2015 NTT DOCOMO, INC.
+//  Released under the MIT license
+//  http://opensource.org/licenses/mit-license.php
 //
+
 
 #import "DPThetaQuaternion.h"
 
@@ -21,6 +23,10 @@
     return self;
 }
 
+- (instancetype)initWithQuaternion:(DPThetaQuaternion *)q
+{
+    return [[DPThetaQuaternion alloc] initWithReal:q.real imaginary:q.imaginary];
+}
 
 - (DPThetaQuaternion *)conjugate
 {
@@ -52,20 +58,22 @@
     return v;
     
 }
+
+
+- (DPThetaVector3D *)rotateByTarget:(DPThetaVector3D *)target
+{
+    DPThetaQuaternion *p = [[DPThetaQuaternion alloc] initWithReal:0 imaginary:target];
+    DPThetaQuaternion *q = self;
+    DPThetaQuaternion *r = [self conjugate];
+    return [[[r multiplyWithQuaternion:p] multiplyWithQuaternion:q] imaginary];
+}
+
 + (DPThetaVector3D *)rotateByPoint:(DPThetaVector3D *)point
                               axis:(DPThetaVector3D *)axis
                             radian:(float)radian
 {
-    DPThetaQuaternion *p = [[DPThetaQuaternion alloc] initWithReal:0 imaginary:point];
-    
-    float c = (float) cos(radian / 2.0f);
-    float s = (float) sin(radian / 2.0f);
-    DPThetaQuaternion *q = [[DPThetaQuaternion alloc] initWithReal:c imaginary:[axis multiplyByMultiplied:s]];
-    DPThetaQuaternion *r = [q conjugate];
-    
-    DPThetaQuaternion *pr = [r multiplyWithQuaternion:p];
-    DPThetaQuaternion *qpr = [pr multiplyWithQuaternion:q];
-    return [qpr imaginary];
+    DPThetaQuaternion *q = [self quaternionFromAxisAndAngle:[axis normalize] radian:radian];
+    return [q rotateByTarget:point];
 }
 
 + (DPThetaVector3D *)rotateXYZByPoint:(DPThetaVector3D *)point
@@ -83,6 +91,14 @@
     result = [DPThetaQuaternion rotateByPoint:result axis:axisZ radian:rotateZ];
     
     return result;
+}
+
++ (DPThetaQuaternion *)quaternionFromAxisAndAngle:(DPThetaVector3D *)normalizedAxis
+                                           radian:(float)radian
+{
+    float c = (float) cos(radian / 2.0f);
+    float s = (float) sin(radian / 2.0f);
+    return [[DPThetaQuaternion alloc] initWithReal:c imaginary:[normalizedAxis multiplyByMultiplied:s]];
 }
 
 @end

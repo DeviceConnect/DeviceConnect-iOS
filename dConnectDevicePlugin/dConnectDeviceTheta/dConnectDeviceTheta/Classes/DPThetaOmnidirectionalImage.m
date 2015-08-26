@@ -2,9 +2,11 @@
 //  DPThetaOmnidirectionalImage.m
 //  dConnectDeviceTheta
 //
-//  Created by 星　貴之 on 2015/08/20.
-//  Copyright (c) 2015年 DOCOMO. All rights reserved.
+//  Copyright (c) 2015 NTT DOCOMO, INC.
+//  Released under the MIT license
+//  http://opensource.org/licenses/mit-license.php
 //
+
 
 #import "DPThetaOmnidirectionalImage.h"
 
@@ -36,12 +38,10 @@
 }
 
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)nsdata{
-    NSLog(@"receive");
     [data appendData:nsdata];
 }
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error{
-    NSLog(@"failed");
     [self abort];
 }
 
