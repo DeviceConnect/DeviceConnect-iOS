@@ -179,7 +179,7 @@ static const double DPThetaMotionDeviceIntervalMilliSec = 100;
         
         DPThetaCamera *camera = _glRenderView.camera;
         DPThetaCameraBuilder *newCamera = [[DPThetaCameraBuilder alloc] initWithCamera:camera];
-        [newCamera rotateForQuaternion:qGyroscopeDelta];
+        [newCamera rotateForQuaternion:_currentRotation];
         _glRenderView.camera = (DPThetaCamera *) [newCamera create];
         
         _eventInterval += dT;
