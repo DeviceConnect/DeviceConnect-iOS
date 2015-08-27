@@ -11,8 +11,6 @@
 #import "DPThetaRoiDeliveryContext.h"
 #import "DPThetaGLRenderView.h"
 
-
-static float const DPThetaNS2S = 1.0f / 1000000000.0f;
 static const double DPThetaMotionDeviceIntervalMilliSec = 100;
 
 @interface DPThetaRoiDeliveryContext()
@@ -45,7 +43,7 @@ static const double DPThetaMotionDeviceIntervalMilliSec = 100;
         _eventInterval = 0.0f;
         _deltaRotationVector = [[NSMutableArray alloc] initWithCapacity:4];
         _motionManager = motionMgr;
-        _motionManager.deviceMotionUpdateInterval = 0.5;//DPThetaMotionDeviceIntervalMilliSec / 1000.0;
+        _motionManager.deviceMotionUpdateInterval = DPThetaMotionDeviceIntervalMilliSec / 1000.0;
         _deviceOrientationOpQueue = [NSOperationQueue new];
         _currentRotation = [[DPThetaQuaternion alloc] initWithReal:1 imaginary:[[DPThetaVector3D alloc] initWithX:0 y:0 z:0]];
         __unsafe_unretained typeof(self) weakSelf = self;
@@ -162,7 +160,7 @@ static const double DPThetaMotionDeviceIntervalMilliSec = 100;
                 qGyroscopeDelta = [[DPThetaQuaternion alloc] initWithReal:deltaVGyroscope[3]
                                                                 imaginary:[[DPThetaVector3D alloc] initWithX:deltaVGyroscope[0]
                                                                                                            y:deltaVGyroscope[1] * -1
-                                                                                                           z:deltaVGyroscope[2]]];
+                                                                                                           z:deltaVGyroscope[2] * -1]];
                 break;
             case UIInterfaceOrientationLandscapeRight:
                 qGyroscopeDelta = [[DPThetaQuaternion alloc] initWithReal:deltaVGyroscope[3]
