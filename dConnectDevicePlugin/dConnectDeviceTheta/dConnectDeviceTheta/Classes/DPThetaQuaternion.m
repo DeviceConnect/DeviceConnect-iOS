@@ -30,7 +30,7 @@
 
 - (DPThetaQuaternion *)conjugate
 {
-    return [[DPThetaQuaternion alloc] initWithReal:[self real] imaginary:[self imaginary]];
+    return [[DPThetaQuaternion alloc] initWithReal:[self real] imaginary:[[self imaginary] multiplyByMultiplied:-1.0f]];
 }
 
 - (DPThetaQuaternion *)multiplyWithQuaternion:(DPThetaQuaternion*)q
@@ -53,7 +53,7 @@
 {
     DPThetaQuaternion *v = qArray[qArray.count - 1];
     for (int i = (int) qArray.count - 2; i >= 0; i--) {
-        v = [v multiplyWithQuaternion:qArray[i]];
+        v = [v multiplyWithQuaternion:(DPThetaQuaternion *) qArray[i]];
     }
     return v;
     

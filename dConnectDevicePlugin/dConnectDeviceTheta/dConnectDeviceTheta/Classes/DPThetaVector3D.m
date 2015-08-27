@@ -101,9 +101,9 @@ static int const DPThetaVector3DSize = 3;
 
 - (DPThetaVector3D*)multiplyByMultiplied:(float)multiplied
 {
-    return [[DPThetaVector3D alloc] initWithX:(multiplied * [self x])
-                                            y:(multiplied * [self y])
-                                            z:(multiplied * [self z]) ];
+    return [[DPThetaVector3D alloc] initWithX:(float) (multiplied * [self x])
+                                            y:(float) (multiplied * [self y])
+                                            z:(float) (multiplied * [self z]) ];
     
 }
 

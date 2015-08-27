@@ -161,7 +161,7 @@ static float const DPThetaZFar = 1000.f;
     float upX = [_camera.upperDirection x];
     float upY = [_camera.upperDirection y];
     float upZ = [_camera.upperDirection z];
-    lookAtMatrix = GLKMatrix4MakeLookAt(x, y, z,
+   lookAtMatrix = GLKMatrix4MakeLookAt(x, y, z,
                                         frontX, frontY, frontZ,
                                         upX, upY, upZ);
     projectionMatrix = GLKMatrix4MakePerspective(GLKMathDegreesToRadians(_camera.fovDegree), [self getScreenAspect],
