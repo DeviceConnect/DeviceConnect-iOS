@@ -15,7 +15,7 @@ static const double DPThetaMotionDeviceIntervalMilliSec = 100;
 
 @interface DPThetaRoiDeliveryContext()
 @property (nonatomic) NSMutableArray *deltaRotationVector;
-@property (nonatomic) long lastEventTimestamp;
+@property (nonatomic) float lastEventTimestamp;
 @property (nonatomic) float eventInterval;
 // 加速度センサー、ジャイロセンサーからの値受領を管理するオブジェクト
 @property CMMotionManager *motionManager;
@@ -124,7 +124,7 @@ static const double DPThetaMotionDeviceIntervalMilliSec = 100;
         float vGyroscope[3];
         float deltaVGyroscope[4];
         DPThetaQuaternion *qGyroscopeDelta;
-        float dT = (motion.timestamp - _lastEventTimestamp) / 2.0f;
+        float dT = motion.timestamp - _lastEventTimestamp;
         vGyroscope[0] = motion.rotationRate.z * -1;
         vGyroscope[1] = motion.rotationRate.y;
         vGyroscope[2] = motion.rotationRate.x;
