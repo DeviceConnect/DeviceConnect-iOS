@@ -13,8 +13,10 @@
 
 
 @protocol DPThetaMixedReplaceMediaServerDelegate<NSObject>
-- (void)didConnectForUri:(NSString*)uri;
-- (void)didDisconnectForUri:(NSString*)uri;
+@optional
+- (void)didConnectForSegment:(NSString*)segment
+                       isGet:(BOOL)isGet;
+- (void)didDisconnectForSegment:(NSString*)segment;
 - (void)didCloseServer;
 @end
 
@@ -33,6 +35,7 @@
 - (void)startStopServer;
 
 - (NSString*)getUrl;
+- (void)stopMediaForSegment:(NSString*)segment;
 
 - (void)offerMediaWithData:(NSData*)data segment:(NSString *)segment;
 @end

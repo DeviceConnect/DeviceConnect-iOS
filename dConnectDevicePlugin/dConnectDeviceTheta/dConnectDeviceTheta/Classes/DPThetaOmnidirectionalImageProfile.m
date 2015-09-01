@@ -10,6 +10,7 @@
 
 #import "DPThetaOmnidirectionalImageProfile.h"
 #import "DPThetaROI.h"
+#import "DPThetaManager.h"
 
 
 @interface DPThetaOmnidirectionalImageProfile()
@@ -25,9 +26,10 @@
     self = [super init];
     if (self) {
         self.delegate = self;
-        _omniImages = [NSMutableDictionary new];
-        _roiContexts = [NSMutableDictionary new];
+        _omniImages = [[NSMutableDictionary alloc] initWithCapacity:0];
+        _roiContexts = [[NSMutableDictionary alloc] initWithCapacity:0];
         _server = [DPThetaMixedReplaceMediaServer new];
+        _server.delegate = self;
     }
     return self;
 }
@@ -63,12 +65,18 @@
                             response:(DConnectResponseMessage *)response
                            serviceId:(NSString *)serviceId
 {
-    NSString *uri = [self omitParametersWithUri:[request stringForKey:DPOmnidirectionalImageProfileParamURI]];
+    NSString *uri = [DPThetaManager omitParametersToUri:[request stringForKey:DPOmnidirectionalImageProfileParamURI]];
     DPThetaRoiDeliveryContext *roiContext = _roiContexts[uri];
     if (!roiContext) {
         [response setErrorToInvalidRequestParameterWithMessage:@"The specified media is not found."];
         return YES;
     }
+    
+    if (![self correctParamsWithRequest:request
+                               response:response]) {
+        return YES;
+    }
+    
     [response setResult:DConnectMessageResultTypeOk];
     DPThetaParam *param = [self getParamForRequest:request];
     [roiContext changeRenderParameter:param isUserRequest:YES];
@@ -83,9 +91,12 @@
                            serviceId:(NSString *)serviceId
                                  uri:(NSString *)uri
 {
-    DPThetaRoiDeliveryContext *roiContext = _roiContexts[[self omitParametersWithUri:uri]];
+    NSString *url = [DPThetaManager omitParametersToUri:uri];
+    DPThetaRoiDeliveryContext *roiContext = _roiContexts[url];
     if (roiContext) {
-        [_roiContexts removeObjectForKey:[self omitParametersWithUri:uri]];
+        url = [url stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"%@/", [_server getUrl]] withString:@""];
+        [_server stopMediaForSegment:url];
+        [_roiContexts removeObjectForKey:url];
         if ([_server isRunning]) {
             [_server startStopServer];
         }
@@ -105,6 +116,12 @@
                         source:(NSString *)source
                          isGet:(BOOL)isGet
 {
+    if (!source) {
+        [response setErrorToInvalidRequestParameterWithMessage:@"Non exist Source"];
+        return YES;
+    }
+    
+    
     if (![_server isRunning]) {
         [_server startStopServer];
     }
@@ -112,7 +129,7 @@
     if (!omniImage) {
         NSBundle *bundle = [NSBundle mainBundle];
         NSString *origin = [bundle bundleIdentifier];
-        NSString *uri = [self omitParametersWithUri:source];
+        NSString *uri = [DPThetaManager omitParametersFromUri:source];
         NSRange range = [[uri stringByRemovingPercentEncoding] rangeOfString:@"file://"];
         NSUInteger index = range.location;
 
@@ -122,7 +139,6 @@
                                 stringByReplacingOccurrencesOfString:@"uri=file://" withString:@""]
                                 stringByReplacingOccurrencesOfString:@"%20" withString:@" "];
             NSData* imageData = [NSData dataWithContentsOfFile:path];
-            UIImage *image = [[UIImage alloc] initWithData:imageData];
             omniImage.image = imageData;
 
         } else {
@@ -136,7 +152,15 @@
             });
             dispatch_semaphore_wait(semaphore, timeout);
         }
+        NSString  *res = [[NSString alloc] initWithData:omniImage.image encoding:NSJapaneseEUCStringEncoding];
+        
+        if ([res isEqualToString:@"No valid api was detected in URL."]) {
+            [response setErrorToInvalidRequestParameterWithMessage:@"Non exist Source"];
+            return YES;
+        }
+        _omniImages[source] = omniImage;
     }
+    
     dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
     dispatch_time_t timeout = dispatch_time(DISPATCH_TIME_NOW, NSEC_PER_SEC * 500);
     DPThetaRoiDeliveryContext *roiContext = [[DPThetaRoiDeliveryContext alloc] initWithSource:omniImage callback:^{
@@ -151,6 +175,7 @@
     roiContext.delegate = self;
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [roiContext changeRenderParameter:[[DPThetaParam alloc] init] isUserRequest:YES];
+        [roiContext startExpiredTimer];
     });
     _roiContexts[uri] = roiContext;
     [response setResult:DConnectMessageResultTypeOk];
@@ -165,17 +190,6 @@
 }
 
 
-- (NSString*)omitParametersWithUri:(NSString*)uri
-{
-    NSRange range = [uri rangeOfString:@"?"];
-    NSUInteger index = range.location;
-    if (index != NSNotFound) {
-        NSString *param = [uri substringFromIndex:index + 1];
-        NSLog(@"substring uri: %@", param);
-        return param;
-    }
-    return uri;
-}
 
 
 - (DPThetaParam *)getParamForRequest:(DConnectRequestMessage *)request
@@ -205,19 +219,104 @@
         vr = NO;
     }
     DPThetaParam *param = [[DPThetaParam alloc] init];
-    param.vrMode = vr;
-    param.stereoMode = stereo;
-    param.cameraX = x;
-    param.cameraY = y;
-    param.cameraZ = z;
-    param.cameraRoll = roll;
-    param.cameraPitch = pitch;
-    param.cameraYaw = yaw;
-    param.cameraFOV = fov;
-    param.sphereSize = sphereSize;
-    param.imageWidth = width;
-    param.imageHeight = height;
+    if ([request stringForKey:DPOmnidirectionalImageProfileParamVR]) {
+        param.vrMode = vr;
+    }
+    if ([request stringForKey:DPOmnidirectionalImageProfileParamStereo]) {
+        param.stereoMode = stereo;
+    }
+
+    if ([request stringForKey:DPOmnidirectionalImageProfileParamX]) {
+        param.cameraX = x;
+    }
+    if ([request stringForKey:DPOmnidirectionalImageProfileParamY]) {
+        param.cameraY = y;
+    }
+    if ([request stringForKey:DPOmnidirectionalImageProfileParamZ]) {
+        param.cameraZ = z;
+    }
+    if ([request stringForKey:DPOmnidirectionalImageProfileParamRoll]) {
+        param.cameraRoll = roll;
+    }
+    if ([request stringForKey:DPOmnidirectionalImageProfileParamPitch]) {
+        param.cameraPitch = pitch;
+    }
+    if ([request stringForKey:DPOmnidirectionalImageProfileParamYaw]) {
+        param.cameraYaw = yaw;
+    }
+    if ([request stringForKey:DPOmnidirectionalImageProfileParamFOV]) {
+        param.cameraFOV = fov;
+    }
+    if ([request stringForKey:DPOmnidirectionalImageProfileParamSphereSize]) {
+        param.sphereSize = sphereSize;
+    }
+    if ([request stringForKey:DPOmnidirectionalImageProfileParamWidth]) {
+        param.imageWidth = width;
+    }
+    if ([request stringForKey:DPOmnidirectionalImageProfileParamHeight]) {
+        param.imageHeight = height;
+    }
     return param;
+}
+
+- (BOOL)correctParamsWithRequest:(DConnectRequestMessage *)request
+                        response:(DConnectResponseMessage *)response
+{
+    
+    NSString *xString = [request stringForKey:DPOmnidirectionalImageProfileParamX];
+    NSString *yString = [request stringForKey:DPOmnidirectionalImageProfileParamY];
+    NSString *zString = [request stringForKey:DPOmnidirectionalImageProfileParamZ];
+    NSString *yawString = [request stringForKey:DPOmnidirectionalImageProfileParamYaw];
+    NSString *rollString = [request stringForKey:DPOmnidirectionalImageProfileParamRoll];
+    NSString *pitchString = [request stringForKey:DPOmnidirectionalImageProfileParamPitch];
+    NSString *fovString = [request stringForKey:DPOmnidirectionalImageProfileParamFOV];
+    NSString *sphereSizeString = [request stringForKey:DPOmnidirectionalImageProfileParamSphereSize];
+    NSString *widthString = [request stringForKey:DPOmnidirectionalImageProfileParamWidth];
+    NSString *heightString = [request stringForKey:DPOmnidirectionalImageProfileParamHeight];
+    NSString *stereoString = [request stringForKey:DPOmnidirectionalImageProfileParamStereo];
+    NSString *vrString = [request stringForKey:DPOmnidirectionalImageProfileParamVR];
+    NSString *parameters[] = {xString, yString, zString, yawString, rollString, pitchString,
+                            fovString, sphereSizeString, widthString, heightString};
+
+    for (int i = 0; i < 10; i++) {
+        if (![DPThetaManager existDecimalWithString:[parameters[i] stringByReplacingOccurrencesOfString:@"e-" withString:@""]]) {
+            NSString *errorMessage = [NSString stringWithFormat:@"%@ is not a number.", parameters[i]];
+            [response setErrorToInvalidRequestParameterWithMessage:errorMessage];
+            return NO;
+        }
+    }
+    
+    for (int i = 3; i < 10; i++) {
+        if (parameters[i].floatValue < 0) {
+            NSString *errorMessage = [NSString stringWithFormat:@"%@ is negative.", parameters[i]];
+            [response setErrorToInvalidRequestParameterWithMessage:errorMessage];
+            return NO;
+        }
+    }
+    for (int i = 3; i < 6; i++) {
+        if (parameters[i].floatValue > 360) {
+            NSString *errorMessage = [NSString stringWithFormat:@"%@ is over 360.", parameters[i]];
+            [response setErrorToInvalidRequestParameterWithMessage:errorMessage];
+            return NO;
+        }
+    }
+    
+    if (fovString.floatValue > 180) {
+        NSString *errorMessage = [NSString stringWithFormat:@"%@ is over 180.", fovString];
+        [response setErrorToInvalidRequestParameterWithMessage:errorMessage];
+        return NO;
+    }
+    
+    if (stereoString && ![DPThetaManager existBOOL:stereoString]) {
+        [response setErrorToInvalidRequestParameterWithMessage:@"stereo is non Boolean."];
+        return NO;
+    }
+
+    if (vrString && ![DPThetaManager existBOOL:vrString]) {
+        [response setErrorToInvalidRequestParameterWithMessage:@"vr is non Boolean."];
+        return NO;
+    }
+    return YES;
 }
 
 
@@ -229,21 +328,52 @@
     [_server offerMediaWithData:data segment:segment];
 }
 
-- (void)didConnectForUri:(NSString*)uri
+-(void)didExpiredMediaWithSegment:(NSString*)segment
 {
-    
+    NSString *url = [NSString stringWithFormat:@"%@/%@", [_server getUrl],segment];
+    DPThetaRoiDeliveryContext *context = _roiContexts[[DPThetaManager omitParametersToUri:url]];
+    if (context) {
+        [_server stopMediaForSegment:segment];
+        [_roiContexts removeObjectForKey:[DPThetaManager omitParametersToUri:url]];
+    }
 }
 
-- (void)didDisconnectForUri:(NSString*)uri
+- (void)didConnectForSegment:(NSString*)segment
+                       isGet:(BOOL)isGet
 {
-    
+    NSString *url = [NSString stringWithFormat:@"%@%@", [_server getUrl],segment];
+    DPThetaRoiDeliveryContext *target = _roiContexts[[DPThetaManager omitParametersToUri:url]];
+    if (!target) {
+        return;
+    }
+    if (isGet) {
+        [target restartExpiredTimer];
+    } else {
+        [target stopExpiredTimer];
+    }
+
 }
 
-
+- (void)didDisconnectForSegment:(NSString*)segment
+{
+    if (_server) {
+        [_server stopMediaForSegment:segment];
+    }
+    DPThetaRoiDeliveryContext *context = _roiContexts[[DPThetaManager omitParametersToUri:
+                                                       [NSString stringWithFormat:@"%@%@",
+                                                       [_server getUrl],segment]]];
+    if (context) {
+        [context destroy];
+        [_roiContexts removeObjectForKey:segment];
+        
+    }
+}
 
 - (void)didCloseServer
 {
-    
+    if (_server && [_server isRunning]) {
+        [_server startStopServer];
+    }
 }
 
 @end

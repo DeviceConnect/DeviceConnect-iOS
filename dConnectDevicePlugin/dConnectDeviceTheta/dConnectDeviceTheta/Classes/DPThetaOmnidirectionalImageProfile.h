@@ -12,7 +12,5 @@
 #import "DPThetaMixedReplaceMediaServer.h"
 #import "DPThetaRoiDeliveryContext.h"
 
-@interface DPThetaOmnidirectionalImageProfile : DPOmnidirectionalImageProfile<DPOmnidirectionalImageProfileDelegate,
-                                        DPThetaMixedReplaceMediaServerDelegate, DPThetaRoiDeliveryContextDelegate>
-
+@interface DPThetaOmnidirectionalImageProfile : DPOmnidirectionalImageProfile<DPOmnidirectionalImageProfileDelegate,DPThetaRoiDeliveryContextDelegate, DPThetaMixedReplaceMediaServerDelegate>
 @end

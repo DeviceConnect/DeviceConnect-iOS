@@ -28,6 +28,7 @@ static const double DPThetaMotionDeviceIntervalMilliSec = 100;
 @property (strong) DPThetaGLRenderView *glRenderView;
 
 @property (nonatomic) DPThetaQuaternion *currentRotation;
+@property (nonatomic) NSTimer *timer;
 @end
 
 @implementation DPThetaRoiDeliveryContext
@@ -46,7 +47,7 @@ static const double DPThetaMotionDeviceIntervalMilliSec = 100;
         _motionManager.deviceMotionUpdateInterval = DPThetaMotionDeviceIntervalMilliSec / 1000.0;
         _deviceOrientationOpQueue = [NSOperationQueue new];
         _currentRotation = [[DPThetaQuaternion alloc] initWithReal:1 imaginary:[[DPThetaVector3D alloc] initWithX:0 y:0 z:0]];
-        __unsafe_unretained typeof(self) weakSelf = self;
+         __unsafe_unretained typeof(self) weakSelf = self;
         _deviceOrientationOp = ^(CMDeviceMotion *motion, NSError *error) {
             if (error) {
                 NSLog(@"DPTheta Sensor Error:\n%@", error.description);
@@ -59,6 +60,7 @@ static const double DPThetaMotionDeviceIntervalMilliSec = 100;
         if (callback) {
             callback();
         }
+        
     }
     return self;
 }
@@ -97,7 +99,7 @@ static const double DPThetaMotionDeviceIntervalMilliSec = 100;
     }
     builder.fovDegree = (float)parameter.cameraFOV;
     _glRenderView.camera = (DPThetaCamera *) builder.create;
-//    [_glRenderView setSphereRadius:parameter.sphereSize];
+    [_glRenderView setSphereRadius:parameter.sphereSize];
     _glRenderView.screenWidth = parameter.imageWidth;
     _glRenderView.screenHeight = parameter.imageHeight;
     [self render];
@@ -238,6 +240,7 @@ static const double DPThetaMotionDeviceIntervalMilliSec = 100;
 
 - (void)initGL
 {
+    [self removeGLView];
     dispatch_async(dispatch_get_main_queue(), ^{
         _glRenderView = [[DPThetaGLRenderView alloc] initWithFrame:CGRectMake(0, 0, 100, 100)];
         [_glRenderView setTexture:_source.image];
@@ -252,6 +255,13 @@ static const double DPThetaMotionDeviceIntervalMilliSec = 100;
 }
 
 
+- (void)removeGLView
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [_glRenderView removeFromSuperview];
+        _glRenderView = NULL;
+    });
+}
 - (UIImage *)compositeImages:(NSArray *)array size:(CGSize)size
 {
     UIImage *image = nil;
@@ -268,10 +278,40 @@ static const double DPThetaMotionDeviceIntervalMilliSec = 100;
     
     image = UIGraphicsGetImageFromCurrentImageContext();
     
-   UIGraphicsEndImageContext();
+    UIGraphicsEndImageContext();
     
     return image;
 }
 
+- (void)startExpiredTimer
+{
+    
+     _timer = [NSTimer
+                 scheduledTimerWithTimeInterval:10.0
+                 target:self
+                 selector:@selector(onStartExpireTimer:)
+                 userInfo:nil
+                 repeats:NO];
+}
 
+- (void)onStartExpireTimer:(NSTimer*)timer
+{
+    if (_delegate) {
+        [_delegate didExpiredMediaWithSegment:_segment];
+    }
+}
+
+- (void)stopExpiredTimer
+{
+    if (_timer) {
+        [_timer invalidate];
+        _timer = NULL;
+    }
+}
+
+- (void)restartExpiredTimer
+{
+    [self stopExpiredTimer];
+    [self startExpiredTimer];
+}
 @end

@@ -23,6 +23,7 @@
     self = [super init];
     if (self) {
         omniCallback = callback;
+        _image = [[NSMutableData alloc] init];
         data = [[NSMutableData alloc] init];
         NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url];
 

@@ -269,19 +269,6 @@ didReceivePutOnRecordingChangeRequest:(DConnectRequestMessage *)request
     return YES;
 }
 
-- (BOOL)            profile:(DConnectMediaStreamRecordingProfile *)profile
-didReceivePutPreviewRequest:(DConnectRequestMessage *)request
-                   response:(DConnectResponseMessage *)response
-                  serviceId:(NSString *)serviceId
-{
-    CONNECT_CHECK();
-    [response setResult:DConnectMessageResultTypeOk];
-    [DConnectMediaStreamRecordingProfile setUri:[NSString stringWithFormat:@"%@/teeeeee",[_server getUrl]]
-                                         target:response];
-    [_server offerMediaWithData:nil segment:@"/teeeeee"];
-    [_server startStopServer];
-    return YES;
-}
 #pragma mark - Delete Methods
 #pragma mark Event Unregstration
 
@@ -312,17 +299,6 @@ didReceiveDeleteOnRecordingChangeRequest:(DConnectRequestMessage *)request
     return YES;
 }
 
-
-- (BOOL)               profile:(DConnectMediaStreamRecordingProfile *)profile
-didReceiveDeletePreviewRequest:(DConnectRequestMessage *)request
-                      response:(DConnectResponseMessage *)response
-                     serviceId:(NSString *)serviceId
-{
-    CONNECT_CHECK();
-    [response setResult:DConnectMessageResultTypeOk];
-    [_server startStopServer];
-    return YES;
-}
 
 #pragma mark - Event Method
 

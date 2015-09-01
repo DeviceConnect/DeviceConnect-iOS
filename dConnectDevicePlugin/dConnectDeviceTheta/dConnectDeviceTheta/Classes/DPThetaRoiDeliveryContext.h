@@ -14,12 +14,9 @@
 #import "DPThetaOmnidirectionalImage.h"
 @protocol DPThetaRoiDeliveryContextDelegate<NSObject>
 -(void)didUpdateMediaWithSegment:(NSString*)segment data:(NSData *)data;
+-(void)didExpiredMediaWithSegment:(NSString*)segment;
 @end
 @interface DPThetaRoiDeliveryContext : NSObject
-{
-    dispatch_source_t _timerSource;
-}
-
 
 /*!
  @brief DPThetaRoiDeliveryContextのデリゲートオブジェクト。
@@ -40,5 +37,9 @@
 - (void)draw;
 - (void)changeRenderParameter:(DPThetaParam *)parameter isUserRequest:(BOOL)isUserRequest;
 - (void)destroy;
+- (void)removeGLView;
 
+- (void)startExpiredTimer;
+- (void)stopExpiredTimer;
+- (void)restartExpiredTimer;
 @end
