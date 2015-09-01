@@ -840,7 +840,7 @@
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/dConnectDeviceAllJoyn/Headers";
-				VALID_ARCHS = "armv7 armv7s i386";
+				VALID_ARCHS = "arm64 armv7";
 				VERSIONING_SYSTEM = "";
 				VERSION_INFO_PREFIX = "";
 			};
@@ -905,7 +905,7 @@
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/dConnectDeviceAllJoyn/Headers";
 				VALIDATE_PRODUCT = YES;
-				VALID_ARCHS = "armv7 armv7s i386";
+				VALID_ARCHS = "arm64 armv7";
 				VERSIONING_SYSTEM = "";
 				VERSION_INFO_PREFIX = "";
 			};
