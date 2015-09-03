@@ -47,6 +47,7 @@ struct DPIRKitCRCInfo
 @interface DPIRKitManager()<NSNetServiceBrowserDelegate, NSNetServiceDelegate>
 {
     NSMutableDictionary *_services;
+    NSMutableDictionary *_devices;
     NSNetServiceBrowser *_browser;
 }
 
@@ -77,6 +78,7 @@ struct DPIRKitCRCInfo
         _browser = [NSNetServiceBrowser new];
         _browser.delegate = self;
         _services = [NSMutableDictionary dictionary];
+        _devices = [NSMutableDictionary dictionary];
     }
     
     return self;
@@ -626,9 +628,24 @@ struct DPIRKitCRCInfo
      // 検索の度に大文字、小文字が変化するので統一しておく。
     device.name = [sender.name uppercaseString];
     device.hostName = sender.hostName;
+    DPIRKitDevice *irkit = _devices[device.name];
     
+    if (!irkit) {
+        _devices[device.name] = device;
+    }
+
     [_detectionDelegate manager:self didFindDevice:device];
     [self netService:sender didNotResolve:nil];
+}
+
+#pragma mark - get Devices
+
+- (NSArray *)devicesAll {
+    return [_devices allValues];
+}
+
+- (DPIRKitDevice *)deviceForServiceId:(NSString *)serviceId {
+    return _devices[serviceId];
 }
 
 @end

@@ -14,5 +14,7 @@
 @interface DPIRKitDevicePlugin : DConnectDevicePlugin
 
 - (DPIRKitDevice *) deviceForServiceId:(NSString *)serviceId;
-
+- (BOOL)sendIRWithServiceId:(NSString *)serviceId
+                    message:(NSString *)message
+                   response:(DConnectResponseMessage *)response;
 @end

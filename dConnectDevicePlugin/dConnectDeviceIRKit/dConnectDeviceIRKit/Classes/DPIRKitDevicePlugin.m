@@ -11,6 +11,12 @@
 #import "DPIRKit_irkit.h"
 #import "DPIRKitRemoteControllerProfile.h"
 #import "DPIRKitConst.h"
+#import "DPIRKitDBManager.h"
+#import "DPIRKitRESTfulRequest.h"
+#import "DPIRKitVirtualDevice.h"
+#import "DPIRKitServiceInformationProfile.h"
+#import "DPIRKitLightProfile.h"
+#import "DPIRKitTVProfile.h"
 
 NSString *const DPIRKitInfoVersion = @"DPIRKitVersion";
 NSString *const DPIRKitInfoAPIKey = @"DPIRKitAPIKey";
@@ -55,10 +61,12 @@ DPIRKitManagerDetectionDelegate
     
     if (self) {
         DConnectServiceDiscoveryProfile *serviceDiscoveryProfile = [DConnectServiceDiscoveryProfile new];
-        DConnectServiceInformationProfile *serviceInformationProfile = [DConnectServiceInformationProfile new];
+        DPIRKitServiceInformationProfile *serviceInformationProfile = [DPIRKitServiceInformationProfile new];
         DConnectSystemProfile *systemProfile = [DConnectSystemProfile new];
         DPIRKitRemoteControllerProfile *remoteControllerProfile
                             = [[DPIRKitRemoteControllerProfile alloc] initWithDevicePlugin:self];
+        DPIRKitTVProfile *tvProfile = [[DPIRKitTVProfile alloc] initWithDevicePlugin:self];
+        DPIRKitLightProfile *lightProfile = [[DPIRKitLightProfile alloc] initWithDevicePlugin:self];
         serviceDiscoveryProfile.delegate = self;
         systemProfile.dataSource = self;
         serviceInformationProfile.dataSource = self;
@@ -66,6 +74,8 @@ DPIRKitManagerDetectionDelegate
         [self addProfile:serviceInformationProfile];
         [self addProfile:systemProfile];
         [self addProfile:remoteControllerProfile];
+        [self addProfile:tvProfile];
+        [self addProfile:lightProfile];
         _devices = [NSMutableDictionary dictionary];
         id<DConnectEventCacheController> controller = [[DConnectMemoryCacheController alloc] init];
         _eventManager = [DConnectEventManager sharedManagerForClass:[DPIRKitDevicePlugin class]];
@@ -134,7 +144,6 @@ DPIRKitManagerDetectionDelegate
             _devices[device.name] = device;
         }
     }
-    
     if ((!hit && online) || (hit && !online)) {
         
         DConnectMessage *networkService = [DConnectMessage message];
@@ -175,6 +184,20 @@ DPIRKitManagerDetectionDelegate
     [[DPIRKitManager sharedInstance] stopDetection];
 }
 
+// 一つでも赤外線が登録されているかをチェックする
+- (BOOL) existIRForServiceId:(NSString *)serviceId {
+    NSArray *requests = [[DPIRKitDBManager sharedInstance] queryRESTfulRequestByServiceId:serviceId];
+    for (DPIRKitRESTfulRequest *request in requests) {
+        DPIRLog(@"%@:%@", request.name,request.ir);
+        NSRange range = [request.ir rangeOfString:@"{\"format\":\"raw\","];
+        if (request.ir && range.location != NSNotFound) {
+            return YES;
+        }
+    }
+    return NO;
+}
+
+
 #pragma mark - Profile Delegate
 #pragma mark DConnectServiceDiscoveryProfileDelegate
 
@@ -197,9 +220,30 @@ didReceiveGetServicesRequest:(DConnectRequestMessage *)request
             // 見つかっている時点でWiFiにつながっているので常にYES。
             [DConnectServiceDiscoveryProfile setOnline:YES target:service];
             [services addMessage:service];
+            NSArray *virtuals = [[DPIRKitDBManager sharedInstance] queryVirtualDevice:nil];
+            if (virtuals.count > 0) {
+                for (DPIRKitVirtualDevice *virtual in virtuals) {
+                    NSRange range = [virtual.serviceId rangeOfString:device.name];
+                    if (range.location != NSNotFound
+                        && [self existIRForServiceId:virtual.serviceId]) {
+                        DConnectMessage *service = [DConnectMessage message];
+                        [DConnectServiceDiscoveryProfile setId:virtual.serviceId target:service];
+                        [DConnectServiceDiscoveryProfile setName:virtual.deviceName target:service];
+                        // 仮想デバイスはWiFiとする。
+                        [DConnectServiceDiscoveryProfile setType:DConnectServiceDiscoveryProfileNetworkTypeWiFi
+                                                          target:service];
+                        // 見つかっている時点でWiFiにつながっているので常にYES。
+                        [DConnectServiceDiscoveryProfile setOnline:YES target:service];
+                        [DConnectServiceDiscoveryProfile setConfig:@"Virtual Device" target:service];
+                        [services addMessage:service];
+                    }
+                }
+            }
+
         }
     }
     
+    //仮想デバイスの追加
     response.result = DConnectMessageResultTypeOk;
     [DConnectServiceDiscoveryProfile setServices:services target:response];
     
@@ -243,6 +287,7 @@ didReceiveDeleteOnServiceChangeRequest:(DConnectRequestMessage *)request
     }
     return YES;
 }
+
 
 #pragma mark DConnectSystemProfileDataSource
 
@@ -301,5 +346,41 @@ didReceiveDeleteOnServiceChangeRequest:(DConnectRequestMessage *)request
     DPIRLog(@"lost a device : %@", device);
     [self sendDeviceDetectionEventWithDevice:device online:NO];
 }
+
+
+- (BOOL)sendIRWithServiceId:(NSString *)serviceId
+                    message:(NSString *)message
+                   response:(DConnectResponseMessage *)response
+{
+    BOOL send = YES;
+    NSArray *ids = [serviceId componentsSeparatedByString:@"."];
+    DPIRKitDevice *device = [[DPIRKitManager sharedInstance] deviceForServiceId:ids[0]];
+    if (message) {
+        NSData *jsonData = [message dataUsingEncoding:NSUnicodeStringEncoding];
+        id jsonObj = [NSJSONSerialization JSONObjectWithData:jsonData
+                                                     options:NSJSONReadingAllowFragments
+                                                       error:NULL];
+        if (![NSJSONSerialization isValidJSONObject:jsonObj]) {
+            [response setErrorToInvalidRequestParameter];
+            return send;
+        }
+    }
+    if (!message) {
+        [response setErrorToInvalidRequestParameter];
+    } else {
+        send = NO;
+        [[DPIRKitManager sharedInstance] sendMessage:message withHostName:device.hostName completion:^(BOOL success) {
+            if (success) {
+                response.result = DConnectMessageResultTypeOk;
+            } else {
+                [response setErrorToUnknown];
+            }
+            
+            [[DConnectManager sharedManager] sendResponse:response];
+        }];
+    }
+    return send;
+}
+
 
 @end
