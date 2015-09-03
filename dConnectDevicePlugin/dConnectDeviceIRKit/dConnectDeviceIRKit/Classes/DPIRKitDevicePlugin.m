@@ -21,7 +21,7 @@
 NSString *const DPIRKitInfoVersion = @"DPIRKitVersion";
 NSString *const DPIRKitInfoAPIKey = @"DPIRKitAPIKey";
 NSString *const DPIRKitStoryBoardName = @"Storyboard_";
-NSString *const DPIRKitPluginName = @"IRKit 2.0.0";
+NSString *const DPIRKitPluginName = @"IRKit 2.1.0";
 
 // Const.h
 NSString *const DPIRKitBundleName = @"dConnectDeviceIRKit_resources";
