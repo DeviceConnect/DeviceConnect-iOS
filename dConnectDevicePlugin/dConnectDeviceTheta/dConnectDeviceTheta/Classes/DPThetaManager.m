@@ -257,6 +257,7 @@ static int const _timeout = 500;
              || [session getStillCaptureMode] == 3) {
              result = YES;
              _imageCallback = completion;
+             [session setAudioVolume: 1];
              [session initiateCapture];
          } else {
              result = NO;
@@ -279,6 +280,7 @@ static int const _timeout = 500;
          // Single shot mode or Interval shooting mode.
          if ([session getStillCaptureMode] == 0) {
              result = YES;
+             [session setAudioVolume: 1];
              [session initiateOpenCapture];
          } else {
              result = NO;
