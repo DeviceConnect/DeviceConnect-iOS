@@ -302,7 +302,9 @@
            controller:(NSFetchedResultsController *)controller
 {
     cell.editingAccessoryType = UITableViewCellAccessoryNone;
-    
+    if (!controller) {
+        controller = [self fetchedResultsController];
+    }
     Page* page = [controller objectAtIndexPath:indexPath];
     cell.textLabel.text = page.title;
     
