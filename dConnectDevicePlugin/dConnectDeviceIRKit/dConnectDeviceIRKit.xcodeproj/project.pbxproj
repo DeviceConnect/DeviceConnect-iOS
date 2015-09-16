@@ -61,6 +61,13 @@
 		30A1EBDF19A8D16600E6CCE9 /* DPIRKitWiFiFormViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 30A1EBDE19A8D16600E6CCE9 /* DPIRKitWiFiFormViewController.m */; };
 		6682B8D719CA81E40039DCAA /* irkit09.png in Resources */ = {isa = PBXBuildFile; fileRef = 6682B8D619CA81E40039DCAA /* irkit09.png */; };
 		AB03424519BD790A00B1967E /* Storyboard_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AB03424719BD790A00B1967E /* Storyboard_iPad.storyboard */; };
+		AB056F951B68D0F200E1482F /* DPIRKitTable.xcdatamodeld in Resources */ = {isa = PBXBuildFile; fileRef = ABC2DB0E1B68574A0034C08F /* DPIRKitTable.xcdatamodeld */; };
+		AB056F981B68DDF300E1482F /* DPIRKitVirtualProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB056F971B68DDF300E1482F /* DPIRKitVirtualProfileViewController.m */; };
+		AB056F9B1B69DDFD00E1482F /* DPIRKitRegisterIRViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB056F9A1B69DDFD00E1482F /* DPIRKitRegisterIRViewController.m */; };
+		AB056FA11B6B1A2800E1482F /* DCMDevicePluginSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB056FA01B6B1A2800E1482F /* DCMDevicePluginSDK.framework */; };
+		AB056FA41B6B29EC00E1482F /* DPIRKitServiceInformationProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = AB056FA31B6B29EC00E1482F /* DPIRKitServiceInformationProfile.m */; };
+		AB056FA71B6B51DE00E1482F /* DPIRKitLightProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = AB056FA61B6B51DE00E1482F /* DPIRKitLightProfile.m */; };
+		AB056FAA1B6B5D0200E1482F /* DPIRKitTVProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = AB056FA91B6B5D0200E1482F /* DPIRKitTVProfile.m */; };
 		AB4B68FC19B4671D009939C9 /* irkit01.png in Resources */ = {isa = PBXBuildFile; fileRef = AB4B68F419B4671D009939C9 /* irkit01.png */; };
 		AB4B68FD19B4671D009939C9 /* irkit02.png in Resources */ = {isa = PBXBuildFile; fileRef = AB4B68F519B4671D009939C9 /* irkit02.png */; };
 		AB4B68FE19B4671D009939C9 /* irkit03.png in Resources */ = {isa = PBXBuildFile; fileRef = AB4B68F619B4671D009939C9 /* irkit03.png */; };
@@ -78,6 +85,23 @@
 		AB4B690A19B46FC9009939C9 /* irkit07.png in Resources */ = {isa = PBXBuildFile; fileRef = AB4B68FA19B4671D009939C9 /* irkit07.png */; };
 		AB4B690B19B46FC9009939C9 /* irkit08.png in Resources */ = {isa = PBXBuildFile; fileRef = AB4B68FB19B4671D009939C9 /* irkit08.png */; };
 		AB506F7419B05CA9004D6C41 /* DConnectSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB506F7319B05CA9004D6C41 /* DConnectSDK.framework */; };
+		AB6A83581B65CA7200E4F32F /* DPIRKitTutorialTopViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB6A83571B65CA7200E4F32F /* DPIRKitTutorialTopViewController.m */; };
+		AB6A835A1B65E07A00E4F32F /* irkit10.png in Resources */ = {isa = PBXBuildFile; fileRef = AB6A83591B65E07A00E4F32F /* irkit10.png */; };
+		AB6A835B1B65FE7A00E4F32F /* irkit10.png in Resources */ = {isa = PBXBuildFile; fileRef = AB6A83591B65E07A00E4F32F /* irkit10.png */; };
+		AB6A835E1B6619AC00E4F32F /* DPIRKitVirtualDeviceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB6A835D1B6619AC00E4F32F /* DPIRKitVirtualDeviceViewController.m */; };
+		AB8658001B82FD2100A0F896 /* light.png in Resources */ = {isa = PBXBuildFile; fileRef = AB8657FE1B82FD2100A0F896 /* light.png */; };
+		AB8658011B82FD2100A0F896 /* tv.png in Resources */ = {isa = PBXBuildFile; fileRef = AB8657FF1B82FD2100A0F896 /* tv.png */; };
+		AB8658021B82FF4900A0F896 /* light.png in Resources */ = {isa = PBXBuildFile; fileRef = AB8657FE1B82FD2100A0F896 /* light.png */; };
+		AB8658031B82FF4900A0F896 /* tv.png in Resources */ = {isa = PBXBuildFile; fileRef = AB8657FF1B82FD2100A0F896 /* tv.png */; };
+		ABC2DB021B6743C60034C08F /* DPIRKitCategorySelectDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = ABC2DB011B6743C60034C08F /* DPIRKitCategorySelectDialog.m */; };
+		ABC2DB051B6744E00034C08F /* DPIRKitDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = ABC2DB041B6744E00034C08F /* DPIRKitDialog.m */; };
+		ABC2DB061B674DC00034C08F /* CategorySelectDialog.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ABC2DAFF1B673B610034C08F /* CategorySelectDialog.storyboard */; };
+		ABC2DB0A1B67728C0034C08F /* VirtualDeviceCreateDialog.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ABC2DB091B676F9B0034C08F /* VirtualDeviceCreateDialog.storyboard */; };
+		ABC2DB0D1B6773E60034C08F /* DPIRKitVirtualDeviceCreateDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = ABC2DB0C1B6773E60034C08F /* DPIRKitVirtualDeviceCreateDialog.m */; };
+		ABC2DB101B68574A0034C08F /* DPIRKitTable.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = ABC2DB0E1B68574A0034C08F /* DPIRKitTable.xcdatamodeld */; };
+		ABC2DB151B685AD90034C08F /* DPIRKitDBManager.m in Sources */ = {isa = PBXBuildFile; fileRef = ABC2DB141B685AD90034C08F /* DPIRKitDBManager.m */; };
+		ABC2DB181B6898E20034C08F /* DPIRKitVirtualDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = ABC2DB171B6898E20034C08F /* DPIRKitVirtualDevice.m */; };
+		ABC2DB1B1B689BBE0034C08F /* DPIRKitRESTfulRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = ABC2DB1A1B689BBE0034C08F /* DPIRKitRESTfulRequest.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -158,6 +182,17 @@
 		6682B8E119CAB96E0039DCAA /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Storyboard_iPad.strings; sourceTree = "<group>"; };
 		6682B8E319CAB9710039DCAA /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Storyboard_iPad.strings; sourceTree = "<group>"; };
 		AB03424619BD790A00B1967E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Storyboard_iPad.storyboard; sourceTree = "<group>"; };
+		AB056F961B68DDF300E1482F /* DPIRKitVirtualProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPIRKitVirtualProfileViewController.h; sourceTree = "<group>"; };
+		AB056F971B68DDF300E1482F /* DPIRKitVirtualProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPIRKitVirtualProfileViewController.m; sourceTree = "<group>"; };
+		AB056F991B69DDFD00E1482F /* DPIRKitRegisterIRViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPIRKitRegisterIRViewController.h; sourceTree = "<group>"; };
+		AB056F9A1B69DDFD00E1482F /* DPIRKitRegisterIRViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPIRKitRegisterIRViewController.m; sourceTree = "<group>"; };
+		AB056FA01B6B1A2800E1482F /* DCMDevicePluginSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DCMDevicePluginSDK.framework; path = ../DCMDevicePluginSDK/bin/DCMDevicePluginSDK.framework; sourceTree = "<group>"; };
+		AB056FA21B6B29EC00E1482F /* DPIRKitServiceInformationProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPIRKitServiceInformationProfile.h; sourceTree = "<group>"; };
+		AB056FA31B6B29EC00E1482F /* DPIRKitServiceInformationProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPIRKitServiceInformationProfile.m; sourceTree = "<group>"; };
+		AB056FA51B6B51DE00E1482F /* DPIRKitLightProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPIRKitLightProfile.h; sourceTree = "<group>"; };
+		AB056FA61B6B51DE00E1482F /* DPIRKitLightProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPIRKitLightProfile.m; sourceTree = "<group>"; };
+		AB056FA81B6B5D0200E1482F /* DPIRKitTVProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPIRKitTVProfile.h; sourceTree = "<group>"; };
+		AB056FA91B6B5D0200E1482F /* DPIRKitTVProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPIRKitTVProfile.m; sourceTree = "<group>"; };
 		AB4B68F419B4671D009939C9 /* irkit01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = irkit01.png; sourceTree = "<group>"; };
 		AB4B68F519B4671D009939C9 /* irkit02.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = irkit02.png; sourceTree = "<group>"; };
 		AB4B68F619B4671D009939C9 /* irkit03.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = irkit03.png; sourceTree = "<group>"; };
@@ -167,6 +202,28 @@
 		AB4B68FA19B4671D009939C9 /* irkit07.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = irkit07.png; sourceTree = "<group>"; };
 		AB4B68FB19B4671D009939C9 /* irkit08.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = irkit08.png; sourceTree = "<group>"; };
 		AB506F7319B05CA9004D6C41 /* DConnectSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DConnectSDK.framework; path = ../../dConnectSDK/dConnectSDKForIOS/DConnectSDK/DConnectSDK.framework; sourceTree = "<group>"; };
+		AB6A83561B65CA7200E4F32F /* DPIRKitTutorialTopViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPIRKitTutorialTopViewController.h; sourceTree = "<group>"; };
+		AB6A83571B65CA7200E4F32F /* DPIRKitTutorialTopViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPIRKitTutorialTopViewController.m; sourceTree = "<group>"; };
+		AB6A83591B65E07A00E4F32F /* irkit10.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = irkit10.png; sourceTree = "<group>"; };
+		AB6A835C1B6619AC00E4F32F /* DPIRKitVirtualDeviceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPIRKitVirtualDeviceViewController.h; sourceTree = "<group>"; };
+		AB6A835D1B6619AC00E4F32F /* DPIRKitVirtualDeviceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPIRKitVirtualDeviceViewController.m; sourceTree = "<group>"; };
+		AB8657FE1B82FD2100A0F896 /* light.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = light.png; sourceTree = "<group>"; };
+		AB8657FF1B82FD2100A0F896 /* tv.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tv.png; sourceTree = "<group>"; };
+		ABC2DAFF1B673B610034C08F /* CategorySelectDialog.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = CategorySelectDialog.storyboard; sourceTree = "<group>"; };
+		ABC2DB001B6743C60034C08F /* DPIRKitCategorySelectDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DPIRKitCategorySelectDialog.h; path = dConnectDeviceIRKit/Classes/alert/DPIRKitCategorySelectDialog.h; sourceTree = SOURCE_ROOT; };
+		ABC2DB011B6743C60034C08F /* DPIRKitCategorySelectDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DPIRKitCategorySelectDialog.m; path = dConnectDeviceIRKit/Classes/alert/DPIRKitCategorySelectDialog.m; sourceTree = SOURCE_ROOT; };
+		ABC2DB031B6744E00034C08F /* DPIRKitDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DPIRKitDialog.h; path = dConnectDeviceIRKit/Classes/alert/DPIRKitDialog.h; sourceTree = SOURCE_ROOT; };
+		ABC2DB041B6744E00034C08F /* DPIRKitDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DPIRKitDialog.m; path = dConnectDeviceIRKit/Classes/alert/DPIRKitDialog.m; sourceTree = SOURCE_ROOT; };
+		ABC2DB091B676F9B0034C08F /* VirtualDeviceCreateDialog.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = VirtualDeviceCreateDialog.storyboard; sourceTree = "<group>"; };
+		ABC2DB0B1B6773E60034C08F /* DPIRKitVirtualDeviceCreateDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DPIRKitVirtualDeviceCreateDialog.h; path = dConnectDeviceIRKit/Classes/alert/DPIRKitVirtualDeviceCreateDialog.h; sourceTree = SOURCE_ROOT; };
+		ABC2DB0C1B6773E60034C08F /* DPIRKitVirtualDeviceCreateDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DPIRKitVirtualDeviceCreateDialog.m; path = dConnectDeviceIRKit/Classes/alert/DPIRKitVirtualDeviceCreateDialog.m; sourceTree = SOURCE_ROOT; };
+		ABC2DB0F1B68574A0034C08F /* DPIRKitTable.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DPIRKitTable.xcdatamodel; sourceTree = "<group>"; };
+		ABC2DB131B685AD90034C08F /* DPIRKitDBManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPIRKitDBManager.h; sourceTree = "<group>"; };
+		ABC2DB141B685AD90034C08F /* DPIRKitDBManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPIRKitDBManager.m; sourceTree = "<group>"; };
+		ABC2DB161B6898E20034C08F /* DPIRKitVirtualDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPIRKitVirtualDevice.h; sourceTree = "<group>"; };
+		ABC2DB171B6898E20034C08F /* DPIRKitVirtualDevice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPIRKitVirtualDevice.m; sourceTree = "<group>"; };
+		ABC2DB191B689BBE0034C08F /* DPIRKitRESTfulRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPIRKitRESTfulRequest.h; sourceTree = "<group>"; };
+		ABC2DB1A1B689BBE0034C08F /* DPIRKitRESTfulRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPIRKitRESTfulRequest.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -174,11 +231,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AB506F7419B05CA9004D6C41 /* DConnectSDK.framework in Frameworks */,
 				3039F98919A61BC000319429 /* CoreData.framework in Frameworks */,
+				AB506F7419B05CA9004D6C41 /* DConnectSDK.framework in Frameworks */,
 				3039F92419A5C21400319429 /* SystemConfiguration.framework in Frameworks */,
 				30A0A2D019A302FB00822B73 /* CoreTelephony.framework in Frameworks */,
 				30A0A2A319A300C100822B73 /* Foundation.framework in Frameworks */,
+				AB056FA11B6B1A2800E1482F /* DCMDevicePluginSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -218,6 +276,7 @@
 		3039F92B19A5E05A00319429 /* setting */ = {
 			isa = PBXGroup;
 			children = (
+				ABC2DAF81B6634790034C08F /* alert */,
 				3039F92C19A5E06600319429 /* viewcontroller */,
 				3039F93219A5E94E00319429 /* DPIRKitModelController.h */,
 				3039F93319A5E94E00319429 /* DPIRKitModelController.m */,
@@ -238,6 +297,14 @@
 				30A1EBDE19A8D16600E6CCE9 /* DPIRKitWiFiFormViewController.m */,
 				3007FBFD19CD4735005F42CD /* DPIRKitWiFiSelectionGuideViewController.h */,
 				3007FBFE19CD4735005F42CD /* DPIRKitWiFiSelectionGuideViewController.m */,
+				AB6A83561B65CA7200E4F32F /* DPIRKitTutorialTopViewController.h */,
+				AB6A83571B65CA7200E4F32F /* DPIRKitTutorialTopViewController.m */,
+				AB6A835C1B6619AC00E4F32F /* DPIRKitVirtualDeviceViewController.h */,
+				AB6A835D1B6619AC00E4F32F /* DPIRKitVirtualDeviceViewController.m */,
+				AB056F961B68DDF300E1482F /* DPIRKitVirtualProfileViewController.h */,
+				AB056F971B68DDF300E1482F /* DPIRKitVirtualProfileViewController.m */,
+				AB056F991B69DDFD00E1482F /* DPIRKitRegisterIRViewController.h */,
+				AB056F9A1B69DDFD00E1482F /* DPIRKitRegisterIRViewController.m */,
 			);
 			path = viewcontroller;
 			sourceTree = "<group>";
@@ -266,6 +333,7 @@
 		30A0A2A119A300C100822B73 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				AB056FA01B6B1A2800E1482F /* DCMDevicePluginSDK.framework */,
 				AB506F7319B05CA9004D6C41 /* DConnectSDK.framework */,
 				3039F98819A61BC000319429 /* CoreData.framework */,
 				3039F92319A5C21400319429 /* SystemConfiguration.framework */,
@@ -326,6 +394,7 @@
 		30A0A2C919A3017D00822B73 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				ABC2DB121B685A3B0034C08F /* db */,
 				3039F92B19A5E05A00319429 /* setting */,
 				3039F91F19A5C18B00319429 /* network */,
 				30A0A32B19A4B92C00822B73 /* profile */,
@@ -340,6 +409,9 @@
 		30A0A2CA19A3018F00822B73 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				AB8657FE1B82FD2100A0F896 /* light.png */,
+				AB8657FF1B82FD2100A0F896 /* tv.png */,
+				AB6A83591B65E07A00E4F32F /* irkit10.png */,
 				AB4B68F419B4671D009939C9 /* irkit01.png */,
 				AB4B68F519B4671D009939C9 /* irkit02.png */,
 				AB4B68F619B4671D009939C9 /* irkit03.png */,
@@ -353,6 +425,9 @@
 				3039F99819A8A4BF00319429 /* Storyboard_iPhone.storyboard */,
 				3039F99E19A8ABBD00319429 /* Localizable.strings */,
 				AB03424719BD790A00B1967E /* Storyboard_iPad.storyboard */,
+				ABC2DAFF1B673B610034C08F /* CategorySelectDialog.storyboard */,
+				ABC2DB091B676F9B0034C08F /* VirtualDeviceCreateDialog.storyboard */,
+				ABC2DB0E1B68574A0034C08F /* DPIRKitTable.xcdatamodeld */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -376,6 +451,12 @@
 			children = (
 				30A0A33119A4C3CD00822B73 /* DPIRKitRemoteControllerProfile.h */,
 				30A0A32D19A4B94600822B73 /* DPIRKitRemoteControllerProfile.m */,
+				AB056FA21B6B29EC00E1482F /* DPIRKitServiceInformationProfile.h */,
+				AB056FA31B6B29EC00E1482F /* DPIRKitServiceInformationProfile.m */,
+				AB056FA51B6B51DE00E1482F /* DPIRKitLightProfile.h */,
+				AB056FA61B6B51DE00E1482F /* DPIRKitLightProfile.m */,
+				AB056FA81B6B5D0200E1482F /* DPIRKitTVProfile.h */,
+				AB056FA91B6B5D0200E1482F /* DPIRKitTVProfile.m */,
 			);
 			path = profile;
 			sourceTree = "<group>";
@@ -395,6 +476,32 @@
 				30A0A34019A5952D00822B73 /* dConnectDeviceIRKit_resources-Prefix.pch */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		ABC2DAF81B6634790034C08F /* alert */ = {
+			isa = PBXGroup;
+			children = (
+				ABC2DB001B6743C60034C08F /* DPIRKitCategorySelectDialog.h */,
+				ABC2DB011B6743C60034C08F /* DPIRKitCategorySelectDialog.m */,
+				ABC2DB031B6744E00034C08F /* DPIRKitDialog.h */,
+				ABC2DB041B6744E00034C08F /* DPIRKitDialog.m */,
+				ABC2DB0B1B6773E60034C08F /* DPIRKitVirtualDeviceCreateDialog.h */,
+				ABC2DB0C1B6773E60034C08F /* DPIRKitVirtualDeviceCreateDialog.m */,
+			);
+			name = alert;
+			sourceTree = "<group>";
+		};
+		ABC2DB121B685A3B0034C08F /* db */ = {
+			isa = PBXGroup;
+			children = (
+				ABC2DB131B685AD90034C08F /* DPIRKitDBManager.h */,
+				ABC2DB141B685AD90034C08F /* DPIRKitDBManager.m */,
+				ABC2DB161B6898E20034C08F /* DPIRKitVirtualDevice.h */,
+				ABC2DB171B6898E20034C08F /* DPIRKitVirtualDevice.m */,
+				ABC2DB191B689BBE0034C08F /* DPIRKitRESTfulRequest.h */,
+				ABC2DB1A1B689BBE0034C08F /* DPIRKitRESTfulRequest.m */,
+			);
+			path = db;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -499,11 +606,14 @@
 				AB4B690119B4671D009939C9 /* irkit06.png in Resources */,
 				AB4B68FE19B4671D009939C9 /* irkit03.png in Resources */,
 				AB4B68FF19B4671D009939C9 /* irkit04.png in Resources */,
+				AB8658001B82FD2100A0F896 /* light.png in Resources */,
 				AB4B690019B4671D009939C9 /* irkit05.png in Resources */,
 				AB4B68FC19B4671D009939C9 /* irkit01.png in Resources */,
 				30A0A2BD19A300C200822B73 /* InfoPlist.strings in Resources */,
 				AB4B68FD19B4671D009939C9 /* irkit02.png in Resources */,
+				AB6A835A1B65E07A00E4F32F /* irkit10.png in Resources */,
 				AB4B690319B4671D009939C9 /* irkit08.png in Resources */,
+				AB8658011B82FD2100A0F896 /* tv.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -511,6 +621,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AB8658021B82FF4900A0F896 /* light.png in Resources */,
+				AB8658031B82FF4900A0F896 /* tv.png in Resources */,
+				AB056F951B68D0F200E1482F /* DPIRKitTable.xcdatamodeld in Resources */,
+				ABC2DB0A1B67728C0034C08F /* VirtualDeviceCreateDialog.storyboard in Resources */,
+				ABC2DB061B674DC00034C08F /* CategorySelectDialog.storyboard in Resources */,
+				AB6A835B1B65FE7A00E4F32F /* irkit10.png in Resources */,
 				AB03424519BD790A00B1967E /* Storyboard_iPad.storyboard in Resources */,
 				AB4B690419B46FC9009939C9 /* irkit01.png in Resources */,
 				AB4B690519B46FC9009939C9 /* irkit02.png in Resources */,
@@ -563,19 +679,33 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AB6A83581B65CA7200E4F32F /* DPIRKitTutorialTopViewController.m in Sources */,
+				ABC2DB1B1B689BBE0034C08F /* DPIRKitRESTfulRequest.m in Sources */,
 				3007FBFC19CD43F4005F42CD /* DPIRKitReachability.m in Sources */,
 				3039F98119A5F40500319429 /* DPIRKitPageViewController.m in Sources */,
 				3007FBFF19CD4735005F42CD /* DPIRKitWiFiSelectionGuideViewController.m in Sources */,
 				30A0A2DA19A3164A00822B73 /* DPIRKitDevice.m in Sources */,
+				AB056F9B1B69DDFD00E1482F /* DPIRKitRegisterIRViewController.m in Sources */,
+				ABC2DB151B685AD90034C08F /* DPIRKitDBManager.m in Sources */,
 				3039F92A19A5D97E00319429 /* NSString+Hex.m in Sources */,
+				AB056FA41B6B29EC00E1482F /* DPIRKitServiceInformationProfile.m in Sources */,
+				ABC2DB181B6898E20034C08F /* DPIRKitVirtualDevice.m in Sources */,
+				AB6A835E1B6619AC00E4F32F /* DPIRKitVirtualDeviceViewController.m in Sources */,
+				AB056FAA1B6B5D0200E1482F /* DPIRKitTVProfile.m in Sources */,
 				3039F93119A5E20A00319429 /* DPIRKitSettingViewController.m in Sources */,
 				3039F92219A5C1CB00319429 /* DPIRKitWiFiUtil.m in Sources */,
 				30A0A2D319A3105300822B73 /* DPIRKitDevicePlugin.m in Sources */,
+				ABC2DB051B6744E00034C08F /* DPIRKitDialog.m in Sources */,
+				ABC2DB101B68574A0034C08F /* DPIRKitTable.xcdatamodeld in Sources */,
 				30A0A2D719A314D600822B73 /* DPIRKitManager.m in Sources */,
 				30A0A32E19A4B94600822B73 /* DPIRKitRemoteControllerProfile.m in Sources */,
 				3039F93419A5E94E00319429 /* DPIRKitModelController.m in Sources */,
+				AB056FA71B6B51DE00E1482F /* DPIRKitLightProfile.m in Sources */,
+				ABC2DB021B6743C60034C08F /* DPIRKitCategorySelectDialog.m in Sources */,
+				ABC2DB0D1B6773E60034C08F /* DPIRKitVirtualDeviceCreateDialog.m in Sources */,
 				3039F98419A5F69800319429 /* DPIRKitConnectionGuideViewController.m in Sources */,
 				30A1EBDF19A8D16600E6CCE9 /* DPIRKitWiFiFormViewController.m in Sources */,
+				AB056F981B68DDF300E1482F /* DPIRKitVirtualProfileViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -720,6 +850,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/../../dConnectSDK/dConnectSDKForIOS/bin",
+					"$(PROJECT_DIR)/../DCMDevicePluginSDK/bin",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "dConnectDeviceIRKit/dConnectDeviceIRKit-Prefix.pch";
@@ -736,6 +867,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/../../dConnectSDK/dConnectSDKForIOS/bin",
+					"$(PROJECT_DIR)/../DCMDevicePluginSDK/bin",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "dConnectDeviceIRKit/dConnectDeviceIRKit-Prefix.pch";
@@ -906,6 +1038,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		ABC2DB0E1B68574A0034C08F /* DPIRKitTable.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				ABC2DB0F1B68574A0034C08F /* DPIRKitTable.xcdatamodel */,
+			);
+			currentVersion = ABC2DB0F1B68574A0034C08F /* DPIRKitTable.xcdatamodel */;
+			path = DPIRKitTable.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 30A0A29719A300C100822B73 /* Project object */;
 }
