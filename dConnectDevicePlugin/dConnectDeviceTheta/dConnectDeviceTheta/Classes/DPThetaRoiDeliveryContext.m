@@ -68,7 +68,7 @@ static const double DPThetaMotionDeviceIntervalMilliSec = 100;
 - (void)destroy
 {
     if (_glRenderView) {
-        _glRenderView = NULL;
+        [self removeGLView];
     }
     if (_motionManager) {
         [_motionManager stopDeviceMotionUpdates];

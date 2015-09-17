@@ -103,6 +103,7 @@ static int const DPThetaTagHeader = 0;
                             }
                             [sock disconnect];
                             [_connectedSockets removeObjectForKey:key];
+                            [_broadcastROIImages removeObjectForKey:segment];
                         } else {
                             
                             [sock writeData:[self generateResponse] withTimeout:-1 tag:1];
@@ -155,6 +156,7 @@ static int const DPThetaTagHeader = 0;
         GCDAsyncSocket *sock = _connectedSockets[seg];
         if (sock) {
             [sock disconnect];
+            
             [_connectedSockets removeObjectForKey:seg];
             [_broadcastROIImages removeObjectForKey:seg];
         }
@@ -162,6 +164,7 @@ static int const DPThetaTagHeader = 0;
             [self startStopServer];
             [_broadcastROIImages removeAllObjects];
         }
+
     }
 }
 

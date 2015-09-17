@@ -94,9 +94,11 @@
     NSString *url = [DPThetaManager omitParametersToUri:uri];
     DPThetaRoiDeliveryContext *roiContext = _roiContexts[url];
     if (roiContext) {
+        [roiContext destroy];
         url = [url stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"%@/", [_server getUrl]] withString:@""];
         [_server stopMediaForSegment:url];
         [_roiContexts removeObjectForKey:url];
+        
         if ([_server isRunning]) {
             [_server startStopServer];
         }
