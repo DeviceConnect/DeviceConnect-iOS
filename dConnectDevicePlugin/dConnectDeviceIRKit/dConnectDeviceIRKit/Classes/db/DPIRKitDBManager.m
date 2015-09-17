@@ -38,8 +38,8 @@ NSString *const DPIRKitTVProfileNames[] = {@"TV電源ON", @"TV電源OFF", @"チ�
                                         @"9",@"10", @"11",
                                         @"12",@"音量+", @"音量-",
                                          @"地デジ", @"BS", @"CS"};
-NSString *const DPIRKitTVProfileURIs[] = {@"/tv", @"/tv", @"/tv/channel?action=next",
-                                        @"/tv/channel?action=previous",
+NSString *const DPIRKitTVProfileURIs[] = {@"/tv", @"/tv", @"/tv/channel?control=next",
+                                        @"/tv/channel?control=previous",
                                         @"/tv/channel?tuning=1",
                                         @"/tv/channel?tuning=2",
                                         @"/tv/channel?tuning=3",
@@ -52,8 +52,8 @@ NSString *const DPIRKitTVProfileURIs[] = {@"/tv", @"/tv", @"/tv/channel?action=n
                                         @"/tv/channel?tuning=10",
                                         @"/tv/channel?tuning=11",
                                         @"/tv/channel?tuning=12",
-                                        @"/tv/volume?action=up",
-                                        @"/tv/volume?action=down",
+                                        @"/tv/volume?control=up",
+                                        @"/tv/volume?control=down",
                                         @"/tv/broadcastwave?select=DTV",
                                         @"/tv/broadcastwave?select=BS",
                                         @"/tv/broadcastwave?select=CS"};

@@ -23,7 +23,7 @@ NSString *const DCMTVProfileAttrMute = @"mute";
 
 NSString *const DCMTVProfileAttrEnlproperty = @"enlproperty";
 
-NSString *const DCMTVProfileParamAction = @"action";
+NSString *const DCMTVProfileParamControl = @"control";
 
 NSString *const DCMTVProfileParamTuning = @"tuning";
 
@@ -137,7 +137,7 @@ NSString *const DCMTVProfileBroadcastwaveCS = @"CS";
     }
     NSString *serviceId = [request serviceId];
     NSString *tuning = [request stringForKey:DCMTVProfileParamTuning];
-    NSString *action = [request stringForKey:DCMTVProfileParamAction];
+    NSString *control = [request stringForKey:DCMTVProfileParamControl];
     NSString *select = [request stringForKey:DCMTVProfileParamSelect];
     NSString *epc = [request stringForKey:DCMTVProfileParamEPC];
     NSString *value = [request stringForKey:DCMTVProfileParamValue];
@@ -165,7 +165,7 @@ NSString *const DCMTVProfileBroadcastwaveCS = @"CS";
                                                 response:
                                                 serviceId:
                                                 tuning:
-                                                action:)
+                                                control:)
                              response:response])
         {
             send = [_delegate profile:self
@@ -173,7 +173,7 @@ NSString *const DCMTVProfileBroadcastwaveCS = @"CS";
                              response:response
                             serviceId:serviceId
                                tuning:tuning
-                           action:action];
+                               control:control];
         } else if ([profile isEqualToString:DCMTVProfileName]
                    && attribute
                    && [attribute isEqualToString:DCMTVProfileAttrVolume]
@@ -181,14 +181,14 @@ NSString *const DCMTVProfileBroadcastwaveCS = @"CS";
                                                 didReceivePutTVVolumeRequest:
                                                 response:
                                                 serviceId:
-                                                action:)
+                                                control:)
                              response:response])
         {
             send = [_delegate profile:self
         didReceivePutTVVolumeRequest:request
                              response:response
                             serviceId:serviceId
-                               action:action];
+                               control:control];
         } else if ([profile isEqualToString:DCMTVProfileName]
                    && attribute
                    && [attribute isEqualToString:DCMTVProfileAttrBroadcastwave]

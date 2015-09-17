@@ -47,7 +47,7 @@ extern NSString *const DCMTVProfileAttrEnlproperty;
 /*!
  @brief パラメータ: control。
  */
-extern NSString *const DCMTVProfileParamAction;
+extern NSString *const DCMTVProfileParamControl;
 
 /*!
  @brief パラメータ: tuning。
@@ -217,7 +217,7 @@ extern NSString *const DCMTVProfileBroadcastwaveCS;
                                response:(DConnectResponseMessage *)response
                               serviceId:(NSString *)serviceId
                                  tuning:(NSString *)tuning
-                                 action:(NSString *)action;
+                                 control:(NSString *)control;
 
 
 /*!
@@ -239,7 +239,7 @@ extern NSString *const DCMTVProfileBroadcastwaveCS;
           didReceivePutTVVolumeRequest:(DConnectRequestMessage *)request
                                response:(DConnectResponseMessage *)response
                               serviceId:(NSString *)serviceId
-                                 action:(NSString *)action;
+                                 control:(NSString *)control;
 
 /*!
  @brief 放送波を変える。

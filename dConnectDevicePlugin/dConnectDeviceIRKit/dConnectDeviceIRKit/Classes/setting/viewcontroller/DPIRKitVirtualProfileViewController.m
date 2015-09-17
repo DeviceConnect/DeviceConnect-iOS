@@ -59,6 +59,12 @@
     }
 
 }
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [_virtualProfileList reloadData];
+}
+
 - (IBAction)closeProfileSettings:(id)sender {
     [self dismissViewControllerAnimated:YES completion:nil];
 

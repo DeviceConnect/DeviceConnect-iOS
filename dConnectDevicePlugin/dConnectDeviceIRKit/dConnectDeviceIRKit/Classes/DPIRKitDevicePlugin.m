@@ -129,7 +129,7 @@ DPIRKitManagerDetectionDelegate
 #pragma mark - Private Methods
 
 - (void) sendDeviceDetectionEventWithDevice:(DPIRKitDevice *)device online:(BOOL)online {
-    
+     [[DPIRKitManager sharedInstance] startDetection];
     BOOL hit = NO;
     @synchronized (_devices) {
         
