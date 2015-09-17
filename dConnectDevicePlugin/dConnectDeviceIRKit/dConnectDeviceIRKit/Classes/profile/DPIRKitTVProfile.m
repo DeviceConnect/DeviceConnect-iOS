@@ -36,7 +36,6 @@
                  didReceivePutTVRequest:(DConnectRequestMessage *)request
                                response:(DConnectResponseMessage *)response
                               serviceId:(NSString *)serviceId
-                                   tvId:(NSString *)tvId
 {
     NSString *uri = [NSString stringWithFormat:@"/%@",[request profile]];
 
@@ -50,7 +49,6 @@
               didReceiveDeleteTVRequest:(DConnectRequestMessage *)request
                                response:(DConnectResponseMessage *)response
                               serviceId:(NSString *)serviceId
-                                   tvId:(NSString *)tvId
 {
     NSString *uri = [NSString stringWithFormat:@"/%@",[request profile]];
     
@@ -66,13 +64,30 @@
                               serviceId:(NSString *)serviceId
                                    tvId:(NSString *)tvId
                                  tuning:(NSString *)tuning
-                                 control:(NSString *)control
+                                 action:(NSString *)action
 {
     NSString *uri = [NSString stringWithFormat:@"/%@/%@?%@=%@",
                                                  [request profile],
                                                  [request attribute],
-                                                 DCMTVProfileParamControl,
-                                                  control];
+                                                 DCMTVProfileParamAction,
+                                                  action];
+    if (tuning) {
+        uri = [NSString stringWithFormat:@"/%@/%@?%@=%@",
+                                                 [request profile],
+                                                 [request attribute],
+                                                 DCMTVProfileParamTuning,
+                                                 tuning];
+    } else if (tuning && action) {
+        uri = [NSString stringWithFormat:@"/%@/%@?%@=%@&%@=%@",
+               [request profile],
+               [request attribute],
+               DCMTVProfileParamTuning,
+               tuning,
+               DCMTVProfileParamAction,
+               action];
+
+        
+    }
     
     return [self sendTVIRRequestWithServiceId:serviceId
                                        method:@"PUT"
@@ -86,14 +101,13 @@
            didReceivePutTVVolumeRequest:(DConnectRequestMessage *)request
                                response:(DConnectResponseMessage *)response
                               serviceId:(NSString *)serviceId
-                                   tvId:(NSString *)tvId
-                                 control:(NSString *)control
+                                 action:(NSString *)action
 {
     NSString *uri = [NSString stringWithFormat:@"/%@/%@?%@=%@",
                      [request profile],
                      [request attribute],
-                     DCMTVProfileParamControl,
-                     control];
+                     DCMTVProfileParamAction,
+                     action];
     
     return [self sendTVIRRequestWithServiceId:serviceId
                                        method:@"PUT"

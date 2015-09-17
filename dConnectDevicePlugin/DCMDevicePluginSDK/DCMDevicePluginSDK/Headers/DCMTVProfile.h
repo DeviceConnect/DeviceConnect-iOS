@@ -45,14 +45,9 @@ extern NSString *const DCMTVProfileAttrMute;
 extern NSString *const DCMTVProfileAttrEnlproperty;
 
 /*!
- @brief パラメータ: tvId。
- */
-extern NSString *const DCMTVProfileParamTVId;
-
-/*!
  @brief パラメータ: control。
  */
-extern NSString *const DCMTVProfileParamControl;
+extern NSString *const DCMTVProfileParamAction;
 
 /*!
  @brief パラメータ: tuning。
@@ -157,16 +152,13 @@ extern NSString *const DCMTVProfileBroadcastwaveCS;
  @param[in] request リクエスト
  @param[in,out] response レスポンス
  @param[in] serviceId サービスID
- @param[in] tvId TVID
  @retval YES レスポンスパラメータを返却する
  @retval NO レスポンスパラメータを返却しないので、@link DConnectManager::sendResponse: @endlinkで返却すること。
  */
 - (BOOL)                        profile:(DCMTVProfile *)profile
         didReceiveGetTVRequest:(DConnectRequestMessage *)request
                                response:(DConnectResponseMessage *)response
-                              serviceId:(NSString *)serviceId
-                                   tvId:(NSString *)tvId;
-
+                              serviceId:(NSString *)serviceId;
 /*!
  @brief 電源を入れる。
  実装されない場合には、Not supportのエラーが返却される。
@@ -178,16 +170,13 @@ extern NSString *const DCMTVProfileBroadcastwaveCS;
  @param[in] request リクエスト
  @param[in,out] response レスポンス
  @param[in] serviceId サービスID
- @param[in] tvId TVID
  @retval YES レスポンスパラメータを返却する
  @retval NO レスポンスパラメータを返却しないので、@link DConnectManager::sendResponse: @endlinkで返却すること。
  */
 - (BOOL)                        profile:(DCMTVProfile *)profile
                  didReceivePutTVRequest:(DConnectRequestMessage *)request
                                response:(DConnectResponseMessage *)response
-                              serviceId:(NSString *)serviceId
-                                   tvId:(NSString *)tvId;
-
+                              serviceId:(NSString *)serviceId;
 /*!
  @brief 電源を消す。
  実装されない場合には、Not supportのエラーが返却される。
@@ -199,16 +188,13 @@ extern NSString *const DCMTVProfileBroadcastwaveCS;
  @param[in] request リクエスト
  @param[in,out] response レスポンス
  @param[in] serviceId サービスID
- @param[in] tvId TVID
  @retval YES レスポンスパラメータを返却する
  @retval NO レスポンスパラメータを返却しないので、@link DConnectManager::sendResponse: @endlinkで返却すること。
  */
 - (BOOL)                        profile:(DCMTVProfile *)profile
                  didReceiveDeleteTVRequest:(DConnectRequestMessage *)request
                                response:(DConnectResponseMessage *)response
-                              serviceId:(NSString *)serviceId
-                                   tvId:(NSString *)tvId;
-
+                              serviceId:(NSString *)serviceId;
 /*!
  @brief チャンネルを変える。
  
@@ -221,7 +207,6 @@ extern NSString *const DCMTVProfileBroadcastwaveCS;
  @param[in] request リクエスト
  @param[in,out] response レスポンス
  @param[in] serviceId サービスID
- @param[in] tvId TVID
  @param[in] tuning チャンネル番号
  @param[in] control チャンネルを前か次に送る
  @retval YES レスポンスパラメータを返却する
@@ -231,9 +216,8 @@ extern NSString *const DCMTVProfileBroadcastwaveCS;
                  didReceivePutTVChannelRequest:(DConnectRequestMessage *)request
                                response:(DConnectResponseMessage *)response
                               serviceId:(NSString *)serviceId
-                                   tvId:(NSString *)tvId
                                  tuning:(NSString *)tuning
-                                 control:(NSString *)control;
+                                 action:(NSString *)action;
 
 
 /*!
@@ -247,7 +231,6 @@ extern NSString *const DCMTVProfileBroadcastwaveCS;
  @param[in] request リクエスト
  @param[in,out] response レスポンス
  @param[in] serviceId サービスID
- @param[in] tvId TVID
  @param[in] control 音量をあげるかさげるか
  @retval YES レスポンスパラメータを返却する
  @retval NO レスポンスパラメータを返却しないので、@link DConnectManager::sendResponse: @endlinkで返却すること。
@@ -256,8 +239,7 @@ extern NSString *const DCMTVProfileBroadcastwaveCS;
           didReceivePutTVVolumeRequest:(DConnectRequestMessage *)request
                                response:(DConnectResponseMessage *)response
                               serviceId:(NSString *)serviceId
-                                   tvId:(NSString *)tvId
-                                 control:(NSString *)control;
+                                 action:(NSString *)action;
 
 /*!
  @brief 放送波を変える。
@@ -271,7 +253,6 @@ extern NSString *const DCMTVProfileBroadcastwaveCS;
  @param[in] request リクエスト
  @param[in,out] response レスポンス
  @param[in] serviceId サービスID
- @param[in] tvId TVID
  @param[in] select 放送波
  @retval YES レスポンスパラメータを返却する
  @retval NO レスポンスパラメータを返却しないので、@link DConnectManager::sendResponse: @endlinkで返却すること。
@@ -280,7 +261,6 @@ extern NSString *const DCMTVProfileBroadcastwaveCS;
            didReceivePutTVBroadcastWaveRequest:(DConnectRequestMessage *)request
                                response:(DConnectResponseMessage *)response
                               serviceId:(NSString *)serviceId
-                                   tvId:(NSString *)tvId
                                  select:(NSString *)select;
 
 /*!
@@ -294,15 +274,13 @@ extern NSString *const DCMTVProfileBroadcastwaveCS;
  @param[in] request リクエスト
  @param[in,out] response レスポンス
  @param[in] serviceId サービスID
- @param[in] tvId TVID
  @retval YES レスポンスパラメータを返却する
  @retval NO レスポンスパラメータを返却しないので、@link DConnectManager::sendResponse: @endlinkで返却すること。
  */
 - (BOOL)                        profile:(DCMTVProfile *)profile
            didReceivePutTVMuteRequest:(DConnectRequestMessage *)request
                                response:(DConnectResponseMessage *)response
-                              serviceId:(NSString *)serviceId
-                                   tvId:(NSString *)tvId;
+                              serviceId:(NSString *)serviceId;
 
 /*!
  @brief ミュートをOFFにする。
@@ -315,16 +293,13 @@ extern NSString *const DCMTVProfileBroadcastwaveCS;
  @param[in] request リクエスト
  @param[in,out] response レスポンス
  @param[in] serviceId サービスID
- @param[in] tvId TVID
  @retval YES レスポンスパラメータを返却する
  @retval NO レスポンスパラメータを返却しないので、@link DConnectManager::sendResponse: @endlinkで返却すること。
  */
 - (BOOL)                        profile:(DCMTVProfile *)profile
            didReceiveDeleteTVMuteRequest:(DConnectRequestMessage *)request
                                response:(DConnectResponseMessage *)response
-                              serviceId:(NSString *)serviceId
-                                   tvId:(NSString *)tvId;
-
+                              serviceId:(NSString *)serviceId;
 /*!
  @brief 該当デバイスがサポートしているECHONET Lite 機器オブジェクトプロパティの設定内容を取得する。
  実装されない場合には、Not supportのエラーが返却される。
@@ -336,7 +311,6 @@ extern NSString *const DCMTVProfileBroadcastwaveCS;
  @param[in] request リクエスト
  @param[in,out] response レスポンス
  @param[in] serviceId サービスID
- @param[in] tvId TVID
  @param[in] epc ECHONET Liteコマンド
  @retval YES レスポンスパラメータを返却する
  @retval NO レスポンスパラメータを返却しないので、@link DConnectManager::sendResponse: @endlinkで返却すること。
@@ -345,7 +319,6 @@ extern NSString *const DCMTVProfileBroadcastwaveCS;
            didReceiveGetTVEnlpropertyRequest:(DConnectRequestMessage *)request
                                response:(DConnectResponseMessage *)response
                               serviceId:(NSString *)serviceId
-                                   tvId:(NSString *)tvId
                                     epc:(NSString *)epc;
 
 /*!
@@ -359,7 +332,6 @@ extern NSString *const DCMTVProfileBroadcastwaveCS;
  @param[in] request リクエスト
  @param[in,out] response レスポンス
  @param[in] serviceId サービスID
- @param[in] tvId TVID
  @param[in] epc ECHONET Liteコマンド
  @param[in] value ECHONET Lite値
  @retval YES レスポンスパラメータを返却する
@@ -369,7 +341,6 @@ extern NSString *const DCMTVProfileBroadcastwaveCS;
       didReceivePutTVEnlpropertyRequest:(DConnectRequestMessage *)request
                                response:(DConnectResponseMessage *)response
                               serviceId:(NSString *)serviceId
-                                   tvId:(NSString *)tvId
                                     epc:(NSString *)epc
                                   value:(NSString *)value;
 
