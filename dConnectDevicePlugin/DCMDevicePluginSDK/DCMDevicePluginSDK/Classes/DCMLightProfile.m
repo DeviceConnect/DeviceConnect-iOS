@@ -10,7 +10,8 @@
 #import "DCMLightProfile.h"
 #import <DConnectSDK/DConnectUtil.h>
 
-
+static NSString * const DCMRegexDecimalPoint = @"^[-+]?([0-9]*)?(\\.)?([0-9]*)?$";
+static NSString * const DCMRegexDigit = @"^([0-9]*)?$";
 NSString *const DCMLightProfileName = @"light";
 NSString *const DCMLightProfileInterfaceGroup = @"group";
 NSString *const DCMLightProfileAttrCreate = @"create";
@@ -93,6 +94,7 @@ NSString *const DCMLightProfileParamGroupName = @"groupName";
     return send;
 }
 
+
 /*
  POSTリクエストを振り分ける。
  */
@@ -125,13 +127,30 @@ NSString *const DCMLightProfileParamGroupName = @"groupName";
                       response:response])
         {
             NSString *lightId = [request stringForKey:DCMLightProfileParamLightId];
-            double brightness = 1.0;
-            if ([request hasKey:DCMLightProfileParamBrightness]) {
-                brightness = [request doubleForKey:DCMLightProfileParamBrightness];
+            NSNumber *brightness = nil;
+            if ([request objectForKey:DCMLightProfileParamBrightness]) {
+                brightness =
+                [DCMLightProfile parseBrightParam:
+                 [request objectForKey:DCMLightProfileParamBrightness]];
+                if (!brightness
+                    || (brightness && ([brightness doubleValue] < 0.0 || [brightness doubleValue] > 1.0))) {
+                    [response setErrorToInvalidRequestParameterWithMessage:
+                     @"Parameter 'brightness' must be a value between 0 and 1.0."];
+                    return YES;
+                }
             }
             NSString *color = [request stringForKey:DCMLightProfileParamColor];
-            NSArray *flashing = [self parsePattern:[request stringForKey:DCMLightProfileParamFlashing]];
-            
+            NSArray *flashing =
+            [DCMLightProfile parsePattern:
+             [request stringForKey:DCMLightProfileParamFlashing] isId:NO];
+            if (!flashing) {
+                [response setErrorToInvalidRequestParameterWithMessage:
+                 @"Parameter 'flashing' invalid."];
+                return YES;
+            }
+            if (![self checkFlash:response flashing:flashing]) {
+                return YES;
+            }
             send = [_delegate profile:self
            didReceivePostLightRequest:request
                              response:response
@@ -155,13 +174,31 @@ NSString *const DCMLightProfileParamGroupName = @"groupName";
                              response:response])
         {
             NSString *groupId = [request stringForKey:DCMLightProfileParamGroupId];
-            double brightness = 1.0;
-            if ([request hasKey:DCMLightProfileParamBrightness]) {
-                brightness = [request doubleForKey:DCMLightProfileParamBrightness];
+            NSNumber *brightness = nil;
+            if ([request objectForKey:DCMLightProfileParamBrightness]) {
+                brightness =
+                [DCMLightProfile parseBrightParam:
+                 [request objectForKey:DCMLightProfileParamBrightness]];
+                if (!brightness
+                    || (brightness && ([brightness doubleValue] < 0.0 || [brightness doubleValue] > 1.0))) {
+                    [response setErrorToInvalidRequestParameterWithMessage:
+                     @"Parameter 'brightness' must be a value between 0 and 1.0."];
+                    return YES;
+                }
             }
             NSString *color = [request stringForKey:DCMLightProfileParamColor];
-            NSArray *flashing = [self parsePattern:[request stringForKey:DCMLightProfileParamFlashing]];
-            
+            NSArray *flashing =
+            [DCMLightProfile parsePattern:
+             [request stringForKey:DCMLightProfileParamFlashing] isId:NO];
+            if (!flashing) {
+                [response setErrorToInvalidRequestParameterWithMessage:
+                 @"Parameter 'flashing' invalid."];
+                return YES;
+            }
+            if (![self checkFlash:response flashing:flashing]) {
+                return YES;
+            }
+
             send = [_delegate profile:self
       didReceivePostLightGroupRequest:request
                              response:response
@@ -185,7 +222,7 @@ NSString *const DCMLightProfileParamGroupName = @"groupName";
         {
             NSString *lightIds = [request stringForKey:DCMLightProfileParamLightIds];
             NSString *groupName = [request stringForKey:DCMLightProfileParamGroupName];
-            NSArray *pattern = [self parsePattern:lightIds];
+            NSArray *pattern = [DCMLightProfile parsePattern:lightIds isId:YES];
             send = [_delegate profile:self
 didReceivePostLightGroupCreateRequest:request
                              response:response
@@ -236,13 +273,32 @@ didReceivePostLightGroupCreateRequest:request
                       response:response])
         {
             NSString *lightId = [request stringForKey:DCMLightProfileParamLightId];
-            double brightness = 1.0;
-            if ([request hasKey:DCMLightProfileParamBrightness]) {
-                brightness = [request doubleForKey:DCMLightProfileParamBrightness];
+            NSNumber *brightness = nil;
+            if ([request objectForKey:DCMLightProfileParamBrightness]) {
+                brightness =
+                [DCMLightProfile parseBrightParam:
+                 [request objectForKey:DCMLightProfileParamBrightness]];
+                if (!brightness
+                    || (brightness && ([brightness doubleValue] < 0.0 || [brightness doubleValue] > 1.0))) {
+                    [response setErrorToInvalidRequestParameterWithMessage:
+                     @"Parameter 'brightness' must be a value between 0 and 1.0."];
+                    return YES;
+                }
             }
             NSString *name = [request stringForKey:DCMLightProfileParamName];
             NSString *color = [request stringForKey:DCMLightProfileParamColor];
-            NSArray *flashing = [self parsePattern:[request stringForKey:DCMLightProfileParamFlashing]];
+            NSArray *flashing =
+            [DCMLightProfile parsePattern:
+             [request stringForKey:DCMLightProfileParamFlashing] isId:NO];
+            if (!flashing) {
+                [response setErrorToInvalidRequestParameterWithMessage:
+                 @"Parameter 'flashing' invalid."];
+                return YES;
+            }
+            if (![self checkFlash:response flashing:flashing]) {
+                return YES;
+            }
+
             
             send = [_delegate profile:self
             didReceivePutLightRequest:request
@@ -269,14 +325,34 @@ didReceivePostLightGroupCreateRequest:request
                              response:response])
         {
             NSString *groupId = [request stringForKey:DCMLightProfileParamGroupId];
-            double brightness = 1.0;
-            if ([request hasKey:DCMLightProfileParamBrightness]) {
-                brightness = [request doubleForKey:DCMLightProfileParamBrightness];
+            NSNumber *brightness = nil;
+            if ([request objectForKey:DCMLightProfileParamBrightness]) {
+                brightness =
+                [DCMLightProfile parseBrightParam:
+                 [request objectForKey:DCMLightProfileParamBrightness]];
+                if (!brightness
+                    || (brightness &&  ([brightness doubleValue] < 0.0 || [brightness doubleValue] > 1.0))) {
+                    [response setErrorToInvalidRequestParameterWithMessage:
+                     @"Parameter 'brightness' must be a value between 0 and 1.0."];
+                    return YES;
+                }
+                
             }
             NSString *name = [request stringForKey:DCMLightProfileParamName];
             NSString *color = [request stringForKey:DCMLightProfileParamColor];
-            NSArray *flashing = [self parsePattern:[request stringForKey:DCMLightProfileParamFlashing]];
-            
+            NSArray *flashing =
+            [DCMLightProfile parsePattern:
+             [request stringForKey:DCMLightProfileParamFlashing]
+                                     isId:NO];
+            if (!flashing) {
+                [response setErrorToInvalidRequestParameterWithMessage:
+                 @"Parameter 'flashing' invalid."];
+                return YES;
+            }
+            if (![self checkFlash:response flashing:flashing]) {
+                return YES;
+            }
+
             send = [_delegate profile:self
        didReceivePutLightGroupRequest:request
                              response:response
@@ -390,10 +466,25 @@ didReceivePostLightGroupCreateRequest:request
     return result;
 }
 
++ (NSNumber *) parseBrightParam:(NSString *)brightnessParam
+{
+    if (![brightnessParam isKindOfClass:NSString.class]) {
+        return nil;
+    }
+    NSScanner *scanner = [NSScanner scannerWithString:brightnessParam];
+    double tmpDouble;
+    if (![scanner scanDouble:&tmpDouble]) {
+        return nil;
+    }
+    return @(tmpDouble);
+}
+
 /*
  flashingをパースする。
  */
-- (NSArray *) parsePattern:(NSString *)pattern {
++ (NSArray *) parsePattern:(NSString *)pattern
+                      isId:(BOOL)isId
+{
     
     NSMutableArray *result = [NSMutableArray array];
     if (!pattern) {
@@ -421,9 +512,46 @@ didReceivePostLightGroupCreateRequest:request
             [result removeAllObjects];
         }
     } else {
+        if (!isId && ![DCMLightProfile existDigitWithString:pattern]) {
+            return nil;
+        }
         [result addObject:pattern];
     }
     
     return result;
 }
+
+- (BOOL)checkFlash:(DConnectResponseMessage *)response flashing:(NSArray *)flashing
+{
+    for (NSString *flash in flashing) {
+        if (flash && [flash doubleValue] < 0.0) {
+            [response setErrorToInvalidRequestParameterWithMessage:
+             @"Parameter 'flashing' must be a x >= 0.0."];
+            return NO;
+        } else if (flash && [DCMLightProfile existDecimalWithString:flash]) {
+            [response setErrorToInvalidRequestParameterWithMessage:
+             @"Parameter 'flashing' must not be decimal."];
+            return NO;
+            
+        }
+    }
+    return YES;
+}
+
+
++ (BOOL)existNumberWithString:(NSString *)numberString Regex:(NSString*)regex {
+    NSRange match = [numberString rangeOfString:regex options:NSRegularExpressionSearch];
+    //数値の場合
+    return match.location != NSNotFound;
+}
+// 整数かどうかを判定する。 true:存在する
++ (BOOL)existDigitWithString:(NSString*)digit {
+    return [self existNumberWithString:digit Regex:DCMRegexDigit];
+}
+
+// 少数かどうかを判定する。
++ (BOOL)existDecimalWithString:(NSString*)decimal {
+    return [self existNumberWithString:decimal Regex:DCMRegexDecimalPoint];
+}
+
 @end

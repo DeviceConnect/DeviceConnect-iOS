@@ -1,0 +1,121 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "CEE06FEC0242C1DA13D9254FFED5E22CFAB006F3",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "EA149CCB3A6C1DF7E3D7DAE5B07CA5629295BB44" : 0,
+    "39B5C804BA7F80E4B77D5021C39D069563232F80" : 0,
+    "BB8F78A8BEC2E5BE78B6A3889EB2452D40C3FB8E" : 0,
+    "2D6818A2F6E9A6D99072B42D0F5FD183D4580175" : 0,
+    "CEE06FEC0242C1DA13D9254FFED5E22CFAB006F3" : 0,
+    "C884769013B54B2C65395C8EED3F248B46756C2F" : 0,
+    "DA46D27ADF5063EBBC01A7A907A6062C47B92820" : 0,
+    "12D2F6EE925FB1B39CD5443196F1BA716858B8DF" : 0,
+    "51C1498589D67FE6FCE1A4A09898325B3A780BDC" : 0,
+    "BABF2D0599CA6E23FE31A3B1C37F407CA3D850D7" : 0,
+    "7C09238191DDF3CCABBF69E377EE1D09AF6BC24E" : 0,
+    "8166AE78A8E0BFF61579F4C179A731598E963453" : 0,
+    "90EE8DC4AB791D9D31EBDADB144707E53ACE319A" : 0,
+    "64A641A5BEE892EE05D41F7A277CCF256E403377" : 0,
+    "206F01C78233CE86D98E36E6B7216175545009C2" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "6B97F517-7B40-41E5-A2C8-31C7E6922DDD",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "EA149CCB3A6C1DF7E3D7DAE5B07CA5629295BB44" : "repos\/20140613_iOS\/dConnectDevicePlugin\/DCMDevicePluginSDK",
+    "39B5C804BA7F80E4B77D5021C39D069563232F80" : "repos\/20140613_iOS\/dConnectDevicePlugin\/dConnectDevicePebble",
+    "BB8F78A8BEC2E5BE78B6A3889EB2452D40C3FB8E" : "repos\/20140613_iOS\/dConnectDevicePlugin\/dConnectDeviceIRKit",
+    "2D6818A2F6E9A6D99072B42D0F5FD183D4580175" : "repos\/20140613_iOS\/dConnectDevicePlugin\/dConnectDeviceDicePlus",
+    "CEE06FEC0242C1DA13D9254FFED5E22CFAB006F3" : "DeviceConnect-iOS",
+    "C884769013B54B2C65395C8EED3F248B46756C2F" : "repos\/20140613_iOS\/dConnectDevicePlugin\/dConnectDeviceHue",
+    "DA46D27ADF5063EBBC01A7A907A6062C47B92820" : "repos\/20140613_iOS\/dConnectDevicePlugin\/dConnectDeviceSonyCamera",
+    "12D2F6EE925FB1B39CD5443196F1BA716858B8DF" : "repos\/20140613_iOS\/dConnectDevicePlugin\/dConnectDeviceSphero",
+    "51C1498589D67FE6FCE1A4A09898325B3A780BDC" : "repos\/20140613_iOS\/dConnectSDK\/dConnectServer",
+    "BABF2D0599CA6E23FE31A3B1C37F407CA3D850D7" : "repos\/20140613_iOS\/dConnectDevicePlugin\/dConnectDeviceHue\/deps\/PhilipsHueSDK-iOS-OSX",
+    "7C09238191DDF3CCABBF69E377EE1D09AF6BC24E" : "repos\/20141017\/dConnectSDKForJavascriptTest",
+    "8166AE78A8E0BFF61579F4C179A731598E963453" : "repos\/20140613_iOS\/dConnectDevicePlugin\/dConnectDeviceHost",
+    "90EE8DC4AB791D9D31EBDADB144707E53ACE319A" : "repos\/20140613_iOS\/dConnectSDK\/dConnectSDKForIOS",
+    "64A641A5BEE892EE05D41F7A277CCF256E403377" : "DeviceConnect-JS",
+    "206F01C78233CE86D98E36E6B7216175545009C2" : "repos\/20140613_iOS\/dConnectDevicePlugin\/dConnectDeviceChromeCast"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "DeviceConnect",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "DeviceConnect.xcworkspace",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "git:\/\/192.168.0.12\/docomo\/dConnect\/iOS\/dConnectDevicePlugin\/dConnectDeviceSphero",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "12D2F6EE925FB1B39CD5443196F1BA716858B8DF"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "git:\/\/192.168.0.12\/docomo\/dConnect\/iOS\/dConnectDevicePlugin\/dConnectDeviceChromeCast",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "206F01C78233CE86D98E36E6B7216175545009C2"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "git:\/\/192.168.0.12\/docomo\/dConnect\/iOS\/dConnectDevicePlugin\/dConnectDeviceDicePlus",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "2D6818A2F6E9A6D99072B42D0F5FD183D4580175"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "git:\/\/192.168.0.12\/docomo\/dConnect\/iOS\/dConnectDevicePlugin\/dConnectDevicePebble",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "39B5C804BA7F80E4B77D5021C39D069563232F80"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "git:\/\/192.168.0.12\/docomo\/dConnect\/iOS\/dConnectSDK\/dConnectServer",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "51C1498589D67FE6FCE1A4A09898325B3A780BDC"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/TakayukiHoshi1984\/DeviceConnect-JS.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "64A641A5BEE892EE05D41F7A277CCF256E403377"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "git:\/\/192.168.0.12\/docomo\/dConnect\/Javascript\/dConnectSDKForJavascriptTest",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "7C09238191DDF3CCABBF69E377EE1D09AF6BC24E"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "git:\/\/192.168.0.12\/docomo\/dConnect\/iOS\/dConnectDevicePlugin\/dConnectDeviceHost",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "8166AE78A8E0BFF61579F4C179A731598E963453"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "git:\/\/192.168.0.12\/docomo\/dConnect\/iOS\/dConnectSDK\/dConnectSDKForIOS",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "90EE8DC4AB791D9D31EBDADB144707E53ACE319A"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/PhilipsHue\/PhilipsHueSDK-iOS-OSX.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "BABF2D0599CA6E23FE31A3B1C37F407CA3D850D7"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "git:\/\/192.168.0.12\/docomo\/dConnect\/iOS\/dConnectDevicePlugin\/dConnectDeviceIRKit",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "BB8F78A8BEC2E5BE78B6A3889EB2452D40C3FB8E"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "git:\/\/192.168.0.12\/docomo\/dConnect\/iOS\/dConnectDevicePlugin\/dConnectDeviceHue",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "C884769013B54B2C65395C8EED3F248B46756C2F"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/TakayukiHoshi1984\/DeviceConnect-iOS.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "CEE06FEC0242C1DA13D9254FFED5E22CFAB006F3"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "git:\/\/192.168.0.12\/docomo\/dConnect\/iOS\/dConnectDevicePlugin\/dConnectDeviceSonyCamera",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "DA46D27ADF5063EBBC01A7A907A6062C47B92820"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "git:\/\/192.168.0.12\/docomo\/dConnect\/iOS\/dConnectDevicePlugin\/DCMDevicePluginSDK",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "EA149CCB3A6C1DF7E3D7DAE5B07CA5629295BB44"
+    }
+  ]
+}

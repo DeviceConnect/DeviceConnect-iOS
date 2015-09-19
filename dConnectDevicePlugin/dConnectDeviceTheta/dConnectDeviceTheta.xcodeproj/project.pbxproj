@@ -37,7 +37,6 @@
 		AB39FEE71B4F4D0500A8139E /* DPThetaSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB39FEE51B4F4D0500A8139E /* DPThetaSettingViewController.m */; };
 		AB39FEE91B4F60F600A8139E /* WiFiTheta.png in Resources */ = {isa = PBXBuildFile; fileRef = AB39FEE81B4F60F600A8139E /* WiFiTheta.png */; };
 		AB50D0141B40D6EB00EB9F94 /* DPThetaDevicePlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = AB50D0131B40D6EB00EB9F94 /* DPThetaDevicePlugin.m */; };
-		AB50D03F1B40DA0D00EB9F94 /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = AB50D03E1B40DA0D00EB9F94 /* libiconv.dylib */; };
 		AB50D0411B40DA1C00EB9F94 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB50D0401B40DA1C00EB9F94 /* ImageIO.framework */; };
 		AB50D0AA1B40DE1600EB9F94 /* ExifRawData.mm in Sources */ = {isa = PBXBuildFile; fileRef = AB50D04B1B40DD3700EB9F94 /* ExifRawData.mm */; };
 		AB50D0AB1B40DE1600EB9F94 /* ExifTags.m in Sources */ = {isa = PBXBuildFile; fileRef = AB50D04D1B40DD3700EB9F94 /* ExifTags.m */; };
@@ -207,7 +206,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AB50D03F1B40DA0D00EB9F94 /* libiconv.dylib in Frameworks */,
 				AB50D0411B40DA1C00EB9F94 /* ImageIO.framework in Frameworks */,
 				AB50D0E41B40E70E00EB9F94 /* DConnectSDK.framework in Frameworks */,
 			);
@@ -908,6 +906,7 @@
 				ABDC9AB01B53B60C002AF9DD /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

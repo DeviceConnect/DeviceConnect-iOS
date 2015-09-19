@@ -177,8 +177,8 @@
 		D6FD02131999EC7A000DB674 /* CipherSignatureFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = D6FD020B1999EC7A000DB674 /* CipherSignatureFactory.m */; };
 		D6FD02141999EC7A000DB674 /* CipherSignatureProc.m in Sources */ = {isa = PBXBuildFile; fileRef = D6FD020E1999EC7A000DB674 /* CipherSignatureProc.m */; };
 		D6FD02151999EC7A000DB674 /* CipherSignatureProcMD.m in Sources */ = {isa = PBXBuildFile; fileRef = D6FD02101999EC7A000DB674 /* CipherSignatureProcMD.m */; };
-		EFC27C2E1AB5B97B0029B257 /* DConnectTouchProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = EFC27C2D1AB5B97B0029B257 /* DConnectTouchProfile.m */; };
 		EF8B64941AAC78D7007C590B /* DConnectKeyEventProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = EF8B64931AAC78D7007C590B /* DConnectKeyEventProfile.m */; };
+		EFC27C2E1AB5B97B0029B257 /* DConnectTouchProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = EFC27C2D1AB5B97B0029B257 /* DConnectTouchProfile.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1816,10 +1816,10 @@
 		D6FD02281999FED3000DB674 /* LocalOAuthSQLiteClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LocalOAuthSQLiteClient.h; path = localoauth/LocalOAuthSQLiteClient.h; sourceTree = "<group>"; };
 		D6FD02291999FED3000DB674 /* LocalOAuthToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LocalOAuthToken.h; path = localoauth/LocalOAuthToken.h; sourceTree = "<group>"; };
 		D6FD022A1999FED3000DB674 /* LocalOAuthTokenManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LocalOAuthTokenManager.h; path = localoauth/LocalOAuthTokenManager.h; sourceTree = "<group>"; };
-		EFC27C2C1AB5B96B0029B257 /* DConnectTouchProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DConnectTouchProfile.h; sourceTree = "<group>"; };
-		EFC27C2D1AB5B97B0029B257 /* DConnectTouchProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DConnectTouchProfile.m; sourceTree = "<group>"; };
 		EF8B64931AAC78D7007C590B /* DConnectKeyEventProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DConnectKeyEventProfile.m; sourceTree = "<group>"; };
 		EF8B64951AAC78F2007C590B /* DConnectKeyEventProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DConnectKeyEventProfile.h; sourceTree = "<group>"; };
+		EFC27C2C1AB5B96B0029B257 /* DConnectTouchProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DConnectTouchProfile.h; sourceTree = "<group>"; };
+		EFC27C2D1AB5B97B0029B257 /* DConnectTouchProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DConnectTouchProfile.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -4302,7 +4302,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "";
 				SDKROOT = iphoneos;
@@ -4334,7 +4334,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				OTHER_LDFLAGS = "";
 				SDKROOT = iphoneos;
 				USER_HEADER_SEARCH_PATHS = "${PROJECT_DIR}/DConnectSDK/";

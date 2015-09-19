@@ -36,7 +36,7 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
 #pragma mark - Interfaces
 
 
-@interface DPAllJoynLightProfile () <DCMLightProfileAltDelegate> {
+@interface DPAllJoynLightProfile () <DCMLightProfileDelegate> {
     DPAllJoynHandler *_handler;
 }
 @end
@@ -1862,7 +1862,12 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
          @"Parameter 'flashing' is not supported."];
         return YES;
     }
-    
+    if (!name || (name && name.length == 0)) {
+        [response setErrorToInvalidRequestParameterWithMessage:
+         @"Parameter 'name' is invalid."];
+        return YES;
+        
+    }
     switch ([self serviceTypeFromService:service]) {
             
         case DPAllJoynLightServiceTypeSingleLamp: {
@@ -2106,6 +2111,12 @@ didReceivePostLightGroupRequest:(DConnectRequestMessage *)request
     if (flashing && flashing.count > 0) {
         [response setErrorToInvalidRequestParameterWithMessage:
          @"Parameter 'flashing' is not supported."];
+        return YES;
+    }
+    
+    if (!name || (name && name.length == 0)) {
+        [response setErrorToInvalidRequestParameterWithMessage:
+         @"Parameter 'name' is invalid."];
         return YES;
     }
     

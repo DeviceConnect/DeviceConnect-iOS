@@ -70,7 +70,7 @@ NSString *const SpheroCalibrationName = @"Sphero CalibrationLED";
                       response:(DConnectResponseMessage *)response
                      serviceId:(NSString *)serviceId
                        lightId:(NSString*)lightId
-                    brightness:(double)brightness
+                    brightness:(NSNumber*)brightness
                          color:(NSString*)color
                       flashing:(NSArray*)flashing
 {
@@ -86,7 +86,7 @@ NSString *const SpheroCalibrationName = @"Sphero CalibrationLED";
     NSString *brightnessString = [request stringForKey:DCMLightProfileParamBrightness];
     if (brightnessString &&
         (![[DPSpheroManager sharedManager] existDecimalWithString:brightnessString]
-         || brightness < 0 || brightness > 1.0)) {
+         || [brightness doubleValue] < 0 || [brightness doubleValue] > 1.0)) {
         [response setErrorToInvalidRequestParameterWithMessage:@"invalid brightness value."];
         return YES;
     }
@@ -95,10 +95,10 @@ NSString *const SpheroCalibrationName = @"Sphero CalibrationLED";
         // キャリブレーションライト点灯。 colorは変えられない。点灯、消灯のみ
         if (flashing.count>0) {
             // 点滅
-            [[DPSpheroManager sharedManager] flashLightWithBrightness:brightness flashData:flashing];
+            [[DPSpheroManager sharedManager] flashLightWithBrightness:[brightness doubleValue] flashData:flashing];
         } else {
             // 点灯
-            [DPSpheroManager sharedManager].calibrationLightBright = brightness;
+            [DPSpheroManager sharedManager].calibrationLightBright = [brightness doubleValue];
         }
     } else if ([lightId isEqualToString:SpheroLED]) {
         // LED点灯
@@ -129,9 +129,9 @@ NSString *const SpheroCalibrationName = @"Sphero CalibrationLED";
                 return YES;
             }
             
-            ledColor = [UIColor colorWithRed:redValue/255. green:greenValue/255. blue:blueValue/255. alpha:brightness];
+            ledColor = [UIColor colorWithRed:redValue/255. green:greenValue/255. blue:blueValue/255. alpha:[brightness doubleValue]];
         } else {
-            ledColor = [UIColor colorWithRed:255. green:255. blue:255. alpha:brightness];
+            ledColor = [UIColor colorWithRed:255. green:255. blue:255. alpha:[brightness doubleValue]];
         }
         if (flashing.count>0) {
             // 点滅
@@ -153,7 +153,7 @@ NSString *const SpheroCalibrationName = @"Sphero CalibrationLED";
                     serviceId:(NSString *)serviceId
                       lightId:(NSString*)lightId
                          name:(NSString *)name
-                   brightness:(double)brightness
+                   brightness:(NSNumber*)brightness
                         color:(NSString*)color
                      flashing:(NSArray*)flashing
 {

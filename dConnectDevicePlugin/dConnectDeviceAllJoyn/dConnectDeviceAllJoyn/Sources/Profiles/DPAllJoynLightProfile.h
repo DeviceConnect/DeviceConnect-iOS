@@ -9,10 +9,8 @@
 
 #import <DCMDevicePluginSDK/DCMLightProfile.h>
 #import "DPAllJoynHandler.h"
-#import "DCMLightProfileAlt.h"
 
-
-@interface DPAllJoynLightProfile : DCMLightProfileAlt
+@interface DPAllJoynLightProfile : DCMLightProfile
 
 - (instancetype)init NS_UNAVAILABLE;
 - (instancetype)initWithHandler:(DPAllJoynHandler *)handler

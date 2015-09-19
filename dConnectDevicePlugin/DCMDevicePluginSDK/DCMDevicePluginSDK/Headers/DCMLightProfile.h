@@ -133,7 +133,7 @@ extern NSString *const DCMLightProfileParamGroupName;
                    response:(DConnectResponseMessage *)response
                    serviceId:(NSString *)serviceId
                     lightId:(NSString*)lightId
-                 brightness:(double)brightness
+                 brightness:(NSNumber*)brightness
                       color:(NSString*)color
                    flashing:(NSArray*)flashing;
 /*!
@@ -162,7 +162,7 @@ extern NSString *const DCMLightProfileParamGroupName;
                    serviceId:(NSString *)serviceId
                     lightId:(NSString*)lightId
                        name:(NSString*)name
-                 brightness:(double)brightness
+                 brightness:(NSNumber*)brightness
                       color:(NSString*)color
                    flashing:(NSArray*)flashing;
 /*!
@@ -234,7 +234,7 @@ didReceivePostLightGroupRequest:(DConnectRequestMessage *)request
                        response:(DConnectResponseMessage *)response
                        serviceId:(NSString *)serviceId
                         groupId:(NSString*)groupId
-                     brightness:(double)brightness
+                     brightness:(NSNumber*)brightness
                           color:(NSString*)color
                        flashing:(NSArray*)flashing;
 /*!
@@ -263,7 +263,7 @@ didReceivePostLightGroupRequest:(DConnectRequestMessage *)request
                        serviceId:(NSString *)serviceId
                         groupId:(NSString*)groupId
                            name:(NSString*)name
-                     brightness:(double)brightness
+                     brightness:(NSNumber*)brightness
                           color:(NSString*)color
                        flashing:(NSArray*)flashing;
 /*!

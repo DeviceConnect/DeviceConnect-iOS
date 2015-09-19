@@ -74,7 +74,7 @@
     didReceivePostLightRequest:(DConnectRequestMessage *)request
         response:(DConnectResponseMessage *)response serviceId:(NSString *)serviceId
          lightId:(NSString*) lightId
-      brightness:(double)brightness
+      brightness:(NSNumber*)brightness
            color:(NSString*) color
         flashing:(NSArray*) flashing
 {
@@ -87,7 +87,7 @@
     return [self turnOnOffHueLightWithResponse:response
                                        lightId:lightId
                                           isOn:YES
-                                    brightness:brightness
+                                    brightness:[brightness doubleValue]
                                          color:color];
 }
 
@@ -111,7 +111,7 @@ didReceiveDeleteLightRequest:(DConnectRequestMessage *)request
         serviceId:(NSString *)serviceId
          lightId:(NSString*) lightId
             name:(NSString *)name
-      brightness:(double)brightness
+      brightness:(NSNumber*)brightness
            color:(NSString*)color
         flashing:(NSArray*) flashing
 {
@@ -127,6 +127,8 @@ didReceiveDeleteLightRequest:(DConnectRequestMessage *)request
     }
     return [[DPHueManager sharedManager] changeLightNameWithLightId:lightId
                                                                   name:name
+                                                                color:color
+                                                         brightness:[brightness doubleValue]
                                                          completion:^{
                                                              [self setErrRespose:response];
                                                              [[DConnectManager sharedManager] sendResponse:response];
@@ -200,7 +202,7 @@ didReceiveDeleteLightRequest:(DConnectRequestMessage *)request
         response:(DConnectResponseMessage *)response
         serviceId:(NSString *)serviceId
          groupId:(NSString*)groupId
-      brightness:(double)brightness
+      brightness:(NSNumber*)brightness
            color:(NSString*)color
         flashing:(NSArray*)flashing
 {
@@ -214,7 +216,7 @@ didReceiveDeleteLightRequest:(DConnectRequestMessage *)request
     return [self turnOnOffHueLightGroupWithResponse:response
                                             groupId:groupId
                                                isOn:YES
-                                         brightness:brightness
+                                         brightness:[brightness doubleValue]
                                               color:color];
 }
 
@@ -234,7 +236,7 @@ didReceiveDeleteLightRequest:(DConnectRequestMessage *)request
         serviceId:(NSString *)serviceId
          groupId:(NSString*) groupId
             name:(NSString *)name
-      brightness:(double)brightness
+      brightness:(NSNumber*)brightness
            color:(NSString*)color
         flashing:(NSArray*)flashing
 {

@@ -62,7 +62,7 @@
                    response:(DConnectResponseMessage *)response
                   serviceId:(NSString *)serviceId
                     lightId:(NSString*)lightId
-                 brightness:(double)brightness
+                 brightness:(NSNumber*)brightness
                       color:(NSString*)color
                    flashing:(NSArray*)flashing
 {
