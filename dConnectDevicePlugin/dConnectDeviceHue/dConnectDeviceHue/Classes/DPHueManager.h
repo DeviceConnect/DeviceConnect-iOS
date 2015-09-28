@@ -15,7 +15,6 @@
 #import <Foundation/Foundation.h>
 #import <HueSDK_iOS/HueSDK.h>
 #import <DConnectSDK/DConnectSDK.h>
-#import <DCMDevicePluginSDK/DCMDevicePluginSDK.h>
 
 
 /*!

@@ -33,7 +33,7 @@
 }
 
 
-- (BOOL)              profile:(DCMLightProfile *)profile
+- (BOOL)              profile:(DConnectLightProfile *)profile
     didReceiveGetLightRequest:(DConnectRequestMessage *)request
                      response:(DConnectResponseMessage *)response
                     serviceId:(NSString *)serviceId
@@ -44,20 +44,20 @@
     [response setResult:DConnectMessageResultTypeOk];
     
     //全体の色を変えるためのID
-    [virtualLight setString:@"1" forKey:DCMLightProfileParamLightId];
-    [virtualLight setString:@"照明" forKey:DCMLightProfileParamName];
+    [virtualLight setString:@"1" forKey:DConnectLightProfileParamLightId];
+    [virtualLight setString:@"照明" forKey:DConnectLightProfileParamName];
     
-    [virtualLight setBool:NO forKey:DCMLightProfileParamOn];
-    [virtualLight setString:@"" forKey:DCMLightProfileParamConfig];
+    [virtualLight setBool:NO forKey:DConnectLightProfileParamOn];
+    [virtualLight setString:@"" forKey:DConnectLightProfileParamConfig];
     [lights addMessage:virtualLight];
     
-    [response setArray:lights forKey:DCMLightProfileParamLights];
+    [response setArray:lights forKey:DConnectLightProfileParamLights];
     return YES;
 }
 
 
 
-- (BOOL)            profile:(DCMLightProfile *)profile
+- (BOOL)            profile:(DConnectLightProfile *)profile
  didReceivePostLightRequest:(DConnectRequestMessage *)request
                    response:(DConnectResponseMessage *)response
                   serviceId:(NSString *)serviceId
@@ -74,7 +74,7 @@
 }
 
 
-- (BOOL)                 profile:(DCMLightProfile *)profile
+- (BOOL)                 profile:(DConnectLightProfile *)profile
     didReceiveDeleteLightRequest:(DConnectRequestMessage *)request
                         response:(DConnectResponseMessage *)response
                        serviceId:(NSString *)serviceId

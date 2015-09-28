@@ -40,7 +40,6 @@
 		ABBD5F381987767600B81007 /* libDCMDevicePluginSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ABBD5F201987767600B81007 /* libDCMDevicePluginSDK.a */; };
 		ABBD5F3E1987767600B81007 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = ABBD5F3C1987767600B81007 /* InfoPlist.strings */; };
 		ABBD5F401987767600B81007 /* DCMDevicePluginSDKTests.m in Sources */ = {isa = PBXBuildFile; fileRef = ABBD5F3F1987767600B81007 /* DCMDevicePluginSDKTests.m */; };
-		ABBD5F4E1987773600B81007 /* DCMLightProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = ABBD5F4D1987773600B81007 /* DCMLightProfile.m */; };
 		ABBD5F501987774B00B81007 /* DCMDriveControllerProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = ABBD5F4F1987774B00B81007 /* DCMDriveControllerProfile.m */; };
 		ABBD5F54198777F200B81007 /* DCMTemperatureProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = ABBD5F53198777F200B81007 /* DCMTemperatureProfile.m */; };
 		ABBD5F5D19877A4900B81007 /* DConnectSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABBD5F5C19877A4900B81007 /* DConnectSDK.framework */; };
@@ -81,8 +80,6 @@
 		ABBD5F3B1987767600B81007 /* DCMDevicePluginSDKTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "DCMDevicePluginSDKTests-Info.plist"; sourceTree = "<group>"; };
 		ABBD5F3D1987767600B81007 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		ABBD5F3F1987767600B81007 /* DCMDevicePluginSDKTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DCMDevicePluginSDKTests.m; sourceTree = "<group>"; };
-		ABBD5F4C1987773100B81007 /* DCMLightProfile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DCMLightProfile.h; sourceTree = "<group>"; };
-		ABBD5F4D1987773600B81007 /* DCMLightProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DCMLightProfile.m; sourceTree = "<group>"; };
 		ABBD5F4F1987774B00B81007 /* DCMDriveControllerProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DCMDriveControllerProfile.m; sourceTree = "<group>"; };
 		ABBD5F511987775500B81007 /* DCMDriveControllerProfile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DCMDriveControllerProfile.h; sourceTree = "<group>"; };
 		ABBD5F52198777EC00B81007 /* DCMTemperatureProfile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DCMTemperatureProfile.h; sourceTree = "<group>"; };
@@ -186,7 +183,6 @@
 				AB056F9F1B6A329C00E1482F /* DCMTVProfile.h */,
 				ABBD5F52198777EC00B81007 /* DCMTemperatureProfile.h */,
 				ABBD5F511987775500B81007 /* DCMDriveControllerProfile.h */,
-				ABBD5F4C1987773100B81007 /* DCMLightProfile.h */,
 				AB3D7482199B26AB00FC4FE5 /* DCMDevicePluginSDK.h */,
 			);
 			path = Headers;
@@ -197,7 +193,6 @@
 			children = (
 				ABBD5F53198777F200B81007 /* DCMTemperatureProfile.m */,
 				ABBD5F4F1987774B00B81007 /* DCMDriveControllerProfile.m */,
-				ABBD5F4D1987773600B81007 /* DCMLightProfile.m */,
 				AB056F9D1B6A327B00E1482F /* DCMTVProfile.m */,
 			);
 			path = Classes;
@@ -323,7 +318,6 @@
 				AB056F9E1B6A327B00E1482F /* DCMTVProfile.m in Sources */,
 				ABBD5F501987774B00B81007 /* DCMDriveControllerProfile.m in Sources */,
 				ABBD5F54198777F200B81007 /* DCMTemperatureProfile.m in Sources */,
-				ABBD5F4E1987773600B81007 /* DCMLightProfile.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

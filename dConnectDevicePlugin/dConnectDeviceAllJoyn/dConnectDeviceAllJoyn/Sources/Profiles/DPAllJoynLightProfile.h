@@ -7,10 +7,10 @@
 //  http://opensource.org/licenses/mit-license.php
 //
 
-#import <DCMDevicePluginSDK/DCMLightProfile.h>
+#import <DConnectSDK/DConnectLightProfile.h>
 #import "DPAllJoynHandler.h"
 
-@interface DPAllJoynLightProfile : DCMLightProfile
+@interface DPAllJoynLightProfile : DConnectLightProfile
 
 - (instancetype)init NS_UNAVAILABLE;
 - (instancetype)initWithHandler:(DPAllJoynHandler *)handler
