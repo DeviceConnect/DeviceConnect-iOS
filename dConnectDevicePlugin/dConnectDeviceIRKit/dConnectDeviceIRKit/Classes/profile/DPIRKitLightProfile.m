@@ -95,6 +95,10 @@
 {
     BOOL send = YES;
     NSArray *requests = [[DPIRKitDBManager sharedInstance] queryRESTfulRequestByServiceId:serviceId];
+    if (requests.count == 0) {
+        [response setErrorToNotSupportProfile];
+        return send;
+    }
     for (DPIRKitRESTfulRequest *req in requests) {
         NSString *uri = [NSString stringWithFormat:@"/%@",[request profile]];
         if ([req.uri isEqualToString:uri] && [req.method isEqualToString:method]
