@@ -33,7 +33,7 @@
 }
 #pragma mark - light
 //Light GET ライトのリスト取得
-- (BOOL) profile:(DCMLightProfile *)profile didReceiveGetLightRequest:(DConnectRequestMessage *)request
+- (BOOL) profile:(DConnectLightProfile *)profile didReceiveGetLightRequest:(DConnectRequestMessage *)request
         response:(DConnectResponseMessage *)response
         serviceId:(NSString *)serviceId
 {
@@ -54,14 +54,14 @@
             
             //ライトの状態をメッセージにセットする（LightID,名前,点灯状態）
             DConnectMessage *led = [DConnectMessage new];
-            [led setString:light.identifier forKey:DCMLightProfileParamLightId];
-            [led setString:light.name forKey:DCMLightProfileParamName];
+            [led setString:light.identifier forKey:DConnectLightProfileParamLightId];
+            [led setString:light.name forKey:DConnectLightProfileParamName];
             
-            [led setBool:[light.lightState.on boolValue] forKey:DCMLightProfileParamOn];
+            [led setBool:[light.lightState.on boolValue] forKey:DConnectLightProfileParamOn];
             [lights addMessage:led];
         }
         [response setResult:DConnectMessageResultTypeOk];
-        [response setArray:lights forKey:DCMLightProfileParamLights];
+        [response setArray:lights forKey:DConnectLightProfileParamLights];
         [[DPHueManager sharedManager] deallocPHNotificationManagerWithReceiver:_self];
         [[DPHueManager sharedManager] deallocHueSDK];
         [[DConnectManager sharedManager] sendResponse:response];
@@ -70,15 +70,15 @@
 }
 
 //Light Post 点灯
-- (BOOL) profile:(DCMLightProfile *)profile
+- (BOOL) profile:(DConnectLightProfile *)profile
     didReceivePostLightRequest:(DConnectRequestMessage *)request
         response:(DConnectResponseMessage *)response serviceId:(NSString *)serviceId
          lightId:(NSString*) lightId
-      brightness:(double)brightness
+      brightness:(NSNumber*)brightness
            color:(NSString*) color
         flashing:(NSArray*) flashing
 {
-    NSString* brightnessString = [request stringForKey:DCMLightProfileParamBrightness];
+    NSString* brightnessString = [request stringForKey:DConnectLightProfileParamBrightness];
     if (brightnessString
         && ![[DPHueManager sharedManager] isDigitWithString:brightnessString]) {
         [self setErrRespose:response];
@@ -87,12 +87,12 @@
     return [self turnOnOffHueLightWithResponse:response
                                        lightId:lightId
                                           isOn:YES
-                                    brightness:brightness
+                                    brightness:[brightness doubleValue]
                                          color:color];
 }
 
 //Light Delete 消灯
-- (BOOL) profile:(DCMLightProfile *)profile
+- (BOOL) profile:(DConnectLightProfile *)profile
 didReceiveDeleteLightRequest:(DConnectRequestMessage *)request
         response:(DConnectResponseMessage *)response
         serviceId:(NSString *)serviceId
@@ -106,12 +106,12 @@ didReceiveDeleteLightRequest:(DConnectRequestMessage *)request
 
 
 //Light Put 名前変更
-- (BOOL) profile:(DCMLightProfile *)profile didReceivePutLightRequest:(DConnectRequestMessage *)request
+- (BOOL) profile:(DConnectLightProfile *)profile didReceivePutLightRequest:(DConnectRequestMessage *)request
         response:(DConnectResponseMessage *)response
         serviceId:(NSString *)serviceId
          lightId:(NSString*) lightId
             name:(NSString *)name
-      brightness:(double)brightness
+      brightness:(NSNumber*)brightness
            color:(NSString*)color
         flashing:(NSArray*) flashing
 {
@@ -127,6 +127,8 @@ didReceiveDeleteLightRequest:(DConnectRequestMessage *)request
     }
     return [[DPHueManager sharedManager] changeLightNameWithLightId:lightId
                                                                   name:name
+                                                                color:color
+                                                         brightness:[brightness doubleValue]
                                                          completion:^{
                                                              [self setErrRespose:response];
                                                              [[DConnectManager sharedManager] sendResponse:response];
@@ -137,7 +139,7 @@ didReceiveDeleteLightRequest:(DConnectRequestMessage *)request
 
 #pragma mark - light group
 //Light Group GET グループ一覧取得
-- (BOOL)                   profile:(DCMLightProfile *)profile
+- (BOOL)                   profile:(DConnectLightProfile *)profile
     didReceiveGetLightGroupRequest:(DConnectRequestMessage *)request
                           response:(DConnectResponseMessage *)response
                           serviceId:(NSString *)serviceId
@@ -158,11 +160,11 @@ didReceiveDeleteLightRequest:(DConnectRequestMessage *)request
         for (PHGroup *group in groupList.allValues) {
             
             DConnectMessage *groupResponse = [DConnectMessage new];
-            [groupResponse setString:group.identifier forKey:DCMLightProfileParamGroupId];
+            [groupResponse setString:group.identifier forKey:DConnectLightProfileParamGroupId];
             if (group.name) {
-                [groupResponse setString:group.name forKey:DCMLightProfileParamName];
+                [groupResponse setString:group.name forKey:DConnectLightProfileParamName];
             } else {
-                [groupResponse setString:@"" forKey:DCMLightProfileParamName];
+                [groupResponse setString:@"" forKey:DConnectLightProfileParamName];
             }
             //キャッシュにあるライトの一覧からライトを取り出す
             NSArray *lightIds = group.lightIdentifiers;
@@ -173,21 +175,21 @@ didReceiveDeleteLightRequest:(DConnectRequestMessage *)request
                     if ([lightId isEqualToString:light.identifier]) {
                         
                         DConnectMessage *led = [DConnectMessage new];
-                        [led setString:light.identifier forKey:DCMLightProfileParamLightId];
-                        [led setString:light.name forKey:DCMLightProfileParamName];
+                        [led setString:light.identifier forKey:DConnectLightProfileParamLightId];
+                        [led setString:light.name forKey:DConnectLightProfileParamName];
                         
-                        [led setBool:[light.lightState.on boolValue] forKey:DCMLightProfileParamOn];
+                        [led setBool:[light.lightState.on boolValue] forKey:DConnectLightProfileParamOn];
                         [lights addMessage:led];
                         
                     }
                 }
             }
             
-            [groupResponse setArray:lights forKey:DCMLightProfileParamLights];
+            [groupResponse setArray:lights forKey:DConnectLightProfileParamLights];
             [groups addMessage:groupResponse];
         }
         [response setResult:DConnectMessageResultTypeOk];
-        [response setArray:groups forKey:DCMLightProfileParamLightGroups];
+        [response setArray:groups forKey:DConnectLightProfileParamLightGroups];
         [[DPHueManager sharedManager] deallocPHNotificationManagerWithReceiver:_self];
         [[DPHueManager sharedManager] deallocHueSDK];
         [[DConnectManager sharedManager] sendResponse:response];
@@ -196,15 +198,15 @@ didReceiveDeleteLightRequest:(DConnectRequestMessage *)request
 }
 
 //Light Group Post ライトグループ点灯
-- (BOOL) profile:(DCMLightProfile *)profile didReceivePostLightGroupRequest:(DConnectRequestMessage *)request
+- (BOOL) profile:(DConnectLightProfile *)profile didReceivePostLightGroupRequest:(DConnectRequestMessage *)request
         response:(DConnectResponseMessage *)response
         serviceId:(NSString *)serviceId
          groupId:(NSString*)groupId
-      brightness:(double)brightness
+      brightness:(NSNumber*)brightness
            color:(NSString*)color
         flashing:(NSArray*)flashing
 {
-    NSString* brightnessString = [request stringForKey:DCMLightProfileParamBrightness];
+    NSString* brightnessString = [request stringForKey:DConnectLightProfileParamBrightness];
     if (brightnessString
         && ![[DPHueManager sharedManager] isDigitWithString:brightnessString]) {
         [self setErrRespose:response];
@@ -214,13 +216,13 @@ didReceiveDeleteLightRequest:(DConnectRequestMessage *)request
     return [self turnOnOffHueLightGroupWithResponse:response
                                             groupId:groupId
                                                isOn:YES
-                                         brightness:brightness
+                                         brightness:[brightness doubleValue]
                                               color:color];
 }
 
 
 //Light Group Delete ライトグループ消灯
-- (BOOL) profile:(DCMLightProfile *)profile didReceiveDeleteLightGroupRequest:(DConnectRequestMessage *)request
+- (BOOL) profile:(DConnectLightProfile *)profile didReceiveDeleteLightGroupRequest:(DConnectRequestMessage *)request
         response:(DConnectResponseMessage *)response
         serviceId:(NSString *)serviceId
          groupId:(NSString*)groupId
@@ -229,12 +231,12 @@ didReceiveDeleteLightRequest:(DConnectRequestMessage *)request
 }
 
 //Light Group Put ライトグループ名称変更
-- (BOOL) profile:(DCMLightProfile *)profile didReceivePutLightGroupRequest:(DConnectRequestMessage *)request
+- (BOOL) profile:(DConnectLightProfile *)profile didReceivePutLightGroupRequest:(DConnectRequestMessage *)request
         response:(DConnectResponseMessage *)response
         serviceId:(NSString *)serviceId
          groupId:(NSString*) groupId
             name:(NSString *)name
-      brightness:(double)brightness
+      brightness:(NSNumber*)brightness
            color:(NSString*)color
         flashing:(NSArray*)flashing
 {
@@ -259,7 +261,7 @@ didReceiveDeleteLightRequest:(DConnectRequestMessage *)request
 }
 
 //Light Group Post ライトグループ作成
-- (BOOL) profile:(DCMLightProfile *)profile didReceivePostLightGroupCreateRequest:(DConnectRequestMessage *)request
+- (BOOL) profile:(DConnectLightProfile *)profile didReceivePostLightGroupCreateRequest:(DConnectRequestMessage *)request
         response:(DConnectResponseMessage *)response
         serviceId:(NSString *)serviceId
         lightIds:(NSArray*)lightIds
@@ -268,7 +270,7 @@ didReceiveDeleteLightRequest:(DConnectRequestMessage *)request
                                                                    groupName:groupName
                                                                   completion:^(NSString* groupId) {
         if (groupId) {
-            [response setString:groupId forKey:DCMLightProfileParamGroupId];
+            [response setString:groupId forKey:DConnectLightProfileParamGroupId];
             [DPHueManager sharedManager].bridgeConnectState = STATE_CONNECT;
         } else {
             [DPHueManager sharedManager].bridgeConnectState = STATE_ERROR_CREATE_FAIL_GROUP;
@@ -285,7 +287,7 @@ didReceiveDeleteLightRequest:(DConnectRequestMessage *)request
 
 
 //Light Group Delete ライトグループ削除
-- (BOOL) profile:(DCMLightProfile *)profile didReceiveDeleteLightGroupClearRequest:(DConnectRequestMessage *)request
+- (BOOL) profile:(DConnectLightProfile *)profile didReceiveDeleteLightGroupClearRequest:(DConnectRequestMessage *)request
         response:(DConnectResponseMessage *)response
         serviceId:(NSString *)serviceId
          groupId:(NSString*)groupId

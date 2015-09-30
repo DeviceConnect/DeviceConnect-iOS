@@ -7,8 +7,8 @@
 //  http://opensource.org/licenses/mit-license.php
 //
 
-#import <DCMDevicePluginSDK/DCMDevicePluginSDK.h>
+#import <DConnectSDK/DConnectLightProfile.h>
 #import "DPIRKitDevicePlugin.h"
-@interface DPIRKitLightProfile : DCMLightProfile<DCMLightProfileDelegate>
+@interface DPIRKitLightProfile : DConnectLightProfile<DConnectLightProfileDelegate>
 - (id) initWithDevicePlugin:(DPIRKitDevicePlugin *)plugin;
 @end

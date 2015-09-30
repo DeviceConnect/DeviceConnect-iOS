@@ -36,7 +36,7 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
 #pragma mark - Interfaces
 
 
-@interface DPAllJoynLightProfile () <DCMLightProfileAltDelegate> {
+@interface DPAllJoynLightProfile () <DConnectLightProfileDelegate> {
     DPAllJoynHandler *_handler;
 }
 @end
@@ -214,13 +214,13 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
          
          DConnectArray *lights = [DConnectArray array];
          DConnectMessage *light = [DConnectMessage message];
-         [light setString:DPAllJoynLightProfileLightIDSelf forKey:DCMLightProfileParamLightId];
-         [light setString:service.serviceName forKey:DCMLightProfileParamName];
-         [light setString:@"" forKey:DCMLightProfileParamConfig];
-         [light setBool:proxy.OnOff forKey:DCMLightProfileParamOn];
+         [light setString:DPAllJoynLightProfileLightIDSelf forKey:DConnectLightProfileParamLightId];
+         [light setString:service.serviceName forKey:DConnectLightProfileParamName];
+         [light setString:@"" forKey:DConnectLightProfileParamConfig];
+         [light setBool:proxy.OnOff forKey:DConnectLightProfileParamOn];
          [lights addMessage:light];
          
-         [response setArray:lights forKey:DCMLightProfileParamLights];
+         [response setArray:lights forKey:DConnectLightProfileParamLights];
          [response setResult:DConnectMessageResultTypeOk];
          [[DConnectManager sharedManager] sendResponse:response];
      }];
@@ -329,14 +329,14 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
              }
              
              DConnectMessage *light = [DConnectMessage message];
-             [light setString:lampID forKey:DCMLightProfileParamLightId];
-             [light setString:lampName forKey:DCMLightProfileParamName];
-             [light setString:@"" forKey:DCMLightProfileParamConfig];
-             [light setBool:onOffState forKey:DCMLightProfileParamOn];
+             [light setString:lampID forKey:DConnectLightProfileParamLightId];
+             [light setString:lampName forKey:DConnectLightProfileParamName];
+             [light setString:@"" forKey:DConnectLightProfileParamConfig];
+             [light setBool:onOffState forKey:DConnectLightProfileParamOn];
              [lights addMessage:light];
          }
          
-         [response setArray:lights forKey:DCMLightProfileParamLights];
+         [response setArray:lights forKey:DConnectLightProfileParamLights];
          [response setResult:DConnectMessageResultTypeOk];
          [[DConnectManager sharedManager] sendResponse:response];
      }];
@@ -1190,28 +1190,28 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
          DConnectArray *lightGroups = [DConnectArray array];
          for (DPAllJoynLampGroup *lampGroup in lampGroups.allValues) {
              DConnectMessage *lightGroupMsg = [DConnectMessage message];
-             [lightGroupMsg setString:lampGroup.groupID forKey:DCMLightProfileParamGroupId];
-             [lightGroupMsg setString:lampGroup.name forKey:DCMLightProfileParamName];
+             [lightGroupMsg setString:lampGroup.groupID forKey:DConnectLightProfileParamGroupId];
+             [lightGroupMsg setString:lampGroup.name forKey:DConnectLightProfileParamName];
              DConnectArray *lights = [DConnectArray array];
              for (NSString *lampID in lampGroup.lampIDs) {
                  DPAllJoynLamp *lamp = lamps[lampID];
                  
                  DConnectMessage *light = [DConnectMessage message];
-                 [light setString:lamp.ID forKey:DCMLightProfileParamLightId];
+                 [light setString:lamp.ID forKey:DConnectLightProfileParamLightId];
                  if (lamp.name) {
-                     [light setString:lamp.name forKey:DCMLightProfileParamName];
+                     [light setString:lamp.name forKey:DConnectLightProfileParamName];
                  }
                  if (lamp.on) {
-                     [light setBool:lamp.on.boolValue forKey:DCMLightProfileParamOn];
+                     [light setBool:lamp.on.boolValue forKey:DConnectLightProfileParamOn];
                  }
-                 [lightGroupMsg setString:lamp.config forKey:DCMLightProfileParamConfig];
+                 [lightGroupMsg setString:lamp.config forKey:DConnectLightProfileParamConfig];
                  [lights addMessage:light];
              }
-             [lightGroupMsg setArray:lights forKey:DCMLightProfileParamLights];
-             [lightGroupMsg setString:lampGroup.config forKey:DCMLightProfileParamConfig];
+             [lightGroupMsg setArray:lights forKey:DConnectLightProfileParamLights];
+             [lightGroupMsg setString:lampGroup.config forKey:DConnectLightProfileParamConfig];
              [lightGroups addMessage:lightGroupMsg];
          }
-         [response setArray:lightGroups forKey:DCMLightProfileParamLightGroups];
+         [response setArray:lightGroups forKey:DConnectLightProfileParamLightGroups];
          
          [response setResult:DConnectMessageResultTypeOk];
          [[DConnectManager sharedManager] sendResponse:response];
@@ -1683,10 +1683,10 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
 
 
 // =============================================================================
-#pragma mark DCMLightProfileDelegate
+#pragma mark DConnectLightProfileDelegate
 
 
-- (BOOL)              profile:(DCMLightProfile *)profile
+- (BOOL)              profile:(DConnectLightProfile *)profile
     didReceiveGetLightRequest:(DConnectRequestMessage *)request
                      response:(DConnectResponseMessage *)response
                     serviceId:(NSString *)serviceId
@@ -1730,7 +1730,7 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
 }
 
 
-- (BOOL)            profile:(DCMLightProfile *)profile
+- (BOOL)            profile:(DConnectLightProfile *)profile
  didReceivePostLightRequest:(DConnectRequestMessage *)request
                    response:(DConnectResponseMessage *)response
                   serviceId:(NSString *)serviceId
@@ -1810,7 +1810,7 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
 }
 
 
-- (BOOL)            profile:(DCMLightProfile *)profile
+- (BOOL)            profile:(DConnectLightProfile *)profile
   didReceivePutLightRequest:(DConnectRequestMessage *)request
                    response:(DConnectResponseMessage *)response
                   serviceId:(NSString *)serviceId
@@ -1862,7 +1862,12 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
          @"Parameter 'flashing' is not supported."];
         return YES;
     }
-    
+    if (!name || (name && name.length == 0)) {
+        [response setErrorToInvalidRequestParameterWithMessage:
+         @"Parameter 'name' is invalid."];
+        return YES;
+        
+    }
     switch ([self serviceTypeFromService:service]) {
             
         case DPAllJoynLightServiceTypeSingleLamp: {
@@ -1891,7 +1896,7 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
 }
 
 
-- (BOOL)                 profile:(DCMLightProfile *)profile
+- (BOOL)                 profile:(DConnectLightProfile *)profile
     didReceiveDeleteLightRequest:(DConnectRequestMessage *)request
                         response:(DConnectResponseMessage *)response
                        serviceId:(NSString *)serviceId
@@ -1945,7 +1950,7 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
 #pragma mark Group
 
 
-- (BOOL)                profile:(DCMLightProfile *)profile
+- (BOOL)                profile:(DConnectLightProfile *)profile
  didReceiveGetLightGroupRequest:(DConnectRequestMessage *)request
                        response:(DConnectResponseMessage *)response
                       serviceId:(NSString *)serviceId
@@ -1983,7 +1988,7 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
 }
 
 
-- (BOOL)                profile:(DCMLightProfile *)profile
+- (BOOL)                profile:(DConnectLightProfile *)profile
 didReceivePostLightGroupRequest:(DConnectRequestMessage *)request
                        response:(DConnectResponseMessage *)response
                       serviceId:(NSString *)serviceId
@@ -2056,7 +2061,7 @@ didReceivePostLightGroupRequest:(DConnectRequestMessage *)request
 }
 
 
-- (BOOL)                profile:(DCMLightProfile *)profile
+- (BOOL)                profile:(DConnectLightProfile *)profile
  didReceivePutLightGroupRequest:(DConnectRequestMessage *)request
                        response:(DConnectResponseMessage *)response
                       serviceId:(NSString *)serviceId
@@ -2109,6 +2114,12 @@ didReceivePostLightGroupRequest:(DConnectRequestMessage *)request
         return YES;
     }
     
+    if (!name || (name && name.length == 0)) {
+        [response setErrorToInvalidRequestParameterWithMessage:
+         @"Parameter 'name' is invalid."];
+        return YES;
+    }
+    
     switch ([self serviceTypeFromService:service]) {
             
         case DPAllJoynLightServiceTypeLampController: {
@@ -2130,7 +2141,7 @@ didReceivePostLightGroupRequest:(DConnectRequestMessage *)request
 }
 
 
-- (BOOL)                    profile:(DCMLightProfile *)profile
+- (BOOL)                    profile:(DConnectLightProfile *)profile
   didReceiveDeleteLightGroupRequest:(DConnectRequestMessage *)request
                            response:(DConnectResponseMessage *)response
                           serviceId:(NSString *)serviceId
@@ -2175,7 +2186,7 @@ didReceivePostLightGroupRequest:(DConnectRequestMessage *)request
 }
 
 
-- (BOOL)                        profile:(DCMLightProfile *)profile
+- (BOOL)                        profile:(DConnectLightProfile *)profile
   didReceivePostLightGroupCreateRequest:(DConnectRequestMessage *)request
                                response:(DConnectResponseMessage *)response
                               serviceId:(NSString *)serviceId
@@ -2227,7 +2238,7 @@ didReceivePostLightGroupRequest:(DConnectRequestMessage *)request
 }
 
 
-- (BOOL)                        profile:(DCMLightProfile *)profile
+- (BOOL)                        profile:(DConnectLightProfile *)profile
  didReceiveDeleteLightGroupClearRequest:(DConnectRequestMessage *)request
                                response:(DConnectResponseMessage *)response
                               serviceId:(NSString *)serviceId

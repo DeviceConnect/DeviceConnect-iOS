@@ -1,5 +1,5 @@
 //
-//  DCMLightProfileName.h
+//  DConnectLightProfileName.h
 //  DCMDevicePluginSDK
 //
 //  Copyright (c) 2014 NTT DOCOMO, INC.
@@ -13,71 +13,71 @@
  */
 #import <DConnectSDK/DConnectSDK.h>
 /*! @brief プロファイル名: light。 */
-extern NSString *const DCMLightProfileName;
+extern NSString *const DConnectLightProfileName;
 /*!
  @brief インターフェイス: group。
  */
-extern NSString *const DCMLightProfileInterfaceGroup;
+extern NSString *const DConnectLightProfileInterfaceGroup;
 /*!
  @brief 属性: create。
  */
-extern NSString *const DCMLightProfileAttrCreate;
+extern NSString *const DConnectLightProfileAttrCreate;
 /*!
  @brief 属性: clear。
  */
-extern NSString *const DCMLightProfileAttrClear;
+extern NSString *const DConnectLightProfileAttrClear;
 
 /*!
  @brief パラメータ: lightId。
  */
-extern NSString *const DCMLightProfileParamLightId;
+extern NSString *const DConnectLightProfileParamLightId;
 /*!
  @brief パラメータ: name。
  */
-extern NSString *const DCMLightProfileParamName;
+extern NSString *const DConnectLightProfileParamName;
 /*!
  @brief パラメータ: color。
  */
-extern NSString *const DCMLightProfileParamColor;
+extern NSString *const DConnectLightProfileParamColor;
 /*!
  @brief パラメータ: brightness。
  */
-extern NSString *const DCMLightProfileParamBrightness;
+extern NSString *const DConnectLightProfileParamBrightness;
 /*!
  @brief パラメータ: flashing。
  */
-extern NSString *const DCMLightProfileParamFlashing;
+extern NSString *const DConnectLightProfileParamFlashing;
 /*!
  @brief パラメータ: lights。
  */
-extern NSString *const DCMLightProfileParamLights;
+extern NSString *const DConnectLightProfileParamLights;
 /*!
  @brief パラメータ: on。
  */
-extern NSString *const DCMLightProfileParamOn;
+extern NSString *const DConnectLightProfileParamOn;
 /*!
  @brief パラメータ: config。
  */
-extern NSString *const DCMLightProfileParamConfig;
+extern NSString *const DConnectLightProfileParamConfig;
 /*!
  @brief パラメータ: groupId。
  */
-extern NSString *const DCMLightProfileParamGroupId;
+extern NSString *const DConnectLightProfileParamGroupId;
 /*!
  @brief パラメータ: groups。
  */
-extern NSString *const DCMLightProfileParamLightGroups;
+extern NSString *const DConnectLightProfileParamLightGroups;
 /*!
  @brief パラメータ: lightIds。
  */
-extern NSString *const DCMLightProfileParamLightIds;
+extern NSString *const DConnectLightProfileParamLightIds;
 /*!
  @brief パラメータ: groupName。
  */
-extern NSString *const DCMLightProfileParamGroupName;
+extern NSString *const DConnectLightProfileParamGroupName;
 
 
-@class DCMLightProfile;
+@class DConnectLightProfile;
 
 /*!
  @brief Light プロファイル。
@@ -86,7 +86,7 @@ extern NSString *const DCMLightProfileParamGroupName;
  デバイスのライト機能を提供するデバイスプラグインは当クラスを継承し、対応APIを実装すること。 <br/>
  </p>
  */
-@protocol DCMLightProfileDelegate<NSObject>
+@protocol DConnectLightProfileDelegate<NSObject>
 @optional
 
 /*!
@@ -104,7 +104,7 @@ extern NSString *const DCMLightProfileParamGroupName;
  @retval YES レスポンスパラメータを返却する。
  @retval NO レスポンスパラメータを返却しないので、@link DConnectManager::sendResponse: @endlinkで返却すること。
  */
-- (BOOL)              profile:(DCMLightProfile *)profile
+- (BOOL)              profile:(DConnectLightProfile *)profile
     didReceiveGetLightRequest:(DConnectRequestMessage *)request
                      response:(DConnectResponseMessage *)response
                      serviceId:(NSString *)serviceId;
@@ -128,12 +128,12 @@ extern NSString *const DCMLightProfileParamGroupName;
  @retval YES レスポンスパラメータを返却する。
  @retval NO レスポンスパラメータを返却しないので、@link DConnectManager::sendResponse: @endlinkで返却すること。
  */
-- (BOOL)            profile:(DCMLightProfile *)profile
+- (BOOL)            profile:(DConnectLightProfile *)profile
  didReceivePostLightRequest:(DConnectRequestMessage *)request
                    response:(DConnectResponseMessage *)response
                    serviceId:(NSString *)serviceId
                     lightId:(NSString*)lightId
-                 brightness:(double)brightness
+                 brightness:(NSNumber*)brightness
                       color:(NSString*)color
                    flashing:(NSArray*)flashing;
 /*!
@@ -156,13 +156,13 @@ extern NSString *const DCMLightProfileParamGroupName;
  @retval YES レスポンスパラメータを返却する。
  @retval NO レスポンスパラメータを返却しないので、@link DConnectManager::sendResponse: @endlinkで返却すること。
  */
-- (BOOL)            profile:(DCMLightProfile *)profile
+- (BOOL)            profile:(DConnectLightProfile *)profile
   didReceivePutLightRequest:(DConnectRequestMessage *)request
                    response:(DConnectResponseMessage *)response
                    serviceId:(NSString *)serviceId
                     lightId:(NSString*)lightId
                        name:(NSString*)name
-                 brightness:(double)brightness
+                 brightness:(NSNumber*)brightness
                       color:(NSString*)color
                    flashing:(NSArray*)flashing;
 /*!
@@ -181,7 +181,7 @@ extern NSString *const DCMLightProfileParamGroupName;
  @retval YES レスポンスパラメータを返却する。
  @retval NO レスポンスパラメータを返却しないので、@link DConnectManager::sendResponse: @endlinkで返却すること。
  */
-- (BOOL)                 profile:(DCMLightProfile *)profile
+- (BOOL)                 profile:(DConnectLightProfile *)profile
     didReceiveDeleteLightRequest:(DConnectRequestMessage *)request
                         response:(DConnectResponseMessage *)response
                         serviceId:(NSString *)serviceId
@@ -205,7 +205,7 @@ extern NSString *const DCMLightProfileParamGroupName;
  @retval YES レスポンスパラメータを返却する。
  @retval NO レスポンスパラメータを返却しないので、@link DConnectManager::sendResponse: @endlinkで返却すること。
  */
-- (BOOL)                profile:(DCMLightProfile *)profile
+- (BOOL)                profile:(DConnectLightProfile *)profile
  didReceiveGetLightGroupRequest:(DConnectRequestMessage *)request
                        response:(DConnectResponseMessage *)response
                        serviceId:(NSString *)serviceId;
@@ -229,12 +229,12 @@ extern NSString *const DCMLightProfileParamGroupName;
  @retval YES レスポンスパラメータを返却する。
  @retval NO レスポンスパラメータを返却しないので、@link DConnectManager::sendResponse: @endlinkで返却すること。
  */
-- (BOOL)                profile:(DCMLightProfile *)profile
+- (BOOL)                profile:(DConnectLightProfile *)profile
 didReceivePostLightGroupRequest:(DConnectRequestMessage *)request
                        response:(DConnectResponseMessage *)response
                        serviceId:(NSString *)serviceId
                         groupId:(NSString*)groupId
-                     brightness:(double)brightness
+                     brightness:(NSNumber*)brightness
                           color:(NSString*)color
                        flashing:(NSArray*)flashing;
 /*!
@@ -257,13 +257,13 @@ didReceivePostLightGroupRequest:(DConnectRequestMessage *)request
  @retval YES レスポンスパラメータを返却する。
  @retval NO レスポンスパラメータを返却しないので、@link DConnectManager::sendResponse: @endlinkで返却すること。
  */
-- (BOOL)                profile:(DCMLightProfile *)profile
+- (BOOL)                profile:(DConnectLightProfile *)profile
  didReceivePutLightGroupRequest:(DConnectRequestMessage *)request
                        response:(DConnectResponseMessage *)response
                        serviceId:(NSString *)serviceId
                         groupId:(NSString*)groupId
                            name:(NSString*)name
-                     brightness:(double)brightness
+                     brightness:(NSNumber*)brightness
                           color:(NSString*)color
                        flashing:(NSArray*)flashing;
 /*!
@@ -282,7 +282,7 @@ didReceivePostLightGroupRequest:(DConnectRequestMessage *)request
  @retval YES レスポンスパラメータを返却する。
  @retval NO レスポンスパラメータを返却しないので、@link DConnectManager::sendResponse: @endlinkで返却すること。
  */
-- (BOOL)                    profile:(DCMLightProfile *)profile
+- (BOOL)                    profile:(DConnectLightProfile *)profile
   didReceiveDeleteLightGroupRequest:(DConnectRequestMessage *)request
                            response:(DConnectResponseMessage *)response
                            serviceId:(NSString *)serviceId
@@ -305,7 +305,7 @@ didReceivePostLightGroupRequest:(DConnectRequestMessage *)request
  @retval YES レスポンスパラメータを返却する。
  @retval NO レスポンスパラメータを返却しないので、@link DConnectManager::sendResponse: @endlinkで返却すること。
  */
-- (BOOL)                        profile:(DCMLightProfile *)profile
+- (BOOL)                        profile:(DConnectLightProfile *)profile
   didReceivePostLightGroupCreateRequest:(DConnectRequestMessage *)request
                                response:(DConnectResponseMessage *)response
                                serviceId:(NSString *)serviceId
@@ -328,7 +328,7 @@ didReceivePostLightGroupRequest:(DConnectRequestMessage *)request
  @retval YES レスポンスパラメータを返却する。
  @retval NO レスポンスパラメータを返却しないので、@link DConnectManager::sendResponse: @endlinkで返却すること。
  */
-- (BOOL)                        profile:(DCMLightProfile *)profile
+- (BOOL)                        profile:(DConnectLightProfile *)profile
  didReceiveDeleteLightGroupClearRequest:(DConnectRequestMessage *)request
                                response:(DConnectResponseMessage *)response
                                serviceId:(NSString *)serviceId
@@ -337,20 +337,20 @@ didReceivePostLightGroupRequest:(DConnectRequestMessage *)request
 
 @end
 /*!
- @class DCMLightProfile
+ @class DConnectLightProfile
  @brief Lightプロファイル。
  
  Light Profileの各APIへのリクエストを受信する。
  受信したリクエストは各API毎にデリゲートに通知される。
  */
-@interface DCMLightProfile : DConnectProfile
+@interface DConnectLightProfile : DConnectProfile
 /*!
- @brief DCMLightProfileのデリゲートオブジェクト。
+ @brief DConnectLightProfileのデリゲートオブジェクト。
  
- デリゲートは @link DCMLightProfileDelegate @endlink を実装しなくてはならない。
+ デリゲートは @link DConnectLightProfileDelegate @endlink を実装しなくてはならない。
  デリゲートはretainされない。
  */
-@property (nonatomic, assign) id<DCMLightProfileDelegate> delegate;
+@property (nonatomic, assign) id<DConnectLightProfileDelegate> delegate;
 
 
 @end

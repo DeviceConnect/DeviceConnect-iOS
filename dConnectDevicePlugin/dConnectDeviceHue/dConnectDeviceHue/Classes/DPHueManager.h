@@ -15,7 +15,6 @@
 #import <Foundation/Foundation.h>
 #import <HueSDK_iOS/HueSDK.h>
 #import <DConnectSDK/DConnectSDK.h>
-#import <DCMDevicePluginSDK/DCMDevicePluginSDK.h>
 
 
 /*!
@@ -203,12 +202,16 @@ pushlinkAuthenticationSuccessSelector:(SEL)pushlinkAuthenticationSuccessSelector
  @brief ライト名の変更。
  @param[in] lightId ライトのID
  @param[in] name 変更後のライトの名前
+ @param[in] color 変更するライトの色
+ @param[in] brightness 変更するライトの明るさ
  @param[in, out] completion レスポンスを返す
  @retval YES レスポンスパラメータを返却する。
  @retval NO レスポンスパラメータを返却しないので、@link DConnectManager::sendResponse: @endlinkで返却すること。
  */
 -(BOOL)changeLightNameWithLightId:(NSString *)lightId
                              name:(NSString *)name
+                            color:(NSString *)color
+                       brightness:(double)brightness
                        completion:(void(^)())completion;
 
 /*!

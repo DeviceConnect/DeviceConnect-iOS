@@ -41,7 +41,6 @@
 		ABC5E3F81A973771003D2634 /* DPChromecastNotificationProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = ABC5E3F11A973771003D2634 /* DPChromecastNotificationProfile.m */; };
 		ABC5E3F91A973771003D2634 /* DPChromecastServiceDiscoveryProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = ABC5E3F31A973771003D2634 /* DPChromecastServiceDiscoveryProfile.m */; };
 		ABC5E3FA1A973771003D2634 /* DPChromecastSystemProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = ABC5E3F51A973771003D2634 /* DPChromecastSystemProfile.m */; };
-		ABCB49AF1AB416C700805F25 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = ABCB49AE1AB416C700805F25 /* libz.dylib */; };
 		ABCB49B11AB416CD00805F25 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABCB49B01AB416CD00805F25 /* CFNetwork.framework */; };
 		ABCB49B31AB416D600805F25 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABCB49B21AB416D600805F25 /* MessageUI.framework */; };
 		ABCB49C51AB4176800805F25 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABCB49C41AB4176800805F25 /* UIKit.framework */; };
@@ -181,7 +180,6 @@
 				ABCB49C51AB4176800805F25 /* UIKit.framework in Frameworks */,
 				ABCB49B31AB416D600805F25 /* MessageUI.framework in Frameworks */,
 				ABCB49B11AB416CD00805F25 /* CFNetwork.framework in Frameworks */,
-				ABCB49AF1AB416C700805F25 /* libz.dylib in Frameworks */,
 				FF94393919C06161006B4A33 /* MediaToolbox.framework in Frameworks */,
 				FF94393719C06152006B4A33 /* MediaAccessibility.framework in Frameworks */,
 				FF94393519C0613E006B4A33 /* MediaPlayer.framework in Frameworks */,

@@ -67,7 +67,6 @@
 		25851BB61B5739B600CB732E /* DPAllJoynServiceInformationProfile.h in Headers */ = {isa = PBXBuildFile; fileRef = 25851BB41B5739B600CB732E /* DPAllJoynServiceInformationProfile.h */; };
 		25851BB71B5739B600CB732E /* DPAllJoynServiceInformationProfile.mm in Sources */ = {isa = PBXBuildFile; fileRef = 25851BB51B5739B600CB732E /* DPAllJoynServiceInformationProfile.mm */; };
 		25851BBA1B573C3100CB732E /* DConnectSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25851BB91B573C3100CB732E /* DConnectSDK.framework */; };
-		25851BBC1B573C9A00CB732E /* DCMDevicePluginSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25851BBB1B573C9A00CB732E /* DCMDevicePluginSDK.framework */; };
 		25851BBD1B57409500CB732E /* Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 25851BBF1B57409500CB732E /* Storyboard.storyboard */; };
 		25851BC61B57455D00CB732E /* DPAllJoynSettingTableViewCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 25851BC41B57455D00CB732E /* DPAllJoynSettingTableViewCell.h */; };
 		25851BC71B57455D00CB732E /* DPAllJoynSettingTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 25851BC51B57455D00CB732E /* DPAllJoynSettingTableViewCell.m */; };
@@ -91,8 +90,6 @@
 		258843C81B5F3A3F003E5257 /* DPAllJoynConst.mm in Sources */ = {isa = PBXBuildFile; fileRef = 258843C61B5F3A3F003E5257 /* DPAllJoynConst.mm */; };
 		258843CB1B5F43F9003E5257 /* NSArray+Query.h in Headers */ = {isa = PBXBuildFile; fileRef = 258843C91B5F43F9003E5257 /* NSArray+Query.h */; };
 		258843CC1B5F43F9003E5257 /* NSArray+Query.m in Sources */ = {isa = PBXBuildFile; fileRef = 258843CA1B5F43F9003E5257 /* NSArray+Query.m */; };
-		2588A2721B707E3E0015B668 /* DCMLightProfileAlt.m in Sources */ = {isa = PBXBuildFile; fileRef = 2588A2711B707E3E0015B668 /* DCMLightProfileAlt.m */; };
-		2588A2741B707E810015B668 /* DCMLightProfileAlt.h in Headers */ = {isa = PBXBuildFile; fileRef = 2588A2731B707E810015B668 /* DCMLightProfileAlt.h */; };
 		2589F0621B61F32200C7B4C0 /* DPAllJoynLightingResponseCode.h in Headers */ = {isa = PBXBuildFile; fileRef = 2589F0611B61F06300C7B4C0 /* DPAllJoynLightingResponseCode.h */; };
 		258FD3C71B78CF3E00F6EA35 /* libAllJoynFramework_iOS_fix.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 258FD3C61B78CF3E00F6EA35 /* libAllJoynFramework_iOS_fix.a */; };
 		258FD3CA1B78CF4F00F6EA35 /* liballjoyn_about_cpp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 258FD3C81B78CF4F00F6EA35 /* liballjoyn_about_cpp.a */; };
@@ -137,7 +134,6 @@
 		25851BB41B5739B600CB732E /* DPAllJoynServiceInformationProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPAllJoynServiceInformationProfile.h; sourceTree = "<group>"; };
 		25851BB51B5739B600CB732E /* DPAllJoynServiceInformationProfile.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DPAllJoynServiceInformationProfile.mm; sourceTree = "<group>"; };
 		25851BB91B573C3100CB732E /* DConnectSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DConnectSDK.framework; path = ../../dConnectSDK/dConnectSDKForIOS/bin/DConnectSDK.framework; sourceTree = "<group>"; };
-		25851BBB1B573C9A00CB732E /* DCMDevicePluginSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DCMDevicePluginSDK.framework; path = ../DCMDevicePluginSDK/bin/DCMDevicePluginSDK.framework; sourceTree = "<group>"; };
 		25851BC11B5740B500CB732E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Storyboard.storyboard; sourceTree = "<group>"; };
 		25851BC41B57455D00CB732E /* DPAllJoynSettingTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPAllJoynSettingTableViewCell.h; sourceTree = "<group>"; };
 		25851BC51B57455D00CB732E /* DPAllJoynSettingTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPAllJoynSettingTableViewCell.m; sourceTree = "<group>"; };
@@ -164,8 +160,6 @@
 		258843CA1B5F43F9003E5257 /* NSArray+Query.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+Query.m"; sourceTree = "<group>"; };
 		258843CE1B5F942D003E5257 /* LSFLamp.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = LSFLamp.xml; sourceTree = "<group>"; };
 		258843D01B5F95B9003E5257 /* LSFControllerService.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = LSFControllerService.xml; sourceTree = "<group>"; };
-		2588A2711B707E3E0015B668 /* DCMLightProfileAlt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DCMLightProfileAlt.m; sourceTree = "<group>"; };
-		2588A2731B707E810015B668 /* DCMLightProfileAlt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DCMLightProfileAlt.h; sourceTree = "<group>"; };
 		2589F0611B61F06300C7B4C0 /* DPAllJoynLightingResponseCode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DPAllJoynLightingResponseCode.h; sourceTree = "<group>"; };
 		258FD3C61B78CF3E00F6EA35 /* libAllJoynFramework_iOS_fix.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libAllJoynFramework_iOS_fix.a; path = "deps/AllJoynIOS_libc++/Release/libAllJoynFramework_iOS_fix.a"; sourceTree = "<group>"; };
 		258FD3C81B78CF4F00F6EA35 /* liballjoyn_about_cpp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = liballjoyn_about_cpp.a; path = deps/AllJoyn/darwin/arm/iphoneos/release/dist/about/lib/liballjoyn_about_cpp.a; sourceTree = "<group>"; };
@@ -201,7 +195,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				25851BBC1B573C9A00CB732E /* DCMDevicePluginSDK.framework in Frameworks */,
 				25851BBA1B573C3100CB732E /* DConnectSDK.framework in Frameworks */,
 				258FD3C71B78CF3E00F6EA35 /* libAllJoynFramework_iOS_fix.a in Frameworks */,
 				258FD3CA1B78CF4F00F6EA35 /* liballjoyn_about_cpp.a in Frameworks */,
@@ -253,7 +246,6 @@
 				258FD3C81B78CF4F00F6EA35 /* liballjoyn_about_cpp.a */,
 				258FD3C91B78CF4F00F6EA35 /* liballjoyn_about_objc.a */,
 				258FD3C61B78CF3E00F6EA35 /* libAllJoynFramework_iOS_fix.a */,
-				25851BBB1B573C9A00CB732E /* DCMDevicePluginSDK.framework */,
 				25851BB91B573C3100CB732E /* DConnectSDK.framework */,
 			);
 			name = Frameworks;
@@ -434,8 +426,6 @@
 		25A06C731B56675B005B6F8A /* Profiles */ = {
 			isa = PBXGroup;
 			children = (
-				2588A2731B707E810015B668 /* DCMLightProfileAlt.h */,
-				2588A2711B707E3E0015B668 /* DCMLightProfileAlt.m */,
 				25A06C7D1B566C86005B6F8A /* DPAllJoynLightProfile.h */,
 				25A06C7E1B566C86005B6F8A /* DPAllJoynLightProfile.mm */,
 				25A06C791B566AB3005B6F8A /* DPAllJoynServiceDiscoveryProfile.h */,
@@ -455,7 +445,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2588A2741B707E810015B668 /* DCMLightProfileAlt.h in Headers */,
 				2589F0621B61F32200C7B4C0 /* DPAllJoynLightingResponseCode.h in Headers */,
 				25851BCA1B574A9F00CB732E /* DPAllJoynSettingMasterSubTableViewController.h in Headers */,
 				25851BD71B575F2700CB732E /* DPAllJoynSettingDetailLIFXViewController.h in Headers */,
@@ -695,7 +684,6 @@
 				25E1A0721B5DE05A00308AFC /* DPAllJoynSynchronizedMutableDictionary.m in Sources */,
 				25856D061B58965E00B1C2DC /* DPAllJoynHandler.mm in Sources */,
 				25856D1A1B59091000B1C2DC /* DPAllJoynServiceEntity.mm in Sources */,
-				2588A2721B707E3E0015B668 /* DCMLightProfileAlt.m in Sources */,
 				258498A91B609A3F0063552E /* AJNLSFControllerService.mm in Sources */,
 				258498AB1B609A3F0063552E /* AJNLSFLamp.mm in Sources */,
 				25851BD81B575F2700CB732E /* DPAllJoynSettingDetailLIFXViewController.m in Sources */,
@@ -840,7 +828,7 @@
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/dConnectDeviceAllJoyn/Headers";
-				VALID_ARCHS = "arm64 armv7";
+				VALID_ARCHS = "arm64 i386 armv7s armv7";
 				VERSIONING_SYSTEM = "";
 				VERSION_INFO_PREFIX = "";
 			};
@@ -905,7 +893,7 @@
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/dConnectDeviceAllJoyn/Headers";
 				VALIDATE_PRODUCT = YES;
-				VALID_ARCHS = "arm64 armv7";
+				VALID_ARCHS = "arm64 i386 armv7s armv7";
 				VERSIONING_SYSTEM = "";
 				VERSION_INFO_PREFIX = "";
 			};
@@ -917,6 +905,10 @@
 				CURRENT_PROJECT_VERSION = "";
 				DEFINES_MODULE = YES;
 				DYLIB_INSTALL_NAME_BASE = "";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/../../dConnectSDK/dConnectSDKForIOS/bin",
+				);
 				GCC_ENABLE_CPP_RTTI = NO;
 				INFOPLIST_FILE = "dConnectDeviceAllJoyn/Supporting Files/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
@@ -932,6 +924,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				STRIP_STYLE = "non-global";
+				VALID_ARCHS = "arm64 i386 armv7s armv7";
 			};
 			name = Debug;
 		};
@@ -941,6 +934,10 @@
 				CURRENT_PROJECT_VERSION = "";
 				DEFINES_MODULE = YES;
 				DYLIB_INSTALL_NAME_BASE = "";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/../../dConnectSDK/dConnectSDKForIOS/bin",
+				);
 				GCC_ENABLE_CPP_RTTI = NO;
 				INFOPLIST_FILE = "dConnectDeviceAllJoyn/Supporting Files/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
@@ -957,6 +954,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				STRIP_STYLE = "non-global";
+				VALID_ARCHS = "arm64 i386 armv7s armv7";
 			};
 			name = Release;
 		};
@@ -1066,6 +1064,7 @@
 				2586CC1F1B749F0100E260FD /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		25A06BF61B562C07005B6F8A /* Build configuration list for PBXProject "dConnectDeviceAllJoyn" */ = {
 			isa = XCConfigurationList;

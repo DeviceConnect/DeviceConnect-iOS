@@ -121,7 +121,7 @@
             [supportedProfileNames addObject:profile.profileName];
         }
         // Optional profiles.
-        else if ([profile.profileName isEqualToString:DCMLightProfileName]) {
+        else if ([profile.profileName isEqualToString:DConnectLightProfileName]) {
             if ([interfaces.allObjects
                  containsAll:DPAllJoynLampControllerInterfaceSet]
                 || [interfaces.allObjects
