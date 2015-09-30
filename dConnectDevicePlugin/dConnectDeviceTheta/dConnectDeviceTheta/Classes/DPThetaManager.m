@@ -12,7 +12,7 @@
 #import "PtpConnection.h"
 #import "PtpLogging.h"
 
-static NSString * const DPThetaRegexDecimalPoint = @"^[-+]?([0-9]*)?(\\.)?([0-9]*)?$";
+static NSString * const DPThetaRegexDecimalPoint = @"^[-+]?([0-9]*)?(\\.*)?([0-9]*)?$";
 static NSString * const DPThetaRegexDigit = @"^([0-9]*)?$";
 static NSString * const DPThetaRegexCSV = @"^([^,]*,)+";
 
@@ -584,6 +584,33 @@ static int const _timeout = 500;
 // 少数かどうかを判定する。
 + (BOOL)existDecimalWithString:(NSString*)decimal {
     return [self existNumberWithString:decimal Regex:DPThetaRegexDecimalPoint];
+}
+
+
++ (BOOL)existBOOL:(NSString*)isBool {
+    return [isBool isEqualToString:@"true"] || [isBool isEqualToString:@"false"];
+}
+
++ (NSString*)omitParametersToUri:(NSString*)uri
+{
+    NSRange range = [uri rangeOfString:@"?"];
+    NSUInteger index = range.location;
+    if (index != NSNotFound) {
+        NSString *param = [uri substringToIndex:index];
+        return param;
+    }
+    return uri;
+}
+
++ (NSString*)omitParametersFromUri:(NSString*)uri
+{
+    NSRange range = [uri rangeOfString:@"?"];
+    NSUInteger index = range.location;
+    if (index != NSNotFound) {
+        NSString *param = [uri substringFromIndex:index + 1];
+        return param;
+    }
+    return uri;
 }
 
 @end

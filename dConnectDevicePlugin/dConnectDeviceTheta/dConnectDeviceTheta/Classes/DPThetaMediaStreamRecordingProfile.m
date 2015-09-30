@@ -12,6 +12,7 @@
 #import "DPThetaManager.h"
 #import "PtpIpObjectInfo.h"
 #import "DPThetaServiceDiscoveryProfile.h"
+#import "DPThetaMixedReplaceMediaServer.h"
 
 
 //Thetaの画像の最大の高さ
@@ -36,6 +37,7 @@ static NSString *const DPThetaMovieMimeType = @"video/mov";
 @interface DPThetaMediaStreamRecordingProfile()
 /// @brief イベントマネージャ
 @property DConnectEventManager *eventMgr;
+@property DPThetaMixedReplaceMediaServer *server;
 
 @end
 @implementation DPThetaMediaStreamRecordingProfile
@@ -48,6 +50,7 @@ static NSString *const DPThetaMovieMimeType = @"video/mov";
         
         // イベントマネージャを取得
         self.eventMgr = [DConnectEventManager sharedManagerForClass:[DPThetaDevicePlugin class]];
+        self.server = [DPThetaMixedReplaceMediaServer new];
     }
     return self;
 }
@@ -265,7 +268,6 @@ didReceivePutOnRecordingChangeRequest:(DConnectRequestMessage *)request
     }];
     return YES;
 }
-
 
 #pragma mark - Delete Methods
 #pragma mark Event Unregstration
