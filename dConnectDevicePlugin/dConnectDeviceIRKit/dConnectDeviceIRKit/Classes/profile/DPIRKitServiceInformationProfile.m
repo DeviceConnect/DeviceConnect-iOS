@@ -12,16 +12,26 @@
 #import "DPIRKitVirtualDevice.h"
 
 
-static NSString *const DPIRKitLightSupportProfile[] = {@"servicediscovery",
+static NSString *const DPIRKitLightSupportProfile[] = {
+                                                    @"system",
+                                                    @"servicediscovery",
                                                     @"serviceinformation",
                                                     @"authorization",
                                                     @"light"};
-static NSUInteger const DPIRKitLightSupportCount = 4;
-static NSString *const DPIRKitTVSupportProfile[] = {@"servicediscovery",
+static NSString *const DPIRKitTVSupportProfile[] = {
+                                                    @"system",
+                                                    @"servicediscovery",
                                                     @"serviceinformation",
                                                     @"authorization",
                                                     @"tv"};
-static NSUInteger const DPIRKitTVSupportCount = 4;
+static NSString *const DPIRKitRemoteControllerSupportProfile[] = {
+                                                    @"system",
+                                                    @"servicediscovery",
+                                                    @"serviceinformation",
+                                                    @"authorization",
+                                                    @"remote_controller"};
+
+static NSUInteger const DPIRKitSupportCount = 5;
 
 @implementation DPIRKitServiceInformationProfile
 
@@ -55,33 +65,25 @@ static NSUInteger const DPIRKitTVSupportCount = 4;
             DPIRKitVirtualDevice *device = virtuals[0];
             if ([device.categoryName isEqualToString:@"ライト"]) {
                 DConnectArray *supports = [DConnectArray array];
-                for (int i = 0; i < DPIRKitLightSupportCount; i++) {
+                for (int i = 0; i < DPIRKitSupportCount; i++) {
                     [supports addString:DPIRKitLightSupportProfile[i]];
                 }
                 [DConnectServiceInformationProfile setSupports:supports target:response];
             } else {
                 DConnectArray *supports = [DConnectArray array];
-                for (int i = 0; i < DPIRKitTVSupportCount; i++) {
+                for (int i = 0; i < DPIRKitSupportCount; i++) {
                     [supports addString:DPIRKitTVSupportProfile[i]];
                 }
                 [DConnectServiceInformationProfile setSupports:supports target:response];
             }
-            [response setResult:DConnectMessageResultTypeOk];
         } else {
-            DConnectMessage *connect = [DConnectMessage message];
-
-            [DConnectServiceInformationProfile setWiFiState:DConnectServiceInformationProfileConnectStateOn
-                                                     target:connect];
-            [DConnectServiceInformationProfile setConnect:connect target:response];
-            
             DConnectArray *supports = [DConnectArray array];
-            NSArray *profiles = [self.provider profiles];
-            for (DConnectProfile *profile in profiles) {
-                [supports addString:[profile profileName]];
+            for (int i = 0; i < DPIRKitSupportCount; i++) {
+                [supports addString:DPIRKitRemoteControllerSupportProfile[i]];
             }
             [DConnectServiceInformationProfile setSupports:supports target:response];
-            [response setResult:DConnectMessageResultTypeOk];
         }
+        [response setResult:DConnectMessageResultTypeOk];
     } else {
         [response setErrorToNotSupportProfile];
     }

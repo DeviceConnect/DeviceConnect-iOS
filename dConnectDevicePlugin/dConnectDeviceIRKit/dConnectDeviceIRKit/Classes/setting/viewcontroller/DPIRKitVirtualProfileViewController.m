@@ -59,6 +59,12 @@
     }
 
 }
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [_virtualProfileList reloadData];
+}
+
 - (IBAction)closeProfileSettings:(id)sender {
     [self dismissViewControllerAnimated:YES completion:nil];
 
@@ -104,12 +110,22 @@
     DPIRKitRESTfulRequest *request = _virtualRequests[indexPath.row];
     UIButton *registerButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     registerButton.frame = CGRectMake(0, 0, 100, 30);
-    [registerButton setTitle:@"登録" forState:UIControlStateNormal];
     [registerButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [registerButton setBackgroundColor:[UIColor colorWithRed:0.00
-                                                       green:0.63
-                                                        blue:0.91
-                                                       alpha:1.0]];
+
+    if (!request.ir) {
+        [registerButton setTitle:@"登録" forState:UIControlStateNormal];
+        [registerButton setBackgroundColor:[UIColor colorWithRed:0.00
+                                                           green:0.63
+                                                            blue:0.91
+                                                           alpha:1.0]];
+    } else {
+        [registerButton setTitle:@"更新" forState:UIControlStateNormal];
+        [registerButton setBackgroundColor:[UIColor colorWithRed:1.00
+                                                           green:0.58
+                                                            blue:0.00
+                                                           alpha:1.0]];
+
+    }
     void (^roundCorner)(UIView*) = ^void(UIView *v) {
         CALayer *layer = v.layer;
         layer.masksToBounds = YES;
