@@ -34,6 +34,9 @@ NSString *const DPIRKitUDKeyClientKey = @"org.deviceconnect.ios.DPIRKit.client_k
 NSString *const DPIRKitUDKeyDeviceKey = @"org.deviceconnect.ios.DPIRKit.device_key";
 NSString *const DPIRKitUDKeyServiceId = @"org.deviceconnect.ios.DPIRKit.device_id";
 
+NSString *const DPIRKitXRequestedWithHeaderName = @"X-Requested-With";
+NSString *const DPIRKitXRequestedWithHeaderValue = @"IRKit Device Plug-in";
+
 struct DPIRKitCRCInfo
 {
     uint8_t security;
@@ -98,6 +101,7 @@ struct DPIRKitCRCInfo
     req.HTTPMethod = @"GET";
     req.cachePolicy = NSURLRequestReloadIgnoringLocalCacheData;
     req.timeoutInterval = DPIRKitHttpRequestTimeout;
+    [req setValue:DPIRKitXRequestedWithHeaderValue forHTTPHeaderField:DPIRKitXRequestedWithHeaderName];
     
     return req;
 }
@@ -108,7 +112,9 @@ struct DPIRKitCRCInfo
     req.HTTPMethod = @"POST";
     req.cachePolicy = NSURLRequestReloadIgnoringLocalCacheData;
     req.timeoutInterval = DPIRKitHttpRequestTimeout;
+    [req setValue:DPIRKitXRequestedWithHeaderValue forHTTPHeaderField:DPIRKitXRequestedWithHeaderName];
     req.HTTPBody = [body dataUsingEncoding:NSUTF8StringEncoding];
+    
     
     return req;
 }
