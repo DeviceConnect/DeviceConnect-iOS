@@ -33,13 +33,12 @@ NSString *const DPThetaServiceDiscoveryServiceId = @"theta";
 didReceiveGetServicesRequest:(DConnectRequestMessage *)request
                               response:(DConnectResponseMessage *)response
 {
-    CONNECT_CHECK();
+    [[DPThetaManager sharedManager] connect];
     DPThetaManager *mgr = [DPThetaManager sharedManager];
     NSString* serial = [mgr getSerialNo];
+    DConnectArray *services = [DConnectArray array];
     if (serial) {
         NSString *name = [NSString stringWithFormat:@"Theta: %@", serial];
-
-        DConnectArray *services = [DConnectArray array];
 
         DConnectMessage *service = [DConnectMessage message];
         [DConnectServiceDiscoveryProfile setId:DPThetaServiceDiscoveryServiceId target:service];
@@ -49,10 +48,18 @@ didReceiveGetServicesRequest:(DConnectRequestMessage *)request
                                                         target:service];
         [services addMessage:service];
 
-        [DConnectServiceDiscoveryProfile setServices:services target:response];
-
-        [response setResult:DConnectMessageResultTypeOk];
     }
+    DConnectMessage *roi = [DConnectMessage message];
+    [DConnectServiceDiscoveryProfile setId:@"roi" target:roi];
+    [DConnectServiceDiscoveryProfile setName:@"ROI Image Service" target:roi];
+    [DConnectServiceDiscoveryProfile setOnline:YES target:roi];
+    [DConnectServiceDiscoveryProfile setScopesWithProvider:self.provider
+                                                    target:roi];
+    [services addMessage:roi];
+    
+    [DConnectServiceDiscoveryProfile setServices:services target:response];
+    
+    [response setResult:DConnectMessageResultTypeOk];
     return YES;
 }
 

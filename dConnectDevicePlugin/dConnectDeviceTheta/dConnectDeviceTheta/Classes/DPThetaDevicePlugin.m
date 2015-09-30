@@ -14,6 +14,7 @@
 #import "DPThetaServiceDiscoveryProfile.h"
 #import "DPThetaSystemProfile.h"
 #import "DPThetaManager.h"
+#import "DPThetaOmnidirectionalImageProfile.h"
 
 @implementation DPThetaDevicePlugin
 
@@ -22,7 +23,7 @@
 {
     self = [super init];
     if (self) {
-        self.pluginName = @"Theta 1.0.0";
+        self.pluginName = @"Theta 1.1.0";
         self.fileMgr = [DConnectFileManager fileManagerForPlugin:self];
         [self addProfile:[DPThetaBatteryProfile new]];
         [self addProfile:[DPThetaFileProfile new]];
@@ -30,6 +31,7 @@
         [self addProfile:[DPThetaServiceDiscoveryProfile new]];
         [self addProfile:[DPThetaSystemProfile new]];
         [self addProfile:[DConnectServiceInformationProfile new]];
+        [self addProfile:[DPThetaOmnidirectionalImageProfile new]];
 
         
         // イベントマネージャの準備
