@@ -132,12 +132,12 @@
 		AB3520BC1BACE6F90010FF55 /* RobotUIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB3520B91BACE6F90010FF55 /* RobotUIKit.framework */; settings = {ASSET_TAGS = (); }; };
 		AB3520BE1BACEB890010FF55 /* libstdc++.6.0.9.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = AB3520BD1BACEB890010FF55 /* libstdc++.6.0.9.tbd */; };
 		AB3520C01BACEBAD0010FF55 /* libiconv.2.4.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = AB3520BF1BACEBAD0010FF55 /* libiconv.2.4.0.tbd */; };
+		AB4464F41BB921210097B9E9 /* ExternalAccessory.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB4464F31BB921210097B9E9 /* ExternalAccessory.framework */; };
 		AB5B2B4E1A9ABAEE0038CCF6 /* dConnectDeviceChromecast_resources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = AB5B2B4C1A9ABAEE0038CCF6 /* dConnectDeviceChromecast_resources.bundle */; };
 		AB5B2B4F1A9ABAEE0038CCF6 /* dConnectDeviceChromecast.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB5B2B4D1A9ABAEE0038CCF6 /* dConnectDeviceChromecast.framework */; };
 		AB722AA21AF22FC000395C70 /* icon_512px.png in Resources */ = {isa = PBXBuildFile; fileRef = AB722AA11AF22FC000395C70 /* icon_512px.png */; };
 		ABBD5F0019861CFA00B81007 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABBD5EFD19861CFA00B81007 /* CoreFoundation.framework */; };
 		ABBD5F0119861CFA00B81007 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABBD5EFE19861CFA00B81007 /* CoreMotion.framework */; };
-		ABBD5F0219861CFA00B81007 /* ExternalAccessory.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABBD5EFF19861CFA00B81007 /* ExternalAccessory.framework */; };
 		ABE627431B79FBFB0093D7D2 /* dConnectDeviceTheta_resources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = ABE627411B79FBFB0093D7D2 /* dConnectDeviceTheta_resources.bundle */; };
 		ABE627441B79FBFB0093D7D2 /* dConnectDeviceTheta.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABE627421B79FBFB0093D7D2 /* dConnectDeviceTheta.framework */; };
 		ABE627461B79FC2B0093D7D2 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABE627451B79FC2B0093D7D2 /* ImageIO.framework */; };
@@ -315,12 +315,13 @@
 		AB3520B91BACE6F90010FF55 /* RobotUIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RobotUIKit.framework; path = ../../dConnectDevicePlugin/dConnectDeviceSphero/RobotUIKit.framework; sourceTree = "<group>"; };
 		AB3520BD1BACEB890010FF55 /* libstdc++.6.0.9.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libstdc++.6.0.9.tbd"; path = "usr/lib/libstdc++.6.0.9.tbd"; sourceTree = SDKROOT; };
 		AB3520BF1BACEBAD0010FF55 /* libiconv.2.4.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libiconv.2.4.0.tbd; path = usr/lib/libiconv.2.4.0.tbd; sourceTree = SDKROOT; };
+		AB4464F31BB921210097B9E9 /* ExternalAccessory.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ExternalAccessory.framework; path = System/Library/Frameworks/ExternalAccessory.framework; sourceTree = SDKROOT; };
 		AB5B2B4C1A9ABAEE0038CCF6 /* dConnectDeviceChromecast_resources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = dConnectDeviceChromecast_resources.bundle; path = ../../dConnectDevicePlugin/dConnectDeviceChromeCast/bin/dConnectDeviceChromecast_resources.bundle; sourceTree = "<group>"; };
 		AB5B2B4D1A9ABAEE0038CCF6 /* dConnectDeviceChromecast.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = dConnectDeviceChromecast.framework; path = ../../dConnectDevicePlugin/dConnectDeviceChromeCast/bin/dConnectDeviceChromecast.framework; sourceTree = "<group>"; };
 		AB722AA11AF22FC000395C70 /* icon_512px.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_512px.png; sourceTree = "<group>"; };
 		ABBD5EFD19861CFA00B81007 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		ABBD5EFE19861CFA00B81007 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
-		ABBD5EFF19861CFA00B81007 /* ExternalAccessory.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ExternalAccessory.framework; path = System/Library/Frameworks/ExternalAccessory.framework; sourceTree = SDKROOT; };
+		ABC430261BB9169100586C9C /* dConnectBrowser.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = dConnectBrowser.entitlements; sourceTree = "<group>"; };
 		ABE627411B79FBFB0093D7D2 /* dConnectDeviceTheta_resources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = dConnectDeviceTheta_resources.bundle; path = ../../dConnectDevicePlugin/dConnectDeviceTheta/bin/dConnectDeviceTheta_resources.bundle; sourceTree = "<group>"; };
 		ABE627421B79FBFB0093D7D2 /* dConnectDeviceTheta.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = dConnectDeviceTheta.framework; path = ../../dConnectDevicePlugin/dConnectDeviceTheta/bin/dConnectDeviceTheta.framework; sourceTree = "<group>"; };
 		ABE627451B79FC2B0093D7D2 /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
@@ -344,12 +345,12 @@
 				25851BDC1B57756F00CB732E /* dConnectDeviceAllJoyn.framework in Frameworks */,
 				6B6F584A1ACE68F90027A21F /* GoogleCast.framework in Frameworks */,
 				254111A819C2CDAD00F74C31 /* MediaAccessibility.framework in Frameworks */,
+				AB4464F41BB921210097B9E9 /* ExternalAccessory.framework in Frameworks */,
 				9700DDE71998E0DD00209D1A /* dConnectDeviceHost.framework in Frameworks */,
 				AB08EFA91BABF2CA000BFD96 /* dConnectDeviceDicePlus.framework in Frameworks */,
 				2518284419B9537E0042C95A /* dConnectDeviceIRKit.framework in Frameworks */,
 				ABBD5F0019861CFA00B81007 /* CoreFoundation.framework in Frameworks */,
 				ABBD5F0119861CFA00B81007 /* CoreMotion.framework in Frameworks */,
-				ABBD5F0219861CFA00B81007 /* ExternalAccessory.framework in Frameworks */,
 				25D555431977E13D002AA492 /* dConnectDeviceHue.framework in Frameworks */,
 				AB5B2B4F1A9ABAEE0038CCF6 /* dConnectDeviceChromecast.framework in Frameworks */,
 				AB08A05E19908B410024C996 /* DCMDevicePluginSDK.framework in Frameworks */,
@@ -522,6 +523,7 @@
 		8E2C5B2C1960FF36005DFCDC = {
 			isa = PBXGroup;
 			children = (
+				ABC430261BB9169100586C9C /* dConnectBrowser.entitlements */,
 				259D0B7A1978B460005978DF /* DevicePlugins */,
 				8E2C5B3E1960FF36005DFCDC /* Browser */,
 				8E2C5B601960FF37005DFCDC /* BrowserTests */,
@@ -541,6 +543,7 @@
 		8E2C5B371960FF36005DFCDC /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				AB4464F31BB921210097B9E9 /* ExternalAccessory.framework */,
 				AB3520BF1BACEBAD0010FF55 /* libiconv.2.4.0.tbd */,
 				AB3520BD1BACEB890010FF55 /* libstdc++.6.0.9.tbd */,
 				AB3520B71BACE6F90010FF55 /* RobotKit.framework */,
@@ -579,7 +582,6 @@
 				254111A519C2CD7D00F74C31 /* GoogleCast.framework */,
 				ABBD5EFD19861CFA00B81007 /* CoreFoundation.framework */,
 				ABBD5EFE19861CFA00B81007 /* CoreMotion.framework */,
-				ABBD5EFF19861CFA00B81007 /* ExternalAccessory.framework */,
 				254111A719C2CDAD00F74C31 /* MediaAccessibility.framework */,
 				8E9A145E196257680004DDB3 /* CoreData.framework */,
 				8E2C5B381960FF36005DFCDC /* Foundation.framework */,
@@ -831,6 +833,14 @@
 				LastUpgradeCheck = 0610;
 				ORGANIZATIONNAME = "NTT DOCOMO, INC.";
 				TargetAttributes = {
+					8E2C5B341960FF36005DFCDC = {
+						DevelopmentTeam = 7D7Z93T4FG;
+						SystemCapabilities = {
+							com.apple.WAC = {
+								enabled = 1;
+							};
+						};
+					};
 					AB0E2E481A942DE500A46DE1 = {
 						CreatedOnToolsVersion = 6.1.1;
 					};
@@ -1069,6 +1079,7 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Akira Sasaki (R9G4Q759SQ)";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_BITCODE = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -1096,7 +1107,7 @@
 					"-lstdc++",
 					"-lc++",
 				);
-				PROVISIONING_PROFILE = "c316008b-55c4-4b46-b1c2-4f8cd5e277e1";
+				PROVISIONING_PROFILE = "50ebc8ec-edf5-4759-8f0c-1adf3ca4eb33";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = "armv7s armv7 arm64";
@@ -1119,6 +1130,7 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Akira Sasaki (R9G4Q759SQ)";
 				COPY_PHASE_STRIP = YES;
 				ENABLE_BITCODE = NO;
 				ENABLE_NS_ASSERTIONS = NO;
@@ -1139,7 +1151,7 @@
 					"-lstdc++",
 					"-lc++",
 				);
-				PROVISIONING_PROFILE = "c316008b-55c4-4b46-b1c2-4f8cd5e277e1";
+				PROVISIONING_PROFILE = "50ebc8ec-edf5-4759-8f0c-1adf3ca4eb33";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -1152,7 +1164,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_ENTITLEMENTS = dConnectBrowser.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Akira Sasaki (R9G4Q759SQ)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Akira Sasaki (R9G4Q759SQ)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/../dConnectSDKForIOS/bin",
@@ -1177,8 +1191,9 @@
 				GCC_PREFIX_HEADER = "Browser/Browser-Prefix.pch";
 				INFOPLIST_FILE = "Browser/Browser-Info.plist";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.deviceconnect.dConnectBrowser;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "50ebc8ec-edf5-4759-8f0c-1adf3ca4eb33";
 				VALID_ARCHS = "armv7s armv7";
 				WRAPPER_EXTENSION = app;
 			};
@@ -1189,7 +1204,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_ENTITLEMENTS = dConnectBrowser.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Akira Sasaki (R9G4Q759SQ)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Akira Sasaki (R9G4Q759SQ)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/../dConnectSDKForIOS/bin",
@@ -1214,8 +1231,9 @@
 				GCC_PREFIX_HEADER = "Browser/Browser-Prefix.pch";
 				INFOPLIST_FILE = "Browser/Browser-Info.plist";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.deviceconnect.dConnectBrowser;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "50ebc8ec-edf5-4759-8f0c-1adf3ca4eb33";
 				VALID_ARCHS = "armv7s armv7";
 				WRAPPER_EXTENSION = app;
 			};
