@@ -27,7 +27,8 @@ extern NSString *const DPIRKitVirtualDeviceCreateNotification ;
 - (BOOL)insertVirtualDeviceWithData:(DPIRKitVirtualDevice *)device;
 - (BOOL)insertRESTfulRequestWithDevice:(DPIRKitVirtualDevice *)device ;
 - (NSArray *)queryVirtualDevice:(NSString *)serviceId;
-- (NSArray *)queryRESTfulRequestByServiceId:(NSString *)serviceId;
+- (NSArray *)queryRESTfulRequestByServiceId:(NSString *)serviceId
+                                    profile:(NSString *)profile;
 - (BOOL)updateRESTfulRequest:(DPIRKitRESTfulRequest *)request;
 - (BOOL)deleteVirtualDevice:(NSString *)serviceId;
 - (BOOL)deleteRESTfulRequestForServiceId:(NSString *)serviceId;

@@ -186,7 +186,8 @@ DPIRKitManagerDetectionDelegate
 
 // 一つでも赤外線が登録されているかをチェックする
 - (BOOL) existIRForServiceId:(NSString *)serviceId {
-    NSArray *requests = [[DPIRKitDBManager sharedInstance] queryRESTfulRequestByServiceId:serviceId];
+    NSArray *requests = [[DPIRKitDBManager sharedInstance] queryRESTfulRequestByServiceId:serviceId
+                                                                                  profile:nil];
     for (DPIRKitRESTfulRequest *request in requests) {
         DPIRLog(@"%@:%@", request.name,request.ir);
         NSRange range = [request.ir rangeOfString:@"{\"format\":\"raw\","];
