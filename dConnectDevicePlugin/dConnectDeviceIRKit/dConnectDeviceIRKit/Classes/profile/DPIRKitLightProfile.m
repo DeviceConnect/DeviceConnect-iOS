@@ -38,13 +38,6 @@
                      response:(DConnectResponseMessage *)response
                     serviceId:(NSString *)serviceId
 {
-    NSArray *requests = [[DPIRKitDBManager sharedInstance] queryRESTfulRequestByServiceId:serviceId
-                                                                                  profile:@"/light"];
-    if (requests.count == 0) {
-        [response setErrorToNotSupportProfile];
-        return YES;
-    }
-
     DConnectArray *lights = [DConnectArray array];
     DConnectMessage *virtualLight = [DConnectMessage new];
     
@@ -74,7 +67,6 @@
                    flashing:(NSArray*)flashing
 {
     return [self sendLightIRRequestWithServiceId:serviceId
-                                         lightId:lightId
                                           method:@"POST"
                                          request:request
                                         response:response];
@@ -89,7 +81,6 @@
                          lightId:(NSString*)lightId
 {
     return [self sendLightIRRequestWithServiceId:serviceId
-                                         lightId:lightId
                                           method:@"DELETE"
                                          request:request
                                         response:response];
@@ -98,20 +89,14 @@
 #pragma mark - private method
 
 - (BOOL)sendLightIRRequestWithServiceId:(NSString *)serviceId
-                                lightId:(NSString *)lightId
                                  method:(NSString *)method
                                 request:(DConnectRequestMessage *)request
                                response:(DConnectResponseMessage *)response
 {
     BOOL send = YES;
-    NSArray *requests = [[DPIRKitDBManager sharedInstance] queryRESTfulRequestByServiceId:serviceId
-                                                                                  profile:@"light"];
+    NSArray *requests = [[DPIRKitDBManager sharedInstance] queryRESTfulRequestByServiceId:serviceId];
     if (requests.count == 0) {
         [response setErrorToNotSupportProfile];
-        return send;
-    }
-    if (!lightId || (lightId && ![lightId isEqualToString:@"1"])) {
-        [response setErrorToInvalidRequestParameterWithMessage:@"Invalid lightId"];
         return send;
     }
     for (DPIRKitRESTfulRequest *req in requests) {
@@ -120,7 +105,7 @@
             && req.ir) {
             send = [_plugin sendIRWithServiceId:serviceId message:req.ir response:response];
         } else {
-            [response setErrorToInvalidRequestParameterWithMessage:@"IR is not registered for that request"];
+            [response setErrorToIllegalServerStateWithMessage:@"IR not registered"];
         }
     }
     return send;
