@@ -297,7 +297,8 @@ NSUInteger const DPIRKitTVProfileCount = 21;
 }
 
 
-- (NSArray *)queryRESTfulRequestByServiceId:(NSString *)serviceId {
+- (NSArray *)queryRESTfulRequestByServiceId:(NSString *)serviceId
+                                    profile:(NSString *)profile {
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     
     // 検索対象のエンティティを指定します。
@@ -317,7 +318,10 @@ NSUInteger const DPIRKitTVProfileCount = 21;
     // NSPredicateを用いて、検索条件の表現（述語）を作成します。
     
     NSPredicate *pred = nil;
-    if (serviceId) {
+    if (serviceId && profile) {
+        pred = [NSPredicate predicateWithFormat:@"%K == %@ AND %K beginswith[c] %@",
+                                        DPIRKitServiceId, serviceId, DPIRKitURI, profile];
+    } else if (serviceId && !profile) {
         pred = [NSPredicate predicateWithFormat:@"%K == %@", DPIRKitServiceId, serviceId];
     }
     [fetchRequest setPredicate:pred];
