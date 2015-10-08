@@ -11,6 +11,7 @@
 #import "DPIRKitVirtualDeviceViewController.h"
 #import "DPIRKitDevice.h"
 #import "DPIRKitDevicePlugin.h"
+#import "DPIRKitManager.h"
 #import "DPIRKitConst.h"
 
 @interface DPIRKitTutorialTopViewController () {
@@ -73,6 +74,10 @@
     }
 }
 
+- (IBAction)searchIRKit:(id)sender {
+    [[DPIRKitManager sharedInstance] startDetection];
+    [_foundIRKitList reloadData];
+}
 
 #pragma mark - table delegate
 
