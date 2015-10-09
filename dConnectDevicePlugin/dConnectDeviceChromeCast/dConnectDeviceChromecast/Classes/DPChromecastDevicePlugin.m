@@ -21,7 +21,7 @@
 - (id) init {
     self = [super init];
     if (self) {
-        self.pluginName = @"Chromecast 2.0.0";
+        self.pluginName = @"ChromeCast (Device Connect Device Plug-in)";
         
 
         // イベントマネージャの準備
