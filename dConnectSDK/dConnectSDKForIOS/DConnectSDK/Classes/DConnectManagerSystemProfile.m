@@ -135,8 +135,10 @@
         NSString *className = NSStringFromClass([plugin class]);
         NSString *pluginId = [NSString stringWithFormat:@"%@.dconnect", className];
         NSString *pluginName = [plugin pluginName];
+        NSString *versionName = [plugin pluginVersionName];
         [message setString:pluginId forKey:DConnectSystemProfileParamId];
         [message setString:pluginName forKey:DConnectSystemProfileParamName];
+        [message setString:versionName forKey:DConnectSystemProfileParamVersion];
         DConnectArray *profileNames = [DConnectArray new];
         NSArray *profiles = [plugin profiles];
         for (DConnectProfile *profile in profiles) {
