@@ -29,7 +29,7 @@ NSString *const DPHueBundleName = @"dConnectDeviceHue_resources";
     
     if (self) {
         
-        self.pluginName = [NSString stringWithFormat:@"hue 2.0.0"];
+        self.pluginName = @"hue (Device Connect Device Plug-in)";
         
         // Service Discovery Profileの追加
         DPHueServiceDiscoveryProfile *networkProfile = [DPHueServiceDiscoveryProfile new];
