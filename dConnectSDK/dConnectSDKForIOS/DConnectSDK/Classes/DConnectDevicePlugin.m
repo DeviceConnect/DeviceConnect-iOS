@@ -32,6 +32,7 @@
         
         self.mProfileMap = [NSMutableDictionary dictionary];
         self.pluginName = NSStringFromClass([self class]);
+        self.pluginVersionName = @"1.0.0";
 
         // Local OAuthプロファイル追加
         [self addProfile:[[DConnectAuthorizationProfile alloc] initWithObject:self]];
