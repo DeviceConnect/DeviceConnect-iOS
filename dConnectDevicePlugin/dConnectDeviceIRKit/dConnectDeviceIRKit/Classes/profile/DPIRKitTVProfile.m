@@ -100,13 +100,13 @@
            didReceivePutTVVolumeRequest:(DConnectRequestMessage *)request
                                response:(DConnectResponseMessage *)response
                               serviceId:(NSString *)serviceId
-                                 action:(NSString *)action
+                                 control:(NSString *)control
 {
     NSString *uri = [NSString stringWithFormat:@"/%@/%@?%@=%@",
                      [request profile],
                      [request attribute],
                      DCMTVProfileParamControl,
-                     action];
+                     control];
     
     return [self sendTVIRRequestWithServiceId:serviceId
                                        method:@"PUT"
