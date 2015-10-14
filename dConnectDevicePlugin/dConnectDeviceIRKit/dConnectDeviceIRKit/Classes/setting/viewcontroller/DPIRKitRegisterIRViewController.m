@@ -36,7 +36,7 @@
     // 閉じるボタン追加
     
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]
-                                             initWithTitle:@"＜ 編集"
+                                             initWithTitle:@"＜ 一覧"
                                              style:UIBarButtonItemStylePlain
                                              target:self
                                              action:@selector(popUIViewController:) ];
