@@ -33,8 +33,6 @@
     NSMutableDictionary *expectedResponse = [NSMutableDictionary dictionaryWithDictionary:[NSJSONSerialization JSONObjectWithData:[expectedJson dataUsingEncoding:NSUTF8StringEncoding] \
                                                                      options:NSJSONReadingMutableContainers \
                                                                        error:nil]]; \
-    [expectedResponse setObject:DCONNECT_MANAGER_APP_NAME forKey:DConnectMessageProduct]; \
-    [expectedResponse setObject:DCONNECT_MANAGER_VERSION_NAME forKey:DConnectMessageVersion]; \
     NSDictionary *actualResponse = [NSJSONSerialization JSONObjectWithData:data \
                                                                options:NSJSONReadingMutableContainers \
                                                                  error:nil]; \
