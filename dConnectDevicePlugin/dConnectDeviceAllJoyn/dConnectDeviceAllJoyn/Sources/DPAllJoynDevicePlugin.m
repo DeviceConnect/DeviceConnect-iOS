@@ -46,9 +46,7 @@ static NSString *const VERSION = @"1.0.0";
         [self addProfile:[[DPAllJoynServiceDiscoveryProfile alloc]
                           initWithHandler:_handler]];
         [self addProfile:[DPAllJoynSystemProfile systemProfileWithVersion:VERSION]];
-        [self addProfile:[[DPAllJoynServiceInformationProfile alloc]
-                          initWithProvider:self handler:_handler
-                          version:VERSION]];
+        [self addProfile:[DConnectServiceInformationProfile new]];
         [self addProfile:[[DPAllJoynLightProfile alloc]
                           initWithHandler:_handler]];
         
