@@ -181,10 +181,9 @@ didReceiveGetReceiveRequest:(DConnectRequestMessage *)request
         
         NSString *pluginRootPath = [pathItr stringByReplacingOccurrencesOfString:rootPath withString:@""];
         NSArray *dirCount = [pluginRootPath componentsSeparatedByString:@"/"];
-
         if (dirCount.count > 2 && !mkBackRoot) {
             DConnectMessage *upDir = [DConnectMessage message];
-            [DConnectFileProfile setPath:[self removeLastDirectoryNameWithRoot:listPath] target:upDir];
+            [DConnectFileProfile setPath:rootPath target:upDir];
             [DConnectFileProfile setFileName:@".." target:upDir];
             [DConnectFileProfile setUpdateDate:[rfc3339DateFormatter stringFromDate:modifiedDate] tareget:upDir];
             [DConnectFileProfile setMIMEType:@"dir/folder" target:upDir];
@@ -194,7 +193,6 @@ didReceiveGetReceiveRequest:(DConnectRequestMessage *)request
             mkBackRoot = YES;
         }
         BOOL isDirectory;
-
         [sysFileMgr fileExistsAtPath:pathItr isDirectory:&isDirectory];
         if (isDirectory) {
             [DConnectFileProfile setMIMEType:@"dir/folder" target:file];
@@ -209,18 +207,6 @@ didReceiveGetReceiveRequest:(DConnectRequestMessage *)request
         }
         
         [fileArr addObject:file];
-    }
-    NSArray *names = [listPath componentsSeparatedByString:@"/"];
-    // DPHostDevicePluginのルートディレクトリかどうか
-    if (![names[names.count - 1] isEqualToString:@"DPHostDevicePlugin"]
-        && !mkBackRoot) {
-        DConnectMessage *upDir = [DConnectMessage message];
-        [DConnectFileProfile setPath:[self removeLastDirectoryNameWithRoot:listPath] target:upDir];
-        [DConnectFileProfile setFileName:@".." target:upDir];
-        [DConnectFileProfile setMIMEType:@"dir/folder" target:upDir];
-        [DConnectFileProfile setFileType:1 target:upDir];
-        [DConnectFileProfile setFileSize:0 target:upDir];
-        [fileArr addObject:upDir];
     }
     return fileArr;
 }
@@ -519,24 +505,6 @@ didReceiveDeleteRmdirRequest:(DConnectRequestMessage *)request
     
     return YES;
 }
-
-//一つ上の絶対ディレクトリパスを返す
-- (NSString*)removeLastDirectoryNameWithRoot:(NSString*)listPath
-{
-    NSString *lastPath = listPath;
-    NSArray *names = [lastPath componentsSeparatedByString:@"/"];
-    NSRange lastDirectory = [lastPath rangeOfString:[@"/" stringByAppendingString:names[names.count - 1]]
-                                            options:NSBackwardsSearch];
-    
-    if(lastDirectory.location != NSNotFound
-       && ![lastPath hasSuffix:@"/Application Support/DPHostDevicePlugin"]) {
-        lastPath = [lastPath stringByReplacingCharactersInRange:lastDirectory
-                                                     withString:@""];
-    }
-    return lastPath;
-}
-
-
 
 //不正なパスかどうかを検査する
 -(BOOL)checkPath:(NSString*)dstPath {
