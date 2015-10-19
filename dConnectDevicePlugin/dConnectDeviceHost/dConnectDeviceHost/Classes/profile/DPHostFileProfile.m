@@ -35,7 +35,7 @@
 - (BOOL)            profile:(DConnectFileProfile *)profile
 didReceiveGetReceiveRequest:(DConnectRequestMessage *)request
                    response:(DConnectResponseMessage *)response
-                   serviceId:(NSString *)serviceId
+                  serviceId:(NSString *)serviceId
                        path:(NSString *)path
 {
     if (!path || path.length == 0) {
@@ -77,8 +77,8 @@ didReceiveGetReceiveRequest:(DConnectRequestMessage *)request
                          path:(NSString *)path
                       fileMgr:(DConnectFileManager *)fileMgr
                    sysFileMgr:(NSFileManager *)sysFileMgr
-                  sortOrder:(NSString **)sortOrder
-                 sortTarget:(NSString **)sortTarget
+                    sortOrder:(NSString **)sortOrder
+                   sortTarget:(NSString **)sortTarget
                         order:(NSArray *)order
 {
     NSString *offsetString = [request stringForKey:DConnectFileProfileParamOffset];
@@ -181,9 +181,10 @@ didReceiveGetReceiveRequest:(DConnectRequestMessage *)request
         
         NSString *pluginRootPath = [pathItr stringByReplacingOccurrencesOfString:rootPath withString:@""];
         NSArray *dirCount = [pluginRootPath componentsSeparatedByString:@"/"];
+        
         if (dirCount.count > 2 && !mkBackRoot) {
             DConnectMessage *upDir = [DConnectMessage message];
-            [DConnectFileProfile setPath:rootPath target:upDir];
+            [DConnectFileProfile setPath:[self removeLastDirectoryNameWithRoot:listPath] target:upDir];
             [DConnectFileProfile setFileName:@".." target:upDir];
             [DConnectFileProfile setUpdateDate:[rfc3339DateFormatter stringFromDate:modifiedDate] tareget:upDir];
             [DConnectFileProfile setMIMEType:@"dir/folder" target:upDir];
@@ -193,6 +194,7 @@ didReceiveGetReceiveRequest:(DConnectRequestMessage *)request
             mkBackRoot = YES;
         }
         BOOL isDirectory;
+        
         [sysFileMgr fileExistsAtPath:pathItr isDirectory:&isDirectory];
         if (isDirectory) {
             [DConnectFileProfile setMIMEType:@"dir/folder" target:file];
@@ -207,6 +209,18 @@ didReceiveGetReceiveRequest:(DConnectRequestMessage *)request
         }
         
         [fileArr addObject:file];
+    }
+    NSArray *names = [listPath componentsSeparatedByString:@"/"];
+    // DPHostDevicePluginのルートディレクトリかどうか
+    if (![names[names.count - 1] isEqualToString:@"DPHostDevicePlugin"]
+        && !mkBackRoot) {
+        DConnectMessage *upDir = [DConnectMessage message];
+        [DConnectFileProfile setPath:[self removeLastDirectoryNameWithRoot:listPath] target:upDir];
+        [DConnectFileProfile setFileName:@".." target:upDir];
+        [DConnectFileProfile setMIMEType:@"dir/folder" target:upDir];
+        [DConnectFileProfile setFileType:1 target:upDir];
+        [DConnectFileProfile setFileSize:0 target:upDir];
+        [fileArr addObject:upDir];
     }
     return fileArr;
 }
@@ -271,7 +285,7 @@ didReceiveGetReceiveRequest:(DConnectRequestMessage *)request
 - (BOOL)         profile:(DConnectFileProfile *)profile
 didReceiveGetListRequest:(DConnectRequestMessage *)request
                 response:(DConnectResponseMessage *)response
-                serviceId:(NSString *)serviceId
+               serviceId:(NSString *)serviceId
                     path:(NSString *)path
                 mimeType:(NSString *)mimeType
                    order:(NSArray *)order
@@ -289,8 +303,8 @@ didReceiveGetListRequest:(DConnectRequestMessage *)request
                                 path:path
                              fileMgr:fileMgr
                           sysFileMgr:sysFileMgr
-                         sortOrder:&sortOrder
-                        sortTarget:&sortTarget
+                           sortOrder:&sortOrder
+                          sortTarget:&sortTarget
                                order:order];
     if (!listPath) {
         [response setErrorToInvalidRequestParameter];
@@ -344,7 +358,7 @@ didReceiveGetListRequest:(DConnectRequestMessage *)request
 - (BOOL)          profile:(DConnectFileProfile *)profile
 didReceivePostSendRequest:(DConnectRequestMessage *)request
                  response:(DConnectResponseMessage *)response
-                 serviceId:(NSString *)serviceId
+                serviceId:(NSString *)serviceId
                      path:(NSString *)path
                  mimeType:(NSString *)mimeType
                      data:(NSData *)data
@@ -387,7 +401,7 @@ didReceivePostSendRequest:(DConnectRequestMessage *)request
 - (BOOL)           profile:(DConnectFileProfile *)profile
 didReceivePostMkdirRequest:(DConnectRequestMessage *)request
                   response:(DConnectResponseMessage *)response
-                  serviceId:(NSString *)serviceId
+                 serviceId:(NSString *)serviceId
                       path:(NSString *)path
 {
     if (!path) {
@@ -423,7 +437,7 @@ didReceivePostMkdirRequest:(DConnectRequestMessage *)request
 - (BOOL)              profile:(DConnectFileProfile *)profile
 didReceiveDeleteRemoveRequest:(DConnectRequestMessage *)request
                      response:(DConnectResponseMessage *)response
-                     serviceId:(NSString *)serviceId
+                    serviceId:(NSString *)serviceId
                          path:(NSString *)path
 {
     if (!path || path.length == 0) {
@@ -433,7 +447,7 @@ didReceiveDeleteRemoveRequest:(DConnectRequestMessage *)request
     
     NSFileManager *sysFileMgr = [NSFileManager defaultManager];
     NSError *error;
-
+    
     // pathが絶対であれ相対であれベースURLに追加する。
     NSString *dstPath = [SELF_PLUGIN pathByAppendingPathComponent:path];
     if ([self checkPath:dstPath]) {
@@ -461,7 +475,7 @@ didReceiveDeleteRemoveRequest:(DConnectRequestMessage *)request
 - (BOOL)             profile:(DConnectFileProfile *)profile
 didReceiveDeleteRmdirRequest:(DConnectRequestMessage *)request
                     response:(DConnectResponseMessage *)response
-                    serviceId:(NSString *)serviceId
+                   serviceId:(NSString *)serviceId
                         path:(NSString *)path
                        force:(BOOL)force
 {
@@ -505,6 +519,24 @@ didReceiveDeleteRmdirRequest:(DConnectRequestMessage *)request
     
     return YES;
 }
+
+//一つ上の絶対ディレクトリパスを返す
+- (NSString*)removeLastDirectoryNameWithRoot:(NSString*)listPath
+{
+    NSString *lastPath = listPath;
+    NSArray *names = [lastPath componentsSeparatedByString:@"/"];
+    NSRange lastDirectory = [lastPath rangeOfString:[@"/" stringByAppendingString:names[names.count - 1]]
+                                            options:NSBackwardsSearch];
+    //ルートディレクトリ（DPHostDevicePlugin)の場合は、そのまま返す
+    if(lastDirectory.location != NSNotFound
+       && ![lastPath hasSuffix:@"/Application Support/DPHostDevicePlugin"]) {
+        lastPath = [lastPath stringByReplacingCharactersInRange:lastDirectory
+                                                     withString:@""];
+    }
+    return lastPath;
+}
+
+
 
 //不正なパスかどうかを検査する
 -(BOOL)checkPath:(NSString*)dstPath {
