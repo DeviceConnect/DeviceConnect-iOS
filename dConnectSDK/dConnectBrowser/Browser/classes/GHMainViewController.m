@@ -96,6 +96,7 @@ typedef enum{
     
     self.swipeView = nil;
     self.swipeBGView = nil;
+    self.redirectURL = nil;
     
     _progressView  = nil;
     _progressProxy = nil;
@@ -108,7 +109,9 @@ typedef enum{
 {
     // foregroundに来た事を検知した時点では、このアプリを起動したカスタムURLを取得できない。
     // なので、カスタムURLを取得するGHAppDelegateにカスタムURLを引数に取って処理を行うコールバックを渡しておく。
-    
+    //ホームランチャーとSafariから起動されたことを区別するため初期化する
+    self.redirectURL = nil;
+    self.toolView.redirectURL = nil;
     id<UIApplicationDelegate> appDelegate
             = [UIApplication sharedApplication].delegate;
     if ([appDelegate isKindOfClass:[GHAppDelegate class]]) {
@@ -116,7 +119,8 @@ typedef enum{
                 setURLLoadingCallback:^(NSURL* redirectURL){
             if (redirectURL) {
                 [self loadHtml:redirectURL.absoluteString];
-                
+                self.redirectURL = redirectURL;
+                self.toolView.redirectURL = redirectURL;
                 //URLを表示
                 NSURLRequest *req = [NSURLRequest requestWithURL:redirectURL
                                                      cachePolicy:NSURLRequestReloadIgnoringLocalCacheData
@@ -124,8 +128,10 @@ typedef enum{
                 
                 [self updateDisplayURL:req];
             }
+            [self updateLayout];
         }];
     }
+    [self updateLayout];
 }
 
 //--------------------------------------------------------------//
@@ -312,7 +318,8 @@ typedef enum{
 ///iPad用 戻る・進むボタンの制御
 - (void)updateBtn
 {
-    if (self.webview.canGoBack) {
+    if (self.webview.canGoBack
+        || (!self.webview.canGoBack && self.redirectURL)) { //Safariから来た時も押下できるようにする
         backBtn.enabled = YES;
     }else{
         backBtn.enabled = NO;
@@ -403,6 +410,10 @@ typedef enum{
     dispatch_async(updateQueue, ^{
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             [self updateLayout];
+            //redirectURLがある場合はSafariに戻る
+            if (![self.webview canGoBack] && self.redirectURL) {
+                [[UIApplication sharedApplication] openURL: self.redirectURL];
+            }
         });
     });
 }
@@ -690,7 +701,7 @@ typedef enum{
         
         self.myRequest = request;
         [self updateDisplayURL:request];
-        self.requestUrl = [[request URL]absoluteString];
+        self.requestUrl = [[request URL] absoluteString];
     }
     
     
@@ -706,7 +717,6 @@ typedef enum{
             [self updateLayout];
         });
     });
-
     return YES;
 }
 
@@ -1311,17 +1321,21 @@ typedef enum{
                    name:UIApplicationWillEnterForegroundNotification object:nil];
     
     isLongPressAccept = YES;
+
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
+
     //初回起動時のweb表示
     id<UIApplicationDelegate> appDelegate = [UIApplication sharedApplication].delegate;
     if ([appDelegate isKindOfClass:[GHAppDelegate class]]) {
         // カスタムURLによって起動された場合は、このカスタムURLによって指定されたリダイレクト先を表示する。
-        
         NSURL *redirectURL = [(GHAppDelegate *)appDelegate redirectURL];
         if (redirectURL) {
+            self.redirectURL = redirectURL;
+            self.toolView.redirectURL = redirectURL;
+
             [(GHAppDelegate *)appDelegate setRedirectURL:nil];
             
             [self loadHtml:redirectURL.absoluteString];
@@ -1332,10 +1346,12 @@ typedef enum{
                                              timeoutInterval:TIMEOUT];
             
             [self updateDisplayURL:req];
+            [self updateLayout]; //Safariから来た場合に戻るボタンの押下設定を行う。
+
             return;
         }
+        [self updateLayout];
     }
-    
     if (!isLaunched) {
         isLaunched = YES;
         [self showLastPage];

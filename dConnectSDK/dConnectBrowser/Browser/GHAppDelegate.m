@@ -48,7 +48,6 @@
 
 - (void)applicationWillResignActive:(UIApplication *)application
 {
-
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application
@@ -72,13 +71,12 @@
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
 {
-    if (![url.scheme isEqualToString:@"dconnect"] || ![url.scheme isEqualToString:@"gotapi"]) {
+    if (![url.scheme isEqualToString:@"dconnect"] && ![url.scheme isEqualToString:@"gotapi"]) {
         return NO;
     }
     
     NSString *directURLStr = [url.resourceSpecifier stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSURL *redirectURL = [NSURL URLWithString:directURLStr];
-
     if (_URLLoadingCallback && redirectURL) {
         // UIApplicationWillEnterForegroundNotification通知オブザベーションによりコールバックが呼ばれた場合、
         // NSURLを引数に取るコールバックが保持される。その上で「dconnect」または「gotapi」URLスキーム経由でリダイレクト先URLが飛んできたのなら、
