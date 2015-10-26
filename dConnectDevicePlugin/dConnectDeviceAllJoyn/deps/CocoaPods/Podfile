@@ -1,3 +1,4 @@
 platform :ios, '8.0'
+xcodeproj './Pods/Pods'
 
 pod 'OpenSSL-Static', '1.0.2.c1'
