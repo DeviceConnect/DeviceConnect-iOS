@@ -352,5 +352,72 @@ didReceivePostLightGroupRequest:(DConnectRequestMessage *)request
  */
 @property (nonatomic, assign) id<DConnectLightProfileDelegate> delegate;
 
+#pragma mark - Setter
+
+
+/*!
+ @brief メッセージにライト一覧を設定する。
+ 
+ @param[in] lights ライト一覧
+ @param[in,out] message ライト一覧を格納するメッセージ
+ */
++ (void) setLights:(DConnectArray *)lights target:(DConnectMessage *)message;
+
+/*!
+ @brief メッセージにライトIDを設定する。
+ 
+ @param[in] lightId ライトID
+ @param[in,out] message ライトIDを格納するメッセージ
+ */
++ (void) setLightId:(NSString*)lightId target:(DConnectMessage *)message;
+
+/*!
+ @brief メッセージにライト名を設定する。
+ 
+ @param[in] lightName ライト名
+ @param[in,out] message ライト名を格納するメッセージ
+ */
++ (void) setLightName:(NSString*)lightName target:(DConnectMessage *)message;
+
+/*!
+ @brief メッセージにライトの点灯状態を設定する。
+ 
+ @param[in] isOn 点灯: YES、 消灯: NO
+ @param[in,out] message ライトの点灯状態を格納するメッセージ
+ */
++ (void) setLightOn:(BOOL)isOn target:(DConnectMessage *)message ;
+
+/*!
+ @brief メッセージにライトの設定情報を設定する。
+ 
+ @param[in] config 設定情報文字列
+ @param[in,out] message ライトの設定情報を格納するメッセージ
+ */
++ (void) setLightConfig:(NSString*)config target:(DConnectMessage *)message;
+
+
+/*!
+ @brief メッセージにライトグループ一覧を設定する。
+ 
+ @param[in] lightGroups ライトグループ一覧
+ @param[in,out] message ライトグループ一覧を格納するメッセージ
+ */
++ (void) setLightGroups:(DConnectArray *)lightGroups target:(DConnectMessage *)message;
+
+/*!
+ @brief メッセージにライトグループIDを設定する。
+ 
+ @param[in] lightGroupId ライトグループID
+ @param[in,out] message ライトグループIDを格納するメッセージ
+ */
++ (void) setLightGroupId:(NSString*)lightGroupId target:(DConnectMessage *)message;
+
+/*!
+ @brief メッセージにライトグループ名を設定する。
+ 
+ @param[in] lightGroupName ライトグループ名
+ @param[in,out] message ライトグループ名を格納するメッセージ
+ */
++ (void) setLightGroupName:(NSString*)lightGroupName target:(DConnectMessage *)message;
 
 @end

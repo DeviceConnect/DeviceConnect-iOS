@@ -214,13 +214,13 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
          
          DConnectArray *lights = [DConnectArray array];
          DConnectMessage *light = [DConnectMessage message];
-         [light setString:DPAllJoynLightProfileLightIDSelf forKey:DConnectLightProfileParamLightId];
-         [light setString:service.serviceName forKey:DConnectLightProfileParamName];
-         [light setString:@"" forKey:DConnectLightProfileParamConfig];
-         [light setBool:proxy.OnOff forKey:DConnectLightProfileParamOn];
+         [DConnectLightProfile setLightId:DPAllJoynLightProfileLightIDSelf target:light];
+         [DConnectLightProfile setLightName:service.serviceName target:light];
+         [DConnectLightProfile setLightConfig:@"" target:light];
+         [DConnectLightProfile setLightOn:proxy.OnOff target:light];
          [lights addMessage:light];
          
-         [response setArray:lights forKey:DConnectLightProfileParamLights];
+         [DConnectLightProfile setLights:lights target:response];
          [response setResult:DConnectMessageResultTypeOk];
          [[DConnectManager sharedManager] sendResponse:response];
      }];
@@ -329,14 +329,13 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
              }
              
              DConnectMessage *light = [DConnectMessage message];
-             [light setString:lampID forKey:DConnectLightProfileParamLightId];
-             [light setString:lampName forKey:DConnectLightProfileParamName];
-             [light setString:@"" forKey:DConnectLightProfileParamConfig];
-             [light setBool:onOffState forKey:DConnectLightProfileParamOn];
+             [DConnectLightProfile setLightId:lampID target:light];
+             [DConnectLightProfile setLightName:lampName target:light];
+             [DConnectLightProfile setLightConfig:@"" target:light];
+             [DConnectLightProfile setLightOn:onOffState target:light];
              [lights addMessage:light];
          }
-         
-         [response setArray:lights forKey:DConnectLightProfileParamLights];
+         [DConnectLightProfile setLights:lights target:response];
          [response setResult:DConnectMessageResultTypeOk];
          [[DConnectManager sharedManager] sendResponse:response];
      }];
@@ -1190,28 +1189,30 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
          DConnectArray *lightGroups = [DConnectArray array];
          for (DPAllJoynLampGroup *lampGroup in lampGroups.allValues) {
              DConnectMessage *lightGroupMsg = [DConnectMessage message];
-             [lightGroupMsg setString:lampGroup.groupID forKey:DConnectLightProfileParamGroupId];
-             [lightGroupMsg setString:lampGroup.name forKey:DConnectLightProfileParamName];
+             
+             [DConnectLightProfile setLightGroupId:lampGroup.groupID target:lightGroupMsg];
+             [DConnectLightProfile setLightGroupName:lampGroup.name target:lightGroupMsg];
              DConnectArray *lights = [DConnectArray array];
              for (NSString *lampID in lampGroup.lampIDs) {
                  DPAllJoynLamp *lamp = lamps[lampID];
                  
                  DConnectMessage *light = [DConnectMessage message];
-                 [light setString:lamp.ID forKey:DConnectLightProfileParamLightId];
+                 
+                 [DConnectLightProfile setLightId:lamp.ID target:light];
                  if (lamp.name) {
-                     [light setString:lamp.name forKey:DConnectLightProfileParamName];
+                     [DConnectLightProfile setLightName:lamp.name target:light];
                  }
                  if (lamp.on) {
-                     [light setBool:lamp.on.boolValue forKey:DConnectLightProfileParamOn];
+                     [DConnectLightProfile setLightOn:lamp.on.boolValue target:light];
                  }
-                 [lightGroupMsg setString:lamp.config forKey:DConnectLightProfileParamConfig];
+                 [DConnectLightProfile setLightConfig:@"" target:light];
                  [lights addMessage:light];
              }
-             [lightGroupMsg setArray:lights forKey:DConnectLightProfileParamLights];
-             [lightGroupMsg setString:lampGroup.config forKey:DConnectLightProfileParamConfig];
+             [DConnectLightProfile setLights:lights target:lightGroupMsg];
+             [DConnectLightProfile setLightConfig:lampGroup.config target:lightGroupMsg];
              [lightGroups addMessage:lightGroupMsg];
          }
-         [response setArray:lightGroups forKey:DConnectLightProfileParamLightGroups];
+         [DConnectLightProfile setLightGroups:lightGroups target:response];
          
          [response setResult:DConnectMessageResultTypeOk];
          [[DConnectManager sharedManager] sendResponse:response];
