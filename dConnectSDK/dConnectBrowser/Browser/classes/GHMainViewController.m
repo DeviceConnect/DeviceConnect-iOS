@@ -110,8 +110,6 @@ typedef enum{
     // foregroundに来た事を検知した時点では、このアプリを起動したカスタムURLを取得できない。
     // なので、カスタムURLを取得するGHAppDelegateにカスタムURLを引数に取って処理を行うコールバックを渡しておく。
     //ホームランチャーとSafariから起動されたことを区別するため初期化する
-    self.redirectURL = nil;
-    self.toolView.redirectURL = nil;
     id<UIApplicationDelegate> appDelegate
             = [UIApplication sharedApplication].delegate;
     if ([appDelegate isKindOfClass:[GHAppDelegate class]]) {
@@ -120,7 +118,6 @@ typedef enum{
             if (redirectURL) {
                 [self loadHtml:redirectURL.absoluteString];
                 self.redirectURL = redirectURL;
-                self.toolView.redirectURL = redirectURL;
                 //URLを表示
                 NSURLRequest *req = [NSURLRequest requestWithURL:redirectURL
                                                      cachePolicy:NSURLRequestReloadIgnoringLocalCacheData
@@ -128,10 +125,8 @@ typedef enum{
                 
                 [self updateDisplayURL:req];
             }
-            [self updateLayout];
         }];
     }
-    [self updateLayout];
 }
 
 //--------------------------------------------------------------//
@@ -318,8 +313,7 @@ typedef enum{
 ///iPad用 戻る・進むボタンの制御
 - (void)updateBtn
 {
-    if (self.webview.canGoBack
-        || (!self.webview.canGoBack && self.redirectURL)) { //Safariから来た時も押下できるようにする
+    if (self.webview.canGoBack) { //Safariから来た時も押下できるようにする
         backBtn.enabled = YES;
     }else{
         backBtn.enabled = NO;
@@ -410,10 +404,6 @@ typedef enum{
     dispatch_async(updateQueue, ^{
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             [self updateLayout];
-            //redirectURLがある場合はSafariに戻る
-            if (![self.webview canGoBack] && self.redirectURL) {
-                [[UIApplication sharedApplication] openURL: self.redirectURL];
-            }
         });
     });
 }
@@ -1334,7 +1324,6 @@ typedef enum{
         NSURL *redirectURL = [(GHAppDelegate *)appDelegate redirectURL];
         if (redirectURL) {
             self.redirectURL = redirectURL;
-            self.toolView.redirectURL = redirectURL;
 
             [(GHAppDelegate *)appDelegate setRedirectURL:nil];
             

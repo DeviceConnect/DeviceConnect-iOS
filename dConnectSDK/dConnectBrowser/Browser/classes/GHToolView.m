@@ -66,8 +66,7 @@
 
 - (void)updateBtn
 {
-    if (self.webview.canGoBack
-        || (!self.webview.canGoBack && self.redirectURL)) { //Safariから来た時も押下できるようにする
+    if (self.webview.canGoBack) { //Safariから来た時も押下できるようにする
         self.backbtn.enabled = YES;
     } else{
         self.backbtn.enabled = NO;
