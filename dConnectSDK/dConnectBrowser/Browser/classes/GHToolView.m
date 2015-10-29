@@ -66,7 +66,7 @@
 
 - (void)updateBtn
 {
-    if (self.webview.canGoBack) {
+    if (self.webview.canGoBack) { 
         self.backbtn.enabled = YES;
     } else{
         self.backbtn.enabled = NO;

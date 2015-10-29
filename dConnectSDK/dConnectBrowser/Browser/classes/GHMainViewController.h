@@ -26,6 +26,8 @@ UIGestureRecognizerDelegate>
 
 ///webview
 @property (nonatomic, strong) UIWebView *webview;
+@property (nonatomic, strong) NSURL *redirectURL;
+
 
 - (IBAction)btnAction:(UIBarButtonItem*)item;
 
