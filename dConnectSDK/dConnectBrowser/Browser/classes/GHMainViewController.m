@@ -313,7 +313,7 @@ typedef enum{
 ///iPad用 戻る・進むボタンの制御
 - (void)updateBtn
 {
-    if (self.webview.canGoBack) { //Safariから来た時も押下できるようにする
+    if (self.webview.canGoBack) { 
         backBtn.enabled = YES;
     }else{
         backBtn.enabled = NO;
@@ -1335,9 +1335,6 @@ typedef enum{
                                              timeoutInterval:TIMEOUT];
             
             [self updateDisplayURL:req];
-            [self updateLayout]; //Safariから来た場合に戻るボタンの押下設定を行う。
-
-            return;
         }
         [self updateLayout];
     }
