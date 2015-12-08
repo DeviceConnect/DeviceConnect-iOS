@@ -48,11 +48,11 @@ static void PrintReachabilityFlags(SCNetworkReachabilityFlags    flags, const ch
 static void ReachabilityCallback(SCNetworkReachabilityRef target, SCNetworkReachabilityFlags flags, void* info)
 {
 #pragma unused (target, flags)
-    NSCAssert(info != NULL, @"info was NULL in ReachabilityCallback");
-    NSCAssert([(__bridge NSObject*) info isKindOfClass: [Reachability class]], @"info was wrong class in ReachabilityCallback");
+    NSCAssert(info != NULL, @"ReachabilityCallback: info can not be null.");
+    NSCAssert([(__bridge NSObject*) info isKindOfClass: [DPHostReachability class]], @"ReachabilityCallback: info must be a DPHostReachability object.");
     
     //We're on the main RunLoop, so an NSAutoreleasePool is not necessary, but is added defensively
-    // in case someon uses the Reachablity object in a different thread.
+    // in case someon uses the DPHostReachability object in a different thread.
     @autoreleasepool {
         DPHostReachability* noteObject = (__bridge DPHostReachability*) info;
         // Post a notification to notify the client that the network reachability changed.
