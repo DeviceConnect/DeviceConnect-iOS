@@ -6,5 +6,7 @@
 	<string>2.1.1</string>
 	<key>DPIRKitAPIKey</key>
 	<string>[YOUR APPLICATION KEY]</string>
+	<key>NSHumanReadableCopyright</key>
+	<string>Copyright (c) 2014 NTT DOCOMO, INC. Released under the MIT license.</string>
 </dict>
 </plist>
