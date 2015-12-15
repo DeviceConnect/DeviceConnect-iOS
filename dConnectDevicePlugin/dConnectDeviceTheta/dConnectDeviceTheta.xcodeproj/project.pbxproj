@@ -114,6 +114,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		2590B6C21C2171AA00E73336 /* require_theta_sdk.rb */ = {isa = PBXFileReference; lastKnownFileType = text.script.ruby; path = require_theta_sdk.rb; sourceTree = "<group>"; };
 		AB055EA21B8AAB1D0078128B /* DPOmnidirectionalImageProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPOmnidirectionalImageProfile.m; sourceTree = "<group>"; };
 		AB39FEAE1B4D0FE200A8139E /* DPThetaFileProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPThetaFileProfile.h; sourceTree = "<group>"; };
 		AB39FEAF1B4D0FE200A8139E /* DPThetaFileProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPThetaFileProfile.m; sourceTree = "<group>"; };
@@ -280,6 +281,7 @@
 		AB50CFEA1B40CDCF00EB9F94 = {
 			isa = PBXGroup;
 			children = (
+				2590B6C21C2171AA00E73336 /* require_theta_sdk.rb */,
 				AB50D0D61B40E0DD00EB9F94 /* Frameworks */,
 				AB50CFF51B40CDCF00EB9F94 /* dConnectDeviceTheta */,
 				AB50D0021B40CDCF00EB9F94 /* dConnectDeviceThetaTests */,
