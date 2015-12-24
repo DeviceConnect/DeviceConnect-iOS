@@ -88,12 +88,14 @@ typedef void (^DConnectAuthorizationFailBlock)(DConnectMessageErrorCodeType erro
  @brief 同期的にアクセストークンをリフレッシュする。
  
  @param[in] clientId クライアントID
+ @param[in] origin オリジン
  @param[in] appName アプリ名
  @param[in] scopes 使用するプロファイル一覧
  @param[in] success 認証成功通知コールバック
  @param[in] error 認証失敗通知コールバック
  */
 + (void) refreshAccessTokenWithClientId:(NSString *)clientId
+                                 origin:(NSString *)origin
                                 appName:(NSString *)appName
                                  scopes:(NSArray *)scopes
                                 success:(DConnectAuthorizationSuccessBlock)success
