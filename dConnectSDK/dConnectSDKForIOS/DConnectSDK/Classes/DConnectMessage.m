@@ -398,7 +398,7 @@ NSString *const DConnectMessageHeaderGotAPIOrigin = @"X-GotAPI-Origin";
     id obj = [self.dictionary objectForKey:aKey];
     if ([obj isKindOfClass:[NSString class]]) {
         int val;
-        if ([[NSScanner scannerWithString:obj] scanInt:&int]) {
+        if ([[NSScanner scannerWithString:obj] scanInt:&val]) {
             return [NSNumber numberWithInt:val];
         } else {
             return nil;
