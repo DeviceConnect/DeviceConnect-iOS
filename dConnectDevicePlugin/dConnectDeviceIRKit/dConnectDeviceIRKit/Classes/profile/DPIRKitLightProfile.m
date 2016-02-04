@@ -105,7 +105,7 @@
 {
     BOOL send = YES;
     NSArray *requests = [[DPIRKitDBManager sharedInstance] queryRESTfulRequestByServiceId:serviceId
-                                                                                  profile:@"light"];
+                                                                                  profile:@"/light"];
     if (requests.count == 0) {
         [response setErrorToNotSupportProfile];
         return send;
