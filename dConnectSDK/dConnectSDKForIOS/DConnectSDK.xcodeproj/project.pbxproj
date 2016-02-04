@@ -85,6 +85,7 @@
 		97AD0D5E192A149C00A1A84D /* DConnectFileDescriptorProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 97AD0D5D192A149C00A1A84D /* DConnectFileDescriptorProfile.m */; };
 		97ECA16E193887E2001662D1 /* DConnectURLProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = 97ECA16D193887E2001662D1 /* DConnectURLProtocol.m */; };
 		97FE24BC191CBB77007C4769 /* multipart_parser.c in Sources */ = {isa = PBXBuildFile; fileRef = 97FE24B8191CBB77007C4769 /* multipart_parser.c */; };
+		AB3520C21BAD4B890010FF55 /* DConnectLightProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = AB3520C11BAD4B890010FF55 /* DConnectLightProfile.m */; settings = {ASSET_TAGS = (); }; };
 		AB702E311A70FAF8002D21CB /* DConnectCanvasProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = AB702E301A70FAF8002D21CB /* DConnectCanvasProfile.m */; };
 		BE21BC67197E109B00BAF018 /* DConnectSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE24744B197914940035E83B /* DConnectSDK.framework */; };
 		BE21BC6F197E11B600BAF018 /* Hash.m in Sources */ = {isa = PBXBuildFile; fileRef = BE21BC6B197E11B600BAF018 /* Hash.m */; };
@@ -177,8 +178,8 @@
 		D6FD02131999EC7A000DB674 /* CipherSignatureFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = D6FD020B1999EC7A000DB674 /* CipherSignatureFactory.m */; };
 		D6FD02141999EC7A000DB674 /* CipherSignatureProc.m in Sources */ = {isa = PBXBuildFile; fileRef = D6FD020E1999EC7A000DB674 /* CipherSignatureProc.m */; };
 		D6FD02151999EC7A000DB674 /* CipherSignatureProcMD.m in Sources */ = {isa = PBXBuildFile; fileRef = D6FD02101999EC7A000DB674 /* CipherSignatureProcMD.m */; };
-		EFC27C2E1AB5B97B0029B257 /* DConnectTouchProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = EFC27C2D1AB5B97B0029B257 /* DConnectTouchProfile.m */; };
 		EF8B64941AAC78D7007C590B /* DConnectKeyEventProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = EF8B64931AAC78D7007C590B /* DConnectKeyEventProfile.m */; };
+		EFC27C2E1AB5B97B0029B257 /* DConnectTouchProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = EFC27C2D1AB5B97B0029B257 /* DConnectTouchProfile.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -294,6 +295,8 @@
 		AB0A87751A8067860016FF77 /* DConnectAvailabilityProfile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DConnectAvailabilityProfile.h; sourceTree = "<group>"; };
 		AB0A87761A8067860016FF77 /* DConnectCanvasProfile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DConnectCanvasProfile.h; sourceTree = "<group>"; };
 		AB0A87771A808BFC0016FF77 /* DConnectServiceDiscoveryProfile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DConnectServiceDiscoveryProfile.h; sourceTree = "<group>"; };
+		AB3520C11BAD4B890010FF55 /* DConnectLightProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DConnectLightProfile.m; path = ../../../../../dConnectDevicePlugin/DCMDevicePluginSDK/DCMDevicePluginSDK/Classes/DConnectLightProfile.m; sourceTree = "<group>"; };
+		AB3520C31BAD4BA90010FF55 /* DConnectLightProfile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DConnectLightProfile.h; sourceTree = "<group>"; };
 		AB702E301A70FAF8002D21CB /* DConnectCanvasProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DConnectCanvasProfile.m; sourceTree = "<group>"; };
 		BE21B730197E108900BAF018 /* build-state.dat */ = {isa = PBXFileReference; lastKnownFileType = text; path = "build-state.dat"; sourceTree = "<group>"; };
 		BE21B731197E108900BAF018 /* DConnectSDK-all-target-headers.hmap */ = {isa = PBXFileReference; lastKnownFileType = file; path = "DConnectSDK-all-target-headers.hmap"; sourceTree = "<group>"; };
@@ -1816,10 +1819,10 @@
 		D6FD02281999FED3000DB674 /* LocalOAuthSQLiteClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LocalOAuthSQLiteClient.h; path = localoauth/LocalOAuthSQLiteClient.h; sourceTree = "<group>"; };
 		D6FD02291999FED3000DB674 /* LocalOAuthToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LocalOAuthToken.h; path = localoauth/LocalOAuthToken.h; sourceTree = "<group>"; };
 		D6FD022A1999FED3000DB674 /* LocalOAuthTokenManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LocalOAuthTokenManager.h; path = localoauth/LocalOAuthTokenManager.h; sourceTree = "<group>"; };
-		EFC27C2C1AB5B96B0029B257 /* DConnectTouchProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DConnectTouchProfile.h; sourceTree = "<group>"; };
-		EFC27C2D1AB5B97B0029B257 /* DConnectTouchProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DConnectTouchProfile.m; sourceTree = "<group>"; };
 		EF8B64931AAC78D7007C590B /* DConnectKeyEventProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DConnectKeyEventProfile.m; sourceTree = "<group>"; };
 		EF8B64951AAC78F2007C590B /* DConnectKeyEventProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DConnectKeyEventProfile.h; sourceTree = "<group>"; };
+		EFC27C2C1AB5B96B0029B257 /* DConnectTouchProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DConnectTouchProfile.h; sourceTree = "<group>"; };
+		EFC27C2D1AB5B97B0029B257 /* DConnectTouchProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DConnectTouchProfile.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -3445,6 +3448,7 @@
 		BE6F93151A70DB0400BFA51F /* DConnectSDK */ = {
 			isa = PBXGroup;
 			children = (
+				AB3520C31BAD4BA90010FF55 /* DConnectLightProfile.h */,
 				EFC27C2C1AB5B96B0029B257 /* DConnectTouchProfile.h */,
 				EF8B64951AAC78F2007C590B /* DConnectKeyEventProfile.h */,
 				AB0A87771A808BFC0016FF77 /* DConnectServiceDiscoveryProfile.h */,
@@ -3652,6 +3656,7 @@
 		C29D331E191B2679001015CC /* profile */ = {
 			isa = PBXGroup;
 			children = (
+				AB3520C11BAD4B890010FF55 /* DConnectLightProfile.m */,
 				EFC27C2D1AB5B97B0029B257 /* DConnectTouchProfile.m */,
 				EF8B64931AAC78D7007C590B /* DConnectKeyEventProfile.m */,
 				AB702E301A70FAF8002D21CB /* DConnectCanvasProfile.m */,
@@ -4135,6 +4140,7 @@
 				D626229E19923298004F01E6 /* LocalOAuthAccessTokenScope.m in Sources */,
 				6BD8C45C1AA8060900198676 /* DConnectManagerAuthorizationProfile.m in Sources */,
 				97ECA16E193887E2001662D1 /* DConnectURLProtocol.m in Sources */,
+				AB3520C21BAD4B890010FF55 /* DConnectLightProfile.m in Sources */,
 				C2F89D631920BB93005F1C5F /* DConnectConnectProfile.m in Sources */,
 				C29D3333191B2679001015CC /* DConnectServiceDiscoveryProfile.m in Sources */,
 				30424D1E1974C3B30084371F /* DConnectEventSessionDao.m in Sources */,
@@ -4302,7 +4308,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "";
 				SDKROOT = iphoneos;
@@ -4334,7 +4340,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				OTHER_LDFLAGS = "";
 				SDKROOT = iphoneos;
 				USER_HEADER_SEARCH_PATHS = "${PROJECT_DIR}/DConnectSDK/";

@@ -147,6 +147,10 @@
 {
     BOOL send = YES;
     NSArray *requests = [[DPIRKitDBManager sharedInstance] queryRESTfulRequestByServiceId:serviceId];
+    if (requests.count == 0) {
+        [response setErrorToNotSupportProfile];
+        return send;
+    }
     for (DPIRKitRESTfulRequest *req in requests) {
         if ([req.uri isEqualToString:uri] && [req.method isEqualToString:method] && req.ir) {
             send = [_plugin sendIRWithServiceId:serviceId message:req.ir response:response];

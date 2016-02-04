@@ -13,7 +13,7 @@
  @date 作成日(2014.7.15)
  */
 #import <UIKit/UIKit.h>
-#import <DCMDevicePluginSDK/DCMLightProfile.h>
+#import <DConnectSDK/DConnectLightProfile.h>
 #import "DPHueManager.h"
 
 
@@ -22,7 +22,7 @@
  @class DPHueLightProfile
  @brief Hue用 Light プロファイル。
  */
-@interface DPHueLightProfile : DCMLightProfile<DCMLightProfileDelegate>
+@interface DPHueLightProfile : DConnectLightProfile<DConnectLightProfileDelegate>
 
 
 @end

@@ -43,46 +43,10 @@
         // プロファイルを追加
         [self addProfile:[DConnectServiceInformationProfile new]];
         __weak typeof(self) _self = self;
-        dispatch_async(dispatch_get_main_queue(), ^{
-            NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
-            UIApplication *application = [UIApplication sharedApplication];
-            
-            [notificationCenter addObserver:_self selector:@selector(applicationdidFinishLaunching)
-                                       name:UIApplicationWillEnterForegroundNotification
-                                     object:application];
-            
-            [notificationCenter addObserver:_self selector:@selector(enterBackground)
-                                       name:UIApplicationDidEnterBackgroundNotification
-                                     object:application];
-            
-        });
     }
     
     return self;
 }
-
-// 後始末
-- (void)dealloc
-{
-    NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
-    UIApplication *application = [UIApplication sharedApplication];
-    
-    [notificationCenter removeObserver:self name:UIApplicationDidBecomeActiveNotification object:application];
-    [notificationCenter removeObserver:self name:UIApplicationDidEnterBackgroundNotification object:application];
-   
-}
-
-//バックグラウンド
-- (void) enterBackground {
-    [[DPThetaManager sharedManager] disconnect];
-}
-
-// 起動時
-- (void)applicationdidFinishLaunching
-{
-    [[DPThetaManager sharedManager] connect];
-}
-
 
 
 

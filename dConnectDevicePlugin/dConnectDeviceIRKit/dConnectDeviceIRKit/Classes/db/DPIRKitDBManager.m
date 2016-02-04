@@ -334,13 +334,13 @@ NSUInteger const DPIRKitTVProfileCount = 21;
     // データ検索を行います。
     // 失敗した場合には、メソッドはfalseを返し、引数errorに値を詰めてくれます。
     NSError *error = nil;
+    NSMutableArray *requests = [NSMutableArray new];
     if (![fetchedResultsController performFetch:&error]) {
         DPIRLog(@"Unresolved error %@, %@", error, [error userInfo]);
-        return nil;
+        return requests;
     }
     
     NSArray *moArray = [fetchedResultsController fetchedObjects];
-    NSMutableArray *requests = [NSMutableArray new];
     for (int i = 0; i < moArray.count; i++) {
         DPIRKitRESTfulRequest* request = [DPIRKitRESTfulRequest new];
         NSManagedObject *object = [moArray objectAtIndex:i];

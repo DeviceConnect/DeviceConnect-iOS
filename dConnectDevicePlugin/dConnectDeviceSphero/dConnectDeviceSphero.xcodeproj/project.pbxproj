@@ -49,7 +49,6 @@
 		AB1061B6197F46A30005BB3F /* DPSpheroLightProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = AB1061B5197F46A30005BB3F /* DPSpheroLightProfile.m */; };
 		AB1061B919809C4F0005BB3F /* DPSpheroDeviceOrientationProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = AB1061B819809C4F0005BB3F /* DPSpheroDeviceOrientationProfile.m */; };
 		AB39FEC01B4E19C000A8139E /* RobotKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB39FEBD1B4E19C000A8139E /* RobotKit.framework */; };
-		AB39FED91B4E253F00A8139E /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = AB39FED81B4E253F00A8139E /* libsqlite3.0.dylib */; };
 		AB917003196157D80084DB70 /* DPSpheroDevicePlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = AB916FF7196157D80084DB70 /* DPSpheroDevicePlugin.m */; };
 		AB917004196157D80084DB70 /* DPSpheroProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = AB916FF8196157D80084DB70 /* DPSpheroProfile.m */; };
 		AB917005196157D80084DB70 /* DPSpheroServiceDiscoveryProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = AB916FFA196157D80084DB70 /* DPSpheroServiceDiscoveryProfile.m */; };
@@ -126,6 +125,8 @@
 		AB1061B5197F46A30005BB3F /* DPSpheroLightProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DPSpheroLightProfile.m; path = dConnectDeviceSphero/Classes/DPSpheroLightProfile.m; sourceTree = SOURCE_ROOT; };
 		AB1061B719809C4F0005BB3F /* DPSpheroDeviceOrientationProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DPSpheroDeviceOrientationProfile.h; path = dConnectDeviceSphero/Classes/DPSpheroDeviceOrientationProfile.h; sourceTree = SOURCE_ROOT; };
 		AB1061B819809C4F0005BB3F /* DPSpheroDeviceOrientationProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DPSpheroDeviceOrientationProfile.m; path = dConnectDeviceSphero/Classes/DPSpheroDeviceOrientationProfile.m; sourceTree = SOURCE_ROOT; };
+		AB3520AF1BACDE6A0010FF55 /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
+		AB3520B01BACDE6A0010FF55 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		AB39FEBD1B4E19C000A8139E /* RobotKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = RobotKit.framework; sourceTree = "<group>"; };
 		AB39FED81B4E253F00A8139E /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
 		AB6ABD6819AEF657006B3F1D /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -171,7 +172,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AB39FED91B4E253F00A8139E /* libsqlite3.0.dylib in Frameworks */,
 				ABE8C646195903220083D672 /* UIKit.framework in Frameworks */,
 				ABE8C62419581F710083D672 /* CoreFoundation.framework in Frameworks */,
 				ABE8C62819581F710083D672 /* CoreMotion.framework in Frameworks */,
@@ -292,6 +292,8 @@
 		ABE8C5681957FE860083D672 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				AB3520AF1BACDE6A0010FF55 /* libsqlite3.0.tbd */,
+				AB3520B01BACDE6A0010FF55 /* libsqlite3.tbd */,
 				AB39FED81B4E253F00A8139E /* libsqlite3.0.dylib */,
 				AB39FEBD1B4E19C000A8139E /* RobotKit.framework */,
 				6611B39019C2D19D0034893E /* DCMDevicePluginSDK.framework */,
@@ -760,7 +762,7 @@
 				PRODUCT_NAME = dConnectDeviceSphero;
 				PROVISIONING_PROFILE = "";
 				SKIP_INSTALL = YES;
-				VALID_ARCHS = "arm64 armv7 armv7s x86_64";
+				VALID_ARCHS = "armv7s armv7 arm64 x86_64";
 			};
 			name = Debug;
 		};
@@ -780,7 +782,7 @@
 				PRODUCT_NAME = dConnectDeviceSphero;
 				PROVISIONING_PROFILE = "";
 				SKIP_INSTALL = YES;
-				VALID_ARCHS = "arm64 armv7 armv7s x86_64";
+				VALID_ARCHS = "armv7s armv7 arm64 x86_64";
 			};
 			name = Release;
 		};

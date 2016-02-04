@@ -478,6 +478,51 @@ pushlinkAuthenticationSuccessSelector:(SEL)pushlinkAuthenticationSuccessSelector
 }
 
 
+- (void)checkColor:(double)dBlightness blueValue:(unsigned int)blueValue greenValue:(unsigned int)greenValue redValue:(unsigned int)redValue color:(NSString *)color myBlightnessPointer:(int *)myBlightnessPointer uicolorPointer:(NSString **)uicolorPointer
+{
+    NSScanner *scan;
+    NSString *blueString;
+    NSString *greenString;
+    NSString *redString;
+    if (color) {
+        if (color.length != 6) {
+            _bridgeConnectState = STATE_ERROR_INVALID_COLOR;
+            return;
+        }
+        
+        redString = [color substringWithRange:NSMakeRange(0, 2)];
+        greenString = [color substringWithRange:NSMakeRange(2, 2)];
+        blueString = [color substringWithRange:NSMakeRange(4, 2)];
+        scan = [NSScanner scannerWithString:redString];
+        if (![scan scanHexInt:&redValue]) {
+            _bridgeConnectState = STATE_ERROR_INVALID_COLOR;
+            return;
+        }
+        scan = [NSScanner scannerWithString:greenString];
+        if (![scan scanHexInt:&greenValue]) {
+            _bridgeConnectState = STATE_ERROR_INVALID_COLOR;
+            return;
+        }
+        scan = [NSScanner scannerWithString:blueString];
+        if (![scan scanHexInt:&blueValue]) {
+            _bridgeConnectState = STATE_ERROR_INVALID_COLOR;
+            return;
+        }
+        
+        redValue = (unsigned int)round(redValue * dBlightness);
+        greenValue = (unsigned int)round(greenValue * dBlightness);
+        blueValue = (unsigned int)round(blueValue * dBlightness);
+    }else{
+        redValue = (unsigned int)round(255 * dBlightness);
+        greenValue = (unsigned int)round(255 * dBlightness);
+        blueValue = (unsigned int)round(255 * dBlightness);
+    }
+    
+    *myBlightnessPointer = MAX(redValue, greenValue);
+    *myBlightnessPointer = MAX(*myBlightnessPointer, blueValue);
+    *uicolorPointer = [NSString stringWithFormat:@"%02X%02X%02X",redValue, greenValue, blueValue];
+}
+
 //エラーの場合、エラー情報をresponseに設定しnilをreturn
 - (PHLightState*) getLightStateIsOn:(BOOL)isOn
                      brightness:(double)brightness
@@ -489,11 +534,6 @@ pushlinkAuthenticationSuccessSelector:(SEL)pushlinkAuthenticationSuccessSelector
 
     if (isOn) {
         double dBlightness = 0;
-        unsigned int redValue, greenValue, blueValue;
-        NSString *redString = nil;
-        NSString *greenString = nil;
-        NSString *blueString = nil;
-        NSScanner *scan = nil;
 
         if (brightness == DBL_MIN ||
             (brightness != DBL_MIN && brightness > 1.0) ||
@@ -502,44 +542,11 @@ pushlinkAuthenticationSuccessSelector:(SEL)pushlinkAuthenticationSuccessSelector
         } else {
             dBlightness = brightness;
         }
+        unsigned int redValue, greenValue, blueValue;
 
-        if (color) {
-            if (color.length != 6) {
-                _bridgeConnectState = STATE_ERROR_INVALID_COLOR;
-                return nil;
-            }
-
-            redString = [color substringWithRange:NSMakeRange(0, 2)];
-            greenString = [color substringWithRange:NSMakeRange(2, 2)];
-            blueString = [color substringWithRange:NSMakeRange(4, 2)];
-            scan = [NSScanner scannerWithString:redString];
-            if (![scan scanHexInt:&redValue]) {
-                _bridgeConnectState = STATE_ERROR_INVALID_COLOR;
-                return nil;
-            }
-            scan = [NSScanner scannerWithString:greenString];
-            if (![scan scanHexInt:&greenValue]) {
-                _bridgeConnectState = STATE_ERROR_INVALID_COLOR;
-                return nil;
-            }
-            scan = [NSScanner scannerWithString:blueString];
-            if (![scan scanHexInt:&blueValue]) {
-                _bridgeConnectState = STATE_ERROR_INVALID_COLOR;
-                return nil;
-            }
-
-            redValue = (unsigned int)round(redValue * dBlightness);
-            greenValue = (unsigned int)round(greenValue * dBlightness);
-            blueValue = (unsigned int)round(blueValue * dBlightness);
-        }else{
-            redValue = (unsigned int)round(255 * dBlightness);
-            greenValue = (unsigned int)round(255 * dBlightness);
-            blueValue = (unsigned int)round(255 * dBlightness);
-        }
-
-        int myBlightness = MAX(redValue, greenValue);
-        myBlightness = MAX(myBlightness, blueValue);
-        NSString *uicolor = [NSString stringWithFormat:@"%02X%02X%02X",redValue, greenValue, blueValue];
+        int myBlightness;
+        NSString *uicolor;
+        [self checkColor:dBlightness blueValue:blueValue greenValue:greenValue redValue:redValue color:color myBlightnessPointer:&myBlightness uicolorPointer:&uicolor];
 
         CGPoint xyPoint = [self convRgbToXy:uicolor];
         if (xyPoint.x != FLT_MIN && xyPoint.y != FLT_MIN) {
@@ -590,8 +597,24 @@ pushlinkAuthenticationSuccessSelector:(SEL)pushlinkAuthenticationSuccessSelector
  */
 -(BOOL)changeLightNameWithLightId:(NSString *)lightId
                              name:(NSString *)name
+                            color:(NSString *)color
+                       brightness:(double)brightness
                        completion:(void(^)())completion
 {
+    unsigned int redValue, greenValue, blueValue;
+
+    int myBlightness;
+    NSString *uicolor;
+    [self checkColor:brightness blueValue:blueValue greenValue:greenValue
+            redValue:redValue color:color myBlightnessPointer:&myBlightness uicolorPointer:&uicolor];
+
+    if (!uicolor) {
+        [self setCompletionWithResponseCompletion:completion
+                                           errors:[NSArray array]
+                                       errorState:STATE_ERROR_INVALID_COLOR];
+        return NO;
+    }
+    
     PHBridgeSendAPI *bridgeSendAPI = [[PHBridgeSendAPI alloc] init];
     PHBridgeResourcesCache *cache = [PHBridgeResourcesReader readBridgeResourcesCache];
     //メインスレッドで動作させる
