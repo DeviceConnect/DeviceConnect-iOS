@@ -73,6 +73,16 @@
                       color:(NSString*)color
                    flashing:(NSArray*)flashing
 {
+    int myBlightness;
+    NSString *uicolor;
+    unsigned int redValue, greenValue, blueValue;
+    [self checkColor:[brightness doubleValue] blueValue:blueValue greenValue:greenValue
+            redValue:redValue color:color myBlightnessPointer:&myBlightness uicolorPointer:&uicolor];
+    
+    if (!uicolor && color) {
+        [response setErrorToInvalidRequestParameterWithMessage:@"Invalid Color String"];
+        return YES;
+    }
     return [self sendLightIRRequestWithServiceId:serviceId
                                          lightId:lightId
                                           method:@"POST"
@@ -114,6 +124,7 @@
         [response setErrorToInvalidRequestParameterWithMessage:@"Invalid lightId"];
         return send;
     }
+
     for (DPIRKitRESTfulRequest *req in requests) {
         NSString *uri = [NSString stringWithFormat:@"/%@",[request profile]];
         if ([req.uri isEqualToString:uri] && [req.method isEqualToString:method]
@@ -124,6 +135,47 @@
         }
     }
     return send;
+}
+
+- (void)checkColor:(double)dBlightness blueValue:(unsigned int)blueValue greenValue:(unsigned int)greenValue redValue:(unsigned int)redValue color:(NSString *)color myBlightnessPointer:(int *)myBlightnessPointer uicolorPointer:(NSString **)uicolorPointer
+{
+    NSScanner *scan;
+    NSString *blueString;
+    NSString *greenString;
+    NSString *redString;
+    if (color) {
+        if (color.length != 6) {
+            return;
+        }
+        
+        redString = [color substringWithRange:NSMakeRange(0, 2)];
+        greenString = [color substringWithRange:NSMakeRange(2, 2)];
+        blueString = [color substringWithRange:NSMakeRange(4, 2)];
+        scan = [NSScanner scannerWithString:redString];
+        if (![scan scanHexInt:&redValue]) {
+            return;
+        }
+        scan = [NSScanner scannerWithString:greenString];
+        if (![scan scanHexInt:&greenValue]) {
+            return;
+        }
+        scan = [NSScanner scannerWithString:blueString];
+        if (![scan scanHexInt:&blueValue]) {
+            return;
+        }
+        
+        redValue = (unsigned int)round(redValue * dBlightness);
+        greenValue = (unsigned int)round(greenValue * dBlightness);
+        blueValue = (unsigned int)round(blueValue * dBlightness);
+    }else{
+        redValue = (unsigned int)round(255 * dBlightness);
+        greenValue = (unsigned int)round(255 * dBlightness);
+        blueValue = (unsigned int)round(255 * dBlightness);
+    }
+    
+    *myBlightnessPointer = MAX(redValue, greenValue);
+    *myBlightnessPointer = MAX(*myBlightnessPointer, blueValue);
+    *uicolorPointer = [NSString stringWithFormat:@"%02X%02X%02X",redValue, greenValue, blueValue];
 }
 
 @end
