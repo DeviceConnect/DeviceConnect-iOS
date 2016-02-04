@@ -27,7 +27,7 @@
     self = [super init];
     
     if (self) {
-        self.pluginName = @"Sphero 2.0.0";
+        self.pluginName = @"Sphero (Device Connect Device Plug-in)";
 
         Class key = [self class];
         [[DConnectEventManager sharedManagerForClass:key]

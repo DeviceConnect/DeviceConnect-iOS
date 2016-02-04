@@ -38,7 +38,7 @@ static NSString *const VERSION = @"1.0.0";
     
     self = [super init];
     if (self) {
-        self.pluginName = [NSString stringWithFormat:@"AllJoyn %@", VERSION];
+        self.pluginName = @"AllJoyn (Device Connect Device Plug-in)";
         
         _handler = [DPAllJoynHandler new];
         
