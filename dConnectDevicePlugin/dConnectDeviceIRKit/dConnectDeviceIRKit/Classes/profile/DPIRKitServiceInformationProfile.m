@@ -59,9 +59,11 @@ static NSUInteger const DPIRKitSupportCount = 5;
     NSString *attribute = [request attribute];
     NSArray *virtuals = [[DPIRKitDBManager sharedInstance] queryVirtualDevice:serviceId];
     if (!interface && !attribute) {
+        DConnectMessage *connect = [DConnectMessage message];
+        [DConnectServiceInformationProfile setWiFiState:DConnectServiceInformationProfileConnectStateOn
+                                                 target:connect];
+        [DConnectServiceInformationProfile setConnect:connect target:response];
         if (virtuals.count == 1) {
-            DConnectMessage *connect = [DConnectMessage message];
-            [DConnectServiceInformationProfile setConnect:connect target:response];
             DPIRKitVirtualDevice *device = virtuals[0];
             if ([device.categoryName isEqualToString:@"ライト"]) {
                 DConnectArray *supports = [DConnectArray array];
