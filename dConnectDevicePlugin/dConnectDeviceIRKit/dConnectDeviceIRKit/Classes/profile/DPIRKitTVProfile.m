@@ -146,7 +146,8 @@
                                response:(DConnectResponseMessage *)response
 {
     BOOL send = YES;
-    NSArray *requests = [[DPIRKitDBManager sharedInstance] queryRESTfulRequestByServiceId:serviceId];
+    NSArray *requests = [[DPIRKitDBManager sharedInstance] queryRESTfulRequestByServiceId:serviceId
+                                                                                  profile:@"/tv"];
     if (requests.count == 0) {
         [response setErrorToNotSupportProfile];
         return send;
@@ -155,7 +156,7 @@
         if ([req.uri isEqualToString:uri] && [req.method isEqualToString:method] && req.ir) {
             send = [_plugin sendIRWithServiceId:serviceId message:req.ir response:response];
         } else {
-            [response setErrorToIllegalServerStateWithMessage:@"IR not registered"];
+            [response setErrorToInvalidRequestParameterWithMessage:@"IR is not registered for that request"];
         }
     }
     return send;

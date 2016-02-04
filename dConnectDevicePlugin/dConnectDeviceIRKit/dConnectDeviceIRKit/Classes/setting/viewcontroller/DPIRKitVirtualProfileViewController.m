@@ -52,7 +52,8 @@
     _virtualProfileList.dataSource = self;
     [_virtualProfileList registerClass:[UITableViewCell class] forCellReuseIdentifier:@"cellVirtualProfile"];
 
-    _virtualRequests = [[DPIRKitDBManager sharedInstance] queryRESTfulRequestByServiceId:_virtualDevice.serviceId];
+    _virtualRequests = [[DPIRKitDBManager sharedInstance] queryRESTfulRequestByServiceId:_virtualDevice.serviceId
+                                                                                 profile:nil];
     [_virtualProfileList reloadData];
     if ([_virtualProfileList respondsToSelector:@selector(setSeparatorInset:)]) {
         [_virtualProfileList setSeparatorInset:UIEdgeInsetsZero];
