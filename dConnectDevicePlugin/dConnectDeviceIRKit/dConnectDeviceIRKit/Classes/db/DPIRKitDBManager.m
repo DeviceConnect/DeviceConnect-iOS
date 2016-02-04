@@ -32,10 +32,26 @@ NSString *const DPIRKitLightProfileMethods[] = {@"POST", @"DELETE"};
 NSUInteger const DPIRKitLightProfileCount = 2;
 // TV ON/OFF チャンネルUp/Down 音量Up/Down 放送電波切り替え(地デジ/BS/CS)
 NSString *const DPIRKitTVProfileNames[] = {@"TV電源ON", @"TV電源OFF", @"チャンネル+",
-                                         @"チャンネル-", @"音量+", @"音量-",
+                                         @"チャンネル-",@"1", @"2",
+                                        @"3",@"4", @"5",
+                                        @"6",@"7", @"8",
+                                        @"9",@"10", @"11",
+                                        @"12",@"音量+", @"音量-",
                                          @"地デジ", @"BS", @"CS"};
 NSString *const DPIRKitTVProfileURIs[] = {@"/tv", @"/tv", @"/tv/channel?control=next",
                                         @"/tv/channel?control=previous",
+                                        @"/tv/channel?tuning=1",
+                                        @"/tv/channel?tuning=2",
+                                        @"/tv/channel?tuning=3",
+                                        @"/tv/channel?tuning=4",
+                                        @"/tv/channel?tuning=5",
+                                        @"/tv/channel?tuning=6",
+                                        @"/tv/channel?tuning=7",
+                                        @"/tv/channel?tuning=8",
+                                        @"/tv/channel?tuning=9",
+                                        @"/tv/channel?tuning=10",
+                                        @"/tv/channel?tuning=11",
+                                        @"/tv/channel?tuning=12",
                                         @"/tv/volume?control=up",
                                         @"/tv/volume?control=down",
                                         @"/tv/broadcastwave?select=DTV",
@@ -43,8 +59,12 @@ NSString *const DPIRKitTVProfileURIs[] = {@"/tv", @"/tv", @"/tv/channel?control=
                                         @"/tv/broadcastwave?select=CS"};
 NSString *const DPIRKitTVProfileMethods[] = {@"PUT", @"DELETE", @"PUT",
                                             @"PUT", @"PUT", @"PUT",
+                                            @"PUT", @"PUT", @"PUT",
+                                            @"PUT", @"PUT", @"PUT",
+                                            @"PUT", @"PUT", @"PUT",
+                                            @"PUT", @"PUT", @"PUT",
                                             @"PUT", @"PUT", @"PUT"};
-NSUInteger const DPIRKitTVProfileCount = 9;
+NSUInteger const DPIRKitTVProfileCount = 21;
 
 
 @interface DPIRKitDBManager()
