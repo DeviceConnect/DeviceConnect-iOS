@@ -891,7 +891,7 @@ didReceiveGetSeekRequest:(DConnectRequestMessage *)request
          else {
              UIViewController *rootView = [UIApplication sharedApplication].keyWindow.rootViewController;
              dispatch_async(dispatch_get_main_queue(), ^{
-                 self.viewController = [self viewControllerWithURL:nil];
+                 self.viewController = [self viewControllerWithURL:movieURL];
                  block();
                  [rootView presentMoviePlayerViewControllerAnimated:_viewController];
              });
