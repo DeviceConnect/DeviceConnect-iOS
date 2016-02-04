@@ -329,7 +329,7 @@ static float const DPThetaZFar = 1000.f;
 - (void)setSphereRadius:(float)radius
 {
     if (radius != shell.radius
-        && (DPThetaZNear < radius && DPThetaZFar < radius)) {
+        && (DPThetaZNear < radius && DPThetaZFar > radius)) {
         shell = [[DPThetaUVSphere alloc] init:radius divide:DPThetaShellDivides];
     }
 }
