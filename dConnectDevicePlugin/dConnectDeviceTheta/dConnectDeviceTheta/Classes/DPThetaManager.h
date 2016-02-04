@@ -202,4 +202,8 @@ typedef void (^DPThetaOnStatusChangeCallback)(PtpIpObjectInfo *object, NSString 
 +(BOOL)existDigitWithString:(NSString*)digit;
 // 少数かどうかを判定する。
 +(BOOL)existDecimalWithString:(NSString*)decimal;
-@end
+
++(BOOL)existBOOL:(NSString*)isBool;
+
++ (NSString*)omitParametersToUri:(NSString*)uri;
++ (NSString*)omitParametersFromUri:(NSString*)uri;@end

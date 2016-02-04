@@ -22,6 +22,7 @@ NSString *const DConnectMediaStreamRecordingProfileAttrOptions = @"options";
 NSString *const DConnectMediaStreamRecordingProfileAttrOnPhoto = @"onphoto";
 NSString *const DConnectMediaStreamRecordingProfileAttrOnRecordingChange = @"onrecordingchange";
 NSString *const DConnectMediaStreamRecordingProfileAttrOnDataAvailable = @"ondataavailable";
+NSString *const DConnectMediaStreamRecordingProfileAttrPreview = @"preview";
 NSString *const DConnectMediaStreamRecordingProfileParamRecorders = @"recorders";
 NSString *const DConnectMediaStreamRecordingProfileParamId = @"id";
 NSString *const DConnectMediaStreamRecordingProfileParamName = @"name";
@@ -225,6 +226,13 @@ NSString *const DConnectMediaStreamRecordingProfileRecordingStateWarning = @"war
             send = [_delegate profile:self didReceivePutOnDataAvailableRequest:request response:response
                              serviceId:serviceId sessionKey:sessionKey];
         }
+    } else if ([attribute isEqualToString:DConnectMediaStreamRecordingProfileAttrPreview]) {
+        if ([self hasMethod:@selector(profile:didReceivePutPreviewRequest:response:serviceId:)
+                   response:response])
+        {
+            send = [_delegate profile:self didReceivePutPreviewRequest:request response:response
+                            serviceId:serviceId];
+        }
     } else {
         [response setErrorToNotSupportProfile];
     }
@@ -259,6 +267,13 @@ NSString *const DConnectMediaStreamRecordingProfileRecordingStateWarning = @"war
         {
             send = [_delegate profile:self didReceiveDeleteOnDataAvailableRequest:request response:response
                              serviceId:serviceId sessionKey:sessionKey];
+        }
+    } else if ([attribute isEqualToString:DConnectMediaStreamRecordingProfileAttrPreview]) {
+        if ([self hasMethod:@selector(profile:didReceiveDeletePreviewRequest:response:serviceId:)
+                   response:response])
+        {
+            send = [_delegate profile:self didReceiveDeletePreviewRequest:request response:response
+                            serviceId:serviceId];
         }
     } else {
         [response setErrorToNotSupportProfile];
