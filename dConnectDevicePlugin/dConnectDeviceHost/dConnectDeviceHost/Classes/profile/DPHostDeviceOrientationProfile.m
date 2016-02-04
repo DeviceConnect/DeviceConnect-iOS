@@ -18,6 +18,9 @@
 // CMDeviceMotionオブジェクトが配送されるインターバル（ミリ秒）
 static const double MotionDeviceIntervalMilliSec = 100;
 
+// 地球の重力加速度
+static const double EarthGravitationalAcceleration = 9.81;
+
 @interface DPHostDeviceOrientationProfile ()
 
 /// @brief イベントマネージャ
@@ -83,18 +86,27 @@ static const double MotionDeviceIntervalMilliSec = 100;
     // 加速度系
     if (_motionManager.accelerometerAvailable) {
         DConnectMessage *acceleration = [DConnectMessage message];
-        [DConnectDeviceOrientationProfile setX:motion.userAcceleration.x target:acceleration];
-        [DConnectDeviceOrientationProfile setY:motion.userAcceleration.y target:acceleration];
-        [DConnectDeviceOrientationProfile setZ:motion.userAcceleration.z target:acceleration];
+        [DConnectDeviceOrientationProfile
+         setX:motion.userAcceleration.x*EarthGravitationalAcceleration
+         target:acceleration];
+        [DConnectDeviceOrientationProfile
+         setY:motion.userAcceleration.y*EarthGravitationalAcceleration
+         target:acceleration];
+        [DConnectDeviceOrientationProfile
+         setZ:motion.userAcceleration.z*EarthGravitationalAcceleration
+         target:acceleration];
         [DConnectDeviceOrientationProfile setAcceleration:acceleration target:orientation];
         
         DConnectMessage *accelerationIncludingGravity = [DConnectMessage message];
-        [DConnectDeviceOrientationProfile setX:motion.userAcceleration.x+motion.gravity.x
-                                        target:accelerationIncludingGravity];
-        [DConnectDeviceOrientationProfile setY:motion.userAcceleration.y+motion.gravity.y
-                                        target:accelerationIncludingGravity];
-        [DConnectDeviceOrientationProfile setZ:motion.userAcceleration.z+motion.gravity.z
-                                        target:accelerationIncludingGravity];
+        [DConnectDeviceOrientationProfile
+         setX:(motion.userAcceleration.x+motion.gravity.x)*EarthGravitationalAcceleration
+         target:accelerationIncludingGravity];
+        [DConnectDeviceOrientationProfile
+         setY:(motion.userAcceleration.y+motion.gravity.y)*EarthGravitationalAcceleration
+         target:accelerationIncludingGravity];
+        [DConnectDeviceOrientationProfile
+         setZ:(motion.userAcceleration.z+motion.gravity.z)*EarthGravitationalAcceleration
+         target:accelerationIncludingGravity];
         [DConnectDeviceOrientationProfile setAccelerationIncludingGravity:accelerationIncludingGravity
                                                                    target:orientation];
     }
