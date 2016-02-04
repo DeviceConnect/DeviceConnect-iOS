@@ -23,6 +23,7 @@ NSString *const DConnectSystemProfileParamPlugins = @"plugins";
 NSString *const DConnectSystemProfileParamPluginId = @"pluginId";
 NSString *const DConnectSystemProfileParamId = @"id";
 NSString *const DConnectSystemProfileParamName = @"name";
+NSString *const DConnectSystemProfileParamVersion = @"version";
 
 @interface DConnectSystemProfile()
 
