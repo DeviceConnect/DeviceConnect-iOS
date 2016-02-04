@@ -12,6 +12,7 @@
 
 static NSString * const DCMRegexDecimalPoint = @"^[-+]?([0-9]*)?(\\.)?([0-9]*)?$";
 static NSString * const DCMRegexDigit = @"^([0-9]*)?$";
+
 NSString *const DConnectLightProfileName = @"light";
 NSString *const DConnectLightProfileInterfaceGroup = @"group";
 NSString *const DConnectLightProfileAttrCreate = @"create";
@@ -448,6 +449,41 @@ didReceivePostLightGroupCreateRequest:request
     }
     
     return send;
+}
+
+
+#pragma mark - Setter
++ (void) setLights:(DConnectArray *)lights target:(DConnectMessage *)message {
+    [message setArray:lights forKey:DConnectLightProfileParamLights];
+}
+
++ (void) setLightId:(NSString*)lightId target:(DConnectMessage *)message {
+    [message setString:lightId forKey:DConnectLightProfileParamLightId];
+}
+
++ (void) setLightName:(NSString*)lightName target:(DConnectMessage *)message {
+    [message setString:lightName forKey:DConnectLightProfileParamName];
+}
+
++ (void) setLightOn:(BOOL)isOn target:(DConnectMessage *)message {
+    [message setBool:isOn forKey:DConnectLightProfileParamOn];
+}
+
++ (void) setLightConfig:(NSString*)config target:(DConnectMessage *)message {
+    [message setString:config forKey:DConnectLightProfileParamConfig];
+}
+
+
++ (void) setLightGroups:(DConnectArray *)lightGroups target:(DConnectMessage *)message {
+    [message setArray:lightGroups forKey:DConnectLightProfileParamLightGroups];
+}
+
++ (void) setLightGroupId:(NSString*)lightGroupId target:(DConnectMessage *)message {
+    [message setString:lightGroupId forKey:DConnectLightProfileParamGroupId];
+}
+
++ (void) setLightGroupName:(NSString*)lightGroupName target:(DConnectMessage *)message {
+    [message setString:lightGroupName forKey:DConnectLightProfileParamName];
 }
 
 

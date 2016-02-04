@@ -8,6 +8,7 @@
 //
 
 #import "DeviceTestPlugin.h"
+#import "TestLightProfile.h"
 #import "TestBatteryProfile.h"
 #import "TestConnectProfile.h"
 #import "TestServiceDiscoveryProfile.h"
@@ -44,6 +45,7 @@
         DConnectServiceInformationProfile *sip = [DConnectServiceInformationProfile new];
         sip.dataSource = self;
 
+        [self addProfile:[[TestLightProfile alloc] initWithDevicePlugin:self]];
         [self addProfile:[[TestBatteryProfile alloc] initWithDevicePlugin:self]];
         [self addProfile:[[TestConnectProfile alloc] initWithDevicePlugin:self]];
         [self addProfile:[[TestDeviceOrientationProfile alloc] initWithDevicePlugin:self]];

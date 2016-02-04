@@ -54,14 +54,15 @@
             
             //ライトの状態をメッセージにセットする（LightID,名前,点灯状態）
             DConnectMessage *led = [DConnectMessage new];
-            [led setString:light.identifier forKey:DConnectLightProfileParamLightId];
-            [led setString:light.name forKey:DConnectLightProfileParamName];
-            
-            [led setBool:[light.lightState.on boolValue] forKey:DConnectLightProfileParamOn];
+            [DConnectLightProfile setLightId:light.identifier target:led];
+            [DConnectLightProfile setLightName:light.name target:led];
+            [DConnectLightProfile setLightOn:[light.lightState.on boolValue] target:led];
+            [DConnectLightProfile setLightConfig:@"" target:led];
+
             [lights addMessage:led];
         }
         [response setResult:DConnectMessageResultTypeOk];
-        [response setArray:lights forKey:DConnectLightProfileParamLights];
+        [DConnectLightProfile setLights:lights target:response];
         [[DPHueManager sharedManager] deallocPHNotificationManagerWithReceiver:_self];
         [[DPHueManager sharedManager] deallocHueSDK];
         [[DConnectManager sharedManager] sendResponse:response];
@@ -160,11 +161,11 @@ didReceiveDeleteLightRequest:(DConnectRequestMessage *)request
         for (PHGroup *group in groupList.allValues) {
             
             DConnectMessage *groupResponse = [DConnectMessage new];
-            [groupResponse setString:group.identifier forKey:DConnectLightProfileParamGroupId];
+            [DConnectLightProfile setLightGroupId:group.identifier target:groupResponse];
             if (group.name) {
-                [groupResponse setString:group.name forKey:DConnectLightProfileParamName];
+                [DConnectLightProfile setLightGroupName:group.name target:groupResponse];
             } else {
-                [groupResponse setString:@"" forKey:DConnectLightProfileParamName];
+                [DConnectLightProfile setLightGroupName:@"" target:groupResponse];
             }
             //キャッシュにあるライトの一覧からライトを取り出す
             NSArray *lightIds = group.lightIdentifiers;
@@ -175,21 +176,21 @@ didReceiveDeleteLightRequest:(DConnectRequestMessage *)request
                     if ([lightId isEqualToString:light.identifier]) {
                         
                         DConnectMessage *led = [DConnectMessage new];
-                        [led setString:light.identifier forKey:DConnectLightProfileParamLightId];
-                        [led setString:light.name forKey:DConnectLightProfileParamName];
                         
-                        [led setBool:[light.lightState.on boolValue] forKey:DConnectLightProfileParamOn];
+                        [DConnectLightProfile setLightId:light.identifier target:led];
+                        [DConnectLightProfile setLightName:light.name target:led];
+                        [DConnectLightProfile setLightOn:[light.lightState.on boolValue] target:led];
+                        [DConnectLightProfile setLightConfig:@"" target:led];
                         [lights addMessage:led];
                         
                     }
                 }
             }
-            
-            [groupResponse setArray:lights forKey:DConnectLightProfileParamLights];
+            [DConnectLightProfile setLights:lights target:groupResponse];
             [groups addMessage:groupResponse];
         }
         [response setResult:DConnectMessageResultTypeOk];
-        [response setArray:groups forKey:DConnectLightProfileParamLightGroups];
+        [DConnectLightProfile setLightGroups:groups target:response];
         [[DPHueManager sharedManager] deallocPHNotificationManagerWithReceiver:_self];
         [[DPHueManager sharedManager] deallocHueSDK];
         [[DConnectManager sharedManager] sendResponse:response];
@@ -270,7 +271,7 @@ didReceiveDeleteLightRequest:(DConnectRequestMessage *)request
                                                                    groupName:groupName
                                                                   completion:^(NSString* groupId) {
         if (groupId) {
-            [response setString:groupId forKey:DConnectLightProfileParamGroupId];
+            [DConnectLightProfile setLightGroupId:groupId target:response];
             [DPHueManager sharedManager].bridgeConnectState = STATE_CONNECT;
         } else {
             [DPHueManager sharedManager].bridgeConnectState = STATE_ERROR_CREATE_FAIL_GROUP;

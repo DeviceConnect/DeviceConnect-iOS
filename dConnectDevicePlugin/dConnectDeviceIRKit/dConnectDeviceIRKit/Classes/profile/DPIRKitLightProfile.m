@@ -51,14 +51,14 @@
     [response setResult:DConnectMessageResultTypeOk];
     
     //全体の色を変えるためのID
-    [virtualLight setString:@"1" forKey:DConnectLightProfileParamLightId];
-    [virtualLight setString:@"照明" forKey:DConnectLightProfileParamName];
-    
-    [virtualLight setBool:NO forKey:DConnectLightProfileParamOn];
-    [virtualLight setString:@"" forKey:DConnectLightProfileParamConfig];
+    [DConnectLightProfile setLightId:@"1" target:virtualLight];
+    [DConnectLightProfile setLightName:@"照明" target:virtualLight];
+    [DConnectLightProfile setLightOn:NO target:virtualLight];
+    [DConnectLightProfile setLightConfig:@"" target:virtualLight];
+
     [lights addMessage:virtualLight];
     
-    [response setArray:lights forKey:DConnectLightProfileParamLights];
+    [DConnectLightProfile setLights:lights target:response];
     return YES;
 }
 

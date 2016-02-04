@@ -45,20 +45,19 @@ NSString *const SpheroCalibrationName = @"Sphero CalibrationLED";
     [response setResult:DConnectMessageResultTypeOk];
     
     //全体の色を変えるためのID
-    [led setString:SpheroLED forKey:DConnectLightProfileParamLightId];
-    [led setString:SpheroLEDName forKey:DConnectLightProfileParamName];
-    
-    [led setBool:[DPSpheroManager sharedManager].isLEDOn forKey:DConnectLightProfileParamOn];
-    [led setString:@"" forKey:DConnectLightProfileParamConfig];
+    [DConnectLightProfile setLightId:SpheroLED target:led];
+    [DConnectLightProfile setLightName:SpheroLEDName target:led];
+    [DConnectLightProfile setLightOn:[DPSpheroManager sharedManager].isLEDOn target:led];
+    [DConnectLightProfile setLightConfig:@"" target:led];
     [lights addMessage:led];
     //CalibrationのライトをつけるためのID(ON/OFFのみ)
-    [calibration setString:SpheroCalibration forKey:DConnectLightProfileParamLightId];
-    [calibration setString:SpheroCalibrationName forKey:DConnectLightProfileParamName];
-    [calibration setBool:[DPSpheroManager sharedManager].calibrationLightBright>0 forKey:DConnectLightProfileParamOn];
-    [calibration setString:@"" forKey:DConnectLightProfileParamConfig];
+    [DConnectLightProfile setLightId:SpheroCalibration target:calibration];
+    [DConnectLightProfile setLightName:SpheroCalibrationName target:calibration];
+    [DConnectLightProfile setLightOn:[DPSpheroManager sharedManager].calibrationLightBright>0 target:calibration];
+    [DConnectLightProfile setLightConfig:@"" target:calibration];
     [lights addMessage:calibration];
     
-    [response setArray:lights forKey:DConnectLightProfileParamLights];
+    [DConnectLightProfile setLights:lights target:response];
     
     return YES;
 }
