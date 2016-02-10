@@ -11,28 +11,56 @@
 #import "HTTPAsyncFileResponse.h"
 #import "WebSocket.h"
 #import "HTTPLogging.h"
+#import "WebSocket.h"
+#import "HTTPMessage.h"
+#import "DConnectMessage.h"
 
 #if ! __has_feature(objc_arc)
 #warning This file must be compiled with ARC. Use -fobjc-arc flag (or convert project to ARC).
 #endif
 
+// Does ARC support support GCD objects?
+// It does if the minimum deployment target is iOS 6+ or Mac OS X 8+
+
+#if TARGET_OS_IPHONE
+
+  // Compiling for iOS
+
+  #if __IPHONE_OS_VERSION_MIN_REQUIRED >= 60000 // iOS 6.0 or later
+    #define NEEDS_DISPATCH_RETAIN_RELEASE 0
+  #else                                         // iOS 5.X or earlier
+    #define NEEDS_DISPATCH_RETAIN_RELEASE 1
+  #endif
+
+#else
+
+  // Compiling for Mac OS X
+
+  #if MAC_OS_X_VERSION_MIN_REQUIRED >= 1080     // Mac OS X 10.8 or later
+    #define NEEDS_DISPATCH_RETAIN_RELEASE 0
+  #else
+    #define NEEDS_DISPATCH_RETAIN_RELEASE 1     // Mac OS X 10.7 or earlier
+  #endif
+
+#endif
+
 // Log levels: off, error, warn, info, verbose
 // Other flags: trace
-//static const int httpLogLevel = HTTP_LOG_LEVEL_WARN; // | HTTP_LOG_FLAG_TRACE;
+static const int httpLogLevel = HTTP_LOG_LEVEL_WARN; // | HTTP_LOG_FLAG_TRACE;
 
 // Define chunk size used to read in data for responses
 // This is how much data will be read from disk into RAM at a time
 #if TARGET_OS_IPHONE
-  #define READ_CHUNKSIZE  (1024 * 256)
+  #define READ_CHUNKSIZE  (1024 * 128)
 #else
   #define READ_CHUNKSIZE  (1024 * 512)
 #endif
 
 // Define chunk size used to read in POST upload data
 #if TARGET_OS_IPHONE
-  #define POST_CHUNKSIZE  (1024 * 256)
+  #define POST_CHUNKSIZE  (1024 * 32)
 #else
-  #define POST_CHUNKSIZE  (1024 * 512)
+  #define POST_CHUNKSIZE  (1024 * 128)
 #endif
 
 // Define the various timeouts (in seconds) for various parts of the HTTP process
@@ -86,6 +114,27 @@
 - (void)startReadingRequest;
 - (void)sendResponseHeadersAndBody;
 @end
+@interface HTTPConnection()
+/*! @brief Websocketの処理を行うキュー.
+ */
+@property (nonatomic) dispatch_queue_t websocketQueue;
+
+/*! @brief ソケット.
+ */
+//@property (nonatomic) GCDAsyncSocket *asyncSocket;
+
+/*! @brief HTTPリクエスト.
+ */
+@property (nonatomic) HTTPMessage *request;
+
+/*! @brief websocketの一覧.
+ */
+@property (nonatomic) NSMutableArray *websocketList;
+
+/*! @brief websocketとsessionKeyの対応表.
+ */
+@property (nonatomic) NSMutableDictionary *websocketDic;
+@end
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark -
@@ -108,6 +157,7 @@ static NSMutableArray *recentNonces;
 		// Initialize class variables
 		recentNonceQueue = dispatch_queue_create("HTTPConnection-Nonce", NULL);
 		recentNonces = [[NSMutableArray alloc] initWithCapacity:5];
+
 	});
 }
 
@@ -182,7 +232,7 @@ static NSMutableArray *recentNonces;
 		if (aConfig.queue)
 		{
 			connectionQueue = aConfig.queue;
-			#if !OS_OBJECT_USE_OBJC
+			#if NEEDS_DISPATCH_RETAIN_RELEASE
 			dispatch_retain(connectionQueue);
 			#endif
 		}
@@ -190,7 +240,17 @@ static NSMutableArray *recentNonces;
 		{
 			connectionQueue = dispatch_queue_create("HTTPConnection", NULL);
 		}
-		
+        self.request = [[HTTPMessage alloc] initEmptyRequest];
+        self.websocketQueue = dispatch_queue_create("WebSocketServer", NULL);
+        
+        self.websocketList = [NSMutableArray array];
+        self.websocketDic = [NSMutableDictionary dictionary];
+        if ([self isUseSSL]) {
+            NSDictionary *settings = [self createSSLConfiguration];
+            if (settings) {
+                [asyncSocket startTLS:settings];
+            }
+        }
 		// Take over ownership of the socket
 		asyncSocket = newSocket;
 		[asyncSocket setDelegate:self delegateQueue:connectionQueue];
@@ -212,7 +272,36 @@ static NSMutableArray *recentNonces;
 	}
 	return self;
 }
+- (void) stopWebSocket {
+    for (int i = 0; i < self.websocketList.count; i++) {
+        WebSocket *socket = self.websocketList[i];
+        [socket stop];
+    }
+    [self.websocketList removeAllObjects];
+    
+    [self.websocketDic removeAllObjects];
+}
 
+- (void) sendEvent:(NSString *)event forSessionKey:(NSString *)sessionKey {
+    WebSocket *socket = [self.websocketDic objectForKey:sessionKey];
+    if (socket) {
+        [socket sendMessage:event];
+    }
+}
+
+- (BOOL) isUseSSL {
+    return NO;
+}
+
+- (NSDictionary *) createSSLConfiguration {
+    // TODO: SSLの実装
+    return nil;
+}
+
+- (NSInteger)numberOfWebSocket
+{
+    return [self.websocketList count];
+}
 
 /**
  * Standard Deconstructor.
@@ -221,7 +310,7 @@ static NSMutableArray *recentNonces;
 {
 	HTTPLogTrace();
 	
-	#if !OS_OBJECT_USE_OBJC
+	#if NEEDS_DISPATCH_RETAIN_RELEASE
 	dispatch_release(connectionQueue);
 	#endif
 	
@@ -233,6 +322,43 @@ static NSMutableArray *recentNonces;
 		[httpResponse connectionDidClose];
 	}
 }
+
+#pragma mark - WebSocketDelegate Methods -
+
+- (void)webSocketDidOpen:(WebSocket *)webSocket {
+    [self.websocketList addObject:webSocket];
+}
+
+- (void)webSocket:(WebSocket *)webSocket didReceiveMessage:(NSString *)msg {
+    NSData *jsonData = [msg dataUsingEncoding:NSUnicodeStringEncoding];
+    if (jsonData) {
+        // JSONをNSDictionaryに変換する
+        NSError *error = nil;
+        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:jsonData
+                                                            options:NSJSONReadingAllowFragments
+                                                              error:&error];
+        if (!error) {
+            NSString *sessionKey = dic[DConnectMessageSessionKey];
+            if (sessionKey) {
+                [self.websocketDic setObject:webSocket forKey:sessionKey];
+            }
+        }
+    }
+}
+
+- (void)webSocketDidClose:(WebSocket *)webSocket {
+    [self.websocketList removeObject:webSocket];
+    for (id key in [self.websocketDic keyEnumerator]) {
+        WebSocket *socket = [self.websocketDic objectForKey:key];
+        if (webSocket == socket) {
+            [self.websocketDic removeObjectForKey:key];
+            return;
+        }
+    }
+
+}
+
+
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark Method Support
@@ -890,17 +1016,17 @@ static NSMutableArray *recentNonces;
  * This method is called after a full HTTP request has been received.
  * The current request is in the HTTPMessage request variable.
 **/
-- (void)replyToHTTPRequest
+- (void)replyToHTTPRequestWithSocket:(GCDAsyncSocket*)socket
 {
 	HTTPLogTrace();
 	
-//	if (HTTP_LOG_VERBOSE)
-//	{
-//		NSData *tempData = [request messageData];
-//		
-//		NSString *tempStr = [[NSString alloc] initWithData:tempData encoding:NSUTF8StringEncoding];
-//		HTTPLogVerbose(@"%@[%p]: Received HTTP request:\n%@", THIS_FILE, self, tempStr);
-//	}
+	if (HTTP_LOG_VERBOSE)
+	{
+		NSData *tempData = [request messageData];
+		
+		NSString *tempStr = [[NSString alloc] initWithData:tempData encoding:NSUTF8StringEncoding];
+		HTTPLogVerbose(@"%@[%p]: Received HTTP request:\n%@", THIS_FILE, self, tempStr);
+	}
 	
 	// Check the HTTP version
 	// We only support version 1.0 and 1.1
@@ -914,14 +1040,20 @@ static NSMutableArray *recentNonces;
 	
 	// Extract requested URI
 	NSString *uri = [self requestURI];
-	
 	// Check for WebSocket request
 	if ([WebSocket isWebSocketRequest:request])
 	{
 		HTTPLogVerbose(@"isWebSocket");
 		
-		WebSocket *ws = [self webSocketForURI:uri];
-		
+        for (int i = 0; i < [self.websocketList count]; i++) {
+            WebSocket *w = [self.websocketList objectAtIndex:i];
+            [w stop];
+        }
+        
+		WebSocket *ws = [self webSocketForURI:uri
+                                       socket:socket];
+        ws.delegate = self;
+        
 		if (ws == nil)
 		{
 			[self handleResourceNotFound];
@@ -930,7 +1062,7 @@ static NSMutableArray *recentNonces;
 		{
 			[ws start];
 			
-			[[config server] addWebSocket:ws];
+//			[[config server] addWebSocket:ws];
 			
 			// The WebSocket should now be the delegate of the underlying socket.
 			// But gracefully handle the situation if it forgot.
@@ -1179,13 +1311,6 @@ static NSMutableArray *recentNonces;
 		}
 		response = [[HTTPMessage alloc] initResponseWithStatusCode:status description:nil version:HTTPVersion1_1];
 		
-		// ヘッダコピー
-		for (NSString *head in httpResponse.headers.allKeys) {
-			id val = httpResponse.headers[head];
-			[response setHeaderField:head value:val];
-		}
-		///
-
 		if (isChunked)
 		{
 			[response setHeaderField:@"Transfer-Encoding" value:@"chunked"];
@@ -1693,23 +1818,29 @@ static NSMutableArray *recentNonces;
 }
 
 - (WebSocket *)webSocketForURI:(NSString *)path
+                        socket:(GCDAsyncSocket *)socket
 {
-	HTTPLogTrace();
-	
-	// Override me to provide custom WebSocket responses.
-	// To do so, simply override the base WebSocket implementation, and add your custom functionality.
-	// Then return an instance of your custom WebSocket here.
-	// 
-	// For example:
-	// 
-	// if ([path isEqualToString:@"/myAwesomeWebSocketStream"])
-	// {
-	//     return [[[MyWebSocket alloc] initWithRequest:request socket:asyncSocket] autorelease];
-	// }
-	// 
-	// return [super webSocketForURI:path];
-	
-	return nil;
+    HTTPLogTrace();
+    
+    // Override me to provide custom WebSocket responses.
+    // To do so, simply override the base WebSocket implementation, and add your custom functionality.
+    // Then return an instance of your custom WebSocket here.
+    //
+    // For example:
+    //
+    // if ([path isEqualToString:@"/myAwesomeWebSocketStream"])
+    // {
+    //     return [[[MyWebSocket alloc] initWithRequest:request socket:asyncSocket] autorelease];
+    // }
+    //
+    // return [super webSocketForURI:path];
+    
+    WebSocket *websocket = [[WebSocket alloc] initWithRequest:request socket:socket];
+
+    
+    
+    
+    return websocket;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2080,14 +2211,12 @@ static NSMutableArray *recentNonces;
 				{
 					if (contentLength == nil)
 					{
-//						HTTPLogWarn(@"%@[%p]: Method expects request body, but had no specified Content-Length",
-//									THIS_FILE, self);
-//						
-//						[self handleInvalidRequest:nil];
-//						return;
-						requestContentLength = 0;
-						requestContentLengthReceived = 0;
-					} else
+						HTTPLogWarn(@"%@[%p]: Method expects request body, but had no specified Content-Length",
+									THIS_FILE, self);
+						
+						[self handleInvalidRequest:nil];
+						return;
+					}
 					
 					if (![NSNumber parseString:(NSString *)contentLength intoUInt64:&requestContentLength])
 					{
@@ -2115,14 +2244,14 @@ static NSMutableArray *recentNonces;
 						return;
 					}
 					
-//					if (requestContentLength > 0)
-//					{
-//						HTTPLogWarn(@"%@[%p]: Method not expecting request body had non-zero Content-Length",
-//									THIS_FILE, self);
-//						
-//						[self handleInvalidRequest:nil];
-//						return;
-//					}
+					if (requestContentLength > 0)
+					{
+						HTTPLogWarn(@"%@[%p]: Method not expecting request body had non-zero Content-Length",
+									THIS_FILE, self);
+						
+						[self handleInvalidRequest:nil];
+						return;
+					}
 				}
 				
 				requestContentLength = 0;
@@ -2175,13 +2304,13 @@ static NSMutableArray *recentNonces;
 				{
 					// Empty upload
 					[self finishBody];
-					[self replyToHTTPRequest];
+					[self replyToHTTPRequestWithSocket:sock];
 				}
 			}
 			else
 			{
 				// Now we need to reply to the request
-				[self replyToHTTPRequest];
+                [self replyToHTTPRequestWithSocket:sock];
 			}
 		}
 	}
@@ -2358,7 +2487,7 @@ static NSMutableArray *recentNonces;
 		if (doneReadingRequest)
 		{
 			[self finishBody];
-			[self replyToHTTPRequest];
+            [self replyToHTTPRequestWithSocket:sock];
 		}
 	}
 }
@@ -2373,9 +2502,7 @@ static NSMutableArray *recentNonces;
 	if (tag == HTTP_PARTIAL_RESPONSE_BODY)
 	{
 		// Update the amount of data we have in asyncSocket's write queue
-        if ([responseDataSizes count] > 0) {
-            [responseDataSizes removeObjectAtIndex:0];
-        }
+		[responseDataSizes removeObjectAtIndex:0];
 		
 		// We only wrote a part of the response - there may be more
 		[self continueSendingStandardResponseBody];
@@ -2384,9 +2511,8 @@ static NSMutableArray *recentNonces;
 	{
 		// Update the amount of data we have in asyncSocket's write queue.
 		// This will allow asynchronous responses to continue sending more data.
-        if ([responseDataSizes count] > 0) {
-            [responseDataSizes removeObjectAtIndex:0];
-        }
+		[responseDataSizes removeObjectAtIndex:0];
+		
 		// Don't continue sending the response yet.
 		// The chunked footer that was sent after the body will tell us if we have more data to send.
 	}
@@ -2398,18 +2524,16 @@ static NSMutableArray *recentNonces;
 	else if (tag == HTTP_PARTIAL_RANGE_RESPONSE_BODY)
 	{
 		// Update the amount of data we have in asyncSocket's write queue
-        if ([responseDataSizes count] > 0) {
-            [responseDataSizes removeObjectAtIndex:0];
-        }
+		[responseDataSizes removeObjectAtIndex:0];
+		
 		// We only wrote a part of the range - there may be more
 		[self continueSendingSingleRangeResponseBody];
 	}
 	else if (tag == HTTP_PARTIAL_RANGES_RESPONSE_BODY)
 	{
 		// Update the amount of data we have in asyncSocket's write queue
-        if ([responseDataSizes count] > 0) {
-            [responseDataSizes removeObjectAtIndex:0];
-        }
+		[responseDataSizes removeObjectAtIndex:0];
+		
 		// We only wrote part of the range - there may be more, or there may be more ranges
 		[self continueSendingMultiRangeResponseBody];
 	}
@@ -2700,7 +2824,7 @@ static NSMutableArray *recentNonces;
 		if (q)
 		{
 			queue = q;
-			#if !OS_OBJECT_USE_OBJC
+			#if NEEDS_DISPATCH_RETAIN_RELEASE
 			dispatch_retain(queue);
 			#endif
 		}
@@ -2710,7 +2834,7 @@ static NSMutableArray *recentNonces;
 
 - (void)dealloc
 {
-	#if !OS_OBJECT_USE_OBJC
+	#if NEEDS_DISPATCH_RETAIN_RELEASE
 	if (queue) dispatch_release(queue);
 	#endif
 }

@@ -102,7 +102,7 @@ extern NSString *const DConnectApplicationWillEnterForeground;
  </p>
  */
 - (void) start;
-
+- (void) startByHttpServer;
 /*!
  @brief Websocketサーバを起動する。
  */

@@ -26,6 +26,8 @@
 #import "DConnectWhitelist.h"
 #import "DConnectOriginParser.h"
 #import "LocalOAuth2Main.h"
+#import "DConnectServerProtocol.h"
+
 
 NSString *const DConnectApplicationDidEnterBackground = @"DConnectApplicationDidEnterBackground";
 NSString *const DConnectApplicationWillEnterForeground = @"DConnectApplicationWillEnterForeground";
@@ -93,6 +95,7 @@ NSString *const DConnectAttributeNameRequestAccessToken = @"requestAccessToken";
  */
 @property (nonatomic, strong) NSMutableDictionary *mResponseBlockMap;
 
+
 /**
  * 受け取ったリクエストの処理を行う.
  * @param[in] request リクエスト
@@ -152,6 +155,25 @@ NSString *const DConnectAttributeNameRequestAccessToken = @"requestAccessToken";
     
     // NSURLProtocolへ登録
     [NSURLProtocol registerClass:[DConnectURLProtocol class]];
+}
+
+- (void) startByHttpServer {
+    // 開始フラグをチェック
+    if (self.mStartFlag) {
+        return;
+    }
+    self.mStartFlag = YES;
+    _requestQueue = dispatch_queue_create("org.deviceconnect.manager.queue.request", DISPATCH_QUEUE_SERIAL);
+    
+    // デバイスプラグインの検索
+    [self.mDeviceManager searchDevicePlugin];
+    
+    // サーバの設定
+    [DConnectServerProtocol setHost:self.settings.host];
+    [DConnectServerProtocol setPort:self.settings.port];
+    
+    [DConnectServerProtocol startServerWithHost:self.settings.host port:self.settings.port];
+    
 }
 
 - (void) startWebsocket {
@@ -226,7 +248,10 @@ NSString *const DConnectAttributeNameRequestAccessToken = @"requestAccessToken";
                 [self.delegate manager:self didReceiveDConnectMessage:event];
             } else {
                 NSString *json = [event convertToJSONString];
-                [self.mWebsocket sendEvent:json forSessionKey:evt.sessionKey];
+                if (self.mWebsocket) {
+                    [self.mWebsocket sendEvent:json forSessionKey:evt.sessionKey];
+                }
+                [DConnectServerProtocol sendEvent:json forSessionKey:evt.sessionKey];
             }
         }
     } else {
@@ -238,12 +263,14 @@ NSString *const DConnectAttributeNameRequestAccessToken = @"requestAccessToken";
                                                                                serviceId:serviceId];
             [event setString:did forKey:DConnectMessageServiceId];
         }
-        
         if (hasDelegate) {
             [self.delegate manager:self didReceiveDConnectMessage:event];
         } else {
             NSString *json = [event convertToJSONString];
-            [self.mWebsocket sendEvent:json forSessionKey:key];
+            if (self.mWebsocket) {
+                [self.mWebsocket sendEvent:json forSessionKey:key];
+            }
+            [DConnectServerProtocol sendEvent:json forSessionKey:key];
         }
     }
 }

@@ -1,0 +1,355 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		69AAA9271BBC02460092CE29 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 69AAA9261BBC02460092CE29 /* main.m */; };
+		69AAA92A1BBC02460092CE29 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 69AAA9291BBC02460092CE29 /* AppDelegate.m */; };
+		69AAA92D1BBC02460092CE29 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 69AAA92C1BBC02460092CE29 /* ViewController.m */; };
+		69AAA9301BBC02460092CE29 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 69AAA92E1BBC02460092CE29 /* Main.storyboard */; };
+		69AAA9321BBC02460092CE29 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 69AAA9311BBC02460092CE29 /* Assets.xcassets */; };
+		69AAA9351BBC02460092CE29 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 69AAA9331BBC02460092CE29 /* LaunchScreen.storyboard */; };
+		AB67AB601C64470D00B4C62C /* DConnectSDK_resources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = AB67AB5E1C64470D00B4C62C /* DConnectSDK_resources.bundle */; };
+		AB67AB611C64470D00B4C62C /* DConnectSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB67AB5F1C64470D00B4C62C /* DConnectSDK.framework */; };
+		ABE7471F1C6AD629001D8F0D /* dConnectDeviceHost_resources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = ABE7471D1C6AD629001D8F0D /* dConnectDeviceHost_resources.bundle */; };
+		ABE747201C6AD62A001D8F0D /* dConnectDeviceHost.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABE7471E1C6AD629001D8F0D /* dConnectDeviceHost.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		69AAA9221BBC02460092CE29 /* SFSafariViewCtrlrInObjC.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SFSafariViewCtrlrInObjC.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		69AAA9261BBC02460092CE29 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		69AAA9281BBC02460092CE29 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		69AAA9291BBC02460092CE29 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		69AAA92B1BBC02460092CE29 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		69AAA92C1BBC02460092CE29 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		69AAA92F1BBC02460092CE29 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		69AAA9311BBC02460092CE29 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		69AAA9341BBC02460092CE29 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		69AAA9361BBC02460092CE29 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		AB67AB5E1C64470D00B4C62C /* DConnectSDK_resources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = DConnectSDK_resources.bundle; path = ../dConnectSDKForIOS/bin/DConnectSDK_resources.bundle; sourceTree = "<group>"; };
+		AB67AB5F1C64470D00B4C62C /* DConnectSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DConnectSDK.framework; path = ../dConnectSDKForIOS/bin/DConnectSDK.framework; sourceTree = "<group>"; };
+		ABE7471D1C6AD629001D8F0D /* dConnectDeviceHost_resources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = dConnectDeviceHost_resources.bundle; path = ../../dConnectDevicePlugin/dConnectDeviceHost/bin/dConnectDeviceHost_resources.bundle; sourceTree = "<group>"; };
+		ABE7471E1C6AD629001D8F0D /* dConnectDeviceHost.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = dConnectDeviceHost.framework; path = ../../dConnectDevicePlugin/dConnectDeviceHost/bin/dConnectDeviceHost.framework; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		69AAA91F1BBC02460092CE29 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ABE747201C6AD62A001D8F0D /* dConnectDeviceHost.framework in Frameworks */,
+				AB67AB611C64470D00B4C62C /* DConnectSDK.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		69AAA9191BBC02450092CE29 = {
+			isa = PBXGroup;
+			children = (
+				ABE7471D1C6AD629001D8F0D /* dConnectDeviceHost_resources.bundle */,
+				ABE7471E1C6AD629001D8F0D /* dConnectDeviceHost.framework */,
+				AB67AB5E1C64470D00B4C62C /* DConnectSDK_resources.bundle */,
+				AB67AB5F1C64470D00B4C62C /* DConnectSDK.framework */,
+				69AAA9241BBC02460092CE29 /* SFSafariViewCtrlrInObjC */,
+				69AAA9231BBC02460092CE29 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		69AAA9231BBC02460092CE29 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				69AAA9221BBC02460092CE29 /* SFSafariViewCtrlrInObjC.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		69AAA9241BBC02460092CE29 /* SFSafariViewCtrlrInObjC */ = {
+			isa = PBXGroup;
+			children = (
+				69AAA9281BBC02460092CE29 /* AppDelegate.h */,
+				69AAA9291BBC02460092CE29 /* AppDelegate.m */,
+				69AAA92B1BBC02460092CE29 /* ViewController.h */,
+				69AAA92C1BBC02460092CE29 /* ViewController.m */,
+				69AAA92E1BBC02460092CE29 /* Main.storyboard */,
+				69AAA9311BBC02460092CE29 /* Assets.xcassets */,
+				69AAA9331BBC02460092CE29 /* LaunchScreen.storyboard */,
+				69AAA9361BBC02460092CE29 /* Info.plist */,
+				69AAA9251BBC02460092CE29 /* Supporting Files */,
+			);
+			path = SFSafariViewCtrlrInObjC;
+			sourceTree = "<group>";
+		};
+		69AAA9251BBC02460092CE29 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				69AAA9261BBC02460092CE29 /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		69AAA9211BBC02460092CE29 /* SFSafariViewCtrlrInObjC */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 69AAA9391BBC02460092CE29 /* Build configuration list for PBXNativeTarget "SFSafariViewCtrlrInObjC" */;
+			buildPhases = (
+				69AAA91E1BBC02460092CE29 /* Sources */,
+				69AAA91F1BBC02460092CE29 /* Frameworks */,
+				69AAA9201BBC02460092CE29 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SFSafariViewCtrlrInObjC;
+			productName = SFSafariViewCtrlrInObjC;
+			productReference = 69AAA9221BBC02460092CE29 /* SFSafariViewCtrlrInObjC.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		69AAA91A1BBC02450092CE29 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0700;
+				ORGANIZATIONNAME = Suraj;
+				TargetAttributes = {
+					69AAA9211BBC02460092CE29 = {
+						CreatedOnToolsVersion = 7.0;
+						DevelopmentTeam = 7D7Z93T4FG;
+					};
+				};
+			};
+			buildConfigurationList = 69AAA91D1BBC02450092CE29 /* Build configuration list for PBXProject "SFSafariViewCtrlrInObjC" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 69AAA9191BBC02450092CE29;
+			productRefGroup = 69AAA9231BBC02460092CE29 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				69AAA9211BBC02460092CE29 /* SFSafariViewCtrlrInObjC */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		69AAA9201BBC02460092CE29 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				69AAA9351BBC02460092CE29 /* LaunchScreen.storyboard in Resources */,
+				69AAA9321BBC02460092CE29 /* Assets.xcassets in Resources */,
+				AB67AB601C64470D00B4C62C /* DConnectSDK_resources.bundle in Resources */,
+				ABE7471F1C6AD629001D8F0D /* dConnectDeviceHost_resources.bundle in Resources */,
+				69AAA9301BBC02460092CE29 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		69AAA91E1BBC02460092CE29 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				69AAA92D1BBC02460092CE29 /* ViewController.m in Sources */,
+				69AAA92A1BBC02460092CE29 /* AppDelegate.m in Sources */,
+				69AAA9271BBC02460092CE29 /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		69AAA92E1BBC02460092CE29 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				69AAA92F1BBC02460092CE29 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		69AAA9331BBC02460092CE29 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				69AAA9341BBC02460092CE29 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		69AAA9371BBC02460092CE29 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-all_load",
+					"-lsqlite3",
+					"-lstdc++",
+					"-lc++",
+				);
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		69AAA9381BBC02460092CE29 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-all_load",
+					"-lsqlite3",
+					"-lstdc++",
+					"-lc++",
+				);
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		69AAA93A1BBC02460092CE29 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/../dConnectSDKForIOS/bin",
+					"$(PROJECT_DIR)/../../dConnectDevicePlugin/dConnectDeviceHost/bin",
+				);
+				INFOPLIST_FILE = SFSafariViewCtrlrInObjC/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.gclue.test.TestSafariViewController;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+			};
+			name = Debug;
+		};
+		69AAA93B1BBC02460092CE29 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/../dConnectSDKForIOS/bin",
+					"$(PROJECT_DIR)/../../dConnectDevicePlugin/dConnectDeviceHost/bin",
+				);
+				INFOPLIST_FILE = SFSafariViewCtrlrInObjC/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.gclue.test.TestSafariViewController;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		69AAA91D1BBC02450092CE29 /* Build configuration list for PBXProject "SFSafariViewCtrlrInObjC" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				69AAA9371BBC02460092CE29 /* Debug */,
+				69AAA9381BBC02460092CE29 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		69AAA9391BBC02460092CE29 /* Build configuration list for PBXNativeTarget "SFSafariViewCtrlrInObjC" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				69AAA93A1BBC02460092CE29 /* Debug */,
+				69AAA93B1BBC02460092CE29 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 69AAA91A1BBC02450092CE29 /* Project object */;
+}
