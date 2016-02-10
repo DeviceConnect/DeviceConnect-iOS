@@ -108,7 +108,6 @@
 		AB67AB2F1C642AC500B4C62C /* RouteResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = AB67AB271C642AC500B4C62C /* RouteResponse.m */; };
 		AB67AB301C642AC500B4C62C /* RoutingConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = AB67AB291C642AC500B4C62C /* RoutingConnection.m */; };
 		AB67AB311C642AC500B4C62C /* RoutingHTTPServer.m in Sources */ = {isa = PBXBuildFile; fileRef = AB67AB2B1C642AC500B4C62C /* RoutingHTTPServer.m */; };
-		AB67AB551C642B8400B4C62C /* DDLog.m in Sources */ = {isa = PBXBuildFile; fileRef = AB67AB451C642B8400B4C62C /* DDLog.m */; };
 		AB67AB641C644BC700B4C62C /* GCIPUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = AB67AB631C644BC700B4C62C /* GCIPUtil.m */; };
 		AB702E311A70FAF8002D21CB /* DConnectCanvasProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = AB702E301A70FAF8002D21CB /* DConnectCanvasProfile.m */; };
 		ABE747131C688473001D8F0D /* DConnectServerProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE747101C688473001D8F0D /* DConnectServerProtocol.m */; };
@@ -364,9 +363,6 @@
 		AB67AB291C642AC500B4C62C /* RoutingConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RoutingConnection.m; sourceTree = "<group>"; };
 		AB67AB2A1C642AC500B4C62C /* RoutingHTTPServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RoutingHTTPServer.h; sourceTree = "<group>"; };
 		AB67AB2B1C642AC500B4C62C /* RoutingHTTPServer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RoutingHTTPServer.m; sourceTree = "<group>"; };
-		AB67AB421C642B8400B4C62C /* DDLegacyMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDLegacyMacros.h; sourceTree = "<group>"; };
-		AB67AB441C642B8400B4C62C /* DDLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDLog.h; sourceTree = "<group>"; };
-		AB67AB451C642B8400B4C62C /* DDLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDLog.m; sourceTree = "<group>"; };
 		AB67AB621C644BC700B4C62C /* GCIPUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCIPUtil.h; sourceTree = "<group>"; };
 		AB67AB631C644BC700B4C62C /* GCIPUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCIPUtil.m; sourceTree = "<group>"; };
 		AB702E301A70FAF8002D21CB /* DConnectCanvasProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DConnectCanvasProfile.m; sourceTree = "<group>"; };
@@ -2050,7 +2046,6 @@
 			children = (
 				AB67AB621C644BC700B4C62C /* GCIPUtil.h */,
 				AB67AB631C644BC700B4C62C /* GCIPUtil.m */,
-				AB67AB361C642B8400B4C62C /* CocoaLumberjack */,
 				AB67AB1E1C642AC500B4C62C /* RoutingHTTPServer */,
 				AB67AAE81C642AB200B4C62C /* CocoaHTTPServer */,
 				AB67AAE31C642A6A00B4C62C /* CocoaAsyncSocket */,
@@ -2163,16 +2158,6 @@
 				AB67AB2B1C642AC500B4C62C /* RoutingHTTPServer.m */,
 			);
 			path = RoutingHTTPServer;
-			sourceTree = "<group>";
-		};
-		AB67AB361C642B8400B4C62C /* CocoaLumberjack */ = {
-			isa = PBXGroup;
-			children = (
-				AB67AB421C642B8400B4C62C /* DDLegacyMacros.h */,
-				AB67AB441C642B8400B4C62C /* DDLog.h */,
-				AB67AB451C642B8400B4C62C /* DDLog.m */,
-			);
-			path = CocoaLumberjack;
 			sourceTree = "<group>";
 		};
 		ABE7470E1C688473001D8F0D /* protocol */ = {
@@ -4294,7 +4279,6 @@
 				309B0B9A1945A671001A39B6 /* DConnectResponseMessage.m in Sources */,
 				AB67AB2E1C642AC500B4C62C /* RouteRequest.m in Sources */,
 				C29D332F191B2679001015CC /* DConnectManager.m in Sources */,
-				AB67AB551C642B8400B4C62C /* DDLog.m in Sources */,
 				D62622D7199232BC004F01E6 /* LocalOAuthConfirmAuthParams.m in Sources */,
 				D62622D4199232BC004F01E6 /* LocalOAuthClientData.m in Sources */,
 				AB67AB1A1C642AB200B4C62C /* HTTPDynamicFileResponse.m in Sources */,

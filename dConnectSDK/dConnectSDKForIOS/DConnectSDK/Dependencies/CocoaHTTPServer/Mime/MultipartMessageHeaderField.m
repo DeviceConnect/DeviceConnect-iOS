@@ -5,11 +5,6 @@
 //-----------------------------------------------------------------
 #pragma mark log level
 
-#ifdef DEBUG
-static const int httpLogLevel = HTTP_LOG_LEVEL_WARN;
-#else
-static const int httpLogLevel = HTTP_LOG_LEVEL_WARN;
-#endif
 
 
 // helpers
@@ -42,17 +37,13 @@ NSString* extractParamValue(const char* bytes, int length, NSStringEncoding enco
 
 	int separatorOffset = findChar(bytes, length, ':');
 	if( (-1 == separatorOffset) || (separatorOffset >= length-2) ) {
-		HTTPLogError(@"MultipartFormDataParser: Bad format.No colon in field header.");
-		// tear down
 		return nil;
 	}
 	
 	// header name is always ascii encoded;
 	name = [[NSString alloc] initWithBytes: bytes length: separatorOffset encoding: NSASCIIStringEncoding];
 	if( nil == name ) {
-		HTTPLogError(@"MultipartFormDataParser: Bad MIME header name.");
-		// tear down
-		return nil;		
+		return nil;
 	}
 	
 	// skip the separator and the next ' ' symbol
@@ -65,26 +56,19 @@ NSString* extractParamValue(const char* bytes, int length, NSStringEncoding enco
 		value = [[NSString alloc] initWithBytes:bytes length: length encoding:encoding];
 
 		if( nil == value ) {
-			HTTPLogError(@"MultipartFormDataParser: Bad MIME header value for header name: '%@'",name);
-			// tear down
-			return nil;		
+			return nil;
 		}
 		return self;
 	}
 	
 	value = [[NSString alloc] initWithBytes:bytes length: separatorOffset encoding:encoding];
-	HTTPLogVerbose(@"MultipartFormDataParser: Processing  header field '%@' : '%@'",name,value);
 	// skipe the separator and the next ' ' symbol
 	bytes += separatorOffset + 2;
 	length -= separatorOffset + 2;
 
 	// parse the "params" part of the header
 	if( ![self parseHeaderValueBytes:bytes length:length encoding:encoding] ) {
-		NSString* paramsStr = [[NSString alloc] initWithBytes:bytes length:length encoding:NSASCIIStringEncoding];
-		HTTPLogError(@"MultipartFormDataParser: Bad params for header with name '%@' and value '%@'",name,value);
-		HTTPLogError(@"MultipartFormDataParser: Params str: %@",paramsStr);
-
-		return nil;		
+		return nil;
 	}
 	return self;
 }
@@ -121,22 +105,10 @@ NSString* extractParamValue(const char* bytes, int length, NSStringEncoding enco
 		if( bytes[offset] == ';' ) {
 			if( !currentParam ) {
 				// found ; before stating '='.
-				HTTPLogError(@"MultipartFormDataParser: Unexpected ';' when parsing header");
 				return NO;
 			}
 			NSString* paramValue = extractParamValue(bytes, offset,encoding);
-			 if( nil == paramValue ) {
-				HTTPLogWarn(@"MultipartFormDataParser: Failed to exctract paramValue for key %@ in header %@",currentParam,name);
-			}
-			else {
-#ifdef DEBUG
-				if( [params objectForKey:currentParam] ) {
-					HTTPLogWarn(@"MultipartFormDataParser: param %@ mentioned more then once in header %@",currentParam,name);
-				}
-#endif
-				[params setObject:paramValue forKey:currentParam];
-				HTTPLogVerbose(@"MultipartFormDataParser: header param: %@ = %@",currentParam,paramValue);
-			}
+            [params setObject:paramValue forKey:currentParam];
 
 			currentParam = nil;
 
@@ -148,25 +120,11 @@ NSString* extractParamValue(const char* bytes, int length, NSStringEncoding enco
 		++ offset;
 	}
 
-	// add last param
-	if( insideQuote ) {
-		HTTPLogWarn(@"MultipartFormDataParser: unterminated quote in header %@",name);
-//		return YES;
-	}
 	if( currentParam ) {
 		NSString* paramValue = extractParamValue(bytes, length,encoding);
 
-		if( nil == paramValue ) {
-			HTTPLogError(@"MultipartFormDataParser: Failed to exctract paramValue for key %@ in header %@",currentParam,name);
-		}
 
-#ifdef DEBUG
-		if( [params objectForKey:currentParam] ) {
-			HTTPLogWarn(@"MultipartFormDataParser: param %@ mentioned more then once in one header",currentParam);
-		}
-#endif
 		[params setObject:paramValue forKey:currentParam];
-		HTTPLogVerbose(@"MultipartFormDataParser: header param: %@ = %@",currentParam,paramValue);
 		currentParam = nil;
 	}
 	

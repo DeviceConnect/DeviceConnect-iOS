@@ -44,10 +44,6 @@
 
 #endif
 
-// Log levels: off, error, warn, info, verbose
-// Other flags: trace
-static const int httpLogLevel = HTTP_LOG_LEVEL_WARN; // | HTTP_LOG_FLAG_TRACE;
-
 // Define chunk size used to read in data for responses
 // This is how much data will be read from disk into RAM at a time
 #if TARGET_OS_IPHONE
@@ -227,7 +223,6 @@ static NSMutableArray *recentNonces;
 {
 	if ((self = [super init]))
 	{
-		HTTPLogTrace();
 		
 		if (aConfig.queue)
 		{
@@ -308,8 +303,6 @@ static NSMutableArray *recentNonces;
 **/
 - (void)dealloc
 {
-	HTTPLogTrace();
-	
 	#if NEEDS_DISPATCH_RETAIN_RELEASE
 	dispatch_release(connectionQueue);
 	#endif
@@ -370,7 +363,7 @@ static NSMutableArray *recentNonces;
 **/
 - (BOOL)supportsMethod:(NSString *)method atPath:(NSString *)path
 {
-	HTTPLogTrace();
+
 	
 	// Override me to support methods such as POST.
 	// 
@@ -403,7 +396,7 @@ static NSMutableArray *recentNonces;
 **/
 - (BOOL)expectsRequestBodyFromMethod:(NSString *)method atPath:(NSString *)path
 {
-	HTTPLogTrace();
+
 	
 	// Override me to add support for other methods that expect the client
 	// to send a body along with the request header.
@@ -436,7 +429,7 @@ static NSMutableArray *recentNonces;
 **/
 - (BOOL)isSecureServer
 {
-	HTTPLogTrace();
+
 	
 	// Override me to create an https server...
 	
@@ -449,7 +442,7 @@ static NSMutableArray *recentNonces;
 **/
 - (NSArray *)sslIdentityAndCertificates
 {
-	HTTPLogTrace();
+
 	
 	// Override me to provide the proper required SSL identity.
 	
@@ -466,7 +459,7 @@ static NSMutableArray *recentNonces;
 **/
 - (BOOL)isPasswordProtected:(NSString *)path
 {
-	HTTPLogTrace();
+
 	
 	// Override me to provide password protection...
 	// You can configure it for the entire server, or based on the current request
@@ -483,7 +476,7 @@ static NSMutableArray *recentNonces;
 **/
 - (BOOL)useDigestAccessAuthentication
 {
-	HTTPLogTrace();
+
 	
 	// Override me to customize the authentication scheme
 	// Make sure you understand the security risks of using the weaker basic authentication
@@ -497,7 +490,7 @@ static NSMutableArray *recentNonces;
 **/
 - (NSString *)realm
 {
-	HTTPLogTrace();
+
 	
 	// Override me to provide a custom realm...
 	// You can configure it for the entire server, or based on the current request
@@ -510,7 +503,7 @@ static NSMutableArray *recentNonces;
 **/
 - (NSString *)passwordForUser:(NSString *)username
 {
-	HTTPLogTrace();
+
 	
 	// Override me to provide proper password authentication
 	// You can configure a password for the entire server, or custom passwords for users and/or resources
@@ -527,7 +520,7 @@ static NSMutableArray *recentNonces;
 **/
 - (BOOL)isAuthenticated
 {
-	HTTPLogTrace();
+
 	
 	// Extract the authentication information from the Authorization header
 	HTTPAuthenticationRequest *auth = [[HTTPAuthenticationRequest alloc] initWithRequest:request];
@@ -662,7 +655,7 @@ static NSMutableArray *recentNonces;
 **/
 - (void)addDigestAuthChallenge:(HTTPMessage *)response
 {
-	HTTPLogTrace();
+
 	
 	NSString *authFormat = @"Digest realm=\"%@\", qop=\"auth\", nonce=\"%@\"";
 	NSString *authInfo = [NSString stringWithFormat:authFormat, [self realm], [[self class] generateNonce]];
@@ -675,7 +668,7 @@ static NSMutableArray *recentNonces;
 **/
 - (void)addBasicAuthChallenge:(HTTPMessage *)response
 {
-	HTTPLogTrace();
+
 	
 	NSString *authFormat = @"Basic realm=\"%@\"";
 	NSString *authInfo = [NSString stringWithFormat:authFormat, [self realm]];
@@ -726,7 +719,7 @@ static NSMutableArray *recentNonces;
 	// 
 	// Be sure to invoke [super startConnection] when you're done.
 	
-	HTTPLogTrace();
+
 	
 	if ([self isSecureServer])
 	{
@@ -763,7 +756,7 @@ static NSMutableArray *recentNonces;
 **/
 - (void)startReadingRequest
 {
-	HTTPLogTrace();
+
 	
 	[asyncSocket readDataToData:[GCDAsyncSocket CRLFData]
 	                withTimeout:TIMEOUT_READ_FIRST_HEADER_LINE
@@ -861,7 +854,7 @@ static NSMutableArray *recentNonces;
  **/
 - (BOOL)parseRangeRequest:(NSString *)rangeHeader withContentLength:(UInt64)contentLength
 {
-	HTTPLogTrace();
+
 	
 	// Examples of byte-ranges-specifier values (assuming an entity-body of length 10000):
 	// 
@@ -1018,15 +1011,7 @@ static NSMutableArray *recentNonces;
 **/
 - (void)replyToHTTPRequestWithSocket:(GCDAsyncSocket*)socket
 {
-	HTTPLogTrace();
-	
-	if (HTTP_LOG_VERBOSE)
-	{
-		NSData *tempData = [request messageData];
-		
-		NSString *tempStr = [[NSString alloc] initWithData:tempData encoding:NSUTF8StringEncoding];
-		HTTPLogVerbose(@"%@[%p]: Received HTTP request:\n%@", THIS_FILE, self, tempStr);
-	}
+
 	
 	// Check the HTTP version
 	// We only support version 1.0 and 1.1
@@ -1043,7 +1028,6 @@ static NSMutableArray *recentNonces;
 	// Check for WebSocket request
 	if ([WebSocket isWebSocketRequest:request])
 	{
-		HTTPLogVerbose(@"isWebSocket");
 		
         for (int i = 0; i < [self.websocketList count]; i++) {
             WebSocket *w = [self.websocketList objectAtIndex:i];
@@ -1068,7 +1052,6 @@ static NSMutableArray *recentNonces;
 			// But gracefully handle the situation if it forgot.
 			if ([asyncSocket delegate] == self)
 			{
-				HTTPLogWarn(@"%@[%p]: WebSocket forgot to set itself as socket delegate", THIS_FILE, self);
 				
 				// Disconnect the socket.
 				// The socketDidDisconnect delegate method will handle everything else.
@@ -1140,7 +1123,7 @@ static NSMutableArray *recentNonces;
 **/
 - (HTTPMessage *)newUniRangeResponse:(UInt64)contentLength
 {
-	HTTPLogTrace();
+
 	
 	// Status Code 206 - Partial Content
 	HTTPMessage *response = [[HTTPMessage alloc] initResponseWithStatusCode:206 description:nil version:HTTPVersion1_1];
@@ -1164,7 +1147,7 @@ static NSMutableArray *recentNonces;
 **/
 - (HTTPMessage *)newMultiRangeResponse:(UInt64)contentLength
 {
-	HTTPLogTrace();
+
 	
 	// Status Code 206 - Partial Content
 	HTTPMessage *response = [[HTTPMessage alloc] initResponseWithStatusCode:206 description:nil version:HTTPVersion1_1];
@@ -1468,7 +1451,7 @@ static NSMutableArray *recentNonces;
 **/
 - (void)continueSendingStandardResponseBody
 {
-	HTTPLogTrace();
+
 	
 	// This method is called when either asyncSocket has finished writing one of the response data chunks,
 	// or when an asynchronous HTTPResponse object informs us that it has more available data for us to send.
@@ -1536,7 +1519,7 @@ static NSMutableArray *recentNonces;
 **/
 - (void)continueSendingSingleRangeResponseBody
 {
-	HTTPLogTrace();
+
 	
 	// This method is called when either asyncSocket has finished writing one of the response data chunks,
 	// or when an asynchronous response informs us that is has more available data for us to send.
@@ -1587,7 +1570,7 @@ static NSMutableArray *recentNonces;
 **/
 - (void)continueSendingMultiRangeResponseBody
 {
-	HTTPLogTrace();
+
 	
 	// This method is called when either asyncSocket has finished writing one of the response data chunks,
 	// or when an asynchronous HTTPResponse object informs us that is has more available data for us to send.
@@ -1673,7 +1656,7 @@ static NSMutableArray *recentNonces;
 **/
 - (NSArray *)directoryIndexFileNames
 {
-	HTTPLogTrace();
+
 	
 	// Override me to support other index pages.
 	
@@ -1690,7 +1673,7 @@ static NSMutableArray *recentNonces;
 **/
 - (NSString *)filePathForURI:(NSString *)path allowDirectory:(BOOL)allowDirectory
 {
-	HTTPLogTrace();
+
 	
 	// Override me to perform custom path mapping.
 	// For example you may want to use a default file other than index.html, or perhaps support multiple types.
@@ -1704,7 +1687,6 @@ static NSMutableArray *recentNonces;
 	
 	if (documentRoot == nil)
 	{
-		HTTPLogWarn(@"%@[%p]: No configured document root", THIS_FILE, self);
 		return nil;
 	}
 	
@@ -1715,7 +1697,6 @@ static NSMutableArray *recentNonces;
 	NSURL *docRoot = [NSURL fileURLWithPath:documentRoot isDirectory:YES];
 	if (docRoot == nil)
 	{
-		HTTPLogWarn(@"%@[%p]: Document root is invalid file path", THIS_FILE, self);
 		return nil;
 	}
 	
@@ -1757,7 +1738,6 @@ static NSMutableArray *recentNonces;
 	
 	if (![fullPath hasPrefix:documentRoot])
 	{
-		HTTPLogWarn(@"%@[%p]: Request for file outside document root", THIS_FILE, self);
 		return nil;
 	}
 	
@@ -1796,7 +1776,7 @@ static NSMutableArray *recentNonces;
 **/
 - (NSObject<HTTPResponse> *)httpResponseForMethod:(NSString *)method URI:(NSString *)path
 {
-	HTTPLogTrace();
+
 	
 	// Override me to provide custom responses.
 	
@@ -1820,8 +1800,6 @@ static NSMutableArray *recentNonces;
 - (WebSocket *)webSocketForURI:(NSString *)path
                         socket:(GCDAsyncSocket *)socket
 {
-    HTTPLogTrace();
-    
     // Override me to provide custom WebSocket responses.
     // To do so, simply override the base WebSocket implementation, and add your custom functionality.
     // Then return an instance of your custom WebSocket here.
@@ -1894,8 +1872,6 @@ static NSMutableArray *recentNonces;
 	// If you simply want to add a few extra header fields, see the preprocessErrorResponse: method.
 	// You can also use preprocessErrorResponse: to add an optional HTML body.
 	
-	HTTPLogWarn(@"HTTP Server: Error 505 - Version Not Supported: %@ (%@)", version, [self requestURI]);
-	
 	HTTPMessage *response = [[HTTPMessage alloc] initResponseWithStatusCode:505 description:nil version:HTTPVersion1_1];
 	[response setHeaderField:@"Content-Length" value:@"0"];
     
@@ -1913,8 +1889,6 @@ static NSMutableArray *recentNonces;
 	// If you simply want to add a few extra header fields, see the preprocessErrorResponse: method.
 	// You can also use preprocessErrorResponse: to add an optional HTML body.
 	
-	HTTPLogInfo(@"HTTP Server: Error 401 - Unauthorized (%@)", [self requestURI]);
-		
 	// Status Code 401 - Unauthorized
 	HTTPMessage *response = [[HTTPMessage alloc] initResponseWithStatusCode:401 description:nil version:HTTPVersion1_1];
 	[response setHeaderField:@"Content-Length" value:@"0"];
@@ -1944,8 +1918,6 @@ static NSMutableArray *recentNonces;
 	// If you simply want to add a few extra header fields, see the preprocessErrorResponse: method.
 	// You can also use preprocessErrorResponse: to add an optional HTML body.
 	
-	HTTPLogWarn(@"HTTP Server: Error 400 - Bad Request (%@)", [self requestURI]);
-	
 	// Status Code 400 - Bad Request
 	HTTPMessage *response = [[HTTPMessage alloc] initResponseWithStatusCode:400 description:nil version:HTTPVersion1_1];
 	[response setHeaderField:@"Content-Length" value:@"0"];
@@ -1972,8 +1944,6 @@ static NSMutableArray *recentNonces;
 	// 
 	// See also: supportsMethod:atPath:
 	
-	HTTPLogWarn(@"HTTP Server: Error 405 - Method Not Allowed: %@ (%@)", method, [self requestURI]);
-	
 	// Status code 405 - Method Not Allowed
 	HTTPMessage *response = [[HTTPMessage alloc] initResponseWithStatusCode:405 description:nil version:HTTPVersion1_1];
 	[response setHeaderField:@"Content-Length" value:@"0"];
@@ -1996,8 +1966,6 @@ static NSMutableArray *recentNonces;
 	// Override me for custom error handling of 404 not found responses
 	// If you simply want to add a few extra header fields, see the preprocessErrorResponse: method.
 	// You can also use preprocessErrorResponse: to add an optional HTML body.
-	
-	HTTPLogInfo(@"HTTP Server: Error 404 - Not Found (%@)", [self requestURI]);
 	
 	// Status Code 404 - Not Found
 	HTTPMessage *response = [[HTTPMessage alloc] initResponseWithStatusCode:404 description:nil version:HTTPVersion1_1];
@@ -2056,7 +2024,7 @@ static NSMutableArray *recentNonces;
 **/
 - (NSData *)preprocessResponse:(HTTPMessage *)response
 {
-	HTTPLogTrace();
+
 	
 	// Override me to customize the response headers
 	// You'll likely want to add your own custom headers, and then return [super preprocessResponse:response]
@@ -2093,7 +2061,7 @@ static NSMutableArray *recentNonces;
 **/
 - (NSData *)preprocessErrorResponse:(HTTPMessage *)response
 {
-	HTTPLogTrace();
+
 	
 	// Override me to customize the error response headers
 	// You'll likely want to add your own custom headers, and then return [super preprocessErrorResponse:response]
@@ -2156,8 +2124,6 @@ static NSMutableArray *recentNonces;
 		BOOL result = [request appendData:data];
 		if (!result)
 		{
-			HTTPLogWarn(@"%@[%p]: Malformed request", THIS_FILE, self);
-			
 			[self handleInvalidRequest:data];
 		}
 		else if (![request isHeaderComplete])
@@ -2211,8 +2177,6 @@ static NSMutableArray *recentNonces;
 				{
 					if (contentLength == nil)
 					{
-						HTTPLogWarn(@"%@[%p]: Method expects request body, but had no specified Content-Length",
-									THIS_FILE, self);
 						
 						[self handleInvalidRequest:nil];
 						return;
@@ -2220,8 +2184,6 @@ static NSMutableArray *recentNonces;
 					
 					if (![NSNumber parseString:(NSString *)contentLength intoUInt64:&requestContentLength])
 					{
-						HTTPLogWarn(@"%@[%p]: Unable to parse Content-Length header into a valid number",
-									THIS_FILE, self);
 						
 						[self handleInvalidRequest:nil];
 						return;
@@ -2237,17 +2199,12 @@ static NSMutableArray *recentNonces;
 					
 					if (![NSNumber parseString:(NSString *)contentLength intoUInt64:&requestContentLength])
 					{
-						HTTPLogWarn(@"%@[%p]: Unable to parse Content-Length header into a valid number",
-									THIS_FILE, self);
-						
 						[self handleInvalidRequest:nil];
 						return;
 					}
 					
 					if (requestContentLength > 0)
 					{
-						HTTPLogWarn(@"%@[%p]: Method not expecting request body had non-zero Content-Length",
-									THIS_FILE, self);
 						
 						[self handleInvalidRequest:nil];
 						return;
@@ -2350,7 +2307,6 @@ static NSMutableArray *recentNonces;
 			
 			if (errno != 0)
 			{
-				HTTPLogWarn(@"%@[%p]: Method expects chunk size, but received something else", THIS_FILE, self);
 				
 				[self handleInvalidRequest:nil];
 				return;
@@ -2415,7 +2371,6 @@ static NSMutableArray *recentNonces;
 			
 			if (![data isEqualToData:[GCDAsyncSocket CRLFData]])
 			{
-				HTTPLogWarn(@"%@[%p]: Method expects chunk trailer, but is missing", THIS_FILE, self);
 				
 				[self handleInvalidRequest:nil];
 				return;
@@ -2609,7 +2564,7 @@ static NSMutableArray *recentNonces;
 **/
 - (void)socketDidDisconnect:(GCDAsyncSocket *)sock withError:(NSError *)err
 {
-	HTTPLogTrace();
+
 	
 	asyncSocket = nil;
 	
@@ -2628,7 +2583,7 @@ static NSMutableArray *recentNonces;
 **/
 - (void)responseHasAvailableData:(NSObject<HTTPResponse> *)sender
 {
-	HTTPLogTrace();
+
 	
 	// We always dispatch this asynchronously onto our connectionQueue,
 	// even if the connectionQueue is the current queue.
@@ -2640,7 +2595,6 @@ static NSMutableArray *recentNonces;
 		
 		if (sender != httpResponse)
 		{
-			HTTPLogWarn(@"%@[%p]: %@ - Sender is not current httpResponse", THIS_FILE, self, THIS_METHOD);
 			return;
 		}
 		
@@ -2671,7 +2625,7 @@ static NSMutableArray *recentNonces;
 **/
 - (void)responseDidAbort:(NSObject<HTTPResponse> *)sender
 {
-	HTTPLogTrace();
+
 	
 	// We always dispatch this asynchronously onto our connectionQueue,
 	// even if the connectionQueue is the current queue.
@@ -2683,7 +2637,6 @@ static NSMutableArray *recentNonces;
 		
 		if (sender != httpResponse)
 		{
-			HTTPLogWarn(@"%@[%p]: %@ - Sender is not current httpResponse", THIS_FILE, self, THIS_METHOD);
 			return;
 		}
 		
@@ -2702,7 +2655,7 @@ static NSMutableArray *recentNonces;
 **/
 - (void)finishResponse
 {
-	HTTPLogTrace();
+
 	
 	// Override me if you want to perform any custom actions after a response has been fully sent.
 	// This is the place to release memory or resources associated with the last request.
@@ -2724,7 +2677,7 @@ static NSMutableArray *recentNonces;
 **/
 - (BOOL)shouldDie
 {
-	HTTPLogTrace();
+
 	
 	// Override me if you have any need to force close the connection.
 	// You may do so by simply returning YES.
@@ -2763,7 +2716,7 @@ static NSMutableArray *recentNonces;
 
 - (void)die
 {
-	HTTPLogTrace();
+
 	
 	// Override me if you want to perform any custom actions when a connection is closed.
 	// Then call [super die] when you're done.

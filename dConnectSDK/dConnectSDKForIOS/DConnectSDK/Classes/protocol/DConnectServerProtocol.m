@@ -22,12 +22,6 @@
 
 
 @implementation DConnectServerProtocol
-// Device Connect ServerのURLのホスト部分の実態
-static NSString* host = @"localhost";
-
-// Device Connect ServerのURLのポート部分の実態
-static int port = 4035;
-
 static NSString *scheme = @"http";
 
 static RoutingHTTPServer *mHttpServer;
