@@ -64,6 +64,7 @@
         error(DConnectMessageErrorCodeUnknown);
     } else {
         [self refreshAccessTokenWithClientId:clientId
+                                      origin:origin
                                      appName:appName scopes:scopes
                                      success:success error:error];
     }
@@ -88,12 +89,13 @@
 
 
 + (void) refreshAccessTokenWithClientId:(NSString *)clientId
+                                 origin:(NSString *)origin
                                 appName:(NSString *)appName
                                  scopes:(NSArray *)scopes
                                 success:(DConnectAuthorizationSuccessBlock)success
                                   error:(DConnectAuthorizationFailBlock)error
 {
-
+    
     if (!clientId) {
         @throw [NSException exceptionWithName:NSInvalidArgumentException
                                        reason:@"Client ID is nil."
@@ -119,6 +121,7 @@
     [DConnectAuthorizationProfile setClientId:clientId target:req];
     [DConnectAuthorizationProfile setScope:[self combineScopes:scopes] target:req];
     [req setString:appName forKey:DConnectAuthorizationProfileParamApplicationName];
+    [req setString:origin forKey:DConnectMessageOrigin];
     
     DConnectResponseMessage *res = [self executeRequest:req];
     
