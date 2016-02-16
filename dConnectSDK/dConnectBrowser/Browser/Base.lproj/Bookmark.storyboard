@@ -43,11 +43,7 @@
                         </barButtonItem>
                     </toolbarItems>
                     <navigationItem key="navigationItem" id="XvY-N3-So0">
-                        <barButtonItem key="rightBarButtonItem" title="完了" id="9uP-2Y-kkj">
-                            <connections>
-                                <action selector="close:" destination="MA7-TU-EJ6" id="MXe-uz-4mB"/>
-                            </connections>
-                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="完了" id="9uP-2Y-kkj"/>
                     </navigationItem>
                     <connections>
                         <outlet property="doneBtn" destination="9uP-2Y-kkj" id="0Ui-hZ-15a"/>
@@ -69,10 +65,10 @@
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="Zh5-cU-K9h" customClass="GHFolderTitleCell">
-                                <rect key="frame" x="0.0" y="50" width="320" height="44"/>
+                                <rect key="frame" x="0.0" y="49.5" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Zh5-cU-K9h" id="kdP-Xz-ddZ">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
                             </tableViewCell>

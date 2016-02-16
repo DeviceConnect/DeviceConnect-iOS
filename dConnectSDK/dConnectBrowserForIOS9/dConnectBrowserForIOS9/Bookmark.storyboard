@@ -42,9 +42,9 @@
                         </barButtonItem>
                     </toolbarItems>
                     <navigationItem key="navigationItem" id="XvY-N3-So0">
-                        <barButtonItem key="rightBarButtonItem" title="完了" id="9uP-2Y-kkj">
+                        <barButtonItem key="rightBarButtonItem" title="+" style="done" id="9uP-2Y-kkj">
                             <connections>
-                                <action selector="close:" destination="MA7-TU-EJ6" id="MXe-uz-4mB"/>
+                                <action selector="close:" destination="MA7-TU-EJ6" id="pyw-s4-LLC"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>

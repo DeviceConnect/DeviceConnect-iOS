@@ -27,6 +27,6 @@
 - (void)setItem:(GHPageModel*)page
 {
     self.titleField.text = page.title;
-    self.urlLabel.text = page.url;
+    self.urlField.text = page.url;
 }
 @end

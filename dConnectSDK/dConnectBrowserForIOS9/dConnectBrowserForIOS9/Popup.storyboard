@@ -52,9 +52,9 @@
                         </barButtonItem>
                     </toolbarItems>
                     <navigationItem key="navigationItem" title="ブックマーク" id="iaX-be-0Q3">
-                        <barButtonItem key="rightBarButtonItem" title="完了" id="vyf-kz-M2b">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="vyf-kz-M2b">
                             <connections>
-                                <action selector="close:" destination="Bwq-nS-LbM" id="XVW-b5-oTT"/>
+                                <action selector="addBookmark:" destination="Bwq-nS-LbM" id="Fue-73-Z0O"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>

@@ -49,6 +49,12 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    UIBarButtonItem* close = [[UIBarButtonItem alloc]initWithTitle:@"閉じる"
+                                                             style:UIBarButtonItemStylePlain
+                                                            target:self
+                                                            action:@selector(close:)];
+    self.navigationItem.leftBarButtonItem = close;
+    
     self.folderBtn.tintColor = [UIColor colorWithWhite:0 alpha:0];
     isEditing = NO;
 }
@@ -76,7 +82,33 @@
 {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
-
+- (IBAction)addBookmark:(id)sender
+{
+    GHPageModel *model = [[GHPageModel alloc]init];
+    model.title = @"";//[self.manager htmlTitle:self.webview];
+    model.url   = @"";//[self.manager htmlURL:self.webview];
+    model.type  = TYPE_BOOKMARK;
+    
+    if (model) {
+        //ディレイさせないとモーダルが出ない
+        [self performSelector:@selector(showAddBookMarkController:) withObject:model afterDelay:0.75];
+    }
+}
+/**
+ * ブックマークの追加controllerを表示
+ * @param page 最新の履歴から持ってくる
+ */
+- (void)showAddBookMarkController:(GHPageModel*)model
+{
+    GHAddBookmarkController * addbook = [[GHAddBookmarkController alloc]initWithPage:model];
+    UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:addbook];
+    
+//    if ([GHUtils isiPad]) {
+//        [self showPopup:nav button:activityBtn];
+//    }else{
+        [self presentViewController:nav animated:YES completion:nil];
+//    }
+}
 - (IBAction)edit:(id)sender
 {
     isEditing = !isEditing;
@@ -90,6 +122,7 @@
     self.tableView.allowsSelectionDuringEditing = YES;
     
     if (isEditing) {
+    
         //編集モード
         self.doneBtn.tintColor = [UIColor colorWithWhite:0 alpha:0];
         self.doneBtn.enabled = NO;

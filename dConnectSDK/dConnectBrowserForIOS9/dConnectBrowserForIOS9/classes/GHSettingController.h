@@ -9,6 +9,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface GHSettingController : UITableViewController<UIAlertViewDelegate>
+@interface GHSettingController : UITableViewController
 
 @end

@@ -12,7 +12,7 @@
 #import "GHURLManager.h"
 #import <DConnectSDK/DConnectSDK.h>
 #import <SafariServices/SafariServices.h>
-
+#import "GHAddBookmarkActivity.h"
 
 @interface ViewController (){
     SFSafariViewController *sfSafariViewController;

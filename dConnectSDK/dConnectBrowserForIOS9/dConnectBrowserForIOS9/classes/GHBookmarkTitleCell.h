@@ -12,7 +12,7 @@
 @interface GHBookmarkTitleCell : UITableViewCell
 
 @property (nonatomic, weak) IBOutlet UITextField *titleField;
-@property (nonatomic, weak) IBOutlet UILabel     *urlLabel;
+@property (nonatomic, weak) IBOutlet UITextField     *urlField;
 @property (nonatomic, weak) IBOutlet UIImageView *favicon;
 
 - (void)setItem:(GHPageModel*)page;
