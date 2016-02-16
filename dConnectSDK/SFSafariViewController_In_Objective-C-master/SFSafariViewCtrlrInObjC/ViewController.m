@@ -34,6 +34,7 @@
     [super viewDidAppear:NO];
 
     void (^loadSFSafariViewControllerBlock)(NSURL *) = ^(NSURL *url) {
+
         sfSafariViewController = [[SFSafariViewController alloc] initWithURL:url entersReaderIfAvailable:YES];
         sfSafariViewController.delegate = self;
         [self presentViewController:sfSafariViewController animated:YES completion:nil];
@@ -42,6 +43,7 @@
     NSURL *url = [NSURL URLWithString:@"http://test.gclue.io/dwa/checker/"];
     loadSFSafariViewControllerBlock(url);
 }
+
 
 #pragma mark - SFSafariViewController Delegate Methods
 -(void)safariViewController:(SFSafariViewController *)controller didCompleteInitialLoad:(BOOL)didLoadSuccessfully {

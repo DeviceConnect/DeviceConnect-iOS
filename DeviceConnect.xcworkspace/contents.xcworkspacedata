@@ -5,9 +5,6 @@
       location = "group:dConnectSDK/dConnectBrowserForIOS9/dConnectBrowserForIOS9.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:dConnectSDK/SFSafariViewController_In_Objective-C-master/SFSafariViewCtrlrInObjC.xcodeproj">
-   </FileRef>
-   <FileRef
       location = "group:dConnectDevicePlugin/dConnectDeviceTheta/dConnectDeviceTheta.xcodeproj">
    </FileRef>
    <FileRef

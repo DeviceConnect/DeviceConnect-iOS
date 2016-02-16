@@ -1,16 +1,26 @@
 //
 //  ViewController.m
-//  dConnectBrowserForIOS9
+//  dConnectBrowser
 //
-//  Created by 星　貴之 on 2016/02/15.
-//  Copyright © 2016年 GClue,Inc. All rights reserved.
+//  Copyright (c) 2016 NTT DOCOMO,INC.
+//  Released under the MIT license
+//  http://opensource.org/licenses/mit-license.php
 //
 
 #import "ViewController.h"
-#import "GHHeaderView.h"
+#import "GHSettingController.h"
+#import "GHSafariViewController.h"
+#import "GHURLManager.h"
+#import <DConnectSDK/DConnectSDK.h>
+#import <SafariServices/SafariServices.h>
 
-@interface ViewController ()
 
+@interface ViewController (){
+    SFSafariViewController *sfSafariViewController;
+}
+
+@property (nonatomic, strong) GHURLManager *manager;
+@property (nonatomic) NSString* url;
 #pragma mark - View position constraint
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *iconTopLeading;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *iconLeftLeading;
@@ -21,7 +31,6 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *settingRightLeading;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *searchViewLeading;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *settingBtnBottomLeading;
-
 #pragma mark - button size constraint
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *iconWidthSize;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *iconHeightSize;
@@ -33,27 +42,43 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *bookmarkBtnWidthSize;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *settingBtnHeightSize;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *settingBtnWidthSize;
+#pragma mark - UI
+- (IBAction)openSafariView:(id)sender;
+- (IBAction)openBookmarkView:(id)sender;
+- (IBAction)openSettingView:(id)sender;
 
 @end
 
 @implementation ViewController
 
 - (void)viewDidLoad {
+    DConnectManager *mgr = [DConnectManager sharedManager];
+    [mgr startByHttpServer];
+
     [super viewDidLoad];
     CGFloat barW = 300;
-    
-    //iPadの場合はナビゲーションにボタンを置く
-//    if ([GHUtils isiPad]) {
-//        [self iPadSetup];
-//        barH = 80;
-//    }
+    NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
+    BOOL isOriginBlock = [def boolForKey:IS_ORIGIN_BLOCKING];
+    mgr.settings.useOriginBlocking = isOriginBlock;
+
+ 
     CGRect frame = CGRectMake(0, 0, barW, 44);
+    _manager = [[GHURLManager alloc]init];
+    _url = @"http://www.google.com";
     GHHeaderView *view = [[GHHeaderView alloc]initWithFrame:frame];
-//    self.searchView.delegate = self;
     view.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-//    _searchView.delegate = self;
+    view.delegate = self;
     [_searchView addSubview:view];
 }
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    DConnectManager *mgr = [DConnectManager sharedManager];
+    NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
+    [def setBool:mgr.settings.useOriginBlocking forKey:IS_ORIGIN_BLOCKING];
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -74,7 +99,81 @@
     [self rotateOrientation:toInterfaceOrientation];
 }
 
+#pragma mark - open UI
 
+- (IBAction)openSafariView:(id)sender {
+    void (^loadSFSafariViewControllerBlock)(NSURL *) = ^(NSURL *url) {
+        sfSafariViewController = [[SFSafariViewController alloc] initWithURL:url entersReaderIfAvailable:YES];
+        sfSafariViewController.delegate = self;
+        [self presentViewController:sfSafariViewController animated:YES completion:nil];
+    };
+    loadSFSafariViewControllerBlock([NSURL URLWithString:_url]);
+}
+
+- (IBAction)openBookmarkView:(id)sender {
+    //ストーリーボードから取得
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Popup" bundle:[NSBundle mainBundle]];
+    UIViewController *bookmark = [storyboard instantiateInitialViewController];
+    
+    
+//    if ([GHUtils isiPad]) {
+//        [self showPopup:bookmark button:item];
+//    }else{
+        [self presentViewController:bookmark animated:YES completion:nil];
+//    }
+
+}
+
+- (IBAction)openSettingView:(id)sender {
+    GHSettingController *setting = [[GHSettingController alloc]initWithStyle:UITableViewStyleGrouped];
+    UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:setting];
+//    if ([GHUtils isiPad]) {
+//        [self showPopup:nav button:settingBtn];
+//    }else{
+        [self presentViewController:nav animated:YES completion:nil];
+//    }
+
+}
+//--------------------------------------------------------------//
+#pragma mark - GHHeaderViewDelegate delegate
+//--------------------------------------------------------------//
+
+- (void)urlUpadated:(NSString*)urlStr
+{
+    //文字列がURLの場合
+    _url = [self.manager isURLString:urlStr];
+    if (!_url) {
+        _url = [self.manager createSearchURL:urlStr];
+    }
+    
+}
+
+- (void)reload
+{
+}
+
+
+- (void)cancelLoading
+{
+}
+
+
+#pragma mark - SFSafariViewController Delegate Methods
+-(void)safariViewController:(SFSafariViewController *)controller didCompleteInitialLoad:(BOOL)didLoadSuccessfully {
+    // Load finished
+    //    if (didLoadSuccessfully) {
+    //        NSLog(@"SafariViewController: Loading of URl finished");
+    //    }
+}
+
+-(void)safariViewControllerDidFinish:(SFSafariViewController *)controller {
+    // Done button pressed
+    //    NSLog(@"safariViewController: Done button pressed");
+    [sfSafariViewController dismissViewControllerAnimated:YES completion:nil];
+}
+
+
+#pragma mark - private method
 
 - (void)rotateOrientation:(UIInterfaceOrientation)toInterfaceOrientation
 {

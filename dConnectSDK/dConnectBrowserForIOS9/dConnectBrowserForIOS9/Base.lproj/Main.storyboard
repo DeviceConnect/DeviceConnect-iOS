@@ -44,6 +44,9 @@
                                 <state key="normal" title="開く" backgroundImage="ButtonStretch">
                                     <color key="titleColor" red="0.99024979641028377" green="0.99701571060531569" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
+                                <connections>
+                                    <action selector="openSafariView:" destination="BYZ-38-t0r" eventType="touchUpInside" id="2w4-gA-kV5"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ecp-x0-V0T">
                                 <rect key="frame" x="231" y="484" width="138" height="40"/>
@@ -54,6 +57,9 @@
                                 <state key="normal" title="設定画面" backgroundImage="ButtonStretch">
                                     <color key="titleColor" red="0.99024979639999999" green="0.99701571060000005" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
+                                <connections>
+                                    <action selector="openSettingView:" destination="BYZ-38-t0r" eventType="touchUpInside" id="LfR-e6-jXy"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Do2-aw-VSP">
                                 <rect key="frame" x="231" y="418" width="138" height="40"/>
@@ -64,6 +70,9 @@
                                 <state key="normal" title="ブックマーク" backgroundImage="ButtonStretch">
                                     <color key="titleColor" red="0.99024979639999999" green="0.99701571060000005" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
+                                <connections>
+                                    <action selector="openBookmarkView:" destination="BYZ-38-t0r" eventType="touchUpInside" id="oEi-h2-8Lm"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>

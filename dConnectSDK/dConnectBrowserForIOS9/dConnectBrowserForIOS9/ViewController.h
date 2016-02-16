@@ -1,14 +1,17 @@
 //
 //  ViewController.h
-//  dConnectBrowserForIOS9
+//  dConnectBrowser
 //
-//  Created by 星　貴之 on 2016/02/15.
-//  Copyright © 2016年 GClue,Inc. All rights reserved.
+//  Copyright (c) 2016 NTT DOCOMO,INC.
+//  Released under the MIT license
+//  http://opensource.org/licenses/mit-license.php
 //
 
 #import <UIKit/UIKit.h>
+#import "GHHeaderView.h"
+#import <SafariServices/SafariServices.h>
 
-@interface ViewController : UIViewController
+@interface ViewController : UIViewController<GHHeaderViewDelegate, SFSafariViewControllerDelegate>
 
 
 @end
