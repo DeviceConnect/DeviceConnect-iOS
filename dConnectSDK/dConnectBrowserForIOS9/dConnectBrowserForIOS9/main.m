@@ -1,6 +1,6 @@
 //
 //  main.m
-//  dConnectBrowserForIOS9
+//  dConnectBrowserForIOS9ForIOS9
 //
 //  Created by 星　貴之 on 2016/02/15.
 //  Copyright © 2016年 GClue,Inc. All rights reserved.

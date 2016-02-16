@@ -1,6 +1,6 @@
 //
 //  AppDelegate.m
-//  dConnectBrowser
+//  dConnectBrowserForIOS9
 //
 //  Copyright (c) 2016 NTT DOCOMO,INC.
 //  Released under the MIT license

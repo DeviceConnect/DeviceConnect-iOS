@@ -1,6 +1,6 @@
 //
 //  ViewController.m
-//  dConnectBrowser
+//  dConnectBrowserForIOS9
 //
 //  Copyright (c) 2016 NTT DOCOMO,INC.
 //  Released under the MIT license
@@ -9,7 +9,6 @@
 
 #import "ViewController.h"
 #import "GHSettingController.h"
-#import "GHSafariViewController.h"
 #import "GHURLManager.h"
 #import <DConnectSDK/DConnectSDK.h>
 #import <SafariServices/SafariServices.h>
