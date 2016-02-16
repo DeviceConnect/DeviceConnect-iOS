@@ -38,6 +38,7 @@
         sfSafariViewController.delegate = self;
         [self presentViewController:sfSafariViewController animated:YES completion:nil];
     };
+//    NSURL *url = [NSURL URLWithString:@"http://192.168.2.114:8000/d/index.html"];
     NSURL *url = [NSURL URLWithString:@"http://test.gclue.io/dwa/checker/"];
     loadSFSafariViewControllerBlock(url);
 }

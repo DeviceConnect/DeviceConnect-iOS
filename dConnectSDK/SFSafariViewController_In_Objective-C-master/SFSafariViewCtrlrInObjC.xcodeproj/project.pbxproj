@@ -13,11 +13,38 @@
 		69AAA9301BBC02460092CE29 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 69AAA92E1BBC02460092CE29 /* Main.storyboard */; };
 		69AAA9321BBC02460092CE29 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 69AAA9311BBC02460092CE29 /* Assets.xcassets */; };
 		69AAA9351BBC02460092CE29 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 69AAA9331BBC02460092CE29 /* LaunchScreen.storyboard */; };
+		AB00F1A41C6DC1B500689C70 /* ActionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB00F1A31C6DC1B500689C70 /* ActionViewController.m */; };
+		AB00F1A71C6DC1B500689C70 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AB00F1A51C6DC1B500689C70 /* MainInterface.storyboard */; };
+		AB00F1AB1C6DC1B500689C70 /* BookmarksExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = AB00F1A01C6DC1B500689C70 /* BookmarksExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		AB67AB601C64470D00B4C62C /* DConnectSDK_resources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = AB67AB5E1C64470D00B4C62C /* DConnectSDK_resources.bundle */; };
 		AB67AB611C64470D00B4C62C /* DConnectSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB67AB5F1C64470D00B4C62C /* DConnectSDK.framework */; };
 		ABE7471F1C6AD629001D8F0D /* dConnectDeviceHost_resources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = ABE7471D1C6AD629001D8F0D /* dConnectDeviceHost_resources.bundle */; };
 		ABE747201C6AD62A001D8F0D /* dConnectDeviceHost.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABE7471E1C6AD629001D8F0D /* dConnectDeviceHost.framework */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		AB00F1A91C6DC1B500689C70 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 69AAA91A1BBC02450092CE29 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = AB00F19F1C6DC1B500689C70;
+			remoteInfo = BookmarksExtension;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		AB00F1751C6DBE4000689C70 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				AB00F1AB1C6DC1B500689C70 /* BookmarksExtension.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		69AAA9221BBC02460092CE29 /* SFSafariViewCtrlrInObjC.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SFSafariViewCtrlrInObjC.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -30,6 +57,11 @@
 		69AAA9311BBC02460092CE29 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		69AAA9341BBC02460092CE29 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		69AAA9361BBC02460092CE29 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		AB00F1A01C6DC1B500689C70 /* BookmarksExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = BookmarksExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		AB00F1A21C6DC1B500689C70 /* ActionViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ActionViewController.h; sourceTree = "<group>"; };
+		AB00F1A31C6DC1B500689C70 /* ActionViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ActionViewController.m; sourceTree = "<group>"; };
+		AB00F1A61C6DC1B500689C70 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
+		AB00F1A81C6DC1B500689C70 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AB67AB5E1C64470D00B4C62C /* DConnectSDK_resources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = DConnectSDK_resources.bundle; path = ../dConnectSDKForIOS/bin/DConnectSDK_resources.bundle; sourceTree = "<group>"; };
 		AB67AB5F1C64470D00B4C62C /* DConnectSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DConnectSDK.framework; path = ../dConnectSDKForIOS/bin/DConnectSDK.framework; sourceTree = "<group>"; };
 		ABE7471D1C6AD629001D8F0D /* dConnectDeviceHost_resources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = dConnectDeviceHost_resources.bundle; path = ../../dConnectDevicePlugin/dConnectDeviceHost/bin/dConnectDeviceHost_resources.bundle; sourceTree = "<group>"; };
@@ -46,6 +78,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		AB00F19D1C6DC1B500689C70 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -57,6 +96,7 @@
 				AB67AB5E1C64470D00B4C62C /* DConnectSDK_resources.bundle */,
 				AB67AB5F1C64470D00B4C62C /* DConnectSDK.framework */,
 				69AAA9241BBC02460092CE29 /* SFSafariViewCtrlrInObjC */,
+				AB00F1A11C6DC1B500689C70 /* BookmarksExtension */,
 				69AAA9231BBC02460092CE29 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -65,6 +105,7 @@
 			isa = PBXGroup;
 			children = (
 				69AAA9221BBC02460092CE29 /* SFSafariViewCtrlrInObjC.app */,
+				AB00F1A01C6DC1B500689C70 /* BookmarksExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -93,6 +134,17 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		AB00F1A11C6DC1B500689C70 /* BookmarksExtension */ = {
+			isa = PBXGroup;
+			children = (
+				AB00F1A21C6DC1B500689C70 /* ActionViewController.h */,
+				AB00F1A31C6DC1B500689C70 /* ActionViewController.m */,
+				AB00F1A51C6DC1B500689C70 /* MainInterface.storyboard */,
+				AB00F1A81C6DC1B500689C70 /* Info.plist */,
+			);
+			path = BookmarksExtension;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -103,15 +155,34 @@
 				69AAA91E1BBC02460092CE29 /* Sources */,
 				69AAA91F1BBC02460092CE29 /* Frameworks */,
 				69AAA9201BBC02460092CE29 /* Resources */,
+				AB00F1751C6DBE4000689C70 /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				AB00F1AA1C6DC1B500689C70 /* PBXTargetDependency */,
 			);
 			name = SFSafariViewCtrlrInObjC;
 			productName = SFSafariViewCtrlrInObjC;
 			productReference = 69AAA9221BBC02460092CE29 /* SFSafariViewCtrlrInObjC.app */;
 			productType = "com.apple.product-type.application";
+		};
+		AB00F19F1C6DC1B500689C70 /* BookmarksExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AB00F1AC1C6DC1B500689C70 /* Build configuration list for PBXNativeTarget "BookmarksExtension" */;
+			buildPhases = (
+				AB00F19C1C6DC1B500689C70 /* Sources */,
+				AB00F19D1C6DC1B500689C70 /* Frameworks */,
+				AB00F19E1C6DC1B500689C70 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = BookmarksExtension;
+			productName = BookmarksExtension;
+			productReference = AB00F1A01C6DC1B500689C70 /* BookmarksExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
 
@@ -124,6 +195,10 @@
 				TargetAttributes = {
 					69AAA9211BBC02460092CE29 = {
 						CreatedOnToolsVersion = 7.0;
+						DevelopmentTeam = 7D7Z93T4FG;
+					};
+					AB00F19F1C6DC1B500689C70 = {
+						CreatedOnToolsVersion = 7.2.1;
 						DevelopmentTeam = 7D7Z93T4FG;
 					};
 				};
@@ -142,6 +217,7 @@
 			projectRoot = "";
 			targets = (
 				69AAA9211BBC02460092CE29 /* SFSafariViewCtrlrInObjC */,
+				AB00F19F1C6DC1B500689C70 /* BookmarksExtension */,
 			);
 		};
 /* End PBXProject section */
@@ -159,6 +235,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		AB00F19E1C6DC1B500689C70 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AB00F1A71C6DC1B500689C70 /* MainInterface.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -172,7 +256,23 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		AB00F19C1C6DC1B500689C70 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AB00F1A41C6DC1B500689C70 /* ActionViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		AB00F1AA1C6DC1B500689C70 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = AB00F19F1C6DC1B500689C70 /* BookmarksExtension */;
+			targetProxy = AB00F1A91C6DC1B500689C70 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		69AAA92E1BBC02460092CE29 /* Main.storyboard */ = {
@@ -189,6 +289,14 @@
 				69AAA9341BBC02460092CE29 /* Base */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		AB00F1A51C6DC1B500689C70 /* MainInterface.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				AB00F1A61C6DC1B500689C70 /* Base */,
+			);
+			name = MainInterface.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -328,6 +436,34 @@
 			};
 			name = Release;
 		};
+		AB00F1AD1C6DC1B500689C70 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				INFOPLIST_FILE = BookmarksExtension/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.gclue.test.TestSafariViewController.BookmarksExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		AB00F1AE1C6DC1B500689C70 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				INFOPLIST_FILE = BookmarksExtension/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.gclue.test.TestSafariViewController.BookmarksExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -348,6 +484,14 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		AB00F1AC1C6DC1B500689C70 /* Build configuration list for PBXNativeTarget "BookmarksExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AB00F1AD1C6DC1B500689C70 /* Debug */,
+				AB00F1AE1C6DC1B500689C70 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 /* End XCConfigurationList section */
 	};

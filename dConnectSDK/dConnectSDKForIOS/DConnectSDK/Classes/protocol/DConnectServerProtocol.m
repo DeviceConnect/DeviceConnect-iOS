@@ -22,6 +22,7 @@
 
 
 @implementation DConnectServerProtocol
+
 static NSString *scheme = @"http";
 
 static RoutingHTTPServer *mHttpServer;
@@ -82,6 +83,18 @@ static RoutingHTTPServer *mHttpServer;
 
 + (void)handleHttpRequest:(RouteRequest*)request response:(RouteResponse*)response
 {
+    if (![[[request url] host] isEqualToString:@"localhost"]) {
+        // todo: 外部からリクエストを受け付けるかどうか
+        NSString *dataStr =
+        [NSString stringWithFormat:
+         @"{\"%@\":%lu,\"%@\":%lu,\"%@\":\"Not localhost.\"}",
+         DConnectMessageResult, (unsigned long)DConnectMessageResultTypeError,
+         DConnectMessageErrorCode, (unsigned long)DConnectMessageErrorCodeIllegalServerState,
+         DConnectMessageErrorMessage];
+        [response setHeader:@"Content-Type" value:@"application/json"];
+        [response respondWithString:dataStr];
+        return;
+    }
     dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
     dispatch_time_t timeout = dispatch_time(DISPATCH_TIME_NOW, NSEC_PER_SEC * HTTP_REQUEST_TIMEOUT);
     
@@ -108,8 +121,14 @@ static RoutingHTTPServer *mHttpServer;
                 [response respondWithString:str];
             }
         } else {
-            // レスポンス無し；失敗
-            @throw @"request must not be nil.";
+            NSString *dataStr =
+            [NSString stringWithFormat:
+             @"{\"%@\":%lu,\"%@\":%lu,\"%@\":\"Illegal State.\"}",
+             DConnectMessageResult, (unsigned long)DConnectMessageResultTypeError,
+             DConnectMessageErrorCode, (unsigned long)DConnectMessageErrorCodeIllegalServerState,
+             DConnectMessageErrorMessage];
+            [response setHeader:@"Content-Type" value:@"application/json"];
+            [response respondWithString:dataStr];
         }
         dispatch_semaphore_signal(semaphore);
     }];
