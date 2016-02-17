@@ -532,16 +532,16 @@ static GHDataManager* mgr = nil;
         favor.priority = @(1);
         [self createPageEntity:favor context:nil];
         
-        GHPageModel *history = [[GHPageModel alloc]init];
-        history.title = @"履歴";
-        history.type = TYPE_HISTORY;
-        history.priority = @(2);
-        [self createPageEntity:history context:nil];
+//        GHPageModel *history = [[GHPageModel alloc]init];
+//        history.title = @"履歴";
+//        history.type = TYPE_HISTORY;
+//        history.priority = @(2);
+//        [self createPageEntity:history context:nil];
         
         GHPageModel *bookmark = [[GHPageModel alloc]init];
         bookmark.title = @"ブックマーク";
         bookmark.type = TYPE_BOOKMARK_FOLDER;
-        bookmark.priority = @(3);
+        bookmark.priority = @(2);
         [self createPageEntity:bookmark context:nil];
     }else{
         [GHUtils clearCashes];

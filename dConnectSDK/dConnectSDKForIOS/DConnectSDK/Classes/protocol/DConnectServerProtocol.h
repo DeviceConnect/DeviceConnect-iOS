@@ -13,7 +13,8 @@
 
 @interface DConnectServerProtocol : DConnectURLProtocol
 
-+ (void)startServerWithHost:(NSString*)host port:(int)port;
+
++ (BOOL)startServerWithHost:(NSString*)host port:(int)port;
 
 + (void)stopServer;
 

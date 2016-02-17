@@ -18,7 +18,7 @@
 #define TYPE_FOLDER   @"folder"
 #define TYPE_BOOKMARK_FOLDER @"bookmark_folder"
 
-#define IS_COOKIE_ACCEPT @"is_cookie_allow"
+#define IS_MANAGER_LAUNCH @"is_manager_launch"
 #define IS_ORIGIN_BLOCKING @"is_origin_blocking"
 
 #define PAGE_URL @"pageurl"

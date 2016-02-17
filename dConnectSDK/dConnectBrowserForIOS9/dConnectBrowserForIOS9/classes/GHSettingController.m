@@ -108,11 +108,16 @@
     return address;
 }
 //--------------------------------------------------------------//
-#pragma mark - CookieスイッチのON/OFF
+#pragma mark - ManagerスイッチのON/OFF
 //--------------------------------------------------------------//
 - (void)updateSwitch:(UISwitch*)sender
 {
-    
+    DConnectManager *manager = [DConnectManager sharedManager];
+    if (sender.isOn) {
+        [manager startByHttpServer];
+    } else {
+        [manager stopByHttpServer];
+    }
 }
 
 //--------------------------------------------------------------//
@@ -127,7 +132,7 @@
 - (void)updateSwitchState
 {
     NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
-//    [def setObject:@(self.cookieSW.isOn) forKey:IS_COOKIE_ACCEPT];
+    [def setObject:@(self.managerSW.isOn) forKey:IS_MANAGER_LAUNCH];
     [def setObject:@(self.blockSW.isOn) forKey:IS_ORIGIN_BLOCKING];
     [def synchronize];
     
@@ -203,10 +208,12 @@
                 if (!self.managerSW ) {
                     self.managerSW = [[UISwitch alloc]init];
                     [self.managerSW addTarget:self action:@selector(updateSwitch:) forControlEvents:UIControlEventValueChanged];
-                    
-                    //スイッチの状態セット
+                    DConnectManager *manager = [DConnectManager sharedManager];
                     NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
-                    BOOL sw = [def boolForKey:IS_COOKIE_ACCEPT];
+                    BOOL sw = [def boolForKey:IS_MANAGER_LAUNCH];
+                    if (sw) {
+                        [manager startByHttpServer];
+                    }
                     [self.managerSW setOn:sw animated:NO];
                     
                     cell.accessoryView = self.managerSW;

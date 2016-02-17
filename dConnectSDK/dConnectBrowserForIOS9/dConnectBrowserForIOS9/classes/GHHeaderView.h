@@ -52,4 +52,5 @@
  * @param urlStr 表示する文字列
  */
 - (void)updateURL:(NSString*)urlStr;
+
 @end

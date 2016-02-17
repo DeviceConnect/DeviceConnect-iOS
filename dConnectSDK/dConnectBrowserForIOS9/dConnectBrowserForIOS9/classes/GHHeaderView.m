@@ -101,7 +101,7 @@
         self.urlLabel.hidden   = NO;
         self.reloadbtn.hidden  = NO;
         self.searchBar.hidden  = YES;
-        self.reloadbtn.enabled = YES;
+        self.reloadbtn.enabled = NO;
     }
 }
 
@@ -176,9 +176,7 @@
 
 - (void)searchBarTextDidEndEditing:(UISearchBar *)searchBar
 {
-    
 }
-
 
 - (void)searchBarCancelButtonClicked:(UISearchBar *) searchBar
 {

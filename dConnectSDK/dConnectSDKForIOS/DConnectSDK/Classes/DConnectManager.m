@@ -172,8 +172,18 @@ NSString *const DConnectAttributeNameRequestAccessToken = @"requestAccessToken";
     [DConnectServerProtocol setHost:self.settings.host];
     [DConnectServerProtocol setPort:self.settings.port];
     
-    [DConnectServerProtocol startServerWithHost:self.settings.host port:self.settings.port];
-    
+    BOOL isSuccess = [DConnectServerProtocol startServerWithHost:self.settings.host port:self.settings.port];
+    if (!isSuccess) {
+        self.mStartFlag = NO;
+    }
+}
+- (void) stopByHttpServer {
+    if (!self.mStartFlag) {
+        return;
+    }
+    self.mStartFlag = NO;
+    [DConnectServerProtocol stopServer];
+
 }
 
 - (void) startWebsocket {
@@ -188,7 +198,6 @@ NSString *const DConnectAttributeNameRequestAccessToken = @"requestAccessToken";
 - (BOOL) isStarted {
     return self.mStartFlag;
 }
-
 - (void) sendRequest:(DConnectRequestMessage *)request
               isHttp:(BOOL)isHttp
             callback:(DConnectResponseBlocks)callback

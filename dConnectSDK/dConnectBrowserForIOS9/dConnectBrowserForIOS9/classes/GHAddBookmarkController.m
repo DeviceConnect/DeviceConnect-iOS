@@ -117,8 +117,26 @@
  */
 - (void)done
 {
+    if (self.titleCell.titleField.text.length == 0) {
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"dConnectBrowser"
+                                                                                 message:@"タイトルを入力してください"
+                                                                          preferredStyle:UIAlertControllerStyleAlert];
+        [alertController addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil]];
+        [self presentViewController:alertController animated:YES completion:nil];
+        return;
+    } else if (self.titleCell.urlField.text.length == 0) {
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"dConnectBrowser"
+                                                                                 message:@"URLを入力してください"
+                                                                          preferredStyle:UIAlertControllerStyleAlert];
+        [alertController addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil]];
+        [self presentViewController:alertController animated:YES completion:nil];
+        return;
+    }
+
+    
+    
     //DBへ保存処理
-    [GHURLManager addBookMark:self.titleCell.titleField.text url:self.myPage.url parent:self.directory];
+    [GHURLManager addBookMark:self.titleCell.titleField.text url:self.titleCell.urlField.text parent:self.directory];
     
     if ([GHUtils isiPad]) {
         [GHUtils postNotification:nil withKey:UZMultipleLayeredPopoverDidDismissNotification];

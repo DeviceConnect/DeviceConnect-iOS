@@ -50,7 +50,7 @@
     //URLか判定
     NSDataDetector *dataDetector = [NSDataDetector dataDetectorWithTypes:NSTextCheckingTypeLink error:nil];
     NSArray *resultArray = [dataDetector matchesInString:
-                            [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]
+                                                        [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]
                                                  options:0
                                                    range:NSMakeRange(0,[urlString length])];
     

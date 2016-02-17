@@ -31,7 +31,7 @@
     
     //Cookieの初期設定を更新
     NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
-    [def setObject:@([GHUtils isCookieAccept]) forKey:IS_COOKIE_ACCEPT];
+    [def setObject:@([GHUtils isCookieAccept]) forKey:IS_MANAGER_LAUNCH];
     
     float osVersion = [[[UIDevice currentDevice] systemVersion] floatValue];
     if (osVersion > 8.0) {

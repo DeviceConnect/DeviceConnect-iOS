@@ -74,6 +74,24 @@
     isEditing = !isEditing;
     [self setEdiMode:isEditing];
 }
+- (IBAction)addBookmark:(id)sender {
+    GHPageModel *model = [[GHPageModel alloc]init];
+    model.title = @"";//[self.manager htmlTitle:self.webview];
+    model.url   = @"";//[self.manager htmlURL:self.webview];
+    model.type  = TYPE_BOOKMARK;
+    
+    if (model) {
+        GHAddBookmarkController * addbook = [[GHAddBookmarkController alloc]initWithPage:model];
+        UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:addbook];
+        
+        //    if ([GHUtils isiPad]) {
+        //        [self showPopup:nav button:activityBtn];
+        //    }else{
+        [self presentViewController:nav animated:YES completion:nil];
+        //    }
+    }
+}
+
 
 
 - (void)setEdiMode:(BOOL)edit
@@ -148,7 +166,8 @@
         if([page.type isEqualToString:TYPE_BOOKMARK]){
             NSDictionary* dict = @{PAGE_URL:page.url};
             [GHUtils postNotification:dict withKey:SHOW_WEBPAGE];
-            
+            [self dismissViewControllerAnimated:YES completion:nil];
+
         }else if([page.type isEqualToString:TYPE_FOLDER]){
             //次の階層へ
             UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Bookmark" bundle:[NSBundle mainBundle]];
@@ -361,7 +380,7 @@
         targetPage.priority = @([targetPage.priority integerValue] + (moveDown ? -1 : 1));
     }
  
-    [[GHDataManager shareManager]save];
+    [[GHDataManager shareManager] save];
 }
 
 - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath

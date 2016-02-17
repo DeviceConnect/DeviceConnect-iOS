@@ -20,11 +20,13 @@
 
 @property (nonatomic, strong) GHURLManager *manager;
 @property (nonatomic) NSString* url;
+@property (strong, nonatomic) IBOutlet UIView *searchView;
+@property (nonatomic, strong) GHHeaderView *headerView;
+
 #pragma mark - View position constraint
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *iconTopLeading;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *iconLeftLeading;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *headerLeftLeading;
-@property (strong, nonatomic) IBOutlet GHHeaderView *searchView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *openRightLeading;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *bookmarkRightLeading;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *settingRightLeading;
@@ -52,11 +54,15 @@
 
 - (void)viewDidLoad {
     DConnectManager *mgr = [DConnectManager sharedManager];
-    [mgr startByHttpServer];
 
     [super viewDidLoad];
     CGFloat barW = 300;
     NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
+    BOOL sw = [def boolForKey:IS_MANAGER_LAUNCH];
+    if (sw) {
+        [mgr startByHttpServer];
+    }
+
     BOOL isOriginBlock = [def boolForKey:IS_ORIGIN_BLOCKING];
     mgr.settings.useOriginBlocking = isOriginBlock;
 
@@ -64,10 +70,15 @@
     CGRect frame = CGRectMake(0, 0, barW, 44);
     _manager = [[GHURLManager alloc]init];
     _url = @"http://www.google.com";
-    GHHeaderView *view = [[GHHeaderView alloc]initWithFrame:frame];
-    view.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-    view.delegate = self;
-    [_searchView addSubview:view];
+    _headerView = [[GHHeaderView alloc] initWithFrame:frame];
+    _headerView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+    _headerView.delegate = self;
+    [_searchView addSubview:_headerView];
+    
+    //ブックマークのweb表示通知
+    [[NSNotificationCenter defaultCenter]addObserver:self
+                                            selector:@selector(showWebPage:)
+                                                name:SHOW_WEBPAGE object:nil];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -101,12 +112,9 @@
 #pragma mark - open UI
 
 - (IBAction)openSafariView:(id)sender {
-    void (^loadSFSafariViewControllerBlock)(NSURL *) = ^(NSURL *url) {
-        sfSafariViewController = [[SFSafariViewController alloc] initWithURL:url entersReaderIfAvailable:YES];
-        sfSafariViewController.delegate = self;
-        [self presentViewController:sfSafariViewController animated:YES completion:nil];
-    };
-    loadSFSafariViewControllerBlock([NSURL URLWithString:_url]);
+    
+    NSString *u = _headerView.searchBar.text;
+    [self openSafariViewInternalWithURL:u];
 }
 
 - (IBAction)openBookmarkView:(id)sender {
@@ -133,6 +141,17 @@
 //    }
 
 }
+
+- (void)openSafariViewInternalWithURL:(NSString*)url
+{
+    void (^loadSFSafariViewControllerBlock)(NSURL *) = ^(NSURL *url) {
+        sfSafariViewController = [[SFSafariViewController alloc] initWithURL:url entersReaderIfAvailable:YES];
+        sfSafariViewController.delegate = self;
+        [self presentViewController:sfSafariViewController animated:YES completion:nil];
+    };
+    loadSFSafariViewControllerBlock([NSURL URLWithString:url]);
+}
+
 //--------------------------------------------------------------//
 #pragma mark - GHHeaderViewDelegate delegate
 //--------------------------------------------------------------//
@@ -144,7 +163,7 @@
     if (!_url) {
         _url = [self.manager createSearchURL:urlStr];
     }
-    
+    [self openSafariViewInternalWithURL:_url];
 }
 
 - (void)reload
@@ -156,8 +175,10 @@
 {
 }
 
-
+//--------------------------------------------------------------//
 #pragma mark - SFSafariViewController Delegate Methods
+//--------------------------------------------------------------//
+
 -(void)safariViewController:(SFSafariViewController *)controller didCompleteInitialLoad:(BOOL)didLoadSuccessfully {
     // Load finished
     //    if (didLoadSuccessfully) {
@@ -173,7 +194,9 @@
 
 
 #pragma mark - private method
-
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
+    return YES;
+}
 - (void)rotateOrientation:(UIInterfaceOrientation)toInterfaceOrientation
 {
     _searchViewLeading.constant = 300;
@@ -187,26 +210,39 @@
 
 - (void)iphoneLayoutWithOrientation:(int)toInterfaceOrientation
 {
+    CGSize screen = [UIScreen mainScreen].bounds.size;
+
     _iconHeightSize.constant = 200;
     _iconHeightSize.constant = 200;
-    
-    if (toInterfaceOrientation == UIInterfaceOrientationPortrait |
-        toInterfaceOrientation == UIInterfaceOrientationPortraitUpsideDown)
+    if ((toInterfaceOrientation == UIDeviceOrientationLandscapeLeft ||
+        toInterfaceOrientation == UIDeviceOrientationLandscapeRight)
+        && screen.width < screen.height)
     {
-        _iconTopLeading.constant = 8;
-        _iconLeftLeading.constant = 60;
-        _headerLeftLeading.constant = 10;
-        _openRightLeading.constant = 90;
-        _bookmarkRightLeading.constant = 90;
-        _settingRightLeading.constant = 90;
-    } else {
         _iconTopLeading.constant = 10;
-        _iconLeftLeading.constant = 50;
-        _headerLeftLeading.constant = 30;
-        _searchViewLeading.constant = 250;
-        _openRightLeading.constant = 70;
-        _bookmarkRightLeading.constant = 70;
-        _settingRightLeading.constant = 70;
+        _iconLeftLeading.constant = (screen.height / 2) - 230;
+        _headerLeftLeading.constant = (screen.height / 2) - 280;
+        _openRightLeading.constant = (screen.height / 2) - 200;
+        _bookmarkRightLeading.constant = (screen.height / 2) - 200;
+        _settingRightLeading.constant = (screen.height / 2) - 200;
+        _settingBtnBottomLeading.constant = (screen.height / 2)  - 200;
+    } else {
+        if (screen.width < screen.height) {
+            _iconTopLeading.constant = (screen.height / 2) - 250;
+            _iconLeftLeading.constant = (screen.width / 2) - 100;
+            _headerLeftLeading.constant = (screen.width / 2) - 150;
+            _settingBtnBottomLeading.constant = (screen.height / 2) - 250;
+            _openRightLeading.constant = (screen.width / 2) - 67;
+            _bookmarkRightLeading.constant = (screen.width / 2) - 67;
+            _settingRightLeading.constant = (screen.width / 2) - 67;
+        } else {
+            _iconTopLeading.constant = (screen.width / 2) - 250;
+            _iconLeftLeading.constant = (screen.height / 2) - 100;
+            _headerLeftLeading.constant = (screen.height / 2) - 150;
+            _settingBtnBottomLeading.constant = (screen.width / 2) - 250;
+            _openRightLeading.constant = (screen.height / 2) - 67;
+            _bookmarkRightLeading.constant = (screen.height / 2) - 67;
+            _settingRightLeading.constant = (screen.height / 2) - 67;
+        }
     }
 }
 
@@ -229,7 +265,7 @@
         _openRightLeading.constant = (screen.width / 2) - 138;
         _bookmarkRightLeading.constant = (screen.width / 2) - 138;
         _settingRightLeading.constant = (screen.width / 2) - 138;
-        _settingBtnBottomLeading.constant = 100;
+        _settingBtnBottomLeading.constant = (screen.height / 2) - 400;
         _iconTopLeading.constant = 50;
         _iconLeftLeading.constant = (screen.width / 2) - 200;
         _headerLeftLeading.constant = (screen.width / 2) - 250;
@@ -240,13 +276,35 @@
         _bookmarkRightLeading.constant = (screen.width / 2) - 400;
         _settingRightLeading.constant = (screen.width / 2) - 400;
         
-        
-        _settingBtnBottomLeading.constant = 300;
-        _iconTopLeading.constant = 100;
+        _settingBtnBottomLeading.constant = (screen.height / 2) - 50;
+        _iconTopLeading.constant = (screen.height / 2) - 300;
         _iconLeftLeading.constant = (screen.width / 2) - 450;
         _headerLeftLeading.constant = (screen.width / 2) - 500;
         
     }
+}
+
+
+#pragma mark - Notification Center
+
+/**
+ * ブックマークのアドレスをwebで表示する
+ * 表示するurlはNSNotificationのモデル、PAGE_URLキーに入っている
+ * @param notif 通知モデル
+ */
+- (void)showWebPage:(NSNotification*)notif
+{
+    NSDictionary *dict = notif.userInfo;
+    _url = [dict objectForKey:PAGE_URL];
+    
+    _url = [self.manager isURLString:_url];
+    if (!_url) {
+        _url = [self.manager createSearchURL:_url];
+    }
+    
+    [self performSelector:@selector(openSafariViewInternalWithURL:) withObject:_url afterDelay:0.75];
+    
+
 }
 
 @end

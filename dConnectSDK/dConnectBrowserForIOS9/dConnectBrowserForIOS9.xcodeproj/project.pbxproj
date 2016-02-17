@@ -27,8 +27,6 @@
 		AB00F2141C719AA800689C70 /* DConnectSDK_resources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = AB00F2121C719AA800689C70 /* DConnectSDK_resources.bundle */; };
 		AB00F2151C719AA800689C70 /* DConnectSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB00F2131C719AA800689C70 /* DConnectSDK.framework */; };
 		AB00F2171C719AB700689C70 /* DCMDevicePluginSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB00F2161C719AB700689C70 /* DCMDevicePluginSDK.framework */; };
-		AB00F21A1C719B2B00689C70 /* dConnectDeviceAllJoyn_resources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = AB00F2181C719B2B00689C70 /* dConnectDeviceAllJoyn_resources.bundle */; };
-		AB00F21B1C719B2B00689C70 /* dConnectDeviceAllJoyn.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB00F2191C719B2B00689C70 /* dConnectDeviceAllJoyn.framework */; };
 		AB00F21E1C719B3900689C70 /* dConnectDeviceChromecast_resources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = AB00F21C1C719B3900689C70 /* dConnectDeviceChromecast_resources.bundle */; };
 		AB00F21F1C719B3900689C70 /* dConnectDeviceChromecast.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB00F21D1C719B3900689C70 /* dConnectDeviceChromecast.framework */; };
 		AB00F2211C719B4000689C70 /* GoogleCast.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB00F2201C719B4000689C70 /* GoogleCast.framework */; };
@@ -45,11 +43,6 @@
 		AB00F2371C719B7600689C70 /* dConnectDevicePebble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB00F2351C719B7600689C70 /* dConnectDevicePebble.framework */; };
 		AB00F23A1C719B8100689C70 /* dConnectDeviceSonyCamera_resources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = AB00F2381C719B8100689C70 /* dConnectDeviceSonyCamera_resources.bundle */; };
 		AB00F23B1C719B8100689C70 /* dConnectDeviceSonyCamera.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB00F2391C719B8100689C70 /* dConnectDeviceSonyCamera.framework */; };
-		AB00F23E1C719B8C00689C70 /* dConnectDeviceSphero_resources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = AB00F23C1C719B8C00689C70 /* dConnectDeviceSphero_resources.bundle */; };
-		AB00F23F1C719B8C00689C70 /* dConnectDeviceSphero.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB00F23D1C719B8C00689C70 /* dConnectDeviceSphero.framework */; };
-		AB00F2431C719B9300689C70 /* RobotKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB00F2401C719B9300689C70 /* RobotKit.framework */; };
-		AB00F2441C719B9300689C70 /* RobotUIKit.bundle in Resources */ = {isa = PBXBuildFile; fileRef = AB00F2411C719B9300689C70 /* RobotUIKit.bundle */; };
-		AB00F2451C719B9300689C70 /* RobotUIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB00F2421C719B9300689C70 /* RobotUIKit.framework */; };
 		AB00F2481C719B9C00689C70 /* dConnectDeviceTheta_resources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = AB00F2461C719B9C00689C70 /* dConnectDeviceTheta_resources.bundle */; };
 		AB00F2491C719B9C00689C70 /* dConnectDeviceTheta.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB00F2471C719B9C00689C70 /* dConnectDeviceTheta.framework */; };
 		AB00F24B1C719F3100689C70 /* ExternalAccessory.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB00F24A1C719F3100689C70 /* ExternalAccessory.framework */; };
@@ -151,8 +144,6 @@
 		AB00F2121C719AA800689C70 /* DConnectSDK_resources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = DConnectSDK_resources.bundle; path = ../dConnectSDKForIOS/bin/DConnectSDK_resources.bundle; sourceTree = "<group>"; };
 		AB00F2131C719AA800689C70 /* DConnectSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DConnectSDK.framework; path = ../dConnectSDKForIOS/bin/DConnectSDK.framework; sourceTree = "<group>"; };
 		AB00F2161C719AB700689C70 /* DCMDevicePluginSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DCMDevicePluginSDK.framework; path = ../../dConnectDevicePlugin/DCMDevicePluginSDK/bin/DCMDevicePluginSDK.framework; sourceTree = "<group>"; };
-		AB00F2181C719B2B00689C70 /* dConnectDeviceAllJoyn_resources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = dConnectDeviceAllJoyn_resources.bundle; path = ../../dConnectDevicePlugin/dConnectDeviceAllJoyn/bin/dConnectDeviceAllJoyn_resources.bundle; sourceTree = "<group>"; };
-		AB00F2191C719B2B00689C70 /* dConnectDeviceAllJoyn.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = dConnectDeviceAllJoyn.framework; path = ../../dConnectDevicePlugin/dConnectDeviceAllJoyn/bin/dConnectDeviceAllJoyn.framework; sourceTree = "<group>"; };
 		AB00F21C1C719B3900689C70 /* dConnectDeviceChromecast_resources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = dConnectDeviceChromecast_resources.bundle; path = ../../dConnectDevicePlugin/dConnectDeviceChromeCast/bin/dConnectDeviceChromecast_resources.bundle; sourceTree = "<group>"; };
 		AB00F21D1C719B3900689C70 /* dConnectDeviceChromecast.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = dConnectDeviceChromecast.framework; path = ../../dConnectDevicePlugin/dConnectDeviceChromeCast/bin/dConnectDeviceChromecast.framework; sourceTree = "<group>"; };
 		AB00F2201C719B4000689C70 /* GoogleCast.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleCast.framework; path = "../../dConnectDevicePlugin/dConnectDeviceChromeCast/GoogleCastSDK-2.6.0-Release/GoogleCast.framework"; sourceTree = "<group>"; };
@@ -169,11 +160,6 @@
 		AB00F2351C719B7600689C70 /* dConnectDevicePebble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = dConnectDevicePebble.framework; path = ../../dConnectDevicePlugin/dConnectDevicePebble/bin/dConnectDevicePebble.framework; sourceTree = "<group>"; };
 		AB00F2381C719B8100689C70 /* dConnectDeviceSonyCamera_resources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = dConnectDeviceSonyCamera_resources.bundle; path = ../../dConnectDevicePlugin/dConnectDeviceSonyCamera/bin/dConnectDeviceSonyCamera_resources.bundle; sourceTree = "<group>"; };
 		AB00F2391C719B8100689C70 /* dConnectDeviceSonyCamera.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = dConnectDeviceSonyCamera.framework; path = ../../dConnectDevicePlugin/dConnectDeviceSonyCamera/bin/dConnectDeviceSonyCamera.framework; sourceTree = "<group>"; };
-		AB00F23C1C719B8C00689C70 /* dConnectDeviceSphero_resources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = dConnectDeviceSphero_resources.bundle; path = ../../dConnectDevicePlugin/dConnectDeviceSphero/bin/dConnectDeviceSphero_resources.bundle; sourceTree = "<group>"; };
-		AB00F23D1C719B8C00689C70 /* dConnectDeviceSphero.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = dConnectDeviceSphero.framework; path = ../../dConnectDevicePlugin/dConnectDeviceSphero/bin/dConnectDeviceSphero.framework; sourceTree = "<group>"; };
-		AB00F2401C719B9300689C70 /* RobotKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RobotKit.framework; path = ../../dConnectDevicePlugin/dConnectDeviceSphero/RobotKit.framework; sourceTree = "<group>"; };
-		AB00F2411C719B9300689C70 /* RobotUIKit.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = RobotUIKit.bundle; path = ../../dConnectDevicePlugin/dConnectDeviceSphero/RobotUIKit.bundle; sourceTree = "<group>"; };
-		AB00F2421C719B9300689C70 /* RobotUIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RobotUIKit.framework; path = ../../dConnectDevicePlugin/dConnectDeviceSphero/RobotUIKit.framework; sourceTree = "<group>"; };
 		AB00F2461C719B9C00689C70 /* dConnectDeviceTheta_resources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = dConnectDeviceTheta_resources.bundle; path = ../../dConnectDevicePlugin/dConnectDeviceTheta/bin/dConnectDeviceTheta_resources.bundle; sourceTree = "<group>"; };
 		AB00F2471C719B9C00689C70 /* dConnectDeviceTheta.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = dConnectDeviceTheta.framework; path = ../../dConnectDevicePlugin/dConnectDeviceTheta/bin/dConnectDeviceTheta.framework; sourceTree = "<group>"; };
 		AB00F24A1C719F3100689C70 /* ExternalAccessory.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ExternalAccessory.framework; path = System/Library/Frameworks/ExternalAccessory.framework; sourceTree = SDKROOT; };
@@ -310,7 +296,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				AB00F2111C719A8F00689C70 /* UIKit.framework in Frameworks */,
-				AB00F21B1C719B2B00689C70 /* dConnectDeviceAllJoyn.framework in Frameworks */,
 				AB00F20F1C719A8600689C70 /* CoreGraphics.framework in Frameworks */,
 				AB00F20D1C719A7D00689C70 /* Foundation.framework in Frameworks */,
 				AB00F20B1C719A6A00689C70 /* CoreData.framework in Frameworks */,
@@ -327,13 +312,10 @@
 				AB00F2051C719A0300689C70 /* CoreFoundation.framework in Frameworks */,
 				AB00F2031C7199F500689C70 /* ImageIO.framework in Frameworks */,
 				AB00F2251C719B4B00689C70 /* dConnectDeviceHost.framework in Frameworks */,
-				AB00F23F1C719B8C00689C70 /* dConnectDeviceSphero.framework in Frameworks */,
 				AB00F2011C7199EB00689C70 /* libiconv.tbd in Frameworks */,
 				AB00F1FF1C7199B800689C70 /* libstdc++.6.0.9.tbd in Frameworks */,
-				AB00F2451C719B9300689C70 /* RobotUIKit.framework in Frameworks */,
 				AB00F2211C719B4000689C70 /* GoogleCast.framework in Frameworks */,
 				AB00F1FD1C7199AC00689C70 /* libiconv.2.4.0.tbd in Frameworks */,
-				AB00F2431C719B9300689C70 /* RobotKit.framework in Frameworks */,
 				AB00F2491C719B9C00689C70 /* dConnectDeviceTheta.framework in Frameworks */,
 				AB00F22B1C719B5B00689C70 /* HueSDK_iOS.framework in Frameworks */,
 				AB00F2291C719B5500689C70 /* dConnectDeviceHue.framework in Frameworks */,
@@ -398,11 +380,6 @@
 				AB00F24A1C719F3100689C70 /* ExternalAccessory.framework */,
 				AB00F2461C719B9C00689C70 /* dConnectDeviceTheta_resources.bundle */,
 				AB00F2471C719B9C00689C70 /* dConnectDeviceTheta.framework */,
-				AB00F2401C719B9300689C70 /* RobotKit.framework */,
-				AB00F2411C719B9300689C70 /* RobotUIKit.bundle */,
-				AB00F2421C719B9300689C70 /* RobotUIKit.framework */,
-				AB00F23C1C719B8C00689C70 /* dConnectDeviceSphero_resources.bundle */,
-				AB00F23D1C719B8C00689C70 /* dConnectDeviceSphero.framework */,
 				AB00F2381C719B8100689C70 /* dConnectDeviceSonyCamera_resources.bundle */,
 				AB00F2391C719B8100689C70 /* dConnectDeviceSonyCamera.framework */,
 				AB00F2341C719B7600689C70 /* dConnectDevicePebble_resources.bundle */,
@@ -419,8 +396,6 @@
 				AB00F2201C719B4000689C70 /* GoogleCast.framework */,
 				AB00F21C1C719B3900689C70 /* dConnectDeviceChromecast_resources.bundle */,
 				AB00F21D1C719B3900689C70 /* dConnectDeviceChromecast.framework */,
-				AB00F2181C719B2B00689C70 /* dConnectDeviceAllJoyn_resources.bundle */,
-				AB00F2191C719B2B00689C70 /* dConnectDeviceAllJoyn.framework */,
 				AB00F2161C719AB700689C70 /* DCMDevicePluginSDK.framework */,
 				AB00F2121C719AA800689C70 /* DConnectSDK_resources.bundle */,
 				AB00F2131C719AA800689C70 /* DConnectSDK.framework */,
@@ -826,14 +801,11 @@
 				AB00F3161C71A2DB00689C70 /* setting@2x.png in Resources */,
 				AB00F3141C71A2DB00689C70 /* print@2x.png in Resources */,
 				AB00F2281C719B5500689C70 /* dConnectDeviceHue_resources.bundle in Resources */,
-				AB00F23E1C719B8C00689C70 /* dConnectDeviceSphero_resources.bundle in Resources */,
-				AB00F21A1C719B2B00689C70 /* dConnectDeviceAllJoyn_resources.bundle in Resources */,
 				AB00F2F31C71A29D00689C70 /* GHPageViewCell.xib in Resources */,
 				AB00F23A1C719B8100689C70 /* dConnectDeviceSonyCamera_resources.bundle in Resources */,
 				AB00F30E1C71A2DB00689C70 /* arrow-next@2x.png in Resources */,
 				AB00F3281C71A93700689C70 /* Popup.storyboard in Resources */,
 				AB00F3271C71A93700689C70 /* Bookmark.storyboard in Resources */,
-				AB00F2441C719B9300689C70 /* RobotUIKit.bundle in Resources */,
 				AB00F2361C719B7600689C70 /* dConnectDevicePebble_resources.bundle in Resources */,
 				AB00F2141C719AA800689C70 /* DConnectSDK_resources.bundle in Resources */,
 				AB00F30C1C71A2DB00689C70 /* addBookmark@2x.png in Resources */,
@@ -1052,6 +1024,24 @@
 				CODE_SIGN_ENTITLEMENTS = dConnectBrowserForIOS9/dConnectBrowserForIOS9.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/../dConnectSDKForIOS/bin",
+					"$(PROJECT_DIR)/../../dConnectDevicePlugin/dConnectDeviceHost/bin",
+					"$(PROJECT_DIR)/../../dConnectDevicePlugin/dConnectDeviceHue/bin",
+					"$(PROJECT_DIR)/../../dConnectDevicePlugin/dConnectDeviceHue/",
+					"$(PROJECT_DIR)/../../dConnectDevicePlugin/dConnectDeviceSonyCamera/bin",
+					"$(PROJECT_DIR)/../../dConnectDevicePlugin/dConnectDeviceSphero/bin",
+					"$(PROJECT_DIR)/../../dConnectDevicePlugin/dConnectDeviceSphero",
+					"$(PROJECT_DIR)/../../dConnectDevicePlugin/DCMDevicePluginSDK/bin",
+					"$(PROJECT_DIR)/../../dConnectDevicePlugin/dConnectDeviceIRKit/bin",
+					"$(PROJECT_DIR)/../../dConnectDevicePlugin/dConnectDeviceChromeCast/bin",
+					"$(PROJECT_DIR)/../../dConnectDevicePlugin/dConnectDeviceChromeCast/GoogleCastSDK-2.6.0-Release",
+					"$(PROJECT_DIR)/../../dConnectDevicePlugin/dConnectDevicePebble/bin",
+					"$(PROJECT_DIR)/../../dConnectDevicePlugin/dConnectDevicePebble",
+					"$(PROJECT_DIR)/../../dConnectDevicePlugin/dConnectDeviceTheta/bin",
+					"$(PROJECT_DIR)/../../dConnectDevicePlugin/dConnectDeviceAllJoyn/bin",
+				);
 				GCC_PREFIX_HEADER = "dConnectBrowserForIOS9/dConnectBrowserForIOS9-Prefix.pch";
 				INFOPLIST_FILE = dConnectBrowserForIOS9/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1077,6 +1067,24 @@
 				CODE_SIGN_ENTITLEMENTS = dConnectBrowserForIOS9/dConnectBrowserForIOS9.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/../dConnectSDKForIOS/bin",
+					"$(PROJECT_DIR)/../../dConnectDevicePlugin/dConnectDeviceHost/bin",
+					"$(PROJECT_DIR)/../../dConnectDevicePlugin/dConnectDeviceHue/bin",
+					"$(PROJECT_DIR)/../../dConnectDevicePlugin/dConnectDeviceHue/",
+					"$(PROJECT_DIR)/../../dConnectDevicePlugin/dConnectDeviceSonyCamera/bin",
+					"$(PROJECT_DIR)/../../dConnectDevicePlugin/dConnectDeviceSphero/bin",
+					"$(PROJECT_DIR)/../../dConnectDevicePlugin/dConnectDeviceSphero",
+					"$(PROJECT_DIR)/../../dConnectDevicePlugin/DCMDevicePluginSDK/bin",
+					"$(PROJECT_DIR)/../../dConnectDevicePlugin/dConnectDeviceIRKit/bin",
+					"$(PROJECT_DIR)/../../dConnectDevicePlugin/dConnectDeviceChromeCast/bin",
+					"$(PROJECT_DIR)/../../dConnectDevicePlugin/dConnectDeviceChromeCast/GoogleCastSDK-2.6.0-Release",
+					"$(PROJECT_DIR)/../../dConnectDevicePlugin/dConnectDevicePebble/bin",
+					"$(PROJECT_DIR)/../../dConnectDevicePlugin/dConnectDevicePebble",
+					"$(PROJECT_DIR)/../../dConnectDevicePlugin/dConnectDeviceTheta/bin",
+					"$(PROJECT_DIR)/../../dConnectDevicePlugin/dConnectDeviceAllJoyn/bin",
+				);
 				GCC_PREFIX_HEADER = "dConnectBrowserForIOS9/dConnectBrowserForIOS9-Prefix.pch";
 				INFOPLIST_FILE = dConnectBrowserForIOS9/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

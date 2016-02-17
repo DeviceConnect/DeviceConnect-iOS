@@ -27,7 +27,7 @@ static NSString *scheme = @"http";
 
 static RoutingHTTPServer *mHttpServer;
 
-+ (void)startServerWithHost:(NSString*)host port:(int)port
++ (BOOL)startServerWithHost:(NSString*)host port:(int)port
 {
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentsDirectory = [paths objectAtIndex:0];
@@ -55,13 +55,9 @@ static RoutingHTTPServer *mHttpServer;
     
     NSError *error;
     if([mHttpServer start:&error]) {
-        NSString *ip = [GCIPUtil myIPAddress];
-        UInt16 port = [mHttpServer listeningPort];
-        NSString *address = [NSString stringWithFormat:@"%@:%hu", ip, port];
-        NSLog(@"server=%@", address);
+        return YES;
     } else {
-        NSString *msg = [NSString stringWithFormat:@"Error starting HTTP Server: %@", error];
-        NSLog(@"error=%@", msg);
+        return NO;
     }
 }
 
@@ -71,6 +67,7 @@ static RoutingHTTPServer *mHttpServer;
         [mHttpServer stop];
     }
 }
+
 
 + (void) sendEvent:(NSString *)event forSessionKey:(NSString *)sessionKey
 {

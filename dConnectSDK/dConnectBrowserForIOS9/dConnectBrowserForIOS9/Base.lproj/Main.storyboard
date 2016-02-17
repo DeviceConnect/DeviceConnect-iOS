@@ -27,7 +27,7 @@
                                     <constraint firstAttribute="height" constant="200" id="BAB-89-RYB"/>
                                 </constraints>
                             </imageView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="35h-Nc-wKR" customClass="GHHeaderView">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="35h-Nc-wKR">
                                 <rect key="frame" x="150" y="245" width="300" height="48"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
@@ -105,7 +105,7 @@
                         <outlet property="openBtnHeightSize" destination="TsY-z6-RPx" id="IZD-QA-ev0"/>
                         <outlet property="openBtnWidthSize" destination="nbI-L0-Drm" id="lbr-Kv-CYz"/>
                         <outlet property="openRightLeading" destination="H5E-g1-OOx" id="KAJ-kL-Cyr"/>
-                        <outlet property="searchView" destination="35h-Nc-wKR" id="dOe-ho-c2f"/>
+                        <outlet property="searchView" destination="35h-Nc-wKR" id="6kh-Ee-iPk"/>
                         <outlet property="searchViewHeightSize" destination="pg7-x0-gBD" id="Q3i-fM-GJd"/>
                         <outlet property="searchViewLeading" destination="BSE-ky-R0h" id="vjw-Qp-d0n"/>
                         <outlet property="searchViewWidthSize" destination="BSE-ky-R0h" id="G3w-Nr-xxw"/>

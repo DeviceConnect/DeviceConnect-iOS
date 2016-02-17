@@ -102,7 +102,22 @@ extern NSString *const DConnectApplicationWillEnterForeground;
  </p>
  */
 - (void) start;
+
+/*!
+ @brief HTTPサーバによるDConnectManagerを開始する。
+ 
+ <p>
+ この関数が呼び出されることでDConnectManagerが起動する。<br/>
+ 2回目以降startが呼び出されてもDConnectManagerは何も処理を行わない。
+ </p>
+ */
 - (void) startByHttpServer;
+
+/*!
+ @brief DConnectManagerを停止する。
+ 
+ */
+- (void) stopByHttpServer;
 /*!
  @brief Websocketサーバを起動する。
  */

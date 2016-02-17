@@ -176,7 +176,7 @@
     
     //page.typeを見て遷移する先を選ぶ （お気に入り、履歴、ブックマーク、フォルダ）
     Page* page = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    
+
     //編集中はブックマークのみ処理
     if (isEditing) {
         if ([page.type isEqualToString:TYPE_BOOKMARK]) {
@@ -185,10 +185,11 @@
         }
     }else{
         if ([page.type isEqualToString:TYPE_BOOKMARK]){
+
             //ブックマーク
             NSDictionary* dict = @{PAGE_URL:page.url};
             [GHUtils postNotification:dict withKey:SHOW_WEBPAGE];
-            
+            [self dismissViewControllerAnimated:YES completion:nil];
         }else{
             if ([page.type isEqualToString:TYPE_FAVORITE] || [page.type isEqualToString:TYPE_FOLDER]) {
                 //お気に入り & フォルダ
@@ -384,14 +385,14 @@
             cell.textLabel.tintColor = [UIColor grayColor];
         }
         
-    }else if ([page.type isEqualToString:TYPE_HISTORY]){
-        //履歴
-        cell.imageView.image = [UIImage imageNamed:@"history"];
-        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        
-        if (isEditing) {
-            cell.textLabel.tintColor = [UIColor grayColor];
-        }
+//    }else if ([page.type isEqualToString:TYPE_HISTORY]){
+//        //履歴
+//        cell.imageView.image = [UIImage imageNamed:@"history"];
+//        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+//        
+//        if (isEditing) {
+//            cell.textLabel.tintColor = [UIColor grayColor];
+//        }
         
     }else if ([page.type isEqualToString:TYPE_BOOKMARK]){
         //ブックマーク
