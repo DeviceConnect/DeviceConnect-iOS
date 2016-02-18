@@ -57,7 +57,7 @@
     for (NSTextCheckingResult *result in resultArray){
         if ([result resultType] == NSTextCheckingTypeLink){
             NSURL *url = [result URL];
-            LOG(@"scheme:%@ url:%@", [url scheme], [url description]);
+            NSLog(@"scheme:%@ url:%@", [url scheme], [url description]);
             return [url description];
         }
     }
@@ -274,13 +274,13 @@
     }else if(_navigationType == webview_NavigationType_goforward_jump ||
              _navigationType == webview_NavigationType_goback_jump){
         //進む・戻る履歴から遷移
-        LOG(@"_currentIndex:%d", (int)_currentIndex );
+        NSLog(@"_currentIndex:%d", (int)_currentIndex );
     } else {
     
         //新しい履歴ラインになる
         //現在位置より先にある履歴は削除
         if (_currentIndex < [self.histroyBack count]) {
-            LOG(@"=== 新しい履歴ライン ===");
+            NSLog(@"=== 新しい履歴ライン ===");
             
             for (int i = (int)[self.histroyBack count] ; i > _currentIndex; i--) {
                 [self.histroyBack removeObject:[self.histroyBack lastObject]];
@@ -351,9 +351,9 @@
     } else if(type == webview_NavigationType_goforward){
         index = (int)_currentIndex;
     }
-    LOG(@"index:%d", index);
+    NSLog(@"index:%d", index);
     if (index < 0 || index >= [self.histroyBack count]) {
-        LOG(@"index is invalid");
+        NSLog(@"index is invalid");
         return nil;
     }
     
@@ -388,7 +388,6 @@
 
 - (void)finishLoading:(UIWebView*)webview
 {
-    LOG_METHOD
     int length = (int)[self historyLength:webview];
     int count  = (int)[self.histroyBack count];
     
@@ -411,7 +410,7 @@
 
     isJump = NO;
     
-    LOG(@"length:%d", length);
+    NSLog(@"length:%d", length);
     [self debug];
 }
 
@@ -449,13 +448,13 @@
 - (void)debug
 {
 #ifdef DEBUG
-    LOG(@"--:%d", (int)_currentIndex );
+    NSLog(@"--:%d", (int)_currentIndex );
     int i = 1;
     for (GHPageModel* model in self.histroyBack) {
         if (i == _currentIndex) {
-            LOG(@"->[%d]:%@", i, model.url );
+            NSLog(@"->[%d]:%@", i, model.url );
         }else{
-            LOG(@"  [%d]:%@", i, model.url );
+            NSLog(@"  [%d]:%@", i, model.url );
         }
         
         i++;
@@ -486,7 +485,7 @@
             break;
     }
     
-    LOG(@"navigationType:%@", type);
+    NSLog(@"navigationType:%@", type);
 #endif
 }
 

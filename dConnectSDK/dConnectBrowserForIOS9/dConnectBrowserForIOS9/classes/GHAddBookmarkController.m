@@ -74,7 +74,7 @@
     if (!self.directory) {
         
         //初期位置はお気に入り
-        NSArray* favorites = [[GHDataManager shareManager]getModelDataByPredicate:[NSPredicate predicateWithFormat:@"type = %@", TYPE_FAVORITE] withEntityName:@"Page" context:nil];
+        NSArray* favorites = [[GHDataManager shareManager] getModelDataByPredicate:[NSPredicate predicateWithFormat:@"type = %@", TYPE_FAVORITE] withEntityName:@"Page" context:nil];
         
         if ([favorites count] > 0) {
             self.directory = [favorites firstObject];

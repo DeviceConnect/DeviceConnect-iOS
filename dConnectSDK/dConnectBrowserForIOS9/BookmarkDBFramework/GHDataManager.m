@@ -9,7 +9,8 @@
 
 #import "GHDataManager.h"
 #import "SVProgressHUD.h"
-
+#import "GHUtils.h"
+#import "GHConfig.h"
 @implementation GHDataManager
 
 //--------------------------------------------------------------//
@@ -234,7 +235,7 @@ static GHDataManager* mgr = nil;
 		return _managedObjectModel;
 	}
     
-	NSURL *modelURL = [[NSBundle mainBundle] URLForResource:@"db" withExtension:@"momd"];
+	NSURL *modelURL = [[NSBundle bundleForClass:[self class]]  URLForResource:@"db" withExtension:@"momd"];
 	_managedObjectModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];
 	return _managedObjectModel;
 }
@@ -258,8 +259,6 @@ static GHDataManager* mgr = nil;
         BOOL isCompatible = [[self getManagedObjectModel] isConfiguration:nil compatibleWithStoreMetadata:sourceMetaData];
         
         if (!isCompatible) {
-            LOG(@"マイグレーションが必要");
-            
             //CoreDataの自動マイグレーションオプションを設定
             options = @{NSMigratePersistentStoresAutomaticallyOption:@(YES),
                         NSInferMappingModelAutomaticallyOption:@(YES)};
@@ -269,9 +268,9 @@ static GHDataManager* mgr = nil;
     }
     
 	error = nil;
-	_persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:[self getManagedObjectModel]];
+    NSManagedObjectModel *_managerObject =[self getManagedObjectModel];
+	_persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:_managerObject];
 	if (![_persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:options error:&error]) {
-		LOG(@"Unresolved error %@, %@", error, [error userInfo]);
 		return nil;
 	}
 
@@ -280,7 +279,8 @@ static GHDataManager* mgr = nil;
 
 - (NSURL *)applicationDocumentsDirectory
 {
-	return [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
+    return [[NSFileManager defaultManager] containerURLForSecurityApplicationGroupIdentifier:@"group.com.deviceconnect.dConnectBrowserForIOS9"];
+//	return [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
 }
 
 - (void)startMigration
@@ -506,7 +506,7 @@ static GHDataManager* mgr = nil;
         NSError *error;
         if (![[NSFileManager defaultManager]removeItemAtPath:dir
                                                       error:&error]){
-            LOG(@"error %@", error);
+            NSLog(@"error %@", error);
         } ;
         
         NSURLCache* cache = [NSURLCache sharedURLCache];

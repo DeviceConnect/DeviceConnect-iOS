@@ -53,6 +53,17 @@
 @implementation ViewController
 
 - (void)viewDidLoad {
+    id<UIApplicationDelegate> appDelegate
+    = [UIApplication sharedApplication].delegate;
+    if ([appDelegate isKindOfClass:[AppDelegate class]]) {
+        [(AppDelegate *)appDelegate
+         setURLLoadingCallback:^(NSURL* redirectURL){
+             if (redirectURL) {
+                 [self openSafariViewInternalWithURL:redirectURL.absoluteString];
+             }
+         }];
+    }
+
     DConnectManager *mgr = [DConnectManager sharedManager];
 
     [super viewDidLoad];
@@ -80,7 +91,6 @@
                                             selector:@selector(showWebPage:)
                                                 name:SHOW_WEBPAGE object:nil];
 }
-
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
@@ -94,7 +104,7 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-// View表示時
+
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
@@ -105,7 +115,7 @@
 
 }
 
-// View回転時
+
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
                                 duration:(NSTimeInterval)duration
 {

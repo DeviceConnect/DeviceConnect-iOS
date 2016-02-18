@@ -27,7 +27,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     //DBの初期値を設定
     //起動時にキャッシュ画像も一旦削除
-    [[GHDataManager shareManager]initPrefs];
+    [[GHDataManager shareManager] initPrefs];
     
     //Cookieの初期設定を更新
     NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
@@ -70,6 +70,7 @@
 }
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
 {
+    NSLog(@"openURL");
     if (![url.scheme isEqualToString:@"dconnect"] && ![url.scheme isEqualToString:@"gotapi"]) {
         return NO;
     }
@@ -80,7 +81,6 @@
         // UIApplicationWillEnterForegroundNotification通知オブザベーションによりコールバックが呼ばれた場合、
         // NSURLを引数に取るコールバックが保持される。その上で「dconnect」または「gotapi」URLスキーム経由でリダイレクト先URLが飛んできたのなら、
         // このコールバックにコールバックURLを渡す。
-        
         _URLLoadingCallback(redirectURL);
         _URLLoadingCallback = nil;
         return YES;

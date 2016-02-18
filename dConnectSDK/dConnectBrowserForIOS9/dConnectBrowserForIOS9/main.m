@@ -1,9 +1,10 @@
 //
 //  main.m
-//  dConnectBrowserForIOS9ForIOS9
+//  dConnectBrowserForIOS9
 //
-//  Created by 星　貴之 on 2016/02/15.
-//  Copyright © 2016年 GClue,Inc. All rights reserved.
+//  Copyright (c) 2016 NTT DOCOMO,INC.
+//  Released under the MIT license
+//  http://opensource.org/licenses/mit-license.php
 //
 
 #import <UIKit/UIKit.h>

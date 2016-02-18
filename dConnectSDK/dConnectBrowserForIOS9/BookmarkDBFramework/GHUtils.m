@@ -161,7 +161,7 @@
                                      withIntermediateDirectories:YES
                                                       attributes:nil
                                                            error:&error]) {
-            LOG(@"error %@", error);
+            NSLog(@"error %@", error);
         } ;
     }
     
@@ -183,7 +183,7 @@
     if([[NSFileManager defaultManager]fileExistsAtPath:imgdir]){
         return [UIImage imageWithContentsOfFile:imgdir];
     } else {
-        LOG(@"画像無し");
+        NSLog(@"画像無し");
         return nil;
     }
 }
@@ -203,7 +203,7 @@
     NSString* caputureImageDir = [self caputureImageDir];
     if (caputureImageDir) {
         [[NSFileManager defaultManager]removeItemAtPath:caputureImageDir error:nil];
-        LOG(@"キャプチャ画像削除");
+        NSLog(@"キャプチャ画像削除");
     }
 }
 

@@ -8,7 +8,9 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 #import "GHDataManager.h"
+#import "GHConfig.h"
 
 typedef enum{
     webview_NavigationType_click = 0,

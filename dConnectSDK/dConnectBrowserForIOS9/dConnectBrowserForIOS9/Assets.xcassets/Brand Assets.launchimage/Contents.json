@@ -3,22 +3,33 @@
     {
       "orientation" : "portrait",
       "idiom" : "ipad",
-      "minimum-system-version" : "7.0",
+      "filename" : "icon_512px-11.png",
       "extent" : "full-screen",
-      "scale" : "2x"
-    },
-    {
-      "orientation" : "landscape",
-      "idiom" : "ipad",
       "minimum-system-version" : "7.0",
-      "extent" : "full-screen",
       "scale" : "1x"
     },
     {
       "orientation" : "landscape",
       "idiom" : "ipad",
-      "minimum-system-version" : "7.0",
+      "filename" : "icon_512px-13.png",
       "extent" : "full-screen",
+      "minimum-system-version" : "7.0",
+      "scale" : "1x"
+    },
+    {
+      "orientation" : "portrait",
+      "idiom" : "ipad",
+      "filename" : "icon_512px-12.png",
+      "extent" : "full-screen",
+      "minimum-system-version" : "7.0",
+      "scale" : "2x"
+    },
+    {
+      "orientation" : "landscape",
+      "idiom" : "ipad",
+      "filename" : "icon_512px-14.png",
+      "extent" : "full-screen",
+      "minimum-system-version" : "7.0",
       "scale" : "2x"
     },
     {
@@ -33,13 +44,6 @@
       "minimum-system-version" : "7.0",
       "subtype" : "retina4",
       "scale" : "2x"
-    },
-    {
-      "orientation" : "portrait",
-      "idiom" : "ipad",
-      "minimum-system-version" : "7.0",
-      "extent" : "full-screen",
-      "scale" : "1x"
     }
   ],
   "info" : {
