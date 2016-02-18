@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="vdZ-Z3-hgQ">
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
     </dependencies>
     <scenes>
@@ -25,7 +24,7 @@
                                             <rect key="frame" x="15" y="0.0" width="270" height="59.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
@@ -64,7 +63,6 @@
                         <outlet property="doneBtn" destination="vyf-kz-M2b" id="1KP-pX-Dnd"/>
                         <outlet property="editBtn" destination="nQV-XX-oMJ" id="Owj-aH-SNa"/>
                         <outlet property="folderBtn" destination="sZR-Zp-uDk" id="F6E-9M-kvR"/>
-                        <segue destination="eCr-Bu-LOf" kind="push" identifier="history" id="ayW-Up-1yU"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vtK-cN-y28" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -78,7 +76,7 @@
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="RkO-Af-foJ">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="Zh5-cU-K9h" customClass="GHFolderTitleCell">
                                 <rect key="frame" x="0.0" y="114" width="320" height="44"/>
@@ -99,53 +97,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tgU-Zf-4T8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2876" y="-489"/>
-        </scene>
-        <!--History View Controller-->
-        <scene sceneID="Mbf-li-ltO">
-            <objects>
-                <tableViewController id="eCr-Bu-LOf" customClass="GHHistoryViewController" sceneMemberID="viewController">
-                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="IFN-rm-2L8">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="XZx-21-Ypg">
-                                <rect key="frame" x="0.0" y="86" width="320" height="44"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="XZx-21-Ypg" id="tRi-5z-YBK">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                </tableViewCellContentView>
-                            </tableViewCell>
-                        </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="eCr-Bu-LOf" id="7jf-Ue-UHu"/>
-                            <outlet property="delegate" destination="eCr-Bu-LOf" id="QX9-r2-GPl"/>
-                        </connections>
-                    </tableView>
-                    <toolbarItems>
-                        <barButtonItem style="plain" systemItem="flexibleSpace" id="TIA-9m-gnu"/>
-                        <barButtonItem title="消去" id="Doj-c7-EZw">
-                            <connections>
-                                <action selector="eraseAll:" destination="eCr-Bu-LOf" id="MqS-3y-G70"/>
-                            </connections>
-                        </barButtonItem>
-                    </toolbarItems>
-                    <navigationItem key="navigationItem" id="RyL-fl-ajs">
-                        <barButtonItem key="rightBarButtonItem" title="完了" id="2FC-K5-QqZ">
-                            <connections>
-                                <action selector="close:" destination="eCr-Bu-LOf" id="snp-Bv-K6t"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
-                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
-                    <connections>
-                        <outlet property="doneBtn" destination="2FC-K5-QqZ" id="FGd-Q6-q5E"/>
-                    </connections>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="bsb-Je-IrK" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2959" y="996"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="H3q-xo-zgb">

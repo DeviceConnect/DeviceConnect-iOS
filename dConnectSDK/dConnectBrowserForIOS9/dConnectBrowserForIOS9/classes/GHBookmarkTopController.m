@@ -10,7 +10,6 @@
 #import "GHBookmarkTopController.h"
 #import "GHBookmarkCell.h"
 #import "GHBookmarkViewController.h"
-#import "GHHistoryViewController.h"
 #import "GHFolderCreateController.h"
 #import "GHFoldersListController.h"
 
@@ -209,9 +208,6 @@
                 
                 [self.navigationController pushViewController:bookmark animated:YES];
                 
-            }else if ([page.type isEqualToString:TYPE_HISTORY]){
-                //履歴
-                [self performSegueWithIdentifier:TYPE_HISTORY sender:page];
             }
         }
 
@@ -385,15 +381,6 @@
             cell.textLabel.tintColor = [UIColor grayColor];
         }
         
-//    }else if ([page.type isEqualToString:TYPE_HISTORY]){
-//        //履歴
-//        cell.imageView.image = [UIImage imageNamed:@"history"];
-//        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-//        
-//        if (isEditing) {
-//            cell.textLabel.tintColor = [UIColor grayColor];
-//        }
-        
     }else if ([page.type isEqualToString:TYPE_BOOKMARK]){
         //ブックマーク
         cell.imageView.image = [UIImage imageNamed:@"bookmark"];
@@ -487,10 +474,6 @@ targetIndexPathForMoveFromRowAtIndexPath:(NSIndexPath*)sourceIndexPath
         }else if ([page.type isEqualToString:TYPE_FOLDER]){
             bookmark.listType = kListType_folder;
         }
-    }else if ([[segue identifier] isEqualToString:TYPE_HISTORY]){
-        //履歴
-        GHHistoryViewController *history = segue.destinationViewController;
-        history.listType = kListType_history;
     }
 }
 

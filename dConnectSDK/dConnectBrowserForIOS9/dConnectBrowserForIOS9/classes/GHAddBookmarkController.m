@@ -10,8 +10,6 @@
 #import "GHAddBookmarkController.h"
 #import "GHURLManager.h"
 #import "GHFoldersListController.h"
-#import "UZMultipleLayeredPopoverController.h"
-
 @interface GHAddBookmarkController ()
 @property (nonatomic, weak) GHBookmarkTitleCell *titleCell;
 @end
@@ -104,11 +102,7 @@
 ///キャンセルボタン
 - (void)cancel
 {
-    if ([GHUtils isiPad]) {
-        [GHUtils postNotification:nil withKey:UZMultipleLayeredPopoverDidDismissNotification];
-    }else{
-        [self dismissViewControllerAnimated:YES completion:nil];
-    }
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 /*
@@ -138,11 +132,7 @@
     //DBへ保存処理
     [GHURLManager addBookMark:self.titleCell.titleField.text url:self.titleCell.urlField.text parent:self.directory];
     
-    if ([GHUtils isiPad]) {
-        [GHUtils postNotification:nil withKey:UZMultipleLayeredPopoverDidDismissNotification];
-    }else{
-       [self dismissViewControllerAnimated:YES completion:nil];
-    }
+   [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 
