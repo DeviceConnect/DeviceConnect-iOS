@@ -13,7 +13,7 @@
 #import <DConnectSDK/DConnectSDK.h>
 #import <SafariServices/SafariServices.h>
 #import "GHAddBookmarkActivity.h"
-
+#import "AppDelegate.h"
 @interface ViewController (){
     SFSafariViewController *sfSafariViewController;
 }
@@ -99,6 +99,10 @@
 {
     [super viewWillAppear:animated];
     [self rotateOrientation:[[UIApplication sharedApplication] statusBarOrientation]];
+    NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+    [center addObserver:self selector:@selector(enterForeground:)
+                   name:UIApplicationWillEnterForegroundNotification object:nil];
+
 }
 
 // View回転時
@@ -107,6 +111,12 @@
 {
     [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
     [self rotateOrientation:toInterfaceOrientation];
+}
+
+- (void)dealloc
+{
+    [[NSURLCache sharedURLCache] removeAllCachedResponses];
+    [[NSNotificationCenter defaultCenter]removeObserver:self];
 }
 
 #pragma mark - open UI
@@ -144,6 +154,9 @@
 
 - (void)openSafariViewInternalWithURL:(NSString*)url
 {
+    if (url.length == 0) {
+        url = @"http://www.google.com";
+    }
     void (^loadSFSafariViewControllerBlock)(NSURL *) = ^(NSURL *url) {
         sfSafariViewController = [[SFSafariViewController alloc] initWithURL:url entersReaderIfAvailable:YES];
         sfSafariViewController.delegate = self;
@@ -305,6 +318,25 @@
     [self performSelector:@selector(openSafariViewInternalWithURL:) withObject:_url afterDelay:0.75];
     
 
+}
+
+
+
+- (void) enterForeground:(NSNotification *)notification
+{
+    // foregroundに来た事を検知した時点では、このアプリを起動したカスタムURLを取得できない。
+    // なので、カスタムURLを取得するGHAppDelegateにカスタムURLを引数に取って処理を行うコールバックを渡しておく。
+    //ホームランチャーとSafariから起動されたことを区別するため初期化する
+    id<UIApplicationDelegate> appDelegate
+    = [UIApplication sharedApplication].delegate;
+    if ([appDelegate isKindOfClass:[AppDelegate class]]) {
+        [(AppDelegate *)appDelegate
+         setURLLoadingCallback:^(NSURL* redirectURL){
+             if (redirectURL) {
+                 [self openSafariViewInternalWithURL:redirectURL.absoluteString];
+             }
+         }];
+    }
 }
 
 @end
