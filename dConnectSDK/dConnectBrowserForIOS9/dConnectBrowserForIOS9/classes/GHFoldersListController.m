@@ -205,10 +205,6 @@
         //お気に入り
         cell.imageView.image = [UIImage imageNamed:@"star"];
         
-    }else if ([page.type isEqualToString:TYPE_HISTORY]){
-        //履歴
-        cell.imageView.image = [UIImage imageNamed:@"history"];
-        
     }else{
         //フォルダ
         cell.imageView.image = [UIImage imageNamed:@"folder"];

@@ -137,7 +137,8 @@
 - (void)readDirectoryList
 {
     //初期位置はお気に入り
-    _favorites = [[GHDataManager shareManager] getModelDataByPredicate:[NSPredicate predicateWithFormat:@"type = %@", TYPE_FAVORITE] withEntityName:@"Page" context:nil];
+    _favorites = [[GHDataManager shareManager] getModelDataByPredicate:[NSPredicate predicateWithFormat:@"type = %@ OR type = %@ OR type = %@", TYPE_FAVORITE, TYPE_BOOKMARK_FOLDER, TYPE_FOLDER] withEntityName:@"Page" context:nil];
+    
     _directoryCount = [_favorites count];
     if ([_favorites count] > 0) {
         self.directory = [_favorites firstObject];
