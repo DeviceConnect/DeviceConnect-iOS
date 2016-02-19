@@ -22,28 +22,11 @@
 @property (strong, nonatomic) IBOutlet UIView *searchView;
 @property (nonatomic, strong) GHHeaderView *headerView;
 
-#pragma mark - View position constraint
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *iconTopLeading;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *iconLeftLeading;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *headerLeftLeading;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *openRightLeading;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *bookmarkRightLeading;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *settingRightLeading;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *searchViewLeading;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *settingBtnBottomLeading;
-#pragma mark - button size constraint
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *iconWidthSize;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *iconHeightSize;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *searchViewWidthSize;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *searchViewHeightSize;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *openBtnHeightSize;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *openBtnWidthSize;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *bookmarkBtnHeightSize;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *bookmarkBtnWidthSize;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *settingBtnHeightSize;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *settingBtnWidthSize;
-#pragma mark - UI
-- (IBAction)openSafariView:(id)sender;
 - (IBAction)openBookmarkView:(id)sender;
 - (IBAction)openSettingView:(id)sender;
 
@@ -76,8 +59,7 @@
     BOOL isOriginBlock = [def boolForKey:IS_ORIGIN_BLOCKING];
     mgr.settings.useOriginBlocking = isOriginBlock;
 
- 
-    CGRect frame = CGRectMake(0, 0, barW, 44);
+    CGRect frame = CGRectMake(15, 10, barW, 44);
     _manager = [[GHURLManager alloc]init];
     _url = @"http://www.google.com";
     _headerView = [[GHHeaderView alloc] initWithFrame:frame];
@@ -130,35 +112,18 @@
 
 #pragma mark - open UI
 
-- (IBAction)openSafariView:(id)sender {
-    
-    NSString *u = _headerView.searchBar.text;
-    [self openSafariViewInternalWithURL:u];
-}
 
 - (IBAction)openBookmarkView:(id)sender {
     //ストーリーボードから取得
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Popup" bundle:[NSBundle mainBundle]];
     UIViewController *bookmark = [storyboard instantiateInitialViewController];
-    
-    
-//    if ([GHUtils isiPad]) {
-//        [self showPopup:bookmark button:item];
-//    }else{
-        [self presentViewController:bookmark animated:YES completion:nil];
-//    }
-
+    [self presentViewController:bookmark animated:YES completion:nil];
 }
 
 - (IBAction)openSettingView:(id)sender {
     GHSettingController *setting = [[GHSettingController alloc]initWithStyle:UITableViewStyleGrouped];
     UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:setting];
-//    if ([GHUtils isiPad]) {
-//        [self showPopup:nav button:settingBtn];
-//    }else{
-        [self presentViewController:nav animated:YES completion:nil];
-//    }
-
+    [self presentViewController:nav animated:YES completion:nil];
 }
 
 - (void)openSafariViewInternalWithURL:(NSString*)url
@@ -190,6 +155,8 @@
 
 - (void)reload
 {
+    NSString *u = _headerView.searchBar.text;
+    [self openSafariViewInternalWithURL:u];
 }
 
 
@@ -202,15 +169,10 @@
 //--------------------------------------------------------------//
 
 -(void)safariViewController:(SFSafariViewController *)controller didCompleteInitialLoad:(BOOL)didLoadSuccessfully {
-    // Load finished
-    //    if (didLoadSuccessfully) {
-    //        NSLog(@"SafariViewController: Loading of URl finished");
-    //    }
+
 }
 
 -(void)safariViewControllerDidFinish:(SFSafariViewController *)controller {
-    // Done button pressed
-    //    NSLog(@"safariViewController: Done button pressed");
     [sfSafariViewController dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -221,7 +183,6 @@
 }
 - (void)rotateOrientation:(UIInterfaceOrientation)toInterfaceOrientation
 {
-    _searchViewLeading.constant = 300;
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
         [self iphoneLayoutWithOrientation:toInterfaceOrientation];
     } else {
@@ -232,78 +193,20 @@
 
 - (void)iphoneLayoutWithOrientation:(int)toInterfaceOrientation
 {
-    CGSize screen = [UIScreen mainScreen].bounds.size;
-
-    _iconHeightSize.constant = 200;
-    _iconHeightSize.constant = 200;
     if ((toInterfaceOrientation == UIDeviceOrientationLandscapeLeft ||
-        toInterfaceOrientation == UIDeviceOrientationLandscapeRight)
-        && screen.width < screen.height)
+        toInterfaceOrientation == UIDeviceOrientationLandscapeRight))
     {
-        _iconTopLeading.constant = 10;
-        _iconLeftLeading.constant = (screen.height / 2) - 230;
-        _headerLeftLeading.constant = (screen.height / 2) - 280;
-        _openRightLeading.constant = (screen.height / 2) - 200;
-        _bookmarkRightLeading.constant = (screen.height / 2) - 200;
-        _settingRightLeading.constant = (screen.height / 2) - 200;
-        _settingBtnBottomLeading.constant = (screen.height / 2)  - 200;
+        _iconTopLeading.constant = 35;
     } else {
-        if (screen.width < screen.height) {
-            _iconTopLeading.constant = (screen.height / 2) - 250;
-            _iconLeftLeading.constant = (screen.width / 2) - 100;
-            _headerLeftLeading.constant = (screen.width / 2) - 150;
-            _settingBtnBottomLeading.constant = (screen.height / 2) - 250;
-            _openRightLeading.constant = (screen.width / 2) - 67;
-            _bookmarkRightLeading.constant = (screen.width / 2) - 67;
-            _settingRightLeading.constant = (screen.width / 2) - 67;
-        } else {
-            _iconTopLeading.constant = (screen.width / 2) - 250;
-            _iconLeftLeading.constant = (screen.height / 2) - 100;
-            _headerLeftLeading.constant = (screen.height / 2) - 150;
-            _settingBtnBottomLeading.constant = (screen.width / 2) - 250;
-            _openRightLeading.constant = (screen.height / 2) - 67;
-            _bookmarkRightLeading.constant = (screen.height / 2) - 67;
-            _settingRightLeading.constant = (screen.height / 2) - 67;
-        }
+        _iconTopLeading.constant = 70;
     }
 }
 
 - (void)ipadLayoutWithOrientation:(int)toInterfaceOrientation
 {
-    CGSize screen = [UIScreen mainScreen].bounds.size;
     _iconHeightSize.constant = 400;
-    
     _iconWidthSize.constant = 400;
     _searchViewWidthSize.constant = 500;
-    _openBtnWidthSize.constant = 270;
-    _openBtnHeightSize.constant = 80;
-    _bookmarkBtnWidthSize.constant = 270;
-    _bookmarkBtnHeightSize.constant = 80;
-    _settingBtnWidthSize.constant = 270;
-    _settingBtnHeightSize.constant = 80;
-    if (toInterfaceOrientation == UIInterfaceOrientationPortrait |
-        toInterfaceOrientation == UIInterfaceOrientationPortraitUpsideDown)
-    {
-        _openRightLeading.constant = (screen.width / 2) - 138;
-        _bookmarkRightLeading.constant = (screen.width / 2) - 138;
-        _settingRightLeading.constant = (screen.width / 2) - 138;
-        _settingBtnBottomLeading.constant = (screen.height / 2) - 400;
-        _iconTopLeading.constant = 50;
-        _iconLeftLeading.constant = (screen.width / 2) - 200;
-        _headerLeftLeading.constant = (screen.width / 2) - 250;
-        
-    } else {
-        
-        _openRightLeading.constant = (screen.width / 2) - 400;
-        _bookmarkRightLeading.constant = (screen.width / 2) - 400;
-        _settingRightLeading.constant = (screen.width / 2) - 400;
-        
-        _settingBtnBottomLeading.constant = (screen.height / 2) - 50;
-        _iconTopLeading.constant = (screen.height / 2) - 300;
-        _iconLeftLeading.constant = (screen.width / 2) - 450;
-        _headerLeftLeading.constant = (screen.width / 2) - 500;
-        
-    }
 }
 
 

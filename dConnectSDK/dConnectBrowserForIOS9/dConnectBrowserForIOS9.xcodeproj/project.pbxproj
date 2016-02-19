@@ -65,7 +65,6 @@
 		AB00F2F51C71A29D00689C70 /* GHSettingController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB00F2D31C71A29D00689C70 /* GHSettingController.m */; };
 		AB00F2F61C71A29D00689C70 /* GHToolView.m in Sources */ = {isa = PBXBuildFile; fileRef = AB00F2D51C71A29D00689C70 /* GHToolView.m */; };
 		AB00F2F71C71A29D00689C70 /* GHURLLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = AB00F2D71C71A29D00689C70 /* GHURLLabel.m */; };
-		AB00F3131C71A2DB00689C70 /* icon_512px.png in Resources */ = {isa = PBXBuildFile; fileRef = AB00F3051C71A2DB00689C70 /* icon_512px.png */; };
 		AB00F3271C71A93700689C70 /* Bookmark.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AB00F3251C71A93700689C70 /* Bookmark.storyboard */; };
 		AB00F3281C71A93700689C70 /* Popup.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AB00F3261C71A93700689C70 /* Popup.storyboard */; };
 		AB00F49C1C71B16200689C70 /* GTMNSString+HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = AB00F4681C71B16200689C70 /* GTMNSString+HTML.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -228,7 +227,6 @@
 		AB00F2D51C71A29D00689C70 /* GHToolView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GHToolView.m; sourceTree = "<group>"; };
 		AB00F2D61C71A29D00689C70 /* GHURLLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHURLLabel.h; sourceTree = "<group>"; };
 		AB00F2D71C71A29D00689C70 /* GHURLLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GHURLLabel.m; sourceTree = "<group>"; };
-		AB00F3051C71A2DB00689C70 /* icon_512px.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_512px.png; sourceTree = "<group>"; };
 		AB00F3241C71A8D700689C70 /* dConnectBrowserForIOS9-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "dConnectBrowserForIOS9-Prefix.pch"; sourceTree = "<group>"; };
 		AB00F3251C71A93700689C70 /* Bookmark.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Bookmark.storyboard; sourceTree = "<group>"; };
 		AB00F3261C71A93700689C70 /* Popup.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Popup.storyboard; sourceTree = "<group>"; };
@@ -365,7 +363,6 @@
 			isa = PBXGroup;
 			children = (
 				AB00F4641C71B16200689C70 /* libs */,
-				AB00F2FA1C71A2BA00689C70 /* resources */,
 				AB00F29F1C71A29D00689C70 /* classes */,
 				AB00F24C1C719F3200689C70 /* dConnectBrowserForIOS9.entitlements */,
 				AB00F1E51C71941800689C70 /* AppDelegate.h */,
@@ -440,22 +437,6 @@
 				AB00F31B1C71A51800689C70 /* models */,
 			);
 			path = classes;
-			sourceTree = "<group>";
-		};
-		AB00F2FA1C71A2BA00689C70 /* resources */ = {
-			isa = PBXGroup;
-			children = (
-				AB00F2FD1C71A2DB00689C70 /* images */,
-			);
-			name = resources;
-			sourceTree = "<group>";
-		};
-		AB00F2FD1C71A2DB00689C70 /* images */ = {
-			isa = PBXGroup;
-			children = (
-				AB00F3051C71A2DB00689C70 /* icon_512px.png */,
-			);
-			path = images;
 			sourceTree = "<group>";
 		};
 		AB00F31B1C71A51800689C70 /* models */ = {
@@ -805,7 +786,6 @@
 				AB00F1F21C71941800689C70 /* LaunchScreen.storyboard in Resources */,
 				AB00F1EF1C71941800689C70 /* Assets.xcassets in Resources */,
 				AB00F2E31C71A29D00689C70 /* GHBookmarkTitleCell.xib in Resources */,
-				AB00F3131C71A2DB00689C70 /* icon_512px.png in Resources */,
 				AB00F2281C719B5500689C70 /* dConnectDeviceHue_resources.bundle in Resources */,
 				AB00F2F31C71A29D00689C70 /* GHPageViewCell.xib in Resources */,
 				AB00F23A1C719B8100689C70 /* dConnectDeviceSonyCamera_resources.bundle in Resources */,

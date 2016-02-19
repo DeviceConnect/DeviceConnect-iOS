@@ -50,8 +50,8 @@
         myView.frame = CGRectMake(0, 0, self.frame.size.width, self.frame.size.height);
         [self addSubview:myView];
         
-        myView.backgroundColor = [UIColor clearColor];
-        self.backgroundColor   = [UIColor clearColor];
+//        myView.backgroundColor = [UIColor clearColor];
+//        self.backgroundColor   = [UIColor clearColor];
     }
 
     
@@ -67,10 +67,10 @@
     _searchBar.keyboardType = UIKeyboardTypeDefault;
     _searchBar.delegate = self;
     
-    _searchBar.searchBarStyle = UISearchBarStyleMinimal;
-    _searchBar.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
+//    _searchBar.searchBarStyle = UISearchBarStyleMinimal;
+//    _searchBar.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
     
-    [self setSearchShow:YES];
+//    [self setSearchShow:YES];
     
     //タップセット
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTaped:)];
@@ -85,7 +85,7 @@
     if (![urlStr isEqualToString:@"about:blank"]) {
         self.urlLabel.text  = urlStr;
         self.searchBar.text = urlStr;
-        [self setSearchShow:NO];
+//        [self setSearchShow:NO];
     }
 }
 
@@ -94,14 +94,14 @@
 {
     if (isShow) {
         self.urlLabel.hidden   = YES;
-        self.reloadbtn.hidden  = YES;
+        self.reloadbtn.hidden  = NO;
         self.searchBar.hidden  = NO;
-        self.reloadbtn.enabled = NO;
+        self.reloadbtn.enabled = YES;
     }else{
         self.urlLabel.hidden   = NO;
         self.reloadbtn.hidden  = NO;
         self.searchBar.hidden  = YES;
-        self.reloadbtn.enabled = NO;
+        self.reloadbtn.enabled = YES;
     }
 }
 
@@ -143,14 +143,14 @@
         btn = [UIImage imageNamed:@"cancel"];
     }
     
-    [self.reloadbtn setImage:btn forState:UIControlStateNormal];
+//    [self.reloadbtn setImage:btn forState:UIControlStateNormal];
 }
 
 
 
 - (void)didTaped:(UIGestureRecognizer*)gest
 {
-    [self setSearchShow:YES];
+//    [self setSearchShow:YES];
     [self.searchBar becomeFirstResponder];
 }
 
@@ -159,7 +159,7 @@
 //--------------------------------------------------------------//
 - (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar
 {
-    searchBar.showsCancelButton = YES;
+//    searchBar.showsCancelButton = YES;
     searchBar.text = self.urlLabel.text;
     return YES;
 }
@@ -170,7 +170,7 @@
 
 - (BOOL)searchBarShouldEndEditing:(UISearchBar *)searchBar
 {
-    searchBar.showsCancelButton = NO;
+//    searchBar.showsCancelButton = NO;
     return YES;
 }
 
@@ -180,9 +180,9 @@
 
 - (void)searchBarCancelButtonClicked:(UISearchBar *) searchBar
 {
-    searchBar.showsCancelButton = NO;
+//    searchBar.showsCancelButton = NO;
     [searchBar resignFirstResponder];
-    [self setSearchShow:NO];
+//    [self setSearchShow:NO];
 }
 
 ///文字列からURLか検索キーワードか判別してwebviewに表示する
@@ -195,7 +195,7 @@
         
     }
     
-    searchBar.showsCancelButton = NO;
+//    searchBar.showsCancelButton = NO;
     [searchBar resignFirstResponder];
 }
 
