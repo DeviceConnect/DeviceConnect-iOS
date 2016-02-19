@@ -104,6 +104,9 @@
 		AB94E8A41C759BD700DAE749 /* GHURLManager.h in Headers */ = {isa = PBXBuildFile; fileRef = AB94E8A21C759BD600DAE749 /* GHURLManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AB94E8A51C759BD700DAE749 /* GHURLManager.m in Sources */ = {isa = PBXBuildFile; fileRef = AB94E8A31C759BD600DAE749 /* GHURLManager.m */; };
 		AB94E8A61C75A40F00DAE749 /* BookmarkDBFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB94E8581C755EB200DAE749 /* BookmarkDBFramework.framework */; };
+		ABE71E2D1C76D3F40061973C /* bookmark@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = ABE71E2A1C76D3F40061973C /* bookmark@2x.png */; };
+		ABE71E2E1C76D3F40061973C /* folder@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = ABE71E2B1C76D3F40061973C /* folder@2x.png */; };
+		ABE71E2F1C76D3F40061973C /* star@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = ABE71E2C1C76D3F40061973C /* star@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -284,6 +287,9 @@
 		AB94E8A01C75999D00DAE749 /* AddBookmarkPreprocessor.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = AddBookmarkPreprocessor.js; sourceTree = "<group>"; };
 		AB94E8A21C759BD600DAE749 /* GHURLManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GHURLManager.h; path = BookmarkDBFramework/GHURLManager.h; sourceTree = SOURCE_ROOT; };
 		AB94E8A31C759BD600DAE749 /* GHURLManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GHURLManager.m; path = BookmarkDBFramework/GHURLManager.m; sourceTree = SOURCE_ROOT; };
+		ABE71E2A1C76D3F40061973C /* bookmark@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bookmark@2x.png"; sourceTree = "<group>"; };
+		ABE71E2B1C76D3F40061973C /* folder@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "folder@2x.png"; sourceTree = "<group>"; };
+		ABE71E2C1C76D3F40061973C /* star@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "star@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -362,6 +368,7 @@
 		AB00F1E11C71941800689C70 /* dConnectBrowserForIOS9 */ = {
 			isa = PBXGroup;
 			children = (
+				ABE71E281C76D3620061973C /* resources */,
 				AB00F4641C71B16200689C70 /* libs */,
 				AB00F29F1C71A29D00689C70 /* classes */,
 				AB00F24C1C719F3200689C70 /* dConnectBrowserForIOS9.entitlements */,
@@ -638,6 +645,24 @@
 			path = BookmarkShare;
 			sourceTree = "<group>";
 		};
+		ABE71E281C76D3620061973C /* resources */ = {
+			isa = PBXGroup;
+			children = (
+				ABE71E291C76D3F40061973C /* images */,
+			);
+			name = resources;
+			sourceTree = "<group>";
+		};
+		ABE71E291C76D3F40061973C /* images */ = {
+			isa = PBXGroup;
+			children = (
+				ABE71E2A1C76D3F40061973C /* bookmark@2x.png */,
+				ABE71E2B1C76D3F40061973C /* folder@2x.png */,
+				ABE71E2C1C76D3F40061973C /* star@2x.png */,
+			);
+			path = images;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -776,6 +801,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ABE71E2F1C76D3F40061973C /* star@2x.png in Resources */,
 				AB00F21E1C719B3900689C70 /* dConnectDeviceChromecast_resources.bundle in Resources */,
 				AB00F22E1C719B6500689C70 /* dConnectDeviceIRKit_resources.bundle in Resources */,
 				AB00F2EF1C71A29D00689C70 /* GHHeaderView.xib in Resources */,
@@ -785,7 +811,9 @@
 				AB00F49D1C71B16200689C70 /* GTMNSString-HTML.podspec in Resources */,
 				AB00F1F21C71941800689C70 /* LaunchScreen.storyboard in Resources */,
 				AB00F1EF1C71941800689C70 /* Assets.xcassets in Resources */,
+				ABE71E2E1C76D3F40061973C /* folder@2x.png in Resources */,
 				AB00F2E31C71A29D00689C70 /* GHBookmarkTitleCell.xib in Resources */,
+				ABE71E2D1C76D3F40061973C /* bookmark@2x.png in Resources */,
 				AB00F2281C719B5500689C70 /* dConnectDeviceHue_resources.bundle in Resources */,
 				AB00F2F31C71A29D00689C70 /* GHPageViewCell.xib in Resources */,
 				AB00F23A1C719B8100689C70 /* dConnectDeviceSonyCamera_resources.bundle in Resources */,
