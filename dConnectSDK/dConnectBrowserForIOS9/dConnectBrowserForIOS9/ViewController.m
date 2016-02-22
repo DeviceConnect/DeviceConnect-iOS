@@ -148,7 +148,8 @@
 
 - (void)urlUpadated:(NSString*)urlStr
 {
-    [self openSafariViewInternalWithURL:_url];
+    NSString *u = _headerView.searchBar.text;
+    [self openSafariViewInternalWithURL:u];
 }
 
 - (void)reload
