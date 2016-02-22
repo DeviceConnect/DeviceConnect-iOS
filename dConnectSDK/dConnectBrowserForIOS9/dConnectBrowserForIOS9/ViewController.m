@@ -128,15 +128,18 @@
 
 - (void)openSafariViewInternalWithURL:(NSString*)url
 {
-    if (url.length == 0) {
-        url = @"http://www.google.com";
+    //文字列がURLの場合
+    _url = [self.manager isURLString:url];
+    if (!_url) {
+        _url = [self.manager createSearchURL:url];
     }
+
     void (^loadSFSafariViewControllerBlock)(NSURL *) = ^(NSURL *url) {
         sfSafariViewController = [[SFSafariViewController alloc] initWithURL:url entersReaderIfAvailable:YES];
         sfSafariViewController.delegate = self;
         [self presentViewController:sfSafariViewController animated:YES completion:nil];
     };
-    loadSFSafariViewControllerBlock([NSURL URLWithString:url]);
+    loadSFSafariViewControllerBlock([NSURL URLWithString:_url]);
 }
 
 //--------------------------------------------------------------//
@@ -145,11 +148,6 @@
 
 - (void)urlUpadated:(NSString*)urlStr
 {
-    //文字列がURLの場合
-    _url = [self.manager isURLString:urlStr];
-    if (!_url) {
-        _url = [self.manager createSearchURL:urlStr];
-    }
     [self openSafariViewInternalWithURL:_url];
 }
 
