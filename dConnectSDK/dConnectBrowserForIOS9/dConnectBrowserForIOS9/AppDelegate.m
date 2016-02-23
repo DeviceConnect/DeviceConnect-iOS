@@ -9,6 +9,8 @@
 
 #import "AppDelegate.h"
 #import "GHDataManager.h"
+#import <DConnectSDK/DConnectSDK.h>
+
 @interface AppDelegate ()
 
 @end
@@ -26,12 +28,15 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     //DBの初期値を設定
-    //起動時にキャッシュ画像も一旦削除
     [[GHDataManager shareManager] initPrefs];
     
-    //Cookieの初期設定を更新
+    DConnectManager *mgr = [DConnectManager sharedManager];
+
     NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
-    [def setObject:@([GHUtils isCookieAccept]) forKey:IS_MANAGER_LAUNCH];
+    BOOL sw = [def boolForKey:IS_MANAGER_LAUNCH];
+    if (sw) {
+        [mgr startByHttpServer];
+    }
     
     float osVersion = [[[UIDevice currentDevice] systemVersion] floatValue];
     if (osVersion > 8.0) {
@@ -70,7 +75,6 @@
 }
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
 {
-    NSLog(@"openURL");
     if (![url.scheme isEqualToString:@"dconnect"] && ![url.scheme isEqualToString:@"gotapi"]) {
         return NO;
     }
