@@ -110,8 +110,16 @@ static RoutingHTTPServer *mHttpServer;
             }
             NSString *contentType = responseCtx.response.MIMEType;
             // レスポンスあり；成功。
-            if (contentType && [contentType rangeOfString:@"multipart/form-data"
+
+            if (contentType && (([contentType rangeOfString:@"multipart/form-data"
                                                   options:NSCaseInsensitiveSearch].location != NSNotFound)
+                || ([contentType rangeOfString:@"image/"
+                                       options:NSCaseInsensitiveSearch].location != NSNotFound)
+                || ([contentType rangeOfString:@"audio/"
+                                       options:NSCaseInsensitiveSearch].location != NSNotFound)
+                || ([contentType rangeOfString:@"video/"
+                                       options:NSCaseInsensitiveSearch].location != NSNotFound)
+                ))
             {
                 [response respondWithData:responseCtx.data];
             } else {

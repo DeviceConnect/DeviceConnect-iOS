@@ -29,7 +29,7 @@ NSString *const DPIRKitCategoryTV = @"テレビ";
     window.transform = CGAffineTransformMakeScale(1.1, 1.1);
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:storyboardName bundle:DPIRBundle()];
     window.rootViewController = [storyboard instantiateInitialViewController];
-    window.backgroundColor = [UIColor colorWithWhite:0 alpha:.6];
+    window.backgroundColor = [UIColor colorWithWhite:0 alpha:0.];
     window.windowLevel = UIWindowLevelNormal + 5;
     
     [window makeKeyAndVisible];

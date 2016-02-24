@@ -62,6 +62,7 @@ didReceiveGetMediaRecorderRequest:(DConnectRequestMessage *)request
                          response:(DConnectResponseMessage *)response
                         serviceId:(NSString *)serviceId
 {
+    
     CONNECT_CHECK();
     DConnectArray *recorders = [DConnectArray new];
     DConnectMessage *recorder = [DConnectMessage new];
@@ -101,27 +102,27 @@ didReceiveGetMediaRecorderRequest:(DConnectRequestMessage *)request
 }
 
 
-- (BOOL)            profile:(DConnectMediaStreamRecordingProfile *)profile
-didReceiveGetOptionsRequest:(DConnectRequestMessage *)request
-                   response:(DConnectResponseMessage *)response
-                  serviceId:(NSString *)serviceId
-                     target:(NSString *)target
-{
-    CONNECT_CHECK();
-    DConnectMessage *imageWidth = [DConnectMessage new];
-    DConnectMessage *imageHeight = [DConnectMessage new];
-    DConnectArray *mimeTypes = [DConnectArray initWithArray:@[DPThetaImageMimeType, DPThetaMovieMimeType]];
-    
-    [DConnectMediaStreamRecordingProfile setMax:DPThetaMaxWidth target:imageWidth];
-    [DConnectMediaStreamRecordingProfile setMin:DPThetaMinWidth target:imageWidth];
-    [DConnectMediaStreamRecordingProfile setImageWidth:imageWidth target:response];
-    [DConnectMediaStreamRecordingProfile setMax:DPThetaMaxHeight target:imageHeight];
-    [DConnectMediaStreamRecordingProfile setMin:DPThetaMinHeight target:imageHeight];
-    [DConnectMediaStreamRecordingProfile setImageHeight:imageHeight target:response];
-    [DConnectMediaStreamRecordingProfile setMIMETypes:mimeTypes target:response];
-    [response setResult:DConnectMessageResultTypeOk];
-    return YES;
-}
+//- (BOOL)            profile:(DConnectMediaStreamRecordingProfile *)profile
+//didReceiveGetOptionsRequest:(DConnectRequestMessage *)request
+//                   response:(DConnectResponseMessage *)response
+//                  serviceId:(NSString *)serviceId
+//                     target:(NSString *)target
+//{
+//    CONNECT_CHECK();
+//    DConnectMessage *imageWidth = [DConnectMessage new];
+//    DConnectMessage *imageHeight = [DConnectMessage new];
+//    DConnectArray *mimeTypes = [DConnectArray initWithArray:@[DPThetaImageMimeType, DPThetaMovieMimeType]];
+//    
+//    [DConnectMediaStreamRecordingProfile setMax:DPThetaMaxWidth target:imageWidth];
+//    [DConnectMediaStreamRecordingProfile setMin:DPThetaMinWidth target:imageWidth];
+//    [DConnectMediaStreamRecordingProfile setImageWidth:imageWidth target:response];
+//    [DConnectMediaStreamRecordingProfile setMax:DPThetaMaxHeight target:imageHeight];
+//    [DConnectMediaStreamRecordingProfile setMin:DPThetaMinHeight target:imageHeight];
+//    [DConnectMediaStreamRecordingProfile setImageHeight:imageHeight target:response];
+//    [DConnectMediaStreamRecordingProfile setMIMETypes:mimeTypes target:response];
+//    [response setResult:DConnectMessageResultTypeOk];
+//    return YES;
+//}
 
 #pragma mark - Post Methods
 
@@ -204,24 +205,24 @@ didReceivePutStopRequest:(DConnectRequestMessage *)request
 }
 
 
-- (BOOL)            profile:(DConnectMediaStreamRecordingProfile *)profile
-didReceivePutOptionsRequest:(DConnectRequestMessage *)request
-                   response:(DConnectResponseMessage *)response
-                  serviceId:(NSString *)serviceId
-                     target:(NSString *)target
-                 imageWidth:(NSNumber *)imageWidth
-                imageHeight:(NSNumber *)imageHeight
-                   mimeType:(NSString *)mimeType
-{
-    CONNECT_CHECK();
-    if ((([imageWidth floatValue] == DPThetaMaxWidth) && ([imageHeight floatValue] == DPThetaMaxHeight))
-        || (([imageWidth floatValue] == DPThetaMinWidth) && ([imageHeight floatValue] == DPThetaMinHeight))) {
-        [[DPThetaManager sharedManager] setImageSize:CGSizeMake([imageWidth floatValue],
-                                                                [imageHeight floatValue])];
-    }
-    [response setResult:DConnectMessageResultTypeOk];
-    return YES;
-}
+//- (BOOL)            profile:(DConnectMediaStreamRecordingProfile *)profile
+//didReceivePutOptionsRequest:(DConnectRequestMessage *)request
+//                   response:(DConnectResponseMessage *)response
+//                  serviceId:(NSString *)serviceId
+//                     target:(NSString *)target
+//                 imageWidth:(NSNumber *)imageWidth
+//                imageHeight:(NSNumber *)imageHeight
+//                   mimeType:(NSString *)mimeType
+//{
+//    CONNECT_CHECK();
+//    if ((([imageWidth floatValue] == DPThetaMaxWidth) && ([imageHeight floatValue] == DPThetaMaxHeight))
+//        || (([imageWidth floatValue] == DPThetaMinWidth) && ([imageHeight floatValue] == DPThetaMinHeight))) {
+//        [[DPThetaManager sharedManager] setImageSize:CGSizeMake([imageWidth floatValue],
+//                                                                [imageHeight floatValue])];
+//    }
+//    [response setResult:DConnectMessageResultTypeOk];
+//    return YES;
+//}
 
 #pragma mark Event Registration
 
