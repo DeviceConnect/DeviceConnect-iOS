@@ -66,7 +66,6 @@ static int const _timeout = 500;
         _ptpConnection = [[PtpConnection alloc] init];
         [_ptpConnection setLoglevel:PTPIP_LOGLEVEL_WARN];
         [_ptpConnection setEventListener:self];
-        
 
     }
     return self;
@@ -181,6 +180,9 @@ static int const _timeout = 500;
 
     }];
     dispatch_semaphore_wait(semaphore, timeout);
+    
+    [self setImageSize:CGSizeMake(2048,1024)];
+
     return result;
 
 }
