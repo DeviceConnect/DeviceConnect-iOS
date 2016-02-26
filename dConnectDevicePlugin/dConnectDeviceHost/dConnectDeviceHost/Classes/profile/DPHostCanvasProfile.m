@@ -48,21 +48,27 @@ DPHostCanvasUIViewController *_displayViewController;
         serviceId:(NSString *)serviceId
         mimeType:(NSString *)mimeType
             data:(NSData *)data
+             uri:(NSString *)uri
           imageX:(double)imageX
           imageY:(double)imageY
             mode:(NSString *)mode
 {
-    if (data == nil || [data length] <= 0) {
-        [response setErrorToInvalidRequestParameterWithMessage:@"data is not specied to update a file."];
-        return YES;
-    }
     if (serviceId == nil || [serviceId length] <= 0) {
         [response setErrorToEmptyServiceId];
         return YES;
     }
     
+    NSData *canvas = data;
+    if (uri || [uri length] > 0) {
+       canvas = [NSData dataWithContentsOfURL:[NSURL URLWithString:uri]];
+    }
+    if (canvas == nil || [canvas length] <= 0) {
+        [response setErrorToInvalidRequestParameterWithMessage:@"data is not specied to update a file."];
+        return YES;
+    }
+    
     DPHostCanvasDrawImage *drawImage = [[DPHostCanvasDrawImage alloc]
-                                            initWithParameter:data
+                                            initWithParameter:canvas
                                                        imageX:imageX
                                                        imageY:imageY
                                                          mode:mode];

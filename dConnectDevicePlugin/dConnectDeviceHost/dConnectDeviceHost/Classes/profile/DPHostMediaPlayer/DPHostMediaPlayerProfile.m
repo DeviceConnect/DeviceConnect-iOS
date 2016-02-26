@@ -765,7 +765,6 @@ didReceiveGetSeekRequest:(DConnectRequestMessage *)request
     void(^block)(void) = ^{
         [_musicPlayer setQueueWithQuery:_defaultMediaQuery];
         _musicPlayer.nowPlayingItem = mediaItem;
-        DPHostMediaContext *mediaCtx = [DPHostMediaContext contextWithMediaItem:_musicPlayer.nowPlayingItem];
 
         DConnectMessage *mediaPlayer = [DConnectMessage message];
         NSString *status = DConnectMediaPlayerProfileStatusMedia;
@@ -956,7 +955,6 @@ didReceivePutMediaRequest:(DConnectRequestMessage *)request
             return YES;
         }
         mediaItem = items[0];
-        DPHostMediaContext *mediaCtx = [DPHostMediaContext contextWithMediaItem:mediaItem];
     }
     
     if (isIPodAudioMedia) {
@@ -1004,8 +1002,6 @@ didReceivePutPlayRequest:(DConnectRequestMessage *)request
                 DConnectMessage *mediaPlayer = [DConnectMessage message];
                 NSString *status = DConnectMediaPlayerProfileStatusPlay;
                 [DConnectMediaPlayerProfile setStatus:status target:mediaPlayer];
-                MPMediaItem *mediaItem = _musicPlayer.nowPlayingItem;
-                DPHostMediaContext *mediaCtx = [DPHostMediaContext contextWithMediaItem:mediaItem];
                 [_self sendEventMusicWithMessage:mediaPlayer];
                 [_musicPlayer setCurrentPlaybackTime:0.0f];
                 [_musicPlayer play];

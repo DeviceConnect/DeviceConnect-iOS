@@ -1777,11 +1777,11 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
         return YES;
     }
     
-    if (flashing && flashing.count > 0) {
-        [response setErrorToInvalidRequestParameterWithMessage:
-         @"Parameter 'flashing' is not supported."];
-        return YES;
-    }
+//    if (flashing && flashing.count > 0) {
+//        [response setErrorToInvalidRequestParameterWithMessage:
+//         @"Parameter 'flashing' is not supported."];
+//        return YES;
+//    }
     
     switch ([self serviceTypeFromService:service]) {
             
@@ -1858,11 +1858,11 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
         return YES;
     }
     
-    if (flashing && flashing.count > 0) {
-        [response setErrorToInvalidRequestParameterWithMessage:
-         @"Parameter 'flashing' is not supported."];
-        return YES;
-    }
+//    if (flashing && flashing.count > 0) {
+//        [response setErrorToInvalidRequestParameterWithMessage:
+//         @"Parameter 'flashing' is not supported."];
+//        return YES;
+//    }
     if (!name || (name && name.length == 0)) {
         [response setErrorToInvalidRequestParameterWithMessage:
          @"Parameter 'name' is invalid."];
@@ -2035,11 +2035,11 @@ didReceivePostLightGroupRequest:(DConnectRequestMessage *)request
         return YES;
     }
     
-    if (flashing && flashing.count > 0) {
-        [response setErrorToInvalidRequestParameterWithMessage:
-         @"Parameter 'flashing' is not supported."];
-        return YES;
-    }
+//    if (flashing && flashing.count > 0) {
+//        [response setErrorToInvalidRequestParameterWithMessage:
+//         @"Parameter 'flashing' is not supported."];
+//        return YES;
+//    }
     
     switch ([self serviceTypeFromService:service]) {
             
@@ -2109,11 +2109,11 @@ didReceivePostLightGroupRequest:(DConnectRequestMessage *)request
         return YES;
     }
     
-    if (flashing && flashing.count > 0) {
-        [response setErrorToInvalidRequestParameterWithMessage:
-         @"Parameter 'flashing' is not supported."];
-        return YES;
-    }
+//    if (flashing && flashing.count > 0) {
+//        [response setErrorToInvalidRequestParameterWithMessage:
+//         @"Parameter 'flashing' is not supported."];
+//        return YES;
+//    }
     
     if (!name || (name && name.length == 0)) {
         [response setErrorToInvalidRequestParameterWithMessage:

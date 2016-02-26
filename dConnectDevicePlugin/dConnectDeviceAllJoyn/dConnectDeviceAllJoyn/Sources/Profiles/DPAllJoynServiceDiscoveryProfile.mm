@@ -50,6 +50,11 @@ didReceiveGetServicesRequest:(DConnectRequestMessage *)request
     for (DPAllJoynServiceEntity *serviceEntity in
          _handler.discoveredAllJoynServices.allValues) {
         
+        // Luminaireのグループを管理しているデバイスは除外する
+        if (([serviceEntity.serviceName rangeOfString:@"LuminaireC"
+                                options:NSCaseInsensitiveSearch].location != NSNotFound)) {
+            continue;
+        }
         DConnectMessage *service = [DConnectMessage message];
         [DConnectServiceDiscoveryProfile setId:serviceEntity.appId
                                         target:service];
