@@ -31,23 +31,27 @@
 #pragma mark - DConnectCanvasProfileDelegate
 
 // 画像描画リクエストを受け取った
-- (BOOL) profile:(DConnectFileProfile *)profile didReceivePostDrawImageRequest:(DConnectRequestMessage *)request
+- (BOOL) profile:(DConnectCanvasProfile *)profile didReceivePostDrawImageRequest:(DConnectRequestMessage *)request
         response:(DConnectResponseMessage *)response
-        serviceId:(NSString *)serviceId
+       serviceId:(NSString *)serviceId
         mimeType:(NSString *)mimeType
             data:(NSData *)data
-               imageX:(double)imageX
-               imageY:(double)imageY
+             uri:(NSString *)uri
+          imageX:(double)imageX
+          imageY:(double)imageY
             mode:(NSString *)mode
 {
-	// パラメータチェック
-	if (data == nil) {
-		[response setErrorToInvalidRequestParameterWithMessage:@"data is not specied to update a file."];
-		return YES;
-	}
-	
+    NSData *canvas = data;
+    if (uri || [uri length] > 0) {
+        canvas = [NSData dataWithContentsOfURL:[NSURL URLWithString:uri]];
+    }
+    if (canvas == nil || [canvas length] <= 0) {
+        [response setErrorToInvalidRequestParameterWithMessage:@"data is not specied to update a file."];
+        return YES;
+    }
+
 	// 画像変換
-    NSData *imgdata = [DPPebbleImage convertImage:data imageX:imageX imageY:imageY mode:mode];
+    NSData *imgdata = [DPPebbleImage convertImage:canvas imageX:imageX imageY:imageY mode:mode];
 	if (!imgdata) {
 		[response setErrorToUnknown];
 		return YES;
