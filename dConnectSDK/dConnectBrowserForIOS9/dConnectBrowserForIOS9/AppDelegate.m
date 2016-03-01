@@ -35,7 +35,7 @@
     NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
     BOOL sw = [def boolForKey:IS_MANAGER_LAUNCH];
     if (sw) {
-        [mgr startByHttpServer];
+        [mgr startByHttpServer];        
     }
     
     float osVersion = [[[UIDevice currentDevice] systemVersion] floatValue];
@@ -43,15 +43,21 @@
         UIUserNotificationType types =  UIUserNotificationTypeBadge|
         UIUserNotificationTypeSound|
         UIUserNotificationTypeAlert;
-        
         UIUserNotificationSettings *mySettings = [UIUserNotificationSettings settingsForTypes:types
                                                                                    categories:nil];
-        
         [application registerUserNotificationSettings:mySettings];
     }
     return YES;
 }
 
+- (void)copyResourceBundleToPath:(NSString *)pathString
+{
+    NSFileManager* fm = [NSFileManager defaultManager];
+    for (NSString* filename in [fm contentsOfDirectoryAtPath:[[NSBundle mainBundle] bundlePath] error:nil]) {
+        NSString* filePath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:filename];
+        [fm copyItemAtPath:filePath toPath:[pathString stringByAppendingPathComponent:filename] error:nil];
+    }
+}
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
     // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
@@ -72,6 +78,8 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     [[GHDataManager shareManager]save];
+    DConnectManager *mgr = [DConnectManager sharedManager];
+    [mgr stopByHttpServer];
 }
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
 {

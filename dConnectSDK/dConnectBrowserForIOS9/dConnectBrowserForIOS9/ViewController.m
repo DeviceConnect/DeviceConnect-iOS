@@ -51,10 +51,6 @@
     [super viewDidLoad];
     CGFloat barW = 300;
     NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
-    BOOL sw = [def boolForKey:IS_MANAGER_LAUNCH];
-    if (sw) {
-        [mgr startByHttpServer];
-    }
 
     BOOL isOriginBlock = [def boolForKey:IS_ORIGIN_BLOCKING];
     mgr.settings.useOriginBlocking = isOriginBlock;
@@ -133,7 +129,6 @@
     if (!_url) {
         _url = [self.manager createSearchURL:url];
     }
-
     void (^loadSFSafariViewControllerBlock)(NSURL *) = ^(NSURL *url) {
         sfSafariViewController = [[SFSafariViewController alloc] initWithURL:url entersReaderIfAvailable:YES];
         sfSafariViewController.delegate = self;

@@ -118,6 +118,8 @@ extern NSString *const DConnectApplicationWillEnterForeground;
  
  */
 - (void) stopByHttpServer;
+
+
 /*!
  @brief Websocketサーバを起動する。
  */

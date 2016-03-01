@@ -19,6 +19,8 @@
 #import "GCIPUtil.h"
 #import "RoutingHTTPServer.h"
 #import "WebSocket.h"
+#import "HTTPServer.h"
+
 
 
 @implementation DConnectServerProtocol
@@ -29,11 +31,8 @@ static RoutingHTTPServer *mHttpServer;
 
 + (BOOL)startServerWithHost:(NSString*)host port:(int)port
 {
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *documentsDirectory = [paths objectAtIndex:0];
     mHttpServer = [[RoutingHTTPServer alloc] init];
     [mHttpServer setPort:port];
-    [mHttpServer setDocumentRoot:documentsDirectory];
     [mHttpServer setDefaultHeader:@"Server" value:@"DeviceConnect/1.0"];
     [mHttpServer setDefaultHeader:@"Access-Control-Allow-Origin" value:@"*"];
     // register Http request handler
@@ -60,6 +59,7 @@ static RoutingHTTPServer *mHttpServer;
         return NO;
     }
 }
+
 
 + (void)stopServer
 {

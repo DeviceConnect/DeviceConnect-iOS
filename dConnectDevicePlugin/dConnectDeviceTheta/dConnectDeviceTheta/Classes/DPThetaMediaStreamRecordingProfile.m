@@ -193,9 +193,8 @@ didReceivePutOnPhotoRequest:(DConnectRequestMessage *)request
                                                              callback:^(NSString *path) {
             [self sendOnPhotoEventWithPath:path mimeType:DPThetaImageMimeType];
         }];
-        [[DConnectManager sharedManager] sendResponse:response];
     }];
-    return NO;
+    return YES;
 }
 
 
@@ -220,10 +219,9 @@ didReceivePutOnRecordingChangeRequest:(DConnectRequestMessage *)request
                                               mimeType:DPThetaMovieMimeType
                                           errorMessage:message];
         }];
-        [[DConnectManager sharedManager] sendResponse:response];
 
     }];
-    return NO;
+    return YES;
 }
 
 #pragma mark - Delete Methods

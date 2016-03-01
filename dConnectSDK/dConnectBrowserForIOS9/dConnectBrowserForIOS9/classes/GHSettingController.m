@@ -30,11 +30,10 @@
 //--------------------------------------------------------------//
 - (id)initWithStyle:(UITableViewStyle)style
 {
-    NSString *ip = [NSString stringWithFormat:@"Host: %@", [self myIPAddress]];
+//    NSString *ip = [NSString stringWithFormat:@"Host: %@", [self myIPAddress]];
     self = [super initWithStyle:style];
     if (self) {
         self.datasource = @[@[@"DeviceConnectManager(ON/OFF)",
-                              ip,
                               @"Port 4035",
                               @"アクセストークン削除",
                               @"Originホワイトリスト管理",
@@ -169,11 +168,11 @@
     
     if (indexPath.section == 0) {
         switch (indexPath.row) {
-            case 3:
+            case 2:
                 //Device Connect Managerのアクセストークン削除
                 [DConnectUtil showAccessTokenList];
                 break;
-            case 4:
+            case 3:
                 //ホワイトリスト管理
                 [DConnectUtil showOriginWhitelist];
                 break;
@@ -223,15 +222,15 @@
             }
                 break;
                 
-            case 3:
+            case 2:
                 //Device Connect Managerのアクセストークン削除
                 cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
                 break;
-            case 4:
+            case 3:
                 //ホワイトリスト管理
                 cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
                 break;
-            case 5:
+            case 4:
             {
                 //Originブロック機能 ON/OFF
                 if (!self.blockSW ) {

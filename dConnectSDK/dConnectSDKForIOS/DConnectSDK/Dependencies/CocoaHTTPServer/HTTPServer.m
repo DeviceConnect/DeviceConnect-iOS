@@ -659,7 +659,7 @@
 {
 //    NSLog(@"connectionDidDie:%d", [connections count]);
 	// Note: This method is called on the connection queue that posted the notification
-	[connectionsLock lock];
+//	[connectionsLock lock];
 //    HTTPConnection *con = (HTTPConnection *) [notification object];
 //    if ([con numberOfWebSocket] == 0) {
 //        [connections removeObject:[notification object]];
@@ -670,7 +670,7 @@
 //            [connections removeObjectAtIndex:i];
 //        }
 //    }
-	[connectionsLock unlock];
+//	[connectionsLock unlock];
 }
 
 /**

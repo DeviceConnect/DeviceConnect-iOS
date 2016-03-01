@@ -156,8 +156,7 @@
             dispatch_semaphore_wait(semaphore, timeout);
         }
         NSString  *res = [[NSString alloc] initWithData:omniImage.image encoding:NSJapaneseEUCStringEncoding];
-        
-        if ([res isEqualToString:@"No valid api was detected in URL."]) {
+        if (!omniImage.image || omniImage.image.length == 0 || [res isEqualToString:@"No valid api was detected in URL."]) {
             [response setErrorToInvalidRequestParameterWithMessage:@"Non exist Source"];
             return YES;
         }

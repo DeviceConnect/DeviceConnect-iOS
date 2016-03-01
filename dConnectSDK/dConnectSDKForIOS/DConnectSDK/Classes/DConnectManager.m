@@ -89,7 +89,6 @@ NSString *const DConnectAttributeNameRequestAccessToken = @"requestAccessToken";
  @brief DConnectManager起動フラグ。
  */
 @property (nonatomic) BOOL mStartFlag;
-
 /**
  * レスポンスとブロックを管理するマップ.
  */
@@ -172,11 +171,13 @@ NSString *const DConnectAttributeNameRequestAccessToken = @"requestAccessToken";
     [DConnectServerProtocol setHost:self.settings.host];
     [DConnectServerProtocol setPort:self.settings.port];
     
-    BOOL isSuccess = [DConnectServerProtocol startServerWithHost:self.settings.host port:self.settings.port];
+    BOOL isSuccess = [DConnectServerProtocol startServerWithHost:self.settings.host
+                                                            port:self.settings.port];
     if (!isSuccess) {
         self.mStartFlag = NO;
     }
 }
+
 - (void) stopByHttpServer {
     if (!self.mStartFlag) {
         return;

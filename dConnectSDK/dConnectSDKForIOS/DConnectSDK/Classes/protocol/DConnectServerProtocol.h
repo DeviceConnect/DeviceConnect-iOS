@@ -15,8 +15,8 @@
 
 
 + (BOOL)startServerWithHost:(NSString*)host port:(int)port;
-
 + (void)stopServer;
+
 
 + (void)sendEvent:(NSString *)event forSessionKey:(NSString *)sessionKey;
 @end

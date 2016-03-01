@@ -28,7 +28,7 @@
         NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url];
 
         [request addValue:origin forHTTPHeaderField:@"X-GotAPI-Origin"];
-
+        [request setTimeoutInterval:1];
         conn = [[NSURLConnection alloc] initWithRequest:request delegate:self];
     }
     return self;
