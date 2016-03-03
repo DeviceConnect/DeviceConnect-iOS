@@ -55,15 +55,19 @@ BOOL _startedCollisionSensor;
 // アプリがバックグラウンドに入った
 - (void)applicationDidEnterBackground
 {
+    [self removeResponseObserver];
     // センサーのマスクを保持
     _streamingMask = [RKSetDataStreamingCommand currentMask];
+
 }
 
 // アプリがフォアグラウンドに入った
 - (void)applicationWillEnterForeground
 {
+
     // すぐは復帰できないので。
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self addResponseObserver];
         // センサーを復帰
         [self startSensor:_streamingMask divisor:kSensorDivisor];
         if (_startedCollisionSensor) {
@@ -542,6 +546,21 @@ BOOL _startedCollisionSensor;
 // 少数かどうかを判定する。
 - (BOOL)existDecimalWithString:(NSString*)decimal {
     return [self existNumberWithString:decimal Regex:kDPSpheroRegexDecimalPoint];
+}
+
+
+- (void)addResponseObserver {
+    [[RKDeviceMessenger sharedMessenger] addResponseObserver:self
+                                                    selector:@selector(handleResponse:)];
+
+}
+
+
+- (void)removeResponseObserver {
+    [[RKDeviceMessenger sharedMessenger] removeDataStreamingObserver:self];
+
+    [[RKDeviceMessenger sharedMessenger] removeResponseObserver:self];
+
 }
 
 

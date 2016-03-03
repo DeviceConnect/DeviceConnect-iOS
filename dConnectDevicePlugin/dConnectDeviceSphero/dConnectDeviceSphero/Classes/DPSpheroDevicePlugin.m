@@ -15,6 +15,7 @@
 #import "DPSpheroLightProfile.h"
 #import "DPSpheroDeviceOrientationProfile.h"
 #import "DPSpheroManager.h"
+#import <RobotKit/RobotKit.h>
 
 @interface DPSpheroDevicePlugin()
 @end
@@ -62,6 +63,10 @@
             [notificationCenter addObserver:_self selector:@selector(enterBackground)
                        name:UIApplicationDidEnterBackgroundNotification
                      object:application];
+            [notificationCenter addObserver:_self selector:@selector(enterNoLongerAvailable)
+                                       name:RKRobotIsNoLongerAvailableNotification
+                                     object:application];
+
         });
     }
     
@@ -74,6 +79,9 @@
 - (void)enterForeground {
     [[DPSpheroManager sharedManager] applicationWillEnterForeground];
 }
+- (void)enterNoLongerAvailable {
+    [[DPSpheroManager sharedManager] applicationDidEnterBackground];
+}
 - (void) dealloc {
     
     NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
@@ -81,5 +89,6 @@
     
     [notificationCenter removeObserver:self name:UIApplicationDidBecomeActiveNotification object:application];
     [notificationCenter removeObserver:self name:UIApplicationDidEnterBackgroundNotification object:application];
+    [notificationCenter removeObserver:self name:RKRobotIsNoLongerAvailableNotification object:application];
 }
 @end
