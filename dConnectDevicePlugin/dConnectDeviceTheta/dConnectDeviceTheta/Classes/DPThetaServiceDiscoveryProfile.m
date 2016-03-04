@@ -33,11 +33,13 @@ NSString *const DPThetaServiceDiscoveryServiceId = @"theta";
 didReceiveGetServicesRequest:(DConnectRequestMessage *)request
                               response:(DConnectResponseMessage *)response
 {
-    [[DPThetaManager sharedManager] connect];
     DPThetaManager *mgr = [DPThetaManager sharedManager];
+    [mgr disconnect];
+    sleep(1);
+    BOOL isConnected = [mgr connect];
     NSString* serial = [mgr getSerialNo];
     DConnectArray *services = [DConnectArray array];
-    if (serial) {
+    if (isConnected && serial) {
         NSString *name = [NSString stringWithFormat:@"Theta: %@", serial];
 
         DConnectMessage *service = [DConnectMessage message];

@@ -57,7 +57,6 @@
     for (NSTextCheckingResult *result in resultArray){
         if ([result resultType] == NSTextCheckingTypeLink){
             NSURL *url = [result URL];
-            LOG(@"scheme:%@ url:%@", [url scheme], [url description]);
             return [url description];
         }
     }

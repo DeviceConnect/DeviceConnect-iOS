@@ -319,13 +319,13 @@ typedef void (^CollisionBlock)(DConnectMessage *);
         [response setResult:DConnectMessageResultTypeOk];
         [response setMessage:msg forKey:DPSpheroProfileParamLocator];
         
-        [[DConnectManager sharedManager] sendResponse:response];
-        
         weakSelf.locatorOnceBlock = nil;
         
         if (![weakSelf hasLocatorEventList]) {
             [[DPSpheroManager sharedManager] stopSensorLocator];
         }
+        [[DConnectManager sharedManager] sendResponse:response];
+
     };
     
     if (![self hasLocatorEventList]) {

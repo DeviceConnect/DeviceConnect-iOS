@@ -30,6 +30,11 @@ extern NSString *const DConnectCanvasProfileParamMIMEType;
 extern NSString *const DConnectCanvasProfileParamData;
 
 /*!
+ @brief パラメータ: url。
+ */
+extern NSString *const DConnectCanvasProfileParamURI;
+
+/*!
  @brief パラメータ: X。
  */
 extern NSString *const DConnectCanvasProfileParamX;
@@ -87,6 +92,7 @@ extern NSString *const DConnectCanvasProfileModeFills;
  @param[in] serviceId サービスID
  @param[in] mimeType マイムタイプ。省略された場合はnil。
  @param[in] data ファイルのバイナリデータ
+ @param[in] uri ファイルのURLデータ
  @param[in] x X座標
  @param[in] y Y座標
  @param[in] mode 画像描画モード
@@ -98,6 +104,7 @@ extern NSString *const DConnectCanvasProfileModeFills;
         serviceId:(NSString *)serviceId
         mimeType:(NSString *)mimeType
             data:(NSData *)data
+             uri:(NSString *)uri
                imageX:(double)imageX
                imageY:(double)imageY
             mode:(NSString *)mode;
@@ -163,6 +170,14 @@ extern NSString *const DConnectCanvasProfileModeFills;
 + (void) setData:(NSData *)data target:(DConnectMessage *)message;
 
 /*!
+ @brief メッセージに画像ファイルのURLを設定する。
+ @param[in] uri 画像ファイルのURL
+ @param[in,out] message 画像ファイルのバイナリを格納するメッセージ
+ */
++ (void) setURI:(NSString *)uri target:(DConnectMessage *)message;
+
+
+/*!
  @brief メッセージにX座標を設定する。
  @param[in] x X座標
  @param[in,out] message X座標を格納するメッセージ
@@ -184,6 +199,7 @@ extern NSString *const DConnectCanvasProfileModeFills;
 + (void) setMode:(NSString *)mode target:(DConnectMessage *)message;
 
 
+
 #pragma mark - Getter
 
 /*!
@@ -199,6 +215,14 @@ extern NSString *const DConnectCanvasProfileModeFills;
  @return 画像ファイルのバイナリ。無い場合はnilを返す。
  */
 + (NSData *) dataFromRequest:(DConnectMessage *)request;
+
+/*!
+ @brief リクエストデータから画像ファイルのURLを取得する。
+ @param[in] request リクエストパラメータ
+ @return 画像ファイルのバイナリ。無い場合はnilを返す。
+ */
++ (NSString *) uriFromRequest:(DConnectMessage *)request;
+
 
 /*!
  @brief リクエストデータからX座標を取得する。
