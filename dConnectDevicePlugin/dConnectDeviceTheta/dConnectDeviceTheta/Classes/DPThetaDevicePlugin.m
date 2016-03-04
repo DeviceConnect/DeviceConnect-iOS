@@ -42,7 +42,6 @@
         
         // プロファイルを追加
         [self addProfile:[DConnectServiceInformationProfile new]];
-        __weak typeof(self) _self = self;
     }
     
     return self;

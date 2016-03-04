@@ -86,7 +86,9 @@ static NSMutableArray *contextCacheVal;
     if ([url.scheme isEqualToString:MediaContextMediaIdSchemeIPodAudio]
         || [url.scheme isEqualToString:MediaContextMediaIdSchemeIPodMovie]) {
         NSNumber *persistentId = [DPHostMediaContext persistentIdWithMediaIdURL:url];
-        
+        if (persistentId) {
+            return nil;
+        }
         MPMediaQuery *mediaQuery = [MPMediaQuery new];
         [mediaQuery addFilterPredicate:
          [MPMediaPropertyPredicate predicateWithValue:[NSNumber numberWithInteger:TargetMPMediaType]

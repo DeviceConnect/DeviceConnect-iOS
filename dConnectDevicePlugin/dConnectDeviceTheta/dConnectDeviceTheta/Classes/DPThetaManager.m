@@ -66,7 +66,6 @@ static int const _timeout = 500;
         _ptpConnection = [[PtpConnection alloc] init];
         [_ptpConnection setLoglevel:PTPIP_LOGLEVEL_WARN];
         [_ptpConnection setEventListener:self];
-        
 
     }
     return self;
@@ -166,19 +165,24 @@ static int const _timeout = 500;
     if ([_ptpConnection connected]) {
         return YES;
     }
+
     __block BOOL result = NO;
     // Setup `target IP`(camera IP).
     // Product default is "192.168.1.1".
     [_ptpConnection setTargetIp:@"192.168.1.1"];
     dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
-    dispatch_time_t timeout = dispatch_time(DISPATCH_TIME_NOW, NSEC_PER_SEC * 100);
+    dispatch_time_t timeout = dispatch_time(DISPATCH_TIME_NOW, NSEC_PER_SEC * _timeout);
 
+    
     [_ptpConnection connect:^(BOOL connected) {
         result = connected;
         dispatch_semaphore_signal(semaphore);
 
     }];
     dispatch_semaphore_wait(semaphore, timeout);
+    
+    [self setImageSize:CGSizeMake(2048,1024)];
+
     return result;
 
 }
@@ -330,6 +334,7 @@ static int const _timeout = 500;
 
 //シリアルNoを返す
 - (NSString*)getSerialNo {
+    _deviceInfo = nil;
     dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
     dispatch_time_t timeout = dispatch_time(DISPATCH_TIME_NOW, NSEC_PER_SEC * _timeout);
 

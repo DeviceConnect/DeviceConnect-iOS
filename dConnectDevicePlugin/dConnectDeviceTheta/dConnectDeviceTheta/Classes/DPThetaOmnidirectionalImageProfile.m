@@ -118,6 +118,7 @@
                         source:(NSString *)source
                          isGet:(BOOL)isGet
 {
+    
     if (!source) {
         [response setErrorToInvalidRequestParameterWithMessage:@"Non exist Source"];
         return YES;
@@ -155,8 +156,7 @@
             dispatch_semaphore_wait(semaphore, timeout);
         }
         NSString  *res = [[NSString alloc] initWithData:omniImage.image encoding:NSJapaneseEUCStringEncoding];
-        
-        if ([res isEqualToString:@"No valid api was detected in URL."]) {
+        if (!omniImage.image || omniImage.image.length == 0 || [res isEqualToString:@"No valid api was detected in URL."]) {
             [response setErrorToInvalidRequestParameterWithMessage:@"Non exist Source"];
             return YES;
         }
@@ -178,15 +178,15 @@
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [roiContext changeRenderParameter:[[DPThetaParam alloc] init] isUserRequest:YES];
         [roiContext startExpiredTimer];
+        _roiContexts[uri] = roiContext;
+        [response setResult:DConnectMessageResultTypeOk];
+        if (isGet) {
+            [response setString:[NSString stringWithFormat:@"%@?snapshot", uri] forKey:DPOmnidirectionalImageProfileParamURI];
+        } else {
+            [response setString:uri forKey:DPOmnidirectionalImageProfileParamURI];
+        }
+        [[DConnectManager sharedManager] sendResponse:response];
     });
-    _roiContexts[uri] = roiContext;
-    [response setResult:DConnectMessageResultTypeOk];
-    if (isGet) {
-        [response setString:[NSString stringWithFormat:@"%@?snapshot", uri] forKey:DPOmnidirectionalImageProfileParamURI];
-    } else {
-        [response setString:uri forKey:DPOmnidirectionalImageProfileParamURI];
-    }
-    [[DConnectManager sharedManager] sendResponse:response];
 
     return NO;
 }

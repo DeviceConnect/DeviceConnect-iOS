@@ -122,11 +122,11 @@
 		9044F33F1A1A21DA0072F241 /* HueSDK_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9044F33E1A1A21DA0072F241 /* HueSDK_iOS.framework */; };
 		9700DDE71998E0DD00209D1A /* dConnectDeviceHost.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9700DDE61998E0DD00209D1A /* dConnectDeviceHost.framework */; };
 		AB08A05E19908B410024C996 /* DCMDevicePluginSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB08A05D19908B410024C996 /* DCMDevicePluginSDK.framework */; };
-		AB3520B51BACE6EF0010FF55 /* dConnectDeviceSphero_resources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = AB3520B31BACE6EF0010FF55 /* dConnectDeviceSphero_resources.bundle */; settings = {ASSET_TAGS = (); }; };
-		AB3520B61BACE6EF0010FF55 /* dConnectDeviceSphero.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB3520B41BACE6EF0010FF55 /* dConnectDeviceSphero.framework */; settings = {ASSET_TAGS = (); }; };
-		AB3520BA1BACE6F90010FF55 /* RobotKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB3520B71BACE6F90010FF55 /* RobotKit.framework */; settings = {ASSET_TAGS = (); }; };
-		AB3520BB1BACE6F90010FF55 /* RobotUIKit.bundle in Resources */ = {isa = PBXBuildFile; fileRef = AB3520B81BACE6F90010FF55 /* RobotUIKit.bundle */; settings = {ASSET_TAGS = (); }; };
-		AB3520BC1BACE6F90010FF55 /* RobotUIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB3520B91BACE6F90010FF55 /* RobotUIKit.framework */; settings = {ASSET_TAGS = (); }; };
+		AB3520B51BACE6EF0010FF55 /* dConnectDeviceSphero_resources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = AB3520B31BACE6EF0010FF55 /* dConnectDeviceSphero_resources.bundle */; };
+		AB3520B61BACE6EF0010FF55 /* dConnectDeviceSphero.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB3520B41BACE6EF0010FF55 /* dConnectDeviceSphero.framework */; };
+		AB3520BA1BACE6F90010FF55 /* RobotKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB3520B71BACE6F90010FF55 /* RobotKit.framework */; };
+		AB3520BB1BACE6F90010FF55 /* RobotUIKit.bundle in Resources */ = {isa = PBXBuildFile; fileRef = AB3520B81BACE6F90010FF55 /* RobotUIKit.bundle */; };
+		AB3520BC1BACE6F90010FF55 /* RobotUIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB3520B91BACE6F90010FF55 /* RobotUIKit.framework */; };
 		AB3520BE1BACEB890010FF55 /* libstdc++.6.0.9.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = AB3520BD1BACEB890010FF55 /* libstdc++.6.0.9.tbd */; };
 		AB3520C01BACEBAD0010FF55 /* libiconv.2.4.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = AB3520BF1BACEBAD0010FF55 /* libiconv.2.4.0.tbd */; };
 		AB4464F41BB921210097B9E9 /* ExternalAccessory.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB4464F31BB921210097B9E9 /* ExternalAccessory.framework */; };

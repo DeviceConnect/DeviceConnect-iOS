@@ -249,4 +249,15 @@ typedef struct DPGyroData_ {
  */
 - (BOOL)existDecimalWithString:(NSString*)decimal;
 
+
+
+/*!
+ @brief Observerの登録。
+ */
+- (void)addResponseObserver;
+/*!
+ @brief Observerの削除。
+ */
+- (void)removeResponseObserver;
+
 @end

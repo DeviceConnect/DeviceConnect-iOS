@@ -308,9 +308,10 @@ typedef void (^DPHostConnectStatusBlock)(BOOL status);
 - (void) reachabilityChanged:(NSNotification *)note
 {
     DPHostReachability* curReach = [note object];
-    BOOL isStatus = ([curReach currentReachabilityStatus] == NotReachable);
+    BOOL isStatus = ([curReach currentReachabilityStatus] != NotReachable);
     NSArray *wifiBlocks = _wifiStatusBlocks;
     if (wifiBlocks) {
+
         for (DPHostConnectStatusBlock wifiBlock in wifiBlocks) {
             wifiBlock(isStatus);
         }
@@ -320,7 +321,6 @@ typedef void (^DPHostConnectStatusBlock)(BOOL status);
     if (wifiBlock) {
         wifiBlock(isStatus);
     }
-
     if (![self checkWifiBlocks]) {
         [_wifiReachability stopNotifier];
     }
