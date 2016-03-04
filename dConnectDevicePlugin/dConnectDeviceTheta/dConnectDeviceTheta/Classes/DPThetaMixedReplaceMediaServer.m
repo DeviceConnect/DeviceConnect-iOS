@@ -95,7 +95,6 @@ static int const DPThetaTagHeader = 0;
                         }
                         _jpegData = _broadcastROIImages[segment];
                         GCDAsyncSocket *sock = _connectedSockets[key];
-
                         if (range.location != NSNotFound) {
                             [sock writeData:[self generateOneShotResponse] withTimeout:-1 tag:1];
                             if (_delegate) {
@@ -103,7 +102,7 @@ static int const DPThetaTagHeader = 0;
                             }
                             [sock disconnect];
                             [_connectedSockets removeObjectForKey:key];
-                            [_broadcastROIImages removeObjectForKey:segment];
+//                            [_broadcastROIImages removeObjectForKey:segment];
                         } else {
                             
                             [sock writeData:[self generateResponse] withTimeout:-1 tag:1];

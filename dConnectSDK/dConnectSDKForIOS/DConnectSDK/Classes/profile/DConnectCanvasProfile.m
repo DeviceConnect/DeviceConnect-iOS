@@ -19,6 +19,7 @@ NSString *const DConnectCanvasProfileAttrDrawImage = @"drawimage";
 // Parameter
 NSString *const DConnectCanvasProfileParamMIMEType = @"mimeType";
 NSString *const DConnectCanvasProfileParamData     = @"data";
+NSString *const DConnectCanvasProfileParamURI = @"uri";
 NSString *const DConnectCanvasProfileParamX        = @"x";
 NSString *const DConnectCanvasProfileParamY        = @"y";
 NSString *const DConnectCanvasProfileParamMode     = @"mode";
@@ -53,10 +54,11 @@ NSString *const DConnectCanvasProfileModeFills  = @"fills";
     NSString *attribute = [request attribute];
     if ([attribute isEqualToString:DConnectCanvasProfileAttrDrawImage]) {
         
-        if ([self hasMethod:@selector(profile:didReceivePostDrawImageRequest:response:serviceId:mimeType:data:imageX:imageY:mode:)
+        if ([self hasMethod:@selector(profile:didReceivePostDrawImageRequest:response:serviceId:mimeType:data:uri:imageX:imageY:mode:)
                    response:response])
         {
             NSData *data = [DConnectCanvasProfile dataFromRequest:request];
+            NSString *uri = [DConnectCanvasProfile uriFromRequest:request];
             NSString *serviceId = [request serviceId];
             NSString *mimeType = [DConnectCanvasProfile mimeTypeFromRequest:request];
             NSString *strX = [DConnectCanvasProfile xFromRequest: request];
@@ -79,7 +81,7 @@ NSString *const DConnectCanvasProfileModeFills  = @"fills";
             NSString *mode = [DConnectCanvasProfile modeFromRequest: request];
             
             send = [_delegate profile:self didReceivePostDrawImageRequest:request response:response
-                             serviceId:serviceId mimeType:mimeType data:data imageX:x imageY:y mode:mode];
+                            serviceId:serviceId mimeType:mimeType data:data uri:uri imageX:x imageY:y mode:mode];
         }
 
     } else {
@@ -128,6 +130,10 @@ NSString *const DConnectCanvasProfileModeFills  = @"fills";
     [message setData:data forKey:DConnectCanvasProfileParamData];
 }
 
++ (void) setURI:(NSString *)uri target:(DConnectMessage *)message {
+    [message setString:uri forKey:DConnectCanvasProfileParamURI];
+}
+
 + (void) setX:(double)x target:(DConnectMessage *)message {
     [message setDouble:x forKey:DConnectCanvasProfileParamX];
 }
@@ -150,6 +156,11 @@ NSString *const DConnectCanvasProfileModeFills  = @"fills";
 + (NSData *) dataFromRequest:(DConnectMessage *)request {
     return [request dataForKey:DConnectCanvasProfileParamData];
 }
+
++ (NSString *) uriFromRequest:(DConnectMessage *)request {
+    return [request stringForKey:DConnectCanvasProfileParamURI];
+}
+
 
 + (NSString *) xFromRequest:(DConnectMessage *)request {
     return [request stringForKey:DConnectCanvasProfileParamX];

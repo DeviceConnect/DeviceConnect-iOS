@@ -253,7 +253,6 @@
 				ABC2D3BA1B86E39A0033AE4A /* CoreMotion.framework in Frameworks */,
 				AB585CC11B7C1B4F00253141 /* GLKit.framework in Frameworks */,
 				AB585CBF1B7C1B4800253141 /* OpenGLES.framework in Frameworks */,
-				AB50D03F1B40DA0D00EB9F94 /* libiconv.dylib in Frameworks */,
 				AB50D0411B40DA1C00EB9F94 /* ImageIO.framework in Frameworks */,
 				AB50D0E41B40E70E00EB9F94 /* DConnectSDK.framework in Frameworks */,
 			);

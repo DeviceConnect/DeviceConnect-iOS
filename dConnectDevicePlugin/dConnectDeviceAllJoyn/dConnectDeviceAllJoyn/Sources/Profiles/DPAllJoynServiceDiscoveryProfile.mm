@@ -50,13 +50,17 @@ didReceiveGetServicesRequest:(DConnectRequestMessage *)request
     for (DPAllJoynServiceEntity *serviceEntity in
          _handler.discoveredAllJoynServices.allValues) {
         
+        // Luminaireのグループを管理しているデバイスは除外する
+        if (([serviceEntity.serviceName rangeOfString:@"LuminaireC"
+                                options:NSCaseInsensitiveSearch].location != NSNotFound)) {
+            continue;
+        }
         DConnectMessage *service = [DConnectMessage message];
         [DConnectServiceDiscoveryProfile setId:serviceEntity.appId
                                         target:service];
         [DConnectServiceDiscoveryProfile setName:serviceEntity.serviceName
                                           target:service];
-        // TODO: AllJoynリモートオブジェクトのトランスポート情報を取得できるか調査。
-//        [DConnectServiceDiscoveryProfile setType:@"wifi" target:service];
+        [DConnectServiceDiscoveryProfile setType:@"wifi" target:service];
         [DConnectServiceDiscoveryProfile setOnline:YES target:service];
         [services addMessage:service];
     }
