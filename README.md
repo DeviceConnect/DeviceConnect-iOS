@@ -37,6 +37,7 @@ In this guide I will continue to discuss the following.
 | Project Name|Content  |
 |:-----------|:---------|
 |dConnectBrowser| Browser app for DeviceConnect.|
+|dConnectBrowserForIOS9| Browser app for DeviceConnect. For iOS9 after.|
 |dConnectSDKForIOS|DeviceConnect library for the platform body. Want to use this library when you want to create a device plug-ins and native apps.|
 |dConnectSDKSample|App to execute JavaScript for testing DeviceConnect.|
 
@@ -48,6 +49,7 @@ In this state, please start the DeviceConnect.xcworkspace. In the workspace that
 Basically, you work with start-up of dConnectBrowser only, such as when you make changes to the other device plug-ins please refer to the following build instructions.
 
 * [dConnectBrowser](https://github.com/DeviceConnect/DeviceConnect-iOS/wiki/dConnectBrowser-Build)
+* [dConnectBrowserForIOS9](https://github.com/DeviceConnect/DeviceConnect-iOS/wiki/dConnectBrowserForIOS9-Build)
 * [AllJoyn](https://github.com/DeviceConnect/DeviceConnect-iOS/wiki/AllJoyn-Build)
 * [ChromeCast](https://github.com/DeviceConnect/DeviceConnect-iOS/wiki/ChromeCast-Build)
 * [Host](https://github.com/DeviceConnect/DeviceConnect-iOS/wiki/Host-Build)

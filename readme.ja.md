@@ -30,6 +30,7 @@ Device Connect iOSはiOS版のDeviceConnectのプラットフォームになり�
 | プロジェクト名|内容  |
 |:-----------|:---------|
 |dConnectBrowser|DeviceConnect用のBrowserアプリ。|
+|dConnectBrowserForIOS9|DeviceConnect用のiOS9以降用Browserアプリ。|
 |dConnectSDKForIOS|DeviceConnectのプラットフォーム本体用ライブラリ。このライブラリをデバイスプラグインやネイティブアプリを作成するときに使用する。|
 |dConnectSDKSample|DeviceConnectのJavaScript用テストを実行するためのアプリ。|
 
@@ -38,7 +39,9 @@ Device Connect iOSはiOS版のDeviceConnectのプラットフォームになり�
 　その状態で、DeviceConnect.xcworkspaceを起動してください。起動されるワークスペースには、dConnectBrowserに実装されているデバイスプラグインとdConnectBrowserのプロジェクトの一覧が表示されます。<br>
 　基本的には、dConnectBrowserのみの起動でも動作しますが、他のデバイスプラグインに変更を加えた場合などは以下のビルド手順書を参考にしてください。
 　
+
 * [dConnectBrowser](https://github.com/DeviceConnect/DeviceConnect-iOS/wiki/dConnectBrowser-Build)
+* [dConnectBrowserForIOS9](https://github.com/DeviceConnect/DeviceConnect-iOS/wiki/dConnectBrowserForIOS9-Build)
 * [AllJoyn](https://github.com/DeviceConnect/DeviceConnect-iOS/wiki/AllJoyn-Build)
 * [ChromeCast](https://github.com/DeviceConnect/DeviceConnect-iOS/wiki/ChromeCast-Build)
 * [Host](https://github.com/DeviceConnect/DeviceConnect-iOS/wiki/Host-Build)
@@ -48,6 +51,7 @@ Device Connect iOSはiOS版のDeviceConnectのプラットフォームになり�
 * [SonyCamera](https://github.com/DeviceConnect/DeviceConnect-iOS/wiki/SonyCamera-Build)
 * [Sphero](https://github.com/DeviceConnect/DeviceConnect-iOS/wiki/Sphero-Build)
 * [Theta](https://github.com/DeviceConnect/DeviceConnect-iOS/wiki/Theta-Build)
+
 
 # <a name="section3">動作確認</a>
  dConnectBrowserのアドレスバーに`http://localhost:4035/gotapi/availability`を入力してください。<br>
