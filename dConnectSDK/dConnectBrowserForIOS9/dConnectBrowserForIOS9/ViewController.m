@@ -128,6 +128,8 @@
     _url = [self.manager isURLString:url];
     if (!_url) {
         _url = [self.manager createSearchURL:url];
+    } else {
+        _url = url;
     }
     void (^loadSFSafariViewControllerBlock)(NSURL *) = ^(NSURL *url) {
         sfSafariViewController = [[SFSafariViewController alloc] initWithURL:url entersReaderIfAvailable:YES];
@@ -216,9 +218,11 @@
     NSDictionary *dict = notif.userInfo;
     _url = [dict objectForKey:PAGE_URL];
     
-    _url = [self.manager isURLString:_url];
-    if (!_url) {
-        _url = [self.manager createSearchURL:_url];
+    NSString *url = [self.manager isURLString:_url];
+    if (!url) {
+        url = [self.manager createSearchURL:url];
+    } else {
+        _url = url;
     }
     
     [self performSelector:@selector(openSafariViewInternalWithURL:) withObject:_url afterDelay:0.75];
