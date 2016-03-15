@@ -46,7 +46,8 @@
 //--------------------------------------------------------------//
 - (NSString*)isURLString:(NSString*)str
 {
-    NSString *urlString = [str stringByReplacingOccurrencesOfString:@"#/" withString:@""];
+    NSString *urlString = [str stringByReplacingOccurrencesOfString:@"#" withString:@""];
+
     //URLか判定
     NSDataDetector *dataDetector = [NSDataDetector dataDetectorWithTypes:NSTextCheckingTypeLink error:nil];
     NSArray *resultArray = [dataDetector matchesInString:
