@@ -128,7 +128,7 @@
             // アクセストークンの取得
             // 特定のプロファイルはアクセストークン無しでもアクセスできるので無視する
             NSString *accessToken = nil;
-            NSArray *scopes = DConnectIgnoreProfiles();
+            NSArray *scopes = DConnectPluginIgnoreProfiles();
             if (plugin.useLocalOAuth && ![scopes containsObject:profileName]) {
                 accessToken = [self authorizationToDevicePlugin:plugin
                                                          origin:origin

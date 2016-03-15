@@ -20,10 +20,10 @@
 @[@"file://"];
 
 #define DConnectIgnoreProfiles() \
-@[@"authorization", @"availability", @"system", @"files"];
+@[@"authorization", @"availability", @"files"];
 
 #define DConnectPluginIgnoreProfiles() \
-@[@"authorization", @"availability", @"system", @"files", @"servicediscovery"];
+@[@"authorization", @"system", @"files", @"servicediscovery"];
 
 #define DCPutPresentedViewController(top) \
 top = [UIApplication sharedApplication].keyWindow.rootViewController; \
