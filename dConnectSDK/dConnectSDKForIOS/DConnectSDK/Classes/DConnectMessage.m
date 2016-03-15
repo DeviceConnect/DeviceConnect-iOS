@@ -397,7 +397,12 @@ NSString *const DConnectMessageHeaderGotAPIOrigin = @"X-GotAPI-Origin";
 - (NSNumber *) numberForKey:(NSString *)aKey {
     id obj = [self.dictionary objectForKey:aKey];
     if ([obj isKindOfClass:[NSString class]]) {
-        return [NSNumber numberWithDouble:[((NSString *) obj) doubleValue]];
+        int val;
+        if ([[NSScanner scannerWithString:obj] scanInt:&val]) {
+            return [NSNumber numberWithInt:val];
+        } else {
+            return nil;
+        }
     }
     return (NSNumber *) [self.dictionary objectForKey:aKey];
 }

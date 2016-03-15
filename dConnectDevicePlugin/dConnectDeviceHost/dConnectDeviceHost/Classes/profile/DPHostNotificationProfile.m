@@ -162,9 +162,7 @@ didReceivePostNotifyRequest:(DConnectRequestMessage *)request
         [response setError:100 message:@"body is nill"];
         return YES;
     }
-    NSString *typeString = [request stringForKey:DConnectNotificationProfileParamType];
-    if (!type || type.intValue < 0 || 3 < type.intValue
-        || (type && ![DPHostUtils existDigitWithString:typeString])) {
+    if (!type || type.intValue < 0 || 3 < type.intValue) {
         [response setErrorToInvalidRequestParameterWithMessage:@"type is null or invalid"];
         return YES;
     }
