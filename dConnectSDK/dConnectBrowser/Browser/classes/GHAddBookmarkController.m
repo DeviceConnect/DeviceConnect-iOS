@@ -201,7 +201,7 @@
         GHBookmarkTitleCell* mycell = (GHBookmarkTitleCell*)cell;
         [mycell setItem:self.myPage];
     }else{
-        cell.textLabel.text = [[self.datasource objectAtIndex:indexPath.section]objectAtIndex:indexPath.row];
+        cell.textLabel.text = [[self.datasource objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
         cell.detailTextLabel.text = self.directory.title;
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }

@@ -44,15 +44,6 @@
 		ABCB49B11AB416CD00805F25 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABCB49B01AB416CD00805F25 /* CFNetwork.framework */; };
 		ABCB49B31AB416D600805F25 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABCB49B21AB416D600805F25 /* MessageUI.framework */; };
 		ABCB49C51AB4176800805F25 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABCB49C41AB4176800805F25 /* UIKit.framework */; };
-		ABCB4A201AB4236000805F25 /* HTTPAsyncFileResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = ABCB4A0E1AB4230900805F25 /* HTTPAsyncFileResponse.m */; };
-		ABCB4A211AB4237000805F25 /* HTTPDataResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = ABCB4A101AB4230900805F25 /* HTTPDataResponse.m */; };
-		ABCB4A221AB4237000805F25 /* HTTPDynamicFileResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = ABCB4A121AB4230900805F25 /* HTTPDynamicFileResponse.m */; };
-		ABCB4A231AB4237000805F25 /* HTTPFileResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = ABCB4A141AB4230900805F25 /* HTTPFileResponse.m */; };
-		ABCB4A241AB4237000805F25 /* HTTPRedirectResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = ABCB4A161AB4230900805F25 /* HTTPRedirectResponse.m */; };
-		ABCB4A251AB4237000805F25 /* HTTPAuthenticationRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = ABCB4A001AB422D300805F25 /* HTTPAuthenticationRequest.m */; };
-		ABCB4A261AB4237000805F25 /* HTTPConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = ABCB4A021AB422D300805F25 /* HTTPConnection.m */; };
-		ABCB4A271AB4237000805F25 /* HTTPServer.m in Sources */ = {isa = PBXBuildFile; fileRef = ABCB4A071AB422D300805F25 /* HTTPServer.m */; };
-		ABCB4A401AB5358700805F25 /* GCIPUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = ABCB4A3E1AB5278E00805F25 /* GCIPUtil.m */; };
 		ABCB4A411AB5358700805F25 /* DPChromecastManager.m in Sources */ = {isa = PBXBuildFile; fileRef = ABC5E3E31A973741003D2634 /* DPChromecastManager.m */; };
 		ABCB4A431AB5365300805F25 /* DPChromecastCanvasProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = ABCB4A391AB446CE00805F25 /* DPChromecastCanvasProfile.m */; };
 		ABCB4A511AB53E0100805F25 /* icon-cast-connected.png in Resources */ = {isa = PBXBuildFile; fileRef = ABC5E3CE1A9736F9003D2634 /* icon-cast-connected.png */; };
@@ -126,32 +117,23 @@
 		ABCB49DE1AB4198A00805F25 /* InfoPlist.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = InfoPlist.strings; sourceTree = "<group>"; };
 		ABCB49FD1AB4228900805F25 /* GCDAsyncSocket.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GCDAsyncSocket.h; sourceTree = "<group>"; };
 		ABCB49FF1AB422D300805F25 /* HTTPAuthenticationRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HTTPAuthenticationRequest.h; sourceTree = "<group>"; };
-		ABCB4A001AB422D300805F25 /* HTTPAuthenticationRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HTTPAuthenticationRequest.m; sourceTree = "<group>"; };
 		ABCB4A011AB422D300805F25 /* HTTPConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HTTPConnection.h; sourceTree = "<group>"; };
-		ABCB4A021AB422D300805F25 /* HTTPConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HTTPConnection.m; sourceTree = "<group>"; };
 		ABCB4A031AB422D300805F25 /* HTTPLogging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HTTPLogging.h; sourceTree = "<group>"; };
 		ABCB4A041AB422D300805F25 /* HTTPMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HTTPMessage.h; sourceTree = "<group>"; };
 		ABCB4A051AB422D300805F25 /* HTTPResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HTTPResponse.h; sourceTree = "<group>"; };
 		ABCB4A061AB422D300805F25 /* HTTPServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HTTPServer.h; sourceTree = "<group>"; };
-		ABCB4A071AB422D300805F25 /* HTTPServer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HTTPServer.m; sourceTree = "<group>"; };
 		ABCB4A081AB422D300805F25 /* WebSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebSocket.h; sourceTree = "<group>"; };
 		ABCB4A0D1AB4230900805F25 /* HTTPAsyncFileResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HTTPAsyncFileResponse.h; sourceTree = "<group>"; };
-		ABCB4A0E1AB4230900805F25 /* HTTPAsyncFileResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HTTPAsyncFileResponse.m; sourceTree = "<group>"; };
 		ABCB4A0F1AB4230900805F25 /* HTTPDataResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HTTPDataResponse.h; sourceTree = "<group>"; };
-		ABCB4A101AB4230900805F25 /* HTTPDataResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HTTPDataResponse.m; sourceTree = "<group>"; };
 		ABCB4A111AB4230900805F25 /* HTTPDynamicFileResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HTTPDynamicFileResponse.h; sourceTree = "<group>"; };
-		ABCB4A121AB4230900805F25 /* HTTPDynamicFileResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HTTPDynamicFileResponse.m; sourceTree = "<group>"; };
 		ABCB4A131AB4230900805F25 /* HTTPFileResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HTTPFileResponse.h; sourceTree = "<group>"; };
-		ABCB4A141AB4230900805F25 /* HTTPFileResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HTTPFileResponse.m; sourceTree = "<group>"; };
 		ABCB4A151AB4230900805F25 /* HTTPRedirectResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HTTPRedirectResponse.h; sourceTree = "<group>"; };
-		ABCB4A161AB4230900805F25 /* HTTPRedirectResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HTTPRedirectResponse.m; sourceTree = "<group>"; };
 		ABCB4A1D1AB4233300805F25 /* DDData.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DDData.h; sourceTree = "<group>"; };
 		ABCB4A1E1AB4233300805F25 /* DDNumber.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DDNumber.h; sourceTree = "<group>"; };
 		ABCB4A1F1AB4233300805F25 /* DDRange.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DDRange.h; sourceTree = "<group>"; };
 		ABCB4A381AB446CE00805F25 /* DPChromecastCanvasProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DPChromecastCanvasProfile.h; path = dConnectDeviceChromecast/Classes/DPChromecastCanvasProfile.h; sourceTree = SOURCE_ROOT; };
 		ABCB4A391AB446CE00805F25 /* DPChromecastCanvasProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DPChromecastCanvasProfile.m; path = dConnectDeviceChromecast/Classes/DPChromecastCanvasProfile.m; sourceTree = SOURCE_ROOT; };
 		ABCB4A3C1AB4480D00805F25 /* DConnectSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DConnectSDK.framework; path = ../../dConnectSDK/dConnectSDKForIOS/bin/DConnectSDK.framework; sourceTree = "<group>"; };
-		ABCB4A3E1AB5278E00805F25 /* GCIPUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCIPUtil.m; sourceTree = "<group>"; };
 		ABCB4A481AB53DF500805F25 /* dConnectDeviceChromecast_resources.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = dConnectDeviceChromecast_resources.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		ABCB4A4B1AB53DF600805F25 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		ABCB4A5A1AB5415700805F25 /* Chromecast_iPad.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Chromecast_iPad.storyboard; path = dConnectDeviceChromecast/Resources/Chromecast_iPad.storyboard; sourceTree = SOURCE_ROOT; };
@@ -224,7 +206,6 @@
 		ABCB49C61AB418D300805F25 /* HTTP */ = {
 			isa = PBXGroup;
 			children = (
-				ABCB4A3E1AB5278E00805F25 /* GCIPUtil.m */,
 				ABCB49CB1AB418DF00805F25 /* GCIPUtil.h */,
 			);
 			name = HTTP;
@@ -273,14 +254,11 @@
 				ABCB4A1C1AB4231600805F25 /* Categories */,
 				ABCB4A0C1AB422E100805F25 /* Responses */,
 				ABCB49FF1AB422D300805F25 /* HTTPAuthenticationRequest.h */,
-				ABCB4A001AB422D300805F25 /* HTTPAuthenticationRequest.m */,
 				ABCB4A011AB422D300805F25 /* HTTPConnection.h */,
-				ABCB4A021AB422D300805F25 /* HTTPConnection.m */,
 				ABCB4A031AB422D300805F25 /* HTTPLogging.h */,
 				ABCB4A041AB422D300805F25 /* HTTPMessage.h */,
 				ABCB4A051AB422D300805F25 /* HTTPResponse.h */,
 				ABCB4A061AB422D300805F25 /* HTTPServer.h */,
-				ABCB4A071AB422D300805F25 /* HTTPServer.m */,
 				ABCB4A081AB422D300805F25 /* WebSocket.h */,
 			);
 			path = HTTP;
@@ -290,15 +268,10 @@
 			isa = PBXGroup;
 			children = (
 				ABCB4A0D1AB4230900805F25 /* HTTPAsyncFileResponse.h */,
-				ABCB4A0E1AB4230900805F25 /* HTTPAsyncFileResponse.m */,
 				ABCB4A0F1AB4230900805F25 /* HTTPDataResponse.h */,
-				ABCB4A101AB4230900805F25 /* HTTPDataResponse.m */,
 				ABCB4A111AB4230900805F25 /* HTTPDynamicFileResponse.h */,
-				ABCB4A121AB4230900805F25 /* HTTPDynamicFileResponse.m */,
 				ABCB4A131AB4230900805F25 /* HTTPFileResponse.h */,
-				ABCB4A141AB4230900805F25 /* HTTPFileResponse.m */,
 				ABCB4A151AB4230900805F25 /* HTTPRedirectResponse.h */,
-				ABCB4A161AB4230900805F25 /* HTTPRedirectResponse.m */,
 			);
 			path = Responses;
 			sourceTree = "<group>";
@@ -599,17 +572,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				ABCB4A431AB5365300805F25 /* DPChromecastCanvasProfile.m in Sources */,
-				ABCB4A401AB5358700805F25 /* GCIPUtil.m in Sources */,
 				ABCB4A411AB5358700805F25 /* DPChromecastManager.m in Sources */,
 				AB596B5D1AB7EDB000A56E27 /* DPChromecastMediaContext.m in Sources */,
-				ABCB4A211AB4237000805F25 /* HTTPDataResponse.m in Sources */,
-				ABCB4A221AB4237000805F25 /* HTTPDynamicFileResponse.m in Sources */,
-				ABCB4A231AB4237000805F25 /* HTTPFileResponse.m in Sources */,
-				ABCB4A241AB4237000805F25 /* HTTPRedirectResponse.m in Sources */,
-				ABCB4A251AB4237000805F25 /* HTTPAuthenticationRequest.m in Sources */,
-				ABCB4A261AB4237000805F25 /* HTTPConnection.m in Sources */,
-				ABCB4A271AB4237000805F25 /* HTTPServer.m in Sources */,
-				ABCB4A201AB4236000805F25 /* HTTPAsyncFileResponse.m in Sources */,
 				ABC5E3F71A973771003D2634 /* DPChromecastMediaPlayerProfile.m in Sources */,
 				ABC5E3EA1A97375D003D2634 /* DPChromecastGuideViewController.m in Sources */,
 				ABC5E3EB1A97375D003D2634 /* DPChromecastSettingViewController.m in Sources */,
@@ -667,7 +631,7 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = dConnectDeviceChromecast_resources/Info.plist;
+				INFOPLIST_FILE = dConnectDeviceChromecast/Resources/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MTL_ENABLE_DEBUG_INFO = YES;
@@ -687,7 +651,7 @@
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				INFOPLIST_FILE = dConnectDeviceChromecast_resources/Info.plist;
+				INFOPLIST_FILE = dConnectDeviceChromecast/Resources/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MTL_ENABLE_DEBUG_INFO = NO;

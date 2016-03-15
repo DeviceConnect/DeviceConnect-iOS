@@ -1,6 +1,6 @@
 //
 //  DConnectLightProfileName.m
-//  DCMDevicePluginSDK
+//  DConnectSDK
 //
 //  Copyright (c) 2014 NTT DOCOMO, INC.
 //  Released under the MIT license
@@ -560,11 +560,12 @@ didReceivePostLightGroupCreateRequest:request
 - (BOOL)checkFlash:(DConnectResponseMessage *)response flashing:(NSArray *)flashing
 {
     for (NSString *flash in flashing) {
-        if (flash && [flash doubleValue] < 0.0) {
+        if (flash && [flash doubleValue] <= 0.0) {
             [response setErrorToInvalidRequestParameterWithMessage:
-             @"Parameter 'flashing' must be a x >= 0.0."];
+             @"Parameter 'flashing' must be a x >= 1."];
             return NO;
-        } else if (flash && [DConnectLightProfile existDecimalWithString:flash]) {
+        } else if (flash && ![DConnectLightProfile existDigitWithString:flash]
+                             && [DConnectLightProfile existDecimalWithString:flash]) {
             [response setErrorToInvalidRequestParameterWithMessage:
              @"Parameter 'flashing' must not be decimal."];
             return NO;

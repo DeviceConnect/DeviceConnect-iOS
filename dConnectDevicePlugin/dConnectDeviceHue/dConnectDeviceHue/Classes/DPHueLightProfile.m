@@ -89,6 +89,7 @@
                                        lightId:lightId
                                           isOn:YES
                                     brightness:[brightness doubleValue]
+                                      flashing:flashing
                                          color:color];
 }
 
@@ -99,7 +100,7 @@ didReceiveDeleteLightRequest:(DConnectRequestMessage *)request
         serviceId:(NSString *)serviceId
          lightId:(NSString*) lightId
 {
-    return [self turnOnOffHueLightWithResponse:response lightId:lightId isOn:NO brightness:0 color:nil];
+    return [self turnOnOffHueLightWithResponse:response lightId:lightId isOn:NO brightness:0  flashing:nil color:nil];
 }
 
 
@@ -130,6 +131,7 @@ didReceiveDeleteLightRequest:(DConnectRequestMessage *)request
                                                                   name:name
                                                                 color:color
                                                          brightness:[brightness doubleValue]
+                                                           flashing:flashing
                                                          completion:^{
                                                              [self setErrRespose:response];
                                                              [[DConnectManager sharedManager] sendResponse:response];
@@ -137,170 +139,6 @@ didReceiveDeleteLightRequest:(DConnectRequestMessage *)request
     
 }
 
-
-#pragma mark - light group
-//Light Group GET グループ一覧取得
-- (BOOL)                   profile:(DConnectLightProfile *)profile
-    didReceiveGetLightGroupRequest:(DConnectRequestMessage *)request
-                          response:(DConnectResponseMessage *)response
-                          serviceId:(NSString *)serviceId
-{
-    [self initHueSdk:serviceId];
-    __weak typeof(self) _self = self;
-    _hueStatusBlock = ^(BridgeConnectState state){
-        if (state != STATE_CONNECT) {
-            [_self setErrRespose:response];
-            [[DConnectManager sharedManager] sendResponse:response];
-            return;
-        }
-        NSDictionary* groupList = [[DPHueManager sharedManager] getLightGroupStatus];
-        NSDictionary* lightList = [[DPHueManager sharedManager] getLightStatus];
-
-        DConnectArray *groups = [DConnectArray array];
-        
-        for (PHGroup *group in groupList.allValues) {
-            
-            DConnectMessage *groupResponse = [DConnectMessage new];
-            [DConnectLightProfile setLightGroupId:group.identifier target:groupResponse];
-            if (group.name) {
-                [DConnectLightProfile setLightGroupName:group.name target:groupResponse];
-            } else {
-                [DConnectLightProfile setLightGroupName:@"" target:groupResponse];
-            }
-            //キャッシュにあるライトの一覧からライトを取り出す
-            NSArray *lightIds = group.lightIdentifiers;
-            DConnectArray *lights = [DConnectArray array];
-            for (PHLight *light in lightList.allValues) {
-                for (NSString *lightId in lightIds) {
-                    
-                    if ([lightId isEqualToString:light.identifier]) {
-                        
-                        DConnectMessage *led = [DConnectMessage new];
-                        
-                        [DConnectLightProfile setLightId:light.identifier target:led];
-                        [DConnectLightProfile setLightName:light.name target:led];
-                        [DConnectLightProfile setLightOn:[light.lightState.on boolValue] target:led];
-                        [DConnectLightProfile setLightConfig:@"" target:led];
-                        [lights addMessage:led];
-                        
-                    }
-                }
-            }
-            [DConnectLightProfile setLights:lights target:groupResponse];
-            [groups addMessage:groupResponse];
-        }
-        [response setResult:DConnectMessageResultTypeOk];
-        [DConnectLightProfile setLightGroups:groups target:response];
-        [[DPHueManager sharedManager] deallocPHNotificationManagerWithReceiver:_self];
-        [[DPHueManager sharedManager] deallocHueSDK];
-        [[DConnectManager sharedManager] sendResponse:response];
-    };
-    return NO;
-}
-
-//Light Group Post ライトグループ点灯
-- (BOOL) profile:(DConnectLightProfile *)profile didReceivePostLightGroupRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response
-        serviceId:(NSString *)serviceId
-         groupId:(NSString*)groupId
-      brightness:(NSNumber*)brightness
-           color:(NSString*)color
-        flashing:(NSArray*)flashing
-{
-    NSString* brightnessString = [request stringForKey:DConnectLightProfileParamBrightness];
-    if (brightnessString
-        && ![[DPHueManager sharedManager] isDigitWithString:brightnessString]) {
-        [self setErrRespose:response];
-        return YES;
-    }
-
-    return [self turnOnOffHueLightGroupWithResponse:response
-                                            groupId:groupId
-                                               isOn:YES
-                                         brightness:[brightness doubleValue]
-                                              color:color];
-}
-
-
-//Light Group Delete ライトグループ消灯
-- (BOOL) profile:(DConnectLightProfile *)profile didReceiveDeleteLightGroupRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response
-        serviceId:(NSString *)serviceId
-         groupId:(NSString*)groupId
-{
-    return [self turnOnOffHueLightGroupWithResponse:response groupId:groupId isOn:NO brightness:0 color:nil];
-}
-
-//Light Group Put ライトグループ名称変更
-- (BOOL) profile:(DConnectLightProfile *)profile didReceivePutLightGroupRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response
-        serviceId:(NSString *)serviceId
-         groupId:(NSString*) groupId
-            name:(NSString *)name
-      brightness:(NSNumber*)brightness
-           color:(NSString*)color
-        flashing:(NSArray*)flashing
-{
-    
-    //nameが指定されてない場合はエラーで返す
-    if (![[DPHueManager sharedManager] checkParamRequiredStringItemWithParam:name errorState:STATE_ERROR_NO_NAME]) {
-        [self setErrRespose:response];
-        return YES;
-    }
-    
-    //groupIdチェック
-    if (![[DPHueManager sharedManager] checkParamGroupId:groupId]) {
-        [self setErrRespose:response];
-        return YES;
-    }
-    
-    return [[DPHueManager sharedManager] changeGroupNameWithGroupId:groupId name:name completion:^{
-        [self setErrRespose:response];
-        [[DConnectManager sharedManager] sendResponse:response];
-    }];
-    
-}
-
-//Light Group Post ライトグループ作成
-- (BOOL) profile:(DConnectLightProfile *)profile didReceivePostLightGroupCreateRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response
-        serviceId:(NSString *)serviceId
-        lightIds:(NSArray*)lightIds
-       groupName:(NSString*)groupName {
-    BOOL result = [[DPHueManager sharedManager] createLightGroupWithLightIds:lightIds
-                                                                   groupName:groupName
-                                                                  completion:^(NSString* groupId) {
-        if (groupId) {
-            [DConnectLightProfile setLightGroupId:groupId target:response];
-            [DPHueManager sharedManager].bridgeConnectState = STATE_CONNECT;
-        } else {
-            [DPHueManager sharedManager].bridgeConnectState = STATE_ERROR_CREATE_FAIL_GROUP;
-        }
-        [self setErrRespose:response];
-        [[DConnectManager sharedManager] sendResponse:response];
-
-    }];
-    [response setResult:DConnectMessageResultTypeError];
-    [self setErrRespose:response];
-    return result;
-}
-
-
-
-//Light Group Delete ライトグループ削除
-- (BOOL) profile:(DConnectLightProfile *)profile didReceiveDeleteLightGroupClearRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response
-        serviceId:(NSString *)serviceId
-         groupId:(NSString*)groupId
-{
-    BOOL result = [[DPHueManager sharedManager] removeLightGroupWithWithGroupId:groupId completion:^{
-        [self setErrRespose:response];
-        [[DConnectManager sharedManager] sendResponse:response];
-    }];
-    [response setResult:DConnectMessageResultTypeError];
-    [self setErrRespose:response];
-    return result;    
-}
 
 #pragma mark - private method
 
@@ -359,6 +197,7 @@ didReceiveDeleteLightRequest:(DConnectRequestMessage *)request
                               lightId:(NSString*)lightId
                                 isOn:(BOOL)isOn
                           brightness:(double)brightness
+                             flashing:(NSArray*)flashing
                                color:(NSString*)color
 {
     if (![[DPHueManager sharedManager] checkParamLightId:lightId]) {
@@ -376,6 +215,7 @@ didReceiveDeleteLightRequest:(DConnectRequestMessage *)request
     }
     return [[DPHueManager sharedManager] changeLightStatusWithLightId:lightId
                                                            lightState:lightState
+                                                             flashing:flashing
                                                            completion:^ {
                                                                [self setErrRespose:response];
                                                                [[DConnectManager sharedManager] sendResponse:response];

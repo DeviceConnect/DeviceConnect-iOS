@@ -573,20 +573,45 @@ pushlinkAuthenticationSuccessSelector:(SEL)pushlinkAuthenticationSuccessSelector
  Lightのステータスチェンジ
  */
 - (BOOL) changeLightStatusWithLightId:(NSString *)lightId
-                lightState:(PHLightState*)lightState
+                           lightState:(PHLightState*)lightState
+                             flashing:(NSArray*)flashing
                            completion:(void(^)())completion
 {
     PHBridgeSendAPI *bridgeSendAPI = [[PHBridgeSendAPI alloc] init];
-    
     //メインスレッドで動作させる
     dispatch_sync(dispatch_get_main_queue(), ^{
-        [bridgeSendAPI updateLightStateForId:lightId withLightState:lightState completionHandler:^(NSArray *errors) {
-            
+        if (flashing && flashing.count > 0) {
+            PHLightState* offState = [self getLightStateIsOn:NO brightness:0 color:nil];
             [self setCompletionWithResponseCompletion:completion
-                                 errors:errors
-                           errorState:STATE_ERROR_UPDATE_FAIL_LIGHT_STATE];
-            
-        }];
+                                               errors:nil
+                                           errorState:STATE_ERROR_UPDATE_FAIL_LIGHT_STATE];
+
+            for (int i = 0; i < flashing.count; i++) {
+                int delay = [flashing[i] intValue];
+                if (i % 2 == 0) {
+                    [bridgeSendAPI updateLightStateForId:lightId withLightState:lightState completionHandler:^(NSArray *errors) {
+                        
+                        
+                    }];
+                    sleep(delay / 1000);
+                } else {
+                    [bridgeSendAPI updateLightStateForId:lightId withLightState:offState completionHandler:^(NSArray *errors) {
+                        
+                        
+                    }];
+                    sleep(delay / 1000);
+                }
+            }
+        } else {
+            [bridgeSendAPI updateLightStateForId:lightId withLightState:lightState completionHandler:^(NSArray *errors) {
+                
+                [self setCompletionWithResponseCompletion:completion
+                                                   errors:errors
+                                               errorState:STATE_ERROR_UPDATE_FAIL_LIGHT_STATE];
+                
+            }];
+
+        }
     });
     
     return NO;
@@ -599,6 +624,7 @@ pushlinkAuthenticationSuccessSelector:(SEL)pushlinkAuthenticationSuccessSelector
                              name:(NSString *)name
                             color:(NSString *)color
                        brightness:(double)brightness
+                         flashing:(NSArray*)flashing
                        completion:(void(^)())completion
 {
     unsigned int redValue, greenValue, blueValue;
@@ -618,6 +644,19 @@ pushlinkAuthenticationSuccessSelector:(SEL)pushlinkAuthenticationSuccessSelector
     PHBridgeSendAPI *bridgeSendAPI = [[PHBridgeSendAPI alloc] init];
     PHBridgeResourcesCache *cache = [PHBridgeResourcesReader readBridgeResourcesCache];
     //メインスレッドで動作させる
+    dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
+    dispatch_time_t timeout = dispatch_time(DISPATCH_TIME_NOW, NSEC_PER_SEC * 500);
+    PHLightState* onState = [self getLightStateIsOn:YES brightness:brightness color:color];
+    [self changeLightStatusWithLightId:lightId
+                            lightState:onState flashing:flashing completion:^(NSArray *errors) {
+                                
+//                                [self setCompletionWithResponseCompletion:completion
+//                                                                   errors:errors
+//                                                               errorState:STATE_ERROR_CHANGE_FAIL_LIGHT_NAME];
+                                                    dispatch_semaphore_signal(semaphore);
+                            }];
+    dispatch_semaphore_wait(semaphore, timeout);
+
     dispatch_sync(dispatch_get_main_queue(), ^{
         
         for (PHLight *light in cache.lights.allValues) {
@@ -630,7 +669,6 @@ pushlinkAuthenticationSuccessSelector:(SEL)pushlinkAuthenticationSuccessSelector
                     [self setCompletionWithResponseCompletion:completion
                                          errors:errors
                                    errorState:STATE_ERROR_CHANGE_FAIL_LIGHT_NAME];
-                    
                 }];
                 
                 break;

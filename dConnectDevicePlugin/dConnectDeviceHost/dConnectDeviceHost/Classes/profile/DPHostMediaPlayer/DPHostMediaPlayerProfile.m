@@ -97,9 +97,9 @@
         
         // iPodプレイヤーを取得
         self.musicPlayer = [MPMusicPlayerController iPodMusicPlayer];
-        self.musicPlayer.shuffleMode = MPMusicShuffleModeOff;
-        self.musicPlayer.repeatMode = MPMusicRepeatModeOne;
-        self.defaultMediaQuery = [MPMediaQuery new];
+        self.musicPlayer.shuffleMode = MPMusicShuffleModeDefault;
+        self.musicPlayer.repeatMode = MPMusicRepeatModeDefault;
+        self.defaultMediaQuery = [MPMediaQuery songsQuery];
         [self.defaultMediaQuery addFilterPredicate:
          [MPMediaPropertyPredicate predicateWithValue:[NSNumber numberWithInteger:TargetMPMediaType]
                                           forProperty:MPMediaItemPropertyMediaType]];
@@ -523,7 +523,6 @@ didReceiveGetMediaRequest:(DConnectRequestMessage *)request
         [response setErrorToInvalidRequestParameterWithMessage:@"mediaId must be specified."];
         return YES;
     }
-    
     NSURL *url = [NSURL URLWithString:mediaId];
     DPHostMediaContext *ctx = [DPHostMediaContext contextWithURL:url];
     if (ctx) {
@@ -766,6 +765,7 @@ didReceiveGetSeekRequest:(DConnectRequestMessage *)request
     void(^block)(void) = ^{
         [_musicPlayer setQueueWithQuery:_defaultMediaQuery];
         _musicPlayer.nowPlayingItem = mediaItem;
+
         DConnectMessage *mediaPlayer = [DConnectMessage message];
         NSString *status = DConnectMediaPlayerProfileStatusMedia;
         [DConnectMediaPlayerProfile setStatus:status target:mediaPlayer];
@@ -889,14 +889,35 @@ didReceiveGetSeekRequest:(DConnectRequestMessage *)request
              block();
          }
          else {
-             UIViewController *rootView = [UIApplication sharedApplication].keyWindow.rootViewController;
              dispatch_async(dispatch_get_main_queue(), ^{
                  self.viewController = [self viewControllerWithURL:movieURL];
-                 block();
-                 [rootView presentMoviePlayerViewControllerAnimated:_viewController];
+                 block();                 
+                 [[self topViewController] presentMoviePlayerViewControllerAnimated:_viewController];
              });
-         }
+
+        }
      }];
+}
+
+#pragma mark - Get topMost viewController
+- (UIViewController *)topViewController{
+    return [self topViewController:[UIApplication sharedApplication].keyWindow.rootViewController];
+}
+
+- (UIViewController *)topViewController:(UIViewController *)rootViewController
+{
+    if (rootViewController.presentedViewController == nil) {
+        return rootViewController;
+    }
+    
+    if ([rootViewController.presentedViewController isMemberOfClass:[UINavigationController class]]) {
+        UINavigationController *navigationController = (UINavigationController *)rootViewController.presentedViewController;
+        UIViewController *lastViewController = [[navigationController viewControllers] lastObject];
+        return [self topViewController:lastViewController];
+    }
+    
+    UIViewController *presentedViewController = (UIViewController *)rootViewController.presentedViewController;
+    return [self topViewController:presentedViewController];
 }
 
 - (BOOL)          profile:(DConnectMediaPlayerProfile *)profile
@@ -952,6 +973,7 @@ didReceivePutPlayRequest:(DConnectRequestMessage *)request
     if (_currentMediaPlayer == MediaPlayerTypeIPod) {
         MPMediaItem *mediaItem = _musicPlayer.nowPlayingItem;
         if ((!mediaItem || _nowPlayingMediaId) && [_musicPlayer playbackState] == MPMusicPlaybackStateStopped) {
+            
             [self             profile:profile
             didReceivePutMediaRequest:request
                              response:response

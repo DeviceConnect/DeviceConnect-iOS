@@ -189,12 +189,14 @@ pushlinkAuthenticationSuccessSelector:(SEL)pushlinkAuthenticationSuccessSelector
  @brief ライトのステータスを変更する。
  @param[in] lightId ライトのID
  @param[in] lightState 変更するステータス
+ @param[in] flashing フラッシュパターン
  @param[in, out] completion レスポンスを返す
  @retval YES レスポンスパラメータを返却する。
  @retval NO レスポンスパラメータを返却しないので、@link DConnectManager::sendResponse: @endlinkで返却すること。
  */
 -(BOOL)changeLightStatusWithLightId:(NSString *)lightId
                          lightState:(PHLightState*)lightState
+                           flashing:(NSArray*)flashing
                          completion:(void(^)())completion;
 
 
@@ -204,6 +206,7 @@ pushlinkAuthenticationSuccessSelector:(SEL)pushlinkAuthenticationSuccessSelector
  @param[in] name 変更後のライトの名前
  @param[in] color 変更するライトの色
  @param[in] brightness 変更するライトの明るさ
+ @param[in] flashing フラッシュパターン
  @param[in, out] completion レスポンスを返す
  @retval YES レスポンスパラメータを返却する。
  @retval NO レスポンスパラメータを返却しないので、@link DConnectManager::sendResponse: @endlinkで返却すること。
@@ -212,6 +215,7 @@ pushlinkAuthenticationSuccessSelector:(SEL)pushlinkAuthenticationSuccessSelector
                              name:(NSString *)name
                             color:(NSString *)color
                        brightness:(double)brightness
+                         flashing:(NSArray*)flashing
                        completion:(void(^)())completion;
 
 /*!

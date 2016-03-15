@@ -80,20 +80,17 @@
 
 #pragma mark - DConnect
 
-- (BOOL)               profile:(DConnectCanvasProfile *)profile
+- (BOOL) profile:(DConnectCanvasProfile *)profile
 didReceivePostDrawImageRequest:(DConnectRequestMessage *)request
-                      response:(DConnectResponseMessage *)response
-                     serviceId:(NSString *)serviceId
-                      mimeType:(NSString *)mimeType
-                          data:(NSData *)data
-                        imageX:(double)imageX
-                        imageY:(double)imageY
-                          mode:(NSString *)mode
+        response:(DConnectResponseMessage *)response
+       serviceId:(NSString *)serviceId
+        mimeType:(NSString *)mimeType
+            data:(NSData *)data
+             uri:(NSString *)uri
+          imageX:(double)imageX
+          imageY:(double)imageY
+            mode:(NSString *)mode
 {
-    if (data == nil || [data length] <= 0) {
-        [response setErrorToInvalidRequestParameterWithMessage:@"data is not specied to update a file."];
-        return YES;
-    }
     if (serviceId == nil || [serviceId length] <= 0) {
         [response setErrorToEmptyServiceId];
         return YES;
@@ -118,7 +115,16 @@ didReceivePostDrawImageRequest:(DConnectRequestMessage *)request
     if (!mode) {
         modeString = @"same";
     }
-    NSString *url = [self saveImage:data];
+    NSData *canvas = data;
+    if (uri || [uri length] > 0) {
+        canvas = [NSData dataWithContentsOfURL:[NSURL URLWithString:uri]];
+    }
+    if (canvas == nil || [canvas length] <= 0) {
+        [response setErrorToInvalidRequestParameterWithMessage:@"data is not specied to update a file."];
+        return YES;
+    }
+
+    NSString *url = [self saveImage:canvas];
     // リクエスト処理
     return [self handleRequest:request
                       response:response
