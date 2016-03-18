@@ -129,7 +129,7 @@ DPIRKitManagerDetectionDelegate
 #pragma mark - Private Methods
 
 - (void) sendDeviceDetectionEventWithDevice:(DPIRKitDevice *)device online:(BOOL)online {
-     [[DPIRKitManager sharedInstance] startDetection];
+    [[DPIRKitManager sharedInstance] startDetection];
     BOOL hit = NO;
     @synchronized (_devices) {
         
@@ -206,9 +206,14 @@ DPIRKitManagerDetectionDelegate
 didReceiveGetServicesRequest:(DConnectRequestMessage *)request
                               response:(DConnectResponseMessage *)response
 {
+    __weak typeof(self) _self = self;
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [_self startObeservation];
+    });
+
     
     DConnectArray *services = [DConnectArray array];
-    
+
     @synchronized (_devices) {
         
         for (DPIRKitDevice *device in _devices.allValues) {
@@ -247,7 +252,6 @@ didReceiveGetServicesRequest:(DConnectRequestMessage *)request
     //仮想デバイスの追加
     response.result = DConnectMessageResultTypeOk;
     [DConnectServiceDiscoveryProfile setServices:services target:response];
-    
     return YES;
 }
 
@@ -339,12 +343,12 @@ didReceiveDeleteOnServiceChangeRequest:(DConnectRequestMessage *)request
 
 - (void) manager:(DPIRKitManager *)manager didFindDevice:(DPIRKitDevice *)device {
     
-    DPIRLog(@"found a device : %@", device);
+    NSLog(@"found a device : %@", device);
     [self sendDeviceDetectionEventWithDevice:device online:YES];
 }
 
 - (void) manager:(DPIRKitManager *)manager didLoseDevice:(DPIRKitDevice *)device {
-    DPIRLog(@"lost a device : %@", device);
+    NSLog(@"lost a device : %@", device);
     [self sendDeviceDetectionEventWithDevice:device online:NO];
 }
 
