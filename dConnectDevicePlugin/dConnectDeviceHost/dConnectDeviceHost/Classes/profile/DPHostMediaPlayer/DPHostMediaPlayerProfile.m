@@ -1294,7 +1294,7 @@ didReceivePutSeekRequest:(DConnectRequestMessage *)request
                      pos:(NSNumber *)pos
 {
     NSString *posString = [request stringForKey:DConnectMediaPlayerProfileParamPos];
-    if ((pos && ![DPHostUtils existDigitWithString:posString])) {
+    if ((posString && ![DPHostUtils existDigitWithString:posString])) {
         [response setErrorToInvalidRequestParameterWithMessage:@"pos must be specified."];
         return YES;
     }
