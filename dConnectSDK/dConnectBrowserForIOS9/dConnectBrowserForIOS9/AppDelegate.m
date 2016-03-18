@@ -31,11 +31,11 @@
     [[GHDataManager shareManager] initPrefs];
     
     DConnectManager *mgr = [DConnectManager sharedManager];
-
+    
     NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
     BOOL sw = [def boolForKey:IS_MANAGER_LAUNCH];
     if (sw) {
-        [mgr startByHttpServer];        
+        [mgr startByHttpServer];
     }
     
     float osVersion = [[[UIDevice currentDevice] systemVersion] floatValue];
@@ -64,12 +64,19 @@
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
-    // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
-    // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+    DConnectManager *mgr = [DConnectManager sharedManager];
+    [mgr stopByHttpServer];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
-    // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+    DConnectManager *mgr = [DConnectManager sharedManager];
+    
+    NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
+    BOOL sw = [def boolForKey:IS_MANAGER_LAUNCH];
+    if (sw) {
+        [mgr startByHttpServer];
+    }
+
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
@@ -78,8 +85,6 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     [[GHDataManager shareManager]save];
-    DConnectManager *mgr = [DConnectManager sharedManager];
-    [mgr stopByHttpServer];
 }
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
 {
