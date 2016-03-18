@@ -103,7 +103,6 @@ static NSString *_DPIRKitVirtualDeviceCategory;
                                                                              message:message
                                                                       preferredStyle:UIAlertControllerStyleAlert];
     
-    // addActionした順に左から右にボタンが配置されます
     [alertController addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         
         [DPIRKitDialog doClose];
