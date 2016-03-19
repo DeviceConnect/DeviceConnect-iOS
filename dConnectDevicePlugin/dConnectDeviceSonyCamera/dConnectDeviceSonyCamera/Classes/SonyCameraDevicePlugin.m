@@ -496,6 +496,7 @@ didReceiveGetMediaRecorderRequest:(DConnectRequestMessage *)request
             
             DConnectMessage *recorder = [DConnectMessage message];
             [DConnectMediaStreamRecordingProfile setRecorderId:SERVICE_ID target:recorder];
+            [DConnectMediaStreamRecordingProfile setRecorderId:@"SonyCamera" target:recorder];
             [DConnectMediaStreamRecordingProfile setRecorderName:@"SonyCamera" target:recorder];
             [DConnectMediaStreamRecordingProfile setRecorderState:status target:recorder];
             [DConnectMediaStreamRecordingProfile setRecorderMIMEType:@"image/png" target:recorder];
@@ -545,10 +546,10 @@ didReceivePostTakePhotoRequest:(DConnectRequestMessage *)request
         return YES;
     }
     
-//    if (target && ![target isEqualToString:@"SonyCamera"]) {
-//        [response setErrorToInvalidRequestParameter];
-//        return YES;
-//    }
+    if (target && ![target isEqualToString:@"SonyCamera"]) {
+        [response setErrorToInvalidRequestParameter];
+        return YES;
+    }
     __weak typeof(self) _self = self;
     
     // 写真撮影をバックグランドでAPIなどを実行
