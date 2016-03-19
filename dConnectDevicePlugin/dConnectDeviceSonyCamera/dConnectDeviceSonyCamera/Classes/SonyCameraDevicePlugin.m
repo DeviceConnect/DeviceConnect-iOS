@@ -496,6 +496,7 @@ didReceiveGetMediaRecorderRequest:(DConnectRequestMessage *)request
             
             DConnectMessage *recorder = [DConnectMessage message];
             [DConnectMediaStreamRecordingProfile setRecorderId:SERVICE_ID target:recorder];
+            [DConnectMediaStreamRecordingProfile setRecorderId:@"SonyCamera" target:recorder];
             [DConnectMediaStreamRecordingProfile setRecorderName:@"SonyCamera" target:recorder];
             [DConnectMediaStreamRecordingProfile setRecorderState:status target:recorder];
             [DConnectMediaStreamRecordingProfile setRecorderMIMEType:@"image/png" target:recorder];

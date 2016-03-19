@@ -238,7 +238,7 @@
         DPIRKitVirtualDevice *device = _devices[c.row];
         BOOL isDeleteVirtualDevice = [mgr deleteVirtualDevice:device.serviceId];
         BOOL isDeleteVirtualProfile = [mgr deleteRESTfulRequestForServiceId:device.serviceId];
-        if (isDeleteVirtualDevice && isDeleteVirtualProfile) {
+        if (isDeleteVirtualDevice || isDeleteVirtualProfile) {
             isDelete = YES;
         }
     }
