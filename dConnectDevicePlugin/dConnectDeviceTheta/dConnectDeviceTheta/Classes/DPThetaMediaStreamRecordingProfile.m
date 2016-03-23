@@ -59,36 +59,32 @@ didReceiveGetMediaRecorderRequest:(DConnectRequestMessage *)request
     CONNECT_CHECK();
     DConnectArray *recorders = [DConnectArray new];
     DConnectMessage *recorder = [DConnectMessage new];
-    [DConnectMediaStreamRecordingProfile setRecorderId:@"0" target:recorder];
-    [DConnectMediaStreamRecordingProfile setRecorderName:@"Theta" target:recorder];
     [DConnectMediaStreamRecordingProfile
      setRecorderState:DConnectMediaStreamRecordingProfileRecorderStateInactive
      target:recorder];
-    [DConnectMediaStreamRecordingProfile setRecorderMIMEType:DPThetaImageMimeType
-                                                      target:recorder];
+    [DConnectMediaStreamRecordingProfile
+     setRecorderState:DConnectMediaStreamRecordingProfileRecorderStateInactive
+     target:recorder];
     [DConnectMediaStreamRecordingProfile setRecorderImageWidth:DPThetaMinWidth target:recorder];
     [DConnectMediaStreamRecordingProfile setRecorderImageHeight:DPThetaMinHeight target:recorder];
     [DConnectMediaStreamRecordingProfile setRecorderConfig:@"[]" target:recorder];
-    [recorders addMessage:recorder];
-    DConnectMessage *video = [DConnectMessage new];
-    [DConnectMediaStreamRecordingProfile setRecorderId:@"1" target:video];
-    [DConnectMediaStreamRecordingProfile setRecorderName:@"Theta" target:video];
-    if ([[DPThetaManager sharedManager] getCameraStatus] == 1) {
+    if ([[DPThetaManager sharedManager] getCameraStatus] == 0) {
+        [DConnectMediaStreamRecordingProfile setRecorderId:@"1" target:recorder];
+        [DConnectMediaStreamRecordingProfile setRecorderMIMEType:DPThetaMovieMimeType
+                                                          target:recorder];
+        [DConnectMediaStreamRecordingProfile setRecorderName:@"THETA - movie" target:recorder];
+
+    } else {
+        [DConnectMediaStreamRecordingProfile setRecorderId:@"0" target:recorder];
         [DConnectMediaStreamRecordingProfile
          setRecorderState:DConnectMediaStreamRecordingProfileRecorderStateRecording
-         target:video];
-    } else {
-        [DConnectMediaStreamRecordingProfile
-         setRecorderState:DConnectMediaStreamRecordingProfileRecorderStateInactive
-         target:video];
-        
+         target:recorder];
+        [DConnectMediaStreamRecordingProfile setRecorderMIMEType:DPThetaImageMimeType
+                                                          target:recorder];
+        [DConnectMediaStreamRecordingProfile setRecorderName:@"THETA - photo" target:recorder];
+
     }
-    [DConnectMediaStreamRecordingProfile setRecorderMIMEType:DPThetaMovieMimeType
-                                                      target:video];
-    [DConnectMediaStreamRecordingProfile setRecorderImageWidth:DPThetaMinWidth target:video];
-    [DConnectMediaStreamRecordingProfile setRecorderImageHeight:DPThetaMinHeight target:video];
-    [DConnectMediaStreamRecordingProfile setRecorderConfig:@"[]" target:video];
-    [recorders addMessage:video];
+    [recorders addMessage:recorder];
     [DConnectMediaStreamRecordingProfile setRecorders:recorders target:response];
     [response setResult:DConnectMessageResultTypeOk];
     return YES;
