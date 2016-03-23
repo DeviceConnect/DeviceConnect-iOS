@@ -24,6 +24,7 @@
     self = [super init];
     if (self) {
         self.pluginName = @"Theta (Device Connect Device Plug-in)";
+        
         self.fileMgr = [DConnectFileManager fileManagerForPlugin:self];
         [self addProfile:[DPThetaBatteryProfile new]];
         [self addProfile:[DPThetaFileProfile new]];

@@ -18,7 +18,7 @@
 #import "DPAllJoynSystemProfile.h"
 
 
-static NSString *const VERSION = @"1.0.0";
+static NSString *const VERSION = @"2.0.0";
 
 
 @implementation DPAllJoynDevicePlugin {
