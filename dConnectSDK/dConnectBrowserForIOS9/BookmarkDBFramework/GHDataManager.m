@@ -114,7 +114,6 @@ static GHDataManager* mgr = nil;
     
     NSError *error;
     NSArray *objects = [moc executeFetchRequest:request error:&error];
-    
     if ([objects count] > 0) {
         return [objects lastObject];
     }else{
@@ -140,7 +139,6 @@ static GHDataManager* mgr = nil;
     
     NSError *error;
     NSArray *objects = [moc executeFetchRequest:request error:&error];
-    
     if ([objects count] > 0) {
         return objects;
     }else{
@@ -165,7 +163,7 @@ static GHDataManager* mgr = nil;
     
     NSError *error;
     NSArray *objects = [moc executeFetchRequest:request error:&error];
-    
+
     if ([objects count] > 0) {
         return objects;
     }else{
@@ -193,7 +191,6 @@ static GHDataManager* mgr = nil;
     
     NSError *error;
     NSArray *objects = [moc executeFetchRequest:request error:&error];
-    
     if ([objects count] > 0) {
         return [objects firstObject];
     }else{
@@ -390,6 +387,7 @@ static GHDataManager* mgr = nil;
     
     page.title        = model.title;
     page.url          = model.url;
+
     page.type         = model.type;
     page.category     = model.category;
     if (model.priority) {

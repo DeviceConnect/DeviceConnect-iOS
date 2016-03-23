@@ -176,7 +176,7 @@
     
     model.priority = @(priority+1);
     
-    [[GHDataManager shareManager]addBookmark:model parent:directory context:nil];
+    [[GHDataManager shareManager] addBookmark:model parent:directory context:nil];
 }
 
 

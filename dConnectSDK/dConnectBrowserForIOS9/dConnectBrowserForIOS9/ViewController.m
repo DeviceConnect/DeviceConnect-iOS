@@ -222,7 +222,8 @@
     if (!url) {
         url = [self.manager createSearchURL:url];
     } else {
-        _url = url;
+        // #変換
+        _url = [_url stringByReplacingOccurrencesOfString:@"%23" withString:@"#"] ;
     }
     
     [self performSelector:@selector(openSafariViewInternalWithURL:) withObject:_url afterDelay:0.75];
