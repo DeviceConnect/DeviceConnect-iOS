@@ -339,7 +339,8 @@ static int const _timeout = 500;
     dispatch_time_t timeout = dispatch_time(DISPATCH_TIME_NOW, NSEC_PER_SEC * _timeout);
 
     [_ptpConnection getDeviceInfo:^(const PtpIpDeviceInfo* info) {
-        _deviceInfo = info.serial_number;
+        _deviceInfo = [NSString stringWithFormat:@"%@ %@", info.model, info.serial_number];
+    
         dispatch_semaphore_signal(semaphore);
 
     }];
@@ -357,7 +358,7 @@ static int const _timeout = 500;
     [_ptpConnection operateSession:^(PtpIpSession *session)
      {
          // Single shot mode or Interval shooting mode.
-         status = [session getCaptureStatus];
+         status = [session getStillCaptureMode];
          dispatch_semaphore_signal(semaphore);
      }];
     dispatch_semaphore_wait(semaphore, timeout);
