@@ -143,6 +143,13 @@
         NSArray *profiles = [plugin profiles];
         for (DConnectProfile *profile in profiles) {
             [profileNames addString:[profile profileName]];
+            if ([profile.profileName isEqualToString:@"system"]) {
+                DConnectSystemProfile *sysProfile = (DConnectSystemProfile *) profile;
+                if (sysProfile.dataSource) {
+                    NSString *v = [sysProfile.dataSource versionOfSystemProfile:sysProfile];
+                    [message setString:v forKey:DConnectSystemProfileParamVersion];
+                }
+            }
         }
         [DConnectSystemProfile setSupports:profileNames target:message];
         [plugins addMessage:message];
