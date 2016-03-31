@@ -53,7 +53,9 @@
 
 - (void)rotateByEulerAngleForRoll:(float)roll yaw:(float)yaw pitch:(float)pitch
 {
-    DPThetaVector3D *lastFrontDirection = _frontDirection;    
+    DPThetaVector3D *lastFrontDirection = _frontDirection;
+    float radianPerDegree = (float) (M_PI / 180.0f);
+    
     float lat = (90.0f - pitch) * radianPerDegree;
     float lng = yaw * radianPerDegree;
     float x = (float)(sin(lat) * cos(lng));
@@ -65,7 +67,7 @@
     float dy = [_frontDirection y] - [lastFrontDirection y];
     float dz = [_frontDirection z] - [lastFrontDirection z];
     
-    float theta = roll;
+    float theta = roll * radianPerDegree;
     DPThetaQuaternion *q = [[DPThetaQuaternion alloc] initWithReal:(float) cos(theta / 2.0f)
                                                          imaginary:[_frontDirection multiplyByMultiplied:(float) sin(theta / 2.0)]];
     _upperDirection = [self rotateWithVector3D:_upperDirection quaternion:q];
