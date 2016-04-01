@@ -79,7 +79,7 @@
 - (void)rotateForQuaternion:(DPThetaQuaternion *)q
 {
     _frontDirection = [self rotateWithVector3D:[[DPThetaVector3D alloc] initWithX:1 y:0 z:0] quaternion:q];
-    _upperDirection = [self rotateWithVector3D:[[DPThetaVector3D alloc] initWithX:0 y:1 z:0] quaternion:q];
+//    _upperDirection = [self rotateWithVector3D:[[DPThetaVector3D alloc] initWithX:0 y:1 z:0] quaternion:q];
     _rightDirection = [self rotateWithVector3D:[[DPThetaVector3D alloc] initWithX:0 y:0 z:1] quaternion:q];
 }
 

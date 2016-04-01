@@ -12,6 +12,7 @@
 #import "DPThetaGLRenderView.h"
 
 static const double DPThetaMotionDeviceIntervalMilliSec = 100;
+static float currentGyro[3];
 
 @interface DPThetaRoiDeliveryContext()
 @property (nonatomic) NSMutableArray *deltaRotationVector;
@@ -29,6 +30,7 @@ static const double DPThetaMotionDeviceIntervalMilliSec = 100;
 
 @property (nonatomic) DPThetaQuaternion *currentRotation;
 @property (nonatomic) NSTimer *timer;
+@property (nonatomic) BOOL initFlag;
 @end
 
 @implementation DPThetaRoiDeliveryContext
@@ -41,6 +43,7 @@ static const double DPThetaMotionDeviceIntervalMilliSec = 100;
     self = [super init];
     if (self) {
         _source = source;
+        _initFlag = NO;
         _eventInterval = 0.0f;
         _deltaRotationVector = [[NSMutableArray alloc] initWithCapacity:4];
         _motionManager = motionMgr;
@@ -123,6 +126,7 @@ static const double DPThetaMotionDeviceIntervalMilliSec = 100;
 {
     if (_lastEventTimestamp != 0) {
         float EPSILON = 0.000000001f;
+        float alpha = 0.8f;
         float vGyroscope[3];
         float deltaVGyroscope[4];
         DPThetaQuaternion *qGyroscopeDelta;
@@ -130,6 +134,23 @@ static const double DPThetaMotionDeviceIntervalMilliSec = 100;
         vGyroscope[0] = motion.rotationRate.z * -1;
         vGyroscope[1] = motion.rotationRate.y;
         vGyroscope[2] = motion.rotationRate.x;
+        
+        
+        if (!_initFlag) {
+            for (int i = 0; i < 3; i++) {
+                currentGyro[i] = vGyroscope[i];
+            }
+            _initFlag = YES;
+        } else {
+            vGyroscope[0] = alpha * currentGyro[0] + (1.0f - alpha) * vGyroscope[0];
+            vGyroscope[1] = alpha * currentGyro[1] + (1.0f - alpha) * vGyroscope[1];
+            vGyroscope[2] = alpha * currentGyro[2] + (1.0f - alpha) * vGyroscope[2];
+            for (int i = 0; i < 3; i++) {
+                currentGyro[i] = vGyroscope[i];
+            }
+        }
+        
+        
         float omegaMagnitude = (float) sqrt(pow(vGyroscope[0], 2) + pow(vGyroscope[1], 2) + pow(vGyroscope[2], 2));
         if (omegaMagnitude > EPSILON) {
             vGyroscope[0] /= omegaMagnitude;
