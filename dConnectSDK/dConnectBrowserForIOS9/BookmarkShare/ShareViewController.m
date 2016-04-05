@@ -108,6 +108,19 @@
 {
     for (NSExtensionItem *item in self.extensionContext.inputItems) {
         for (NSItemProvider *itemProvider in item.attachments) {
+            if ([itemProvider hasItemConformingToTypeIdentifier:(NSString *)kUTTypeURL]) {
+                [itemProvider loadItemForTypeIdentifier:(NSString *)kUTTypeURL options:nil completionHandler:^(NSURL *url, NSError *error) {
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        _urlField.text = url.absoluteString;
+                        NSDate *nowdate = [NSDate date];
+                        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+                        [formatter setDateFormat:@"yyyy年MM月dd日 HH時mm分ss秒"];
+                        NSString *dateString = [formatter stringFromDate:nowdate];
+                        _titleField.text = dateString;
+                    });
+                }];
+                break;
+            }
             if ([itemProvider hasItemConformingToTypeIdentifier:(NSString *)kUTTypePropertyList]) {
                 [itemProvider loadItemForTypeIdentifier:(NSString *)kUTTypePropertyList options:nil completionHandler:^(NSDictionary *jsDict, NSError *error) {
                     dispatch_async(dispatch_get_main_queue(), ^{

@@ -31,13 +31,11 @@
 
 - (void)setDrawObject: (DPHostCanvasDrawObject *) drawObject {
     _drawObject = drawObject;
-    
     /* redraw */
     [self setNeedsDisplay];
 }
 
 - (void)drawRect:(CGRect)rect {
-    
     CGContextRef context = UIGraphicsGetCurrentContext();
     
     // display size

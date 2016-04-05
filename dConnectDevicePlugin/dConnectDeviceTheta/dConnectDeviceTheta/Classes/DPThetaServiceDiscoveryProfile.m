@@ -40,11 +40,9 @@ didReceiveGetServicesRequest:(DConnectRequestMessage *)request
     NSString* serial = [mgr getSerialNo];
     DConnectArray *services = [DConnectArray array];
     if (isConnected && serial) {
-        NSString *name = [NSString stringWithFormat:@"Theta: %@", serial];
-
         DConnectMessage *service = [DConnectMessage message];
         [DConnectServiceDiscoveryProfile setId:DPThetaServiceDiscoveryServiceId target:service];
-        [DConnectServiceDiscoveryProfile setName:name target:service];
+        [DConnectServiceDiscoveryProfile setName:serial target:service];
         [DConnectServiceDiscoveryProfile setOnline:YES target:service];
         [DConnectServiceDiscoveryProfile setScopesWithProvider:self.provider
                                                         target:service];

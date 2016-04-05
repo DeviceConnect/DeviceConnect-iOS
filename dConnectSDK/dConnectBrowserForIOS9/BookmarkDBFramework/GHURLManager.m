@@ -165,7 +165,7 @@
 {
     GHPageModel *model = [[GHPageModel alloc]init];
     model.title = title;
-    model.url   = url;
+    model.url   = [url stringByReplacingOccurrencesOfString:@"#" withString:@"%23"];
     model.type  = TYPE_BOOKMARK;
     
     //デフォルトフォルダはPRIORITY以下。

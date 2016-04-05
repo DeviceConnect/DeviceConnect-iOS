@@ -61,6 +61,9 @@ DPHostCanvasUIViewController *_displayViewController;
     NSData *canvas = data;
     if (uri || [uri length] > 0) {
        canvas = [NSData dataWithContentsOfURL:[NSURL URLWithString:uri]];
+       if (!canvas) {
+            canvas = data;
+        }
     }
     if (canvas == nil || [canvas length] <= 0) {
         [response setErrorToInvalidRequestParameterWithMessage:@"data is not specied to update a file."];
@@ -72,7 +75,6 @@ DPHostCanvasUIViewController *_displayViewController;
                                                        imageX:imageX
                                                        imageY:imageY
                                                          mode:mode];
-    
     if (_displayViewController == nil) {
         /* start ViewController */
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -125,9 +127,9 @@ didReceiveDeleteDrawImageRequest:(DConnectRequestMessage *)request
         UIViewController *rootView;
         PutPresentedViewController(rootView);
         [rootView presentViewController:viewController animated:YES completion:^() {
-            [response setResult:DConnectMessageResultTypeOk];
-            [[DConnectManager sharedManager] sendResponse:response];
         }];
+        [response setResult:DConnectMessageResultTypeOk];
+        [[DConnectManager sharedManager] sendResponse:response];
     } else {
         [response setErrorToNotSupportAttribute];
         [[DConnectManager sharedManager] sendResponse:response];
