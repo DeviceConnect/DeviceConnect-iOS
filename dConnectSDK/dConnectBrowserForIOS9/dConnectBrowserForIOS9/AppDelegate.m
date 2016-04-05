@@ -91,8 +91,7 @@
     if (![url.scheme isEqualToString:@"dconnect"] && ![url.scheme isEqualToString:@"gotapi"]) {
         return NO;
     }
-    
-    NSString *directURLStr = [url.resourceSpecifier stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
+    NSString *directURLStr = [url.resourceSpecifier stringByRemovingPercentEncoding];
     NSURL *redirectURL = [NSURL URLWithString:directURLStr];
     if (_URLLoadingCallback && redirectURL) {
         // UIApplicationWillEnterForegroundNotification通知オブザベーションによりコールバックが呼ばれた場合、
