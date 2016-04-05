@@ -92,7 +92,7 @@
         return NO;
     }
     
-    NSString *directURLStr = [url.resourceSpecifier stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLHostAllowedCharacterSet]];
+    NSString *directURLStr = [url.resourceSpecifier stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
     NSURL *redirectURL = [NSURL URLWithString:directURLStr];
     if (_URLLoadingCallback && redirectURL) {
         // UIApplicationWillEnterForegroundNotification通知オブザベーションによりコールバックが呼ばれた場合、
