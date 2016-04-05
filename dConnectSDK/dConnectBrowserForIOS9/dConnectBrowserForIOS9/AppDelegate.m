@@ -29,15 +29,19 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     //DBの初期値を設定
     [[GHDataManager shareManager] initPrefs];
-    
+    NSLog(@"ruidui");
     DConnectManager *mgr = [DConnectManager sharedManager];
     
     NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
-    BOOL sw = [def boolForKey:IS_MANAGER_LAUNCH];
-    if (sw) {
+
+    BOOL sw = [def boolForKey:IS_FIRST_LAUNCH];
+    if (!sw) {
         [mgr startByHttpServer];
-    }
+        [def setObject:@(YES) forKey:IS_MANAGER_LAUNCH];
+        [def setObject:@(YES) forKey:IS_FIRST_LAUNCH];
+        [def synchronize];
     
+    }
     float osVersion = [[[UIDevice currentDevice] systemVersion] floatValue];
     if (osVersion > 8.0) {
         UIUserNotificationType types =  UIUserNotificationTypeBadge|
