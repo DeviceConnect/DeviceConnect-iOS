@@ -29,7 +29,6 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     //DBの初期値を設定
     [[GHDataManager shareManager] initPrefs];
-    NSLog(@"ruidui");
     DConnectManager *mgr = [DConnectManager sharedManager];
     
     NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
