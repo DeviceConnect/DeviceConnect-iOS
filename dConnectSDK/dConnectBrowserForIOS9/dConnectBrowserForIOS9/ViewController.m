@@ -222,7 +222,6 @@
     if (!url) {
         url = [self.manager createSearchURL:url];
     } else {
-        // #変換
         _url = [_url stringByReplacingOccurrencesOfString:@"%23" withString:@"#"] ;
     }
     
