@@ -34,7 +34,8 @@
     NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
 
     BOOL sw = [def boolForKey:IS_FIRST_LAUNCH];
-    if (!sw) {
+    BOOL launch = [def boolForKey:IS_MANAGER_LAUNCH];
+    if (!sw || launch) {
         [mgr startByHttpServer];
         [def setObject:@(YES) forKey:IS_MANAGER_LAUNCH];
         [def setObject:@(YES) forKey:IS_FIRST_LAUNCH];

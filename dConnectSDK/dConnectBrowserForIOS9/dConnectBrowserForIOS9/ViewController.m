@@ -126,10 +126,10 @@
 {
     //文字列がURLの場合
     _url = [self.manager isURLString:url];
-    if (!_url) {
-        _url = [self.manager createSearchURL:url];
-    } else {
+    if ([url rangeOfString:@"#"].location != NSNotFound) {
         _url = url;
+    } else if (!_url) {
+        _url = [self.manager createSearchURL:url];
     }
     void (^loadSFSafariViewControllerBlock)(NSURL *) = ^(NSURL *url) {
         sfSafariViewController = [[SFSafariViewController alloc] initWithURL:url entersReaderIfAvailable:YES];
@@ -219,12 +219,11 @@
     _url = [dict objectForKey:PAGE_URL];
     
     NSString *url = [self.manager isURLString:_url];
-    if (!url) {
-        url = [self.manager createSearchURL:url];
-    } else {
+    if ([url rangeOfString:@"%23"].location != NSNotFound) {
         _url = [_url stringByReplacingOccurrencesOfString:@"%23" withString:@"#"] ;
+    } else if (!url) {
+        url = [self.manager createSearchURL:url];
     }
-    
     [self performSelector:@selector(openSafariViewInternalWithURL:) withObject:_url afterDelay:0.75];
     
 
