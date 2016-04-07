@@ -733,31 +733,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="IRKitと赤外線の準備が完了したら、受信ボタンを押してください。" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4iM-nB-Rjc">
-                                <rect key="frame" x="27" y="201" width="266" height="61"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="1" green="0.098723787859882006" blue="0.067934493412554531" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LQl-mi-W8I">
-                                <rect key="frame" x="145" y="341" width="30" height="30"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="30" id="2X6-hd-ncY"/>
-                                </constraints>
-                                <state key="normal" title="受信">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="receiveIR:" destination="Lwl-P4-j2K" eventType="touchUpInside" id="5IW-IA-4Po"/>
-                                </connections>
-                            </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g0Z-Vy-joI">
-                                <rect key="frame" x="160" y="154" width="0.0" height="0.0"/>
-                                <color key="backgroundColor" red="0.99553721698543196" green="1" blue="0.97946144161161142" alpha="1" colorSpace="calibratedRGB"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="26"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8iq-1O-pfa">
                                 <rect key="frame" x="16" y="210" width="288" height="148"/>
                                 <subviews>
@@ -791,20 +766,63 @@
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="NO"/>
                                 </userDefinedRuntimeAttributes>
                             </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PBI-QV-Hzy">
+                                <rect key="frame" x="9" y="157" width="303" height="254"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g0Z-Vy-joI">
+                                        <rect key="frame" x="18" y="42" width="266" height="62"/>
+                                        <color key="backgroundColor" red="0.99553721698543196" green="1" blue="0.97946144161161142" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="62" id="G3M-sa-Ed1"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="26"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LQl-mi-W8I">
+                                        <rect key="frame" x="136" y="224" width="30" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="2X6-hd-ncY"/>
+                                        </constraints>
+                                        <state key="normal" title="受信">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="receiveIR:" destination="Lwl-P4-j2K" eventType="touchUpInside" id="5IW-IA-4Po"/>
+                                        </connections>
+                                    </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="IRKitと赤外線の準備が完了したら、受信ボタンを押してください。" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4iM-nB-Rjc">
+                                        <rect key="frame" x="18" y="137" width="277" height="61"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="4iM-nB-Rjc" secondAttribute="height" multiplier="277:61" id="mPE-u0-HdO"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" red="1" green="0.098723787859882006" blue="0.067934493412554531" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="LQl-mi-W8I" firstAttribute="centerX" secondItem="g0Z-Vy-joI" secondAttribute="centerX" id="73B-fL-UYT"/>
+                                    <constraint firstItem="4iM-nB-Rjc" firstAttribute="top" secondItem="g0Z-Vy-joI" secondAttribute="bottom" constant="33" id="BH0-VE-1p3"/>
+                                    <constraint firstItem="LQl-mi-W8I" firstAttribute="top" secondItem="4iM-nB-Rjc" secondAttribute="bottom" constant="26" id="G1Y-Sh-iNA"/>
+                                    <constraint firstItem="g0Z-Vy-joI" firstAttribute="leading" secondItem="PBI-QV-Hzy" secondAttribute="leading" constant="18" id="MPb-M9-1eu"/>
+                                    <constraint firstItem="LQl-mi-W8I" firstAttribute="centerX" secondItem="PBI-QV-Hzy" secondAttribute="centerX" id="Nnm-DW-m1D"/>
+                                    <constraint firstItem="g0Z-Vy-joI" firstAttribute="leading" secondItem="4iM-nB-Rjc" secondAttribute="leading" id="PCj-Lb-xrv"/>
+                                    <constraint firstItem="g0Z-Vy-joI" firstAttribute="top" secondItem="PBI-QV-Hzy" secondAttribute="top" constant="42" id="SjQ-T6-cpy"/>
+                                    <constraint firstAttribute="height" constant="254" id="Z1X-hP-09g"/>
+                                    <constraint firstAttribute="width" constant="303" id="dT1-Of-fe0"/>
+                                    <constraint firstAttribute="bottom" secondItem="LQl-mi-W8I" secondAttribute="bottom" id="x0Z-p2-rEj"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="4iM-nB-Rjc" firstAttribute="top" secondItem="g0Z-Vy-joI" secondAttribute="bottom" constant="47" id="0df-8E-zQz"/>
+                            <constraint firstItem="PBI-QV-Hzy" firstAttribute="centerX" secondItem="UhZ-P3-580" secondAttribute="centerX" id="6sB-Ke-mrA"/>
                             <constraint firstAttribute="centerY" secondItem="8iq-1O-pfa" secondAttribute="centerY" id="80J-Lj-wBo"/>
-                            <constraint firstAttribute="trailing" secondItem="4iM-nB-Rjc" secondAttribute="trailing" constant="27" id="Bkh-d1-7Ts"/>
-                            <constraint firstItem="LQl-mi-W8I" firstAttribute="centerX" secondItem="8iq-1O-pfa" secondAttribute="centerX" id="EN6-ww-PHJ"/>
                             <constraint firstAttribute="centerX" secondItem="8iq-1O-pfa" secondAttribute="centerX" id="F3s-zp-IEg"/>
-                            <constraint firstItem="g0Z-Vy-joI" firstAttribute="centerX" secondItem="4iM-nB-Rjc" secondAttribute="centerX" id="I30-M4-Xv9"/>
-                            <constraint firstItem="g0Z-Vy-joI" firstAttribute="top" secondItem="UhZ-P3-580" secondAttribute="top" constant="154" id="Nab-v7-HCO"/>
-                            <constraint firstItem="4iM-nB-Rjc" firstAttribute="leading" secondItem="UhZ-P3-580" secondAttribute="leading" constant="27" id="fX7-ve-nxn"/>
+                            <constraint firstItem="PBI-QV-Hzy" firstAttribute="centerY" secondItem="UhZ-P3-580" secondAttribute="centerY" id="bLf-Ty-JB8"/>
                             <constraint firstItem="8iq-1O-pfa" firstAttribute="centerY" secondItem="UhZ-P3-580" secondAttribute="centerY" id="iil-Uu-j04"/>
-                            <constraint firstItem="LQl-mi-W8I" firstAttribute="top" secondItem="4iM-nB-Rjc" secondAttribute="bottom" constant="79" id="nSM-XA-ejr"/>
-                            <constraint firstItem="8iq-1O-pfa" firstAttribute="centerX" secondItem="4iM-nB-Rjc" secondAttribute="centerX" id="nkl-ke-lFW"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="HIX-Mc-5Kq">
