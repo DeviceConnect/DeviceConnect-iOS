@@ -223,7 +223,7 @@
         _url = [_url stringByReplacingOccurrencesOfString:@"%23" withString:@"#"] ;
     } else if (!url) {
         url = [self.manager createSearchURL:url];
-    }
+    } 
     [self performSelector:@selector(openSafariViewInternalWithURL:) withObject:_url afterDelay:0.75];
     
 
