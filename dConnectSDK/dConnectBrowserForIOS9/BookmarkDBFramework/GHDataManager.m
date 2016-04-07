@@ -541,6 +541,14 @@ static GHDataManager* mgr = nil;
         bookmark.type = TYPE_BOOKMARK_FOLDER;
         bookmark.priority = @(2);
         [self createPageEntity:bookmark context:nil];
+        
+        NSLog(@"default");
+        GHPageModel *defaultBookmark = [[GHPageModel alloc]init];
+        defaultBookmark.title = @"Device Web API Manager";
+        defaultBookmark.url = @"https://www.gclue.io/dwa/";
+        defaultBookmark.type = TYPE_BOOKMARK;
+        defaultBookmark.priority = @(3);
+        [self createPageEntity:defaultBookmark context:nil];
     }else{
         [GHUtils clearCashes];
     }
