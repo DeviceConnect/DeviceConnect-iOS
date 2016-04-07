@@ -29,6 +29,7 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *searchViewHeightSize;
 - (IBAction)openBookmarkView:(id)sender;
 - (IBAction)openSettingView:(id)sender;
+- (IBAction)onTapView:(id)sender;
 
 @end
 
@@ -62,11 +63,18 @@
     _headerView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     _headerView.delegate = self;
     [_searchView addSubview:_headerView];
-    
     //ブックマークのweb表示通知
-    [[NSNotificationCenter defaultCenter]addObserver:self
+    [[NSNotificationCenter defaultCenter] addObserver:self
                                             selector:@selector(showWebPage:)
                                                 name:SHOW_WEBPAGE object:nil];
+    
+    [[NSNotificationCenter defaultCenter]addObserver:self
+                                            selector:@selector(keyboardWillBeShown:)
+                                                name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self
+                                            selector:@selector(keyboardWillBeHidden:)
+                                                name:UIKeyboardWillHideNotification object:nil];
+    
 }
 - (void)viewWillDisappear:(BOOL)animated
 {
@@ -75,7 +83,6 @@
     NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
     [def setBool:mgr.settings.useOriginBlocking forKey:IS_ORIGIN_BLOCKING];
 }
-
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -120,6 +127,10 @@
     GHSettingController *setting = [[GHSettingController alloc]initWithStyle:UITableViewStyleGrouped];
     UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:setting];
     [self presentViewController:nav animated:YES completion:nil];
+}
+
+- (IBAction)onTapView:(id)sender {
+    [self.view endEditing:YES];
 }
 
 - (void)openSafariViewInternalWithURL:(NSString*)url
@@ -192,7 +203,7 @@
     if ((toInterfaceOrientation == UIDeviceOrientationLandscapeLeft ||
         toInterfaceOrientation == UIDeviceOrientationLandscapeRight))
     {
-        _iconTopLeading.constant = 35;
+        _iconTopLeading.constant = 20;
     } else {
         _iconTopLeading.constant = 70;
     }
@@ -246,6 +257,36 @@
              }
          }];
     }
+}
+
+
+
+- (void)keyboardWillBeShown:(NSNotification*)notif
+{
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+        if (([[UIApplication sharedApplication] statusBarOrientation] == UIDeviceOrientationLandscapeLeft ||
+             [[UIApplication sharedApplication] statusBarOrientation] == UIDeviceOrientationLandscapeRight))
+        {
+            _iconTopLeading.constant = 20 - _iconHeightSize.constant;
+        } else {
+            _iconTopLeading.constant = 70;
+        }
+    }
+}
+
+- (void)keyboardWillBeHidden:(NSNotification*)notif
+{
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+        if (([[UIApplication sharedApplication] statusBarOrientation] == UIDeviceOrientationLandscapeLeft ||
+             [[UIApplication sharedApplication] statusBarOrientation] == UIDeviceOrientationLandscapeRight))
+        {
+            _iconTopLeading.constant = 20;
+        } else {
+            _iconTopLeading.constant = 70;
+        }
+        
+    }
+    
 }
 
 @end
