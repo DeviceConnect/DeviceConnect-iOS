@@ -524,24 +524,14 @@
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
                                 </userDefinedRuntimeAttributes>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="IRKit一覧" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ee4-p2-VeE">
-                                <rect key="frame" x="125" y="30" width="71" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="IRKit一覧" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ee4-p2-VeE">
+                                <rect key="frame" x="125" y="30" width="70" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2S2-vp-5eR">
-                                <rect key="frame" x="7" y="26" width="64" height="30"/>
-                                <state key="normal" title="&lt; CLOSE">
-                                    <color key="titleColor" red="0.94650441765095972" green="1" blue="0.99506703244178962" alpha="1" colorSpace="calibratedRGB"/>
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="closeSettings:" destination="pXU-hx-a2b" eventType="touchUpInside" id="gEB-D4-4Bi"/>
-                                </connections>
-                            </button>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="cellIRKit" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="x9E-cA-mGo">
-                                <rect key="frame" x="0.0" y="64" width="320" height="460"/>
+                                <rect key="frame" x="0.0" y="69" width="320" height="455"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </tableView>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5Yc-06-q64">
@@ -570,17 +560,16 @@
                         <constraints>
                             <constraint firstItem="x9E-cA-mGo" firstAttribute="leading" secondItem="dxl-JY-Ozs" secondAttribute="leadingMargin" constant="-16" id="0MN-OR-p0n"/>
                             <constraint firstItem="EKQ-gW-1TX" firstAttribute="top" secondItem="x9E-cA-mGo" secondAttribute="bottom" id="0Oq-H6-70c"/>
-                            <constraint firstItem="2S2-vp-5eR" firstAttribute="top" secondItem="dxl-JY-Ozs" secondAttribute="topMargin" constant="26" id="66o-jM-OLO"/>
+                            <constraint firstItem="x9E-cA-mGo" firstAttribute="top" secondItem="hgR-kz-uyZ" secondAttribute="bottom" constant="5" id="7vu-aP-Xpu"/>
+                            <constraint firstAttribute="bottom" secondItem="5Yc-06-q64" secondAttribute="bottom" id="Bor-h9-hZi"/>
                             <constraint firstAttribute="centerX" secondItem="xBb-cg-Eev" secondAttribute="centerX" id="Cm8-gE-h5z"/>
                             <constraint firstAttribute="centerY" secondItem="xBb-cg-Eev" secondAttribute="centerY" id="Cvh-oC-D7U"/>
-                            <constraint firstItem="2S2-vp-5eR" firstAttribute="leading" secondItem="dxl-JY-Ozs" secondAttribute="leadingMargin" constant="-9" id="Wip-fV-lgT"/>
+                            <constraint firstAttribute="trailing" secondItem="5Yc-06-q64" secondAttribute="trailing" id="ae5-Hg-PX9"/>
                             <constraint firstAttribute="centerX" secondItem="ee4-p2-VeE" secondAttribute="centerX" id="bfg-5g-GbJ"/>
+                            <constraint firstItem="5Yc-06-q64" firstAttribute="leading" secondItem="dxl-JY-Ozs" secondAttribute="leading" id="eAX-km-CAl"/>
                             <constraint firstAttribute="trailingMargin" secondItem="x9E-cA-mGo" secondAttribute="trailing" constant="-16" id="g2f-Zg-QZD"/>
                             <constraint firstItem="5Yc-06-q64" firstAttribute="bottom" secondItem="dxl-JY-Ozs" secondAttribute="bottomMargin" id="hMH-ZD-olu"/>
-                            <constraint firstItem="5Yc-06-q64" firstAttribute="leading" secondItem="dxl-JY-Ozs" secondAttribute="leadingMargin" constant="-16" id="q6U-UZ-wLh"/>
-                            <constraint firstItem="x9E-cA-mGo" firstAttribute="top" secondItem="dxl-JY-Ozs" secondAttribute="topMargin" constant="64" id="w8S-qZ-eTc"/>
                             <constraint firstItem="ee4-p2-VeE" firstAttribute="top" secondItem="dxl-JY-Ozs" secondAttribute="topMargin" constant="30" id="wrg-nC-cN5"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="5Yc-06-q64" secondAttribute="trailing" constant="-16" id="ykf-ez-MPr"/>
                         </constraints>
                     </view>
                     <toolbarItems/>
@@ -591,6 +580,7 @@
                         <outlet property="foundIRKitList" destination="x9E-cA-mGo" id="ead-oe-jNO"/>
                         <outlet property="indicatorView" destination="Kcu-rg-clq" id="evw-iD-Ca6"/>
                         <outlet property="progressView" destination="xBb-cg-Eev" id="U5L-nx-7TP"/>
+                        <outlet property="toolBar" destination="5Yc-06-q64" id="M4B-Lt-Zso"/>
                         <segue destination="Jed-es-tTO" kind="push" identifier="showDetail" id="kqj-Ib-18W"/>
                     </connections>
                 </viewController>

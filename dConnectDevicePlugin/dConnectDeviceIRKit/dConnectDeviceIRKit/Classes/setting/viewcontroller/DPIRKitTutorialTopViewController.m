@@ -22,6 +22,7 @@
 @property (weak, nonatomic) IBOutlet UITableView *foundIRKitList;
 @property (weak, nonatomic) IBOutlet UIView *progressView;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *indicatorView;
+@property (weak, nonatomic) IBOutlet UIToolbar *toolBar;
 
 @end
 
@@ -45,11 +46,16 @@
     title.text = @"IRKit一覧";
     [title sizeToFit];
     self.navigationItem.titleView = title;
+    self.toolBar.backgroundColor = [UIColor
+                                   colorWithRed:0.00
+                                          green:0.63
+                                           blue:0.91
+                                          alpha:1.0];
     // バー背景色
     self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:0.00
-                                                                           green:0.63
-                                                                            blue:0.91
-                                                                           alpha:1.0];
+                                       green:0.63
+                                        blue:0.91
+                                       alpha:1.0];
 
     _foundIRKitList.delegate = self;
     _foundIRKitList.dataSource = self;

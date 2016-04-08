@@ -17,8 +17,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VoR-i3-2Xw">
-                                <rect key="frame" x="28" y="123" width="265" height="331"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VoR-i3-2Xw">
+                                <rect key="frame" x="28" y="119" width="265" height="331"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="デバイス名" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IjM-M1-uKC">
                                         <rect key="frame" x="21" y="18" width="85" height="21"/>
@@ -30,7 +30,7 @@
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="ID" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hpR-6C-URn">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ID" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hpR-6C-URn">
                                         <rect key="frame" x="21" y="99" width="17" height="21"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -106,7 +106,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
-                                <color key="backgroundColor" red="0.86164482490000005" green="0.99880487299999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0.98950065481616767" green="1" blue="0.9829950699928357" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstItem="N8V-G7-jNo" firstAttribute="top" secondItem="IjM-M1-uKC" secondAttribute="bottom" constant="8" id="1Et-T4-x7H"/>
                                     <constraint firstAttribute="width" constant="265" id="22Y-9f-WVg"/>
@@ -122,6 +122,7 @@
                                     <constraint firstAttribute="bottom" secondItem="qyE-pg-YV1" secondAttribute="bottom" constant="8" id="QCv-I5-Cc2"/>
                                     <constraint firstItem="IjM-M1-uKC" firstAttribute="leading" secondItem="VoR-i3-2Xw" secondAttribute="leading" constant="21" id="S9I-ME-hAa"/>
                                     <constraint firstAttribute="trailing" secondItem="wMx-2y-WjO" secondAttribute="trailing" constant="25" id="TFS-3n-Vva"/>
+                                    <constraint firstItem="hpR-6C-URn" firstAttribute="leading" secondItem="3GL-B7-kQp" secondAttribute="leading" id="Tqe-FA-nVF"/>
                                     <constraint firstItem="hpR-6C-URn" firstAttribute="top" secondItem="N8V-G7-jNo" secondAttribute="bottom" constant="22" id="cWE-ae-n4Z"/>
                                     <constraint firstItem="qyE-pg-YV1" firstAttribute="top" secondItem="YgI-b0-nRY" secondAttribute="bottom" constant="37" id="dJg-iy-OQt"/>
                                     <constraint firstItem="wMx-2y-WjO" firstAttribute="top" secondItem="hpR-6C-URn" secondAttribute="bottom" constant="2" id="f31-x3-g0w"/>
@@ -134,6 +135,11 @@
                                     <constraint firstItem="IjM-M1-uKC" firstAttribute="top" secondItem="VoR-i3-2Xw" secondAttribute="top" constant="18" id="tLM-Qz-giH"/>
                                     <constraint firstItem="N8V-G7-jNo" firstAttribute="leading" secondItem="VoR-i3-2Xw" secondAttribute="leading" constant="25" id="tgw-2L-wv2"/>
                                 </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="10"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
                             </view>
                         </subviews>
                         <constraints>
