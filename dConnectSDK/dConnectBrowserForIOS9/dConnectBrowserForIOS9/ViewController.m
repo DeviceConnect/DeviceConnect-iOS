@@ -263,30 +263,24 @@
 
 - (void)keyboardWillBeShown:(NSNotification*)notif
 {
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-        if (([[UIApplication sharedApplication] statusBarOrientation] == UIDeviceOrientationLandscapeLeft ||
-             [[UIApplication sharedApplication] statusBarOrientation] == UIDeviceOrientationLandscapeRight))
-        {
-            _iconTopLeading.constant = 20 - _iconHeightSize.constant;
-        } else {
-            _iconTopLeading.constant = 70;
-        }
+    if (([[UIApplication sharedApplication] statusBarOrientation] == UIDeviceOrientationLandscapeLeft ||
+         [[UIApplication sharedApplication] statusBarOrientation] == UIDeviceOrientationLandscapeRight))
+    {
+        _iconTopLeading.constant = 20 - _iconHeightSize.constant;
+    } else {
+        _iconTopLeading.constant = 70;
     }
 }
 
 - (void)keyboardWillBeHidden:(NSNotification*)notif
 {
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-        if (([[UIApplication sharedApplication] statusBarOrientation] == UIDeviceOrientationLandscapeLeft ||
-             [[UIApplication sharedApplication] statusBarOrientation] == UIDeviceOrientationLandscapeRight))
-        {
-            _iconTopLeading.constant = 20;
-        } else {
-            _iconTopLeading.constant = 70;
-        }
-        
+    if (([[UIApplication sharedApplication] statusBarOrientation] == UIDeviceOrientationLandscapeLeft ||
+         [[UIApplication sharedApplication] statusBarOrientation] == UIDeviceOrientationLandscapeRight))
+    {
+        _iconTopLeading.constant = 20;
+    } else {
+        _iconTopLeading.constant = 70;
     }
-    
 }
 
 @end
