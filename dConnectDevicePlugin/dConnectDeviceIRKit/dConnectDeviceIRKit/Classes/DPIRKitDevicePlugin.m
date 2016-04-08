@@ -343,12 +343,12 @@ didReceiveDeleteOnServiceChangeRequest:(DConnectRequestMessage *)request
 
 - (void) manager:(DPIRKitManager *)manager didFindDevice:(DPIRKitDevice *)device {
     
-    NSLog(@"found a device : %@", device);
+    DPIRLog(@"found a device : %@", device);
     [self sendDeviceDetectionEventWithDevice:device online:YES];
 }
 
 - (void) manager:(DPIRKitManager *)manager didLoseDevice:(DPIRKitDevice *)device {
-    NSLog(@"lost a device : %@", device);
+    DPIRLog(@"lost a device : %@", device);
     [self sendDeviceDetectionEventWithDevice:device online:NO];
 }
 

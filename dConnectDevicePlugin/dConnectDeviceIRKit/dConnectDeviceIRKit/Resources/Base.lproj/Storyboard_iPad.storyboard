@@ -37,8 +37,8 @@
                                 <rect key="frame" x="0.0" y="0.0" width="768" height="1030"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </tableView>
-                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qNy-SW-3fT">
-                                <rect key="frame" x="-109" y="980" width="877" height="44"/>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qNy-SW-3fT">
+                                <rect key="frame" x="0.0" y="980" width="768" height="44"/>
                                 <items>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="LNA-po-koG"/>
                                     <barButtonItem title="追加" id="D0e-py-JHL">
@@ -57,6 +57,11 @@
                             </toolbar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="qNy-SW-3fT" firstAttribute="leading" secondItem="7S0-OM-lMF" secondAttribute="leading" id="4Gn-yf-nsz"/>
+                            <constraint firstAttribute="trailing" secondItem="qNy-SW-3fT" secondAttribute="trailing" id="Bqt-rz-qwD"/>
+                            <constraint firstAttribute="bottom" secondItem="qNy-SW-3fT" secondAttribute="bottom" id="R9d-FE-kWv"/>
+                        </constraints>
                     </view>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="Wpx-LF-uNS">
@@ -93,8 +98,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="9Zg-nz-AQv">
-                                <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="9Zg-nz-AQv">
+                                <rect key="frame" x="4" y="0.0" width="760" height="1024"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </tableView>
                         </subviews>
@@ -256,8 +261,8 @@
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="gDq-8W-Gde"/>
                                 </items>
                             </toolbar>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="qNK-n3-lyi">
-                                <rect key="frame" x="0.0" y="64" width="768" height="916"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="qNK-n3-lyi">
+                                <rect key="frame" x="4" y="64" width="760" height="928"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </tableView>
                         </subviews>
