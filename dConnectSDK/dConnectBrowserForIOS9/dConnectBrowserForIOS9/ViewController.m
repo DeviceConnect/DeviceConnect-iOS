@@ -29,6 +29,7 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *searchViewHeightSize;
 - (IBAction)openBookmarkView:(id)sender;
 - (IBAction)openSettingView:(id)sender;
+- (IBAction)onTapView:(id)sender;
 
 @end
 
@@ -62,11 +63,18 @@
     _headerView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     _headerView.delegate = self;
     [_searchView addSubview:_headerView];
-    
     //ブックマークのweb表示通知
-    [[NSNotificationCenter defaultCenter]addObserver:self
+    [[NSNotificationCenter defaultCenter] addObserver:self
                                             selector:@selector(showWebPage:)
                                                 name:SHOW_WEBPAGE object:nil];
+    
+    [[NSNotificationCenter defaultCenter]addObserver:self
+                                            selector:@selector(keyboardWillBeShown:)
+                                                name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self
+                                            selector:@selector(keyboardWillBeHidden:)
+                                                name:UIKeyboardWillHideNotification object:nil];
+    
 }
 - (void)viewWillDisappear:(BOOL)animated
 {
@@ -75,7 +83,6 @@
     NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
     [def setBool:mgr.settings.useOriginBlocking forKey:IS_ORIGIN_BLOCKING];
 }
-
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -122,14 +129,18 @@
     [self presentViewController:nav animated:YES completion:nil];
 }
 
+- (IBAction)onTapView:(id)sender {
+    [self.view endEditing:YES];
+}
+
 - (void)openSafariViewInternalWithURL:(NSString*)url
 {
     //文字列がURLの場合
     _url = [self.manager isURLString:url];
-    if (!_url) {
-        _url = [self.manager createSearchURL:url];
-    } else {
+    if ([url rangeOfString:@"#"].location != NSNotFound) {
         _url = url;
+    } else if (!_url) {
+        _url = [self.manager createSearchURL:url];
     }
     void (^loadSFSafariViewControllerBlock)(NSURL *) = ^(NSURL *url) {
         sfSafariViewController = [[SFSafariViewController alloc] initWithURL:url entersReaderIfAvailable:YES];
@@ -192,7 +203,7 @@
     if ((toInterfaceOrientation == UIDeviceOrientationLandscapeLeft ||
         toInterfaceOrientation == UIDeviceOrientationLandscapeRight))
     {
-        _iconTopLeading.constant = 35;
+        _iconTopLeading.constant = 20;
     } else {
         _iconTopLeading.constant = 70;
     }
@@ -219,12 +230,11 @@
     _url = [dict objectForKey:PAGE_URL];
     
     NSString *url = [self.manager isURLString:_url];
-    if (!url) {
-        url = [self.manager createSearchURL:url];
-    } else {
+    if ([url rangeOfString:@"%23"].location != NSNotFound) {
         _url = [_url stringByReplacingOccurrencesOfString:@"%23" withString:@"#"] ;
-    }
-    
+    } else if (!url) {
+        url = [self.manager createSearchURL:url];
+    } 
     [self performSelector:@selector(openSafariViewInternalWithURL:) withObject:_url afterDelay:0.75];
     
 
@@ -246,6 +256,30 @@
                  [self openSafariViewInternalWithURL:redirectURL.absoluteString];
              }
          }];
+    }
+}
+
+
+
+- (void)keyboardWillBeShown:(NSNotification*)notif
+{
+    if (([[UIApplication sharedApplication] statusBarOrientation] == UIDeviceOrientationLandscapeLeft ||
+         [[UIApplication sharedApplication] statusBarOrientation] == UIDeviceOrientationLandscapeRight))
+    {
+        _iconTopLeading.constant = 20 - _iconHeightSize.constant;
+    } else {
+        _iconTopLeading.constant = 70;
+    }
+}
+
+- (void)keyboardWillBeHidden:(NSNotification*)notif
+{
+    if (([[UIApplication sharedApplication] statusBarOrientation] == UIDeviceOrientationLandscapeLeft ||
+         [[UIApplication sharedApplication] statusBarOrientation] == UIDeviceOrientationLandscapeRight))
+    {
+        _iconTopLeading.constant = 20;
+    } else {
+        _iconTopLeading.constant = 70;
     }
 }
 
