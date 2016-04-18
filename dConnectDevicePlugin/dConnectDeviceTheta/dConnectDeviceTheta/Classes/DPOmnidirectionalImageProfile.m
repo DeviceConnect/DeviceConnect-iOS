@@ -145,7 +145,6 @@ NSString *const DPOmnidirectionalImageProfileParamURI = @"uri";
     }
     
     NSString *serviceId = [request serviceId];
-    NSString *sessionKey = [request sessionKey];
     NSString *profile = [request profile];
     NSString *interface = [request interface];
     NSString *attribute = [request attribute];
