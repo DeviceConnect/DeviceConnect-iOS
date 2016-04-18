@@ -397,14 +397,29 @@ NSString *const DConnectMessageHeaderGotAPIOrigin = @"X-GotAPI-Origin";
 - (NSNumber *) numberForKey:(NSString *)aKey {
     id obj = [self.dictionary objectForKey:aKey];
     if ([obj isKindOfClass:[NSString class]]) {
-        int val;
-        if ([[NSScanner scannerWithString:obj] scanInt:&val]) {
-            return [NSNumber numberWithInt:val];
-        } else {
-            return nil;
+        NSRange range = [obj rangeOfString:@"."];
+        if (range.location != NSNotFound) {
+            double val;
+            if ([[NSScanner scannerWithString:obj] scanDouble:&val]) {
+                return [NSNumber numberWithDouble:val];
+            } else {
+                return nil;
+            }
+        }
+        else {
+            int val;
+            if ([[NSScanner scannerWithString:obj] scanInt:&val]) {
+                return [NSNumber numberWithInt:val];
+            } else {
+                return nil;
+            }
         }
     }
-    return (NSNumber *) [self.dictionary objectForKey:aKey];
+    if ([obj isKindOfClass:[NSNumber class]]) {
+        return (NSNumber *) [self.dictionary objectForKey:aKey];
+    } else {
+        return nil;
+    }
 }
 
 - (id) objectForKey:(NSString *)aKey {
