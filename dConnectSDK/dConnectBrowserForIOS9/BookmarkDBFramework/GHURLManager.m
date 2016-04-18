@@ -50,8 +50,7 @@
 
     //URLか判定
     NSDataDetector *dataDetector = [NSDataDetector dataDetectorWithTypes:NSTextCheckingTypeLink error:nil];
-    NSArray *resultArray = [dataDetector matchesInString:
-                                                        [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]
+    NSArray *resultArray = [dataDetector matchesInString:[urlString stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]]
                                                  options:0
                                                    range:NSMakeRange(0,[urlString length])];
     
@@ -71,7 +70,7 @@
 {
     NSArray *languages = [NSLocale preferredLanguages];
     NSString *lang = [languages objectAtIndex:0];
-    NSString *encodedString = [str stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSString *encodedString = [str stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLHostAllowedCharacterSet]];
     return [NSString stringWithFormat:@"https://google.co.jp/search?q=%@&ie=UTF-8&oe=UTF-8&hl=%@&client=safari", encodedString , lang];
 }
 

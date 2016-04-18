@@ -29,15 +29,19 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     //DBの初期値を設定
     [[GHDataManager shareManager] initPrefs];
-    
     DConnectManager *mgr = [DConnectManager sharedManager];
     
     NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
-    BOOL sw = [def boolForKey:IS_MANAGER_LAUNCH];
-    if (sw) {
+
+    BOOL sw = [def boolForKey:IS_FIRST_LAUNCH];
+    BOOL launch = [def boolForKey:IS_MANAGER_LAUNCH];
+    if (!sw || launch) {
         [mgr startByHttpServer];
-    }
+        [def setObject:@(YES) forKey:IS_MANAGER_LAUNCH];
+        [def setObject:@(YES) forKey:IS_FIRST_LAUNCH];
+        [def synchronize];
     
+    }
     float osVersion = [[[UIDevice currentDevice] systemVersion] floatValue];
     if (osVersion > 8.0) {
         UIUserNotificationType types =  UIUserNotificationTypeBadge|
@@ -91,8 +95,7 @@
     if (![url.scheme isEqualToString:@"dconnect"] && ![url.scheme isEqualToString:@"gotapi"]) {
         return NO;
     }
-    
-    NSString *directURLStr = [url.resourceSpecifier stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLHostAllowedCharacterSet]];
+    NSString *directURLStr = [url.resourceSpecifier stringByRemovingPercentEncoding];
     NSURL *redirectURL = [NSURL URLWithString:directURLStr];
     if (_URLLoadingCallback && redirectURL) {
         // UIApplicationWillEnterForegroundNotification通知オブザベーションによりコールバックが呼ばれた場合、

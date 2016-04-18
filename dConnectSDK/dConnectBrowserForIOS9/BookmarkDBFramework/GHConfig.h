@@ -18,6 +18,8 @@
 #define TYPE_FOLDER   @"folder"
 #define TYPE_BOOKMARK_FOLDER @"bookmark_folder"
 
+#define IS_FIRST_LAUNCH @"is_first_launch"
+
 #define IS_MANAGER_LAUNCH @"is_manager_launch"
 #define IS_ORIGIN_BLOCKING @"is_origin_blocking"
 

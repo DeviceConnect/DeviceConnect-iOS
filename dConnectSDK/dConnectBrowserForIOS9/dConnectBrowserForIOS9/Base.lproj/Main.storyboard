@@ -1,93 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="sIh-io-mcp">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="sIh-io-mcp">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
-        <scene sceneID="tne-QT-ifu">
-            <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="huv-uo-dHB"/>
-                        <viewControllerLayoutGuide type="bottom" id="bij-R6-D31"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bg" translatesAutoresizingMaskIntoConstraints="NO" id="IyX-6O-ulp">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                            </imageView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_512px.png" translatesAutoresizingMaskIntoConstraints="NO" id="yWJ-eD-tgB">
-                                <rect key="frame" x="200" y="28" width="200" height="200"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="200" id="5po-cc-bay"/>
-                                    <constraint firstAttribute="height" constant="200" id="BAB-89-RYB"/>
-                                </constraints>
-                            </imageView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="35h-Nc-wKR">
-                                <rect key="frame" x="150" y="245" width="300" height="48"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="300" id="BSE-ky-R0h"/>
-                                    <constraint firstAttribute="height" constant="48" id="pg7-x0-gBD"/>
-                                </constraints>
-                            </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0XZ-6l-Ewa">
-                                <rect key="frame" x="231" y="354" width="138" height="40"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="40" id="TsY-z6-RPx"/>
-                                    <constraint firstAttribute="width" constant="138" id="nbI-L0-Drm"/>
-                                </constraints>
-                                <state key="normal" title="開く" backgroundImage="ButtonStretch">
-                                    <color key="titleColor" red="0.99024979641028377" green="0.99701571060531569" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                </state>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ecp-x0-V0T">
-                                <rect key="frame" x="231" y="484" width="138" height="40"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="40" id="hKa-Lq-qOX"/>
-                                    <constraint firstAttribute="width" constant="138" id="lpe-Po-All"/>
-                                </constraints>
-                                <state key="normal" title="設定画面" backgroundImage="ButtonStretch">
-                                    <color key="titleColor" red="0.99024979639999999" green="0.99701571060000005" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                </state>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Do2-aw-VSP">
-                                <rect key="frame" x="231" y="418" width="138" height="40"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="138" id="BoG-an-iB3"/>
-                                    <constraint firstAttribute="height" constant="40" id="Zci-oC-Gqs"/>
-                                </constraints>
-                                <state key="normal" title="ブックマーク" backgroundImage="ButtonStretch">
-                                    <color key="titleColor" red="0.99024979639999999" green="0.99701571060000005" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                </state>
-                            </button>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="IyX-6O-ulp" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="6LJ-rt-qQf"/>
-                            <constraint firstAttribute="trailing" secondItem="ecp-x0-V0T" secondAttribute="trailing" constant="231" id="8wB-hH-vhJ"/>
-                            <constraint firstItem="yWJ-eD-tgB" firstAttribute="top" secondItem="huv-uo-dHB" secondAttribute="bottom" constant="8" id="9cX-EL-Kc6"/>
-                            <constraint firstItem="ecp-x0-V0T" firstAttribute="top" secondItem="Do2-aw-VSP" secondAttribute="bottom" constant="26" id="ADC-Ic-pKL"/>
-                            <constraint firstItem="yWJ-eD-tgB" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="200" id="CTb-Uc-EQK"/>
-                            <constraint firstItem="Do2-aw-VSP" firstAttribute="top" secondItem="0XZ-6l-Ewa" secondAttribute="bottom" constant="24" id="Dwy-oF-W7E"/>
-                            <constraint firstAttribute="trailing" secondItem="0XZ-6l-Ewa" secondAttribute="trailing" constant="231" id="H5E-g1-OOx"/>
-                            <constraint firstAttribute="trailing" secondItem="IyX-6O-ulp" secondAttribute="trailing" id="R9M-eQ-sXk"/>
-                            <constraint firstItem="bij-R6-D31" firstAttribute="top" secondItem="ecp-x0-V0T" secondAttribute="bottom" constant="76" id="TH4-9C-8PD"/>
-                            <constraint firstAttribute="trailing" secondItem="Do2-aw-VSP" secondAttribute="trailing" constant="231" id="TRI-ap-amC"/>
-                            <constraint firstItem="IyX-6O-ulp" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="XkF-t9-w6h"/>
-                            <constraint firstItem="bij-R6-D31" firstAttribute="top" secondItem="IyX-6O-ulp" secondAttribute="bottom" id="bSC-CC-zKn"/>
-                            <constraint firstItem="35h-Nc-wKR" firstAttribute="top" secondItem="yWJ-eD-tgB" secondAttribute="bottom" constant="17" id="nx9-Gy-e97"/>
-                            <constraint firstItem="35h-Nc-wKR" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="150" id="tZJ-J6-Blx"/>
-                        </constraints>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="395" y="429"/>
-        </scene>
         <!--View Controller-->
         <scene sceneID="imP-pn-kqd">
             <objects>
@@ -130,6 +46,7 @@
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="0.99778302324716073" blue="0.97538636504325948" alpha="1" colorSpace="calibratedRGB"/>
+                        <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="acI-uG-oiL" firstAttribute="top" secondItem="VWP-nI-QRg" secondAttribute="bottom" constant="8" id="FDq-zP-YTy"/>
                             <constraint firstItem="3T1-VZ-zWU" firstAttribute="top" secondItem="VWP-nI-QRg" secondAttribute="bottom" constant="8" id="J1k-Zi-V3u"/>
@@ -140,10 +57,13 @@
                             <constraint firstItem="TrB-Kh-GPB" firstAttribute="top" secondItem="bXg-rR-ohP" secondAttribute="bottom" constant="8" id="gmd-sX-96U"/>
                             <constraint firstAttribute="trailing" secondItem="acI-uG-oiL" secondAttribute="trailing" constant="20" id="q9m-M3-5P7"/>
                         </constraints>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="mNS-AY-ab2" appends="YES" id="ePE-AE-TsN"/>
+                        </connections>
                     </view>
                     <connections>
                         <outlet property="iconHeightSize" destination="2xJ-Ed-bnf" id="gBH-K1-5Ms"/>
-                        <outlet property="iconTopLeading" destination="NMj-b0-Y7U" id="Mij-7o-DMa"/>
+                        <outlet property="iconTopLeading" destination="NMj-b0-Y7U" id="8y2-oi-pvC"/>
                         <outlet property="iconWidthSize" destination="kKH-SG-GH3" id="NVJ-KL-B63"/>
                         <outlet property="searchView" destination="TrB-Kh-GPB" id="ZrX-MR-0y1"/>
                         <outlet property="searchViewHeightSize" destination="213-02-pRQ" id="92V-kd-5ZZ"/>
@@ -151,15 +71,17 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3H7-zK-k4z" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="mNS-AY-ab2">
+                    <connections>
+                        <action selector="onTapView:" destination="sIh-io-mcp" id="9qf-iY-NR5"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="1102" y="429"/>
         </scene>
     </scenes>
     <resources>
-        <image name="ButtonStretch" width="40" height="40"/>
-        <image name="bg" width="320" height="568"/>
         <image name="bookmark" width="40" height="40"/>
-        <image name="icon_512px.png" width="512" height="512"/>
         <image name="logo" width="160" height="160"/>
         <image name="settings" width="40" height="40"/>
     </resources>
