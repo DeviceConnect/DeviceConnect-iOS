@@ -62,6 +62,9 @@ DPHostCanvasUIViewController *_displayViewController;
     if (uri || [uri length] > 0) {
        canvas = [NSData dataWithContentsOfURL:[NSURL URLWithString:uri]];
     }
+    if (!canvas) {
+        canvas = data;
+    }
     if (canvas == nil || [canvas length] <= 0) {
         [response setErrorToInvalidRequestParameterWithMessage:@"data is not specied to update a file."];
         return YES;
