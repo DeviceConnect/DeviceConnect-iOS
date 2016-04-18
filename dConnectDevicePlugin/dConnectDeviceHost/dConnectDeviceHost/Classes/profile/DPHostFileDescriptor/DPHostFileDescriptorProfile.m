@@ -228,6 +228,7 @@ didReceivePutWriteRequest:(DConnectRequestMessage *)request
         [response setErrorToInvalidRequestParameterWithMessage:@"path must be specified."];
         return YES;
     }
+
     NSString *positionString = [request stringForKey:DConnectFileDescriptorProfileParamPosition];
     if (positionString && ![DPHostUtils existDigitWithString:positionString]) {
         [response setErrorToInvalidRequestParameterWithMessage:@"position is non-float"];
@@ -251,20 +252,26 @@ didReceivePutWriteRequest:(DConnectRequestMessage *)request
                     unsigned long long oldOffset = [fileHandle offsetInFile];
                     @try {
                         if (position) {
-                            [fileHandle seekToFileOffset:[position unsignedLongLongValue]];
-                            [fileHandle writeData:media];
-                            [fileHandle seekToFileOffset:[position unsignedLongLongValue]+[media length]];
+                            unsigned long long fileLength = [fileHandle seekToEndOfFile];
+                            if ([position unsignedLongLongValue] > fileLength) {
+                                [fileHandle seekToFileOffset:oldOffset];
+                                [response setErrorToUnknownWithMessage:@"position is wrong."];
+                            } else {
+                                [fileHandle seekToFileOffset:[position unsignedLongLongValue]];
+                                [fileHandle writeData:media];
+                                [fileHandle seekToFileOffset:[position unsignedLongLongValue]+[media length]];
+                                [response setResult:DConnectMessageResultTypeOk];
+                            }
                         } else {
                             [fileHandle writeData:media];
                             [fileHandle seekToFileOffset:[media length]];
+                            [response setResult:DConnectMessageResultTypeOk];
                         }
                     }
                     @catch (NSException *exception) {
                         [fileHandle seekToFileOffset:oldOffset];
                         [response setErrorToUnknownWithMessage:@"Failed to write data."];
-                        return YES;
                     }
-                    [response setResult:DConnectMessageResultTypeOk];
                 } else {
                     [response setErrorToInvalidRequestParameterWithMessage:
                      @"The file specified by path is not opened; use File Descriptor Open API first to open it."];
