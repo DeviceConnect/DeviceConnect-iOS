@@ -156,6 +156,10 @@ NSString *const SpheroCalibrationName = @"Sphero CalibrationLED";
                         color:(NSString*)color
                      flashing:(NSArray*)flashing
 {
+    if (name == nil || [name isEqualToString:@""]) {
+        [response setErrorToInvalidRequestParameterWithMessage:@"name is invalid."];
+        return YES;
+    }
     return [self profile:profile didReceivePostLightRequest:request response:response serviceId:serviceId lightId:lightId brightness:brightness color:color flashing:flashing];
 }
 
