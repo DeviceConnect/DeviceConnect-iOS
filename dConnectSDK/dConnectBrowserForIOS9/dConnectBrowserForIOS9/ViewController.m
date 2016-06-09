@@ -13,9 +13,7 @@
 #import <DConnectSDK/DConnectSDK.h>
 #import <SafariServices/SafariServices.h>
 #import "AppDelegate.h"
-@interface ViewController (){
-    SFSafariViewController *sfSafariViewController;
-}
+@interface ViewController (){}
 
 @property (nonatomic, strong) GHURLManager *manager;
 @property (nonatomic) NSString* url;
@@ -135,6 +133,11 @@
 
 - (void)openSafariViewInternalWithURL:(NSString*)url
 {
+    AppDelegate* delegate = [UIApplication sharedApplication].delegate;
+    if (delegate.window.rootViewController.presentedViewController != nil) {
+        [self dismissViewControllerAnimated:false completion:nil];
+    }
+
     //文字列がURLの場合
     _url = [self.manager isURLString:url];
     if ([url rangeOfString:@"#"].location != NSNotFound) {
@@ -143,7 +146,7 @@
         _url = [self.manager createSearchURL:url];
     }
     void (^loadSFSafariViewControllerBlock)(NSURL *) = ^(NSURL *url) {
-        sfSafariViewController = [[SFSafariViewController alloc] initWithURL:url entersReaderIfAvailable:YES];
+        SFSafariViewController* sfSafariViewController = [[SFSafariViewController alloc] initWithURL:url entersReaderIfAvailable:YES];
         sfSafariViewController.delegate = self;
         [self presentViewController:sfSafariViewController animated:YES completion:nil];
     };
@@ -180,7 +183,7 @@
 }
 
 -(void)safariViewControllerDidFinish:(SFSafariViewController *)controller {
-    [sfSafariViewController dismissViewControllerAnimated:YES completion:nil];
+    [controller dismissViewControllerAnimated:YES completion:nil];
 }
 
 
