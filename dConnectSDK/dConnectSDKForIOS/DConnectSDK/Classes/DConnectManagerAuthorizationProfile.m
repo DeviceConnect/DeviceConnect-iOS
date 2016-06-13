@@ -46,6 +46,10 @@
     NSString *serviceId = [request serviceId];
     NSString *clientId = [DConnectAuthorizationProfile clientIdFromRequest:request];
     NSString *scope = [DConnectAuthorizationProfile scopeFromeFromRequest:request];
+    
+    // APIパス名の大文字小文字を区別しない対応。小文字に統一する。
+    scope = [scope lowercaseString];
+    
     NSArray *scopes = [DConnectAuthorizationProfile parsePattern:scope];
     NSString *applicationName = [DConnectAuthorizationProfile applicationNameFromRequest:request];
     

@@ -9,7 +9,7 @@
 
 #import "DConnectMediaStreamRecordingProfile.h"
 
-NSString *const DConnectMediaStreamRecordingProfileName = @"mediastream_recording";
+NSString *const DConnectMediaStreamRecordingProfileName = @"mediastreamrecording";
 NSString *const DConnectMediaStreamRecordingProfileAttrMediaRecorder = @"mediarecorder";
 NSString *const DConnectMediaStreamRecordingProfileAttrTakePhoto = @"takephoto";
 NSString *const DConnectMediaStreamRecordingProfileAttrRecord = @"record";
