@@ -685,10 +685,11 @@ NSString *const DConnectAttributeNameRequestAccessToken = @"requestAccessToken";
             NSString *oldProfile = [resultWithRequestProfile objectForKey: OLD_NAME];
             
             // デバイスプラグインが持っているプロファイルが新旧どちらなのか判定する
-            if ([dpProfiles containsObject: newProfile]) {
+            
+            if ([dp profileWithName: newProfile]) {
                 dpIsNew = YES;
             }
-            else if ([dpProfiles containsObject: oldProfile]) {
+            else if ([dp profileWithName: oldProfile]) {
                 dpIsOld = YES;
             }
             
