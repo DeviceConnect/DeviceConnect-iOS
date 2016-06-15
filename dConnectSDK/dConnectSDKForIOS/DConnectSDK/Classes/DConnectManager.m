@@ -443,12 +443,6 @@ NSString *const DConnectAttributeNameRequestAccessToken = @"requestAccessToken";
 {
     __weak DConnectManager *_self = self;
     
-    // APIパス名を小文字に統一する。(大文字小文字を区別しない対応)
-    [self convertLowerProfileInterfaceAttributeWithRequest: request];
-    
-    // APIパス名をデバイスプラグインのバージョンに合わせて新旧変換する
-    [self matchingProfileInterfaceAttributeWithRequest: request];
-    
     // 常に待つので0を指定しておく
     dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
     dispatch_time_t timeout = dispatch_time(DISPATCH_TIME_NOW, NSEC_PER_SEC * HTTP_REQUEST_TIMEOUT);
@@ -489,6 +483,10 @@ NSString *const DConnectAttributeNameRequestAccessToken = @"requestAccessToken";
                                                                                 accessToken:accessToken];
                 if ([result checkResult]) {
                     
+                    // APIパス名を小文字に統一し、デバイスプラグインのバージョンに合わせて新旧変換する
+                    [self convertLowerProfileInterfaceAttributeWithRequest: request];
+                    [self matchingProfileInterfaceAttributeWithRequest: request];
+                    
                     [_self executeRequest:request response:response callback:callback];
                 } else {
                     // Local OAuth認証失敗
@@ -512,6 +510,10 @@ NSString *const DConnectAttributeNameRequestAccessToken = @"requestAccessToken";
                 [_self sendResponse:response];
             }
         } else {
+            // APIパス名を小文字に統一し、デバイスプラグインのバージョンに合わせて新旧変換する
+            [self convertLowerProfileInterfaceAttributeWithRequest: request];
+            [self matchingProfileInterfaceAttributeWithRequest: request];
+            
             [_self executeRequest:request
                          response:response
                          callback:callback];
