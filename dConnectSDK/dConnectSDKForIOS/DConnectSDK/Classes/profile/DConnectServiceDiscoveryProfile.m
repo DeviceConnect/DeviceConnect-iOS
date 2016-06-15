@@ -9,7 +9,7 @@
 
 #import "DConnectServiceDiscoveryProfile.h"
 
-NSString *const DConnectServiceDiscoveryProfileName = @"servicediscovery";
+NSString *const DConnectServiceDiscoveryProfileName = @"serviceDiscovery";
 NSString *const DConnectServiceDiscoveryProfileAttrOnServiceChange = @"onservicechange";
 NSString *const DConnectServiceDiscoveryProfileParamNetworkService = @"networkService";
 NSString *const DConnectServiceDiscoveryProfileParamServices = @"services";

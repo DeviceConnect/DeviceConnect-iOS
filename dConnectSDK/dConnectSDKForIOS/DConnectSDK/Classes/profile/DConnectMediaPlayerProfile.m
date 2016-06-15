@@ -10,11 +10,11 @@
 #import "DConnectMediaPlayerProfile.h"
 
 // 属性
-NSString *const DConnectMediaPlayerProfileName               = @"mediaplayer";
+NSString *const DConnectMediaPlayerProfileName               = @"mediaPlayer";
 NSString *const DConnectMediaPlayerProfileAttrMedia          = @"media";
-NSString *const DConnectMediaPlayerProfileAttrMediaList      = @"medialist";
+NSString *const DConnectMediaPlayerProfileAttrMediaList      = @"mediaList";
 NSString *const DConnectMediaPlayerProfileAttrVolume         = @"volume";
-NSString *const DConnectMediaPlayerProfileAttrPlayStatus     = @"playstatus";
+NSString *const DConnectMediaPlayerProfileAttrPlayStatus     = @"playStatus";
 NSString *const DConnectMediaPlayerProfileAttrPlay           = @"play";
 NSString *const DConnectMediaPlayerProfileAttrStop           = @"stop";
 NSString *const DConnectMediaPlayerProfileAttrPause          = @"pause";

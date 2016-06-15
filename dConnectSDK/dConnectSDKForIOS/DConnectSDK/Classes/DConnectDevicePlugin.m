@@ -76,19 +76,19 @@
 #endif
 
     // Service Discovery APIのパスを変換
-    NSString *profileName = [request profile];
-    if ([profileName isEqualToString:DConnectProfileNameNetworkServiceDiscovery]) {
-        NSString *attribute = [request attribute];
-        if ([attribute isEqualToString:DConnectAttributeNameGetNetworkServices]) {
+    NSString *profileName = [[request profile] lowercaseString];
+    if ([profileName isEqualToString:[DConnectProfileNameNetworkServiceDiscovery lowercaseString]]) {
+        NSString *attribute = [[request attribute] lowercaseString];
+        if ([attribute isEqualToString:[DConnectAttributeNameGetNetworkServices lowercaseString]]) {
             profileName = DConnectServiceDiscoveryProfileName;
             [request setProfile:DConnectServiceDiscoveryProfileName];
             [request setAttribute:nil];
         }
-    } else if ([profileName isEqualToString:DConnectAuthorizationProfileName]) {
-        NSString *attribute = [request attribute];
-        if ([attribute isEqualToString:DConnectAttributeNameCreateClient]) {
+    } else if ([profileName isEqualToString:[DConnectAuthorizationProfileName lowercaseString]]) {
+        NSString *attribute = [[request attribute] lowercaseString];
+        if ([attribute isEqualToString:[DConnectAttributeNameCreateClient lowercaseString]]) {
             [request setAttribute:DConnectAuthorizationProfileAttrGrant];
-        } else if ([attribute isEqualToString:DConnectAttributeNameRequestAccessToken]) {
+        } else if ([attribute isEqualToString:[DConnectAttributeNameRequestAccessToken lowercaseString]]) {
             [request setAttribute:DConnectAuthorizationProfileAttrAccessToken];
         }
     }
@@ -146,7 +146,7 @@
 #pragma mark - DConnectProfileProvider Methods -
 
 - (void) addProfile:(DConnectProfile *) profile {
-    NSString *name = [profile profileName];
+    NSString *name = [[profile profileName] lowercaseString];
     if (name) {
         [self.mProfileMap setObject:profile forKey:name];
         profile.provider = self;
@@ -154,7 +154,7 @@
 }
 
 - (void) removeProfile:(DConnectProfile *) profile {
-    NSString *name = [profile profileName];
+    NSString *name = [[profile profileName] lowercaseString];
     if (name) {
         [self.mProfileMap removeObjectForKey:name];
     }
@@ -162,7 +162,7 @@
 
 - (DConnectProfile *) profileWithName:(NSString *)name {
     if (name) {
-        return [self.mProfileMap objectForKey:name];
+        return [self.mProfileMap objectForKey:[name lowercaseString]];
     }
     return nil;
 }

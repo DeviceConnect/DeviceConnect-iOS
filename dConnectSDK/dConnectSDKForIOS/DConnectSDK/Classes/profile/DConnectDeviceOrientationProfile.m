@@ -9,7 +9,7 @@
 
 #import "DConnectDeviceOrientationProfile.h"
 
-NSString *const DConnectDeviceOrientationProfileName = @"deviceorientation";
+NSString *const DConnectDeviceOrientationProfileName = @"deviceOrientation";
 NSString *const DConnectDeviceOrientationProfileAttrOnDeviceOrientation = @"ondeviceorientation";
 NSString *const DConnectDeviceOrientationProfileParamOrientation = @"orientation";
 NSString *const DConnectDeviceOrientationProfileParamAcceleration = @"acceleration";

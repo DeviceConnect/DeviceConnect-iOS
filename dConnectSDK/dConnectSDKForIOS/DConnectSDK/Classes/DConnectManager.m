@@ -552,7 +552,7 @@ NSString *const DConnectAttributeNameRequestAccessToken = @"requestAccessToken";
 #pragma mark - DConnectProfileProvider Methods -
 
 - (void) addProfile:(DConnectProfile *) profile {
-    NSString *name = [profile profileName];
+    NSString *name = [[profile profileName] lowercaseString];
     if (name) {
         [self.mProfileMap setObject:profile forKey:name];
         profile.provider = self;
@@ -560,7 +560,7 @@ NSString *const DConnectAttributeNameRequestAccessToken = @"requestAccessToken";
 }
 
 - (void) removeProfile:(DConnectProfile *)profile {
-    NSString *name = [profile profileName];
+    NSString *name = [[profile profileName] lowercaseString];
     if (name) {
         [self.mProfileMap removeObjectForKey:name];
     }
@@ -568,7 +568,8 @@ NSString *const DConnectAttributeNameRequestAccessToken = @"requestAccessToken";
 
 - (DConnectProfile *) profileWithName:(NSString *)name {
     if (name) {
-        return [_mProfileMap objectForKey:name];
+        NSString *lowerName = [name lowercaseString];
+        return [_mProfileMap objectForKey:lowerName];
     }
     return nil;
 }

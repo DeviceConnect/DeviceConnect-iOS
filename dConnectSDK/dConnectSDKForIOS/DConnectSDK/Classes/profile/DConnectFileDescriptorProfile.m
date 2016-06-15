@@ -9,7 +9,7 @@
 
 #import "DConnectFileDescriptorProfile.h"
 
-NSString *const DConnectFileDescriptorProfileName = @"filedescriptor";
+NSString *const DConnectFileDescriptorProfileName = @"fileDescriptor";
 NSString *const DConnectFileDescriptorProfileAttrOpen = @"open";
 NSString *const DConnectFileDescriptorProfileAttrClose = @"close";
 NSString *const DConnectFileDescriptorProfileAttrRead = @"read";

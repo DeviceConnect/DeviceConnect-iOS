@@ -9,7 +9,7 @@
 
 #import "DConnectKeyEventProfile.h"
 
-NSString *const DConnectKeyEventProfileName = @"keyevent";
+NSString *const DConnectKeyEventProfileName = @"keyEvent";
 NSString *const DConnectKeyEventProfileAttrKeyEvent = @"keyevent";
 NSString *const DConnectKeyEventProfileAttrOnDown = @"ondown";
 NSString *const DConnectKeyEventProfileAttrOnUp = @"onup";
