@@ -19,6 +19,7 @@
 @property (nonatomic, strong) GHURLManager *manager;
 @property (nonatomic) NSString* url;
 @property (nonatomic, strong) IBOutlet GHHeaderView *headerView;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *headerHeight;
 
 - (IBAction)openBookmarkView:(id)sender;
 - (IBAction)openSettingView:(id)sender;
@@ -50,6 +51,8 @@
     _manager = [[GHURLManager alloc]init];
     _url = @"http://www.google.com";
 
+    self.headerView.delegate = self;
+
     //ブックマークのweb表示通知
     [[NSNotificationCenter defaultCenter] addObserver:self
                                             selector:@selector(showWebPage:)
@@ -66,6 +69,20 @@
     [[NSUserDefaults standardUserDefaults] setBool:mgr.settings.useOriginBlocking forKey:IS_ORIGIN_BLOCKING];
 }
 
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
+                                duration:(NSTimeInterval)duration
+{
+    [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
+    if ((toInterfaceOrientation == UIDeviceOrientationLandscapeLeft ||
+         toInterfaceOrientation == UIDeviceOrientationLandscapeRight))
+    {
+        self.headerHeight.constant = 44;
+    } else {
+        self.headerHeight.constant = 64;
+    }
+
+    [self.view setNeedsUpdateConstraints];
+}
 
 - (void)dealloc
 {
@@ -73,8 +90,10 @@
     [[NSNotificationCenter defaultCenter]removeObserver:self];
 }
 
-#pragma mark - open UI
 
+//--------------------------------------------------------------//
+#pragma mark - open UI
+//--------------------------------------------------------------//
 
 - (IBAction)openBookmarkView:(id)sender {
     //ストーリーボードから取得
@@ -118,22 +137,9 @@
 //--------------------------------------------------------------//
 #pragma mark - GHHeaderViewDelegate delegate
 //--------------------------------------------------------------//
-
 - (void)urlUpadated:(NSString*)urlStr
 {
-    NSString *u = _headerView.searchBar.text;
-    [self openSafariViewInternalWithURL:u];
-}
-
-- (void)reload
-{
-    NSString *u = _headerView.searchBar.text;
-    [self openSafariViewInternalWithURL:u];
-}
-
-
-- (void)cancelLoading
-{
+    [self openSafariViewInternalWithURL:urlStr];
 }
 
 //--------------------------------------------------------------//
