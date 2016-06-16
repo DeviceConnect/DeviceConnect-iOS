@@ -63,7 +63,7 @@ NSString *const DConnectLightProfileParamGroupName = @"groupName";
     NSString *profile = [request profile];
     NSString *attribute = [request attribute];
     if (profile) {
-        if ([profile isEqualToString:DConnectLightProfileName]
+        if ([self isEqualToProfile:profile cmp:DConnectLightProfileName]
             && !attribute
             && [self hasMethod:@selector(profile:didReceiveGetLightRequest:response:serviceId:) response:response])
         {
@@ -72,9 +72,9 @@ NSString *const DConnectLightProfileParamGroupName = @"groupName";
             didReceiveGetLightRequest:request
                              response:response
                             serviceId:serviceId];
-        } else if ([profile isEqualToString:DConnectLightProfileName]
+        } else if ([self isEqualToProfile:profile cmp:DConnectLightProfileName]
                    && attribute
-                   && [attribute isEqualToString:DConnectLightProfileInterfaceGroup]
+                   && [self isEqualToAttribute: attribute cmp:DConnectLightProfileInterfaceGroup]
                    && [self hasMethod:@selector(profile:
                                                 didReceiveGetLightGroupRequest:
                                                 response:
@@ -114,7 +114,7 @@ NSString *const DConnectLightProfileParamGroupName = @"groupName";
     NSString *attribute = [request attribute];
     
     if (profile) {
-        if ([profile isEqualToString:DConnectLightProfileName]
+        if ([self isEqualToProfile:profile cmp:DConnectLightProfileName]
             && !interface
             && !attribute
             && [self hasMethod:@selector(profile:
@@ -160,10 +160,10 @@ NSString *const DConnectLightProfileParamGroupName = @"groupName";
                            brightness:brightness
                                 color:color
                              flashing:flashing];
-        } else if ([profile isEqualToString:DConnectLightProfileName]
+        } else if ([self isEqualToProfile:profile cmp:DConnectLightProfileName]
                    && !interface
                    && attribute
-                   && [attribute isEqualToString:DConnectLightProfileInterfaceGroup]
+                   && [self isEqualToAttribute: attribute cmp:DConnectLightProfileInterfaceGroup]
                    && [self hasMethod:@selector(profile:
                                                 didReceivePostLightGroupRequest:
                                                 response:
@@ -208,11 +208,11 @@ NSString *const DConnectLightProfileParamGroupName = @"groupName";
                            brightness:brightness
                                 color:color
                              flashing:flashing];
-        } else if ([profile isEqualToString:DConnectLightProfileName]
+        } else if ([self isEqualToProfile: profile cmp:DConnectLightProfileName]
                    && interface
                    && attribute
-                   && [interface isEqualToString:DConnectLightProfileInterfaceGroup]
-                   && [attribute isEqualToString:DConnectLightProfileAttrCreate]
+                   && [self isEqualToInterface: interface cmp:DConnectLightProfileInterfaceGroup]
+                   && [self isEqualToAttribute: attribute cmp:DConnectLightProfileAttrCreate]
                    && [self hasMethod:@selector(profile:
                                                 didReceivePostLightGroupCreateRequest:
                                                 response:
@@ -259,7 +259,7 @@ didReceivePostLightGroupCreateRequest:request
     NSString *attribute = [request attribute];
     
     if (profile) {
-        if ([profile isEqualToString:DConnectLightProfileName]
+        if ([self isEqualToProfile: profile cmp:DConnectLightProfileName]
             && !interface
             && !attribute
             && [self hasMethod:@selector(profile:
@@ -310,10 +310,10 @@ didReceivePostLightGroupCreateRequest:request
                            brightness:brightness
                                 color:color
                              flashing:flashing];
-        } else if ([profile isEqualToString:DConnectLightProfileName]
+        } else if ([self isEqualToProfile: profile cmp:DConnectLightProfileName]
                    && !interface
                    && attribute
-                   && [attribute isEqualToString:DConnectLightProfileInterfaceGroup]
+                   && [self isEqualToAttribute: attribute cmp:DConnectLightProfileInterfaceGroup]
                    && [self hasMethod:@selector(profile:
                                                 didReceivePutLightGroupRequest:
                                                 response:
@@ -391,7 +391,7 @@ didReceivePostLightGroupCreateRequest:request
     NSString *attribute = [request attribute];
     
     if (profile) {
-        if ([profile isEqualToString:DConnectLightProfileName]
+        if ([self isEqualToProfile: profile cmp:DConnectLightProfileName]
             && !interface
             && !attribute
             && [self hasMethod:@selector(profile:
@@ -407,10 +407,10 @@ didReceivePostLightGroupCreateRequest:request
                              response:response
                             serviceId:serviceId
                               lightId:lightId];
-        } else if ([profile isEqualToString:DConnectLightProfileName]
+        } else if ([self isEqualToProfile: profile cmp:DConnectLightProfileName]
                    && !interface
                    && attribute
-                   && [attribute isEqualToString:DConnectLightProfileInterfaceGroup]
+                   && [self isEqualToAttribute: attribute cmp:DConnectLightProfileInterfaceGroup]
                    && [self hasMethod:@selector(profile:
                                                 didReceiveDeleteLightGroupRequest:
                                                 response:
@@ -424,11 +424,11 @@ didReceivePostLightGroupCreateRequest:request
                              response:response
                             serviceId:serviceId
                               groupId:groupId];
-        } else if ([profile isEqualToString:DConnectLightProfileName]
+        } else if ([self isEqualToProfile: profile cmp:DConnectLightProfileName]
                    && interface
                    && attribute
-                   && [interface isEqualToString:DConnectLightProfileInterfaceGroup]
-                   && [attribute isEqualToString:DConnectLightProfileAttrClear]
+                   && [self isEqualToInterface: interface cmp:DConnectLightProfileInterfaceGroup]
+                   && [self isEqualToAttribute: attribute cmp:DConnectLightProfileAttrClear]
                    && [self hasMethod:@selector(profile:
                                                 didReceiveDeleteLightGroupClearRequest:
                                                 response:

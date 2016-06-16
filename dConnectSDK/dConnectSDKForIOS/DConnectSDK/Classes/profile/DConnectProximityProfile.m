@@ -43,14 +43,14 @@ NSString *const DConnectProximityProfileParamNear = @"near";
     NSString *attribute = [request attribute];
     NSString *serviceId = [request serviceId];
     
-    if ([attribute isEqualToString:DConnectProximityProfileAttrOnDeviceProximity]) {
+    if ([self isEqualToAttribute: attribute cmp:DConnectProximityProfileAttrOnDeviceProximity]) {
         if ([self hasMethod:@selector(profile:didReceiveGetOnDeviceProximityRequest:response:serviceId:)
                    response:response])
         {
             send = [_delegate profile:self didReceiveGetOnDeviceProximityRequest:request response:response
                             serviceId:serviceId];
         }
-    } else if ([attribute isEqualToString:DConnectProximityProfileAttrOnUserProximity]) {
+    } else if ([self isEqualToAttribute: attribute cmp:DConnectProximityProfileAttrOnUserProximity]) {
         if ([self hasMethod:@selector(profile:didReceiveGetOnUserProximityRequest:response:serviceId:)
                    response:response])
         {
@@ -77,14 +77,14 @@ NSString *const DConnectProximityProfileParamNear = @"near";
     NSString *serviceId = [request serviceId];
     NSString *sessionKey = [request sessionKey];
     
-    if ([attribute isEqualToString:DConnectProximityProfileAttrOnDeviceProximity]) {
+    if ([self isEqualToAttribute: attribute cmp:DConnectProximityProfileAttrOnDeviceProximity]) {
         if ([self hasMethod:@selector(profile:didReceivePutOnDeviceProximityRequest:response:serviceId:sessionKey:)
                    response:response])
         {
             send = [_delegate profile:self didReceivePutOnDeviceProximityRequest:request response:response
                              serviceId:serviceId sessionKey:sessionKey];
         }
-    } else if ([attribute isEqualToString:DConnectProximityProfileAttrOnUserProximity]) {
+    } else if ([self isEqualToAttribute: attribute cmp:DConnectProximityProfileAttrOnUserProximity]) {
         if ([self hasMethod:@selector(profile:didReceivePutOnUserProximityRequest:response:serviceId:sessionKey:)
                    response:response])
         {
@@ -112,14 +112,14 @@ NSString *const DConnectProximityProfileParamNear = @"near";
     NSString *serviceId = [request serviceId];
     NSString *sessionKey = [request sessionKey];
     
-    if ([attribute isEqualToString:DConnectProximityProfileAttrOnDeviceProximity]) {
+    if ([self isEqualToAttribute: attribute cmp:DConnectProximityProfileAttrOnDeviceProximity]) {
         if ([self hasMethod:@selector(profile:didReceiveDeleteOnDeviceProximityRequest:response:serviceId:sessionKey:)
                    response:response])
         {
             send = [_delegate profile:self didReceiveDeleteOnDeviceProximityRequest:request response:response
                              serviceId:serviceId sessionKey:sessionKey];
         }
-    } else if ([attribute isEqualToString:DConnectProximityProfileAttrOnUserProximity]) {
+    } else if ([self isEqualToAttribute: attribute cmp:DConnectProximityProfileAttrOnUserProximity]) {
         if ([self hasMethod:@selector(profile:didReceiveDeleteOnUserProximityRequest:response:serviceId:sessionKey:)
                    response:response])
         {

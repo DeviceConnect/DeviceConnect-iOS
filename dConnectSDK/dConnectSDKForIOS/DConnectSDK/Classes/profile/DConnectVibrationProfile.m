@@ -51,7 +51,7 @@ const long long DConnectVibrationProfileDefaultMaxVibrationTime = 500;
     
     NSString *attribute = [request attribute];
     
-    if ([attribute isEqualToString:DConnectVibrationProfileAttrVibrate]) {
+    if ([self isEqualToAttribute: attribute cmp:DConnectVibrationProfileAttrVibrate]) {
         if ([self hasMethod:@selector(profile:
                                       didReceivePutVibrateRequest:
                                       response:
@@ -82,7 +82,7 @@ const long long DConnectVibrationProfileDefaultMaxVibrationTime = 500;
     
     NSString *attribute = [request attribute];
     
-    if ([attribute isEqualToString:DConnectVibrationProfileAttrVibrate]) {
+    if ([self isEqualToAttribute: attribute cmp:DConnectVibrationProfileAttrVibrate]) {
         if ([self hasMethod:@selector(profile:didReceiveDeleteVibrateRequest:response:serviceId:) response:response])
         {
             send = [_delegate profile:self didReceiveDeleteVibrateRequest:request response:response

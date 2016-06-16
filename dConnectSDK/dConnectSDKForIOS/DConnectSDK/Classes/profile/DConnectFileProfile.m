@@ -61,7 +61,7 @@ NSString *const DConnectFileProfileOrderDESC = @"desc";
     NSString *attribute = [request attribute];
     NSString *serviceId = [request serviceId];
     
-    if ([attribute isEqualToString:DConnectFileProfileAttrReceive]) {
+    if ([self isEqualToAttribute: attribute cmp:DConnectFileProfileAttrReceive]) {
         
         if ([self hasMethod:@selector(profile:didReceiveGetReceiveRequest:response:serviceId:path:)
                    response:response])
@@ -70,7 +70,7 @@ NSString *const DConnectFileProfileOrderDESC = @"desc";
             send = [_delegate profile:self didReceiveGetReceiveRequest:request response:response
                              serviceId:serviceId path:path];
         }
-    } else if ([attribute isEqualToString:DConnectFileProfileAttrList]) {
+    } else if ([self isEqualToAttribute: attribute cmp:DConnectFileProfileAttrList]) {
         if ([self hasMethod:@selector(profile:didReceiveGetListRequest:response:serviceId:path:mimeType:order:offset:limit:)
                    response:response])
         {
@@ -106,7 +106,7 @@ NSString *const DConnectFileProfileOrderDESC = @"desc";
     }
     
     NSString *attribute = [request attribute];
-    if ([attribute isEqualToString:DConnectFileProfileAttrSend]) {
+    if ([self isEqualToAttribute: attribute cmp:DConnectFileProfileAttrSend]) {
         
         if ([self hasMethod:@selector(profile:didReceivePostSendRequest:response:serviceId:path:mimeType:data:)
                    response:response])
@@ -119,7 +119,7 @@ NSString *const DConnectFileProfileOrderDESC = @"desc";
             send = [_delegate profile:self didReceivePostSendRequest:request response:response
                              serviceId:serviceId path:path mimeType:mimeType data:data];
         }
-    } else if ([attribute isEqualToString:DConnectFileProfileAttrMkdir]) {
+    } else if ([self isEqualToAttribute: attribute cmp:DConnectFileProfileAttrMkdir]) {
         if ([self hasMethod:@selector(profile:didReceivePostMkdirRequest:response:serviceId:path:)
                    response:response])
         {
@@ -147,7 +147,7 @@ NSString *const DConnectFileProfileOrderDESC = @"desc";
     }
     
     NSString *attribute = [request attribute];
-    if ([attribute isEqualToString:DConnectFileProfileAttrRemove]) {
+    if ([self isEqualToAttribute: attribute cmp:DConnectFileProfileAttrRemove]) {
         if ([self hasMethod:@selector(profile:didReceiveDeleteRemoveRequest:response:serviceId:path:)
                    response:response])
         {
@@ -157,7 +157,7 @@ NSString *const DConnectFileProfileOrderDESC = @"desc";
             send = [_delegate profile:self didReceiveDeleteRemoveRequest:request response:response
                              serviceId:serviceId path:path];
         }
-    } else if ([attribute isEqualToString:DConnectFileProfileAttrRmdir]) {
+    } else if ([self isEqualToAttribute: attribute cmp:DConnectFileProfileAttrRmdir]) {
         
         if ([self hasMethod:@selector(profile:didReceiveDeleteRmdirRequest:response:serviceId:path:force:)
                    response:response])

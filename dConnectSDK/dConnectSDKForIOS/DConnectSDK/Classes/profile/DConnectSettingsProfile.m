@@ -49,8 +49,8 @@ const double DConnectSettingsProfileMinLevel = 0.0;
     NSString *serviceId = [request serviceId];
     
     if (interface) {
-        if ([interface isEqualToString:DConnectSettingsProfileInterfaceSound] &&
-            [attribute isEqualToString:DConnectSettingsProfileAttrVolume])
+        if ([self isEqualToInterface: interface cmp:DConnectSettingsProfileInterfaceSound] &&
+            [self isEqualToAttribute: attribute cmp:DConnectSettingsProfileAttrVolume])
         {
             if ([self hasMethod:@selector(profile:didReceiveGetVolumeRequest:response:serviceId:kind:)
                        response:response])
@@ -59,15 +59,15 @@ const double DConnectSettingsProfileMinLevel = 0.0;
                                  serviceId:serviceId
                                      kind:[DConnectSettingsProfile volumeKindFromRequest:request]];
             }
-        } else if ([interface isEqualToString:DConnectSettingsProfileInterfaceDisplay]) {
-            if ([attribute isEqualToString:DConnectSettingsProfileAttrLight]) {
+        } else if ([self isEqualToInterface: interface cmp:DConnectSettingsProfileInterfaceDisplay]) {
+            if ([self isEqualToAttribute: attribute cmp:DConnectSettingsProfileAttrLight]) {
                 if ([self hasMethod:@selector(profile:didReceiveGetLightRequest:response:serviceId:)
                            response:response])
                 {
                     send = [_delegate profile:self didReceiveGetLightRequest:request
                                      response:response serviceId:serviceId];
                 }
-            } else if ([attribute isEqualToString:DConnectSettingsProfileAttrSleep]) {
+            } else if ([self isEqualToAttribute: attribute cmp:DConnectSettingsProfileAttrSleep]) {
                 if ([self hasMethod:@selector(profile:didReceiveGetSleepRequest:response:serviceId:)
                            response:response])
                 {
@@ -80,7 +80,7 @@ const double DConnectSettingsProfileMinLevel = 0.0;
         } else {
             [response setErrorToNotSupportProfile];
         }
-    } else if ([attribute isEqualToString:DConnectSettingsProfileAttrDate]) {
+    } else if ([self isEqualToAttribute: attribute cmp:DConnectSettingsProfileAttrDate]) {
         if ([self hasMethod:@selector(profile:didReceiveGetDateRequest:response:serviceId:)
                    response:response])
         {
@@ -107,8 +107,8 @@ const double DConnectSettingsProfileMinLevel = 0.0;
     NSString *serviceId = [request serviceId];
     
     if (interface) {
-        if ([interface isEqualToString:DConnectSettingsProfileInterfaceSound] &&
-            [attribute isEqualToString:DConnectSettingsProfileAttrVolume]) {
+        if ([self isEqualToInterface: interface cmp:DConnectSettingsProfileInterfaceSound] &&
+            [self isEqualToAttribute: attribute cmp:DConnectSettingsProfileAttrVolume]) {
             
             if ([self hasMethod:@selector(profile:didReceivePutVolumeRequest:response:serviceId:kind:level:)
                        response:response])
@@ -117,8 +117,8 @@ const double DConnectSettingsProfileMinLevel = 0.0;
                                      kind:[DConnectSettingsProfile volumeKindFromRequest:request]
                                     level:[DConnectSettingsProfile levelFromRequest:request]];
             }
-        } else if ([interface isEqualToString:DConnectSettingsProfileInterfaceDisplay]) {
-            if ([attribute isEqualToString:DConnectSettingsProfileAttrLight]) {
+        } else if ([self isEqualToInterface: interface cmp:DConnectSettingsProfileInterfaceDisplay]) {
+            if ([self isEqualToAttribute: attribute cmp:DConnectSettingsProfileAttrLight]) {
                 if ([self hasMethod:@selector(profile:didReceivePutLightRequest:response:serviceId:level:)
                            response:response])
                 {
@@ -129,7 +129,7 @@ const double DConnectSettingsProfileMinLevel = 0.0;
                                                     level:[DConnectSettingsProfile
                                                            levelFromRequest:request]];
                 }
-            } else if ([attribute isEqualToString:DConnectSettingsProfileAttrSleep]) {
+            } else if ([self isEqualToAttribute: attribute cmp:DConnectSettingsProfileAttrSleep]) {
                 if ([self hasMethod:@selector(profile:didReceivePutSleepRequest:response:serviceId:time:)
                            response:response])
                 {
@@ -146,7 +146,7 @@ const double DConnectSettingsProfileMinLevel = 0.0;
         } else {
             [response setErrorToNotSupportProfile];
         }
-    } else if ([attribute isEqualToString:DConnectSettingsProfileAttrDate]) {
+    } else if ([self isEqualToAttribute: attribute cmp:DConnectSettingsProfileAttrDate]) {
         if ([self hasMethod:@selector(profile:didReceivePutDateRequest:response:serviceId:date:)
                    response:response])
         {

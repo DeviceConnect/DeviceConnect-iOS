@@ -45,7 +45,7 @@ NSString *const DConnectDeviceOrientationProfileParamAccelerationIncludingGravit
     
     NSString *attribute = [request attribute];
     
-    if ([attribute isEqualToString:DConnectDeviceOrientationProfileAttrOnDeviceOrientation]) {
+    if ([self isEqualToAttribute: attribute cmp:DConnectDeviceOrientationProfileAttrOnDeviceOrientation]) {
         if ([self hasMethod:@selector(profile:didReceiveGetOnDeviceOrientationRequest:response:serviceId:)
                    response:response]) {
             NSString *serviceId = [request serviceId];
@@ -70,7 +70,7 @@ NSString *const DConnectDeviceOrientationProfileParamAccelerationIncludingGravit
     
     NSString *attribute = [request attribute];
     
-    if ([attribute isEqualToString:DConnectDeviceOrientationProfileAttrOnDeviceOrientation]) {
+    if ([self isEqualToAttribute: attribute cmp:DConnectDeviceOrientationProfileAttrOnDeviceOrientation]) {
         if ([self hasMethod:@selector(profile:didReceivePutOnDeviceOrientationRequest:response:serviceId:sessionKey:)
                    response:response])
         {
@@ -98,7 +98,7 @@ NSString *const DConnectDeviceOrientationProfileParamAccelerationIncludingGravit
     
     NSString *attribute = [request attribute];
     
-    if ([attribute isEqualToString:DConnectDeviceOrientationProfileAttrOnDeviceOrientation]) {
+    if ([self isEqualToAttribute: attribute cmp:DConnectDeviceOrientationProfileAttrOnDeviceOrientation]) {
         
         if ([self hasMethod:@selector(profile:didReceiveDeleteOnDeviceOrientationRequest:response:serviceId:sessionKey:)
                    response:response])
