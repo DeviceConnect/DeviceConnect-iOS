@@ -20,6 +20,7 @@
 @property (nonatomic) NSString* url;
 @property (nonatomic, strong) IBOutlet GHHeaderView *headerView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *headerHeight;
+@property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 
 - (IBAction)openBookmarkView:(id)sender;
 - (IBAction)openSettingView:(id)sender;
@@ -193,6 +194,36 @@
              }
          }];
     }
+}
+
+//--------------------------------------------------------------//
+#pragma mark - collectionViewDelegate
+//--------------------------------------------------------------//
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+
+}
+
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
+{
+    return 8;
+}
+
+- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
+{
+    return 2;
+}
+
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    UICollectionViewCell* cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"bookmarkCell" forIndexPath:indexPath];
+    return cell;
+}
+
+- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
+{
+    UICollectionReusableView* header = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:@"headerCell" forIndexPath:indexPath];
+    return header;
 }
 
 @end
