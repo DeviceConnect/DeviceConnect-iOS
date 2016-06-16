@@ -20,42 +20,13 @@
 #define HEIGHT 44
 
 //--------------------------------------------------------------//
-#pragma mark - 初期化
-//--------------------------------------------------------------//
-- (id)initWithFrame:(CGRect)frame
-{
-    self = [super initWithFrame:frame];
-    if (self) {
-        //nibをはりつけ
-        [self setup];
-    }
-    return self;
-}
-
-- (void)dealloc
-{
-    
-}
-//--------------------------------------------------------------//
 #pragma mark - UI
 //--------------------------------------------------------------//
-- (void)setup
+- (void)awakeFromNib
 {
+    [super awakeFromNib];
     isLoading = NO;
-    
-    NSString *myClassName = NSStringFromClass([self class]);
-    NSArray *nibObjects = [[NSBundle mainBundle] loadNibNamed:myClassName owner:self options:nil];
-    if ([nibObjects count] > 0) {
-        UIView *myView = [nibObjects objectAtIndex:0];
-        myView.frame = CGRectMake(0, 0, self.frame.size.width, self.frame.size.height);
-        [self addSubview:myView];
-        
-//        myView.backgroundColor = [UIColor clearColor];
-//        self.backgroundColor   = [UIColor clearColor];
-    }
 
-    
-    
     //画像角丸
     CALayer *layer = self.urlLabel.layer;
     layer.masksToBounds = YES;
@@ -67,28 +38,19 @@
     _searchBar.keyboardType = UIKeyboardTypeDefault;
     _searchBar.delegate = self;
     
-//    _searchBar.searchBarStyle = UISearchBarStyleMinimal;
-//    _searchBar.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
-    
-//    [self setSearchShow:YES];
-    
     //タップセット
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTaped:)];
     tap.numberOfTapsRequired = 1;
     [self.urlLabel addGestureRecognizer:tap];
 }
 
-
-
 - (void)updateURL:(NSString*)urlStr
 {
     if (![urlStr isEqualToString:@"about:blank"]) {
         self.urlLabel.text  = urlStr;
         self.searchBar.text = urlStr;
-//        [self setSearchShow:NO];
     }
 }
-
 
 - (void)setSearchShow:(BOOL)isShow
 {
@@ -105,8 +67,6 @@
     }
 }
 
-
-
 //--------------------------------------------------------------//
 #pragma mark - 更新ボタンまたはキャンセル
 //--------------------------------------------------------------//
@@ -116,41 +76,26 @@
     if (isLoading) {
         if ([self.delegate respondsToSelector:@selector(cancelLoading)]) {
             [self.delegate cancelLoading];
-            [self setReloadBtn:YES];
+            isLoading = NO;
         }
     }else{
         if ([self.delegate respondsToSelector:@selector(reload)]) {
             [self.delegate reload];
-            [self setReloadBtn:NO];
+             isLoading = YES;
         }
     }
-    
-    
 }
-
 
 //--------------------------------------------------------------//
 #pragma mark - ボタンの変更
 //--------------------------------------------------------------//
 - (void)setReloadBtn:(BOOL)isReload
 {
-    UIImage *btn;
-    if (isReload) {
-        isLoading = NO;
-        btn = [UIImage imageNamed:@"reload"];
-    }else{
-        isLoading = YES;
-        btn = [UIImage imageNamed:@"cancel"];
-    }
-    
-//    [self.reloadbtn setImage:btn forState:UIControlStateNormal];
+    isLoading = !isReload;
 }
-
-
 
 - (void)didTaped:(UIGestureRecognizer*)gest
 {
-//    [self setSearchShow:YES];
     [self.searchBar becomeFirstResponder];
 }
 
@@ -159,30 +104,21 @@
 //--------------------------------------------------------------//
 - (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar
 {
-//    searchBar.showsCancelButton = YES;
     searchBar.text = self.urlLabel.text;
     return YES;
 }
-- (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar
-{
-    
-}
+- (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar {}
 
 - (BOOL)searchBarShouldEndEditing:(UISearchBar *)searchBar
 {
-//    searchBar.showsCancelButton = NO;
     return YES;
 }
 
-- (void)searchBarTextDidEndEditing:(UISearchBar *)searchBar
-{
-}
+- (void)searchBarTextDidEndEditing:(UISearchBar *)searchBar {}
 
 - (void)searchBarCancelButtonClicked:(UISearchBar *) searchBar
 {
-//    searchBar.showsCancelButton = NO;
     [searchBar resignFirstResponder];
-//    [self setSearchShow:NO];
 }
 
 ///文字列からURLか検索キーワードか判別してwebviewに表示する
@@ -192,10 +128,8 @@
         if ([self.delegate respondsToSelector:@selector(urlUpadated:)]) {
             [self.delegate urlUpadated:searchBar.text];
         }
-        
     }
-    
-//    searchBar.showsCancelButton = NO;
+
     [searchBar resignFirstResponder];
 }
 
