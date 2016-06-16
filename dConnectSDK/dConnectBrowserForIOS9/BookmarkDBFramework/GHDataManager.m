@@ -523,29 +523,21 @@ static GHDataManager* mgr = nil;
     NSArray* prefs = [self getModelDataByPredicate:pred withEntityName:@"Page" context:nil];
     if ([prefs count] == 0) {
         //初期値セット
-        
         GHPageModel *favor = [[GHPageModel alloc]init];
         favor.title = @"お気に入り";
         favor.type = TYPE_FAVORITE;
         favor.priority = @(1);
         [self createPageEntity:favor context:nil];
         
-//        GHPageModel *history = [[GHPageModel alloc]init];
-//        history.title = @"履歴";
-//        history.type = TYPE_HISTORY;
-//        history.priority = @(2);
-//        [self createPageEntity:history context:nil];
-        
         GHPageModel *bookmark = [[GHPageModel alloc]init];
         bookmark.title = @"ブックマーク";
         bookmark.type = TYPE_BOOKMARK_FOLDER;
         bookmark.priority = @(2);
         [self createPageEntity:bookmark context:nil];
-        
-        NSLog(@"default");
+
         GHPageModel *defaultBookmark = [[GHPageModel alloc]init];
-        defaultBookmark.title = @"Device Web API Manager";
-        defaultBookmark.url = @"https://www.gclue.io/dwa/";
+        defaultBookmark.title = @"DeviceWebAPIコンソーシアム";
+        defaultBookmark.url = @"https://device-webapi.org/";
         defaultBookmark.type = TYPE_BOOKMARK;
         defaultBookmark.priority = @(3);
         [self createPageEntity:defaultBookmark context:nil];
