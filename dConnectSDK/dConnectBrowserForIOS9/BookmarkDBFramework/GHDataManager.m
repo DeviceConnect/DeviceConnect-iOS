@@ -535,17 +535,31 @@ static GHDataManager* mgr = nil;
         bookmark.priority = @(2);
         [self createPageEntity:bookmark context:nil];
 
-        GHPageModel *defaultBookmark = [[GHPageModel alloc]init];
-        defaultBookmark.title = @"DeviceWebAPIコンソーシアム";
-        defaultBookmark.url = @"https://device-webapi.org/";
-        defaultBookmark.type = TYPE_BOOKMARK;
-        defaultBookmark.priority = @(3);
-        [self createPageEntity:defaultBookmark context:nil];
-    }else{
+    } else {
         [GHUtils clearCashes];
+    }
+
+    if (![self isBookmarkExist: [NSPredicate predicateWithFormat:@"url = %@", defaultBookmarkURL]]){
+        [self addNewBookMark];
     }
 }
 
+- (BOOL)isBookmarkExist:(NSPredicate*)predicate
+{
+    return ([[self getModelDataByPredicate: predicate
+                          withEntityName:@"Page"
+                                 context:nil] count] != 0);
+}
 
+NSString *defaultBookmarkURL = @"https://device-webapi.org/";
+- (void)addNewBookMark
+{
+    GHPageModel *defaultBookmark = [[GHPageModel alloc]init];
+    defaultBookmark.title = @"DeviceWebAPIコンソーシアム";
+    defaultBookmark.url = defaultBookmarkURL;
+    defaultBookmark.type = TYPE_BOOKMARK;
+    defaultBookmark.priority = @(3);
+    [self createPageEntity:defaultBookmark context:nil];
+}
 
 @end
