@@ -12,13 +12,6 @@
 
 @protocol GHHeaderViewDelegate <NSObject>
 @optional
-
-///リロード
-- (void)reload;
-
-///ロードキャンセル
-- (void)cancelLoading;
-
 /**
  * 入力されたURLを渡す
  * @param urlStr 文字列
@@ -29,7 +22,6 @@
 
 @interface GHHeaderView : UIView<UISearchBarDelegate, UIGestureRecognizerDelegate>
 
-@property (nonatomic, weak) IBOutlet GHURLLabel       *urlLabel;
 @property (nonatomic, weak) IBOutlet UISearchBar      *searchBar;
 @property (nonatomic, weak) IBOutlet UIButton         *reloadbtn;
 @property (nonatomic, weak) IBOutlet id<GHHeaderViewDelegate>  delegate;

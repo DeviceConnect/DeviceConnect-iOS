@@ -20,27 +20,28 @@
 {
     [super awakeFromNib];
 
-    //画像角丸
-    CALayer *layer = self.urlLabel.layer;
-    layer.masksToBounds = YES;
-    layer.cornerRadius = 5.0f;
-    
-    self.urlLabel.backgroundColor = [UIColor colorWithWhite:0.8 alpha:0.3];
-
     _searchBar.placeholder = @"Web検索/サイト名を入力";
     _searchBar.keyboardType = UIKeyboardTypeDefault;
     _searchBar.delegate = self;
-    
-    //タップセット
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTaped:)];
-    tap.numberOfTapsRequired = 1;
-    [self.urlLabel addGestureRecognizer:tap];
+
+    // UISearchBarのサブビューの背景を透明にする
+    for (UIView *subview in self.searchBar.subviews) {
+        for(UIView *secondSubView in subview.subviews) {
+            if ([secondSubView isKindOfClass:[UIImageView class]]) {
+                [secondSubView removeFromSuperview];
+            }
+
+            // テキストフィールド部分を取得
+            if ([secondSubView isKindOfClass:[UITextField class]]) {
+                [(UITextField *)secondSubView setBackgroundColor:[UIColor whiteColor]];
+            }
+        }
+    }
 }
 
 - (void)updateURL:(NSString*)urlStr
 {
     if (![urlStr isEqualToString:@"about:blank"]) {
-        self.urlLabel.text  = urlStr;
         self.searchBar.text = urlStr;
     }
 }
@@ -48,12 +49,10 @@
 - (void)setSearchShow:(BOOL)isShow
 {
     if (isShow) {
-        self.urlLabel.hidden   = YES;
         self.reloadbtn.hidden  = NO;
         self.searchBar.hidden  = NO;
         self.reloadbtn.enabled = YES;
     }else{
-        self.urlLabel.hidden   = NO;
         self.reloadbtn.hidden  = NO;
         self.searchBar.hidden  = YES;
         self.reloadbtn.enabled = YES;
@@ -71,20 +70,12 @@
     }
 }
 
-//--------------------------------------------------------------//
-#pragma mark - ボタンの変更
-//--------------------------------------------------------------//
-- (void)didTaped:(UIGestureRecognizer*)gest
-{
-    [self.searchBar becomeFirstResponder];
-}
 
 //--------------------------------------------------------------//
 #pragma mark - searchBar delegate
 //--------------------------------------------------------------//
 - (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar
 {
-    searchBar.text = self.urlLabel.text;
     return YES;
 }
 - (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar {}
