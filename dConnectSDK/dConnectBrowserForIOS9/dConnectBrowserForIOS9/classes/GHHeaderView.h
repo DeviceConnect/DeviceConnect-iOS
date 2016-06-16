@@ -32,20 +32,8 @@
 @property (nonatomic, weak) IBOutlet GHURLLabel       *urlLabel;
 @property (nonatomic, weak) IBOutlet UISearchBar      *searchBar;
 @property (nonatomic, weak) IBOutlet UIButton         *reloadbtn;
-@property (nonatomic, weak) id<GHHeaderViewDelegate>  delegate;
+@property (nonatomic, weak) IBOutlet id<GHHeaderViewDelegate>  delegate;
 
-
-/**
- * リロードボタンまたはキャンセルボタンタップ
- * @param sender
- */
-- (IBAction)reload:(UIButton*)sender;
-
-/**
- * リロードボタンの画像を変更およびフラグ変更
- * @param isReload リロードボタンか
- */
-- (void)setReloadBtn:(BOOL)isReload;
 
 /**
  * URLを表示する

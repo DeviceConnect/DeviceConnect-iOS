@@ -8,12 +8,6 @@
 //
 
 #import "GHHeaderView.h"
-@interface GHHeaderView()
-{
-    ///ローディング中か判断フラグ
-    BOOL isLoading;
-}
-@end
 
 @implementation GHHeaderView
 
@@ -25,7 +19,6 @@
 - (void)awakeFromNib
 {
     [super awakeFromNib];
-    isLoading = NO;
 
     //画像角丸
     CALayer *layer = self.urlLabel.layer;
@@ -70,30 +63,17 @@
 //--------------------------------------------------------------//
 #pragma mark - 更新ボタンまたはキャンセル
 //--------------------------------------------------------------//
-- (IBAction)reload:(UIButton*)sender
+- (IBAction)search:(UIButton*)sender
 {
     LOG_METHOD
-    if (isLoading) {
-        if ([self.delegate respondsToSelector:@selector(cancelLoading)]) {
-            [self.delegate cancelLoading];
-            isLoading = NO;
-        }
-    }else{
-        if ([self.delegate respondsToSelector:@selector(reload)]) {
-            [self.delegate reload];
-             isLoading = YES;
-        }
+    if ([self.delegate respondsToSelector:@selector(urlUpadated:)]) {
+        [self.delegate urlUpadated:_searchBar.text];
     }
 }
 
 //--------------------------------------------------------------//
 #pragma mark - ボタンの変更
 //--------------------------------------------------------------//
-- (void)setReloadBtn:(BOOL)isReload
-{
-    isLoading = !isReload;
-}
-
 - (void)didTaped:(UIGestureRecognizer*)gest
 {
     [self.searchBar becomeFirstResponder];
