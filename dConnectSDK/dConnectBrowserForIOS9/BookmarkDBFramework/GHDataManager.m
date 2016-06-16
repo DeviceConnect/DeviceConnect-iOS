@@ -523,37 +523,43 @@ static GHDataManager* mgr = nil;
     NSArray* prefs = [self getModelDataByPredicate:pred withEntityName:@"Page" context:nil];
     if ([prefs count] == 0) {
         //初期値セット
-        
         GHPageModel *favor = [[GHPageModel alloc]init];
         favor.title = @"お気に入り";
         favor.type = TYPE_FAVORITE;
         favor.priority = @(1);
         [self createPageEntity:favor context:nil];
         
-//        GHPageModel *history = [[GHPageModel alloc]init];
-//        history.title = @"履歴";
-//        history.type = TYPE_HISTORY;
-//        history.priority = @(2);
-//        [self createPageEntity:history context:nil];
-        
         GHPageModel *bookmark = [[GHPageModel alloc]init];
         bookmark.title = @"ブックマーク";
         bookmark.type = TYPE_BOOKMARK_FOLDER;
         bookmark.priority = @(2);
         [self createPageEntity:bookmark context:nil];
-        
-        NSLog(@"default");
-        GHPageModel *defaultBookmark = [[GHPageModel alloc]init];
-        defaultBookmark.title = @"Device Web API Manager";
-        defaultBookmark.url = @"https://www.gclue.io/dwa/";
-        defaultBookmark.type = TYPE_BOOKMARK;
-        defaultBookmark.priority = @(3);
-        [self createPageEntity:defaultBookmark context:nil];
-    }else{
+
+    } else {
         [GHUtils clearCashes];
+    }
+
+    if (![self isBookmarkExist: [NSPredicate predicateWithFormat:@"url = %@", defaultBookmarkURL]]){
+        [self addNewBookMark];
     }
 }
 
+- (BOOL)isBookmarkExist:(NSPredicate*)predicate
+{
+    return ([[self getModelDataByPredicate: predicate
+                          withEntityName:@"Page"
+                                 context:nil] count] != 0);
+}
 
+NSString *defaultBookmarkURL = @"https://device-webapi.org/";
+- (void)addNewBookMark
+{
+    GHPageModel *defaultBookmark = [[GHPageModel alloc]init];
+    defaultBookmark.title = @"DeviceWebAPIコンソーシアム";
+    defaultBookmark.url = defaultBookmarkURL;
+    defaultBookmark.type = TYPE_BOOKMARK;
+    defaultBookmark.priority = @(3);
+    [self createPageEntity:defaultBookmark context:nil];
+}
 
 @end
