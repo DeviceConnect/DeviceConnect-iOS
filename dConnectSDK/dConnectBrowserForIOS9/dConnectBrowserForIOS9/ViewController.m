@@ -13,18 +13,13 @@
 #import <DConnectSDK/DConnectSDK.h>
 #import <SafariServices/SafariServices.h>
 #import "AppDelegate.h"
+
 @interface ViewController (){}
 
 @property (nonatomic, strong) GHURLManager *manager;
 @property (nonatomic) NSString* url;
-@property (strong, nonatomic) IBOutlet UIView *searchView;
-@property (nonatomic, strong) GHHeaderView *headerView;
+@property (nonatomic, strong) IBOutlet GHHeaderView *headerView;
 
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *iconTopLeading;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *iconWidthSize;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *iconHeightSize;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *searchViewWidthSize;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *searchViewHeightSize;
 - (IBAction)openBookmarkView:(id)sender;
 - (IBAction)openSettingView:(id)sender;
 - (IBAction)onTapView:(id)sender;
@@ -48,62 +43,29 @@
     DConnectManager *mgr = [DConnectManager sharedManager];
 
     [super viewDidLoad];
-    CGFloat barW = 300;
-    NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
 
-    BOOL isOriginBlock = [def boolForKey:IS_ORIGIN_BLOCKING];
+    BOOL isOriginBlock = [[NSUserDefaults standardUserDefaults] boolForKey:IS_ORIGIN_BLOCKING];
     mgr.settings.useOriginBlocking = isOriginBlock;
 
-    CGRect frame = CGRectMake(15, 10, barW, 44);
     _manager = [[GHURLManager alloc]init];
     _url = @"http://www.google.com";
-    _headerView = [[GHHeaderView alloc] initWithFrame:frame];
-    _headerView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-    _headerView.delegate = self;
-    [_searchView addSubview:_headerView];
+
     //ブックマークのweb表示通知
     [[NSNotificationCenter defaultCenter] addObserver:self
                                             selector:@selector(showWebPage:)
                                                 name:SHOW_WEBPAGE object:nil];
-    
-    [[NSNotificationCenter defaultCenter]addObserver:self
-                                            selector:@selector(keyboardWillBeShown:)
-                                                name:UIKeyboardWillShowNotification object:nil];
-    [[NSNotificationCenter defaultCenter]addObserver:self
-                                            selector:@selector(keyboardWillBeHidden:)
-                                                name:UIKeyboardWillHideNotification object:nil];
-    
+
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(enterForeground:)
+                                                 name:UIApplicationWillEnterForegroundNotification object:nil];
 }
+
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
     DConnectManager *mgr = [DConnectManager sharedManager];
-    NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
-    [def setBool:mgr.settings.useOriginBlocking forKey:IS_ORIGIN_BLOCKING];
+    [[NSUserDefaults standardUserDefaults] setBool:mgr.settings.useOriginBlocking forKey:IS_ORIGIN_BLOCKING];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    [self rotateOrientation:[[UIApplication sharedApplication] statusBarOrientation]];
-    NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
-    [center addObserver:self selector:@selector(enterForeground:)
-                   name:UIApplicationWillEnterForegroundNotification object:nil];
-
-}
-
-
-- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
-                                duration:(NSTimeInterval)duration
-{
-    [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
-    [self rotateOrientation:toInterfaceOrientation];
-}
 
 - (void)dealloc
 {
@@ -187,39 +149,6 @@
 }
 
 
-#pragma mark - private method
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-    return YES;
-}
-- (void)rotateOrientation:(UIInterfaceOrientation)toInterfaceOrientation
-{
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-        [self iphoneLayoutWithOrientation:toInterfaceOrientation];
-    } else {
-        [self ipadLayoutWithOrientation:toInterfaceOrientation];
-    }
-    [self.view setNeedsUpdateConstraints];
-}
-
-- (void)iphoneLayoutWithOrientation:(int)toInterfaceOrientation
-{
-    if ((toInterfaceOrientation == UIDeviceOrientationLandscapeLeft ||
-        toInterfaceOrientation == UIDeviceOrientationLandscapeRight))
-    {
-        _iconTopLeading.constant = 20;
-    } else {
-        _iconTopLeading.constant = 70;
-    }
-}
-
-- (void)ipadLayoutWithOrientation:(int)toInterfaceOrientation
-{
-    _iconHeightSize.constant = 400;
-    _iconWidthSize.constant = 400;
-    _searchViewWidthSize.constant = 500;
-}
-
-
 #pragma mark - Notification Center
 
 /**
@@ -243,8 +172,6 @@
 
 }
 
-
-
 - (void) enterForeground:(NSNotification *)notification
 {
     // foregroundに来た事を検知した時点では、このアプリを起動したカスタムURLを取得できない。
@@ -259,30 +186,6 @@
                  [self openSafariViewInternalWithURL:redirectURL.absoluteString];
              }
          }];
-    }
-}
-
-
-
-- (void)keyboardWillBeShown:(NSNotification*)notif
-{
-    if (([[UIApplication sharedApplication] statusBarOrientation] == UIDeviceOrientationLandscapeLeft ||
-         [[UIApplication sharedApplication] statusBarOrientation] == UIDeviceOrientationLandscapeRight))
-    {
-        _iconTopLeading.constant = 20 - _iconHeightSize.constant;
-    } else {
-        _iconTopLeading.constant = 70;
-    }
-}
-
-- (void)keyboardWillBeHidden:(NSNotification*)notif
-{
-    if (([[UIApplication sharedApplication] statusBarOrientation] == UIDeviceOrientationLandscapeLeft ||
-         [[UIApplication sharedApplication] statusBarOrientation] == UIDeviceOrientationLandscapeRight))
-    {
-        _iconTopLeading.constant = 20;
-    } else {
-        _iconTopLeading.constant = 70;
     }
 }
 
