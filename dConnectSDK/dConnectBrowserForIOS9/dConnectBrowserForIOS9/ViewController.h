@@ -11,7 +11,7 @@
 #import "GHHeaderView.h"
 #import <SafariServices/SafariServices.h>
 
-@interface ViewController : UIViewController<GHHeaderViewDelegate, SFSafariViewControllerDelegate>
+@interface ViewController : UIViewController<GHHeaderViewDelegate, SFSafariViewControllerDelegate, UICollectionViewDelegate, UICollectionViewDataSource>
 
 
 @end
