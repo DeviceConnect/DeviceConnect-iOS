@@ -45,4 +45,12 @@
     self.titleLabel.hidden = !isEnabled;
 }
 
+- (IBAction)didTapItem:(UIButton *)sender {
+    self.didIconSelected(self.viewModel.page);
+}
+
+- (void)dealloc
+{
+    self.didIconSelected = nil;
+}
 @end

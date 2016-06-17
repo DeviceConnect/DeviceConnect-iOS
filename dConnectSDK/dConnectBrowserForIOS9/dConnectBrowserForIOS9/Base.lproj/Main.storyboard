@@ -38,6 +38,12 @@
                                             <rect key="frame" x="0.0" y="0.0" width="70" height="100"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aD8-rK-ltM">
+                                                    <rect key="frame" x="0.0" y="0.0" width="70" height="75"/>
+                                                    <connections>
+                                                        <action selector="didTapItem:" destination="mxe-B7-ksr" eventType="touchUpInside" id="Bab-mh-81M"/>
+                                                    </connections>
+                                                </button>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="IBh-te-JKo">
                                                     <rect key="frame" x="0.0" y="0.0" width="70" height="70"/>
                                                     <color key="backgroundColor" red="0.91764705879999997" green="0.91764705879999997" blue="0.91764705879999997" alpha="1" colorSpace="calibratedRGB"/>
@@ -55,11 +61,15 @@
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
                                         <constraints>
+                                            <constraint firstItem="qSP-O1-Hxl" firstAttribute="top" secondItem="aD8-rK-ltM" secondAttribute="bottom" id="2fa-PI-P18"/>
                                             <constraint firstItem="IBh-te-JKo" firstAttribute="leading" secondItem="mxe-B7-ksr" secondAttribute="leadingMargin" id="B8X-Ac-g0B"/>
                                             <constraint firstItem="qSP-O1-Hxl" firstAttribute="leading" secondItem="mxe-B7-ksr" secondAttribute="leading" id="Bb7-nw-U3z"/>
                                             <constraint firstAttribute="trailing" secondItem="IBh-te-JKo" secondAttribute="trailing" id="QEU-r1-GNA"/>
                                             <constraint firstItem="IBh-te-JKo" firstAttribute="leading" secondItem="mxe-B7-ksr" secondAttribute="leading" id="QLz-J6-8KV"/>
+                                            <constraint firstAttribute="trailing" secondItem="aD8-rK-ltM" secondAttribute="trailing" id="RAP-lU-UuY"/>
+                                            <constraint firstItem="aD8-rK-ltM" firstAttribute="leading" secondItem="mxe-B7-ksr" secondAttribute="leading" id="Sjv-38-SQa"/>
                                             <constraint firstAttribute="bottom" secondItem="qSP-O1-Hxl" secondAttribute="bottom" id="Svf-ql-YCD"/>
+                                            <constraint firstItem="aD8-rK-ltM" firstAttribute="top" secondItem="mxe-B7-ksr" secondAttribute="top" id="UOZ-yM-fBh"/>
                                             <constraint firstAttribute="trailingMargin" secondItem="IBh-te-JKo" secondAttribute="trailing" id="ViA-fi-VlV"/>
                                             <constraint firstItem="IBh-te-JKo" firstAttribute="top" secondItem="mxe-B7-ksr" secondAttribute="topMargin" id="aV1-gJ-Bp2"/>
                                             <constraint firstItem="IBh-te-JKo" firstAttribute="top" secondItem="mxe-B7-ksr" secondAttribute="top" id="jsG-h4-FyL"/>

@@ -218,6 +218,10 @@
                 [cell setEnabled:NO];
             } else {
                 [cell setBookmark:page];
+                __weak ViewController *weakSelf = self;
+                [cell setDidIconSelected: ^(Page* page){
+                    [weakSelf openSafariViewInternalWithURL:page.url];
+                }];
             }
             return cell;
         }
@@ -241,4 +245,11 @@
     return header;
 }
 
+- (IBAction)didSelectItem:(UICollectionViewCell*)sender
+{
+    if ( [sender isKindOfClass:[BookmarkIconViewCell class]]) {
+        BookmarkIconViewCell* cell = (BookmarkIconViewCell*)sender;
+        [self openSafariViewInternalWithURL:cell.viewModel.page.url];
+    }
+}
 @end
