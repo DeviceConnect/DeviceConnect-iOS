@@ -80,7 +80,7 @@
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
-                                <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="headerCell" id="sII-s1-7gM">
+                                <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="headerCell" id="sII-s1-7gM" customClass="TopCollectionHeaderView">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="40"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
@@ -95,6 +95,9 @@
                                         <constraint firstItem="muq-Xa-bDg" firstAttribute="leading" secondItem="sII-s1-7gM" secondAttribute="leading" constant="5" id="aJE-YI-2Ly"/>
                                         <constraint firstItem="muq-Xa-bDg" firstAttribute="centerY" secondItem="sII-s1-7gM" secondAttribute="centerY" id="zrx-R6-36Q"/>
                                     </constraints>
+                                    <connections>
+                                        <outlet property="titleLabel" destination="muq-Xa-bDg" id="8uv-rq-0TV"/>
+                                    </connections>
                                 </collectionReusableView>
                                 <connections>
                                     <outlet property="dataSource" destination="sIh-io-mcp" id="tUW-16-T72"/>
