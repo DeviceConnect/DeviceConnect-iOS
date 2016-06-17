@@ -77,7 +77,7 @@ static NSString* touch_icon = @"apple-touch-icon.png";
 {
     NSURL *url = [NSURL URLWithString:urlString];
     if (url.host) {
-        return [url.host stringByAppendingString:touch_icon];
+        return [NSString stringWithFormat:@"%@://%@/%@", url.scheme, url.host, touch_icon];
     }
     return nil;
 }
