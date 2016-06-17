@@ -43,11 +43,26 @@
 {
     self.iconImage.hidden = !isEnabled;
     self.titleLabel.hidden = !isEnabled;
+    self.selectButton.enabled = isEnabled;
 }
 
+
+//--------------------------------------------------------------//
+#pragma mark - ボタン制御
+//--------------------------------------------------------------//
 - (IBAction)didTapItem:(UIButton *)sender {
-    self.didIconSelected(self.viewModel.page);
+    if (self.viewModel.page != nil) {
+        self.didIconSelected(self.viewModel.page);
+    }
+    self.alpha = 1.0;
 }
+
+- (IBAction)didTouchDown:(UIButton *)sender {
+    [UIView animateWithDuration:0.15 animations:^{
+        self.alpha = 0.3;
+    }];
+}
+
 
 - (void)dealloc
 {

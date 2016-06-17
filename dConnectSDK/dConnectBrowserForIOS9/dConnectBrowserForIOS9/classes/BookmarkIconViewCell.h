@@ -14,6 +14,7 @@ typedef void (^DidIconSelected)(Page*);
 
 @property (weak, nonatomic) IBOutlet UIImageView *iconImage;
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
+@property (weak, nonatomic) IBOutlet UIButton *selectButton;
 @property (strong, nonatomic) BookmarkIconViewModel *viewModel;
 @property (copy, nonatomic) DidIconSelected didIconSelected;
 

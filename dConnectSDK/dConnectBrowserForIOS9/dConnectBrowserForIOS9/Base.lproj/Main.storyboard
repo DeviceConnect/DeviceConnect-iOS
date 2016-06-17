@@ -42,6 +42,7 @@
                                                     <rect key="frame" x="0.0" y="0.0" width="70" height="75"/>
                                                     <connections>
                                                         <action selector="didTapItem:" destination="mxe-B7-ksr" eventType="touchUpInside" id="Bab-mh-81M"/>
+                                                        <action selector="didTouchDown:" destination="mxe-B7-ksr" eventType="touchDown" id="pFf-S0-PIK"/>
                                                     </connections>
                                                 </button>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="IBh-te-JKo">
@@ -86,6 +87,7 @@
                                         </variation>
                                         <connections>
                                             <outlet property="iconImage" destination="IBh-te-JKo" id="mah-ca-rY0"/>
+                                            <outlet property="selectButton" destination="aD8-rK-ltM" id="i7n-yS-Ta8"/>
                                             <outlet property="titleLabel" destination="qSP-O1-Hxl" id="Nxx-uL-9Cp"/>
                                         </connections>
                                     </collectionViewCell>
