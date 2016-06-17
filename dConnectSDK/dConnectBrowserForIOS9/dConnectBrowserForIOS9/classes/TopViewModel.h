@@ -20,5 +20,6 @@
 - (void)saveOriginBlock;
 - (NSString*)checkUrlString:(NSString*)url;
 - (NSString*)makeURLFromNotification:(NSNotification*)notif;
+- (void)updateDatasource;
 
 @end
