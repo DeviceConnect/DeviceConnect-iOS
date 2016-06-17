@@ -25,6 +25,8 @@
 @property (nonatomic, strong) IBOutlet GHHeaderView *headerView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *headerHeight;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
+@property (strong, nonatomic) UILabel* emptyBookmarksLabel;
+@property (strong, nonatomic) UILabel* emptyDevicesLabel;
 
 - (IBAction)openBookmarkView:(id)sender;
 - (IBAction)openSettingView:(id)sender;
@@ -75,6 +77,7 @@
     [super viewWillAppear:animated];
     [viewModel updateDatasource];
     [self.collectionView reloadData];
+    [self addEmptyLabelIfNeeded];
 }
 
 
@@ -106,6 +109,38 @@
     [[NSNotificationCenter defaultCenter]removeObserver:self];
 }
 
+
+- (void)addEmptyLabelIfNeeded
+{
+    if (viewModel.isBookmarksEmpty) {
+        self.emptyBookmarksLabel = [self makeEmptyLabel: CGRectMake(0, 50, 320, 220)
+                                             message:@"ブックマークがありません。\nブックマークを登録してください。"];
+        [self.collectionView addSubview:self.emptyBookmarksLabel];
+    } else {
+        [self.emptyBookmarksLabel removeFromSuperview];
+        self.emptyBookmarksLabel = nil;
+    }
+
+    if (viewModel.isDeviceEmpty) {
+        self.emptyDevicesLabel = [self makeEmptyLabel: CGRectMake(0, 300, 320, 220)
+                                             message:@"デバイスが接続されていません。\nプラグインから設定を行ってください。"];
+        [self.collectionView addSubview:self.emptyDevicesLabel];
+    } else {
+        [self.emptyDevicesLabel removeFromSuperview];
+        self.emptyDevicesLabel = nil;
+    }
+}
+
+- (UILabel*)makeEmptyLabel:(CGRect)rect message:(NSString*)message
+{
+    UILabel *label = [[UILabel alloc]initWithFrame:rect];
+    label.text = message;
+    label.numberOfLines = 2;
+    label.textAlignment = NSTextAlignmentCenter;
+    label.textColor = HEXCOLOR(0x666666);
+    label.backgroundColor = [UIColor whiteColor];
+    return label;
+}
 
 //--------------------------------------------------------------//
 #pragma mark - open UI

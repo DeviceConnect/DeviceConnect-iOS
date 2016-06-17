@@ -86,7 +86,8 @@ static NSInteger maxIconCount = 8;
 //--------------------------------------------------------------//
 - (NSArray*)setupDevices
 {
-    return [[NSArray alloc]init];
+    _isDeviceEmpty = YES;
+    return [[NSArray alloc]init]; // FIXME:
 }
 
 
