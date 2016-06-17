@@ -14,11 +14,13 @@
 #import <SafariServices/SafariServices.h>
 #import "AppDelegate.h"
 #import "BookmarkIconViewCell.h"
+#import "TopViewModel.h"
 
-@interface ViewController (){}
+@interface ViewController ()
+{
+    TopViewModel *viewModel;
+}
 
-@property (nonatomic, strong) GHURLManager *manager;
-@property (nonatomic) NSString* url;
 @property (nonatomic, strong) IBOutlet GHHeaderView *headerView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *headerHeight;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
@@ -30,6 +32,15 @@
 @end
 
 @implementation ViewController
+
+- (instancetype)initWithCoder:(NSCoder *)aDecoder
+{
+    self = [super initWithCoder:aDecoder];
+    if (self) {
+        viewModel = [[TopViewModel alloc]init];
+    }
+    return self;
+}
 
 - (void)viewDidLoad {
     id<UIApplicationDelegate> appDelegate
@@ -43,17 +54,11 @@
          }];
     }
 
-    DConnectManager *mgr = [DConnectManager sharedManager];
-
     [super viewDidLoad];
-
-    BOOL isOriginBlock = [[NSUserDefaults standardUserDefaults] boolForKey:IS_ORIGIN_BLOCKING];
-    mgr.settings.useOriginBlocking = isOriginBlock;
-
-    _manager = [[GHURLManager alloc]init];
-    _url = @"http://www.google.com";
+    [viewModel initialSetup];
 
     self.headerView.delegate = self;
+
 
     //ブックマークのweb表示通知
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -67,8 +72,7 @@
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    DConnectManager *mgr = [DConnectManager sharedManager];
-    [[NSUserDefaults standardUserDefaults] setBool:mgr.settings.useOriginBlocking forKey:IS_ORIGIN_BLOCKING];
+    [viewModel finishOriginBlock];
 }
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
@@ -121,19 +125,12 @@
         [self dismissViewControllerAnimated:false completion:nil];
     }
 
-    //文字列がURLの場合
-    _url = [self.manager isURLString:url];
-    if ([url rangeOfString:@"#"].location != NSNotFound) {
-        _url = url;
-    } else if (!_url) {
-        _url = [self.manager createSearchURL:url];
-    }
     void (^loadSFSafariViewControllerBlock)(NSURL *) = ^(NSURL *url) {
         SFSafariViewController* sfSafariViewController = [[SFSafariViewController alloc] initWithURL:url entersReaderIfAvailable:YES];
         sfSafariViewController.delegate = self;
         [self presentViewController:sfSafariViewController animated:YES completion:nil];
     };
-    loadSFSafariViewControllerBlock([NSURL URLWithString:_url]);
+    loadSFSafariViewControllerBlock([NSURL URLWithString: [viewModel checkUrlString:url]]);
 }
 
 //--------------------------------------------------------------//
@@ -166,18 +163,8 @@
  */
 - (void)showWebPage:(NSNotification*)notif
 {
-    NSDictionary *dict = notif.userInfo;
-    _url = [dict objectForKey:PAGE_URL];
-    
-    NSString *url = [self.manager isURLString:_url];
-    if ([_url rangeOfString:@"%23"].location != NSNotFound) {
-        _url = [_url stringByReplacingOccurrencesOfString:@"%23" withString:@"#"] ;
-    } else if (!url) {
-        url = [self.manager createSearchURL:url];
-    } 
-    [self performSelector:@selector(openSafariViewInternalWithURL:) withObject:_url afterDelay:0.75];
-    
-
+    NSString *url = [viewModel makeURLFromNotification: notif];
+    [self performSelector:@selector(openSafariViewInternalWithURL:) withObject:url afterDelay:0.75];
 }
 
 - (void) enterForeground:(NSNotification *)notification
@@ -202,12 +189,12 @@
 //--------------------------------------------------------------//
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return 8;
+    return [[viewModel.datasource objectAtIndex:section]count];
 }
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
 {
-    return 2;
+    return [viewModel.datasource count];
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath

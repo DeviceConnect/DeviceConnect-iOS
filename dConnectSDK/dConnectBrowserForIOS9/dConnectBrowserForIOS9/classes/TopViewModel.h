@@ -7,7 +7,16 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "GHURLManager.h"
 
 @interface TopViewModel : NSObject
+@property (strong, nonatomic) NSMutableArray* datasource;
+@property (nonatomic, strong) GHURLManager *manager;
+@property (nonatomic) NSString* url;
+
+- (void)initialSetup;
+- (void)finishOriginBlock;
+- (NSString*)checkUrlString:(NSString*)url;
+- (NSString*)makeURLFromNotification:(NSNotification*)notif;
 
 @end
