@@ -15,6 +15,7 @@
 #import "AppDelegate.h"
 #import "BookmarkIconViewCell.h"
 #import "TopViewModel.h"
+#import "TopCollectionHeaderView.h"
 
 @interface ViewController ()
 {
@@ -221,9 +222,14 @@
     return cell;
 }
 
-- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
+- (TopCollectionHeaderView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
 {
-    UICollectionReusableView* header = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:@"headerCell" forIndexPath:indexPath];
+    TopCollectionHeaderView* header = (TopCollectionHeaderView*)[collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:@"headerCell" forIndexPath:indexPath];
+    if (indexPath.section == 0) {
+        header.titleLabel.text = @"ブックマーク";
+    } else {
+        header.titleLabel.text = @"デバイス";
+    }
     return header;
 }
 
