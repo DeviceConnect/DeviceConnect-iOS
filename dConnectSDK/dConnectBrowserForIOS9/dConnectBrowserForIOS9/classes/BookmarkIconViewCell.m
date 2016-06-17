@@ -19,6 +19,11 @@
     return self;
 }
 
+- (void)layoutSubviews
+{
+    self.iconImage.layer.cornerRadius = 10;
+    self.iconImage.clipsToBounds = YES;
+}
 
 - (void)setBookmark:(Page*)page
 {
