@@ -70,6 +70,14 @@
                                                  name:UIApplicationWillEnterForegroundNotification object:nil];
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [viewModel updateDatasource];
+    [self.collectionView reloadData];
+}
+
+
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
