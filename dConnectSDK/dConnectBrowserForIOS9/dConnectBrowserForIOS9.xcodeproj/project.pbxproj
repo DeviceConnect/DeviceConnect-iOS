@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		8EBB89131D1385050038700B /* IconViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EBB89121D1385050038700B /* IconViewCell.m */; };
+		8EBB891A1D1387380038700B /* IconViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EBB89191D1387380038700B /* IconViewModel.m */; };
 		AB00F1E41C71941800689C70 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = AB00F1E31C71941800689C70 /* main.m */; };
 		AB00F1E71C71941800689C70 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = AB00F1E61C71941800689C70 /* AppDelegate.m */; };
 		AB00F1EA1C71941800689C70 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB00F1E91C71941800689C70 /* ViewController.m */; };
@@ -161,6 +162,8 @@
 /* Begin PBXFileReference section */
 		8EBB89111D1385050038700B /* IconViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IconViewCell.h; sourceTree = "<group>"; };
 		8EBB89121D1385050038700B /* IconViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IconViewCell.m; sourceTree = "<group>"; };
+		8EBB89181D1387380038700B /* IconViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IconViewModel.h; sourceTree = "<group>"; };
+		8EBB89191D1387380038700B /* IconViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IconViewModel.m; sourceTree = "<group>"; };
 		AB00F1DF1C71941800689C70 /* dConnectBrowserForIOS9.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = dConnectBrowserForIOS9.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB00F1E31C71941800689C70 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		AB00F1E51C71941800689C70 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -372,6 +375,23 @@
 			name = top;
 			sourceTree = "<group>";
 		};
+		8EBB89161D1387010038700B /* viewModel */ = {
+			isa = PBXGroup;
+			children = (
+				8EBB89171D1387090038700B /* top */,
+			);
+			name = viewModel;
+			sourceTree = "<group>";
+		};
+		8EBB89171D1387090038700B /* top */ = {
+			isa = PBXGroup;
+			children = (
+				8EBB89181D1387380038700B /* IconViewModel.h */,
+				8EBB89191D1387380038700B /* IconViewModel.m */,
+			);
+			name = top;
+			sourceTree = "<group>";
+		};
 		AB00F1D61C71941800689C70 = {
 			isa = PBXGroup;
 			children = (
@@ -474,6 +494,7 @@
 		AB00F29F1C71A29D00689C70 /* classes */ = {
 			isa = PBXGroup;
 			children = (
+				8EBB89161D1387010038700B /* viewModel */,
 				AB00F3201C71A73D00689C70 /* views */,
 				AB00F31C1C71A65D00689C70 /* controller */,
 				AB00F31B1C71A51800689C70 /* models */,
@@ -918,6 +939,7 @@
 				AB00F2F71C71A29D00689C70 /* GHURLLabel.m in Sources */,
 				AB00F4A61C71B16200689C70 /* RATreeNodeInfo+Private.m in Sources */,
 				AB00F2EB1C71A29D00689C70 /* GHFoldersListController.m in Sources */,
+				8EBB891A1D1387380038700B /* IconViewModel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
