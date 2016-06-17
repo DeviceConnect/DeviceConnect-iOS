@@ -72,9 +72,10 @@
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    [viewModel finishOriginBlock];
+    [viewModel saveOriginBlock];
 }
 
+// landscape時にはステータスバーが無くなるのでその分headerViewの高さを短くする
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
                                 duration:(NSTimeInterval)duration
 {
@@ -203,7 +204,12 @@
         case 0:
         {
             BookmarkIconViewCell* cell = (BookmarkIconViewCell*)[collectionView dequeueReusableCellWithReuseIdentifier:@"BookmarkIconViewCell" forIndexPath:indexPath];
-//            [cell setBookmark:page];
+            Page* page = [[viewModel.datasource objectAtIndex:indexPath.section]objectAtIndex:indexPath.row];
+            if ([page isKindOfClass:[GHPageModel class]] && [page.type isEqualToString: TYPE_BOOKMARK_DUMMY]) {
+                [cell setEnabled:NO];
+            } else {
+                [cell setBookmark:page];
+            }
             return cell;
         }
         case 1:
