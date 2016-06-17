@@ -6,11 +6,11 @@
 //  Copyright © 2016年 GClue,Inc. All rights reserved.
 //
 
-#import "IconViewModel.h"
-@interface IconViewModel()
+#import "BookmarkIconViewModel.h"
+@interface BookmarkIconViewModel()
 @end
 
-@implementation IconViewModel
+@implementation BookmarkIconViewModel
 
 static NSString* faviconURL = @"http://www.google.com/s2/favicons?domain=";
 static NSString* touch_icon = @"apple-touch-icon.png";

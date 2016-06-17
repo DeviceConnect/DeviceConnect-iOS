@@ -1,5 +1,5 @@
 //
-//  CollectionViewCell.h
+//  BookmarkIconViewCell.h
 //  dConnectBrowserForIOS9
 //
 //  Created by Tetsuya Hirano on 2016/06/17.
@@ -7,8 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BookmarkIconViewModel.h"
 
-@interface IconViewCell : UICollectionViewCell
+@interface BookmarkIconViewCell : UICollectionViewCell
 @property (weak, nonatomic) IBOutlet UIImageView *iconImage;
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
+@property (strong, nonatomic) BookmarkIconViewModel *viewModel;
 @end

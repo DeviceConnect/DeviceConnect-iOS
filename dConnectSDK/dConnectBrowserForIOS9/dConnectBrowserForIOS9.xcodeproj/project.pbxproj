@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		8EBB89131D1385050038700B /* IconViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EBB89121D1385050038700B /* IconViewCell.m */; };
-		8EBB891A1D1387380038700B /* IconViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EBB89191D1387380038700B /* IconViewModel.m */; };
+		8EBB89131D1385050038700B /* BookmarkIconViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EBB89121D1385050038700B /* BookmarkIconViewCell.m */; };
+		8EBB891A1D1387380038700B /* BookmarkIconViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EBB89191D1387380038700B /* BookmarkIconViewModel.m */; };
 		AB00F1E41C71941800689C70 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = AB00F1E31C71941800689C70 /* main.m */; };
 		AB00F1E71C71941800689C70 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = AB00F1E61C71941800689C70 /* AppDelegate.m */; };
 		AB00F1EA1C71941800689C70 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB00F1E91C71941800689C70 /* ViewController.m */; };
@@ -160,10 +160,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		8EBB89111D1385050038700B /* IconViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IconViewCell.h; sourceTree = "<group>"; };
-		8EBB89121D1385050038700B /* IconViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IconViewCell.m; sourceTree = "<group>"; };
-		8EBB89181D1387380038700B /* IconViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IconViewModel.h; sourceTree = "<group>"; };
-		8EBB89191D1387380038700B /* IconViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IconViewModel.m; sourceTree = "<group>"; };
+		8EBB89111D1385050038700B /* BookmarkIconViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookmarkIconViewCell.h; sourceTree = "<group>"; };
+		8EBB89121D1385050038700B /* BookmarkIconViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BookmarkIconViewCell.m; sourceTree = "<group>"; };
+		8EBB89181D1387380038700B /* BookmarkIconViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookmarkIconViewModel.h; sourceTree = "<group>"; };
+		8EBB89191D1387380038700B /* BookmarkIconViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BookmarkIconViewModel.m; sourceTree = "<group>"; };
 		AB00F1DF1C71941800689C70 /* dConnectBrowserForIOS9.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = dConnectBrowserForIOS9.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB00F1E31C71941800689C70 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		AB00F1E51C71941800689C70 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -369,8 +369,8 @@
 		8EBB89101D1384990038700B /* top */ = {
 			isa = PBXGroup;
 			children = (
-				8EBB89111D1385050038700B /* IconViewCell.h */,
-				8EBB89121D1385050038700B /* IconViewCell.m */,
+				8EBB89111D1385050038700B /* BookmarkIconViewCell.h */,
+				8EBB89121D1385050038700B /* BookmarkIconViewCell.m */,
 			);
 			name = top;
 			sourceTree = "<group>";
@@ -386,8 +386,8 @@
 		8EBB89171D1387090038700B /* top */ = {
 			isa = PBXGroup;
 			children = (
-				8EBB89181D1387380038700B /* IconViewModel.h */,
-				8EBB89191D1387380038700B /* IconViewModel.m */,
+				8EBB89181D1387380038700B /* BookmarkIconViewModel.h */,
+				8EBB89191D1387380038700B /* BookmarkIconViewModel.m */,
 			);
 			name = top;
 			sourceTree = "<group>";
@@ -910,7 +910,7 @@
 			files = (
 				AB00F2E21C71A29D00689C70 /* GHBookmarkTitleCell.m in Sources */,
 				AB00F2E81C71A29D00689C70 /* GHDirectory.m in Sources */,
-				8EBB89131D1385050038700B /* IconViewCell.m in Sources */,
+				8EBB89131D1385050038700B /* BookmarkIconViewCell.m in Sources */,
 				AB00F2EC1C71A29D00689C70 /* GHFolderTitleCell.m in Sources */,
 				AB00F4A41C71B16200689C70 /* RATreeNode.m in Sources */,
 				AB00F2EA1C71A29D00689C70 /* GHFolderCreateController.m in Sources */,
@@ -939,7 +939,7 @@
 				AB00F2F71C71A29D00689C70 /* GHURLLabel.m in Sources */,
 				AB00F4A61C71B16200689C70 /* RATreeNodeInfo+Private.m in Sources */,
 				AB00F2EB1C71A29D00689C70 /* GHFoldersListController.m in Sources */,
-				8EBB891A1D1387380038700B /* IconViewModel.m in Sources */,
+				8EBB891A1D1387380038700B /* BookmarkIconViewModel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -1,5 +1,5 @@
 //
-//  IconViewModel.h
+//  BookmarkIconViewModel.h
 //  dConnectBrowserForIOS9
 //
 //  Created by Tetsuya Hirano on 2016/06/17.
@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "Page.h"
 
-@interface IconViewModel : NSObject
+@interface BookmarkIconViewModel : NSObject
 @property (weak, nonatomic) Page* page;
 - (void)bookmarkIconImage:(void (^)(UIImage*))completion;
 @end
