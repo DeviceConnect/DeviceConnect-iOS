@@ -7,7 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "Page.h"
 
 @interface IconViewModel : NSObject
-
+@property (weak, nonatomic) Page* page;
+- (void)bookmarkIconImage:(void (^)(UIImage*))completion;
 @end
