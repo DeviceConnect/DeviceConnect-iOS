@@ -364,9 +364,6 @@ static GHDataManager* mgr = nil;
     [moc insertObject:data];
 }
 
-
-
-
 //--------------------------------------------------------------//
 #pragma mark - Pageエンティティ
 //--------------------------------------------------------------//
@@ -422,6 +419,7 @@ static GHDataManager* mgr = nil;
     page.created_date = [NSDate date];
     page.sectionIndex = [GHUtils dateToString:page.created_date];
     page.identifier   = [GHUtils createUUID];
+    page.latest_opened_date = [NSDate date];
     
     NSArray *parents = [self getModelDataByPredicate:[NSPredicate predicateWithFormat:@"type = %@", TYPE_HISTORY]
                                       withEntityName:@"Page" context:moc];
@@ -457,6 +455,7 @@ static GHDataManager* mgr = nil;
     page.created_date = [NSDate date];
     page.sectionIndex = [GHUtils dateToString:page.created_date];
     page.identifier   = [GHUtils createUUID];
+    page.latest_opened_date = [NSDate date];
     
     //リレーションセット
     page.parent = parent;
