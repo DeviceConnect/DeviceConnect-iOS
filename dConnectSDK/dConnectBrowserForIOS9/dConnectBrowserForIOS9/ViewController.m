@@ -13,6 +13,7 @@
 #import <DConnectSDK/DConnectSDK.h>
 #import <SafariServices/SafariServices.h>
 #import "AppDelegate.h"
+#import "BookmarkIconViewCell.h"
 
 @interface ViewController (){}
 
@@ -199,11 +200,6 @@
 //--------------------------------------------------------------//
 #pragma mark - collectionViewDelegate
 //--------------------------------------------------------------//
-- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
-{
-
-}
-
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
     return 8;
@@ -216,7 +212,19 @@
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    UICollectionViewCell* cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"bookmarkCell" forIndexPath:indexPath];
+    switch (indexPath.section) {
+        case 0:
+        {
+            BookmarkIconViewCell* cell = (BookmarkIconViewCell*)[collectionView dequeueReusableCellWithReuseIdentifier:@"BookmarkIconViewCell" forIndexPath:indexPath];
+//            [cell setBookmark:page];
+            return cell;
+        }
+        case 1:
+            break;
+        default:
+            break;
+    }
+    UICollectionViewCell* cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"BookmarkIconViewCell" forIndexPath:indexPath];
     return cell;
 }
 

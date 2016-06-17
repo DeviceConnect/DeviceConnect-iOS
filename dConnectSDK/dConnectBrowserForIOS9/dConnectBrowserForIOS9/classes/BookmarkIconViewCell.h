@@ -10,7 +10,11 @@
 #import "BookmarkIconViewModel.h"
 
 @interface BookmarkIconViewCell : UICollectionViewCell
+
 @property (weak, nonatomic) IBOutlet UIImageView *iconImage;
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (strong, nonatomic) BookmarkIconViewModel *viewModel;
+
+- (void)setBookmark:(Page*)page;
+- (void)setEnabled:(BOOL)isEnabled;
 @end
