@@ -10,7 +10,7 @@
 #import "DCMDriveControllerProfile.h"
 #import <DConnectSDK/DConnectUtil.h>
 
-NSString *const DCMDriveControllerProfileName = @"drive_controller";
+NSString *const DCMDriveControllerProfileName = @"driveController";
 
 NSString *const DCMDriveControllerProfileAttrMove = @"move";
 NSString *const DCMDriveControllerProfileAttrStop = @"stop";

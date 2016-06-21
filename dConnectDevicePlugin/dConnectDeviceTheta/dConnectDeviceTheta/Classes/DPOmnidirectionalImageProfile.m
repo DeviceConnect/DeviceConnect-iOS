@@ -8,7 +8,7 @@
 
 #import "DPOmnidirectionalImageProfile.h"
 
-NSString *const DPOmnidirectionalImageProfileName = @"omnidirectional_image";
+NSString *const DPOmnidirectionalImageProfileName = @"omnidirectionalImage";
 
 
 NSString *const DPOmnidirectionalImageProfileInterfaceROI = @"roi";

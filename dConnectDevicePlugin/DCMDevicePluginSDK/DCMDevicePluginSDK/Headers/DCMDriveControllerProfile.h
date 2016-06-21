@@ -12,7 +12,7 @@
  @date 作成日(2014.7.22)
  */
 #import <DConnectSDK/DConnectSDK.h>
-/*! @brief プロファイル名: drive_controller。 */
+/*! @brief プロファイル名: driveController。 */
 extern NSString *const DCMDriveControllerProfileName;
 /*!
  @brief 属性: move。
@@ -54,7 +54,7 @@ extern NSString *const DCMDriveControllerProfileParamSpeed;
  実装されない場合には、Not supportのエラーが返却される。
  <pre>
  [対応するRESTful]
- POST http://{dConnectドメイン}/drive_controller/move?serviceId=xxxxx
+ POST http://{dConnectドメイン}/driveController/move?serviceId=xxxxx
  </pre>
  @param[in] profile プロファイル
  @param[in] request リクエスト
@@ -77,7 +77,7 @@ extern NSString *const DCMDriveControllerProfileParamSpeed;
  実装されない場合には、Not supportのエラーが返却される。
  <pre>
  [対応するRESTful]
- PUT http://{dConnectドメイン}/drive_controller/rotate?serviceId=xxxxx
+ PUT http://{dConnectドメイン}/driveController/rotate?serviceId=xxxxx
  </pre>
  @param[in] profile プロファイル
  @param[in] request リクエスト
@@ -98,7 +98,7 @@ extern NSString *const DCMDriveControllerProfileParamSpeed;
  
  <pre>
  [対応するRESTful]
- DELETE http://{dConnectドメイン}/drive_controller/stop?serviceId=xxxxx
+ DELETE http://{dConnectドメイン}/driveController/stop?serviceId=xxxxx
  </pre>
  @param[in] profile プロファイル
 @param[in] request リクエスト
