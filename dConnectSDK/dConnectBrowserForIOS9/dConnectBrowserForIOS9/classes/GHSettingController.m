@@ -18,6 +18,25 @@
 @property (nonatomic, strong) UISwitch* blockSW;
 @end
 
+typedef NS_ENUM (NSInteger, SettingCellType) {
+    SettingCellTypeIpAddress,
+    SettingCellTypePortNumber
+};
+
+typedef NS_ENUM (NSInteger, DeviceCellType) {
+    DeviceCellTypeList,
+};
+
+typedef NS_ENUM (NSInteger, SecurityCellType) {
+    SecurityCellTypeDeleteAccessToken,
+    SecurityCellTypeOriginWhitelist,
+    SecurityCellTypeOriginBlock,
+    SecurityCellTypeLocalOAuth,
+    SecurityCellTypeOrigin,
+    SecurityCellTypeExternIP,
+    SecurityCellTypeWebSocket,
+};
+
 
 #define CELL_ID @"setting"
 #define ALERT_COOKIE  100
@@ -33,13 +52,25 @@
 //    NSString *ip = [NSString stringWithFormat:@"Host: %@", [self myIPAddress]];
     self = [super initWithStyle:style];
     if (self) {
-        self.datasource = @[@[@"DeviceConnectManager(ON/OFF)",
-                              @"Port 4035",
-                              @"アクセストークン削除",
-                              @"Originホワイトリスト管理",
-                              @"Originブロック機能"]
+//        self.datasource = @[@[@"DeviceConnectManager(ON/OFF)",
+//                              @"Port 4035",
+//                              @"アクセストークン削除",
+//                              @"Originホワイトリスト管理",
+//                              @"Originブロック機能"]
+//                            ];
+
+        self.datasource = @[@[@(SettingCellTypeIpAddress),
+                              @(SettingCellTypePortNumber)],
+                            @[@(DeviceCellTypeList)],
+                            @[@(SecurityCellTypeDeleteAccessToken),
+                              @(SecurityCellTypeOriginWhitelist),
+                              @(SecurityCellTypeOriginBlock),
+                              @(SecurityCellTypeLocalOAuth),
+                              @(SecurityCellTypeOrigin),
+                              @(SecurityCellTypeExternIP),
+                              @(SecurityCellTypeWebSocket)]
                             ];
-        
+
         self.title = @"設定";
 
     }
@@ -62,15 +93,13 @@
     
     //セルの登録
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:CELL_ID];
-    
-//    if (![GHUtils isiPad]) {
-        //ナビボタンのセット
-        UIBarButtonItem* close = [[UIBarButtonItem alloc]initWithTitle:@"閉じる"
-                                                                 style:UIBarButtonItemStylePlain
-                                                                target:self
-                                                                action:@selector(close)];
-        self.navigationItem.leftBarButtonItem = close;
-//    }
+
+    //ナビボタンのセット
+    UIBarButtonItem* close = [[UIBarButtonItem alloc]initWithTitle:@"閉じる"
+                                                             style:UIBarButtonItemStylePlain
+                                                            target:self
+                                                            action:@selector(close)];
+    self.navigationItem.leftBarButtonItem = close;
 }
 
 - (void)didReceiveMemoryWarning
