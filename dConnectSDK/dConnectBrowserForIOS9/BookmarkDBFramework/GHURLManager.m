@@ -61,9 +61,10 @@
                 return [url description];
             } else if ([[url scheme] isEqualToString: @"gotapi"] && [[url host] isEqualToString: @"start"]) {
                 //gotapiの場合
-                NSInteger queryWordLenght = 4;
+                NSString* queryURL = @"url=";
+                NSInteger queryWordLenght = queryURL.length;
                 NSString* query = [url query];
-                if (query.length > queryWordLenght) {
+                if (query.length > queryWordLenght && [[query substringWithRange:NSMakeRange(0, queryWordLenght)] isEqualToString:queryURL])  {
                     return [self isURLString: [query substringFromIndex: queryWordLenght]];
                 }
             }
