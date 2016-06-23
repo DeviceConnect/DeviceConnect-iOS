@@ -9,5 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface SwitchableCell : UITableViewCell
-
+@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
+@property (weak, nonatomic) IBOutlet UISwitch *switchBtn;
+@property (strong, nonatomic) NSIndexPath* indexPath;
 @end

@@ -9,5 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface DetailableCell : UITableViewCell
-
+@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
+@property (strong, nonatomic) NSIndexPath* indexPath;
 @end
