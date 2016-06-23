@@ -123,7 +123,6 @@
                 case SecurityCellTypeDeleteAccessToken:
                 case SecurityCellTypeOriginWhitelist:
                 case SecurityCellTypeWebSocket:
-                case SecurityCellTypeRESTfulLog:
                     return [self configureDetailCell:tableView atIndexPath: indexPath];
                     break;
                 case SecurityCellTypeOriginBlock:

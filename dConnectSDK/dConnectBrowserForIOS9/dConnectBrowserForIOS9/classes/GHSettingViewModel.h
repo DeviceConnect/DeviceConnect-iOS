@@ -33,7 +33,6 @@ typedef NS_ENUM (NSInteger, SecurityCellType) {
     SecurityCellTypeOrigin,
     SecurityCellTypeExternIP,
     SecurityCellTypeWebSocket,
-    SecurityCellTypeRESTfulLog,
 };
 
 @property (nonatomic, strong) NSArray* datasource;

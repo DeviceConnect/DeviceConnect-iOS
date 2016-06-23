@@ -26,8 +26,7 @@
                               @(SecurityCellTypeLocalOAuth),
                               @(SecurityCellTypeOrigin),
                               @(SecurityCellTypeExternIP),
-                              @(SecurityCellTypeWebSocket),
-                              @(SecurityCellTypeRESTfulLog)]
+                              @(SecurityCellTypeWebSocket)]
                             ];
     }
 
@@ -115,9 +114,6 @@
                 case SecurityCellTypeWebSocket:
                     return @"WebSocket一覧";
                     break;
-                case SecurityCellTypeRESTfulLog:
-                    return @"RESTfulリクエストのログ一覧";
-                    break;
             }
             break;
     }
@@ -177,9 +173,6 @@
                     break;
                 case SecurityCellTypeWebSocket:
                     //TODO: WebSocket
-                    break;
-                case SecurityCellTypeRESTfulLog:
-                    //TODO: RESTful log
                     break;
             }
             break;
