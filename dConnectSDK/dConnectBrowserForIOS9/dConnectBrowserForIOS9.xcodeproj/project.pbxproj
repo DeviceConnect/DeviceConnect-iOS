@@ -11,6 +11,7 @@
 		8EBB891A1D1387380038700B /* BookmarkIconViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EBB89191D1387380038700B /* BookmarkIconViewModel.m */; };
 		8EBB891D1D139C750038700B /* TopViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EBB891C1D139C750038700B /* TopViewModel.m */; };
 		8EBB89211D13CA960038700B /* TopCollectionHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EBB89201D13CA960038700B /* TopCollectionHeaderView.m */; };
+		8ED7B1AD1D1BA4070053FDBD /* GHSettingViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ED7B1AC1D1BA4070053FDBD /* GHSettingViewModel.m */; };
 		AB00F1E41C71941800689C70 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = AB00F1E31C71941800689C70 /* main.m */; };
 		AB00F1E71C71941800689C70 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = AB00F1E61C71941800689C70 /* AppDelegate.m */; };
 		AB00F1EA1C71941800689C70 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB00F1E91C71941800689C70 /* ViewController.m */; };
@@ -171,6 +172,8 @@
 		8EBB891E1D13B7C20038700B /* db 3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "db 3.xcdatamodel"; sourceTree = "<group>"; };
 		8EBB891F1D13CA960038700B /* TopCollectionHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TopCollectionHeaderView.h; sourceTree = "<group>"; };
 		8EBB89201D13CA960038700B /* TopCollectionHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TopCollectionHeaderView.m; sourceTree = "<group>"; };
+		8ED7B1AB1D1BA4070053FDBD /* GHSettingViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHSettingViewModel.h; sourceTree = "<group>"; };
+		8ED7B1AC1D1BA4070053FDBD /* GHSettingViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GHSettingViewModel.m; sourceTree = "<group>"; };
 		AB00F1DF1C71941800689C70 /* dConnectBrowserForIOS9.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = dConnectBrowserForIOS9.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB00F1E31C71941800689C70 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		AB00F1E51C71941800689C70 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -387,6 +390,7 @@
 		8EBB89161D1387010038700B /* viewModel */ = {
 			isa = PBXGroup;
 			children = (
+				8ED7B1AA1D1BA3E40053FDBD /* setting */,
 				8EBB89171D1387090038700B /* top */,
 			);
 			name = viewModel;
@@ -401,6 +405,15 @@
 				8EBB891C1D139C750038700B /* TopViewModel.m */,
 			);
 			name = top;
+			sourceTree = "<group>";
+		};
+		8ED7B1AA1D1BA3E40053FDBD /* setting */ = {
+			isa = PBXGroup;
+			children = (
+				8ED7B1AB1D1BA4070053FDBD /* GHSettingViewModel.h */,
+				8ED7B1AC1D1BA4070053FDBD /* GHSettingViewModel.m */,
+			);
+			name = setting;
 			sourceTree = "<group>";
 		};
 		AB00F1D61C71941800689C70 = {
@@ -943,6 +956,7 @@
 				AB00F2E51C71A29D00689C70 /* GHBookmarkViewController.m in Sources */,
 				AB00F2F61C71A29D00689C70 /* GHToolView.m in Sources */,
 				AB00F1E71C71941800689C70 /* AppDelegate.m in Sources */,
+				8ED7B1AD1D1BA4070053FDBD /* GHSettingViewModel.m in Sources */,
 				AB00F2F51C71A29D00689C70 /* GHSettingController.m in Sources */,
 				AB00F4A81C71B16200689C70 /* RATreeView+Enums.m in Sources */,
 				AB00F2E41C71A29D00689C70 /* GHBookmarkTopController.m in Sources */,
