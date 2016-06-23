@@ -53,4 +53,24 @@
     freeifaddrs(interfaces);
     return address;
 }
+
+
+- (NSString*)sectionTitle:(NSInteger)section
+{
+    switch (section) {
+        case SectionTypeSetting:
+            return @"設定";
+            break;
+        case SectionTypeDevice:
+            return @"デバイスプラグイン";
+            break;
+        case SectionTypeSecurity:
+            return @"セキュリティ";
+            break;
+        default:
+            return @"";
+            break;
+    }
+}
+
 @end

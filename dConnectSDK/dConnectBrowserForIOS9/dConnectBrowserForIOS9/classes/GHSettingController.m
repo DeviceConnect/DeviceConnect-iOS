@@ -223,20 +223,7 @@
 
 - (NSString*)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    switch (section) {
-        case SectionTypeSetting:
-            return @"設定";
-            break;
-        case SectionTypeDevice:
-            return @"デバイスプラグイン";
-            break;
-        case SectionTypeSecurity:
-            return @"セキュリティ";
-            break;
-        default:
-            return @"";
-            break;
-    }
+    return [viewModel sectionTitle: section];
 }
 
 
