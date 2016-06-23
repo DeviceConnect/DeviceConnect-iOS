@@ -26,7 +26,8 @@
                               @(SecurityCellTypeLocalOAuth),
                               @(SecurityCellTypeOrigin),
                               @(SecurityCellTypeExternIP),
-                              @(SecurityCellTypeWebSocket)]
+                              @(SecurityCellTypeWebSocket),
+                              @(SecurityCellTypeRESTfulLog)]
                             ];
     }
 
