@@ -12,6 +12,9 @@
 		8EBB891D1D139C750038700B /* TopViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EBB891C1D139C750038700B /* TopViewModel.m */; };
 		8EBB89211D13CA960038700B /* TopCollectionHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EBB89201D13CA960038700B /* TopCollectionHeaderView.m */; };
 		8ED7B1AD1D1BA4070053FDBD /* GHSettingViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ED7B1AC1D1BA4070053FDBD /* GHSettingViewModel.m */; };
+		8ED7B1B21D1BB0270053FDBD /* GrayLabelCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ED7B1B11D1BB0270053FDBD /* GrayLabelCell.m */; };
+		8ED7B1B51D1BB03C0053FDBD /* SwitchableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ED7B1B41D1BB03C0053FDBD /* SwitchableCell.m */; };
+		8ED7B1B81D1BB04A0053FDBD /* DetailableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ED7B1B71D1BB04A0053FDBD /* DetailableCell.m */; };
 		AB00F1E41C71941800689C70 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = AB00F1E31C71941800689C70 /* main.m */; };
 		AB00F1E71C71941800689C70 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = AB00F1E61C71941800689C70 /* AppDelegate.m */; };
 		AB00F1EA1C71941800689C70 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB00F1E91C71941800689C70 /* ViewController.m */; };
@@ -174,6 +177,12 @@
 		8EBB89201D13CA960038700B /* TopCollectionHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TopCollectionHeaderView.m; sourceTree = "<group>"; };
 		8ED7B1AB1D1BA4070053FDBD /* GHSettingViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHSettingViewModel.h; sourceTree = "<group>"; };
 		8ED7B1AC1D1BA4070053FDBD /* GHSettingViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GHSettingViewModel.m; sourceTree = "<group>"; };
+		8ED7B1B01D1BB0270053FDBD /* GrayLabelCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GrayLabelCell.h; sourceTree = "<group>"; };
+		8ED7B1B11D1BB0270053FDBD /* GrayLabelCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GrayLabelCell.m; sourceTree = "<group>"; };
+		8ED7B1B31D1BB03C0053FDBD /* SwitchableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwitchableCell.h; sourceTree = "<group>"; };
+		8ED7B1B41D1BB03C0053FDBD /* SwitchableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SwitchableCell.m; sourceTree = "<group>"; };
+		8ED7B1B61D1BB04A0053FDBD /* DetailableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailableCell.h; sourceTree = "<group>"; };
+		8ED7B1B71D1BB04A0053FDBD /* DetailableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailableCell.m; sourceTree = "<group>"; };
 		AB00F1DF1C71941800689C70 /* dConnectBrowserForIOS9.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = dConnectBrowserForIOS9.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB00F1E31C71941800689C70 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		AB00F1E51C71941800689C70 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -416,6 +425,19 @@
 			name = setting;
 			sourceTree = "<group>";
 		};
+		8ED7B1AF1D1BAFFD0053FDBD /* setting */ = {
+			isa = PBXGroup;
+			children = (
+				8ED7B1B01D1BB0270053FDBD /* GrayLabelCell.h */,
+				8ED7B1B11D1BB0270053FDBD /* GrayLabelCell.m */,
+				8ED7B1B31D1BB03C0053FDBD /* SwitchableCell.h */,
+				8ED7B1B41D1BB03C0053FDBD /* SwitchableCell.m */,
+				8ED7B1B61D1BB04A0053FDBD /* DetailableCell.h */,
+				8ED7B1B71D1BB04A0053FDBD /* DetailableCell.m */,
+			);
+			name = setting;
+			sourceTree = "<group>";
+		};
 		AB00F1D61C71941800689C70 = {
 			isa = PBXGroup;
 			children = (
@@ -573,6 +595,7 @@
 		AB00F3201C71A73D00689C70 /* views */ = {
 			isa = PBXGroup;
 			children = (
+				8ED7B1AF1D1BAFFD0053FDBD /* setting */,
 				8EBB89101D1384990038700B /* top */,
 				AB00F3231C71A7A300689C70 /* webview */,
 				AB00F3221C71A76B00689C70 /* bookmark */,
@@ -935,6 +958,7 @@
 				AB00F2E21C71A29D00689C70 /* GHBookmarkTitleCell.m in Sources */,
 				8EBB89211D13CA960038700B /* TopCollectionHeaderView.m in Sources */,
 				AB00F2E81C71A29D00689C70 /* GHDirectory.m in Sources */,
+				8ED7B1B51D1BB03C0053FDBD /* SwitchableCell.m in Sources */,
 				8EBB89131D1385050038700B /* BookmarkIconViewCell.m in Sources */,
 				AB00F2EC1C71A29D00689C70 /* GHFolderTitleCell.m in Sources */,
 				AB00F4A41C71B16200689C70 /* RATreeNode.m in Sources */,
@@ -949,11 +973,13 @@
 				AB00F4AB1C71B16200689C70 /* RATreeView+TableViewDelegate.m in Sources */,
 				AB00F4AD1C71B16200689C70 /* RATreeView.m in Sources */,
 				AB00F1EA1C71941800689C70 /* ViewController.m in Sources */,
+				8ED7B1B21D1BB0270053FDBD /* GrayLabelCell.m in Sources */,
 				AB00F4A71C71B16200689C70 /* RATreeNodeInfo.m in Sources */,
 				AB00F2E11C71A29D00689C70 /* GHBookmarkCell.m in Sources */,
 				AB00F4A91C71B16200689C70 /* RATreeView+Private.m in Sources */,
 				AB00F49C1C71B16200689C70 /* GTMNSString+HTML.m in Sources */,
 				AB00F2E51C71A29D00689C70 /* GHBookmarkViewController.m in Sources */,
+				8ED7B1B81D1BB04A0053FDBD /* DetailableCell.m in Sources */,
 				AB00F2F61C71A29D00689C70 /* GHToolView.m in Sources */,
 				AB00F1E71C71941800689C70 /* AppDelegate.m in Sources */,
 				8ED7B1AD1D1BA4070053FDBD /* GHSettingViewModel.m in Sources */,
