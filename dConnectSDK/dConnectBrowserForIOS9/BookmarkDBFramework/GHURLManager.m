@@ -55,9 +55,18 @@
                                                    range:NSMakeRange(0,[urlString length])];
     
     for (NSTextCheckingResult *result in resultArray){
-        if ([result resultType] == NSTextCheckingTypeLink){
+        if ([result resultType] == NSTextCheckingTypeLink) {
             NSURL *url = [result URL];
-            return [url description];
+            if ([[url scheme] isEqualToString: @"http"] || [[url scheme] isEqualToString: @"https"]) {
+                return [url description];
+            } else if ([[url scheme] isEqualToString: @"gotapi"] && [[url host] isEqualToString: @"start"]) {
+                //gotapiの場合
+                NSInteger queryWordLenght = 4;
+                NSString* query = [url query];
+                if (query.length > queryWordLenght) {
+                    return [self isURLString: [query substringFromIndex: queryWordLenght]];
+                }
+            }
         }
     }
     
