@@ -7,6 +7,7 @@
 //
 
 #import "GHSettingViewModel.h"
+#import <DConnectSDK/DConnectSDK.h>
 #import <ifaddrs.h>
 #import <arpa/inet.h>
 
@@ -71,6 +72,35 @@
             return @"";
             break;
     }
+}
+
+- (void)updateOriginBlocking:(BOOL)isOn
+{
+    [DConnectManager sharedManager].settings.useOriginBlocking = isOn;
+}
+
+//ManagerスイッチのON/OFF
+- (void)updateManager:(BOOL)isOn
+{
+    DConnectManager *manager = [DConnectManager sharedManager];
+    if (isOn) {
+        [manager startByHttpServer];
+    } else {
+        [manager stopByHttpServer];
+    }
+}
+
+
+///スイッチの状態を保存
+- (void)updateSwitchState:(BOOL)managerSW blockSW:(BOOL)blockSW
+{
+    NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
+    [def setObject:@(managerSW) forKey:IS_MANAGER_LAUNCH];
+    [def setObject:@(blockSW) forKey:IS_ORIGIN_BLOCKING];
+    [def synchronize];
+
+    //Cookie許可設定
+    [GHUtils setCookieAccept:managerSW];
 }
 
 @end

@@ -38,5 +38,8 @@ typedef NS_ENUM (NSInteger, SecurityCellType) {
 @property (nonatomic, strong) NSArray* datasource;
 
 - (NSString*)sectionTitle:(NSInteger)section;
+- (void)updateSwitchState:(BOOL)managerSW blockSW:(BOOL)blockSW;
+- (void)updateManager:(BOOL)isOn;
+- (void)updateOriginBlocking:(BOOL)isOn;
 
 @end

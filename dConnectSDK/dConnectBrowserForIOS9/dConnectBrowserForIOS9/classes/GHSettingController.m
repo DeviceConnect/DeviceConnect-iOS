@@ -67,7 +67,7 @@
 
 - (void)close
 {
-    [self updateSwitchState];
+    [viewModel updateSwitchState:self.managerSW.isOn blockSW:self.blockSW.isOn];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -77,12 +77,7 @@
 //--------------------------------------------------------------//
 - (void)updateSwitch:(UISwitch*)sender
 {
-    DConnectManager *manager = [DConnectManager sharedManager];
-    if (sender.isOn) {
-        [manager startByHttpServer];
-    } else {
-        [manager stopByHttpServer];
-    }
+    [viewModel updateManager:sender.isOn];
 }
 
 //--------------------------------------------------------------//
@@ -90,19 +85,7 @@
 //--------------------------------------------------------------//
 - (void)updateOriginBlockingSwitch:(UISwitch*)sender
 {
-    [DConnectManager sharedManager].settings.useOriginBlocking = sender.isOn;
-}
-
-///スイッチの状態を保存
-- (void)updateSwitchState
-{
-    NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
-    [def setObject:@(self.managerSW.isOn) forKey:IS_MANAGER_LAUNCH];
-    [def setObject:@(self.blockSW.isOn) forKey:IS_ORIGIN_BLOCKING];
-    [def synchronize];
-    
-    //Cookie許可設定
-    [GHUtils setCookieAccept:self.managerSW.isOn];
+    [viewModel updateOriginBlocking: sender.isOn];
 }
 
 //--------------------------------------------------------------//
