@@ -23,6 +23,7 @@
 
 #define IS_MANAGER_LAUNCH @"is_manager_launch"
 #define IS_ORIGIN_BLOCKING @"is_origin_blocking"
+#define IS_USE_LOCALOAUTH @"is_useLocalOAuth"
 
 #define PAGE_URL @"pageurl"
 
