@@ -29,7 +29,6 @@
 @property (strong, nonatomic) UILabel* emptyDevicesLabel;
 
 - (IBAction)openBookmarkView:(id)sender;
-- (IBAction)openSettingView:(id)sender;
 - (IBAction)onTapView:(id)sender;
 
 @end
@@ -153,11 +152,6 @@
     [self presentViewController:bookmark animated:YES completion:nil];
 }
 
-- (IBAction)openSettingView:(id)sender {
-    GHSettingController *setting = [[GHSettingController alloc]initWithStyle:UITableViewStyleGrouped];
-    UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:setting];
-    [self presentViewController:nav animated:YES completion:nil];
-}
 
 - (IBAction)onTapView:(id)sender {
     [self.view endEditing:YES];
