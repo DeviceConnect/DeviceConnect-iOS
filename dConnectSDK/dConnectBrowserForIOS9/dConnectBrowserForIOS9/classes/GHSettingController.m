@@ -162,10 +162,29 @@
     return cell;
 }
 
-- (NSString*)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+CGFloat headerHeight = 36.0;
+- (UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    return [viewModel sectionTitle: section];
+    NSString* title = [viewModel sectionTitle: section];
+    CGRect rect = [[UIScreen mainScreen]bounds];
+    CGFloat screenWidth = rect.size.width;
+    UILabel* label = [[UILabel alloc]initWithFrame:CGRectMake(10, 0, screenWidth, headerHeight)];
+    label.text = title;
+    label.font = [UIFont boldSystemFontOfSize:16.0];
+
+    UIView* header = [[UIView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, headerHeight)];
+    [header addSubview:label];
+    return header;
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return headerHeight;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+{
+    return 0;
+}
 
 @end
