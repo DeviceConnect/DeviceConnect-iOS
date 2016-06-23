@@ -12,30 +12,18 @@
 #import <DConnectSDK/DConnectSDK.h>
 #import <ifaddrs.h>
 #import <arpa/inet.h>
+#import "GHSettingViewModel.h"
+
 @interface GHSettingController ()
+{
+    GHSettingViewModel* viewModel;
+}
+
 @property (nonatomic, strong) NSArray* datasource;
 @property (nonatomic, strong) UISwitch* managerSW;
 @property (nonatomic, strong) UISwitch* blockSW;
 @end
 
-typedef NS_ENUM (NSInteger, SettingCellType) {
-    SettingCellTypeIpAddress,
-    SettingCellTypePortNumber
-};
-
-typedef NS_ENUM (NSInteger, DeviceCellType) {
-    DeviceCellTypeList,
-};
-
-typedef NS_ENUM (NSInteger, SecurityCellType) {
-    SecurityCellTypeDeleteAccessToken,
-    SecurityCellTypeOriginWhitelist,
-    SecurityCellTypeOriginBlock,
-    SecurityCellTypeLocalOAuth,
-    SecurityCellTypeOrigin,
-    SecurityCellTypeExternIP,
-    SecurityCellTypeWebSocket,
-};
 
 
 #define CELL_ID @"setting"
@@ -49,30 +37,10 @@ typedef NS_ENUM (NSInteger, SecurityCellType) {
 //--------------------------------------------------------------//
 - (id)initWithStyle:(UITableViewStyle)style
 {
-//    NSString *ip = [NSString stringWithFormat:@"Host: %@", [self myIPAddress]];
     self = [super initWithStyle:style];
     if (self) {
-//        self.datasource = @[@[@"DeviceConnectManager(ON/OFF)",
-//                              @"Port 4035",
-//                              @"アクセストークン削除",
-//                              @"Originホワイトリスト管理",
-//                              @"Originブロック機能"]
-//                            ];
-
-        self.datasource = @[@[@(SettingCellTypeIpAddress),
-                              @(SettingCellTypePortNumber)],
-                            @[@(DeviceCellTypeList)],
-                            @[@(SecurityCellTypeDeleteAccessToken),
-                              @(SecurityCellTypeOriginWhitelist),
-                              @(SecurityCellTypeOriginBlock),
-                              @(SecurityCellTypeLocalOAuth),
-                              @(SecurityCellTypeOrigin),
-                              @(SecurityCellTypeExternIP),
-                              @(SecurityCellTypeWebSocket)]
-                            ];
-
+        viewModel = [[GHSettingViewModel alloc]init];
         self.title = @"設定";
-
     }
     return self;
 }
@@ -101,12 +69,6 @@ typedef NS_ENUM (NSInteger, SecurityCellType) {
                                                             action:@selector(close)];
     self.navigationItem.leftBarButtonItem = close;
 }
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-}
-
 
 - (void)close
 {
@@ -174,12 +136,12 @@ typedef NS_ENUM (NSInteger, SecurityCellType) {
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return [self.datasource count];
+    return [viewModel.datasource count];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [(NSArray *)[self.datasource objectAtIndex:section] count];
+    return [(NSArray *)[viewModel.datasource objectAtIndex:section] count];
 }
 
 
@@ -226,7 +188,7 @@ typedef NS_ENUM (NSInteger, SecurityCellType) {
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
     cell.accessoryType = UITableViewCellAccessoryNone;
-    cell.textLabel.text = [[self.datasource objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
+    cell.textLabel.text = [[viewModel.datasource objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
     
     if (indexPath.section == 0) {
         switch (indexPath.row) {
@@ -282,6 +244,26 @@ typedef NS_ENUM (NSInteger, SecurityCellType) {
         }
     }
 }
+
+
+- (NSString*)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    switch (section) {
+        case SectionTypeSetting:
+            return @"設定";
+            break;
+        case SectionTypeDevice:
+            return @"デバイスプラグイン";
+            break;
+        case SectionTypeSecurity:
+            return @"セキュリティ";
+            break;
+        default:
+            return @"";
+            break;
+    }
+}
+
 
 
 
