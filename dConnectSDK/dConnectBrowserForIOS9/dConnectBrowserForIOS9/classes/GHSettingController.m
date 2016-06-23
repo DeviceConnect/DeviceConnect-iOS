@@ -22,12 +22,6 @@
 @end
 
 
-
-#define CELL_ID @"setting"
-#define ALERT_COOKIE  100
-#define ALERT_HISTORY 101
-
-
 @implementation GHSettingController
 //--------------------------------------------------------------//
 #pragma mark - 初期化
@@ -68,6 +62,7 @@
 //--------------------------------------------------------------//
 - (void)updateSwitch:(UISwitch*)sender
 {
+    //NOTE: SecurityCellTypeがタグとして設定されている
     SecurityCellType type = sender.tag;
     [viewModel updateSwitch:type switchState:sender.isOn];
 }
