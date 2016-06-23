@@ -74,33 +74,141 @@
     }
 }
 
-- (void)updateOriginBlocking:(BOOL)isOn
+- (NSString*)cellTitle:(NSIndexPath *)indexPath
 {
-    [DConnectManager sharedManager].settings.useOriginBlocking = isOn;
+    NSInteger type = [(NSNumber*)[[self.datasource objectAtIndex:indexPath.section] objectAtIndex:indexPath.row] integerValue];
+    switch (indexPath.section) {
+        case SectionTypeSetting:
+            switch (type) {
+                case SettingCellTypeIpAddress:
+                    return [NSString stringWithFormat: @"IP %@", [self myIPAddress]];
+                    break;
+                case SettingCellTypePortNumber:
+                    return @"Port 4035";
+                    break;
+            }
+            break;
+        case SectionTypeDevice:
+            return @"デバイスプラグイン";
+            break;
+        case SectionTypeSecurity:
+            switch (type) {
+                case SecurityCellTypeDeleteAccessToken:
+                    return @"アクセストークン削除";
+                    break;
+                case SecurityCellTypeOriginWhitelist:
+                    return @"Originホワイトリスト管理";
+                    break;
+                case SecurityCellTypeOriginBlock:
+                    return @"Originブロック機能";
+                    break;
+                case SecurityCellTypeLocalOAuth:
+                    return @"LocalAuth (ON/OFF)";
+                    break;
+                case SecurityCellTypeOrigin:
+                    return @"Origin (有効/無効)";
+                    break;
+                case SecurityCellTypeExternIP:
+                    return @"外部IPを許可 (有効/無効)";
+                    break;
+                case SecurityCellTypeWebSocket:
+                    return @"WebSocket一覧";
+                    break;
+                case SecurityCellTypeRESTfulLog:
+                    return @"RESTfulリクエストのログ一覧";
+                    break;
+            }
+            break;
+    }
+
+    return @"";
 }
 
-//ManagerスイッチのON/OFF
-- (void)updateManager:(BOOL)isOn
+
+- (void)updateSwitch:(SecurityCellType)type switchState:(BOOL)isOn
 {
-    DConnectManager *manager = [DConnectManager sharedManager];
-    if (isOn) {
-        [manager startByHttpServer];
-    } else {
-        [manager stopByHttpServer];
+    switch (type) {
+        case SecurityCellTypeOriginBlock:
+            [DConnectManager sharedManager].settings.useOriginBlocking = isOn;
+            break;
+        case SecurityCellTypeLocalOAuth:
+            [DConnectManager sharedManager].settings.useLocalOAuth = isOn;
+            break;
+        case SecurityCellTypeOrigin:
+            //TODO:
+            break;
+        case SecurityCellTypeExternIP:
+            //TODO:
+            break;
+        case SecurityCellTypeWebSocket:
+            //TODO:
+            break;
+        default:
+            break;
     }
 }
 
 
 ///スイッチの状態を保存
-- (void)updateSwitchState:(BOOL)managerSW blockSW:(BOOL)blockSW
+- (void)updateSwitchState
 {
     NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
-    [def setObject:@(managerSW) forKey:IS_MANAGER_LAUNCH];
-    [def setObject:@(blockSW) forKey:IS_ORIGIN_BLOCKING];
+    DConnectSettings* settings = [DConnectManager sharedManager].settings;
+    [def setObject:@(settings.useOriginBlocking) forKey:IS_ORIGIN_BLOCKING];
+    [def setObject:@(settings.useLocalOAuth) forKey:IS_USE_LOCALOAUTH];
     [def synchronize];
+}
 
-    //Cookie許可設定
-    [GHUtils setCookieAccept:managerSW];
+- (void)didSelectedRow:(NSIndexPath *)indexPath
+{
+    NSInteger type = [(NSNumber*)[[self.datasource objectAtIndex:indexPath.section] objectAtIndex:indexPath.row] integerValue];
+    switch (indexPath.section) {
+        case SectionTypeDevice:
+            //TODO: DeviceList
+            break;
+        case SectionTypeSecurity:
+            switch (type) {
+                case SecurityCellTypeDeleteAccessToken:
+                    [DConnectUtil showAccessTokenList];
+                    break;
+                case SecurityCellTypeOriginWhitelist:
+                    [DConnectUtil showOriginWhitelist];
+                    break;
+                case SecurityCellTypeWebSocket:
+                    //TODO: WebSocket
+                    break;
+                case SecurityCellTypeRESTfulLog:
+                    //TODO: RESTful log
+                    break;
+            }
+            break;
+    }
+}
+
+
+- (BOOL)switchState:(SecurityCellType)type
+{
+    switch (type) {
+        case SecurityCellTypeOriginBlock:
+            return [DConnectManager sharedManager].settings.useOriginBlocking;
+            break;
+        case SecurityCellTypeLocalOAuth:
+            return [DConnectManager sharedManager].settings.useLocalOAuth;
+            break;
+        case SecurityCellTypeOrigin:
+            //TODO:
+            break;
+        case SecurityCellTypeExternIP:
+            //TODO:
+            break;
+        case SecurityCellTypeWebSocket:
+            //TODO:
+            break;
+        default:
+            return NO;
+            break;
+    }
+    return NO; //FIXME:
 }
 
 @end

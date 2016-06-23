@@ -33,13 +33,16 @@ typedef NS_ENUM (NSInteger, SecurityCellType) {
     SecurityCellTypeOrigin,
     SecurityCellTypeExternIP,
     SecurityCellTypeWebSocket,
+    SecurityCellTypeRESTfulLog,
 };
 
 @property (nonatomic, strong) NSArray* datasource;
 
 - (NSString*)sectionTitle:(NSInteger)section;
-- (void)updateSwitchState:(BOOL)managerSW blockSW:(BOOL)blockSW;
-- (void)updateManager:(BOOL)isOn;
-- (void)updateOriginBlocking:(BOOL)isOn;
+- (NSString*)cellTitle:(NSIndexPath *)indexPath;
+- (void)updateSwitchState;
+- (void)updateSwitch:(SecurityCellType)type switchState:(BOOL)isOn;
+- (void)didSelectedRow:(NSIndexPath *)indexPath;
+- (BOOL)switchState:(SecurityCellType)type;
 
 @end
