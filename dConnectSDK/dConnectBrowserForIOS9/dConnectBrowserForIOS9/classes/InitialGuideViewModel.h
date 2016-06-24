@@ -10,6 +10,10 @@
 #import "GuideDataViewController.h"
 
 @interface InitialGuideViewModel : NSObject
+
 @property (nonatomic, strong) NSArray* datasource;
+@property (nonatomic, readonly) NSUInteger pageIndex;
+
 - (GuideDataViewController*)viewControllerAtIndex:(NSInteger)index;
+
 @end
