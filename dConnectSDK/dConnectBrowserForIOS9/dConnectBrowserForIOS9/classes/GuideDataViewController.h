@@ -19,6 +19,5 @@ typedef void (^CloseButtonCallback)();
 + (instancetype)instantiateWithFilename:(NSString*)filename
                         withPageNaumber:(NSInteger)pageNumber
                              isLastPage:(BOOL)isLastPage;
-- (void)setCloseButtonEnabled:(BOOL)isEnabled;
 
 @end

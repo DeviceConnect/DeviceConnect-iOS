@@ -32,7 +32,6 @@
     self.closeButton.layer.cornerRadius = 8;
 }
 
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];

@@ -32,7 +32,6 @@
                       completion:nil];
 }
 
-
 - (void)dealloc
 {
     viewModel = nil;
@@ -47,7 +46,6 @@
     NSInteger index = viewController.pageNumber;
     viewModel.pageIndex = index - 1;
     return [viewModel viewControllerAtIndex: viewModel.pageIndex];
-
 }
 
 - (UIViewController *)pageViewController:(UIPageViewController *)pageViewController
