@@ -18,10 +18,22 @@
 {
     self = [super init];
     if (self) {
-        [self setupWebView: urlString];
+        [self setupWebView];
+        [self loadRequest: urlString];
     }
     return self;
 }
+
+- (instancetype)initWithPath:(NSString*)path
+{
+    self = [super init];
+    if (self) {
+        [self setupWebView];
+        [self loadLocalFile: path];
+    }
+    return self;
+}
+
 
 - (void)dealloc
 {
@@ -32,13 +44,12 @@
 //--------------------------------------------------------------//
 #pragma mark - webView setup
 //--------------------------------------------------------------//
-- (void)setupWebView:(NSString*)urlString
+- (void)setupWebView
 {
     self.webView = [[WKWebView alloc]init];
     self.webView.navigationDelegate = self;
     self.webView.allowsBackForwardNavigationGestures = YES;
     self.webView.translatesAutoresizingMaskIntoConstraints = NO;
-    [self loadRequest: urlString];
     [self.view addSubview:self.webView];
     [self.view addConstraints:@[
                                 [NSLayoutConstraint constraintWithItem:self.webView
@@ -64,6 +75,12 @@
     NSURL *url = [NSURL URLWithString: urlString];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     [self.webView loadRequest:request];
+}
+
+- (void)loadLocalFile:(NSString*)path
+{
+    NSString* html = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:nil];
+    [self.webView loadHTMLString:html baseURL:nil];
 }
 
 //--------------------------------------------------------------//

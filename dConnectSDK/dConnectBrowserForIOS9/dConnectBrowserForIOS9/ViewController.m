@@ -190,8 +190,8 @@
 
 - (IBAction)openHelpView
 {
-    NSString* url = @"http://www.yahoo.co.jp/";
-    WebViewController* webView = [[WebViewController alloc]initWithURL: url];
+    NSString* path = [[NSBundle mainBundle]pathForResource:@"help" ofType:@"html"];
+    WebViewController* webView = [[WebViewController alloc]initWithPath: path];
     UINavigationController* nav = [[UINavigationController alloc]initWithRootViewController:webView];
     [self presentViewController:nav animated:YES completion:nil];
 }

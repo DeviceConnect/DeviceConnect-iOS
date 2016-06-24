@@ -10,4 +10,5 @@
 #import <WebKit/WebKit.h>
 @interface WebViewController : UIViewController<WKNavigationDelegate>
 - (instancetype)initWithURL:(NSString*)urlString;
+- (instancetype)initWithPath:(NSString*)path;
 @end
