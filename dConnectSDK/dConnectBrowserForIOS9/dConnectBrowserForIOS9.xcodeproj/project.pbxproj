@@ -393,6 +393,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8E0A4C361D1CC87700827DA6 /* initialGuide */ = {
+			isa = PBXGroup;
+			children = (
+				8E0A4C301D1CC4A500827DA6 /* InitialGuideViewController.h */,
+				8E0A4C311D1CC4A500827DA6 /* InitialGuideViewController.m */,
+				8E0A4C331D1CC4BE00827DA6 /* GuideDataViewController.h */,
+				8E0A4C341D1CC4BE00827DA6 /* GuideDataViewController.m */,
+			);
+			name = initialGuide;
+			sourceTree = "<group>";
+		};
+		8E0A4C371D1CC89C00827DA6 /* initialGuide */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = initialGuide;
+			sourceTree = "<group>";
+		};
 		8EBB89101D1384990038700B /* top */ = {
 			isa = PBXGroup;
 			children = (
@@ -407,6 +425,7 @@
 		8EBB89161D1387010038700B /* viewModel */ = {
 			isa = PBXGroup;
 			children = (
+				8E0A4C371D1CC89C00827DA6 /* initialGuide */,
 				8ED7B1AA1D1BA3E40053FDBD /* setting */,
 				8EBB89171D1387090038700B /* top */,
 			);
@@ -573,10 +592,7 @@
 				AB00F2D31C71A29D00689C70 /* GHSettingController.m */,
 				AB00F31F1C71A6B700689C70 /* bookmark */,
 				AB00F31D1C71A66D00689C70 /* folder */,
-				8E0A4C301D1CC4A500827DA6 /* InitialGuideViewController.h */,
-				8E0A4C311D1CC4A500827DA6 /* InitialGuideViewController.m */,
-				8E0A4C331D1CC4BE00827DA6 /* GuideDataViewController.h */,
-				8E0A4C341D1CC4BE00827DA6 /* GuideDataViewController.m */,
+				8E0A4C361D1CC87700827DA6 /* initialGuide */,
 			);
 			name = controller;
 			sourceTree = "<group>";
