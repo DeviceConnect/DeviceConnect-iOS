@@ -10,8 +10,12 @@
 
 typedef void (^CloseButtonCallback)();
 @interface GuideDataViewController : UIViewController
+
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
 @property (weak, nonatomic) IBOutlet UIButton *closeButton;
 @property (copy, nonatomic) CloseButtonCallback closeButtonCallback;
+
 + (instancetype)instantiateWithFilename:(NSString*)filename;
+- (void)setCloseButtonEnabled:(BOOL)isEnabled;
+
 @end

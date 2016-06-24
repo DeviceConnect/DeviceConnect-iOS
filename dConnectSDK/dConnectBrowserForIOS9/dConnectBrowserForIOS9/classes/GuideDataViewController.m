@@ -21,6 +21,12 @@
     return controller;
 }
 
+- (void)setCloseButtonEnabled:(BOOL)isEnabled
+{
+    self.closeButton.hidden = !isEnabled;
+    self.closeButton.enabled = isEnabled;
+}
+
 - (IBAction)didTappedCloseButton:(UIButton *)sender {
     _closeButtonCallback();
 }
