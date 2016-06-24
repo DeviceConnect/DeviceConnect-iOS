@@ -160,7 +160,7 @@
                                     <constraint firstAttribute="height" constant="44" id="eIc-fQ-cIT"/>
                                 </constraints>
                                 <items>
-                                    <barButtonItem title="ヘルプ" id="KAK-gC-zUP">
+                                    <barButtonItem image="help" id="KAK-gC-zUP">
                                         <connections>
                                             <action selector="openHelpView" destination="sIh-io-mcp" id="eUK-ow-LdE"/>
                                         </connections>
@@ -343,6 +343,7 @@
     </scenes>
     <resources>
         <image name="bookmark" width="40" height="40"/>
+        <image name="help" width="30" height="30"/>
         <image name="search" width="42" height="40"/>
         <image name="settings" width="40" height="40"/>
     </resources>
