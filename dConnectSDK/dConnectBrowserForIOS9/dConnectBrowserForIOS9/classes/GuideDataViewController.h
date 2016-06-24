@@ -13,9 +13,12 @@ typedef void (^CloseButtonCallback)();
 
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
 @property (weak, nonatomic) IBOutlet UIButton *closeButton;
+@property (nonatomic) NSInteger pageNumber;
 @property (copy, nonatomic) CloseButtonCallback closeButtonCallback;
 
-+ (instancetype)instantiateWithFilename:(NSString*)filename;
++ (instancetype)instantiateWithFilename:(NSString*)filename
+                        withPageNaumber:(NSInteger)pageNumber
+                             isLastPage:(BOOL)isLastPage;
 - (void)setCloseButtonEnabled:(BOOL)isEnabled;
 
 @end

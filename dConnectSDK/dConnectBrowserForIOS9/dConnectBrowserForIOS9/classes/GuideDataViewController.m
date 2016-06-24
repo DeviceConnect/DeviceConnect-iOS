@@ -9,16 +9,35 @@
 #import "GuideDataViewController.h"
 
 @interface GuideDataViewController ()
-
+@property (nonatomic, strong) NSString* filename;
+@property (nonatomic) BOOL isLastPage;
 @end
 
 @implementation GuideDataViewController
 + (instancetype)instantiateWithFilename:(NSString*)filename
+                        withPageNaumber:(NSInteger)pageNumber
+                             isLastPage:(BOOL)isLastPage
 {
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"InitialGuide" bundle:[NSBundle mainBundle]];
     GuideDataViewController *controller = (GuideDataViewController*)[storyboard instantiateViewControllerWithIdentifier:@"GuideDataViewController"];
-    controller.imageView.image = [UIImage imageNamed:filename];
+    controller.filename = filename;
+    controller.isLastPage = isLastPage;
+    controller.pageNumber = pageNumber;
     return controller;
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    self.closeButton.layer.cornerRadius = 8;
+}
+
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    self.imageView.image = [UIImage imageNamed: self.filename];
+    [self setCloseButtonEnabled: self.isLastPage];
 }
 
 - (void)setCloseButtonEnabled:(BOOL)isEnabled
