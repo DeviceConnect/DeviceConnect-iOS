@@ -25,6 +25,8 @@
 #define IS_ORIGIN_BLOCKING @"is_origin_blocking"
 #define IS_USE_LOCALOAUTH @"is_useLocalOAuth"
 
+#define IS_INITIAL_GUIDE_OPEN @"is_initial_guide_open"
+
 #define PAGE_URL @"pageurl"
 
 //Categoryキー

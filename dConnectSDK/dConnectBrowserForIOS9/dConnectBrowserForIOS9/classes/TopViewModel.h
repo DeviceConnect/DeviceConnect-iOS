@@ -21,5 +21,6 @@
 - (NSString*)checkUrlString:(NSString*)url;
 - (NSString*)makeURLFromNotification:(NSNotification*)notif;
 - (void)updateDatasource;
+- (BOOL)isNeedOpenInitialGuide;
 
 @end
