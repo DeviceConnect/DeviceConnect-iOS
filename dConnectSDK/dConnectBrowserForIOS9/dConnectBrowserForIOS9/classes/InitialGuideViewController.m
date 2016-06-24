@@ -7,31 +7,45 @@
 //
 
 #import "InitialGuideViewController.h"
+#import "InitialGuideViewModel.h"
 
 @interface InitialGuideViewController ()
-
+{
+    __weak UIPageViewController* pageview;
+    InitialGuideViewModel *viewModel;
+}
 @end
 
 @implementation InitialGuideViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    pageview = (UIPageViewController*)[self.childViewControllers firstObject];
+    pageview.delegate = self;
+    pageview.dataSource = self;
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+
+- (void)dealloc
+{
+    viewModel = nil;
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+//--------------------------------------------------------------//
+#pragma mark - pageViewController delegate
+//--------------------------------------------------------------//
+- (UIViewController *)pageViewController:(UIPageViewController *)pageViewController
+      viewControllerBeforeViewController:(UIViewController *)viewController
+{
+    NSInteger index = viewModel.pageIndex;
+    return [viewModel viewControllerAtIndex: index--];
 }
-*/
+
+- (UIViewController *)pageViewController:(UIPageViewController *)pageViewController
+       viewControllerAfterViewController:(UIViewController *)viewController
+{
+    NSInteger index = viewModel.pageIndex;
+    return [viewModel viewControllerAtIndex: index++];
+}
 
 @end
