@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@interface InitialGuideViewController : UIViewController<UIPageViewControllerDataSource, UIPageViewControllerDelegate>
+#import "InitialGuideViewModel.h"
+@interface InitialGuideViewController : UIViewController<UIPageViewControllerDataSource, UIPageViewControllerDelegate, InitialGuideViewModelDelegate>
 @property (weak, nonatomic) IBOutlet UIView *containerView;
 @end
