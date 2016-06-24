@@ -127,9 +127,9 @@
                                response:(DConnectResponseMessage *)response
 {
     NSString *attribute = [request attribute];
-    if ([attribute isEqualToString:DConnectAuthorizationProfileAttrGrant]) {
+    if ([self isEqualToAttribute:attribute cmp:DConnectAuthorizationProfileAttrGrant]) {
         [response setString:@"" forKey:DConnectAuthorizationProfileParamClientId];
-    } else if ([attribute isEqualToString:DConnectAuthorizationProfileAttrAccessToken]) {
+    } else if ([self isEqualToAttribute:attribute cmp:DConnectAuthorizationProfileAttrAccessToken]) {
         [response setString:@"" forKey:DConnectAuthorizationProfileParamAccessToken];
     }
 }

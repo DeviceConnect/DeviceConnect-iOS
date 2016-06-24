@@ -100,8 +100,8 @@ NSString *const DPSpheroProfileParamImpactTimestamp = @"impactTimestamp";
     
     if (profile && interface && attribute) {
         //Quaternion
-        if ([interface isEqualToString:DPSpheroProfileInterfaceQuaternion]
-            && [attribute isEqualToString:DPSpheroProfileAttrOnQuaternion]
+        if ([self isEqualToInterface: interface cmp:DPSpheroProfileInterfaceQuaternion]
+            && [self isEqualToAttribute: attribute cmp:DPSpheroProfileAttrOnQuaternion]
             && [self hasMethod:
                 @selector(profile:
                           didReceiveGetOnQuaternionRequest:
@@ -113,8 +113,8 @@ NSString *const DPSpheroProfileParamImpactTimestamp = @"impactTimestamp";
                                                 response:response
                                                serviceId:serviceId];
             //Locator
-        } else if ([interface isEqualToString:DPSpheroProfileInterfaceLocator]
-                   && [attribute isEqualToString:DPSpheroProfileAttrOnLocator]
+        } else if ([self isEqualToInterface: interface cmp:DPSpheroProfileInterfaceLocator]
+                   && [self isEqualToAttribute: attribute cmp:DPSpheroProfileAttrOnLocator]
                    && [self hasMethod:
                        @selector(profile:
                                  didReceiveGetOnLocatorRequest:
@@ -126,8 +126,8 @@ NSString *const DPSpheroProfileParamImpactTimestamp = @"impactTimestamp";
                                          response:response
                                         serviceId:serviceId];
             //Collision
-        } else if ([interface isEqualToString:DPSpheroProfileInterfaceCollision]
-                   && [attribute isEqualToString:DPSpheroProfileAttrOnCollision]
+        } else if ([self isEqualToInterface: interface cmp:DPSpheroProfileInterfaceCollision]
+                   && [self isEqualToAttribute: attribute cmp:DPSpheroProfileAttrOnCollision]
                    && [self hasMethod:
                        @selector(profile:
                                  didReceiveGetOnCollisionRequest:
@@ -170,8 +170,8 @@ NSString *const DPSpheroProfileParamImpactTimestamp = @"impactTimestamp";
     
     if (profile && interface && attribute) {
         //Quaternion
-        if ([interface isEqualToString:DPSpheroProfileInterfaceQuaternion]
-            && [attribute isEqualToString:DPSpheroProfileAttrOnQuaternion]
+        if ([self isEqualToInterface: interface cmp:DPSpheroProfileInterfaceQuaternion]
+            && [self isEqualToAttribute: attribute cmp:DPSpheroProfileAttrOnQuaternion]
             && [self hasMethod:
                 @selector(profile:
                           didReceivePutOnQuaternionRequest:
@@ -185,8 +185,8 @@ NSString *const DPSpheroProfileParamImpactTimestamp = @"impactTimestamp";
                                                serviceId:serviceId
                                               sessionKey:sessionKey];
         //Locator
-        } else if ([interface isEqualToString:DPSpheroProfileInterfaceLocator]
-                           && [attribute isEqualToString:DPSpheroProfileAttrOnLocator]
+        } else if ([self isEqualToInterface: interface cmp:DPSpheroProfileInterfaceLocator]
+                   && [self isEqualToAttribute: attribute cmp:DPSpheroProfileAttrOnLocator]
                    && [self hasMethod:
                                 @selector(profile:
                                           didReceivePutOnLocatorRequest:
@@ -200,8 +200,8 @@ NSString *const DPSpheroProfileParamImpactTimestamp = @"impactTimestamp";
                                         serviceId:serviceId
                                        sessionKey:sessionKey ];
         //Collision
-        } else if ([interface isEqualToString:DPSpheroProfileInterfaceCollision]
-                   && [attribute isEqualToString:DPSpheroProfileAttrOnCollision]
+        } else if ([self isEqualToInterface: interface cmp:DPSpheroProfileInterfaceCollision]
+                   && [self isEqualToAttribute: attribute cmp:DPSpheroProfileAttrOnCollision]
                    && [self hasMethod:
                             @selector(profile:
                                       didReceivePutOnCollisionRequest:
@@ -246,8 +246,8 @@ NSString *const DPSpheroProfileParamImpactTimestamp = @"impactTimestamp";
     
     if (profile && interface && attribute) {
         // Quaternion
-        if ([interface isEqualToString:DPSpheroProfileInterfaceQuaternion]
-            && [attribute isEqualToString:DPSpheroProfileAttrOnQuaternion]
+        if ([self isEqualToInterface: interface cmp:DPSpheroProfileInterfaceQuaternion]
+            && [self isEqualToAttribute: attribute cmp:DPSpheroProfileAttrOnQuaternion]
             && [self hasMethod:
                         @selector(profile:
                                 didReceiveDeleteOnQuaternionRequest:
@@ -262,8 +262,8 @@ NSString *const DPSpheroProfileParamImpactTimestamp = @"impactTimestamp";
                                               serviceId:serviceId
                                              sessionKey:sessionKey];
         //Locator
-        } else if ([interface isEqualToString:DPSpheroProfileInterfaceLocator]
-                   && [attribute isEqualToString:DPSpheroProfileAttrOnLocator]
+        } else if ([self isEqualToInterface: interface cmp:DPSpheroProfileInterfaceLocator]
+                   && [self isEqualToAttribute: attribute cmp:DPSpheroProfileAttrOnLocator]
                    && [self hasMethod:
                                 @selector(profile:
                                           didReceiveDeleteOnLocatorRequest:
@@ -278,8 +278,8 @@ NSString *const DPSpheroProfileParamImpactTimestamp = @"impactTimestamp";
                                            serviceId:serviceId
                                           sessionKey:sessionKey];
         //Collision
-        } else if ([interface isEqualToString:DPSpheroProfileInterfaceCollision]
-                   && [attribute isEqualToString:DPSpheroProfileAttrOnCollision]
+        } else if ([self isEqualToInterface: interface cmp:DPSpheroProfileInterfaceCollision]
+                   && [self isEqualToAttribute: attribute cmp:DPSpheroProfileAttrOnCollision]
                    && [self hasMethod:
                             @selector(profile:
                                       didReceiveDeleteOnCollisionRequest:

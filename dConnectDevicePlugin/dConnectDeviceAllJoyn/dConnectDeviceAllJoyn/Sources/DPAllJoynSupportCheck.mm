@@ -113,14 +113,14 @@
     
     for (DConnectProfile *profile in [provider profiles]) {
         // Prerequisite profiles.
-        if ([profile.profileName isEqualToString:DConnectServiceDiscoveryProfileName]
-            || [profile.profileName isEqualToString:DConnectServiceInformationProfileName]
-            || [profile.profileName isEqualToString:DConnectSystemProfileName]
+        if ([self isEqualToProfile: profile.profileName cmp:DConnectServiceDiscoveryProfileName]
+            || [self isEqualToProfile: profile.profileName cmp:DConnectServiceInformationProfileName]
+            || [self isEqualToProfile: profile.profileName cmp:DConnectSystemProfileName]
             ) {
             [supportedProfileNames addObject:profile.profileName];
         }
         // Optional profiles.
-        else if ([profile.profileName isEqualToString:DConnectLightProfileName]) {
+        else if ([self isEqualToProfile: profile.profileName cmp:DConnectLightProfileName]) {
             if ([interfaces.allObjects
                  containsAll:DPAllJoynLampControllerInterfaceSet]
                 || [interfaces.allObjects
@@ -170,6 +170,13 @@
     }
     
     return busObjectDescriptions;
+}
+
++ (BOOL) isEqualToProfile: (NSString *)profile cmp:(NSString *)cmpProfile {
+    if ([[profile lowercaseString] isEqualToString: [cmpProfile lowercaseString]]) {
+        return YES;
+    }
+    return NO;
 }
 
 @end

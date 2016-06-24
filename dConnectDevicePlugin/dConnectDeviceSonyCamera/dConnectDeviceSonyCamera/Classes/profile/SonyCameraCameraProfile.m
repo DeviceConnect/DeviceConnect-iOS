@@ -34,7 +34,7 @@ NSString *const SonyCameraCameraProfileParamZoomdiameter = @"zoomPosition";
     NSString *attribute = [request attribute];
     
     if (attribute) {
-        if ([attribute isEqualToString:SonyCameraCameraProfileAttrZoom]) {
+        if ([self isEqualToAttribute:attribute cmp:SonyCameraCameraProfileAttrZoom]) {
             NSString *direction = [request stringForKey:SonyCameraCameraProfileParamDirection];
             NSString *movement = [request stringForKey:SonyCameraCameraProfileParamMovement];
             if ([self hasMethod:
@@ -69,7 +69,7 @@ NSString *const SonyCameraCameraProfileParamZoomdiameter = @"zoomPosition";
     NSString *attribute = [request attribute];
     
     if (attribute) {
-        if ([attribute isEqualToString:SonyCameraCameraProfileAttrZoom]) {
+        if ([self isEqualToAttribute:attribute cmp:SonyCameraCameraProfileAttrZoom]) {
             if ([self hasMethod:@selector(profile:
                                           didReceiveGetZoomRequest:
                                           response:

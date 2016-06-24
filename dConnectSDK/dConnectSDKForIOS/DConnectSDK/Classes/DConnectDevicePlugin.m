@@ -77,18 +77,18 @@
 
     // Service Discovery APIのパスを変換
     NSString *profileName = [[request profile] lowercaseString];
-    if ([profileName isEqualToString:[DConnectProfileNameNetworkServiceDiscovery lowercaseString]]) {
+    if ([self isEqualToProfile: profileName cmp:DConnectProfileNameNetworkServiceDiscovery]) {
         NSString *attribute = [[request attribute] lowercaseString];
-        if ([attribute isEqualToString:[DConnectAttributeNameGetNetworkServices lowercaseString]]) {
+        if ([self isEqualToAttribute: attribute cmp:DConnectAttributeNameGetNetworkServices]) {
             profileName = DConnectServiceDiscoveryProfileName;
             [request setProfile:DConnectServiceDiscoveryProfileName];
             [request setAttribute:nil];
         }
-    } else if ([profileName isEqualToString:[DConnectAuthorizationProfileName lowercaseString]]) {
-        NSString *attribute = [[request attribute] lowercaseString];
-        if ([attribute isEqualToString:[DConnectAttributeNameCreateClient lowercaseString]]) {
+    } else if ([self isEqualToProfile: profileName cmp:DConnectAuthorizationProfileName]) {
+        NSString *attribute = [request attribute];
+        if ([self isEqualToAttribute: attribute cmp:DConnectAttributeNameCreateClient]) {
             [request setAttribute:DConnectAuthorizationProfileAttrGrant];
-        } else if ([attribute isEqualToString:[DConnectAttributeNameRequestAccessToken lowercaseString]]) {
+        } else if ([self isEqualToAttribute: attribute cmp:DConnectAttributeNameRequestAccessToken]) {
             [request setAttribute:DConnectAuthorizationProfileAttrAccessToken];
         }
     }
@@ -173,6 +173,30 @@
         [list addObject:[self.mProfileMap objectForKey:key]];
     }
     return list;
+}
+
+- (BOOL)isEqualToProfile: profile cmp: (NSString *)cmpProfile {
+    
+    if ([[profile lowercaseString] isEqualToString: [cmpProfile lowercaseString]]) {
+        return YES;
+    }
+    return NO;
+}
+
+- (BOOL)isEqualToAttribute: attribute cmp: (NSString *)cmpAttribute {
+    
+    if ([[attribute lowercaseString] isEqualToString: [cmpAttribute lowercaseString]]) {
+        return YES;
+    }
+    return NO;
+}
+
+- (BOOL)isEqualToInterface: interface cmp: (NSString *)cmpInterface {
+    
+    if ([[interface lowercaseString] isEqualToString: [cmpInterface lowercaseString]]) {
+        return YES;
+    }
+    return NO;
 }
 
 @end
