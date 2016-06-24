@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@interface WebViewController : UIViewController
-
+#import <WebKit/WebKit.h>
+@interface WebViewController : UIViewController<WKNavigationDelegate>
+- (instancetype)initWithURL:(NSString*)urlString;
 @end
