@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8E0A4C2F1D1CC2D500827DA6 /* InitialGuide.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8E0A4C2E1D1CC2D500827DA6 /* InitialGuide.storyboard */; };
 		8EBB89131D1385050038700B /* BookmarkIconViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EBB89121D1385050038700B /* BookmarkIconViewCell.m */; };
 		8EBB891A1D1387380038700B /* BookmarkIconViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EBB89191D1387380038700B /* BookmarkIconViewModel.m */; };
 		8EBB891D1D139C750038700B /* TopViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EBB891C1D139C750038700B /* TopViewModel.m */; };
@@ -166,6 +167,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		8E0A4C2E1D1CC2D500827DA6 /* InitialGuide.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = InitialGuide.storyboard; path = classes/InitialGuide.storyboard; sourceTree = "<group>"; };
 		8EBB89111D1385050038700B /* BookmarkIconViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookmarkIconViewCell.h; sourceTree = "<group>"; };
 		8EBB89121D1385050038700B /* BookmarkIconViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BookmarkIconViewCell.m; sourceTree = "<group>"; };
 		8EBB89181D1387380038700B /* BookmarkIconViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookmarkIconViewModel.h; sourceTree = "<group>"; };
@@ -473,6 +475,7 @@
 				AB00F3251C71A93700689C70 /* Bookmark.storyboard */,
 				AB00F3261C71A93700689C70 /* Popup.storyboard */,
 				AB00F1EB1C71941800689C70 /* Main.storyboard */,
+				8E0A4C2E1D1CC2D500827DA6 /* InitialGuide.storyboard */,
 				AB00F1EE1C71941800689C70 /* Assets.xcassets */,
 				AB00F1F01C71941800689C70 /* LaunchScreen.storyboard */,
 				AB00F1F31C71941800689C70 /* Info.plist */,
@@ -926,6 +929,7 @@
 				AB00F3271C71A93700689C70 /* Bookmark.storyboard in Resources */,
 				AB00F2361C719B7600689C70 /* dConnectDevicePebble_resources.bundle in Resources */,
 				AB00F2141C719AA800689C70 /* DConnectSDK_resources.bundle in Resources */,
+				8E0A4C2F1D1CC2D500827DA6 /* InitialGuide.storyboard in Resources */,
 				AB00F2481C719B9C00689C70 /* dConnectDeviceTheta_resources.bundle in Resources */,
 				AB00F1ED1C71941800689C70 /* Main.storyboard in Resources */,
 			);

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+    </dependencies>
+    <scenes>
+        <!--Page View Controller-->
+        <scene sceneID="lcX-RY-UUm">
+            <objects>
+                <pageViewController autoresizesArchivedViewToFullSize="NO" transitionStyle="pageCurl" navigationOrientation="horizontal" spineLocation="min" id="b5b-Ln-4sE" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="DhF-mb-tkY" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="354" y="433"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="oul-iv-bcp">
+            <objects>
+                <viewController id="khG-Gb-HcH" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="HFz-za-thh"/>
+                        <viewControllerLayoutGuide type="bottom" id="dVo-SA-Fuy"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="ycg-5h-KJY">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="mjR-NC-mTJ">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="T3o-Mu-9lX">
+                                <rect key="frame" x="278" y="540" width="45" height="30"/>
+                                <state key="normal" title="閉じる"/>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="T3o-Mu-9lX" firstAttribute="centerX" secondItem="ycg-5h-KJY" secondAttribute="centerX" id="Buz-ds-nzd"/>
+                            <constraint firstItem="mjR-NC-mTJ" firstAttribute="top" secondItem="ycg-5h-KJY" secondAttribute="top" id="HoM-Pj-1k1"/>
+                            <constraint firstAttribute="trailing" secondItem="mjR-NC-mTJ" secondAttribute="trailing" id="IRY-Mm-imz"/>
+                            <constraint firstItem="dVo-SA-Fuy" firstAttribute="top" secondItem="T3o-Mu-9lX" secondAttribute="bottom" constant="30" id="Y4i-az-5Sf"/>
+                            <constraint firstItem="mjR-NC-mTJ" firstAttribute="top" secondItem="HFz-za-thh" secondAttribute="bottom" id="bc9-vz-cmn"/>
+                            <constraint firstItem="mjR-NC-mTJ" firstAttribute="top" secondItem="HFz-za-thh" secondAttribute="bottom" id="d3E-i1-cXj"/>
+                            <constraint firstItem="dVo-SA-Fuy" firstAttribute="top" secondItem="mjR-NC-mTJ" secondAttribute="bottom" id="i5L-NQ-7cv"/>
+                            <constraint firstItem="mjR-NC-mTJ" firstAttribute="leading" secondItem="ycg-5h-KJY" secondAttribute="leading" id="lxU-0P-GhL"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="bc9-vz-cmn"/>
+                                <exclude reference="d3E-i1-cXj"/>
+                            </mask>
+                        </variation>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="eE6-b2-qVF" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1020" y="433"/>
+        </scene>
+    </scenes>
+</document>
