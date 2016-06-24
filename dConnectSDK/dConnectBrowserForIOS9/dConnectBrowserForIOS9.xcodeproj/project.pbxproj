@@ -10,6 +10,7 @@
 		8E0A4C2F1D1CC2D500827DA6 /* InitialGuide.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8E0A4C2E1D1CC2D500827DA6 /* InitialGuide.storyboard */; };
 		8E0A4C321D1CC4A500827DA6 /* InitialGuideViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0A4C311D1CC4A500827DA6 /* InitialGuideViewController.m */; };
 		8E0A4C351D1CC4BE00827DA6 /* GuideDataViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0A4C341D1CC4BE00827DA6 /* GuideDataViewController.m */; };
+		8E0A4C3A1D1CC92D00827DA6 /* InitialGuideViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0A4C391D1CC92D00827DA6 /* InitialGuideViewModel.m */; };
 		8EBB89131D1385050038700B /* BookmarkIconViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EBB89121D1385050038700B /* BookmarkIconViewCell.m */; };
 		8EBB891A1D1387380038700B /* BookmarkIconViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EBB89191D1387380038700B /* BookmarkIconViewModel.m */; };
 		8EBB891D1D139C750038700B /* TopViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EBB891C1D139C750038700B /* TopViewModel.m */; };
@@ -174,6 +175,8 @@
 		8E0A4C311D1CC4A500827DA6 /* InitialGuideViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InitialGuideViewController.m; sourceTree = "<group>"; };
 		8E0A4C331D1CC4BE00827DA6 /* GuideDataViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GuideDataViewController.h; sourceTree = "<group>"; };
 		8E0A4C341D1CC4BE00827DA6 /* GuideDataViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GuideDataViewController.m; sourceTree = "<group>"; };
+		8E0A4C381D1CC92D00827DA6 /* InitialGuideViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InitialGuideViewModel.h; sourceTree = "<group>"; };
+		8E0A4C391D1CC92D00827DA6 /* InitialGuideViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InitialGuideViewModel.m; sourceTree = "<group>"; };
 		8EBB89111D1385050038700B /* BookmarkIconViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookmarkIconViewCell.h; sourceTree = "<group>"; };
 		8EBB89121D1385050038700B /* BookmarkIconViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BookmarkIconViewCell.m; sourceTree = "<group>"; };
 		8EBB89181D1387380038700B /* BookmarkIconViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookmarkIconViewModel.h; sourceTree = "<group>"; };
@@ -407,6 +410,8 @@
 		8E0A4C371D1CC89C00827DA6 /* initialGuide */ = {
 			isa = PBXGroup;
 			children = (
+				8E0A4C381D1CC92D00827DA6 /* InitialGuideViewModel.h */,
+				8E0A4C391D1CC92D00827DA6 /* InitialGuideViewModel.m */,
 			);
 			name = initialGuide;
 			sourceTree = "<group>";
@@ -1002,6 +1007,7 @@
 				8EBB891D1D139C750038700B /* TopViewModel.m in Sources */,
 				AB00F4AB1C71B16200689C70 /* RATreeView+TableViewDelegate.m in Sources */,
 				AB00F4AD1C71B16200689C70 /* RATreeView.m in Sources */,
+				8E0A4C3A1D1CC92D00827DA6 /* InitialGuideViewModel.m in Sources */,
 				AB00F1EA1C71941800689C70 /* ViewController.m in Sources */,
 				8ED7B1B21D1BB0270053FDBD /* GrayLabelCell.m in Sources */,
 				AB00F4A71C71B16200689C70 /* RATreeNodeInfo.m in Sources */,
