@@ -172,6 +172,32 @@ static GHDataManager* mgr = nil;
     }
 }
 
+//NSPredicateからエンティティをlimit付で取得
+- (NSArray*)getModelDataByPredicate:(NSPredicate*)pred
+                withSortDescriptors:(NSArray *)sortDescriptors
+                         entityName:(NSString*)name
+                              limit:(NSInteger)limit
+                            context:(NSManagedObjectContext *)moc
+{
+    //NSManagedObjectContextがnilの場合
+    if (!moc) {
+        moc = _managedObjectContext;
+    }
+
+    NSFetchRequest *request = [self fetchRequest:pred withSortDescriptors:sortDescriptors entityName:name context:moc];
+    request.returnsObjectsAsFaults = NO;
+    request.fetchLimit = limit;
+
+    NSError *error;
+    NSArray *objects = [moc executeFetchRequest:request error:&error];
+
+    if ([objects count] > 0) {
+        return objects;
+    }else{
+        return nil;
+    }
+}
+
 
 //エンティティのタイプでフェッチ
 - (NSManagedObject*)getModelDataByType:(NSString*)type
@@ -338,9 +364,6 @@ static GHDataManager* mgr = nil;
     [moc insertObject:data];
 }
 
-
-
-
 //--------------------------------------------------------------//
 #pragma mark - Pageエンティティ
 //--------------------------------------------------------------//
@@ -396,6 +419,7 @@ static GHDataManager* mgr = nil;
     page.created_date = [NSDate date];
     page.sectionIndex = [GHUtils dateToString:page.created_date];
     page.identifier   = [GHUtils createUUID];
+    page.latest_opened_date = [NSDate date];
     
     NSArray *parents = [self getModelDataByPredicate:[NSPredicate predicateWithFormat:@"type = %@", TYPE_HISTORY]
                                       withEntityName:@"Page" context:moc];
@@ -431,6 +455,7 @@ static GHDataManager* mgr = nil;
     page.created_date = [NSDate date];
     page.sectionIndex = [GHUtils dateToString:page.created_date];
     page.identifier   = [GHUtils createUUID];
+    page.latest_opened_date = [NSDate date];
     
     //リレーションセット
     page.parent = parent;

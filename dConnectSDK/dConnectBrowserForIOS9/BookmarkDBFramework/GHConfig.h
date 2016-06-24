@@ -17,11 +17,13 @@
 #define TYPE_HISTORY  @"history"
 #define TYPE_FOLDER   @"folder"
 #define TYPE_BOOKMARK_FOLDER @"bookmark_folder"
+#define TYPE_BOOKMARK_DUMMY @"bookmark_dummy"
 
 #define IS_FIRST_LAUNCH @"is_first_launch"
 
 #define IS_MANAGER_LAUNCH @"is_manager_launch"
 #define IS_ORIGIN_BLOCKING @"is_origin_blocking"
+#define IS_USE_LOCALOAUTH @"is_useLocalOAuth"
 
 #define PAGE_URL @"pageurl"
 

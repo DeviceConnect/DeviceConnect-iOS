@@ -100,6 +100,21 @@
 
 
 /**
+ * NSPredicateからエンティティをlimit付で取得
+ * @param pred
+ * @param sortDescriptors
+ * @param name フェッチ対象のエンティティ名
+ * @param limit 最大取得件数
+ * @param moc 使用するNSManagedObjectContext
+ * @return NSArray 検索結果を配列で返却
+ */
+- (NSArray*)getModelDataByPredicate:(NSPredicate*)pred
+                withSortDescriptors:(NSArray *)sortDescriptors
+                         entityName:(NSString*)name
+                              limit:(NSInteger)limit
+                            context:(NSManagedObjectContext *)moc;
+
+/**
  * エンティティのタイプでフェッチ
  * @param type フェッチするtype
  * @param moc 使用するNSManagedObjectContext
