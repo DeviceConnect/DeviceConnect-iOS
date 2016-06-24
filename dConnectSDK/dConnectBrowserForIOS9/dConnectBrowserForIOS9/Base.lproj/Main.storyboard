@@ -160,13 +160,16 @@
                                     <constraint firstAttribute="height" constant="44" id="eIc-fQ-cIT"/>
                                 </constraints>
                                 <items>
-                                    <barButtonItem title="ヘルプ" id="KAK-gC-zUP"/>
+                                    <barButtonItem title="ヘルプ" id="KAK-gC-zUP">
+                                        <connections>
+                                            <action selector="openHelpView" destination="sIh-io-mcp" id="eUK-ow-LdE"/>
+                                        </connections>
+                                    </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="INb-7v-2E4"/>
                                     <barButtonItem title="デバイス" id="8ah-EP-91Q"/>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="yho-lk-O6e"/>
                                     <barButtonItem image="settings" id="qYV-8V-Mhy">
                                         <connections>
-                                            <action selector="openSettingView:" destination="sIh-io-mcp" id="Y9n-Yl-HeB"/>
                                             <segue destination="Wey-Uj-JCu" kind="presentation" id="LIS-WN-LM7"/>
                                         </connections>
                                     </barButtonItem>

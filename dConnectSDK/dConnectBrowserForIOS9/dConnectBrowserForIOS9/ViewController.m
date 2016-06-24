@@ -17,6 +17,7 @@
 #import "TopViewModel.h"
 #import "TopCollectionHeaderView.h"
 #import "InitialGuideViewController.h"
+#import "WebViewController.h"
 
 @interface ViewController ()
 {
@@ -185,6 +186,14 @@
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"InitialGuide" bundle:[NSBundle mainBundle]];
     InitialGuideViewController *controller = (InitialGuideViewController*)[storyboard instantiateViewControllerWithIdentifier:@"InitialGuideViewController"];
     [self presentViewController:controller animated:YES completion:nil];
+}
+
+- (IBAction)openHelpView
+{
+    NSString* url = @"http://www.yahoo.co.jp/";
+    WebViewController* webView = [[WebViewController alloc]initWithURL: url];
+    UINavigationController* nav = [[UINavigationController alloc]initWithRootViewController:webView];
+    [self presentViewController:nav animated:YES completion:nil];
 }
 
 //--------------------------------------------------------------//
