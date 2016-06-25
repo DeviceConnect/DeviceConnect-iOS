@@ -105,7 +105,7 @@
         NSString *accessToken = [request accessToken];
         NSArray *scopes = DConnectPluginIgnoreProfiles();
         LocalOAuth2Main *oauth = [LocalOAuth2Main sharedOAuthForClass:[self class]];
-        LocalOAuthCheckAccessTokenResult *result = [oauth checkAccessTokenWithScope:profileName
+        LocalOAuthCheckAccessTokenResult *result = [oauth checkAccessTokenWithScope:[profileName lowercaseString]
                                                                       specialScopes:scopes
                                                                         accessToken:accessToken];
         if ([result checkResult]) {

@@ -481,7 +481,7 @@ NSString *const DConnectAttributeNameRequestAccessToken = @"requestAccessToken";
                 NSArray *scopes = DConnectIgnoreProfiles();
                 NSString *accessToken = [request accessToken];
                 LocalOAuth2Main *oauth = [LocalOAuth2Main sharedOAuthForClass:[DConnectManager class]];
-                LocalOAuthCheckAccessTokenResult *result = [oauth checkAccessTokenWithScope:profileName
+                LocalOAuthCheckAccessTokenResult *result = [oauth checkAccessTokenWithScope:[profileName lowercaseString]
                                                                               specialScopes:scopes
                                                                                 accessToken:accessToken];
                 if ([result checkResult]) {
