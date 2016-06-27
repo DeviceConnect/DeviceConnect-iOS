@@ -137,4 +137,20 @@ static NSInteger maxIconCount = 8;
     return self.url;
 }
 
+
+//--------------------------------------------------------------//
+#pragma mark - 初期ガイド表示
+//--------------------------------------------------------------//
+- (BOOL)isNeedOpenInitialGuide
+{
+    NSUserDefaults* def = [NSUserDefaults standardUserDefaults];
+    if ([def boolForKey:IS_INITIAL_GUIDE_OPEN]) {
+        return NO;
+    } else {
+        [def setBool:YES forKey:IS_INITIAL_GUIDE_OPEN];
+        [def synchronize];
+        return YES;
+    }
+}
+
 @end

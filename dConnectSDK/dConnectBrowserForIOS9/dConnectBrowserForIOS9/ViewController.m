@@ -16,6 +16,8 @@
 #import "BookmarkIconViewCell.h"
 #import "TopViewModel.h"
 #import "TopCollectionHeaderView.h"
+#import "InitialGuideViewController.h"
+#import "WebViewController.h"
 
 @interface ViewController ()
 {
@@ -79,6 +81,13 @@
     [self addEmptyLabelIfNeeded];
 }
 
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    if ([viewModel isNeedOpenInitialGuide]) {
+        [self openInitialGuide];
+    }
+}
 
 - (void)viewWillDisappear:(BOOL)animated
 {
@@ -170,6 +179,21 @@
         [self presentViewController:sfSafariViewController animated:YES completion:nil];
     };
     loadSFSafariViewControllerBlock([NSURL URLWithString: [viewModel checkUrlString:url]]);
+}
+
+- (void)openInitialGuide
+{
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"InitialGuide" bundle:[NSBundle mainBundle]];
+    InitialGuideViewController *controller = (InitialGuideViewController*)[storyboard instantiateViewControllerWithIdentifier:@"InitialGuideViewController"];
+    [self presentViewController:controller animated:YES completion:nil];
+}
+
+- (IBAction)openHelpView
+{
+    NSString* path = [[NSBundle mainBundle]pathForResource:@"help" ofType:@"html"];
+    WebViewController* webView = [[WebViewController alloc]initWithPath: path];
+    UINavigationController* nav = [[UINavigationController alloc]initWithRootViewController:webView];
+    [self presentViewController:nav animated:YES completion:nil];
 }
 
 //--------------------------------------------------------------//

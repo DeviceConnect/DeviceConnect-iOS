@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8E0A4C2F1D1CC2D500827DA6 /* InitialGuide.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8E0A4C2E1D1CC2D500827DA6 /* InitialGuide.storyboard */; };
+		8E0A4C321D1CC4A500827DA6 /* InitialGuideViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0A4C311D1CC4A500827DA6 /* InitialGuideViewController.m */; };
+		8E0A4C351D1CC4BE00827DA6 /* GuideDataViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0A4C341D1CC4BE00827DA6 /* GuideDataViewController.m */; };
+		8E0A4C3A1D1CC92D00827DA6 /* InitialGuideViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0A4C391D1CC92D00827DA6 /* InitialGuideViewModel.m */; };
+		8E0A4C3F1D1D28B900827DA6 /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0A4C3E1D1D28B900827DA6 /* WebViewController.m */; };
+		8E0A4C441D1D32EF00827DA6 /* help.html in Resources */ = {isa = PBXBuildFile; fileRef = 8E0A4C431D1D32EF00827DA6 /* help.html */; };
 		8EBB89131D1385050038700B /* BookmarkIconViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EBB89121D1385050038700B /* BookmarkIconViewCell.m */; };
 		8EBB891A1D1387380038700B /* BookmarkIconViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EBB89191D1387380038700B /* BookmarkIconViewModel.m */; };
 		8EBB891D1D139C750038700B /* TopViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EBB891C1D139C750038700B /* TopViewModel.m */; };
@@ -166,6 +172,16 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		8E0A4C2E1D1CC2D500827DA6 /* InitialGuide.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = InitialGuide.storyboard; path = classes/InitialGuide.storyboard; sourceTree = "<group>"; };
+		8E0A4C301D1CC4A500827DA6 /* InitialGuideViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InitialGuideViewController.h; sourceTree = "<group>"; };
+		8E0A4C311D1CC4A500827DA6 /* InitialGuideViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InitialGuideViewController.m; sourceTree = "<group>"; };
+		8E0A4C331D1CC4BE00827DA6 /* GuideDataViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GuideDataViewController.h; sourceTree = "<group>"; };
+		8E0A4C341D1CC4BE00827DA6 /* GuideDataViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GuideDataViewController.m; sourceTree = "<group>"; };
+		8E0A4C381D1CC92D00827DA6 /* InitialGuideViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InitialGuideViewModel.h; sourceTree = "<group>"; };
+		8E0A4C391D1CC92D00827DA6 /* InitialGuideViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InitialGuideViewModel.m; sourceTree = "<group>"; };
+		8E0A4C3D1D1D28B900827DA6 /* WebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebViewController.h; sourceTree = "<group>"; };
+		8E0A4C3E1D1D28B900827DA6 /* WebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebViewController.m; sourceTree = "<group>"; };
+		8E0A4C431D1D32EF00827DA6 /* help.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = help.html; sourceTree = "<group>"; };
 		8EBB89111D1385050038700B /* BookmarkIconViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookmarkIconViewCell.h; sourceTree = "<group>"; };
 		8EBB89121D1385050038700B /* BookmarkIconViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BookmarkIconViewCell.m; sourceTree = "<group>"; };
 		8EBB89181D1387380038700B /* BookmarkIconViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookmarkIconViewModel.h; sourceTree = "<group>"; };
@@ -385,6 +401,43 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8E0A4C361D1CC87700827DA6 /* initialGuide */ = {
+			isa = PBXGroup;
+			children = (
+				8E0A4C301D1CC4A500827DA6 /* InitialGuideViewController.h */,
+				8E0A4C311D1CC4A500827DA6 /* InitialGuideViewController.m */,
+				8E0A4C331D1CC4BE00827DA6 /* GuideDataViewController.h */,
+				8E0A4C341D1CC4BE00827DA6 /* GuideDataViewController.m */,
+			);
+			name = initialGuide;
+			sourceTree = "<group>";
+		};
+		8E0A4C371D1CC89C00827DA6 /* initialGuide */ = {
+			isa = PBXGroup;
+			children = (
+				8E0A4C381D1CC92D00827DA6 /* InitialGuideViewModel.h */,
+				8E0A4C391D1CC92D00827DA6 /* InitialGuideViewModel.m */,
+			);
+			name = initialGuide;
+			sourceTree = "<group>";
+		};
+		8E0A4C3C1D1D289E00827DA6 /* webview */ = {
+			isa = PBXGroup;
+			children = (
+				8E0A4C3D1D1D28B900827DA6 /* WebViewController.h */,
+				8E0A4C3E1D1D28B900827DA6 /* WebViewController.m */,
+			);
+			name = webview;
+			sourceTree = "<group>";
+		};
+		8E0A4C421D1D32EF00827DA6 /* html */ = {
+			isa = PBXGroup;
+			children = (
+				8E0A4C431D1D32EF00827DA6 /* help.html */,
+			);
+			path = html;
+			sourceTree = "<group>";
+		};
 		8EBB89101D1384990038700B /* top */ = {
 			isa = PBXGroup;
 			children = (
@@ -399,6 +452,7 @@
 		8EBB89161D1387010038700B /* viewModel */ = {
 			isa = PBXGroup;
 			children = (
+				8E0A4C371D1CC89C00827DA6 /* initialGuide */,
 				8ED7B1AA1D1BA3E40053FDBD /* setting */,
 				8EBB89171D1387090038700B /* top */,
 			);
@@ -473,6 +527,7 @@
 				AB00F3251C71A93700689C70 /* Bookmark.storyboard */,
 				AB00F3261C71A93700689C70 /* Popup.storyboard */,
 				AB00F1EB1C71941800689C70 /* Main.storyboard */,
+				8E0A4C2E1D1CC2D500827DA6 /* InitialGuide.storyboard */,
 				AB00F1EE1C71941800689C70 /* Assets.xcassets */,
 				AB00F1F01C71941800689C70 /* LaunchScreen.storyboard */,
 				AB00F1F31C71941800689C70 /* Info.plist */,
@@ -562,8 +617,10 @@
 			children = (
 				AB00F2D21C71A29D00689C70 /* GHSettingController.h */,
 				AB00F2D31C71A29D00689C70 /* GHSettingController.m */,
+				8E0A4C3C1D1D289E00827DA6 /* webview */,
 				AB00F31F1C71A6B700689C70 /* bookmark */,
 				AB00F31D1C71A66D00689C70 /* folder */,
+				8E0A4C361D1CC87700827DA6 /* initialGuide */,
 			);
 			name = controller;
 			sourceTree = "<group>";
@@ -751,6 +808,7 @@
 		ABE71E281C76D3620061973C /* resources */ = {
 			isa = PBXGroup;
 			children = (
+				8E0A4C421D1D32EF00827DA6 /* html */,
 				ABE71E291C76D3F40061973C /* images */,
 			);
 			name = resources;
@@ -909,6 +967,7 @@
 				AB00F22E1C719B6500689C70 /* dConnectDeviceIRKit_resources.bundle in Resources */,
 				AB1FAB0C1C7AC1E00013C434 /* dConnectDeviceAllJoyn_resources.bundle in Resources */,
 				AB00F49E1C71B16200689C70 /* LICENSE in Resources */,
+				8E0A4C441D1D32EF00827DA6 /* help.html in Resources */,
 				AB00F2ED1C71A29D00689C70 /* GHFolderTitleCell.xib in Resources */,
 				AB00F2241C719B4B00689C70 /* dConnectDeviceHost_resources.bundle in Resources */,
 				AB00F49D1C71B16200689C70 /* GTMNSString-HTML.podspec in Resources */,
@@ -926,6 +985,7 @@
 				AB00F3271C71A93700689C70 /* Bookmark.storyboard in Resources */,
 				AB00F2361C719B7600689C70 /* dConnectDevicePebble_resources.bundle in Resources */,
 				AB00F2141C719AA800689C70 /* DConnectSDK_resources.bundle in Resources */,
+				8E0A4C2F1D1CC2D500827DA6 /* InitialGuide.storyboard in Resources */,
 				AB00F2481C719B9C00689C70 /* dConnectDeviceTheta_resources.bundle in Resources */,
 				AB00F1ED1C71941800689C70 /* Main.storyboard in Resources */,
 			);
@@ -956,6 +1016,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AB00F2E21C71A29D00689C70 /* GHBookmarkTitleCell.m in Sources */,
+				8E0A4C3F1D1D28B900827DA6 /* WebViewController.m in Sources */,
 				8EBB89211D13CA960038700B /* TopCollectionHeaderView.m in Sources */,
 				AB00F2E81C71A29D00689C70 /* GHDirectory.m in Sources */,
 				8ED7B1B51D1BB03C0053FDBD /* SwitchableCell.m in Sources */,
@@ -972,6 +1033,7 @@
 				8EBB891D1D139C750038700B /* TopViewModel.m in Sources */,
 				AB00F4AB1C71B16200689C70 /* RATreeView+TableViewDelegate.m in Sources */,
 				AB00F4AD1C71B16200689C70 /* RATreeView.m in Sources */,
+				8E0A4C3A1D1CC92D00827DA6 /* InitialGuideViewModel.m in Sources */,
 				AB00F1EA1C71941800689C70 /* ViewController.m in Sources */,
 				8ED7B1B21D1BB0270053FDBD /* GrayLabelCell.m in Sources */,
 				AB00F4A71C71B16200689C70 /* RATreeNodeInfo.m in Sources */,
@@ -982,6 +1044,7 @@
 				8ED7B1B81D1BB04A0053FDBD /* DetailableCell.m in Sources */,
 				AB00F2F61C71A29D00689C70 /* GHToolView.m in Sources */,
 				AB00F1E71C71941800689C70 /* AppDelegate.m in Sources */,
+				8E0A4C351D1CC4BE00827DA6 /* GuideDataViewController.m in Sources */,
 				8ED7B1AD1D1BA4070053FDBD /* GHSettingViewModel.m in Sources */,
 				AB00F2F51C71A29D00689C70 /* GHSettingController.m in Sources */,
 				AB00F4A81C71B16200689C70 /* RATreeView+Enums.m in Sources */,
@@ -992,6 +1055,7 @@
 				AB00F2F71C71A29D00689C70 /* GHURLLabel.m in Sources */,
 				AB00F4A61C71B16200689C70 /* RATreeNodeInfo+Private.m in Sources */,
 				AB00F2EB1C71A29D00689C70 /* GHFoldersListController.m in Sources */,
+				8E0A4C321D1CC4A500827DA6 /* InitialGuideViewController.m in Sources */,
 				8EBB891A1D1387380038700B /* BookmarkIconViewModel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

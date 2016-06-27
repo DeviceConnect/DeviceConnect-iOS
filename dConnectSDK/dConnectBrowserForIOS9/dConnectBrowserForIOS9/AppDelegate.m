@@ -46,6 +46,9 @@
                                                                                    categories:nil];
         [application registerUserNotificationSettings:mySettings];
     }
+    DConnectManager *mgr = [DConnectManager sharedManager];
+    [mgr startByHttpServer];
+
     return YES;
 }
 
