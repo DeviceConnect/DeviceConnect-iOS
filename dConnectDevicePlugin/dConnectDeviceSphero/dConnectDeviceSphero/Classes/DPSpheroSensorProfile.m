@@ -81,11 +81,11 @@ typedef void (^CollisionBlock)(DConnectMessage *);
                                        interface:interface
                                        attribute:attribute];
     if (events == 0) {
-        if ([interface isEqualToString:DPSpheroProfileInterfaceQuaternion]) {
+        if ([self isEqualToInterface: interface cmp:DPSpheroProfileInterfaceQuaternion]) {
             [[DPSpheroManager sharedManager] stopSensorQuaternion];
-        } else if ([interface isEqualToString:DPSpheroProfileInterfaceLocator]) {
+        } else if ([self isEqualToInterface: interface cmp:DPSpheroProfileInterfaceLocator]) {
             [[DPSpheroManager sharedManager] stopSensorLocator];
-        } else if ([interface isEqualToString:DPSpheroProfileInterfaceCollision]) {
+        } else if ([self isEqualToInterface: interface cmp:DPSpheroProfileInterfaceCollision]) {
             [[DPSpheroManager sharedManager] stopSensorCollision];
         }
     }

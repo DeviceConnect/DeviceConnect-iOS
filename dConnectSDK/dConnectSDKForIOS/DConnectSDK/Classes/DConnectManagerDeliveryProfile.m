@@ -88,11 +88,11 @@
     // System Profileのwakeupは例外的にpluginIdで宛先を決める
     // ここでは、/system/device/wakeupの場合のみpluginIdを使用するようにする
     NSString *profileName = [request profile];
-    if ([profileName isEqualToString:DConnectSystemProfileName]) {
+    if ([self isEqualToProfile:profileName cmp:DConnectSystemProfileName]) {
         NSString *inter = [request interface];
         NSString *attr = [request attribute];
-        if ([inter isEqualToString:DConnectSystemProfileInterfaceDevice]
-            && [attr isEqualToString:DConnectSystemProfileAttrWakeUp]) {
+        if ([self isEqualToInterface:inter cmp:DConnectSystemProfileInterfaceDevice]
+            && [self isEqualToAttribute:attr cmp:DConnectSystemProfileAttrWakeUp]) {
             serviceId = [request pluginId];
             if (!serviceId) {
                 [response setErrorToInvalidRequestParameterWithMessage:@"pluginId is required."];

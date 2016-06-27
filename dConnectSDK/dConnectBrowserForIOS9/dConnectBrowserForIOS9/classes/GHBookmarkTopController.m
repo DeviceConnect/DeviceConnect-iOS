@@ -184,6 +184,7 @@
         }
     }else{
         if ([page.type isEqualToString:TYPE_BOOKMARK]){
+            page.latest_opened_date = [NSDate date];
 
             //ブックマーク
             NSDictionary* dict = @{PAGE_URL:page.url};

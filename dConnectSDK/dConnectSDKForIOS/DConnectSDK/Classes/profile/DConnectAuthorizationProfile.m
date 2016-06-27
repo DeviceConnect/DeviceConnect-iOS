@@ -48,10 +48,10 @@ NSString *const DConnectAuthorizationProfileGrantTypeAuthorizationCode = @"autho
     NSString *attribute = [request attribute];
     
     if (attribute) {
-        if ([attribute isEqualToString:DConnectAuthorizationProfileAttrGrant]) {
+        if ([self isEqualToAttribute: attribute cmp:DConnectAuthorizationProfileAttrGrant]) {
             send = [self didReceiveGetCreateClientRequest:request
                                                  response:response];
-        } else if ([attribute isEqualToString:DConnectAuthorizationProfileAttrAccessToken]) {
+        } else if ([self isEqualToAttribute: attribute cmp: DConnectAuthorizationProfileAttrAccessToken]) {
             send = [self didReceiveGetRequestAccessTokenRequest:request
                                                        response:response];
         } else {
@@ -95,6 +95,10 @@ NSString *const DConnectAuthorizationProfileGrantTypeAuthorizationCode = @"autho
     NSString *package = [DConnectAuthorizationProfile packageFromRequest:request];
     NSString *clientId = [DConnectAuthorizationProfile clientIdFromRequest:request];
     NSString *scope = [DConnectAuthorizationProfile scopeFromeFromRequest:request];
+    
+    // APIパス名の大文字小文字を区別しない対応。小文字に統一する。
+    scope = [scope lowercaseString];
+    
     NSArray *scopes = [DConnectAuthorizationProfile parsePattern:scope];
     NSString *applicationName = @"Device Connect Manager";
     

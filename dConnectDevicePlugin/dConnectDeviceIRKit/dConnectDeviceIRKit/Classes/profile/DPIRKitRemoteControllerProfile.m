@@ -12,7 +12,7 @@
 #import "DPIRKitDevicePlugin.h"
 #import "DPIRKit_irkit.h"
 
-NSString *const DPIRKitRemoteControllerProfileName = @"remote_controller";
+NSString *const DPIRKitRemoteControllerProfileName = @"remoteController";
 NSString *const DPIRKitRemoteControllerProfileParamMessage = @"message";
 
 @interface DPIRKitRemoteControllerProfile()

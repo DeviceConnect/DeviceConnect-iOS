@@ -54,25 +54,25 @@ NSString *const DConnectBatteryProfileParamBattery         = @"battery";
     NSString *attribute = [request attribute];
     
     if (attribute) {
-        if ([attribute isEqualToString:DConnectBatteryProfileAttrLevel]) {
+        if ([self isEqualToAttribute: attribute cmp:DConnectBatteryProfileAttrLevel]) {
             if ([self hasMethod:@selector(profile:didReceiveGetLevelRequest:response:serviceId:) response:response])
             {
                 send = [_delegate profile:self didReceiveGetLevelRequest:request
                                  response:response serviceId:serviceId];
             }
-        } else if ([attribute isEqualToString:DConnectBatteryProfileAttrCharging]) {
+        } else if ([self isEqualToAttribute: attribute cmp:DConnectBatteryProfileAttrCharging]) {
             if ([self hasMethod:@selector(profile:didReceiveGetChargingRequest:response:serviceId:) response:response])
             {
                 send = [_delegate profile:self didReceiveGetChargingRequest:request
                                  response:response serviceId:serviceId];
             }
-        } else if ([attribute isEqualToString:DConnectBatteryProfileAttrChargingTime]) {
+        } else if ([self isEqualToAttribute: attribute cmp:DConnectBatteryProfileAttrChargingTime]) {
             if ([self hasMethod:@selector(profile:didReceiveGetChargingTimeRequest:response:serviceId:) response:response])
             {
                 send = [_delegate profile:self didReceiveGetChargingTimeRequest:request
                                  response:response serviceId:serviceId];
             }
-        } else if ([attribute isEqualToString:DConnectBatteryProfileAttrDischargingTime]) {
+        } else if ([self isEqualToAttribute: attribute cmp:DConnectBatteryProfileAttrDischargingTime]) {
             if ([self hasMethod:@selector(profile:didReceiveGetDischargingTimeRequest:response:serviceId:) response:response])
             {
                 send = [_delegate profile:self didReceiveGetDischargingTimeRequest:request
@@ -103,7 +103,7 @@ NSString *const DConnectBatteryProfileParamBattery         = @"battery";
     NSString *attribute = [request attribute];
     
     if (attribute) {
-        if ([attribute isEqualToString:DConnectBatteryProfileAttrOnChargingChange]) {
+        if ([self isEqualToAttribute: attribute cmp:DConnectBatteryProfileAttrOnChargingChange]) {
             
             if ([self hasMethod:@selector(profile:didReceivePutOnChargingChangeRequest:response:serviceId:sessionKey:)
                        response:response])
@@ -112,7 +112,7 @@ NSString *const DConnectBatteryProfileParamBattery         = @"battery";
                                  serviceId:serviceId sessionKey:sessionKey];
             }
             
-        } else if ([attribute isEqualToString:DConnectBatteryProfileAttrOnBatteryChange]) {
+        } else if ([self isEqualToAttribute:attribute cmp:DConnectBatteryProfileAttrOnBatteryChange]) {
             
             if ([self hasMethod:@selector(profile:didReceivePutOnBatteryChangeRequest:response:serviceId:sessionKey:)
                        response:response])
@@ -144,7 +144,7 @@ NSString *const DConnectBatteryProfileParamBattery         = @"battery";
     NSString *sessionKey = [request sessionKey];
     NSString *attribute = [request attribute];
     
-    if ([DConnectBatteryProfileAttrOnChargingChange isEqualToString:attribute]) {
+    if ([self isEqualToAttribute: DConnectBatteryProfileAttrOnChargingChange cmp:attribute]) {
         
         if ([self hasMethod:@selector(profile:didReceiveDeleteOnChargingChangeRequest:response:serviceId:sessionKey:)
                    response:response])
@@ -153,7 +153,7 @@ NSString *const DConnectBatteryProfileParamBattery         = @"battery";
                              serviceId:serviceId sessionKey:sessionKey];
         }
         
-    } else if ([DConnectBatteryProfileAttrOnBatteryChange isEqualToString:attribute]) {
+    } else if ([self isEqualToAttribute: DConnectBatteryProfileAttrOnBatteryChange cmp:attribute]) {
         if ([self hasMethod:@selector(profile:didReceiveDeleteOnBatteryChangeRequest:response:serviceId:sessionKey:)
                    response:response])
         {

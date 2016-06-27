@@ -48,7 +48,7 @@ NSString *const DConnectNotificationProfileParamUri = @"uri";
     }
     
     NSString *attribute = [request attribute];
-    if ([attribute isEqualToString:DConnectNotificationProfileAttrNotify]) {
+    if ([self isEqualToAttribute: attribute cmp:DConnectNotificationProfileAttrNotify]) {
         
         if ([self hasMethod:@selector(profile:
                                       didReceivePostNotifyRequest:
@@ -94,7 +94,7 @@ NSString *const DConnectNotificationProfileParamUri = @"uri";
     NSString *serviceId = [request serviceId];
     NSString *sessionKey = [request sessionKey];
     
-    if ([attribute isEqualToString:DConnectNotificationProfileAttrOnClick]) {
+    if ([self isEqualToAttribute: attribute cmp:DConnectNotificationProfileAttrOnClick]) {
         
         if ([self hasMethod:@selector(profile:didReceivePutOnClickRequest:response:serviceId:sessionKey:)
                    response:response])
@@ -102,21 +102,21 @@ NSString *const DConnectNotificationProfileParamUri = @"uri";
             send = [_delegate profile:self didReceivePutOnClickRequest:request response:response
                              serviceId:serviceId sessionKey:sessionKey];
         }
-    } else if ([attribute isEqualToString:DConnectNotificationProfileAttrOnClose]) {
+    } else if ([self isEqualToAttribute: attribute cmp:DConnectNotificationProfileAttrOnClose]) {
         if ([self hasMethod:@selector(profile:didReceivePutOnCloseRequest:response:serviceId:sessionKey:)
                    response:response])
         {
             send = [_delegate profile:self didReceivePutOnCloseRequest:request response:response
                              serviceId:serviceId sessionKey:sessionKey];
         }
-    } else if ([attribute isEqualToString:DConnectNotificationProfileAttrOnError]) {
+    } else if ([self isEqualToAttribute: attribute cmp:DConnectNotificationProfileAttrOnError]) {
         if ([self hasMethod:@selector(profile:didReceivePutOnErrorRequest:response:serviceId:sessionKey:)
                    response:response])
         {
             send = [_delegate profile:self didReceivePutOnErrorRequest:request response:response
                              serviceId:serviceId sessionKey:sessionKey];
         }
-    } else if ([attribute isEqualToString:DConnectNotificationProfileAttrOnShow]) {
+    } else if ([self isEqualToAttribute: attribute cmp:DConnectNotificationProfileAttrOnShow]) {
         if ([self hasMethod:@selector(profile:didReceivePutOnShowRequest:response:serviceId:sessionKey:)
                    response:response])
         {
@@ -142,35 +142,35 @@ NSString *const DConnectNotificationProfileParamUri = @"uri";
     NSString *serviceId = [request serviceId];
     NSString *sessionKey = [request sessionKey];
     
-    if ([attribute isEqualToString:DConnectNotificationProfileAttrOnClick]) {
+    if ([self isEqualToAttribute: attribute cmp:DConnectNotificationProfileAttrOnClick]) {
         if ([self hasMethod:@selector(profile:didReceiveDeleteOnClickRequest:response:serviceId:sessionKey:)
                    response:response])
         {
             send = [_delegate profile:self didReceiveDeleteOnClickRequest:request response:response
                              serviceId:serviceId sessionKey:sessionKey];
         }
-    } else if ([attribute isEqualToString:DConnectNotificationProfileAttrOnClose]) {
+    } else if ([self isEqualToAttribute: attribute cmp:DConnectNotificationProfileAttrOnClose]) {
         if ([self hasMethod:@selector(profile:didReceiveDeleteOnCloseRequest:response:serviceId:sessionKey:)
                    response:response])
         {
             send = [_delegate profile:self didReceiveDeleteOnCloseRequest:request response:response
                              serviceId:serviceId sessionKey:sessionKey];
         }
-    } else if ([attribute isEqualToString:DConnectNotificationProfileAttrOnError]) {
+    } else if ([self isEqualToAttribute: attribute cmp:DConnectNotificationProfileAttrOnError]) {
         if ([self hasMethod:@selector(profile:didReceiveDeleteOnErrorRequest:response:serviceId:sessionKey:)
                    response:response])
         {
             send = [_delegate profile:self didReceiveDeleteOnErrorRequest:request response:response
                              serviceId:serviceId sessionKey:sessionKey];
         }
-    } else if ([attribute isEqualToString:DConnectNotificationProfileAttrOnShow]) {
+    } else if ([self isEqualToAttribute: attribute cmp:DConnectNotificationProfileAttrOnShow]) {
         if ([self hasMethod:@selector(profile:didReceiveDeleteOnShowRequest:response:serviceId:sessionKey:)
                    response:response])
         {
             send = [_delegate profile:self didReceiveDeleteOnShowRequest:request response:response
                              serviceId:serviceId sessionKey:sessionKey];
         }
-    } else if ([attribute isEqualToString:DConnectNotificationProfileAttrNotify]) {
+    } else if ([self isEqualToAttribute: attribute cmp:DConnectNotificationProfileAttrNotify]) {
         if ([self hasMethod:@selector(profile:didReceiveDeleteNotifyRequest:response:serviceId:notificationId:)
                    response:response])
         {

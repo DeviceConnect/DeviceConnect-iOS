@@ -10,46 +10,34 @@
 #import "GHSettingController.h"
 #import "GHDataManager.h"
 #import <DConnectSDK/DConnectSDK.h>
-#import <ifaddrs.h>
-#import <arpa/inet.h>
+#import "GHSettingViewModel.h"
+#import "GrayLabelCell.h"
+#import "SwitchableCell.h"
+#import "DetailableCell.h"
+
 @interface GHSettingController ()
-@property (nonatomic, strong) NSArray* datasource;
-@property (nonatomic, strong) UISwitch* managerSW;
-@property (nonatomic, strong) UISwitch* blockSW;
+{
+    GHSettingViewModel* viewModel;
+}
 @end
-
-
-#define CELL_ID @"setting"
-#define ALERT_COOKIE  100
-#define ALERT_HISTORY 101
 
 
 @implementation GHSettingController
 //--------------------------------------------------------------//
 #pragma mark - 初期化
 //--------------------------------------------------------------//
-- (id)initWithStyle:(UITableViewStyle)style
+- (instancetype)initWithCoder:(NSCoder *)aDecoder
 {
-//    NSString *ip = [NSString stringWithFormat:@"Host: %@", [self myIPAddress]];
-    self = [super initWithStyle:style];
+    self = [super initWithCoder:aDecoder];
     if (self) {
-        self.datasource = @[@[@"DeviceConnectManager(ON/OFF)",
-                              @"Port 4035",
-                              @"アクセストークン削除",
-                              @"Originホワイトリスト管理",
-                              @"Originブロック機能"]
-                            ];
-        
-        self.title = @"設定";
-
+        viewModel = [[GHSettingViewModel alloc]init];
     }
     return self;
 }
 
 - (void)dealloc
 {
-    self.datasource = nil;
-    self.managerSW   = nil;
+    viewModel = nil;
 }
 
 
@@ -59,85 +47,26 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    //セルの登録
-    [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:CELL_ID];
-    
-//    if (![GHUtils isiPad]) {
-        //ナビボタンのセット
-        UIBarButtonItem* close = [[UIBarButtonItem alloc]initWithTitle:@"閉じる"
-                                                                 style:UIBarButtonItemStylePlain
-                                                                target:self
-                                                                action:@selector(close)];
-        self.navigationItem.leftBarButtonItem = close;
-//    }
+    self.title = @"設定";
 }
 
-- (void)didReceiveMemoryWarning
+- (IBAction)close
 {
-    [super didReceiveMemoryWarning];
-}
-
-
-- (void)close
-{
-    [self updateSwitchState];
+    [viewModel updateSwitchState];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (NSString *)myIPAddress
-{
-    NSString *address = nil;
-    struct ifaddrs *interfaces = NULL;
-    struct ifaddrs *temp_addr = NULL;
-    int success = 0;
-    success = getifaddrs(&interfaces);
-    if (success == 0) {
-        temp_addr = interfaces;
-        while(temp_addr != NULL) {
-            if(temp_addr->ifa_addr->sa_family == AF_INET) {
-                if([[NSString stringWithUTF8String:temp_addr->ifa_name] isEqualToString:@"en0"]) {
-                    address = [NSString stringWithUTF8String:inet_ntoa(((struct sockaddr_in *)temp_addr->ifa_addr)->sin_addr)];
-                }
-            }
-            temp_addr = temp_addr->ifa_next;
-        }
-    }
-    freeifaddrs(interfaces);
-    return address;
-}
+
 //--------------------------------------------------------------//
-#pragma mark - ManagerスイッチのON/OFF
+#pragma mark - スイッチのON/OFF
 //--------------------------------------------------------------//
 - (void)updateSwitch:(UISwitch*)sender
 {
-    DConnectManager *manager = [DConnectManager sharedManager];
-    if (sender.isOn) {
-        [manager startByHttpServer];
-    } else {
-        [manager stopByHttpServer];
-    }
+    //NOTE: SecurityCellTypeがタグとして設定されている
+    SecurityCellType type = sender.tag;
+    [viewModel updateSwitch:type switchState:sender.isOn];
 }
 
-//--------------------------------------------------------------//
-#pragma mark - Originブロック機能のON/OFF
-//--------------------------------------------------------------//
-- (void)updateOriginBlockingSwitch:(UISwitch*)sender
-{
-    [DConnectManager sharedManager].settings.useOriginBlocking = sender.isOn;
-}
-
-///スイッチの状態を保存
-- (void)updateSwitchState
-{
-    NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
-    [def setObject:@(self.managerSW.isOn) forKey:IS_MANAGER_LAUNCH];
-    [def setObject:@(self.blockSW.isOn) forKey:IS_ORIGIN_BLOCKING];
-    [def synchronize];
-    
-    //Cookie許可設定
-    [GHUtils setCookieAccept:self.managerSW.isOn];
-}
 
 //--------------------------------------------------------------//
 #pragma mark - Table view data source
@@ -145,44 +74,24 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return [self.datasource count];
+    return [viewModel.datasource count];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [(NSArray *)[self.datasource objectAtIndex:section] count];
+    return [(NSArray *)[viewModel.datasource objectAtIndex:section] count];
 }
-
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CELL_ID forIndexPath:indexPath];
-    [self configureCell:cell atIndexPath:indexPath];
-    return cell;
+    return [self configureCell:tableView atIndexPath:indexPath];
 }
-
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    
-    if (indexPath.section == 0) {
-        switch (indexPath.row) {
-            case 2:
-                //Device Connect Managerのアクセストークン削除
-                [DConnectUtil showAccessTokenList];
-                break;
-            case 3:
-                //ホワイトリスト管理
-                [DConnectUtil showOriginWhitelist];
-                break;
-            default:
-                break;
-        }
-    }
+    [viewModel didSelectedRow:indexPath];
 }
-
-
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -191,69 +100,85 @@
 
 /**
  * セルの表示内容をセット
- * @param cell 対象のセル
+ * @param tableView 対象のtableView
  * @param indexPath indexPath
  */
-- (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
+- (UITableViewCell*)configureCell:(UITableView *)tableView atIndexPath:(NSIndexPath *)indexPath
 {
-    cell.accessoryType = UITableViewCellAccessoryNone;
-    cell.textLabel.text = [[self.datasource objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
-    
-    if (indexPath.section == 0) {
-        switch (indexPath.row) {
-            case 0:
-            {
-                //DeviceConnectManagerのON/OFF
-                if (!self.managerSW ) {
-                    self.managerSW = [[UISwitch alloc]init];
-                    [self.managerSW addTarget:self action:@selector(updateSwitch:) forControlEvents:UIControlEventValueChanged];
-                    DConnectManager *manager = [DConnectManager sharedManager];
-                    NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
-                    BOOL sw = [def boolForKey:IS_MANAGER_LAUNCH];
-                    if (sw) {
-                        [manager startByHttpServer];
-                    }
-                    [self.managerSW setOn:sw animated:NO];
-                    
-                    cell.accessoryView = self.managerSW;
-                }
-                
-                cell.selectionStyle = UITableViewCellSelectionStyleNone;
-            }
-                break;
-                
-            case 2:
-                //Device Connect Managerのアクセストークン削除
-                cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-                break;
-            case 3:
-                //ホワイトリスト管理
-                cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-                break;
-            case 4:
-            {
-                //Originブロック機能 ON/OFF
-                if (!self.blockSW ) {
-                    self.blockSW = [[UISwitch alloc]init];
-                    [self.blockSW addTarget:self action:@selector(updateOriginBlockingSwitch:) forControlEvents:UIControlEventValueChanged];
-                    
-                    //スイッチの状態セット
-                    NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
-                    BOOL sw = [def boolForKey:IS_ORIGIN_BLOCKING];
-                    [self.blockSW setOn:sw animated:NO];
-                    
-                    cell.accessoryView = self.blockSW;
-                }
-                
-                cell.selectionStyle = UITableViewCellSelectionStyleNone;
-            }
-                break;
-            default:
-                break;
+    NSInteger type = [(NSNumber*)[[viewModel.datasource objectAtIndex:indexPath.section] objectAtIndex:indexPath.row] integerValue];
+    switch (indexPath.section) {
+        case SectionTypeSetting:
+        {
+            GrayLabelCell *cell = (GrayLabelCell*)[tableView dequeueReusableCellWithIdentifier:@"GrayLabelCell"
+                                                                                  forIndexPath:indexPath];
+            cell.titleLabel.text = [viewModel cellTitle: indexPath];
+            return cell;
         }
+            break;
+        case SectionTypeDevice:
+            return [self configureDetailCell:tableView atIndexPath: indexPath];
+            break;
+        case SectionTypeSecurity:
+            switch (type) {
+                case SecurityCellTypeDeleteAccessToken:
+                case SecurityCellTypeOriginWhitelist:
+                case SecurityCellTypeWebSocket:
+                    return [self configureDetailCell:tableView atIndexPath: indexPath];
+                    break;
+                case SecurityCellTypeOriginBlock:
+                case SecurityCellTypeLocalOAuth:
+                case SecurityCellTypeOrigin:
+                case SecurityCellTypeExternIP:
+                {
+                    SwitchableCell *cell = (SwitchableCell*)[tableView dequeueReusableCellWithIdentifier:@"SwitchableCell"
+                                                                                            forIndexPath:indexPath];
+                    cell.titleLabel.text = [viewModel cellTitle: indexPath];
+                    [cell.switchBtn addTarget:self action:@selector(updateSwitch:)
+                             forControlEvents: UIControlEventValueChanged];
+                    cell.switchBtn.tag = type; //NOTE: SecurityCellType
+                    cell.indexPath = indexPath;
+                    [cell.switchBtn setOn:[viewModel switchState:type] animated:NO];
+                    return cell;
+                }
+                    break;
+            }
+            break;
     }
+    return [[UITableViewCell alloc]init];
 }
 
+- (DetailableCell*)configureDetailCell:(UITableView *)tableView atIndexPath:(NSIndexPath *)indexPath
+{
+    DetailableCell *cell = (DetailableCell*)[tableView dequeueReusableCellWithIdentifier:@"DetailableCell"
+                                                                            forIndexPath:indexPath];
+    cell.titleLabel.text = [viewModel cellTitle: indexPath];
+    cell.indexPath = indexPath;
+    return cell;
+}
 
+CGFloat headerHeight = 36.0;
+- (UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    NSString* title = [viewModel sectionTitle: section];
+    CGRect rect = [[UIScreen mainScreen]bounds];
+    CGFloat screenWidth = rect.size.width;
+    UILabel* label = [[UILabel alloc]initWithFrame:CGRectMake(10, 0, screenWidth, headerHeight)];
+    label.text = title;
+    label.font = [UIFont boldSystemFontOfSize:16.0];
+
+    UIView* header = [[UIView alloc]initWithFrame:CGRectMake(0, 0, screenWidth, headerHeight)];
+    [header addSubview:label];
+    return header;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return headerHeight;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+{
+    return 0;
+}
 
 @end

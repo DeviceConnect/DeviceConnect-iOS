@@ -16,6 +16,7 @@
 
 @property (nonatomic, retain) NSString * category;
 @property (nonatomic, retain) NSDate * created_date;
+@property (nonatomic, retain) NSDate * latest_opened_date;
 @property (nonatomic, retain) NSString * identifier;
 @property (nonatomic, retain) NSNumber * priority;
 @property (nonatomic, retain) NSString * sectionIndex;

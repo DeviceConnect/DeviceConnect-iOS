@@ -25,7 +25,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: GET
- * Path: /file_descriptor/open?serviceId=xxxx&mediaid=xxxx&flag=xxxx&mode=xxxx
+ * Path: /fileDescriptor/open?serviceId=xxxx&mediaid=xxxx&flag=xxxx&mode=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -35,7 +35,7 @@
  */
 - (void) testHttpNormalFileDescriptorOpenGet
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/file_descriptor/open?serviceId=%@&flag=r&path=/test/test.png", self.serviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/fileDescriptor/open?serviceId=%@&flag=r&path=/test/test.png", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
     
@@ -47,7 +47,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /file_descriptor/close?serviceId=xxxx&mediaid=xxxx
+ * Path: /fileDescriptor/close?serviceId=xxxx&mediaid=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -56,7 +56,7 @@
  */
 - (void) testHttpNormalFileDescriptorClosePut
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/file_descriptor/close?serviceId=%@&path=/test/test.png", self.serviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/fileDescriptor/close?serviceId=%@&path=/test/test.png", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
@@ -68,7 +68,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: GET
- * Path: /file_descriptor/read?serviceId=xxxx&mediaid=xxxx&length=xxxx
+ * Path: /fileDescriptor/read?serviceId=xxxx&mediaid=xxxx&length=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -77,7 +77,7 @@
  */
 - (void) testHttpNormalFileDescriptorReadGet
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/file_descriptor/read?serviceId=%@&length=1&path=/test/test.png", self.serviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/fileDescriptor/read?serviceId=%@&length=1&path=/test/test.png", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
     
@@ -89,7 +89,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /file_descriptor/write?serviceId=xxxx&mediaid=xxxx
+ * Path: /fileDescriptor/write?serviceId=xxxx&mediaid=xxxx
  * Entity: 文字列"test"。
  * </pre>
  * <pre>
@@ -99,7 +99,7 @@
  */
 - (void) testHttpNormalFileDescriptorWritePut
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/file_descriptor/write?serviceId=%@&path=/test/test.png", self.serviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/fileDescriptor/write?serviceId=%@&path=/test/test.png", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     Multipart* multi = [Multipart new];
@@ -115,7 +115,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /file_descriptor/watchfile?serviceId=xxxx&session_key=xxxx
+ * Path: /fileDescriptor/watchfile?serviceId=xxxx&session_key=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -124,7 +124,7 @@
  */
 - (void) testHttpNormalFileDescriptorOnWatchFilePut
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/file_descriptor/onwatchfile?sessionKey=%@&serviceId=%@", self.clientId, self.serviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/fileDescriptor/onwatchfile?sessionKey=%@&serviceId=%@", self.clientId, self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
@@ -137,7 +137,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /file_descriptor/watchfile?serviceId=xxxx&session_key=xxxx
+ * Path: /fileDescriptor/watchfile?serviceId=xxxx&session_key=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -146,7 +146,7 @@
  */
 - (void) testHttpNormalFileDescriptorOnWatchFileDelete
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/file_descriptor/onwatchfile?sessionKey=%@&serviceId=%@", self.clientId, self.serviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/fileDescriptor/onwatchfile?sessionKey=%@&serviceId=%@", self.clientId, self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     

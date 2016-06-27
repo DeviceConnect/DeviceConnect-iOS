@@ -45,7 +45,7 @@ NSString *const DCMTemperatureProfileParamType = @"type";
     
     NSString *profile = [request profile];
     
-    if ([profile isEqualToString:DCMTemperatureProfileName]
+    if ([self isEqualToProfile:profile cmp:DCMTemperatureProfileName]
         && [self hasMethod:@selector(profile:didReceiveGetTemperatureRequest:response:serviceId:) response:response])
     {
         NSString *serviceId = [request serviceId];

@@ -15,6 +15,7 @@
 
 @dynamic category;
 @dynamic created_date;
+@dynamic latest_opened_date;
 @dynamic identifier;
 @dynamic priority;
 @dynamic sectionIndex;

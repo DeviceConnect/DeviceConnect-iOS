@@ -118,5 +118,31 @@
  */
 - (BOOL) didReceiveDeleteRequest:(DConnectRequestMessage *) request response:(DConnectResponseMessage *) response;
 
+/*!
+ @brief Profileが一致するか判定する。
+ 
+ @param[in] profile 比較するprofile
+ @param[in] cmpProfile 比較されるprofile
+ @return Profileが一致(大小文字区別せず)したらYES、そうでなければNO。
+ */
+- (BOOL) isEqualToProfile: (NSString *)profile cmp: (NSString *)cmpProfile;
+
+/*!
+ @brief Interfaceが一致するか判定する。
+ 
+ @param[in] interface 比較するinterface
+ @param[in] cmpInterface 比較されるinterface
+ @return Interfaceが一致(大小文字区別せず)したらYES、そうでなければNO。
+ */
+- (BOOL) isEqualToInterface: (NSString *)interface cmp: (NSString *)cmpInterface;
+
+/*!
+ @brief Attributeが一致するか判定する。
+ 
+ @param[in] attribute 比較するattribute
+ @param[in] cmpAttribute 比較されるattribute
+ @return Attributeが一致(大小文字区別せず)したらYES、そうでなければNO。
+ */
+- (BOOL) isEqualToAttribute: (NSString *)attribute cmp: (NSString *)cmpAttribute;
 
 @end

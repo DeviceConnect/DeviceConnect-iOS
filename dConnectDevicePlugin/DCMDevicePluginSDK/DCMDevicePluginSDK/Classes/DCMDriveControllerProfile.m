@@ -10,7 +10,7 @@
 #import "DCMDriveControllerProfile.h"
 #import <DConnectSDK/DConnectUtil.h>
 
-NSString *const DCMDriveControllerProfileName = @"drive_controller";
+NSString *const DCMDriveControllerProfileName = @"driveController";
 
 NSString *const DCMDriveControllerProfileAttrMove = @"move";
 NSString *const DCMDriveControllerProfileAttrStop = @"stop";
@@ -53,9 +53,9 @@ NSString *const DCMDriveControllerProfileParamSpeed = @"speed";
     NSString *attribute = [request attribute];
     
     if (profile) {
-        if ([profile isEqualToString:DCMDriveControllerProfileName]
+        if ([self isEqualToProfile:profile cmp:DCMDriveControllerProfileName]
             && attribute != nil
-            && [attribute isEqualToString:DCMDriveControllerProfileAttrMove]
+            && [self isEqualToAttribute:attribute cmp:DCMDriveControllerProfileAttrMove]
             && [self hasMethod:@selector(profile:
                                          didReceivePostDriveControllerMoveRequest:
                                          response:
@@ -101,9 +101,9 @@ NSString *const DCMDriveControllerProfileParamSpeed = @"speed";
     NSString *attribute = [request attribute];
     
     if (profile) {
-        if ([profile isEqualToString:DCMDriveControllerProfileName]
+        if ([self isEqualToProfile:profile cmp: DCMDriveControllerProfileName]
             && attribute != nil
-            && [attribute isEqualToString:DCMDriveControllerProfileAttrRotate]
+            && [self isEqualToAttribute:attribute cmp:DCMDriveControllerProfileAttrRotate]
             && [self hasMethod:@selector(profile:
                                          didReceivePutDriveControllerRotateRequest:
                                          response:
@@ -144,9 +144,9 @@ NSString *const DCMDriveControllerProfileParamSpeed = @"speed";
     NSString *attribute = [request attribute];
 
     if (profile) {
-        if ([profile isEqualToString:DCMDriveControllerProfileName]
+        if ([self isEqualToProfile:profile cmp:DCMDriveControllerProfileName]
             && attribute != nil
-            && [attribute isEqualToString:DCMDriveControllerProfileAttrStop]
+            && [self isEqualToAttribute: attribute cmp:DCMDriveControllerProfileAttrStop]
             && [self hasMethod:@selector(profile:
                                          didReceiveDeleteDriveControllerStopRequest:
                                          response:

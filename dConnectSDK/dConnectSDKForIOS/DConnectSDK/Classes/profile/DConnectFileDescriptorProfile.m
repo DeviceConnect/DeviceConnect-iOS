@@ -9,7 +9,7 @@
 
 #import "DConnectFileDescriptorProfile.h"
 
-NSString *const DConnectFileDescriptorProfileName = @"file_descriptor";
+NSString *const DConnectFileDescriptorProfileName = @"fileDescriptor";
 NSString *const DConnectFileDescriptorProfileAttrOpen = @"open";
 NSString *const DConnectFileDescriptorProfileAttrClose = @"close";
 NSString *const DConnectFileDescriptorProfileAttrRead = @"read";
@@ -55,7 +55,7 @@ NSString *const DConnectFileDescriptorProfileParamPath = @"path";
         NSString *serviceId = [request serviceId];
         NSString *path = [DConnectFileDescriptorProfile pathFromRequest:request];
         
-        if ([attribute isEqualToString:DConnectFileDescriptorProfileAttrOpen]) {
+        if ([self isEqualToAttribute: attribute cmp:DConnectFileDescriptorProfileAttrOpen]) {
             if ([self hasMethod:@selector(profile:didReceiveGetOpenRequest:response:serviceId:path:flag:)
                        response:response])
             {
@@ -63,7 +63,7 @@ NSString *const DConnectFileDescriptorProfileParamPath = @"path";
                 send = [_delegate profile:self didReceiveGetOpenRequest:request response:response
                                  serviceId:serviceId path:path flag:flag];
             }
-        } else if ([attribute isEqualToString:DConnectFileDescriptorProfileAttrRead]) {
+        } else if ([self isEqualToAttribute: attribute cmp:DConnectFileDescriptorProfileAttrRead]) {
             if ([self hasMethod:@selector(profile:didReceiveGetReadRequest:response:serviceId:path:length:position:)
                        response:response])
             {
@@ -97,7 +97,7 @@ NSString *const DConnectFileDescriptorProfileParamPath = @"path";
         NSString *serviceId = [request serviceId];
         NSString *path = [DConnectFileDescriptorProfile pathFromRequest:request];
         
-        if ([attribute isEqualToString:DConnectFileDescriptorProfileAttrClose]) {
+        if ([self isEqualToAttribute:attribute cmp:DConnectFileDescriptorProfileAttrClose]) {
             
             if ([self hasMethod:@selector(profile:didReceivePutCloseRequest:response:serviceId:path:)
                        response:response])
@@ -105,7 +105,7 @@ NSString *const DConnectFileDescriptorProfileParamPath = @"path";
                 send = [_delegate profile:self didReceivePutCloseRequest:request response:response
                                  serviceId:serviceId path:path];
             }
-        } else if ([attribute isEqualToString:DConnectFileDescriptorProfileAttrWrite]) {
+        } else if ([self isEqualToAttribute: attribute cmp:DConnectFileDescriptorProfileAttrWrite]) {
             if ([self hasMethod:@selector(profile:didReceivePutWriteRequest:response:serviceId:path:media:position:)
                        response:response])
             {
@@ -115,7 +115,7 @@ NSString *const DConnectFileDescriptorProfileParamPath = @"path";
                 send = [_delegate profile:self didReceivePutWriteRequest:request response:response
                                  serviceId:serviceId path:path media:media position:position];
             }
-        } else if ([attribute isEqualToString:DConnectFileDescriptorProfileAttrOnWatchFile]) {
+        } else if ([self isEqualToAttribute:attribute cmp:DConnectFileDescriptorProfileAttrOnWatchFile]) {
             
             if ([self hasMethod:@selector(profile:didReceivePutOnWatchFileRequest:response:serviceId:sessionKey:)
                        response:response])
@@ -143,7 +143,7 @@ NSString *const DConnectFileDescriptorProfileParamPath = @"path";
     
     NSString *attribute = [request attribute];
     
-    if ([DConnectFileDescriptorProfileAttrOnWatchFile isEqualToString:attribute]) {
+    if ([self isEqualToAttribute: DConnectFileDescriptorProfileAttrOnWatchFile cmp:attribute]) {
         
         if ([self hasMethod:@selector(profile:didReceiveDeleteOnWatchFileRequest:response:serviceId:sessionKey:)
                    response:response])

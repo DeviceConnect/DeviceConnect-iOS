@@ -9,7 +9,7 @@
 
 #import "DConnectKeyEventProfile.h"
 
-NSString *const DConnectKeyEventProfileName = @"keyevent";
+NSString *const DConnectKeyEventProfileName = @"keyEvent";
 NSString *const DConnectKeyEventProfileAttrKeyEvent = @"keyevent";
 NSString *const DConnectKeyEventProfileAttrOnDown = @"ondown";
 NSString *const DConnectKeyEventProfileAttrOnUp = @"onup";
@@ -44,7 +44,7 @@ int const DConnectKeyEventProfileKeyTypeUser = 0x00000800;
     
     NSString *attribute = [request attribute];
     
-    if ([attribute isEqualToString:DConnectKeyEventProfileAttrOnDown]) {
+    if ([self isEqualToAttribute: attribute cmp:DConnectKeyEventProfileAttrOnDown]) {
         if ([self hasMethod:@selector(profile:didReceiveGetOnDownRequest:response:serviceId:)
                    response:response])
         {
@@ -54,7 +54,7 @@ int const DConnectKeyEventProfileKeyTypeUser = 0x00000800;
         } else {
             [response setErrorToUnknownAttribute];
         }
-    } else if ([attribute isEqualToString:DConnectKeyEventProfileAttrOnUp]) {
+    } else if ([self isEqualToAttribute:attribute cmp:DConnectKeyEventProfileAttrOnUp]) {
         if ([self hasMethod:@selector(profile:didReceiveGetOnUpRequest:response:serviceId:)
                    response:response])
         {
@@ -82,7 +82,7 @@ int const DConnectKeyEventProfileKeyTypeUser = 0x00000800;
     
     NSString *attribute = [request attribute];
     
-    if ([attribute isEqualToString:DConnectKeyEventProfileAttrOnDown]) {
+    if ([self isEqualToAttribute: attribute cmp:DConnectKeyEventProfileAttrOnDown]) {
         if ([self hasMethod:@selector(profile:didReceivePutOnDownRequest:response:serviceId:sessionKey:)
                    response:response])
         {
@@ -93,7 +93,7 @@ int const DConnectKeyEventProfileKeyTypeUser = 0x00000800;
         } else {
             [response setErrorToUnknownAttribute];
         }
-    } else if ([attribute isEqualToString:DConnectKeyEventProfileAttrOnUp]) {
+    } else if ([self isEqualToAttribute: attribute cmp:DConnectKeyEventProfileAttrOnUp]) {
         if ([self hasMethod:@selector(profile:didReceivePutOnUpRequest:response:serviceId:sessionKey:)
                    response:response])
         {
@@ -122,7 +122,7 @@ int const DConnectKeyEventProfileKeyTypeUser = 0x00000800;
     
     NSString *attribute = [request attribute];
     
-    if ([attribute isEqualToString:DConnectKeyEventProfileAttrOnDown]) {
+    if ([self isEqualToAttribute: attribute cmp:DConnectKeyEventProfileAttrOnDown]) {
         if ([self hasMethod:@selector(profile:didReceiveDeleteOnDownRequest:response:serviceId:sessionKey:)
                    response:response])
         {
@@ -133,7 +133,7 @@ int const DConnectKeyEventProfileKeyTypeUser = 0x00000800;
         } else {
             [response setErrorToUnknownAttribute];
         }
-    } else if ([attribute isEqualToString:DConnectKeyEventProfileAttrOnUp]) {
+    } else if ([self isEqualToAttribute: attribute cmp:DConnectKeyEventProfileAttrOnUp]) {
         if ([self hasMethod:@selector(profile:didReceiveDeleteOnUpRequest:response:serviceId:sessionKey:)
                    response:response])
         {

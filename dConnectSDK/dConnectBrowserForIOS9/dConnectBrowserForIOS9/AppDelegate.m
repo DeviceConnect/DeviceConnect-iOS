@@ -29,15 +29,10 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     //DBの初期値を設定
     [[GHDataManager shareManager] initPrefs];
-    DConnectManager *mgr = [DConnectManager sharedManager];
-    
     NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
-
     BOOL sw = [def boolForKey:IS_FIRST_LAUNCH];
-    BOOL launch = [def boolForKey:IS_MANAGER_LAUNCH];
-    if (!sw || launch) {
-        [mgr startByHttpServer];
-        [def setObject:@(YES) forKey:IS_MANAGER_LAUNCH];
+    if (!sw) {
+        [[DConnectManager sharedManager] startByHttpServer];
         [def setObject:@(YES) forKey:IS_FIRST_LAUNCH];
         [def synchronize];
     
@@ -51,6 +46,9 @@
                                                                                    categories:nil];
         [application registerUserNotificationSettings:mySettings];
     }
+    DConnectManager *mgr = [DConnectManager sharedManager];
+    [mgr startByHttpServer];
+
     return YES;
 }
 
@@ -74,13 +72,7 @@
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
     DConnectManager *mgr = [DConnectManager sharedManager];
-    
-    NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
-    BOOL sw = [def boolForKey:IS_MANAGER_LAUNCH];
-    if (sw) {
-        [mgr startByHttpServer];
-    }
-
+    [mgr startByHttpServer];
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {

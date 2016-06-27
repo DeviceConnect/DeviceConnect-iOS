@@ -8,7 +8,7 @@
 
 #import "DPOmnidirectionalImageProfile.h"
 
-NSString *const DPOmnidirectionalImageProfileName = @"omnidirectional_image";
+NSString *const DPOmnidirectionalImageProfileName = @"omnidirectionalImage";
 
 
 NSString *const DPOmnidirectionalImageProfileInterfaceROI = @"roi";
@@ -55,7 +55,7 @@ NSString *const DPOmnidirectionalImageProfileParamURI = @"uri";
     
     if (profile) {
         if (!interface
-            && [attribute isEqualToString:DPOmnidirectionalImageProfileAttrROI]
+            && [self isEqualToAttribute:attribute cmp:DPOmnidirectionalImageProfileAttrROI]
             && [self hasMethod:
                 @selector(profile:
                           didReceiveGetRoiRequest:response:serviceId:source:)
@@ -97,7 +97,7 @@ NSString *const DPOmnidirectionalImageProfileParamURI = @"uri";
     
     if (profile) {
         if (!interface
-            && [attribute isEqualToString:DPOmnidirectionalImageProfileAttrROI]
+            && [self isEqualToAttribute:attribute cmp:DPOmnidirectionalImageProfileAttrROI]
             && [self hasMethod:
                 @selector(profile:
                           didReceivePutRoiRequest:response:serviceId:source:)
@@ -109,8 +109,8 @@ NSString *const DPOmnidirectionalImageProfileParamURI = @"uri";
                                   serviceId:serviceId
                                      source:source];
 
-        } else if ([interface isEqualToString:DPOmnidirectionalImageProfileInterfaceROI]
-            && [attribute isEqualToString:DPOmnidirectionalImageProfileAttrSettings]
+        } else if ([self isEqualToInterface: interface cmp:DPOmnidirectionalImageProfileInterfaceROI]
+            && [self isEqualToAttribute: attribute cmp:DPOmnidirectionalImageProfileAttrSettings]
             && [self hasMethod:
                 @selector(profile:
                           didReceivePutRoiSettingsRequest:response:serviceId:)
@@ -152,7 +152,7 @@ NSString *const DPOmnidirectionalImageProfileParamURI = @"uri";
     
     if (profile) {
         if (!interface
-            && [attribute isEqualToString:DPOmnidirectionalImageProfileAttrROI]
+            && [self isEqualToAttribute:attribute cmp:DPOmnidirectionalImageProfileAttrROI]
             && [self hasMethod:
                 @selector(profile:
                           didReceiveDeleteRoiRequest:response:serviceId:uri:)

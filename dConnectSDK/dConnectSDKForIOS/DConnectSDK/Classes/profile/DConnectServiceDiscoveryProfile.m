@@ -9,7 +9,7 @@
 
 #import "DConnectServiceDiscoveryProfile.h"
 
-NSString *const DConnectServiceDiscoveryProfileName = @"servicediscovery";
+NSString *const DConnectServiceDiscoveryProfileName = @"serviceDiscovery";
 NSString *const DConnectServiceDiscoveryProfileAttrOnServiceChange = @"onservicechange";
 NSString *const DConnectServiceDiscoveryProfileParamNetworkService = @"networkService";
 NSString *const DConnectServiceDiscoveryProfileParamServices = @"services";
@@ -71,7 +71,7 @@ NSString *const DConnectServiceDiscoveryProfileNetworkTypeBLE = @"BLE";
     }
     
     NSString *attribute = [request attribute];
-    if ([attribute isEqualToString:DConnectServiceDiscoveryProfileAttrOnServiceChange]) {
+    if ([self isEqualToAttribute: attribute cmp:DConnectServiceDiscoveryProfileAttrOnServiceChange]) {
         if ([self hasMethod:@selector(profile:
                                       didReceivePutOnServiceChangeRequest:
                                       response:
@@ -100,7 +100,7 @@ NSString *const DConnectServiceDiscoveryProfileNetworkTypeBLE = @"BLE";
     }
     
     NSString *attribute = [request attribute];
-    if ([attribute isEqualToString:DConnectServiceDiscoveryProfileAttrOnServiceChange]) {
+    if ([self isEqualToAttribute: attribute cmp:DConnectServiceDiscoveryProfileAttrOnServiceChange]) {
         if ([self hasMethod:@selector(profile:
                                       didReceiveDeleteOnServiceChangeRequest:
                                       response:

@@ -29,7 +29,7 @@ static NSString *const DPIRKitRemoteControllerSupportProfile[] = {
                                                     @"servicediscovery",
                                                     @"serviceinformation",
                                                     @"authorization",
-                                                    @"remote_controller"};
+                                                    @"remotecontroller"};
 
 static NSUInteger const DPIRKitSupportCount = 5;
 

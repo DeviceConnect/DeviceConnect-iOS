@@ -68,4 +68,26 @@
     return YES;
 }
 
+- (BOOL) isEqualToProfile: (NSString *)profile cmp: (NSString *)cmpProfile {
+    if ([[profile lowercaseString] isEqualToString: [cmpProfile lowercaseString]]) {
+        return YES;
+    }
+    return NO;
+}
+
+- (BOOL) isEqualToInterface: (NSString *)interface cmp: (NSString *)cmpInterface {
+    if ([[interface lowercaseString] isEqualToString: [cmpInterface lowercaseString]]) {
+        return YES;
+    }
+    return NO;
+}
+
+- (BOOL) isEqualToAttribute: (NSString *)attribute cmp: (NSString *)cmpAttribute {
+    if ([[attribute lowercaseString] isEqualToString: [cmpAttribute lowercaseString]]) {
+        return YES;
+    }
+    return NO;
+}
+
+
 @end
