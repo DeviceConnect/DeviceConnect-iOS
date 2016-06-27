@@ -27,6 +27,8 @@
 #import "DConnectOriginParser.h"
 #import "LocalOAuth2Main.h"
 #import "DConnectServerProtocol.h"
+#import "api/DConnectApiSpecList.h"
+
 
 
 NSString *const DConnectApplicationDidEnterBackground = @"DConnectApplicationDidEnterBackground";
@@ -134,6 +136,9 @@ NSString *const DConnectAttributeNameRequestAccessToken = @"requestAccessToken";
     dispatch_once(&onceToken, ^{
         sharedDConnectManager = [DConnectManager new];
     });
+    /***/
+    [[DConnectApiSpecList shared] loadApiSpecDebug];
+    /***/
     return sharedDConnectManager;
 }
 
@@ -575,5 +580,6 @@ NSString *const DConnectAttributeNameRequestAccessToken = @"requestAccessToken";
     id<DConnectOrigin> origin = [DConnectOriginParser parse:originExp];
     return [[DConnectWhitelist sharedWhitelist] allows:origin];
 }
+
 
 @end

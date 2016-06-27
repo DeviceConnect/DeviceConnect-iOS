@@ -35,28 +35,31 @@
 - (id) init {
     self = [super init];
     if (self) {
-
+        
         // 初期値設定
         self.mApiSpecList = [NSMutableArray array];
     }
     return self;
 }
 
-/*
 - (DConnectApiSpec *) findApiSpec: (NSString *) method
-                             path: (NSString *) path {
+                             path: (NSString *) path
+{
+    NSString *methodLow = [method lowercaseString];
+    NSString *pathLow = [path lowercaseString];
     
     for (DConnectApiSpec *spec in self.mApiSpecList) {
-        if ([[spec method] isEqualToString: method] && [[spec path] isEqualToString: path]) {
+        
+        if ([[[DConnectApiSpec convertMethodToString: [spec method]] lowercaseString] isEqualToString: methodLow] &&
+            [[[spec path] lowercaseString] isEqualToString: pathLow]) {
             return spec;
         }
     }
     return nil;
 }
- */
 
-- (void) addApiSpecList :(NSString *)jsonFilePath/* throws IOException, JSONException*/ {
-
+- (void) addApiSpecList :(NSString *)jsonFilePath {
+    
     NSString *jsonString = [NSString stringWithContentsOfFile: (NSString *)jsonFilePath
                                                      encoding: NSUTF8StringEncoding
                                                         error: nil];
@@ -71,33 +74,51 @@
     
     // JSON を NSArray に変換する
     NSError *error;
-    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:jsonData
-                                                        options:NSJSONReadingAllowFragments
-                                                          error:&error];
+    id array = [NSJSONSerialization JSONObjectWithData:jsonData
+                                               options:NSJSONReadingAllowFragments
+                                                 error:&error];
     if (error != nil) {
         NSLog(@"JSON parse error: %@", error);
         return;
     }
     
-    // DEBUG
-    [self debugJsonDictionary: dic];
-    
-    
-    
-    
-    
-/*
-    String file = loadFile(json);
-    JSONArray array = new JSONArray(file);
-    for (int i = 0; i < array.length(); i++) {
-        JSONObject apiObj = array.getJSONObject(i);
-        DConnectApiSpec apiSpec = DConnectApiSpec.fromJson(apiObj);
-        if (apiSpec != null) {
-            addApiSpec(apiSpec);
+    // NSArrayをApiSpecに変換して格納する
+    if ([array isKindOfClass: [NSArray class]]) {
+        NSArray *jsonArray = (NSArray *) array; // NSDictionaryの配列
+        
+        for (NSDictionary *jsonObj in jsonArray) {
+            NSLog(@"jsonObj class: %@", [[jsonObj class] description]);
+            
+            if ([jsonObj isKindOfClass: [NSDictionary class]]) {
+                NSLog(@"jsonObj is NSDictionary");
+                DConnectApiSpec *apiSpec = [DConnectApiSpec fromJson: jsonObj];
+                
+                if (apiSpec != nil) {
+                    [self addApiSpec : apiSpec];
+                }
+            }
         }
+        
+        
+        
+        
+        // DEBUG
+        [self debugJsonArray: array];
     }
-*/
 }
+/*
+ public void addApiSpecList(final InputStream json) throws IOException, JSONException {
+ String file = loadFile(json);
+ JSONArray array = new JSONArray(file);
+ for (int i = 0; i < array.length(); i++) {
+ JSONObject apiObj = array.getJSONObject(i);
+ DConnectApiSpec apiSpec = DConnectApiSpec.fromJson(apiObj);
+ if (apiSpec != null) {
+ addApiSpec(apiSpec);
+ }
+ }
+ }
+ */
 
 - (void) addApiSpec : (DConnectApiSpec *)apiSpec {
     [self.mApiSpecList addObject: apiSpec];
@@ -113,6 +134,27 @@
 
 - (void) loadApiSpecDebug {
     
+    NSString *jsonFilename = @"battery";
+    NSString *jsonFilePath = [self jsonFilePathWithJsonFilename: jsonFilename];
+    
+    [self addApiSpecList: jsonFilePath];
+}
+
+- (NSString *)jsonFilePathWithJsonFilename: (NSString *)jsonFilename {
+    
+    NSString *filetype = @"json";
+    
+    NSString *bundlePath = [[NSBundle mainBundle] pathForResource:@"DConnectSDK_resources" ofType:@"bundle"];
+    NSBundle *bundle = [NSBundle bundleWithPath:bundlePath];
+    
+    NSString *pathName = [bundle pathForResource:jsonFilename ofType:filetype];
+    
+    return pathName;
+}
+
+
+- (void) loadApiSpecDebug_bak {
+    
     NSString *filename = @"battery";
     NSString *filetype = @"json";
     
@@ -121,7 +163,7 @@
     
     NSString *pathName = [bundle pathForResource:filename ofType:filetype];
     
-//    const GLchar *source = (GLchar *)[[NSString stringWithContentsOfFile:pathName encoding:NSUTF8StringEncoding error:nil] UTF8String];
+    //    const GLchar *source = (GLchar *)[[NSString stringWithContentsOfFile:pathName encoding:NSUTF8StringEncoding error:nil] UTF8String];
     
     NSString *jsonString = [NSString stringWithContentsOfFile:pathName encoding:NSUTF8StringEncoding error:nil];
     
@@ -143,8 +185,8 @@
     // JSON を NSArray に変換する
     NSError *error;
     NSObject *result = [NSJSONSerialization JSONObjectWithData:jsonData
-                                                        options:NSJSONReadingAllowFragments
-                                                          error:&error];
+                                                       options:NSJSONReadingAllowFragments
+                                                         error:&error];
     if (error != nil) {
         NSLog(@"JSON parse error: %@", error);
         return;

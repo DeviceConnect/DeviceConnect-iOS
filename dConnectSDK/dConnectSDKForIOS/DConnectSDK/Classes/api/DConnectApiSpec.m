@@ -67,13 +67,21 @@
 // toBundle()相当
 - (NSDictionary *)toDictionary {
     
-    NSMutableDictionary *dic = [NSMutableDictionary dictionary];
-    [dic setObject: self.name forKey: @"name"];
-//    [dic setObject: self.type forKey: @"type"];
-//    [dic setObject: self.method forKey: @"method"];
-    [dic setObject: self.path forKey: @"path"];
-//    dic["requestParamSpec"] = self.requestParamSpecList;
-    return dic;
+    // JSON出力用Dictionaryを作成して返す
+    @try {
+        NSString *strMethod = [DConnectApiSpec convertMethodToString: self.method];
+        NSString *strType = [DConnectApiSpec convertTypeToString: self.type];
+        NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+        [dic setObject: self.name forKey: @"name"];
+        [dic setObject: strMethod forKey: @"type"];
+        [dic setObject: strType forKey: @"method"];
+        [dic setObject: self.path forKey: @"path"];
+        [dic setObject: self.requestParamSpecList forKey: @"requestParamSpec"];
+        return dic;
+    }
+    @catch (NSException *e) {
+        return nil;
+    }
 }
 
 - (void) setName: (NSString *)name {
@@ -132,8 +140,8 @@
     @throw [NSString stringWithFormat: @"type is invalid: %@", string];
 }
 
-- (NSString *) convertMethodToString: (DConnectApiSpecMethod) enMethod {
-
++ (NSString *) convertMethodToString: (DConnectApiSpecMethod) enMethod {
+    
     if (enMethod == GET) {
         return METHOD_GET;
     }
@@ -149,7 +157,7 @@
     @throw @"unknown enum(method).";
 }
 
-- (NSString *) convertTypeToString: (DConnectApiSpecType) enType {
++ (NSString *) convertTypeToString: (DConnectApiSpecType) enType {
     
     if (enType == ONESHOT) {
         return TYPE_ONESHOT;
@@ -159,37 +167,6 @@
     }
     @throw @"unknown enum(type).";
 }
-
-/*
-+ (DConnectApiSpec *) fromJson : (NSDictionary *)apiObj {
-
-    NSString *name = [apiObj objectForKey:NAME];
-    NSString *path = [apiObj objectForKey:PATH];
-    NSString *methodStr = [apiObj objectForKey:METHOD];
-    NSString *typeStr = [apiObj objectForKey:TYPE];
-    
-    // 認識できない文字列を渡したら例外をスローする
-    DConnectApiSpecMethod method = [DConnectApiSpec parseMethod: methodStr];
-    
-    // 認識できない文字列を渡したら例外をスローする
-    DConnectApiSpecType type = [DConnectApiSpec parseType: typeStr];
-
-    NSMutableArray *paramList = [NSMutableArray array]; // DConnectRequestParamSpecの配列
-    NSArray *requestParams = [apiObj objectForKey: REQUEST_PARAMS];
-    if (requestParams != nil) {
-       
-        // DConnectRequestParamSpecの配列
-//        NSArray *paramSpec = [DConnectRequestParamSpec fromJson: requestParams];
-        
-//        paramList = [paramList arrayByAddingObjectsFromArray: paramSpec];
-    }
-    
-    DConnectApiSpecbuilder *builder = [[DConnectApiSpecbuilder alloc] init];
-    
-    DConnectApiSpec *apiSpec = [[[[[[builder name: name] type: type] method: method] path: path] requestParamList: paramList] build];
-    return apiSpec;
-}
-*/
 
 @end
 
@@ -262,5 +239,41 @@
     return apiSpec;
 }
 
++ (DConnectApiSpec *) fromJson : (NSDictionary *)apiObj {
+    
+    NSLog(@"DConnectApiSpec fromJson start");
+    
+    NSString *name = [apiObj objectForKey:NAME];
+    NSString *path = [apiObj objectForKey:PATH];
+    NSString *methodStr = [apiObj objectForKey:METHOD];
+    NSString *typeStr = [apiObj objectForKey:TYPE];
+    
+    @try {
+        // 認識できない文字列を渡したら例外をスローする
+        DConnectApiSpecMethod method = [DConnectApiSpec parseMethod: methodStr];
+        
+        // 認識できない文字列を渡したら例外をスローする
+        DConnectApiSpecType type = [DConnectApiSpec parseType: typeStr];
+        
+        //
+        NSMutableArray *paramList = [NSMutableArray array]; // DConnectRequestParamSpecの配列
+        NSArray *requestParams = [apiObj objectForKey: REQUEST_PARAMS]; // NSDictionaryの配列
+        if (requestParams != nil) {
+            for (int k = 0; k < [requestParams count]; k ++) {
+                NSDictionary *paramObj = [requestParams objectAtIndex: k];
+                DConnectRequestParamSpec *paramSpec = [DConnectRequestParamSpec fromJson: paramObj];
+                [paramList addObject: paramSpec];
+            }
+        }
+        DConnectApiSpecBuilder *builder = [[DConnectApiSpecBuilder alloc] init];
+        
+        DConnectApiSpec *apiSpec = [[[[[[builder name: name] type: type] method: method] path: path] requestParamSpecList: paramList] build];
+        return apiSpec;
+    }
+    @catch (NSException *e) {
+        DCLogE(@"fromJson exception: %@", e);
+        return nil;
+    }
+}
 
 @end

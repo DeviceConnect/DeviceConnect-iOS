@@ -9,6 +9,9 @@
 
 #import <Foundation/Foundation.h>
 
+#import "DConnectRequestParamSpec.h"
+
+
 typedef enum {
     ONESHOT = 0,
     EVENT,
@@ -31,6 +34,12 @@ typedef enum {
 + (DConnectApiSpecMethod) parseMethod: (NSString *)string;
 
 + (DConnectApiSpecType) parseType: (NSString *)string;
+
++ (NSString *) convertMethodToString: (DConnectApiSpecMethod) enMethod;
+
++ (NSString *) convertTypeToString: (DConnectApiSpecType) enType;
+
++ (DConnectApiSpec *) fromJson : (NSDictionary *)apiObj;
 
 - (NSString *) name;
 
