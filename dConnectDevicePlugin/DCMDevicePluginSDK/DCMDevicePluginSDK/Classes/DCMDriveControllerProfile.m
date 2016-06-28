@@ -53,9 +53,9 @@ NSString *const DCMDriveControllerProfileParamSpeed = @"speed";
     NSString *attribute = [request attribute];
     
     if (profile) {
-        if ([self isEqualToProfile:profile cmp:DCMDriveControllerProfileName]
+        if ([profile localizedCaseInsensitiveCompare: DCMDriveControllerProfileName] == NSOrderedSame
             && attribute != nil
-            && [self isEqualToAttribute:attribute cmp:DCMDriveControllerProfileAttrMove]
+            && [attribute localizedCaseInsensitiveCompare: DCMDriveControllerProfileAttrMove] == NSOrderedSame
             && [self hasMethod:@selector(profile:
                                          didReceivePostDriveControllerMoveRequest:
                                          response:
@@ -101,9 +101,9 @@ NSString *const DCMDriveControllerProfileParamSpeed = @"speed";
     NSString *attribute = [request attribute];
     
     if (profile) {
-        if ([self isEqualToProfile:profile cmp: DCMDriveControllerProfileName]
+        if ([profile localizedCaseInsensitiveCompare: DCMDriveControllerProfileName] == NSOrderedSame
             && attribute != nil
-            && [self isEqualToAttribute:attribute cmp:DCMDriveControllerProfileAttrRotate]
+            && [attribute localizedCaseInsensitiveCompare: DCMDriveControllerProfileAttrRotate] == NSOrderedSame
             && [self hasMethod:@selector(profile:
                                          didReceivePutDriveControllerRotateRequest:
                                          response:
@@ -144,9 +144,9 @@ NSString *const DCMDriveControllerProfileParamSpeed = @"speed";
     NSString *attribute = [request attribute];
 
     if (profile) {
-        if ([self isEqualToProfile:profile cmp:DCMDriveControllerProfileName]
+        if ([profile localizedCaseInsensitiveCompare: DCMDriveControllerProfileName] == NSOrderedSame
             && attribute != nil
-            && [self isEqualToAttribute: attribute cmp:DCMDriveControllerProfileAttrStop]
+            && [attribute localizedCaseInsensitiveCompare: DCMDriveControllerProfileAttrStop] == NSOrderedSame
             && [self hasMethod:@selector(profile:
                                          didReceiveDeleteDriveControllerStopRequest:
                                          response:

@@ -42,7 +42,7 @@ NSString *const DConnectSystemProfileParamVersion = @"version";
     NSString *interface = [request interface];
     NSString *attribute = [request attribute];
     
-    if (interface && attribute && [self isEqualToAttribute: attribute cmp:DConnectSystemProfileAttrWakeUp] && _dataSource)
+    if (interface && attribute && [attribute localizedCaseInsensitiveCompare:DConnectSystemProfileAttrWakeUp] == NSOrderedSame && _dataSource)
     {
         dispatch_async(dispatch_get_main_queue(), ^{
             UIViewController *viewController = [_dataSource profile:self settingPageForRequest:request];
@@ -59,7 +59,7 @@ NSString *const DConnectSystemProfileParamVersion = @"version";
             [[DConnectManager sharedManager] sendResponse:response];
         });
         send = NO;
-    } else if ([self isEqualToAttribute: attribute cmp:DConnectSystemProfileAttrKeyword]) {
+    } else if (attribute && [attribute localizedCaseInsensitiveCompare:DConnectSystemProfileAttrKeyword] == NSOrderedSame) {
         if (_delegate && [_delegate respondsToSelector:@selector(profile:didReceivePutKeywordRequest:response:)])
         {
             send = [_delegate profile:self didReceivePutKeywordRequest:request response:response];
@@ -83,7 +83,7 @@ NSString *const DConnectSystemProfileParamVersion = @"version";
     }
     
     NSString *attribute = [request attribute];
-    if ([self isEqualToAttribute: DConnectSystemProfileAttrEvents cmp:attribute]) {
+    if (attribute && [attribute localizedCaseInsensitiveCompare:DConnectSystemProfileAttrEvents] == NSOrderedSame) {
         if ([_delegate respondsToSelector:@selector(profile:
                                                     didReceiveDeleteEventsRequest:
                                                     response:

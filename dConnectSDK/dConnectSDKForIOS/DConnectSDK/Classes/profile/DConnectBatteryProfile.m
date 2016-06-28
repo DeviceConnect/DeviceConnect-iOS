@@ -54,25 +54,25 @@ NSString *const DConnectBatteryProfileParamBattery         = @"battery";
     NSString *attribute = [request attribute];
     
     if (attribute) {
-        if ([self isEqualToAttribute: attribute cmp:DConnectBatteryProfileAttrLevel]) {
+        if ([attribute localizedCaseInsensitiveCompare: DConnectBatteryProfileAttrLevel] == NSOrderedSame) {
             if ([self hasMethod:@selector(profile:didReceiveGetLevelRequest:response:serviceId:) response:response])
             {
                 send = [_delegate profile:self didReceiveGetLevelRequest:request
                                  response:response serviceId:serviceId];
             }
-        } else if ([self isEqualToAttribute: attribute cmp:DConnectBatteryProfileAttrCharging]) {
+        } else if ([attribute localizedCaseInsensitiveCompare:DConnectBatteryProfileAttrCharging] == NSOrderedSame) {
             if ([self hasMethod:@selector(profile:didReceiveGetChargingRequest:response:serviceId:) response:response])
             {
                 send = [_delegate profile:self didReceiveGetChargingRequest:request
                                  response:response serviceId:serviceId];
             }
-        } else if ([self isEqualToAttribute: attribute cmp:DConnectBatteryProfileAttrChargingTime]) {
+        } else if ([attribute localizedCaseInsensitiveCompare:DConnectBatteryProfileAttrChargingTime] == NSOrderedSame) {
             if ([self hasMethod:@selector(profile:didReceiveGetChargingTimeRequest:response:serviceId:) response:response])
             {
                 send = [_delegate profile:self didReceiveGetChargingTimeRequest:request
                                  response:response serviceId:serviceId];
             }
-        } else if ([self isEqualToAttribute: attribute cmp:DConnectBatteryProfileAttrDischargingTime]) {
+        } else if ([attribute localizedCaseInsensitiveCompare:DConnectBatteryProfileAttrDischargingTime] == NSOrderedSame) {
             if ([self hasMethod:@selector(profile:didReceiveGetDischargingTimeRequest:response:serviceId:) response:response])
             {
                 send = [_delegate profile:self didReceiveGetDischargingTimeRequest:request
@@ -103,7 +103,7 @@ NSString *const DConnectBatteryProfileParamBattery         = @"battery";
     NSString *attribute = [request attribute];
     
     if (attribute) {
-        if ([self isEqualToAttribute: attribute cmp:DConnectBatteryProfileAttrOnChargingChange]) {
+        if ([attribute localizedCaseInsensitiveCompare: DConnectBatteryProfileAttrOnChargingChange] == NSOrderedSame) {
             
             if ([self hasMethod:@selector(profile:didReceivePutOnChargingChangeRequest:response:serviceId:sessionKey:)
                        response:response])
@@ -112,7 +112,7 @@ NSString *const DConnectBatteryProfileParamBattery         = @"battery";
                                  serviceId:serviceId sessionKey:sessionKey];
             }
             
-        } else if ([self isEqualToAttribute:attribute cmp:DConnectBatteryProfileAttrOnBatteryChange]) {
+        } else if ([attribute localizedCaseInsensitiveCompare:DConnectBatteryProfileAttrOnBatteryChange] == NSOrderedSame) {
             
             if ([self hasMethod:@selector(profile:didReceivePutOnBatteryChangeRequest:response:serviceId:sessionKey:)
                        response:response])
@@ -144,7 +144,9 @@ NSString *const DConnectBatteryProfileParamBattery         = @"battery";
     NSString *sessionKey = [request sessionKey];
     NSString *attribute = [request attribute];
     
-    if ([self isEqualToAttribute: DConnectBatteryProfileAttrOnChargingChange cmp:attribute]) {
+    if (!attribute) {
+        [response setErrorToNotSupportProfile];
+    } else if ([attribute localizedCaseInsensitiveCompare: DConnectBatteryProfileAttrOnChargingChange] == NSOrderedSame) {
         
         if ([self hasMethod:@selector(profile:didReceiveDeleteOnChargingChangeRequest:response:serviceId:sessionKey:)
                    response:response])
@@ -153,7 +155,7 @@ NSString *const DConnectBatteryProfileParamBattery         = @"battery";
                              serviceId:serviceId sessionKey:sessionKey];
         }
         
-    } else if ([self isEqualToAttribute: DConnectBatteryProfileAttrOnBatteryChange cmp:attribute]) {
+    } else if ([attribute localizedCaseInsensitiveCompare: DConnectBatteryProfileAttrOnBatteryChange] == NSOrderedSame) {
         if ([self hasMethod:@selector(profile:didReceiveDeleteOnBatteryChangeRequest:response:serviceId:sessionKey:)
                    response:response])
         {

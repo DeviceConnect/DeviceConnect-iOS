@@ -48,10 +48,10 @@ NSString *const DConnectAuthorizationProfileGrantTypeAuthorizationCode = @"autho
     NSString *attribute = [request attribute];
     
     if (attribute) {
-        if ([self isEqualToAttribute: attribute cmp:DConnectAuthorizationProfileAttrGrant]) {
+        if ([attribute localizedCaseInsensitiveCompare: DConnectAuthorizationProfileAttrGrant] == NSOrderedSame) {
             send = [self didReceiveGetCreateClientRequest:request
                                                  response:response];
-        } else if ([self isEqualToAttribute: attribute cmp: DConnectAuthorizationProfileAttrAccessToken]) {
+        } else if ([attribute  localizedCaseInsensitiveCompare: DConnectAuthorizationProfileAttrAccessToken] == NSOrderedSame) {
             send = [self didReceiveGetRequestAccessTokenRequest:request
                                                        response:response];
         } else {

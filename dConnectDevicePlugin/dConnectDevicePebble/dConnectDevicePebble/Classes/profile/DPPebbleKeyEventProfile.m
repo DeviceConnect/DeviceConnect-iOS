@@ -50,11 +50,13 @@ static const UInt64 CACHE_RETENTION_TIME = 10000;
  */
 - (DConnectMessage *) getKeyEventCache:(NSString *)attr {
     UInt64 CurrentTime = (UInt64)floor((CFAbsoluteTimeGetCurrent() + kCFAbsoluteTimeIntervalSince1970) * 1000.0);
-    if ([self isEqualToAttribute:attr cmp:DConnectKeyEventProfileAttrOnDown]) {
+    if (!attr) {
+        return nil;
+    } else if ([attr localizedCaseInsensitiveCompare: DConnectKeyEventProfileAttrOnDown] == NSOrderedSame) {
         if (CurrentTime - mOnDownCacheTime <= CACHE_RETENTION_TIME) {
             return mOnDownCache;
         }
-    } else if ([self isEqualToAttribute:attr cmp:DConnectKeyEventProfileAttrOnUp]
+    } else if ([attr localizedCaseInsensitiveCompare: DConnectKeyEventProfileAttrOnUp] == NSOrderedSame
                && (CurrentTime - mOnUpCacheTime <= CACHE_RETENTION_TIME)) {
         return mOnUpCache;
     }
@@ -69,10 +71,12 @@ static const UInt64 CACHE_RETENTION_TIME = 10000;
 - (void) setKeyEventCache:(NSString *)attr
              keyeventData:(DConnectMessage *)keyeventData {
     UInt64 CurrentTime = (UInt64)floor((CFAbsoluteTimeGetCurrent() + kCFAbsoluteTimeIntervalSince1970) * 1000.0);
-    if ([self isEqualToAttribute:attr cmp:DConnectKeyEventProfileAttrOnDown]) {
+    if (!attr) {
+        return;
+    } else if ([attr localizedCaseInsensitiveCompare: DConnectKeyEventProfileAttrOnDown] == NSOrderedSame) {
         mOnDownCache = keyeventData;
         mOnDownCacheTime = CurrentTime;
-    } else if ([self isEqualToAttribute:attr cmp:DConnectKeyEventProfileAttrOnUp]) {
+    } else if ([attr localizedCaseInsensitiveCompare: DConnectKeyEventProfileAttrOnUp] == NSOrderedSame) {
         mOnUpCache = keyeventData;
         mOnUpCacheTime = CurrentTime;
     }

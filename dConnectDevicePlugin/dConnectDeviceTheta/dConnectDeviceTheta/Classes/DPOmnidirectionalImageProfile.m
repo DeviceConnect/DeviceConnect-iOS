@@ -55,7 +55,8 @@ NSString *const DPOmnidirectionalImageProfileParamURI = @"uri";
     
     if (profile) {
         if (!interface
-            && [self isEqualToAttribute:attribute cmp:DPOmnidirectionalImageProfileAttrROI]
+            && attribute
+            && [attribute localizedCaseInsensitiveCompare: DPOmnidirectionalImageProfileAttrROI] == NSOrderedSame
             && [self hasMethod:
                 @selector(profile:
                           didReceiveGetRoiRequest:response:serviceId:source:)
@@ -97,7 +98,8 @@ NSString *const DPOmnidirectionalImageProfileParamURI = @"uri";
     
     if (profile) {
         if (!interface
-            && [self isEqualToAttribute:attribute cmp:DPOmnidirectionalImageProfileAttrROI]
+            && attribute
+            && [attribute localizedCaseInsensitiveCompare:DPOmnidirectionalImageProfileAttrROI] == NSOrderedSame
             && [self hasMethod:
                 @selector(profile:
                           didReceivePutRoiRequest:response:serviceId:source:)
@@ -109,8 +111,10 @@ NSString *const DPOmnidirectionalImageProfileParamURI = @"uri";
                                   serviceId:serviceId
                                      source:source];
 
-        } else if ([self isEqualToInterface: interface cmp:DPOmnidirectionalImageProfileInterfaceROI]
-            && [self isEqualToAttribute: attribute cmp:DPOmnidirectionalImageProfileAttrSettings]
+        } else if (interface
+            && attribute
+            && [interface localizedCaseInsensitiveCompare: DPOmnidirectionalImageProfileInterfaceROI] == NSOrderedSame
+            && [attribute localizedCaseInsensitiveCompare: DPOmnidirectionalImageProfileAttrSettings] == NSOrderedSame
             && [self hasMethod:
                 @selector(profile:
                           didReceivePutRoiSettingsRequest:response:serviceId:)
@@ -152,7 +156,8 @@ NSString *const DPOmnidirectionalImageProfileParamURI = @"uri";
     
     if (profile) {
         if (!interface
-            && [self isEqualToAttribute:attribute cmp:DPOmnidirectionalImageProfileAttrROI]
+            && attribute
+            && [attribute localizedCaseInsensitiveCompare: DPOmnidirectionalImageProfileAttrROI] == NSOrderedSame
             && [self hasMethod:
                 @selector(profile:
                           didReceiveDeleteRoiRequest:response:serviceId:uri:)

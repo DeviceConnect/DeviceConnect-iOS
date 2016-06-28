@@ -42,7 +42,7 @@ NSString *const DConnectPhoneProfileParamState = @"state";
     
     NSString *attribute = [request attribute];
     
-    if ([self isEqualToAttribute: attribute cmp:DConnectPhoneProfileAttrCall]) {
+    if (attribute && [attribute localizedCaseInsensitiveCompare: DConnectPhoneProfileAttrCall] == NSOrderedSame) {
         if ([self hasMethod:@selector(profile:didReceivePostCallRequest:response:serviceId:phoneNumber:)
                    response:response])
         {
@@ -66,7 +66,7 @@ NSString *const DConnectPhoneProfileParamState = @"state";
     
     NSString *attribute = [request attribute];
     NSString *serviceId = [request serviceId];
-    if ([self isEqualToAttribute: attribute cmp:DConnectPhoneProfileAttrSet]) {
+    if (attribute && [attribute localizedCaseInsensitiveCompare: DConnectPhoneProfileAttrSet] == NSOrderedSame) {
         if ([self hasMethod:@selector(profile:didReceivePutSetRequest:response:serviceId:mode:)
                    response:response])
         {
@@ -74,7 +74,7 @@ NSString *const DConnectPhoneProfileParamState = @"state";
             send = [_delegate profile:self didReceivePutSetRequest:request response:response
                              serviceId:serviceId mode:mode];
         }
-    } else if ([self isEqualToAttribute: attribute cmp:DConnectPhoneProfileAttrOnConnect]) {
+    } else if (attribute && [attribute localizedCaseInsensitiveCompare: DConnectPhoneProfileAttrOnConnect] == NSOrderedSame) {
         if ([self hasMethod:@selector(profile:didReceivePutOnConnectRequest:response:serviceId:sessionKey:)
                    response:response])
         {
@@ -99,7 +99,7 @@ NSString *const DConnectPhoneProfileParamState = @"state";
     
     NSString *attribute = [request attribute];
     
-    if ([self isEqualToAttribute: attribute cmp:DConnectPhoneProfileAttrOnConnect]) {
+    if (attribute && [attribute localizedCaseInsensitiveCompare: DConnectPhoneProfileAttrOnConnect] == NSOrderedSame) {
         if ([self hasMethod:@selector(profile:didReceiveDeleteOnConnectRequest:response:serviceId:sessionKey:)
                    response:response])
         {

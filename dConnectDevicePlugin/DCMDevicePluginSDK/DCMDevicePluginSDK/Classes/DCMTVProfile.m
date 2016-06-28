@@ -87,7 +87,7 @@ NSString *const DCMTVProfileBroadcastwaveCS = @"CS";
     NSString *profile = [request profile];
     NSString *attribute = [request attribute];
     if (profile) {
-        if ([self isEqualToProfile:profile cmp:DCMTVProfileName]
+        if ([profile localizedCaseInsensitiveCompare: DCMTVProfileName] == NSOrderedSame
             && !attribute
             && [self hasMethod:@selector(profile:didReceiveGetTVRequest:response:serviceId:) response:response])
         {
@@ -97,9 +97,9 @@ NSString *const DCMTVProfileBroadcastwaveCS = @"CS";
                              response:response
                             serviceId:serviceId
                     ];
-        } else if ([self isEqualToProfile:profile cmp:DCMTVProfileName]
+        } else if ([profile localizedCaseInsensitiveCompare: DCMTVProfileName] == NSOrderedSame
                    && attribute
-                   && [self isEqualToAttribute:attribute cmp:DCMTVProfileAttrEnlproperty]
+                   && [attribute localizedCaseInsensitiveCompare: DCMTVProfileAttrEnlproperty] == NSOrderedSame
                    && [self hasMethod:@selector(profile:
                                                 didReceiveGetTVEnlpropertyRequest:
                                                 response:
@@ -145,7 +145,7 @@ NSString *const DCMTVProfileBroadcastwaveCS = @"CS";
     NSString *attribute = [request attribute];
     
     if (profile) {
-        if ([self isEqualToProfile:profile cmp:DCMTVProfileName]
+        if ([profile localizedCaseInsensitiveCompare: DCMTVProfileName] == NSOrderedSame
             && !attribute
             && [self hasMethod:@selector(profile:
                                          didReceivePutTVRequest:
@@ -157,9 +157,9 @@ NSString *const DCMTVProfileBroadcastwaveCS = @"CS";
             didReceivePutTVRequest:request
                              response:response
                             serviceId:serviceId];
-        } else if ([self isEqualToProfile:profile cmp:DCMTVProfileName]
+        } else if ([profile localizedCaseInsensitiveCompare: DCMTVProfileName] == NSOrderedSame
                    && attribute
-                   && [self isEqualToAttribute:attribute cmp:DCMTVProfileAttrChannel]
+                   && [attribute localizedCaseInsensitiveCompare: DCMTVProfileAttrChannel] == NSOrderedSame
                    && [self hasMethod:@selector(profile:
                                                 didReceivePutTVChannelRequest:
                                                 response:
@@ -174,9 +174,9 @@ NSString *const DCMTVProfileBroadcastwaveCS = @"CS";
                             serviceId:serviceId
                                tuning:tuning
                                control:control];
-        } else if ([self isEqualToProfile:profile cmp:DCMTVProfileName]
+        } else if ([profile localizedCaseInsensitiveCompare: DCMTVProfileName] == NSOrderedSame
                    && attribute
-                   && [self isEqualToAttribute:attribute cmp:DCMTVProfileAttrVolume]
+                   && [attribute localizedCaseInsensitiveCompare: DCMTVProfileAttrVolume] == NSOrderedSame
                    && [self hasMethod:@selector(profile:
                                                 didReceivePutTVVolumeRequest:
                                                 response:
@@ -189,9 +189,9 @@ NSString *const DCMTVProfileBroadcastwaveCS = @"CS";
                              response:response
                             serviceId:serviceId
                                control:control];
-        } else if ([self isEqualToProfile:profile cmp:DCMTVProfileName]
+        } else if ([profile localizedCaseInsensitiveCompare: DCMTVProfileName] == NSOrderedSame
                    && attribute
-                   && [self isEqualToAttribute:attribute cmp:DCMTVProfileAttrBroadcastwave]
+                   && [attribute localizedCaseInsensitiveCompare: DCMTVProfileAttrBroadcastwave] == NSOrderedSame
                    && [self hasMethod:@selector(profile:
                                                 didReceivePutTVBroadcastWaveRequest:
                                                 response:
@@ -204,9 +204,9 @@ NSString *const DCMTVProfileBroadcastwaveCS = @"CS";
                              response:response
                             serviceId:serviceId
                                select:select];
-        } else if ([self isEqualToProfile:profile cmp:DCMTVProfileName]
+        } else if ([profile localizedCaseInsensitiveCompare: DCMTVProfileName] == NSOrderedSame
                    && attribute
-                   && [self isEqualToAttribute: attribute cmp:DCMTVProfileAttrMute]
+                   && [attribute localizedCaseInsensitiveCompare: DCMTVProfileAttrMute] == NSOrderedSame
                    && [self hasMethod:@selector(profile:
                                                 didReceivePutTVMuteRequest:
                                                 response:
@@ -217,9 +217,9 @@ NSString *const DCMTVProfileBroadcastwaveCS = @"CS";
            didReceivePutTVMuteRequest:request
                              response:response
                             serviceId:serviceId];
-        } else if ([self isEqualToProfile:profile cmp:DCMTVProfileName]
+        } else if ([profile localizedCaseInsensitiveCompare: DCMTVProfileName] == NSOrderedSame
                    && attribute
-                   && [self isEqualToAttribute: attribute cmp:DCMTVProfileAttrEnlproperty]
+                   && [attribute localizedCaseInsensitiveCompare: DCMTVProfileAttrEnlproperty] == NSOrderedSame
                    && [self hasMethod:@selector(profile:
                                                 didReceivePutTVEnlpropertyRequest:
                                                 response:
@@ -261,7 +261,7 @@ NSString *const DCMTVProfileBroadcastwaveCS = @"CS";
     NSString *attribute = [request attribute];
     
     if (profile) {
-        if ([self isEqualToProfile:profile cmp:DCMTVProfileName]
+        if ([profile localizedCaseInsensitiveCompare: DCMTVProfileName] == NSOrderedSame
             && !attribute
             && [self hasMethod:@selector(profile:
                                          didReceiveDeleteTVRequest:
@@ -273,9 +273,9 @@ NSString *const DCMTVProfileBroadcastwaveCS = @"CS";
             didReceiveDeleteTVRequest:request
                              response:response
                             serviceId:serviceId];
-        } else if ([self isEqualToProfile:profile cmp:DCMTVProfileName]
+        } else if ([profile localizedCaseInsensitiveCompare: DCMTVProfileName] == NSOrderedSame
                    && attribute
-                   && [self isEqualToAttribute:attribute cmp:DCMTVProfileAttrMute]
+                   && [attribute localizedCaseInsensitiveCompare: DCMTVProfileAttrMute] == NSOrderedSame
                    && [self hasMethod:@selector(profile:
                                                 didReceiveDeleteTVMuteRequest:
                                                 response:

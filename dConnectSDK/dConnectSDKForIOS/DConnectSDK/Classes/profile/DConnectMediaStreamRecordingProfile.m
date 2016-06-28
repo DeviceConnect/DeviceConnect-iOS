@@ -84,14 +84,14 @@ NSString *const DConnectMediaStreamRecordingProfileRecordingStateWarning = @"war
     NSString *attribute = [request attribute];
     NSString *serviceId = [request serviceId];
     
-    if ([self isEqualToAttribute: attribute cmp:DConnectMediaStreamRecordingProfileAttrMediaRecorder]) {
+    if (attribute && [attribute localizedCaseInsensitiveCompare: DConnectMediaStreamRecordingProfileAttrMediaRecorder] == NSOrderedSame) {
         if ([self hasMethod:@selector(profile:didReceiveGetMediaRecorderRequest:response:serviceId:)
                    response:response])
         {
             send = [_delegate profile:self didReceiveGetMediaRecorderRequest:request
                              response:response serviceId:serviceId];
         }
-    } else if ([self isEqualToAttribute: attribute cmp:DConnectMediaStreamRecordingProfileAttrOptions]) {
+    } else if (attribute && [attribute localizedCaseInsensitiveCompare: DConnectMediaStreamRecordingProfileAttrOptions] == NSOrderedSame) {
         if ([self hasMethod:@selector(profile:didReceiveGetOptionsRequest:response:serviceId:target:)
                    response:response])
         {
@@ -119,14 +119,14 @@ NSString *const DConnectMediaStreamRecordingProfileRecordingStateWarning = @"war
     NSString *serviceId = [request serviceId];
     NSString *target = [DConnectMediaStreamRecordingProfile targetFromRequest:request];
     
-    if ([self isEqualToAttribute: attribute cmp:DConnectMediaStreamRecordingProfileAttrTakePhoto]) {
+    if (attribute && [attribute localizedCaseInsensitiveCompare: DConnectMediaStreamRecordingProfileAttrTakePhoto] == NSOrderedSame) {
         if ([self hasMethod:@selector(profile:didReceivePostTakePhotoRequest:response:serviceId:target:)
                    response:response])
         {
             send = [_delegate profile:self didReceivePostTakePhotoRequest:request
                              response:response serviceId:serviceId target:target];
         }
-    } else if ([self isEqualToAttribute: attribute cmp:DConnectMediaStreamRecordingProfileAttrRecord]) {
+    } else if (attribute && [attribute localizedCaseInsensitiveCompare:DConnectMediaStreamRecordingProfileAttrRecord] == NSOrderedSame) {
         if ([self hasMethod:@selector(profile:didReceivePostRecordRequest:response:serviceId:target:timeslice:)
                    response:response])
         {
@@ -154,21 +154,21 @@ NSString *const DConnectMediaStreamRecordingProfileRecordingStateWarning = @"war
     NSString *target = [DConnectMediaStreamRecordingProfile targetFromRequest:request];
     NSString *sessionKey = [request sessionKey];
     
-    if ([self isEqualToAttribute: attribute cmp:DConnectMediaStreamRecordingProfileAttrPause]) {
+    if (attribute && [attribute localizedCaseInsensitiveCompare:DConnectMediaStreamRecordingProfileAttrPause] == NSOrderedSame) {
         if ([self hasMethod:@selector(profile:didReceivePutPauseRequest:response:serviceId:target:)
                    response:response])
         {
             send = [_delegate profile:self didReceivePutPauseRequest:request
                              response:response serviceId:serviceId target:target];
         }
-    } else if ([self isEqualToAttribute: attribute cmp:DConnectMediaStreamRecordingProfileAttrResume]) {
+    } else if (attribute && [attribute localizedCaseInsensitiveCompare: DConnectMediaStreamRecordingProfileAttrResume] == NSOrderedSame) {
         if ([self hasMethod:@selector(profile:didReceivePutResumeRequest:response:serviceId:target:)
                    response:response])
         {
             send = [_delegate profile:self didReceivePutResumeRequest:request
                              response:response serviceId:serviceId target:target];
         }
-    } else if ([self isEqualToAttribute: attribute cmp:DConnectMediaStreamRecordingProfileAttrStop]) {
+    } else if (attribute && [attribute localizedCaseInsensitiveCompare: DConnectMediaStreamRecordingProfileAttrStop] == NSOrderedSame) {
         if ([self hasMethod:@selector(profile:didReceivePutStopRequest:response:serviceId:target:)
                    response:response])
         {
@@ -176,21 +176,21 @@ NSString *const DConnectMediaStreamRecordingProfileRecordingStateWarning = @"war
                              response:response serviceId:serviceId target:target];
         }
         
-    } else if ([self isEqualToAttribute: attribute cmp:DConnectMediaStreamRecordingProfileAttrMuteTrack]) {
+    } else if (attribute && [attribute localizedCaseInsensitiveCompare:DConnectMediaStreamRecordingProfileAttrMuteTrack] == NSOrderedSame) {
         if ([self hasMethod:@selector(profile:didReceivePutMuteTrackRequest:response:serviceId:target:)
                    response:response])
         {
             send = [_delegate profile:self didReceivePutMuteTrackRequest:request
                              response:response serviceId:serviceId target:target];
         }
-    } else if ([self isEqualToAttribute:attribute cmp:DConnectMediaStreamRecordingProfileAttrUnmuteTrack]) {
+    } else if (attribute && [attribute localizedCaseInsensitiveCompare:DConnectMediaStreamRecordingProfileAttrUnmuteTrack] == NSOrderedSame) {
         if ([self hasMethod:@selector(profile:didReceivePutUnmuteTrackRequest:response:serviceId:target:)
                    response:response])
         {
             send = [_delegate profile:self didReceivePutUnmuteTrackRequest:request
                              response:response serviceId:serviceId target:target];
         }
-    } else if ([self isEqualToAttribute: attribute cmp:DConnectMediaStreamRecordingProfileAttrOptions]) {
+    } else if (attribute && [attribute localizedCaseInsensitiveCompare:DConnectMediaStreamRecordingProfileAttrOptions] == NSOrderedSame) {
         if ([self hasMethod:
              @selector(profile:didReceivePutOptionsRequest:response:serviceId:target:imageWidth:imageHeight:mimeType:)
                    response:response])
@@ -205,28 +205,28 @@ NSString *const DConnectMediaStreamRecordingProfileRecordingStateWarning = @"war
                              mimeType:mimeType];
             
         }
-    } else if ([self isEqualToAttribute: attribute cmp:DConnectMediaStreamRecordingProfileAttrOnPhoto]) {
+    } else if (attribute && [attribute localizedCaseInsensitiveCompare:DConnectMediaStreamRecordingProfileAttrOnPhoto] == NSOrderedSame) {
         if ([self hasMethod:@selector(profile:didReceivePutOnPhotoRequest:response:serviceId:sessionKey:)
                    response:response])
         {
             send = [_delegate profile:self didReceivePutOnPhotoRequest:request response:response
                              serviceId:serviceId sessionKey:sessionKey];
         }
-    } else if ([self isEqualToAttribute: attribute cmp:DConnectMediaStreamRecordingProfileAttrOnRecordingChange]) {
+    } else if (attribute && [attribute localizedCaseInsensitiveCompare:DConnectMediaStreamRecordingProfileAttrOnRecordingChange] == NSOrderedSame) {
         if ([self hasMethod:@selector(profile:didReceivePutOnRecordingChangeRequest:response:serviceId:sessionKey:)
                    response:response])
         {
             send = [_delegate profile:self didReceivePutOnRecordingChangeRequest:request response:response
                              serviceId:serviceId sessionKey:sessionKey];
         }
-    } else if ([self isEqualToAttribute: attribute cmp:DConnectMediaStreamRecordingProfileAttrOnDataAvailable]) {
+    } else if (attribute && [attribute localizedCaseInsensitiveCompare: DConnectMediaStreamRecordingProfileAttrOnDataAvailable] == NSOrderedSame) {
         if ([self hasMethod:@selector(profile:didReceivePutOnDataAvailableRequest:response:serviceId:sessionKey:)
                    response:response])
         {
             send = [_delegate profile:self didReceivePutOnDataAvailableRequest:request response:response
                              serviceId:serviceId sessionKey:sessionKey];
         }
-    } else if ([self isEqualToAttribute: attribute cmp:DConnectMediaStreamRecordingProfileAttrPreview]) {
+    } else if (attribute && [attribute localizedCaseInsensitiveCompare:DConnectMediaStreamRecordingProfileAttrPreview] == NSOrderedSame) {
         if ([self hasMethod:@selector(profile:didReceivePutPreviewRequest:response:serviceId:)
                    response:response])
         {
@@ -246,7 +246,7 @@ NSString *const DConnectMediaStreamRecordingProfileRecordingStateWarning = @"war
     NSString *serviceId = [request serviceId];
     NSString *sessionKey = [request sessionKey];
     
-    if ([self isEqualToAttribute: attribute cmp:DConnectMediaStreamRecordingProfileAttrOnPhoto]) {
+    if (attribute && [attribute localizedCaseInsensitiveCompare: DConnectMediaStreamRecordingProfileAttrOnPhoto] == NSOrderedSame) {
         if ([self hasMethod:@selector(profile:didReceiveDeleteOnPhotoRequest:response:serviceId:sessionKey:)
                    response:response])
         {
@@ -254,21 +254,21 @@ NSString *const DConnectMediaStreamRecordingProfileRecordingStateWarning = @"war
                              serviceId:serviceId sessionKey:sessionKey];
         }
 
-    } else if ([self isEqualToAttribute: attribute cmp:DConnectMediaStreamRecordingProfileAttrOnRecordingChange]) {
+    } else if (attribute && [attribute localizedCaseInsensitiveCompare: DConnectMediaStreamRecordingProfileAttrOnRecordingChange] == NSOrderedSame) {
         if ([self hasMethod:@selector(profile:didReceiveDeleteOnRecordingChangeRequest:response:serviceId:sessionKey:)
                    response:response])
         {
             send = [_delegate profile:self didReceiveDeleteOnRecordingChangeRequest:request response:response
                              serviceId:serviceId sessionKey:sessionKey];
         }
-    } else if ([self isEqualToAttribute: attribute cmp:DConnectMediaStreamRecordingProfileAttrOnDataAvailable]) {
+    } else if (attribute && [attribute localizedCaseInsensitiveCompare: DConnectMediaStreamRecordingProfileAttrOnDataAvailable] == NSOrderedSame) {
         if ([self hasMethod:@selector(profile:didReceiveDeleteOnDataAvailableRequest:response:serviceId:sessionKey:)
                    response:response])
         {
             send = [_delegate profile:self didReceiveDeleteOnDataAvailableRequest:request response:response
                              serviceId:serviceId sessionKey:sessionKey];
         }
-    } else if ([self isEqualToAttribute: attribute cmp:DConnectMediaStreamRecordingProfileAttrPreview]) {
+    } else if (attribute && [attribute localizedCaseInsensitiveCompare: DConnectMediaStreamRecordingProfileAttrPreview] == NSOrderedSame) {
         if ([self hasMethod:@selector(profile:didReceiveDeletePreviewRequest:response:serviceId:)
                    response:response])
         {

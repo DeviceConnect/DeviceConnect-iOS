@@ -61,7 +61,9 @@ NSString *const DConnectFileProfileOrderDESC = @"desc";
     NSString *attribute = [request attribute];
     NSString *serviceId = [request serviceId];
     
-    if ([self isEqualToAttribute: attribute cmp:DConnectFileProfileAttrReceive]) {
+    if (!attribute) {
+        [response setErrorToNotSupportProfile];
+    } else if ([attribute localizedCaseInsensitiveCompare:DConnectFileProfileAttrReceive] == NSOrderedSame) {
         
         if ([self hasMethod:@selector(profile:didReceiveGetReceiveRequest:response:serviceId:path:)
                    response:response])
@@ -70,7 +72,7 @@ NSString *const DConnectFileProfileOrderDESC = @"desc";
             send = [_delegate profile:self didReceiveGetReceiveRequest:request response:response
                              serviceId:serviceId path:path];
         }
-    } else if ([self isEqualToAttribute: attribute cmp:DConnectFileProfileAttrList]) {
+    } else if ([attribute localizedCaseInsensitiveCompare: DConnectFileProfileAttrList] == NSOrderedSame) {
         if ([self hasMethod:@selector(profile:didReceiveGetListRequest:response:serviceId:path:mimeType:order:offset:limit:)
                    response:response])
         {
@@ -106,7 +108,9 @@ NSString *const DConnectFileProfileOrderDESC = @"desc";
     }
     
     NSString *attribute = [request attribute];
-    if ([self isEqualToAttribute: attribute cmp:DConnectFileProfileAttrSend]) {
+    if (!attribute) {
+        [response setErrorToNotSupportProfile];
+    } else if ([attribute localizedCaseInsensitiveCompare:DConnectFileProfileAttrSend] == NSOrderedSame) {
         
         if ([self hasMethod:@selector(profile:didReceivePostSendRequest:response:serviceId:path:mimeType:data:)
                    response:response])
@@ -119,7 +123,7 @@ NSString *const DConnectFileProfileOrderDESC = @"desc";
             send = [_delegate profile:self didReceivePostSendRequest:request response:response
                              serviceId:serviceId path:path mimeType:mimeType data:data];
         }
-    } else if ([self isEqualToAttribute: attribute cmp:DConnectFileProfileAttrMkdir]) {
+    } else if ([attribute localizedCaseInsensitiveCompare:DConnectFileProfileAttrMkdir] == NSOrderedSame) {
         if ([self hasMethod:@selector(profile:didReceivePostMkdirRequest:response:serviceId:path:)
                    response:response])
         {
@@ -147,7 +151,9 @@ NSString *const DConnectFileProfileOrderDESC = @"desc";
     }
     
     NSString *attribute = [request attribute];
-    if ([self isEqualToAttribute: attribute cmp:DConnectFileProfileAttrRemove]) {
+    if (!attribute) {
+        [response setErrorToNotSupportProfile];
+    } else if ([attribute localizedCaseInsensitiveCompare:DConnectFileProfileAttrRemove] == NSOrderedSame) {
         if ([self hasMethod:@selector(profile:didReceiveDeleteRemoveRequest:response:serviceId:path:)
                    response:response])
         {
@@ -157,7 +163,7 @@ NSString *const DConnectFileProfileOrderDESC = @"desc";
             send = [_delegate profile:self didReceiveDeleteRemoveRequest:request response:response
                              serviceId:serviceId path:path];
         }
-    } else if ([self isEqualToAttribute: attribute cmp:DConnectFileProfileAttrRmdir]) {
+    } else if ([attribute localizedCaseInsensitiveCompare:DConnectFileProfileAttrRmdir] == NSOrderedSame) {
         
         if ([self hasMethod:@selector(profile:didReceiveDeleteRmdirRequest:response:serviceId:path:force:)
                    response:response])

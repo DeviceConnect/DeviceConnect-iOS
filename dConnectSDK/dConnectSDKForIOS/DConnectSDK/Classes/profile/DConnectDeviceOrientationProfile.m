@@ -45,7 +45,9 @@ NSString *const DConnectDeviceOrientationProfileParamAccelerationIncludingGravit
     
     NSString *attribute = [request attribute];
     
-    if ([self isEqualToAttribute: attribute cmp:DConnectDeviceOrientationProfileAttrOnDeviceOrientation]) {
+    if (!attribute) {
+        [response setErrorToNotSupportProfile];
+    } else if ([attribute localizedCaseInsensitiveCompare: DConnectDeviceOrientationProfileAttrOnDeviceOrientation] == NSOrderedSame) {
         if ([self hasMethod:@selector(profile:didReceiveGetOnDeviceOrientationRequest:response:serviceId:)
                    response:response]) {
             NSString *serviceId = [request serviceId];
@@ -70,7 +72,9 @@ NSString *const DConnectDeviceOrientationProfileParamAccelerationIncludingGravit
     
     NSString *attribute = [request attribute];
     
-    if ([self isEqualToAttribute: attribute cmp:DConnectDeviceOrientationProfileAttrOnDeviceOrientation]) {
+    if (!attribute) {
+        [response setErrorToNotSupportProfile];
+    } else if ([attribute localizedCaseInsensitiveCompare: DConnectDeviceOrientationProfileAttrOnDeviceOrientation] == NSOrderedSame) {
         if ([self hasMethod:@selector(profile:didReceivePutOnDeviceOrientationRequest:response:serviceId:sessionKey:)
                    response:response])
         {
@@ -98,7 +102,9 @@ NSString *const DConnectDeviceOrientationProfileParamAccelerationIncludingGravit
     
     NSString *attribute = [request attribute];
     
-    if ([self isEqualToAttribute: attribute cmp:DConnectDeviceOrientationProfileAttrOnDeviceOrientation]) {
+    if (!attribute) {
+        [response setErrorToNotSupportProfile];
+    } else if ([attribute localizedCaseInsensitiveCompare: DConnectDeviceOrientationProfileAttrOnDeviceOrientation] == NSOrderedSame) {
         
         if ([self hasMethod:@selector(profile:didReceiveDeleteOnDeviceOrientationRequest:response:serviceId:sessionKey:)
                    response:response])

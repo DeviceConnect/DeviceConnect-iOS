@@ -45,9 +45,10 @@ NSString *const DCMTemperatureProfileParamType = @"type";
     
     NSString *profile = [request profile];
     
-    if ([self isEqualToProfile:profile cmp:DCMTemperatureProfileName]
-        && [self hasMethod:@selector(profile:didReceiveGetTemperatureRequest:response:serviceId:) response:response])
-    {
+    if (!profile) {
+        [response setErrorToNotSupportProfile];
+    } else if ([profile localizedCaseInsensitiveCompare: DCMTemperatureProfileName] == NSOrderedSame
+        && [self hasMethod:@selector(profile:didReceiveGetTemperatureRequest:response:serviceId:) response:response]) {
         NSString *serviceId = [request serviceId];
         send = [_delegate profile:self didReceiveGetTemperatureRequest:request response:response
                          serviceId:serviceId];

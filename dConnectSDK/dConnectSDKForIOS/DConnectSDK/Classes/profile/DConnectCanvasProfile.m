@@ -52,7 +52,9 @@ NSString *const DConnectCanvasProfileModeFills  = @"fills";
     }
     
     NSString *attribute = [request attribute];
-    if ([self isEqualToAttribute: attribute cmp:DConnectCanvasProfileAttrDrawImage]) {
+    if (!attribute) {
+        [response setErrorToNotSupportProfile];
+    } else if ([attribute localizedCaseInsensitiveCompare:DConnectCanvasProfileAttrDrawImage]) {
         
         if ([self hasMethod:@selector(profile:didReceivePostDrawImageRequest:response:serviceId:mimeType:data:uri:imageX:imageY:mode:)
                    response:response])
@@ -102,7 +104,10 @@ NSString *const DConnectCanvasProfileModeFills  = @"fills";
     }
     
     NSString *attribute = [request attribute];
-    if ([self isEqualToAttribute: attribute cmp: DConnectCanvasProfileAttrDrawImage]) {
+    if (!attribute) {
+        [response setErrorToNotSupportProfile];
+    }
+    else if ([attribute localizedCaseInsensitiveCompare: DConnectCanvasProfileAttrDrawImage] == NSOrderedSame) {
         
         if ([self hasMethod:@selector(profile:didReceiveDeleteDrawImageRequest:response:serviceId:)
                    response:response])

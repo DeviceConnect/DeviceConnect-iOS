@@ -71,7 +71,9 @@ NSString *const DConnectServiceDiscoveryProfileNetworkTypeBLE = @"BLE";
     }
     
     NSString *attribute = [request attribute];
-    if ([self isEqualToAttribute: attribute cmp:DConnectServiceDiscoveryProfileAttrOnServiceChange]) {
+    if (!attribute) {
+        [response setErrorToNotSupportProfile];
+    } else if ([attribute localizedCaseInsensitiveCompare: DConnectServiceDiscoveryProfileAttrOnServiceChange] == NSOrderedSame) {
         if ([self hasMethod:@selector(profile:
                                       didReceivePutOnServiceChangeRequest:
                                       response:
@@ -100,7 +102,9 @@ NSString *const DConnectServiceDiscoveryProfileNetworkTypeBLE = @"BLE";
     }
     
     NSString *attribute = [request attribute];
-    if ([self isEqualToAttribute: attribute cmp:DConnectServiceDiscoveryProfileAttrOnServiceChange]) {
+    if (!attribute) {
+        [response setErrorToNotSupportProfile];
+    } else if ([attribute localizedCaseInsensitiveCompare: DConnectServiceDiscoveryProfileAttrOnServiceChange] == NSOrderedSame) {
         if ([self hasMethod:@selector(profile:
                                       didReceiveDeleteOnServiceChangeRequest:
                                       response:

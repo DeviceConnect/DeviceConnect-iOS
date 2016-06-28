@@ -95,7 +95,7 @@ NSString *const DConnectMediaPlayerProfileOrderDESC = @"desc";
         
         NSString *serviceId = request.serviceId;
         
-        if ([self isEqualToAttribute:DConnectMediaPlayerProfileAttrMedia cmp: attribute]) {
+        if (attribute && [attribute localizedCaseInsensitiveCompare: DConnectMediaPlayerProfileAttrMedia] == NSOrderedSame) {
             if ([self hasMethod:@selector(profile:didReceiveGetMediaRequest:response:serviceId:mediaId:)
                        response:response])
             {
@@ -103,7 +103,7 @@ NSString *const DConnectMediaPlayerProfileOrderDESC = @"desc";
                 send = [_delegate profile:self didReceiveGetMediaRequest:request
                                  response:response serviceId:serviceId mediaId:mediaId];
             }
-        } else if ([self isEqualToAttribute:DConnectMediaPlayerProfileAttrMediaList cmp:attribute]) {
+        } else if (attribute && [attribute localizedCaseInsensitiveCompare: DConnectMediaPlayerProfileAttrMediaList] == NSOrderedSame) {
             if ([self hasMethod:@selector(profile:didReceiveGetMediaListRequest:response:
                                           serviceId:query:mimeType:order:offset:limit:)
                        response:response])
@@ -121,28 +121,28 @@ NSString *const DConnectMediaPlayerProfileOrderDESC = @"desc";
                                  serviceId:serviceId query:query mimeType:mimeType order:order
                                    offset:offset limit:limit];
             }
-        } else if ([self isEqualToAttribute: DConnectMediaPlayerProfileAttrPlayStatus cmp: attribute]) {
+        } else if (attribute && [attribute localizedCaseInsensitiveCompare: DConnectMediaPlayerProfileAttrPlayStatus] == NSOrderedSame) {
             if ([self hasMethod:@selector(profile:didReceiveGetPlayStatusRequest:response:serviceId:)
                        response:response])
             {
                 send = [_delegate profile:self didReceiveGetPlayStatusRequest:request
                                  response:response serviceId:serviceId];
             }
-        } else if ([self isEqualToAttribute: DConnectMediaPlayerProfileAttrSeek cmp: attribute]) {
+        } else if (attribute && [attribute localizedCaseInsensitiveCompare: DConnectMediaPlayerProfileAttrSeek] == NSOrderedSame) {
             if ([self hasMethod:@selector(profile:didReceiveGetSeekRequest:response:serviceId:)
                        response:response])
             {
                 send = [_delegate profile:self didReceiveGetSeekRequest:request
                                  response:response serviceId:serviceId];
             }
-        } else if ([self isEqualToAttribute: DConnectMediaPlayerProfileAttrVolume cmp: attribute]) {
+        } else if (attribute && [attribute localizedCaseInsensitiveCompare: DConnectMediaPlayerProfileAttrVolume] == NSOrderedSame) {
             if ([self hasMethod:@selector(profile:didReceiveGetVolumeRequest:response:serviceId:)
                        response:response])
             {
                 send = [_delegate profile:self didReceiveGetVolumeRequest:request
                                  response:response serviceId:serviceId];
             }
-        } else if ([self isEqualToAttribute: DConnectMediaPlayerProfileAttrMute cmp: attribute]) {
+        } else if ([attribute localizedCaseInsensitiveCompare: DConnectMediaPlayerProfileAttrMute] == NSOrderedSame) {
             if ([self hasMethod:@selector(profile:didReceiveGetMuteRequest:response:serviceId:)
                        response:response])
             {
@@ -174,7 +174,9 @@ NSString *const DConnectMediaPlayerProfileOrderDESC = @"desc";
         
         NSString *serviceId = request.serviceId;
         
-        if ([self isEqualToAttribute: DConnectMediaPlayerProfileAttrMedia cmp: attribute]) {
+        if (!attribute) {
+            [response setErrorToNotSupportProfile];
+        } else if ([attribute localizedCaseInsensitiveCompare: DConnectMediaPlayerProfileAttrMedia] == NSOrderedSame) {
             if ([self hasMethod:@selector(profile:didReceivePutMediaRequest:response:serviceId:mediaId:)
                 response:response])
             {
@@ -182,35 +184,35 @@ NSString *const DConnectMediaPlayerProfileOrderDESC = @"desc";
                 send = [_delegate profile:self didReceivePutMediaRequest:request response:response
                                  serviceId:serviceId mediaId:mediaId];
             }
-        } else if ([self isEqualToAttribute: DConnectMediaPlayerProfileAttrPlay cmp: attribute]) {
+        } else if ([attribute localizedCaseInsensitiveCompare:DConnectMediaPlayerProfileAttrPlay] == NSOrderedSame) {
             if ([self hasMethod:@selector(profile:didReceivePutPlayRequest:response:serviceId:)
                        response:response])
             {
                 send = [_delegate profile:self didReceivePutPlayRequest:request
                                  response:response serviceId:serviceId];
             }
-        } else if ([self isEqualToAttribute: DConnectMediaPlayerProfileAttrStop cmp: attribute]) {
+        } else if ([attribute localizedCaseInsensitiveCompare: DConnectMediaPlayerProfileAttrStop] == NSOrderedSame) {
             if ([self hasMethod:@selector(profile:didReceivePutStopRequest:response:serviceId:)
                        response:response])
             {
                 send = [_delegate profile:self didReceivePutStopRequest:request
                                  response:response serviceId:serviceId];
             }
-        } else if ([self isEqualToAttribute: DConnectMediaPlayerProfileAttrPause cmp:attribute]) {
+        } else if ([attribute localizedCaseInsensitiveCompare: DConnectMediaPlayerProfileAttrPause] == NSOrderedSame) {
             if ([self hasMethod:@selector(profile:didReceivePutPauseRequest:response:serviceId:)
                        response:response])
             {
                 send = [_delegate profile:self didReceivePutPauseRequest:request
                                  response:response serviceId:serviceId];
             }
-        } else if ([self isEqualToAttribute: DConnectMediaPlayerProfileAttrResume cmp:attribute]) {
+        } else if ([attribute localizedCaseInsensitiveCompare: DConnectMediaPlayerProfileAttrResume] == NSOrderedSame) {
             if ([self hasMethod:@selector(profile:didReceivePutResumeRequest:response:serviceId:)
                        response:response])
             {
                 send = [_delegate profile:self didReceivePutResumeRequest:request
                                  response:response serviceId:serviceId];
             }
-        } else if ([self isEqualToAttribute: DConnectMediaPlayerProfileAttrSeek cmp:attribute]) {
+        } else if ([attribute localizedCaseInsensitiveCompare: DConnectMediaPlayerProfileAttrSeek] == NSOrderedSame) {
             if ([self hasMethod:@selector(profile:didReceivePutSeekRequest:response:serviceId:pos:)
                        response:response])
             {
@@ -219,7 +221,7 @@ NSString *const DConnectMediaPlayerProfileOrderDESC = @"desc";
                                  response:response serviceId:serviceId pos:pos];
                 
             }
-        } else if ([self isEqualToAttribute: DConnectMediaPlayerProfileAttrVolume cmp:attribute]) {
+        } else if ([attribute localizedCaseInsensitiveCompare:DConnectMediaPlayerProfileAttrVolume] == NSOrderedSame) {
             if ([self hasMethod:@selector(profile:didReceivePutVolumeRequest:response:serviceId:volume:)
                        response:response])
             {
@@ -227,14 +229,14 @@ NSString *const DConnectMediaPlayerProfileOrderDESC = @"desc";
                 send = [_delegate profile:self didReceivePutVolumeRequest:request response:response
                                  serviceId:serviceId volume:volume];
             }
-        } else if ([self isEqualToAttribute: DConnectMediaPlayerProfileAttrMute cmp:attribute]) {
+        } else if ([attribute localizedCaseInsensitiveCompare: DConnectMediaPlayerProfileAttrMute] == NSOrderedSame) {
             if ([self hasMethod:@selector(profile:didReceivePutMuteRequest:response:serviceId:)
                        response:response])
             {
                 send = [_delegate profile:self didReceivePutMuteRequest:request
                                  response:response serviceId:serviceId];
             }
-        } else if ([self isEqualToAttribute: DConnectMediaPlayerProfileAttrOnStatusChange cmp: attribute]) {
+        } else if ([attribute localizedCaseInsensitiveCompare: DConnectMediaPlayerProfileAttrOnStatusChange] == NSOrderedSame) {
             if ([self hasMethod:@selector(profile:didReceivePutOnStatusChangeRequest:response:
                                           serviceId:sessionKey:) response:response])
             {
@@ -265,23 +267,21 @@ NSString *const DConnectMediaPlayerProfileOrderDESC = @"desc";
     
     NSString *attribute = request.attribute;
     
-    if (attribute) {
-        if ([self isEqualToAttribute: DConnectMediaPlayerProfileAttrMute cmp:attribute]) {
-            if ([self hasMethod:@selector(profile:didReceiveDeleteMuteRequest:response:serviceId:)
-                       response:response])
-            {
-                send = [_delegate profile:self didReceiveDeleteMuteRequest:request response:response
-                                 serviceId:request.serviceId];
-            }
-        } else if ([self isEqualToAttribute: DConnectMediaPlayerProfileAttrOnStatusChange cmp:attribute]) {
-            if ([self hasMethod:@selector(profile:didReceiveDeleteOnStatusChangeRequest:
-                                          response:serviceId:sessionKey:) response:response])
-            {
-                send = [_delegate profile:self didReceiveDeleteOnStatusChangeRequest:request response:response
-                                 serviceId:request.serviceId sessionKey:request.sessionKey];
-            }
-        } else {
-            [response setErrorToNotSupportProfile];
+    if (!attribute) {
+        [response setErrorToNotSupportProfile];
+    } else if ([attribute localizedCaseInsensitiveCompare: DConnectMediaPlayerProfileAttrMute] == NSOrderedSame) {
+        if ([self hasMethod:@selector(profile:didReceiveDeleteMuteRequest:response:serviceId:)
+                   response:response])
+        {
+            send = [_delegate profile:self didReceiveDeleteMuteRequest:request response:response
+                             serviceId:request.serviceId];
+        }
+    } else if ([attribute localizedCaseInsensitiveCompare: DConnectMediaPlayerProfileAttrOnStatusChange] == NSOrderedSame) {
+        if ([self hasMethod:@selector(profile:didReceiveDeleteOnStatusChangeRequest:
+                                      response:serviceId:sessionKey:) response:response])
+        {
+            send = [_delegate profile:self didReceiveDeleteOnStatusChangeRequest:request response:response
+                             serviceId:request.serviceId sessionKey:request.sessionKey];
         }
     } else {
         [response setErrorToNotSupportProfile];

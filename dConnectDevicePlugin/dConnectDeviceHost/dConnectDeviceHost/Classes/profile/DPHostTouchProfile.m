@@ -181,37 +181,39 @@ static const long FLAG_ON_TOUCH_CANCEL = 0x00000020;
  */
 - (DConnectMessage *) getTouchCache:(NSString *)attr {
     UInt64 CurrentTime = (UInt64)floor((CFAbsoluteTimeGetCurrent() + kCFAbsoluteTimeIntervalSince1970) * 1000.0);
-    if ([self isEqualToAttribute:attr cmp:DConnectTouchProfileAttrOnTouch]) {
+    if (!attr) {
+        return nil;
+    } else if ([attr localizedCaseInsensitiveCompare: DConnectTouchProfileAttrOnTouch] == NSOrderedSame) {
         if (CurrentTime - mOnTouchCacheTime <= CACHE_RETENTION_TIME) {
             return mOnTouchCache;
         } else {
             return nil;
         }
-    } else if ([self isEqualToAttribute:attr cmp:DConnectTouchProfileAttrOnTouchStart]) {
+    } else if ([attr localizedCaseInsensitiveCompare: DConnectTouchProfileAttrOnTouchStart] == NSOrderedSame) {
         if (CurrentTime - mOnTouchStartCacheTime <= CACHE_RETENTION_TIME) {
             return mOnTouchStartCache;
         } else {
             return nil;
         }
-    } else if ([self isEqualToAttribute:attr cmp:DConnectTouchProfileAttrOnTouchEnd]) {
+    } else if ([attr localizedCaseInsensitiveCompare: DConnectTouchProfileAttrOnTouchEnd] == NSOrderedSame) {
         if (CurrentTime - mOnTouchEndCacheTime <= CACHE_RETENTION_TIME) {
             return mOnTouchEndCache;
         } else {
             return nil;
         }
-    } else if ([self isEqualToAttribute:attr cmp:DConnectTouchProfileAttrOnDoubleTap]) {
+    } else if ([attr localizedCaseInsensitiveCompare: DConnectTouchProfileAttrOnDoubleTap] == NSOrderedSame) {
         if (CurrentTime - mOnDoubleTapCacheTime <= CACHE_RETENTION_TIME) {
             return mOnDoubleTapCache;
         } else {
             return nil;
         }
-    } else if ([self isEqualToAttribute:attr cmp:DConnectTouchProfileAttrOnTouchMove]) {
+    } else if ([attr localizedCaseInsensitiveCompare: DConnectTouchProfileAttrOnTouchMove] == NSOrderedSame) {
         if (CurrentTime - mOnTouchMoveCacheTime <= CACHE_RETENTION_TIME) {
             return mOnTouchMoveCache;
         } else {
             return nil;
         }
-    } else if ([self isEqualToAttribute:attr cmp:DConnectTouchProfileAttrOnTouchCancel]) {
+    } else if ([attr localizedCaseInsensitiveCompare: DConnectTouchProfileAttrOnTouchCancel] == NSOrderedSame) {
         if (CurrentTime - mOnTouchCancelCacheTime <= CACHE_RETENTION_TIME) {
             return mOnTouchCancelCache;
         } else {
@@ -230,22 +232,24 @@ static const long FLAG_ON_TOUCH_CANCEL = 0x00000020;
 - (void) setTouchCache:(NSString *)attr
              touchData:(DConnectMessage *)touchData {
     UInt64 CurrentTime = (UInt64)floor((CFAbsoluteTimeGetCurrent() + kCFAbsoluteTimeIntervalSince1970) * 1000.0);
-    if ([self isEqualToAttribute:attr cmp:DConnectTouchProfileAttrOnTouch]) {
+    if (!attr) {
+        return;
+    } else if ([attr localizedCaseInsensitiveCompare: DConnectTouchProfileAttrOnTouch] == NSOrderedSame) {
         mOnTouchCache = touchData;
         mOnTouchCacheTime = CurrentTime;
-    } else if ([self isEqualToAttribute:attr cmp:DConnectTouchProfileAttrOnTouchStart]) {
+    } else if ([attr localizedCaseInsensitiveCompare: DConnectTouchProfileAttrOnTouchStart] == NSOrderedSame) {
         mOnTouchStartCache = touchData;
         mOnTouchStartCacheTime = CurrentTime;
-    } else if ([self isEqualToAttribute:attr cmp:DConnectTouchProfileAttrOnTouchEnd]) {
+    } else if ([attr localizedCaseInsensitiveCompare: DConnectTouchProfileAttrOnTouchEnd] == NSOrderedSame) {
         mOnTouchEndCache = touchData;
         mOnTouchEndCacheTime = CurrentTime;
-    } else if ([self isEqualToAttribute:attr cmp:DConnectTouchProfileAttrOnDoubleTap]) {
+    } else if ([attr localizedCaseInsensitiveCompare: DConnectTouchProfileAttrOnDoubleTap] == NSOrderedSame) {
         mOnDoubleTapCache = touchData;
         mOnDoubleTapCacheTime = CurrentTime;
-    } else if ([self isEqualToAttribute:attr cmp:DConnectTouchProfileAttrOnTouchMove]) {
+    } else if ([attr localizedCaseInsensitiveCompare: DConnectTouchProfileAttrOnTouchMove] == NSOrderedSame) {
         mOnTouchMoveCache = touchData;
         mOnTouchMoveCacheTime = CurrentTime;
-    } else if ([self isEqualToAttribute:attr cmp:DConnectTouchProfileAttrOnTouchCancel]) {
+    } else if ([attr localizedCaseInsensitiveCompare: DConnectTouchProfileAttrOnTouchCancel] == NSOrderedSame) {
         mOnTouchCancelCache = touchData;
         mOnTouchCancelCacheTime = CurrentTime;
     }

@@ -39,10 +39,10 @@
     BOOL send = NO;
     if (attribute == nil && interface == nil) {
         send = [self didReceiveGetSystemRequest:request response:response];
-    } else if ([self isEqualToAttribute:attribute cmp:DConnectSystemProfileAttrKeyword]) {
+    } else if (attribute && [attribute localizedCaseInsensitiveCompare: DConnectSystemProfileAttrKeyword] == NSOrderedSame) {
         [response setErrorToNotSupportAction];
         send = YES;
-    } else if ([self isEqualToAttribute:attribute cmp:DConnectSystemProfileAttrEvents]) {
+    } else if (attribute && [attribute localizedCaseInsensitiveCompare: DConnectSystemProfileAttrEvents] == NSOrderedSame) {
         [response setErrorToNotSupportAction];
         send = YES;
     }
@@ -58,10 +58,10 @@
     if (interface == nil && attribute == nil) {
         [response setErrorToNotSupportAction];
         return YES;
-    } else if ([self isEqualToAttribute:attribute cmp:DConnectSystemProfileAttrKeyword]) {
+    } else if (attribute && [attribute localizedCaseInsensitiveCompare: DConnectSystemProfileAttrKeyword] == NSOrderedSame) {
         [response setErrorToNotSupportAction];
         return YES;
-    } else  if ([self isEqualToAttribute:attribute cmp:DConnectSystemProfileAttrEvents]) {
+    } else  if (attribute && [attribute localizedCaseInsensitiveCompare:DConnectSystemProfileAttrEvents] == NSOrderedSame) {
         [response setErrorToNotSupportAction];
         return YES;
     }
@@ -78,10 +78,10 @@
     if (interface == nil && attribute == nil) {
         [response setErrorToNotSupportAction];
         return YES;
-    } else if ([self isEqualToAttribute:attribute cmp:DConnectSystemProfileAttrKeyword]) {
+    } else if (attribute && [attribute localizedCaseInsensitiveCompare:DConnectSystemProfileAttrKeyword] == NSOrderedSame) {
         [response setErrorToNotSupportAction];
         return YES;
-    } else  if ([self isEqualToAttribute:attribute cmp:DConnectSystemProfileAttrEvents]) {
+    } else  if (attribute && [attribute localizedCaseInsensitiveCompare: DConnectSystemProfileAttrEvents] == NSOrderedSame) {
         [response setErrorToNotSupportAction];
         return YES;
     }
@@ -98,10 +98,10 @@
     if (interface == nil && attribute == nil) {
         [response setErrorToNotSupportAction];
         return YES;
-    } else if ([self isEqualToAttribute:attribute cmp:DConnectSystemProfileAttrKeyword]) {
+    } else if (attribute && [attribute localizedCaseInsensitiveCompare: DConnectSystemProfileAttrKeyword] == NSOrderedSame) {
         [response setErrorToNotSupportAction];
         return YES;
-    } else  if ([self isEqualToAttribute:attribute cmp:DConnectSystemProfileAttrEvents]) {
+    } else if (attribute && [attribute localizedCaseInsensitiveCompare: DConnectSystemProfileAttrEvents] == NSOrderedSame) {
         NSString *sessionKey = [request sessionKey];
         return [self profile:self didReceiveDeleteEventsRequest:request
                     response:response
@@ -143,7 +143,7 @@
         NSArray *profiles = [plugin profiles];
         for (DConnectProfile *profile in profiles) {
             [profileNames addString:[profile profileName]];
-            if ([self isEqualToProfile:profile.profileName cmp:@"system"]) {
+            if (profile.profileName && [profile.profileName localizedCaseInsensitiveCompare:@"system"] == NSOrderedSame) {
                 DConnectSystemProfile *sysProfile = (DConnectSystemProfile *) profile;
                 if (sysProfile.dataSource) {
                     NSString *v = [sysProfile.dataSource versionOfSystemProfile:sysProfile];

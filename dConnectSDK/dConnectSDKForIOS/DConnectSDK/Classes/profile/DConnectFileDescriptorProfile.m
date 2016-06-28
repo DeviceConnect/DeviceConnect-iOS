@@ -55,7 +55,9 @@ NSString *const DConnectFileDescriptorProfileParamPath = @"path";
         NSString *serviceId = [request serviceId];
         NSString *path = [DConnectFileDescriptorProfile pathFromRequest:request];
         
-        if ([self isEqualToAttribute: attribute cmp:DConnectFileDescriptorProfileAttrOpen]) {
+        if (!attribute) {
+            [response setErrorToNotSupportProfile];
+        } else if ([attribute localizedCaseInsensitiveCompare: DConnectFileDescriptorProfileAttrOpen] == NSOrderedSame) {
             if ([self hasMethod:@selector(profile:didReceiveGetOpenRequest:response:serviceId:path:flag:)
                        response:response])
             {
@@ -63,7 +65,7 @@ NSString *const DConnectFileDescriptorProfileParamPath = @"path";
                 send = [_delegate profile:self didReceiveGetOpenRequest:request response:response
                                  serviceId:serviceId path:path flag:flag];
             }
-        } else if ([self isEqualToAttribute: attribute cmp:DConnectFileDescriptorProfileAttrRead]) {
+        } else if ([attribute localizedCaseInsensitiveCompare: DConnectFileDescriptorProfileAttrRead] == NSOrderedSame) {
             if ([self hasMethod:@selector(profile:didReceiveGetReadRequest:response:serviceId:path:length:position:)
                        response:response])
             {
@@ -97,7 +99,9 @@ NSString *const DConnectFileDescriptorProfileParamPath = @"path";
         NSString *serviceId = [request serviceId];
         NSString *path = [DConnectFileDescriptorProfile pathFromRequest:request];
         
-        if ([self isEqualToAttribute:attribute cmp:DConnectFileDescriptorProfileAttrClose]) {
+        if (!attribute) {
+            [response setErrorToNotSupportProfile];
+        } if ([attribute localizedCaseInsensitiveCompare: DConnectFileDescriptorProfileAttrClose] == NSOrderedSame) {
             
             if ([self hasMethod:@selector(profile:didReceivePutCloseRequest:response:serviceId:path:)
                        response:response])
@@ -105,7 +109,7 @@ NSString *const DConnectFileDescriptorProfileParamPath = @"path";
                 send = [_delegate profile:self didReceivePutCloseRequest:request response:response
                                  serviceId:serviceId path:path];
             }
-        } else if ([self isEqualToAttribute: attribute cmp:DConnectFileDescriptorProfileAttrWrite]) {
+        } else if ([attribute localizedCaseInsensitiveCompare: DConnectFileDescriptorProfileAttrWrite] == NSOrderedSame) {
             if ([self hasMethod:@selector(profile:didReceivePutWriteRequest:response:serviceId:path:media:position:)
                        response:response])
             {
@@ -115,7 +119,7 @@ NSString *const DConnectFileDescriptorProfileParamPath = @"path";
                 send = [_delegate profile:self didReceivePutWriteRequest:request response:response
                                  serviceId:serviceId path:path media:media position:position];
             }
-        } else if ([self isEqualToAttribute:attribute cmp:DConnectFileDescriptorProfileAttrOnWatchFile]) {
+        } else if ([attribute localizedCaseInsensitiveCompare: DConnectFileDescriptorProfileAttrOnWatchFile] == NSOrderedSame) {
             
             if ([self hasMethod:@selector(profile:didReceivePutOnWatchFileRequest:response:serviceId:sessionKey:)
                        response:response])
@@ -143,7 +147,10 @@ NSString *const DConnectFileDescriptorProfileParamPath = @"path";
     
     NSString *attribute = [request attribute];
     
-    if ([self isEqualToAttribute: DConnectFileDescriptorProfileAttrOnWatchFile cmp:attribute]) {
+    if (!attribute) {
+        [response setErrorToNotSupportProfile];
+    }
+    else if ([attribute localizedCaseInsensitiveCompare: DConnectFileDescriptorProfileAttrOnWatchFile] == NSOrderedSame) {
         
         if ([self hasMethod:@selector(profile:didReceiveDeleteOnWatchFileRequest:response:serviceId:sessionKey:)
                    response:response])

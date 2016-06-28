@@ -269,8 +269,8 @@ NSString *const DConnectAttributeNameRequestAccessToken = @"requestAccessToken";
 {
     NSString *profile = [event stringForKey:DConnectMessageProfile];
     NSString *attribute = [event stringForKey:DConnectMessageAttribute];
-    if ([self isEqualToProfile: profile cmp:DConnectServiceDiscoveryProfileName] &&
-        [self isEqualToAttribute: attribute cmp:DConnectServiceDiscoveryProfileAttrOnServiceChange]) {
+    if (profile && [profile localizedCaseInsensitiveCompare:DConnectServiceDiscoveryProfileName] == NSOrderedSame &&
+        attribute && [attribute localizedCaseInsensitiveCompare:DConnectServiceDiscoveryProfileAttrOnServiceChange] == NSOrderedSame) {
         
         // サービスIDを付加する
         DConnectMessage *service = [event messageForKey:DConnectServiceDiscoveryProfileParamNetworkService];
@@ -763,30 +763,6 @@ NSString *const DConnectAttributeNameRequestAccessToken = @"requestAccessToken";
     
     // 新名称も旧名称もマッチしなかった
     return nil;
-}
-
-- (BOOL)isEqualToProfile: profile cmp: (NSString *)cmpProfile {
-    
-    if ([[profile lowercaseString] isEqualToString: [cmpProfile lowercaseString]]) {
-        return YES;
-    }
-    return NO;
-}
-
-- (BOOL)isEqualToAttribute: attribute cmp: (NSString *)cmpAttribute {
-    
-    if ([[attribute lowercaseString] isEqualToString: [cmpAttribute lowercaseString]]) {
-        return YES;
-    }
-    return NO;
-}
-
-- (BOOL)isEqualToInterface: interface cmp: (NSString *)cmpInterface {
-    
-    if ([[interface lowercaseString] isEqualToString: [cmpInterface lowercaseString]]) {
-        return YES;
-    }
-    return NO;
 }
 
 @end
