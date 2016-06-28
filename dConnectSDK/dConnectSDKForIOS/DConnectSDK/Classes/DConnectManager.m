@@ -28,13 +28,12 @@
 #import "LocalOAuth2Main.h"
 #import "DConnectServerProtocol.h"
 
-
-#define MATCH_YES           @"YES"
-#define MATCH_NO            @"NO"
-#define MATCH_OLD_NAME      @"matchOldName"
-#define MATCH_NEW_NAME      @"matchNewName"
-#define OLD_NAME            @"oldName"
-#define NEW_NAME            @"newName"
+static NSString *const MATCH_YES = @"YES";
+static NSString *const MATCH_NO = @"NO";
+static NSString *const MATCH_OLD_NAME = @"matchOldName";
+static NSString *const MATCH_NEW_NAME = @"matchNewName";
+static NSString *const OLD_NAME = @"oldName";
+static NSString *const NEW_NAME = @"newName";
 
 NSString *const DConnectApplicationDidEnterBackground = @"DConnectApplicationDidEnterBackground";
 NSString *const DConnectApplicationWillEnterForeground = @"DConnectApplicationWillEnterForeground";
