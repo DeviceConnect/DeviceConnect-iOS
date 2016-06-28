@@ -637,19 +637,19 @@ NSString *const DConnectAttributeNameRequestAccessToken = @"requestAccessToken";
 - (void) matchingProfileInterfaceAttributeWithRequest: (DConnectRequestMessage *)request {
     
     // Profile新旧対応テーブル(key:新 / val:旧)
-    NSDictionary *profileConvertTable = [NSDictionary dictionaryWithObjectsAndKeys:
-                                         @"drivecontroller", @"drive_controller",
-                                         @"filedescriptor", @"file_descriptor",
-                                         @"mediaplayer", @"media_player",
-                                         @"mediastreamrecording", @"mediastream_recording",
-                                         @"omnidirectionalimage", @"omnidirectional_image",
-                                         @"remotecontroller", @"remote_controller",
-                                         nil];
+    NSDictionary *profileConvertTable = @{
+                                         @"drivecontroller":@"drive_controller",
+                                         @"filedescriptor":@"file_descriptor",
+                                         @"mediaplayer":@"media_player",
+                                         @"mediastreamrecording":@"mediastream_recording",
+                                         @"omnidirectionalimage":@"omnidirectional_image",
+                                         @"remotecontroller":@"remote_controller"
+                                         };
     // attribute新旧対応テーブル(key:新 / val:旧)
-    NSDictionary *attributeConvertTable = [NSDictionary dictionaryWithObjectsAndKeys:
-                                           @"medialist", @"media_list",
-                                           @"playstatus", @"play_status",
-                                           nil];
+    NSDictionary *attributeConvertTable = @{
+                                           @"medialist":@"media_list",
+                                           @"playstatus":@"play_status"
+                                           };
     
     // リクエストのProfile,Attributeが新旧対応テーブルに存在しなければ変換しない
     NSString *serviceId = [request serviceId];
@@ -681,12 +681,12 @@ NSString *const DConnectAttributeNameRequestAccessToken = @"requestAccessToken";
         if (resultWithRequestProfile != nil) {
             
             // テーブルに存在する(新旧どちらにマッチしたかも分かる)
-            BOOL requestProfileIsNew = [[resultWithRequestProfile objectForKey: MATCH_NEW_NAME]
+            BOOL requestProfileIsNew = [resultWithRequestProfile[MATCH_NEW_NAME]
                                         isEqualToString: MATCH_YES];
-            BOOL requestProfileIsOld = [[resultWithRequestProfile objectForKey: MATCH_OLD_NAME]
+            BOOL requestProfileIsOld = [resultWithRequestProfile [MATCH_OLD_NAME]
                                         isEqualToString: MATCH_YES];
-            NSString *newProfile = [resultWithRequestProfile objectForKey: NEW_NAME];
-            NSString *oldProfile = [resultWithRequestProfile objectForKey: OLD_NAME];
+            NSString *newProfile = resultWithRequestProfile[NEW_NAME];
+            NSString *oldProfile = resultWithRequestProfile[OLD_NAME];
             
             // デバイスプラグインが持っているプロファイルが新旧どちらなのか判定する
             
@@ -715,12 +715,12 @@ NSString *const DConnectAttributeNameRequestAccessToken = @"requestAccessToken";
         if (resultWithRequestAttribute != nil) {
             
             // テーブルに存在する(新旧どちらにマッチしたかも分かる)
-            BOOL requestAttributeIsNew = [[resultWithRequestAttribute objectForKey: MATCH_NEW_NAME]
+            BOOL requestAttributeIsNew = [resultWithRequestAttribute[MATCH_NEW_NAME]
                                           isEqualToString: MATCH_YES];
-            BOOL requestAttributeIsOld = [[resultWithRequestAttribute objectForKey: MATCH_OLD_NAME]
+            BOOL requestAttributeIsOld = [resultWithRequestAttribute[MATCH_OLD_NAME]
                                           isEqualToString: MATCH_YES];
-            NSString *newAttribute = [resultWithRequestAttribute objectForKey: NEW_NAME];
-            NSString *oldAttribute = [resultWithRequestAttribute objectForKey: OLD_NAME];
+            NSString *newAttribute = resultWithRequestAttribute[NEW_NAME];
+            NSString *oldAttribute = resultWithRequestAttribute[OLD_NAME];
             
             // リクエストされたattributeとデバイスプラグインのattributeのレベルが合わない場合はデバイスプラグインに合わせて変換する
             if (requestAttributeIsOld && dpIsNew) {
@@ -737,14 +737,14 @@ NSString *const DConnectAttributeNameRequestAccessToken = @"requestAccessToken";
                                      convertTable : (NSDictionary *)convertTable {
     
     // 旧名称でマッチした
-    NSString *newName = [convertTable objectForKey: name];
+    NSString *newName = convertTable[name];
     if (newName != nil) {
-        NSDictionary *result = [NSDictionary dictionaryWithObjectsAndKeys:
-                                MATCH_YES, MATCH_OLD_NAME,
-                                MATCH_NO, MATCH_NEW_NAME,
-                                name, OLD_NAME,
-                                newName, NEW_NAME,
-                                nil];
+        NSDictionary *result = @{
+                                 MATCH_YES:MATCH_OLD_NAME,
+                                 MATCH_NO:MATCH_NEW_NAME,
+                                 name:OLD_NAME,
+                                 newName:NEW_NAME,
+                                 };
         return result;
     }
     // 新名称でマッチした
@@ -752,12 +752,12 @@ NSString *const DConnectAttributeNameRequestAccessToken = @"requestAccessToken";
     if (oldNames != nil && [oldNames count] > 0) {
         NSString *oldName = [oldNames objectAtIndex: 0];
         
-        NSDictionary *result = [NSDictionary dictionaryWithObjectsAndKeys:
-                                MATCH_NO, MATCH_OLD_NAME,
-                                MATCH_YES, MATCH_NEW_NAME,
-                                oldName, OLD_NAME,
-                                name, NEW_NAME,
-                                nil];
+        NSDictionary *result = @{
+                                 MATCH_NO:MATCH_OLD_NAME,
+                                 MATCH_YES:MATCH_NEW_NAME,
+                                 oldName:OLD_NAME,
+                                 name:NEW_NAME,
+                                 };
         return result;
     }
     
