@@ -129,7 +129,7 @@ const double DConnectSettingsProfileMinLevel = 0.0;
                                                     level:[DConnectSettingsProfile
                                                            levelFromRequest:request]];
                 }
-            } else if (attribute && [attribute localizedCaseInsensitiveCompare: DConnectSettingsProfileAttrSleep]) {
+            } else if (attribute && [attribute localizedCaseInsensitiveCompare: DConnectSettingsProfileAttrSleep] == NSOrderedSame) {
                 if ([self hasMethod:@selector(profile:didReceivePutSleepRequest:response:serviceId:time:)
                            response:response])
                 {
