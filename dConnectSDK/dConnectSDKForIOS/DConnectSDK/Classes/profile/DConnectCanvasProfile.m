@@ -54,7 +54,7 @@ NSString *const DConnectCanvasProfileModeFills  = @"fills";
     NSString *attribute = [request attribute];
     if (!attribute) {
         [response setErrorToNotSupportProfile];
-    } else if ([attribute localizedCaseInsensitiveCompare:DConnectCanvasProfileAttrDrawImage]) {
+    } else if ([attribute localizedCaseInsensitiveCompare:DConnectCanvasProfileAttrDrawImage] == NSOrderedSame) {
         
         if ([self hasMethod:@selector(profile:didReceivePostDrawImageRequest:response:serviceId:mimeType:data:uri:imageX:imageY:mode:)
                    response:response])
