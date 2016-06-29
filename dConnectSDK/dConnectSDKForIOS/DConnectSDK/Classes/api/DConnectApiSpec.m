@@ -15,7 +15,7 @@
 #define METHOD_POST @"POST"
 #define METHOD_DELETE @"DELETE"
 
-#define TYPE_ONESHOT @"one_shot"
+#define TYPE_ONESHOT @"one-shot"
 #define TYPE_EVENT @"event"
 
 #define NAME @"name"
@@ -115,6 +115,9 @@
 
 
 + (DConnectApiSpecMethod) parseMethod: (NSString *)string {
+    if (string == nil) {
+        @throw [NSString stringWithFormat: @"method is invalid : nil"];
+    }
     if ([[string lowercaseString] isEqualToString: [(METHOD_GET) lowercaseString]]) {
         return GET;
     }
@@ -131,6 +134,9 @@
 }
 
 + (DConnectApiSpecType) parseType: (NSString *)string {
+    if (string == nil) {
+        @throw [NSString stringWithFormat: @"type is invalid : nil"];
+    }
     if ([[string lowercaseString] isEqualToString: [(TYPE_ONESHOT) lowercaseString]]) {
         return ONESHOT;
     }
@@ -239,9 +245,10 @@
     return apiSpec;
 }
 
+// TODO: AndroidではDConnectApiSpecで定義されているが、DConnectApiSpecとDConnectApiSpecBuilderの包含関係があいまいなためObjective-Cでは実装できない。
+//       ここではDConnectApiSpecBuilderがDConnectApiSpecを包含するようにコーディングしたのでfromJsonをDConnectApiSpecBuilderに移動している。
+//       しかしBuilderパターンとは関係ないメソッドなので配置場所は再検討する必要がある。
 + (DConnectApiSpec *) fromJson : (NSDictionary *)apiObj {
-    
-    NSLog(@"DConnectApiSpec fromJson start");
     
     NSString *name = [apiObj objectForKey:NAME];
     NSString *path = [apiObj objectForKey:PATH];
@@ -249,6 +256,7 @@
     NSString *typeStr = [apiObj objectForKey:TYPE];
     
     @try {
+        
         // 認識できない文字列を渡したら例外をスローする
         DConnectApiSpecMethod method = [DConnectApiSpec parseMethod: methodStr];
         
@@ -270,7 +278,7 @@
         DConnectApiSpec *apiSpec = [[[[[[builder name: name] type: type] method: method] path: path] requestParamSpecList: paramList] build];
         return apiSpec;
     }
-    @catch (NSException *e) {
+    @catch (NSString *e) {
         DCLogE(@"fromJson exception: %@", e);
         return nil;
     }

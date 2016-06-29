@@ -91,7 +91,7 @@
             
             if ([jsonObj isKindOfClass: [NSDictionary class]]) {
                 NSLog(@"jsonObj is NSDictionary");
-                DConnectApiSpec *apiSpec = [DConnectApiSpec fromJson: jsonObj];
+                DConnectApiSpec *apiSpec = [DConnectApiSpecBuilder fromJson: jsonObj];
                 
                 if (apiSpec != nil) {
                     [self addApiSpec : apiSpec];

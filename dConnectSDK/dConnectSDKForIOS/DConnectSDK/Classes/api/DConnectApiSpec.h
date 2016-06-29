@@ -39,8 +39,6 @@ typedef enum {
 
 + (NSString *) convertTypeToString: (DConnectApiSpecType) enType;
 
-+ (DConnectApiSpec *) fromJson : (NSDictionary *)apiObj;
-
 - (NSString *) name;
 
 - (DConnectApiSpecType) type;
@@ -71,5 +69,7 @@ typedef enum {
 - (id)requestParamSpecList:(NSArray *) requestParamSpecList;
 
 - (DConnectApiSpec *)build;
+
++ (DConnectApiSpec *) fromJson : (NSDictionary *)apiObj;
 
 @end
