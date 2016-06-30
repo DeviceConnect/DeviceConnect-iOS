@@ -8,6 +8,7 @@
 
 #import "BookmarkIconViewModel.h"
 #import "HTMLParser.h"
+#import "GHDataManager.h"
 
 @interface BookmarkIconViewModel()
 {
@@ -139,5 +140,10 @@ static NSString* touch_icon = @"apple-touch-icon.png";
     return [NSString stringWithFormat:@"%@://%@/%@", url.scheme, url.host, path];
 }
 
+- (void)updateOpenDate
+{
+    self.page.latest_opened_date = [NSDate date];
+    [[GHDataManager shareManager]save];
+}
 
 @end

@@ -58,6 +58,7 @@
 - (IBAction)didTapItem:(UIButton *)sender {
     if (self.viewModel.page != nil) {
         self.didIconSelected(self.viewModel.page);
+        [self.viewModel updateOpenDate];
     }
     self.alpha = 1.0;
 }

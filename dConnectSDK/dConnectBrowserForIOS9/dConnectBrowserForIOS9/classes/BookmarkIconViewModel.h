@@ -12,4 +12,5 @@
 @interface BookmarkIconViewModel : NSObject
 @property (weak, nonatomic) Page* page;
 - (void)bookmarkIconImage:(void (^)(UIImage*))completion;
+- (void)updateOpenDate;
 @end
