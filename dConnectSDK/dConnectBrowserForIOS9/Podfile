@@ -1,0 +1,8 @@
+platform :ios, '9.0'
+workspace '../../DeviceConnect'
+xcodeproj 'dConnectBrowserForIOS9'
+
+target "dConnectBrowserForIOS9" do 
+	pod 'Objective-C-HMTL-Parser', '~> 0.0.1'
+	xcodeproj 'dConnectBrowserForIOS9'
+end

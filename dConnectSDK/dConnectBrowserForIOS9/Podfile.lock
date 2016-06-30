@@ -1,0 +1,12 @@
+PODS:
+  - Objective-C-HMTL-Parser (0.0.1)
+
+DEPENDENCIES:
+  - Objective-C-HMTL-Parser (~> 0.0.1)
+
+SPEC CHECKSUMS:
+  Objective-C-HMTL-Parser: cc468311d0ae434646c56aae3b62426977f19ca0
+
+PODFILE CHECKSUM: b2f1398bcd126463eb157d755a201afa5c573645
+
+COCOAPODS: 1.0.0
