@@ -43,4 +43,7 @@
    <FileRef
       location = "group:dConnectDevicePlugin/dConnectDeviceTest/dConnectDeviceTest.xcodeproj">
    </FileRef>
+   <FileRef
+      location = "group:dConnectSDK/dConnectBrowserForIOS9/Pods/Pods.xcodeproj">
+   </FileRef>
 </Workspace>
