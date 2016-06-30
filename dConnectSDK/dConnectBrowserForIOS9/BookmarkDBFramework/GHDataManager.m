@@ -393,6 +393,7 @@ static GHDataManager* mgr = nil;
     page.created_date = [NSDate date];
     page.sectionIndex = [GHUtils dateToString:page.created_date];
     page.identifier   = [GHUtils createUUID];
+    page.latest_opened_date = [NSDate date];
     
     return page;
 }
