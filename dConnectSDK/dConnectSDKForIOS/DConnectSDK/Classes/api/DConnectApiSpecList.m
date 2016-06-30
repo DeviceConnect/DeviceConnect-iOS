@@ -8,6 +8,7 @@
 //
 
 #import "DConnectApiSpecList.h"
+#import "DConnectApiSpecJsonParser.h"
 
 @interface DConnectApiSpecList()
 
@@ -91,7 +92,7 @@
             
             if ([jsonObj isKindOfClass: [NSDictionary class]]) {
                 NSLog(@"jsonObj is NSDictionary");
-                DConnectApiSpec *apiSpec = [DConnectApiSpecBuilder fromJson: jsonObj];
+                DConnectApiSpec *apiSpec = [DConnectApiSpecJsonParser fromJson: jsonObj];
                 
                 if (apiSpec != nil) {
                     [self addApiSpec : apiSpec];

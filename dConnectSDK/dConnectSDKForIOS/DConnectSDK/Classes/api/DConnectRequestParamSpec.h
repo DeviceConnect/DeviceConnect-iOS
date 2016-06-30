@@ -2,11 +2,17 @@
 //  DConnectRequestParamSpec.h
 //  DConnectSDK
 //
-//  Created by Mitsuhiro Suzuki on 2016/06/27.
-//  Copyright © 2016年 NTT DOCOMO, INC. All rights reserved.
+//  Copyright (c) 2016 NTT DOCOMO,INC.
+//  Released under the MIT license
+//  http://opensource.org/licenses/mit-license.php
 //
 
 #import <Foundation/Foundation.h>
+
+extern NSString *const DConnectRequestParamSpecJsonKeyName;
+extern NSString *const DConnectRequestParamSpecJsonKeyMandatory;
+extern NSString *const DConnectRequestParamSpecJsonKeyType;
+
 
 typedef enum {
     STRING = 0,
@@ -21,12 +27,12 @@ typedef enum {
 - (DConnectRequestParamSpecType) type;
 - (void) setName: (NSString *)name;
 - (NSString *) name;
-- (void) setMandatory: (BOOL) isMandatory;
+- (void) setIsMandatory: (BOOL) isMandatory;
 - (BOOL) isMandatory;
+- (BOOL) validate: (id) param;
 - (NSDictionary *) toDictionary;
 
 + (NSString *) convertTypeToString: (DConnectRequestParamSpecType) type;
 + (DConnectRequestParamSpecType)parseType: (NSString *)strType;
-+ (DConnectRequestParamSpec *)fromJson: (NSDictionary *) json;
 
 @end

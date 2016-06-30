@@ -12,6 +12,22 @@
 #import "DConnectRequestParamSpec.h"
 
 
+extern NSString * const DConnectApiSpecMethodGet;
+extern NSString * const DConnectApiSpecMethodPut;
+extern NSString * const DConnectApiSpecMethodPost;
+extern NSString * const DConnectApiSpecMethodDelete;
+
+extern NSString * const DConnectApiSpecTypeOneShot;
+extern NSString * const DConnectApiSpecTypeEvent;
+
+extern NSString * const DConnectApiSpecJsonKeyName;
+extern NSString * const DConnectApiSpecJsonKeyPath;
+extern NSString * const DConnectApiSpecJsonKeyMethod;
+extern NSString * const DConnectApiSpecJsonKeyType;
+extern NSString * const DConnectApiSpecJsonKeyRequestParams;
+//extern NSString * const DConnectApiSpecJsonKeyRequestParamSpec;
+
+
 typedef enum {
     ONESHOT = 0,
     EVENT,
@@ -31,14 +47,6 @@ typedef enum {
 
 @interface DConnectApiSpec : NSObject
 
-+ (DConnectApiSpecMethod) parseMethod: (NSString *)string;
-
-+ (DConnectApiSpecType) parseType: (NSString *)string;
-
-+ (NSString *) convertMethodToString: (DConnectApiSpecMethod) enMethod;
-
-+ (NSString *) convertTypeToString: (DConnectApiSpecType) enType;
-
 - (NSString *) name;
 
 - (DConnectApiSpecType) type;
@@ -49,27 +57,29 @@ typedef enum {
 
 - (NSArray *) requestParamSpecList;
 
-- (NSDictionary *)toDictionary;
+- (NSDictionary *) toDictionary;
 
+- (void) setName: (NSString *) name;
+
+- (void) setType: (DConnectApiSpecType) type;
+
+- (void) setMethod: (DConnectApiSpecMethod) method;
+
+- (void) setPath: (NSString *) path;
+
+- (void) setRequestParamSpecList: (NSArray *) requestParamSpecList;
+
+
+
+
+
++ (DConnectApiSpecMethod) parseMethod: (NSString *)string;
+
++ (DConnectApiSpecType) parseType: (NSString *)string;
+
++ (NSString *) convertMethodToString: (DConnectApiSpecMethod) enMethod;
+
++ (NSString *) convertTypeToString: (DConnectApiSpecType) enType;
 
 @end
 
-@interface DConnectApiSpecBuilder : NSObject
-
-- (id)init;
-
-- (id)name: (NSString *) name;
-
-- (id)type: (DConnectApiSpecType) type;
-
-- (id)method: (DConnectApiSpecMethod) method;
-
-- (id)path: (NSString *) path;
-
-- (id)requestParamSpecList:(NSArray *) requestParamSpecList;
-
-- (DConnectApiSpec *)build;
-
-+ (DConnectApiSpec *) fromJson : (NSDictionary *)apiObj;
-
-@end

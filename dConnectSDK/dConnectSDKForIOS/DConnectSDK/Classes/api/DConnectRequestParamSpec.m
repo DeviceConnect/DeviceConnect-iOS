@@ -2,20 +2,21 @@
 //  DConnectRequestParamSpec.m
 //  DConnectSDK
 //
-//  Created by Mitsuhiro Suzuki on 2016/06/27.
-//  Copyright © 2016年 NTT DOCOMO, INC. All rights reserved.
+//  Copyright (c) 2016 NTT DOCOMO,INC.
+//  Released under the MIT license
+//  http://opensource.org/licenses/mit-license.php
 //
 
 #import "DConnectRequestParamSpec.h"
 
-#define NAME        @"name"
-#define MANDATORY   @"mandatory"
-#define TYPE        @"type"
+NSString *const DConnectRequestParamSpecJsonKeyName = @"name";
+NSString *const DConnectRequestParamSpecJsonKeyMandatory = @"mandatory";
+NSString *const DConnectRequestParamSpecJsonKeyType = @"type";
 
-#define TYPE_STRING @"STRING"
-#define TYPE_INTEGER @"INTEGER"
-#define TYPE_NUMBER @"NUMBER"
-#define TYPE_BOOLEAN @"BOOLEAN"
+NSString *const TYPE_STRING = @"STRING";
+NSString *const TYPE_INTEGER = @"INTEGER";
+NSString *const TYPE_NUMBER = @"NUMBER";
+NSString *const TYPE_BOOLEAN = @"BOOLEAN";
 
 
 
@@ -52,7 +53,7 @@
     return self.mName;
 }
 
-- (void) setMandatory: (BOOL) isMandatory {
+- (void) setIsMandatory: (BOOL) isMandatory {
     self.mIsMandatory = isMandatory;
 }
 
@@ -118,38 +119,6 @@
         return BOOLEAN;
     }
     @throw [NSString stringWithFormat: @"type is invalid : %@", strType];
-}
-
-+ (DConnectRequestParamSpec *)fromJson: (NSDictionary *) json {
-    
-    NSString *type = [json objectForKey: TYPE];
-    
-    @try {
-        // 失敗したら例外を返す
-        DConnectRequestParamSpecType paramType = [DConnectRequestParamSpec parseType: type];
-        
-        DConnectRequestParamSpec *spec = nil;
-        switch (paramType) {
-            case BOOLEAN:
-                //                spec = [BooleanRequestParamSpec fromJson: json];
-                break;
-            case STRING:
-                //                spec = [StringRequestParamSpec fromJson: json];
-                break;
-            case INTEGER:
-                //                spec = [IntegerRequestParamSpec fromJson: json];
-                break;
-            case NUMBER:
-                //                spec = [NumberRequestParamSpec fromJson: json];
-                break;
-            default:
-                @throw [NSString stringWithFormat: @"Illegal Argument Exception type: %@", type];
-        }
-        return spec;
-    }
-    @catch (NSException *e) {
-        return nil;
-    }
 }
 
 @end
