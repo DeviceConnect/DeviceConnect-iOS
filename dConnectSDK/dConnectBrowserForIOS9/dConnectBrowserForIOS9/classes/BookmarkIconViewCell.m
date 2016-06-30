@@ -34,6 +34,11 @@
     __weak BookmarkIconViewCell* weakSelf = self;
     [self.viewModel bookmarkIconImage:^(UIImage *image) {
         weakSelf.iconImage.image = image;
+        if (image.size.height < 32) {
+            weakSelf.iconImage.contentMode = UIViewContentModeCenter;
+        } else {
+            weakSelf.iconImage.contentMode = UIViewContentModeScaleAspectFit;
+        }
     }];
 
     [self setEnabled:YES];
