@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		8E05634C1D2628A4008EBA25 /* GHDeviceUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E05634B1D2628A4008EBA25 /* GHDeviceUtil.m */; };
 		8E05634F1D263C05008EBA25 /* DeviceIconViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E05634E1D263C05008EBA25 /* DeviceIconViewCell.m */; };
+		8E0563521D263CFA008EBA25 /* DeviceIconViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0563511D263CFA008EBA25 /* DeviceIconViewModel.m */; };
 		8E0A4C2F1D1CC2D500827DA6 /* InitialGuide.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8E0A4C2E1D1CC2D500827DA6 /* InitialGuide.storyboard */; };
 		8E0A4C321D1CC4A500827DA6 /* InitialGuideViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0A4C311D1CC4A500827DA6 /* InitialGuideViewController.m */; };
 		8E0A4C351D1CC4BE00827DA6 /* GuideDataViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0A4C341D1CC4BE00827DA6 /* GuideDataViewController.m */; };
@@ -181,6 +182,8 @@
 		8E05634B1D2628A4008EBA25 /* GHDeviceUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GHDeviceUtil.m; sourceTree = "<group>"; };
 		8E05634D1D263C05008EBA25 /* DeviceIconViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeviceIconViewCell.h; sourceTree = "<group>"; };
 		8E05634E1D263C05008EBA25 /* DeviceIconViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeviceIconViewCell.m; sourceTree = "<group>"; };
+		8E0563501D263CFA008EBA25 /* DeviceIconViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeviceIconViewModel.h; sourceTree = "<group>"; };
+		8E0563511D263CFA008EBA25 /* DeviceIconViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeviceIconViewModel.m; sourceTree = "<group>"; };
 		8E0A4C2E1D1CC2D500827DA6 /* InitialGuide.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = InitialGuide.storyboard; path = classes/InitialGuide.storyboard; sourceTree = "<group>"; };
 		8E0A4C301D1CC4A500827DA6 /* InitialGuideViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InitialGuideViewController.h; sourceTree = "<group>"; };
 		8E0A4C311D1CC4A500827DA6 /* InitialGuideViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InitialGuideViewController.m; sourceTree = "<group>"; };
@@ -494,6 +497,8 @@
 				8EBB89191D1387380038700B /* BookmarkIconViewModel.m */,
 				8EBB891B1D139C750038700B /* TopViewModel.h */,
 				8EBB891C1D139C750038700B /* TopViewModel.m */,
+				8E0563501D263CFA008EBA25 /* DeviceIconViewModel.h */,
+				8E0563511D263CFA008EBA25 /* DeviceIconViewModel.m */,
 			);
 			name = top;
 			sourceTree = "<group>";
@@ -1051,6 +1056,7 @@
 				8E3772451D24D577003D3124 /* HTMLParser.m in Sources */,
 				8E0A4C3F1D1D28B900827DA6 /* WebViewController.m in Sources */,
 				8EBB89211D13CA960038700B /* TopCollectionHeaderView.m in Sources */,
+				8E0563521D263CFA008EBA25 /* DeviceIconViewModel.m in Sources */,
 				AB00F2E81C71A29D00689C70 /* GHDirectory.m in Sources */,
 				8ED7B1B51D1BB03C0053FDBD /* SwitchableCell.m in Sources */,
 				8EBB89131D1385050038700B /* BookmarkIconViewCell.m in Sources */,
