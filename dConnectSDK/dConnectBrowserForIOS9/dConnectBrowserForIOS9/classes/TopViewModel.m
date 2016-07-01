@@ -15,6 +15,7 @@
 {
     GHDeviceUtil* diveiceUtil;
 }
+@property(nonatomic, strong) NSArray* devices;
 @end
 
 @implementation TopViewModel
@@ -31,12 +32,17 @@ typedef NS_ENUM (NSInteger, SectionType) {
 {
     self = [super init];
     if (self) {
+        __weak TopViewModel *_self = self;
         self.manager = [[GHURLManager alloc]init];
         diveiceUtil = [[GHDeviceUtil alloc]init];
+        [diveiceUtil setRecieveDeviceList:^(DConnectArray *deviceList){
+            [_self updateDevice:deviceList];
+        }];
         self.url = @"http://www.google.com";
+        self.devices = [[NSArray alloc]init];
         self.datasource = [[NSMutableArray alloc]initWithObjects:
                            [[NSArray alloc]init],
-                           [[NSArray alloc]init],
+                           self.devices,
                            nil];
         [self updateDatasource];
     }
@@ -48,6 +54,8 @@ typedef NS_ENUM (NSInteger, SectionType) {
     self.manager = nil;
     self.url = nil;
     self.datasource = nil;
+    [diveiceUtil setRecieveDeviceList:nil];
+    diveiceUtil = nil;
 }
 
 //--------------------------------------------------------------//
@@ -56,7 +64,7 @@ typedef NS_ENUM (NSInteger, SectionType) {
 - (void)updateDatasource
 {
     [self.datasource replaceObjectAtIndex:Bookmark withObject:[self setupBookmarks]];
-    [self.datasource replaceObjectAtIndex:Device withObject:[self setupDevices]];
+    [self.datasource replaceObjectAtIndex:Device withObject:self.devices];
 }
 
 
@@ -100,15 +108,14 @@ static NSInteger maxIconCount = 8;
 //--------------------------------------------------------------//
 #pragma mark - Devices
 //--------------------------------------------------------------//
-- (NSArray*)setupDevices
+- (void)updateDevice:(DConnectArray*)deviceList
 {
-    return [[NSArray alloc]init]; // FIXME:
-}
 
+}
 
 - (BOOL)isDeviceEmpty
 {
-    return ([[self.datasource objectAtIndex:Device] count] == 0);
+    return ([self.devices count] == 0);
 }
 
 //--------------------------------------------------------------//

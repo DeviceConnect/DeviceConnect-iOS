@@ -9,12 +9,17 @@
 #import <Foundation/Foundation.h>
 #import "GHURLManager.h"
 
+@protocol TopViewModelDelegate <NSObject>
+- (void)requestDatasourceReload;
+@end
+
 @interface TopViewModel : NSObject
 @property (strong, nonatomic) NSMutableArray* datasource;
 @property (nonatomic, strong) GHURLManager *manager;
 @property (nonatomic) NSString* url;
 @property (nonatomic, readonly) BOOL isBookmarksEmpty;
 @property (nonatomic, readonly) BOOL isDeviceEmpty;
+@property (nonatomic, weak) IBOutlet id<TopViewModelDelegate>  delegate;
 
 - (void)initialSetup;
 - (void)saveOriginBlock;
