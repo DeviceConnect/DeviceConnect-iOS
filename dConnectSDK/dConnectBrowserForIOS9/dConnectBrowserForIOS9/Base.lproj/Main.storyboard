@@ -41,7 +41,6 @@
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aD8-rK-ltM">
                                                     <rect key="frame" x="0.0" y="0.0" width="70" height="75"/>
                                                     <connections>
-                                                        <action selector="backNormal:" destination="mxe-B7-ksr" eventType="touchUpOutside" id="AqR-Xa-fZc"/>
                                                         <action selector="backNormal:" destination="mxe-B7-ksr" eventType="touchCancel" id="VPt-s2-5uz"/>
                                                         <action selector="didTapItem:" destination="mxe-B7-ksr" eventType="touchUpInside" id="Bab-mh-81M"/>
                                                         <action selector="didTouchDown:" destination="mxe-B7-ksr" eventType="touchDown" id="pFf-S0-PIK"/>
@@ -104,7 +103,6 @@
                                                     <rect key="frame" x="0.0" y="0.0" width="70" height="75"/>
                                                     <connections>
                                                         <action selector="backNormal:" destination="PaE-c0-nDI" eventType="touchCancel" id="aSL-Ws-i1j"/>
-                                                        <action selector="backNormal:" destination="PaE-c0-nDI" eventType="touchDragOutside" id="mvr-Nf-Vbd"/>
                                                         <action selector="didTapItem:" destination="PaE-c0-nDI" eventType="touchUpInside" id="GYd-Av-KYC"/>
                                                         <action selector="didTouchDown:" destination="PaE-c0-nDI" eventType="touchDown" id="UeN-vZ-ySF"/>
                                                     </connections>
@@ -155,7 +153,7 @@
                                             <outlet property="titleLabel" destination="3di-oC-Pxp" id="F8n-Um-hwP"/>
                                         </connections>
                                     </collectionViewCell>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="DeviceDetailIcon" id="zLJ-M4-k7r">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="DeviceDetailIcon" id="zLJ-M4-k7r" customClass="DeviceMoreViewCell">
                                         <rect key="frame" x="165" y="50" width="70" height="100"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -164,6 +162,12 @@
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oqL-7E-unJ">
                                                     <rect key="frame" x="0.0" y="0.0" width="70" height="75"/>
+                                                    <connections>
+                                                        <action selector="backNormal:" destination="zLJ-M4-k7r" eventType="touchUpOutside" id="FKm-0j-3fS"/>
+                                                        <action selector="backNormal:" destination="zLJ-M4-k7r" eventType="touchCancel" id="xol-Cg-t7F"/>
+                                                        <action selector="didTapItem:" destination="zLJ-M4-k7r" eventType="touchUpInside" id="k6B-Bf-Xdc"/>
+                                                        <action selector="didTouchDown:" destination="zLJ-M4-k7r" eventType="touchDown" id="dmd-Zn-QYO"/>
+                                                    </connections>
                                                 </button>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="deviceDetailButton" translatesAutoresizingMaskIntoConstraints="NO" id="nR5-yt-GWp">
                                                     <rect key="frame" x="0.0" y="0.0" width="70" height="70"/>
