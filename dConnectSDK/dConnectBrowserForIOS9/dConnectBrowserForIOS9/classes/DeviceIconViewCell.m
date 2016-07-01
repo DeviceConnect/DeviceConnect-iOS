@@ -30,16 +30,7 @@
     self.viewModel.message = message;
     self.titleLabel.text = self.viewModel.name;
     self.iconImage.image = [UIImage imageNamed:@"no_bookmark_icon"];
-//
-//    __weak BookmarkIconViewCell* weakSelf = self;
-//    [self.viewModel bookmarkIconImage:^(UIImage *image) {
-//        weakSelf.iconImage.image = image;
-//        if (image.size.height < 32) {
-//            weakSelf.iconImage.contentMode = UIViewContentModeCenter;
-//        } else {
-//            weakSelf.iconImage.contentMode = UIViewContentModeScaleAspectFit;
-//        }
-//    }];
+    //TODO: プラグインのBundleから画像を取得する
 
     [self setEnabled:YES];
 }
