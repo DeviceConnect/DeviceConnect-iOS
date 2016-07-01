@@ -12,6 +12,11 @@
 
 @implementation TopViewModel
 
+typedef NS_ENUM (NSInteger, SectionType) {
+    Bookmark,
+    Device
+};
+
 //--------------------------------------------------------------//
 #pragma mark - 初期化
 //--------------------------------------------------------------//
@@ -42,8 +47,8 @@
 //--------------------------------------------------------------//
 - (void)updateDatasource
 {
-    [self.datasource replaceObjectAtIndex:0 withObject:[self setupBookmarks]];
-    [self.datasource replaceObjectAtIndex:1 withObject:[self setupDevices]];
+    [self.datasource replaceObjectAtIndex:Bookmark withObject:[self setupBookmarks]];
+    [self.datasource replaceObjectAtIndex:Device withObject:[self setupDevices]];
 }
 
 
@@ -54,8 +59,7 @@ static NSInteger maxIconCount = 8;
 - (NSArray*)setupBookmarks
 {
     NSMutableArray* bookmarks = [[self fetchBookmarks]mutableCopy];
-    _isBookmarksEmpty = (bookmarks == nil);
-    if (_isBookmarksEmpty) {
+    if ([bookmarks count] == 0) {
         bookmarks = [[NSMutableArray alloc]init];
     }
     //maxIconCountに達していない場合はダミーを作成する
@@ -79,6 +83,10 @@ static NSInteger maxIconCount = 8;
     return bookmarks;
 }
 
+- (BOOL)isBookmarksEmpty
+{
+    return ([[self.datasource objectAtIndex:Bookmark] count] == 0);
+}
 
 
 //--------------------------------------------------------------//
@@ -86,10 +94,14 @@ static NSInteger maxIconCount = 8;
 //--------------------------------------------------------------//
 - (NSArray*)setupDevices
 {
-    _isDeviceEmpty = YES;
     return [[NSArray alloc]init]; // FIXME:
 }
 
+
+- (BOOL)isDeviceEmpty
+{
+    return ([[self.datasource objectAtIndex:Device] count] == 0);
+}
 
 //--------------------------------------------------------------//
 #pragma mark - useOriginBlocking 更新
