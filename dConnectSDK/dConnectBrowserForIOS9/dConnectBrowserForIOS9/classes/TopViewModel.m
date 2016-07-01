@@ -59,7 +59,7 @@
 - (void)updateDatasource
 {
     [self.datasource replaceObjectAtIndex:Bookmark withObject:[self setupBookmarks]];
-    [self.datasource replaceObjectAtIndex:Device withObject:self.devices];
+    [self.datasource replaceObjectAtIndex:Device withObject:[self showableDevices]];
 }
 
 
@@ -105,7 +105,28 @@ static NSInteger maxIconCount = 8;
 //--------------------------------------------------------------//
 - (void)updateDevice:(DConnectArray*)deviceList
 {
+    NSMutableArray* array = [[NSMutableArray alloc]init];
+    for (int s = 0; s < [deviceList count]; s++) {
+        DConnectMessage *service = [deviceList messageAtIndex: s];
+        [array addObject:service];
+    }
+    self.devices = array;
+    [self updateDatasource];
+    [self.delegate requestDatasourceReload];
+}
 
+- (NSArray*)showableDevices
+{
+    if([self.devices count] > maxIconCount) {
+        NSMutableArray* reduce = [self.devices mutableCopy];
+        NSRange range = NSMakeRange(maxIconCount-1, [self.devices count] - maxIconCount+1); //NOTE:+1は詳細ボタンを追加するため
+        [reduce removeObjectsInRange:range];
+
+        //最後の1つを詳細表示用にNSStringを入れる
+        [reduce addObject: @"deviceDeteilButtonKey"];
+        return reduce;
+    }
+    return self.devices;
 }
 
 - (BOOL)isDeviceEmpty
