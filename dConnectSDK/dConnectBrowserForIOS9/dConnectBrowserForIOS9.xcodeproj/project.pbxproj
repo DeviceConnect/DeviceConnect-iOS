@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8E05634C1D2628A4008EBA25 /* GHDeviceUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E05634B1D2628A4008EBA25 /* GHDeviceUtil.m */; };
 		8E0A4C2F1D1CC2D500827DA6 /* InitialGuide.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8E0A4C2E1D1CC2D500827DA6 /* InitialGuide.storyboard */; };
 		8E0A4C321D1CC4A500827DA6 /* InitialGuideViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0A4C311D1CC4A500827DA6 /* InitialGuideViewController.m */; };
 		8E0A4C351D1CC4BE00827DA6 /* GuideDataViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0A4C341D1CC4BE00827DA6 /* GuideDataViewController.m */; };
@@ -175,6 +176,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		8E05634A1D2628A4008EBA25 /* GHDeviceUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHDeviceUtil.h; sourceTree = "<group>"; };
+		8E05634B1D2628A4008EBA25 /* GHDeviceUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GHDeviceUtil.m; sourceTree = "<group>"; };
 		8E0A4C2E1D1CC2D500827DA6 /* InitialGuide.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = InitialGuide.storyboard; path = classes/InitialGuide.storyboard; sourceTree = "<group>"; };
 		8E0A4C301D1CC4A500827DA6 /* InitialGuideViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InitialGuideViewController.h; sourceTree = "<group>"; };
 		8E0A4C311D1CC4A500827DA6 /* InitialGuideViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InitialGuideViewController.m; sourceTree = "<group>"; };
@@ -627,6 +630,8 @@
 		AB00F31B1C71A51800689C70 /* models */ = {
 			isa = PBXGroup;
 			children = (
+				8E05634A1D2628A4008EBA25 /* GHDeviceUtil.h */,
+				8E05634B1D2628A4008EBA25 /* GHDeviceUtil.m */,
 				AB00F2BB1C71A29D00689C70 /* GHDirectory.h */,
 				AB00F2BC1C71A29D00689C70 /* GHDirectory.m */,
 			);
@@ -1047,6 +1052,7 @@
 				AB00F2EC1C71A29D00689C70 /* GHFolderTitleCell.m in Sources */,
 				AB00F4A41C71B16200689C70 /* RATreeNode.m in Sources */,
 				AB00F2EA1C71A29D00689C70 /* GHFolderCreateController.m in Sources */,
+				8E05634C1D2628A4008EBA25 /* GHDeviceUtil.m in Sources */,
 				AB00F4A51C71B16200689C70 /* RATreeNodeCollectionController.m in Sources */,
 				AB00F2E01C71A29D00689C70 /* GHAddBookmarkController.m in Sources */,
 				AB00F4AC1C71B16200689C70 /* RATreeView+UIScrollView.m in Sources */,
