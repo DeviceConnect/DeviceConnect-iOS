@@ -9,6 +9,13 @@
 #import "TopViewModel.h"
 #import <DConnectSDK/DConnectSDK.h>
 #import "GHDataManager.h"
+#import "GHDeviceUtil.h"
+
+@interface TopViewModel()
+{
+    GHDeviceUtil* diveiceUtil;
+}
+@end
 
 @implementation TopViewModel
 
@@ -25,6 +32,7 @@ typedef NS_ENUM (NSInteger, SectionType) {
     self = [super init];
     if (self) {
         self.manager = [[GHURLManager alloc]init];
+        diveiceUtil = [[GHDeviceUtil alloc]init];
         self.url = @"http://www.google.com";
         self.datasource = [[NSMutableArray alloc]initWithObjects:
                            [[NSArray alloc]init],
