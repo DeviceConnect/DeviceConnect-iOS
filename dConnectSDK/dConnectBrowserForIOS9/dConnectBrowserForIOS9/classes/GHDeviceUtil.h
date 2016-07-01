@@ -7,7 +7,12 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <DConnectSDK/DConnectSDK.h>
+
+typedef void (^DiscoverDeviceCompletion)(DConnectArray *result);
 
 @interface GHDeviceUtil : NSObject
-
+@property (nonatomic, strong) NSString* accessToken;
+- (void)setup;
+- (void)discoverDevices:(DiscoverDeviceCompletion)completion;
 @end
