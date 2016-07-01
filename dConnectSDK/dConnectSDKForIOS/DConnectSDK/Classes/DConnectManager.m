@@ -206,10 +206,7 @@ NSString *const DConnectAttributeNameRequestAccessToken = @"requestAccessToken";
         DConnectManagerServiceDiscoveryProfile *p = (DConnectManagerServiceDiscoveryProfile *) [self profileWithName:DConnectServiceDiscoveryProfileName];
         DConnectResponseMessage *response = [DConnectResponseMessage message];
         DConnectRequestMessage *request = [DConnectRequestMessage new];
-        DConnectDevicePluginManager *deviceMgr = _mDeviceManager;
         [request setAction: DConnectMessageActionTypeGet];
-
-        NSArray *devices = [deviceMgr devicePluginList];
         [p profile:p didReceiveGetServicesRequest:request response:response];
         if (callback) {
             callback(response);
