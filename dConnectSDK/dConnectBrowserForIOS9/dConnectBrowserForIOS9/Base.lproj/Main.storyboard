@@ -160,8 +160,8 @@
                                             <rect key="frame" x="0.0" y="0.0" width="70" height="100"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oqL-7E-unJ">
-                                                    <rect key="frame" x="0.0" y="0.0" width="70" height="75"/>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oqL-7E-unJ">
+                                                    <rect key="frame" x="0.0" y="0.0" width="70" height="70"/>
                                                     <connections>
                                                         <action selector="backNormal:" destination="zLJ-M4-k7r" eventType="touchUpOutside" id="FKm-0j-3fS"/>
                                                         <action selector="backNormal:" destination="zLJ-M4-k7r" eventType="touchCancel" id="xol-Cg-t7F"/>
@@ -184,6 +184,8 @@
                                             <constraint firstAttribute="trailingMargin" secondItem="nR5-yt-GWp" secondAttribute="trailing" id="EI7-yg-d0a"/>
                                             <constraint firstItem="nR5-yt-GWp" firstAttribute="leading" secondItem="zLJ-M4-k7r" secondAttribute="leading" id="I2c-Df-MvD"/>
                                             <constraint firstAttribute="trailing" secondItem="oqL-7E-unJ" secondAttribute="trailing" id="RKO-4Y-5rE"/>
+                                            <constraint firstItem="nR5-yt-GWp" firstAttribute="height" secondItem="oqL-7E-unJ" secondAttribute="height" id="S8q-FG-dB7"/>
+                                            <constraint firstItem="nR5-yt-GWp" firstAttribute="width" secondItem="oqL-7E-unJ" secondAttribute="width" id="Vcy-pZ-p7l"/>
                                             <constraint firstItem="nR5-yt-GWp" firstAttribute="top" secondItem="zLJ-M4-k7r" secondAttribute="top" id="YXF-bh-t5i"/>
                                             <constraint firstAttribute="trailing" secondItem="nR5-yt-GWp" secondAttribute="trailing" id="fLl-Nb-jBb"/>
                                             <constraint firstItem="nR5-yt-GWp" firstAttribute="leading" secondItem="zLJ-M4-k7r" secondAttribute="leadingMargin" id="iFP-47-wuO"/>
@@ -191,9 +193,9 @@
                                         </constraints>
                                         <variation key="default">
                                             <mask key="constraints">
-                                                <exclude reference="iFP-47-wuO"/>
-                                                <exclude reference="EI7-yg-d0a"/>
                                                 <exclude reference="1vb-a6-9t4"/>
+                                                <exclude reference="EI7-yg-d0a"/>
+                                                <exclude reference="iFP-47-wuO"/>
                                             </mask>
                                         </variation>
                                     </collectionViewCell>
