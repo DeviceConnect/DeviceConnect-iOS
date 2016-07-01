@@ -9,6 +9,11 @@
 #import <Foundation/Foundation.h>
 #import "GHURLManager.h"
 
+typedef NS_ENUM (NSInteger, SectionType) {
+    Bookmark,
+    Device
+};
+
 @protocol TopViewModelDelegate <NSObject>
 - (void)requestDatasourceReload;
 @end

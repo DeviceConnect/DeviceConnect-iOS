@@ -20,11 +20,6 @@
 
 @implementation TopViewModel
 
-typedef NS_ENUM (NSInteger, SectionType) {
-    Bookmark,
-    Device
-};
-
 //--------------------------------------------------------------//
 #pragma mark - 初期化
 //--------------------------------------------------------------//
