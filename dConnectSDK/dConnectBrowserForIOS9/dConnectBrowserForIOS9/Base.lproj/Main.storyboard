@@ -151,6 +151,44 @@
                                             <outlet property="titleLabel" destination="3di-oC-Pxp" id="F8n-Um-hwP"/>
                                         </connections>
                                     </collectionViewCell>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="DeviceDetailIcon" id="zLJ-M4-k7r">
+                                        <rect key="frame" x="165" y="50" width="70" height="100"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="70" height="100"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oqL-7E-unJ">
+                                                    <rect key="frame" x="0.0" y="0.0" width="70" height="75"/>
+                                                </button>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="deviceDetailButton" translatesAutoresizingMaskIntoConstraints="NO" id="nR5-yt-GWp">
+                                                    <rect key="frame" x="0.0" y="0.0" width="70" height="70"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" secondItem="nR5-yt-GWp" secondAttribute="height" multiplier="1:1" id="A1p-gi-iHu"/>
+                                                    </constraints>
+                                                </imageView>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <constraints>
+                                            <constraint firstItem="nR5-yt-GWp" firstAttribute="top" secondItem="zLJ-M4-k7r" secondAttribute="topMargin" id="1vb-a6-9t4"/>
+                                            <constraint firstItem="oqL-7E-unJ" firstAttribute="leading" secondItem="zLJ-M4-k7r" secondAttribute="leading" id="2RM-Hq-G6b"/>
+                                            <constraint firstAttribute="trailingMargin" secondItem="nR5-yt-GWp" secondAttribute="trailing" id="EI7-yg-d0a"/>
+                                            <constraint firstItem="nR5-yt-GWp" firstAttribute="leading" secondItem="zLJ-M4-k7r" secondAttribute="leading" id="I2c-Df-MvD"/>
+                                            <constraint firstAttribute="trailing" secondItem="oqL-7E-unJ" secondAttribute="trailing" id="RKO-4Y-5rE"/>
+                                            <constraint firstItem="nR5-yt-GWp" firstAttribute="top" secondItem="zLJ-M4-k7r" secondAttribute="top" id="YXF-bh-t5i"/>
+                                            <constraint firstAttribute="trailing" secondItem="nR5-yt-GWp" secondAttribute="trailing" id="fLl-Nb-jBb"/>
+                                            <constraint firstItem="nR5-yt-GWp" firstAttribute="leading" secondItem="zLJ-M4-k7r" secondAttribute="leadingMargin" id="iFP-47-wuO"/>
+                                            <constraint firstItem="oqL-7E-unJ" firstAttribute="top" secondItem="zLJ-M4-k7r" secondAttribute="top" id="wLu-hZ-YaH"/>
+                                        </constraints>
+                                        <variation key="default">
+                                            <mask key="constraints">
+                                                <exclude reference="iFP-47-wuO"/>
+                                                <exclude reference="EI7-yg-d0a"/>
+                                                <exclude reference="1vb-a6-9t4"/>
+                                            </mask>
+                                        </variation>
+                                    </collectionViewCell>
                                 </cells>
                                 <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="headerCell" id="sII-s1-7gM" customClass="TopCollectionHeaderView">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="40"/>
@@ -226,7 +264,7 @@
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="INb-7v-2E4"/>
-                                    <barButtonItem title="デバイス" id="8ah-EP-91Q"/>
+                                    <barButtonItem image="deviceIcon" id="8ah-EP-91Q"/>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="yho-lk-O6e"/>
                                     <barButtonItem image="settings" id="qYV-8V-Mhy">
                                         <connections>
@@ -403,6 +441,8 @@
     </scenes>
     <resources>
         <image name="bookmark" width="40" height="40"/>
+        <image name="deviceDetailButton" width="109" height="109"/>
+        <image name="deviceIcon" width="30" height="32"/>
         <image name="help" width="30" height="30"/>
         <image name="search" width="42" height="40"/>
         <image name="settings" width="40" height="40"/>
