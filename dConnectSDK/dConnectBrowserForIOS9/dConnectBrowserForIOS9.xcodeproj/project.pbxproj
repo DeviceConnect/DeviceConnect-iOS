@@ -14,6 +14,8 @@
 		8E0A4C3A1D1CC92D00827DA6 /* InitialGuideViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0A4C391D1CC92D00827DA6 /* InitialGuideViewModel.m */; };
 		8E0A4C3F1D1D28B900827DA6 /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0A4C3E1D1D28B900827DA6 /* WebViewController.m */; };
 		8E0A4C441D1D32EF00827DA6 /* help.html in Resources */ = {isa = PBXBuildFile; fileRef = 8E0A4C431D1D32EF00827DA6 /* help.html */; };
+		8E3772441D24D577003D3124 /* HTMLNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E3772411D24D577003D3124 /* HTMLNode.m */; };
+		8E3772451D24D577003D3124 /* HTMLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E3772431D24D577003D3124 /* HTMLParser.m */; };
 		8E3772471D24D5B3003D3124 /* libxml2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E3772461D24D5B3003D3124 /* libxml2.tbd */; };
 		8E5EA3931D253E65009FC8F0 /* libObjective-C-HMTL-Parser.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E5EA3921D253E65009FC8F0 /* libObjective-C-HMTL-Parser.a */; };
 		8EBB89131D1385050038700B /* BookmarkIconViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EBB89121D1385050038700B /* BookmarkIconViewCell.m */; };
@@ -186,6 +188,10 @@
 		8E0A4C3D1D1D28B900827DA6 /* WebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebViewController.h; sourceTree = "<group>"; };
 		8E0A4C3E1D1D28B900827DA6 /* WebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebViewController.m; sourceTree = "<group>"; };
 		8E0A4C431D1D32EF00827DA6 /* help.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = help.html; sourceTree = "<group>"; };
+		8E3772401D24D577003D3124 /* HTMLNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HTMLNode.h; path = "Objective-C-HMTL-Parser/HTMLNode.h"; sourceTree = "<group>"; };
+		8E3772411D24D577003D3124 /* HTMLNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HTMLNode.m; path = "Objective-C-HMTL-Parser/HTMLNode.m"; sourceTree = "<group>"; };
+		8E3772421D24D577003D3124 /* HTMLParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HTMLParser.h; path = "Objective-C-HMTL-Parser/HTMLParser.h"; sourceTree = "<group>"; };
+		8E3772431D24D577003D3124 /* HTMLParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HTMLParser.m; path = "Objective-C-HMTL-Parser/HTMLParser.m"; sourceTree = "<group>"; };
 		8E3772461D24D5B3003D3124 /* libxml2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libxml2.tbd; path = usr/lib/libxml2.tbd; sourceTree = SDKROOT; };
 		8E5EA3921D253E65009FC8F0 /* libObjective-C-HMTL-Parser.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libObjective-C-HMTL-Parser.a"; path = "../../../../../../../Users/hirano/Library/Developer/Xcode/DerivedData/Build/Products/Debug-iphoneos/Objective-C-HMTL-Parser/libObjective-C-HMTL-Parser.a"; sourceTree = "<group>"; };
 		8EBB89111D1385050038700B /* BookmarkIconViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookmarkIconViewCell.h; sourceTree = "<group>"; };
@@ -458,6 +464,17 @@
 			path = html;
 			sourceTree = "<group>";
 		};
+		8E37723F1D24D545003D3124 /* Objective-C-HMTL-Parser */ = {
+			isa = PBXGroup;
+			children = (
+				8E3772401D24D577003D3124 /* HTMLNode.h */,
+				8E3772411D24D577003D3124 /* HTMLNode.m */,
+				8E3772421D24D577003D3124 /* HTMLParser.h */,
+				8E3772431D24D577003D3124 /* HTMLParser.m */,
+			);
+			name = "Objective-C-HMTL-Parser";
+			sourceTree = "<group>";
+		};
 		8EBB89101D1384990038700B /* top */ = {
 			isa = PBXGroup;
 			children = (
@@ -728,6 +745,7 @@
 		AB00F4641C71B16200689C70 /* libs */ = {
 			isa = PBXGroup;
 			children = (
+				8E37723F1D24D545003D3124 /* Objective-C-HMTL-Parser */,
 				AB00F4651C71B16200689C70 /* GTMNSString-HTML */,
 				AB00F4761C71B16200689C70 /* RATreeView */,
 			);
@@ -1091,6 +1109,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AB00F2E21C71A29D00689C70 /* GHBookmarkTitleCell.m in Sources */,
+				8E3772451D24D577003D3124 /* HTMLParser.m in Sources */,
 				8E0A4C3F1D1D28B900827DA6 /* WebViewController.m in Sources */,
 				8EBB89211D13CA960038700B /* TopCollectionHeaderView.m in Sources */,
 				AB00F2E81C71A29D00689C70 /* GHDirectory.m in Sources */,
@@ -1129,6 +1148,7 @@
 				AB00F4AA1C71B16200689C70 /* RATreeView+TableViewDataSource.m in Sources */,
 				AB00F2F71C71A29D00689C70 /* GHURLLabel.m in Sources */,
 				AB00F4A61C71B16200689C70 /* RATreeNodeInfo+Private.m in Sources */,
+				8E3772441D24D577003D3124 /* HTMLNode.m in Sources */,
 				AB00F2EB1C71A29D00689C70 /* GHFoldersListController.m in Sources */,
 				8E0A4C321D1CC4A500827DA6 /* InitialGuideViewController.m in Sources */,
 				8EBB891A1D1387380038700B /* BookmarkIconViewModel.m in Sources */,
