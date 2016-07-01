@@ -69,7 +69,6 @@ static GHDeviceUtil* mgr = nil;
     [self discoverDevices:^(DConnectArray *result) {
         _self.currentDevices = result;
         _self.recieveDeviceList(result);
-        [_self debug:result];
     }];
 }
 
