@@ -14,7 +14,6 @@
 #import <SafariServices/SafariServices.h>
 #import "AppDelegate.h"
 #import "BookmarkIconViewCell.h"
-#import "TopViewModel.h"
 #import "TopCollectionHeaderView.h"
 #import "InitialGuideViewController.h"
 #import "WebViewController.h"
@@ -305,4 +304,14 @@
         [self openSafariViewInternalWithURL:cell.viewModel.page.url];
     }
 }
+
+
+//--------------------------------------------------------------//
+#pragma mark - TopViewModelDelegate
+//--------------------------------------------------------------//
+- (void)requestDatasourceReload
+{
+    [self.collectionView reloadSections: [NSIndexSet indexSetWithIndex:1]];
+}
+
 @end
