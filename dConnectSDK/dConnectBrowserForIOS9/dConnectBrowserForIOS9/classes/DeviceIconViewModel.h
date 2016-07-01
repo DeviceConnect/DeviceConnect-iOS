@@ -7,7 +7,14 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <DConnectSDK/DConnectSDK.h>
 
 @interface DeviceIconViewModel : NSObject
+
+@property(nonatomic, strong) DConnectMessage* message;
+@property(nonatomic) NSString* name;
+@property(nonatomic) NSString* idName;
+@property(nonatomic) NSString* type;
+@property(nonatomic) BOOL isOnline;
 
 @end
