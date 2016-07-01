@@ -16,7 +16,18 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.view.backgroundColor = [UIColor whiteColor];
     self.title = @"デバイス一覧";
+    UIBarButtonItem *closeButton = [[UIBarButtonItem alloc]initWithTitle:@"閉じる"
+                                                                   style:UIBarButtonItemStylePlain
+                                                                  target:self
+                                                                  action:@selector(close:)];
+    self.navigationItem.leftBarButtonItem = closeButton;
+}
+
+- (void)close:(UIBarButtonItem*)item
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 @end

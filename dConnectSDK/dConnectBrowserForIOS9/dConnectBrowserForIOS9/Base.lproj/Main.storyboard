@@ -272,7 +272,11 @@
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="INb-7v-2E4"/>
-                                    <barButtonItem image="deviceIcon" id="8ah-EP-91Q"/>
+                                    <barButtonItem image="deviceIcon" id="8ah-EP-91Q">
+                                        <connections>
+                                            <action selector="openDeviceList:" destination="sIh-io-mcp" id="FAb-1m-cHZ"/>
+                                        </connections>
+                                    </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="yho-lk-O6e"/>
                                     <barButtonItem image="settings" id="qYV-8V-Mhy">
                                         <connections>

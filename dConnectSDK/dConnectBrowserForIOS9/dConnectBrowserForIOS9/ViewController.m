@@ -18,6 +18,8 @@
 #import "InitialGuideViewController.h"
 #import "WebViewController.h"
 #import "DeviceIconViewCell.h"
+#import "DeviceMoreViewCell.h"
+#import "GHDeviceListViewController.h"
 
 @interface ViewController ()
 {
@@ -203,6 +205,13 @@
     
 }
 
+- (IBAction)openDeviceList:(id)sender
+{
+    GHDeviceListViewController* controller = [[GHDeviceListViewController alloc]init];
+    UINavigationController* nav = [[UINavigationController alloc]initWithRootViewController:controller];
+    [self presentViewController:nav animated:YES completion:nil];
+}
+
 //--------------------------------------------------------------//
 #pragma mark - GHHeaderViewDelegate delegate
 //--------------------------------------------------------------//
@@ -298,7 +307,12 @@
                 }];
                 return cell;
             } else {
-                return [collectionView dequeueReusableCellWithReuseIdentifier:@"DeviceDetailIcon" forIndexPath:indexPath];
+                DeviceMoreViewCell* cell = (DeviceMoreViewCell*)[collectionView dequeueReusableCellWithReuseIdentifier:@"DeviceDetailIcon" forIndexPath:indexPath];
+                __weak ViewController *weakSelf = self;
+                [cell setDidDeviceMorelected: ^() {
+                    [weakSelf openDeviceList: nil];
+                }];
+                return cell;
             }
         }
             break;
