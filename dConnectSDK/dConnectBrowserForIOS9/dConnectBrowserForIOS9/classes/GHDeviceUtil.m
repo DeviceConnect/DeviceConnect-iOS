@@ -31,16 +31,34 @@
     manager = [DConnectManager sharedManager];
     [manager start];
     q_global = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    [self updateDiveceList];
+}
 
+- (void)debug:(DConnectArray*)array
+{
+    for(int i = 0; i < [array count]; i++) {
+        DConnectMessage *item = [array objectAtIndex:i];
+        NSArray* keys = [item allKeys];
+        for (NSString* key in keys) {
+            LOG(@"[%@]:%@", key, [item arrayForKey:key]);
+        }
+    }
+}
+
+//--------------------------------------------------------------//
+#pragma mark - デバイス一覧取得
+//--------------------------------------------------------------//
+- (void)updateDiveceList
+{
     __weak GHDeviceUtil *_self = self;
     [self requestAccessToken:^(NSString *accessToken) {
         _self.accessToken = accessToken;
         [_self discoverDevices:^(DConnectArray *result) {
-            LOG(@"%d", [result count]);
+            _self.recieveDeviceList(result);
+            [_self debug:result];
         }];
     }];
 }
-
 
 - (void)discoverDevices:(DiscoverDeviceCompletion)completion
 {
@@ -54,6 +72,7 @@
 
     [manager sendRequest: request callback:^(DConnectResponseMessage *response) {
         if ([response result] == DConnectMessageResultTypeOk) {
+            LOG(@"%@", response);
             DConnectArray *result = [response arrayForKey: DConnectServiceDiscoveryProfileParamServices];
             if (completion) {
                 completion(result);
@@ -66,8 +85,18 @@
     }];
 }
 
+//--------------------------------------------------------------//
+#pragma mark - アクセストークンを取得
+//--------------------------------------------------------------//
 - (void)requestAccessToken:(void(^)(NSString *accessToken))completion
 {
+    if(self.accessToken) {
+        if (completion) {
+            completion(self.accessToken);
+        }
+        return;
+    }
+
     NSArray *scopes = [@[DConnectServiceDiscoveryProfileName,
                          DConnectServiceDiscoveryProfileParamNetworkService,
                          DConnectServiceDiscoveryProfileParamState,
@@ -87,6 +116,7 @@
                                     scopes: scopes
                                    success: ^(NSString *clientId, NSString *accessToken) {
                                        LOG(@" - response - accessToken: %@", accessToken);
+                                       LOG(@" - response - clientId: %@", clientId);
                                        if (completion) {
                                            completion(accessToken);
                                        }
@@ -102,6 +132,12 @@
     NSBundle *bundle = [NSBundle mainBundle];
     NSString *package = [bundle bundleIdentifier];
     return package;
+}
+
+
+- (void)dealloc
+{
+    _recieveDeviceList = nil;
 }
 
 @end
