@@ -42,6 +42,7 @@
     self = [super initWithCoder:aDecoder];
     if (self) {
         viewModel = [[TopViewModel alloc]init];
+        viewModel.delegate = self;
     }
     return self;
 }
@@ -287,14 +288,18 @@
             break;
         case Device:
         {
-            DeviceIconViewCell* cell = (DeviceIconViewCell*)[collectionView dequeueReusableCellWithReuseIdentifier:@"DeviceIconViewCell" forIndexPath:indexPath];
             DConnectMessage* message = [[viewModel.datasource objectAtIndex:indexPath.section]objectAtIndex:indexPath.row];
-            [cell setDevice:message];
-            __weak ViewController *weakSelf = self;
-            [cell setDidIconSelected: ^(DConnectMessage* message) {
-                [weakSelf openDeviceDetail: message];
-            }];
-            return cell;
+            if([message isKindOfClass:[DConnectMessage class]]) {
+                DeviceIconViewCell* cell = (DeviceIconViewCell*)[collectionView dequeueReusableCellWithReuseIdentifier:@"DeviceIconViewCell" forIndexPath:indexPath];
+                [cell setDevice:message];
+                __weak ViewController *weakSelf = self;
+                [cell setDidIconSelected: ^(DConnectMessage* message) {
+                    [weakSelf openDeviceDetail: message];
+                }];
+                return cell;
+            } else {
+                return [collectionView dequeueReusableCellWithReuseIdentifier:@"DeviceDetailIcon" forIndexPath:indexPath];
+            }
         }
             break;
         default:
@@ -330,6 +335,7 @@
 - (void)requestDatasourceReload
 {
     [self.collectionView reloadSections: [NSIndexSet indexSetWithIndex:Device]];
+    [self addEmptyLabelIfNeeded];
 }
 
 @end
