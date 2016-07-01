@@ -10,13 +10,13 @@
 #import "DeviceIconViewModel.h"
 
 @interface DeviceIconViewCell : UICollectionViewCell
-typedef void (^DidIconSelected)(DConnectMessage*);
+typedef void (^DidDeviceIconSelected)(DConnectMessage*);
 
 @property (weak, nonatomic) IBOutlet UIImageView *iconImage;
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UIButton *selectButton;
 @property (strong, nonatomic) DeviceIconViewModel *viewModel;
-@property (copy, nonatomic) DidIconSelected didIconSelected;
+@property (copy, nonatomic) DidDeviceIconSelected didIconSelected;
 
 - (void)setDevice:(DConnectMessage*)message;
 - (void)setEnabled:(BOOL)isEnabled;
