@@ -91,6 +91,66 @@
                                             <outlet property="titleLabel" destination="qSP-O1-Hxl" id="Nxx-uL-9Cp"/>
                                         </connections>
                                     </collectionViewCell>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="DeviceIconViewCell" id="PaE-c0-nDI" customClass="DeviceIconViewCell">
+                                        <rect key="frame" x="85" y="50" width="70" height="100"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="70" height="100"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Cuk-KV-3vZ">
+                                                    <rect key="frame" x="0.0" y="0.0" width="70" height="75"/>
+                                                    <connections>
+                                                        <action selector="didTapItem:" destination="PaE-c0-nDI" eventType="touchUpInside" id="GYd-Av-KYC"/>
+                                                        <action selector="didTouchDown:" destination="PaE-c0-nDI" eventType="touchDown" id="UeN-vZ-ySF"/>
+                                                    </connections>
+                                                </button>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="3K8-e1-iHJ">
+                                                    <rect key="frame" x="0.0" y="0.0" width="70" height="70"/>
+                                                    <color key="backgroundColor" red="0.91764705879999997" green="0.91764705879999997" blue="0.91764705879999997" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" secondItem="3K8-e1-iHJ" secondAttribute="height" multiplier="1:1" id="DOR-iE-Iuq"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3di-oC-Pxp">
+                                                    <rect key="frame" x="0.0" y="75" width="70" height="12"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <constraints>
+                                            <constraint firstItem="3K8-e1-iHJ" firstAttribute="top" secondItem="PaE-c0-nDI" secondAttribute="topMargin" id="1it-xm-5oy"/>
+                                            <constraint firstItem="Cuk-KV-3vZ" firstAttribute="top" secondItem="PaE-c0-nDI" secondAttribute="top" id="4SG-En-MGu"/>
+                                            <constraint firstItem="3di-oC-Pxp" firstAttribute="top" secondItem="Cuk-KV-3vZ" secondAttribute="bottom" id="744-xS-sMD"/>
+                                            <constraint firstItem="3K8-e1-iHJ" firstAttribute="leading" secondItem="PaE-c0-nDI" secondAttribute="leading" id="DUb-4C-9ib"/>
+                                            <constraint firstAttribute="trailing" secondItem="3di-oC-Pxp" secondAttribute="trailing" id="Spt-t4-5Lt"/>
+                                            <constraint firstAttribute="trailing" secondItem="Cuk-KV-3vZ" secondAttribute="trailing" id="TWj-ap-CfA"/>
+                                            <constraint firstAttribute="bottom" secondItem="3di-oC-Pxp" secondAttribute="bottom" id="V0R-XE-pdV"/>
+                                            <constraint firstItem="3K8-e1-iHJ" firstAttribute="top" secondItem="PaE-c0-nDI" secondAttribute="top" id="WC6-Be-eTJ"/>
+                                            <constraint firstItem="3K8-e1-iHJ" firstAttribute="leading" secondItem="PaE-c0-nDI" secondAttribute="leadingMargin" id="clJ-xe-lSX"/>
+                                            <constraint firstAttribute="trailing" secondItem="3K8-e1-iHJ" secondAttribute="trailing" id="dMl-OF-KDl"/>
+                                            <constraint firstItem="3di-oC-Pxp" firstAttribute="leading" secondItem="PaE-c0-nDI" secondAttribute="leading" id="lzw-Pb-Vbm"/>
+                                            <constraint firstItem="3di-oC-Pxp" firstAttribute="top" secondItem="3K8-e1-iHJ" secondAttribute="bottom" constant="5" id="mYu-O6-DY3"/>
+                                            <constraint firstItem="Cuk-KV-3vZ" firstAttribute="leading" secondItem="PaE-c0-nDI" secondAttribute="leading" id="pBF-yb-g6l"/>
+                                            <constraint firstAttribute="trailingMargin" secondItem="3K8-e1-iHJ" secondAttribute="trailing" id="udr-XD-2zW"/>
+                                        </constraints>
+                                        <variation key="default">
+                                            <mask key="constraints">
+                                                <exclude reference="clJ-xe-lSX"/>
+                                                <exclude reference="udr-XD-2zW"/>
+                                                <exclude reference="1it-xm-5oy"/>
+                                                <exclude reference="V0R-XE-pdV"/>
+                                            </mask>
+                                        </variation>
+                                        <connections>
+                                            <outlet property="iconImage" destination="3K8-e1-iHJ" id="rZm-hO-KJv"/>
+                                            <outlet property="selectButton" destination="Cuk-KV-3vZ" id="2Eo-Ag-2TJ"/>
+                                            <outlet property="titleLabel" destination="3di-oC-Pxp" id="F8n-Um-hwP"/>
+                                        </connections>
+                                    </collectionViewCell>
                                 </cells>
                                 <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="headerCell" id="sII-s1-7gM" customClass="TopCollectionHeaderView">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="40"/>

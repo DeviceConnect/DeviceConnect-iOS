@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <DConnectSDK/DConnectSDK.h>
+#import "DeviceIconViewModel.h"
 
 @interface DeviceIconViewCell : UICollectionViewCell
 typedef void (^DidIconSelected)(DConnectMessage*);
@@ -15,7 +15,7 @@ typedef void (^DidIconSelected)(DConnectMessage*);
 @property (weak, nonatomic) IBOutlet UIImageView *iconImage;
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UIButton *selectButton;
-//@property (strong, nonatomic) BookmarkIconViewModel *viewModel;
+@property (strong, nonatomic) DeviceIconViewModel *viewModel;
 @property (copy, nonatomic) DidIconSelected didIconSelected;
 
 - (void)setDevice:(DConnectMessage*)message;

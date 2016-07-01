@@ -13,7 +13,7 @@
 {
     self = [super initWithCoder:aDecoder];
     if (self) {
-//        self.viewModel = [[BookmarkIconViewModel alloc]init];
+        self.viewModel = [[DeviceIconViewModel alloc]init];
     }
     return self;
 }
@@ -27,8 +27,9 @@
 - (void)setDevice:(DConnectMessage*)message
 {
     self.iconImage.image = nil;
-//    self.viewModel.page = page;
-//    self.titleLabel.text = self.viewModel.page.title;
+    self.viewModel.message = message;
+    self.titleLabel.text = self.viewModel.name;
+    self.iconImage.image = [UIImage imageNamed:@"no_bookmark_icon"];
 //
 //    __weak BookmarkIconViewCell* weakSelf = self;
 //    [self.viewModel bookmarkIconImage:^(UIImage *image) {
@@ -55,10 +56,7 @@
 #pragma mark - ボタン制御
 //--------------------------------------------------------------//
 - (IBAction)didTapItem:(UIButton *)sender {
-//    if (self.viewModel.page != nil) {
-//        self.didIconSelected(self.viewModel.page);
-//        [self.viewModel updateOpenDate];
-//    }
+    self.didIconSelected(self.viewModel.message);
     self.alpha = 1.0;
 }
 
