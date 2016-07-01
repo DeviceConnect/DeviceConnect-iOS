@@ -69,6 +69,10 @@
     }];
 }
 
+- (IBAction)backNormal:(UIButton *)sender {
+    self.alpha = 1.0;
+}
+
 
 - (void)dealloc
 {

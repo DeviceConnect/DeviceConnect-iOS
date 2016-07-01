@@ -41,6 +41,8 @@
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aD8-rK-ltM">
                                                     <rect key="frame" x="0.0" y="0.0" width="70" height="75"/>
                                                     <connections>
+                                                        <action selector="backNormal:" destination="mxe-B7-ksr" eventType="touchUpOutside" id="AqR-Xa-fZc"/>
+                                                        <action selector="backNormal:" destination="mxe-B7-ksr" eventType="touchCancel" id="VPt-s2-5uz"/>
                                                         <action selector="didTapItem:" destination="mxe-B7-ksr" eventType="touchUpInside" id="Bab-mh-81M"/>
                                                         <action selector="didTouchDown:" destination="mxe-B7-ksr" eventType="touchDown" id="pFf-S0-PIK"/>
                                                     </connections>
@@ -101,6 +103,8 @@
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Cuk-KV-3vZ">
                                                     <rect key="frame" x="0.0" y="0.0" width="70" height="75"/>
                                                     <connections>
+                                                        <action selector="backNormal:" destination="PaE-c0-nDI" eventType="touchCancel" id="aSL-Ws-i1j"/>
+                                                        <action selector="backNormal:" destination="PaE-c0-nDI" eventType="touchDragOutside" id="mvr-Nf-Vbd"/>
                                                         <action selector="didTapItem:" destination="PaE-c0-nDI" eventType="touchUpInside" id="GYd-Av-KYC"/>
                                                         <action selector="didTouchDown:" destination="PaE-c0-nDI" eventType="touchDown" id="UeN-vZ-ySF"/>
                                                     </connections>
