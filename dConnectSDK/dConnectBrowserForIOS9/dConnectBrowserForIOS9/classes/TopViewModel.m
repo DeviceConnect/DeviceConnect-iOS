@@ -12,9 +12,6 @@
 #import "GHDeviceUtil.h"
 
 @interface TopViewModel()
-{
-    GHDeviceUtil* diveiceUtil;
-}
 @property(nonatomic, strong) NSArray* devices;
 @end
 
@@ -29,8 +26,7 @@
     if (self) {
         __weak TopViewModel *_self = self;
         self.manager = [[GHURLManager alloc]init];
-        diveiceUtil = [[GHDeviceUtil alloc]init];
-        [diveiceUtil setRecieveDeviceList:^(DConnectArray *deviceList){
+        [[GHDeviceUtil shareManager] setRecieveDeviceList:^(DConnectArray *deviceList){
             [_self updateDevice:deviceList];
         }];
         self.url = @"http://www.google.com";
@@ -49,8 +45,7 @@
     self.manager = nil;
     self.url = nil;
     self.datasource = nil;
-    [diveiceUtil setRecieveDeviceList:nil];
-    diveiceUtil = nil;
+    [[GHDeviceUtil shareManager] setRecieveDeviceList: nil];
 }
 
 //--------------------------------------------------------------//

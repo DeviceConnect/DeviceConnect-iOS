@@ -13,7 +13,8 @@ typedef void (^DiscoverDeviceCompletion)(DConnectArray *result);
 typedef void (^RecieveDeviceList)(DConnectArray *deviceList);
 
 @interface GHDeviceUtil : NSObject
-@property (nonatomic, strong) NSString* accessToken;
+@property (nonatomic, strong) DConnectArray* currentDevices;
 @property (nonatomic, copy) RecieveDeviceList recieveDeviceList;
++ (GHDeviceUtil*)shareManager;
 - (void)discoverDevices:(DiscoverDeviceCompletion)completion;
 @end

@@ -17,6 +17,18 @@
 
 @implementation GHDeviceUtil
 
+
+static GHDeviceUtil* mgr = nil;
+
++(GHDeviceUtil*)shareManager
+{
+    if (!mgr) {
+        mgr = [[GHDeviceUtil alloc]init];
+    }
+
+    return mgr;
+}
+
 - (instancetype)init
 {
     self = [super init];
@@ -55,6 +67,7 @@
 {
     __weak GHDeviceUtil *_self = self;
     [self discoverDevices:^(DConnectArray *result) {
+        _self.currentDevices = result;
         _self.recieveDeviceList(result);
         [_self debug:result];
     }];
