@@ -12,22 +12,22 @@
 
 - (NSString*)name
 {
-    return (NSString*)[self.message arrayForKey:@"name"];
+    return (NSString*)[self.message arrayForKey: DConnectServiceDiscoveryProfileParamName];
 }
 
 - (BOOL)isOnline
 {
-    return (BOOL)[self.message arrayForKey:@"online"];
+    return (BOOL)[self.message arrayForKey: DConnectServiceDiscoveryProfileParamOnline];
 }
 
 - (NSString*)idName
 {
-    return (NSString*)[self.message arrayForKey:@"id"];
+    return (NSString*)[self.message arrayForKey: DConnectServiceDiscoveryProfileParamId];
 }
 
 - (NSString*)type
 {
-    return (NSString*)[self.message arrayForKey:@"type"];
+    return (NSString*)[self.message arrayForKey: DConnectServiceDiscoveryProfileParamType];
 }
 
 - (void)dealloc
