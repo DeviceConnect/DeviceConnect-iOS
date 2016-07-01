@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		8E05634C1D2628A4008EBA25 /* GHDeviceUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E05634B1D2628A4008EBA25 /* GHDeviceUtil.m */; };
+		8E05634F1D263C05008EBA25 /* DeviceIconViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E05634E1D263C05008EBA25 /* DeviceIconViewCell.m */; };
 		8E0A4C2F1D1CC2D500827DA6 /* InitialGuide.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8E0A4C2E1D1CC2D500827DA6 /* InitialGuide.storyboard */; };
 		8E0A4C321D1CC4A500827DA6 /* InitialGuideViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0A4C311D1CC4A500827DA6 /* InitialGuideViewController.m */; };
 		8E0A4C351D1CC4BE00827DA6 /* GuideDataViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0A4C341D1CC4BE00827DA6 /* GuideDataViewController.m */; };
@@ -178,6 +179,8 @@
 /* Begin PBXFileReference section */
 		8E05634A1D2628A4008EBA25 /* GHDeviceUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHDeviceUtil.h; sourceTree = "<group>"; };
 		8E05634B1D2628A4008EBA25 /* GHDeviceUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GHDeviceUtil.m; sourceTree = "<group>"; };
+		8E05634D1D263C05008EBA25 /* DeviceIconViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeviceIconViewCell.h; sourceTree = "<group>"; };
+		8E05634E1D263C05008EBA25 /* DeviceIconViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeviceIconViewCell.m; sourceTree = "<group>"; };
 		8E0A4C2E1D1CC2D500827DA6 /* InitialGuide.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = InitialGuide.storyboard; path = classes/InitialGuide.storyboard; sourceTree = "<group>"; };
 		8E0A4C301D1CC4A500827DA6 /* InitialGuideViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InitialGuideViewController.h; sourceTree = "<group>"; };
 		8E0A4C311D1CC4A500827DA6 /* InitialGuideViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InitialGuideViewController.m; sourceTree = "<group>"; };
@@ -468,6 +471,8 @@
 				8EBB89121D1385050038700B /* BookmarkIconViewCell.m */,
 				8EBB891F1D13CA960038700B /* TopCollectionHeaderView.h */,
 				8EBB89201D13CA960038700B /* TopCollectionHeaderView.m */,
+				8E05634D1D263C05008EBA25 /* DeviceIconViewCell.h */,
+				8E05634E1D263C05008EBA25 /* DeviceIconViewCell.m */,
 			);
 			name = top;
 			sourceTree = "<group>";
@@ -1055,6 +1060,7 @@
 				8E05634C1D2628A4008EBA25 /* GHDeviceUtil.m in Sources */,
 				AB00F4A51C71B16200689C70 /* RATreeNodeCollectionController.m in Sources */,
 				AB00F2E01C71A29D00689C70 /* GHAddBookmarkController.m in Sources */,
+				8E05634F1D263C05008EBA25 /* DeviceIconViewCell.m in Sources */,
 				AB00F4AC1C71B16200689C70 /* RATreeView+UIScrollView.m in Sources */,
 				AB00F2F21C71A29D00689C70 /* GHPageViewCell.m in Sources */,
 				AB00F49F1C71B16200689C70 /* NSString+HTML.m in Sources */,
