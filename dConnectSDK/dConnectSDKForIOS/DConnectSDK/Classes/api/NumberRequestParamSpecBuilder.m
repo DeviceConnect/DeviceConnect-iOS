@@ -13,6 +13,8 @@
 
 @property NSString * mName;
 
+@property BOOL mIsMandatory;
+
 @property NumberRequestParamSpecFormat mFormat;
 
 @property NSNumber * mMaxValue;
@@ -35,6 +37,7 @@
     
     if (self) {
         self.mName = nil;
+        self.mIsMandatory = NO;
         self.mFormat = FLOAT;
         self.mMaxValue = nil;
         self.mMinValue = nil;
@@ -47,8 +50,8 @@
 
 #pragma mark - NumberRequestParamSpecBuilder Setter Method
 
-/*
-- (id)name: (NSString *)name {
+
+- (id)name: (NSString *) name {
     self.mName = name;
     return self;
 }
@@ -57,34 +60,29 @@
     self.mIsMandatory = isMandatory;
     return self;
 }
-*/
-- (id)name: (NSString *) name {
-    self.mName = name;
-    return self;
-}
 
 - (id)format:(NumberRequestParamSpecFormat)format {
     self.mFormat = format;
     return self;
 }
 
-- (id)maxValue:(NSNumber *)maxValue {
-    self.mMaxValue = maxValue;
+- (id)maxValue:(double)maxValue {
+    self.mMaxValue = [[NSNumber alloc] initWithDouble: maxValue];
     return self;
 }
 
-- (id)minValue:(NSNumber *)minValue {
-    self.mMinValue = minValue;
+- (id)minValue:(double)minValue {
+    self.mMinValue = [[NSNumber alloc] initWithDouble: minValue];
     return self;
 }
 
-- (id)exclusiveMaxValue:(NSNumber *)exclusiveMaxValue {
-    self.mExclusiveMaxValue = exclusiveMaxValue;
+- (id)exclusiveMaxValue:(double)exclusiveMaxValue {
+    self.mExclusiveMaxValue = [[NSNumber alloc] initWithDouble: exclusiveMaxValue];
     return self;
 }
 
-- (id)exclusiveMinValue:(NSNumber *)exclusiveMinValue {
-    self.mExclusiveMinValue = exclusiveMinValue;
+- (id)exclusiveMinValue:(double)exclusiveMinValue {
+    self.mExclusiveMinValue = [[NSNumber alloc] initWithDouble: exclusiveMinValue];
     return self;
 }
 
@@ -95,6 +93,7 @@
     NumberRequestParamSpec *paramSpec = [[NumberRequestParamSpec alloc] init];
     
     [paramSpec setName: self.mName];
+    [paramSpec setIsMandatory: self.mIsMandatory];
     [paramSpec setFormat: self.mFormat];
     [paramSpec setMaxValue: self.mMaxValue];
     [paramSpec setMinValue: self.mMinValue];

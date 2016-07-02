@@ -48,4 +48,8 @@ typedef enum {
 
 - (void) setExclusiveMinValue: (NSNumber *) exclusiveMinValue;
 
++ (NSString *) convertFormatToString: (NumberRequestParamSpecFormat) format;
+
++ (NumberRequestParamSpecFormat) parseFormat: (NSString *) strFormat;
+
 @end

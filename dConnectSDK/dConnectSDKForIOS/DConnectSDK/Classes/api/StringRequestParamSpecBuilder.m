@@ -17,9 +17,9 @@
 
 @property StringRequestParamSpecFormat mFormat;
 
-@property NSInteger *mMaxLength;
+@property NSNumber *mMaxLength; // int値を格納。nilなら省略。
 
-@property NSInteger *mMinLength;
+@property NSNumber *mMinLength; // int値を格納。nilなら省略。
 
 @property NSArray *mEnumList;   // NSStringの配列
 
@@ -62,12 +62,12 @@
     return self;
 }
 
-- (id)maxLength:(NSInteger *)maxLength {
+- (id)maxLength:(NSNumber *) maxLength {
     self.mMaxLength = maxLength;
     return self;
 }
 
-- (id)minLength:(NSInteger *)minLength {
+- (id)minLength:(NSNumber *) minLength {
     self.mMinLength = minLength;
     return self;
 }

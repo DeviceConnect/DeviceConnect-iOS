@@ -16,15 +16,17 @@
 
 - (id)name: (NSString *) name;
 
+- (id)isMandatory:(BOOL)isMandatory;
+
 - (id)format:(NumberRequestParamSpecFormat)format;
 
-- (id)maxValue:(NSNumber *)maxValue;
+- (id)maxValue:(double)maxValue;
 
-- (id)minValue:(NSNumber *)minValue;
+- (id)minValue:(double)minValue;
 
-- (id)exclusiveMaxValue:(NSNumber *)exclusiveMaxValue;
+- (id)exclusiveMaxValue:(double)exclusiveMaxValue;
 
-- (id)exclusiveMinValue:(NSNumber *)exclusiveMinValue;
+- (id)exclusiveMinValue:(double)exclusiveMinValue;
 
 - (NumberRequestParamSpec *)build;
 

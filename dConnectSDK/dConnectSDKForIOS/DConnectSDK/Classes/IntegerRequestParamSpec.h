@@ -53,4 +53,8 @@ typedef enum {
 
 - (void) setEnumList: (NSArray *) enumList ;
 
++ (NSString *) convertFormatToString: (IntegerRequestParamSpecFormat) format;
+
++ (IntegerRequestParamSpecFormat) parseFormat: (NSString *) strFormat;
+
 @end

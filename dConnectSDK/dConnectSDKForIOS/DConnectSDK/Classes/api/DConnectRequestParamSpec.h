@@ -32,7 +32,11 @@ typedef enum {
 - (BOOL) validate: (id) param;
 - (NSDictionary *) toDictionary;
 
++ (NSString *) convertBoolToString: (BOOL) boolValue;
++ (BOOL)parseBool: (NSString *)strBool;
 + (NSString *) convertTypeToString: (DConnectRequestParamSpecType) type;
 + (DConnectRequestParamSpecType)parseType: (NSString *)strType;
++ (BOOL)isDigit:(NSString *)text;
++ (BOOL)isNumber:(NSString *)text;
 
 @end

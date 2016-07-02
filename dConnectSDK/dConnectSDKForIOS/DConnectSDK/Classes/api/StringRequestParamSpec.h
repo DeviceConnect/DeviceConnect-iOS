@@ -31,18 +31,22 @@ typedef enum {
 
 - (StringRequestParamSpecFormat) format;
 
-- (NSInteger *) maxLength;
+- (NSNumber *) maxLength;
 
-- (NSInteger *) minLength;
+- (NSNumber *) minLength;
 
 - (NSArray *) enumList;
 
 - (void)setFormat : (StringRequestParamSpecFormat) type;
 
-- (void) setMaxLength: (NSInteger *) maxLength;
+- (void) setMaxLength: (NSNumber *) maxLength;
 
-- (void) setMinLength: (NSInteger *) minLength;
+- (void) setMinLength: (NSNumber *) minLength;
 
 - (void) setEnumList: (NSArray *) enumList ;
+
++ (NSString *) convertFormatToString: (StringRequestParamSpecFormat) format;
+
++ (StringRequestParamSpecFormat) parseFormat: (NSString *) strFormat;
 
 @end

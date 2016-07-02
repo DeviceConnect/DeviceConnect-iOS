@@ -20,9 +20,9 @@
 
 - (id)format:(StringRequestParamSpecFormat)format;
 
-- (id)maxLength:(NSInteger *)maxLength;
+- (id)maxLength:(NSNumber *)maxLength;
 
-- (id)minLength:(NSInteger *)minLength;
+- (id)minLength:(NSNumber *)minLength;
 
 - (id)enumList:(NSArray *)enumList;
 

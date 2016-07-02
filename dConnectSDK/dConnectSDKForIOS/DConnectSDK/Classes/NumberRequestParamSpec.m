@@ -15,6 +15,9 @@ NSString *const NumberRequestParamSpecJsonKeyMinValue = @"minValue";
 NSString *const NumberRequestParamSpecJsonKeyExclusiveMaxValue = @"exclusiveMaxValue";
 NSString *const NumberRequestParamSpecJsonKeyExclusiveMinValue = @"exclusiveMinValue";
 
+static NSString *const NUMBER_FORMAT_FLOAT = @"float";
+static NSString *const NUMBER_FORMAT_DOUBLE = @"double";
+
 @interface NumberRequestParamSpec()
 
 @property NumberRequestParamSpecFormat mFormat;
@@ -148,5 +151,36 @@ NSString *const NumberRequestParamSpecJsonKeyExclusiveMinValue = @"exclusiveMinV
     return [aScanner isAtEnd];
 }
 
+
+#pragma mark - NumberRequestParamSpec Static Method
+
+// enum Format#getName()相当
++ (NSString *) convertFormatToString: (NumberRequestParamSpecFormat) format {
+    if (format == FLOAT) {
+        return NUMBER_FORMAT_FLOAT;
+    }
+    if (format == DOUBLE) {
+        return NUMBER_FORMAT_DOUBLE;
+    }
+    @throw [NSString stringWithFormat: @"format is invalid : type: %d", (int)format];
+}
+
+// enum Format#parse()相当
++ (NumberRequestParamSpecFormat) parseFormat: (NSString *) strFormat {
+    
+    if (!strFormat) {
+        @throw [NSString stringWithFormat: @"strFormat is nil"];
+    }
+    
+    NSString *strFormatLow = [strFormat lowercaseString];
+    
+    if ([strFormatLow isEqualToString: [NUMBER_FORMAT_FLOAT lowercaseString]]) {
+        return FLOAT;
+    }
+    if ([strFormatLow isEqualToString: [NUMBER_FORMAT_DOUBLE lowercaseString]]) {
+        return DOUBLE;
+    }
+    @throw [NSString stringWithFormat: @"strFormat is invalid : %@", strFormat];
+}
 
 @end

@@ -17,6 +17,10 @@ NSString *const IntegerRequestParamSpecJsonKeyExclusiveMinValue = @"exclusiveMin
 NSString *const IntegerRequestParamSpecJsonKeyEnum = @"enum";
 //NSString *const IntegerRequestParamSpecJsonKeyValue = @"value";
 
+static NSString *const STRING_FORMAT_INT32 = @"int32";
+static NSString *const STRING_FORMAT_INT64 = @"int64";
+
+
 @interface IntegerRequestParamSpec()
 
 @property IntegerRequestParamSpecFormat mFormat;
@@ -123,7 +127,7 @@ NSString *const IntegerRequestParamSpecJsonKeyEnum = @"enum";
 - (BOOL)validateInt32: (id) param {
     if ([param isMemberOfClass: [NSString class]]) {
         NSString *strParam = (NSString *)param;
-        if ([self isDigit: strParam]) {
+        if ([DConnectRequestParamSpec isDigit: strParam]) {
             long long l = [strParam longLongValue];
             if (INT32_MIN <= l && l <= INT32_MAX) {
                 return [self validateRange: l];
@@ -138,7 +142,7 @@ NSString *const IntegerRequestParamSpecJsonKeyEnum = @"enum";
 - (BOOL) validateInt64: (id) param {
     if ([param isMemberOfClass: [NSString class]]) {
         NSString *strParam = (NSString *)param;
-        if ([self isDigit: strParam]) {
+        if ([DConnectRequestParamSpec  isDigit: strParam]) {
             long long l = [strParam longLongValue];
             if (INT64_MIN <= l && l <= INT64_MAX) {
                 return [self validateRange: l];
@@ -155,7 +159,7 @@ NSString *const IntegerRequestParamSpecJsonKeyEnum = @"enum";
     if (self.mEnumList) {
         
         for (NSString *strEnum in self.mEnumList) {
-            if ([self isDigit: strEnum]) {
+            if ([DConnectRequestParamSpec  isDigit: strEnum]) {
                 if ([strEnum longLongValue] == (long long)value) {
                     return YES;
                 }
@@ -180,14 +184,35 @@ NSString *const IntegerRequestParamSpecJsonKeyEnum = @"enum";
     }
 }
 
-- (BOOL)isDigit:(NSString *)text {
-    NSCharacterSet *digitCharSet = [NSCharacterSet characterSetWithCharactersInString:@"0123456789"];
-    
-    NSScanner *aScanner = [NSScanner localizedScannerWithString:text];
-    [aScanner setCharactersToBeSkipped:nil];
-    
-    [aScanner scanCharactersFromSet:digitCharSet intoString:NULL];
-    return [aScanner isAtEnd];
+
+#pragma mark - IntegerRequestParamSpec Static Method
+
+// enum Format#getName()相当
++ (NSString *) convertFormatToString: (IntegerRequestParamSpecFormat) format {
+    if (format == INT32) {
+        return STRING_FORMAT_INT32;
+    }
+    if (format == INT64) {
+        return STRING_FORMAT_INT64;
+    }
+    @throw [NSString stringWithFormat: @"format is invalid : %d", (int)format];
 }
 
+// enum Format#parse()相当
++ (IntegerRequestParamSpecFormat) parseFormat: (NSString *) strFormat {
+    
+    if (!strFormat) {
+        @throw [NSString stringWithFormat: @"strFormat is nil"];
+    }
+    
+    NSString *strFormatLow = [strFormat lowercaseString];
+    
+    if ([strFormatLow isEqualToString: [STRING_FORMAT_INT32 lowercaseString]]) {
+        return INT32;
+    }
+    if ([strFormatLow isEqualToString: [STRING_FORMAT_INT64 lowercaseString]]) {
+        return INT64;
+    }
+    @throw [NSString stringWithFormat: @"strFormat is invalid : %@", strFormat];
+}
 @end

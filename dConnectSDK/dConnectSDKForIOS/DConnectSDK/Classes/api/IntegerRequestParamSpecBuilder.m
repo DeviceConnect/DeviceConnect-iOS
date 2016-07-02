@@ -13,6 +13,8 @@
 
 @property NSString * mName;
 
+@property BOOL mIsMandatory;
+
 @property IntegerRequestParamSpecFormat mFormat;
 
 @property NSNumber * mMaxValue;
@@ -38,6 +40,7 @@
     if (self) {
         // 初期値設定
         self.mName = nil;
+        self.mIsMandatory = NO;
         self.mFormat = INT32;
         self.mMaxValue = nil;
         self.mMinValue = nil;
@@ -56,28 +59,34 @@
     return self;
 }
 
+- (id)isMandatory: (BOOL)isMandatory {
+    self.mIsMandatory = isMandatory;
+    return self;
+}
+
+
 - (id)format:(IntegerRequestParamSpecFormat)format {
     self.mFormat = format;
     return self;
 }
 
-- (id)maxValue:(NSNumber *)maxValue {
-    self.mMaxValue = maxValue;
+- (id)maxValue:(long)maxValue {
+    self.mMaxValue = [[NSNumber alloc] initWithLong: maxValue];
     return self;
 }
 
-- (id)minValue:(NSNumber *)minValue {
-    self.mMinValue = minValue;
+- (id)minValue:(long)minValue {
+    self.mMinValue = [[NSNumber alloc] initWithLong: minValue];
     return self;
 }
 
-- (id)exclusiveMaxValue:(NSNumber *)exclusiveMaxValue {
-    self.mExclusiveMaxValue = exclusiveMaxValue;
+- (id)exclusiveMaxValue:(long)exclusiveMaxValue {
+    self.mExclusiveMaxValue = [[NSNumber alloc] initWithLong: exclusiveMaxValue];
     return self;
 }
 
-- (id)exclusiveMinValue:(NSNumber *)exclusiveMinValue {
-    self.mExclusiveMinValue = exclusiveMinValue;
+- (id)exclusiveMinValue:(long)exclusiveMinValue {
+    self.mExclusiveMinValue = [[NSNumber alloc] initWithLong: exclusiveMinValue];
     return self;
 }
 

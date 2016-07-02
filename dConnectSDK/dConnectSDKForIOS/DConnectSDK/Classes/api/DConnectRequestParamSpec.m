@@ -13,6 +13,9 @@ NSString *const DConnectRequestParamSpecJsonKeyName = @"name";
 NSString *const DConnectRequestParamSpecJsonKeyMandatory = @"mandatory";
 NSString *const DConnectRequestParamSpecJsonKeyType = @"type";
 
+NSString *const BOOL_TRUE = @"true";
+NSString *const BOOL_FALSE = @"false";
+
 NSString *const TYPE_STRING = @"STRING";
 NSString *const TYPE_INTEGER = @"INTEGER";
 NSString *const TYPE_NUMBER = @"NUMBER";
@@ -83,6 +86,33 @@ NSString *const TYPE_BOOLEAN = @"BOOLEAN";
     return nil; // TODO
 }
 
+
+
++ (NSString *) convertBoolToString: (BOOL) boolValue {
+    if (boolValue == YES) {
+        return BOOL_TRUE;
+    }
+    if (boolValue == NO) {
+        return BOOL_FALSE;
+    }
+    @throw [NSString stringWithFormat: @"bool is invalid : boolValue: %d", (int)boolValue];
+}
+
++ (BOOL)parseBool: (NSString *)strBool {
+    
+    NSString *strBoolLow = [strBool lowercaseString];
+    
+    if ([strBoolLow isEqualToString: [BOOL_TRUE lowercaseString]]) {
+        return YES;
+    }
+    if ([strBoolLow isEqualToString: [BOOL_FALSE lowercaseString]]) {
+        return NO;
+    }
+    @throw [NSString stringWithFormat: @"bool is invalid : %@", strBool];
+}
+
+
+
 // enum Type#getName()相当
 + (NSString *) convertTypeToString: (DConnectRequestParamSpecType) type {
     if (type == STRING) {
@@ -119,6 +149,27 @@ NSString *const TYPE_BOOLEAN = @"BOOLEAN";
         return BOOLEAN;
     }
     @throw [NSString stringWithFormat: @"type is invalid : %@", strType];
+}
+
+
++ (BOOL)isDigit:(NSString *)text {
+    NSCharacterSet *digitCharSet = [NSCharacterSet characterSetWithCharactersInString:@"+-0123456789"];
+    
+    NSScanner *aScanner = [NSScanner localizedScannerWithString:text];
+    [aScanner setCharactersToBeSkipped:nil];
+    
+    [aScanner scanCharactersFromSet:digitCharSet intoString:NULL];
+    return [aScanner isAtEnd];
+}
+
++ (BOOL)isNumber:(NSString *)text {
+    NSCharacterSet *digitCharSet = [NSCharacterSet characterSetWithCharactersInString:@"+-0123456789."];
+    
+    NSScanner *aScanner = [NSScanner localizedScannerWithString:text];
+    [aScanner setCharactersToBeSkipped:nil];
+    
+    [aScanner scanCharactersFromSet:digitCharSet intoString:NULL];
+    return [aScanner isAtEnd];
 }
 
 @end

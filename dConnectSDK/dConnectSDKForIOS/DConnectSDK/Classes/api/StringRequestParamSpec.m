@@ -15,11 +15,17 @@ NSString *const StringRequestParamSpecJsonKeyMinLength = @"minLength";
 NSString *const StringRequestParamSpecJsonKeyEnum = @"enum";
 NSString *const StringRequestParamSpecJsonKeyValue = @"value";
 
+static NSString *const STRING_FORMAT_TEXT = @"text";
+static NSString *const STRING_FORMAT_BYTE = @"byte";
+static NSString *const STRING_FORMAT_BINARY = @"binary";
+static NSString *const STRING_FORMAT_DATE = @"date";
+
+
 @interface StringRequestParamSpec()
 
 @property StringRequestParamSpecFormat mFormat;
-@property NSInteger *mMaxLength;
-@property NSInteger *mMinLength;
+@property NSNumber *mMaxLength; // int値を格納。nilなら省略。
+@property NSNumber *mMinLength; // int値を格納。nilなら省略。
 @property NSArray *mEnumList; // NSStringの配列
 
 @end
@@ -74,11 +80,11 @@ NSString *const StringRequestParamSpecJsonKeyValue = @"value";
     return self.mFormat;
 }
 
-- (NSInteger *) maxLength {
+- (NSNumber *) maxLength {
     return self.mMaxLength;
 }
 
-- (NSInteger *) minLength {
+- (NSNumber *) minLength {
     return self.mMinLength;
 }
 
@@ -92,11 +98,11 @@ NSString *const StringRequestParamSpecJsonKeyValue = @"value";
 - (void)setFormat : (StringRequestParamSpecFormat) format {
     self.mFormat = format;
 }
-- (void) setMaxLength: (NSInteger *) maxLength {
+- (void) setMaxLength: (NSNumber *) maxLength {
     self.mMaxLength = maxLength;
 }
 
-- (void) setMinLength: (NSInteger *) minLength {
+- (void) setMinLength: (NSNumber *) minLength {
     self.mMinLength = minLength;
 }
 
@@ -108,13 +114,57 @@ NSString *const StringRequestParamSpecJsonKeyValue = @"value";
 #pragma mark - StringRequestParamSpec Private Method
 
 - (BOOL)validateLength: (NSString *) param {
-    if (self.mMaxLength != nil && [param length] > *(self.mMaxLength)) {
+    if (self.mMaxLength != nil && [param length] > [self.mMaxLength intValue]) {
         return NO;
     }
-    if (self.mMinLength != nil && [param length] < *(self.mMinLength)) {
+    if (self.mMinLength != nil && [param length] < [self.mMinLength intValue]) {
         return NO;
     }
     return YES;
 }
-          
+
+
+#pragma mark - StringRequestParamSpec Static Method
+
+// enum Format#getName()相当
++ (NSString *) convertFormatToString: (StringRequestParamSpecFormat) format {
+    if (format == TEXT) {
+        return STRING_FORMAT_TEXT;
+    }
+    if (format == BYTE) {
+        return STRING_FORMAT_BYTE;
+    }
+    if (format == BINARY) {
+        return STRING_FORMAT_BINARY;
+    }
+    if (format == DATE) {
+        return STRING_FORMAT_DATE;
+    }
+    @throw [NSString stringWithFormat: @"format is invalid : type: %d", (int)format];
+}
+
+// enum Format#parse()相当
++ (StringRequestParamSpecFormat) parseFormat: (NSString *) strFormat {
+    
+    if (!strFormat) {
+        @throw [NSString stringWithFormat: @"strFormat is nil"];
+    }
+    
+    NSString *strFormatLow = [strFormat lowercaseString];
+    
+    if ([strFormatLow isEqualToString: [STRING_FORMAT_TEXT lowercaseString]]) {
+        return TEXT;
+    }
+    if ([strFormatLow isEqualToString: [STRING_FORMAT_BYTE lowercaseString]]) {
+        return BYTE;
+    }
+    if ([strFormatLow isEqualToString: [STRING_FORMAT_BINARY lowercaseString]]) {
+        return BINARY;
+    }
+    if ([strFormatLow isEqualToString: [STRING_FORMAT_DATE lowercaseString]]) {
+        return DATE;
+    }
+    @throw [NSString stringWithFormat: @"strFormat is invalid : %@", strFormat];
+}
+
 @end
