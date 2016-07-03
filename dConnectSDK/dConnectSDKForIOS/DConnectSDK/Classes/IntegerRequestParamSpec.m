@@ -49,6 +49,21 @@ static NSString *const STRING_FORMAT_INT64 = @"int64";
     return self;
 }
 
+- (instancetype)init
+{
+    self = [super initWithType: INTEGER];
+    if (self) {
+        // 初期値設定
+        self.mFormat = INT32;
+        self.mMaxValue = nil;
+        self.mMinValue = nil;
+        self.mExclusiveMaxValue = nil;
+        self.mExclusiveMinValue = nil;
+        self.mEnumList = nil;
+    }
+    return self;
+}
+
 - (BOOL) validate: (id) obj {
     
     if (![super validate: obj]) {
@@ -120,6 +135,26 @@ static NSString *const STRING_FORMAT_INT64 = @"int64";
     self.mEnumList = enumList;
 }
 
+
+#pragma mark - DConnectRequestParamSpecDelegate Implement
+
+- (NSDictionary *) toDictionary {
+    
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    
+    dict[DConnectRequestParamSpecJsonKeyName] = self.name;
+    dict[DConnectRequestParamSpecJsonKeyType] = [DConnectRequestParamSpec convertTypeToString: self.type];
+    dict[DConnectRequestParamSpecJsonKeyMandatory] = [NSNumber numberWithBool: self.isMandatory];
+    
+    dict[IntegerRequestParamSpecJsonKeyFormat] = [IntegerRequestParamSpec convertFormatToString: self.mFormat];
+    dict[IntegerRequestParamSpecJsonKeyMaxValue] = self.mMaxValue;
+    dict[IntegerRequestParamSpecJsonKeyMinValue] = self.mMinValue;
+    dict[IntegerRequestParamSpecJsonKeyExclusiveMaxValue] = self.mExclusiveMaxValue;
+    dict[IntegerRequestParamSpecJsonKeyExclusiveMinValue] = self.mExclusiveMinValue;
+    dict[IntegerRequestParamSpecJsonKeyEnum] = self.enumList;
+    
+    return dict;
+}
 
 
 #pragma mark - IntegerRequestParamSpec Private Method

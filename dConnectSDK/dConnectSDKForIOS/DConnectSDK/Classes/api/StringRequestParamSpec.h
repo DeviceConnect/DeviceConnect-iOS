@@ -23,7 +23,9 @@ typedef enum {
     DATE,
 } StringRequestParamSpecFormat;
 
-@interface StringRequestParamSpec : DConnectRequestParamSpec
+@interface StringRequestParamSpec : DConnectRequestParamSpec<DConnectRequestParamSpecDelegate>
+
+- (instancetype)init;
 
 - (instancetype)initWitFormat: (StringRequestParamSpecFormat) format;
 
@@ -44,6 +46,8 @@ typedef enum {
 - (void) setMinLength: (NSNumber *) minLength;
 
 - (void) setEnumList: (NSArray *) enumList ;
+
+- (NSDictionary *) toDictionary;
 
 + (NSString *) convertFormatToString: (StringRequestParamSpecFormat) format;
 

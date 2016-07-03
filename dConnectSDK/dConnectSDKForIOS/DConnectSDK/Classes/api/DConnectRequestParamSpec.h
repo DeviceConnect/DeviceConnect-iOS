@@ -22,6 +22,14 @@ typedef enum {
 } DConnectRequestParamSpecType;
 
 
+@protocol DConnectRequestParamSpecDelegate <NSObject>
+
+- (NSDictionary *)toDictionary;
+
+@end
+
+
+
 @interface  DConnectRequestParamSpec : NSObject
 
 - (instancetype)initWithType: (DConnectRequestParamSpecType)type;
@@ -31,7 +39,9 @@ typedef enum {
 - (void) setIsMandatory: (BOOL) isMandatory;
 - (BOOL) isMandatory;
 - (BOOL) validate: (id) param;
+/*
 - (NSDictionary *) toDictionary;
+*/
 
 + (NSString *) convertBoolToString: (BOOL) boolValue;
 + (NSString *) convertTypeToString: (DConnectRequestParamSpecType) type;

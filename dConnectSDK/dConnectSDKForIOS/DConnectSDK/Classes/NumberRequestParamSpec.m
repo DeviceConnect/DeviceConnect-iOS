@@ -30,6 +30,20 @@ static NSString *const NUMBER_FORMAT_DOUBLE = @"double";
 
 @implementation NumberRequestParamSpec
 
+- (instancetype)init
+{
+    self = [super initWithType: NUMBER];
+    if (self) {
+        // 初期値設定
+        self.mFormat = FLOAT;
+        self.mMaxValue = nil;
+        self.mMinValue = nil;
+        self.mExclusiveMaxValue = nil;
+        self.mExclusiveMinValue = nil;
+    }
+    return self;
+}
+
 - (instancetype)initWithFormat:(NumberRequestParamSpecFormat) format
 {
     self = [super initWithType: NUMBER];
@@ -61,6 +75,25 @@ static NSString *const NUMBER_FORMAT_DOUBLE = @"double";
             @throw [NSString stringWithFormat: @"Illegal state exception : %d", (int)self.mFormat];
     }
     return NO;
+}
+
+#pragma mark - DConnectRequestParamSpecDelegate Implement
+
+- (NSDictionary *) toDictionary {
+    
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    
+    dict[DConnectRequestParamSpecJsonKeyName] = self.name;
+    dict[DConnectRequestParamSpecJsonKeyType] = [DConnectRequestParamSpec convertTypeToString: self.type];
+    dict[DConnectRequestParamSpecJsonKeyMandatory] = [NSNumber numberWithBool: self.isMandatory];
+    
+    dict[NumberRequestParamSpecJsonKeyFormat] = [NumberRequestParamSpec convertFormatToString: self.mFormat];
+    dict[NumberRequestParamSpecJsonKeyMaxValue] = self.mMaxValue;
+    dict[NumberRequestParamSpecJsonKeyMinValue] = self.mMinValue;
+    dict[NumberRequestParamSpecJsonKeyExclusiveMaxValue] = self.mExclusiveMaxValue;
+    dict[NumberRequestParamSpecJsonKeyExclusiveMinValue] = self.mExclusiveMinValue;
+    
+    return dict;
 }
 
 #pragma mark - NumberRequestParamSpec Getter Method

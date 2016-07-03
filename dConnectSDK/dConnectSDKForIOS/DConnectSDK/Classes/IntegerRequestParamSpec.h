@@ -25,6 +25,8 @@ typedef enum {
 
 @interface IntegerRequestParamSpec : DConnectRequestParamSpec
 
+- (instancetype)init;
+
 - (instancetype)initWithFormat: (IntegerRequestParamSpecFormat) format;
 
 - (BOOL) validate: (id) obj;
@@ -52,6 +54,8 @@ typedef enum {
 - (void) setExclusiveMinValue: (NSNumber *) exclusiveMinValue;
 
 - (void) setEnumList: (NSArray *) enumList ;
+
+- (NSDictionary *) toDictionary;
 
 + (NSString *) convertFormatToString: (IntegerRequestParamSpecFormat) format;
 

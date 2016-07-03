@@ -55,6 +55,19 @@ NSString *const BooleanRequestParamSpecJsonValFalse = @"false";
     return NO;
 }
 
+#pragma mark - DConnectRequestParamSpecDelegate Implement
+
+- (NSDictionary *) toDictionary {
+   
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    
+    dict[DConnectRequestParamSpecJsonKeyName] = self.name;
+    dict[DConnectRequestParamSpecJsonKeyType] = [DConnectRequestParamSpec convertTypeToString: self.type];
+    dict[DConnectRequestParamSpecJsonKeyMandatory] = [NSNumber numberWithBool: self.isMandatory];
+    
+    return dict;
+}
+
 #pragma mark - BooleanRequestParamSpec Getter Method
 
 - (NSString *) name {

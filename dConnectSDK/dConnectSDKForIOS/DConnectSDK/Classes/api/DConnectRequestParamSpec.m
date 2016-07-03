@@ -81,11 +81,12 @@ NSString *const TYPE_BOOLEAN = @"BOOLEAN";
     return NO;
 }
 
+/*
 // toBundle()相当
 - (NSDictionary *) toDictionary {
     return nil; // TODO
 }
-
+*/
 
 
 + (NSString *) convertBoolToString: (BOOL) boolValue {

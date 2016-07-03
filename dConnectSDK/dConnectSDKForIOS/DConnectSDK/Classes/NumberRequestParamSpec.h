@@ -22,7 +22,9 @@ typedef enum {
 } NumberRequestParamSpecFormat;
 
 
-@interface NumberRequestParamSpec : DConnectRequestParamSpec
+@interface NumberRequestParamSpec : DConnectRequestParamSpec<DConnectRequestParamSpecDelegate>
+
+- (instancetype)init;
 
 - (instancetype)initWithFormat:(NumberRequestParamSpecFormat) format;
 

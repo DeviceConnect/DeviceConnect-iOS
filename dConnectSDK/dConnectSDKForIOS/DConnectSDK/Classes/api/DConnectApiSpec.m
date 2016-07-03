@@ -112,14 +112,20 @@ NSString * const DConnectApiSpecJsonKeyRequestParams = @"requestParams";
     
     // JSON出力用Dictionaryを作成して返す
     @try {
-        NSString *strMethod = [DConnectApiSpec convertMethodToString: self.mMethod];
-        NSString *strType = [DConnectApiSpec convertTypeToString: self.mType];
         NSMutableDictionary *dic = [NSMutableDictionary dictionary];
-        [dic setObject: self.mName forKey: DConnectApiSpecJsonKeyName];
-        [dic setObject: strMethod forKey: DConnectApiSpecJsonKeyType];
-        [dic setObject: strType forKey: DConnectApiSpecJsonKeyMethod];
-        [dic setObject: self.mPath forKey: DConnectApiSpecJsonKeyPath];
-        [dic setObject: self.mRequestParamSpecList forKey: DConnectApiSpecJsonKeyRequestParams];
+        dic[DConnectApiSpecJsonKeyName] = self.mName;
+        dic[DConnectApiSpecJsonKeyType] = [DConnectApiSpec convertTypeToString: self.mType];
+        dic[DConnectApiSpecJsonKeyMethod] = [DConnectApiSpec convertMethodToString: self.mMethod];
+        dic[DConnectApiSpecJsonKeyPath] = self.mPath;
+        
+        NSMutableArray *requestParamSpecJsonArray = [NSMutableArray array];
+        for (id<DConnectRequestParamSpecDelegate> delegate in self.mRequestParamSpecList) {
+            [requestParamSpecJsonArray addObject:[delegate toDictionary]];
+        }
+        
+        
+        dic[DConnectApiSpecJsonKeyRequestParams] = requestParamSpecJsonArray;
+        
         return dic;
     }
     @catch (NSException *e) {

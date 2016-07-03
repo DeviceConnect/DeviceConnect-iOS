@@ -16,7 +16,7 @@ extern NSString *const BooleanRequestParamSpecJsonKeyIsMandatory;
 extern NSString *const BooleanRequestParamSpecJsonValTrue;
 extern NSString *const BooleanRequestParamSpecJsonValFalse;
 
-@interface BooleanRequestParamSpec : DConnectRequestParamSpec
+@interface BooleanRequestParamSpec : DConnectRequestParamSpec<DConnectRequestParamSpecDelegate>
 
 - (instancetype)init;
 
@@ -30,6 +30,7 @@ extern NSString *const BooleanRequestParamSpecJsonValFalse;
 
 - (void) setIsMandatory: (BOOL) isMandatory ;
 
+- (NSDictionary *) toDictionary;
 
 
 @end

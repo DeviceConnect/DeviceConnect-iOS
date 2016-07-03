@@ -13,7 +13,7 @@ NSString *const StringRequestParamSpecJsonKeyFormat = @"format";
 NSString *const StringRequestParamSpecJsonKeyMaxLength = @"maxLength";
 NSString *const StringRequestParamSpecJsonKeyMinLength = @"minLength";
 NSString *const StringRequestParamSpecJsonKeyEnum = @"enum";
-NSString *const StringRequestParamSpecJsonKeyValue = @"value";
+//NSString *const StringRequestParamSpecJsonKeyValue = @"value";
 
 static NSString *const STRING_FORMAT_TEXT = @"text";
 static NSString *const STRING_FORMAT_BYTE = @"byte";
@@ -33,8 +33,21 @@ static NSString *const STRING_FORMAT_DATE = @"date";
 
 @implementation StringRequestParamSpec
 
-- (instancetype)initWitFormat: (StringRequestParamSpecFormat) format {
+- (instancetype)init {
 
+    self = [super initWithType: STRING];
+    if (self) {
+        // 初期値設定
+        self.mFormat = TEXT;
+        self.mMaxLength = nil;
+        self.mMinLength = nil;
+        self.mEnumList = nil;
+    }
+    return self;
+}
+
+- (instancetype)initWitFormat: (StringRequestParamSpecFormat) format {
+    
     self = [super initWithType: STRING];
     if (self) {
         // 初期値設定
@@ -72,8 +85,27 @@ static NSString *const STRING_FORMAT_DATE = @"date";
     return NO;
 }
 
-          
-          
+
+
+#pragma mark - DConnectRequestParamSpecDelegate Implement
+
+- (NSDictionary *) toDictionary {
+    
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    
+    dict[DConnectRequestParamSpecJsonKeyName] = self.name;
+    dict[DConnectRequestParamSpecJsonKeyType] = [DConnectRequestParamSpec convertTypeToString: self.type];
+    dict[DConnectRequestParamSpecJsonKeyMandatory] = [NSNumber numberWithBool: self.isMandatory];
+    
+    dict[StringRequestParamSpecJsonKeyFormat] = [StringRequestParamSpec convertFormatToString: self.mFormat];
+    dict[StringRequestParamSpecJsonKeyMaxLength] = self.mMaxLength;
+    dict[StringRequestParamSpecJsonKeyMinLength] = self.mMinLength;
+    dict[StringRequestParamSpecJsonKeyEnum] = self.enumList;
+    
+    return dict;
+}
+
+
 #pragma mark - StringRequestParamSpec Getter Method
 
 - (StringRequestParamSpecFormat) format {
