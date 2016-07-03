@@ -17,10 +17,10 @@
     NSString *name = [json objectForKey: DConnectRequestParamSpecJsonKeyName];
     NSNumber *numMandatory = [json objectForKey: DConnectRequestParamSpecJsonKeyMandatory];
     NSString *strFormat = [json objectForKey: NumberRequestParamSpecJsonKeyFormat];
-    NSString *strMaxValue = [json objectForKey: NumberRequestParamSpecJsonKeyMaxValue];
-    NSString *strMinValue = [json objectForKey: NumberRequestParamSpecJsonKeyMinValue];
-    NSString *strExclusiveMaxValue = [json objectForKey: NumberRequestParamSpecJsonKeyExclusiveMaxValue];
-    NSString *strExclusiveMinValue = [json objectForKey: NumberRequestParamSpecJsonKeyExclusiveMinValue];
+    NSNumber *numMaxValue = [json objectForKey: NumberRequestParamSpecJsonKeyMaxValue];
+    NSNumber *numMinValue = [json objectForKey: NumberRequestParamSpecJsonKeyMinValue];
+    NSNumber *numExclusiveMaxValue = [json objectForKey: NumberRequestParamSpecJsonKeyExclusiveMaxValue];
+    NSNumber *numExclusiveMinValue = [json objectForKey: NumberRequestParamSpecJsonKeyExclusiveMinValue];
     
     
     NumberRequestParamSpecBuilder *builder = [[NumberRequestParamSpecBuilder alloc] init];
@@ -51,40 +51,35 @@
     [builder format: format];
     
     // maxValue
-    if (strMaxValue) {
-        if ([DConnectRequestParamSpec isNumber: strMaxValue]) {
-            [builder maxValue: [strMaxValue doubleValue]];
-        } else {
-            // 不正値なら例外スロー(JSONException相当)
-            @throw [NSString stringWithFormat: @"maxValue is invalid : %@", strMaxValue];
+    if (numMaxValue) {
+        if (![numMaxValue isKindOfClass: [NSNumber class]]) {
+            @throw @"maxValue not number";
         }
+        [builder maxValue: [numMaxValue doubleValue]];
     }
 
     // minValue
-    if (strMinValue) {
-        if ([DConnectRequestParamSpec isNumber: strMinValue]) {
-            [builder minValue: [strMinValue doubleValue]];
-        } else {
-            // 不正値なら例外スロー(JSONException相当)
-            @throw [NSString stringWithFormat: @"minValue is invalid : %@", strMinValue];
+    if (numMinValue) {
+        if (![numMinValue isKindOfClass: [NSNumber class]]) {
+            @throw @"minValue not number";
         }
+        [builder minValue: [numMinValue doubleValue]];
     }
     
-    if (strExclusiveMaxValue) {
-        if ([DConnectRequestParamSpec isNumber: strExclusiveMaxValue]) {
-            [builder exclusiveMaxValue: [strExclusiveMaxValue doubleValue]];
-        } else {
-            // 不正値なら例外スロー(JSONException相当)
-            @throw [NSString stringWithFormat: @"exclusiveMaxValue is invalid : %@", strExclusiveMaxValue];
+    // exclusiveMaxValue
+    if (numExclusiveMaxValue) {
+        if (![numMaxValue isKindOfClass: [NSNumber class]]) {
+            @throw @"exclusiveMaxValue not number";
         }
+        [builder exclusiveMaxValue: [numExclusiveMaxValue doubleValue]];
     }
-    if (strExclusiveMinValue) {
-        if ([DConnectRequestParamSpec isNumber: strExclusiveMinValue]) {
-            [builder exclusiveMinValue: [strExclusiveMinValue doubleValue]];
-        } else {
-            // 不正値なら例外スロー(JSONException相当)
-            @throw [NSString stringWithFormat: @"exclusiveMinValue is invalid : %@", strExclusiveMinValue];
+    
+    // exclusiveMinValue
+    if (numExclusiveMinValue) {
+        if (![numExclusiveMinValue isKindOfClass: [NSNumber class]]) {
+            @throw @"exclusiveMinValue not number";
         }
+        [builder exclusiveMinValue: [numExclusiveMinValue doubleValue]];
     }
     
     return [builder build];
