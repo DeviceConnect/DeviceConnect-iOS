@@ -119,14 +119,6 @@ NSString * const DConnectApiSpecJsonKeyRequestParams = @"requestParams";
         [dic setObject: strMethod forKey: DConnectApiSpecJsonKeyType];
         [dic setObject: strType forKey: DConnectApiSpecJsonKeyMethod];
         [dic setObject: self.mPath forKey: DConnectApiSpecJsonKeyPath];
-        
-        NSMutableArray *requestParamSpecJsonList = [NSMutableArray array]:
-        for ( self.mRequestParamSpecList) {
-            <#statements#>
-        }
-        
-        
-        
         [dic setObject: self.mRequestParamSpecList forKey: DConnectApiSpecJsonKeyRequestParams];
         return dic;
     }
