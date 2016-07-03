@@ -125,7 +125,7 @@ static NSString *const STRING_FORMAT_INT64 = @"int64";
 #pragma mark - IntegerRequestParamSpec Private Method
 
 - (BOOL)validateInt32: (id) param {
-    if ([param isMemberOfClass: [NSString class]]) {
+    if ([param isKindOfClass: [NSString class]]) {
         NSString *strParam = (NSString *)param;
         if ([DConnectRequestParamSpec isDigit: strParam]) {
             long long l = [strParam longLongValue];
@@ -140,7 +140,7 @@ static NSString *const STRING_FORMAT_INT64 = @"int64";
 }
 
 - (BOOL) validateInt64: (id) param {
-    if ([param isMemberOfClass: [NSString class]]) {
+    if ([param isKindOfClass: [NSString class]]) {
         NSString *strParam = (NSString *)param;
         if ([DConnectRequestParamSpec  isDigit: strParam]) {
             long long l = [strParam longLongValue];

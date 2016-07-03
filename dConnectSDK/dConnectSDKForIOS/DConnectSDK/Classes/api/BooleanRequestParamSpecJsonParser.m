@@ -16,24 +16,29 @@
 + (BooleanRequestParamSpec *) fromJson : (NSDictionary *)jsonObj {
     
     NSString *name = [jsonObj objectForKey:BooleanRequestParamSpecJsonKeyName];
-    NSString *strIsMandatory = [jsonObj objectForKey:BooleanRequestParamSpecJsonKeyIsMandatory];
-    if (name == nil || strIsMandatory == nil) {
-        return nil;
-    }
-    
-    BOOL isMandatory;
-    if ([strIsMandatory localizedCaseInsensitiveCompare:BooleanRequestParamSpecJsonValTrue] == NSOrderedSame) {
-        isMandatory = TRUE;
-    } else if ([strIsMandatory localizedCaseInsensitiveCompare: BooleanRequestParamSpecJsonValFalse] == NSOrderedSame) {
-        isMandatory = FALSE;
-    } else {
-        return nil;
-    }
+    NSNumber *numMandatory = [jsonObj objectForKey:BooleanRequestParamSpecJsonKeyIsMandatory];
     
     BooleanRequestParamSpecBuilder *builder = [[BooleanRequestParamSpecBuilder alloc] init];
     
-    BooleanRequestParamSpec *paramSpec = [[[builder name: name] isMandatory: isMandatory] build];
-    return paramSpec;
+    // name
+    if (!name) {
+        @throw @"name not found";
+    }
+    if (![name isKindOfClass: [NSString class]]) {
+        @throw @"name not string";
+    }
+    [builder name: name];
+    
+    // isMandatory
+    if (numMandatory) {
+        if (![numMandatory isKindOfClass: [NSNumber class]]) {
+            @throw @"mandatory not bool";
+        }
+    }
+    [builder isMandatory: [numMandatory boolValue]];
+    
+    // buildしてJSONを返す
+    return [builder build];
 }
 
 @end

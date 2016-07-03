@@ -54,7 +54,7 @@ static NSString *const STRING_FORMAT_DATE = @"date";
     if (obj == nil) {
         return YES;
     }
-    if (![obj isMemberOfClass: [NSString class]]) {
+    if (![obj isKindOfClass: [NSString class]]) {
         return NO;
     }
     NSString *param = (NSString *) obj;

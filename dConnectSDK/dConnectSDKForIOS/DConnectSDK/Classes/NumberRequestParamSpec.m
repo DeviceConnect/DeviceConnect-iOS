@@ -112,7 +112,7 @@ static NSString *const NUMBER_FORMAT_DOUBLE = @"double";
 #pragma mark - NumberRequestParamSpec Private Method
 
 - (BOOL)validateDouble: (id) param {
-    if ([param isMemberOfClass: [NSString class]]) {
+    if ([param isKindOfClass: [NSString class]]) {
         NSString *strParam = (NSString *)param;
         if ([self isDouble: strParam]) {
             double d = [strParam doubleValue];

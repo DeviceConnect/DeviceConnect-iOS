@@ -35,7 +35,7 @@ NSString *const BooleanRequestParamSpecJsonValFalse = @"false";
         return YES;
     }
     // Stringの"TRUE","FALSE"ならYESを返す
-    if ([obj isMemberOfClass: [NSString class]]) {
+    if ([obj isKindOfClass: [NSString class]]) {
         NSString *str = (NSString *) obj;
         if (str) {
             if ([str localizedCaseInsensitiveCompare: BooleanRequestParamSpecJsonValTrue] == NSOrderedSame ||
@@ -46,7 +46,7 @@ NSString *const BooleanRequestParamSpecJsonValFalse = @"false";
         return NO;
     }
     // NSNumberのBOOL値のTRUE,FALSEならYESを返す
-    if ([obj isMemberOfClass: [NSNumber class]]) {
+    if ([obj isKindOfClass: [NSNumber class]]) {
         NSNumber *num = (NSNumber *)obj;
         if ([num boolValue] == TRUE || [num boolValue] == FALSE) {
             return YES;

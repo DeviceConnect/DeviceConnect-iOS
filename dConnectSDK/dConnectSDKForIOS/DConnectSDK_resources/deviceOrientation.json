@@ -1,27 +1,22 @@
 [
   {
-  "name": "Vibration Start API",
-  "type": "one-shot",
+  "name": "DeviceOrientation Event API",
+  "type": "event",
   "method": "PUT",
-  "path": "/gotapi/vibration/vibrate",
+  "path": "/gotapi/deviceOrientation/onDeviceOrientation",
   "requestParams": [
                     {
                     "name": "serviceId",
                     "type": "string",
                     "mandatory": true
-                    },
-                    {
-                    "name": "pattern",
-                    "type": "string",
-                    "mandatory": false
                     }
                     ]
   },
   {
-  "name": "Vibration Stop API",
-  "type": "one-shot",
+  "name": "DeviceOrientation Event API",
+  "type": "event",
   "method": "DELETE",
-  "path": "/gotapi/vibration/vibrate",
+  "path": "/gotapi/deviceOrientation/onDeviceOrientation",
   "requestParams": [
                     {
                     "name": "serviceId",

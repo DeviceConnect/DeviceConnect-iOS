@@ -98,19 +98,6 @@ NSString *const TYPE_BOOLEAN = @"BOOLEAN";
     @throw [NSString stringWithFormat: @"bool is invalid : boolValue: %d", (int)boolValue];
 }
 
-+ (BOOL)parseBool: (NSString *)strBool {
-    
-    NSString *strBoolLow = [strBool lowercaseString];
-    
-    if ([strBoolLow isEqualToString: [BOOL_TRUE lowercaseString]]) {
-        return YES;
-    }
-    if ([strBoolLow isEqualToString: [BOOL_FALSE lowercaseString]]) {
-        return NO;
-    }
-    @throw [NSString stringWithFormat: @"bool is invalid : %@", strBool];
-}
-
 
 
 // enum Type#getName()相当

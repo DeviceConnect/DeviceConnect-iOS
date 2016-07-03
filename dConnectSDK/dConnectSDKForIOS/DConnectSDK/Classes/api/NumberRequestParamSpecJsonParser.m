@@ -15,26 +15,42 @@
 + (NumberRequestParamSpec *)fromJson: (NSDictionary *) json {
     
     NSString *name = [json objectForKey: DConnectRequestParamSpecJsonKeyName];
-    NSString *strMandatory = [json objectForKey: DConnectRequestParamSpecJsonKeyMandatory];
+    NSNumber *numMandatory = [json objectForKey: DConnectRequestParamSpecJsonKeyMandatory];
     NSString *strFormat = [json objectForKey: NumberRequestParamSpecJsonKeyFormat];
     NSString *strMaxValue = [json objectForKey: NumberRequestParamSpecJsonKeyMaxValue];
     NSString *strMinValue = [json objectForKey: NumberRequestParamSpecJsonKeyMinValue];
     NSString *strExclusiveMaxValue = [json objectForKey: NumberRequestParamSpecJsonKeyExclusiveMaxValue];
     NSString *strExclusiveMinValue = [json objectForKey: NumberRequestParamSpecJsonKeyExclusiveMinValue];
     
-    // 不正値なら例外スロー(JSONException相当)
-    BOOL isMandatory = [DConnectRequestParamSpec parseBool:strMandatory];
     
+    NumberRequestParamSpecBuilder *builder = [[NumberRequestParamSpecBuilder alloc] init];
+    
+    // name
+    if (!name) {
+        @throw @"name not found";
+    }
+    if (![name isKindOfClass: [NSString class]]) {
+        @throw @"name not string";
+    }
+    [builder name: name];
+    
+    // isMandatory
+    if (numMandatory) {
+        if (![numMandatory isKindOfClass: [NSNumber class]]) {
+            @throw @"mandatory not bool";
+        }
+    }
+    [builder isMandatory: [numMandatory boolValue]];
+    
+    // format
     NumberRequestParamSpecFormat format = FLOAT;
     if (strFormat) {
         // 不正値なら例外スロー(JSONException相当)
         format = [NumberRequestParamSpec parseFormat: strFormat];
     }
+    [builder format: format];
     
-    NumberRequestParamSpecBuilder *builder = [[NumberRequestParamSpecBuilder alloc] init];
-    [builder name: name];
-    [builder isMandatory: isMandatory];
-    
+    // maxValue
     if (strMaxValue) {
         if ([DConnectRequestParamSpec isNumber: strMaxValue]) {
             [builder maxValue: [strMaxValue doubleValue]];
@@ -43,6 +59,8 @@
             @throw [NSString stringWithFormat: @"maxValue is invalid : %@", strMaxValue];
         }
     }
+
+    // minValue
     if (strMinValue) {
         if ([DConnectRequestParamSpec isNumber: strMinValue]) {
             [builder minValue: [strMinValue doubleValue]];

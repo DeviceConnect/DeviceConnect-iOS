@@ -21,6 +21,7 @@ typedef enum {
     BOOLEAN
 } DConnectRequestParamSpecType;
 
+
 @interface  DConnectRequestParamSpec : NSObject
 
 - (instancetype)initWithType: (DConnectRequestParamSpecType)type;
@@ -33,7 +34,6 @@ typedef enum {
 - (NSDictionary *) toDictionary;
 
 + (NSString *) convertBoolToString: (BOOL) boolValue;
-+ (BOOL)parseBool: (NSString *)strBool;
 + (NSString *) convertTypeToString: (DConnectRequestParamSpecType) type;
 + (DConnectRequestParamSpecType)parseType: (NSString *)strType;
 + (BOOL)isDigit:(NSString *)text;

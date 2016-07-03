@@ -15,27 +15,43 @@
 + (IntegerRequestParamSpec *)fromJson: (NSDictionary *) json {
     
     NSString *name = [json objectForKey: DConnectRequestParamSpecJsonKeyName];
-    NSString *strMandatory = [json objectForKey: DConnectRequestParamSpecJsonKeyMandatory];
+    NSNumber *numMandatory = [json objectForKey: DConnectRequestParamSpecJsonKeyMandatory];
     NSString *strFormat = [json objectForKey: IntegerRequestParamSpecJsonKeyFormat];
     NSString *strMaxValue = [json objectForKey: IntegerRequestParamSpecJsonKeyMaxValue];
     NSString *strMinValue = [json objectForKey: IntegerRequestParamSpecJsonKeyMinValue];
     NSString *strExclusiveMaxValue = [json objectForKey: IntegerRequestParamSpecJsonKeyExclusiveMaxValue];
     NSString *strExclusiveMinValue = [json objectForKey: IntegerRequestParamSpecJsonKeyExclusiveMinValue];
-    NSString *strEnumJson = [json objectForKey: IntegerRequestParamSpecJsonKeyEnum];
+    NSArray *enumArray = [json objectForKey: IntegerRequestParamSpecJsonKeyEnum];
     
-    // 不正値なら例外スロー(JSONException相当)
-    BOOL isMandatory = [DConnectRequestParamSpec parseBool:strMandatory];
     
+    IntegerRequestParamSpecBuilder *builder = [[IntegerRequestParamSpecBuilder alloc] init];
+    
+    // name
+    if (!name) {
+        @throw @"name not found";
+    }
+    if (![name isKindOfClass: [NSString class]]) {
+        @throw [NSString stringWithFormat: @"name not string : %@", [[name class] description]];
+    }
+    [builder name: name];
+    
+    // isMandatory
+    if (numMandatory) {
+        if (![numMandatory isKindOfClass: [NSNumber class]]) {
+            @throw @"mandatory not bool";
+        }
+    }
+    [builder isMandatory: [numMandatory boolValue]];
+    
+    // format
     IntegerRequestParamSpecFormat format = INT32;
     if (strFormat) {
         // 不正値なら例外スロー(JSONException相当)
         format = [IntegerRequestParamSpec parseFormat: strFormat];
     }
-    
-    IntegerRequestParamSpecBuilder *builder = [[IntegerRequestParamSpecBuilder alloc] init];
-    [builder name: name];
-    [builder isMandatory: isMandatory];
-    
+    [builder format: format];
+
+    // maxValue
     if (strMaxValue) {
         if ([DConnectRequestParamSpec isDigit: strMaxValue]) {
             if ((format == INT32 && INT_MIN <= [strMaxValue longLongValue] && [strMaxValue longLongValue] <= INT_MAX) ||
@@ -50,6 +66,8 @@
             @throw [NSString stringWithFormat: @"maxValue is invalid : %@", strMaxValue];
         }
     }
+    
+    // minValue
     if (strMinValue) {
         if ([DConnectRequestParamSpec isDigit: strMinValue]) {
             if ((format == INT32 && INT_MIN <= [strMinValue longLongValue] && [strMinValue longLongValue] <= INT_MAX) ||
@@ -65,6 +83,7 @@
         }
     }
     
+    // exclusiveMaxValue
     if (strExclusiveMaxValue) {
         if ([DConnectRequestParamSpec isDigit: strExclusiveMaxValue]) {
             if ((format == INT32 && INT_MIN <= [strExclusiveMaxValue longLongValue] && [strExclusiveMaxValue longLongValue] <= INT_MAX) ||
@@ -79,6 +98,8 @@
             @throw [NSString stringWithFormat: @"exclusiveMaxValue is invalid : %@", strExclusiveMaxValue];
         }
     }
+    
+    // exclusiveMinValue
     if (strExclusiveMinValue) {
         if ([DConnectRequestParamSpec isDigit: strExclusiveMinValue]) {
             if ((format == INT32 && INT_MIN <= [strExclusiveMinValue longLongValue] && [strExclusiveMinValue longLongValue] <= INT_MAX) ||
@@ -94,26 +115,24 @@
         }
     }
     
-    if (strEnumJson) {
+    // enum
+    if (enumArray) {
+        /***/
+        NSLog(@"enum count: %d", (int)[enumArray count]);
+        
+        
+        /***/
+        
+        
+        if (![enumArray isKindOfClass: [NSArray class]]) {
+            @throw @"enum not array";
+        }
         
         // JSON文字列をNSDataに変換
-        NSData *enumJsonData = [strEnumJson dataUsingEncoding:NSUnicodeStringEncoding];
-        
-        // JSON を NSArray に変換する
-        NSError *error;
-        id enumArray = [NSJSONSerialization JSONObjectWithData:enumJsonData
-                                                       options:NSJSONReadingAllowFragments
-                                                         error:&error];
-        if (error != nil) {
-            // 不正値なら例外スロー(JSONException相当)
-            @throw [NSString stringWithFormat: @"JSON parse error: %@", error];
-        }
-        
-        if ([enumArray isMemberOfClass: [NSArray class]]) {
-            [builder enumList: (NSArray *)enumArray];
-        }
+        [builder enumList: enumArray];
     }
     
+    // buildしてJSONを返す
     return [builder build];
 }
 

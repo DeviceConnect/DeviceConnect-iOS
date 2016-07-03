@@ -28,14 +28,14 @@
     if (!name) {
         @throw @"name not found";
     }
-    if (![name isMemberOfClass: [NSString class]]) {
+    if (![name isKindOfClass: [NSString class]]) {
         @throw @"name not string";
     }
     [builder name: name];
     
     // isMandatory
     if (numMandatory) {
-        if (![numMandatory isMemberOfClass: [NSNumber class]]) {
+        if (![numMandatory isKindOfClass: [NSNumber class]]) {
             @throw @"mandatory not bool";
         }
     }
@@ -73,7 +73,7 @@
     
     // enumJson
     if (enumArray) {
-        if (![enumArray isMemberOfClass: [NSArray class]]) {
+        if (![enumArray isKindOfClass: [NSArray class]]) {
             @throw @"enum not array";
         }
         [builder enumList: (NSArray *)enumArray];
