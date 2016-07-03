@@ -25,32 +25,32 @@ NSString * const DConnectApiSpecJsonKeyRequestParams = @"requestParams";
 
 @interface DConnectApiSpec()
 
-@property NSString *name;
+@property NSString *mName;
 
-@property DConnectApiSpecType type;
+@property DConnectApiSpecType mType;
 
-@property DConnectApiSpecMethod method;
+@property DConnectApiSpecMethod mMethod;
 
-@property NSString *path;
+@property NSString *mPath;
 
 // DConnectRequestParamSpecの配列
-@property NSArray *requestParamSpecList;
+@property NSArray *mRequestParamSpecList;
 
 @end
 
 @implementation DConnectApiSpec
 
 // 初期化
-- (id) init {
+- (instancetype) init {
     self = [super init];
     if (self) {
         
         // 初期値設定
-        self.name = @"";
-        self.type = ONESHOT;
-        self.method = GET;
-        self.path = @"";
-        self.requestParamSpecList = [NSArray array];
+        self.mName = nil;
+        self.mType = ONESHOT;
+        self.mMethod = GET;
+        self.mPath = nil;
+        self.mRequestParamSpecList = [NSArray array];
     }
     return self;
 }
@@ -58,23 +58,23 @@ NSString * const DConnectApiSpecJsonKeyRequestParams = @"requestParams";
 #pragma mark - DConnectApiSpec Getter Method
 
 - (NSString *) name {
-    return self.name;
+    return self.mName;
 }
 
 - (DConnectApiSpecType) type {
-    return self.type;
+    return self.mType;
 }
 
 - (DConnectApiSpecMethod) method {
-    return self.method;
+    return self.mMethod;
 }
 
 - (NSString *) path {
-    return self.path;
+    return self.mPath;
 }
 
 - (NSArray *) requestParamSpecList {
-    return self.requestParamSpecList;
+    return self.mRequestParamSpecList;
 }
 
 
@@ -82,23 +82,23 @@ NSString * const DConnectApiSpecJsonKeyRequestParams = @"requestParams";
 #pragma mark - DConnectApiSpec Setter Method
 
 - (void) setName: (NSString *)name {
-    self.name = name;
+    self.mName = name;
 }
 
 - (void) setType: (DConnectApiSpecType) type {
-    self.type = type;
+    self.mType = type;
 }
 
 - (void) setMethod: (DConnectApiSpecMethod) method {
-    self.method = method;
+    self.mMethod = method;
 }
 
 - (void) setPath: (NSString *)path {
-    self.path = path;
+    self.mPath = path;
 }
 
 - (void)setRequestParamSpecList: (NSArray *)requestParamSpecList {
-    self.requestParamSpecList = requestParamSpecList;
+    self.mRequestParamSpecList = requestParamSpecList;
 }
 
 
@@ -112,14 +112,22 @@ NSString * const DConnectApiSpecJsonKeyRequestParams = @"requestParams";
     
     // JSON出力用Dictionaryを作成して返す
     @try {
-        NSString *strMethod = [DConnectApiSpec convertMethodToString: self.method];
-        NSString *strType = [DConnectApiSpec convertTypeToString: self.type];
+        NSString *strMethod = [DConnectApiSpec convertMethodToString: self.mMethod];
+        NSString *strType = [DConnectApiSpec convertTypeToString: self.mType];
         NSMutableDictionary *dic = [NSMutableDictionary dictionary];
-        [dic setObject: self.name forKey: DConnectApiSpecJsonKeyName];
+        [dic setObject: self.mName forKey: DConnectApiSpecJsonKeyName];
         [dic setObject: strMethod forKey: DConnectApiSpecJsonKeyType];
         [dic setObject: strType forKey: DConnectApiSpecJsonKeyMethod];
-        [dic setObject: self.path forKey: DConnectApiSpecJsonKeyPath];
-        [dic setObject: self.requestParamSpecList forKey: DConnectApiSpecJsonKeyRequestParams];
+        [dic setObject: self.mPath forKey: DConnectApiSpecJsonKeyPath];
+        
+        NSMutableArray *requestParamSpecJsonList = [NSMutableArray array]:
+        for ( self.mRequestParamSpecList) {
+            <#statements#>
+        }
+        
+        
+        
+        [dic setObject: self.mRequestParamSpecList forKey: DConnectApiSpecJsonKeyRequestParams];
         return dic;
     }
     @catch (NSException *e) {
@@ -127,6 +135,16 @@ NSString * const DConnectApiSpecJsonKeyRequestParams = @"requestParams";
     }
 }
 
+- (NSString *) toJson {
+    
+    NSDictionary *jsonDict = [self toDictionary];
+    
+    NSError*error = nil;
+    NSData*data = [NSJSONSerialization dataWithJSONObject:jsonDict options:2 error:&error];
+    NSString *strJson = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+    NSLog(@"DConnectApiSpec # toJson: %@", strJson);
+    return strJson;
+}
 
 
 
@@ -139,7 +157,7 @@ NSString * const DConnectApiSpecJsonKeyRequestParams = @"requestParams";
 
 + (DConnectApiSpecMethod) parseMethod: (NSString *)string {
     if (string == nil) {
-        @throw [NSString stringWithFormat: @"method is invalid : nil"];
+        @throw [NSString stringWithFormat: @"apiSpecMethod is invalid : nil"];
     }
     if ([[string lowercaseString] isEqualToString: [DConnectApiSpecMethodGet lowercaseString]]) {
         return GET;
@@ -153,12 +171,12 @@ NSString * const DConnectApiSpecJsonKeyRequestParams = @"requestParams";
     if ([[string lowercaseString] isEqualToString: [DConnectApiSpecMethodDelete lowercaseString]]) {
         return DELETE;
     }
-    @throw [NSString stringWithFormat: @"method is invalid : %@", string];
+    @throw [NSString stringWithFormat: @"apiSpecMethod is invalid : %@", string];
 }
 
 + (DConnectApiSpecType) parseType: (NSString *)string {
     if (string == nil) {
-        @throw [NSString stringWithFormat: @"type is invalid : nil"];
+        @throw [NSString stringWithFormat: @"apiSpectype is invalid : nil"];
     }
     if ([[string lowercaseString] isEqualToString: [DConnectApiSpecTypeOneShot lowercaseString]]) {
         return ONESHOT;
@@ -166,7 +184,7 @@ NSString * const DConnectApiSpecJsonKeyRequestParams = @"requestParams";
     if ([[string lowercaseString] isEqualToString: [DConnectApiSpecTypeEvent lowercaseString]]) {
         return EVENT;
     }
-    @throw [NSString stringWithFormat: @"type is invalid: %@", string];
+    @throw [NSString stringWithFormat: @"apiSpectype is invalid: %@", string];
 }
 
 + (NSString *) convertMethodToString: (DConnectApiSpecMethod) enMethod {
@@ -183,7 +201,7 @@ NSString * const DConnectApiSpecJsonKeyRequestParams = @"requestParams";
     if (enMethod == DELETE) {
         return DConnectApiSpecMethodDelete;
     }
-    @throw @"unknown enum(method).";
+    @throw [NSString stringWithFormat: @"unknown ApiSpecMethod : %d", (int)enMethod];
 }
 
 + (NSString *) convertTypeToString: (DConnectApiSpecType) enType {
@@ -194,7 +212,7 @@ NSString * const DConnectApiSpecJsonKeyRequestParams = @"requestParams";
     if (enType == EVENT) {
         return DConnectApiSpecTypeEvent;
     }
-    @throw @"unknown enum(type).";
+    @throw [NSString stringWithFormat: @"unknown ApiSpecType : %d", (int)enType];
 }
 
 @end

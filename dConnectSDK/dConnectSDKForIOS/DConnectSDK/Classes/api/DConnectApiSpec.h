@@ -47,6 +47,8 @@ typedef enum {
 
 @interface DConnectApiSpec : NSObject
 
+- (instancetype) init;
+
 - (NSString *) name;
 
 - (DConnectApiSpecType) type;
@@ -59,6 +61,8 @@ typedef enum {
 
 - (NSDictionary *) toDictionary;
 
+- (NSString *) toJson;
+
 - (void) setName: (NSString *) name;
 
 - (void) setType: (DConnectApiSpecType) type;
@@ -68,10 +72,6 @@ typedef enum {
 - (void) setPath: (NSString *) path;
 
 - (void) setRequestParamSpecList: (NSArray *) requestParamSpecList;
-
-
-
-
 
 + (DConnectApiSpecMethod) parseMethod: (NSString *)string;
 

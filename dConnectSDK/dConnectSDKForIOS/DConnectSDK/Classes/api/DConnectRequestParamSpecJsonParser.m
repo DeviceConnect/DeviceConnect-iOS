@@ -38,12 +38,12 @@
                 spec = [NumberRequestParamSpecJsonParser fromJson: json];
                 break;
             default:
-                @throw [NSString stringWithFormat: @"Illegal Argument Exception type: %@", type];
+                @throw [NSString stringWithFormat: @"Unknown requestParamType: %@", type];
         }
         return spec;
     }
-    @catch (NSException *e) {
-        return nil;
+    @catch (NSString *e) {
+        @throw e;
     }
 }
 

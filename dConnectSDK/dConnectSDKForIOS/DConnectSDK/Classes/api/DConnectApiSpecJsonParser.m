@@ -33,14 +33,21 @@
         // 認識できない文字列を渡したら例外をスローする
         DConnectApiSpecType type = [DConnectApiSpec parseType: typeStr];
         
-        //
         NSMutableArray *paramList = [NSMutableArray array]; // DConnectRequestParamSpecの配列
         NSArray *requestParams = [apiObj objectForKey: DConnectApiSpecJsonKeyRequestParams]; // NSDictionaryの配列
         if (requestParams != nil) {
             for (int k = 0; k < [requestParams count]; k ++) {
                 NSDictionary *paramObj = [requestParams objectAtIndex: k];
-                DConnectRequestParamSpec *paramSpec = [DConnectRequestParamSpecJsonParser fromJson: paramObj];
-                [paramList addObject: paramSpec];
+                @try {
+                    DConnectRequestParamSpec *paramSpec = [DConnectRequestParamSpecJsonParser fromJson: paramObj];
+                    if (paramSpec != nil) {
+                        [paramList addObject: paramSpec];
+                    }
+                }
+                @catch (NSString *e) {
+                    NSLog(@"%@", e);
+                    DCLogE(e);
+                }
             }
         }
         DConnectApiSpecBuilder *builder = [[DConnectApiSpecBuilder alloc] init];

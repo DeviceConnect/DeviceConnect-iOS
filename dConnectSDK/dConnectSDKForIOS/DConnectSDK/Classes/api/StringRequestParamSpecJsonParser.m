@@ -15,25 +15,41 @@
 + (StringRequestParamSpec *)fromJson: (NSDictionary *) json {
     
     NSString *name = [json objectForKey: DConnectRequestParamSpecJsonKeyName];
-    NSString *strMandatory = [json objectForKey: DConnectRequestParamSpecJsonKeyMandatory];
+    NSNumber *numMandatory = [json objectForKey: DConnectRequestParamSpecJsonKeyMandatory];
     NSString *strFormat = [json objectForKey: StringRequestParamSpecJsonKeyFormat];
     NSString *strMaxLength = [json objectForKey: StringRequestParamSpecJsonKeyMaxLength];
     NSString *strMinLength = [json objectForKey: StringRequestParamSpecJsonKeyMinLength];
-    NSString *strEnumJson = [json objectForKey: StringRequestParamSpecJsonKeyEnum];
+    NSArray *enumArray = [json objectForKey: StringRequestParamSpecJsonKeyEnum];
     
-    // 不正値なら例外スロー(JSONException相当)
-    BOOL isMandatory = [DConnectRequestParamSpec parseBool:strMandatory];
     
+    StringRequestParamSpecBuilder *builder = [[StringRequestParamSpecBuilder alloc] init];
+    
+    // name
+    if (!name) {
+        @throw @"name not found";
+    }
+    if (![name isMemberOfClass: [NSString class]]) {
+        @throw @"name not string";
+    }
+    [builder name: name];
+    
+    // isMandatory
+    if (numMandatory) {
+        if (![numMandatory isMemberOfClass: [NSNumber class]]) {
+            @throw @"mandatory not bool";
+        }
+    }
+    [builder isMandatory: [numMandatory boolValue]];
+
+    // format
     StringRequestParamSpecFormat format = TEXT;
     if (strFormat) {
         // 不正値なら例外スロー(JSONException相当)
         format = [StringRequestParamSpec parseFormat: strFormat];
     }
+    [builder format: format];
     
-    StringRequestParamSpecBuilder *builder = [[StringRequestParamSpecBuilder alloc] init];
-    [builder name: name];
-    [builder isMandatory: isMandatory];
-    
+    // maxLength
     if (strMaxLength) {
         if ([DConnectRequestParamSpec isDigit: strMaxLength]) {
             NSNumber *maxLength = [[NSNumber alloc] initWithInt: [strMaxLength intValue]];
@@ -43,6 +59,8 @@
             @throw [NSString stringWithFormat: @"maxLength is invalid : %@", strMaxLength];
         }
     }
+    
+    // minLength
     if (strMinLength) {
         if ([DConnectRequestParamSpec isDigit: strMinLength]) {
             NSNumber *minLength = [[NSNumber alloc] initWithInt: [strMinLength intValue]];
@@ -52,26 +70,16 @@
             @throw [NSString stringWithFormat: @"minLength is invalid : %@", strMinLength];
         }
     }
-    if (strEnumJson) {
-        
-        // JSON文字列をNSDataに変換
-        NSData *enumJsonData = [strEnumJson dataUsingEncoding:NSUnicodeStringEncoding];
-        
-        // JSON を NSArray に変換する
-        NSError *error;
-        id enumArray = [NSJSONSerialization JSONObjectWithData:enumJsonData
-                                                   options:NSJSONReadingAllowFragments
-                                                     error:&error];
-        if (error != nil) {
-            // 不正値なら例外スロー(JSONException相当)
-            @throw [NSString stringWithFormat: @"JSON parse error: %@", error];
+    
+    // enumJson
+    if (enumArray) {
+        if (![enumArray isMemberOfClass: [NSArray class]]) {
+            @throw @"enum not array";
         }
-        
-        if ([enumArray isMemberOfClass: [NSArray class]]) {
-            [builder enumList: (NSArray *)enumArray];
-        }
+        [builder enumList: (NSArray *)enumArray];
     }
     
+    // buildしてJSONを返す
     return [builder build];
 }
 
