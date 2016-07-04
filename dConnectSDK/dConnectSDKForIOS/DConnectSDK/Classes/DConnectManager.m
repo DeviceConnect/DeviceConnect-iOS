@@ -27,7 +27,7 @@
 #import "DConnectOriginParser.h"
 #import "LocalOAuth2Main.h"
 #import "DConnectServerProtocol.h"
-#import "api/DConnectApiSpecList.h"
+#import "profile/spec/DConnectApiSpecList.h"
 
 
 

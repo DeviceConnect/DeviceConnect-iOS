@@ -124,11 +124,13 @@
 
 - (void) loadApiSpecDebug {
     
-    NSString *jsonFilename = @"battery";
+    DConnectPluginXmlUtil
+    
+    NSString *jsonFilename = @"light";
     NSString *jsonFilePath = [self jsonFilePathWithJsonFilename: jsonFilename];
     
     @try {
-    [self addApiSpecList: jsonFilePath];
+        [self addApiSpecList: jsonFilePath];
     }
     @catch (NSString *e) {
         NSLog(@"exception: %@", e);
@@ -147,29 +149,6 @@
     return pathName;
 }
 
-
-- (void) loadApiSpecDebug_bak {
-    
-    NSString *filename = @"battery";
-    NSString *filetype = @"json";
-    
-    NSString *bundlePath = [[NSBundle mainBundle] pathForResource:@"DConnectSDK_resources" ofType:@"bundle"];
-    NSBundle *bundle = [NSBundle bundleWithPath:bundlePath];
-    
-    NSString *pathName = [bundle pathForResource:filename ofType:filetype];
-    
-    //    const GLchar *source = (GLchar *)[[NSString stringWithContentsOfFile:pathName encoding:NSUTF8StringEncoding error:nil] UTF8String];
-    
-    NSString *jsonString = [NSString stringWithContentsOfFile:pathName encoding:NSUTF8StringEncoding error:nil];
-    
-    if (!jsonString) {
-        NSLog(@"loadApiSpecDebug Failed");
-        return;
-    }
-    
-    [self loadApiSpec: jsonString];
-    
-}
 
 
 - (void) loadApiSpec: (NSString *)jsonString {
@@ -227,7 +206,7 @@
 
 - (void)debugJsonDictionary: (NSDictionary *)dic {
     
-    NSLog(@"  dic count: %d", [dic count]);
+    NSLog(@"  dic count: %d", (int)[dic count]);
     NSArray *keys = [dic allKeys];
     NSArray *vals = [dic allValues];
     for(int i=0;i<[keys count];i++){
