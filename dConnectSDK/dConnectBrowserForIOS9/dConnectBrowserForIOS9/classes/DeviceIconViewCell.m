@@ -1,20 +1,19 @@
 //
-//  BookmarkIconViewCell.m
+//  DeviceIconViewCell.m
 //  dConnectBrowserForIOS9
 //
-//  Created by Tetsuya Hirano on 2016/06/17.
+//  Created by Tetsuya Hirano on 2016/07/01.
 //  Copyright © 2016年 GClue,Inc. All rights reserved.
 //
 
-#import "BookmarkIconViewCell.h"
+#import "DeviceIconViewCell.h"
 
-@implementation BookmarkIconViewCell
-
+@implementation DeviceIconViewCell
 - (instancetype)initWithCoder:(NSCoder *)aDecoder
 {
     self = [super initWithCoder:aDecoder];
     if (self) {
-        self.viewModel = [[BookmarkIconViewModel alloc]init];
+        self.viewModel = [[DeviceIconViewModel alloc]init];
     }
     return self;
 }
@@ -25,21 +24,13 @@
     self.iconImage.clipsToBounds = YES;
 }
 
-- (void)setBookmark:(Page*)page
+- (void)setDevice:(DConnectMessage*)message
 {
     self.iconImage.image = nil;
-    self.viewModel.page = page;
-    self.titleLabel.text = self.viewModel.page.title;
-
-    __weak BookmarkIconViewCell* weakSelf = self;
-    [self.viewModel bookmarkIconImage:^(UIImage *image) {
-        weakSelf.iconImage.image = image;
-        if (image.size.height < 32) {
-            weakSelf.iconImage.contentMode = UIViewContentModeCenter;
-        } else {
-            weakSelf.iconImage.contentMode = UIViewContentModeScaleAspectFit;
-        }
-    }];
+    self.viewModel.message = message;
+    self.titleLabel.text = self.viewModel.name;
+    self.iconImage.image = [UIImage imageNamed:@"no_bookmark_icon"];
+    //TODO: プラグインのBundleから画像を取得する
 
     [self setEnabled:YES];
 }
@@ -56,10 +47,7 @@
 #pragma mark - ボタン制御
 //--------------------------------------------------------------//
 - (IBAction)didTapItem:(UIButton *)sender {
-    if (self.viewModel.page != nil) {
-        self.didIconSelected(self.viewModel.page);
-        [self.viewModel updateOpenDate];
-    }
+    self.didIconSelected(self.viewModel.message);
     self.alpha = 1.0;
 }
 
@@ -73,9 +61,9 @@
     self.alpha = 1.0;
 }
 
-
 - (void)dealloc
 {
     self.didIconSelected = nil;
 }
+
 @end

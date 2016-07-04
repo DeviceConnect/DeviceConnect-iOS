@@ -153,4 +153,6 @@ extern NSString *const DConnectApplicationWillEnterForeground;
  */
 - (void) sendResponse:(DConnectResponseMessage *)response;
 
+
+- (void)startServiceDiscoveryForCallback:(DConnectResponseBlocks)callback;
 @end

@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8E05634C1D2628A4008EBA25 /* GHDeviceUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E05634B1D2628A4008EBA25 /* GHDeviceUtil.m */; };
+		8E05634F1D263C05008EBA25 /* DeviceIconViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E05634E1D263C05008EBA25 /* DeviceIconViewCell.m */; };
+		8E0563521D263CFA008EBA25 /* DeviceIconViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0563511D263CFA008EBA25 /* DeviceIconViewModel.m */; };
+		8E0563551D2681CB008EBA25 /* DeviceMoreViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0563541D2681CB008EBA25 /* DeviceMoreViewCell.m */; };
+		8E0563591D2683DC008EBA25 /* GHDeviceListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0563581D2683DC008EBA25 /* GHDeviceListViewController.m */; };
 		8E0A4C2F1D1CC2D500827DA6 /* InitialGuide.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8E0A4C2E1D1CC2D500827DA6 /* InitialGuide.storyboard */; };
 		8E0A4C321D1CC4A500827DA6 /* InitialGuideViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0A4C311D1CC4A500827DA6 /* InitialGuideViewController.m */; };
 		8E0A4C351D1CC4BE00827DA6 /* GuideDataViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0A4C341D1CC4BE00827DA6 /* GuideDataViewController.m */; };
@@ -175,6 +180,16 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		8E05634A1D2628A4008EBA25 /* GHDeviceUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHDeviceUtil.h; sourceTree = "<group>"; };
+		8E05634B1D2628A4008EBA25 /* GHDeviceUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GHDeviceUtil.m; sourceTree = "<group>"; };
+		8E05634D1D263C05008EBA25 /* DeviceIconViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeviceIconViewCell.h; sourceTree = "<group>"; };
+		8E05634E1D263C05008EBA25 /* DeviceIconViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeviceIconViewCell.m; sourceTree = "<group>"; };
+		8E0563501D263CFA008EBA25 /* DeviceIconViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeviceIconViewModel.h; sourceTree = "<group>"; };
+		8E0563511D263CFA008EBA25 /* DeviceIconViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeviceIconViewModel.m; sourceTree = "<group>"; };
+		8E0563531D2681CB008EBA25 /* DeviceMoreViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeviceMoreViewCell.h; sourceTree = "<group>"; };
+		8E0563541D2681CB008EBA25 /* DeviceMoreViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeviceMoreViewCell.m; sourceTree = "<group>"; };
+		8E0563571D2683DC008EBA25 /* GHDeviceListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHDeviceListViewController.h; sourceTree = "<group>"; };
+		8E0563581D2683DC008EBA25 /* GHDeviceListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GHDeviceListViewController.m; sourceTree = "<group>"; };
 		8E0A4C2E1D1CC2D500827DA6 /* InitialGuide.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = InitialGuide.storyboard; path = classes/InitialGuide.storyboard; sourceTree = "<group>"; };
 		8E0A4C301D1CC4A500827DA6 /* InitialGuideViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InitialGuideViewController.h; sourceTree = "<group>"; };
 		8E0A4C311D1CC4A500827DA6 /* InitialGuideViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InitialGuideViewController.m; sourceTree = "<group>"; };
@@ -410,6 +425,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8E0563561D2683B7008EBA25 /* device */ = {
+			isa = PBXGroup;
+			children = (
+				8E0563571D2683DC008EBA25 /* GHDeviceListViewController.h */,
+				8E0563581D2683DC008EBA25 /* GHDeviceListViewController.m */,
+			);
+			name = device;
+			sourceTree = "<group>";
+		};
 		8E0A4C361D1CC87700827DA6 /* initialGuide */ = {
 			isa = PBXGroup;
 			children = (
@@ -465,6 +489,10 @@
 				8EBB89121D1385050038700B /* BookmarkIconViewCell.m */,
 				8EBB891F1D13CA960038700B /* TopCollectionHeaderView.h */,
 				8EBB89201D13CA960038700B /* TopCollectionHeaderView.m */,
+				8E05634D1D263C05008EBA25 /* DeviceIconViewCell.h */,
+				8E05634E1D263C05008EBA25 /* DeviceIconViewCell.m */,
+				8E0563531D2681CB008EBA25 /* DeviceMoreViewCell.h */,
+				8E0563541D2681CB008EBA25 /* DeviceMoreViewCell.m */,
 			);
 			name = top;
 			sourceTree = "<group>";
@@ -486,6 +514,8 @@
 				8EBB89191D1387380038700B /* BookmarkIconViewModel.m */,
 				8EBB891B1D139C750038700B /* TopViewModel.h */,
 				8EBB891C1D139C750038700B /* TopViewModel.m */,
+				8E0563501D263CFA008EBA25 /* DeviceIconViewModel.h */,
+				8E0563511D263CFA008EBA25 /* DeviceIconViewModel.m */,
 			);
 			name = top;
 			sourceTree = "<group>";
@@ -627,6 +657,8 @@
 		AB00F31B1C71A51800689C70 /* models */ = {
 			isa = PBXGroup;
 			children = (
+				8E05634A1D2628A4008EBA25 /* GHDeviceUtil.h */,
+				8E05634B1D2628A4008EBA25 /* GHDeviceUtil.m */,
 				AB00F2BB1C71A29D00689C70 /* GHDirectory.h */,
 				AB00F2BC1C71A29D00689C70 /* GHDirectory.m */,
 			);
@@ -638,6 +670,7 @@
 			children = (
 				AB00F2D21C71A29D00689C70 /* GHSettingController.h */,
 				AB00F2D31C71A29D00689C70 /* GHSettingController.m */,
+				8E0563561D2683B7008EBA25 /* device */,
 				8E0A4C3C1D1D289E00827DA6 /* webview */,
 				AB00F31F1C71A6B700689C70 /* bookmark */,
 				AB00F31D1C71A66D00689C70 /* folder */,
@@ -1041,18 +1074,22 @@
 				8E3772451D24D577003D3124 /* HTMLParser.m in Sources */,
 				8E0A4C3F1D1D28B900827DA6 /* WebViewController.m in Sources */,
 				8EBB89211D13CA960038700B /* TopCollectionHeaderView.m in Sources */,
+				8E0563521D263CFA008EBA25 /* DeviceIconViewModel.m in Sources */,
 				AB00F2E81C71A29D00689C70 /* GHDirectory.m in Sources */,
 				8ED7B1B51D1BB03C0053FDBD /* SwitchableCell.m in Sources */,
 				8EBB89131D1385050038700B /* BookmarkIconViewCell.m in Sources */,
 				AB00F2EC1C71A29D00689C70 /* GHFolderTitleCell.m in Sources */,
 				AB00F4A41C71B16200689C70 /* RATreeNode.m in Sources */,
 				AB00F2EA1C71A29D00689C70 /* GHFolderCreateController.m in Sources */,
+				8E05634C1D2628A4008EBA25 /* GHDeviceUtil.m in Sources */,
 				AB00F4A51C71B16200689C70 /* RATreeNodeCollectionController.m in Sources */,
 				AB00F2E01C71A29D00689C70 /* GHAddBookmarkController.m in Sources */,
+				8E05634F1D263C05008EBA25 /* DeviceIconViewCell.m in Sources */,
 				AB00F4AC1C71B16200689C70 /* RATreeView+UIScrollView.m in Sources */,
 				AB00F2F21C71A29D00689C70 /* GHPageViewCell.m in Sources */,
 				AB00F49F1C71B16200689C70 /* NSString+HTML.m in Sources */,
 				AB00F2E91C71A29D00689C70 /* GHFolderCell.m in Sources */,
+				8E0563591D2683DC008EBA25 /* GHDeviceListViewController.m in Sources */,
 				8EBB891D1D139C750038700B /* TopViewModel.m in Sources */,
 				AB00F4AB1C71B16200689C70 /* RATreeView+TableViewDelegate.m in Sources */,
 				AB00F4AD1C71B16200689C70 /* RATreeView.m in Sources */,
@@ -1079,6 +1116,7 @@
 				AB00F4A61C71B16200689C70 /* RATreeNodeInfo+Private.m in Sources */,
 				8E3772441D24D577003D3124 /* HTMLNode.m in Sources */,
 				AB00F2EB1C71A29D00689C70 /* GHFoldersListController.m in Sources */,
+				8E0563551D2681CB008EBA25 /* DeviceMoreViewCell.m in Sources */,
 				8E0A4C321D1CC4A500827DA6 /* InitialGuideViewController.m in Sources */,
 				8EBB891A1D1387380038700B /* BookmarkIconViewModel.m in Sources */,
 			);

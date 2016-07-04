@@ -14,10 +14,12 @@
 #import <SafariServices/SafariServices.h>
 #import "AppDelegate.h"
 #import "BookmarkIconViewCell.h"
-#import "TopViewModel.h"
 #import "TopCollectionHeaderView.h"
 #import "InitialGuideViewController.h"
 #import "WebViewController.h"
+#import "DeviceIconViewCell.h"
+#import "DeviceMoreViewCell.h"
+#import "GHDeviceListViewController.h"
 
 @interface ViewController ()
 {
@@ -42,6 +44,7 @@
     self = [super initWithCoder:aDecoder];
     if (self) {
         viewModel = [[TopViewModel alloc]init];
+        viewModel.delegate = self;
     }
     return self;
 }
@@ -196,6 +199,19 @@
     [self presentViewController:nav animated:YES completion:nil];
 }
 
+
+- (void)openDeviceDetail:(DConnectMessage*)message
+{
+    
+}
+
+- (IBAction)openDeviceList:(id)sender
+{
+    GHDeviceListViewController* controller = [[GHDeviceListViewController alloc]init];
+    UINavigationController* nav = [[UINavigationController alloc]initWithRootViewController:controller];
+    [self presentViewController:nav animated:YES completion:nil];
+}
+
 //--------------------------------------------------------------//
 #pragma mark - GHHeaderViewDelegate delegate
 //--------------------------------------------------------------//
@@ -263,7 +279,7 @@
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     switch (indexPath.section) {
-        case 0:
+        case Bookmark:
         {
             BookmarkIconViewCell* cell = (BookmarkIconViewCell*)[collectionView dequeueReusableCellWithReuseIdentifier:@"BookmarkIconViewCell" forIndexPath:indexPath];
             Page* page = [[viewModel.datasource objectAtIndex:indexPath.section]objectAtIndex:indexPath.row];
@@ -278,7 +294,27 @@
             }
             return cell;
         }
-        case 1:
+            break;
+        case Device:
+        {
+            DConnectMessage* message = [[viewModel.datasource objectAtIndex:indexPath.section]objectAtIndex:indexPath.row];
+            if([message isKindOfClass:[DConnectMessage class]]) {
+                DeviceIconViewCell* cell = (DeviceIconViewCell*)[collectionView dequeueReusableCellWithReuseIdentifier:@"DeviceIconViewCell" forIndexPath:indexPath];
+                [cell setDevice:message];
+                __weak ViewController *weakSelf = self;
+                [cell setDidIconSelected: ^(DConnectMessage* message) {
+                    [weakSelf openDeviceDetail: message];
+                }];
+                return cell;
+            } else {
+                DeviceMoreViewCell* cell = (DeviceMoreViewCell*)[collectionView dequeueReusableCellWithReuseIdentifier:@"DeviceDetailIcon" forIndexPath:indexPath];
+                __weak ViewController *weakSelf = self;
+                [cell setDidDeviceMorelected: ^() {
+                    [weakSelf openDeviceList: nil];
+                }];
+                return cell;
+            }
+        }
             break;
         default:
             break;
@@ -290,7 +326,7 @@
 - (TopCollectionHeaderView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
 {
     TopCollectionHeaderView* header = (TopCollectionHeaderView*)[collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:@"headerCell" forIndexPath:indexPath];
-    if (indexPath.section == 0) {
+    if (indexPath.section == Bookmark) {
         header.titleLabel.text = @"ブックマーク";
     } else {
         header.titleLabel.text = @"デバイス";
@@ -305,4 +341,15 @@
         [self openSafariViewInternalWithURL:cell.viewModel.page.url];
     }
 }
+
+
+//--------------------------------------------------------------//
+#pragma mark - TopViewModelDelegate
+//--------------------------------------------------------------//
+- (void)requestDatasourceReload
+{
+    [self.collectionView reloadSections: [NSIndexSet indexSetWithIndex:Device]];
+    [self addEmptyLabelIfNeeded];
+}
+
 @end

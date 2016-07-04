@@ -9,6 +9,11 @@
 #import "TopViewModel.h"
 #import <DConnectSDK/DConnectSDK.h>
 #import "GHDataManager.h"
+#import "GHDeviceUtil.h"
+
+@interface TopViewModel()
+@property(nonatomic, strong) NSArray* devices;
+@end
 
 @implementation TopViewModel
 
@@ -19,11 +24,16 @@
 {
     self = [super init];
     if (self) {
+        __weak TopViewModel *_self = self;
         self.manager = [[GHURLManager alloc]init];
+        [[GHDeviceUtil shareManager] setRecieveDeviceList:^(DConnectArray *deviceList){
+            [_self updateDevice:deviceList];
+        }];
         self.url = @"http://www.google.com";
+        self.devices = [[NSArray alloc]init];
         self.datasource = [[NSMutableArray alloc]initWithObjects:
                            [[NSArray alloc]init],
-                           [[NSArray alloc]init],
+                           self.devices,
                            nil];
         [self updateDatasource];
     }
@@ -35,6 +45,7 @@
     self.manager = nil;
     self.url = nil;
     self.datasource = nil;
+    [[GHDeviceUtil shareManager] setRecieveDeviceList: nil];
 }
 
 //--------------------------------------------------------------//
@@ -42,8 +53,8 @@
 //--------------------------------------------------------------//
 - (void)updateDatasource
 {
-    [self.datasource replaceObjectAtIndex:0 withObject:[self setupBookmarks]];
-    [self.datasource replaceObjectAtIndex:1 withObject:[self setupDevices]];
+    [self.datasource replaceObjectAtIndex:Bookmark withObject:[self setupBookmarks]];
+    [self.datasource replaceObjectAtIndex:Device withObject:[self showableDevices]];
 }
 
 
@@ -54,8 +65,7 @@ static NSInteger maxIconCount = 8;
 - (NSArray*)setupBookmarks
 {
     NSMutableArray* bookmarks = [[self fetchBookmarks]mutableCopy];
-    _isBookmarksEmpty = (bookmarks == nil);
-    if (_isBookmarksEmpty) {
+    if ([bookmarks count] == 0) {
         bookmarks = [[NSMutableArray alloc]init];
     }
     //maxIconCountに達していない場合はダミーを作成する
@@ -79,17 +89,45 @@ static NSInteger maxIconCount = 8;
     return bookmarks;
 }
 
+- (BOOL)isBookmarksEmpty
+{
+    return ([[self.datasource objectAtIndex:Bookmark] count] == 0);
+}
 
 
 //--------------------------------------------------------------//
 #pragma mark - Devices
 //--------------------------------------------------------------//
-- (NSArray*)setupDevices
+- (void)updateDevice:(DConnectArray*)deviceList
 {
-    _isDeviceEmpty = YES;
-    return [[NSArray alloc]init]; // FIXME:
+    NSMutableArray* array = [[NSMutableArray alloc]init];
+    for (int s = 0; s < [deviceList count]; s++) {
+        DConnectMessage *service = [deviceList messageAtIndex: s];
+        [array addObject:service];
+    }
+    self.devices = array;
+    [self updateDatasource];
+    [self.delegate requestDatasourceReload];
 }
 
+- (NSArray*)showableDevices
+{
+    if([self.devices count] > maxIconCount) {
+        NSMutableArray* reduce = [self.devices mutableCopy];
+        NSRange range = NSMakeRange(maxIconCount-1, [self.devices count] - maxIconCount+1); //NOTE:+1は詳細ボタンを追加するため
+        [reduce removeObjectsInRange:range];
+
+        //最後の1つを詳細表示用にNSStringを入れる
+        [reduce addObject: @"deviceDeteilButtonKey"];
+        return reduce;
+    }
+    return self.devices;
+}
+
+- (BOOL)isDeviceEmpty
+{
+    return ([self.devices count] == 0);
+}
 
 //--------------------------------------------------------------//
 #pragma mark - useOriginBlocking 更新

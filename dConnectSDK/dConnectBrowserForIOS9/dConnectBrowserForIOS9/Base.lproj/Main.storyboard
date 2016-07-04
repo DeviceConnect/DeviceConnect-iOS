@@ -41,6 +41,7 @@
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aD8-rK-ltM">
                                                     <rect key="frame" x="0.0" y="0.0" width="70" height="75"/>
                                                     <connections>
+                                                        <action selector="backNormal:" destination="mxe-B7-ksr" eventType="touchCancel" id="VPt-s2-5uz"/>
                                                         <action selector="didTapItem:" destination="mxe-B7-ksr" eventType="touchUpInside" id="Bab-mh-81M"/>
                                                         <action selector="didTouchDown:" destination="mxe-B7-ksr" eventType="touchDown" id="pFf-S0-PIK"/>
                                                     </connections>
@@ -90,6 +91,113 @@
                                             <outlet property="selectButton" destination="aD8-rK-ltM" id="i7n-yS-Ta8"/>
                                             <outlet property="titleLabel" destination="qSP-O1-Hxl" id="Nxx-uL-9Cp"/>
                                         </connections>
+                                    </collectionViewCell>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="DeviceIconViewCell" id="PaE-c0-nDI" customClass="DeviceIconViewCell">
+                                        <rect key="frame" x="85" y="50" width="70" height="100"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="70" height="100"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Cuk-KV-3vZ">
+                                                    <rect key="frame" x="0.0" y="0.0" width="70" height="75"/>
+                                                    <connections>
+                                                        <action selector="backNormal:" destination="PaE-c0-nDI" eventType="touchCancel" id="aSL-Ws-i1j"/>
+                                                        <action selector="didTapItem:" destination="PaE-c0-nDI" eventType="touchUpInside" id="GYd-Av-KYC"/>
+                                                        <action selector="didTouchDown:" destination="PaE-c0-nDI" eventType="touchDown" id="UeN-vZ-ySF"/>
+                                                    </connections>
+                                                </button>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="3K8-e1-iHJ">
+                                                    <rect key="frame" x="0.0" y="0.0" width="70" height="70"/>
+                                                    <color key="backgroundColor" red="0.91764705879999997" green="0.91764705879999997" blue="0.91764705879999997" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" secondItem="3K8-e1-iHJ" secondAttribute="height" multiplier="1:1" id="DOR-iE-Iuq"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3di-oC-Pxp">
+                                                    <rect key="frame" x="0.0" y="75" width="70" height="12"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <constraints>
+                                            <constraint firstItem="3K8-e1-iHJ" firstAttribute="top" secondItem="PaE-c0-nDI" secondAttribute="topMargin" id="1it-xm-5oy"/>
+                                            <constraint firstItem="Cuk-KV-3vZ" firstAttribute="top" secondItem="PaE-c0-nDI" secondAttribute="top" id="4SG-En-MGu"/>
+                                            <constraint firstItem="3di-oC-Pxp" firstAttribute="top" secondItem="Cuk-KV-3vZ" secondAttribute="bottom" id="744-xS-sMD"/>
+                                            <constraint firstItem="3K8-e1-iHJ" firstAttribute="leading" secondItem="PaE-c0-nDI" secondAttribute="leading" id="DUb-4C-9ib"/>
+                                            <constraint firstAttribute="trailing" secondItem="3di-oC-Pxp" secondAttribute="trailing" id="Spt-t4-5Lt"/>
+                                            <constraint firstAttribute="trailing" secondItem="Cuk-KV-3vZ" secondAttribute="trailing" id="TWj-ap-CfA"/>
+                                            <constraint firstAttribute="bottom" secondItem="3di-oC-Pxp" secondAttribute="bottom" id="V0R-XE-pdV"/>
+                                            <constraint firstItem="3K8-e1-iHJ" firstAttribute="top" secondItem="PaE-c0-nDI" secondAttribute="top" id="WC6-Be-eTJ"/>
+                                            <constraint firstItem="3K8-e1-iHJ" firstAttribute="leading" secondItem="PaE-c0-nDI" secondAttribute="leadingMargin" id="clJ-xe-lSX"/>
+                                            <constraint firstAttribute="trailing" secondItem="3K8-e1-iHJ" secondAttribute="trailing" id="dMl-OF-KDl"/>
+                                            <constraint firstItem="3di-oC-Pxp" firstAttribute="leading" secondItem="PaE-c0-nDI" secondAttribute="leading" id="lzw-Pb-Vbm"/>
+                                            <constraint firstItem="3di-oC-Pxp" firstAttribute="top" secondItem="3K8-e1-iHJ" secondAttribute="bottom" constant="5" id="mYu-O6-DY3"/>
+                                            <constraint firstItem="Cuk-KV-3vZ" firstAttribute="leading" secondItem="PaE-c0-nDI" secondAttribute="leading" id="pBF-yb-g6l"/>
+                                            <constraint firstAttribute="trailingMargin" secondItem="3K8-e1-iHJ" secondAttribute="trailing" id="udr-XD-2zW"/>
+                                        </constraints>
+                                        <variation key="default">
+                                            <mask key="constraints">
+                                                <exclude reference="clJ-xe-lSX"/>
+                                                <exclude reference="udr-XD-2zW"/>
+                                                <exclude reference="1it-xm-5oy"/>
+                                                <exclude reference="V0R-XE-pdV"/>
+                                            </mask>
+                                        </variation>
+                                        <connections>
+                                            <outlet property="iconImage" destination="3K8-e1-iHJ" id="rZm-hO-KJv"/>
+                                            <outlet property="selectButton" destination="Cuk-KV-3vZ" id="2Eo-Ag-2TJ"/>
+                                            <outlet property="titleLabel" destination="3di-oC-Pxp" id="F8n-Um-hwP"/>
+                                        </connections>
+                                    </collectionViewCell>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="DeviceDetailIcon" id="zLJ-M4-k7r" customClass="DeviceMoreViewCell">
+                                        <rect key="frame" x="165" y="50" width="70" height="100"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="70" height="100"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oqL-7E-unJ">
+                                                    <rect key="frame" x="0.0" y="0.0" width="70" height="70"/>
+                                                    <connections>
+                                                        <action selector="backNormal:" destination="zLJ-M4-k7r" eventType="touchUpOutside" id="FKm-0j-3fS"/>
+                                                        <action selector="backNormal:" destination="zLJ-M4-k7r" eventType="touchCancel" id="xol-Cg-t7F"/>
+                                                        <action selector="didTapItem:" destination="zLJ-M4-k7r" eventType="touchUpInside" id="k6B-Bf-Xdc"/>
+                                                        <action selector="didTouchDown:" destination="zLJ-M4-k7r" eventType="touchDown" id="dmd-Zn-QYO"/>
+                                                    </connections>
+                                                </button>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="deviceDetailButton" translatesAutoresizingMaskIntoConstraints="NO" id="nR5-yt-GWp">
+                                                    <rect key="frame" x="0.0" y="0.0" width="70" height="70"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" secondItem="nR5-yt-GWp" secondAttribute="height" multiplier="1:1" id="A1p-gi-iHu"/>
+                                                    </constraints>
+                                                </imageView>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <constraints>
+                                            <constraint firstItem="nR5-yt-GWp" firstAttribute="top" secondItem="zLJ-M4-k7r" secondAttribute="topMargin" id="1vb-a6-9t4"/>
+                                            <constraint firstItem="oqL-7E-unJ" firstAttribute="leading" secondItem="zLJ-M4-k7r" secondAttribute="leading" id="2RM-Hq-G6b"/>
+                                            <constraint firstAttribute="trailingMargin" secondItem="nR5-yt-GWp" secondAttribute="trailing" id="EI7-yg-d0a"/>
+                                            <constraint firstItem="nR5-yt-GWp" firstAttribute="leading" secondItem="zLJ-M4-k7r" secondAttribute="leading" id="I2c-Df-MvD"/>
+                                            <constraint firstAttribute="trailing" secondItem="oqL-7E-unJ" secondAttribute="trailing" id="RKO-4Y-5rE"/>
+                                            <constraint firstItem="nR5-yt-GWp" firstAttribute="height" secondItem="oqL-7E-unJ" secondAttribute="height" id="S8q-FG-dB7"/>
+                                            <constraint firstItem="nR5-yt-GWp" firstAttribute="width" secondItem="oqL-7E-unJ" secondAttribute="width" id="Vcy-pZ-p7l"/>
+                                            <constraint firstItem="nR5-yt-GWp" firstAttribute="top" secondItem="zLJ-M4-k7r" secondAttribute="top" id="YXF-bh-t5i"/>
+                                            <constraint firstAttribute="trailing" secondItem="nR5-yt-GWp" secondAttribute="trailing" id="fLl-Nb-jBb"/>
+                                            <constraint firstItem="nR5-yt-GWp" firstAttribute="leading" secondItem="zLJ-M4-k7r" secondAttribute="leadingMargin" id="iFP-47-wuO"/>
+                                            <constraint firstItem="oqL-7E-unJ" firstAttribute="top" secondItem="zLJ-M4-k7r" secondAttribute="top" id="wLu-hZ-YaH"/>
+                                        </constraints>
+                                        <variation key="default">
+                                            <mask key="constraints">
+                                                <exclude reference="1vb-a6-9t4"/>
+                                                <exclude reference="EI7-yg-d0a"/>
+                                                <exclude reference="iFP-47-wuO"/>
+                                            </mask>
+                                        </variation>
                                     </collectionViewCell>
                                 </cells>
                                 <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="headerCell" id="sII-s1-7gM" customClass="TopCollectionHeaderView">
@@ -166,7 +274,11 @@
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="INb-7v-2E4"/>
-                                    <barButtonItem title="デバイス" id="8ah-EP-91Q"/>
+                                    <barButtonItem image="deviceIcon" id="8ah-EP-91Q">
+                                        <connections>
+                                            <action selector="openDeviceList:" destination="sIh-io-mcp" id="FAb-1m-cHZ"/>
+                                        </connections>
+                                    </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="yho-lk-O6e"/>
                                     <barButtonItem image="settings" id="qYV-8V-Mhy">
                                         <connections>
@@ -343,6 +455,8 @@
     </scenes>
     <resources>
         <image name="bookmark" width="40" height="40"/>
+        <image name="deviceDetailButton" width="109" height="109"/>
+        <image name="deviceIcon" width="30" height="32"/>
         <image name="help" width="30" height="30"/>
         <image name="search" width="42" height="40"/>
         <image name="settings" width="40" height="40"/>
