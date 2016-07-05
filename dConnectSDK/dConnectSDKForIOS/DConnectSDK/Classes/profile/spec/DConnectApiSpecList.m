@@ -22,14 +22,13 @@
 @implementation DConnectApiSpecList
 
 // 共有インスタンス
-+ (instancetype)shared
-{
-    static id sharedInstance;
-    static dispatch_once_t onceSpheroToken;
-    dispatch_once(&onceSpheroToken, ^{
-        sharedInstance = [self new];
++ (DConnectApiSpecList *)shared {
+    static DConnectApiSpecList *sharedApiSpecList = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        sharedApiSpecList = [[DConnectApiSpecList alloc] init];
     });
-    return sharedInstance;
+    return sharedApiSpecList;
 }
 
 // 初期化
@@ -59,7 +58,14 @@
     return nil;
 }
 
-- (void) addApiSpecList :(NSString *)jsonFilePath {
+// プロファイル名を元にAPI仕様定義ファイル(JSON)を読み込み、mApiSpecListに格納する。エラーが発生したら例外をスローする。
+- (void) addApiSpecList :(NSString *)profileName {
+    
+    NSString * jsonFilePath = [self jsonFilePathWithProfileName: profileName];
+    if (!jsonFilePath) {
+        @throw [NSString stringWithFormat: @"json file not found : %@", profileName];
+    }
+    
     NSError *error = nil;
     NSString *jsonString = [NSString stringWithContentsOfFile: (NSString *)jsonFilePath
                                                      encoding: NSUTF8StringEncoding
@@ -82,7 +88,6 @@
                 
                 // ApcSpecに変換する
                 DConnectApiSpec *apiSpec = [DConnectApiSpecJsonParser fromJson: jsonObj];
-                NSLog(@"DConnectApiSpec(json): %@", [apiSpec toJson]);
                 if (apiSpec != nil) {
                     [self addApiSpec : apiSpec];
                 }
@@ -113,31 +118,10 @@
     return array;
 }
 
+#pragma mark - Private Method
 
-
-
-
-
-// ------------------------------------------------------------------------------------------------------------
-// Debug用
-// ------------------------------------------------------------------------------------------------------------
-
-- (void) loadApiSpecDebug {
-    
-    DConnectPluginXmlUtil
-    
-    NSString *jsonFilename = @"light";
-    NSString *jsonFilePath = [self jsonFilePathWithJsonFilename: jsonFilename];
-    
-    @try {
-        [self addApiSpecList: jsonFilePath];
-    }
-    @catch (NSString *e) {
-        NSLog(@"exception: %@", e);
-    }
-}
-
-- (NSString *)jsonFilePathWithJsonFilename: (NSString *)jsonFilename {
+// プロファイル名を元にDConnectSDK_resources.Bundleに格納されたAPI定義JSONファイル名(<プロファイル名>.json)のファイルパスを返す。存在しないときはnilを返す。
+- (NSString *)jsonFilePathWithProfileName: (NSString *)jsonFilename {
     
     NSString *filetype = @"json";
     
@@ -147,71 +131,6 @@
     NSString *pathName = [bundle pathForResource:jsonFilename ofType:filetype];
     
     return pathName;
-}
-
-
-
-- (void) loadApiSpec: (NSString *)jsonString {
-    
-    // JSON文字列をNSDataに変換
-    NSData *jsonData = [jsonString dataUsingEncoding:NSUnicodeStringEncoding];
-    
-    // JSON を NSArray に変換する
-    NSError *error;
-    NSObject *result = [NSJSONSerialization JSONObjectWithData:jsonData
-                                                       options:NSJSONReadingAllowFragments
-                                                         error:&error];
-    if (error != nil) {
-        NSLog(@"JSON parse error: %@", error);
-        return;
-    }
-    if (result == nil) {
-        NSLog(@"result nil.");
-        return;
-    }
-    
-    if ([result isKindOfClass: [NSArray class]]) {
-        NSArray *array = (NSArray *)result;
-        NSLog(@"array count: %d", (int)[array count]);
-        [self debugJsonArray:array];
-    }
-    else if ([result isKindOfClass: [NSDictionary class]]) {
-        NSDictionary *dic = (NSDictionary *)result;
-        NSLog(@"dic count: %d", (int)[dic count]);
-        // DEBUG
-        [self debugJsonDictionary: dic];
-    }
-    else {
-        NSLog(@"result is not NSArray or NSDictionary.");
-        return;
-    }
-    
-    
-    
-    
-}
-
-
-- (void)debugJsonArray : (NSArray *)array {
-    
-    for (NSObject *record in array) {
-        NSLog(@"array [] description: %@", [[record class] description]);
-        
-        if ([record isKindOfClass: [NSDictionary class]]) {
-            NSDictionary *dic = (NSDictionary *)record;
-            [self debugJsonDictionary: dic];
-        }
-    }
-}
-
-- (void)debugJsonDictionary: (NSDictionary *)dic {
-    
-    NSLog(@"  dic count: %d", (int)[dic count]);
-    NSArray *keys = [dic allKeys];
-    NSArray *vals = [dic allValues];
-    for(int i=0;i<[keys count];i++){
-        NSLog(@"  dic[%d] - key：%@　value：%@", i, [keys objectAtIndex:i], [vals objectAtIndex:i]);
-    }
 }
 
 @end

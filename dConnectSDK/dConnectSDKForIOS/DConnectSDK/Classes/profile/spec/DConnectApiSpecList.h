@@ -19,7 +19,11 @@
  */
 + (instancetype)shared;
 
-- (void) loadApiSpecDebug;
+- (DConnectApiSpec *) findApiSpec: (NSString *) method
+                             path: (NSString *) path;
 
+- (void) addApiSpecList :(NSString *)profileName;
+
+- (void) addApiSpec : (DConnectApiSpec *)apiSpec;
 
 @end

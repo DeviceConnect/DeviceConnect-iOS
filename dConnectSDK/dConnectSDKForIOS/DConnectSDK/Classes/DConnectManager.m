@@ -27,7 +27,6 @@
 #import "DConnectOriginParser.h"
 #import "LocalOAuth2Main.h"
 #import "DConnectServerProtocol.h"
-#import "profile/spec/DConnectApiSpecList.h"
 
 
 
@@ -136,9 +135,6 @@ NSString *const DConnectAttributeNameRequestAccessToken = @"requestAccessToken";
     dispatch_once(&onceToken, ^{
         sharedDConnectManager = [DConnectManager new];
     });
-    /***/
-    [[DConnectApiSpecList shared] loadApiSpecDebug];
-    /***/
     return sharedDConnectManager;
 }
 
