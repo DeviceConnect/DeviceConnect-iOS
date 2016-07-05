@@ -33,6 +33,7 @@
 
 /* Begin PBXBuildFile section */
 		AB056F9E1B6A327B00E1482F /* DCMTVProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = AB056F9D1B6A327B00E1482F /* DCMTVProfile.m */; };
+		AB3D3E9E1D2B9FD1004290BA /* DCMHealthProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = AB3D3E9D1D2B9FD1004290BA /* DCMHealthProfile.m */; };
 		ABBD5F241987767600B81007 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABBD5F231987767600B81007 /* Foundation.framework */; };
 		ABBD5F321987767600B81007 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABBD5F311987767600B81007 /* XCTest.framework */; };
 		ABBD5F331987767600B81007 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABBD5F231987767600B81007 /* Foundation.framework */; };
@@ -70,6 +71,8 @@
 /* Begin PBXFileReference section */
 		AB056F9D1B6A327B00E1482F /* DCMTVProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DCMTVProfile.m; sourceTree = "<group>"; };
 		AB056F9F1B6A329C00E1482F /* DCMTVProfile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DCMTVProfile.h; sourceTree = "<group>"; };
+		AB3D3E9D1D2B9FD1004290BA /* DCMHealthProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DCMHealthProfile.m; sourceTree = "<group>"; };
+		AB3D3E9F1D2B9FF7004290BA /* DCMHealthProfile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DCMHealthProfile.h; sourceTree = "<group>"; };
 		AB3D7482199B26AB00FC4FE5 /* DCMDevicePluginSDK.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DCMDevicePluginSDK.h; sourceTree = "<group>"; };
 		ABBD5F201987767600B81007 /* libDCMDevicePluginSDK.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libDCMDevicePluginSDK.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		ABBD5F231987767600B81007 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -180,6 +183,7 @@
 		ABBD5F49198776CC00B81007 /* Headers */ = {
 			isa = PBXGroup;
 			children = (
+				AB3D3E9F1D2B9FF7004290BA /* DCMHealthProfile.h */,
 				AB056F9F1B6A329C00E1482F /* DCMTVProfile.h */,
 				ABBD5F52198777EC00B81007 /* DCMTemperatureProfile.h */,
 				ABBD5F511987775500B81007 /* DCMDriveControllerProfile.h */,
@@ -194,6 +198,7 @@
 				ABBD5F53198777F200B81007 /* DCMTemperatureProfile.m */,
 				ABBD5F4F1987774B00B81007 /* DCMDriveControllerProfile.m */,
 				AB056F9D1B6A327B00E1482F /* DCMTVProfile.m */,
+				AB3D3E9D1D2B9FD1004290BA /* DCMHealthProfile.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -315,6 +320,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AB3D3E9E1D2B9FD1004290BA /* DCMHealthProfile.m in Sources */,
 				AB056F9E1B6A327B00E1482F /* DCMTVProfile.m in Sources */,
 				ABBD5F501987774B00B81007 /* DCMDriveControllerProfile.m in Sources */,
 				ABBD5F54198777F200B81007 /* DCMTemperatureProfile.m in Sources */,

@@ -32,7 +32,35 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
-		ABF6C37A1D2B4B57006B1B91 /* hitoeAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABF6C3791D2B4B57006B1B91 /* hitoeAPI.framework */; };
+		AB3D3E681D2B85E7004290BA /* Hitoe_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ABF6C39F1D2B5202006B1B91 /* Hitoe_iPhone.storyboard */; };
+		AB3D3E6A1D2B890F004290BA /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = ABF6C3931D2B4CF6006B1B91 /* Info.plist */; };
+		AB3D3E6B1D2B890F004290BA /* Hitoe_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AB3D3E691D2B88D6004290BA /* Hitoe_iPad.storyboard */; };
+		AB3D3E851D2B9E9B004290BA /* bg_orientation_graph.png in Resources */ = {isa = PBXBuildFile; fileRef = AB3D3E6E1D2B9E9B004290BA /* bg_orientation_graph.png */; };
+		AB3D3E861D2B9E9B004290BA /* bg_stress.xml in Resources */ = {isa = PBXBuildFile; fileRef = AB3D3E6F1D2B9E9B004290BA /* bg_stress.xml */; };
+		AB3D3E871D2B9E9B004290BA /* hitoe_explain.png in Resources */ = {isa = PBXBuildFile; fileRef = AB3D3E701D2B9E9B004290BA /* hitoe_explain.png */; };
+		AB3D3E881D2B9E9B004290BA /* hitoe_input_pin.png in Resources */ = {isa = PBXBuildFile; fileRef = AB3D3E711D2B9E9B004290BA /* hitoe_input_pin.png */; };
+		AB3D3E891D2B9E9B004290BA /* hitoe_set.png in Resources */ = {isa = PBXBuildFile; fileRef = AB3D3E721D2B9E9B004290BA /* hitoe_set.png */; };
+		AB3D3E8A1D2B9E9B004290BA /* mark_battery01.png in Resources */ = {isa = PBXBuildFile; fileRef = AB3D3E731D2B9E9B004290BA /* mark_battery01.png */; };
+		AB3D3E8B1D2B9E9B004290BA /* mark_battery02.png in Resources */ = {isa = PBXBuildFile; fileRef = AB3D3E741D2B9E9B004290BA /* mark_battery02.png */; };
+		AB3D3E8C1D2B9E9B004290BA /* mark_battery03.png in Resources */ = {isa = PBXBuildFile; fileRef = AB3D3E751D2B9E9B004290BA /* mark_battery03.png */; };
+		AB3D3E8D1D2B9E9B004290BA /* mark_battery04.png in Resources */ = {isa = PBXBuildFile; fileRef = AB3D3E761D2B9E9B004290BA /* mark_battery04.png */; };
+		AB3D3E8E1D2B9E9B004290BA /* mark_battery05.png in Resources */ = {isa = PBXBuildFile; fileRef = AB3D3E771D2B9E9B004290BA /* mark_battery05.png */; };
+		AB3D3E8F1D2B9E9B004290BA /* mark_heartrate.png in Resources */ = {isa = PBXBuildFile; fileRef = AB3D3E781D2B9E9B004290BA /* mark_heartrate.png */; };
+		AB3D3E901D2B9E9B004290BA /* pose_backward.png in Resources */ = {isa = PBXBuildFile; fileRef = AB3D3E791D2B9E9B004290BA /* pose_backward.png */; };
+		AB3D3E911D2B9E9B004290BA /* pose_default.png in Resources */ = {isa = PBXBuildFile; fileRef = AB3D3E7A1D2B9E9B004290BA /* pose_default.png */; };
+		AB3D3E921D2B9E9B004290BA /* pose_facedown.png in Resources */ = {isa = PBXBuildFile; fileRef = AB3D3E7B1D2B9E9B004290BA /* pose_facedown.png */; };
+		AB3D3E931D2B9E9B004290BA /* pose_faceleft.png in Resources */ = {isa = PBXBuildFile; fileRef = AB3D3E7C1D2B9E9B004290BA /* pose_faceleft.png */; };
+		AB3D3E941D2B9E9B004290BA /* pose_faceright.png in Resources */ = {isa = PBXBuildFile; fileRef = AB3D3E7D1D2B9E9B004290BA /* pose_faceright.png */; };
+		AB3D3E951D2B9E9B004290BA /* pose_faceup.png in Resources */ = {isa = PBXBuildFile; fileRef = AB3D3E7E1D2B9E9B004290BA /* pose_faceup.png */; };
+		AB3D3E961D2B9E9B004290BA /* pose_forward.png in Resources */ = {isa = PBXBuildFile; fileRef = AB3D3E7F1D2B9E9B004290BA /* pose_forward.png */; };
+		AB3D3E971D2B9E9B004290BA /* pose_leftside.png in Resources */ = {isa = PBXBuildFile; fileRef = AB3D3E801D2B9E9B004290BA /* pose_leftside.png */; };
+		AB3D3E981D2B9E9B004290BA /* pose_rightside.png in Resources */ = {isa = PBXBuildFile; fileRef = AB3D3E811D2B9E9B004290BA /* pose_rightside.png */; };
+		AB3D3E991D2B9E9B004290BA /* pose_running.png in Resources */ = {isa = PBXBuildFile; fileRef = AB3D3E821D2B9E9B004290BA /* pose_running.png */; };
+		AB3D3E9A1D2B9E9B004290BA /* pose_standing.png in Resources */ = {isa = PBXBuildFile; fileRef = AB3D3E831D2B9E9B004290BA /* pose_standing.png */; };
+		AB3D3E9B1D2B9E9B004290BA /* pose_walking.png in Resources */ = {isa = PBXBuildFile; fileRef = AB3D3E841D2B9E9B004290BA /* pose_walking.png */; };
+		ABF6C3AB1D2B7722006B1B91 /* DConnectSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABF6C3AA1D2B7722006B1B91 /* DConnectSDK.framework */; };
+		ABF6C3AD1D2B7741006B1B91 /* hitoeAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABF6C3AC1D2B7741006B1B91 /* hitoeAPI.framework */; };
+		ABF6C3B31D2B7903006B1B91 /* DPHitoeDevicePlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = ABF6C3B21D2B7903006B1B91 /* DPHitoeDevicePlugin.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -48,11 +76,40 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		AB3D3E671D2B7D44004290BA /* DPHitoeConsts.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DPHitoeConsts.h; sourceTree = "<group>"; };
+		AB3D3E691D2B88D6004290BA /* Hitoe_iPad.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Hitoe_iPad.storyboard; sourceTree = "<group>"; };
+		AB3D3E6E1D2B9E9B004290BA /* bg_orientation_graph.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bg_orientation_graph.png; sourceTree = "<group>"; };
+		AB3D3E6F1D2B9E9B004290BA /* bg_stress.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = bg_stress.xml; sourceTree = "<group>"; };
+		AB3D3E701D2B9E9B004290BA /* hitoe_explain.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hitoe_explain.png; sourceTree = "<group>"; };
+		AB3D3E711D2B9E9B004290BA /* hitoe_input_pin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hitoe_input_pin.png; sourceTree = "<group>"; };
+		AB3D3E721D2B9E9B004290BA /* hitoe_set.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hitoe_set.png; sourceTree = "<group>"; };
+		AB3D3E731D2B9E9B004290BA /* mark_battery01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mark_battery01.png; sourceTree = "<group>"; };
+		AB3D3E741D2B9E9B004290BA /* mark_battery02.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mark_battery02.png; sourceTree = "<group>"; };
+		AB3D3E751D2B9E9B004290BA /* mark_battery03.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mark_battery03.png; sourceTree = "<group>"; };
+		AB3D3E761D2B9E9B004290BA /* mark_battery04.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mark_battery04.png; sourceTree = "<group>"; };
+		AB3D3E771D2B9E9B004290BA /* mark_battery05.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mark_battery05.png; sourceTree = "<group>"; };
+		AB3D3E781D2B9E9B004290BA /* mark_heartrate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mark_heartrate.png; sourceTree = "<group>"; };
+		AB3D3E791D2B9E9B004290BA /* pose_backward.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pose_backward.png; sourceTree = "<group>"; };
+		AB3D3E7A1D2B9E9B004290BA /* pose_default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pose_default.png; sourceTree = "<group>"; };
+		AB3D3E7B1D2B9E9B004290BA /* pose_facedown.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pose_facedown.png; sourceTree = "<group>"; };
+		AB3D3E7C1D2B9E9B004290BA /* pose_faceleft.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pose_faceleft.png; sourceTree = "<group>"; };
+		AB3D3E7D1D2B9E9B004290BA /* pose_faceright.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pose_faceright.png; sourceTree = "<group>"; };
+		AB3D3E7E1D2B9E9B004290BA /* pose_faceup.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pose_faceup.png; sourceTree = "<group>"; };
+		AB3D3E7F1D2B9E9B004290BA /* pose_forward.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pose_forward.png; sourceTree = "<group>"; };
+		AB3D3E801D2B9E9B004290BA /* pose_leftside.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pose_leftside.png; sourceTree = "<group>"; };
+		AB3D3E811D2B9E9B004290BA /* pose_rightside.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pose_rightside.png; sourceTree = "<group>"; };
+		AB3D3E821D2B9E9B004290BA /* pose_running.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pose_running.png; sourceTree = "<group>"; };
+		AB3D3E831D2B9E9B004290BA /* pose_standing.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pose_standing.png; sourceTree = "<group>"; };
+		AB3D3E841D2B9E9B004290BA /* pose_walking.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pose_walking.png; sourceTree = "<group>"; };
 		ABF6C36C1D2B4A0D006B1B91 /* libdConnectDeviceHitoe.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libdConnectDeviceHitoe.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		ABF6C3791D2B4B57006B1B91 /* hitoeAPI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = hitoeAPI.framework; sourceTree = "<group>"; };
 		ABF6C3911D2B4CF6006B1B91 /* dConnectDeviceHitoe_resources.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = dConnectDeviceHitoe_resources.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		ABF6C3931D2B4CF6006B1B91 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		ABF6C39F1D2B5202006B1B91 /* Hitoe_iPhone.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Hitoe_iPhone.storyboard; sourceTree = "<group>"; };
+		ABF6C3A91D2B7722006B1B91 /* DConnectSDK_resources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = DConnectSDK_resources.bundle; path = ../../dConnectSDK/dConnectSDKForIOS/bin/DConnectSDK_resources.bundle; sourceTree = "<group>"; };
+		ABF6C3AA1D2B7722006B1B91 /* DConnectSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DConnectSDK.framework; path = ../../dConnectSDK/dConnectSDKForIOS/bin/DConnectSDK.framework; sourceTree = "<group>"; };
+		ABF6C3AC1D2B7741006B1B91 /* hitoeAPI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = hitoeAPI.framework; sourceTree = "<group>"; };
+		ABF6C3B11D2B7903006B1B91 /* DPHitoeDevicePlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHitoeDevicePlugin.h; sourceTree = "<group>"; };
+		ABF6C3B21D2B7903006B1B91 /* DPHitoeDevicePlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHitoeDevicePlugin.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,7 +117,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				ABF6C37A1D2B4B57006B1B91 /* hitoeAPI.framework in Frameworks */,
+				ABF6C3AB1D2B7722006B1B91 /* DConnectSDK.framework in Frameworks */,
+				ABF6C3AD1D2B7741006B1B91 /* hitoeAPI.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -74,6 +132,36 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		AB3D3E6D1D2B9E5C004290BA /* Drawable */ = {
+			isa = PBXGroup;
+			children = (
+				AB3D3E6E1D2B9E9B004290BA /* bg_orientation_graph.png */,
+				AB3D3E6F1D2B9E9B004290BA /* bg_stress.xml */,
+				AB3D3E701D2B9E9B004290BA /* hitoe_explain.png */,
+				AB3D3E711D2B9E9B004290BA /* hitoe_input_pin.png */,
+				AB3D3E721D2B9E9B004290BA /* hitoe_set.png */,
+				AB3D3E731D2B9E9B004290BA /* mark_battery01.png */,
+				AB3D3E741D2B9E9B004290BA /* mark_battery02.png */,
+				AB3D3E751D2B9E9B004290BA /* mark_battery03.png */,
+				AB3D3E761D2B9E9B004290BA /* mark_battery04.png */,
+				AB3D3E771D2B9E9B004290BA /* mark_battery05.png */,
+				AB3D3E781D2B9E9B004290BA /* mark_heartrate.png */,
+				AB3D3E791D2B9E9B004290BA /* pose_backward.png */,
+				AB3D3E7A1D2B9E9B004290BA /* pose_default.png */,
+				AB3D3E7B1D2B9E9B004290BA /* pose_facedown.png */,
+				AB3D3E7C1D2B9E9B004290BA /* pose_faceleft.png */,
+				AB3D3E7D1D2B9E9B004290BA /* pose_faceright.png */,
+				AB3D3E7E1D2B9E9B004290BA /* pose_faceup.png */,
+				AB3D3E7F1D2B9E9B004290BA /* pose_forward.png */,
+				AB3D3E801D2B9E9B004290BA /* pose_leftside.png */,
+				AB3D3E811D2B9E9B004290BA /* pose_rightside.png */,
+				AB3D3E821D2B9E9B004290BA /* pose_running.png */,
+				AB3D3E831D2B9E9B004290BA /* pose_standing.png */,
+				AB3D3E841D2B9E9B004290BA /* pose_walking.png */,
+			);
+			path = Drawable;
+			sourceTree = "<group>";
+		};
 		ABF6C3631D2B4A0D006B1B91 = {
 			isa = PBXGroup;
 			children = (
@@ -106,7 +194,9 @@
 		ABF6C3781D2B4AB1006B1B91 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				ABF6C3791D2B4B57006B1B91 /* hitoeAPI.framework */,
+				ABF6C3AC1D2B7741006B1B91 /* hitoeAPI.framework */,
+				ABF6C3A91D2B7722006B1B91 /* DConnectSDK_resources.bundle */,
+				ABF6C3AA1D2B7722006B1B91 /* DConnectSDK.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -114,7 +204,9 @@
 		ABF6C37B1D2B4B7B006B1B91 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				AB3D3E6D1D2B9E5C004290BA /* Drawable */,
 				ABF6C39F1D2B5202006B1B91 /* Hitoe_iPhone.storyboard */,
+				AB3D3E691D2B88D6004290BA /* Hitoe_iPad.storyboard */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -122,9 +214,13 @@
 		ABF6C37C1D2B4BA9006B1B91 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				ABF6C3A01D2B73E5006B1B91 /* Util */,
 				ABF6C39E1D2B50B2006B1B91 /* Data */,
 				ABF6C39D1D2B4F45006B1B91 /* Setting */,
 				ABF6C39C1D2B4E10006B1B91 /* Profile */,
+				ABF6C3B11D2B7903006B1B91 /* DPHitoeDevicePlugin.h */,
+				ABF6C3B21D2B7903006B1B91 /* DPHitoeDevicePlugin.m */,
+				AB3D3E671D2B7D44004290BA /* DPHitoeConsts.h */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -163,6 +259,13 @@
 			children = (
 			);
 			path = Data;
+			sourceTree = "<group>";
+		};
+		ABF6C3A01D2B73E5006B1B91 /* Util */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Util;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -250,6 +353,32 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AB3D3E951D2B9E9B004290BA /* pose_faceup.png in Resources */,
+				AB3D3E8E1D2B9E9B004290BA /* mark_battery05.png in Resources */,
+				AB3D3E851D2B9E9B004290BA /* bg_orientation_graph.png in Resources */,
+				AB3D3E6A1D2B890F004290BA /* Info.plist in Resources */,
+				AB3D3E961D2B9E9B004290BA /* pose_forward.png in Resources */,
+				AB3D3E8D1D2B9E9B004290BA /* mark_battery04.png in Resources */,
+				AB3D3E8C1D2B9E9B004290BA /* mark_battery03.png in Resources */,
+				AB3D3E981D2B9E9B004290BA /* pose_rightside.png in Resources */,
+				AB3D3E901D2B9E9B004290BA /* pose_backward.png in Resources */,
+				AB3D3E931D2B9E9B004290BA /* pose_faceleft.png in Resources */,
+				AB3D3E941D2B9E9B004290BA /* pose_faceright.png in Resources */,
+				AB3D3E971D2B9E9B004290BA /* pose_leftside.png in Resources */,
+				AB3D3E861D2B9E9B004290BA /* bg_stress.xml in Resources */,
+				AB3D3E881D2B9E9B004290BA /* hitoe_input_pin.png in Resources */,
+				AB3D3E891D2B9E9B004290BA /* hitoe_set.png in Resources */,
+				AB3D3E6B1D2B890F004290BA /* Hitoe_iPad.storyboard in Resources */,
+				AB3D3E921D2B9E9B004290BA /* pose_facedown.png in Resources */,
+				AB3D3E8B1D2B9E9B004290BA /* mark_battery02.png in Resources */,
+				AB3D3E991D2B9E9B004290BA /* pose_running.png in Resources */,
+				AB3D3E681D2B85E7004290BA /* Hitoe_iPhone.storyboard in Resources */,
+				AB3D3E9A1D2B9E9B004290BA /* pose_standing.png in Resources */,
+				AB3D3E8F1D2B9E9B004290BA /* mark_heartrate.png in Resources */,
+				AB3D3E9B1D2B9E9B004290BA /* pose_walking.png in Resources */,
+				AB3D3E871D2B9E9B004290BA /* hitoe_explain.png in Resources */,
+				AB3D3E911D2B9E9B004290BA /* pose_default.png in Resources */,
+				AB3D3E8A1D2B9E9B004290BA /* mark_battery01.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -267,7 +396,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Environment Variables\nFRAMEWORK_NAME=${PROJECT_NAME}\nFRAMEWORK_VERSION=A\nFRAMEWORK_VERSION_NUMBER=1.0\nCONFIGURATION=\"Release\"\nFRAMEWORK_BUILD_PATH=\"${SRCROOT}/build/${CONFIGURATION}-framework\"\nFRAMEWORK_DIR=\"${FRAMEWORK_BUILD_PATH}/${FRAMEWORK_NAME}.framework\"\nSTATICLIB_BUILD_PATH=\"${SRCROOT}/build/${CONFIGURATION}-universal\"\n\n# Clean directories\nrm -rf \"${FRAMEWORK_BUILD_PATH}\"\n\n# Build simulator and device binaries.\n# A target to build a static library *must* have the name ${PROJECT_NAME}.\nxcodebuild -project ${PROJECT_NAME}.xcodeproj -sdk iphonesimulator -target ${PROJECT_NAME} -configuration ${CONFIGURATION} clean build\nxcodebuild -project ${PROJECT_NAME}.xcodeproj -sdk iphoneos -target ${PROJECT_NAME} -configuration ${CONFIGURATION} clean build\n# A target to build a bundle *must* have the name ${PROJECT_NAME}_resources. This target is optional.\nxcodebuild -project ${PROJECT_NAME}.xcodeproj -sdk iphonesimulator -target ${PROJECT_NAME}_resources -configuration ${CONFIGURATION} clean build || true\nxcodebuild -project ${PROJECT_NAME}.xcodeproj -sdk iphoneos -target ${PROJECT_NAME}_resources -configuration ${CONFIGURATION} clean build || true\n\n# create directories.\nmkdir -p ${FRAMEWORK_DIR}/Versions/${FRAMEWORK_VERSION}/Headers\n#mkdir -p ${FRAMEWORK_DIR}/Versions/${FRAMEWORK_VERSION}/Resources\nmkdir -p ${STATICLIB_BUILD_PATH}\n# create symlinks\ncd ${FRAMEWORK_DIR}\nln -s ../Versions/${FRAMEWORK_VERSION} Versions/Current\nln -s Versions/Current/Headers Headers\n#ln -s Versions/Current/Resources Resources\nln -s Versions/Current/${FRAMEWORK_NAME} ${FRAMEWORK_NAME}\ncd ${SRCROOT}\n\n# create the universal library, and strip internal symbols from it\nlipo ${SRCROOT}/build/${CONFIGURATION}-iphoneos/lib${FRAMEWORK_NAME}.a ${SRCROOT}/build/${CONFIGURATION}-iphonesimulator/lib${FRAMEWORK_NAME}.a -create -output \"${STATICLIB_BUILD_PATH}/lib${FRAMEWORK_NAME}.a\"\n#strip -x \"${STATICLIB_BUILD_PATH}/lib${FRAMEWORK_NAME}.a\"\ncp \"${STATICLIB_BUILD_PATH}/lib${FRAMEWORK_NAME}.a\" \"${FRAMEWORK_DIR}/Versions/Current/${FRAMEWORK_NAME}\"\n\n# copy files\ncp -r ${SRCROOT}/${PROJECT_NAME}/Headers/ ${FRAMEWORK_DIR}/Headers/\n\n# copy binary to bin folder\ncd ${SRCROOT}\n#rm -rf bin\n#mkdir bin\ncd bin\nls | grep -v -E '.gitignore$' | xargs rm -rf\ncd ..\ncp -R ${FRAMEWORK_DIR} bin\ncp -r build/${CONFIGURATION}-resources/${PROJECT_NAME}_resources.bundle bin";
+			shellScript = "# Environment Variables\nFRAMEWORK_NAME=${PROJECT_NAME}\nFRAMEWORK_VERSION=A\nFRAMEWORK_VERSION_NUMBER=1.0\nCONFIGURATION=\"Release\"\nFRAMEWORK_BUILD_PATH=\"${SRCROOT}/build/${CONFIGURATION}-framework\"\nFRAMEWORK_DIR=\"${FRAMEWORK_BUILD_PATH}/${FRAMEWORK_NAME}.framework\"\nSTATICLIB_BUILD_PATH=\"${SRCROOT}/build/${CONFIGURATION}-universal\"\n\n# Clean directories\nrm -rf \"${FRAMEWORK_BUILD_PATH}\"\n\n# Build simulator and device binaries.\n# A target to build a static library *must* have the name ${PROJECT_NAME}.\nxcodebuild -project ${PROJECT_NAME}.xcodeproj -sdk iphonesimulator -target ${PROJECT_NAME} -configuration ${CONFIGURATION} clean build\nxcodebuild -project ${PROJECT_NAME}.xcodeproj -sdk iphoneos -target ${PROJECT_NAME} -configuration ${CONFIGURATION} clean build\n# A target to build a bundle *must* have the name ${PROJECT_NAME}_resources. This target is optional.\nxcodebuild -project ${PROJECT_NAME}.xcodeproj -sdk iphonesimulator -target ${PROJECT_NAME}_resources -configuration ${CONFIGURATION} clean build || true\nxcodebuild -project ${PROJECT_NAME}.xcodeproj -sdk iphoneos -target ${PROJECT_NAME}_resources -configuration ${CONFIGURATION} clean build || true\n\n# create directories.\nmkdir -p ${FRAMEWORK_DIR}/Versions/${FRAMEWORK_VERSION}/Headers\n#mkdir -p ${FRAMEWORK_DIR}/Versions/${FRAMEWORK_VERSION}/Resources\nmkdir -p ${STATICLIB_BUILD_PATH}\n# create symlinks\ncd ${FRAMEWORK_DIR}\nln -s ../Versions/${FRAMEWORK_VERSION} Versions/Current\nln -s Versions/Current/Headers Headers\n#ln -s Versions/Current/Resources Resources\nln -s Versions/Current/${FRAMEWORK_NAME} ${FRAMEWORK_NAME}\ncd ${SRCROOT}\n\n# create the universal library, and strip internal symbols from it\nlipo ${SRCROOT}/build/${CONFIGURATION}-iphoneos/lib${FRAMEWORK_NAME}.a ${SRCROOT}/build/${CONFIGURATION}-iphonesimulator/lib${FRAMEWORK_NAME}.a -create -output \"${STATICLIB_BUILD_PATH}/lib${FRAMEWORK_NAME}.a\"\n#strip -x \"${STATICLIB_BUILD_PATH}/lib${FRAMEWORK_NAME}.a\"\ncp \"${STATICLIB_BUILD_PATH}/lib${FRAMEWORK_NAME}.a\" \"${FRAMEWORK_DIR}/Versions/Current/${FRAMEWORK_NAME}\"\n\n# copy files\ncp -r ${SRCROOT}/${PROJECT_NAME}/Headers/ ${FRAMEWORK_DIR}/Headers/\n\n# copy binary to bin folder\ncd ${SRCROOT}\n\ncd bin\nls | grep -v -E '.gitignore$' | xargs rm -rf\ncd ..\ncp -R ${FRAMEWORK_DIR} bin\ncp -r build/${CONFIGURATION}-resources/${PROJECT_NAME}_resources.bundle bin";
 		};
 		ABF6C39B1D2B4D5F006B1B91 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -289,6 +418,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ABF6C3B31D2B7903006B1B91 /* DPHitoeDevicePlugin.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -385,9 +515,12 @@
 		ABF6C3761D2B4A0D006B1B91 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/../../dConnectSDK/dConnectSDKForIOS/bin\n$(PROJECT_DIR)/../../dConnectSDK/dConnectSDKForIOS/bin",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -398,9 +531,12 @@
 		ABF6C3771D2B4A0D006B1B91 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/../../dConnectSDK/dConnectSDKForIOS/bin\n$(PROJECT_DIR)/../../dConnectSDK/dConnectSDKForIOS/bin",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -427,13 +563,16 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "-";
 				COMBINE_HIDPI_IMAGES = YES;
+				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)-resources";
 				INFOPLIST_FILE = dConnectDeviceHitoe_resources/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.deviceconnect.ios.dConnectDeviceHitoe-resources";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
+				VALID_ARCHS = "arm64 armv7 armv7s";
 				WRAPPER_EXTENSION = bundle;
 			};
 			name = Debug;
@@ -443,13 +582,16 @@
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "-";
 				COMBINE_HIDPI_IMAGES = YES;
+				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)-resources";
 				INFOPLIST_FILE = dConnectDeviceHitoe_resources/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.deviceconnect.ios.dConnectDeviceHitoe-resources";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
+				VALID_ARCHS = "arm64 armv7 armv7s";
 				WRAPPER_EXTENSION = bundle;
 			};
 			name = Release;
@@ -487,6 +629,7 @@
 				ABF6C3771D2B4A0D006B1B91 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		ABF6C37F1D2B4C3C006B1B91 /* Build configuration list for PBXAggregateTarget "dConnectDeviceHitoe_framework" */ = {
 			isa = XCConfigurationList;
@@ -495,6 +638,7 @@
 				ABF6C3811D2B4C3C006B1B91 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		ABF6C3941D2B4CF6006B1B91 /* Build configuration list for PBXNativeTarget "dConnectDeviceHitoe_resources" */ = {
 			isa = XCConfigurationList;
@@ -503,6 +647,7 @@
 				ABF6C3961D2B4CF6006B1B91 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		ABF6C3981D2B4D58006B1B91 /* Build configuration list for PBXAggregateTarget "dConnectDeviceHitoe_OCLint" */ = {
 			isa = XCConfigurationList;
@@ -511,6 +656,7 @@
 				ABF6C39A1D2B4D58006B1B91 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
