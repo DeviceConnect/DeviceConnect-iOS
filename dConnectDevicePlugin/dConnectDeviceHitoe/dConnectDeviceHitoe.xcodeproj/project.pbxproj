@@ -58,6 +58,9 @@
 		AB3D3E991D2B9E9B004290BA /* pose_running.png in Resources */ = {isa = PBXBuildFile; fileRef = AB3D3E821D2B9E9B004290BA /* pose_running.png */; };
 		AB3D3E9A1D2B9E9B004290BA /* pose_standing.png in Resources */ = {isa = PBXBuildFile; fileRef = AB3D3E831D2B9E9B004290BA /* pose_standing.png */; };
 		AB3D3E9B1D2B9E9B004290BA /* pose_walking.png in Resources */ = {isa = PBXBuildFile; fileRef = AB3D3E841D2B9E9B004290BA /* pose_walking.png */; };
+		AB3D3EB21D2CC40D004290BA /* DPHitoeSystemProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = AB3D3EB11D2CC40D004290BA /* DPHitoeSystemProfile.m */; };
+		AB3D3EB61D2CC7F3004290BA /* DCMDevicePluginSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB3D3EB51D2CC7F2004290BA /* DCMDevicePluginSDK.framework */; };
+		AB3D3EC01D2CCDB7004290BA /* DPHitoeDeviceListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB3D3EBF1D2CCDB7004290BA /* DPHitoeDeviceListViewController.m */; };
 		ABF6C3AB1D2B7722006B1B91 /* DConnectSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABF6C3AA1D2B7722006B1B91 /* DConnectSDK.framework */; };
 		ABF6C3AD1D2B7741006B1B91 /* hitoeAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABF6C3AC1D2B7741006B1B91 /* hitoeAPI.framework */; };
 		ABF6C3B31D2B7903006B1B91 /* DPHitoeDevicePlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = ABF6C3B21D2B7903006B1B91 /* DPHitoeDevicePlugin.m */; };
@@ -101,6 +104,11 @@
 		AB3D3E821D2B9E9B004290BA /* pose_running.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pose_running.png; sourceTree = "<group>"; };
 		AB3D3E831D2B9E9B004290BA /* pose_standing.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pose_standing.png; sourceTree = "<group>"; };
 		AB3D3E841D2B9E9B004290BA /* pose_walking.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pose_walking.png; sourceTree = "<group>"; };
+		AB3D3EB01D2CC40D004290BA /* DPHitoeSystemProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHitoeSystemProfile.h; sourceTree = "<group>"; };
+		AB3D3EB11D2CC40D004290BA /* DPHitoeSystemProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHitoeSystemProfile.m; sourceTree = "<group>"; };
+		AB3D3EB51D2CC7F2004290BA /* DCMDevicePluginSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DCMDevicePluginSDK.framework; path = ../DCMDevicePluginSDK/bin/DCMDevicePluginSDK.framework; sourceTree = "<group>"; };
+		AB3D3EBE1D2CCDB7004290BA /* DPHitoeDeviceListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHitoeDeviceListViewController.h; sourceTree = "<group>"; };
+		AB3D3EBF1D2CCDB7004290BA /* DPHitoeDeviceListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHitoeDeviceListViewController.m; sourceTree = "<group>"; };
 		ABF6C36C1D2B4A0D006B1B91 /* libdConnectDeviceHitoe.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libdConnectDeviceHitoe.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		ABF6C3911D2B4CF6006B1B91 /* dConnectDeviceHitoe_resources.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = dConnectDeviceHitoe_resources.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		ABF6C3931D2B4CF6006B1B91 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -119,6 +127,7 @@
 			files = (
 				ABF6C3AB1D2B7722006B1B91 /* DConnectSDK.framework in Frameworks */,
 				ABF6C3AD1D2B7741006B1B91 /* hitoeAPI.framework in Frameworks */,
+				AB3D3EB61D2CC7F3004290BA /* DCMDevicePluginSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -162,6 +171,23 @@
 			path = Drawable;
 			sourceTree = "<group>";
 		};
+		AB3D3EB41D2CC72D004290BA /* db */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = db;
+			sourceTree = "<group>";
+		};
+		AB3D3EB71D2CCAA9004290BA /* viewcontroller */ = {
+			isa = PBXGroup;
+			children = (
+				AB3D3EBE1D2CCDB7004290BA /* DPHitoeDeviceListViewController.h */,
+				AB3D3EBF1D2CCDB7004290BA /* DPHitoeDeviceListViewController.m */,
+			);
+			name = viewcontroller;
+			path = dConnectDeviceHitoe/Classes/setting/viewcontroller;
+			sourceTree = SOURCE_ROOT;
+		};
 		ABF6C3631D2B4A0D006B1B91 = {
 			isa = PBXGroup;
 			children = (
@@ -194,6 +220,7 @@
 		ABF6C3781D2B4AB1006B1B91 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				AB3D3EB51D2CC7F2004290BA /* DCMDevicePluginSDK.framework */,
 				ABF6C3AC1D2B7741006B1B91 /* hitoeAPI.framework */,
 				ABF6C3A91D2B7722006B1B91 /* DConnectSDK_resources.bundle */,
 				ABF6C3AA1D2B7722006B1B91 /* DConnectSDK.framework */,
@@ -214,10 +241,11 @@
 		ABF6C37C1D2B4BA9006B1B91 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				ABF6C3A01D2B73E5006B1B91 /* Util */,
-				ABF6C39E1D2B50B2006B1B91 /* Data */,
-				ABF6C39D1D2B4F45006B1B91 /* Setting */,
-				ABF6C39C1D2B4E10006B1B91 /* Profile */,
+				AB3D3EB41D2CC72D004290BA /* db */,
+				ABF6C3A01D2B73E5006B1B91 /* util */,
+				ABF6C39E1D2B50B2006B1B91 /* data */,
+				ABF6C39D1D2B4F45006B1B91 /* setting */,
+				ABF6C39C1D2B4E10006B1B91 /* profile */,
 				ABF6C3B11D2B7903006B1B91 /* DPHitoeDevicePlugin.h */,
 				ABF6C3B21D2B7903006B1B91 /* DPHitoeDevicePlugin.m */,
 				AB3D3E671D2B7D44004290BA /* DPHitoeConsts.h */,
@@ -240,32 +268,38 @@
 			path = dConnectDeviceHitoe_resources;
 			sourceTree = "<group>";
 		};
-		ABF6C39C1D2B4E10006B1B91 /* Profile */ = {
+		ABF6C39C1D2B4E10006B1B91 /* profile */ = {
 			isa = PBXGroup;
 			children = (
+				AB3D3EB01D2CC40D004290BA /* DPHitoeSystemProfile.h */,
+				AB3D3EB11D2CC40D004290BA /* DPHitoeSystemProfile.m */,
 			);
+			name = profile;
 			path = Profile;
 			sourceTree = "<group>";
 		};
-		ABF6C39D1D2B4F45006B1B91 /* Setting */ = {
+		ABF6C39D1D2B4F45006B1B91 /* setting */ = {
 			isa = PBXGroup;
 			children = (
+				AB3D3EB71D2CCAA9004290BA /* viewcontroller */,
 			);
+			name = setting;
 			path = Setting;
 			sourceTree = "<group>";
 		};
-		ABF6C39E1D2B50B2006B1B91 /* Data */ = {
+		ABF6C39E1D2B50B2006B1B91 /* data */ = {
 			isa = PBXGroup;
 			children = (
 			);
+			name = data;
 			path = Data;
 			sourceTree = "<group>";
 		};
-		ABF6C3A01D2B73E5006B1B91 /* Util */ = {
+		ABF6C3A01D2B73E5006B1B91 /* util */ = {
 			isa = PBXGroup;
 			children = (
 			);
-			name = Util;
+			name = util;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -418,6 +452,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AB3D3EC01D2CCDB7004290BA /* DPHitoeDeviceListViewController.m in Sources */,
+				AB3D3EB21D2CC40D004290BA /* DPHitoeSystemProfile.m in Sources */,
 				ABF6C3B31D2B7903006B1B91 /* DPHitoeDevicePlugin.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -449,9 +485,10 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -468,7 +505,8 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -492,9 +530,10 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = NO;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -505,7 +544,8 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
@@ -516,11 +556,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
-					"$(PROJECT_DIR)/../../dConnectSDK/dConnectSDKForIOS/bin\n$(PROJECT_DIR)/../../dConnectSDK/dConnectSDKForIOS/bin",
+					"$(PROJECT_DIR)/../../dConnectSDK/dConnectSDKForIOS/bin",
+					"$(PROJECT_DIR)/../DCMDevicePluginSDK/bin",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -532,11 +573,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
-					"$(PROJECT_DIR)/../../dConnectSDK/dConnectSDKForIOS/bin\n$(PROJECT_DIR)/../../dConnectSDK/dConnectSDKForIOS/bin",
+					"$(PROJECT_DIR)/../../dConnectSDK/dConnectSDKForIOS/bin",
+					"$(PROJECT_DIR)/../DCMDevicePluginSDK/bin",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -547,6 +589,7 @@
 		ABF6C3801D2B4C3C006B1B91 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -554,6 +597,7 @@
 		ABF6C3811D2B4C3C006B1B91 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -564,6 +608,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				COMBINE_HIDPI_IMAGES = YES;
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)-resources";
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = NO;
 				INFOPLIST_FILE = dConnectDeviceHitoe_resources/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
@@ -583,6 +628,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				COMBINE_HIDPI_IMAGES = YES;
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)-resources";
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = NO;
 				INFOPLIST_FILE = dConnectDeviceHitoe_resources/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
@@ -599,6 +645,7 @@
 		ABF6C3991D2B4D58006B1B91 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -606,6 +653,7 @@
 		ABF6C39A1D2B4D58006B1B91 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;

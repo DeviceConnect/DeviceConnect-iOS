@@ -44,7 +44,7 @@ extern int const DPHitoeExWalkUnitNum;
 extern int const DPHitoeExLRBalanceUnitNum;
 
 extern NSString *const DPHitoeSensorDeviceType;
-extern NSString *const DPHitoeSensorParamSearchTime;
+extern long long const DPHitoeSensorParamSearchTime;
 
 extern int const DPHitoeECGSamplingInterval;
 extern int const DPHitoeACCSamplingInterval;
@@ -77,11 +77,6 @@ extern int const DPHitoeLeftRightThreshold;
 
 extern int const DPHitoeChartTitleSize;
 extern int const DPHitoeLabesSize;
-extern UIColor *const DPHitoeAxisColor;
-extern UIColor *const DPHitoeGridColor;
-extern UIColor *const DPHitoeTitleColor;
-extern UIColor *const DPHitoeXLabelColor;
-extern UIColor *const DPHitoeYLabelColor;
 
 
 

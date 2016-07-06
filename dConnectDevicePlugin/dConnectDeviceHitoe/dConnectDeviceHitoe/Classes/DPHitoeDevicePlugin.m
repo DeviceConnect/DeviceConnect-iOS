@@ -8,30 +8,31 @@
 //
 
 #import "DPHitoeDevicePlugin.h"
+#import "DPHitoeSystemProfile.h"
 #import "DPHitoeConsts.h"
 // Const.h
 NSString *const DPHitoeBundleName = @"dConnectDeviceHitoe_resources";
 
 
-NSString *const DPHitoeBR = "\n";
-NSString *const DPHitoeVB = "|";
-NSString *const DPHitoeComma = ",";
-NSString *const DPHitoeColon = ":"
+NSString *const DPHitoeBR = @"\n";
+NSString *const DPHitoeVB = @"|";
+NSString *const DPHitoeComma = @",";
+NSString *const DPHitoeColon = @":";
 
-NSString *const DPHitoeRawDataPrefix = "raw.";
-NSString *const DPHitoeBaDataPrefix = "ba.";
-NSString *const DPHitoeExDataPrefix = "ex.";
+NSString *const DPHitoeRawDataPrefix = @"raw.";
+NSString *const DPHitoeBaDataPrefix = @"ba.";
+NSString *const DPHitoeExDataPrefix = @"ex.";
 
-NSString *const DPHitoeRawConnectionPrefix = "R";
-NSString *const DPHitoeBaConnectionPrefix = "B";
-NSString *const DPHitoeExConnectionPrefix = "E";
+NSString *const DPHitoeRawConnectionPrefix = @"R";
+NSString *const DPHitoeBaConnectionPrefix = @"B";
+NSString *const DPHitoeExConnectionPrefix = @"E";
 
 int const DPHitoeExPostureUnitNum = 30;
 int const DPHitoeExWalkUnitNum = 110;
 int const DPHitoeExLRBalanceUnitNum = 280;
 
-NSString *const DPHitoeSensorDeviceType = "hitoe D01";
-NSString *const DPHitoeSensorParamSearchTime = 5000;
+NSString *const DPHitoeSensorDeviceType = @"hitoe D01";
+long long const DPHitoeSensorParamSearchTime = 5000;
 
 int const DPHitoeECGSamplingInterval = 40;
 int const DPHitoeACCSamplingInterval = 40;
@@ -45,14 +46,14 @@ int const DPHitoeBaSkipCount = 50;
 int const DPHitoeBaRRIMin = 240;
 int const DPHitoeBaRRIMax = 3999;
 int const DPHitoeBaSampleCount = 20;
-NSString *const DPHitoeBaRRIInput = "extracted_rri";
+NSString *const DPHitoeBaRRIInput = @"extracted_rri";
 int const DPHitoeBaFreqSamplingInterval = 4000;
 int const DPHitoeBaFreqSamplingWindow = 60;
 int const DPHitoeBaRRISamplingRate = 8;
 int const DPHitoeBaTimeSamplingInterval = 4000;
 int const DPHitoeBaTimeSamplingWindow = 60;
 
-NSString *const DPHitoeExAccAxisXYZ = "XYZ=XYZ";
+NSString *const DPHitoeExAccAxisXYZ = @"XYZ=XYZ";
 int const DPHitoeExPostureWinodw = 1;
 double const DPHitoExWalkStride = 0.81;
 double const DPHitoeExRunStrideCOF = 0.0091;
@@ -66,12 +67,6 @@ int const DPHitoeLeftRightThreshold = 20;
 
 int const DPHitoeChartTitleSize = 25;
 int const DPHitoeLabesSize = 16;
-UIColor *const DPHitoeAxisColor = [UIColor whiteColor];
-UIColor *const DPHitoeGridColor = [UIColor whiteColor];
-UIColor *const DPHitoeTitleColor = [UIColor blackColor];
-UIColor *const DPHitoeXLabelColor = [UIColor blackColor];
-UIColor *const DPHitoeYLabelColor = [UIColor blackColor];
-
 
 
 int const DPHitoeApiIdGetAvailableSensor = 0x1010;
@@ -96,7 +91,7 @@ int const DPHitoeResIdSensorDisconnect = 0x65;
 int const DPHitoeResIdSensorDisconnectNotice = 0x66;
 
 
-NSString *const DPHitoeDeviceNameHitoeTX = "hitoe tx";
+NSString *const DPHitoeDeviceNameHitoeTX = @"hitoe tx";
 int const DPHitoeDeviceTypeUnknown = 0;
 int const DPHitoeDeviceTypeHitoeTx = 1;
 
@@ -113,12 +108,12 @@ int const DPHitoeDataKeyExtension = 0x04;
     self = [super init];
     if (self) {
         self.pluginName = @"Hitoe (Device Connect Device Plug-in)";
-        
-//        [self addProfile:[DPThetaBatteryProfile new]];
-//        [self addProfile:[DPThetaFileProfile new]];
-//        [self addProfile:[DPThetaMediaStreamRecordingProfile new]];
-//        [self addProfile:[DPThetaServiceDiscoveryProfile new]];
-//        [self addProfile:[DPThetaSystemProfile new]];
+
+//        [self addProfile:[DPHitoeBatteryProfile new]];
+//        [self addProfile:[DPHitoeFileProfile new]];
+//        [self addProfile:[DPHitoeMediaStreamRecordingProfile new]];
+//        [self addProfile:[DPHitoeServiceDiscoveryProfile new]];
+        [self addProfile:[DPHitoeSystemProfile new]];
         [self addProfile:[DConnectServiceInformationProfile new]];
         
         
@@ -132,4 +127,6 @@ int const DPHitoeDataKeyExtension = 0x04;
     
     return self;
 }
+
+
 @end
