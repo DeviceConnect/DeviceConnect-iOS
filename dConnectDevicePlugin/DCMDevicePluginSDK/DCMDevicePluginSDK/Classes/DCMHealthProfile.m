@@ -2,7 +2,7 @@
 //  DCMHealthProfile.m
 //  DCMDevicePluginSDK
 //
-//  Copyright (c) 2015 NTT DOCOMO, INC.
+//  Copyright (c) 2016 NTT DOCOMO, INC.
 //  Released under the MIT license
 //  http://opensource.org/licenses/mit-license.php
 //
@@ -168,6 +168,36 @@ NSString *const DCMHealthProfileParamBatteryLevel = @"batteryLevel";
 }
 + (void) setTimeStampString:(NSString*)timeStampString target:(DConnectMessage *)message {
     [message setString:timeStampString forKey:DCMHealthProfileParamTimeStampString];
+}
++ (void) setProductName:(NSString*)productName target:(DConnectMessage *)message {
+    [message setString:productName forKey:DCMHealthProfileParamProductName];
+}
++ (void) setManufacturerName:(NSString*)manufacturerName target:(DConnectMessage *)message {
+    [message setString:manufacturerName forKey:DCMHealthProfileParamManufacturerName];
+}
++ (void) setModelNumber:(NSString*)modelNumber target:(DConnectMessage *)message {
+    [message setString:modelNumber forKey:DCMHealthProfileParamModelNumber];
+}
++ (void) setFirmwareRevision:(NSString*)firmwareRevision target:(DConnectMessage *)message {
+    [message setString:firmwareRevision forKey:DCMHealthProfileParamFirmwareRevision];
+}
++ (void) setSerialNumber:(NSString*)serialNumber target:(DConnectMessage *)message {
+    [message setString:serialNumber forKey:DCMHealthProfileParamSerialNumber];
+}
++ (void) setSoftwareRevision:(NSString*)softwareRevision target:(DConnectMessage *)message {
+    [message setString:softwareRevision forKey:DCMHealthProfileParamSoftwareRevision];
+}
++ (void) setHardwareRevision:(NSString*)hardwareRevision target:(DConnectMessage *)message {
+    [message setString:hardwareRevision forKey:DCMHealthProfileParamHardwareRevision];
+}
++ (void) setPartNumber:(NSString*)partNumber target:(DConnectMessage *)message {
+    [message setString:partNumber forKey:DCMHealthProfileParamPartNumber];
+}
++ (void) setSystemId:(NSString*)systemId target:(DConnectMessage *)message {
+    [message setString:systemId forKey:DCMHealthProfileParamSystemId];
+}
++ (void) setBatteryLevel:(NSString*)batteryLevel target:(DConnectMessage *)message {
+    [message setString:batteryLevel forKey:DCMHealthProfileParamBatteryLevel];
 }
 
 #pragma mark - Private Methods
