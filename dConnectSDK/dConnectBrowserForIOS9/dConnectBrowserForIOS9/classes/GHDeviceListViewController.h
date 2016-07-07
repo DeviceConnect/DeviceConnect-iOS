@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@interface GHDeviceListViewController : UIViewController<UICollectionViewDelegate, UICollectionViewDataSource>
+#import "GHDeviceListViewModel.h"
+@interface GHDeviceListViewController : UIViewController<UICollectionViewDelegate, UICollectionViewDataSource, GHDeviceListViewModelDelegate>
 
 @end

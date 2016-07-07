@@ -27,6 +27,7 @@
     self = [super initWithCoder:aDecoder];
     if(self){
         viewModel = [[GHDeviceListViewModel alloc]init];
+        viewModel.delegate = self;
     }
     return self;
 }
@@ -41,17 +42,12 @@
 //--------------------------------------------------------------//
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return [[viewModel.datasource objectAtIndex:section]count];
-}
-
-- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
-{
     return [viewModel.datasource count];
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    DConnectMessage* message = [[viewModel.datasource objectAtIndex:indexPath.section]objectAtIndex:indexPath.row];
+    DConnectMessage* message = [viewModel.datasource objectAtIndex:indexPath.row];
         DeviceIconViewCell* cell = (DeviceIconViewCell*)[collectionView dequeueReusableCellWithReuseIdentifier:@"DeviceIconViewCell" forIndexPath:indexPath];
         [cell setDevice:message];
         __weak GHDeviceListViewController *weakSelf = self;
@@ -66,6 +62,14 @@
     TopCollectionHeaderView* header = (TopCollectionHeaderView*)[collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:@"headerCell" forIndexPath:indexPath];
      header.titleLabel.text = @"デバイス";
     return header;
+}
+
+//--------------------------------------------------------------//
+#pragma mark - GHDeviceListViewModelDelegate
+//--------------------------------------------------------------//
+- (void)requestDatasourceReload
+{
+    [self.collectionView reloadData];
 }
 
 //--------------------------------------------------------------//
@@ -88,6 +92,12 @@
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
     self.title = @"デバイス一覧";
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    [viewModel setup];
 }
 
 @end
