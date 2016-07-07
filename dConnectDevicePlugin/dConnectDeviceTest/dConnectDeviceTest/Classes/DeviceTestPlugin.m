@@ -38,6 +38,7 @@
     
     if (self) {
         self.useLocalOAuth = NO;
+        self.pluginName = @"Device Connect Device Plugin for Test";
         
         [[DConnectEventManager sharedManagerForClass:[self class]]
          setController:[DConnectMemoryCacheController new]];
