@@ -124,9 +124,11 @@
 - (void)addEmptyLabelIfNeeded
 {
     if (viewModel.isBookmarksEmpty) {
-        self.emptyBookmarksLabel = [self makeEmptyLabel: CGRectMake(0, 50, 320, 220)
-                                             message:@"ブックマークがありません。\nブックマークを登録してください。"];
-        [self.collectionView addSubview:self.emptyBookmarksLabel];
+        if (!self.emptyBookmarksLabel) {
+            self.emptyBookmarksLabel = [self makeEmptyLabel: CGRectMake(0, 50, 320, 220)
+                                                    message:@"ブックマークがありません。\nブックマークを登録してください。"];
+            [self.collectionView addSubview:self.emptyBookmarksLabel];
+        }
     } else {
         [self.emptyBookmarksLabel removeFromSuperview];
         self.emptyBookmarksLabel = nil;
