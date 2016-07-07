@@ -91,7 +91,12 @@ static NSInteger maxIconCount = 8;
 
 - (BOOL)isBookmarksEmpty
 {
-    return ([[self.datasource objectAtIndex:Bookmark] count] == 0);
+    for (GHPageModel* page in [self.datasource objectAtIndex:Bookmark]) {
+        if (![page.type isEqualToString:TYPE_BOOKMARK_DUMMY]) {
+            return NO;
+        }
+    }
+    return YES;
 }
 
 
