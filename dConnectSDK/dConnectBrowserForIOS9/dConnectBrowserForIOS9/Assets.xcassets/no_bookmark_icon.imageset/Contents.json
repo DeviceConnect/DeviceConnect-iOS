@@ -2,12 +2,11 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "icon-76.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "icon-76@2x.png",
+      "filename" : "dconnect_icon.png",
       "scale" : "2x"
     },
     {
