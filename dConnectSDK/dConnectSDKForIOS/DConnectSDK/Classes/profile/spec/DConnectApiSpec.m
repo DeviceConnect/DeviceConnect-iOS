@@ -202,6 +202,23 @@ NSString * const DConnectApiSpecJsonKeyRequestParams = @"requestParams";
     @throw [NSString stringWithFormat: @"unknown ApiSpecMethod : %d", (int)enMethod];
 }
 
++ (DConnectApiSpecMethod) convertActionToMethod: (DConnectMessageActionType) enMethod {
+
+    if (enMethod == DConnectMessageActionTypeGet) {
+        return GET;
+    }
+    if (enMethod == DConnectMessageActionTypePut) {
+        return PUT;
+    }
+    if (enMethod == DConnectMessageActionTypePost) {
+        return POST;
+    }
+    if (enMethod == DConnectMessageActionTypeDelete) {
+        return DELETE;
+    }
+    @throw [NSString stringWithFormat: @"unknown DConnectMessageActionType : %d", (int)enMethod];
+}
+
 + (NSString *) convertTypeToString: (DConnectApiSpecType) enType {
     
     if (enType == ONESHOT) {

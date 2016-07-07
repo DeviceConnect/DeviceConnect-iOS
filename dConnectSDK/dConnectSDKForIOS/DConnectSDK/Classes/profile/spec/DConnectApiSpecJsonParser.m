@@ -51,8 +51,12 @@
             }
         }
         DConnectApiSpecBuilder *builder = [[DConnectApiSpecBuilder alloc] init];
-        
-        DConnectApiSpec *apiSpec = [[[[[[builder name: name] type: type] method: method] path: path] requestParamSpecList: paramList] build];
+        [builder name: name];
+        [builder type: type];
+        [builder method: method];
+        [builder path: path];
+        [builder requestParamSpecList: paramList];
+        DConnectApiSpec *apiSpec = [builder build];
         return apiSpec;
     }
     @catch (NSString *e) {

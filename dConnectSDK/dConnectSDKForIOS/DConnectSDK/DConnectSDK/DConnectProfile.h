@@ -32,6 +32,12 @@
  */
 @property (nonatomic, weak) id<DConnectProfileProvider> provider;
 
+
+/*!
+ @brief サポートするAPI(key: ApiIdentifier, value: DConnectApi).
+ */
+@property (nonatomic, weak) NSMutableDictionary *mApis;
+
 /*!
  @brief プロファイル名を取得する。
  

@@ -7,8 +7,7 @@
 //  http://opensource.org/licenses/mit-license.php
 //
 
-#import <Foundation/Foundation.h>
-
+#import <DConnectSDK.h>
 #import "DConnectRequestParamSpec.h"
 
 
@@ -76,6 +75,8 @@ typedef enum {
 + (DConnectApiSpecMethod) parseMethod: (NSString *)string;
 
 + (DConnectApiSpecType) parseType: (NSString *)string;
+
++ (DConnectApiSpecMethod) convertActionToMethod: (DConnectMessageActionType) enMethod;
 
 + (NSString *) convertMethodToString: (DConnectApiSpecMethod) enMethod;
 
