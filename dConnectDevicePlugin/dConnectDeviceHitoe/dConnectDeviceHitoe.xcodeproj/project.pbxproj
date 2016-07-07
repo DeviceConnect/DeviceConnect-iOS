@@ -32,6 +32,7 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		AB281C161D2DE35B0092A2B2 /* DPHitoeDeviceListTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB281C151D2DE35B0092A2B2 /* DPHitoeDeviceListTableViewController.m */; };
 		AB3D3E681D2B85E7004290BA /* Hitoe_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ABF6C39F1D2B5202006B1B91 /* Hitoe_iPhone.storyboard */; };
 		AB3D3E6A1D2B890F004290BA /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = ABF6C3931D2B4CF6006B1B91 /* Info.plist */; };
 		AB3D3E6B1D2B890F004290BA /* Hitoe_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AB3D3E691D2B88D6004290BA /* Hitoe_iPad.storyboard */; };
@@ -60,7 +61,6 @@
 		AB3D3E9B1D2B9E9B004290BA /* pose_walking.png in Resources */ = {isa = PBXBuildFile; fileRef = AB3D3E841D2B9E9B004290BA /* pose_walking.png */; };
 		AB3D3EB21D2CC40D004290BA /* DPHitoeSystemProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = AB3D3EB11D2CC40D004290BA /* DPHitoeSystemProfile.m */; };
 		AB3D3EB61D2CC7F3004290BA /* DCMDevicePluginSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB3D3EB51D2CC7F2004290BA /* DCMDevicePluginSDK.framework */; };
-		AB3D3EC01D2CCDB7004290BA /* DPHitoeDeviceListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB3D3EBF1D2CCDB7004290BA /* DPHitoeDeviceListViewController.m */; };
 		ABF6C3AB1D2B7722006B1B91 /* DConnectSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABF6C3AA1D2B7722006B1B91 /* DConnectSDK.framework */; };
 		ABF6C3AD1D2B7741006B1B91 /* hitoeAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABF6C3AC1D2B7741006B1B91 /* hitoeAPI.framework */; };
 		ABF6C3B31D2B7903006B1B91 /* DPHitoeDevicePlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = ABF6C3B21D2B7903006B1B91 /* DPHitoeDevicePlugin.m */; };
@@ -79,6 +79,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		AB281C141D2DE35B0092A2B2 /* DPHitoeDeviceListTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHitoeDeviceListTableViewController.h; sourceTree = "<group>"; };
+		AB281C151D2DE35B0092A2B2 /* DPHitoeDeviceListTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHitoeDeviceListTableViewController.m; sourceTree = "<group>"; };
 		AB3D3E671D2B7D44004290BA /* DPHitoeConsts.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DPHitoeConsts.h; sourceTree = "<group>"; };
 		AB3D3E691D2B88D6004290BA /* Hitoe_iPad.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Hitoe_iPad.storyboard; sourceTree = "<group>"; };
 		AB3D3E6E1D2B9E9B004290BA /* bg_orientation_graph.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bg_orientation_graph.png; sourceTree = "<group>"; };
@@ -107,8 +109,6 @@
 		AB3D3EB01D2CC40D004290BA /* DPHitoeSystemProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHitoeSystemProfile.h; sourceTree = "<group>"; };
 		AB3D3EB11D2CC40D004290BA /* DPHitoeSystemProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHitoeSystemProfile.m; sourceTree = "<group>"; };
 		AB3D3EB51D2CC7F2004290BA /* DCMDevicePluginSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DCMDevicePluginSDK.framework; path = ../DCMDevicePluginSDK/bin/DCMDevicePluginSDK.framework; sourceTree = "<group>"; };
-		AB3D3EBE1D2CCDB7004290BA /* DPHitoeDeviceListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHitoeDeviceListViewController.h; sourceTree = "<group>"; };
-		AB3D3EBF1D2CCDB7004290BA /* DPHitoeDeviceListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHitoeDeviceListViewController.m; sourceTree = "<group>"; };
 		ABF6C36C1D2B4A0D006B1B91 /* libdConnectDeviceHitoe.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libdConnectDeviceHitoe.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		ABF6C3911D2B4CF6006B1B91 /* dConnectDeviceHitoe_resources.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = dConnectDeviceHitoe_resources.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		ABF6C3931D2B4CF6006B1B91 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -181,8 +181,8 @@
 		AB3D3EB71D2CCAA9004290BA /* viewcontroller */ = {
 			isa = PBXGroup;
 			children = (
-				AB3D3EBE1D2CCDB7004290BA /* DPHitoeDeviceListViewController.h */,
-				AB3D3EBF1D2CCDB7004290BA /* DPHitoeDeviceListViewController.m */,
+				AB281C141D2DE35B0092A2B2 /* DPHitoeDeviceListTableViewController.h */,
+				AB281C151D2DE35B0092A2B2 /* DPHitoeDeviceListTableViewController.m */,
 			);
 			name = viewcontroller;
 			path = dConnectDeviceHitoe/Classes/setting/viewcontroller;
@@ -452,7 +452,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AB3D3EC01D2CCDB7004290BA /* DPHitoeDeviceListViewController.m in Sources */,
+				AB281C161D2DE35B0092A2B2 /* DPHitoeDeviceListTableViewController.m in Sources */,
 				AB3D3EB21D2CC40D004290BA /* DPHitoeSystemProfile.m in Sources */,
 				ABF6C3B31D2B7903006B1B91 /* DPHitoeDevicePlugin.m in Sources */,
 			);

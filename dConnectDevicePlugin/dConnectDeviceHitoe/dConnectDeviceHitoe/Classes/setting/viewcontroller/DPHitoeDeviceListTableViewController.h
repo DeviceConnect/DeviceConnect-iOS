@@ -1,5 +1,5 @@
 //
-//  DPHitoeDevicePlugin.h
+//  DPHitoeDeviceListTableViewController.h
 //  dConnectDeviceHitoe
 //
 //  Copyright (c) 2016 NTT DOCOMO, INC.
@@ -7,9 +7,9 @@
 //  http://opensource.org/licenses/mit-license.php
 //
 
-#import <Foundation/Foundation.h>
-#import <DConnectSDK/DConnectSDK.h>
 
-@interface DPHitoeDevicePlugin : DConnectDevicePlugin
+#import <UIKit/UIKit.h>
+
+@interface DPHitoeDeviceListTableViewController : UITableViewController
 
 @end
