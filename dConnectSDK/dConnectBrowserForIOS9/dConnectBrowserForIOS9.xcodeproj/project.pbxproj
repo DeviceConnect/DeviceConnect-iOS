@@ -21,6 +21,7 @@
 		8E1A05871D2DF0AA006A466B /* GHDeviceListViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E1A05861D2DF0AA006A466B /* GHDeviceListViewModel.m */; };
 		8E1A05891D2E12F5006A466B /* device.html in Resources */ = {isa = PBXBuildFile; fileRef = 8E1A05881D2E12F5006A466B /* device.html */; };
 		8E1A058D1D2E41BC006A466B /* GHDevicePluginTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E1A058C1D2E41BC006A466B /* GHDevicePluginTableViewController.m */; };
+		8E1A05911D2E423B006A466B /* GHDevicePluginViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E1A05901D2E423B006A466B /* GHDevicePluginViewModel.m */; };
 		8E3772441D24D577003D3124 /* HTMLNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E3772411D24D577003D3124 /* HTMLNode.m */; };
 		8E3772451D24D577003D3124 /* HTMLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E3772431D24D577003D3124 /* HTMLParser.m */; };
 		8E3772471D24D5B3003D3124 /* libxml2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E3772461D24D5B3003D3124 /* libxml2.tbd */; };
@@ -208,6 +209,8 @@
 		8E1A05881D2E12F5006A466B /* device.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = device.html; sourceTree = "<group>"; };
 		8E1A058B1D2E41BC006A466B /* GHDevicePluginTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHDevicePluginTableViewController.h; sourceTree = "<group>"; };
 		8E1A058C1D2E41BC006A466B /* GHDevicePluginTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GHDevicePluginTableViewController.m; sourceTree = "<group>"; };
+		8E1A058F1D2E423B006A466B /* GHDevicePluginViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHDevicePluginViewModel.h; sourceTree = "<group>"; };
+		8E1A05901D2E423B006A466B /* GHDevicePluginViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GHDevicePluginViewModel.m; sourceTree = "<group>"; };
 		8E3772401D24D577003D3124 /* HTMLNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HTMLNode.h; path = "Objective-C-HMTL-Parser/HTMLNode.h"; sourceTree = "<group>"; };
 		8E3772411D24D577003D3124 /* HTMLNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HTMLNode.m; path = "Objective-C-HMTL-Parser/HTMLNode.m"; sourceTree = "<group>"; };
 		8E3772421D24D577003D3124 /* HTMLParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HTMLParser.h; path = "Objective-C-HMTL-Parser/HTMLParser.h"; sourceTree = "<group>"; };
@@ -498,6 +501,15 @@
 			name = devicePlugin;
 			sourceTree = "<group>";
 		};
+		8E1A058E1D2E421C006A466B /* devicePlugin */ = {
+			isa = PBXGroup;
+			children = (
+				8E1A058F1D2E423B006A466B /* GHDevicePluginViewModel.h */,
+				8E1A05901D2E423B006A466B /* GHDevicePluginViewModel.m */,
+			);
+			name = devicePlugin;
+			sourceTree = "<group>";
+		};
 		8E37723F1D24D545003D3124 /* Objective-C-HMTL-Parser */ = {
 			isa = PBXGroup;
 			children = (
@@ -527,6 +539,7 @@
 		8EBB89161D1387010038700B /* viewModel */ = {
 			isa = PBXGroup;
 			children = (
+				8E1A058E1D2E421C006A466B /* devicePlugin */,
 				8E1A05841D2DF083006A466B /* device */,
 				8E0A4C371D1CC89C00827DA6 /* initialGuide */,
 				8ED7B1AA1D1BA3E40053FDBD /* setting */,
@@ -1106,6 +1119,7 @@
 				8EBB89211D13CA960038700B /* TopCollectionHeaderView.m in Sources */,
 				8E0563521D263CFA008EBA25 /* DeviceIconViewModel.m in Sources */,
 				AB00F2E81C71A29D00689C70 /* GHDirectory.m in Sources */,
+				8E1A05911D2E423B006A466B /* GHDevicePluginViewModel.m in Sources */,
 				8ED7B1B51D1BB03C0053FDBD /* SwitchableCell.m in Sources */,
 				8EBB89131D1385050038700B /* BookmarkIconViewCell.m in Sources */,
 				AB00F2EC1C71A29D00689C70 /* GHFolderTitleCell.m in Sources */,
