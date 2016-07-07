@@ -10,6 +10,7 @@
 #import "GHDeviceListViewModel.h"
 #import "TopCollectionHeaderView.h"
 #import "DeviceIconViewCell.h"
+#import "WebViewController.h"
 
 @interface GHDeviceListViewController ()
 {
@@ -82,7 +83,11 @@
 
 - (void)openDeviceDetail:(DConnectMessage*)message
 {
-
+    //TODO: デバイス確認画面用のhtmlのpathを渡す
+    NSString* path = [[NSBundle mainBundle]pathForResource:@"device" ofType:@"html"];
+    WebViewController* controller = [[WebViewController alloc]initWithPath:path];
+    UINavigationController* nav = [[UINavigationController alloc]initWithRootViewController:controller];
+    [self presentViewController:nav animated:YES completion:nil];
 }
 
 //--------------------------------------------------------------//
