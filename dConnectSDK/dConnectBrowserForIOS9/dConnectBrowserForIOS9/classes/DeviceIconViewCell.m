@@ -29,9 +29,15 @@
     self.iconImage.image = nil;
     self.viewModel.message = message;
     self.titleLabel.text = self.viewModel.name;
-    self.iconImage.image = [UIImage imageNamed:@"no_bookmark_icon"];
-    //TODO: プラグインのBundleから画像を取得する
 
+    NSString* target = @"dConnectDevicePebble"; //TODO: DConnectMessage.idからターゲットを判定する
+    NSString* bundle = [[NSBundle mainBundle] pathForResource:target ofType:@"bundle"];
+    if (bundle) {
+        NSString* imagePath = [NSString stringWithFormat:@"%@/dconnect_icon.png", bundle];
+        self.iconImage.image = [[UIImage alloc] initWithContentsOfFile:imagePath];
+    } else {
+        self.iconImage.image = [UIImage imageNamed:@"default_device_icon"];
+    }
     [self setEnabled:YES];
 }
 
