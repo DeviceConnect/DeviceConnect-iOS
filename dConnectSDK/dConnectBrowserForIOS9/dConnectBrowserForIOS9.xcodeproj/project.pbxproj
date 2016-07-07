@@ -18,6 +18,7 @@
 		8E0A4C3A1D1CC92D00827DA6 /* InitialGuideViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0A4C391D1CC92D00827DA6 /* InitialGuideViewModel.m */; };
 		8E0A4C3F1D1D28B900827DA6 /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0A4C3E1D1D28B900827DA6 /* WebViewController.m */; };
 		8E0A4C441D1D32EF00827DA6 /* help.html in Resources */ = {isa = PBXBuildFile; fileRef = 8E0A4C431D1D32EF00827DA6 /* help.html */; };
+		8E1A05871D2DF0AA006A466B /* GHDeviceListViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E1A05861D2DF0AA006A466B /* GHDeviceListViewModel.m */; };
 		8E3772441D24D577003D3124 /* HTMLNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E3772411D24D577003D3124 /* HTMLNode.m */; };
 		8E3772451D24D577003D3124 /* HTMLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E3772431D24D577003D3124 /* HTMLParser.m */; };
 		8E3772471D24D5B3003D3124 /* libxml2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E3772461D24D5B3003D3124 /* libxml2.tbd */; };
@@ -200,6 +201,8 @@
 		8E0A4C3D1D1D28B900827DA6 /* WebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebViewController.h; sourceTree = "<group>"; };
 		8E0A4C3E1D1D28B900827DA6 /* WebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebViewController.m; sourceTree = "<group>"; };
 		8E0A4C431D1D32EF00827DA6 /* help.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = help.html; sourceTree = "<group>"; };
+		8E1A05851D2DF0AA006A466B /* GHDeviceListViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHDeviceListViewModel.h; sourceTree = "<group>"; };
+		8E1A05861D2DF0AA006A466B /* GHDeviceListViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GHDeviceListViewModel.m; sourceTree = "<group>"; };
 		8E3772401D24D577003D3124 /* HTMLNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HTMLNode.h; path = "Objective-C-HMTL-Parser/HTMLNode.h"; sourceTree = "<group>"; };
 		8E3772411D24D577003D3124 /* HTMLNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HTMLNode.m; path = "Objective-C-HMTL-Parser/HTMLNode.m"; sourceTree = "<group>"; };
 		8E3772421D24D577003D3124 /* HTMLParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HTMLParser.h; path = "Objective-C-HMTL-Parser/HTMLParser.h"; sourceTree = "<group>"; };
@@ -471,6 +474,15 @@
 			path = html;
 			sourceTree = "<group>";
 		};
+		8E1A05841D2DF083006A466B /* device */ = {
+			isa = PBXGroup;
+			children = (
+				8E1A05851D2DF0AA006A466B /* GHDeviceListViewModel.h */,
+				8E1A05861D2DF0AA006A466B /* GHDeviceListViewModel.m */,
+			);
+			name = device;
+			sourceTree = "<group>";
+		};
 		8E37723F1D24D545003D3124 /* Objective-C-HMTL-Parser */ = {
 			isa = PBXGroup;
 			children = (
@@ -500,6 +512,7 @@
 		8EBB89161D1387010038700B /* viewModel */ = {
 			isa = PBXGroup;
 			children = (
+				8E1A05841D2DF083006A466B /* device */,
 				8E0A4C371D1CC89C00827DA6 /* initialGuide */,
 				8ED7B1AA1D1BA3E40053FDBD /* setting */,
 				8EBB89171D1387090038700B /* top */,
@@ -1089,6 +1102,7 @@
 				AB00F2F21C71A29D00689C70 /* GHPageViewCell.m in Sources */,
 				AB00F49F1C71B16200689C70 /* NSString+HTML.m in Sources */,
 				AB00F2E91C71A29D00689C70 /* GHFolderCell.m in Sources */,
+				8E1A05871D2DF0AA006A466B /* GHDeviceListViewModel.m in Sources */,
 				8E0563591D2683DC008EBA25 /* GHDeviceListViewController.m in Sources */,
 				8EBB891D1D139C750038700B /* TopViewModel.m in Sources */,
 				AB00F4AB1C71B16200689C70 /* RATreeView+TableViewDelegate.m in Sources */,
