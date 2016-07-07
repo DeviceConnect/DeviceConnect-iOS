@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface GHDeviceListViewController : UIViewController
+@interface GHDeviceListViewController : UIViewController<UICollectionViewDelegate, UICollectionViewDataSource>
 
 @end
