@@ -33,7 +33,7 @@
 }
 
 
-- (DConnectSystemProfile<DConnectSystemProfileDataSource> *)findSystemProfile
+- (DConnectSystemProfile*)findSystemProfile
 {
     NSArray* profiles = [self.datasource lastObject];
     for (DConnectProfile *profile in profiles) {

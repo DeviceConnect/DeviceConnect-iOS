@@ -22,5 +22,5 @@ typedef NS_ENUM (NSInteger, CellType) {
 @property (nonatomic, strong) NSArray* datasource;
 
 - (instancetype)initWithPlugin:(NSDictionary*)plugin;
-- (DConnectSystemProfile<DConnectSystemProfileDataSource> *)findSystemProfile;
+- (DConnectSystemProfile*)findSystemProfile;
 @end
