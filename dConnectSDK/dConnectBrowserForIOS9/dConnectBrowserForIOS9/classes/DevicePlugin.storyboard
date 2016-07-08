@@ -13,7 +13,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="80" id="6du-rR-el1">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="DevicePluginViewCell" rowHeight="80" id="6du-rR-el1" customClass="DevicePluginViewCell">
                                 <rect key="frame" x="0.0" y="28" width="600" height="80"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="6du-rR-el1" id="qoX-Am-YDE">
@@ -51,6 +51,11 @@
                                         <constraint firstItem="3OF-Jp-Eka" firstAttribute="leading" secondItem="qoX-Am-YDE" secondAttribute="leading" constant="20" id="ssk-bH-oDa"/>
                                     </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="iconView" destination="3OF-Jp-Eka" id="rH1-Qw-Ipq"/>
+                                    <outlet property="titleLabel" destination="PQf-E9-tEB" id="bHu-rC-sR1"/>
+                                    <outlet property="versionLabel" destination="Zde-pu-r5H" id="Lx0-PT-NuA"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>

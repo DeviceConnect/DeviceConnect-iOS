@@ -26,6 +26,7 @@
 		8E3772451D24D577003D3124 /* HTMLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E3772431D24D577003D3124 /* HTMLParser.m */; };
 		8E3772471D24D5B3003D3124 /* libxml2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E3772461D24D5B3003D3124 /* libxml2.tbd */; };
 		8E9AE4EC1D2F421C007348DA /* DevicePlugin.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8E9AE4EB1D2F421C007348DA /* DevicePlugin.storyboard */; };
+		8E9AE4EF1D2F43C0007348DA /* DevicePluginViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E9AE4EE1D2F43C0007348DA /* DevicePluginViewCell.m */; };
 		8EBB89131D1385050038700B /* BookmarkIconViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EBB89121D1385050038700B /* BookmarkIconViewCell.m */; };
 		8EBB891A1D1387380038700B /* BookmarkIconViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EBB89191D1387380038700B /* BookmarkIconViewModel.m */; };
 		8EBB891D1D139C750038700B /* TopViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EBB891C1D139C750038700B /* TopViewModel.m */; };
@@ -218,6 +219,8 @@
 		8E3772431D24D577003D3124 /* HTMLParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HTMLParser.m; path = "Objective-C-HMTL-Parser/HTMLParser.m"; sourceTree = "<group>"; };
 		8E3772461D24D5B3003D3124 /* libxml2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libxml2.tbd; path = usr/lib/libxml2.tbd; sourceTree = SDKROOT; };
 		8E9AE4EB1D2F421C007348DA /* DevicePlugin.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = DevicePlugin.storyboard; sourceTree = "<group>"; };
+		8E9AE4ED1D2F43C0007348DA /* DevicePluginViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DevicePluginViewCell.h; sourceTree = "<group>"; };
+		8E9AE4EE1D2F43C0007348DA /* DevicePluginViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DevicePluginViewCell.m; sourceTree = "<group>"; };
 		8EBB89111D1385050038700B /* BookmarkIconViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookmarkIconViewCell.h; sourceTree = "<group>"; };
 		8EBB89121D1385050038700B /* BookmarkIconViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BookmarkIconViewCell.m; sourceTree = "<group>"; };
 		8EBB89181D1387380038700B /* BookmarkIconViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookmarkIconViewModel.h; sourceTree = "<group>"; };
@@ -516,6 +519,8 @@
 			isa = PBXGroup;
 			children = (
 				8E9AE4EB1D2F421C007348DA /* DevicePlugin.storyboard */,
+				8E9AE4ED1D2F43C0007348DA /* DevicePluginViewCell.h */,
+				8E9AE4EE1D2F43C0007348DA /* DevicePluginViewCell.m */,
 			);
 			name = devicePlugin;
 			sourceTree = "<group>";
@@ -1173,6 +1178,7 @@
 				AB00F2F71C71A29D00689C70 /* GHURLLabel.m in Sources */,
 				AB00F4A61C71B16200689C70 /* RATreeNodeInfo+Private.m in Sources */,
 				8E3772441D24D577003D3124 /* HTMLNode.m in Sources */,
+				8E9AE4EF1D2F43C0007348DA /* DevicePluginViewCell.m in Sources */,
 				AB00F2EB1C71A29D00689C70 /* GHFoldersListController.m in Sources */,
 				8E0563551D2681CB008EBA25 /* DeviceMoreViewCell.m in Sources */,
 				8E0A4C321D1CC4A500827DA6 /* InitialGuideViewController.m in Sources */,
