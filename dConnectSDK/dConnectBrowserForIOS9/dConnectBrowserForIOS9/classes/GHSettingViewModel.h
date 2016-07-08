@@ -8,9 +8,14 @@
 
 #import <Foundation/Foundation.h>
 
+@protocol GHSettingViewModelDelegate <NSObject>
+- (void)openDevicePluginList;
+- (void)openWebSocketList;
+@end
+
 @interface GHSettingViewModel : NSObject
 
-typedef NS_ENUM (NSInteger, SectionType) {
+typedef NS_ENUM (NSInteger, SettingSectionType) {
     SectionTypeSetting,
     SectionTypeDevice,
     SectionTypeSecurity
@@ -36,6 +41,7 @@ typedef NS_ENUM (NSInteger, SecurityCellType) {
 };
 
 @property (nonatomic, strong) NSArray* datasource;
+@property (nonatomic, weak) id<GHSettingViewModelDelegate> delegate;
 
 - (NSString*)sectionTitle:(NSInteger)section;
 - (NSString*)cellTitle:(NSIndexPath *)indexPath;

@@ -10,10 +10,10 @@
 #import "GHSettingController.h"
 #import "GHDataManager.h"
 #import <DConnectSDK/DConnectSDK.h>
-#import "GHSettingViewModel.h"
 #import "GrayLabelCell.h"
 #import "SwitchableCell.h"
 #import "DetailableCell.h"
+#import "GHDevicePluginTableViewController.h"
 
 @interface GHSettingController ()
 {
@@ -23,6 +23,7 @@
 
 
 @implementation GHSettingController
+
 //--------------------------------------------------------------//
 #pragma mark - 初期化
 //--------------------------------------------------------------//
@@ -31,6 +32,7 @@
     self = [super initWithCoder:aDecoder];
     if (self) {
         viewModel = [[GHSettingViewModel alloc]init];
+        viewModel.delegate = self;
     }
     return self;
 }
@@ -40,6 +42,21 @@
     viewModel = nil;
 }
 
+//--------------------------------------------------------------//
+#pragma mark - delegate
+//--------------------------------------------------------------//
+- (void)openDevicePluginList
+{
+    
+    GHDevicePluginTableViewController* controller = [GHDevicePluginTableViewController instantiate];
+    UINavigationController* nav = [[UINavigationController alloc]initWithRootViewController:controller];
+    [self presentViewController:nav animated:YES completion:nil];
+}
+
+- (void)openWebSocketList
+{
+
+}
 
 //--------------------------------------------------------------//
 #pragma mark - view cycle

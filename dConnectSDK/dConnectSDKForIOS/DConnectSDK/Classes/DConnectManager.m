@@ -593,4 +593,9 @@ NSString *const DConnectAttributeNameRequestAccessToken = @"requestAccessToken";
     return [[DConnectWhitelist sharedWhitelist] allows:origin];
 }
 
+
+- (NSArray*)devicePluginsList
+{
+    return [self.mDeviceManager devicePluginList];
+}
 @end

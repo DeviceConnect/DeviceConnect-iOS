@@ -20,9 +20,13 @@
 		8E0A4C441D1D32EF00827DA6 /* help.html in Resources */ = {isa = PBXBuildFile; fileRef = 8E0A4C431D1D32EF00827DA6 /* help.html */; };
 		8E1A05871D2DF0AA006A466B /* GHDeviceListViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E1A05861D2DF0AA006A466B /* GHDeviceListViewModel.m */; };
 		8E1A05891D2E12F5006A466B /* device.html in Resources */ = {isa = PBXBuildFile; fileRef = 8E1A05881D2E12F5006A466B /* device.html */; };
+		8E1A058D1D2E41BC006A466B /* GHDevicePluginTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E1A058C1D2E41BC006A466B /* GHDevicePluginTableViewController.m */; };
+		8E1A05911D2E423B006A466B /* GHDevicePluginViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E1A05901D2E423B006A466B /* GHDevicePluginViewModel.m */; };
 		8E3772441D24D577003D3124 /* HTMLNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E3772411D24D577003D3124 /* HTMLNode.m */; };
 		8E3772451D24D577003D3124 /* HTMLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E3772431D24D577003D3124 /* HTMLParser.m */; };
 		8E3772471D24D5B3003D3124 /* libxml2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E3772461D24D5B3003D3124 /* libxml2.tbd */; };
+		8E9AE4EC1D2F421C007348DA /* DevicePlugin.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8E9AE4EB1D2F421C007348DA /* DevicePlugin.storyboard */; };
+		8E9AE4EF1D2F43C0007348DA /* GHDevicePluginViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E9AE4EE1D2F43C0007348DA /* GHDevicePluginViewCell.m */; };
 		8EBB89131D1385050038700B /* BookmarkIconViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EBB89121D1385050038700B /* BookmarkIconViewCell.m */; };
 		8EBB891A1D1387380038700B /* BookmarkIconViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EBB89191D1387380038700B /* BookmarkIconViewModel.m */; };
 		8EBB891D1D139C750038700B /* TopViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EBB891C1D139C750038700B /* TopViewModel.m */; };
@@ -205,11 +209,18 @@
 		8E1A05851D2DF0AA006A466B /* GHDeviceListViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHDeviceListViewModel.h; sourceTree = "<group>"; };
 		8E1A05861D2DF0AA006A466B /* GHDeviceListViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GHDeviceListViewModel.m; sourceTree = "<group>"; };
 		8E1A05881D2E12F5006A466B /* device.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = device.html; sourceTree = "<group>"; };
+		8E1A058B1D2E41BC006A466B /* GHDevicePluginTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHDevicePluginTableViewController.h; sourceTree = "<group>"; };
+		8E1A058C1D2E41BC006A466B /* GHDevicePluginTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GHDevicePluginTableViewController.m; sourceTree = "<group>"; };
+		8E1A058F1D2E423B006A466B /* GHDevicePluginViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHDevicePluginViewModel.h; sourceTree = "<group>"; };
+		8E1A05901D2E423B006A466B /* GHDevicePluginViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GHDevicePluginViewModel.m; sourceTree = "<group>"; };
 		8E3772401D24D577003D3124 /* HTMLNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HTMLNode.h; path = "Objective-C-HMTL-Parser/HTMLNode.h"; sourceTree = "<group>"; };
 		8E3772411D24D577003D3124 /* HTMLNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HTMLNode.m; path = "Objective-C-HMTL-Parser/HTMLNode.m"; sourceTree = "<group>"; };
 		8E3772421D24D577003D3124 /* HTMLParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HTMLParser.h; path = "Objective-C-HMTL-Parser/HTMLParser.h"; sourceTree = "<group>"; };
 		8E3772431D24D577003D3124 /* HTMLParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HTMLParser.m; path = "Objective-C-HMTL-Parser/HTMLParser.m"; sourceTree = "<group>"; };
 		8E3772461D24D5B3003D3124 /* libxml2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libxml2.tbd; path = usr/lib/libxml2.tbd; sourceTree = SDKROOT; };
+		8E9AE4EB1D2F421C007348DA /* DevicePlugin.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = DevicePlugin.storyboard; sourceTree = "<group>"; };
+		8E9AE4ED1D2F43C0007348DA /* GHDevicePluginViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHDevicePluginViewCell.h; sourceTree = "<group>"; };
+		8E9AE4EE1D2F43C0007348DA /* GHDevicePluginViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GHDevicePluginViewCell.m; sourceTree = "<group>"; };
 		8EBB89111D1385050038700B /* BookmarkIconViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookmarkIconViewCell.h; sourceTree = "<group>"; };
 		8EBB89121D1385050038700B /* BookmarkIconViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BookmarkIconViewCell.m; sourceTree = "<group>"; };
 		8EBB89181D1387380038700B /* BookmarkIconViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookmarkIconViewModel.h; sourceTree = "<group>"; };
@@ -486,6 +497,34 @@
 			name = device;
 			sourceTree = "<group>";
 		};
+		8E1A058A1D2E4180006A466B /* devicePlugin */ = {
+			isa = PBXGroup;
+			children = (
+				8E1A058B1D2E41BC006A466B /* GHDevicePluginTableViewController.h */,
+				8E1A058C1D2E41BC006A466B /* GHDevicePluginTableViewController.m */,
+			);
+			name = devicePlugin;
+			sourceTree = "<group>";
+		};
+		8E1A058E1D2E421C006A466B /* devicePlugin */ = {
+			isa = PBXGroup;
+			children = (
+				8E1A058F1D2E423B006A466B /* GHDevicePluginViewModel.h */,
+				8E1A05901D2E423B006A466B /* GHDevicePluginViewModel.m */,
+			);
+			name = devicePlugin;
+			sourceTree = "<group>";
+		};
+		8E1A05921D2E497A006A466B /* devicePlugin */ = {
+			isa = PBXGroup;
+			children = (
+				8E9AE4EB1D2F421C007348DA /* DevicePlugin.storyboard */,
+				8E9AE4ED1D2F43C0007348DA /* GHDevicePluginViewCell.h */,
+				8E9AE4EE1D2F43C0007348DA /* GHDevicePluginViewCell.m */,
+			);
+			name = devicePlugin;
+			sourceTree = "<group>";
+		};
 		8E37723F1D24D545003D3124 /* Objective-C-HMTL-Parser */ = {
 			isa = PBXGroup;
 			children = (
@@ -515,6 +554,7 @@
 		8EBB89161D1387010038700B /* viewModel */ = {
 			isa = PBXGroup;
 			children = (
+				8E1A058E1D2E421C006A466B /* devicePlugin */,
 				8E1A05841D2DF083006A466B /* device */,
 				8E0A4C371D1CC89C00827DA6 /* initialGuide */,
 				8ED7B1AA1D1BA3E40053FDBD /* setting */,
@@ -686,6 +726,7 @@
 			children = (
 				AB00F2D21C71A29D00689C70 /* GHSettingController.h */,
 				AB00F2D31C71A29D00689C70 /* GHSettingController.m */,
+				8E1A058A1D2E4180006A466B /* devicePlugin */,
 				8E0563561D2683B7008EBA25 /* device */,
 				8E0A4C3C1D1D289E00827DA6 /* webview */,
 				AB00F31F1C71A6B700689C70 /* bookmark */,
@@ -722,6 +763,7 @@
 		AB00F3201C71A73D00689C70 /* views */ = {
 			isa = PBXGroup;
 			children = (
+				8E1A05921D2E497A006A466B /* devicePlugin */,
 				8ED7B1AF1D1BAFFD0053FDBD /* setting */,
 				8EBB89101D1384990038700B /* top */,
 				AB00F3231C71A7A300689C70 /* webview */,
@@ -1038,6 +1080,7 @@
 				AB00F22E1C719B6500689C70 /* dConnectDeviceIRKit_resources.bundle in Resources */,
 				AB1FAB0C1C7AC1E00013C434 /* dConnectDeviceAllJoyn_resources.bundle in Resources */,
 				AB00F49E1C71B16200689C70 /* LICENSE in Resources */,
+				8E9AE4EC1D2F421C007348DA /* DevicePlugin.storyboard in Resources */,
 				8E0A4C441D1D32EF00827DA6 /* help.html in Resources */,
 				AB00F2ED1C71A29D00689C70 /* GHFolderTitleCell.xib in Resources */,
 				AB00F2241C719B4B00689C70 /* dConnectDeviceHost_resources.bundle in Resources */,
@@ -1093,6 +1136,7 @@
 				8EBB89211D13CA960038700B /* TopCollectionHeaderView.m in Sources */,
 				8E0563521D263CFA008EBA25 /* DeviceIconViewModel.m in Sources */,
 				AB00F2E81C71A29D00689C70 /* GHDirectory.m in Sources */,
+				8E1A05911D2E423B006A466B /* GHDevicePluginViewModel.m in Sources */,
 				8ED7B1B51D1BB03C0053FDBD /* SwitchableCell.m in Sources */,
 				8EBB89131D1385050038700B /* BookmarkIconViewCell.m in Sources */,
 				AB00F2EC1C71A29D00689C70 /* GHFolderTitleCell.m in Sources */,
@@ -1116,6 +1160,7 @@
 				8ED7B1B21D1BB0270053FDBD /* GrayLabelCell.m in Sources */,
 				AB00F4A71C71B16200689C70 /* RATreeNodeInfo.m in Sources */,
 				AB00F2E11C71A29D00689C70 /* GHBookmarkCell.m in Sources */,
+				8E1A058D1D2E41BC006A466B /* GHDevicePluginTableViewController.m in Sources */,
 				AB00F4A91C71B16200689C70 /* RATreeView+Private.m in Sources */,
 				AB00F49C1C71B16200689C70 /* GTMNSString+HTML.m in Sources */,
 				AB00F2E51C71A29D00689C70 /* GHBookmarkViewController.m in Sources */,
@@ -1133,6 +1178,7 @@
 				AB00F2F71C71A29D00689C70 /* GHURLLabel.m in Sources */,
 				AB00F4A61C71B16200689C70 /* RATreeNodeInfo+Private.m in Sources */,
 				8E3772441D24D577003D3124 /* HTMLNode.m in Sources */,
+				8E9AE4EF1D2F43C0007348DA /* GHDevicePluginViewCell.m in Sources */,
 				AB00F2EB1C71A29D00689C70 /* GHFoldersListController.m in Sources */,
 				8E0563551D2681CB008EBA25 /* DeviceMoreViewCell.m in Sources */,
 				8E0A4C321D1CC4A500827DA6 /* InitialGuideViewController.m in Sources */,
