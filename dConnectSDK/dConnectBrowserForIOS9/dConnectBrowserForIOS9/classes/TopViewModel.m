@@ -79,7 +79,7 @@ static NSInteger maxIconCount = 8;
 
 - (NSArray*)fetchBookmarks
 {
-    NSPredicate* predicate = [NSPredicate predicateWithFormat:@"latest_opened_date != NULL"];
+    NSPredicate* predicate = [NSPredicate predicateWithFormat:@"type == %@ AND latest_opened_date != NULL AND priority > %d", TYPE_BOOKMARK, PRIORITY-1];
     NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"latest_opened_date" ascending:NO];
     NSArray* bookmarks = [[GHDataManager shareManager]getModelDataByPredicate:predicate
                                                           withSortDescriptors:@[sortDescriptor]
@@ -91,7 +91,12 @@ static NSInteger maxIconCount = 8;
 
 - (BOOL)isBookmarksEmpty
 {
-    return ([[self.datasource objectAtIndex:Bookmark] count] == 0);
+    for (GHPageModel* page in [self.datasource objectAtIndex:Bookmark]) {
+        if (![page.type isEqualToString:TYPE_BOOKMARK_DUMMY]) {
+            return NO;
+        }
+    }
+    return YES;
 }
 
 

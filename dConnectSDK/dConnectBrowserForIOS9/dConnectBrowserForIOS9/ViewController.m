@@ -124,9 +124,11 @@
 - (void)addEmptyLabelIfNeeded
 {
     if (viewModel.isBookmarksEmpty) {
-        self.emptyBookmarksLabel = [self makeEmptyLabel: CGRectMake(0, 50, 320, 220)
-                                             message:@"ブックマークがありません。\nブックマークを登録してください。"];
-        [self.collectionView addSubview:self.emptyBookmarksLabel];
+        if (!self.emptyBookmarksLabel) {
+            self.emptyBookmarksLabel = [self makeEmptyLabel: CGRectMake(0, 50, 320, 220)
+                                                    message:@"ブックマークがありません。\nブックマークを登録してください。"];
+            [self.collectionView addSubview:self.emptyBookmarksLabel];
+        }
     } else {
         [self.emptyBookmarksLabel removeFromSuperview];
         self.emptyBookmarksLabel = nil;
@@ -202,7 +204,11 @@
 
 - (void)openDeviceDetail:(DConnectMessage*)message
 {
-    
+    //TODO: デバイス確認画面用のhtmlのpathを渡す
+    NSString* path = [[NSBundle mainBundle]pathForResource:@"device" ofType:@"html"];
+    WebViewController* controller = [[WebViewController alloc]initWithPath:path];
+    UINavigationController* nav = [[UINavigationController alloc]initWithRootViewController:controller];
+    [self presentViewController:nav animated:YES completion:nil];
 }
 
 - (IBAction)openDeviceList:(id)sender

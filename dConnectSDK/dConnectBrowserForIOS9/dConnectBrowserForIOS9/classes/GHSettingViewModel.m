@@ -10,6 +10,7 @@
 #import <DConnectSDK/DConnectSDK.h>
 #import <ifaddrs.h>
 #import <arpa/inet.h>
+#import "GHSettingController.h"
 
 @implementation GHSettingViewModel
 
@@ -161,7 +162,7 @@
     NSInteger type = [(NSNumber*)[[self.datasource objectAtIndex:indexPath.section] objectAtIndex:indexPath.row] integerValue];
     switch (indexPath.section) {
         case SectionTypeDevice:
-            //TODO: DeviceList
+            [self.delegate openDevicePluginList];
             break;
         case SectionTypeSecurity:
             switch (type) {
@@ -172,7 +173,7 @@
                     [DConnectUtil showOriginWhitelist];
                     break;
                 case SecurityCellTypeWebSocket:
-                    //TODO: WebSocket
+                    [self.delegate openWebSocketList];
                     break;
             }
             break;

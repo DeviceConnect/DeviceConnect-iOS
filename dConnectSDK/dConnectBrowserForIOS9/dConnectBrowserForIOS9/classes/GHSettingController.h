@@ -8,7 +8,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "GHSettingViewModel.h"
 
-@interface GHSettingController : UITableViewController
-
+@interface GHSettingController : UITableViewController<GHSettingViewModelDelegate>
 @end
