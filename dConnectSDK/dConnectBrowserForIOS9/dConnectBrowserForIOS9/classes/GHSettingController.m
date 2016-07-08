@@ -47,7 +47,8 @@
 //--------------------------------------------------------------//
 - (void)openDevicePluginList
 {
-    GHDevicePluginTableViewController* controller = [[GHDevicePluginTableViewController alloc] init];
+    
+    GHDevicePluginTableViewController* controller = [GHDevicePluginTableViewController instantiate];
     UINavigationController* nav = [[UINavigationController alloc]initWithRootViewController:controller];
     [self presentViewController:nav animated:YES completion:nil];
 }
