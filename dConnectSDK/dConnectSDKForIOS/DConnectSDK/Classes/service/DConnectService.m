@@ -72,22 +72,32 @@ public void setNetworkType(final NetworkType type) {
     _mConfig = config;
 }
 
-//@Override
-- (NSArray *) profileList {
+// TODO: didReceiveRequestに名称変更。
+- (BOOL) onRequest: (DConnectRequestMessage *) request response: (DConnectResponseMessage *)response {
+    DConnectProfile *profile = [self profileWithName: [request profile]];
+    if (!profile) {
+        [response setErrorToNotSupportProfile];
+        return YES;
+    }
+    
+    return [profile didReceiveRequest: request response: response];
+}
+
+#pragma mark - DConnectProfileProvider Implement.
+
+- (NSArray *) profiles {
     
     // TODO: DConnectProfileのNSCopying対応。
     return [_mProfiles allValues];
 }
 
-//@Override
-- (DConnectProfile *) profile: (NSString *) name {
+- (DConnectProfile *) profileWithName: (NSString *) name {
     if (!name) {
         return nil;
     }
     return _mProfiles[[name lowercaseString]];
 }
 
-//@Override
 - (void) addProfile: (DConnectProfile *) profile {
     if (!profile) {
         return;
@@ -100,24 +110,12 @@ public void setNetworkType(final NetworkType type) {
     _mProfiles[profileName] = profile;
 }
 
-//@Override
 - (void) removeProfile: (DConnectProfile *) profile {
     if (!profile) {
         return;
     }
     NSString *profileName = [[profile profileName] lowercaseString];
     [_mProfiles removeObjectForKey: profileName];
-}
-
-- (BOOL) onRequest: (DConnectRequestMessage *) request response: (DConnectResponseMessage *)response {
-    DConnectProfile *profile = [self profile: [request profile]];
-    if (!profile) {
-        [response setErrorToNotSupportProfile];
-        return YES;
-    }
-    
-//    return [_delegate onRequest: request response: response];
-    return NO;
 }
 
 

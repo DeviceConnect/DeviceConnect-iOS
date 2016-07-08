@@ -16,11 +16,7 @@
 @implementation DConnectProfile
 
 
-/*!
- @brief プロファイルに設定されているDevice Connect API実装のリストを返す.
- @retval API実装のリスト(DConnectApiの配列)
- */
-- (NSArray *) apiList {
+- (NSArray *) apis {
     
     // ディープコピーして返す
     // TODO: DConnectApiにNSCopyingプロトコルを実装する

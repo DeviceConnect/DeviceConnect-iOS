@@ -7,9 +7,10 @@
 //  http://opensource.org/licenses/mit-license.php
 //
 
-#import <Foundation/Foundation.h>
+//#import <Foundation/Foundation.h>
+#import "DConnectProfileProvider.h"
 
-@interface DConnectService : NSObject
+@interface DConnectService : NSObject<DConnectProfileProvider>
 
 /*!
  @brief サービスID.
@@ -30,6 +31,24 @@
 @property (nonatomic, weak) NSString *mConfig;
 
 - (instancetype) initWithServiceId: (NSString *)serviceId;
+
+- (NSString *) serviceId;
+
+- (void) setName: (NSString *)name;
+
+- (NSString *) name;
+
+- (void) setNetworkType: (NSString *) type;
+
+- (NSString *) networkType;
+
+- (void) setOnline: (BOOL) isOnline;
+
+- (BOOL) isOnline;
+
+- (NSString *) config;
+
+- (void) setConfig: (NSString *) config;
 
 
 @end

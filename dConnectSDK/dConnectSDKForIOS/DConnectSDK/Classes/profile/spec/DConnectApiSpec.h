@@ -7,9 +7,9 @@
 //  http://opensource.org/licenses/mit-license.php
 //
 
-#import <DConnectSDK.h>
+//#import <DConnectSDK.h>
 #import "DConnectRequestParamSpec.h"
-
+#import "DConnectMessage.h"
 
 extern NSString * const DConnectApiSpecMethodGet;
 extern NSString * const DConnectApiSpecMethodPut;

@@ -9,6 +9,8 @@
 
 //#import <DConnectSDK/DConnectSDK.h>
 #import "DConnectApiSpec.h"
+#import "DConnectRequestMessage.h"
+#import "DConnectResponseMessage.h"
 
 @protocol DConnectApiDelegate <NSObject>
 

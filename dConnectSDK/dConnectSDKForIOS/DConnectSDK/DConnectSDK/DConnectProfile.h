@@ -17,7 +17,7 @@
 #import <DConnectSDK/DConnectResponseMessage.h>
 #import <DConnectSDK/DConnectProfileProvider.h>
 //#import "DConnectService.h"
-//#import "DConnectApi.h"
+#import "DConnectApi.h"
 
 /*!
  @class DConnectProfile
@@ -43,6 +43,11 @@
 
 
 
+/*!
+ @brief プロファイルに設定されているDevice Connect API実装のリストを返す.
+ @retval API実装のリスト(DConnectApiの配列)
+ */
+- (NSArray *) apis;
 
 
 /*!
@@ -51,26 +56,26 @@
  @param[in] method リクエストされたAPIのメソッド
  @retval 指定されたリクエストに対応するAPI実装を返す. 存在しない場合は<code>null</code>
  */
-//- (DConnectApi *) findApiWithPath: (NSString *) path method: (DConnectApiSpecMethod) method;
+- (DConnectApi *) findApiWithPath: (NSString *) path method: (DConnectApiSpecMethod) method;
 
 /*!
  @brief Device Connect API実装を追加する.
  @param[in] api API 追加するAPI実装
  */
-//- (void) addApi: (DConnectApi *) api;
+- (void) addApi: (DConnectApi *) api;
 
 /*!
  @brief Device Connect API実装を削除する.
  @param[in] api 削除するAPI実装
  */
-//- (void) removeApi: (DConnectApi *) api;
+- (void) removeApi: (DConnectApi *) api;
 
 /*!
  @brief 指定されたDevice Connect APIへのパスを返す.
  @param[in] api API実装
  @retval パス
  */
-//- (NSString *) apiPath: (DConnectApi *) api;
+- (NSString *) apiPath: (DConnectApi *) api;
 
 /*!
  @brief プロファイル名、インターフェース名、アトリビュート名からパスを作成する.

@@ -182,6 +182,7 @@
 		D62622E7199232BC004F01E6 /* LocalOAuthSQLiteToken.m in Sources */ = {isa = PBXBuildFile; fileRef = D62622CB199232BC004F01E6 /* LocalOAuthSQLiteToken.m */; };
 		D62622E9199232BC004F01E6 /* LocalOAuthToken.m in Sources */ = {isa = PBXBuildFile; fileRef = D62622CF199232BC004F01E6 /* LocalOAuthToken.m */; };
 		D62622EA199232BC004F01E6 /* LocalOAuthTokenManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D62622D1199232BC004F01E6 /* LocalOAuthTokenManager.m */; };
+		D62866B61D2F899A00C0C2D6 /* DConnectServiceManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D62866B51D2F899A00C0C2D6 /* DConnectServiceManager.m */; };
 		D646C7B919A5BDC500C2D91B /* LocalOAuthUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = D646C7B819A5BDC400C2D91B /* LocalOAuthUtils.m */; };
 		D647CF9D1D2B62B7006BF6A9 /* DConnectServiceManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D647CF9C1D2B62B7006BF6A9 /* DConnectServiceManager.m */; };
 		D647CFA31D2BDD0D006BF6A9 /* IntegerRequestParamSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = D647CFA01D2BDD0D006BF6A9 /* IntegerRequestParamSpec.m */; };
@@ -1868,6 +1869,9 @@
 		D62622CB199232BC004F01E6 /* LocalOAuthSQLiteToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LocalOAuthSQLiteToken.m; path = localoauth/LocalOAuthSQLiteToken.m; sourceTree = "<group>"; };
 		D62622CF199232BC004F01E6 /* LocalOAuthToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LocalOAuthToken.m; path = localoauth/LocalOAuthToken.m; sourceTree = "<group>"; };
 		D62622D1199232BC004F01E6 /* LocalOAuthTokenManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LocalOAuthTokenManager.m; path = localoauth/LocalOAuthTokenManager.m; sourceTree = "<group>"; };
+		D62866B41D2F899A00C0C2D6 /* DConnectServiceManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DConnectServiceManager.h; path = service/DConnectServiceManager.h; sourceTree = "<group>"; };
+		D62866B51D2F899A00C0C2D6 /* DConnectServiceManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DConnectServiceManager.m; path = service/DConnectServiceManager.m; sourceTree = "<group>"; };
+		D62866B71D300AC900C0C2D6 /* DConnectServiceProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DConnectServiceProvider.h; path = service/DConnectServiceProvider.h; sourceTree = "<group>"; };
 		D646C7B719A5BDC400C2D91B /* LocalOAuthUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LocalOAuthUtils.h; path = localoauth/LocalOAuthUtils.h; sourceTree = "<group>"; };
 		D646C7B819A5BDC400C2D91B /* LocalOAuthUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LocalOAuthUtils.m; path = localoauth/LocalOAuthUtils.m; sourceTree = "<group>"; };
 		D647CF9B1D2B62B7006BF6A9 /* DConnectServiceManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DConnectServiceManager.h; sourceTree = "<group>"; };
@@ -3994,6 +3998,9 @@
 			children = (
 				D60DD5FF1D2F383F00DEBE5C /* DConnectService.h */,
 				D60DD6001D2F383F00DEBE5C /* DConnectService.m */,
+				D62866B41D2F899A00C0C2D6 /* DConnectServiceManager.h */,
+				D62866B51D2F899A00C0C2D6 /* DConnectServiceManager.m */,
+				D62866B71D300AC900C0C2D6 /* DConnectServiceProvider.h */,
 			);
 			name = service;
 			sourceTree = "<group>";
@@ -4528,6 +4535,7 @@
 				D684AC261D2CF67C00F56CA0 /* DeleteApi.m in Sources */,
 				AB67AB1D1C642AB200B4C62C /* WebSocket.m in Sources */,
 				30424D211974C3D10084371F /* DConnectInterfaceDao.m in Sources */,
+				D62866B61D2F899A00C0C2D6 /* DConnectServiceManager.m in Sources */,
 				30318AF519AAE908008A42C3 /* DConnectDevicePlugin+Private.m in Sources */,
 				AB702E311A70FAF8002D21CB /* DConnectCanvasProfile.m in Sources */,
 				D62622E9199232BC004F01E6 /* LocalOAuthToken.m in Sources */,
