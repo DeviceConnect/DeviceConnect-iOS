@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+    </dependencies>
+    <scenes>
+        <!--Device Plugin Table View Controller-->
+        <scene sceneID="FCp-VM-s7b">
+            <objects>
+                <tableViewController id="9ul-ZP-FLM" customClass="GHDevicePluginTableViewController" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="KMa-9N-wee">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="80" id="6du-rR-el1">
+                                <rect key="frame" x="0.0" y="28" width="600" height="80"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="6du-rR-el1" id="qoX-Am-YDE">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="79"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="default_device_icon" translatesAutoresizingMaskIntoConstraints="NO" id="3OF-Jp-Eka">
+                                            <rect key="frame" x="20" y="10" width="60" height="60"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="60" id="AoA-UX-ZVO"/>
+                                                <constraint firstAttribute="width" constant="60" id="PVd-OG-Ph7"/>
+                                            </constraints>
+                                        </imageView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PQf-E9-tEB">
+                                            <rect key="frame" x="95" y="10" width="485" height="22"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zde-pu-r5H">
+                                            <rect key="frame" x="95" y="42" width="485" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="trailing" secondItem="Zde-pu-r5H" secondAttribute="trailing" constant="20" id="8d4-3b-5tk"/>
+                                        <constraint firstAttribute="trailing" secondItem="PQf-E9-tEB" secondAttribute="trailing" constant="20" id="EB4-LP-mb9"/>
+                                        <constraint firstItem="Zde-pu-r5H" firstAttribute="leading" secondItem="3OF-Jp-Eka" secondAttribute="trailing" constant="15" id="T6i-yM-vuC"/>
+                                        <constraint firstItem="3OF-Jp-Eka" firstAttribute="centerY" secondItem="qoX-Am-YDE" secondAttribute="centerY" id="aIX-LX-pCF"/>
+                                        <constraint firstItem="PQf-E9-tEB" firstAttribute="leading" secondItem="3OF-Jp-Eka" secondAttribute="trailing" constant="15" id="epn-wP-vb4"/>
+                                        <constraint firstItem="PQf-E9-tEB" firstAttribute="top" secondItem="3OF-Jp-Eka" secondAttribute="top" id="fQ1-ku-1ds"/>
+                                        <constraint firstItem="Zde-pu-r5H" firstAttribute="top" secondItem="PQf-E9-tEB" secondAttribute="bottom" constant="10" id="siE-dT-nVv"/>
+                                        <constraint firstItem="3OF-Jp-Eka" firstAttribute="leading" secondItem="qoX-Am-YDE" secondAttribute="leading" constant="20" id="ssk-bH-oDa"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="9ul-ZP-FLM" id="o55-Tv-qZM"/>
+                            <outlet property="delegate" destination="9ul-ZP-FLM" id="gRJ-sX-Na0"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="v56-8n-nkd" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="320" y="412"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="default_device_icon" width="72" height="70"/>
+    </resources>
+</document>
