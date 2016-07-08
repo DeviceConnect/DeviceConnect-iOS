@@ -6,7 +6,7 @@
 //  Copyright © 2016年 GClue,Inc. All rights reserved.
 //
 
-#import "DevicePluginViewCell.h"
+#import "GHDevicePluginViewCell.h"
 
 @implementation DevicePluginViewCell
 
@@ -18,7 +18,10 @@
 
 - (void)configureCell:(DConnectDevicePlugin*)plugins
 {
+    self.titleLabel.text = [plugins pluginName];
+    self.versionLabel.text = [plugins pluginVersionName];
 
+    //TODO: アイコンをバンドルから取ってくる
 }
 
 @end

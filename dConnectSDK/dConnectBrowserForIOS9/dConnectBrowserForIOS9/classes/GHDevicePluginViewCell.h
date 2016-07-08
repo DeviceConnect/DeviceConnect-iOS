@@ -1,5 +1,5 @@
 //
-//  DevicePluginViewCell.h
+//  GHDevicePluginViewCell.h
 //  dConnectBrowserForIOS9
 //
 //  Created by Tetsuya Hirano on 2016/07/08.
@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <DConnectSDK/DConnectSDK.h>
 
-@interface DevicePluginViewCell : UITableViewCell
+@interface GHDevicePluginViewCell : UITableViewCell
 
 @property (weak, nonatomic) IBOutlet UIImageView *iconView;
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
