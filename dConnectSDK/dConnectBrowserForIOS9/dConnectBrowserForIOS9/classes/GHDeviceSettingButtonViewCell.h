@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+typedef void (^DidTappedSetting)();
 @interface GHDeviceSettingButtonViewCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UIButton *settingButton;
+@property (nonatomic, copy) DidTappedSetting didTappedSetting;
 @end

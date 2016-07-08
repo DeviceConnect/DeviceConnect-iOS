@@ -9,6 +9,7 @@
 #import "GHDevicePluginTableViewController.h"
 #import "GHDevicePluginViewModel.h"
 #import "GHDevicePluginViewCell.h"
+#import "GHDevicePluginDetailViewController.h"
 
 @interface GHDevicePluginTableViewController ()
 {
@@ -67,7 +68,9 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    //TODO: デバイスプラグイン設定画面
+    NSDictionary* plugin = [viewModel makePlguinAndProfiles:indexPath.row];
+    GHDevicePluginDetailViewController *controller = [GHDevicePluginDetailViewController instantiateWithPlugin:plugin];
+    [self.navigationController pushViewController:controller animated:YES];
 }
 
 @end

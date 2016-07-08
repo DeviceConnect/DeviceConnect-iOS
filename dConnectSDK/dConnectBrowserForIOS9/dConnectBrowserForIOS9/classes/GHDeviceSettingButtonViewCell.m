@@ -16,5 +16,15 @@
     self.settingButton.clipsToBounds = YES;
 }
 
+- (IBAction)didTappedButton:(UIButton *)sender {
+    if (_didTappedSetting) {
+        _didTappedSetting();
+    }
+}
+
+- (void)dealloc
+{
+    _didTappedSetting = nil;
+}
 
 @end
