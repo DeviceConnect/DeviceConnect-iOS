@@ -9,5 +9,5 @@
 #import <Foundation/Foundation.h>
 
 @interface GHDevicePluginViewModel : NSObject
-
+@property (nonatomic, strong) NSArray* datasource;
 @end

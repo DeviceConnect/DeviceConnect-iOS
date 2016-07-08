@@ -7,7 +7,27 @@
 //
 
 #import "GHDevicePluginViewModel.h"
+#import <DConnectSDK/DConnectSDK.h>
 
 @implementation GHDevicePluginViewModel
 
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        self.datasource = [[NSMutableArray alloc]init];
+        [self setDevicePluginsList];
+    }
+    return self;
+}
+
+- (void)setDevicePluginsList
+{
+    self.datasource = [[DConnectManager sharedManager] devicePluginsList];
+}
+
+- (void)dealloc
+{
+    self.datasource = nil;
+}
 @end
