@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface GHDevicePluginDetailViewController : UIViewController
-
+@interface GHDevicePluginDetailViewController : UITableViewController
++ (GHDevicePluginDetailViewController*)instantiateWithPlugin:(NSDictionary*)plugin;
 @end
