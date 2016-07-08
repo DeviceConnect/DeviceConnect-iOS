@@ -16,6 +16,8 @@
 #import <DConnectSDK/DConnectRequestMessage.h>
 #import <DConnectSDK/DConnectResponseMessage.h>
 #import <DConnectSDK/DConnectProfileProvider.h>
+//#import "DConnectService.h"
+//#import "DConnectApi.h"
 
 /*!
  @class DConnectProfile
@@ -37,6 +39,61 @@
  @brief サポートするAPI(key: ApiIdentifier, value: DConnectApi).
  */
 @property (nonatomic, weak) NSMutableDictionary *mApis;
+
+
+
+
+
+
+/*!
+ @brief 指定されたリクエストに対応するDevice Connect API実装を返す.
+ @param[in] path リクエストされたAPIのパス
+ @param[in] method リクエストされたAPIのメソッド
+ @retval 指定されたリクエストに対応するAPI実装を返す. 存在しない場合は<code>null</code>
+ */
+//- (DConnectApi *) findApiWithPath: (NSString *) path method: (DConnectApiSpecMethod) method;
+
+/*!
+ @brief Device Connect API実装を追加する.
+ @param[in] api API 追加するAPI実装
+ */
+//- (void) addApi: (DConnectApi *) api;
+
+/*!
+ @brief Device Connect API実装を削除する.
+ @param[in] api 削除するAPI実装
+ */
+//- (void) removeApi: (DConnectApi *) api;
+
+/*!
+ @brief 指定されたDevice Connect APIへのパスを返す.
+ @param[in] api API実装
+ @retval パス
+ */
+//- (NSString *) apiPath: (DConnectApi *) api;
+
+/*!
+ @brief プロファイル名、インターフェース名、アトリビュート名からパスを作成する.
+ @param[in] profileName プロファイル名
+ @param[in] interfaceName インターフェース名
+ @param[in] attributeName アトリビュート名
+ @retval パス
+ */
+- (NSString *) apiPathWithProfileInterfaceAttribute : (NSString *) profileName interfaceName: (NSString *) interfaceName attributeName:(NSString *) attributeName;
+
+/*!
+ @brief 本プロファイル実装を提供するサービスを設定する.
+ 
+ @param[in] service サービス
+ */
+//- (void) setService: (DConnectService *) service;
+
+/*!
+ @brief 本プロファイル実装を提供するサービスを取得する.
+ 
+ @retval サービス
+ */
+//- (DConnectService *) service;
 
 /*!
  @brief プロファイル名を取得する。

@@ -28,11 +28,6 @@
     return list;
 }
 
-/*!
- @brief 指定されたリクエストに対応するDevice Connect API実装を返す.
- @param[in] request リクエスト
- @retval 指定されたリクエストに対応するAPI実装を返す. 存在しない場合は<code>null</code>
- */
 - (DConnectApi *) findApi: (DConnectRequestMessage *) request {
     
     DConnectMessageActionType action = [request action];
@@ -48,22 +43,12 @@
     return [self findApiWithPath: path method: method];
 }
 
-/*!
- @brief 指定されたリクエストに対応するDevice Connect API実装を返す.
- @param[in] path リクエストされたAPIのパス
- @param[in] method リクエストされたAPIのメソッド
- @retval 指定されたリクエストに対応するAPI実装を返す. 存在しない場合は<code>null</code>
- */
 - (DConnectApi *) findApiWithPath: (NSString *) path method: (DConnectApiSpecMethod) method {
     ApiIdentifier *apiIdentifier = [[ApiIdentifier alloc] initWithPath:path method: method];
     NSString *apiIdentifierString = [apiIdentifier apiIdentifierString];
     return _mApis[apiIdentifierString];
 }
 
-/*!
- @brief Device Connect API実装を追加する.
- @param[in] api API 追加するAPI実装
- */
 - (void) addApi: (DConnectApi *) api {
     NSString *path = [self apiPath: api];
     ApiIdentifier *apiIdentifier = [[ApiIdentifier alloc] initWithPath:path method:[api method]];
@@ -71,10 +56,6 @@
     self.mApis[apiIdentifierString] = api;
 }
 
-/*!
- @brief Device Connect API実装を削除する.
- @param[in] api 削除するAPI実装
- */
 - (void) removeApi: (DConnectApi *) api {
     NSString *apiPath = [self apiPath:api];
     DConnectApiSpecMethod method = [api method];
@@ -83,11 +64,6 @@
     [self.mApis removeObjectForKey: apiIdentifierString];
 }
 
-/*!
- @brief 指定されたDevice Connect APIへのパスを返す.
- @param[in] api API実装
- @retval パス
- */
 - (NSString *) apiPath: (DConnectApi *) api {
     
     NSString *apiPath = [self apiPathWithProfileInterfaceAttribute: [self profileName]
@@ -96,13 +72,6 @@
     return apiPath;
 }
 
-/*!
- @brief プロファイル名、インターフェース名、アトリビュート名からパスを作成する.
- @param[in] profileName プロファイル名
- @param[in] interfaceName インターフェース名
- @param[in] attributeName アトリビュート名
- @retval パス
- */
 - (NSString *) apiPathWithProfileInterfaceAttribute : (NSString *) profileName interfaceName: (NSString *) interfaceName attributeName:(NSString *) attributeName {
 
     NSMutableString *path = [NSMutableString string];
@@ -119,6 +88,15 @@
     return path;
 }
 
+/*
+- (void) setService: (DConnectService *) service {
+    _mService = service;
+}
+
+- (DConnectService *) service {
+    return _mService;
+}
+*/
 
 
 

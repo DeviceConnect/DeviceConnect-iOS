@@ -152,6 +152,7 @@
 		C2F89D631920BB93005F1C5F /* DConnectConnectProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = C2F89D621920BB93005F1C5F /* DConnectConnectProfile.m */; };
 		C2F89D671920BCD4005F1C5F /* DConnectFileProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = C2F89D661920BCD4005F1C5F /* DConnectFileProfile.m */; };
 		D60DD5FD1D2E4C3400DEBE5C /* ApiIdentifier.m in Sources */ = {isa = PBXBuildFile; fileRef = D60DD5FC1D2E4C3400DEBE5C /* ApiIdentifier.m */; };
+		D60DD6011D2F383F00DEBE5C /* DConnectService.m in Sources */ = {isa = PBXBuildFile; fileRef = D60DD6001D2F383F00DEBE5C /* DConnectService.m */; };
 		D623FE6D19B6279600706448 /* LocalOAuthAccessTokenDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D623FE6C19B6279600706448 /* LocalOAuthAccessTokenDetailViewController.m */; };
 		D62622911992326E004F01E6 /* LocalOAuthClientDao.m in Sources */ = {isa = PBXBuildFile; fileRef = D626228A1992326E004F01E6 /* LocalOAuthClientDao.m */; };
 		D62622921992326E004F01E6 /* LocalOAuthProfileDao.m in Sources */ = {isa = PBXBuildFile; fileRef = D626228C1992326E004F01E6 /* LocalOAuthProfileDao.m */; };
@@ -1826,6 +1827,8 @@
 		C2F89D661920BCD4005F1C5F /* DConnectFileProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DConnectFileProfile.m; sourceTree = "<group>"; };
 		D60DD5FB1D2E4C3400DEBE5C /* ApiIdentifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ApiIdentifier.h; path = spec/ApiIdentifier.h; sourceTree = "<group>"; };
 		D60DD5FC1D2E4C3400DEBE5C /* ApiIdentifier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ApiIdentifier.m; path = spec/ApiIdentifier.m; sourceTree = "<group>"; };
+		D60DD5FF1D2F383F00DEBE5C /* DConnectService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DConnectService.h; path = service/DConnectService.h; sourceTree = "<group>"; };
+		D60DD6001D2F383F00DEBE5C /* DConnectService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DConnectService.m; path = service/DConnectService.m; sourceTree = "<group>"; };
 		D623FE6B19B6279600706448 /* LocalOAuthAccessTokenDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LocalOAuthAccessTokenDetailViewController.h; path = localoauth/LocalOAuthAccessTokenDetailViewController.h; sourceTree = "<group>"; };
 		D623FE6C19B6279600706448 /* LocalOAuthAccessTokenDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LocalOAuthAccessTokenDetailViewController.m; path = localoauth/LocalOAuthAccessTokenDetailViewController.m; sourceTree = "<group>"; };
 		D62622891992326E004F01E6 /* LocalOAuthClientDao.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LocalOAuthClientDao.h; path = localoauth/cache/db/dao/LocalOAuthClientDao.h; sourceTree = "<group>"; };
@@ -3847,6 +3850,7 @@
 		C29D3317191B2679001015CC /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				D60DD5FE1D2F380200DEBE5C /* service */,
 				ABE747151C688608001D8F0D /* websocket */,
 				ABE7470E1C688473001D8F0D /* protocol */,
 				D6FD01F51999E593000DB674 /* cipher */,
@@ -3983,6 +3987,15 @@
 			children = (
 			);
 			path = Stress;
+			sourceTree = "<group>";
+		};
+		D60DD5FE1D2F380200DEBE5C /* service */ = {
+			isa = PBXGroup;
+			children = (
+				D60DD5FF1D2F383F00DEBE5C /* DConnectService.h */,
+				D60DD6001D2F383F00DEBE5C /* DConnectService.m */,
+			);
+			name = service;
 			sourceTree = "<group>";
 		};
 		D6262285199231ED004F01E6 /* localoauth */ = {
@@ -4530,6 +4543,7 @@
 				D684AC201D2CF4D500F56CA0 /* DConnectApi.m in Sources */,
 				ABE747131C688473001D8F0D /* DConnectServerProtocol.m in Sources */,
 				AB0C3C211BDF1FBD000F4C5D /* DConnectLightProfile.m in Sources */,
+				D60DD6011D2F383F00DEBE5C /* DConnectService.m in Sources */,
 				6B4EEF5C1AAF2A1800A92E0D /* DConnectWhitelist.m in Sources */,
 				AB67AB301C642AC500B4C62C /* RoutingConnection.m in Sources */,
 				D684AC2C1D2CF6AF00F56CA0 /* PutApi.m in Sources */,
