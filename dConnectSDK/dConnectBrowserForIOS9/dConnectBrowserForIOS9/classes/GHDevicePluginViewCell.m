@@ -8,7 +8,7 @@
 
 #import "GHDevicePluginViewCell.h"
 
-@implementation DevicePluginViewCell
+@implementation GHDevicePluginViewCell
 
 - (void)layoutSubviews
 {
@@ -20,6 +20,7 @@
 {
     self.titleLabel.text = [plugins pluginName];
     self.versionLabel.text = [plugins pluginVersionName];
+    [self layoutSubviews];
 
     //TODO: アイコンをバンドルから取ってくる
 }
