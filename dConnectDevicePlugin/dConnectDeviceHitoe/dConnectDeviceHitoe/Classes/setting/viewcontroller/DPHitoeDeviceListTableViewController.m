@@ -9,6 +9,8 @@
 
 
 #import "DPHitoeDeviceListTableViewController.h"
+#import "DPHitoeProgressDialog.h"
+#import "DPHitoeDeviceListCell.h"
 
 @interface DPHitoeDeviceListTableViewController ()
 
@@ -39,8 +41,11 @@
                                                                            green:0.63
                                                                             blue:0.91
                                                                            alpha:1.0];
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC));
+    dispatch_after(popTime, dispatch_get_main_queue(), ^{
 
-    [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"cellhitoe"];
+//        [DPHitoeProgressDialog showProgressDialog];
+    });
 }
 
 - (void)didReceiveMemoryWarning {
@@ -65,21 +70,20 @@
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cellhitoe" forIndexPath:indexPath];
-    
-    // Configure the cell...
-    cell.textLabel.text = @"test";
-    UIButton *connectSW = [[UIButton alloc] initWithFrame:CGRectZero];
-    connectSW.titleLabel.text = @"接続";
-    [connectSW addTarget:self action:@selector(tapSwitch:) forControlEvents:UIControlEventTouchUpInside];
-    connectSW.tag = indexPath.row;
+    DPHitoeDeviceListCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cellhitoe" forIndexPath:indexPath];
+    cell.title.text = @"Hitoe";
+    cell.address.text = @"address";
+    cell.connect.titleLabel.text = @"接続";
+    [cell.connect addTarget:self action:@selector(handleTouchButton:event:) forControlEvents:UIControlEventTouchUpInside];
 
-    
     return cell;
 }
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (void)handleTouchButton:(UIButton *)sender event:(UIEvent *)event {
+    NSLog(@"tap");
+}
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    NSLog(@"select index:%d", indexPath.row);
 }
 /*
 // Override to support conditional editing of the table view.

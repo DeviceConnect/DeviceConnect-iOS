@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
     </dependencies>
     <scenes>
         <!--デバイス一覧画面-->
@@ -14,19 +15,59 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="cellhitoe" selectionStyle="default" indentationWidth="10" id="KhH-JH-nLZ">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="cellhitoe" id="KhH-JH-nLZ" customClass="DPHitoeDeviceListCell">
                                 <rect key="frame" x="0.0" y="92" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KhH-JH-nLZ" id="Pga-d6-FHs">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="U5y-rx-KsV">
-                                            <rect key="frame" x="531" y="-7" width="46" height="30"/>
-                                            <state key="normal" title="Button"/>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lEQ-aQ-hfu">
+                                            <rect key="frame" x="513" y="5" width="59" height="30"/>
+                                            <color key="backgroundColor" red="0.080736300203982703" green="0.87406548983479193" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="59" id="p8w-az-vdX"/>
+                                                <constraint firstAttribute="height" constant="30" id="yEb-Fq-0qa"/>
+                                            </constraints>
+                                            <state key="normal" title="接続">
+                                                <color key="titleColor" red="0.95495664542493641" green="0.95587964343958209" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                            </state>
                                         </button>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QKu-9w-y4X">
+                                            <rect key="frame" x="13" y="0.0" width="42" height="21"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" secondItem="QKu-9w-y4X" secondAttribute="height" multiplier="2:1" id="CxS-ns-erh"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1cx-QL-tbY">
+                                            <rect key="frame" x="13" y="22" width="42" height="21"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" secondItem="1cx-QL-tbY" secondAttribute="height" multiplier="2:1" id="ffS-jE-467"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
                                     </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="trailing" secondItem="lEQ-aQ-hfu" secondAttribute="trailing" constant="28" id="Cfz-Bj-iGA"/>
+                                        <constraint firstAttribute="bottom" secondItem="lEQ-aQ-hfu" secondAttribute="bottom" constant="8.5" id="PEw-lV-Rtu"/>
+                                        <constraint firstItem="QKu-9w-y4X" firstAttribute="top" secondItem="Pga-d6-FHs" secondAttribute="top" id="YZv-cg-TWc"/>
+                                        <constraint firstItem="QKu-9w-y4X" firstAttribute="leading" secondItem="Pga-d6-FHs" secondAttribute="leading" constant="13" id="aDV-2A-0ag"/>
+                                        <constraint firstItem="1cx-QL-tbY" firstAttribute="leading" secondItem="Pga-d6-FHs" secondAttribute="leading" constant="13" id="dlK-4N-Usm"/>
+                                        <constraint firstItem="lEQ-aQ-hfu" firstAttribute="top" secondItem="Pga-d6-FHs" secondAttribute="top" constant="5" id="gay-Pr-NfP"/>
+                                        <constraint firstAttribute="bottom" secondItem="1cx-QL-tbY" secondAttribute="bottom" constant="0.5" id="h1K-MJ-Prr"/>
+                                        <constraint firstItem="1cx-QL-tbY" firstAttribute="top" secondItem="QKu-9w-y4X" secondAttribute="bottom" constant="1" id="tUz-bH-JVx"/>
+                                    </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="address" destination="1cx-QL-tbY" id="HhT-Fi-Dij"/>
+                                    <outlet property="connect" destination="lEQ-aQ-hfu" id="pJV-PT-n3a"/>
+                                    <outlet property="title" destination="QKu-9w-y4X" id="NwI-oy-iYm"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
