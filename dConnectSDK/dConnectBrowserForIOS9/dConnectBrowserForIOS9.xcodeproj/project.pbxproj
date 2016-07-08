@@ -31,6 +31,7 @@
 		8E9AE4F81D2FBDBB007348DA /* GHDeviceProfileViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E9AE4F71D2FBDBB007348DA /* GHDeviceProfileViewCell.m */; };
 		8E9AE4FB1D2FBDCE007348DA /* GHDeviceSettingButtonViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E9AE4FA1D2FBDCE007348DA /* GHDeviceSettingButtonViewCell.m */; };
 		8E9AE4FE1D2FBDEE007348DA /* GHDevicePluginSectionHeaderViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E9AE4FD1D2FBDEE007348DA /* GHDevicePluginSectionHeaderViewCell.m */; };
+		8E9AE5011D2FBFBC007348DA /* GHDevicePluginDetailViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E9AE5001D2FBFBC007348DA /* GHDevicePluginDetailViewModel.m */; };
 		8EBB89131D1385050038700B /* BookmarkIconViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EBB89121D1385050038700B /* BookmarkIconViewCell.m */; };
 		8EBB891A1D1387380038700B /* BookmarkIconViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EBB89191D1387380038700B /* BookmarkIconViewModel.m */; };
 		8EBB891D1D139C750038700B /* TopViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EBB891C1D139C750038700B /* TopViewModel.m */; };
@@ -233,6 +234,8 @@
 		8E9AE4FA1D2FBDCE007348DA /* GHDeviceSettingButtonViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GHDeviceSettingButtonViewCell.m; sourceTree = "<group>"; };
 		8E9AE4FC1D2FBDEE007348DA /* GHDevicePluginSectionHeaderViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHDevicePluginSectionHeaderViewCell.h; sourceTree = "<group>"; };
 		8E9AE4FD1D2FBDEE007348DA /* GHDevicePluginSectionHeaderViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GHDevicePluginSectionHeaderViewCell.m; sourceTree = "<group>"; };
+		8E9AE4FF1D2FBFBC007348DA /* GHDevicePluginDetailViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHDevicePluginDetailViewModel.h; sourceTree = "<group>"; };
+		8E9AE5001D2FBFBC007348DA /* GHDevicePluginDetailViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GHDevicePluginDetailViewModel.m; sourceTree = "<group>"; };
 		8EBB89111D1385050038700B /* BookmarkIconViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookmarkIconViewCell.h; sourceTree = "<group>"; };
 		8EBB89121D1385050038700B /* BookmarkIconViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BookmarkIconViewCell.m; sourceTree = "<group>"; };
 		8EBB89181D1387380038700B /* BookmarkIconViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookmarkIconViewModel.h; sourceTree = "<group>"; };
@@ -525,6 +528,8 @@
 			children = (
 				8E1A058F1D2E423B006A466B /* GHDevicePluginViewModel.h */,
 				8E1A05901D2E423B006A466B /* GHDevicePluginViewModel.m */,
+				8E9AE4FF1D2FBFBC007348DA /* GHDevicePluginDetailViewModel.h */,
+				8E9AE5001D2FBFBC007348DA /* GHDevicePluginDetailViewModel.m */,
 			);
 			name = devicePlugin;
 			sourceTree = "<group>";
@@ -1207,6 +1212,7 @@
 				8E0563551D2681CB008EBA25 /* DeviceMoreViewCell.m in Sources */,
 				8E0A4C321D1CC4A500827DA6 /* InitialGuideViewController.m in Sources */,
 				8EBB891A1D1387380038700B /* BookmarkIconViewModel.m in Sources */,
+				8E9AE5011D2FBFBC007348DA /* GHDevicePluginDetailViewModel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
