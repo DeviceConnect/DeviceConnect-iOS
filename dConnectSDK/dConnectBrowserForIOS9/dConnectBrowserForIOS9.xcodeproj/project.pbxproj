@@ -28,6 +28,9 @@
 		8E9AE4EC1D2F421C007348DA /* DevicePlugin.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8E9AE4EB1D2F421C007348DA /* DevicePlugin.storyboard */; };
 		8E9AE4EF1D2F43C0007348DA /* GHDevicePluginViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E9AE4EE1D2F43C0007348DA /* GHDevicePluginViewCell.m */; };
 		8E9AE4F21D2FA73E007348DA /* GHDevicePluginDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E9AE4F11D2FA73E007348DA /* GHDevicePluginDetailViewController.m */; };
+		8E9AE4F81D2FBDBB007348DA /* GHDeviceProfileViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E9AE4F71D2FBDBB007348DA /* GHDeviceProfileViewCell.m */; };
+		8E9AE4FB1D2FBDCE007348DA /* GHDeviceSettingButtonViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E9AE4FA1D2FBDCE007348DA /* GHDeviceSettingButtonViewCell.m */; };
+		8E9AE4FE1D2FBDEE007348DA /* GHDevicePluginSectionHeaderViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E9AE4FD1D2FBDEE007348DA /* GHDevicePluginSectionHeaderViewCell.m */; };
 		8EBB89131D1385050038700B /* BookmarkIconViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EBB89121D1385050038700B /* BookmarkIconViewCell.m */; };
 		8EBB891A1D1387380038700B /* BookmarkIconViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EBB89191D1387380038700B /* BookmarkIconViewModel.m */; };
 		8EBB891D1D139C750038700B /* TopViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EBB891C1D139C750038700B /* TopViewModel.m */; };
@@ -224,6 +227,12 @@
 		8E9AE4EE1D2F43C0007348DA /* GHDevicePluginViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GHDevicePluginViewCell.m; sourceTree = "<group>"; };
 		8E9AE4F01D2FA73E007348DA /* GHDevicePluginDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHDevicePluginDetailViewController.h; sourceTree = "<group>"; };
 		8E9AE4F11D2FA73E007348DA /* GHDevicePluginDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GHDevicePluginDetailViewController.m; sourceTree = "<group>"; };
+		8E9AE4F61D2FBDBB007348DA /* GHDeviceProfileViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHDeviceProfileViewCell.h; sourceTree = "<group>"; };
+		8E9AE4F71D2FBDBB007348DA /* GHDeviceProfileViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GHDeviceProfileViewCell.m; sourceTree = "<group>"; };
+		8E9AE4F91D2FBDCE007348DA /* GHDeviceSettingButtonViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHDeviceSettingButtonViewCell.h; sourceTree = "<group>"; };
+		8E9AE4FA1D2FBDCE007348DA /* GHDeviceSettingButtonViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GHDeviceSettingButtonViewCell.m; sourceTree = "<group>"; };
+		8E9AE4FC1D2FBDEE007348DA /* GHDevicePluginSectionHeaderViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHDevicePluginSectionHeaderViewCell.h; sourceTree = "<group>"; };
+		8E9AE4FD1D2FBDEE007348DA /* GHDevicePluginSectionHeaderViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GHDevicePluginSectionHeaderViewCell.m; sourceTree = "<group>"; };
 		8EBB89111D1385050038700B /* BookmarkIconViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookmarkIconViewCell.h; sourceTree = "<group>"; };
 		8EBB89121D1385050038700B /* BookmarkIconViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BookmarkIconViewCell.m; sourceTree = "<group>"; };
 		8EBB89181D1387380038700B /* BookmarkIconViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookmarkIconViewModel.h; sourceTree = "<group>"; };
@@ -526,6 +535,12 @@
 				8E9AE4EB1D2F421C007348DA /* DevicePlugin.storyboard */,
 				8E9AE4ED1D2F43C0007348DA /* GHDevicePluginViewCell.h */,
 				8E9AE4EE1D2F43C0007348DA /* GHDevicePluginViewCell.m */,
+				8E9AE4F61D2FBDBB007348DA /* GHDeviceProfileViewCell.h */,
+				8E9AE4F71D2FBDBB007348DA /* GHDeviceProfileViewCell.m */,
+				8E9AE4F91D2FBDCE007348DA /* GHDeviceSettingButtonViewCell.h */,
+				8E9AE4FA1D2FBDCE007348DA /* GHDeviceSettingButtonViewCell.m */,
+				8E9AE4FC1D2FBDEE007348DA /* GHDevicePluginSectionHeaderViewCell.h */,
+				8E9AE4FD1D2FBDEE007348DA /* GHDevicePluginSectionHeaderViewCell.m */,
 			);
 			name = devicePlugin;
 			sourceTree = "<group>";
@@ -1135,6 +1150,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8E9AE4FB1D2FBDCE007348DA /* GHDeviceSettingButtonViewCell.m in Sources */,
 				AB00F2E21C71A29D00689C70 /* GHBookmarkTitleCell.m in Sources */,
 				8E3772451D24D577003D3124 /* HTMLParser.m in Sources */,
 				8E0A4C3F1D1D28B900827DA6 /* WebViewController.m in Sources */,
@@ -1150,6 +1166,7 @@
 				8E05634C1D2628A4008EBA25 /* GHDeviceUtil.m in Sources */,
 				AB00F4A51C71B16200689C70 /* RATreeNodeCollectionController.m in Sources */,
 				AB00F2E01C71A29D00689C70 /* GHAddBookmarkController.m in Sources */,
+				8E9AE4FE1D2FBDEE007348DA /* GHDevicePluginSectionHeaderViewCell.m in Sources */,
 				8E05634F1D263C05008EBA25 /* DeviceIconViewCell.m in Sources */,
 				AB00F4AC1C71B16200689C70 /* RATreeView+UIScrollView.m in Sources */,
 				AB00F2F21C71A29D00689C70 /* GHPageViewCell.m in Sources */,
@@ -1181,6 +1198,7 @@
 				AB00F2EE1C71A29D00689C70 /* GHHeaderView.m in Sources */,
 				AB00F1E41C71941800689C70 /* main.m in Sources */,
 				AB00F4AA1C71B16200689C70 /* RATreeView+TableViewDataSource.m in Sources */,
+				8E9AE4F81D2FBDBB007348DA /* GHDeviceProfileViewCell.m in Sources */,
 				AB00F2F71C71A29D00689C70 /* GHURLLabel.m in Sources */,
 				AB00F4A61C71B16200689C70 /* RATreeNodeInfo+Private.m in Sources */,
 				8E3772441D24D577003D3124 /* HTMLNode.m in Sources */,
