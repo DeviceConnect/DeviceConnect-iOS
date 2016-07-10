@@ -21,6 +21,15 @@
         _didTappedSetting();
     }
 }
+- (IBAction)didTouchDown:(id)sender {
+    [UIView animateWithDuration:0.3 animations:^{
+        self.settingButton.alpha = 0.5;
+    }];
+}
+
+- (IBAction)didTouchUp:(id)sender {
+    self.settingButton.alpha = 1.0;
+}
 
 - (void)dealloc
 {

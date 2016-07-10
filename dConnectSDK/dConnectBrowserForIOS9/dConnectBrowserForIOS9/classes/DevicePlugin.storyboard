@@ -162,17 +162,22 @@
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="64"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UzL-zg-sPO">
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UzL-zg-sPO">
                                             <rect key="frame" x="20" y="10" width="560" height="44"/>
-                                            <color key="backgroundColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <color key="backgroundColor" red="0.2274509804" green="0.59607843140000005" blue="0.84705882349999995" alpha="1" colorSpace="calibratedRGB"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" priority="750" constant="44" id="KaJ-Oj-cRm"/>
                                             </constraints>
+                                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
                                             <state key="normal" title="設定を開く">
                                                 <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             </state>
                                             <connections>
                                                 <action selector="didTappedButton:" destination="448-9I-EPY" eventType="touchUpInside" id="t4Z-RW-mbN"/>
+                                                <action selector="didTouchDown:" destination="448-9I-EPY" eventType="touchDown" id="Ukq-9O-YMh"/>
+                                                <action selector="didTouchUp:" destination="448-9I-EPY" eventType="touchCancel" id="6Zk-YF-1rJ"/>
+                                                <action selector="didTouchUp:" destination="448-9I-EPY" eventType="touchUpInside" id="D4b-Sw-6ik"/>
+                                                <action selector="didTouchUp:" destination="448-9I-EPY" eventType="touchUpOutside" id="zp7-E5-kBY"/>
                                             </connections>
                                         </button>
                                     </subviews>
