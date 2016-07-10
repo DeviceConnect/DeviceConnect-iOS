@@ -60,7 +60,7 @@
                                         <constraint firstItem="3OF-Jp-Eka" firstAttribute="centerY" secondItem="qoX-Am-YDE" secondAttribute="centerY" id="aIX-LX-pCF"/>
                                         <constraint firstItem="PQf-E9-tEB" firstAttribute="top" secondItem="qoX-Am-YDE" secondAttribute="top" constant="10" id="eNV-xw-uHe"/>
                                         <constraint firstItem="PQf-E9-tEB" firstAttribute="leading" secondItem="3OF-Jp-Eka" secondAttribute="trailing" constant="15" id="epn-wP-vb4"/>
-                                        <constraint firstItem="Zde-pu-r5H" firstAttribute="top" secondItem="PQf-E9-tEB" secondAttribute="bottom" priority="750" constant="5" id="f7e-WD-mdw"/>
+                                        <constraint firstItem="Zde-pu-r5H" firstAttribute="top" secondItem="PQf-E9-tEB" secondAttribute="bottom" priority="999" constant="5" id="f7e-WD-mdw"/>
                                         <constraint firstItem="PQf-E9-tEB" firstAttribute="top" secondItem="3OF-Jp-Eka" secondAttribute="top" id="fQ1-ku-1ds"/>
                                         <constraint firstItem="tdm-pD-0wt" firstAttribute="top" secondItem="3OF-Jp-Eka" secondAttribute="bottom" constant="9" id="nUW-Sp-c0E"/>
                                         <constraint firstItem="3OF-Jp-Eka" firstAttribute="leading" secondItem="qoX-Am-YDE" secondAttribute="leading" constant="20" id="ssk-bH-oDa"/>
@@ -73,7 +73,7 @@
                                         </mask>
                                     </variation>
                                 </tableViewCellContentView>
-                                <color key="backgroundColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <connections>
                                     <outlet property="iconView" destination="3OF-Jp-Eka" id="rH1-Qw-Ipq"/>
                                     <outlet property="titleLabel" destination="PQf-E9-tEB" id="bHu-rC-sR1"/>
@@ -131,24 +131,17 @@
                                     <constraints>
                                         <constraint firstAttribute="trailing" secondItem="kh6-tC-9IY" secondAttribute="trailing" constant="20" id="4n7-4e-Q17"/>
                                         <constraint firstAttribute="bottom" secondItem="ieV-hP-gdO" secondAttribute="bottom" constant="10" id="7XU-Zg-nMl"/>
-                                        <constraint firstItem="kh6-tC-9IY" firstAttribute="top" secondItem="z7n-ZP-tac" secondAttribute="top" id="HfI-HN-aqd"/>
-                                        <constraint firstItem="ieV-hP-gdO" firstAttribute="top" secondItem="kh6-tC-9IY" secondAttribute="bottom" priority="750" constant="5" id="I1C-hO-wSg"/>
+                                        <constraint firstItem="ieV-hP-gdO" firstAttribute="top" secondItem="kh6-tC-9IY" secondAttribute="bottom" priority="999" constant="5" id="I1C-hO-wSg"/>
                                         <constraint firstItem="kh6-tC-9IY" firstAttribute="leading" secondItem="z7n-ZP-tac" secondAttribute="trailing" constant="15" id="Ik2-pj-wGi"/>
-                                        <constraint firstItem="z7n-ZP-tac" firstAttribute="centerY" secondItem="uh5-Qj-mEq" secondAttribute="centerY" id="LqH-cK-5pl"/>
                                         <constraint firstItem="z7n-ZP-tac" firstAttribute="leading" secondItem="uh5-Qj-mEq" secondAttribute="leading" constant="20" id="Mop-OR-jgx"/>
                                         <constraint firstAttribute="trailing" secondItem="ieV-hP-gdO" secondAttribute="trailing" constant="20" id="W0D-G8-Qx7"/>
-                                        <constraint firstItem="z7n-ZP-tac" firstAttribute="centerY" secondItem="uh5-Qj-mEq" secondAttribute="centerY" id="XPC-B4-Fj6"/>
                                         <constraint firstItem="kh6-tC-9IY" firstAttribute="top" secondItem="uh5-Qj-mEq" secondAttribute="top" constant="10" id="dje-9d-RmU"/>
+                                        <constraint firstAttribute="bottom" secondItem="z7n-ZP-tac" secondAttribute="bottom" priority="250" constant="4" id="g7h-Rr-MPE"/>
+                                        <constraint firstItem="z7n-ZP-tac" firstAttribute="centerY" secondItem="uh5-Qj-mEq" secondAttribute="centerY" id="gYN-Ks-ctd"/>
                                         <constraint firstItem="ieV-hP-gdO" firstAttribute="leading" secondItem="z7n-ZP-tac" secondAttribute="trailing" constant="15" id="u1e-Br-oF5"/>
                                     </constraints>
-                                    <variation key="default">
-                                        <mask key="constraints">
-                                            <exclude reference="LqH-cK-5pl"/>
-                                            <exclude reference="HfI-HN-aqd"/>
-                                        </mask>
-                                    </variation>
                                 </tableViewCellContentView>
-                                <color key="backgroundColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <connections>
                                     <outlet property="iconView" destination="z7n-ZP-tac" id="bh3-DW-0x9"/>
                                     <outlet property="titleLabel" destination="kh6-tC-9IY" id="z1H-Xt-oRc"/>
@@ -274,6 +267,7 @@
                             <outlet property="delegate" destination="VoA-KW-0YI" id="DSV-aq-OO9"/>
                         </connections>
                     </tableView>
+                    <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bL8-y4-4M5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

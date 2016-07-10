@@ -10,6 +10,12 @@
 
 @implementation GHDevicePluginViewCell
 
+- (void)awakeFromNib
+{
+    [super awakeFromNib];
+    self.contentView.autoresizingMask = UIViewAutoresizingFlexibleHeight;
+}
+
 - (void)layoutSubviews
 {
     self.iconView.layer.cornerRadius = 10;
@@ -20,7 +26,6 @@
 {
     self.titleLabel.text = [plugins pluginName];
     self.versionLabel.text = [plugins pluginVersionName];
-    [self layoutSubviews];
 
     //TODO: アイコンをバンドルから取ってくる
 }
