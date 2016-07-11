@@ -65,6 +65,21 @@
 		AB3D3E9B1D2B9E9B004290BA /* pose_walking.png in Resources */ = {isa = PBXBuildFile; fileRef = AB3D3E841D2B9E9B004290BA /* pose_walking.png */; };
 		AB3D3EB21D2CC40D004290BA /* DPHitoeSystemProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = AB3D3EB11D2CC40D004290BA /* DPHitoeSystemProfile.m */; };
 		AB3D3EB61D2CC7F3004290BA /* DCMDevicePluginSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB3D3EB51D2CC7F2004290BA /* DCMDevicePluginSDK.framework */; };
+		AB507ED31D30D5760014C504 /* DPHitoeTable.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = AB507ED11D30D5760014C504 /* DPHitoeTable.xcdatamodeld */; };
+		AB507ED41D30D6500014C504 /* DPHitoeTable.xcdatamodeld in Resources */ = {isa = PBXBuildFile; fileRef = AB507ED11D30D5760014C504 /* DPHitoeTable.xcdatamodeld */; };
+		AB507ED71D30DE270014C504 /* DPHitoeDBManager.m in Sources */ = {isa = PBXBuildFile; fileRef = AB507ED61D30DE270014C504 /* DPHitoeDBManager.m */; };
+		AB507ED91D30E31A0014C504 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB507ED81D30E31A0014C504 /* CoreData.framework */; };
+		AB507EDC1D3102680014C504 /* DPHitoeDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = AB507EDB1D3102680014C504 /* DPHitoeDevice.m */; };
+		AB507EE51D31CFF90014C504 /* DPHitoeAddDeviceTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB507EE41D31CFF90014C504 /* DPHitoeAddDeviceTableViewController.m */; };
+		AB507EE81D31E87A0014C504 /* DPHitoeManager.m in Sources */ = {isa = PBXBuildFile; fileRef = AB507EE71D31E87A0014C504 /* DPHitoeManager.m */; };
+		AB507EEB1D31EB920014C504 /* DPHitoeAccelerationData.m in Sources */ = {isa = PBXBuildFile; fileRef = AB507EEA1D31EB920014C504 /* DPHitoeAccelerationData.m */; };
+		AB507EEE1D31EE530014C504 /* DPHitoeHeartData.m in Sources */ = {isa = PBXBuildFile; fileRef = AB507EED1D31EE530014C504 /* DPHitoeHeartData.m */; };
+		AB507EF11D31F82D0014C504 /* DPHitoeDeviceData.m in Sources */ = {isa = PBXBuildFile; fileRef = AB507EF01D31F82D0014C504 /* DPHitoeDeviceData.m */; };
+		AB507EF41D31F9BF0014C504 /* DPHitoeHeartRateData.m in Sources */ = {isa = PBXBuildFile; fileRef = AB507EF31D31F9BF0014C504 /* DPHitoeHeartRateData.m */; };
+		AB507EF71D31FB4D0014C504 /* DPHitoePoseEstimationData.m in Sources */ = {isa = PBXBuildFile; fileRef = AB507EF61D31FB4D0014C504 /* DPHitoePoseEstimationData.m */; };
+		AB507EFA1D31FBC60014C504 /* DPHitoeStressEstimationData.m in Sources */ = {isa = PBXBuildFile; fileRef = AB507EF91D31FBC60014C504 /* DPHitoeStressEstimationData.m */; };
+		AB507EFD1D31FDE10014C504 /* DPHitoeWalkStateData.m in Sources */ = {isa = PBXBuildFile; fileRef = AB507EFC1D31FDE10014C504 /* DPHitoeWalkStateData.m */; };
+		AB507F001D31FED10014C504 /* DPHitoeTempExData.m in Sources */ = {isa = PBXBuildFile; fileRef = AB507EFF1D31FED10014C504 /* DPHitoeTempExData.m */; };
 		ABF6C3AB1D2B7722006B1B91 /* DConnectSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABF6C3AA1D2B7722006B1B91 /* DConnectSDK.framework */; };
 		ABF6C3AD1D2B7741006B1B91 /* hitoeAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABF6C3AC1D2B7741006B1B91 /* hitoeAPI.framework */; };
 		ABF6C3B31D2B7903006B1B91 /* DPHitoeDevicePlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = ABF6C3B21D2B7903006B1B91 /* DPHitoeDevicePlugin.m */; };
@@ -120,6 +135,32 @@
 		AB3D3EB01D2CC40D004290BA /* DPHitoeSystemProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHitoeSystemProfile.h; sourceTree = "<group>"; };
 		AB3D3EB11D2CC40D004290BA /* DPHitoeSystemProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHitoeSystemProfile.m; sourceTree = "<group>"; };
 		AB3D3EB51D2CC7F2004290BA /* DCMDevicePluginSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DCMDevicePluginSDK.framework; path = ../DCMDevicePluginSDK/bin/DCMDevicePluginSDK.framework; sourceTree = "<group>"; };
+		AB507ED21D30D5760014C504 /* DPHitoeTable.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DPHitoeTable.xcdatamodel; sourceTree = "<group>"; };
+		AB507ED51D30DE270014C504 /* DPHitoeDBManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHitoeDBManager.h; sourceTree = "<group>"; };
+		AB507ED61D30DE270014C504 /* DPHitoeDBManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHitoeDBManager.m; sourceTree = "<group>"; };
+		AB507ED81D30E31A0014C504 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		AB507EDA1D3102680014C504 /* DPHitoeDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHitoeDevice.h; sourceTree = "<group>"; };
+		AB507EDB1D3102680014C504 /* DPHitoeDevice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHitoeDevice.m; sourceTree = "<group>"; };
+		AB507EE31D31CFF90014C504 /* DPHitoeAddDeviceTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHitoeAddDeviceTableViewController.h; sourceTree = "<group>"; };
+		AB507EE41D31CFF90014C504 /* DPHitoeAddDeviceTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHitoeAddDeviceTableViewController.m; sourceTree = "<group>"; };
+		AB507EE61D31E87A0014C504 /* DPHitoeManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DPHitoeManager.h; path = dConnectDeviceHitoe/Classes/data/DPHitoeManager.h; sourceTree = SOURCE_ROOT; };
+		AB507EE71D31E87A0014C504 /* DPHitoeManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DPHitoeManager.m; path = dConnectDeviceHitoe/Classes/data/DPHitoeManager.m; sourceTree = SOURCE_ROOT; };
+		AB507EE91D31EB920014C504 /* DPHitoeAccelerationData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DPHitoeAccelerationData.h; path = dConnectDeviceHitoe/Classes/data/DPHitoeAccelerationData.h; sourceTree = SOURCE_ROOT; };
+		AB507EEA1D31EB920014C504 /* DPHitoeAccelerationData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DPHitoeAccelerationData.m; path = dConnectDeviceHitoe/Classes/data/DPHitoeAccelerationData.m; sourceTree = SOURCE_ROOT; };
+		AB507EEC1D31EE530014C504 /* DPHitoeHeartData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DPHitoeHeartData.h; path = dConnectDeviceHitoe/Classes/data/DPHitoeHeartData.h; sourceTree = SOURCE_ROOT; };
+		AB507EED1D31EE530014C504 /* DPHitoeHeartData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DPHitoeHeartData.m; path = dConnectDeviceHitoe/Classes/data/DPHitoeHeartData.m; sourceTree = SOURCE_ROOT; };
+		AB507EEF1D31F82D0014C504 /* DPHitoeDeviceData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DPHitoeDeviceData.h; path = dConnectDeviceHitoe/Classes/data/DPHitoeDeviceData.h; sourceTree = SOURCE_ROOT; };
+		AB507EF01D31F82D0014C504 /* DPHitoeDeviceData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DPHitoeDeviceData.m; path = dConnectDeviceHitoe/Classes/data/DPHitoeDeviceData.m; sourceTree = SOURCE_ROOT; };
+		AB507EF21D31F9BE0014C504 /* DPHitoeHeartRateData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DPHitoeHeartRateData.h; path = dConnectDeviceHitoe/Classes/data/DPHitoeHeartRateData.h; sourceTree = SOURCE_ROOT; };
+		AB507EF31D31F9BF0014C504 /* DPHitoeHeartRateData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DPHitoeHeartRateData.m; path = dConnectDeviceHitoe/Classes/data/DPHitoeHeartRateData.m; sourceTree = SOURCE_ROOT; };
+		AB507EF51D31FB4D0014C504 /* DPHitoePoseEstimationData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DPHitoePoseEstimationData.h; path = dConnectDeviceHitoe/Classes/data/DPHitoePoseEstimationData.h; sourceTree = SOURCE_ROOT; };
+		AB507EF61D31FB4D0014C504 /* DPHitoePoseEstimationData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DPHitoePoseEstimationData.m; path = dConnectDeviceHitoe/Classes/data/DPHitoePoseEstimationData.m; sourceTree = SOURCE_ROOT; };
+		AB507EF81D31FBC60014C504 /* DPHitoeStressEstimationData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DPHitoeStressEstimationData.h; path = dConnectDeviceHitoe/Classes/data/DPHitoeStressEstimationData.h; sourceTree = SOURCE_ROOT; };
+		AB507EF91D31FBC60014C504 /* DPHitoeStressEstimationData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DPHitoeStressEstimationData.m; path = dConnectDeviceHitoe/Classes/data/DPHitoeStressEstimationData.m; sourceTree = SOURCE_ROOT; };
+		AB507EFB1D31FDE10014C504 /* DPHitoeWalkStateData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DPHitoeWalkStateData.h; path = dConnectDeviceHitoe/Classes/data/DPHitoeWalkStateData.h; sourceTree = SOURCE_ROOT; };
+		AB507EFC1D31FDE10014C504 /* DPHitoeWalkStateData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DPHitoeWalkStateData.m; path = dConnectDeviceHitoe/Classes/data/DPHitoeWalkStateData.m; sourceTree = SOURCE_ROOT; };
+		AB507EFE1D31FED10014C504 /* DPHitoeTempExData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DPHitoeTempExData.h; path = dConnectDeviceHitoe/Classes/data/DPHitoeTempExData.h; sourceTree = SOURCE_ROOT; };
+		AB507EFF1D31FED10014C504 /* DPHitoeTempExData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DPHitoeTempExData.m; path = dConnectDeviceHitoe/Classes/data/DPHitoeTempExData.m; sourceTree = SOURCE_ROOT; };
 		ABF6C36C1D2B4A0D006B1B91 /* libdConnectDeviceHitoe.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libdConnectDeviceHitoe.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		ABF6C3911D2B4CF6006B1B91 /* dConnectDeviceHitoe_resources.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = dConnectDeviceHitoe_resources.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		ABF6C3931D2B4CF6006B1B91 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -136,6 +177,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AB507ED91D30E31A0014C504 /* CoreData.framework in Frameworks */,
 				ABF6C3AB1D2B7722006B1B91 /* DConnectSDK.framework in Frameworks */,
 				ABF6C3AD1D2B7741006B1B91 /* hitoeAPI.framework in Frameworks */,
 				AB3D3EB61D2CC7F3004290BA /* DCMDevicePluginSDK.framework in Frameworks */,
@@ -207,6 +249,10 @@
 		AB3D3EB41D2CC72D004290BA /* db */ = {
 			isa = PBXGroup;
 			children = (
+				AB507ED51D30DE270014C504 /* DPHitoeDBManager.h */,
+				AB507ED61D30DE270014C504 /* DPHitoeDBManager.m */,
+				AB507EDA1D3102680014C504 /* DPHitoeDevice.h */,
+				AB507EDB1D3102680014C504 /* DPHitoeDevice.m */,
 			);
 			path = db;
 			sourceTree = "<group>";
@@ -216,6 +262,8 @@
 			children = (
 				AB281C141D2DE35B0092A2B2 /* DPHitoeDeviceListTableViewController.h */,
 				AB281C151D2DE35B0092A2B2 /* DPHitoeDeviceListTableViewController.m */,
+				AB507EE31D31CFF90014C504 /* DPHitoeAddDeviceTableViewController.h */,
+				AB507EE41D31CFF90014C504 /* DPHitoeAddDeviceTableViewController.m */,
 			);
 			name = viewcontroller;
 			path = dConnectDeviceHitoe/Classes/setting/viewcontroller;
@@ -253,6 +301,7 @@
 		ABF6C3781D2B4AB1006B1B91 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				AB507ED81D30E31A0014C504 /* CoreData.framework */,
 				AB3D3EB51D2CC7F2004290BA /* DCMDevicePluginSDK.framework */,
 				ABF6C3AC1D2B7741006B1B91 /* hitoeAPI.framework */,
 				ABF6C3A91D2B7722006B1B91 /* DConnectSDK_resources.bundle */,
@@ -268,6 +317,7 @@
 				ABF6C39F1D2B5202006B1B91 /* Hitoe_iPhone.storyboard */,
 				AB3D3E691D2B88D6004290BA /* Hitoe_iPad.storyboard */,
 				AB2E14EF1D2F656700564A5E /* ProgressDialog.storyboard */,
+				AB507ED11D30D5760014C504 /* DPHitoeTable.xcdatamodeld */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -326,6 +376,24 @@
 		ABF6C39E1D2B50B2006B1B91 /* data */ = {
 			isa = PBXGroup;
 			children = (
+				AB507EE61D31E87A0014C504 /* DPHitoeManager.h */,
+				AB507EE71D31E87A0014C504 /* DPHitoeManager.m */,
+				AB507EE91D31EB920014C504 /* DPHitoeAccelerationData.h */,
+				AB507EEA1D31EB920014C504 /* DPHitoeAccelerationData.m */,
+				AB507EEC1D31EE530014C504 /* DPHitoeHeartData.h */,
+				AB507EED1D31EE530014C504 /* DPHitoeHeartData.m */,
+				AB507EEF1D31F82D0014C504 /* DPHitoeDeviceData.h */,
+				AB507EF01D31F82D0014C504 /* DPHitoeDeviceData.m */,
+				AB507EF21D31F9BE0014C504 /* DPHitoeHeartRateData.h */,
+				AB507EF31D31F9BF0014C504 /* DPHitoeHeartRateData.m */,
+				AB507EF51D31FB4D0014C504 /* DPHitoePoseEstimationData.h */,
+				AB507EF61D31FB4D0014C504 /* DPHitoePoseEstimationData.m */,
+				AB507EF81D31FBC60014C504 /* DPHitoeStressEstimationData.h */,
+				AB507EF91D31FBC60014C504 /* DPHitoeStressEstimationData.m */,
+				AB507EFB1D31FDE10014C504 /* DPHitoeWalkStateData.h */,
+				AB507EFC1D31FDE10014C504 /* DPHitoeWalkStateData.m */,
+				AB507EFE1D31FED10014C504 /* DPHitoeTempExData.h */,
+				AB507EFF1D31FED10014C504 /* DPHitoeTempExData.m */,
 			);
 			name = data;
 			path = Data;
@@ -423,6 +491,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AB507ED41D30D6500014C504 /* DPHitoeTable.xcdatamodeld in Resources */,
 				AB2E14F31D2F6D2400564A5E /* ProgressDialog.storyboard in Resources */,
 				AB3D3E951D2B9E9B004290BA /* pose_faceup.png in Resources */,
 				AB3D3E8E1D2B9E9B004290BA /* mark_battery05.png in Resources */,
@@ -489,12 +558,25 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AB507F001D31FED10014C504 /* DPHitoeTempExData.m in Sources */,
 				AB281C161D2DE35B0092A2B2 /* DPHitoeDeviceListTableViewController.m in Sources */,
+				AB507EF71D31FB4D0014C504 /* DPHitoePoseEstimationData.m in Sources */,
+				AB507ED31D30D5760014C504 /* DPHitoeTable.xcdatamodeld in Sources */,
+				AB507EF41D31F9BF0014C504 /* DPHitoeHeartRateData.m in Sources */,
+				AB507EFD1D31FDE10014C504 /* DPHitoeWalkStateData.m in Sources */,
+				AB507EE81D31E87A0014C504 /* DPHitoeManager.m in Sources */,
 				AB2E14F21D2F661700564A5E /* DPHitoeProgressDialog.m in Sources */,
+				AB507ED71D30DE270014C504 /* DPHitoeDBManager.m in Sources */,
+				AB507EEB1D31EB920014C504 /* DPHitoeAccelerationData.m in Sources */,
 				AB2E14EE1D2F64D300564A5E /* DPHitoeDialog.m in Sources */,
+				AB507EEE1D31EE530014C504 /* DPHitoeHeartData.m in Sources */,
 				AB3D3EB21D2CC40D004290BA /* DPHitoeSystemProfile.m in Sources */,
+				AB507EF11D31F82D0014C504 /* DPHitoeDeviceData.m in Sources */,
+				AB507EDC1D3102680014C504 /* DPHitoeDevice.m in Sources */,
 				ABF6C3B31D2B7903006B1B91 /* DPHitoeDevicePlugin.m in Sources */,
+				AB507EE51D31CFF90014C504 /* DPHitoeAddDeviceTableViewController.m in Sources */,
 				AB2E14F71D2F79A700564A5E /* DPHitoeDeviceListCell.m in Sources */,
+				AB507EFA1D31FBC60014C504 /* DPHitoeStressEstimationData.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -747,6 +829,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		AB507ED11D30D5760014C504 /* DPHitoeTable.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				AB507ED21D30D5760014C504 /* DPHitoeTable.xcdatamodel */,
+			);
+			currentVersion = AB507ED21D30D5760014C504 /* DPHitoeTable.xcdatamodel */;
+			path = DPHitoeTable.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = ABF6C3641D2B4A0D006B1B91 /* Project object */;
 }

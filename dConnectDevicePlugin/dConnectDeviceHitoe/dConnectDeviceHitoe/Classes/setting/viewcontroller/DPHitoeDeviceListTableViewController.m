@@ -11,8 +11,12 @@
 #import "DPHitoeDeviceListTableViewController.h"
 #import "DPHitoeProgressDialog.h"
 #import "DPHitoeDeviceListCell.h"
+#import "DPHitoeAddDeviceTableViewController.h"
 
 @interface DPHitoeDeviceListTableViewController ()
+@property (weak, nonatomic) IBOutlet UILabel *descriptionLabel;
+@property (weak, nonatomic) IBOutlet UIButton *settingBtn;
+@property (weak, nonatomic) IBOutlet UITableView *registerDeviceList;
 
 @end
 
@@ -36,11 +40,14 @@
     title.text = @"Device一覧画面";
     [title sizeToFit];
     self.navigationItem.titleView = title;
+    self.registerDeviceList.delegate = self;
+    self.registerDeviceList.dataSource = self;
     // バー背景色
     self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:0.00
                                                                            green:0.63
                                                                             blue:0.91
                                                                            alpha:1.0];
+//    self.tableView.rowHeight = UITableViewAutomaticDimension;
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC));
     dispatch_after(popTime, dispatch_get_main_queue(), ^{
 
@@ -68,65 +75,54 @@
     return 1;
 }
 
-
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 80;
+}
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     DPHitoeDeviceListCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cellhitoe" forIndexPath:indexPath];
-    cell.title.text = @"Hitoe";
+    cell.title.text = @"Hitoe 001  d000322\n[ONLINE]";
     cell.address.text = @"address";
     cell.connect.titleLabel.text = @"接続";
     [cell.connect addTarget:self action:@selector(handleTouchButton:event:) forControlEvents:UIControlEventTouchUpInside];
-
     return cell;
 }
+
 - (void)handleTouchButton:(UIButton *)sender event:(UIEvent *)event {
     NSLog(@"tap");
+    [sender setBackgroundColor:[UIColor grayColor]];
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC));
+    dispatch_after(popTime, dispatch_get_main_queue(), ^{
+        [sender setBackgroundColor:[UIColor colorWithRed:0.00
+                                                   green:0.63
+                                                    blue:0.91
+                                                   alpha:1.0]];
+    });
+
+    
+
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    NSLog(@"select index:%d", indexPath.row);
+    [tableView deselectRowAtIndexPath:indexPath animated:NO];
 }
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
 
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
 
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-}
-*/
 
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
+#pragma mark - segue
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+    if ([[segue identifier] isEqualToString:@"showAddDevice"]) {
+        //        NSIndexPath *indexPath = [_foundIRKitList indexPathForSelectedRow];
+        DPHitoeAddDeviceTableViewController *controller =
+        (DPHitoeAddDeviceTableViewController *)[segue destinationViewController] ;
+        //        NSArray *devices = [[DPIRKitManager sharedInstance] devicesAll];
+        //        [controller setDetailItem:devices[indexPath.row]];
+    }
 }
-*/
+- (IBAction)showAddDeviceViewController:(id)sender {
+    [self performSegueWithIdentifier:@"showAddDevice" sender:self];
+}
+
+
 
 @end

@@ -116,7 +116,6 @@ int const DPHitoeDataKeyExtension = 0x04;
         [self addProfile:[DPHitoeSystemProfile new]];
         [self addProfile:[DConnectServiceInformationProfile new]];
         
-        
         // イベントマネージャの準備
         Class key = [self class];
         [[DConnectEventManager sharedManagerForClass:key]
