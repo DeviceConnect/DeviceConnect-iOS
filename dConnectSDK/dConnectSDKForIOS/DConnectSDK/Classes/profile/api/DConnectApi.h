@@ -30,6 +30,8 @@
 
 @interface DConnectApi : NSObject
 
+@property(nonatomic, assign) id<DConnectApiDelegate> delegate;
+
 - (instancetype) initWithMethod: (DConnectApiSpecMethod) method;
 
 /*!
@@ -62,5 +64,16 @@
  */
 - (void) setApiSpec: (DConnectApiSpec *) apiSpec;
 
+/*!
+ @brief RESPONSEメソッドハンドラー.<br>
+ リクエストパラメータに応じてデバイスのサービスを提供し、その結果をレスポンスパラメータに格納する。
+ レスポンスパラメータの送信準備が出来た場合は返り値にYESを指定する事。
+ 送信準備ができていない場合は、返り値にNOを指定し、スレッドを立ち上げてそのスレッドで最終的にレスポンスパラメータの送信を行う事。
+ 
+ @param[in] request リクエストパラメータ
+ @param[in,out] response レスポンスパラメータ
+ @retval レスポンスパラメータを送信するか否か
+ */
+- (BOOL) onRequest: (DConnectRequestMessage *) request response: (DConnectResponseMessage *) response;
 
 @end

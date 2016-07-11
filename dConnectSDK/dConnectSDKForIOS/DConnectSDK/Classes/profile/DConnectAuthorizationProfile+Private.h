@@ -8,6 +8,7 @@
 //
 
 #import "DConnectAuthorizationProfile.h"
+#import "GetApi.h"
 
 /*!
  @class DConnectAuthorizationProfile
@@ -29,32 +30,6 @@
  */
 - (id) initWithObject:(id)object;
 
-#pragma mark - Get Methods
-
-/*!
- @brief Local OAuthで使用するクライアントの作成要求の受信を通知する。
- 
- @param[in] requst リクエストパラメータ
- @param[in,out] response レスポンスパラメータ
- 
- @retval YES レスポンスパラメータを返却する。
- @retval NO レスポンスパラメータを返却しないので、@link DConnectManager::sendResponse: @endlinkで返却すること。
- */
-- (BOOL) didReceiveGetCreateClientRequest:(DConnectRequestMessage *)request
-                                 response:(DConnectResponseMessage *)response;
-
-/*!
- 
- @brief Local OAuthで使用するアクセストークンの作成要求の受信を通知する。
- 
- @param[in] requst リクエストパラメータ
- @param[in,out] response レスポンスパラメータ
- 
- @retval YES レスポンスパラメータを返却する。
- @retval NO レスポンスパラメータを返却しないので、@link DConnectManager::sendResponse: @endlinkで返却すること。
- */
-- (BOOL) didReceiveGetRequestAccessTokenRequest:(DConnectRequestMessage *)request
-                                       response:(DConnectResponseMessage *)response;
 
 #pragma mark - Setter
 
@@ -130,5 +105,48 @@
  @retval nil リクエストにアプリケーション名が指定されていない場合
  */
 + (NSString *) applicationNameFromRequest:(DConnectRequestMessage *)request;
+
+@end
+
+
+
+/*!
+ @class DConnectAuthorizationGetCreateClientApi
+ @brief Local OAuthで使用するクライアントの作成を要求するAPI。
+ */
+@interface DConnectAuthorizationGetCreateClientApi : GetApi<DConnectApiDelegate>
+
+@property (nonatomic) id object;
+
+/*!
+ @brief 任意のオブジェクトを指定して本クラスのインスタンスを初期化する。
+ オブジェクトはDConnectDevicePluginもしくはDConnectManagerのインスタンスでなければならない。
+ 
+ @param[in] object DevicePluginかManagerかを判別するためのオブジェクト
+ 
+ @retval 本クラスのインスタンス
+ */
+- (id) initWithObject:(id)object;
+
+@end
+
+
+/*!
+ @class DConnectAuthorizationGetRequestAccessTokenApi
+ @brief Local OAuthで使用するアクセストークンの作成を要求API。
+ */
+@interface DConnectAuthorizationGetRequestAccessTokenApi : GetApi<DConnectApiDelegate>
+
+@property (nonatomic) id object;
+
+/*!
+ @brief 任意のオブジェクトを指定して本クラスのインスタンスを初期化する。
+ オブジェクトはDConnectDevicePluginもしくはDConnectManagerのインスタンスでなければならない。
+ 
+ @param[in] object DevicePluginかManagerかを判別するためのオブジェクト
+ 
+ @retval 本クラスのインスタンス
+ */
+- (id) initWithObject:(id)object;
 
 @end

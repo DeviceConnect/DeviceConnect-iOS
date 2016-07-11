@@ -57,4 +57,16 @@
     self.mApiSpec = apiSpec;
 }
 
+- (BOOL) onRequest: (DConnectRequestMessage *) request response: (DConnectResponseMessage *) response {
+    
+    if (_delegate) {
+        return [_delegate onRequest:request response: response];
+    }
+    return NO;
+}
+
+
+
+
+
 @end

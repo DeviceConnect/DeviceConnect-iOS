@@ -34,6 +34,9 @@ NSString *const DConnectAuthorizationProfileGrantTypeAuthorizationCode = @"autho
     self = [super init];
     if (self) {
         self.object = object;
+        
+        [self addApi: [[DConnectAuthorizationGetCreateClientApi alloc] initWithObject: self.object]];
+        [self addApi: [[DConnectAuthorizationGetRequestAccessTokenApi alloc]  initWithObject: self.object]];
     }
     return self;
 }
@@ -42,31 +45,82 @@ NSString *const DConnectAuthorizationProfileGrantTypeAuthorizationCode = @"autho
     return DConnectAuthorizationProfileName;
 }
 
-- (BOOL) didReceiveGetRequest:(DConnectRequestMessage *)request response:(DConnectResponseMessage *)response {
-    BOOL send = YES;
-    
-    NSString *attribute = [request attribute];
-    
-    if (attribute) {
-        if ([attribute isEqualToString:DConnectAuthorizationProfileAttrGrant]) {
-            send = [self didReceiveGetCreateClientRequest:request
-                                                 response:response];
-        } else if ([attribute isEqualToString:DConnectAuthorizationProfileAttrAccessToken]) {
-            send = [self didReceiveGetRequestAccessTokenRequest:request
-                                                       response:response];
-        } else {
-            [response setErrorToNotSupportProfile];
-        }
-    } else {
-        [response setErrorToNotSupportProfile];
-    }
-    
-    return send;
+
+#pragma mark - Setter
+
++ (void) setClientId:(NSString *)clientId target:(DConnectMessage *)message {
+    [message setString:clientId forKey:DConnectAuthorizationProfileParamClientId];
 }
 
-- (BOOL) didReceiveGetCreateClientRequest:(DConnectRequestMessage *)request
-                                 response:(DConnectResponseMessage *)response
-{
++ (void) setAccessToken:(NSString *)accessToken target:(DConnectMessage *)message {
+    [message setString:accessToken forKey:DConnectAuthorizationProfileParamAccessToken];
+}
+
++ (void) setScopes:(DConnectArray *)scopes target:(DConnectMessage *)message {
+    [message setArray:scopes forKey:DConnectAuthorizationProfileParamScopes];
+}
+
++ (void) setScope:(NSString *)scope target:(DConnectMessage *)message {
+    [message setString:scope forKey:DConnectAuthorizationProfileParamScope];
+}
+
++ (void) setExpirePriod:(long long)priod target:(DConnectMessage *)message {
+    [message setLongLong:priod forKey:DConnectAuthorizationProfileParamExpirePeriod];
+}
+
++ (void) setExpire:(long long)expire target:(DConnectMessage *)message {
+    [message setLongLong:expire forKey:DConnectAuthorizationProfileParamExpire];
+}
+
+#pragma mark - Getter
+
++ (NSString *) packageFromRequest:(DConnectRequestMessage *)request {
+    return [request stringForKey:DConnectAuthorizationProfileParamPackage];
+}
+
++ (NSString *) clientIdFromRequest:(DConnectRequestMessage *)request {
+    return [request stringForKey:DConnectAuthorizationProfileParamClientId];
+}
+
++ (NSString *) scopeFromeFromRequest:(DConnectRequestMessage *)request {
+    return [request stringForKey:DConnectAuthorizationProfileParamScope];
+}
+
++ (NSArray *) parsePattern:(NSString *)scope {
+    return [scope componentsSeparatedByString:@","];
+}
+
++ (NSString *) applicationNameFromRequest:(DConnectRequestMessage *)request {
+    return [request stringForKey:DConnectAuthorizationProfileParamApplicationName];
+}
+
+@end
+
+
+
+#pragma mark - DConnectAuthorizationGetCreateClientApi
+
+@implementation DConnectAuthorizationGetCreateClientApi
+
+- (id) initWithObject:(id)object {
+    self = [super init];
+    if (self) {
+        self.delegate = self;
+        self.object = object;
+    }
+    return self;
+}
+
+- (NSString *)attribute {
+    return DConnectAuthorizationProfileAttrGrant;
+}
+
+#pragma mark - DConnectApiDelegate Implement.
+
+// [self didReceiveGetCreateClientRequest]をDConnectApi形式に移植
+// TODO: didReceiveRequest に名称変更
+- (BOOL)onRequest:(DConnectRequestMessage *)request response:(DConnectResponseMessage *)response {
+    
     NSString *serviceId = [request serviceId];
     NSString *package = [DConnectAuthorizationProfile packageFromRequest:request];
     
@@ -74,9 +128,9 @@ NSString *const DConnectAuthorizationProfileGrantTypeAuthorizationCode = @"autho
         [response setErrorToInvalidRequestParameter];
     } else {
         LocalOAuth2Main *oauth = [LocalOAuth2Main sharedOAuthForClass:[self.object class]];
-		LocalOAuthPackageInfo *packageInfo
-                = [[LocalOAuthPackageInfo alloc] initWithPackageNameServiceId:package
-                                                                    serviceId:serviceId];
+        LocalOAuthPackageInfo *packageInfo
+        = [[LocalOAuthPackageInfo alloc] initWithPackageNameServiceId:package
+                                                            serviceId:serviceId];
         LocalOAuthClientData *clientData = [oauth createClientWithPackageInfo:packageInfo];
         if (clientData) {
             [response setResult:DConnectMessageResultTypeOk];
@@ -88,9 +142,32 @@ NSString *const DConnectAuthorizationProfileGrantTypeAuthorizationCode = @"autho
     return YES;
 }
 
-- (BOOL) didReceiveGetRequestAccessTokenRequest:(DConnectRequestMessage *)request
-                                       response:(DConnectResponseMessage *)response
-{
+@end
+
+
+
+#pragma mark - DConnectAuthorizationGetRequestAccessTokenApi
+        
+@implementation DConnectAuthorizationGetRequestAccessTokenApi
+
+- (id) initWithObject:(id)object {
+    self = [super init];
+    if (self) {
+        self.delegate = self;
+        self.object = object;
+    }
+    return self;
+}
+ 
+- (NSString *)attribute {
+    return DConnectAuthorizationProfileAttrAccessToken;
+}
+         
+#pragma mark - DConnectApiDelegate Implement.
+         
+// [self didReceiveGetRequestAccessTokenRequest]をDConnectApi形式に移植
+// TODO: didReceiveRequest に名称変更
+- (BOOL)onRequest:(DConnectRequestMessage *)request response:(DConnectResponseMessage *)response {
     NSString *serviceId = [request serviceId];
     NSString *package = [DConnectAuthorizationProfile packageFromRequest:request];
     NSString *clientId = [DConnectAuthorizationProfile clientIdFromRequest:request];
@@ -178,54 +255,6 @@ NSString *const DConnectAuthorizationProfileGrantTypeAuthorizationCode = @"autho
         [response setErrorToAuthorizationWithMessage:@"timeout"];
     }
     return YES;
-}
-
-#pragma mark - Setter
-
-+ (void) setClientId:(NSString *)clientId target:(DConnectMessage *)message {
-    [message setString:clientId forKey:DConnectAuthorizationProfileParamClientId];
-}
-
-+ (void) setAccessToken:(NSString *)accessToken target:(DConnectMessage *)message {
-    [message setString:accessToken forKey:DConnectAuthorizationProfileParamAccessToken];
-}
-
-+ (void) setScopes:(DConnectArray *)scopes target:(DConnectMessage *)message {
-    [message setArray:scopes forKey:DConnectAuthorizationProfileParamScopes];
-}
-
-+ (void) setScope:(NSString *)scope target:(DConnectMessage *)message {
-    [message setString:scope forKey:DConnectAuthorizationProfileParamScope];
-}
-
-+ (void) setExpirePriod:(long long)priod target:(DConnectMessage *)message {
-    [message setLongLong:priod forKey:DConnectAuthorizationProfileParamExpirePeriod];
-}
-
-+ (void) setExpire:(long long)expire target:(DConnectMessage *)message {
-    [message setLongLong:expire forKey:DConnectAuthorizationProfileParamExpire];
-}
-
-#pragma mark - Getter
-
-+ (NSString *) packageFromRequest:(DConnectRequestMessage *)request {
-    return [request stringForKey:DConnectAuthorizationProfileParamPackage];
-}
-
-+ (NSString *) clientIdFromRequest:(DConnectRequestMessage *)request {
-    return [request stringForKey:DConnectAuthorizationProfileParamClientId];
-}
-
-+ (NSString *) scopeFromeFromRequest:(DConnectRequestMessage *)request {
-    return [request stringForKey:DConnectAuthorizationProfileParamScope];
-}
-
-+ (NSArray *) parsePattern:(NSString *)scope {
-    return [scope componentsSeparatedByString:@","];
-}
-
-+ (NSString *) applicationNameFromRequest:(DConnectRequestMessage *)request {
-    return [request stringForKey:DConnectAuthorizationProfileParamApplicationName];
 }
 
 @end
