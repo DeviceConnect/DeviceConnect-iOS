@@ -57,18 +57,23 @@
 
 - (BOOL) executeRequest:(DConnectRequestMessage *) request response:(DConnectResponseMessage *) response
 {
-    // 指定されたプロファイルを取得する
+    // プラグインにプロファイルが存在するか？
     DConnectProfile *profile = [self profileWithName:[request profile]];
-    
-    // 各プロファイルでリクエストを処理する
-    BOOL processed = YES;
     if (profile) {
-        processed = [profile didReceiveRequest:request response:response];
-    } else {
-        [response setErrorToNotSupportProfile];
+        return [profile didReceiveRequest:request response:response];
     }
     
-    return processed;
+    // DConnectServiceにプロファイルが登録されているか？
+    DConnectServiceManager *serviceManager = [DConnectServiceManager sharedForClass: self.class];
+    DConnectService *service = [serviceManager service: [request serviceId]];
+    if (service) {
+        // TODO: onRequest → didReceiveRequest に名称変更。
+        return [service onRequest: request response: response];
+    }
+    
+    // プロファイルが存在しないのでエラー
+    [response setErrorToNotSupportProfile];
+    return YES;
 }
 
 - (BOOL) didReceiveRequest:(DConnectRequestMessage *) request response:(DConnectResponseMessage *) response
@@ -94,13 +99,6 @@
         } else if ([attribute isEqualToString:DConnectAttributeNameRequestAccessToken]) {
             [request setAttribute:DConnectAuthorizationProfileAttrAccessToken];
         }
-    }
-    
-    // プロファイルの有無をチェックする
-    DConnectProfile *profile = [self profileWithName:[request profile]];
-    if (profile == nil) {
-        [response setErrorToNotSupportProfile];
-        return YES;
     }
     
     if (self.useLocalOAuth) {

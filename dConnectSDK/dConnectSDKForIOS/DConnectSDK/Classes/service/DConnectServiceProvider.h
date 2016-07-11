@@ -7,9 +7,13 @@
 //  http://opensource.org/licenses/mit-license.php
 //
 
-#import "DConnectService.h"
+//#import "DConnectService.h"
+
+@class DConnectService;
 
 @protocol DConnectServiceProvider <NSObject>
+
+- (BOOL) hasService: (NSString *) serviceId;
 
 - (DConnectService *) service: (NSString *) serviceId;
 
@@ -17,7 +21,7 @@
  @brief サービス配列を返す.
  @retval DConnectServiceの配列
  */
-- (NSArray *) serviceList;
+- (NSArray *) services;
 
 - (void) addService: (DConnectService *) service;
 

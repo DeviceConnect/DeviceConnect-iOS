@@ -8,6 +8,7 @@
 //
 
 //#import <Foundation/Foundation.h>
+#import "DConnectServiceProvider.h"
 #import "DConnectProfileProvider.h"
 
 @interface DConnectService : NSObject<DConnectProfileProvider>
@@ -50,5 +51,6 @@
 
 - (void) setConfig: (NSString *) config;
 
+- (BOOL) onRequest: request response: response;
 
 @end
