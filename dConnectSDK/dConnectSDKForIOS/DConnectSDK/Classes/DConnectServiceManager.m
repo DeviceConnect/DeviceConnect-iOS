@@ -10,6 +10,8 @@
 #import "DConnectServiceManager.h"
 #import "DConnectApiSpecList.h"
 #import "DConnectMessage.h"
+#import "DConnectProfile.h"
+#import "DConnectApi.h"
 
 /**
  ServiceManagerインスタンスを格納する(key:クラス名(NSString*),
@@ -84,15 +86,16 @@ static NSMutableDictionary *_instanceArray = nil;
     self.mApiSpecs = dictionary;
 }
 
-/*
 - (void) addService: (DConnectService *) service {
-    NSLog(@"addService: id = %@", [service serviceId);
+    NSLog(@"addService: id = %@", [service serviceId]);
     
-    if (self.mApiSpecs) {
-        for(DConnectProfile *profile in [service profileList]) {
-            for(DConnectApi *api in [profile apiList]) {
+    if (_mApiSpecs) {
+        for(DConnectProfile *profile in [service profiles]) {
+            for(DConnectApi *api in [profile apis]) {
                 NSString *path = [self createPath: [profile profileName] api: api];
-                DConnectApiSpec *spec = [mApiSpecs findApiSpec: [DConnectApi convertMethodToString: [api method]] path: path];
+                
+                NSString *method = [DConnectApiSpec convertMethodToString: [api method]];
+                DConnectApiSpec *spec = [_mApiSpecs findApiSpec: method path: path];
                 if (spec) {
                     [api setApiSpec: spec];
                 }
@@ -100,13 +103,11 @@ static NSMutableDictionary *_instanceArray = nil;
         }
     }
     
-    mDConnectServices[[service serviceId] = service;
+    _mDConnectServices[[service serviceId]] = service;
     
-    NSLog(@"mDConnectServices.size = %d", [mDConnectServices count]);
+    NSLog(@"mDConnectServices.size = %d", (int)[_mDConnectServices count]);
 }
-*/
 
-/*
 - (NSString *) createPath:(NSString *) profileName api:(DConnectApi *) api {
     NSString *interfaceName = [api interface];
     NSString *attributeName = [api attribute];
@@ -126,25 +127,21 @@ static NSMutableDictionary *_instanceArray = nil;
     }
     return path;
 }
-*/
-/*
-- (void) removeService: (NSString *) serviceId {
-    [self.mDConnectServices remove: serviceId];
-}
-*/
 
-/*
+
+- (void) removeService: (NSString *) serviceId {
+    [_mDConnectServices removeObjectForKey: serviceId];
+}
+
 //@Override
 - (DConnectService *) service: (NSString *) serviceId {
-    return mDConnectServices[serviceId];
+    return _mDConnectServices[serviceId];
 }
-*/
 
-/*
 //@Override
 // DConnectServiceの配列を返す
-- (NSArray *) serviceList {
-    NSLog(@"getServiceList: %d", [self.mDConnectServices count]);
+- (NSArray *) services {
+    NSLog(@"getServiceList: %d", (int)[self.mDConnectServices count]);
     
     // ディープコピー
     // TODO: DConnectServiceはディープコピー対応する(NSCopyingを実装する)
@@ -152,12 +149,14 @@ static NSMutableDictionary *_instanceArray = nil;
     NSArray *list = [[NSArray alloc] initWithArray:[self.mDConnectServices allValues] copyItems: YES];
     return list;
 }
-*/
 
-/*
+
 - (BOOL) hasService: (NSString *)serviceId {
-    return [self service: serviceId];
+    BOOL result = NO;
+    if ([self service: serviceId]) {
+        result = YES;
+    }
+    return result;
 }
-*/
 
 @end

@@ -9,6 +9,8 @@
 
 #import <Foundation/Foundation.h>
 #import "DConnectApiSpecList.h"
+#import "DConnectService.h"
+#import "DConnectApi.h"
 
 @interface DConnectServiceManager : NSObject
 
@@ -27,5 +29,16 @@
 + (DConnectServiceManager *)sharedForKey: (NSString *)key;
 
 - (void) setApiSpecDictionary: (DConnectApiSpecList *) dictionary;
+
+- (void) addService: (DConnectService *) service;
+
+- (void) removeService: (NSString *) serviceId;
+
+- (DConnectService *) service: (NSString *) serviceId;
+
+- (NSArray *) services;
+
+- (BOOL) hasService: (NSString *)serviceId;
+
 
 @end
