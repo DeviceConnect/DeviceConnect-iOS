@@ -7,9 +7,9 @@
 //  http://opensource.org/licenses/mit-license.php
 //
 
-//#import <Foundation/Foundation.h>
-#import "DConnectServiceProvider.h"
-#import "DConnectProfileProvider.h"
+#import <Foundation/Foundation.h>
+#import <DConnectSDK/DConnectServiceProvider.h>
+#import <DConnectSDK/DConnectProfileProvider.h>
 
 @interface DConnectService : NSObject<DConnectProfileProvider>
 

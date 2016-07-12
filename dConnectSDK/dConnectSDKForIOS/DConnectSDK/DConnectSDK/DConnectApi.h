@@ -7,10 +7,10 @@
 //  http://opensource.org/licenses/mit-license.php
 //
 
-//#import <DConnectSDK/DConnectSDK.h>
-#import "DConnectApiSpec.h"
-#import "DConnectRequestMessage.h"
-#import "DConnectResponseMessage.h"
+#import <Foundation/Foundation.h>
+#import <DConnectSDK/DConnectApiSpec.h>
+#import <DConnectSDK/DConnectRequestMessage.h>
+#import <DConnectSDK/DConnectResponseMessage.h>
 
 @protocol DConnectApiDelegate <NSObject>
 

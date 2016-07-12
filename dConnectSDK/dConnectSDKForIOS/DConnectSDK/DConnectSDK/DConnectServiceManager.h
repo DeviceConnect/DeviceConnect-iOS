@@ -9,10 +9,23 @@
 
 #import <Foundation/Foundation.h>
 #import "DConnectApiSpecList.h"
-#import "DConnectService.h"
-#import "DConnectApi.h"
+#import <DConnectSDK/DConnectService.h>
+#import <DConnectSDK/DConnectServiceProvider.h>
 
-@interface DConnectServiceManager : NSObject
+
+
+@interface DConnectServiceManager : NSObject<DConnectServiceProvider>
+
+// DConnectApiSpecの配列
+@property NSMutableArray *mApiSpecList;
+
+@property (nonatomic, weak) DConnectApiSpecList *mApiSpecs;
+
+/*!
+ @brief 接続サービス配列(key:サービスID value: DConnectService *)]
+ */
+@property (nonatomic, weak) NSMutableDictionary *mDConnectServices;
+
 
 /*!
  DConnectServiceManagerインスタンス取得.

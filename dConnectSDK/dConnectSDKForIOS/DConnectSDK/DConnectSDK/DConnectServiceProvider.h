@@ -7,7 +7,8 @@
 //  http://opensource.org/licenses/mit-license.php
 //
 
-//#import "DConnectService.h"
+#import <Foundation/Foundation.h>
+#import <DConnectSDK/DConnectService.h>
 
 @class DConnectService;
 

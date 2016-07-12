@@ -7,11 +7,71 @@
 //  http://opensource.org/licenses/mit-license.php
 //
 
-#import "DConnectServiceManager.h"
-#import "DConnectProfile.h"
+#import <DConnectSDK/DConnectServiceManager.h>
+#import <DConnectSDK/DConnectProfile.h>
+#import "DConnectApiSpecList.h"
+
+/**
+ ServiceManagerインスタンスを格納する(key:クラス名(NSString*),
+ value:インスタンス(DConnectServiceManager*))
+ */
+static NSMutableDictionary *_instanceArray = nil;
+
+
+
+@interface DConnectServiceManager() {
+    
+    /** キー(クラス名) */
+    NSString *_key;
+}
+
+@end
+
 
 @implementation DConnectServiceManager
 
+
++ (DConnectServiceManager *)sharedForClass: (Class)clazz {
+    
+    NSString *key = [clazz description];
+    NSLog(@"[DConnectServiceManager sharedForClass: %@]", key);
+    
+    DConnectServiceManager *manager = [DConnectServiceManager sharedForKey: key];
+    return manager;
+}
+
++ (DConnectServiceManager *)sharedForKey: (NSString *)key {
+    
+    /* mInstanceArray初期化 */
+    if (_instanceArray == nil) {
+        _instanceArray = [NSMutableDictionary dictionary];
+    }
+    
+    DConnectServiceManager *instance = _instanceArray[key];
+    if (instance != nil) {
+        /* classに対応するインスタンスが存在すればそれを返す */
+        return instance;
+        
+    }
+    /* classに対応するインスタンスが無ければインスタンス作成して追加する */
+    instance = [[DConnectServiceManager alloc] initWithKey: key];
+    _instanceArray[key] = instance;
+    return instance;
+}
+
+- (instancetype) initWithKey: (NSString *)key {
+    self = [super init];
+    
+    _key = key;
+    
+    /* デフォルト値を設定 */
+    if (self) {
+        self.mApiSpecList = nil;
+        self.mApiSpecs = nil;
+        self.mDConnectServices = [NSMutableDictionary dictionary];
+    }
+    return self;
+}
 
 - (void) setApiSpecDictionary: (DConnectApiSpecList *) dictionary {
     _mApiSpecs = dictionary;
@@ -53,8 +113,8 @@
     return _mDConnectServices[serviceId];
 }
 
-- (NSArray *) serviceList {
-    NSLog(@"getServiceList: %d", (int)[_mDConnectServices count]);
+- (NSArray *) services {
+    NSLog(@"getServices: %d", (int)[_mDConnectServices count]);
     NSMutableArray *list = [NSMutableArray array];
     [list addObjectsFromArray: [_mDConnectServices allValues]];
     return list;
