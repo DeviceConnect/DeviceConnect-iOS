@@ -80,6 +80,10 @@
 		AB507EFA1D31FBC60014C504 /* DPHitoeStressEstimationData.m in Sources */ = {isa = PBXBuildFile; fileRef = AB507EF91D31FBC60014C504 /* DPHitoeStressEstimationData.m */; };
 		AB507EFD1D31FDE10014C504 /* DPHitoeWalkStateData.m in Sources */ = {isa = PBXBuildFile; fileRef = AB507EFC1D31FDE10014C504 /* DPHitoeWalkStateData.m */; };
 		AB507F001D31FED10014C504 /* DPHitoeTempExData.m in Sources */ = {isa = PBXBuildFile; fileRef = AB507EFF1D31FED10014C504 /* DPHitoeTempExData.m */; };
+		ABC25ABD1D33627000CD9DA0 /* DPHitoeAddDeviceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = ABC25ABC1D33627000CD9DA0 /* DPHitoeAddDeviceCell.m */; };
+		ABC25AC11D33841900CD9DA0 /* DPHitoePinCodeDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = ABC25AC01D33841900CD9DA0 /* DPHitoePinCodeDialog.m */; };
+		ABC25AC21D33854D00CD9DA0 /* PinCodeDialog.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ABC25ABE1D33805700CD9DA0 /* PinCodeDialog.storyboard */; };
+		ABC25ACA1D34929200CD9DA0 /* DPHitoeStringUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = ABC25AC91D34929200CD9DA0 /* DPHitoeStringUtil.m */; };
 		ABF6C3AB1D2B7722006B1B91 /* DConnectSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABF6C3AA1D2B7722006B1B91 /* DConnectSDK.framework */; };
 		ABF6C3AD1D2B7741006B1B91 /* hitoeAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABF6C3AC1D2B7741006B1B91 /* hitoeAPI.framework */; };
 		ABF6C3B31D2B7903006B1B91 /* DPHitoeDevicePlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = ABF6C3B21D2B7903006B1B91 /* DPHitoeDevicePlugin.m */; };
@@ -161,6 +165,13 @@
 		AB507EFC1D31FDE10014C504 /* DPHitoeWalkStateData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DPHitoeWalkStateData.m; path = dConnectDeviceHitoe/Classes/data/DPHitoeWalkStateData.m; sourceTree = SOURCE_ROOT; };
 		AB507EFE1D31FED10014C504 /* DPHitoeTempExData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DPHitoeTempExData.h; path = dConnectDeviceHitoe/Classes/data/DPHitoeTempExData.h; sourceTree = SOURCE_ROOT; };
 		AB507EFF1D31FED10014C504 /* DPHitoeTempExData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DPHitoeTempExData.m; path = dConnectDeviceHitoe/Classes/data/DPHitoeTempExData.m; sourceTree = SOURCE_ROOT; };
+		ABC25ABB1D33627000CD9DA0 /* DPHitoeAddDeviceCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHitoeAddDeviceCell.h; sourceTree = "<group>"; };
+		ABC25ABC1D33627000CD9DA0 /* DPHitoeAddDeviceCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHitoeAddDeviceCell.m; sourceTree = "<group>"; };
+		ABC25ABE1D33805700CD9DA0 /* PinCodeDialog.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = PinCodeDialog.storyboard; sourceTree = "<group>"; };
+		ABC25ABF1D33841900CD9DA0 /* DPHitoePinCodeDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHitoePinCodeDialog.h; sourceTree = "<group>"; };
+		ABC25AC01D33841900CD9DA0 /* DPHitoePinCodeDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHitoePinCodeDialog.m; sourceTree = "<group>"; };
+		ABC25AC81D34929200CD9DA0 /* DPHitoeStringUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHitoeStringUtil.h; sourceTree = "<group>"; };
+		ABC25AC91D34929200CD9DA0 /* DPHitoeStringUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHitoeStringUtil.m; sourceTree = "<group>"; };
 		ABF6C36C1D2B4A0D006B1B91 /* libdConnectDeviceHitoe.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libdConnectDeviceHitoe.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		ABF6C3911D2B4CF6006B1B91 /* dConnectDeviceHitoe_resources.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = dConnectDeviceHitoe_resources.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		ABF6C3931D2B4CF6006B1B91 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -201,6 +212,8 @@
 				AB2E14ED1D2F64D300564A5E /* DPHitoeDialog.m */,
 				AB2E14F01D2F661700564A5E /* DPHitoeProgressDialog.h */,
 				AB2E14F11D2F661700564A5E /* DPHitoeProgressDialog.m */,
+				ABC25ABF1D33841900CD9DA0 /* DPHitoePinCodeDialog.h */,
+				ABC25AC01D33841900CD9DA0 /* DPHitoePinCodeDialog.m */,
 			);
 			name = dialog;
 			path = dConnectDeviceHitoe/Classes/setting/dialog;
@@ -211,6 +224,8 @@
 			children = (
 				AB2E14F51D2F79A700564A5E /* DPHitoeDeviceListCell.h */,
 				AB2E14F61D2F79A700564A5E /* DPHitoeDeviceListCell.m */,
+				ABC25ABB1D33627000CD9DA0 /* DPHitoeAddDeviceCell.h */,
+				ABC25ABC1D33627000CD9DA0 /* DPHitoeAddDeviceCell.m */,
 			);
 			name = cell;
 			path = dConnectDeviceHitoe/Classes/setting/cell;
@@ -269,6 +284,15 @@
 			path = dConnectDeviceHitoe/Classes/setting/viewcontroller;
 			sourceTree = SOURCE_ROOT;
 		};
+		ABC25AC71D34926A00CD9DA0 /* util */ = {
+			isa = PBXGroup;
+			children = (
+				ABC25AC81D34929200CD9DA0 /* DPHitoeStringUtil.h */,
+				ABC25AC91D34929200CD9DA0 /* DPHitoeStringUtil.m */,
+			);
+			path = util;
+			sourceTree = "<group>";
+		};
 		ABF6C3631D2B4A0D006B1B91 = {
 			isa = PBXGroup;
 			children = (
@@ -318,6 +342,7 @@
 				AB3D3E691D2B88D6004290BA /* Hitoe_iPad.storyboard */,
 				AB2E14EF1D2F656700564A5E /* ProgressDialog.storyboard */,
 				AB507ED11D30D5760014C504 /* DPHitoeTable.xcdatamodeld */,
+				ABC25ABE1D33805700CD9DA0 /* PinCodeDialog.storyboard */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -325,8 +350,8 @@
 		ABF6C37C1D2B4BA9006B1B91 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				ABC25AC71D34926A00CD9DA0 /* util */,
 				AB3D3EB41D2CC72D004290BA /* db */,
-				ABF6C3A01D2B73E5006B1B91 /* util */,
 				ABF6C39E1D2B50B2006B1B91 /* data */,
 				ABF6C39D1D2B4F45006B1B91 /* setting */,
 				ABF6C39C1D2B4E10006B1B91 /* profile */,
@@ -397,13 +422,6 @@
 			);
 			name = data;
 			path = Data;
-			sourceTree = "<group>";
-		};
-		ABF6C3A01D2B73E5006B1B91 /* util */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = util;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -491,6 +509,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ABC25AC21D33854D00CD9DA0 /* PinCodeDialog.storyboard in Resources */,
 				AB507ED41D30D6500014C504 /* DPHitoeTable.xcdatamodeld in Resources */,
 				AB2E14F31D2F6D2400564A5E /* ProgressDialog.storyboard in Resources */,
 				AB3D3E951D2B9E9B004290BA /* pose_faceup.png in Resources */,
@@ -569,9 +588,12 @@
 				AB507ED71D30DE270014C504 /* DPHitoeDBManager.m in Sources */,
 				AB507EEB1D31EB920014C504 /* DPHitoeAccelerationData.m in Sources */,
 				AB2E14EE1D2F64D300564A5E /* DPHitoeDialog.m in Sources */,
+				ABC25ABD1D33627000CD9DA0 /* DPHitoeAddDeviceCell.m in Sources */,
 				AB507EEE1D31EE530014C504 /* DPHitoeHeartData.m in Sources */,
+				ABC25AC11D33841900CD9DA0 /* DPHitoePinCodeDialog.m in Sources */,
 				AB3D3EB21D2CC40D004290BA /* DPHitoeSystemProfile.m in Sources */,
 				AB507EF11D31F82D0014C504 /* DPHitoeDeviceData.m in Sources */,
+				ABC25ACA1D34929200CD9DA0 /* DPHitoeStringUtil.m in Sources */,
 				AB507EDC1D3102680014C504 /* DPHitoeDevice.m in Sources */,
 				ABF6C3B31D2B7903006B1B91 /* DPHitoeDevicePlugin.m in Sources */,
 				AB507EE51D31CFF90014C504 /* DPHitoeAddDeviceTableViewController.m in Sources */,

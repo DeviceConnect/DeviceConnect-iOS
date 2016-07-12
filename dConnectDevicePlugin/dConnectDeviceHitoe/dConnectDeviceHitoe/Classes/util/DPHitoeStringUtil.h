@@ -1,5 +1,5 @@
 //
-//  DPHitoeHeartData.m
+//  DPHitoeStringUtil.h
 //  dConnectDeviceHitoe
 //
 //  Copyright (c) 2016 NTT DOCOMO, INC.
@@ -7,8 +7,8 @@
 //  http://opensource.org/licenses/mit-license.php
 //
 
+#import <Foundation/Foundation.h>
 
-#import "DPHitoeHeartData.h"
-
-@implementation DPHitoeHeartData
+@interface DPHitoeStringUtil : NSObject
++ (int)lastIndexOf:(NSString*)str c:(NSString*)c;
 @end

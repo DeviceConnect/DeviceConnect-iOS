@@ -18,7 +18,7 @@
 
 + (DPHitoeDBManager*)sharedInstance;
 - (BOOL)insertHitoeDevice:(DPHitoeDevice *)device;
-- (NSArray*)queryHitoDeviceWithServiceId:(NSString * )serviceId;
+- (NSMutableArray*)queryHitoDeviceWithServiceId:(NSString * )serviceId;
 - (BOOL)updateHitoeDevice:(DPHitoeDevice *)device;
 - (BOOL)deleteHitoeDeviceWithServiceId:(NSString *)serviceId;
 @end

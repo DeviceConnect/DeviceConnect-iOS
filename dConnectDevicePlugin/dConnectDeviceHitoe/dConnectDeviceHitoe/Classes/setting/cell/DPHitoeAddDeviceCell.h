@@ -1,5 +1,5 @@
 //
-//  DPHitoeAddDeviceTableViewController.h
+//  DPHitoeAddDeviceCell.h
 //  dConnectDeviceHitoe
 //
 //  Copyright (c) 2016 NTT DOCOMO, INC.
@@ -8,8 +8,9 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "DPHitoeManager.h"
 
-@interface DPHitoeAddDeviceTableViewController : UITableViewController<DPHitoeConnectionDelegate>
+@interface DPHitoeAddDeviceCell : UITableViewCell
+@property (weak, nonatomic) IBOutlet UILabel *title;
+@property (weak, nonatomic) IBOutlet UILabel *address;
 
 @end

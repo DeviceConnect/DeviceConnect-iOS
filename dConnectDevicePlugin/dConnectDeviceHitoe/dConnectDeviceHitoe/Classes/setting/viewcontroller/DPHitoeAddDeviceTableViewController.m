@@ -9,16 +9,22 @@
 
 
 #import "DPHitoeAddDeviceTableViewController.h"
+#import "DPHitoeAddDeviceCell.h"
+#import "DPHitoeDevice.h"
+#import "DPHitoeProgressDialog.h"
+#import "DPHitoePinCodeDialog.h"
 
-@interface DPHitoeAddDeviceTableViewController ()
-
+@interface DPHitoeAddDeviceTableViewController () {
+    NSMutableArray *discoveries;
+}
+@property (nonatomic) NSTimer *timer;
 @end
 
 @implementation DPHitoeAddDeviceTableViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    discoveries = [NSMutableArray array];
     // 背景白
     self.view.backgroundColor = [UIColor whiteColor];
     // 閉じるボタン追加
@@ -31,7 +37,7 @@
     UILabel *title = [[UILabel alloc] initWithFrame:CGRectZero];
     title.font = [UIFont boldSystemFontOfSize:16.0];
     title.textColor = [UIColor whiteColor];
-    title.text = @"Device一覧画面";
+    title.text = @"Device追加画面";
     [title sizeToFit];
     self.navigationItem.titleView = title;
     // バー背景色
@@ -39,6 +45,18 @@
                                                                            green:0.63
                                                                             blue:0.91
                                                                            alpha:1.0];
+    
+    [DPHitoeManager sharedInstance].connectionDelegate = self;
+
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC));
+    dispatch_after(popTime, dispatch_get_main_queue(), ^{
+        _timer = [NSTimer
+                     scheduledTimerWithTimeInterval:5.0
+                     target:self
+                     selector:@selector(onTimer:)
+                     userInfo:nil
+                     repeats:YES];
+    });
 }
 
 - (void)didReceiveMemoryWarning {
@@ -51,72 +69,113 @@
 
 #pragma mark - Table view data source
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-#warning Incomplete implementation, return the number of sections
-    return 0;
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 50;
 }
+
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-#warning Incomplete implementation, return the number of rows
-    return 0;
+    return [discoveries count];
 }
 
-/*
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
-    
-    // Configure the cell...
-    
+
+    DPHitoeAddDeviceCell *cell = (DPHitoeAddDeviceCell*) [tableView dequeueReusableCellWithIdentifier:@"cellDevice" forIndexPath:indexPath];
+    DPHitoeDevice *device = [discoveries objectAtIndex:indexPath.section];
+    cell.title.text = device.name;
+    cell.address.text = device.serviceId;
     return cell;
 }
-*/
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [tableView deselectRowAtIndexPath:indexPath animated:NO];
 
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
+    NSMutableArray *devices = [DPHitoeManager sharedInstance].registeredDevices;
+    DPHitoeDevice *device = [devices objectAtIndex:indexPath.section];
+    
+    if (!device.pinCode) {
+        if ([_timer isValid]) {
+            [_timer invalidate];
+        }
+        [DPHitoePinCodeDialog showPinCodeDialogWithCompletion:^(NSString *pinCode) {
+            device.pinCode = pinCode;
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                [[DPHitoeManager sharedInstance] connectForHitoe:device];
+            });
+            _timer = [NSTimer
+                      scheduledTimerWithTimeInterval:5.0
+                      target:self
+                      selector:@selector(onTimer:)
+                      userInfo:nil
+                      repeats:YES];
+        }];
+    } else {
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            [[DPHitoeManager sharedInstance] connectForHitoe:device];
+        });
+    }
+   [DPHitoeProgressDialog showProgressDialog];
+
 }
-*/
 
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
+
+#pragma mark - Hitoe delegate
+-(void)connectWithDevice:(DPHitoeDevice*)device {
+    [DPHitoeProgressDialog closeProgressDialog];
+    for (int i = 0; i < [discoveries count]; i++) {
+        DPHitoeDevice *discovery = [discoveries objectAtIndex:i];
+        if ([discovery.serviceId isEqualToString:device.serviceId]) {
+            [discoveries removeObjectAtIndex:i];
+        }
+    }
+    [self.tableView reloadData];
 }
-*/
 
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
+-(void)connectFailWithDevice:(DPHitoeDevice*)device {
+    [DPHitoeProgressDialog closeProgressDialog];
+
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"接続失敗"
+                                                                             message:@"Hitoeとの接続に失敗しました。"
+                                                                      preferredStyle:UIAlertControllerStyleAlert];
+    
+    [alertController addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil]];
+    [self presentViewController:alertController animated:YES completion:nil];
+
 }
-*/
 
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
+-(void)disconnectWithDevice:(DPHitoeDevice*)device {
+    
 }
-*/
 
-/*
-#pragma mark - Navigation
+-(void)discoveryForDevices:(NSMutableArray*)devices {
+    discoveries = [devices mutableCopy];
+    for (int i = 0; i < [discoveries count]; i++) {
+        DPHitoeDevice *discovery = [discoveries objectAtIndex:i];
+        if (discovery.isRegisterFlag && discovery.pinCode) {
+            [discoveries removeObjectAtIndex:i];
+        }
+    }
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+    if ([discoveries count] > 0) {
+        [self.tableView reloadData];
+    }
+    [DPHitoeProgressDialog closeProgressDialog];
 }
-*/
+
+-(void)deleteAtDevice:(DPHitoeDevice*)device {
+    
+}
 
 #pragma mark - Segue
 - (IBAction)searchDevices:(id)sender {
+    [[DPHitoeManager sharedInstance] discovery];
+    [DPHitoeProgressDialog showProgressDialog];
+}
+
+#pragma mark - Timer
+
+- (void)onTimer:(NSTimer*)timer {
+    [[DPHitoeManager sharedInstance] discovery];
 }
 
 @end

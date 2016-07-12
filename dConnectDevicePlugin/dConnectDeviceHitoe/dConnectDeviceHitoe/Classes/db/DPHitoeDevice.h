@@ -27,4 +27,10 @@
 @property (nonatomic, copy) NSString *exConnectionId;
 @property (nonatomic, copy) NSMutableArray *exConnectionList;
 @property (nonatomic, assign) int responseId;
+
+- (id) initWithInfoString:(NSString *)info;
+- (void)setAvailableData:(NSString *)availableData;
+- (void)setConnectionId:(NSString *)connectionId;
+- (void)removeConnectionId:(NSString *)connectionId;
+
 @end

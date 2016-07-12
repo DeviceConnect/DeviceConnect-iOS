@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="fT3-4P-dMV">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+    </dependencies>
+    <scenes>
+        <!--Hitoe Pin Code Dialog-->
+        <scene sceneID="Yk0-iW-8pm">
+            <objects>
+                <viewController id="fT3-4P-dMV" customClass="DPHitoePinCodeDialog" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="JUL-fp-rFJ"/>
+                        <viewControllerLayoutGuide type="bottom" id="uPa-Vc-bZe"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="w4V-F5-5tJ">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eu3-8b-UHU">
+                                <rect key="frame" x="180" y="166" width="240" height="267"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="hitoe_input_pin.png" translatesAutoresizingMaskIntoConstraints="NO" id="lxM-qp-f7T">
+                                        <rect key="frame" x="11" y="38" width="219" height="130"/>
+                                    </imageView>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="s6e-jQ-dmr">
+                                        <rect key="frame" x="11" y="193" width="219" height="30"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="枠の中の数字を入力してください。" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dgV-3b-Az0">
+                                        <rect key="frame" x="10" y="165" width="230" height="28"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="PINコードの入力" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sdd-Xx-b92">
+                                        <rect key="frame" x="55" y="8" width="129" height="21"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="R0s-eH-Ozr">
+                                        <rect key="frame" x="165" y="229" width="30" height="30"/>
+                                        <state key="normal" title="OK"/>
+                                        <connections>
+                                            <action selector="okBtn:" destination="fT3-4P-dMV" eventType="touchUpInside" id="Bua-kd-FRb"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9mQ-VL-rJx">
+                                        <rect key="frame" x="40" y="229" width="48" height="30"/>
+                                        <state key="normal" title="Cancel"/>
+                                        <connections>
+                                            <action selector="cancelBtn:" destination="fT3-4P-dMV" eventType="touchUpInside" id="DxO-D4-dTN"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" red="0.95226603403141363" green="0.95226603403141363" blue="0.95226603403141363" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="s6e-jQ-dmr" secondAttribute="trailing" constant="10" id="049-XS-Zke"/>
+                                    <constraint firstItem="R0s-eH-Ozr" firstAttribute="top" secondItem="s6e-jQ-dmr" secondAttribute="bottom" constant="6" id="3Uw-7m-3ps"/>
+                                    <constraint firstItem="Sdd-Xx-b92" firstAttribute="leading" secondItem="eu3-8b-UHU" secondAttribute="leading" constant="55" id="4Kk-kw-u42"/>
+                                    <constraint firstItem="Sdd-Xx-b92" firstAttribute="top" secondItem="eu3-8b-UHU" secondAttribute="top" constant="8" id="713-RV-gSl"/>
+                                    <constraint firstAttribute="height" constant="267" id="8hV-Qr-Sju"/>
+                                    <constraint firstItem="s6e-jQ-dmr" firstAttribute="top" secondItem="lxM-qp-f7T" secondAttribute="bottom" constant="25" id="8lX-uq-cWu"/>
+                                    <constraint firstItem="9mQ-VL-rJx" firstAttribute="top" secondItem="s6e-jQ-dmr" secondAttribute="bottom" constant="6" id="8xQ-Gx-5ej"/>
+                                    <constraint firstItem="dgV-3b-Az0" firstAttribute="leading" secondItem="eu3-8b-UHU" secondAttribute="leading" constant="10" id="ANw-rS-9tr"/>
+                                    <constraint firstItem="s6e-jQ-dmr" firstAttribute="leading" secondItem="eu3-8b-UHU" secondAttribute="leading" constant="11" id="CYn-q1-YZm"/>
+                                    <constraint firstItem="dgV-3b-Az0" firstAttribute="top" secondItem="Sdd-Xx-b92" secondAttribute="bottom" constant="136" id="NfN-yF-A0q"/>
+                                    <constraint firstItem="R0s-eH-Ozr" firstAttribute="leading" secondItem="9mQ-VL-rJx" secondAttribute="trailing" constant="77" id="QC1-na-Ddf"/>
+                                    <constraint firstItem="lxM-qp-f7T" firstAttribute="leading" secondItem="eu3-8b-UHU" secondAttribute="leading" constant="11" id="SwW-zn-Paw"/>
+                                    <constraint firstItem="9mQ-VL-rJx" firstAttribute="leading" secondItem="eu3-8b-UHU" secondAttribute="leading" constant="40" id="WIk-Zu-3zb"/>
+                                    <constraint firstAttribute="trailing" secondItem="dgV-3b-Az0" secondAttribute="trailing" id="WaI-tA-Mzc"/>
+                                    <constraint firstAttribute="width" constant="240" id="ZP2-lM-WYY"/>
+                                    <constraint firstAttribute="trailing" secondItem="lxM-qp-f7T" secondAttribute="trailing" constant="10" id="b7G-ii-Puq"/>
+                                    <constraint firstItem="lxM-qp-f7T" firstAttribute="top" secondItem="Sdd-Xx-b92" secondAttribute="bottom" constant="9" id="gFc-gk-q8W"/>
+                                    <constraint firstItem="s6e-jQ-dmr" firstAttribute="top" secondItem="dgV-3b-Az0" secondAttribute="bottom" id="ggb-gW-6An"/>
+                                    <constraint firstAttribute="trailing" secondItem="R0s-eH-Ozr" secondAttribute="trailing" constant="45" id="ko9-jd-0KW"/>
+                                    <constraint firstAttribute="bottom" secondItem="9mQ-VL-rJx" secondAttribute="bottom" constant="8" id="sx8-7f-L20"/>
+                                    <constraint firstAttribute="bottom" secondItem="R0s-eH-Ozr" secondAttribute="bottom" constant="8" id="wqH-MT-xfu"/>
+                                    <constraint firstAttribute="trailing" secondItem="Sdd-Xx-b92" secondAttribute="trailing" constant="56" id="zMH-Na-YWr"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="eu3-8b-UHU" firstAttribute="top" secondItem="JUL-fp-rFJ" secondAttribute="bottom" constant="146" id="N2F-SU-4Wu"/>
+                            <constraint firstItem="eu3-8b-UHU" firstAttribute="centerX" secondItem="w4V-F5-5tJ" secondAttribute="centerX" id="vSg-GL-al7"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="pinCodeField" destination="s6e-jQ-dmr" id="njp-Pn-jR4"/>
+                        <outlet property="pinDialogHeight" destination="8hV-Qr-Sju" id="Ihj-Qk-8Z1"/>
+                        <outlet property="pinDialogTop" destination="N2F-SU-4Wu" id="YfA-9y-Djp"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ogh-tU-No0" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="437" y="558"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="hitoe_input_pin.png" width="480" height="360"/>
+    </resources>
+</document>

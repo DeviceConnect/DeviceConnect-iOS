@@ -22,11 +22,11 @@ static const char kAssocKey_Window;
 + (void)doShowForWindow:(UIWindow *)w
          storyboardName:(NSString*)storyboardName{
     UIWindow *window = w;
-    window.alpha = 0.3;
+    window.alpha = 0.2;
     window.transform = CGAffineTransformMakeScale(1.0, 1.0);
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:storyboardName bundle:DPHitoeBundle()];
     window.rootViewController = [storyboard instantiateInitialViewController];
-    window.backgroundColor = [UIColor colorWithWhite:0 alpha:0.3];
+    window.backgroundColor = [UIColor colorWithWhite:0 alpha:0.2];
     window.windowLevel = UIWindowLevelNormal + 5;
     
     [window makeKeyAndVisible];

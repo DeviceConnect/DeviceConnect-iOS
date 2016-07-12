@@ -123,7 +123,7 @@ NSString *const DPHitoeColumnConnectMode = @"connectMode";
     return YES;
 }
 
-- (NSArray*)queryHitoDeviceWithServiceId:(NSString * )serviceId{
+- (NSMutableArray*)queryHitoDeviceWithServiceId:(NSString * )serviceId{
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     
     NSEntityDescription *entity

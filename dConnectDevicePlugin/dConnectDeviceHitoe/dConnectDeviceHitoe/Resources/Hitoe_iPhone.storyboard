@@ -150,13 +150,44 @@ Hitoeを追加してください。</string>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="UFO-eq-bdl">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="cellDevice" id="UFO-eq-bdl" customClass="DPHitoeAddDeviceCell">
                                 <rect key="frame" x="0.0" y="92" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="UFO-eq-bdl" id="vUr-gf-oPd">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="02F-LS-oPg">
+                                            <rect key="frame" x="14" y="27" width="296.5" height="16"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" secondItem="02F-LS-oPg" secondAttribute="height" multiplier="389:21" id="xle-1S-gxN"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hno-VS-ohZ">
+                                            <rect key="frame" x="14" y="0.0" width="508" height="23"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" secondItem="hno-VS-ohZ" secondAttribute="height" multiplier="464:21" id="IZe-aJ-bWy"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="system" pointSize="19"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="hno-VS-ohZ" firstAttribute="top" secondItem="vUr-gf-oPd" secondAttribute="top" id="4fr-pv-PEi"/>
+                                        <constraint firstItem="02F-LS-oPg" firstAttribute="leading" secondItem="hno-VS-ohZ" secondAttribute="leading" id="7NP-ZH-8GG"/>
+                                        <constraint firstAttribute="bottom" secondItem="02F-LS-oPg" secondAttribute="bottom" constant="0.5" id="H6Z-Qa-AWB"/>
+                                        <constraint firstItem="02F-LS-oPg" firstAttribute="leading" secondItem="vUr-gf-oPd" secondAttribute="leading" constant="14" id="Jtx-uO-ryB"/>
+                                        <constraint firstItem="hno-VS-ohZ" firstAttribute="leading" secondItem="vUr-gf-oPd" secondAttribute="leading" constant="14" id="h2O-mD-hms"/>
+                                    </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="address" destination="02F-LS-oPg" id="byg-Pd-vMd"/>
+                                    <outlet property="title" destination="hno-VS-ohZ" id="tdn-mH-b17"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
