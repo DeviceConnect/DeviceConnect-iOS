@@ -1921,14 +1921,14 @@
 		D67225EB1D34B566008641EA /* DConnectServiceManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DConnectServiceManager.h; sourceTree = "<group>"; };
 		D67225EC1D34B566008641EA /* DConnectServiceProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DConnectServiceProvider.h; sourceTree = "<group>"; };
 		D67225ED1D34CBD6008641EA /* DConnectApiSpecList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DConnectApiSpecList.h; sourceTree = "<group>"; };
+		D67225F41D362395008641EA /* DeleteApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeleteApi.h; sourceTree = "<group>"; };
+		D67225F51D362395008641EA /* GetApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GetApi.h; sourceTree = "<group>"; };
+		D67225F61D362395008641EA /* PostApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PostApi.h; sourceTree = "<group>"; };
+		D67225F71D362395008641EA /* PutApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PutApi.h; sourceTree = "<group>"; };
 		D684AC1F1D2CF4D500F56CA0 /* DConnectApi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DConnectApi.m; path = api/DConnectApi.m; sourceTree = "<group>"; };
-		D684AC211D2CF51900F56CA0 /* GetApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GetApi.h; path = api/GetApi.h; sourceTree = "<group>"; };
 		D684AC221D2CF51900F56CA0 /* GetApi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GetApi.m; path = api/GetApi.m; sourceTree = "<group>"; };
-		D684AC241D2CF67C00F56CA0 /* DeleteApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DeleteApi.h; path = api/DeleteApi.h; sourceTree = "<group>"; };
 		D684AC251D2CF67C00F56CA0 /* DeleteApi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DeleteApi.m; path = api/DeleteApi.m; sourceTree = "<group>"; };
-		D684AC271D2CF69800F56CA0 /* PostApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PostApi.h; path = api/PostApi.h; sourceTree = "<group>"; };
 		D684AC281D2CF69800F56CA0 /* PostApi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PostApi.m; path = api/PostApi.m; sourceTree = "<group>"; };
-		D684AC2A1D2CF6AF00F56CA0 /* PutApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PutApi.h; path = api/PutApi.h; sourceTree = "<group>"; };
 		D684AC2B1D2CF6AF00F56CA0 /* PutApi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PutApi.m; path = api/PutApi.m; sourceTree = "<group>"; };
 		D68ED359199BBA4800D8BF71 /* LocalOAuthClientPackageInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LocalOAuthClientPackageInfo.h; path = localoauth/LocalOAuthClientPackageInfo.h; sourceTree = "<group>"; };
 		D68ED35A199BBA4800D8BF71 /* LocalOAuthClientPackageInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LocalOAuthClientPackageInfo.m; path = localoauth/LocalOAuthClientPackageInfo.m; sourceTree = "<group>"; };
@@ -3726,6 +3726,10 @@
 		BE6F93151A70DB0400BFA51F /* DConnectSDK */ = {
 			isa = PBXGroup;
 			children = (
+				D67225F41D362395008641EA /* DeleteApi.h */,
+				D67225F51D362395008641EA /* GetApi.h */,
+				D67225F61D362395008641EA /* PostApi.h */,
+				D67225F71D362395008641EA /* PutApi.h */,
 				D67225ED1D34CBD6008641EA /* DConnectApiSpecList.h */,
 				D67225EA1D34B566008641EA /* DConnectService.h */,
 				D67225EB1D34B566008641EA /* DConnectServiceManager.h */,
@@ -4117,13 +4121,9 @@
 			isa = PBXGroup;
 			children = (
 				D684AC1F1D2CF4D500F56CA0 /* DConnectApi.m */,
-				D684AC211D2CF51900F56CA0 /* GetApi.h */,
 				D684AC221D2CF51900F56CA0 /* GetApi.m */,
-				D684AC241D2CF67C00F56CA0 /* DeleteApi.h */,
 				D684AC251D2CF67C00F56CA0 /* DeleteApi.m */,
-				D684AC271D2CF69800F56CA0 /* PostApi.h */,
 				D684AC281D2CF69800F56CA0 /* PostApi.m */,
-				D684AC2A1D2CF6AF00F56CA0 /* PutApi.h */,
 				D684AC2B1D2CF6AF00F56CA0 /* PutApi.m */,
 			);
 			name = api;

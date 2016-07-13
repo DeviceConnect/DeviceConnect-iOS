@@ -10,8 +10,10 @@
 #import "DConnectProfile.h"
 #import "DConnectManager.h"
 #import "LocalOAuth2Settings.h"
-#import "DConnectApi.h"
 #import "ApiIdentifier.h"
+#import <DConnectSDK/DConnectApiSpecList.h>
+#import <DConnectSDK/DConnectApiSpec.h>
+#import <DConnectSDK/DConnectApi.h>
 
 @implementation DConnectProfile
 
@@ -84,6 +86,35 @@
     return path;
 }
 
+
+- (BOOL) isKnownApi: (DConnectRequestMessage *)request {
+    DConnectMessageActionType action = [request action];
+    DConnectApiSpecMethod method;
+    @try {
+        method = [DConnectApiSpec convertActionToMethod: action];
+    }
+    @catch (NSString *e) {
+        return NO;
+    }
+    if (!method) {
+        return NO;
+    }
+    
+    NSString *strMethod;
+    @try {
+        strMethod = [DConnectApiSpec convertMethodToString:method];
+    }
+    @catch (NSString *e) {
+        return NO;
+    }
+    
+    NSString *path = [self apiPathWithProfileInterfaceAttribute:[request attribute] interfaceName:[request interface] attributeName:[request attribute]];
+    
+    DConnectApiSpecList *apiSpecList = [DConnectApiSpecList shared];
+    return [apiSpecList findApiSpec: strMethod path: path] != nil;
+}
+
+
 /*
 - (void) setService: (DConnectService *) service {
     _mService = service;
@@ -116,22 +147,23 @@
 }
 
 - (BOOL) didReceiveRequest:(DConnectRequestMessage *) request response:(DConnectResponseMessage *) response {
-    NSUInteger action = [request action];
     
-    BOOL send = YES;
-    if (DConnectMessageActionTypeGet == action) {
-        send = [self didReceiveGetRequest:request response:response];
-    } else if (DConnectMessageActionTypePost == action) {
-        send = [self didReceivePostRequest:request response:response];
-    } else if (DConnectMessageActionTypePut == action) {
-        send = [self didReceivePutRequest:request response:response];
-    } else if (DConnectMessageActionTypeDelete == action) {
-        send = [self didReceiveDeleteRequest:request response:response];
+    DConnectApi *api = [self findApi: request];
+    if (api) {
+        DConnectApiSpec *spec = [api apiSpec];
+        if (spec && ![spec validate: request]) {
+            [response setErrorToInvalidRequestParameter];
+            return YES;
+        }
+        return [api onRequest:request response: response];
     } else {
-        [response setErrorToNotSupportAction];
+        if ([self isKnownApi: request]) {
+            [response setErrorToNotSupportAttribute];
+        } else {
+            [response setErrorToUnknownAttribute];
+        }
+        return YES;
     }
-    
-    return send;
 }
 
 - (BOOL) didReceiveGetRequest:(DConnectRequestMessage *)request response:(DConnectResponseMessage *)response {
