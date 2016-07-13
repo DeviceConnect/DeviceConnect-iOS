@@ -48,11 +48,14 @@
     NSString *methodLow = [method lowercaseString];
     NSString *pathLow = [path lowercaseString];
     
-    for (DConnectApiSpec *spec in self.mApiSpecList) {
+    @synchronized(self) {
         
-        if ([[[DConnectApiSpec convertMethodToString: [spec method]] lowercaseString] isEqualToString: methodLow] &&
-            [[[spec path] lowercaseString] isEqualToString: pathLow]) {
-            return spec;
+        for (DConnectApiSpec *spec in self.mApiSpecList) {
+            
+            if ([[[DConnectApiSpec convertMethodToString: [spec method]] lowercaseString] isEqualToString: methodLow] &&
+                [[[spec path] lowercaseString] isEqualToString: pathLow]) {
+                return spec;
+            }
         }
     }
     return nil;
@@ -97,7 +100,9 @@
 }
 
 - (void) addApiSpec : (DConnectApiSpec *)apiSpec {
-    [self.mApiSpecList addObject: apiSpec];
+    @synchronized(self) {
+        [self.mApiSpecList addObject: apiSpec];
+    }
 }
 
 // JSON文字列をNSArray(配列の場合)またはNSDictionary(Objectの場合)に変換(失敗したら例外スローする)
