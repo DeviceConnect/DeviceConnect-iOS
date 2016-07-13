@@ -10,6 +10,7 @@
 #import <Foundation/Foundation.h>
 #import <DConnectSDK/DConnectRequestParamSpec.h>
 #import <DConnectSDK/DConnectMessage.h>
+#import <DConnectSDK/DConnectRequestMessage.h>
 
 extern NSString * const DConnectApiSpecMethodGet;
 extern NSString * const DConnectApiSpecMethodPut;
@@ -57,6 +58,8 @@ typedef enum {
 - (NSString *) path;
 
 - (NSArray *) requestParamSpecList;
+
+- (BOOL) validate: (DConnectRequestMessage *) request;
 
 - (NSDictionary *) toDictionary;
 

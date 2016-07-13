@@ -77,6 +77,26 @@ NSString * const DConnectApiSpecJsonKeyRequestParams = @"requestParams";
     return self.mRequestParamSpecList;
 }
 
+- (BOOL) validate: (DConnectRequestMessage *) request {
+
+    // TODO: validate処理が未実装(iOSではApiIdentifierで照合する？Swagger対応と一緒に作業する)
+    for (DConnectRequestParamSpec *paramSpec in [self requestParamSpecList]) {
+        
+        NSLog(@"paramSpec name : %@", [paramSpec name]);
+    }
+    return YES;
+    
+/*
+    Bundle extras = request.getExtras();
+    for (DConnectRequestParamSpec paramSpec : getRequestParamList()) {
+        Object paramValue = extras.get(paramSpec.getName());
+        if (!paramSpec.validate(paramValue)) {
+            return false;
+        }
+    }
+    return true;
+*/
+}
 
 
 #pragma mark - DConnectApiSpec Setter Method
