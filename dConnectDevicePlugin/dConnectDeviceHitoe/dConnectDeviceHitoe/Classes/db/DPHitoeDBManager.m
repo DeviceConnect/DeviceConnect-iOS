@@ -125,7 +125,8 @@ NSString *const DPHitoeColumnConnectMode = @"connectMode";
 
 - (NSMutableArray*)queryHitoDeviceWithServiceId:(NSString * )serviceId{
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    
+    NSMutableArray *devices = [NSMutableArray new];
+
     NSEntityDescription *entity
     = [NSEntityDescription entityForName:DPHitoeDeviceDB inManagedObjectContext:_managedObjectContext];
     [fetchRequest setEntity:entity];
@@ -147,11 +148,10 @@ NSString *const DPHitoeColumnConnectMode = @"connectMode";
                                                      cacheName:nil];
     NSError *error = nil;
     if (![fetchedResultsController performFetch:&error]) {
-        return nil;
+        return devices;
     }
     
     NSArray *moArray = [fetchedResultsController fetchedObjects];
-    NSMutableArray *devices = [NSMutableArray new];
     for (int i = 0; i < moArray.count; i++) {
         DPHitoeDevice* device = [DPHitoeDevice new];
         NSManagedObject *object = [moArray objectAtIndex:i];
@@ -226,7 +226,7 @@ NSString *const DPHitoeColumnConnectMode = @"connectMode";
     
     NSPredicate *pred = nil;
     if (serviceId) {
-        pred = [NSPredicate predicateWithFormat:@"%K == %@", DPHitoeColumnName, serviceId];
+        pred = [NSPredicate predicateWithFormat:@"%K == %@", DPHitoeColumnServiceId, serviceId];
     } else {
         return NO;
     }
@@ -248,8 +248,10 @@ NSString *const DPHitoeColumnConnectMode = @"connectMode";
     if (moArray.count <= 0) {
         return NO;
     }
-    NSManagedObject *object = [moArray objectAtIndex:0];
-    [_managedObjectContext deleteObject:object];
+    for (int i = 0; i < [moArray count]; i++) {
+        NSManagedObject *object = [moArray objectAtIndex:i];
+        [_managedObjectContext deleteObject:object];
+    }
     if (![_managedObjectContext save:&error]) {
         return NO;
     }

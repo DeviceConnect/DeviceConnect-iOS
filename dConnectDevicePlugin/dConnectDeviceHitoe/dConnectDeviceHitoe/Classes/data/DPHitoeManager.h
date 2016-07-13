@@ -22,11 +22,11 @@
 
 @protocol DPHitoeConnectionDelegate<NSObject>
 
--(void)connectWithDevice:(DPHitoeDevice*)device;
--(void)connectFailWithDevice:(DPHitoeDevice*)device;
--(void)disconnectWithDevice:(DPHitoeDevice*)device;
--(void)discoveryForDevices:(NSMutableArray*)devices;
--(void)deleteAtDevice:(DPHitoeDevice*)device;
+-(void)didConnectWithDevice:(DPHitoeDevice*)device;
+-(void)didConnectFailWithDevice:(DPHitoeDevice*)device;
+-(void)didDisconnectWithDevice:(DPHitoeDevice*)device;
+-(void)didDiscoveryForDevices:(NSMutableArray*)devices;
+-(void)didDeleteAtDevice:(DPHitoeDevice*)device;
 @end
 
 
@@ -47,6 +47,8 @@
 - (void)start;
 - (void)stop;
 - (void)discovery;
+
+- (void)readHitoeData;
 - (void)connectForHitoe:(DPHitoeDevice *)device;
 - (void)disconnectForHitoe:(DPHitoeDevice *)device;
 - (void)deleteAtHitoe:(DPHitoeDevice *)device;

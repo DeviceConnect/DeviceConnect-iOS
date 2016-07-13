@@ -9,7 +9,7 @@
 
 
 #import <UIKit/UIKit.h>
-
-@interface DPHitoeDeviceListTableViewController : UIViewController<UITableViewDataSource, UITableViewDelegate>
+#import "DPHitoeManager.h"
+@interface DPHitoeDeviceListTableViewController : UIViewController<UITableViewDataSource, UITableViewDelegate, DPHitoeConnectionDelegate>
 
 @end

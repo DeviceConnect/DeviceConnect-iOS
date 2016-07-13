@@ -56,19 +56,19 @@ Hitoeを追加してください。</string>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <button opaque="NO" contentMode="scaleToFill" highlighted="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="41Z-zg-pmc">
-                                                    <rect key="frame" x="512" y="6.5" width="80" height="30.5"/>
+                                                    <rect key="frame" x="512" y="-4" width="80" height="50.5"/>
                                                     <color key="backgroundColor" red="0.033435128159154281" green="0.86742353349298151" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="30.5" id="VTy-dY-kV9"/>
+                                                        <constraint firstAttribute="height" constant="50" id="4wS-CO-0wH"/>
                                                         <constraint firstAttribute="width" constant="80" id="mSO-lL-Gal"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="18"/>
                                                     <color key="tintColor" red="0.079670963885682511" green="0.91978979514192338" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <state key="normal" title="接続"/>
                                                 </button>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PdU-ar-8Az">
-                                                    <rect key="frame" x="18" y="23" width="35.5" height="17"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PdU-ar-8Az">
+                                                    <rect key="frame" x="18" y="28" width="26.5" height="12"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="9"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>

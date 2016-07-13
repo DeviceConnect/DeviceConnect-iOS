@@ -83,4 +83,36 @@
         [_exConnectionList removeObject:connectionId];
     }
 }
+
+
+- (void)setRawData {
+    _availableRawDataList = [NSMutableArray array];
+    [_availableRawDataList removeAllObjects];
+    [_availableRawDataList addObject:@"raw.ecg"];
+    [_availableRawDataList addObject:@"raw.acc"];
+    [_availableRawDataList addObject:@"raw.rri"];
+    [_availableRawDataList addObject:@"raw.bat"];
+    [_availableRawDataList addObject:@"raw.hr"];
+}
+
+- (void)setBaData {
+    _availableBaDataList = [NSMutableArray array];
+    [_availableBaDataList removeAllObjects];
+    [_availableBaDataList addObject:@"ba.extracted_rri"];
+    [_availableBaDataList addObject:@"ba.cleaned_rri"];
+    [_availableBaDataList addObject:@"ba.interpolated_rri"];
+    [_availableBaDataList addObject:@"ba.freq_domain"];
+    [_availableBaDataList addObject:@"ba.time_domain"];
+}
+
+- (void)setExData {
+    _availableExDataList = [NSMutableArray array];
+
+    [_availableExDataList removeAllObjects];
+    [_availableExDataList addObject:@"ex.stress"];
+    [_availableExDataList addObject:@"ex.posture"];
+    [_availableExDataList addObject:@"ex.walk"];
+    [_availableExDataList addObject:@"ex.lr_balance"];
+}
+
 @end

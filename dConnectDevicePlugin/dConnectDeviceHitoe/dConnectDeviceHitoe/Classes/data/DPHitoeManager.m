@@ -13,6 +13,8 @@
 #import "DPHitoeStringUtil.h"
 #import "DPHitoeTempExData.h"
 
+
+
 @interface DPHitoeManager() {
     HitoeSdkAPI *api;
 }
@@ -97,15 +99,29 @@
     NSString *param = [NSString stringWithFormat:@"search_time=%lld", DPHitoeSensorParamSearchTime];
     [api getAvilableSensor:DPHitoeSensorDeviceType parameter:param];
 }
+- (void)readHitoeData {
+    NSArray *dbHitoe = [[DPHitoeDBManager sharedInstance] queryHitoDeviceWithServiceId:nil];
+    for (DPHitoeDevice *hitoe in dbHitoe) {
+        if (![self containsConnectedHitoeDevice:hitoe.serviceId]) {
+            [_registeredDevices addObject:hitoe];
+        }
+    }
+}
 
 - (void)connectForHitoe:(DPHitoeDevice *)device {
     if (!device.pinCode) {
         return;
     }
+    
     NSString *param = [NSString stringWithFormat:@"pincode=%@", device.pinCode];
     [api connect:device.type individualIdentifier:device.serviceId connectMode:device.connectMode parameterSettings:param];
     device.responseId = DPHitoeResIdSensorConnect;
-    [[DPHitoeDBManager sharedInstance] insertHitoeDevice:device];
+    NSMutableArray *existDevice = [[DPHitoeDBManager sharedInstance] queryHitoDeviceWithServiceId:device.serviceId];
+    if ([existDevice count] == 0) {
+        [[DPHitoeDBManager sharedInstance] insertHitoeDevice:device];
+    } else {
+        [[DPHitoeDBManager sharedInstance] updateHitoeDevice:device];
+    }
     _stressEstimationData[(id <NSCopying>) device] = [DPHitoeStressEstimationData new];
     for (int i = 0; i < [_registeredDevices count]; i++) {
         DPHitoeDevice *exist = _registeredDevices[i];
@@ -116,7 +132,6 @@
             _registeredDevices[i] = exist;
         }
     }
-    
 }
 - (void)disconnectForHitoe:(DPHitoeDevice *)device {
     DPHitoeDevice *current = [self getHitoeDeviceForServiceId:device.serviceId];
@@ -128,11 +143,25 @@
     // TODO scanhitoe
     
     if (_connectionDelegate) {
-        [_connectionDelegate disconnectWithDevice:current];
+        [_connectionDelegate didDisconnectWithDevice:current];
     }
 }
 - (void)deleteAtHitoe:(DPHitoeDevice *)device {
-    
+    [[DPHitoeDBManager sharedInstance] deleteHitoeDeviceWithServiceId:device.serviceId];
+
+    if (_connectionDelegate) {
+        [_connectionDelegate didDeleteAtDevice:device];
+    }
+    int pos = -1;
+    for (int i = 0; i < [_registeredDevices count]; i++) {
+        if ([((DPHitoeDevice *) _registeredDevices[i]).serviceId isEqualToString:device.serviceId]) {
+            pos = i;
+            break;
+        }
+    }
+    if (pos != -1) {
+        [_registeredDevices removeObjectAtIndex:pos];
+    }
 }
 - (BOOL)containsConnectedHitoeDevice:(NSString *)serviceId {
     for (DPHitoeDevice *device in _registeredDevices) {
@@ -196,7 +225,6 @@
     }
     NSArray *sensors = [responseString componentsSeparatedByString:DPHitoeBR];
     NSMutableArray *pins = [[DPHitoeDBManager sharedInstance] queryHitoDeviceWithServiceId:nil];
-    
     for (int i = 0; i < [sensors count]; i++) {
         NSString *sensorStr = [sensors[i] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
         if (sensorStr.length == 0) {
@@ -221,7 +249,7 @@
         }
     }
     if (_connectionDelegate) {
-        [_connectionDelegate discoveryForDevices:_registeredDevices];
+        [_connectionDelegate didDiscoveryForDevices:_registeredDevices];
     }
 }
 
@@ -230,24 +258,24 @@
     int pos = [self currentPosForResponseId:responseId];
     if (pos == -1) {
         if (_connectionDelegate) {
-            [_connectionDelegate connectFailWithDevice:nil];
+            [_connectionDelegate didConnectFailWithDevice:nil];
         }
         return;
     }
     DPHitoeDevice *currentDevice = _registeredDevices[pos];
     if (responseId == DPHitoeResIdSensorDisconnectNotice) {
         if (_connectionDelegate) {
-            [_connectionDelegate connectFailWithDevice:currentDevice];
+            [_connectionDelegate didConnectFailWithDevice:currentDevice];
         }
         return;
     } else if (responseId == DPHitoeResIdSensorConnectNotice) {
         if (_connectionDelegate) {
-            [_connectionDelegate connectWithDevice:currentDevice];
+            [_connectionDelegate didConnectWithDevice:currentDevice];
         }
         return;
     } else if (responseId != DPHitoeResIdSensorConnect) {
         if (_connectionDelegate) {
-            [_connectionDelegate connectFailWithDevice:currentDevice];
+           [_connectionDelegate didConnectFailWithDevice:currentDevice];
         }
         return;
     }
@@ -259,9 +287,8 @@
     [self notifyAddRawReceiverWithDevice:currentDevice
                                 responseString:@"raw.ecg\nraw.acc\nraw.rri\nraw.bat\nraw.hr"];
 
-    [api getAvilableData:currentDevice.sessionId];
     if (_connectionDelegate) {
-        [_connectionDelegate connectWithDevice:currentDevice];
+        [_connectionDelegate didConnectWithDevice:currentDevice];
     }
     for (int i = 0; i < [_registeredDevices count]; i++) {
         DPHitoeDevice *pos = _registeredDevices[i];
@@ -269,11 +296,13 @@
             _registeredDevices[i] = currentDevice;
         }
     }
+    [api getAvilableData:currentDevice.sessionId];
 }
 
 - (void)notifyAddRawReceiverWithDevice:(DPHitoeDevice*)device
                               responseString:(NSString *)responseString {
-    [device setAvailableData:responseString];
+//    [device setAvailableData:responseString];
+    [device setRawData];
     NSMutableArray *keyList = device.availableRawDataList;
     NSMutableString *keyStringBuffer = [NSMutableString new];
     NSMutableString *paramStringBuffer = [NSMutableString new];
@@ -318,7 +347,7 @@
         }
 
     }
-    [api addReceiver:device.sessionId dataKey:keyStringBuffer dataReceiver:self parameterSetting:paramStringBuffer dataList:nil];
+    [api addReceiver:device.sessionId dataKey:(NSString *) keyStringBuffer dataReceiver:self parameterSetting:(NSString *)paramStringBuffer dataList:@""];
 }
 
 - (void)notifyAddBaReceiverWithResponseId:(int)responseId
@@ -330,10 +359,12 @@
     if (pos == -1) {
         return;
     }
-    [_registeredDevices[pos] setAvailableData:responseString];
+//    [_registeredDevices[pos] setAvailableData:responseString];
     DPHitoeDevice *receiveDevice = _registeredDevices[pos];
+    [receiveDevice setBaData];
     
     NSMutableArray *keyList = ((DPHitoeDevice *)_registeredDevices[pos]).availableBaDataList;
+
     NSMutableString *keyStringBuffer = [NSMutableString new];
     NSMutableString *paramStringBuffer = [NSMutableString new];
     
@@ -452,7 +483,7 @@
             [paramStringBuffer appendFormat:@"%d", DPHitoeBaTimeSamplingWindow];
         }
     }
-    [api addReceiver:receiveDevice.sessionId dataKey:keyStringBuffer dataReceiver:self parameterSetting:paramStringBuffer dataList:nil];
+    [api addReceiver:receiveDevice.sessionId dataKey:(NSString *) keyStringBuffer dataReceiver:self parameterSetting:(NSString *) paramStringBuffer dataList:@""];
 }
 
 - (void)notifyAddReceiverWithResponseId:(int)responseId
@@ -465,6 +496,7 @@
         return;
     }
     [((DPHitoeDevice *) _registeredDevices[pos]) setConnectionId:responseString];
+
 }
 
 - (void)notifyRemoveReceiverWithResponseId:(int)responseId

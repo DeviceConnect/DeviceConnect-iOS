@@ -12,11 +12,13 @@
 #import "DPHitoeProgressDialog.h"
 #import "DPHitoeDeviceListCell.h"
 #import "DPHitoeAddDeviceTableViewController.h"
+#import "DPHitoeProgressDialog.h"
 
 @interface DPHitoeDeviceListTableViewController ()
 @property (weak, nonatomic) IBOutlet UILabel *descriptionLabel;
 @property (weak, nonatomic) IBOutlet UIButton *settingBtn;
 @property (weak, nonatomic) IBOutlet UITableView *registerDeviceList;
+@property (nonatomic) NSTimer *timer;
 
 @end
 
@@ -43,16 +45,21 @@
     self.registerDeviceList.delegate = self;
     self.registerDeviceList.dataSource = self;
     // バー背景色
-    self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:0.00
-                                                                           green:0.63
-                                                                            blue:0.91
-                                                                           alpha:1.0];
-//    self.tableView.rowHeight = UITableViewAutomaticDimension;
-    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC));
-    dispatch_after(popTime, dispatch_get_main_queue(), ^{
+    self.navigationController.navigationBar.barTintColor = [self disconnectedBtnColor];
+    
+    UILongPressGestureRecognizer *longPressRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(rowButtonAction:)];
+    longPressRecognizer.allowableMovement = 15;
+    longPressRecognizer.minimumPressDuration = 0.6f;
+    [self.registerDeviceList addGestureRecognizer: longPressRecognizer];
+    [[DPHitoeManager sharedInstance] readHitoeData];
 
-//        [DPHitoeProgressDialog showProgressDialog];
-    });
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [DPHitoeManager sharedInstance].connectionDelegate = self;
+
+    [self enableTableView];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -67,12 +74,9 @@
 
 #pragma mark - Table view data source
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
-}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 1;
+    return [[DPHitoeManager sharedInstance].registeredDevices count];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -81,48 +85,164 @@
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     DPHitoeDeviceListCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cellhitoe" forIndexPath:indexPath];
-    cell.title.text = @"Hitoe 001  d000322\n[ONLINE]";
-    cell.address.text = @"address";
-    cell.connect.titleLabel.text = @"接続";
+    NSMutableArray *devices = [DPHitoeManager sharedInstance].registeredDevices;
+    DPHitoeDevice *device = devices[indexPath.section];
+    NSString *name;
+    NSString *btnName;
+    UIColor *btnColor;
+    if (device.isRegisterFlag) {
+        name = [NSString stringWithFormat:@"%@\n[ONLINE]", device.name];
+        btnName = @"解除";
+        btnColor = [self connectedBtnColor];
+    } else {
+        name = [NSString stringWithFormat:@"%@\n[OFFLINE]", device.name];
+        btnName = @"接続";
+        btnColor = [self disconnectedBtnColor];
+
+    }
+    cell.title.text = name;
+    cell.address.text = device.serviceId;
+    cell.connect.titleLabel.text = btnName;
+    cell.connect.backgroundColor = btnColor;
     [cell.connect addTarget:self action:@selector(handleTouchButton:event:) forControlEvents:UIControlEventTouchUpInside];
     return cell;
 }
 
 - (void)handleTouchButton:(UIButton *)sender event:(UIEvent *)event {
+    NSIndexPath *indexPath = [self indexPathForControlEvent:event];
+    NSMutableArray *devices = [DPHitoeManager sharedInstance].registeredDevices;
+    DPHitoeDevice *device = devices[indexPath.section];
+    UIColor *btnColor;
+    NSString *btnName;
+    if (device.isRegisterFlag) {
+        btnColor = [self disconnectedBtnColor];
+        btnName = @"解除";
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            [[DPHitoeManager sharedInstance] disconnectForHitoe:device];
+        });
+    } else {
+        btnColor = [self connectedBtnColor];
+        btnName = @"接続";
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            [[DPHitoeManager sharedInstance] connectForHitoe:device];
+        });
+        [DPHitoeProgressDialog showProgressDialog];
 
-    [sender setBackgroundColor:[UIColor grayColor]];
-    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC));
-    dispatch_after(popTime, dispatch_get_main_queue(), ^{
-        [sender setBackgroundColor:[UIColor colorWithRed:0.00
-                                                   green:0.63
-                                                    blue:0.91
-                                                   alpha:1.0]];
-    });
+    }
 
-    
-
+    sender.titleLabel.text = btnName;
 }
+
+-(IBAction)rowButtonAction:(UILongPressGestureRecognizer *)gestureRecognizer {
+    
+    CGPoint p = [gestureRecognizer locationInView:self.registerDeviceList];
+    NSIndexPath *indexPath = [self.registerDeviceList indexPathForRowAtPoint:p];
+    if (!indexPath){
+        return;
+    } else if (((UILongPressGestureRecognizer *)gestureRecognizer).state == UIGestureRecognizerStateBegan){
+        NSMutableArray *devices = [DPHitoeManager sharedInstance].registeredDevices;
+        DPHitoeDevice *device = devices[indexPath.section];
+        NSString *message = [NSString stringWithFormat:@"%@を削除しますか？", device.name];
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"削除" message:message preferredStyle:UIAlertControllerStyleAlert];
+        [alertController addAction:[UIAlertAction actionWithTitle:@"削除" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            [[DPHitoeManager sharedInstance] deleteAtHitoe:device];
+            
+        }]];
+        [alertController addAction:[UIAlertAction actionWithTitle:@"キャンセル" style:UIAlertActionStyleDefault handler:nil]];
+        
+        [self presentViewController:alertController animated:YES completion:nil];
+
+    }
+    
+}
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
 }
 
+#pragma mark - Hitoe's Delegate
+-(void)didConnectWithDevice:(DPHitoeDevice*)device {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.registerDeviceList reloadData];
+    });
+    [DPHitoeProgressDialog closeProgressDialog];
+}
+-(void)didConnectFailWithDevice:(DPHitoeDevice*)device {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.registerDeviceList reloadData];
+    });
+    [DPHitoeProgressDialog closeProgressDialog];
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"接続失敗"
+                                                                             message:@"Hitoeとの接続に失敗しました。"
+                                                                      preferredStyle:UIAlertControllerStyleAlert];
+    
+    [alertController addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil]];
+    [self presentViewController:alertController animated:YES completion:nil];
 
+    
+}
+-(void)didDisconnectWithDevice:(DPHitoeDevice*)device {
+    [DPHitoeProgressDialog closeProgressDialog];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.registerDeviceList reloadData];
+    });
+}
+-(void)didDiscoveryForDevices:(NSMutableArray*)devices {
+    
+}
+-(void)didDeleteAtDevice:(DPHitoeDevice*)device {
+    [DPHitoeProgressDialog closeProgressDialog];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self enableTableView];
+    });
+}
 
 #pragma mark - segue
 
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if ([[segue identifier] isEqualToString:@"showAddDevice"]) {
-        //        NSIndexPath *indexPath = [_foundIRKitList indexPathForSelectedRow];
-        DPHitoeAddDeviceTableViewController *controller =
-        (DPHitoeAddDeviceTableViewController *)[segue destinationViewController] ;
-        //        NSArray *devices = [[DPIRKitManager sharedInstance] devicesAll];
-        //        [controller setDetailItem:devices[indexPath.row]];
-    }
-}
+
 - (IBAction)showAddDeviceViewController:(id)sender {
     [self performSegueWithIdentifier:@"showAddDevice" sender:self];
 }
 
 
+
+
+
+#pragma mark - UIColor's const.
+
+- (UIColor *)connectedBtnColor
+{
+    return [UIColor colorWithRed:0.88 green:0.00 blue:0.30 alpha:1.0];
+}
+
+- (UIColor *)disconnectedBtnColor
+{
+    return [UIColor colorWithRed:0.00
+                                     green:0.63
+                                      blue:0.91
+                                     alpha:1.0];
+}
+
+
+#pragma mark - Private method
+
+- (NSIndexPath *)indexPathForControlEvent:(UIEvent *)event {
+    UITouch *touch = [[event allTouches] anyObject];
+    CGPoint p = [touch locationInView:self.registerDeviceList];
+    NSIndexPath *indexPath = [self.registerDeviceList indexPathForRowAtPoint:p];
+    return indexPath;
+}
+
+- (void)enableTableView {
+    if ([[DPHitoeManager sharedInstance].registeredDevices count] == 0) {
+        self.registerDeviceList.hidden = YES;
+        self.settingBtn.hidden = YES;
+    } else {
+        self.registerDeviceList.hidden = NO;
+        self.settingBtn.hidden = NO;
+        [self.registerDeviceList reloadData];
+    }
+
+}
 
 @end

@@ -33,4 +33,9 @@
 - (void)setConnectionId:(NSString *)connectionId;
 - (void)removeConnectionId:(NSString *)connectionId;
 
+
+- (void)setRawData;
+- (void)setBaData;
+- (void)setExData;
+
 @end

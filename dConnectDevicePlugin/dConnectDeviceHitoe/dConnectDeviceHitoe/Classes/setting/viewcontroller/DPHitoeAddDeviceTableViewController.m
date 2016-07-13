@@ -46,7 +46,6 @@
                                                                             blue:0.91
                                                                            alpha:1.0];
     
-    [DPHitoeManager sharedInstance].connectionDelegate = self;
 
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC));
     dispatch_after(popTime, dispatch_get_main_queue(), ^{
@@ -57,6 +56,20 @@
                      userInfo:nil
                      repeats:YES];
     });
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [DPHitoeManager sharedInstance].connectionDelegate = self;
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    if ([_timer isValid]) {
+        [_timer invalidate];
+    }
+
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -109,6 +122,7 @@
                       userInfo:nil
                       repeats:YES];
         }];
+        return;
     } else {
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             [[DPHitoeManager sharedInstance] connectForHitoe:device];
@@ -120,7 +134,7 @@
 
 
 #pragma mark - Hitoe delegate
--(void)connectWithDevice:(DPHitoeDevice*)device {
+-(void)didConnectWithDevice:(DPHitoeDevice*)device {
     [DPHitoeProgressDialog closeProgressDialog];
     for (int i = 0; i < [discoveries count]; i++) {
         DPHitoeDevice *discovery = [discoveries objectAtIndex:i];
@@ -131,7 +145,7 @@
     [self.tableView reloadData];
 }
 
--(void)connectFailWithDevice:(DPHitoeDevice*)device {
+-(void)didConnectFailWithDevice:(DPHitoeDevice*)device {
     [DPHitoeProgressDialog closeProgressDialog];
 
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"接続失敗"
@@ -143,15 +157,15 @@
 
 }
 
--(void)disconnectWithDevice:(DPHitoeDevice*)device {
+-(void)didDisconnectWithDevice:(DPHitoeDevice*)device {
     
 }
 
--(void)discoveryForDevices:(NSMutableArray*)devices {
+-(void)didDiscoveryForDevices:(NSMutableArray*)devices {
     discoveries = [devices mutableCopy];
     for (int i = 0; i < [discoveries count]; i++) {
         DPHitoeDevice *discovery = [discoveries objectAtIndex:i];
-        if (discovery.isRegisterFlag && discovery.pinCode) {
+        if (discovery.pinCode) {
             [discoveries removeObjectAtIndex:i];
         }
     }
@@ -162,11 +176,10 @@
     [DPHitoeProgressDialog closeProgressDialog];
 }
 
--(void)deleteAtDevice:(DPHitoeDevice*)device {
+-(void)didDeleteAtDevice:(DPHitoeDevice*)device {
     
 }
 
-#pragma mark - Segue
 - (IBAction)searchDevices:(id)sender {
     [[DPHitoeManager sharedInstance] discovery];
     [DPHitoeProgressDialog showProgressDialog];
