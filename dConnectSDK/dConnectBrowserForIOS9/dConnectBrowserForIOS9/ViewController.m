@@ -103,6 +103,11 @@
                                 duration:(NSTimeInterval)duration
 {
     [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
+
+    if ([[UIDevice currentDevice]userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
+        return;
+    }
+
     if ((toInterfaceOrientation == UIDeviceOrientationLandscapeLeft ||
          toInterfaceOrientation == UIDeviceOrientationLandscapeRight))
     {
