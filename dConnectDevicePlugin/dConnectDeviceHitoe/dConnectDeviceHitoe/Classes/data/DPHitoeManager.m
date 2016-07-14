@@ -12,6 +12,7 @@
 #import "DPHitoeDBManager.h"
 #import "DPHitoeStringUtil.h"
 #import "DPHitoeTempExData.h"
+#import "DPHitoeRawDataParseUtil.h"
 
 
 
@@ -24,6 +25,9 @@
 @property (nonatomic, copy) NSMutableDictionary *poseEstimationData;
 @property (nonatomic, copy) NSMutableDictionary *stressEstimationData;
 @property (nonatomic, copy) NSMutableDictionary *walkStateData;
+@property (nonatomic, copy) NSMutableArray *listForPosture;
+@property (nonatomic, copy) NSMutableArray *listForWalk;
+@property (nonatomic, copy) NSMutableArray *listForLRBalance;
 
 @end
 @implementation DPHitoeManager
@@ -43,6 +47,13 @@
     self = [super init];
     
     if (self) {
+        self.hrData = [NSMutableDictionary dictionary];
+        self.accelData = [NSMutableDictionary dictionary];
+        self.ecgData = [NSMutableDictionary dictionary];
+        self.poseEstimationData = [NSMutableDictionary dictionary];
+        self.stressEstimationData = [NSMutableDictionary dictionary];
+        self.walkStateData = [NSMutableDictionary dictionary];
+
         api = [HitoeSdkAPI sharedManager];
         [api setAPIDelegate:self];
         _registeredDevices = [NSMutableArray array];
@@ -83,7 +94,71 @@
                   data:(NSString *)data
             responseId:(int)responseId {
     NSLog(@"DataCallback:connectId=%@,dataKey=%@,rawData=%@",connectionId, dataKey, data);
-
+    int pos = [self currentDeviceForConnectionId:connectionId];
+    if (pos == -1) {
+        return;
+    }
+    DPHitoeDevice *receiveDevice = _registeredDevices[pos];
+    if (!receiveDevice.sessionId) {
+        return;
+    }
+    if([dataKey isEqualToString:@"raw.ecg"]) {
+        [self extractHealthWithHeartRateType:DPHitoeHeartECG raw:data device:receiveDevice];
+    } else if([dataKey isEqualToString:@"raw.acc"]) {
+        [self analizeAccelerationData:data device:receiveDevice];
+        DPHitoeAccelerationData *currentAccel = _accelData[receiveDevice.serviceId];
+        if (!currentAccel) {
+            currentAccel = [DPHitoeAccelerationData new];
+        }
+        [DPHitoeRawDataParseUtil parseAccelerationData:currentAccel raw:data];
+        _accelData[receiveDevice.serviceId] = currentAccel;
+    } else if([dataKey isEqualToString:@"raw.rri"]) {
+        [self extractHealthWithHeartRateType:DPHitoeHeartRRI raw:data device:receiveDevice];
+    } else if([dataKey isEqualToString:@"raw.bat"]) {
+        [self extractBatteryWithRaw:data device:receiveDevice];
+    } else if([dataKey isEqualToString:@"raw.hr"]) {
+        [self extractHealthWithHeartRateType:DPHitoeHeartRate raw:data device:receiveDevice];
+    } else if([dataKey isEqualToString:@"raw.saved_hr"]) {
+        
+    } else if([dataKey isEqualToString:@"raw.saved_rri"]) {
+        
+    } else if([dataKey isEqualToString:@"ba.extracted_rri"]) {
+        
+    } else if([dataKey isEqualToString:@"ba.cleaned_rri"]) {
+        
+    } else if([dataKey isEqualToString:@"ba.interpolated_rri"]) {
+        
+    } else if([dataKey isEqualToString:@"ba.freq_domain"]) {
+        [self parseFreqDomainWithData:data device:receiveDevice];
+    } else if([dataKey isEqualToString:@"ba.time_domain"]) {
+        
+    } else if([dataKey isEqualToString:@"ex.stress"]) {
+        DPHitoeStressEstimationData *stress = [DPHitoeRawDataParseUtil parseStressEstimationWithRaw:data];
+        _stressEstimationData[receiveDevice.serviceId] = stress;
+    } else if([dataKey isEqualToString:@"ex.posture"]) {
+        DPHitoePoseEstimationData *pose = [DPHitoeRawDataParseUtil parsePoseEstimationWithRaw:data];
+        _poseEstimationData[receiveDevice.serviceId] = pose;
+    } else if([dataKey isEqualToString:@"ex.walk"]) {
+        DPHitoeWalkStateData *walk = _walkStateData[receiveDevice.serviceId];
+        if (!walk) {
+            walk = [DPHitoeWalkStateData new];
+        }
+        walk = [DPHitoeRawDataParseUtil parseWalkStateWithData:walk raw:data];
+        _walkStateData[receiveDevice.serviceId] = walk;
+    } else if([dataKey isEqualToString:@"ex.lr_balance"]) {
+        DPHitoeWalkStateData *walk = _walkStateData[receiveDevice.serviceId];
+        if (!walk) {
+            walk = [DPHitoeWalkStateData new];
+        }
+        walk = [DPHitoeRawDataParseUtil parseWalkStateForBalanceWithData:walk raw:data];
+        _walkStateData[receiveDevice.serviceId] = walk;
+    }
+    
+    if ([dataKey isEqualToString:DPHitoeExConnectionPrefix]) {
+        // 拡張分析はコネクションを破棄する
+        [api removeReceiver:connectionId];
+        [receiveDevice removeConnectionId:connectionId];
+    }
 }
 
 #pragma mark - Public method
@@ -229,6 +304,39 @@
         }
     }
     return device;
+}
+
+- (int)currentDeviceForConnectionId:(NSString*)connectionId {
+    int pos = -1;
+    for (int i = 0; i < [_registeredDevices count]; i++) {
+        DPHitoeDevice *hitoe = _registeredDevices[i];
+        if (!hitoe.rawConnectionId) {
+            if ([hitoe.rawConnectionId isEqualToString:connectionId]) {
+                pos = i;
+                break;
+            }
+            
+        }
+        if (!hitoe.baConnectionId) {
+            if ([hitoe.baConnectionId isEqualToString:connectionId]) {
+                pos = i;
+                break;
+            }
+        }
+        if ([hitoe.exConnectionList count] > 0) {
+            for (int j = 0; j < [hitoe.exConnectionList count]; j++) {
+                NSString* exConnectionId = hitoe.exConnectionList[j];
+                if (!exConnectionId) {
+                    continue;
+                }
+                if ([exConnectionId isEqualToString:connectionId]) {
+                    pos = i;
+                    break;
+                }
+            }
+        }
+    }
+    return pos;
 }
 
 #pragma mark - Notify method
@@ -567,5 +675,121 @@
     [((DPHitoeDevice *) _registeredDevices[pos]) removeConnectionId:responseString];
     [[DPHitoeDBManager sharedInstance] updateHitoeDevice:_registeredDevices[pos]];
     [self disconnectForHitoe:_registeredDevices[pos]];
+}
+
+#pragma mark - Hitoe's data Extract method
+
+- (void)extractHealthWithHeartRateType:(DPHitoeHeart)heartRateType
+                                   raw:(NSString*)raw
+                                device:(DPHitoeDevice*)device {
+    DPHitoeHeartRateData *currentHeartRate = _hrData[device.serviceId];
+    if (!currentHeartRate) {
+        currentHeartRate = [DPHitoeHeartRateData new];
+    }
+    if (heartRateType == DPHitoeHeartRate) {
+        DPHitoeHeartData *heart = [DPHitoeRawDataParseUtil parseHeartRateWithRaw:raw];
+        currentHeartRate.heartRate = heart;
+        _hrData[device.serviceId] = currentHeartRate;
+    } else if (heartRateType == DPHitoeHeartRRI) {
+        DPHitoeHeartData *rri = [DPHitoeRawDataParseUtil parseRRIWithRaw:raw];
+        currentHeartRate.rrinterval = rri;
+        _hrData[device.serviceId] = currentHeartRate;
+    } else if (heartRateType == DPHitoeHeartEnergyExpended) {
+        DPHitoeHeartData *energy = [DPHitoeRawDataParseUtil parseEnergyExpendedWithRaw:raw];
+        currentHeartRate.energyExpended = energy;
+        _hrData[device.serviceId] = currentHeartRate;
+    } else if (heartRateType == DPHitoeHeartECG) {
+        DPHitoeHeartData *ecg = [DPHitoeRawDataParseUtil parseEnergyExpendedWithRaw:raw];
+        currentHeartRate.ecg = ecg;
+        _ecgData[device.serviceId] = currentHeartRate;
+    }
+}
+
+- (void)extractBatteryWithRaw:(NSString*)raw device:(DPHitoeDevice*)device {
+    NSArray *lineList = [raw componentsSeparatedByString:DPHitoeBR];
+    NSString* levelString = lineList[[lineList count] - 1];
+    NSArray *level = [levelString componentsSeparatedByString:DPHitoeComma];
+    
+    DPHitoeTargetDeviceData *current = [DPHitoeRawDataParseUtil parseDeviceDataWithDevice:device batteryLevel:[level[1] floatValue]];
+
+    DPHitoeHeartRateData *currentHeartRate = _hrData[device.serviceId];
+    if (!currentHeartRate) {
+        currentHeartRate = [DPHitoeHeartRateData new];
+    }
+    currentHeartRate.target = current;
+    _hrData[device.serviceId] = currentHeartRate;
+}
+
+-(void)analizeAccelerationData:(NSString *)raw
+                        device:(DPHitoeDevice*)device {
+    NSArray *lineList = [raw componentsSeparatedByString:DPHitoeBR];
+    NSMutableArray *postureInputList = [NSMutableArray array];
+    NSMutableArray *walkInputList = [NSMutableArray array];
+    NSMutableArray *lrBalanceInputList = [NSMutableArray array];
+    
+    @autoreleasepool {
+        for (int i = 0; i < [lineList count]; i++) {
+            if ([device.availableExDataList containsObject:@"ex.posture"]) {
+                [_listForPosture addObject:lineList[i]];
+                if ([_listForPosture count] > DPHitoeExPostureUnitNum + 5) {
+                    for (int j = 0; j < DPHitoeExPostureUnitNum + 5; j++) {
+                        [postureInputList addObject:_listForPosture[j]];
+                    }
+                    // 1秒分を削除
+                    [_listForPosture removeObjectsInRange:NSMakeRange(0, 25)];
+                }
+                if ([postureInputList count] > 0) {
+                    [self notifyAddExReceiverWithKey:@"ex.posture" dataList:postureInputList];
+                    [postureInputList removeAllObjects];
+                }
+            }
+            
+            if ([device.availableExDataList containsObject:@"ex.walk"]) {
+                [_listForWalk addObject:lineList[i]];
+                if ([_listForWalk count] > DPHitoeExWalkUnitNum + 5) {
+                    for (int j = 0 ; j < DPHitoeExWalkUnitNum + 5; j++) {
+                        [walkInputList addObject:_listForWalk[j]];
+                    }
+                    // 1秒分を削除
+                    [_listForWalk removeObjectsInRange:NSMakeRange(0, 25)];
+                }
+                
+                if ([walkInputList count] > 0) {
+                    [self notifyAddExReceiverWithKey:@"ex.walk" dataList:walkInputList];
+                    [walkInputList removeAllObjects];
+                }
+            }
+            
+            if ([device.availableExDataList containsObject:@"ex.lr_balance"]) {
+                [_listForLRBalance addObject:lineList[i]];
+                if ([_listForLRBalance count] > DPHitoeExLRBalanceUnitNum + 5) {
+                    for (int j = 0; j < DPHitoeExLRBalanceUnitNum + 5; j++) {
+                        [lrBalanceInputList addObject:_listForLRBalance[j]];
+                    }
+                    // 1秒分を削除
+                    [_listForLRBalance removeObjectsInRange:NSMakeRange(0, 25)];
+                }
+                
+                if ([lrBalanceInputList count] > 0) {
+                    [self notifyAddExReceiverWithKey:@"ex.lr_balance" dataList:lrBalanceInputList];
+                    [lrBalanceInputList removeAllObjects];
+                }
+            }
+        }
+
+    }
+}
+
+- (void)parseFreqDomainWithData:(NSString*)raw device:(DPHitoeDevice*)device {
+    NSArray *lineList = [raw componentsSeparatedByString:DPHitoeBR];
+    NSMutableArray *stressInputList = [NSMutableArray array];
+
+    if ([device.availableExDataList containsObject:@"ex.stress"]) {
+        for (int i = 0; i < [lineList count]; i++) {
+            [stressInputList addObject:lineList[i]];
+        }
+
+        [self notifyAddExReceiverWithKey:@"ex.stress" dataList:stressInputList];
+    }
 }
 @end

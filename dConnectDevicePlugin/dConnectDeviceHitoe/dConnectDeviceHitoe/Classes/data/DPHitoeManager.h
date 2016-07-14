@@ -16,8 +16,9 @@
 #import "DPHitoeWalkStateData.h"
 #import "DPHitoeAccelerationData.h"
 #import "DPHitoeHeartData.h"
-#import "DPHitoeDeviceData.h"
+#import "DPHitoeTargetDeviceData.h"
 #import "DPHitoeConsts.h"
+#import "DPHitoeHeartData.h"
 
 
 @protocol DPHitoeConnectionDelegate<NSObject>
@@ -35,11 +36,11 @@
 #pragma mark - Delegate object
 @property (nonatomic, weak) id<DPHitoeConnectionDelegate> connectionDelegate;
 
-@property (nonatomic, copy) void (^heartRateReceived)(DPHitoeDeviceData *device, DPHitoeHeartRateData *heartRate);
-@property (nonatomic, copy) void (^ecgReceived)(DPHitoeDeviceData *device, DPHitoeHeartRateData *ecg);
-@property (nonatomic, copy) void (^stressEstimationReceived)(DPHitoeDeviceData *device, DPHitoeStressEstimationData *stress);
-@property (nonatomic, copy) void (^poseEstimationReceived)(DPHitoeDeviceData *device, DPHitoePoseEstimationData *pose);
-@property (nonatomic, copy) void (^walkStateReceived)(DPHitoeDeviceData *device, DPHitoeWalkStateData *walk);
+@property (nonatomic, copy) void (^heartRateReceived)(DPHitoeTargetDeviceData *device, DPHitoeHeartRateData *heartRate);
+@property (nonatomic, copy) void (^ecgReceived)(DPHitoeTargetDeviceData *device, DPHitoeHeartRateData *ecg);
+@property (nonatomic, copy) void (^stressEstimationReceived)(DPHitoeTargetDeviceData *device, DPHitoeStressEstimationData *stress);
+@property (nonatomic, copy) void (^poseEstimationReceived)(DPHitoeTargetDeviceData *device, DPHitoePoseEstimationData *pose);
+@property (nonatomic, copy) void (^walkStateReceived)(DPHitoeTargetDeviceData *device, DPHitoeWalkStateData *walk);
 
 #pragma mark - store data
 @property (nonatomic, copy) NSMutableArray *registeredDevices;

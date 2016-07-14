@@ -12,12 +12,13 @@
 
 @interface DPHitoeHeartData : NSObject
 
-enum DPHitoeHeart {
+typedef enum DPHitoeHeart : NSUInteger
+{
     DPHitoeHeartRate = 0,
     DPHitoeHeartRRI,
     DPHitoeHeartEnergyExpended,
     DPHitoeHeartECG
-};
+} DPHitoeHeart;
 
 @property (nonatomic, assign) enum DPHitoeHeart heartType;
 @property (nonatomic, assign) float value;

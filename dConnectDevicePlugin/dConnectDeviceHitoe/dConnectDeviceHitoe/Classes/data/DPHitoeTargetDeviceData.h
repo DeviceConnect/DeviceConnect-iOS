@@ -9,7 +9,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface DPHitoeDeviceData : NSObject
+@interface DPHitoeTargetDeviceData : NSObject
 @property (nonatomic, copy) NSString *productName;
 @property (nonatomic, copy) NSString *manufacturerName;
 @property (nonatomic, copy) NSString *modelNumber;

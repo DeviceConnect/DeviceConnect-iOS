@@ -7,8 +7,8 @@
 //  http://opensource.org/licenses/mit-license.php
 //
 
-#import "DPHitoeDeviceData.h"
+#import "DPHitoeTargetDeviceData.h"
 
-@implementation DPHitoeDeviceData
+@implementation DPHitoeTargetDeviceData
 
 @end

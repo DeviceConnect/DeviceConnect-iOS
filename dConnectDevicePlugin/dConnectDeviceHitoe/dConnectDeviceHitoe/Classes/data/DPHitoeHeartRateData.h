@@ -9,11 +9,11 @@
 
 
 #import <Foundation/Foundation.h>
-#import "DPHitoeDeviceData.h"
+#import "DPHitoeTargetDeviceData.h"
 #import "DPHitoeHeartData.h"
 
 @interface DPHitoeHeartRateData : NSObject
-@property (nonatomic, copy) DPHitoeDeviceData *target;
+@property (nonatomic, copy) DPHitoeTargetDeviceData *target;
 @property (nonatomic, copy) DPHitoeHeartData *heartRate;
 @property (nonatomic, copy) DPHitoeHeartData *rrinterval;
 @property (nonatomic, copy) DPHitoeHeartData *energyExpended;
