@@ -47,6 +47,10 @@
         UIViewController* controller = [systemProfile.dataSource profile:nil settingPageForRequest:nil];
         if (controller) {
             [self presentViewController:controller animated:YES completion:nil];
+        } else {
+            UIAlertController* alert = [UIAlertController alertControllerWithTitle:nil message:@"設定画面はありません" preferredStyle:UIAlertControllerStyleAlert];
+            [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil]];
+            [self presentViewController:alert animated:YES completion:nil];
         }
     }
 }
