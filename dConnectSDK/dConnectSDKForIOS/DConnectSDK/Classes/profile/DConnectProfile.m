@@ -15,14 +15,28 @@
 #import <DConnectSDK/DConnectApiSpec.h>
 #import <DConnectSDK/DConnectApi.h>
 
-@implementation DConnectProfile
+@implementation DConnectProfile {
+    
+    /*!
+     @brief サポートするAPI(key: ApiIdentifier, value: DConnectApi).
+     */
+    NSMutableDictionary *mApis;
+}
 
+
+- (instancetype) init {
+    self = [super init];
+    if (self) {
+        mApis = [NSMutableDictionary dictionary];
+    }
+    return self;
+}
 
 - (NSArray *) apis {
     
     // ディープコピーして返す
     // TODO: DConnectApiにNSCopyingプロトコルを実装する
-    NSArray *list = [[NSArray alloc] initWithArray: [_mApis allValues] copyItems: YES];
+    NSArray *list = [[NSArray alloc] initWithArray: [mApis allValues] copyItems: YES];
     return list;
 }
 
@@ -45,13 +59,14 @@
     ApiIdentifier *apiIdentifier = [[ApiIdentifier alloc] initWithPath:path method: method];
     NSString *apiIdentifierString = [apiIdentifier apiIdentifierString];
     return _mApis[apiIdentifierString];
+    return mApis[apiIdentifierString];
 }
 
 - (void) addApi: (DConnectApi *) api {
     NSString *path = [self apiPath: api];
     ApiIdentifier *apiIdentifier = [[ApiIdentifier alloc] initWithPath:path method:[api method]];
     NSString *apiIdentifierString = [apiIdentifier apiIdentifierString];
-    self.mApis[apiIdentifierString] = api;
+    mApis[apiIdentifierString] = api;
 }
 
 - (void) removeApi: (DConnectApi *) api {
@@ -59,7 +74,7 @@
     DConnectApiSpecMethod method = [api method];
     ApiIdentifier *apiIdentifier = [[ApiIdentifier alloc] initWithPath:apiPath method:method];
     NSString *apiIdentifierString = [apiIdentifier apiIdentifierString];
-    [self.mApis removeObjectForKey: apiIdentifierString];
+    [mApis removeObjectForKey: apiIdentifierString];
 }
 
 - (NSString *) apiPath: (DConnectApi *) api {

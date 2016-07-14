@@ -35,13 +35,8 @@
 @property (nonatomic, weak) id<DConnectProfileProvider> provider;
 
 
-/*!
- @brief サポートするAPI(key: ApiIdentifier, value: DConnectApi).
- */
-@property (nonatomic, weak) NSMutableDictionary *mApis;
 
-
-
+- (instancetype) init;
 
 /*!
  @brief プロファイルに設定されているDevice Connect API実装のリストを返す.
