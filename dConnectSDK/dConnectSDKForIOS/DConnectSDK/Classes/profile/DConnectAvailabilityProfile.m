@@ -14,14 +14,32 @@ NSString *const DConnectAvailabilityProfileName = @"availability";
 
 @implementation DConnectAvailabilityProfile
 
+- (id) init {
+    self = [super init];
+    if (self) {
+        
+        [self addApi: [[DConnectAvailabilityGetApi alloc] init]];
+    }
+    return self;
+}
+
 - (NSString *) profileName {
     return DConnectAvailabilityProfileName;
 }
 
-- (BOOL) didReceiveGetRequest:(DConnectRequestMessage *)request response:(DConnectResponseMessage *)response
-{
+@end
+
+
+#pragma mark - DConnectAvailabilityGetApi
+
+@implementation DConnectAvailabilityGetApi
+
+#pragma mark - DConnectApiDelegate Implement.
+
+- (BOOL)onRequest:(DConnectRequestMessage *)request response:(DConnectResponseMessage *)response {
     [response setResult:DConnectMessageResultTypeOk];
     return YES;
 }
 
 @end
+

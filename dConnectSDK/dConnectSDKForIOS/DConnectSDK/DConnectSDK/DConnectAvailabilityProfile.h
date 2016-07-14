@@ -13,6 +13,7 @@
  @author NTT DOCOMO
  */
 #import <DConnectSDK/DConnectProfile.h>
+#import <DConnectSDK/GetApi.h>
 
 /*!
  @brief プロファイル名。
@@ -20,5 +21,15 @@
 extern NSString *const DConnectAvailabilityProfileName;
 
 @interface DConnectAvailabilityProfile : DConnectProfile
+
+- (id) init;
+
+@end
+
+
+/*!
+ @class DConnectAvailabilityGetApi
+ */
+@interface DConnectAvailabilityGetApi : GetApi<DConnectApiDelegate>
 
 @end
