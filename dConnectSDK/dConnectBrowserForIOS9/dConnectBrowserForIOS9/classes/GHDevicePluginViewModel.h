@@ -10,4 +10,5 @@
 
 @interface GHDevicePluginViewModel : NSObject
 @property (nonatomic, strong) NSArray* datasource;
+- (NSDictionary*)makePlguinAndProfiles:(NSInteger)index;
 @end
