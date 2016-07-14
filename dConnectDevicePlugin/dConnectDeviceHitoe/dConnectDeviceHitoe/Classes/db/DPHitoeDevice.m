@@ -84,7 +84,6 @@
     }
 }
 
-
 - (void)setRawData {
     _availableRawDataList = [NSMutableArray array];
     [_availableRawDataList removeAllObjects];

@@ -122,7 +122,7 @@
     } else {
         [[DPHitoeDBManager sharedInstance] updateHitoeDevice:device];
     }
-    _stressEstimationData[(id <NSCopying>) device] = [DPHitoeStressEstimationData new];
+    _stressEstimationData[device.serviceId] = [DPHitoeStressEstimationData new];
     for (int i = 0; i < [_registeredDevices count]; i++) {
         DPHitoeDevice *exist = _registeredDevices[i];
         if ([exist.serviceId isEqualToString:device.serviceId]) {
@@ -184,22 +184,22 @@
     return nil;
 }
 - (DPHitoeHeartRateData *)getHeartRateDataForServiceId:(NSString *)serviceId {
-    return nil;
+    return _hrData[serviceId];
 }
 - (DPHitoeHeartRateData *)getECGDataForServiceId:(NSString *)serviceId {
-    return nil;
+    return _ecgData[serviceId];
 }
 - (DPHitoeStressEstimationData *)getStressEstimationDataForServiceId:(NSString *)serviceId {
-    return nil;
+    return _stressEstimationData[serviceId];
 }
 - (DPHitoePoseEstimationData *)getPoseEstimationDataForServiceId:(NSString *)serviceId {
-    return nil;
+    return _poseEstimationData[serviceId];
 }
 - (DPHitoeWalkStateData *)getWalkStateDataForServiceId:(NSString *)serviceId {
-    return nil;
+    return _walkStateData[serviceId];
 }
 - (DPHitoeAccelerationData *)getAccelerationDataForServiceId:(NSString *)serviceId {
-    return nil;
+    return _accelData[serviceId];
 }
 
 
@@ -217,6 +217,20 @@
     }
     return pos;
 }
+
+
+- (DPHitoeDevice *)currentDeviceForServiceId:(NSString *)serviceId {
+    DPHitoeDevice *device = nil;
+    for (int i = 0; i < [_registeredDevices count]; i++) {
+        DPHitoeDevice *current = _registeredDevices[i];
+        if ([current.serviceId isEqualToString:serviceId]) {
+            device = current;
+            break;
+        }
+    }
+    return device;
+}
+
 #pragma mark - Notify method
 - (void)notifyDiscoveryHitoeDeviceWithResponseId:(int)responseId
                                   responseString:(NSString *)responseString {
@@ -290,6 +304,7 @@
     if (_connectionDelegate) {
         [_connectionDelegate didConnectWithDevice:currentDevice];
     }
+    
     for (int i = 0; i < [_registeredDevices count]; i++) {
         DPHitoeDevice *pos = _registeredDevices[i];
         if ([pos.serviceId isEqualToString:currentDevice.serviceId]) {
@@ -484,6 +499,46 @@
         }
     }
     [api addReceiver:receiveDevice.sessionId dataKey:(NSString *) keyStringBuffer dataReceiver:self parameterSetting:(NSString *) paramStringBuffer dataList:@""];
+}
+
+- (void)notifyAddExReceiverWithKey:(NSString*)key
+                          dataList:(NSMutableArray *)dataList {
+
+    
+    NSMutableString *paramStringBuilder = [NSMutableString new];
+    NSMutableString *dataStringBuilder = [NSMutableString new];
+    
+    for (int i = 0; i < [dataList count]; i++) {
+        if (dataStringBuilder.length > 0) {
+            [dataStringBuilder appendString:DPHitoeBR];
+        }
+        [dataStringBuilder appendString:dataList[i]];
+    }
+    if ([key isEqualToString:@"ex.posture"]) {
+        [paramStringBuilder appendString:@"ex.acc_axis="];
+        [paramStringBuilder appendString:DPHitoeExAccAxisXYZ];
+        
+        [paramStringBuilder appendString:@"ex.posture_window="];
+        [paramStringBuilder appendFormat:@"%d", DPHitoeExPostureWinodw];
+    } else if([key isEqualToString:@"ex.walk"]) {
+        [paramStringBuilder appendString:@"ex.acc_axis="];
+        [paramStringBuilder appendString:DPHitoeExAccAxisXYZ];
+        [paramStringBuilder appendString:@"ex.walk_stride="];
+        [paramStringBuilder appendFormat:@"%lf", DPHitoExWalkStride];
+        [paramStringBuilder appendString:@"ex.run_stride_cof="];
+        [paramStringBuilder appendFormat:@"%lf", DPHitoeExRunStrideCOF];
+        [paramStringBuilder appendString:@"ex.run_stride_int="];
+        [paramStringBuilder appendFormat:@"%lf", DPHitoeExRunStrideINT];
+    } else if ([key isEqualToString:@"ex.lr_balance"]) {
+        [paramStringBuilder appendString:@"ex.acc_axis="];
+        [paramStringBuilder appendString:DPHitoeExAccAxisXYZ];
+    }
+
+    [api addReceiver:@"" dataKey:key dataReceiver:self parameterSetting:paramStringBuilder dataList:dataStringBuilder];
+}
+
+- (void)removeExReceiverForConnectionId:(NSString*)connectionId {
+    [api removeReceiver:connectionId];
 }
 
 - (void)notifyAddReceiverWithResponseId:(int)responseId
