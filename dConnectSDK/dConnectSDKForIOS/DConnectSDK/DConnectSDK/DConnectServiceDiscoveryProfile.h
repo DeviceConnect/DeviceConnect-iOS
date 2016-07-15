@@ -14,6 +14,7 @@
  */
 #import <DConnectSDK/DConnectProfile.h>
 #import <DConnectSDK/DConnectProfileProvider.h>
+#import <DConnectSDK/DConnectServiceProvider.h>
 #import "GetApi.h"
 #import "PutApi.h"
 #import "DeleteApi.h"
@@ -213,7 +214,8 @@ extern NSString *const DConnectServiceDiscoveryProfileNetworkTypeBLE;
  */
 @property (nonatomic, weak) id<DConnectServiceDiscoveryProfileDelegate> delegate;
 
-- (instancetype) init;
+- (instancetype) initWithServiceProvider: (DConnectServiceProvider *) serviceProvider;
+
 
 #pragma mark - Setter
 
@@ -307,7 +309,7 @@ extern NSString *const DConnectServiceDiscoveryProfileNetworkTypeBLE;
  
  @retval 本クラスのインスタンス
  */
-- (id) initWithProfile: (DConnectProfile *)profile;
+- (id) initWithProfile: (DConnectServiceDiscoveryProfile *)profile serviceProvider: (DConnectServiceProvider *) serviceProvider;
 
 @end
 

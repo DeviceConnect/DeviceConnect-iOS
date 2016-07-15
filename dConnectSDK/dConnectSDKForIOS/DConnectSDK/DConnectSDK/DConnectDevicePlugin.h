@@ -15,6 +15,8 @@
 #import <DConnectSDK/DConnectProfileProvider.h>
 #import <DConnectSDK/DConnectRequestMessage.h>
 #import <DConnectSDK/DConnectResponseMessage.h>
+#import <DConnectSDK/DConnectServiceProvider.h>
+
 
 /*! 
  @class DConnectDevicePlugin
@@ -45,7 +47,9 @@
  */
 @interface DConnectDevicePlugin : NSObject <DConnectProfileProvider>
 
-/*! 
+@property (nonatomic) DConnectServiceProvider *mServiceProvider;
+
+/*!
  @brief デバイスプラグインの名前。
  
  プラグイン名を変更したい場合には、この変数に値を代入すること。

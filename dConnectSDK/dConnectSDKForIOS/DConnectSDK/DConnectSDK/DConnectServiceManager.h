@@ -14,7 +14,7 @@
 
 
 
-@interface DConnectServiceManager : NSObject<DConnectServiceProvider>
+@interface DConnectServiceManager : DConnectServiceProvider
 
 // DConnectApiSpecの配列
 @property NSMutableArray *mApiSpecList;

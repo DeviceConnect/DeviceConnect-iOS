@@ -8,6 +8,7 @@
 //
 
 #import "DConnectServiceDiscoveryProfile.h"
+#import <DConnectSDK/DConnectService.h>
 
 NSString *const DConnectServiceDiscoveryProfileName = @"servicediscovery";
 NSString *const DConnectServiceDiscoveryProfileAttrOnServiceChange = @"onservicechange";
@@ -35,12 +36,10 @@ NSString *const DConnectServiceDiscoveryProfileNetworkTypeBLE = @"BLE";
 
 @implementation DConnectServiceDiscoveryProfile
 
-- (instancetype) init {
+- (instancetype) initWithServiceProvider: (DConnectServiceProvider *) serviceProvider {
     self = [super init];
     if (self) {
-        [self addApi: [[DConnectServiceDiscoveryGetServicesApi alloc] initWithProfile: self]];
-        [self addApi: [[DConnectServiceDiscoveryPutOnServiceChangeApi alloc] initWithProfile: self]];
-        [self addApi: [[DConnectServiceDiscoveryDeleteOnServiceChangeApi alloc] initWithProfile: self]];
+        [self addApi: [[DConnectServiceDiscoveryGetServicesApi alloc] initWithProfile: self serviceProvider: serviceProvider]];
     }
     return self;
 }
@@ -198,14 +197,37 @@ NSString *const DConnectServiceDiscoveryProfileNetworkTypeBLE = @"BLE";
 
 #pragma mark - DConnectServiceDiscoveryGetServicesApi
 
-@implementation DConnectServiceDiscoveryGetServicesApi
+@implementation DConnectServiceDiscoveryGetServicesApi {
+    DConnectServiceProvider *mServiceProvider;
+}
 
-- (id) initWithProfile: (DConnectServiceDiscoveryProfile *)profile {
+- (id) initWithProfile: (DConnectServiceDiscoveryProfile *)profile serviceProvider: (DConnectServiceProvider *) serviceProvider {
     self = [super init];
     if (self) {
         self.serviceDiscoveryProfile = profile;
+        mServiceProvider = serviceProvider;
     }
     return self;
+}
+
+- (void) appendServiceList: (DConnectResponseMessage *)response {
+    
+    DConnectArray *services = [DConnectArray array];
+    
+    for (DConnectService *serviceEntity in [mServiceProvider services]) {
+        DConnectMessage *service = [DConnectMessage message];
+        NSString *serviceId = [serviceEntity serviceId];
+        [DConnectServiceDiscoveryProfile setId:serviceId
+                                        target:service];
+        [DConnectServiceDiscoveryProfile setName:[serviceEntity name]
+                                          target:service];
+        [DConnectServiceDiscoveryProfile setType:[serviceEntity networkType]
+                                          target:service];
+        [DConnectServiceDiscoveryProfile setOnline:[serviceEntity isOnline] target:service];
+        [services addMessage:service];
+    }
+    [DConnectServiceDiscoveryProfile setServices:services target:response];
+    [response setResult:DConnectMessageResultTypeOk];
 }
 
 #pragma mark - DConnectApiDelegate Implement.
@@ -213,117 +235,8 @@ NSString *const DConnectServiceDiscoveryProfileNetworkTypeBLE = @"BLE";
 // [self didReceiveGetRequest]をDConnectApi形式に移植
 // TODO: didReceiveRequest に名称変更
 - (BOOL)onRequest:(DConnectRequestMessage *)request response:(DConnectResponseMessage *)response {
-    BOOL send = YES;
-    
-    if ([DConnectServiceDiscoveryUtils hasMethod:@selector(profile:didReceiveGetServicesRequest:response:)
-                                        response:response
-                                        delegate: _serviceDiscoveryProfile.delegate]) {
-        send = [_serviceDiscoveryProfile.delegate profile:_serviceDiscoveryProfile didReceiveGetServicesRequest:request response:response];
-    }
-    
-    return send;
-}
-
-@end
-
-
-
-#pragma mark - DConnectServiceDiscoveryPutOnServiceChangeApi
-
-@implementation DConnectServiceDiscoveryPutOnServiceChangeApi
-
-- (id) initWithProfile: (DConnectServiceDiscoveryProfile *)profile {
-    self = [super init];
-    if (self) {
-        self.serviceDiscoveryProfile = profile;
-    }
-    return self;
-}
-
-- (NSString *)attribute {
-    return DConnectServiceDiscoveryProfileAttrOnServiceChange;
-}
-
-#pragma mark - DConnectApiDelegate Implement.
-
-// [self didReceivePutRequest]をDConnectApi形式に移植
-// TODO: didReceiveRequest に名称変更
-- (BOOL)onRequest:(DConnectRequestMessage *)request response:(DConnectResponseMessage *)response {
-    BOOL send = YES;
-    
-    if ([DConnectServiceDiscoveryUtils hasMethod:@selector(profile:
-                                  didReceivePutOnServiceChangeRequest:
-                                  response:
-                                  serviceId:
-                                  sessionKey:)
-                                        response:response
-                                        delegate: _serviceDiscoveryProfile.delegate]) {
-        send = [_serviceDiscoveryProfile.delegate                       profile:_serviceDiscoveryProfile
-                    didReceivePutOnServiceChangeRequest:request
-                                               response:response
-                                              serviceId:[request serviceId]
-                                             sessionKey:[request sessionKey]];
-    }
-    
-    return send;
-}
-
-@end
-
-
-
-
-#pragma mark - DConnectServiceDiscoveryDeleteOnServiceChangeApi
-
-@implementation DConnectServiceDiscoveryDeleteOnServiceChangeApi
-
-- (id) initWithProfile: (DConnectServiceDiscoveryProfile *)profile {
-    self = [super init];
-    if (self) {
-        self.serviceDiscoveryProfile = profile;
-    }
-    return self;
-}
-
-- (NSString *)attribute {
-    return DConnectServiceDiscoveryProfileAttrOnServiceChange;
-}
-
-#pragma mark - DConnectApiDelegate Implement.
-
-// [self didReceiveDeleteRequest]をDConnectApi形式に移植
-// TODO: didReceiveRequest に名称変更
-- (BOOL)onRequest:(DConnectRequestMessage *)request response:(DConnectResponseMessage *)response {
-    BOOL send = YES;
-    
-    if ([DConnectServiceDiscoveryUtils hasMethod:@selector(profile:
-                                  didReceiveDeleteOnServiceChangeRequest:
-                                  response:
-                                  serviceId:
-                                  sessionKey:)
-                                        response:response
-                                        delegate: _serviceDiscoveryProfile.delegate]) {
-        send = [_serviceDiscoveryProfile.delegate profile:_serviceDiscoveryProfile
-           didReceiveDeleteOnServiceChangeRequest:request
-                                         response:response
-                                        serviceId:[request serviceId]
-                                       sessionKey:[request sessionKey]];
-    }
-    
-    return send;
-}
-
-@end
-
-
-@implementation DConnectServiceDiscoveryUtils
-
-+ (BOOL) hasMethod:(SEL)method response:(DConnectResponseMessage *)response delegate: (id<DConnectServiceDiscoveryProfileDelegate>) delegate {
-    BOOL result = [delegate respondsToSelector:method];
-    if (!result) {
-        [response setErrorToNotSupportAttribute];
-    }
-    return result;
+    [self appendServiceList: response];
+    return YES;
 }
 
 @end

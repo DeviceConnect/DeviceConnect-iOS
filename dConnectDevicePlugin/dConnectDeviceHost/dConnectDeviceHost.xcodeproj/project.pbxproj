@@ -74,6 +74,7 @@
 		D69997451A7E210D00EF934F /* DPHostCanvasView.m in Sources */ = {isa = PBXBuildFile; fileRef = D69997441A7E210D00EF934F /* DPHostCanvasView.m */; };
 		D69997481A7F1AD800EF934F /* DPHostCanvasDrawObject.m in Sources */ = {isa = PBXBuildFile; fileRef = D69997471A7F1AD800EF934F /* DPHostCanvasDrawObject.m */; };
 		D699974B1A7F264900EF934F /* DPHostCanvasDrawImage.m in Sources */ = {isa = PBXBuildFile; fileRef = D699974A1A7F264900EF934F /* DPHostCanvasDrawImage.m */; };
+		D6C860251D38D3AF00232EEF /* DPHostService.m in Sources */ = {isa = PBXBuildFile; fileRef = D6C860241D38D3AF00232EEF /* DPHostService.m */; };
 		EFDD96A11AB805980068E984 /* DPHostTouchProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = EFDD96A01AB805980068E984 /* DPHostTouchProfile.m */; };
 		EFDD96A71AB805F70068E984 /* DPHostTouchUIViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EFDD96A41AB805F70068E984 /* DPHostTouchUIViewController.m */; };
 		EFDD96A81AB805F70068E984 /* DPHostTouchView.m in Sources */ = {isa = PBXBuildFile; fileRef = EFDD96A61AB805F70068E984 /* DPHostTouchView.m */; };
@@ -162,6 +163,8 @@
 		D69997471A7F1AD800EF934F /* DPHostCanvasDrawObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHostCanvasDrawObject.m; sourceTree = "<group>"; };
 		D69997491A7F264900EF934F /* DPHostCanvasDrawImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHostCanvasDrawImage.h; sourceTree = "<group>"; };
 		D699974A1A7F264900EF934F /* DPHostCanvasDrawImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHostCanvasDrawImage.m; sourceTree = "<group>"; };
+		D6C860231D38D3AF00232EEF /* DPHostService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHostService.h; sourceTree = "<group>"; };
+		D6C860241D38D3AF00232EEF /* DPHostService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHostService.m; sourceTree = "<group>"; };
 		EFDD969F1AB805840068E984 /* DPHostTouchProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHostTouchProfile.h; sourceTree = "<group>"; };
 		EFDD96A01AB805980068E984 /* DPHostTouchProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHostTouchProfile.m; sourceTree = "<group>"; };
 		EFDD96A31AB805F70068E984 /* DPHostTouchUIViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHostTouchUIViewController.h; sourceTree = "<group>"; };
@@ -328,6 +331,8 @@
 				25FF1DB3196A89AD00EA7F72 /* DPHostUtils.m */,
 				257FC23519BAAF5200358536 /* DPHostReachability.h */,
 				257FC23619BAAF5200358536 /* DPHostReachability.m */,
+				D6C860231D38D3AF00232EEF /* DPHostService.h */,
+				D6C860241D38D3AF00232EEF /* DPHostService.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -598,6 +603,7 @@
 				2515192519A86FC800430980 /* DPHostMediaPlayerProfile.m in Sources */,
 				97FE19F2192B2FB400808FA5 /* DPHostDevicePlugin.m in Sources */,
 				D6384EA91A7625BD00384167 /* DPHostCanvasProfile.m in Sources */,
+				D6C860251D38D3AF00232EEF /* DPHostService.m in Sources */,
 				D69997451A7E210D00EF934F /* DPHostCanvasView.m in Sources */,
 				D6384EAD1A7625CF00384167 /* DPHostCanvasUIViewController.m in Sources */,
 				252F870319736DEB00142BAE /* DPHostPhoneProfile.m in Sources */,

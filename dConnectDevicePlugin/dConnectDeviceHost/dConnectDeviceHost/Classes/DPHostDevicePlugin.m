@@ -10,6 +10,7 @@
 #import <DConnectSDK/DConnectFileManager.h>
 #import <DConnectSDK/DConnectEventManager.h>
 #import <DConnectSDK/DConnectMemoryCacheController.h>
+#import <DConnectSDK/DConnectServiceManager.h>
 
 #import "DPHostDevicePlugin.h"
 
@@ -30,11 +31,17 @@
     self = [super init];
     if (self) {
         self.fileMgr = [DConnectFileManager fileManagerForPlugin:self];
-        
         self.pluginName = @"Host (Device Connect Device Plug-in)";
+        self.mServiceProvider = [[DConnectServiceManager alloc] init];
+        
+        // サービス追加
+        DConnectService *hostService = [[DConnectService alloc] initWithServiceId: SERVICE_ID];
+        [hostService setName: SERVICE_NAME];
+        hostService.setOnline(true);
+        [self.mServiceProvider addService: hostService];
         
         // プロファイルを追加
-        [self addProfile:[[DPHostServiceDiscoveryProfile alloc] initWithFileManager:self.fileMgr]];
+        [self addProfile:[[DPHostServiceDiscoveryProfile alloc] initWithFileManager:self.fileMgr serviceProvider: mServiceProvider]];
         [self addProfile:[DPHostSystemProfile new]];
     }
     return self;

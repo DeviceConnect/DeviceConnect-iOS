@@ -8,11 +8,11 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <DConnectSDK/DConnectService.h>
 
+//#import <DConnectSDK/DConnectService.h>
 @class DConnectService;
 
-@protocol DConnectServiceProvider <NSObject>
+@interface DConnectServiceProvider : NSObject
 
 - (BOOL) hasService: (NSString *) serviceId;
 

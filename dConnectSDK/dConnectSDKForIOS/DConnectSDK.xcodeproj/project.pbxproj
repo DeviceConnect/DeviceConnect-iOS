@@ -225,6 +225,7 @@
 		D699E72B19C094BD002F334C /* LocalOAuthConfirmAuthRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = D699E72A19C094BD002F334C /* LocalOAuthConfirmAuthRequest.m */; };
 		D6BBC79E19A2585D00F090CA /* LocalOAuthConfirmAuthViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BBC79D19A2585D00F090CA /* LocalOAuthConfirmAuthViewController.m */; };
 		D6BBC7E219A36BF800F090CA /* LocalOAuthTypedefs.m in Sources */ = {isa = PBXBuildFile; fileRef = D6BBC7E119A36BF800F090CA /* LocalOAuthTypedefs.m */; };
+		D6C8601E1D38964400232EEF /* DConnectServiceProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = D6C8601D1D38964400232EEF /* DConnectServiceProvider.m */; };
 		D6ECC6D319A4B78900FE3161 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6ECC6D219A4B78900FE3161 /* CoreFoundation.framework */; };
 		D6ECC6D919A4B78900FE3161 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D6ECC6D719A4B78900FE3161 /* InfoPlist.strings */; };
 		D6ECC6DE19A4B7C800FE3161 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C29D3337191B2685001015CC /* Info.plist */; };
@@ -1943,6 +1944,7 @@
 		D6BBC79D19A2585D00F090CA /* LocalOAuthConfirmAuthViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LocalOAuthConfirmAuthViewController.m; path = localoauth/LocalOAuthConfirmAuthViewController.m; sourceTree = "<group>"; };
 		D6BBC7E019A36BF800F090CA /* LocalOAuthTypedefs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LocalOAuthTypedefs.h; path = localoauth/LocalOAuthTypedefs.h; sourceTree = "<group>"; };
 		D6BBC7E119A36BF800F090CA /* LocalOAuthTypedefs.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LocalOAuthTypedefs.m; path = localoauth/LocalOAuthTypedefs.m; sourceTree = "<group>"; };
+		D6C8601D1D38964400232EEF /* DConnectServiceProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DConnectServiceProvider.m; path = service/DConnectServiceProvider.m; sourceTree = "<group>"; };
 		D6ECC6D119A4B78900FE3161 /* DConnectSDK_resources.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DConnectSDK_resources.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		D6ECC6D219A4B78900FE3161 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		D6ECC6D619A4B78900FE3161 /* DConnectSDK_resources-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "DConnectSDK_resources-Info.plist"; sourceTree = "<group>"; };
@@ -4004,6 +4006,7 @@
 			children = (
 				D60DD6001D2F383F00DEBE5C /* DConnectService.m */,
 				D62866B51D2F899A00C0C2D6 /* DConnectServiceManager.m */,
+				D6C8601D1D38964400232EEF /* DConnectServiceProvider.m */,
 			);
 			name = service;
 			sourceTree = "<group>";
@@ -4475,6 +4478,7 @@
 				ABE747141C688473001D8F0D /* DConnectURLProtocol.m in Sources */,
 				972107571920604E00529618 /* DConnectMultipartParser.m in Sources */,
 				6BC64F771AB199C80095BFC9 /* DConnectWhitelistUtil.m in Sources */,
+				D6C8601E1D38964400232EEF /* DConnectServiceProvider.m in Sources */,
 				D65F83481D2A2AF80024685D /* BooleanRequestParamSpec.m in Sources */,
 				D65F834D1D2A2AF80024685D /* DConnectRequestParamSpecJsonParser.m in Sources */,
 				D623FE6D19B6279600706448 /* LocalOAuthAccessTokenDetailViewController.m in Sources */,
