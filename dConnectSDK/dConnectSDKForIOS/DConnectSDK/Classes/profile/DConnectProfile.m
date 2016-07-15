@@ -58,7 +58,6 @@
 - (DConnectApi *) findApiWithPath: (NSString *) path method: (DConnectApiSpecMethod) method {
     ApiIdentifier *apiIdentifier = [[ApiIdentifier alloc] initWithPath:path method: method];
     NSString *apiIdentifierString = [apiIdentifier apiIdentifierString];
-    return _mApis[apiIdentifierString];
     return mApis[apiIdentifierString];
 }
 
