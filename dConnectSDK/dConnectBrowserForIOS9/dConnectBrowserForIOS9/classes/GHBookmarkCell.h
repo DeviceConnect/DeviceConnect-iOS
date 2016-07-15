@@ -12,4 +12,5 @@
 
 @interface GHBookmarkCell : UITableViewCell
 @property (nonatomic, weak) Page *myPage;
+- (void)configureCell:(Page *)page atIndexPath:(NSIndexPath *)indexPath isEditing:(BOOL)isEditing;
 @end
