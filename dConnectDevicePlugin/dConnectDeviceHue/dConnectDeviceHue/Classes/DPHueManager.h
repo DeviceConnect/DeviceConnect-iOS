@@ -15,7 +15,7 @@
 #import <Foundation/Foundation.h>
 #import <HueSDK_iOS/HueSDK.h>
 #import <DConnectSDK/DConnectSDK.h>
-
+#import <DConnectSDK/DConnectServiceProvider.h>
 
 /*!
  @class DPHueManager
@@ -55,6 +55,11 @@ typedef enum BridgeConnectState : NSInteger {
 } BridgeConnectState;
 
 /*!
+ @brief ServiceProvider.
+ */
+@property (nonatomic) DConnectServiceProvider *mServiceProvider;
+
+/*!
  @brief Hue Bridge リスト。
  */
 @property (nonatomic) NSDictionary *hueBridgeList;
@@ -80,6 +85,10 @@ typedef void (^DPHueLightStatusBlock)(BridgeConnectState state);
  */
 -(void)initHue;
 
+/*!
+ @brief ServiceProviderを登録
+ */
+- (void)setServiceProvider: (DConnectServiceProvider *) serviceProvider;
 
 /*!
  @brief ブリッジの検索。

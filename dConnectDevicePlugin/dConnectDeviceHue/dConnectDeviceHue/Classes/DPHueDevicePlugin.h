@@ -12,7 +12,9 @@
  @date 作成日(2014.7.15)
  */
 #import <Foundation/Foundation.h>
-#import <DConnectSDK/DConnectSDK.h>
+#import <DConnectSDK/DConnectDevicePlugin.h>
+#import <DConnectSDK/DConnectServiceManager.h>
+
 
 /*!
  @class DPHueDevicePlugin
