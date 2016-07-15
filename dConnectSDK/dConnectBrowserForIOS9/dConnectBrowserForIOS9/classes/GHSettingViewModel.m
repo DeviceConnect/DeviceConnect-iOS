@@ -26,8 +26,7 @@
                               @(SecurityCellTypeOriginBlock),
                               @(SecurityCellTypeLocalOAuth),
                               @(SecurityCellTypeOrigin),
-                              @(SecurityCellTypeExternIP),
-                              @(SecurityCellTypeWebSocket)]
+                              @(SecurityCellTypeExternIP)]
                             ];
     }
 
@@ -112,9 +111,6 @@
                 case SecurityCellTypeExternIP:
                     return @"外部IPを許可 (有効/無効)";
                     break;
-                case SecurityCellTypeWebSocket:
-                    return @"WebSocket一覧";
-                    break;
             }
             break;
     }
@@ -136,9 +132,6 @@
             //TODO:
             break;
         case SecurityCellTypeExternIP:
-            //TODO:
-            break;
-        case SecurityCellTypeWebSocket:
             //TODO:
             break;
         default:
@@ -172,9 +165,6 @@
                 case SecurityCellTypeOriginWhitelist:
                     [DConnectUtil showOriginWhitelist];
                     break;
-                case SecurityCellTypeWebSocket:
-                    [self.delegate openWebSocketList];
-                    break;
             }
             break;
     }
@@ -194,9 +184,6 @@
             //TODO:
             break;
         case SecurityCellTypeExternIP:
-            //TODO:
-            break;
-        case SecurityCellTypeWebSocket:
             //TODO:
             break;
         default:
