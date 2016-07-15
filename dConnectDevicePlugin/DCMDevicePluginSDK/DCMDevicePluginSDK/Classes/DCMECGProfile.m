@@ -127,14 +127,14 @@ NSString *const DCMECGProfileParamTimeStampString = @"timeStampString";
 + (void) setType:(NSString*)type target:(DConnectMessage *)message {
     [message setString:type forKey:DCMECGProfileParamType];
 }
-+ (void) setTypeCode:(NSString*)typeCode target:(DConnectMessage *)message {
-    [message setString:typeCode forKey:DCMECGProfileParamTypeCode];
++ (void) setTypeCode:(int)typeCode target:(DConnectMessage *)message {
+    [message setInteger:typeCode forKey:DCMECGProfileParamTypeCode];
 }
 + (void) setUnit:(NSString*)unit target:(DConnectMessage *)message {
     [message setString:unit forKey:DCMECGProfileParamUnit];
 }
-+ (void) setUnitCode:(NSString*)unitCode target:(DConnectMessage *)message {
-    [message setString:unitCode forKey:DCMECGProfileParamUnitCode];
++ (void) setUnitCode:(int)unitCode target:(DConnectMessage *)message {
+    [message setInteger:unitCode forKey:DCMECGProfileParamUnitCode];
 }
 + (void) setTimeStamp:(long long)timeStamp target:(DConnectMessage *)message {
     [message setLongLong:timeStamp forKey:DCMECGProfileParamTimeStamp];

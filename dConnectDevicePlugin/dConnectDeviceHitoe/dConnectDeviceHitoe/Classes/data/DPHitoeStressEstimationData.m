@@ -9,5 +9,8 @@
 #import "DPHitoeStressEstimationData.h"
 
 @implementation DPHitoeStressEstimationData
-
+- (id)copyWithZone:(NSZone *)zone {
+    id copiedObject = [[[self class] allocWithZone:zone] init];
+    return copiedObject;
+}
 @end

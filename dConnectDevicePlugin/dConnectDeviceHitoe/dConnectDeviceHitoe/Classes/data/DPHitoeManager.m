@@ -19,15 +19,15 @@
 @interface DPHitoeManager() {
     HitoeSdkAPI *api;
 }
-@property (nonatomic, copy) NSMutableDictionary *hrData;
-@property (nonatomic, copy) NSMutableDictionary *accelData;
-@property (nonatomic, copy) NSMutableDictionary *ecgData;
-@property (nonatomic, copy) NSMutableDictionary *poseEstimationData;
-@property (nonatomic, copy) NSMutableDictionary *stressEstimationData;
-@property (nonatomic, copy) NSMutableDictionary *walkStateData;
-@property (nonatomic, copy) NSMutableArray *listForPosture;
-@property (nonatomic, copy) NSMutableArray *listForWalk;
-@property (nonatomic, copy) NSMutableArray *listForLRBalance;
+@property (nonatomic, strong) NSMutableDictionary *hrData;
+@property (nonatomic, strong) NSMutableDictionary *accelData;
+@property (nonatomic, strong) NSMutableDictionary *ecgData;
+@property (nonatomic, strong) NSMutableDictionary *poseEstimationData;
+@property (nonatomic, strong) NSMutableDictionary *stressEstimationData;
+@property (nonatomic, strong) NSMutableDictionary *walkStateData;
+@property (nonatomic, strong) NSMutableArray *listForPosture;
+@property (nonatomic, strong) NSMutableArray *listForWalk;
+@property (nonatomic, strong) NSMutableArray *listForLRBalance;
 
 @end
 @implementation DPHitoeManager
@@ -96,6 +96,7 @@
     NSLog(@"DataCallback:connectId=%@,dataKey=%@,rawData=%@",connectionId, dataKey, data);
     int pos = [self currentDeviceForConnectionId:connectionId];
     if (pos == -1) {
+        NSLog(@"no connectionId");
         return;
     }
     DPHitoeDevice *receiveDevice = _registeredDevices[pos];
@@ -159,6 +160,8 @@
         [api removeReceiver:connectionId];
         [receiveDevice removeConnectionId:connectionId];
     }
+    
+    [self notifyCallbacksWithDevice:receiveDevice];
 }
 
 #pragma mark - Public method
@@ -309,34 +312,47 @@
 - (int)currentDeviceForConnectionId:(NSString*)connectionId {
     int pos = -1;
     for (int i = 0; i < [_registeredDevices count]; i++) {
-        DPHitoeDevice *hitoe = _registeredDevices[i];
-        if (!hitoe.rawConnectionId) {
-            if ([hitoe.rawConnectionId isEqualToString:connectionId]) {
+        if ([((DPHitoeDevice *)_registeredDevices[i]).rawConnectionId isEqualToString:connectionId]) {
+            pos = i;
+            break;
+        }
+        if ([((DPHitoeDevice *)_registeredDevices[i]).baConnectionId isEqualToString:connectionId]) {
+            pos = i;
+            break;
+        }
+        for (int j = 0; j < [((DPHitoeDevice *)_registeredDevices[i]).exConnectionList count]; j++) {
+            NSString* exConnectionId = ((DPHitoeDevice *)_registeredDevices[i]).exConnectionList[j];
+            if (!exConnectionId) {
+                continue;
+            }
+            if ([exConnectionId isEqualToString:connectionId]) {
                 pos = i;
                 break;
-            }
-            
-        }
-        if (!hitoe.baConnectionId) {
-            if ([hitoe.baConnectionId isEqualToString:connectionId]) {
-                pos = i;
-                break;
-            }
-        }
-        if ([hitoe.exConnectionList count] > 0) {
-            for (int j = 0; j < [hitoe.exConnectionList count]; j++) {
-                NSString* exConnectionId = hitoe.exConnectionList[j];
-                if (!exConnectionId) {
-                    continue;
-                }
-                if ([exConnectionId isEqualToString:connectionId]) {
-                    pos = i;
-                    break;
-                }
             }
         }
     }
     return pos;
+}
+
+- (void)notifyCallbacksWithDevice:(DPHitoeDevice*)device {
+    if (_heartRateReceived) {
+        _heartRateReceived(device, _hrData[device.serviceId]);
+    }
+    if (_ecgReceived) {
+        _ecgReceived(device, _ecgData[device.serviceId]);
+    }
+    if (_stressEstimationReceived) {
+        _stressEstimationReceived(device, _stressEstimationData[device.serviceId]);
+    }
+    if (_poseEstimationReceived) {
+        _poseEstimationReceived(device, _poseEstimationData[device.serviceId]);
+    }
+    if (_walkStateReceived) {
+        _walkStateReceived(device, _walkStateData[device.serviceId]);
+    }
+    if (_accelReceived) {
+        _accelReceived(device, _accelData[device.serviceId]);
+    }
 }
 
 #pragma mark - Notify method
@@ -424,7 +440,6 @@
 
 - (void)notifyAddRawReceiverWithDevice:(DPHitoeDevice*)device
                               responseString:(NSString *)responseString {
-//    [device setAvailableData:responseString];
     [device setRawData];
     NSMutableArray *keyList = device.availableRawDataList;
     NSMutableString *keyStringBuffer = [NSMutableString new];
@@ -482,7 +497,6 @@
     if (pos == -1) {
         return;
     }
-//    [_registeredDevices[pos] setAvailableData:responseString];
     DPHitoeDevice *receiveDevice = _registeredDevices[pos];
     [receiveDevice setBaData];
     
@@ -699,7 +713,7 @@
         currentHeartRate.energyExpended = energy;
         _hrData[device.serviceId] = currentHeartRate;
     } else if (heartRateType == DPHitoeHeartECG) {
-        DPHitoeHeartData *ecg = [DPHitoeRawDataParseUtil parseEnergyExpendedWithRaw:raw];
+        DPHitoeHeartData *ecg = [DPHitoeRawDataParseUtil parseECGWithRaw:raw];
         currentHeartRate.ecg = ecg;
         _ecgData[device.serviceId] = currentHeartRate;
     }

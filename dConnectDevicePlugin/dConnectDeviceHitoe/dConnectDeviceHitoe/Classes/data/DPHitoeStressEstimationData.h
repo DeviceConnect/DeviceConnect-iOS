@@ -9,8 +9,8 @@
 
 #import <Foundation/Foundation.h>
 
-@interface DPHitoeStressEstimationData : NSObject
+@interface DPHitoeStressEstimationData : NSObject<NSCopying>
 @property (nonatomic,assign) double lfhf;
 @property (nonatomic, assign) long timeStamp;
-@property (nonatomic, copy) NSString *timeStampString;
+@property (nonatomic, strong) NSString *timeStampString;
 @end

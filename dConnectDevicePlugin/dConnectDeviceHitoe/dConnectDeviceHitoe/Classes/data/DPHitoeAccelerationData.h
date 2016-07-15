@@ -10,7 +10,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface DPHitoeAccelerationData : NSObject
+@interface DPHitoeAccelerationData : NSObject<NSCopying>
 
 @property (nonatomic, assign) double accelX;
 @property (nonatomic, assign) double accelY;

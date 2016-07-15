@@ -9,12 +9,12 @@
 
 #import <Foundation/Foundation.h>
 
-@interface DPHitoeWalkStateData : NSObject
+@interface DPHitoeWalkStateData : NSObject<NSCopying>
 @property (nonatomic, assign) int step;
-@property (nonatomic, copy) NSString *state;
+@property (nonatomic, strong) NSString *state;
 @property (nonatomic, assign) double speed;
 @property (nonatomic, assign) double distance;
 @property (nonatomic, assign) double balance;
 @property (nonatomic, assign) long timeStamp;
-@property (nonatomic, copy) NSString *timeStampString;
+@property (nonatomic, strong) NSString *timeStampString;
 @end

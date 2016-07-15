@@ -8,17 +8,19 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <DConnectSDK/DConnectSDK.h>
 
-@interface DPHitoeTargetDeviceData : NSObject
-@property (nonatomic, copy) NSString *productName;
-@property (nonatomic, copy) NSString *manufacturerName;
-@property (nonatomic, copy) NSString *modelNumber;
-@property (nonatomic, copy) NSString *firmwareRevision;
-@property (nonatomic, copy) NSString *serialNumber;
-@property (nonatomic, copy) NSString *softwareRevision;
-@property (nonatomic, copy) NSString *hardwareRevision;
-@property (nonatomic, copy) NSString *partNumber;
-@property (nonatomic, copy) NSString *protocolRevision;
-@property (nonatomic, copy) NSString *systemId;
-@property (nonatomic, assign) float batteryLevel;
+@interface DPHitoeTargetDeviceData : NSObject<NSCopying>
+@property (nonatomic, strong) NSString *productName;
+@property (nonatomic, strong) NSString *manufacturerName;
+@property (nonatomic, strong) NSString *modelNumber;
+@property (nonatomic, strong) NSString *firmwareRevision;
+@property (nonatomic, strong) NSString *serialNumber;
+@property (nonatomic, strong) NSString *softwareRevision;
+@property (nonatomic, strong) NSString *hardwareRevision;
+@property (nonatomic, strong) NSString *partNumber;
+@property (nonatomic, strong) NSString *protocolRevision;
+@property (nonatomic, strong) NSString *systemId;
+@property (nonatomic, assign) double batteryLevel;
+- (DConnectMessage*)toDConnectMessage;
 @end

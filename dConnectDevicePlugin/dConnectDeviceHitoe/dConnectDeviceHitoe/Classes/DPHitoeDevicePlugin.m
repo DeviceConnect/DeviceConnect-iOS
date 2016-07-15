@@ -9,6 +9,8 @@
 
 #import "DPHitoeDevicePlugin.h"
 #import "DPHitoeSystemProfile.h"
+#import "DPHitoeServiceDiscoveryProfle.h"
+#import "DPHitoeHealthProfile.h"
 #import "DPHitoeConsts.h"
 // Const.h
 NSString *const DPHitoeBundleName = @"dConnectDeviceHitoe_resources";
@@ -110,9 +112,8 @@ int const DPHitoeDataKeyExtension = 0x04;
         self.pluginName = @"Hitoe (Device Connect Device Plug-in)";
 
 //        [self addProfile:[DPHitoeBatteryProfile new]];
-//        [self addProfile:[DPHitoeFileProfile new]];
-//        [self addProfile:[DPHitoeMediaStreamRecordingProfile new]];
-//        [self addProfile:[DPHitoeServiceDiscoveryProfile new]];
+        [self addProfile:[DPHitoeServiceDiscoveryProfle new]];
+        [self addProfile:[DPHitoeHealthProfile new]];
         [self addProfile:[DPHitoeSystemProfile new]];
         [self addProfile:[DConnectServiceInformationProfile new]];
         

@@ -9,7 +9,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface DPHitoeTempExData : NSObject
-@property (nonatomic, copy) NSString *key;
-@property (nonatomic, copy) NSMutableArray *dataList;
+@interface DPHitoeTempExData : NSObject<NSCopying>
+@property (nonatomic, strong) NSString *key;
+@property (nonatomic, strong) NSMutableArray *dataList;
 @end

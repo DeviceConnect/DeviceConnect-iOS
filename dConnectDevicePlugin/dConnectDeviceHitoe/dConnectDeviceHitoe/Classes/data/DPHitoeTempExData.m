@@ -10,5 +10,8 @@
 #import "DPHitoeTempExData.h"
 
 @implementation DPHitoeTempExData
-
+- (id)copyWithZone:(NSZone *)zone {
+    id copiedObject = [[[self class] allocWithZone:zone] init];
+    return copiedObject;
+}
 @end

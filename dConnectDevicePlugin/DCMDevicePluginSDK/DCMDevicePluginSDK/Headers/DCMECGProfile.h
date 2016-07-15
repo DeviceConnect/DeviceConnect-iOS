@@ -220,7 +220,7 @@ didReceiveGetOnECGRequest:(DConnectRequestMessage *)request
  @param[in] typeCode 健康機器の計測値のタイプコード
  @param[in,out] message 健康機器の計測値のタイプコードを格納するメッセージ
  */
-+ (void) setTypeCode:(NSString*)typeCode target:(DConnectMessage *)message;
++ (void) setTypeCode:(int)typeCode target:(DConnectMessage *)message;
 
 /*!
  @brief メッセージに健康機器の計測値の単位を設定する。
@@ -236,7 +236,7 @@ didReceiveGetOnECGRequest:(DConnectRequestMessage *)request
  @param[in] unitCode 健康機器の計測値の単位コード
  @param[in,out] message 健康機器の計測値の単位コードを格納するメッセージ
  */
-+ (void) setUnitCode:(NSString*)unitCode target:(DConnectMessage *)message;
++ (void) setUnitCode:(int)unitCode target:(DConnectMessage *)message;
 
 /*!
  @brief メッセージに健康機器の計測値のタイムスタンプを設定する。

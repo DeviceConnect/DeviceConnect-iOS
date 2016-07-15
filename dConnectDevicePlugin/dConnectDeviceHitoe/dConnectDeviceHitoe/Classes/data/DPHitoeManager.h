@@ -36,11 +36,12 @@
 #pragma mark - Delegate object
 @property (nonatomic, weak) id<DPHitoeConnectionDelegate> connectionDelegate;
 
-@property (nonatomic, copy) void (^heartRateReceived)(DPHitoeTargetDeviceData *device, DPHitoeHeartRateData *heartRate);
-@property (nonatomic, copy) void (^ecgReceived)(DPHitoeTargetDeviceData *device, DPHitoeHeartRateData *ecg);
-@property (nonatomic, copy) void (^stressEstimationReceived)(DPHitoeTargetDeviceData *device, DPHitoeStressEstimationData *stress);
-@property (nonatomic, copy) void (^poseEstimationReceived)(DPHitoeTargetDeviceData *device, DPHitoePoseEstimationData *pose);
-@property (nonatomic, copy) void (^walkStateReceived)(DPHitoeTargetDeviceData *device, DPHitoeWalkStateData *walk);
+@property (nonatomic, copy) void (^heartRateReceived)(DPHitoeDevice *device, DPHitoeHeartRateData *heartRate);
+@property (nonatomic, copy) void (^ecgReceived)(DPHitoeDevice *device, DPHitoeHeartRateData *ecg);
+@property (nonatomic, copy) void (^stressEstimationReceived)(DPHitoeDevice *device, DPHitoeStressEstimationData *stress);
+@property (nonatomic, copy) void (^poseEstimationReceived)(DPHitoeDevice *device, DPHitoePoseEstimationData *pose);
+@property (nonatomic, copy) void (^walkStateReceived)(DPHitoeDevice *device, DPHitoeWalkStateData *walk);
+@property (nonatomic, copy) void (^accelReceived)(DPHitoeDevice *device, DPHitoeAccelerationData *walk);
 
 #pragma mark - store data
 @property (nonatomic, copy) NSMutableArray *registeredDevices;

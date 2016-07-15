@@ -154,14 +154,14 @@ NSString *const DCMHealthProfileParamBatteryLevel = @"batteryLevel";
 + (void) setType:(NSString*)type target:(DConnectMessage *)message {
     [message setString:type forKey:DCMHealthProfileParamType];
 }
-+ (void) setTypeCode:(NSString*)typeCode target:(DConnectMessage *)message {
-    [message setString:typeCode forKey:DCMHealthProfileParamTypeCode];
++ (void) setTypeCode:(int)typeCode target:(DConnectMessage *)message {
+    [message setInteger:typeCode forKey:DCMHealthProfileParamTypeCode];
 }
 + (void) setUnit:(NSString*)unit target:(DConnectMessage *)message {
     [message setString:unit forKey:DCMHealthProfileParamUnit];
 }
-+ (void) setUnitCode:(NSString*)unitCode target:(DConnectMessage *)message {
-    [message setString:unitCode forKey:DCMHealthProfileParamUnitCode];
++ (void) setUnitCode:(int)unitCode target:(DConnectMessage *)message {
+    [message setInteger:unitCode forKey:DCMHealthProfileParamUnitCode];
 }
 + (void) setTimeStamp:(long long)timeStamp target:(DConnectMessage *)message {
     [message setLongLong:timeStamp forKey:DCMHealthProfileParamTimeStamp];
@@ -190,14 +190,17 @@ NSString *const DCMHealthProfileParamBatteryLevel = @"batteryLevel";
 + (void) setHardwareRevision:(NSString*)hardwareRevision target:(DConnectMessage *)message {
     [message setString:hardwareRevision forKey:DCMHealthProfileParamHardwareRevision];
 }
++ (void) setProtocolRevision:(NSString*)protocolRevision target:(DConnectMessage *)message {
+    [message setString:protocolRevision forKey:DCMHealthProfileParamProtocolRevision];
+}
 + (void) setPartNumber:(NSString*)partNumber target:(DConnectMessage *)message {
     [message setString:partNumber forKey:DCMHealthProfileParamPartNumber];
 }
 + (void) setSystemId:(NSString*)systemId target:(DConnectMessage *)message {
     [message setString:systemId forKey:DCMHealthProfileParamSystemId];
 }
-+ (void) setBatteryLevel:(NSString*)batteryLevel target:(DConnectMessage *)message {
-    [message setString:batteryLevel forKey:DCMHealthProfileParamBatteryLevel];
++ (void) setBatteryLevel:(double)batteryLevel target:(DConnectMessage *)message {
+    [message setDouble:batteryLevel forKey:DCMHealthProfileParamBatteryLevel];
 }
 
 #pragma mark - Private Methods

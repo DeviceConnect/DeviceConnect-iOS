@@ -12,10 +12,10 @@
 #import "DPHitoeTargetDeviceData.h"
 #import "DPHitoeHeartData.h"
 
-@interface DPHitoeHeartRateData : NSObject
-@property (nonatomic, copy) DPHitoeTargetDeviceData *target;
-@property (nonatomic, copy) DPHitoeHeartData *heartRate;
-@property (nonatomic, copy) DPHitoeHeartData *rrinterval;
-@property (nonatomic, copy) DPHitoeHeartData *energyExpended;
-@property (nonatomic, copy) DPHitoeHeartData *ecg;
+@interface DPHitoeHeartRateData : NSObject<NSCopying>
+@property (nonatomic, strong) DPHitoeTargetDeviceData *target;
+@property (nonatomic, strong) DPHitoeHeartData *heartRate;
+@property (nonatomic, strong) DPHitoeHeartData *rrinterval;
+@property (nonatomic, strong) DPHitoeHeartData *energyExpended;
+@property (nonatomic, strong) DPHitoeHeartData *ecg;
 @end

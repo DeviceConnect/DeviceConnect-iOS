@@ -63,13 +63,11 @@
 
 
 - (void)setConnectionId:(NSString *)connectionId {
-    if ([connectionId hasPrefix:DPHitoeRawDataPrefix]) {
-        
+    if ([connectionId hasPrefix:DPHitoeRawConnectionPrefix]) {
         _rawConnectionId = connectionId;
-    } else if ([connectionId hasPrefix:DPHitoeBaDataPrefix]) {
-        
+    } else if ([connectionId hasPrefix:DPHitoeBaConnectionPrefix]) {
         _baConnectionId = connectionId;
-    } else if ([connectionId hasPrefix:DPHitoeExDataPrefix]) {
+    } else if ([connectionId hasPrefix:DPHitoeExConnectionPrefix]) {
         [_exConnectionList addObject:connectionId];
     }
 }
@@ -114,4 +112,8 @@
     [_availableExDataList addObject:@"ex.lr_balance"];
 }
 
+- (id)copyWithZone:(NSZone *)zone {
+    id copiedObject = [[[self class] allocWithZone:zone] init];
+    return copiedObject;
+}
 @end

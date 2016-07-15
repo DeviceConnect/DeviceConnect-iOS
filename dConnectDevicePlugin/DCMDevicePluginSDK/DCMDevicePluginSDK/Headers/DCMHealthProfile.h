@@ -325,7 +325,7 @@ didReceiveDeleteHeartRequest:(DConnectRequestMessage *)request
  @param[in] typeCode 健康機器の計測値のタイプコード
  @param[in,out] message 健康機器の計測値のタイプコードを格納するメッセージ
  */
-+ (void) setTypeCode:(NSString*)typeCode target:(DConnectMessage *)message;
++ (void) setTypeCode:(int)typeCode target:(DConnectMessage *)message;
 
 /*!
  @brief メッセージに健康機器の計測値の単位を設定する。
@@ -341,7 +341,7 @@ didReceiveDeleteHeartRequest:(DConnectRequestMessage *)request
  @param[in] unitCode 健康機器の計測値の単位コード
  @param[in,out] message 健康機器の計測値の単位コードを格納するメッセージ
  */
-+ (void) setUnitCode:(NSString*)unitCode target:(DConnectMessage *)message;
++ (void) setUnitCode:(int)unitCode target:(DConnectMessage *)message;
 
 /*!
  @brief メッセージに健康機器の計測値のタイムスタンプを設定する。
@@ -428,6 +428,13 @@ didReceiveDeleteHeartRequest:(DConnectRequestMessage *)request
 + (void) setPartNumber:(NSString*)partNumber target:(DConnectMessage *)message;
 
 /*!
+ @brief メッセージに健康機器のProtocolRevisionを設定する。
+ 
+ @param[in] protocolRevision 健康機器のProtocolRevision
+ @param[in,out] message 健康機器のProtocolRevisionを格納するメッセージ
+ */
++ (void) setProtocolRevision:(NSString*)protocolRevision target:(DConnectMessage *)message;
+/*!
  @brief メッセージに健康機器のSystemIdを設定する。
  
  @param[in] systemId 健康機器のSystemId
@@ -441,7 +448,7 @@ didReceiveDeleteHeartRequest:(DConnectRequestMessage *)request
  @param[in] batteryLevel 健康機器のBatteryLevel
  @param[in,out] message 健康機器のBatteryLevelを格納するメッセージ
  */
-+ (void) setBatteryLevel:(NSString*)batteryLevel target:(DConnectMessage *)message;
++ (void) setBatteryLevel:(double)batteryLevel target:(DConnectMessage *)message;
 
 
 

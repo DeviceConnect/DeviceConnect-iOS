@@ -9,23 +9,23 @@
 
 #import <Foundation/Foundation.h>
 
-@interface DPHitoeDevice : NSObject
+@interface DPHitoeDevice : NSObject<NSCopying>
 
-@property (nonatomic, copy) NSString *type;
-@property (nonatomic, copy) NSString *name;
-@property (nonatomic, copy) NSString *serviceId;
-@property (nonatomic, copy) NSString *connectMode;
-@property (nonatomic, copy) NSString *pinCode;
+@property (nonatomic, strong) NSString *type;
+@property (nonatomic, strong) NSString *name;
+@property (nonatomic, strong) NSString *serviceId;
+@property (nonatomic, strong) NSString *connectMode;
+@property (nonatomic, strong) NSString *pinCode;
 @property (nonatomic, assign, getter=isRegisterFlag) BOOL registerFlag;
-@property (nonatomic, copy) NSString *memorySetting;
-@property (nonatomic, copy) NSMutableArray *availableRawDataList;
-@property (nonatomic, copy) NSMutableArray *availableBaDataList;
-@property (nonatomic, copy) NSMutableArray *availableExDataList;
-@property (nonatomic, copy) NSString *sessionId;
-@property (nonatomic, copy) NSString *rawConnectionId;
-@property (nonatomic, copy) NSString *baConnectionId;
-@property (nonatomic, copy) NSString *exConnectionId;
-@property (nonatomic, copy) NSMutableArray *exConnectionList;
+@property (nonatomic, strong) NSString *memorySetting;
+@property (nonatomic, strong) NSMutableArray *availableRawDataList;
+@property (nonatomic, strong) NSMutableArray *availableBaDataList;
+@property (nonatomic, strong) NSMutableArray *availableExDataList;
+@property (nonatomic, strong) NSString *sessionId;
+@property (nonatomic, strong) NSString *rawConnectionId;
+@property (nonatomic, strong) NSString *baConnectionId;
+@property (nonatomic, strong) NSString *exConnectionId;
+@property (nonatomic, strong) NSMutableArray *exConnectionList;
 @property (nonatomic, assign) int responseId;
 
 - (id) initWithInfoString:(NSString *)info;

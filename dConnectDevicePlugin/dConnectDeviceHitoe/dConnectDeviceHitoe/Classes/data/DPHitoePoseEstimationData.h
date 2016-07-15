@@ -9,8 +9,8 @@
 
 #import <Foundation/Foundation.h>
 
-@interface DPHitoePoseEstimationData : NSObject
-@property (nonatomic, copy) NSString *state;
+@interface DPHitoePoseEstimationData : NSObject<NSCopying>
+@property (nonatomic, strong) NSString *state;
 @property (nonatomic, assign) long timeStamp;
-@property (nonatomic, copy) NSString *timeStampString;
+@property (nonatomic, strong) NSString *timeStampString;
 @end
