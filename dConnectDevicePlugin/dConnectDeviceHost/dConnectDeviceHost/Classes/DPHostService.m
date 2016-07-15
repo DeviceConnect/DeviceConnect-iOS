@@ -8,6 +8,9 @@
 //
 
 #import "DPHostService.h"
+#import "DPHostDevicePlugin.h"
+
+static NSString *const ServiceDiscoveryServiceId = @"host";
 
 @implementation DPHostService
 
@@ -18,7 +21,8 @@
         NSString *name = [NSString stringWithFormat:@"Host: %@", device.name];
         NSString *config = [NSString stringWithFormat:@"{\"OS\":\"%@ %@\"}",
                             device.systemName, device.systemVersion];
-        [self setName: SERVICE_NAME];
+        [self setId: ServiceDiscoveryServiceId];
+        [self setName: name];
         [self setOnline: YES];
         [self setConfig:config];
         

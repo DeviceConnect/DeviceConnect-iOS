@@ -32,7 +32,6 @@
     if (self) {
         self.fileMgr = [DConnectFileManager fileManagerForPlugin:self];
         self.pluginName = @"Host (Device Connect Device Plug-in)";
-        self.mServiceProvider = [[DConnectServiceManager alloc] init];
         
         // サービス追加
         DConnectService *hostService = [[DConnectService alloc] initWithServiceId: SERVICE_ID];

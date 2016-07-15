@@ -57,7 +57,6 @@
 		97FE19FF192B2FB400808FA5 /* libdConnectDeviceHost.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 97FE19E7192B2FB400808FA5 /* libdConnectDeviceHost.a */; };
 		97FE1A05192B2FB500808FA5 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 97FE1A03192B2FB500808FA5 /* InfoPlist.strings */; };
 		97FE1A07192B2FB500808FA5 /* dConnectDeviceHostTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 97FE1A06192B2FB500808FA5 /* dConnectDeviceHostTests.m */; };
-		97FE1A1E192B5ACD00808FA5 /* DPHostServiceDiscoveryProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 97FE1A1D192B5ACD00808FA5 /* DPHostServiceDiscoveryProfile.m */; };
 		97FE1A21192B6DA400808FA5 /* DPHostSystemProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 97FE1A20192B6DA400808FA5 /* DPHostSystemProfile.m */; };
 		AB0B13271A80A12300D655D5 /* DPHostFileDescriptorContext.m in Sources */ = {isa = PBXBuildFile; fileRef = AB0B13241A80A12300D655D5 /* DPHostFileDescriptorContext.m */; };
 		AB0B13281A80A12300D655D5 /* DPHostFileDescriptorProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = AB0B13261A80A12300D655D5 /* DPHostFileDescriptorProfile.m */; };
@@ -136,8 +135,6 @@
 		97FE1A02192B2FB400808FA5 /* dConnectDeviceHostTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "dConnectDeviceHostTests-Info.plist"; sourceTree = "<group>"; };
 		97FE1A04192B2FB500808FA5 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		97FE1A06192B2FB500808FA5 /* dConnectDeviceHostTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = dConnectDeviceHostTests.m; sourceTree = "<group>"; };
-		97FE1A1C192B5ACD00808FA5 /* DPHostServiceDiscoveryProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHostServiceDiscoveryProfile.h; sourceTree = "<group>"; };
-		97FE1A1D192B5ACD00808FA5 /* DPHostServiceDiscoveryProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHostServiceDiscoveryProfile.m; sourceTree = "<group>"; };
 		97FE1A1F192B6DA400808FA5 /* DPHostSystemProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHostSystemProfile.h; sourceTree = "<group>"; };
 		97FE1A20192B6DA400808FA5 /* DPHostSystemProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHostSystemProfile.m; sourceTree = "<group>"; };
 		AB0B13231A80A12300D655D5 /* DPHostFileDescriptorContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHostFileDescriptorContext.h; sourceTree = "<group>"; };
@@ -361,8 +358,6 @@
 				25FF1DB0196A89A700EA7F72 /* DPHostFileProfile.m */,
 				25F0BC31199310C10095C333 /* DPHostMediaPlayer */,
 				25B42C6219865EC400B65E83 /* DPHostMediaStreamRecording */,
-				97FE1A1C192B5ACD00808FA5 /* DPHostServiceDiscoveryProfile.h */,
-				97FE1A1D192B5ACD00808FA5 /* DPHostServiceDiscoveryProfile.m */,
 				25FF1DB5196A9B8000EA7F72 /* DPHostNotificationProfile.h */,
 				25FF1DB6196A9B8000EA7F72 /* DPHostNotificationProfile.m */,
 				252F870119736DEB00142BAE /* DPHostPhoneProfile.h */,
@@ -617,7 +612,6 @@
 				25B42C6519865F1000B65E83 /* DPHostRecorderContext.m in Sources */,
 				25FF1DB4196A89AD00EA7F72 /* DPHostUtils.m in Sources */,
 				25FF0C0E196FBECF00E8C7C3 /* DPHostProximityProfile.m in Sources */,
-				97FE1A1E192B5ACD00808FA5 /* DPHostServiceDiscoveryProfile.m in Sources */,
 				25DF80D9196CE622003F6FF3 /* DPHostVibrationProfile.m in Sources */,
 				D699974B1A7F264900EF934F /* DPHostCanvasDrawImage.m in Sources */,
 				257FC23719BAAF5200358536 /* DPHostReachability.m in Sources */,
