@@ -53,11 +53,6 @@
     [self presentViewController:nav animated:YES completion:nil];
 }
 
-- (void)openWebSocketList
-{
-
-}
-
 //--------------------------------------------------------------//
 #pragma mark - view cycle
 //--------------------------------------------------------------//
@@ -112,7 +107,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 60;
+    return 50;
 }
 
 /**
@@ -139,7 +134,6 @@
             switch (type) {
                 case SecurityCellTypeDeleteAccessToken:
                 case SecurityCellTypeOriginWhitelist:
-                case SecurityCellTypeWebSocket:
                     return [self configureDetailCell:tableView atIndexPath: indexPath];
                     break;
                 case SecurityCellTypeOriginBlock:
