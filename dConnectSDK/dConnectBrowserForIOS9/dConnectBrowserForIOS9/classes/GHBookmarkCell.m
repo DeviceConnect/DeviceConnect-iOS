@@ -36,7 +36,11 @@
 
     }else if ([page.type isEqualToString:TYPE_BOOKMARK]){
         //ブックマーク
-        self.imageView.image = [UIImage imageNamed:@"bookmark"];
+        if (page.priority.integerValue == DeviceWebAPI_priority) {
+            self.imageView.image = [UIImage imageNamed:@"deviceWebAPI_icon"];
+        } else {
+            self.imageView.image = [UIImage imageNamed:@"bookmark"];
+        }
 
         //編集中のアクセサリー
         self.editingAccessoryType = UITableViewCellAccessoryDisclosureIndicator;

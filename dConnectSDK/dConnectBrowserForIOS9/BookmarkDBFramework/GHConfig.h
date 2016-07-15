@@ -40,4 +40,5 @@
 #define CLEAR_HISTORY @"clear_history"
 
 #define PRIORITY 100
+#define DeviceWebAPI_priority 3
 @end
