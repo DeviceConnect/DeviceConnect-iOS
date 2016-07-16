@@ -74,7 +74,7 @@ typedef void (^DPThetaOnStatusChangeCallback)(PtpIpObjectInfo *object, NSString 
  @brief ServiceProviderを登録する。
  @param[in] serviceProvider ServiceProvider
  */
-- (void)setServceProvider: (DConnectServiceProvider *) serviceProvider;
+- (void)setServiceProvider: (DConnectServiceProvider *) serviceProvider;
 
 /*!
  @brief Thetaと接続する。

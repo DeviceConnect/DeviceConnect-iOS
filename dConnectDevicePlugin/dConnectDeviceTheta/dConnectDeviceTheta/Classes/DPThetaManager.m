@@ -73,7 +73,7 @@ static int const _timeout = 500;
     return self;
 }
 
-- (void)setServceProvider: (DConnectServiceProvider *) serviceProvider {
+- (void)setServiceProvider: (DConnectServiceProvider *) serviceProvider {
     @synchronized(self) {
         self.mServiceProvider = serviceProvider;
     }
@@ -630,6 +630,7 @@ static int const _timeout = 500;
 
 // デバイス管理情報更新
 - (void) updateManageServices {
+
     @synchronized(self) {
         
         // ServiceProvider未登録なら処理しない
