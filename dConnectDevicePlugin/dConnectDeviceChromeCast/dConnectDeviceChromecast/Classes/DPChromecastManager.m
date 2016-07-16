@@ -11,6 +11,8 @@
 #import <GoogleCast/GoogleCast.h>
 #import "GCIPUtil.h"
 #import "HTTPServer.h"
+#import <DConnectSDK/DConnectService.h>
+#import "DPChromecastService.h"
 
 static NSString *const kReceiverAppID = @"[YOUR APPLICATION ID]";
 static NSString *const kReceiverNamespace
@@ -77,6 +79,53 @@ static const NSTimeInterval DPSemaphoreTimeout = 20.0;
 	}
 	return self;
 }
+
+- (void) setServiceProvider: (DConnectServiceProvider *) serviceProvider {
+    _mServiceProvider = serviceProvider;
+}
+
+// デバイス管理情報更新
+- (void) updateManageServices {
+    @synchronized(self) {
+        
+        // ServiceProvider未登録なら処理しない
+        if (!_mServiceProvider) {
+            return;
+        }
+        
+        NSArray *deviceList = [self deviceList];
+        
+        // ServiceProviderに存在するサービスが検出されなかったならオフラインにする
+        for (DConnectService *service in [_mServiceProvider services]) {
+            NSString *serviceId = [service serviceId];
+            
+            BOOL isFindDevice = NO;
+            for (NSDictionary *device in deviceList) {
+                NSString *deviceServiceId = device[@"id"];
+                if (deviceServiceId && [serviceId localizedCaseInsensitiveCompare: deviceServiceId] == NSOrderedSame) {
+                    isFindDevice = YES;
+                    break;
+                }
+            }
+            
+            if (!isFindDevice) {
+                [service setOnline: NO];
+            }
+        }
+        
+        // サービス未登録なら登録する
+        for (NSDictionary *device in deviceList) {
+            NSString *serviceId = device[@"id"];
+            NSString *deviceName = device[@"name"];
+            if (![_mServiceProvider service: serviceId]) {
+                DPChromecastService *service = [[DPChromecastService alloc] initWithServiceId:serviceId
+                                                                                   deviceName:deviceName];
+                [_mServiceProvider addService: service];
+            }
+        }
+    }
+}
+
 
 #pragma mark - GCKLoggerDelegate
 
@@ -184,6 +233,9 @@ static const NSTimeInterval DPSemaphoreTimeout = 20.0;
                            clientPackageName:info[@"CFBundleIdentifier"]];
         data.deviceManager.delegate = self;
         [data.deviceManager connect];
+        
+        // デバイス管理情報更新
+        [self updateManageServices];
     });
 }
 
@@ -219,6 +271,9 @@ static const NSTimeInterval DPSemaphoreTimeout = 20.0;
 		[_dataDict removeObjectForKey:deviceID];
 	}
     [self stopScan];
+    
+    // デバイス管理情報更新
+    [self updateManageServices];
 }
 
 // テキストの送信
@@ -404,6 +459,8 @@ static const NSTimeInterval DPSemaphoreTimeout = 20.0;
         }
     }
 }
+
+
 
 #pragma mark - GCKDeviceManagerDelegate
 

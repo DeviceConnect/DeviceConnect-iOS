@@ -9,10 +9,6 @@
 
 #import "DPChromecastDevicePlugin.h"
 #import "DPChromecastSystemProfile.h"
-#import "DPChromecastServiceDiscoveryProfile.h"
-#import "DPChromecastNotificationProfile.h"
-#import "DPChromecastMediaPlayerProfile.h"
-#import "DPChromecastCanvasProfile.h"
 #import "DPChromecastManager.h"
 
 
@@ -31,12 +27,8 @@
                   controllerWithClass:key]];
 
         // プロファイルを追加
-        [self addProfile:[DPChromecastServiceDiscoveryProfile new]];
         [self addProfile:[DPChromecastSystemProfile new]];
-        [self addProfile:[DPChromecastNotificationProfile new]];
-        [self addProfile:[DPChromecastMediaPlayerProfile new]];
-        [self addProfile:[DConnectServiceInformationProfile new]];
-        [self addProfile:[DPChromecastCanvasProfile new]];
+
         __weak typeof(self) _self = self;
         dispatch_async(dispatch_get_main_queue(), ^{
             NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];

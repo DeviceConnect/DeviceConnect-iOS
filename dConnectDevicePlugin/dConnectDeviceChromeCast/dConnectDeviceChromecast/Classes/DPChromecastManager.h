@@ -8,8 +8,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <DConnectSDK/DConnectServiceProvider.h>
 
 @interface DPChromecastManager : NSObject
+
+@property (nonatomic) DConnectServiceProvider *mServiceProvider;
 
 // 接続可能なデバイスリスト取得
 @property (nonatomic, readonly) NSArray *deviceList;
@@ -19,6 +22,8 @@ typedef void (^DPChromeCastCallback)(BOOL success, NSString *error);
 
 // 共有インスタンス
 + (instancetype)sharedManager;
+
+- (void) setServiceProvider: (DConnectServiceProvider *) serviceProvider;
 
 // スキャン開始
 - (void)startScan;
