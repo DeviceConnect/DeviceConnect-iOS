@@ -9,7 +9,6 @@
 
 #import "DPThetaDevicePlugin.h"
 #import "DPThetaBatteryProfile.h"
-#import "DPThetaServiceDiscoveryProfile.h"
 #import "DPThetaManager.h"
 
 @interface DPThetaBatteryProfile ()

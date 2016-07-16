@@ -11,10 +11,12 @@
 #import "DPThetaDevicePlugin.h"
 #import "PtpConnection.h"
 #import "PtpLogging.h"
+#import "DPThetaService.h"
 
 static NSString * const DPThetaRegexDecimalPoint = @"^[-+]?([0-9]*)?(\\.*)?([0-9]*)?$";
 static NSString * const DPThetaRegexDigit = @"^([0-9]*)?$";
 static NSString * const DPThetaRegexCSV = @"^([^,]*,)+";
+
 
 @interface DPThetaManager()<PtpIpEventListener>
 {
@@ -71,6 +73,11 @@ static int const _timeout = 500;
     return self;
 }
 
+- (void)setServceProvider: (DConnectServiceProvider *) serviceProvider {
+    @synchronized(self) {
+        self.mServiceProvider = serviceProvider;
+    }
+}
 
 #pragma mark - PtpIpEventListener delegates.
 
@@ -101,6 +108,8 @@ static int const _timeout = 500;
                     if (callback) {
                         callback(objectInfo, @"stop", nil);
                     }
+                    // デバイス管理情報更新
+                    [self updateManageServices];
                 }
             }
             
@@ -617,6 +626,46 @@ static int const _timeout = 500;
         return param;
     }
     return uri;
+}
+
+// デバイス管理情報更新
+- (void) updateManageServices {
+    @synchronized(self) {
+        
+        // ServiceProvider未登録なら処理しない
+        if (!self.mServiceProvider) {
+            return;
+        }
+        
+        // デバイス接続中
+        BOOL isConnected = [self connect];
+        NSString* serial = [self getSerialNo];
+        if (isConnected && serial) {
+            
+            // サービス未登録なら登録する
+            if (![self.mServiceProvider service: DPThetaDeviceServiceId]) {
+                DPThetaService *service = [[DPThetaService alloc] initWithServiceId: DPThetaDeviceServiceId];
+                [service setName:serial];
+                [service setOnline:YES];
+                [self.mServiceProvider addService: service];
+            }
+        } else {
+            // 切断中でサービスが登録済ならオフラインにする
+            DConnectService *service = [self.mServiceProvider service: DPThetaDeviceServiceId];
+            if (service) {
+                [service setOnline:NO];
+            }
+        }
+
+        // ROI接続中(常時)
+        // サービス未登録なら登録する
+        if (![self.mServiceProvider service: DPThetaRoiServiceId]) {
+            DPThetaService *service = [[DPThetaService alloc] initWithServiceId: DPThetaRoiServiceId];
+            [service setName: @"ROI Image Service"];
+            [service setOnline:YES];
+            [self.mServiceProvider addService: service];
+        }
+    }
 }
 
 @end

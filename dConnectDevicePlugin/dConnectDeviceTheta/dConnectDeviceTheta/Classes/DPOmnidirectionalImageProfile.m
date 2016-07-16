@@ -38,6 +38,7 @@ NSString *const DPOmnidirectionalImageProfileParamURI = @"uri";
     return DPOmnidirectionalImageProfileName;
 }
 
+/*
 - (BOOL) didReceiveGetRequest:(DConnectRequestMessage *)request
                      response:(DConnectResponseMessage *)response {
     BOOL send = YES;
@@ -76,10 +77,12 @@ NSString *const DPOmnidirectionalImageProfileParamURI = @"uri";
     
     return send;
 }
+*/
 
 /*
  PUTリクエストを受け付ける。
  */
+/*
 - (BOOL) didReceivePutRequest:(DConnectRequestMessage *)request
                      response:(DConnectResponseMessage *)response {
     BOOL send = YES;
@@ -130,11 +133,12 @@ NSString *const DPOmnidirectionalImageProfileParamURI = @"uri";
     
     return send;
 }
-
+*/
 
 /**
  DELETEリクエストを受け付ける。
  */
+/*
 - (BOOL) didReceiveDeleteRequest:(DConnectRequestMessage *)request
                         response:(DConnectResponseMessage *)response {
     BOOL send = YES;
@@ -174,7 +178,7 @@ NSString *const DPOmnidirectionalImageProfileParamURI = @"uri";
     
     return send;
 }
-
+*/
 
 
 #pragma mark - Private Methods
