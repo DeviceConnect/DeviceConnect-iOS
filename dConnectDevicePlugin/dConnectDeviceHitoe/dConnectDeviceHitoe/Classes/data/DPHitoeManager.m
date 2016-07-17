@@ -53,6 +53,9 @@
         self.poseEstimationData = [NSMutableDictionary dictionary];
         self.stressEstimationData = [NSMutableDictionary dictionary];
         self.walkStateData = [NSMutableDictionary dictionary];
+        self.listForPosture = [NSMutableArray array];
+        self.listForWalk = [NSMutableArray array];
+        self.listForLRBalance = [NSMutableArray array];
 
         api = [HitoeSdkAPI sharedManager];
         [api setAPIDelegate:self];
@@ -96,7 +99,6 @@
     NSLog(@"DataCallback:connectId=%@,dataKey=%@,rawData=%@",connectionId, dataKey, data);
     int pos = [self currentDeviceForConnectionId:connectionId];
     if (pos == -1) {
-        NSLog(@"no connectionId");
         return;
     }
     DPHitoeDevice *receiveDevice = _registeredDevices[pos];
@@ -119,20 +121,8 @@
         [self extractBatteryWithRaw:data device:receiveDevice];
     } else if([dataKey isEqualToString:@"raw.hr"]) {
         [self extractHealthWithHeartRateType:DPHitoeHeartRate raw:data device:receiveDevice];
-    } else if([dataKey isEqualToString:@"raw.saved_hr"]) {
-        
-    } else if([dataKey isEqualToString:@"raw.saved_rri"]) {
-        
-    } else if([dataKey isEqualToString:@"ba.extracted_rri"]) {
-        
-    } else if([dataKey isEqualToString:@"ba.cleaned_rri"]) {
-        
-    } else if([dataKey isEqualToString:@"ba.interpolated_rri"]) {
-        
     } else if([dataKey isEqualToString:@"ba.freq_domain"]) {
         [self parseFreqDomainWithData:data device:receiveDevice];
-    } else if([dataKey isEqualToString:@"ba.time_domain"]) {
-        
     } else if([dataKey isEqualToString:@"ex.stress"]) {
         DPHitoeStressEstimationData *stress = [DPHitoeRawDataParseUtil parseStressEstimationWithRaw:data];
         _stressEstimationData[receiveDevice.serviceId] = stress;
@@ -155,7 +145,7 @@
         _walkStateData[receiveDevice.serviceId] = walk;
     }
     
-    if ([dataKey isEqualToString:DPHitoeExConnectionPrefix]) {
+    if ([dataKey hasPrefix:DPHitoeExConnectionPrefix]) {
         // 拡張分析はコネクションを破棄する
         [api removeReceiver:connectionId];
         [receiveDevice removeConnectionId:connectionId];
@@ -495,6 +485,7 @@
     }
     int pos = [self currentPosForResponseId:responseId];
     if (pos == -1) {
+
         return;
     }
     DPHitoeDevice *receiveDevice = _registeredDevices[pos];
@@ -522,12 +513,12 @@
                 [paramStringBuffer appendFormat:@"%d", DPHitoeBaSamplingInterval];
             }
             if (paramStringBuffer.length > 0 && [DPHitoeStringUtil lastIndexOf:keyStringBuffer c:DPHitoeBR] != keyStringBuffer.length - 1) {
-                [keyStringBuffer appendString:DPHitoeBR];
+                [paramStringBuffer appendString:DPHitoeBR];
             }
             [paramStringBuffer appendString:@"ba.ecg_threshhold="];
             [paramStringBuffer appendFormat:@"%d", DPHitoeBaECGThreshold];
             if (paramStringBuffer.length > 0 && [DPHitoeStringUtil lastIndexOf:keyStringBuffer c:DPHitoeBR] != keyStringBuffer.length - 1) {
-                [keyStringBuffer appendString:DPHitoeBR];
+                [paramStringBuffer appendString:DPHitoeBR];
             }
             [paramStringBuffer appendString:@"ba.ecg_skip_count="];
             [paramStringBuffer appendFormat:@"%d", DPHitoeBaSkipCount];
@@ -535,28 +526,28 @@
             
             if ([paramStringBuffer rangeOfString:@"ba.sampling_interval"].location == NSNotFound) {
                 if (paramStringBuffer.length > 0 && [DPHitoeStringUtil lastIndexOf:keyStringBuffer c:DPHitoeBR] != keyStringBuffer.length - 1) {
-                    [keyStringBuffer appendString:DPHitoeBR];
+                    [paramStringBuffer appendString:DPHitoeBR];
                 }
                 [paramStringBuffer appendString:@"ba.sampling_interval="];
                 [paramStringBuffer appendFormat:@"%d", DPHitoeBaSamplingInterval];
             }
             if (paramStringBuffer.length > 0 && [DPHitoeStringUtil lastIndexOf:keyStringBuffer c:DPHitoeBR] != keyStringBuffer.length - 1) {
-                [keyStringBuffer appendString:DPHitoeBR];
+                [paramStringBuffer appendString:DPHitoeBR];
             }
             [paramStringBuffer appendString:@"ba.rri_min="];
             [paramStringBuffer appendFormat:@"%d", DPHitoeBaRRIMin];
             if (paramStringBuffer.length > 0 && [DPHitoeStringUtil lastIndexOf:keyStringBuffer c:DPHitoeBR] != keyStringBuffer.length - 1) {
-                [keyStringBuffer appendString:DPHitoeBR];
+                [paramStringBuffer appendString:DPHitoeBR];
             }
             [paramStringBuffer appendString:@"ba.rri_max="];
             [paramStringBuffer appendFormat:@"%d", DPHitoeBaRRIMax];
             if (paramStringBuffer.length > 0 && [DPHitoeStringUtil lastIndexOf:keyStringBuffer c:DPHitoeBR] != keyStringBuffer.length - 1) {
-                [keyStringBuffer appendString:DPHitoeBR];
+                [paramStringBuffer appendString:DPHitoeBR];
             }
             [paramStringBuffer appendString:@"ba.sample_count="];
             [paramStringBuffer appendFormat:@"%d", DPHitoeBaSampleCount];
             if (paramStringBuffer.length > 0 && [DPHitoeStringUtil lastIndexOf:keyStringBuffer c:DPHitoeBR] != keyStringBuffer.length - 1) {
-                [keyStringBuffer appendString:DPHitoeBR];
+                [paramStringBuffer appendString:DPHitoeBR];
             }
             [paramStringBuffer appendString:@"ba.rri_input="];
             [paramStringBuffer appendFormat:@"%@", DPHitoeBaRRIInput];
@@ -564,21 +555,21 @@
             
             if ([paramStringBuffer rangeOfString:@"ba.freq_sampling_interval"].location == NSNotFound) {
                 if (paramStringBuffer.length > 0 && [DPHitoeStringUtil lastIndexOf:keyStringBuffer c:DPHitoeBR] != keyStringBuffer.length - 1) {
-                    [keyStringBuffer appendString:DPHitoeBR];
+                    [paramStringBuffer appendString:DPHitoeBR];
                 }
                 [paramStringBuffer appendString:@"ba.freq_sampling_interval="];
                 [paramStringBuffer appendFormat:@"%d", DPHitoeBaFreqSamplingInterval];
             }
             if ([paramStringBuffer rangeOfString:@"ba.freq_sampling_window"].location == NSNotFound) {
                 if (paramStringBuffer.length > 0 && [DPHitoeStringUtil lastIndexOf:keyStringBuffer c:DPHitoeBR] != keyStringBuffer.length - 1) {
-                    [keyStringBuffer appendString:DPHitoeBR];
+                    [paramStringBuffer appendString:DPHitoeBR];
                 }
                 [paramStringBuffer appendString:@"ba.freq_sampling_window="];
                 [paramStringBuffer appendFormat:@"%d", DPHitoeBaFreqSamplingWindow];
             }
             if ([paramStringBuffer rangeOfString:@"ba.rri_sampling_rate"].location == NSNotFound) {
                 if (paramStringBuffer.length > 0 && [DPHitoeStringUtil lastIndexOf:keyStringBuffer c:DPHitoeBR] != keyStringBuffer.length - 1) {
-                    [keyStringBuffer appendString:DPHitoeBR];
+                    [paramStringBuffer appendString:DPHitoeBR];
                 }
                 [paramStringBuffer appendString:@"ba.rri_sampling_rate="];
                 [paramStringBuffer appendFormat:@"%d", DPHitoeBaRRISamplingRate];
@@ -587,21 +578,21 @@
             
             if ([paramStringBuffer rangeOfString:@"ba.freq_sampling_interval"].location == NSNotFound) {
                 if (paramStringBuffer.length > 0 && [DPHitoeStringUtil lastIndexOf:keyStringBuffer c:DPHitoeBR] != keyStringBuffer.length - 1) {
-                    [keyStringBuffer appendString:DPHitoeBR];
+                    [paramStringBuffer appendString:DPHitoeBR];
                 }
                 [paramStringBuffer appendString:@"ba.freq_sampling_interval="];
                 [paramStringBuffer appendFormat:@"%d", DPHitoeBaFreqSamplingInterval];
             }
             if ([paramStringBuffer rangeOfString:@"ba.freq_sampling_window"].location == NSNotFound) {
                 if (paramStringBuffer.length > 0 && [DPHitoeStringUtil lastIndexOf:keyStringBuffer c:DPHitoeBR] != keyStringBuffer.length - 1) {
-                    [keyStringBuffer appendString:DPHitoeBR];
+                    [paramStringBuffer appendString:DPHitoeBR];
                 }
                 [paramStringBuffer appendString:@"ba.freq_sampling_window="];
                 [paramStringBuffer appendFormat:@"%d", DPHitoeBaFreqSamplingWindow];
             }
             if ([paramStringBuffer rangeOfString:@"ba.rri_sampling_rate"].location == NSNotFound) {
                 if (paramStringBuffer.length > 0 && [DPHitoeStringUtil lastIndexOf:keyStringBuffer c:DPHitoeBR] != keyStringBuffer.length - 1) {
-                    [keyStringBuffer appendString:DPHitoeBR];
+                    [paramStringBuffer appendString:DPHitoeBR];
                 }
                 [paramStringBuffer appendString:@"ba.rri_sampling_rate="];
                 [paramStringBuffer appendFormat:@"%d", DPHitoeBaRRISamplingRate];
@@ -609,18 +600,18 @@
         } else if ([keyList[i] isEqualToString:@"ba.time_domain"]) {
             
             if (paramStringBuffer.length > 0 && [DPHitoeStringUtil lastIndexOf:keyStringBuffer c:DPHitoeBR] != keyStringBuffer.length - 1) {
-                [keyStringBuffer appendString:DPHitoeBR];
+                [paramStringBuffer appendString:DPHitoeBR];
             }
             [paramStringBuffer appendString:@"ba.time_sampling_interval="];
             [paramStringBuffer appendFormat:@"%d", DPHitoeBaTimeSamplingInterval];
             if (paramStringBuffer.length > 0 && [DPHitoeStringUtil lastIndexOf:keyStringBuffer c:DPHitoeBR] != keyStringBuffer.length - 1) {
-                [keyStringBuffer appendString:DPHitoeBR];
+                [paramStringBuffer appendString:DPHitoeBR];
             }
             [paramStringBuffer appendString:@"ba.time_sampling_window="];
             [paramStringBuffer appendFormat:@"%d", DPHitoeBaTimeSamplingWindow];
         }
     }
-    [api addReceiver:receiveDevice.sessionId dataKey:(NSString *) keyStringBuffer dataReceiver:self parameterSetting:(NSString *) paramStringBuffer dataList:@""];
+    [api addReceiver:receiveDevice.sessionId dataKey:keyStringBuffer dataReceiver:self parameterSetting: paramStringBuffer dataList:@""];
 }
 
 - (void)notifyAddExReceiverWithKey:(NSString*)key
@@ -673,7 +664,6 @@
         return;
     }
     [((DPHitoeDevice *) _registeredDevices[pos]) setConnectionId:responseString];
-
 }
 
 - (void)notifyRemoveReceiverWithResponseId:(int)responseId
@@ -740,58 +730,57 @@
     NSMutableArray *postureInputList = [NSMutableArray array];
     NSMutableArray *walkInputList = [NSMutableArray array];
     NSMutableArray *lrBalanceInputList = [NSMutableArray array];
+    [device setExData];
     
-    @autoreleasepool {
-        for (int i = 0; i < [lineList count]; i++) {
-            if ([device.availableExDataList containsObject:@"ex.posture"]) {
-                [_listForPosture addObject:lineList[i]];
-                if ([_listForPosture count] > DPHitoeExPostureUnitNum + 5) {
-                    for (int j = 0; j < DPHitoeExPostureUnitNum + 5; j++) {
-                        [postureInputList addObject:_listForPosture[j]];
-                    }
-                    // 1秒分を削除
-                    [_listForPosture removeObjectsInRange:NSMakeRange(0, 25)];
+    for (int i = 0; i < [lineList count]; i++) {
+        if ([device.availableExDataList containsObject:@"ex.posture"]) {
+            [_listForPosture addObject:lineList[i]];
+            if ([_listForPosture count] > DPHitoeExPostureUnitNum + 5) {
+                for (int j = 0; j < DPHitoeExPostureUnitNum + 5; j++) {
+                    [postureInputList addObject:_listForPosture[j]];
                 }
-                if ([postureInputList count] > 0) {
-                    [self notifyAddExReceiverWithKey:@"ex.posture" dataList:postureInputList];
-                    [postureInputList removeAllObjects];
-                }
+                // 1秒分を削除
+                [_listForPosture removeObjectsInRange:NSMakeRange(0, 25)];
             }
-            
-            if ([device.availableExDataList containsObject:@"ex.walk"]) {
-                [_listForWalk addObject:lineList[i]];
-                if ([_listForWalk count] > DPHitoeExWalkUnitNum + 5) {
-                    for (int j = 0 ; j < DPHitoeExWalkUnitNum + 5; j++) {
-                        [walkInputList addObject:_listForWalk[j]];
-                    }
-                    // 1秒分を削除
-                    [_listForWalk removeObjectsInRange:NSMakeRange(0, 25)];
-                }
-                
-                if ([walkInputList count] > 0) {
-                    [self notifyAddExReceiverWithKey:@"ex.walk" dataList:walkInputList];
-                    [walkInputList removeAllObjects];
-                }
-            }
-            
-            if ([device.availableExDataList containsObject:@"ex.lr_balance"]) {
-                [_listForLRBalance addObject:lineList[i]];
-                if ([_listForLRBalance count] > DPHitoeExLRBalanceUnitNum + 5) {
-                    for (int j = 0; j < DPHitoeExLRBalanceUnitNum + 5; j++) {
-                        [lrBalanceInputList addObject:_listForLRBalance[j]];
-                    }
-                    // 1秒分を削除
-                    [_listForLRBalance removeObjectsInRange:NSMakeRange(0, 25)];
-                }
-                
-                if ([lrBalanceInputList count] > 0) {
-                    [self notifyAddExReceiverWithKey:@"ex.lr_balance" dataList:lrBalanceInputList];
-                    [lrBalanceInputList removeAllObjects];
-                }
+            if ([postureInputList count] > 0) {
+                [self notifyAddExReceiverWithKey:@"ex.posture" dataList:postureInputList];
+                [postureInputList removeAllObjects];
             }
         }
-
+        
+        if ([device.availableExDataList containsObject:@"ex.walk"]) {
+            [_listForWalk addObject:lineList[i]];
+            if ([_listForWalk count] > DPHitoeExWalkUnitNum + 5) {
+                for (int j = 0 ; j < DPHitoeExWalkUnitNum + 5; j++) {
+                    [walkInputList addObject:_listForWalk[j]];
+                }
+                // 1秒分を削除
+                [_listForWalk removeObjectsInRange:NSMakeRange(0, 25)];
+            }
+            
+            if ([walkInputList count] > 0) {
+                [self notifyAddExReceiverWithKey:@"ex.walk" dataList:walkInputList];
+                [walkInputList removeAllObjects];
+            }
+        }
+        
+        if ([device.availableExDataList containsObject:@"ex.lr_balance"]) {
+            [_listForLRBalance addObject:lineList[i]];
+            if ([_listForLRBalance count] > DPHitoeExLRBalanceUnitNum + 5) {
+                for (int j = 0; j < DPHitoeExLRBalanceUnitNum + 5; j++) {
+                    [lrBalanceInputList addObject:_listForLRBalance[j]];
+                }
+                // 1秒分を削除
+                [_listForLRBalance removeObjectsInRange:NSMakeRange(0, 25)];
+            }
+            
+            if ([lrBalanceInputList count] > 0) {
+                [self notifyAddExReceiverWithKey:@"ex.lr_balance" dataList:lrBalanceInputList];
+                [lrBalanceInputList removeAllObjects];
+            }
+        }
     }
+
 }
 
 - (void)parseFreqDomainWithData:(NSString*)raw device:(DPHitoeDevice*)device {

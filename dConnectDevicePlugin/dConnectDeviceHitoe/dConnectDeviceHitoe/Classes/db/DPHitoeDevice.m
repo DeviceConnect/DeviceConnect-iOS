@@ -27,14 +27,15 @@
             _serviceId = infos[2];
             _connectMode = infos[3];
             _memorySetting = infos[4];
-            NSArray *list = [_memorySetting componentsSeparatedByString:DPHitoeVB];
-            for (NSString *l in list) {
-                [_availableRawDataList addObject:l];
-            }
+            
         }
+        [self setRawData];
+        [self setBaData];
+        [self setExData];
     }
     return self;
 }
+
 
 - (void)setAvailableData:(NSString *)availableData {
     NSArray* dataList = [availableData componentsSeparatedByString:DPHitoeBR];
@@ -68,22 +69,21 @@
     } else if ([connectionId hasPrefix:DPHitoeBaConnectionPrefix]) {
         _baConnectionId = connectionId;
     } else if ([connectionId hasPrefix:DPHitoeExConnectionPrefix]) {
-        [_exConnectionList addObject:connectionId];
+        [_exConnectionList addObject:[NSString stringWithString:connectionId]];
     }
 }
 
 - (void)removeConnectionId:(NSString *)connectionId {
-    if (_rawConnectionId && [_rawConnectionId isEqualToString:connectionId]) {
+    if ([_rawConnectionId isEqualToString:connectionId]) {
         _rawConnectionId = nil;
-    } else if (_baConnectionId && [_baConnectionId isEqualToString:connectionId]) {
+    } else if ([_baConnectionId isEqualToString:connectionId]) {
         _baConnectionId = nil;
-    } else if ([_exConnectionList count] > 0 && [_exConnectionList containsObject:connectionId]) {
+    } else if ([_exConnectionList containsObject:connectionId]) {
         [_exConnectionList removeObject:connectionId];
     }
 }
 
 - (void)setRawData {
-    _availableRawDataList = [NSMutableArray array];
     [_availableRawDataList removeAllObjects];
     [_availableRawDataList addObject:@"raw.ecg"];
     [_availableRawDataList addObject:@"raw.acc"];
@@ -93,7 +93,6 @@
 }
 
 - (void)setBaData {
-    _availableBaDataList = [NSMutableArray array];
     [_availableBaDataList removeAllObjects];
     [_availableBaDataList addObject:@"ba.extracted_rri"];
     [_availableBaDataList addObject:@"ba.cleaned_rri"];
@@ -103,8 +102,6 @@
 }
 
 - (void)setExData {
-    _availableExDataList = [NSMutableArray array];
-
     [_availableExDataList removeAllObjects];
     [_availableExDataList addObject:@"ex.stress"];
     [_availableExDataList addObject:@"ex.posture"];

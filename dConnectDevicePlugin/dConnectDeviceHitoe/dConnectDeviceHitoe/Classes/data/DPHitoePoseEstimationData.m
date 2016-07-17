@@ -7,6 +7,7 @@
 //  http://opensource.org/licenses/mit-license.php
 //
 
+#import <DCMDevicePluginSDK/DCMPoseEstimationProfile.h>
 #import "DPHitoePoseEstimationData.h"
 
 @implementation DPHitoePoseEstimationData
@@ -14,4 +15,14 @@
     id copiedObject = [[[self class] allocWithZone:zone] init];
     return copiedObject;
 }
+
+- (DConnectMessage*)toDConnectMessage {
+    DConnectMessage *message = [DConnectMessage new];
+    [DCMPoseEstimationProfile setState:self.state target:message];
+    [DCMPoseEstimationProfile setTimeStamp:self.timeStamp target:message];
+    [DCMPoseEstimationProfile setTimeStampString:self.timeStampString target:message];
+    
+    return message;
+}
+
 @end

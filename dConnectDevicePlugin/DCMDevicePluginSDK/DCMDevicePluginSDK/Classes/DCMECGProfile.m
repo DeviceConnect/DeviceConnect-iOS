@@ -12,7 +12,7 @@
 
 NSString *const DCMECGProfileName = @"ecg";
 NSString *const DCMECGProfileAttrOnECG = @"onECG";
-NSString *const DCMECGProfileParamECG = @"ECG";
+NSString *const DCMECGProfileParamECG = @"ecg";
 NSString *const DCMECGProfileParamValue = @"value";
 NSString *const DCMECGProfileParamMDERFloat = @"mderFloat";
 NSString *const DCMECGProfileParamType = @"type";

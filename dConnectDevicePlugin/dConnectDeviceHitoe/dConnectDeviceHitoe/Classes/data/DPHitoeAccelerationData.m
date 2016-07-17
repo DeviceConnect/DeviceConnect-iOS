@@ -15,4 +15,17 @@
     id copiedObject = [[[self class] allocWithZone:zone] init];
     return copiedObject;
 }
+
+- (DConnectMessage*)toDConnectMessage {
+    DConnectMessage *message = [DConnectMessage new];
+    DConnectMessage *accel = [DConnectMessage new];
+    [DConnectDeviceOrientationProfile setX:self.accelX target:accel];
+    [DConnectDeviceOrientationProfile setY:self.accelY target:accel];
+    [DConnectDeviceOrientationProfile setZ:self.accelZ target:accel];
+    
+    [DConnectDeviceOrientationProfile setAcceleration:accel target:message];
+    [DConnectDeviceOrientationProfile setInterval:self.interval target:message];
+    return message;
+}
+
 @end

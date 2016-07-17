@@ -1,5 +1,5 @@
 //
-//  DPHitoeHealthProfile.h
+//  DPHitoeECGProfile.h
 //  dConnectDeviceHitoe
 //
 //  Copyright (c) 2016 NTT DOCOMO, INC.
@@ -9,6 +9,6 @@
 
 #import <DCMDevicePluginSDK/DCMDevicePluginSDK.h>
 
-@interface DPHitoeHealthProfile : DCMHealthProfile<DCMHealthProfileDelegate>
+@interface DPHitoeECGProfile : DCMECGProfile<DCMECGProfileDelegate>
 
 @end

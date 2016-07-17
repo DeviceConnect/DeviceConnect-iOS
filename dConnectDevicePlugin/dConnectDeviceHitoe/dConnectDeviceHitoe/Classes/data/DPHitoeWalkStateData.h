@@ -8,6 +8,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <DConnectSDK/DConnectSDK.h>
 
 @interface DPHitoeWalkStateData : NSObject<NSCopying>
 @property (nonatomic, assign) int step;
@@ -17,4 +18,6 @@
 @property (nonatomic, assign) double balance;
 @property (nonatomic, assign) long timeStamp;
 @property (nonatomic, strong) NSString *timeStampString;
+- (DConnectMessage*)toDConnectMessage;
+
 @end

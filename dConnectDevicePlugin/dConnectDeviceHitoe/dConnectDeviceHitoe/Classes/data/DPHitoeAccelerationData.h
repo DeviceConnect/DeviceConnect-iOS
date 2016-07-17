@@ -9,11 +9,14 @@
 
 
 #import <Foundation/Foundation.h>
-
+#import <DConnectSDK/DConnectSDK.h>
 @interface DPHitoeAccelerationData : NSObject<NSCopying>
 
 @property (nonatomic, assign) double accelX;
 @property (nonatomic, assign) double accelY;
 @property (nonatomic, assign) double accelZ;
 @property (nonatomic, assign) long interval;
+
+- (DConnectMessage*)toDConnectMessage;
+
 @end

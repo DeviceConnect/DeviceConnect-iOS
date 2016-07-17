@@ -11,6 +11,12 @@
 #import "DPHitoeSystemProfile.h"
 #import "DPHitoeServiceDiscoveryProfle.h"
 #import "DPHitoeHealthProfile.h"
+#import "DPHitoeECGProfile.h"
+#import "DPHitoeBatteryProfile.h"
+#import "DPHitoePoseEstimationProfile.h"
+#import "DPHitoeStressEstimationProfile.h"
+#import "DPHitoeDeviceOrientationProfile.h"
+#import "DPHitoeWalkStateProfile.h"
 #import "DPHitoeConsts.h"
 // Const.h
 NSString *const DPHitoeBundleName = @"dConnectDeviceHitoe_resources";
@@ -111,12 +117,16 @@ int const DPHitoeDataKeyExtension = 0x04;
     if (self) {
         self.pluginName = @"Hitoe (Device Connect Device Plug-in)";
 
-//        [self addProfile:[DPHitoeBatteryProfile new]];
+        [self addProfile:[DPHitoeBatteryProfile new]];
         [self addProfile:[DPHitoeServiceDiscoveryProfle new]];
         [self addProfile:[DPHitoeHealthProfile new]];
+        [self addProfile:[DPHitoeECGProfile new]];
+        [self addProfile:[DPHitoePoseEstimationProfile new]];
+        [self addProfile:[DPHitoeStressEstimationProfile new]];
         [self addProfile:[DPHitoeSystemProfile new]];
+        [self addProfile:[DPHitoeWalkStateProfile new]];
         [self addProfile:[DConnectServiceInformationProfile new]];
-        
+        [self addProfile:[DPHitoeDeviceOrientationProfile new]];
         // イベントマネージャの準備
         Class key = [self class];
         [[DConnectEventManager sharedManagerForClass:key]

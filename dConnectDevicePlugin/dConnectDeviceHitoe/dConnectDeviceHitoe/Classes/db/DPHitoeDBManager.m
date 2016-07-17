@@ -153,7 +153,7 @@ NSString *const DPHitoeColumnConnectMode = @"connectMode";
     
     NSArray *moArray = [fetchedResultsController fetchedObjects];
     for (int i = 0; i < moArray.count; i++) {
-        DPHitoeDevice* device = [DPHitoeDevice new];
+        DPHitoeDevice* device = [[DPHitoeDevice alloc] initWithInfoString:nil];
         NSManagedObject *object = [moArray objectAtIndex:i];
         device.serviceId= [object valueForKey:DPHitoeColumnServiceId];
         device.name = [object valueForKey:DPHitoeColumnName];
