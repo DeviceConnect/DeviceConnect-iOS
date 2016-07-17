@@ -129,10 +129,37 @@
             [DConnectManager sharedManager].settings.useLocalOAuth = isOn;
             break;
         case SecurityCellTypeOrigin:
-            //TODO:
+            if ([DConnectManager sharedManager].settings.useLocalOAuth
+                && [DConnectManager sharedManager].settings.useOriginEnable) {
+                NSString *message = @"下記の機能がアプリのOriginを参照するため下記もOFFに切り替わります。\n- LocalOAuth\nよろしいですか？";
+                UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"警告" message:message preferredStyle:UIAlertControllerStyleAlert];
+                [alertController addAction:[UIAlertAction actionWithTitle:@"はい" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+                    [DConnectManager sharedManager].settings.useLocalOAuth = isOn;
+                    [DConnectManager sharedManager].settings.useOriginEnable = isOn;
+                    if (self.delegate) {
+                        [self.delegate updateSwitches];
+                    }
+
+                }]];
+                [alertController addAction:[UIAlertAction actionWithTitle:@"いいえ" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+                    [DConnectManager sharedManager].settings.useOriginEnable = YES;
+                    if (self.delegate) {
+                        [self.delegate updateSwitches];
+                    }
+                }]];
+                UIViewController *baseView = [UIApplication sharedApplication].keyWindow.rootViewController;
+                while (baseView.presentedViewController != nil && !baseView.presentedViewController.isBeingDismissed) {
+                    baseView = baseView.presentedViewController;
+                }
+                [baseView presentViewController:alertController animated:YES completion:nil];
+                
+            } else {
+                [DConnectManager sharedManager].settings.useOriginEnable = isOn;
+            }
             break;
         case SecurityCellTypeExternIP:
-            //TODO:
+            [DConnectManager sharedManager].settings.useExternalIP = isOn;
+            [[DConnectManager sharedManager] setAllowExternalIp];
             break;
         default:
             break;
@@ -147,6 +174,8 @@
     DConnectSettings* settings = [DConnectManager sharedManager].settings;
     [def setObject:@(settings.useOriginBlocking) forKey:IS_ORIGIN_BLOCKING];
     [def setObject:@(settings.useLocalOAuth) forKey:IS_USE_LOCALOAUTH];
+    [def setObject:@(settings.useOriginEnable) forKey:IS_ORIGIN_ENABLE];
+    [def setObject:@(settings.useExternalIP) forKey:IS_EXTERNAL_IP];
     [def synchronize];
 }
 
@@ -181,10 +210,10 @@
             return [DConnectManager sharedManager].settings.useLocalOAuth;
             break;
         case SecurityCellTypeOrigin:
-            //TODO:
+            return [DConnectManager sharedManager].settings.useOriginEnable;
             break;
         case SecurityCellTypeExternIP:
-            //TODO:
+            return [DConnectManager sharedManager].settings.useExternalIP;
             break;
         default:
             return NO;

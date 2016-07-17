@@ -67,4 +67,18 @@
  */
 @property (nonatomic) BOOL useOriginBlocking;
 
+
+/*!
+ @brief Origin有効/無効。
+ 
+ デフォルトでは有効。
+ */
+@property (nonatomic) BOOL useOriginEnable;
+
+/*!
+ @brief 外部IPのON/OFF。
+ 
+ デフォルトではOFF。
+ */
+@property (nonatomic) BOOL useExternalIP;
 @end

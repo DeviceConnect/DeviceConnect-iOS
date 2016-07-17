@@ -103,6 +103,11 @@ extern NSString *const DConnectApplicationWillEnterForeground;
  */
 - (void) start;
 
+/**
+ @brief 外部IPを許可すためにHTTPServerを起動し直すためのメソッド。
+ */
+- (void)setAllowExternalIp;
+
 /*!
  @brief HTTPサーバによるDConnectManagerを開始する。
  

@@ -16,7 +16,7 @@
 
 + (BOOL)startServerWithHost:(NSString*)host port:(int)port;
 + (void)stopServer;
-
++ (void)setExternalIPFlag:(BOOL)flag;
 
 + (void)sendEvent:(NSString *)event forSessionKey:(NSString *)sessionKey;
 @end

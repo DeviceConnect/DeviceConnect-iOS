@@ -27,7 +27,7 @@ typedef NS_ENUM (NSInteger, SectionType) {
 @property (nonatomic, weak) IBOutlet id<TopViewModelDelegate>  delegate;
 
 - (void)initialSetup;
-- (void)saveOriginBlock;
+- (void)saveSettings;
 - (NSString*)checkUrlString:(NSString*)url;
 - (NSString*)makeURLFromNotification:(NSNotification*)notif;
 - (void)updateDatasource;

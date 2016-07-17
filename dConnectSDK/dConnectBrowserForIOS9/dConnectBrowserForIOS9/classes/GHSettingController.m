@@ -53,6 +53,10 @@
     [self presentViewController:nav animated:YES completion:nil];
 }
 
+- (void)updateSwitches
+{
+    [self.tableView reloadData];
+}
 //--------------------------------------------------------------//
 #pragma mark - view cycle
 //--------------------------------------------------------------//

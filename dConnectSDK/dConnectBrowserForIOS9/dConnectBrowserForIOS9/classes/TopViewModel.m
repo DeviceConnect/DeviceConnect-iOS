@@ -142,12 +142,22 @@ static NSInteger maxIconCount = 8;
     DConnectManager *mgr = [DConnectManager sharedManager];
     BOOL isOriginBlock = [[NSUserDefaults standardUserDefaults] boolForKey:IS_ORIGIN_BLOCKING];
     mgr.settings.useOriginBlocking = isOriginBlock;
+    BOOL isLocalOAuth = [[NSUserDefaults standardUserDefaults] boolForKey:IS_USE_LOCALOAUTH];
+    mgr.settings.useLocalOAuth = isLocalOAuth;
+    BOOL isOriginEnable = [[NSUserDefaults standardUserDefaults] boolForKey:IS_ORIGIN_ENABLE];
+    mgr.settings.useOriginEnable = isOriginEnable;
+    BOOL isExternalIp = [[NSUserDefaults standardUserDefaults] boolForKey:IS_EXTERNAL_IP];
+    mgr.settings.useExternalIP = isExternalIp;
+    
 }
 
-- (void)saveOriginBlock
+- (void)saveSettings
 {
     DConnectManager *mgr = [DConnectManager sharedManager];
     [[NSUserDefaults standardUserDefaults] setBool:mgr.settings.useOriginBlocking forKey:IS_ORIGIN_BLOCKING];
+    [[NSUserDefaults standardUserDefaults] setBool:mgr.settings.useLocalOAuth forKey:IS_USE_LOCALOAUTH];
+    [[NSUserDefaults standardUserDefaults] setBool:mgr.settings.useOriginEnable forKey:IS_ORIGIN_ENABLE];
+    [[NSUserDefaults standardUserDefaults] setBool:mgr.settings.useExternalIP forKey:IS_EXTERNAL_IP];
 }
 
 
