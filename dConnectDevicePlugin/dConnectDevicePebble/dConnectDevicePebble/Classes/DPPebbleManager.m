@@ -10,6 +10,8 @@
 #import "DPPebbleManager.h"
 #import <PebbleKit/PebbleKit.h>
 #import "pebble_device_plugin_defines.h"
+#import <DConnectSDK/DConnectService.h>
+#import "DPPebbleService.h"
 
 /** milli G を m/s^2 の値にする係数. */
 #define G_TO_MS2_COEFFICIENT 9.81/1000.0
@@ -71,6 +73,22 @@ static NSString * const kDPPebbleRegexCSV = @"^([^,]*,)+";
 	return self;
 }
 
+- (void) setServiceProvider: (DConnectServiceProvider *) serviceProvider {
+    @synchronized(self) {
+        self.mServiceProvider = serviceProvider;
+    }
+}
+
+- (void)pebbleCentral:(PBPebbleCentral*)central watchDidConnect:(PBWatch*)watch isNew:(BOOL)isNew {
+    // デバイス管理情報更新
+    [self updateManageServices];
+}
+
+- (void)pebbleCentral:(PBPebbleCentral*)central watchDidDisconnect:(PBWatch*)watch {
+    // デバイス管理情報更新
+    [self updateManageServices];
+}
+
 // アプリがバックグラウンドに入った時に呼ぶ
 - (void)applicationDidEnterBackground
 {
@@ -120,6 +138,47 @@ static NSString * const kDPPebbleRegexCSV = @"^([^,]*,)+";
 	return nil;
 }
 
+// デバイス管理情報更新
+- (void) updateManageServices {
+    @synchronized(self) {
+        
+        // ServiceProvider未登録なら処理しない
+        if (!_mServiceProvider) {
+            return;
+        }
+        
+        NSArray *deviceList = [self deviceList];
+        
+        // ServiceProviderに存在するサービスが検出されなかったならオフラインにする
+        for (DConnectService *service in [_mServiceProvider services]) {
+            NSString *serviceId = [service serviceId];
+            
+            BOOL isFindDevice = NO;
+            for (NSDictionary *device in deviceList) {
+                NSString *deviceServiceId = device[@"id"];
+                if (deviceServiceId && [serviceId localizedCaseInsensitiveCompare: deviceServiceId] == NSOrderedSame) {
+                    isFindDevice = YES;
+                    break;
+                }
+            }
+            
+            if (!isFindDevice) {
+                [service setOnline: NO];
+            }
+        }
+        
+        // サービス未登録なら登録する
+        for (NSDictionary *device in deviceList) {
+            NSString *serviceId = device[@"id"];
+            NSString *deviceName = device[@"name"];
+            if (![_mServiceProvider service: serviceId]) {
+                DPPebbleService *service = [[DPPebbleService alloc] initWithServiceId:serviceId
+                                                                           deviceName:deviceName];
+                [_mServiceProvider addService: service];
+            }
+        }
+    }
+}
 
 
 #pragma mark - Battery

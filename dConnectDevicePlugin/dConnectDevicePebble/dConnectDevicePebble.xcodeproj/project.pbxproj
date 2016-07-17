@@ -69,6 +69,7 @@
 		ABCE5F5819AB38C00040EE10 /* PebbleKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABCE5F5719AB38C00040EE10 /* PebbleKit.framework */; };
 		BE066B5919A8532700CBED07 /* dConnectDevicePebble_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BE066B5819A8532700CBED07 /* dConnectDevicePebble_iPhone.storyboard */; };
 		BE066B5B19A8537A00CBED07 /* dConnectDevicePebble_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BE066B5A19A8537A00CBED07 /* dConnectDevicePebble_iPad.storyboard */; };
+		D6C8604B1D3B4BFF00232EEF /* DPPebbleService.m in Sources */ = {isa = PBXBuildFile; fileRef = D6C8604A1D3B4BFF00232EEF /* DPPebbleService.m */; };
 		EFD5B7471AAC91C000C15A3A /* DPPebbleKeyEventProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = EFD5B7461AAC91C000C15A3A /* DPPebbleKeyEventProfile.m */; };
 /* End PBXBuildFile section */
 
@@ -166,6 +167,8 @@
 		ABCE5F5719AB38C00040EE10 /* PebbleKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = PebbleKit.framework; sourceTree = "<group>"; };
 		BE066B5819A8532700CBED07 /* dConnectDevicePebble_iPhone.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = dConnectDevicePebble_iPhone.storyboard; sourceTree = "<group>"; };
 		BE066B5A19A8537A00CBED07 /* dConnectDevicePebble_iPad.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = dConnectDevicePebble_iPad.storyboard; sourceTree = "<group>"; };
+		D6C860491D3B4BFF00232EEF /* DPPebbleService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPPebbleService.h; sourceTree = "<group>"; };
+		D6C8604A1D3B4BFF00232EEF /* DPPebbleService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPPebbleService.m; sourceTree = "<group>"; };
 		EFD5B7451AAC919800C15A3A /* DPPebbleKeyEventProfile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DPPebbleKeyEventProfile.h; sourceTree = "<group>"; };
 		EFD5B7461AAC91C000C15A3A /* DPPebbleKeyEventProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPPebbleKeyEventProfile.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -289,6 +292,8 @@
 				AB33D7741A7605540073A1BA /* DPPebbleImage.m */,
 				AB33D7751A7605540073A1BA /* DPPebbleManager.h */,
 				AB33D7761A7605540073A1BA /* DPPebbleManager.m */,
+				D6C860491D3B4BFF00232EEF /* DPPebbleService.h */,
+				D6C8604A1D3B4BFF00232EEF /* DPPebbleService.m */,
 				4450060B19BD4D5100C9FF54 /* profile */,
 				4450061E19BD4D5100C9FF54 /* settings */,
 			);
@@ -508,6 +513,7 @@
 				AB33D7771A7605540073A1BA /* DPPebbleDevicePlugin.m in Sources */,
 				4450065A19BD4D5100C9FF54 /* PebbleViewController.m in Sources */,
 				4450065219BD4D5100C9FF54 /* PebbleSettingView05Controller.m in Sources */,
+				D6C8604B1D3B4BFF00232EEF /* DPPebbleService.m in Sources */,
 				4450064A19BD4D5100C9FF54 /* PebbleSettingView01Controller.m in Sources */,
 				4450064619BD4D5100C9FF54 /* DPPebbleVibrationProfile.m in Sources */,
 				4450063619BD4D5100C9FF54 /* DPPebbleBatteryProfile.m in Sources */,
