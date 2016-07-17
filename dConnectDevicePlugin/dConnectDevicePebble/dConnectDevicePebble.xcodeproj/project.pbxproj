@@ -39,7 +39,6 @@
 		44407C321998BE4E00E9B751 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 44407C301998BE4E00E9B751 /* InfoPlist.strings */; };
 		4450063619BD4D5100C9FF54 /* DPPebbleBatteryProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 4450060D19BD4D5100C9FF54 /* DPPebbleBatteryProfile.m */; };
 		4450063819BD4D5100C9FF54 /* DPPebbleDeviceOrientationProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 4450060F19BD4D5100C9FF54 /* DPPebbleDeviceOrientationProfile.m */; };
-		4450063E19BD4D5100C9FF54 /* DPPebbleServiceDiscoveryProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 4450061519BD4D5100C9FF54 /* DPPebbleServiceDiscoveryProfile.m */; };
 		4450064019BD4D5100C9FF54 /* DPPebbleNotificationProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 4450061719BD4D5100C9FF54 /* DPPebbleNotificationProfile.m */; };
 		4450064219BD4D5100C9FF54 /* DPPebbleSettingsProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 4450061919BD4D5100C9FF54 /* DPPebbleSettingsProfile.m */; };
 		4450064419BD4D5100C9FF54 /* DPPebbleSystemProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 4450061B19BD4D5100C9FF54 /* DPPebbleSystemProfile.m */; };
@@ -118,8 +117,6 @@
 		4450060D19BD4D5100C9FF54 /* DPPebbleBatteryProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPPebbleBatteryProfile.m; sourceTree = "<group>"; };
 		4450060E19BD4D5100C9FF54 /* DPPebbleDeviceOrientationProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPPebbleDeviceOrientationProfile.h; sourceTree = "<group>"; };
 		4450060F19BD4D5100C9FF54 /* DPPebbleDeviceOrientationProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPPebbleDeviceOrientationProfile.m; sourceTree = "<group>"; };
-		4450061419BD4D5100C9FF54 /* DPPebbleServiceDiscoveryProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPPebbleServiceDiscoveryProfile.h; sourceTree = "<group>"; };
-		4450061519BD4D5100C9FF54 /* DPPebbleServiceDiscoveryProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPPebbleServiceDiscoveryProfile.m; sourceTree = "<group>"; };
 		4450061619BD4D5100C9FF54 /* DPPebbleNotificationProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPPebbleNotificationProfile.h; sourceTree = "<group>"; };
 		4450061719BD4D5100C9FF54 /* DPPebbleNotificationProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPPebbleNotificationProfile.m; sourceTree = "<group>"; };
 		4450061819BD4D5100C9FF54 /* DPPebbleSettingsProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPPebbleSettingsProfile.h; sourceTree = "<group>"; };
@@ -307,8 +304,6 @@
 				AB33D76F1A7605330073A1BA /* DPPebbleCanvasProfile.m */,
 				783D47AE19FA2CBB001C6CD9 /* DPPebbleProfileUtil.h */,
 				783D47AF19FA2CBB001C6CD9 /* DPPebbleProfileUtil.m */,
-				4450061419BD4D5100C9FF54 /* DPPebbleServiceDiscoveryProfile.h */,
-				4450061519BD4D5100C9FF54 /* DPPebbleServiceDiscoveryProfile.m */,
 				4450060C19BD4D5100C9FF54 /* DPPebbleBatteryProfile.h */,
 				4450060D19BD4D5100C9FF54 /* DPPebbleBatteryProfile.m */,
 				4450060E19BD4D5100C9FF54 /* DPPebbleDeviceOrientationProfile.h */,
@@ -507,7 +502,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				4450063819BD4D5100C9FF54 /* DPPebbleDeviceOrientationProfile.m in Sources */,
-				4450063E19BD4D5100C9FF54 /* DPPebbleServiceDiscoveryProfile.m in Sources */,
 				4450064219BD4D5100C9FF54 /* DPPebbleSettingsProfile.m in Sources */,
 				4450064419BD4D5100C9FF54 /* DPPebbleSystemProfile.m in Sources */,
 				AB33D7771A7605540073A1BA /* DPPebbleDevicePlugin.m in Sources */,
