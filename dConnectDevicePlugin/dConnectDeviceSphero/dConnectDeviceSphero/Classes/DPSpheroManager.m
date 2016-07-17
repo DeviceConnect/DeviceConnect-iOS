@@ -12,6 +12,8 @@
 #import <RobotUIKit/RobotUIKit.h>
 #import <RobotKit/RobotKit.h>
 #import <RobotKit/RKGetUserRGBLEDColorCommand.h>
+#import <DConnectSDK/DConnectService.h>
+#import "DPSpheroService.h"
 
 
 // センサー監視間隔（400Hz/kSensorDivisor）
@@ -50,6 +52,12 @@ BOOL _startedCollisionSensor;
        _isActivated = YES;
     }
     return self;
+}
+
+- (void) setServiceProvider: (DConnectServiceProvider *)serviceProvider {
+    @synchronized(self) {
+        self.mServiceProvider = serviceProvider;
+    }
 }
 
 // アプリがバックグラウンドに入った
@@ -131,6 +139,9 @@ BOOL _startedCollisionSensor;
             _calibrationLightBright = 0;
             _streamingMask = 0;
             _startedCollisionSensor = NO;
+            
+            // デバイス管理情報更新
+            [self updateManageServices];
 
             return YES;
         }
@@ -151,6 +162,49 @@ BOOL _startedCollisionSensor;
         [array addObject:@{@"name": robo.accessory.name, @"id": robo.bluetoothAddress}];
     }
     return array;
+}
+
+
+// デバイス管理情報更新
+- (void) updateManageServices {
+    @synchronized(self) {
+        
+        // ServiceProvider未登録なら処理しない
+        if (!_mServiceProvider) {
+            return;
+        }
+        
+        NSArray *deviceList = [self deviceList];
+        
+        // ServiceProviderに存在するサービスが検出されなかったならオフラインにする
+        for (DConnectService *service in [_mServiceProvider services]) {
+            NSString *serviceId = [service serviceId];
+            
+            BOOL isFindDevice = NO;
+            for (NSDictionary *device in deviceList) {
+                NSString *deviceServiceId = device[@"id"];
+                if (deviceServiceId && [serviceId localizedCaseInsensitiveCompare: deviceServiceId] == NSOrderedSame) {
+                    isFindDevice = YES;
+                    break;
+                }
+            }
+            
+            if (!isFindDevice) {
+                [service setOnline: NO];
+            }
+        }
+        
+        // サービス未登録なら登録する
+        for (NSDictionary *device in deviceList) {
+            NSString *serviceId = device[@"id"];
+            NSString *deviceName = device[@"name"];
+            if (![_mServiceProvider service: serviceId]) {
+                DPSpheroService *service = [[DPSpheroService alloc] initWithServiceId:serviceId
+                                                                           deviceName:deviceName];
+                [_mServiceProvider addService: service];
+            }
+        }
+    }
 }
 
 #pragma mark - Observer
