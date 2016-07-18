@@ -12,7 +12,7 @@
 
 #import "DPHostDevicePlugin.h"
 #import "DPHostDeviceOrientationProfile.h"
-#import "DPHostServiceDiscoveryProfile.h"
+#import "DPHostService.h"
 #import "DPHostUtils.h"
 
 // CMDeviceMotionオブジェクトが配送されるインターバル（ミリ秒）
@@ -129,7 +129,7 @@ static const double EarthGravitationalAcceleration = 9.81;
     DConnectMessage *orientation = [self createOrientationWithMotion:motion];
     _orientation = orientation;
     
-    NSArray *evts = [_eventMgr eventListForServiceId:ServiceDiscoveryServiceId
+    NSArray *evts = [_eventMgr eventListForServiceId:DPHostDevicePluginServiceId
                                             profile:DConnectDeviceOrientationProfileName
                                           attribute:DConnectDeviceOrientationProfileAttrOnDeviceOrientation];
     for (DConnectEvent *evt in evts) {

@@ -15,7 +15,7 @@
 
 #import "DPHostDevicePlugin.h"
 #import "DPHostPhoneProfile.h"
-#import "DPHostServiceDiscoveryProfile.h"
+#import "DPHostService.h"
 #import "DPHostUtils.h"
 
 @interface DPHostPhoneProfile()
@@ -57,7 +57,7 @@
             } else {
                 return;
             }
-            NSArray *evts = [weakSelf.eventMgr eventListForServiceId:ServiceDiscoveryServiceId
+            NSArray *evts = [weakSelf.eventMgr eventListForServiceId:DPHostDevicePluginServiceId
                                                     profile:DConnectPhoneProfileName
                                                   attribute:DConnectPhoneProfileAttrOnConnect];
             for (DConnectEvent *evt in evts) {

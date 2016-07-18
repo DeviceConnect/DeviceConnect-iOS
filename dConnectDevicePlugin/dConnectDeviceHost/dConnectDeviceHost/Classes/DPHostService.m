@@ -7,21 +7,38 @@
 //  http://opensource.org/licenses/mit-license.php
 //
 
+#import <UIKit/UIKit.h>
 #import "DPHostService.h"
 #import "DPHostDevicePlugin.h"
+#import "DPHostBatteryProfile.h"
+#import "DPHostDeviceOrientationProfile.h"
+#import "DPHostFileDescriptorProfile.h"
+#import "DPHostFileProfile.h"
+#import "DPHostMediaPlayerProfile.h"
+#import "DPHostMediaStreamRecordingProfile.h"
+#import "DPHostNotificationProfile.h"
+#import "DPHostPhoneProfile.h"
+#import "DPHostProximityProfile.h"
+#import "DPHostSettingsProfile.h"
+#import "DPHostVibrationProfile.h"
+#import "DPHostConnectProfile.h"
+#import "DPHostCanvasProfile.h"
+#import <DConnectSDK/DConnectServiceInformationProfile.h>
+#import "DPHostTouchProfile.h"
 
-static NSString *const ServiceDiscoveryServiceId = @"host";
+
+
+NSString *const DPHostDevicePluginServiceId = @"host";
 
 @implementation DPHostService
 
 - (instancetype) initWithFileManager: (DConnectFileManager *) fileMgr {
-    self = [super init];
+    self = [super initWithServiceId: DPHostDevicePluginServiceId];
     if (self) {
         UIDevice *device = [UIDevice currentDevice];
         NSString *name = [NSString stringWithFormat:@"Host: %@", device.name];
         NSString *config = [NSString stringWithFormat:@"{\"OS\":\"%@ %@\"}",
                             device.systemName, device.systemVersion];
-        [self setId: ServiceDiscoveryServiceId];
         [self setName: name];
         [self setOnline: YES];
         [self setConfig:config];

@@ -8,7 +8,12 @@
 //
 
 #import <DConnectSDK/DConnectService.h>
+#import <DConnectSDK/DConnectFileManager.h>
+
+extern NSString *const DPHostDevicePluginServiceId;
 
 @interface DPHostService : DConnectService
+
+- (instancetype) initWithFileManager: (DConnectFileManager *) fileMgr;
 
 @end

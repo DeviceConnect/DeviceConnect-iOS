@@ -9,7 +9,7 @@
 
 #import "DPHostDevicePlugin.h"
 #import "DPHostTouchProfile.h"
-#import "DPHostServiceDiscoveryProfile.h"
+#import "DPHostService.h"
 #import "DPHostUtils.h"
 #import "DPHostTouchUIViewController.h"
 

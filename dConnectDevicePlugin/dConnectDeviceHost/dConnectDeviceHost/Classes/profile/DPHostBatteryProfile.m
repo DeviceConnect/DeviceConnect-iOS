@@ -9,7 +9,7 @@
 
 #import "DPHostDevicePlugin.h"
 #import "DPHostBatteryProfile.h"
-#import "DPHostServiceDiscoveryProfile.h"
+#import "DPHostService.h"
 #import "DPHostUtils.h"
 
 @interface DPHostBatteryProfile ()
@@ -56,7 +56,7 @@
 - (void) sendOnChargingChangeEvent:(NSNotification *)notification
 {
     // イベントの取得
-    NSArray *evts = [_eventMgr eventListForServiceId:ServiceDiscoveryServiceId
+    NSArray *evts = [_eventMgr eventListForServiceId:DPHostDevicePluginServiceId
                                             profile:DConnectBatteryProfileName
                                           attribute:DConnectBatteryProfileAttrOnChargingChange];
     // イベント送信
@@ -87,7 +87,7 @@
 - (void) sendOnBatteryChangeEvent:(NSNotification *)notification
 {
     // イベントの取得
-    NSArray *evts = [_eventMgr eventListForServiceId:ServiceDiscoveryServiceId
+    NSArray *evts = [_eventMgr eventListForServiceId:DPHostDevicePluginServiceId
                                             profile:DConnectBatteryProfileName
                                           attribute:DConnectBatteryProfileAttrOnBatteryChange];
     // イベント送信

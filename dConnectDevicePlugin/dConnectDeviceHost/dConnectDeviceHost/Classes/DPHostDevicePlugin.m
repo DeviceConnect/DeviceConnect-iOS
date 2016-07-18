@@ -13,9 +13,8 @@
 #import <DConnectSDK/DConnectServiceManager.h>
 
 #import "DPHostDevicePlugin.h"
-
-#import "DPHostServiceDiscoveryProfile.h"
 #import "DPHostSystemProfile.h"
+#import "DPHostService.h"
 
 @implementation DPHostDevicePlugin
 
@@ -34,13 +33,10 @@
         self.pluginName = @"Host (Device Connect Device Plug-in)";
         
         // サービス追加
-        DConnectService *hostService = [[DConnectService alloc] initWithServiceId: SERVICE_ID];
-        [hostService setName: SERVICE_NAME];
-        hostService.setOnline(true);
+        DConnectService *hostService = [[DPHostService alloc] initWithFileManager: self.fileMgr];
         [self.mServiceProvider addService: hostService];
         
         // プロファイルを追加
-        [self addProfile:[[DPHostServiceDiscoveryProfile alloc] initWithFileManager:self.fileMgr serviceProvider: mServiceProvider]];
         [self addProfile:[DPHostSystemProfile new]];
     }
     return self;
