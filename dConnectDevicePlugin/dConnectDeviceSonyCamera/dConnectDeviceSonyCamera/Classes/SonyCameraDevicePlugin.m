@@ -15,6 +15,9 @@
 #import "SonyCameraViewController.h"
 #import "SampleLiveviewManager.h"
 #import "SonyCameraCameraProfile.h"
+#import "SonyCameraService.h"
+
+#import <DConnectSDK/DConnectService.h>
 
 #import <SystemConfiguration/CaptiveNetwork.h>
 
@@ -319,19 +322,19 @@ NSString *const SonyFilePrefix = @"sony";
     @synchronized(self) {
         
         // ServiceProvider未登録なら処理しない
-        if (!_mServiceProvider) {
+        if (!self.mServiceProvider) {
             return;
         }
         
-        int deviceCount = [DeviceList getSize];
+        int deviceCount = (int)[DeviceList getSize];
         
         // ServiceProviderに存在するサービスが検出されなかったならオフラインにする
-        for (DConnectService *service in [_mServiceProvider services]) {
+        for (DConnectService *service in [self.mServiceProvider services]) {
             NSString *serviceId = [service serviceId];
             
             BOOL isFindDevice = NO;
             for (int deviceIndex = 0; deviceIndex < deviceCount; deviceIndex ++) {
-                NSString *deviceServiceId = [NSString stringWithFormat:@"%d", i];
+                NSString *deviceServiceId = [NSString stringWithFormat:@"%d", deviceIndex];
                 if (deviceServiceId && [serviceId localizedCaseInsensitiveCompare: deviceServiceId] == NSOrderedSame) {
                     isFindDevice = YES;
                     break;
@@ -345,13 +348,13 @@ NSString *const SonyFilePrefix = @"sony";
         
         // サービス未登録なら登録する
         for (int deviceIndex = 0; deviceIndex < deviceCount; deviceIndex ++) {
-            NSString *deviceServiceId = [NSString stringWithFormat:@"%d", i];
+            NSString *deviceServiceId = [NSString stringWithFormat:@"%d", deviceIndex];
             NSString *deviceName = SonyDeviceName;
-            if (![_mServiceProvider service: serviceId]) {
-                SonyCameraService *service = [[SonyCameraService alloc] initWithServiceId:serviceId
+            if (![self.mServiceProvider service: deviceServiceId]) {
+                SonyCameraService *service = [[SonyCameraService alloc] initWithServiceId:deviceServiceId
                                                                                deviceName:deviceName
-                                                                                 profiles: [self.mServiceProfiles]];
-                [_mServiceProvider addService: service];
+                                                                                 profiles: self.mServiceProfiles];
+                [self.mServiceProvider addService: service];
             }
         }
     }

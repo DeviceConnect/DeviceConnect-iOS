@@ -11,6 +11,6 @@
 
 @interface SonyCameraService : DConnectService
 
-- (instancetype) initWithServiceId: (NSString *) serviceId deviceName: (NSString *) deviceName profiles: (NSArray *) profiles];
+- (instancetype) initWithServiceId: (NSString *) serviceId deviceName: (NSString *) deviceName profiles: (NSArray *) profiles;
 
 @end
