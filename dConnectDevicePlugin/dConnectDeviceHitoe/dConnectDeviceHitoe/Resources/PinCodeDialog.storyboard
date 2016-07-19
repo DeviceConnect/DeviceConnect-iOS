@@ -55,7 +55,7 @@
                                         </connections>
                                     </button>
                                 </subviews>
-                                <color key="backgroundColor" red="0.95226603403141363" green="0.95226603403141363" blue="0.95226603403141363" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0.94117647058823528" green="0.94117647058823528" blue="0.94117647058823528" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="s6e-jQ-dmr" secondAttribute="trailing" constant="10" id="049-XS-Zke"/>
                                     <constraint firstItem="Sdd-Xx-b92" firstAttribute="leading" secondItem="eu3-8b-UHU" secondAttribute="leading" constant="55" id="4Kk-kw-u42"/>
@@ -88,6 +88,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="pinCodeDialogView" destination="eu3-8b-UHU" id="Xke-RR-TgR"/>
                         <outlet property="pinCodeField" destination="s6e-jQ-dmr" id="njp-Pn-jR4"/>
                         <outlet property="pinDialogHeight" destination="8hV-Qr-Sju" id="Ihj-Qk-8Z1"/>
                         <outlet property="pinDialogTop" destination="N2F-SU-4Wu" id="YfA-9y-Djp"/>

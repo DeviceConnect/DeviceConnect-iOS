@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="SRd-Lb-p1K">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+    </dependencies>
+    <scenes>
+        <!--Hitoe Set Shirt Dialog-->
+        <scene sceneID="IQm-kD-IRW">
+            <objects>
+                <viewController id="SRd-Lb-p1K" customClass="DPHitoeSetShirtDialog" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="1KP-t5-984"/>
+                        <viewControllerLayoutGuide type="bottom" id="Nyn-NU-dzx"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="MtN-su-twy">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Kab-O7-Z2q">
+                                <rect key="frame" x="180" y="166" width="240" height="267"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Hitoeの装着" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="w4a-xE-6V2">
+                                        <rect key="frame" x="70" y="8" width="92" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4hl-g0-RYG">
+                                        <rect key="frame" x="105" y="215" width="30" height="30"/>
+                                        <state key="normal" title="OK"/>
+                                        <connections>
+                                            <action selector="onClose:" destination="SRd-Lb-p1K" eventType="touchUpInside" id="2h8-ud-2VJ"/>
+                                        </connections>
+                                    </button>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" image="hitoe_set.png" translatesAutoresizingMaskIntoConstraints="NO" id="fxb-Ct-3g7">
+                                        <rect key="frame" x="25" y="36" width="191" height="124.5"/>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Hitoeをシャツに装着してください。" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sBD-6Y-Xsx">
+                                        <rect key="frame" x="8" y="180" width="224" height="16"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" red="0.96202143324607325" green="0.96202143324607325" blue="0.96202143324607325" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="fxb-Ct-3g7" secondAttribute="trailing" constant="24" id="0eU-tG-7bf"/>
+                                    <constraint firstAttribute="width" constant="240" id="2lc-kB-0IR"/>
+                                    <constraint firstAttribute="bottom" secondItem="4hl-g0-RYG" secondAttribute="bottom" constant="22" id="4FW-AT-JBh"/>
+                                    <constraint firstItem="sBD-6Y-Xsx" firstAttribute="leading" secondItem="Kab-O7-Z2q" secondAttribute="leading" constant="8" id="AEk-NP-i1g"/>
+                                    <constraint firstAttribute="height" constant="267" id="UyB-N4-IYo"/>
+                                    <constraint firstItem="w4a-xE-6V2" firstAttribute="top" secondItem="Kab-O7-Z2q" secondAttribute="top" constant="8" id="WS1-Qe-bL5"/>
+                                    <constraint firstItem="sBD-6Y-Xsx" firstAttribute="top" secondItem="fxb-Ct-3g7" secondAttribute="bottom" constant="19.5" id="XDK-MK-XGa"/>
+                                    <constraint firstAttribute="trailing" secondItem="4hl-g0-RYG" secondAttribute="trailing" constant="105" id="ZTi-Nr-4Bg"/>
+                                    <constraint firstAttribute="trailing" secondItem="sBD-6Y-Xsx" secondAttribute="trailing" constant="8" id="ZqO-Qo-Ie9"/>
+                                    <constraint firstItem="w4a-xE-6V2" firstAttribute="leading" secondItem="Kab-O7-Z2q" secondAttribute="leading" constant="70" id="biR-KO-sVC"/>
+                                    <constraint firstItem="4hl-g0-RYG" firstAttribute="top" secondItem="sBD-6Y-Xsx" secondAttribute="bottom" constant="19" id="kbe-Uh-RFM"/>
+                                    <constraint firstItem="fxb-Ct-3g7" firstAttribute="leading" secondItem="Kab-O7-Z2q" secondAttribute="leading" constant="25" id="kfc-Tg-KrZ"/>
+                                    <constraint firstItem="4hl-g0-RYG" firstAttribute="leading" secondItem="Kab-O7-Z2q" secondAttribute="leading" constant="105" id="kgf-Fl-tWd"/>
+                                    <constraint firstItem="fxb-Ct-3g7" firstAttribute="top" secondItem="w4a-xE-6V2" secondAttribute="bottom" constant="8" id="kqg-tk-tyU"/>
+                                    <constraint firstAttribute="trailing" secondItem="w4a-xE-6V2" secondAttribute="trailing" constant="78" id="pqk-Cl-tdK"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="Kab-O7-Z2q" firstAttribute="centerY" secondItem="MtN-su-twy" secondAttribute="centerY" id="1BT-47-1eU"/>
+                            <constraint firstItem="Kab-O7-Z2q" firstAttribute="centerX" secondItem="MtN-su-twy" secondAttribute="centerX" id="PNo-KU-TPC"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="hitoeShirtView" destination="Kab-O7-Z2q" id="a4E-cZ-0zE"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Iar-Rx-shu" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="474" y="428"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="hitoe_set.png" width="480" height="360"/>
+    </resources>
+</document>

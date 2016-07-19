@@ -8,8 +8,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <CoreBluetooth/CoreBluetooth.h>
+
 #import "DPHitoeManager.h"
 
-@interface DPHitoeAddDeviceTableViewController : UITableViewController<DPHitoeConnectionDelegate>
+@interface DPHitoeAddDeviceTableViewController : UITableViewController<DPHitoeConnectionDelegate,CBCentralManagerDelegate>
 
 @end

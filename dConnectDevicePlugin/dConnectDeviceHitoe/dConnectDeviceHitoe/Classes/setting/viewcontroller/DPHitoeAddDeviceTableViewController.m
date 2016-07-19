@@ -13,9 +13,12 @@
 #import "DPHitoeDevice.h"
 #import "DPHitoeProgressDialog.h"
 #import "DPHitoePinCodeDialog.h"
+#import "DPHitoeWakeupDialog.h"
+#import "DPHitoeSetShirtDialog.h"
 
 @interface DPHitoeAddDeviceTableViewController () {
     NSMutableArray *discoveries;
+    CBCentralManager *cManager;
 }
 @property (nonatomic) NSTimer *timer;
 @end
@@ -47,20 +50,26 @@
                                                                            alpha:1.0];
     
 
-    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC));
-    dispatch_after(popTime, dispatch_get_main_queue(), ^{
-        _timer = [NSTimer
-                     scheduledTimerWithTimeInterval:5.0
-                     target:self
-                     selector:@selector(onTimer:)
-                     userInfo:nil
-                     repeats:YES];
-    });
+
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     [DPHitoeManager sharedInstance].connectionDelegate = self;
+    NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
+    BOOL sw = [def boolForKey:DPHitoeWakeUpNever];
+    if (!sw) {
+        [DPHitoeWakeupDialog showHitoeWakeupDialogWithComplition:^{
+            [self startTimer];
+        }];
+    } else {
+        [self startTimer];
+    }
+    cManager = [[CBCentralManager alloc] initWithDelegate:self queue:nil];
+    NSArray *services = @[];
+    NSDictionary *options = @{CBCentralManagerScanOptionAllowDuplicatesKey:@(NO)};
+    [cManager scanForPeripheralsWithServices:services options:options];
+
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
@@ -68,8 +77,6 @@
     if ([_timer isValid]) {
         [_timer invalidate];
     }
-
-    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -112,40 +119,42 @@
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
-
-    NSMutableArray *devices = [DPHitoeManager sharedInstance].registeredDevices;
-    DPHitoeDevice *device = [devices objectAtIndex:indexPath.section];
-    
+    if ([discoveries count] <= 0) {
+        return;
+    }
+    DPHitoeDevice *device = discoveries[indexPath.row];
+    if ([_timer isValid]) {
+        [_timer invalidate];
+    }
     if (!device.pinCode) {
-        if ([_timer isValid]) {
-            [_timer invalidate];
-        }
         [DPHitoePinCodeDialog showPinCodeDialogWithCompletion:^(NSString *pinCode) {
+            [DPHitoePinCodeDialog closePinCodesDialog];
+
             device.pinCode = pinCode;
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
                 [[DPHitoeManager sharedInstance] connectForHitoe:device];
+                
             });
-            _timer = [NSTimer
-                      scheduledTimerWithTimeInterval:5.0
-                      target:self
-                      selector:@selector(onTimer:)
-                      userInfo:nil
-                      repeats:YES];
+            dispatch_queue_t updateQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+            dispatch_async(updateQueue, ^{
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    [DPHitoeProgressDialog showProgressDialog];
+                });
+            });
+
         }];
-        return;
     } else {
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             [[DPHitoeManager sharedInstance] connectForHitoe:device];
         });
-    }
-   [DPHitoeProgressDialog showProgressDialog];
+        [DPHitoeProgressDialog showProgressDialog];
 
+    }
 }
 
 
 #pragma mark - Hitoe delegate
 -(void)didConnectWithDevice:(DPHitoeDevice*)device {
-    [DPHitoeProgressDialog closeProgressDialog];
     for (int i = 0; i < [discoveries count]; i++) {
         DPHitoeDevice *discovery = [discoveries objectAtIndex:i];
         if ([discovery.serviceId isEqualToString:device.serviceId]) {
@@ -153,18 +162,23 @@
         }
     }
     [self.tableView reloadData];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [DPHitoeSetShirtDialog showHitoeSetShirtDialogWithComplition:^{
+            [self startTimer];
+            [DPHitoeProgressDialog closeProgressDialog];
+        }];
+    });
 }
 
 -(void)didConnectFailWithDevice:(DPHitoeDevice*)device {
-    [DPHitoeProgressDialog closeProgressDialog];
-
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"接続失敗"
                                                                              message:@"Hitoeとの接続に失敗しました。"
                                                                       preferredStyle:UIAlertControllerStyleAlert];
     
     [alertController addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil]];
     [self presentViewController:alertController animated:YES completion:nil];
-
+    [self startTimer];
+    [DPHitoeProgressDialog closeProgressDialog];
 }
 
 -(void)didDisconnectWithDevice:(DPHitoeDevice*)device {
@@ -175,14 +189,11 @@
     discoveries = [devices mutableCopy];
     for (int i = 0; i < [discoveries count]; i++) {
         DPHitoeDevice *discovery = [discoveries objectAtIndex:i];
-        if (discovery.pinCode) {
+        if (discovery.pinCode && discovery.pinCode.length > 0) {
             [discoveries removeObjectAtIndex:i];
         }
     }
-
-    if ([discoveries count] > 0) {
-        [self.tableView reloadData];
-    }
+    [self.tableView reloadData];
     [DPHitoeProgressDialog closeProgressDialog];
 }
 
@@ -190,9 +201,35 @@
     
 }
 
+#pragma mark - CoreBluetooth Delegate
+- (void)centralManagerDidUpdateState:(CBCentralManager *)central {
+    BOOL isStatus = (central.state == CBCentralManagerStatePoweredOn);
+    if (!isStatus) {
+        if ([_timer isValid]) {
+            [_timer invalidate];
+        }
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self dismissViewControllerAnimated:YES completion:nil];
+        });
+    }
+    [cManager stopScan];
+}
+
+
 - (IBAction)searchDevices:(id)sender {
     [[DPHitoeManager sharedInstance] discovery];
     [DPHitoeProgressDialog showProgressDialog];
+}
+
+
+#pragma mark - Private Method
+- (void)startTimer {
+    _timer = [NSTimer
+              scheduledTimerWithTimeInterval:5.0
+              target:self
+              selector:@selector(onTimer:)
+              userInfo:nil
+              repeats:YES];
 }
 
 #pragma mark - Timer

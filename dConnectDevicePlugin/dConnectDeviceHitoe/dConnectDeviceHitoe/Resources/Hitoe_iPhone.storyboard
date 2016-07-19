@@ -19,10 +19,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uEi-mf-LUM">
-                                <rect key="frame" x="20" y="77" width="534" height="73"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uEi-mf-LUM">
+                                <rect key="frame" x="20" y="77" width="534" height="100"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" secondItem="uEi-mf-LUM" secondAttribute="height" multiplier="534:73" id="nY8-vc-5Q5"/>
+                                    <constraint firstAttribute="height" constant="100" id="DOj-gq-vIJ"/>
+                                    <constraint firstAttribute="width" constant="534" id="ecS-3m-Wd7"/>
                                 </constraints>
                                 <string key="text">Hitoeが追加されていません。
 「デバイス追加画面へ」ボタンを押して、
@@ -31,10 +32,6 @@ Hitoeを追加してください。</string>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UCU-HF-eXh">
-                                <rect key="frame" x="248" y="158" width="105" height="30"/>
-                                <state key="normal" title="設定画面を開く"/>
-                            </button>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="udi-pm-wdn">
                                 <rect key="frame" x="0.0" y="64" width="600" height="492"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -66,8 +63,8 @@ Hitoeを追加してください。</string>
                                                     <color key="tintColor" red="0.079670963885682511" green="0.91978979514192338" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <state key="normal" title="接続"/>
                                                 </button>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PdU-ar-8Az">
-                                                    <rect key="frame" x="18" y="28" width="26.5" height="12"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PdU-ar-8Az">
+                                                    <rect key="frame" x="18" y="29" width="24" height="11"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="9"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
@@ -97,13 +94,11 @@ Hitoeを追加してください。</string>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="UCU-HF-eXh" firstAttribute="top" secondItem="uEi-mf-LUM" secondAttribute="bottom" constant="8" id="03H-Qo-PvP"/>
                             <constraint firstItem="uEi-mf-LUM" firstAttribute="leading" secondItem="kVS-yK-epS" secondAttribute="leading" constant="20" id="3Ey-2b-fvA"/>
                             <constraint firstItem="uEi-mf-LUM" firstAttribute="top" secondItem="xt6-4t-lmO" secondAttribute="bottom" constant="13" id="5ks-Qn-LGp"/>
                             <constraint firstItem="udi-pm-wdn" firstAttribute="centerY" secondItem="kVS-yK-epS" secondAttribute="centerY" id="HRK-r3-HO3"/>
                             <constraint firstAttribute="trailing" secondItem="uEi-mf-LUM" secondAttribute="trailing" constant="46" id="Ihv-6M-6mE"/>
                             <constraint firstAttribute="trailing" secondItem="udi-pm-wdn" secondAttribute="trailing" id="Vsa-UA-gsn"/>
-                            <constraint firstItem="UCU-HF-eXh" firstAttribute="centerX" secondItem="kVS-yK-epS" secondAttribute="centerX" id="ZZS-at-dgs"/>
                             <constraint firstItem="udi-pm-wdn" firstAttribute="bottom" secondItem="3rO-6c-NaD" secondAttribute="top" id="cXl-aI-7sK"/>
                             <constraint firstItem="udi-pm-wdn" firstAttribute="leading" secondItem="kVS-yK-epS" secondAttribute="leading" id="h6G-7O-gkr"/>
                             <constraint firstItem="udi-pm-wdn" firstAttribute="top" secondItem="xt6-4t-lmO" secondAttribute="bottom" id="kXX-FY-VdK"/>
@@ -116,6 +111,7 @@ Hitoeを追加してください。</string>
                             <mask key="constraints">
                                 <exclude reference="HRK-r3-HO3"/>
                                 <exclude reference="kXX-FY-VdK"/>
+                                <exclude reference="twQ-3l-C2A"/>
                                 <exclude reference="vBS-ds-xof"/>
                             </mask>
                         </variation>
@@ -131,9 +127,9 @@ Hitoeを追加してください。</string>
                     </toolbarItems>
                     <navigationItem key="navigationItem" title="デバイス一覧画面" id="AQ4-Pg-tBi"/>
                     <connections>
+                        <outlet property="addDeviceBtn" destination="ORY-jc-bZb" id="cv5-l7-g3H"/>
                         <outlet property="descriptionLabel" destination="uEi-mf-LUM" id="oQi-QG-LeG"/>
                         <outlet property="registerDeviceList" destination="udi-pm-wdn" id="yXL-bt-Z8q"/>
-                        <outlet property="settingBtn" destination="UCU-HF-eXh" id="5XX-dx-YpR"/>
                         <segue destination="EDi-af-Os2" kind="showDetail" identifier="showAddDevice" id="tbo-Nx-BEs"/>
                     </connections>
                 </viewController>

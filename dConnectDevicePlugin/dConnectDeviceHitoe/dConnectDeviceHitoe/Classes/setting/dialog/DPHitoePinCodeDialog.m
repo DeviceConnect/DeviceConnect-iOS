@@ -22,6 +22,7 @@ static void (^pinCodeCallback)(NSString *pinCode);
 @property (weak, nonatomic) IBOutlet UITextField *pinCodeField;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *pinDialogTop;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *pinDialogHeight;
+@property (weak, nonatomic) IBOutlet UIView *pinCodeDialogView;
 
 @end
 
@@ -29,6 +30,14 @@ static void (^pinCodeCallback)(NSString *pinCode);
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    void (^roundCorner)(UIView*) = ^void(UIView *v) {
+        CALayer *layer = v.layer;
+        layer.masksToBounds = YES;
+        layer.cornerRadius = 5.;
+    };
+    
+    roundCorner(self.pinCodeDialogView);
+
 }
 -(void)viewWillAppear:(BOOL)animated
 {
@@ -59,7 +68,7 @@ static void (^pinCodeCallback)(NSString *pinCode);
     if (pinCodeCallback) {
         pinCodeCallback(_pinCodeField.text);
     }
-    [DPHitoePinCodeDialog closePinCodesDialog];
+
 }
 
 #pragma mark - public method
