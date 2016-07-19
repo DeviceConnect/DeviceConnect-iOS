@@ -13,24 +13,6 @@
 
 @interface DConnectService : NSObject<DConnectProfileProvider>
 
-/*!
- @brief サービスID.
- */
-@property (nonatomic, weak) NSString *mId;
-
-/*!
- @brief サポートするプロファイル一覧(key:プロファイル名(小文字) value:DConnectProfile *).
- */
-@property (nonatomic, weak) NSMutableDictionary *mProfiles;
-
-@property (nonatomic, weak) NSString *mName;
-
-@property (nonatomic, weak) NSString *mType;
-
-@property BOOL mIsOnline;
-
-@property (nonatomic, weak) NSString *mConfig;
-
 - (instancetype) initWithServiceId: (NSString *)serviceId;
 
 - (NSString *) serviceId;
