@@ -29,7 +29,7 @@
 
 @implementation DConnectDevicePlugin
 
-- (id) init {
+- (id) initWithObject: (id) object {
     self = [super init];
     if (self) {
         
@@ -38,7 +38,7 @@
         self.mProfileMap = [NSMutableDictionary dictionary];
         self.pluginName = NSStringFromClass([self class]);
         self.pluginVersionName = @"1.0.0";
-        self.mServiceProvider = [[DConnectServiceManager alloc] init];
+        self.mServiceProvider = [DConnectServiceManager sharedForClass: [object class]];
 
         // プロファイル追加
         [self addProfile:[[DConnectAuthorizationProfile alloc] initWithObject:self]];

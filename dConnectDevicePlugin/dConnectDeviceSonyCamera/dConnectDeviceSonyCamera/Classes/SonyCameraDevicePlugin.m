@@ -152,7 +152,7 @@ NSString *const SonyFilePrefix = @"sony";
 @implementation SonyCameraDevicePlugin
 
 - (instancetype) init {
-    self = [super init];
+    self = [super initWithObject: self];
     if (self) {
         self.pluginName = @"Sony Camera (Device Connect Device Plug-in)";
         self.timeslice = 200;

@@ -34,7 +34,7 @@
 
 - (id) init {
     
-    self = [super init];
+    self = [super initWithObject: self];
     
     if (self) {
         self.useLocalOAuth = NO;
