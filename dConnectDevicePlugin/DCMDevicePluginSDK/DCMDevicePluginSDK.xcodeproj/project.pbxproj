@@ -43,6 +43,7 @@
 		ABBD5F501987774B00B81007 /* DCMDriveControllerProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = ABBD5F4F1987774B00B81007 /* DCMDriveControllerProfile.m */; };
 		ABBD5F54198777F200B81007 /* DCMTemperatureProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = ABBD5F53198777F200B81007 /* DCMTemperatureProfile.m */; };
 		ABBD5F5D19877A4900B81007 /* DConnectSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABBD5F5C19877A4900B81007 /* DConnectSDK.framework */; };
+		BEBA9D0A1D3DD62900970FDC /* DCMHumidityProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = BEBA9D091D3DD62900970FDC /* DCMHumidityProfile.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -85,6 +86,8 @@
 		ABBD5F52198777EC00B81007 /* DCMTemperatureProfile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DCMTemperatureProfile.h; sourceTree = "<group>"; };
 		ABBD5F53198777F200B81007 /* DCMTemperatureProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DCMTemperatureProfile.m; sourceTree = "<group>"; };
 		ABBD5F5C19877A4900B81007 /* DConnectSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DConnectSDK.framework; path = ../../dConnectSDK/dConnectSDKForIOS/DConnectSDK/DConnectSDK.framework; sourceTree = "<group>"; };
+		BEBA9D081D3DD5B000970FDC /* DCMHumidityProfile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DCMHumidityProfile.h; sourceTree = "<group>"; };
+		BEBA9D091D3DD62900970FDC /* DCMHumidityProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DCMHumidityProfile.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -181,6 +184,7 @@
 			isa = PBXGroup;
 			children = (
 				AB056F9F1B6A329C00E1482F /* DCMTVProfile.h */,
+				BEBA9D081D3DD5B000970FDC /* DCMHumidityProfile.h */,
 				ABBD5F52198777EC00B81007 /* DCMTemperatureProfile.h */,
 				ABBD5F511987775500B81007 /* DCMDriveControllerProfile.h */,
 				AB3D7482199B26AB00FC4FE5 /* DCMDevicePluginSDK.h */,
@@ -191,8 +195,9 @@
 		ABBD5F4B1987772900B81007 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				ABBD5F53198777F200B81007 /* DCMTemperatureProfile.m */,
 				ABBD5F4F1987774B00B81007 /* DCMDriveControllerProfile.m */,
+				BEBA9D091D3DD62900970FDC /* DCMHumidityProfile.m */,
+				ABBD5F53198777F200B81007 /* DCMTemperatureProfile.m */,
 				AB056F9D1B6A327B00E1482F /* DCMTVProfile.m */,
 			);
 			path = Classes;
@@ -316,6 +321,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AB056F9E1B6A327B00E1482F /* DCMTVProfile.m in Sources */,
+				BEBA9D0A1D3DD62900970FDC /* DCMHumidityProfile.m in Sources */,
 				ABBD5F501987774B00B81007 /* DCMDriveControllerProfile.m in Sources */,
 				ABBD5F54198777F200B81007 /* DCMTemperatureProfile.m in Sources */,
 			);
