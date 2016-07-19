@@ -297,6 +297,10 @@ didReceiveDeleteOnServiceChangeRequest:(DConnectRequestMessage *)request
 
 @implementation DConnectManagerServiceDiscoveryPutOnServiceChangeRequestApi
 
+- (NSString *)attribute {
+    return DConnectServiceDiscoveryProfileAttrOnServiceChange;
+}
+
 - (id) initWithProfile: (DConnectManagerServiceDiscoveryProfile *)profile {
     self = [super init];
     if (self) {
@@ -337,6 +341,10 @@ didReceiveDeleteOnServiceChangeRequest:(DConnectRequestMessage *)request
 #pragma mark - DConnectManagerServiceDiscoveryDeleteOnServiceChangeRequestApi
 
 @implementation DConnectManagerServiceDiscoveryDeleteOnServiceChangeRequestApi
+
+- (NSString *)attribute {
+    return DConnectServiceDiscoveryProfileAttrOnServiceChange;
+}
 
 - (id) initWithProfile: (DConnectManagerServiceDiscoveryProfile *)profile {
     self = [super init];
