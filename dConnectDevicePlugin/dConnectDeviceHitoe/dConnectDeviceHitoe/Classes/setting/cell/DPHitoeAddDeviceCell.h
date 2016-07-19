@@ -12,5 +12,6 @@
 @interface DPHitoeAddDeviceCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UILabel *title;
 @property (weak, nonatomic) IBOutlet UILabel *address;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *searchProgress;
 
 @end

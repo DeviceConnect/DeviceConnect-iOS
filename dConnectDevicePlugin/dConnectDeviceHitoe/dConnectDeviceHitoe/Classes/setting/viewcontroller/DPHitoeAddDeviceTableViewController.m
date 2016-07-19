@@ -89,15 +89,25 @@
 
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [discoveries count];
+    return [discoveries count] + 1;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 
     DPHitoeAddDeviceCell *cell = (DPHitoeAddDeviceCell*) [tableView dequeueReusableCellWithIdentifier:@"cellDevice" forIndexPath:indexPath];
-    DPHitoeDevice *device = [discoveries objectAtIndex:indexPath.section];
-    cell.title.text = device.name;
-    cell.address.text = device.serviceId;
+    if ([discoveries count] > indexPath.row) {
+        DPHitoeDevice *device = [discoveries objectAtIndex:indexPath.row];
+        cell.title.text = device.name;
+        cell.address.text = device.serviceId;
+        cell.title.hidden = NO;
+        cell.address.hidden = NO;
+        cell.searchProgress.hidden = YES;
+    } else {
+        cell.title.hidden = YES;
+        cell.address.hidden = YES;
+        cell.searchProgress.hidden = NO;
+        [cell.searchProgress startAnimating];
+    }
     return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {

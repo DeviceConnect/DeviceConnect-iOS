@@ -14,7 +14,10 @@
 #import "DPHitoeAddDeviceTableViewController.h"
 #import "DPHitoeProgressDialog.h"
 
-@interface DPHitoeDeviceListTableViewController ()
+@interface DPHitoeDeviceListTableViewController () {
+    NSMutableArray *discoveries;
+}
+
 @property (weak, nonatomic) IBOutlet UILabel *descriptionLabel;
 @property (weak, nonatomic) IBOutlet UIButton *settingBtn;
 @property (weak, nonatomic) IBOutlet UITableView *registerDeviceList;
@@ -26,7 +29,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    discoveries = [NSMutableArray array];
+
     // 背景白
     self.view.backgroundColor = [UIColor whiteColor];
     // 閉じるボタン追加
@@ -52,7 +56,13 @@
     longPressRecognizer.minimumPressDuration = 0.6f;
     [self.registerDeviceList addGestureRecognizer: longPressRecognizer];
     [[DPHitoeManager sharedInstance] readHitoeData];
-
+    discoveries = [[DPHitoeManager sharedInstance].registeredDevices mutableCopy];
+    for (int i = 0; i < [discoveries count]; i++) {
+        DPHitoeDevice *discovery = [discoveries objectAtIndex:i];
+        if (discovery.pinCode) {
+            [discoveries removeObjectAtIndex:i];
+        }
+    }
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -76,7 +86,7 @@
 
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [[DPHitoeManager sharedInstance].registeredDevices count];
+    return [discoveries count];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -234,7 +244,8 @@
 }
 
 - (void)enableTableView {
-    if ([[DPHitoeManager sharedInstance].registeredDevices count] == 0) {
+    
+    if ([discoveries count] == 0) {
         self.registerDeviceList.hidden = YES;
         self.settingBtn.hidden = YES;
     } else {
