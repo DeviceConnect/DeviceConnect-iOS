@@ -85,7 +85,9 @@
 		25E1A0721B5DE05A00308AFC /* DPAllJoynSynchronizedMutableDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 25E1A0701B5DE05A00308AFC /* DPAllJoynSynchronizedMutableDictionary.m */; };
 		25F136491B67112600ADD8CB /* DPAllJoynColorUtility.h in Headers */ = {isa = PBXBuildFile; fileRef = 25F136471B67112600ADD8CB /* DPAllJoynColorUtility.h */; };
 		25F1364A1B67112600ADD8CB /* DPAllJoynColorUtility.mm in Sources */ = {isa = PBXBuildFile; fileRef = 25F136481B67112600ADD8CB /* DPAllJoynColorUtility.mm */; };
-		ABC861A61BDA2B4A00E86FA9 /* libAllJoynFramework_iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ABC861A51BDA2B4A00E86FA9 /* libAllJoynFramework_iOS.a */; settings = {ASSET_TAGS = (); }; };
+		ABC861A61BDA2B4A00E86FA9 /* libAllJoynFramework_iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ABC861A51BDA2B4A00E86FA9 /* libAllJoynFramework_iOS.a */; };
+		D6C860321D3A1D2100232EEF /* DPAllJoynService.h in Headers */ = {isa = PBXBuildFile; fileRef = D6C860301D3A1D2000232EEF /* DPAllJoynService.h */; };
+		D6C860331D3A1D2100232EEF /* DPAllJoynService.m in Sources */ = {isa = PBXBuildFile; fileRef = D6C860311D3A1D2000232EEF /* DPAllJoynService.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -166,6 +168,8 @@
 		25F136471B67112600ADD8CB /* DPAllJoynColorUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPAllJoynColorUtility.h; sourceTree = "<group>"; };
 		25F136481B67112600ADD8CB /* DPAllJoynColorUtility.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DPAllJoynColorUtility.mm; sourceTree = "<group>"; };
 		ABC861A51BDA2B4A00E86FA9 /* libAllJoynFramework_iOS.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libAllJoynFramework_iOS.a; path = deps/AllJoyn/darwin/arm/iphoneos/release/dist/about/lib/libAllJoynFramework_iOS.a; sourceTree = "<group>"; };
+		D6C860301D3A1D2000232EEF /* DPAllJoynService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPAllJoynService.h; sourceTree = "<group>"; };
+		D6C860311D3A1D2000232EEF /* DPAllJoynService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPAllJoynService.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -339,6 +343,8 @@
 				25856D181B59091000B1C2DC /* DPAllJoynServiceEntity.mm */,
 				258843C11B5F336A003E5257 /* DPAllJoynSupportCheck.h */,
 				258843C21B5F336A003E5257 /* DPAllJoynSupportCheck.mm */,
+				D6C860301D3A1D2000232EEF /* DPAllJoynService.h */,
+				D6C860311D3A1D2000232EEF /* DPAllJoynService.m */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -433,6 +439,7 @@
 				258843CB1B5F43F9003E5257 /* NSArray+Query.h in Headers */,
 				258498AC1B609A3F0063552E /* LSFControllerService.h in Headers */,
 				2579E9601B69BA99000CA047 /* DPAllJoynMessageConverter.h in Headers */,
+				D6C860321D3A1D2100232EEF /* DPAllJoynService.h in Headers */,
 				25E1A0711B5DE05A00308AFC /* DPAllJoynSynchronizedMutableDictionary.h in Headers */,
 				25856D051B58965E00B1C2DC /* DPAllJoynHandler.h in Headers */,
 				25856D191B59091000B1C2DC /* DPAllJoynServiceEntity.h in Headers */,
@@ -626,6 +633,7 @@
 				25E1A0721B5DE05A00308AFC /* DPAllJoynSynchronizedMutableDictionary.m in Sources */,
 				25856D061B58965E00B1C2DC /* DPAllJoynHandler.mm in Sources */,
 				25856D1A1B59091000B1C2DC /* DPAllJoynServiceEntity.mm in Sources */,
+				D6C860331D3A1D2100232EEF /* DPAllJoynService.m in Sources */,
 				258498A91B609A3F0063552E /* AJNLSFControllerService.mm in Sources */,
 				258498AB1B609A3F0063552E /* AJNLSFLamp.mm in Sources */,
 				25851BD81B575F2700CB732E /* DPAllJoynSettingDetailLIFXViewController.m in Sources */,

@@ -10,7 +10,7 @@
 #import "DPHostTouchView.h"
 #import <DConnectSDK/DConnectSDK.h>
 #import "DPHostDevicePlugin.h"
-#import "DPHostServiceDiscoveryProfile.h"
+#import "DPHostService.h"
 #import "DPHostTouchProfile.h"
 #import "DPHostUtils.h"
 
@@ -35,7 +35,7 @@
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
     // Get event (ontouch).
-    NSArray *evtsTouch = [_eventMgr eventListForServiceId:ServiceDiscoveryServiceId
+    NSArray *evtsTouch = [_eventMgr eventListForServiceId:DPHostDevicePluginServiceId
                                                   profile:DConnectTouchProfileName
                                                 attribute:DConnectTouchProfileAttrOnTouch];
     if (evtsTouch != nil) {
@@ -44,7 +44,7 @@
     }
     
     // Get event (ontouchstart).
-    NSArray *evtsTouchStart = [_eventMgr eventListForServiceId:ServiceDiscoveryServiceId
+    NSArray *evtsTouchStart = [_eventMgr eventListForServiceId:DPHostDevicePluginServiceId
                                                        profile:DConnectTouchProfileName
                                                      attribute:DConnectTouchProfileAttrOnTouchStart];
     if (evtsTouchStart != nil) {
@@ -58,7 +58,7 @@
     for (UITouch *aTouch in touches) {
         if (aTouch.tapCount >= 2) {
             // Get event (ondoubletap).
-            NSArray *evtsDoubleTap = [_eventMgr eventListForServiceId:ServiceDiscoveryServiceId
+            NSArray *evtsDoubleTap = [_eventMgr eventListForServiceId:DPHostDevicePluginServiceId
                                                               profile:DConnectTouchProfileName
                                                             attribute:DConnectTouchProfileAttrOnDoubleTap];
             if (evtsDoubleTap != nil) {
@@ -67,7 +67,7 @@
             }
         } else {
             // Get event (ontouchend).
-            NSArray *evtsTouchEnd = [_eventMgr eventListForServiceId:ServiceDiscoveryServiceId
+            NSArray *evtsTouchEnd = [_eventMgr eventListForServiceId:DPHostDevicePluginServiceId
                                                              profile:DConnectTouchProfileName
                                                            attribute:DConnectTouchProfileAttrOnTouchEnd];
             if (evtsTouchEnd != nil) {
@@ -81,7 +81,7 @@
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
     // Get event (ontouchmove).
-    NSArray *evtsMove = [_eventMgr eventListForServiceId:ServiceDiscoveryServiceId
+    NSArray *evtsMove = [_eventMgr eventListForServiceId:DPHostDevicePluginServiceId
                                                  profile:DConnectTouchProfileName
                                                attribute:DConnectTouchProfileAttrOnTouchMove];
     if (evtsMove != nil) {
@@ -93,7 +93,7 @@
 - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event
 {
     // Get event (ontouchcancel).
-    NSArray *evtsCancel = [_eventMgr eventListForServiceId:ServiceDiscoveryServiceId
+    NSArray *evtsCancel = [_eventMgr eventListForServiceId:DPHostDevicePluginServiceId
                                                    profile:DConnectTouchProfileName
                                                  attribute:DConnectTouchProfileAttrOnTouchCancel];
     if (evtsCancel != nil) {

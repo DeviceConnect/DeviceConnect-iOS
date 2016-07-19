@@ -32,6 +32,11 @@ return YES; \
 @interface DPThetaManager : NSObject
 
 /*!
+ @brief ServiceProvider.
+ */
+@property DConnectServiceProvider *mServiceProvider;
+
+/*!
  @brief DConnectのFileManager。
  */
 @property DConnectFileManager *fileMgr;
@@ -64,6 +69,12 @@ typedef void (^DPThetaOnStatusChangeCallback)(PtpIpObjectInfo *object, NSString 
  @return DPSpheroManagerの共有インスタンス。
  */
 + (instancetype)sharedManager;
+
+/*!
+ @brief ServiceProviderを登録する。
+ @param[in] serviceProvider ServiceProvider
+ */
+- (void)setServiceProvider: (DConnectServiceProvider *) serviceProvider;
 
 /*!
  @brief Thetaと接続する。

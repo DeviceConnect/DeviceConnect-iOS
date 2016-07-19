@@ -10,7 +10,7 @@
 #import <sys/stat.h>
 #import <sys/event.h>
 #import "DPHostFileDescriptorProfile.h"
-#import "DPHostServiceDiscoveryProfile.h"
+#import "DPHostService.h"
 #import "DPHostDevicePlugin.h"
 #import "DPHostUtils.h"
 #import "DPHostFileDescriptorContext.h"

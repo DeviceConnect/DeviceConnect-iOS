@@ -10,7 +10,6 @@
 #import "DPSpheroDeviceOrientationProfile.h"
 #import "DPSpheroDevicePlugin.h"
 #import "DPSpheroManager.h"
-#import "DPSpheroServiceDiscoveryProfile.h"
 
 typedef void (^OrientationBlock)(DPGyroData gyroData, DPPoint3D accel, int interval);
 

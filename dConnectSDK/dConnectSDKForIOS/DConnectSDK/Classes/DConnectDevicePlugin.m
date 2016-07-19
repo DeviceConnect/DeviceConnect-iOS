@@ -18,6 +18,7 @@
 #import "DConnectServiceManager.h"
 #import "DConnectServiceInformationProfile.h"
 
+
 @interface DConnectDevicePlugin ()
 /**
  * プロファイルを格納するマップ.
@@ -31,14 +32,19 @@
 - (id) init {
     self = [super init];
     if (self) {
-        self.useLocalOAuth = YES;
         
+        // デバイスプラグインデータ設定
+        self.useLocalOAuth = YES;
         self.mProfileMap = [NSMutableDictionary dictionary];
         self.pluginName = NSStringFromClass([self class]);
         self.pluginVersionName = @"1.0.0";
+        self.mServiceProvider = [[DConnectServiceManager alloc] init];
 
-        // Local OAuthプロファイル追加
+        // プロファイル追加
         [self addProfile:[[DConnectAuthorizationProfile alloc] initWithObject:self]];
+        [self addProfile:[[DConnectServiceDiscoveryProfile alloc] initWithServiceProvider: self.mServiceProvider]];
+        [self addProfile:[DConnectSystemProfile new]];
+        
         
         // イベント登録
         NSNotificationCenter *notificationCenter

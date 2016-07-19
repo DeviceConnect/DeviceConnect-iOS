@@ -8,6 +8,7 @@
 //
 
 #import "DPHueManager.h"
+#import "DPHueService.h"
 
 @implementation DPHueManager
 //見つけたブリッジのリスト
@@ -45,7 +46,12 @@ NSString *const DPHueBridgeListName = @"org.deviceconnect.ios.DPHue.ip";
     }
 }
 
-//ブリッジの検索
+// ServiceProviderを登録
+- (void)setServiceProvider: (DConnectServiceProvider *) serviceProvider {
+    self.mServiceProvider = serviceProvider;
+}
+
+//ブリッジ検索
 -(void)searchBridgeWithCompletion:(PHBridgeSearchCompletionHandler)completion
 {
     [bridgeSearching startSearchWithCompletionHandler:^(NSDictionary *bridgesFound) {
@@ -53,6 +59,7 @@ NSString *const DPHueBridgeListName = @"org.deviceconnect.ios.DPHue.ip";
         if (completion) {
             completion(bridgesFound);
         }
+        [self updateHueServiceProvider];
     }];
 }
 
@@ -796,4 +803,33 @@ pushlinkAuthenticationSuccessSelector:(SEL)pushlinkAuthenticationSuccessSelector
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     _hueBridgeList = [userDefaults dictionaryForKey:DPHueBridgeListName].mutableCopy;
 }
+
+- (void)updateHueServiceProvider {
+    @synchronized(self) {
+        NSDictionary *bridgesFound = self.hueBridgeList;
+
+        // ServiceProviderに存在するデバイスが最新のリストに存在しなかったらそのサービスをオフラインにする
+        for (DPHueService *service in [self.mServiceProvider services]) {
+            NSString *serviceId = [service serviceId];
+            if (!bridgesFound[serviceId]) {
+                [service setOnline: NO];
+            }
+        }
+        
+        // ServiceProviderに未登録のデバイスが見つかったら追加登録する
+        if (bridgesFound.count > 0) {
+            for (id key in [bridgesFound keyEnumerator]) {
+                NSString *serviceId = [NSString stringWithFormat:@"%@_%@",[bridgesFound valueForKey:key],key];
+                if (![self.mServiceProvider service: serviceId]) {
+                    DPHueService *service = [[DPHueService alloc] initWithBridgeKey:key bridgeValue:[bridgesFound valueForKey:key]];
+                    [self.mServiceProvider addService: service];
+                }
+            }
+            
+        }
+    }
+}
+
+
+
 @end

@@ -19,9 +19,9 @@
 
 #import "DPHostDevicePlugin.h"
 #import "DPHostMediaPlayerProfile.h"
-#import "DPHostServiceDiscoveryProfile.h"
 #import "DPHostMediaContext.h"
 #import "DPHostReachability.h"
+#import "DPHostService.h"
 #import "DPHostUtils.h"
 
 @interface DPHostMediaPlayerProfile()
@@ -124,7 +124,7 @@
 {
 
     // イベントの取得
-    NSArray *evts = [_eventMgr eventListForServiceId:ServiceDiscoveryServiceId
+    NSArray *evts = [_eventMgr eventListForServiceId:DPHostDevicePluginServiceId
                                             profile:DConnectMediaPlayerProfileName
                                           attribute:DConnectMediaPlayerProfileAttrOnStatusChange];
     
@@ -153,7 +153,7 @@
 {
 
     // イベントの取得
-    NSArray *evts = [_eventMgr eventListForServiceId:ServiceDiscoveryServiceId
+    NSArray *evts = [_eventMgr eventListForServiceId:DPHostDevicePluginServiceId
                                             profile:DConnectMediaPlayerProfileName
                                           attribute:DConnectMediaPlayerProfileAttrOnStatusChange];
     
@@ -200,7 +200,7 @@
 - (void) nowPlayingItemChangedInMoviePlayer:(NSNotification *)notification
 {
     // イベントの取得
-    NSArray *evts = [_eventMgr eventListForServiceId:ServiceDiscoveryServiceId
+    NSArray *evts = [_eventMgr eventListForServiceId:DPHostDevicePluginServiceId
                                             profile:DConnectMediaPlayerProfileName
                                           attribute:DConnectMediaPlayerProfileAttrOnStatusChange];
     

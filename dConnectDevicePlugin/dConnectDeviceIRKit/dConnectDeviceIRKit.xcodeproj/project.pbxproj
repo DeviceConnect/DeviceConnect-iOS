@@ -102,6 +102,7 @@
 		ABC2DB151B685AD90034C08F /* DPIRKitDBManager.m in Sources */ = {isa = PBXBuildFile; fileRef = ABC2DB141B685AD90034C08F /* DPIRKitDBManager.m */; };
 		ABC2DB181B6898E20034C08F /* DPIRKitVirtualDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = ABC2DB171B6898E20034C08F /* DPIRKitVirtualDevice.m */; };
 		ABC2DB1B1B689BBE0034C08F /* DPIRKitRESTfulRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = ABC2DB1A1B689BBE0034C08F /* DPIRKitRESTfulRequest.m */; };
+		D673DA7C1D3BBD330021F1BF /* DPIRKitService.m in Sources */ = {isa = PBXBuildFile; fileRef = D673DA7B1D3BBD330021F1BF /* DPIRKitService.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -224,6 +225,8 @@
 		ABC2DB171B6898E20034C08F /* DPIRKitVirtualDevice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPIRKitVirtualDevice.m; sourceTree = "<group>"; };
 		ABC2DB191B689BBE0034C08F /* DPIRKitRESTfulRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPIRKitRESTfulRequest.h; sourceTree = "<group>"; };
 		ABC2DB1A1B689BBE0034C08F /* DPIRKitRESTfulRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPIRKitRESTfulRequest.m; sourceTree = "<group>"; };
+		D673DA7A1D3BBD330021F1BF /* DPIRKitService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPIRKitService.h; sourceTree = "<group>"; };
+		D673DA7B1D3BBD330021F1BF /* DPIRKitService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPIRKitService.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -402,6 +405,8 @@
 				30A0A2D119A3105300822B73 /* DPIRKitDevicePlugin.h */,
 				30A0A2D219A3105300822B73 /* DPIRKitDevicePlugin.m */,
 				3039F99119A70D0C00319429 /* DPIRKitConst.h */,
+				D673DA7A1D3BBD330021F1BF /* DPIRKitService.h */,
+				D673DA7B1D3BBD330021F1BF /* DPIRKitService.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -686,6 +691,7 @@
 				3007FBFF19CD4735005F42CD /* DPIRKitWiFiSelectionGuideViewController.m in Sources */,
 				30A0A2DA19A3164A00822B73 /* DPIRKitDevice.m in Sources */,
 				AB056F9B1B69DDFD00E1482F /* DPIRKitRegisterIRViewController.m in Sources */,
+				D673DA7C1D3BBD330021F1BF /* DPIRKitService.m in Sources */,
 				ABC2DB151B685AD90034C08F /* DPIRKitDBManager.m in Sources */,
 				3039F92A19A5D97E00319429 /* NSString+Hex.m in Sources */,
 				AB056FA41B6B29EC00E1482F /* DPIRKitServiceInformationProfile.m in Sources */,

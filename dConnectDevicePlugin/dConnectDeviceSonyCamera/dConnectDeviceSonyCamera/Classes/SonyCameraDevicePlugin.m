@@ -15,6 +15,9 @@
 #import "SonyCameraViewController.h"
 #import "SampleLiveviewManager.h"
 #import "SonyCameraCameraProfile.h"
+#import "SonyCameraService.h"
+
+#import <DConnectSDK/DConnectService.h>
 
 #import <SystemConfiguration/CaptiveNetwork.h>
 
@@ -49,7 +52,6 @@ NSString *const SonyFilePrefix = @"sony";
  @brief Sony Remote Camera用デバイスプラグイン。
  */
 @interface SonyCameraDevicePlugin () <SampleDiscoveryDelegate,
-                            DConnectServiceDiscoveryProfileDelegate,
                             DConnectSystemProfileDelegate,
                             DConnectSystemProfileDataSource,
                             DConnectMediaStreamRecordingProfileDelegate,
@@ -57,6 +59,10 @@ NSString *const SonyFilePrefix = @"sony";
                             SampleLiveviewDelegate,
                             SonyCameraRemoteApiUtilDelegate,
                             DConnectSettingsProfileDelegate>
+/*!
+ @brief Service生成時に登録するプロファイル(DConnectProfile *)の配列
+ */
+@property (nonatomic) NSArray *mServiceProfiles;
 
 /*!
  @brief SonyRemoteApi操作用.
@@ -156,22 +162,20 @@ NSString *const SonyFilePrefix = @"sony";
         self.mFileManager = [DConnectFileManager fileManagerForPlugin:self];
         Class key = [self class];
         [[DConnectEventManager sharedManagerForClass:key] setController:[DConnectMemoryCacheController new]];
-        DConnectServiceDiscoveryProfile *networkProfile = [DConnectServiceDiscoveryProfile new];
-        networkProfile.delegate = self;
         DConnectSystemProfile *systemProfile = [DConnectSystemProfile new];
         systemProfile.delegate = self;
         systemProfile.dataSource = self;
+        [self addProfile:systemProfile];
+        
+        // サービスで登録するProfile
         DConnectMediaStreamRecordingProfile *mediaProfile = [DConnectMediaStreamRecordingProfile new];
         mediaProfile.delegate = self;
         DConnectSettingsProfile *settingsProfile = [DConnectSettingsProfile new];
         settingsProfile.delegate = self;
         SonyCameraCameraProfile *cameraProfile = [SonyCameraCameraProfile new];
         cameraProfile.delegate = self;
-        [self addProfile:networkProfile];
-        [self addProfile:systemProfile];
-        [self addProfile:mediaProfile];
-        [self addProfile:cameraProfile];
-        [self addProfile:[DConnectServiceInformationProfile new]];
+        self.mServiceProfiles = @[ mediaProfile, cameraProfile, [DConnectServiceInformationProfile new] ];
+        
         if ([self checkSSID]) {
             [self searchSonyCameraDevice];
         }
@@ -298,6 +302,9 @@ NSString *const SonyFilePrefix = @"sony";
     // デバイス選択
     NSInteger idx = [serviceId integerValue];
     [DeviceList selectDeviceAt:idx];
+    
+    // デバイス管理情報更新
+    [self updateManageServices];
 
     return YES;
 }
@@ -309,6 +316,51 @@ NSString *const SonyFilePrefix = @"sony";
                                     attribute:DConnectMediaStreamRecordingProfileAttrOnDataAvailable];
     return evts.count > 0;
 }
+
+// デバイス管理情報更新
+- (void) updateManageServices {
+    @synchronized(self) {
+        
+        // ServiceProvider未登録なら処理しない
+        if (!self.mServiceProvider) {
+            return;
+        }
+        
+        int deviceCount = (int)[DeviceList getSize];
+        
+        // ServiceProviderに存在するサービスが検出されなかったならオフラインにする
+        for (DConnectService *service in [self.mServiceProvider services]) {
+            NSString *serviceId = [service serviceId];
+            
+            BOOL isFindDevice = NO;
+            for (int deviceIndex = 0; deviceIndex < deviceCount; deviceIndex ++) {
+                NSString *deviceServiceId = [NSString stringWithFormat:@"%d", deviceIndex];
+                if (deviceServiceId && [serviceId localizedCaseInsensitiveCompare: deviceServiceId] == NSOrderedSame) {
+                    isFindDevice = YES;
+                    break;
+                }
+            }
+            
+            if (!isFindDevice) {
+                [service setOnline: NO];
+            }
+        }
+        
+        // サービス未登録なら登録する
+        for (int deviceIndex = 0; deviceIndex < deviceCount; deviceIndex ++) {
+            NSString *deviceServiceId = [NSString stringWithFormat:@"%d", deviceIndex];
+            NSString *deviceName = SonyDeviceName;
+            if (![self.mServiceProvider service: deviceServiceId]) {
+                SonyCameraService *service = [[SonyCameraService alloc] initWithServiceId:deviceServiceId
+                                                                               deviceName:deviceName
+                                                                                 profiles: self.mServiceProfiles];
+                [self.mServiceProvider addService: service];
+            }
+        }
+    }
+}
+
+
 
 #pragma mark - SampleDiscoveryDelegate
 
@@ -325,30 +377,6 @@ NSString *const SonyFilePrefix = @"sony";
         }
     }
     [self.delegate didReceiveDeviceList:discovery];
-}
-
-#pragma mark - DConnectServiceDiscoveryProfileDelegate
-
-- (BOOL)                       profile:(DConnectServiceDiscoveryProfile *)profile
-          didReceiveGetServicesRequest:(DConnectRequestMessage *)request
-                              response:(DConnectResponseMessage *)response
-{
-    DConnectArray *services = [DConnectArray array];
-    for (int i = 0; i < [DeviceList getSize]; i++) {
-        NSString *serviceId = [NSString stringWithFormat:@"%d", i];
-        DConnectMessage *service = [DConnectMessage message];
-        [DConnectServiceDiscoveryProfile setId:serviceId target:service];
-        [DConnectServiceDiscoveryProfile setName:SonyDeviceName target:service];
-        [DConnectServiceDiscoveryProfile setType:DConnectServiceDiscoveryProfileNetworkTypeWiFi
-                                                 target:service];
-        [DConnectServiceDiscoveryProfile setOnline:YES target:service];
-        [DConnectServiceDiscoveryProfile setScopesWithProvider:self
-                                                        target:service];
-        [services addMessage:service];
-    }
-    [DConnectServiceDiscoveryProfile setServices:services target:response];
-    [response setResult:DConnectMessageResultTypeOk];
-    return YES;
 }
 
 #pragma mark - DConnectSystemProfileDelegate

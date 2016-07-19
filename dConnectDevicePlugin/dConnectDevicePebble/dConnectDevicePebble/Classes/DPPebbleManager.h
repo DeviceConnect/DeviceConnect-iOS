@@ -8,14 +8,21 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <DConnectSDK/DConnectServiceProvider.h>
 
 @interface DPPebbleManager : NSObject
+
+// ServiceProvider
+@property (nonatomic, weak) DConnectServiceProvider *mServiceProvider;
 
 // 接続可能なデバイスリスト取得
 @property (nonatomic, readonly) NSArray *deviceList;
 
 // 共有インスタンス
 + (instancetype)sharedManager;
+
+// ServiceProvider設定
+- (void) setServiceProvider: (DConnectServiceProvider *)serviceProvider;
 
 // アプリがバックグラウンドに入った時に呼ぶ
 - (void)applicationDidEnterBackground;
