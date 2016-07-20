@@ -8,7 +8,10 @@
 //
 
 #import <DConnectSDK/DConnectSDK.h>
+#import "DPLinkingSensorData.h"
 
 @interface DPLinkingDeviceOrientationProfile : DConnectDeviceOrientationProfile
+
++ (void) updateSensorData:(DPLinkingSensorData *)sensor to:(DConnectMessage *)message;
 
 @end

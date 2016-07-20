@@ -41,10 +41,11 @@
 - (UIViewController *) profile:(DConnectSystemProfile *)sender
          settingPageForRequest:(DConnectRequestMessage *)request
 {
-    UIStoryboard *storyBoard;
-    storyBoard = [UIStoryboard storyboardWithName:@"Linking"
-                                           bundle:DPLinkingResourceBundle()];
-    return [storyBoard instantiateInitialViewController];
+    return nil;
+//    UIStoryboard *storyBoard;
+//    storyBoard = [UIStoryboard storyboardWithName:@"Linking"
+//                                           bundle:DPLinkingResourceBundle()];
+//    return [storyBoard instantiateInitialViewController];
 }
 
 @end

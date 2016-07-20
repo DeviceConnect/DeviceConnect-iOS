@@ -65,6 +65,10 @@
 		BED1242C1D3F503700205FCD /* DCMDevicePluginSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BED1242B1D3F503700205FCD /* DCMDevicePluginSDK.framework */; };
 		BED1242E1D3F504A00205FCD /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = BED1242D1D3F504A00205FCD /* libsqlite3.0.tbd */; };
 		BED124321D3F52EE00205FCD /* DConnectSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BED124311D3F52EE00205FCD /* DConnectSDK.framework */; };
+		BED124361D3F690E00205FCD /* DPLinkingTimeoutSchedule.m in Sources */ = {isa = PBXBuildFile; fileRef = BED124351D3F690E00205FCD /* DPLinkingTimeoutSchedule.m */; };
+		BED1243D1D3F76AA00205FCD /* DPLinkingDeviceSensorHolder.m in Sources */ = {isa = PBXBuildFile; fileRef = BED1243C1D3F76AA00205FCD /* DPLinkingDeviceSensorHolder.m */; };
+		BED124401D3F775700205FCD /* DPLinkingDeviceSensorOnce.m in Sources */ = {isa = PBXBuildFile; fileRef = BED1243F1D3F775700205FCD /* DPLinkingDeviceSensorOnce.m */; };
+		BED124431D3F7C5200205FCD /* DPLinkingDeviceRepeatExecutor.m in Sources */ = {isa = PBXBuildFile; fileRef = BED124421D3F7C5200205FCD /* DPLinkingDeviceRepeatExecutor.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -206,6 +210,14 @@
 		BED1242D1D3F504A00205FCD /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
 		BED1242F1D3F51EF00205FCD /* dConnectDeviceLinking-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "dConnectDeviceLinking-Prefix.pch"; sourceTree = "<group>"; };
 		BED124311D3F52EE00205FCD /* DConnectSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DConnectSDK.framework; path = ../../dConnectSDK/dConnectSDKForIOS/bin/DConnectSDK.framework; sourceTree = "<group>"; };
+		BED124341D3F690E00205FCD /* DPLinkingTimeoutSchedule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPLinkingTimeoutSchedule.h; sourceTree = "<group>"; };
+		BED124351D3F690E00205FCD /* DPLinkingTimeoutSchedule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPLinkingTimeoutSchedule.m; sourceTree = "<group>"; };
+		BED1243B1D3F76AA00205FCD /* DPLinkingDeviceSensorHolder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPLinkingDeviceSensorHolder.h; sourceTree = "<group>"; };
+		BED1243C1D3F76AA00205FCD /* DPLinkingDeviceSensorHolder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPLinkingDeviceSensorHolder.m; sourceTree = "<group>"; };
+		BED1243E1D3F775700205FCD /* DPLinkingDeviceSensorOnce.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPLinkingDeviceSensorOnce.h; sourceTree = "<group>"; };
+		BED1243F1D3F775700205FCD /* DPLinkingDeviceSensorOnce.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPLinkingDeviceSensorOnce.m; sourceTree = "<group>"; };
+		BED124411D3F7C5200205FCD /* DPLinkingDeviceRepeatExecutor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPLinkingDeviceRepeatExecutor.h; sourceTree = "<group>"; };
+		BED124421D3F7C5200205FCD /* DPLinkingDeviceRepeatExecutor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPLinkingDeviceRepeatExecutor.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -384,6 +396,7 @@
 		BED123B51D3F4EE500205FCD /* profile */ = {
 			isa = PBXGroup;
 			children = (
+				BED1243A1D3F76AA00205FCD /* util */,
 				BED123B61D3F4EE500205FCD /* DPLinkingDeviceBatteryProfile.h */,
 				BED123B71D3F4EE500205FCD /* DPLinkingDeviceBatteryProfile.m */,
 				BED123B81D3F4EE500205FCD /* DPLinkingDeviceHumidityProfile.h */,
@@ -460,6 +473,8 @@
 			children = (
 				BED123E81D3F4EE500205FCD /* DPLinkingUtil.h */,
 				BED123E91D3F4EE500205FCD /* DPLinkingUtil.m */,
+				BED124341D3F690E00205FCD /* DPLinkingTimeoutSchedule.h */,
+				BED124351D3F690E00205FCD /* DPLinkingTimeoutSchedule.m */,
 			);
 			path = util;
 			sourceTree = "<group>";
@@ -485,6 +500,19 @@
 				BED1242D1D3F504A00205FCD /* libsqlite3.0.tbd */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		BED1243A1D3F76AA00205FCD /* util */ = {
+			isa = PBXGroup;
+			children = (
+				BED1243B1D3F76AA00205FCD /* DPLinkingDeviceSensorHolder.h */,
+				BED1243C1D3F76AA00205FCD /* DPLinkingDeviceSensorHolder.m */,
+				BED1243E1D3F775700205FCD /* DPLinkingDeviceSensorOnce.h */,
+				BED1243F1D3F775700205FCD /* DPLinkingDeviceSensorOnce.m */,
+				BED124411D3F7C5200205FCD /* DPLinkingDeviceRepeatExecutor.h */,
+				BED124421D3F7C5200205FCD /* DPLinkingDeviceRepeatExecutor.m */,
+			);
+			path = util;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -628,6 +656,7 @@
 				BED1240C1D3F4EE500205FCD /* DPLinkingDeviceService.m in Sources */,
 				BED123F51D3F4EE500205FCD /* DPLinkingHumidityData.m in Sources */,
 				BED124121D3F4EE500205FCD /* DPLinkingBeaconViewController.m in Sources */,
+				BED124431D3F7C5200205FCD /* DPLinkingDeviceRepeatExecutor.m in Sources */,
 				BED123FA1D3F4EE500205FCD /* DPLinkingBeaconHumidityProfile.m in Sources */,
 				BED123F81D3F4EE500205FCD /* DPLinkingBeaconAtmosphericPressureProfile.m in Sources */,
 				BED1241A1D3F4EE500205FCD /* DPLinkingUtil.m in Sources */,
@@ -642,14 +671,17 @@
 				BED124131D3F4EE500205FCD /* DPLinkingButton.m in Sources */,
 				BED1240E1D3F4EE500205FCD /* DPLinkingServiceDiscoveryProfile.m in Sources */,
 				BED123FF1D3F4EE500205FCD /* DPLinkingDevicePlugin.m in Sources */,
+				BED124401D3F775700205FCD /* DPLinkingDeviceSensorOnce.m in Sources */,
 				BED124091D3F4EE500205FCD /* DPLinkingDeviceProximityProfile.m in Sources */,
 				BED124161D3F4EE500205FCD /* DPLinkingMainViewController.m in Sources */,
 				BED123F21D3F4EE500205FCD /* DPLinkingBeacon.m in Sources */,
 				BED123FE1D3F4EE500205FCD /* DPLinkingBeaconService.m in Sources */,
+				BED1243D1D3F76AA00205FCD /* DPLinkingDeviceSensorHolder.m in Sources */,
 				BED124011D3F4EE500205FCD /* DPLinkingDeviceManager.m in Sources */,
 				BED123F41D3F4EE500205FCD /* DPLinkingGattData.m in Sources */,
 				BED123F31D3F4EE500205FCD /* DPLinkingBeaconManager.m in Sources */,
 				BED124031D3F4EE500205FCD /* DPLinkingDeviceBatteryProfile.m in Sources */,
+				BED124361D3F690E00205FCD /* DPLinkingTimeoutSchedule.m in Sources */,
 				BED123F61D3F4EE500205FCD /* DPLinkingRawData.m in Sources */,
 				BED124041D3F4EE500205FCD /* DPLinkingDeviceHumidityProfile.m in Sources */,
 				BED1240D1D3F4EE500205FCD /* DConnectAtmosphericPressureProfile.m in Sources */,
