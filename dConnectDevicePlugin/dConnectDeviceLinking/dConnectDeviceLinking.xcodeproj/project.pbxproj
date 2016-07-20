@@ -140,8 +140,8 @@
 		BED123A81D3F4EE500205FCD /* DPLinkingBeaconTemperatureProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPLinkingBeaconTemperatureProfile.m; sourceTree = "<group>"; };
 		BED123AA1D3F4EE500205FCD /* DPLinkingBeaconService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPLinkingBeaconService.h; sourceTree = "<group>"; };
 		BED123AB1D3F4EE500205FCD /* DPLinkingBeaconService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPLinkingBeaconService.m; sourceTree = "<group>"; };
-		BED123AC1D3F4EE500205FCD /* DPLinkingDevicePlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DPLinkingDevicePlugin.h; path = Classes/DPLinkingDevicePlugin.h; sourceTree = "<group>"; };
-		BED123AD1D3F4EE500205FCD /* DPLinkingDevicePlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DPLinkingDevicePlugin.m; path = Classes/DPLinkingDevicePlugin.m; sourceTree = "<group>"; };
+		BED123AC1D3F4EE500205FCD /* DPLinkingDevicePlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPLinkingDevicePlugin.h; sourceTree = "<group>"; };
+		BED123AD1D3F4EE500205FCD /* DPLinkingDevicePlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPLinkingDevicePlugin.m; sourceTree = "<group>"; };
 		BED123AF1D3F4EE500205FCD /* DPLinkingDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPLinkingDevice.h; sourceTree = "<group>"; };
 		BED123B01D3F4EE500205FCD /* DPLinkingDevice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPLinkingDevice.m; sourceTree = "<group>"; };
 		BED123B11D3F4EE500205FCD /* DPLinkingDeviceManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPLinkingDeviceManager.h; sourceTree = "<group>"; };
@@ -262,8 +262,6 @@
 			isa = PBXGroup;
 			children = (
 				BED1238A1D3F4EE500205FCD /* Classes */,
-				BED123AC1D3F4EE500205FCD /* DPLinkingDevicePlugin.h */,
-				BED123AD1D3F4EE500205FCD /* DPLinkingDevicePlugin.m */,
 				BED123EA1D3F4EE500205FCD /* Resources */,
 				BED1235A1D3F4EB000205FCD /* AppDelegate.h */,
 				BED1235B1D3F4EB000205FCD /* AppDelegate.m */,
@@ -309,6 +307,8 @@
 				BED123CB1D3F4EE500205FCD /* profile */,
 				BED123D21D3F4EE500205FCD /* ui */,
 				BED123E71D3F4EE500205FCD /* util */,
+				BED123AC1D3F4EE500205FCD /* DPLinkingDevicePlugin.h */,
+				BED123AD1D3F4EE500205FCD /* DPLinkingDevicePlugin.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -479,10 +479,10 @@
 		BED124301D3F524100205FCD /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				BED1242D1D3F504A00205FCD /* libsqlite3.0.tbd */,
 				BED124311D3F52EE00205FCD /* DConnectSDK.framework */,
 				BED1242B1D3F503700205FCD /* DCMDevicePluginSDK.framework */,
 				BED124201D3F4F4000205FCD /* LinkingLibrary.framework */,
+				BED1242D1D3F504A00205FCD /* libsqlite3.0.tbd */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
