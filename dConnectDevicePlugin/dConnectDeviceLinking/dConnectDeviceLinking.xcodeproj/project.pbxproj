@@ -1,0 +1,916 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		BED123591D3F4EB000205FCD /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = BED123581D3F4EB000205FCD /* main.m */; };
+		BED1235C1D3F4EB000205FCD /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = BED1235B1D3F4EB000205FCD /* AppDelegate.m */; };
+		BED123641D3F4EB000205FCD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BED123631D3F4EB000205FCD /* Assets.xcassets */; };
+		BED123721D3F4EB000205FCD /* dConnectDeviceLinkingTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BED123711D3F4EB000205FCD /* dConnectDeviceLinkingTests.m */; };
+		BED1237D1D3F4EB000205FCD /* dConnectDeviceLinkingUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = BED1237C1D3F4EB000205FCD /* dConnectDeviceLinkingUITests.m */; };
+		BED123F01D3F4EE500205FCD /* DPLinkingAtmosphericPressureData.m in Sources */ = {isa = PBXBuildFile; fileRef = BED1238D1D3F4EE500205FCD /* DPLinkingAtmosphericPressureData.m */; };
+		BED123F11D3F4EE500205FCD /* DPLinkingBattryData.m in Sources */ = {isa = PBXBuildFile; fileRef = BED1238F1D3F4EE500205FCD /* DPLinkingBattryData.m */; };
+		BED123F21D3F4EE500205FCD /* DPLinkingBeacon.m in Sources */ = {isa = PBXBuildFile; fileRef = BED123911D3F4EE500205FCD /* DPLinkingBeacon.m */; };
+		BED123F31D3F4EE500205FCD /* DPLinkingBeaconManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BED123931D3F4EE500205FCD /* DPLinkingBeaconManager.m */; };
+		BED123F41D3F4EE500205FCD /* DPLinkingGattData.m in Sources */ = {isa = PBXBuildFile; fileRef = BED123951D3F4EE500205FCD /* DPLinkingGattData.m */; };
+		BED123F51D3F4EE500205FCD /* DPLinkingHumidityData.m in Sources */ = {isa = PBXBuildFile; fileRef = BED123971D3F4EE500205FCD /* DPLinkingHumidityData.m */; };
+		BED123F61D3F4EE500205FCD /* DPLinkingRawData.m in Sources */ = {isa = PBXBuildFile; fileRef = BED123991D3F4EE500205FCD /* DPLinkingRawData.m */; };
+		BED123F71D3F4EE500205FCD /* DPLinkingTemperatureData.m in Sources */ = {isa = PBXBuildFile; fileRef = BED1239B1D3F4EE500205FCD /* DPLinkingTemperatureData.m */; };
+		BED123F81D3F4EE500205FCD /* DPLinkingBeaconAtmosphericPressureProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = BED1239E1D3F4EE500205FCD /* DPLinkingBeaconAtmosphericPressureProfile.m */; };
+		BED123F91D3F4EE500205FCD /* DPLinkingBeaconBatteryProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = BED123A01D3F4EE500205FCD /* DPLinkingBeaconBatteryProfile.m */; };
+		BED123FA1D3F4EE500205FCD /* DPLinkingBeaconHumidityProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = BED123A21D3F4EE500205FCD /* DPLinkingBeaconHumidityProfile.m */; };
+		BED123FB1D3F4EE500205FCD /* DPLinkingBeaconKeyEventProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = BED123A41D3F4EE500205FCD /* DPLinkingBeaconKeyEventProfile.m */; };
+		BED123FC1D3F4EE500205FCD /* DPLinkingBeaconProximityProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = BED123A61D3F4EE500205FCD /* DPLinkingBeaconProximityProfile.m */; };
+		BED123FD1D3F4EE500205FCD /* DPLinkingBeaconTemperatureProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = BED123A81D3F4EE500205FCD /* DPLinkingBeaconTemperatureProfile.m */; };
+		BED123FE1D3F4EE500205FCD /* DPLinkingBeaconService.m in Sources */ = {isa = PBXBuildFile; fileRef = BED123AB1D3F4EE500205FCD /* DPLinkingBeaconService.m */; };
+		BED123FF1D3F4EE500205FCD /* DPLinkingDevicePlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = BED123AD1D3F4EE500205FCD /* DPLinkingDevicePlugin.m */; };
+		BED124001D3F4EE500205FCD /* DPLinkingDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = BED123B01D3F4EE500205FCD /* DPLinkingDevice.m */; };
+		BED124011D3F4EE500205FCD /* DPLinkingDeviceManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BED123B21D3F4EE500205FCD /* DPLinkingDeviceManager.m */; };
+		BED124021D3F4EE500205FCD /* DPLinkingSensorData.m in Sources */ = {isa = PBXBuildFile; fileRef = BED123B41D3F4EE500205FCD /* DPLinkingSensorData.m */; };
+		BED124031D3F4EE500205FCD /* DPLinkingDeviceBatteryProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = BED123B71D3F4EE500205FCD /* DPLinkingDeviceBatteryProfile.m */; };
+		BED124041D3F4EE500205FCD /* DPLinkingDeviceHumidityProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = BED123B91D3F4EE500205FCD /* DPLinkingDeviceHumidityProfile.m */; };
+		BED124051D3F4EE500205FCD /* DPLinkingDeviceKeyEventProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = BED123BB1D3F4EE500205FCD /* DPLinkingDeviceKeyEventProfile.m */; };
+		BED124061D3F4EE500205FCD /* DPLinkingDeviceLightProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = BED123BD1D3F4EE500205FCD /* DPLinkingDeviceLightProfile.m */; };
+		BED124071D3F4EE500205FCD /* DPLinkingDeviceNotificationProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = BED123BF1D3F4EE500205FCD /* DPLinkingDeviceNotificationProfile.m */; };
+		BED124081D3F4EE500205FCD /* DPLinkingDeviceOrientationProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = BED123C11D3F4EE500205FCD /* DPLinkingDeviceOrientationProfile.m */; };
+		BED124091D3F4EE500205FCD /* DPLinkingDeviceProximityProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = BED123C31D3F4EE500205FCD /* DPLinkingDeviceProximityProfile.m */; };
+		BED1240A1D3F4EE500205FCD /* DPLinkingDeviceTemperatureProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = BED123C51D3F4EE500205FCD /* DPLinkingDeviceTemperatureProfile.m */; };
+		BED1240B1D3F4EE500205FCD /* DPLinkingDeviceVibrationProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = BED123C71D3F4EE500205FCD /* DPLinkingDeviceVibrationProfile.m */; };
+		BED1240C1D3F4EE500205FCD /* DPLinkingDeviceService.m in Sources */ = {isa = PBXBuildFile; fileRef = BED123CA1D3F4EE500205FCD /* DPLinkingDeviceService.m */; };
+		BED1240D1D3F4EE500205FCD /* DConnectAtmosphericPressureProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = BED123CD1D3F4EE500205FCD /* DConnectAtmosphericPressureProfile.m */; };
+		BED1240E1D3F4EE500205FCD /* DPLinkingServiceDiscoveryProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = BED123CF1D3F4EE500205FCD /* DPLinkingServiceDiscoveryProfile.m */; };
+		BED1240F1D3F4EE500205FCD /* DPLinkingSystemProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = BED123D11D3F4EE500205FCD /* DPLinkingSystemProfile.m */; };
+		BED124101D3F4EE500205FCD /* DPLinkingAppInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BED123D41D3F4EE500205FCD /* DPLinkingAppInfoViewController.m */; };
+		BED124111D3F4EE500205FCD /* DPLinkingBeaconListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BED123D61D3F4EE500205FCD /* DPLinkingBeaconListViewController.m */; };
+		BED124121D3F4EE500205FCD /* DPLinkingBeaconViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BED123D81D3F4EE500205FCD /* DPLinkingBeaconViewController.m */; };
+		BED124131D3F4EE500205FCD /* DPLinkingButton.m in Sources */ = {isa = PBXBuildFile; fileRef = BED123DA1D3F4EE500205FCD /* DPLinkingButton.m */; };
+		BED124141D3F4EE500205FCD /* DPLinkingDeviceListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BED123DC1D3F4EE500205FCD /* DPLinkingDeviceListViewController.m */; };
+		BED124151D3F4EE500205FCD /* DPLinkingDeviceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BED123DE1D3F4EE500205FCD /* DPLinkingDeviceViewController.m */; };
+		BED124161D3F4EE500205FCD /* DPLinkingMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BED123E01D3F4EE500205FCD /* DPLinkingMainViewController.m */; };
+		BED124171D3F4EE500205FCD /* DPLinkingPairingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BED123E21D3F4EE500205FCD /* DPLinkingPairingViewController.m */; };
+		BED124181D3F4EE500205FCD /* DPLinkingPopoverViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BED123E41D3F4EE500205FCD /* DPLinkingPopoverViewController.m */; };
+		BED124191D3F4EE500205FCD /* DPLinkingSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BED123E61D3F4EE500205FCD /* DPLinkingSearchViewController.m */; };
+		BED1241A1D3F4EE500205FCD /* DPLinkingUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = BED123E91D3F4EE500205FCD /* DPLinkingUtil.m */; };
+		BED1241B1D3F4EE500205FCD /* beacon_icon_blue.png in Resources */ = {isa = PBXBuildFile; fileRef = BED123EB1D3F4EE500205FCD /* beacon_icon_blue.png */; };
+		BED1241C1D3F4EE500205FCD /* beacon_icon_white.png in Resources */ = {isa = PBXBuildFile; fileRef = BED123EC1D3F4EE500205FCD /* beacon_icon_white.png */; };
+		BED1241D1D3F4EE500205FCD /* beacon_icon_white@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BED123ED1D3F4EE500205FCD /* beacon_icon_white@2x.png */; };
+		BED1241E1D3F4EE500205FCD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BED123EE1D3F4EE500205FCD /* LaunchScreen.storyboard */; };
+		BED1241F1D3F4EE500205FCD /* Linking.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BED123EF1D3F4EE500205FCD /* Linking.storyboard */; };
+		BED124211D3F4F4000205FCD /* LinkingLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BED124201D3F4F4000205FCD /* LinkingLibrary.framework */; };
+		BED124271D3F4F7300205FCD /* LinkingLibrary.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = BED124201D3F4F4000205FCD /* LinkingLibrary.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		BED1242C1D3F503700205FCD /* DCMDevicePluginSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BED1242B1D3F503700205FCD /* DCMDevicePluginSDK.framework */; };
+		BED1242E1D3F504A00205FCD /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = BED1242D1D3F504A00205FCD /* libsqlite3.0.tbd */; };
+		BED124321D3F52EE00205FCD /* DConnectSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BED124311D3F52EE00205FCD /* DConnectSDK.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		BED1236E1D3F4EB000205FCD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BED1234C1D3F4EB000205FCD /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = BED123531D3F4EB000205FCD;
+			remoteInfo = dConnectDeviceLinking;
+		};
+		BED123791D3F4EB000205FCD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BED1234C1D3F4EB000205FCD /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = BED123531D3F4EB000205FCD;
+			remoteInfo = dConnectDeviceLinking;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		BED124261D3F4F6E00205FCD /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				BED124271D3F4F7300205FCD /* LinkingLibrary.framework in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		BED123541D3F4EB000205FCD /* dConnectDeviceLinking.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = dConnectDeviceLinking.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		BED123581D3F4EB000205FCD /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		BED1235A1D3F4EB000205FCD /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		BED1235B1D3F4EB000205FCD /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		BED123631D3F4EB000205FCD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		BED123681D3F4EB000205FCD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BED1236D1D3F4EB000205FCD /* dConnectDeviceLinkingTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = dConnectDeviceLinkingTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		BED123711D3F4EB000205FCD /* dConnectDeviceLinkingTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = dConnectDeviceLinkingTests.m; sourceTree = "<group>"; };
+		BED123731D3F4EB000205FCD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BED123781D3F4EB000205FCD /* dConnectDeviceLinkingUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = dConnectDeviceLinkingUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		BED1237C1D3F4EB000205FCD /* dConnectDeviceLinkingUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = dConnectDeviceLinkingUITests.m; sourceTree = "<group>"; };
+		BED1237E1D3F4EB000205FCD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BED1238C1D3F4EE500205FCD /* DPLinkingAtmosphericPressureData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPLinkingAtmosphericPressureData.h; sourceTree = "<group>"; };
+		BED1238D1D3F4EE500205FCD /* DPLinkingAtmosphericPressureData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPLinkingAtmosphericPressureData.m; sourceTree = "<group>"; };
+		BED1238E1D3F4EE500205FCD /* DPLinkingBattryData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPLinkingBattryData.h; sourceTree = "<group>"; };
+		BED1238F1D3F4EE500205FCD /* DPLinkingBattryData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPLinkingBattryData.m; sourceTree = "<group>"; };
+		BED123901D3F4EE500205FCD /* DPLinkingBeacon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPLinkingBeacon.h; sourceTree = "<group>"; };
+		BED123911D3F4EE500205FCD /* DPLinkingBeacon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPLinkingBeacon.m; sourceTree = "<group>"; };
+		BED123921D3F4EE500205FCD /* DPLinkingBeaconManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPLinkingBeaconManager.h; sourceTree = "<group>"; };
+		BED123931D3F4EE500205FCD /* DPLinkingBeaconManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPLinkingBeaconManager.m; sourceTree = "<group>"; };
+		BED123941D3F4EE500205FCD /* DPLinkingGattData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPLinkingGattData.h; sourceTree = "<group>"; };
+		BED123951D3F4EE500205FCD /* DPLinkingGattData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPLinkingGattData.m; sourceTree = "<group>"; };
+		BED123961D3F4EE500205FCD /* DPLinkingHumidityData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPLinkingHumidityData.h; sourceTree = "<group>"; };
+		BED123971D3F4EE500205FCD /* DPLinkingHumidityData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPLinkingHumidityData.m; sourceTree = "<group>"; };
+		BED123981D3F4EE500205FCD /* DPLinkingRawData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPLinkingRawData.h; sourceTree = "<group>"; };
+		BED123991D3F4EE500205FCD /* DPLinkingRawData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPLinkingRawData.m; sourceTree = "<group>"; };
+		BED1239A1D3F4EE500205FCD /* DPLinkingTemperatureData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPLinkingTemperatureData.h; sourceTree = "<group>"; };
+		BED1239B1D3F4EE500205FCD /* DPLinkingTemperatureData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPLinkingTemperatureData.m; sourceTree = "<group>"; };
+		BED1239D1D3F4EE500205FCD /* DPLinkingBeaconAtmosphericPressureProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPLinkingBeaconAtmosphericPressureProfile.h; sourceTree = "<group>"; };
+		BED1239E1D3F4EE500205FCD /* DPLinkingBeaconAtmosphericPressureProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPLinkingBeaconAtmosphericPressureProfile.m; sourceTree = "<group>"; };
+		BED1239F1D3F4EE500205FCD /* DPLinkingBeaconBatteryProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPLinkingBeaconBatteryProfile.h; sourceTree = "<group>"; };
+		BED123A01D3F4EE500205FCD /* DPLinkingBeaconBatteryProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPLinkingBeaconBatteryProfile.m; sourceTree = "<group>"; };
+		BED123A11D3F4EE500205FCD /* DPLinkingBeaconHumidityProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPLinkingBeaconHumidityProfile.h; sourceTree = "<group>"; };
+		BED123A21D3F4EE500205FCD /* DPLinkingBeaconHumidityProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPLinkingBeaconHumidityProfile.m; sourceTree = "<group>"; };
+		BED123A31D3F4EE500205FCD /* DPLinkingBeaconKeyEventProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPLinkingBeaconKeyEventProfile.h; sourceTree = "<group>"; };
+		BED123A41D3F4EE500205FCD /* DPLinkingBeaconKeyEventProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPLinkingBeaconKeyEventProfile.m; sourceTree = "<group>"; };
+		BED123A51D3F4EE500205FCD /* DPLinkingBeaconProximityProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPLinkingBeaconProximityProfile.h; sourceTree = "<group>"; };
+		BED123A61D3F4EE500205FCD /* DPLinkingBeaconProximityProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPLinkingBeaconProximityProfile.m; sourceTree = "<group>"; };
+		BED123A71D3F4EE500205FCD /* DPLinkingBeaconTemperatureProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPLinkingBeaconTemperatureProfile.h; sourceTree = "<group>"; };
+		BED123A81D3F4EE500205FCD /* DPLinkingBeaconTemperatureProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPLinkingBeaconTemperatureProfile.m; sourceTree = "<group>"; };
+		BED123AA1D3F4EE500205FCD /* DPLinkingBeaconService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPLinkingBeaconService.h; sourceTree = "<group>"; };
+		BED123AB1D3F4EE500205FCD /* DPLinkingBeaconService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPLinkingBeaconService.m; sourceTree = "<group>"; };
+		BED123AC1D3F4EE500205FCD /* DPLinkingDevicePlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DPLinkingDevicePlugin.h; path = Classes/DPLinkingDevicePlugin.h; sourceTree = "<group>"; };
+		BED123AD1D3F4EE500205FCD /* DPLinkingDevicePlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DPLinkingDevicePlugin.m; path = Classes/DPLinkingDevicePlugin.m; sourceTree = "<group>"; };
+		BED123AF1D3F4EE500205FCD /* DPLinkingDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPLinkingDevice.h; sourceTree = "<group>"; };
+		BED123B01D3F4EE500205FCD /* DPLinkingDevice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPLinkingDevice.m; sourceTree = "<group>"; };
+		BED123B11D3F4EE500205FCD /* DPLinkingDeviceManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPLinkingDeviceManager.h; sourceTree = "<group>"; };
+		BED123B21D3F4EE500205FCD /* DPLinkingDeviceManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPLinkingDeviceManager.m; sourceTree = "<group>"; };
+		BED123B31D3F4EE500205FCD /* DPLinkingSensorData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPLinkingSensorData.h; sourceTree = "<group>"; };
+		BED123B41D3F4EE500205FCD /* DPLinkingSensorData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPLinkingSensorData.m; sourceTree = "<group>"; };
+		BED123B61D3F4EE500205FCD /* DPLinkingDeviceBatteryProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPLinkingDeviceBatteryProfile.h; sourceTree = "<group>"; };
+		BED123B71D3F4EE500205FCD /* DPLinkingDeviceBatteryProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPLinkingDeviceBatteryProfile.m; sourceTree = "<group>"; };
+		BED123B81D3F4EE500205FCD /* DPLinkingDeviceHumidityProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPLinkingDeviceHumidityProfile.h; sourceTree = "<group>"; };
+		BED123B91D3F4EE500205FCD /* DPLinkingDeviceHumidityProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPLinkingDeviceHumidityProfile.m; sourceTree = "<group>"; };
+		BED123BA1D3F4EE500205FCD /* DPLinkingDeviceKeyEventProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPLinkingDeviceKeyEventProfile.h; sourceTree = "<group>"; };
+		BED123BB1D3F4EE500205FCD /* DPLinkingDeviceKeyEventProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPLinkingDeviceKeyEventProfile.m; sourceTree = "<group>"; };
+		BED123BC1D3F4EE500205FCD /* DPLinkingDeviceLightProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPLinkingDeviceLightProfile.h; sourceTree = "<group>"; };
+		BED123BD1D3F4EE500205FCD /* DPLinkingDeviceLightProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPLinkingDeviceLightProfile.m; sourceTree = "<group>"; };
+		BED123BE1D3F4EE500205FCD /* DPLinkingDeviceNotificationProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPLinkingDeviceNotificationProfile.h; sourceTree = "<group>"; };
+		BED123BF1D3F4EE500205FCD /* DPLinkingDeviceNotificationProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPLinkingDeviceNotificationProfile.m; sourceTree = "<group>"; };
+		BED123C01D3F4EE500205FCD /* DPLinkingDeviceOrientationProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPLinkingDeviceOrientationProfile.h; sourceTree = "<group>"; };
+		BED123C11D3F4EE500205FCD /* DPLinkingDeviceOrientationProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPLinkingDeviceOrientationProfile.m; sourceTree = "<group>"; };
+		BED123C21D3F4EE500205FCD /* DPLinkingDeviceProximityProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPLinkingDeviceProximityProfile.h; sourceTree = "<group>"; };
+		BED123C31D3F4EE500205FCD /* DPLinkingDeviceProximityProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPLinkingDeviceProximityProfile.m; sourceTree = "<group>"; };
+		BED123C41D3F4EE500205FCD /* DPLinkingDeviceTemperatureProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPLinkingDeviceTemperatureProfile.h; sourceTree = "<group>"; };
+		BED123C51D3F4EE500205FCD /* DPLinkingDeviceTemperatureProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPLinkingDeviceTemperatureProfile.m; sourceTree = "<group>"; };
+		BED123C61D3F4EE500205FCD /* DPLinkingDeviceVibrationProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPLinkingDeviceVibrationProfile.h; sourceTree = "<group>"; };
+		BED123C71D3F4EE500205FCD /* DPLinkingDeviceVibrationProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPLinkingDeviceVibrationProfile.m; sourceTree = "<group>"; };
+		BED123C91D3F4EE500205FCD /* DPLinkingDeviceService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPLinkingDeviceService.h; sourceTree = "<group>"; };
+		BED123CA1D3F4EE500205FCD /* DPLinkingDeviceService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPLinkingDeviceService.m; sourceTree = "<group>"; };
+		BED123CC1D3F4EE500205FCD /* DConnectAtmosphericPressureProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DConnectAtmosphericPressureProfile.h; sourceTree = "<group>"; };
+		BED123CD1D3F4EE500205FCD /* DConnectAtmosphericPressureProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DConnectAtmosphericPressureProfile.m; sourceTree = "<group>"; };
+		BED123CE1D3F4EE500205FCD /* DPLinkingServiceDiscoveryProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPLinkingServiceDiscoveryProfile.h; sourceTree = "<group>"; };
+		BED123CF1D3F4EE500205FCD /* DPLinkingServiceDiscoveryProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPLinkingServiceDiscoveryProfile.m; sourceTree = "<group>"; };
+		BED123D01D3F4EE500205FCD /* DPLinkingSystemProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPLinkingSystemProfile.h; sourceTree = "<group>"; };
+		BED123D11D3F4EE500205FCD /* DPLinkingSystemProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPLinkingSystemProfile.m; sourceTree = "<group>"; };
+		BED123D31D3F4EE500205FCD /* DPLinkingAppInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPLinkingAppInfoViewController.h; sourceTree = "<group>"; };
+		BED123D41D3F4EE500205FCD /* DPLinkingAppInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPLinkingAppInfoViewController.m; sourceTree = "<group>"; };
+		BED123D51D3F4EE500205FCD /* DPLinkingBeaconListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPLinkingBeaconListViewController.h; sourceTree = "<group>"; };
+		BED123D61D3F4EE500205FCD /* DPLinkingBeaconListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPLinkingBeaconListViewController.m; sourceTree = "<group>"; };
+		BED123D71D3F4EE500205FCD /* DPLinkingBeaconViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPLinkingBeaconViewController.h; sourceTree = "<group>"; };
+		BED123D81D3F4EE500205FCD /* DPLinkingBeaconViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPLinkingBeaconViewController.m; sourceTree = "<group>"; };
+		BED123D91D3F4EE500205FCD /* DPLinkingButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPLinkingButton.h; sourceTree = "<group>"; };
+		BED123DA1D3F4EE500205FCD /* DPLinkingButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPLinkingButton.m; sourceTree = "<group>"; };
+		BED123DB1D3F4EE500205FCD /* DPLinkingDeviceListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPLinkingDeviceListViewController.h; sourceTree = "<group>"; };
+		BED123DC1D3F4EE500205FCD /* DPLinkingDeviceListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPLinkingDeviceListViewController.m; sourceTree = "<group>"; };
+		BED123DD1D3F4EE500205FCD /* DPLinkingDeviceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPLinkingDeviceViewController.h; sourceTree = "<group>"; };
+		BED123DE1D3F4EE500205FCD /* DPLinkingDeviceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPLinkingDeviceViewController.m; sourceTree = "<group>"; };
+		BED123DF1D3F4EE500205FCD /* DPLinkingMainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPLinkingMainViewController.h; sourceTree = "<group>"; };
+		BED123E01D3F4EE500205FCD /* DPLinkingMainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPLinkingMainViewController.m; sourceTree = "<group>"; };
+		BED123E11D3F4EE500205FCD /* DPLinkingPairingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPLinkingPairingViewController.h; sourceTree = "<group>"; };
+		BED123E21D3F4EE500205FCD /* DPLinkingPairingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPLinkingPairingViewController.m; sourceTree = "<group>"; };
+		BED123E31D3F4EE500205FCD /* DPLinkingPopoverViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPLinkingPopoverViewController.h; sourceTree = "<group>"; };
+		BED123E41D3F4EE500205FCD /* DPLinkingPopoverViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPLinkingPopoverViewController.m; sourceTree = "<group>"; };
+		BED123E51D3F4EE500205FCD /* DPLinkingSearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPLinkingSearchViewController.h; sourceTree = "<group>"; };
+		BED123E61D3F4EE500205FCD /* DPLinkingSearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPLinkingSearchViewController.m; sourceTree = "<group>"; };
+		BED123E81D3F4EE500205FCD /* DPLinkingUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPLinkingUtil.h; sourceTree = "<group>"; };
+		BED123E91D3F4EE500205FCD /* DPLinkingUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPLinkingUtil.m; sourceTree = "<group>"; };
+		BED123EB1D3F4EE500205FCD /* beacon_icon_blue.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = beacon_icon_blue.png; sourceTree = "<group>"; };
+		BED123EC1D3F4EE500205FCD /* beacon_icon_white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = beacon_icon_white.png; sourceTree = "<group>"; };
+		BED123ED1D3F4EE500205FCD /* beacon_icon_white@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "beacon_icon_white@2x.png"; sourceTree = "<group>"; };
+		BED123EE1D3F4EE500205FCD /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		BED123EF1D3F4EE500205FCD /* Linking.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Linking.storyboard; sourceTree = "<group>"; };
+		BED124201D3F4F4000205FCD /* LinkingLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LinkingLibrary.framework; path = dConnectDeviceLinking/Libs/Release/LinkingLibrary.framework; sourceTree = "<group>"; };
+		BED1242B1D3F503700205FCD /* DCMDevicePluginSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DCMDevicePluginSDK.framework; path = ../DCMDevicePluginSDK/bin/DCMDevicePluginSDK.framework; sourceTree = "<group>"; };
+		BED1242D1D3F504A00205FCD /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
+		BED1242F1D3F51EF00205FCD /* dConnectDeviceLinking-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "dConnectDeviceLinking-Prefix.pch"; sourceTree = "<group>"; };
+		BED124311D3F52EE00205FCD /* DConnectSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DConnectSDK.framework; path = ../../dConnectSDK/dConnectSDKForIOS/bin/DConnectSDK.framework; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		BED123511D3F4EB000205FCD /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BED124321D3F52EE00205FCD /* DConnectSDK.framework in Frameworks */,
+				BED1242E1D3F504A00205FCD /* libsqlite3.0.tbd in Frameworks */,
+				BED1242C1D3F503700205FCD /* DCMDevicePluginSDK.framework in Frameworks */,
+				BED124211D3F4F4000205FCD /* LinkingLibrary.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BED1236A1D3F4EB000205FCD /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BED123751D3F4EB000205FCD /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		BED1234B1D3F4EB000205FCD = {
+			isa = PBXGroup;
+			children = (
+				BED124301D3F524100205FCD /* Frameworks */,
+				BED123561D3F4EB000205FCD /* dConnectDeviceLinking */,
+				BED123701D3F4EB000205FCD /* dConnectDeviceLinkingTests */,
+				BED1237B1D3F4EB000205FCD /* dConnectDeviceLinkingUITests */,
+				BED123551D3F4EB000205FCD /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		BED123551D3F4EB000205FCD /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				BED123541D3F4EB000205FCD /* dConnectDeviceLinking.app */,
+				BED1236D1D3F4EB000205FCD /* dConnectDeviceLinkingTests.xctest */,
+				BED123781D3F4EB000205FCD /* dConnectDeviceLinkingUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		BED123561D3F4EB000205FCD /* dConnectDeviceLinking */ = {
+			isa = PBXGroup;
+			children = (
+				BED1238A1D3F4EE500205FCD /* Classes */,
+				BED123AC1D3F4EE500205FCD /* DPLinkingDevicePlugin.h */,
+				BED123AD1D3F4EE500205FCD /* DPLinkingDevicePlugin.m */,
+				BED123EA1D3F4EE500205FCD /* Resources */,
+				BED1235A1D3F4EB000205FCD /* AppDelegate.h */,
+				BED1235B1D3F4EB000205FCD /* AppDelegate.m */,
+				BED123631D3F4EB000205FCD /* Assets.xcassets */,
+				BED123681D3F4EB000205FCD /* Info.plist */,
+				BED123571D3F4EB000205FCD /* Supporting Files */,
+			);
+			path = dConnectDeviceLinking;
+			sourceTree = "<group>";
+		};
+		BED123571D3F4EB000205FCD /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				BED123581D3F4EB000205FCD /* main.m */,
+				BED1242F1D3F51EF00205FCD /* dConnectDeviceLinking-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		BED123701D3F4EB000205FCD /* dConnectDeviceLinkingTests */ = {
+			isa = PBXGroup;
+			children = (
+				BED123711D3F4EB000205FCD /* dConnectDeviceLinkingTests.m */,
+				BED123731D3F4EB000205FCD /* Info.plist */,
+			);
+			path = dConnectDeviceLinkingTests;
+			sourceTree = "<group>";
+		};
+		BED1237B1D3F4EB000205FCD /* dConnectDeviceLinkingUITests */ = {
+			isa = PBXGroup;
+			children = (
+				BED1237C1D3F4EB000205FCD /* dConnectDeviceLinkingUITests.m */,
+				BED1237E1D3F4EB000205FCD /* Info.plist */,
+			);
+			path = dConnectDeviceLinkingUITests;
+			sourceTree = "<group>";
+		};
+		BED1238A1D3F4EE500205FCD /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				BED1238B1D3F4EE500205FCD /* beacon */,
+				BED123AE1D3F4EE500205FCD /* linking */,
+				BED123CB1D3F4EE500205FCD /* profile */,
+				BED123D21D3F4EE500205FCD /* ui */,
+				BED123E71D3F4EE500205FCD /* util */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		BED1238B1D3F4EE500205FCD /* beacon */ = {
+			isa = PBXGroup;
+			children = (
+				BED1238C1D3F4EE500205FCD /* DPLinkingAtmosphericPressureData.h */,
+				BED1238D1D3F4EE500205FCD /* DPLinkingAtmosphericPressureData.m */,
+				BED1238E1D3F4EE500205FCD /* DPLinkingBattryData.h */,
+				BED1238F1D3F4EE500205FCD /* DPLinkingBattryData.m */,
+				BED123901D3F4EE500205FCD /* DPLinkingBeacon.h */,
+				BED123911D3F4EE500205FCD /* DPLinkingBeacon.m */,
+				BED123921D3F4EE500205FCD /* DPLinkingBeaconManager.h */,
+				BED123931D3F4EE500205FCD /* DPLinkingBeaconManager.m */,
+				BED123941D3F4EE500205FCD /* DPLinkingGattData.h */,
+				BED123951D3F4EE500205FCD /* DPLinkingGattData.m */,
+				BED123961D3F4EE500205FCD /* DPLinkingHumidityData.h */,
+				BED123971D3F4EE500205FCD /* DPLinkingHumidityData.m */,
+				BED123981D3F4EE500205FCD /* DPLinkingRawData.h */,
+				BED123991D3F4EE500205FCD /* DPLinkingRawData.m */,
+				BED1239A1D3F4EE500205FCD /* DPLinkingTemperatureData.h */,
+				BED1239B1D3F4EE500205FCD /* DPLinkingTemperatureData.m */,
+				BED1239C1D3F4EE500205FCD /* profile */,
+				BED123A91D3F4EE500205FCD /* service */,
+			);
+			path = beacon;
+			sourceTree = "<group>";
+		};
+		BED1239C1D3F4EE500205FCD /* profile */ = {
+			isa = PBXGroup;
+			children = (
+				BED1239D1D3F4EE500205FCD /* DPLinkingBeaconAtmosphericPressureProfile.h */,
+				BED1239E1D3F4EE500205FCD /* DPLinkingBeaconAtmosphericPressureProfile.m */,
+				BED1239F1D3F4EE500205FCD /* DPLinkingBeaconBatteryProfile.h */,
+				BED123A01D3F4EE500205FCD /* DPLinkingBeaconBatteryProfile.m */,
+				BED123A11D3F4EE500205FCD /* DPLinkingBeaconHumidityProfile.h */,
+				BED123A21D3F4EE500205FCD /* DPLinkingBeaconHumidityProfile.m */,
+				BED123A31D3F4EE500205FCD /* DPLinkingBeaconKeyEventProfile.h */,
+				BED123A41D3F4EE500205FCD /* DPLinkingBeaconKeyEventProfile.m */,
+				BED123A51D3F4EE500205FCD /* DPLinkingBeaconProximityProfile.h */,
+				BED123A61D3F4EE500205FCD /* DPLinkingBeaconProximityProfile.m */,
+				BED123A71D3F4EE500205FCD /* DPLinkingBeaconTemperatureProfile.h */,
+				BED123A81D3F4EE500205FCD /* DPLinkingBeaconTemperatureProfile.m */,
+			);
+			path = profile;
+			sourceTree = "<group>";
+		};
+		BED123A91D3F4EE500205FCD /* service */ = {
+			isa = PBXGroup;
+			children = (
+				BED123AA1D3F4EE500205FCD /* DPLinkingBeaconService.h */,
+				BED123AB1D3F4EE500205FCD /* DPLinkingBeaconService.m */,
+			);
+			path = service;
+			sourceTree = "<group>";
+		};
+		BED123AE1D3F4EE500205FCD /* linking */ = {
+			isa = PBXGroup;
+			children = (
+				BED123AF1D3F4EE500205FCD /* DPLinkingDevice.h */,
+				BED123B01D3F4EE500205FCD /* DPLinkingDevice.m */,
+				BED123B11D3F4EE500205FCD /* DPLinkingDeviceManager.h */,
+				BED123B21D3F4EE500205FCD /* DPLinkingDeviceManager.m */,
+				BED123B31D3F4EE500205FCD /* DPLinkingSensorData.h */,
+				BED123B41D3F4EE500205FCD /* DPLinkingSensorData.m */,
+				BED123B51D3F4EE500205FCD /* profile */,
+				BED123C81D3F4EE500205FCD /* service */,
+			);
+			path = linking;
+			sourceTree = "<group>";
+		};
+		BED123B51D3F4EE500205FCD /* profile */ = {
+			isa = PBXGroup;
+			children = (
+				BED123B61D3F4EE500205FCD /* DPLinkingDeviceBatteryProfile.h */,
+				BED123B71D3F4EE500205FCD /* DPLinkingDeviceBatteryProfile.m */,
+				BED123B81D3F4EE500205FCD /* DPLinkingDeviceHumidityProfile.h */,
+				BED123B91D3F4EE500205FCD /* DPLinkingDeviceHumidityProfile.m */,
+				BED123BA1D3F4EE500205FCD /* DPLinkingDeviceKeyEventProfile.h */,
+				BED123BB1D3F4EE500205FCD /* DPLinkingDeviceKeyEventProfile.m */,
+				BED123BC1D3F4EE500205FCD /* DPLinkingDeviceLightProfile.h */,
+				BED123BD1D3F4EE500205FCD /* DPLinkingDeviceLightProfile.m */,
+				BED123BE1D3F4EE500205FCD /* DPLinkingDeviceNotificationProfile.h */,
+				BED123BF1D3F4EE500205FCD /* DPLinkingDeviceNotificationProfile.m */,
+				BED123C01D3F4EE500205FCD /* DPLinkingDeviceOrientationProfile.h */,
+				BED123C11D3F4EE500205FCD /* DPLinkingDeviceOrientationProfile.m */,
+				BED123C21D3F4EE500205FCD /* DPLinkingDeviceProximityProfile.h */,
+				BED123C31D3F4EE500205FCD /* DPLinkingDeviceProximityProfile.m */,
+				BED123C41D3F4EE500205FCD /* DPLinkingDeviceTemperatureProfile.h */,
+				BED123C51D3F4EE500205FCD /* DPLinkingDeviceTemperatureProfile.m */,
+				BED123C61D3F4EE500205FCD /* DPLinkingDeviceVibrationProfile.h */,
+				BED123C71D3F4EE500205FCD /* DPLinkingDeviceVibrationProfile.m */,
+			);
+			path = profile;
+			sourceTree = "<group>";
+		};
+		BED123C81D3F4EE500205FCD /* service */ = {
+			isa = PBXGroup;
+			children = (
+				BED123C91D3F4EE500205FCD /* DPLinkingDeviceService.h */,
+				BED123CA1D3F4EE500205FCD /* DPLinkingDeviceService.m */,
+			);
+			path = service;
+			sourceTree = "<group>";
+		};
+		BED123CB1D3F4EE500205FCD /* profile */ = {
+			isa = PBXGroup;
+			children = (
+				BED123CC1D3F4EE500205FCD /* DConnectAtmosphericPressureProfile.h */,
+				BED123CD1D3F4EE500205FCD /* DConnectAtmosphericPressureProfile.m */,
+				BED123CE1D3F4EE500205FCD /* DPLinkingServiceDiscoveryProfile.h */,
+				BED123CF1D3F4EE500205FCD /* DPLinkingServiceDiscoveryProfile.m */,
+				BED123D01D3F4EE500205FCD /* DPLinkingSystemProfile.h */,
+				BED123D11D3F4EE500205FCD /* DPLinkingSystemProfile.m */,
+			);
+			path = profile;
+			sourceTree = "<group>";
+		};
+		BED123D21D3F4EE500205FCD /* ui */ = {
+			isa = PBXGroup;
+			children = (
+				BED123D31D3F4EE500205FCD /* DPLinkingAppInfoViewController.h */,
+				BED123D41D3F4EE500205FCD /* DPLinkingAppInfoViewController.m */,
+				BED123D51D3F4EE500205FCD /* DPLinkingBeaconListViewController.h */,
+				BED123D61D3F4EE500205FCD /* DPLinkingBeaconListViewController.m */,
+				BED123D71D3F4EE500205FCD /* DPLinkingBeaconViewController.h */,
+				BED123D81D3F4EE500205FCD /* DPLinkingBeaconViewController.m */,
+				BED123D91D3F4EE500205FCD /* DPLinkingButton.h */,
+				BED123DA1D3F4EE500205FCD /* DPLinkingButton.m */,
+				BED123DB1D3F4EE500205FCD /* DPLinkingDeviceListViewController.h */,
+				BED123DC1D3F4EE500205FCD /* DPLinkingDeviceListViewController.m */,
+				BED123DD1D3F4EE500205FCD /* DPLinkingDeviceViewController.h */,
+				BED123DE1D3F4EE500205FCD /* DPLinkingDeviceViewController.m */,
+				BED123DF1D3F4EE500205FCD /* DPLinkingMainViewController.h */,
+				BED123E01D3F4EE500205FCD /* DPLinkingMainViewController.m */,
+				BED123E11D3F4EE500205FCD /* DPLinkingPairingViewController.h */,
+				BED123E21D3F4EE500205FCD /* DPLinkingPairingViewController.m */,
+				BED123E31D3F4EE500205FCD /* DPLinkingPopoverViewController.h */,
+				BED123E41D3F4EE500205FCD /* DPLinkingPopoverViewController.m */,
+				BED123E51D3F4EE500205FCD /* DPLinkingSearchViewController.h */,
+				BED123E61D3F4EE500205FCD /* DPLinkingSearchViewController.m */,
+			);
+			path = ui;
+			sourceTree = "<group>";
+		};
+		BED123E71D3F4EE500205FCD /* util */ = {
+			isa = PBXGroup;
+			children = (
+				BED123E81D3F4EE500205FCD /* DPLinkingUtil.h */,
+				BED123E91D3F4EE500205FCD /* DPLinkingUtil.m */,
+			);
+			path = util;
+			sourceTree = "<group>";
+		};
+		BED123EA1D3F4EE500205FCD /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				BED123EB1D3F4EE500205FCD /* beacon_icon_blue.png */,
+				BED123EC1D3F4EE500205FCD /* beacon_icon_white.png */,
+				BED123ED1D3F4EE500205FCD /* beacon_icon_white@2x.png */,
+				BED123EE1D3F4EE500205FCD /* LaunchScreen.storyboard */,
+				BED123EF1D3F4EE500205FCD /* Linking.storyboard */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		BED124301D3F524100205FCD /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				BED1242D1D3F504A00205FCD /* libsqlite3.0.tbd */,
+				BED124311D3F52EE00205FCD /* DConnectSDK.framework */,
+				BED1242B1D3F503700205FCD /* DCMDevicePluginSDK.framework */,
+				BED124201D3F4F4000205FCD /* LinkingLibrary.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		BED123531D3F4EB000205FCD /* dConnectDeviceLinking */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BED123811D3F4EB100205FCD /* Build configuration list for PBXNativeTarget "dConnectDeviceLinking" */;
+			buildPhases = (
+				BED123501D3F4EB000205FCD /* Sources */,
+				BED123511D3F4EB000205FCD /* Frameworks */,
+				BED123521D3F4EB000205FCD /* Resources */,
+				BED124261D3F4F6E00205FCD /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = dConnectDeviceLinking;
+			productName = dConnectDeviceLinking;
+			productReference = BED123541D3F4EB000205FCD /* dConnectDeviceLinking.app */;
+			productType = "com.apple.product-type.application";
+		};
+		BED1236C1D3F4EB000205FCD /* dConnectDeviceLinkingTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BED123841D3F4EB100205FCD /* Build configuration list for PBXNativeTarget "dConnectDeviceLinkingTests" */;
+			buildPhases = (
+				BED123691D3F4EB000205FCD /* Sources */,
+				BED1236A1D3F4EB000205FCD /* Frameworks */,
+				BED1236B1D3F4EB000205FCD /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				BED1236F1D3F4EB000205FCD /* PBXTargetDependency */,
+			);
+			name = dConnectDeviceLinkingTests;
+			productName = dConnectDeviceLinkingTests;
+			productReference = BED1236D1D3F4EB000205FCD /* dConnectDeviceLinkingTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		BED123771D3F4EB000205FCD /* dConnectDeviceLinkingUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BED123871D3F4EB100205FCD /* Build configuration list for PBXNativeTarget "dConnectDeviceLinkingUITests" */;
+			buildPhases = (
+				BED123741D3F4EB000205FCD /* Sources */,
+				BED123751D3F4EB000205FCD /* Frameworks */,
+				BED123761D3F4EB000205FCD /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				BED1237A1D3F4EB000205FCD /* PBXTargetDependency */,
+			);
+			name = dConnectDeviceLinkingUITests;
+			productName = dConnectDeviceLinkingUITests;
+			productReference = BED123781D3F4EB000205FCD /* dConnectDeviceLinkingUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		BED1234C1D3F4EB000205FCD /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0720;
+				ORGANIZATIONNAME = "NTT DOCOMO, INC.";
+				TargetAttributes = {
+					BED123531D3F4EB000205FCD = {
+						CreatedOnToolsVersion = 7.2.1;
+					};
+					BED1236C1D3F4EB000205FCD = {
+						CreatedOnToolsVersion = 7.2.1;
+						TestTargetID = BED123531D3F4EB000205FCD;
+					};
+					BED123771D3F4EB000205FCD = {
+						CreatedOnToolsVersion = 7.2.1;
+						TestTargetID = BED123531D3F4EB000205FCD;
+					};
+				};
+			};
+			buildConfigurationList = BED1234F1D3F4EB000205FCD /* Build configuration list for PBXProject "dConnectDeviceLinking" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = BED1234B1D3F4EB000205FCD;
+			productRefGroup = BED123551D3F4EB000205FCD /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				BED123531D3F4EB000205FCD /* dConnectDeviceLinking */,
+				BED1236C1D3F4EB000205FCD /* dConnectDeviceLinkingTests */,
+				BED123771D3F4EB000205FCD /* dConnectDeviceLinkingUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		BED123521D3F4EB000205FCD /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BED1241D1D3F4EE500205FCD /* beacon_icon_white@2x.png in Resources */,
+				BED1241C1D3F4EE500205FCD /* beacon_icon_white.png in Resources */,
+				BED123641D3F4EB000205FCD /* Assets.xcassets in Resources */,
+				BED1241E1D3F4EE500205FCD /* LaunchScreen.storyboard in Resources */,
+				BED1241F1D3F4EE500205FCD /* Linking.storyboard in Resources */,
+				BED1241B1D3F4EE500205FCD /* beacon_icon_blue.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BED1236B1D3F4EB000205FCD /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BED123761D3F4EB000205FCD /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		BED123501D3F4EB000205FCD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BED123F11D3F4EE500205FCD /* DPLinkingBattryData.m in Sources */,
+				BED124111D3F4EE500205FCD /* DPLinkingBeaconListViewController.m in Sources */,
+				BED124021D3F4EE500205FCD /* DPLinkingSensorData.m in Sources */,
+				BED124191D3F4EE500205FCD /* DPLinkingSearchViewController.m in Sources */,
+				BED1240C1D3F4EE500205FCD /* DPLinkingDeviceService.m in Sources */,
+				BED123F51D3F4EE500205FCD /* DPLinkingHumidityData.m in Sources */,
+				BED124121D3F4EE500205FCD /* DPLinkingBeaconViewController.m in Sources */,
+				BED123FA1D3F4EE500205FCD /* DPLinkingBeaconHumidityProfile.m in Sources */,
+				BED123F81D3F4EE500205FCD /* DPLinkingBeaconAtmosphericPressureProfile.m in Sources */,
+				BED1241A1D3F4EE500205FCD /* DPLinkingUtil.m in Sources */,
+				BED1235C1D3F4EB000205FCD /* AppDelegate.m in Sources */,
+				BED124061D3F4EE500205FCD /* DPLinkingDeviceLightProfile.m in Sources */,
+				BED124181D3F4EE500205FCD /* DPLinkingPopoverViewController.m in Sources */,
+				BED1240B1D3F4EE500205FCD /* DPLinkingDeviceVibrationProfile.m in Sources */,
+				BED123FC1D3F4EE500205FCD /* DPLinkingBeaconProximityProfile.m in Sources */,
+				BED123591D3F4EB000205FCD /* main.m in Sources */,
+				BED1240A1D3F4EE500205FCD /* DPLinkingDeviceTemperatureProfile.m in Sources */,
+				BED124171D3F4EE500205FCD /* DPLinkingPairingViewController.m in Sources */,
+				BED124131D3F4EE500205FCD /* DPLinkingButton.m in Sources */,
+				BED1240E1D3F4EE500205FCD /* DPLinkingServiceDiscoveryProfile.m in Sources */,
+				BED123FF1D3F4EE500205FCD /* DPLinkingDevicePlugin.m in Sources */,
+				BED124091D3F4EE500205FCD /* DPLinkingDeviceProximityProfile.m in Sources */,
+				BED124161D3F4EE500205FCD /* DPLinkingMainViewController.m in Sources */,
+				BED123F21D3F4EE500205FCD /* DPLinkingBeacon.m in Sources */,
+				BED123FE1D3F4EE500205FCD /* DPLinkingBeaconService.m in Sources */,
+				BED124011D3F4EE500205FCD /* DPLinkingDeviceManager.m in Sources */,
+				BED123F41D3F4EE500205FCD /* DPLinkingGattData.m in Sources */,
+				BED123F31D3F4EE500205FCD /* DPLinkingBeaconManager.m in Sources */,
+				BED124031D3F4EE500205FCD /* DPLinkingDeviceBatteryProfile.m in Sources */,
+				BED123F61D3F4EE500205FCD /* DPLinkingRawData.m in Sources */,
+				BED124041D3F4EE500205FCD /* DPLinkingDeviceHumidityProfile.m in Sources */,
+				BED1240D1D3F4EE500205FCD /* DConnectAtmosphericPressureProfile.m in Sources */,
+				BED123F01D3F4EE500205FCD /* DPLinkingAtmosphericPressureData.m in Sources */,
+				BED123F91D3F4EE500205FCD /* DPLinkingBeaconBatteryProfile.m in Sources */,
+				BED124001D3F4EE500205FCD /* DPLinkingDevice.m in Sources */,
+				BED1240F1D3F4EE500205FCD /* DPLinkingSystemProfile.m in Sources */,
+				BED124141D3F4EE500205FCD /* DPLinkingDeviceListViewController.m in Sources */,
+				BED123FD1D3F4EE500205FCD /* DPLinkingBeaconTemperatureProfile.m in Sources */,
+				BED124151D3F4EE500205FCD /* DPLinkingDeviceViewController.m in Sources */,
+				BED123FB1D3F4EE500205FCD /* DPLinkingBeaconKeyEventProfile.m in Sources */,
+				BED124101D3F4EE500205FCD /* DPLinkingAppInfoViewController.m in Sources */,
+				BED124071D3F4EE500205FCD /* DPLinkingDeviceNotificationProfile.m in Sources */,
+				BED124081D3F4EE500205FCD /* DPLinkingDeviceOrientationProfile.m in Sources */,
+				BED124051D3F4EE500205FCD /* DPLinkingDeviceKeyEventProfile.m in Sources */,
+				BED123F71D3F4EE500205FCD /* DPLinkingTemperatureData.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BED123691D3F4EB000205FCD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BED123721D3F4EB000205FCD /* dConnectDeviceLinkingTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BED123741D3F4EB000205FCD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BED1237D1D3F4EB000205FCD /* dConnectDeviceLinkingUITests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		BED1236F1D3F4EB000205FCD /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = BED123531D3F4EB000205FCD /* dConnectDeviceLinking */;
+			targetProxy = BED1236E1D3F4EB000205FCD /* PBXContainerItemProxy */;
+		};
+		BED1237A1D3F4EB000205FCD /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = BED123531D3F4EB000205FCD /* dConnectDeviceLinking */;
+			targetProxy = BED123791D3F4EB000205FCD /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		BED1237F1D3F4EB100205FCD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				FRAMEWORK_SEARCH_PATHS = "";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		BED123801D3F4EB100205FCD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				FRAMEWORK_SEARCH_PATHS = "";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		BED123821D3F4EB100205FCD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/dConnectDeviceLinking/Libs/Release",
+					"$(PROJECT_DIR)/../DCMDevicePluginSDK/bin",
+					"$(PROJECT_DIR)/../../dConnectSDK/dConnectSDKForIOS/bin",
+				);
+				INFOPLIST_FILE = dConnectDeviceLinking/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_BUNDLE_IDENTIFIER = org.deviceconnect.ios.linking.dConnectDeviceLinking;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		BED123831D3F4EB100205FCD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/dConnectDeviceLinking/Libs/Release",
+					"$(PROJECT_DIR)/../DCMDevicePluginSDK/bin",
+					"$(PROJECT_DIR)/../../dConnectSDK/dConnectSDKForIOS/bin",
+				);
+				INFOPLIST_FILE = dConnectDeviceLinking/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_BUNDLE_IDENTIFIER = org.deviceconnect.ios.linking.dConnectDeviceLinking;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		BED123851D3F4EB100205FCD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = dConnectDeviceLinkingTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = org.deviceconnect.ios.linking.dConnectDeviceLinkingTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/dConnectDeviceLinking.app/dConnectDeviceLinking";
+			};
+			name = Debug;
+		};
+		BED123861D3F4EB100205FCD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = dConnectDeviceLinkingTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = org.deviceconnect.ios.linking.dConnectDeviceLinkingTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/dConnectDeviceLinking.app/dConnectDeviceLinking";
+			};
+			name = Release;
+		};
+		BED123881D3F4EB100205FCD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = dConnectDeviceLinkingUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = org.deviceconnect.ios.linking.dConnectDeviceLinkingUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = dConnectDeviceLinking;
+				USES_XCTRUNNER = YES;
+			};
+			name = Debug;
+		};
+		BED123891D3F4EB100205FCD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = dConnectDeviceLinkingUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = org.deviceconnect.ios.linking.dConnectDeviceLinkingUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = dConnectDeviceLinking;
+				USES_XCTRUNNER = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		BED1234F1D3F4EB000205FCD /* Build configuration list for PBXProject "dConnectDeviceLinking" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BED1237F1D3F4EB100205FCD /* Debug */,
+				BED123801D3F4EB100205FCD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		BED123811D3F4EB100205FCD /* Build configuration list for PBXNativeTarget "dConnectDeviceLinking" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BED123821D3F4EB100205FCD /* Debug */,
+				BED123831D3F4EB100205FCD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		BED123841D3F4EB100205FCD /* Build configuration list for PBXNativeTarget "dConnectDeviceLinkingTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BED123851D3F4EB100205FCD /* Debug */,
+				BED123861D3F4EB100205FCD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		BED123871D3F4EB100205FCD /* Build configuration list for PBXNativeTarget "dConnectDeviceLinkingUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BED123881D3F4EB100205FCD /* Debug */,
+				BED123891D3F4EB100205FCD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = BED1234C1D3F4EB000205FCD /* Project object */;
+}

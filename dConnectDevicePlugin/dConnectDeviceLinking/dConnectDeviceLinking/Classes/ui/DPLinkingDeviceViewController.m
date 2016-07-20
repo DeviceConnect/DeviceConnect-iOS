@@ -264,10 +264,10 @@
                                                                    message:@"デバイスが切断されました。"
                                                             preferredStyle:UIAlertControllerStyleAlert];
     
-    [alert addAction:[UIAlertAction actionWithTitle:@"はい" style:UIAlertActionStyleDefault handler:nil]];
-    [self presentViewController:alert animated:YES completion:^{
+    [alert addAction:[UIAlertAction actionWithTitle:@"はい" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         [_self.navigationController popViewControllerAnimated:YES];
-    }];
+    }]];
+    [self presentViewController:alert animated:YES completion:nil];
 }
 - (void) openNotSupportDialog:(NSString *)msg {
     __block DPLinkingDeviceViewController *_self = self;
@@ -275,10 +275,10 @@
                                                                    message:msg
                                                             preferredStyle:UIAlertControllerStyleAlert];
     
-    [alert addAction:[UIAlertAction actionWithTitle:@"はい" style:UIAlertActionStyleDefault handler:nil]];
-    [self presentViewController:alert animated:YES completion:^{
+    [alert addAction:[UIAlertAction actionWithTitle:@"はい" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         [_self.navigationController popViewControllerAnimated:YES];
-    }];
+    }]];
+    [self presentViewController:alert animated:YES completion:nil];
 }
 
 #pragma mark - Table view data source
