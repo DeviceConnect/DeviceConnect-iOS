@@ -95,7 +95,7 @@
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    [viewModel saveOriginBlock];
+    [viewModel saveSettings];
 }
 
 // landscape時にはステータスバーが無くなるのでその分headerViewの高さを短くする
@@ -103,6 +103,11 @@
                                 duration:(NSTimeInterval)duration
 {
     [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
+
+    if ([[UIDevice currentDevice]userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
+        return;
+    }
+
     if ((toInterfaceOrientation == UIDeviceOrientationLandscapeLeft ||
          toInterfaceOrientation == UIDeviceOrientationLandscapeRight))
     {

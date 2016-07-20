@@ -178,6 +178,10 @@ NSString *const DConnectAttributeNameRequestAccessToken = @"requestAccessToken";
     }
 }
 
+- (void)setAllowExternalIp {
+    [DConnectServerProtocol setExternalIPFlag:self.settings.useExternalIP];
+}
+
 - (void) stopByHttpServer {
     if (!self.mStartFlag) {
         return;
@@ -578,6 +582,10 @@ NSString *const DConnectAttributeNameRequestAccessToken = @"requestAccessToken";
 }
 
 - (BOOL) allowsOriginOfRequest:(DConnectRequestMessage *)requestMessage{
+    BOOL isEnable = [self.settings useOriginEnable];
+    if (!isEnable) {
+        return YES;
+    }
     NSString *originExp = [requestMessage origin];
     if (!originExp) {
         return NO;

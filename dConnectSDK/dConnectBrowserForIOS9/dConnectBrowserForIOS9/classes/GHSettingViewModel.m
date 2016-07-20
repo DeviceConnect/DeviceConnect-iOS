@@ -26,8 +26,7 @@
                               @(SecurityCellTypeOriginBlock),
                               @(SecurityCellTypeLocalOAuth),
                               @(SecurityCellTypeOrigin),
-                              @(SecurityCellTypeExternIP),
-                              @(SecurityCellTypeWebSocket)]
+                              @(SecurityCellTypeExternIP)]
                             ];
     }
 
@@ -112,15 +111,13 @@
                 case SecurityCellTypeExternIP:
                     return @"外部IPを許可 (有効/無効)";
                     break;
-                case SecurityCellTypeWebSocket:
-                    return @"WebSocket一覧";
-                    break;
             }
             break;
     }
 
     return @"";
 }
+
 
 
 - (void)updateSwitch:(SecurityCellType)type switchState:(BOOL)isOn
@@ -130,16 +127,18 @@
             [DConnectManager sharedManager].settings.useOriginBlocking = isOn;
             break;
         case SecurityCellTypeLocalOAuth:
-            [DConnectManager sharedManager].settings.useLocalOAuth = isOn;
+            [self checkOriginAndLocalOAuth:isOn type:type copmletion:^{
+                [DConnectManager sharedManager].settings.useLocalOAuth = isOn;
+            }];
             break;
         case SecurityCellTypeOrigin:
-            //TODO:
+            [self checkOriginAndLocalOAuth:isOn type:type copmletion:^{
+                [DConnectManager sharedManager].settings.useOriginEnable = isOn;
+            }];
             break;
         case SecurityCellTypeExternIP:
-            //TODO:
-            break;
-        case SecurityCellTypeWebSocket:
-            //TODO:
+            [DConnectManager sharedManager].settings.useExternalIP = isOn;
+            [[DConnectManager sharedManager] setAllowExternalIp];
             break;
         default:
             break;
@@ -154,6 +153,8 @@
     DConnectSettings* settings = [DConnectManager sharedManager].settings;
     [def setObject:@(settings.useOriginBlocking) forKey:IS_ORIGIN_BLOCKING];
     [def setObject:@(settings.useLocalOAuth) forKey:IS_USE_LOCALOAUTH];
+    [def setObject:@(settings.useOriginEnable) forKey:IS_ORIGIN_ENABLE];
+    [def setObject:@(settings.useExternalIP) forKey:IS_EXTERNAL_IP];
     [def synchronize];
 }
 
@@ -172,9 +173,6 @@
                 case SecurityCellTypeOriginWhitelist:
                     [DConnectUtil showOriginWhitelist];
                     break;
-                case SecurityCellTypeWebSocket:
-                    [self.delegate openWebSocketList];
-                    break;
             }
             break;
     }
@@ -191,19 +189,73 @@
             return [DConnectManager sharedManager].settings.useLocalOAuth;
             break;
         case SecurityCellTypeOrigin:
-            //TODO:
+            return [DConnectManager sharedManager].settings.useOriginEnable;
             break;
         case SecurityCellTypeExternIP:
-            //TODO:
-            break;
-        case SecurityCellTypeWebSocket:
-            //TODO:
+            return [DConnectManager sharedManager].settings.useExternalIP;
             break;
         default:
             return NO;
             break;
     }
     return NO; //FIXME:
+}
+
+
+- (void)checkOriginAndLocalOAuth:(BOOL)isOn type:(int)type copmletion:(void (^)())completion
+{
+    if (type == SecurityCellTypeOrigin
+        && [DConnectManager sharedManager].settings.useLocalOAuth
+        && [DConnectManager sharedManager].settings.useOriginEnable) {
+        NSString *message = @"下記の機能がアプリのOriginを参照するため下記もOFFに切り替わります。\n- LocalOAuth\nよろしいですか？";
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"警告" message:message preferredStyle:UIAlertControllerStyleAlert];
+        [alertController addAction:[UIAlertAction actionWithTitle:@"はい" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            [DConnectManager sharedManager].settings.useLocalOAuth = isOn;
+            [DConnectManager sharedManager].settings.useOriginEnable = isOn;
+            if (self.delegate) {
+                [self.delegate updateSwitches];
+            }
+            
+        }]];
+        [alertController addAction:[UIAlertAction actionWithTitle:@"いいえ" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            [DConnectManager sharedManager].settings.useOriginEnable = YES;
+            if (self.delegate) {
+                [self.delegate updateSwitches];
+            }
+        }]];
+        UIViewController *baseView = [UIApplication sharedApplication].keyWindow.rootViewController;
+        while (baseView.presentedViewController != nil && !baseView.presentedViewController.isBeingDismissed) {
+            baseView = baseView.presentedViewController;
+        }
+        [baseView presentViewController:alertController animated:YES completion:nil];
+    } else if (type == SecurityCellTypeLocalOAuth
+               && ![DConnectManager sharedManager].settings.useLocalOAuth
+               && ![DConnectManager sharedManager].settings.useOriginEnable) {
+        NSString *message = @"本機能はアプリのOriginを参照するため、下記もONに切り替わります。\n- Origin(有効/無効)\nよろしいですか？";
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"警告" message:message preferredStyle:UIAlertControllerStyleAlert];
+        [alertController addAction:[UIAlertAction actionWithTitle:@"はい" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            [DConnectManager sharedManager].settings.useLocalOAuth = isOn;
+            [DConnectManager sharedManager].settings.useOriginEnable = isOn;
+            if (self.delegate) {
+                [self.delegate updateSwitches];
+            }
+            
+        }]];
+        [alertController addAction:[UIAlertAction actionWithTitle:@"いいえ" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            [DConnectManager sharedManager].settings.useLocalOAuth = NO;
+            if (self.delegate) {
+                [self.delegate updateSwitches];
+            }
+        }]];
+        UIViewController *baseView = [UIApplication sharedApplication].keyWindow.rootViewController;
+        while (baseView.presentedViewController != nil && !baseView.presentedViewController.isBeingDismissed) {
+            baseView = baseView.presentedViewController;
+        }
+        [baseView presentViewController:alertController animated:YES completion:nil];
+        
+    } else {
+        completion();
+    }
 }
 
 @end

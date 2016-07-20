@@ -26,6 +26,15 @@
     self.datasource = [[DConnectManager sharedManager] devicePluginsList];
 }
 
+- (NSDictionary*)makePlguinAndProfiles:(NSInteger)index
+{
+    DConnectDevicePlugin* plugin = [self.datasource objectAtIndex: index];
+    return @{
+             @"plugin": plugin,
+             @"profiles": [plugin profiles]
+             };
+}
+
 - (void)dealloc
 {
     self.datasource = nil;

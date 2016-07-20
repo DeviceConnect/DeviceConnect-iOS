@@ -10,7 +10,7 @@
 
 @protocol GHSettingViewModelDelegate <NSObject>
 - (void)openDevicePluginList;
-- (void)openWebSocketList;
+- (void)updateSwitches;
 @end
 
 @interface GHSettingViewModel : NSObject
@@ -37,7 +37,6 @@ typedef NS_ENUM (NSInteger, SecurityCellType) {
     SecurityCellTypeLocalOAuth,
     SecurityCellTypeOrigin,
     SecurityCellTypeExternIP,
-    SecurityCellTypeWebSocket,
 };
 
 @property (nonatomic, strong) NSArray* datasource;
