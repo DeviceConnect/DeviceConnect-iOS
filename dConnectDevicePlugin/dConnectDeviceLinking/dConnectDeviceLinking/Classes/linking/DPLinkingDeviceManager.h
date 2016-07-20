@@ -74,6 +74,7 @@
 - (void) removeAllDPLinkingDevice;
 
 - (DPLinkingDevice *) findDPLinkingDeviceByPeripheral:(CBPeripheral *)peripheral;
+- (DPLinkingDevice *) findDPLinkingDeviceByServiceId:(NSString *)serviceId;
 
 - (void) connectDPLinkingDevice:(DPLinkingDevice *)device;
 - (void) disconnectDPLinkingDevice:(DPLinkingDevice *)device;

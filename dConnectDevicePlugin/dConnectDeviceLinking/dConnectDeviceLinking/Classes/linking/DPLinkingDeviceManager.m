@@ -101,6 +101,17 @@ static DPLinkingDeviceManager* _sharedInstance = nil;
     return result;
 }
 
+- (DPLinkingDevice *) findDPLinkingDeviceByServiceId:(NSString *)serviceId {
+    __block DPLinkingDevice *result = nil;
+    [self.devices enumerateObjectsUsingBlock:^(DPLinkingDevice *obj, NSUInteger idx, BOOL *stop) {
+        if ([obj.identifier isEqualToString:serviceId]) {
+            result = obj;
+            *stop = YES;
+        }
+    }];
+    return result;
+}
+
 - (NSArray *) getDPLinkingDevices {
     return self.devices;
 }

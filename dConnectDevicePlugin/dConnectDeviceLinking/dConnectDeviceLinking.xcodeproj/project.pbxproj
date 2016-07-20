@@ -316,6 +316,8 @@
 		BED1238B1D3F4EE500205FCD /* beacon */ = {
 			isa = PBXGroup;
 			children = (
+				BED1239C1D3F4EE500205FCD /* profile */,
+				BED123A91D3F4EE500205FCD /* service */,
 				BED1238C1D3F4EE500205FCD /* DPLinkingAtmosphericPressureData.h */,
 				BED1238D1D3F4EE500205FCD /* DPLinkingAtmosphericPressureData.m */,
 				BED1238E1D3F4EE500205FCD /* DPLinkingBattryData.h */,
@@ -332,8 +334,6 @@
 				BED123991D3F4EE500205FCD /* DPLinkingRawData.m */,
 				BED1239A1D3F4EE500205FCD /* DPLinkingTemperatureData.h */,
 				BED1239B1D3F4EE500205FCD /* DPLinkingTemperatureData.m */,
-				BED1239C1D3F4EE500205FCD /* profile */,
-				BED123A91D3F4EE500205FCD /* service */,
 			);
 			path = beacon;
 			sourceTree = "<group>";
@@ -369,14 +369,14 @@
 		BED123AE1D3F4EE500205FCD /* linking */ = {
 			isa = PBXGroup;
 			children = (
+				BED123B51D3F4EE500205FCD /* profile */,
+				BED123C81D3F4EE500205FCD /* service */,
 				BED123AF1D3F4EE500205FCD /* DPLinkingDevice.h */,
 				BED123B01D3F4EE500205FCD /* DPLinkingDevice.m */,
 				BED123B11D3F4EE500205FCD /* DPLinkingDeviceManager.h */,
 				BED123B21D3F4EE500205FCD /* DPLinkingDeviceManager.m */,
 				BED123B31D3F4EE500205FCD /* DPLinkingSensorData.h */,
 				BED123B41D3F4EE500205FCD /* DPLinkingSensorData.m */,
-				BED123B51D3F4EE500205FCD /* profile */,
-				BED123C81D3F4EE500205FCD /* service */,
 			);
 			path = linking;
 			sourceTree = "<group>";
