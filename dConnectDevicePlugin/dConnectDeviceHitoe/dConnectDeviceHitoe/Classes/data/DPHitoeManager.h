@@ -56,6 +56,9 @@
 - (void)deleteAtHitoe:(DPHitoeDevice *)device;
 - (BOOL)containsConnectedHitoeDevice:(NSString *)serviceId;
 
+- (void)startRetryTimer;
+- (void)stopRetryTimer;
+
 - (DPHitoeDevice *)getHitoeDeviceForServiceId:(NSString *)serviceId;
 - (DPHitoeHeartRateData *)getHeartRateDataForServiceId:(NSString *)serviceId;
 - (DPHitoeHeartRateData *)getECGDataForServiceId:(NSString *)serviceId;

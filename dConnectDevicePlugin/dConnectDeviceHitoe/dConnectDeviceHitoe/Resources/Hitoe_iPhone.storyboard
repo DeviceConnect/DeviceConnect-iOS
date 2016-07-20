@@ -131,6 +131,7 @@ Hitoeを追加してください。</string>
                         <outlet property="descriptionLabel" destination="uEi-mf-LUM" id="oQi-QG-LeG"/>
                         <outlet property="registerDeviceList" destination="udi-pm-wdn" id="yXL-bt-Z8q"/>
                         <segue destination="EDi-af-Os2" kind="showDetail" identifier="showAddDevice" id="tbo-Nx-BEs"/>
+                        <segue destination="YLO-Gu-blU" kind="show" identifier="showControlDevice" id="Wfh-oC-o1F"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3Pk-bw-hv5" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -214,6 +215,25 @@ Hitoeを追加してください。</string>
             </objects>
             <point key="canvasLocation" x="1186" y="1835"/>
         </scene>
+        <!--Hitoe Control Health View Controller-->
+        <scene sceneID="EnM-Dm-2Y0">
+            <objects>
+                <viewController id="wG7-dp-1k3" customClass="DPHitoeControlHealthViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="ccN-C7-OmO"/>
+                        <viewControllerLayoutGuide type="bottom" id="N0G-py-CKh"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="0Qk-Uc-Lhw">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="MsT-jL-sht"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="p3l-Ju-Frh" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-206" y="3434"/>
+        </scene>
         <!--Navigation Controller-->
         <scene sceneID="dG7-xw-QUr">
             <objects>
@@ -234,6 +254,56 @@ Hitoeを追加してください。</string>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="l69-OG-MMi" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="453" y="1835"/>
+        </scene>
+        <!--デバイス操作画面-->
+        <scene sceneID="IIR-ob-4VK">
+            <objects>
+                <tableViewController title="デバイス操作画面" id="PUZ-78-Ev0" customClass="DPHitoeDeviceControlViewController" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="ToS-px-B0R">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="controlProfile" id="YBt-FE-U07">
+                                <rect key="frame" x="0.0" y="92" width="600" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="YBt-FE-U07" id="Z96-b7-2eM">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="PUZ-78-Ev0" id="L2D-SG-6c9"/>
+                            <outlet property="delegate" destination="PUZ-78-Ev0" id="ajB-Iu-emr"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="デバイス操作画面" id="ajY-un-xfo">
+                        <barButtonItem key="backBarButtonItem" title="&lt; CLOSE" id="Oe0-BS-RMU"/>
+                    </navigationItem>
+                    <connections>
+                        <segue destination="wG7-dp-1k3" kind="show" identifier="controlHealth" id="DKT-Aj-m3w"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="lte-7x-zFt" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="493" y="2607"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="T8G-35-U9i">
+            <objects>
+                <navigationController id="YLO-Gu-blU" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="kw9-R0-14V">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="PUZ-78-Ev0" kind="relationship" relationship="rootViewController" id="Vtu-0Q-2gz"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="1h6-bp-lSH" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-242" y="2607"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="uIW-Ut-FTo">

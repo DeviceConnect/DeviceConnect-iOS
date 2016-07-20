@@ -32,7 +32,6 @@
         // イベントマネージャを取得
         self.eventMgr = [DConnectEventManager sharedManagerForClass:[DPHitoeDevicePlugin class]];
         __unsafe_unretained typeof(self) weakSelf = self;
-
         self.heartRateReceived = ^(DPHitoeDevice *device, DPHitoeHeartRateData *heartRate) {
             [weakSelf notifyReceiveDataForDevice:device data:heartRate];
         };

@@ -24,12 +24,13 @@ static NSString *const DPHitoeOpenBluetooth = @"BluetoothがOFFになってい�
 @interface DPHitoeDeviceListTableViewController () {
     NSMutableArray *discoveries;
     CBCentralManager *cManager;
+    BOOL isConnecting;
 }
 
 @property (weak, nonatomic) IBOutlet UILabel *descriptionLabel;
 @property (weak, nonatomic) IBOutlet UIButton *settingBtn;
 @property (weak, nonatomic) IBOutlet UITableView *registerDeviceList;
-@property (nonatomic) NSTimer *timer;
+@property (nonatomic) NSTimer *connectedTimeout;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *addDeviceBtn;
 
 @end
@@ -84,6 +85,14 @@ static NSString *const DPHitoeOpenBluetooth = @"BluetoothがOFFになってい�
     [self enableTableView];
 }
 
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    if ([_connectedTimeout isValid]) {
+        [_connectedTimeout invalidate];
+    }
+    
+    isConnecting = NO;
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -149,7 +158,7 @@ static NSString *const DPHitoeOpenBluetooth = @"BluetoothがOFFになってい�
             [[DPHitoeManager sharedInstance] connectForHitoe:device];
         });
         [DPHitoeProgressDialog showProgressDialog];
-
+        [self startTimeoutTimer];
     }
 
     sender.titleLabel.text = btnName;
@@ -180,6 +189,8 @@ static NSString *const DPHitoeOpenBluetooth = @"BluetoothがOFFになってい�
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
+    [self performSegueWithIdentifier:@"showControlDevice" sender:self];
+
 }
 
 
@@ -189,6 +200,7 @@ static NSString *const DPHitoeOpenBluetooth = @"BluetoothがOFFになってい�
         [self.registerDeviceList reloadData];
     });
     [DPHitoeProgressDialog closeProgressDialog];
+    isConnecting = NO;
 }
 
 -(void)didConnectFailWithDevice:(DPHitoeDevice*)device {
@@ -203,7 +215,7 @@ static NSString *const DPHitoeOpenBluetooth = @"BluetoothがOFFになってい�
     [alertController addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil]];
     [self presentViewController:alertController animated:YES completion:nil];
 
-    
+    isConnecting = NO;
 }
 -(void)didDisconnectWithDevice:(DPHitoeDevice*)device {
     [DPHitoeProgressDialog closeProgressDialog];
@@ -238,7 +250,15 @@ static NSString *const DPHitoeOpenBluetooth = @"BluetoothがOFFになってい�
 
 #pragma mark - segue
 
-
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([[segue identifier] isEqualToString:@"showControlDevice"]) {
+//        NSIndexPath *indexPath = [_virtualDeviceList indexPathForSelectedRow];
+//        DPIRKitVirtualProfileViewController *controller =
+//        (DPIRKitVirtualProfileViewController *)[segue destinationViewController] ;
+//        DPIRKitVirtualDevice *device = _devices[indexPath.row];
+//        [controller setDetailItem:device];
+    }
+}
 - (IBAction)showAddDeviceViewController:(id)sender {
     [self performSegueWithIdentifier:@"showAddDevice" sender:self];
 }
@@ -287,6 +307,29 @@ static NSString *const DPHitoeOpenBluetooth = @"BluetoothがOFFになってい�
         [self.registerDeviceList reloadData];
     }
 
+}
+- (void)startTimeoutTimer {
+    isConnecting = YES;
+    _connectedTimeout = [NSTimer
+                         scheduledTimerWithTimeInterval:30.0
+                         target:self
+                         selector:@selector(onTimeout:)
+                         userInfo:nil
+                         repeats:NO];
+    
+}
+#pragma mark - Timer
+- (void)onTimeout:(NSTimer*)timer {
+    if (isConnecting) {
+        [DPHitoeProgressDialog closeProgressDialog];
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"接続失敗"
+                                                                                 message:@"Hitoeとの接続に失敗しました。"
+                                                                          preferredStyle:UIAlertControllerStyleAlert];
+        
+        [alertController addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil]];
+        [self presentViewController:alertController animated:YES completion:nil];
+        isConnecting = NO;
+    }
 }
 
 @end

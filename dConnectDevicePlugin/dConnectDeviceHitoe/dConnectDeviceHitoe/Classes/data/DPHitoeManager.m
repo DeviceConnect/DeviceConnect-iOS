@@ -16,8 +16,13 @@
 
 
 
+static int const DPHitoeRetryCount = 3000;
+
 @interface DPHitoeManager() {
     HitoeSdkAPI *api;
+    BOOL isScanning;
+    BOOL isCallbackRunning;
+    int retryCount;
 }
 @property (nonatomic, strong) NSMutableDictionary *hrData;
 @property (nonatomic, strong) NSMutableDictionary *accelData;
@@ -28,7 +33,8 @@
 @property (nonatomic, strong) NSMutableArray *listForPosture;
 @property (nonatomic, strong) NSMutableArray *listForWalk;
 @property (nonatomic, strong) NSMutableArray *listForLRBalance;
-
+@property (nonatomic, strong) NSMutableDictionary *nowTimeStamp;
+@property (nonatomic) NSTimer *timer;
 @end
 @implementation DPHitoeManager
 
@@ -56,7 +62,8 @@
         self.listForPosture = [NSMutableArray array];
         self.listForWalk = [NSMutableArray array];
         self.listForLRBalance = [NSMutableArray array];
-
+        self.nowTimeStamp = [NSMutableDictionary dictionary];
+        isScanning = NO;
         api = [HitoeSdkAPI sharedManager];
         [api setAPIDelegate:self];
         _registeredDevices = [NSMutableArray array];
@@ -71,7 +78,7 @@
         apiResorce:(int)apiResorce
             object:(id)object {
     NSString *responseData = (NSString*) object;
-    NSLog(@"cbCallback:%d:%d:%@", apiId, apiResorce, responseData);
+//    NSLog(@"cbCallback:%d:%d:%@", apiId, apiResorce, responseData);
     if (apiId == DPHitoeApiIdGetAvailableSensor) {
         [self notifyDiscoveryHitoeDeviceWithResponseId:apiResorce responseString:responseData];
     } else if (apiId == DPHitoeApiIdConnect) {
@@ -96,7 +103,7 @@
                dataKey:(NSString *)dataKey
                   data:(NSString *)data
             responseId:(int)responseId {
-    NSLog(@"DataCallback:connectId=%@,dataKey=%@,rawData=%@",connectionId, dataKey, data);
+//    NSLog(@"DataCallback:connectId=%@,dataKey=%@,rawData=%@",connectionId, dataKey, data);
     int pos = [self currentDeviceForConnectionId:connectionId];
     if (pos == -1) {
         return;
@@ -200,6 +207,7 @@
             _registeredDevices[i] = exist;
         }
     }
+    [self startRetryTimer];
 }
 - (void)disconnectForHitoe:(DPHitoeDevice *)device {
     DPHitoeDevice *current = [self getHitoeDeviceForServiceId:device.serviceId];
@@ -208,7 +216,6 @@
     current.sessionId = nil;
     [[DPHitoeDBManager sharedInstance] updateHitoeDevice:current];
     
-    // TODO scanhitoe
     
     if (_connectionDelegate) {
         [_connectionDelegate didDisconnectWithDevice:current];
@@ -230,6 +237,9 @@
     if (pos != -1) {
         [_registeredDevices removeObjectAtIndex:pos];
     }
+    if ([_registeredDevices count] == 0) {
+        [self stopRetryTimer];
+    }
 }
 - (BOOL)containsConnectedHitoeDevice:(NSString *)serviceId {
     for (DPHitoeDevice *device in _registeredDevices) {
@@ -239,6 +249,9 @@
     }
     return NO;
 }
+
+
+#pragma mark - Getter
 
 - (DPHitoeDevice *)getHitoeDeviceForServiceId:(NSString *)serviceId {
     for (int i = 0; i < [_registeredDevices count]; i++) {
@@ -271,6 +284,74 @@
 }
 
 
+#pragma mark - Watch timer
+- (void)startRetryTimer {
+    if (isScanning) {
+        return;
+    }
+    retryCount = 0;
+    isScanning = YES;
+    isCallbackRunning = YES;
+    [_nowTimeStamp removeAllObjects];
+    for (DPHitoeDevice *device in _registeredDevices) {
+        NSNumber *timeStamp = [NSNumber numberWithLong:[[NSDate date] timeIntervalSince1970] * 1000];
+        _nowTimeStamp[device.serviceId] = timeStamp;
+    }
+    dispatch_async(dispatch_get_main_queue(), ^{
+        _timer = [NSTimer
+                  scheduledTimerWithTimeInterval:10.0
+                  target:self
+                  selector:@selector(onDisconnectSearchTimer:)
+                  userInfo:nil
+                  repeats:YES];
+    });
+
+}
+
+- (void)stopRetryTimer {
+    isScanning = NO;
+    isCallbackRunning = NO;
+
+    if ([_timer isValid]) {
+        [_timer invalidate];
+    }
+}
+
+
+- (void)onDisconnectSearchTimer:(NSTimer*) timer{
+    for (NSString *serviceId in _hrData.allKeys) {
+        DPHitoeHeartRateData *rate = _hrData[serviceId];
+        long timeStamp = rate.heartRate.timeStamp;
+        long history = [_nowTimeStamp[serviceId] longValue];
+//        NSLog(@"================>");
+//        NSLog(@"timestamp:%ld", timeStamp);
+//        NSLog(@"history:%ld", history);
+//        NSLog(@"<================");
+        if (isCallbackRunning && history == timeStamp) { //切断された
+//            NSLog(@"retry1");
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                DPHitoeDevice *retryDevice = [self getHitoeDeviceForServiceId:serviceId];
+                if ([retryDevice isRegisterFlag]) {
+                    [self connectForHitoe:retryDevice];
+                }
+            });
+            retryCount++;
+            isCallbackRunning = NO;
+        } else if (!isCallbackRunning && history == timeStamp && retryCount < DPHitoeRetryCount) {
+//            NSLog(@"retry%d", retryCount);
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                DPHitoeDevice *retryDevice = [self getHitoeDeviceForServiceId:serviceId];
+                if ([retryDevice isRegisterFlag]) {
+                    [self connectForHitoe:retryDevice];
+                }
+            });
+            retryCount++;
+        } else if (!isCallbackRunning && history < timeStamp) { //再接続された
+            isCallbackRunning = YES;
+        }
+        _nowTimeStamp[serviceId] = [NSNumber numberWithLong:timeStamp];
+    }
+}
 
 
 #pragma mark - Private method

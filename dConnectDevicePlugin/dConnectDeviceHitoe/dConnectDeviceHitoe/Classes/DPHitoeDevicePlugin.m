@@ -17,6 +17,7 @@
 #import "DPHitoeStressEstimationProfile.h"
 #import "DPHitoeDeviceOrientationProfile.h"
 #import "DPHitoeWalkStateProfile.h"
+#import "DPHitoeManager.h"
 #import "DPHitoeConsts.h"
 // Const.h
 NSString *const DPHitoeBundleName = @"dConnectDeviceHitoe_resources";
@@ -132,11 +133,24 @@ int const DPHitoeDataKeyExtension = 0x04;
         [[DConnectEventManager sharedManagerForClass:key]
          setController:[DConnectDBCacheController
                         controllerWithClass:key]];
-        
+        __weak typeof(self) _self = self;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
+            UIApplication *application = [UIApplication sharedApplication];
+            
+            [notificationCenter addObserver:_self selector:@selector(enterForeground)
+                                       name:UIApplicationWillEnterForegroundNotification
+                                     object:application];
+            
+        });
     }
     
     return self;
 }
 
+
+- (void)enterForeground {
+    [[DPHitoeManager sharedInstance] startRetryTimer];
+}
 
 @end

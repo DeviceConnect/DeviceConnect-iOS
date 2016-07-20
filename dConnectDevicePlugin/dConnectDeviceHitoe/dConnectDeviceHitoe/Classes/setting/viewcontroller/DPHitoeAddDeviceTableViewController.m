@@ -19,8 +19,10 @@
 @interface DPHitoeAddDeviceTableViewController () {
     NSMutableArray *discoveries;
     CBCentralManager *cManager;
+    BOOL isConnecting;
 }
 @property (nonatomic) NSTimer *timer;
+@property (nonatomic) NSTimer *connectedTimeout;
 @end
 
 @implementation DPHitoeAddDeviceTableViewController
@@ -77,6 +79,11 @@
     if ([_timer isValid]) {
         [_timer invalidate];
     }
+    if ([_connectedTimeout isValid]) {
+        [_connectedTimeout invalidate];
+    }
+
+    isConnecting = NO;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -141,14 +148,14 @@
                     [DPHitoeProgressDialog showProgressDialog];
                 });
             });
-
+            [self startTimeoutTimer];
         }];
     } else {
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             [[DPHitoeManager sharedInstance] connectForHitoe:device];
         });
         [DPHitoeProgressDialog showProgressDialog];
-
+        [self startTimeoutTimer];
     }
 }
 
@@ -168,6 +175,7 @@
             [DPHitoeProgressDialog closeProgressDialog];
         }];
     });
+    isConnecting = NO;
 }
 
 -(void)didConnectFailWithDevice:(DPHitoeDevice*)device {
@@ -179,6 +187,7 @@
     [self presentViewController:alertController animated:YES completion:nil];
     [self startTimer];
     [DPHitoeProgressDialog closeProgressDialog];
+    isConnecting = NO;
 }
 
 -(void)didDisconnectWithDevice:(DPHitoeDevice*)device {
@@ -232,10 +241,33 @@
               repeats:YES];
 }
 
+- (void)startTimeoutTimer {
+    isConnecting = YES;
+    _connectedTimeout = [NSTimer
+                         scheduledTimerWithTimeInterval:30.0
+                         target:self
+                         selector:@selector(onTimeout:)
+                         userInfo:nil
+                         repeats:NO];
+
+}
 #pragma mark - Timer
 
 - (void)onTimer:(NSTimer*)timer {
     [[DPHitoeManager sharedInstance] discovery];
 }
 
+- (void)onTimeout:(NSTimer*)timer {
+    if (isConnecting) {
+        [DPHitoeProgressDialog closeProgressDialog];
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"接続失敗"
+                                                                                 message:@"Hitoeとの接続に失敗しました。"
+                                                                          preferredStyle:UIAlertControllerStyleAlert];
+        
+        [alertController addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil]];
+        [self presentViewController:alertController animated:YES completion:nil];
+        isConnecting = NO;
+    }
+
+}
 @end
