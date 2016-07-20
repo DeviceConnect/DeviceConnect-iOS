@@ -18,6 +18,8 @@
         self.port = 4035;
         self.useLocalOAuth = YES;
         self.useOriginBlocking = NO;
+        self.useOriginEnable = YES;
+        self.useExternalIP = NO;
     }
     return self;
 }

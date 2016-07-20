@@ -10,6 +10,7 @@
 
 @protocol GHSettingViewModelDelegate <NSObject>
 - (void)openDevicePluginList;
+- (void)updateSwitches;
 @end
 
 @interface GHSettingViewModel : NSObject

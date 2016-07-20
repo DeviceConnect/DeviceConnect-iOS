@@ -24,6 +24,8 @@
 #define IS_MANAGER_LAUNCH @"is_manager_launch"
 #define IS_ORIGIN_BLOCKING @"is_origin_blocking"
 #define IS_USE_LOCALOAUTH @"is_useLocalOAuth"
+#define IS_ORIGIN_ENABLE @"is_origin_enable"
+#define IS_EXTERNAL_IP @"is_external_ip"
 
 #define IS_INITIAL_GUIDE_OPEN @"is_initial_guide_open"
 

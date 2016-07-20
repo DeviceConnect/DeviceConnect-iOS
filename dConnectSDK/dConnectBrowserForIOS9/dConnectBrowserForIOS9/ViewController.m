@@ -95,7 +95,7 @@
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    [viewModel saveOriginBlock];
+    [viewModel saveSettings];
 }
 
 // landscape時にはステータスバーが無くなるのでその分headerViewの高さを短くする
