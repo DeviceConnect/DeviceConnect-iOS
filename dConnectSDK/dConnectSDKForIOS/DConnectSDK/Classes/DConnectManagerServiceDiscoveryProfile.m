@@ -22,9 +22,9 @@
     self = [super initWithServiceProvider: nil];
     if (self) {
 
-        NSString *getServicesRequestApiPath = [self apiPathWithProfileInterfaceAttribute: self.profileName
-                                                                        interfaceName: nil
-                                                                        attributeName: nil];
+        NSString *getServicesRequestApiPath = [self apiPathWithProfile: self.profileName
+                                                         interfaceName: nil
+                                                         attributeName: nil];
         [self addGetPath: getServicesRequestApiPath
                      api:^(DConnectRequestMessage *request, DConnectResponseMessage *response) {
                          // GotAPI対応: プラグイン側のI/Fに変換
@@ -113,9 +113,9 @@
                          return YES;
                      }];
         
-        NSString *putOnServiceChangeRequestApiPath = [self apiPathWithProfileInterfaceAttribute: self.profileName
-                                                                           interfaceName: nil
-                                                                           attributeName: DConnectServiceDiscoveryProfileAttrOnServiceChange];
+        NSString *putOnServiceChangeRequestApiPath = [self apiPathWithProfile: self.profileName
+                                                                interfaceName: nil
+                                                                attributeName: DConnectServiceDiscoveryProfileAttrOnServiceChange];
         [self addPutPath: putOnServiceChangeRequestApiPath
                      api:^(DConnectRequestMessage *request, DConnectResponseMessage *response) {
                          DConnectEventManager *mgr = [DConnectEventManager sharedManagerForClass:[DConnectManager class]];
@@ -136,9 +136,9 @@
                          return YES;
                      }];
         
-        NSString *deleteOnServiceChangeRequestApiPath = [self apiPathWithProfileInterfaceAttribute: self.profileName
-                                                                                  interfaceName: nil
-                                                                                  attributeName: DConnectServiceDiscoveryProfileAttrOnServiceChange];
+        NSString *deleteOnServiceChangeRequestApiPath = [self apiPathWithProfile: self.profileName
+                                                                   interfaceName: nil
+                                                                   attributeName: DConnectServiceDiscoveryProfileAttrOnServiceChange];
         [self addDeletePath: deleteOnServiceChangeRequestApiPath
                         api:^(DConnectRequestMessage *request, DConnectResponseMessage *response) {
                             DConnectEventManager *mgr = [DConnectEventManager sharedManagerForClass:[DConnectManager class]];

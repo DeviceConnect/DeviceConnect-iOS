@@ -214,11 +214,6 @@
 		D65F83531D2A2AF80024685D /* NumberRequestParamSpecBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = D65F83391D2A2AF80024685D /* NumberRequestParamSpecBuilder.m */; };
 		D65F83541D2A2AF80024685D /* IntegerRequestParamSpecBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = D65F833B1D2A2AF80024685D /* IntegerRequestParamSpecBuilder.m */; };
 		D65F83551D2A2AF80024685D /* BooleanRequestParamSpecBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = D65F83411D2A2AF80024685D /* BooleanRequestParamSpecBuilder.m */; };
-		D684AC201D2CF4D500F56CA0 /* DConnectApi.m in Sources */ = {isa = PBXBuildFile; fileRef = D684AC1F1D2CF4D500F56CA0 /* DConnectApi.m */; };
-		D684AC231D2CF51900F56CA0 /* GetApi.m in Sources */ = {isa = PBXBuildFile; fileRef = D684AC221D2CF51900F56CA0 /* GetApi.m */; };
-		D684AC261D2CF67C00F56CA0 /* DeleteApi.m in Sources */ = {isa = PBXBuildFile; fileRef = D684AC251D2CF67C00F56CA0 /* DeleteApi.m */; };
-		D684AC291D2CF69800F56CA0 /* PostApi.m in Sources */ = {isa = PBXBuildFile; fileRef = D684AC281D2CF69800F56CA0 /* PostApi.m */; };
-		D684AC2C1D2CF6AF00F56CA0 /* PutApi.m in Sources */ = {isa = PBXBuildFile; fileRef = D684AC2B1D2CF6AF00F56CA0 /* PutApi.m */; };
 		D68ED35B199BBA4800D8BF71 /* LocalOAuthClientPackageInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = D68ED35A199BBA4800D8BF71 /* LocalOAuthClientPackageInfo.m */; };
 		D6960ED3199FAEB400BE4D1B /* LocalOAuthSQLiteProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = D6960ED2199FAEB400BE4D1B /* LocalOAuthSQLiteProfile.m */; };
 		D6960ED619A0759200BE4D1B /* LocalOAuthSQLiteScopeInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = D6960ED519A0759200BE4D1B /* LocalOAuthSQLiteScopeInfo.m */; };
@@ -1925,15 +1920,6 @@
 		D67225EB1D34B566008641EA /* DConnectServiceManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DConnectServiceManager.h; sourceTree = "<group>"; };
 		D67225EC1D34B566008641EA /* DConnectServiceProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DConnectServiceProvider.h; sourceTree = "<group>"; };
 		D67225ED1D34CBD6008641EA /* DConnectApiSpecList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DConnectApiSpecList.h; sourceTree = "<group>"; };
-		D67225F41D362395008641EA /* DeleteApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeleteApi.h; sourceTree = "<group>"; };
-		D67225F51D362395008641EA /* GetApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GetApi.h; sourceTree = "<group>"; };
-		D67225F61D362395008641EA /* PostApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PostApi.h; sourceTree = "<group>"; };
-		D67225F71D362395008641EA /* PutApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PutApi.h; sourceTree = "<group>"; };
-		D684AC1F1D2CF4D500F56CA0 /* DConnectApi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DConnectApi.m; path = api/DConnectApi.m; sourceTree = "<group>"; };
-		D684AC221D2CF51900F56CA0 /* GetApi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GetApi.m; path = api/GetApi.m; sourceTree = "<group>"; };
-		D684AC251D2CF67C00F56CA0 /* DeleteApi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DeleteApi.m; path = api/DeleteApi.m; sourceTree = "<group>"; };
-		D684AC281D2CF69800F56CA0 /* PostApi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PostApi.m; path = api/PostApi.m; sourceTree = "<group>"; };
-		D684AC2B1D2CF6AF00F56CA0 /* PutApi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PutApi.m; path = api/PutApi.m; sourceTree = "<group>"; };
 		D68ED359199BBA4800D8BF71 /* LocalOAuthClientPackageInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LocalOAuthClientPackageInfo.h; path = localoauth/LocalOAuthClientPackageInfo.h; sourceTree = "<group>"; };
 		D68ED35A199BBA4800D8BF71 /* LocalOAuthClientPackageInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LocalOAuthClientPackageInfo.m; path = localoauth/LocalOAuthClientPackageInfo.m; sourceTree = "<group>"; };
 		D6960ED1199FAEB400BE4D1B /* LocalOAuthSQLiteProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LocalOAuthSQLiteProfile.h; path = localoauth/LocalOAuthSQLiteProfile.h; sourceTree = "<group>"; };
@@ -3732,10 +3718,6 @@
 			isa = PBXGroup;
 			children = (
 				D64226601D3F11090010CE40 /* DConnectApiEntity.h */,
-				D67225F41D362395008641EA /* DeleteApi.h */,
-				D67225F51D362395008641EA /* GetApi.h */,
-				D67225F61D362395008641EA /* PostApi.h */,
-				D67225F71D362395008641EA /* PutApi.h */,
 				D67225ED1D34CBD6008641EA /* DConnectApiSpecList.h */,
 				D67225EA1D34B566008641EA /* DConnectService.h */,
 				D67225EB1D34B566008641EA /* DConnectServiceManager.h */,
@@ -4127,11 +4109,6 @@
 		D65F83271D2A294C0024685D /* api */ = {
 			isa = PBXGroup;
 			children = (
-				D684AC1F1D2CF4D500F56CA0 /* DConnectApi.m */,
-				D684AC221D2CF51900F56CA0 /* GetApi.m */,
-				D684AC251D2CF67C00F56CA0 /* DeleteApi.m */,
-				D684AC281D2CF69800F56CA0 /* PostApi.m */,
-				D684AC2B1D2CF6AF00F56CA0 /* PutApi.m */,
 				D642265E1D3F09890010CE40 /* DConnectApiEntity.m */,
 			);
 			name = api;
@@ -4438,12 +4415,10 @@
 				259667BC195CFE6B0082A701 /* DConnectFileManager.m in Sources */,
 				D647CFA81D2BDF94006BF6A9 /* DConnectApiSpecBuilder.m in Sources */,
 				D65F83491D2A2AF80024685D /* StringRequestParamSpec.m in Sources */,
-				D684AC231D2CF51900F56CA0 /* GetApi.m in Sources */,
 				BEF208AD19AC70530027E0CE /* DConnectLocalOAuthDB.m in Sources */,
 				D6BBC79E19A2585D00F090CA /* LocalOAuthConfirmAuthViewController.m in Sources */,
 				D6960ED3199FAEB400BE4D1B /* LocalOAuthSQLiteProfile.m in Sources */,
 				D62622E1199232BC004F01E6 /* LocalOAuthRedirectionURI.m in Sources */,
-				D684AC291D2CF69800F56CA0 /* PostApi.m in Sources */,
 				D62622E3199232BC004F01E6 /* LocalOAuthSampleUser.m in Sources */,
 				D65F834F1D2A2AF80024685D /* NumberRequestParamSpecJsonParser.m in Sources */,
 				AB67AB1B1C642AB200B4C62C /* HTTPFileResponse.m in Sources */,
@@ -4535,7 +4510,6 @@
 				3005641A196C152500A4E708 /* DConnectEventManager.m in Sources */,
 				AB67AB171C642AB200B4C62C /* MultipartMessageHeaderField.m in Sources */,
 				D6FD02111999EC7A000DB674 /* CipherAuthSignature.m in Sources */,
-				D684AC261D2CF67C00F56CA0 /* DeleteApi.m in Sources */,
 				AB67AB1D1C642AB200B4C62C /* WebSocket.m in Sources */,
 				30424D211974C3D10084371F /* DConnectInterfaceDao.m in Sources */,
 				D62866B61D2F899A00C0C2D6 /* DConnectServiceManager.m in Sources */,
@@ -4551,13 +4525,11 @@
 				D62622941992326E004F01E6 /* LocalOAuthTokenDao.m in Sources */,
 				C29D332E191B2679001015CC /* DConnectDevicePluginManager.m in Sources */,
 				D62622DC199232BC004F01E6 /* LocalOAuth2Settings.m in Sources */,
-				D684AC201D2CF4D500F56CA0 /* DConnectApi.m in Sources */,
 				ABE747131C688473001D8F0D /* DConnectServerProtocol.m in Sources */,
 				AB0C3C211BDF1FBD000F4C5D /* DConnectLightProfile.m in Sources */,
 				D60DD6011D2F383F00DEBE5C /* DConnectService.m in Sources */,
 				6B4EEF5C1AAF2A1800A92E0D /* DConnectWhitelist.m in Sources */,
 				AB67AB301C642AC500B4C62C /* RoutingConnection.m in Sources */,
-				D684AC2C1D2CF6AF00F56CA0 /* PutApi.m in Sources */,
 				ABE7471A1C688608001D8F0D /* DConnectWebSocket.m in Sources */,
 				D642265F1D3F09890010CE40 /* DConnectApiEntity.m in Sources */,
 				D65F834A1D2A2AF80024685D /* DConnectApiSpec.m in Sources */,

@@ -9,7 +9,9 @@
 
 #import <DConnectSDK/DConnectServiceManager.h>
 #import <DConnectSDK/DConnectProfile.h>
+#import <DConnectSDK/DConnectApiEntity.h>
 #import "DConnectApiSpecList.h"
+
 
 /**
  ServiceManagerインスタンスを格納する(key:クラス名(NSString*),
@@ -98,7 +100,7 @@ static NSMutableDictionary *_instanceArray = nil;
     if (_mApiSpecs) {
         
         for (DConnectProfile *profile in [service profiles]) {
-            for (DConnectApiEntity *api in [profile apis_]) {
+            for (DConnectApiEntity *api in [profile apis]) {
                 NSString *path = [api path];
                 NSString *strMethod = [api method];
                 DConnectApiSpec *spec = [_mApiSpecs findApiSpec: strMethod path: path];
@@ -139,27 +141,6 @@ static NSMutableDictionary *_instanceArray = nil;
         return YES;
     }
     return NO;
-}
-
-#pragma mark - Private Methods.
-
-- (NSString *) createPath: (NSString *) profileName api: (DConnectApi *) api {
-    NSString *interfaceName = [api interface];
-    NSString *attributeName = [api attribute];
-    NSMutableString *path = [NSMutableString string];
-    [path appendString: @"/"];
-    [path appendString: DConnectMessageDefaultAPI];
-    [path appendString: @"/"];
-    [path appendString: profileName];
-    if (interfaceName) {
-        [path appendString: @"/"];
-        [path appendString: interfaceName];
-    }
-    if (attributeName) {
-        [path appendString: @"/"];
-        [path appendString: attributeName];
-    }
-    return path;
 }
 
 @end

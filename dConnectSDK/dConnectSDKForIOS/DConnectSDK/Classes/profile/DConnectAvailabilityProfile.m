@@ -18,9 +18,9 @@ NSString *const DConnectAvailabilityProfileName = @"availability";
     self = [super init];
     if (self) {
         
-        NSString *getApiPath = [self apiPathWithProfileInterfaceAttribute: [self profileName]
-                                                                        interfaceName: nil
-                                                                        attributeName: nil];
+        NSString *getApiPath = [self apiPathWithProfile: [self profileName]
+                                          interfaceName: nil
+                                          attributeName: nil];
         [self addGetPath: getApiPath
                      api:^(DConnectRequestMessage *request, DConnectResponseMessage *response) {
                          return YES;

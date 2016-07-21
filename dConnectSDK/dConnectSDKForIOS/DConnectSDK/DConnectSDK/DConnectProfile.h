@@ -44,7 +44,7 @@
  @brief プロファイルに設定されているDevice Connect API実装のリストを返す.
  @retval API実装のリスト(DConnectApiEntityの配列)
  */
-- (NSArray *) apis_;
+- (NSArray *) apis;
 
 
 /*!
@@ -53,7 +53,7 @@
  @param[in] method リクエストされたAPIのメソッド
  @retval 指定されたリクエストに対応するAPI実装を返す. 存在しない場合は<code>null</code>
  */
-- (DConnectApiEntity *) findApiWithPath_: (NSString *) path method: (DConnectApiSpecMethod) method;
+- (DConnectApiEntity *) findApiWithPath: (NSString *) path method: (DConnectApiSpecMethod) method;
 
 /*!
  @brief プロファイル名、インターフェース名、アトリビュート名からパスを作成する.
@@ -62,7 +62,7 @@
  @param[in] attributeName アトリビュート名
  @retval パス
  */
-- (NSString *) apiPathWithProfileInterfaceAttribute : (NSString *) profileName interfaceName: (NSString *) interfaceName attributeName:(NSString *) attributeName;
+- (NSString *) apiPathWithProfile : (NSString *) profileName interfaceName: (NSString *) interfaceName attributeName:(NSString *) attributeName;
 
 /*!
  @brief 本プロファイル実装を提供するサービスを設定する.
@@ -201,6 +201,7 @@
  @brief Device Connect API実装を削除する.
  @param[in] apiEntity 削除するAPI実装
  */
-- (void) removeApi_: (DConnectApiEntity *) apiEntity;
+- (void) removeApi: (DConnectApiEntity *) apiEntity;
+
 
 @end

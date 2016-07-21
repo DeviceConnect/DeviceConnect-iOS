@@ -13,7 +13,6 @@
  @author NTT DOCOMO
  */
 #import <DConnectSDK/DConnectProfile.h>
-#import <DConnectSDK/GetApi.h>
 
 /*!
  @brief プロファイル名。

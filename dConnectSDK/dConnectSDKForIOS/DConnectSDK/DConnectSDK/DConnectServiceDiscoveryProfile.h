@@ -15,9 +15,7 @@
 #import <DConnectSDK/DConnectProfile.h>
 #import <DConnectSDK/DConnectProfileProvider.h>
 #import <DConnectSDK/DConnectServiceProvider.h>
-#import "GetApi.h"
-#import "PutApi.h"
-#import "DeleteApi.h"
+
 
 /*!
  @brief プロファイル名: servicediscovery。
