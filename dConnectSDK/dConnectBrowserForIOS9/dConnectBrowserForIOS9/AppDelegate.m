@@ -82,11 +82,13 @@
 - (void)applicationWillTerminate:(UIApplication *)application {
     [[GHDataManager shareManager]save];
 }
-- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
+
+- (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<NSString *,id> *)options
 {
     if (![url.scheme isEqualToString:@"dconnect"] && ![url.scheme isEqualToString:@"gotapi"]) {
         return NO;
     }
+
     NSString *directURLStr = [url.resourceSpecifier stringByRemovingPercentEncoding];
     NSURL *redirectURL = [NSURL URLWithString:directURLStr];
     if (_URLLoadingCallback && redirectURL) {
