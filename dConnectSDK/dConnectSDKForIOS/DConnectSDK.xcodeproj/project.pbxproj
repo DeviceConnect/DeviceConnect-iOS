@@ -1865,7 +1865,6 @@
 		D62622CF199232BC004F01E6 /* LocalOAuthToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LocalOAuthToken.m; path = localoauth/LocalOAuthToken.m; sourceTree = "<group>"; };
 		D62622D1199232BC004F01E6 /* LocalOAuthTokenManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LocalOAuthTokenManager.m; path = localoauth/LocalOAuthTokenManager.m; sourceTree = "<group>"; };
 		D62866B51D2F899A00C0C2D6 /* DConnectServiceManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DConnectServiceManager.m; path = service/DConnectServiceManager.m; sourceTree = "<group>"; };
-		D62866BF1D3489A800C0C2D6 /* DConnectApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DConnectApi.h; sourceTree = "<group>"; };
 		D62866C01D3489A800C0C2D6 /* DConnectApiSpec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DConnectApiSpec.h; sourceTree = "<group>"; };
 		D642265E1D3F09890010CE40 /* DConnectApiEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DConnectApiEntity.m; path = api/DConnectApiEntity.m; sourceTree = "<group>"; };
 		D64226601D3F11090010CE40 /* DConnectApiEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DConnectApiEntity.h; sourceTree = "<group>"; };
@@ -3722,7 +3721,6 @@
 				D67225EA1D34B566008641EA /* DConnectService.h */,
 				D67225EB1D34B566008641EA /* DConnectServiceManager.h */,
 				D67225EC1D34B566008641EA /* DConnectServiceProvider.h */,
-				D62866BF1D3489A800C0C2D6 /* DConnectApi.h */,
 				D62866C01D3489A800C0C2D6 /* DConnectApiSpec.h */,
 				D67225E91D34AEEE008641EA /* DConnectRequestParamSpec.h */,
 				AB3520C31BAD4BA90010FF55 /* DConnectLightProfile.h */,

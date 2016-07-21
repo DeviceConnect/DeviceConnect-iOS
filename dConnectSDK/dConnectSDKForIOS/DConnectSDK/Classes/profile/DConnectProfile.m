@@ -13,7 +13,6 @@
 #import "ApiIdentifier.h"
 #import <DConnectSDK/DConnectApiSpecList.h>
 #import <DConnectSDK/DConnectApiSpec.h>
-#import <DConnectSDK/DConnectApi.h>
 
 @implementation DConnectProfile {
     
