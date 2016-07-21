@@ -181,13 +181,18 @@
 
 - (void) addMethod:(NSString *)method path:(NSString *)path api:(DConnectApiFunction)api
 {
-    DConnectApiEntity *entity = [DConnectApiEntity new];
-    [entity setMethod: [NSString stringWithString: method]];
-    [entity setPath: [NSString stringWithString: path]];
-    [entity setApi: [api copy]];
+    DConnectApiEntity *apiEntity = [DConnectApiEntity new];
+    [apiEntity setMethod: [NSString stringWithString: method]];
+    [apiEntity setPath: [NSString stringWithString: path]];
+    [apiEntity setApi: [api copy]];
     
     @synchronized(mApis) {
-        [mApis addObject:entity];
+        
+        // 同名のメソッドとパスがすでに存在する場合は、削除する
+        [self removeApi: apiEntity];
+
+        // APIを追加する
+        [mApis addObject: apiEntity];
     }
 }
 

@@ -17,7 +17,6 @@
 #import <DConnectSDK/DConnectResponseMessage.h>
 #import <DConnectSDK/DConnectProfileProvider.h>
 //#import "DConnectService.h"
-#import <DConnectSDK/DConnectApi.h>
 #import <DConnectSDK/DConnectApiEntity.h>
 
 /*!
