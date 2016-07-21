@@ -182,4 +182,14 @@ numberOfRowsInComponent:(NSInteger)component{
 {
     _directory = _favorites[row];
 }
+
+
+//--------------------------------------------------------------//
+#pragma mark - textfieldDelegate
+//--------------------------------------------------------------//
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [textField resignFirstResponder];
+    return YES;
+}
 @end
