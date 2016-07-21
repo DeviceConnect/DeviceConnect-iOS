@@ -13,6 +13,7 @@
 #import "DPHitoeDeviceListCell.h"
 #import "DPHitoeAddDeviceTableViewController.h"
 #import "DPHitoeProgressDialog.h"
+#import "DPHitoeDeviceControlViewController.h"
 
 static NSString *const DPHitoeOpenAddDevice = @"Hitoeが追加されていません。\n"
                                             "「デバイス追加画面へ」ボタンを押して、\n"
@@ -189,6 +190,17 @@ static NSString *const DPHitoeOpenBluetooth = @"BluetoothがOFFになってい�
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
+    DPHitoeDevice *device = discoveries[indexPath.row];
+    if (!device.isRegisterFlag) {
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"警告"
+                                                                                 message:@"Hitoeを操作するには、Hitoeと接続してください。"
+                                                                          preferredStyle:UIAlertControllerStyleAlert];
+        
+        [alertController addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil]];
+        [self presentViewController:alertController animated:YES completion:nil];
+
+        return;
+    }
     [self performSegueWithIdentifier:@"showControlDevice" sender:self];
 
 }
@@ -252,11 +264,12 @@ static NSString *const DPHitoeOpenBluetooth = @"BluetoothがOFFになってい�
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([[segue identifier] isEqualToString:@"showControlDevice"]) {
-//        NSIndexPath *indexPath = [_virtualDeviceList indexPathForSelectedRow];
-//        DPIRKitVirtualProfileViewController *controller =
-//        (DPIRKitVirtualProfileViewController *)[segue destinationViewController] ;
-//        DPIRKitVirtualDevice *device = _devices[indexPath.row];
-//        [controller setDetailItem:device];
+        NSIndexPath *indexPath = [_registerDeviceList indexPathForSelectedRow];
+        UINavigationController *navController = (UINavigationController*)[segue destinationViewController] ;
+        DPHitoeDeviceControlViewController *controller =
+        (DPHitoeDeviceControlViewController *) [navController topViewController];
+        DPHitoeDevice *device = discoveries[indexPath.row];
+        [controller setDevice:device];
     }
 }
 - (IBAction)showAddDeviceViewController:(id)sender {

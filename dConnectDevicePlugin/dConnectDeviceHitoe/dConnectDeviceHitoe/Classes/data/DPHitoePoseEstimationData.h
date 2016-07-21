@@ -11,7 +11,7 @@
 #import <DConnectSDK/DConnectSDK.h>
 @interface DPHitoePoseEstimationData : NSObject<NSCopying>
 @property (nonatomic, strong) NSString *state;
-@property (nonatomic, assign) long timeStamp;
+@property (nonatomic, assign) long long timeStamp;
 @property (nonatomic, strong) NSString *timeStampString;
 - (DConnectMessage*)toDConnectMessage;
 

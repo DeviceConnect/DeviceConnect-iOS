@@ -57,6 +57,7 @@
     }
     NSArray* lineList = [raw componentsSeparatedByString:DPHitoeBR];
     NSArray* list = [lineList[0] componentsSeparatedByString:DPHitoeComma];
+    data.timeStamp = [((NSString*) list[0]) longLongValue];
     NSArray* accList = [list[1] componentsSeparatedByString:DPHitoeColon];
     data.accelX = [accList[0] doubleValue];
     data.accelY = [accList[1] doubleValue];
@@ -73,7 +74,7 @@
             continue;
         }
         NSArray *list = [val componentsSeparatedByString:DPHitoeComma];
-        long timestamp = (long) [((NSString*) list[0]) longLongValue];
+        long long timestamp = [((NSString*) list[0]) longLongValue];
         NSArray *ecgList = [list[1] componentsSeparatedByString:DPHitoeColon];
         NSString *date = [self getTimeStampStringForLong:timestamp];
         ecg.value = [ecgList[0] floatValue];
@@ -100,7 +101,7 @@
     if (!stressList[0] || !stressList[1]) {
         return stress;
     }
-    long timestamp = (long) [((NSString*) stressList[0]) longLongValue];
+    long long timestamp = [((NSString*) stressList[0]) longLongValue];
     double lfhf = [stressList[1] doubleValue];
     stress.lfhf = lfhf;
     stress.timeStamp = timestamp;
@@ -116,7 +117,7 @@
     }
     NSArray *lineList = [raw componentsSeparatedByString:DPHitoeBR];
     NSArray *poseList = [lineList[0] componentsSeparatedByString:DPHitoeComma];
-    long timestamp  = (long) [((NSString*) poseList[0]) longLongValue];
+    long long timestamp  = [((NSString*) poseList[0]) longLongValue];
     pose.timeStamp = timestamp;
     pose.timeStampString = [self getTimeStampStringForLong:timestamp];
     
@@ -154,7 +155,7 @@
                                             raw:(NSString*)raw {
     NSArray *lineList = [raw componentsSeparatedByString:DPHitoeBR];
     NSArray *walkList = [lineList[0] componentsSeparatedByString:DPHitoeComma];
-    long timestamp = (long) [((NSString*) walkList[0]) longLongValue];
+    long long timestamp = [((NSString*) walkList[0]) longLongValue];
     data.timeStamp = timestamp;
     data.timeStampString = [self getTimeStampStringForLong:timestamp];
     data.step = [walkList[1] intValue];
@@ -203,7 +204,7 @@
     heart.typeCode = typeCode;
     heart.unit = unit;
     heart.unitCode = unitCode;
-    heart.timeStamp = (long) [((NSString*) hrValue[0]) longLongValue];
+    heart.timeStamp = [((NSString*) hrValue[0]) longLongValue];
     heart.timeStampString = [self getTimeStampStringForLong:heart.timeStamp];
     
     return heart;
@@ -216,7 +217,7 @@
 }
 
 
-+ (NSString*)getTimeStampStringForLong:(long)timeStamp {
++ (NSString*)getTimeStampStringForLong:(long long)timeStamp {
     NSTimeInterval seconds = timeStamp / 1000;
     NSDate *date = [NSDate dateWithTimeIntervalSince1970:seconds];
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init] ;

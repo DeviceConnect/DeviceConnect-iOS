@@ -16,7 +16,7 @@
 @property (nonatomic, assign) double speed;
 @property (nonatomic, assign) double distance;
 @property (nonatomic, assign) double balance;
-@property (nonatomic, assign) long timeStamp;
+@property (nonatomic, assign) long long timeStamp;
 @property (nonatomic, strong) NSString *timeStampString;
 - (DConnectMessage*)toDConnectMessage;
 

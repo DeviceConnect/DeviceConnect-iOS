@@ -92,6 +92,9 @@
 		AB7E737A1D3DE7D10080AD22 /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB7E73791D3DE7D10080AD22 /* CoreBluetooth.framework */; };
 		AB7E737D1D3F07470080AD22 /* DPHitoeDeviceControlViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB7E737C1D3F07470080AD22 /* DPHitoeDeviceControlViewController.m */; };
 		AB7E73851D3F0E370080AD22 /* DPHitoeControlHealthViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB7E73841D3F0E370080AD22 /* DPHitoeControlHealthViewController.m */; };
+		AB7E738B1D3F3EC90080AD22 /* DPHitoeECGChartView.m in Sources */ = {isa = PBXBuildFile; fileRef = AB7E738A1D3F3EC90080AD22 /* DPHitoeECGChartView.m */; };
+		AB7E738D1D3F40FB0080AD22 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB7E738C1D3F40FB0080AD22 /* CoreGraphics.framework */; };
+		AB7E73901D3F55C20080AD22 /* DPHitoeControlECGViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB7E738F1D3F55C20080AD22 /* DPHitoeControlECGViewController.m */; };
 		ABC25ABD1D33627000CD9DA0 /* DPHitoeAddDeviceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = ABC25ABC1D33627000CD9DA0 /* DPHitoeAddDeviceCell.m */; };
 		ABC25AC11D33841900CD9DA0 /* DPHitoePinCodeDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = ABC25AC01D33841900CD9DA0 /* DPHitoePinCodeDialog.m */; };
 		ABC25AC21D33854D00CD9DA0 /* PinCodeDialog.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ABC25ABE1D33805700CD9DA0 /* PinCodeDialog.storyboard */; };
@@ -204,6 +207,11 @@
 		AB7E737C1D3F07470080AD22 /* DPHitoeDeviceControlViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHitoeDeviceControlViewController.m; sourceTree = "<group>"; };
 		AB7E73831D3F0E370080AD22 /* DPHitoeControlHealthViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHitoeControlHealthViewController.h; sourceTree = "<group>"; };
 		AB7E73841D3F0E370080AD22 /* DPHitoeControlHealthViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHitoeControlHealthViewController.m; sourceTree = "<group>"; };
+		AB7E73891D3F3EC90080AD22 /* DPHitoeECGChartView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHitoeECGChartView.h; sourceTree = "<group>"; };
+		AB7E738A1D3F3EC90080AD22 /* DPHitoeECGChartView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHitoeECGChartView.m; sourceTree = "<group>"; };
+		AB7E738C1D3F40FB0080AD22 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		AB7E738E1D3F55C20080AD22 /* DPHitoeControlECGViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHitoeControlECGViewController.h; sourceTree = "<group>"; };
+		AB7E738F1D3F55C20080AD22 /* DPHitoeControlECGViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHitoeControlECGViewController.m; sourceTree = "<group>"; };
 		ABC25ABB1D33627000CD9DA0 /* DPHitoeAddDeviceCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHitoeAddDeviceCell.h; sourceTree = "<group>"; };
 		ABC25ABC1D33627000CD9DA0 /* DPHitoeAddDeviceCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHitoeAddDeviceCell.m; sourceTree = "<group>"; };
 		ABC25ABE1D33805700CD9DA0 /* PinCodeDialog.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = PinCodeDialog.storyboard; sourceTree = "<group>"; };
@@ -237,6 +245,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AB7E738D1D3F40FB0080AD22 /* CoreGraphics.framework in Frameworks */,
 				AB7E737A1D3DE7D10080AD22 /* CoreBluetooth.framework in Frameworks */,
 				AB507ED91D30E31A0014C504 /* CoreData.framework in Frameworks */,
 				ABF6C3AB1D2B7722006B1B91 /* DConnectSDK.framework in Frameworks */,
@@ -344,12 +353,24 @@
 		AB7E73821D3F0DE90080AD22 /* control */ = {
 			isa = PBXGroup;
 			children = (
+				AB7E73881D3F3E710080AD22 /* view */,
 				AB7E73831D3F0E370080AD22 /* DPHitoeControlHealthViewController.h */,
 				AB7E73841D3F0E370080AD22 /* DPHitoeControlHealthViewController.m */,
+				AB7E738E1D3F55C20080AD22 /* DPHitoeControlECGViewController.h */,
+				AB7E738F1D3F55C20080AD22 /* DPHitoeControlECGViewController.m */,
 			);
 			name = control;
 			path = dConnectDeviceHitoe/Classes/setting/control;
 			sourceTree = SOURCE_ROOT;
+		};
+		AB7E73881D3F3E710080AD22 /* view */ = {
+			isa = PBXGroup;
+			children = (
+				AB7E73891D3F3EC90080AD22 /* DPHitoeECGChartView.h */,
+				AB7E738A1D3F3EC90080AD22 /* DPHitoeECGChartView.m */,
+			);
+			path = view;
+			sourceTree = "<group>";
 		};
 		ABC25AC71D34926A00CD9DA0 /* util */ = {
 			isa = PBXGroup;
@@ -396,6 +417,7 @@
 		ABF6C3781D2B4AB1006B1B91 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				AB7E738C1D3F40FB0080AD22 /* CoreGraphics.framework */,
 				AB7E73791D3DE7D10080AD22 /* CoreBluetooth.framework */,
 				AB507ED81D30E31A0014C504 /* CoreData.framework */,
 				AB3D3EB51D2CC7F2004290BA /* DCMDevicePluginSDK.framework */,
@@ -690,6 +712,7 @@
 				AB2E14F21D2F661700564A5E /* DPHitoeProgressDialog.m in Sources */,
 				AB507ED71D30DE270014C504 /* DPHitoeDBManager.m in Sources */,
 				AB1F4AAB1D387B45005784D9 /* DPHitoeHealthProfile.m in Sources */,
+				AB7E738B1D3F3EC90080AD22 /* DPHitoeECGChartView.m in Sources */,
 				AB507EEB1D31EB920014C504 /* DPHitoeAccelerationData.m in Sources */,
 				AB2E14EE1D2F64D300564A5E /* DPHitoeDialog.m in Sources */,
 				ABC25ABD1D33627000CD9DA0 /* DPHitoeAddDeviceCell.m in Sources */,
@@ -697,6 +720,7 @@
 				ABC25AF51D3735FE00CD9DA0 /* DPHitoeRawDataParseUtil.m in Sources */,
 				ABC25AC11D33841900CD9DA0 /* DPHitoePinCodeDialog.m in Sources */,
 				AB1F4AB81D38DFFC005784D9 /* DPHitoeBatteryProfile.m in Sources */,
+				AB7E73901D3F55C20080AD22 /* DPHitoeControlECGViewController.m in Sources */,
 				AB3D3EB21D2CC40D004290BA /* DPHitoeSystemProfile.m in Sources */,
 				AB507EF11D31F82D0014C504 /* DPHitoeTargetDeviceData.m in Sources */,
 				ABE4EBBA1D38FF2B0007B0A2 /* DPHitoePoseEstimationProfile.m in Sources */,

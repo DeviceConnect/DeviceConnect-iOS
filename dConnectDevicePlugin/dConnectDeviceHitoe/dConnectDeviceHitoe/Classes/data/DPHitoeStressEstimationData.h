@@ -12,7 +12,7 @@
 
 @interface DPHitoeStressEstimationData : NSObject<NSCopying>
 @property (nonatomic,assign) double lfhf;
-@property (nonatomic, assign) long timeStamp;
+@property (nonatomic, assign) long long timeStamp;
 @property (nonatomic, strong) NSString *timeStampString;
 - (DConnectMessage*)toDConnectMessage;
 

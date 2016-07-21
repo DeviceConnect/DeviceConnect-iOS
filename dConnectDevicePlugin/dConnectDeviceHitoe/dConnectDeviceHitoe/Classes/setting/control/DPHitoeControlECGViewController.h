@@ -1,5 +1,5 @@
 //
-//  DPHitoeDeviceControlViewController.h
+//  DPHitoeControlECGViewController.h
 //  dConnectDeviceHitoe
 //
 //  Copyright (c) 2016 NTT DOCOMO, INC.
@@ -7,11 +7,10 @@
 //  http://opensource.org/licenses/mit-license.php
 //
 
-
 #import <UIKit/UIKit.h>
 #import "DPHitoeDevice.h"
-@interface DPHitoeDeviceControlViewController : UITableViewController
 
-
+@interface DPHitoeControlECGViewController : UIViewController
 - (void)setDevice:(DPHitoeDevice*)device;
+
 @end

@@ -15,7 +15,8 @@
 @property (nonatomic, assign) double accelX;
 @property (nonatomic, assign) double accelY;
 @property (nonatomic, assign) double accelZ;
-@property (nonatomic, assign) long interval;
+@property (nonatomic, assign) long long interval;
+@property (nonatomic, assign) long long timeStamp;
 
 - (DConnectMessage*)toDConnectMessage;
 
