@@ -15,9 +15,9 @@
 typedef BOOL (^DConnectApiFunction)(DConnectRequestMessage*, DConnectResponseMessage*);
 
 @interface DConnectApiEntity : NSObject<NSCopying>
-@property (nonatomic, weak) NSString *method;
-@property (nonatomic, weak) NSString *path;
+@property (nonatomic, strong) NSString *method;
+@property (nonatomic, strong) NSString *path;
 @property (nonatomic, strong) DConnectApiFunction api;
-@property (nonatomic, weak) DConnectApiSpec *apiSpec;
+@property (nonatomic, strong) DConnectApiSpec *apiSpec;
 
 @end
