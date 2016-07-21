@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--Initial Guide View Controller-->
@@ -70,17 +71,21 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="mjR-NC-mTJ">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="T3o-Mu-9lX">
-                                <rect key="frame" x="190" y="541" width="220" height="44"/>
-                                <color key="backgroundColor" red="0.91372549020000005" green="0.36862745099999999" blue="0.027450980390000001" alpha="1" colorSpace="calibratedRGB"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="T3o-Mu-9lX">
+                                <rect key="frame" x="526" y="30" width="44" height="44"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="220" id="L2k-dw-dCI"/>
+                                    <constraint firstAttribute="width" constant="44" id="r8N-fc-hzS"/>
                                     <constraint firstAttribute="height" constant="44" id="zoS-GD-P1t"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
-                                <state key="normal" title="閉じる">
+                                <state key="normal" image="close_button">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="L2k-dw-dCI"/>
+                                    </mask>
+                                </variation>
                                 <connections>
                                     <action selector="didTappedCloseButton:" destination="khG-Gb-HcH" eventType="touchUpInside" id="aU3-ES-i6h"/>
                                 </connections>
@@ -88,9 +93,11 @@
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstAttribute="trailing" secondItem="T3o-Mu-9lX" secondAttribute="trailing" constant="30" id="3PI-Is-uBe"/>
                             <constraint firstItem="T3o-Mu-9lX" firstAttribute="centerX" secondItem="ycg-5h-KJY" secondAttribute="centerX" id="Buz-ds-nzd"/>
                             <constraint firstItem="mjR-NC-mTJ" firstAttribute="top" secondItem="ycg-5h-KJY" secondAttribute="top" id="HoM-Pj-1k1"/>
                             <constraint firstAttribute="trailing" secondItem="mjR-NC-mTJ" secondAttribute="trailing" id="IRY-Mm-imz"/>
+                            <constraint firstItem="T3o-Mu-9lX" firstAttribute="top" secondItem="ycg-5h-KJY" secondAttribute="topMargin" constant="30" id="L5w-y0-AI8"/>
                             <constraint firstItem="dVo-SA-Fuy" firstAttribute="top" secondItem="T3o-Mu-9lX" secondAttribute="bottom" constant="15" id="Y4i-az-5Sf"/>
                             <constraint firstItem="mjR-NC-mTJ" firstAttribute="top" secondItem="HFz-za-thh" secondAttribute="bottom" id="bc9-vz-cmn"/>
                             <constraint firstItem="mjR-NC-mTJ" firstAttribute="top" secondItem="HFz-za-thh" secondAttribute="bottom" id="d3E-i1-cXj"/>
@@ -101,6 +108,8 @@
                             <mask key="constraints">
                                 <exclude reference="bc9-vz-cmn"/>
                                 <exclude reference="d3E-i1-cXj"/>
+                                <exclude reference="Buz-ds-nzd"/>
+                                <exclude reference="Y4i-az-5Sf"/>
                             </mask>
                         </variation>
                     </view>
@@ -114,4 +123,7 @@
             <point key="canvasLocation" x="1020" y="433"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="close_button" width="60" height="60"/>
+    </resources>
 </document>
