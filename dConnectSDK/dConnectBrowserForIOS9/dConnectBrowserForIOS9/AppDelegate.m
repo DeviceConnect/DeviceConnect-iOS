@@ -85,7 +85,9 @@
 
 - (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<NSString *,id> *)options
 {
-    if (![url.scheme isEqualToString:@"dconnect"] && ![url.scheme isEqualToString:@"gotapi"]) {
+    //NOTE:safariViewからのリダイレクトは無視する(つまりBookmarkShare)
+    NSString* value =  options[@"UIApplicationOpenURLOptionsSourceApplicationKey"];
+    if ((![url.scheme isEqualToString:@"dconnect"] && ![url.scheme isEqualToString:@"gotapi"]) || [value isEqualToString:@"com.apple.SafariViewService"]) {
         return NO;
     }
 
