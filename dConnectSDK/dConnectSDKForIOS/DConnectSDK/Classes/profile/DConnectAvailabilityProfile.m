@@ -23,6 +23,7 @@ NSString *const DConnectAvailabilityProfileName = @"availability";
                                           attributeName: nil];
         [self addGetPath: getApiPath
                      api:^(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+                         [response setResult:DConnectMessageResultTypeOk];
                          return YES;
                      }];
     }
