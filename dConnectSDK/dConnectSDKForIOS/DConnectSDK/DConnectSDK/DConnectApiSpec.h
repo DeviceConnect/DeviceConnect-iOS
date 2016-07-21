@@ -45,7 +45,7 @@ typedef enum {
 
 
 
-@interface DConnectApiSpec : NSObject
+@interface DConnectApiSpec : NSObject<NSCopying>
 
 - (instancetype) init;
 

@@ -33,10 +33,134 @@ NSString *const DConnectAuthorizationProfileGrantTypeAuthorizationCode = @"autho
 - (id) initWithObject:(id)object {
     self = [super init];
     if (self) {
-        self.object = object;
+        __weak id weakObject = object;
         
-        [self addApi: [[DConnectAuthorizationGetCreateClientApi alloc] initWithObject: self.object]];
-        [self addApi: [[DConnectAuthorizationGetRequestAccessTokenApi alloc]  initWithObject: self.object]];
+        NSString *getCreateClientApiPath = [self apiPathWithProfileInterfaceAttribute: self.profileName
+                                                                        interfaceName: nil
+                                                                        attributeName: DConnectAuthorizationProfileAttrGrant];
+        [self addGetPath: getCreateClientApiPath
+                     api:^(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+                         
+            NSString *serviceId = [request serviceId];
+            NSString *package = [DConnectAuthorizationProfile packageFromRequest:request];
+            /***/
+            NSLog(@"onRequest - serviceId: {%@}", serviceId);
+            NSLog(@"onRequest - package: {%@}", package);
+            NSLog(@"onRequest - request(JSON): {%@}", [request convertToJSONString]);
+            /***/
+            
+            if (package == nil || package.length <= 0) {
+                [response setErrorToInvalidRequestParameter];
+            } else {
+                LocalOAuth2Main *oauth = [LocalOAuth2Main sharedOAuthForClass: [weakObject class]];
+                LocalOAuthPackageInfo *packageInfo
+                = [[LocalOAuthPackageInfo alloc] initWithPackageNameServiceId:package
+                                                                    serviceId:serviceId];
+                LocalOAuthClientData *clientData = [oauth createClientWithPackageInfo:packageInfo];
+                if (clientData) {
+                    [response setResult:DConnectMessageResultTypeOk];
+                    [DConnectAuthorizationProfile setClientId:clientData.clientId target:response];
+                } else {
+                    [response setErrorToUnknown];
+                }
+            }
+            return YES;
+        }];
+        
+        NSString *getRequestAccessTokenApiPath = [self apiPathWithProfileInterfaceAttribute: self.profileName
+                                                                        interfaceName: nil
+                                                                        attributeName: DConnectAuthorizationProfileAttrAccessToken];
+        [self addGetPath:getRequestAccessTokenApiPath
+                     api:^(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+                         
+            NSString *serviceId = [request serviceId];
+            NSString *package = [DConnectAuthorizationProfile packageFromRequest:request];
+            NSString *clientId = [DConnectAuthorizationProfile clientIdFromRequest:request];
+            NSString *scope = [DConnectAuthorizationProfile scopeFromeFromRequest:request];
+            NSArray *scopes = [DConnectAuthorizationProfile parsePattern:scope];
+            NSString *applicationName = @"Device Connect Manager";
+            
+            if (clientId == nil) {
+                [response setErrorToInvalidRequestParameterWithMessage:@"clientId is nil."];
+                return YES;
+            } else if (clientId.length <= 0) {
+                [response setErrorToInvalidRequestParameterWithMessage:@"clientId is empty."];
+                return YES;
+            } else if (scopes == nil) {
+                [response setErrorToInvalidRequestParameterWithMessage:@"scope is nil."];
+                return YES;
+            } else if (scopes.count <= 0) {
+                [response setErrorToInvalidRequestParameterWithMessage:@"scope is empty."];
+                return YES;
+            } else if (scope.length <= 0) {
+                [response setErrorToInvalidRequestParameterWithMessage:@"scope is empty."];
+                return YES;
+            } else if (package == nil) {
+                [response setErrorToInvalidRequestParameterWithMessage:@"package is nil."];
+                return YES;
+            } else if (package.length <= 0) {
+                [response setErrorToInvalidRequestParameterWithMessage:@"package is empty."];
+                return YES;
+            }
+            
+            LocalOAuth2Main *oauth = [LocalOAuth2Main sharedOAuthForClass: [weakObject class]];
+            dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
+            dispatch_time_t timeout = dispatch_time(DISPATCH_TIME_NOW, NSEC_PER_SEC * 60);
+            BOOL isDevicePlugin = [object isKindOfClass:[DConnectDevicePlugin class]];
+            
+            LocalOAuthConfirmAuthParams *params = [LocalOAuthConfirmAuthParams new];
+            params.applicationName = applicationName;
+            params.clientId = clientId;
+            params.serviceId = serviceId;
+            params.scope = scopes;
+            params.isForDevicePlugin = isDevicePlugin;
+            params.object = object;
+            
+            [oauth confirmPublishAccessTokenWithParams:params
+                            receiveAccessTokenCallback:^(LocalOAuthAccessTokenData *accessTokenData) {
+                                if (accessTokenData) {
+                                    
+                                    [response setResult:DConnectMessageResultTypeOk];
+                                    [DConnectAuthorizationProfile setAccessToken:accessTokenData._accessToken
+                                                                          target:response];
+                                    
+                                    DConnectArray *arr = [DConnectArray array];
+                                    NSArray *scopes = accessTokenData._scopes;
+                                    LocalOAuthAccessTokenScope *minScope = nil;
+                                    for (LocalOAuthAccessTokenScope *s in scopes) {
+                                        DConnectMessage *msg = [DConnectMessage message];
+                                        [DConnectAuthorizationProfile setScope:s._scope target:msg];
+                                        [DConnectAuthorizationProfile setExpirePriod:s._expirePeriod target:msg];
+                                        [arr addMessage:msg];
+                                        
+                                        // 最短の有効期限を取得する
+                                        if (minScope == nil
+                                            || s._expirePeriod < minScope._expirePeriod) {
+                                            minScope = s;
+                                        }
+                                    }
+                                    if (minScope) {
+                                        long expirePeriod = minScope._expirePeriod;
+                                        long long expire = accessTokenData._timestamp + (expirePeriod * 1000LL);
+                                        [DConnectAuthorizationProfile setExpire:expire target:response];
+                                    }
+                                    [DConnectAuthorizationProfile setScopes:arr target:response];
+                                } else {
+                                    [response setErrorToAuthorizationWithMessage:@"Cannot create a access token."];
+                                }
+                                dispatch_semaphore_signal(semaphore);
+                            }
+                              receiveExceptionCallback:^(NSString *exceptionMessage) {
+                                  [response setErrorToAuthorizationWithMessage:@"Cannot create a access token."];
+                                  dispatch_semaphore_signal(semaphore);
+                              }];
+            
+            long result = dispatch_semaphore_wait(semaphore, timeout);
+            if (result != 0) {
+                [response setErrorToAuthorizationWithMessage:@"timeout"];
+            }
+            return YES;
+        }];
     }
     return self;
 }
@@ -92,169 +216,6 @@ NSString *const DConnectAuthorizationProfileGrantTypeAuthorizationCode = @"autho
 
 + (NSString *) applicationNameFromRequest:(DConnectRequestMessage *)request {
     return [request stringForKey:DConnectAuthorizationProfileParamApplicationName];
-}
-
-@end
-
-
-
-#pragma mark - DConnectAuthorizationGetCreateClientApi
-
-@implementation DConnectAuthorizationGetCreateClientApi
-
-- (id) initWithObject:(id)object {
-    self = [super init];
-    if (self) {
-        self.delegate = self;
-        self.object = object;
-    }
-    return self;
-}
-
-- (NSString *)attribute {
-    return DConnectAuthorizationProfileAttrGrant;
-}
-
-#pragma mark - DConnectApiDelegate Implement.
-
-// [self didReceiveGetCreateClientRequest]をDConnectApi形式に移植
-// TODO: didReceiveRequest に名称変更
-- (BOOL)onRequest:(DConnectRequestMessage *)request response:(DConnectResponseMessage *)response {
-    
-    NSString *serviceId = [request serviceId];
-    NSString *package = [DConnectAuthorizationProfile packageFromRequest:request];
-    
-    if (package == nil || package.length <= 0) {
-        [response setErrorToInvalidRequestParameter];
-    } else {
-        LocalOAuth2Main *oauth = [LocalOAuth2Main sharedOAuthForClass:[self.object class]];
-        LocalOAuthPackageInfo *packageInfo
-        = [[LocalOAuthPackageInfo alloc] initWithPackageNameServiceId:package
-                                                            serviceId:serviceId];
-        LocalOAuthClientData *clientData = [oauth createClientWithPackageInfo:packageInfo];
-        if (clientData) {
-            [response setResult:DConnectMessageResultTypeOk];
-            [DConnectAuthorizationProfile setClientId:clientData.clientId target:response];
-        } else {
-            [response setErrorToUnknown];
-        }
-    }
-    return YES;
-}
-
-@end
-
-
-
-#pragma mark - DConnectAuthorizationGetRequestAccessTokenApi
-        
-@implementation DConnectAuthorizationGetRequestAccessTokenApi
-
-- (id) initWithObject:(id)object {
-    self = [super init];
-    if (self) {
-        self.delegate = self;
-        self.object = object;
-    }
-    return self;
-}
- 
-- (NSString *)attribute {
-    return DConnectAuthorizationProfileAttrAccessToken;
-}
-         
-#pragma mark - DConnectApiDelegate Implement.
-         
-// [self didReceiveGetRequestAccessTokenRequest]をDConnectApi形式に移植
-// TODO: didReceiveRequest に名称変更
-- (BOOL)onRequest:(DConnectRequestMessage *)request response:(DConnectResponseMessage *)response {
-    NSString *serviceId = [request serviceId];
-    NSString *package = [DConnectAuthorizationProfile packageFromRequest:request];
-    NSString *clientId = [DConnectAuthorizationProfile clientIdFromRequest:request];
-    NSString *scope = [DConnectAuthorizationProfile scopeFromeFromRequest:request];
-    NSArray *scopes = [DConnectAuthorizationProfile parsePattern:scope];
-    NSString *applicationName = @"Device Connect Manager";
-    
-    if (clientId == nil) {
-        [response setErrorToInvalidRequestParameterWithMessage:@"clientId is nil."];
-        return YES;
-    } else if (clientId.length <= 0) {
-        [response setErrorToInvalidRequestParameterWithMessage:@"clientId is empty."];
-        return YES;
-    } else if (scopes == nil) {
-        [response setErrorToInvalidRequestParameterWithMessage:@"scope is nil."];
-        return YES;
-    } else if (scopes.count <= 0) {
-        [response setErrorToInvalidRequestParameterWithMessage:@"scope is empty."];
-        return YES;
-    } else if (scope.length <= 0) {
-        [response setErrorToInvalidRequestParameterWithMessage:@"scope is empty."];
-        return YES;
-    } else if (package == nil) {
-        [response setErrorToInvalidRequestParameterWithMessage:@"package is nil."];
-        return YES;
-    } else if (package.length <= 0) {
-        [response setErrorToInvalidRequestParameterWithMessage:@"package is empty."];
-        return YES;
-    }
-    
-    LocalOAuth2Main *oauth = [LocalOAuth2Main sharedOAuthForClass:[self.object class]];
-    dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
-    dispatch_time_t timeout = dispatch_time(DISPATCH_TIME_NOW, NSEC_PER_SEC * 60);
-    BOOL isDevicePlugin = [_object isKindOfClass:[DConnectDevicePlugin class]];
-    
-    LocalOAuthConfirmAuthParams *params = [LocalOAuthConfirmAuthParams new];
-    params.applicationName = applicationName;
-    params.clientId = clientId;
-    params.serviceId = serviceId;
-    params.scope = scopes;
-    params.isForDevicePlugin = isDevicePlugin;
-    params.object = _object;
-    
-    [oauth confirmPublishAccessTokenWithParams:params
-                    receiveAccessTokenCallback:^(LocalOAuthAccessTokenData *accessTokenData) {
-                        if (accessTokenData) {
-                            
-                            [response setResult:DConnectMessageResultTypeOk];
-                            [DConnectAuthorizationProfile setAccessToken:accessTokenData._accessToken
-                                                                  target:response];
-                            
-                            DConnectArray *arr = [DConnectArray array];
-                            NSArray *scopes = accessTokenData._scopes;
-                            LocalOAuthAccessTokenScope *minScope = nil;
-                            for (LocalOAuthAccessTokenScope *s in scopes) {
-                                DConnectMessage *msg = [DConnectMessage message];
-                                [DConnectAuthorizationProfile setScope:s._scope target:msg];
-                                [DConnectAuthorizationProfile setExpirePriod:s._expirePeriod target:msg];
-                                [arr addMessage:msg];
-                                
-                                // 最短の有効期限を取得する
-                                if (minScope == nil
-                                    || s._expirePeriod < minScope._expirePeriod) {
-                                    minScope = s;
-                                }
-                            }
-                            if (minScope) {
-                                long expirePeriod = minScope._expirePeriod;
-                                long long expire = accessTokenData._timestamp + (expirePeriod * 1000LL);
-                                [DConnectAuthorizationProfile setExpire:expire target:response];
-                            }
-                            [DConnectAuthorizationProfile setScopes:arr target:response];
-                        } else {
-                            [response setErrorToAuthorizationWithMessage:@"Cannot create a access token."];
-                        }
-                        dispatch_semaphore_signal(semaphore);
-                    }
-                      receiveExceptionCallback:^(NSString *exceptionMessage) {
-                          [response setErrorToAuthorizationWithMessage:@"Cannot create a access token."];
-                          dispatch_semaphore_signal(semaphore);
-                      }];
-    
-    long result = dispatch_semaphore_wait(semaphore, timeout);
-    if (result != 0) {
-        [response setErrorToAuthorizationWithMessage:@"timeout"];
-    }
-    return YES;
 }
 
 @end

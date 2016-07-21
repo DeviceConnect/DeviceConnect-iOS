@@ -18,7 +18,13 @@ NSString *const DConnectAvailabilityProfileName = @"availability";
     self = [super init];
     if (self) {
         
-        [self addApi: [[DConnectAvailabilityGetApi alloc] init]];
+        NSString *getApiPath = [self apiPathWithProfileInterfaceAttribute: [self profileName]
+                                                                        interfaceName: nil
+                                                                        attributeName: nil];
+        [self addGetPath: getApiPath
+                     api:^(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+                         return YES;
+                     }];
     }
     return self;
 }
@@ -28,18 +34,3 @@ NSString *const DConnectAvailabilityProfileName = @"availability";
 }
 
 @end
-
-
-#pragma mark - DConnectAvailabilityGetApi
-
-@implementation DConnectAvailabilityGetApi
-
-#pragma mark - DConnectApiDelegate Implement.
-
-- (BOOL)onRequest:(DConnectRequestMessage *)request response:(DConnectResponseMessage *)response {
-    [response setResult:DConnectMessageResultTypeOk];
-    return YES;
-}
-
-@end
-

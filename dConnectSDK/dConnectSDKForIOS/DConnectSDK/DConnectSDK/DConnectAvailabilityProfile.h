@@ -25,11 +25,3 @@ extern NSString *const DConnectAvailabilityProfileName;
 - (id) init;
 
 @end
-
-
-/*!
- @class DConnectAvailabilityGetApi
- */
-@interface DConnectAvailabilityGetApi : GetApi<DConnectApiDelegate>
-
-@end

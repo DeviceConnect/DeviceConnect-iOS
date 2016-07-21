@@ -55,6 +55,21 @@ NSString * const DConnectApiSpecJsonKeyRequestParams = @"requestParams";
     return self;
 }
 
+#pragma mark - NSCopying Implement.
+
+- (id)copyWithZone:(NSZone *)zone {
+    
+    DConnectApiSpec *copyInstance = [[DConnectApiSpec alloc] init];
+    
+    copyInstance.mName = [NSString stringWithString: [self mName]];
+    copyInstance.mType = [self mType];
+    copyInstance.mMethod = [self mMethod];
+    copyInstance.mPath = [NSString stringWithString: [self mPath]];
+    copyInstance.mRequestParamSpecList = [[NSArray alloc] initWithArray: [self mRequestParamSpecList] copyItems: YES];
+    
+    return copyInstance;
+}
+
 #pragma mark - DConnectApiSpec Getter Method
 
 - (NSString *) name {

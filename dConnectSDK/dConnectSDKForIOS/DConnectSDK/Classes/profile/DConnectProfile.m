@@ -17,71 +17,93 @@
 
 @implementation DConnectProfile {
     
+//    /*!
+//     @brief サポートするAPI(key: ApiIdentifier, value: DConnectApi).
+//     */
+//    NSMutableDictionary *mApis;
     /*!
-     @brief サポートするAPI(key: ApiIdentifier, value: DConnectApi).
+     @brief サポートするAPI(DConnectApiEntityの配列).
      */
-    NSMutableDictionary *mApis;
+    NSMutableArray *mApis_;
 }
 
 
 - (instancetype) init {
     self = [super init];
     if (self) {
-        mApis = [NSMutableDictionary dictionary];
+        mApis_ = [NSMutableArray array];
     }
     return self;
 }
 
-- (NSArray *) apis {
-    
-    // ディープコピーして返す
-    // TODO: DConnectApiにNSCopyingプロトコルを実装する
-    NSArray *list = [[NSArray alloc] initWithArray: [mApis allValues] copyItems: YES];
-    return list;
-}
+//- (NSArray *) apis {
+//    
+//    // ディープコピーして返す
+//    // TODO: DConnectApiにNSCopyingプロトコルを実装する
+//    NSArray *list = [[NSArray alloc] initWithArray: [mApis allValues] copyItems: YES];
+//    return list;
+//}
 
-- (DConnectApi *) findApi: (DConnectRequestMessage *) request {
-    
-    DConnectMessageActionType action = [request action];
-    
-    DConnectApiSpecMethod method;
-    @try {
-        method = [DConnectApiSpec convertActionToMethod: action];
-    }
-    @catch (NSString *e) {
-        return nil;
-    }
-    NSString *path = [self apiPathWithProfileInterfaceAttribute:[request profile] interfaceName:[request interface] attributeName:[request attribute]];
-    return [self findApiWithPath: path method: method];
-}
+//- (DConnectApi *) findApi: (DConnectRequestMessage *) request {
+//    
+//    DConnectMessageActionType action = [request action];
+//    
+//    DConnectApiSpecMethod method;
+//    @try {
+//        method = [DConnectApiSpec convertActionToMethod: action];
+//    }
+//    @catch (NSString *e) {
+//        return nil;
+//    }
+//    NSString *path = [self apiPathWithProfileInterfaceAttribute:[request profile] interfaceName:[request interface] attributeName:[request attribute]];
+//    NSLog(@"findApi - pluginId: %@", [request pluginId]);
+//    return [self findApiWithPath: path method: method];
+//}
 
-- (DConnectApi *) findApiWithPath: (NSString *) path method: (DConnectApiSpecMethod) method {
-    ApiIdentifier *apiIdentifier = [[ApiIdentifier alloc] initWithPath:path method: method];
-    NSString *apiIdentifierString = [apiIdentifier apiIdentifierString];
-    return mApis[apiIdentifierString];
-}
+//- (DConnectApi *) findApiWithPath: (NSString *) path method: (DConnectApiSpecMethod) method {
+//    ApiIdentifier *apiIdentifier = [[ApiIdentifier alloc] initWithPath:path method: method];
+//    NSString *apiIdentifierString = [apiIdentifier apiIdentifierString];
+///***/
+//    NSLog(@"findApiWithPath - class: %@", [[self class] description]);
+//    NSLog(@"findApiWithPath - profile: %@", [self profileName]);
+//    NSLog(@"findApiWithPath - path: %@", path);
+//    NSLog(@"findApiWithPath - apiIdentifierString: %@", apiIdentifierString);
+//    NSLog(@"findApiWithPath - _mApis count: %d", (int)[mApis count]);
+//    for (NSString *apiKey in [mApis allKeys]) {
+//        NSLog(@"findApiWithPath - _mApi(key): %@", apiKey);
+//    }
+//    NSLog(@"findApiWithPath - result: %@", (mApis[apiIdentifierString] ? @"(not nil)":@"(nil)"));
+//    /***/
+//    return mApis[apiIdentifierString];
+//}
 
-- (void) addApi: (DConnectApi *) api {
-    NSString *path = [self apiPath: api];
-    ApiIdentifier *apiIdentifier = [[ApiIdentifier alloc] initWithPath:path method:[api method]];
-    NSString *apiIdentifierString = [apiIdentifier apiIdentifierString];
-    mApis[apiIdentifierString] = api;
-}
+//- (void) addApi: (DConnectApi *) api {
+//    NSString *path = [self apiPath: api];
+//    ApiIdentifier *apiIdentifier = [[ApiIdentifier alloc] initWithPath:path method:[api method]];
+//    NSString *apiIdentifierString = [apiIdentifier apiIdentifierString];
+//    /***/
+//    NSLog(@"addApi - class: %@", [[self class] description]);
+//    NSLog(@"addApi - profile: %@", [self profileName]);
+//    NSLog(@"addApi - apiIdentifierString: %@", apiIdentifierString);
+//    /***/
+//    mApis[apiIdentifierString] = api;
+//    /***/
+//    NSLog(@"addApi - _mApis: %@", (mApis ? @"(not nil)" : @"(nil)"));
+//    NSLog(@"addApi - _mApis count: %d", (int)[mApis count]);
+//    /***/
+//}
 
-- (void) removeApi: (DConnectApi *) api {
-    NSString *apiPath = [self apiPath:api];
-    DConnectApiSpecMethod method = [api method];
-    ApiIdentifier *apiIdentifier = [[ApiIdentifier alloc] initWithPath:apiPath method:method];
-    NSString *apiIdentifierString = [apiIdentifier apiIdentifierString];
-    [mApis removeObjectForKey: apiIdentifierString];
-}
+//- (void) removeApi: (DConnectApi *) api {
+//    NSString *apiPath = [self apiPath:api];
+//    DConnectApiSpecMethod method = [api method];
+//    ApiIdentifier *apiIdentifier = [[ApiIdentifier alloc] initWithPath:apiPath method:method];
+//    NSString *apiIdentifierString = [apiIdentifier apiIdentifierString];
+//    [mApis removeObjectForKey: apiIdentifierString];
+//}
 
-- (NSString *) apiPath: (DConnectApi *) api {
-    
-    NSString *apiPath = [self apiPathWithProfileInterfaceAttribute: [self profileName]
-                         interfaceName:[api interface]
-                                                     attributeName:[api attribute]];
-    return apiPath;
+// TODO: 削除予定
+- (NSString *) apiPath: (DConnectApiEntity *) api {
+    return [api path];
 }
 
 - (NSString *) apiPathWithProfileInterfaceAttribute : (NSString *) profileName interfaceName: (NSString *) interfaceName attributeName:(NSString *) attributeName {
@@ -162,14 +184,15 @@
 
 - (BOOL) didReceiveRequest:(DConnectRequestMessage *) request response:(DConnectResponseMessage *) response {
     
-    DConnectApi *api = [self findApi: request];
+    DConnectApiEntity *api = [self findApi_: request];
     if (api) {
         DConnectApiSpec *spec = [api apiSpec];
         if (spec && ![spec validate: request]) {
             [response setErrorToInvalidRequestParameter];
             return YES;
         }
-        return [api onRequest:request response: response];
+        
+        return [api api](request, response);
     } else {
         if ([self isKnownApi: request]) {
             [response setErrorToNotSupportAttribute];
@@ -179,6 +202,7 @@
         return YES;
     }
 }
+
 
 - (BOOL) didReceiveGetRequest:(DConnectRequestMessage *)request response:(DConnectResponseMessage *)response {
     [response setErrorToNotSupportAction];
@@ -198,6 +222,111 @@
 - (BOOL) didReceiveDeleteRequest:(DConnectRequestMessage *)request response:(DConnectResponseMessage *)response {
     [response setErrorToNotSupportAction];
     return YES;
+}
+
+#pragma mark - Blocks version
+
+
+
+- (void) addGetPath:(NSString *)path api:(DConnectApiFunction)api
+{
+    [self addMethod: @"GET" path: path api: api];
+}
+
+- (void) addPostPath:(NSString *)path api:(DConnectApiFunction)api
+{
+    [self addMethod: @"POST" path: path api: api];
+}
+
+- (void) addPutPath:(NSString *)path api:(DConnectApiFunction)api
+{
+    [self addMethod: @"PUT" path: path api: api];
+}
+
+- (void) addDeletePath:(NSString *)path api:(DConnectApiFunction)api
+{
+    [self addMethod: @"DELETE" path: path api: api];
+}
+
+- (void) addMethod:(NSString *)method path:(NSString *)path api:(DConnectApiFunction)api
+{
+    DConnectApiEntity *entity = [DConnectApiEntity new];
+    [entity setMethod: method];
+    [entity setPath: path];
+    [entity setApi: [api copy]];
+    
+    @synchronized(mApis_) {
+        [mApis_ addObject:entity];
+    }
+}
+
+- (NSArray *) apis_ {
+    
+    NSArray *apisCopy;
+    @synchronized(mApis_) {
+        // ディープコピーして返す
+        apisCopy = [[NSArray alloc] initWithArray: mApis_ copyItems: YES];
+    }
+    return apisCopy;
+}
+
+- (DConnectApiEntity *) findApi_: (DConnectRequestMessage *) request {
+    
+    DConnectMessageActionType action = [request action];
+    
+    DConnectApiSpecMethod method;
+    @try {
+        method = [DConnectApiSpec convertActionToMethod: action];
+    }
+    @catch (NSString *e) {
+        return nil;
+    }
+    
+    NSString *path = [self apiPathWithProfileInterfaceAttribute:[request profile] interfaceName:[request interface] attributeName:[request attribute]];
+    return [self findApiWithPath_: path method: method];
+}
+
+- (DConnectApiEntity *) findApiWithPath_: (NSString *) path method: (DConnectApiSpecMethod) method {
+
+    NSString *strMethod = nil;
+    @try {
+        strMethod = [DConnectApiSpec convertMethodToString:method];
+    }
+    @catch (NSString *e) {
+        return nil;
+    }
+
+    @synchronized(mApis_) {
+        
+        for (DConnectApiEntity *api in mApis_) {
+            if ([api path] && [path localizedCaseInsensitiveCompare: [api path]] == NSOrderedSame &&
+                [api method] && [strMethod localizedCaseInsensitiveCompare:[api method]] == NSOrderedSame) {
+                /***/
+                NSLog(@"findApiWithPath - result: (not nil)");
+                /***/
+                return api;
+            }
+        }
+    }
+    return nil;
+}
+
+- (void) removeApi_: (DConnectApiEntity *) apiEntity {
+    
+    NSString *path = [apiEntity path];
+    NSString *strMethod = [apiEntity method];
+    
+    @synchronized(mApis_) {
+        for (int index = [mApis_ count] - 1; index >= 0; index --) {
+            DConnectApiEntity *api = mApis_[index];
+            
+            if ([api path] && [path localizedCaseInsensitiveCompare: [api path]] == NSOrderedSame &&
+                [api method] && [strMethod localizedCaseInsensitiveCompare:[api method]] == NSOrderedSame) {
+                
+                [mApis_ removeObjectAtIndex: index];
+            }
+        }
+    }
 }
 
 @end

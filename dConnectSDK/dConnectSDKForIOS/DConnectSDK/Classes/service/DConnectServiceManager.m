@@ -98,10 +98,9 @@ static NSMutableDictionary *_instanceArray = nil;
     if (_mApiSpecs) {
         
         for (DConnectProfile *profile in [service profiles]) {
-            for (DConnectApi *api in [profile apis]) {
-                NSString *path = [self createPath: [profile profileName] api: api];
-                
-                NSString *strMethod = [DConnectApiSpec convertMethodToString: [api method]];
+            for (DConnectApiEntity *api in [profile apis_]) {
+                NSString *path = [api path];
+                NSString *strMethod = [api method];
                 DConnectApiSpec *spec = [_mApiSpecs findApiSpec: strMethod path: path];
                 if (spec) {
                     [api setApiSpec: spec];

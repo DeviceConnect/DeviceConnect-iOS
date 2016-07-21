@@ -295,63 +295,9 @@ extern NSString *const DConnectServiceDiscoveryProfileNetworkTypeBLE;
 @end
 
 
-/*!
- @class DConnectServiceDiscoveryGetServicesApi
- */
-@interface DConnectServiceDiscoveryGetServicesApi : GetApi<DConnectApiDelegate>
-
-@property (nonatomic, weak) DConnectServiceDiscoveryProfile *serviceDiscoveryProfile;
-
-/*!
- @brief DConnectServiceDiscoveryProfileのdelegateを指定して本クラスのインスタンスを初期化する。
- 
- @param[in] delegate DConnectServiceDiscoveryProfileのdelegate
- 
- @retval 本クラスのインスタンス
- */
-- (id) initWithProfile: (DConnectServiceDiscoveryProfile *)profile serviceProvider: (DConnectServiceProvider *) serviceProvider;
-
-@end
-
-
-/*!
- @class DConnectServiceDiscoveryPutOnServiceChangeApi
- */
-@interface DConnectServiceDiscoveryPutOnServiceChangeApi : PutApi<DConnectApiDelegate>
-
-@property (nonatomic, weak) DConnectServiceDiscoveryProfile *serviceDiscoveryProfile;
-
-/*!
- @brief DConnectServiceDiscoveryProfileのdelegateを指定して本クラスのインスタンスを初期化する。
- 
- @param[in] delegate DConnectServiceDiscoveryProfileのdelegate
- 
- @retval 本クラスのインスタンス
- */
-- (id) initWithProfile: (DConnectProfile *)profile;
-
-@end
 
 
 
-
-/*!
- @class DConnectServiceDiscoveryDeleteOnServiceChangeApi
- */
-@interface DConnectServiceDiscoveryDeleteOnServiceChangeApi : DeleteApi<DConnectApiDelegate>
-
-@property (nonatomic, weak) DConnectServiceDiscoveryProfile *serviceDiscoveryProfile;
-
-/*!
- @brief DConnectServiceDiscoveryProfileのdelegateを指定して本クラスのインスタンスを初期化する。
- 
- @param[in] delegate DConnectServiceDiscoveryProfileのdelegate
- 
- @retval 本クラスのインスタンス
- */
-- (id) initWithProfile: (DConnectProfile *)profile;
-
-@end
 
 
 @interface DConnectServiceDiscoveryUtils : NSObject
