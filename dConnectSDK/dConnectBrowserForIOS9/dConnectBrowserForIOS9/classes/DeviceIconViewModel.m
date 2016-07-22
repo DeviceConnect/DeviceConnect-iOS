@@ -59,20 +59,21 @@
     }
 }
 
-//TODO: DConnectMessage.idからターゲットを判定する
+//TODO: DConnectMessage.idからターゲットbundleを判定する
+//全て網羅できていない
 - (NSString*)targetBundle
 {
-    NSArray* services = [[self idName] componentsSeparatedByString:@"."];
-    NSString* target = [services objectAtIndex:1];
-    if([target isEqualToString:@"DPPebbleDevicePlugin"]) {
+    DConnectManager *mgr = [DConnectManager sharedManager];
+    NSString* pluginId = [mgr devicePluginIdForServiceId:[self idName]];
+    if([pluginId isEqualToString:@"DPPebbleDevicePlugin.dconnect"]) {
         return @"dConnectDevicePebble";
-    } else if([target isEqualToString:@"DPHostDevicePlugin"]) {
+    } else if([pluginId isEqualToString:@"DPHostDevicePlugin.dconnect"]) {
         return @"dConnectDeviceHost";
-    } else if([target isEqualToString:@"DPThetaDevicePlugin"]) {
+    } else if([pluginId isEqualToString:@"DPThetaDevicePlugin.dconnect"]) {
         return @"dConnectDeviceTheta";
     }
 
-    return target;
+    return pluginId;
 }
 
 
