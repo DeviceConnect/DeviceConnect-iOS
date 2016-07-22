@@ -24,7 +24,6 @@
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uEi-mf-LUM">
                                 <rect key="frame" x="20" y="77" width="534" height="100"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="534" id="0Fq-UH-WZe"/>
                                     <constraint firstAttribute="height" constant="100" id="DOj-gq-vIJ"/>
                                     <constraint firstAttribute="width" constant="534" id="ecS-3m-Wd7"/>
                                 </constraints>
@@ -32,16 +31,10 @@
 「デバイス追加画面へ」ボタンを押して、
 Hitoeを追加してください。</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
-                                <variation key="default">
-                                    <mask key="constraints">
-                                        <exclude reference="0Fq-UH-WZe"/>
-                                    </mask>
-                                </variation>
                                 <variation key="widthClass=compact">
                                     <mask key="constraints">
-                                        <include reference="0Fq-UH-WZe"/>
                                         <exclude reference="ecS-3m-Wd7"/>
                                     </mask>
                                 </variation>
@@ -63,7 +56,7 @@ Hitoeを追加してください。</string>
                                                         <constraint firstAttribute="width" secondItem="Ug5-Yz-v8k" secondAttribute="height" multiplier="203:20" id="xZt-sI-sof"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <button opaque="NO" contentMode="scaleToFill" highlighted="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="41Z-zg-pmc">
@@ -80,7 +73,7 @@ Hitoeを追加してください。</string>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PdU-ar-8Az">
                                                     <rect key="frame" x="18" y="29" width="24" height="11"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="9"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
@@ -110,10 +103,12 @@ Hitoeを追加してください。</string>
                         <constraints>
                             <constraint firstItem="uEi-mf-LUM" firstAttribute="leading" secondItem="kVS-yK-epS" secondAttribute="leading" constant="20" id="3Ey-2b-fvA"/>
                             <constraint firstItem="uEi-mf-LUM" firstAttribute="top" secondItem="xt6-4t-lmO" secondAttribute="bottom" constant="13" id="5ks-Qn-LGp"/>
+                            <constraint firstItem="uEi-mf-LUM" firstAttribute="leading" secondItem="kVS-yK-epS" secondAttribute="leading" constant="20" id="CAt-bm-hhW"/>
                             <constraint firstItem="udi-pm-wdn" firstAttribute="centerY" secondItem="kVS-yK-epS" secondAttribute="centerY" id="HRK-r3-HO3"/>
                             <constraint firstItem="uEi-mf-LUM" firstAttribute="leading" secondItem="kVS-yK-epS" secondAttribute="leadingMargin" id="Hkb-Ee-iaH"/>
                             <constraint firstAttribute="trailing" secondItem="uEi-mf-LUM" secondAttribute="trailing" constant="46" id="Ihv-6M-6mE"/>
                             <constraint firstAttribute="trailing" secondItem="udi-pm-wdn" secondAttribute="trailing" id="Vsa-UA-gsn"/>
+                            <constraint firstAttribute="trailing" secondItem="uEi-mf-LUM" secondAttribute="trailing" constant="20" id="Y30-q2-vUW"/>
                             <constraint firstItem="udi-pm-wdn" firstAttribute="bottom" secondItem="3rO-6c-NaD" secondAttribute="top" id="cXl-aI-7sK"/>
                             <constraint firstItem="udi-pm-wdn" firstAttribute="leading" secondItem="kVS-yK-epS" secondAttribute="leading" id="h6G-7O-gkr"/>
                             <constraint firstItem="udi-pm-wdn" firstAttribute="top" secondItem="xt6-4t-lmO" secondAttribute="bottom" id="kXX-FY-VdK"/>
@@ -126,7 +121,9 @@ Hitoeを追加してください。</string>
                             <mask key="constraints">
                                 <exclude reference="HRK-r3-HO3"/>
                                 <exclude reference="kXX-FY-VdK"/>
+                                <exclude reference="CAt-bm-hhW"/>
                                 <exclude reference="Hkb-Ee-iaH"/>
+                                <exclude reference="Y30-q2-vUW"/>
                                 <exclude reference="twQ-3l-C2A"/>
                                 <exclude reference="vBS-ds-xof"/>
                             </mask>
@@ -134,8 +131,10 @@ Hitoeを追加してください。</string>
                         <variation key="widthClass=compact">
                             <mask key="constraints">
                                 <exclude reference="3Ey-2b-fvA"/>
+                                <include reference="CAt-bm-hhW"/>
                                 <include reference="Hkb-Ee-iaH"/>
                                 <exclude reference="Ihv-6M-6mE"/>
+                                <include reference="Y30-q2-vUW"/>
                             </mask>
                         </variation>
                     </view>
@@ -159,7 +158,7 @@ Hitoeを追加してください。</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3Pk-bw-hv5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-236" y="1835"/>
+            <point key="canvasLocation" x="-237" y="1835"/>
         </scene>
         <!--デバイス追加画面-->
         <scene sceneID="8KR-gJ-QMn">
@@ -183,7 +182,7 @@ Hitoeを追加してください。</string>
                                                 <constraint firstAttribute="width" secondItem="02F-LS-oPg" secondAttribute="height" multiplier="389:21" id="xle-1S-gxN"/>
                                             </constraints>
                                             <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hno-VS-ohZ">
@@ -192,7 +191,7 @@ Hitoeを追加してください。</string>
                                                 <constraint firstAttribute="width" secondItem="hno-VS-ohZ" secondAttribute="height" multiplier="464:21" id="IZe-aJ-bWy"/>
                                             </constraints>
                                             <fontDescription key="fontDescription" type="system" pointSize="19"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="Ojb-Zf-J69">
@@ -249,13 +248,149 @@ Hitoeを追加してください。</string>
                     <view key="view" contentMode="scaleToFill" id="0Qk-Uc-Lhw">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="mark_heartrate.png" translatesAutoresizingMaskIntoConstraints="NO" id="hIe-PN-lJ2">
+                                <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="244" id="6dK-hx-vCh"/>
+                                    <constraint firstAttribute="height" constant="171" id="ydF-qz-h2w"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="6dK-hx-vCh"/>
+                                        <exclude reference="ydF-qz-h2w"/>
+                                    </mask>
+                                </variation>
+                                <variation key="widthClass=compact">
+                                    <mask key="constraints">
+                                        <include reference="6dK-hx-vCh"/>
+                                        <include reference="ydF-qz-h2w"/>
+                                    </mask>
+                                </variation>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Uw3-yP-oaF">
+                                <rect key="frame" x="-42" y="-21" width="42" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="45" id="5i4-yO-LxH"/>
+                                    <constraint firstAttribute="width" constant="103" id="cS0-HC-ei4"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="5i4-yO-LxH"/>
+                                        <exclude reference="cS0-HC-ei4"/>
+                                    </mask>
+                                </variation>
+                                <variation key="widthClass=compact">
+                                    <mask key="constraints">
+                                        <include reference="5i4-yO-LxH"/>
+                                        <include reference="cS0-HC-ei4"/>
+                                    </mask>
+                                </variation>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EIX-Co-L3d">
+                                <rect key="frame" x="171" y="389" width="68" height="37"/>
+                                <color key="backgroundColor" red="0.1137254902" green="0.83529411760000005" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="37" id="e3O-zq-zUn"/>
+                                    <constraint firstAttribute="width" secondItem="EIX-Co-L3d" secondAttribute="height" multiplier="68:37" id="ss6-mA-Hpd"/>
+                                </constraints>
+                                <state key="normal" title="登録">
+                                    <color key="titleColor" red="1" green="0.96365796439999996" blue="0.98679234699999996" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="e3O-zq-zUn"/>
+                                    </mask>
+                                </variation>
+                                <connections>
+                                    <action selector="registerECG:" destination="5Jb-Sj-ZMo" eventType="touchUpInside" id="O4m-I4-2nf"/>
+                                    <action selector="registerHeartRate:" destination="wG7-dp-1k3" eventType="touchUpInside" id="tQl-xS-eGe"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rcF-Zf-XtK">
+                                <rect key="frame" x="362" y="389" width="68" height="37"/>
+                                <color key="backgroundColor" red="0.1137254902" green="0.83529411760000005" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="rcF-Zf-XtK" secondAttribute="height" multiplier="68:37" id="ZQC-d3-VGo"/>
+                                    <constraint firstAttribute="height" constant="37" id="mSg-2p-qV4"/>
+                                </constraints>
+                                <state key="normal" title="解除">
+                                    <color key="titleColor" red="1" green="0.96365796439999996" blue="0.98679234699999996" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="unregisterECG:" destination="5Jb-Sj-ZMo" eventType="touchUpInside" id="pDs-qg-Bee"/>
+                                    <action selector="unregisterHeartRate:" destination="wG7-dp-1k3" eventType="touchUpInside" id="5xO-ij-mIn"/>
+                                </connections>
+                            </button>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="rcF-Zf-XtK" firstAttribute="trailing" secondItem="hIe-PN-lJ2" secondAttribute="trailing" id="9ee-EB-8yA"/>
+                            <constraint firstItem="EIX-Co-L3d" firstAttribute="baseline" secondItem="rcF-Zf-XtK" secondAttribute="firstBaseline" id="Jj7-GA-VkD"/>
+                            <constraint firstItem="EIX-Co-L3d" firstAttribute="top" secondItem="hIe-PN-lJ2" secondAttribute="bottom" constant="75" id="MTL-nT-KX4"/>
+                            <constraint firstItem="EIX-Co-L3d" firstAttribute="firstBaseline" secondItem="rcF-Zf-XtK" secondAttribute="baseline" id="Nk6-7n-ynS"/>
+                            <constraint firstItem="Uw3-yP-oaF" firstAttribute="centerX" secondItem="0Qk-Uc-Lhw" secondAttribute="centerX" id="Vwr-Dp-NsM"/>
+                            <constraint firstItem="Uw3-yP-oaF" firstAttribute="top" secondItem="hIe-PN-lJ2" secondAttribute="bottom" constant="13" id="h7x-PW-aK6"/>
+                            <constraint firstItem="hIe-PN-lJ2" firstAttribute="top" secondItem="ccN-C7-OmO" secondAttribute="bottom" constant="64" id="npf-HF-yhR"/>
+                            <constraint firstItem="EIX-Co-L3d" firstAttribute="top" secondItem="rcF-Zf-XtK" secondAttribute="top" id="qXp-nw-Bhj"/>
+                            <constraint firstItem="hIe-PN-lJ2" firstAttribute="centerX" secondItem="0Qk-Uc-Lhw" secondAttribute="centerX" id="qgb-fq-WyD"/>
+                            <constraint firstItem="EIX-Co-L3d" firstAttribute="leading" secondItem="hIe-PN-lJ2" secondAttribute="leading" id="yXG-R2-Eu2"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="subviews">
+                                <exclude reference="hIe-PN-lJ2"/>
+                                <exclude reference="Uw3-yP-oaF"/>
+                                <exclude reference="EIX-Co-L3d"/>
+                                <exclude reference="rcF-Zf-XtK"/>
+                            </mask>
+                            <mask key="constraints">
+                                <exclude reference="npf-HF-yhR"/>
+                                <exclude reference="qgb-fq-WyD"/>
+                                <exclude reference="Vwr-Dp-NsM"/>
+                                <exclude reference="h7x-PW-aK6"/>
+                                <exclude reference="Jj7-GA-VkD"/>
+                                <exclude reference="MTL-nT-KX4"/>
+                                <exclude reference="Nk6-7n-ynS"/>
+                                <exclude reference="qXp-nw-Bhj"/>
+                                <exclude reference="yXG-R2-Eu2"/>
+                                <exclude reference="9ee-EB-8yA"/>
+                            </mask>
+                        </variation>
+                        <variation key="widthClass=compact">
+                            <mask key="subviews">
+                                <include reference="hIe-PN-lJ2"/>
+                                <include reference="Uw3-yP-oaF"/>
+                                <include reference="EIX-Co-L3d"/>
+                                <include reference="rcF-Zf-XtK"/>
+                            </mask>
+                            <mask key="constraints">
+                                <include reference="npf-HF-yhR"/>
+                                <include reference="qgb-fq-WyD"/>
+                                <include reference="Vwr-Dp-NsM"/>
+                                <include reference="h7x-PW-aK6"/>
+                                <include reference="Jj7-GA-VkD"/>
+                                <include reference="MTL-nT-KX4"/>
+                                <include reference="Nk6-7n-ynS"/>
+                                <include reference="qXp-nw-Bhj"/>
+                                <include reference="yXG-R2-Eu2"/>
+                                <include reference="9ee-EB-8yA"/>
+                            </mask>
+                        </variation>
                     </view>
                     <navigationItem key="navigationItem" id="MsT-jL-sht"/>
+                    <connections>
+                        <outlet property="heartRateImageTop" destination="npf-HF-yhR" id="pWM-sO-Drk"/>
+                        <outlet property="heartRateLabel" destination="Uw3-yP-oaF" id="xGw-u2-M6j"/>
+                        <outlet property="registerBtn" destination="EIX-Co-L3d" id="aKZ-xO-67s"/>
+                        <outlet property="unregisterBtn" destination="rcF-Zf-XtK" id="gEr-N9-yZc"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="p3l-Ju-Frh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-206" y="3434"/>
+            <point key="canvasLocation" x="-207" y="3434"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="dG7-xw-QUr">
@@ -308,6 +443,7 @@ Hitoeを追加してください。</string>
                     </navigationItem>
                     <connections>
                         <segue destination="5Jb-Sj-ZMo" kind="show" identifier="controlECG" id="gPu-1e-rtp"/>
+                        <segue destination="wG7-dp-1k3" kind="show" identifier="controlHeartRate" id="4lQ-EW-3SZ"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lte-7x-zFt" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -326,9 +462,9 @@ Hitoeを追加してください。</string>
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VCz-uu-Bee" customClass="DPHitoeECGChartView">
+                            <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VCz-uu-Bee" customClass="DPHitoeECGChartView">
                                 <rect key="frame" x="171" y="185.5" width="259" height="109.5"/>
-                                <color key="backgroundColor" red="0.93109865837696337" green="0.93109865837696337" blue="0.93109865837696337" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="243.5" id="Eo7-WE-a5R"/>
                                     <constraint firstAttribute="height" constant="110" id="o28-lz-0hM"/>
@@ -383,12 +519,11 @@ Hitoeを追加してください。</string>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="Tfn-yk-zph" firstAttribute="top" secondItem="VCz-uu-Bee" secondAttribute="bottom" constant="94" id="2Yk-aV-bsD"/>
-                            <constraint firstItem="CPu-ml-ksW" firstAttribute="top" secondItem="OkX-CQ-RjD" secondAttribute="bottom" constant="130" id="3rv-45-DQd"/>
+                            <constraint firstItem="OkX-CQ-RjD" firstAttribute="trailing" secondItem="VCz-uu-Bee" secondAttribute="trailing" id="38s-hL-D8K"/>
                             <constraint firstItem="OkX-CQ-RjD" firstAttribute="top" secondItem="VCz-uu-Bee" secondAttribute="bottom" constant="94" id="4C2-Af-3iV"/>
                             <constraint firstItem="VCz-uu-Bee" firstAttribute="centerX" secondItem="uDu-CA-3AL" secondAttribute="centerX" id="Ac6-Vo-8ld"/>
                             <constraint firstItem="OkX-CQ-RjD" firstAttribute="firstBaseline" secondItem="Tfn-yk-zph" secondAttribute="baseline" id="C2C-SL-dMZ"/>
                             <constraint firstItem="OkX-CQ-RjD" firstAttribute="top" secondItem="Tfn-yk-zph" secondAttribute="top" id="DJQ-qr-1Qr"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="OkX-CQ-RjD" secondAttribute="trailing" constant="50" id="Flp-z2-lsF"/>
                             <constraint firstItem="Tfn-yk-zph" firstAttribute="centerY" secondItem="uDu-CA-3AL" secondAttribute="centerY" constant="-120" id="Koj-hI-J5e"/>
                             <constraint firstItem="VCz-uu-Bee" firstAttribute="top" secondItem="lnt-iA-NUI" secondAttribute="bottom" constant="82" id="QYk-fO-Y4U"/>
                             <constraint firstItem="OkX-CQ-RjD" firstAttribute="trailing" secondItem="VCz-uu-Bee" secondAttribute="trailing" id="b30-7R-pUH"/>
@@ -405,7 +540,7 @@ Hitoeを追加してください。</string>
                                 <exclude reference="fKx-nm-7zx"/>
                                 <exclude reference="2Yk-aV-bsD"/>
                                 <exclude reference="Koj-hI-J5e"/>
-                                <exclude reference="Flp-z2-lsF"/>
+                                <exclude reference="38s-hL-D8K"/>
                             </mask>
                         </variation>
                         <variation key="widthClass=compact">
@@ -413,7 +548,7 @@ Hitoeを追加してください。</string>
                                 <exclude reference="Ac6-Vo-8ld"/>
                                 <include reference="cj0-sa-UeC"/>
                                 <include reference="fKx-nm-7zx"/>
-                                <include reference="Flp-z2-lsF"/>
+                                <include reference="38s-hL-D8K"/>
                                 <exclude reference="b30-7R-pUH"/>
                                 <exclude reference="zzy-nB-s32"/>
                             </mask>
@@ -421,6 +556,9 @@ Hitoeを追加してください。</string>
                     </view>
                     <connections>
                         <outlet property="ecgChart" destination="VCz-uu-Bee" id="cbD-CC-FNa"/>
+                        <outlet property="ecgChartTop" destination="cj0-sa-UeC" id="pN1-53-oeL"/>
+                        <outlet property="registerBtn" destination="Tfn-yk-zph" id="XkP-la-zT6"/>
+                        <outlet property="unregisterBtn" destination="OkX-CQ-RjD" id="JwF-z6-4UD"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ubX-hc-7AT" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -465,4 +603,7 @@ Hitoeを追加してください。</string>
             <point key="canvasLocation" x="-523" y="1058"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="mark_heartrate.png" width="480" height="360"/>
+    </resources>
 </document>

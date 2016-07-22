@@ -9,8 +9,10 @@
 
 #import <UIKit/UIKit.h>
 #import "DPHitoeDevice.h"
+#import "DPHioteControlViewController.h"
 
-@interface DPHitoeControlECGViewController : UIViewController
+
+@interface DPHitoeControlECGViewController : DPHioteControlViewController
 - (void)setDevice:(DPHitoeDevice*)device;
 
 @end

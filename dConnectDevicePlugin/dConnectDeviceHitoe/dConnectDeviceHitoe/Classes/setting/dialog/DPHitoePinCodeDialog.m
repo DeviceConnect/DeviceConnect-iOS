@@ -84,6 +84,8 @@ static void (^pinCodeCallback)(NSString *pinCode);
 }
 
 
+#pragma mark - Rotate Delegate
+
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     return YES;
 }

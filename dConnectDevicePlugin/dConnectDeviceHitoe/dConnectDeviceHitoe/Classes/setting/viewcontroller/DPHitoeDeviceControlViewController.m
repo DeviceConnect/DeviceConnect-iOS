@@ -10,7 +10,7 @@
 
 #import "DPHitoeDeviceControlViewController.h"
 #import "DPHitoeControlECGViewController.h"
-
+#import "DPHitoeControlHealthViewController.h"
 typedef enum DPHitoeProfiles : NSUInteger
 {
     DPHitoeHeartRate = 0,
@@ -22,7 +22,9 @@ typedef enum DPHitoeProfiles : NSUInteger
     DPHitoeWalk
 } DPHitoeProfiles;
 
-@interface DPHitoeDeviceControlViewController ()
+@interface DPHitoeDeviceControlViewController () {
+    CBCentralManager *cManager;
+}
 @property NSArray *profileList;
 @property (nonatomic, copy) DPHitoeDevice *device;
 @end
@@ -48,6 +50,10 @@ typedef enum DPHitoeProfiles : NSUInteger
                                                                            green:0.63
                                                                             blue:0.91
                                                                            alpha:1.0];
+    cManager = [[CBCentralManager alloc] initWithDelegate:self queue:nil];
+    NSArray *services = @[];
+    NSDictionary *options = @{CBCentralManagerScanOptionAllowDuplicatesKey:@(NO)};
+    [cManager scanForPeripheralsWithServices:services options:options];
     
 }
 
@@ -59,20 +65,7 @@ typedef enum DPHitoeProfiles : NSUInteger
     [super didReceiveMemoryWarning];
 }
 
-#pragma mark - Table view data source
 
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [_profileList count];
-}
-
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"controlProfile" forIndexPath:indexPath];
-    cell.textLabel.text = _profileList[indexPath.row];
-    
-    return cell;
-}
 
 
 #pragma mark - Public method
@@ -92,18 +85,37 @@ typedef enum DPHitoeProfiles : NSUInteger
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
 
-    if ([[segue identifier] isEqualToString:@"controlECG"]) {
+    if ([[segue identifier] isEqualToString:@"controlHeartRate"]) {
+        DPHitoeControlHealthViewController *controller =
+        (DPHitoeControlHealthViewController *) [segue destinationViewController];
+        [controller setDevice:_device];
+    } else if ([[segue identifier] isEqualToString:@"controlECG"]) {
         DPHitoeDeviceControlViewController *controller =
         (DPHitoeDeviceControlViewController *) [segue destinationViewController];
         [controller setDevice:_device];
     }
 }
 
+#pragma mark - Table view data source
+
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return [_profileList count];
+}
+
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"controlProfile" forIndexPath:indexPath];
+    cell.textLabel.text = _profileList[indexPath.row];
+    
+    return cell;
+}
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
     switch (indexPath.row) {
         case DPHitoeHeartRate:
-            [self.navigationController performSegueWithIdentifier:@"controlHealth" sender:self];
+            [self performSegueWithIdentifier:@"controlHeartRate" sender:self];
             break;
         case DPHitoeECG:
             [self performSegueWithIdentifier:@"controlECG" sender:self];
@@ -111,6 +123,15 @@ typedef enum DPHitoeProfiles : NSUInteger
         default:
             break;
     }
+}
+
+#pragma mark - CoreBluetooth Delegate
+- (void)centralManagerDidUpdateState:(CBCentralManager *)central {
+    BOOL isStatus = (central.state == CBCentralManagerStatePoweredOn);
+    if (!isStatus) {
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }
+    [cManager stopScan];
 }
 
 

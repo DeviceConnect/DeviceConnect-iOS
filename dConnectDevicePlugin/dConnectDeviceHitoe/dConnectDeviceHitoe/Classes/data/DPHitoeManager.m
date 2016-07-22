@@ -103,7 +103,7 @@ static int const DPHitoeRetryCount = 3000;
                dataKey:(NSString *)dataKey
                   data:(NSString *)data
             responseId:(int)responseId {
-//    NSLog(@"DataCallback:connectId=%@,dataKey=%@,rawData=%@",connectionId, dataKey, data);
+    NSLog(@"DataCallback:connectId=%@,dataKey=%@,rawData=%@",connectionId, dataKey, data);
     int pos = [self currentDeviceForConnectionId:connectionId];
     if (pos == -1) {
         return;
@@ -294,7 +294,7 @@ static int const DPHitoeRetryCount = 3000;
     isCallbackRunning = YES;
     [_nowTimeStamp removeAllObjects];
     for (DPHitoeDevice *device in _registeredDevices) {
-        NSNumber *timeStamp = [NSNumber numberWithLong:[[NSDate date] timeIntervalSince1970] * 1000];
+        NSNumber *timeStamp = [NSNumber numberWithLongLong:[[NSDate date] timeIntervalSince1970] * 1000];
         _nowTimeStamp[device.serviceId] = timeStamp;
     }
     dispatch_async(dispatch_get_main_queue(), ^{
@@ -321,14 +321,14 @@ static int const DPHitoeRetryCount = 3000;
 - (void)onDisconnectSearchTimer:(NSTimer*) timer{
     for (NSString *serviceId in _hrData.allKeys) {
         DPHitoeHeartRateData *rate = _hrData[serviceId];
-        long timeStamp = rate.heartRate.timeStamp;
-        long history = [_nowTimeStamp[serviceId] longValue];
-//        NSLog(@"================>");
-//        NSLog(@"timestamp:%ld", timeStamp);
-//        NSLog(@"history:%ld", history);
-//        NSLog(@"<================");
+        long long timeStamp = rate.heartRate.timeStamp;
+        long long history = [_nowTimeStamp[serviceId] longLongValue];
+        NSLog(@"================>");
+        NSLog(@"timestamp:%lld", timeStamp);
+        NSLog(@"history:%lld", history);
+        NSLog(@"<================");
         if (isCallbackRunning && history == timeStamp) { //切断された
-//            NSLog(@"retry1");
+            NSLog(@"retry1");
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
                 DPHitoeDevice *retryDevice = [self getHitoeDeviceForServiceId:serviceId];
                 if ([retryDevice isRegisterFlag]) {
@@ -338,9 +338,13 @@ static int const DPHitoeRetryCount = 3000;
             retryCount++;
             isCallbackRunning = NO;
         } else if (!isCallbackRunning && history == timeStamp && retryCount < DPHitoeRetryCount) {
-//            NSLog(@"retry%d", retryCount);
+            NSLog(@"retry%d", retryCount);
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
                 DPHitoeDevice *retryDevice = [self getHitoeDeviceForServiceId:serviceId];
+                if ([retryDevice isRegisterFlag]) {
+                    [self disconnectForHitoe:retryDevice];
+                }
+                sleep(1.0);
                 if ([retryDevice isRegisterFlag]) {
                     [self connectForHitoe:retryDevice];
                 }
@@ -349,7 +353,7 @@ static int const DPHitoeRetryCount = 3000;
         } else if (!isCallbackRunning && history < timeStamp) { //再接続された
             isCallbackRunning = YES;
         }
-        _nowTimeStamp[serviceId] = [NSNumber numberWithLong:timeStamp];
+        _nowTimeStamp[serviceId] = [NSNumber numberWithLongLong:timeStamp];
     }
 }
 

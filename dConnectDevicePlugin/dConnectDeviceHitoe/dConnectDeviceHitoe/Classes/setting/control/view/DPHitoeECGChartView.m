@@ -9,11 +9,6 @@
 
 #import "DPHitoeECGChartView.h"
 #import <CoreGraphics/CoreGraphics.h>
-
-static int const DPHitoePluseDensityCount = 20;
-// データ数
-static int const DPHitoeDataCount = 1;
-// データタイトル
 static NSString *const DPHitoeTitle = @"ECG";
 
 @interface DPHitoeECGChartView() {

@@ -22,8 +22,11 @@ static int const DPHitoeECGChartMaxRange = 4800;
 }
 
 @property (weak, nonatomic) IBOutlet DPHitoeECGChartView *ecgChart;
-@property (nonatomic) NSTimer *timer;
+@property (nonatomic) NSTimer *ecgTimer;
 @property (nonatomic, copy) DPHitoeDevice *device;
+@property (weak, nonatomic) IBOutlet UIButton *registerBtn;
+@property (weak, nonatomic) IBOutlet UIButton *unregisterBtn;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *ecgChartTop;
 
 @end
 
@@ -51,6 +54,15 @@ static int const DPHitoeECGChartMaxRange = 4800;
                                                                            alpha:1.0];
     minX = 0;
     maxX = 0;
+    void (^roundCorner)(UIView*) = ^void(UIView *v) {
+        CALayer *layer = v.layer;
+        layer.masksToBounds = YES;
+        layer.cornerRadius = 5.;
+    };
+    
+    roundCorner(_registerBtn);
+    roundCorner(_unregisterBtn);
+    
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -83,18 +95,18 @@ static int const DPHitoeECGChartMaxRange = 4800;
     maxX = minX + DPHitoeECGChartMaxRange;
     [ecgList removeAllObjects];
     NSTimeInterval target = DPHitoeECGChartInterval / 1000;
-    _timer = [NSTimer
+    _ecgTimer = [NSTimer
               scheduledTimerWithTimeInterval:target
               target:self
-              selector:@selector(onTimer:)
+              selector:@selector(onECGTimer:)
               userInfo:nil
               repeats:YES];
     
 }
 
 - (void)stopTimer {
-    if (_timer.isValid) {
-        [_timer invalidate];
+    if (_ecgTimer.isValid) {
+        [_ecgTimer invalidate];
     }
 }
 
@@ -116,15 +128,12 @@ static int const DPHitoeECGChartMaxRange = 4800;
     }
     CGPoint p = CGPointMake((CGFloat) index, (CGFloat) (ecg / 1000));
     [ecgList addObject:[NSValue valueWithCGPoint:p]];
-    NSLog(@"ecg:%d", [ecgList count]);
-    NSLog(@"index:%ld", index);
-    NSLog(@"minxX:%ld", minX);
-    NSLog(@"max:%ld", maxX);
+ 
     [_ecgChart drawPointWithIndex:(int) (index - minX) pulse:ecg];
 }
 
 #pragma mark - Timer
-- (void)onTimer:(NSTimer *)timer {
+- (void)onECGTimer:(NSTimer *)timer {
     DPHitoeManager *mgr = [DPHitoeManager sharedInstance];
     DPHitoeHeartRateData *heart = [mgr getECGDataForServiceId:_device.serviceId];
     DPHitoeHeartData *data = heart.ecg;
@@ -140,6 +149,45 @@ static int const DPHitoeECGChartMaxRange = 4800;
 }
 - (IBAction)unregisterECG:(id)sender {
     [self stopTimer];
+}
+
+#pragma mark - Rotate Delegate
+
+
+// View回転時
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
+                                duration:(NSTimeInterval)duration
+{
+    [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
+    [self rotateOrientation:toInterfaceOrientation];
+}
+
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
+    return YES;
+}
+- (void)rotateOrientation:(UIInterfaceOrientation)toInterfaceOrientation
+{
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+        [self iphoneLayoutWithOrientation:toInterfaceOrientation];
+    } else {
+        [self ipadLayoutWithOrientation:toInterfaceOrientation];
+    }
+    [self.view setNeedsUpdateConstraints];
+}
+
+- (void)iphoneLayoutWithOrientation:(int)toInterfaceOrientation
+{
+    if ((toInterfaceOrientation == UIDeviceOrientationLandscapeLeft ||
+         toInterfaceOrientation == UIDeviceOrientationLandscapeRight))
+    {
+        _ecgChartTop.constant = 20;
+    } else {
+        _ecgChartTop.constant = 121;
+    }
+}
+
+- (void)ipadLayoutWithOrientation:(int)toInterfaceOrientation
+{
 }
 
 @end
