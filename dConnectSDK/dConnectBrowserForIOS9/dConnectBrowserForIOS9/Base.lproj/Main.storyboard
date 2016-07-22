@@ -109,7 +109,6 @@
                                                 </button>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="3K8-e1-iHJ">
                                                     <rect key="frame" x="0.0" y="0.0" width="70" height="70"/>
-                                                    <color key="backgroundColor" red="0.91764705879999997" green="0.91764705879999997" blue="0.91764705879999997" alpha="1" colorSpace="calibratedRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" secondItem="3K8-e1-iHJ" secondAttribute="height" multiplier="1:1" id="DOR-iE-Iuq"/>
                                                     </constraints>
@@ -386,7 +385,6 @@
                                                 </button>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="QFY-WL-bOF">
                                                     <rect key="frame" x="0.0" y="0.0" width="70" height="70"/>
-                                                    <color key="backgroundColor" red="0.91764705879999997" green="0.91764705879999997" blue="0.91764705879999997" alpha="1" colorSpace="calibratedRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" secondItem="QFY-WL-bOF" secondAttribute="height" multiplier="1:1" id="Ttt-xa-0H6"/>
                                                     </constraints>
