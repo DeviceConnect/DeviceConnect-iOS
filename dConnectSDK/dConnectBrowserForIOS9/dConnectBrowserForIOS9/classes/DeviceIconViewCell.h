@@ -13,7 +13,7 @@
 typedef void (^DidDeviceIconSelected)(DConnectMessage*);
 
 @property (weak, nonatomic) IBOutlet UIImageView *iconImage;
-@property (weak, nonatomic) IBOutlet UIImageView *kindIconImage;
+@property (weak, nonatomic) IBOutlet UIImageView *typeIconImage;
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UIButton *selectButton;
 @property (strong, nonatomic) DeviceIconViewModel *viewModel;
