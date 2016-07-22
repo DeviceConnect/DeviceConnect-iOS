@@ -172,5 +172,5 @@ extern NSString *const DConnectApplicationWillEnterForeground;
  @return PluginId
  */
 - (NSString *) devicePluginIdForServiceId:(NSString *)serviceId;
-
+- (NSString *)iconFilePathForServiceId:(NSString *)serviceId isOnline:(BOOL)isOnline;
 @end
