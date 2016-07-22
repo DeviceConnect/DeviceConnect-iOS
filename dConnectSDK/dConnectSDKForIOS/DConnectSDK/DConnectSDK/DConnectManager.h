@@ -167,4 +167,10 @@ extern NSString *const DConnectApplicationWillEnterForeground;
  */
 - (NSArray*)devicePluginsList;
 
+/*!
+ @brief serviceIdからPluginIdを取得する。
+ @return PluginId
+ */
+- (NSString *) devicePluginIdForServiceId:(NSString *)serviceId;
+
 @end
