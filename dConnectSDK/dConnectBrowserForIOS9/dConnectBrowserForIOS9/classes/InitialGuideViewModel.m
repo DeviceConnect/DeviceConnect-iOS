@@ -41,10 +41,8 @@
 
 - (GuideDataViewController*)makeViewController:(NSInteger)index
 {
-    BOOL isLastPage = (index == self.datasource.count - 1);
     return [GuideDataViewController instantiateWithFilename: [self.datasource objectAtIndex: index]
-                                            withPageNaumber: index
-                                                 isLastPage: isLastPage];
+                                            withPageNaumber: index];
 }
 
 @end

@@ -13,6 +13,7 @@
 {
     __weak UIPageViewController* pageview;
     InitialGuideViewModel *viewModel;
+    UIButton* closeButton;
 }
 @end
 
@@ -30,6 +31,27 @@
                        direction: UIPageViewControllerNavigationDirectionForward
                         animated:NO
                       completion:nil];
+
+    closeButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    UIImage* image = [UIImage imageNamed:@"close_button"];
+    [closeButton setImage:image forState:UIControlStateNormal];
+    [closeButton addTarget:self action:@selector(closeWindow) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:closeButton];
+}
+
+- (void)viewDidLayoutSubviews
+{
+    [super viewDidLayoutSubviews];
+    [self updateButtonFrame];
+}
+
+- (void)updateButtonFrame
+{
+    CGSize buttonSize = CGSizeMake(44, 44);
+    closeButton.frame = CGRectMake(self.view.frame.size.width - 20 - buttonSize.width,
+                                   20,
+                                   buttonSize.width,
+                                   buttonSize.height);
 }
 
 - (void)dealloc
