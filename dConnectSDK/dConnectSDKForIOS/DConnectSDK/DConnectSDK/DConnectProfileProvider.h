@@ -51,8 +51,18 @@
 
  @brief プロファイル一覧を取得する。
 
- @return プロファイル一覧
+ @return プロファイル一覧(DConnectProfile *の配列)
  */
 - (NSArray *) profiles;
+
+/*!
+ @brief サービスIDに一致するサービスからプロファイル一覧を取得する。
+ 
+ @param[in] servieId サービスID
+ @return プロファイル一覧(DConnectProfile *の配列)
+ */
+- (NSArray *) serviceProfilesWithServiceId: (NSString *) serviceId;
+
+
 
 @end

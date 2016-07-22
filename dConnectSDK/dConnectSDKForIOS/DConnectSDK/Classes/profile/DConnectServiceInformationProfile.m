@@ -13,6 +13,7 @@
 NSString *const DConnectServiceInformationProfileName = @"serviceinformation";
 
 NSString *const DConnectServiceInformationProfileParamSupports = @"supports";
+NSString *const DConnectServiceInformationProfileParamSupportApis = @"supportApis";
 
 NSString *const DConnectServiceInformationProfileParamConnect = @"connect";
 NSString *const DConnectServiceInformationProfileParamWiFi = @"wifi";
@@ -29,10 +30,71 @@ NSString *const DConnectServiceInformationProfileParamBLE = @"ble";
 
 @implementation DConnectServiceInformationProfile
 
+- (instancetype) init {
+    self = [super init];
+    if (self) {
+        __weak id blockSelf = self;
+        __weak id<DConnectProfileProvider> blockProvider = self.provider;
+        __weak id<DConnectServiceInformationProfileDataSource> blockDataSource = _dataSource;
+        
+        NSString *getInformationApiPath = [self apiPathWithProfile: self.profileName
+                                                  interfaceName: nil
+                                                  attributeName: nil];
+        [self addGetPath: getInformationApiPath
+                     api:^(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+                         
+                         NSString *serviceId = [request serviceId];
+
+                         DConnectMessage *connect = [DConnectMessage message];
+                         if (blockDataSource) {
+                             if ([blockDataSource respondsToSelector:@selector(profile:wifiStateForServiceId:)]) {
+                                 [DConnectServiceInformationProfile setWiFiState:
+                                  [blockDataSource profile:blockSelf wifiStateForServiceId:serviceId]
+                                                                          target:connect];
+                             }
+                             if ([blockDataSource respondsToSelector:@selector(profile:bleStateForServiceId:)]) {
+                                 [DConnectServiceInformationProfile setBLEState:
+                                  [blockDataSource profile:blockSelf bleStateForServiceId:serviceId]
+                                                                         target:connect];
+                             }
+                             if ([blockDataSource respondsToSelector:@selector(profile:bluetoothStateForServiceId:)]) {
+                                 [DConnectServiceInformationProfile setBluetoothState:
+                                  [blockDataSource profile:blockSelf bluetoothStateForServiceId:serviceId]
+                                                                               target:connect];
+                             }
+                             if ([blockDataSource respondsToSelector:@selector(profile:nfcStateForServiceId:)]) {
+                                 [DConnectServiceInformationProfile setNFCState:
+                                  [blockDataSource profile:blockSelf nfcStateForServiceId:serviceId]
+                                                                         target:connect];
+                             }
+                         }
+                         [DConnectServiceInformationProfile setConnect:connect target:response];
+                         
+                         // supports, supportApis
+                         NSArray *profiles = [blockProvider profiles];
+                         DConnectArray *supports = [DConnectArray array];
+                         for (DConnectProfile *profile in profiles) {
+                             [supports addString:[profile profileName]];
+                         }
+                         [DConnectServiceInformationProfile setSupports: supports target: response];
+                         [DConnectServiceInformationProfile setSupportApis: profiles target: response];
+
+                         [response setResult:DConnectMessageResultTypeOk];
+                         
+                         return YES;
+                     }];
+        
+    }
+    return self;
+}
+
+
+
 - (NSString *) profileName {
     return DConnectServiceInformationProfileName;
 }
 
+/*
 - (BOOL) didReceiveGetRequest:(DConnectRequestMessage *)request response:(DConnectResponseMessage *)response {
     BOOL send = YES;
     
@@ -85,11 +147,33 @@ NSString *const DConnectServiceInformationProfileParamBLE = @"ble";
     
     return send;
 }
+*/
 
 #pragma mark - Setter
 
 + (void) setSupports:(DConnectArray *)supports target:(DConnectMessage *)message {
     [message setArray:supports forKey:DConnectServiceInformationProfileParamSupports];
+}
+
++ (void) setSupportApis:(NSArray *)profiles target:(DConnectMessage *)message {
+    // TODO: supportApisレスポンス処理未実装(Swagger対応と一緒に実装する予定)
+/*
+    Bundle supportApisBundle = new Bundle();
+    for (final DConnectProfile profile : profileList) {
+        DConnectProfileSpec profileSpec = profile.getProfileSpec();
+        if (profileSpec != null) {
+            Bundle bundle = profileSpec.toBundle(new DConnectApiSpecFilter() {
+                @Override
+                public boolean filter(final String path, final Method method) {
+                    return profile.hasApi(path, method);
+                }
+            });
+            supportApisBundle.putBundle(profile.getProfileName(), bundle);
+        }
+    }
+    [response.putExtra(PARAM_SUPPORT_APIS, supportApisBundle);
+*/
+//    [message setArray:supportApis forKey:DConnectServiceInformationProfileParamSupportApis];
 }
 
 + (void) setConnect:(DConnectMessage *)connect target:(DConnectMessage *)message {
@@ -147,5 +231,5 @@ NSString *const DConnectServiceInformationProfileParamBLE = @"ble";
             break;
     }
 }
-
 @end
+

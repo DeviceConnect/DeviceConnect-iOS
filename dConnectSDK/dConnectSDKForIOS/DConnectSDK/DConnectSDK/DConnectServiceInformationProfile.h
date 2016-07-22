@@ -35,6 +35,11 @@ extern NSString *const DConnectServiceInformationProfileName;
 extern NSString *const DConnectServiceInformationProfileParamSupports;
 
 /*!
+ @brief パラメータ: supportApis。
+ */
+extern NSString *const DConnectServiceInformationProfileParamSupportApis;
+
+/*!
  @brief パラメータ: connect。
  */
 extern NSString *const DConnectServiceInformationProfileParamConnect;
@@ -215,6 +220,14 @@ typedef NS_ENUM(NSInteger, DConnectServiceInformationProfileConnectState) {
  @param[in,out] message I/Fの一覧を格納するメッセージ
  */
 + (void) setSupports:(DConnectArray *)supports target:(DConnectMessage *)message;
+
+/*!
+ @brief メッセージにサポートしているI/Fの一覧を格納する。
+ 
+ @param[in] profiles サポートしているI/F一覧
+ @param[in,out] message I/Fの一覧を格納するメッセージ
+ */
++ (void) setSupportApis:(NSArray *)profiles target:(DConnectMessage *)message;
 
 /*!
  @brief メッセージにデバイスの接続状態を設定する。

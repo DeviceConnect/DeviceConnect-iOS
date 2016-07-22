@@ -183,6 +183,19 @@
     return list;
 }
 
+- (NSArray *) serviceProfilesWithServiceId: (NSString *) serviceId {
+
+    DConnectService *service = [self.mServiceProvider service: serviceId];
+    if (service) {
+        // サービスIDに該当するサービスを検出して、そのサービスに登録されているプロファイル一覧(DConnectProfile * の配列)を取得
+        NSArray *serviceProfiles = [service profiles];
+        return serviceProfiles;
+    }
+    return nil;
+}
+
+
+
 // デバイスプラグインがaddProfile()した後にSDK側で処理を実行するタイミングがないので[loadApiSpecList]をそのまま使えない。
 // [addProfile]する毎に[loadApiSpec]を実行してApiSpecを設定する。
 - (void) loadApiSpec: (NSString *)profileName {
