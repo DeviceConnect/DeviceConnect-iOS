@@ -2,7 +2,6 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="j1y-V4-xli">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--Share View Controller-->
@@ -58,11 +57,12 @@
                                         </connections>
                                     </textField>
                                     <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Qpa-G8-VUk">
-                                        <rect key="frame" x="140" y="204" width="320" height="216"/>
+                                        <rect key="frame" x="140" y="204" width="320" height="300"/>
                                     </pickerView>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="Qpa-G8-VUk" secondAttribute="bottom" constant="30" id="2MH-Xg-4MD"/>
                                     <constraint firstItem="tVg-5g-d5k" firstAttribute="top" secondItem="Ijk-t8-NKU" secondAttribute="bottom" constant="5" id="48r-5h-zC6"/>
                                     <constraint firstItem="kls-eY-Cqf" firstAttribute="centerX" secondItem="yGg-vK-PQa" secondAttribute="centerX" id="4RZ-6W-1nF"/>
                                     <constraint firstItem="Qpa-G8-VUk" firstAttribute="centerX" secondItem="yGg-vK-PQa" secondAttribute="centerX" id="A6X-l1-LXj"/>
@@ -103,6 +103,10 @@
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="sOe-Je-KsR"/>
+                                    <barButtonItem enabled="NO" title="追 加" style="plain" id="srF-Mh-TVk">
+                                        <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="OE6-So-p4X"/>
                                     <barButtonItem style="done" systemItem="save" id="g05-G7-c94">
                                         <connections>
                                             <action selector="addBookmark:" destination="j1y-V4-xli" id="Dfs-dc-NIJ"/>
@@ -110,12 +114,6 @@
                                     </barButtonItem>
                                 </items>
                             </toolbar>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="追 加" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vuo-wW-lGD">
-                                <rect key="frame" x="280" y="32" width="41" height="22"/>
-                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                         </subviews>
                         <color key="backgroundColor" red="0.99315818038128834" green="1" blue="0.99425312822803624" alpha="0.0" colorSpace="calibratedRGB"/>
                         <constraints>
@@ -124,16 +122,15 @@
                             <constraint firstAttribute="trailing" secondItem="3kj-sN-02Q" secondAttribute="trailing" id="RCl-TT-5YW"/>
                             <constraint firstItem="yGg-vK-PQa" firstAttribute="top" secondItem="3kj-sN-02Q" secondAttribute="bottom" id="Vlr-o4-NJ2"/>
                             <constraint firstItem="3kj-sN-02Q" firstAttribute="leading" secondItem="wbc-yd-nQP" secondAttribute="leading" id="jc7-ix-uXq"/>
-                            <constraint firstItem="vuo-wW-lGD" firstAttribute="centerX" secondItem="wbc-yd-nQP" secondAttribute="centerX" id="lec-X2-lm7"/>
                             <constraint firstAttribute="trailing" secondItem="yGg-vK-PQa" secondAttribute="trailing" id="mTw-mg-ngz"/>
                             <constraint firstItem="d5i-Ba-RvD" firstAttribute="top" secondItem="yGg-vK-PQa" secondAttribute="bottom" id="mUt-BC-eSp"/>
                             <constraint firstItem="yGg-vK-PQa" firstAttribute="leading" secondItem="wbc-yd-nQP" secondAttribute="leading" id="qL1-pO-HEr"/>
-                            <constraint firstItem="vuo-wW-lGD" firstAttribute="top" secondItem="wbc-yd-nQP" secondAttribute="topMargin" constant="32" id="zzm-E3-Uba"/>
                         </constraints>
                     </view>
                     <nil key="simulatedTopBarMetrics"/>
                     <connections>
                         <outlet property="folderPlacePicker" destination="Qpa-G8-VUk" id="sqk-db-JCj"/>
+                        <outlet property="titleBarItem" destination="srF-Mh-TVk" id="aVP-V4-eIF"/>
                         <outlet property="titleField" destination="kls-eY-Cqf" id="68J-is-xVM"/>
                         <outlet property="urlField" destination="tVg-5g-d5k" id="Feg-Ud-xMz"/>
                     </connections>

@@ -19,6 +19,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *titleField;
 @property (weak, nonatomic) IBOutlet UITextField *urlField;
 @property (weak, nonatomic) IBOutlet UIPickerView *folderPlacePicker;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *titleBarItem;
 
 #pragma mark - Constraint
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *titleWidthSize;
@@ -40,6 +41,10 @@
     [self rotateOrientation];
     [self scanHTMLInfo];
     [self readDirectoryList];
+    NSDictionary* attribute = @{NSForegroundColorAttributeName : [UIColor blackColor],
+                                NSFontAttributeName : [UIFont boldSystemFontOfSize:16]};
+
+    [self.titleBarItem setTitleTextAttributes:attribute forState:UIControlStateNormal];
 }
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
