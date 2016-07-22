@@ -11,7 +11,6 @@
 #import "DPHitoeManager.h"
 #import "DPHitoeDBManager.h"
 #import "DPHitoeStringUtil.h"
-#import "DPHitoeTempExData.h"
 #import "DPHitoeRawDataParseUtil.h"
 
 

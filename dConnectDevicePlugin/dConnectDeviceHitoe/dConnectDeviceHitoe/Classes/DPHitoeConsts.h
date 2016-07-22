@@ -165,4 +165,8 @@ extern int const DPHitoeDataKeyExtension;
 #define DPHitoeLocalizedString(bundle, key) \
 [bundle localizedStringForKey:key value:@"" table:nil]
 
+
+#define DPHitoeMin(a,b)    ((a) < (b) ? (a) : (b))
+#define DPHitoeMax(a,b)    ((a) > (b) ? (a) : (b))
+
 #define IPHONE4_H 480

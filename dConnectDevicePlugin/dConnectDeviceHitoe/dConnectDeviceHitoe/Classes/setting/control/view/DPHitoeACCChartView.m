@@ -1,17 +1,19 @@
 //
-//  ECGChartView.m
+//  DPHitoeACCChartView.m
 //  dConnectDeviceHitoe
+//
 //
 //  Copyright (c) 2016 NTT DOCOMO, INC.
 //  Released under the MIT license
 //  http://opensource.org/licenses/mit-license.php
 //
 
-#import "DPHitoeECGChartView.h"
 #import <CoreGraphics/CoreGraphics.h>
-static NSString *const DPHitoeTitle = @"ECG";
+#import "DPHitoeACCChartView.h"
+#import "DPHitoeAccelerationData.h"
+#import "DPHitoeConsts.h"
 
-@interface DPHitoeECGChartView() {
+@interface DPHitoeACCChartView() {
     CGFloat graphWidth;
     int graphHeight;
     int interval;
@@ -21,11 +23,11 @@ static NSString *const DPHitoeTitle = @"ECG";
     int dataMax;
     CGFloat graphStepWidth;
     BOOL drawGuide;
-    CGFloat yOffset;
+    int yOffset;
     CGFloat yStart;
     CGFloat yEnd;
     CGFloat xInterval;
-   
+
     CGFloat valueMin;
     CGFloat valueMax;
     CGFloat valueLimit;
@@ -35,41 +37,31 @@ static NSString *const DPHitoeTitle = @"ECG";
 
     int indexWriteNeed;
     int indexWritten;
-    
+
     int prevStepIndex;
-    CGFloat prevPoint;
+    CGFloat prevPoint[3];
 
     CGImageRef imageBase;
     CGImageRef imagePrev;
 
     CGRect boundsRect;
     CGAffineTransform affine;
-
+    
     BOOL isDrawActive;
 }
-
 @end
-@implementation DPHitoeECGChartView
 
-- (instancetype)init {
-    self = [super init];
-    if (self) {
-        drawPoints = [NSMutableArray array];
-    }
-    return self;
-}
+@implementation DPHitoeACCChartView
+
 
 - (void)drawRect:(CGRect)rect {
     CGContextRef context = UIGraphicsGetCurrentContext();
-    
     int indexStart = 0;
     
     if (indexWritten == indexWriteNeed) {
         isDrawActive = NO;
         return;
     } else if (indexWritten < indexWriteNeed) {
-        // 正常パターン
-        // 未描画分を全部描画する，indexWritten から indexWriteNeed まで
         if (imagePrev) {
             CGContextConcatCTM(context, affine);
             CGContextDrawImage(context, boundsRect, imagePrev);
@@ -77,52 +69,98 @@ static NSString *const DPHitoeTitle = @"ECG";
         
         indexStart = indexWritten;
     } else {
-        // インデックスが戻った（主に br == 0）
-        // 先頭（index:0）から indexWriteNeed まで描画する
         if (imageBase) {
             CGContextConcatCTM(context, affine);
             CGContextDrawImage(context, boundsRect, imageBase);
             imagePrev = nil;
             imagePrev = CGBitmapContextCreateImage(context);
         }
+        
         indexStart = 0;
         
     }
     
-    CGContextSetStrokeColorWithColor(context, [self dataColor].CGColor);
-    
     BOOL isFirst = YES;
+    CGFloat point[] = {0.0, 0.0, 0.0};
+    CGFloat pointPrev = (CGFloat) graphCenter;
     for (indexWritten = indexStart; indexWritten <= indexWriteNeed; indexWritten++) {
-        CGFloat point = 0;
-        if ([drawPoints[indexWritten] doubleValue] != -99999999.9) {
-            point = [drawPoints[indexWritten] doubleValue] * coefficient;
+        point[0] = 0.0;
+        point[1] = 0.0;
+        point[2] = 0.0;
+        
+        DPHitoeAccelerationData *acc = drawPoints[indexWritten];
+        if (acc.accelX != -99999999.9) {
+            double temp[3];
+            temp[0] = acc.accelX;
+            temp[1] = acc.accelY;
+            temp[2] = acc.accelZ;
+            point[0] = (CGFloat) temp[0] * coefficient;
+            point[1] = (CGFloat) temp[1] * coefficient;
+            point[2] = (CGFloat) temp[2] * coefficient;
         } else {
             continue;
         }
         
-        point += (CGFloat) graphCenter;
-        if (point < yStart) {
-            point = yStart;
-        } else if (yEnd < point) {
-            point = yEnd;
+        point[0] += pointPrev;
+        point[1] += pointPrev;
+        point[2] += pointPrev;
+        
+        point[0] = DPHitoeMin(DPHitoeMax(point[0], yStart), yEnd);
+        point[1] = DPHitoeMin(DPHitoeMax(point[1], yStart), yEnd);
+        point[2] = DPHitoeMin(DPHitoeMax(point[2], yStart), yEnd);
+        
+        CGContextSetStrokeColorWithColor(context, [self xColor].CGColor);
+        if (isFirst) {
+            if (indexStart == 0) {
+                CGContextMoveToPoint(context, 0, pointPrev);
+            } else {
+                CGContextMoveToPoint(context, ((CGFloat) prevStepIndex * graphStepWidth), prevPoint[0]);
+            }
+        } else {
+            CGContextMoveToPoint(context, ((CGFloat) prevStepIndex * graphStepWidth), prevPoint[0]);
         }
+        
+        CGContextAddLineToPoint(context, ((CGFloat) indexWritten * graphStepWidth), point[0]);
+        NSLog(@"%lf:%lf", ((CGFloat) prevStepIndex * graphStepWidth), ((CGFloat) indexWritten * graphStepWidth));
+        CGContextStrokePath(context);
+        prevPoint[0] = point[0];
+        
+        CGContextSetStrokeColorWithColor(context, [self yColor].CGColor);
+        if (isFirst) {
+            if (indexStart == 0) {
+                CGContextMoveToPoint(context, 0, pointPrev);
+            } else {
+                CGContextMoveToPoint(context, ((CGFloat) prevStepIndex * graphStepWidth), prevPoint[1]);
+            }
+        } else {
+            CGContextMoveToPoint(context, ((CGFloat) prevStepIndex * graphStepWidth), prevPoint[1]);
+        }
+        
+        CGContextAddLineToPoint(context, ((CGFloat) indexWritten * graphStepWidth), point[1]);
+        CGContextStrokePath(context);
+        prevPoint[1] = point[1];
+        
+        CGContextSetStrokeColorWithColor(context, [self zColor].CGColor);
+        if (isFirst) {
+            if (indexStart == 0) {
+                CGContextMoveToPoint(context, 0, pointPrev);
+            } else {
+                CGContextMoveToPoint(context, ((CGFloat) prevStepIndex * graphStepWidth), prevPoint[2]);
+            }
+        } else {
+            CGContextMoveToPoint(context, ((CGFloat) prevStepIndex * graphStepWidth), prevPoint[2]);
+        }
+        
+        CGContextAddLineToPoint(context, ((CGFloat) indexWritten * graphStepWidth), point[2]);
+        CGContextStrokePath(context);
+        prevPoint[2] = point[2];
+        
+        prevStepIndex = indexWritten;
         
         if (isFirst) {
             isFirst = NO;
-            if (indexStart == 0) {
-                CGFloat pointPrev = (CGFloat) graphCenter;
-                CGContextMoveToPoint(context, 0, pointPrev);
-            } else {
-                CGContextMoveToPoint(context,  prevStepIndex * graphStepWidth, prevPoint);
-            }
         }
-        CGContextAddLineToPoint(context, indexWritten * graphStepWidth, point);
-        
-        prevStepIndex = indexWritten;
-        prevPoint = point;
     }
-    
-    CGContextStrokePath(context);
     imagePrev = nil;
     imagePrev = CGBitmapContextCreateImage(context);
     
@@ -131,12 +169,18 @@ static NSString *const DPHitoeTitle = @"ECG";
     UIGraphicsEndImageContext();
 }
 
-#pragma mark - Public method
 - (void)setupWithDataMax:(int)dMax valueMin:(double)vMin valueMax:(double)vMax {
     isReady = NO;
-    coefficient = 1.0;
-    indexWritten = 0;
-    CGFloat tempValue = 0.0;
+    drawPoints = [NSMutableArray array];
+    prevPoint[0] = 0.0;
+    prevPoint[1] = 0.0;
+    prevPoint[2] = 0.0;
+    drawGuide = NO;
+    isReady = NO;
+    isDrawActive = NO;
+    yOffset = 0;
+
+    double tempValue = 0.0;
     BOOL isMinMinus = NO;
     if (vMin < 0) {
         isMinMinus = YES;
@@ -159,21 +203,27 @@ static NSString *const DPHitoeTitle = @"ECG";
     valueMin = (CGFloat) vMin;
     valueMax = (CGFloat) vMax;
     dataMax = dMax;
-    graphHeight  = ((int) self.bounds.size.height) - (yOffset * 2);
+    graphHeight  = (int) self.bounds.size.height - yOffset * 2;
     graphCenter = graphHeight / 2;
-    coefficient = ((CGFloat) graphCenter) - (yOffset * 2) / (((CGFloat) tempValue) * 1.2);
+    coefficient = ((CGFloat) graphCenter) - (yOffset * 2) / (CGFloat) (tempValue * 1.2);
     valueLimit = ((CGFloat) tempValue) * 1.2 * coefficient;
-    valueRed = ((CGFloat) valueMax) * coefficient;
+    valueRed = ((CGFloat) vMax) * coefficient;
     graphWidth = self.bounds.size.width;
-    graphStepWidth = graphWidth / ((CGFloat) dMax);
-    if (graphStepWidth == 0) {
+    graphStepWidth = graphWidth / (CGFloat) dMax;
+    if (graphStepWidth == 0 ){
         graphStepWidth = 1;
     }
-    NSNumber *initialize[dMax];
+    drawPoints = [NSMutableArray array];
     for (int i = 0; i < dMax; i++) {
-        initialize[i] = @(-99999999.9);
+        DPHitoeAccelerationData *initialize = [DPHitoeAccelerationData new];
+        initialize.timeStamp =  0;
+        initialize.accelX = -99999999.9;
+        initialize.accelY = 0.0;
+        initialize.accelZ = 0.0;
+        [drawPoints addObject:initialize];
     }
-    drawPoints = [NSMutableArray arrayWithObjects:initialize count:dMax];
+    
+    
     indexWriteNeed = 0;
     indexWritten = dMax;
     
@@ -192,7 +242,7 @@ static NSString *const DPHitoeTitle = @"ECG";
     //***************************************************
     // 背景を塗りつぶす
     // 色
-    CGContextSetFillColorWithColor(context, [[UIColor blackColor] CGColor]);
+    CGContextSetFillColorWithColor(context, [UIColor whiteColor].CGColor);
     // バス作成
     CGContextMoveToPoint(context, 0, 0);
     CGContextAddRect(context, CGRectMake(0, 0, self.bounds.size.width, self.bounds.size.height));
@@ -204,7 +254,7 @@ static NSString *const DPHitoeTitle = @"ECG";
     //***************************************************
     // ガイドなどの線を引く（準備）
     // 色
-    CGContextSetStrokeColorWithColor(context, [[UIColor darkGrayColor] CGColor]);
+    CGContextSetStrokeColorWithColor(context, [UIColor lightGrayColor].CGColor);
     // 両端
     CGContextSetLineCap(context, kCGLineCapButt);
     // つなぎ目
@@ -258,31 +308,46 @@ static NSString *const DPHitoeTitle = @"ECG";
     isReady = YES;
     
 }
-
-
--(void)drawPointWithIndex:(int)index pulse:(double)pulse {
+- (void)drawPointWithIndex:(int)index pulse:(DPHitoeAccelerationData *)pulse {
     if (!isReady) {
         return;
     }
     if (index < 0 || dataMax <= index) {
         return;
     }
-    drawPoints[index] = @((CGFloat) pulse);
+    
+    DPHitoeAccelerationData *accel = [DPHitoeAccelerationData new];
+    accel.accelX = pulse.accelX;
+    accel.accelY = pulse.accelY;
+    accel.accelZ = pulse.accelZ;
+    accel.timeStamp = index;
+    drawPoints[index] = accel;
+    
     indexWriteNeed = index;
 }
-
 - (void)drawPointNow {
     if (!isDrawActive) {
         isDrawActive = YES;
         [self setNeedsDisplay];
     }
+
 }
+
+
 #pragma mark - UIColor's const.
 
-- (UIColor *)dataColor
+- (UIColor *)xColor
+{
+    return [UIColor redColor];
+}
+
+- (UIColor *)yColor
 {
     return [UIColor greenColor];
 }
-
+- (UIColor *)zColor
+{
+    return [UIColor blueColor];
+}
 
 @end

@@ -1,5 +1,5 @@
 //
-//  ECGChartView.h
+//  DPHitoeACCChartView.h
 //  dConnectDeviceHitoe
 //
 //  Copyright (c) 2016 NTT DOCOMO, INC.
@@ -9,9 +9,9 @@
 
 
 #import <UIKit/UIKit.h>
-
-@interface DPHitoeECGChartView : UIView
+#import "DPHitoeAccelerationData.h"
+@interface DPHitoeACCChartView : UIView
 - (void)setupWithDataMax:(int)dMax valueMin:(double)vMin valueMax:(double)vMax;
-- (void)drawPointWithIndex:(int)index pulse:(double)pulse;
+- (void)drawPointWithIndex:(int)index pulse:(DPHitoeAccelerationData *)pulse;
 - (void)drawPointNow;
 @end

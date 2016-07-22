@@ -237,6 +237,144 @@ Hitoeを追加してください。</string>
             </objects>
             <point key="canvasLocation" x="1186" y="1835"/>
         </scene>
+        <!--Hitoe Control Battery View Controller-->
+        <scene sceneID="fzT-pM-dJM">
+            <objects>
+                <viewController id="lMu-YB-2pE" customClass="DPHitoeControlBatteryViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="4DJ-X5-ybN"/>
+                        <viewControllerLayoutGuide type="bottom" id="dmZ-Hg-W9V"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="m06-C0-0Cq">
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="mark_battery01.png" translatesAutoresizingMaskIntoConstraints="NO" id="Eo6-0G-nXx">
+                                <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="244" id="3Zi-Zd-itv"/>
+                                    <constraint firstAttribute="height" constant="171" id="qQl-Lg-6go"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="3Zi-Zd-itv"/>
+                                        <exclude reference="qQl-Lg-6go"/>
+                                    </mask>
+                                </variation>
+                                <variation key="widthClass=compact">
+                                    <mask key="constraints">
+                                        <include reference="3Zi-Zd-itv"/>
+                                        <include reference="qQl-Lg-6go"/>
+                                    </mask>
+                                </variation>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wRs-Ck-pDC">
+                                <rect key="frame" x="-42" y="-21" width="42" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="103" id="0ce-3s-ora"/>
+                                    <constraint firstAttribute="height" constant="45" id="PMG-fi-GhZ">
+                                        <variation key="widthClass=compact" constant="30"/>
+                                    </constraint>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="PMG-fi-GhZ"/>
+                                        <exclude reference="0ce-3s-ora"/>
+                                    </mask>
+                                </variation>
+                                <variation key="widthClass=compact">
+                                    <mask key="constraints">
+                                        <include reference="PMG-fi-GhZ"/>
+                                        <include reference="0ce-3s-ora"/>
+                                    </mask>
+                                </variation>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gVY-SL-dCd">
+                                <rect key="frame" x="171" y="389" width="68" height="37"/>
+                                <color key="backgroundColor" red="0.1137254902" green="0.83529411760000005" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="55" id="Q6L-gs-pjW"/>
+                                    <constraint firstAttribute="width" secondItem="gVY-SL-dCd" secondAttribute="height" multiplier="68:37" id="gbr-tK-Nhu"/>
+                                    <constraint firstAttribute="height" constant="37" id="qQV-LK-FvX"/>
+                                    <constraint firstAttribute="height" constant="30" id="wEQ-yh-jZo"/>
+                                </constraints>
+                                <state key="normal" title="取得">
+                                    <color key="titleColor" red="1" green="0.96365796439999996" blue="0.98679234699999996" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="Q6L-gs-pjW"/>
+                                        <exclude reference="qQV-LK-FvX"/>
+                                        <exclude reference="wEQ-yh-jZo"/>
+                                    </mask>
+                                </variation>
+                                <variation key="widthClass=compact">
+                                    <mask key="constraints">
+                                        <include reference="Q6L-gs-pjW"/>
+                                        <exclude reference="gbr-tK-Nhu"/>
+                                        <include reference="wEQ-yh-jZo"/>
+                                    </mask>
+                                </variation>
+                                <connections>
+                                    <action selector="getBattery:" destination="lMu-YB-2pE" eventType="touchUpInside" id="Fec-B6-Y5v"/>
+                                    <action selector="registerECG:" destination="5Jb-Sj-ZMo" eventType="touchUpInside" id="SYV-e6-qvX"/>
+                                    <action selector="registerHeartRate:" destination="wG7-dp-1k3" eventType="touchUpInside" id="8J0-UW-yZa"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Eo6-0G-nXx" firstAttribute="centerX" secondItem="m06-C0-0Cq" secondAttribute="centerX" id="CmJ-eP-lxR"/>
+                            <constraint firstItem="wRs-Ck-pDC" firstAttribute="centerX" secondItem="m06-C0-0Cq" secondAttribute="centerX" id="QYa-8x-PXN"/>
+                            <constraint firstItem="Eo6-0G-nXx" firstAttribute="top" secondItem="4DJ-X5-ybN" secondAttribute="bottom" constant="63" id="aoL-Lq-7f9"/>
+                            <constraint firstItem="wRs-Ck-pDC" firstAttribute="top" secondItem="Eo6-0G-nXx" secondAttribute="bottom" constant="13" id="hJk-os-BtG"/>
+                            <constraint firstItem="gVY-SL-dCd" firstAttribute="centerX" secondItem="m06-C0-0Cq" secondAttribute="centerX" id="mjK-Dt-IXu"/>
+                            <constraint firstItem="gVY-SL-dCd" firstAttribute="top" secondItem="wRs-Ck-pDC" secondAttribute="bottom" constant="13" id="qfq-yL-suE"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="subviews">
+                                <exclude reference="Eo6-0G-nXx"/>
+                                <exclude reference="wRs-Ck-pDC"/>
+                                <exclude reference="gVY-SL-dCd"/>
+                            </mask>
+                            <mask key="constraints">
+                                <exclude reference="CmJ-eP-lxR"/>
+                                <exclude reference="aoL-Lq-7f9"/>
+                                <exclude reference="QYa-8x-PXN"/>
+                                <exclude reference="hJk-os-BtG"/>
+                                <exclude reference="mjK-Dt-IXu"/>
+                                <exclude reference="qfq-yL-suE"/>
+                            </mask>
+                        </variation>
+                        <variation key="widthClass=compact">
+                            <mask key="subviews">
+                                <include reference="Eo6-0G-nXx"/>
+                                <include reference="wRs-Ck-pDC"/>
+                                <include reference="gVY-SL-dCd"/>
+                            </mask>
+                            <mask key="constraints">
+                                <include reference="CmJ-eP-lxR"/>
+                                <include reference="aoL-Lq-7f9"/>
+                                <include reference="QYa-8x-PXN"/>
+                                <include reference="hJk-os-BtG"/>
+                                <include reference="mjK-Dt-IXu"/>
+                                <include reference="qfq-yL-suE"/>
+                            </mask>
+                        </variation>
+                    </view>
+                    <connections>
+                        <outlet property="batteryBtn" destination="gVY-SL-dCd" id="qdb-3y-uPk"/>
+                        <outlet property="batteryImageTop" destination="aoL-Lq-7f9" id="TbI-u8-X5n"/>
+                        <outlet property="batteryImageView" destination="Eo6-0G-nXx" id="Rs7-JB-LlH"/>
+                        <outlet property="batteryLabel" destination="wRs-Ck-pDC" id="wTo-bz-NBk"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="e9U-Ft-dEX" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-871.5" y="3434"/>
+        </scene>
         <!--Hitoe Control Health View Controller-->
         <scene sceneID="EnM-Dm-2Y0">
             <objects>
@@ -271,7 +409,9 @@ Hitoeを追加してください。</string>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Uw3-yP-oaF">
                                 <rect key="frame" x="-42" y="-21" width="42" height="21"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="45" id="5i4-yO-LxH"/>
+                                    <constraint firstAttribute="height" constant="45" id="5i4-yO-LxH">
+                                        <variation key="widthClass=compact" constant="30"/>
+                                    </constraint>
                                     <constraint firstAttribute="width" constant="103" id="cS0-HC-ei4"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
@@ -330,7 +470,9 @@ Hitoeを追加してください。</string>
                         <constraints>
                             <constraint firstItem="rcF-Zf-XtK" firstAttribute="trailing" secondItem="hIe-PN-lJ2" secondAttribute="trailing" id="9ee-EB-8yA"/>
                             <constraint firstItem="EIX-Co-L3d" firstAttribute="baseline" secondItem="rcF-Zf-XtK" secondAttribute="firstBaseline" id="Jj7-GA-VkD"/>
-                            <constraint firstItem="EIX-Co-L3d" firstAttribute="top" secondItem="hIe-PN-lJ2" secondAttribute="bottom" constant="75" id="MTL-nT-KX4"/>
+                            <constraint firstItem="EIX-Co-L3d" firstAttribute="top" secondItem="hIe-PN-lJ2" secondAttribute="bottom" constant="75" id="MTL-nT-KX4">
+                                <variation key="widthClass=compact" constant="50"/>
+                            </constraint>
                             <constraint firstItem="EIX-Co-L3d" firstAttribute="firstBaseline" secondItem="rcF-Zf-XtK" secondAttribute="baseline" id="Nk6-7n-ynS"/>
                             <constraint firstItem="Uw3-yP-oaF" firstAttribute="centerX" secondItem="0Qk-Uc-Lhw" secondAttribute="centerX" id="Vwr-Dp-NsM"/>
                             <constraint firstItem="Uw3-yP-oaF" firstAttribute="top" secondItem="hIe-PN-lJ2" secondAttribute="bottom" constant="13" id="h7x-PW-aK6"/>
@@ -347,10 +489,10 @@ Hitoeを追加してください。</string>
                                 <exclude reference="rcF-Zf-XtK"/>
                             </mask>
                             <mask key="constraints">
-                                <exclude reference="npf-HF-yhR"/>
-                                <exclude reference="qgb-fq-WyD"/>
                                 <exclude reference="Vwr-Dp-NsM"/>
                                 <exclude reference="h7x-PW-aK6"/>
+                                <exclude reference="npf-HF-yhR"/>
+                                <exclude reference="qgb-fq-WyD"/>
                                 <exclude reference="Jj7-GA-VkD"/>
                                 <exclude reference="MTL-nT-KX4"/>
                                 <exclude reference="Nk6-7n-ynS"/>
@@ -367,10 +509,10 @@ Hitoeを追加してください。</string>
                                 <include reference="rcF-Zf-XtK"/>
                             </mask>
                             <mask key="constraints">
-                                <include reference="npf-HF-yhR"/>
-                                <include reference="qgb-fq-WyD"/>
                                 <include reference="Vwr-Dp-NsM"/>
                                 <include reference="h7x-PW-aK6"/>
+                                <include reference="npf-HF-yhR"/>
+                                <include reference="qgb-fq-WyD"/>
                                 <include reference="Jj7-GA-VkD"/>
                                 <include reference="MTL-nT-KX4"/>
                                 <include reference="Nk6-7n-ynS"/>
@@ -444,6 +586,8 @@ Hitoeを追加してください。</string>
                     <connections>
                         <segue destination="5Jb-Sj-ZMo" kind="show" identifier="controlECG" id="gPu-1e-rtp"/>
                         <segue destination="wG7-dp-1k3" kind="show" identifier="controlHeartRate" id="4lQ-EW-3SZ"/>
+                        <segue destination="lMu-YB-2pE" kind="show" identifier="controlBattery" id="igG-Qc-1dJ"/>
+                        <segue destination="f8O-px-omV" kind="show" identifier="controlAcc" id="DCY-u3-wzB"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lte-7x-zFt" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -482,7 +626,7 @@ Hitoeを追加してください。</string>
                                     </mask>
                                 </variation>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OkX-CQ-RjD">
+                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OkX-CQ-RjD">
                                 <rect key="frame" x="362" y="389" width="68" height="37"/>
                                 <color key="backgroundColor" red="0.1137254902" green="0.83529411760000005" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
@@ -496,7 +640,7 @@ Hitoeを追加してください。</string>
                                     <action selector="unregisterECG:" destination="5Jb-Sj-ZMo" eventType="touchUpInside" id="Rp0-PY-jd4"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Tfn-yk-zph">
+                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Tfn-yk-zph">
                                 <rect key="frame" x="171" y="389" width="68" height="37"/>
                                 <color key="backgroundColor" red="0.11372549019607843" green="0.83529411764705885" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
@@ -565,6 +709,136 @@ Hitoeを追加してください。</string>
             </objects>
             <point key="canvasLocation" x="465" y="3434"/>
         </scene>
+        <!--Hiote Control Device Orientation View Controller-->
+        <scene sceneID="i2U-Ja-Pmi">
+            <objects>
+                <viewController id="f8O-px-omV" customClass="DPHioteControlDeviceOrientationViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="MRk-Ol-vUx"/>
+                        <viewControllerLayoutGuide type="bottom" id="sx0-ZY-3gu"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="9k6-Gj-FIF">
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KKs-s9-9pf" customClass="DPHitoeACCChartView">
+                                <rect key="frame" x="171" y="185.5" width="259" height="109.5"/>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="243.5" id="Hsa-yJ-fvs"/>
+                                    <constraint firstAttribute="height" constant="110" id="Zjk-pc-R3A"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="Hsa-yJ-fvs"/>
+                                        <exclude reference="Zjk-pc-R3A"/>
+                                    </mask>
+                                </variation>
+                                <variation key="widthClass=compact">
+                                    <mask key="constraints">
+                                        <include reference="Hsa-yJ-fvs"/>
+                                        <include reference="Zjk-pc-R3A"/>
+                                    </mask>
+                                </variation>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qcM-hx-rDl">
+                                <rect key="frame" x="362" y="389" width="68" height="37"/>
+                                <color key="backgroundColor" red="0.1137254902" green="0.83529411760000005" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="qcM-hx-rDl" secondAttribute="height" multiplier="68:37" id="gCp-YB-epA"/>
+                                    <constraint firstAttribute="height" constant="37" id="uNu-3R-bBx"/>
+                                </constraints>
+                                <state key="normal" title="解除">
+                                    <color key="titleColor" red="1" green="0.96365796439999996" blue="0.98679234699999996" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="unregisterAccel:" destination="f8O-px-omV" eventType="touchUpInside" id="PWq-g8-QXc"/>
+                                    <action selector="unregisterECG:" destination="5Jb-Sj-ZMo" eventType="touchUpInside" id="CDN-FY-f4n"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2L6-gl-ksg">
+                                <rect key="frame" x="171" y="389" width="68" height="37"/>
+                                <color key="backgroundColor" red="0.1137254902" green="0.83529411760000005" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="2L6-gl-ksg" secondAttribute="height" multiplier="68:37" id="8Fm-9P-eWa"/>
+                                    <constraint firstAttribute="height" constant="37" id="rT7-rr-FTe"/>
+                                </constraints>
+                                <state key="normal" title="登録">
+                                    <color key="titleColor" red="1" green="0.96365796439999996" blue="0.98679234699999996" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="rT7-rr-FTe"/>
+                                    </mask>
+                                </variation>
+                                <connections>
+                                    <action selector="registerAccel:" destination="f8O-px-omV" eventType="touchUpInside" id="Jkz-72-Ion"/>
+                                    <action selector="registerECG:" destination="5Jb-Sj-ZMo" eventType="touchUpInside" id="KNF-4M-U3a"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="2L6-gl-ksg" firstAttribute="width" secondItem="2L6-gl-ksg" secondAttribute="height" multiplier="68:37" id="1Rd-9T-7bv"/>
+                            <constraint firstItem="qcM-hx-rDl" firstAttribute="top" secondItem="2L6-gl-ksg" secondAttribute="top" id="2i0-KH-hug"/>
+                            <constraint firstItem="KKs-s9-9pf" firstAttribute="top" secondItem="MRk-Ol-vUx" secondAttribute="bottom" constant="124" id="6js-kp-JMc"/>
+                            <constraint firstItem="qcM-hx-rDl" firstAttribute="top" secondItem="KKs-s9-9pf" secondAttribute="bottom" constant="94" id="Azh-Fh-zOu"/>
+                            <constraint firstItem="qcM-hx-rDl" firstAttribute="width" secondItem="qcM-hx-rDl" secondAttribute="height" multiplier="68:37" id="UZ3-Pd-uN6"/>
+                            <constraint firstItem="qcM-hx-rDl" firstAttribute="firstBaseline" secondItem="2L6-gl-ksg" secondAttribute="baseline" id="WAL-Mv-ZIQ"/>
+                            <constraint firstItem="qcM-hx-rDl" firstAttribute="trailing" secondItem="KKs-s9-9pf" secondAttribute="trailing" id="XH7-xO-ZbB"/>
+                            <constraint firstItem="qcM-hx-rDl" firstAttribute="baseline" secondItem="2L6-gl-ksg" secondAttribute="firstBaseline" id="msQ-Av-UZz"/>
+                            <constraint firstItem="2L6-gl-ksg" firstAttribute="leading" secondItem="KKs-s9-9pf" secondAttribute="leading" id="oey-vT-QDL"/>
+                            <constraint firstItem="KKs-s9-9pf" firstAttribute="centerX" secondItem="9k6-Gj-FIF" secondAttribute="centerX" id="u4V-K9-j2J"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="subviews">
+                                <exclude reference="KKs-s9-9pf"/>
+                                <exclude reference="qcM-hx-rDl"/>
+                                <exclude reference="2L6-gl-ksg"/>
+                            </mask>
+                            <mask key="constraints">
+                                <exclude reference="6js-kp-JMc"/>
+                                <exclude reference="u4V-K9-j2J"/>
+                                <exclude reference="1Rd-9T-7bv"/>
+                                <exclude reference="oey-vT-QDL"/>
+                                <exclude reference="2i0-KH-hug"/>
+                                <exclude reference="Azh-Fh-zOu"/>
+                                <exclude reference="UZ3-Pd-uN6"/>
+                                <exclude reference="WAL-Mv-ZIQ"/>
+                                <exclude reference="XH7-xO-ZbB"/>
+                                <exclude reference="msQ-Av-UZz"/>
+                            </mask>
+                        </variation>
+                        <variation key="widthClass=compact">
+                            <mask key="subviews">
+                                <include reference="KKs-s9-9pf"/>
+                                <include reference="qcM-hx-rDl"/>
+                                <include reference="2L6-gl-ksg"/>
+                            </mask>
+                            <mask key="constraints">
+                                <include reference="6js-kp-JMc"/>
+                                <include reference="u4V-K9-j2J"/>
+                                <include reference="1Rd-9T-7bv"/>
+                                <include reference="oey-vT-QDL"/>
+                                <include reference="2i0-KH-hug"/>
+                                <include reference="Azh-Fh-zOu"/>
+                                <include reference="UZ3-Pd-uN6"/>
+                                <include reference="WAL-Mv-ZIQ"/>
+                                <include reference="XH7-xO-ZbB"/>
+                                <include reference="msQ-Av-UZz"/>
+                            </mask>
+                        </variation>
+                    </view>
+                    <connections>
+                        <outlet property="accChartView" destination="KKs-s9-9pf" id="mmh-Fx-teP"/>
+                        <outlet property="chartViewTop" destination="6js-kp-JMc" id="B2O-GO-n5X"/>
+                        <outlet property="registerBtn" destination="2L6-gl-ksg" id="fQf-46-OB7"/>
+                        <outlet property="unregisterBtn" destination="qcM-hx-rDl" id="S5L-4Z-iYi"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="rdc-yU-gSC" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1092" y="3434"/>
+        </scene>
         <!--Navigation Controller-->
         <scene sceneID="T8G-35-U9i">
             <objects>
@@ -604,6 +878,7 @@ Hitoeを追加してください。</string>
         </scene>
     </scenes>
     <resources>
+        <image name="mark_battery01.png" width="480" height="360"/>
         <image name="mark_heartrate.png" width="480" height="360"/>
     </resources>
 </document>

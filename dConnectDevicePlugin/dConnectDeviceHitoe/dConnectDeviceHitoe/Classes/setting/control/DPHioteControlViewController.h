@@ -8,7 +8,9 @@
 //
 #import <UIKit/UIKit.h>
 #import <CoreBluetooth/CoreBluetooth.h>
-
+#import "DPHitoeDevice.h"
 @interface DPHioteControlViewController : UIViewController<CBCentralManagerDelegate>
+@property (nonatomic, copy) DPHitoeDevice *device;
+- (void)setDevice:(DPHitoeDevice*)device;
 
 @end

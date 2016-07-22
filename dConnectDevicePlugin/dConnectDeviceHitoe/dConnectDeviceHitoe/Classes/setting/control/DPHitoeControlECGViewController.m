@@ -23,7 +23,6 @@ static int const DPHitoeECGChartMaxRange = 4800;
 
 @property (weak, nonatomic) IBOutlet DPHitoeECGChartView *ecgChart;
 @property (nonatomic) NSTimer *ecgTimer;
-@property (nonatomic, copy) DPHitoeDevice *device;
 @property (weak, nonatomic) IBOutlet UIButton *registerBtn;
 @property (weak, nonatomic) IBOutlet UIButton *unregisterBtn;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *ecgChartTop;
@@ -37,21 +36,6 @@ static int const DPHitoeECGChartMaxRange = 4800;
     _ecgChart.layer.borderColor = [[UIColor grayColor] CGColor];
     _ecgChart.layer.borderWidth = 1.0;
     ecgList = [NSMutableArray array];
-    // 背景白
-    self.view.backgroundColor = [UIColor whiteColor];
-    
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]
-                                             initWithTitle:@"＜CLOSE"
-                                             style:UIBarButtonItemStylePlain
-                                             target:self
-                                             action:@selector(closeSettings:) ];
-    self.navigationItem.leftBarButtonItem.tintColor = [UIColor whiteColor];
-    self.navigationItem.leftBarButtonItem.tintColor = [UIColor whiteColor];
-    // バー背景色
-    self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:0.00
-                                                                           green:0.63
-                                                                            blue:0.91
-                                                                           alpha:1.0];
     minX = 0;
     maxX = 0;
     void (^roundCorner)(UIView*) = ^void(UIView *v) {
@@ -69,25 +53,13 @@ static int const DPHitoeECGChartMaxRange = 4800;
     [super viewDidAppear:animated];
     [_ecgChart setupWithDataMax:4800 valueMin:-3000.0 valueMax:3000.0];
 }
+- (void)viewDidDisappear:(BOOL)animated {
+    [self stopTimer];
+}
 
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-}
-- (IBAction)closeSettings:(id)sender {
-    [self.navigationController popViewControllerAnimated:YES];
-}
-
-#pragma mark - Public method
-- (void)setDevice:(DPHitoeDevice*)device {
-    _device = device;
-    UILabel *title = [[UILabel alloc] initWithFrame:CGRectZero];
-    title.font = [UIFont boldSystemFontOfSize:16.0];
-    title.textColor = [UIColor whiteColor];
-    NSString *titleMessage = [NSString stringWithFormat:@"%@ 操作画面", _device.name];
-    title.text = titleMessage;
-    [title sizeToFit];
-    self.navigationItem.titleView = title;
 }
 
 #pragma mark - Private method
@@ -135,7 +107,7 @@ static int const DPHitoeECGChartMaxRange = 4800;
 #pragma mark - Timer
 - (void)onECGTimer:(NSTimer *)timer {
     DPHitoeManager *mgr = [DPHitoeManager sharedInstance];
-    DPHitoeHeartRateData *heart = [mgr getECGDataForServiceId:_device.serviceId];
+    DPHitoeHeartRateData *heart = [mgr getECGDataForServiceId:super.device.serviceId];
     DPHitoeHeartData *data = heart.ecg;
     if (data) {
         [self setECGWithIndex:data.timeStamp ecg:data.value];
@@ -154,26 +126,6 @@ static int const DPHitoeECGChartMaxRange = 4800;
 #pragma mark - Rotate Delegate
 
 
-// View回転時
-- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
-                                duration:(NSTimeInterval)duration
-{
-    [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
-    [self rotateOrientation:toInterfaceOrientation];
-}
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-    return YES;
-}
-- (void)rotateOrientation:(UIInterfaceOrientation)toInterfaceOrientation
-{
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-        [self iphoneLayoutWithOrientation:toInterfaceOrientation];
-    } else {
-        [self ipadLayoutWithOrientation:toInterfaceOrientation];
-    }
-    [self.view setNeedsUpdateConstraints];
-}
 
 - (void)iphoneLayoutWithOrientation:(int)toInterfaceOrientation
 {

@@ -23,10 +23,29 @@
     NSArray *services = @[];
     NSDictionary *options = @{CBCentralManagerScanOptionAllowDuplicatesKey:@(NO)};
     [cManager scanForPeripheralsWithServices:services options:options];
+    // 背景白
+    self.view.backgroundColor = [UIColor whiteColor];
+    
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]
+                                             initWithTitle:@"＜CLOSE"
+                                             style:UIBarButtonItemStylePlain
+                                             target:self
+                                             action:@selector(closeSettings:) ];
+    self.navigationItem.leftBarButtonItem.tintColor = [UIColor whiteColor];
+    self.navigationItem.leftBarButtonItem.tintColor = [UIColor whiteColor];
+    // バー背景色
+    self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:0.00
+                                                                           green:0.63
+                                                                            blue:0.91
+                                                                           alpha:1.0];
 }
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
+}
+- (IBAction)closeSettings:(id)sender {
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 #pragma mark - CoreBluetooth Delegate
@@ -38,5 +57,42 @@
     [cManager stopScan];
 }
 
+#pragma mark - Public method
+- (void)setDevice:(DPHitoeDevice*)device {
+    _device = device;
+    UILabel *title = [[UILabel alloc] initWithFrame:CGRectZero];
+    title.font = [UIFont boldSystemFontOfSize:16.0];
+    title.textColor = [UIColor whiteColor];
+    NSString *titleMessage = [NSString stringWithFormat:@"%@ 操作画面", _device.name];
+    title.text = titleMessage;
+    [title sizeToFit];
+    self.navigationItem.titleView = title;
+}
 
+
+// View回転時
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
+                                duration:(NSTimeInterval)duration
+{
+    [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
+    [self rotateOrientation:toInterfaceOrientation];
+}
+
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
+    return YES;
+}
+- (void)rotateOrientation:(UIInterfaceOrientation)toInterfaceOrientation
+{
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+        [self iphoneLayoutWithOrientation:toInterfaceOrientation];
+    } else {
+        [self ipadLayoutWithOrientation:toInterfaceOrientation];
+    }
+    [self.view setNeedsUpdateConstraints];
+}
+
+#pragma mark - Abstract methods
+
+- (void)iphoneLayoutWithOrientation:(int)toInterfaceOrientation {}
+- (void)ipadLayoutWithOrientation:(int)toInterfaceOrientation {}
 @end

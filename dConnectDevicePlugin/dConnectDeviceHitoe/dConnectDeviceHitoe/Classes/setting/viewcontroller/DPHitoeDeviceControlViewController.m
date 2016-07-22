@@ -9,8 +9,7 @@
 
 
 #import "DPHitoeDeviceControlViewController.h"
-#import "DPHitoeControlECGViewController.h"
-#import "DPHitoeControlHealthViewController.h"
+#import "DPHioteControlViewController.h"
 typedef enum DPHitoeProfiles : NSUInteger
 {
     DPHitoeHeartRate = 0,
@@ -85,15 +84,15 @@ typedef enum DPHitoeProfiles : NSUInteger
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
 
-    if ([[segue identifier] isEqualToString:@"controlHeartRate"]) {
-        DPHitoeControlHealthViewController *controller =
-        (DPHitoeControlHealthViewController *) [segue destinationViewController];
+//    if ([[segue identifier] isEqualToString:@"controlHeartRate"]) {
+//        DPHitoeControlHealthViewController *controller =
+//        (DPHitoeControlHealthViewController *) [segue destinationViewController];
+//        [controller setDevice:_device];
+//    } else if ([[segue identifier] isEqualToString:@"controlECG"]) {
+        DPHioteControlViewController *controller =
+        (DPHioteControlViewController *) [segue destinationViewController];
         [controller setDevice:_device];
-    } else if ([[segue identifier] isEqualToString:@"controlECG"]) {
-        DPHitoeDeviceControlViewController *controller =
-        (DPHitoeDeviceControlViewController *) [segue destinationViewController];
-        [controller setDevice:_device];
-    }
+//    }
 }
 
 #pragma mark - Table view data source
@@ -117,8 +116,14 @@ typedef enum DPHitoeProfiles : NSUInteger
         case DPHitoeHeartRate:
             [self performSegueWithIdentifier:@"controlHeartRate" sender:self];
             break;
+        case DPHitoeBattery:
+            [self performSegueWithIdentifier:@"controlBattery" sender:self];
+            break;
         case DPHitoeECG:
             [self performSegueWithIdentifier:@"controlECG" sender:self];
+            break;
+        case DPHitoeDeviceOrientation:
+            [self performSegueWithIdentifier:@"controlAcc" sender:self];
             break;
         default:
             break;
