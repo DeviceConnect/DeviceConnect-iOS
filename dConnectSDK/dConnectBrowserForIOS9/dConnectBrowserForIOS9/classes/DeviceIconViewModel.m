@@ -32,11 +32,10 @@
 
 - (UIImage*)iconImage
 {
-    NSString* target = [self targetBundle];
-    NSString* bundle = [[NSBundle mainBundle] pathForResource:target ofType:@"bundle"];
-    if (bundle) {
-        NSString* imagePath = [NSString stringWithFormat:@"%@/dconnect_icon.png", bundle];
-        return [[UIImage alloc] initWithContentsOfFile:imagePath];
+    DConnectManager *mgr = [DConnectManager sharedManager];
+    NSString* filePath = [mgr iconFilePathForServiceId:[self idName] isOnline:self.isOnline];
+    if (filePath) {
+        return [[UIImage alloc] initWithContentsOfFile:filePath];
     } else {
         NSString* filename = self.isOnline ? @"default_device_icon" : @"default_device_icon_off";
         return [UIImage imageNamed:filename];
@@ -58,24 +57,6 @@
         return nil;
     }
 }
-
-//TODO: DConnectMessage.idからターゲットbundleを判定する
-//全て網羅できていない
-- (NSString*)targetBundle
-{
-    DConnectManager *mgr = [DConnectManager sharedManager];
-    NSString* pluginId = [mgr devicePluginIdForServiceId:[self idName]];
-    if([pluginId isEqualToString:@"DPPebbleDevicePlugin.dconnect"]) {
-        return @"dConnectDevicePebble";
-    } else if([pluginId isEqualToString:@"DPHostDevicePlugin.dconnect"]) {
-        return @"dConnectDeviceHost";
-    } else if([pluginId isEqualToString:@"DPThetaDevicePlugin.dconnect"]) {
-        return @"dConnectDeviceTheta";
-    }
-
-    return pluginId;
-}
-
 
 - (void)dealloc
 {
