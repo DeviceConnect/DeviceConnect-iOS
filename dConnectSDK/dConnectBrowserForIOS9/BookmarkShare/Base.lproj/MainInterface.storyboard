@@ -57,12 +57,11 @@
                                         </connections>
                                     </textField>
                                     <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Qpa-G8-VUk">
-                                        <rect key="frame" x="140" y="204" width="320" height="300"/>
+                                        <rect key="frame" x="140" y="204" width="320" height="216"/>
                                     </pickerView>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="bottom" secondItem="Qpa-G8-VUk" secondAttribute="bottom" constant="30" id="2MH-Xg-4MD"/>
                                     <constraint firstItem="tVg-5g-d5k" firstAttribute="top" secondItem="Ijk-t8-NKU" secondAttribute="bottom" constant="5" id="48r-5h-zC6"/>
                                     <constraint firstItem="kls-eY-Cqf" firstAttribute="centerX" secondItem="yGg-vK-PQa" secondAttribute="centerX" id="4RZ-6W-1nF"/>
                                     <constraint firstItem="Qpa-G8-VUk" firstAttribute="centerX" secondItem="yGg-vK-PQa" secondAttribute="centerX" id="A6X-l1-LXj"/>
@@ -71,6 +70,7 @@
                                     <constraint firstItem="O64-NN-XHk" firstAttribute="top" secondItem="yGg-vK-PQa" secondAttribute="top" constant="20" id="Mrh-z1-NcR"/>
                                     <constraint firstItem="Ijk-t8-NKU" firstAttribute="top" secondItem="kls-eY-Cqf" secondAttribute="bottom" constant="15" id="Ov0-hw-0vs"/>
                                     <constraint firstItem="kls-eY-Cqf" firstAttribute="top" secondItem="O64-NN-XHk" secondAttribute="bottom" constant="10" id="Sqe-Cu-3d9"/>
+                                    <constraint firstAttribute="bottom" secondItem="Qpa-G8-VUk" secondAttribute="bottom" priority="250" constant="30" id="TdT-T4-DZL"/>
                                     <constraint firstItem="tVg-5g-d5k" firstAttribute="height" secondItem="kls-eY-Cqf" secondAttribute="height" id="bd7-AH-kUC"/>
                                     <constraint firstItem="Qpa-G8-VUk" firstAttribute="top" secondItem="JNB-xh-OuL" secondAttribute="bottom" id="dNr-nk-6SP"/>
                                     <constraint firstItem="O64-NN-XHk" firstAttribute="leading" secondItem="JNB-xh-OuL" secondAttribute="leading" id="dnB-oc-g4C"/>
