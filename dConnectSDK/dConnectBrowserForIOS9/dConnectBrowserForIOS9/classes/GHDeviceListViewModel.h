@@ -16,4 +16,5 @@
 @property (strong, nonatomic) NSMutableArray* datasource;
 @property (nonatomic, weak) id<GHDeviceListViewModelDelegate> delegate;
 - (void)setup;
+- (void)refresh;
 @end

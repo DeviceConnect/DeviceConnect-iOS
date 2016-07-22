@@ -90,6 +90,11 @@
     [self presentViewController:nav animated:YES completion:nil];
 }
 
+
+- (IBAction)refresh:(UIBarButtonItem *)sender {
+    [viewModel refresh];
+}
+
 //--------------------------------------------------------------//
 #pragma mark - view cycle
 //--------------------------------------------------------------//
