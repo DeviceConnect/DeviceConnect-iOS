@@ -92,7 +92,7 @@
                                             <outlet property="titleLabel" destination="qSP-O1-Hxl" id="Nxx-uL-9Cp"/>
                                         </connections>
                                     </collectionViewCell>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="DeviceIconViewCell" id="PaE-c0-nDI" customClass="DeviceIconViewCell">
+                                    <collectionViewCell opaque="NO" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="DeviceIconViewCell" id="PaE-c0-nDI" customClass="DeviceIconViewCell">
                                         <rect key="frame" x="85" y="50" width="70" height="100"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -120,6 +120,13 @@
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="wifi_on" translatesAutoresizingMaskIntoConstraints="NO" id="myD-Vp-UUG">
+                                                    <rect key="frame" x="-5" y="-5" width="30" height="30"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="30" id="B8r-ln-MVP"/>
+                                                        <constraint firstAttribute="width" constant="30" id="fLD-aF-mu8"/>
+                                                    </constraints>
+                                                </imageView>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
@@ -127,7 +134,9 @@
                                             <constraint firstItem="3K8-e1-iHJ" firstAttribute="top" secondItem="PaE-c0-nDI" secondAttribute="topMargin" id="1it-xm-5oy"/>
                                             <constraint firstItem="Cuk-KV-3vZ" firstAttribute="top" secondItem="PaE-c0-nDI" secondAttribute="top" id="4SG-En-MGu"/>
                                             <constraint firstItem="3di-oC-Pxp" firstAttribute="top" secondItem="Cuk-KV-3vZ" secondAttribute="bottom" id="744-xS-sMD"/>
+                                            <constraint firstItem="myD-Vp-UUG" firstAttribute="top" secondItem="PaE-c0-nDI" secondAttribute="top" constant="-5" id="9pD-tk-J4E"/>
                                             <constraint firstItem="3K8-e1-iHJ" firstAttribute="leading" secondItem="PaE-c0-nDI" secondAttribute="leading" id="DUb-4C-9ib"/>
+                                            <constraint firstItem="myD-Vp-UUG" firstAttribute="leading" secondItem="PaE-c0-nDI" secondAttribute="leading" constant="-5" id="K9M-I1-CRK"/>
                                             <constraint firstAttribute="trailing" secondItem="3di-oC-Pxp" secondAttribute="trailing" id="Spt-t4-5Lt"/>
                                             <constraint firstAttribute="trailing" secondItem="Cuk-KV-3vZ" secondAttribute="trailing" id="TWj-ap-CfA"/>
                                             <constraint firstAttribute="bottom" secondItem="3di-oC-Pxp" secondAttribute="bottom" id="V0R-XE-pdV"/>
@@ -149,6 +158,7 @@
                                         </variation>
                                         <connections>
                                             <outlet property="iconImage" destination="3K8-e1-iHJ" id="rZm-hO-KJv"/>
+                                            <outlet property="kindIconImage" destination="myD-Vp-UUG" id="DyT-M3-lRS"/>
                                             <outlet property="selectButton" destination="Cuk-KV-3vZ" id="2Eo-Ag-2TJ"/>
                                             <outlet property="titleLabel" destination="3di-oC-Pxp" id="F8n-Um-hwP"/>
                                         </connections>
@@ -387,14 +397,23 @@
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="wifi_on" translatesAutoresizingMaskIntoConstraints="NO" id="do3-bw-kG6">
+                                                    <rect key="frame" x="-5" y="-5" width="30" height="30"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="30" id="pT6-1z-GjU"/>
+                                                        <constraint firstAttribute="width" constant="30" id="rom-8X-vC9"/>
+                                                    </constraints>
+                                                </imageView>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
                                         <constraints>
                                             <constraint firstItem="yNz-QW-Ww5" firstAttribute="top" secondItem="nK6-L7-zq7" secondAttribute="top" id="74f-Yo-ooN"/>
                                             <constraint firstAttribute="trailingMargin" secondItem="QFY-WL-bOF" secondAttribute="trailing" id="A8N-n5-p99"/>
+                                            <constraint firstItem="do3-bw-kG6" firstAttribute="top" secondItem="nK6-L7-zq7" secondAttribute="top" constant="-5" id="BGX-DH-GI9"/>
                                             <constraint firstAttribute="trailing" secondItem="d0l-7B-rwB" secondAttribute="trailing" id="Efw-3N-8Rd"/>
                                             <constraint firstAttribute="bottom" secondItem="d0l-7B-rwB" secondAttribute="bottom" id="aoK-Zo-Q3d"/>
+                                            <constraint firstItem="do3-bw-kG6" firstAttribute="leading" secondItem="nK6-L7-zq7" secondAttribute="leading" constant="-5" id="d7U-x5-I7h"/>
                                             <constraint firstItem="QFY-WL-bOF" firstAttribute="leading" secondItem="nK6-L7-zq7" secondAttribute="leadingMargin" id="dfc-mx-ucq"/>
                                             <constraint firstItem="QFY-WL-bOF" firstAttribute="leading" secondItem="nK6-L7-zq7" secondAttribute="leading" id="fe7-aK-MMe"/>
                                             <constraint firstAttribute="trailing" secondItem="yNz-QW-Ww5" secondAttribute="trailing" id="gK5-rV-hg4"/>
@@ -408,14 +427,15 @@
                                         </constraints>
                                         <variation key="default">
                                             <mask key="constraints">
-                                                <exclude reference="i2n-La-zSe"/>
-                                                <exclude reference="dfc-mx-ucq"/>
                                                 <exclude reference="A8N-n5-p99"/>
+                                                <exclude reference="dfc-mx-ucq"/>
+                                                <exclude reference="i2n-La-zSe"/>
                                                 <exclude reference="aoK-Zo-Q3d"/>
                                             </mask>
                                         </variation>
                                         <connections>
                                             <outlet property="iconImage" destination="QFY-WL-bOF" id="Zjh-Sl-Umv"/>
+                                            <outlet property="kindIconImage" destination="do3-bw-kG6" id="kut-ue-azj"/>
                                             <outlet property="selectButton" destination="yNz-QW-Ww5" id="Z2C-fi-jgb"/>
                                             <outlet property="titleLabel" destination="d0l-7B-rwB" id="7dh-PR-5jR"/>
                                         </connections>
@@ -619,5 +639,6 @@
         <image name="help" width="30" height="30"/>
         <image name="search" width="42" height="40"/>
         <image name="settings" width="40" height="40"/>
+        <image name="wifi_on" width="30" height="30"/>
     </resources>
 </document>
