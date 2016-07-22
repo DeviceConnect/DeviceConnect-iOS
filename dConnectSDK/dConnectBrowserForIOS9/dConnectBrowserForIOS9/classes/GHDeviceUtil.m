@@ -66,15 +66,31 @@ static GHDeviceUtil* mgr = nil;
 - (void)updateDiveceList
 {
     __weak GHDeviceUtil *_self = self;
-    [self discoverDevices:^(DConnectArray *result) {
-        _self.currentDevices = result;
-        _self.recieveDeviceList(result);
-    }];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self discoverDevices:^(DConnectArray *result) {
+                _self.currentDevices = result;
+                _self.recieveDeviceList(result);
+            }];
+        });
+    });
 }
 
 - (void)discoverDevices:(DiscoverDeviceCompletion)completion
 {
-    [manager startServiceDiscoveryForCallback:^(DConnectResponseMessage *response) {
+    BOOL isLocalOAuth = manager.settings.useLocalOAuth;
+    
+    if (isLocalOAuth) {
+        manager.settings.useLocalOAuth = NO;
+    }
+    
+    DConnectRequestMessage *request = [DConnectRequestMessage new];
+    [request setAction: DConnectMessageActionTypeGet];
+    [request setApi: DConnectMessageDefaultAPI];
+    [request setProfile: DConnectServiceDiscoveryProfileName];
+    [request setString:[self packageName] forKey:DConnectMessageOrigin];
+    
+    [manager sendRequest: request callback:^(DConnectResponseMessage *response) {
         if (response != nil) {
             if ([response result] == DConnectMessageResultTypeOk) {
                 DConnectArray *services = [response arrayForKey: DConnectServiceDiscoveryProfileParamServices];
@@ -92,7 +108,17 @@ static GHDeviceUtil* mgr = nil;
                 completion(nil);
             }
         }
+        if (isLocalOAuth) {
+            manager.settings.useLocalOAuth = YES;
+        }
+
     }];
+}
+
+- (NSString *)packageName {
+    NSBundle *bundle = [NSBundle mainBundle];
+    NSString *package = [bundle bundleIdentifier];
+    return package;
 }
 
 - (void)dealloc
