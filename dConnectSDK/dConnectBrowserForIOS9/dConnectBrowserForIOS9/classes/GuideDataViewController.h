@@ -17,7 +17,6 @@ typedef void (^CloseButtonCallback)();
 @property (copy, nonatomic) CloseButtonCallback closeButtonCallback;
 
 + (instancetype)instantiateWithFilename:(NSString*)filename
-                        withPageNaumber:(NSInteger)pageNumber
-                             isLastPage:(BOOL)isLastPage;
+                        withPageNaumber:(NSInteger)pageNumber;
 
 @end
