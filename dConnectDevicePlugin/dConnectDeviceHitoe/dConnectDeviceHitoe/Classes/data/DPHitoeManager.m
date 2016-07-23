@@ -211,11 +211,6 @@ static int const DPHitoeRetryCount = 30;
             _registeredDevices[i] = exist;
         }
     }
-    NSLog(@"<<<<<<<<<<<<<<<<<<<<<<<<<<<");
-    for (int i = 0; i < [_registeredDevices count]; i++) {
-        NSLog(@"device:%d", ((DPHitoeDevice *) _registeredDevices[i]).responseId);
-    }
-    NSLog(@">>>>>>>>>>>>>>>>>>>>>>>>>>>");
     [self startRetryTimer];
 }
 - (void)disconnectForHitoe:(DPHitoeDevice *)device {
@@ -702,6 +697,7 @@ static int const DPHitoeRetryCount = 30;
             [paramStringBuffer appendFormat:@"%d", DPHitoeBaTimeSamplingWindow];
         }
     }
+
     [api addReceiver:receiveDevice.sessionId dataKey:keyStringBuffer dataReceiver:self parameterSetting: paramStringBuffer dataList:@""];
 }
 
@@ -751,10 +747,10 @@ static int const DPHitoeRetryCount = 30;
         return;
     }
     int pos = [self currentPosForResponseId:responseId];
+
     if (pos == -1) {
         return;
     }
-    
     [((DPHitoeDevice *) _registeredDevices[pos]) setConnectionId:responseString];
 }
 

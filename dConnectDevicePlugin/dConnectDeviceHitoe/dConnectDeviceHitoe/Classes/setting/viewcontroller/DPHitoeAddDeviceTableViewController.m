@@ -20,6 +20,7 @@
     NSMutableArray *discoveries;
     CBCentralManager *cManager;
     BOOL isConnecting;
+    DPHitoeDevice *currentDevice;
 }
 @property (nonatomic) NSTimer *timer;
 @property (nonatomic) NSTimer *connectedTimeout;
@@ -129,17 +130,17 @@
     if ([discoveries count] <= 0) {
         return;
     }
-    DPHitoeDevice *device = discoveries[indexPath.row];
+    currentDevice = discoveries[indexPath.row];
     if ([_timer isValid]) {
         [_timer invalidate];
     }
-    if (!device.pinCode) {
+    if (!currentDevice.pinCode) {
         [DPHitoePinCodeDialog showPinCodeDialogWithCompletion:^(NSString *pinCode) {
             [DPHitoePinCodeDialog closePinCodesDialog];
 
-            device.pinCode = pinCode;
+            currentDevice.pinCode = pinCode;
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-                [[DPHitoeManager sharedInstance] connectForHitoe:device];
+                [[DPHitoeManager sharedInstance] connectForHitoe:currentDevice];
                 
             });
             dispatch_queue_t updateQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
@@ -152,7 +153,7 @@
         }];
     } else {
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            [[DPHitoeManager sharedInstance] connectForHitoe:device];
+            [[DPHitoeManager sharedInstance] connectForHitoe:currentDevice];
         });
         [DPHitoeProgressDialog showProgressDialog];
         [self startTimeoutTimer];
@@ -179,6 +180,11 @@
 }
 
 -(void)didConnectFailWithDevice:(DPHitoeDevice*)device {
+    for (int i = 0; i < [discoveries count]; i++) {
+        if ([device.serviceId isEqualToString:((DPHitoeDevice*) discoveries[i]).serviceId]) {
+            ((DPHitoeDevice*) discoveries[i]).pinCode = nil;
+        }
+    }
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"接続失敗"
                                                                              message:@"Hitoeとの接続に失敗しました。"
                                                                       preferredStyle:UIAlertControllerStyleAlert];
@@ -188,6 +194,7 @@
     [self startTimer];
     [DPHitoeProgressDialog closeProgressDialog];
     isConnecting = NO;
+
 }
 
 -(void)didDisconnectWithDevice:(DPHitoeDevice*)device {
@@ -267,6 +274,10 @@
         [alertController addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil]];
         [self presentViewController:alertController animated:YES completion:nil];
         isConnecting = NO;
+        if (currentDevice) {
+            currentDevice.pinCode = nil;
+            currentDevice = nil;
+        }
     }
 
 }
