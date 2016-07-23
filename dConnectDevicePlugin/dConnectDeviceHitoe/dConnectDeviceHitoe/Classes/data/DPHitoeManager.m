@@ -15,13 +15,15 @@
 
 
 
-static int const DPHitoeRetryCount = 3000;
+static int const DPHitoeRetryCount = 30;
 
 @interface DPHitoeManager() {
     HitoeSdkAPI *api;
     BOOL isScanning;
     BOOL isCallbackRunning;
     int retryCount;
+    dispatch_semaphore_t _semaphore;
+
 }
 @property (nonatomic, strong) NSMutableDictionary *hrData;
 @property (nonatomic, strong) NSMutableDictionary *accelData;
@@ -66,6 +68,8 @@ static int const DPHitoeRetryCount = 3000;
         api = [HitoeSdkAPI sharedManager];
         [api setAPIDelegate:self];
         _registeredDevices = [NSMutableArray array];
+        _semaphore = dispatch_semaphore_create(1);
+
     }
     
     return self;
@@ -77,7 +81,7 @@ static int const DPHitoeRetryCount = 3000;
         apiResorce:(int)apiResorce
             object:(id)object {
     NSString *responseData = (NSString*) object;
-//    NSLog(@"cbCallback:%d:%d:%@", apiId, apiResorce, responseData);
+    NSLog(@"cbCallback:%d:%d:%@", apiId, apiResorce, responseData);
     if (apiId == DPHitoeApiIdGetAvailableSensor) {
         [self notifyDiscoveryHitoeDeviceWithResponseId:apiResorce responseString:responseData];
     } else if (apiId == DPHitoeApiIdConnect) {
@@ -105,6 +109,7 @@ static int const DPHitoeRetryCount = 3000;
     NSLog(@"DataCallback:connectId=%@,dataKey=%@,rawData=%@",connectionId, dataKey, data);
     int pos = [self currentDeviceForConnectionId:connectionId];
     if (pos == -1) {
+        NSLog(@"no connection ID:%@", connectionId);
         return;
     }
     DPHitoeDevice *receiveDevice = _registeredDevices[pos];
@@ -206,6 +211,11 @@ static int const DPHitoeRetryCount = 3000;
             _registeredDevices[i] = exist;
         }
     }
+    NSLog(@"<<<<<<<<<<<<<<<<<<<<<<<<<<<");
+    for (int i = 0; i < [_registeredDevices count]; i++) {
+        NSLog(@"device:%d", ((DPHitoeDevice *) _registeredDevices[i]).responseId);
+    }
+    NSLog(@">>>>>>>>>>>>>>>>>>>>>>>>>>>");
     [self startRetryTimer];
 }
 - (void)disconnectForHitoe:(DPHitoeDevice *)device {
@@ -340,10 +350,6 @@ static int const DPHitoeRetryCount = 3000;
             NSLog(@"retry%d", retryCount);
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
                 DPHitoeDevice *retryDevice = [self getHitoeDeviceForServiceId:serviceId];
-                if ([retryDevice isRegisterFlag]) {
-                    [self disconnectForHitoe:retryDevice];
-                }
-                sleep(1.0);
                 if ([retryDevice isRegisterFlag]) {
                     [self connectForHitoe:retryDevice];
                 }
@@ -507,6 +513,8 @@ static int const DPHitoeRetryCount = 3000;
         DPHitoeDevice *pos = _registeredDevices[i];
         if ([pos.serviceId isEqualToString:currentDevice.serviceId]) {
             _registeredDevices[i] = currentDevice;
+        } else {
+            ((DPHitoeDevice *) _registeredDevices[i]).responseId = DPHitoeResIdSensorConnectNotice;
         }
     }
     [api getAvilableData:currentDevice.sessionId];
@@ -569,7 +577,6 @@ static int const DPHitoeRetryCount = 3000;
     }
     int pos = [self currentPosForResponseId:responseId];
     if (pos == -1) {
-
         return;
     }
     DPHitoeDevice *receiveDevice = _registeredDevices[pos];
@@ -747,6 +754,7 @@ static int const DPHitoeRetryCount = 3000;
     if (pos == -1) {
         return;
     }
+    
     [((DPHitoeDevice *) _registeredDevices[pos]) setConnectionId:responseString];
 }
 

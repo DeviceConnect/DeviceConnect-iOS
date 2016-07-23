@@ -26,6 +26,7 @@ static NSString *const DPHitoeOpenBluetooth = @"BluetoothがOFFになってい�
     NSMutableArray *discoveries;
     CBCentralManager *cManager;
     BOOL isConnecting;
+    NSUInteger current;
 }
 
 @property (weak, nonatomic) IBOutlet UILabel *descriptionLabel;
@@ -201,6 +202,7 @@ static NSString *const DPHitoeOpenBluetooth = @"BluetoothがOFFになってい�
 
         return;
     }
+    current = indexPath.row;
     [self performSegueWithIdentifier:@"showControlDevice" sender:self];
 
 }
@@ -264,11 +266,10 @@ static NSString *const DPHitoeOpenBluetooth = @"BluetoothがOFFになってい�
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([[segue identifier] isEqualToString:@"showControlDevice"]) {
-        NSIndexPath *indexPath = [_registerDeviceList indexPathForSelectedRow];
         UINavigationController *navController = (UINavigationController*)[segue destinationViewController] ;
         DPHitoeDeviceControlViewController *controller =
         (DPHitoeDeviceControlViewController *) [navController topViewController];
-        DPHitoeDevice *device = discoveries[indexPath.row];
+        DPHitoeDevice *device = discoveries[current];
         [controller setDevice:device];
     }
 }

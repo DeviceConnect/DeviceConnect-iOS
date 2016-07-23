@@ -82,6 +82,7 @@ static NSString *const DPHitoeTitle = @"ECG";
         if (imageBase) {
             CGContextConcatCTM(context, affine);
             CGContextDrawImage(context, boundsRect, imageBase);
+            CGImageRelease(imagePrev);
             imagePrev = nil;
             imagePrev = CGBitmapContextCreateImage(context);
         }
@@ -99,30 +100,32 @@ static NSString *const DPHitoeTitle = @"ECG";
         } else {
             continue;
         }
-        
-        point += (CGFloat) graphCenter;
-        if (point < yStart) {
-            point = yStart;
-        } else if (yEnd < point) {
-            point = yEnd;
-        }
-        
-        if (isFirst) {
-            isFirst = NO;
-            if (indexStart == 0) {
-                CGFloat pointPrev = (CGFloat) graphCenter;
-                CGContextMoveToPoint(context, 0, pointPrev);
-            } else {
-                CGContextMoveToPoint(context,  prevStepIndex * graphStepWidth, prevPoint);
+        @autoreleasepool {
+            point += (CGFloat) graphCenter;
+            if (point < yStart) {
+                point = yStart;
+            } else if (yEnd < point) {
+                point = yEnd;
             }
+            
+            if (isFirst) {
+                isFirst = NO;
+                if (indexStart == 0) {
+                    CGFloat pointPrev = (CGFloat) graphCenter;
+                    CGContextMoveToPoint(context, 0, pointPrev);
+                } else {
+                    CGContextMoveToPoint(context,  prevStepIndex * graphStepWidth, prevPoint);
+                }
+            }
+            CGContextAddLineToPoint(context, indexWritten * graphStepWidth, point);
+            
+            prevStepIndex = indexWritten;
+            prevPoint = point;
         }
-        CGContextAddLineToPoint(context, indexWritten * graphStepWidth, point);
-        
-        prevStepIndex = indexWritten;
-        prevPoint = point;
     }
     
     CGContextStrokePath(context);
+    CGImageRelease(imagePrev);
     imagePrev = nil;
     imagePrev = CGBitmapContextCreateImage(context);
     

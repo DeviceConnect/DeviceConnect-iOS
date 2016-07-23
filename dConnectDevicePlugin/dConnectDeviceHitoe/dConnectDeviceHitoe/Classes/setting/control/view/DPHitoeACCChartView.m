@@ -72,6 +72,7 @@
         if (imageBase) {
             CGContextConcatCTM(context, affine);
             CGContextDrawImage(context, boundsRect, imageBase);
+            CGImageRelease(imagePrev);
             imagePrev = nil;
             imagePrev = CGBitmapContextCreateImage(context);
         }
@@ -100,67 +101,69 @@
         } else {
             continue;
         }
-        
-        point[0] += pointPrev;
-        point[1] += pointPrev;
-        point[2] += pointPrev;
-        
-        point[0] = DPHitoeMin(DPHitoeMax(point[0], yStart), yEnd);
-        point[1] = DPHitoeMin(DPHitoeMax(point[1], yStart), yEnd);
-        point[2] = DPHitoeMin(DPHitoeMax(point[2], yStart), yEnd);
-        
-        CGContextSetStrokeColorWithColor(context, [self xColor].CGColor);
-        if (isFirst) {
-            if (indexStart == 0) {
-                CGContextMoveToPoint(context, 0, pointPrev);
+        @autoreleasepool {
+            point[0] += pointPrev;
+            point[1] += pointPrev;
+            point[2] += pointPrev;
+            
+            point[0] = DPHitoeMin(DPHitoeMax(point[0], yStart), yEnd);
+            point[1] = DPHitoeMin(DPHitoeMax(point[1], yStart), yEnd);
+            point[2] = DPHitoeMin(DPHitoeMax(point[2], yStart), yEnd);
+            
+            CGContextSetStrokeColorWithColor(context, [self xColor].CGColor);
+            if (isFirst) {
+                if (indexStart == 0) {
+                    CGContextMoveToPoint(context, 0, pointPrev);
+                } else {
+                    CGContextMoveToPoint(context, ((CGFloat) prevStepIndex) * graphStepWidth, prevPoint[0]);
+                }
             } else {
-                CGContextMoveToPoint(context, ((CGFloat) prevStepIndex * graphStepWidth), prevPoint[0]);
+                CGContextMoveToPoint(context, ((CGFloat) prevStepIndex) * graphStepWidth, prevPoint[0]);
             }
-        } else {
-            CGContextMoveToPoint(context, ((CGFloat) prevStepIndex * graphStepWidth), prevPoint[0]);
-        }
-        
-        CGContextAddLineToPoint(context, ((CGFloat) indexWritten * graphStepWidth), point[0]);
-        NSLog(@"%lf:%lf", ((CGFloat) prevStepIndex * graphStepWidth), ((CGFloat) indexWritten * graphStepWidth));
-        CGContextStrokePath(context);
-        prevPoint[0] = point[0];
-        
-        CGContextSetStrokeColorWithColor(context, [self yColor].CGColor);
-        if (isFirst) {
-            if (indexStart == 0) {
-                CGContextMoveToPoint(context, 0, pointPrev);
+            
+            CGContextAddLineToPoint(context, ((CGFloat) indexWritten) * graphStepWidth, point[0]);
+            CGContextStrokePath(context);
+            prevPoint[0] = point[0];
+
+            CGContextSetStrokeColorWithColor(context, [self yColor].CGColor);
+            if (isFirst) {
+                if (indexStart == 0) {
+                    CGContextMoveToPoint(context, 0, pointPrev);
+                } else {
+                    CGContextMoveToPoint(context, ((CGFloat) prevStepIndex) * graphStepWidth, prevPoint[1] / 2);
+                }
             } else {
-                CGContextMoveToPoint(context, ((CGFloat) prevStepIndex * graphStepWidth), prevPoint[1]);
+                CGContextMoveToPoint(context, ((CGFloat) prevStepIndex) * graphStepWidth, prevPoint[1] / 2);
             }
-        } else {
-            CGContextMoveToPoint(context, ((CGFloat) prevStepIndex * graphStepWidth), prevPoint[1]);
-        }
-        
-        CGContextAddLineToPoint(context, ((CGFloat) indexWritten * graphStepWidth), point[1]);
-        CGContextStrokePath(context);
-        prevPoint[1] = point[1];
-        
-        CGContextSetStrokeColorWithColor(context, [self zColor].CGColor);
-        if (isFirst) {
-            if (indexStart == 0) {
-                CGContextMoveToPoint(context, 0, pointPrev);
+            
+            CGContextAddLineToPoint(context, ((CGFloat) indexWritten) * graphStepWidth, point[1] / 2);
+            
+            
+            CGContextStrokePath(context);
+            prevPoint[1] = point[1];
+            
+            CGContextSetStrokeColorWithColor(context, [self zColor].CGColor);
+            if (isFirst) {
+                if (indexStart == 0) {
+                    CGContextMoveToPoint(context, 0, pointPrev);
+                } else {
+                    CGContextMoveToPoint(context, ((CGFloat) prevStepIndex) * graphStepWidth, prevPoint[2]);
+                }
             } else {
-                CGContextMoveToPoint(context, ((CGFloat) prevStepIndex * graphStepWidth), prevPoint[2]);
+                CGContextMoveToPoint(context, ((CGFloat) prevStepIndex) * graphStepWidth, prevPoint[2]);
             }
-        } else {
-            CGContextMoveToPoint(context, ((CGFloat) prevStepIndex * graphStepWidth), prevPoint[2]);
-        }
-        
-        CGContextAddLineToPoint(context, ((CGFloat) indexWritten * graphStepWidth), point[2]);
-        CGContextStrokePath(context);
-        prevPoint[2] = point[2];
-        
-        prevStepIndex = indexWritten;
-        
-        if (isFirst) {
-            isFirst = NO;
+            
+            CGContextAddLineToPoint(context, ((CGFloat) indexWritten) * graphStepWidth, point[2]);
+            CGContextStrokePath(context);
+            prevPoint[2] = point[2];
+            prevStepIndex = indexWritten;
+            
+            if (isFirst) {
+                isFirst = NO;
+            }
         }
     }
+    CGImageRelease(imagePrev);
     imagePrev = nil;
     imagePrev = CGBitmapContextCreateImage(context);
     
