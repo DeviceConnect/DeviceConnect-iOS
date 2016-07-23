@@ -118,7 +118,7 @@ static NSString *const DPHitoeOpenBluetooth = @"BluetoothがOFFになってい�
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     DPHitoeDeviceListCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cellhitoe" forIndexPath:indexPath];
     NSMutableArray *devices = [DPHitoeManager sharedInstance].registeredDevices;
-    DPHitoeDevice *device = devices[indexPath.section];
+    DPHitoeDevice *device = devices[indexPath.row];
     NSString *name;
     NSString *btnName;
     UIColor *btnColor;
@@ -143,7 +143,7 @@ static NSString *const DPHitoeOpenBluetooth = @"BluetoothがOFFになってい�
 - (void)handleTouchButton:(UIButton *)sender event:(UIEvent *)event {
     NSIndexPath *indexPath = [self indexPathForControlEvent:event];
     NSMutableArray *devices = [DPHitoeManager sharedInstance].registeredDevices;
-    DPHitoeDevice *device = devices[indexPath.section];
+    DPHitoeDevice *device = devices[indexPath.row];
     UIColor *btnColor;
     NSString *btnName;
     if (device.isRegisterFlag) {

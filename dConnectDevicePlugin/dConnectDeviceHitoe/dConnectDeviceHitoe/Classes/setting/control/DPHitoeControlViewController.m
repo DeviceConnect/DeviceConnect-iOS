@@ -7,15 +7,15 @@
 //  http://opensource.org/licenses/mit-license.php
 //
 
-#import "DPHioteControlViewController.h"
+#import "DPHitoeControlViewController.h"
 
-@interface DPHioteControlViewController () {
+@interface DPHitoeControlViewController () {
     CBCentralManager *cManager;
 }
 
 @end
 
-@implementation DPHioteControlViewController
+@implementation DPHitoeControlViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -60,13 +60,6 @@
 #pragma mark - Public method
 - (void)setDevice:(DPHitoeDevice*)device {
     _device = device;
-    UILabel *title = [[UILabel alloc] initWithFrame:CGRectZero];
-    title.font = [UIFont boldSystemFontOfSize:16.0];
-    title.textColor = [UIColor whiteColor];
-    NSString *titleMessage = [NSString stringWithFormat:@"%@ 操作画面", _device.name];
-    title.text = titleMessage;
-    [title sizeToFit];
-    self.navigationItem.titleView = title;
 }
 
 

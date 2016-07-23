@@ -8,8 +8,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "DPHioteControlViewController.h"
+#import "DPHitoeControlViewController.h"
 
 
-@interface DPHitoeControlECGViewController : DPHioteControlViewController
+@interface DPHitoeControlECGViewController : DPHitoeControlViewController
 @end

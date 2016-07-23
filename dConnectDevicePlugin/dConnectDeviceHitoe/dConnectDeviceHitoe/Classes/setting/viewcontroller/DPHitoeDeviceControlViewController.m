@@ -9,7 +9,7 @@
 
 
 #import "DPHitoeDeviceControlViewController.h"
-#import "DPHioteControlViewController.h"
+#import "DPHitoeControlViewController.h"
 typedef enum DPHitoeProfiles : NSUInteger
 {
     DPHitoeHeartRate = 0,
@@ -84,15 +84,9 @@ typedef enum DPHitoeProfiles : NSUInteger
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
 
-//    if ([[segue identifier] isEqualToString:@"controlHeartRate"]) {
-//        DPHitoeControlHealthViewController *controller =
-//        (DPHitoeControlHealthViewController *) [segue destinationViewController];
-//        [controller setDevice:_device];
-//    } else if ([[segue identifier] isEqualToString:@"controlECG"]) {
-        DPHioteControlViewController *controller =
-        (DPHioteControlViewController *) [segue destinationViewController];
-        [controller setDevice:_device];
-//    }
+    DPHitoeControlViewController *controller =
+    (DPHitoeControlViewController *) [segue destinationViewController];
+    [controller setDevice:_device];
 }
 
 #pragma mark - Table view data source
@@ -125,6 +119,16 @@ typedef enum DPHitoeProfiles : NSUInteger
         case DPHitoeDeviceOrientation:
             [self performSegueWithIdentifier:@"controlAcc" sender:self];
             break;
+        case DPHitoePose:
+            [self performSegueWithIdentifier:@"controlPose" sender:self];
+            break;
+        case DPHitoeWalk:
+            [self performSegueWithIdentifier:@"controlWalk" sender:self];
+            break;
+        case DPHitoeStress:
+            [self performSegueWithIdentifier:@"controlStress" sender:self];
+            break;
+
         default:
             break;
     }

@@ -7,9 +7,9 @@
 //  http://opensource.org/licenses/mit-license.php
 //
 
-#import "DPHioteControlViewController.h"
+#import "DPHitoeControlViewController.h"
 #import "DPHitoeDevice.h"
 
-@interface DPHitoeControlBatteryViewController : DPHioteControlViewController
+@interface DPHitoeControlBatteryViewController : DPHitoeControlViewController
 
 @end

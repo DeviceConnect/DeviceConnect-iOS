@@ -32,7 +32,7 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
-		AB1EC28A1D41ACAD005172E7 /* DPHioteControlViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB1EC2891D41ACAD005172E7 /* DPHioteControlViewController.m */; };
+		AB1EC28A1D41ACAD005172E7 /* DPHitoeControlViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB1EC2891D41ACAD005172E7 /* DPHitoeControlViewController.m */; };
 		AB1EC2911D41CFEE005172E7 /* DPHitoeControlBatteryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB1EC2901D41CFEE005172E7 /* DPHitoeControlBatteryViewController.m */; };
 		AB1EC2941D41E19B005172E7 /* DPHioteControlDeviceOrientationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB1EC2931D41E19B005172E7 /* DPHioteControlDeviceOrientationViewController.m */; };
 		AB1EC2971D41E22F005172E7 /* DPHitoeACCChartView.m in Sources */ = {isa = PBXBuildFile; fileRef = AB1EC2961D41E22F005172E7 /* DPHitoeACCChartView.m */; };
@@ -98,6 +98,9 @@
 		AB7E738B1D3F3EC90080AD22 /* DPHitoeECGChartView.m in Sources */ = {isa = PBXBuildFile; fileRef = AB7E738A1D3F3EC90080AD22 /* DPHitoeECGChartView.m */; };
 		AB7E738D1D3F40FB0080AD22 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB7E738C1D3F40FB0080AD22 /* CoreGraphics.framework */; };
 		AB7E73901D3F55C20080AD22 /* DPHitoeControlECGViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB7E738F1D3F55C20080AD22 /* DPHitoeControlECGViewController.m */; };
+		ABA7D0B61D42550D00ED7E31 /* DPHioteControlPoseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABA7D0B51D42550D00ED7E31 /* DPHioteControlPoseViewController.m */; };
+		ABA7D0B91D42EB6E00ED7E31 /* DPHitoeControlWalkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABA7D0B81D42EB6E00ED7E31 /* DPHitoeControlWalkViewController.m */; };
+		ABA7D0BC1D42F2C500ED7E31 /* DPHitoeControlStressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABA7D0BB1D42F2C500ED7E31 /* DPHitoeControlStressViewController.m */; };
 		ABC25ABD1D33627000CD9DA0 /* DPHitoeAddDeviceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = ABC25ABC1D33627000CD9DA0 /* DPHitoeAddDeviceCell.m */; };
 		ABC25AC11D33841900CD9DA0 /* DPHitoePinCodeDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = ABC25AC01D33841900CD9DA0 /* DPHitoePinCodeDialog.m */; };
 		ABC25AC21D33854D00CD9DA0 /* PinCodeDialog.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ABC25ABE1D33805700CD9DA0 /* PinCodeDialog.storyboard */; };
@@ -125,8 +128,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		AB1EC2881D41ACAD005172E7 /* DPHioteControlViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHioteControlViewController.h; sourceTree = "<group>"; };
-		AB1EC2891D41ACAD005172E7 /* DPHioteControlViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHioteControlViewController.m; sourceTree = "<group>"; };
+		AB1EC2881D41ACAD005172E7 /* DPHitoeControlViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHitoeControlViewController.h; sourceTree = "<group>"; };
+		AB1EC2891D41ACAD005172E7 /* DPHitoeControlViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHitoeControlViewController.m; sourceTree = "<group>"; };
 		AB1EC28F1D41CFEE005172E7 /* DPHitoeControlBatteryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHitoeControlBatteryViewController.h; sourceTree = "<group>"; };
 		AB1EC2901D41CFEE005172E7 /* DPHitoeControlBatteryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHitoeControlBatteryViewController.m; sourceTree = "<group>"; };
 		AB1EC2921D41E19A005172E7 /* DPHioteControlDeviceOrientationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHioteControlDeviceOrientationViewController.h; sourceTree = "<group>"; };
@@ -221,6 +224,12 @@
 		AB7E738C1D3F40FB0080AD22 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		AB7E738E1D3F55C20080AD22 /* DPHitoeControlECGViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHitoeControlECGViewController.h; sourceTree = "<group>"; };
 		AB7E738F1D3F55C20080AD22 /* DPHitoeControlECGViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHitoeControlECGViewController.m; sourceTree = "<group>"; };
+		ABA7D0B41D42550D00ED7E31 /* DPHioteControlPoseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHioteControlPoseViewController.h; sourceTree = "<group>"; };
+		ABA7D0B51D42550D00ED7E31 /* DPHioteControlPoseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHioteControlPoseViewController.m; sourceTree = "<group>"; };
+		ABA7D0B71D42EB6E00ED7E31 /* DPHitoeControlWalkViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHitoeControlWalkViewController.h; sourceTree = "<group>"; };
+		ABA7D0B81D42EB6E00ED7E31 /* DPHitoeControlWalkViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHitoeControlWalkViewController.m; sourceTree = "<group>"; };
+		ABA7D0BA1D42F2C500ED7E31 /* DPHitoeControlStressViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHitoeControlStressViewController.h; sourceTree = "<group>"; };
+		ABA7D0BB1D42F2C500ED7E31 /* DPHitoeControlStressViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHitoeControlStressViewController.m; sourceTree = "<group>"; };
 		ABC25ABB1D33627000CD9DA0 /* DPHitoeAddDeviceCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHitoeAddDeviceCell.h; sourceTree = "<group>"; };
 		ABC25ABC1D33627000CD9DA0 /* DPHitoeAddDeviceCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHitoeAddDeviceCell.m; sourceTree = "<group>"; };
 		ABC25ABE1D33805700CD9DA0 /* PinCodeDialog.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = PinCodeDialog.storyboard; sourceTree = "<group>"; };
@@ -362,8 +371,8 @@
 		AB7E73821D3F0DE90080AD22 /* control */ = {
 			isa = PBXGroup;
 			children = (
-				AB1EC2881D41ACAD005172E7 /* DPHioteControlViewController.h */,
-				AB1EC2891D41ACAD005172E7 /* DPHioteControlViewController.m */,
+				AB1EC2881D41ACAD005172E7 /* DPHitoeControlViewController.h */,
+				AB1EC2891D41ACAD005172E7 /* DPHitoeControlViewController.m */,
 				AB7E73881D3F3E710080AD22 /* view */,
 				AB7E73831D3F0E370080AD22 /* DPHitoeControlHealthViewController.h */,
 				AB7E73841D3F0E370080AD22 /* DPHitoeControlHealthViewController.m */,
@@ -373,6 +382,12 @@
 				AB1EC2901D41CFEE005172E7 /* DPHitoeControlBatteryViewController.m */,
 				AB1EC2921D41E19A005172E7 /* DPHioteControlDeviceOrientationViewController.h */,
 				AB1EC2931D41E19B005172E7 /* DPHioteControlDeviceOrientationViewController.m */,
+				ABA7D0B41D42550D00ED7E31 /* DPHioteControlPoseViewController.h */,
+				ABA7D0B51D42550D00ED7E31 /* DPHioteControlPoseViewController.m */,
+				ABA7D0B71D42EB6E00ED7E31 /* DPHitoeControlWalkViewController.h */,
+				ABA7D0B81D42EB6E00ED7E31 /* DPHitoeControlWalkViewController.m */,
+				ABA7D0BA1D42F2C500ED7E31 /* DPHitoeControlStressViewController.h */,
+				ABA7D0BB1D42F2C500ED7E31 /* DPHitoeControlStressViewController.m */,
 			);
 			name = control;
 			path = dConnectDeviceHitoe/Classes/setting/control;
@@ -738,13 +753,16 @@
 				AB7E73901D3F55C20080AD22 /* DPHitoeControlECGViewController.m in Sources */,
 				AB3D3EB21D2CC40D004290BA /* DPHitoeSystemProfile.m in Sources */,
 				AB507EF11D31F82D0014C504 /* DPHitoeTargetDeviceData.m in Sources */,
+				ABA7D0B61D42550D00ED7E31 /* DPHioteControlPoseViewController.m in Sources */,
 				ABE4EBBA1D38FF2B0007B0A2 /* DPHitoePoseEstimationProfile.m in Sources */,
 				ABC25ACA1D34929200CD9DA0 /* DPHitoeStringUtil.m in Sources */,
 				AB507EDC1D3102680014C504 /* DPHitoeDevice.m in Sources */,
+				ABA7D0B91D42EB6E00ED7E31 /* DPHitoeControlWalkViewController.m in Sources */,
+				ABA7D0BC1D42F2C500ED7E31 /* DPHitoeControlStressViewController.m in Sources */,
 				ABF6C3B31D2B7903006B1B91 /* DPHitoeDevicePlugin.m in Sources */,
 				AB1EC2941D41E19B005172E7 /* DPHioteControlDeviceOrientationViewController.m in Sources */,
 				AB1EC2971D41E22F005172E7 /* DPHitoeACCChartView.m in Sources */,
-				AB1EC28A1D41ACAD005172E7 /* DPHioteControlViewController.m in Sources */,
+				AB1EC28A1D41ACAD005172E7 /* DPHitoeControlViewController.m in Sources */,
 				AB507EE51D31CFF90014C504 /* DPHitoeAddDeviceTableViewController.m in Sources */,
 				AB2E14F71D2F79A700564A5E /* DPHitoeDeviceListCell.m in Sources */,
 				AB507EFA1D31FBC60014C504 /* DPHitoeStressEstimationData.m in Sources */,

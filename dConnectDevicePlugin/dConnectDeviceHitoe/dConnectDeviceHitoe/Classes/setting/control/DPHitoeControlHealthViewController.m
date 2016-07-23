@@ -34,6 +34,12 @@
     
     roundCorner(_registerBtn);
     roundCorner(_unregisterBtn);
+    UILabel *title = [[UILabel alloc] initWithFrame:CGRectZero];
+    title.font = [UIFont boldSystemFontOfSize:16.0];
+    title.textColor = [UIColor whiteColor];
+    title.text = @"HeartRate(心拍数)";
+    [title sizeToFit];
+    self.navigationItem.titleView = title;
 
 }
 

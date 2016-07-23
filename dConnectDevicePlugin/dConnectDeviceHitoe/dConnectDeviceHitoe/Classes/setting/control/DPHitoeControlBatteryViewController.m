@@ -31,6 +31,13 @@
     };
     
     roundCorner(_batteryBtn);
+    UILabel *title = [[UILabel alloc] initWithFrame:CGRectZero];
+    title.font = [UIFont boldSystemFontOfSize:16.0];
+    title.textColor = [UIColor whiteColor];
+    title.text = @"Battery(電池残量)";
+    [title sizeToFit];
+    self.navigationItem.titleView = title;
+
 }
 
 - (void)didReceiveMemoryWarning {

@@ -46,7 +46,13 @@ static int const DPHitoeECGChartMaxRange = 4800;
     
     roundCorner(_registerBtn);
     roundCorner(_unregisterBtn);
-    
+    UILabel *title = [[UILabel alloc] initWithFrame:CGRectZero];
+    title.font = [UIFont boldSystemFontOfSize:16.0];
+    title.textColor = [UIColor whiteColor];
+    title.text = @"ECG(心電図)";
+    [title sizeToFit];
+    self.navigationItem.titleView = title;
+
 }
 
 - (void)viewDidAppear:(BOOL)animated {
