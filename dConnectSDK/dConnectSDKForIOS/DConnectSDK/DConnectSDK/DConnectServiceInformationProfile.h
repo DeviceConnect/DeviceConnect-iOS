@@ -21,6 +21,7 @@
  @author NTT DOCOMO
  */
 #import <DConnectSDK/DConnectProfile.h>
+#import <DConnectSDK/DConnectProfileProvider.h>
 #import <UIKit/UIKit.h>
 
 /*!
@@ -210,6 +211,16 @@ typedef NS_ENUM(NSInteger, DConnectServiceInformationProfileConnectState) {
  データソースはretainされない。
  */
 @property (nonatomic, weak) id<DConnectServiceInformationProfileDataSource> dataSource;
+
+
+/*!
+ @brief DConnectProfileProviderオブジェクトを指定して初期化する。
+ 
+ @param[in] provider DConnectProfileProviderインスタンス
+ 
+ @retval DConnectServiceInformationProfileインスタンス。
+ */
+- (instancetype) initWithProvider: (id<DConnectProfileProvider>) provider;
 
 #pragma mark - Setter
 

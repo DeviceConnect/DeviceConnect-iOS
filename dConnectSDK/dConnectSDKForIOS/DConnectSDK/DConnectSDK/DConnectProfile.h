@@ -18,6 +18,7 @@
 #import <DConnectSDK/DConnectProfileProvider.h>
 //#import "DConnectService.h"
 #import <DConnectSDK/DConnectApiEntity.h>
+#import <DConnectSDK/DConnectProfileProvider.h>
 
 /*!
  @class DConnectProfile
@@ -37,7 +38,14 @@
 
 
 
-- (instancetype) init;
+/*!
+ @brief DConnectProfileProviderオブジェクトを指定して初期化する。
+ 
+ @param[in] provider DConnectProfileProviderインスタンス
+ 
+ @retval DConnectProfileインスタンス。
+ */
+- (instancetype) initWithProvider: (id<DConnectProfileProvider>) provider;
 
 /*!
  @brief プロファイルに設定されているDevice Connect API実装のリストを返す.

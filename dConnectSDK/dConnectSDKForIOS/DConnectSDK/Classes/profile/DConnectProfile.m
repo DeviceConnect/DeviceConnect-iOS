@@ -22,10 +22,18 @@
     NSMutableArray *mApis;
 }
 
-
 - (instancetype) init {
     self = [super init];
     if (self) {
+        mApis = [NSMutableArray array];
+    }
+    return self;
+}
+
+- (instancetype) initWithProvider:(id<DConnectProfileProvider>) provider {
+    self = [super init];
+    if (self) {
+        [self setProvider: provider];
         mApis = [NSMutableArray array];
     }
     return self;

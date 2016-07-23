@@ -156,7 +156,6 @@
     NSString *name = [profile profileName];
     if (name) {
         [self.mProfileMap setObject:profile forKey:name];
-        profile.provider = self;
         [self loadApiSpec: name];
     }
 }

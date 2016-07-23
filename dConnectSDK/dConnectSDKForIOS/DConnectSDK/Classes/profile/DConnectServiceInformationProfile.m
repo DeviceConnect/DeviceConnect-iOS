@@ -9,6 +9,7 @@
 
 #import "DConnectServiceInformationProfile.h"
 #import "DConnectProfileProvider.h"
+#import <DConnectSDK/DConnectProfile.h>
 
 NSString *const DConnectServiceInformationProfileName = @"serviceinformation";
 
@@ -30,8 +31,8 @@ NSString *const DConnectServiceInformationProfileParamBLE = @"ble";
 
 @implementation DConnectServiceInformationProfile
 
-- (instancetype) init {
-    self = [super init];
+- (instancetype) initWithProvider: (id<DConnectProfileProvider>) provider {
+    self = [super initWithProvider: provider];
     if (self) {
         __weak id blockSelf = self;
         __weak id<DConnectProfileProvider> blockProvider = self.provider;
