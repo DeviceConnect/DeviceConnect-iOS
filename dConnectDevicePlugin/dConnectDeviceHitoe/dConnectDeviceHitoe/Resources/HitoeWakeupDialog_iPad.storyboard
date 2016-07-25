@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="nMI-yT-PMo">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+    </dependencies>
+    <scenes>
+        <!--Hitoe Wakeup Dialog-->
+        <scene sceneID="zUA-XN-EI6">
+            <objects>
+                <viewController id="nMI-yT-PMo" customClass="DPHitoeWakeupDialog" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="dlw-er-Hak"/>
+                        <viewControllerLayoutGuide type="bottom" id="RRP-HO-IFe"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="ww4-Px-EhG">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CTG-j0-TWa">
+                                <rect key="frame" x="60" y="33" width="480" height="534"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ALH-vO-bKz">
+                                        <rect key="frame" x="39" y="280" width="403" height="99"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="403" id="Ifd-HJ-7Nh"/>
+                                            <constraint firstAttribute="height" constant="99" id="Oir-zR-GWD"/>
+                                        </constraints>
+                                        <string key="text">デバイスの電源は入っていますか？
+Hitoeの電源を2秒押して電源を入れてください。</string>
+                                        <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Hitoeの起動" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="s7e-Z8-9vp">
+                                        <rect key="frame" x="158" y="8" width="165" height="37.5"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="165" id="1YF-fr-p5N"/>
+                                            <constraint firstAttribute="height" constant="37.5" id="ugI-aB-l0q"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" image="hitoe_explain960.png" translatesAutoresizingMaskIntoConstraints="NO" id="YNC-GQ-Lv8">
+                                        <rect key="frame" x="81" y="53" width="319" height="219"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="219" id="8hY-6d-PWG"/>
+                                            <constraint firstAttribute="width" constant="319" id="t0q-s6-n0R"/>
+                                        </constraints>
+                                    </imageView>
+                                    <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="749" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="j2j-5A-Igo">
+                                        <rect key="frame" x="151" y="384" width="68" height="54.5"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="68" id="kxj-Pt-FNQ"/>
+                                            <constraint firstAttribute="height" constant="54.5" id="xG6-nq-BKb"/>
+                                        </constraints>
+                                        <state key="normal" image="check_off.png"/>
+                                        <state key="selected" image="check_on.png"/>
+                                        <connections>
+                                            <action selector="onCheck:" destination="nMI-yT-PMo" eventType="touchUpInside" id="LvQ-sM-WyD"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zH6-dK-DHv">
+                                        <rect key="frame" x="215" y="469" width="51" height="36"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="51" id="SjI-j1-zwO"/>
+                                            <constraint firstAttribute="height" constant="36" id="rPm-PY-Pm2"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                        <state key="normal" title="OK"/>
+                                        <connections>
+                                            <action selector="onClose:" destination="nMI-yT-PMo" eventType="touchUpInside" id="3xT-Az-EmJ"/>
+                                        </connections>
+                                    </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="次回以降省略" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="d0R-nk-c7r">
+                                        <rect key="frame" x="241" y="401" width="150" height="20.5"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="20.5" id="7Kc-m1-umA"/>
+                                            <constraint firstAttribute="width" constant="150" id="Yx4-RQ-O7F"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="23"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" red="0.90929728403141363" green="0.90929728403141363" blue="0.90929728403141363" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="534" id="52J-ht-LKH"/>
+                                    <constraint firstItem="zH6-dK-DHv" firstAttribute="centerX" secondItem="CTG-j0-TWa" secondAttribute="centerX" id="5cL-xT-EOp"/>
+                                    <constraint firstAttribute="width" constant="480" id="8cI-Tb-clM"/>
+                                    <constraint firstItem="zH6-dK-DHv" firstAttribute="top" secondItem="j2j-5A-Igo" secondAttribute="bottom" constant="30.5" id="Npm-9A-hR6"/>
+                                    <constraint firstItem="s7e-Z8-9vp" firstAttribute="centerX" secondItem="CTG-j0-TWa" secondAttribute="centerX" id="TyF-U1-OHw"/>
+                                    <constraint firstItem="s7e-Z8-9vp" firstAttribute="top" secondItem="CTG-j0-TWa" secondAttribute="top" constant="8" id="U4g-va-uFL"/>
+                                    <constraint firstItem="ALH-vO-bKz" firstAttribute="centerX" secondItem="CTG-j0-TWa" secondAttribute="centerX" id="Uj1-8W-oBv"/>
+                                    <constraint firstItem="j2j-5A-Igo" firstAttribute="top" secondItem="ALH-vO-bKz" secondAttribute="bottom" constant="5" id="Xni-ST-Z7w"/>
+                                    <constraint firstItem="d0R-nk-c7r" firstAttribute="leading" secondItem="j2j-5A-Igo" secondAttribute="trailing" constant="22" id="aA1-bV-RiF"/>
+                                    <constraint firstItem="d0R-nk-c7r" firstAttribute="top" secondItem="ALH-vO-bKz" secondAttribute="bottom" constant="22" id="cAh-Y6-t2S"/>
+                                    <constraint firstItem="j2j-5A-Igo" firstAttribute="leading" secondItem="CTG-j0-TWa" secondAttribute="leading" constant="151" id="hdu-CS-Wpa"/>
+                                    <constraint firstItem="YNC-GQ-Lv8" firstAttribute="centerX" secondItem="CTG-j0-TWa" secondAttribute="centerX" id="kMr-e7-nYf"/>
+                                    <constraint firstItem="ALH-vO-bKz" firstAttribute="top" secondItem="YNC-GQ-Lv8" secondAttribute="bottom" constant="8" id="nPh-WW-OJi"/>
+                                    <constraint firstItem="YNC-GQ-Lv8" firstAttribute="top" secondItem="s7e-Z8-9vp" secondAttribute="bottom" constant="7.5" id="nfw-9G-02e"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="CTG-j0-TWa" firstAttribute="centerX" secondItem="ww4-Px-EhG" secondAttribute="centerX" id="cuc-5h-0fe"/>
+                            <constraint firstItem="CTG-j0-TWa" firstAttribute="centerY" secondItem="ww4-Px-EhG" secondAttribute="centerY" id="tVL-Ph-4QY"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="nextAbridgement" destination="j2j-5A-Igo" id="pkr-gM-Am9"/>
+                        <outlet property="wakeupDialogView" destination="CTG-j0-TWa" id="RHm-ve-4ft"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Rwb-2y-uL7" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="330" y="459"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="check_off.png" width="50" height="50"/>
+        <image name="check_on.png" width="50" height="50"/>
+        <image name="hitoe_explain960.png" width="960" height="720"/>
+    </resources>
+</document>

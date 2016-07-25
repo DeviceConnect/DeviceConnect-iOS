@@ -53,15 +53,35 @@
     if (data) {
         float level = (data.batteryLevel + 1) / 4;
         if (level == 1.0) {
-            [_batteryImageView setImage:[UIImage imageWithContentsOfFile:[bundlePath stringByAppendingPathComponent:@"mark_battery01.png"]]];
+            if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+                [_batteryImageView setImage:[UIImage imageWithContentsOfFile:[bundlePath stringByAppendingPathComponent:@"mark_battery01.png"]]];
+            } else {
+                [_batteryImageView setImage:[UIImage imageWithContentsOfFile:[bundlePath stringByAppendingPathComponent:@"mark_battery01_960.png"]]];
+            }
         } else if (level == 0.75) {
-            [_batteryImageView setImage:[UIImage imageWithContentsOfFile:[bundlePath stringByAppendingPathComponent:@"mark_battery02.png"]]];
+            if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+                [_batteryImageView setImage:[UIImage imageWithContentsOfFile:[bundlePath stringByAppendingPathComponent:@"mark_battery02.png"]]];
+            } else {
+                [_batteryImageView setImage:[UIImage imageWithContentsOfFile:[bundlePath stringByAppendingPathComponent:@"mark_battery02_960.png"]]];
+            }
         } else if (level == 0.5) {
-            [_batteryImageView setImage:[UIImage imageWithContentsOfFile:[bundlePath stringByAppendingPathComponent:@"mark_battery03.png"]]];
+            if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+                [_batteryImageView setImage:[UIImage imageWithContentsOfFile:[bundlePath stringByAppendingPathComponent:@"mark_battery03.png"]]];
+            } else {
+                [_batteryImageView setImage:[UIImage imageWithContentsOfFile:[bundlePath stringByAppendingPathComponent:@"mark_battery03_960.png"]]];
+            }
         } else if (level == 0.25) {
-            [_batteryImageView setImage:[UIImage imageWithContentsOfFile:[bundlePath stringByAppendingPathComponent:@"mark_battery04.png"]]];
+            if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+                [_batteryImageView setImage:[UIImage imageWithContentsOfFile:[bundlePath stringByAppendingPathComponent:@"mark_battery04.png"]]];
+            } else {
+                [_batteryImageView setImage:[UIImage imageWithContentsOfFile:[bundlePath stringByAppendingPathComponent:@"mark_battery04_960.png"]]];
+            }
         } else {
-            [_batteryImageView setImage:[UIImage imageWithContentsOfFile:[bundlePath stringByAppendingPathComponent:@"mark_battery05.png"]]];
+            if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+                [_batteryImageView setImage:[UIImage imageWithContentsOfFile:[bundlePath stringByAppendingPathComponent:@"mark_battery05.png"]]];
+            } else {
+                [_batteryImageView setImage:[UIImage imageWithContentsOfFile:[bundlePath stringByAppendingPathComponent:@"mark_battery05_960.png"]]];
+            }
         }
         [_batteryLabel setText:[NSString stringWithFormat:@"%d", (int) (level * 100)]];
     }
@@ -82,6 +102,13 @@
 
 - (void)ipadLayoutWithOrientation:(int)toInterfaceOrientation
 {
+    if ((toInterfaceOrientation == UIDeviceOrientationLandscapeLeft ||
+         toInterfaceOrientation == UIDeviceOrientationLandscapeRight))
+    {
+        _batteryImageTop.constant = 10;
+    } else {
+        _batteryImageTop.constant = 70;
+    }
 }
 
 @end

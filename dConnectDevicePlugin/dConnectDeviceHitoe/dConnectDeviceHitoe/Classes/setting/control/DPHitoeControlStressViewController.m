@@ -138,6 +138,13 @@
 
 - (void)ipadLayoutWithOrientation:(int)toInterfaceOrientation
 {
+    if ((toInterfaceOrientation == UIDeviceOrientationLandscapeLeft ||
+         toInterfaceOrientation == UIDeviceOrientationLandscapeRight))
+    {
+        _stressTop.constant = 10;
+    } else {
+        _stressTop.constant = 95;
+    }
 }
 
 

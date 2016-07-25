@@ -146,6 +146,13 @@ static int const DPHitoeECGChartMaxRange = 4800;
 
 - (void)ipadLayoutWithOrientation:(int)toInterfaceOrientation
 {
+    if ((toInterfaceOrientation == UIDeviceOrientationLandscapeLeft ||
+         toInterfaceOrientation == UIDeviceOrientationLandscapeRight))
+    {
+        _ecgChartTop.constant = 20;
+    } else {
+        _ecgChartTop.constant = 115;
+    }
 }
 
 @end

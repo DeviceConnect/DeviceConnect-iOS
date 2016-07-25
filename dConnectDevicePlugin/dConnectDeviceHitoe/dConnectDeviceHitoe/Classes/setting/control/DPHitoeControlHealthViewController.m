@@ -102,6 +102,14 @@
 
 - (void)ipadLayoutWithOrientation:(int)toInterfaceOrientation
 {
+    if ((toInterfaceOrientation == UIDeviceOrientationLandscapeLeft ||
+         toInterfaceOrientation == UIDeviceOrientationLandscapeRight))
+    {
+        _heartRateImageTop.constant = 10;
+    } else {
+        _heartRateImageTop.constant = 51;
+    }
+
 }
 
 

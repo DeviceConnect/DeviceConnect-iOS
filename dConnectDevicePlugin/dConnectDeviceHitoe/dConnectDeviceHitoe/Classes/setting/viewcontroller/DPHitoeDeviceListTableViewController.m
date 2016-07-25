@@ -30,7 +30,7 @@ static NSString *const DPHitoeOpenBluetooth = @"BluetoothがOFFになってい�
 }
 
 @property (weak, nonatomic) IBOutlet UILabel *descriptionLabel;
-@property (weak, nonatomic) IBOutlet UIButton *settingBtn;
+
 @property (weak, nonatomic) IBOutlet UITableView *registerDeviceList;
 @property (nonatomic) NSTimer *connectedTimeout;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *addDeviceBtn;
@@ -66,11 +66,14 @@ static NSString *const DPHitoeOpenBluetooth = @"BluetoothがOFFになってい�
     longPressRecognizer.allowableMovement = 15;
     longPressRecognizer.minimumPressDuration = 0.6f;
     [self.registerDeviceList addGestureRecognizer: longPressRecognizer];
+
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    [[DPHitoeManager sharedInstance] readHitoeData];
+    if ([[DPHitoeManager sharedInstance].registeredDevices count] == 0) {
+        [[DPHitoeManager sharedInstance] readHitoeData];
+    }
     discoveries = [[DPHitoeManager sharedInstance].registeredDevices mutableCopy];
     for (int i = 0; i < [discoveries count]; i++) {
         DPHitoeDevice *discovery = [discoveries objectAtIndex:i];
@@ -84,7 +87,13 @@ static NSString *const DPHitoeOpenBluetooth = @"BluetoothがOFFになってい�
     NSArray *services = @[];
     NSDictionary *options = @{CBCentralManagerScanOptionAllowDuplicatesKey:@(NO)};
     [cManager scanForPeripheralsWithServices:services options:options];
-    [self enableTableView];
+    //接続状態でボタンの文字が接続解除になってしまうため
+    dispatch_queue_t updateQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    dispatch_async(updateQueue, ^{
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [self enableTableView];
+        });
+    });
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
@@ -114,9 +123,10 @@ static NSString *const DPHitoeOpenBluetooth = @"BluetoothがOFFになってい�
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 80;
+    return 90;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+
     DPHitoeDeviceListCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cellhitoe" forIndexPath:indexPath];
     NSMutableArray *devices = [DPHitoeManager sharedInstance].registeredDevices;
     DPHitoeDevice *device = devices[indexPath.row];
@@ -138,6 +148,7 @@ static NSString *const DPHitoeOpenBluetooth = @"BluetoothがOFFになってい�
     cell.connect.titleLabel.text = btnName;
     cell.connect.backgroundColor = btnColor;
     [cell.connect addTarget:self action:@selector(handleTouchButton:event:) forControlEvents:UIControlEventTouchUpInside];
+    
     return cell;
 }
 
@@ -149,13 +160,13 @@ static NSString *const DPHitoeOpenBluetooth = @"BluetoothがOFFになってい�
     NSString *btnName;
     if (device.isRegisterFlag) {
         btnColor = [self disconnectedBtnColor];
-        btnName = @"解除";
+        btnName = @"接続";
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             [[DPHitoeManager sharedInstance] disconnectForHitoe:device];
         });
     } else {
         btnColor = [self connectedBtnColor];
-        btnName = @"接続";
+        btnName = @"解除";
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             [[DPHitoeManager sharedInstance] connectForHitoe:device];
         });
@@ -164,6 +175,8 @@ static NSString *const DPHitoeOpenBluetooth = @"BluetoothがOFFになってい�
     }
 
     sender.titleLabel.text = btnName;
+    sender.backgroundColor = btnColor;
+
 }
 
 -(IBAction)rowButtonAction:(UILongPressGestureRecognizer *)gestureRecognizer {
@@ -252,7 +265,6 @@ static NSString *const DPHitoeOpenBluetooth = @"BluetoothがOFFになってい�
     BOOL isStatus = (central.state == CBCentralManagerStatePoweredOn);
     if (!isStatus) {
         self.registerDeviceList.hidden = YES;
-        self.settingBtn.hidden = YES;
         self.addDeviceBtn.enabled = NO;
         self.descriptionLabel.text = DPHitoeOpenBluetooth;
     } else {
@@ -310,12 +322,10 @@ static NSString *const DPHitoeOpenBluetooth = @"BluetoothがOFFになってい�
     
     if ([discoveries count] == 0) {
         self.registerDeviceList.hidden = YES;
-        self.settingBtn.hidden = YES;
         self.addDeviceBtn.enabled = YES;
         self.descriptionLabel.text = DPHitoeOpenAddDevice;
     } else {
         self.registerDeviceList.hidden = NO;
-        self.settingBtn.hidden = NO;
         self.addDeviceBtn.enabled = YES;
 
         [self.registerDeviceList reloadData];

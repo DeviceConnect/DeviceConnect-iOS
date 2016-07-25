@@ -1,5 +1,5 @@
 //
-//  DPHioteControlViewController.h
+//  DPHitoeControlViewController.h
 //  dConnectDeviceHitoe
 //
 //  Copyright (c) 2016 NTT DOCOMO, INC.

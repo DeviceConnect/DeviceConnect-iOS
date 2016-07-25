@@ -49,8 +49,14 @@ static void (^okCallback)();
 }
 
 + (void)showHitoeSetShirtDialogWithComplition:(void(^)())completion {
+    NSString *bundleName;
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
+        bundleName = @"HitoeShirtDialog_iPhone";
+    } else {
+        bundleName = @"HitoeShirtDialog_iPad";
+    }
     [super doShowForWindow:[[DPHitoeSetShirt alloc] initWithFrame:[UIScreen mainScreen].bounds]
-            storyboardName:@"HitoeShirtDialog"];
+            storyboardName:bundleName];
     okCallback = completion;
 }
 @end

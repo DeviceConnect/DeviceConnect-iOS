@@ -58,8 +58,15 @@ static BOOL isChecked = NO;
 }
 
 + (void)showHitoeWakeupDialogWithComplition:(void(^)())completion  {
+    NSString *bundleName;
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
+        bundleName = @"HitoeWakeupDialog_iPhone";
+    } else {
+        bundleName = @"HitoeWakeupDialog_iPad";
+    }
+
     [super doShowForWindow:[[DPHitoeWakeup alloc] initWithFrame:[UIScreen mainScreen].bounds]
-            storyboardName:@"HitoeWakeupDialog"];
+            storyboardName:bundleName];
     okCallback = completion;
 }
 

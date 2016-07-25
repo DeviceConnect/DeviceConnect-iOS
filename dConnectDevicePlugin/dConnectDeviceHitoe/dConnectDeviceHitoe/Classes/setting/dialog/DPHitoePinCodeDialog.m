@@ -37,7 +37,7 @@ static void (^pinCodeCallback)(NSString *pinCode);
     };
     
     roundCorner(self.pinCodeDialogView);
-
+    _pinCodeField.keyboardType = UIKeyboardTypeNumberPad;
 }
 -(void)viewWillAppear:(BOOL)animated
 {
@@ -74,8 +74,15 @@ static void (^pinCodeCallback)(NSString *pinCode);
 #pragma mark - public method
 
 +(void)showPinCodeDialogWithCompletion:(void  (^)(NSString *pinCode))completion {
+    NSString *bundleName;
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
+        bundleName = @"PinCodeDialog_iPhone";
+    } else {
+        bundleName = @"PinCodeDialog_iPad";
+    }
+
     [super doShowForWindow:[[DPHitoePinCode alloc] initWithFrame:[UIScreen mainScreen].bounds]
-            storyboardName:@"PinCodeDialog"];
+            storyboardName:bundleName];
     pinCodeCallback = completion;
 }
 
@@ -112,29 +119,79 @@ static void (^pinCodeCallback)(NSString *pinCode);
 
 - (void)ipadLayoutWithOrientation:(int)toInterfaceOrientation
 {
+    if ((toInterfaceOrientation == UIDeviceOrientationLandscapeLeft ||
+         toInterfaceOrientation == UIDeviceOrientationLandscapeRight))
+    {
+        _pinDialogTop.constant = 50;
+    } else {
+        _pinDialogTop.constant = 200;
+    }
 }
 
 #pragma mark - TextField
 
 - (void)keyboardWillBeShown:(NSNotification*)notif
 {
-    if (([[UIApplication sharedApplication] statusBarOrientation] == UIDeviceOrientationLandscapeLeft ||
-         [[UIApplication sharedApplication] statusBarOrientation] == UIDeviceOrientationLandscapeRight))
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+        [self iphonekeyboardWillBeShown:[[UIApplication sharedApplication] statusBarOrientation]];
+    } else {
+        [self ipadkeyboardWillBeShown:[[UIApplication sharedApplication] statusBarOrientation]];
+    }
+}
+
+- (void)iphonekeyboardWillBeShown:(int)toInterfaceOrientation
+{
+    if ((toInterfaceOrientation == UIDeviceOrientationLandscapeLeft ||
+         toInterfaceOrientation == UIDeviceOrientationLandscapeRight))
     {
         _pinDialogTop.constant = 146 - (_pinDialogHeight.constant);
     } else {
         _pinDialogTop.constant = 146 - (_pinDialogHeight.constant / 2);
     }
+    
+}
+
+- (void)ipadkeyboardWillBeShown:(int)toInterfaceOrientation
+{
+    if ((toInterfaceOrientation == UIDeviceOrientationLandscapeLeft ||
+         toInterfaceOrientation == UIDeviceOrientationLandscapeRight))
+    {
+        _pinDialogTop.constant = 65 - (_pinDialogHeight.constant / 3);
+    } else {
+        _pinDialogTop.constant = 200;
+    }
 }
 
 - (void)keyboardWillBeHidden:(NSNotification*)notif
 {
-    if (([[UIApplication sharedApplication] statusBarOrientation] == UIDeviceOrientationLandscapeLeft ||
-         [[UIApplication sharedApplication] statusBarOrientation] == UIDeviceOrientationLandscapeRight))
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+        [self iphonekeyboardWillBeHidden:[[UIApplication sharedApplication] statusBarOrientation]];
+    } else {
+        [self ipadkeyboardWillBeHidden:[[UIApplication sharedApplication] statusBarOrientation]];
+    }
+}
+
+- (void)iphonekeyboardWillBeHidden:(int)toInterfaceOrientation
+{
+    if ((toInterfaceOrientation == UIDeviceOrientationLandscapeLeft ||
+         toInterfaceOrientation == UIDeviceOrientationLandscapeRight))
     {
         _pinDialogTop.constant = 20;
     } else {
         _pinDialogTop.constant = 146;
     }
+    
 }
+
+- (void)ipadkeyboardWillBeHidden:(int)toInterfaceOrientation
+{
+    if ((toInterfaceOrientation == UIDeviceOrientationLandscapeLeft ||
+         toInterfaceOrientation == UIDeviceOrientationLandscapeRight))
+    {
+        _pinDialogTop.constant = 50;
+    } else {
+        _pinDialogTop.constant = 200;
+    }
+}
+
 @end

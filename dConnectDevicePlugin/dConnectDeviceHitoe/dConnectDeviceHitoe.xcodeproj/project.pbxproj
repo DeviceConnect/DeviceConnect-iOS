@@ -48,28 +48,6 @@
 		AB2E14F71D2F79A700564A5E /* DPHitoeDeviceListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AB2E14F61D2F79A700564A5E /* DPHitoeDeviceListCell.m */; };
 		AB3D3E681D2B85E7004290BA /* Hitoe_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ABF6C39F1D2B5202006B1B91 /* Hitoe_iPhone.storyboard */; };
 		AB3D3E6B1D2B890F004290BA /* Hitoe_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AB3D3E691D2B88D6004290BA /* Hitoe_iPad.storyboard */; };
-		AB3D3E851D2B9E9B004290BA /* bg_orientation_graph.png in Resources */ = {isa = PBXBuildFile; fileRef = AB3D3E6E1D2B9E9B004290BA /* bg_orientation_graph.png */; };
-		AB3D3E871D2B9E9B004290BA /* hitoe_explain.png in Resources */ = {isa = PBXBuildFile; fileRef = AB3D3E701D2B9E9B004290BA /* hitoe_explain.png */; };
-		AB3D3E881D2B9E9B004290BA /* hitoe_input_pin.png in Resources */ = {isa = PBXBuildFile; fileRef = AB3D3E711D2B9E9B004290BA /* hitoe_input_pin.png */; };
-		AB3D3E891D2B9E9B004290BA /* hitoe_set.png in Resources */ = {isa = PBXBuildFile; fileRef = AB3D3E721D2B9E9B004290BA /* hitoe_set.png */; };
-		AB3D3E8A1D2B9E9B004290BA /* mark_battery01.png in Resources */ = {isa = PBXBuildFile; fileRef = AB3D3E731D2B9E9B004290BA /* mark_battery01.png */; };
-		AB3D3E8B1D2B9E9B004290BA /* mark_battery02.png in Resources */ = {isa = PBXBuildFile; fileRef = AB3D3E741D2B9E9B004290BA /* mark_battery02.png */; };
-		AB3D3E8C1D2B9E9B004290BA /* mark_battery03.png in Resources */ = {isa = PBXBuildFile; fileRef = AB3D3E751D2B9E9B004290BA /* mark_battery03.png */; };
-		AB3D3E8D1D2B9E9B004290BA /* mark_battery04.png in Resources */ = {isa = PBXBuildFile; fileRef = AB3D3E761D2B9E9B004290BA /* mark_battery04.png */; };
-		AB3D3E8E1D2B9E9B004290BA /* mark_battery05.png in Resources */ = {isa = PBXBuildFile; fileRef = AB3D3E771D2B9E9B004290BA /* mark_battery05.png */; };
-		AB3D3E8F1D2B9E9B004290BA /* mark_heartrate.png in Resources */ = {isa = PBXBuildFile; fileRef = AB3D3E781D2B9E9B004290BA /* mark_heartrate.png */; };
-		AB3D3E901D2B9E9B004290BA /* pose_backward.png in Resources */ = {isa = PBXBuildFile; fileRef = AB3D3E791D2B9E9B004290BA /* pose_backward.png */; };
-		AB3D3E911D2B9E9B004290BA /* pose_default.png in Resources */ = {isa = PBXBuildFile; fileRef = AB3D3E7A1D2B9E9B004290BA /* pose_default.png */; };
-		AB3D3E921D2B9E9B004290BA /* pose_facedown.png in Resources */ = {isa = PBXBuildFile; fileRef = AB3D3E7B1D2B9E9B004290BA /* pose_facedown.png */; };
-		AB3D3E931D2B9E9B004290BA /* pose_faceleft.png in Resources */ = {isa = PBXBuildFile; fileRef = AB3D3E7C1D2B9E9B004290BA /* pose_faceleft.png */; };
-		AB3D3E941D2B9E9B004290BA /* pose_faceright.png in Resources */ = {isa = PBXBuildFile; fileRef = AB3D3E7D1D2B9E9B004290BA /* pose_faceright.png */; };
-		AB3D3E951D2B9E9B004290BA /* pose_faceup.png in Resources */ = {isa = PBXBuildFile; fileRef = AB3D3E7E1D2B9E9B004290BA /* pose_faceup.png */; };
-		AB3D3E961D2B9E9B004290BA /* pose_forward.png in Resources */ = {isa = PBXBuildFile; fileRef = AB3D3E7F1D2B9E9B004290BA /* pose_forward.png */; };
-		AB3D3E971D2B9E9B004290BA /* pose_leftside.png in Resources */ = {isa = PBXBuildFile; fileRef = AB3D3E801D2B9E9B004290BA /* pose_leftside.png */; };
-		AB3D3E981D2B9E9B004290BA /* pose_rightside.png in Resources */ = {isa = PBXBuildFile; fileRef = AB3D3E811D2B9E9B004290BA /* pose_rightside.png */; };
-		AB3D3E991D2B9E9B004290BA /* pose_running.png in Resources */ = {isa = PBXBuildFile; fileRef = AB3D3E821D2B9E9B004290BA /* pose_running.png */; };
-		AB3D3E9A1D2B9E9B004290BA /* pose_standing.png in Resources */ = {isa = PBXBuildFile; fileRef = AB3D3E831D2B9E9B004290BA /* pose_standing.png */; };
-		AB3D3E9B1D2B9E9B004290BA /* pose_walking.png in Resources */ = {isa = PBXBuildFile; fileRef = AB3D3E841D2B9E9B004290BA /* pose_walking.png */; };
 		AB3D3EB21D2CC40D004290BA /* DPHitoeSystemProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = AB3D3EB11D2CC40D004290BA /* DPHitoeSystemProfile.m */; };
 		AB3D3EB61D2CC7F3004290BA /* DCMDevicePluginSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB3D3EB51D2CC7F2004290BA /* DCMDevicePluginSDK.framework */; };
 		AB507ED31D30D5760014C504 /* DPHitoeTable.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = AB507ED11D30D5760014C504 /* DPHitoeTable.xcdatamodeld */; };
@@ -86,27 +64,72 @@
 		AB507EF71D31FB4D0014C504 /* DPHitoePoseEstimationData.m in Sources */ = {isa = PBXBuildFile; fileRef = AB507EF61D31FB4D0014C504 /* DPHitoePoseEstimationData.m */; };
 		AB507EFA1D31FBC60014C504 /* DPHitoeStressEstimationData.m in Sources */ = {isa = PBXBuildFile; fileRef = AB507EF91D31FBC60014C504 /* DPHitoeStressEstimationData.m */; };
 		AB507EFD1D31FDE10014C504 /* DPHitoeWalkStateData.m in Sources */ = {isa = PBXBuildFile; fileRef = AB507EFC1D31FDE10014C504 /* DPHitoeWalkStateData.m */; };
-		AB7E736C1D3DC08C0080AD22 /* HitoeWakeupDialog.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AB7E736B1D3DC0740080AD22 /* HitoeWakeupDialog.storyboard */; };
+		AB7E736C1D3DC08C0080AD22 /* HitoeWakeupDialog_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AB7E736B1D3DC0740080AD22 /* HitoeWakeupDialog_iPhone.storyboard */; };
 		AB7E736F1D3DC4040080AD22 /* DPHitoeWakeupDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = AB7E736E1D3DC4040080AD22 /* DPHitoeWakeupDialog.m */; };
-		AB7E73721D3DC8050080AD22 /* check_off.png in Resources */ = {isa = PBXBuildFile; fileRef = AB7E73701D3DC8050080AD22 /* check_off.png */; };
-		AB7E73731D3DC8050080AD22 /* check_on.png in Resources */ = {isa = PBXBuildFile; fileRef = AB7E73711D3DC8050080AD22 /* check_on.png */; };
 		AB7E73771D3DD7FD0080AD22 /* DPHitoeSetShirtDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = AB7E73761D3DD7FD0080AD22 /* DPHitoeSetShirtDialog.m */; };
-		AB7E73781D3DE4C90080AD22 /* HitoeShirtDialog.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AB7E73741D3DCE9E0080AD22 /* HitoeShirtDialog.storyboard */; };
+		AB7E73781D3DE4C90080AD22 /* HitoeShirtDialog_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AB7E73741D3DCE9E0080AD22 /* HitoeShirtDialog_iPhone.storyboard */; };
 		AB7E737A1D3DE7D10080AD22 /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB7E73791D3DE7D10080AD22 /* CoreBluetooth.framework */; };
 		AB7E737D1D3F07470080AD22 /* DPHitoeDeviceControlViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB7E737C1D3F07470080AD22 /* DPHitoeDeviceControlViewController.m */; };
 		AB7E73851D3F0E370080AD22 /* DPHitoeControlHealthViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB7E73841D3F0E370080AD22 /* DPHitoeControlHealthViewController.m */; };
 		AB7E738B1D3F3EC90080AD22 /* DPHitoeECGChartView.m in Sources */ = {isa = PBXBuildFile; fileRef = AB7E738A1D3F3EC90080AD22 /* DPHitoeECGChartView.m */; };
 		AB7E738D1D3F40FB0080AD22 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB7E738C1D3F40FB0080AD22 /* CoreGraphics.framework */; };
 		AB7E73901D3F55C20080AD22 /* DPHitoeControlECGViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB7E738F1D3F55C20080AD22 /* DPHitoeControlECGViewController.m */; };
-		ABA7D0B61D42550D00ED7E31 /* DPHioteControlPoseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABA7D0B51D42550D00ED7E31 /* DPHioteControlPoseViewController.m */; };
+		ABA7D0B61D42550D00ED7E31 /* DPHitoeControlPoseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABA7D0B51D42550D00ED7E31 /* DPHitoeControlPoseViewController.m */; };
 		ABA7D0B91D42EB6E00ED7E31 /* DPHitoeControlWalkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABA7D0B81D42EB6E00ED7E31 /* DPHitoeControlWalkViewController.m */; };
 		ABA7D0BC1D42F2C500ED7E31 /* DPHitoeControlStressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABA7D0BB1D42F2C500ED7E31 /* DPHitoeControlStressViewController.m */; };
 		ABC25ABD1D33627000CD9DA0 /* DPHitoeAddDeviceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = ABC25ABC1D33627000CD9DA0 /* DPHitoeAddDeviceCell.m */; };
 		ABC25AC11D33841900CD9DA0 /* DPHitoePinCodeDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = ABC25AC01D33841900CD9DA0 /* DPHitoePinCodeDialog.m */; };
-		ABC25AC21D33854D00CD9DA0 /* PinCodeDialog.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ABC25ABE1D33805700CD9DA0 /* PinCodeDialog.storyboard */; };
+		ABC25AC21D33854D00CD9DA0 /* PinCodeDialog_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ABC25ABE1D33805700CD9DA0 /* PinCodeDialog_iPhone.storyboard */; };
 		ABC25ACA1D34929200CD9DA0 /* DPHitoeStringUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = ABC25AC91D34929200CD9DA0 /* DPHitoeStringUtil.m */; };
 		ABC25AF01D37204900CD9DA0 /* DPHitoeMDERFloatConvertUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = ABC25AEF1D37204900CD9DA0 /* DPHitoeMDERFloatConvertUtil.m */; };
 		ABC25AF51D3735FE00CD9DA0 /* DPHitoeRawDataParseUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = ABC25AF41D3735FE00CD9DA0 /* DPHitoeRawDataParseUtil.m */; };
+		ABC4296E1D4438F200668396 /* check_off.png in Resources */ = {isa = PBXBuildFile; fileRef = ABC429571D4438F200668396 /* check_off.png */; };
+		ABC4296F1D4438F200668396 /* check_on.png in Resources */ = {isa = PBXBuildFile; fileRef = ABC429581D4438F200668396 /* check_on.png */; };
+		ABC429701D4438F200668396 /* hitoe_explain.png in Resources */ = {isa = PBXBuildFile; fileRef = ABC429591D4438F200668396 /* hitoe_explain.png */; };
+		ABC429711D4438F200668396 /* hitoe_input_pin.png in Resources */ = {isa = PBXBuildFile; fileRef = ABC4295A1D4438F200668396 /* hitoe_input_pin.png */; };
+		ABC429721D4438F200668396 /* hitoe_set.png in Resources */ = {isa = PBXBuildFile; fileRef = ABC4295B1D4438F200668396 /* hitoe_set.png */; };
+		ABC429731D4438F200668396 /* mark_battery01.png in Resources */ = {isa = PBXBuildFile; fileRef = ABC4295C1D4438F200668396 /* mark_battery01.png */; };
+		ABC429741D4438F200668396 /* mark_battery02.png in Resources */ = {isa = PBXBuildFile; fileRef = ABC4295D1D4438F200668396 /* mark_battery02.png */; };
+		ABC429751D4438F200668396 /* mark_battery03.png in Resources */ = {isa = PBXBuildFile; fileRef = ABC4295E1D4438F200668396 /* mark_battery03.png */; };
+		ABC429761D4438F200668396 /* mark_battery04.png in Resources */ = {isa = PBXBuildFile; fileRef = ABC4295F1D4438F200668396 /* mark_battery04.png */; };
+		ABC429771D4438F200668396 /* mark_battery05.png in Resources */ = {isa = PBXBuildFile; fileRef = ABC429601D4438F200668396 /* mark_battery05.png */; };
+		ABC429781D4438F200668396 /* mark_heartrate.png in Resources */ = {isa = PBXBuildFile; fileRef = ABC429611D4438F200668396 /* mark_heartrate.png */; };
+		ABC429791D4438F200668396 /* pose_backward.png in Resources */ = {isa = PBXBuildFile; fileRef = ABC429621D4438F200668396 /* pose_backward.png */; };
+		ABC4297A1D4438F200668396 /* pose_default.png in Resources */ = {isa = PBXBuildFile; fileRef = ABC429631D4438F200668396 /* pose_default.png */; };
+		ABC4297B1D4438F200668396 /* pose_facedown.png in Resources */ = {isa = PBXBuildFile; fileRef = ABC429641D4438F200668396 /* pose_facedown.png */; };
+		ABC4297C1D4438F200668396 /* pose_faceleft.png in Resources */ = {isa = PBXBuildFile; fileRef = ABC429651D4438F200668396 /* pose_faceleft.png */; };
+		ABC4297D1D4438F200668396 /* pose_faceright.png in Resources */ = {isa = PBXBuildFile; fileRef = ABC429661D4438F200668396 /* pose_faceright.png */; };
+		ABC4297E1D4438F200668396 /* pose_faceup.png in Resources */ = {isa = PBXBuildFile; fileRef = ABC429671D4438F200668396 /* pose_faceup.png */; };
+		ABC4297F1D4438F200668396 /* pose_forward.png in Resources */ = {isa = PBXBuildFile; fileRef = ABC429681D4438F200668396 /* pose_forward.png */; };
+		ABC429801D4438F200668396 /* pose_leftside.png in Resources */ = {isa = PBXBuildFile; fileRef = ABC429691D4438F200668396 /* pose_leftside.png */; };
+		ABC429811D4438F200668396 /* pose_rightside.png in Resources */ = {isa = PBXBuildFile; fileRef = ABC4296A1D4438F200668396 /* pose_rightside.png */; };
+		ABC429821D4438F200668396 /* pose_running.png in Resources */ = {isa = PBXBuildFile; fileRef = ABC4296B1D4438F200668396 /* pose_running.png */; };
+		ABC429831D4438F200668396 /* pose_standing.png in Resources */ = {isa = PBXBuildFile; fileRef = ABC4296C1D4438F200668396 /* pose_standing.png */; };
+		ABC429841D4438F200668396 /* pose_walking.png in Resources */ = {isa = PBXBuildFile; fileRef = ABC4296D1D4438F200668396 /* pose_walking.png */; };
+		ABC4299E1D443B3400668396 /* hitoe_explain960.png in Resources */ = {isa = PBXBuildFile; fileRef = ABC429881D443B3400668396 /* hitoe_explain960.png */; };
+		ABC4299F1D443B3400668396 /* hitoe_input_pin960.png in Resources */ = {isa = PBXBuildFile; fileRef = ABC429891D443B3400668396 /* hitoe_input_pin960.png */; };
+		ABC429A01D443B3400668396 /* hitoe_set960.png in Resources */ = {isa = PBXBuildFile; fileRef = ABC4298A1D443B3400668396 /* hitoe_set960.png */; };
+		ABC429A11D443B3400668396 /* mark_battery01_960.png in Resources */ = {isa = PBXBuildFile; fileRef = ABC4298B1D443B3400668396 /* mark_battery01_960.png */; };
+		ABC429A21D443B3400668396 /* mark_battery02_960.png in Resources */ = {isa = PBXBuildFile; fileRef = ABC4298C1D443B3400668396 /* mark_battery02_960.png */; };
+		ABC429A31D443B3400668396 /* mark_battery03_960.png in Resources */ = {isa = PBXBuildFile; fileRef = ABC4298D1D443B3400668396 /* mark_battery03_960.png */; };
+		ABC429A41D443B3400668396 /* mark_battery04_960.png in Resources */ = {isa = PBXBuildFile; fileRef = ABC4298E1D443B3400668396 /* mark_battery04_960.png */; };
+		ABC429A51D443B3400668396 /* mark_battery05_960.png in Resources */ = {isa = PBXBuildFile; fileRef = ABC4298F1D443B3400668396 /* mark_battery05_960.png */; };
+		ABC429A61D443B3400668396 /* mark_heartrate960.png in Resources */ = {isa = PBXBuildFile; fileRef = ABC429901D443B3400668396 /* mark_heartrate960.png */; };
+		ABC429A71D443B3400668396 /* pose_backward960.png in Resources */ = {isa = PBXBuildFile; fileRef = ABC429911D443B3400668396 /* pose_backward960.png */; };
+		ABC429A81D443B3400668396 /* pose_default960.png in Resources */ = {isa = PBXBuildFile; fileRef = ABC429921D443B3400668396 /* pose_default960.png */; };
+		ABC429A91D443B3400668396 /* pose_facedown960.png in Resources */ = {isa = PBXBuildFile; fileRef = ABC429931D443B3400668396 /* pose_facedown960.png */; };
+		ABC429AA1D443B3400668396 /* pose_faceleft960.png in Resources */ = {isa = PBXBuildFile; fileRef = ABC429941D443B3400668396 /* pose_faceleft960.png */; };
+		ABC429AB1D443B3400668396 /* pose_faceright960.png in Resources */ = {isa = PBXBuildFile; fileRef = ABC429951D443B3400668396 /* pose_faceright960.png */; };
+		ABC429AC1D443B3400668396 /* pose_faceup960.png in Resources */ = {isa = PBXBuildFile; fileRef = ABC429961D443B3400668396 /* pose_faceup960.png */; };
+		ABC429AD1D443B3400668396 /* pose_forward960.png in Resources */ = {isa = PBXBuildFile; fileRef = ABC429971D443B3400668396 /* pose_forward960.png */; };
+		ABC429AE1D443B3400668396 /* pose_leftside960.png in Resources */ = {isa = PBXBuildFile; fileRef = ABC429981D443B3400668396 /* pose_leftside960.png */; };
+		ABC429AF1D443B3400668396 /* pose_rightside960.png in Resources */ = {isa = PBXBuildFile; fileRef = ABC429991D443B3400668396 /* pose_rightside960.png */; };
+		ABC429B01D443B3400668396 /* pose_running960.png in Resources */ = {isa = PBXBuildFile; fileRef = ABC4299A1D443B3400668396 /* pose_running960.png */; };
+		ABC429B11D443B3400668396 /* pose_standing960.png in Resources */ = {isa = PBXBuildFile; fileRef = ABC4299B1D443B3400668396 /* pose_standing960.png */; };
+		ABC429B21D443B3400668396 /* pose_walking960.png in Resources */ = {isa = PBXBuildFile; fileRef = ABC4299C1D443B3400668396 /* pose_walking960.png */; };
+		ABD3345D1D45C97000D05903 /* PinCodeDialog_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ABD3345C1D45BBFA00D05903 /* PinCodeDialog_iPad.storyboard */; };
+		ABD3345E1D45C97000D05903 /* HitoeWakeupDialog_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ABD3345B1D45B84300D05903 /* HitoeWakeupDialog_iPad.storyboard */; };
+		ABD3345F1D45C97000D05903 /* HitoeShirtDialog_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ABD3345A1D45B67F00D05903 /* HitoeShirtDialog_iPad.storyboard */; };
 		ABE4EBBA1D38FF2B0007B0A2 /* DPHitoePoseEstimationProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE4EBB91D38FF2B0007B0A2 /* DPHitoePoseEstimationProfile.m */; };
 		ABE4EBBD1D3906DA0007B0A2 /* DPHitoeStressEstimationProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE4EBBC1D3906DA0007B0A2 /* DPHitoeStressEstimationProfile.m */; };
 		ABE4EBC01D3909850007B0A2 /* DPHitoeWalkStateProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE4EBBF1D3909850007B0A2 /* DPHitoeWalkStateProfile.m */; };
@@ -132,7 +155,7 @@
 		AB1EC2891D41ACAD005172E7 /* DPHitoeControlViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHitoeControlViewController.m; sourceTree = "<group>"; };
 		AB1EC28F1D41CFEE005172E7 /* DPHitoeControlBatteryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHitoeControlBatteryViewController.h; sourceTree = "<group>"; };
 		AB1EC2901D41CFEE005172E7 /* DPHitoeControlBatteryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHitoeControlBatteryViewController.m; sourceTree = "<group>"; };
-		AB1EC2921D41E19A005172E7 /* DPHioteControlDeviceOrientationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHioteControlDeviceOrientationViewController.h; sourceTree = "<group>"; };
+		AB1EC2921D41E19A005172E7 /* DPHitoeControlDeviceOrientationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHitoeControlDeviceOrientationViewController.h; sourceTree = "<group>"; };
 		AB1EC2931D41E19B005172E7 /* DPHioteControlDeviceOrientationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHioteControlDeviceOrientationViewController.m; sourceTree = "<group>"; };
 		AB1EC2951D41E22F005172E7 /* DPHitoeACCChartView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHitoeACCChartView.h; sourceTree = "<group>"; };
 		AB1EC2961D41E22F005172E7 /* DPHitoeACCChartView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHitoeACCChartView.m; sourceTree = "<group>"; };
@@ -157,28 +180,6 @@
 		AB2E14F61D2F79A700564A5E /* DPHitoeDeviceListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHitoeDeviceListCell.m; sourceTree = "<group>"; };
 		AB3D3E671D2B7D44004290BA /* DPHitoeConsts.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DPHitoeConsts.h; sourceTree = "<group>"; };
 		AB3D3E691D2B88D6004290BA /* Hitoe_iPad.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Hitoe_iPad.storyboard; sourceTree = "<group>"; };
-		AB3D3E6E1D2B9E9B004290BA /* bg_orientation_graph.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bg_orientation_graph.png; sourceTree = "<group>"; };
-		AB3D3E701D2B9E9B004290BA /* hitoe_explain.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hitoe_explain.png; sourceTree = "<group>"; };
-		AB3D3E711D2B9E9B004290BA /* hitoe_input_pin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hitoe_input_pin.png; sourceTree = "<group>"; };
-		AB3D3E721D2B9E9B004290BA /* hitoe_set.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hitoe_set.png; sourceTree = "<group>"; };
-		AB3D3E731D2B9E9B004290BA /* mark_battery01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mark_battery01.png; sourceTree = "<group>"; };
-		AB3D3E741D2B9E9B004290BA /* mark_battery02.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mark_battery02.png; sourceTree = "<group>"; };
-		AB3D3E751D2B9E9B004290BA /* mark_battery03.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mark_battery03.png; sourceTree = "<group>"; };
-		AB3D3E761D2B9E9B004290BA /* mark_battery04.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mark_battery04.png; sourceTree = "<group>"; };
-		AB3D3E771D2B9E9B004290BA /* mark_battery05.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mark_battery05.png; sourceTree = "<group>"; };
-		AB3D3E781D2B9E9B004290BA /* mark_heartrate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mark_heartrate.png; sourceTree = "<group>"; };
-		AB3D3E791D2B9E9B004290BA /* pose_backward.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pose_backward.png; sourceTree = "<group>"; };
-		AB3D3E7A1D2B9E9B004290BA /* pose_default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pose_default.png; sourceTree = "<group>"; };
-		AB3D3E7B1D2B9E9B004290BA /* pose_facedown.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pose_facedown.png; sourceTree = "<group>"; };
-		AB3D3E7C1D2B9E9B004290BA /* pose_faceleft.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pose_faceleft.png; sourceTree = "<group>"; };
-		AB3D3E7D1D2B9E9B004290BA /* pose_faceright.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pose_faceright.png; sourceTree = "<group>"; };
-		AB3D3E7E1D2B9E9B004290BA /* pose_faceup.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pose_faceup.png; sourceTree = "<group>"; };
-		AB3D3E7F1D2B9E9B004290BA /* pose_forward.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pose_forward.png; sourceTree = "<group>"; };
-		AB3D3E801D2B9E9B004290BA /* pose_leftside.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pose_leftside.png; sourceTree = "<group>"; };
-		AB3D3E811D2B9E9B004290BA /* pose_rightside.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pose_rightside.png; sourceTree = "<group>"; };
-		AB3D3E821D2B9E9B004290BA /* pose_running.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pose_running.png; sourceTree = "<group>"; };
-		AB3D3E831D2B9E9B004290BA /* pose_standing.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pose_standing.png; sourceTree = "<group>"; };
-		AB3D3E841D2B9E9B004290BA /* pose_walking.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pose_walking.png; sourceTree = "<group>"; };
 		AB3D3EB01D2CC40D004290BA /* DPHitoeSystemProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHitoeSystemProfile.h; sourceTree = "<group>"; };
 		AB3D3EB11D2CC40D004290BA /* DPHitoeSystemProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHitoeSystemProfile.m; sourceTree = "<group>"; };
 		AB3D3EB51D2CC7F2004290BA /* DCMDevicePluginSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DCMDevicePluginSDK.framework; path = ../DCMDevicePluginSDK/bin/DCMDevicePluginSDK.framework; sourceTree = "<group>"; };
@@ -206,12 +207,10 @@
 		AB507EF91D31FBC60014C504 /* DPHitoeStressEstimationData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DPHitoeStressEstimationData.m; path = dConnectDeviceHitoe/Classes/data/DPHitoeStressEstimationData.m; sourceTree = SOURCE_ROOT; };
 		AB507EFB1D31FDE10014C504 /* DPHitoeWalkStateData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DPHitoeWalkStateData.h; path = dConnectDeviceHitoe/Classes/data/DPHitoeWalkStateData.h; sourceTree = SOURCE_ROOT; };
 		AB507EFC1D31FDE10014C504 /* DPHitoeWalkStateData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DPHitoeWalkStateData.m; path = dConnectDeviceHitoe/Classes/data/DPHitoeWalkStateData.m; sourceTree = SOURCE_ROOT; };
-		AB7E736B1D3DC0740080AD22 /* HitoeWakeupDialog.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = HitoeWakeupDialog.storyboard; sourceTree = "<group>"; };
+		AB7E736B1D3DC0740080AD22 /* HitoeWakeupDialog_iPhone.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = HitoeWakeupDialog_iPhone.storyboard; sourceTree = "<group>"; };
 		AB7E736D1D3DC4040080AD22 /* DPHitoeWakeupDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHitoeWakeupDialog.h; sourceTree = "<group>"; };
 		AB7E736E1D3DC4040080AD22 /* DPHitoeWakeupDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHitoeWakeupDialog.m; sourceTree = "<group>"; };
-		AB7E73701D3DC8050080AD22 /* check_off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = check_off.png; sourceTree = "<group>"; };
-		AB7E73711D3DC8050080AD22 /* check_on.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = check_on.png; sourceTree = "<group>"; };
-		AB7E73741D3DCE9E0080AD22 /* HitoeShirtDialog.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = HitoeShirtDialog.storyboard; sourceTree = "<group>"; };
+		AB7E73741D3DCE9E0080AD22 /* HitoeShirtDialog_iPhone.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = HitoeShirtDialog_iPhone.storyboard; sourceTree = "<group>"; };
 		AB7E73751D3DD7FD0080AD22 /* DPHitoeSetShirtDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHitoeSetShirtDialog.h; sourceTree = "<group>"; };
 		AB7E73761D3DD7FD0080AD22 /* DPHitoeSetShirtDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHitoeSetShirtDialog.m; sourceTree = "<group>"; };
 		AB7E73791D3DE7D10080AD22 /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
@@ -224,15 +223,15 @@
 		AB7E738C1D3F40FB0080AD22 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		AB7E738E1D3F55C20080AD22 /* DPHitoeControlECGViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHitoeControlECGViewController.h; sourceTree = "<group>"; };
 		AB7E738F1D3F55C20080AD22 /* DPHitoeControlECGViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHitoeControlECGViewController.m; sourceTree = "<group>"; };
-		ABA7D0B41D42550D00ED7E31 /* DPHioteControlPoseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHioteControlPoseViewController.h; sourceTree = "<group>"; };
-		ABA7D0B51D42550D00ED7E31 /* DPHioteControlPoseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHioteControlPoseViewController.m; sourceTree = "<group>"; };
+		ABA7D0B41D42550D00ED7E31 /* DPHitoeControlPoseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHitoeControlPoseViewController.h; sourceTree = "<group>"; };
+		ABA7D0B51D42550D00ED7E31 /* DPHitoeControlPoseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHitoeControlPoseViewController.m; sourceTree = "<group>"; };
 		ABA7D0B71D42EB6E00ED7E31 /* DPHitoeControlWalkViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHitoeControlWalkViewController.h; sourceTree = "<group>"; };
 		ABA7D0B81D42EB6E00ED7E31 /* DPHitoeControlWalkViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHitoeControlWalkViewController.m; sourceTree = "<group>"; };
 		ABA7D0BA1D42F2C500ED7E31 /* DPHitoeControlStressViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHitoeControlStressViewController.h; sourceTree = "<group>"; };
 		ABA7D0BB1D42F2C500ED7E31 /* DPHitoeControlStressViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHitoeControlStressViewController.m; sourceTree = "<group>"; };
 		ABC25ABB1D33627000CD9DA0 /* DPHitoeAddDeviceCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHitoeAddDeviceCell.h; sourceTree = "<group>"; };
 		ABC25ABC1D33627000CD9DA0 /* DPHitoeAddDeviceCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHitoeAddDeviceCell.m; sourceTree = "<group>"; };
-		ABC25ABE1D33805700CD9DA0 /* PinCodeDialog.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = PinCodeDialog.storyboard; sourceTree = "<group>"; };
+		ABC25ABE1D33805700CD9DA0 /* PinCodeDialog_iPhone.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = PinCodeDialog_iPhone.storyboard; sourceTree = "<group>"; };
 		ABC25ABF1D33841900CD9DA0 /* DPHitoePinCodeDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHitoePinCodeDialog.h; sourceTree = "<group>"; };
 		ABC25AC01D33841900CD9DA0 /* DPHitoePinCodeDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHitoePinCodeDialog.m; sourceTree = "<group>"; };
 		ABC25AC81D34929200CD9DA0 /* DPHitoeStringUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHitoeStringUtil.h; sourceTree = "<group>"; };
@@ -241,6 +240,53 @@
 		ABC25AEF1D37204900CD9DA0 /* DPHitoeMDERFloatConvertUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHitoeMDERFloatConvertUtil.m; sourceTree = "<group>"; };
 		ABC25AF31D3735FE00CD9DA0 /* DPHitoeRawDataParseUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHitoeRawDataParseUtil.h; sourceTree = "<group>"; };
 		ABC25AF41D3735FE00CD9DA0 /* DPHitoeRawDataParseUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHitoeRawDataParseUtil.m; sourceTree = "<group>"; };
+		ABC429571D4438F200668396 /* check_off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = check_off.png; path = dConnectDeviceHitoe/Resources/Drawable_iPhone/check_off.png; sourceTree = SOURCE_ROOT; };
+		ABC429581D4438F200668396 /* check_on.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = check_on.png; path = dConnectDeviceHitoe/Resources/Drawable_iPhone/check_on.png; sourceTree = SOURCE_ROOT; };
+		ABC429591D4438F200668396 /* hitoe_explain.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = hitoe_explain.png; path = dConnectDeviceHitoe/Resources/Drawable_iPhone/hitoe_explain.png; sourceTree = SOURCE_ROOT; };
+		ABC4295A1D4438F200668396 /* hitoe_input_pin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = hitoe_input_pin.png; path = dConnectDeviceHitoe/Resources/Drawable_iPhone/hitoe_input_pin.png; sourceTree = SOURCE_ROOT; };
+		ABC4295B1D4438F200668396 /* hitoe_set.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = hitoe_set.png; path = dConnectDeviceHitoe/Resources/Drawable_iPhone/hitoe_set.png; sourceTree = SOURCE_ROOT; };
+		ABC4295C1D4438F200668396 /* mark_battery01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = mark_battery01.png; path = dConnectDeviceHitoe/Resources/Drawable_iPhone/mark_battery01.png; sourceTree = SOURCE_ROOT; };
+		ABC4295D1D4438F200668396 /* mark_battery02.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = mark_battery02.png; path = dConnectDeviceHitoe/Resources/Drawable_iPhone/mark_battery02.png; sourceTree = SOURCE_ROOT; };
+		ABC4295E1D4438F200668396 /* mark_battery03.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = mark_battery03.png; path = dConnectDeviceHitoe/Resources/Drawable_iPhone/mark_battery03.png; sourceTree = SOURCE_ROOT; };
+		ABC4295F1D4438F200668396 /* mark_battery04.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = mark_battery04.png; path = dConnectDeviceHitoe/Resources/Drawable_iPhone/mark_battery04.png; sourceTree = SOURCE_ROOT; };
+		ABC429601D4438F200668396 /* mark_battery05.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = mark_battery05.png; path = dConnectDeviceHitoe/Resources/Drawable_iPhone/mark_battery05.png; sourceTree = SOURCE_ROOT; };
+		ABC429611D4438F200668396 /* mark_heartrate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = mark_heartrate.png; path = dConnectDeviceHitoe/Resources/Drawable_iPhone/mark_heartrate.png; sourceTree = SOURCE_ROOT; };
+		ABC429621D4438F200668396 /* pose_backward.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = pose_backward.png; path = dConnectDeviceHitoe/Resources/Drawable_iPhone/pose_backward.png; sourceTree = SOURCE_ROOT; };
+		ABC429631D4438F200668396 /* pose_default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = pose_default.png; path = dConnectDeviceHitoe/Resources/Drawable_iPhone/pose_default.png; sourceTree = SOURCE_ROOT; };
+		ABC429641D4438F200668396 /* pose_facedown.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = pose_facedown.png; path = dConnectDeviceHitoe/Resources/Drawable_iPhone/pose_facedown.png; sourceTree = SOURCE_ROOT; };
+		ABC429651D4438F200668396 /* pose_faceleft.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = pose_faceleft.png; path = dConnectDeviceHitoe/Resources/Drawable_iPhone/pose_faceleft.png; sourceTree = SOURCE_ROOT; };
+		ABC429661D4438F200668396 /* pose_faceright.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = pose_faceright.png; path = dConnectDeviceHitoe/Resources/Drawable_iPhone/pose_faceright.png; sourceTree = SOURCE_ROOT; };
+		ABC429671D4438F200668396 /* pose_faceup.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = pose_faceup.png; path = dConnectDeviceHitoe/Resources/Drawable_iPhone/pose_faceup.png; sourceTree = SOURCE_ROOT; };
+		ABC429681D4438F200668396 /* pose_forward.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = pose_forward.png; path = dConnectDeviceHitoe/Resources/Drawable_iPhone/pose_forward.png; sourceTree = SOURCE_ROOT; };
+		ABC429691D4438F200668396 /* pose_leftside.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = pose_leftside.png; path = dConnectDeviceHitoe/Resources/Drawable_iPhone/pose_leftside.png; sourceTree = SOURCE_ROOT; };
+		ABC4296A1D4438F200668396 /* pose_rightside.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = pose_rightside.png; path = dConnectDeviceHitoe/Resources/Drawable_iPhone/pose_rightside.png; sourceTree = SOURCE_ROOT; };
+		ABC4296B1D4438F200668396 /* pose_running.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = pose_running.png; path = dConnectDeviceHitoe/Resources/Drawable_iPhone/pose_running.png; sourceTree = SOURCE_ROOT; };
+		ABC4296C1D4438F200668396 /* pose_standing.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = pose_standing.png; path = dConnectDeviceHitoe/Resources/Drawable_iPhone/pose_standing.png; sourceTree = SOURCE_ROOT; };
+		ABC4296D1D4438F200668396 /* pose_walking.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = pose_walking.png; path = dConnectDeviceHitoe/Resources/Drawable_iPhone/pose_walking.png; sourceTree = SOURCE_ROOT; };
+		ABC429881D443B3400668396 /* hitoe_explain960.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hitoe_explain960.png; sourceTree = "<group>"; };
+		ABC429891D443B3400668396 /* hitoe_input_pin960.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hitoe_input_pin960.png; sourceTree = "<group>"; };
+		ABC4298A1D443B3400668396 /* hitoe_set960.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hitoe_set960.png; sourceTree = "<group>"; };
+		ABC4298B1D443B3400668396 /* mark_battery01_960.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mark_battery01_960.png; sourceTree = "<group>"; };
+		ABC4298C1D443B3400668396 /* mark_battery02_960.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mark_battery02_960.png; sourceTree = "<group>"; };
+		ABC4298D1D443B3400668396 /* mark_battery03_960.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mark_battery03_960.png; sourceTree = "<group>"; };
+		ABC4298E1D443B3400668396 /* mark_battery04_960.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mark_battery04_960.png; sourceTree = "<group>"; };
+		ABC4298F1D443B3400668396 /* mark_battery05_960.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mark_battery05_960.png; sourceTree = "<group>"; };
+		ABC429901D443B3400668396 /* mark_heartrate960.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mark_heartrate960.png; sourceTree = "<group>"; };
+		ABC429911D443B3400668396 /* pose_backward960.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pose_backward960.png; sourceTree = "<group>"; };
+		ABC429921D443B3400668396 /* pose_default960.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pose_default960.png; sourceTree = "<group>"; };
+		ABC429931D443B3400668396 /* pose_facedown960.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pose_facedown960.png; sourceTree = "<group>"; };
+		ABC429941D443B3400668396 /* pose_faceleft960.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pose_faceleft960.png; sourceTree = "<group>"; };
+		ABC429951D443B3400668396 /* pose_faceright960.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pose_faceright960.png; sourceTree = "<group>"; };
+		ABC429961D443B3400668396 /* pose_faceup960.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pose_faceup960.png; sourceTree = "<group>"; };
+		ABC429971D443B3400668396 /* pose_forward960.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pose_forward960.png; sourceTree = "<group>"; };
+		ABC429981D443B3400668396 /* pose_leftside960.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pose_leftside960.png; sourceTree = "<group>"; };
+		ABC429991D443B3400668396 /* pose_rightside960.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pose_rightside960.png; sourceTree = "<group>"; };
+		ABC4299A1D443B3400668396 /* pose_running960.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pose_running960.png; sourceTree = "<group>"; };
+		ABC4299B1D443B3400668396 /* pose_standing960.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pose_standing960.png; sourceTree = "<group>"; };
+		ABC4299C1D443B3400668396 /* pose_walking960.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pose_walking960.png; sourceTree = "<group>"; };
+		ABD3345A1D45B67F00D05903 /* HitoeShirtDialog_iPad.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = HitoeShirtDialog_iPad.storyboard; sourceTree = "<group>"; };
+		ABD3345B1D45B84300D05903 /* HitoeWakeupDialog_iPad.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = HitoeWakeupDialog_iPad.storyboard; sourceTree = "<group>"; };
+		ABD3345C1D45BBFA00D05903 /* PinCodeDialog_iPad.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = PinCodeDialog_iPad.storyboard; sourceTree = "<group>"; };
 		ABE4EBB81D38FF2B0007B0A2 /* DPHitoePoseEstimationProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DPHitoePoseEstimationProfile.h; path = dConnectDeviceHitoe/Classes/profile/DPHitoePoseEstimationProfile.h; sourceTree = SOURCE_ROOT; };
 		ABE4EBB91D38FF2B0007B0A2 /* DPHitoePoseEstimationProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DPHitoePoseEstimationProfile.m; path = dConnectDeviceHitoe/Classes/profile/DPHitoePoseEstimationProfile.m; sourceTree = SOURCE_ROOT; };
 		ABE4EBBB1D3906DA0007B0A2 /* DPHitoeStressEstimationProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DPHitoeStressEstimationProfile.h; path = dConnectDeviceHitoe/Classes/profile/DPHitoeStressEstimationProfile.h; sourceTree = SOURCE_ROOT; };
@@ -312,34 +358,34 @@
 			path = dConnectDeviceHitoe/Classes/setting/cell;
 			sourceTree = SOURCE_ROOT;
 		};
-		AB3D3E6D1D2B9E5C004290BA /* Drawable */ = {
+		AB3D3E6D1D2B9E5C004290BA /* Drawable_iPhone */ = {
 			isa = PBXGroup;
 			children = (
-				AB7E73701D3DC8050080AD22 /* check_off.png */,
-				AB7E73711D3DC8050080AD22 /* check_on.png */,
-				AB3D3E6E1D2B9E9B004290BA /* bg_orientation_graph.png */,
-				AB3D3E701D2B9E9B004290BA /* hitoe_explain.png */,
-				AB3D3E711D2B9E9B004290BA /* hitoe_input_pin.png */,
-				AB3D3E721D2B9E9B004290BA /* hitoe_set.png */,
-				AB3D3E731D2B9E9B004290BA /* mark_battery01.png */,
-				AB3D3E741D2B9E9B004290BA /* mark_battery02.png */,
-				AB3D3E751D2B9E9B004290BA /* mark_battery03.png */,
-				AB3D3E761D2B9E9B004290BA /* mark_battery04.png */,
-				AB3D3E771D2B9E9B004290BA /* mark_battery05.png */,
-				AB3D3E781D2B9E9B004290BA /* mark_heartrate.png */,
-				AB3D3E791D2B9E9B004290BA /* pose_backward.png */,
-				AB3D3E7A1D2B9E9B004290BA /* pose_default.png */,
-				AB3D3E7B1D2B9E9B004290BA /* pose_facedown.png */,
-				AB3D3E7C1D2B9E9B004290BA /* pose_faceleft.png */,
-				AB3D3E7D1D2B9E9B004290BA /* pose_faceright.png */,
-				AB3D3E7E1D2B9E9B004290BA /* pose_faceup.png */,
-				AB3D3E7F1D2B9E9B004290BA /* pose_forward.png */,
-				AB3D3E801D2B9E9B004290BA /* pose_leftside.png */,
-				AB3D3E811D2B9E9B004290BA /* pose_rightside.png */,
-				AB3D3E821D2B9E9B004290BA /* pose_running.png */,
-				AB3D3E831D2B9E9B004290BA /* pose_standing.png */,
-				AB3D3E841D2B9E9B004290BA /* pose_walking.png */,
+				ABC429571D4438F200668396 /* check_off.png */,
+				ABC429581D4438F200668396 /* check_on.png */,
+				ABC429591D4438F200668396 /* hitoe_explain.png */,
+				ABC4295A1D4438F200668396 /* hitoe_input_pin.png */,
+				ABC4295B1D4438F200668396 /* hitoe_set.png */,
+				ABC4295C1D4438F200668396 /* mark_battery01.png */,
+				ABC4295D1D4438F200668396 /* mark_battery02.png */,
+				ABC4295E1D4438F200668396 /* mark_battery03.png */,
+				ABC4295F1D4438F200668396 /* mark_battery04.png */,
+				ABC429601D4438F200668396 /* mark_battery05.png */,
+				ABC429611D4438F200668396 /* mark_heartrate.png */,
+				ABC429621D4438F200668396 /* pose_backward.png */,
+				ABC429631D4438F200668396 /* pose_default.png */,
+				ABC429641D4438F200668396 /* pose_facedown.png */,
+				ABC429651D4438F200668396 /* pose_faceleft.png */,
+				ABC429661D4438F200668396 /* pose_faceright.png */,
+				ABC429671D4438F200668396 /* pose_faceup.png */,
+				ABC429681D4438F200668396 /* pose_forward.png */,
+				ABC429691D4438F200668396 /* pose_leftside.png */,
+				ABC4296A1D4438F200668396 /* pose_rightside.png */,
+				ABC4296B1D4438F200668396 /* pose_running.png */,
+				ABC4296C1D4438F200668396 /* pose_standing.png */,
+				ABC4296D1D4438F200668396 /* pose_walking.png */,
 			);
+			name = Drawable_iPhone;
 			path = Drawable;
 			sourceTree = "<group>";
 		};
@@ -380,10 +426,10 @@
 				AB7E738F1D3F55C20080AD22 /* DPHitoeControlECGViewController.m */,
 				AB1EC28F1D41CFEE005172E7 /* DPHitoeControlBatteryViewController.h */,
 				AB1EC2901D41CFEE005172E7 /* DPHitoeControlBatteryViewController.m */,
-				AB1EC2921D41E19A005172E7 /* DPHioteControlDeviceOrientationViewController.h */,
+				AB1EC2921D41E19A005172E7 /* DPHitoeControlDeviceOrientationViewController.h */,
 				AB1EC2931D41E19B005172E7 /* DPHioteControlDeviceOrientationViewController.m */,
-				ABA7D0B41D42550D00ED7E31 /* DPHioteControlPoseViewController.h */,
-				ABA7D0B51D42550D00ED7E31 /* DPHioteControlPoseViewController.m */,
+				ABA7D0B41D42550D00ED7E31 /* DPHitoeControlPoseViewController.h */,
+				ABA7D0B51D42550D00ED7E31 /* DPHitoeControlPoseViewController.m */,
 				ABA7D0B71D42EB6E00ED7E31 /* DPHitoeControlWalkViewController.h */,
 				ABA7D0B81D42EB6E00ED7E31 /* DPHitoeControlWalkViewController.m */,
 				ABA7D0BA1D42F2C500ED7E31 /* DPHitoeControlStressViewController.h */,
@@ -415,6 +461,34 @@
 				ABC25AF41D3735FE00CD9DA0 /* DPHitoeRawDataParseUtil.m */,
 			);
 			path = util;
+			sourceTree = "<group>";
+		};
+		ABC429561D4438A200668396 /* Drawable_iPad */ = {
+			isa = PBXGroup;
+			children = (
+				ABC429881D443B3400668396 /* hitoe_explain960.png */,
+				ABC429891D443B3400668396 /* hitoe_input_pin960.png */,
+				ABC4298A1D443B3400668396 /* hitoe_set960.png */,
+				ABC4298B1D443B3400668396 /* mark_battery01_960.png */,
+				ABC4298C1D443B3400668396 /* mark_battery02_960.png */,
+				ABC4298D1D443B3400668396 /* mark_battery03_960.png */,
+				ABC4298E1D443B3400668396 /* mark_battery04_960.png */,
+				ABC4298F1D443B3400668396 /* mark_battery05_960.png */,
+				ABC429901D443B3400668396 /* mark_heartrate960.png */,
+				ABC429911D443B3400668396 /* pose_backward960.png */,
+				ABC429921D443B3400668396 /* pose_default960.png */,
+				ABC429931D443B3400668396 /* pose_facedown960.png */,
+				ABC429941D443B3400668396 /* pose_faceleft960.png */,
+				ABC429951D443B3400668396 /* pose_faceright960.png */,
+				ABC429961D443B3400668396 /* pose_faceup960.png */,
+				ABC429971D443B3400668396 /* pose_forward960.png */,
+				ABC429981D443B3400668396 /* pose_leftside960.png */,
+				ABC429991D443B3400668396 /* pose_rightside960.png */,
+				ABC4299A1D443B3400668396 /* pose_running960.png */,
+				ABC4299B1D443B3400668396 /* pose_standing960.png */,
+				ABC4299C1D443B3400668396 /* pose_walking960.png */,
+			);
+			path = Drawable_iPad;
 			sourceTree = "<group>";
 		};
 		ABF6C3631D2B4A0D006B1B91 = {
@@ -463,14 +537,18 @@
 		ABF6C37B1D2B4B7B006B1B91 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				AB3D3E6D1D2B9E5C004290BA /* Drawable */,
+				ABC429561D4438A200668396 /* Drawable_iPad */,
+				AB3D3E6D1D2B9E5C004290BA /* Drawable_iPhone */,
 				ABF6C39F1D2B5202006B1B91 /* Hitoe_iPhone.storyboard */,
 				AB3D3E691D2B88D6004290BA /* Hitoe_iPad.storyboard */,
 				AB2E14EF1D2F656700564A5E /* ProgressDialog.storyboard */,
 				AB507ED11D30D5760014C504 /* DPHitoeTable.xcdatamodeld */,
-				ABC25ABE1D33805700CD9DA0 /* PinCodeDialog.storyboard */,
-				AB7E736B1D3DC0740080AD22 /* HitoeWakeupDialog.storyboard */,
-				AB7E73741D3DCE9E0080AD22 /* HitoeShirtDialog.storyboard */,
+				ABC25ABE1D33805700CD9DA0 /* PinCodeDialog_iPhone.storyboard */,
+				ABD3345C1D45BBFA00D05903 /* PinCodeDialog_iPad.storyboard */,
+				AB7E736B1D3DC0740080AD22 /* HitoeWakeupDialog_iPhone.storyboard */,
+				ABD3345B1D45B84300D05903 /* HitoeWakeupDialog_iPad.storyboard */,
+				AB7E73741D3DCE9E0080AD22 /* HitoeShirtDialog_iPhone.storyboard */,
+				ABD3345A1D45B67F00D05903 /* HitoeShirtDialog_iPad.storyboard */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -652,37 +730,60 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AB7E73781D3DE4C90080AD22 /* HitoeShirtDialog.storyboard in Resources */,
-				AB7E736C1D3DC08C0080AD22 /* HitoeWakeupDialog.storyboard in Resources */,
-				ABC25AC21D33854D00CD9DA0 /* PinCodeDialog.storyboard in Resources */,
+				ABD3345D1D45C97000D05903 /* PinCodeDialog_iPad.storyboard in Resources */,
+				ABD3345E1D45C97000D05903 /* HitoeWakeupDialog_iPad.storyboard in Resources */,
+				ABD3345F1D45C97000D05903 /* HitoeShirtDialog_iPad.storyboard in Resources */,
+				ABC429731D4438F200668396 /* mark_battery01.png in Resources */,
+				ABC4296E1D4438F200668396 /* check_off.png in Resources */,
+				ABC429A91D443B3400668396 /* pose_facedown960.png in Resources */,
+				ABC429821D4438F200668396 /* pose_running.png in Resources */,
+				ABC429A11D443B3400668396 /* mark_battery01_960.png in Resources */,
+				AB7E73781D3DE4C90080AD22 /* HitoeShirtDialog_iPhone.storyboard in Resources */,
+				ABC429811D4438F200668396 /* pose_rightside.png in Resources */,
+				ABC429AC1D443B3400668396 /* pose_faceup960.png in Resources */,
+				ABC4296F1D4438F200668396 /* check_on.png in Resources */,
+				ABC429A41D443B3400668396 /* mark_battery04_960.png in Resources */,
+				ABC429A61D443B3400668396 /* mark_heartrate960.png in Resources */,
+				ABC429AE1D443B3400668396 /* pose_leftside960.png in Resources */,
+				ABC4297E1D4438F200668396 /* pose_faceup.png in Resources */,
+				ABC4299F1D443B3400668396 /* hitoe_input_pin960.png in Resources */,
+				ABC429AF1D443B3400668396 /* pose_rightside960.png in Resources */,
+				ABC429B21D443B3400668396 /* pose_walking960.png in Resources */,
+				ABC429791D4438F200668396 /* pose_backward.png in Resources */,
+				ABC4297D1D4438F200668396 /* pose_faceright.png in Resources */,
+				ABC429B01D443B3400668396 /* pose_running960.png in Resources */,
+				ABC429A71D443B3400668396 /* pose_backward960.png in Resources */,
+				ABC429831D4438F200668396 /* pose_standing.png in Resources */,
+				ABC429A31D443B3400668396 /* mark_battery03_960.png in Resources */,
+				AB7E736C1D3DC08C0080AD22 /* HitoeWakeupDialog_iPhone.storyboard in Resources */,
+				ABC429A51D443B3400668396 /* mark_battery05_960.png in Resources */,
+				ABC4297C1D4438F200668396 /* pose_faceleft.png in Resources */,
+				ABC429841D4438F200668396 /* pose_walking.png in Resources */,
+				ABC25AC21D33854D00CD9DA0 /* PinCodeDialog_iPhone.storyboard in Resources */,
+				ABC4299E1D443B3400668396 /* hitoe_explain960.png in Resources */,
+				ABC4297B1D4438F200668396 /* pose_facedown.png in Resources */,
+				ABC429AB1D443B3400668396 /* pose_faceright960.png in Resources */,
+				ABC429751D4438F200668396 /* mark_battery03.png in Resources */,
 				AB507ED41D30D6500014C504 /* DPHitoeTable.xcdatamodeld in Resources */,
+				ABC429B11D443B3400668396 /* pose_standing960.png in Resources */,
+				ABC429771D4438F200668396 /* mark_battery05.png in Resources */,
+				ABC429A21D443B3400668396 /* mark_battery02_960.png in Resources */,
+				ABC429781D4438F200668396 /* mark_heartrate.png in Resources */,
+				ABC429AA1D443B3400668396 /* pose_faceleft960.png in Resources */,
 				AB2E14F31D2F6D2400564A5E /* ProgressDialog.storyboard in Resources */,
-				AB3D3E951D2B9E9B004290BA /* pose_faceup.png in Resources */,
-				AB3D3E8E1D2B9E9B004290BA /* mark_battery05.png in Resources */,
-				AB3D3E851D2B9E9B004290BA /* bg_orientation_graph.png in Resources */,
-				AB3D3E961D2B9E9B004290BA /* pose_forward.png in Resources */,
-				AB3D3E8D1D2B9E9B004290BA /* mark_battery04.png in Resources */,
-				AB3D3E8C1D2B9E9B004290BA /* mark_battery03.png in Resources */,
-				AB3D3E981D2B9E9B004290BA /* pose_rightside.png in Resources */,
-				AB3D3E901D2B9E9B004290BA /* pose_backward.png in Resources */,
-				AB3D3E931D2B9E9B004290BA /* pose_faceleft.png in Resources */,
-				AB3D3E941D2B9E9B004290BA /* pose_faceright.png in Resources */,
-				AB3D3E971D2B9E9B004290BA /* pose_leftside.png in Resources */,
-				AB3D3E881D2B9E9B004290BA /* hitoe_input_pin.png in Resources */,
-				AB3D3E891D2B9E9B004290BA /* hitoe_set.png in Resources */,
-				AB7E73721D3DC8050080AD22 /* check_off.png in Resources */,
+				ABC429741D4438F200668396 /* mark_battery02.png in Resources */,
 				AB3D3E6B1D2B890F004290BA /* Hitoe_iPad.storyboard in Resources */,
-				AB3D3E921D2B9E9B004290BA /* pose_facedown.png in Resources */,
-				AB3D3E8B1D2B9E9B004290BA /* mark_battery02.png in Resources */,
-				AB3D3E991D2B9E9B004290BA /* pose_running.png in Resources */,
-				AB7E73731D3DC8050080AD22 /* check_on.png in Resources */,
+				ABC429AD1D443B3400668396 /* pose_forward960.png in Resources */,
+				ABC4297A1D4438F200668396 /* pose_default.png in Resources */,
+				ABC429A01D443B3400668396 /* hitoe_set960.png in Resources */,
+				ABC429A81D443B3400668396 /* pose_default960.png in Resources */,
+				ABC429721D4438F200668396 /* hitoe_set.png in Resources */,
 				AB3D3E681D2B85E7004290BA /* Hitoe_iPhone.storyboard in Resources */,
-				AB3D3E9A1D2B9E9B004290BA /* pose_standing.png in Resources */,
-				AB3D3E8F1D2B9E9B004290BA /* mark_heartrate.png in Resources */,
-				AB3D3E9B1D2B9E9B004290BA /* pose_walking.png in Resources */,
-				AB3D3E871D2B9E9B004290BA /* hitoe_explain.png in Resources */,
-				AB3D3E911D2B9E9B004290BA /* pose_default.png in Resources */,
-				AB3D3E8A1D2B9E9B004290BA /* mark_battery01.png in Resources */,
+				ABC429701D4438F200668396 /* hitoe_explain.png in Resources */,
+				ABC429761D4438F200668396 /* mark_battery04.png in Resources */,
+				ABC429711D4438F200668396 /* hitoe_input_pin.png in Resources */,
+				ABC429801D4438F200668396 /* pose_leftside.png in Resources */,
+				ABC4297F1D4438F200668396 /* pose_forward.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -753,7 +854,7 @@
 				AB7E73901D3F55C20080AD22 /* DPHitoeControlECGViewController.m in Sources */,
 				AB3D3EB21D2CC40D004290BA /* DPHitoeSystemProfile.m in Sources */,
 				AB507EF11D31F82D0014C504 /* DPHitoeTargetDeviceData.m in Sources */,
-				ABA7D0B61D42550D00ED7E31 /* DPHioteControlPoseViewController.m in Sources */,
+				ABA7D0B61D42550D00ED7E31 /* DPHitoeControlPoseViewController.m in Sources */,
 				ABE4EBBA1D38FF2B0007B0A2 /* DPHitoePoseEstimationProfile.m in Sources */,
 				ABC25ACA1D34929200CD9DA0 /* DPHitoeStringUtil.m in Sources */,
 				AB507EDC1D3102680014C504 /* DPHitoeDevice.m in Sources */,

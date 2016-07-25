@@ -22,7 +22,6 @@ static int const DPHitoeRetryCount = 30;
     BOOL isScanning;
     BOOL isCallbackRunning;
     int retryCount;
-    dispatch_semaphore_t _semaphore;
 
 }
 @property (nonatomic, strong) NSMutableDictionary *hrData;
@@ -68,7 +67,6 @@ static int const DPHitoeRetryCount = 30;
         api = [HitoeSdkAPI sharedManager];
         [api setAPIDelegate:self];
         _registeredDevices = [NSMutableArray array];
-        _semaphore = dispatch_semaphore_create(1);
 
     }
     

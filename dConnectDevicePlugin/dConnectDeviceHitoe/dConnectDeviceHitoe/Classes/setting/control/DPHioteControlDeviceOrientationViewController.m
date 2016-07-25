@@ -1,5 +1,5 @@
 //
-//  DPHioteControlDeviceOrientationViewController.m
+//  DPHitoeControlDeviceOrientationViewController.m
 //  dConnectDeviceHitoe
 //
 //  Copyright (c) 2016 NTT DOCOMO, INC.
@@ -7,7 +7,7 @@
 //  http://opensource.org/licenses/mit-license.php
 //
 
-#import "DPHioteControlDeviceOrientationViewController.h"
+#import "DPHitoeControlDeviceOrientationViewController.h"
 #import "DPHitoeACCChartView.h"
 #import "DPHitoeManager.h"
 #import "DPHitoeAccelerationData.h"
@@ -16,7 +16,7 @@ static int const DPHitoeACCInterval = 120;
 
 static int const DPHitoeACCMaxRange = 4800;
 
-@interface DPHioteControlDeviceOrientationViewController () {
+@interface DPHitoeControlDeviceOrientationViewController () {
     NSMutableArray *accList;
     long long minX;
     long long maxX;
@@ -29,7 +29,7 @@ static int const DPHitoeACCMaxRange = 4800;
 
 @end
 
-@implementation DPHioteControlDeviceOrientationViewController
+@implementation DPHitoeControlDeviceOrientationViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -143,6 +143,13 @@ static int const DPHitoeACCMaxRange = 4800;
 
 - (void)ipadLayoutWithOrientation:(int)toInterfaceOrientation
 {
+    if ((toInterfaceOrientation == UIDeviceOrientationLandscapeLeft ||
+         toInterfaceOrientation == UIDeviceOrientationLandscapeRight))
+    {
+        _chartViewTop.constant = 20;
+    } else {
+        _chartViewTop.constant = 114;
+    }
 }
 
 

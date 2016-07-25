@@ -237,15 +237,16 @@ Hitoeを追加してください。</string>
             </objects>
             <point key="canvasLocation" x="1186" y="1835"/>
         </scene>
-        <!--Hiote Control Pose View Controller-->
+        <!--Hitoe Control Pose View Controller-->
         <scene sceneID="v9G-e2-SpV">
             <objects>
-                <viewController id="cjQ-Uq-5sd" customClass="DPHioteControlPoseViewController" sceneMemberID="viewController">
+                <viewController id="cjQ-Uq-5sd" customClass="DPHitoeControlPoseViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="jBE-68-iV4"/>
                         <viewControllerLayoutGuide type="bottom" id="dC0-U1-wlt"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="TAq-Cd-QIU">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="64E-JY-FmB">
@@ -679,7 +680,7 @@ Hitoeを追加してください。</string>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="l69-OG-MMi" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="453" y="1835"/>
+            <point key="canvasLocation" x="513" y="1835"/>
         </scene>
         <!--デバイス操作画面-->
         <scene sceneID="IIR-ob-4VK">
@@ -732,6 +733,7 @@ Hitoeを追加してください。</string>
                         <viewControllerLayoutGuide type="bottom" id="7jH-t0-JRb"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="cpA-sD-NQ1">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AZq-IT-07D">
@@ -745,7 +747,7 @@ Hitoeを追加してください。</string>
                                             <constraint firstAttribute="width" secondItem="JIF-w2-uU7" secondAttribute="height" multiplier="47:42" id="aIJ-xT-7DD"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                         <variation key="default">
                                             <mask key="constraints">
@@ -770,7 +772,7 @@ Hitoeを追加してください。</string>
                                             <constraint firstAttribute="width" constant="80" id="e5A-e2-YwH"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                         <variation key="default">
                                             <mask key="constraints">
@@ -795,7 +797,7 @@ Hitoeを追加してください。</string>
                                             <constraint firstAttribute="width" secondItem="1Cx-NC-dnM" secondAttribute="height" multiplier="40:21" id="yu2-HV-T80"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                         <variation key="default">
                                             <mask key="constraints">
@@ -820,7 +822,7 @@ Hitoeを追加してください。</string>
                                             <constraint firstAttribute="height" constant="42" id="g2i-GL-aEg"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                         <variation key="default">
                                             <mask key="constraints">
@@ -845,7 +847,7 @@ Hitoeを追加してください。</string>
                                             <constraint firstAttribute="width" secondItem="6dh-gy-But" secondAttribute="height" multiplier="20:7" id="n7k-6u-4vr"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                         <variation key="default">
                                             <mask key="constraints">
@@ -870,7 +872,7 @@ Hitoeを追加してください。</string>
                                             <constraint firstAttribute="height" constant="42" id="eyu-AS-rYY"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                         <variation key="default">
                                             <mask key="constraints">
@@ -894,7 +896,7 @@ Hitoeを追加してください。</string>
                                             <constraint firstAttribute="height" constant="42" id="D0j-kw-aMa"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                         <variation key="default">
                                             <mask key="constraints">
@@ -916,7 +918,7 @@ Hitoeを追加してください。</string>
                                             <constraint firstAttribute="width" constant="96" id="fiN-Vi-nDm"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                         <variation key="default">
                                             <mask key="constraints">
@@ -938,7 +940,7 @@ Hitoeを追加してください。</string>
                                             <constraint firstAttribute="width" constant="96" id="JGn-CX-INB"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                         <variation key="default">
                                             <mask key="constraints">
@@ -960,7 +962,7 @@ Hitoeを追加してください。</string>
                                             <constraint firstAttribute="width" constant="96" id="o9t-M2-8JX"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                         <variation key="default">
                                             <mask key="constraints">
@@ -975,7 +977,7 @@ Hitoeを追加してください。</string>
                                             </mask>
                                         </variation>
                                     </label>
-                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ePS-vz-W9g">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ePS-vz-W9g">
                                         <rect key="frame" x="171" y="389" width="68" height="37"/>
                                         <color key="backgroundColor" red="0.1137254902" green="0.83529411760000005" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
@@ -999,7 +1001,7 @@ Hitoeを追加してください。</string>
                                             <action selector="registerWalk:" destination="RwO-3Z-nfl" eventType="touchUpInside" id="ESw-hs-1Ka"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hgX-J1-t5e">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hgX-J1-t5e">
                                         <rect key="frame" x="362" y="389" width="68" height="37"/>
                                         <color key="backgroundColor" red="0.1137254902" green="0.83529411760000005" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
@@ -1081,21 +1083,10 @@ Hitoeを追加してください。</string>
                                     <mask key="constraints">
                                         <exclude reference="HrQ-M7-m5A"/>
                                         <exclude reference="p0A-C6-wT8"/>
-                                        <exclude reference="6c9-9Z-mQs"/>
-                                        <exclude reference="iFU-Wv-R9Z"/>
-                                        <exclude reference="rGY-JM-Hgt"/>
-                                        <exclude reference="Aek-vB-00Z"/>
-                                        <exclude reference="bgH-X3-jNz"/>
-                                        <exclude reference="boD-Rj-g1g"/>
-                                        <exclude reference="jKF-oa-ikX"/>
                                         <exclude reference="PHS-Wf-2zt"/>
                                         <exclude reference="dzr-da-wzx"/>
                                         <exclude reference="gma-OJ-IFe"/>
                                         <exclude reference="qoQ-8C-cw3"/>
-                                        <exclude reference="AwH-ox-ehU"/>
-                                        <exclude reference="NAl-Hd-a6S"/>
-                                        <exclude reference="VJ8-2C-ORb"/>
-                                        <exclude reference="WCp-zq-CFt"/>
                                         <exclude reference="31P-Yh-4f0"/>
                                         <exclude reference="nqW-5K-Tce"/>
                                         <exclude reference="u28-Il-q0l"/>
@@ -1104,15 +1095,26 @@ Hitoeを追加してください。</string>
                                         <exclude reference="ufm-hg-3dc"/>
                                         <exclude reference="mjB-d7-hsE"/>
                                         <exclude reference="oE7-Dw-KCL"/>
-                                        <exclude reference="j7U-Sd-tKx"/>
-                                        <exclude reference="ne5-rg-B5o"/>
-                                        <exclude reference="M8Z-J4-Mob"/>
-                                        <exclude reference="dct-wU-dK7"/>
-                                        <exclude reference="4bL-JG-uql"/>
-                                        <exclude reference="zpm-3L-O68"/>
+                                        <exclude reference="6c9-9Z-mQs"/>
+                                        <exclude reference="iFU-Wv-R9Z"/>
+                                        <exclude reference="rGY-JM-Hgt"/>
                                         <exclude reference="itc-3g-STg"/>
                                         <exclude reference="mV2-Nw-kmj"/>
                                         <exclude reference="qHU-NL-8OM"/>
+                                        <exclude reference="M8Z-J4-Mob"/>
+                                        <exclude reference="dct-wU-dK7"/>
+                                        <exclude reference="j7U-Sd-tKx"/>
+                                        <exclude reference="ne5-rg-B5o"/>
+                                        <exclude reference="Aek-vB-00Z"/>
+                                        <exclude reference="bgH-X3-jNz"/>
+                                        <exclude reference="boD-Rj-g1g"/>
+                                        <exclude reference="jKF-oa-ikX"/>
+                                        <exclude reference="AwH-ox-ehU"/>
+                                        <exclude reference="NAl-Hd-a6S"/>
+                                        <exclude reference="VJ8-2C-ORb"/>
+                                        <exclude reference="WCp-zq-CFt"/>
+                                        <exclude reference="4bL-JG-uql"/>
+                                        <exclude reference="zpm-3L-O68"/>
                                         <exclude reference="6bv-BQ-WwR"/>
                                         <exclude reference="fxO-79-hDh"/>
                                     </mask>
@@ -1135,21 +1137,10 @@ Hitoeを追加してください。</string>
                                     <mask key="constraints">
                                         <include reference="HrQ-M7-m5A"/>
                                         <include reference="p0A-C6-wT8"/>
-                                        <include reference="6c9-9Z-mQs"/>
-                                        <include reference="iFU-Wv-R9Z"/>
-                                        <include reference="rGY-JM-Hgt"/>
-                                        <include reference="Aek-vB-00Z"/>
-                                        <include reference="bgH-X3-jNz"/>
-                                        <include reference="boD-Rj-g1g"/>
-                                        <include reference="jKF-oa-ikX"/>
                                         <include reference="PHS-Wf-2zt"/>
                                         <include reference="dzr-da-wzx"/>
                                         <include reference="gma-OJ-IFe"/>
                                         <include reference="qoQ-8C-cw3"/>
-                                        <include reference="AwH-ox-ehU"/>
-                                        <include reference="NAl-Hd-a6S"/>
-                                        <include reference="VJ8-2C-ORb"/>
-                                        <include reference="WCp-zq-CFt"/>
                                         <include reference="31P-Yh-4f0"/>
                                         <include reference="nqW-5K-Tce"/>
                                         <include reference="u28-Il-q0l"/>
@@ -1158,15 +1149,26 @@ Hitoeを追加してください。</string>
                                         <include reference="ufm-hg-3dc"/>
                                         <include reference="mjB-d7-hsE"/>
                                         <include reference="oE7-Dw-KCL"/>
-                                        <include reference="j7U-Sd-tKx"/>
-                                        <include reference="ne5-rg-B5o"/>
-                                        <include reference="M8Z-J4-Mob"/>
-                                        <include reference="dct-wU-dK7"/>
-                                        <include reference="4bL-JG-uql"/>
-                                        <include reference="zpm-3L-O68"/>
+                                        <include reference="6c9-9Z-mQs"/>
+                                        <include reference="iFU-Wv-R9Z"/>
+                                        <include reference="rGY-JM-Hgt"/>
                                         <include reference="itc-3g-STg"/>
                                         <include reference="mV2-Nw-kmj"/>
                                         <include reference="qHU-NL-8OM"/>
+                                        <include reference="M8Z-J4-Mob"/>
+                                        <include reference="dct-wU-dK7"/>
+                                        <include reference="j7U-Sd-tKx"/>
+                                        <include reference="ne5-rg-B5o"/>
+                                        <include reference="Aek-vB-00Z"/>
+                                        <include reference="bgH-X3-jNz"/>
+                                        <include reference="boD-Rj-g1g"/>
+                                        <include reference="jKF-oa-ikX"/>
+                                        <include reference="AwH-ox-ehU"/>
+                                        <include reference="NAl-Hd-a6S"/>
+                                        <include reference="VJ8-2C-ORb"/>
+                                        <include reference="WCp-zq-CFt"/>
+                                        <include reference="4bL-JG-uql"/>
+                                        <include reference="zpm-3L-O68"/>
                                         <include reference="6bv-BQ-WwR"/>
                                         <include reference="fxO-79-hDh"/>
                                     </mask>
@@ -1327,10 +1329,10 @@ Hitoeを追加してください。</string>
             </objects>
             <point key="canvasLocation" x="465" y="3434"/>
         </scene>
-        <!--Hiote Control Device Orientation View Controller-->
+        <!--Hitoe Control Device Orientation View Controller-->
         <scene sceneID="i2U-Ja-Pmi">
             <objects>
-                <viewController id="f8O-px-omV" customClass="DPHioteControlDeviceOrientationViewController" sceneMemberID="viewController">
+                <viewController id="f8O-px-omV" customClass="DPHitoeControlDeviceOrientationViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="MRk-Ol-vUx"/>
                         <viewControllerLayoutGuide type="bottom" id="sx0-ZY-3gu"/>
@@ -1341,7 +1343,7 @@ Hitoeを追加してください。</string>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KKs-s9-9pf" customClass="DPHitoeACCChartView">
                                 <rect key="frame" x="171" y="185.5" width="259" height="109.5"/>
-                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="243.5" id="Hsa-yJ-fvs"/>
                                     <constraint firstAttribute="height" constant="110" id="Zjk-pc-R3A"/>
@@ -1461,6 +1463,7 @@ Hitoeを追加してください。</string>
                         <viewControllerLayoutGuide type="bottom" id="zB3-BX-yOE"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="pmb-Ds-3MR">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0ih-lF-g1x">
@@ -1528,7 +1531,7 @@ Hitoeを追加してください。</string>
                                             <accessibilityTraits key="traits" staticText="YES" adjustable="YES"/>
                                         </accessibility>
                                         <fontDescription key="fontDescription" type="system" pointSize="38"/>
-                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                         <variation key="widthClass=compact" fixedFrame="YES">
                                             <rect key="frame" x="17" y="40" width="206" height="49"/>

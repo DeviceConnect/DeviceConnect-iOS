@@ -106,6 +106,13 @@
 
 - (void)ipadLayoutWithOrientation:(int)toInterfaceOrientation
 {
+    if ((toInterfaceOrientation == UIDeviceOrientationLandscapeLeft ||
+         toInterfaceOrientation == UIDeviceOrientationLandscapeRight))
+    {
+        _viewTop.constant = 10;
+    } else {
+        _viewTop.constant = 65;
+    }
 }
 
 

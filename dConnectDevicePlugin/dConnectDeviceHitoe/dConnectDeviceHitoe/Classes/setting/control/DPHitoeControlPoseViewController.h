@@ -1,6 +1,7 @@
 //
-//  DPHioteControlDeviceOrientationViewController.h
+//  DPHitoeControlPoseViewController.h
 //  dConnectDeviceHitoe
+//
 //
 //  Copyright (c) 2016 NTT DOCOMO, INC.
 //  Released under the MIT license
@@ -8,6 +9,6 @@
 //
 #import "DPHitoeControlViewController.h"
 
-@interface DPHioteControlDeviceOrientationViewController : DPHitoeControlViewController
+@interface DPHitoeControlPoseViewController : DPHitoeControlViewController
 
 @end
