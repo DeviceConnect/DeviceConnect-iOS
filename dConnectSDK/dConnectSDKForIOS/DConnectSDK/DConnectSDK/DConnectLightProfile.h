@@ -352,6 +352,66 @@ didReceivePostLightGroupRequest:(DConnectRequestMessage *)request
  */
 @property (nonatomic, assign) id<DConnectLightProfileDelegate> delegate;
 
+
+#pragma mark - Getter
+
+/*!
+ @brief リクエストからlightIdを取得する。
+ @retval lightId
+ @retval nil リクエストにlightIdが指定されていない場合
+ */
++ (NSString *) lightIdFromRequest: (DConnectRequestMessage *) request;
+
+/*!
+ @brief リクエストからlightIdsを取得する。
+ @retval lightIds
+ @retval nil リクエストにlightIdsが指定されていない場合
+ */
++ (NSString *) lightIdsFromRequest: (DConnectRequestMessage *) request;
+
+/*!
+ @brief リクエストからbrightnessを取得する。
+ @retval brightness
+ @retval nil リクエストにbrightnessが指定されていない場合
+ */
++ (NSNumber *) brightnessFromRequest: (DConnectRequestMessage *) request;
+
+/*!
+ @brief リクエストからnameを取得する。
+ @retval name
+ @retval nil リクエストにnameが指定されていない場合
+ */
++ (NSString *) nameFromRequest: (DConnectRequestMessage *) request;
+
+/*!
+ @brief リクエストからcolorを取得する。
+ @retval color
+ @retval nil リクエストにcolorが指定されていない場合
+ */
++ (NSString *) colorFromRequest: (DConnectRequestMessage *) request;
+
+/*!
+ @brief リクエストからflashingを取得する。
+ @retval flashing
+ @retval nil リクエストにflashingが指定されていない場合
+ */
++ (NSString *) flashingFromRequest: (DConnectRequestMessage *) request;
+
+/*!
+ @brief リクエストからgroupIdを取得する。
+ @retval groupId
+ @retval nil リクエストにgroupIdが指定されていない場合
+ */
++ (NSString *) groupIdFromRequest: (DConnectRequestMessage *) request;
+
+/*!
+ @brief リクエストからgroupNameを取得する。
+ @retval groupName
+ @retval nil リクエストにgroupNameが指定されていない場合
+ */
++ (NSString *) groupNameFromRequest: (DConnectRequestMessage *) request;
+
+
 #pragma mark - Setter
 
 
