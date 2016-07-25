@@ -411,6 +411,14 @@ didReceivePostLightGroupRequest:(DConnectRequestMessage *)request
  */
 + (NSString *) groupNameFromRequest: (DConnectRequestMessage *) request;
 
+/*
+ flashingをパースする。
+ */
++ (NSArray *) parsePattern:(NSString *)pattern
+                      isId:(BOOL)isId;
+
+- (BOOL)checkFlash:(DConnectResponseMessage *)response flashing:(NSArray *)flashing;
+
 
 #pragma mark - Setter
 
