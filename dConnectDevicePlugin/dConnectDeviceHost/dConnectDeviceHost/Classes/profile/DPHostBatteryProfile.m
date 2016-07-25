@@ -32,6 +32,7 @@
         
         // イベントマネージャを取得
         self.eventMgr = [DConnectEventManager sharedManagerForClass:[DPHostDevicePlugin class]];
+        __weak id weakEventMgr = self.eventMgr;
         
         [UIDevice currentDevice].batteryMonitoringEnabled = YES;
         [[NSNotificationCenter defaultCenter] addObserver:self
@@ -43,6 +44,168 @@
                                                      name:UIDeviceBatteryStateDidChangeNotification
                                                    object:nil];
         
+        // API登録(didReceiveGetLevelRequest相当)
+        NSString *getLevelRequestApiPath = [self apiPathWithProfile: self.profileName
+                                                      interfaceName: nil
+                                                      attributeName: DConnectBatteryProfileAttrLevel];
+        [self addGetPath: getLevelRequestApiPath api: ^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+            
+            float level = [[UIDevice currentDevice] batteryLevel];
+            if (level < 0 || level > 1) {
+                // 未知のステータス；エラーレスポンスを返す。
+                [response setErrorToUnknownWithMessage:@"Battery status is unknown."];
+            } else {
+                [DConnectBatteryProfile setLevel:level target:response];
+                [response setResult:DConnectMessageResultTypeOk];
+            }
+            return YES;
+            
+        }];
+        
+        // API登録(didReceiveGetChargingRequest相当)
+        NSString *getChargingRequestApiPath = [self apiPathWithProfile: self.profileName
+                                                      interfaceName: nil
+                                                      attributeName: DConnectBatteryProfileAttrCharging];
+        [self addGetPath: getChargingRequestApiPath api: ^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+            NSNumber *charging;
+            switch ([[UIDevice currentDevice] batteryState]) {
+                case UIDeviceBatteryStateFull:
+                case UIDeviceBatteryStateCharging:
+                    charging = @YES;
+                    break;
+                case UIDeviceBatteryStateUnplugged:
+                    charging = @NO;
+                    break;
+                case UIDeviceBatteryStateUnknown:
+                default:
+                    // 未知のステータス；エラーレスポンスを返す。
+                    [response setErrorToUnknownWithMessage:@"Battery status is unknown."];
+                    return YES;
+            }
+            [DConnectBatteryProfile setCharging:[charging boolValue] target:response];
+            [response setResult:DConnectMessageResultTypeOk];
+            return YES;
+        }];
+        
+        // API登録(didReceiveGetAllRequest相当)
+        NSString *getAllRequestApiPath = [self apiPathWithProfile: self.profileName
+                                                    interfaceName: nil
+                                                    attributeName: nil];
+        [self addGetPath: getAllRequestApiPath api: ^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+            float level = [[UIDevice currentDevice] batteryLevel];
+            NSNumber *charging;
+            switch ([[UIDevice currentDevice] batteryState]) {
+                case UIDeviceBatteryStateFull:
+                case UIDeviceBatteryStateCharging:
+                    charging = @YES;
+                    break;
+                case UIDeviceBatteryStateUnplugged:
+                    charging = @NO;
+                    break;
+                case UIDeviceBatteryStateUnknown:
+                default:
+                    // 未知のステータス
+                    charging = nil;
+                    break;
+            }
+            if (level >= 0 && level <= 1) {
+                [DConnectBatteryProfile setLevel:level target:response];
+            }
+            if (charging) {
+                [DConnectBatteryProfile setCharging:[charging boolValue] target:response];
+            }
+            if ((level >= 0 && level <= 1) || charging) {
+                [response setResult:DConnectMessageResultTypeOk];
+            } else {
+                // 未知のステータス；エラーレスポンスを返す。
+                [response setErrorToUnknownWithMessage:@"Battery status is unknown."];
+            }
+            return YES;
+         }];
+
+        // API登録(didReceivePutOnChargingChangeRequest相当)
+        NSString *putOnChargingChangeRequestApiPath = [self apiPathWithProfile: self.profileName
+                                                                 interfaceName: nil
+                                                                 attributeName: DConnectBatteryProfileAttrOnChargingChange];
+        [self addPutPath: putOnChargingChangeRequestApiPath api: ^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+            switch ([weakEventMgr addEventForRequest:request]) {
+                case DConnectEventErrorNone:             // エラー無し.
+                    [response setResult:DConnectMessageResultTypeOk];
+                    break;
+                case DConnectEventErrorInvalidParameter: // 不正なパラメータ.
+                    [response setErrorToInvalidRequestParameter];
+                    break;
+                case DConnectEventErrorNotFound:         // マッチするイベント無し.
+                case DConnectEventErrorFailed:           // 処理失敗.
+                    [response setErrorToUnknown];
+                    break;
+            }
+            
+            return YES;
+        }];
+        
+        // API登録(didReceivePutOnBatteryChangeRequest相当)
+        NSString *putOnBatteryChangeRequestApiPath = [self apiPathWithProfile: self.profileName
+                                                                 interfaceName: nil
+                                                                 attributeName: DConnectBatteryProfileAttrOnBatteryChange];
+        [self addPutPath: putOnBatteryChangeRequestApiPath api: ^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+            switch ([weakEventMgr addEventForRequest:request]) {
+                case DConnectEventErrorNone:             // エラー無し.
+                    [response setResult:DConnectMessageResultTypeOk];
+                    break;
+                case DConnectEventErrorInvalidParameter: // 不正なパラメータ.
+                    [response setErrorToInvalidRequestParameter];
+                    break;
+                case DConnectEventErrorNotFound:         // マッチするイベント無し.
+                case DConnectEventErrorFailed:           // 処理失敗.
+                    [response setErrorToUnknown];
+                    break;
+            }
+            
+            return YES;
+        }];
+        
+        // API登録(didReceiveDeleteOnChargingChangeRequest相当)
+        NSString *deleteOnChargingChangeRequestApiPath = [self apiPathWithProfile: self.profileName
+                                                                    interfaceName: nil
+                                                                    attributeName: DConnectBatteryProfileAttrOnChargingChange];
+        [self addDeletePath: deleteOnChargingChangeRequestApiPath api: ^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+            switch ([weakEventMgr removeEventForRequest:request]) {
+                case DConnectEventErrorNone:             // エラー無し.
+                    [response setResult:DConnectMessageResultTypeOk];
+                    break;
+                case DConnectEventErrorInvalidParameter: // 不正なパラメータ.
+                    [response setErrorToInvalidRequestParameter];
+                    break;
+                case DConnectEventErrorNotFound:         // マッチするイベント無し.
+                case DConnectEventErrorFailed:           // 処理失敗.
+                    [response setErrorToUnknown];
+                    break;
+            }
+            
+            return YES;
+        }];
+        
+        // API登録(didReceiveDeleteOnBatteryChangeRequest相当)
+        NSString *deleteOnBatteryChangeRequestApiPath = [self apiPathWithProfile: self.profileName
+                                                                   interfaceName: nil
+                                                                   attributeName: DConnectBatteryProfileAttrOnBatteryChange];
+        [self addDeletePath: deleteOnBatteryChangeRequestApiPath api: ^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+            switch ([weakEventMgr removeEventForRequest:request]) {
+                case DConnectEventErrorNone:             // エラー無し.
+                    [response setResult:DConnectMessageResultTypeOk];
+                    break;
+                case DConnectEventErrorInvalidParameter: // 不正なパラメータ.
+                    [response setErrorToInvalidRequestParameter];
+                    break;
+                case DConnectEventErrorNotFound:         // マッチするイベント無し.
+                case DConnectEventErrorFailed:           // 処理失敗.
+                    [response setErrorToUnknown];
+                    break;
+            }
+            
+            return YES;
+        }];
     }
     return self;
 }
@@ -105,178 +268,4 @@
         [SELF_PLUGIN sendEvent:eventMsg];
     }
 }
-
-#pragma mark - Get Methods
-
-- (BOOL)        profile:(DConnectBatteryProfile *)profile
-didReceiveGetAllRequest:(DConnectRequestMessage *)request
-               response:(DConnectResponseMessage *)response
-               serviceId:(NSString *)serviceId
-{
-    float level = [[UIDevice currentDevice] batteryLevel];
-    NSNumber *charging;
-    switch ([[UIDevice currentDevice] batteryState]) {
-        case UIDeviceBatteryStateFull:
-        case UIDeviceBatteryStateCharging:
-            charging = @YES;
-            break;
-        case UIDeviceBatteryStateUnplugged:
-            charging = @NO;
-            break;
-        case UIDeviceBatteryStateUnknown:
-        default:
-            // 未知のステータス
-            charging = nil;
-            break;
-    }
-    if (level >= 0 && level <= 1) {
-        [DConnectBatteryProfile setLevel:level target:response];
-    }
-    if (charging) {
-        [DConnectBatteryProfile setCharging:[charging boolValue] target:response];
-    }
-    if ((level >= 0 && level <= 1) || charging) {
-        [response setResult:DConnectMessageResultTypeOk];
-    } else {
-        // 未知のステータス；エラーレスポンスを返す。
-        [response setErrorToUnknownWithMessage:@"Battery status is unknown."];
-    }
-    return YES;
-}
-
-- (BOOL)          profile:(DConnectBatteryProfile *)profile
-didReceiveGetLevelRequest:(DConnectRequestMessage *)request
-                 response:(DConnectResponseMessage *)response
-                 serviceId:(NSString *)serviceId
-{
-    float level = [[UIDevice currentDevice] batteryLevel];
-    if (level < 0 || level > 1) {
-        // 未知のステータス；エラーレスポンスを返す。
-        [response setErrorToUnknownWithMessage:@"Battery status is unknown."];
-    } else {
-        [DConnectBatteryProfile setLevel:level target:response];
-        [response setResult:DConnectMessageResultTypeOk];
-    }
-    return YES;
-}
-
-- (BOOL)             profile:(DConnectBatteryProfile *)profile
-didReceiveGetChargingRequest:(DConnectRequestMessage *)request
-                    response:(DConnectResponseMessage *)response
-                    serviceId:(NSString *)serviceId
-{
-    NSNumber *charging;
-    switch ([[UIDevice currentDevice] batteryState]) {
-        case UIDeviceBatteryStateFull:
-        case UIDeviceBatteryStateCharging:
-            charging = @YES;
-            break;
-        case UIDeviceBatteryStateUnplugged:
-            charging = @NO;
-            break;
-        case UIDeviceBatteryStateUnknown:
-        default:
-            // 未知のステータス；エラーレスポンスを返す。
-            [response setErrorToUnknownWithMessage:@"Battery status is unknown."];
-            return YES;
-    }
-    [DConnectBatteryProfile setCharging:[charging boolValue] target:response];
-    [response setResult:DConnectMessageResultTypeOk];
-    return YES;
-}
-
-#pragma mark - Put Methods
-#pragma mark Event Registration
-
-- (BOOL)                     profile:(DConnectBatteryProfile *)profile
-didReceivePutOnChargingChangeRequest:(DConnectRequestMessage *)request
-                            response:(DConnectResponseMessage *)response
-                            serviceId:(NSString *)serviceId
-                          sessionKey:(NSString *)sessionKey
-{
-    switch ([_eventMgr addEventForRequest:request]) {
-        case DConnectEventErrorNone:             // エラー無し.
-            [response setResult:DConnectMessageResultTypeOk];
-            break;
-        case DConnectEventErrorInvalidParameter: // 不正なパラメータ.
-            [response setErrorToInvalidRequestParameter];
-            break;
-        case DConnectEventErrorNotFound:         // マッチするイベント無し.
-        case DConnectEventErrorFailed:           // 処理失敗.
-            [response setErrorToUnknown];
-            break;
-    }
-    
-    return YES;
-}
-
-- (BOOL)                    profile:(DConnectBatteryProfile *)profile
-didReceivePutOnBatteryChangeRequest:(DConnectRequestMessage *)request
-                           response:(DConnectResponseMessage *)response
-                           serviceId:(NSString *)serviceId
-                         sessionKey:(NSString *)sessionKey
-{
-    switch ([_eventMgr addEventForRequest:request]) {
-        case DConnectEventErrorNone:             // エラー無し.
-            [response setResult:DConnectMessageResultTypeOk];
-            break;
-        case DConnectEventErrorInvalidParameter: // 不正なパラメータ.
-            [response setErrorToInvalidRequestParameter];
-            break;
-        case DConnectEventErrorNotFound:         // マッチするイベント無し.
-        case DConnectEventErrorFailed:           // 処理失敗.
-            [response setErrorToUnknown];
-            break;
-    }
-    
-    return YES;
-}
-
-#pragma mark - Delete Methods
-#pragma mark Event Unregistration
-
-- (BOOL)                        profile:(DConnectBatteryProfile *)profile
-didReceiveDeleteOnChargingChangeRequest:(DConnectRequestMessage *)request
-                               response:(DConnectResponseMessage *)response
-                               serviceId:(NSString *)serviceId
-                             sessionKey:(NSString *)sessionKey
-{
-    switch ([_eventMgr removeEventForRequest:request]) {
-        case DConnectEventErrorNone:             // エラー無し.
-            [response setResult:DConnectMessageResultTypeOk];
-            break;
-        case DConnectEventErrorInvalidParameter: // 不正なパラメータ.
-            [response setErrorToInvalidRequestParameter];
-            break;
-        case DConnectEventErrorNotFound:         // マッチするイベント無し.
-        case DConnectEventErrorFailed:           // 処理失敗.
-            [response setErrorToUnknown];
-            break;
-    }
-    
-    return YES;
-}
-
-- (BOOL)                       profile:(DConnectBatteryProfile *)profile
-didReceiveDeleteOnBatteryChangeRequest:(DConnectRequestMessage *)request
-                              response:(DConnectResponseMessage *)response
-                              serviceId:(NSString *)serviceId
-                            sessionKey:(NSString *)sessionKey
-{
-    switch ([_eventMgr removeEventForRequest:request]) {
-        case DConnectEventErrorNone:             // エラー無し.
-            [response setResult:DConnectMessageResultTypeOk];
-            break;
-        case DConnectEventErrorInvalidParameter: // 不正なパラメータ.
-            [response setErrorToInvalidRequestParameter];
-            break;
-        case DConnectEventErrorNotFound:         // マッチするイベント無し.
-        case DConnectEventErrorFailed:           // 処理失敗.
-            [response setErrorToUnknown];
-            break;
-    }
-    
-    return YES;
-}
-
 @end
