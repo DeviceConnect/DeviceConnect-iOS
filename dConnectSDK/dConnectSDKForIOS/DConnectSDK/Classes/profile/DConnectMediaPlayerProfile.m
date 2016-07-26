@@ -1,5 +1,5 @@
 //
-//  DConnectMediaStreamsPlayProfile.m
+//  DConnectMediaPlayerProfile.m
 //  DConnectSDK
 //
 //  Copyright (c) 2014 NTT DOCOMO,INC.
@@ -80,6 +80,7 @@ NSString *const DConnectMediaPlayerProfileOrderDESC = @"desc";
     return DConnectMediaPlayerProfileName;
 }
 
+/*
 - (BOOL) didReceiveGetRequest:(DConnectRequestMessage *)request response:(DConnectResponseMessage *)response {
     
     BOOL send = YES;
@@ -288,6 +289,7 @@ NSString *const DConnectMediaPlayerProfileOrderDESC = @"desc";
     
     return send;
 }
+*/
 
 #pragma mark - Setter
 
