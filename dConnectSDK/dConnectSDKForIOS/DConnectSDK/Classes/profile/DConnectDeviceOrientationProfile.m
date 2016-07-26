@@ -35,6 +35,7 @@ NSString *const DConnectDeviceOrientationProfileParamAccelerationIncludingGravit
     return DConnectDeviceOrientationProfileName;
 }
 
+/*
 - (BOOL) didReceiveGetRequest:(DConnectRequestMessage *)request response:(DConnectResponseMessage *)response {
     BOOL send = YES;
     
@@ -114,6 +115,7 @@ NSString *const DConnectDeviceOrientationProfileParamAccelerationIncludingGravit
 
     return send;
 }
+*/
 
 #pragma mark - Setter
 + (void) setInterval:(long long)interval target:(DConnectMessage *)message {
