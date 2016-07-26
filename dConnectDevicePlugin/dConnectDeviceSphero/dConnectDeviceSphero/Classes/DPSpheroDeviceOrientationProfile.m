@@ -35,8 +35,7 @@ typedef void (^OrientationBlock)(DPGyroData gyroData, DPPoint3D accel, int inter
         self.delegate = self;
         [DPSpheroManager sharedManager].orientationDelegate = self;
         self.orientationBlkArray = [NSMutableArray new];
-        
-        __unsafe_unretained typeof(self) weakSelf = self;
+        __weak DPSpheroDeviceOrientationProfile *weakSelf = self;
 
         OrientationBlock blk = ^(DPGyroData gyroData, DPPoint3D accel, int interval) {
             DConnectMessage *message = [weakSelf createOrientationWithAttitude:gyroData accel:accel interval:interval];
@@ -57,6 +56,69 @@ typedef void (^OrientationBlock)(DPGyroData gyroData, DPPoint3D accel, int inter
             }
         };
         [self.orientationBlkArray addObject:blk];
+        
+        // API登録(didReceiveGetOnDeviceOrientationRequest相当)
+        NSString *getOnDeviceOrientationRequestApiPath = [self apiPathWithProfile: self.profileName
+                                                                    interfaceName: nil
+                                                                    attributeName: DConnectDeviceOrientationProfileAttrOnDeviceOrientation];
+        [self addGetPath: getOnDeviceOrientationRequestApiPath
+                     api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+                         
+                         NSString *serviceId = [request serviceId];
+                         
+                         // 接続確認
+                         CONNECT_CHECK();
+                         
+                         OrientationBlock blk = ^(DPGyroData gyroData, DPPoint3D accel, int interval) {
+                             DConnectMessage *orientation = [weakSelf createOrientationWithAttitude:gyroData accel:accel interval:interval];
+                             [response setResult:DConnectMessageResultTypeOk];
+                             [DConnectDeviceOrientationProfile setOrientation:orientation target:response];
+                             
+                             DConnectManager *mgr = [DConnectManager sharedManager];
+                             [mgr sendResponse:response];
+                             [weakSelf.orientationBlkArray removeObject:blk];
+                             if (![weakSelf hasEventList]) {
+                                 [[DPSpheroManager sharedManager] stopSensorOrientation];
+                             }
+                         };
+                         [[weakSelf orientationBlkArray] addObject:blk];
+                         [[DPSpheroManager sharedManager] startSensorOrientation];
+                         return NO;
+                     }];
+        
+        // API登録(didReceivePutOnDeviceOrientationRequest相当)
+        NSString *putOnDeviceOrientationRequestApiPath = [self apiPathWithProfile: self.profileName
+                                                                    interfaceName: nil
+                                                                    attributeName: DConnectDeviceOrientationProfileAttrOnDeviceOrientation];
+        [self addPutPath: putOnDeviceOrientationRequestApiPath
+                     api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+                         NSString *serviceId = [request serviceId];
+                         
+                         // 接続確認
+                         CONNECT_CHECK();
+                         
+                         [weakSelf handleRequest:request response:response isRemove:NO callback:^{
+                             [[DPSpheroManager sharedManager] startSensorOrientation];
+                         }];
+                         return YES;
+                     }];
+        
+        // API登録(didReceiveDeleteOnDeviceOrientationRequest相当)
+        NSString *deleteOnDeviceOrientationRequestApiPath = [self apiPathWithProfile: self.profileName
+                                                                       interfaceName: nil
+                                                                       attributeName: DConnectDeviceOrientationProfileAttrOnDeviceOrientation];
+        [self addDeletePath: deleteOnDeviceOrientationRequestApiPath
+                        api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+                            NSString *serviceId = [request serviceId];
+                            
+                            // 接続確認
+                            CONNECT_CHECK();
+                            
+                            [weakSelf handleRequest:request response:response isRemove:YES callback:^{
+                                [[DPSpheroManager sharedManager] stopSensorOrientation];
+                            }];
+                            return YES;
+                        }];
     }
     return self;
 }
@@ -124,67 +186,6 @@ typedef void (^OrientationBlock)(DPGyroData gyroData, DPPoint3D accel, int inter
     for (OrientationBlock blk in [self.orientationBlkArray reverseObjectEnumerator]) {
         blk(gyroData, accel, interval);
     }
-}
-
-#pragma mark - DConnectDeviceOrientationProfileDelegate
-
-- (BOOL)                        profile:(DConnectDeviceOrientationProfile *)profile
-didReceiveGetOnDeviceOrientationRequest:(DConnectRequestMessage *)request
-                               response:(DConnectResponseMessage *)response
-                              serviceId:(NSString *)serviceId
-{
-    // 接続確認
-    CONNECT_CHECK();
-
-    __unsafe_unretained typeof(self) weakSelf = self;
-
-    OrientationBlock blk = ^(DPGyroData gyroData, DPPoint3D accel, int interval) {
-        DConnectMessage *orientation = [weakSelf createOrientationWithAttitude:gyroData accel:accel interval:interval];
-        [response setResult:DConnectMessageResultTypeOk];
-        [DConnectDeviceOrientationProfile setOrientation:orientation target:response];
-
-        DConnectManager *mgr = [DConnectManager sharedManager];
-        [mgr sendResponse:response];
-        [weakSelf.orientationBlkArray removeObject:blk];
-        if (![weakSelf hasEventList]) {
-            [[DPSpheroManager sharedManager] stopSensorOrientation];
-        }
-    };
-    [self.orientationBlkArray addObject:blk];
-    [[DPSpheroManager sharedManager] startSensorOrientation];
-    return NO;
-}
-
-// Orientationのイベント登録
-- (BOOL)                            profile:(DConnectDeviceOrientationProfile *)profile
-    didReceivePutOnDeviceOrientationRequest:(DConnectRequestMessage *)request
-                                   response:(DConnectResponseMessage *)response
-                                  serviceId:(NSString *)serviceId
-                                 sessionKey:(NSString *)sessionKey
-{
-    // 接続確認
-    CONNECT_CHECK();
-    
-    [self handleRequest:request response:response isRemove:NO callback:^{
-        [[DPSpheroManager sharedManager] startSensorOrientation];
-    }];
-    return YES;
-}
-
-// Orientationのイベント解除
-- (BOOL)                               profile:(DConnectDeviceOrientationProfile *)profile
-    didReceiveDeleteOnDeviceOrientationRequest:(DConnectRequestMessage *)request
-                                      response:(DConnectResponseMessage *)response
-                                     serviceId:(NSString *)serviceId
-                                    sessionKey:(NSString *)sessionKey
-{
-    // 接続確認
-    CONNECT_CHECK();
-    
-    [self handleRequest:request response:response isRemove:YES callback:^{
-        [[DPSpheroManager sharedManager] stopSensorOrientation];
-    }];
-    return YES;
 }
 
 @end
