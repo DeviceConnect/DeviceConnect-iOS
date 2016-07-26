@@ -50,6 +50,7 @@ NSString *const DConnectFileProfileOrderDESC = @"desc";
     return DConnectFileProfileName;
 }
 
+/*
 - (BOOL) didReceiveGetRequest:(DConnectRequestMessage *)request response:(DConnectResponseMessage *)response {
     BOOL send = YES;
     
@@ -178,6 +179,7 @@ NSString *const DConnectFileProfileOrderDESC = @"desc";
     
     return send;
 }
+*/
 
 #pragma mark - Setter
 
