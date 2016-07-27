@@ -43,6 +43,8 @@
 		6611B37F19C28A830034893E /* DPGuideViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6611B37E19C28A830034893E /* DPGuideViewController.m */; };
 		6611B38019C2A6410034893E /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6611B38219C2A6410034893E /* Localizable.strings */; };
 		6611B39119C2D19D0034893E /* DCMDevicePluginSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6611B39019C2D19D0034893E /* DCMDevicePluginSDK.framework */; };
+		8EB854541D4240950035C0DC /* dconnect_icon_off.png in Resources */ = {isa = PBXBuildFile; fileRef = 8EB854521D4240950035C0DC /* dconnect_icon_off.png */; };
+		8EB854551D4240950035C0DC /* dconnect_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 8EB854531D4240950035C0DC /* dconnect_icon.png */; };
 		AB00075119C95CFB008CED6A /* SpheroBluetoothSetting.png in Resources */ = {isa = PBXBuildFile; fileRef = AB00075019C95CFB008CED6A /* SpheroBluetoothSetting.png */; };
 		AB00075219C95D23008CED6A /* SpheroBluetoothSetting.png in Resources */ = {isa = PBXBuildFile; fileRef = AB00075019C95CFB008CED6A /* SpheroBluetoothSetting.png */; };
 		AB1061AE197E3B290005BB3F /* DPSpheroDriveControllerProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = AB1061AD197E3B290005BB3F /* DPSpheroDriveControllerProfile.m */; };
@@ -117,6 +119,8 @@
 		6611B38B19C2B9D20034893E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/SpheroDevicePlugin_iPad.strings; sourceTree = "<group>"; };
 		6611B38D19C2B9DA0034893E /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/SpheroDevicePlugin_iPad.strings; sourceTree = "<group>"; };
 		6611B39019C2D19D0034893E /* DCMDevicePluginSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DCMDevicePluginSDK.framework; path = "../DCMDevicePluginSDK/build/Debug-framework/DCMDevicePluginSDK.framework"; sourceTree = "<group>"; };
+		8EB854521D4240950035C0DC /* dconnect_icon_off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dconnect_icon_off.png; sourceTree = "<group>"; };
+		8EB854531D4240950035C0DC /* dconnect_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dconnect_icon.png; sourceTree = "<group>"; };
 		AB00075019C95CFB008CED6A /* SpheroBluetoothSetting.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SpheroBluetoothSetting.png; sourceTree = "<group>"; };
 		AB1061AC197E3B290005BB3F /* DPSpheroDriveControllerProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DPSpheroDriveControllerProfile.h; path = dConnectDeviceSphero/Classes/DPSpheroDriveControllerProfile.h; sourceTree = SOURCE_ROOT; };
 		AB1061AD197E3B290005BB3F /* DPSpheroDriveControllerProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DPSpheroDriveControllerProfile.m; path = dConnectDeviceSphero/Classes/DPSpheroDriveControllerProfile.m; sourceTree = SOURCE_ROOT; };
@@ -250,6 +254,8 @@
 		AB91707319617E940084DB70 /* dConnectDeviceSphero_resources */ = {
 			isa = PBXGroup;
 			children = (
+				8EB854521D4240950035C0DC /* dconnect_icon_off.png */,
+				8EB854531D4240950035C0DC /* dconnect_icon.png */,
 				AB91707419617E940084DB70 /* Supporting Files */,
 			);
 			path = dConnectDeviceSphero_resources;
@@ -473,6 +479,8 @@
 				6611B37319C27FE60034893E /* SpheroSettingWakeup_2.png in Resources */,
 				AB91707819617E940084DB70 /* InfoPlist.strings in Resources */,
 				6611B37019C27FE60034893E /* SpheroSettingConnected_2.png in Resources */,
+				8EB854541D4240950035C0DC /* dconnect_icon_off.png in Resources */,
+				8EB854551D4240950035C0DC /* dconnect_icon.png in Resources */,
 				6611B36A19C27FB60034893E /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -47,4 +47,12 @@
     return [self.fileMgr.URL URLByAppendingPathComponent:pathComponent].standardizedURL.path;
 }
 
+- (NSString*)iconFilePath:(BOOL)isOnline
+{
+    NSString *bundlePath = [[NSBundle mainBundle] pathForResource:@"dConnectDeviceHost_resources" ofType:@"bundle"];
+    NSBundle *bundle = [NSBundle bundleWithPath:bundlePath];
+    NSString* filename = isOnline ? @"dconnect_icon" : @"dconnect_icon_off";
+    return [bundle pathForResource:filename ofType:@"png"];
+}
+
 @end

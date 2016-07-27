@@ -32,6 +32,8 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		8EB854501D42406F0035C0DC /* dconnect_icon_off.png in Resources */ = {isa = PBXBuildFile; fileRef = 8EB8544E1D42406F0035C0DC /* dconnect_icon_off.png */; };
+		8EB854511D42406F0035C0DC /* dconnect_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 8EB8544F1D42406F0035C0DC /* dconnect_icon.png */; };
 		BE24CF04197F7BC4007BBC69 /* SampleLiveviewManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BE24CF03197F7BC3007BBC69 /* SampleLiveviewManager.m */; };
 		BE4B295D19809B8900338159 /* sonycamera_img01@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BE4B295819809B8900338159 /* sonycamera_img01@2x.png */; };
 		BE4B295E19809B8900338159 /* sonycamera_img02@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BE4B295919809B8900338159 /* sonycamera_img02@2x.png */; };
@@ -97,6 +99,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		8EB8544E1D42406F0035C0DC /* dconnect_icon_off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dconnect_icon_off.png; sourceTree = "<group>"; };
+		8EB8544F1D42406F0035C0DC /* dconnect_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dconnect_icon.png; sourceTree = "<group>"; };
 		ABB1838F19F626930059E7F8 /* SonyCameraCameraProfile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SonyCameraCameraProfile.h; sourceTree = "<group>"; };
 		ABB1839019F626B30059E7F8 /* SonyCameraDevicePlugin.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SonyCameraDevicePlugin.h; sourceTree = "<group>"; };
 		BE24CF02197F7BC3007BBC69 /* SampleLiveviewManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SampleLiveviewManager.h; sourceTree = "<group>"; };
@@ -388,6 +392,8 @@
 		C2540C7B195ACC0800AE012C /* dConnectDeviceSonyCamera_resources */ = {
 			isa = PBXGroup;
 			children = (
+				8EB8544E1D42406F0035C0DC /* dconnect_icon_off.png */,
+				8EB8544F1D42406F0035C0DC /* dconnect_icon.png */,
 				BE4B295719809B8900338159 /* images */,
 				BED92A3F1991D78400B61B2F /* SonyCameraDevicePlugin_iPhone.storyboard */,
 				BED92A3D1991C11400B61B2F /* SonyCameraDevicePlugin_iPad.storyboard */,
@@ -514,11 +520,13 @@
 				BE4B296019809B8900338159 /* pageindicator_off.png in Resources */,
 				BEAFFE5C19C96FE100A98079 /* sonycamera01@2x.png in Resources */,
 				BED92A401991D78400B61B2F /* SonyCameraDevicePlugin_iPhone.storyboard in Resources */,
+				8EB854501D42406F0035C0DC /* dconnect_icon_off.png in Resources */,
 				BED92A3E1991C11400B61B2F /* SonyCameraDevicePlugin_iPad.storyboard in Resources */,
 				BE4B295D19809B8900338159 /* sonycamera_img01@2x.png in Resources */,
 				BE75D3181994A54A00F1BFC9 /* settings_iphone.png in Resources */,
 				BE575B26199863C200C31076 /* settings_ipad.png in Resources */,
 				BE4B295E19809B8900338159 /* sonycamera_img02@2x.png in Resources */,
+				8EB854511D42406F0035C0DC /* dconnect_icon.png in Resources */,
 				BE4B296119809B8900338159 /* pageindicator_on.png in Resources */,
 				BE4B295F19809B8900338159 /* sonycamera_img03@2x.png in Resources */,
 			);

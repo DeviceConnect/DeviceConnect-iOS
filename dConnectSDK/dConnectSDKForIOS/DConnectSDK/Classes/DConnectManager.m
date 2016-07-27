@@ -591,4 +591,17 @@ NSString *const DConnectAttributeNameRequestAccessToken = @"requestAccessToken";
 {
     return [self.mDeviceManager devicePluginList];
 }
+
+- (NSString *)devicePluginIdForServiceId:(NSString *)serviceId
+{
+    DConnectDevicePlugin *plugin = [self.mDeviceManager devicePluginForServiceId:serviceId];
+    return [plugin pluginId];
+}
+
+- (NSString *)iconFilePathForServiceId:(NSString *)serviceId isOnline:(BOOL)isOnline
+{
+    DConnectDevicePlugin *plugin = [self.mDeviceManager devicePluginForServiceId:serviceId];
+    return [plugin iconFilePath:isOnline];
+
+}
 @end

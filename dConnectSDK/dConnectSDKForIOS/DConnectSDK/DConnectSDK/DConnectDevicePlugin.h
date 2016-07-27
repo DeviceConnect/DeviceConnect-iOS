@@ -111,4 +111,6 @@
  */
 - (void)applicationWillEnterForeground;
 
+- (NSString*)iconFilePath:(BOOL)isOnline;
+
 @end

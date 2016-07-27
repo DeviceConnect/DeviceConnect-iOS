@@ -35,12 +35,26 @@
 
     __weak GHDeviceListViewModel* _self = self;
     [self fetchDevices:^(DConnectArray *deviceList) {
-        for (int i = 0; i < [deviceList count]; i++) {
-            DConnectMessage *service = [deviceList messageAtIndex: i];
-            [_self.datasource addObject:service];
-        }
-        [_self.delegate requestDatasourceReload];
+        [_self updateDatasource:deviceList];
     }];
+}
+
+- (void)refresh
+{
+    __weak GHDeviceListViewModel* _self = self;
+    [[GHDeviceUtil shareManager] discoverDevices:^(DConnectArray *result) {
+        [_self updateDatasource:result];
+    }];
+}
+
+- (void)updateDatasource:(DConnectArray*)deviceList
+{
+    [self.datasource removeAllObjects];
+    for (int i = 0; i < [deviceList count]; i++) {
+        DConnectMessage *service = [deviceList messageAtIndex: i];
+        [self.datasource addObject:service];
+    }
+    [self.delegate requestDatasourceReload];
 }
 
 @end

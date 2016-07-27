@@ -44,6 +44,8 @@
 		64A6938A19BBEBBC0084D904 /* DPHueItemBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 64A6938919BBEBBC0084D904 /* DPHueItemBridge.m */; };
 		64BAEB541998D6A000BCDBDA /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 64BAEB531998D6A000BCDBDA /* UIKit.framework */; };
 		64BB087D19C335EE00C66903 /* HueSDK_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 64BB087C19C335EE00C66903 /* HueSDK_iOS.framework */; };
+		8EB854441D423FDD0035C0DC /* dconnect_icon_off.png in Resources */ = {isa = PBXBuildFile; fileRef = 8EB854421D423FDD0035C0DC /* dconnect_icon_off.png */; };
+		8EB854451D423FDD0035C0DC /* dconnect_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 8EB854431D423FDD0035C0DC /* dconnect_icon.png */; };
 		AB08A0F019920F8F0024C996 /* hue001.png in Resources */ = {isa = PBXBuildFile; fileRef = AB08A0E719920C860024C996 /* hue001.png */; };
 		AB08A0F119920F8F0024C996 /* hue002.png in Resources */ = {isa = PBXBuildFile; fileRef = AB08A0E819920C860024C996 /* hue002.png */; };
 		AB08A0F219920F8F0024C996 /* hue003.png in Resources */ = {isa = PBXBuildFile; fileRef = AB08A0E919920C860024C996 /* hue003.png */; };
@@ -112,6 +114,8 @@
 		64A6938919BBEBBC0084D904 /* DPHueItemBridge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHueItemBridge.m; sourceTree = "<group>"; };
 		64BAEB531998D6A000BCDBDA /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		64BB087C19C335EE00C66903 /* HueSDK_iOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HueSDK_iOS.framework; path = "deps/PhilipsHueSDK-iOS-OSX/HueSDK_iOS.framework"; sourceTree = "<group>"; };
+		8EB854421D423FDD0035C0DC /* dconnect_icon_off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dconnect_icon_off.png; sourceTree = "<group>"; };
+		8EB854431D423FDD0035C0DC /* dconnect_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dconnect_icon.png; sourceTree = "<group>"; };
 		AB08A0E719920C860024C996 /* hue001.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hue001.png; sourceTree = "<group>"; };
 		AB08A0E819920C860024C996 /* hue002.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hue002.png; sourceTree = "<group>"; };
 		AB08A0E919920C860024C996 /* hue003.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hue003.png; sourceTree = "<group>"; };
@@ -325,6 +329,8 @@
 		AB181678196A6916000BE265 /* dConnectDeviceHue_resources */ = {
 			isa = PBXGroup;
 			children = (
+				8EB854421D423FDD0035C0DC /* dconnect_icon_off.png */,
+				8EB854431D423FDD0035C0DC /* dconnect_icon.png */,
 				AB181679196A6916000BE265 /* Supporting Files */,
 			);
 			path = dConnectDeviceHue_resources;
@@ -466,11 +472,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8EB854441D423FDD0035C0DC /* dconnect_icon_off.png in Resources */,
 				AB3A3FCC1B145B5000C40A88 /* hue_small_icon.png in Resources */,
 				AB4E025319EE4C9900F385D0 /* Localizable.strings in Resources */,
 				64278B5C19B896D500AC54E5 /* HueSetting_iPad.storyboard in Resources */,
 				AB08A0FE19930F260024C996 /* Info.plist in Resources */,
 				AB08A0F019920F8F0024C996 /* hue001.png in Resources */,
+				8EB854451D423FDD0035C0DC /* dconnect_icon.png in Resources */,
 				AB08A0F119920F8F0024C996 /* hue002.png in Resources */,
 				AB08A0F219920F8F0024C996 /* hue003.png in Resources */,
 				AB08A0F319920F8F0024C996 /* hue004.png in Resources */,
