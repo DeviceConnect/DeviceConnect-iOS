@@ -13,7 +13,6 @@
 #import <DConnectSDK/DConnectServiceInformationProfile.h>
 #import "DPAllJoynHandler.h"
 #import "DPAllJoynLightProfile.h"
-#import "DPAllJoynServiceDiscoveryProfile.h"
 #import "DPAllJoynServiceInformationProfile.h"
 #import "DPAllJoynSystemProfile.h"
 
