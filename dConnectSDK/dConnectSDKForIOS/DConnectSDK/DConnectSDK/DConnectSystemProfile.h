@@ -238,4 +238,16 @@ extern NSString *const DConnectSystemProfileParamVersion;
  */
 + (NSString *) pluginIdFromRequest:(DConnectMessage *)request;
 
+#pragma mark - Private
+
+
+/*!
+ @brief PutWakeupRequestを受信した時に実行する処理。設定画面表示を行う。
+ @param[in] request リクエストパラメータ
+ @param[in,out] response レスポンスパラメータ
+ @retval YES レスポンスパラメータを返却する。
+ @retval NO レスポンスパラメータを返却しないので、@link DConnectManager::sendResponse: @endlinkで返却すること。
+ */
+- (BOOL) didReceivePutWakeupRequest:(DConnectRequestMessage *)request response:(DConnectResponseMessage *)response;
+
 @end
