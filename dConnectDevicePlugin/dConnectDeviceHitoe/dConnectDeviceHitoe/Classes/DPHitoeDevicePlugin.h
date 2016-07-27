@@ -9,7 +9,8 @@
 
 #import <Foundation/Foundation.h>
 #import <DConnectSDK/DConnectSDK.h>
+#import "DPHitoeManager.h"
 
-@interface DPHitoeDevicePlugin : DConnectDevicePlugin
+@interface DPHitoeDevicePlugin : DConnectDevicePlugin<DPHitoeConnectionDelegate>
 
 @end

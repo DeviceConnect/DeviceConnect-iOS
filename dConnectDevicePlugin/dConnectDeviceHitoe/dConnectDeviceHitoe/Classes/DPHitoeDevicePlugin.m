@@ -9,16 +9,10 @@
 
 #import "DPHitoeDevicePlugin.h"
 #import "DPHitoeSystemProfile.h"
-#import "DPHitoeServiceDiscoveryProfle.h"
-#import "DPHitoeHealthProfile.h"
-#import "DPHitoeECGProfile.h"
-#import "DPHitoeBatteryProfile.h"
-#import "DPHitoePoseEstimationProfile.h"
-#import "DPHitoeStressEstimationProfile.h"
-#import "DPHitoeDeviceOrientationProfile.h"
-#import "DPHitoeWalkStateProfile.h"
 #import "DPHitoeManager.h"
 #import "DPHitoeConsts.h"
+#import "DPHitoeService.h"
+#import "DPHitoeDevice.h"
 // Const.h
 NSString *const DPHitoeBundleName = @"dConnectDeviceHitoe_resources";
 
@@ -116,18 +110,20 @@ int const DPHitoeDataKeyExtension = 0x04;
 {
     self = [super init];
     if (self) {
+        [self addProfile:[DPHitoeSystemProfile new]];
         self.pluginName = @"Hitoe (Device Connect Device Plug-in)";
 
-        [self addProfile:[DPHitoeBatteryProfile new]];
-        [self addProfile:[DPHitoeServiceDiscoveryProfle new]];
-        [self addProfile:[DPHitoeHealthProfile new]];
-        [self addProfile:[DPHitoeECGProfile new]];
-        [self addProfile:[DPHitoePoseEstimationProfile new]];
-        [self addProfile:[DPHitoeStressEstimationProfile new]];
-        [self addProfile:[DPHitoeSystemProfile new]];
-        [self addProfile:[DPHitoeWalkStateProfile new]];
-        [self addProfile:[DConnectServiceInformationProfile new]];
-        [self addProfile:[DPHitoeDeviceOrientationProfile new]];
+        
+        DPHitoeManager *mgr = [DPHitoeManager sharedInstance];
+        mgr.connectionDelegate = self;
+        [mgr readHitoeData];
+        NSMutableArray *devices = mgr.registeredDevices;
+        for (DPHitoeDevice *device in devices) {
+            DConnectService *hitoeService = [[DPHitoeService alloc] initWithDevice:device];
+            [self.mServiceProvider addService: hitoeService];
+        }
+        
+        
         // イベントマネージャの準備
         Class key = [self class];
         [[DConnectEventManager sharedManagerForClass:key]
@@ -151,6 +147,53 @@ int const DPHitoeDataKeyExtension = 0x04;
 
 - (void)enterForeground {
     [[DPHitoeManager sharedInstance] startRetryTimer];
+}
+
+#pragma mark - Hitoe Delegate
+
+-(void)didConnectWithDevice:(DPHitoeDevice*)device {
+    DConnectService *hitoeService = [self.mServiceProvider service:device.serviceId];
+    if (hitoeService) {
+        [hitoeService setOnline:YES];
+    }
+    
+}
+-(void)didConnectFailWithDevice:(DPHitoeDevice*)device {
+    DConnectService *hitoeService = [self.mServiceProvider service:device.serviceId];
+    if (hitoeService) {
+        [hitoeService setOnline:NO];
+    }
+}
+
+-(void)didDisconnectWithDevice:(DPHitoeDevice*)device {
+    DConnectService *hitoeService = [self.mServiceProvider service:device.serviceId];
+    if (hitoeService) {
+        [hitoeService setOnline:NO];
+    }
+}
+-(void)didDiscoveryForDevices:(NSMutableArray*)devices {
+    for (DPHitoeDevice *device in devices) {
+        if (device.pinCode) {
+            DConnectService *hitoeService = [[DPHitoeService alloc] initWithDevice:device];
+            [self.mServiceProvider addService: hitoeService];
+        }
+    }
+}
+-(void)didDeleteAtDevice:(DPHitoeDevice*)device {
+    DConnectService *hitoeService = [self.mServiceProvider service:device.serviceId];
+    [self.mServiceProvider removeService:hitoeService];
+}
+
+
+#pragma mark - DevicePlugin's icon image
+
+- (NSString*)iconFilePath:(BOOL)isOnline
+{
+//    NSString *bundlePath = [DPHitoeBundle() pathForResource:@"dConnectDeviceHost_resources" ofType:@"bundle"];
+//    NSBundle *bundle = [NSBundle bundleWithPath:bundlePath];
+//    NSString* filename = isOnline ? @"dconnect_icon" : @"dconnect_icon_off";
+//    return [bundle pathForResource:filename ofType:@"png"];
+    return nil;
 }
 
 @end

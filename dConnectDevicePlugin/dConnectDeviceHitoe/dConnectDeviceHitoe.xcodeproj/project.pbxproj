@@ -130,6 +130,7 @@
 		ABD3345D1D45C97000D05903 /* PinCodeDialog_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ABD3345C1D45BBFA00D05903 /* PinCodeDialog_iPad.storyboard */; };
 		ABD3345E1D45C97000D05903 /* HitoeWakeupDialog_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ABD3345B1D45B84300D05903 /* HitoeWakeupDialog_iPad.storyboard */; };
 		ABD3345F1D45C97000D05903 /* HitoeShirtDialog_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ABD3345A1D45B67F00D05903 /* HitoeShirtDialog_iPad.storyboard */; };
+		ABDDDF821D485153002EFF57 /* DPHitoeService.m in Sources */ = {isa = PBXBuildFile; fileRef = ABDDDF811D485153002EFF57 /* DPHitoeService.m */; };
 		ABE4EBBA1D38FF2B0007B0A2 /* DPHitoePoseEstimationProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE4EBB91D38FF2B0007B0A2 /* DPHitoePoseEstimationProfile.m */; };
 		ABE4EBBD1D3906DA0007B0A2 /* DPHitoeStressEstimationProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE4EBBC1D3906DA0007B0A2 /* DPHitoeStressEstimationProfile.m */; };
 		ABE4EBC01D3909850007B0A2 /* DPHitoeWalkStateProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE4EBBF1D3909850007B0A2 /* DPHitoeWalkStateProfile.m */; };
@@ -287,6 +288,8 @@
 		ABD3345A1D45B67F00D05903 /* HitoeShirtDialog_iPad.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = HitoeShirtDialog_iPad.storyboard; sourceTree = "<group>"; };
 		ABD3345B1D45B84300D05903 /* HitoeWakeupDialog_iPad.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = HitoeWakeupDialog_iPad.storyboard; sourceTree = "<group>"; };
 		ABD3345C1D45BBFA00D05903 /* PinCodeDialog_iPad.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = PinCodeDialog_iPad.storyboard; sourceTree = "<group>"; };
+		ABDDDF801D485153002EFF57 /* DPHitoeService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHitoeService.h; sourceTree = "<group>"; };
+		ABDDDF811D485153002EFF57 /* DPHitoeService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHitoeService.m; sourceTree = "<group>"; };
 		ABE4EBB81D38FF2B0007B0A2 /* DPHitoePoseEstimationProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DPHitoePoseEstimationProfile.h; path = dConnectDeviceHitoe/Classes/profile/DPHitoePoseEstimationProfile.h; sourceTree = SOURCE_ROOT; };
 		ABE4EBB91D38FF2B0007B0A2 /* DPHitoePoseEstimationProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DPHitoePoseEstimationProfile.m; path = dConnectDeviceHitoe/Classes/profile/DPHitoePoseEstimationProfile.m; sourceTree = SOURCE_ROOT; };
 		ABE4EBBB1D3906DA0007B0A2 /* DPHitoeStressEstimationProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DPHitoeStressEstimationProfile.h; path = dConnectDeviceHitoe/Classes/profile/DPHitoeStressEstimationProfile.h; sourceTree = SOURCE_ROOT; };
@@ -564,6 +567,8 @@
 				ABF6C3B11D2B7903006B1B91 /* DPHitoeDevicePlugin.h */,
 				ABF6C3B21D2B7903006B1B91 /* DPHitoeDevicePlugin.m */,
 				AB3D3E671D2B7D44004290BA /* DPHitoeConsts.h */,
+				ABDDDF801D485153002EFF57 /* DPHitoeService.h */,
+				ABDDDF811D485153002EFF57 /* DPHitoeService.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -840,6 +845,7 @@
 				AB1F4AB51D38D76F005784D9 /* DPHitoeECGProfile.m in Sources */,
 				AB1EC2911D41CFEE005172E7 /* DPHitoeControlBatteryViewController.m in Sources */,
 				AB507EE81D31E87A0014C504 /* DPHitoeManager.m in Sources */,
+				ABDDDF821D485153002EFF57 /* DPHitoeService.m in Sources */,
 				AB2E14F21D2F661700564A5E /* DPHitoeProgressDialog.m in Sources */,
 				AB507ED71D30DE270014C504 /* DPHitoeDBManager.m in Sources */,
 				AB1F4AAB1D387B45005784D9 /* DPHitoeHealthProfile.m in Sources */,

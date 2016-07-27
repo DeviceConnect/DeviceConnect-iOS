@@ -43,7 +43,7 @@
         [DConnectServiceDiscoveryProfile setId:device.serviceId target:service];
         [DConnectServiceDiscoveryProfile setName:device.name
                                           target:service];
-        [DConnectServiceDiscoveryProfile setType:DConnectServiceDiscoveryProfileNetworkTypeWiFi
+        [DConnectServiceDiscoveryProfile setType:DConnectServiceDiscoveryProfileNetworkTypeBLE
                                           target:service];
         [DConnectServiceDiscoveryProfile setOnline:device.isRegisterFlag target:service];
         [DConnectServiceDiscoveryProfile setScopesWithProvider:self.provider
