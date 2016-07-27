@@ -15,9 +15,13 @@
 #import "DPHitoeHeartRateData.h"
 #import "DPHitoeHeartData.h"
 #import "DPHitoeDevice.h"
+#import "DPHitoeEventDispatcher.h"
+#import "DPHitoeEventDispatcherFactory.h"
+#import "DPHitoeEventDispatcherManager.h"
 
 @interface DPHitoeHealthProfile()
 @property DConnectEventManager *eventMgr;
+@property DPHitoeEventDispatcherManager *dispatcherManager;
 @property (nonatomic, copy) void (^heartRateReceived)(DPHitoeDevice *device, DPHitoeHeartRateData *heartRate);
 
 @end
@@ -31,6 +35,7 @@
         
         // イベントマネージャを取得
         self.eventMgr = [DConnectEventManager sharedManagerForClass:[DPHitoeDevicePlugin class]];
+        self.dispatcherManager = [DPHitoeEventDispatcherManager new];
         __unsafe_unretained typeof(self) weakSelf = self;
         self.heartRateReceived = ^(DPHitoeDevice *device, DPHitoeHeartRateData *heartRate) {
             [weakSelf notifyReceiveDataForDevice:device data:heartRate];
@@ -88,8 +93,14 @@ didReceiveGetHeartRequest:(DConnectRequestMessage *)request
         } else {
             switch ([_eventMgr addEventForRequest:request]) {
                 case DConnectEventErrorNone:             // エラー無し.
+                {
                     [response setResult:DConnectMessageResultTypeOk];
                     mgr.heartRateReceived = self.heartRateReceived;
+                    DPHitoeEventDispatcher *dispatcher = [DPHitoeEventDispatcherFactory createEventDispatcherForDevicePlugin:self.provider
+                                                                                                                     request:request];
+                    [_dispatcherManager addEventDispatcherForServiceId:serviceId dispatcher:dispatcher];
+
+                }
                     break;
                 case DConnectEventErrorInvalidParameter: // 不正なパラメータ.
                     [response setErrorToInvalidRequestParameter];
@@ -125,7 +136,7 @@ didReceiveGetHeartRequest:(DConnectRequestMessage *)request
             [response setErrorToNotFoundService];
             return YES;
         } else {
-
+            [_dispatcherManager removeEventDispacherForServiceId:serviceId];
             switch ([_eventMgr removeEventForRequest:request]) {
                 case DConnectEventErrorNone:             // エラー無し.
                     [response setResult:DConnectMessageResultTypeOk];
@@ -170,7 +181,7 @@ didReceiveGetHeartRequest:(DConnectRequestMessage *)request
     for (DConnectEvent *evt in evts) {
         DConnectMessage *eventMsg = [DConnectEventManager createEventMessageWithEvent:evt];
         [DCMHealthProfile setHeart:[self getHeartRateMessageForHeartRateData:data] target:eventMsg];
-        [((DPHitoeDevicePlugin *)self.provider) sendEvent:eventMsg];
+        [_dispatcherManager sendEventForServiceId:device.serviceId message:eventMsg];
     }
 }
 

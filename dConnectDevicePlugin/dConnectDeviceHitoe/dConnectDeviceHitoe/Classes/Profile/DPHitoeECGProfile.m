@@ -15,9 +15,13 @@
 #import "DPHitoeHeartRateData.h"
 #import "DPHitoeHeartData.h"
 #import "DPHitoeDevice.h"
+#import "DPHitoeEventDispatcher.h"
+#import "DPHitoeEventDispatcherFactory.h"
+#import "DPHitoeEventDispatcherManager.h"
 
 @interface DPHitoeECGProfile()
 @property DConnectEventManager *eventMgr;
+@property DPHitoeEventDispatcherManager *dispatcherManager;
 @property (nonatomic, copy) void (^ecgReceived)(DPHitoeDevice *device, DPHitoeHeartRateData *ecg);
 
 @end
@@ -31,6 +35,7 @@
         
         // イベントマネージャを取得
         self.eventMgr = [DConnectEventManager sharedManagerForClass:[DPHitoeDevicePlugin class]];
+        self.dispatcherManager = [DPHitoeEventDispatcherManager new];
         __unsafe_unretained typeof(self) weakSelf = self;
         
         self.ecgReceived = ^(DPHitoeDevice *device, DPHitoeHeartRateData *ecg) {
@@ -89,8 +94,14 @@ didReceiveGetOnECGRequest:(DConnectRequestMessage *)request
         } else {
             switch ([_eventMgr addEventForRequest:request]) {
                 case DConnectEventErrorNone:             // エラー無し.
+                {
                     [response setResult:DConnectMessageResultTypeOk];
                     mgr.ecgReceived = self.ecgReceived;
+                    DPHitoeEventDispatcher *dispatcher = [DPHitoeEventDispatcherFactory createEventDispatcherForDevicePlugin:self.provider
+                                                                                                                     request:request];
+                    [_dispatcherManager addEventDispatcherForServiceId:serviceId dispatcher:dispatcher];
+
+                }
                     break;
                 case DConnectEventErrorInvalidParameter: // 不正なパラメータ.
                     [response setErrorToInvalidRequestParameter];
@@ -126,7 +137,7 @@ didReceiveGetOnECGRequest:(DConnectRequestMessage *)request
             [response setErrorToNotFoundService];
             return YES;
         } else {
-            
+            [_dispatcherManager removeEventDispacherForServiceId:serviceId];
             switch ([_eventMgr removeEventForRequest:request]) {
                 case DConnectEventErrorNone:             // エラー無し.
                     [response setResult:DConnectMessageResultTypeOk];
@@ -156,7 +167,7 @@ didReceiveGetOnECGRequest:(DConnectRequestMessage *)request
     for (DConnectEvent *evt in evts) {
         DConnectMessage *eventMsg = [DConnectEventManager createEventMessageWithEvent:evt];
         [DCMECGProfile setECG:[data.ecg toDConnectMessage] target:eventMsg];
-        [((DPHitoeDevicePlugin *)self.provider) sendEvent:eventMsg];
+        [_dispatcherManager sendEventForServiceId:device.serviceId message:eventMsg];
     }
 }
 
