@@ -26,116 +26,128 @@
     if (self) {
         self.plugin = plugin;
         self.delegate = self;
+        __weak DPIRKitTVProfile *weakSelf = self;
+        
+        // API登録(didReceivePutTVRequest相当)
+        NSString *putTVRequestApiPath = [self apiPathWithProfile: self.profileName
+                                                           interfaceName: nil
+                                                           attributeName: nil];
+        [self addPutPath: putTVRequestApiPath
+                     api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+
+                         NSString *serviceId = [request serviceId];
+                         NSString *uri = [NSString stringWithFormat:@"/%@",[request profile]];
+                         
+                         return [weakSelf sendTVIRRequestWithServiceId:serviceId
+                                                                method:@"PUT"
+                                                                   uri:uri
+                                                              response:response];
+                     }];
+        
+        // API登録(didReceiveDeleteTVRequest相当)
+        NSString *deleteTVRequestApiPath = [self apiPathWithProfile: self.profileName
+                                                      interfaceName: nil
+                                                      attributeName: nil];
+        [self addDeletePath: deleteTVRequestApiPath
+                        api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+
+                            NSString *serviceId = [request serviceId];
+                            NSString *uri = [NSString stringWithFormat:@"/%@",[request profile]];
+                            
+                            return [weakSelf sendTVIRRequestWithServiceId:serviceId
+                                                                   method:@"DELETE"
+                                                                      uri:uri
+                                                                 response:response];
+                        }];
+        
+        // API登録(didReceivePutTVChannelRequest相当)
+        NSString *putTVChannelRequestApiPath = [self apiPathWithProfile: self.profileName
+                                                          interfaceName: nil
+                                                          attributeName: DCMTVProfileAttrChannel];
+        [self addPutPath: putTVChannelRequestApiPath
+                     api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+
+                         NSString *serviceId = [request serviceId];
+                         NSString *tuning = [request stringForKey:DCMTVProfileParamTuning];
+                         NSString *control = [request stringForKey:DCMTVProfileParamControl];
+                         NSString *uri = [NSString stringWithFormat:@"/%@/%@?%@=%@",
+                                          [request profile],
+                                          [request attribute],
+                                          DCMTVProfileParamControl,
+                                          control];
+                         if (tuning) {
+                             uri = [NSString stringWithFormat:@"/%@/%@?%@=%@",
+                                    [request profile],
+                                    [request attribute],
+                                    DCMTVProfileParamTuning,
+                                    tuning];
+                         } else if (tuning && control) {
+                             uri = [NSString stringWithFormat:@"/%@/%@?%@=%@&%@=%@",
+                                    [request profile],
+                                    [request attribute],
+                                    DCMTVProfileParamTuning,
+                                    tuning,
+                                    DCMTVProfileParamControl,
+                                    control];
+                             
+                             
+                         }
+                         
+                         return [weakSelf sendTVIRRequestWithServiceId:serviceId
+                                                                method:@"PUT"
+                                                                   uri:uri
+                                                              response:response];
+                         
+                     }];
+        
+        // API登録(didReceivePutTVVolumeRequest相当)
+        NSString *putTVVolumeRequestApiPath = [self apiPathWithProfile: self.profileName
+                                                         interfaceName: nil
+                                                         attributeName: DCMTVProfileAttrVolume];
+        [self addPutPath: putTVVolumeRequestApiPath
+                     api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+                         
+                         NSString *serviceId = [request serviceId];
+                         NSString *control = [request stringForKey:DCMTVProfileParamControl];
+
+                         NSString *uri = [NSString stringWithFormat:@"/%@/%@?%@=%@",
+                                          [request profile],
+                                          [request attribute],
+                                          DCMTVProfileParamControl,
+                                          control];
+                         
+                         return [weakSelf sendTVIRRequestWithServiceId:serviceId
+                                                                method:@"PUT"
+                                                                   uri:uri
+                                                              response:response];
+                         
+                     }];
+        
+        // API登録(didReceivePutTVBroadcastWaveRequest相当)
+        NSString *putTVBroadcastWaveRequestApiPath = [self apiPathWithProfile: self.profileName
+                                                                interfaceName: nil
+                                                                attributeName: DCMTVProfileAttrVolume];
+        [self addPutPath: putTVBroadcastWaveRequestApiPath
+                     api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+                         
+                         NSString *serviceId = [request serviceId];
+                         NSString *select = [request stringForKey:DCMTVProfileParamSelect];
+                         NSString *uri = [NSString stringWithFormat:@"/%@/%@?%@=%@",
+                                          [request profile],
+                                          [request attribute],
+                                          DCMTVProfileParamSelect,
+                                          select];
+                         
+                         return [weakSelf sendTVIRRequestWithServiceId:serviceId
+                                                                method:@"PUT"
+                                                                   uri:uri
+                                                              response:response];
+                         
+                     }];
     }
     return self;
     
 }
-
-
-- (BOOL)                        profile:(DCMTVProfile *)profile
-                 didReceivePutTVRequest:(DConnectRequestMessage *)request
-                               response:(DConnectResponseMessage *)response
-                              serviceId:(NSString *)serviceId
-{
-    NSString *uri = [NSString stringWithFormat:@"/%@",[request profile]];
-
-    return [self sendTVIRRequestWithServiceId:serviceId
-                                       method:@"PUT"
-                                          uri:uri
-                                     response:response];
-}
-
-- (BOOL)                        profile:(DCMTVProfile *)profile
-              didReceiveDeleteTVRequest:(DConnectRequestMessage *)request
-                               response:(DConnectResponseMessage *)response
-                              serviceId:(NSString *)serviceId
-{
-    NSString *uri = [NSString stringWithFormat:@"/%@",[request profile]];
-    
-    return [self sendTVIRRequestWithServiceId:serviceId
-                                       method:@"DELETE"
-                                          uri:uri
-                                     response:response];
-}
-
-- (BOOL)                        profile:(DCMTVProfile *)profile
-          didReceivePutTVChannelRequest:(DConnectRequestMessage *)request
-                               response:(DConnectResponseMessage *)response
-                              serviceId:(NSString *)serviceId
-                                 tuning:(NSString *)tuning
-                                 control:(NSString *)control
-{
-    NSString *uri = [NSString stringWithFormat:@"/%@/%@?%@=%@",
-                                                 [request profile],
-                                                 [request attribute],
-                                                 DCMTVProfileParamControl,
-                                                  control];
-    if (tuning) {
-        uri = [NSString stringWithFormat:@"/%@/%@?%@=%@",
-                                                 [request profile],
-                                                 [request attribute],
-                                                 DCMTVProfileParamTuning,
-                                                 tuning];
-    } else if (tuning && control) {
-        uri = [NSString stringWithFormat:@"/%@/%@?%@=%@&%@=%@",
-               [request profile],
-               [request attribute],
-               DCMTVProfileParamTuning,
-               tuning,
-               DCMTVProfileParamControl,
-               control];
-
-        
-    }
-
-    return [self sendTVIRRequestWithServiceId:serviceId
-                                       method:@"PUT"
-                                          uri:uri
-                                     response:response];
-
-}
-
-
-- (BOOL)                        profile:(DCMTVProfile *)profile
-           didReceivePutTVVolumeRequest:(DConnectRequestMessage *)request
-                               response:(DConnectResponseMessage *)response
-                              serviceId:(NSString *)serviceId
-                                 control:(NSString *)control
-{
-    NSString *uri = [NSString stringWithFormat:@"/%@/%@?%@=%@",
-                     [request profile],
-                     [request attribute],
-                     DCMTVProfileParamControl,
-                     control];
-    
-    return [self sendTVIRRequestWithServiceId:serviceId
-                                       method:@"PUT"
-                                          uri:uri
-                                     response:response];
-    
-}
-
-
-- (BOOL)                        profile:(DCMTVProfile *)profile
-    didReceivePutTVBroadcastWaveRequest:(DConnectRequestMessage *)request
-                               response:(DConnectResponseMessage *)response
-                              serviceId:(NSString *)serviceId
-                                 select:(NSString *)select
-{
-    NSString *uri = [NSString stringWithFormat:@"/%@/%@?%@=%@",
-                     [request profile],
-                     [request attribute],
-                     DCMTVProfileParamSelect,
-                     select];
-    
-    return [self sendTVIRRequestWithServiceId:serviceId
-                                       method:@"PUT"
-                                          uri:uri
-                                     response:response];
-    
-}
-
-
 
 
 #pragma mark - private method
