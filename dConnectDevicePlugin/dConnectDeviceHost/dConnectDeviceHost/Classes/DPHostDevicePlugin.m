@@ -8,25 +8,13 @@
 //
 
 #import <DConnectSDK/DConnectFileManager.h>
+#import <DConnectSDK/DConnectEventManager.h>
+#import <DConnectSDK/DConnectMemoryCacheController.h>
+#import <DConnectSDK/DConnectServiceManager.h>
 
 #import "DPHostDevicePlugin.h"
-
-#import "DPHostBatteryProfile.h"
-#import "DPHostDeviceOrientationProfile.h"
-#import "DPHostFileDescriptorProfile.h"
-#import "DPHostFileProfile.h"
-#import "DPHostMediaPlayerProfile.h"
-#import "DPHostMediaStreamRecordingProfile.h"
-#import "DPHostServiceDiscoveryProfile.h"
-#import "DPHostNotificationProfile.h"
-#import "DPHostPhoneProfile.h"
-#import "DPHostProximityProfile.h"
-#import "DPHostSettingsProfile.h"
 #import "DPHostSystemProfile.h"
-#import "DPHostVibrationProfile.h"
-#import "DPHostConnectProfile.h"
-#import "DPHostCanvasProfile.h"
-#import "DPHostTouchProfile.h"
+#import "DPHostService.h"
 
 @implementation DPHostDevicePlugin
 
@@ -39,30 +27,17 @@
 }
 
 - (id) init {
-    self = [super init];
+    self = [super initWithObject: self];
     if (self) {
         self.fileMgr = [DConnectFileManager fileManagerForPlugin:self];
-        
         self.pluginName = @"Host (Device Connect Device Plug-in)";
         
+        // サービス追加
+        DConnectService *hostService = [[DPHostService alloc] initWithFileManager: self.fileMgr];
+        [self.mServiceProvider addService: hostService];
+        
         // プロファイルを追加
-        [self addProfile:[DPHostBatteryProfile new]];
-        [self addProfile:[DPHostDeviceOrientationProfile new]];
-        [self addProfile:[[DPHostFileDescriptorProfile alloc] initWithFileManager:self.fileMgr]];
-        [self addProfile:[DPHostFileProfile new]];
-        [self addProfile:[DPHostMediaPlayerProfile new]];
-        [self addProfile:[DPHostMediaStreamRecordingProfile new]];
-        [self addProfile:[DPHostServiceDiscoveryProfile new]];
-        [self addProfile:[DPHostNotificationProfile new]];
-        [self addProfile:[DPHostPhoneProfile new]];
-        [self addProfile:[DPHostProximityProfile new]];
-        [self addProfile:[DPHostSettingsProfile new]];
         [self addProfile:[DPHostSystemProfile new]];
-        [self addProfile:[DPHostVibrationProfile new]];
-        [self addProfile:[DPHostConnectProfile new]];
-        [self addProfile:[DPHostCanvasProfile new]];
-        [self addProfile:[DConnectServiceInformationProfile new]];
-        [self addProfile:[DPHostTouchProfile new]];
     }
     return self;
 }

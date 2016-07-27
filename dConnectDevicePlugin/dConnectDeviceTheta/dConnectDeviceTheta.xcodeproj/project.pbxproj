@@ -69,7 +69,6 @@
 		AB50D0C51B40DE1600EB9F94 /* PtpOperator.m in Sources */ = {isa = PBXBuildFile; fileRef = AB50D0891B40DD3700EB9F94 /* PtpOperator.m */; };
 		AB50D0E41B40E70E00EB9F94 /* DConnectSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB50D0E21B40E70E00EB9F94 /* DConnectSDK.framework */; };
 		AB50D0EB1B40F0C300EB9F94 /* DPThetaBatteryProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = AB50D0E61B40F0C300EB9F94 /* DPThetaBatteryProfile.m */; };
-		AB50D0EC1B40F0C300EB9F94 /* DPThetaServiceDiscoveryProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = AB50D0E81B40F0C300EB9F94 /* DPThetaServiceDiscoveryProfile.m */; };
 		AB50D0ED1B40F0C300EB9F94 /* DPThetatSystemProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = AB50D0EA1B40F0C300EB9F94 /* DPThetatSystemProfile.m */; };
 		AB50D0F01B40F32B00EB9F94 /* DPThetaManager.m in Sources */ = {isa = PBXBuildFile; fileRef = AB50D0EF1B40F32B00EB9F94 /* DPThetaManager.m */; };
 		AB585CB31B7B0BF700253141 /* DPThetaMixedReplaceMediaServer.m in Sources */ = {isa = PBXBuildFile; fileRef = AB585CB21B7B0BF700253141 /* DPThetaMixedReplaceMediaServer.m */; };
@@ -99,6 +98,7 @@
 		ABDC9ACE1B54987B002AF9DD /* thetaOn@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = ABDC9AC91B54987B002AF9DD /* thetaOn@2x.png */; };
 		ABDC9ACF1B54987B002AF9DD /* thetaStandby@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = ABDC9ACA1B54987B002AF9DD /* thetaStandby@2x.png */; };
 		ABDC9AD01B54987B002AF9DD /* thetaWiFi@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = ABDC9ACB1B54987B002AF9DD /* thetaWiFi@2x.png */; };
+		D6C8602F1D39F1D900232EEF /* DPThetaService.m in Sources */ = {isa = PBXBuildFile; fileRef = D6C8602E1D39F1D900232EEF /* DPThetaService.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -196,8 +196,6 @@
 		AB50D0E21B40E70E00EB9F94 /* DConnectSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DConnectSDK.framework; path = ../../dConnectSDK/dConnectSDKForIOS/bin/DConnectSDK.framework; sourceTree = "<group>"; };
 		AB50D0E51B40F0C300EB9F94 /* DPThetaBatteryProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPThetaBatteryProfile.h; sourceTree = "<group>"; };
 		AB50D0E61B40F0C300EB9F94 /* DPThetaBatteryProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPThetaBatteryProfile.m; sourceTree = "<group>"; };
-		AB50D0E71B40F0C300EB9F94 /* DPThetaServiceDiscoveryProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPThetaServiceDiscoveryProfile.h; sourceTree = "<group>"; };
-		AB50D0E81B40F0C300EB9F94 /* DPThetaServiceDiscoveryProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPThetaServiceDiscoveryProfile.m; sourceTree = "<group>"; };
 		AB50D0E91B40F0C300EB9F94 /* DPThetaSystemProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPThetaSystemProfile.h; sourceTree = "<group>"; };
 		AB50D0EA1B40F0C300EB9F94 /* DPThetatSystemProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPThetatSystemProfile.m; sourceTree = "<group>"; };
 		AB50D0EE1B40F32B00EB9F94 /* DPThetaManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPThetaManager.h; sourceTree = "<group>"; };
@@ -244,6 +242,8 @@
 		ABDC9AC91B54987B002AF9DD /* thetaOn@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "thetaOn@2x.png"; sourceTree = "<group>"; };
 		ABDC9ACA1B54987B002AF9DD /* thetaStandby@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "thetaStandby@2x.png"; sourceTree = "<group>"; };
 		ABDC9ACB1B54987B002AF9DD /* thetaWiFi@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "thetaWiFi@2x.png"; sourceTree = "<group>"; };
+		D6C8602D1D39F1D900232EEF /* DPThetaService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPThetaService.h; sourceTree = "<group>"; };
+		D6C8602E1D39F1D900232EEF /* DPThetaService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPThetaService.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -344,6 +344,8 @@
 				AB50D0131B40D6EB00EB9F94 /* DPThetaDevicePlugin.m */,
 				AB50D0EE1B40F32B00EB9F94 /* DPThetaManager.h */,
 				AB50D0EF1B40F32B00EB9F94 /* DPThetaManager.m */,
+				D6C8602D1D39F1D900232EEF /* DPThetaService.h */,
+				D6C8602E1D39F1D900232EEF /* DPThetaService.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -502,8 +504,6 @@
 			children = (
 				AB50D0E51B40F0C300EB9F94 /* DPThetaBatteryProfile.h */,
 				AB50D0E61B40F0C300EB9F94 /* DPThetaBatteryProfile.m */,
-				AB50D0E71B40F0C300EB9F94 /* DPThetaServiceDiscoveryProfile.h */,
-				AB50D0E81B40F0C300EB9F94 /* DPThetaServiceDiscoveryProfile.m */,
 				AB50D0E91B40F0C300EB9F94 /* DPThetaSystemProfile.h */,
 				AB50D0EA1B40F0C300EB9F94 /* DPThetatSystemProfile.m */,
 				ABCA999F1B44F73E001C2AA1 /* DPThetaMediaStreamRecordingProfile.h */,
@@ -729,6 +729,7 @@
 				AB055EA31B8AAB1D0078128B /* DPOmnidirectionalImageProfile.m in Sources */,
 				AB50D0B01B40DE1600EB9F94 /* basictypes.cpp in Sources */,
 				AB585CB31B7B0BF700253141 /* DPThetaMixedReplaceMediaServer.m in Sources */,
+				D6C8602F1D39F1D900232EEF /* DPThetaService.m in Sources */,
 				AB50D0B11B40DE1600EB9F94 /* bufferedsock.cpp in Sources */,
 				AB50D0B21B40DE1600EB9F94 /* bytestream.cpp in Sources */,
 				AB50D0B31B40DE1600EB9F94 /* exceptions.cpp in Sources */,
@@ -764,7 +765,6 @@
 				AB50D0141B40D6EB00EB9F94 /* DPThetaDevicePlugin.m in Sources */,
 				ABC2D3B81B86B03E0033AE4A /* DPThetaRoiDeliveryContext.m in Sources */,
 				ABC2D3B01B8571420033AE4A /* DPThetaParam.m in Sources */,
-				AB50D0EC1B40F0C300EB9F94 /* DPThetaServiceDiscoveryProfile.m in Sources */,
 				ABC2D3AD1B84866E0033AE4A /* DPThetaCameraBuilder.m in Sources */,
 				AB585CBB1B7C18EA00253141 /* DPThetaUVSphere.m in Sources */,
 			);

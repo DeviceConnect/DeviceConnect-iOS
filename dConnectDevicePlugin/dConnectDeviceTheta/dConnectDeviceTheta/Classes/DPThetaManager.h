@@ -21,6 +21,7 @@ return YES; \
 
 // イベント送信用のマクロ
 #define SELF_PLUGIN ((DPThetaDevicePlugin *)self.provider)
+#define WEAKSELF_PLUGIN ((DPThetaDevicePlugin *)weakSelf.provider)
 
 
 /*!
@@ -30,6 +31,11 @@ return YES; \
  Thetaの機能を管理する。
  */
 @interface DPThetaManager : NSObject
+
+/*!
+ @brief ServiceProvider.
+ */
+@property DConnectServiceProvider *mServiceProvider;
 
 /*!
  @brief DConnectのFileManager。
@@ -64,6 +70,12 @@ typedef void (^DPThetaOnStatusChangeCallback)(PtpIpObjectInfo *object, NSString 
  @return DPSpheroManagerの共有インスタンス。
  */
 + (instancetype)sharedManager;
+
+/*!
+ @brief ServiceProviderを登録する。
+ @param[in] serviceProvider ServiceProvider
+ */
+- (void)setServiceProvider: (DConnectServiceProvider *) serviceProvider;
 
 /*!
  @brief Thetaと接続する。

@@ -11,7 +11,6 @@
 #import "DPHostCanvasUIViewController.h"
 #import "DPHostCanvasDrawImage.h"
 
-
 #define PutPresentedViewController(top) \
 top = [UIApplication sharedApplication].keyWindow.rootViewController; \
 while (top.presentedViewController) { \
@@ -21,11 +20,9 @@ top = top.presentedViewController; \
 #define _Bundle() \
 [NSBundle bundleWithPath:[[NSBundle mainBundle] pathForResource:@"dConnectDeviceHost_resources" ofType:@"bundle"]]
 
+@interface DPHostCanvasProfile ()
 
-
-@interface DPHostCanvasProfile () {
-DPHostCanvasUIViewController *_displayViewController;
-}
+@property(nonatomic, weak) DPHostCanvasUIViewController * displayViewController;
 
 @end
 
@@ -36,75 +33,100 @@ DPHostCanvasUIViewController *_displayViewController;
     self = [super init];
     if (self) {
         self.delegate = self;
-        _displayViewController = nil;
+        [self setDisplayViewController: nil];
+        __weak DPHostCanvasProfile *weakSelf = self;
+        
+        // API登録(didReceivePostDrawImageRequest相当)
+        NSString *postDrawImageRequestApiPath = [self apiPathWithProfile: self.profileName
+                                                        interfaceName: nil
+                                                        attributeName: DConnectCanvasProfileAttrDrawImage];
+        [self addPostPath: postDrawImageRequestApiPath
+                     api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+
+                         BOOL send = YES;
+                         
+                         NSData *data = [DConnectCanvasProfile dataFromRequest:request];
+                         NSString *uri = [DConnectCanvasProfile uriFromRequest:request];
+                         NSString *serviceId = [request serviceId];
+                         NSString *mimeType = [DConnectCanvasProfile mimeTypeFromRequest:request];
+                         NSString *strX = [DConnectCanvasProfile xFromRequest: request];
+                         NSString *strY = [DConnectCanvasProfile yFromRequest: request];
+                         
+                         if (mimeType != nil && ![weakSelf isMimeTypeWithString: mimeType]) {
+                             [response setErrorToInvalidRequestParameterWithMessage: @"mimeType format is incorrect."];
+                             return send;
+                         }
+                         if (strX != nil && ![weakSelf isFloatWithString: strX]) {
+                             [response setErrorToInvalidRequestParameterWithMessage: @"x is different type."];
+                             return send;
+                         }
+                         if (strY != nil && ![weakSelf isFloatWithString: strY]) {
+                             [response setErrorToInvalidRequestParameterWithMessage: @"y is different type."];
+                             return send;
+                         }
+                         double imageX = strX.doubleValue;
+                         double imageY = strY.doubleValue;
+                         NSString *mode = [DConnectCanvasProfile modeFromRequest: request];
+                         
+                         
+                         if (serviceId == nil || [serviceId length] <= 0) {
+                             [response setErrorToEmptyServiceId];
+                             return YES;
+                         }
+                         
+                         NSData *canvas = data;
+                         if (uri || [uri length] > 0) {
+                             canvas = [NSData dataWithContentsOfURL:[NSURL URLWithString:uri]];
+                             if (!canvas) {
+                                 canvas = data;
+                             }
+                         }
+                         if (canvas == nil || [canvas length] <= 0) {
+                             [response setErrorToInvalidRequestParameterWithMessage:@"data is not specied to update a file."];
+                             return YES;
+                         }
+                         
+                         DPHostCanvasDrawImage *drawImage = [[DPHostCanvasDrawImage alloc]
+                                                             initWithParameter:canvas
+                                                             imageX:imageX
+                                                             imageY:imageY
+                                                             mode:mode];
+                         if ([weakSelf displayViewController] == nil) {
+                             /* start ViewController */
+                             dispatch_async(dispatch_get_main_queue(), ^{
+                                 DPHostCanvasUIViewController * displayViewController = [weakSelf presentCanvasProfileViewController: response drawObject: drawImage];
+                                 [weakSelf setDisplayViewController: displayViewController];
+                             });
+                         } else {
+                             dispatch_async(dispatch_get_main_queue(), ^{
+                                 [[weakSelf displayViewController] setDrawObject: drawImage];
+                                 [response setResult:DConnectMessageResultTypeOk];
+                                 [[DConnectManager sharedManager] sendResponse:response];
+                             });
+                         }
+                         
+                         return NO;
+                     }];
+        
+        // API登録(didReceiveDeleteDrawImageRequest相当)
+        NSString *deleteDrawImageRequestApiPath = [self apiPathWithProfile: self.profileName
+                                                           interfaceName: nil
+                                                           attributeName: DConnectCanvasProfileAttrDrawImage];
+        [self addDeletePath: deleteDrawImageRequestApiPath
+                      api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+                          
+                          if ([weakSelf displayViewController]) {
+                              dispatch_async(dispatch_get_main_queue(), ^{
+                                  [[weakSelf displayViewController] dismissViewControllerAnimated:YES completion:nil];
+                              });
+                              [response setResult:DConnectMessageResultTypeOk];
+                          } else {
+                              [response setErrorToIllegalDeviceStateWithMessage:@"the canvas is not displayed."];
+                          }
+                          return YES;
+                      }];
     }
     return self;
-}
-
-#pragma mark - DConnect
-
-- (BOOL) profile:(DConnectCanvasProfile *)profile didReceivePostDrawImageRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response
-        serviceId:(NSString *)serviceId
-        mimeType:(NSString *)mimeType
-            data:(NSData *)data
-             uri:(NSString *)uri
-          imageX:(double)imageX
-          imageY:(double)imageY
-            mode:(NSString *)mode
-{
-    if (serviceId == nil || [serviceId length] <= 0) {
-        [response setErrorToEmptyServiceId];
-        return YES;
-    }
-    
-    NSData *canvas = data;
-    if (uri || [uri length] > 0) {
-       canvas = [NSData dataWithContentsOfURL:[NSURL URLWithString:uri]];
-       if (!canvas) {
-            canvas = data;
-        }
-    }
-    if (canvas == nil || [canvas length] <= 0) {
-        [response setErrorToInvalidRequestParameterWithMessage:@"data is not specied to update a file."];
-        return YES;
-    }
-    
-    DPHostCanvasDrawImage *drawImage = [[DPHostCanvasDrawImage alloc]
-                                            initWithParameter:canvas
-                                                       imageX:imageX
-                                                       imageY:imageY
-                                                         mode:mode];
-    if (_displayViewController == nil) {
-        /* start ViewController */
-        dispatch_async(dispatch_get_main_queue(), ^{
-            _displayViewController = [self presentCanvasProfileViewController: response drawObject: drawImage];
-        });
-    } else {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [_displayViewController setDrawObject: drawImage];
-            [response setResult:DConnectMessageResultTypeOk];
-            [[DConnectManager sharedManager] sendResponse:response];
-        });
-    }
-
-    return NO;
-}
-
-- (BOOL)                 profile:(DConnectCanvasProfile *)profile
-didReceiveDeleteDrawImageRequest:(DConnectRequestMessage *)request
-                        response:(DConnectResponseMessage *)response
-                       serviceId:(NSString *)serviceId
-{
-    if (_displayViewController) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [_displayViewController dismissViewControllerAnimated:YES completion:nil];
-        });
-        [response setResult:DConnectMessageResultTypeOk];
-    } else {
-        [response setErrorToIllegalDeviceStateWithMessage:@"the canvas is not displayed."];
-    }
-    return YES;
 }
 
 - (void) disappearViewController {

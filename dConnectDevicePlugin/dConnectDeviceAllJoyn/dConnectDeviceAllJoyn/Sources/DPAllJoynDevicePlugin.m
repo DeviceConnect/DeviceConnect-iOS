@@ -36,19 +36,15 @@ static NSString *const VERSION = @"2.0.0";
         return nil;
     }
     
-    self = [super init];
+    self = [super initWithObject: self];
     if (self) {
         self.pluginName = @"AllJoyn (Device Connect Device Plug-in)";
         
         _handler = [DPAllJoynHandler new];
+        [_handler setServiceProvider: self.mServiceProvider];
         
         // Add profiles.
-        [self addProfile:[[DPAllJoynServiceDiscoveryProfile alloc]
-                          initWithHandler:_handler]];
         [self addProfile:[DPAllJoynSystemProfile systemProfileWithVersion:VERSION]];
-        [self addProfile:[DConnectServiceInformationProfile new]];
-        [self addProfile:[[DPAllJoynLightProfile alloc]
-                          initWithHandler:_handler]];
         
         id block;
         block = ^(BOOL result) {

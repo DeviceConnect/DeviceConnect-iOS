@@ -41,6 +41,7 @@ NSString *const DConnectFileDescriptorProfileParamPath = @"path";
     return DConnectFileDescriptorProfileName;
 }
 
+/*
 - (BOOL) didReceiveGetRequest:(DConnectRequestMessage *)request response:(DConnectResponseMessage *)response {
     BOOL send = YES;
     
@@ -158,6 +159,7 @@ NSString *const DConnectFileDescriptorProfileParamPath = @"path";
     }
     return send;
 }
+*/
 
 #pragma mark - Setter
 /*!

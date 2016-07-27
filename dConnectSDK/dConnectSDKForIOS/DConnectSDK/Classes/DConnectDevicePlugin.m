@@ -14,6 +14,10 @@
 #import "DConnectSystemProfile.h"
 #import "DConnectConst.h"
 #import "LocalOAuth2Main.h"
+#import "DConnectApiSpecList.h"
+#import "DConnectServiceManager.h"
+#import "DConnectServiceInformationProfile.h"
+
 
 @interface DConnectDevicePlugin ()
 /**
@@ -25,17 +29,22 @@
 
 @implementation DConnectDevicePlugin
 
-- (id) init {
+- (id) initWithObject: (id) object {
     self = [super init];
     if (self) {
-        self.useLocalOAuth = YES;
         
+        // デバイスプラグインデータ設定
+        self.useLocalOAuth = YES;
         self.mProfileMap = [NSMutableDictionary dictionary];
         self.pluginName = NSStringFromClass([self class]);
         self.pluginVersionName = @"1.0.0";
+        self.mServiceProvider = [DConnectServiceManager sharedForClass: [object class]];
 
-        // Local OAuthプロファイル追加
+        // プロファイル追加
         [self addProfile:[[DConnectAuthorizationProfile alloc] initWithObject:self]];
+        [self addProfile:[[DConnectServiceDiscoveryProfile alloc] initWithServiceProvider: self.mServiceProvider]];
+        [self addProfile:[DConnectSystemProfile new]];
+        
         
         // イベント登録
         NSNotificationCenter *notificationCenter
@@ -54,18 +63,23 @@
 
 - (BOOL) executeRequest:(DConnectRequestMessage *) request response:(DConnectResponseMessage *) response
 {
-    // 指定されたプロファイルを取得する
+    // プラグインにプロファイルが存在するか？
     DConnectProfile *profile = [self profileWithName:[request profile]];
-    
-    // 各プロファイルでリクエストを処理する
-    BOOL processed = YES;
     if (profile) {
-        processed = [profile didReceiveRequest:request response:response];
-    } else {
-        [response setErrorToNotSupportProfile];
+        return [profile didReceiveRequest:request response:response];
     }
     
-    return processed;
+    // DConnectServiceにプロファイルが登録されているか？
+    DConnectServiceManager *serviceManager = [DConnectServiceManager sharedForClass: self.class];
+    DConnectService *service = [serviceManager service: [request serviceId]];
+    if (service) {
+        // TODO: onRequest → didReceiveRequest に名称変更。
+        return [service onRequest: request response: response];
+    }
+    
+    // プロファイルが存在しないのでエラー
+    [response setErrorToNotSupportProfile];
+    return YES;
 }
 
 - (BOOL) didReceiveRequest:(DConnectRequestMessage *) request response:(DConnectResponseMessage *) response
@@ -91,13 +105,6 @@
         } else if ([attribute isEqualToString:DConnectAttributeNameRequestAccessToken]) {
             [request setAttribute:DConnectAuthorizationProfileAttrAccessToken];
         }
-    }
-    
-    // プロファイルの有無をチェックする
-    DConnectProfile *profile = [self profileWithName:[request profile]];
-    if (profile == nil) {
-        [response setErrorToNotSupportProfile];
-        return YES;
     }
     
     if (self.useLocalOAuth) {
@@ -149,7 +156,7 @@
     NSString *name = [profile profileName];
     if (name) {
         [self.mProfileMap setObject:profile forKey:name];
-        profile.provider = self;
+        [self loadApiSpec: name];
     }
 }
 
@@ -173,6 +180,40 @@
         [list addObject:[self.mProfileMap objectForKey:key]];
     }
     return list;
+}
+
+- (NSArray *) serviceProfilesWithServiceId: (NSString *) serviceId {
+
+    DConnectService *service = [self.mServiceProvider service: serviceId];
+    if (service) {
+        // サービスIDに該当するサービスを検出して、そのサービスに登録されているプロファイル一覧(DConnectProfile * の配列)を取得
+        NSArray *serviceProfiles = [service profiles];
+        return serviceProfiles;
+    }
+    return nil;
+}
+
+
+
+// デバイスプラグインがaddProfile()した後にSDK側で処理を実行するタイミングがないので[loadApiSpecList]をそのまま使えない。
+// [addProfile]する毎に[loadApiSpec]を実行してApiSpecを設定する。
+- (void) loadApiSpec: (NSString *)profileName {
+    
+    if (!profileName ||
+        [DConnectAuthorizationProfileName localizedCaseInsensitiveCompare: profileName] == NSOrderedSame ||
+        [DConnectServiceDiscoveryProfileName localizedCaseInsensitiveCompare: profileName] == NSOrderedSame ||
+        [DConnectServiceInformationProfileName localizedCaseInsensitiveCompare: profileName] == NSOrderedSame ||
+        [DConnectSystemProfileName localizedCaseInsensitiveCompare: profileName] == NSOrderedSame) {
+        return;
+    }
+    
+    @try {
+        DConnectApiSpecList *specList = [DConnectApiSpecList shared];
+        [specList addApiSpecList: profileName];
+    } @catch (NSString *e) {
+        DCLogW(@"Device Connect API Specs is invalid. %@", e);
+        return;
+    }
 }
 
 @end

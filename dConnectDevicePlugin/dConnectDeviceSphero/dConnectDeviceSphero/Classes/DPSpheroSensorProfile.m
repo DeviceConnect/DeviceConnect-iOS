@@ -9,7 +9,6 @@
 #import "DPSpheroSensorProfile.h"
 #import "DPSpheroDevicePlugin.h"
 #import "DPSpheroManager.h"
-#import "DPSpheroServiceDiscoveryProfile.h"
 
 
 typedef void (^QuaternionBlock)(DConnectMessage *);

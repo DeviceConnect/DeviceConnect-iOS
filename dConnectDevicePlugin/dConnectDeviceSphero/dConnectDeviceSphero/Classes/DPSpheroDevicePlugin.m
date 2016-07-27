@@ -8,12 +8,7 @@
 //
 
 #import "DPSpheroDevicePlugin.h"
-#import "DPSpheroServiceDiscoveryProfile.h"
-#import "DPSpheroSensorProfile.h"
 #import "DPSpheroSystemProfile.h"
-#import "DPSpheroDriveControllerProfile.h"
-#import "DPSpheroLightProfile.h"
-#import "DPSpheroDeviceOrientationProfile.h"
 #import "DPSpheroManager.h"
 #import <RobotKit/RobotKit.h>
 
@@ -25,7 +20,7 @@
 // 初期化
 - (id) init
 {
-    self = [super init];
+    self = [super initWithObject: self];
     
     if (self) {
         self.pluginName = @"Sphero (Device Connect Device Plug-in)";
@@ -33,24 +28,12 @@
         Class key = [self class];
         [[DConnectEventManager sharedManagerForClass:key]
                 setController:[DConnectMemoryCacheController new]];
-
-        // Service Discovery Profileの追加
-        DPSpheroServiceDiscoveryProfile *networkProfile = [DPSpheroServiceDiscoveryProfile new];
         
+        [[DPSpheroManager sharedManager] setServiceProvider: self.mServiceProvider];
+
         // System Profileの追加
-        DPSpheroSystemProfile *systemProfile = [DPSpheroSystemProfile new];
-        // Sphero Profileの追加
-        DPSpheroSensorProfile *spheroProfile = [DPSpheroSensorProfile new];
-        DPSpheroDriveControllerProfile *DCMDriveControllerProfile = [DPSpheroDriveControllerProfile new];
-        DPSpheroLightProfile *DConnectLightProfile = [DPSpheroLightProfile new];
-        DPSpheroDeviceOrientationProfile *deviceorientationProfile = [DPSpheroDeviceOrientationProfile new];
-        [self addProfile:networkProfile];
-        [self addProfile:systemProfile];
-        [self addProfile:spheroProfile];
-        [self addProfile:DCMDriveControllerProfile];
-        [self addProfile:DConnectLightProfile];
-        [self addProfile:deviceorientationProfile];
-        [self addProfile:[DConnectServiceInformationProfile new]];
+        [self addProfile:[DPSpheroSystemProfile new]];
+
         __weak typeof(self) _self = self;
         dispatch_async(dispatch_get_main_queue(), ^{
             NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];

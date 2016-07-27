@@ -127,23 +127,18 @@ NSString *const DConnectLightProfileParamGroupName = @"groupName";
                                          flashing:)
                       response:response])
         {
-            NSString *lightId = [request stringForKey:DConnectLightProfileParamLightId];
-            NSNumber *brightness = nil;
-            if ([request objectForKey:DConnectLightProfileParamBrightness]) {
-                brightness =
-                [DConnectLightProfile parseBrightParam:
-                 [request objectForKey:DConnectLightProfileParamBrightness]];
-                if (!brightness
-                    || (brightness && ([brightness doubleValue] < 0.0 || [brightness doubleValue] > 1.0))) {
-                    [response setErrorToInvalidRequestParameterWithMessage:
-                     @"Parameter 'brightness' must be a value between 0 and 1.0."];
-                    return YES;
-                }
+            NSString *lightId = [DConnectLightProfile lightIdFromRequest: request];
+            NSNumber *brightness = [DConnectLightProfile brightnessFromRequest: request];
+            NSString *color = [DConnectLightProfile colorFromRequest: request];
+            NSArray *flashing = [DConnectLightProfile parsePattern: [DConnectLightProfile flashingFromRequest: request] isId:NO];
+            
+            if (!brightness
+                || (brightness && ([brightness doubleValue] < 0.0 || [brightness doubleValue] > 1.0))) {
+                [response setErrorToInvalidRequestParameterWithMessage:
+                 @"Parameter 'brightness' must be a value between 0 and 1.0."];
+                return YES;
             }
-            NSString *color = [request stringForKey:DConnectLightProfileParamColor];
-            NSArray *flashing =
-            [DConnectLightProfile parsePattern:
-             [request stringForKey:DConnectLightProfileParamFlashing] isId:NO];
+
             if (!flashing) {
                 [response setErrorToInvalidRequestParameterWithMessage:
                  @"Parameter 'flashing' invalid."];
@@ -174,23 +169,16 @@ NSString *const DConnectLightProfileParamGroupName = @"groupName";
                                                 flashing:)
                              response:response])
         {
-            NSString *groupId = [request stringForKey:DConnectLightProfileParamGroupId];
-            NSNumber *brightness = nil;
-            if ([request objectForKey:DConnectLightProfileParamBrightness]) {
-                brightness =
-                [DConnectLightProfile parseBrightParam:
-                 [request objectForKey:DConnectLightProfileParamBrightness]];
-                if (!brightness
-                    || (brightness && ([brightness doubleValue] < 0.0 || [brightness doubleValue] > 1.0))) {
-                    [response setErrorToInvalidRequestParameterWithMessage:
-                     @"Parameter 'brightness' must be a value between 0 and 1.0."];
-                    return YES;
-                }
+            NSString *groupId = [DConnectLightProfile groupIdFromRequest: request];
+            NSNumber *brightness = [DConnectLightProfile brightnessFromRequest: request];
+            if (!brightness
+                || (brightness && ([brightness doubleValue] < 0.0 || [brightness doubleValue] > 1.0))) {
+                [response setErrorToInvalidRequestParameterWithMessage:
+                 @"Parameter 'brightness' must be a value between 0 and 1.0."];
+                return YES;
             }
-            NSString *color = [request stringForKey:DConnectLightProfileParamColor];
-            NSArray *flashing =
-            [DConnectLightProfile parsePattern:
-             [request stringForKey:DConnectLightProfileParamFlashing] isId:NO];
+            NSString *color = [DConnectLightProfile colorFromRequest: request];
+            NSArray *flashing = [DConnectLightProfile parsePattern: [DConnectLightProfile flashingFromRequest: request] isId:NO];
             if (!flashing) {
                 [response setErrorToInvalidRequestParameterWithMessage:
                  @"Parameter 'flashing' invalid."];
@@ -221,8 +209,8 @@ NSString *const DConnectLightProfileParamGroupName = @"groupName";
                                                 groupName:)
                              response:response])
         {
-            NSString *lightIds = [request stringForKey:DConnectLightProfileParamLightIds];
-            NSString *groupName = [request stringForKey:DConnectLightProfileParamGroupName];
+            NSString *lightIds = [DConnectLightProfile lightIdsFromRequest: request];
+            NSString *groupName = [DConnectLightProfile groupNameFromRequest:request];
             NSArray *pattern = [DConnectLightProfile parsePattern:lightIds isId:YES];
             send = [_delegate profile:self
 didReceivePostLightGroupCreateRequest:request
@@ -273,24 +261,17 @@ didReceivePostLightGroupCreateRequest:request
                                          flashing:)
                       response:response])
         {
-            NSString *lightId = [request stringForKey:DConnectLightProfileParamLightId];
-            NSNumber *brightness = nil;
-            if ([request objectForKey:DConnectLightProfileParamBrightness]) {
-                brightness =
-                [DConnectLightProfile parseBrightParam:
-                 [request objectForKey:DConnectLightProfileParamBrightness]];
-                if (!brightness
-                    || (brightness && ([brightness doubleValue] < 0.0 || [brightness doubleValue] > 1.0))) {
-                    [response setErrorToInvalidRequestParameterWithMessage:
-                     @"Parameter 'brightness' must be a value between 0 and 1.0."];
-                    return YES;
-                }
+            NSString *lightId = [DConnectLightProfile lightIdFromRequest: request];
+            NSNumber *brightness = [DConnectLightProfile brightnessFromRequest: request];
+            if (!brightness
+                || (brightness && ([brightness doubleValue] < 0.0 || [brightness doubleValue] > 1.0))) {
+                [response setErrorToInvalidRequestParameterWithMessage:
+                 @"Parameter 'brightness' must be a value between 0 and 1.0."];
+                return YES;
             }
             NSString *name = [request stringForKey:DConnectLightProfileParamName];
             NSString *color = [request stringForKey:DConnectLightProfileParamColor];
-            NSArray *flashing =
-            [DConnectLightProfile parsePattern:
-             [request stringForKey:DConnectLightProfileParamFlashing] isId:NO];
+            NSArray *flashing = [DConnectLightProfile parsePattern: [DConnectLightProfile flashingFromRequest: request] isId:NO];
             if (!flashing) {
                 [response setErrorToInvalidRequestParameterWithMessage:
                  @"Parameter 'flashing' invalid."];
@@ -325,26 +306,17 @@ didReceivePostLightGroupCreateRequest:request
                                                 flashing:)
                              response:response])
         {
-            NSString *groupId = [request stringForKey:DConnectLightProfileParamGroupId];
-            NSNumber *brightness = nil;
-            if ([request objectForKey:DConnectLightProfileParamBrightness]) {
-                brightness =
-                [DConnectLightProfile parseBrightParam:
-                 [request objectForKey:DConnectLightProfileParamBrightness]];
-                if (!brightness
-                    || (brightness &&  ([brightness doubleValue] < 0.0 || [brightness doubleValue] > 1.0))) {
-                    [response setErrorToInvalidRequestParameterWithMessage:
-                     @"Parameter 'brightness' must be a value between 0 and 1.0."];
-                    return YES;
-                }
-                
+            NSString *groupId = [DConnectLightProfile groupIdFromRequest: request];
+            NSNumber *brightness = [DConnectLightProfile brightnessFromRequest: request];
+            if (!brightness
+                || (brightness &&  ([brightness doubleValue] < 0.0 || [brightness doubleValue] > 1.0))) {
+                [response setErrorToInvalidRequestParameterWithMessage:
+                 @"Parameter 'brightness' must be a value between 0 and 1.0."];
+                return YES;
             }
-            NSString *name = [request stringForKey:DConnectLightProfileParamName];
-            NSString *color = [request stringForKey:DConnectLightProfileParamColor];
-            NSArray *flashing =
-            [DConnectLightProfile parsePattern:
-             [request stringForKey:DConnectLightProfileParamFlashing]
-                                     isId:NO];
+            NSString *name = [DConnectLightProfile nameFromRequest: request];
+            NSString *color = [DConnectLightProfile colorFromRequest: request];
+            NSArray *flashing = [DConnectLightProfile parsePattern: [DConnectLightProfile flashingFromRequest: request] isId:NO];
             if (!flashing) {
                 [response setErrorToInvalidRequestParameterWithMessage:
                  @"Parameter 'flashing' invalid."];
@@ -401,7 +373,7 @@ didReceivePostLightGroupCreateRequest:request
                                          lightId:)
                       response:response])
         {
-            NSString *lightId = [request stringForKey:DConnectLightProfileParamLightId];
+            NSString *lightId = [DConnectLightProfile lightIdFromRequest: request];
             send = [_delegate profile:self
          didReceiveDeleteLightRequest:request
                              response:response
@@ -451,6 +423,52 @@ didReceivePostLightGroupCreateRequest:request
     return send;
 }
 
+#pragma mark - Getter
+
++ (NSString *) lightIdFromRequest: (DConnectRequestMessage *) request {
+    NSString *lightId = [request stringForKey:DConnectLightProfileParamLightId];
+    return lightId;
+}
+
++ (NSString *) lightIdsFromRequest: (DConnectRequestMessage *) request {
+    NSString *lightIds = [request stringForKey:DConnectLightProfileParamLightIds];
+    return lightIds;
+}
+
++ (NSNumber *) brightnessFromRequest: (DConnectRequestMessage *) request {
+    NSNumber *brightness = nil;
+    if ([request objectForKey:DConnectLightProfileParamBrightness]) {
+        brightness =
+        [DConnectLightProfile parseBrightParam:
+         [request objectForKey:DConnectLightProfileParamBrightness]];
+    }
+    return brightness;
+}
+
++ (NSString *) nameFromRequest: (DConnectRequestMessage *) request {
+    NSString *name = [request stringForKey:DConnectLightProfileParamName];
+    return name;
+}
+
++ (NSString *) colorFromRequest: (DConnectRequestMessage *) request {
+    NSString *color = [request stringForKey:DConnectLightProfileParamColor];
+    return color;
+}
+
++ (NSString *) flashingFromRequest: (DConnectRequestMessage *) request {
+    NSString *flashing = [request stringForKey:DConnectLightProfileParamFlashing];
+    return flashing;
+}
+
++ (NSString *) groupIdFromRequest: (DConnectRequestMessage *) request {
+    NSString *groupId = [request stringForKey:DConnectLightProfileParamGroupId];
+    return groupId;
+}
+
++ (NSString *) groupNameFromRequest: (DConnectRequestMessage *) request {
+    NSString *groupName = [request stringForKey:DConnectLightProfileParamGroupName];
+    return groupName;
+}
 
 #pragma mark - Setter
 + (void) setLights:(DConnectArray *)lights target:(DConnectMessage *)message {

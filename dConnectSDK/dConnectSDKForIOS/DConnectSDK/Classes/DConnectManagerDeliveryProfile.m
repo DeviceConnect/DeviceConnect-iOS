@@ -65,9 +65,11 @@
 /*!
  @brief 使用するプロファイル一覧を取得する。
  @param[in] plugin プロファイル一覧を取得するデバイスプラグイン
+ @param[in] serviceId サービスID
  @retval プロファイル一覧
  */
-- (NSArray *)getScopeFromDevicePlugin:(DConnectDevicePlugin *)plugin;
+- (NSArray *)getScopeFromDevicePlugin:(DConnectDevicePlugin *)plugin
+                            serviceId:(NSString *)serviceId;
 
 @end
 
@@ -235,7 +237,7 @@
                                                      serviceId:(NSString *)serviceId
                                                       clientId:(NSString *)clientId
 {
-    NSArray *scopes = [self getScopeFromDevicePlugin:plugin];
+    NSArray *scopes = [self getScopeFromDevicePlugin:plugin serviceId: serviceId];
     NSString *scope = [DConnectUtil combineScopes:scopes];
     
     DConnectRequestMessage *request = [DConnectRequestMessage message];
@@ -255,12 +257,25 @@
     return response;
 }
 
-- (NSArray *)getScopeFromDevicePlugin:(DConnectDevicePlugin *)plugin {
+- (NSArray *)getScopeFromDevicePlugin:(DConnectDevicePlugin *)plugin
+                            serviceId:(NSString *)serviceId {
     NSMutableArray *scopes = [NSMutableArray array];
+    
+    
+    // デバイスプラグインから取得
     NSArray *profiles = [plugin profiles];
     for (DConnectProfile *profile in profiles) {
         [scopes addObject:[profile profileName]];
     }
+    
+    // サービスデータから取得
+    DConnectManager *mgr = (DConnectManager *) self.provider;
+    NSString *did = [mgr.mDeviceManager spliteServiceId:serviceId byDevicePlugin:plugin];
+    NSArray * serviceScopes = [plugin serviceProfilesWithServiceId: did];
+    for (DConnectProfile *profile in serviceScopes) {
+        [scopes addObject: [profile profileName]];
+    }
+    
     return [scopes sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];
 }
 

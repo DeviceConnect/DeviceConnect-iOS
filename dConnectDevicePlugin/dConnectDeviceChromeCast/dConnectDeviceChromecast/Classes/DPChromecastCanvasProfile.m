@@ -17,6 +17,117 @@
     self = [super init];
     if (self) {
         self.delegate = self;
+        __weak DPChromecastCanvasProfile *weakSelf = self;
+        
+        // API登録(didReceivePostDrawImageRequest相当)
+        NSString *postDrawImageRequestApiPath = [self apiPathWithProfile: self.profileName
+                                                           interfaceName: nil
+                                                           attributeName: DConnectCanvasProfileAttrDrawImage];
+        [self addPostPath: postDrawImageRequestApiPath
+                      api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+                          
+                          BOOL send = YES;
+                          
+                          NSData *data = [DConnectCanvasProfile dataFromRequest:request];
+                          NSString *uri = [DConnectCanvasProfile uriFromRequest:request];
+                          NSString *serviceId = [request serviceId];
+                          NSString *mimeType = [DConnectCanvasProfile mimeTypeFromRequest:request];
+                          NSString *strX = [DConnectCanvasProfile xFromRequest: request];
+                          NSString *strY = [DConnectCanvasProfile yFromRequest: request];
+                          
+                          if (mimeType != nil && ![weakSelf isMimeTypeWithString: mimeType]) {
+                              [response setErrorToInvalidRequestParameterWithMessage: @"mimeType format is incorrect."];
+                              return send;
+                          }
+                          if (strX != nil && ![weakSelf isFloatWithString: strX]) {
+                              [response setErrorToInvalidRequestParameterWithMessage: @"x is different type."];
+                              return send;
+                          }
+                          if (strY != nil && ![weakSelf isFloatWithString: strY]) {
+                              [response setErrorToInvalidRequestParameterWithMessage: @"y is different type."];
+                              return send;
+                          }
+                          double imageX = strX.doubleValue;
+                          double imageY = strY.doubleValue;
+                          NSString *mode = [DConnectCanvasProfile modeFromRequest: request];
+                          
+                          if (serviceId == nil || [serviceId length] <= 0) {
+                              [response setErrorToEmptyServiceId];
+                              return YES;
+                          }
+                          NSString *xString = [request stringForKey:DConnectCanvasProfileParamX];
+                          NSString *yString = [request stringForKey:DConnectCanvasProfileParamY];
+                          
+                          if (![[DPChromecastManager sharedManager] existDecimalWithString:xString]) {
+                              [response setErrorToInvalidRequestParameterWithMessage:@"x is Invalid."];
+                              return YES;
+                          }
+                          if (![[DPChromecastManager sharedManager] existDecimalWithString:yString]) {
+                              [response setErrorToInvalidRequestParameterWithMessage:@"y is Invalid."];
+                              return YES;
+                          }
+                          if (mimeType && ![[DPChromecastManager sharedManager] existMimeTypeWithString:mimeType]) {
+                              [response setErrorToInvalidRequestParameterWithMessage:@"MimeType is Invalid."];
+                              return YES;
+                          }
+                          
+                          NSString *modeString = mode;
+                          if (!mode) {
+                              modeString = @"same";
+                          }
+                          NSData *canvas = data;
+                          if (uri || [uri length] > 0) {
+                              canvas = [NSData dataWithContentsOfURL:[NSURL URLWithString:uri]];
+                          }
+                          if (!canvas) {
+                              canvas = data;
+                          }
+                          if (canvas == nil || [canvas length] <= 0) {
+                              [response setErrorToInvalidRequestParameterWithMessage:@"data is not specied to update a file."];
+                              return YES;
+                          }
+                          
+                          NSString *url = [weakSelf saveImage:canvas];
+                          // リクエスト処理
+                          return [weakSelf handleRequest:request
+                                                response:response
+                                               serviceId:serviceId
+                                                callback:^{
+                                      // メッセージ送信
+                                      DPChromecastManager *mgr = [DPChromecastManager sharedManager];
+                                      [mgr sendCanvasWithID:serviceId
+                                                   imageURL:url
+                                                     imageX:imageX
+                                                     imageY:imageY
+                                                       mode:modeString];
+                                  }];
+                      }];
+        
+        
+        // API登録(didReceiveDeleteDrawImageRequest相当)
+        NSString *deleteDrawImageRequestApiPath = [self apiPathWithProfile: self.profileName
+                                                             interfaceName: nil
+                                                             attributeName: DConnectCanvasProfileAttrDrawImage];
+        [self addDeletePath: deleteDrawImageRequestApiPath
+                        api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+                            
+                            NSString *serviceId = [request serviceId];
+                            NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+                            NSString *documentsDirectory = [paths objectAtIndex:0];
+                            [[DPChromecastManager sharedManager] removeFileForfileNamesAtDirectoryPath:documentsDirectory
+                                                                                             extension:@"jpg"];
+                            
+                            // リクエスト処理
+                            return [weakSelf handleRequest:request
+                                                  response:response
+                                                 serviceId:serviceId
+                                                  callback: ^{
+                                        // メッセージクリア
+                                        DPChromecastManager *mgr = [DPChromecastManager sharedManager];
+                                        [mgr clearCanvasWithID:serviceId];
+                                    }];
+                        }];
+        
     }
     return self;
 }
@@ -76,96 +187,5 @@
                      fileName];
     return url;
 }
-
-
-#pragma mark - DConnect
-
-- (BOOL) profile:(DConnectCanvasProfile *)profile
-didReceivePostDrawImageRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response
-       serviceId:(NSString *)serviceId
-        mimeType:(NSString *)mimeType
-            data:(NSData *)data
-             uri:(NSString *)uri
-          imageX:(double)imageX
-          imageY:(double)imageY
-            mode:(NSString *)mode
-{
-    if (serviceId == nil || [serviceId length] <= 0) {
-        [response setErrorToEmptyServiceId];
-        return YES;
-    }
-    NSString *xString = [request stringForKey:DConnectCanvasProfileParamX];
-    NSString *yString = [request stringForKey:DConnectCanvasProfileParamY];
-
-    if (![[DPChromecastManager sharedManager] existDecimalWithString:xString]) {
-        [response setErrorToInvalidRequestParameterWithMessage:@"x is Invalid."];
-        return YES;
-    }
-    if (![[DPChromecastManager sharedManager] existDecimalWithString:yString]) {
-        [response setErrorToInvalidRequestParameterWithMessage:@"y is Invalid."];
-        return YES;
-    }
-    if (mimeType && ![[DPChromecastManager sharedManager] existMimeTypeWithString:mimeType]) {
-        [response setErrorToInvalidRequestParameterWithMessage:@"MimeType is Invalid."];
-        return YES;
-    }
-    
-    NSString *modeString = mode;
-    if (!mode) {
-        modeString = @"same";
-    }
-    NSData *canvas = data;
-    if (uri || [uri length] > 0) {
-        canvas = [NSData dataWithContentsOfURL:[NSURL URLWithString:uri]];
-    }
-    if (!canvas) {
-        canvas = data;
-    }
-    if (canvas == nil || [canvas length] <= 0) {
-        [response setErrorToInvalidRequestParameterWithMessage:@"data is not specied to update a file."];
-        return YES;
-    }
-
-    NSString *url = [self saveImage:canvas];
-    // リクエスト処理
-    return [self handleRequest:request
-                      response:response
-                     serviceId:serviceId
-                      callback:
-            ^{
-                // メッセージ送信
-                DPChromecastManager *mgr = [DPChromecastManager sharedManager];
-                [mgr sendCanvasWithID:serviceId
-                             imageURL:url
-                               imageX:imageX
-                               imageY:imageY
-                                 mode:modeString];
-            }];
-}
-
-- (BOOL)                 profile:(DConnectCanvasProfile *)profile
-didReceiveDeleteDrawImageRequest:(DConnectRequestMessage *)request
-                        response:(DConnectResponseMessage *)response
-                       serviceId:(NSString *)serviceId
-{
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *documentsDirectory = [paths objectAtIndex:0];
-    [[DPChromecastManager sharedManager] removeFileForfileNamesAtDirectoryPath:documentsDirectory
-                                                                     extension:@"jpg"];
-     
-    // リクエスト処理
-    return [self handleRequest:request
-                      response:response
-                     serviceId:serviceId
-                      callback:
-            ^{
-                // メッセージクリア
-                DPChromecastManager *mgr = [DPChromecastManager sharedManager];
-                [mgr clearCanvasWithID:serviceId];
-            }];
-}
-
-
 
 @end

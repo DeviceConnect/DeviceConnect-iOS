@@ -9,7 +9,7 @@
 
 #import "DPHostDevicePlugin.h"
 #import "DPHostProximityProfile.h"
-#import "DPHostServiceDiscoveryProfile.h"
+#import "DPHostService.h"
 #import "DPHostUtils.h"
 
 typedef void (^DPHostProximityBlock)(DConnectMessage *);
@@ -124,7 +124,7 @@ didReceivePutOnUserProximityRequest:(DConnectRequestMessage *)request
     if (evts.count == 0) {
         self.proximityBlock = ^(DConnectMessage *message) {
             // イベントの取得
-            NSArray *evts = [weakSelf.eventMgr eventListForServiceId:ServiceDiscoveryServiceId
+            NSArray *evts = [weakSelf.eventMgr eventListForServiceId:DPHostDevicePluginServiceId
                                                              profile:DConnectProximityProfileName
                                                            attribute:DConnectProximityProfileAttrOnUserProximity];
             

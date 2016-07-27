@@ -71,6 +71,7 @@
 		C2540C7A195ACC0800AE012C /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2540C79195ACC0800AE012C /* CoreFoundation.framework */; };
 		C2540C80195ACC0800AE012C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C2540C7E195ACC0800AE012C /* InfoPlist.strings */; };
 		C2540C8B195ACD8500AE012C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2540C8A195ACD8500AE012C /* UIKit.framework */; };
+		D6C860481D3B436400232EEF /* SonyCameraService.m in Sources */ = {isa = PBXBuildFile; fileRef = D6C860471D3B436400232EEF /* SonyCameraService.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -161,6 +162,8 @@
 		C2540C7F195ACC0800AE012C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		C2540C81195ACC0800AE012C /* dConnectDeviceSonyCamera_resources-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "dConnectDeviceSonyCamera_resources-Prefix.pch"; sourceTree = "<group>"; };
 		C2540C8A195ACD8500AE012C /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		D6C860461D3B436400232EEF /* SonyCameraService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SonyCameraService.h; sourceTree = "<group>"; };
+		D6C860471D3B436400232EEF /* SonyCameraService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SonyCameraService.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -311,6 +314,8 @@
 				BE75D31219949D4F00F1BFC9 /* SonyCameraSettingView03Controller.m */,
 				BE75D3141994A44500F1BFC9 /* SonyCameraSettingView04Controller.h */,
 				BE75D3151994A44500F1BFC9 /* SonyCameraSettingView04Controller.m */,
+				D6C860461D3B436400232EEF /* SonyCameraService.h */,
+				D6C860471D3B436400232EEF /* SonyCameraService.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -565,6 +570,7 @@
 				C2540C6C195A853600AE012C /* SampleRemoteApi.m in Sources */,
 				BE75D3041994884200F1BFC9 /* SonyCameraDataViewController.m in Sources */,
 				C2540C6B195A853600AE012C /* SampleCameraEventObserver.m in Sources */,
+				D6C860481D3B436400232EEF /* SonyCameraService.m in Sources */,
 				C2540C69195A853600AE012C /* HttpAsynchronousRequest.m in Sources */,
 				BE75D310199497F600F1BFC9 /* SonyCameraSettingView01Controller.m in Sources */,
 				C2540C6A195A853600AE012C /* HttpSynchronousRequest.m in Sources */,

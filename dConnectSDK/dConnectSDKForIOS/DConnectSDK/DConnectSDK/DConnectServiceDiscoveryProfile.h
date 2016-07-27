@@ -14,6 +14,8 @@
  */
 #import <DConnectSDK/DConnectProfile.h>
 #import <DConnectSDK/DConnectProfileProvider.h>
+#import <DConnectSDK/DConnectServiceProvider.h>
+
 
 /*!
  @brief プロファイル名: servicediscovery。
@@ -210,6 +212,9 @@ extern NSString *const DConnectServiceDiscoveryProfileNetworkTypeBLE;
  */
 @property (nonatomic, weak) id<DConnectServiceDiscoveryProfileDelegate> delegate;
 
+- (instancetype) initWithServiceProvider: (DConnectServiceProvider *) serviceProvider;
+
+
 #pragma mark - Setter
 
 /*!
@@ -286,3 +291,16 @@ extern NSString *const DConnectServiceDiscoveryProfileNetworkTypeBLE;
 + (void) setState:(BOOL)state target:(DConnectMessage *)message;
 
 @end
+
+
+
+
+
+
+
+@interface DConnectServiceDiscoveryUtils : NSObject
+
++ (BOOL) hasMethod:(SEL)method response:(DConnectResponseMessage *)response delegate: (id<DConnectServiceDiscoveryProfileDelegate>) delegate;
+
+@end
+

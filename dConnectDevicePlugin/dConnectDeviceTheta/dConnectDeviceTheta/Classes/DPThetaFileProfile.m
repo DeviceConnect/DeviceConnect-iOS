@@ -17,132 +17,145 @@
     self = [super init];
     if (self) {
         self.delegate = self;
+        __weak DPThetaFileProfile *weakSelf = self;
+        
+        // API登録(didReceiveGetReceiveRequest相当)
+        NSString *getReceiveRequestApiPath = [self apiPathWithProfile: self.profileName
+                                                        interfaceName: nil
+                                                        attributeName: DConnectFileProfileAttrReceive];
+        [self addGetPath: getReceiveRequestApiPath
+                     api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+                         
+                         NSString *path = [DConnectFileProfile pathFromRequest:request];
+                         
+                         CONNECT_CHECK();
+                         if (!path || path.length == 0) {
+                             [response setErrorToInvalidRequestParameterWithMessage:@"path must be specified."];
+                             return YES;
+                         }
+                         
+                         NSString *uri = [[DPThetaManager sharedManager] receiveImageFileWithFileName:path
+                                                                                              fileMgr:[WEAKSELF_PLUGIN fileMgr]];
+                         if (uri) {
+                             [DConnectFileProfile setURI:uri target:response];
+                             [DConnectFileProfile setMIMEType:@"image/jpeg" target:response];
+                             [response setResult:DConnectMessageResultTypeOk];
+                         } else {
+                             [response setErrorToInvalidRequestParameterWithMessage:@"Not exist path"];
+                         }
+                         return YES;
+                     }];
+        
+        // API登録(didReceiveGetListRequest相当)
+        NSString *getListRequestApiPath = [self apiPathWithProfile: self.profileName
+                                                     interfaceName: nil
+                                                     attributeName: DConnectFileProfileAttrList];
+        [self addGetPath: getListRequestApiPath
+                     api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+                         
+                         NSString *path = [DConnectFileProfile pathFromRequest:request];
+                         NSString *orderStr = [DConnectFileProfile orderFromRequest:request];
+                         NSNumber *offset = [DConnectFileProfile offsetFromRequest:request];
+                         NSNumber *limit = [DConnectFileProfile limitFromRequest:request];
+//                         NSString *mimeType = [DConnectFileProfile mimeTypeFromRequest:request];
+                         NSArray *order = nil;
+                         
+                         if (orderStr) {
+                             order = [orderStr componentsSeparatedByString:@","];
+                         }
+                         
+                         CONNECT_CHECK();
+                         if (path && ![path isEqualToString:@"/"]) {
+                             [response setErrorToInvalidRequestParameter];
+                             return YES;
+                         }
+                         
+                         
+                         NSString *sortTarget;
+                         NSString *sortOrder;
+                         if (![weakSelf checkParameters:request
+                                               response:response
+                                              sortOrder:&sortOrder
+                                             sortTarget:&sortTarget
+                                                  order:order]) {
+                             [response setErrorToInvalidRequestParameter];
+                             return YES;
+                         }
+                         NSComparator comp;
+                         [weakSelf compareOrderWithResponse:response sortTarget:sortTarget comp:&comp sortOrder:sortOrder];
+                         if ([response integerForKey:DConnectMessageResult] == DConnectMessageResultTypeError) {
+                             return YES;
+                         }
+                         
+                         if (offset && offset.integerValue < 0) {
+                             [response setErrorToInvalidRequestParameterWithMessage:@"offset must be a non-negative value."];
+                             return YES;
+                         }
+                         
+                         if (limit && limit.integerValue < 0) {
+                             [response setErrorToInvalidRequestParameterWithMessage:@"limit must be a positive value."];
+                             return YES;
+                         }
+                         
+                         
+                         NSMutableArray *fileArr = [weakSelf convertFileArrayFromPtpInfoArray:[[DPThetaManager sharedManager] getAllFiles]];
+                         if (fileArr.count <= 0) {
+                             [response setErrorToIllegalDeviceState];
+                             return YES;
+                         }
+                         if (offset && offset.integerValue >= fileArr.count) {
+                             [response setErrorToInvalidRequestParameterWithMessage:@"offset exceeds the size of the media list."];
+                             return YES;
+                         }
+                         
+                         // 並び替えを実行
+                         NSArray *tmpArr = fileArr;
+                         if (comp) {
+                             tmpArr = [fileArr sortedArrayUsingComparator:comp];
+                         }
+                         
+                         // ページングのために配列の一部分だけ抜き出し
+                         if (offset || limit) {
+                             NSUInteger offsetVal = offset ? offset.unsignedIntegerValue : 0;
+                             NSUInteger limitVal = limit ? limit.unsignedIntegerValue : fileArr.count;
+                             tmpArr = [tmpArr subarrayWithRange:
+                                       NSMakeRange(offset.unsignedIntegerValue,
+                                                   MIN(fileArr.count - offsetVal, limitVal))];
+                         }
+                         
+                         [DConnectFileProfile setCount:(int)tmpArr.count target:response];
+                         [DConnectFileProfile setFiles:[DConnectArray initWithArray:tmpArr] target:response];
+                         [response setResult:DConnectMessageResultTypeOk];
+                         return YES;
+                     }];
+        
+        // API登録(didReceiveDeleteRemoveRequest相当)
+        NSString *deleteRemoveRequestApiPath = [self apiPathWithProfile: self.profileName
+                                                          interfaceName: nil
+                                                          attributeName: DConnectFileProfileAttrRemove];
+        [self addDeletePath: deleteRemoveRequestApiPath
+                        api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+                            
+                            NSString *path = [DConnectFileProfile pathFromRequest:request];
+                            
+                            CONNECT_CHECK();
+                            if (!path || path.length == 0) {
+                                [response setErrorToInvalidRequestParameterWithMessage:@"path must be specified."];
+                                return YES;
+                            }
+                            BOOL isSuccess = [[DPThetaManager sharedManager] removeFileWithName:path
+                                                                                        fileMgr:[WEAKSELF_PLUGIN fileMgr]];
+                            if (isSuccess) {
+                                [response setResult:DConnectMessageResultTypeOk];
+                            } else {
+                                [response setErrorToIllegalDeviceStateWithMessage:@"Not Exist path"];
+                            }
+                            return YES;
+                        }];
+
     }
     return self;
 }
-
-- (BOOL)            profile:(DConnectFileProfile *)profile
-didReceiveGetReceiveRequest:(DConnectRequestMessage *)request
-                   response:(DConnectResponseMessage *)response
-                  serviceId:(NSString *)serviceId
-                       path:(NSString *)path
-{
-    CONNECT_CHECK();
-    if (!path || path.length == 0) {
-        [response setErrorToInvalidRequestParameterWithMessage:@"path must be specified."];
-        return YES;
-    }
-    
-    NSString *uri = [[DPThetaManager sharedManager] receiveImageFileWithFileName:path
-                                                                         fileMgr:[SELF_PLUGIN fileMgr]];
-    if (uri) {
-        [DConnectFileProfile setURI:uri target:response];
-        [DConnectFileProfile setMIMEType:@"image/jpeg" target:response];
-        [response setResult:DConnectMessageResultTypeOk];
-    } else {
-        [response setErrorToInvalidRequestParameterWithMessage:@"Not exist path"];
-    }
-    return YES;
-}
-
-
-- (BOOL)         profile:(DConnectFileProfile *)profile
-didReceiveGetListRequest:(DConnectRequestMessage *)request
-                response:(DConnectResponseMessage *)response
-               serviceId:(NSString *)serviceId
-                    path:(NSString *)path
-                mimeType:(NSString *)mimeType
-                   order:(NSArray *)order
-                  offset:(NSNumber *)offset
-                   limit:(NSNumber *)limit
-{
-    CONNECT_CHECK();
-    if (path && ![path isEqualToString:@"/"]) {
-        [response setErrorToInvalidRequestParameter];
-        return YES;
-    }
-
-    
-    NSString *sortTarget;
-    NSString *sortOrder;
-    if (![self checkParameters:request
-                            response:response
-                           sortOrder:&sortOrder
-                          sortTarget:&sortTarget
-                        order:order]) {
-        [response setErrorToInvalidRequestParameter];
-        return YES;
-    }
-    NSComparator comp;
-    [self compareOrderWithResponse:response sortTarget:sortTarget comp:&comp sortOrder:sortOrder];
-    if ([response integerForKey:DConnectMessageResult] == DConnectMessageResultTypeError) {
-        return YES;
-    }
-    
-    if (offset && offset.integerValue < 0) {
-        [response setErrorToInvalidRequestParameterWithMessage:@"offset must be a non-negative value."];
-        return YES;
-    }
-    
-    if (limit && limit.integerValue < 0) {
-        [response setErrorToInvalidRequestParameterWithMessage:@"limit must be a positive value."];
-        return YES;
-    }
-    
-    
-    NSMutableArray *fileArr = [self convertFileArrayFromPtpInfoArray:[[DPThetaManager sharedManager] getAllFiles]];
-    if (fileArr.count <= 0) {
-        [response setErrorToIllegalDeviceState];
-        return YES;
-    }
-    if (offset && offset.integerValue >= fileArr.count) {
-        [response setErrorToInvalidRequestParameterWithMessage:@"offset exceeds the size of the media list."];
-        return YES;
-    }
-    
-    // 並び替えを実行
-    NSArray *tmpArr = fileArr;
-    if (comp) {
-        tmpArr = [fileArr sortedArrayUsingComparator:comp];
-    }
-    
-    // ページングのために配列の一部分だけ抜き出し
-    if (offset || limit) {
-        NSUInteger offsetVal = offset ? offset.unsignedIntegerValue : 0;
-        NSUInteger limitVal = limit ? limit.unsignedIntegerValue : fileArr.count;
-        tmpArr = [tmpArr subarrayWithRange:
-                  NSMakeRange(offset.unsignedIntegerValue,
-                              MIN(fileArr.count - offsetVal, limitVal))];
-    }
-    
-    [DConnectFileProfile setCount:(int)tmpArr.count target:response];
-    [DConnectFileProfile setFiles:[DConnectArray initWithArray:tmpArr] target:response];
-    [response setResult:DConnectMessageResultTypeOk];
-    return YES;
-}
-
-- (BOOL)              profile:(DConnectFileProfile *)profile
-didReceiveDeleteRemoveRequest:(DConnectRequestMessage *)request
-                     response:(DConnectResponseMessage *)response
-                    serviceId:(NSString *)serviceId
-                         path:(NSString *)path
-{
-    CONNECT_CHECK();
-    if (!path || path.length == 0) {
-        [response setErrorToInvalidRequestParameterWithMessage:@"path must be specified."];
-        return YES;
-    }
-    BOOL isSuccess = [[DPThetaManager sharedManager] removeFileWithName:path
-                                                                fileMgr:[SELF_PLUGIN fileMgr]];
-    if (isSuccess) {
-        [response setResult:DConnectMessageResultTypeOk];
-    } else {
-        [response setErrorToIllegalDeviceStateWithMessage:@"Not Exist path"];
-    }
-    return YES;
-}
-
-#pragma mark - private method
 
 - (NSMutableArray*)convertFileArrayFromPtpInfoArray:(NSArray*)ptpInfoArray
 {
@@ -165,7 +178,6 @@ didReceiveDeleteRemoveRequest:(DConnectRequestMessage *)request
     }
     return fileArr;
 }
-
 
 /*!
  @brief /file/listのパラメータチェック.

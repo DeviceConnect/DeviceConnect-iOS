@@ -11,9 +11,9 @@
 #import "DPThetaDevicePlugin.h"
 #import "DPThetaManager.h"
 #import "PtpIpObjectInfo.h"
-#import "DPThetaServiceDiscoveryProfile.h"
 #import "DPThetaMixedReplaceMediaServer.h"
-
+#import "DPThetaService.h"
+ 
 //Thetaの画像の最小の高さ
 static NSUInteger const DPThetaMinHeight = 1024;
 
@@ -291,7 +291,7 @@ didReceiveDeleteOnRecordingChangeRequest:(DConnectRequestMessage *)request
     });
     
     // イベントの取得
-    NSArray *evts = [_eventMgr eventListForServiceId:DPThetaServiceDiscoveryServiceId
+    NSArray *evts = [_eventMgr eventListForServiceId:DPThetaDeviceServiceId
                                              profile:DConnectMediaStreamRecordingProfileName
                                            attribute:DConnectMediaStreamRecordingProfileAttrOnPhoto];
     // イベント送信
@@ -314,7 +314,7 @@ didReceiveDeleteOnRecordingChangeRequest:(DConnectRequestMessage *)request
                                  errorMessage:(NSString *)errorMsg
 {
     // イベントの取得
-    NSArray *evts = [_eventMgr eventListForServiceId:DPThetaServiceDiscoveryServiceId
+    NSArray *evts = [_eventMgr eventListForServiceId:DPThetaDeviceServiceId
                                              profile:DConnectMediaStreamRecordingProfileName
                                            attribute:DConnectMediaStreamRecordingProfileAttrOnRecordingChange];
     

@@ -8,15 +8,7 @@
 //
 
 #import "DPPebbleDevicePlugin.h"
-#import "DPPebbleServiceDiscoveryProfile.h"
 #import "DPPebbleSystemProfile.h"
-#import "DPPebbleBatteryProfile.h"
-#import "DPPebbleVibrationProfile.h"
-#import "DPPebbleSettingsProfile.h"
-#import "DPPebbleDeviceOrientationProfile.h"
-#import "DPPebbleNotificationProfile.h"
-#import "DPPebbleCanvasProfile.h"
-#import "DPPebbleKeyEventProfile.h"
 #import "PebbleViewController.h"
 #import "DPPebbleManager.h"
 
@@ -29,7 +21,7 @@
 
 - (instancetype) init
 {
-	self = [super init];
+	self = [super initWithObject: self];
 	if (self) {
 		// プラグイン名を設定
 		self.pluginName = @"Pebble (Device Connect Device Plug-in)";
@@ -38,17 +30,11 @@
 		Class key = [self class];
 		[[DConnectEventManager sharedManagerForClass:key] setController:[DConnectMemoryCacheController new]];
 		
+        // DPPebbleManagerへServiceProviderを渡す
+        [[DPPebbleManager sharedManager] setServiceProvider: self.mServiceProvider];
+        
 		// 各プロファイルの追加
-		[self addProfile:[DPPebbleServiceDiscoveryProfile new]];
-		[self addProfile:[DPPebbleNotificationProfile new]];
-		[self addProfile:[DPPebbleSystemProfile new]];
-		[self addProfile:[DPPebbleBatteryProfile new]];
-		[self addProfile:[DPPebbleSettingsProfile new]];
-		[self addProfile:[DPPebbleVibrationProfile new]];
-		[self addProfile:[DPPebbleDeviceOrientationProfile new]];
-        [self addProfile:[DPPebbleCanvasProfile new]];
-        [self addProfile:[DConnectServiceInformationProfile new]];
-        [self addProfile:[DPPebbleKeyEventProfile new]];
+        [self addProfile:[DPPebbleSystemProfile new]];
 		
 		dispatch_async(dispatch_get_main_queue(), ^{
 			NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];

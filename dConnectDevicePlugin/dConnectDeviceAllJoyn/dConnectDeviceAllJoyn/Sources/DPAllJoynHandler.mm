@@ -16,7 +16,7 @@
 #import "DPAllJoynServiceEntity.h"
 #import "DPAllJoynSupportCheck.h"
 #import "DPAllJoynSynchronizedMutableDictionary.h"
-
+#import "DPAllJoynService.h"
 
 static int const DPAllJoynAliveTimeout = 30000;
 static int const DPAllJoynPingTimeout = 5000;
@@ -48,6 +48,7 @@ static size_t const DPAllJoynJoinRetryMax = 5;
 //@property (nonatomic, strong) BasicObjectProxy *basicObjectProxy;
 @property (nonatomic, strong) AJNAboutProxy *aboutProxy;
 @property BOOL wasNameAlreadyFound;
+@property (nonatomic) DConnectServiceProvider *mServiceProvider;
 
 @end
 
@@ -135,6 +136,9 @@ static size_t const DPAllJoynJoinRetryMax = 5;
     });
 }
 
+- (void) setServiceProvider: (DConnectServiceProvider *) serviceProvider {
+    _mServiceProvider = serviceProvider;
+}
 
 - (void)destroyAllJoynContextWithBlock:(void(^)(BOOL result))block
 {
@@ -359,6 +363,9 @@ static size_t const DPAllJoynJoinRetryMax = 5;
                      [_discoveredServices removeObjectForKey:serviceEntity.appId];
                  }
              }
+             
+             // デバイス管理情報更新
+             [self updateManageServices];
          }];
     }
 }
@@ -383,6 +390,36 @@ static size_t const DPAllJoynJoinRetryMax = 5;
                                  (int64_t)(delayMillis * NSEC_PER_MSEC)),
                    dispatch_get_main_queue(), block);
 }
+
+// デバイス管理情報更新
+- (void) updateManageServices {
+    @synchronized(self) {
+        
+        // ServiceProvider未登録なら処理しない
+        if (!_mServiceProvider) {
+            return;
+        }
+
+        // ServiceProviderに存在するサービスが検出されなかったならオフラインにする
+        for (DConnectService *service in [_mServiceProvider services]) {
+            NSString *serviceId = [service serviceId];
+            if (!self.discoveredAllJoynServices[serviceId]) {
+                [service setOnline: NO];
+            }
+        }
+        
+        // サービス未登録なら登録する
+        for (DPAllJoynServiceEntity *serviceEntity in [self.discoveredAllJoynServices allValues]) {
+            if (![_mServiceProvider service: serviceEntity.appId]) {
+                DPAllJoynService *service = [[DPAllJoynService alloc] initWithServiceId:serviceEntity.appId
+                                                                            serviceName:serviceEntity.serviceName
+                                                                                handler:self];
+                [_mServiceProvider addService: service];
+            }
+        }
+    }
+}
+
 
 
 // =============================================================================
@@ -418,6 +455,9 @@ static size_t const DPAllJoynJoinRetryMax = 5;
         service.lastAlive = oldService.lastAlive;
     }
     [_discoveredServices setObject:service forKey:service.appId];
+    
+    // デバイス管理情報更新
+    [self updateManageServices];
 }
 
 
