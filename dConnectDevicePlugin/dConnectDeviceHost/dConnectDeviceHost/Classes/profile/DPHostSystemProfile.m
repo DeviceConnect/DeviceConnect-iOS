@@ -32,6 +32,17 @@
         // イベントマネージャを取得
         self.eventMgr = [DConnectEventManager sharedManagerForClass:[DPHostDevicePlugin class]];
         
+        // API登録(settingPageForRequest相当)
+        NSString *putSettingPageForRequestApiPath = [self apiPathWithProfile: self.profileName
+                                                               interfaceName: DConnectSystemProfileInterfaceDevice
+                                                               attributeName: DConnectSystemProfileAttrWakeUp];
+        [self addPutPath: putSettingPageForRequestApiPath
+                     api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+                         
+                         BOOL send = [weakSelf didReceivePutWakeupRequest:request response:response];
+                         return send;
+                     }];
+        
         // API登録(didReceiveDeleteEventsRequest相当)
         NSString *deleteEventsRequestApiPath = [self apiPathWithProfile: self.profileName
                                                           interfaceName: nil
