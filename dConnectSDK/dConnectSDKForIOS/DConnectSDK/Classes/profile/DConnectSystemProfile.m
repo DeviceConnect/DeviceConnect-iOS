@@ -36,6 +36,7 @@ NSString *const DConnectSystemProfileParamVersion = @"version";
     return DConnectSystemProfileName;
 }
 
+/*
 - (BOOL) didReceivePutRequest:(DConnectRequestMessage *)request response:(DConnectResponseMessage *)response {
     BOOL send = YES;
     
@@ -101,6 +102,7 @@ NSString *const DConnectSystemProfileParamVersion = @"version";
     
     return send;
 }
+*/
 
 #pragma mark - Setter
 
