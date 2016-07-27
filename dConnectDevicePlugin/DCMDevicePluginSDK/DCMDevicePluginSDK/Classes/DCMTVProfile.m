@@ -74,6 +74,7 @@ NSString *const DCMTVProfileBroadcastwaveCS = @"CS";
 /*
  GETリクエストを振り分ける。
  */
+/*
 - (BOOL) didReceiveGetRequest:(DConnectRequestMessage *)request
                      response:(DConnectResponseMessage *)response {
     BOOL send = YES;
@@ -122,11 +123,12 @@ NSString *const DCMTVProfileBroadcastwaveCS = @"CS";
     
     return send;
 }
-
+*/
 
 /*
  PUTリクエストを振り分ける。
  */
+/*
 - (BOOL) didReceivePutRequest:(DConnectRequestMessage *)request
                      response:(DConnectResponseMessage *)response {
     BOOL send = YES;
@@ -243,10 +245,12 @@ NSString *const DCMTVProfileBroadcastwaveCS = @"CS";
     
     return send;
 }
+*/
 
 /*
  DELETEリクエストを振り分ける。
  */
+/*
 - (BOOL) didReceiveDeleteRequest:(DConnectRequestMessage *)request
                         response:(DConnectResponseMessage *)response {
     BOOL send = YES;
@@ -295,6 +299,7 @@ NSString *const DCMTVProfileBroadcastwaveCS = @"CS";
     
     return send;
 }
+*/
 
 
 
