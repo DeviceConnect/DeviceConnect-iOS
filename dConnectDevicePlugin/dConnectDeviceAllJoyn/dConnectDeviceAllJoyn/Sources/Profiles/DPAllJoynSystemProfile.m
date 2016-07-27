@@ -25,6 +25,18 @@
     if (self) {
         self.dataSource = self;
         self.version = version;
+        __weak DPAllJoynSystemProfile *weakSelf = self;
+        
+        // API登録(dataSourceのsettingPageForRequestを実行する処理を登録)
+        NSString *putSettingPageForRequestApiPath = [self apiPathWithProfile: self.profileName
+                                                               interfaceName: DConnectSystemProfileInterfaceDevice
+                                                               attributeName: DConnectSystemProfileAttrWakeUp];
+        [self addPutPath: putSettingPageForRequestApiPath
+                     api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+                         
+                         BOOL send = [weakSelf didReceivePutWakeupRequest:request response:response];
+                         return send;
+                     }];
     }
     return self;
 }
