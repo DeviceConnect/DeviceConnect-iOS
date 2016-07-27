@@ -16,33 +16,27 @@
 {
     self = [super init];
     if (self) {
-        self.delegate = self;
+        __unsafe_unretained typeof(self) weakSelf = self;
+        
+        NSString *didReceiveGetAllRequest = [self apiPathWithProfile: self.profileName
+                                                                interfaceName: nil
+                                                                attributeName: nil];
+        [self addGetPath:didReceiveGetAllRequest api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+            return [weakSelf getBatteryLevelWithRequest:request response:response serviceId:[request serviceId]];
+        }];
+        NSString *didReceiveGetLevelRequest = [self apiPathWithProfile: self.profileName
+                                                                interfaceName: nil
+                                                                attributeName: DConnectBatteryProfileAttrLevel];
+        [self addGetPath:didReceiveGetLevelRequest api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+            return [weakSelf getBatteryLevelWithRequest:request response:response serviceId:[request serviceId]];
+        }];
     }
     return self;
 }
 
-#pragma mark - Get Methods
-
-- (BOOL)        profile:(DConnectBatteryProfile *)profile
-didReceiveGetAllRequest:(DConnectRequestMessage *)request
-               response:(DConnectResponseMessage *)response
-              serviceId:(NSString *)serviceId
-{
-    return [self getBatteryLevelWithProfile:profile didReceiveGetLevelRequest:request response:response serviceId:serviceId];
-}
-
-- (BOOL)          profile:(DConnectBatteryProfile *)profile
-didReceiveGetLevelRequest:(DConnectRequestMessage *)request
-                 response:(DConnectResponseMessage *)response
-                serviceId:(NSString *)serviceId
-{
-    return [self getBatteryLevelWithProfile:profile didReceiveGetLevelRequest:request response:response serviceId:serviceId];
-}
-
 #pragma mark - Private Method
 
-- (BOOL)getBatteryLevelWithProfile:(DConnectBatteryProfile *)profile
-         didReceiveGetLevelRequest:(DConnectRequestMessage *)request
+- (BOOL)getBatteryLevelWithRequest:(DConnectRequestMessage *)request
                           response:(DConnectResponseMessage *)response
                          serviceId:(NSString *)serviceId {
     

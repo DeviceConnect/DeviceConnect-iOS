@@ -9,6 +9,6 @@
 
 #import <DCMDevicePluginSDK/DCMDevicePluginSDK.h>
 
-@interface DPHitoePoseEstimationProfile : DCMPoseEstimationProfile<DCMPoseEstimationProfileDelegate>
+@interface DPHitoePoseEstimationProfile : DCMPoseEstimationProfile
 
 @end

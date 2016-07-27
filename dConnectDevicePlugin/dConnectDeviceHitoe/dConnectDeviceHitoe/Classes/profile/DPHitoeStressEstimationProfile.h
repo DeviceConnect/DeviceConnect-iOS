@@ -9,6 +9,6 @@
 
 #import <DCMDevicePluginSDK/DCMDevicePluginSDK.h>
 
-@interface DPHitoeStressEstimationProfile : DCMStressEstimationProfile<DCMStressEstimationProfileDelegate>
+@interface DPHitoeStressEstimationProfile : DCMStressEstimationProfile
 
 @end

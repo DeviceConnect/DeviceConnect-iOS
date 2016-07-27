@@ -26,21 +26,37 @@
 {
     self = [super init];
     if (self) {
-        self.delegate = self;
-        
         // イベントマネージャを取得
         self.eventMgr = [DConnectEventManager sharedManagerForClass:[DPHitoeDevicePlugin class]];
         __unsafe_unretained typeof(self) weakSelf = self;
         self.walkReceived = ^(DPHitoeDevice *device, DPHitoeWalkStateData *walk) {
             [weakSelf notifyReceiveDataForDevice:device data:walk];
         };
+        NSString *didReceiveGetOnWalkStateRequest = [self apiPathWithProfile: self.profileName
+                                                                      interfaceName: nil
+                                                                      attributeName: DCMWalkStateProfileAttrOnWalkState];
+        [self addGetPath:didReceiveGetOnWalkStateRequest api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+            return [weakSelf didReceiveGetOnWalkStateRequest:request response:response serviceId:[request serviceId]];
+        }];
+        NSString *didReceivePutOnWalkStateRequest = [self apiPathWithProfile: self.profileName
+                                                                      interfaceName: nil
+                                                                      attributeName: DCMWalkStateProfileAttrOnWalkState];
+        [self addPutPath:didReceivePutOnWalkStateRequest api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+            return [weakSelf didReceivePutOnWalkStateRequest:request response:response serviceId:[request serviceId] sessionKey:[request sessionKey]];
+        }];
+        NSString *didReceiveDeleteOnWalkStateRequest = [self apiPathWithProfile: self.profileName
+                                                                         interfaceName: nil
+                                                                         attributeName: DCMWalkStateProfileAttrOnWalkState];
+        [self addDeletePath:didReceiveDeleteOnWalkStateRequest api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+            return [weakSelf didReceiveDeleteOnWalkStateRequest:request response:response serviceId:[request serviceId] sessionKey:[request sessionKey]];
+        }];
+
     }
     return self;
 }
 
 
-- (BOOL)          profile:(DCMWalkStateProfile *)profile
-didReceiveGetOnWalkStateRequest:(DConnectRequestMessage *)request
+- (BOOL)didReceiveGetOnWalkStateRequest:(DConnectRequestMessage *)request
                  response:(DConnectResponseMessage *)response
                 serviceId:(NSString *)serviceId {
     if (!serviceId) {
@@ -65,8 +81,7 @@ didReceiveGetOnWalkStateRequest:(DConnectRequestMessage *)request
 }
 
 
-- (BOOL)           profile:(DCMWalkStateProfile *)profile
-didReceivePutOnWalkStateRequest:(DConnectRequestMessage *)request
+- (BOOL)didReceivePutOnWalkStateRequest:(DConnectRequestMessage *)request
                   response:(DConnectResponseMessage *)response
                  serviceId:(NSString *)serviceId
                 sessionKey:(NSString *)sessionKey {
@@ -104,8 +119,7 @@ didReceivePutOnWalkStateRequest:(DConnectRequestMessage *)request
     return YES;
 }
 
-- (BOOL)                           profile:(DCMWalkStateProfile *)profile
- didReceiveDeleteOnWalkStateRequest:(DConnectRequestMessage *)request
+- (BOOL)didReceiveDeleteOnWalkStateRequest:(DConnectRequestMessage *)request
                                   response:(DConnectResponseMessage *)response
                                  serviceId:(NSString *)serviceId
                                 sessionKey:(NSString *)sessionKey {

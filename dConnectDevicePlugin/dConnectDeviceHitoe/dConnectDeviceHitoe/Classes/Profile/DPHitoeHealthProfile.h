@@ -9,6 +9,6 @@
 
 #import <DCMDevicePluginSDK/DCMDevicePluginSDK.h>
 
-@interface DPHitoeHealthProfile : DCMHealthProfile<DCMHealthProfileDelegate>
+@interface DPHitoeHealthProfile : DCMHealthProfile
 
 @end

@@ -26,21 +26,37 @@
 {
     self = [super init];
     if (self) {
-        self.delegate = self;
-        
         // イベントマネージャを取得
         self.eventMgr = [DConnectEventManager sharedManagerForClass:[DPHitoeDevicePlugin class]];
         __unsafe_unretained typeof(self) weakSelf = self;
         self.poseReceived = ^(DPHitoeDevice *device, DPHitoePoseEstimationData *pose) {
             [weakSelf notifyReceiveDataForDevice:device data:pose];
         };
+        NSString *didReceiveGetOnPoseEstimationRequest = [self apiPathWithProfile: self.profileName
+                                                                       interfaceName: nil
+                                                                       attributeName: DCMPoseEstimationProfileAttrOnPoseEstimation];
+        [self addGetPath:didReceiveGetOnPoseEstimationRequest api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+            return [weakSelf didReceiveGetOnPoseEstimationRequest:request response:response serviceId:[request serviceId]];
+        }];
+        NSString *didReceivePutOnPoseEstimationRequest = [self apiPathWithProfile: self.profileName
+                                                                       interfaceName: nil
+                                                                       attributeName: DCMPoseEstimationProfileAttrOnPoseEstimation];
+        [self addPutPath:didReceivePutOnPoseEstimationRequest api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+            return [weakSelf didReceivePutOnPoseEstimationRequest:request response:response serviceId:[request serviceId] sessionKey:[request sessionKey]];
+        }];
+        NSString *didReceiveDeleteOnPoseEstimationRequest = [self apiPathWithProfile: self.profileName
+                                                                          interfaceName: nil
+                                                                          attributeName: DCMPoseEstimationProfileAttrOnPoseEstimation];
+        [self addDeletePath:didReceiveDeleteOnPoseEstimationRequest api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+            return [weakSelf didReceiveDeleteOnPoseEstimationRequest:request response:response serviceId:[request serviceId] sessionKey:[request sessionKey]];
+        }];
+
     }
     return self;
 }
 
 
-- (BOOL)          profile:(DCMPoseEstimationProfile *)profile
-didReceiveGetOnPoseEstimationRequest:(DConnectRequestMessage *)request
+- (BOOL)didReceiveGetOnPoseEstimationRequest:(DConnectRequestMessage *)request
                  response:(DConnectResponseMessage *)response
                 serviceId:(NSString *)serviceId {
     if (!serviceId) {
@@ -65,8 +81,7 @@ didReceiveGetOnPoseEstimationRequest:(DConnectRequestMessage *)request
 }
 
 
-- (BOOL)           profile:(DCMPoseEstimationProfile *)profile
-didReceivePutOnPoseEstimationRequest:(DConnectRequestMessage *)request
+- (BOOL)didReceivePutOnPoseEstimationRequest:(DConnectRequestMessage *)request
                   response:(DConnectResponseMessage *)response
                  serviceId:(NSString *)serviceId
                 sessionKey:(NSString *)sessionKey {
@@ -104,8 +119,7 @@ didReceivePutOnPoseEstimationRequest:(DConnectRequestMessage *)request
     return YES;
 }
 
-- (BOOL)                           profile:(DCMPoseEstimationProfile *)profile
-didReceiveDeleteOnPoseEstimationRequest:(DConnectRequestMessage *)request
+- (BOOL)didReceiveDeleteOnPoseEstimationRequest:(DConnectRequestMessage *)request
                                   response:(DConnectResponseMessage *)response
                                  serviceId:(NSString *)serviceId
                                 sessionKey:(NSString *)sessionKey {

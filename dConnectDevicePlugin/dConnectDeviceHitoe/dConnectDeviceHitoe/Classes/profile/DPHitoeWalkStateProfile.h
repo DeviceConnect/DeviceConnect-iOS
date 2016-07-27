@@ -9,6 +9,6 @@
 
 #import <DCMDevicePluginSDK/DCMDevicePluginSDK.h>
 
-@interface DPHitoeWalkStateProfile : DCMWalkStateProfile<DCMWalkStateProfileDelegate>
+@interface DPHitoeWalkStateProfile : DCMWalkStateProfile
 
 @end

@@ -28,7 +28,6 @@
 {
     self = [super init];
     if (self) {
-        self.delegate = self;
         
         // イベントマネージャを取得
         self.eventMgr = [DConnectEventManager sharedManagerForClass:[DPHitoeDevicePlugin class]];
@@ -36,13 +35,31 @@
         self.accelReceived = ^(DPHitoeDevice *device, DPHitoeAccelerationData *accel) {
             [weakSelf notifyReceiveDataForDevice:device data:accel];
         };
+        NSString *didReceiveGetOnDeviceOrientationRequest = [self apiPathWithProfile: self.profileName
+                                                                interfaceName: nil
+                                                                attributeName: DConnectDeviceOrientationProfileAttrOnDeviceOrientation];
+        [self addGetPath:didReceiveGetOnDeviceOrientationRequest api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+            return [weakSelf didReceiveGetOnDeviceOrientationRequest:request response:response serviceId:[request serviceId]];
+        }];
+        NSString *didReceivePutOnDeviceOrientationRequest = [self apiPathWithProfile: self.profileName
+                                                         interfaceName: nil
+                                                         attributeName: DConnectDeviceOrientationProfileAttrOnDeviceOrientation];
+        [self addPutPath:didReceivePutOnDeviceOrientationRequest api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+            return [weakSelf didReceivePutOnDeviceOrientationRequest:request response:response serviceId:[request serviceId] sessionKey:[request sessionKey]];
+        }];
+        NSString *didReceiveDeleteOnDeviceOrientationRequest = [self apiPathWithProfile: self.profileName
+                                                            interfaceName: nil
+                                                            attributeName: DConnectDeviceOrientationProfileAttrOnDeviceOrientation];
+        [self addDeletePath:didReceiveDeleteOnDeviceOrientationRequest api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+            return [weakSelf didReceiveDeleteOnDeviceOrientationRequest:request response:response serviceId:[request serviceId] sessionKey:[request sessionKey]];
+        }];
+
     }
     return self;
 }
 
 
-- (BOOL)          profile:(DConnectDeviceOrientationProfile *)profile
-  didReceiveGetOnDeviceOrientationRequest:(DConnectRequestMessage *)request
+- (BOOL)didReceiveGetOnDeviceOrientationRequest:(DConnectRequestMessage *)request
                  response:(DConnectResponseMessage *)response
                 serviceId:(NSString *)serviceId {
     if (!serviceId) {
@@ -67,8 +84,7 @@
 }
 
 
-- (BOOL)           profile:(DConnectDeviceOrientationProfile *)profile
-   didReceivePutOnDeviceOrientationRequest:(DConnectRequestMessage *)request
+- (BOOL)didReceivePutOnDeviceOrientationRequest:(DConnectRequestMessage *)request
                   response:(DConnectResponseMessage *)response
                  serviceId:(NSString *)serviceId
                 sessionKey:(NSString *)sessionKey {
@@ -110,8 +126,7 @@
     return YES;
 }
 
-- (BOOL)                           profile:(DConnectDeviceOrientationProfile *)profile
-didReceiveDeleteOnDeviceOrientationRequest:(DConnectRequestMessage *)request
+- (BOOL)didReceiveDeleteOnDeviceOrientationRequest:(DConnectRequestMessage *)request
                                   response:(DConnectResponseMessage *)response
                                  serviceId:(NSString *)serviceId
                                 sessionKey:(NSString *)sessionKey {

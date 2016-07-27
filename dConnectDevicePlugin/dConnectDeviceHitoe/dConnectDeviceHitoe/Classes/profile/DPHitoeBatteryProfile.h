@@ -8,6 +8,6 @@
 //
 #import <DConnectSDK/DConnectSDK.h>
 
-@interface DPHitoeBatteryProfile : DConnectBatteryProfile<DConnectBatteryProfileDelegate>
+@interface DPHitoeBatteryProfile : DConnectBatteryProfile
 
 @end

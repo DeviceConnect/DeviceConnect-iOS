@@ -27,7 +27,6 @@
 {
     self = [super init];
     if (self) {
-        self.delegate = self;
         
         // イベントマネージャを取得
         self.eventMgr = [DConnectEventManager sharedManagerForClass:[DPHitoeDevicePlugin class]];
@@ -36,13 +35,31 @@
         self.ecgReceived = ^(DPHitoeDevice *device, DPHitoeHeartRateData *ecg) {
             [weakSelf notifyReceiveDataForDevice:device data:ecg];
         };
+        NSString *didReceiveGetOnECGRequest = [self apiPathWithProfile: self.profileName
+                                                                interfaceName: nil
+                                                                attributeName: DCMECGProfileAttrOnECG];
+        [self addGetPath:didReceiveGetOnECGRequest api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+            return [weakSelf didReceiveGetOnECGRequest:request response:response serviceId:[request serviceId]];
+        }];
+        NSString *didReceivePutOnECGRequest = [self apiPathWithProfile: self.profileName
+                                                         interfaceName: nil
+                                                         attributeName: DCMECGProfileAttrOnECG];
+        [self addPutPath:didReceivePutOnECGRequest api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+            return [weakSelf didReceivePutOnECGRequest:request response:response serviceId:[request serviceId] sessionKey:[request sessionKey]];
+        }];
+        NSString *didReceiveDeleteOnECGRequest = [self apiPathWithProfile: self.profileName
+                                                            interfaceName: nil
+                                                            attributeName: DCMECGProfileAttrOnECG];
+        [self addDeletePath:didReceiveDeleteOnECGRequest api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+            return [weakSelf didReceiveDeleteOnECGRequest:request response:response serviceId:[request serviceId] sessionKey:[request sessionKey]];
+        }];
+
     }
     return self;
 }
 
 
-- (BOOL)          profile:(DCMECGProfile *)profile
-didReceiveGetOnECGRequest:(DConnectRequestMessage *)request
+- (BOOL)didReceiveGetOnECGRequest:(DConnectRequestMessage *)request
                  response:(DConnectResponseMessage *)response
                 serviceId:(NSString *)serviceId {
     if (!serviceId) {
@@ -67,8 +84,7 @@ didReceiveGetOnECGRequest:(DConnectRequestMessage *)request
 }
 
 
-- (BOOL)           profile:(DCMECGProfile *)profile
- didReceivePutOnECGRequest:(DConnectRequestMessage *)request
+- (BOOL)didReceivePutOnECGRequest:(DConnectRequestMessage *)request
                   response:(DConnectResponseMessage *)response
                  serviceId:(NSString *)serviceId
                 sessionKey:(NSString *)sessionKey {
@@ -106,8 +122,7 @@ didReceiveGetOnECGRequest:(DConnectRequestMessage *)request
     return YES;
 }
 
-- (BOOL)                           profile:(DCMECGProfile *)profile
-              didReceiveDeleteOnECGRequest:(DConnectRequestMessage *)request
+- (BOOL)didReceiveDeleteOnECGRequest:(DConnectRequestMessage *)request
                                   response:(DConnectResponseMessage *)response
                                  serviceId:(NSString *)serviceId
                                 sessionKey:(NSString *)sessionKey {

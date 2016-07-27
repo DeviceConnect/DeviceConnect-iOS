@@ -27,7 +27,6 @@
 {
     self = [super init];
     if (self) {
-        self.delegate = self;
         
         // イベントマネージャを取得
         self.eventMgr = [DConnectEventManager sharedManagerForClass:[DPHitoeDevicePlugin class]];
@@ -35,13 +34,32 @@
         self.heartRateReceived = ^(DPHitoeDevice *device, DPHitoeHeartRateData *heartRate) {
             [weakSelf notifyReceiveDataForDevice:device data:heartRate];
         };
+        
+        NSString *didReceiveGetHeartRequestApiPath = [self apiPathWithProfile: self.profileName
+                                                                    interfaceName: nil
+                                                                    attributeName: DCMHealthProfileAttrHeart];
+        [self addGetPath:didReceiveGetHeartRequestApiPath api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+            return [weakSelf didReceiveGetHeartRequest:request response:response serviceId:[request serviceId]];
+        }];
+        NSString *didReceivePutHeartRequest = [self apiPathWithProfile: self.profileName
+                                                         interfaceName: nil
+                                                         attributeName: DCMHealthProfileAttrHeart];
+        [self addPutPath:didReceivePutHeartRequest api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+            return [weakSelf didReceivePutHeartRequest:request response:response serviceId:[request serviceId] sessionKey:[request sessionKey]];
+        }];
+        NSString *didReceiveDeleteHeartRequest = [self apiPathWithProfile: self.profileName
+                                                         interfaceName: nil
+                                                         attributeName: DCMHealthProfileAttrHeart];
+        [self addDeletePath:didReceiveDeleteHeartRequest api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+            return [weakSelf didReceiveDeleteHeartRequest:request response:response serviceId:[request serviceId] sessionKey:[request sessionKey]];
+        }];
+        
     }
     return self;
 }
 
 
-- (BOOL)          profile:(DCMHealthProfile *)profile
-didReceiveGetHeartRequest:(DConnectRequestMessage *)request
+- (BOOL) didReceiveGetHeartRequest:(DConnectRequestMessage *)request
                  response:(DConnectResponseMessage *)response
                 serviceId:(NSString *)serviceId {
     if (!serviceId) {
@@ -66,8 +84,7 @@ didReceiveGetHeartRequest:(DConnectRequestMessage *)request
 }
 
 
-- (BOOL)           profile:(DCMHealthProfile *)profile
- didReceivePutHeartRequest:(DConnectRequestMessage *)request
+- (BOOL) didReceivePutHeartRequest:(DConnectRequestMessage *)request
                   response:(DConnectResponseMessage *)response
                  serviceId:(NSString *)serviceId
                 sessionKey:(NSString *)sessionKey {
@@ -105,11 +122,10 @@ didReceiveGetHeartRequest:(DConnectRequestMessage *)request
     return YES;
 }
 
-- (BOOL)                           profile:(DCMHealthProfile *)profile
-              didReceiveDeleteHeartRequest:(DConnectRequestMessage *)request
-                                  response:(DConnectResponseMessage *)response
-                                 serviceId:(NSString *)serviceId
-                                sessionKey:(NSString *)sessionKey {
+- (BOOL)didReceiveDeleteHeartRequest:(DConnectRequestMessage *)request
+                            response:(DConnectResponseMessage *)response
+                           serviceId:(NSString *)serviceId
+                          sessionKey:(NSString *)sessionKey {
     if (!serviceId) {
         [response setErrorToNotFoundServiceWithMessage:@"Not found serviceID"];
     } else if (!sessionKey) {

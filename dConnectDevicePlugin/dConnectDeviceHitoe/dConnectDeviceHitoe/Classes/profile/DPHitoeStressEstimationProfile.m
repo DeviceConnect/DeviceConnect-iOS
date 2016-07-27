@@ -25,21 +25,37 @@
 {
     self = [super init];
     if (self) {
-        self.delegate = self;
-        
         // イベントマネージャを取得
         self.eventMgr = [DConnectEventManager sharedManagerForClass:[DPHitoeDevicePlugin class]];
         __unsafe_unretained typeof(self) weakSelf = self;
         self.stressReceived = ^(DPHitoeDevice *device, DPHitoeStressEstimationData *stress) {
             [weakSelf notifyReceiveDataForDevice:device data:stress];
         };
+        NSString *didReceiveGetOnStressEstimationRequest = [self apiPathWithProfile: self.profileName
+                                                                       interfaceName: nil
+                                                                       attributeName: DCMStressEstimationProfileAttrOnStressEstimation];
+        [self addGetPath:didReceiveGetOnStressEstimationRequest api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+            return [weakSelf didReceiveGetOnStressEstimationRequest:request response:response serviceId:[request serviceId]];
+        }];
+        NSString *didReceivePutOnStressEstimationRequest = [self apiPathWithProfile: self.profileName
+                                                                       interfaceName: nil
+                                                                       attributeName: DCMStressEstimationProfileAttrOnStressEstimation];
+        [self addPutPath:didReceivePutOnStressEstimationRequest api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+            return [weakSelf didReceivePutOnStressEstimationRequest:request response:response serviceId:[request serviceId] sessionKey:[request sessionKey]];
+        }];
+        NSString *didReceiveDeleteOnStressEstimationRequest = [self apiPathWithProfile: self.profileName
+                                                                          interfaceName: nil
+                                                                          attributeName: DCMStressEstimationProfileAttrOnStressEstimation];
+        [self addDeletePath:didReceiveDeleteOnStressEstimationRequest api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+            return [weakSelf didReceiveDeleteOnStressEstimationRequest:request response:response serviceId:[request serviceId] sessionKey:[request sessionKey]];
+        }];
+
     }
     return self;
 }
 
 
-- (BOOL)          profile:(DCMStressEstimationProfile *)profile
-didReceiveGetOnStressEstimationRequest:(DConnectRequestMessage *)request
+- (BOOL)didReceiveGetOnStressEstimationRequest:(DConnectRequestMessage *)request
                  response:(DConnectResponseMessage *)response
                 serviceId:(NSString *)serviceId {
     if (!serviceId) {
@@ -64,8 +80,7 @@ didReceiveGetOnStressEstimationRequest:(DConnectRequestMessage *)request
 }
 
 
-- (BOOL)           profile:(DCMStressEstimationProfile *)profile
-didReceivePutOnStressEstimationRequest:(DConnectRequestMessage *)request
+- (BOOL)didReceivePutOnStressEstimationRequest:(DConnectRequestMessage *)request
                   response:(DConnectResponseMessage *)response
                  serviceId:(NSString *)serviceId
                 sessionKey:(NSString *)sessionKey {
@@ -103,8 +118,7 @@ didReceivePutOnStressEstimationRequest:(DConnectRequestMessage *)request
     return YES;
 }
 
-- (BOOL)                           profile:(DCMStressEstimationProfile *)profile
-   didReceiveDeleteOnStressEstimationRequest:(DConnectRequestMessage *)request
+- (BOOL)didReceiveDeleteOnStressEstimationRequest:(DConnectRequestMessage *)request
                                   response:(DConnectResponseMessage *)response
                                  serviceId:(NSString *)serviceId
                                 sessionKey:(NSString *)sessionKey {

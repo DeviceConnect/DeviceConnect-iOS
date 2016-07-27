@@ -10,6 +10,6 @@
 
 #import <DConnectSDK/DConnectSDK.h>
 
-@interface DPHitoeDeviceOrientationProfile : DConnectDeviceOrientationProfile<DConnectDeviceOrientationProfileDelegate>
+@interface DPHitoeDeviceOrientationProfile : DConnectDeviceOrientationProfile
 
 @end

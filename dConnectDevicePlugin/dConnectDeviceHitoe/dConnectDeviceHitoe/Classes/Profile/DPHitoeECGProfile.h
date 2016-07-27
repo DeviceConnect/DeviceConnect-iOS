@@ -9,6 +9,6 @@
 
 #import <DCMDevicePluginSDK/DCMDevicePluginSDK.h>
 
-@interface DPHitoeECGProfile : DCMECGProfile<DCMECGProfileDelegate>
+@interface DPHitoeECGProfile : DCMECGProfile
 
 @end
