@@ -31,6 +31,7 @@ NSString *const DConnectProximityProfileParamNear = @"near";
     return DConnectProximityProfileName;
 }
 
+/*
 - (BOOL) didReceiveGetRequest:(DConnectRequestMessage *)request response:(DConnectResponseMessage *)response {
     
     BOOL send = YES;
@@ -133,6 +134,7 @@ NSString *const DConnectProximityProfileParamNear = @"near";
     
     return send;
 }
+*/
 
 #pragma mark - Setter
 
