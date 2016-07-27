@@ -25,34 +25,53 @@
     self = [super init];
     if (self) {
         self.delegate = self;
+        __weak DPHostVibrationProfile *weakSelf = self;
+        
+        // API登録(didReceivePutVibrateRequest相当)
+        NSString *putVibrateRequestApiPath = [self apiPathWithProfile: self.profileName
+                                                     interfaceName: nil
+                                                     attributeName: DConnectVibrationProfileAttrVibrate];
+        [self addPutPath: putVibrateRequestApiPath
+                     api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+                         NSString *patternStr = [DConnectVibrationProfile patternFromRequest:request];
+                         NSArray *pattern = patternStr ? [weakSelf parsePattern:patternStr] : nil;
+                         
+                         NSString *patternString = [request stringForKey:DConnectVibrationProfileParamPattern];
+                         if ((patternString
+                              && ![DPHostUtils existCSVWithString:patternString]
+                              && ![DPHostUtils existDigitWithString:patternString])
+                             || (patternString
+                                 && [DPHostUtils existCSVWithString:patternString]
+                                 && ![self existNumberInArray:pattern])
+                             || (patternString
+                                 && [DPHostUtils existCSVWithString:patternString]
+                                 && ![DPHostUtils existDigitWithString:patternString]
+                                 && ![self existNumberInArray:pattern])
+                             ) {
+                             [response setErrorToInvalidRequestParameter];
+                             return YES;
+                         }
+                         AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
+                         [response setResult:DConnectMessageResultTypeOk];
+                         
+                         return YES;
+                     }];
+        
+        // API登録(didReceiveDeleteVibrateRequest相当)
+        NSString *deleteVibrateRequestApiPath = [self apiPathWithProfile: self.profileName
+                                                           interfaceName: nil
+                                                           attributeName: DConnectVibrationProfileAttrVibrate];
+        [self addDeletePath: deleteVibrateRequestApiPath
+                        api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+                            [response setErrorToNotSupportProfileWithMessage:@"Vibration Stop API is not supported."];
+                            return YES;
+                        }];
     }
     return self;
 }
 
-#pragma mark - Put Methods
+#pragma mark - Private Methods
 
-- (BOOL) didReceivePutRequest:(DConnectRequestMessage *)request response:(DConnectResponseMessage *)response {
-    
-    BOOL send = YES;
-    
-    if (!self.delegate) {
-        [response setErrorToNotSupportAction];
-        return send;
-    }
-    
-    NSString *attribute = [request attribute];
-    
-    if ([attribute isEqualToString:DConnectVibrationProfileAttrVibrate]) {
-        NSString *patternStr = [DConnectVibrationProfile patternFromRequest:request];
-        NSArray *pattern = patternStr ? [self parsePattern:patternStr] : nil;
-        send = [self profile:self didReceivePutVibrateRequest:request response:response
-                    serviceId:[request serviceId] pattern:pattern];
-    } else {
-        [response setErrorToNotSupportProfile];
-    }
-    
-    return send;
-}
 - (BOOL)existNumberInArray:(NSArray*)pattern
 {
     if (pattern) {
@@ -67,44 +86,5 @@
     return NO;
 }
 
-#pragma mark - DConnectVibrationProfileDelegate
-
-// バイブ鳴動開始リクエストを受け取った
-- (BOOL)            profile:(DConnectVibrationProfile *)profile
-didReceivePutVibrateRequest:(DConnectRequestMessage *)request
-                   response:(DConnectResponseMessage *)response
-                  serviceId:(NSString *)serviceId
-                    pattern:(NSArray *) pattern
-{
-    NSString *patternString = [request stringForKey:DConnectVibrationProfileParamPattern];
-    if ((patternString
-         && ![DPHostUtils existCSVWithString:patternString]
-         && ![DPHostUtils existDigitWithString:patternString])
-        || (patternString
-            && [DPHostUtils existCSVWithString:patternString]
-            && ![self existNumberInArray:pattern])
-        || (patternString
-            && [DPHostUtils existCSVWithString:patternString]
-            && ![DPHostUtils existDigitWithString:patternString]
-            && ![self existNumberInArray:pattern])
-        ) {
-        [response setErrorToInvalidRequestParameter];
-        return YES;
-    }
-    AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
-    [response setResult:DConnectMessageResultTypeOk];
-
-    return YES;
-}
-
-#pragma mark - Delete Methods
-- (BOOL)               profile:(DConnectVibrationProfile *)profile
-didReceiveDeleteVibrateRequest:(DConnectRequestMessage *)request
-                      response:(DConnectResponseMessage *)response
-                      serviceId:(NSString *)serviceId
-{
-    [response setErrorToNotSupportProfileWithMessage:@"Vibration Stop API is not supported."];
-    return YES;
-}
 
 @end

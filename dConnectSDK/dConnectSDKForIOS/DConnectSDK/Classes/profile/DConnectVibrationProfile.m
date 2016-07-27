@@ -40,6 +40,7 @@ const long long DConnectVibrationProfileDefaultMaxVibrationTime = 500;
     return DConnectVibrationProfileName;
 }
 
+/*
 - (BOOL) didReceivePutRequest:(DConnectRequestMessage *)request response:(DConnectResponseMessage *)response {
     
     BOOL send = YES;
@@ -94,6 +95,7 @@ const long long DConnectVibrationProfileDefaultMaxVibrationTime = 500;
     
     return send;
 }
+*/
 
 #pragma mark - Getter
 
