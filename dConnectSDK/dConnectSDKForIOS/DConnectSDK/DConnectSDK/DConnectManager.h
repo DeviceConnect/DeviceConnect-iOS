@@ -158,9 +158,6 @@ extern NSString *const DConnectApplicationWillEnterForeground;
  */
 - (void) sendResponse:(DConnectResponseMessage *)response;
 
-
-- (void)startServiceDiscoveryForCallback:(DConnectResponseBlocks)callback;
-
 /*!
  @brief DConnectDevicePluginManagerから登録されているすべてのデバイスプラグインを取得する。
  @return DConnectDevicePluginインスタンスの配列
