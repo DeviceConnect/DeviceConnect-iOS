@@ -40,217 +40,216 @@ static NSString *const DPThetaMovieMimeType = @"video/mov";
     self = [super init];
     if (self) {
         self.delegate = self;
+        __weak DPThetaMediaStreamRecordingProfile *weakSelf = self;
         
         // イベントマネージャを取得
         self.eventMgr = [DConnectEventManager sharedManagerForClass:[DPThetaDevicePlugin class]];
         self.server = [DPThetaMixedReplaceMediaServer new];
+        
+        // API登録(didReceiveGetMediaRecorderRequest相当)
+        NSString *getMediaRecorderRequestApiPath = [self apiPathWithProfile: self.profileName
+                                                              interfaceName: nil
+                                                              attributeName: DConnectMediaStreamRecordingProfileAttrMediaRecorder];
+        [self addGetPath: getMediaRecorderRequestApiPath
+                     api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+                         
+                         CONNECT_CHECK();
+                         DConnectArray *recorders = [DConnectArray new];
+                         DConnectMessage *recorder = [DConnectMessage new];
+                         [DConnectMediaStreamRecordingProfile
+                          setRecorderState:DConnectMediaStreamRecordingProfileRecorderStateInactive
+                          target:recorder];
+                         [DConnectMediaStreamRecordingProfile
+                          setRecorderState:DConnectMediaStreamRecordingProfileRecorderStateInactive
+                          target:recorder];
+                         [DConnectMediaStreamRecordingProfile setRecorderImageWidth:DPThetaMinWidth target:recorder];
+                         [DConnectMediaStreamRecordingProfile setRecorderImageHeight:DPThetaMinHeight target:recorder];
+                         [DConnectMediaStreamRecordingProfile setRecorderConfig:@"[]" target:recorder];
+                         if ([[DPThetaManager sharedManager] getCameraStatus] == 0) {
+                             [DConnectMediaStreamRecordingProfile setRecorderId:@"1" target:recorder];
+                             [DConnectMediaStreamRecordingProfile setRecorderMIMEType:DPThetaMovieMimeType
+                                                                               target:recorder];
+                             [DConnectMediaStreamRecordingProfile setRecorderName:@"THETA - movie" target:recorder];
+                             
+                         } else {
+                             [DConnectMediaStreamRecordingProfile setRecorderId:@"0" target:recorder];
+                             [DConnectMediaStreamRecordingProfile
+                              setRecorderState:DConnectMediaStreamRecordingProfileRecorderStateRecording
+                              target:recorder];
+                             [DConnectMediaStreamRecordingProfile setRecorderMIMEType:DPThetaImageMimeType
+                                                                               target:recorder];
+                             [DConnectMediaStreamRecordingProfile setRecorderName:@"THETA - photo" target:recorder];
+                             
+                         }
+                         [recorders addMessage:recorder];
+                         [DConnectMediaStreamRecordingProfile setRecorders:recorders target:response];
+                         [response setResult:DConnectMessageResultTypeOk];
+                         return YES;
+                     }];
+        
+        // API登録(didReceivePostTakePhotoRequest相当)
+        NSString *postTakePhotoRequestApiPath = [self apiPathWithProfile: self.profileName
+                                                           interfaceName: nil
+                                                           attributeName: DConnectMediaStreamRecordingProfileAttrTakePhoto];
+        [self addPostPath: postTakePhotoRequestApiPath
+                      api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+
+                          NSString *target = [DConnectMediaStreamRecordingProfile targetFromRequest:request];
+                         
+                          CONNECT_CHECK();
+                          if (target && ![target isEqualToString:@"0"]) {
+                              [response setErrorToInvalidRequestParameterWithMessage:@"Invalid target"];
+                              return YES;
+                          }
+                          BOOL isSuccess = [[DPThetaManager sharedManager] takePictureWithCompletion:^(NSString *uri, NSString* path) {
+                              [response setResult:DConnectMessageResultTypeOk];
+                              
+                              [DConnectMediaStreamRecordingProfile setUri:uri
+                                                                   target:response];
+                              [DConnectMediaStreamRecordingProfile setPath:path
+                                                                    target:response];
+                              [[DConnectManager sharedManager] sendResponse:response];
+                              
+                          } fileMgr:[WEAKSELF_PLUGIN fileMgr]];
+                          if (!isSuccess) {
+                              [response setErrorToIllegalServerStateWithMessage:@"Failed to take a picture."];
+                          }
+                          return !isSuccess;
+                      }];
+        
+        // API登録(didReceivePostRecordRequest相当)
+        NSString *postRecordRequestApiPath = [self apiPathWithProfile: self.profileName
+                                                        interfaceName: nil
+                                                        attributeName: DConnectMediaStreamRecordingProfileAttrRecord];
+        [self addPostPath: postRecordRequestApiPath
+                      api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+
+                          NSString *target = [DConnectMediaStreamRecordingProfile targetFromRequest:request];
+                          NSNumber *timeslice = [DConnectMediaStreamRecordingProfile timesliceFromRequest:request];
+
+                          CONNECT_CHECK();
+                          if (target && ![target isEqualToString:@"1"]) {
+                              [response setErrorToInvalidRequestParameterWithMessage:@"Invalid target"];
+                              return YES;
+                          }
+                          NSString *timesliceString = [request stringForKey:DConnectMediaStreamRecordingProfileParamTimeSlice];
+                          if (![DPThetaManager existDigitWithString:timesliceString]
+                              || (timeslice && timeslice < 0) || (timesliceString && timesliceString.length <= 0)) {
+                              [response setErrorToInvalidRequestParameterWithMessage:
+                               @"timeslice is not supported; please omit this parameter."];
+                              return YES;
+                          }
+                          BOOL isSuccess = [[DPThetaManager sharedManager] recordingMovie];
+                          if (isSuccess) {
+                              [response setResult:DConnectMessageResultTypeOk];
+                          } else {
+                              [response setErrorToIllegalDeviceStateWithMessage:@"Failed to record movie start"];
+                          }
+                          
+                          return YES;
+                      }];
+        
+        // API登録(didReceivePutStopRequest相当)
+        NSString *putStopRequestApiPath = [self apiPathWithProfile: self.profileName
+                                                     interfaceName: nil
+                                                     attributeName: DConnectMediaStreamRecordingProfileAttrStop];
+        [self addPutPath: putStopRequestApiPath
+                     api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+                          
+                         CONNECT_CHECK();
+                         BOOL isSuccess = [[DPThetaManager sharedManager] stopMovie];
+                         if (isSuccess) {
+                             [response setResult:DConnectMessageResultTypeOk];
+                         } else {
+                             [response setErrorToIllegalDeviceStateWithMessage:@"Failed to record movie stop"];
+                         }
+                         
+                         return YES;
+                     }];
+        
+        // API登録(didReceivePutOnPhotoRequest相当)
+        NSString *putOnPhotoRequestApiPath = [self apiPathWithProfile: self.profileName
+                                                     interfaceName: nil
+                                                     attributeName: DConnectMediaStreamRecordingProfileAttrOnPhoto];
+        [self addPutPath: putOnPhotoRequestApiPath
+                     api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+                         
+                         NSString *serviceId = [request serviceId];
+                         
+                         CONNECT_CHECK();
+                         [weakSelf handleEventRequest:request response:response isRemove:NO callback:^{
+                             [[DPThetaManager sharedManager] addOnPhotoEventCallbackWithID:serviceId
+                                                                                   fileMgr:[WEAKSELF_PLUGIN fileMgr]
+                                                                                  callback:^(NSString *path) {
+                                                                                      [weakSelf sendOnPhotoEventWithPath:path mimeType:DPThetaImageMimeType];
+                                                                                  }];
+                         }];
+                         return YES;
+                     }];
+        
+        // API登録(didReceivePutOnRecordingChangeRequest相当)
+        NSString *putOnRecordingChangeRequestApiPath = [self apiPathWithProfile: self.profileName
+                                                                  interfaceName: nil
+                                                                  attributeName: DConnectMediaStreamRecordingProfileAttrOnRecordingChange];
+        [self addPutPath: putOnRecordingChangeRequestApiPath
+                     api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+                         
+                         NSString *serviceId = [request serviceId];
+                         
+                         CONNECT_CHECK();
+                         [weakSelf handleEventRequest:request response:response isRemove:NO callback:^{
+                             [[DPThetaManager sharedManager] addOnStatusEventCallbackWithID:serviceId
+                                                                                   callback:^(PtpIpObjectInfo *object,
+                                                                                              NSString *status,
+                                                                                              NSString *message) {
+                                                                                       NSString *path = nil;
+                                                                                       if (object) {
+                                                                                           path = object.filename;
+                                                                                       }
+                                                                                       [weakSelf sendOnRecordingChangeEventWithStatus:status
+                                                                                                                             path:path
+                                                                                                                         mimeType:DPThetaMovieMimeType
+                                                                                                                     errorMessage:message];
+                                                                                   }];
+                             
+                         }];
+                         return YES;
+                     }];
+        
+        // API登録(didReceiveDeleteOnPhotoRequest相当)
+        NSString *deleteOnPhotoRequestApiPath = [self apiPathWithProfile: self.profileName
+                                                           interfaceName: nil
+                                                           attributeName: DConnectMediaStreamRecordingProfileAttrOnPhoto];
+        [self addDeletePath: deleteOnPhotoRequestApiPath
+                        api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+
+                            NSString *serviceId = [request serviceId];
+                            
+                            CONNECT_CHECK();
+                            [weakSelf handleEventRequest:request response:response isRemove:YES callback:^{
+                                [[DPThetaManager sharedManager] removeOnPhotoEventCallbackWithID:serviceId];
+                            }];
+                            return YES;
+                        }];
+        
+        // API登録(didReceiveDeleteOnRecordingChangeRequest相当)
+        NSString *deleteOnRecordingChangeRequestApiPath = [self apiPathWithProfile: self.profileName
+                                                                  interfaceName: nil
+                                                                  attributeName: DConnectMediaStreamRecordingProfileAttrOnRecordingChange];
+        [self addDeletePath: deleteOnRecordingChangeRequestApiPath
+                        api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+                            
+                            NSString *serviceId = [request serviceId];
+                            
+                            CONNECT_CHECK();
+                            [weakSelf handleEventRequest:request response:response isRemove:YES callback:^{
+                                [[DPThetaManager sharedManager] removeOnStatusEventCallbackWithID:serviceId];
+                            }];
+                            return YES;
+                        }];
     }
     return self;
 }
-
-#pragma mark - Get Methods
-
-- (BOOL)                  profile:(DConnectMediaStreamRecordingProfile *)profile
-didReceiveGetMediaRecorderRequest:(DConnectRequestMessage *)request
-                         response:(DConnectResponseMessage *)response
-                        serviceId:(NSString *)serviceId
-{
-    
-    CONNECT_CHECK();
-    DConnectArray *recorders = [DConnectArray new];
-    DConnectMessage *recorder = [DConnectMessage new];
-    [DConnectMediaStreamRecordingProfile
-     setRecorderState:DConnectMediaStreamRecordingProfileRecorderStateInactive
-     target:recorder];
-    [DConnectMediaStreamRecordingProfile
-     setRecorderState:DConnectMediaStreamRecordingProfileRecorderStateInactive
-     target:recorder];
-    [DConnectMediaStreamRecordingProfile setRecorderImageWidth:DPThetaMinWidth target:recorder];
-    [DConnectMediaStreamRecordingProfile setRecorderImageHeight:DPThetaMinHeight target:recorder];
-    [DConnectMediaStreamRecordingProfile setRecorderConfig:@"[]" target:recorder];
-    if ([[DPThetaManager sharedManager] getCameraStatus] == 0) {
-        [DConnectMediaStreamRecordingProfile setRecorderId:@"1" target:recorder];
-        [DConnectMediaStreamRecordingProfile setRecorderMIMEType:DPThetaMovieMimeType
-                                                          target:recorder];
-        [DConnectMediaStreamRecordingProfile setRecorderName:@"THETA - movie" target:recorder];
-
-    } else {
-        [DConnectMediaStreamRecordingProfile setRecorderId:@"0" target:recorder];
-        [DConnectMediaStreamRecordingProfile
-         setRecorderState:DConnectMediaStreamRecordingProfileRecorderStateRecording
-         target:recorder];
-        [DConnectMediaStreamRecordingProfile setRecorderMIMEType:DPThetaImageMimeType
-                                                          target:recorder];
-        [DConnectMediaStreamRecordingProfile setRecorderName:@"THETA - photo" target:recorder];
-
-    }
-    [recorders addMessage:recorder];
-    [DConnectMediaStreamRecordingProfile setRecorders:recorders target:response];
-    [response setResult:DConnectMessageResultTypeOk];
-    return YES;
-}
-
-
-
-#pragma mark - Post Methods
-
-
-- (BOOL)               profile:(DConnectMediaStreamRecordingProfile *)profile
-didReceivePostTakePhotoRequest:(DConnectRequestMessage *)request
-                      response:(DConnectResponseMessage *)response
-                     serviceId:(NSString *)serviceId
-                        target:(NSString *)target
-{
-    CONNECT_CHECK();
-    if (target && ![target isEqualToString:@"0"]) {
-        [response setErrorToInvalidRequestParameterWithMessage:@"Invalid target"];
-        return YES;
-    }
-    BOOL isSuccess = [[DPThetaManager sharedManager] takePictureWithCompletion:^(NSString *uri, NSString* path) {
-        [response setResult:DConnectMessageResultTypeOk];
-
-        [DConnectMediaStreamRecordingProfile setUri:uri
-                                             target:response];
-        [DConnectMediaStreamRecordingProfile setPath:path
-                                              target:response];
-        [[DConnectManager sharedManager] sendResponse:response];
-
-    } fileMgr:[SELF_PLUGIN fileMgr]];
-    if (!isSuccess) {
-        [response setErrorToIllegalServerStateWithMessage:@"Failed to take a picture."];
-    }
-    return !isSuccess;
-}
-
-- (BOOL)            profile:(DConnectMediaStreamRecordingProfile *)profile
-didReceivePostRecordRequest:(DConnectRequestMessage *)request
-                   response:(DConnectResponseMessage *)response
-                  serviceId:(NSString *)serviceId
-                     target:(NSString *)target
-                  timeslice:(NSNumber *)timeslice
-{
-    CONNECT_CHECK();
-    if (target && ![target isEqualToString:@"1"]) {
-        [response setErrorToInvalidRequestParameterWithMessage:@"Invalid target"];
-        return YES;
-    }
-    NSString *timesliceString = [request stringForKey:DConnectMediaStreamRecordingProfileParamTimeSlice];
-    if (![DPThetaManager existDigitWithString:timesliceString]
-        || (timeslice && timeslice < 0) || (timesliceString && timesliceString.length <= 0)) {
-        [response setErrorToInvalidRequestParameterWithMessage:
-         @"timeslice is not supported; please omit this parameter."];
-        return YES;
-    }
-    BOOL isSuccess = [[DPThetaManager sharedManager] recordingMovie];
-    if (isSuccess) {
-        [response setResult:DConnectMessageResultTypeOk];
-    } else {
-        [response setErrorToIllegalDeviceStateWithMessage:@"Failed to record movie start"];
-    }
-    
-    return YES;
-}
-
-
-#pragma mark - Put Methods
-
-
-- (BOOL)         profile:(DConnectMediaStreamRecordingProfile *)profile
-didReceivePutStopRequest:(DConnectRequestMessage *)request
-                response:(DConnectResponseMessage *)response
-               serviceId:(NSString *)serviceId
-                  target:(NSString *)target
-{
-    CONNECT_CHECK();
-    BOOL isSuccess = [[DPThetaManager sharedManager] stopMovie];
-    if (isSuccess) {
-        [response setResult:DConnectMessageResultTypeOk];
-    } else {
-        [response setErrorToIllegalDeviceStateWithMessage:@"Failed to record movie stop"];
-    }
- 
-    return YES;
-}
-
-
-#pragma mark Event Registration
-
-
-- (BOOL)            profile:(DConnectMediaStreamRecordingProfile *)profile
-didReceivePutOnPhotoRequest:(DConnectRequestMessage *)request
-                   response:(DConnectResponseMessage *)response
-                  serviceId:(NSString *)serviceId
-                 sessionKey:(NSString *)sessionKey
-{
-    CONNECT_CHECK();
-    [self handleEventRequest:request response:response isRemove:NO callback:^{
-        [[DPThetaManager sharedManager] addOnPhotoEventCallbackWithID:serviceId
-                                                              fileMgr:[SELF_PLUGIN fileMgr]
-                                                             callback:^(NSString *path) {
-            [self sendOnPhotoEventWithPath:path mimeType:DPThetaImageMimeType];
-        }];
-    }];
-    return YES;
-}
-
-
-- (BOOL)                      profile:(DConnectMediaStreamRecordingProfile *)profile
-didReceivePutOnRecordingChangeRequest:(DConnectRequestMessage *)request
-                             response:(DConnectResponseMessage *)response
-                            serviceId:(NSString *)serviceId
-                           sessionKey:(NSString *)sessionKey
-{
-    CONNECT_CHECK();
-    [self handleEventRequest:request response:response isRemove:NO callback:^{
-        [[DPThetaManager sharedManager] addOnStatusEventCallbackWithID:serviceId
-                                                              callback:^(PtpIpObjectInfo *object,
-                                                                         NSString *status,
-                                                                         NSString *message) {
-            NSString *path = nil;
-            if (object) {
-                path = object.filename;
-            }
-            [self sendOnRecordingChangeEventWithStatus:status
-                                                  path:path
-                                              mimeType:DPThetaMovieMimeType
-                                          errorMessage:message];
-        }];
-
-    }];
-    return YES;
-}
-
-#pragma mark - Delete Methods
-#pragma mark Event Unregstration
-
-- (BOOL) profile:(DConnectMediaStreamRecordingProfile *)profile
-    didReceiveDeleteOnPhotoRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response
-       serviceId:(NSString *)serviceId
-      sessionKey:(NSString *)sessionKey
-{
-    CONNECT_CHECK();
-    [self handleEventRequest:request response:response isRemove:YES callback:^{
-        [[DPThetaManager sharedManager] removeOnPhotoEventCallbackWithID:serviceId];
-    }];
-    return YES;
-}
-
-
-- (BOOL)                         profile:(DConnectMediaStreamRecordingProfile *)profile
-didReceiveDeleteOnRecordingChangeRequest:(DConnectRequestMessage *)request
-                                response:(DConnectResponseMessage *)response
-                               serviceId:(NSString *)serviceId
-                              sessionKey:(NSString *)sessionKey
-{
-    CONNECT_CHECK();
-    [self handleEventRequest:request response:response isRemove:YES callback:^{
-        [[DPThetaManager sharedManager] removeOnStatusEventCallbackWithID:serviceId];
-    }];
-    return YES;
-}
-
-
 #pragma mark - Event Method
 
 - (void)handleEventRequest:(DConnectRequestMessage *)request
