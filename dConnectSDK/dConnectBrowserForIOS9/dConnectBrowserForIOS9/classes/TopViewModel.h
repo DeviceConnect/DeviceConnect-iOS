@@ -25,6 +25,7 @@ typedef NS_ENUM (NSInteger, SectionType) {
 @property (nonatomic, readonly) BOOL isBookmarksEmpty;
 @property (nonatomic, readonly) BOOL isDeviceEmpty;
 @property (nonatomic, weak) IBOutlet id<TopViewModelDelegate>  delegate;
+@property (nonatomic, readonly) BOOL isDeviceLoading;
 
 - (void)initialSetup;
 - (void)saveSettings;

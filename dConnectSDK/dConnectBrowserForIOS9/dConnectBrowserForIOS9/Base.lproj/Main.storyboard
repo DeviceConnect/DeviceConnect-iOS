@@ -331,6 +331,7 @@
                         <outlet property="collectionView" destination="ztj-Vy-zOu" id="ivT-PI-XIG"/>
                         <outlet property="headerHeight" destination="Tj7-Kj-3lV" id="dMc-J1-St8"/>
                         <outlet property="headerView" destination="307-cp-fPT" id="hnb-in-o08"/>
+                        <outlet property="loadingView" destination="krw-95-yHv" id="L6x-Ey-XG7"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3H7-zK-k4z" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -339,6 +340,33 @@
                         <action selector="onTapView:" destination="sIh-io-mcp" id="9qf-iY-NR5"/>
                     </connections>
                 </tapGestureRecognizer>
+                <view contentMode="scaleToFill" id="krw-95-yHv">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="220"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <activityIndicatorView opaque="NO" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="dzY-Dz-ZbW">
+                            <rect key="frame" x="168" y="130" width="40" height="40"/>
+                            <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="40" id="Ojs-NY-qpG"/>
+                                <constraint firstAttribute="height" constant="40" id="bl1-Ma-2kP"/>
+                            </constraints>
+                        </activityIndicatorView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="デバイスを確認中..." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="k0q-VQ-IRp">
+                            <rect key="frame" x="117" y="100" width="142" height="20"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstItem="k0q-VQ-IRp" firstAttribute="centerY" secondItem="krw-95-yHv" secondAttribute="centerY" id="993-fV-ngq"/>
+                        <constraint firstItem="k0q-VQ-IRp" firstAttribute="centerX" secondItem="krw-95-yHv" secondAttribute="centerX" id="AJs-BD-IaZ"/>
+                        <constraint firstItem="dzY-Dz-ZbW" firstAttribute="centerX" secondItem="krw-95-yHv" secondAttribute="centerX" id="PWR-lz-dkK"/>
+                        <constraint firstItem="dzY-Dz-ZbW" firstAttribute="top" secondItem="k0q-VQ-IRp" secondAttribute="bottom" constant="10" id="mrR-Rx-8rJ"/>
+                    </constraints>
+                </view>
             </objects>
             <point key="canvasLocation" x="1102" y="429"/>
         </scene>

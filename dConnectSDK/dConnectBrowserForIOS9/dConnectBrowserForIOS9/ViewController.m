@@ -31,6 +31,7 @@
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (strong, nonatomic) UILabel* emptyBookmarksLabel;
 @property (strong, nonatomic) UILabel* emptyDevicesLabel;
+@property (strong, nonatomic) IBOutlet UIView* loadingView;
 
 - (IBAction)openBookmarkView:(id)sender;
 - (IBAction)onTapView:(id)sender;
@@ -139,12 +140,16 @@
         self.emptyBookmarksLabel = nil;
     }
 
-    if (viewModel.isDeviceEmpty) {
+    if (viewModel.isDeviceEmpty && viewModel.isDeviceLoading) {
+        self.loadingView.frame = CGRectMake(0, 300, self.collectionView.frame.size.width, 100);
+        [self.collectionView addSubview: self.loadingView];
+    } else if (viewModel.isDeviceEmpty && !viewModel.isDeviceLoading) {
         self.emptyDevicesLabel = [self makeEmptyLabel: CGRectMake(0, 300, 320, 220)
                                              message:@"デバイスが接続されていません。\nプラグインから設定を行ってください。"];
         [self.collectionView addSubview:self.emptyDevicesLabel];
     } else {
         [self.emptyDevicesLabel removeFromSuperview];
+        [self.loadingView removeFromSuperview];
         self.emptyDevicesLabel = nil;
     }
 }
@@ -359,8 +364,10 @@
 //--------------------------------------------------------------//
 - (void)requestDatasourceReload
 {
-    [self.collectionView reloadSections: [NSIndexSet indexSetWithIndex:Device]];
-    [self addEmptyLabelIfNeeded];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.collectionView reloadSections: [NSIndexSet indexSetWithIndex:Device]];
+        [self addEmptyLabelIfNeeded];
+    });
 }
 
 @end
