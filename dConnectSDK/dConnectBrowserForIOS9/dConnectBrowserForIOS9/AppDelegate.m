@@ -34,6 +34,11 @@
     if (!sw) {
         [[DConnectManager sharedManager] startByHttpServer];
         [def setObject:@(YES) forKey:IS_FIRST_LAUNCH];
+        DConnectManager *mgr = [DConnectManager sharedManager];
+        [def setBool:mgr.settings.useOriginBlocking forKey:IS_ORIGIN_BLOCKING];
+        [def setBool:mgr.settings.useLocalOAuth forKey:IS_USE_LOCALOAUTH];
+        [def setBool:mgr.settings.useOriginEnable forKey:IS_ORIGIN_ENABLE];
+        [def setBool:mgr.settings.useExternalIP forKey:IS_EXTERNAL_IP];
         [def synchronize];
     
     }
