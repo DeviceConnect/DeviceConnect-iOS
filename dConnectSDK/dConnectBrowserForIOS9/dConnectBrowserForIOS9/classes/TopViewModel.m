@@ -27,7 +27,9 @@
         __weak TopViewModel *_self = self;
         self.manager = [[GHURLManager alloc]init];
         [[GHDeviceUtil shareManager] setRecieveDeviceList:^(DConnectArray *deviceList){
-            [_self updateDevice:deviceList];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [_self updateDevice:deviceList];
+            });
         }];
         self.url = @"http://www.google.com";
         self.devices = [[NSArray alloc]init];
