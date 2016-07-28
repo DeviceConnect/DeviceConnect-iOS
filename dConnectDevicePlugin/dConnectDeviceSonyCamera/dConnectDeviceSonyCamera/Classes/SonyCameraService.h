@@ -8,9 +8,11 @@
 //
 
 #import <DConnectSDK/DConnectService.h>
+#import "SampleLiveviewManager.h"
+#import "SonyCameraRemoteApiUtil.h"
 
 @interface SonyCameraService : DConnectService
 
-- (instancetype) initWithServiceId: (NSString *) serviceId deviceName: (NSString *) deviceName profiles: (NSArray *) profiles;
+- (instancetype) initWithServiceId: (NSString *) serviceId deviceName: (NSString *) deviceName liveViewDelegate: (id<SampleLiveviewDelegate>) liveViewDelegate remoteApiUtilDelegate:(id<SonyCameraRemoteApiUtilDelegate>) remoteApiUtilDelegate;
 
 @end
