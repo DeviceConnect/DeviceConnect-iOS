@@ -25,7 +25,7 @@ typedef NS_ENUM (NSInteger, SectionType) {
 @property (nonatomic, readonly) BOOL isBookmarksEmpty;
 @property (nonatomic, readonly) BOOL isDeviceEmpty;
 @property (nonatomic, weak) IBOutlet id<TopViewModelDelegate>  delegate;
-@property (nonatomic, readonly) BOOL isDeviceLoading;
+@property (nonatomic, readonly) __block BOOL isDeviceLoading;
 
 - (void)initialSetup;
 - (void)saveSettings;
@@ -33,5 +33,5 @@ typedef NS_ENUM (NSInteger, SectionType) {
 - (NSString*)makeURLFromNotification:(NSNotification*)notif;
 - (void)updateDatasource;
 - (BOOL)isNeedOpenInitialGuide;
-
+- (void)updateDeviceList;
 @end

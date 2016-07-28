@@ -51,7 +51,6 @@
 {
     [self.datasource replaceObjectAtIndex:Bookmark withObject:[self setupBookmarks]];
     [self.datasource replaceObjectAtIndex:Device withObject:[self showableDevices]];
-    [self updateDeviceList];
 }
 
 

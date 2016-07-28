@@ -80,6 +80,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    [viewModel updateDeviceList];
     [viewModel updateDatasource];
     [self.collectionView reloadData];
     [self addEmptyLabelIfNeeded];
@@ -140,17 +141,20 @@
         self.emptyBookmarksLabel = nil;
     }
 
-    if (viewModel.isDeviceEmpty && viewModel.isDeviceLoading) {
-        self.loadingView.frame = CGRectMake(0, 300, self.collectionView.frame.size.width, 100);
-        [self.collectionView addSubview: self.loadingView];
-    } else if (viewModel.isDeviceEmpty && !viewModel.isDeviceLoading) {
+    if (viewModel.isDeviceEmpty && !viewModel.isDeviceLoading) {
         self.emptyDevicesLabel = [self makeEmptyLabel: CGRectMake(0, 300, 320, 220)
                                              message:@"デバイスが接続されていません。\nプラグインから設定を行ってください。"];
         [self.collectionView addSubview:self.emptyDevicesLabel];
     } else {
         [self.emptyDevicesLabel removeFromSuperview];
-        [self.loadingView removeFromSuperview];
         self.emptyDevicesLabel = nil;
+    }
+
+    if (viewModel.isDeviceEmpty && viewModel.isDeviceLoading) {
+        self.loadingView.frame = CGRectMake(0, 300, self.collectionView.frame.size.width, 220);
+        [self.collectionView addSubview: self.loadingView];
+    } else {
+        [self.loadingView removeFromSuperview];
     }
 }
 
