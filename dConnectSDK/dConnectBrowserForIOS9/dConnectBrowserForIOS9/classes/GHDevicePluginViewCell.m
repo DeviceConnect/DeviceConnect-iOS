@@ -31,7 +31,7 @@
 
 - (UIImage*)iconImage:(DConnectDevicePlugin*)plugins
 {
-    NSString* filePath = [plugins iconFilePath:YES];
+    NSString* filePath = [plugins iconFilePath:YES]; //NOTE:DConnectDevicePluginではonlineかどうかわからない
     if (filePath) {
         return [[UIImage alloc] initWithContentsOfFile:filePath];
     } else {
