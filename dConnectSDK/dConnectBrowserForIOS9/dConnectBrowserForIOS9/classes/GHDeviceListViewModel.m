@@ -14,9 +14,9 @@
 - (void)fetchDevices:(void (^)(DConnectArray *deviceList))completion
 {
     if([GHDeviceUtil shareManager].currentDevices.count == 0) {
-        [[GHDeviceUtil shareManager] setRecieveDeviceList:^(DConnectArray *deviceList){
+        [[GHDeviceUtil shareManager] discoverDevices:^(DConnectArray *result) {
             if (completion) {
-                completion(deviceList);
+                completion(result);
             }
         }];
     } else {
