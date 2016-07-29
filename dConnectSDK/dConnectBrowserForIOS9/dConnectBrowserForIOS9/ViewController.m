@@ -31,6 +31,7 @@
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (strong, nonatomic) UILabel* emptyBookmarksLabel;
 @property (strong, nonatomic) UILabel* emptyDevicesLabel;
+@property (strong, nonatomic) IBOutlet UIView* loadingView;
 
 - (IBAction)openBookmarkView:(id)sender;
 - (IBAction)onTapView:(id)sender;
@@ -79,6 +80,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    [viewModel updateDeviceList];
     [viewModel updateDatasource];
     [self.collectionView reloadData];
     [self addEmptyLabelIfNeeded];
@@ -139,13 +141,20 @@
         self.emptyBookmarksLabel = nil;
     }
 
-    if (viewModel.isDeviceEmpty) {
+    if (viewModel.isDeviceEmpty && !viewModel.isDeviceLoading) {
         self.emptyDevicesLabel = [self makeEmptyLabel: CGRectMake(0, 300, 320, 220)
                                              message:@"デバイスが接続されていません。\nプラグインから設定を行ってください。"];
         [self.collectionView addSubview:self.emptyDevicesLabel];
     } else {
         [self.emptyDevicesLabel removeFromSuperview];
         self.emptyDevicesLabel = nil;
+    }
+
+    if (viewModel.isDeviceLoading) {
+        self.loadingView.frame = CGRectMake(0, 300, self.collectionView.frame.size.width, 220);
+        [self.collectionView addSubview: self.loadingView];
+    } else {
+        [self.loadingView removeFromSuperview];
     }
 }
 
@@ -212,13 +221,6 @@
     //TODO: デバイス確認画面用のhtmlのpathを渡す
     NSString* path = [[NSBundle mainBundle]pathForResource:@"device" ofType:@"html"];
     WebViewController* controller = [[WebViewController alloc]initWithPath:path];
-    UINavigationController* nav = [[UINavigationController alloc]initWithRootViewController:controller];
-    [self presentViewController:nav animated:YES completion:nil];
-}
-
-- (IBAction)openDeviceList:(id)sender
-{
-    GHDeviceListViewController* controller = [[GHDeviceListViewController alloc]init];
     UINavigationController* nav = [[UINavigationController alloc]initWithRootViewController:controller];
     [self presentViewController:nav animated:YES completion:nil];
 }
@@ -321,7 +323,7 @@
                 DeviceMoreViewCell* cell = (DeviceMoreViewCell*)[collectionView dequeueReusableCellWithReuseIdentifier:@"DeviceDetailIcon" forIndexPath:indexPath];
                 __weak ViewController *weakSelf = self;
                 [cell setDidDeviceMorelected: ^() {
-                    [weakSelf openDeviceList: nil];
+                    [weakSelf performSegueWithIdentifier:@"OpenDeviceList" sender:nil];
                 }];
                 return cell;
             }
@@ -359,8 +361,10 @@
 //--------------------------------------------------------------//
 - (void)requestDatasourceReload
 {
-    [self.collectionView reloadSections: [NSIndexSet indexSetWithIndex:Device]];
-    [self addEmptyLabelIfNeeded];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.collectionView reloadSections: [NSIndexSet indexSetWithIndex:Device]];
+        [self addEmptyLabelIfNeeded];
+    });
 }
 
 @end

@@ -49,6 +49,8 @@
 		25FF1DB4196A89AD00EA7F72 /* DPHostUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FF1DB3196A89AD00EA7F72 /* DPHostUtils.m */; };
 		25FF1DB7196A9B8000EA7F72 /* DPHostNotificationProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FF1DB6196A9B8000EA7F72 /* DPHostNotificationProfile.m */; };
 		25FF1DBA196AA53400EA7F72 /* DPHostDeviceOrientationProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 25FF1DB9196AA53400EA7F72 /* DPHostDeviceOrientationProfile.m */; };
+		8EB854481D4240130035C0DC /* dconnect_icon_off.png in Resources */ = {isa = PBXBuildFile; fileRef = 8EB854461D4240130035C0DC /* dconnect_icon_off.png */; };
+		8EB854491D4240130035C0DC /* dconnect_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 8EB854471D4240130035C0DC /* dconnect_icon.png */; };
 		97FE19EB192B2FB400808FA5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97FE19EA192B2FB400808FA5 /* Foundation.framework */; };
 		97FE19F2192B2FB400808FA5 /* DPHostDevicePlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 97FE19F1192B2FB400808FA5 /* DPHostDevicePlugin.m */; };
 		97FE19F9192B2FB400808FA5 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97FE19F8192B2FB400808FA5 /* XCTest.framework */; };
@@ -125,6 +127,8 @@
 		25FF1DB6196A9B8000EA7F72 /* DPHostNotificationProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHostNotificationProfile.m; sourceTree = "<group>"; };
 		25FF1DB8196AA53400EA7F72 /* DPHostDeviceOrientationProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHostDeviceOrientationProfile.h; sourceTree = "<group>"; };
 		25FF1DB9196AA53400EA7F72 /* DPHostDeviceOrientationProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHostDeviceOrientationProfile.m; sourceTree = "<group>"; };
+		8EB854461D4240130035C0DC /* dconnect_icon_off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dconnect_icon_off.png; sourceTree = "<group>"; };
+		8EB854471D4240130035C0DC /* dconnect_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dconnect_icon.png; sourceTree = "<group>"; };
 		97FE19E7192B2FB400808FA5 /* libdConnectDeviceHost.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libdConnectDeviceHost.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		97FE19EA192B2FB400808FA5 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		97FE19EE192B2FB400808FA5 /* DPHostDevicePlugin-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "DPHostDevicePlugin-Prefix.pch"; sourceTree = "<group>"; };
@@ -219,6 +223,8 @@
 		25DAFD19196A61E50002734B /* dConnectDeviceHost_resources */ = {
 			isa = PBXGroup;
 			children = (
+				8EB854461D4240130035C0DC /* dconnect_icon_off.png */,
+				8EB854471D4240130035C0DC /* dconnect_icon.png */,
 				25DAFD1A196A61E50002734B /* Supporting Files */,
 			);
 			path = dConnectDeviceHost_resources;
@@ -521,10 +527,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8EB854491D4240130035C0DC /* dconnect_icon.png in Resources */,
 				D62F0D1B1AA6E2CB00BC0ADA /* close_small_button_normal.png in Resources */,
 				D62F0D1A1AA6E2CB00BC0ADA /* close_small_button_focus.png in Resources */,
 				D6384EB11A762B2E00384167 /* dConnectDeviceHost.storyboard in Resources */,
 				D62F0D1C1AA6E2CB00BC0ADA /* close_small_button_push.png in Resources */,
+				8EB854481D4240130035C0DC /* dconnect_icon_off.png in Resources */,
 				25DAFD1E196A61E50002734B /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

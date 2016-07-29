@@ -15,6 +15,8 @@
 @property(nonatomic) NSString* name;
 @property(nonatomic) NSString* idName;
 @property(nonatomic) NSString* type;
+@property(nonatomic) UIImage* iconImage;
+@property(nonatomic) NSString* typeIconFilename;
 @property(nonatomic) BOOL isOnline;
 
 @end

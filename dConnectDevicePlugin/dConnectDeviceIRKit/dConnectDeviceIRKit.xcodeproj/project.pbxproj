@@ -60,6 +60,8 @@
 		30A0A34419A5956C00822B73 /* dConnectDeviceIRKit-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 30A0A33219A5932700822B73 /* dConnectDeviceIRKit-Info.plist */; };
 		30A1EBDF19A8D16600E6CCE9 /* DPIRKitWiFiFormViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 30A1EBDE19A8D16600E6CCE9 /* DPIRKitWiFiFormViewController.m */; };
 		6682B8D719CA81E40039DCAA /* irkit09.png in Resources */ = {isa = PBXBuildFile; fileRef = 6682B8D619CA81E40039DCAA /* irkit09.png */; };
+		8EB8544C1D42403E0035C0DC /* dconnect_icon_off.png in Resources */ = {isa = PBXBuildFile; fileRef = 8EB8544A1D42403E0035C0DC /* dconnect_icon_off.png */; };
+		8EB8544D1D42403E0035C0DC /* dconnect_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 8EB8544B1D42403E0035C0DC /* dconnect_icon.png */; };
 		AB03424519BD790A00B1967E /* Storyboard_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AB03424719BD790A00B1967E /* Storyboard_iPad.storyboard */; };
 		AB056F951B68D0F200E1482F /* DPIRKitTable.xcdatamodeld in Resources */ = {isa = PBXBuildFile; fileRef = ABC2DB0E1B68574A0034C08F /* DPIRKitTable.xcdatamodeld */; };
 		AB056F981B68DDF300E1482F /* DPIRKitVirtualProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB056F971B68DDF300E1482F /* DPIRKitVirtualProfileViewController.m */; };
@@ -181,6 +183,8 @@
 		6682B8DB19CAB88A0039DCAA /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Storyboard_iPhone.strings; sourceTree = "<group>"; };
 		6682B8E119CAB96E0039DCAA /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Storyboard_iPad.strings; sourceTree = "<group>"; };
 		6682B8E319CAB9710039DCAA /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Storyboard_iPad.strings; sourceTree = "<group>"; };
+		8EB8544A1D42403E0035C0DC /* dconnect_icon_off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dconnect_icon_off.png; sourceTree = "<group>"; };
+		8EB8544B1D42403E0035C0DC /* dconnect_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dconnect_icon.png; sourceTree = "<group>"; };
 		AB03424619BD790A00B1967E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Storyboard_iPad.storyboard; sourceTree = "<group>"; };
 		AB056F961B68DDF300E1482F /* DPIRKitVirtualProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPIRKitVirtualProfileViewController.h; sourceTree = "<group>"; };
 		AB056F971B68DDF300E1482F /* DPIRKitVirtualProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPIRKitVirtualProfileViewController.m; sourceTree = "<group>"; };
@@ -464,6 +468,8 @@
 		30A0A33A19A5952D00822B73 /* dConnectDeviceIRKit_resources */ = {
 			isa = PBXGroup;
 			children = (
+				8EB8544A1D42403E0035C0DC /* dconnect_icon_off.png */,
+				8EB8544B1D42403E0035C0DC /* dconnect_icon.png */,
 				30A0A33B19A5952D00822B73 /* Supporting Files */,
 			);
 			path = dConnectDeviceIRKit_resources;
@@ -621,6 +627,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8EB8544D1D42403E0035C0DC /* dconnect_icon.png in Resources */,
 				AB8658021B82FF4900A0F896 /* light.png in Resources */,
 				AB8658031B82FF4900A0F896 /* tv.png in Resources */,
 				AB056F951B68D0F200E1482F /* DPIRKitTable.xcdatamodeld in Resources */,
@@ -633,6 +640,7 @@
 				AB4B690619B46FC9009939C9 /* irkit03.png in Resources */,
 				AB4B690719B46FC9009939C9 /* irkit04.png in Resources */,
 				AB4B690819B46FC9009939C9 /* irkit05.png in Resources */,
+				8EB8544C1D42403E0035C0DC /* dconnect_icon_off.png in Resources */,
 				AB4B690919B46FC9009939C9 /* irkit06.png in Resources */,
 				AB4B690A19B46FC9009939C9 /* irkit07.png in Resources */,
 				AB4B690B19B46FC9009939C9 /* irkit08.png in Resources */,

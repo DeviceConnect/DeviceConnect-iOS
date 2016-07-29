@@ -175,4 +175,9 @@
     return list;
 }
 
+- (NSString*)iconFilePath:(BOOL)isOnline
+{
+    return nil; //should be overrided
+}
+
 @end

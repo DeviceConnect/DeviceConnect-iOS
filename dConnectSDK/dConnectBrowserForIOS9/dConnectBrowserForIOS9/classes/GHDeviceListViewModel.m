@@ -14,9 +14,9 @@
 - (void)fetchDevices:(void (^)(DConnectArray *deviceList))completion
 {
     if([GHDeviceUtil shareManager].currentDevices.count == 0) {
-        [[GHDeviceUtil shareManager] setRecieveDeviceList:^(DConnectArray *deviceList){
+        [[GHDeviceUtil shareManager] discoverDevices:^(DConnectArray *result) {
             if (completion) {
-                completion(deviceList);
+                completion(result);
             }
         }];
     } else {
@@ -35,12 +35,27 @@
 
     __weak GHDeviceListViewModel* _self = self;
     [self fetchDevices:^(DConnectArray *deviceList) {
-        for (int i = 0; i < [deviceList count]; i++) {
-            DConnectMessage *service = [deviceList messageAtIndex: i];
-            [_self.datasource addObject:service];
-        }
-        [_self.delegate requestDatasourceReload];
+        [_self updateDatasource:deviceList];
     }];
+}
+
+- (void)refresh
+{
+    __weak GHDeviceListViewModel* _self = self;
+    [[GHDeviceUtil shareManager] discoverDevices:^(DConnectArray *result) {
+        [_self updateDatasource:result];
+    }];
+    [self.delegate startReloadDeviceList];
+}
+
+- (void)updateDatasource:(DConnectArray*)deviceList
+{
+    [self.datasource removeAllObjects];
+    for (int i = 0; i < [deviceList count]; i++) {
+        DConnectMessage *service = [deviceList messageAtIndex: i];
+        [self.datasource addObject:service];
+    }
+    [self.delegate finishReloadDeviceList];
 }
 
 @end

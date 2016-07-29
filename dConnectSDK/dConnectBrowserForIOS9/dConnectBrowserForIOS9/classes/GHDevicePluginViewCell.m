@@ -26,8 +26,17 @@
 {
     self.titleLabel.text = [plugins pluginName];
     self.versionLabel.text = [plugins pluginVersionName];
+    self.iconView.image = [self iconImage:plugins];
+}
 
-    //TODO: アイコンをバンドルから取ってくる
+- (UIImage*)iconImage:(DConnectDevicePlugin*)plugins
+{
+    NSString* filePath = [plugins iconFilePath:YES]; //NOTE:DConnectDevicePluginではonlineかどうかわからない
+    if (filePath) {
+        return [[UIImage alloc] initWithContentsOfFile:filePath];
+    } else {
+        return [UIImage imageNamed:@"default_device_icon"];
+    }
 }
 
 @end

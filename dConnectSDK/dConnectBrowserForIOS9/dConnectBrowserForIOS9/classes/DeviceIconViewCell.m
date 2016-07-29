@@ -29,14 +29,12 @@
     self.iconImage.image = nil;
     self.viewModel.message = message;
     self.titleLabel.text = self.viewModel.name;
-
-    NSString* target = @"dConnectDevicePebble"; //TODO: DConnectMessage.idからターゲットを判定する
-    NSString* bundle = [[NSBundle mainBundle] pathForResource:target ofType:@"bundle"];
-    if (bundle) {
-        NSString* imagePath = [NSString stringWithFormat:@"%@/dconnect_icon.png", bundle];
-        self.iconImage.image = [[UIImage alloc] initWithContentsOfFile:imagePath];
+    self.iconImage.image = self.viewModel.iconImage;
+    if(self.viewModel.typeIconFilename) {
+        self.typeIconImage.image = [UIImage imageNamed:self.viewModel.typeIconFilename];
+        self.typeIconImage.hidden = NO;
     } else {
-        self.iconImage.image = [UIImage imageNamed:@"default_device_icon"];
+        self.typeIconImage.hidden = YES;
     }
     [self setEnabled:YES];
 }

@@ -91,5 +91,13 @@
     [mgr startHttpServer];
 }
 
+- (NSString*)iconFilePath:(BOOL)isOnline
+{
+    NSString *bundlePath = [[NSBundle mainBundle] pathForResource:@"dConnectDeviceChromecast_resources" ofType:@"bundle"];
+    NSBundle *bundle = [NSBundle bundleWithPath:bundlePath];
+    NSString* filename = isOnline ? @"dconnect_icon" : @"dconnect_icon_off";
+    return [bundle pathForResource:filename ofType:@"png"];
+}
+
 @end
 

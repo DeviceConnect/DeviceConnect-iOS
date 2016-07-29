@@ -9,11 +9,13 @@
 #import <Foundation/Foundation.h>
 
 @protocol GHDeviceListViewModelDelegate <NSObject>
-- (void)requestDatasourceReload;
+- (void)startReloadDeviceList;
+- (void)finishReloadDeviceList;
 @end
 
 @interface GHDeviceListViewModel : NSObject
 @property (strong, nonatomic) NSMutableArray* datasource;
 @property (nonatomic, weak) id<GHDeviceListViewModelDelegate> delegate;
 - (void)setup;
+- (void)refresh;
 @end
