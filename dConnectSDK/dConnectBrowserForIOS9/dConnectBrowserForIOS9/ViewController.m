@@ -150,7 +150,7 @@
         self.emptyDevicesLabel = nil;
     }
 
-    if (viewModel.isDeviceEmpty && viewModel.isDeviceLoading) {
+    if (viewModel.isDeviceLoading) {
         self.loadingView.frame = CGRectMake(0, 300, self.collectionView.frame.size.width, 220);
         [self.collectionView addSubview: self.loadingView];
     } else {

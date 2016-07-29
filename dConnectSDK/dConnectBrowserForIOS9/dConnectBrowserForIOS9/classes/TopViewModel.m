@@ -31,6 +31,10 @@
                            [[NSArray alloc]init],
                            self.devices,
                            nil];
+        __weak TopViewModel *_self = self;
+        [[GHDeviceUtil shareManager] setRecieveDeviceList:^(DConnectArray *deviceList){
+            [_self updateDevice:deviceList];
+        }];
         [self updateDatasource];
     }
     return self;
@@ -133,11 +137,8 @@ static NSInteger maxIconCount = 8;
 
 - (void)updateDeviceList
 {
-    __weak TopViewModel *_self = self;
     _isDeviceLoading = YES;
-    [[GHDeviceUtil shareManager] setRecieveDeviceList:^(DConnectArray *deviceList){
-        [_self updateDevice:deviceList];
-    }];
+    [[GHDeviceUtil shareManager]updateDiveceList];
 }
 
 //--------------------------------------------------------------//
