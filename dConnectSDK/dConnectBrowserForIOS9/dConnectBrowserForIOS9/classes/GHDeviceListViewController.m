@@ -17,6 +17,8 @@
     GHDeviceListViewModel *viewModel;
 }
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *reloadButton;
+@property (strong, nonatomic) IBOutlet UIView* loadingView;
 @end
 
 @implementation GHDeviceListViewController
@@ -68,10 +70,20 @@
 //--------------------------------------------------------------//
 #pragma mark - GHDeviceListViewModelDelegate
 //--------------------------------------------------------------//
-- (void)requestDatasourceReload
+- (void)startReloadDeviceList
+{
+    self.reloadButton.enabled = NO;
+    self.loadingView.frame = CGRectMake(0, 40, self.collectionView.frame.size.width, 220);
+    [self.collectionView addSubview: self.loadingView];
+
+}
+
+- (void)finishReloadDeviceList
 {
     dispatch_async(dispatch_get_main_queue(), ^{
+        [self.loadingView removeFromSuperview];
         [self.collectionView reloadData];
+        self.reloadButton.enabled = YES;
     });
 }
 

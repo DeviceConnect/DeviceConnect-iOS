@@ -518,11 +518,40 @@
                     </navigationItem>
                     <connections>
                         <outlet property="collectionView" destination="4Ls-C2-Mcl" id="LLO-rp-7ud"/>
+                        <outlet property="loadingView" destination="IdZ-7u-dg9" id="lLj-gd-kDH"/>
+                        <outlet property="reloadButton" destination="xKU-bc-HaL" id="fJ5-dT-XfI"/>
                     </connections>
                 </viewController>
+                <view contentMode="scaleToFill" id="IdZ-7u-dg9">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="220"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <activityIndicatorView opaque="NO" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="459-pW-QbJ">
+                            <rect key="frame" x="168" y="130" width="40" height="40"/>
+                            <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="40" id="ina-Zc-gxz"/>
+                                <constraint firstAttribute="width" constant="40" id="mLH-wF-6bY"/>
+                            </constraints>
+                        </activityIndicatorView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="デバイスを確認中..." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QQQ-jr-ytO">
+                            <rect key="frame" x="117" y="100" width="142" height="20"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.80000000000000004" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstItem="QQQ-jr-ytO" firstAttribute="centerY" secondItem="IdZ-7u-dg9" secondAttribute="centerY" id="Dkl-LF-cJZ"/>
+                        <constraint firstItem="QQQ-jr-ytO" firstAttribute="centerX" secondItem="IdZ-7u-dg9" secondAttribute="centerX" id="MXI-rG-51y"/>
+                        <constraint firstItem="459-pW-QbJ" firstAttribute="centerX" secondItem="IdZ-7u-dg9" secondAttribute="centerX" id="Q09-J3-Cgx"/>
+                        <constraint firstItem="459-pW-QbJ" firstAttribute="top" secondItem="QQQ-jr-ytO" secondAttribute="bottom" constant="10" id="hK0-zX-Uhd"/>
+                    </constraints>
+                </view>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hhu-hM-75C" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2865" y="1161"/>
+            <point key="canvasLocation" x="2970" y="1372"/>
         </scene>
         <!--Setting Controller-->
         <scene sceneID="bDJ-Ty-NW7">

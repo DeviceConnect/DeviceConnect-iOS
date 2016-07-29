@@ -45,6 +45,7 @@
     [[GHDeviceUtil shareManager] discoverDevices:^(DConnectArray *result) {
         [_self updateDatasource:result];
     }];
+    [self.delegate startReloadDeviceList];
 }
 
 - (void)updateDatasource:(DConnectArray*)deviceList
@@ -54,7 +55,7 @@
         DConnectMessage *service = [deviceList messageAtIndex: i];
         [self.datasource addObject:service];
     }
-    [self.delegate requestDatasourceReload];
+    [self.delegate finishReloadDeviceList];
 }
 
 @end
