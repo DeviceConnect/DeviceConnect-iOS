@@ -325,12 +325,13 @@ static int const DPHitoeRetryCount = 30;
         DPHitoeHeartRateData *rate = _hrData[serviceId];
         long long timeStamp = rate.heartRate.timeStamp;
         long long history = [_nowTimeStamp[serviceId] longLongValue];
-        NSLog(@"================>");
-        NSLog(@"timestamp:%lld", timeStamp);
-        NSLog(@"history:%lld", history);
-        NSLog(@"<================");
-        if (isCallbackRunning && history == timeStamp) { //切断された
-            NSLog(@"retry1");
+//        NSLog(@"================>");
+//        NSLog(@"timestamp:%lld", timeStamp);
+//        NSLog(@"history:%lld", history);
+//        NSLog(@"<================");
+        DPHitoeDevice *device = [self getHitoeDeviceForServiceId:serviceId];
+        if (isCallbackRunning && history == timeStamp && device.isRegisterFlag) { //切断された
+//            NSLog(@"retry1");
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
                 DPHitoeDevice *retryDevice = [self getHitoeDeviceForServiceId:serviceId];
                 if ([retryDevice isRegisterFlag]) {
@@ -339,8 +340,9 @@ static int const DPHitoeRetryCount = 30;
             });
             retryCount++;
             isCallbackRunning = NO;
-        } else if (!isCallbackRunning && history == timeStamp && retryCount < DPHitoeRetryCount) {
-            NSLog(@"retry%d", retryCount);
+        } else if (!isCallbackRunning && history == timeStamp && retryCount < DPHitoeRetryCount
+                   && device.isRegisterFlag) {
+//            NSLog(@"retry%d", retryCount);
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
                 DPHitoeDevice *retryDevice = [self getHitoeDeviceForServiceId:serviceId];
                 if ([retryDevice isRegisterFlag]) {
