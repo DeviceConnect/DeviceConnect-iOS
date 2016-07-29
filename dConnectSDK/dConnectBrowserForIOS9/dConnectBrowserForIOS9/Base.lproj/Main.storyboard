@@ -285,8 +285,7 @@
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="INb-7v-2E4"/>
                                     <barButtonItem image="deviceIcon" id="8ah-EP-91Q">
                                         <connections>
-                                            <action selector="openDeviceList:" destination="sIh-io-mcp" id="FAb-1m-cHZ"/>
-                                            <segue destination="c6t-gf-O0Y" kind="presentation" id="hf9-Dc-Jkr"/>
+                                            <segue destination="c6t-gf-O0Y" kind="presentation" identifier="OpenDeviceList" id="hf9-Dc-Jkr"/>
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="yho-lk-O6e"/>

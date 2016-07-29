@@ -225,13 +225,6 @@
     [self presentViewController:nav animated:YES completion:nil];
 }
 
-- (IBAction)openDeviceList:(id)sender
-{
-    GHDeviceListViewController* controller = [[GHDeviceListViewController alloc]init];
-    UINavigationController* nav = [[UINavigationController alloc]initWithRootViewController:controller];
-    [self presentViewController:nav animated:YES completion:nil];
-}
-
 //--------------------------------------------------------------//
 #pragma mark - GHHeaderViewDelegate delegate
 //--------------------------------------------------------------//
@@ -330,7 +323,7 @@
                 DeviceMoreViewCell* cell = (DeviceMoreViewCell*)[collectionView dequeueReusableCellWithReuseIdentifier:@"DeviceDetailIcon" forIndexPath:indexPath];
                 __weak ViewController *weakSelf = self;
                 [cell setDidDeviceMorelected: ^() {
-                    [weakSelf openDeviceList: nil];
+                    [weakSelf performSegueWithIdentifier:@"OpenDeviceList" sender:nil];
                 }];
                 return cell;
             }
