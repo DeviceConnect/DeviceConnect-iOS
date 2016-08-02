@@ -194,11 +194,8 @@ static DPLinkingDeviceManager* _sharedInstance = nil;
 - (void) sendLEDCommand:(DPLinkingDevice *)device power:(BOOL)on {
     BLERequestController *request = [BLERequestController sharedInstance];
     if (on) {
-        NSMutableDictionary *dic = [device.setting.settingInformationDataVibration mutableCopy];
-        dic[@"settingPatternNumber"] = @0;
-
         [request startDemoSelectSettingInformationWithLED:device.setting.settingInformationDataLED
-                                                vibration:dic
+                                                vibration:nil
                                                peripheral:device.peripheral
                                                disconnect:NO];
     } else {
@@ -212,10 +209,7 @@ static DPLinkingDeviceManager* _sharedInstance = nil;
 - (void) sendVibrationCommand:(DPLinkingDevice *)device power:(BOOL)on {
     BLERequestController *request = [BLERequestController sharedInstance];
     if (on) {
-        NSMutableDictionary *dic = [device.setting.settingInformationDataLED mutableCopy];
-        dic[@"settingPatternNumber"] = @0;
-        
-        [request startDemoSelectSettingInformationWithLED:dic
+        [request startDemoSelectSettingInformationWithLED:nil
                                                 vibration:device.setting.settingInformationDataVibration
                                                peripheral:device.peripheral
                                                disconnect:NO];
@@ -255,8 +249,8 @@ static DPLinkingDeviceManager* _sharedInstance = nil;
                    notifyCategoryId:0
                          ledSetting:YES
                    vibrationSetting:YES
-                                led:nil
-                          vibration:nil
+                                led:device.setting.settingInformationDataLED
+                          vibration:device.setting.settingInformationDataVibration
                            deviceId:device.setting.deviceId
                           deviceUId:nil
                          peripheral:device.peripheral
