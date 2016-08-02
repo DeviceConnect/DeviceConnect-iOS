@@ -13,14 +13,14 @@
     
     NSString *mPath;
     
-    DConnectApiSpecMethod mMethod;
+    DConnectSpecMethod mMethod;
 }
 
 @end
 
 @implementation ApiIdentifier
 
-- (instancetype)initWithPath: (NSString *)path method: (DConnectApiSpecMethod) method {
+- (instancetype)initWithPath: (NSString *)path method: (DConnectSpecMethod) method {
 
     self = [super init];
     if (self) {
@@ -39,7 +39,7 @@
 - (instancetype)initWithPathAndMethodString: (NSString *)path method: (NSString *) method {
 
     // 引数に問題があれば例外をスローする
-    DConnectApiSpecMethod enMethod = [DConnectApiSpec parseMethod: method];
+    DConnectSpecMethod enMethod = [DConnectSpecConstants parseMethod: method];
     
     self = [self initWithPath: path method: enMethod];
     return self;
@@ -47,7 +47,7 @@
 
 - (NSString *) apiIdentifierString {
     
-    NSString *str = [NSString stringWithFormat: @"%@-%@", mPath, [DConnectApiSpec convertMethodToString: mMethod]];
+    NSString *str = [NSString stringWithFormat: @"%@-%@", mPath, [DConnectSpecConstants toMethodString: mMethod]];
     
     return str;
 }

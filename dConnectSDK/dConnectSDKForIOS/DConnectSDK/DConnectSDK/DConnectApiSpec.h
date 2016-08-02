@@ -8,10 +8,12 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <DConnectSDK/DConnectRequestParamSpec.h>
 #import <DConnectSDK/DConnectMessage.h>
 #import <DConnectSDK/DConnectRequestMessage.h>
+#import "DConnectSpecConstants.h"
 
+// TODO: 削除してDConnectSpecConstants.hで定義された定数に変更する。
+/*
 extern NSString * const DConnectApiSpecMethodGet;
 extern NSString * const DConnectApiSpecMethodPut;
 extern NSString * const DConnectApiSpecMethodPost;
@@ -27,7 +29,6 @@ extern NSString * const DConnectApiSpecJsonKeyType;
 extern NSString * const DConnectApiSpecJsonKeyRequestParams;
 //extern NSString * const DConnectApiSpecJsonKeyRequestParamSpec;
 
-
 typedef enum {
     ONESHOT = 0,
     EVENT,
@@ -40,6 +41,7 @@ typedef enum {
     DELETE,
 } DConnectApiSpecMethod;
 
+ */
 
 
 
@@ -47,43 +49,25 @@ typedef enum {
 
 @interface DConnectApiSpec : NSObject<NSCopying>
 
+@property(nonatomic, strong) NSString *name;
+
+@property(nonatomic) DConnectSpecType type;
+
+@property(nonatomic) DConnectSpecMethod method;
+
+@property(nonatomic, strong) NSString *path;
+
+// DConnectRequestParamSpecの配列
+@property(nonatomic, strong) NSArray *requestParamSpecList;
+
+
 - (instancetype) init;
-
-- (NSString *) name;
-
-- (DConnectApiSpecType) type;
-
-- (DConnectApiSpecMethod) method;
-
-- (NSString *) path;
-
-- (NSArray *) requestParamSpecList;
 
 - (BOOL) validate: (DConnectRequestMessage *) request;
 
 - (NSDictionary *) toDictionary;
 
 - (NSString *) toJson;
-
-- (void) setName: (NSString *) name;
-
-- (void) setType: (DConnectApiSpecType) type;
-
-- (void) setMethod: (DConnectApiSpecMethod) method;
-
-- (void) setPath: (NSString *) path;
-
-- (void) setRequestParamSpecList: (NSArray *) requestParamSpecList;
-
-+ (DConnectApiSpecMethod) parseMethod: (NSString *)string;
-
-+ (DConnectApiSpecType) parseType: (NSString *)string;
-
-+ (DConnectApiSpecMethod) convertActionToMethod: (DConnectMessageActionType) enMethod;
-
-+ (NSString *) convertMethodToString: (DConnectApiSpecMethod) enMethod;
-
-+ (NSString *) convertTypeToString: (DConnectApiSpecType) enType;
 
 @end
 

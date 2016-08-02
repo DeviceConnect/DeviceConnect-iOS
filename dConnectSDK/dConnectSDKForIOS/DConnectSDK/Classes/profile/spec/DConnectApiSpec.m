@@ -9,6 +9,7 @@
 
 #import "DConnectApiSpec.h"
 
+/*
 NSString * const DConnectApiSpecMethodGet = @"GET";
 NSString * const DConnectApiSpecMethodPut = @"PUT";
 NSString * const DConnectApiSpecMethodPost = @"POST";
@@ -22,21 +23,7 @@ NSString * const DConnectApiSpecJsonKeyPath = @"path";
 NSString * const DConnectApiSpecJsonKeyMethod = @"method";
 NSString * const DConnectApiSpecJsonKeyType = @"type";
 NSString * const DConnectApiSpecJsonKeyRequestParams = @"requestParams";
-
-@interface DConnectApiSpec()
-
-@property NSString *mName;
-
-@property DConnectApiSpecType mType;
-
-@property DConnectApiSpecMethod mMethod;
-
-@property NSString *mPath;
-
-// DConnectRequestParamSpecの配列
-@property NSArray *mRequestParamSpecList;
-
-@end
+*/
 
 @implementation DConnectApiSpec
 
@@ -70,28 +57,6 @@ NSString * const DConnectApiSpecJsonKeyRequestParams = @"requestParams";
     return copyInstance;
 }
 
-#pragma mark - DConnectApiSpec Getter Method
-
-- (NSString *) name {
-    return self.mName;
-}
-
-- (DConnectApiSpecType) type {
-    return self.mType;
-}
-
-- (DConnectApiSpecMethod) method {
-    return self.mMethod;
-}
-
-- (NSString *) path {
-    return self.mPath;
-}
-
-- (NSArray *) requestParamSpecList {
-    return self.mRequestParamSpecList;
-}
-
 - (BOOL) validate: (DConnectRequestMessage *) request {
 
     // TODO: validate処理が未実装(iOSではApiIdentifierで照合する？Swagger対応と一緒に作業する)
@@ -114,30 +79,6 @@ NSString * const DConnectApiSpecJsonKeyRequestParams = @"requestParams";
 }
 
 
-#pragma mark - DConnectApiSpec Setter Method
-
-- (void) setName: (NSString *)name {
-    self.mName = name;
-}
-
-- (void) setType: (DConnectApiSpecType) type {
-    self.mType = type;
-}
-
-- (void) setMethod: (DConnectApiSpecMethod) method {
-    self.mMethod = method;
-}
-
-- (void) setPath: (NSString *)path {
-    self.mPath = path;
-}
-
-- (void)setRequestParamSpecList: (NSArray *)requestParamSpecList {
-    self.mRequestParamSpecList = requestParamSpecList;
-}
-
-
-
 #pragma mark - DConnectApiSpec Other Method
 
 
@@ -150,7 +91,7 @@ NSString * const DConnectApiSpecJsonKeyRequestParams = @"requestParams";
         NSMutableDictionary *dic = [NSMutableDictionary dictionary];
         dic[DConnectApiSpecJsonKeyName] = self.mName;
         dic[DConnectApiSpecJsonKeyType] = [DConnectApiSpec convertTypeToString: self.mType];
-        dic[DConnectApiSpecJsonKeyMethod] = [DConnectApiSpec convertMethodToString: self.mMethod];
+        dic[DConnectApiSpecJsonKeyMethod] = [DConnectSpecConstants toMethodString: self.mMethod];
         dic[DConnectApiSpecJsonKeyPath] = self.mPath;
         
         NSMutableArray *requestParamSpecJsonArray = [NSMutableArray array];
@@ -184,86 +125,6 @@ NSString * const DConnectApiSpecJsonKeyRequestParams = @"requestParams";
 
 
 
-
-
-#pragma mark - DConnectApiSpec Static Method
-
-+ (DConnectApiSpecMethod) parseMethod: (NSString *)string {
-    if (string == nil) {
-        @throw [NSString stringWithFormat: @"apiSpecMethod is invalid : nil"];
-    }
-    if ([[string lowercaseString] isEqualToString: [DConnectApiSpecMethodGet lowercaseString]]) {
-        return GET;
-    }
-    if ([[string lowercaseString] isEqualToString: [DConnectApiSpecMethodPut lowercaseString]]) {
-        return PUT;
-    }
-    if ([[string lowercaseString] isEqualToString: [DConnectApiSpecMethodPost lowercaseString]]) {
-        return POST;
-    }
-    if ([[string lowercaseString] isEqualToString: [DConnectApiSpecMethodDelete lowercaseString]]) {
-        return DELETE;
-    }
-    @throw [NSString stringWithFormat: @"apiSpecMethod is invalid : %@", string];
-}
-
-+ (DConnectApiSpecType) parseType: (NSString *)string {
-    if (string == nil) {
-        @throw [NSString stringWithFormat: @"apiSpectype is invalid : nil"];
-    }
-    if ([[string lowercaseString] isEqualToString: [DConnectApiSpecTypeOneShot lowercaseString]]) {
-        return ONESHOT;
-    }
-    if ([[string lowercaseString] isEqualToString: [DConnectApiSpecTypeEvent lowercaseString]]) {
-        return EVENT;
-    }
-    @throw [NSString stringWithFormat: @"apiSpectype is invalid: %@", string];
-}
-
-+ (NSString *) convertMethodToString: (DConnectApiSpecMethod) enMethod {
-    
-    if (enMethod == GET) {
-        return DConnectApiSpecMethodGet;
-    }
-    if (enMethod == PUT) {
-        return DConnectApiSpecMethodPut;
-    }
-    if (enMethod == POST) {
-        return DConnectApiSpecMethodPost;
-    }
-    if (enMethod == DELETE) {
-        return DConnectApiSpecMethodDelete;
-    }
-    @throw [NSString stringWithFormat: @"unknown ApiSpecMethod : %d", (int)enMethod];
-}
-
-+ (DConnectApiSpecMethod) convertActionToMethod: (DConnectMessageActionType) enMethod {
-
-    if (enMethod == DConnectMessageActionTypeGet) {
-        return GET;
-    }
-    if (enMethod == DConnectMessageActionTypePut) {
-        return PUT;
-    }
-    if (enMethod == DConnectMessageActionTypePost) {
-        return POST;
-    }
-    if (enMethod == DConnectMessageActionTypeDelete) {
-        return DELETE;
-    }
-    @throw [NSString stringWithFormat: @"unknown DConnectMessageActionType : %d", (int)enMethod];
-}
-
-+ (NSString *) convertTypeToString: (DConnectApiSpecType) enType {
-    
-    if (enType == ONESHOT) {
-        return DConnectApiSpecTypeOneShot;
-    }
-    if (enType == EVENT) {
-        return DConnectApiSpecTypeEvent;
-    }
-    @throw [NSString stringWithFormat: @"unknown ApiSpecType : %d", (int)enType];
-}
 
 @end
 

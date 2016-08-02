@@ -1,17 +1,17 @@
+////
+////  DConnectApiSpecJsonParser.h
+////  DConnectSDK
+////
+////  Copyright (c) 2016 NTT DOCOMO,INC.
+////  Released under the MIT license
+////  http://opensource.org/licenses/mit-license.php
+////
 //
-//  DConnectApiSpecJsonParser.h
-//  DConnectSDK
+//#import <Foundation/Foundation.h>
+//#import "DConnectApiSpec.h"
 //
-//  Copyright (c) 2016 NTT DOCOMO,INC.
-//  Released under the MIT license
-//  http://opensource.org/licenses/mit-license.php
+//@interface DConnectApiSpecJsonParser : NSObject
 //
-
-#import <Foundation/Foundation.h>
-#import "DConnectApiSpec.h"
-
-@interface DConnectApiSpecJsonParser : NSObject
-
-+ (DConnectApiSpec *) fromJson : (NSDictionary *)apiObj;
-
-@end
+//+ (DConnectApiSpec *) fromJson : (NSDictionary *)apiObj;
+//
+//@end

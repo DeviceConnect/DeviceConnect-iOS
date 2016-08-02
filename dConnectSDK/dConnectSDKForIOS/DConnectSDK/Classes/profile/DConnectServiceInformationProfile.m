@@ -10,6 +10,10 @@
 #import "DConnectServiceInformationProfile.h"
 #import "DConnectProfileProvider.h"
 #import <DConnectSDK/DConnectProfile.h>
+//#import <DConnectSDK/DConnectProfileSpec.h>
+#import "DConnectProfileSpec.h"
+#import "DConnectApiSpecFilter.h"
+#import "DConnectSpecConstants.h"
 
 NSString *const DConnectServiceInformationProfileName = @"serviceinformation";
 
@@ -21,6 +25,8 @@ NSString *const DConnectServiceInformationProfileParamWiFi = @"wifi";
 NSString *const DConnectServiceInformationProfileParamBluetooth = @"bluetooth";
 NSString *const DConnectServiceInformationProfileParamNFC = @"nfc";
 NSString *const DConnectServiceInformationProfileParamBLE = @"ble";
+
+static NSString *const KEY_PATHS = @"paths";
 
 @interface DConnectServiceInformationProfile()
 
@@ -157,25 +163,109 @@ NSString *const DConnectServiceInformationProfileParamBLE = @"ble";
 }
 
 + (void) setSupportApis:(NSArray *)profiles target:(DConnectMessage *)message {
-    // TODO: supportApisレスポンス処理未実装(Swagger対応と一緒に実装する予定)
-/*
-    Bundle supportApisBundle = new Bundle();
-    for (final DConnectProfile profile : profileList) {
-        DConnectProfileSpec profileSpec = profile.getProfileSpec();
-        if (profileSpec != null) {
-            Bundle bundle = profileSpec.toBundle(new DConnectApiSpecFilter() {
-                @Override
-                public boolean filter(final String path, final Method method) {
-                    return profile.hasApi(path, method);
-                }
-            });
-            supportApisBundle.putBundle(profile.getProfileName(), bundle);
+    NSMutableDictionary *supportApis = [NSMutableDictionary dictionary];
+    for (DConnectProfile *profile in profiles) {
+        // API定義JSONファイルのProfileSpecを参照
+        DConnectProfileSpec *profileSpec = [profile profileSpec];
+        if (profileSpec) {
+            NSDictionary *bundle = [DConnectServiceInformationProfile createSupportApisBundle: profileSpec profile: profile];
+            NSString *profileName = [profile profileName];
+            supportApis[profileName] = bundle;
         }
     }
-    [response.putExtra(PARAM_SUPPORT_APIS, supportApisBundle);
-*/
-//    [message setArray:supportApis forKey:DConnectServiceInformationProfileParamSupportApis];
+    
+    // NSMutableDictionaryをDConnectMessageに変換
+    DConnectMessage *supportApisBundle = [self convertToDConnectMessageFromNSDictionary: supportApis];
+    [message setMessage:supportApisBundle forKey:DConnectServiceInformationProfileParamSupportApis];
 }
+
++ (NSDictionary *) createSupportApisBundle: (DConnectProfileSpec *) profileSpec profile: (DConnectProfile *) profile {
+    
+    // bundle全体をmutableディープコピーする
+    CFPropertyListRef *tmpBundle_ = (CFPropertyListRef *)CFPropertyListCreateDeepCopy(kCFAllocatorDefault,
+                                                                             (CFDictionaryRef)[profileSpec toBundle],
+                                                                             kCFPropertyListMutableContainersAndLeaves);
+    NSMutableDictionary *tmpBundle = CFBridgingRelease(tmpBundle_);
+    
+    // API定義(JSONファイルから読み取ったデータ)のうち、プロファイルにAPIが未実装のものは削除する
+    NSMutableDictionary *pathsObj = tmpBundle[KEY_PATHS];
+    if (!pathsObj) {
+        return tmpBundle;
+    }
+    NSArray *pathNames = [pathsObj allKeys];
+    for (NSString *pathName in pathNames) {
+        NSMutableDictionary *pathObj = pathsObj[pathName];
+        if (!pathObj) {
+            continue;
+        }
+        for (NSString * strMethod in DConnectSpecMethods) {
+            NSString *strMethodName = [strMethod lowercaseString];
+            NSMutableDictionary *methodObj = pathObj[strMethodName];
+            if (!methodObj) {
+                continue;
+            }
+            DConnectSpecMethod method = [DConnectSpecConstants parseMethod: strMethod];
+            if (![profile hasApi: pathName method: method]) {
+                [pathObj removeObjectForKey: strMethodName];
+            }
+        }
+        if ([pathObj count] == 0) {
+            [pathsObj removeObjectForKey: pathName];
+        }
+    }
+    return tmpBundle;
+}
+
+// NSDictionaryをDConnectMessageに変換
++ (DConnectMessage *) convertToDConnectMessageFromNSDictionary: (NSDictionary *)dictionary {
+    
+    DConnectMessage *message = [DConnectMessage message];
+    for (NSString *key in [dictionary allKeys]) {
+        id value = dictionary[key];
+        if ([value isKindOfClass: [NSDictionary class]]) {
+            DConnectMessage *mes = [self convertToDConnectMessageFromNSDictionary: (NSDictionary *)value];
+            [message setMessage:mes forKey:key];
+        } else if ([value isKindOfClass: [NSArray class]]) {
+            DConnectArray *arr = [self convertToDConnectArrayFromNSArray: (NSArray *)value];
+            [message setArray:arr forKey:key];
+        } else if ([value isKindOfClass: [NSNumber class]]) {
+            NSNumber *number = (NSNumber *)value;
+            if ([[[number class] description] isEqualToString: @"__NSCFBoolean"]) {
+                [message setBool:[number boolValue] forKey:key];
+            } else {
+                [message setDouble:[number doubleValue] forKey:key];
+            }
+        }
+    }
+    return message;
+}
+
+// NSArrayをDConnectArrayに変換
++ (DConnectArray *) convertToDConnectArrayFromNSArray: (NSArray *)array {
+
+    DConnectArray *dcArray = [DConnectArray array];
+    for (id value in array) {
+        if ([value isKindOfClass: [NSDictionary class]]) {
+            DConnectMessage *mes = [self convertToDConnectMessageFromNSDictionary: (NSDictionary *)value];
+            [dcArray addMessage: mes];
+        } else if ([value isKindOfClass: [NSArray class]]) {
+            DConnectArray *arr = [self convertToDConnectArrayFromNSArray: (NSArray *)value];
+            [dcArray addArray: arr];
+        } else if ([value isKindOfClass: [NSNumber class]]) {
+            NSNumber *number = (NSNumber *)value;
+            if ([[[number class] description] isEqualToString: @"__NSCFBoolean"]) {
+                [dcArray addInteger: [number integerValue]];
+            } else {
+                [dcArray addDouble:[number doubleValue]];
+            }
+        }
+    }
+    
+    return dcArray;
+}
+
+
+
 
 + (void) setConnect:(DConnectMessage *)connect target:(DConnectMessage *)message {
     [message setMessage:connect forKey:DConnectServiceInformationProfileParamConnect];

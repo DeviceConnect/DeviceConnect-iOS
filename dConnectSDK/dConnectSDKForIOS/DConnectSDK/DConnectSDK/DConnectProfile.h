@@ -19,6 +19,8 @@
 //#import "DConnectService.h"
 #import <DConnectSDK/DConnectApiEntity.h>
 #import <DConnectSDK/DConnectProfileProvider.h>
+#import <DConnectSDK/DConnectApiSpec.h>
+#import "DConnectProfileSpec.h"
 
 /*!
  @class DConnectProfile
@@ -60,7 +62,7 @@
  @param[in] method リクエストされたAPIのメソッド
  @retval 指定されたリクエストに対応するAPI実装を返す. 存在しない場合は<code>null</code>
  */
-- (DConnectApiEntity *) findApiWithPath: (NSString *) path method: (DConnectApiSpecMethod) method;
+- (DConnectApiEntity *) findApiWithPath: (NSString *) path method: (DConnectSpecMethod) method;
 
 /*!
  @brief プロファイル名、インターフェース名、アトリビュート名からパスを作成する.
@@ -69,7 +71,7 @@
  @param[in] attributeName アトリビュート名
  @retval パス
  */
-- (NSString *) apiPathWithProfile : (NSString *) profileName interfaceName: (NSString *) interfaceName attributeName:(NSString *) attributeName;
+- (NSString *) apiPathWithProfile : (NSString *) profileName interfaceName : (NSString *) interfaceName attributeName:(NSString *) attributeName;
 
 /*!
  @brief 本プロファイル実装を提供するサービスを設定する.
@@ -84,6 +86,19 @@
  @retval サービス
  */
 //- (DConnectService *) service;
+
+
+/*!
+ @brief Device Connect API 仕様定義リストを設定する.
+ @param[in] profileSpec API 仕様定義リスト
+ */
+- (void) setProfileSpec: (DConnectProfileSpec *) profileSpec;
+
+/**
+ * Device Connect API 仕様定義リストを取得する.
+ * @return API 仕様定義リスト
+ */
+- (DConnectProfileSpec *) profileSpec;
 
 /*!
  @brief プロファイル名を取得する。
@@ -210,5 +225,13 @@
  */
 - (void) removeApi: (DConnectApiEntity *) apiEntity;
 
+/*!
+ @brief APIが実装済か確認する。
+ @param[in] path パス
+ @param[in] method メソッド
+ @retval YES APIが実装済である
+ @retval NO APIが実装済ではない
+ */
+- (BOOL) hasApi: (NSString *) path method: (DConnectSpecMethod) method;
 
 @end

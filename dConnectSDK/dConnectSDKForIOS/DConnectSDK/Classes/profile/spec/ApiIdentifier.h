@@ -7,11 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "DConnectApiSpec.h"
+#import "DConnectSpecConstants.h"
 
 @interface ApiIdentifier : NSObject
 
-- (instancetype)initWithPath: (NSString *)path method: (DConnectApiSpecMethod) method;
+- (instancetype)initWithPath: (NSString *)path method: (DConnectSpecMethod) method;
 
 - (instancetype)initWithPathAndMethodString: (NSString *)path method: (NSString *) method;
 
