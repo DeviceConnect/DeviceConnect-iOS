@@ -8,7 +8,6 @@
 //
 
 #import "SwaggerJsonParser.h"
-#import "SwaggerBundleFactory.h"
 #import "DConnectProfileSpecBuilder.h"
 #import "DConnectApiSpecBuilder.h"
 #import "DConnectParameterSpec.h"
@@ -85,7 +84,7 @@ typedef DConnectParameterSpec * (^ParameterObjectParser)(NSDictionary *json);
             DConnectApiSpecBuilder *builder = [[DConnectApiSpecBuilder alloc] init];
             [builder setType: type];
             [builder setMethod: method];
-            [builder setRequestParamSpecList:paramSpecList];
+            [builder setParamList: paramSpecList];
             return [builder build];
         };
         
@@ -146,9 +145,10 @@ typedef DConnectParameterSpec * (^ParameterObjectParser)(NSDictionary *json);
     for (NSString *path in pathsObj.allKeys) {
         NSDictionary *pathObj = [pathsObj objectForKey: path];
         
-        for (NSString *strMethod in DConnectSpecMethods) {
+        NSArray *strMethods = DConnectSpecMethods();
+        for (NSString *strMethod in strMethods) {
             NSString *strMethodLow = [strMethod lowercaseString];
-            NSString *opObj = [pathObj objectForKey: strMethodLow];
+            NSDictionary *opObj = [pathObj objectForKey: strMethodLow];
             if (!opObj) {
                 continue;
             }

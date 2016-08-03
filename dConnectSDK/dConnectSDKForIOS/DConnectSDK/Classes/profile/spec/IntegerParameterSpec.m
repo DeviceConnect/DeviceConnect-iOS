@@ -2,8 +2,9 @@
 //  IntegerParameterSpec.m
 //  DConnectSDK
 //
-//  Created by Mitsuhiro Suzuki on 2016/08/02.
-//  Copyright © 2016年 NTT DOCOMO, INC. All rights reserved.
+//  Copyright (c) 2016 NTT DOCOMO,INC.
+//  Released under the MIT license
+//  http://opensource.org/licenses/mit-license.php
 //
 
 #import "IntegerParameterSpec.h"
@@ -12,7 +13,7 @@
 @implementation IntegerParameterSpec
 
 - (instancetype) initWithDataFormat: (DConnectSpecDataFormat) dataFormat {
-    self = [super initWithDataSpec: [[IntegerDataSpec alloc] initWithDataFormat: dataFormat]];
+    self = [super initWithDataSpec: [[IntegerDataSpec alloc] initWithFormat: dataFormat]];
     return self;
 }
 
@@ -29,7 +30,7 @@
  @return 最大値
  */
 - (long) maximum {
-    return [[self integerDataSpec] maximum];
+    return [[[self integerDataSpec] maximum] longValue];
 }
 
 /*!
@@ -37,7 +38,7 @@
  @param maximum 最大値
  */
 - (void) setMaximum: (long) maximum {
-    [[self integerDataSpec] setMaximum:] maximum];
+    [[self integerDataSpec] setMaximum: [NSNumber numberWithLong: maximum]];
 }
 
 /*!
@@ -45,7 +46,7 @@
  @return 最小値
  */
 - (long) minimum {
-    return [[self integerDataSpec] minimum];
+    return [[[self integerDataSpec] minimum] longValue];
 }
 
 /*!
@@ -53,7 +54,7 @@
  @param[in] minimum 最小値
  */
 - (void) setMinimum: (long) minimum {
-    [[self integerDataSpec] setMinimum: minimum];
+    [[self integerDataSpec] setMinimum: [NSNumber numberWithLong: minimum]];
 }
 
 /*!
@@ -61,7 +62,7 @@
  @return 指定できない場合は<code>true</code>. それ以外の場合は<code>false</code>
  */
 - (BOOL) isExclusiveMaximum {
-    return [[self integerDataSpec] isExclusiveMaximum];
+    return [[self integerDataSpec] exclusiveMaximum];
 }
 
 /*!
@@ -69,7 +70,7 @@
  @param exclusiveMaximum 指定できない場合は<code>true</code>. それ以外の場合は<code>false</code>
  */
 - (void) setExclusiveMaximum: (BOOL) exclusiveMaximum {
-    [[self integerDataSpec] setExclusiveMaximum: excusiveMaximum];
+    [[self integerDataSpec] setExclusiveMaximum: exclusiveMaximum];
 }
 
 /*!
@@ -77,7 +78,7 @@
  @return 指定できない場合は<code>true</code>. それ以外の場合は<code>false</code>
  */
 - (BOOL) isExclusiveMinimum {
-    return [[self integerDataSpec] isExclusiveMinimum];
+    return [[self integerDataSpec] exclusiveMinimum];
 }
 
 /*!

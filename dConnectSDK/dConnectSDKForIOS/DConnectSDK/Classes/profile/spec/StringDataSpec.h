@@ -20,6 +20,8 @@
 
 - (instancetype)initWitDataFormat: (DConnectSpecDataFormat) dataFormat;
 
+#pragma mark - Abstruct Methods Implement.
+
 - (BOOL) validate: (id) obj;
 
 @end

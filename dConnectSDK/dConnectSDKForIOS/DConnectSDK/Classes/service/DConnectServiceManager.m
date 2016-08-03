@@ -44,7 +44,7 @@ static NSMutableDictionary *_instanceArray = nil;
 + (DConnectServiceManager *)sharedForClass: (Class)clazz {
     
     NSString *key = [clazz description];
-    NSLog(@"[DConnectServiceManager sharedForClass: %@]", key);
+//    NSLog(@"[DConnectServiceManager sharedForClass: %@]", key);
     
     DConnectServiceManager *manager = [DConnectServiceManager sharedForKey: key];
     return manager;
@@ -94,8 +94,8 @@ static NSMutableDictionary *_instanceArray = nil;
     
     NSString *serviceId = [service serviceId];
     
-    NSLog(@"addService: id = %@ / key = %@", serviceId, _key);
-    NSLog(@"addService: mDConnectServices = %@ / key = %@", (mDConnectServices ? @"(not nil)":@"(nil)"), _key);
+//    NSLog(@"addService: id = %@ / key = %@", serviceId, _key);
+//    NSLog(@"addService: mDConnectServices = %@ / key = %@", (mDConnectServices ? @"(not nil)":@"(nil)"), _key);
     
     if (_mApiSpecs) {
         
@@ -112,7 +112,7 @@ static NSMutableDictionary *_instanceArray = nil;
     }
     
     mDConnectServices[serviceId] = service;
-    NSLog(@"addService: count = %d / key = %@", (int)[mDConnectServices count], _key);
+//    NSLog(@"addService: count = %d / key = %@", (int)[mDConnectServices count], _key);
 }
 
 - (void) removeService: (DConnectService *) service {
@@ -126,7 +126,7 @@ static NSMutableDictionary *_instanceArray = nil;
 
 - (NSArray *) services {
     
-    NSLog(@"getServices: %d - key: %@", (int)[mDConnectServices count], _key);
+//    NSLog(@"getServices: %d - key: %@", (int)[mDConnectServices count], _key);
     NSMutableArray *list = [NSMutableArray array];
     [list addObjectsFromArray: [mDConnectServices allValues]];
     return list;

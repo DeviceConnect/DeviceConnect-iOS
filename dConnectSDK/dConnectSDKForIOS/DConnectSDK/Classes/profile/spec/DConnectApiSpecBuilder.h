@@ -13,17 +13,11 @@
 
 @interface DConnectApiSpecBuilder : NSObject
 
-@property(nonatomic, strong) NSString *name;
-
 @property(nonatomic) DConnectSpecType type;
 
 @property(nonatomic) DConnectSpecMethod method;
 
-@property(nonatomic, strong) NSString *path;
-
-@property(nonatomic, strong) NSArray *requestParamSpecList;
-
-- (id)init;
+@property(nonatomic, strong) NSArray *paramList;        // List<DConnectParameterSpec>
 
 - (DConnectApiSpec *)build;
 

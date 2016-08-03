@@ -8,6 +8,7 @@
 //
 
 #import "NumberDataSpec.h"
+#import "DConnectSpecConstants.h"
 
 @implementation NumberDataSpec
 
@@ -16,7 +17,7 @@
     self = [super initWithDataType: NUMBER];
     if (self) {
         // 初期値設定
-        [self setFormat: format];
+        [self setDataFormat: format];
     }
     return self;
 }
@@ -28,13 +29,13 @@
     if (!obj) {
         return YES;
     }
-    switch ([self format]) {
+    switch ([self dataFormat]) {
         case FLOAT:
             return [self validateFloat: obj];
         case DOUBLE:
             return [self validateFloat: obj];
         default:
-            @throw [NSString stringWithFormat: @"Illegal state exception : %d", (int)[self format]];
+            @throw [NSString stringWithFormat: @"Illegal state exception : %d", (int)[self dataFormat]];
     }
     return NO;
 }
@@ -44,7 +45,7 @@
 - (BOOL)validateFloat: (id) param {
     if ([param isKindOfClass: [NSString class]]) {
         NSString *strParam = (NSString *)param;
-        if ([self isDouble: strParam]) {
+        if ([DConnectSpecConstants isNumber: strParam]) {
             double d = [strParam doubleValue];
             return [self validateRange: d];
         }
@@ -62,10 +63,10 @@
 
     BOOL isValid = YES;
     if ([self maximum]) {
-        isValid &= [self isExclusiveMaximum] ? ([self maximum] > value) : ([self maximum] >= value);
+        isValid &= [self exclusiveMaximum] ? ([[self maximum] doubleValue] > value) : ([[self maximum] doubleValue] >= value);
     }
     if ([self minimum]) {
-        isValid &= [self isExclusiveMinimum] ? ([self minimum] < value) : ([self minimum] <= value);
+        isValid &= [self exclusiveMinimum] ? ([[self minimum] doubleValue] < value) : ([[self minimum] doubleValue] <= value);
     }
     return isValid;
 }

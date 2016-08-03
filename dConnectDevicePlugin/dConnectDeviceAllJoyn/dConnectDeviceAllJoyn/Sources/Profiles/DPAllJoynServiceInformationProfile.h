@@ -14,7 +14,7 @@
 @interface DPAllJoynServiceInformationProfile : DConnectServiceInformationProfile
 
 - (instancetype)init NS_UNAVAILABLE;
-- (instancetype)initWithProvider:(id<DConnectProfileProvider>)provider
+- (instancetype)initWithProvider:(id)provider
                          handler:(DPAllJoynHandler *)handler
                          version:(NSString *)version NS_DESIGNATED_INITIALIZER;
 

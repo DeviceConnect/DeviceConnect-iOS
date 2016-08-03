@@ -8,6 +8,7 @@
 //
 
 #import "BooleanDataSpec.h"
+#import "DConnectSpecConstants.h"
 
 @implementation BooleanDataSpec
 
@@ -25,8 +26,8 @@
     if ([obj isKindOfClass: [NSString class]]) {
         NSString *str = (NSString *) obj;
         if (str) {
-            if ([str localizedCaseInsensitiveCompare: BooleanRequestParamSpecJsonValTrue] == NSOrderedSame ||
-                [str localizedCaseInsensitiveCompare: BooleanRequestParamSpecJsonValFalse] == NSOrderedSame) {
+            if ([str localizedCaseInsensitiveCompare: DConnectSpecBoolTrue] == NSOrderedSame ||
+                [str localizedCaseInsensitiveCompare: DConnectSpecBoolFalse] == NSOrderedSame) {
                 return YES;
             }
         }

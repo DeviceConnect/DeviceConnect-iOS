@@ -2,15 +2,17 @@
 //  NumberParameterSpec.h
 //  DConnectSDK
 //
-//  Created by Mitsuhiro Suzuki on 2016/08/02.
-//  Copyright © 2016年 NTT DOCOMO, INC. All rights reserved.
+//  Copyright (c) 2016 NTT DOCOMO,INC.
+//  Released under the MIT license
+//  http://opensource.org/licenses/mit-license.php
 //
 
 #import "NumberDataSpec.h"
+#import "DConnectParameterSpec.h"
 
-@interface NumberParameterSpec : NumberDataSpec
+@interface NumberParameterSpec : DConnectParameterSpec
 
-- (instancetype) initWithDataType:(DConnectSpecDataType)dataType;
+- (instancetype) initWithDataFormat:(DConnectSpecDataFormat)dataFormat;
 
 /*!
  @brief データのフォーマット指定を取得する.

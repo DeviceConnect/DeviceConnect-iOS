@@ -15,10 +15,7 @@
 #import <Foundation/Foundation.h>
 #import <DConnectSDK/DConnectRequestMessage.h>
 #import <DConnectSDK/DConnectResponseMessage.h>
-#import <DConnectSDK/DConnectProfileProvider.h>
-//#import "DConnectService.h"
 #import <DConnectSDK/DConnectApiEntity.h>
-#import <DConnectSDK/DConnectProfileProvider.h>
 #import <DConnectSDK/DConnectApiSpec.h>
 #import "DConnectProfileSpec.h"
 
@@ -33,9 +30,9 @@
 @interface DConnectProfile : NSObject
 
 /*!
- @brief プロファイルプロバイダ。
+ @brief プロファイルプロバイダ。(DConnectProfileProvider型のポインタ)
  */
-@property (nonatomic, weak) id<DConnectProfileProvider> provider;
+@property (nonatomic, weak) id provider;
 
 
 
@@ -47,7 +44,7 @@
  
  @retval DConnectProfileインスタンス。
  */
-- (instancetype) initWithProvider: (id<DConnectProfileProvider>) provider;
+- (instancetype) initWithProvider: (id) provider;
 
 /*!
  @brief プロファイルに設定されているDevice Connect API実装のリストを返す.
@@ -72,6 +69,7 @@
  @retval パス
  */
 - (NSString *) apiPathWithProfile : (NSString *) profileName interfaceName : (NSString *) interfaceName attributeName:(NSString *) attributeName;
+
 
 /*!
  @brief 本プロファイル実装を提供するサービスを設定する.

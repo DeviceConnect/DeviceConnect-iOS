@@ -8,34 +8,45 @@
 //
 
 #import <Foundation/Foundation.h>
-//#import "DConnectProfileSpecBundleFactory.h"
 #import "DConnectApiSpec.h"
-#import "DConnectApiSpecFilter.h"
 #import "DConnectSpecConstants.h"
 #import "DConnectProfileSpec.h"
 
-// Bundle BundleFactory # createBundle(final DConnectProfileSpec profileSpec, final DConnectApiSpecFilter filter)
-typedef NSDictionary * (^DConnectProfileSpecBundleFactory)(NSDictionary *json, DConnectApiSpecFilter filter);
-
-
 @interface DConnectProfileSpec : NSObject
 
-// Bundle mBundle;
 @property (nonatomic, strong) NSDictionary * bundle;
 
-// Map<String, Map<Method, DConnectApiSpec>> mAllApiSpecs;
-@property (nonatomic, strong) NSMutableDictionary * apiSpecs;
 
-// List<DConnectApiSpec> getApiSpecList()
+@property (nonatomic, strong) NSMutableDictionary * apiSpecs;    // Map<String, Map<Method, DConnectApiSpec>>
+
+
+/*!
+ @brief 当該プロファイル上で定義されている、APIの仕様定義のリストを取得する.
+ @return {@link DConnectApiSpec}のリスト
+ */
 - (NSArray *) apiSpecList;
 
-// Map<Method, DConnectApiSpec> findApiSpecs(final String path)
--(NSDictionary *) findApiSpecs: (NSString *) path;
+/**
+ @brief 指定されたパスで提供されるAPIの仕様定義のマップを取得する.
+ @param path APIのパス
+ @return {@link DConnectApiSpec}のマップ. キーはメソッド名.
+         指定されたパスで提供しているAPIが存在しない場合は<code>null</code>
+ */
+- (NSDictionary *) findApiSpecs: (NSString *) path;
 
-// DConnectApiSpec findApiSpec(final String path, final Method method)
+/*!
+ @brief 指定されたパスとメソッドで提供されるAPIの仕様定義を取得する.
+ @param path APIのパス
+ @param method APIのメソッド名
+ @return {@link DConnectApiSpec}のインスタンス.
+         指定されたパスとメソッドで提供しているAPIが存在しない場合は<code>null</code>
+ */
 - (DConnectApiSpec *) findApiSpec: (NSString *)path method: (DConnectSpecMethod) method;
 
-// Bundle toBundle()
+/*!
+ @brief API仕様定義ファイルから生成したBundleのインスタンスを取得する.
+ @return Bundleのインスタンス
+ */
 - (NSDictionary *) toBundle;
 
 @end

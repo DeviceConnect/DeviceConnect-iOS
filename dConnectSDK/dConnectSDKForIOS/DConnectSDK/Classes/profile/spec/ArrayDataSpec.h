@@ -2,18 +2,19 @@
 //  ArrayDataSpec.h
 //  DConnectSDK
 //
-//  Created by Mitsuhiro Suzuki on 2016/07/30.
-//  Copyright © 2016年 NTT DOCOMO, INC. All rights reserved.
+//  Copyright (c) 2016 NTT DOCOMO,INC.
+//  Released under the MIT license
+//  http://opensource.org/licenses/mit-license.php
 //
 
 #import "DConnectDataSpec.h"
 
 @interface ArrayDataSpec : DConnectDataSpec
 
-@property(nonatomic, strong) DConnectDataSpec *itemSpec;
+@property(nonatomic, strong) DConnectDataSpec *itemsSpec;
 @property(nonatomic, strong) NSNumber *maxLength;       // Int値。nilなら指定なし。
 @property(nonatomic, strong) NSNumber *minLength;       // Int値。nilなら指定なし。
 
-- (instancetype) initWithDataSpec: (DConnectDataSpec *) itemsSpec;
+- (instancetype) initWithItemsSpec: (DConnectDataSpec *) itemsSpec;
 
 @end

@@ -12,12 +12,6 @@
 
 @interface BooleanDataSpecBuilder : NSObject
 
-- (id)init;
-
-- (id)name: (NSString *) name;
-
-- (id)isMandatory: (BOOL) isMandatory;
-
 - (BooleanDataSpec *)build;
 
 @end

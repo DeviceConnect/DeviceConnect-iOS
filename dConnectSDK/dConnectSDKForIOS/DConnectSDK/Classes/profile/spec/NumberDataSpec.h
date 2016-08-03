@@ -12,6 +12,12 @@
 
 @interface NumberDataSpec : DConnectDataSpec
 
+@property(nonatomic) DConnectSpecDataFormat dataFormat;
+@property(nonatomic, strong) NSNumber *maximum; // double値を格納。nilなら省略。
+@property(nonatomic, strong) NSNumber *minimum; // double値を格納。nilなら省略。
+@property(nonatomic) BOOL exclusiveMaximum;
+@property(nonatomic) BOOL exclusiveMinimum;
+
 - (instancetype)initWithDataFormat:(DConnectSpecDataFormat) format;
 
 #pragma mark - Abstruct Methods Implement.

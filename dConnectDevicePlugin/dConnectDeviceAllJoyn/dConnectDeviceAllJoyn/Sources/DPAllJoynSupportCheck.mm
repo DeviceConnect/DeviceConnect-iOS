@@ -96,7 +96,7 @@
 }
 
 
-+ (NSArray *)supportedProfileNamesWithProvider:(id<DConnectProfileProvider>)provider
++ (NSArray *)supportedProfileNamesWithProvider:(id)provider
                                        service:(DPAllJoynServiceEntity *)service
 {
     if (!provider) {

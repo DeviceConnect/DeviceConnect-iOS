@@ -2,8 +2,9 @@
 //  DConnectSpecConstants.h
 //  DConnectSDK
 //
-//  Created by Mitsuhiro Suzuki on 2016/07/30.
-//  Copyright © 2016年 NTT DOCOMO, INC. All rights reserved.
+//  Copyright (c) 2016 NTT DOCOMO,INC.
+//  Released under the MIT license
+//  http://opensource.org/licenses/mit-license.php
 //
 
 #import <Foundation/Foundation.h>
@@ -49,13 +50,11 @@ typedef enum {
 extern NSString * const DConnectSpecTypeOneshot;
 extern NSString * const DConnectSpecTypeEvent;
 extern NSString * const DConnectSpecTypeStreaming;
-extern NSArray * const DConnectSpecTypes;
 
 extern NSString * const DConnectSpecMethodGet;
 extern NSString * const DConnectSpecMethodPut;
 extern NSString * const DConnectSpecMethodPost;
 extern NSString * const DConnectSpecMethodDelete;
-extern NSArray *const DConnectSpecMethods;
 
 extern NSString * const DConnectSpecDataTypeArray;
 extern NSString * const DConnectSpecDataTypeBoolean;
@@ -63,7 +62,6 @@ extern NSString * const DConnectSpecDataTypeInteger;
 extern NSString * const DConnectSpecDataTypeNumber;
 extern NSString * const DConnectSpecDataTypeString;
 extern NSString * const DConnectSpecDataTypeFile;
-extern NSArray *const DConnectSpecDataTypes;
 
 extern NSString * const DConnectSpecDataFormatInt32;
 extern NSString * const DConnectSpecDataFormatInt64;
@@ -76,11 +74,9 @@ extern NSString * const DConnectSpecDataFormatDate;
 extern NSString * const DConnectSpecDataFormatDateTime;
 extern NSString * const DConnectSpecDataFormatPassword;
 extern NSString * const DConnectSpecDataFormatRGB;
-extern NSArray *const DConnectSpecDataFormats;
 
 extern NSString * const DConnectSpecBoolFalse;
 extern NSString * const DConnectSpecBoolTrue;
-extern NSArray *const DConnectSpecBools;
 
 #define DConnectSpecTypes() @[DConnectSpecTypeOneshot, DConnectSpecTypeEvent, DConnectSpecTypeStreaming]
 

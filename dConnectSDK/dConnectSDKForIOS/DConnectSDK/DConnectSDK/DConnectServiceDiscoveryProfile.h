@@ -279,7 +279,7 @@ extern NSString *const DConnectServiceDiscoveryProfileNetworkTypeBLE;
  @param[in, out] message デバイスの設定情報を格納するメッセージ
  @param[in] プロファイルプロバイダー
  */
-+ (void) setScopesWithProvider:(id<DConnectProfileProvider>)provider
++ (void) setScopesWithProvider:(DConnectProfileProvider *)provider
                         target:(DConnectMessage *)message;
 
 /*!

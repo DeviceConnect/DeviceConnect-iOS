@@ -2,8 +2,9 @@
 //  NumberParameterSpec.m
 //  DConnectSDK
 //
-//  Created by Mitsuhiro Suzuki on 2016/08/02.
-//  Copyright © 2016年 NTT DOCOMO, INC. All rights reserved.
+//  Copyright (c) 2016 NTT DOCOMO,INC.
+//  Released under the MIT license
+//  http://opensource.org/licenses/mit-license.php
 //
 
 #import "NumberParameterSpec.h"
@@ -21,7 +22,7 @@
  @return データのフォーマット指定
  */
 - (DConnectSpecDataFormat) format {
-    return [[self numberDataSpec] format];
+    return [[self numberDataSpec] dataFormat];
 }
 
 /*!
@@ -29,7 +30,7 @@
  @return 最大値
  */
 - (double) maximum {
-    return [[self numberDataSpec] maximum];
+    return [[[self numberDataSpec] maximum] doubleValue];
 }
 
 /*!
@@ -37,7 +38,7 @@
  @param maximum 最大値
  */
 - (void) setMaximum: (double) maximum {
-    [[self numberDataSpec] setMaximum: maximum];
+    [[self numberDataSpec] setMaximum: [NSNumber numberWithDouble:maximum]];
 }
 
 /*!
@@ -45,7 +46,7 @@
  @return 最小値
  */
 - (double) minimum {
-    return [[self numberDataSpec] minimum];
+    return [[[self numberDataSpec] minimum] doubleValue];
 }
 
 /*!
@@ -53,7 +54,7 @@
  @param minimum 最小値
  */
 - (void) setMinimum: (double) minimum {
-    [[self numberDataSpec] setMinimum: minimum];
+    [[self numberDataSpec] setMinimum: [NSNumber numberWithDouble: minimum]];
 }
 
 /*!
@@ -61,7 +62,7 @@
  @return 指定できない場合は<code>true</code>. それ以外の場合は<code>false</code>
  */
 - (BOOL) isExclusiveMaximum {
-    return [[self numberDataSpec] isExclusiveMaximum];
+    return [[self numberDataSpec] exclusiveMaximum];
 }
 
 /*!
@@ -77,7 +78,7 @@
  @return 指定できない場合は<code>true</code>. それ以外の場合は<code>false</code>
  */
 - (BOOL) isExclusiveMinimum {
-    return [[self numberDataSpec] isExclusiveMinimum];
+    return [[self numberDataSpec] exclusiveMinimum];
 }
 
 /*!

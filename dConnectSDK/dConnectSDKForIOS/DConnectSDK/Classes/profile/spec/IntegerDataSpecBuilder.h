@@ -20,7 +20,7 @@
 
 @property (nonatomic) BOOL exclusiveMaximum;
 
-@property (nonatomic) BOOL * exclusiveMinimum;
+@property (nonatomic) BOOL exclusiveMinimum;
 
 @property (nonatomic, strong) NSArray * enumList;
 
