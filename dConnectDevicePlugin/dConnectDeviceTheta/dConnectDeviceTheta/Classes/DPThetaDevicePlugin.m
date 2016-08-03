@@ -16,7 +16,7 @@
 
 - (id) init
 {
-    self = [super init];
+    self = [super initWithObject: self];
     if (self) {
         self.pluginName = @"Theta (Device Connect Device Plug-in)";
         [[DPThetaManager sharedManager] setServiceProvider: self.mServiceProvider];

@@ -42,7 +42,7 @@ typedef void (^CollisionBlock)(DConnectMessage *);
         self.collisionOnceBlock = nil;
         [DPSpheroManager sharedManager].sensorDelegate = self;
         
-        __unsafe_unretained typeof(self) weakSelf = self;
+        __weak DPSpheroSensorProfile *weakSelf = self;
 
         self.quaternionBlock = ^(DConnectMessage *msg) {
             [weakSelf sendMessage:msg
@@ -64,6 +64,210 @@ typedef void (^CollisionBlock)(DConnectMessage *);
                         attribute:DPSpheroProfileAttrOnCollision
                             param:DPSpheroProfileParamCollision];
         };
+        
+        // API登録(didReceiveGetOnQuaternionRequest相当)
+        NSString *getOnQuaternionRequestApiPath = [self apiPathWithProfile: self.profileName
+                                                             interfaceName: DPSpheroProfileInterfaceQuaternion
+                                                             attributeName: DPSpheroProfileAttrOnQuaternion];
+        [self addGetPath: getOnQuaternionRequestApiPath
+                     api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+                         
+                         NSString *serviceId = [request serviceId];
+                         
+                         // 接続確認
+                         CONNECT_CHECK();
+                         
+                         weakSelf.quaternionOnceBlock = ^(DConnectMessage *msg) {
+                             [response setResult:DConnectMessageResultTypeOk];
+                             [response setMessage:msg forKey:DPSpheroProfileParamQuaternion];
+                             
+                             [[DConnectManager sharedManager] sendResponse:response];
+                             
+                             weakSelf.quaternionOnceBlock = nil;
+                             
+                             if (![weakSelf hasQuaternionEventList]) {
+                                 [[DPSpheroManager sharedManager] stopSensorQuaternion];
+                             }
+                         };
+                         
+                         if (![weakSelf hasQuaternionEventList]) {
+                             [[DPSpheroManager sharedManager] startSensorQuaternion];
+                         }
+                         
+                         return NO;
+                     }];
+        
+        // API登録(didReceiveGetOnLocatorRequest相当)
+        NSString *getOnLocatorRequestApiPath = [self apiPathWithProfile: self.profileName
+                                                          interfaceName: DPSpheroProfileInterfaceLocator
+                                                          attributeName: DPSpheroProfileAttrOnLocator];
+        [self addGetPath: getOnLocatorRequestApiPath
+                     api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+                         
+                         NSString *serviceId = [request serviceId];
+                         
+                         // 接続確認
+                         CONNECT_CHECK();
+                         
+                         weakSelf.locatorOnceBlock = ^(DConnectMessage *msg) {
+                             [response setResult:DConnectMessageResultTypeOk];
+                             [response setMessage:msg forKey:DPSpheroProfileParamLocator];
+                             
+                             weakSelf.locatorOnceBlock = nil;
+                             
+                             if (![weakSelf hasLocatorEventList]) {
+                                 [[DPSpheroManager sharedManager] stopSensorLocator];
+                             }
+                             [[DConnectManager sharedManager] sendResponse:response];
+                             
+                         };
+                         
+                         if (![weakSelf hasLocatorEventList]) {
+                             [[DPSpheroManager sharedManager] startSensorLocator];
+                         }
+                         
+                         return NO;
+                     }];
+        
+        // API登録(didReceiveGetOnCollisionRequest相当)
+        NSString *getOnCollisionRequestApiPath = [self apiPathWithProfile: self.profileName
+                                                            interfaceName: DPSpheroProfileInterfaceCollision
+                                                            attributeName: DPSpheroProfileAttrOnCollision];
+        [self addGetPath: getOnCollisionRequestApiPath
+                     api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+                        
+                         NSString *serviceId = [request serviceId];
+                         
+                         // 接続確認
+                         CONNECT_CHECK();
+                         
+                         weakSelf.collisionOnceBlock = ^(DConnectMessage *msg) {
+                             [response setResult:DConnectMessageResultTypeOk];
+                             [response setMessage:msg forKey:DPSpheroProfileParamCollision];
+                             
+                             [[DConnectManager sharedManager] sendResponse:response];
+                             
+                             weakSelf.collisionOnceBlock = nil;
+                             
+                             if (![weakSelf hasCollisionEventList]) {
+                                 [[DPSpheroManager sharedManager] stopSensorCollision];
+                             }
+                         };
+                         
+                         if (![weakSelf hasCollisionEventList]) {
+                             [[DPSpheroManager sharedManager] startSensorCollision];
+                         }
+                         
+                         return NO;
+                     }];
+
+        // API登録(didReceivePutOnQuaternionRequest相当)
+        NSString *putOnQuaternionRequestApiPath = [self apiPathWithProfile: self.profileName
+                                                             interfaceName: DPSpheroProfileInterfaceQuaternion
+                                                             attributeName: DPSpheroProfileAttrOnQuaternion];
+        [self addPutPath: putOnQuaternionRequestApiPath
+                     api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+                        
+                         NSString *serviceId = [request serviceId];
+                         
+                         // 接続確認
+                         CONNECT_CHECK();
+                         
+                         [weakSelf handleRequest:request response:response isRemove:NO callback:^{
+                             [[DPSpheroManager sharedManager] startSensorQuaternion];
+                         }];
+                         return YES;
+                     }];
+        
+        // API登録(didReceivePutOnLocatorRequest相当)
+        NSString *putOnLocatorRequestApiPath = [self apiPathWithProfile: self.profileName
+                                                          interfaceName: DPSpheroProfileInterfaceLocator
+                                                          attributeName: DPSpheroProfileAttrOnLocator];
+        [self addPutPath: putOnLocatorRequestApiPath
+                     api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+                        
+                         NSString *serviceId = [request serviceId];
+                         
+                         // 接続確認
+                         CONNECT_CHECK();
+                         
+                         [weakSelf handleRequest:request response:response isRemove:NO callback:^{
+                             [[DPSpheroManager sharedManager] startSensorLocator];
+                         }];
+                         return YES;
+                     }];
+        
+        // API登録(didReceivePutOnCollisionRequest相当)
+        NSString *putOnCollisionRequestApiPath = [self apiPathWithProfile: self.profileName
+                                                            interfaceName: DPSpheroProfileInterfaceCollision
+                                                            attributeName: DPSpheroProfileAttrOnCollision];
+        [self addPutPath: putOnCollisionRequestApiPath
+                     api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+                        
+                         NSString *serviceId = [request serviceId];
+                         
+                         // 接続確認
+                         CONNECT_CHECK();
+                         
+                         [weakSelf handleRequest:request response:response isRemove:NO callback:^{
+                             [[DPSpheroManager sharedManager] startSensorCollision];
+                         }];
+                         return YES;
+                     }];
+        
+        // API登録(didReceiveDeleteOnQuaternionRequest相当)
+        NSString *deleteOnQuaternionRequestApiPath = [self apiPathWithProfile: self.profileName
+                                                             interfaceName: DPSpheroProfileInterfaceQuaternion
+                                                             attributeName: DPSpheroProfileAttrOnQuaternion];
+        [self addDeletePath: deleteOnQuaternionRequestApiPath
+                        api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+                         
+                            NSString *serviceId = [request serviceId];
+                            
+                            // 接続確認
+                            CONNECT_CHECK();
+                            
+                            [weakSelf handleRequest:request response:response isRemove:YES callback:^{
+                                [[DPSpheroManager sharedManager] stopSensorQuaternion];
+                            }];
+                            return YES;
+                        }];
+        
+        // API登録(didReceiveDeleteOnLocatorRequest相当)
+        NSString *deleteOnLocatorRequestApiPath = [self apiPathWithProfile: self.profileName
+                                                          interfaceName: DPSpheroProfileInterfaceLocator
+                                                          attributeName: DPSpheroProfileAttrOnLocator];
+        [self addDeletePath: deleteOnLocatorRequestApiPath
+                        api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+                         
+                            NSString *serviceId = [request serviceId];
+                            
+                            // 接続確認
+                            CONNECT_CHECK();
+                            
+                            [weakSelf handleRequest:request response:response isRemove:YES callback:^{
+                                [[DPSpheroManager sharedManager] stopSensorLocator];
+                            }];
+                            return YES;
+                        }];
+        
+        // API登録(didReceiveDeleteOnCollisionRequest相当)
+        NSString *deleteOnCollisionRequestApiPath = [self apiPathWithProfile: self.profileName
+                                                            interfaceName: DPSpheroProfileInterfaceCollision
+                                                            attributeName: DPSpheroProfileAttrOnCollision];
+        [self addDeletePath: deleteOnCollisionRequestApiPath
+                        api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+                         
+                            NSString *serviceId = [request serviceId];
+                            
+                            // 接続確認
+                            CONNECT_CHECK();
+                            
+                            [weakSelf handleRequest:request response:response isRemove:YES callback:^{
+                                [[DPSpheroManager sharedManager] stopSensorCollision];
+                            }];
+                            return YES;
+                        }];
     }
     return self;
 }
@@ -233,203 +437,6 @@ typedef void (^CollisionBlock)(DConnectMessage *);
         CollisionBlock block = self.collisionOnceBlock;
         block(msg);
     }
-}
-
-
-#pragma mark - Quaternion
-
-- (BOOL)                     profile:(DPSpheroProfile *)profile
-    didReceiveGetOnQuaternionRequest:(DConnectRequestMessage *)request
-                            response:(DConnectResponseMessage *)response
-                           serviceId:(NSString *)serviceId
-{
-    // 接続確認
-    CONNECT_CHECK();
-
-    __unsafe_unretained typeof(self) weakSelf = self;
-    
-    self.quaternionOnceBlock = ^(DConnectMessage *msg) {
-        [response setResult:DConnectMessageResultTypeOk];
-        [response setMessage:msg forKey:DPSpheroProfileParamQuaternion];
-
-        [[DConnectManager sharedManager] sendResponse:response];
-        
-        weakSelf.quaternionOnceBlock = nil;
-
-        if (![weakSelf hasQuaternionEventList]) {
-            [[DPSpheroManager sharedManager] stopSensorQuaternion];
-        }
-    };
-    
-    if (![self hasQuaternionEventList]) {
-        [[DPSpheroManager sharedManager] startSensorQuaternion];
-    }
-    
-    return NO;
-}
-
-
-// Quaternionのイベントを登録
-- (BOOL)                     profile:(DPSpheroProfile *)profile
-    didReceivePutOnQuaternionRequest:(DConnectRequestMessage *)request
-                            response:(DConnectResponseMessage *)response
-                           serviceId:(NSString *)serviceId sessionKey:(NSString *)sessionKey
-{
-    // 接続確認
-    CONNECT_CHECK();
-    
-    [self handleRequest:request response:response isRemove:NO callback:^{
-        [[DPSpheroManager sharedManager] startSensorQuaternion];
-    }];
-    return YES;
-}
-
-// Quaternionのイベント登録を解除
-- (BOOL)                        profile:(DPSpheroProfile *)profile
-    didReceiveDeleteOnQuaternionRequest:(DConnectRequestMessage *)request
-                               response:(DConnectResponseMessage *)response
-                              serviceId:(NSString *)serviceId
-                             sessionKey:(NSString *)sessionKey
-{
-    // 接続確認
-    CONNECT_CHECK();
-    
-    [self handleRequest:request response:response isRemove:YES callback:^{
-        [[DPSpheroManager sharedManager] stopSensorQuaternion];
-    }];
-    return YES;
-}
-
-
-#pragma mark - Locator
-
-// Locatorのイベントを登録
-- (BOOL)                  profile:(DPSpheroProfile *)profile
-    didReceiveGetOnLocatorRequest:(DConnectRequestMessage *)request
-                         response:(DConnectResponseMessage *)response
-                        serviceId:(NSString *)serviceId
-{
-    // 接続確認
-    CONNECT_CHECK();
-    
-    __unsafe_unretained typeof(self) weakSelf = self;
-    
-    self.locatorOnceBlock = ^(DConnectMessage *msg) {
-        [response setResult:DConnectMessageResultTypeOk];
-        [response setMessage:msg forKey:DPSpheroProfileParamLocator];
-        
-        weakSelf.locatorOnceBlock = nil;
-        
-        if (![weakSelf hasLocatorEventList]) {
-            [[DPSpheroManager sharedManager] stopSensorLocator];
-        }
-        [[DConnectManager sharedManager] sendResponse:response];
-
-    };
-    
-    if (![self hasLocatorEventList]) {
-        [[DPSpheroManager sharedManager] startSensorLocator];
-    }
-    
-    return NO;
-}
-
-
-// Locatorのイベントを登録
-- (BOOL)                  profile:(DPSpheroProfile *)profile
-    didReceivePutOnLocatorRequest:(DConnectRequestMessage *)request
-                         response:(DConnectResponseMessage *)response
-                        serviceId:(NSString *)serviceId
-                       sessionKey:(NSString *)sessionKey
-{
-    // 接続確認
-    CONNECT_CHECK();
-
-    [self handleRequest:request response:response isRemove:NO callback:^{
-        [[DPSpheroManager sharedManager] startSensorLocator];
-    }];
-    return YES;
-}
-
-// Locatorのイベント登録を解除
-- (BOOL)                     profile:(DPSpheroProfile *)profile
-    didReceiveDeleteOnLocatorRequest:(DConnectRequestMessage *)request
-                            response:(DConnectResponseMessage *)response
-                           serviceId:(NSString *)serviceId
-                          sessionKey:(NSString *)sessionKey
-{
-    // 接続確認
-    CONNECT_CHECK();
-    
-    [self handleRequest:request response:response isRemove:YES callback:^{
-        [[DPSpheroManager sharedManager] stopSensorLocator];
-    }];
-    return YES;
-}
-
-
-#pragma mark - Collision
-
-- (BOOL)                    profile:(DPSpheroProfile *)profile
-    didReceiveGetOnCollisionRequest:(DConnectRequestMessage *)request
-                           response:(DConnectResponseMessage *)response
-                          serviceId:(NSString *)serviceId
-{
-    // 接続確認
-    CONNECT_CHECK();
-    
-    __unsafe_unretained typeof(self) weakSelf = self;
-    
-    self.collisionOnceBlock = ^(DConnectMessage *msg) {
-        [response setResult:DConnectMessageResultTypeOk];
-        [response setMessage:msg forKey:DPSpheroProfileParamCollision];
-        
-        [[DConnectManager sharedManager] sendResponse:response];
-        
-        weakSelf.collisionOnceBlock = nil;
-        
-        if (![weakSelf hasCollisionEventList]) {
-            [[DPSpheroManager sharedManager] stopSensorCollision];
-        }
-    };
-    
-    if (![self hasCollisionEventList]) {
-        [[DPSpheroManager sharedManager] startSensorCollision];
-    }
-    
-    return NO;
-}
-
-// Collisionのイベントを登録
-- (BOOL)                    profile:(DPSpheroProfile *)profile
-    didReceivePutOnCollisionRequest:(DConnectRequestMessage *)request
-                           response:(DConnectResponseMessage *)response
-                          serviceId:(NSString *)serviceId
-                         sessionKey:(NSString *)sessionKey
-{
-    // 接続確認
-    CONNECT_CHECK();
-    
-    [self handleRequest:request response:response isRemove:NO callback:^{
-        [[DPSpheroManager sharedManager] startSensorCollision];
-    }];
-    return YES;
-}
-
-// Collisionのイベント登録を解除
-- (BOOL)                       profile:(DPSpheroProfile *)profile
-    didReceiveDeleteOnCollisionRequest:(DConnectRequestMessage *)request
-                              response:(DConnectResponseMessage *)response
-                             serviceId:(NSString *)serviceId
-                            sessionKey:(NSString *)sessionKey
-{
-    // 接続確認
-    CONNECT_CHECK();
-    
-    [self handleRequest:request response:response isRemove:YES callback:^{
-        [[DPSpheroManager sharedManager] stopSensorCollision];
-    }];
-    return YES;
 }
 
 @end

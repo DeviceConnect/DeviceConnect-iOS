@@ -17,7 +17,10 @@
 #import <DConnectSDK/DConnectResponseMessage.h>
 #import <DConnectSDK/DConnectProfileProvider.h>
 //#import "DConnectService.h"
-#import "DConnectApi.h"
+#import <DConnectSDK/DConnectApiEntity.h>
+#import <DConnectSDK/DConnectProfileProvider.h>
+#import <DConnectSDK/DConnectApiSpec.h>
+#import "DConnectProfileSpec.h"
 
 /*!
  @class DConnectProfile
@@ -36,11 +39,19 @@
 
 
 
-- (instancetype) init;
+
+/*!
+ @brief DConnectProfileProviderオブジェクトを指定して初期化する。
+ 
+ @param[in] provider DConnectProfileProviderインスタンス
+ 
+ @retval DConnectProfileインスタンス。
+ */
+- (instancetype) initWithProvider: (id<DConnectProfileProvider>) provider;
 
 /*!
  @brief プロファイルに設定されているDevice Connect API実装のリストを返す.
- @retval API実装のリスト(DConnectApiの配列)
+ @retval API実装のリスト(DConnectApiEntityの配列)
  */
 - (NSArray *) apis;
 
@@ -51,26 +62,7 @@
  @param[in] method リクエストされたAPIのメソッド
  @retval 指定されたリクエストに対応するAPI実装を返す. 存在しない場合は<code>null</code>
  */
-- (DConnectApi *) findApiWithPath: (NSString *) path method: (DConnectApiSpecMethod) method;
-
-/*!
- @brief Device Connect API実装を追加する.
- @param[in] api API 追加するAPI実装
- */
-- (void) addApi: (DConnectApi *) api;
-
-/*!
- @brief Device Connect API実装を削除する.
- @param[in] api 削除するAPI実装
- */
-- (void) removeApi: (DConnectApi *) api;
-
-/*!
- @brief 指定されたDevice Connect APIへのパスを返す.
- @param[in] api API実装
- @retval パス
- */
-- (NSString *) apiPath: (DConnectApi *) api;
+- (DConnectApiEntity *) findApiWithPath: (NSString *) path method: (DConnectSpecMethod) method;
 
 /*!
  @brief プロファイル名、インターフェース名、アトリビュート名からパスを作成する.
@@ -79,7 +71,7 @@
  @param[in] attributeName アトリビュート名
  @retval パス
  */
-- (NSString *) apiPathWithProfileInterfaceAttribute : (NSString *) profileName interfaceName: (NSString *) interfaceName attributeName:(NSString *) attributeName;
+- (NSString *) apiPathWithProfile : (NSString *) profileName interfaceName : (NSString *) interfaceName attributeName:(NSString *) attributeName;
 
 /*!
  @brief 本プロファイル実装を提供するサービスを設定する.
@@ -94,6 +86,19 @@
  @retval サービス
  */
 //- (DConnectService *) service;
+
+
+/*!
+ @brief Device Connect API 仕様定義リストを設定する.
+ @param[in] profileSpec API 仕様定義リスト
+ */
+- (void) setProfileSpec: (DConnectProfileSpec *) profileSpec;
+
+/**
+ * Device Connect API 仕様定義リストを取得する.
+ * @return API 仕様定義リスト
+ */
+- (DConnectProfileSpec *) profileSpec;
 
 /*!
  @brief プロファイル名を取得する。
@@ -181,5 +186,52 @@
  */
 - (BOOL) didReceiveDeleteRequest:(DConnectRequestMessage *) request response:(DConnectResponseMessage *) response;
 
+
+/*!
+ @brief GetメソッドのAPIパスと処理を登録する。
+ 
+ @param[in] path APIパス
+ @param[in] api このメソッドのリクエストがあったときに実行される処理
+ */
+- (void) addGetPath:(NSString *)path api:(DConnectApiFunction)api;
+
+/*!
+ @brief PostメソッドのAPIパスと処理を登録する。
+ 
+ @param[in] path APIパス
+ @param[in] api このメソッドのリクエストがあったときに実行される処理
+ */
+- (void) addPostPath:(NSString *)path api:(DConnectApiFunction)api;
+
+/*!
+ @brief PutメソッドのAPIパスと処理を登録する。
+ 
+ @param[in] path APIパス
+ @param[in] api このメソッドのリクエストがあったときに実行される処理
+ */
+- (void) addPutPath:(NSString *)path api:(DConnectApiFunction)api;
+
+/*!
+ @brief DeleteメソッドのAPIパスと処理を登録する。
+ 
+ @param[in] path APIパス
+ @param[in] api このメソッドのリクエストがあったときに実行される処理
+ */
+- (void) addDeletePath:(NSString *)path api:(DConnectApiFunction)api;
+
+/*!
+ @brief Device Connect API実装を削除する.
+ @param[in] apiEntity 削除するAPI実装
+ */
+- (void) removeApi: (DConnectApiEntity *) apiEntity;
+
+/*!
+ @brief APIが実装済か確認する。
+ @param[in] path パス
+ @param[in] method メソッド
+ @retval YES APIが実装済である
+ @retval NO APIが実装済ではない
+ */
+- (BOOL) hasApi: (NSString *) path method: (DConnectSpecMethod) method;
 
 @end

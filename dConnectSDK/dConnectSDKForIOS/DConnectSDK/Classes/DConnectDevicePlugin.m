@@ -29,7 +29,7 @@
 
 @implementation DConnectDevicePlugin
 
-- (id) init {
+- (id) initWithObject: (id) object {
     self = [super init];
     if (self) {
         
@@ -38,7 +38,7 @@
         self.mProfileMap = [NSMutableDictionary dictionary];
         self.pluginName = NSStringFromClass([self class]);
         self.pluginVersionName = @"1.0.0";
-        self.mServiceProvider = [[DConnectServiceManager alloc] init];
+        self.mServiceProvider = [DConnectServiceManager sharedForClass: [object class]];
 
         // プロファイル追加
         [self addProfile:[[DConnectAuthorizationProfile alloc] initWithObject:self]];
@@ -156,7 +156,6 @@
     NSString *name = [profile profileName];
     if (name) {
         [self.mProfileMap setObject:profile forKey:name];
-        profile.provider = self;
         [self loadApiSpec: name];
     }
 }
@@ -182,6 +181,19 @@
     }
     return list;
 }
+
+- (NSArray *) serviceProfilesWithServiceId: (NSString *) serviceId {
+
+    DConnectService *service = [self.mServiceProvider service: serviceId];
+    if (service) {
+        // サービスIDに該当するサービスを検出して、そのサービスに登録されているプロファイル一覧(DConnectProfile * の配列)を取得
+        NSArray *serviceProfiles = [service profiles];
+        return serviceProfiles;
+    }
+    return nil;
+}
+
+
 
 // デバイスプラグインがaddProfile()した後にSDK側で処理を実行するタイミングがないので[loadApiSpecList]をそのまま使えない。
 // [addProfile]する毎に[loadApiSpec]を実行してApiSpecを設定する。

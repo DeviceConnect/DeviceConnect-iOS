@@ -52,7 +52,7 @@
         
         for (DConnectApiSpec *spec in self.mApiSpecList) {
             
-            if ([[[DConnectApiSpec convertMethodToString: [spec method]] lowercaseString] isEqualToString: methodLow] &&
+            if ([[[DConnectSpecConstants toMethodString: [spec method]] lowercaseString] isEqualToString: methodLow] &&
                 [[[spec path] lowercaseString] isEqualToString: pathLow]) {
                 return spec;
             }

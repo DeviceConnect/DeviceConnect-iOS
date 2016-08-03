@@ -44,6 +44,7 @@ NSString *const DConnectConnectProfileInterfaceBluetooth = @"bluetooth";
     return DConnectConnectProfileName;
 }
 
+/*
 - (BOOL) didReceiveGetRequest:(DConnectRequestMessage *)request response:(DConnectResponseMessage *)response {
     BOOL send = YES;
     
@@ -293,6 +294,7 @@ NSString *const DConnectConnectProfileInterfaceBluetooth = @"bluetooth";
     
     return send;
 }
+*/
 
 #pragma mark - Setter
 

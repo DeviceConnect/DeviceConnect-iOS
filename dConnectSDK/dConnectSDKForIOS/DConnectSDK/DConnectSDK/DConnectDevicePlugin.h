@@ -73,6 +73,17 @@
  */
 @property (nonatomic) BOOL useLocalOAuth;
 
+
+/*!
+ @brief 任意のオブジェクトを指定してServiceManagerを初期化する。
+ オブジェクトはDConnectDevicePluginもしくはDConnectManagerのインスタンスでなければならない。
+ 
+ @param[in] object DConnectDevicePluginもしくはDConnectManagerのインスタンス
+ 
+ @retval ServiceManagerインスタンス。
+ */
+- (id) initWithObject: (id) object;
+
 /*!
  @brief イベントを送信する。
 

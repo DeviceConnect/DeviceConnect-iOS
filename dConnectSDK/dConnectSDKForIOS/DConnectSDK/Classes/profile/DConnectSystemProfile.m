@@ -36,6 +36,7 @@ NSString *const DConnectSystemProfileParamVersion = @"version";
     return DConnectSystemProfileName;
 }
 
+/*
 - (BOOL) didReceivePutRequest:(DConnectRequestMessage *)request response:(DConnectResponseMessage *)response {
     BOOL send = YES;
     
@@ -44,21 +45,7 @@ NSString *const DConnectSystemProfileParamVersion = @"version";
     
     if (interface && attribute && [attribute isEqualToString:DConnectSystemProfileAttrWakeUp] && _dataSource)
     {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            UIViewController *viewController = [_dataSource profile:self settingPageForRequest:request];
-            if (viewController) {
-                UIViewController *rootView;
-                DCPutPresentedViewController(rootView);
-                
-                [rootView presentViewController:viewController animated:YES completion:nil];
-                [response setResult:DConnectMessageResultTypeOk];
-            } else {
-                [response setErrorToNotSupportAttribute];
-            }
-            
-            [[DConnectManager sharedManager] sendResponse:response];
-        });
-        send = NO;
+        send = [self didReceivePutWakeupRequest: request, response: response];
     } else if ([attribute isEqualToString:DConnectSystemProfileAttrKeyword]) {
         if (_delegate && [_delegate respondsToSelector:@selector(profile:didReceivePutKeywordRequest:response:)])
         {
@@ -100,6 +87,26 @@ NSString *const DConnectSystemProfileParamVersion = @"version";
     }
     
     return send;
+}
+*/
+- (BOOL) didReceivePutWakeupRequest:(DConnectRequestMessage *)request response:(DConnectResponseMessage *)response {
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        UIViewController *viewController = [_dataSource profile:self settingPageForRequest:request];
+        if (viewController) {
+            UIViewController *rootView;
+            DCPutPresentedViewController(rootView);
+            
+            [rootView presentViewController:viewController animated:YES completion:nil];
+            [response setResult:DConnectMessageResultTypeOk];
+        } else {
+            [response setErrorToNotSupportAttribute];
+        }
+        
+        [[DConnectManager sharedManager] sendResponse:response];
+    });
+    
+    return NO;
 }
 
 #pragma mark - Setter

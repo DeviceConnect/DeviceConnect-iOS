@@ -21,7 +21,7 @@
 
 - (instancetype) init
 {
-	self = [super init];
+	self = [super initWithObject: self];
 	if (self) {
 		// プラグイン名を設定
 		self.pluginName = @"Pebble (Device Connect Device Plug-in)";

@@ -21,6 +21,7 @@
  @author NTT DOCOMO
  */
 #import <DConnectSDK/DConnectProfile.h>
+#import <DConnectSDK/DConnectProfileProvider.h>
 #import <UIKit/UIKit.h>
 
 /*!
@@ -33,6 +34,11 @@ extern NSString *const DConnectServiceInformationProfileName;
  @brief パラメータ: supports。
  */
 extern NSString *const DConnectServiceInformationProfileParamSupports;
+
+/*!
+ @brief パラメータ: supportApis。
+ */
+extern NSString *const DConnectServiceInformationProfileParamSupportApis;
 
 /*!
  @brief パラメータ: connect。
@@ -206,6 +212,16 @@ typedef NS_ENUM(NSInteger, DConnectServiceInformationProfileConnectState) {
  */
 @property (nonatomic, weak) id<DConnectServiceInformationProfileDataSource> dataSource;
 
+
+/*!
+ @brief DConnectProfileProviderオブジェクトを指定して初期化する。
+ 
+ @param[in] provider DConnectProfileProviderインスタンス
+ 
+ @retval DConnectServiceInformationProfileインスタンス。
+ */
+- (instancetype) initWithProvider: (id<DConnectProfileProvider>) provider;
+
 #pragma mark - Setter
 
 /*!
@@ -215,6 +231,14 @@ typedef NS_ENUM(NSInteger, DConnectServiceInformationProfileConnectState) {
  @param[in,out] message I/Fの一覧を格納するメッセージ
  */
 + (void) setSupports:(DConnectArray *)supports target:(DConnectMessage *)message;
+
+/*!
+ @brief メッセージにサポートしているI/Fの一覧を格納する。
+ 
+ @param[in] profiles サポートしているI/F一覧
+ @param[in,out] message I/Fの一覧を格納するメッセージ
+ */
++ (void) setSupportApis:(NSArray *)profiles target:(DConnectMessage *)message;
 
 /*!
  @brief メッセージにデバイスの接続状態を設定する。

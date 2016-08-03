@@ -24,6 +24,32 @@
 	if (self) {
 		self.delegate = self;
 		self.dataSource = self;
+        __weak DPPebbleSystemProfile *weakSelf = self;
+        
+        // API登録(dataSourceのsettingPageForRequestを実行する処理を登録)
+        NSString *putSettingPageForRequestApiPath = [self apiPathWithProfile: self.profileName
+                                                               interfaceName: DConnectSystemProfileInterfaceDevice
+                                                               attributeName: DConnectSystemProfileAttrWakeUp];
+        [self addPutPath: putSettingPageForRequestApiPath
+                     api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+                         
+                         BOOL send = [weakSelf didReceivePutWakeupRequest:request response:response];
+                         return send;
+                     }];
+        
+        // API登録(didReceiveDeleteEventsRequest相当)
+        NSString *deleteEventsRequestApiPath = [self apiPathWithProfile: self.profileName
+                                                          interfaceName: nil
+                                                          attributeName: DConnectSystemProfileAttrEvents];
+        [self addDeletePath: deleteEventsRequestApiPath
+                        api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+                            
+                            [[DPPebbleManager sharedManager] deleteAllEvents:^(NSError *error) {
+                                [response setResult:DConnectMessageResultTypeOk];
+                                [[DConnectManager sharedManager] sendResponse:response];
+                            }];
+                            return NO;
+                        }];
 	}
 	return self;
 }
@@ -54,22 +80,5 @@
 
 	return viewController;
 }
-
-
-#pragma mark - Delete Methods
-
-// イベント一括解除リクエストを受け取った
-- (BOOL)              profile:(DConnectSystemProfile *)profile
-didReceiveDeleteEventsRequest:(DConnectRequestMessage *)request
-                     response:(DConnectResponseMessage *)response
-                   sessionKey:(NSString *)sessionKey
-{
-	[[DPPebbleManager sharedManager] deleteAllEvents:^(NSError *error) {
-		[response setResult:DConnectMessageResultTypeOk];
-		[[DConnectManager sharedManager] sendResponse:response];
-	}];
-	return NO;
-}
-
 
 @end

@@ -21,7 +21,7 @@
     
     @try {
         // 失敗したら例外を返す
-        DConnectRequestParamSpecType paramType = [DConnectRequestParamSpec parseType: type];
+        DConnectSpecDataType paramType = [DConnectSpecConstants parseDataType: type];
         
         DConnectRequestParamSpec *spec = nil;
         switch (paramType) {

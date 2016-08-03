@@ -34,6 +34,7 @@ NSString *const DConnectTouchProfileParamY = @"y";
     return DConnectTouchProfileName;
 }
 
+/*
 - (BOOL) didReceiveGetRequest:(DConnectRequestMessage *)request response:(DConnectResponseMessage *)response {
     
     BOOL send = YES;
@@ -280,6 +281,7 @@ NSString *const DConnectTouchProfileParamY = @"y";
     
     return send;
 }
+*/
 
 #pragma mark - Setter
 + (void) setTouch:(DConnectMessage *)touch target:(DConnectMessage *)message {

@@ -62,7 +62,7 @@ DPIRKitManagerDetectionDelegate
 
 - (id) init {
     
-    self = [super init];
+    self = [super initWithObject: self];
     
     if (self) {
         DConnectSystemProfile *systemProfile = [DConnectSystemProfile new];

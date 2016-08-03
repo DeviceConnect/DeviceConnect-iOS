@@ -77,7 +77,6 @@
 		25A06C0F1B562C08005B6F8A /* dConnectDeviceAllJoynTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 25A06C0E1B562C08005B6F8A /* dConnectDeviceAllJoynTests.m */; };
 		25A06C311B564742005B6F8A /* DPAllJoynSettingMasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 25A06C301B564742005B6F8A /* DPAllJoynSettingMasterViewController.m */; };
 		25A06C761B5667E1005B6F8A /* DPAllJoynDevicePlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 25A06C751B5667E1005B6F8A /* DPAllJoynDevicePlugin.m */; };
-		25A06C781B566AAA005B6F8A /* DPAllJoynServiceDiscoveryProfile.mm in Sources */ = {isa = PBXBuildFile; fileRef = 25A06C771B566AAA005B6F8A /* DPAllJoynServiceDiscoveryProfile.mm */; };
 		25A06C7C1B566AD0005B6F8A /* DPAllJoynSystemProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 25A06C7B1B566AD0005B6F8A /* DPAllJoynSystemProfile.m */; };
 		25A06C7F1B566C86005B6F8A /* DPAllJoynLightProfile.h in Headers */ = {isa = PBXBuildFile; fileRef = 25A06C7D1B566C86005B6F8A /* DPAllJoynLightProfile.h */; };
 		25A06C801B566C86005B6F8A /* DPAllJoynLightProfile.mm in Sources */ = {isa = PBXBuildFile; fileRef = 25A06C7E1B566C86005B6F8A /* DPAllJoynLightProfile.mm */; };
@@ -157,8 +156,6 @@
 		25A06C6D1B565ED2005B6F8A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		25A06C741B5667AA005B6F8A /* DPAllJoynDevicePlugin.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DPAllJoynDevicePlugin.h; sourceTree = "<group>"; };
 		25A06C751B5667E1005B6F8A /* DPAllJoynDevicePlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPAllJoynDevicePlugin.m; sourceTree = "<group>"; };
-		25A06C771B566AAA005B6F8A /* DPAllJoynServiceDiscoveryProfile.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DPAllJoynServiceDiscoveryProfile.mm; sourceTree = "<group>"; };
-		25A06C791B566AB3005B6F8A /* DPAllJoynServiceDiscoveryProfile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DPAllJoynServiceDiscoveryProfile.h; sourceTree = "<group>"; };
 		25A06C7A1B566AC6005B6F8A /* DPAllJoynSystemProfile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DPAllJoynSystemProfile.h; sourceTree = "<group>"; };
 		25A06C7B1B566AD0005B6F8A /* DPAllJoynSystemProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPAllJoynSystemProfile.m; sourceTree = "<group>"; };
 		25A06C7D1B566C86005B6F8A /* DPAllJoynLightProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPAllJoynLightProfile.h; sourceTree = "<group>"; };
@@ -412,8 +409,6 @@
 			children = (
 				25A06C7D1B566C86005B6F8A /* DPAllJoynLightProfile.h */,
 				25A06C7E1B566C86005B6F8A /* DPAllJoynLightProfile.mm */,
-				25A06C791B566AB3005B6F8A /* DPAllJoynServiceDiscoveryProfile.h */,
-				25A06C771B566AAA005B6F8A /* DPAllJoynServiceDiscoveryProfile.mm */,
 				25851BB41B5739B600CB732E /* DPAllJoynServiceInformationProfile.h */,
 				25851BB51B5739B600CB732E /* DPAllJoynServiceInformationProfile.mm */,
 				25A06C7A1B566AC6005B6F8A /* DPAllJoynSystemProfile.h */,
@@ -621,7 +616,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				25A06C781B566AAA005B6F8A /* DPAllJoynServiceDiscoveryProfile.mm in Sources */,
 				25851BCB1B574A9F00CB732E /* DPAllJoynSettingMasterSubTableViewController.m in Sources */,
 				258843CC1B5F43F9003E5257 /* NSArray+Query.m in Sources */,
 				25F1364A1B67112600ADD8CB /* DPAllJoynColorUtility.mm in Sources */,

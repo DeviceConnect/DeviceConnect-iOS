@@ -8,16 +8,12 @@
 //
 
 #import "DConnectAuthorizationProfile.h"
-#import "GetApi.h"
 
 /*!
  @class DConnectAuthorizationProfile
  @brief Authorizationプロファイル。
  */
 @interface DConnectAuthorizationProfile : DConnectProfile
-
-@property (nonatomic) id object;
-
 
 /*!
  @brief 任意のオブジェクトを指定してAuthorizationProfileを初期化する。
@@ -105,48 +101,5 @@
  @retval nil リクエストにアプリケーション名が指定されていない場合
  */
 + (NSString *) applicationNameFromRequest:(DConnectRequestMessage *)request;
-
-@end
-
-
-
-/*!
- @class DConnectAuthorizationGetCreateClientApi
- @brief Local OAuthで使用するクライアントの作成を要求するAPI。
- */
-@interface DConnectAuthorizationGetCreateClientApi : GetApi<DConnectApiDelegate>
-
-@property (nonatomic) id object;
-
-/*!
- @brief 任意のオブジェクトを指定して本クラスのインスタンスを初期化する。
- オブジェクトはDConnectDevicePluginもしくはDConnectManagerのインスタンスでなければならない。
- 
- @param[in] object DevicePluginかManagerかを判別するためのオブジェクト
- 
- @retval 本クラスのインスタンス
- */
-- (id) initWithObject:(id)object;
-
-@end
-
-
-/*!
- @class DConnectAuthorizationGetRequestAccessTokenApi
- @brief Local OAuthで使用するアクセストークンの作成を要求API。
- */
-@interface DConnectAuthorizationGetRequestAccessTokenApi : GetApi<DConnectApiDelegate>
-
-@property (nonatomic) id object;
-
-/*!
- @brief 任意のオブジェクトを指定して本クラスのインスタンスを初期化する。
- オブジェクトはDConnectDevicePluginもしくはDConnectManagerのインスタンスでなければならない。
- 
- @param[in] object DevicePluginかManagerかを判別するためのオブジェクト
- 
- @retval 本クラスのインスタンス
- */
-- (id) initWithObject:(id)object;
 
 @end

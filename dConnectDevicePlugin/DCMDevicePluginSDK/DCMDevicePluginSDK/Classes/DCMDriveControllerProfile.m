@@ -39,6 +39,7 @@ NSString *const DCMDriveControllerProfileParamSpeed = @"speed";
 /*
  POSTリクエストを振り分ける。
  */
+/*
 - (BOOL) didReceivePostRequest:(DConnectRequestMessage *)request
                       response:(DConnectResponseMessage *)response {
     BOOL send = YES;
@@ -83,10 +84,12 @@ NSString *const DCMDriveControllerProfileParamSpeed = @"speed";
     
     return send;
 }
+*/
 
 /*
  PUTリクエストを振り分ける
  */
+/*
 - (BOOL) didReceivePutRequest:(DConnectRequestMessage *)request
                      response:(DConnectResponseMessage *)response {
     BOOL send = YES;
@@ -126,10 +129,12 @@ NSString *const DCMDriveControllerProfileParamSpeed = @"speed";
     
     return send;
 }
+*/
 
 /*
  DELETEリクエストを振り分ける。
  */
+/*
 - (BOOL) didReceiveDeleteRequest:(DConnectRequestMessage *)request
                         response:(DConnectResponseMessage *)response {
     BOOL send = YES;
@@ -168,6 +173,7 @@ NSString *const DCMDriveControllerProfileParamSpeed = @"speed";
     
     return send;
 }
+*/
 
 #pragma mark - Private Methods
 

@@ -21,6 +21,7 @@ return YES; \
 
 // イベント送信用のマクロ
 #define SELF_PLUGIN ((DPThetaDevicePlugin *)self.provider)
+#define WEAKSELF_PLUGIN ((DPThetaDevicePlugin *)weakSelf.provider)
 
 
 /*!

@@ -31,7 +31,7 @@ NSString *const DConnectPhoneProfileParamState = @"state";
 - (NSString *) profileName {
     return DConnectPhoneProfileName;
 }
-
+/*
 - (BOOL) didReceivePostRequest:(DConnectRequestMessage *)request response:(DConnectResponseMessage *)response {
     BOOL send = YES;
     
@@ -114,6 +114,7 @@ NSString *const DConnectPhoneProfileParamState = @"state";
     
     return send;
 }
+*/
 
 #pragma mark - Getter
 

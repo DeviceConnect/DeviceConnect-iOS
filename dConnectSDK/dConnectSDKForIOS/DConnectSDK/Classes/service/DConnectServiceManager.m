@@ -9,7 +9,9 @@
 
 #import <DConnectSDK/DConnectServiceManager.h>
 #import <DConnectSDK/DConnectProfile.h>
+#import <DConnectSDK/DConnectApiEntity.h>
 #import "DConnectApiSpecList.h"
+
 
 /**
  ServiceManagerインスタンスを格納する(key:クラス名(NSString*),
@@ -21,8 +23,16 @@ static NSMutableDictionary *_instanceArray = nil;
 
 @interface DConnectServiceManager() {
     
-    /** キー(クラス名) */
+    /*!
+     @brief キー(クラス名)
+     */
     NSString *_key;
+    
+    /*!
+     @brief 接続サービス配列(key:サービスID value: DConnectService *)]
+     */
+    NSMutableDictionary *mDConnectServices;
+    
 }
 
 @end
@@ -68,7 +78,7 @@ static NSMutableDictionary *_instanceArray = nil;
     if (self) {
         self.mApiSpecList = nil;
         self.mApiSpecs = nil;
-        self.mDConnectServices = [NSMutableDictionary dictionary];
+        mDConnectServices = [NSMutableDictionary dictionary];
     }
     return self;
 }
@@ -84,15 +94,15 @@ static NSMutableDictionary *_instanceArray = nil;
     
     NSString *serviceId = [service serviceId];
     
-    NSLog(@"addService: id = %@", serviceId);
+    NSLog(@"addService: id = %@ / key = %@", serviceId, _key);
+    NSLog(@"addService: mDConnectServices = %@ / key = %@", (mDConnectServices ? @"(not nil)":@"(nil)"), _key);
     
     if (_mApiSpecs) {
         
         for (DConnectProfile *profile in [service profiles]) {
-            for (DConnectApi *api in [profile apis]) {
-                NSString *path = [self createPath: [profile profileName] api: api];
-                
-                NSString *strMethod = [DConnectApiSpec convertMethodToString: [api method]];
+            for (DConnectApiEntity *api in [profile apis]) {
+                NSString *path = [api path];
+                NSString *strMethod = [api method];
                 DConnectApiSpec *spec = [_mApiSpecs findApiSpec: strMethod path: path];
                 if (spec) {
                     [api setApiSpec: spec];
@@ -101,27 +111,29 @@ static NSMutableDictionary *_instanceArray = nil;
         }
     }
     
-    _mDConnectServices[serviceId] = service;
+    mDConnectServices[serviceId] = service;
+    NSLog(@"addService: count = %d / key = %@", (int)[mDConnectServices count], _key);
 }
 
 - (void) removeService: (DConnectService *) service {
     NSString *serviceId = [service serviceId];
-    [_mDConnectServices removeObjectForKey: serviceId];
+    [mDConnectServices removeObjectForKey: serviceId];
 }
 
 - (DConnectService *) service: (NSString *) serviceId {
-    return _mDConnectServices[serviceId];
+    return mDConnectServices[serviceId];
 }
 
 - (NSArray *) services {
-    NSLog(@"getServices: %d", (int)[_mDConnectServices count]);
+    
+    NSLog(@"getServices: %d - key: %@", (int)[mDConnectServices count], _key);
     NSMutableArray *list = [NSMutableArray array];
-    [list addObjectsFromArray: [_mDConnectServices allValues]];
+    [list addObjectsFromArray: [mDConnectServices allValues]];
     return list;
 }
 
 - (void) removeAllServices {
-    [_mDConnectServices removeAllObjects];
+    [mDConnectServices removeAllObjects];
 }
 
 - (BOOL) hasService: (NSString *) serviceId {
@@ -129,27 +141,6 @@ static NSMutableDictionary *_instanceArray = nil;
         return YES;
     }
     return NO;
-}
-
-#pragma mark - Private Methods.
-
-- (NSString *) createPath: (NSString *) profileName api: (DConnectApi *) api {
-    NSString *interfaceName = [api interface];
-    NSString *attributeName = [api attribute];
-    NSMutableString *path = [NSMutableString string];
-    [path appendString: @"/"];
-    [path appendString: DConnectMessageDefaultAPI];
-    [path appendString: @"/"];
-    [path appendString: profileName];
-    if (interfaceName) {
-        [path appendString: @"/"];
-        [path appendString: interfaceName];
-    }
-    if (attributeName) {
-        [path appendString: @"/"];
-        [path appendString: attributeName];
-    }
-    return path;
 }
 
 @end

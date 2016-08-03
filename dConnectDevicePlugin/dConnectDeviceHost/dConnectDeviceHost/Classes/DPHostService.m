@@ -57,7 +57,7 @@ NSString *const DPHostDevicePluginServiceId = @"host";
         [self addProfile:[DPHostVibrationProfile new]];
         [self addProfile:[DPHostConnectProfile new]];
         [self addProfile:[DPHostCanvasProfile new]];
-        [self addProfile:[DConnectServiceInformationProfile new]];
+        [self addProfile:[[DConnectServiceInformationProfile alloc] initWithProvider: self]];
         [self addProfile:[DPHostTouchProfile new]];
     }
     return self;

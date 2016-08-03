@@ -43,6 +43,7 @@ NSString *const DConnectCanvasProfileModeFills  = @"fills";
     return DConnectCanvasProfileName;
 }
 
+/*
 - (BOOL) didReceivePostRequest:(DConnectRequestMessage *)request response:(DConnectResponseMessage *)response {
     BOOL send = YES;
     
@@ -119,6 +120,7 @@ NSString *const DConnectCanvasProfileModeFills  = @"fills";
     
     return send;
 }
+*/
 
 #pragma mark - Setter
 

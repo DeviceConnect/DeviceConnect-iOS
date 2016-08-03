@@ -35,7 +35,7 @@ const double DConnectSettingsProfileMinLevel = 0.0;
 - (NSString *) profileName {
     return DConnectSettingsProfileName;
 }
-
+/*
 - (BOOL) didReceiveGetRequest:(DConnectRequestMessage *)request response:(DConnectResponseMessage *)response {
     BOOL send = YES;
     
@@ -159,6 +159,7 @@ const double DConnectSettingsProfileMinLevel = 0.0;
     
     return send;
 }
+*/
 
 #pragma mark - Getter
 

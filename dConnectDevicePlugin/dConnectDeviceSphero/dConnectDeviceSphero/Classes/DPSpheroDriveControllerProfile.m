@@ -19,96 +19,101 @@
     self = [super init];
     if (self) {
         self.delegate = self;
-
+        
+        // API登録(didReceivePostDriveControllerMoveRequest相当)
+        NSString *postDriveControllerMoveRequestApiPath = [self apiPathWithProfile: self.profileName
+                                                                     interfaceName: nil
+                                                                     attributeName: DCMDriveControllerProfileAttrMove];
+        [self addPostPath: postDriveControllerMoveRequestApiPath
+                      api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+                          
+                          NSString *serviceId = [request serviceId];
+                          double angle = [request doubleForKey:DCMDriveControllerProfileParamAngle];
+                          double speed = [request doubleForKey:DCMDriveControllerProfileParamSpeed];
+                          
+                          // 接続確認
+                          CONNECT_CHECK();
+                          
+                          // パラメータチェック
+                          NSString *angleString = [request stringForKey:DCMDriveControllerProfileParamAngle];
+                          NSString *speedString = [request stringForKey:DCMDriveControllerProfileParamSpeed];
+                          if (!angleString) {
+                              [response setErrorToInvalidRequestParameterWithMessage:@"invalid angle value."];
+                              return YES;
+                          }
+                          if (![[DPSpheroManager sharedManager] existDigitWithString:angleString] || angle < 0 || angle > 360 ) {
+                              [response setErrorToInvalidRequestParameterWithMessage:@"invalid angle value."];
+                              return YES;
+                          }
+                          if (!speedString) {
+                              [response setErrorToInvalidRequestParameterWithMessage:@"invalid speed value."];
+                              return YES;
+                          }
+                          if (![[DPSpheroManager sharedManager] existDecimalWithString:speedString]
+                              || speed < 0 || speed > 1.0) {
+                              [response setErrorToInvalidRequestParameterWithMessage:@"invalid speed value."];
+                              return YES;
+                          }
+                          
+                          // 移動
+                          [[DPSpheroManager sharedManager] move:angle velocity:speed];
+                          
+                          [response setResult:DConnectMessageResultTypeOk];
+                          return YES;
+                      }];
+        
+        // API登録(didReceivePutDriveControllerRotateRequest相当)
+        NSString *putDriveControllerRotateRequestApiPath = [self apiPathWithProfile: self.profileName
+                                                                      interfaceName: nil
+                                                                      attributeName: DCMDriveControllerProfileAttrRotate];
+        [self addPutPath: putDriveControllerRotateRequestApiPath
+                      api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+                          
+                          NSString *serviceId = [request serviceId];
+                          double angle = [request doubleForKey:DCMDriveControllerProfileParamAngle];
+                          
+                          // 接続確認
+                          CONNECT_CHECK();
+                          
+                          // パラメータチェック
+                          NSString *angleString = [request stringForKey:DCMDriveControllerProfileParamAngle];
+                          if (!angleString) {
+                              [response setErrorToInvalidRequestParameterWithMessage:@"invalid angle value."];
+                              return YES;
+                          }
+                          if(![[DPSpheroManager sharedManager] existDigitWithString:angleString]
+                             || angle < 0 || angle > 360) {
+                              [response setErrorToInvalidRequestParameterWithMessage:@"invalid angle value."];
+                              return YES;
+                          }
+                          
+                          // 回転
+                          [[DPSpheroManager sharedManager] rotate:angle];
+                          
+                          [response setResult:DConnectMessageResultTypeOk];
+                          return YES;
+                      }];
+        
+        // API登録(didReceiveDeleteDriveControllerStopRequest相当)
+        NSString *deleteDriveControllerStopRequestApiPath = [self apiPathWithProfile: self.profileName
+                                                                       interfaceName: nil
+                                                                       attributeName: DCMDriveControllerProfileAttrStop];
+        [self addDeletePath: deleteDriveControllerStopRequestApiPath
+                      api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+                          
+                          NSString *serviceId = [request serviceId];
+                          
+                          // 接続確認
+                          CONNECT_CHECK();
+                          
+                          // 停止
+                          [[DPSpheroManager sharedManager] stop];
+                          
+                          [response setResult:DConnectMessageResultTypeOk];
+                          return YES;
+                      }];
     }
     return self;
-}
-
-// デバイスの操作
-- (BOOL)                             profile:(DCMDriveControllerProfile *)profile
-    didReceivePostDriveControllerMoveRequest:(DConnectRequestMessage *)request
-                                    response:(DConnectResponseMessage *)response
-                                   serviceId:(NSString *)serviceId
-                                       angle:(double)angle
-                                       speed:(double)speed
-{
-    // 接続確認
-    CONNECT_CHECK();
-    
-    
-    // パラメータチェック
-    NSString *angleString = [request stringForKey:DCMDriveControllerProfileParamAngle];
-    NSString *speedString = [request stringForKey:DCMDriveControllerProfileParamSpeed];
-    if (!angleString) {
-        [response setErrorToInvalidRequestParameterWithMessage:@"invalid angle value."];
-        return YES;
-    }
-    if (![[DPSpheroManager sharedManager] existDigitWithString:angleString] || angle < 0 || angle > 360 ) {
-        [response setErrorToInvalidRequestParameterWithMessage:@"invalid angle value."];
-        return YES;
-    }
-    if (!speedString) {
-        [response setErrorToInvalidRequestParameterWithMessage:@"invalid speed value."];
-        return YES;
-    }
-    if (![[DPSpheroManager sharedManager] existDecimalWithString:speedString]
-                || speed < 0 || speed > 1.0) {
-        [response setErrorToInvalidRequestParameterWithMessage:@"invalid speed value."];
-        return YES;
-    }
-
-    // 移動
-    [[DPSpheroManager sharedManager] move:angle velocity:speed];
-
-    [response setResult:DConnectMessageResultTypeOk];
-    return YES;
-}
-
-
-// デバイスの回転
-- (BOOL)                              profile:(DCMDriveControllerProfile *)profile
-    didReceivePutDriveControllerRotateRequest:(DConnectRequestMessage *)request
-                                     response:(DConnectResponseMessage *)response
-                                    serviceId:(NSString *)serviceId
-                                        angle:(double)angle
-{
-    // 接続確認
-    CONNECT_CHECK();
-
-    // パラメータチェック
-    NSString *angleString = [request stringForKey:DCMDriveControllerProfileParamAngle];
-    if (!angleString) {
-        [response setErrorToInvalidRequestParameterWithMessage:@"invalid angle value."];
-        return YES;
-    }
-    if(![[DPSpheroManager sharedManager] existDigitWithString:angleString]
-        || angle < 0 || angle > 360) {
-        [response setErrorToInvalidRequestParameterWithMessage:@"invalid angle value."];
-        return YES;
-    }
-    
-    // 回転
-    [[DPSpheroManager sharedManager] rotate:angle];
-    
-    [response setResult:DConnectMessageResultTypeOk];
-    return YES;
-    
-}
-
-// デバイスの停止
-- (BOOL)                               profile:(DCMDriveControllerProfile *)profile
-    didReceiveDeleteDriveControllerStopRequest:(DConnectRequestMessage *)request
-                                      response:(DConnectResponseMessage *)response
-                                     serviceId:(NSString *)serviceId
-{
-    // 接続確認
-    CONNECT_CHECK();
-
-    // 停止
-    [[DPSpheroManager sharedManager] stop];
-    
-    [response setResult:DConnectMessageResultTypeOk];
-    return YES;
 }
 
 @end

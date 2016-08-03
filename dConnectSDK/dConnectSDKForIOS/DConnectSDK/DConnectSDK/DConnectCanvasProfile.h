@@ -20,6 +20,11 @@
 extern NSString *const DConnectCanvasProfileName;
 
 /*!
+ @brief アトリビュート: drawImage。
+ */
+extern NSString *const DConnectCanvasProfileAttrDrawImage;
+
+/*!
  @brief パラメータ: mimetype。
  */
 extern NSString *const DConnectCanvasProfileParamMIMEType;
@@ -244,5 +249,9 @@ extern NSString *const DConnectCanvasProfileModeFills;
  @return 画像描画モード。無い場合はnilを返す。
  */
 + (NSString *) modeFromRequest:(DConnectMessage *)request;
+
+- (BOOL) isMimeTypeWithString: (NSString *)mimeTypeString;
+
+- (BOOL)isFloatWithString:(NSString *)numberString;
 
 @end

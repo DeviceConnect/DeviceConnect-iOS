@@ -11,6 +11,29 @@
 #import "DConnectProfile.h"
 #import "DConnectServiceInformationProfile.h"
 
+@interface DConnectService() {
+    
+    /*!
+     @brief サービスID.
+     */
+    NSString *mId;
+    
+    /*!
+     @brief サポートするプロファイル一覧(key:プロファイル名(小文字) value:DConnectProfile *).
+     */
+    NSMutableDictionary *mProfiles;
+    
+    NSString *mName;
+    
+    NSString *mType;
+    
+    BOOL mIsOnline;
+    
+    NSString *mConfig;
+}
+
+@end
+
 @implementation DConnectService
 
 - (instancetype) initWithServiceId: (NSString *)serviceId {
@@ -19,8 +42,8 @@
     }
     self = [super init];
     if (self) {
-        _mId = serviceId;
-        _mProfiles = [NSMutableDictionary dictionary];
+        mId = serviceId;
+        mProfiles = [NSMutableDictionary dictionary];
         [self addProfile: [[DConnectServiceInformationProfile alloc] init]];
     }
     return self;
@@ -31,15 +54,15 @@
  @retval サービスID
  */
 - (NSString *) serviceId {
-    return _mId;
+    return mId;
 }
 
 - (void) setName: (NSString *)name {
-    _mName = name;
+    mName = name;
 }
 
 - (NSString *) name {
-    return _mName;
+    return mName;
 }
 
 /*
@@ -49,27 +72,27 @@ public void setNetworkType(final NetworkType type) {
 */
 
 - (void) setNetworkType: (NSString *) type {
-    _mType = type;
+    mType = type;
 }
 
 - (NSString *) networkType {
-    return _mType;
+    return mType;
 }
 
 - (void) setOnline: (BOOL) isOnline {
-    _mIsOnline = isOnline;
+    mIsOnline = isOnline;
 }
  
 - (BOOL) isOnline {
-    return _mIsOnline;
+    return mIsOnline;
 }
 
 - (NSString *) config {
-    return _mConfig;
+    return mConfig;
 }
 
 - (void) setConfig: (NSString *) config {
-    _mConfig = config;
+    mConfig = config;
 }
 
 // TODO: didReceiveRequestに名称変更。
@@ -88,14 +111,14 @@ public void setNetworkType(final NetworkType type) {
 - (NSArray *) profiles {
     
     // TODO: DConnectProfileのNSCopying対応。
-    return [_mProfiles allValues];
+    return [mProfiles allValues];
 }
 
 - (DConnectProfile *) profileWithName: (NSString *) name {
     if (!name) {
         return nil;
     }
-    return _mProfiles[[name lowercaseString]];
+    return mProfiles[[name lowercaseString]];
 }
 
 - (void) addProfile: (DConnectProfile *) profile {
@@ -107,7 +130,7 @@ public void setNetworkType(final NetworkType type) {
     [profile setService: self];
 */
     NSString *profileName = [[profile profileName] lowercaseString];
-    _mProfiles[profileName] = profile;
+    mProfiles[profileName] = profile;
 }
 
 - (void) removeProfile: (DConnectProfile *) profile {
@@ -115,7 +138,7 @@ public void setNetworkType(final NetworkType type) {
         return;
     }
     NSString *profileName = [[profile profileName] lowercaseString];
-    [_mProfiles removeObjectForKey: profileName];
+    [mProfiles removeObjectForKey: profileName];
 }
 
 

@@ -42,6 +42,7 @@ NSString *const DConnectBatteryProfileParamBattery         = @"battery";
     return DConnectBatteryProfileName;
 }
 
+/*
 - (BOOL) didReceiveGetRequest:(DConnectRequestMessage *)request response:(DConnectResponseMessage *)response {
     BOOL send = YES;
     
@@ -89,7 +90,9 @@ NSString *const DConnectBatteryProfileParamBattery         = @"battery";
     
     return send;
 }
+*/
 
+/*
 - (BOOL) didReceivePutRequest:(DConnectRequestMessage *)request response:(DConnectResponseMessage *)response {
     BOOL send = YES;
     
@@ -130,7 +133,9 @@ NSString *const DConnectBatteryProfileParamBattery         = @"battery";
     
     return send;
 }
+*/
 
+/*
 - (BOOL) didReceiveDeleteRequest:(DConnectRequestMessage *)request response:(DConnectResponseMessage *)response {
     
     BOOL send = YES;
@@ -165,6 +170,7 @@ NSString *const DConnectBatteryProfileParamBattery         = @"battery";
     }
     return send;
 }
+*/
 
 #pragma mark - Setter
 

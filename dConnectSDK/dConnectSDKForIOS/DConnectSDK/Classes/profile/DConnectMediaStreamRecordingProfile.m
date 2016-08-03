@@ -73,6 +73,7 @@ NSString *const DConnectMediaStreamRecordingProfileRecordingStateWarning = @"war
     return DConnectMediaStreamRecordingProfileName;
 }
 
+/*
 - (BOOL) didReceiveGetRequest:(DConnectRequestMessage *)request response:(DConnectResponseMessage *)response {
     BOOL send = YES;
     
@@ -281,6 +282,7 @@ NSString *const DConnectMediaStreamRecordingProfileRecordingStateWarning = @"war
     
     return send;
 }
+*/
 
 #pragma mark - Setter
 

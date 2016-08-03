@@ -23,35 +23,35 @@
 	self = [super init];
 	if (self) {
 		self.delegate = self;
+        
+        // API登録(didReceiveGetDateRequest相当)
+        NSString *getDateRequestApiPath = [self apiPathWithProfile: self.profileName
+                                                     interfaceName: nil
+                                                     attributeName: DConnectSettingsProfileAttrDate];
+        [self addGetPath: getDateRequestApiPath
+                     api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+                         
+                         NSString *serviceId = [request serviceId];
+                         [[DPPebbleManager sharedManager] fetchDate:serviceId callback:^(NSString *date, NSError *error) {
+                             
+                             // エラーチェック
+                             if ([DPPebbleProfileUtil handleError:error response:response]) {
+                                 if (date) {
+                                     [DConnectSettingsProfile setDate:date target:response];
+                                     [response setResult:DConnectMessageResultTypeOk];
+                                 } else {
+                                     [response setErrorToUnknown];
+                                 }
+                             }
+                             
+                             // レスポンスを返却
+                             [[DConnectManager sharedManager] sendResponse:response];
+                         }];
+                         return NO;
+                     }];
 	}
 	return self;
 	
-}
-
-
-#pragma mark - DConnectSettingsProfileDelegate
-
-- (BOOL)         profile:(DConnectSettingsProfile *)profile
-didReceiveGetDateRequest:(DConnectRequestMessage *)request
-                response:(DConnectResponseMessage *)response
-                serviceId:(NSString *)serviceId
-{
-	[[DPPebbleManager sharedManager] fetchDate:serviceId callback:^(NSString *date, NSError *error) {
-		
-		// エラーチェック
-		if ([DPPebbleProfileUtil handleError:error response:response]) {
-			if (date) {
-				[DConnectSettingsProfile setDate:date target:response];
-				[response setResult:DConnectMessageResultTypeOk];
-			} else {
-				[response setErrorToUnknown];
-			}
-		}
-		
-		// レスポンスを返却
-		[[DConnectManager sharedManager] sendResponse:response];
-	}];
-	return NO;
 }
 
 @end

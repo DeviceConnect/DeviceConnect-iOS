@@ -20,7 +20,7 @@
 // 初期化
 - (id) init
 {
-    self = [super init];
+    self = [super initWithObject: self];
     
     if (self) {
         self.pluginName = @"Sphero (Device Connect Device Plug-in)";

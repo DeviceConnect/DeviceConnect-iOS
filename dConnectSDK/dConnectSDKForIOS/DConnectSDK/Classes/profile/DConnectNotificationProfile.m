@@ -39,6 +39,7 @@ NSString *const DConnectNotificationProfileParamUri = @"uri";
     return DConnectNotificationProfileName;
 }
 
+/*
 - (BOOL) didReceivePostRequest:(DConnectRequestMessage *) request response:(DConnectResponseMessage *) response {
     BOOL send = YES;
     
@@ -184,6 +185,7 @@ NSString *const DConnectNotificationProfileParamUri = @"uri";
     
     return send;
 }
+*/
 
 #pragma mark - Setter
 

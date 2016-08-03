@@ -83,7 +83,7 @@ NSString *const DPSpheroProfileParamImpactTimestamp = @"impactTimestamp";
 }
 
 #pragma mark - DConnectProfile Method
-
+/*
 - (BOOL) didReceiveGetRequest:(DConnectRequestMessage *)request
                      response:(DConnectResponseMessage *)response {
     BOOL send = YES;
@@ -149,10 +149,12 @@ NSString *const DPSpheroProfileParamImpactTimestamp = @"impactTimestamp";
     
     return send;
 }
+*/
 
 /*
  PUTリクエストを受け付ける。
  */
+/*
 - (BOOL) didReceivePutRequest:(DConnectRequestMessage *)request
                      response:(DConnectResponseMessage *)response {
     BOOL send = YES;
@@ -225,10 +227,12 @@ NSString *const DPSpheroProfileParamImpactTimestamp = @"impactTimestamp";
    
     return send;
 }
+*/
 
 /**
  DELETEリクエストを受け付ける。
  */
+/*
 - (BOOL) didReceiveDeleteRequest:(DConnectRequestMessage *)request
                         response:(DConnectResponseMessage *)response {
     BOOL send = YES;
@@ -303,6 +307,7 @@ NSString *const DPSpheroProfileParamImpactTimestamp = @"impactTimestamp";
     
     return send;
 }
+*/
 
 #pragma mark - Private Methods
 

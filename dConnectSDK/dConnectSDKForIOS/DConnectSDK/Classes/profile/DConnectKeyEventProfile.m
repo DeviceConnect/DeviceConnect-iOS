@@ -33,6 +33,7 @@ int const DConnectKeyEventProfileKeyTypeUser = 0x00000800;
     return DConnectKeyEventProfileName;
 }
 
+/*
 - (BOOL) didReceiveGetRequest:(DConnectRequestMessage *)request response:(DConnectResponseMessage *)response {
     
     BOOL send = YES;
@@ -150,6 +151,7 @@ int const DConnectKeyEventProfileKeyTypeUser = 0x00000800;
     
     return send;
 }
+*/
 
 #pragma mark - Setter
 + (void) setKeyEvent:(DConnectMessage *)keyevent target:(DConnectMessage *)message {

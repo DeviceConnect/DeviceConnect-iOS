@@ -1,119 +1,187 @@
-[
-  {
-  "name": "Battery Status API",
-  "type": "one-shot",
-  "method": "GET",
-  "path": "/gotapi/battery",
-  "requestParams": [
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "Battery Profile",
+        "version": "2.0.0",
+        "description": ""
+    },
+    "consumes": [],
+    "paths": {
+        "/": {
+            "get": {
+                "x-type": "one-shot",
+                "summary": "",
+                "description": "",
+                "parameters": [
                     {
-                    "name": "serviceId",
-                    "type": "string",
-                    "mandatory": true
+                        "name": "serviceId",
+                        "in": "query",
+                        "required": true,
+                        "type": "string"
                     }
-                    ]
-  },
-  {
-  "name": "Battery Status Charging API",
-  "type": "one-shot",
-  "method": "GET",
-  "path": "/gotapi/battery/charging",
-  "requestParams": [
+                ],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/charging": {
+            "get": {
+                "x-type": "one-shot",
+                "summary": "",
+                "description": "",
+                "parameters": [
                     {
-                    "name": "serviceId",
-                    "type": "string",
-                    "mandatory": true
+                        "name": "serviceId",
+                        "in": "query",
+                        "required": true,
+                        "type": "string"
                     }
-                    ]
-  },
-  {
-  "name": "Battery Status Charging Time API",
-  "type": "one-shot",
-  "method": "GET",
-  "path": "/gotapi/battery/chargingTime",
-  "requestParams": [
+                ],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/chargingTime": {
+            "get": {
+                "x-type": "one-shot",
+                "summary": "",
+                "description": "",
+                "parameters": [
                     {
-                    "name": "serviceId",
-                    "type": "string",
-                    "mandatory": true
+                        "name": "serviceId",
+                        "in": "query",
+                        "required": true,
+                        "type": "string"
                     }
-                    ]
-  },
-  {
-  "name": "Battery Status Discharging Time API",
-  "type": "one-shot",
-  "method": "GET",
-  "path": "/gotapi/battery/dischargingTime",
-  "requestParams": [
+                ],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/dischargingTime": {
+            "get": {
+                "x-type": "one-shot",
+                "summary": "",
+                "description": "",
+                "parameters": [
                     {
-                    "name": "serviceId",
-                    "type": "string",
-                    "mandatory": true
+                        "name": "serviceId",
+                        "in": "query",
+                        "required": true,
+                        "type": "string"
                     }
-                    ]
-  },
-  {
-  "name": "Battery Status Level API",
-  "type": "one-shot",
-  "method": "GET",
-  "path": "/gotapi/battery/level",
-  "requestParams": [
+                ],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/level": {
+            "get": {
+                "x-type": "one-shot",
+                "summary": "",
+                "description": "",
+                "parameters": [
                     {
-                    "name": "serviceId",
-                    "type": "string",
-                    "mandatory": true
+                        "name": "serviceId",
+                        "in": "query",
+                        "required": true,
+                        "type": "string"
                     }
-                    ]
-  },
-  {
-  "name": "Battery Status Charging Event API",
-  "type": "event",
-  "method": "PUT",
-  "path": "/gotapi/battery/onchargingchange",
-  "requestParams": [
+                ],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/onBatteryChange": {
+            "put": {
+                "x-type": "event",
+                "summary": "",
+                "description": "",
+                "parameters": [
                     {
-                    "name": "serviceId",
-                    "type": "string",
-                    "mandatory": true
+                        "name": "serviceId",
+                        "in": "query",
+                        "required": true,
+                        "type": "string"
                     }
-                    ]
-  },
-  {
-  "name": "Battery Status Charging Event API",
-  "type": "event",
-  "method": "DELETE",
-  "path": "/gotapi/battery/onchargingchange",
-  "requestParams": [
+                ],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                }
+            },
+            "delete": {
+                "x-type": "event",
+                "summary": "",
+                "description": "",
+                "parameters": [
                     {
-                    "name": "serviceId",
-                    "type": "string",
-                    "mandatory": true
+                        "name": "serviceId",
+                        "in": "query",
+                        "required": true,
+                        "type": "string"
                     }
-                    ]
-  },
-  {
-  "name": "Battery Status Change Event API",
-  "type": "event",
-  "method": "PUT",
-  "path": "/gotapi/battery/onbatterychange",
-  "requestParams": [
+                ],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/onChargingChange": {
+            "put": {
+                "x-type": "event",
+                "summary": "",
+                "description": "",
+                "parameters": [
                     {
-                    "name": "serviceId",
-                    "type": "string",
-                    "mandatory": true
+                        "name": "serviceId",
+                        "in": "query",
+                        "required": true,
+                        "type": "string"
                     }
-                    ]
-  },
-  {
-  "name": "Battery Status Change Event API",
-  "type": "event",
-  "method": "DELETE",
-  "path": "/gotapi/battery/onbatterychange",
-  "requestParams": [
+                ],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                }
+            },
+            "delete": {
+                "x-type": "event",
+                "summary": "",
+                "description": "",
+                "parameters": [
                     {
-                    "name": "serviceId",
-                    "type": "string",
-                    "mandatory": true
+                        "name": "serviceId",
+                        "in": "query",
+                        "required": true,
+                        "type": "string"
                     }
-                    ]
-  }
-]
+                ],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                }
+            }
+        }
+    }
+}

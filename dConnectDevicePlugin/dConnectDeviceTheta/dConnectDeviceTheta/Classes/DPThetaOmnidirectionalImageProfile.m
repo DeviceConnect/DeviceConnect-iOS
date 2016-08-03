@@ -26,89 +26,100 @@
     self = [super init];
     if (self) {
         self.delegate = self;
+        __weak DPThetaOmnidirectionalImageProfile *weakSelf = self;
         _omniImages = [[NSMutableDictionary alloc] initWithCapacity:0];
         _roiContexts = [[NSMutableDictionary alloc] initWithCapacity:0];
         _server = [DPThetaMixedReplaceMediaServer new];
         _server.delegate = self;
+        
+        // API登録(didReceiveGetRoiRequest相当)
+        NSString *getRoiRequestApiPath = [self apiPathWithProfile: self.profileName
+                                                    interfaceName: nil
+                                                    attributeName: DPOmnidirectionalImageProfileAttrROI];
+        [self addGetPath: getRoiRequestApiPath
+                     api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+                         
+                         NSString *serviceId = [request serviceId];
+                         NSString *source = [request stringForKey:DPOmnidirectionalImageProfileParamSource];
+
+                         return [weakSelf requestViewWithRequest:request
+                                                        response:response
+                                                       serviceId:serviceId
+                                                          source:source
+                                                           isGet:YES];
+                     }];
+        
+        // API登録(didReceivePutRoiRequest相当)
+        NSString *putRoiRequestApiPath = [self apiPathWithProfile: self.profileName
+                                                    interfaceName: nil
+                                                    attributeName: DPOmnidirectionalImageProfileAttrROI];
+        [self addPutPath: putRoiRequestApiPath
+                     api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+                         
+                         NSString *serviceId = [request serviceId];
+                         NSString *source = [request stringForKey:DPOmnidirectionalImageProfileParamSource];
+                         
+                         return [weakSelf requestViewWithRequest:request
+                                                        response:response
+                                                       serviceId:serviceId
+                                                          source:source
+                                                           isGet:NO];
+                     }];
+        
+        // API登録(didReceivePutRoiSettingsRequest相当)
+        NSString *putRoiSettingsRequestApiPath = [self apiPathWithProfile: self.profileName
+                                                            interfaceName: DPOmnidirectionalImageProfileInterfaceROI
+                                                            attributeName: DPOmnidirectionalImageProfileAttrSettings];
+        [self addPutPath: putRoiSettingsRequestApiPath
+                     api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+                         
+                         NSString *uri = [DPThetaManager omitParametersToUri:[request stringForKey:DPOmnidirectionalImageProfileParamURI]];
+                         DPThetaRoiDeliveryContext *roiContext = [weakSelf roiContexts][uri];
+                         if (!roiContext) {
+                             [response setErrorToInvalidRequestParameterWithMessage:@"The specified media is not found."];
+                             return YES;
+                         }
+                         
+                         if (![weakSelf correctParamsWithRequest:request
+                                                    response:response]) {
+                             return YES;
+                         }
+                         
+                         [response setResult:DConnectMessageResultTypeOk];
+                         DPThetaParam *param = [weakSelf getParamForRequest:request];
+                         [roiContext changeRenderParameter:param isUserRequest:YES];
+                         return YES;
+                     }];
+        
+        // API登録(didReceiveDeleteRoiRequest相当)
+        NSString *deleteRoiRequestApiPath = [self apiPathWithProfile: self.profileName
+                                                       interfaceName: nil
+                                                       attributeName: DPOmnidirectionalImageProfileAttrROI];
+        [self addDeletePath: deleteRoiRequestApiPath
+                        api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+                         
+                            NSString *uri = [request stringForKey:DPOmnidirectionalImageProfileParamURI];
+                            
+                            NSString *url = [DPThetaManager omitParametersToUri:uri];
+                            DPThetaRoiDeliveryContext *roiContext = [weakSelf roiContexts][url];
+                            if (roiContext) {
+                                [roiContext destroy];
+                                url = [url stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"%@/", [_server getUrl]] withString:@""];
+                                [[weakSelf server] stopMediaForSegment:url];
+                                [[weakSelf roiContexts] removeObjectForKey:url];
+                                
+                                if ([[weakSelf server] isRunning]) {
+                                    [[weakSelf server] startStopServer];
+                                }
+                                [response setResult:DConnectMessageResultTypeOk];
+                            } else {
+                                [response setErrorToInvalidRequestParameterWithMessage:@"The specified media is not found."];
+                            }
+                            return YES;
+                        }];
     }
     return self;
 }
-
-- (BOOL)                     profile:(DPOmnidirectionalImageProfile *)profile
-             didReceiveGetRoiRequest:(DConnectRequestMessage *)request
-                            response:(DConnectResponseMessage *)response
-                           serviceId:(NSString *)serviceId
-                              source:(NSString *)source
-{
-    return [self requestViewWithRequest:request
-                               response:response
-                              serviceId:serviceId
-                                 source:source
-                                  isGet:YES];
-}
-
-- (BOOL)                     profile:(DPOmnidirectionalImageProfile *)profile
-             didReceivePutRoiRequest:(DConnectRequestMessage *)request
-                            response:(DConnectResponseMessage *)response
-                           serviceId:(NSString *)serviceId
-                              source:(NSString *)source
-{
-    return [self requestViewWithRequest:request
-                               response:response
-                              serviceId:serviceId
-                                 source:source
-                                  isGet:NO];
-}
-
-- (BOOL)                     profile:(DPOmnidirectionalImageProfile *)profile
-     didReceivePutRoiSettingsRequest:(DConnectRequestMessage *)request
-                            response:(DConnectResponseMessage *)response
-                           serviceId:(NSString *)serviceId
-{
-    NSString *uri = [DPThetaManager omitParametersToUri:[request stringForKey:DPOmnidirectionalImageProfileParamURI]];
-    DPThetaRoiDeliveryContext *roiContext = _roiContexts[uri];
-    if (!roiContext) {
-        [response setErrorToInvalidRequestParameterWithMessage:@"The specified media is not found."];
-        return YES;
-    }
-    
-    if (![self correctParamsWithRequest:request
-                               response:response]) {
-        return YES;
-    }
-    
-    [response setResult:DConnectMessageResultTypeOk];
-    DPThetaParam *param = [self getParamForRequest:request];
-    [roiContext changeRenderParameter:param isUserRequest:YES];
-    return YES;
-}
-
-
-
-- (BOOL)                     profile:(DPOmnidirectionalImageProfile *)profile
-          didReceiveDeleteRoiRequest:(DConnectRequestMessage *)request
-                            response:(DConnectResponseMessage *)response
-                           serviceId:(NSString *)serviceId
-                                 uri:(NSString *)uri
-{
-    NSString *url = [DPThetaManager omitParametersToUri:uri];
-    DPThetaRoiDeliveryContext *roiContext = _roiContexts[url];
-    if (roiContext) {
-        [roiContext destroy];
-        url = [url stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"%@/", [_server getUrl]] withString:@""];
-        [_server stopMediaForSegment:url];
-        [_roiContexts removeObjectForKey:url];
-        
-        if ([_server isRunning]) {
-            [_server startStopServer];
-        }
-        [response setResult:DConnectMessageResultTypeOk];
-    } else {
-        [response setErrorToInvalidRequestParameterWithMessage:@"The specified media is not found."];
-    }
-    return YES;
-}
-
 
 #pragma mark - private method
 

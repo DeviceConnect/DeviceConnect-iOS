@@ -27,7 +27,7 @@
 }
 
 - (id) init {
-    self = [super init];
+    self = [super initWithObject: self];
     if (self) {
         self.fileMgr = [DConnectFileManager fileManagerForPlugin:self];
         self.pluginName = @"Host (Device Connect Device Plug-in)";

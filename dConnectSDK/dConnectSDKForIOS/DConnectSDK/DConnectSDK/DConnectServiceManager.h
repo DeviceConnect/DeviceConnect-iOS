@@ -21,11 +21,6 @@
 
 @property (nonatomic, weak) DConnectApiSpecList *mApiSpecs;
 
-/*!
- @brief 接続サービス配列(key:サービスID value: DConnectService *)]
- */
-@property (nonatomic, weak) NSMutableDictionary *mDConnectServices;
-
 
 /*!
  DConnectServiceManagerインスタンス取得.

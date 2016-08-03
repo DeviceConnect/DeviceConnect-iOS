@@ -33,6 +33,7 @@ NSString *const DCMTemperatureProfileParamType = @"type";
 /*
  GETリクエストを振り分ける。
  */
+/*
 - (BOOL) didReceiveGetRequest:(DConnectRequestMessage *)request
                      response:(DConnectResponseMessage *)response {
     
@@ -57,6 +58,7 @@ NSString *const DCMTemperatureProfileParamType = @"type";
     
     return send;
 }
+*/
 
 #pragma mark - Private Methods
 

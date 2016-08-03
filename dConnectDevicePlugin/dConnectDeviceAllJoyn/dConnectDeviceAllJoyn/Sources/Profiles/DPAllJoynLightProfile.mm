@@ -92,6 +92,309 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
     if (self) {
         self.delegate = self;
         _handler = handler;
+        __weak DPAllJoynLightProfile *weakSelf = self;
+        __weak DPAllJoynHandler *weakHandler = handler;
+        
+        // API登録(didReceiveGetLightRequest相当)
+        NSString *getLightRequestApiPath = [self apiPathWithProfile: self.profileName
+                                                      interfaceName: nil
+                                                      attributeName: nil];
+        [self addGetPath: getLightRequestApiPath
+                     api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+                         NSString *serviceId = [request serviceId];
+                         if (!serviceId) {
+                             [response setErrorToEmptyServiceId];
+                             return YES;
+                         }
+                         
+                         DPAllJoynServiceEntity *service =
+                         weakHandler.discoveredAllJoynServices[serviceId];
+                         
+                         if (!service) {
+                             [response setErrorToNotFoundService];
+                             return YES;
+                         }
+                         
+                         switch ([weakSelf serviceTypeFromService:service]) {
+                                 
+                             case DPAllJoynLightServiceTypeSingleLamp: {
+                                 [weakSelf
+                                  didReceiveGetLightRequestForSingleLampWithResponse:response
+                                  service:service];
+                                 return NO;
+                             }
+                                 
+                             case DPAllJoynLightServiceTypeLampController: {
+                                 [weakSelf
+                                  didReceiveGetLightRequestForLampControllerWithResponse:response
+                                  service:service];
+                                 return NO;
+                             }
+                                 
+                             case DPAllJoynLightServiceTypeUnknown:
+                             default: {
+                                 [response setErrorToNotSupportAction];
+                                 return YES;
+                             }
+                                 
+                         }
+                     }];
+
+        // API登録(didReceivePostLightRequest相当)
+        NSString *postLightRequestApiPath = [self apiPathWithProfile: self.profileName
+                                                       interfaceName: nil
+                                                       attributeName: nil];
+        [self addPostPath: postLightRequestApiPath
+                     api:^(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+                         
+                         NSString *serviceId = [request serviceId];
+                         NSString *lightId = [DConnectLightProfile lightIdFromRequest: request];
+                         NSNumber *brightness = [DConnectLightProfile brightnessFromRequest: request];
+                         NSString *color = [DConnectLightProfile colorFromRequest: request];
+                         NSArray *flashing = [DConnectLightProfile parsePattern: [DConnectLightProfile flashingFromRequest: request] isId:NO];
+                         
+                         if (!brightness
+                             || (brightness && ([brightness doubleValue] < 0.0 || [brightness doubleValue] > 1.0))) {
+                             [response setErrorToInvalidRequestParameterWithMessage:
+                              @"Parameter 'brightness' must be a value between 0 and 1.0."];
+                             return YES;
+                         }
+                         
+                         if (!flashing) {
+                             [response setErrorToInvalidRequestParameterWithMessage:
+                              @"Parameter 'flashing' invalid."];
+                             return YES;
+                         }
+                         if (![weakSelf checkFlash:response flashing:flashing]) {
+                             return YES;
+                         }
+                         
+                         if (!serviceId) {
+                             [response setErrorToEmptyServiceId];
+                             return YES;
+                         }
+                         
+                         DPAllJoynServiceEntity *service =
+                         weakHandler.discoveredAllJoynServices[serviceId];
+                         
+                         if (!service) {
+                             [response setErrorToNotFoundService];
+                             return YES;
+                         }
+                         
+                         if (!lightId) {
+                             [response setErrorToInvalidRequestParameterWithMessage:
+                              @"Parameter 'lightId' must be specified."];
+                             return YES;
+                         }
+                         
+                         if (brightness
+                             && (brightness.doubleValue < 0 || brightness.doubleValue > 1)) {
+                             [response setErrorToInvalidRequestParameterWithMessage:
+                              @"Parameter 'brightness' must be a value between 0 and 1.0 ."];
+                             [[DConnectManager sharedManager] sendResponse:response];
+                             return YES;
+                         }
+                         
+                         if (color
+                             && (color.length != 6
+                                 || ![[NSScanner scannerWithString:color] scanHexInt:nil]))
+                         {
+                             [response setErrorToInvalidRequestParameterWithMessage:
+                              @"Parameter 'color' is invalid."];
+                             [[DConnectManager sharedManager] sendResponse:response];
+                             return YES;
+                         }
+                         
+                         //    if (flashing && flashing.count > 0) {
+                         //        [response setErrorToInvalidRequestParameterWithMessage:
+                         //         @"Parameter 'flashing' is not supported."];
+                         //        return YES;
+                         //    }
+                         
+                         switch ([weakSelf serviceTypeFromService:service]) {
+                                 
+                             case DPAllJoynLightServiceTypeSingleLamp: {
+                                 [weakSelf
+                                  didReceivePostLightRequestForSingleLampWithResponse:response
+                                  service:service lightId:lightId brightness:brightness
+                                  color:color flashing:flashing];
+                                 return NO;
+                             }
+                                 
+                             case DPAllJoynLightServiceTypeLampController: {
+                                 [weakSelf
+                                  didReceivePostLightRequestForLampControllerWithResponse:response
+                                  service:service lightId:lightId brightness:brightness
+                                  color:color flashing:flashing];
+                                 return NO;
+                             }
+                                 
+                             case DPAllJoynLightServiceTypeUnknown:
+                             default: {
+                                 [response setErrorToNotSupportAction];
+                                 return YES;
+                             }
+                                 
+                         }
+                     }];
+        
+        // API登録(didReceivePutLightRequest相当)
+        NSString *putLightRequestApiPath = [self apiPathWithProfile: self.profileName
+                                                      interfaceName: nil
+                                                      attributeName: nil];
+        [self addPutPath: putLightRequestApiPath
+                      api:^(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+                          
+                          NSString *serviceId = [request serviceId];
+                          NSString *lightId = [DConnectLightProfile lightIdFromRequest: request];
+                          NSNumber *brightness = [DConnectLightProfile brightnessFromRequest: request];
+                          if (!brightness
+                              || (brightness && ([brightness doubleValue] < 0.0 || [brightness doubleValue] > 1.0))) {
+                              [response setErrorToInvalidRequestParameterWithMessage:
+                               @"Parameter 'brightness' must be a value between 0 and 1.0."];
+                              return YES;
+                          }
+                          NSString *name = [request stringForKey:DConnectLightProfileParamName];
+                          NSString *color = [request stringForKey:DConnectLightProfileParamColor];
+                          NSArray *flashing = [DConnectLightProfile parsePattern: [DConnectLightProfile flashingFromRequest: request] isId:NO];
+                          if (!flashing) {
+                              [response setErrorToInvalidRequestParameterWithMessage:
+                               @"Parameter 'flashing' invalid."];
+                              return YES;
+                          }
+                          if (![weakSelf checkFlash:response flashing:flashing]) {
+                              return YES;
+                          }
+                          
+                          if (!serviceId) {
+                              [response setErrorToEmptyServiceId];
+                              return YES;
+                          }
+                          
+                          DPAllJoynServiceEntity *service =
+                          weakHandler.discoveredAllJoynServices[serviceId];
+                          
+                          if (!service) {
+                              [response setErrorToNotFoundService];
+                              return YES;
+                          }
+                          
+                          if (!lightId) {
+                              [response setErrorToInvalidRequestParameterWithMessage:
+                               @"Parameter 'lightId' must be specified."];
+                              return YES;
+                          }
+                          
+                          if (brightness
+                              && (brightness.doubleValue < 0 || brightness.doubleValue > 1)) {
+                              [response setErrorToInvalidRequestParameterWithMessage:
+                               @"Parameter 'brightness' must be a value between 0 and 1.0 ."];
+                              [[DConnectManager sharedManager] sendResponse:response];
+                              return YES;
+                          }
+                          
+                          if (color
+                              && (color.length != 6
+                                  || ![[NSScanner scannerWithString:color] scanHexInt:nil]))
+                          {
+                              [response setErrorToInvalidRequestParameterWithMessage:
+                               @"Parameter 'color' is invalid."];
+                              [[DConnectManager sharedManager] sendResponse:response];
+                              return YES;
+                          }
+                          
+                          //    if (flashing && flashing.count > 0) {
+                          //        [response setErrorToInvalidRequestParameterWithMessage:
+                          //         @"Parameter 'flashing' is not supported."];
+                          //        return YES;
+                          //    }
+                          if (!name || (name && name.length == 0)) {
+                              [response setErrorToInvalidRequestParameterWithMessage:
+                               @"Parameter 'name' is invalid."];
+                              return YES;
+                              
+                          }
+                          switch ([weakSelf serviceTypeFromService:service]) {
+                                  
+                              case DPAllJoynLightServiceTypeSingleLamp: {
+                                  [weakSelf
+                                   didReceivePutLightRequestForSingleLampWithResponse:response
+                                   service:service lightId:lightId name:name brightness:brightness
+                                   color:color flashing:flashing];
+                                  return NO;
+                              }
+                                  
+                              case DPAllJoynLightServiceTypeLampController: {
+                                  [weakSelf
+                                   didReceivePutLightRequestForLampControllerWithResponse:response
+                                   service:service lightId:lightId name:name brightness:brightness
+                                   color:color flashing:flashing];
+                                  return NO;
+                              }
+                                  
+                              case DPAllJoynLightServiceTypeUnknown:
+                              default: {
+                                  [response setErrorToNotSupportAction];
+                                  return YES;
+                              }
+                                  
+                          }
+                      }];
+        
+        // API登録(didReceiveDeleteLightRequest相当)
+        NSString *deleteLightRequestApiPath = [self apiPathWithProfile: self.profileName
+                                                         interfaceName: nil
+                                                         attributeName: nil];
+        [self addDeletePath: deleteLightRequestApiPath
+                     api:^(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+                         
+                         NSString *serviceId = [request serviceId];
+                         NSString *lightId = [DConnectLightProfile lightIdFromRequest: request];
+
+                         if (!serviceId) {
+                             [response setErrorToEmptyServiceId];
+                             return YES;
+                         }
+                         
+                         DPAllJoynServiceEntity *service =
+                         weakHandler.discoveredAllJoynServices[serviceId];
+                         
+                         if (!service) {
+                             [response setErrorToNotFoundService];
+                             return YES;
+                         }
+                         
+                         if (!lightId) {
+                             [response setErrorToInvalidRequestParameterWithMessage:
+                              @"Parameter 'lightId' must be specified."];
+                             return YES;
+                         }
+                         
+                         switch ([weakSelf serviceTypeFromService:service]) {
+                                 
+                             case DPAllJoynLightServiceTypeSingleLamp: {
+                                 [weakSelf
+                                  didReceiveDeleteLightRequestForSingleLampWithResponse:response
+                                  service:service lightId:lightId];
+                                 return NO;
+                             }
+                                 
+                             case DPAllJoynLightServiceTypeLampController: {
+                                 [weakSelf
+                                  didReceiveDeleteLightRequestForLampControllerWithResponse:response
+                                  service:service lightId:lightId];
+                                 return NO;
+                             }
+                                 
+                             case DPAllJoynLightServiceTypeUnknown:
+                             default: {
+                                 [response setErrorToNotSupportAction];
+                                 return YES;
+                             }
+                                 
+                         }
+                     }];
     }
     return self;
 }
@@ -225,7 +528,6 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
          [[DConnectManager sharedManager] sendResponse:response];
      }];
 }
-
 
 - (void) didReceiveGetLightRequestForLampControllerWithResponse:(DConnectResponseMessage *)response
                                                         service:(DPAllJoynServiceEntity *)service
@@ -1709,270 +2011,6 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
      }];
 }
 
-
-// =============================================================================
-#pragma mark DConnectLightProfileDelegate
-
-
-- (BOOL)              profile:(DConnectLightProfile *)profile
-    didReceiveGetLightRequest:(DConnectRequestMessage *)request
-                     response:(DConnectResponseMessage *)response
-                    serviceId:(NSString *)serviceId
-{
-    if (!serviceId) {
-        [response setErrorToEmptyServiceId];
-        return YES;
-    }
-    
-    DPAllJoynServiceEntity *service =
-    _handler.discoveredAllJoynServices[serviceId];
-    
-    if (!service) {
-        [response setErrorToNotFoundService];
-        return YES;
-    }
-    
-    switch ([self serviceTypeFromService:service]) {
-            
-        case DPAllJoynLightServiceTypeSingleLamp: {
-            [self
-             didReceiveGetLightRequestForSingleLampWithResponse:response
-             service:service];
-            return NO;
-        }
-            
-        case DPAllJoynLightServiceTypeLampController: {
-            [self
-             didReceiveGetLightRequestForLampControllerWithResponse:response
-             service:service];
-            return NO;
-        }
-            
-        case DPAllJoynLightServiceTypeUnknown:
-        default: {
-            [response setErrorToNotSupportAction];
-            return YES;
-        }
-            
-    }
-}
-
-
-- (BOOL)            profile:(DConnectLightProfile *)profile
- didReceivePostLightRequest:(DConnectRequestMessage *)request
-                   response:(DConnectResponseMessage *)response
-                  serviceId:(NSString *)serviceId
-                    lightId:(NSString *)lightId
-                 brightness:(NSNumber *)brightness
-                      color:(NSString *)color
-                   flashing:(NSArray *)flashing
-{
-    if (!serviceId) {
-        [response setErrorToEmptyServiceId];
-        return YES;
-    }
-    
-    DPAllJoynServiceEntity *service =
-    _handler.discoveredAllJoynServices[serviceId];
-    
-    if (!service) {
-        [response setErrorToNotFoundService];
-        return YES;
-    }
-    
-    if (!lightId) {
-        [response setErrorToInvalidRequestParameterWithMessage:
-         @"Parameter 'lightId' must be specified."];
-        return YES;
-    }
-    
-    if (brightness
-        && (brightness.doubleValue < 0 || brightness.doubleValue > 1)) {
-        [response setErrorToInvalidRequestParameterWithMessage:
-         @"Parameter 'brightness' must be a value between 0 and 1.0 ."];
-        [[DConnectManager sharedManager] sendResponse:response];
-        return YES;
-    }
-    
-    if (color
-        && (color.length != 6
-            || ![[NSScanner scannerWithString:color] scanHexInt:nil]))
-    {
-        [response setErrorToInvalidRequestParameterWithMessage:
-         @"Parameter 'color' is invalid."];
-        [[DConnectManager sharedManager] sendResponse:response];
-        return YES;
-    }
-    
-//    if (flashing && flashing.count > 0) {
-//        [response setErrorToInvalidRequestParameterWithMessage:
-//         @"Parameter 'flashing' is not supported."];
-//        return YES;
-//    }
-    
-    switch ([self serviceTypeFromService:service]) {
-            
-        case DPAllJoynLightServiceTypeSingleLamp: {
-            [self
-             didReceivePostLightRequestForSingleLampWithResponse:response
-             service:service lightId:lightId brightness:brightness
-             color:color flashing:flashing];
-            return NO;
-        }
-            
-        case DPAllJoynLightServiceTypeLampController: {
-            [self
-             didReceivePostLightRequestForLampControllerWithResponse:response
-             service:service lightId:lightId brightness:brightness
-             color:color flashing:flashing];
-            return NO;
-        }
-            
-        case DPAllJoynLightServiceTypeUnknown:
-        default: {
-            [response setErrorToNotSupportAction];
-            return YES;
-        }
-            
-    }
-}
-
-
-- (BOOL)            profile:(DConnectLightProfile *)profile
-  didReceivePutLightRequest:(DConnectRequestMessage *)request
-                   response:(DConnectResponseMessage *)response
-                  serviceId:(NSString *)serviceId
-                    lightId:(NSString *)lightId
-                       name:(NSString *)name
-                 brightness:(NSNumber *)brightness
-                      color:(NSString *)color
-                   flashing:(NSArray *)flashing
-{
-    if (!serviceId) {
-        [response setErrorToEmptyServiceId];
-        return YES;
-    }
-    
-    DPAllJoynServiceEntity *service =
-    _handler.discoveredAllJoynServices[serviceId];
-    
-    if (!service) {
-        [response setErrorToNotFoundService];
-        return YES;
-    }
-    
-    if (!lightId) {
-        [response setErrorToInvalidRequestParameterWithMessage:
-         @"Parameter 'lightId' must be specified."];
-        return YES;
-    }
-    
-    if (brightness
-        && (brightness.doubleValue < 0 || brightness.doubleValue > 1)) {
-        [response setErrorToInvalidRequestParameterWithMessage:
-         @"Parameter 'brightness' must be a value between 0 and 1.0 ."];
-        [[DConnectManager sharedManager] sendResponse:response];
-        return YES;
-    }
-    
-    if (color
-        && (color.length != 6
-            || ![[NSScanner scannerWithString:color] scanHexInt:nil]))
-    {
-        [response setErrorToInvalidRequestParameterWithMessage:
-         @"Parameter 'color' is invalid."];
-        [[DConnectManager sharedManager] sendResponse:response];
-        return YES;
-    }
-    
-//    if (flashing && flashing.count > 0) {
-//        [response setErrorToInvalidRequestParameterWithMessage:
-//         @"Parameter 'flashing' is not supported."];
-//        return YES;
-//    }
-    if (!name || (name && name.length == 0)) {
-        [response setErrorToInvalidRequestParameterWithMessage:
-         @"Parameter 'name' is invalid."];
-        return YES;
-        
-    }
-    switch ([self serviceTypeFromService:service]) {
-            
-        case DPAllJoynLightServiceTypeSingleLamp: {
-            [self
-             didReceivePutLightRequestForSingleLampWithResponse:response
-             service:service lightId:lightId name:name brightness:brightness
-             color:color flashing:flashing];
-            return NO;
-        }
-            
-        case DPAllJoynLightServiceTypeLampController: {
-            [self
-             didReceivePutLightRequestForLampControllerWithResponse:response
-             service:service lightId:lightId name:name brightness:brightness
-             color:color flashing:flashing];
-            return NO;
-        }
-            
-        case DPAllJoynLightServiceTypeUnknown:
-        default: {
-            [response setErrorToNotSupportAction];
-            return YES;
-        }
-            
-    }
-}
-
-
-- (BOOL)                 profile:(DConnectLightProfile *)profile
-    didReceiveDeleteLightRequest:(DConnectRequestMessage *)request
-                        response:(DConnectResponseMessage *)response
-                       serviceId:(NSString *)serviceId
-                         lightId:(NSString *)lightId
-{
-    if (!serviceId) {
-        [response setErrorToEmptyServiceId];
-        return YES;
-    }
-    
-    DPAllJoynServiceEntity *service =
-    _handler.discoveredAllJoynServices[serviceId];
-    
-    if (!service) {
-        [response setErrorToNotFoundService];
-        return YES;
-    }
-    
-    if (!lightId) {
-        [response setErrorToInvalidRequestParameterWithMessage:
-         @"Parameter 'lightId' must be specified."];
-        return YES;
-    }
-    
-    switch ([self serviceTypeFromService:service]) {
-            
-        case DPAllJoynLightServiceTypeSingleLamp: {
-            [self
-             didReceiveDeleteLightRequestForSingleLampWithResponse:response
-             service:service lightId:lightId];
-            return NO;
-        }
-            
-        case DPAllJoynLightServiceTypeLampController: {
-            [self
-             didReceiveDeleteLightRequestForLampControllerWithResponse:response
-             service:service lightId:lightId];
-            return NO;
-        }
-            
-        case DPAllJoynLightServiceTypeUnknown:
-        default: {
-            [response setErrorToNotSupportAction];
-            return YES;
-        }
-            
-    }
-}
 
 
 @end

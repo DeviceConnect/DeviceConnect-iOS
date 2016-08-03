@@ -76,7 +76,8 @@ static const long FLAG_ON_TOUCH_CANCEL = 0x00000020;
     if (self) {
         self.delegate = self;
         _displayViewController = nil;
-
+        __weak DPHostTouchProfile *weakSelf = self;
+ 
         mOnTouchCache = nil;
         mOnTouchCacheTime = 0;
         mOnTouchStartCache = nil;
@@ -93,6 +94,367 @@ static const long FLAG_ON_TOUCH_CANCEL = 0x00000020;
         
         // Get event manager.
         self.eventMgr = [DConnectEventManager sharedManagerForClass:[DPHostDevicePlugin class]];
+        __weak DConnectEventManager *weakEventMgr = self.eventMgr;
+        
+        // API登録(didReceiveGetOnTouchRequest相当)
+        NSString *getOnTouchRequestApiPath = [self apiPathWithProfile: self.profileName
+                                                        interfaceName: nil
+                                                        attributeName: DConnectTouchProfileAttrOnTouch];
+        [self addGetPath: getOnTouchRequestApiPath
+                     api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+                         DConnectMessage *touch = [weakSelf getTouchCache:DConnectTouchProfileAttrOnTouch];
+                         [DConnectTouchProfile setTouch:touch target:response];
+                         [response setResult:DConnectMessageResultTypeOk];
+                         return YES;
+                     }];
+
+        // API登録(didReceiveGetOnTouchStartRequest相当)
+        NSString *getOnTouchStartRequestApiPath = [self apiPathWithProfile: self.profileName
+                                                             interfaceName: nil
+                                                             attributeName: DConnectTouchProfileAttrOnTouchStart];
+        [self addGetPath: getOnTouchStartRequestApiPath
+                     api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+                         DConnectMessage *touch = [weakSelf getTouchCache:DConnectTouchProfileAttrOnTouchStart];
+                         [DConnectTouchProfile setTouch:touch target:response];
+                         [response setResult:DConnectMessageResultTypeOk];
+                         return YES;
+                     }];
+
+        // API登録(didReceiveGetOnTouchEndRequest相当)
+        NSString *getOnTouchEndRequestApiPath = [self apiPathWithProfile: self.profileName
+                                                           interfaceName: nil
+                                                           attributeName: DConnectTouchProfileAttrOnTouchEnd];
+        [self addGetPath: getOnTouchEndRequestApiPath
+                     api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+                         DConnectMessage *touch = [weakSelf getTouchCache:DConnectTouchProfileAttrOnTouchEnd];
+                         [DConnectTouchProfile setTouch:touch target:response];
+                         [response setResult:DConnectMessageResultTypeOk];
+                         return YES;
+                     }];
+        
+        // API登録(didReceiveGetOnDoubleTapRequest相当)
+        NSString *getOnDoubleTapRequestApiPath = [self apiPathWithProfile: self.profileName
+                                                            interfaceName: nil
+                                                            attributeName: DConnectTouchProfileAttrOnDoubleTap];
+        [self addGetPath: getOnDoubleTapRequestApiPath
+                     api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+                         DConnectMessage *touch = [weakSelf getTouchCache:DConnectTouchProfileAttrOnDoubleTap];
+                         [DConnectTouchProfile setTouch:touch target:response];
+                         [response setResult:DConnectMessageResultTypeOk];
+                         return YES;
+                     }];
+        
+        // API登録(didReceiveGetOnTouchMoveRequest相当)
+        NSString *getOnTouchMoveRequestApiPath = [self apiPathWithProfile: self.profileName
+                                                            interfaceName: nil
+                                                            attributeName: DConnectTouchProfileAttrOnTouchMove];
+        [self addGetPath: getOnTouchMoveRequestApiPath
+                     api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+                         DConnectMessage *touch = [weakSelf getTouchCache:DConnectTouchProfileAttrOnTouchMove];
+                         [DConnectTouchProfile setTouch:touch target:response];
+                         [response setResult:DConnectMessageResultTypeOk];
+                         return YES;
+                     }];
+        
+        // API登録(didReceiveGetOnTouchCancelRequest相当)
+        NSString *getOnTouchCancelRequestApiPath = [self apiPathWithProfile: self.profileName
+                                                              interfaceName: nil
+                                                              attributeName: DConnectTouchProfileAttrOnTouchCancel];
+        [self addGetPath: getOnTouchCancelRequestApiPath
+                     api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+                         DConnectMessage *touch = [weakSelf getTouchCache:DConnectTouchProfileAttrOnTouchCancel];
+                         [DConnectTouchProfile setTouch:touch target:response];
+                         [response setResult:DConnectMessageResultTypeOk];
+                         return YES;
+                     }];
+        
+        // API登録(didReceivePutOnTouchRequest相当)
+        NSString *putOnTouchRequestApiPath = [self apiPathWithProfile: self.profileName
+                                                        interfaceName: nil
+                                                        attributeName: DConnectTouchProfileAttrOnTouch];
+        [self addPutPath: putOnTouchRequestApiPath
+                     api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+                         switch ([weakEventMgr addEventForRequest:request]) {
+                             case DConnectEventErrorNone:             // No error.
+                                 [response setResult:DConnectMessageResultTypeOk];
+                                 [weakSelf startTouchView];
+                                 mTouchEventManageFlag |= FLAG_ON_TOUCH;
+                                 break;
+                             case DConnectEventErrorInvalidParameter: // Invalid Parameter.
+                                 [response setErrorToInvalidRequestParameter];
+                                 break;
+                             case DConnectEventErrorNotFound:         // Event not found.
+                             case DConnectEventErrorFailed:           // Failed process.
+                                 [response setErrorToUnknown];
+                                 break;
+                         }
+                         
+                         return YES;
+                     }];
+        
+        // API登録(didReceivePutOnTouchStartRequest相当)
+        NSString *putOnTouchStartRequestApiPath = [self apiPathWithProfile: self.profileName
+                                                             interfaceName: nil
+                                                             attributeName: DConnectTouchProfileAttrOnTouchStart];
+        [self addPutPath: putOnTouchStartRequestApiPath
+                     api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+                         switch ([weakEventMgr addEventForRequest:request]) {
+                             case DConnectEventErrorNone:             // No error.
+                                 [response setResult:DConnectMessageResultTypeOk];
+                                 [weakSelf startTouchView];
+                                 mTouchEventManageFlag |= FLAG_ON_TOUCH_START;
+                                 break;
+                             case DConnectEventErrorInvalidParameter: // Invalid Parameter.
+                                 [response setErrorToInvalidRequestParameter];
+                                 break;
+                             case DConnectEventErrorNotFound:         // Event not found.
+                             case DConnectEventErrorFailed:           // Failed process.
+                                 [response setErrorToUnknown];
+                                 break;
+                         }
+                         
+                         return YES;
+                     }];
+        
+        // API登録(didReceivePutOnTouchEndRequest相当)
+        NSString *putOnTouchEndRequestApiPath = [self apiPathWithProfile: self.profileName
+                                                           interfaceName: nil
+                                                           attributeName: DConnectTouchProfileAttrOnTouchEnd];
+        [self addPutPath: putOnTouchEndRequestApiPath
+                     api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+                         switch ([weakEventMgr addEventForRequest:request]) {
+                             case DConnectEventErrorNone:             // No error.
+                                 [response setResult:DConnectMessageResultTypeOk];
+                                 [weakSelf startTouchView];
+                                 mTouchEventManageFlag |= FLAG_ON_TOUCH_END;
+                                 break;
+                             case DConnectEventErrorInvalidParameter: // Invalid Parameter.
+                                 [response setErrorToInvalidRequestParameter];
+                                 break;
+                             case DConnectEventErrorNotFound:         // Event not found.
+                             case DConnectEventErrorFailed:           // Failed process.
+                                 [response setErrorToUnknown];
+                                 break;
+                         }
+                         
+                         return YES;
+                     }];
+        
+        // API登録(didReceivePutOnDoubleTapRequest相当)
+        NSString *putOnDoubleTapRequestApiPath = [self apiPathWithProfile: self.profileName
+                                                            interfaceName: nil
+                                                            attributeName: DConnectTouchProfileAttrOnDoubleTap];
+        [self addPutPath: putOnDoubleTapRequestApiPath
+                     api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+                         switch ([weakEventMgr addEventForRequest:request]) {
+                             case DConnectEventErrorNone:             // No error.
+                                 [response setResult:DConnectMessageResultTypeOk];
+                                 [weakSelf startTouchView];
+                                 mTouchEventManageFlag |= FLAG_ON_DOUBLE_TAP;
+                                 break;
+                             case DConnectEventErrorInvalidParameter: // Invalid Parameter.
+                                 [response setErrorToInvalidRequestParameter];
+                                 break;
+                             case DConnectEventErrorNotFound:         // Event not found.
+                             case DConnectEventErrorFailed:           // Failed process.
+                                 [response setErrorToUnknown];
+                                 break;
+                         }
+                         
+                         return YES;
+                     }];
+        
+        // API登録(didReceivePutOnTouchMoveRequest相当)
+        NSString *putOnTouchMoveRequestApiPath = [self apiPathWithProfile: self.profileName
+                                                            interfaceName: nil
+                                                            attributeName: DConnectTouchProfileAttrOnTouchMove];
+        [self addPutPath: putOnTouchMoveRequestApiPath
+                     api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+                         switch ([weakEventMgr addEventForRequest:request]) {
+                             case DConnectEventErrorNone:             // No error.
+                                 [response setResult:DConnectMessageResultTypeOk];
+                                 [weakSelf startTouchView];
+                                 mTouchEventManageFlag |= FLAG_ON_TOUCH_MOVE;
+                                 break;
+                             case DConnectEventErrorInvalidParameter: // Invalid Parameter.
+                                 [response setErrorToInvalidRequestParameter];
+                                 break;
+                             case DConnectEventErrorNotFound:         // Event not found.
+                             case DConnectEventErrorFailed:           // Failed process.
+                                 [response setErrorToUnknown];
+                                 break;
+                         }
+                         
+                         return YES;
+                     }];
+        
+        // API登録(didReceivePutOnTouchCancelRequest相当)
+        NSString *putOnTouchCancelRequestApiPath = [self apiPathWithProfile: self.profileName
+                                                              interfaceName: nil
+                                                              attributeName: DConnectTouchProfileAttrOnTouchCancel];
+        [self addPutPath: putOnTouchCancelRequestApiPath
+                     api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+                         switch ([weakEventMgr addEventForRequest:request]) {
+                             case DConnectEventErrorNone:             // No error.
+                                 [response setResult:DConnectMessageResultTypeOk];
+                                 [weakSelf startTouchView];
+                                 mTouchEventManageFlag |= FLAG_ON_TOUCH_CANCEL;
+                                 break;
+                             case DConnectEventErrorInvalidParameter: // Invalid Parameter.
+                                 [response setErrorToInvalidRequestParameter];
+                                 break;
+                             case DConnectEventErrorNotFound:         // Event not found.
+                             case DConnectEventErrorFailed:           // Failed process.
+                                 [response setErrorToUnknown];
+                                 break;
+                         }
+                         
+                         return YES;
+                     }];
+
+        // API登録(didReceiveDeleteOnTouchRequest相当)
+        NSString *deleteOnTouchRequestApiPath = [self apiPathWithProfile: self.profileName
+                                                           interfaceName: nil
+                                                           attributeName: DConnectTouchProfileAttrOnTouch];
+        [self addDeletePath: deleteOnTouchRequestApiPath
+                     api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+                         switch ([weakEventMgr removeEventForRequest:request]) {
+                             case DConnectEventErrorNone:             // No error.
+                                 [response setResult:DConnectMessageResultTypeOk];
+                                 mTouchEventManageFlag &= ~(FLAG_ON_TOUCH);
+                                 [weakSelf closeTouchView];
+                                 break;
+                             case DConnectEventErrorInvalidParameter: // Invalid Parameter.
+                                 [response setErrorToInvalidRequestParameter];
+                                 break;
+                             case DConnectEventErrorNotFound:         // Event not found.
+                             case DConnectEventErrorFailed:           // Failed process.
+                                 [response setErrorToUnknown];
+                                 break;
+                         }
+                         
+                         return YES;
+                     }];
+        
+        // API登録(didReceiveDeleteOnTouchStartRequest相当)
+        NSString *deleteOnTouchStartRequestApiPath = [self apiPathWithProfile: self.profileName
+                                                                interfaceName: nil
+                                                                attributeName: DConnectTouchProfileAttrOnTouchStart];
+        [self addDeletePath: deleteOnTouchStartRequestApiPath
+                        api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+                            switch ([weakEventMgr removeEventForRequest:request]) {
+                                case DConnectEventErrorNone:             // No error.
+                                    [response setResult:DConnectMessageResultTypeOk];
+                                    mTouchEventManageFlag &= ~(FLAG_ON_TOUCH_START);
+                                    [weakSelf closeTouchView];
+                                    break;
+                                case DConnectEventErrorInvalidParameter: // Invalid Parameter.
+                                    [response setErrorToInvalidRequestParameter];
+                                    break;
+                                case DConnectEventErrorNotFound:         // Event not found.
+                                case DConnectEventErrorFailed:           // Failed process.
+                                    [response setErrorToUnknown];
+                                    break;
+                            }
+                            
+                            return YES;
+                        }];
+        
+        // API登録(didReceiveDeleteOnTouchEndRequest相当)
+        NSString *deleteOnTouchEndRequestApiPath = [self apiPathWithProfile: self.profileName
+                                                              interfaceName: nil
+                                                              attributeName: DConnectTouchProfileAttrOnTouchEnd];
+        [self addDeletePath: deleteOnTouchEndRequestApiPath
+                        api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+                            switch ([weakEventMgr removeEventForRequest:request]) {
+                                case DConnectEventErrorNone:             // No error.
+                                    [response setResult:DConnectMessageResultTypeOk];
+                                    mTouchEventManageFlag &= ~(FLAG_ON_TOUCH_END);
+                                    [weakSelf closeTouchView];
+                                    break;
+                                case DConnectEventErrorInvalidParameter: // Invalid Parameter.
+                                    [response setErrorToInvalidRequestParameter];
+                                    break;
+                                case DConnectEventErrorNotFound:         // Event not found.
+                                case DConnectEventErrorFailed:           // Failed process.
+                                    [response setErrorToUnknown];
+                                    break;
+                            }
+                            
+                            return YES;
+                        }];
+        
+        // API登録(didReceiveDeleteOnDoubleTapRequest相当)
+        NSString *deleteOnDoubleTapRequestApiPath = [self apiPathWithProfile: self.profileName
+                                                               interfaceName: nil
+                                                               attributeName: DConnectTouchProfileAttrOnDoubleTap];
+        [self addDeletePath: deleteOnDoubleTapRequestApiPath
+                        api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+                            switch ([weakEventMgr removeEventForRequest:request]) {
+                                case DConnectEventErrorNone:             // No error.
+                                    [response setResult:DConnectMessageResultTypeOk];
+                                    mTouchEventManageFlag &= ~(FLAG_ON_DOUBLE_TAP);
+                                    [weakSelf closeTouchView];
+                                    break;
+                                case DConnectEventErrorInvalidParameter: // Invalid Parameter.
+                                    [response setErrorToInvalidRequestParameter];
+                                    break;
+                                case DConnectEventErrorNotFound:         // Event not found.
+                                case DConnectEventErrorFailed:           // Failed process.
+                                    [response setErrorToUnknown];
+                                    break;
+                            }
+                            
+                            return YES;
+                        }];
+        
+        // API登録(didReceiveDeleteOnTouchMoveRequest相当)
+        NSString *deleteOnTouchMoveRequestApiPath = [self apiPathWithProfile: self.profileName
+                                                               interfaceName: nil
+                                                               attributeName: DConnectTouchProfileAttrOnTouchMove];
+        [self addDeletePath: deleteOnTouchMoveRequestApiPath
+                        api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+                            switch ([weakEventMgr removeEventForRequest:request]) {
+                                case DConnectEventErrorNone:             // No error.
+                                    [response setResult:DConnectMessageResultTypeOk];
+                                    mTouchEventManageFlag &= ~(FLAG_ON_TOUCH_MOVE);
+                                    [weakSelf closeTouchView];
+                                    break;
+                                case DConnectEventErrorInvalidParameter: // Invalid Parameter.
+                                    [response setErrorToInvalidRequestParameter];
+                                    break;
+                                case DConnectEventErrorNotFound:         // Event not found.
+                                case DConnectEventErrorFailed:           // Failed process.
+                                    [response setErrorToUnknown];
+                                    break;
+                            }
+                            
+                            return YES;
+                        }];
+        
+        // API登録(didReceiveDeleteOnTouchCancelRequest相当)
+        NSString *deleteOnTouchCancelRequestApiPath = [self apiPathWithProfile: self.profileName
+                                                                 interfaceName: nil
+                                                                 attributeName: DConnectTouchProfileAttrOnTouchCancel];
+        [self addDeletePath: deleteOnTouchCancelRequestApiPath
+                        api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+                            switch ([weakEventMgr removeEventForRequest:request]) {
+                                case DConnectEventErrorNone:             // No error.
+                                    [response setResult:DConnectMessageResultTypeOk];
+                                    mTouchEventManageFlag &= ~(FLAG_ON_TOUCH_CANCEL);
+                                    [weakSelf closeTouchView];
+                                    break;
+                                case DConnectEventErrorInvalidParameter: // Invalid Parameter.
+                                    [response setErrorToInvalidRequestParameter];
+                                    break;
+                                case DConnectEventErrorNotFound:         // Event not found.
+                                case DConnectEventErrorFailed:           // Failed process.
+                                    [response setErrorToUnknown];
+                                    break;
+                            }
+                            
+                            return YES;
+                        }];
     }
     return self;
 }
@@ -257,373 +619,6 @@ static const long FLAG_ON_TOUCH_CANCEL = 0x00000020;
  */
 - (void) sendTouchEvent:(DConnectMessage *)eventMsg {
     [SELF_PLUGIN sendEvent:eventMsg];
-}
-
-#pragma mark - Get Methods
-// Receive get onTouch request.
-- (BOOL)            profile:(DConnectTouchProfile *)profile
-didReceiveGetOnTouchRequest:(DConnectRequestMessage *)request
-                   response:(DConnectResponseMessage *)response
-                  serviceId:(NSString *)serviceId
-{
-    DConnectMessage *touch = [self getTouchCache:DConnectTouchProfileAttrOnTouch];
-    [DConnectTouchProfile setTouch:touch target:response];
-    [response setResult:DConnectMessageResultTypeOk];
-    return YES;
-}
-
-// Receive get onTouchStart request.
-- (BOOL)                 profile:(DConnectTouchProfile *)profile
-didReceiveGetOnTouchStartRequest:(DConnectRequestMessage *)request
-                        response:(DConnectResponseMessage *)response
-                       serviceId:(NSString *)serviceId
-{
-    DConnectMessage *touch = [self getTouchCache:DConnectTouchProfileAttrOnTouchStart];
-    [DConnectTouchProfile setTouch:touch target:response];
-    [response setResult:DConnectMessageResultTypeOk];
-    return YES;
-}
-
-// Receive get onTouchEnd request.
-- (BOOL)               profile:(DConnectTouchProfile *)profile
-didReceiveGetOnTouchEndRequest:(DConnectRequestMessage *)request
-                      response:(DConnectResponseMessage *)response
-                     serviceId:(NSString *)serviceId
-{
-    DConnectMessage *touch = [self getTouchCache:DConnectTouchProfileAttrOnTouchEnd];
-    [DConnectTouchProfile setTouch:touch target:response];
-    [response setResult:DConnectMessageResultTypeOk];
-    return YES;
-}
-
-// Receive get onDoubleTap request.
-- (BOOL)                profile:(DConnectTouchProfile *)profile
-didReceiveGetOnDoubleTapRequest:(DConnectRequestMessage *)request
-                       response:(DConnectResponseMessage *)response
-                      serviceId:(NSString *)serviceId
-{
-    DConnectMessage *touch = [self getTouchCache:DConnectTouchProfileAttrOnDoubleTap];
-    [DConnectTouchProfile setTouch:touch target:response];
-    [response setResult:DConnectMessageResultTypeOk];
-    return YES;
-}
-
-// Receive get onTouchMove request.
-- (BOOL)                profile:(DConnectTouchProfile *)profile
-didReceiveGetOnTouchMoveRequest:(DConnectRequestMessage *)request
-                       response:(DConnectResponseMessage *)response
-                      serviceId:(NSString *)serviceId
-{
-    DConnectMessage *touch = [self getTouchCache:DConnectTouchProfileAttrOnTouchMove];
-    [DConnectTouchProfile setTouch:touch target:response];
-    [response setResult:DConnectMessageResultTypeOk];
-    return YES;
-}
-
-// Receive get onTouchCancel request.
-- (BOOL)                  profile:(DConnectTouchProfile *)profile
-didReceiveGetOnTouchCancelRequest:(DConnectRequestMessage *)request
-                         response:(DConnectResponseMessage *)response
-                        serviceId:(NSString *)serviceId
-{
-    DConnectMessage *touch = [self getTouchCache:DConnectTouchProfileAttrOnTouchCancel];
-    [DConnectTouchProfile setTouch:touch target:response];
-    [response setResult:DConnectMessageResultTypeOk];
-    return YES;
-}
-
-#pragma mark - Put Methods
-#pragma mark Event Registration
-
-- (BOOL)            profile:(DConnectTouchProfile *)profile
-didReceivePutOnTouchRequest:(DConnectRequestMessage *)request
-                   response:(DConnectResponseMessage *)response
-                  serviceId:(NSString *)serviceId
-                 sessionKey:(NSString *)sessionKey
-{
-    switch ([_eventMgr addEventForRequest:request]) {
-        case DConnectEventErrorNone:             // No error.
-            [response setResult:DConnectMessageResultTypeOk];
-            [self startTouchView];
-            mTouchEventManageFlag |= FLAG_ON_TOUCH;
-            break;
-        case DConnectEventErrorInvalidParameter: // Invalid Parameter.
-            [response setErrorToInvalidRequestParameter];
-            break;
-        case DConnectEventErrorNotFound:         // Event not found.
-        case DConnectEventErrorFailed:           // Failed process.
-            [response setErrorToUnknown];
-            break;
-    }
-    
-    return YES;
-}
-
-- (BOOL)                 profile:(DConnectTouchProfile *)profile
-didReceivePutOnTouchStartRequest:(DConnectRequestMessage *)request
-                        response:(DConnectResponseMessage *)response
-                       serviceId:(NSString *)serviceId
-                      sessionKey:(NSString *)sessionKey
-{
-    switch ([_eventMgr addEventForRequest:request]) {
-        case DConnectEventErrorNone:             // No error.
-            [response setResult:DConnectMessageResultTypeOk];
-            [self startTouchView];
-            mTouchEventManageFlag |= FLAG_ON_TOUCH_START;
-            break;
-        case DConnectEventErrorInvalidParameter: // Invalid Parameter.
-            [response setErrorToInvalidRequestParameter];
-            break;
-        case DConnectEventErrorNotFound:         // Event not found.
-        case DConnectEventErrorFailed:           // Failed process.
-            [response setErrorToUnknown];
-            break;
-    }
-    
-    return YES;
-}
-
-- (BOOL)            profile:(DConnectTouchProfile *)profile
-didReceivePutOnTouchEndRequest:(DConnectRequestMessage *)request
-                   response:(DConnectResponseMessage *)response
-                  serviceId:(NSString *)serviceId
-                 sessionKey:(NSString *)sessionKey
-{
-    switch ([_eventMgr addEventForRequest:request]) {
-        case DConnectEventErrorNone:             // No error.
-            [response setResult:DConnectMessageResultTypeOk];
-            [self startTouchView];
-            mTouchEventManageFlag |= FLAG_ON_TOUCH_END;
-            break;
-        case DConnectEventErrorInvalidParameter: // Invalid Parameter.
-            [response setErrorToInvalidRequestParameter];
-            break;
-        case DConnectEventErrorNotFound:         // Event not found.
-        case DConnectEventErrorFailed:           // Failed process.
-            [response setErrorToUnknown];
-            break;
-    }
-    
-    return YES;
-}
-
-- (BOOL)                profile:(DConnectTouchProfile *)profile
-didReceivePutOnDoubleTapRequest:(DConnectRequestMessage *)request
-                       response:(DConnectResponseMessage *)response
-                      serviceId:(NSString *)serviceId
-                     sessionKey:(NSString *)sessionKey
-{
-    switch ([_eventMgr addEventForRequest:request]) {
-        case DConnectEventErrorNone:             // No error.
-            [response setResult:DConnectMessageResultTypeOk];
-            [self startTouchView];
-            mTouchEventManageFlag |= FLAG_ON_DOUBLE_TAP;
-            break;
-        case DConnectEventErrorInvalidParameter: // Invalid Parameter.
-            [response setErrorToInvalidRequestParameter];
-            break;
-        case DConnectEventErrorNotFound:         // Event not found.
-        case DConnectEventErrorFailed:           // Failed process.
-            [response setErrorToUnknown];
-            break;
-    }
-    
-    return YES;
-}
-
-- (BOOL)                profile:(DConnectTouchProfile *)profile
-didReceivePutOnTouchMoveRequest:(DConnectRequestMessage *)request
-                       response:(DConnectResponseMessage *)response
-                      serviceId:(NSString *)serviceId
-                     sessionKey:(NSString *)sessionKey
-{
-    switch ([_eventMgr addEventForRequest:request]) {
-        case DConnectEventErrorNone:             // No error.
-            [response setResult:DConnectMessageResultTypeOk];
-            [self startTouchView];
-            mTouchEventManageFlag |= FLAG_ON_TOUCH_MOVE;
-            break;
-        case DConnectEventErrorInvalidParameter: // Invalid Parameter.
-            [response setErrorToInvalidRequestParameter];
-            break;
-        case DConnectEventErrorNotFound:         // Event not found.
-        case DConnectEventErrorFailed:           // Failed process.
-            [response setErrorToUnknown];
-            break;
-    }
-    
-    return YES;
-}
-
-- (BOOL)                  profile:(DConnectTouchProfile *)profile
-didReceivePutOnTouchCancelRequest:(DConnectRequestMessage *)request
-                         response:(DConnectResponseMessage *)response
-                        serviceId:(NSString *)serviceId
-                       sessionKey:(NSString *)sessionKey
-{
-    switch ([_eventMgr addEventForRequest:request]) {
-        case DConnectEventErrorNone:             // No error.
-            [response setResult:DConnectMessageResultTypeOk];
-            [self startTouchView];
-            mTouchEventManageFlag |= FLAG_ON_TOUCH_CANCEL;
-            break;
-        case DConnectEventErrorInvalidParameter: // Invalid Parameter.
-            [response setErrorToInvalidRequestParameter];
-            break;
-        case DConnectEventErrorNotFound:         // Event not found.
-        case DConnectEventErrorFailed:           // Failed process.
-            [response setErrorToUnknown];
-            break;
-    }
-    
-    return YES;
-}
-
-#pragma mark - Delete Methods
-#pragma mark Event Unregistration
-
-- (BOOL)               profile:(DConnectTouchProfile *)profile
-didReceiveDeleteOnTouchRequest:(DConnectRequestMessage *)request
-                      response:(DConnectResponseMessage *)response
-                     serviceId:(NSString *)serviceId
-                    sessionKey:(NSString *)sessionKey
-{
-    switch ([_eventMgr removeEventForRequest:request]) {
-        case DConnectEventErrorNone:             // No error.
-            [response setResult:DConnectMessageResultTypeOk];
-            mTouchEventManageFlag &= ~(FLAG_ON_TOUCH);
-            [self closeTouchView];
-            break;
-        case DConnectEventErrorInvalidParameter: // Invalid Parameter.
-            [response setErrorToInvalidRequestParameter];
-            break;
-        case DConnectEventErrorNotFound:         // Event not found.
-        case DConnectEventErrorFailed:           // Failed process.
-            [response setErrorToUnknown];
-            break;
-    }
-    
-    return YES;
-}
-
-- (BOOL)                    profile:(DConnectTouchProfile *)profile
-didReceiveDeleteOnTouchStartRequest:(DConnectRequestMessage *)request
-                           response:(DConnectResponseMessage *)response
-                          serviceId:(NSString *)serviceId
-                         sessionKey:(NSString *)sessionKey
-{
-    switch ([_eventMgr removeEventForRequest:request]) {
-        case DConnectEventErrorNone:             // No error.
-            [response setResult:DConnectMessageResultTypeOk];
-            mTouchEventManageFlag &= ~(FLAG_ON_TOUCH_START);
-            [self closeTouchView];
-            break;
-        case DConnectEventErrorInvalidParameter: // Invalid Parameter.
-            [response setErrorToInvalidRequestParameter];
-            break;
-        case DConnectEventErrorNotFound:         // Event not found.
-        case DConnectEventErrorFailed:           // Failed process.
-            [response setErrorToUnknown];
-            break;
-    }
-    
-    return YES;
-}
-
-- (BOOL)                  profile:(DConnectTouchProfile *)profile
-didReceiveDeleteOnTouchEndRequest:(DConnectRequestMessage *)request
-                         response:(DConnectResponseMessage *)response
-                        serviceId:(NSString *)serviceId
-                       sessionKey:(NSString *)sessionKey
-{
-    switch ([_eventMgr removeEventForRequest:request]) {
-        case DConnectEventErrorNone:             // No error.
-            [response setResult:DConnectMessageResultTypeOk];
-            mTouchEventManageFlag &= ~(FLAG_ON_TOUCH_END);
-            [self closeTouchView];
-            break;
-        case DConnectEventErrorInvalidParameter: // Invalid Parameter.
-            [response setErrorToInvalidRequestParameter];
-            break;
-        case DConnectEventErrorNotFound:         // Event not found.
-        case DConnectEventErrorFailed:           // Failed process.
-            [response setErrorToUnknown];
-            break;
-    }
-    
-    return YES;
-}
-
-- (BOOL)                   profile:(DConnectTouchProfile *)profile
-didReceiveDeleteOnDoubleTapRequest:(DConnectRequestMessage *)request
-                          response:(DConnectResponseMessage *)response
-                         serviceId:(NSString *)serviceId
-                        sessionKey:(NSString *)sessionKey
-{
-    switch ([_eventMgr removeEventForRequest:request]) {
-        case DConnectEventErrorNone:             // No error.
-            [response setResult:DConnectMessageResultTypeOk];
-            mTouchEventManageFlag &= ~(FLAG_ON_DOUBLE_TAP);
-            [self closeTouchView];
-            break;
-        case DConnectEventErrorInvalidParameter: // Invalid Parameter.
-            [response setErrorToInvalidRequestParameter];
-            break;
-        case DConnectEventErrorNotFound:         // Event not found.
-        case DConnectEventErrorFailed:           // Failed process.
-            [response setErrorToUnknown];
-            break;
-    }
-    
-    return YES;
-}
-
-- (BOOL)                   profile:(DConnectTouchProfile *)profile
-didReceiveDeleteOnTouchMoveRequest:(DConnectRequestMessage *)request
-                          response:(DConnectResponseMessage *)response
-                         serviceId:(NSString *)serviceId
-                        sessionKey:(NSString *)sessionKey
-{
-    switch ([_eventMgr removeEventForRequest:request]) {
-        case DConnectEventErrorNone:             // No error.
-            [response setResult:DConnectMessageResultTypeOk];
-            mTouchEventManageFlag &= ~(FLAG_ON_TOUCH_MOVE);
-            [self closeTouchView];
-            break;
-        case DConnectEventErrorInvalidParameter: // Invalid Parameter.
-            [response setErrorToInvalidRequestParameter];
-            break;
-        case DConnectEventErrorNotFound:         // Event not found.
-        case DConnectEventErrorFailed:           // Failed process.
-            [response setErrorToUnknown];
-            break;
-    }
-    
-    return YES;
-}
-
-- (BOOL)                     profile:(DConnectTouchProfile *)profile
-didReceiveDeleteOnTouchCancelRequest:(DConnectRequestMessage *)request
-                            response:(DConnectResponseMessage *)response
-                           serviceId:(NSString *)serviceId
-                          sessionKey:(NSString *)sessionKey
-{
-    switch ([_eventMgr removeEventForRequest:request]) {
-        case DConnectEventErrorNone:             // No error.
-            [response setResult:DConnectMessageResultTypeOk];
-            mTouchEventManageFlag &= ~(FLAG_ON_TOUCH_CANCEL);
-            [self closeTouchView];
-            break;
-        case DConnectEventErrorInvalidParameter: // Invalid Parameter.
-            [response setErrorToInvalidRequestParameter];
-            break;
-        case DConnectEventErrorNotFound:         // Event not found.
-        case DConnectEventErrorFailed:           // Failed process.
-            [response setErrorToUnknown];
-            break;
-    }
-    
-    return YES;
 }
 
 @end
