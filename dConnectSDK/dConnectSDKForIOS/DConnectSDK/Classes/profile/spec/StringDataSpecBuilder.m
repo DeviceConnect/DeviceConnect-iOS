@@ -12,9 +12,9 @@
 @implementation StringDataSpecBuilder
 
 - (instancetype) init {
-    self = [[super alloc] init];
+    self = [super init];
     if (self) {
-        [paramSpec setFormat: TEXT];
+        [self setFormat: TEXT];
     }
     return self;
 }

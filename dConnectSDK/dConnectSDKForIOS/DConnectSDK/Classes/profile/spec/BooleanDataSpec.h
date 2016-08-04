@@ -12,16 +12,8 @@
 
 @interface BooleanDataSpec : DConnectDataSpec
 
+#pragma mark - Abstruct Methods Implement.
+
 - (BOOL) validate: (id) obj;
-
-- (NSString *) name;
-
-- (BOOL) isMandatory;
-
-- (void) setName: (NSString *) name;
-
-- (void) setIsMandatory: (BOOL) isMandatory ;
-
-- (NSDictionary *) toDictionary;
 
 @end

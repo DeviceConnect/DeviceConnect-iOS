@@ -2,8 +2,9 @@
 //  DConnectSpecConstants.m
 //  DConnectSDK
 //
-//  Created by Mitsuhiro Suzuki on 2016/07/30.
-//  Copyright © 2016年 NTT DOCOMO, INC. All rights reserved.
+//  Copyright (c) 2016 NTT DOCOMO,INC.
+//  Released under the MIT license
+//  http://opensource.org/licenses/mit-license.php
 //
 
 #import "DConnectSpecConstants.h"
@@ -47,7 +48,8 @@ NSString * const DConnectSpecBoolTrue = @"true";
     NSString *strTypeLow = [strType lowercaseString];
     
     int i = 0;
-    for (NSString *strType in DConnectSpecTypes) {
+    NSArray *strTypes = DConnectSpecTypes();
+    for (NSString *strType in strTypes) {
         if ([strTypeLow isEqualToString: [strType lowercaseString]]) {
             return (DConnectSpecType)i;
         }
@@ -57,8 +59,11 @@ NSString * const DConnectSpecBoolTrue = @"true";
 }
 
 + (NSString *) toTypeString: (DConnectSpecType)type {
+    
+    NSArray *types = DConnectSpecTypes();
+    
     int index = (int)type;
-    if (index <= 0 && index < [DConnectSpecTypes count]) {
+    if (index <= 0 && index < [types count]) {
         return DConnectSpecTypes()[index];
     }
     
@@ -67,10 +72,12 @@ NSString * const DConnectSpecBoolTrue = @"true";
 
 + (DConnectSpecMethod) parseMethod: (NSString *)strMethod {
     
+    NSArray *methods = DConnectSpecMethods();
+    
     NSString *strMethodLow = [strMethod lowercaseString];
     
     int i = 0;
-    for (NSString *strMethod in DConnectSpecMethods) {
+    for (NSString *strMethod in methods) {
         if ([strMethodLow isEqualToString: [strMethod lowercaseString]]) {
             return (DConnectSpecMethod)i;
         }
@@ -80,9 +87,12 @@ NSString * const DConnectSpecBoolTrue = @"true";
 }
     
 + (NSString *) toMethodString: (DConnectSpecMethod)method {
+    
+    NSArray *methods = DConnectSpecMethods();
+    
     int index = (int)method;
-    if (index <= 0 && index < [DConnectSpecMethods count]) {
-        return DConnectSpecMethods()[index];
+    if (index <= 0 && index < [methods count]) {
+        return methods[index];
     }
     
     @throw @"invalid method";
@@ -107,11 +117,13 @@ NSString * const DConnectSpecBoolTrue = @"true";
     
 + (DConnectSpecDataType) parseDataType: (NSString *)strDataType {
     
+    NSArray *dataTypes = DConnectSpecDataTypes();
+    
     NSString *strDataTypeLow = [strDataType lowercaseString];
     
     int i = 0;
-    for (NSString *strDataType in DConnectSpecDataTypes) {
-        if ([strDataTypeLow isEqualToString: [strDataType lowercaseString]]) {
+    for (NSString *dataType in dataTypes) {
+        if ([strDataTypeLow isEqualToString: [dataType lowercaseString]]) {
             return (DConnectSpecDataType)i;
         }
         i ++;
@@ -120,9 +132,10 @@ NSString * const DConnectSpecBoolTrue = @"true";
 }
     
 + (NSString *) toDataTypeString: (DConnectSpecDataType)dataType {
+    NSArray *types = DConnectSpecDataTypes();
     int index = (int)dataType;
-    if (index <= 0 && index < [DConnectSpecDataTypes count]) {
-        return DConnectSpecDataTypes()[index];
+    if (index <= 0 && index < [types count]) {
+        return types[index];
     }
     
     @throw @"invalid dataType";
@@ -130,10 +143,12 @@ NSString * const DConnectSpecBoolTrue = @"true";
 
 + (DConnectSpecDataFormat) parseDataFormat: (NSString *)strDataFormat {
     
+    NSArray *dataFormats = DConnectSpecDataFormats();
+    
     NSString *strDataFormatLow = [strDataFormat lowercaseString];
     
     int i = 0;
-    for (NSString *strDataFormat in DConnectSpecDataFormats) {
+    for (NSString *strDataFormat in dataFormats) {
         if ([strDataFormatLow isEqualToString: [strDataFormat lowercaseString]]) {
             return (DConnectSpecDataFormat)i;
         }
@@ -143,9 +158,10 @@ NSString * const DConnectSpecBoolTrue = @"true";
 }
 
 + (NSString *) toDataFormatString: (DConnectSpecDataFormat)dataFormat {
+    NSArray *dataFormats = DConnectSpecDataFormats();
     int index = (int)dataFormat;
-    if (index <= 0 && index < [DConnectSpecDataFormats count]) {
-        return DConnectSpecDataFormats()[index];
+    if (index <= 0 && index < [dataFormats count]) {
+        return dataFormats[index];
     }
     
     @throw @"invalid dataFormat";
@@ -154,14 +170,14 @@ NSString * const DConnectSpecBoolTrue = @"true";
     
 + (BOOL) parseBool: (NSString *)strBool {
     
-    NSArray *dConnectSpecBools = DConnectSpecBools();
-    BOOL dConnectSpecBoolValues[] = DConnectSpecBoolValues();
+    NSArray *bools = DConnectSpecBools();
+    BOOL boolValues[] = DConnectSpecBoolValues();
     
     NSString *strBoolLow = [strBool lowercaseString];
     int i = 0;
-    for (NSString *strBool in dConnectSpecBools) {
+    for (NSString *strBool in bools) {
         if ([strBoolLow isEqualToString: [strBool lowercaseString]]) {
-            return dConnectSpecBoolValues[i];
+            return boolValues[i];
         }
         i ++;
     }
@@ -170,12 +186,13 @@ NSString * const DConnectSpecBoolTrue = @"true";
     
 + (NSString *) toBoolString: (BOOL)boolValue {
     
-    BOOL dConnectSpecBoolValues[] = DConnectSpecBoolValues();
+    NSArray *bools = DConnectSpecBools();
+    BOOL boolValues[] = DConnectSpecBoolValues();
     
-    int count = [DConnectSpecBools count];
+    int count = [bools count];
     for (int i = 0; i < count; i ++) {
-        if (dConnectSpecBoolValues[i] == boolValue) {
-            return DConnectSpecBools[i];
+        if (boolValues[i] == boolValue) {
+            return bools[i];
         }
     }
     

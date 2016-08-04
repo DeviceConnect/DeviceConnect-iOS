@@ -2,8 +2,9 @@
 //  NumberDataSpecBuilder.m
 //  DConnectSDK
 //
-//  Created by Mitsuhiro Suzuki on 2016/08/02.
-//  Copyright © 2016年 NTT DOCOMO, INC. All rights reserved.
+//  Copyright (c) 2016 NTT DOCOMO,INC.
+//  Released under the MIT license
+//  http://opensource.org/licenses/mit-license.php
 //
 
 #import "NumberDataSpecBuilder.h"
@@ -21,7 +22,7 @@
 
 - (NumberDataSpec *) build {
     
-    NumberDataSpec *spec = [NumberDataSpec initWithDataFormat: [self dataFormat]];
+    NumberDataSpec *spec = [[NumberDataSpec alloc] initWithDataFormat: [self dataFormat]];
     [spec setMaximum: [self maximum]];
     [spec setExclusiveMaximum: [self exclusiveMaximum]];
     [spec setMinimum: [self minimum]];

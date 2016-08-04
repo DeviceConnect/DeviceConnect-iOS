@@ -2,8 +2,9 @@
 //  IntegerParameterSpecBuilder.m
 //  DConnectSDK
 //
-//  Created by Mitsuhiro Suzuki on 2016/08/02.
-//  Copyright © 2016年 NTT DOCOMO, INC. All rights reserved.
+//  Copyright (c) 2016 NTT DOCOMO,INC.
+//  Released under the MIT license
+//  http://opensource.org/licenses/mit-license.php
 //
 
 #import "IntegerParameterSpecBuilder.h"
@@ -14,20 +15,24 @@
     
     self = [super init];
     if (self) {
-        [self setFormat: INT32];
+        [self setDataFormat: INT32];
     }
     return self;
 }
 
 - (IntegerParameterSpec *) build {
     
-    IntegerParameterSpec *spec = [[IntegerParameterSpec alloc] initWithDataFormat: [self format]];
+    IntegerParameterSpec *spec = [[IntegerParameterSpec alloc] initWithDataFormat: [self dataFormat]];
     [spec setName: [self name]];
-    [spec setRequired: [self isRequired]];
+    [spec setIsRequired: [self isRequired]];
     [spec setEnumList: [self enumList]];
-    [spec setMaximum: [self maximum]];
+    if ([self maximum]) {
+        [spec setMaximum: [[self maximum] longValue]];
+    }
     [spec setExclusiveMaximum: [self exclusiveMaximum]];
-    [spec setMinimum: [self minimum]];
+    if ([self minimum]) {
+        [spec setMinimum: [[self minimum] longValue]];
+    }
     [spec setExclusiveMinimum: [self exclusiveMinimum]];
     return spec;
 }

@@ -1,5 +1,5 @@
 //
-//  NumberRequestParamSpecBuilder.m
+//  NumberParameterSpecBuilder.m
 //  DConnectSDK
 //
 //  Copyright (c) 2016 NTT DOCOMO,INC.
@@ -8,6 +8,7 @@
 //
 
 #import "NumberParameterSpecBuilder.h"
+#import "NumberParameterSpec.h"
 
 @implementation NumberParameterSpecBuilder
 
@@ -15,22 +16,27 @@
     
     self = [super init];
     if (self) {
-        [self setFormat: NUMBER];
+        [self setFormat: FLOAT];
     }
     return self;
 }
 
-- (NumberDataSpec *) build {
+- (NumberParameterSpec *) build {
+    
     NumberParameterSpec *spec = [[NumberParameterSpec alloc] initWithDataFormat: [self format]];
     
-    [paramSpec setName: [self name]];
-    [paramSpec setRequired: [self isRequired]];
-    [paramSpec setMaximum: [self maximum]];
-    [paramSpec setExclusiveMaximum: [self exclusiveMaximum]];
-    [paramSpec setMinimum: [self minimum]];
-    [paramSpec setExclusiveMinimum: [self exclusiveMinimum]];
+    [spec setName: [self name]];
+    [spec setIsRequired: [self isRequired]];
+    if ([self maximum]) {
+        [spec setMaximum: [[self maximum] doubleValue]];
+    }
+    [spec setExclusiveMaximum: [self exclusiveMaximum]];
+    if ([self minimum]) {
+        [spec setMinimum: [[self minimum] doubleValue]];
+    }
+    [spec setExclusiveMinimum: [self exclusiveMinimum]];
 
-    return paramSpec;
+    return spec;
 }
 
 @end

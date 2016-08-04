@@ -6,14 +6,6 @@
 //  Released under the MIT license
 //  http://opensource.org/licenses/mit-license.php
 //
-//
-//  DConnectServiceInformationProfile.h
-//  dConnectManager
-//
-//  Copyright (c) 2014 NTT DOCOMO,INC.
-//  Released under the MIT license
-//  http://opensource.org/licenses/mit-license.php
-//
 
 /*!
  @file
@@ -220,7 +212,7 @@ typedef NS_ENUM(NSInteger, DConnectServiceInformationProfileConnectState) {
  
  @retval DConnectServiceInformationProfileインスタンス。
  */
-- (instancetype) initWithProvider: (id<DConnectProfileProvider>) provider;
+- (instancetype) initWithProvider: (id) provider;
 
 #pragma mark - Setter
 

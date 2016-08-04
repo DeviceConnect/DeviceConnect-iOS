@@ -2,8 +2,9 @@
 //  IntegerParameterSpecBuilder.h
 //  DConnectSDK
 //
-//  Created by Mitsuhiro Suzuki on 2016/08/02.
-//  Copyright © 2016年 NTT DOCOMO, INC. All rights reserved.
+//  Copyright (c) 2016 NTT DOCOMO,INC.
+//  Released under the MIT license
+//  http://opensource.org/licenses/mit-license.php
 //
 
 #import "DConnectParameterSpecBaseBuilder.h"
@@ -17,7 +18,7 @@
 @property(nonatomic, strong) NSNumber *minimum;     // long値
 @property(nonatomic) BOOL exclusiveMaximum;
 @property(nonatomic) BOOL exclusiveMinimum;
-@property(nonatomic, strong) NSArray *mEnumList;    // NSNumber(long値)の配列
+@property(nonatomic, strong) NSArray *enumList;     // NSNumber(long値)の配列
 
 - (IntegerParameterSpec *) build;
 

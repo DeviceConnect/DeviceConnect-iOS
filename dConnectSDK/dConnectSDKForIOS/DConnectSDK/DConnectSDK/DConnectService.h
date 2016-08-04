@@ -11,27 +11,23 @@
 #import <DConnectSDK/DConnectServiceProvider.h>
 #import <DConnectSDK/DConnectProfileProvider.h>
 
-@interface DConnectService : NSObject<DConnectProfileProvider>
+@interface DConnectService : DConnectProfileProvider
+
+/*!
+ @brief サービスID.
+ */
+@property(nonatomic, strong) NSString *serviceId;
+
+@property(nonatomic, strong) NSString *name;
+
+@property(nonatomic, strong) NSString *networkType;
+
+@property(nonatomic) BOOL isOnline;
+
+@property(nonatomic, strong) NSString *config;
+
 
 - (instancetype) initWithServiceId: (NSString *)serviceId;
-
-- (NSString *) serviceId;
-
-- (void) setName: (NSString *)name;
-
-- (NSString *) name;
-
-- (void) setNetworkType: (NSString *) type;
-
-- (NSString *) networkType;
-
-- (void) setOnline: (BOOL) isOnline;
-
-- (BOOL) isOnline;
-
-- (NSString *) config;
-
-- (void) setConfig: (NSString *) config;
 
 - (BOOL) onRequest: request response: response;
 

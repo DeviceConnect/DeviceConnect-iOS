@@ -16,7 +16,7 @@
 @interface DPAllJoynServiceInformationProfile ()
 <DConnectServiceInformationProfileDelegate> {
 @private
-    id<DConnectProfileProvider> _provider;
+    id _provider;
     DPAllJoynHandler *_handler;
     NSString *_version;
 }
@@ -25,7 +25,7 @@
 
 @implementation DPAllJoynServiceInformationProfile
 
-- (instancetype)initWithProvider:(id<DConnectProfileProvider>)provider
+- (instancetype)initWithProvider:(id)provider
                          handler:(DPAllJoynHandler *)handler
                          version:(NSString *)version
 {

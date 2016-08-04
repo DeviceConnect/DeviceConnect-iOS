@@ -2,24 +2,19 @@
 //  ArrayDataSpec.m
 //  DConnectSDK
 //
-//  Created by Mitsuhiro Suzuki on 2016/07/30.
-//  Copyright © 2016年 NTT DOCOMO, INC. All rights reserved.
+//  Copyright (c) 2016 NTT DOCOMO,INC.
+//  Released under the MIT license
+//  http://opensource.org/licenses/mit-license.php
 //
 
 #import "ArrayDataSpec.h"
 
 
-@interface ArrayDataSpec()
-
-@property(nonatomic, strong) DConnectDataSpec *itemsSpec;
-
-@end
-
 @implementation ArrayDataSpec
 
-- (instancetype) initWithDataSpec: (DConnectDataSpec *) itemsSpec {
+- (instancetype) initWithItemsSpec: (DConnectDataSpec *) itemsSpec {
     
-    self = [super initWithType: DConnectSpecDataTypeArray];
+    self = [super initWithDataType: ARRAY];
     if (self) {
         [self setItemsSpec: itemsSpec];
     }
@@ -40,33 +35,25 @@
     if (!obj) {
         return YES;
     }
-    NSString *arrayParam = [obj.toString();
-    if (arrayParam.equals("")) { // TODO allowEmptyValueに対応
-        return true;
+    
+    NSString *arrayParam = nil;
+    if ([obj isKindOfClass: [NSString class]]) {
+        arrayParam = (NSString *)obj;
+    } else {
+        return YES;
     }
-    String[] items = arrayParam.split(","); // TODO csv以外の形式に対応
-    for (String item : items) {
-        if (!mItemsSpec.validate(item)) {
-            return false;
+    
+    if ([arrayParam isEqualToString: @""]) { // TODO allowEmptyValueに対応
+        return YES;
+    }
+    
+    NSArray *items = [arrayParam componentsSeparatedByString:@","]; // TODO csv以外の形式に対応
+    for (NSString *item in items) {
+        if (![[self itemsSpec] validate: item]) {
+            return NO;
         }
     }
     return YES;
-
-    /*-----*/
-    if (obj == null) {
-        return true;
-    }
-    String arrayParam = obj.toString();
-    if (arrayParam.equals("")) { // TODO allowEmptyValueに対応
-        return true;
-    }
-    String[] items = arrayParam.split(","); // TODO csv以外の形式に対応
-    for (String item : items) {
-        if (!mItemsSpec.validate(item)) {
-            return false;
-        }
-    }
-    return true;
 }
 
 @end

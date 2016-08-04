@@ -11,9 +11,9 @@
 
 @implementation IntegerDataSpec
 
-- (instancetype)initWithFormat: (IntegerRequestParamSpecFormat) format
+- (instancetype)initWithFormat: (DConnectSpecDataFormat) format
 {
-    self = [super initWithType: INTEGER];
+    self = [super initWithDataType: INTEGER];
     if (self) {
         // 初期値設定
         [self setFormat: format];
@@ -62,7 +62,7 @@
         }
         return [self validateRange: l];
     } if ([param isKindOfClass: [NSNumber class]]) {
-        NSNumber *numParam = (NSString *)param;
+        NSNumber *numParam = (NSNumber *) param;
         long long l = [numParam longLongValue];
         if (!(INT32_MIN <= l && l <= INT32_MAX)) {
             return NO;
@@ -85,7 +85,7 @@
         }
         return [self validateRange: l];
     } if ([param isKindOfClass: [NSNumber class]]) {
-        NSNumber *numParam = (NSString *)param;
+        NSNumber *numParam = (NSNumber *) param;
         long long l = [numParam longLongValue];
         if (!(INT64_MIN <= l && l <= INT64_MAX)) {
             return NO;
@@ -110,10 +110,10 @@
     } else {
         BOOL isValid = YES;
         if ([self maximum]) {
-            isValid &=  [self exclusiveMaximum] ? ([self maximum] > value) : ([self maximum] >= value);
+            isValid &= [self exclusiveMaximum] ? ([[self maximum] longValue] > value) : ([[self maximum] longValue] >= value);
         }
         if ([self minimum]) {
-            isValid &= [self exclusiveMinimum] ? ([self minimum] < value) : ([self minimum] <= value);
+            isValid &= [self exclusiveMinimum] ? ([[self minimum] longValue] < value) : ([[self minimum] longValue] <= value);
         }
         return isValid;
     }

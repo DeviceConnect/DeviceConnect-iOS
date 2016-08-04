@@ -2,17 +2,21 @@
 //  StringParameterSpec.m
 //  DConnectSDK
 //
-//  Created by Mitsuhiro Suzuki on 2016/08/02.
-//  Copyright © 2016年 NTT DOCOMO, INC. All rights reserved.
+//  Copyright (c) 2016 NTT DOCOMO,INC.
+//  Released under the MIT license
+//  http://opensource.org/licenses/mit-license.php
 //
 
 #import "StringParameterSpec.h"
+#import "StringDataSpec.h"
+#import "DConnectDataSpec.h"
 
 @implementation StringParameterSpec
 
 - (instancetype) initWithDataFormat:(DConnectSpecDataFormat)dataFormat {
 
-    self = [super initWitDataSpec: [[StringDataSpec alloc] initWitDataFormat: dataFormat]];
+    StringDataSpec *stringDataSpec = [[StringDataSpec alloc] initWitDataFormat: dataFormat];
+    self = [super initWithDataSpec: stringDataSpec];
     return self;
 }
 
@@ -21,7 +25,7 @@
  @return データのフォーマット指定
  */
 - (DConnectSpecDataFormat) format {
-    return [[self stringDataSpec] format];
+    return [[self stringDataSpec] dataFormat];
 }
 
 /*!
@@ -29,7 +33,7 @@
  @return 文字列の最大長
  */
 - (int) maxLength {
-    return [[self stringDataSpec] maxLength];
+    return [[[self stringDataSpec] maxLength] intValue];
 }
 
 /*!
@@ -37,7 +41,7 @@
  @param maxLength 文字列の最大長
  */
 - (void) setMaxLength: (int) maxLength {
-    [[self stringDataSpec] setMaxLength: maxLength];
+    [[self stringDataSpec] setMaxLength: [NSNumber numberWithInt: maxLength]];
 }
 
 /*!
@@ -45,7 +49,7 @@
  @return 文字列の最小長
  */
 - (int) minLength {
-    return [[self stringDataSpec] minLength];
+    return [[[self stringDataSpec] minLength] intValue];
 }
 
 /*!
@@ -53,7 +57,7 @@
  @param minLength 文字列の最小長
  */
 - (void) setMinLength: (int) minLength {
-    [[self stringDataSpec] setMinLength: minLength];
+    [[self stringDataSpec] setMinLength: [NSNumber numberWithInt: minLength]];
 }
 
 /*!
@@ -75,6 +79,7 @@
 #pragma mark - Private Methods.
 
 - (StringDataSpec *) stringDataSpec {
+
     return (StringDataSpec *)[self dataSpec];
 }
 

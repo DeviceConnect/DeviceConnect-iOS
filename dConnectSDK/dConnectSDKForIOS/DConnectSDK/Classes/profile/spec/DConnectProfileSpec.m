@@ -12,10 +12,8 @@
 
 @implementation DConnectProfileSpec
 
-// List<DConnectApiSpec>
 - (NSArray *) apiSpecList {
 
-    // List<DConnectApiSpec>
     NSMutableArray *list = [NSMutableArray array];
     if (![self apiSpecs]) {
         return list;
@@ -29,21 +27,21 @@
     return list;
 }
 
-// Map<Method, DConnectApiSpec>
 -(NSDictionary *) findApiSpecs: (NSString *) path {
     if (!path) {
         @throw @"path is null.";
     }
     
-    return [self apiSpecs][[path lowercaseString]];
+    
+    return [self apiSpecs][[path lowercaseString]];     // Map<Method, DConnectApiSpec>
 }
 
 - (DConnectApiSpec *) findApiSpec: (NSString *)path method: (DConnectSpecMethod) method {
     if (!method) {
         @throw @"method is null.";
     }
-    // Map<Method, DConnectApiSpec> apiSpecsOfPath
-    NSDictionary *apiSpecsOfPath = [self findApiSpecs: path];
+    
+    NSDictionary *apiSpecsOfPath = [self findApiSpecs: path];   // Map<Method, DConnectApiSpec> apiSpecsOfPath
     if (!apiSpecsOfPath) {
         return nil;
     }
@@ -51,7 +49,6 @@
     return apiSpecsOfPath[strMethod];
 }
 
-// Map<Method, DConnectApiSpec>
 - (NSDictionary *) toBundle {
     return [self bundle];
 }

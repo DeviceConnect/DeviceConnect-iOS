@@ -2,8 +2,9 @@
 //  StringParameterSpecBuilder.m
 //  DConnectSDK
 //
-//  Created by Mitsuhiro Suzuki on 2016/08/03.
-//  Copyright © 2016年 NTT DOCOMO, INC. All rights reserved.
+//  Copyright (c) 2016 NTT DOCOMO,INC.
+//  Released under the MIT license
+//  http://opensource.org/licenses/mit-license.php
 //
 
 #import "StringParameterSpecBuilder.h"
@@ -15,16 +16,16 @@
     
     self = [super init];
     if (self) {
-        [self setFormat: TEXT];
+        [self setDataFormat: TEXT];
     }
     return self;
 }
 
 - (StringParameterSpec *) build {
     
-    StringParameterSpec *spec = [[StringParameterSpec alloc] initWithDataFormat: [self format]];
+    StringParameterSpec *spec = [[StringParameterSpec alloc] initWithDataFormat: [self dataFormat]];
     [spec setName: [self name]];
-    [spec setRequired: [self isRequired]];
+    [spec setIsRequired: [self isRequired]];
     if ([self enumList]) {
         [spec setEnumList: [self enumList]];
     } else {

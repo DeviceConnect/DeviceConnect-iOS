@@ -10,9 +10,7 @@
 #import "DConnectServiceInformationProfile.h"
 #import "DConnectProfileProvider.h"
 #import <DConnectSDK/DConnectProfile.h>
-//#import <DConnectSDK/DConnectProfileSpec.h>
 #import "DConnectProfileSpec.h"
-#import "DConnectApiSpecFilter.h"
 #import "DConnectSpecConstants.h"
 
 NSString *const DConnectServiceInformationProfileName = @"serviceinformation";
@@ -37,11 +35,11 @@ static NSString *const KEY_PATHS = @"paths";
 
 @implementation DConnectServiceInformationProfile
 
-- (instancetype) initWithProvider: (id<DConnectProfileProvider>) provider {
+- (instancetype) initWithProvider: (id) provider {
     self = [super initWithProvider: provider];
     if (self) {
         __weak id blockSelf = self;
-        __weak id<DConnectProfileProvider> blockProvider = self.provider;
+        __weak id blockProvider = self.provider;
         __weak id<DConnectServiceInformationProfileDataSource> blockDataSource = _dataSource;
         
         NSString *getInformationApiPath = [self apiPathWithProfile: self.profileName
@@ -198,7 +196,8 @@ static NSString *const KEY_PATHS = @"paths";
         if (!pathObj) {
             continue;
         }
-        for (NSString * strMethod in DConnectSpecMethods) {
+        NSArray *strMethods = DConnectSpecMethods();
+        for (NSString * strMethod in strMethods) {
             NSString *strMethodName = [strMethod lowercaseString];
             NSMutableDictionary *methodObj = pathObj[strMethodName];
             if (!methodObj) {

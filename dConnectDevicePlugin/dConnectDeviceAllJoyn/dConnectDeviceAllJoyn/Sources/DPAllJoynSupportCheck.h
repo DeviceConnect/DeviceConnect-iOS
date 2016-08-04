@@ -29,7 +29,7 @@
  Returns names of Device Connect profiles that can be implemented using a
  specified AllJoyn service.
  */
-+ (NSArray *)supportedProfileNamesWithProvider:(id<DConnectProfileProvider>)provider
++ (NSArray *)supportedProfileNamesWithProvider:(id)provider
                                        service:(DPAllJoynServiceEntity *)service;
 /*!
  @retval YES AllJoyn interfaces are supported in the AllJoyn service.

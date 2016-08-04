@@ -16,23 +16,24 @@
     self = [super init];
     
     if (self) {
-        [self setName: nil];
-        [self setMethod: GET];
         [self setType: ONESHOT];
-        [self setPath: nil];
-        [self setRequestParamSpecList: nil];
+        [self setMethod: GET];
+        [self setParamList: [NSArray array]];        // List<DConnectParameterSpec>
     }
     
     return self;
 }
+
 - (DConnectApiSpec *) build {
-    DConnectApiSpec *apiSpec = [[DConnectApiSpec alloc] init];
-    [apiSpec setName: [self name]];
-    [apiSpec setType: [self type]];
-    [apiSpec setMethod: [self method]];
-    [apiSpec setPath: [self path]];
-    [apiSpec setRequestParamSpecList: [self requestParamSpecList]];
-    return apiSpec;
+
+    NSArray *deepCopyParamList =[[NSArray alloc] initWithArray: [self paramList] copyItems: YES];
+    
+    DConnectApiSpec *spec = [[DConnectApiSpec alloc] init];
+    [spec setType: [self type]];
+    [spec setMethod: [self method]];
+    [spec setRequestParamSpecList: deepCopyParamList];
+    
+    return spec;
 }
 
 @end

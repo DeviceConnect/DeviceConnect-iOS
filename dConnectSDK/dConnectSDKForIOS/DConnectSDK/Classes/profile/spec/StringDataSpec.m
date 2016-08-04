@@ -16,10 +16,10 @@ static NSString * RGB_PATTERN = @"[0-9a-zA-Z]{%d}";
 
 - (instancetype)initWitDataFormat: (DConnectSpecDataFormat) dataFormat {
     
-    self = [super initWithType: STRING];
+    self = [super initWithDataType: STRING];
     if (self) {
         // 初期値設定
-        [self setFormat: dataFormat];
+        [self setDataFormat: dataFormat];
         [self setMaxLength: nil];
         [self setMinLength: nil];
         [self setEnumList: nil];
@@ -38,7 +38,7 @@ static NSString * RGB_PATTERN = @"[0-9a-zA-Z]{%d}";
         return NO;
     }
     NSString *param = (NSString *) obj;
-    switch([self format]) {
+    switch([self dataFormat]) {
         case TEXT:
             return [self validateLength: param];
         case BYTE:
@@ -57,7 +57,7 @@ static NSString * RGB_PATTERN = @"[0-9a-zA-Z]{%d}";
                 return NO;
             }
         default:
-            @throw [NSString stringWithFormat: @"Illegal state exception. format: %d", (int)[self format]];
+            @throw [NSString stringWithFormat: @"Illegal state exception. format: %d", (int)[self dataFormat]];
     }
     return NO;
 }

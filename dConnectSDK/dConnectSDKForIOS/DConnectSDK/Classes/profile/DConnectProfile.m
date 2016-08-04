@@ -10,7 +10,6 @@
 #import "DConnectProfile.h"
 #import "DConnectManager.h"
 #import "LocalOAuth2Settings.h"
-#import "ApiIdentifier.h"
 #import <DConnectSDK/DConnectApiSpecList.h>
 #import <DConnectSDK/DConnectApiSpec.h>
 #import "DConnectProfileSpec.h"
@@ -37,7 +36,7 @@
     return self;
 }
 
-- (instancetype) initWithProvider:(id<DConnectProfileProvider>) provider {
+- (instancetype) initWithProvider:(id) provider {
     self = [super init];
     if (self) {
         [self setProvider: provider];
@@ -54,7 +53,7 @@
 
 
 
-- (NSString *) apiPathWithProfile : (NSString *) profileName : (NSString *) interfaceName attributeName:(NSString *) attributeName {
+- (NSString *) apiPathWithProfile : (NSString *) profileName interfaceName: (NSString *) interfaceName attributeName:(NSString *) attributeName {
     
     NSMutableString *path = [NSMutableString string];
     [path appendString: @"/"];

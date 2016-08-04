@@ -33,7 +33,7 @@
 
 
 - (IntegerDataSpec *) build {
-    IntegerDataSpec *paramSpec = [[IntegerRequestParamSpec alloc] initWithFormat: [self format]];
+    IntegerDataSpec *paramSpec = [[IntegerDataSpec alloc] initWithFormat: [self format]];
     [paramSpec setEnumList: [self enumList]];
     [paramSpec setMaximum: [self maximum]];
     [paramSpec setMinimum: [self minimum]];

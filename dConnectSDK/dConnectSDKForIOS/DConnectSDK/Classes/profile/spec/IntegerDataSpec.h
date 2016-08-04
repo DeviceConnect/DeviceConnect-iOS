@@ -13,9 +13,9 @@
 @interface IntegerDataSpec : DConnectDataSpec
 
 @property (nonatomic) DConnectSpecDataFormat format;
-@property (nonatomic, strong) NSNumber *maxmum;         // long値を格納
+@property (nonatomic, strong) NSNumber *maximum;        // long値を格納
 @property (nonatomic, strong) NSNumber *minimum;        // long値を格納
-@property (nonatomic) BOOL exclusiveMaxmum;
+@property (nonatomic) BOOL exclusiveMaximum;
 @property (nonatomic) BOOL exclusiveMinimum;
 @property (nonatomic, strong) NSArray *enumList;        // NSNumber(long)値の配列
 

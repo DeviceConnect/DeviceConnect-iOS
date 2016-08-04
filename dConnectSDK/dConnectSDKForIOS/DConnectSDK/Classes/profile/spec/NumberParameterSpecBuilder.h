@@ -8,7 +8,7 @@
 //
 
 #import "DConnectParameterSpecBaseBuilder.h"
-#import "NumberDataSpec.h"
+#import "NumberParameterSpec.h"
 
 @interface NumberParameterSpecBuilder : DConnectParameterSpecBaseBuilder
 
@@ -22,6 +22,5 @@
 
 @property(nonatomic) BOOL exclusiveMinimum;
 
-- (NumberDataSpec *)build;
-
+- (NumberParameterSpec *) build;
 @end

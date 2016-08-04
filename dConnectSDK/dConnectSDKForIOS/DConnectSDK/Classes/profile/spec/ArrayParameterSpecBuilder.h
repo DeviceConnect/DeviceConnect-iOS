@@ -2,8 +2,9 @@
 //  ArrayParameterSpecBuilder.h
 //  DConnectSDK
 //
-//  Created by Mitsuhiro Suzuki on 2016/08/03.
-//  Copyright © 2016年 NTT DOCOMO, INC. All rights reserved.
+//  Copyright (c) 2016 NTT DOCOMO,INC.
+//  Released under the MIT license
+//  http://opensource.org/licenses/mit-license.php
 //
 
 #import "DConnectParameterSpecBaseBuilder.h"
@@ -12,7 +13,7 @@
 @interface ArrayParameterSpecBuilder : DConnectParameterSpecBaseBuilder
 
 @property(nonatomic, strong) DConnectDataSpec *itemSpec;
-@property(nonatomic) int maxLength;
-@property(nonatomic) int minLength;
+@property(nonatomic, strong) NSNumber *maxLength;       // int型,nilなら省略
+@property(nonatomic, strong) NSNumber *minLength;       // int型,nilなら省略
 
 @end

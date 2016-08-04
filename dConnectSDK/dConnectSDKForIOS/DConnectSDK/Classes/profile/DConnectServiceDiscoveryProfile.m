@@ -152,7 +152,7 @@ NSString *const DConnectServiceDiscoveryProfileNetworkTypeBLE = @"BLE";
     [message setString:config forKey:DConnectServiceDiscoveryProfileParamConfig];
 }
 
-+ (void) setScopesWithProvider:(id<DConnectProfileProvider>)provider
++ (void) setScopesWithProvider:(DConnectProfileProvider *)provider
                         target:(DConnectMessage *)message
 {
     NSArray *profiles = [provider profiles];
