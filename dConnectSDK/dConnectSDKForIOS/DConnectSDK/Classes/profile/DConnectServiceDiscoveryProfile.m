@@ -62,7 +62,7 @@ NSString *const DConnectServiceDiscoveryProfileNetworkTypeBLE = @"BLE";
                              /***/
                              [DConnectServiceDiscoveryProfile setType:[serviceEntity networkType]
                                                                target:service];
-                             [DConnectServiceDiscoveryProfile setOnline:[serviceEntity isOnline] target:service];
+                             [DConnectServiceDiscoveryProfile setOnline:[serviceEntity online] target:service];
                              [services addMessage:service];
                          }
                          [DConnectServiceDiscoveryProfile setServices:services target:response];

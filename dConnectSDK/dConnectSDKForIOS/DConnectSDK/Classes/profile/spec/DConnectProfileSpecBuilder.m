@@ -36,7 +36,7 @@
  */
 - (DConnectProfileSpec *) build {
     DConnectProfileSpec *profileSpec = [[DConnectProfileSpec alloc] init];
-    [profileSpec setApiSpecs: [self allApiSpecs]];
+    [profileSpec setAllApiSpecs: [self allApiSpecs]];
     [profileSpec setBundle: [self bundle]];
     return profileSpec;
 }

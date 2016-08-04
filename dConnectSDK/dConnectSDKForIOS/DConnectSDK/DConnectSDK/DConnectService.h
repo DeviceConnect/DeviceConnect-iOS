@@ -22,7 +22,7 @@
 
 @property(nonatomic, strong) NSString *networkType;
 
-@property(nonatomic) BOOL isOnline;
+@property(nonatomic) BOOL online;
 
 @property(nonatomic, strong) NSString *config;
 

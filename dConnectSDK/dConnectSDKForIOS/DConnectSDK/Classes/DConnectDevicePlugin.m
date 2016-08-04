@@ -14,17 +14,24 @@
 #import "DConnectSystemProfile.h"
 #import "DConnectConst.h"
 #import "LocalOAuth2Main.h"
-#import "DConnectApiSpecList.h"
 #import "DConnectServiceManager.h"
 #import "DConnectServiceInformationProfile.h"
-
+#import <DConnectSDK/DConnectPluginSpec.h>
 
 @interface DConnectDevicePlugin ()
-/**
- * プロファイルを格納するマップ.
+
+/*!
+ @brief PluginSpec。
+ */
+@property(nonatomic, strong) DConnectPluginSpec *pluginSpec;
+
+/*!
+ @brief プロファイルを格納するマップ.
  */
 @property (nonatomic) NSMutableDictionary *mProfileMap;
+
 - (BOOL) executeRequest:(DConnectRequestMessage *) request response:(DConnectResponseMessage *) response;
+
 @end
 
 @implementation DConnectDevicePlugin
@@ -38,7 +45,10 @@
         self.mProfileMap = [NSMutableDictionary dictionary];
         self.pluginName = NSStringFromClass([self class]);
         self.pluginVersionName = @"1.0.0";
-        self.mServiceProvider = [DConnectServiceManager sharedForClass: [object class]];
+        [self setPluginSpec: [[DConnectPluginSpec alloc] init]];
+
+        DConnectServiceManager *serviceManager = [DConnectServiceManager sharedForClass: [object class]];
+        [serviceManager setPluginSpec: [self pluginSpec]];
 
         // プロファイル追加
         [self addProfile:[[DConnectAuthorizationProfile alloc] initWithObject:self]];
@@ -152,12 +162,18 @@
 
 #pragma mark - DConnectProfileProvider Methods -
 
+// DConnectMessageService#addProfile()
 - (void) addProfile:(DConnectProfile *) profile {
-    NSString *name = [profile profileName];
-    if (name) {
-        [self.mProfileMap setObject:profile forKey:name];
-        [self loadApiSpec: name];
+    if (!profile) {
+        return;
     }
+    NSString *profileName = [[profile profileName] lowercaseString];
+
+    // プロファイルのJSONファイルを読み込み、内部生成したprofileSpecを新規登録する
+    [[self pluginSpec] addProfileSpec: profileName];
+    
+    // ProfileMapにprofileデータを追加
+    [self.mProfileMap setObject: profile forKey: profileName];
 }
 
 - (void) removeProfile:(DConnectProfile *) profile {
@@ -191,29 +207,6 @@
         return serviceProfiles;
     }
     return nil;
-}
-
-
-
-// デバイスプラグインがaddProfile()した後にSDK側で処理を実行するタイミングがないので[loadApiSpecList]をそのまま使えない。
-// [addProfile]する毎に[loadApiSpec]を実行してApiSpecを設定する。
-- (void) loadApiSpec: (NSString *)profileName {
-    
-    if (!profileName ||
-        [DConnectAuthorizationProfileName localizedCaseInsensitiveCompare: profileName] == NSOrderedSame ||
-        [DConnectServiceDiscoveryProfileName localizedCaseInsensitiveCompare: profileName] == NSOrderedSame ||
-        [DConnectServiceInformationProfileName localizedCaseInsensitiveCompare: profileName] == NSOrderedSame ||
-        [DConnectSystemProfileName localizedCaseInsensitiveCompare: profileName] == NSOrderedSame) {
-        return;
-    }
-    
-    @try {
-        DConnectApiSpecList *specList = [DConnectApiSpecList shared];
-        [specList addApiSpecList: profileName];
-    } @catch (NSString *e) {
-        DCLogW(@"Device Connect API Specs is invalid. %@", e);
-        return;
-    }
 }
 
 @end

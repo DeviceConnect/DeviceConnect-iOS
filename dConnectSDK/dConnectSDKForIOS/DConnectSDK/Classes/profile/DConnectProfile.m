@@ -10,7 +10,6 @@
 #import "DConnectProfile.h"
 #import "DConnectManager.h"
 #import "LocalOAuth2Settings.h"
-#import <DConnectSDK/DConnectApiSpecList.h>
 #import <DConnectSDK/DConnectApiSpec.h>
 #import "DConnectProfileSpec.h"
 

@@ -24,6 +24,4 @@ extern NSString * const ParameterObjectParserKeyType;
 
 @interface SwaggerJsonParser : DConnectProfileSpecJsonParser
 
-- (DConnectProfileSpec *) parseJson: (NSDictionary *) json;
-
 @end

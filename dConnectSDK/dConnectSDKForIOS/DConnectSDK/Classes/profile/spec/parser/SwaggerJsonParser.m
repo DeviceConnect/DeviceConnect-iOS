@@ -136,6 +136,7 @@ typedef DConnectParameterSpec * (^ParameterObjectParser)(NSDictionary *json);
 }
 
 
+#pragma mark - DConnectProfileSpecJsonParser Methods.
 
 - (DConnectProfileSpec *) parseJson: (NSDictionary *) json {
     DConnectProfileSpecBuilder *builder = [[DConnectProfileSpecBuilder alloc] init];
@@ -163,7 +164,8 @@ typedef DConnectParameterSpec * (^ParameterObjectParser)(NSDictionary *json);
     return [builder build];
 }
 
- 
+#pragma mark - Private Methods.
+
 - (ParameterObjectParser) getParameterParser: (NSDictionary *) json {
     
     NSString *type = json[ParameterObjectParserKeyType];

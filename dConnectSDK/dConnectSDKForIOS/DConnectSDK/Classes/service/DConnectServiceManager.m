@@ -10,8 +10,6 @@
 #import <DConnectSDK/DConnectServiceManager.h>
 #import <DConnectSDK/DConnectProfile.h>
 #import <DConnectSDK/DConnectApiEntity.h>
-#import "DConnectApiSpecList.h"
-
 
 /**
  ServiceManagerインスタンスを格納する(key:クラス名(NSString*),
@@ -76,17 +74,11 @@ static NSMutableDictionary *_instanceArray = nil;
     
     /* デフォルト値を設定 */
     if (self) {
-        self.mApiSpecList = nil;
-        self.mApiSpecs = nil;
+        [self setPluginSpec: [[DConnectPluginSpec alloc] init]];
         mDConnectServices = [NSMutableDictionary dictionary];
     }
     return self;
 }
-
-- (void) setApiSpecDictionary: (DConnectApiSpecList *) dictionary {
-    _mApiSpecs = dictionary;
-}
-
 
 #pragma mark - DConnectServiceProvider Implement.
 
@@ -94,16 +86,17 @@ static NSMutableDictionary *_instanceArray = nil;
     
     NSString *serviceId = [service serviceId];
     
-//    NSLog(@"addService: id = %@ / key = %@", serviceId, _key);
-//    NSLog(@"addService: mDConnectServices = %@ / key = %@", (mDConnectServices ? @"(not nil)":@"(nil)"), _key);
-    
-    if (_mApiSpecs) {
-        
+    if ([self pluginSpec]) {
         for (DConnectProfile *profile in [service profiles]) {
+            DConnectProfileSpec *profileSpec = [[self pluginSpec] findProfileSpec: [[profile profileName] lowercaseString]];
+            if (!profileSpec) {
+                continue;
+            }
+            [profile setProfileSpec: profileSpec];
             for (DConnectApiEntity *api in [profile apis]) {
-                NSString *path = [api path];
-                NSString *strMethod = [api method];
-                DConnectApiSpec *spec = [_mApiSpecs findApiSpec: strMethod path: path];
+                DConnectSpecMethod method = [DConnectSpecConstants parseMethod:[api method]];
+                
+                DConnectApiSpec *spec = [profileSpec findApiSpec: [api path] method: method];
                 if (spec) {
                     [api setApiSpec: spec];
                 }

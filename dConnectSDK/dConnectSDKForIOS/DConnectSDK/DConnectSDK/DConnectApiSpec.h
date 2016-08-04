@@ -10,7 +10,7 @@
 #import <Foundation/Foundation.h>
 #import <DConnectSDK/DConnectMessage.h>
 #import <DConnectSDK/DConnectRequestMessage.h>
-#import "DConnectSpecConstants.h"
+#import <DConnectSDK/DConnectSpecConstants.h>
 
 @interface DConnectApiSpec : NSObject<NSCopying>
 

@@ -11,8 +11,9 @@
 
 @implementation DConnectProfileSpecJsonParser
 
-- (DConnectProfileSpec *) parseJson: (NSString *) jsonFilename {
-    // TODO: JSONオブジェクトを渡すか、JSONファイル名を渡すか
+#pragma mark - DConnectProfileSpecJsonParser Methods.
+
+- (DConnectProfileSpec *) parseJson: (NSDictionary *) json {
     return nil;
 }
 
