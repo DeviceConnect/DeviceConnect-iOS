@@ -21,14 +21,6 @@
     return self;
 }
 
-/*!
- @brief 配列に格納できるデータの仕様を取得する.
- @return 配列に格納できるデータの仕様
- */
-- (DConnectDataSpec *) itemsSpec {
-    return [self itemsSpec];
-}
-
 #pragma mark - Abstruct Methods Implement.
 
 - (BOOL) validate: (id) obj {

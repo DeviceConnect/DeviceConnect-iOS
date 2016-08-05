@@ -182,6 +182,9 @@
 		D62622E9199232BC004F01E6 /* LocalOAuthToken.m in Sources */ = {isa = PBXBuildFile; fileRef = D62622CF199232BC004F01E6 /* LocalOAuthToken.m */; };
 		D62622EA199232BC004F01E6 /* LocalOAuthTokenManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D62622D1199232BC004F01E6 /* LocalOAuthTokenManager.m */; };
 		D62866B61D2F899A00C0C2D6 /* DConnectServiceManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D62866B51D2F899A00C0C2D6 /* DConnectServiceManager.m */; };
+		D62E464E1D542E2300E3C489 /* FileDataSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = D62E464D1D542E2300E3C489 /* FileDataSpec.m */; };
+		D62E46511D542F0300E3C489 /* FileParameterSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = D62E46501D542F0300E3C489 /* FileParameterSpec.m */; };
+		D62E46541D542FB900E3C489 /* FileParameterSpecBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = D62E46531D542FB900E3C489 /* FileParameterSpecBuilder.m */; };
 		D642265F1D3F09890010CE40 /* DConnectApiEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = D642265E1D3F09890010CE40 /* DConnectApiEntity.m */; };
 		D646C7B919A5BDC500C2D91B /* LocalOAuthUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = D646C7B819A5BDC400C2D91B /* LocalOAuthUtils.m */; };
 		D647CFA31D2BDD0D006BF6A9 /* IntegerDataSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = D647CFA01D2BDD0D006BF6A9 /* IntegerDataSpec.m */; };
@@ -1900,6 +1903,12 @@
 		D62866B51D2F899A00C0C2D6 /* DConnectServiceManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DConnectServiceManager.m; path = service/DConnectServiceManager.m; sourceTree = "<group>"; };
 		D62866C01D3489A800C0C2D6 /* DConnectApiSpec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DConnectApiSpec.h; sourceTree = "<group>"; };
 		D62E463D1D53924800E3C489 /* DConnectPluginSpec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DConnectPluginSpec.h; sourceTree = "<group>"; };
+		D62E464C1D542E2300E3C489 /* FileDataSpec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FileDataSpec.h; path = spec/FileDataSpec.h; sourceTree = "<group>"; };
+		D62E464D1D542E2300E3C489 /* FileDataSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FileDataSpec.m; path = spec/FileDataSpec.m; sourceTree = "<group>"; };
+		D62E464F1D542F0300E3C489 /* FileParameterSpec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FileParameterSpec.h; path = spec/FileParameterSpec.h; sourceTree = "<group>"; };
+		D62E46501D542F0300E3C489 /* FileParameterSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FileParameterSpec.m; path = spec/FileParameterSpec.m; sourceTree = "<group>"; };
+		D62E46521D542FB900E3C489 /* FileParameterSpecBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FileParameterSpecBuilder.h; path = spec/FileParameterSpecBuilder.h; sourceTree = "<group>"; };
+		D62E46531D542FB900E3C489 /* FileParameterSpecBuilder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FileParameterSpecBuilder.m; path = spec/FileParameterSpecBuilder.m; sourceTree = "<group>"; };
 		D642265E1D3F09890010CE40 /* DConnectApiEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DConnectApiEntity.m; path = api/DConnectApiEntity.m; sourceTree = "<group>"; };
 		D64226601D3F11090010CE40 /* DConnectApiEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DConnectApiEntity.h; sourceTree = "<group>"; };
 		D646C7B719A5BDC400C2D91B /* LocalOAuthUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LocalOAuthUtils.h; path = localoauth/LocalOAuthUtils.h; sourceTree = "<group>"; };
@@ -4258,6 +4267,12 @@
 				D6DA6AD11D4DB4AA00974D43 /* ArrayParameterSpec.m */,
 				D662DFC81D510CBF00C0F476 /* ArrayParameterSpecBuilder.h */,
 				D662DFC91D510CBF00C0F476 /* ArrayParameterSpecBuilder.m */,
+				D62E464C1D542E2300E3C489 /* FileDataSpec.h */,
+				D62E464D1D542E2300E3C489 /* FileDataSpec.m */,
+				D62E464F1D542F0300E3C489 /* FileParameterSpec.h */,
+				D62E46501D542F0300E3C489 /* FileParameterSpec.m */,
+				D62E46521D542FB900E3C489 /* FileParameterSpecBuilder.h */,
+				D62E46531D542FB900E3C489 /* FileParameterSpecBuilder.m */,
 			);
 			name = spec;
 			sourceTree = "<group>";
@@ -4562,6 +4577,8 @@
 				D66143DE1D50AEBF0050B662 /* NumberDataSpecBuilder.m in Sources */,
 				D662DFC41D50EAFE00C0F476 /* StringParameterSpec.m in Sources */,
 				D626229F19923298004F01E6 /* LocalOAuthAuthSession.m in Sources */,
+				D62E46511D542F0300E3C489 /* FileParameterSpec.m in Sources */,
+				D62E46541D542FB900E3C489 /* FileParameterSpecBuilder.m in Sources */,
 				D6BBC7E219A36BF800F090CA /* LocalOAuthTypedefs.m in Sources */,
 				D6FD02141999EC7A000DB674 /* CipherSignatureProc.m in Sources */,
 				AB67AB131C642AB200B4C62C /* HTTPMessage.m in Sources */,
@@ -4592,6 +4609,7 @@
 				AB67AB2C1C642AC500B4C62C /* HTTPResponseProxy.m in Sources */,
 				97FE24BC191CBB77007C4769 /* multipart_parser.c in Sources */,
 				D62622E4199232BC004F01E6 /* LocalOAuthSampleUserManager.m in Sources */,
+				D62E464E1D542E2300E3C489 /* FileDataSpec.m in Sources */,
 				C2F89D541920AAAF005F1C5F /* DConnectManagerServiceDiscoveryProfile.m in Sources */,
 				D62622931992326E004F01E6 /* LocalOAuthScopeDao.m in Sources */,
 				D6A413C61D4B9F2D00730C9B /* DConnectProfileSpecJsonParserFactory.m in Sources */,

@@ -26,8 +26,8 @@
     StringParameterSpec *spec = [[StringParameterSpec alloc] initWithDataFormat: [self dataFormat]];
     [spec setName: [self name]];
     [spec setIsRequired: [self isRequired]];
-    if ([self enumList]) {
-        [spec setEnumList: [self enumList]];
+    if ([self enums]) {
+        [spec setEnums: [self enums]];
     } else {
         [spec setMaxLength:[self maxLength]];
         [spec setMinLength:[self minLength]];

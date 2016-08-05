@@ -64,16 +64,16 @@
  @brief 定数一覧を取得する.
  @return 定数の配列
  */
-- (NSArray *) enumList {
-    return [[self stringDataSpec] enumList];
+- (NSArray *) enums {
+    return [[self stringDataSpec] enums];
 }
 
 /*!
  @brief 定数一覧を設定する.
  @param enumList 定数の配列
  */
-- (void) setEnumList: (NSArray *) enumList {
-    return [[self stringDataSpec] setEnumList: enumList];
+- (void) setEnums: (NSArray *) enums {
+    return [[self stringDataSpec] setEnums: enums];
 }
 
 #pragma mark - Private Methods.

@@ -16,7 +16,7 @@
 @property (nonatomic) DConnectSpecDataFormat dataFormat;
 @property (nonatomic, strong) NSNumber *maxLength; // int値を格納。nilなら省略。
 @property (nonatomic, strong) NSNumber *minLength; // int値を格納。nilなら省略。
-@property (nonatomic, strong) NSArray *enumList; // NSStringの配列
+@property (nonatomic, strong) NSArray *enums;       // NSStringの配列
 
 - (instancetype)initWitDataFormat: (DConnectSpecDataFormat) dataFormat;
 

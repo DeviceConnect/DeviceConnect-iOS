@@ -103,7 +103,7 @@ extern NSString * const DConnectSpecBoolTrue;
 + (NSString *) toDataTypeString: (DConnectSpecDataType)dataType;
 + (DConnectSpecDataFormat) parseDataFormat: (NSString *)strDataFormat;
 + (NSString *) toDataFormatString: (DConnectSpecDataFormat)dataFormat;
-+ (BOOL) parseBool: (NSString *)strBool;
++ (BOOL) parseBool: (id)valBool;
 + (NSString *) toBoolString: (BOOL)boolValue;
 + (BOOL)isDigit:(NSString *)text;
 + (BOOL)isNumber:(NSString *)text;

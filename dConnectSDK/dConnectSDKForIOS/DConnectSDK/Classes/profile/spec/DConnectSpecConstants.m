@@ -45,6 +45,10 @@ NSString * const DConnectSpecBoolTrue = @"true";
 
 + (DConnectSpecType) parseType: (NSString *)strType {
     
+    if (![strType isKindOfClass: [NSString class]]) {
+        @throw @"invalid strType";
+    }
+    
     NSString *strTypeLow = [strType lowercaseString];
     
     int i = 0;
@@ -71,6 +75,10 @@ NSString * const DConnectSpecBoolTrue = @"true";
 }
 
 + (DConnectSpecMethod) parseMethod: (NSString *)strMethod {
+    
+    if (![strMethod isKindOfClass: [NSString class]]) {
+        @throw @"invalid strMethod";
+    }
     
     NSArray *methods = DConnectSpecMethods();
     
@@ -117,6 +125,10 @@ NSString * const DConnectSpecBoolTrue = @"true";
     
 + (DConnectSpecDataType) parseDataType: (NSString *)strDataType {
     
+    if (![strDataType isKindOfClass: [NSString class]]) {
+        @throw @"invalid strDataType";
+    }
+    
     NSArray *dataTypes = DConnectSpecDataTypes();
     
     NSString *strDataTypeLow = [strDataType lowercaseString];
@@ -143,6 +155,10 @@ NSString * const DConnectSpecBoolTrue = @"true";
 
 + (DConnectSpecDataFormat) parseDataFormat: (NSString *)strDataFormat {
     
+    if (![strDataFormat isKindOfClass: [NSString class]]) {
+        @throw @"invalid strDataFormat";
+    }
+    
     NSArray *dataFormats = DConnectSpecDataFormats();
     
     NSString *strDataFormatLow = [strDataFormat lowercaseString];
@@ -167,21 +183,31 @@ NSString * const DConnectSpecBoolTrue = @"true";
     @throw @"invalid dataFormat";
 }
 
++ (BOOL) parseBool: (id)valBool {
+    NSLog(@"parseBool: strBool(class):%@", [[valBool class] description]);
     
-+ (BOOL) parseBool: (NSString *)strBool {
-    
-    NSArray *bools = DConnectSpecBools();
-    BOOL boolValues[] = DConnectSpecBoolValues();
-    
-    NSString *strBoolLow = [strBool lowercaseString];
-    int i = 0;
-    for (NSString *strBool in bools) {
-        if ([strBoolLow isEqualToString: [strBool lowercaseString]]) {
-            return boolValues[i];
+    if ([valBool isKindOfClass: [NSNumber class]]) {
+        if ([[[valBool class] description] isEqualToString: @"__NSCFBoolean"]) {
+            NSNumber *numBool = (NSNumber *)valBool;
+            return [numBool boolValue];
         }
-        i ++;
     }
-    @throw @"invalid strBool";
+    if ([valBool isKindOfClass: [NSString class]]) {
+        NSArray *bools = DConnectSpecBools();
+        BOOL boolValues[] = DConnectSpecBoolValues();
+        
+        NSString *strBool = (NSString *)valBool;
+        NSString *strBoolLow = [strBool lowercaseString];
+        int i = 0;
+        for (NSString *strBool in bools) {
+            if ([strBoolLow isEqualToString: [strBool lowercaseString]]) {
+                return boolValues[i];
+            }
+            i ++;
+        }
+    }
+    
+    @throw @"invalid varBool";
 }
     
 + (NSString *) toBoolString: (BOOL)boolValue {
@@ -200,6 +226,11 @@ NSString * const DConnectSpecBoolTrue = @"true";
 }
 
 + (BOOL)isDigit:(NSString *)text {
+    
+    if (![text isKindOfClass: [NSString class]]) {
+        return NO;
+    }
+    
     NSCharacterSet *digitCharSet = [NSCharacterSet characterSetWithCharactersInString:@"+-0123456789"];
     
     NSScanner *aScanner = [NSScanner localizedScannerWithString:text];
@@ -210,6 +241,11 @@ NSString * const DConnectSpecBoolTrue = @"true";
 }
 
 + (BOOL)isNumber:(NSString *)text {
+    
+    if (![text isKindOfClass: [NSString class]]) {
+        return NO;
+    }
+    
     NSCharacterSet *digitCharSet = [NSCharacterSet characterSetWithCharactersInString:@"+-0123456789."];
     
     NSScanner *aScanner = [NSScanner localizedScannerWithString:text];
