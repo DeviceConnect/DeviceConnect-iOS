@@ -93,9 +93,11 @@
     //safariViewからgotapi://stopが叩かれた場合
     NSString* value =  options[@"UIApplicationOpenURLOptionsSourceApplicationKey"];
     if ([value isEqualToString:@"com.apple.SafariViewService"] && [url.absoluteString isEqualToString:@"gotapi://stop"]) {
-        dispatch_async(dispatch_get_main_queue() , ^{
-            [[UIApplication sharedApplication] openURL: self.latestURL];
-            _requestToCloseSafariView();
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0) , ^{
+            dispatch_async(dispatch_get_main_queue() , ^{
+                [[UIApplication sharedApplication] openURL: self.latestURL];
+                _requestToCloseSafariView();
+            });
         });
         return NO;
 
