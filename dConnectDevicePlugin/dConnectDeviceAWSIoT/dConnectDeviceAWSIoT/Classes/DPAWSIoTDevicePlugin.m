@@ -1,5 +1,5 @@
 //
-//  DPAWSIotDevicePlugin.m
+//  DPAWSIoTDevicePlugin.m
 //  dConnectDeviceAWSIoT
 //
 //  Copyright (c) 2016 NTT DOCOMO, INC.
@@ -7,10 +7,12 @@
 //  http://opensource.org/licenses/mit-license.php
 //
 
-#import "DPAWSIotDevicePlugin.h"
+#import "DPAWSIoTDevicePlugin.h"
 #import "DPAWSIoTServiceDiscoveryProfile.h"
 
-@implementation DPAWSIotDevicePlugin
+#import <AWSIoT.h>
+
+@implementation DPAWSIoTDevicePlugin
 
 - (id) init {
 	self = [super init];

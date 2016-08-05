@@ -1,5 +1,5 @@
 //
-//  DPAWSIotDevicePlugin.h
+//  DPAWSIoTDevicePlugin.h
 //  dConnectDeviceAWSIoT
 //
 //  Copyright (c) 2016 NTT DOCOMO, INC.
@@ -9,6 +9,6 @@
 
 #import <DConnectSDK/DConnectSDK.h>
 
-@interface DPAWSIotDevicePlugin : DConnectDevicePlugin
+@interface DPAWSIoTDevicePlugin : DConnectDevicePlugin
 
 @end

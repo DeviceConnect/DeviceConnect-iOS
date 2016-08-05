@@ -21,10 +21,27 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
-		78298A071D532D3500E9B90B /* DPAWSIotDevicePlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 78298A061D532D3500E9B90B /* DPAWSIotDevicePlugin.m */; };
+		0D9A5AF3E331558BE11D5967 /* libPods-dConnectDeviceAWSIoT.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C1F919291C216B65FF160D5 /* libPods-dConnectDeviceAWSIoT.a */; };
+		78298A071D532D3500E9B90B /* DPAWSIoTDevicePlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 78298A061D532D3500E9B90B /* DPAWSIoTDevicePlugin.m */; };
 		78298A091D532DB900E9B90B /* DConnectSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78298A081D532DB900E9B90B /* DConnectSDK.framework */; };
 		78298A1A1D5334B000E9B90B /* DPAWSIoTServiceDiscoveryProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 78298A191D5334B000E9B90B /* DPAWSIoTServiceDiscoveryProfile.m */; };
+		782FCF771D5340B10084DE03 /* libAWSCore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 782FCF751D5340B10084DE03 /* libAWSCore.a */; };
+		782FCF781D5340B10084DE03 /* libAWSIoT.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 782FCF761D5340B10084DE03 /* libAWSIoT.a */; };
+		782FCFA61D54150C0084DE03 /* DPAWSIoTManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 782FCFA51D54150C0084DE03 /* DPAWSIoTManager.m */; };
+		782FCFB91D54514C0084DE03 /* Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 782FCFB81D54514C0084DE03 /* Tests.m */; };
+		782FCFBB1D54514C0084DE03 /* libdConnectDeviceAWSIoT.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 782989F81D532AF900E9B90B /* libdConnectDeviceAWSIoT.a */; };
+		782FCFC41D5453BC0084DE03 /* DConnectSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78298A081D532DB900E9B90B /* DConnectSDK.framework */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		782FCFBC1D54514C0084DE03 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 782989F01D532AF900E9B90B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 782989F71D532AF900E9B90B;
+			remoteInfo = dConnectDeviceAWSIoT;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		782989F61D532AF900E9B90B /* CopyFiles */ = {
@@ -39,12 +56,23 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		6FAF38FDC94555EDF3019CB2 /* Pods-dConnectDeviceAWSIoT.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-dConnectDeviceAWSIoT.release.xcconfig"; path = "Pods/Target Support Files/Pods-dConnectDeviceAWSIoT/Pods-dConnectDeviceAWSIoT.release.xcconfig"; sourceTree = "<group>"; };
 		782989F81D532AF900E9B90B /* libdConnectDeviceAWSIoT.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libdConnectDeviceAWSIoT.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		78298A061D532D3500E9B90B /* DPAWSIotDevicePlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPAWSIotDevicePlugin.m; sourceTree = "<group>"; };
+		78298A061D532D3500E9B90B /* DPAWSIoTDevicePlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPAWSIoTDevicePlugin.m; sourceTree = "<group>"; };
 		78298A081D532DB900E9B90B /* DConnectSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DConnectSDK.framework; path = ../../dConnectSDK/dConnectSDKForIOS/bin/DConnectSDK.framework; sourceTree = "<group>"; };
 		78298A191D5334B000E9B90B /* DPAWSIoTServiceDiscoveryProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPAWSIoTServiceDiscoveryProfile.m; sourceTree = "<group>"; };
-		78298A1C1D53351A00E9B90B /* DPAWSIotDevicePlugin.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DPAWSIotDevicePlugin.h; sourceTree = "<group>"; };
+		78298A1C1D53351A00E9B90B /* DPAWSIoTDevicePlugin.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DPAWSIoTDevicePlugin.h; sourceTree = "<group>"; };
 		78298A1D1D53351A00E9B90B /* DPAWSIoTServiceDiscoveryProfile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DPAWSIoTServiceDiscoveryProfile.h; sourceTree = "<group>"; };
+		782FCF751D5340B10084DE03 /* libAWSCore.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libAWSCore.a; path = "../../../../../../Library/Developer/Xcode/DerivedData/dConnectDeviceAWSIoT-hjvzbykvepdftldcwismnygwtdiy/Build/Products/Debug-iphoneos/AWSCore/libAWSCore.a"; sourceTree = "<group>"; };
+		782FCF761D5340B10084DE03 /* libAWSIoT.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libAWSIoT.a; path = "../../../../../../Library/Developer/Xcode/DerivedData/dConnectDeviceAWSIoT-hjvzbykvepdftldcwismnygwtdiy/Build/Products/Debug-iphoneos/AWSIoT/libAWSIoT.a"; sourceTree = "<group>"; };
+		782FCFA41D54150C0084DE03 /* DPAWSIoTManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPAWSIoTManager.h; sourceTree = "<group>"; };
+		782FCFA51D54150C0084DE03 /* DPAWSIoTManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPAWSIoTManager.m; sourceTree = "<group>"; };
+		782FCFAE1D544D8A0084DE03 /* Pods-dConnectDeviceAWSIoT.app.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "Pods-dConnectDeviceAWSIoT.app.xcconfig"; path = "Pods/Target Support Files/Pods-dConnectDeviceAWSIoT/Pods-dConnectDeviceAWSIoT.app.xcconfig"; sourceTree = "<group>"; };
+		782FCFB61D54514C0084DE03 /* Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		782FCFB81D54514C0084DE03 /* Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Tests.m; sourceTree = "<group>"; };
+		782FCFBA1D54514C0084DE03 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		88658FBE182227BAC71710AD /* Pods-dConnectDeviceAWSIoT.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-dConnectDeviceAWSIoT.debug.xcconfig"; path = "Pods/Target Support Files/Pods-dConnectDeviceAWSIoT/Pods-dConnectDeviceAWSIoT.debug.xcconfig"; sourceTree = "<group>"; };
+		9C1F919291C216B65FF160D5 /* libPods-dConnectDeviceAWSIoT.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-dConnectDeviceAWSIoT.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,7 +80,19 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				782FCF771D5340B10084DE03 /* libAWSCore.a in Frameworks */,
+				782FCF781D5340B10084DE03 /* libAWSIoT.a in Frameworks */,
 				78298A091D532DB900E9B90B /* DConnectSDK.framework in Frameworks */,
+				0D9A5AF3E331558BE11D5967 /* libPods-dConnectDeviceAWSIoT.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		782FCFB31D54514C0084DE03 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				782FCFBB1D54514C0084DE03 /* libdConnectDeviceAWSIoT.a in Frameworks */,
+				782FCFC41D5453BC0084DE03 /* DConnectSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -63,8 +103,10 @@
 			isa = PBXGroup;
 			children = (
 				782989FA1D532AF900E9B90B /* dConnectDeviceAWSIoT */,
+				782FCFB71D54514C0084DE03 /* Tests */,
 				78298A0A1D532DBD00E9B90B /* Frameworks */,
 				782989F91D532AF900E9B90B /* Products */,
+				BCA6B25A08249B8A21B87253 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -72,6 +114,7 @@
 			isa = PBXGroup;
 			children = (
 				782989F81D532AF900E9B90B /* libdConnectDeviceAWSIoT.a */,
+				782FCFB61D54514C0084DE03 /* Tests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -89,9 +132,10 @@
 		78298A041D532CBE00E9B90B /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				78298A1C1D53351A00E9B90B /* DPAWSIotDevicePlugin.h */,
-				78298A061D532D3500E9B90B /* DPAWSIotDevicePlugin.m */,
+				78298A1C1D53351A00E9B90B /* DPAWSIoTDevicePlugin.h */,
+				78298A061D532D3500E9B90B /* DPAWSIoTDevicePlugin.m */,
 				78298A1E1D53352700E9B90B /* Profile */,
+				782FCFA71D5415110084DE03 /* AWS */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -99,7 +143,10 @@
 		78298A0A1D532DBD00E9B90B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				782FCF751D5340B10084DE03 /* libAWSCore.a */,
+				782FCF761D5340B10084DE03 /* libAWSIoT.a */,
 				78298A081D532DB900E9B90B /* DConnectSDK.framework */,
+				9C1F919291C216B65FF160D5 /* libPods-dConnectDeviceAWSIoT.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -127,6 +174,34 @@
 			name = Profile;
 			sourceTree = "<group>";
 		};
+		782FCFA71D5415110084DE03 /* AWS */ = {
+			isa = PBXGroup;
+			children = (
+				782FCFA41D54150C0084DE03 /* DPAWSIoTManager.h */,
+				782FCFA51D54150C0084DE03 /* DPAWSIoTManager.m */,
+			);
+			name = AWS;
+			sourceTree = "<group>";
+		};
+		782FCFB71D54514C0084DE03 /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				782FCFB81D54514C0084DE03 /* Tests.m */,
+				782FCFBA1D54514C0084DE03 /* Info.plist */,
+			);
+			path = Tests;
+			sourceTree = "<group>";
+		};
+		BCA6B25A08249B8A21B87253 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				782FCFAE1D544D8A0084DE03 /* Pods-dConnectDeviceAWSIoT.app.xcconfig */,
+				88658FBE182227BAC71710AD /* Pods-dConnectDeviceAWSIoT.debug.xcconfig */,
+				6FAF38FDC94555EDF3019CB2 /* Pods-dConnectDeviceAWSIoT.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -134,9 +209,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 78298A011D532AF900E9B90B /* Build configuration list for PBXNativeTarget "dConnectDeviceAWSIoT" */;
 			buildPhases = (
+				C59EAF795197306587FA2DD1 /* [CP] Check Pods Manifest.lock */,
 				782989F41D532AF900E9B90B /* Sources */,
 				782989F51D532AF900E9B90B /* Frameworks */,
 				782989F61D532AF900E9B90B /* CopyFiles */,
+				C84F4F1213E40DDAF3635B65 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -146,6 +223,24 @@
 			productName = dConnectDeviceAWSIoT;
 			productReference = 782989F81D532AF900E9B90B /* libdConnectDeviceAWSIoT.a */;
 			productType = "com.apple.product-type.library.static";
+		};
+		782FCFB51D54514C0084DE03 /* Tests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 782FCFBE1D54514C0084DE03 /* Build configuration list for PBXNativeTarget "Tests" */;
+			buildPhases = (
+				782FCFB21D54514C0084DE03 /* Sources */,
+				782FCFB31D54514C0084DE03 /* Frameworks */,
+				782FCFB41D54514C0084DE03 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				782FCFBD1D54514C0084DE03 /* PBXTargetDependency */,
+			);
+			name = Tests;
+			productName = Tests;
+			productReference = 782FCFB61D54514C0084DE03 /* Tests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
 
@@ -162,6 +257,9 @@
 					78298A101D532F4F00E9B90B = {
 						CreatedOnToolsVersion = 7.3;
 					};
+					782FCFB51D54514C0084DE03 = {
+						CreatedOnToolsVersion = 7.3;
+					};
 				};
 			};
 			buildConfigurationList = 782989F31D532AF900E9B90B /* Build configuration list for PBXProject "dConnectDeviceAWSIoT" */;
@@ -170,6 +268,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				Base,
 			);
 			mainGroup = 782989EF1D532AF900E9B90B;
 			productRefGroup = 782989F91D532AF900E9B90B /* Products */;
@@ -178,9 +277,20 @@
 			targets = (
 				782989F71D532AF900E9B90B /* dConnectDeviceAWSIoT */,
 				78298A101D532F4F00E9B90B /* dConnectDeviceAWSIoT_framework */,
+				782FCFB51D54514C0084DE03 /* Tests */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		782FCFB41D54514C0084DE03 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
 		78298A141D532F5500E9B90B /* ShellScript */ = {
@@ -196,6 +306,36 @@
 			shellPath = /bin/sh;
 			shellScript = "# Environment Variables\nFRAMEWORK_NAME=${PROJECT_NAME}\nFRAMEWORK_VERSION=A\nFRAMEWORK_VERSION_NUMBER=1.0\nCONFIGURATION=\"Release\"\nFRAMEWORK_BUILD_PATH=\"${SRCROOT}/build/${CONFIGURATION}-framework\"\nFRAMEWORK_DIR=\"${FRAMEWORK_BUILD_PATH}/${FRAMEWORK_NAME}.framework\"\nSTATICLIB_BUILD_PATH=\"${SRCROOT}/build/${CONFIGURATION}-universal\"\n\necho ${PROJECT_NAME}\necho ${SRCROOT}\necho ${FRAMEWORK_BUILD_PATH}\n\n# Clean directories\nrm -rf \"${FRAMEWORK_BUILD_PATH}\"\n\n# Build simulator and device binaries.\n# A target to build a static library *must* have the name ${PROJECT_NAME}.\nxcodebuild -project ${PROJECT_NAME}.xcodeproj -sdk iphonesimulator -target ${PROJECT_NAME} -configuration ${CONFIGURATION} clean build\nxcodebuild -project ${PROJECT_NAME}.xcodeproj -sdk iphoneos -target ${PROJECT_NAME} -configuration ${CONFIGURATION} clean build\n# A target to build a bundle *must* have the name ${PROJECT_NAME}_resources. This target is optional.\nxcodebuild -project ${PROJECT_NAME}.xcodeproj -sdk iphonesimulator -target ${PROJECT_NAME}_resources -configuration ${CONFIGURATION} clean build || true\nxcodebuild -project ${PROJECT_NAME}.xcodeproj -sdk iphoneos -target ${PROJECT_NAME}_resources -configuration ${CONFIGURATION} clean build || true\n\n# create directories.\nmkdir -p ${FRAMEWORK_DIR}/Versions/${FRAMEWORK_VERSION}/Headers\n#mkdir -p ${FRAMEWORK_DIR}/Versions/${FRAMEWORK_VERSION}/Resources\nmkdir -p ${STATICLIB_BUILD_PATH}\n# create symlinks\ncd ${FRAMEWORK_DIR}\nln -s ../Versions/${FRAMEWORK_VERSION} Versions/Current\nln -s Versions/Current/Headers Headers\n#ln -s Versions/Current/Resources Resources\nln -s Versions/Current/${FRAMEWORK_NAME} ${FRAMEWORK_NAME}\ncd ${SRCROOT}\n\n# create the universal library, and strip internal symbols from it\nlipo ${SRCROOT}/build/${CONFIGURATION}-iphoneos/lib${FRAMEWORK_NAME}.a ${SRCROOT}/build/${CONFIGURATION}-iphonesimulator/lib${FRAMEWORK_NAME}.a -create -output \"${STATICLIB_BUILD_PATH}/lib${FRAMEWORK_NAME}.a\"\n#strip -x \"${STATICLIB_BUILD_PATH}/lib${FRAMEWORK_NAME}.a\"\ncp \"${STATICLIB_BUILD_PATH}/lib${FRAMEWORK_NAME}.a\" \"${FRAMEWORK_DIR}/Versions/Current/${FRAMEWORK_NAME}\"\n\n# copy files\ncp -r ${SRCROOT}/${PROJECT_NAME}/Headers/ ${FRAMEWORK_DIR}/Headers/\n\n# copy binary to bin folder\ncd ${SRCROOT}\n\nmkdir -p bin\ncd bin\nls | grep -v -E '.gitignore$' | xargs rm -rf\ncd ..\ncp -R ${FRAMEWORK_DIR} bin\n#cp -r build/${CONFIGURATION}-resources/${PROJECT_NAME}_resources.bundle bin";
 		};
+		C59EAF795197306587FA2DD1 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		C84F4F1213E40DDAF3635B65 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-dConnectDeviceAWSIoT/Pods-dConnectDeviceAWSIoT-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -203,12 +343,29 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				78298A071D532D3500E9B90B /* DPAWSIotDevicePlugin.m in Sources */,
+				782FCFA61D54150C0084DE03 /* DPAWSIoTManager.m in Sources */,
+				78298A071D532D3500E9B90B /* DPAWSIoTDevicePlugin.m in Sources */,
 				78298A1A1D5334B000E9B90B /* DPAWSIoTServiceDiscoveryProfile.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		782FCFB21D54514C0084DE03 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				782FCFB91D54514C0084DE03 /* Tests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		782FCFBD1D54514C0084DE03 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 782989F71D532AF900E9B90B /* dConnectDeviceAWSIoT */;
+			targetProxy = 782FCFBC1D54514C0084DE03 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		782989FF1D532AF900E9B90B /* Debug */ = {
@@ -303,6 +460,7 @@
 		};
 		78298A021D532AF900E9B90B /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 88658FBE182227BAC71710AD /* Pods-dConnectDeviceAWSIoT.debug.xcconfig */;
 			buildSettings = {
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -312,6 +470,7 @@
 		};
 		78298A031D532AF900E9B90B /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6FAF38FDC94555EDF3019CB2 /* Pods-dConnectDeviceAWSIoT.release.xcconfig */;
 			buildSettings = {
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -329,6 +488,28 @@
 		78298A121D532F4F00E9B90B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		782FCFBF1D54514C0084DE03 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 782FCFAE1D544D8A0084DE03 /* Pods-dConnectDeviceAWSIoT.app.xcconfig */;
+			buildSettings = {
+				INFOPLIST_FILE = Tests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = org.deviceconnect.deviceplugin.Tests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		782FCFC01D54514C0084DE03 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 782FCFAE1D544D8A0084DE03 /* Pods-dConnectDeviceAWSIoT.app.xcconfig */;
+			buildSettings = {
+				INFOPLIST_FILE = Tests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = org.deviceconnect.deviceplugin.Tests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -362,6 +543,14 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		782FCFBE1D54514C0084DE03 /* Build configuration list for PBXNativeTarget "Tests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				782FCFBF1D54514C0084DE03 /* Debug */,
+				782FCFC01D54514C0084DE03 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 /* End XCConfigurationList section */
 	};

@@ -303,3 +303,4 @@ ant.properties
 build.xml
 
 dConnectDevicePlugin/dConnectDeviceAWSIoT/bin
+dConnectDevicePlugin/dConnectDeviceAWSIoT/Pods
