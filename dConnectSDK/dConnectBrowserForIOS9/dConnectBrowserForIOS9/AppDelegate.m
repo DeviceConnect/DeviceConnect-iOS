@@ -103,7 +103,7 @@
 
     //NOTE:BookmarkShareからのリダイレクトは無視する
     if ((![url.scheme isEqualToString:@"dconnect"] && ![url.scheme isEqualToString:@"gotapi"]) ||
-        ([value isEqualToString:@"com.apple.SafariViewService"] && ![url.absoluteString isEqualToString:@"gotapi://stop"])) {
+        [value isEqualToString:@"com.apple.SafariViewService"]) {
         return NO;
     }
 
