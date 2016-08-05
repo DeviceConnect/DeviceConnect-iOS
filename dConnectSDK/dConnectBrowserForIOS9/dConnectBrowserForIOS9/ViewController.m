@@ -60,6 +60,11 @@
                  [self openSafariViewInternalWithURL:redirectURL.absoluteString];
              }
          }];
+        [(AppDelegate *)appDelegate setRequestToCloseSafariView:^{
+            if (appDelegate.window.rootViewController.presentedViewController != nil) {
+                [self dismissViewControllerAnimated:false completion:nil];
+            }
+        }];
     }
 
     [super viewDidLoad];

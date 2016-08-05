@@ -10,6 +10,7 @@
 #import <DConnectSDK/DConnectSDK.h>
 #import "GHDataManager.h"
 #import "GHDeviceUtil.h"
+#import "AppDelegate.h"
 
 @interface TopViewModel()
 @property(nonatomic, strong) NSArray* devices;
@@ -180,6 +181,7 @@ static NSInteger maxIconCount = 8;
     } else if (!self.url) {
         self.url = [self.manager createSearchURL:url];
     }
+    [self setLatestURL:self.url];
     return self.url;
 }
 
@@ -194,8 +196,17 @@ static NSInteger maxIconCount = 8;
     } else if (![self.manager isURLString:self.url]) {
         self.url = [self.manager createSearchURL:url];
     }
+
+    [self setLatestURL:self.url];
     return self.url;
 }
+
+- (void)setLatestURL:(NSString*)url
+{
+    AppDelegate* app = [UIApplication sharedApplication].delegate;
+    app.latestURL = [NSURL URLWithString: url];
+}
+
 
 
 //--------------------------------------------------------------//
