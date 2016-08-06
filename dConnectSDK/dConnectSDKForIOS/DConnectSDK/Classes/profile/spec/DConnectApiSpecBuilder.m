@@ -26,12 +26,10 @@
 
 - (DConnectApiSpec *) build {
 
-    NSArray *deepCopyParamList =[[NSArray alloc] initWithArray: [self params] copyItems: YES];
-    
     DConnectApiSpec *spec = [[DConnectApiSpec alloc] init];
     [spec setType: [self type]];
     [spec setMethod: [self method]];
-    [spec setRequestParamSpecList: deepCopyParamList];
+    [spec setRequestParamSpecList: [self params]];
     
     return spec;
 }

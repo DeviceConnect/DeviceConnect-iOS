@@ -67,7 +67,7 @@ NSString * const DConnectSpecBoolTrue = @"true";
     NSArray *types = DConnectSpecTypes();
     
     int index = (int)type;
-    if (index <= 0 && index < [types count]) {
+    if (0 <= index && index < [types count]) {
         return DConnectSpecTypes()[index];
     }
     
@@ -99,7 +99,7 @@ NSString * const DConnectSpecBoolTrue = @"true";
     NSArray *methods = DConnectSpecMethods();
     
     int index = (int)method;
-    if (index <= 0 && index < [methods count]) {
+    if (0 <= index && index < [methods count]) {
         return methods[index];
     }
     
@@ -146,7 +146,7 @@ NSString * const DConnectSpecBoolTrue = @"true";
 + (NSString *) toDataTypeString: (DConnectSpecDataType)dataType {
     NSArray *types = DConnectSpecDataTypes();
     int index = (int)dataType;
-    if (index <= 0 && index < [types count]) {
+    if (0 <= index && index < [types count]) {
         return types[index];
     }
     
@@ -176,7 +176,7 @@ NSString * const DConnectSpecBoolTrue = @"true";
 + (NSString *) toDataFormatString: (DConnectSpecDataFormat)dataFormat {
     NSArray *dataFormats = DConnectSpecDataFormats();
     int index = (int)dataFormat;
-    if (index <= 0 && index < [dataFormats count]) {
+    if (0 <= index && index < [dataFormats count]) {
         return dataFormats[index];
     }
     
@@ -184,8 +184,6 @@ NSString * const DConnectSpecBoolTrue = @"true";
 }
 
 + (BOOL) parseBool: (id)valBool {
-    NSLog(@"parseBool: strBool(class):%@", [[valBool class] description]);
-    
     if ([valBool isKindOfClass: [NSNumber class]]) {
         if ([[[valBool class] description] isEqualToString: @"__NSCFBoolean"]) {
             NSNumber *numBool = (NSNumber *)valBool;
