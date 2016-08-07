@@ -20,7 +20,7 @@
  @retval YES 追加成功。
  @retval NO 追加失敗。API仕様定義JSONファイル解析に失敗等。
  */
-- (BOOL) addProfileSpec: (NSString *) profileName;
+- (BOOL) addProfileSpec: (NSString *) profileName error: (NSError **) error;
 /*!
  @brief 指定したプロファイルの仕様定義を取得する.
  @param profileName プロファイル名

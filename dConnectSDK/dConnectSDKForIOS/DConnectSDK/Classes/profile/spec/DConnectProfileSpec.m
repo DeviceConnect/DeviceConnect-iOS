@@ -35,15 +35,15 @@
 }
 
 - (DConnectApiSpec *) findApiSpec: (NSString *)path method: (DConnectSpecMethod) method {
-    if (!method) {
-        @throw @"method is null.";
-    }
-    
     NSDictionary *apiSpecsOfPath = [self findApiSpecs: path];   // Map<Method, DConnectApiSpec> apiSpecsOfPath
     if (!apiSpecsOfPath) {
         return nil;
     }
-    NSString *strMethod = [DConnectSpecConstants toMethodString: method];
+    NSError *error;
+    NSString *strMethod = [DConnectSpecConstants toMethodString: method error: &error];
+    if (!strMethod) {
+        return nil;
+    }
     return apiSpecsOfPath[strMethod];
 }
 

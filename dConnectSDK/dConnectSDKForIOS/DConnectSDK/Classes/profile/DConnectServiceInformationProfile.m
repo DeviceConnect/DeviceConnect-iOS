@@ -82,7 +82,11 @@ static NSString *const KEY_PATHS = @"paths";
                              [supports addString:[profile profileName]];
                          }
                          [DConnectServiceInformationProfile setSupports: supports target: response];
-                         [DConnectServiceInformationProfile setSupportApis: profiles target: response];
+                         NSError *error;
+                         if (![DConnectServiceInformationProfile setSupportApis: profiles target: response error: &error]) {
+                             [response setErrorToUnknownWithMessage: [error localizedDescription]];
+                             return YES;
+                         }
 
                          [response setResult:DConnectMessageResultTypeOk];
                          
@@ -160,13 +164,16 @@ static NSString *const KEY_PATHS = @"paths";
     [message setArray:supports forKey:DConnectServiceInformationProfileParamSupports];
 }
 
-+ (void) setSupportApis:(NSArray *)profiles target:(DConnectMessage *)message {
++ (BOOL) setSupportApis:(NSArray *)profiles target:(DConnectMessage *)message error:(NSError **) error {
     NSMutableDictionary *supportApis = [NSMutableDictionary dictionary];
     for (DConnectProfile *profile in profiles) {
         // API定義JSONファイルのProfileSpecを参照
         DConnectProfileSpec *profileSpec = [profile profileSpec];
         if (profileSpec) {
-            NSDictionary *bundle = [DConnectServiceInformationProfile createSupportApisBundle: profileSpec profile: profile];
+            NSDictionary *bundle;
+            if (![DConnectServiceInformationProfile createSupportApisBundle: profileSpec profile: profile outBundle:&bundle error:error]) {
+                return NO;
+            }
             NSString *profileName = [profile profileName];
             supportApis[profileName] = bundle;
         }
@@ -175,9 +182,10 @@ static NSString *const KEY_PATHS = @"paths";
     // NSMutableDictionaryをDConnectMessageに変換
     DConnectMessage *supportApisBundle = [self convertToDConnectMessageFromNSDictionary: supportApis];
     [message setMessage:supportApisBundle forKey:DConnectServiceInformationProfileParamSupportApis];
+    return YES;
 }
 
-+ (NSDictionary *) createSupportApisBundle: (DConnectProfileSpec *) profileSpec profile: (DConnectProfile *) profile {
++ (BOOL) createSupportApisBundle: (DConnectProfileSpec *) profileSpec profile: (DConnectProfile *) profile outBundle: (NSDictionary **) outBundle error: (NSError **) error {
     
     // bundle全体をmutableディープコピーする
     CFPropertyListRef *tmpBundle_ = (CFPropertyListRef *)CFPropertyListCreateDeepCopy(kCFAllocatorDefault,
@@ -188,7 +196,8 @@ static NSString *const KEY_PATHS = @"paths";
     // API定義(JSONファイルから読み取ったデータ)のうち、プロファイルにAPIが未実装のものは削除する
     NSMutableDictionary *pathsObj = tmpBundle[KEY_PATHS];
     if (!pathsObj) {
-        return tmpBundle;
+        *outBundle = tmpBundle;
+        return YES;
     }
     NSArray *pathNames = [pathsObj allKeys];
     for (NSString *pathName in pathNames) {
@@ -203,7 +212,10 @@ static NSString *const KEY_PATHS = @"paths";
             if (!methodObj) {
                 continue;
             }
-            DConnectSpecMethod method = [DConnectSpecConstants parseMethod: strMethod];
+            DConnectSpecMethod method;
+            if (![DConnectSpecConstants parseMethod: strMethod outMethod:&method error:error]) {
+                return NO;
+            }
             if (![profile hasApi: pathName method: method]) {
                 [pathObj removeObjectForKey: strMethodName];
             }
@@ -212,7 +224,8 @@ static NSString *const KEY_PATHS = @"paths";
             [pathsObj removeObjectForKey: pathName];
         }
     }
-    return tmpBundle;
+    *outBundle = tmpBundle;
+    return YES;
 }
 
 // NSDictionaryをDConnectMessageに変換

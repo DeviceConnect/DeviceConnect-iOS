@@ -94,8 +94,13 @@ static NSMutableDictionary *_instanceArray = nil;
             }
             [profile setProfileSpec: profileSpec];
             for (DConnectApiEntity *api in [profile apis]) {
-                DConnectSpecMethod method = [DConnectSpecConstants parseMethod:[api method]];
-                
+                DConnectSpecMethod method;
+                NSError *error;
+                if (![DConnectSpecConstants parseMethod:[api method] outMethod: &method error:&error]) {
+                    NSLog(@"addService error, %@", [error description]);
+                    DCLogW(@"addService error, %@", [error description]);
+                    continue;
+                }
                 DConnectApiSpec *spec = [profileSpec findApiSpec: [api path] method: method];
                 if (spec) {
                     [api setApiSpec: spec];

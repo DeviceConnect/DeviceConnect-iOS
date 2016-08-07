@@ -11,22 +11,19 @@
 
 @implementation DConnectProfileSpecBuilder
 
-/**
- * APIの仕様定義を追加する.
- *
- * @param path パス
- * @param method メソッド
- * @param apiSpec 仕様定義
- */
-- (void) addApiSpec: (NSString *) path method: (DConnectSpecMethod) method apiSpec: (DConnectApiSpec *) apiSpec {
+- (BOOL) addApiSpec: (NSString *) path method: (DConnectSpecMethod) method apiSpec: (DConnectApiSpec *) apiSpec error: (NSError **) error {
     NSString *pathKey = [path lowercaseString];
     NSMutableDictionary *apiSpecs = [self allApiSpecs][pathKey];        // Map<Method, DConnectApiSpec>
     if (!apiSpecs) {
         apiSpecs = [NSMutableDictionary dictionary];                    // HashMap<Method, DConnectApiSpec>
         [self allApiSpecs][pathKey] = apiSpecs;
     }
-    NSString *strMethod = [DConnectSpecConstants toMethodString: method];
+    NSString *strMethod = [DConnectSpecConstants toMethodString: method error: error];
+    if (!strMethod) {
+        return NO;
+    }
     apiSpecs[strMethod] = apiSpec;
+    return YES;
 }
 
 /**

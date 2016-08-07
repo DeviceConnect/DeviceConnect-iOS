@@ -14,6 +14,6 @@
 
 #pragma mark - DConnectProfileSpecJsonParser Methods.
 
-- (DConnectProfileSpec *) parseJson: (NSDictionary *) json;
+- (DConnectProfileSpec *) parseJson: (NSDictionary *) json error:(NSError **) error;
 
 @end

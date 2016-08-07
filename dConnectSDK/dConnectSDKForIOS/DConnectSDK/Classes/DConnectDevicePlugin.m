@@ -170,7 +170,11 @@
     NSString *profileName = [[profile profileName] lowercaseString];
 
     // プロファイルのJSONファイルを読み込み、内部生成したprofileSpecを新規登録する
-    [[self pluginSpec] addProfileSpec: profileName];
+    NSError *error = nil;
+    [[self pluginSpec] addProfileSpec: profileName error: &error];
+    if (error) {
+        DCLogE(@"addProfileSpec error ! %@", [error description]);
+    }
     
     // ProfileMapにprofileデータを追加
     [self.mProfileMap setObject: profile forKey: profileName];

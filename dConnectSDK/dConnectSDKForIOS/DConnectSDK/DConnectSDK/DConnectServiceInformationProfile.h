@@ -229,8 +229,11 @@ typedef NS_ENUM(NSInteger, DConnectServiceInformationProfileConnectState) {
  
  @param[in] profiles サポートしているI/F一覧
  @param[in,out] message I/Fの一覧を格納するメッセージ
+ @param[out] error エラー
+ @retval YES 成功
+ @retval NO エラー
  */
-+ (void) setSupportApis:(NSArray *)profiles target:(DConnectMessage *)message;
++ (BOOL) setSupportApis:(NSArray *)profiles target:(DConnectMessage *)message error:(NSError **) error;
 
 /*!
  @brief メッセージにデバイスの接続状態を設定する。
