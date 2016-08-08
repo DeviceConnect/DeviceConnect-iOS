@@ -66,9 +66,8 @@ typedef void (^CollisionBlock)(DConnectMessage *);
         };
         
         // API登録(didReceiveGetOnQuaternionRequest相当)
-        NSString *getOnQuaternionRequestApiPath = [self apiPathWithProfile: self.profileName
-                                                             interfaceName: DPSpheroProfileInterfaceQuaternion
-                                                             attributeName: DPSpheroProfileAttrOnQuaternion];
+        NSString *getOnQuaternionRequestApiPath = [self apiPath: DPSpheroProfileInterfaceQuaternion
+                                                  attributeName: DPSpheroProfileAttrOnQuaternion];
         [self addGetPath: getOnQuaternionRequestApiPath
                      api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
                          
@@ -98,9 +97,8 @@ typedef void (^CollisionBlock)(DConnectMessage *);
                      }];
         
         // API登録(didReceiveGetOnLocatorRequest相当)
-        NSString *getOnLocatorRequestApiPath = [self apiPathWithProfile: self.profileName
-                                                          interfaceName: DPSpheroProfileInterfaceLocator
-                                                          attributeName: DPSpheroProfileAttrOnLocator];
+        NSString *getOnLocatorRequestApiPath = [self apiPath: DPSpheroProfileInterfaceLocator
+                                               attributeName: DPSpheroProfileAttrOnLocator];
         [self addGetPath: getOnLocatorRequestApiPath
                      api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
                          
@@ -130,9 +128,8 @@ typedef void (^CollisionBlock)(DConnectMessage *);
                      }];
         
         // API登録(didReceiveGetOnCollisionRequest相当)
-        NSString *getOnCollisionRequestApiPath = [self apiPathWithProfile: self.profileName
-                                                            interfaceName: DPSpheroProfileInterfaceCollision
-                                                            attributeName: DPSpheroProfileAttrOnCollision];
+        NSString *getOnCollisionRequestApiPath = [self apiPath: DPSpheroProfileInterfaceCollision
+                                                 attributeName: DPSpheroProfileAttrOnCollision];
         [self addGetPath: getOnCollisionRequestApiPath
                      api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
                         
@@ -162,9 +159,8 @@ typedef void (^CollisionBlock)(DConnectMessage *);
                      }];
 
         // API登録(didReceivePutOnQuaternionRequest相当)
-        NSString *putOnQuaternionRequestApiPath = [self apiPathWithProfile: self.profileName
-                                                             interfaceName: DPSpheroProfileInterfaceQuaternion
-                                                             attributeName: DPSpheroProfileAttrOnQuaternion];
+        NSString *putOnQuaternionRequestApiPath = [self apiPath: DPSpheroProfileInterfaceQuaternion
+                                                  attributeName: DPSpheroProfileAttrOnQuaternion];
         [self addPutPath: putOnQuaternionRequestApiPath
                      api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
                         
@@ -180,9 +176,8 @@ typedef void (^CollisionBlock)(DConnectMessage *);
                      }];
         
         // API登録(didReceivePutOnLocatorRequest相当)
-        NSString *putOnLocatorRequestApiPath = [self apiPathWithProfile: self.profileName
-                                                          interfaceName: DPSpheroProfileInterfaceLocator
-                                                          attributeName: DPSpheroProfileAttrOnLocator];
+        NSString *putOnLocatorRequestApiPath = [self apiPath: DPSpheroProfileInterfaceLocator
+                                               attributeName: DPSpheroProfileAttrOnLocator];
         [self addPutPath: putOnLocatorRequestApiPath
                      api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
                         
@@ -198,9 +193,8 @@ typedef void (^CollisionBlock)(DConnectMessage *);
                      }];
         
         // API登録(didReceivePutOnCollisionRequest相当)
-        NSString *putOnCollisionRequestApiPath = [self apiPathWithProfile: self.profileName
-                                                            interfaceName: DPSpheroProfileInterfaceCollision
-                                                            attributeName: DPSpheroProfileAttrOnCollision];
+        NSString *putOnCollisionRequestApiPath = [self apiPath: DPSpheroProfileInterfaceCollision
+                                                 attributeName: DPSpheroProfileAttrOnCollision];
         [self addPutPath: putOnCollisionRequestApiPath
                      api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
                         
@@ -216,9 +210,8 @@ typedef void (^CollisionBlock)(DConnectMessage *);
                      }];
         
         // API登録(didReceiveDeleteOnQuaternionRequest相当)
-        NSString *deleteOnQuaternionRequestApiPath = [self apiPathWithProfile: self.profileName
-                                                             interfaceName: DPSpheroProfileInterfaceQuaternion
-                                                             attributeName: DPSpheroProfileAttrOnQuaternion];
+        NSString *deleteOnQuaternionRequestApiPath = [self apiPath: DPSpheroProfileInterfaceQuaternion
+                                                     attributeName: DPSpheroProfileAttrOnQuaternion];
         [self addDeletePath: deleteOnQuaternionRequestApiPath
                         api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
                          
@@ -234,9 +227,8 @@ typedef void (^CollisionBlock)(DConnectMessage *);
                         }];
         
         // API登録(didReceiveDeleteOnLocatorRequest相当)
-        NSString *deleteOnLocatorRequestApiPath = [self apiPathWithProfile: self.profileName
-                                                          interfaceName: DPSpheroProfileInterfaceLocator
-                                                          attributeName: DPSpheroProfileAttrOnLocator];
+        NSString *deleteOnLocatorRequestApiPath = [self apiPath: DPSpheroProfileInterfaceLocator
+                                                  attributeName: DPSpheroProfileAttrOnLocator];
         [self addDeletePath: deleteOnLocatorRequestApiPath
                         api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
                          
@@ -252,9 +244,8 @@ typedef void (^CollisionBlock)(DConnectMessage *);
                         }];
         
         // API登録(didReceiveDeleteOnCollisionRequest相当)
-        NSString *deleteOnCollisionRequestApiPath = [self apiPathWithProfile: self.profileName
-                                                            interfaceName: DPSpheroProfileInterfaceCollision
-                                                            attributeName: DPSpheroProfileAttrOnCollision];
+        NSString *deleteOnCollisionRequestApiPath = [self apiPath: DPSpheroProfileInterfaceCollision
+                                                    attributeName: DPSpheroProfileAttrOnCollision];
         [self addDeletePath: deleteOnCollisionRequestApiPath
                         api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
                          

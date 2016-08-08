@@ -28,9 +28,8 @@
         __weak DPAllJoynSystemProfile *weakSelf = self;
         
         // API登録(dataSourceのsettingPageForRequestを実行する処理を登録)
-        NSString *putSettingPageForRequestApiPath = [self apiPathWithProfile: self.profileName
-                                                               interfaceName: DConnectSystemProfileInterfaceDevice
-                                                               attributeName: DConnectSystemProfileAttrWakeUp];
+        NSString *putSettingPageForRequestApiPath = [self apiPath: DConnectSystemProfileInterfaceDevice
+                                                    attributeName: DConnectSystemProfileAttrWakeUp];
         [self addPutPath: putSettingPageForRequestApiPath
                      api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
                          

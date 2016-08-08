@@ -42,9 +42,8 @@ static NSString *const KEY_PATHS = @"paths";
         __weak id blockProvider = self.provider;
         __weak id<DConnectServiceInformationProfileDataSource> blockDataSource = _dataSource;
         
-        NSString *getInformationApiPath = [self apiPathWithProfile: self.profileName
-                                                  interfaceName: nil
-                                                  attributeName: nil];
+        NSString *getInformationApiPath = [self apiPath: nil
+                                          attributeName: nil];
         [self addGetPath: getInformationApiPath
                      api:^(DConnectRequestMessage *request, DConnectResponseMessage *response) {
                          

@@ -37,9 +37,8 @@ top = top.presentedViewController; \
         __weak DPHostCanvasProfile *weakSelf = self;
         
         // API登録(didReceivePostDrawImageRequest相当)
-        NSString *postDrawImageRequestApiPath = [self apiPathWithProfile: self.profileName
-                                                        interfaceName: nil
-                                                        attributeName: DConnectCanvasProfileAttrDrawImage];
+        NSString *postDrawImageRequestApiPath = [self apiPath: nil
+                                                attributeName: DConnectCanvasProfileAttrDrawImage];
         [self addPostPath: postDrawImageRequestApiPath
                      api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
 
@@ -109,9 +108,8 @@ top = top.presentedViewController; \
                      }];
         
         // API登録(didReceiveDeleteDrawImageRequest相当)
-        NSString *deleteDrawImageRequestApiPath = [self apiPathWithProfile: self.profileName
-                                                           interfaceName: nil
-                                                           attributeName: DConnectCanvasProfileAttrDrawImage];
+        NSString *deleteDrawImageRequestApiPath = [self apiPath: nil
+                                                  attributeName: DConnectCanvasProfileAttrDrawImage];
         [self addDeletePath: deleteDrawImageRequestApiPath
                       api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
                           

@@ -346,9 +346,8 @@ typedef NS_ENUM(NSUInteger, OptionIndex) {
         self.defaultAudioRecorderId = [NSNumber numberWithUnsignedInteger:self.recorderArr.count - 1];
         
         // API登録(didReceiveGetMediaRecorderRequest相当)
-        NSString *getPlayStatusRequestApiPath = [self apiPathWithProfile: self.profileName
-                                                           interfaceName: nil
-                                                           attributeName: DConnectMediaStreamRecordingProfileAttrMediaRecorder];
+        NSString *getPlayStatusRequestApiPath = [self apiPath: nil
+                                                attributeName: DConnectMediaStreamRecordingProfileAttrMediaRecorder];
         [self addGetPath: getPlayStatusRequestApiPath
                      api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
                          DConnectArray *recorders = [DConnectArray array];
@@ -400,9 +399,8 @@ typedef NS_ENUM(NSUInteger, OptionIndex) {
                      }];
          
         // API登録(didReceivePostTakePhotoRequest相当)
-        NSString *postTakePhotoRequestApiPath = [self apiPathWithProfile: self.profileName
-                                                           interfaceName: nil
-                                                           attributeName: DConnectMediaStreamRecordingProfileAttrTakePhoto];
+        NSString *postTakePhotoRequestApiPath = [self apiPath: nil
+                                                attributeName: DConnectMediaStreamRecordingProfileAttrTakePhoto];
         [self addPostPath: postTakePhotoRequestApiPath
                      api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
                          
@@ -591,9 +589,8 @@ typedef NS_ENUM(NSUInteger, OptionIndex) {
                      }];
         
         // API登録(didReceivePostRecordRequest相当)
-        NSString *postRecordRequestApiPath = [self apiPathWithProfile: self.profileName
-                                                           interfaceName: nil
-                                                           attributeName: DConnectMediaStreamRecordingProfileAttrRecord];
+        NSString *postRecordRequestApiPath = [self apiPath: nil
+                                             attributeName: DConnectMediaStreamRecordingProfileAttrRecord];
         [self addPostPath: postRecordRequestApiPath
                       api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
                           
@@ -734,9 +731,8 @@ typedef NS_ENUM(NSUInteger, OptionIndex) {
                       }];
         
         // API登録(didReceivePutPauseRequest相当)
-        NSString *putPauseRequestApiPath = [self apiPathWithProfile: self.profileName
-                                                      interfaceName: nil
-                                                      attributeName: DConnectMediaStreamRecordingProfileAttrPause];
+        NSString *putPauseRequestApiPath = [self apiPath: nil
+                                           attributeName: DConnectMediaStreamRecordingProfileAttrPause];
         [self addPutPath: putPauseRequestApiPath
                      api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
                          
@@ -819,9 +815,8 @@ typedef NS_ENUM(NSUInteger, OptionIndex) {
                      }];
         
         // API登録(didReceivePutResumeRequest相当)
-        NSString *putResumeRequestApiPath = [self apiPathWithProfile: self.profileName
-                                                       interfaceName: nil
-                                                       attributeName: DConnectMediaStreamRecordingProfileAttrResume];
+        NSString *putResumeRequestApiPath = [self apiPath: nil
+                                            attributeName: DConnectMediaStreamRecordingProfileAttrResume];
         [self addPutPath: putResumeRequestApiPath
                      api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
 
@@ -898,9 +893,8 @@ typedef NS_ENUM(NSUInteger, OptionIndex) {
                      }];
         
         // API登録(didReceivePutStopRequest相当)
-        NSString *putStopRequestApiPath = [self apiPathWithProfile: self.profileName
-                                                     interfaceName: nil
-                                                     attributeName: DConnectMediaStreamRecordingProfileAttrStop];
+        NSString *putStopRequestApiPath = [self apiPath: nil
+                                          attributeName: DConnectMediaStreamRecordingProfileAttrStop];
         [self addPutPath: putStopRequestApiPath
                      api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
 
@@ -1032,9 +1026,8 @@ typedef NS_ENUM(NSUInteger, OptionIndex) {
                      }];
         
         // API登録(didReceivePutMuteTrackRequest相当)
-        NSString *putMuteTrackRequestApiPath = [self apiPathWithProfile: self.profileName
-                                                          interfaceName: nil
-                                                          attributeName: DConnectMediaStreamRecordingProfileAttrMuteTrack];
+        NSString *putMuteTrackRequestApiPath = [self apiPath: nil
+                                               attributeName: DConnectMediaStreamRecordingProfileAttrMuteTrack];
         [self addPutPath: putMuteTrackRequestApiPath
                      api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
 
@@ -1107,9 +1100,8 @@ typedef NS_ENUM(NSUInteger, OptionIndex) {
                      }];
         
         // API登録(didReceivePutUnmuteTrackRequest相当)
-        NSString *putUnmuteTrackRequestApiPath = [self apiPathWithProfile: self.profileName
-                                                            interfaceName: nil
-                                                            attributeName: DConnectMediaStreamRecordingProfileAttrUnmuteTrack];
+        NSString *putUnmuteTrackRequestApiPath = [self apiPath: nil
+                                                 attributeName: DConnectMediaStreamRecordingProfileAttrUnmuteTrack];
         [self addPutPath: putUnmuteTrackRequestApiPath
                      api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
 
@@ -1181,9 +1173,8 @@ typedef NS_ENUM(NSUInteger, OptionIndex) {
                      }];
         
         // API登録(didReceivePutOnPhotoRequest相当)
-        NSString *putOnPhotoRequestApiPath = [self apiPathWithProfile: self.profileName
-                                                        interfaceName: nil
-                                                        attributeName: DConnectMediaStreamRecordingProfileAttrOnPhoto];
+        NSString *putOnPhotoRequestApiPath = [self apiPath: nil
+                                             attributeName: DConnectMediaStreamRecordingProfileAttrOnPhoto];
         [self addPutPath: putOnPhotoRequestApiPath
                      api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
                          switch ([[weakSelf eventMgr] addEventForRequest:request]) {
@@ -1203,9 +1194,8 @@ typedef NS_ENUM(NSUInteger, OptionIndex) {
                      }];
         
         // API登録(didReceivePutOnRecordingChangeRequest相当)
-        NSString *putOnRecordingChangeRequestApiPath = [self apiPathWithProfile: self.profileName
-                                                                  interfaceName: nil
-                                                                  attributeName: DConnectMediaStreamRecordingProfileAttrOnRecordingChange];
+        NSString *putOnRecordingChangeRequestApiPath = [self apiPath: nil
+                                                       attributeName: DConnectMediaStreamRecordingProfileAttrOnRecordingChange];
         [self addPutPath: putOnRecordingChangeRequestApiPath
                      api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
                          switch ([[weakSelf eventMgr] addEventForRequest:request]) {
@@ -1225,9 +1215,8 @@ typedef NS_ENUM(NSUInteger, OptionIndex) {
                      }];
         
         // API登録(didReceivePutOnDataAvailableRequest相当)
-        NSString *putOnDataAvailableRequestApiPath = [self apiPathWithProfile: self.profileName
-                                                                interfaceName: nil
-                                                                attributeName: DConnectMediaStreamRecordingProfileAttrOnDataAvailable];
+        NSString *putOnDataAvailableRequestApiPath = [self apiPath: nil
+                                                     attributeName: DConnectMediaStreamRecordingProfileAttrOnDataAvailable];
         [self addPutPath: putOnDataAvailableRequestApiPath
                      api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
 
@@ -1261,9 +1250,8 @@ typedef NS_ENUM(NSUInteger, OptionIndex) {
                      }];
         
         // API登録(didReceiveDeleteOnPhotoRequest相当)
-        NSString *deleteOnPhotoRequestApiPath = [self apiPathWithProfile: self.profileName
-                                                           interfaceName: nil
-                                                           attributeName: DConnectMediaStreamRecordingProfileAttrOnPhoto];
+        NSString *deleteOnPhotoRequestApiPath = [self apiPath: nil
+                                                attributeName: DConnectMediaStreamRecordingProfileAttrOnPhoto];
         [self addDeletePath: deleteOnPhotoRequestApiPath
                         api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
                             switch ([[weakSelf eventMgr] removeEventForRequest:request]) {
@@ -1283,9 +1271,8 @@ typedef NS_ENUM(NSUInteger, OptionIndex) {
                         }];
 
         // API登録(didReceiveDeleteOnRecordingChangeRequest相当)
-        NSString *deleteOnRecordingChangeRequestApiPath = [self apiPathWithProfile: self.profileName
-                                                                     interfaceName: nil
-                                                                     attributeName: DConnectMediaStreamRecordingProfileAttrOnRecordingChange];
+        NSString *deleteOnRecordingChangeRequestApiPath = [self apiPath: nil
+                                                          attributeName: DConnectMediaStreamRecordingProfileAttrOnRecordingChange];
         [self addDeletePath: deleteOnRecordingChangeRequestApiPath
                         api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
                             switch ([[weakSelf eventMgr] removeEventForRequest:request]) {
@@ -1305,9 +1292,8 @@ typedef NS_ENUM(NSUInteger, OptionIndex) {
                         }];
         
         // API登録(didReceiveDeleteOnDataAvailableRequest相当)
-        NSString *deleteOnDataAvailableRequestApiPath = [self apiPathWithProfile: self.profileName
-                                                                   interfaceName: nil
-                                                                   attributeName: DConnectMediaStreamRecordingProfileAttrOnDataAvailable];
+        NSString *deleteOnDataAvailableRequestApiPath = [self apiPath: nil
+                                                        attributeName: DConnectMediaStreamRecordingProfileAttrOnDataAvailable];
         [self addDeletePath: deleteOnDataAvailableRequestApiPath
                         api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
 

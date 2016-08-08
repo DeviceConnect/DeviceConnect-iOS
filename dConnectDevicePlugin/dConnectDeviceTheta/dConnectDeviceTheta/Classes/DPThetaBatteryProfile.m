@@ -24,9 +24,8 @@
         self.delegate = self;
         
         // API登録(didReceiveGetLevelRequest相当)
-        NSString *getLevelRequestApiPath = [self apiPathWithProfile: self.profileName
-                                                      interfaceName: nil
-                                                      attributeName: DConnectBatteryProfileAttrLevel];
+        NSString *getLevelRequestApiPath = [self apiPath: nil
+                                           attributeName: DConnectBatteryProfileAttrLevel];
         [self addGetPath: getLevelRequestApiPath api: ^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
             
             CONNECT_CHECK();
@@ -43,9 +42,8 @@
         }];
         
         // API登録(didReceiveGetAllRequest相当)
-        NSString *getAllRequestApiPath = [self apiPathWithProfile: self.profileName
-                                                    interfaceName: nil
-                                                    attributeName: nil];
+        NSString *getAllRequestApiPath = [self apiPath: nil
+                                         attributeName: nil];
         [self addGetPath: getAllRequestApiPath api: ^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
             CONNECT_CHECK();
             float level = [[DPThetaManager sharedManager] getBatteryLevel] / (float) 100.0;

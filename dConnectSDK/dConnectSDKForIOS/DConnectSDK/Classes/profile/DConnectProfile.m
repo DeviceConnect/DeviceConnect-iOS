@@ -52,22 +52,6 @@
 
 
 
-- (NSString *) apiPathWithProfile : (NSString *) profileName interfaceName: (NSString *) interfaceName attributeName:(NSString *) attributeName {
-    
-    NSMutableString *path = [NSMutableString string];
-    [path appendString: @"/"];
-    [path appendString: profileName];
-    if (interfaceName) {
-        [path appendString: @"/"];
-        [path appendString: interfaceName];
-    }
-    if (attributeName) {
-        [path appendString: @"/"];
-        [path appendString: attributeName];
-    }
-    return path;
-}
-
 - (NSString *) apiPath : (NSString *) interfaceName attributeName:(NSString *) attributeName {
     
     NSMutableString *path = [NSMutableString string];

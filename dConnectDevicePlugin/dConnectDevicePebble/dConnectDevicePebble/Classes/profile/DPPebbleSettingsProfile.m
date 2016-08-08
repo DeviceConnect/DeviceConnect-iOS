@@ -25,9 +25,8 @@
 		self.delegate = self;
         
         // API登録(didReceiveGetDateRequest相当)
-        NSString *getDateRequestApiPath = [self apiPathWithProfile: self.profileName
-                                                     interfaceName: nil
-                                                     attributeName: DConnectSettingsProfileAttrDate];
+        NSString *getDateRequestApiPath = [self apiPath: nil
+                                          attributeName: DConnectSettingsProfileAttrDate];
         [self addGetPath: getDateRequestApiPath
                      api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
                          

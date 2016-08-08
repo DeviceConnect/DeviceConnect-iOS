@@ -71,9 +71,8 @@
         };
         
         // API登録(didReceivePostCallRequest相当)
-        NSString *postCallRequestApiPath = [self apiPathWithProfile: self.profileName
-                                                      interfaceName: nil
-                                                      attributeName: DConnectPhoneProfileAttrCall];
+        NSString *postCallRequestApiPath = [self apiPath: nil
+                                           attributeName: DConnectPhoneProfileAttrCall];
         [self addPostPath: postCallRequestApiPath
                       api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
                           
@@ -114,9 +113,8 @@
                       }];
 
         // API登録(didReceivePutOnConnectRequest相当)
-        NSString *putOnConnectRequestApiPath = [self apiPathWithProfile: self.profileName
-                                                          interfaceName: nil
-                                                          attributeName: DConnectPhoneProfileAttrOnConnect];
+        NSString *putOnConnectRequestApiPath = [self apiPath: nil
+                                               attributeName: DConnectPhoneProfileAttrOnConnect];
         [self addPutPath: putOnConnectRequestApiPath
                      api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
                           
@@ -137,9 +135,8 @@
                      }];
         
         // API登録(didReceiveDeleteOnConnectRequest相当)
-        NSString *deleteOnConnectRequestApiPath = [self apiPathWithProfile: self.profileName
-                                                             interfaceName: nil
-                                                             attributeName: DConnectPhoneProfileAttrOnConnect];
+        NSString *deleteOnConnectRequestApiPath = [self apiPath: nil
+                                                  attributeName: DConnectPhoneProfileAttrOnConnect];
         [self addDeletePath: deleteOnConnectRequestApiPath
                         api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
                          

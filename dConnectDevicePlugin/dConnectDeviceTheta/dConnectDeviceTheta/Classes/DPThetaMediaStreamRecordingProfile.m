@@ -47,9 +47,8 @@ static NSString *const DPThetaMovieMimeType = @"video/mov";
         self.server = [DPThetaMixedReplaceMediaServer new];
         
         // API登録(didReceiveGetMediaRecorderRequest相当)
-        NSString *getMediaRecorderRequestApiPath = [self apiPathWithProfile: self.profileName
-                                                              interfaceName: nil
-                                                              attributeName: DConnectMediaStreamRecordingProfileAttrMediaRecorder];
+        NSString *getMediaRecorderRequestApiPath = [self apiPath: nil
+                                                   attributeName: DConnectMediaStreamRecordingProfileAttrMediaRecorder];
         [self addGetPath: getMediaRecorderRequestApiPath
                      api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
                          
@@ -88,9 +87,8 @@ static NSString *const DPThetaMovieMimeType = @"video/mov";
                      }];
         
         // API登録(didReceivePostTakePhotoRequest相当)
-        NSString *postTakePhotoRequestApiPath = [self apiPathWithProfile: self.profileName
-                                                           interfaceName: nil
-                                                           attributeName: DConnectMediaStreamRecordingProfileAttrTakePhoto];
+        NSString *postTakePhotoRequestApiPath = [self apiPath: nil
+                                                attributeName: DConnectMediaStreamRecordingProfileAttrTakePhoto];
         [self addPostPath: postTakePhotoRequestApiPath
                       api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
 
@@ -118,9 +116,8 @@ static NSString *const DPThetaMovieMimeType = @"video/mov";
                       }];
         
         // API登録(didReceivePostRecordRequest相当)
-        NSString *postRecordRequestApiPath = [self apiPathWithProfile: self.profileName
-                                                        interfaceName: nil
-                                                        attributeName: DConnectMediaStreamRecordingProfileAttrRecord];
+        NSString *postRecordRequestApiPath = [self apiPath: nil
+                                             attributeName: DConnectMediaStreamRecordingProfileAttrRecord];
         [self addPostPath: postRecordRequestApiPath
                       api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
 
@@ -150,9 +147,8 @@ static NSString *const DPThetaMovieMimeType = @"video/mov";
                       }];
         
         // API登録(didReceivePutStopRequest相当)
-        NSString *putStopRequestApiPath = [self apiPathWithProfile: self.profileName
-                                                     interfaceName: nil
-                                                     attributeName: DConnectMediaStreamRecordingProfileAttrStop];
+        NSString *putStopRequestApiPath = [self apiPath: nil
+                                          attributeName: DConnectMediaStreamRecordingProfileAttrStop];
         [self addPutPath: putStopRequestApiPath
                      api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
                           
@@ -168,9 +164,8 @@ static NSString *const DPThetaMovieMimeType = @"video/mov";
                      }];
         
         // API登録(didReceivePutOnPhotoRequest相当)
-        NSString *putOnPhotoRequestApiPath = [self apiPathWithProfile: self.profileName
-                                                     interfaceName: nil
-                                                     attributeName: DConnectMediaStreamRecordingProfileAttrOnPhoto];
+        NSString *putOnPhotoRequestApiPath = [self apiPath: nil
+                                             attributeName: DConnectMediaStreamRecordingProfileAttrOnPhoto];
         [self addPutPath: putOnPhotoRequestApiPath
                      api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
                          
@@ -188,9 +183,8 @@ static NSString *const DPThetaMovieMimeType = @"video/mov";
                      }];
         
         // API登録(didReceivePutOnRecordingChangeRequest相当)
-        NSString *putOnRecordingChangeRequestApiPath = [self apiPathWithProfile: self.profileName
-                                                                  interfaceName: nil
-                                                                  attributeName: DConnectMediaStreamRecordingProfileAttrOnRecordingChange];
+        NSString *putOnRecordingChangeRequestApiPath = [self apiPath: nil
+                                                       attributeName: DConnectMediaStreamRecordingProfileAttrOnRecordingChange];
         [self addPutPath: putOnRecordingChangeRequestApiPath
                      api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
                          
@@ -217,9 +211,8 @@ static NSString *const DPThetaMovieMimeType = @"video/mov";
                      }];
         
         // API登録(didReceiveDeleteOnPhotoRequest相当)
-        NSString *deleteOnPhotoRequestApiPath = [self apiPathWithProfile: self.profileName
-                                                           interfaceName: nil
-                                                           attributeName: DConnectMediaStreamRecordingProfileAttrOnPhoto];
+        NSString *deleteOnPhotoRequestApiPath = [self apiPath: nil
+                                                attributeName: DConnectMediaStreamRecordingProfileAttrOnPhoto];
         [self addDeletePath: deleteOnPhotoRequestApiPath
                         api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
 
@@ -233,9 +226,8 @@ static NSString *const DPThetaMovieMimeType = @"video/mov";
                         }];
         
         // API登録(didReceiveDeleteOnRecordingChangeRequest相当)
-        NSString *deleteOnRecordingChangeRequestApiPath = [self apiPathWithProfile: self.profileName
-                                                                  interfaceName: nil
-                                                                  attributeName: DConnectMediaStreamRecordingProfileAttrOnRecordingChange];
+        NSString *deleteOnRecordingChangeRequestApiPath = [self apiPath: nil
+                                                          attributeName: DConnectMediaStreamRecordingProfileAttrOnRecordingChange];
         [self addDeletePath: deleteOnRecordingChangeRequestApiPath
                         api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
                             

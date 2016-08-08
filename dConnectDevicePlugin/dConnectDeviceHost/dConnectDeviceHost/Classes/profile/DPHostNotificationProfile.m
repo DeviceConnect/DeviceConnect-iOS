@@ -81,9 +81,8 @@ typedef NS_ENUM(NSUInteger, NotificationIndex) {
         });
 
         // API登録(didReceivePostNotifyRequest相当)
-        NSString *postNotifyRequestApiPath = [self apiPathWithProfile: self.profileName
-                                                        interfaceName: nil
-                                                        attributeName: DConnectNotificationProfileAttrNotify];
+        NSString *postNotifyRequestApiPath = [self apiPath: nil
+                                             attributeName: DConnectNotificationProfileAttrNotify];
         [self addPostPath: postNotifyRequestApiPath
                      api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
                          
@@ -149,9 +148,8 @@ typedef NS_ENUM(NSUInteger, NotificationIndex) {
                      }];
         
         // API登録(didReceivePutOnClickRequest相当)
-        NSString *putOnClickRequestApiPath = [self apiPathWithProfile: self.profileName
-                                                        interfaceName: nil
-                                                        attributeName: DConnectNotificationProfileAttrOnClick];
+        NSString *putOnClickRequestApiPath = [self apiPath: nil
+                                             attributeName: DConnectNotificationProfileAttrOnClick];
         [self addPutPath: putOnClickRequestApiPath
                      api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
                          
@@ -172,9 +170,8 @@ typedef NS_ENUM(NSUInteger, NotificationIndex) {
                      }];
         
         // API登録(didReceivePutOnShowRequest相当)
-        NSString *putOnShowRequestApiPath = [self apiPathWithProfile: self.profileName
-                                                       interfaceName: nil
-                                                       attributeName: DConnectNotificationProfileAttrOnShow];
+        NSString *putOnShowRequestApiPath = [self apiPath: nil
+                                            attributeName: DConnectNotificationProfileAttrOnShow];
         [self addPutPath: putOnShowRequestApiPath
                      api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
                          
@@ -195,9 +192,8 @@ typedef NS_ENUM(NSUInteger, NotificationIndex) {
                      }];
         
         // API登録(didReceivePutOnCloseRequest相当)
-        NSString *putOnCloseRequestApiPath = [self apiPathWithProfile: self.profileName
-                                                        interfaceName: nil
-                                                        attributeName: DConnectNotificationProfileAttrOnClose];
+        NSString *putOnCloseRequestApiPath = [self apiPath: nil
+                                             attributeName: DConnectNotificationProfileAttrOnClose];
         [self addPutPath: putOnCloseRequestApiPath
                      api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
                          
@@ -218,9 +214,8 @@ typedef NS_ENUM(NSUInteger, NotificationIndex) {
                      }];
         
         // API登録(didReceiveDeleteNotifyRequest相当)
-        NSString *deleteNotifyRequestApiPath = [self apiPathWithProfile: self.profileName
-                                                          interfaceName: nil
-                                                          attributeName: DConnectNotificationProfileAttrNotify];
+        NSString *deleteNotifyRequestApiPath = [self apiPath: nil
+                                               attributeName: DConnectNotificationProfileAttrNotify];
         [self addDeletePath: deleteNotifyRequestApiPath
                         api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
                          
@@ -247,9 +242,8 @@ typedef NS_ENUM(NSUInteger, NotificationIndex) {
                         }];
         
         // API登録(didReceiveDeleteOnClickRequest相当)
-        NSString *deleteOnClickRequestApiPath = [self apiPathWithProfile: self.profileName
-                                                           interfaceName: nil
-                                                           attributeName: DConnectNotificationProfileAttrOnClick];
+        NSString *deleteOnClickRequestApiPath = [self apiPath: nil
+                                                attributeName: DConnectNotificationProfileAttrOnClick];
         [self addDeletePath: deleteOnClickRequestApiPath
                         api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
                             
@@ -270,9 +264,8 @@ typedef NS_ENUM(NSUInteger, NotificationIndex) {
                         }];
         
         // API登録(didReceiveDeleteOnShowRequest相当)
-        NSString *deleteOnShowRequestApiPath = [self apiPathWithProfile: self.profileName
-                                                           interfaceName: nil
-                                                           attributeName: DConnectNotificationProfileAttrOnShow];
+        NSString *deleteOnShowRequestApiPath = [self apiPath: nil
+                                               attributeName: DConnectNotificationProfileAttrOnShow];
         [self addDeletePath: deleteOnShowRequestApiPath
                         api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
                             
@@ -293,9 +286,8 @@ typedef NS_ENUM(NSUInteger, NotificationIndex) {
                         }];
         
         // API登録(didReceiveDeleteOnCloseRequest相当)
-        NSString *deleteOnCloseRequestApiPath = [self apiPathWithProfile: self.profileName
-                                                           interfaceName: nil
-                                                           attributeName: DConnectNotificationProfileAttrOnClose];
+        NSString *deleteOnCloseRequestApiPath = [self apiPath: nil
+                                                attributeName: DConnectNotificationProfileAttrOnClose];
         [self addDeletePath: deleteOnCloseRequestApiPath
                         api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
                             

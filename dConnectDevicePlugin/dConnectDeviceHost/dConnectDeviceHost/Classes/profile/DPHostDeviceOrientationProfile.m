@@ -75,9 +75,8 @@ static const double EarthGravitationalAcceleration = 9.81;
         };
 
         // API登録(didReceiveGetOnDeviceOrientationRequest相当)
-        NSString *getOnDeviceOrientationRequestApiPath = [self apiPathWithProfile: self.profileName
-                                                           interfaceName: nil
-                                                           attributeName: DConnectDeviceOrientationProfileAttrOnDeviceOrientation];
+        NSString *getOnDeviceOrientationRequestApiPath = [self apiPath: nil
+                                                         attributeName: DConnectDeviceOrientationProfileAttrOnDeviceOrientation];
         [self addGetPath: getOnDeviceOrientationRequestApiPath
                       api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
                           NSString *serviceId = [request serviceId];
@@ -110,9 +109,8 @@ static const double EarthGravitationalAcceleration = 9.81;
                       }];
         
         // API登録(didReceivePutOnDeviceOrientationRequest相当)
-        NSString *putOnDeviceOrientationRequestApiPath = [self apiPathWithProfile: self.profileName
-                                                                    interfaceName: nil
-                                                                    attributeName: DConnectDeviceOrientationProfileAttrOnDeviceOrientation];
+        NSString *putOnDeviceOrientationRequestApiPath = [self apiPath: nil
+                                                         attributeName: DConnectDeviceOrientationProfileAttrOnDeviceOrientation];
         [self addPutPath: putOnDeviceOrientationRequestApiPath
                      api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
                          NSString *serviceId = [request serviceId];
@@ -139,9 +137,8 @@ static const double EarthGravitationalAcceleration = 9.81;
                      }];
         
         // API登録(didReceiveDeleteOnDeviceOrientationRequest相当)
-        NSString *deleteOnDeviceOrientationRequestApiPath = [self apiPathWithProfile: self.profileName
-                                                                    interfaceName: nil
-                                                                    attributeName: DConnectDeviceOrientationProfileAttrOnDeviceOrientation];
+        NSString *deleteOnDeviceOrientationRequestApiPath = [self apiPath: nil
+                                                            attributeName: DConnectDeviceOrientationProfileAttrOnDeviceOrientation];
         [self addDeletePath: deleteOnDeviceOrientationRequestApiPath
                      api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
                          NSString *serviceId = [request serviceId];

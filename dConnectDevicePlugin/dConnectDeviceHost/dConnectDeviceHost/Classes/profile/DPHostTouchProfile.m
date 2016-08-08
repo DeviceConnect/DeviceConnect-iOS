@@ -97,9 +97,8 @@ static const long FLAG_ON_TOUCH_CANCEL = 0x00000020;
         __weak DConnectEventManager *weakEventMgr = self.eventMgr;
         
         // API登録(didReceiveGetOnTouchRequest相当)
-        NSString *getOnTouchRequestApiPath = [self apiPathWithProfile: self.profileName
-                                                        interfaceName: nil
-                                                        attributeName: DConnectTouchProfileAttrOnTouch];
+        NSString *getOnTouchRequestApiPath = [self apiPath: nil
+                                             attributeName: DConnectTouchProfileAttrOnTouch];
         [self addGetPath: getOnTouchRequestApiPath
                      api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
                          DConnectMessage *touch = [weakSelf getTouchCache:DConnectTouchProfileAttrOnTouch];
@@ -109,9 +108,8 @@ static const long FLAG_ON_TOUCH_CANCEL = 0x00000020;
                      }];
 
         // API登録(didReceiveGetOnTouchStartRequest相当)
-        NSString *getOnTouchStartRequestApiPath = [self apiPathWithProfile: self.profileName
-                                                             interfaceName: nil
-                                                             attributeName: DConnectTouchProfileAttrOnTouchStart];
+        NSString *getOnTouchStartRequestApiPath = [self apiPath: nil
+                                                  attributeName: DConnectTouchProfileAttrOnTouchStart];
         [self addGetPath: getOnTouchStartRequestApiPath
                      api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
                          DConnectMessage *touch = [weakSelf getTouchCache:DConnectTouchProfileAttrOnTouchStart];
@@ -121,9 +119,8 @@ static const long FLAG_ON_TOUCH_CANCEL = 0x00000020;
                      }];
 
         // API登録(didReceiveGetOnTouchEndRequest相当)
-        NSString *getOnTouchEndRequestApiPath = [self apiPathWithProfile: self.profileName
-                                                           interfaceName: nil
-                                                           attributeName: DConnectTouchProfileAttrOnTouchEnd];
+        NSString *getOnTouchEndRequestApiPath = [self apiPath: nil
+                                                attributeName: DConnectTouchProfileAttrOnTouchEnd];
         [self addGetPath: getOnTouchEndRequestApiPath
                      api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
                          DConnectMessage *touch = [weakSelf getTouchCache:DConnectTouchProfileAttrOnTouchEnd];
@@ -133,9 +130,8 @@ static const long FLAG_ON_TOUCH_CANCEL = 0x00000020;
                      }];
         
         // API登録(didReceiveGetOnDoubleTapRequest相当)
-        NSString *getOnDoubleTapRequestApiPath = [self apiPathWithProfile: self.profileName
-                                                            interfaceName: nil
-                                                            attributeName: DConnectTouchProfileAttrOnDoubleTap];
+        NSString *getOnDoubleTapRequestApiPath = [self apiPath: nil
+                                                 attributeName: DConnectTouchProfileAttrOnDoubleTap];
         [self addGetPath: getOnDoubleTapRequestApiPath
                      api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
                          DConnectMessage *touch = [weakSelf getTouchCache:DConnectTouchProfileAttrOnDoubleTap];
@@ -145,9 +141,8 @@ static const long FLAG_ON_TOUCH_CANCEL = 0x00000020;
                      }];
         
         // API登録(didReceiveGetOnTouchMoveRequest相当)
-        NSString *getOnTouchMoveRequestApiPath = [self apiPathWithProfile: self.profileName
-                                                            interfaceName: nil
-                                                            attributeName: DConnectTouchProfileAttrOnTouchMove];
+        NSString *getOnTouchMoveRequestApiPath = [self apiPath: nil
+                                                 attributeName: DConnectTouchProfileAttrOnTouchMove];
         [self addGetPath: getOnTouchMoveRequestApiPath
                      api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
                          DConnectMessage *touch = [weakSelf getTouchCache:DConnectTouchProfileAttrOnTouchMove];
@@ -157,9 +152,8 @@ static const long FLAG_ON_TOUCH_CANCEL = 0x00000020;
                      }];
         
         // API登録(didReceiveGetOnTouchCancelRequest相当)
-        NSString *getOnTouchCancelRequestApiPath = [self apiPathWithProfile: self.profileName
-                                                              interfaceName: nil
-                                                              attributeName: DConnectTouchProfileAttrOnTouchCancel];
+        NSString *getOnTouchCancelRequestApiPath = [self apiPath: nil
+                                                   attributeName: DConnectTouchProfileAttrOnTouchCancel];
         [self addGetPath: getOnTouchCancelRequestApiPath
                      api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
                          DConnectMessage *touch = [weakSelf getTouchCache:DConnectTouchProfileAttrOnTouchCancel];
@@ -169,9 +163,8 @@ static const long FLAG_ON_TOUCH_CANCEL = 0x00000020;
                      }];
         
         // API登録(didReceivePutOnTouchRequest相当)
-        NSString *putOnTouchRequestApiPath = [self apiPathWithProfile: self.profileName
-                                                        interfaceName: nil
-                                                        attributeName: DConnectTouchProfileAttrOnTouch];
+        NSString *putOnTouchRequestApiPath = [self apiPath: nil
+                                             attributeName: DConnectTouchProfileAttrOnTouch];
         [self addPutPath: putOnTouchRequestApiPath
                      api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
                          switch ([weakEventMgr addEventForRequest:request]) {
@@ -193,9 +186,8 @@ static const long FLAG_ON_TOUCH_CANCEL = 0x00000020;
                      }];
         
         // API登録(didReceivePutOnTouchStartRequest相当)
-        NSString *putOnTouchStartRequestApiPath = [self apiPathWithProfile: self.profileName
-                                                             interfaceName: nil
-                                                             attributeName: DConnectTouchProfileAttrOnTouchStart];
+        NSString *putOnTouchStartRequestApiPath = [self apiPath: nil
+                                                  attributeName: DConnectTouchProfileAttrOnTouchStart];
         [self addPutPath: putOnTouchStartRequestApiPath
                      api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
                          switch ([weakEventMgr addEventForRequest:request]) {
@@ -217,8 +209,7 @@ static const long FLAG_ON_TOUCH_CANCEL = 0x00000020;
                      }];
         
         // API登録(didReceivePutOnTouchEndRequest相当)
-        NSString *putOnTouchEndRequestApiPath = [self apiPathWithProfile: self.profileName
-                                                           interfaceName: nil
+        NSString *putOnTouchEndRequestApiPath = [self apiPath: nil
                                                            attributeName: DConnectTouchProfileAttrOnTouchEnd];
         [self addPutPath: putOnTouchEndRequestApiPath
                      api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
@@ -241,9 +232,8 @@ static const long FLAG_ON_TOUCH_CANCEL = 0x00000020;
                      }];
         
         // API登録(didReceivePutOnDoubleTapRequest相当)
-        NSString *putOnDoubleTapRequestApiPath = [self apiPathWithProfile: self.profileName
-                                                            interfaceName: nil
-                                                            attributeName: DConnectTouchProfileAttrOnDoubleTap];
+        NSString *putOnDoubleTapRequestApiPath = [self apiPath: nil
+                                                 attributeName: DConnectTouchProfileAttrOnDoubleTap];
         [self addPutPath: putOnDoubleTapRequestApiPath
                      api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
                          switch ([weakEventMgr addEventForRequest:request]) {
@@ -265,9 +255,8 @@ static const long FLAG_ON_TOUCH_CANCEL = 0x00000020;
                      }];
         
         // API登録(didReceivePutOnTouchMoveRequest相当)
-        NSString *putOnTouchMoveRequestApiPath = [self apiPathWithProfile: self.profileName
-                                                            interfaceName: nil
-                                                            attributeName: DConnectTouchProfileAttrOnTouchMove];
+        NSString *putOnTouchMoveRequestApiPath = [self apiPath: nil
+                                                 attributeName: DConnectTouchProfileAttrOnTouchMove];
         [self addPutPath: putOnTouchMoveRequestApiPath
                      api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
                          switch ([weakEventMgr addEventForRequest:request]) {
@@ -289,9 +278,8 @@ static const long FLAG_ON_TOUCH_CANCEL = 0x00000020;
                      }];
         
         // API登録(didReceivePutOnTouchCancelRequest相当)
-        NSString *putOnTouchCancelRequestApiPath = [self apiPathWithProfile: self.profileName
-                                                              interfaceName: nil
-                                                              attributeName: DConnectTouchProfileAttrOnTouchCancel];
+        NSString *putOnTouchCancelRequestApiPath = [self apiPath: nil
+                                                   attributeName: DConnectTouchProfileAttrOnTouchCancel];
         [self addPutPath: putOnTouchCancelRequestApiPath
                      api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
                          switch ([weakEventMgr addEventForRequest:request]) {
@@ -313,9 +301,8 @@ static const long FLAG_ON_TOUCH_CANCEL = 0x00000020;
                      }];
 
         // API登録(didReceiveDeleteOnTouchRequest相当)
-        NSString *deleteOnTouchRequestApiPath = [self apiPathWithProfile: self.profileName
-                                                           interfaceName: nil
-                                                           attributeName: DConnectTouchProfileAttrOnTouch];
+        NSString *deleteOnTouchRequestApiPath = [self apiPath: nil
+                                                attributeName: DConnectTouchProfileAttrOnTouch];
         [self addDeletePath: deleteOnTouchRequestApiPath
                      api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
                          switch ([weakEventMgr removeEventForRequest:request]) {
@@ -337,9 +324,8 @@ static const long FLAG_ON_TOUCH_CANCEL = 0x00000020;
                      }];
         
         // API登録(didReceiveDeleteOnTouchStartRequest相当)
-        NSString *deleteOnTouchStartRequestApiPath = [self apiPathWithProfile: self.profileName
-                                                                interfaceName: nil
-                                                                attributeName: DConnectTouchProfileAttrOnTouchStart];
+        NSString *deleteOnTouchStartRequestApiPath = [self apiPath: nil
+                                                     attributeName: DConnectTouchProfileAttrOnTouchStart];
         [self addDeletePath: deleteOnTouchStartRequestApiPath
                         api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
                             switch ([weakEventMgr removeEventForRequest:request]) {
@@ -361,9 +347,8 @@ static const long FLAG_ON_TOUCH_CANCEL = 0x00000020;
                         }];
         
         // API登録(didReceiveDeleteOnTouchEndRequest相当)
-        NSString *deleteOnTouchEndRequestApiPath = [self apiPathWithProfile: self.profileName
-                                                              interfaceName: nil
-                                                              attributeName: DConnectTouchProfileAttrOnTouchEnd];
+        NSString *deleteOnTouchEndRequestApiPath = [self apiPath: nil
+                                                   attributeName: DConnectTouchProfileAttrOnTouchEnd];
         [self addDeletePath: deleteOnTouchEndRequestApiPath
                         api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
                             switch ([weakEventMgr removeEventForRequest:request]) {
@@ -385,9 +370,8 @@ static const long FLAG_ON_TOUCH_CANCEL = 0x00000020;
                         }];
         
         // API登録(didReceiveDeleteOnDoubleTapRequest相当)
-        NSString *deleteOnDoubleTapRequestApiPath = [self apiPathWithProfile: self.profileName
-                                                               interfaceName: nil
-                                                               attributeName: DConnectTouchProfileAttrOnDoubleTap];
+        NSString *deleteOnDoubleTapRequestApiPath = [self apiPath: nil
+                                                    attributeName: DConnectTouchProfileAttrOnDoubleTap];
         [self addDeletePath: deleteOnDoubleTapRequestApiPath
                         api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
                             switch ([weakEventMgr removeEventForRequest:request]) {
@@ -409,9 +393,8 @@ static const long FLAG_ON_TOUCH_CANCEL = 0x00000020;
                         }];
         
         // API登録(didReceiveDeleteOnTouchMoveRequest相当)
-        NSString *deleteOnTouchMoveRequestApiPath = [self apiPathWithProfile: self.profileName
-                                                               interfaceName: nil
-                                                               attributeName: DConnectTouchProfileAttrOnTouchMove];
+        NSString *deleteOnTouchMoveRequestApiPath = [self apiPath: nil
+                                                    attributeName: DConnectTouchProfileAttrOnTouchMove];
         [self addDeletePath: deleteOnTouchMoveRequestApiPath
                         api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
                             switch ([weakEventMgr removeEventForRequest:request]) {
@@ -433,9 +416,8 @@ static const long FLAG_ON_TOUCH_CANCEL = 0x00000020;
                         }];
         
         // API登録(didReceiveDeleteOnTouchCancelRequest相当)
-        NSString *deleteOnTouchCancelRequestApiPath = [self apiPathWithProfile: self.profileName
-                                                                 interfaceName: nil
-                                                                 attributeName: DConnectTouchProfileAttrOnTouchCancel];
+        NSString *deleteOnTouchCancelRequestApiPath = [self apiPath: nil
+                                                      attributeName: DConnectTouchProfileAttrOnTouchCancel];
         [self addDeletePath: deleteOnTouchCancelRequestApiPath
                         api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
                             switch ([weakEventMgr removeEventForRequest:request]) {

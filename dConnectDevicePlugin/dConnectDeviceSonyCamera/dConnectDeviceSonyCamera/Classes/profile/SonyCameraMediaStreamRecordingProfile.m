@@ -30,9 +30,8 @@
         __weak SonyCameraMediaStreamRecordingProfile *weakSelf = self;
         
         // API登録(didReceiveGetMediaRecorderRequest相当)
-        NSString *getMediaRecorderRequestApiPath = [self apiPathWithProfile: self.profileName
-                                                     interfaceName: nil
-                                                     attributeName: DConnectMediaStreamRecordingProfileAttrMediaRecorder];
+        NSString *getMediaRecorderRequestApiPath = [self apiPath: nil
+                                                   attributeName: DConnectMediaStreamRecordingProfileAttrMediaRecorder];
         [self addGetPath: getMediaRecorderRequestApiPath api: ^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
             
             NSString *serviceId = [request serviceId];
@@ -140,9 +139,8 @@
         }];
         
         // API登録(didReceivePostTakePhotoRequest相当)
-        NSString *postTakePhotoRequestApiPath = [self apiPathWithProfile: self.profileName
-                                                              interfaceName: nil
-                                                              attributeName: DConnectMediaStreamRecordingProfileAttrTakePhoto];
+        NSString *postTakePhotoRequestApiPath = [self apiPath: nil
+                                                attributeName: DConnectMediaStreamRecordingProfileAttrTakePhoto];
         [self addPostPath: postTakePhotoRequestApiPath api: ^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
             
             NSString *serviceId = [request serviceId];
@@ -226,9 +224,8 @@
         }];
         
         // API登録(didReceivePostRecordRequest相当)
-        NSString *postRecordRequestApiPath = [self apiPathWithProfile: self.profileName
-                                                        interfaceName: nil
-                                                        attributeName: DConnectMediaStreamRecordingProfileAttrTakePhoto];
+        NSString *postRecordRequestApiPath = [self apiPath: nil
+                                             attributeName: DConnectMediaStreamRecordingProfileAttrTakePhoto];
         [self addPostPath: postRecordRequestApiPath api: ^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
             
             NSString *serviceId = [request serviceId];
@@ -275,9 +272,8 @@
         }];
         
         // API登録(didReceivePutStopRequest相当)
-        NSString *putStopRequestApiPath = [self apiPathWithProfile: self.profileName
-                                                     interfaceName: nil
-                                                     attributeName: DConnectMediaStreamRecordingProfileAttrStop];
+        NSString *putStopRequestApiPath = [self apiPath: nil
+                                          attributeName: DConnectMediaStreamRecordingProfileAttrStop];
         [self addPutPath: putStopRequestApiPath api: ^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
             
             NSString *serviceId = [request serviceId];
@@ -317,9 +313,8 @@
         }];
         
         // API登録(didReceivePutOnPhotoRequest相当)
-        NSString *putOnPhotoRequestApiPath = [self apiPathWithProfile: self.profileName
-                                                        interfaceName: nil
-                                                        attributeName: DConnectMediaStreamRecordingProfileAttrOnPhoto];
+        NSString *putOnPhotoRequestApiPath = [self apiPath: nil
+                                             attributeName: DConnectMediaStreamRecordingProfileAttrOnPhoto];
         [self addPutPath: putOnPhotoRequestApiPath api: ^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
             
             NSString *serviceId = [request serviceId];
@@ -351,9 +346,8 @@
         }];
         
         // API登録(didReceiveDeleteOnPhotoRequest相当)
-        NSString *deleteOnPhotoRequestApiPath = [self apiPathWithProfile: self.profileName
-                                                           interfaceName: nil
-                                                           attributeName: DConnectMediaStreamRecordingProfileAttrOnPhoto];
+        NSString *deleteOnPhotoRequestApiPath = [self apiPath: nil
+                                                attributeName: DConnectMediaStreamRecordingProfileAttrOnPhoto];
         [self addDeletePath: deleteOnPhotoRequestApiPath api: ^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
             
             NSString *serviceId = [request serviceId];
@@ -386,9 +380,8 @@
         }];
         
         // API登録(didReceivePutOnDataAvailableRequest相当)
-        NSString *putOnDataAvailableRequestApiPath = [self apiPathWithProfile: self.profileName
-                                                           interfaceName: nil
-                                                           attributeName: DConnectMediaStreamRecordingProfileAttrOnDataAvailable];
+        NSString *putOnDataAvailableRequestApiPath = [self apiPath: nil
+                                                     attributeName: DConnectMediaStreamRecordingProfileAttrOnDataAvailable];
         [self addPutPath: putOnDataAvailableRequestApiPath api: ^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
             
             NSString *serviceId = [request serviceId];
@@ -430,9 +423,8 @@
         }];
         
         // API登録(didReceiveDeleteOnDataAvailableRequest相当)
-        NSString *deleteOnDataAvailableRequestApiPath = [self apiPathWithProfile: self.profileName
-                                                                interfaceName: nil
-                                                                attributeName: DConnectMediaStreamRecordingProfileAttrOnDataAvailable];
+        NSString *deleteOnDataAvailableRequestApiPath = [self apiPath: nil
+                                                        attributeName: DConnectMediaStreamRecordingProfileAttrOnDataAvailable];
         [self addDeletePath: deleteOnDataAvailableRequestApiPath api: ^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
             
             NSString *serviceId = [request serviceId];

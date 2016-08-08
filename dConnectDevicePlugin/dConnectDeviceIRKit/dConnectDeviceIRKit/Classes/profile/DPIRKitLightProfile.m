@@ -31,9 +31,8 @@
         __weak DPIRKitLightProfile *weakSelf = self;
         
         // API登録(didReceiveGetLightRequest相当)
-        NSString *getLightRequestApiPath = [self apiPathWithProfile: self.profileName
-                                                      interfaceName: nil
-                                                      attributeName: nil];
+        NSString *getLightRequestApiPath = [self apiPath: nil
+                                           attributeName: nil];
         [self addGetPath: getLightRequestApiPath
                      api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
                          NSString *serviceId = [request serviceId];
@@ -67,9 +66,8 @@
                      }];
         
         // API登録(didReceivePostLightRequest相当)
-        NSString *postLightRequestApiPath = [self apiPathWithProfile: self.profileName
-                                                       interfaceName: nil
-                                                       attributeName: nil];
+        NSString *postLightRequestApiPath = [self apiPath: nil
+                                            attributeName: nil];
         [self addPostPath: postLightRequestApiPath
                       api:^(DConnectRequestMessage *request, DConnectResponseMessage *response) {
                           
@@ -119,9 +117,8 @@
         
         
         // API登録(didReceiveDeleteLightRequest相当)
-        NSString *deleteLightRequestApiPath = [self apiPathWithProfile: self.profileName
-                                                         interfaceName: nil
-                                                         attributeName: nil];
+        NSString *deleteLightRequestApiPath = [self apiPath: nil
+                                              attributeName: nil];
         [self addDeletePath: deleteLightRequestApiPath
                         api:^(DConnectRequestMessage *request, DConnectResponseMessage *response) {
                             

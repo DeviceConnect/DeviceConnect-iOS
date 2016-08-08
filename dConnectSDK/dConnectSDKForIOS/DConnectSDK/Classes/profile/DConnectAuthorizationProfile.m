@@ -35,9 +35,8 @@ NSString *const DConnectAuthorizationProfileGrantTypeAuthorizationCode = @"autho
     if (self) {
         __weak id weakObject = object;
         
-        NSString *getCreateClientApiPath = [self apiPathWithProfile: self.profileName
-                                                      interfaceName: nil
-                                                      attributeName: DConnectAuthorizationProfileAttrGrant];
+        NSString *getCreateClientApiPath = [self apiPath: nil
+                                           attributeName: DConnectAuthorizationProfileAttrGrant];
         [self addGetPath: getCreateClientApiPath
                      api:^(DConnectRequestMessage *request, DConnectResponseMessage *response) {
                          
@@ -67,9 +66,8 @@ NSString *const DConnectAuthorizationProfileGrantTypeAuthorizationCode = @"autho
             return YES;
         }];
         
-        NSString *getRequestAccessTokenApiPath = [self apiPathWithProfile: self.profileName
-                                                            interfaceName: nil
-                                                            attributeName: DConnectAuthorizationProfileAttrAccessToken];
+        NSString *getRequestAccessTokenApiPath = [self apiPath: nil
+                                                 attributeName: DConnectAuthorizationProfileAttrAccessToken];
         [self addGetPath:getRequestAccessTokenApiPath
                      api:^(DConnectRequestMessage *request, DConnectResponseMessage *response) {
                          

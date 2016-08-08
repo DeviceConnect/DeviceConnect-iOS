@@ -21,9 +21,8 @@
         self.delegate = self;
         
         // API登録(didReceivePostDriveControllerMoveRequest相当)
-        NSString *postDriveControllerMoveRequestApiPath = [self apiPathWithProfile: self.profileName
-                                                                     interfaceName: nil
-                                                                     attributeName: DCMDriveControllerProfileAttrMove];
+        NSString *postDriveControllerMoveRequestApiPath = [self apiPath: nil
+                                                          attributeName: DCMDriveControllerProfileAttrMove];
         [self addPostPath: postDriveControllerMoveRequestApiPath
                       api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
                           
@@ -63,9 +62,8 @@
                       }];
         
         // API登録(didReceivePutDriveControllerRotateRequest相当)
-        NSString *putDriveControllerRotateRequestApiPath = [self apiPathWithProfile: self.profileName
-                                                                      interfaceName: nil
-                                                                      attributeName: DCMDriveControllerProfileAttrRotate];
+        NSString *putDriveControllerRotateRequestApiPath = [self apiPath: nil
+                                                           attributeName: DCMDriveControllerProfileAttrRotate];
         [self addPutPath: putDriveControllerRotateRequestApiPath
                       api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
                           
@@ -95,9 +93,8 @@
                       }];
         
         // API登録(didReceiveDeleteDriveControllerStopRequest相当)
-        NSString *deleteDriveControllerStopRequestApiPath = [self apiPathWithProfile: self.profileName
-                                                                       interfaceName: nil
-                                                                       attributeName: DCMDriveControllerProfileAttrStop];
+        NSString *deleteDriveControllerStopRequestApiPath = [self apiPath: nil
+                                                            attributeName: DCMDriveControllerProfileAttrStop];
         [self addDeletePath: deleteDriveControllerStopRequestApiPath
                       api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
                           

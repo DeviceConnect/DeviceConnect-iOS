@@ -35,9 +35,8 @@ NSString *const SonyCameraCameraProfileParamZoomdiameter = @"zoomPosition";
     if (self) {
         
         // API登録(didReceiveGetZoomRequest相当)
-        NSString *getZoomRequestApiPath = [self apiPathWithProfile: self.profileName
-                                                      interfaceName: nil
-                                                      attributeName: SonyCameraCameraProfileAttrZoom];
+        NSString *getZoomRequestApiPath = [self apiPath: nil
+                                          attributeName: SonyCameraCameraProfileAttrZoom];
         [self addGetPath: getZoomRequestApiPath api: ^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
             
             NSString *serviceId = [request serviceId];
@@ -67,9 +66,8 @@ NSString *const SonyCameraCameraProfileParamZoomdiameter = @"zoomPosition";
         }];
         
         // API登録(didReceivePutZoomRequest相当)
-        NSString *putZoomRequestApiPath = [self apiPathWithProfile: self.profileName
-                                                     interfaceName: nil
-                                                     attributeName: SonyCameraCameraProfileAttrZoom];
+        NSString *putZoomRequestApiPath = [self apiPath: nil
+                                          attributeName: SonyCameraCameraProfileAttrZoom];
         [self addPutPath: putZoomRequestApiPath api: ^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
             
             NSString *serviceId = [request serviceId];

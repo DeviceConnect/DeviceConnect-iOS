@@ -29,9 +29,8 @@
         __weak DPIRKitTVProfile *weakSelf = self;
         
         // API登録(didReceivePutTVRequest相当)
-        NSString *putTVRequestApiPath = [self apiPathWithProfile: self.profileName
-                                                           interfaceName: nil
-                                                           attributeName: nil];
+        NSString *putTVRequestApiPath = [self apiPath: nil
+                                        attributeName: nil];
         [self addPutPath: putTVRequestApiPath
                      api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
 
@@ -45,9 +44,8 @@
                      }];
         
         // API登録(didReceiveDeleteTVRequest相当)
-        NSString *deleteTVRequestApiPath = [self apiPathWithProfile: self.profileName
-                                                      interfaceName: nil
-                                                      attributeName: nil];
+        NSString *deleteTVRequestApiPath = [self apiPath: nil
+                                           attributeName: nil];
         [self addDeletePath: deleteTVRequestApiPath
                         api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
 
@@ -61,9 +59,8 @@
                         }];
         
         // API登録(didReceivePutTVChannelRequest相当)
-        NSString *putTVChannelRequestApiPath = [self apiPathWithProfile: self.profileName
-                                                          interfaceName: nil
-                                                          attributeName: DCMTVProfileAttrChannel];
+        NSString *putTVChannelRequestApiPath = [self apiPath: nil
+                                               attributeName: DCMTVProfileAttrChannel];
         [self addPutPath: putTVChannelRequestApiPath
                      api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
 
@@ -101,9 +98,8 @@
                      }];
         
         // API登録(didReceivePutTVVolumeRequest相当)
-        NSString *putTVVolumeRequestApiPath = [self apiPathWithProfile: self.profileName
-                                                         interfaceName: nil
-                                                         attributeName: DCMTVProfileAttrVolume];
+        NSString *putTVVolumeRequestApiPath = [self apiPath: nil
+                                              attributeName: DCMTVProfileAttrVolume];
         [self addPutPath: putTVVolumeRequestApiPath
                      api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
                          
@@ -124,9 +120,8 @@
                      }];
         
         // API登録(didReceivePutTVBroadcastWaveRequest相当)
-        NSString *putTVBroadcastWaveRequestApiPath = [self apiPathWithProfile: self.profileName
-                                                                interfaceName: nil
-                                                                attributeName: DCMTVProfileAttrVolume];
+        NSString *putTVBroadcastWaveRequestApiPath = [self apiPath: nil
+                                                     attributeName: DCMTVProfileAttrVolume];
         [self addPutPath: putTVBroadcastWaveRequestApiPath
                      api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
                          

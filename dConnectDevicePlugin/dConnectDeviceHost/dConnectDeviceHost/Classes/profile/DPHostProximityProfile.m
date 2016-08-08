@@ -60,9 +60,8 @@ typedef void (^DPHostProximityBlock)(DConnectMessage *);
                                                        object:nil];
 
             // API登録(didReceiveGetOnUserProximityRequest相当)
-            NSString *getOnUserProximityRequestApiPath = [self apiPathWithProfile: self.profileName
-                                                                    interfaceName: nil
-                                                                    attributeName: DConnectProximityProfileAttrOnUserProximity];
+            NSString *getOnUserProximityRequestApiPath = [self apiPath: nil
+                                                         attributeName: DConnectProximityProfileAttrOnUserProximity];
             [self addGetPath: getOnUserProximityRequestApiPath
                           api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
                               
@@ -76,9 +75,8 @@ typedef void (^DPHostProximityBlock)(DConnectMessage *);
                           }];
 
             // API登録(didReceivePutOnUserProximityRequest相当)
-            NSString *putOnUserProximityRequestApiPath = [self apiPathWithProfile: self.profileName
-                                                                    interfaceName: nil
-                                                                    attributeName: DConnectProximityProfileAttrOnUserProximity];
+            NSString *putOnUserProximityRequestApiPath = [self apiPath: nil
+                                                         attributeName: DConnectProximityProfileAttrOnUserProximity];
             [self addPutPath: putOnUserProximityRequestApiPath
                          api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
                              
@@ -129,9 +127,8 @@ typedef void (^DPHostProximityBlock)(DConnectMessage *);
                          }];
 
             // API登録(didReceiveDeleteOnUserProximityRequest相当)
-            NSString *deleteOnUserProximityRequestApiPath = [self apiPathWithProfile: self.profileName
-                                                                       interfaceName: nil
-                                                                       attributeName: DConnectProximityProfileAttrOnUserProximity];
+            NSString *deleteOnUserProximityRequestApiPath = [self apiPath: nil
+                                                            attributeName: DConnectProximityProfileAttrOnUserProximity];
             [self addDeletePath: deleteOnUserProximityRequestApiPath
                             api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
                              

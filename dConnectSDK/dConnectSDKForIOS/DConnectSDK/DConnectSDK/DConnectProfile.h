@@ -62,13 +62,12 @@
 - (DConnectApiEntity *) findApiWithPath: (NSString *) path method: (DConnectSpecMethod) method;
 
 /*!
- @brief プロファイル名、インターフェース名、アトリビュート名からパスを作成する.
- @param[in] profileName プロファイル名
+ @brief インターフェース名、アトリビュート名からパスを作成する.
  @param[in] interfaceName インターフェース名
  @param[in] attributeName アトリビュート名
  @retval パス
  */
-- (NSString *) apiPathWithProfile : (NSString *) profileName interfaceName : (NSString *) interfaceName attributeName:(NSString *) attributeName;
+- (NSString *) apiPath : (NSString *) interfaceName attributeName:(NSString *) attributeName;
 
 
 /*!

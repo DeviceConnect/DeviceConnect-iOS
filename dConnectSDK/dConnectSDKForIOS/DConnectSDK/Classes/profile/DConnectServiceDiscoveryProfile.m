@@ -42,9 +42,8 @@ NSString *const DConnectServiceDiscoveryProfileNetworkTypeBLE = @"BLE";
         __weak id blockSelf = self;
         __weak id blockDelegate = self.delegate;
         
-        NSString *getServicesApiPath = [self apiPathWithProfile: self.profileName
-                                                  interfaceName: nil
-                                                  attributeName: nil];
+        NSString *getServicesApiPath = [self apiPath: nil
+                                       attributeName: nil];
         [self addGetPath: getServicesApiPath
                      api:^(DConnectRequestMessage *request, DConnectResponseMessage *response) {
                          DConnectArray *services = [DConnectArray array];
@@ -70,9 +69,8 @@ NSString *const DConnectServiceDiscoveryProfileNetworkTypeBLE = @"BLE";
                          return YES;
                      }];
         
-        NSString *putOnServiceChangeApiPath = [self apiPathWithProfile: self.profileName
-                                                         interfaceName: nil
-                                                         attributeName: DConnectServiceDiscoveryProfileAttrOnServiceChange];
+        NSString *putOnServiceChangeApiPath = [self apiPath: nil
+                                              attributeName: DConnectServiceDiscoveryProfileAttrOnServiceChange];
         [self addPutPath: putOnServiceChangeApiPath
                      api:^(DConnectRequestMessage *request, DConnectResponseMessage *response) {
                          BOOL send = YES;
@@ -91,9 +89,8 @@ NSString *const DConnectServiceDiscoveryProfileNetworkTypeBLE = @"BLE";
                          return send;
                      }];
 
-        NSString *deleteOnServiceChangeApiPath = [self apiPathWithProfile: self.profileName
-                                                            interfaceName: nil
-                                                            attributeName: DConnectServiceDiscoveryProfileAttrOnServiceChange];
+        NSString *deleteOnServiceChangeApiPath = [self apiPath: nil
+                                                 attributeName: DConnectServiceDiscoveryProfileAttrOnServiceChange];
         [self addDeletePath: deleteOnServiceChangeApiPath
                      api:^(DConnectRequestMessage *request, DConnectResponseMessage *response) {
                          BOOL send = YES;
