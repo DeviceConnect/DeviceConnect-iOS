@@ -103,14 +103,14 @@
     @synchronized(self) {
         
         // ServiceProvider未登録なら処理しない
-        if (!self.plugin.mServiceProvider) {
+        if (!self.plugin.serviceProvider) {
             return;
         }
         
         int deviceCount = (int)[DeviceList getSize];
         
         // ServiceProviderに存在するサービスが検出されなかったならオフラインにする
-        for (DConnectService *service in [self.plugin.mServiceProvider services]) {
+        for (DConnectService *service in [self.plugin.serviceProvider services]) {
             NSString *serviceId = [service serviceId];
             
             BOOL isFindDevice = NO;
@@ -131,12 +131,12 @@
         for (int deviceIndex = 0; deviceIndex < deviceCount; deviceIndex ++) {
             NSString *deviceServiceId = [NSString stringWithFormat:@"%d", deviceIndex];
             NSString *deviceName = SonyDeviceName;
-            if (![self.plugin.mServiceProvider service: deviceServiceId]) {
+            if (![self.plugin.serviceProvider service: deviceServiceId]) {
                 SonyCameraService *service = [[SonyCameraService alloc] initWithServiceId:deviceServiceId
                                                                                deviceName:deviceName
                                                                          liveViewDelegate:self.liveViewDelegate
                                                                     remoteApiUtilDelegate:self.remoteApiUtilDelegate];
-                [self.plugin.mServiceProvider addService: service];
+                [self.plugin.serviceProvider addService: service];
             }
         }
     }

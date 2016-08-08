@@ -29,7 +29,7 @@
         [[DConnectEventManager sharedManagerForClass:key]
                 setController:[DConnectMemoryCacheController new]];
         
-        [[DPSpheroManager sharedManager] setServiceProvider: self.mServiceProvider];
+        [[DPSpheroManager sharedManager] setServiceProvider: self.serviceProvider];
 
         // System Profileの追加
         [self addProfile:[DPSpheroSystemProfile new]];

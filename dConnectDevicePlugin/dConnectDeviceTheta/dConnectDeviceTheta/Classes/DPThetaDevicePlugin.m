@@ -19,7 +19,7 @@
     self = [super initWithObject: self];
     if (self) {
         self.pluginName = @"Theta (Device Connect Device Plug-in)";
-        [[DPThetaManager sharedManager] setServiceProvider: self.mServiceProvider];
+        [[DPThetaManager sharedManager] setServiceProvider: self.serviceProvider];
         self.fileMgr = [DConnectFileManager fileManagerForPlugin:self];
         [self addProfile:[DPThetaSystemProfile new]];
         

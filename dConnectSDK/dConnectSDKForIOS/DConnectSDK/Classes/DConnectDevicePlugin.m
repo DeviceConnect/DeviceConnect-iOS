@@ -49,10 +49,11 @@
 
         DConnectServiceManager *serviceManager = [DConnectServiceManager sharedForClass: [object class]];
         [serviceManager setPluginSpec: [self pluginSpec]];
-
+        [self setServiceProvider: serviceManager];
+        
         // プロファイル追加
         [self addProfile:[[DConnectAuthorizationProfile alloc] initWithObject:self]];
-        [self addProfile:[[DConnectServiceDiscoveryProfile alloc] initWithServiceProvider: self.mServiceProvider]];
+        [self addProfile:[[DConnectServiceDiscoveryProfile alloc] initWithServiceProvider: self.serviceProvider]];
         [self addProfile:[DConnectSystemProfile new]];
         
         
@@ -204,7 +205,7 @@
 
 - (NSArray *) serviceProfilesWithServiceId: (NSString *) serviceId {
 
-    DConnectService *service = [self.mServiceProvider service: serviceId];
+    DConnectService *service = [self.serviceProvider service: serviceId];
     if (service) {
         // サービスIDに該当するサービスを検出して、そのサービスに登録されているプロファイル一覧(DConnectProfile * の配列)を取得
         NSArray *serviceProfiles = [service profiles];

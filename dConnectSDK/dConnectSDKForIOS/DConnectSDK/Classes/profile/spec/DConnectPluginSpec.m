@@ -86,7 +86,7 @@
  @return {@link DConnectProfileSpec}のインスタンス
  */
 - (DConnectProfileSpec *) findProfileSpec: (NSString *) profileName {
-    return [self profileSpecs][profileName];
+    return [self profileSpecs_][profileName];
 }
 
 /*!
@@ -108,7 +108,7 @@
  @return {@link DConnectProfileSpec}のマップ. キーはプロファイル名.Map<String, DConnectProfileSpec>
  */
 - (NSDictionary *) profileSpecs {
-   NSDictionary *deepCopyDictionary = [[NSDictionary alloc] initWithDictionary:[self profileSpecs] copyItems:YES];
+   NSDictionary *deepCopyDictionary = [[NSDictionary alloc] initWithDictionary:[self profileSpecs_] copyItems:YES];
    return deepCopyDictionary;
 }
 
