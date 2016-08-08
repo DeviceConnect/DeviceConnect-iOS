@@ -177,6 +177,12 @@
         DCLogE(@"addProfileSpec error ! %@", [error description]);
     }
     
+    // プロファイルに仕様データを設定する
+    DConnectProfileSpec *profileSpec = [[self pluginSpec] findProfileSpec: profileName];
+    if (profileSpec) {
+        [profile setProfileSpec: profileSpec];
+    }
+    
     // ProfileMapにprofileデータを追加
     [self.mProfileMap setObject: profile forKey: profileName];
 }

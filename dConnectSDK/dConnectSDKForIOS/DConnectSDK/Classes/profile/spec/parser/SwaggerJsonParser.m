@@ -153,16 +153,16 @@ typedef DConnectParameterSpec * (^ParameterObjectParser)(NSDictionary *json, NSE
                 [builder setFormat: dataFormat];
             }
             if (json[ItemObjectParserKeyMaximum]) {
-                if ([DConnectSpecConstants isDigit: json[ItemObjectParserKeyMaximum]]) {
-                    [builder setMaximum: [NSNumber numberWithLong: [json[ItemObjectParserKeyMaximum] longValue]]];
+                if ([json[ItemObjectParserKeyMaximum] isKindOfClass: [NSNumber class]]) {
+                    [builder setMaximum: json[ItemObjectParserKeyMaximum]];
                 } else {
                     *error = [DConnectSpecErrorFactory createError: [NSString stringWithFormat: @"maximum is invalid: %@", json[ItemObjectParserKeyMaximum]]];
                     return nil;
                 }
             }
             if (json[ItemObjectParserKeyMinimum]) {
-                if ([DConnectSpecConstants isDigit: json[ItemObjectParserKeyMinimum]]) {
-                    [builder setMinimum: [NSNumber numberWithLong: [json[ItemObjectParserKeyMinimum] longValue]]];
+                if ([json[ItemObjectParserKeyMinimum] isKindOfClass: [NSNumber class]]) {
+                    [builder setMinimum: json[ItemObjectParserKeyMinimum]];
                 } else {
                     *error = [DConnectSpecErrorFactory createError: [NSString stringWithFormat: @"minimum is invalid: %@", json[ItemObjectParserKeyMinimum]]];
                     return nil;
@@ -188,8 +188,8 @@ typedef DConnectParameterSpec * (^ParameterObjectParser)(NSDictionary *json, NSE
                     
                     NSMutableArray *enums = [NSMutableArray array];
                     for (int i = 0; i < [array count]; i ++) {
-                        if ([DConnectSpecConstants isDigit: array[i]]) {
-                            [enums addObject: [NSNumber numberWithLong:[array[i] longValue]]];
+                        if ([array[i] isKindOfClass:[NSNumber class]]) {
+                            [enums addObject: array[i]];
                         } else {
                             *error = [DConnectSpecErrorFactory createError: [NSString stringWithFormat: @"enum is invalid: %@", json[ItemObjectParserKeyEnum]]];
                             return nil;
@@ -215,16 +215,16 @@ typedef DConnectParameterSpec * (^ParameterObjectParser)(NSDictionary *json, NSE
                 [builder setDataFormat: dataFormat];
             }
             if (json[ItemObjectParserKeyMaximum]) {
-                if ([DConnectSpecConstants isNumber: json[ItemObjectParserKeyMaximum]]) {
-                    [builder setMaximum: [NSNumber numberWithDouble: [json[ItemObjectParserKeyMaximum] doubleValue]]];
+                if ([json[ItemObjectParserKeyMaximum] isKindOfClass: [NSNumber class]]) {
+                    [builder setMaximum: json[ItemObjectParserKeyMaximum]];
                 } else {
                     *error = [DConnectSpecErrorFactory createError: [NSString stringWithFormat: @"maximum is invalid: %@", json[ItemObjectParserKeyMaximum]]];
                     return nil;
                 }
             }
             if (json[ItemObjectParserKeyMinimum]) {
-                if ([DConnectSpecConstants isNumber: json[ItemObjectParserKeyMinimum]]) {
-                    [builder setMinimum: [NSNumber numberWithDouble: [json[ItemObjectParserKeyMinimum] doubleValue]]];
+                if ([json[ItemObjectParserKeyMinimum] isKindOfClass: [NSNumber class]]) {
+                    [builder setMinimum: json[ItemObjectParserKeyMinimum]];
                 } else {
                     *error = [DConnectSpecErrorFactory createError: [NSString stringWithFormat: @"minimum is invalid: %@", json[ItemObjectParserKeyMinimum]]];
                     return nil;
@@ -258,15 +258,15 @@ typedef DConnectParameterSpec * (^ParameterObjectParser)(NSDictionary *json, NSE
                 [builder setFormat: dataFormat];
             }
             if (json[ItemObjectParserKeyMaxLength]) {
-                if ([DConnectSpecConstants isDigit: json[ItemObjectParserKeyMaxLength]]) {
-                    [builder setMaxLength: [NSNumber numberWithLong: [json[ItemObjectParserKeyMaxLength] longValue]]];
+                if ([json[ItemObjectParserKeyMaxLength] isKindOfClass: [NSNumber class]]) {
+                    [builder setMaxLength: json[ItemObjectParserKeyMaxLength]];
                 } else {
                     *error = [DConnectSpecErrorFactory createError: [NSString stringWithFormat: @"maxlength is invalid: %@", json[ItemObjectParserKeyMaximum]]];
                     return nil;
                 }
             }
             if (json[ItemObjectParserKeyMinLength]) {
-                if ([DConnectSpecConstants isDigit: json[ItemObjectParserKeyMinLength]]) {
+                if ([json[ItemObjectParserKeyMinLength] isKindOfClass:[NSNumber class]]) {
                     [builder setMinLength: [NSNumber numberWithLong: [json[ItemObjectParserKeyMinLength] longValue]]];
                 } else {
                     *error = [DConnectSpecErrorFactory createError: [NSString stringWithFormat: @"minlength is invalid: %@", json[ItemObjectParserKeyMinimum]]];

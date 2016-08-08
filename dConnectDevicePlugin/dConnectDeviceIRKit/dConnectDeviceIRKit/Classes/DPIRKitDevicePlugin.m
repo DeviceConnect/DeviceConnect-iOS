@@ -150,9 +150,9 @@ DPIRKitManagerDetectionDelegate
         
         // デバイスが未登録なら登録する
         NSString *serviceId = device.name;
-        if (![self.mServiceProvider service: serviceId]) {
+        if (![self.serviceProvider service: serviceId]) {
             DPIRKitService *service = [[DPIRKitService alloc] initWithServiceId: serviceId profiles: mServiceProfiles];
-            [self.mServiceProvider addService: service];
+            [self.serviceProvider addService: service];
         }
         
         NSArray *events = [_eventManager eventListForProfile:DConnectServiceDiscoveryProfileName
@@ -169,9 +169,9 @@ DPIRKitManagerDetectionDelegate
     } else {
         // デバイスが登録済なら登録解除する
         NSString *serviceId = device.name;
-        DConnectService *service = [self.mServiceProvider service: serviceId];
+        DConnectService *service = [self.serviceProvider service: serviceId];
         if (service) {
-            [self.mServiceProvider removeService: service];
+            [self.serviceProvider removeService: service];
         }
         
     }

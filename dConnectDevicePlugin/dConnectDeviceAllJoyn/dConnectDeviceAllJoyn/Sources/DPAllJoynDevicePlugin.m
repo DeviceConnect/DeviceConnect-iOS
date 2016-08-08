@@ -40,7 +40,7 @@ static NSString *const VERSION = @"2.0.0";
         self.pluginName = @"AllJoyn (Device Connect Device Plug-in)";
         
         _handler = [DPAllJoynHandler new];
-        [_handler setServiceProvider: self.mServiceProvider];
+        [_handler setServiceProvider: self.serviceProvider];
         
         // Add profiles.
         [self addProfile:[DPAllJoynSystemProfile systemProfileWithVersion:VERSION]];

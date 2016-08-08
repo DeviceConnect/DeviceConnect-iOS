@@ -47,7 +47,7 @@
  */
 @interface DConnectDevicePlugin : DConnectProfileProvider
 
-@property (nonatomic) DConnectServiceProvider *mServiceProvider;
+@property (nonatomic) DConnectServiceProvider *serviceProvider;
 
 /*!
  @brief デバイスプラグインの名前。
