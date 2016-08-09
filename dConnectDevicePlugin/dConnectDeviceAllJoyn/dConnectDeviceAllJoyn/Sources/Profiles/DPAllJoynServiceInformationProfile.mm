@@ -68,13 +68,6 @@ didReceiveGetInformationRequest:(DConnectRequestMessage *)request
         return true;
     }
     
-    DConnectMessage *connect = [DConnectMessage message];
-    DConnectServiceInformationProfileConnectState const stateNone =
-    DConnectServiceInformationProfileConnectStateNone;
-    [DPAllJoynServiceInformationProfile setWiFiState:stateNone target:connect];
-    [DPAllJoynServiceInformationProfile setNFCState:stateNone target:connect];
-    [DPAllJoynServiceInformationProfile setBLEState:stateNone target:connect];
-    [DPAllJoynServiceInformationProfile setConnect:connect target:response];
     [response setVersion:_version];
     
     DConnectArray *profiles =
