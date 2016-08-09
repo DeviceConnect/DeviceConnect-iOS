@@ -55,10 +55,6 @@ NSString *const DConnectServiceDiscoveryProfileNetworkTypeBLE = @"BLE";
                                                              target:service];
                              [DConnectServiceDiscoveryProfile setName:[serviceEntity name]
                                                                target:service];
-                             /***/
-                             NSLog(@"appendServiceList: serviceId: %@", serviceId);
-                             NSLog(@"appendServiceList: name: %@", [serviceEntity name]);
-                             /***/
                              [DConnectServiceDiscoveryProfile setType:[serviceEntity networkType]
                                                                target:service];
                              [DConnectServiceDiscoveryProfile setOnline:[serviceEntity online] target:service];

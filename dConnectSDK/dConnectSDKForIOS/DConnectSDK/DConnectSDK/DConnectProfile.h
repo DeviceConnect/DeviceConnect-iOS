@@ -34,9 +34,6 @@
  */
 @property (nonatomic, weak) id provider;
 
-
-
-
 /*!
  @brief DConnectProfileProviderオブジェクトを指定して初期化する。
  

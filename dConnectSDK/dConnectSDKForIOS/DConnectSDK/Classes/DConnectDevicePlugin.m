@@ -21,6 +21,11 @@
 @interface DConnectDevicePlugin ()
 
 /*!
+ @brief plugin。
+ */
+@property(nonatomic, weak) id plugin_;
+
+/*!
  @brief PluginSpec。
  */
 @property(nonatomic, strong) DConnectPluginSpec *pluginSpec;
@@ -48,6 +53,7 @@
         [self setPluginSpec: [[DConnectPluginSpec alloc] init]];
 
         DConnectServiceManager *serviceManager = [DConnectServiceManager sharedForClass: [object class]];
+        [serviceManager setPlugin: self];
         [serviceManager setPluginSpec: [self pluginSpec]];
         [self setServiceProvider: serviceManager];
         
@@ -182,6 +188,9 @@
     if (profileSpec) {
         [profile setProfileSpec: profileSpec];
     }
+    
+    // プロファイルにデバイスプラグインのインスタンスを設定する
+    [profile setProvider: self];
     
     // ProfileMapにprofileデータを追加
     [self.mProfileMap setObject: profile forKey: profileName];

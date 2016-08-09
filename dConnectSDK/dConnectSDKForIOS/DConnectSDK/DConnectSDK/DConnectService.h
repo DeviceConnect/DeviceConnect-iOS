@@ -29,6 +29,8 @@
 
 - (instancetype) initWithServiceId: (NSString *)serviceId;
 
+- (void) setPlugin: (id) plugin;
+
 - (BOOL) onRequest: request response: response;
 
 @end

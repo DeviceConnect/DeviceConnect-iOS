@@ -15,7 +15,6 @@
 
 @implementation DConnectProfile {
     
-    
     /**
      * Device Connect API 仕様定義リスト.
      */
@@ -44,13 +43,10 @@
     return self;
 }
 
-
 // TODO: 削除予定
 - (NSString *) apiPath: (DConnectApiEntity *) api {
     return [api path];
 }
-
-
 
 - (NSString *) apiPath : (NSString *) interfaceName attributeName:(NSString *) attributeName {
     

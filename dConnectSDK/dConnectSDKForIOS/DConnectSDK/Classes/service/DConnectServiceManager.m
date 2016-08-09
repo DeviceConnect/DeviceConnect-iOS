@@ -33,6 +33,8 @@ static NSMutableDictionary *_instanceArray = nil;
     
 }
 
+@property(nonatomic, weak) id plugin_;
+
 @end
 
 
@@ -82,6 +84,14 @@ static NSMutableDictionary *_instanceArray = nil;
 
 #pragma mark - DConnectServiceProvider Implement.
 
+- (id) plugin {
+    return [self plugin_];
+}
+
+- (void) setPlugin: (id) plugin {
+    [self setPlugin_: plugin];
+}
+
 - (void) addService: (DConnectService *) service {
     
     NSString *serviceId = [service serviceId];
@@ -119,6 +129,9 @@ static NSMutableDictionary *_instanceArray = nil;
             }
         }
     }
+    
+    // Serviceにpluginを渡す
+    [service setPlugin: [self plugin]];
     
     mDConnectServices[serviceId] = service;
 //    NSLog(@"addService: count = %d / key = %@", (int)[mDConnectServices count], _key);
