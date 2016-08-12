@@ -8,6 +8,7 @@
 //
 
 #import "DPAWSIoTDevicePlugin.h"
+#import "DPAWSIoTSystemProfile.h"
 #import "DPAWSIoTServiceDiscoveryProfile.h"
 
 #import <AWSIoT.h>
@@ -27,6 +28,7 @@
 		
 		// プロファイルを追加
 		[self addProfile:[DPAWSIoTServiceDiscoveryProfile new]];
+		[self addProfile:[DPAWSIoTSystemProfile new]];
 		[self addProfile:[DConnectServiceInformationProfile new]];
 	}
 	

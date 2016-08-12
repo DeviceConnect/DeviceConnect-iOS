@@ -41,24 +41,33 @@
 	AWSStaticCredentialsProvider *provider = [[AWSStaticCredentialsProvider alloc] initWithAccessKey:accessKey secretKey:secretKey];
 	AWSServiceConfiguration *config = [[AWSServiceConfiguration alloc] initWithRegion:region credentialsProvider:provider];
 	[[AWSServiceManager defaultServiceManager] setDefaultServiceConfiguration:config];
+	
 	// MQTT接続
 	AWSIoTDataManager *manager = [AWSIoTDataManager defaultIoTDataManager];
 	NSString *clientID = [[NSUUID UUID] UUIDString];
 	if (![manager connectUsingWebSocketWithClientId:clientID cleanSession:YES statusCallback:^(AWSIoTMQTTStatus status) {
 		NSLog(@"* mqtt status: %ld", (long)status);
-		if (status == AWSIoTMQTTStatusConnected) {
-			if (!_isConnected) {
-				dispatch_async(dispatch_get_main_queue(), ^{
+		dispatch_async(dispatch_get_main_queue(), ^{
+			// 接続成功
+			if (status == AWSIoTMQTTStatusConnected) {
+				if (!_isConnected) {
 					if (handler) {
 						handler(nil);
 					}
-				});
-				_isConnected = YES;
+					_isConnected = YES;
+				}
 			}
-		}
-		if (status == AWSIoTMQTTStatusConnectionRefused) {
-			// FIXME: エラーなどで接続出来ない場合もhandlerで返事を返す。
-		}
+			// 接続エラー
+			if (status == AWSIoTMQTTStatusConnectionError) {
+				// 接続時のエラーはhandlerを呼んで再接続処理をキャンセル。接続中のエラーは再接続処理が走るので無視。
+				if (!_isConnected) {
+					if (handler) {
+						handler([NSError errorWithDomain:ERROR_DOMAIN code:-1 userInfo:nil]);
+					}
+					[manager disconnect];
+				}
+			}
+		});
 	}]) {
 		if (handler) {
 			handler([NSError errorWithDomain:ERROR_DOMAIN code:-1 userInfo:nil]);
@@ -129,6 +138,40 @@
 - (BOOL)publishWithTopic:(NSString*)topic message:(NSString*)message {
 	AWSIoTDataManager *manager = [AWSIoTDataManager defaultIoTDataManager];
 	return [manager publishString:message onTopic:topic QoS:AWSIoTMQTTQoSMessageDeliveryAttemptedAtMostOnce];
+}
+
+// リージョンIDから名前を取得
++ (NSString *)regionNameFromType:(AWSRegionType)regionType {
+	switch (regionType) {
+		case AWSRegionUSEast1:
+			return @"us-east-1";
+		case AWSRegionUSWest2:
+			return @"us-west-2";
+		case AWSRegionUSWest1:
+			return @"us-west-1";
+		case AWSRegionEUWest1:
+			return @"eu-west-1";
+		case AWSRegionEUCentral1:
+			return @"eu-central-1";
+		case AWSRegionAPSoutheast1:
+			return @"ap-southeast-1";
+		case AWSRegionAPSoutheast2:
+			return @"ap-southeast-2";
+		case AWSRegionAPNortheast1:
+			return @"ap-northeast-1";
+		case AWSRegionAPNortheast2:
+			return @"ap-northeast-2";
+		case AWSRegionAPSouth1:
+			return @"ap-south-1";
+		case AWSRegionSAEast1:
+			return @"sa-east-1";
+		case AWSRegionCNNorth1:
+			return @"cn-north-1";
+		case AWSRegionUSGovWest1:
+			return @"us-gov-west-1";
+		default:
+			return nil;
+	}
 }
 
 @end

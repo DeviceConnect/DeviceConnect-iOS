@@ -31,4 +31,8 @@
 // MQTTのTopicにメッセージを配信
 - (BOOL)publishWithTopic:(NSString*)topic message:(NSString*)message;
 
+
+// リージョンIDから名前を取得
++ (NSString *)regionNameFromType:(AWSRegionType)regionType;
+
 @end
