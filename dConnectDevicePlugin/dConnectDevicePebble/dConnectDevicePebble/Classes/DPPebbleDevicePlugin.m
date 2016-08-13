@@ -32,6 +32,7 @@
 		
         // DPPebbleManagerへServiceProviderを渡す
         [[DPPebbleManager sharedManager] setServiceProvider: self.serviceProvider];
+        [[DPPebbleManager sharedManager] setPlugin: self];
         
 		// 各プロファイルの追加
         [self addProfile:[DPPebbleSystemProfile new]];

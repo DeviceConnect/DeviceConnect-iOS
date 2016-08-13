@@ -141,7 +141,7 @@ typedef void (^DPHostConnectStatusBlock)(BOOL status);
         [self addPutPath: putOnWifiChangeRequestApiPath api: ^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
             BOOL result = [_self registerEventWithRequest:request response:response];
             if (result) {
-                __block DConnectDevicePlugin *plugin = (DConnectDevicePlugin *)_self.provider;
+                __block DConnectDevicePlugin *plugin = (DConnectDevicePlugin *)_self.plugin;
                 _wifiEventBlock = ^(BOOL isStatus) {
                     NSArray *evts = [_self.eventMgr eventListForServiceId:DPHostDevicePluginServiceId
                                                                   profile:DConnectConnectProfileName
@@ -168,7 +168,7 @@ typedef void (^DPHostConnectStatusBlock)(BOOL status);
         [self addPutPath: putOnBluetoothChangeRequestApiPath api: ^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
             BOOL result = [_self registerEventWithRequest:request response:response];
             if (result) {
-                __block DConnectDevicePlugin *plugin = (DConnectDevicePlugin *)_self.provider;
+                __block DConnectDevicePlugin *plugin = (DConnectDevicePlugin *)_self.plugin;
                 _bluetoothEventBlock = ^(BOOL isStatus) {
                     NSArray *evts = [_self.eventMgr eventListForServiceId:DPHostDevicePluginServiceId
                                                                   profile:DConnectConnectProfileName
@@ -193,7 +193,7 @@ typedef void (^DPHostConnectStatusBlock)(BOOL status);
         [self addPutPath: putOnBLEChangeRequestApiPath api: ^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
             BOOL result = [_self registerEventWithRequest:request response:response];
             if (result) {
-                __block DConnectDevicePlugin *plugin = (DConnectDevicePlugin *)_self.provider;
+                __block DConnectDevicePlugin *plugin = (DConnectDevicePlugin *)_self.plugin;
                 _bleEventBlock = ^(BOOL isStatus) {
                     NSArray *evts = [_self.eventMgr eventListForServiceId:DPHostDevicePluginServiceId
                                                                   profile:DConnectConnectProfileName

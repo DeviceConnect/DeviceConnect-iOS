@@ -821,7 +821,7 @@ pushlinkAuthenticationSuccessSelector:(SEL)pushlinkAuthenticationSuccessSelector
             for (id key in [bridgesFound keyEnumerator]) {
                 NSString *serviceId = [NSString stringWithFormat:@"%@_%@",[bridgesFound valueForKey:key],key];
                 if (![self.mServiceProvider service: serviceId]) {
-                    DPHueService *service = [[DPHueService alloc] initWithBridgeKey:key bridgeValue:[bridgesFound valueForKey:key]];
+                    DPHueService *service = [[DPHueService alloc] initWithBridgeKey:key bridgeValue:[bridgesFound valueForKey:key] plugin: [self plugin]];
                     [self.mServiceProvider addService: service];
                 }
             }

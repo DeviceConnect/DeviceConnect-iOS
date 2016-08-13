@@ -80,23 +80,19 @@ static const NSTimeInterval DPSemaphoreTimeout = 20.0;
 	return self;
 }
 
-- (void) setServiceProvider: (DConnectServiceProvider *) serviceProvider {
-    _mServiceProvider = serviceProvider;
-}
-
 // デバイス管理情報更新
 - (void) updateManageServices {
     @synchronized(self) {
         
         // ServiceProvider未登録なら処理しない
-        if (!_mServiceProvider) {
+        if (!_serviceProvider) {
             return;
         }
         
         NSArray *deviceList = [self deviceList];
         
         // ServiceProviderに存在するサービスが検出されなかったならオフラインにする
-        for (DConnectService *service in [_mServiceProvider services]) {
+        for (DConnectService *service in [_serviceProvider services]) {
             NSString *serviceId = [service serviceId];
             
             BOOL isFindDevice = NO;
@@ -117,10 +113,11 @@ static const NSTimeInterval DPSemaphoreTimeout = 20.0;
         for (NSDictionary *device in deviceList) {
             NSString *serviceId = device[@"id"];
             NSString *deviceName = device[@"name"];
-            if (![_mServiceProvider service: serviceId]) {
+            if (![_serviceProvider service: serviceId]) {
                 DPChromecastService *service = [[DPChromecastService alloc] initWithServiceId:serviceId
-                                                                                   deviceName:deviceName];
-                [_mServiceProvider addService: service];
+                                                                                   deviceName:deviceName
+                                                plugin: self.plugin];
+                [_serviceProvider addService: service];
             }
         }
     }

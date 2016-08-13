@@ -519,6 +519,7 @@ NSString *const DConnectAttributeNameRequestAccessToken = @"requestAccessToken";
     if (name) {
         [self.mProfileMap setObject:profile forKey:name];
         profile.provider = self;
+        profile.plugin = nil;
     }
 }
 

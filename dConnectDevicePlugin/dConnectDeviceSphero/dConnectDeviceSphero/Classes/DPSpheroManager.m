@@ -54,12 +54,6 @@ BOOL _startedCollisionSensor;
     return self;
 }
 
-- (void) setServiceProvider: (DConnectServiceProvider *)serviceProvider {
-    @synchronized(self) {
-        self.mServiceProvider = serviceProvider;
-    }
-}
-
 // アプリがバックグラウンドに入った
 - (void)applicationDidEnterBackground
 {
@@ -170,14 +164,14 @@ BOOL _startedCollisionSensor;
     @synchronized(self) {
         
         // ServiceProvider未登録なら処理しない
-        if (!_mServiceProvider) {
+        if (!self.serviceProvider) {
             return;
         }
         
         NSArray *deviceList = [self deviceList];
         
         // ServiceProviderに存在するサービスが検出されなかったならオフラインにする
-        for (DConnectService *service in [_mServiceProvider services]) {
+        for (DConnectService *service in [self.serviceProvider services]) {
             NSString *serviceId = [service serviceId];
             
             BOOL isFindDevice = NO;
@@ -198,10 +192,11 @@ BOOL _startedCollisionSensor;
         for (NSDictionary *device in deviceList) {
             NSString *serviceId = device[@"id"];
             NSString *deviceName = device[@"name"];
-            if (![_mServiceProvider service: serviceId]) {
+            if (![self.serviceProvider service: serviceId]) {
                 DPSpheroService *service = [[DPSpheroService alloc] initWithServiceId:serviceId
-                                                                           deviceName:deviceName];
-                [_mServiceProvider addService: service];
+                                                                           deviceName:deviceName
+                                                                               plugin: self.plugin];
+                [self.serviceProvider addService: service];
             }
         }
     }

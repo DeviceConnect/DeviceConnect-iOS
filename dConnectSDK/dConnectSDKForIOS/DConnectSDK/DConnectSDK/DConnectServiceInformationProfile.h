@@ -205,15 +205,6 @@ typedef NS_ENUM(NSInteger, DConnectServiceInformationProfileConnectState) {
 @property (nonatomic, weak) id<DConnectServiceInformationProfileDataSource> dataSource;
 
 
-/*!
- @brief DConnectProfileProviderオブジェクトを指定して初期化する。
- 
- @param[in] provider DConnectProfileProviderインスタンス
- 
- @retval DConnectServiceInformationProfileインスタンス。
- */
-- (instancetype) initWithProvider: (id) provider;
-
 #pragma mark - Setter
 
 /*!

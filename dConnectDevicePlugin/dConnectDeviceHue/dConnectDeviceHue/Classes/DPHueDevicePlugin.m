@@ -28,6 +28,7 @@ NSString *const DPHueBundleName = @"dConnectDeviceHue_resources";
         
         self.serviceProvider = [[DConnectServiceManager alloc] init];
         [[DPHueManager sharedManager] setServiceProvider: self.serviceProvider];
+        [[DPHueManager sharedManager] setPlugin: self];
         
         self.pluginName = @"hue (Device Connect Device Plug-in)";
         

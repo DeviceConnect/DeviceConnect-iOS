@@ -27,9 +27,7 @@
 @property(nonatomic, strong) NSString *config;
 
 
-- (instancetype) initWithServiceId: (NSString *)serviceId;
-
-- (void) setPlugin: (id) plugin;
+- (instancetype) initWithServiceId: (NSString *)serviceId plugin: (id) plugin;
 
 - (BOOL) onRequest: request response: response;
 

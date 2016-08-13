@@ -14,8 +14,8 @@
 
 @implementation DPChromecastService
 
-- (instancetype) initWithServiceId: (NSString *) serviceId deviceName: (NSString *) deviceName {
-    self = [super initWithServiceId: serviceId];
+- (instancetype) initWithServiceId: (NSString *) serviceId deviceName: (NSString *) deviceName plugin: (id) plugin {
+    self = [super initWithServiceId: serviceId plugin: plugin];
     if (self) {
         [self setName: [NSString stringWithFormat:@"Chromecast(%@)", deviceName]];
         [self setNetworkType: DConnectServiceDiscoveryProfileNetworkTypeWiFi];
@@ -23,7 +23,6 @@
         
         [self addProfile:[DPChromecastNotificationProfile new]];
         [self addProfile:[DPChromecastMediaPlayerProfile new]];
-        [self addProfile:[DConnectServiceInformationProfile new]];
         [self addProfile:[DPChromecastCanvasProfile new]];
     }
     return self;

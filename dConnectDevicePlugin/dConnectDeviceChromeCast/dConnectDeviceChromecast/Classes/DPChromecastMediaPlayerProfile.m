@@ -841,7 +841,7 @@
 // イベント追加
 - (void) addMediaEvent:(NSString *)serviceId
 {
-	__block DConnectDevicePlugin *_self = (DConnectDevicePlugin *)self.provider;
+	__block DConnectDevicePlugin *_self = (DConnectDevicePlugin *)self.plugin;
 	
 	DConnectEventManager *evtMgr = [DConnectEventManager sharedManagerForClass:[DPChromecastDevicePlugin class]];
 	

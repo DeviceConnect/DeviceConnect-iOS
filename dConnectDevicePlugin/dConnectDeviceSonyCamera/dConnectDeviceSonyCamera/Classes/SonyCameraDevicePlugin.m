@@ -18,7 +18,6 @@
 #import "SonyCameraManager.h"
 
 #import <DConnectSDK/DConnectService.h>
-#import <DConnectSDK/DConnectServiceInformationProfile.h>
 #import <SystemConfiguration/CaptiveNetwork.h>
 
 
@@ -72,9 +71,6 @@
                      object:application];
             
         });
-        
-        // プロファイルを追加
-        [self addProfile:[DConnectServiceInformationProfile new]];
     }
     return self;
 }

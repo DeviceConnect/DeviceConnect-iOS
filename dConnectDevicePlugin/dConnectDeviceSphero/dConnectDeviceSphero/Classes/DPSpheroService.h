@@ -11,6 +11,6 @@
 
 @interface DPSpheroService : DConnectService
 
-- (instancetype) initWithServiceId:(NSString *)serviceId deviceName: (NSString *) deviceName;
+- (instancetype) initWithServiceId:(NSString *)serviceId deviceName: (NSString *) deviceName plugin: (id) plugin;
 
 @end

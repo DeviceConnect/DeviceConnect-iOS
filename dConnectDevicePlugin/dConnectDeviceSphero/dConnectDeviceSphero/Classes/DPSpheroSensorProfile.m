@@ -286,7 +286,7 @@ typedef void (^CollisionBlock)(DConnectMessage *);
     for (DConnectEvent *event in events) {
         DConnectMessage *eventMsg = [DConnectEventManager createEventMessageWithEvent:event];
         [eventMsg setMessage:message forKey:param];
-        DConnectDevicePlugin *plugin = (DConnectDevicePlugin *)self.provider;
+        DConnectDevicePlugin *plugin = (DConnectDevicePlugin *)self.plugin;
         [plugin sendEvent:eventMsg];
     }
    

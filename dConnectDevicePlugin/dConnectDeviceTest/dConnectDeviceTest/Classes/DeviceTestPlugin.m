@@ -42,9 +42,6 @@
         [[DConnectEventManager sharedManagerForClass:[self class]]
          setController:[DConnectMemoryCacheController new]];
         
-        DConnectServiceInformationProfile *sip = [DConnectServiceInformationProfile new];
-        sip.dataSource = self;
-
         [self addProfile:[[TestLightProfile alloc] initWithDevicePlugin:self]];
         [self addProfile:[[TestBatteryProfile alloc] initWithDevicePlugin:self]];
         [self addProfile:[[TestConnectProfile alloc] initWithDevicePlugin:self]];
@@ -57,7 +54,6 @@
         [self addProfile:[[TestNotificationProfile alloc] initWithDevicePlugin:self]];
         [self addProfile:[[TestPhoneProfile alloc] initWithDevicePlugin:self]];
         [self addProfile:[[TestProximityProfile alloc] initWithDevicePlugin:self]];
-        [self addProfile:sip];
         [self addProfile:[[TestSettingsProfile alloc] initWithDevicePlugin:self]];
         [self addProfile:[TestSystemProfile new]];
         [self addProfile:[TestVibrationProfile new]];

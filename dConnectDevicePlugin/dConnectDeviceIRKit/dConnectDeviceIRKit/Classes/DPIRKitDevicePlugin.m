@@ -14,7 +14,6 @@
 #import "DPIRKitDBManager.h"
 #import "DPIRKitRESTfulRequest.h"
 #import "DPIRKitVirtualDevice.h"
-#import "DPIRKitServiceInformationProfile.h"
 #import "DPIRKitLightProfile.h"
 #import "DPIRKitTVProfile.h"
 #import "DPIRKitService.h"
@@ -70,13 +69,11 @@ DPIRKitManagerDetectionDelegate
         [self addProfile:systemProfile];
         
         // サービスで登録するProfile
-        DPIRKitServiceInformationProfile *serviceInformationProfile = [DPIRKitServiceInformationProfile new];
         DPIRKitRemoteControllerProfile *remoteControllerProfile
                             = [[DPIRKitRemoteControllerProfile alloc] initWithDevicePlugin:self];
         DPIRKitTVProfile *tvProfile = [[DPIRKitTVProfile alloc] initWithDevicePlugin:self];
         DPIRKitLightProfile *lightProfile = [[DPIRKitLightProfile alloc] initWithDevicePlugin:self];
-        serviceInformationProfile.dataSource = self;
-        mServiceProfiles = @[ serviceInformationProfile, remoteControllerProfile, tvProfile, lightProfile ];
+        mServiceProfiles = @[ remoteControllerProfile, tvProfile, lightProfile ];
         
         _devices = [NSMutableDictionary dictionary];
         id<DConnectEventCacheController> controller = [[DConnectMemoryCacheController alloc] init];
@@ -151,7 +148,7 @@ DPIRKitManagerDetectionDelegate
         // デバイスが未登録なら登録する
         NSString *serviceId = device.name;
         if (![self.serviceProvider service: serviceId]) {
-            DPIRKitService *service = [[DPIRKitService alloc] initWithServiceId: serviceId profiles: mServiceProfiles];
+            DPIRKitService *service = [[DPIRKitService alloc] initWithServiceId: serviceId profiles: mServiceProfiles plugin: self];
             [self.serviceProvider addService: service];
         }
         

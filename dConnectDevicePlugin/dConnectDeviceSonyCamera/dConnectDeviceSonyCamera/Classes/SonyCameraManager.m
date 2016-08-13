@@ -134,6 +134,7 @@
             if (![self.plugin.serviceProvider service: deviceServiceId]) {
                 SonyCameraService *service = [[SonyCameraService alloc] initWithServiceId:deviceServiceId
                                                                                deviceName:deviceName
+                                                                                   plugin: self.plugin
                                                                          liveViewDelegate:self.liveViewDelegate
                                                                     remoteApiUtilDelegate:self.remoteApiUtilDelegate];
                 [self.plugin.serviceProvider addService: service];

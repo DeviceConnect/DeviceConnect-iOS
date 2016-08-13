@@ -130,9 +130,6 @@ static NSMutableDictionary *_instanceArray = nil;
         }
     }
     
-    // Serviceにpluginを渡す
-    [service setPlugin: [self plugin]];
-    
     mDConnectServices[serviceId] = service;
 //    NSLog(@"addService: count = %d / key = %@", (int)[mDConnectServices count], _key);
 }

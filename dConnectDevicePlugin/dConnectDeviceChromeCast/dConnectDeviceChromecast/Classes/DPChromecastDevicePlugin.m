@@ -42,6 +42,8 @@
                        name:UIApplicationDidEnterBackgroundNotification
                      object:application];
             DPChromecastManager *mgr = [DPChromecastManager sharedManager];
+            [mgr setServiceProvider: self.serviceProvider];
+            [mgr setPlugin: self];
             [mgr startScan];
             [mgr startHttpServer];
 

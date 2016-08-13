@@ -14,6 +14,6 @@ extern NSString *const DPThetaRoiServiceId;
 
 @interface DPThetaService : DConnectService
 
-- (instancetype) initWithServiceId: (NSString *) serviceId;
+- (instancetype) initWithServiceId: (NSString *) serviceId plugin: (id) plugin;
 
 @end

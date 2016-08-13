@@ -20,8 +20,8 @@ return YES; \
 } \
 
 // イベント送信用のマクロ
-#define SELF_PLUGIN ((DPThetaDevicePlugin *)self.provider)
-#define WEAKSELF_PLUGIN ((DPThetaDevicePlugin *)weakSelf.provider)
+#define SELF_PLUGIN ((DPThetaDevicePlugin *)self.plugin)
+#define WEAKSELF_PLUGIN ((DPThetaDevicePlugin *)weakSelf.plugin)
 
 
 /*!
@@ -35,7 +35,12 @@ return YES; \
 /*!
  @brief ServiceProvider.
  */
-@property DConnectServiceProvider *mServiceProvider;
+@property(nonatomic, weak) DConnectServiceProvider *serviceProvider;
+
+/*!
+ @brief DevicePlugin.
+ */
+@property(nonatomic, weak) id plugin;
 
 /*!
  @brief DConnectのFileManager。
@@ -70,12 +75,6 @@ typedef void (^DPThetaOnStatusChangeCallback)(PtpIpObjectInfo *object, NSString 
  @return DPSpheroManagerの共有インスタンス。
  */
 + (instancetype)sharedManager;
-
-/*!
- @brief ServiceProviderを登録する。
- @param[in] serviceProvider ServiceProvider
- */
-- (void)setServiceProvider: (DConnectServiceProvider *) serviceProvider;
 
 /*!
  @brief Thetaと接続する。

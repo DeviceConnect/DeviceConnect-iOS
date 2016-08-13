@@ -18,14 +18,13 @@ NSString *const DPThetaRoiServiceId = @"roi";
 
 @implementation DPThetaService
 
-- (instancetype) initWithServiceId: (NSString *) serviceId {
+- (instancetype) initWithServiceId: (NSString *) serviceId plugin: (id) plugin {
 
-    self = [super initWithServiceId: serviceId];
+    self = [super initWithServiceId: serviceId plugin: plugin];
     if (self) {
         [self addProfile:[DPThetaBatteryProfile new]];
         [self addProfile:[DPThetaFileProfile new]];
         [self addProfile:[DPThetaMediaStreamRecordingProfile new]];
-        [self addProfile:[DConnectServiceInformationProfile new]];
         [self addProfile:[DPThetaOmnidirectionalImageProfile new]];
     }
     return self;

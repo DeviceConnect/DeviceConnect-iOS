@@ -13,8 +13,8 @@
 
 @implementation DPIRKitService
 
-- (instancetype) initWithServiceId: (NSString *)serviceId profiles: (NSArray *) profiles {
-    self = [super initWithServiceId: serviceId];
+- (instancetype) initWithServiceId: (NSString *)serviceId profiles: (NSArray *) profiles plugin: (id) plugin {
+    self = [super initWithServiceId: serviceId plugin: plugin];
     if (self) {
         [self setName: serviceId];
         [self setNetworkType: DConnectServiceDiscoveryProfileNetworkTypeWiFi];

@@ -34,15 +34,6 @@
     return self;
 }
 
-- (instancetype) initWithProvider:(id) provider {
-    self = [super init];
-    if (self) {
-        [self setProvider: provider];
-        mApis = [NSMutableArray array];
-    }
-    return self;
-}
-
 // TODO: 削除予定
 - (NSString *) apiPath: (DConnectApiEntity *) api {
     return [api path];

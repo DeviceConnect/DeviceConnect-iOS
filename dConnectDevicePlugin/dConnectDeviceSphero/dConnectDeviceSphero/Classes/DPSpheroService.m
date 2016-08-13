@@ -15,8 +15,8 @@
 
 @implementation DPSpheroService
 
-- (instancetype) initWithServiceId:(NSString *)serviceId deviceName: (NSString *) deviceName {
-    self = [super initWithServiceId: serviceId];
+- (instancetype) initWithServiceId:(NSString *)serviceId deviceName: (NSString *) deviceName plugin: (id) plugin {
+    self = [super initWithServiceId: serviceId plugin: plugin];
     if (self) {
         [self setName: deviceName];
         [self setNetworkType: DConnectServiceDiscoveryProfileNetworkTypeBluetooth];
@@ -27,7 +27,6 @@
         [self addProfile:[DPSpheroDriveControllerProfile new]];
         [self addProfile:[DPSpheroLightProfile new]];
         [self addProfile:[DPSpheroDeviceOrientationProfile new]];
-        [self addProfile:[DConnectServiceInformationProfile new]];
     }
     return self;
 }

@@ -35,11 +35,10 @@ static NSString *const KEY_PATHS = @"paths";
 
 @implementation DConnectServiceInformationProfile
 
-- (instancetype) initWithProvider: (id) provider {
-    self = [super initWithProvider: provider];
+- (instancetype) init {
+    self = [super init];
     if (self) {
         __weak id blockSelf = self;
-        __weak id blockProvider = self.provider;
         __weak id<DConnectServiceInformationProfileDataSource> blockDataSource = _dataSource;
         
         NSString *getInformationApiPath = [self apiPath: nil
@@ -75,7 +74,7 @@ static NSString *const KEY_PATHS = @"paths";
                          [DConnectServiceInformationProfile setConnect:connect target:response];
                          
                          // supports, supportApis
-                         NSArray *profiles = [blockProvider profiles];
+                         NSArray *profiles = [[blockSelf provider] profiles];
                          DConnectArray *supports = [DConnectArray array];
                          for (DConnectProfile *profile in profiles) {
                              [supports addString:[profile profileName]];

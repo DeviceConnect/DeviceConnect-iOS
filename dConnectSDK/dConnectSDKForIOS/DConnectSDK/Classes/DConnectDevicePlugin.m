@@ -189,8 +189,9 @@
         [profile setProfileSpec: profileSpec];
     }
     
-    // プロファイルにデバイスプラグインのインスタンスを設定する
+    // プロファイルにプロファイルプロバイダとデバイスプラグインのインスタンスを設定する
     [profile setProvider: self];
+    [profile setPlugin: self];
     
     // ProfileMapにprofileデータを追加
     [self.mProfileMap setObject: profile forKey: profileName];

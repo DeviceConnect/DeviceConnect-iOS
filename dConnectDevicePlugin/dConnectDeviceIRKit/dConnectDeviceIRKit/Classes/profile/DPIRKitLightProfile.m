@@ -13,12 +13,6 @@
 #import "DPIRKitVirtualDevice.h"
 #import "DPIRKitRESTfulRequest.h"
 
-@interface DPIRKitLightProfile()
-@property (nonatomic, weak) DPIRKitDevicePlugin *plugin;
-
-
-@end
-
 @implementation DPIRKitLightProfile
 // 初期化
 - (id) initWithDevicePlugin:(DPIRKitDevicePlugin *)plugin
@@ -166,7 +160,7 @@
         NSString *uri = [NSString stringWithFormat:@"/%@",[request profile]];
         if ([req.uri isEqualToString:uri] && [req.method isEqualToString:method]
             && req.ir) {
-            send = [_plugin sendIRWithServiceId:serviceId message:req.ir response:response];
+            send = [self.plugin sendIRWithServiceId:serviceId message:req.ir response:response];
         } else {
             [response setErrorToInvalidRequestParameterWithMessage:@"IR is not registered for that request"];
         }

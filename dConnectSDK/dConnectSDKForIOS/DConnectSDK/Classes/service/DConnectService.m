@@ -17,7 +17,7 @@
 /*!
  @brief プラグインのインスタンス.
  */
-@property(nonatomic, weak) id plugin_;
+@property(nonatomic, weak) id plugin;
 
 /*!
  @brief サポートするプロファイル一覧(key:プロファイル名(小文字) value:DConnectProfile *).
@@ -28,13 +28,14 @@
 
 @implementation DConnectService
 
-- (instancetype) initWithServiceId: (NSString *)serviceId {
+- (instancetype) initWithServiceId: (NSString *)serviceId plugin: (id) plugin {
     if (!serviceId) {
         @throw @"id is null.";
     }
     self = [super init];
     if (self) {
         [self setServiceId: serviceId];
+        [self setPlugin: plugin];
         [self setProfiles_: [NSMutableDictionary dictionary]];
         [self addProfile: [[DConnectServiceInformationProfile alloc] init]];
     }
@@ -50,16 +51,6 @@
     }
     
     return [profile didReceiveRequest: request response: response];
-}
-
-- (void) setPlugin: (id) plugin {
-    
-    [self setPlugin_: plugin];
-    
-    // 登録済みのプロファイルデータにプラグインを設定する
-    for (DConnectProfile *profile in [[self profiles_] allValues]) {
-        [profile setProvider: plugin];
-    }
 }
 
 #pragma mark - DConnectProfileProvider Implement.
@@ -80,8 +71,9 @@
         return;
     }
 
-    // プロファイルにデバイスプラグインのインスタンスを設定する
-    [profile setProvider: [self plugin_]];
+    // プロファイルにプロファイルプロバイダとデバイスプラグインのインスタンスを設定する
+    [profile setProvider: self];
+    [profile setPlugin: [self plugin]];
     
     NSString *profileName = [[profile profileName] lowercaseString];
     [self profiles_][profileName] = profile;

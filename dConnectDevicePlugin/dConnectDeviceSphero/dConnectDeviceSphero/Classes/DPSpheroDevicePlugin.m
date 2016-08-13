@@ -30,6 +30,7 @@
                 setController:[DConnectMemoryCacheController new]];
         
         [[DPSpheroManager sharedManager] setServiceProvider: self.serviceProvider];
+        [[DPSpheroManager sharedManager] setPlugin:self];
 
         // System Profileの追加
         [self addProfile:[DPSpheroSystemProfile new]];

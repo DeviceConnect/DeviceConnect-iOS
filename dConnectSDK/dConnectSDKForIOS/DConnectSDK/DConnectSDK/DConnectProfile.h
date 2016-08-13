@@ -31,17 +31,17 @@
 
 /*!
  @brief プロファイルプロバイダ。(DConnectProfileProvider型のポインタ)
+        ※DConnectServiceの仕組みに変更したことにより、意味合いが変わった。
+            以前はproviderは{ DConnectDevicePlugin & DConnectProfileProvider }の値を設定したが、
+            DConnectServiceにてaddProfileしているプロファイルのproviderはDConnectServiceでありDConnectDevicePluginではない。
+            1つの変数で同等の機能を実現できないので、pluginを追加してDConnectDevicePluginの参照ポインタを持たせることにした。
  */
 @property (nonatomic, weak) id provider;
 
 /*!
- @brief DConnectProfileProviderオブジェクトを指定して初期化する。
- 
- @param[in] provider DConnectProfileProviderインスタンス
- 
- @retval DConnectProfileインスタンス。
+ @brief デバイスプラグイン。(DConnectDevicePlugin型のポインタ)
  */
-- (instancetype) initWithProvider: (id) provider;
+@property (nonatomic, weak) id plugin;
 
 /*!
  @brief プロファイルに設定されているDevice Connect API実装のリストを返す.

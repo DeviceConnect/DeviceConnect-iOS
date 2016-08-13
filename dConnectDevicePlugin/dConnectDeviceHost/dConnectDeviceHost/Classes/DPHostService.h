@@ -14,6 +14,6 @@ extern NSString *const DPHostDevicePluginServiceId;
 
 @interface DPHostService : DConnectService
 
-- (instancetype) initWithFileManager: (DConnectFileManager *) fileMgr;
+- (instancetype) initWithFileManager: (DConnectFileManager *) fileMgr plugin: (id) plugin;
 
 @end
