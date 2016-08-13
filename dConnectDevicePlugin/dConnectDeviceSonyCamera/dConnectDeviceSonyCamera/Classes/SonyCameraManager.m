@@ -90,7 +90,7 @@
 }
 
 - (BOOL) hasDataAvaiableEvent {
-    DConnectEventManager *mgr = [DConnectEventManager sharedManagerForClass:[self class]];
+    DConnectEventManager *mgr = [DConnectEventManager sharedManagerForClass:[self.plugin class]];
     NSArray *evts = [mgr eventListForServiceId:SERVICE_ID
                                        profile:DConnectMediaStreamRecordingProfileName
                                      attribute:DConnectMediaStreamRecordingProfileAttrOnDataAvailable];

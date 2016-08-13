@@ -118,7 +118,7 @@ NSString *const SonyDevicePluginVersion = @"2.0.0";
 #pragma mark - Primate Methods.
 
 - (BOOL) hasDataAvaiableEvent {
-    DConnectEventManager *mgr = [DConnectEventManager sharedManagerForClass:[self class]];
+    DConnectEventManager *mgr = [DConnectEventManager sharedManagerForClass:[SonyCameraDevicePlugin class]];
     NSArray *evts = [mgr eventListForServiceId:SERVICE_ID
                                        profile:DConnectMediaStreamRecordingProfileName
                                      attribute:DConnectMediaStreamRecordingProfileAttrOnDataAvailable];

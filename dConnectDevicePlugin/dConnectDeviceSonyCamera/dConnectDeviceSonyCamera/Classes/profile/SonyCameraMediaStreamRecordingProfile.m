@@ -333,7 +333,7 @@
                 return YES;
             }
             
-            DConnectEventManager *mgr = [DConnectEventManager sharedManagerForClass:[weakSelf class]];
+            DConnectEventManager *mgr = [DConnectEventManager sharedManagerForClass:[weakSelf.plugin class]];
             DConnectEventError error = [mgr addEventForRequest:request];
             if (error == DConnectEventErrorNone) {
                 [response setResult:DConnectMessageResultTypeOk];
@@ -366,7 +366,7 @@
                 return YES;
             }
             
-            DConnectEventManager *mgr = [DConnectEventManager sharedManagerForClass:[weakSelf class]];
+            DConnectEventManager *mgr = [DConnectEventManager sharedManagerForClass:[weakSelf.plugin class]];
             DConnectEventError error = [mgr removeEventForRequest:request];
             if (error == DConnectEventErrorNone) {
                 [response setResult:DConnectMessageResultTypeOk];
@@ -406,7 +406,7 @@
                 return YES;
             }
             
-            DConnectEventManager *mgr = [DConnectEventManager sharedManagerForClass:[weakSelf class]];
+            DConnectEventManager *mgr = [DConnectEventManager sharedManagerForClass:[weakSelf.plugin class]];
             DConnectEventError error = [mgr addEventForRequest:request];
             if (error == DConnectEventErrorNone) {
                 [response setResult:DConnectMessageResultTypeOk];
@@ -449,7 +449,7 @@
                 return YES;
             }
             
-            DConnectEventManager *mgr = [DConnectEventManager sharedManagerForClass:[weakSelf class]];
+            DConnectEventManager *mgr = [DConnectEventManager sharedManagerForClass:[weakSelf.plugin class]];
             DConnectEventError error = [mgr removeEventForRequest:request];
             if (error == DConnectEventErrorNone) {
                 [response setResult:DConnectMessageResultTypeOk];
