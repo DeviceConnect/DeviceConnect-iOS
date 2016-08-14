@@ -44,6 +44,51 @@
     return self;
 }
 
+// デバイス管理情報更新
+- (void) updateManageServices {
+    @synchronized(self) {
+        
+        // ServiceProvider未登録なら処理しない
+        if (!self.serviceProvider) {
+            return;
+        }
+        
+        int deviceCount = (int)[DeviceList getSize];
+        
+        // ServiceProviderに存在するサービスが検出されなかったならオフラインにする
+        for (DConnectService *service in [self.serviceProvider services]) {
+            NSString *serviceId = [service serviceId];
+            
+            BOOL isFindDevice = NO;
+            for (int deviceIndex = 0; deviceIndex < deviceCount; deviceIndex ++) {
+                NSString *deviceServiceId = [NSString stringWithFormat:@"%d", deviceIndex];
+                if (deviceServiceId && [serviceId localizedCaseInsensitiveCompare: deviceServiceId] == NSOrderedSame) {
+                    isFindDevice = YES;
+                    break;
+                }
+            }
+            
+            if (!isFindDevice) {
+                [service setOnline: NO];
+            }
+        }
+        
+        // サービス未登録なら登録する
+        for (int deviceIndex = 0; deviceIndex < deviceCount; deviceIndex ++) {
+            NSString *deviceServiceId = [NSString stringWithFormat:@"%d", deviceIndex];
+            NSString *deviceName = SonyDeviceName;
+            if (![self.serviceProvider service: deviceServiceId]) {
+                SonyCameraService *service = [[SonyCameraService alloc] initWithServiceId:deviceServiceId
+                                                                               deviceName:deviceName
+                                                                                   plugin: self.plugin
+                                                                         liveViewDelegate:self.liveViewDelegate
+                                                                    remoteApiUtilDelegate:self.remoteApiUtilDelegate];
+                [self.serviceProvider addService: service];
+            }
+        }
+    }
+}
+
 #pragma mark - Private Methods -
 
 - (NSData *) download:(NSString *)requestURL {
@@ -83,9 +128,6 @@
     NSInteger idx = [serviceId integerValue];
     [DeviceList selectDeviceAt:idx];
     
-    // デバイス管理情報更新
-    [self updateManageServices];
-    
     return YES;
 }
 
@@ -97,50 +139,5 @@
     return evts.count > 0;
 }
 
-
-// デバイス管理情報更新
-- (void) updateManageServices {
-    @synchronized(self) {
-        
-        // ServiceProvider未登録なら処理しない
-        if (!self.plugin.serviceProvider) {
-            return;
-        }
-        
-        int deviceCount = (int)[DeviceList getSize];
-        
-        // ServiceProviderに存在するサービスが検出されなかったならオフラインにする
-        for (DConnectService *service in [self.plugin.serviceProvider services]) {
-            NSString *serviceId = [service serviceId];
-            
-            BOOL isFindDevice = NO;
-            for (int deviceIndex = 0; deviceIndex < deviceCount; deviceIndex ++) {
-                NSString *deviceServiceId = [NSString stringWithFormat:@"%d", deviceIndex];
-                if (deviceServiceId && [serviceId localizedCaseInsensitiveCompare: deviceServiceId] == NSOrderedSame) {
-                    isFindDevice = YES;
-                    break;
-                }
-            }
-            
-            if (!isFindDevice) {
-                [service setOnline: NO];
-            }
-        }
-        
-        // サービス未登録なら登録する
-        for (int deviceIndex = 0; deviceIndex < deviceCount; deviceIndex ++) {
-            NSString *deviceServiceId = [NSString stringWithFormat:@"%d", deviceIndex];
-            NSString *deviceName = SonyDeviceName;
-            if (![self.plugin.serviceProvider service: deviceServiceId]) {
-                SonyCameraService *service = [[SonyCameraService alloc] initWithServiceId:deviceServiceId
-                                                                               deviceName:deviceName
-                                                                                   plugin: self.plugin
-                                                                         liveViewDelegate:self.liveViewDelegate
-                                                                    remoteApiUtilDelegate:self.remoteApiUtilDelegate];
-                [self.plugin.serviceProvider addService: service];
-            }
-        }
-    }
-}
 
 @end
