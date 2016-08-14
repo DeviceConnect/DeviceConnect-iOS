@@ -225,7 +225,7 @@
         
         // API登録(didReceivePostRecordRequest相当)
         NSString *postRecordRequestApiPath = [self apiPath: nil
-                                             attributeName: DConnectMediaStreamRecordingProfileAttrTakePhoto];
+                                             attributeName: DConnectMediaStreamRecordingProfileAttrRecord];
         [self addPostPath: postRecordRequestApiPath api: ^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
             
             NSString *serviceId = [request serviceId];
