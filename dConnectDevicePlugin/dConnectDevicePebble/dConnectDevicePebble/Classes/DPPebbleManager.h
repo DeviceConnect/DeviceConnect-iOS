@@ -29,6 +29,9 @@
 // アプリがフォアグラウンドに入った時に呼ぶ
 - (void)applicationWillEnterForeground;
 
+// デバイス管理情報更新
+- (void) updateManageServices;
+
 // バッテリー情報取得
 - (void)fetchBatteryInfo:(NSString*)serviceID callback:(void(^)(float level, BOOL isCharging, NSError *error))callback;
 // バッテリーレベル取得
