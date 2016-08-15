@@ -115,7 +115,7 @@
                                  // キャッシュ保持
                                  weakSelf.cacheOrientationData = message;
                                  // DConnectにイベント送信
-                                 [DPPebbleProfileUtil sendMessageWithProvider:weakSelf.provider
+                                 [DPPebbleProfileUtil sendMessageWithPlugin:weakSelf.plugin
                                                                       profile:DConnectDeviceOrientationProfileName
                                                                     attribute:DConnectDeviceOrientationProfileAttrOnDeviceOrientation
                                                                     serviceID:serviceId

@@ -88,7 +88,7 @@ static const UInt64 CACHE_RETENTION_TIME = 10000;
                                                keyeventData:(DConnectMessage *)message];
                                  
                                  // Send event to DConnect.
-                                 [DPPebbleProfileUtil sendMessageWithProvider:weakSelf.provider
+                                 [DPPebbleProfileUtil sendMessageWithPlugin:weakSelf.plugin
                                                                       profile:DConnectKeyEventProfileName
                                                                     attribute:DConnectKeyEventProfileAttrOnDown
                                                                     serviceID:serviceId
@@ -135,7 +135,7 @@ static const UInt64 CACHE_RETENTION_TIME = 10000;
                                                keyeventData:(DConnectMessage *)message];
                                  
                                  // Send event to DConnect.
-                                 [DPPebbleProfileUtil sendMessageWithProvider:weakSelf.provider
+                                 [DPPebbleProfileUtil sendMessageWithPlugin:weakSelf.plugin
                                                                       profile:DConnectKeyEventProfileName
                                                                     attribute:DConnectKeyEventProfileAttrOnUp
                                                                     serviceID:serviceId

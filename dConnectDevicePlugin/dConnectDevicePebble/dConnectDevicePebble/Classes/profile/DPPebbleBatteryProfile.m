@@ -112,7 +112,7 @@
                     [DConnectBatteryProfile setCharging:isCharging target:message];
                     
                     // DConnectにイベント送信
-                    [DPPebbleProfileUtil sendMessageWithProvider:[weakSelf provider]
+                    [DPPebbleProfileUtil sendMessageWithPlugin:[weakSelf plugin]
                                                          profile:DConnectBatteryProfileName
                                                        attribute:DConnectBatteryProfileAttrOnChargingChange
                                                        serviceID:serviceId
@@ -158,7 +158,7 @@
                     [DConnectBatteryProfile setLevel:level target:message];
                     
                     // DConnectにイベント送信
-                    [DPPebbleProfileUtil sendMessageWithProvider:[weakSelf provider]
+                    [DPPebbleProfileUtil sendMessageWithPlugin:[weakSelf plugin]
                                                          profile:DConnectBatteryProfileName
                                                        attribute:DConnectBatteryProfileAttrOnBatteryChange
                                                        serviceID:serviceId
