@@ -22,7 +22,7 @@
 - (void)disconnect;
 // Shadow取得
 - (void)fetchShadowWithName:(NSString*)name
-		  completionHandler:(void (^)(NSString *result, NSError *error))handler;
+		  completionHandler:(void (^)(id json, NSError *error))handler;
 // Shadow更新
 - (void)updateShadowWithName:(NSString*)name value:(NSString*)str
 		   completionHandler:(void (^)(NSError *error))handler;

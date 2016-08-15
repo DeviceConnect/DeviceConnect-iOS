@@ -9,10 +9,17 @@
 
 #import "DPAWSIoTDeviceListViewController.h"
 #import "DPAWSIoTUtils.h"
+#import "DPAWSIoTManager.h"
 
-@interface DPAWSIoTDeviceListViewController ()
+// TODO: 名前を決める
+#define kShadowName @"dconnect"
 
+@interface DPAWSIoTDeviceListViewController () <UITableViewDataSource> {
+	NSDictionary *_devices;
+}
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
 @end
+
 
 @implementation DPAWSIoTDeviceListViewController
 
@@ -28,10 +35,42 @@
 	} else {
 		// ログイン
 		[DPAWSIoTUtils loginWithHandler:^(NSError *error) {
-			// TODO: 処理
+			if (error) {
+				return;
+			}
+			// Shadow取得
+			[[DPAWSIoTManager sharedManager] fetchShadowWithName:kShadowName completionHandler:^(id json, NSError *error) {
+				// TODO: 処理
+				if (error) {
+					// TODO: エラー処理
+					return;
+				}
+				_devices = json[@"state"][@"reported"];
+				[self.tableView reloadData];
+				NSLog(@"%@", _devices);
+			}];
 		}];
 	}
 }
 
+
+#pragma mark - UITableView
+
+// 行数
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+	return _devices.count;
+}
+
+// テーブル内容
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
+	UILabel *label = [cell viewWithTag:1];
+	id key = [_devices.allKeys objectAtIndex:indexPath.row];
+	NSString *name = _devices[key][@"name"];
+	label.text = name;
+	return cell;
+}
 
 @end

@@ -30,8 +30,12 @@
 	XCTestExpectation *okExpectation = [self expectationWithDescription:@"ok!"];
 	// 接続
 	[[DPAWSIoTManager sharedManager] connectWithAccessKey:@"AKIAJYDTLD4DPFGZ4PAQ" secretKey:@"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" region:AWSRegionAPNortheast1 completionHandler:^(NSError *error) {
+		
 		// Shadow取得
-		[[DPAWSIoTManager sharedManager] fetchShadowWithName:@"dc01" completionHandler:^(NSString *result, NSError *error) {
+		[[DPAWSIoTManager sharedManager] fetchShadowWithName:@"dc01" completionHandler:^(id json, NSError *error) {
+			NSLog(@"%@", json);
+			NSLog(@"%@", error);
+
 			XCTAssertNil(error, @"error");
 			[okExpectation fulfill];
 		}];
@@ -49,7 +53,7 @@
 //		[[DPAWSIoTManager sharedManager] publishWithTopic:@"tp" message:@"test"];
 //		[okExpectation fulfill];
 	}];
-	[self waitForExpectationsWithTimeout:5 handler:nil];
+	[self waitForExpectationsWithTimeout:15 handler:nil];
 }
 
 - (void)testPerformanceExample {

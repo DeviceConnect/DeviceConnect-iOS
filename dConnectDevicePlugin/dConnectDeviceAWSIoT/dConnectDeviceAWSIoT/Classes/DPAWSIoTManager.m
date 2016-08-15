@@ -51,10 +51,10 @@
 			// 接続成功
 			if (status == AWSIoTMQTTStatusConnected) {
 				if (!_isConnected) {
+					_isConnected = YES;
 					if (handler) {
 						handler(nil);
 					}
-					_isConnected = YES;
 				}
 			}
 			// 接続エラー
@@ -83,7 +83,7 @@
 }
 
 // Shadow取得
-- (void)fetchShadowWithName:(NSString*)name completionHandler:(void (^)(NSString *result, NSError *error))handler {
+- (void)fetchShadowWithName:(NSString*)name completionHandler:(void (^)(id json, NSError *error))handler {
 	if (!_isConnected) {
 		if (handler) {
 			handler(nil, [NSError errorWithDomain:ERROR_DOMAIN code:-1 userInfo:nil]);
@@ -96,8 +96,15 @@
 	[iotData getThingShadow:request
 		  completionHandler:^(AWSIoTDataGetThingShadowResponse * _Nullable response, NSError * _Nullable error) {
 		if (handler) {
-			NSString *str = [[NSString alloc] initWithData:response.payload encoding:NSUTF8StringEncoding];
-			handler(str, error);
+			dispatch_async(dispatch_get_main_queue(), ^{
+				if (error) {
+					handler(nil, error);
+				} else {
+					NSError *error;
+					id json = [NSJSONSerialization JSONObjectWithData:response.payload options:NSJSONReadingAllowFragments error:&error];
+					handler(json, error);
+				}
+			});
 		}
 	}];
 }

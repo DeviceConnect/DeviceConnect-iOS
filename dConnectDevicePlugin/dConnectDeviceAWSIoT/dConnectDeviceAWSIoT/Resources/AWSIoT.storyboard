@@ -137,7 +137,7 @@
             </objects>
             <point key="canvasLocation" x="488" y="1138"/>
         </scene>
-        <!--IoT Device List View Controller-->
+        <!--Manager List-->
         <scene sceneID="buy-JS-6Zj">
             <objects>
                 <viewController id="uSr-aD-rfc" customClass="DPAWSIoTDeviceListViewController" sceneMemberID="viewController">
@@ -149,9 +149,39 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="27N-r2-OlW">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="55" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="27N-r2-OlW">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="524"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" rowHeight="55" id="Ia1-K1-p7W">
+                                        <rect key="frame" x="0.0" y="92" width="320" height="55"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Ia1-K1-p7W" id="N7q-Z7-Ing">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="54.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <switch opaque="NO" tag="2" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="cWz-f9-zEK">
+                                                    <rect key="frame" x="253" y="12" width="51" height="31"/>
+                                                </switch>
+                                                <label opaque="NO" userInteractionEnabled="NO" tag="1" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7cn-1h-Gsn">
+                                                    <rect key="frame" x="18" y="17" width="42" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailing" secondItem="cWz-f9-zEK" secondAttribute="trailing" constant="18" id="Gvv-zp-Gyi"/>
+                                                <constraint firstItem="7cn-1h-Gsn" firstAttribute="leading" secondItem="N7q-Z7-Ing" secondAttribute="leading" constant="18" id="LBx-qD-E45"/>
+                                                <constraint firstItem="cWz-f9-zEK" firstAttribute="centerY" secondItem="N7q-Z7-Ing" secondAttribute="centerY" id="aYp-dd-wRW"/>
+                                                <constraint firstItem="7cn-1h-Gsn" firstAttribute="centerY" secondItem="N7q-Z7-Ing" secondAttribute="centerY" id="tOA-xR-e5h"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="uSr-aD-rfc" id="Co0-bO-egP"/>
+                                </connections>
                             </tableView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="g3C-z2-C7w">
                                 <rect key="frame" x="143.5" y="530" width="34" height="30"/>
@@ -168,8 +198,9 @@
                             <constraint firstItem="g3C-z2-C7w" firstAttribute="centerX" secondItem="mwV-w7-LbA" secondAttribute="centerX" id="oKu-Nw-I9M"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="6De-Ss-1xb"/>
+                    <navigationItem key="navigationItem" title="Manager List" id="6De-Ss-1xb"/>
                     <connections>
+                        <outlet property="tableView" destination="27N-r2-OlW" id="c5N-kq-NGa"/>
                         <segue destination="NpT-dD-Uuq" kind="presentation" identifier="LoginSegue" id="ohk-Yl-9YH"/>
                     </connections>
                 </viewController>
