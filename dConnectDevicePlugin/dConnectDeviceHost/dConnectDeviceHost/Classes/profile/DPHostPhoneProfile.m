@@ -66,7 +66,7 @@
                 [DConnectPhoneProfile setPhoneNumber:weakSelf.callingNumber target:phoneStatus];
                 [DConnectPhoneProfile setState:callState target:phoneStatus];
                 [DConnectPhoneProfile setPhoneStatus:phoneStatus target:eventMsg];
-                [((DPHostDevicePlugin *)weakSelf.provider) sendEvent:eventMsg];
+                [((DPHostDevicePlugin *)weakSelf.plugin) sendEvent:eventMsg];
             }
         };
         

@@ -51,7 +51,7 @@ typedef void (^OrientationBlock)(DPGyroData gyroData, DPPoint3D accel, int inter
             for (DConnectEvent *msg in events) {
                 DConnectMessage *eventMsg = [DConnectEventManager createEventMessageWithEvent:msg];
                 [DConnectDeviceOrientationProfile setOrientation:message target:eventMsg];
-                DConnectDevicePlugin *plugin = (DConnectDevicePlugin *)weakSelf.provider;
+                DConnectDevicePlugin *plugin = (DConnectDevicePlugin *)weakSelf.plugin;
                 [plugin sendEvent:eventMsg];
             }
         };

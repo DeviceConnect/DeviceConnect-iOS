@@ -92,7 +92,7 @@ typedef void (^DPHostProximityBlock)(DConnectMessage *);
                                                                                       profile:DConnectProximityProfileName
                                                                                     attribute:DConnectProximityProfileAttrOnUserProximity];
                                      
-                                     DPHostDevicePlugin *plugin = (DPHostDevicePlugin *)weakSelf.provider;
+                                     DPHostDevicePlugin *plugin = (DPHostDevicePlugin *)weakSelf.plugin;
                                      // イベント送信
                                      for (DConnectEvent *evt in evts) {
                                          DConnectMessage *eventMsg = [DConnectEventManager createEventMessageWithEvent:evt];
