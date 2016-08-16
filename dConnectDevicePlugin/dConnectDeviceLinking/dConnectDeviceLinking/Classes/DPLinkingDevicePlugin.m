@@ -22,11 +22,9 @@
         Class key = [self class];
         DConnectMemoryCacheController *ctl = [[DConnectMemoryCacheController alloc] init];
         [[DConnectEventManager sharedManagerForClass:key] setController:ctl];
-        
-        
+
         [self addProfile:[[DPLinkingServiceDiscoveryProfile alloc] init]];
         [self addProfile:[DPLinkingSystemProfile systemProfileWithVersion:@"1.0"]];
-
     }
     return self;
 }

@@ -24,7 +24,7 @@
 
 - (instancetype) initWithDevice: (DPLinkingDevice *)device
 {
-    self = [super initWithServiceId:device.identifier];
+    self = [super initWithServiceId:device.identifier plugin:nil];
     if (self) {
         _device = device;
         [self setName:device.setting.name];

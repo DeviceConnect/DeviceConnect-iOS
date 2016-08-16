@@ -21,7 +21,7 @@
 
 - (instancetype) initWithBeacon:(DPLinkingBeacon *)beacon
 {
-    self = [super initWithServiceId:@""];
+    self = [super initWithServiceId:@"" plugin:nil];
     if (self) {
         _beacon = beacon;
 
