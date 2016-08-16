@@ -8,6 +8,7 @@
 //
 
 #import "DConnectSpecConstants.h"
+#import "DConnectSpecErrorFactory.h"
 
 NSString * const DConnectSpecTypeOneshot = @"one-shot";
 NSString * const DConnectSpecTypeEvent = @"event";
@@ -43,34 +44,53 @@ NSString * const DConnectSpecBoolTrue = @"true";
 
 @implementation DConnectSpecConstants
 
-+ (DConnectSpecType) parseType: (NSString *)strType {
++ (BOOL) parseType: (NSString *)strType outType: (DConnectSpecType *) outType error: (NSError **) error {
+
+    NSString *errorMessage;
+    
+    if (![strType isKindOfClass: [NSString class]]) {
+        id idType = strType;
+        errorMessage = [NSString stringWithFormat: @"parseType, not string parameter. class:%@", [[idType class] description]];
+        *error = [DConnectSpecErrorFactory createError: errorMessage];
+        return NO;
+    }
     
     NSString *strTypeLow = [strType lowercaseString];
     
     int i = 0;
     NSArray *strTypes = DConnectSpecTypes();
-    for (NSString *strType in strTypes) {
-        if ([strTypeLow isEqualToString: [strType lowercaseString]]) {
-            return (DConnectSpecType)i;
+    for (NSString *strType_ in strTypes) {
+        if ([strTypeLow isEqualToString: [strType_ lowercaseString]]) {
+            *outType = (DConnectSpecType)i;
+            return YES;
         }
         i ++;
     }
-    @throw @"invalid strType";
+    errorMessage = [NSString stringWithFormat: @"unknown type string :%@", strType];
+    *error = [DConnectSpecErrorFactory createError: errorMessage];
+    return NO;
 }
 
-+ (NSString *) toTypeString: (DConnectSpecType)type {
++ (NSString *) toTypeString: (DConnectSpecType)type error:(NSError **) error {
     
     NSArray *types = DConnectSpecTypes();
     
     int index = (int)type;
-    if (index <= 0 && index < [types count]) {
+    if (0 <= index && index < [types count]) {
         return DConnectSpecTypes()[index];
     }
     
-    @throw @"invalid type";
+    NSString *errorMessage = [NSString stringWithFormat: @"unknown type value :%d", (int)type];
+    *error = [DConnectSpecErrorFactory createError: errorMessage];
+    return nil;
 }
 
-+ (DConnectSpecMethod) parseMethod: (NSString *)strMethod {
++ (BOOL) parseMethod: (NSString *)strMethod outMethod: (DConnectSpecMethod *) outMethod error: (NSError **) error {
+    
+    if (![strMethod isKindOfClass: [NSString class]]) {
+        *error = [DConnectSpecErrorFactory createError: [NSString stringWithFormat: @"parseMethod Error. %@", strMethod]];
+        return NO;
+    }
     
     NSArray *methods = DConnectSpecMethods();
     
@@ -79,43 +99,61 @@ NSString * const DConnectSpecBoolTrue = @"true";
     int i = 0;
     for (NSString *strMethod in methods) {
         if ([strMethodLow isEqualToString: [strMethod lowercaseString]]) {
-            return (DConnectSpecMethod)i;
+            *outMethod = (DConnectSpecMethod)i;
+            return YES;
         }
         i ++;
     }
-    @throw @"invalid strMethod";
+    *error = [DConnectSpecErrorFactory createError: [NSString stringWithFormat: @"parseMethod Error. %@", strMethod]];
+    return NO;
 }
     
-+ (NSString *) toMethodString: (DConnectSpecMethod)method {
++ (NSString *) toMethodString: (DConnectSpecMethod)method error: (NSError **) error {
     
     NSArray *methods = DConnectSpecMethods();
     
     int index = (int)method;
-    if (index <= 0 && index < [methods count]) {
+    if (0 <= index && index < [methods count]) {
         return methods[index];
     }
     
-    @throw @"invalid method";
+    NSString *errorMessage = [NSString stringWithFormat: @"unknown method value :%d", (int)method];
+    *error = [DConnectSpecErrorFactory createError: errorMessage];
+    return nil;
 }
 
-+ (DConnectSpecMethod) toMethodFromAction: (DConnectMessageActionType) enMethod {
++ (BOOL) toMethodFromAction: (DConnectMessageActionType) method outMethod: (DConnectSpecMethod *) outMethod error: (NSError **) error {
     
-    if (enMethod == DConnectMessageActionTypeGet) {
-        return GET;
+    if (method == DConnectMessageActionTypeGet) {
+        *outMethod = GET;
+        return YES;
     }
-    if (enMethod == DConnectMessageActionTypePut) {
-        return PUT;
+    if (method == DConnectMessageActionTypePut) {
+        *outMethod = PUT;
+        return YES;
     }
-    if (enMethod == DConnectMessageActionTypePost) {
-        return POST;
+    if (method == DConnectMessageActionTypePost) {
+        *outMethod = POST;
+        return YES;
     }
-    if (enMethod == DConnectMessageActionTypeDelete) {
-        return DELETE;
+    if (method == DConnectMessageActionTypeDelete) {
+        *outMethod = DELETE;
+        return YES;
     }
-    @throw [NSString stringWithFormat: @"unknown DConnectMessageActionType : %d", (int)enMethod];
+
+    NSString *errorMessage = [NSString stringWithFormat: @"unknown method value :%d", (int)method];
+    *error = [DConnectSpecErrorFactory createError: errorMessage];
+    return NO;
 }
+
++ (BOOL) parseDataType: (NSString *)strDataType outDataType: (DConnectSpecDataType *) outDataType error: (NSError **) error {
     
-+ (DConnectSpecDataType) parseDataType: (NSString *)strDataType {
+    if (![strDataType isKindOfClass: [NSString class]]) {
+        id idDataType = strDataType;
+        NSString *errorMessage = [NSString stringWithFormat: @"parseDataType, not string parameter. class:%@", [[idDataType class] description]];
+        *error = [DConnectSpecErrorFactory createError: errorMessage];
+        return NO;
+    }
     
     NSArray *dataTypes = DConnectSpecDataTypes();
     
@@ -124,24 +162,36 @@ NSString * const DConnectSpecBoolTrue = @"true";
     int i = 0;
     for (NSString *dataType in dataTypes) {
         if ([strDataTypeLow isEqualToString: [dataType lowercaseString]]) {
-            return (DConnectSpecDataType)i;
+            *outDataType = (DConnectSpecDataType)i;
+            return YES;
         }
         i ++;
     }
-    @throw @"invalid strDataType";
-}
     
-+ (NSString *) toDataTypeString: (DConnectSpecDataType)dataType {
+    *error = [DConnectSpecErrorFactory createError: [NSString stringWithFormat: @"parseDataType Error. %@", strDataType]];
+    return NO;
+}
+
++ (NSString *) toDataTypeString: (DConnectSpecDataType)dataType error:(NSError **) error {
     NSArray *types = DConnectSpecDataTypes();
     int index = (int)dataType;
-    if (index <= 0 && index < [types count]) {
+    if (0 <= index && index < [types count]) {
         return types[index];
     }
     
-    @throw @"invalid dataType";
+    NSString *errorMessage = [NSString stringWithFormat: @"unknown dataType value :%d", (int)dataType];
+    *error = [DConnectSpecErrorFactory createError: errorMessage];
+    return nil;
 }
 
-+ (DConnectSpecDataFormat) parseDataFormat: (NSString *)strDataFormat {
++ (BOOL) parseDataFormat: (NSString *)strDataFormat outDataFormat: (DConnectSpecDataFormat *) outDataFormat error:(NSError **) error {
+    
+    if (![strDataFormat isKindOfClass: [NSString class]]) {
+        id idDataFormat = strDataFormat;
+        NSString *errorMessage = [NSString stringWithFormat: @"parseDataFormat, not string parameter. class:%@", [[idDataFormat class] description]];
+        *error = [DConnectSpecErrorFactory createError: errorMessage];
+        return NO;
+    }
     
     NSArray *dataFormats = DConnectSpecDataFormats();
     
@@ -150,38 +200,61 @@ NSString * const DConnectSpecBoolTrue = @"true";
     int i = 0;
     for (NSString *strDataFormat in dataFormats) {
         if ([strDataFormatLow isEqualToString: [strDataFormat lowercaseString]]) {
-            return (DConnectSpecDataFormat)i;
+            *outDataFormat = (DConnectSpecDataFormat)i;
+            return YES;
         }
         i ++;
     }
-    @throw @"invalid strDataFormat";
+    
+    *error = [DConnectSpecErrorFactory createError: [NSString stringWithFormat: @"parseDataFormat Error. %@", strDataFormat]];
+    return NO;
 }
 
-+ (NSString *) toDataFormatString: (DConnectSpecDataFormat)dataFormat {
++ (NSString *) toDataFormatString: (DConnectSpecDataFormat)dataFormat error:(NSError **)error {
     NSArray *dataFormats = DConnectSpecDataFormats();
     int index = (int)dataFormat;
-    if (index <= 0 && index < [dataFormats count]) {
+    if (0 <= index && index < [dataFormats count]) {
         return dataFormats[index];
     }
     
-    @throw @"invalid dataFormat";
+    NSString *errorMessage = [NSString stringWithFormat: @"unknown dataFormat value :%d", (int)dataFormat];
+    *error = [DConnectSpecErrorFactory createError: errorMessage];
+    return nil;
 }
 
-    
-+ (BOOL) parseBool: (NSString *)strBool {
-    
-    NSArray *bools = DConnectSpecBools();
-    BOOL boolValues[] = DConnectSpecBoolValues();
-    
-    NSString *strBoolLow = [strBool lowercaseString];
-    int i = 0;
-    for (NSString *strBool in bools) {
-        if ([strBoolLow isEqualToString: [strBool lowercaseString]]) {
-            return boolValues[i];
++ (BOOL) parseBool: (id)idBool outBoolValue: (BOOL *)outBoolValue error:(NSError **) error {
+    if ([idBool isKindOfClass: [NSNumber class]]) {
+        if ([[[idBool class] description] isEqualToString: @"__NSCFBoolean"]) {
+            NSNumber *numBool = (NSNumber *)idBool;
+            *outBoolValue = [numBool boolValue];
+            return YES;
+        } else {
+            *error = [DConnectSpecErrorFactory createError: [NSString stringWithFormat: @"parseBool, not bool or string parameter. class:%@", [[idBool class] description]]];
+            return NO;
         }
-        i ++;
+    } else if ([idBool isKindOfClass: [NSString class]]) {
+        NSArray *bools = DConnectSpecBools();
+        BOOL boolValues[] = DConnectSpecBoolValues();
+        
+        NSString *strBool = (NSString *)idBool;
+        NSString *strBoolLow = [strBool lowercaseString];
+        int i = 0;
+        for (NSString *strBool in bools) {
+            if ([strBoolLow isEqualToString: [strBool lowercaseString]]) {
+                *outBoolValue = boolValues[i];
+                return YES;
+            }
+            i ++;
+        }
+        
+        *error = [DConnectSpecErrorFactory createError: [NSString stringWithFormat: @"parseBool, invalid bool value. %@", strBool]];
+        return NO;
+        
+    } else {
+        NSString *errorMessage = [NSString stringWithFormat: @"parseBool, not bool or string parameter. class:%@", [[idBool class] description]];
+        *error = [DConnectSpecErrorFactory createError: errorMessage];
+        return NO;
     }
-    @throw @"invalid strBool";
 }
     
 + (NSString *) toBoolString: (BOOL)boolValue {
@@ -200,6 +273,11 @@ NSString * const DConnectSpecBoolTrue = @"true";
 }
 
 + (BOOL)isDigit:(NSString *)text {
+    
+    if (![text isKindOfClass: [NSString class]]) {
+        return NO;
+    }
+    
     NSCharacterSet *digitCharSet = [NSCharacterSet characterSetWithCharactersInString:@"+-0123456789"];
     
     NSScanner *aScanner = [NSScanner localizedScannerWithString:text];
@@ -210,6 +288,11 @@ NSString * const DConnectSpecBoolTrue = @"true";
 }
 
 + (BOOL)isNumber:(NSString *)text {
+    
+    if (![text isKindOfClass: [NSString class]]) {
+        return NO;
+    }
+    
     NSCharacterSet *digitCharSet = [NSCharacterSet characterSetWithCharactersInString:@"+-0123456789."];
     
     NSScanner *aScanner = [NSScanner localizedScannerWithString:text];

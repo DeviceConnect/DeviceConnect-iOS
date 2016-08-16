@@ -13,12 +13,6 @@
 #import "DPIRKitVirtualDevice.h"
 #import "DPIRKitRESTfulRequest.h"
 
-@interface DPIRKitLightProfile()
-@property (nonatomic, weak) DPIRKitDevicePlugin *plugin;
-
-
-@end
-
 @implementation DPIRKitLightProfile
 // 初期化
 - (id) initWithDevicePlugin:(DPIRKitDevicePlugin *)plugin
@@ -31,9 +25,8 @@
         __weak DPIRKitLightProfile *weakSelf = self;
         
         // API登録(didReceiveGetLightRequest相当)
-        NSString *getLightRequestApiPath = [self apiPathWithProfile: self.profileName
-                                                      interfaceName: nil
-                                                      attributeName: nil];
+        NSString *getLightRequestApiPath = [self apiPath: nil
+                                           attributeName: nil];
         [self addGetPath: getLightRequestApiPath
                      api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
                          NSString *serviceId = [request serviceId];
@@ -67,9 +60,8 @@
                      }];
         
         // API登録(didReceivePostLightRequest相当)
-        NSString *postLightRequestApiPath = [self apiPathWithProfile: self.profileName
-                                                       interfaceName: nil
-                                                       attributeName: nil];
+        NSString *postLightRequestApiPath = [self apiPath: nil
+                                            attributeName: nil];
         [self addPostPath: postLightRequestApiPath
                       api:^(DConnectRequestMessage *request, DConnectResponseMessage *response) {
                           
@@ -119,9 +111,8 @@
         
         
         // API登録(didReceiveDeleteLightRequest相当)
-        NSString *deleteLightRequestApiPath = [self apiPathWithProfile: self.profileName
-                                                         interfaceName: nil
-                                                         attributeName: nil];
+        NSString *deleteLightRequestApiPath = [self apiPath: nil
+                                              attributeName: nil];
         [self addDeletePath: deleteLightRequestApiPath
                         api:^(DConnectRequestMessage *request, DConnectResponseMessage *response) {
                             
@@ -169,7 +160,7 @@
         NSString *uri = [NSString stringWithFormat:@"/%@",[request profile]];
         if ([req.uri isEqualToString:uri] && [req.method isEqualToString:method]
             && req.ir) {
-            send = [_plugin sendIRWithServiceId:serviceId message:req.ir response:response];
+            send = [self.plugin sendIRWithServiceId:serviceId message:req.ir response:response];
         } else {
             [response setErrorToInvalidRequestParameterWithMessage:@"IR is not registered for that request"];
         }

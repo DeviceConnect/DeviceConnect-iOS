@@ -19,9 +19,8 @@
         self.delegate = self;
         
         // API登録(didReceiveGetDateRequest相当)
-        NSString *getDateRequestApiPath = [self apiPathWithProfile: self.profileName
-                                                     interfaceName: nil
-                                                     attributeName: DConnectSettingsProfileAttrDate];
+        NSString *getDateRequestApiPath = [self apiPath: nil
+                                          attributeName: DConnectSettingsProfileAttrDate];
         [self addGetPath: getDateRequestApiPath
                       api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
                           
@@ -39,9 +38,8 @@
                       }];
 
         // API登録(didReceiveGetLightRequest相当)
-        NSString *getLightRequestApiPath = [self apiPathWithProfile: self.profileName
-                                                      interfaceName: DConnectSettingsProfileInterfaceDisplay
-                                                      attributeName: DConnectSettingsProfileAttrLight];
+        NSString *getLightRequestApiPath = [self apiPath: DConnectSettingsProfileInterfaceDisplay
+                                           attributeName: DConnectSettingsProfileAttrLight];
         [self addGetPath: getLightRequestApiPath
                      api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
                          
@@ -51,9 +49,8 @@
                      }];
 
         // API登録(didReceivePutLightRequest相当)
-        NSString *putLightRequestApiPath = [self apiPathWithProfile: self.profileName
-                                                      interfaceName: DConnectSettingsProfileInterfaceDisplay
-                                                      attributeName: DConnectSettingsProfileAttrLight];
+        NSString *putLightRequestApiPath = [self apiPath: DConnectSettingsProfileInterfaceDisplay
+                                           attributeName: DConnectSettingsProfileAttrLight];
         [self addPutPath: putLightRequestApiPath
                      api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
                          

@@ -27,9 +27,8 @@
         __weak DPPebbleVibrationProfile *weakSelf = self;
         
         // API登録(didReceivePutVibrateRequest相当)
-        NSString *putVibrateRequestApiPath = [self apiPathWithProfile: self.profileName
-                                                        interfaceName: nil
-                                                        attributeName: DConnectVibrationProfileAttrVibrate];
+        NSString *putVibrateRequestApiPath = [self apiPath: nil
+                                             attributeName: DConnectVibrationProfileAttrVibrate];
         [self addPutPath: putVibrateRequestApiPath
                      api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
                          
@@ -64,9 +63,8 @@
                      }];
         
         // API登録(didReceiveDeleteVibrateRequest相当)
-        NSString *deleteVibrateRequestApiPath = [self apiPathWithProfile: self.profileName
-                                                           interfaceName: nil
-                                                           attributeName: DConnectVibrationProfileAttrVibrate];
+        NSString *deleteVibrateRequestApiPath = [self apiPath: nil
+                                                attributeName: DConnectVibrationProfileAttrVibrate];
         [self addDeletePath: deleteVibrateRequestApiPath
                         api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
                             

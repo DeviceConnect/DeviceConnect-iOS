@@ -12,7 +12,7 @@
 
 @interface NumberParameterSpecBuilder : DConnectParameterSpecBaseBuilder
 
-@property(nonatomic) DConnectSpecDataFormat format;
+@property(nonatomic) DConnectSpecDataFormat dataFormat;
 
 @property(nonatomic, strong) NSNumber * maximum;    // double型
 

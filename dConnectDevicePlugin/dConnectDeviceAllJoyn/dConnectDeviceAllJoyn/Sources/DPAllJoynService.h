@@ -12,6 +12,5 @@
 
 @interface DPAllJoynService : DConnectService
 
-- (instancetype) initWithServiceId: (NSString *) serviceId serviceName: (NSString *)serviceName handler: (DPAllJoynHandler *) handler;
-
+- (instancetype) initWithServiceId: (NSString *) serviceId serviceName: (NSString *)serviceName plugin: (id) plugin handler: (DPAllJoynHandler *) handler;
 @end

@@ -37,6 +37,11 @@ NSString *const SonyFilePrefix = @"sony";
 @interface SonyCameraManager : NSObject/*<SonyCameraRemoteApiUtilDelegate>*/
 
 /*!
+ @brief ServiceProvider.
+ */
+@property (nonatomic, weak) DConnectServiceProvider *serviceProvider;
+
+/*!
  @brief Service生成時に登録するプロファイル(DConnectProfile *)の配列
  */
 @property (nonatomic, weak) SonyCameraDevicePlugin *plugin;
@@ -131,6 +136,10 @@ NSString *const SonyFilePrefix = @"sony";
  */
 - (BOOL) hasDataAvaiableEvent;
 
+/*!
+ @brief デバイス管理情報更新
+ */
+- (void) updateManageServices;
 
 @end
 

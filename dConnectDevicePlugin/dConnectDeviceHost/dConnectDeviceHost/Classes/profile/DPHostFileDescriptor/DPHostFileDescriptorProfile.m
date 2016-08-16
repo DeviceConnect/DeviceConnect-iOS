@@ -33,9 +33,8 @@
         __weak DPHostFileDescriptorProfile *weakSelf = self;
         
         // API登録(didReceiveGetOpenRequest相当)
-        NSString *getOpenRequestApiPath = [self apiPathWithProfile: self.profileName
-                                                     interfaceName: nil
-                                                     attributeName: DConnectFileDescriptorProfileAttrOpen];
+        NSString *getOpenRequestApiPath = [self apiPath: nil
+                                          attributeName: DConnectFileDescriptorProfileAttrOpen];
         [self addGetPath: getOpenRequestApiPath
                      api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
                          
@@ -106,9 +105,8 @@
                      }];
         
         // API登録(didReceiveGetReadRequest相当)
-        NSString *getReadRequestApiPath = [self apiPathWithProfile: self.profileName
-                                                     interfaceName: nil
-                                                     attributeName: DConnectFileDescriptorProfileAttrRead];
+        NSString *getReadRequestApiPath = [self apiPath: nil
+                                          attributeName: DConnectFileDescriptorProfileAttrRead];
         [self addGetPath: getReadRequestApiPath
                      api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
                          
@@ -180,9 +178,8 @@
                      }];
 
         // API登録(didReceivePutCloseRequest相当)
-        NSString *putCloseRequestApiPath = [self apiPathWithProfile: self.profileName
-                                                      interfaceName: nil
-                                                      attributeName: DConnectFileDescriptorProfileAttrClose];
+        NSString *putCloseRequestApiPath = [self apiPath: nil
+                                           attributeName: DConnectFileDescriptorProfileAttrClose];
         [self addPutPath: putCloseRequestApiPath
                      api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
                          
@@ -215,9 +212,8 @@
                      }];
         
         // API登録(didReceivePutWriteRequest相当)
-        NSString *putWriteRequestApiPath = [self apiPathWithProfile: self.profileName
-                                                      interfaceName: nil
-                                                      attributeName: DConnectFileDescriptorProfileAttrWrite];
+        NSString *putWriteRequestApiPath = [self apiPath: nil
+                                           attributeName: DConnectFileDescriptorProfileAttrWrite];
         [self addPutPath: putWriteRequestApiPath
                      api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
                          

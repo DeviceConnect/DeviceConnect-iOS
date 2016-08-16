@@ -12,6 +12,8 @@
 
 @interface DConnectProfileSpecJsonParser : NSObject
 
-- (DConnectProfileSpec *) parseJson: (NSString *) jsonFilename;
+#pragma mark - DConnectProfileSpecJsonParser Methods.
+
+- (DConnectProfileSpec *) parseJson: (NSDictionary *) json error:(NSError **) error;
 
 @end

@@ -42,8 +42,6 @@
 		258498AD1B609A3F0063552E /* LSFControllerService.m in Sources */ = {isa = PBXBuildFile; fileRef = 258498A51B609A3F0063552E /* LSFControllerService.m */; };
 		258498AE1B609A3F0063552E /* LSFLamp.h in Headers */ = {isa = PBXBuildFile; fileRef = 258498A61B609A3F0063552E /* LSFLamp.h */; };
 		258498AF1B609A3F0063552E /* LSFLamp.m in Sources */ = {isa = PBXBuildFile; fileRef = 258498A71B609A3F0063552E /* LSFLamp.m */; };
-		25851BB61B5739B600CB732E /* DPAllJoynServiceInformationProfile.h in Headers */ = {isa = PBXBuildFile; fileRef = 25851BB41B5739B600CB732E /* DPAllJoynServiceInformationProfile.h */; };
-		25851BB71B5739B600CB732E /* DPAllJoynServiceInformationProfile.mm in Sources */ = {isa = PBXBuildFile; fileRef = 25851BB51B5739B600CB732E /* DPAllJoynServiceInformationProfile.mm */; };
 		25851BBA1B573C3100CB732E /* DConnectSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25851BB91B573C3100CB732E /* DConnectSDK.framework */; };
 		25851BBD1B57409500CB732E /* Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 25851BBF1B57409500CB732E /* Storyboard.storyboard */; };
 		25851BC61B57455D00CB732E /* DPAllJoynSettingTableViewCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 25851BC41B57455D00CB732E /* DPAllJoynSettingTableViewCell.h */; };
@@ -110,8 +108,6 @@
 		258498A51B609A3F0063552E /* LSFControllerService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LSFControllerService.m; sourceTree = "<group>"; };
 		258498A61B609A3F0063552E /* LSFLamp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LSFLamp.h; sourceTree = "<group>"; };
 		258498A71B609A3F0063552E /* LSFLamp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LSFLamp.m; sourceTree = "<group>"; };
-		25851BB41B5739B600CB732E /* DPAllJoynServiceInformationProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPAllJoynServiceInformationProfile.h; sourceTree = "<group>"; };
-		25851BB51B5739B600CB732E /* DPAllJoynServiceInformationProfile.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DPAllJoynServiceInformationProfile.mm; sourceTree = "<group>"; };
 		25851BB91B573C3100CB732E /* DConnectSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DConnectSDK.framework; path = ../../dConnectSDK/dConnectSDKForIOS/bin/DConnectSDK.framework; sourceTree = "<group>"; };
 		25851BC11B5740B500CB732E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Storyboard.storyboard; sourceTree = "<group>"; };
 		25851BC41B57455D00CB732E /* DPAllJoynSettingTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPAllJoynSettingTableViewCell.h; sourceTree = "<group>"; };
@@ -409,8 +405,6 @@
 			children = (
 				25A06C7D1B566C86005B6F8A /* DPAllJoynLightProfile.h */,
 				25A06C7E1B566C86005B6F8A /* DPAllJoynLightProfile.mm */,
-				25851BB41B5739B600CB732E /* DPAllJoynServiceInformationProfile.h */,
-				25851BB51B5739B600CB732E /* DPAllJoynServiceInformationProfile.mm */,
 				25A06C7A1B566AC6005B6F8A /* DPAllJoynSystemProfile.h */,
 				25A06C7B1B566AD0005B6F8A /* DPAllJoynSystemProfile.m */,
 			);
@@ -440,7 +434,6 @@
 				25856D191B59091000B1C2DC /* DPAllJoynServiceEntity.h in Headers */,
 				25A06C7F1B566C86005B6F8A /* DPAllJoynLightProfile.h in Headers */,
 				25F136491B67112600ADD8CB /* DPAllJoynColorUtility.h in Headers */,
-				25851BB61B5739B600CB732E /* DPAllJoynServiceInformationProfile.h in Headers */,
 				25851BC61B57455D00CB732E /* DPAllJoynSettingTableViewCell.h in Headers */,
 				258498AA1B609A3F0063552E /* AJNLSFLamp.h in Headers */,
 				258498A81B609A3F0063552E /* AJNLSFControllerService.h in Headers */,
@@ -631,7 +624,6 @@
 				258498A91B609A3F0063552E /* AJNLSFControllerService.mm in Sources */,
 				258498AB1B609A3F0063552E /* AJNLSFLamp.mm in Sources */,
 				25851BD81B575F2700CB732E /* DPAllJoynSettingDetailLIFXViewController.m in Sources */,
-				25851BB71B5739B600CB732E /* DPAllJoynServiceInformationProfile.mm in Sources */,
 				258843C81B5F3A3F003E5257 /* DPAllJoynConst.mm in Sources */,
 				258843C41B5F336A003E5257 /* DPAllJoynSupportCheck.mm in Sources */,
 				25851BE51B57929100CB732E /* CALayer+StoryboardUserDefinedRuntimeAttributes.m in Sources */,

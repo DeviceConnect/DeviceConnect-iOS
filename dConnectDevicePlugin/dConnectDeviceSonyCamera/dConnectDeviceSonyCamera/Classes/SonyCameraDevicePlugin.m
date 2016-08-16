@@ -16,16 +16,14 @@
 #import "SampleLiveviewManager.h"
 #import "SonyCameraService.h"
 #import "SonyCameraManager.h"
-
-#import <DConnectSDK/DConnectService.h>
-#import <DConnectSDK/DConnectServiceInformationProfile.h>
+#import "SonyCameraSystemProfile.h"
 #import <SystemConfiguration/CaptiveNetwork.h>
 
 
 /*!
  @brief Sony Remote Camera用デバイスプラグイン。
  */
-@interface SonyCameraDevicePlugin () <SampleDiscoveryDelegate,
+@interface SonyCameraDevicePlugin() <SampleDiscoveryDelegate,
                             SampleLiveviewDelegate,
                             SonyCameraRemoteApiUtilDelegate>
 
@@ -59,6 +57,13 @@
         Class key = [self class];
         [[DConnectEventManager sharedManagerForClass:key] setController:[DConnectMemoryCacheController new]];
         
+        [[SonyCameraManager sharedManager] setServiceProvider: self.serviceProvider];
+        [[SonyCameraManager sharedManager] setPlugin:self];
+        
+        // System Profileの追加
+        [self addProfile:[SonyCameraSystemProfile new]];
+        
+        
         if ([self checkSSID]) {
             [self searchSonyCameraDevice];
         }
@@ -72,9 +77,6 @@
                      object:application];
             
         });
-        
-        // プロファイルを追加
-        [self addProfile:[DConnectServiceInformationProfile new]];
     }
     return self;
 }
@@ -157,8 +159,6 @@
     return NO;
 }
 
-
-
 #pragma mark - SampleDiscoveryDelegate
 
 - (void) didReceiveDeviceList:(BOOL) discovery {
@@ -174,7 +174,12 @@
             [manager.remoteApi actStartLiveView:self];
         }
     }
+    
+    // デバイス管理情報更新
+    [manager updateManageServices];
+
     [self.delegate didReceiveDeviceList:discovery];
+
 }
 
 #pragma mark - SampleLiveviewDelegate -

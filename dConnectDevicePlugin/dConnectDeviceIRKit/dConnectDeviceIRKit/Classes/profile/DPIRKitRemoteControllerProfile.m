@@ -19,7 +19,6 @@ NSString *const DPIRKitRemoteControllerProfileParamMessage = @"message";
 {
     DPIRKitManager *_irkit;
 }
-@property (nonatomic, weak) DPIRKitDevicePlugin *plugin;
 
 - (void) setMessage:(NSString *)message target:(DConnectMessage *)target;
 - (NSString *) messageFromRequest:(DConnectRequestMessage *)request;
@@ -65,10 +64,10 @@ NSString *const DPIRKitRemoteControllerProfileParamMessage = @"message";
     BOOL send = YES;
     if ([request.attribute length] != 0) {
         [response setErrorToNotSupportProfile];
-    } else if (_plugin) {
+    } else if (self.plugin) {
         
         __weak typeof(self) _self = self;
-        DPIRKitDevice *device = [_plugin deviceForServiceId:request.serviceId];
+        DPIRKitDevice *device = [self.plugin deviceForServiceId:request.serviceId];
         if (device) {
             send = NO;
             [_irkit fetchMessageWithHostName:device.hostName completion:^(NSString *message) {
@@ -97,9 +96,9 @@ NSString *const DPIRKitRemoteControllerProfileParamMessage = @"message";
     BOOL send = YES;
     if ([request.attribute length] != 0) {
         [response setErrorToNotSupportProfile];
-    } else if (_plugin) {
+    } else if (self.plugin) {
         
-        DPIRKitDevice *device = [_plugin deviceForServiceId:request.serviceId];
+        DPIRKitDevice *device = [self.plugin deviceForServiceId:request.serviceId];
         if (device) {
             
             NSString *message = [self messageFromRequest:request];

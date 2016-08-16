@@ -11,6 +11,13 @@
 #import "DeviceList.h"
 #import <DConnectSDK/DConnectService.h>
 #import "SonyCameraService.h"
+#import "SonyCameraReachability.h"
+
+@interface SonyCameraManager()
+
+@property (nonatomic, strong) SonyCameraReachability *reachability;
+
+@end
 
 @implementation SonyCameraManager
 
@@ -40,8 +47,74 @@
         self.plugin = plugin;
         self.liveViewDelegate = liveViewDelegate;
         self.remoteApiUtilDelegate = remoteApiUtilDelegate;
+        
+        // Reachabilityの初期処理
+        self.reachability = [SonyCameraReachability reachabilityWithHostName: @"www.google.com"];
+        [[NSNotificationCenter defaultCenter]
+         addObserver:self
+         selector:@selector(notifiedNetworkStatus:)
+         name:kReachabilityChangedNotification
+         object:nil];
+        [self.reachability startNotifier];
     }
     return self;
+}
+
+- (void)dealloc {
+    // Reachabilityの終了処理
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kReachabilityChangedNotification object:nil];
+}
+
+// デバイス管理情報更新
+- (void) updateManageServices {
+    @synchronized(self) {
+        
+        // ServiceProvider未登録なら処理しない
+        if (!self.serviceProvider) {
+            return;
+        }
+        
+        int deviceCount = (int)[DeviceList getSize];
+        
+        // ServiceProviderに存在するサービスが検出されなかったならオフラインにする
+        for (DConnectService *service in [self.serviceProvider services]) {
+            NSString *serviceId = [service serviceId];
+
+            // SonyCamera以外は対象外
+            if ([[service name] localizedCaseInsensitiveCompare: SonyDeviceName] != NSOrderedSame) {
+                continue;
+            }
+            
+            // ServiceProviderにあって最新のリストに無い場合はオフラインにする。有ればオンラインにする
+            BOOL isFindDevice = NO;
+            for (int deviceIndex = 0; deviceIndex < deviceCount; deviceIndex ++) {
+                NSString *deviceServiceId = [NSString stringWithFormat:@"%d", deviceIndex];
+                if (deviceServiceId && [serviceId localizedCaseInsensitiveCompare: deviceServiceId] == NSOrderedSame) {
+                    isFindDevice = YES;
+                    break;
+                }
+            }
+            if (isFindDevice) {
+                [service setOnline: YES];
+            } else {
+                [service setOnline: NO];
+            }
+        }
+        
+        // サービス未登録なら登録する
+        for (int deviceIndex = 0; deviceIndex < deviceCount; deviceIndex ++) {
+            NSString *deviceServiceId = [NSString stringWithFormat:@"%d", deviceIndex];
+            NSString *deviceName = SonyDeviceName;
+            if (![self.serviceProvider service: deviceServiceId]) {
+                SonyCameraService *service = [[SonyCameraService alloc] initWithServiceId:deviceServiceId
+                                                                               deviceName:deviceName
+                                                                                   plugin: self.plugin
+                                                                         liveViewDelegate:self.liveViewDelegate
+                                                                    remoteApiUtilDelegate:self.remoteApiUtilDelegate];
+                [self.serviceProvider addService: service];
+            }
+        }
+    }
 }
 
 #pragma mark - Private Methods -
@@ -83,63 +156,20 @@
     NSInteger idx = [serviceId integerValue];
     [DeviceList selectDeviceAt:idx];
     
-    // デバイス管理情報更新
-    [self updateManageServices];
-    
     return YES;
 }
 
 - (BOOL) hasDataAvaiableEvent {
-    DConnectEventManager *mgr = [DConnectEventManager sharedManagerForClass:[self class]];
+    DConnectEventManager *mgr = [DConnectEventManager sharedManagerForClass:[self.plugin class]];
     NSArray *evts = [mgr eventListForServiceId:SERVICE_ID
                                        profile:DConnectMediaStreamRecordingProfileName
                                      attribute:DConnectMediaStreamRecordingProfileAttrOnDataAvailable];
     return evts.count > 0;
 }
 
-
-// デバイス管理情報更新
-- (void) updateManageServices {
-    @synchronized(self) {
-        
-        // ServiceProvider未登録なら処理しない
-        if (!self.plugin.mServiceProvider) {
-            return;
-        }
-        
-        int deviceCount = (int)[DeviceList getSize];
-        
-        // ServiceProviderに存在するサービスが検出されなかったならオフラインにする
-        for (DConnectService *service in [self.plugin.mServiceProvider services]) {
-            NSString *serviceId = [service serviceId];
-            
-            BOOL isFindDevice = NO;
-            for (int deviceIndex = 0; deviceIndex < deviceCount; deviceIndex ++) {
-                NSString *deviceServiceId = [NSString stringWithFormat:@"%d", deviceIndex];
-                if (deviceServiceId && [serviceId localizedCaseInsensitiveCompare: deviceServiceId] == NSOrderedSame) {
-                    isFindDevice = YES;
-                    break;
-                }
-            }
-            
-            if (!isFindDevice) {
-                [service setOnline: NO];
-            }
-        }
-        
-        // サービス未登録なら登録する
-        for (int deviceIndex = 0; deviceIndex < deviceCount; deviceIndex ++) {
-            NSString *deviceServiceId = [NSString stringWithFormat:@"%d", deviceIndex];
-            NSString *deviceName = SonyDeviceName;
-            if (![self.plugin.mServiceProvider service: deviceServiceId]) {
-                SonyCameraService *service = [[SonyCameraService alloc] initWithServiceId:deviceServiceId
-                                                                               deviceName:deviceName
-                                                                         liveViewDelegate:self.liveViewDelegate
-                                                                    remoteApiUtilDelegate:self.remoteApiUtilDelegate];
-                [self.plugin.mServiceProvider addService: service];
-            }
-        }
-    }
+// 通知を受け取るメソッド
+-(void)notifiedNetworkStatus:(NSNotification *)notification {
+    [self updateManageServices];
 }
 
 @end

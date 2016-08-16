@@ -17,7 +17,7 @@
 
 @property(nonatomic) DConnectSpecMethod method;
 
-@property(nonatomic, strong) NSArray *paramList;        // List<DConnectParameterSpec>
+@property(nonatomic, strong) NSArray *params;        // List<DConnectParameterSpec>
 
 - (DConnectApiSpec *)build;
 

@@ -10,12 +10,10 @@
 #import "DConnectProfile.h"
 #import "DConnectManager.h"
 #import "LocalOAuth2Settings.h"
-#import <DConnectSDK/DConnectApiSpecList.h>
 #import <DConnectSDK/DConnectApiSpec.h>
 #import "DConnectProfileSpec.h"
 
 @implementation DConnectProfile {
-    
     
     /**
      * Device Connect API 仕様定義リスト.
@@ -36,37 +34,9 @@
     return self;
 }
 
-- (instancetype) initWithProvider:(id) provider {
-    self = [super init];
-    if (self) {
-        [self setProvider: provider];
-        mApis = [NSMutableArray array];
-    }
-    return self;
-}
-
-
 // TODO: 削除予定
 - (NSString *) apiPath: (DConnectApiEntity *) api {
     return [api path];
-}
-
-
-
-- (NSString *) apiPathWithProfile : (NSString *) profileName interfaceName: (NSString *) interfaceName attributeName:(NSString *) attributeName {
-    
-    NSMutableString *path = [NSMutableString string];
-    [path appendString: @"/"];
-    [path appendString: profileName];
-    if (interfaceName) {
-        [path appendString: @"/"];
-        [path appendString: interfaceName];
-    }
-    if (attributeName) {
-        [path appendString: @"/"];
-        [path appendString: attributeName];
-    }
-    return path;
 }
 
 - (NSString *) apiPath : (NSString *) interfaceName attributeName:(NSString *) attributeName {
@@ -93,7 +63,12 @@
 
 - (BOOL) isKnownMethod: (DConnectRequestMessage *) request {
     
-    DConnectSpecMethod method = [DConnectSpecConstants toMethodFromAction:[request action]];
+    NSError *error;
+    DConnectSpecMethod method;
+    if (![DConnectSpecConstants toMethodFromAction:[request action] outMethod:&method error:&error]) {
+        DCLogE(@"isKnownMethod error: %@", [error localizedDescription]);
+        return NO;
+    }
     if (!method) {
         return NO;
     }
@@ -103,17 +78,6 @@
     }
     return [mProfileSpec findApiSpec: path method: method] != nil;
 }
-
-/*
-- (void) setService: (DConnectService *) service {
-    _mService = service;
-}
-
-- (DConnectService *) service {
-    return _mService;
-}
-*/
-
 
 /**
  * Device Connect API 仕様定義リストを設定する.
@@ -248,11 +212,9 @@
     
     DConnectMessageActionType action = [request action];
     
+    NSError *error;
     DConnectSpecMethod method;
-    @try {
-        method = [DConnectSpecConstants toMethodFromAction: action];
-    }
-    @catch (NSString *e) {
+    if (![DConnectSpecConstants toMethodFromAction: action outMethod: &method error:&error]) {
         return nil;
     }
     
@@ -262,11 +224,9 @@
 
 - (DConnectApiEntity *) findApiWithPath: (NSString *) path method: (DConnectSpecMethod) method {
 
-    NSString *strMethod = nil;
-    @try {
-        strMethod = [DConnectSpecConstants toMethodString:method];
-    }
-    @catch (NSString *e) {
+    NSError *error;
+    NSString *strMethod = [DConnectSpecConstants toMethodString:method error: &error];
+    if (!strMethod) {
         return nil;
     }
 

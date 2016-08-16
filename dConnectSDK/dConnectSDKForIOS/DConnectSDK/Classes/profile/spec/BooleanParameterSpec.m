@@ -8,11 +8,12 @@
 //
 
 #import "BooleanParameterSpec.h"
+#import "BooleanDataSpec.h"
 
 @implementation BooleanParameterSpec
 
 - (instancetype) init {
-    self = [super initWithDataSpec: [[BooleanParameterSpec alloc] init]];
+    self = [super initWithDataSpec: [[BooleanDataSpec alloc] init]];
     return self;
 }
 

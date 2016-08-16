@@ -16,7 +16,17 @@
 
 @property(nonatomic, strong) NSDictionary *bundle;
 
-- (void) addApiSpec: (NSString *) path method: (DConnectSpecMethod) method apiSpec: (DConnectApiSpec *) apiSpec;
+/*!
+ @brief APIの仕様定義を追加する.
+ 
+ @param path[in] パス
+ @param method[in] メソッド
+ @param apiSpec[in] 仕様定義
+ @param error[out] エラー
+ @retval YES 成功
+ @retval NO エラー
+ */
+- (BOOL) addApiSpec: (NSString *) path method: (DConnectSpecMethod) method apiSpec: (DConnectApiSpec *) apiSpec error: (NSError **) error;
 
 - (DConnectProfileSpec *) build;
 

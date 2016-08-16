@@ -48,13 +48,13 @@
  @brief 定数一覧を取得する.
  @return 定数の配列
  */
-- (NSArray *) enumList;
+- (NSArray *) enums;
 
 /*!
  @brief 定数一覧を設定する.
- @param enumList 定数の配列
+ @param enums 定数の配列
  */
-- (void) setEnumList: (NSArray *) enumList;
+- (void) setEnums: (NSArray *) enums;
 
 
 @end

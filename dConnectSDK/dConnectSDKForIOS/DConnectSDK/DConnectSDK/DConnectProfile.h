@@ -31,20 +31,17 @@
 
 /*!
  @brief プロファイルプロバイダ。(DConnectProfileProvider型のポインタ)
+        ※DConnectServiceの仕組みに変更したことにより、意味合いが変わった。
+            以前はproviderは{ DConnectDevicePlugin & DConnectProfileProvider }の値を設定したが、
+            DConnectServiceにてaddProfileしているプロファイルのproviderはDConnectServiceでありDConnectDevicePluginではない。
+            1つの変数で同等の機能を実現できないので、pluginを追加してDConnectDevicePluginの参照ポインタを持たせることにした。
  */
 @property (nonatomic, weak) id provider;
 
-
-
-
 /*!
- @brief DConnectProfileProviderオブジェクトを指定して初期化する。
- 
- @param[in] provider DConnectProfileProviderインスタンス
- 
- @retval DConnectProfileインスタンス。
+ @brief デバイスプラグイン。(DConnectDevicePlugin型のポインタ)
  */
-- (instancetype) initWithProvider: (id) provider;
+@property (nonatomic, weak) id plugin;
 
 /*!
  @brief プロファイルに設定されているDevice Connect API実装のリストを返す.
@@ -62,13 +59,12 @@
 - (DConnectApiEntity *) findApiWithPath: (NSString *) path method: (DConnectSpecMethod) method;
 
 /*!
- @brief プロファイル名、インターフェース名、アトリビュート名からパスを作成する.
- @param[in] profileName プロファイル名
+ @brief インターフェース名、アトリビュート名からパスを作成する.
  @param[in] interfaceName インターフェース名
  @param[in] attributeName アトリビュート名
  @retval パス
  */
-- (NSString *) apiPathWithProfile : (NSString *) profileName interfaceName : (NSString *) interfaceName attributeName:(NSString *) attributeName;
+- (NSString *) apiPath : (NSString *) interfaceName attributeName:(NSString *) attributeName;
 
 
 /*!

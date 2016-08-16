@@ -8,18 +8,13 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "DConnectApiSpecList.h"
 #import <DConnectSDK/DConnectService.h>
 #import <DConnectSDK/DConnectServiceProvider.h>
-
-
+#import <DConnectSDK/DConnectPluginSpec.h>
 
 @interface DConnectServiceManager : DConnectServiceProvider
 
-// DConnectApiSpecの配列
-@property NSMutableArray *mApiSpecList;
-
-@property (nonatomic, weak) DConnectApiSpecList *mApiSpecs;
+@property(nonatomic, strong) DConnectPluginSpec *pluginSpec;
 
 
 /*!
@@ -36,7 +31,11 @@
  */
 + (DConnectServiceManager *)sharedForKey: (NSString *)key;
 
-- (void) setApiSpecDictionary: (DConnectApiSpecList *) dictionary;
+- (void) setPlugin: (id) plugin;
+
+#pragma mark - DConnectServiceProvider Implement.
+
+- (id) plugin;
 
 - (void) addService: (DConnectService *) service;
 

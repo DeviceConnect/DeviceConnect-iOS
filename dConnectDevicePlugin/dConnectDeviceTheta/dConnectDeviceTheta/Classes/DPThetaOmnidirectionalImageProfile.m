@@ -33,9 +33,8 @@
         _server.delegate = self;
         
         // API登録(didReceiveGetRoiRequest相当)
-        NSString *getRoiRequestApiPath = [self apiPathWithProfile: self.profileName
-                                                    interfaceName: nil
-                                                    attributeName: DPOmnidirectionalImageProfileAttrROI];
+        NSString *getRoiRequestApiPath = [self apiPath: nil
+                                         attributeName: DPOmnidirectionalImageProfileAttrROI];
         [self addGetPath: getRoiRequestApiPath
                      api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
                          
@@ -50,9 +49,8 @@
                      }];
         
         // API登録(didReceivePutRoiRequest相当)
-        NSString *putRoiRequestApiPath = [self apiPathWithProfile: self.profileName
-                                                    interfaceName: nil
-                                                    attributeName: DPOmnidirectionalImageProfileAttrROI];
+        NSString *putRoiRequestApiPath = [self apiPath: nil
+                                         attributeName: DPOmnidirectionalImageProfileAttrROI];
         [self addPutPath: putRoiRequestApiPath
                      api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
                          
@@ -67,9 +65,8 @@
                      }];
         
         // API登録(didReceivePutRoiSettingsRequest相当)
-        NSString *putRoiSettingsRequestApiPath = [self apiPathWithProfile: self.profileName
-                                                            interfaceName: DPOmnidirectionalImageProfileInterfaceROI
-                                                            attributeName: DPOmnidirectionalImageProfileAttrSettings];
+        NSString *putRoiSettingsRequestApiPath = [self apiPath: DPOmnidirectionalImageProfileInterfaceROI
+                                                 attributeName: DPOmnidirectionalImageProfileAttrSettings];
         [self addPutPath: putRoiSettingsRequestApiPath
                      api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
                          
@@ -92,9 +89,8 @@
                      }];
         
         // API登録(didReceiveDeleteRoiRequest相当)
-        NSString *deleteRoiRequestApiPath = [self apiPathWithProfile: self.profileName
-                                                       interfaceName: nil
-                                                       attributeName: DPOmnidirectionalImageProfileAttrROI];
+        NSString *deleteRoiRequestApiPath = [self apiPath: nil
+                                            attributeName: DPOmnidirectionalImageProfileAttrROI];
         [self addDeletePath: deleteRoiRequestApiPath
                         api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
                          

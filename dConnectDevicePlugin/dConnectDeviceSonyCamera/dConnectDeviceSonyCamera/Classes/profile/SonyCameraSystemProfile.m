@@ -41,9 +41,8 @@ NSString *const SonyDevicePluginVersion = @"2.0.0";
         self.eventMgr = [DConnectEventManager sharedManagerForClass:[SonyCameraDevicePlugin class]];
         
         // API登録(dataSourceのsettingPageForRequestを実行する処理を登録)
-        NSString *putSettingPageForRequestApiPath = [self apiPathWithProfile: self.profileName
-                                                               interfaceName: DConnectSystemProfileInterfaceDevice
-                                                               attributeName: DConnectSystemProfileAttrWakeUp];
+        NSString *putSettingPageForRequestApiPath = [self apiPath: DConnectSystemProfileInterfaceDevice
+                                                    attributeName: DConnectSystemProfileAttrWakeUp];
         [self addPutPath: putSettingPageForRequestApiPath
                      api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
                          
@@ -52,9 +51,8 @@ NSString *const SonyDevicePluginVersion = @"2.0.0";
                      }];
         
         // API登録(didReceiveDeleteEventsRequest相当)
-        NSString *deleteEventsRequestApiPath = [self apiPathWithProfile: self.profileName
-                                                          interfaceName: nil
-                                                          attributeName: DConnectSystemProfileAttrEvents];
+        NSString *deleteEventsRequestApiPath = [self apiPath: nil
+                                               attributeName: DConnectSystemProfileAttrEvents];
         [self addDeletePath: deleteEventsRequestApiPath
                         api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
                             
@@ -120,7 +118,7 @@ NSString *const SonyDevicePluginVersion = @"2.0.0";
 #pragma mark - Primate Methods.
 
 - (BOOL) hasDataAvaiableEvent {
-    DConnectEventManager *mgr = [DConnectEventManager sharedManagerForClass:[self class]];
+    DConnectEventManager *mgr = [DConnectEventManager sharedManagerForClass:[SonyCameraDevicePlugin class]];
     NSArray *evts = [mgr eventListForServiceId:SERVICE_ID
                                        profile:DConnectMediaStreamRecordingProfileName
                                      attribute:DConnectMediaStreamRecordingProfileAttrOnDataAvailable];

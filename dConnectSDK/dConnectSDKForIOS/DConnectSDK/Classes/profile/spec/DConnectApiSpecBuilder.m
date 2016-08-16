@@ -18,7 +18,7 @@
     if (self) {
         [self setType: ONESHOT];
         [self setMethod: GET];
-        [self setParamList: [NSArray array]];        // List<DConnectParameterSpec>
+        [self setParams: [NSArray array]];        // List<DConnectParameterSpec>
     }
     
     return self;
@@ -26,12 +26,10 @@
 
 - (DConnectApiSpec *) build {
 
-    NSArray *deepCopyParamList =[[NSArray alloc] initWithArray: [self paramList] copyItems: YES];
-    
     DConnectApiSpec *spec = [[DConnectApiSpec alloc] init];
     [spec setType: [self type]];
     [spec setMethod: [self method]];
-    [spec setRequestParamSpecList: deepCopyParamList];
+    [spec setRequestParamSpecList: [self params]];
     
     return spec;
 }

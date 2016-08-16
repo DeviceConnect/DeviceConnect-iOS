@@ -13,6 +13,7 @@
 @interface DPHueService : DConnectService
 
 - (instancetype) initWithBridgeKey: (NSString *) bridgeKey
-                       bridgeValue: (NSString *) bridgeValue;
+                       bridgeValue: (NSString *) bridgeValue
+                            plugin: (id) plugin;
 
 @end

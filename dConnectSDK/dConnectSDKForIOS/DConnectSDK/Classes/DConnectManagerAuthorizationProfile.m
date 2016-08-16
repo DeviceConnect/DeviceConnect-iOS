@@ -17,9 +17,8 @@
     self = [super initWithObject: object];
     if (self) {
         
-        NSString *getCreateClientApiPath = [self apiPathWithProfile: self.profileName
-                                                      interfaceName: nil
-                                                      attributeName: DConnectAuthorizationProfileAttrGrant];
+        NSString *getCreateClientApiPath = [self apiPath: nil
+                                           attributeName: DConnectAuthorizationProfileAttrGrant];
         [self addGetPath: getCreateClientApiPath
                      api:^(DConnectRequestMessage *request, DConnectResponseMessage *response) {
                          
@@ -47,9 +46,8 @@
                          return YES;
                      }];
         
-        NSString *getRequestAccessTokenApiPath = [self apiPathWithProfile: self.profileName
-                                                            interfaceName: nil
-                                                            attributeName: DConnectAuthorizationProfileAttrAccessToken];
+        NSString *getRequestAccessTokenApiPath = [self apiPath: nil
+                                                 attributeName: DConnectAuthorizationProfileAttrAccessToken];
         [self addGetPath: getRequestAccessTokenApiPath
                      api:^(DConnectRequestMessage *request, DConnectResponseMessage *response) {
                          NSString *serviceId = [request serviceId];

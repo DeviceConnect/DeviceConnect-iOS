@@ -25,9 +25,8 @@
         __weak DPChromecastNotificationProfile *weakSelf = self;
         
         // API登録(didReceivePostNotifyRequest相当)
-        NSString *postNotifyRequestApiPath = [self apiPathWithProfile: self.profileName
-                                                        interfaceName: nil
-                                                        attributeName: DConnectNotificationProfileAttrNotify];
+        NSString *postNotifyRequestApiPath = [self apiPath: nil
+                                             attributeName: DConnectNotificationProfileAttrNotify];
         [self addPostPath: postNotifyRequestApiPath
                       api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
                           
@@ -69,9 +68,8 @@
                       }];
 
         // API登録(didReceiveDeleteNotifyRequest相当)
-        NSString *deleteNotifyRequestApiPath = [self apiPathWithProfile: self.profileName
-                                                          interfaceName: nil
-                                                          attributeName: DConnectNotificationProfileAttrNotify];
+        NSString *deleteNotifyRequestApiPath = [self apiPath: nil
+                                               attributeName: DConnectNotificationProfileAttrNotify];
         [self addDeletePath: deleteNotifyRequestApiPath
                         api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
                             

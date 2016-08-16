@@ -22,7 +22,7 @@ static NSString * RGB_PATTERN = @"[0-9a-zA-Z]{%d}";
         [self setDataFormat: dataFormat];
         [self setMaxLength: nil];
         [self setMinLength: nil];
-        [self setEnumList: nil];
+        [self setEnums: nil];
     }
     return self;
 }

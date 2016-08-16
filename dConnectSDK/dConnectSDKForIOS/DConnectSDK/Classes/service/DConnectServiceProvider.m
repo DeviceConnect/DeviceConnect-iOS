@@ -11,6 +11,10 @@
 
 @implementation DConnectServiceProvider
 
+- (id) plugin {
+    return nil;
+}
+
 - (BOOL) hasService: (NSString *) serviceId {
     return NO;
 }

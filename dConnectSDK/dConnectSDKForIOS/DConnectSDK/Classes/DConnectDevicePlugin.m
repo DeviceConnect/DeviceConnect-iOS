@@ -14,17 +14,29 @@
 #import "DConnectSystemProfile.h"
 #import "DConnectConst.h"
 #import "LocalOAuth2Main.h"
-#import "DConnectApiSpecList.h"
 #import "DConnectServiceManager.h"
 #import "DConnectServiceInformationProfile.h"
-
+#import <DConnectSDK/DConnectPluginSpec.h>
 
 @interface DConnectDevicePlugin ()
-/**
- * プロファイルを格納するマップ.
+
+/*!
+ @brief plugin。
+ */
+@property(nonatomic, weak) id plugin_;
+
+/*!
+ @brief PluginSpec。
+ */
+@property(nonatomic, strong) DConnectPluginSpec *pluginSpec;
+
+/*!
+ @brief プロファイルを格納するマップ.
  */
 @property (nonatomic) NSMutableDictionary *mProfileMap;
+
 - (BOOL) executeRequest:(DConnectRequestMessage *) request response:(DConnectResponseMessage *) response;
+
 @end
 
 @implementation DConnectDevicePlugin
@@ -38,11 +50,16 @@
         self.mProfileMap = [NSMutableDictionary dictionary];
         self.pluginName = NSStringFromClass([self class]);
         self.pluginVersionName = @"1.0.0";
-        self.mServiceProvider = [DConnectServiceManager sharedForClass: [object class]];
+        [self setPluginSpec: [[DConnectPluginSpec alloc] init]];
 
+        DConnectServiceManager *serviceManager = [DConnectServiceManager sharedForClass: [object class]];
+        [serviceManager setPlugin: self];
+        [serviceManager setPluginSpec: [self pluginSpec]];
+        [self setServiceProvider: serviceManager];
+        
         // プロファイル追加
         [self addProfile:[[DConnectAuthorizationProfile alloc] initWithObject:self]];
-        [self addProfile:[[DConnectServiceDiscoveryProfile alloc] initWithServiceProvider: self.mServiceProvider]];
+        [self addProfile:[[DConnectServiceDiscoveryProfile alloc] initWithServiceProvider: self.serviceProvider]];
         [self addProfile:[DConnectSystemProfile new]];
         
         
@@ -152,12 +169,32 @@
 
 #pragma mark - DConnectProfileProvider Methods -
 
+// DConnectMessageService#addProfile()
 - (void) addProfile:(DConnectProfile *) profile {
-    NSString *name = [profile profileName];
-    if (name) {
-        [self.mProfileMap setObject:profile forKey:name];
-        [self loadApiSpec: name];
+    if (!profile) {
+        return;
     }
+    NSString *profileName = [[profile profileName] lowercaseString];
+
+    // プロファイルのJSONファイルを読み込み、内部生成したprofileSpecを新規登録する
+    NSError *error = nil;
+    [[self pluginSpec] addProfileSpec: profileName error: &error];
+    if (error) {
+        DCLogE(@"addProfileSpec error ! %@", [error description]);
+    }
+    
+    // プロファイルに仕様データを設定する
+    DConnectProfileSpec *profileSpec = [[self pluginSpec] findProfileSpec: profileName];
+    if (profileSpec) {
+        [profile setProfileSpec: profileSpec];
+    }
+    
+    // プロファイルにプロファイルプロバイダとデバイスプラグインのインスタンスを設定する
+    [profile setProvider: self];
+    [profile setPlugin: self];
+    
+    // ProfileMapにprofileデータを追加
+    [self.mProfileMap setObject: profile forKey: profileName];
 }
 
 - (void) removeProfile:(DConnectProfile *) profile {
@@ -184,36 +221,13 @@
 
 - (NSArray *) serviceProfilesWithServiceId: (NSString *) serviceId {
 
-    DConnectService *service = [self.mServiceProvider service: serviceId];
+    DConnectService *service = [self.serviceProvider service: serviceId];
     if (service) {
         // サービスIDに該当するサービスを検出して、そのサービスに登録されているプロファイル一覧(DConnectProfile * の配列)を取得
         NSArray *serviceProfiles = [service profiles];
         return serviceProfiles;
     }
     return nil;
-}
-
-
-
-// デバイスプラグインがaddProfile()した後にSDK側で処理を実行するタイミングがないので[loadApiSpecList]をそのまま使えない。
-// [addProfile]する毎に[loadApiSpec]を実行してApiSpecを設定する。
-- (void) loadApiSpec: (NSString *)profileName {
-    
-    if (!profileName ||
-        [DConnectAuthorizationProfileName localizedCaseInsensitiveCompare: profileName] == NSOrderedSame ||
-        [DConnectServiceDiscoveryProfileName localizedCaseInsensitiveCompare: profileName] == NSOrderedSame ||
-        [DConnectServiceInformationProfileName localizedCaseInsensitiveCompare: profileName] == NSOrderedSame ||
-        [DConnectSystemProfileName localizedCaseInsensitiveCompare: profileName] == NSOrderedSame) {
-        return;
-    }
-    
-    @try {
-        DConnectApiSpecList *specList = [DConnectApiSpecList shared];
-        [specList addApiSpecList: profileName];
-    } @catch (NSString *e) {
-        DCLogW(@"Device Connect API Specs is invalid. %@", e);
-        return;
-    }
 }
 
 @end

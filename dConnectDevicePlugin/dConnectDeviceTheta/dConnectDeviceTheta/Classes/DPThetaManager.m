@@ -73,12 +73,6 @@ static int const _timeout = 500;
     return self;
 }
 
-- (void)setServiceProvider: (DConnectServiceProvider *) serviceProvider {
-    @synchronized(self) {
-        self.mServiceProvider = serviceProvider;
-    }
-}
-
 #pragma mark - PtpIpEventListener delegates.
 
 -(void)ptpip_eventReceived:(int)code :(uint32_t)param1 :(uint32_t)param2 :(uint32_t)param3
@@ -634,7 +628,7 @@ static int const _timeout = 500;
     @synchronized(self) {
         
         // ServiceProvider未登録なら処理しない
-        if (!self.mServiceProvider) {
+        if (!self.serviceProvider) {
             return;
         }
         
@@ -644,15 +638,15 @@ static int const _timeout = 500;
         if (isConnected && serial) {
             
             // サービス未登録なら登録する
-            if (![self.mServiceProvider service: DPThetaDeviceServiceId]) {
-                DPThetaService *service = [[DPThetaService alloc] initWithServiceId: DPThetaDeviceServiceId];
+            if (![self.serviceProvider service: DPThetaDeviceServiceId]) {
+                DPThetaService *service = [[DPThetaService alloc] initWithServiceId: DPThetaDeviceServiceId plugin: self.plugin];
                 [service setName:serial];
                 [service setOnline:YES];
-                [self.mServiceProvider addService: service];
+                [self.serviceProvider addService: service];
             }
         } else {
             // 切断中でサービスが登録済ならオフラインにする
-            DConnectService *service = [self.mServiceProvider service: DPThetaDeviceServiceId];
+            DConnectService *service = [self.serviceProvider service: DPThetaDeviceServiceId];
             if (service) {
                 [service setOnline:NO];
             }
@@ -660,11 +654,11 @@ static int const _timeout = 500;
 
         // ROI接続中(常時)
         // サービス未登録なら登録する
-        if (![self.mServiceProvider service: DPThetaRoiServiceId]) {
-            DPThetaService *service = [[DPThetaService alloc] initWithServiceId: DPThetaRoiServiceId];
+        if (![self.serviceProvider service: DPThetaRoiServiceId]) {
+            DPThetaService *service = [[DPThetaService alloc] initWithServiceId: DPThetaRoiServiceId plugin: self.plugin];
             [service setName: @"ROI Image Service"];
             [service setOnline:YES];
-            [self.mServiceProvider addService: service];
+            [self.serviceProvider addService: service];
         }
     }
 }

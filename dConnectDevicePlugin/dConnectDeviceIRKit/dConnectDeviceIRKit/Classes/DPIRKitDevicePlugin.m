@@ -14,7 +14,6 @@
 #import "DPIRKitDBManager.h"
 #import "DPIRKitRESTfulRequest.h"
 #import "DPIRKitVirtualDevice.h"
-#import "DPIRKitServiceInformationProfile.h"
 #import "DPIRKitLightProfile.h"
 #import "DPIRKitTVProfile.h"
 #import "DPIRKitService.h"
@@ -70,13 +69,11 @@ DPIRKitManagerDetectionDelegate
         [self addProfile:systemProfile];
         
         // サービスで登録するProfile
-        DPIRKitServiceInformationProfile *serviceInformationProfile = [DPIRKitServiceInformationProfile new];
         DPIRKitRemoteControllerProfile *remoteControllerProfile
                             = [[DPIRKitRemoteControllerProfile alloc] initWithDevicePlugin:self];
         DPIRKitTVProfile *tvProfile = [[DPIRKitTVProfile alloc] initWithDevicePlugin:self];
         DPIRKitLightProfile *lightProfile = [[DPIRKitLightProfile alloc] initWithDevicePlugin:self];
-        serviceInformationProfile.dataSource = self;
-        mServiceProfiles = @[ serviceInformationProfile, remoteControllerProfile, tvProfile, lightProfile ];
+        mServiceProfiles = @[ remoteControllerProfile, tvProfile, lightProfile ];
         
         _devices = [NSMutableDictionary dictionary];
         id<DConnectEventCacheController> controller = [[DConnectMemoryCacheController alloc] init];
@@ -150,9 +147,9 @@ DPIRKitManagerDetectionDelegate
         
         // デバイスが未登録なら登録する
         NSString *serviceId = device.name;
-        if (![self.mServiceProvider service: serviceId]) {
-            DPIRKitService *service = [[DPIRKitService alloc] initWithServiceId: serviceId profiles: mServiceProfiles];
-            [self.mServiceProvider addService: service];
+        if (![self.serviceProvider service: serviceId]) {
+            DPIRKitService *service = [[DPIRKitService alloc] initWithServiceId: serviceId profiles: mServiceProfiles plugin: self];
+            [self.serviceProvider addService: service];
         }
         
         NSArray *events = [_eventManager eventListForProfile:DConnectServiceDiscoveryProfileName
@@ -169,9 +166,9 @@ DPIRKitManagerDetectionDelegate
     } else {
         // デバイスが登録済なら登録解除する
         NSString *serviceId = device.name;
-        DConnectService *service = [self.mServiceProvider service: serviceId];
+        DConnectService *service = [self.serviceProvider service: serviceId];
         if (service) {
-            [self.mServiceProvider removeService: service];
+            [self.serviceProvider removeService: service];
         }
         
     }

@@ -49,9 +49,8 @@
         __weak DPPebbleDeviceOrientationProfile *weakSelf = self;
         
         // API登録(didReceiveGetOnDeviceOrientationRequest相当)
-        NSString *getOnDeviceOrientationRequestApiPath = [self apiPathWithProfile: self.profileName
-                                                                    interfaceName: nil
-                                                                    attributeName: DConnectDeviceOrientationProfileAttrOnDeviceOrientation];
+        NSString *getOnDeviceOrientationRequestApiPath = [self apiPath: nil
+                                                         attributeName: DConnectDeviceOrientationProfileAttrOnDeviceOrientation];
         [self addGetPath: getOnDeviceOrientationRequestApiPath
                      api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
                          NSString *serviceId = [request serviceId];
@@ -92,9 +91,8 @@
                      }];
         
         // API登録(didReceivePutOnDeviceOrientationRequest相当)
-        NSString *putOnDeviceOrientationRequestApiPath = [self apiPathWithProfile: self.profileName
-                                                                    interfaceName: nil
-                                                                    attributeName: DConnectDeviceOrientationProfileAttrOnDeviceOrientation];
+        NSString *putOnDeviceOrientationRequestApiPath = [self apiPath: nil
+                                                         attributeName: DConnectDeviceOrientationProfileAttrOnDeviceOrientation];
         [self addPutPath: putOnDeviceOrientationRequestApiPath
                      api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
                          NSString *serviceId = [request serviceId];
@@ -117,7 +115,7 @@
                                  // キャッシュ保持
                                  weakSelf.cacheOrientationData = message;
                                  // DConnectにイベント送信
-                                 [DPPebbleProfileUtil sendMessageWithProvider:weakSelf.provider
+                                 [DPPebbleProfileUtil sendMessageWithPlugin:weakSelf.plugin
                                                                       profile:DConnectDeviceOrientationProfileName
                                                                     attribute:DConnectDeviceOrientationProfileAttrOnDeviceOrientation
                                                                     serviceID:serviceId
@@ -141,9 +139,8 @@
                      }];
         
         // API登録(didReceiveDeleteOnDeviceOrientationRequest相当)
-        NSString *deleteOnDeviceOrientationRequestApiPath = [self apiPathWithProfile: self.profileName
-                                                                       interfaceName: nil
-                                                                       attributeName: DConnectDeviceOrientationProfileAttrOnDeviceOrientation];
+        NSString *deleteOnDeviceOrientationRequestApiPath = [self apiPath: nil
+                                                            attributeName: DConnectDeviceOrientationProfileAttrOnDeviceOrientation];
         [self addDeletePath: deleteOnDeviceOrientationRequestApiPath
                         api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
                             NSString *serviceId = [request serviceId];

@@ -9,6 +9,7 @@
 
 #import <Foundation/Foundation.h>
 #import "DConnectSpecConstants.h"
+#import "NumberDataSpec.h"
 
 @interface NumberDataSpecBuilder : NSObject
 
@@ -21,5 +22,7 @@
 @property(nonatomic) BOOL exclusiveMaximum;
 
 @property(nonatomic) BOOL exclusiveMinimum;
+
+- (NumberDataSpec *) build;
 
 @end

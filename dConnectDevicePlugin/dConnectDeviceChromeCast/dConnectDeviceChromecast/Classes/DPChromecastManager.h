@@ -12,7 +12,9 @@
 
 @interface DPChromecastManager : NSObject
 
-@property (nonatomic) DConnectServiceProvider *mServiceProvider;
+@property (nonatomic, weak) DConnectServiceProvider *serviceProvider;
+
+@property (nonatomic, weak) id plugin;
 
 // 接続可能なデバイスリスト取得
 @property (nonatomic, readonly) NSArray *deviceList;
@@ -22,8 +24,6 @@ typedef void (^DPChromeCastCallback)(BOOL success, NSString *error);
 
 // 共有インスタンス
 + (instancetype)sharedManager;
-
-- (void) setServiceProvider: (DConnectServiceProvider *) serviceProvider;
 
 // スキャン開始
 - (void)startScan;

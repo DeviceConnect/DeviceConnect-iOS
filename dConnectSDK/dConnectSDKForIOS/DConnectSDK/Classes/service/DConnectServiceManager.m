@@ -10,8 +10,6 @@
 #import <DConnectSDK/DConnectServiceManager.h>
 #import <DConnectSDK/DConnectProfile.h>
 #import <DConnectSDK/DConnectApiEntity.h>
-#import "DConnectApiSpecList.h"
-
 
 /**
  ServiceManagerインスタンスを格納する(key:クラス名(NSString*),
@@ -34,6 +32,8 @@ static NSMutableDictionary *_instanceArray = nil;
     NSMutableDictionary *mDConnectServices;
     
 }
+
+@property(nonatomic, weak) id plugin_;
 
 @end
 
@@ -76,34 +76,53 @@ static NSMutableDictionary *_instanceArray = nil;
     
     /* デフォルト値を設定 */
     if (self) {
-        self.mApiSpecList = nil;
-        self.mApiSpecs = nil;
+        [self setPluginSpec: [[DConnectPluginSpec alloc] init]];
         mDConnectServices = [NSMutableDictionary dictionary];
     }
     return self;
 }
 
-- (void) setApiSpecDictionary: (DConnectApiSpecList *) dictionary {
-    _mApiSpecs = dictionary;
+#pragma mark - DConnectServiceProvider Implement.
+
+- (id) plugin {
+    return [self plugin_];
 }
 
-
-#pragma mark - DConnectServiceProvider Implement.
+- (void) setPlugin: (id) plugin {
+    [self setPlugin_: plugin];
+}
 
 - (void) addService: (DConnectService *) service {
     
     NSString *serviceId = [service serviceId];
     
-//    NSLog(@"addService: id = %@ / key = %@", serviceId, _key);
-//    NSLog(@"addService: mDConnectServices = %@ / key = %@", (mDConnectServices ? @"(not nil)":@"(nil)"), _key);
-    
-    if (_mApiSpecs) {
-        
+    if ([self pluginSpec]) {
         for (DConnectProfile *profile in [service profiles]) {
+
+            // プロファイルのJSONファイルを読み込み、内部生成したprofileSpecを新規登録する
+            if (![[self pluginSpec] findProfileSpec: [profile profileName]]) {
+                NSError *error = nil;
+                [[self pluginSpec] addProfileSpec: [profile profileName] error: &error];
+                if (error) {
+                    NSLog(@"addService error ! %@", [error description]);
+                    DCLogE(@"addService error ! %@", [error description]);
+                }
+            }
+            
+            DConnectProfileSpec *profileSpec = [[self pluginSpec] findProfileSpec: [[profile profileName] lowercaseString]];
+            if (!profileSpec) {
+                continue;
+            }
+            [profile setProfileSpec: profileSpec];
             for (DConnectApiEntity *api in [profile apis]) {
-                NSString *path = [api path];
-                NSString *strMethod = [api method];
-                DConnectApiSpec *spec = [_mApiSpecs findApiSpec: strMethod path: path];
+                DConnectSpecMethod method;
+                NSError *error;
+                if (![DConnectSpecConstants parseMethod:[api method] outMethod: &method error:&error]) {
+                    NSLog(@"addService error, %@", [error description]);
+                    DCLogW(@"addService error, %@", [error description]);
+                    continue;
+                }
+                DConnectApiSpec *spec = [profileSpec findApiSpec: [api path] method: method];
                 if (spec) {
                     [api setApiSpec: spec];
                 }

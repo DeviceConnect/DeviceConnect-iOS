@@ -23,9 +23,8 @@
         __weak DPSpheroSystemProfile *weakSelf = self;
         
         // API登録(dataSourceのsettingPageForRequestを実行する処理を登録)
-        NSString *putSettingPageForRequestApiPath = [self apiPathWithProfile: self.profileName
-                                                               interfaceName: DConnectSystemProfileInterfaceDevice
-                                                               attributeName: DConnectSystemProfileAttrWakeUp];
+        NSString *putSettingPageForRequestApiPath = [self apiPath: DConnectSystemProfileInterfaceDevice
+                                                    attributeName: DConnectSystemProfileAttrWakeUp];
         [self addPutPath: putSettingPageForRequestApiPath
                      api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
                          
@@ -34,9 +33,8 @@
                      }];
         
         // API登録(didReceiveDeleteEventsRequest相当)
-        NSString *deleteEventsRequestApiPath = [self apiPathWithProfile: self.profileName
-                                                          interfaceName: nil
-                                                          attributeName: DConnectSystemProfileAttrEvents];
+        NSString *deleteEventsRequestApiPath = [self apiPath: nil
+                                               attributeName: DConnectSystemProfileAttrEvents];
         [self addDeletePath: deleteEventsRequestApiPath
                         api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
                             

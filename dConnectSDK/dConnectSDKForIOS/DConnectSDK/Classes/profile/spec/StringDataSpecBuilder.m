@@ -23,8 +23,8 @@
     
     StringDataSpec *paramSpec = [[StringDataSpec alloc] initWitDataFormat:[self format]];
     
-    if ([self enumList]) {
-        [paramSpec setEnumList: [self enumList]];
+    if ([self enums]) {
+        [paramSpec setEnums: [self enums]];
     } else {
         [paramSpec setMaxLength: [self maxLength]];
         [paramSpec setMinLength: [self minLength]];

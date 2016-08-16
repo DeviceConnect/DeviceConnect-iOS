@@ -48,7 +48,6 @@ static size_t const DPAllJoynJoinRetryMax = 5;
 //@property (nonatomic, strong) BasicObjectProxy *basicObjectProxy;
 @property (nonatomic, strong) AJNAboutProxy *aboutProxy;
 @property BOOL wasNameAlreadyFound;
-@property (nonatomic) DConnectServiceProvider *mServiceProvider;
 
 @end
 
@@ -134,10 +133,6 @@ static size_t const DPAllJoynJoinRetryMax = 5;
         
         block(YES);
     });
-}
-
-- (void) setServiceProvider: (DConnectServiceProvider *) serviceProvider {
-    _mServiceProvider = serviceProvider;
 }
 
 - (void)destroyAllJoynContextWithBlock:(void(^)(BOOL result))block
@@ -396,12 +391,12 @@ static size_t const DPAllJoynJoinRetryMax = 5;
     @synchronized(self) {
         
         // ServiceProvider未登録なら処理しない
-        if (!_mServiceProvider) {
+        if (!_serviceProvider) {
             return;
         }
 
         // ServiceProviderに存在するサービスが検出されなかったならオフラインにする
-        for (DConnectService *service in [_mServiceProvider services]) {
+        for (DConnectService *service in [_serviceProvider services]) {
             NSString *serviceId = [service serviceId];
             if (!self.discoveredAllJoynServices[serviceId]) {
                 [service setOnline: NO];
@@ -410,11 +405,12 @@ static size_t const DPAllJoynJoinRetryMax = 5;
         
         // サービス未登録なら登録する
         for (DPAllJoynServiceEntity *serviceEntity in [self.discoveredAllJoynServices allValues]) {
-            if (![_mServiceProvider service: serviceEntity.appId]) {
+            if (![_serviceProvider service: serviceEntity.appId]) {
                 DPAllJoynService *service = [[DPAllJoynService alloc] initWithServiceId:serviceEntity.appId
                                                                             serviceName:serviceEntity.serviceName
+                                                                                 plugin: self.plugin
                                                                                 handler:self];
-                [_mServiceProvider addService: service];
+                [_serviceProvider addService: service];
             }
         }
     }

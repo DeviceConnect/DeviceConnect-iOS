@@ -26,9 +26,8 @@
         __weak id weakSelf = self;
         
         // API登録(didReceiveGetLevelRequest相当)
-        NSString *getLevelRequestApiPath = [self apiPathWithProfile: self.profileName
-                                                      interfaceName: nil
-                                                      attributeName: DConnectBatteryProfileAttrLevel];
+        NSString *getLevelRequestApiPath = [self apiPath: nil
+                                           attributeName: DConnectBatteryProfileAttrLevel];
         [self addGetPath: getLevelRequestApiPath api: ^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
             NSString *serviceId = [request serviceId];
             [[DPPebbleManager sharedManager] fetchBatteryLevel:serviceId callback:^(float level, NSError *error) {
@@ -48,9 +47,8 @@
         }];
         
         // API登録(didReceiveGetChargingRequest相当)
-        NSString *getChargingRequestApiPath = [self apiPathWithProfile: self.profileName
-                                                         interfaceName: nil
-                                                         attributeName: DConnectBatteryProfileAttrCharging];
+        NSString *getChargingRequestApiPath = [self apiPath: nil
+                                              attributeName: DConnectBatteryProfileAttrCharging];
         [self addPutPath: getChargingRequestApiPath api: ^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
             NSString *serviceId = [request serviceId];
             [[DPPebbleManager sharedManager] fetchBatteryCharging:serviceId callback:^(BOOL isCharging, NSError *error) {
@@ -70,9 +68,8 @@
         }];
         
         // API登録(didReceiveGetAllRequest相当)
-        NSString *getAllRequestApiPath = [self apiPathWithProfile: self.profileName
-                                                      interfaceName: nil
-                                                      attributeName: nil];
+        NSString *getAllRequestApiPath = [self apiPath: nil
+                                         attributeName: nil];
         [self addGetPath: getAllRequestApiPath api: ^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
             NSString *serviceId = [request serviceId];
             [[DPPebbleManager sharedManager] fetchBatteryInfo:serviceId callback:^(float level, BOOL isCharging, NSError *error) {
@@ -93,9 +90,8 @@
         }];
         
         // API登録(didReceivePutOnChargingChangeRequest相当)
-        NSString *putOnChargingChangeRequestApiPath = [self apiPathWithProfile: self.profileName
-                                                                 interfaceName: nil
-                                                                 attributeName: DConnectBatteryProfileAttrOnChargingChange];
+        NSString *putOnChargingChangeRequestApiPath = [self apiPath: nil
+                                                      attributeName: DConnectBatteryProfileAttrOnChargingChange];
         [self addPutPath: putOnChargingChangeRequestApiPath api: ^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
             __block BOOL responseFlg = YES;
  
@@ -116,7 +112,7 @@
                     [DConnectBatteryProfile setCharging:isCharging target:message];
                     
                     // DConnectにイベント送信
-                    [DPPebbleProfileUtil sendMessageWithProvider:[weakSelf provider]
+                    [DPPebbleProfileUtil sendMessageWithPlugin:[weakSelf plugin]
                                                          profile:DConnectBatteryProfileName
                                                        attribute:DConnectBatteryProfileAttrOnChargingChange
                                                        serviceID:serviceId
@@ -141,9 +137,8 @@
         }];
         
         // API登録(didReceivePutOnBatteryChangeRequest相当)
-        NSString *putOnBatteryChangeRequestApiPath = [self apiPathWithProfile: self.profileName
-                                                                 interfaceName: nil
-                                                                 attributeName: DConnectBatteryProfileAttrOnChargingChange];
+        NSString *putOnBatteryChangeRequestApiPath = [self apiPath: nil
+                                                     attributeName: DConnectBatteryProfileAttrOnChargingChange];
         [self addPutPath: putOnBatteryChangeRequestApiPath api: ^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
             __block BOOL responseFlg = YES;
             // イベント登録
@@ -163,7 +158,7 @@
                     [DConnectBatteryProfile setLevel:level target:message];
                     
                     // DConnectにイベント送信
-                    [DPPebbleProfileUtil sendMessageWithProvider:[weakSelf provider]
+                    [DPPebbleProfileUtil sendMessageWithPlugin:[weakSelf plugin]
                                                          profile:DConnectBatteryProfileName
                                                        attribute:DConnectBatteryProfileAttrOnBatteryChange
                                                        serviceID:serviceId
@@ -188,9 +183,8 @@
         }];
         
         // API登録(didReceiveDeleteOnChargingChangeRequest相当)
-        NSString *deleteOnChargingChangeRequestApiPath = [self apiPathWithProfile: self.profileName
-                                                                    interfaceName: nil
-                                                                    attributeName: DConnectBatteryProfileAttrOnChargingChange];
+        NSString *deleteOnChargingChangeRequestApiPath = [self apiPath: nil
+                                                         attributeName: DConnectBatteryProfileAttrOnChargingChange];
         [self addDeletePath: deleteOnChargingChangeRequestApiPath api: ^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
             // DConnectイベント削除
             [DPPebbleProfileUtil handleRequest:request response:response isRemove:YES callback:^{
@@ -204,9 +198,8 @@
         }];
 
         // API登録(didReceiveDeleteOnBatteryChangeRequest相当)
-        NSString *deleteOnBatteryChangeRequestApiPath = [self apiPathWithProfile: self.profileName
-                                                                    interfaceName: nil
-                                                                    attributeName: DConnectBatteryProfileAttrOnBatteryChange];
+        NSString *deleteOnBatteryChangeRequestApiPath = [self apiPath: nil
+                                                        attributeName: DConnectBatteryProfileAttrOnBatteryChange];
         [self addDeletePath: deleteOnBatteryChangeRequestApiPath api: ^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
             // DConnectイベント削除
             [DPPebbleProfileUtil handleRequest:request response:response isRemove:YES callback:^{

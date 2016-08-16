@@ -94,17 +94,16 @@ extern NSString * const DConnectSpecBoolTrue;
 
 @interface DConnectSpecConstants : NSObject
 
-+ (DConnectSpecType) parseType: (NSString *)strType;
-+ (NSString *) toTypeString: (DConnectSpecType)method;
-+ (DConnectSpecMethod) parseMethod: (NSString *)strMethod;
-+ (DConnectSpecMethod) toMethodFromAction: (DConnectMessageActionType) enMethod;
-+ (NSString *) toMethodString: (DConnectSpecMethod)method;
-+ (DConnectSpecDataType) parseDataType: (NSString *)strDataType;
-+ (NSString *) toDataTypeString: (DConnectSpecDataType)dataType;
-+ (DConnectSpecDataFormat) parseDataFormat: (NSString *)strDataFormat;
-+ (NSString *) toDataFormatString: (DConnectSpecDataFormat)dataFormat;
-+ (BOOL) parseBool: (NSString *)strBool;
-+ (NSString *) toBoolString: (BOOL)boolValue;
++ (BOOL) parseType: (NSString *)strType outType: (DConnectSpecType *) outType error: (NSError **) error;
++ (NSString *) toTypeString: (DConnectSpecType)type error:(NSError **) error;
++ (BOOL) parseMethod: (NSString *)strMethod outMethod: (DConnectSpecMethod *) outMethod error: (NSError **) error;
++ (BOOL) toMethodFromAction: (DConnectMessageActionType) method outMethod: (DConnectSpecMethod *) outMethod error: (NSError **) error;
++ (NSString *) toMethodString: (DConnectSpecMethod)method error: (NSError **) error;
++ (BOOL) parseDataType: (NSString *)strDataType outDataType: (DConnectSpecDataType *) outDataType error: (NSError **) error;
++ (NSString *) toDataTypeString: (DConnectSpecDataType)dataType error:(NSError **) error;
++ (BOOL) parseDataFormat: (NSString *)strDataFormat outDataFormat: (DConnectSpecDataFormat *) outDataFormat error:(NSError **) error;
++ (NSString *) toDataFormatString: (DConnectSpecDataFormat)dataFormat error:(NSError **)error;
++ (BOOL) parseBool: (id)idBool outBoolValue: (BOOL *)outBoolValue error:(NSError **) error;
 + (BOOL)isDigit:(NSString *)text;
 + (BOOL)isNumber:(NSString *)text;
 

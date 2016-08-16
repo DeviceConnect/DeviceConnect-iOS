@@ -22,12 +22,12 @@
 
 @property(nonatomic, strong) NSString *networkType;
 
-@property(nonatomic) BOOL isOnline;
+@property(nonatomic) BOOL online;
 
 @property(nonatomic, strong) NSString *config;
 
 
-- (instancetype) initWithServiceId: (NSString *)serviceId;
+- (instancetype) initWithServiceId: (NSString *)serviceId plugin: (id) plugin;
 
 - (BOOL) onRequest: request response: response;
 

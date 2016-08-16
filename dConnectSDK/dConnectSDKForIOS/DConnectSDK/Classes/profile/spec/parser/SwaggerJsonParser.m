@@ -11,7 +11,21 @@
 #import "DConnectProfileSpecBuilder.h"
 #import "DConnectApiSpecBuilder.h"
 #import "DConnectParameterSpec.h"
+
+#import "IntegerDataSpecBuilder.h"
+#import "NumberDataSpecBuilder.h"
+#import "StringDataSpecBuilder.h"
+#import "BooleanDataSpecBuilder.h"
 #import "ArrayDataSpecBuilder.h"
+
+#import "IntegerParameterSpecBuilder.h"
+#import "NumberParameterSpecBuilder.h"
+#import "StringParameterSpecBuilder.h"
+#import "BooleanParameterSpecBuilder.h"
+#import "ArrayParameterSpecBuilder.h"
+#import "FileParameterSpecBuilder.h"
+
+#import "DConnectSpecErrorFactory.h"
 
 static NSString * const KEY_PATHS = @"paths";
 
@@ -33,28 +47,26 @@ NSString * const ItemObjectParserKeyEnum = @"enum";                 // ItemsObje
 NSString * const ItemObjectParserKeyItems = @"items";                // ItemsObjectParser # KEY_ITEMS
 
 
-typedef DConnectApiSpec * (^OperationObjectParser)(DConnectSpecMethod method, NSDictionary *jsonOpObj);
-typedef DConnectDataSpec * (^ItemsObjectParser)(NSDictionary *json);
-typedef DConnectParameterSpec * (^ParameterObjectParser)(NSDictionary *json);
+typedef DConnectApiSpec * (^OperationObjectParser)(DConnectSpecMethod method, NSDictionary *jsonOpObj, NSError **error);
+typedef DConnectDataSpec * (^ItemsObjectParser)(NSDictionary *json, NSError **error);
+typedef DConnectParameterSpec * (^ParameterObjectParser)(NSDictionary *json, NSError **error);
 
-@interface SwaggerJsonParser() {
+@interface SwaggerJsonParser()
     
-    OperationObjectParser OPERATION_OBJECT_PARSER;
+@property(nonatomic, strong) OperationObjectParser OPERATION_OBJECT_PARSER;
     
-    ItemsObjectParser ARRAY_ITEMS_PARSER;
-    ItemsObjectParser BOOLEAN_ITEMS_PARSER;
-    ItemsObjectParser INTEGER_ITEMS_PARSER;
-    ItemsObjectParser NUMBER_ITEMS_PARSER;
-    ItemsObjectParser STRING_ITEMS_PARSER;
+@property(nonatomic, strong) ItemsObjectParser ARRAY_ITEMS_PARSER;
+@property(nonatomic, strong) ItemsObjectParser BOOLEAN_ITEMS_PARSER;
+@property(nonatomic, strong) ItemsObjectParser INTEGER_ITEMS_PARSER;
+@property(nonatomic, strong) ItemsObjectParser NUMBER_ITEMS_PARSER;
+@property(nonatomic, strong) ItemsObjectParser STRING_ITEMS_PARSER;
     
-    ParameterObjectParser ARRAY_PARAM_PARSER;
-    ParameterObjectParser BOOLEAN_PARAM_PARSER;
-    ParameterObjectParser FILE_PARAM_PARSER;
-    ParameterObjectParser INTEGER_PARAM_PARSER;
-    ParameterObjectParser NUMBER_PARAM_PARSER;
-    ParameterObjectParser STRING_PARAM_PARSER;
-    
-}
+@property(nonatomic, strong) ParameterObjectParser ARRAY_PARAM_PARSER;
+@property(nonatomic, strong) ParameterObjectParser BOOLEAN_PARAM_PARSER;
+@property(nonatomic, strong) ParameterObjectParser FILE_PARAM_PARSER;
+@property(nonatomic, strong) ParameterObjectParser INTEGER_PARAM_PARSER;
+@property(nonatomic, strong) ParameterObjectParser NUMBER_PARAM_PARSER;
+@property(nonatomic, strong) ParameterObjectParser STRING_PARAM_PARSER;
 
 @end
 
@@ -67,34 +79,53 @@ typedef DConnectParameterSpec * (^ParameterObjectParser)(NSDictionary *json);
     if (self) {
         __weak SwaggerJsonParser *weakSelf = self;
         
-        // private static final OperationObjectParser OPERATION_OBJECT_PARSER = new OperationObjectParser() {
-        OPERATION_OBJECT_PARSER = ^ DConnectApiSpec * (DConnectSpecMethod method, NSDictionary *jsonOpObj) {
-            
-            DConnectSpecType type = [DConnectSpecConstants parseType: jsonOpObj[OperationObjectParserKeyXType]];
+        // private static final OperationObjectParser OPERATION_OBJECT_PARSER = new OperationObjectParser();
+        self.OPERATION_OBJECT_PARSER = ^ DConnectApiSpec * (DConnectSpecMethod method, NSDictionary *jsonOpObj, NSError **error) {
+            DConnectSpecType type;
+            if (![DConnectSpecConstants parseType: jsonOpObj[OperationObjectParserKeyXType] outType: &type error: error]) {
+                return nil;
+            }
             NSArray *parameters = jsonOpObj[OperationObjectParserKeyParameters];
             
-            NSMutableArray *paramSpecList = [NSMutableArray array]; // DConnectParameterSpecの配列
+            NSMutableArray *paramSpecs = [NSMutableArray array]; // DConnectParameterSpecの配列
             
             for (NSDictionary *paramObj in parameters) {
-                ParameterObjectParser parser = [weakSelf getParameterParser: paramObj];
-                DConnectParameterSpec *paramSpec = parser(paramObj);
-                [paramSpecList addObject: paramSpec];
+                
+                if (!paramObj) {
+                    continue;
+                }
+                
+                ParameterObjectParser parser = [weakSelf getParameterParser: paramObj error: error];
+                if (!parser) {
+                    return nil;
+                }
+                DConnectParameterSpec *paramSpec = parser(paramObj, error);
+                if (!paramSpec) {
+                    return nil;
+                }
+                [paramSpecs addObject: paramSpec];
             }
             
             DConnectApiSpecBuilder *builder = [[DConnectApiSpecBuilder alloc] init];
             [builder setType: type];
             [builder setMethod: method];
-            [builder setParamList: paramSpecList];
+            [builder setParams: paramSpecs];
             return [builder build];
         };
         
         // private static final ItemsObjectParser ARRAY_ITEMS_PARSER = new ArrayItemsObjectParser();
-        ARRAY_ITEMS_PARSER = ^ DConnectDataSpec * (NSDictionary *json) {
+        self.ARRAY_ITEMS_PARSER = ^ DConnectDataSpec * (NSDictionary *json, NSError **error) {
             ArrayDataSpecBuilder *builder = [[ArrayDataSpecBuilder alloc] init];
             
             NSDictionary *itemsObj = json[ItemObjectParserKeyItems];
-            ItemsObjectParser parser = [weakSelf getItemsParser: itemsObj];
-            DConnectDataSpec *itemSpec = parser(itemsObj);
+            ItemsObjectParser parser = [weakSelf getItemsParser: itemsObj error: error];
+            if (!parser) {
+                return nil;
+            }
+            DConnectDataSpec *itemSpec = parser(itemsObj, error);
+            if (!itemSpec) {
+                return nil;
+            }
             [builder setItemsSpec: itemSpec];
             
             if (json[ItemObjectParserKeyMaxLength]) {
@@ -107,37 +138,300 @@ typedef DConnectParameterSpec * (^ParameterObjectParser)(NSDictionary *json);
         };
                  
         // BOOLEAN_ITEMS_PARSER = new BooleanItemsObjectParser();
-        BOOLEAN_ITEMS_PARSER = ^ DConnectDataSpec * (NSDictionary *json) {
-            return nil;
+        self.BOOLEAN_ITEMS_PARSER = ^ DConnectDataSpec * (NSDictionary *json, NSError **error) {
+            return [[[BooleanDataSpecBuilder alloc] init] build];
         };
                  
         // INTEGER_ITEMS_PARSER = new IntegerItemsObjectParser();
-        INTEGER_ITEMS_PARSER = ^ DConnectDataSpec * (NSDictionary *json) {
-            return nil;
+        self.INTEGER_ITEMS_PARSER = ^ DConnectDataSpec * (NSDictionary *json, NSError **error) {
+            IntegerDataSpecBuilder *builder = [[IntegerDataSpecBuilder alloc] init];
+            if (json[ItemObjectParserKeyFormat]) {
+                DConnectSpecDataFormat dataFormat;
+                if (![DConnectSpecConstants parseDataFormat:json[ItemObjectParserKeyFormat] outDataFormat:&dataFormat error: error]) {
+                    return nil;
+                }
+                [builder setFormat: dataFormat];
+            }
+            if (json[ItemObjectParserKeyMaximum]) {
+                if ([json[ItemObjectParserKeyMaximum] isKindOfClass: [NSNumber class]]) {
+                    [builder setMaximum: json[ItemObjectParserKeyMaximum]];
+                } else {
+                    *error = [DConnectSpecErrorFactory createError: [NSString stringWithFormat: @"maximum is invalid: %@", json[ItemObjectParserKeyMaximum]]];
+                    return nil;
+                }
+            }
+            if (json[ItemObjectParserKeyMinimum]) {
+                if ([json[ItemObjectParserKeyMinimum] isKindOfClass: [NSNumber class]]) {
+                    [builder setMinimum: json[ItemObjectParserKeyMinimum]];
+                } else {
+                    *error = [DConnectSpecErrorFactory createError: [NSString stringWithFormat: @"minimum is invalid: %@", json[ItemObjectParserKeyMinimum]]];
+                    return nil;
+                }
+            }
+            if (json[ItemObjectParserKeyExclusiveMaximum]) {
+                BOOL exclusiveMaximumValue;
+                if (![DConnectSpecConstants parseBool: json[ItemObjectParserKeyExclusiveMaximum] outBoolValue:&exclusiveMaximumValue error: error]) {
+                    return nil;
+                }
+                [builder setExclusiveMaximum: exclusiveMaximumValue];
+            }
+            if (json[ItemObjectParserKeyExclusiveMinimum]) {
+                BOOL exclusiveMinimumValue;
+                if (![DConnectSpecConstants parseBool: json[ItemObjectParserKeyExclusiveMinimum] outBoolValue:&exclusiveMinimumValue error: error]) {
+                    return nil;
+                }
+                [builder setExclusiveMinimum: exclusiveMinimumValue];
+            }
+            if (json[ItemObjectParserKeyEnum]) {
+                NSArray *array = json[ItemObjectParserKeyEnum];
+                if ([array isKindOfClass: [NSArray class]]) {
+                    
+                    NSMutableArray *enums = [NSMutableArray array];
+                    for (int i = 0; i < [array count]; i ++) {
+                        if ([array[i] isKindOfClass:[NSNumber class]]) {
+                            [enums addObject: array[i]];
+                        } else {
+                            *error = [DConnectSpecErrorFactory createError: [NSString stringWithFormat: @"enum is invalid: %@", json[ItemObjectParserKeyEnum]]];
+                            return nil;
+                        }
+                    }
+                    [builder setEnumList: enums];
+                } else {
+                    *error = [DConnectSpecErrorFactory createError: [NSString stringWithFormat: @"enum is invalid: %@", json[ItemObjectParserKeyEnum]]];
+                    return nil;
+                }
+            }
+            return [builder build];
         };
         
         // NUMBER_ITEMS_PARSER = new NumberItemsObjectParser();
-        NUMBER_ITEMS_PARSER = ^ DConnectDataSpec * (NSDictionary *json) {
-            return nil;
+        self.NUMBER_ITEMS_PARSER = ^ DConnectDataSpec * (NSDictionary *json, NSError **error) {
+            NumberDataSpecBuilder *builder = [[NumberDataSpecBuilder alloc] init];
+            if (json[ItemObjectParserKeyFormat]) {
+                DConnectSpecDataFormat dataFormat;
+                if (![DConnectSpecConstants parseDataFormat:json[ItemObjectParserKeyFormat] outDataFormat:&dataFormat error:error]) {
+                    return nil;
+                }
+                [builder setDataFormat: dataFormat];
+            }
+            if (json[ItemObjectParserKeyMaximum]) {
+                if ([json[ItemObjectParserKeyMaximum] isKindOfClass: [NSNumber class]]) {
+                    [builder setMaximum: json[ItemObjectParserKeyMaximum]];
+                } else {
+                    *error = [DConnectSpecErrorFactory createError: [NSString stringWithFormat: @"maximum is invalid: %@", json[ItemObjectParserKeyMaximum]]];
+                    return nil;
+                }
+            }
+            if (json[ItemObjectParserKeyMinimum]) {
+                if ([json[ItemObjectParserKeyMinimum] isKindOfClass: [NSNumber class]]) {
+                    [builder setMinimum: json[ItemObjectParserKeyMinimum]];
+                } else {
+                    *error = [DConnectSpecErrorFactory createError: [NSString stringWithFormat: @"minimum is invalid: %@", json[ItemObjectParserKeyMinimum]]];
+                    return nil;
+                }
+            }
+            if (json[ItemObjectParserKeyExclusiveMaximum]) {
+                BOOL exclusiveMaximum;
+                if (![DConnectSpecConstants parseBool: json[ItemObjectParserKeyExclusiveMaximum] outBoolValue:&exclusiveMaximum error: error]) {
+                    return nil;
+                }
+                [builder setExclusiveMaximum: exclusiveMaximum];
+            }
+            if (json[ItemObjectParserKeyExclusiveMinimum]) {
+                BOOL exclusiveMinimum;
+                if (![DConnectSpecConstants parseBool: json[ItemObjectParserKeyExclusiveMinimum] outBoolValue:&exclusiveMinimum error: error]) {
+                    return nil;
+                }
+                [builder setExclusiveMinimum: exclusiveMinimum];
+            }
+            return [builder build];
         };
         
         // STRING_ITEMS_PARSER = new StringItemsObjectParser();
+        self.STRING_ITEMS_PARSER = ^ DConnectDataSpec * (NSDictionary *json, NSError **error) {
+            StringDataSpecBuilder *builder = [[StringDataSpecBuilder alloc] init];
+            if (json[ItemObjectParserKeyFormat]) {
+                DConnectSpecDataFormat dataFormat;
+                if (![DConnectSpecConstants parseDataFormat:json[ItemObjectParserKeyFormat] outDataFormat: &dataFormat error:error]) {
+                    return nil;
+                }
+                [builder setFormat: dataFormat];
+            }
+            if (json[ItemObjectParserKeyMaxLength]) {
+                if ([json[ItemObjectParserKeyMaxLength] isKindOfClass: [NSNumber class]]) {
+                    [builder setMaxLength: json[ItemObjectParserKeyMaxLength]];
+                } else {
+                    *error = [DConnectSpecErrorFactory createError: [NSString stringWithFormat: @"maxlength is invalid: %@", json[ItemObjectParserKeyMaximum]]];
+                    return nil;
+                }
+            }
+            if (json[ItemObjectParserKeyMinLength]) {
+                if ([json[ItemObjectParserKeyMinLength] isKindOfClass:[NSNumber class]]) {
+                    [builder setMinLength: [NSNumber numberWithLong: [json[ItemObjectParserKeyMinLength] longValue]]];
+                } else {
+                    *error = [DConnectSpecErrorFactory createError: [NSString stringWithFormat: @"minlength is invalid: %@", json[ItemObjectParserKeyMinimum]]];
+                    return nil;
+                }
+            }
+            if (json[ItemObjectParserKeyEnum]) {
+                NSArray *array = json[ItemObjectParserKeyEnum];
+                if ([array isKindOfClass: [NSArray class]]) {
+                    
+                    NSMutableArray *enums = [NSMutableArray array];
+                    for (int i = 0; i < [array count]; i ++) {
+                        [enums addObject: array[i]];
+                    }
+                    [builder setEnums: enums];
+                } else {
+                    *error = [DConnectSpecErrorFactory createError: [NSString stringWithFormat: @"enum is invalid: %@", json[ItemObjectParserKeyEnum]]];
+                    return nil;
+                }
+            }
+            return [builder build];
+        };
         
         // ARRAY_PARAM_PARSER = new ArrayParameterParser();
-        // BOOLEAN_PARAM_PARSER = new BooleanParameterParser();
-        // FILE_PARAM_PARSER = new FileParameterParser();
-        // INTEGER_PARAM_PARSER = new IntegerParameterParser();
-        // NUMBER_PARAM_PARSER = new NumberParameterParser();
-        // STRING_PARAM_PARSER = new StringParameterParser();
-
+        self.ARRAY_PARAM_PARSER = ^ DConnectParameterSpec * (NSDictionary *json, NSError **error) {
+            NSLog(@"      ARRAY_PARAM_PARSER - start json(class): %@", [[json class] description]);
+            ArrayDataSpec *dataSpec = (ArrayDataSpec *) weakSelf.ARRAY_ITEMS_PARSER(json, error);
+            if (!dataSpec) {
+                return nil;
+            }
+            
+            ArrayParameterSpecBuilder *builder = [[ArrayParameterSpecBuilder alloc] init];
+            [builder setName: json[ParameterObjectParserKeyName]];
+            
+            if (json[ParameterObjectParserKeyRequied]) {
+                BOOL required;
+                if (![DConnectSpecConstants parseBool: json[ParameterObjectParserKeyRequied] outBoolValue:&required error: error]) {
+                    *error = [DConnectSpecErrorFactory createError: [NSString stringWithFormat: @"required is invalid: %@", json[ParameterObjectParserKeyRequied]]];
+                    return nil;
+                } else {
+                    [builder setIsRequired: [json[ParameterObjectParserKeyRequied] boolValue]];
+                }
+            }
+            
+            [builder setItemSpec: [dataSpec itemsSpec]];
+            [builder setMaxLength: [dataSpec maxLength]];
+            [builder setMinLength: [dataSpec minLength]];
+            return [builder build];
+        };
         
+        // BOOLEAN_PARAM_PARSER = new BooleanParameterParser();
+        self.BOOLEAN_PARAM_PARSER = ^ DConnectParameterSpec * (NSDictionary *json, NSError **error) {
+            BooleanParameterSpecBuilder *builder = [[BooleanParameterSpecBuilder alloc] init];
+            [builder setName: json[ParameterObjectParserKeyName]];
+            if (json[ParameterObjectParserKeyRequied]) {
+                BOOL required;
+                if (![DConnectSpecConstants parseBool: json[ParameterObjectParserKeyRequied] outBoolValue:&required error: error]) {
+                    *error = [DConnectSpecErrorFactory createError: [NSString stringWithFormat: @"required is invalid: %@", json[ParameterObjectParserKeyRequied]]];
+                    return nil;
+                }
+                [builder setIsRequired: required];
+            }
+            return [builder build];
+        };
+        
+        // FILE_PARAM_PARSER = new FileParameterParser();
+        self.FILE_PARAM_PARSER = ^ DConnectParameterSpec * (NSDictionary *json, NSError **error) {
+            FileParameterSpecBuilder *builder = [[FileParameterSpecBuilder alloc] init];
+            [builder setName: json[ParameterObjectParserKeyName]];
+
+            if (json[ParameterObjectParserKeyRequied]) {
+                BOOL required;
+                if (![DConnectSpecConstants parseBool: json[ParameterObjectParserKeyRequied] outBoolValue:&required error:error]) {
+                    *error = [DConnectSpecErrorFactory createError: [NSString stringWithFormat: @"required is invalid: %@", json[ParameterObjectParserKeyRequied]]];
+                    return nil;
+                }
+                [builder setIsRequired: required];
+            }
+            return [builder build];
+        };
+
+        // INTEGER_PARAM_PARSER = new IntegerParameterParser();
+        self.INTEGER_PARAM_PARSER = ^ DConnectParameterSpec * (NSDictionary *json, NSError **error) {
+            IntegerDataSpec *dataSpec = (IntegerDataSpec *) weakSelf.INTEGER_ITEMS_PARSER(json, error);
+            if (!dataSpec) {
+                return nil;
+            }
+            
+            IntegerParameterSpecBuilder *builder = [[IntegerParameterSpecBuilder alloc] init];
+            [builder setName: json[ParameterObjectParserKeyName]];
+            if (json[ParameterObjectParserKeyRequied]) {
+                BOOL required;
+                if (![DConnectSpecConstants parseBool: json[ParameterObjectParserKeyRequied] outBoolValue:&required error:error]) {
+                    *error = [DConnectSpecErrorFactory createError: [NSString stringWithFormat: @"required is invalid: %@", json[ParameterObjectParserKeyRequied]]];
+                    return nil;
+                }
+                [builder setIsRequired: required];
+            }
+            [builder setDataFormat: [dataSpec format]];
+            [builder setMaximum: [dataSpec maximum]];
+            [builder setMinimum: [dataSpec minimum]];
+            [builder setExclusiveMaximum: [dataSpec exclusiveMaximum]];
+            [builder setExclusiveMinimum: [dataSpec exclusiveMinimum]];
+            [builder setEnumList: [dataSpec enumList]];
+            return [builder build];
+        };
+
+        // NUMBER_PARAM_PARSER = new NumberParameterParser();
+        self.NUMBER_PARAM_PARSER = ^ DConnectParameterSpec * (NSDictionary *json, NSError **error) {
+            NumberDataSpec *dataSpec = (NumberDataSpec *) weakSelf.NUMBER_ITEMS_PARSER(json, error);
+            if (!dataSpec) {
+                return nil;
+            }
+            
+            NumberParameterSpecBuilder *builder = [[NumberParameterSpecBuilder alloc] init];
+            [builder setName: json[ParameterObjectParserKeyName]];
+            if (json[ParameterObjectParserKeyRequied]) {
+                BOOL required;
+                if (![DConnectSpecConstants parseBool: json[ParameterObjectParserKeyRequied] outBoolValue:&required error:error]) {
+                    *error = [DConnectSpecErrorFactory createError: [NSString stringWithFormat: @"required is invalid: %@", json[ParameterObjectParserKeyRequied]]];
+                    return nil;
+                }
+                [builder setIsRequired: required];
+            }
+            [builder setDataFormat: [dataSpec dataFormat]];
+            [builder setMaximum: [dataSpec maximum]];
+            [builder setMinimum: [dataSpec minimum]];
+            [builder setExclusiveMaximum: [dataSpec exclusiveMaximum]];
+            [builder setExclusiveMinimum: [dataSpec exclusiveMinimum]];
+            return [builder build];
+        };
+        
+        // STRING_PARAM_PARSER = new StringParameterParser();
+        self.STRING_PARAM_PARSER = ^ DConnectParameterSpec * (NSDictionary *json, NSError **error) {
+            StringDataSpec *dataSpec = (StringDataSpec *) weakSelf.STRING_ITEMS_PARSER(json, error);
+            if (!dataSpec) {
+                return nil;
+            }
+            
+            NSLog(@"      STRING_PARAM_PARSER - StringParameterSpecBuilder init");
+            StringParameterSpecBuilder *builder = [[StringParameterSpecBuilder alloc] init];
+            [builder setName: json[ParameterObjectParserKeyName]];
+            if (json[ParameterObjectParserKeyRequied]) {
+                BOOL required;
+                if (![DConnectSpecConstants parseBool: json[ParameterObjectParserKeyRequied] outBoolValue:&required error:error]) {
+                    *error = [DConnectSpecErrorFactory createError: [NSString stringWithFormat: @"required is invalid: %@", json[ParameterObjectParserKeyRequied]]];
+                    return nil;
+                }
+                [builder setIsRequired: required];
+            }
+            [builder setDataFormat: [dataSpec dataFormat]];
+            [builder setMaxLength: [[dataSpec maxLength] longValue]];
+            [builder setMinLength: [[dataSpec minLength] longValue]];
+            [builder setEnums: [dataSpec enums]];
+            
+            return [builder build];
+        };
     }
     return self;
 }
 
 
+#pragma mark - DConnectProfileSpecJsonParser Methods.
 
-- (DConnectProfileSpec *) parseJson: (NSDictionary *) json {
+- (DConnectProfileSpec *) parseJson: (NSDictionary *) json error:(NSError **) error {
     DConnectProfileSpecBuilder *builder = [[DConnectProfileSpecBuilder alloc] init];
     [builder setBundle: json];        // JSONパースでNSDictionary,NSArrayに変換されるのでtoBundle()処理は不要。そのままjsonを代入する。
     
@@ -152,10 +446,15 @@ typedef DConnectParameterSpec * (^ParameterObjectParser)(NSDictionary *json);
             if (!opObj) {
                 continue;
             }
-            DConnectSpecMethod method = [DConnectSpecConstants parseMethod: strMethod];
-            DConnectApiSpec *apiSpec = OPERATION_OBJECT_PARSER(method, opObj);
+            DConnectSpecMethod method;
+            if (![DConnectSpecConstants parseMethod: strMethod outMethod:&method error: error]) {
+                return nil;
+            }
+            DConnectApiSpec *apiSpec = self.OPERATION_OBJECT_PARSER(method, opObj, error);
             if (apiSpec) {
-                [builder addApiSpec: path method: method apiSpec: apiSpec];
+                [builder addApiSpec: path method: method apiSpec: apiSpec error: error];
+            } else {
+                return nil;
             }
         }
     }
@@ -163,53 +462,58 @@ typedef DConnectParameterSpec * (^ParameterObjectParser)(NSDictionary *json);
     return [builder build];
 }
 
- 
-- (ParameterObjectParser) getParameterParser: (NSDictionary *) json {
+#pragma mark - Private Methods.
+
+- (ParameterObjectParser) getParameterParser: (NSDictionary *) json error: (NSError **) error {
     
     NSString *type = json[ParameterObjectParserKeyType];
-    DConnectSpecDataType paramType = [DConnectSpecConstants parseDataType: type];
-    if (!paramType) {
-         @throw [NSString stringWithFormat: @"Unknown parameter type '%@' is specified.", type];
+    DConnectSpecDataType paramType;
+    if (![DConnectSpecConstants parseDataType: type outDataType:&paramType error:error]) {
+        return nil;
     }
     switch (paramType) {
         case BOOLEAN:
-            return BOOLEAN_PARAM_PARSER;
+            return self.BOOLEAN_PARAM_PARSER;
         case INTEGER:
-            return INTEGER_PARAM_PARSER;
+            return self.INTEGER_PARAM_PARSER;
         case NUMBER:
-            return NUMBER_PARAM_PARSER;
+            return self.NUMBER_PARAM_PARSER;
         case STRING:
-            return STRING_PARAM_PARSER;
+            return self.STRING_PARAM_PARSER;
         case FILE_:
-            return FILE_PARAM_PARSER;
+            return self.FILE_PARAM_PARSER;
         case ARRAY:
-            return ARRAY_PARAM_PARSER;
+            return self.ARRAY_PARAM_PARSER;
         default:
-            @throw [NSString stringWithFormat: @"Invalid parameter type '%@' is specified.", type];
+            *error = [DConnectSpecErrorFactory createError: [NSString stringWithFormat: @"Invalid parameter type '%@' is specified.", type]];
+            return nil;
     }
 }
 
-- (ParameterObjectParser) getItemsParser: (NSDictionary *) json {
+- (ParameterObjectParser) getItemsParser: (NSDictionary *) json error: (NSError **) error {
     NSString *type = json[ParameterObjectParserKeyType];
-    DConnectSpecDataType paramType = [DConnectSpecConstants parseDataType: type];
-    if (!paramType) {
-         @throw [NSString stringWithFormat: @"Unknown parameter type '%@' is specified.", type];
+
+    DConnectSpecDataType paramType;
+    if (![DConnectSpecConstants parseDataType: type outDataType: &paramType error:error]) {
+        return nil;
     }
+
     switch (paramType) {
         case BOOLEAN:
-            return BOOLEAN_PARAM_PARSER;
+            return self.BOOLEAN_PARAM_PARSER;
         case INTEGER:
-            return INTEGER_PARAM_PARSER;
+            return self.INTEGER_PARAM_PARSER;
         case NUMBER:
-            return NUMBER_PARAM_PARSER;
+            return self.NUMBER_PARAM_PARSER;
         case STRING:
-            return STRING_PARAM_PARSER;
+            return self.STRING_PARAM_PARSER;
         case FILE_:
-            return FILE_PARAM_PARSER;
+            return self.FILE_PARAM_PARSER;
         case ARRAY:
-            return ARRAY_PARAM_PARSER;
+            return self.ARRAY_PARAM_PARSER;
         default:
-            @throw [NSString stringWithFormat: @"Invalid parameter type '%@' is specified.", type];
+            *error = [DConnectSpecErrorFactory createError: [NSString stringWithFormat: @"Invalid parameter type '%@' is specified.", type]];
+            return nil;
     }
 }
  

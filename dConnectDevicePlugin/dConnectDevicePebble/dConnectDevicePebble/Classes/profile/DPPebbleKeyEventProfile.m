@@ -41,9 +41,8 @@ static const UInt64 CACHE_RETENTION_TIME = 10000;
         mOnUpCacheTime = 0;
         
         // API登録(didReceiveGetOnDownRequest相当)
-        NSString *getOnDownRequestApiPath = [self apiPathWithProfile: self.profileName
-                                                       interfaceName: nil
-                                                       attributeName: DConnectKeyEventProfileAttrOnDown];
+        NSString *getOnDownRequestApiPath = [self apiPath: nil
+                                            attributeName: DConnectKeyEventProfileAttrOnDown];
         [self addGetPath: getOnDownRequestApiPath
                      api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
                          [response setResult:DConnectMessageResultTypeOk];
@@ -53,9 +52,8 @@ static const UInt64 CACHE_RETENTION_TIME = 10000;
                      }];
         
         // API登録(didReceiveGetOnUpRequest相当)
-        NSString *getOnUpRequestApiPath = [self apiPathWithProfile: self.profileName
-                                                     interfaceName: nil
-                                                     attributeName: DConnectKeyEventProfileAttrOnUp];
+        NSString *getOnUpRequestApiPath = [self apiPath: nil
+                                          attributeName: DConnectKeyEventProfileAttrOnUp];
         [self addGetPath: getOnUpRequestApiPath
                      api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
                          [response setResult:DConnectMessageResultTypeOk];
@@ -65,9 +63,8 @@ static const UInt64 CACHE_RETENTION_TIME = 10000;
                      }];
         
         // API登録(didReceivePutOnDownRequest相当)
-        NSString *putOnDownRequestApiPath = [self apiPathWithProfile: self.profileName
-                                                       interfaceName: nil
-                                                       attributeName: DConnectKeyEventProfileAttrOnDown];
+        NSString *putOnDownRequestApiPath = [self apiPath: nil
+                                            attributeName: DConnectKeyEventProfileAttrOnDown];
         [self addPutPath: putOnDownRequestApiPath
                      api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
                          __block BOOL responseFlg = YES;
@@ -91,7 +88,7 @@ static const UInt64 CACHE_RETENTION_TIME = 10000;
                                                keyeventData:(DConnectMessage *)message];
                                  
                                  // Send event to DConnect.
-                                 [DPPebbleProfileUtil sendMessageWithProvider:weakSelf.provider
+                                 [DPPebbleProfileUtil sendMessageWithPlugin:weakSelf.plugin
                                                                       profile:DConnectKeyEventProfileName
                                                                     attribute:DConnectKeyEventProfileAttrOnDown
                                                                     serviceID:serviceId
@@ -113,9 +110,8 @@ static const UInt64 CACHE_RETENTION_TIME = 10000;
                      }];
         
         // API登録(didReceivePutOnUpRequest相当)
-        NSString *putOnOnUpRequestApiPath = [self apiPathWithProfile: self.profileName
-                                                       interfaceName: nil
-                                                       attributeName: DConnectKeyEventProfileAttrOnUp];
+        NSString *putOnOnUpRequestApiPath = [self apiPath: nil
+                                            attributeName: DConnectKeyEventProfileAttrOnUp];
         [self addPutPath: putOnOnUpRequestApiPath
                      api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
                          __block BOOL responseFlg = YES;
@@ -139,7 +135,7 @@ static const UInt64 CACHE_RETENTION_TIME = 10000;
                                                keyeventData:(DConnectMessage *)message];
                                  
                                  // Send event to DConnect.
-                                 [DPPebbleProfileUtil sendMessageWithProvider:weakSelf.provider
+                                 [DPPebbleProfileUtil sendMessageWithPlugin:weakSelf.plugin
                                                                       profile:DConnectKeyEventProfileName
                                                                     attribute:DConnectKeyEventProfileAttrOnUp
                                                                     serviceID:serviceId
@@ -163,9 +159,8 @@ static const UInt64 CACHE_RETENTION_TIME = 10000;
                      }];
         
         // API登録(didReceiveDeleteOnDownRequest相当)
-        NSString *deleteOnDownRequestApiPath = [self apiPathWithProfile: self.profileName
-                                                          interfaceName: nil
-                                                          attributeName: DConnectKeyEventProfileAttrOnDown];
+        NSString *deleteOnDownRequestApiPath = [self apiPath: nil
+                                               attributeName: DConnectKeyEventProfileAttrOnDown];
         [self addPutPath: deleteOnDownRequestApiPath
                      api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
                          NSString *serviceId = [request serviceId];
@@ -180,9 +175,8 @@ static const UInt64 CACHE_RETENTION_TIME = 10000;
                      }];
         
         // API登録(didReceiveDeleteOnUpRequest相当)
-        NSString *deleteOnOnUpRequestApiPath = [self apiPathWithProfile: self.profileName
-                                                          interfaceName: nil
-                                                          attributeName: DConnectKeyEventProfileAttrOnUp];
+        NSString *deleteOnOnUpRequestApiPath = [self apiPath: nil
+                                               attributeName: DConnectKeyEventProfileAttrOnUp];
         [self addPutPath: deleteOnOnUpRequestApiPath
                      api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
                          // Remove event of DConnect.

@@ -16,14 +16,14 @@
     
     self = [super init];
     if (self) {
-        [self setFormat: FLOAT];
+        [self setDataFormat: FLOAT];
     }
     return self;
 }
 
 - (NumberParameterSpec *) build {
     
-    NumberParameterSpec *spec = [[NumberParameterSpec alloc] initWithDataFormat: [self format]];
+    NumberParameterSpec *spec = [[NumberParameterSpec alloc] initWithDataFormat: [self dataFormat]];
     
     [spec setName: [self name]];
     [spec setIsRequired: [self isRequired]];

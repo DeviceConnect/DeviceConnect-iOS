@@ -324,7 +324,7 @@ const char * const VideoCaptureQueueName = "org.deviceconnect.ios.host.mediastre
         [DConnectMediaStreamRecordingProfile setErrorMessage:error.localizedDescription target:media];
         [DConnectMediaStreamRecordingProfile setPhoto:media target:eventMsg];
         
-        [(DConnectDevicePlugin *)_profile.provider sendEvent:eventMsg];
+        [(DConnectDevicePlugin *)_profile.plugin sendEvent:eventMsg];
     }
 }
 

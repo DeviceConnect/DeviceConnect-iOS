@@ -98,7 +98,12 @@ typedef struct DPGyroData_ {
 /*!
  @brief ServiceProvider.
  */
-@property (nonatomic, weak) DConnectServiceProvider *mServiceProvider;
+@property (nonatomic, weak) DConnectServiceProvider *serviceProvider;
+
+/*!
+ @brief DevicePlugin.
+ */
+@property (nonatomic, weak) id plugin;
 
 /*!
  @brief Spheroのセンサー処理用デリゲート。

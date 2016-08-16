@@ -31,7 +31,11 @@
 		[[DConnectEventManager sharedManagerForClass:key] setController:[DConnectMemoryCacheController new]];
 		
         // DPPebbleManagerへServiceProviderを渡す
-        [[DPPebbleManager sharedManager] setServiceProvider: self.mServiceProvider];
+        [[DPPebbleManager sharedManager] setServiceProvider: self.serviceProvider];
+        [[DPPebbleManager sharedManager] setPlugin: self];
+        
+        // ServiceProvider更新
+        [[DPPebbleManager sharedManager] updateManageServices];
         
 		// 各プロファイルの追加
         [self addProfile:[DPPebbleSystemProfile new]];
