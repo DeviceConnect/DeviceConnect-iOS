@@ -235,9 +235,6 @@
         for (DConnectApiEntity *api in mApis) {
             if ([api path] && [path localizedCaseInsensitiveCompare: [api path]] == NSOrderedSame &&
                 [api method] && [strMethod localizedCaseInsensitiveCompare:[api method]] == NSOrderedSame) {
-                /***/
-                NSLog(@"findApiWithPath - result: (not nil)");
-                /***/
                 return api;
             }
         }

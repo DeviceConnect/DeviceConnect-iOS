@@ -42,11 +42,6 @@ NSString *const DConnectAuthorizationProfileGrantTypeAuthorizationCode = @"autho
                          
             NSString *serviceId = [request serviceId];
             NSString *package = [DConnectAuthorizationProfile packageFromRequest:request];
-            /***/
-            NSLog(@"onRequest - serviceId: {%@}", serviceId);
-            NSLog(@"onRequest - package: {%@}", package);
-            NSLog(@"onRequest - request(JSON): {%@}", [request convertToJSONString]);
-            /***/
             
             if (package == nil || package.length <= 0) {
                 [response setErrorToInvalidRequestParameter];

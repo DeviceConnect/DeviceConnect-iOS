@@ -44,7 +44,6 @@ static NSMutableDictionary *_instanceArray = nil;
 + (DConnectServiceManager *)sharedForClass: (Class)clazz {
     
     NSString *key = [clazz description];
-//    NSLog(@"[DConnectServiceManager sharedForClass: %@]", key);
     
     DConnectServiceManager *manager = [DConnectServiceManager sharedForKey: key];
     return manager;
@@ -104,7 +103,6 @@ static NSMutableDictionary *_instanceArray = nil;
                 NSError *error = nil;
                 [[self pluginSpec] addProfileSpec: [profile profileName] error: &error];
                 if (error) {
-                    NSLog(@"addService error ! %@", [error description]);
                     DCLogE(@"addService error ! %@", [error description]);
                 }
             }
@@ -118,7 +116,6 @@ static NSMutableDictionary *_instanceArray = nil;
                 DConnectSpecMethod method;
                 NSError *error;
                 if (![DConnectSpecConstants parseMethod:[api method] outMethod: &method error:&error]) {
-                    NSLog(@"addService error, %@", [error description]);
                     DCLogW(@"addService error, %@", [error description]);
                     continue;
                 }
@@ -131,7 +128,6 @@ static NSMutableDictionary *_instanceArray = nil;
     }
     
     mDConnectServices[serviceId] = service;
-//    NSLog(@"addService: count = %d / key = %@", (int)[mDConnectServices count], _key);
 }
 
 - (void) removeService: (DConnectService *) service {
@@ -145,7 +141,6 @@ static NSMutableDictionary *_instanceArray = nil;
 
 - (NSArray *) services {
     
-//    NSLog(@"getServices: %d - key: %@", (int)[mDConnectServices count], _key);
     NSMutableArray *list = [NSMutableArray array];
     [list addObjectsFromArray: [mDConnectServices allValues]];
     return list;
