@@ -99,6 +99,7 @@
 		ABDC9ACF1B54987B002AF9DD /* thetaStandby@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = ABDC9ACA1B54987B002AF9DD /* thetaStandby@2x.png */; };
 		ABDC9AD01B54987B002AF9DD /* thetaWiFi@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = ABDC9ACB1B54987B002AF9DD /* thetaWiFi@2x.png */; };
 		D6C8602F1D39F1D900232EEF /* DPThetaService.m in Sources */ = {isa = PBXBuildFile; fileRef = D6C8602E1D39F1D900232EEF /* DPThetaService.m */; };
+		D6D172771D6301C000444337 /* DPThetaReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = D6D172761D6301C000444337 /* DPThetaReachability.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -244,6 +245,8 @@
 		ABDC9ACB1B54987B002AF9DD /* thetaWiFi@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "thetaWiFi@2x.png"; sourceTree = "<group>"; };
 		D6C8602D1D39F1D900232EEF /* DPThetaService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPThetaService.h; sourceTree = "<group>"; };
 		D6C8602E1D39F1D900232EEF /* DPThetaService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPThetaService.m; sourceTree = "<group>"; };
+		D6D172751D6301C000444337 /* DPThetaReachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPThetaReachability.h; sourceTree = "<group>"; };
+		D6D172761D6301C000444337 /* DPThetaReachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPThetaReachability.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -346,6 +349,8 @@
 				AB50D0EF1B40F32B00EB9F94 /* DPThetaManager.m */,
 				D6C8602D1D39F1D900232EEF /* DPThetaService.h */,
 				D6C8602E1D39F1D900232EEF /* DPThetaService.m */,
+				D6D172751D6301C000444337 /* DPThetaReachability.h */,
+				D6D172761D6301C000444337 /* DPThetaReachability.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -723,6 +728,7 @@
 				AB50D0AB1B40DE1600EB9F94 /* ExifTags.m in Sources */,
 				AB50D0AC1B40DE1600EB9F94 /* RicohEXIF.mm in Sources */,
 				AB50D0AD1B40DE1600EB9F94 /* LibLogging.mm in Sources */,
+				D6D172771D6301C000444337 /* DPThetaReachability.m in Sources */,
 				AB50D0AE1B40DE1600EB9F94 /* logger.cpp in Sources */,
 				ABCA99A11B44F73E001C2AA1 /* DPThetaMediaStreamRecordingProfile.m in Sources */,
 				AB50D0AF1B40DE1600EB9F94 /* ObjcLogger.mm in Sources */,

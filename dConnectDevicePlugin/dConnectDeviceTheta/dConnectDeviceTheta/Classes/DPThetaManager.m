@@ -12,6 +12,7 @@
 #import "PtpConnection.h"
 #import "PtpLogging.h"
 #import "DPThetaService.h"
+#import "DPThetaReachability.h"
 
 static NSString * const DPThetaRegexDecimalPoint = @"^[-+]?([0-9]*)?(\\.*)?([0-9]*)?$";
 static NSString * const DPThetaRegexDigit = @"^([0-9]*)?$";
@@ -31,6 +32,9 @@ static NSString * const DPThetaRegexCSV = @"^([^,]*,)+";
     NSMutableDictionary* _onStatusEventList;
     CGSize _imageSize;
 }
+
+@property (nonatomic, strong) DPThetaReachability *reachability;
+
 @end
 
 @implementation DPThetaManager
@@ -69,6 +73,15 @@ static int const _timeout = 500;
         [_ptpConnection setLoglevel:PTPIP_LOGLEVEL_WARN];
         [_ptpConnection setEventListener:self];
 
+        
+        // Reachabilityの初期処理
+        self.reachability = [DPThetaReachability reachabilityWithHostName: @"www.google.com"];
+        [[NSNotificationCenter defaultCenter]
+         addObserver:self
+         selector:@selector(notifiedNetworkStatus:)
+         name:DPThetaReachabilityChangedNotification
+         object:nil];
+        [self.reachability startNotifier];
     }
     return self;
 }
@@ -342,7 +355,11 @@ static int const _timeout = 500;
     dispatch_time_t timeout = dispatch_time(DISPATCH_TIME_NOW, NSEC_PER_SEC * _timeout);
 
     [_ptpConnection getDeviceInfo:^(const PtpIpDeviceInfo* info) {
-        _deviceInfo = [NSString stringWithFormat:@"%@ %@", info.model, info.serial_number];
+        if (info && info.model && info.serial_number) {
+            _deviceInfo = [NSString stringWithFormat:@"%@ %@", info.model, info.serial_number];
+        } else {
+            _deviceInfo = nil;
+        }
     
         dispatch_semaphore_signal(semaphore);
 
@@ -632,9 +649,11 @@ static int const _timeout = 500;
             return;
         }
         
-        // デバイス接続中
+        // 接続を試みる(接続成功したらシリアル番号も取得できる)
         BOOL isConnected = [self connect];
         NSString* serial = [self getSerialNo];
+        
+        // 接続できた
         if (isConnected && serial) {
             
             // サービス未登録なら登録する
@@ -643,6 +662,10 @@ static int const _timeout = 500;
                 [service setName:serial];
                 [service setOnline:YES];
                 [self.serviceProvider addService: service];
+            } else {
+                // サービス登録済ならオンラインにする
+                DConnectService *service = [self.serviceProvider service: DPThetaDeviceServiceId];
+                [service setOnline:YES];
             }
         } else {
             // 切断中でサービスが登録済ならオフラインにする
@@ -651,6 +674,7 @@ static int const _timeout = 500;
                 [service setOnline:NO];
             }
         }
+        // TODO: 一度接続したThetaデバイスのWifiを別のものに変更しても[self isConnected]がYESを返してしまうのでofflineの判定ができない。[self connect]の前に[self getSerialNo]を実行してデバイスから取得できるかやってみたが、それをするとその後の[self connect]が成功しなくなってしまう。
 
         // ROI接続中(常時)
         // サービス未登録なら登録する
@@ -661,6 +685,11 @@ static int const _timeout = 500;
             [self.serviceProvider addService: service];
         }
     }
+}
+
+// 通知を受け取るメソッド
+-(void)notifiedNetworkStatus:(NSNotification *)notification {
+    [self updateManageServices];
 }
 
 @end
