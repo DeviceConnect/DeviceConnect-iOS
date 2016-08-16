@@ -50,16 +50,11 @@
         
         // Reachabilityの初期処理
         self.reachability = [SonyCameraReachability reachabilityWithHostName: @"www.google.com"];
-        
-        // 続いて、NSNotificationCenterに、
-        // ネットワーク状態が変化した際に通知を受ける対象を指定します。
         [[NSNotificationCenter defaultCenter]
          addObserver:self
          selector:@selector(notifiedNetworkStatus:)
          name:kReachabilityChangedNotification
          object:nil];
-        
-        // ネットワーク監視を開始します。
         [self.reachability startNotifier];
     }
     return self;
@@ -174,7 +169,6 @@
 
 // 通知を受け取るメソッド
 -(void)notifiedNetworkStatus:(NSNotification *)notification {
-    [DConnectUtilDebug putLog: @"notifiedNetworkStatus"];
     [self updateManageServices];
 }
 
