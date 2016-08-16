@@ -11,6 +11,13 @@
 #import "DeviceList.h"
 #import <DConnectSDK/DConnectService.h>
 #import "SonyCameraService.h"
+#import "SonyCameraReachability.h"
+
+@interface SonyCameraManager()
+
+@property (nonatomic, strong) SonyCameraReachability *reachability;
+
+@end
 
 @implementation SonyCameraManager
 
@@ -40,8 +47,27 @@
         self.plugin = plugin;
         self.liveViewDelegate = liveViewDelegate;
         self.remoteApiUtilDelegate = remoteApiUtilDelegate;
+        
+        // Reachabilityの初期処理
+        self.reachability = [SonyCameraReachability reachabilityWithHostName: @"www.google.com"];
+        
+        // 続いて、NSNotificationCenterに、
+        // ネットワーク状態が変化した際に通知を受ける対象を指定します。
+        [[NSNotificationCenter defaultCenter]
+         addObserver:self
+         selector:@selector(notifiedNetworkStatus:)
+         name:kReachabilityChangedNotification
+         object:nil];
+        
+        // ネットワーク監視を開始します。
+        [self.reachability startNotifier];
     }
     return self;
+}
+
+- (void)dealloc {
+    // Reachabilityの終了処理
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:kReachabilityChangedNotification object:nil];
 }
 
 // デバイス管理情報更新
@@ -58,7 +84,13 @@
         // ServiceProviderに存在するサービスが検出されなかったならオフラインにする
         for (DConnectService *service in [self.serviceProvider services]) {
             NSString *serviceId = [service serviceId];
+
+            // SonyCamera以外は対象外
+            if ([[service name] localizedCaseInsensitiveCompare: SonyDeviceName] != NSOrderedSame) {
+                continue;
+            }
             
+            // ServiceProviderにあって最新のリストに無い場合はオフラインにする。有ればオンラインにする
             BOOL isFindDevice = NO;
             for (int deviceIndex = 0; deviceIndex < deviceCount; deviceIndex ++) {
                 NSString *deviceServiceId = [NSString stringWithFormat:@"%d", deviceIndex];
@@ -67,8 +99,9 @@
                     break;
                 }
             }
-            
-            if (!isFindDevice) {
+            if (isFindDevice) {
+                [service setOnline: YES];
+            } else {
                 [service setOnline: NO];
             }
         }
@@ -139,5 +172,10 @@
     return evts.count > 0;
 }
 
+// 通知を受け取るメソッド
+-(void)notifiedNetworkStatus:(NSNotification *)notification {
+    [DConnectUtilDebug putLog: @"notifiedNetworkStatus"];
+    [self updateManageServices];
+}
 
 @end
