@@ -678,6 +678,7 @@
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
+				VALID_ARCHS = "armv7s armv7 arm64 x86_64";
 			};
 			name = Debug;
 		};
@@ -715,6 +716,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
+				VALID_ARCHS = "armv7s armv7 arm64 x86_64";
 			};
 			name = Release;
 		};
@@ -728,10 +730,13 @@
 					"$(PROJECT_DIR)/../../dConnectSDK/dConnectSDKForIOS/bin",
 					"$(PROJECT_DIR)/../../dConnectDevicePlugin/DCMDevicePluginSDK/bin",
 				);
+				GCC_PREFIX_HEADER = "dConnectDeviceLinking/dConnectDeviceLinking-Prefix.pch";
 				HEADER_SEARCH_PATHS = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include;
+				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				VALID_ARCHS = "armv7s armv7 arm64 x86_64";
 			};
 			name = Debug;
 		};
@@ -745,10 +750,13 @@
 					"$(PROJECT_DIR)/../../dConnectSDK/dConnectSDKForIOS/bin",
 					"$(PROJECT_DIR)/../../dConnectDevicePlugin/DCMDevicePluginSDK/bin",
 				);
+				GCC_PREFIX_HEADER = "dConnectDeviceLinking/dConnectDeviceLinking-Prefix.pch";
 				HEADER_SEARCH_PATHS = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include;
+				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				VALID_ARCHS = "armv7s armv7 arm64 x86_64";
 			};
 			name = Release;
 		};
@@ -838,6 +846,7 @@
 				BE285A371D6315FD00CB9F95 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
