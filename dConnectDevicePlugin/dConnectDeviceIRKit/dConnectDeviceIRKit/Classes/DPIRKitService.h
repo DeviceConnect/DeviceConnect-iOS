@@ -11,6 +11,6 @@
 
 @interface DPIRKitService : DConnectService
 
-- (instancetype) initWithServiceId: (NSString *)serviceId profiles: (NSArray *) profiles plugin: (id) plugin;
+- (instancetype) initWithServiceId: (NSString *)serviceId plugin: (id) plugin;
 
 @end

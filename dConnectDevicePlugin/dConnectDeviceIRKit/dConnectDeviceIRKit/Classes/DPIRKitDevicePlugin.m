@@ -14,8 +14,7 @@
 #import "DPIRKitDBManager.h"
 #import "DPIRKitRESTfulRequest.h"
 #import "DPIRKitVirtualDevice.h"
-#import "DPIRKitLightProfile.h"
-#import "DPIRKitTVProfile.h"
+#import "DPIRKitSystemProfile.h"
 #import "DPIRKitService.h"
 
 NSString *const DPIRKitInfoVersion = @"DPIRKitVersion";
@@ -41,11 +40,6 @@ DPIRKitManagerDetectionDelegate
     NSMutableDictionary *_devices;
     DConnectEventManager *_eventManager;
     NSString *_version;
-    
-    /*!
-     @brief Service生成時に登録するプロファイル(DConnectProfile *)の配列
-     */
-    NSArray *mServiceProfiles;
 }
 
 - (void) sendDeviceDetectionEventWithDevice:(DPIRKitDevice *)device online:(BOOL)online;
@@ -64,16 +58,13 @@ DPIRKitManagerDetectionDelegate
     self = [super initWithObject: self];
     
     if (self) {
-        DConnectSystemProfile *systemProfile = [DConnectSystemProfile new];
-        systemProfile.dataSource = self;
-        [self addProfile:systemProfile];
         
-        // サービスで登録するProfile
-        DPIRKitRemoteControllerProfile *remoteControllerProfile
-                            = [[DPIRKitRemoteControllerProfile alloc] initWithDevicePlugin:self];
-        DPIRKitTVProfile *tvProfile = [[DPIRKitTVProfile alloc] initWithDevicePlugin:self];
-        DPIRKitLightProfile *lightProfile = [[DPIRKitLightProfile alloc] initWithDevicePlugin:self];
-        mServiceProfiles = @[ remoteControllerProfile, tvProfile, lightProfile ];
+        DPIRKitManager *manager = [DPIRKitManager sharedInstance];
+        [manager setServiceProvider: self.serviceProvider];
+        [manager setPlugin:self];
+        
+        // System Profileの追加
+        [self addProfile:[[DPIRKitSystemProfile alloc] initWithDelegate: nil dataSource: self]];
         
         _devices = [NSMutableDictionary dictionary];
         id<DConnectEventCacheController> controller = [[DConnectMemoryCacheController alloc] init];
@@ -92,7 +83,7 @@ DPIRKitManagerDetectionDelegate
             [notificationCenter addObserver:_self selector:@selector(stopObeservation)
                        name:UIApplicationDidEnterBackgroundNotification
                      object:application];
-            DPIRKitManager *manager = [DPIRKitManager sharedInstance];
+
             manager.apiKey = info[DPIRKitInfoAPIKey];
             manager.detectionDelegate = _self;
             
@@ -145,10 +136,13 @@ DPIRKitManagerDetectionDelegate
     }
     if ((!hit && online) || (hit && !online)) {
         
-        // デバイスが未登録なら登録する
+        // デバイスが未登録なら登録する、登録済ならonlineにする
         NSString *serviceId = device.name;
-        if (![self.serviceProvider service: serviceId]) {
-            DPIRKitService *service = [[DPIRKitService alloc] initWithServiceId: serviceId profiles: mServiceProfiles plugin: self];
+        if ([self.serviceProvider service: serviceId]) {
+            DConnectService *service = [self.serviceProvider service: serviceId];
+            [service setOnline: YES];
+        } else {
+            DPIRKitService *service = [[DPIRKitService alloc] initWithServiceId: serviceId plugin: self];
             [self.serviceProvider addService: service];
         }
         
@@ -164,11 +158,11 @@ DPIRKitManagerDetectionDelegate
             [self sendEvent:message];
         }
     } else {
-        // デバイスが登録済なら登録解除する
+        // デバイスが登録済ならオフラインにする
         NSString *serviceId = device.name;
         DConnectService *service = [self.serviceProvider service: serviceId];
         if (service) {
-            [self.serviceProvider removeService: service];
+            [service setOnline: NO];
         }
         
     }

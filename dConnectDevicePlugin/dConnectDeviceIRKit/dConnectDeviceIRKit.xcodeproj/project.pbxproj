@@ -102,6 +102,7 @@
 		ABC2DB181B6898E20034C08F /* DPIRKitVirtualDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = ABC2DB171B6898E20034C08F /* DPIRKitVirtualDevice.m */; };
 		ABC2DB1B1B689BBE0034C08F /* DPIRKitRESTfulRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = ABC2DB1A1B689BBE0034C08F /* DPIRKitRESTfulRequest.m */; };
 		D673DA7C1D3BBD330021F1BF /* DPIRKitService.m in Sources */ = {isa = PBXBuildFile; fileRef = D673DA7B1D3BBD330021F1BF /* DPIRKitService.m */; };
+		D6D1727A1D63F95B00444337 /* DPIRKitSystemProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = D6D172791D63F95A00444337 /* DPIRKitSystemProfile.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -224,6 +225,8 @@
 		ABC2DB1A1B689BBE0034C08F /* DPIRKitRESTfulRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPIRKitRESTfulRequest.m; sourceTree = "<group>"; };
 		D673DA7A1D3BBD330021F1BF /* DPIRKitService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPIRKitService.h; sourceTree = "<group>"; };
 		D673DA7B1D3BBD330021F1BF /* DPIRKitService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPIRKitService.m; sourceTree = "<group>"; };
+		D6D172781D63F95A00444337 /* DPIRKitSystemProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPIRKitSystemProfile.h; sourceTree = "<group>"; };
+		D6D172791D63F95A00444337 /* DPIRKitSystemProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPIRKitSystemProfile.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -457,6 +460,8 @@
 				AB056FA61B6B51DE00E1482F /* DPIRKitLightProfile.m */,
 				AB056FA81B6B5D0200E1482F /* DPIRKitTVProfile.h */,
 				AB056FA91B6B5D0200E1482F /* DPIRKitTVProfile.m */,
+				D6D172781D63F95A00444337 /* DPIRKitSystemProfile.h */,
+				D6D172791D63F95A00444337 /* DPIRKitSystemProfile.m */,
 			);
 			path = profile;
 			sourceTree = "<group>";
@@ -705,6 +710,7 @@
 				ABC2DB0D1B6773E60034C08F /* DPIRKitVirtualDeviceCreateDialog.m in Sources */,
 				3039F98419A5F69800319429 /* DPIRKitConnectionGuideViewController.m in Sources */,
 				30A1EBDF19A8D16600E6CCE9 /* DPIRKitWiFiFormViewController.m in Sources */,
+				D6D1727A1D63F95B00444337 /* DPIRKitSystemProfile.m in Sources */,
 				AB056F981B68DDF300E1482F /* DPIRKitVirtualProfileViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
