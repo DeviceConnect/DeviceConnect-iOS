@@ -19,7 +19,9 @@
     if (self) {
         self.pluginName = @"ChromeCast (Device Connect Device Plug-in)";
         
-
+        [[DPChromecastManager sharedManager] setServiceProvider: self.serviceProvider];
+        [[DPChromecastManager sharedManager] setPlugin:self];
+        
         // イベントマネージャの準備
         Class key = [self class];
         [[DConnectEventManager sharedManagerForClass:key]

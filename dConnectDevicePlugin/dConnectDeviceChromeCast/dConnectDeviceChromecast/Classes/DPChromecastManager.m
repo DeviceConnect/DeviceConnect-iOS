@@ -13,6 +13,7 @@
 #import "HTTPServer.h"
 #import <DConnectSDK/DConnectService.h>
 #import "DPChromecastService.h"
+#import "DPChromecastReachability.h"
 
 static NSString *const kReceiverAppID = @"[YOUR APPLICATION ID]";
 static NSString *const kReceiverNamespace
@@ -43,6 +44,8 @@ static const NSTimeInterval DPSemaphoreTimeout = 20.0;
 	dispatch_semaphore_t _semaphore;
     HTTPServer *_httpServer;
 }
+
+@property (nonatomic, strong) DPChromecastReachability *reachability;
 
 @end
 
@@ -76,18 +79,49 @@ static const NSTimeInterval DPSemaphoreTimeout = 20.0;
         [_httpServer setType:@"_http._tcp."];
         [_httpServer setPort:38088];
         [_httpServer setDocumentRoot:documentsDirectory];
+        
+        // Reachabilityの初期処理
+        self.reachability = [DPChromecastReachability reachabilityWithHostName: @"www.google.com"];
+        [[NSNotificationCenter defaultCenter]
+         addObserver:self
+         selector:@selector(notifiedNetworkStatus:)
+         name:DPChromecastReachabilityChangedNotification
+         object:nil];
+        [self.reachability startNotifier];
 	}
 	return self;
 }
 
+// 通知を受け取るメソッド
+-(void)notifiedNetworkStatus:(NSNotification *)notification {
+    NetworkStatus networkStatus = [self.reachability currentReachabilityStatus];
+    if (networkStatus == NotReachable) {
+        [self updateManageServices: NO];
+    } else {
+        [self startScan];
+    }
+}
+
 // デバイス管理情報更新
-- (void) updateManageServices {
+- (void) updateManageServices : (BOOL) onlineForSet {
     @synchronized(self) {
         
         // ServiceProvider未登録なら処理しない
         if (!_serviceProvider) {
             return;
         }
+        
+        // オフラインにする場合は、全サービスをオフラインにする(Wifi Offにされたことを想定)
+        if (!onlineForSet) {
+            for (DConnectService *service in [_serviceProvider services]) {
+                [service setOnline: NO];
+            }
+            return;
+        }
+        
+        // オンラインにする場合は、[self startScan]によりスキャンされた内容(deviceList)を
+        // serviceProviderに登録する(オンラインフラグはYES)。
+        // すでに登録されている場合は追加せずに既存データのオンラインフラグをYESに設定する。
         
         NSArray *deviceList = [self deviceList];
         
@@ -103,21 +137,23 @@ static const NSTimeInterval DPSemaphoreTimeout = 20.0;
                     break;
                 }
             }
-            
             if (!isFindDevice) {
                 [service setOnline: NO];
             }
         }
         
-        // サービス未登録なら登録する
+        // サービス未登録なら登録する。登録済ならオンラインにする
         for (NSDictionary *device in deviceList) {
             NSString *serviceId = device[@"id"];
             NSString *deviceName = device[@"name"];
-            if (![_serviceProvider service: serviceId]) {
-                DPChromecastService *service = [[DPChromecastService alloc] initWithServiceId:serviceId
-                                                                                   deviceName:deviceName
-                                                plugin: self.plugin];
+            DPChromecastService *service = [_serviceProvider service: serviceId];
+            if (!service) {
+                service = [[DPChromecastService alloc] initWithServiceId:serviceId
+                                                              deviceName:deviceName
+                                                                  plugin: self.plugin];
                 [_serviceProvider addService: service];
+            } else {
+                [service setOnline: YES];
             }
         }
     }
@@ -230,9 +266,6 @@ static const NSTimeInterval DPSemaphoreTimeout = 20.0;
                            clientPackageName:info[@"CFBundleIdentifier"]];
         data.deviceManager.delegate = self;
         [data.deviceManager connect];
-        
-        // デバイス管理情報更新
-        [self updateManageServices];
     });
 }
 
@@ -270,7 +303,7 @@ static const NSTimeInterval DPSemaphoreTimeout = 20.0;
     [self stopScan];
     
     // デバイス管理情報更新
-    [self updateManageServices];
+    [self updateManageServices: YES];
 }
 
 // テキストの送信
@@ -457,6 +490,22 @@ static const NSTimeInterval DPSemaphoreTimeout = 20.0;
     }
 }
 
+#pragma GCKDeviceScannerListener
+
+- (void)deviceDidComeOnline:(GCKDevice *)device {
+    // デバイス管理情報更新
+    [self updateManageServices: YES];
+}
+
+- (void)deviceDidGoOffline:(GCKDevice *)device {
+    // デバイス管理情報更新
+    [self updateManageServices: YES];
+}
+
+- (void)deviceDidChange:(GCKDevice *)device {
+    // デバイス管理情報更新
+    [self updateManageServices: YES];
+}
 
 
 #pragma mark - GCKDeviceManagerDelegate

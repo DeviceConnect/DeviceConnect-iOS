@@ -55,6 +55,7 @@
 		ABCB4A5C1AB5415700805F25 /* Chromecast_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ABCB4A5A1AB5415700805F25 /* Chromecast_iPad.storyboard */; };
 		ABCB4A5D1AB5415700805F25 /* Chromecast_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ABCB4A5B1AB5415700805F25 /* Chromecast_iPhone.storyboard */; };
 		D6C860421D3A811100232EEF /* DPChromecastService.m in Sources */ = {isa = PBXBuildFile; fileRef = D6C860411D3A811000232EEF /* DPChromecastService.m */; };
+		D6D1727D1D64417100444337 /* DPChromecastReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = D6D1727C1D64417100444337 /* DPChromecastReachability.m */; };
 		FF65A97519B709B500DE9EF8 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF65A97419B709B500DE9EF8 /* Foundation.framework */; };
 		FF94393519C0613E006B4A33 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF94393419C0613E006B4A33 /* MediaPlayer.framework */; };
 		FF94393719C06152006B4A33 /* MediaAccessibility.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF94393619C06152006B4A33 /* MediaAccessibility.framework */; };
@@ -138,6 +139,8 @@
 		ABCB4A5B1AB5415700805F25 /* Chromecast_iPhone.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Chromecast_iPhone.storyboard; path = dConnectDeviceChromecast/Resources/Chromecast_iPhone.storyboard; sourceTree = SOURCE_ROOT; };
 		D6C860401D3A811000232EEF /* DPChromecastService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DPChromecastService.h; path = dConnectDeviceChromecast/Classes/DPChromecastService.h; sourceTree = SOURCE_ROOT; };
 		D6C860411D3A811000232EEF /* DPChromecastService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DPChromecastService.m; path = dConnectDeviceChromecast/Classes/DPChromecastService.m; sourceTree = SOURCE_ROOT; };
+		D6D1727B1D64417100444337 /* DPChromecastReachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DPChromecastReachability.h; path = dConnectDeviceChromecast/Classes/DPChromecastReachability.h; sourceTree = SOURCE_ROOT; };
+		D6D1727C1D64417100444337 /* DPChromecastReachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DPChromecastReachability.m; path = dConnectDeviceChromecast/Classes/DPChromecastReachability.m; sourceTree = SOURCE_ROOT; };
 		FF65A97119B709B500DE9EF8 /* libdConnectDeviceChromecast.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libdConnectDeviceChromecast.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF65A97419B709B500DE9EF8 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		FF65A9BD19B7183200DE9EF8 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
@@ -398,6 +401,8 @@
 				ABC5E3E31A973741003D2634 /* DPChromecastManager.m */,
 				D6C860401D3A811000232EEF /* DPChromecastService.h */,
 				D6C860411D3A811000232EEF /* DPChromecastService.m */,
+				D6D1727B1D64417100444337 /* DPChromecastReachability.h */,
+				D6D1727C1D64417100444337 /* DPChromecastReachability.m */,
 				6617D0F019CBEACC00BC1E3C /* Setting */,
 				6617D0F719CBFD3B00BC1E3C /* Profile */,
 			);
@@ -580,6 +585,7 @@
 				ABC5E3EB1A97375D003D2634 /* DPChromecastSettingViewController.m in Sources */,
 				ABC5E3F81A973771003D2634 /* DPChromecastNotificationProfile.m in Sources */,
 				ABC5E3FA1A973771003D2634 /* DPChromecastSystemProfile.m in Sources */,
+				D6D1727D1D64417100444337 /* DPChromecastReachability.m in Sources */,
 				ABC5E3E41A973741003D2634 /* DPChromecastDevicePlugin.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
