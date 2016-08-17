@@ -20,11 +20,36 @@
     DPLinkingDeviceSensorHolder *_holder;
 }
 
-- (BOOL)                        profile:(DConnectDeviceOrientationProfile *)profile
-didReceiveGetOnDeviceOrientationRequest:(DConnectRequestMessage *)request
-                               response:(DConnectResponseMessage *)response
-                              serviceId:(NSString *)serviceId
+- (instancetype) init
 {
+    self = [super init];
+    if (self) {
+        __weak typeof(self) _self = self;
+        
+        NSString *onDeviceOrientationRequestApiPath = [self apiPath:nil
+                                                      attributeName:DConnectDeviceOrientationProfileAttrOnDeviceOrientation];
+        [self addGetPath: onDeviceOrientationRequestApiPath
+                     api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+                         return [_self onGetDeviceOrientation:request response:response];
+                     }];
+        
+        [self addPutPath: onDeviceOrientationRequestApiPath
+                     api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+                         return [_self onPutDeviceOrientation:request response:response];
+                     }];
+
+        [self addDeletePath: onDeviceOrientationRequestApiPath
+                        api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+                            return [_self onDeleteDeviceOrientation:request response:response];
+                        }];
+    }
+    return self;
+}
+
+- (BOOL) onGetDeviceOrientation:(DConnectRequestMessage *)request response:(DConnectResponseMessage *)response
+{
+    NSString *serviceId = [request serviceId];
+    
     DPLinkingDeviceManager *mgr = [DPLinkingDeviceManager sharedInstance];
     DPLinkingDevice *device = [mgr findDPLinkingDeviceByServiceId:serviceId];
     if (!device) {
@@ -46,12 +71,10 @@ didReceiveGetOnDeviceOrientationRequest:(DConnectRequestMessage *)request
     return NO;
 }
 
-- (BOOL)                        profile:(DConnectDeviceOrientationProfile *)profile
-didReceivePutOnDeviceOrientationRequest:(DConnectRequestMessage *)request
-                               response:(DConnectResponseMessage *)response
-                              serviceId:(NSString *)serviceId
-                             sessionKey:(NSString *)sessionKey
+- (BOOL) onPutDeviceOrientation:(DConnectRequestMessage *)request response:(DConnectResponseMessage *)response
 {
+    NSString *serviceId = [request serviceId];
+    
     DPLinkingDeviceManager *deviceMgr = [DPLinkingDeviceManager sharedInstance];
     DPLinkingDevice *device = [deviceMgr findDPLinkingDeviceByServiceId:serviceId];
     if (!device) {
@@ -75,12 +98,10 @@ didReceivePutOnDeviceOrientationRequest:(DConnectRequestMessage *)request
     return YES;
 }
 
-- (BOOL)                            profile:(DConnectDeviceOrientationProfile *)profile
-didReceiveDeleteOnDeviceOrientationRequest:(DConnectRequestMessage *)request
-                                   response:(DConnectResponseMessage *)response
-                                  serviceId:(NSString *)serviceId
-                                 sessionKey:(NSString *)sessionKey
+- (BOOL) onDeleteDeviceOrientation:(DConnectRequestMessage *)request response:(DConnectResponseMessage *)response
 {
+    NSString *serviceId = [request serviceId];
+    
     DPLinkingDeviceManager *deviceMgr = [DPLinkingDeviceManager sharedInstance];
     DPLinkingDevice *device = [deviceMgr findDPLinkingDeviceByServiceId:serviceId];
     if (!device) {
@@ -135,7 +156,7 @@ didReceiveDeleteOnDeviceOrientationRequest:(DConnectRequestMessage *)request
             for (DConnectEvent *event in events) {
                 DConnectMessage *eventMsg = [DConnectEventManager createEventMessageWithEvent:event];
                 [DConnectDeviceOrientationProfile setOrientation:_holder.orientation target:eventMsg];
-                DConnectDevicePlugin *plugin = (DConnectDevicePlugin *)self.provider;
+                DConnectDevicePlugin *plugin = (DConnectDevicePlugin *) self.plugin;
                 [plugin sendEvent:eventMsg];
             }
         }

@@ -13,6 +13,6 @@
 
 @interface DPLinkingDeviceService : DConnectService
 
-- (instancetype) initWithDevice: (DPLinkingDevice *)device;
+- (instancetype) initWithDevice: (DPLinkingDevice *)device plugin:(DConnectDevicePlugin *)plugin;
 
 @end

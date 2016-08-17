@@ -22,11 +22,12 @@
     DPLinkingDevice *_device;
 }
 
-- (instancetype) initWithDevice: (DPLinkingDevice *)device
+- (instancetype) initWithDevice: (DPLinkingDevice *)device plugin:(DConnectDevicePlugin *)plugin
 {
-    self = [super initWithServiceId:device.identifier plugin:nil];
+    self = [super initWithServiceId:device.identifier plugin:plugin];
     if (self) {
         _device = device;
+
         [self setName:device.setting.name];
         [self setNetworkType:DConnectServiceInformationProfileParamBLE];
         

@@ -68,12 +68,13 @@
 - (void) createLinkingDeviceList
 {
     __weak DConnectServiceProvider *_provider = _serviceProvider;
+    __weak DConnectDevicePlugin *_plugin = self.plugin;
 
     [_serviceProvider removeAllServices];
-    
+
     NSArray *devices = [_deviceManager getDPLinkingDevices];
     [devices enumerateObjectsUsingBlock:^(DPLinkingDevice *device, NSUInteger idx, BOOL *stop) {
-        [_provider addService:[[DPLinkingDeviceService alloc] initWithDevice:device]];
+        [_provider addService:[[DPLinkingDeviceService alloc] initWithDevice:device plugin:_plugin]];
     }];
 }
 
