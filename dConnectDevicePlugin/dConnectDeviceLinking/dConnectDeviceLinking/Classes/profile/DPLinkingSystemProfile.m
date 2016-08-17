@@ -32,9 +32,9 @@
                              UIViewController *viewController = [storyboard instantiateInitialViewController];
                              [rootView presentViewController:viewController animated:YES completion:nil];
                          }
+
                          [response setResult:DConnectMessageResultTypeOk];
                          return YES;
-
                      }];
     }
     return self;
@@ -50,13 +50,6 @@
 - (NSString *) versionOfSystemProfile:(DConnectSystemProfile *)profile
 {
     return _version;
-}
-
-- (UIViewController *) profile:(DConnectSystemProfile *)sender
-         settingPageForRequest:(DConnectRequestMessage *)request
-{
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Linking" bundle:DPLinkingResourceBundle()];
-    return [storyboard instantiateInitialViewController];
 }
 
 @end

@@ -236,7 +236,8 @@ static DPLinkingDeviceManager* _sharedInstance = nil;
 }
 
 - (void) sendNotification:(DPLinkingDevice *)device title:(NSString *)title message:(NSString *)message {
-    NSString *appName = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleDisplayName"];
+    // TODO: 設定が反映されない。
+    NSString *appName = @"Linking Plugin";
     NSString *bundleId = [[NSBundle mainBundle] bundleIdentifier];
 
     BLERequestController *request = [BLERequestController sharedInstance];
@@ -249,8 +250,8 @@ static DPLinkingDeviceManager* _sharedInstance = nil;
                    notifyCategoryId:0
                          ledSetting:YES
                    vibrationSetting:YES
-                                led:device.setting.settingInformationDataLED
-                          vibration:device.setting.settingInformationDataVibration
+                                led:nil
+                          vibration:nil
                            deviceId:device.setting.deviceId
                           deviceUId:nil
                          peripheral:device.peripheral
