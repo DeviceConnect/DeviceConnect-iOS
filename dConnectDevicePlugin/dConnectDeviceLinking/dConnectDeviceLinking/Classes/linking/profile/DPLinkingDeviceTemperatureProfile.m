@@ -11,4 +11,25 @@
 
 @implementation DPLinkingDeviceTemperatureProfile
 
+- (instancetype) init
+{
+    self = [super init];
+    if (self) {
+        __weak typeof(self) _self = self;
+        
+        [self addGetPath: @"/"
+                     api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+                         return [_self onGetTemperature:request response:response];
+                     }];
+    }
+    return self;
+}
+
+#pragma mark - Private Method
+
+- (BOOL) onGetTemperature:(DConnectRequestMessage *)request response:(DConnectResponseMessage *)response
+{
+    return YES;
+}
+
 @end
