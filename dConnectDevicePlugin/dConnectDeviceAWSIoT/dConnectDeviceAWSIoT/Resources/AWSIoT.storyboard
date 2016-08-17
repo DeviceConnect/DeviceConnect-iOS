@@ -186,6 +186,9 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="g3C-z2-C7w">
                                 <rect key="frame" x="143.5" y="530" width="34" height="30"/>
                                 <state key="normal" title="Sync"/>
+                                <connections>
+                                    <action selector="syncButtonPressed:" destination="uSr-aD-rfc" eventType="touchUpInside" id="eYT-8z-yo0"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -224,6 +227,51 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3bz-5N-8B1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-421" y="438"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="IwX-m9-d2g">
+            <objects>
+                <viewController storyboardIdentifier="LoadingHUD" id="eKj-pd-hZN" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="rax-iL-Lje"/>
+                        <viewControllerLayoutGuide type="bottom" id="j47-Zy-hMq"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="NGi-Mi-oXf">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JRB-Zx-Vvb">
+                                <rect key="frame" x="60" y="220" width="200" height="128"/>
+                                <subviews>
+                                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="Kqq-1e-nGE">
+                                        <rect key="frame" x="82" y="45" width="37" height="37"/>
+                                        <color key="color" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                    </activityIndicatorView>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="128" id="9ZW-uu-lKN"/>
+                                    <constraint firstAttribute="width" constant="200" id="iU1-E2-scT"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="10"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="0.74920819256756754" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="JRB-Zx-Vvb" firstAttribute="centerX" secondItem="NGi-Mi-oXf" secondAttribute="centerX" id="Mfg-nx-Mei"/>
+                            <constraint firstItem="JRB-Zx-Vvb" firstAttribute="centerY" secondItem="NGi-Mi-oXf" secondAttribute="centerY" id="Ubu-AN-PEf"/>
+                        </constraints>
+                    </view>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="c1N-4P-YRb" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-421" y="1138"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="H9m-4h-n8w">

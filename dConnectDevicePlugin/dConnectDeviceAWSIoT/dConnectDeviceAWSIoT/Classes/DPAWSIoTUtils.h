@@ -6,7 +6,7 @@
 //  Copyright © 2016年 NTT DOCOMO, INC. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
 @interface DPAWSIoTUtils : NSObject
 
@@ -19,5 +19,10 @@
 
 // ログイン
 + (void)loginWithHandler:(void (^)(NSError *error))handler;
+
+// ローディング画面表示
++ (void)showLoadingHUD:(UIStoryboard*)storyboard;
+// ローディング画面非表示
++ (void)hideLoadingHUD;
 
 @end

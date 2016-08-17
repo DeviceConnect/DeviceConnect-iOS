@@ -33,24 +33,46 @@
 	if (![DPAWSIoTUtils hasAccount]) {
 		[self performSegueWithIdentifier:@"LoginSegue" sender:self];
 	} else {
+		// ローディング画面表示
+		[DPAWSIoTUtils showLoadingHUD:self.storyboard];
 		// ログイン
 		[DPAWSIoTUtils loginWithHandler:^(NSError *error) {
 			if (error) {
+				// ローディング画面非表示
+				[DPAWSIoTUtils hideLoadingHUD];
 				return;
 			}
 			// Shadow取得
-			[[DPAWSIoTManager sharedManager] fetchShadowWithName:kShadowName completionHandler:^(id json, NSError *error) {
-				// TODO: 処理
-				if (error) {
-					// TODO: エラー処理
-					return;
-				}
-				_devices = json[@"state"][@"reported"];
-				[self.tableView reloadData];
-				NSLog(@"%@", _devices);
-			}];
+			[self syncShadow];
 		}];
 	}
+}
+
+// syncボタンイベント
+- (IBAction)syncButtonPressed:(id)sender {
+	// ローディング画面表示
+	[DPAWSIoTUtils showLoadingHUD:self.storyboard];
+	// Shadow取得
+	[self syncShadow];
+}
+
+
+// Shadowを同期
+- (void)syncShadow {
+	// Shadow取得
+	[[DPAWSIoTManager sharedManager] fetchShadowWithName:kShadowName completionHandler:^(id json, NSError *error) {
+		// ローディング画面非表示
+		[DPAWSIoTUtils hideLoadingHUD];
+		// TODO: 処理
+		if (error) {
+			// TODO: エラー処理
+			return;
+		}
+		// テーブル再読み込み
+		_devices = json[@"state"][@"reported"];
+		[self.tableView reloadData];
+		NSLog(@"%@", _devices);
+	}];
 }
 
 
@@ -67,9 +89,10 @@
 {
 	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
 	UILabel *label = [cell viewWithTag:1];
+	UISwitch *sw = [cell viewWithTag:2];
 	id key = [_devices.allKeys objectAtIndex:indexPath.row];
-	NSString *name = _devices[key][@"name"];
-	label.text = name;
+	label.text = _devices[key][@"name"];
+	[sw setOn:[_devices[key][@"online"] boolValue]];
 	return cell;
 }
 

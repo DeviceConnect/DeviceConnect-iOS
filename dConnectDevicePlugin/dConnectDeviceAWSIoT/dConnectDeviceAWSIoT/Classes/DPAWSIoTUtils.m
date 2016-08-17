@@ -16,6 +16,10 @@
 
 @implementation DPAWSIoTUtils
 
+// ローディング画面
+static UIViewController *loadingHUD;
+
+
 // アカウントの設定があるか
 + (BOOL)hasAccount {
 	NSString *accessKey = [DPAWSIoTKeychain findWithKey:kAccessKeyID];
@@ -53,6 +57,27 @@
 			handler(error);
 		}
 	}];
-
 }
+
+// ローディング画面表示
++ (void)showLoadingHUD:(UIStoryboard*)storyboard {
+	if (!loadingHUD) {
+		loadingHUD = [storyboard instantiateViewControllerWithIdentifier:@"LoadingHUD"];
+	}
+	[[UIApplication sharedApplication].keyWindow addSubview:loadingHUD.view];
+	loadingHUD.view.alpha = 0;
+	[UIView animateWithDuration:0.4 animations:^{
+		loadingHUD.view.alpha = 1.0;
+	}];
+}
+
+// ローディング画面非表示
++ (void)hideLoadingHUD {
+	[UIView animateWithDuration:0.3 animations:^{
+		loadingHUD.view.alpha = 0;
+	} completion:^(BOOL finished) {
+		[loadingHUD.view removeFromSuperview];
+	}];
+}
+
 @end
