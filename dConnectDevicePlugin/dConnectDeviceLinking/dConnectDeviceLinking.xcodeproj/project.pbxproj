@@ -79,6 +79,7 @@
 		BE58BE761D645E3800354F08 /* DPLinkingBeaconHumidityOnce.m in Sources */ = {isa = PBXBuildFile; fileRef = BE58BE751D645E3800354F08 /* DPLinkingBeaconHumidityOnce.m */; };
 		BE58BE791D6461BB00354F08 /* DPLinkingBeaconTemperatureOnce.m in Sources */ = {isa = PBXBuildFile; fileRef = BE58BE781D6461BB00354F08 /* DPLinkingBeaconTemperatureOnce.m */; };
 		BE58BE7F1D6465D900354F08 /* DPLinkingBeaconAtmosphericPressureOnce.m in Sources */ = {isa = PBXBuildFile; fileRef = BE58BE7E1D6465D900354F08 /* DPLinkingBeaconAtmosphericPressureOnce.m */; };
+		BE58BE821D646ABB00354F08 /* DPLinkingBeaconProximityOnce.m in Sources */ = {isa = PBXBuildFile; fileRef = BE58BE811D646ABB00354F08 /* DPLinkingBeaconProximityOnce.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -206,6 +207,8 @@
 		BE58BE781D6461BB00354F08 /* DPLinkingBeaconTemperatureOnce.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPLinkingBeaconTemperatureOnce.m; sourceTree = "<group>"; };
 		BE58BE7D1D6465D900354F08 /* DPLinkingBeaconAtmosphericPressureOnce.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPLinkingBeaconAtmosphericPressureOnce.h; sourceTree = "<group>"; };
 		BE58BE7E1D6465D900354F08 /* DPLinkingBeaconAtmosphericPressureOnce.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPLinkingBeaconAtmosphericPressureOnce.m; sourceTree = "<group>"; };
+		BE58BE801D646ABB00354F08 /* DPLinkingBeaconProximityOnce.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPLinkingBeaconProximityOnce.h; sourceTree = "<group>"; };
+		BE58BE811D646ABB00354F08 /* DPLinkingBeaconProximityOnce.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPLinkingBeaconProximityOnce.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -486,6 +489,8 @@
 				BE58BE751D645E3800354F08 /* DPLinkingBeaconHumidityOnce.m */,
 				BE58BE771D6461BB00354F08 /* DPLinkingBeaconTemperatureOnce.h */,
 				BE58BE781D6461BB00354F08 /* DPLinkingBeaconTemperatureOnce.m */,
+				BE58BE801D646ABB00354F08 /* DPLinkingBeaconProximityOnce.h */,
+				BE58BE811D646ABB00354F08 /* DPLinkingBeaconProximityOnce.m */,
 			);
 			path = util;
 			sourceTree = "<group>";
@@ -618,6 +623,7 @@
 				BE2859E91D630B2800CB9F95 /* DPLinkingSystemProfile.m in Sources */,
 				BE2859D71D630B2800CB9F95 /* DPLinkingDevice.m in Sources */,
 				BE2859CB1D630B2800CB9F95 /* DPLinkingGattData.m in Sources */,
+				BE58BE821D646ABB00354F08 /* DPLinkingBeaconProximityOnce.m in Sources */,
 				BE2859CF1D630B2800CB9F95 /* DPLinkingBeaconAtmosphericPressureProfile.m in Sources */,
 				BE58BE761D645E3800354F08 /* DPLinkingBeaconHumidityOnce.m in Sources */,
 				BE2859CC1D630B2800CB9F95 /* DPLinkingHumidityData.m in Sources */,

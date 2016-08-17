@@ -1,5 +1,5 @@
 //
-//  DPLinkingBeaconTemperatureOnce.h
+//  DPLinkingBeaconProximityOnce.h
 //  dConnectDeviceLinking
 //
 //  Copyright (c) 2016 NTT DOCOMO, INC.
@@ -12,7 +12,7 @@
 #import "DPLinkingTimeoutSchedule.h"
 #import "DPLinkingBeaconManager.h"
 
-@interface DPLinkingBeaconTemperatureOnce : DPLinkingTimeoutSchedule <DPLinkingBeaconTemperatureDelegate>
+@interface DPLinkingBeaconProximityOnce : DPLinkingTimeoutSchedule <DPLinkingBeaconGattDataDelegate>
 
 @property (nonatomic) DConnectRequestMessage *request;
 @property (nonatomic) DConnectResponseMessage *response;
