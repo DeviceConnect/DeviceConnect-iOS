@@ -8,69 +8,31 @@
 //
 
 #import "DCMTemperatureProfile.h"
-#import <DConnectSDK/DConnectUtil.h>
+#import "DCMUtil.h"
 
 NSString *const DCMTemperatureProfileName = @"temperature";
 NSString *const DCMTemperatureProfileParamTemperature = @"temperature";
 NSString *const DCMTemperatureProfileParamType = @"type";
-
-@interface DCMTemperatureProfile()
-- (BOOL) hasMethod:(SEL)method response:(DConnectResponseMessage *)response;
-@end
-
+NSString *const DCMTemperatureProfileParamTimeStamp = @"timeStamp";
+NSString *const DCMTemperatureProfileParamTimeStampString = @"timeStampString";
 
 @implementation DCMTemperatureProfile
 
-/*
- プロファイル名。
- */
 - (NSString *) profileName {
     return DCMTemperatureProfileName;
 }
 
-#pragma mark - DConnectProfile Method
-
-/*
- GETリクエストを振り分ける。
- */
-/*
-- (BOOL) didReceiveGetRequest:(DConnectRequestMessage *)request
-                     response:(DConnectResponseMessage *)response {
-    
-    BOOL send = YES;
-    
-    if (!self.delegate) {
-        [response setErrorToNotSupportAction];
-        return send;
-    }
-    
-    NSString *profile = [request profile];
-    
-    if ([profile isEqualToString:DCMTemperatureProfileName]
-        && [self hasMethod:@selector(profile:didReceiveGetTemperatureRequest:response:serviceId:) response:response])
-    {
-        NSString *serviceId = [request serviceId];
-        send = [_delegate profile:self didReceiveGetTemperatureRequest:request response:response
-                         serviceId:serviceId];
-    } else {
-        [response setErrorToNotSupportProfile];
-    }
-    
-    return send;
++ (void) setTemperature:(float)temperature target:(DConnectMessage *)message {
+    [message setFloat:temperature forKey:DCMTemperatureProfileParamTemperature];
 }
-*/
 
-#pragma mark - Private Methods
-
-/**
- メソッドが存在するかを確認する。
- */
-- (BOOL) hasMethod:(SEL)method
-          response:(DConnectResponseMessage *)response {
-    BOOL result = [_delegate respondsToSelector:method];
-    if (!result) {
-        [response setErrorToNotSupportAttribute];
-    }
-    return result;
++ (void) setTimeStamp:(long)timeStamp target:(DConnectMessage *)message {
+    [message setLong:timeStamp forKey:DCMTemperatureProfileParamTimeStamp];
+    [message setString:[DCMUtil timeStampToString:timeStamp] forKey:DCMTemperatureProfileParamTimeStampString];
 }
+
++ (void) setType:(DCMTemperatureType)type target:(DConnectMessage *)message {
+    [message setInteger:type forKey:DCMTemperatureProfileParamType];
+}
+
 @end

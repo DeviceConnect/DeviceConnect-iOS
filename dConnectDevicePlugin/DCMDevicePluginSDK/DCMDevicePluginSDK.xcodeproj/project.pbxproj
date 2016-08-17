@@ -42,8 +42,9 @@
 		ABBD5F401987767600B81007 /* DCMDevicePluginSDKTests.m in Sources */ = {isa = PBXBuildFile; fileRef = ABBD5F3F1987767600B81007 /* DCMDevicePluginSDKTests.m */; };
 		ABBD5F501987774B00B81007 /* DCMDriveControllerProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = ABBD5F4F1987774B00B81007 /* DCMDriveControllerProfile.m */; };
 		ABBD5F54198777F200B81007 /* DCMTemperatureProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = ABBD5F53198777F200B81007 /* DCMTemperatureProfile.m */; };
-		ABBD5F5D19877A4900B81007 /* DConnectSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABBD5F5C19877A4900B81007 /* DConnectSDK.framework */; };
+		BE58BE7C1D6463B500354F08 /* DCMUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = BE58BE7B1D6463B500354F08 /* DCMUtil.m */; };
 		BEBA9D0A1D3DD62900970FDC /* DCMHumidityProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = BEBA9D091D3DD62900970FDC /* DCMHumidityProfile.m */; };
+		BEF9F63A1D52D8200006FF2D /* DConnectSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BEF9F6391D52D8200006FF2D /* DConnectSDK.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -86,8 +87,11 @@
 		ABBD5F52198777EC00B81007 /* DCMTemperatureProfile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DCMTemperatureProfile.h; sourceTree = "<group>"; };
 		ABBD5F53198777F200B81007 /* DCMTemperatureProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DCMTemperatureProfile.m; sourceTree = "<group>"; };
 		ABBD5F5C19877A4900B81007 /* DConnectSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DConnectSDK.framework; path = ../../dConnectSDK/dConnectSDKForIOS/DConnectSDK/DConnectSDK.framework; sourceTree = "<group>"; };
+		BE58BE7A1D6463B500354F08 /* DCMUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DCMUtil.h; sourceTree = "<group>"; };
+		BE58BE7B1D6463B500354F08 /* DCMUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DCMUtil.m; sourceTree = "<group>"; };
 		BEBA9D081D3DD5B000970FDC /* DCMHumidityProfile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DCMHumidityProfile.h; sourceTree = "<group>"; };
 		BEBA9D091D3DD62900970FDC /* DCMHumidityProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DCMHumidityProfile.m; sourceTree = "<group>"; };
+		BEF9F6391D52D8200006FF2D /* DConnectSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DConnectSDK.framework; path = ../../dConnectSDK/dConnectSDKForIOS/bin/DConnectSDK.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -95,8 +99,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BEF9F63A1D52D8200006FF2D /* DConnectSDK.framework in Frameworks */,
 				ABBD5F241987767600B81007 /* Foundation.framework in Frameworks */,
-				ABBD5F5D19877A4900B81007 /* DConnectSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -136,6 +140,7 @@
 		ABBD5F221987767600B81007 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				BEF9F6391D52D8200006FF2D /* DConnectSDK.framework */,
 				ABBD5F5C19877A4900B81007 /* DConnectSDK.framework */,
 				ABBD5F231987767600B81007 /* Foundation.framework */,
 				ABBD5F311987767600B81007 /* XCTest.framework */,
@@ -199,6 +204,8 @@
 				BEBA9D091D3DD62900970FDC /* DCMHumidityProfile.m */,
 				ABBD5F53198777F200B81007 /* DCMTemperatureProfile.m */,
 				AB056F9D1B6A327B00E1482F /* DCMTVProfile.m */,
+				BE58BE7A1D6463B500354F08 /* DCMUtil.h */,
+				BE58BE7B1D6463B500354F08 /* DCMUtil.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -320,6 +327,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BE58BE7C1D6463B500354F08 /* DCMUtil.m in Sources */,
 				AB056F9E1B6A327B00E1482F /* DCMTVProfile.m in Sources */,
 				BEBA9D0A1D3DD62900970FDC /* DCMHumidityProfile.m in Sources */,
 				ABBD5F501987774B00B81007 /* DCMDriveControllerProfile.m in Sources */,

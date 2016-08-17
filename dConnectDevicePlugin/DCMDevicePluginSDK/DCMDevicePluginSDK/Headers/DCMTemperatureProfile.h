@@ -21,21 +21,29 @@ extern NSString *const DCMTemperatureProfileName;
  @brief パラメータ: temperature。
  */
 extern NSString *const DCMTemperatureProfileParamTemperature;
+
 /*!
  @brief パラメータ: type。
  */
 extern NSString *const DCMTemperatureProfileParamType;
 
+/*!
+ @brief パラメータ: timeStamp。
+ */
+extern NSString *const DCMTemperatureProfileParamTimeStamp;
 
+/*!
+ @brief パラメータ: timeStampString。
+ */
+extern NSString *const DCMTemperatureProfileParamTimeStampString;
 
 /*!
  @brief 摂氏・華氏を表す
  */
-enum {
+typedef NS_ENUM(NSInteger, DCMTemperatureType) {
     DCMTemperatureProfileEnumCelsius = 1,  /*!< 摂氏 */
     DCMTemperatureProfileEnumCelsiusFahrenheit /*!<華氏 */
 };
-
 
 @class DCMTemperatureProfile;
 
@@ -78,6 +86,7 @@ enum {
  受信したリクエストは各API毎にデリゲートに通知される。
  */
 @interface DCMTemperatureProfile : DConnectProfile
+
 /*!
  @brief DCMTemperatureProfileのデリゲートオブジェクト。
  
@@ -85,4 +94,9 @@ enum {
  デリゲートはretainされない。
  */
 @property (nonatomic, assign) id<DCMTemperatureProfileDelegate> delegate;
+
++ (void) setTemperature:(float)temperature target:(DConnectMessage *)message;
++ (void) setTimeStamp:(long)timeStamp target:(DConnectMessage *)message;
++ (void) setType:(DCMTemperatureType)type target:(DConnectMessage *)message;
+
 @end

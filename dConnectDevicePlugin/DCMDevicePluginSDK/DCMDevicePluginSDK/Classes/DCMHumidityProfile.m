@@ -8,6 +8,7 @@
 //
 
 #import "DCMHumidityProfile.h"
+#import "DCMUtil.h"
 
 NSString *const DCMHumidityProfileName = @"humidity";
 
@@ -30,15 +31,7 @@ NSString *const DCMHumidityProfileParamTimeStampString = @"timeStampString";
 + (void) setTimeStamp:(long)timeStamp target:(DConnectMessage *)message
 {
     [message setLong:timeStamp forKey:DCMHumidityProfileParamTimeStamp];
-    [message setString:[self timeStampToString:timeStamp] forKey:DCMHumidityProfileParamTimeStampString];
-}
-
-+ (NSString *) timeStampToString:(long)timeStamp
-{
-    NSDate *date = [NSDate dateWithTimeIntervalSince1970:timeStamp];
-    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"YYYY-MM-dd hh:mm:ss"];
-    return [formatter stringFromDate:date];
+    [message setString:[DCMUtil timeStampToString:timeStamp] forKey:DCMHumidityProfileParamTimeStampString];
 }
 
 @end
