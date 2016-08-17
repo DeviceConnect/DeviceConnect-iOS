@@ -19,12 +19,32 @@
     DPLinkingDeviceRepeatExecutor *_repeatExecutor;
 }
 
-- (BOOL)            profile:(DConnectVibrationProfile *)profile
-didReceivePutVibrateRequest:(DConnectRequestMessage *)request
-                   response:(DConnectResponseMessage *)response
-                  serviceId:(NSString *)serviceId
-                    pattern:(NSArray *) pattern
+- (instancetype) init
 {
+    self = [super init];
+    if (self) {
+        __weak typeof(self) _self = self;
+        
+        NSString *vibrateRequestApiPath = [self apiPath:nil
+                                          attributeName:DConnectVibrationProfileAttrVibrate];
+        [self addPutPath: vibrateRequestApiPath
+                     api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+                         return [_self onPutVibrate:request response:response];
+                     }];
+        [self addDeletePath: vibrateRequestApiPath
+                        api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+                            return [_self onDeleteVibrate:request response:response];
+                        }];
+    }
+    return self;
+}
+
+- (BOOL) onPutVibrate:(DConnectRequestMessage *)request response:(DConnectResponseMessage *)response
+{
+    NSString *serviceId = [request serviceId];
+    NSString *patternStr = [DConnectVibrationProfile patternFromRequest:request];
+    NSArray *pattern = patternStr ? [self parsePattern:patternStr] : nil;
+    
     DPLinkingDeviceManager *deviceMgr = [DPLinkingDeviceManager sharedInstance];
     DPLinkingDevice *device = [deviceMgr findDPLinkingDeviceByServiceId:serviceId];
     if (!device) {
@@ -48,11 +68,10 @@ didReceivePutVibrateRequest:(DConnectRequestMessage *)request
     return YES;
 }
 
-- (BOOL)                profile:(DConnectVibrationProfile *)profile
- didReceiveDeleteVibrateRequest:(DConnectRequestMessage *)request
-                       response:(DConnectResponseMessage *)response
-                      serviceId:(NSString *)serviceId
+- (BOOL) onDeleteVibrate:(DConnectRequestMessage *)request response:(DConnectResponseMessage *)response
 {
+    NSString *serviceId = [request serviceId];
+
     DPLinkingDeviceManager *deviceMgr = [DPLinkingDeviceManager sharedInstance];
     DPLinkingDevice *device = [deviceMgr findDPLinkingDeviceByServiceId:serviceId];
     if (!device) {
