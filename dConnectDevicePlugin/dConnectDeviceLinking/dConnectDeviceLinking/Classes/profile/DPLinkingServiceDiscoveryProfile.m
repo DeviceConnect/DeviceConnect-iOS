@@ -12,6 +12,7 @@
 #import "DPLinkingDeviceManager.h"
 #import "DPLinkingBeaconManager.h"
 #import "DPLinkingDeviceService.h"
+#import "DPLinkingBeaconService.h"
 
 @implementation DPLinkingServiceDiscoveryProfile {
     DPLinkingDeviceManager *_deviceManager;
@@ -41,7 +42,10 @@
 
 - (BOOL) onGetService:(DConnectRequestMessage *)request response:(DConnectResponseMessage *)response
 {
+    [_serviceProvider removeAllServices];
+
     [self createLinkingDeviceList];
+    [self createLinkingBeaconList];
     
     DConnectArray *services = [DConnectArray array];
     
@@ -54,7 +58,8 @@
         [DConnectServiceDiscoveryProfile setName:[serviceEntity name] target:service];
         [DConnectServiceDiscoveryProfile setType:[serviceEntity networkType] target:service];
         [DConnectServiceDiscoveryProfile setOnline:[serviceEntity online] target:service];
-        
+
+
         // TODO: scopes
         
         [services addMessage:service];
@@ -70,11 +75,20 @@
     __weak DConnectServiceProvider *_provider = _serviceProvider;
     __weak DConnectDevicePlugin *_plugin = self.plugin;
 
-    [_serviceProvider removeAllServices];
-
     NSArray *devices = [_deviceManager getDPLinkingDevices];
     [devices enumerateObjectsUsingBlock:^(DPLinkingDevice *device, NSUInteger idx, BOOL *stop) {
         [_provider addService:[[DPLinkingDeviceService alloc] initWithDevice:device plugin:_plugin]];
+    }];
+}
+
+- (void) createLinkingBeaconList
+{
+    __weak DConnectServiceProvider *_provider = _serviceProvider;
+    __weak DConnectDevicePlugin *_plugin = self.plugin;
+    
+    NSArray *beacons = [_beaconManager getBeacons];
+    [beacons enumerateObjectsUsingBlock:^(DPLinkingBeacon *beacon, NSUInteger idx, BOOL *stop) {
+        [_provider addService:[[DPLinkingBeaconService alloc] initWithBeacon:beacon plugin:_plugin]];
     }];
 }
 

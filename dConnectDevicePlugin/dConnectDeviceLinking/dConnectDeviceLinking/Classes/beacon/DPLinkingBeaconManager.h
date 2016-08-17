@@ -61,6 +61,7 @@
 + (DPLinkingBeaconManager *) sharedInstance;
 
 - (DPLinkingBeacon *) findBeaconByExtraId:(long)extraId venderId:(long)vendorId;
+- (DPLinkingBeacon *) findBeaconByBeaconId:(NSString *)beaconId;
 
 - (NSArray *) getBeacons;
 - (void) removeBeacon:(int)index;

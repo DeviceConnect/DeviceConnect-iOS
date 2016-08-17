@@ -105,6 +105,17 @@ static DPLinkingBeaconManager* _sharedInstance = nil;
     return result;
 }
 
+- (DPLinkingBeacon *) findBeaconByBeaconId:(NSString *)beaconId {
+    __block DPLinkingBeacon *result = nil;
+    [self.beacons enumerateObjectsUsingBlock:^(DPLinkingBeacon *obj, NSUInteger idx, BOOL *stop) {
+        if ([beaconId isEqualToString:obj.beaconId]) {
+            result = obj;
+            *stop = YES;
+        }
+    }];
+    return result;
+}
+
 - (NSArray *) getBeacons {
     return self.beacons;
 }

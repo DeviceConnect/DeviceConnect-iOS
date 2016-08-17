@@ -13,6 +13,6 @@
 
 @interface DPLinkingBeaconService : DConnectService
 
-- (instancetype) initWithBeacon: (DPLinkingBeacon *)beacon;
+- (instancetype) initWithBeacon:(DPLinkingBeacon *)beacon plugin:(DConnectDevicePlugin *)plugin;
 
 @end
