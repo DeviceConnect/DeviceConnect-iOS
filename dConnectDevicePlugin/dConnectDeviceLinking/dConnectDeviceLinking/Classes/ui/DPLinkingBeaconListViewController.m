@@ -110,7 +110,7 @@
 
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     DPLinkingBeacon *beacon = [[self.beaconManager getBeacons] objectAtIndex:indexPath.row];
-    UIStoryboard* storyboard = [UIStoryboard storyboardWithName:@"Linking" bundle:nil];
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Linking" bundle:DPLinkingResourceBundle()];
     DPLinkingBeaconViewController* viewCtl = [storyboard instantiateViewControllerWithIdentifier:@"beacon_controller"];
     viewCtl.beaconManager = self.beaconManager;
     viewCtl.beacon = beacon;

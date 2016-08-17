@@ -6,38 +6,75 @@
 //  Released under the MIT license
 //  http://opensource.org/licenses/mit-license.php
 //
+#import <DConnectSDK/DConnectService.h>
 
 #import "DPLinkingServiceDiscoveryProfile.h"
 #import "DPLinkingDeviceManager.h"
 #import "DPLinkingBeaconManager.h"
+#import "DPLinkingDeviceService.h"
 
 @implementation DPLinkingServiceDiscoveryProfile {
     DPLinkingDeviceManager *_deviceManager;
     DPLinkingBeaconManager *_beaconManager;
+    DConnectServiceProvider *_serviceProvider;
 }
 
-- (instancetype)init{
+- (instancetype) initWithServiceProvider: (DConnectServiceProvider *) serviceProvider {
     self = [super init];
     if (self) {
+        __weak typeof(self) _self = self;
+
         _deviceManager = [DPLinkingDeviceManager sharedInstance];
         _beaconManager = [DPLinkingBeaconManager sharedInstance];
+        _serviceProvider = serviceProvider;
+        
+        [self addGetPath:[self apiPath:nil attributeName:nil]
+                     api:^(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+                         return [_self onGetService:request response:response];
+                     }];
+
     }
     return self;
 }
 
-#pragma mark - DConnectServiceDiscoveryProfileDelegate
+#pragma mark - Private Method
 
-- (BOOL)             profile:(DConnectServiceDiscoveryProfile *)profile
-didReceiveGetServicesRequest:(DConnectRequestMessage *)request
-                    response:(DConnectResponseMessage *)response
+- (BOOL) onGetService:(DConnectRequestMessage *)request response:(DConnectResponseMessage *)response
 {
+    [self createLinkingDeviceList];
+    
     DConnectArray *services = [DConnectArray array];
     
+    for (DConnectService *serviceEntity in [_serviceProvider services]) {
+        NSString *serviceId = [serviceEntity serviceId];
+        
+        DConnectMessage *service = [DConnectMessage message];
+        
+        [DConnectServiceDiscoveryProfile setId:serviceId target:service];
+        [DConnectServiceDiscoveryProfile setName:[serviceEntity name] target:service];
+        [DConnectServiceDiscoveryProfile setType:[serviceEntity networkType] target:service];
+        [DConnectServiceDiscoveryProfile setOnline:[serviceEntity online] target:service];
+        
+        // TODO: scopes
+        
+        [services addMessage:service];
+    }
     
     [DConnectServiceDiscoveryProfile setServices:services target:response];
-    
     [response setResult:DConnectMessageResultTypeOk];
     return YES;
+}
+
+- (void) createLinkingDeviceList
+{
+    __weak DConnectServiceProvider *_provider = _serviceProvider;
+
+    [_serviceProvider removeAllServices];
+    
+    NSArray *devices = [_deviceManager getDPLinkingDevices];
+    [devices enumerateObjectsUsingBlock:^(DPLinkingDevice *device, NSUInteger idx, BOOL *stop) {
+        [_provider addService:[[DPLinkingDeviceService alloc] initWithDevice:device]];
+    }];
 }
 
 @end

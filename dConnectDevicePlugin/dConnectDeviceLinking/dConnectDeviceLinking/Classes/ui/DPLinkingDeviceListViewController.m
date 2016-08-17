@@ -55,7 +55,7 @@
 #pragma mark - Private Method
 
 - (void) openConnectingDialog {
-    UIStoryboard* storyboard = [UIStoryboard storyboardWithName:@"Linking" bundle:nil];
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Linking" bundle:DPLinkingResourceBundle()];
     UIViewController* viewCtl = [storyboard instantiateViewControllerWithIdentifier:@"pairing_alert"];
     self.connectingAlert = [UIAlertController alertControllerWithTitle:nil
                                                             message:nil
@@ -190,7 +190,7 @@
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     DPLinkingDevice *device = [[self.deviceManager getDPLinkingDevices] objectAtIndex:indexPath.row];
     if (device.online) {
-        UIStoryboard* storyboard = [UIStoryboard storyboardWithName:@"Linking" bundle:nil];
+        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Linking" bundle:DPLinkingResourceBundle()];
         DPLinkingDeviceViewController* viewCtl = [storyboard instantiateViewControllerWithIdentifier:@"device_controller"];
         viewCtl.deviceManager = self.deviceManager;
         viewCtl.device = device;

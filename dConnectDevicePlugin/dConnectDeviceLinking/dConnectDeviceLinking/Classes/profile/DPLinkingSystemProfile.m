@@ -18,17 +18,31 @@
     self = [super init];
     if (self) {
         _version = version;
+        
+        NSString *putSettingPageForRequestApiPath = [self apiPath: DConnectSystemProfileInterfaceDevice
+                                                    attributeName: DConnectSystemProfileAttrWakeUp];
+        [self addPutPath: putSettingPageForRequestApiPath
+                     api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+                         UIViewController *rootView = [UIApplication sharedApplication].keyWindow.rootViewController;
+                         while (rootView.presentedViewController) {
+                             rootView = rootView.presentedViewController;
+                         }
+                         if (rootView) {
+                             UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Linking" bundle:DPLinkingResourceBundle()];
+                             UIViewController *viewController = [storyboard instantiateInitialViewController];
+                             [rootView presentViewController:viewController animated:YES completion:nil];
+                         }
+                         [response setResult:DConnectMessageResultTypeOk];
+                         return YES;
+
+                     }];
     }
     return self;
 }
 
 + (instancetype) systemProfileWithVersion:(NSString *)version
 {
-    DPLinkingSystemProfile *instance = [self new];
-    if (instance) {
-        (void)[instance initWithVersion:version];
-    }
-    return instance;
+    return [[DPLinkingSystemProfile alloc] initWithVersion:version];
 }
 
 #pragma mark - DConnectSystemProfileDataSource
@@ -41,11 +55,8 @@
 - (UIViewController *) profile:(DConnectSystemProfile *)sender
          settingPageForRequest:(DConnectRequestMessage *)request
 {
-    return nil;
-//    UIStoryboard *storyBoard;
-//    storyBoard = [UIStoryboard storyboardWithName:@"Linking"
-//                                           bundle:DPLinkingResourceBundle()];
-//    return [storyBoard instantiateInitialViewController];
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Linking" bundle:DPLinkingResourceBundle()];
+    return [storyboard instantiateInitialViewController];
 }
 
 @end

@@ -33,7 +33,10 @@
 
 - (void) cancel
 {
-    _cancelBlock();
+    if (_cancelBlock) {
+        _cancelBlock();
+        _cancelBlock = nil;
+    }
 }
 
 - (void) nextStep
@@ -49,9 +52,9 @@
         return;
     }
     
-    int time = [[_pattern objectAtIndex:_index] integerValue];
+    double time = [[_pattern objectAtIndex:_index] integerValue] / 1000.0;
 
-    __block typeof(self) _self = self;
+    __weak typeof(self) _self = self;
     _cancelBlock = [DPLinkingUtil asyncAfterDelay:time block:^{
         [_self nextStep];
     }];

@@ -12,28 +12,52 @@
 #import "DPLinkingDeviceRepeatExecutor.h"
 
 @interface DPLinkingDeviceLightProfile () <DConnectLightProfileDelegate>
-
 @end
 
 @implementation DPLinkingDeviceLightProfile {
     DPLinkingDeviceRepeatExecutor *_flashingExecutor;
 }
 
-- (BOOL)              profile:(DConnectLightProfile *)profile
-    didReceiveGetLightRequest:(DConnectRequestMessage *)request
-                     response:(DConnectResponseMessage *)response
-                    serviceId:(NSString *)serviceId
+- (instancetype) init
 {
+    self = [super init];
+    if (self) {
+        __weak typeof(self) _self = self;
+
+        [self addGetPath:[self apiPath:nil attributeName:nil]
+                     api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+                         return [_self onGetLight:request response:response];
+                     }];
+        
+        [self addPostPath:[self apiPath:nil attributeName:nil]
+                      api:^(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+                          return [_self onPostLight:request response:response];
+                      }];
+        
+        [self addDeletePath:[self apiPath:nil attributeName:nil]
+                        api:^(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+                            return [_self onDeleteLight:request response:response];
+                        }];
+    }
+    return self;
+}
+
+#pragma mark - Private Method
+
+- (BOOL) onGetLight:(DConnectRequestMessage *)request response:(DConnectResponseMessage *)response
+{
+    NSString *serviceId = [request serviceId];
+    
     DPLinkingDeviceManager *deviceMgr = [DPLinkingDeviceManager sharedInstance];
     DPLinkingDevice *device = [deviceMgr findDPLinkingDeviceByServiceId:serviceId];
     if (!device) {
         [response setErrorToNotFoundService];
         return YES;
     }
-
+    
     DConnectArray *lights = [DConnectArray array];
     DConnectMessage *led = [DConnectMessage new];
-
+    
     [DConnectLightProfile setLightId:device.identifier target:led];
     [DConnectLightProfile setLightName:@"Linking LED" target:led];
     [DConnectLightProfile setLightOn:YES target:led];
@@ -41,19 +65,15 @@
     
     [DConnectLightProfile setLights:lights target:response];
     [response setResult:DConnectMessageResultTypeOk];
-
+    
     return YES;
 }
 
-- (BOOL)            profile:(DConnectLightProfile *)profile
- didReceivePostLightRequest:(DConnectRequestMessage *)request
-                   response:(DConnectResponseMessage *)response
-                  serviceId:(NSString *)serviceId
-                    lightId:(NSString*)lightId
-                 brightness:(NSNumber*)brightness
-                      color:(NSString*)color
-                   flashing:(NSArray*)flashing
+- (BOOL) onPostLight:(DConnectRequestMessage *)request response:(DConnectResponseMessage *)response
 {
+    NSString *serviceId = [request serviceId];
+    NSArray *flashing = [DConnectLightProfile parsePattern:[DConnectLightProfile flashingFromRequest:request] isId:NO];
+    
     DPLinkingDeviceManager *deviceMgr = [DPLinkingDeviceManager sharedInstance];
     DPLinkingDevice *device = [deviceMgr findDPLinkingDeviceByServiceId:serviceId];
     if (!device) {
@@ -76,12 +96,10 @@
     return YES;
 }
 
-- (BOOL)                 profile:(DConnectLightProfile *)profile
-    didReceiveDeleteLightRequest:(DConnectRequestMessage *)request
-                        response:(DConnectResponseMessage *)response
-                       serviceId:(NSString *)serviceId
-                         lightId:(NSString*)lightId
+- (BOOL) onDeleteLight:(DConnectRequestMessage *)request response:(DConnectResponseMessage *)response
 {
+    NSString *serviceId = [request serviceId];
+    
     DPLinkingDeviceManager *deviceMgr = [DPLinkingDeviceManager sharedInstance];
     DPLinkingDevice *device = [deviceMgr findDPLinkingDeviceByServiceId:serviceId];
     if (!device) {
@@ -93,7 +111,7 @@
         [_flashingExecutor cancel];
     }
     [deviceMgr sendLEDCommand:device power:NO];
-
+    
     [response setResult:DConnectMessageResultTypeOk];
     
     return YES;

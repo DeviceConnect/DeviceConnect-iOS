@@ -15,15 +15,14 @@
 
 - (id) init
 {
-    self = [super init];
+    self = [super initWithObject: self];
     if (self) {
         self.pluginName = @"Linking (Device Connect Device Plug-in)";
 
-        Class key = [self class];
         DConnectMemoryCacheController *ctl = [[DConnectMemoryCacheController alloc] init];
-        [[DConnectEventManager sharedManagerForClass:key] setController:ctl];
+        [[DConnectEventManager sharedManagerForClass:[self class]] setController:ctl];
 
-        [self addProfile:[[DPLinkingServiceDiscoveryProfile alloc] init]];
+        [self addProfile:[[DPLinkingServiceDiscoveryProfile alloc] initWithServiceProvider: self.serviceProvider]];
         [self addProfile:[DPLinkingSystemProfile systemProfileWithVersion:@"1.0"]];
     }
     return self;

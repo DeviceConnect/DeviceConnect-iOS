@@ -1933,6 +1933,12 @@
             <objects>
                 <tabBarController id="PrS-M3-tr1" customClass="DPLinkingMainViewController" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" id="Z7b-VJ-WCY">
+                        <barButtonItem key="leftBarButtonItem" title="閉じる" id="Y7d-tj-ZeJ">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <connections>
+                                <action selector="closeButtonTap:" destination="PrS-M3-tr1" id="9bK-7z-uTD"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="設定" id="NCQ-VK-P9E">
                             <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>

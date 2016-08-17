@@ -97,7 +97,7 @@
 }
 
 - (void) openPairingDialog {
-    UIStoryboard* storyboard = [UIStoryboard storyboardWithName:@"Linking" bundle:nil];
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Linking" bundle:DPLinkingResourceBundle()];
     UIViewController* viewCtl = [storyboard instantiateViewControllerWithIdentifier:@"pairing_alert"];
     self.pairingAlert = [UIAlertController alertControllerWithTitle:nil
                                                             message:nil

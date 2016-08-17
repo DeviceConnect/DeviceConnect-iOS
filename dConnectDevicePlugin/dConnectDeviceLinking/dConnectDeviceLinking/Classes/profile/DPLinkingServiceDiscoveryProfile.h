@@ -11,6 +11,6 @@
 
 @interface DPLinkingServiceDiscoveryProfile : DConnectServiceDiscoveryProfile
 
-- (instancetype)init;
+- (instancetype) initWithServiceProvider:(DConnectServiceProvider *) serviceProvider;
 
 @end

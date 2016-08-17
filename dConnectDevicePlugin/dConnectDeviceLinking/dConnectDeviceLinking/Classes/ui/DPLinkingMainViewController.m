@@ -77,8 +77,12 @@
 
 #pragma mark - IBAction
 
+- (IBAction)closeButtonTap:(id)sender {
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
 - (IBAction)settingButtonTap:(id)sender {
-    UIStoryboard* storyboard = [UIStoryboard storyboardWithName:@"Linking" bundle:nil];
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Linking" bundle:DPLinkingResourceBundle()];
     UIViewController* viewCtl = [storyboard instantiateViewControllerWithIdentifier:@"popover_sample"];
     
     viewCtl.modalPresentationStyle = UIModalPresentationPopover;
