@@ -26,7 +26,6 @@ NSString *const DPHueBundleName = @"dConnectDeviceHue_resources";
     
     if (self) {
         
-        self.serviceProvider = [[DConnectServiceManager alloc] init];
         [[DPHueManager sharedManager] setServiceProvider: self.serviceProvider];
         [[DPHueManager sharedManager] setPlugin: self];
         
