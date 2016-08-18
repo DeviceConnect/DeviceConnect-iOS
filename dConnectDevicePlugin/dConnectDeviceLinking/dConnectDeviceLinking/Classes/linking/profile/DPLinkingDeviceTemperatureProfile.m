@@ -29,6 +29,7 @@
 
 - (BOOL) onGetTemperature:(DConnectRequestMessage *)request response:(DConnectResponseMessage *)response
 {
+    [response setErrorToNotSupportProfile];
     return YES;
 }
 

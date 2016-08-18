@@ -29,7 +29,7 @@
 
 - (BOOL) onGetHumidity:(DConnectRequestMessage *)request response:(DConnectResponseMessage *)response
 {
-    [response setResult:DConnectMessageResultTypeError];
+    [response setErrorToNotSupportProfile];
     return YES;
 }
 

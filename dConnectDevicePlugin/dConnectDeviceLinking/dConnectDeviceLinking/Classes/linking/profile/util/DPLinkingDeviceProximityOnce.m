@@ -67,4 +67,5 @@
 {
     [_deviceManager disableListenRange:_device delegate:self];
 }
+
 @end
