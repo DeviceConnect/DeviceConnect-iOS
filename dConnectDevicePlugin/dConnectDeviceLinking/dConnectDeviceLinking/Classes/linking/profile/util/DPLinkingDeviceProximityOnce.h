@@ -2,12 +2,21 @@
 //  DPLinkingDeviceProximityOnce.h
 //  dConnectDeviceLinking
 //
-//  Created by 小林伸郎 on 2016/08/18.
-//  Copyright © 2016年 NTT DOCOMO, INC. All rights reserved.
+//  Copyright (c) 2016 NTT DOCOMO, INC.
+//  Released under the MIT license
+//  http://opensource.org/licenses/mit-license.php
 //
 
-#import <Foundation/Foundation.h>
+#import <DConnectSDK/DConnectSDK.h>
 
-@interface DPLinkingDeviceProximityOnce : NSObject
+#import "DPLinkingTimeoutSchedule.h"
+#import "DPLinkingDeviceManager.h"
+
+@interface DPLinkingDeviceProximityOnce : DPLinkingTimeoutSchedule <DPLinkingDeviceRangeDelegate>
+
+@property (nonatomic) DConnectRequestMessage *request;
+@property (nonatomic) DConnectResponseMessage *response;
+
+- (instancetype) initWithDevice:(DPLinkingDevice *)device;
 
 @end

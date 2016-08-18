@@ -66,8 +66,6 @@
     sensor.request = request;
     sensor.response = response;
     
-    [mgr enableListenSensor:device delegate:sensor];
-
     return NO;
 }
 

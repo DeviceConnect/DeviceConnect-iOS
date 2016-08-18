@@ -22,6 +22,8 @@
     if (self) {
         _deviceManager = [DPLinkingDeviceManager sharedInstance];
         _holder = [[DPLinkingDeviceSensorHolder alloc] initWithDevice:device];
+        
+        [_deviceManager enableListenSensor:device delegate:self];
     }
     return self;
 }
