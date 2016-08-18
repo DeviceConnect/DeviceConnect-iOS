@@ -706,10 +706,8 @@ static int const _timeout = 500;
     BOOL online = NO;
     if ([self.reachability currentReachabilityStatus] == NotReachable) {
         online = YES;
-        NSLog(@"notifiedNetworkStatus - online = YES");
     } else {
         online = NO;
-        NSLog(@"notifiedNetworkStatus - online = NO");
     }
     
     // デバイス管理情報更新
