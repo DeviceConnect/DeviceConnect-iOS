@@ -16,6 +16,7 @@
 #import "DPIRKitVirtualDevice.h"
 #import "DPIRKitSystemProfile.h"
 #import "DPIRKitService.h"
+#import "DPIRKitReachability.h"
 
 NSString *const DPIRKitInfoVersion = @"DPIRKitVersion";
 NSString *const DPIRKitInfoAPIKey = @"DPIRKitAPIKey";
@@ -41,6 +42,8 @@ DPIRKitManagerDetectionDelegate
     DConnectEventManager *_eventManager;
     NSString *_version;
 }
+
+@property (nonatomic, strong) DPIRKitReachability *reachability;
 
 - (void) sendDeviceDetectionEventWithDevice:(DPIRKitDevice *)device online:(BOOL)online;
 
@@ -90,6 +93,15 @@ DPIRKitManagerDetectionDelegate
             [_self startObeservation];
         });
         self.pluginName = DPIRKitPluginName;
+        
+        // Reachabilityの初期処理
+        self.reachability = [DPIRKitReachability reachabilityWithHostName: @"www.google.com"];
+        [[NSNotificationCenter defaultCenter]
+         addObserver:self
+         selector:@selector(notifiedNetworkStatus:)
+         name:DPIRKitReachabilityChangedNotification
+         object:nil];
+        [self.reachability startNotifier];
     }
     
     return self;
@@ -242,6 +254,20 @@ DPIRKitManagerDetectionDelegate
     
     return state;
 }
+
+// 通知を受け取るメソッド
+-(void)notifiedNetworkStatus:(NSNotification *)notification {
+    DPIRKitNetworkStatus networkStatus = [self.reachability currentReachabilityStatus];
+    if (networkStatus == DPIRKitNotReachable) {
+        // ネット接続が切断されたので全サービスをオフラインにする
+        for (DConnectService *service in self.serviceProvider.services) {
+            [service setOnline: NO];
+        }
+    } else {
+//        [[DPIRKitManager sharedInstance] startDetection];
+    }
+}
+
 
 #pragma mark - DPIRKitManagerDetectionDelegate
 
