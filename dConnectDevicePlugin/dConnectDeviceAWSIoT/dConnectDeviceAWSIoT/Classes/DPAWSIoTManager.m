@@ -131,12 +131,13 @@
 }
 
 // MQTTのTopicを購読
-- (BOOL)subscribeWithTopic:(NSString*)topic messageHandler:(void (^)(NSString *message))handler {
+- (BOOL)subscribeWithTopic:(NSString*)topic messageHandler:(void (^)(id json, NSError *error))handler {
 	AWSIoTDataManager *manager = [AWSIoTDataManager defaultIoTDataManager];
 	return [manager subscribeToTopic:topic QoS:AWSIoTMQTTQoSMessageDeliveryAttemptedAtMostOnce messageCallback:^(NSData *data) {
 		if (handler) {
-			NSString *message = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-			handler(message);
+			NSError *error;
+			id json = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
+			handler(json, error);
 		}
 	}];
 }

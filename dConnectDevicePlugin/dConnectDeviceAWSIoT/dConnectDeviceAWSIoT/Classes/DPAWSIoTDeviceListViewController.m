@@ -11,9 +11,6 @@
 #import "DPAWSIoTUtils.h"
 #import "DPAWSIoTManager.h"
 
-// TODO: 名前を決める
-#define kShadowName @"dconnect"
-
 @interface DPAWSIoTDeviceListViewController () <UITableViewDataSource> {
 	NSDictionary *_devices;
 }
@@ -22,10 +19,6 @@
 
 
 @implementation DPAWSIoTDeviceListViewController
-
-//- (void)viewWillAppear:(BOOL)animated {
-//	[DPAWSIoTUtils clearAccount];
-//}
 
 // View表示後
 - (void)viewDidAppear:(BOOL)animated {
@@ -56,11 +49,21 @@
 	[self syncShadow];
 }
 
+// 閉じるボタンイベント
+- (IBAction)closeButtonPressed:(id)sender
+{
+	[self dismissViewControllerAnimated:YES completion:nil];
+}
+
+// メニューボタンイベント
+- (IBAction)menuButtonPressed:(id)sender {
+}
+
 
 // Shadowを同期
 - (void)syncShadow {
 	// Shadow取得
-	[[DPAWSIoTManager sharedManager] fetchShadowWithName:kShadowName completionHandler:^(id json, NSError *error) {
+	[DPAWSIoTUtils fetchShadowWithHandler:^(id json, NSError *error) {
 		// ローディング画面非表示
 		[DPAWSIoTUtils hideLoadingHUD];
 		// TODO: 処理

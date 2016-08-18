@@ -25,4 +25,7 @@
 // ローディング画面非表示
 + (void)hideLoadingHUD;
 
+// Shadow取得
++ (void)fetchShadowWithHandler:(void (^)(id json, NSError *error))handler;
+
 @end

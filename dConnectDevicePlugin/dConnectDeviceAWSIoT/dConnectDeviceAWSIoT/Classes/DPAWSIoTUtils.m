@@ -14,6 +14,9 @@
 #define kSecretKey @"secretKey"
 #define kRegionKey @"regionKey"
 
+// TODO: 名前を決める
+#define kShadowName @"dconnect"
+
 @implementation DPAWSIoTUtils
 
 // ローディング画面
@@ -78,6 +81,11 @@ static UIViewController *loadingHUD;
 	} completion:^(BOOL finished) {
 		[loadingHUD.view removeFromSuperview];
 	}];
+}
+
+// Shadow取得
++ (void)fetchShadowWithHandler:(void (^)(id json, NSError *error))handler {
+	[[DPAWSIoTManager sharedManager] fetchShadowWithName:kShadowName completionHandler:handler];
 }
 
 @end

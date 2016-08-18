@@ -27,7 +27,7 @@
 - (void)updateShadowWithName:(NSString*)name value:(NSString*)str
 		   completionHandler:(void (^)(NSError *error))handler;
 // MQTTのTopicを購読
-- (BOOL)subscribeWithTopic:(NSString*)topic messageHandler:(void (^)(NSString *message))handler;
+- (BOOL)subscribeWithTopic:(NSString*)topic messageHandler:(void (^)(id json, NSError *error))handler;
 // MQTTのTopicにメッセージを配信
 - (BOOL)publishWithTopic:(NSString*)topic message:(NSString*)message;
 
