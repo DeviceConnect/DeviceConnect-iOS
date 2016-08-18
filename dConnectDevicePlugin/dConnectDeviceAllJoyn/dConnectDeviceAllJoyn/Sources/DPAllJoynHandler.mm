@@ -17,6 +17,7 @@
 #import "DPAllJoynSupportCheck.h"
 #import "DPAllJoynSynchronizedMutableDictionary.h"
 #import "DPAllJoynService.h"
+#import "DPAlljoynReachability.h"
 
 static int const DPAllJoynAliveTimeout = 30000;
 static int const DPAllJoynPingTimeout = 5000;
@@ -48,6 +49,7 @@ static size_t const DPAllJoynJoinRetryMax = 5;
 //@property (nonatomic, strong) BasicObjectProxy *basicObjectProxy;
 @property (nonatomic, strong) AJNAboutProxy *aboutProxy;
 @property BOOL wasNameAlreadyFound;
+@property (nonatomic, strong) DPAlljoynReachability *reachability;
 
 @end
 
@@ -62,6 +64,15 @@ static size_t const DPAllJoynJoinRetryMax = 5;
         dispatch_queue_create("org.deviceconnect.deviceplugin.handlerQueue",
                               DISPATCH_QUEUE_SERIAL);
         _discoveredServices = [DPAllJoynSynchronizedMutableDictionary new];
+        
+        // Reachabilityの初期処理
+        self.reachability = [DPAlljoynReachability reachabilityWithHostName: @"www.google.com"];
+        [[NSNotificationCenter defaultCenter]
+         addObserver:self
+         selector:@selector(notifiedNetworkStatus:)
+         name:DPAlljoynReachabilityChangedNotification
+         object:nil];
+        [self.reachability startNotifier];
     }
     return self;
 }
@@ -360,7 +371,7 @@ static size_t const DPAllJoynJoinRetryMax = 5;
              }
              
              // デバイス管理情報更新
-             [self updateManageServices];
+             [self updateManageServices: YES];
          }];
     }
 }
@@ -386,12 +397,30 @@ static size_t const DPAllJoynJoinRetryMax = 5;
                    dispatch_get_main_queue(), block);
 }
 
+// 通知を受け取るメソッド
+-(void)notifiedNetworkStatus:(NSNotification *)notification {
+    NetworkStatus networkStatus = [self.reachability currentReachabilityStatus];
+    if (networkStatus == NotReachable) {
+        [self updateManageServices: NO];
+    } else {
+        [self updateManageServices: YES];
+    }
+}
+
 // デバイス管理情報更新
-- (void) updateManageServices {
+- (void) updateManageServices: (BOOL) onlineForSet {
     @synchronized(self) {
         
         // ServiceProvider未登録なら処理しない
         if (!_serviceProvider) {
+            return;
+        }
+
+        // オフラインにする場合は、全サービスをオフラインにする(Wifi Offにされたことを想定)
+        if (!onlineForSet) {
+            for (DConnectService *service in [_serviceProvider services]) {
+                [service setOnline: NO];
+            }
             return;
         }
 
@@ -403,13 +432,16 @@ static size_t const DPAllJoynJoinRetryMax = 5;
             }
         }
         
-        // サービス未登録なら登録する
+        // サービス未登録なら登録する、登録済みならオンラインにする
         for (DPAllJoynServiceEntity *serviceEntity in [self.discoveredAllJoynServices allValues]) {
-            if (![_serviceProvider service: serviceEntity.appId]) {
-                DPAllJoynService *service = [[DPAllJoynService alloc] initWithServiceId:serviceEntity.appId
-                                                                            serviceName:serviceEntity.serviceName
-                                                                                 plugin: self.plugin
-                                                                                handler:self];
+            DConnectService *service = [_serviceProvider service: serviceEntity.appId];
+            if (service) {
+                [service setOnline: YES];
+            } else {
+                service = [[DPAllJoynService alloc] initWithServiceId:serviceEntity.appId
+                                                          serviceName:serviceEntity.serviceName
+                                                               plugin: self.plugin
+                                                              handler:self];
                 [_serviceProvider addService: service];
             }
         }
@@ -453,7 +485,7 @@ static size_t const DPAllJoynJoinRetryMax = 5;
     [_discoveredServices setObject:service forKey:service.appId];
     
     // デバイス管理情報更新
-    [self updateManageServices];
+    [self updateManageServices: YES];
 }
 
 
