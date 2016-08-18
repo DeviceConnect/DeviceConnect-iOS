@@ -18,6 +18,8 @@ static NSString * const DPThetaRegexDecimalPoint = @"^[-+]?([0-9]*)?(\\.*)?([0-9
 static NSString * const DPThetaRegexDigit = @"^([0-9]*)?$";
 static NSString * const DPThetaRegexCSV = @"^([^,]*,)+";
 
+static NSString * const ROI_IMAGE_SERVICE = @"ROI Image Service";
+
 
 @interface DPThetaManager()<PtpIpEventListener>
 {
@@ -116,7 +118,7 @@ static int const _timeout = 500;
                         callback(objectInfo, @"stop", nil);
                     }
                     // デバイス管理情報更新
-                    [self updateManageServices];
+                    [self updateManageServices: YES];
                 }
             }
             
@@ -640,12 +642,23 @@ static int const _timeout = 500;
 }
 
 // デバイス管理情報更新
-- (void) updateManageServices {
+- (void) updateManageServices: (BOOL) onlineForSet {
 
     @synchronized(self) {
         
         // ServiceProvider未登録なら処理しない
         if (!self.serviceProvider) {
+            return;
+        }
+        
+        // オフラインにする場合は、ROIを除く全サービスをオフラインにする
+        if (!onlineForSet) {
+            for (DConnectService *service in [self.serviceProvider services]) {
+                if ([[service name] isEqualToString: ROI_IMAGE_SERVICE]) {
+                    continue;
+                }
+                [service setOnline: NO];
+            }
             return;
         }
         
@@ -674,13 +687,12 @@ static int const _timeout = 500;
                 [service setOnline:NO];
             }
         }
-        // TODO: 一度接続したThetaデバイスのWifiを別のものに変更しても[self isConnected]がYESを返してしまうのでofflineの判定ができない。[self connect]の前に[self getSerialNo]を実行してデバイスから取得できるかやってみたが、それをするとその後の[self connect]が成功しなくなってしまう。
 
         // ROI接続中(常時)
         // サービス未登録なら登録する
         if (![self.serviceProvider service: DPThetaRoiServiceId]) {
             DPThetaService *service = [[DPThetaService alloc] initWithServiceId: DPThetaRoiServiceId plugin: self.plugin];
-            [service setName: @"ROI Image Service"];
+            [service setName: ROI_IMAGE_SERVICE];
             [service setOnline:YES];
             [self.serviceProvider addService: service];
         }
@@ -689,7 +701,19 @@ static int const _timeout = 500;
 
 // 通知を受け取るメソッド
 -(void)notifiedNetworkStatus:(NSNotification *)notification {
-    [self updateManageServices];
+    
+    // Thetaオンライン判定(Theta接続中はインターネット接続できないのでこの条件で判定する。
+    BOOL online = NO;
+    if ([self.reachability currentReachabilityStatus] == NotReachable) {
+        online = YES;
+        NSLog(@"notifiedNetworkStatus - online = YES");
+    } else {
+        online = NO;
+        NSLog(@"notifiedNetworkStatus - online = NO");
+    }
+    
+    // デバイス管理情報更新
+    [self updateManageServices: online];
 }
 
 @end
