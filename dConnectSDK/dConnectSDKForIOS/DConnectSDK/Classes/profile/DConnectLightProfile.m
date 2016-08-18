@@ -559,7 +559,7 @@ didReceivePostLightGroupCreateRequest:request
                 }
                 break;
             }
-            [result addObject:valueStr];
+            [result addObject:@([valueStr intValue])];
         }
         
         if (result.count == 0) {
