@@ -44,7 +44,7 @@
 {
     self = [super initWithCoder:aDecoder];
     if (self) {
-        viewModel = [[TopViewModel alloc]init];
+        viewModel = [[TopViewModel alloc] init];
         viewModel.delegate = self;
     }
     return self;
@@ -84,11 +84,16 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
+
     [super viewWillAppear:animated];
-    [viewModel updateDeviceList];
-    [viewModel updateDatasource];
-    [self.collectionView reloadData];
-    [self addEmptyLabelIfNeeded];
+    __weak ViewController* _self = self;
+    NSUserDefaults* def = [NSUserDefaults standardUserDefaults];
+    if ([def boolForKey:IS_INITIAL_GUIDE_OPEN]) {
+        [viewModel updateDeviceList];
+        [viewModel updateDatasource];
+        [_self.collectionView reloadData];
+        [_self addEmptyLabelIfNeeded];
+    }
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -102,7 +107,7 @@
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    [viewModel saveSettings];
+//    [viewModel saveSettings];
 }
 
 // landscape時にはステータスバーが無くなるのでその分headerViewの高さを短くする
@@ -315,7 +320,10 @@
             break;
         case Device:
         {
-            DConnectMessage* message = [[viewModel.datasource objectAtIndex:indexPath.section]objectAtIndex:indexPath.row];
+            if ([viewModel.datasource count] < indexPath.section) {
+                break;
+            }
+            DConnectMessage* message = [[viewModel.datasource objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
             if([message isKindOfClass:[DConnectMessage class]]) {
                 DeviceIconViewCell* cell = (DeviceIconViewCell*)[collectionView dequeueReusableCellWithReuseIdentifier:@"DeviceIconViewCell" forIndexPath:indexPath];
                 [cell setDevice:message];

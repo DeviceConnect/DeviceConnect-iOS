@@ -7,11 +7,13 @@
 //
 
 #import "GHDeviceUtil.h"
+static const NSTimeInterval DPSemaphoreTimeout = 20.0;
 
 @interface GHDeviceUtil()
 {
     DConnectManager *manager;
     dispatch_queue_t q_global;
+    dispatch_semaphore_t _semaphore;
 }
 @end
 
@@ -33,6 +35,7 @@ static GHDeviceUtil* mgr = nil;
 {
     self = [super init];
     if(self){
+        _semaphore = dispatch_semaphore_create(1);
         [self setup];
     }
     return self;
@@ -78,41 +81,43 @@ static GHDeviceUtil* mgr = nil;
 
 - (void)discoverDevices:(DiscoverDeviceCompletion)completion
 {
-    BOOL isLocalOAuth = manager.settings.useLocalOAuth;
-    
-    if (isLocalOAuth) {
-        manager.settings.useLocalOAuth = NO;
-    }
-    
-    DConnectRequestMessage *request = [DConnectRequestMessage new];
-    [request setAction: DConnectMessageActionTypeGet];
-    [request setApi: DConnectMessageDefaultAPI];
-    [request setProfile: DConnectServiceDiscoveryProfileName];
-    [request setString:[self packageName] forKey:DConnectMessageOrigin];
-    
-    [manager sendRequest: request callback:^(DConnectResponseMessage *response) {
-        if (response != nil) {
-            if ([response result] == DConnectMessageResultTypeOk) {
-                DConnectArray *services = [response arrayForKey: DConnectServiceDiscoveryProfileParamServices];
-                if (completion) {
-                    completion(services);
+    @synchronized(self) {
+        dispatch_semaphore_wait(_semaphore,
+                                dispatch_time(DISPATCH_TIME_NOW, NSEC_PER_SEC * DPSemaphoreTimeout));
+        
+        BOOL isLocalOAuth = manager.settings.useLocalOAuth;
+        if (isLocalOAuth) {
+            manager.settings.useLocalOAuth = NO;
+        }
+        DConnectRequestMessage *request = [DConnectRequestMessage new];
+        [request setAction: DConnectMessageActionTypeGet];
+        [request setApi: DConnectMessageDefaultAPI];
+        [request setProfile: DConnectServiceDiscoveryProfileName];
+        [request setString:[self packageName] forKey:DConnectMessageOrigin];
+        [manager sendRequest: request callback:^(DConnectResponseMessage *response) {
+            if (response != nil) {
+                if ([response result] == DConnectMessageResultTypeOk) {
+                    DConnectArray *services = [response arrayForKey: DConnectServiceDiscoveryProfileParamServices];
+                    if (completion) {
+                        completion(services);
+                    }
+                } else {
+                    LOG(@" - response - errorCode: %d", [response errorCode]);
+                    if (completion) {
+                        completion(nil);
+                    }
                 }
             } else {
-                LOG(@" - response - errorCode: %d", [response errorCode]);
                 if (completion) {
                     completion(nil);
                 }
             }
-        } else {
-            if (completion) {
-                completion(nil);
+            if (isLocalOAuth) {
+                manager.settings.useLocalOAuth = YES;
             }
-        }
-        if (isLocalOAuth) {
-            manager.settings.useLocalOAuth = YES;
-        }
-
-    }];
+            dispatch_semaphore_signal(_semaphore);
+        }];
+    }
 }
 
 - (NSString *)packageName {
