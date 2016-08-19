@@ -11,11 +11,6 @@
 
 @interface DPAWSIoTUtils : NSObject
 
-// ManagerUUIDを返す
-+ (NSString*)managerUUID;
-// ManagerNameを返す
-+ (NSString*)managerName;
-
 // アカウントの設定があるか
 + (BOOL)hasAccount;
 // アカウントの設定をクリア
@@ -30,11 +25,6 @@
 + (void)showLoadingHUD:(UIStoryboard*)storyboard;
 // ローディング画面非表示
 + (void)hideLoadingHUD;
-
-// Shadowからデバイス情報を取得する
-+ (void)fetchManagerInfoWithHandler:(void (^)(NSDictionary *managers, NSDictionary *myInfo, NSError *error))handler;
-// 自分のデバイス情報をShadowに登録
-+ (void)setManagerInfo:(BOOL)online handler:(void (^)(NSError *error))handler;
 
 // メニュー作成
 + (UIAlertController*)createMenu:(NSArray*)items handler:(void (^)(int index))handler;

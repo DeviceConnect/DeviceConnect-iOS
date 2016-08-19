@@ -15,29 +15,12 @@
 #define kSecretKey @"secretKey"
 #define kRegionKey @"regionKey"
 
-// TODO: 名前を決める
-#define kShadowName @"dconnect"
-// TODO: 本来は定数じゃなくManagerのUUID/Nameを取得
-#define kManagerUUID @"abc"
-#define kManagerName @"あいう"
-
 
 @implementation DPAWSIoTUtils
 
 // ローディング画面
 static UIViewController *loadingHUD;
 
-// ManagerUUIDを返す
-+ (NSString*)managerUUID {
-	// TODO: 仮
-	return kManagerUUID;
-}
-
-// ManagerNameを返す
-+ (NSString*)managerName {
-	// TODO: 仮
-	return kManagerName;
-}
 
 // アカウントの設定があるか
 + (BOOL)hasAccount {
@@ -104,40 +87,6 @@ static UIViewController *loadingHUD;
 			[loadingHUD.view removeFromSuperview];
 		}];
 	}
-}
-
-// Shadowからデバイス情報を取得する
-+ (void)fetchManagerInfoWithHandler:(void (^)(NSDictionary *managers, NSDictionary *myInfo, NSError *error))handler {
-	[[DPAWSIoTManager sharedManager] fetchShadowWithName:kShadowName
-									   completionHandler:^(id json, NSError *error)
-	{
-		if (error) {
-			handler(nil, nil, error);
-			return;
-		}
-		// 自分の情報
-		NSDictionary *myInfo = json[@"state"][@"reported"][kManagerUUID];
-		// 自分以外の情報
-		NSMutableDictionary *managers = [json[@"state"][@"reported"] mutableCopy];
-		[managers removeObjectForKey:kManagerUUID];
-		handler(managers, myInfo, nil);
-	}];
-}
-
-// 自分のデバイス情報をShadowに登録
-+ (void)setManagerInfo:(BOOL)online handler:(void (^)(NSError *error))handler {
-	NSDictionary *info = @{@"name": kManagerName, @"online": @(online), @"timeStamp": @([[NSDate date] timeIntervalSince1970])};
-	NSDictionary *dic = @{@"state": @{@"reported": @{kManagerUUID: info}}};
-	NSError *error;
-	NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dic options:0 error:&error];
-	if (error) {
-		handler(error);
-		return;
-	}
-	NSString *val = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-	[[DPAWSIoTManager sharedManager] updateShadowWithName:kShadowName value:val completionHandler:^(NSError *error) {
-		handler(error);
-	}];
 }
 
 // メニュー作成

@@ -141,6 +141,12 @@
 	}];
 }
 
+// MQTTのTopicの購読を解除
+- (void)unsubscribeWithTopic:(NSString*)topic {
+	AWSIoTDataManager *manager = [AWSIoTDataManager defaultIoTDataManager];
+	[manager unsubscribeTopic:topic];
+}
+
 // MQTTのTopicにメッセージを配信
 - (BOOL)publishWithTopic:(NSString*)topic message:(NSString*)message {
 	AWSIoTDataManager *manager = [AWSIoTDataManager defaultIoTDataManager];

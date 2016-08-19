@@ -12,6 +12,7 @@
 #import "DPAWSIoTServiceDiscoveryProfile.h"
 #import "DPAWSIoTUtils.h"
 #import "DPAWSIoTManager.h"
+#import "DPAWSIoTController.h"
 #import "DConnectDevicePlugin+Private.h"
 #import "DConnectMessage+Private.h"
 
@@ -31,7 +32,7 @@
 	if (self) {
 		self.pluginName = @"AWSIoT (Device Connect Device Plug-in)";
 		_responses = [NSMutableDictionary dictionary];
-		_managerUUID = [DPAWSIoTUtils managerUUID];
+		_managerUUID = [DPAWSIoTController managerUUID];
 		self.useLocalOAuth = NO;
 		
 		// イベントマネージャの準備
@@ -55,7 +56,7 @@
 					return;
 				}
 				// Shadow取得
-				[DPAWSIoTUtils fetchManagerInfoWithHandler:^(NSDictionary *managers, NSDictionary *myInfo, NSError *error) {
+				[DPAWSIoTController fetchManagerInfoWithHandler:^(NSDictionary *managers, NSDictionary *myInfo, NSError *error) {
 					if (error) {
 						// TODO: エラー処理
 						NSLog(@"%@", error);
@@ -63,7 +64,7 @@
 					}
 					// onlineの時だけRequestTopic購読
 					if ([myInfo[@"online"] boolValue]) {
-						[self subscribeRequest];
+						[DPAWSIoTController subscribeRequest];
 					}
 					// ResponseTopic購読
 					for (NSString *key in managers.allKeys) {
@@ -99,20 +100,6 @@
 	} else {
 		return [super executeRequest:request response:response];
 	}
-}
-
-// RequestTopic購読
-- (void)subscribeRequest {
-	NSString *requestTopic = [NSString stringWithFormat:@"deviceconnect/%@/request", _managerUUID];
-	[[DPAWSIoTManager sharedManager] subscribeWithTopic:requestTopic messageHandler:^(id json, NSError *error) {
-		// TODO: 処理
-		NSLog(@"request:%@", json);
-	}];
-}
-
-// RequestTopic購読解除
-- (void)unsubscribeRequest {
-	// TODO: 処理
 }
 
 // MQTTにリクエストを送信

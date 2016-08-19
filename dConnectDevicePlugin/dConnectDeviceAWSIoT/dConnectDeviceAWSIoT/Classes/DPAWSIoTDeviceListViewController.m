@@ -10,6 +10,7 @@
 #import "DPAWSIoTDeviceListViewController.h"
 #import "DPAWSIoTUtils.h"
 #import "DPAWSIoTManager.h"
+#import "DPAWSIoTController.h"
 
 @interface DPAWSIoTDeviceListViewController () <UITableViewDataSource> {
 	NSDictionary *_devices;
@@ -49,7 +50,7 @@
 // Shadowを同期
 - (void)syncShadow {
 	// Shadow取得
-	[DPAWSIoTUtils fetchManagerInfoWithHandler:^(NSDictionary *managers, NSDictionary *myInfo, NSError *error) {
+	[DPAWSIoTController fetchManagerInfoWithHandler:^(NSDictionary *managers, NSDictionary *myInfo, NSError *error) {
 		// ローディング画面非表示
 		[DPAWSIoTUtils hideLoadingHUD];
 		// TODO: 処理
