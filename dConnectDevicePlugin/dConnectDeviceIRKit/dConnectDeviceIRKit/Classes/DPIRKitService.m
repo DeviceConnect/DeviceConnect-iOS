@@ -17,7 +17,7 @@
 @implementation DPIRKitService
 
 - (instancetype) initWithServiceId: (NSString *)serviceId plugin: (id)plugin{
-    self = [super initWithServiceId: serviceId plugin: plugin];
+    self = [super initWithServiceId: serviceId plugin: plugin dataSource: self];
     if (self) {
         [self setName: serviceId];
         [self setNetworkType: DConnectServiceDiscoveryProfileNetworkTypeWiFi];
@@ -31,7 +31,18 @@
     return self;
 }
 
+#pragma mark - DConnectServiceInformationProfileDataSource Implement.
 
-
+- (DConnectServiceInformationProfileConnectState)profile:(DConnectServiceInformationProfile *)profile
+                                   wifiStateForServiceId:(NSString *)serviceId {
+    
+    DConnectServiceInformationProfileConnectState wifiState;
+    if (self.online) {
+        wifiState = DConnectServiceInformationProfileConnectStateOn;
+    } else {
+        wifiState = DConnectServiceInformationProfileConnectStateOff;
+    }
+    return wifiState;
+}
 
 @end

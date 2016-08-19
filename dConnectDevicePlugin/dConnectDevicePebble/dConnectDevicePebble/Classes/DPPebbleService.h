@@ -9,7 +9,7 @@
 
 #import <DConnectSDK/DConnectService.h>
 
-@interface DPPebbleService : DConnectService
+@interface DPPebbleService : DConnectService<DConnectServiceInformationProfileDataSource>
 
 - (instancetype) initWithServiceId: (NSString *) serviceId deviceName: (NSString *) deviceName plugin: (id) plugin;
 

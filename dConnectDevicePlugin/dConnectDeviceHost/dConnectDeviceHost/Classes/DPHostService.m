@@ -32,7 +32,7 @@ NSString *const DPHostDevicePluginServiceId = @"host";
 @implementation DPHostService
 
 - (instancetype) initWithFileManager: (DConnectFileManager *) fileMgr plugin: (id) plugin {
-    self = [super initWithServiceId: DPHostDevicePluginServiceId plugin: plugin];
+    self = [super initWithServiceId: DPHostDevicePluginServiceId plugin: plugin dataSource:self];
     if (self) {
         UIDevice *device = [UIDevice currentDevice];
         NSString *name = [NSString stringWithFormat:@"Host: %@", device.name];

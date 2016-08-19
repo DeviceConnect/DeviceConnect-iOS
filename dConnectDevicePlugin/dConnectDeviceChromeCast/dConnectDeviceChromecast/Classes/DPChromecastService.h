@@ -10,7 +10,7 @@
 #import <DConnectSDK/DConnectSDK.h>
 #import <DConnectSDK/DConnectService.h>
 
-@interface DPChromecastService : DConnectService
+@interface DPChromecastService : DConnectService<DConnectServiceInformationProfileDataSource>
 
 - (instancetype) initWithServiceId: (NSString *) serviceId deviceName: (NSString *) deviceName plugin: (id) plugin;
 

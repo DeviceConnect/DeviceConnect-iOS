@@ -9,8 +9,9 @@
 
 #import <DConnectSDK/DConnectService.h>
 #import <DConnectSDK/DConnectFileManager.h>
+#import <DConnectSDK/DConnectServiceInformationProfile.h>
 
-@interface DPHueService : DConnectService
+@interface DPHueService : DConnectService<DConnectServiceInformationProfileDataSource>
 
 - (instancetype) initWithBridgeKey: (NSString *) bridgeKey
                        bridgeValue: (NSString *) bridgeValue

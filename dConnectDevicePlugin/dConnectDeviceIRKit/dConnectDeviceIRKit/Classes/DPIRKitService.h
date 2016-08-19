@@ -9,7 +9,7 @@
 
 #import <DConnectSDK/DConnectService.h>
 
-@interface DPIRKitService : DConnectService
+@interface DPIRKitService : DConnectService<DConnectServiceInformationProfileDataSource>
 
 - (instancetype) initWithServiceId: (NSString *)serviceId plugin: (id) plugin;
 
