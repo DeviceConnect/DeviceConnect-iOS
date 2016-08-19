@@ -10,10 +10,13 @@
 #import "DPAWSIoTUtils.h"
 #import "DPAWSIoTKeychain.h"
 #import "DPAWSIoTManager.h"
+#import "DPAWSIoTNetworkManager.h"
 
 #define kAccessKeyID @"accessKey"
 #define kSecretKey @"secretKey"
 #define kRegionKey @"regionKey"
+
+#define ERROR_DOMAIN @"DPAWSIoTUtils"
 
 
 @implementation DPAWSIoTUtils
@@ -115,6 +118,50 @@ static UIViewController *loadingHUD;
 		[alert addAction:action];
 	}
 	return alert;
+}
+
+// HTTP通信
++ (void)sendRequest:(NSDictionary*)request handler:(void (^)(NSData *data, NSError *error))handler {
+
+	// TODO: ポート番号を設定
+	NSString *path = [NSString stringWithFormat:@"http://localhost:%d", 4035];
+	NSMutableDictionary *params = [request mutableCopy];
+	path = [DPAWSIoTUtils appendPath:path params:params name:@"api"];
+	path = [DPAWSIoTUtils appendPath:path params:params name:@"profile"];
+	path = [DPAWSIoTUtils appendPath:path params:params name:@"interface"];
+	path = [DPAWSIoTUtils appendPath:path params:params name:@"attribute"];
+	NSString *method = request[@"action"];
+	NSString *origin = request[@"origin"];
+	// 不要なパラメータを削除
+	[params removeObjectForKey:@"accessToken"];
+	[params removeObjectForKey:@"action"];
+	[params removeObjectForKey:@"origin"];
+	[params removeObjectForKey:@"_type"];
+	[params removeObjectForKey:@"version"];
+	[DPAWSIoTNetworkManager sendRequestWithPath:path method:method
+										 params:params headers:@{@"X-GotAPI-Origin": origin}
+										handler:^(NSData *data, NSURLResponse *response, NSError *error)
+	{
+		if (error) {
+			handler(nil, error);
+			return;
+		}
+		NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
+		if (httpResponse.statusCode == 200) {
+			handler(data, nil);
+		} else {
+			handler(data, [NSError errorWithDomain:ERROR_DOMAIN code:-1 userInfo:nil]);
+		}
+	}];
+}
+
+// パス追加
++ (NSString*)appendPath:(NSString*)path params:(NSMutableDictionary*)params name:(NSString*)name {
+	if (params[name]) {
+		path = [path stringByAppendingPathComponent:params[name]];
+		[params removeObjectForKey:name];
+	}
+	return path;
 }
 
 @end

@@ -9,6 +9,9 @@
 
 #import <XCTest/XCTest.h>
 #import "DPAWSIoTManager.h"
+#import "DPAWSIoTNetworkManager.h"
+
+#define kShadowName @"dc01"
 
 @interface Tests : XCTestCase
 
@@ -30,30 +33,73 @@
 	XCTestExpectation *okExpectation = [self expectationWithDescription:@"ok!"];
 	// 接続
 	[[DPAWSIoTManager sharedManager] connectWithAccessKey:@"AKIAJYDTLD4DPFGZ4PAQ" secretKey:@"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" region:AWSRegionAPNortheast1 completionHandler:^(NSError *error) {
+		int test = 5;
 		
-		// Shadow取得
-		[[DPAWSIoTManager sharedManager] fetchShadowWithName:@"dc01" completionHandler:^(id json, NSError *error) {
-			NSLog(@"%@", json);
-			NSLog(@"%@", error);
-
-			XCTAssertNil(error, @"error");
-			[okExpectation fulfill];
-		}];
-//		// Shadow更新
-//		[[DPAWSIoTManager sharedManager] updateShadowWithName:@"dc01" value:@"{\"state\": {\"reported\": {\"aaa\": \"bbb\"}}}" completionHandler:^(NSError *error) {
-//			XCTAssertNil(error, @"error");
-//			[okExpectation fulfill];
-//		}];
-//		// MQTT/Sub
-//		[[DPAWSIoTManager sharedManager] subscribeWithTopic:@"tp" messageHandler:^(NSString *message) {
-//			NSLog(@"%@", message);
-//			[okExpectation fulfill];
-//		}];
-//		// MQTT/Pub
-//		[[DPAWSIoTManager sharedManager] publishWithTopic:@"tp" message:@"test"];
-//		[okExpectation fulfill];
+		switch (test) {
+			case 1:
+				[self fetchShadow:okExpectation];
+				break;
+			case 2:
+				[self updateShadow:okExpectation];
+				break;
+			case 3:
+				[self subscribeMQTT:okExpectation];
+				break;
+			case 4:
+				[self publishMQTT:okExpectation];
+				break;
+			case 5:
+				[self http:okExpectation];
+				break;
+				
+			default:
+				break;
+		}
 	}];
-	[self waitForExpectationsWithTimeout:15 handler:nil];
+	[self waitForExpectationsWithTimeout:5 handler:nil];
+}
+
+// Shadow取得
+- (void)fetchShadow:(XCTestExpectation*)expectation {
+	[[DPAWSIoTManager sharedManager] fetchShadowWithName:kShadowName completionHandler:^(id json, NSError *error) {
+		NSLog(@"%@", json);
+		NSLog(@"%@", error);
+		
+		XCTAssertNil(error, @"error");
+		[expectation fulfill];
+	}];
+}
+
+// Shadow更新
+- (void)updateShadow:(XCTestExpectation*)expectation {
+	[[DPAWSIoTManager sharedManager] updateShadowWithName:kShadowName value:@"{\"state\": {\"reported\": {\"test\": \"ok!\"}}}" completionHandler:^(NSError *error) {
+		XCTAssertNil(error, @"error");
+		[expectation fulfill];
+	}];
+}
+
+// MQTT/Sub
+- (void)subscribeMQTT:(XCTestExpectation*)expectation {
+	[[DPAWSIoTManager sharedManager] subscribeWithTopic:@"tp" messageHandler:^(id json, NSError *error) {
+		NSLog(@"%@", json);
+		XCTAssertNil(error, @"error");
+		[expectation fulfill];
+	}];
+}
+
+// MQTT/Pub
+- (void)publishMQTT:(XCTestExpectation*)expectation {
+	[[DPAWSIoTManager sharedManager] publishWithTopic:@"tp" message:@"test"];
+	[expectation fulfill];
+}
+
+// HTTP
+- (void)http:(XCTestExpectation*)expectation {
+	[DPAWSIoTNetworkManager sendRequestWithPath:@"http://gclue.com" method:@"get" params:@{@"test": @"param"} handler:^(NSData *data, NSURLResponse *response, NSError *error) {
+		NSLog(@"%@", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
+		XCTAssertNil(error, @"error");
+		[expectation fulfill];
+	}];
 }
 
 - (void)testPerformanceExample {

@@ -149,6 +149,7 @@
 
 // MQTTのTopicにメッセージを配信
 - (BOOL)publishWithTopic:(NSString*)topic message:(NSString*)message {
+//	NSLog(@"publish: %@, %@", topic, message);
 	AWSIoTDataManager *manager = [AWSIoTDataManager defaultIoTDataManager];
 	return [manager publishString:message onTopic:topic QoS:AWSIoTMQTTQoSMessageDeliveryAttemptedAtMostOnce];
 }

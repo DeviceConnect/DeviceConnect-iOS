@@ -18,9 +18,6 @@
 // アカウントを設定
 + (void)setAccount:(NSString*)accessKey secretKey:(NSString*)secretKey region:(NSInteger)region;
 
-// ログイン
-+ (void)loginWithHandler:(void (^)(NSError *error))handler;
-
 // ローディング画面表示
 + (void)showLoadingHUD:(UIStoryboard*)storyboard;
 // ローディング画面非表示
@@ -28,5 +25,10 @@
 
 // メニュー作成
 + (UIAlertController*)createMenu:(NSArray*)items handler:(void (^)(int index))handler;
+
+// ログイン
++ (void)loginWithHandler:(void (^)(NSError *error))handler;
+// HTTP通信
++ (void)sendRequest:(NSDictionary*)request handler:(void (^)(NSData *data, NSError *error))handler;
 
 @end

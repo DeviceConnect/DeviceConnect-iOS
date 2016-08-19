@@ -9,6 +9,7 @@
 
 #import "DPAWSIoTController.h"
 #import "DPAWSIoTManager.h"
+#import "DPAWSIoTUtils.h"
 
 // TODO: 名前を決める
 #define kShadowName @"dconnect"
@@ -79,8 +80,38 @@
 + (void)subscribeRequest {
 	NSString *requestTopic = [NSString stringWithFormat:@"deviceconnect/%@/request", kManagerUUID];
 	[[DPAWSIoTManager sharedManager] subscribeWithTopic:requestTopic messageHandler:^(id json, NSError *error) {
-		// TODO: 処理
-		NSLog(@"request:%@", json);
+		if (error) {
+			// TODO: エラー処理
+			NSLog(@"%@", error);
+			return;
+		}
+		// MQTTからHTTPへ
+		//NSLog(@"request:%@", json);
+		[DPAWSIoTUtils sendRequest:json[@"request"] handler:^(NSData *data, NSError *error) {
+			if (error) {
+				// TODO: エラー処理
+				NSLog(@"%@", error);
+				return;
+			}
+			// 返却形式にフォーマット
+			NSDictionary *resJson = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
+			NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+			[dic setObject:json[@"requestCode"] forKey:@"requestCode"];
+			[dic setObject:resJson forKey:@"response"];
+			NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dic options:0 error:&error];
+			if (error) {
+				// TODO: エラー処理
+				NSLog(@"%@", error);
+				return;
+			}
+			// レスポンスをMQTT送信
+			NSString *msg = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+			NSString *responseTopic = [NSString stringWithFormat:@"deviceconnect/%@/response", kManagerUUID];
+			NSLog(@"%@, %@", responseTopic, msg);
+			if (![[DPAWSIoTManager sharedManager] publishWithTopic:responseTopic message:msg]) {
+				// TODO: エラー処理
+			}
+		}];
 	}];
 }
 
