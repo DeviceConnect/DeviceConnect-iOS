@@ -56,7 +56,12 @@
 {
     // 指定されたプロファイルを取得する
     DConnectProfile *profile = [self profileWithName:[request profile]];
-    
+	// プロファイルの有無をチェックする
+	if (profile == nil) {
+		[response setErrorToNotSupportProfile];
+		return YES;
+	}
+
     // 各プロファイルでリクエストを処理する
     BOOL processed = YES;
     if (profile) {
@@ -91,13 +96,6 @@
         } else if ([attribute isEqualToString:DConnectAttributeNameRequestAccessToken]) {
             [request setAttribute:DConnectAuthorizationProfileAttrAccessToken];
         }
-    }
-    
-    // プロファイルの有無をチェックする
-    DConnectProfile *profile = [self profileWithName:[request profile]];
-    if (profile == nil) {
-        [response setErrorToNotSupportProfile];
-        return YES;
     }
     
     if (self.useLocalOAuth) {
