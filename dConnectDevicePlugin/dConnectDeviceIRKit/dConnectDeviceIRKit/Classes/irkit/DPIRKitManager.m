@@ -78,8 +78,6 @@ struct DPIRKitCRCInfo
     
     if (self) {
         // UIスレッドで生成しないといけないため、使用側でUIスレッドで作成する。
-        _browser = [NSNetServiceBrowser new];
-        _browser.delegate = self;
         _services = [NSMutableDictionary dictionary];
         _devices = [NSMutableDictionary dictionary];
     }
@@ -216,12 +214,20 @@ struct DPIRKitCRCInfo
 - (void) startDetection {
     DPIRLog(@"startDetection");
     [_services removeAllObjects];
+    if (_browser) {
+        [self stopDetection];
+    }
+    _browser = [NSNetServiceBrowser new];
+    _browser.delegate = self;
     [_browser searchForServicesOfType:DPIRKitServiceType inDomain:DPIRKitDomain];
 }
 
 - (void) stopDetection {
     DPIRLog(@"stopDetection");
     [_browser stop];
+    [_browser removeFromRunLoop:[NSRunLoop currentRunLoop]
+                        forMode:NSRunLoopCommonModes];
+    _browser = nil;
 }
 
 - (void) fetchMessageWithHostName:(NSString *)hostName completion:(void (^)(NSString *))completion {

@@ -131,7 +131,6 @@ DPIRKitManagerDetectionDelegate
 #pragma mark - Private Methods
 
 - (void) sendDeviceDetectionEventWithDevice:(DPIRKitDevice *)device online:(BOOL)online {
-    [[DPIRKitManager sharedInstance] startDetection];
     BOOL hit = NO;
     @synchronized (_devices) {
         
@@ -148,14 +147,25 @@ DPIRKitManagerDetectionDelegate
     }
     if ((!hit && online) || (hit && !online)) {
         
-        // デバイスが未登録なら登録する、登録済ならonlineにする
-        NSString *serviceId = device.name;
-        if ([self.serviceProvider service: serviceId]) {
-            DConnectService *service = [self.serviceProvider service: serviceId];
-            [service setOnline: YES];
-        } else {
-            DPIRKitService *service = [[DPIRKitService alloc] initWithServiceId: serviceId plugin: self];
-            [self.serviceProvider addService: service];
+        if (self.serviceProvider) {
+            if (online) {
+                // オンライン遷移の場合、デバイスが未登録なら登録し、登録済ならフラグをオンラインにする
+                NSString *serviceId = device.name;
+                if ([self.serviceProvider service: serviceId]) {
+                    DConnectService *service = [self.serviceProvider service: serviceId];
+                    [service setOnline: YES];
+                } else {
+                    DPIRKitService *service = [[DPIRKitService alloc] initWithServiceId: serviceId plugin: self];
+                    [self.serviceProvider addService: service];
+                }
+            } else {
+                // オフライン遷移の場合、デバイスが登録済ならフラグをオフラインにする
+                NSString *serviceId = device.name;
+                DConnectService *service = [self.serviceProvider service: serviceId];
+                if (service) {
+                    [service setOnline: NO];
+                }
+            }
         }
         
         NSArray *events = [_eventManager eventListForProfile:DConnectServiceDiscoveryProfileName
@@ -169,14 +179,6 @@ DPIRKitManagerDetectionDelegate
             [message setString:event.sessionKey forKey:DConnectMessageSessionKey];
             [self sendEvent:message];
         }
-    } else {
-        // デバイスが登録済ならオフラインにする
-        NSString *serviceId = device.name;
-        DConnectService *service = [self.serviceProvider service: serviceId];
-        if (service) {
-            [service setOnline: NO];
-        }
-        
     }
 }
 
@@ -263,8 +265,6 @@ DPIRKitManagerDetectionDelegate
         for (DConnectService *service in self.serviceProvider.services) {
             [service setOnline: NO];
         }
-    } else {
-//        [[DPIRKitManager sharedInstance] startDetection];
     }
 }
 
@@ -273,12 +273,12 @@ DPIRKitManagerDetectionDelegate
 
 - (void) manager:(DPIRKitManager *)manager didFindDevice:(DPIRKitDevice *)device {
     
-    NSLog(@"found a device : %@", device);
+    DPIRLog(@"found a device : %@", device);
     [self sendDeviceDetectionEventWithDevice:device online:YES];
 }
 
 - (void) manager:(DPIRKitManager *)manager didLoseDevice:(DPIRKitDevice *)device {
-    NSLog(@"lost a device : %@", device);
+    DPIRLog(@"lost a device : %@", device);
     [self sendDeviceDetectionEventWithDevice:device online:NO];
 }
 
