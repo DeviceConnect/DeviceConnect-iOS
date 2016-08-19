@@ -22,6 +22,9 @@ static NSString * const kDPSpheroRegexDecimalPoint = @"^[-+]?([0-9]*)?(\\.)?([0-
 static NSString * const kDPSpheroRegexDigit = @"^([0-9]*)?$";
 static NSString * const kDPSpheroMimeType = @"^([a-zA-Z]*)(/)([a-zA-Z]+)$";
 
+static NSString * const CONNECTION_STATE = @"connectionState";
+static NSString * const CONNECTION_STATE_ONLINE = @"online";
+static NSString * const CONNECTION_STATE_OFFLINE = @"offline";
 
 @interface DPSpheroManager ()
 
@@ -50,6 +53,14 @@ BOOL _startedCollisionSensor;
     if (self) {
         // 初期状態で有効化済み
        _isActivated = YES;
+        
+        // Sphero接続処理
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            for (NSDictionary *device in [self deviceList]) {
+                [self connectDeviceWithID:device[@"id"]];
+                
+            }
+        });
     }
     return self;
 }
@@ -69,6 +80,12 @@ BOOL _startedCollisionSensor;
 
     // すぐは復帰できないので。
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        
+        // Sphero接続処理
+        for (NSDictionary *device in [self deviceList]) {
+            [self connectDeviceWithID:device[@"id"]];
+        }
+
         [self addResponseObserver];
         // センサーを復帰
         [self startSensor:_streamingMask divisor:kSensorDivisor];
@@ -148,12 +165,22 @@ BOOL _startedCollisionSensor;
 {
     if (!_isActivated) return nil;
     
+    // [[RKRobotProvider sharedRobotProvider] robots]には、
+    // 現在接続中のものだけではなく以前に接続したことのあるデバイスも含まれている。
+    // 現在オンラインのデバイスは、robo.connection.connectionStateに
+    // RKConnectionStateJumpMainAppまたはRKConnectionStateOnlineが設定されるようである。
+    // オフラインのデバイスは、RKConnectionStateOfflineが設定されるようである。
     NSMutableArray *array = [NSMutableArray array];
     for (RKRobot *robo in [[RKRobotProvider sharedRobotProvider] robots]) {
         //NSLog(@"%@", robo);
         //NSLog(@"%@", robo.accessory.name);
         //NSLog(@"%@", robo.bluetoothAddress);
-        [array addObject:@{@"name": robo.accessory.name, @"id": robo.bluetoothAddress}];
+        NSString *connectionState = CONNECTION_STATE_OFFLINE;
+        if (robo.connection.connectionState != RKConnectionStateOffline) {
+            connectionState = CONNECTION_STATE_ONLINE;
+        }
+        
+        [array addObject:@{@"name": robo.accessory.name, @"id": robo.bluetoothAddress, CONNECTION_STATE:connectionState}];
     }
     return array;
 }
@@ -170,20 +197,28 @@ BOOL _startedCollisionSensor;
         
         NSArray *deviceList = [self deviceList];
         
-        // ServiceProviderに存在するサービスが検出されなかったならオフラインにする
+        // ServiceProviderに存在するサービスがdeviceListに存在する場合は、deviceのオンライン／オフライン状態を参照して設定する
+        // 存在しない場合は、オフラインにする
         for (DConnectService *service in [self.serviceProvider services]) {
             NSString *serviceId = [service serviceId];
-            
             BOOL isFindDevice = NO;
+            BOOL isOnline = NO;
             for (NSDictionary *device in deviceList) {
                 NSString *deviceServiceId = device[@"id"];
                 if (deviceServiceId && [serviceId localizedCaseInsensitiveCompare: deviceServiceId] == NSOrderedSame) {
                     isFindDevice = YES;
+                    if ([device[CONNECTION_STATE] isEqualToString: CONNECTION_STATE_ONLINE]) {
+                        isOnline = YES;
+                    } else {
+                        isOnline = NO;
+                    }
+                    
                     break;
                 }
             }
-            
-            if (!isFindDevice) {
+            if (isFindDevice) {
+                [service setOnline: isOnline];
+            } else {
                 [service setOnline: NO];
             }
         }
@@ -192,10 +227,21 @@ BOOL _startedCollisionSensor;
         for (NSDictionary *device in deviceList) {
             NSString *serviceId = device[@"id"];
             NSString *deviceName = device[@"name"];
-            if (![self.serviceProvider service: serviceId]) {
-                DPSpheroService *service = [[DPSpheroService alloc] initWithServiceId:serviceId
-                                                                           deviceName:deviceName
-                                                                               plugin: self.plugin];
+            BOOL isOnline = NO;
+            if ([device[CONNECTION_STATE] isEqualToString: CONNECTION_STATE_ONLINE]) {
+                isOnline = YES;
+            } else {
+                isOnline = NO;
+            }
+            
+            DConnectService *service = [self.serviceProvider service: serviceId];
+            if (service) {
+                [service setOnline: isOnline];
+            } else {
+                service = [[DPSpheroService alloc] initWithServiceId:serviceId
+                                                          deviceName:deviceName
+                                                              plugin: self.plugin];
+                [service setOnline: isOnline];
                 [self.serviceProvider addService: service];
             }
         }

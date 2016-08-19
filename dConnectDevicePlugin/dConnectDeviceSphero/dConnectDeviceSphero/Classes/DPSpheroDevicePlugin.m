@@ -51,6 +51,18 @@
                                        name:RKRobotIsNoLongerAvailableNotification
                                      object:application];
 
+            /* Regained connection noitification */
+            [notificationCenter addObserver:_self
+                                   selector:@selector(handleRobotOnline)
+                                       name:RKRobotDidGainControlNotification
+                                     object:nil];
+            
+            // Takes ~20 seconds to recognize a ball going offline
+            // Recognizes immediately when we close the connection to the ball
+            [notificationCenter addObserver:_self
+                                   selector:@selector(handleRobotOffline)
+                                       name:RKRobotIsNoLongerAvailableNotification
+                                     object:nil];
         });
     }
     
@@ -66,6 +78,12 @@
 - (void)enterNoLongerAvailable {
     [[DPSpheroManager sharedManager] applicationDidEnterBackground];
 }
+- (void)handleRobotOnline {
+    [[DPSpheroManager sharedManager] updateManageServices];
+}
+- (void)handleRobotOffline {
+    [[DPSpheroManager sharedManager] updateManageServices];
+}
 - (void) dealloc {
     
     NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
@@ -73,6 +91,8 @@
     
     [notificationCenter removeObserver:self name:UIApplicationDidBecomeActiveNotification object:application];
     [notificationCenter removeObserver:self name:UIApplicationDidEnterBackgroundNotification object:application];
+    [notificationCenter removeObserver:self name:RKRobotIsNoLongerAvailableNotification object:application];
+    [notificationCenter removeObserver:self name:RKRobotDidGainControlNotification object:application];
     [notificationCenter removeObserver:self name:RKRobotIsNoLongerAvailableNotification object:application];
 }
 @end
