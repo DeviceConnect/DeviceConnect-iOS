@@ -13,7 +13,6 @@
 #define ERROR_DOMAIN @"DPAWSIoTManager"
 
 @interface DPAWSIoTManager () {
-	BOOL _isConnected;
 }
 @end
 

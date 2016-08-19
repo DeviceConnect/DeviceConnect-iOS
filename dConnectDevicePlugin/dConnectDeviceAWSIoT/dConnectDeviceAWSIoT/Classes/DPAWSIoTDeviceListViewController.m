@@ -20,26 +20,52 @@
 
 @implementation DPAWSIoTDeviceListViewController
 
-// View表示後
-- (void)viewDidAppear:(BOOL)animated {
+// View表示時
+- (void)viewWillAppear:(BOOL)animated {
 	// アカウントの設定がない場合はログイン画面へ
 	if (![DPAWSIoTUtils hasAccount]) {
 		[self performSegueWithIdentifier:@"LoginSegue" sender:self];
 	} else {
 		// ローディング画面表示
 		[DPAWSIoTUtils showLoadingHUD:self.storyboard];
-		// ログイン
-		[DPAWSIoTUtils loginWithHandler:^(NSError *error) {
-			if (error) {
-				// ローディング画面非表示
-				[DPAWSIoTUtils hideLoadingHUD];
-				return;
-			}
-			// Shadow取得
+		if ([DPAWSIoTManager sharedManager].isConnected) {
+			// ログイン済みの場合はShadow取得
 			[self syncShadow];
-		}];
+		} else {
+			// ログイン
+			[DPAWSIoTUtils loginWithHandler:^(NSError *error) {
+				if (error) {
+					// ローディング画面非表示
+					[DPAWSIoTUtils hideLoadingHUD];
+					return;
+				}
+				// Shadow取得
+				[self syncShadow];
+			}];
+		}
 	}
 }
+
+// Shadowを同期
+- (void)syncShadow {
+	// Shadow取得
+	[DPAWSIoTUtils fetchManagerInfoWithHandler:^(NSDictionary *managers, NSDictionary *myInfo, NSError *error) {
+		// ローディング画面非表示
+		[DPAWSIoTUtils hideLoadingHUD];
+		// TODO: 処理
+		if (error) {
+			// TODO: エラー処理
+			return;
+		}
+		// テーブル再読み込み
+		_devices = managers;
+		[self.tableView reloadData];
+		NSLog(@"%@", _devices);
+	}];
+}
+
+
+#pragma mark - Events
 
 // syncボタンイベント
 - (IBAction)syncButtonPressed:(id)sender {
@@ -57,25 +83,18 @@
 
 // メニューボタンイベント
 - (IBAction)menuButtonPressed:(id)sender {
-}
-
-
-// Shadowを同期
-- (void)syncShadow {
-	// Shadow取得
-	[DPAWSIoTUtils fetchShadowWithHandler:^(id json, NSError *error) {
-		// ローディング画面非表示
-		[DPAWSIoTUtils hideLoadingHUD];
-		// TODO: 処理
-		if (error) {
-			// TODO: エラー処理
-			return;
+	// TODO: ローカライズ
+	NSString *menu1 = @"Setting AWSIoT";
+	NSString *menu2 = @"Authentication";
+	NSString *menu3 = @"Logout";
+	UIAlertController *ac = [DPAWSIoTUtils createMenu:@[menu1, menu2, menu3] handler:^(int index) {
+		switch (index) {
+			case 0:
+				[self performSegueWithIdentifier:@"SettingSegue" sender:self];
+				break;
 		}
-		// テーブル再読み込み
-		_devices = json[@"state"][@"reported"];
-		[self.tableView reloadData];
-		NSLog(@"%@", _devices);
 	}];
+	[self presentViewController:ac animated:YES completion:nil];
 }
 
 
@@ -92,10 +111,10 @@
 {
 	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
 	UILabel *label = [cell viewWithTag:1];
-	UISwitch *sw = [cell viewWithTag:2];
+//	UISwitch *sw = [cell viewWithTag:2];
 	id key = [_devices.allKeys objectAtIndex:indexPath.row];
 	label.text = _devices[key][@"name"];
-	[sw setOn:[_devices[key][@"online"] boolValue]];
+//	[sw setOn:[_devices[key][@"online"] boolValue]];
 	return cell;
 }
 

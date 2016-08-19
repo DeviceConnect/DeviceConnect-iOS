@@ -2,13 +2,19 @@
 //  DPAWSIoTUtils.h
 //  dConnectDeviceAWSIoT
 //
-//  Created by zuvola on 2016/08/12.
-//  Copyright © 2016年 NTT DOCOMO, INC. All rights reserved.
+//  Copyright (c) 2016 NTT DOCOMO, INC.
+//  Released under the MIT license
+//  http://opensource.org/licenses/mit-license.php
 //
 
 #import <UIKit/UIKit.h>
 
 @interface DPAWSIoTUtils : NSObject
+
+// ManagerUUIDを返す
++ (NSString*)managerUUID;
+// ManagerNameを返す
++ (NSString*)managerName;
 
 // アカウントの設定があるか
 + (BOOL)hasAccount;
@@ -25,7 +31,12 @@
 // ローディング画面非表示
 + (void)hideLoadingHUD;
 
-// Shadow取得
-+ (void)fetchShadowWithHandler:(void (^)(id json, NSError *error))handler;
+// Shadowからデバイス情報を取得する
++ (void)fetchManagerInfoWithHandler:(void (^)(NSDictionary *managers, NSDictionary *myInfo, NSError *error))handler;
+// 自分のデバイス情報をShadowに登録
++ (void)setManagerInfo:(BOOL)online handler:(void (^)(NSError *error))handler;
+
+// メニュー作成
++ (UIAlertController*)createMenu:(NSArray*)items handler:(void (^)(int index))handler;
 
 @end

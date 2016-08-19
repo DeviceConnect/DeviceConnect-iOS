@@ -12,6 +12,8 @@
 
 @interface DPAWSIoTManager : NSObject
 
+@property (readonly) BOOL isConnected;
+
 // 共有インスタンス
 + (instancetype)sharedManager;
 
