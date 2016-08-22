@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="sIh-io-mcp">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="sIh-io-mcp">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
@@ -41,6 +41,7 @@
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aD8-rK-ltM">
                                                     <rect key="frame" x="0.0" y="0.0" width="70" height="75"/>
                                                     <connections>
+                                                        <action selector="backNormal:" destination="mxe-B7-ksr" eventType="touchDragOutside" id="HiX-5O-cPG"/>
                                                         <action selector="backNormal:" destination="mxe-B7-ksr" eventType="touchCancel" id="VPt-s2-5uz"/>
                                                         <action selector="didTapItem:" destination="mxe-B7-ksr" eventType="touchUpInside" id="Bab-mh-81M"/>
                                                         <action selector="didTouchDown:" destination="mxe-B7-ksr" eventType="touchDown" id="pFf-S0-PIK"/>
@@ -102,6 +103,7 @@
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Cuk-KV-3vZ">
                                                     <rect key="frame" x="0.0" y="0.0" width="70" height="75"/>
                                                     <connections>
+                                                        <action selector="backNormal:" destination="PaE-c0-nDI" eventType="touchDragOutside" id="G9O-3V-MUA"/>
                                                         <action selector="backNormal:" destination="PaE-c0-nDI" eventType="touchCancel" id="aSL-Ws-i1j"/>
                                                         <action selector="didTapItem:" destination="PaE-c0-nDI" eventType="touchUpInside" id="GYd-Av-KYC"/>
                                                         <action selector="didTouchDown:" destination="PaE-c0-nDI" eventType="touchDown" id="UeN-vZ-ySF"/>
