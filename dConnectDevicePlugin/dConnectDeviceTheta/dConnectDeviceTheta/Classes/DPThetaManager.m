@@ -69,6 +69,8 @@ static int const _timeout = 500;
         _batteryLevel = 0;
         _onPhotoEventList = [NSMutableDictionary new];
         _onStatusEventList = [NSMutableDictionary new];
+        
+        [self updateManageServices: YES];
 
         // Ready to PTP/IP.
         _ptpConnection = [[PtpConnection alloc] init];

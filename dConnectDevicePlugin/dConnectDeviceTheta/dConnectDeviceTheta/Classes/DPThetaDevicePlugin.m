@@ -21,6 +21,7 @@
         self.pluginName = @"Theta (Device Connect Device Plug-in)";
         [[DPThetaManager sharedManager] setServiceProvider: self.serviceProvider];
         [[DPThetaManager sharedManager] setPlugin:self];
+        [[DPThetaManager sharedManager] init];
         
         self.fileMgr = [DConnectFileManager fileManagerForPlugin:self];
         [self addProfile:[DPThetaSystemProfile new]];
