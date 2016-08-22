@@ -20,6 +20,7 @@
 #import "DeviceIconViewCell.h"
 #import "DeviceMoreViewCell.h"
 #import "GHDeviceListViewController.h"
+#import "GHDeviceUtil.h"
 
 @interface ViewController ()
 {
@@ -86,6 +87,12 @@
 {
 
     [super viewWillAppear:animated];
+
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
     __weak ViewController* _self = self;
     NSUserDefaults* def = [NSUserDefaults standardUserDefaults];
     if ([def boolForKey:IS_INITIAL_GUIDE_OPEN]) {
@@ -94,14 +101,10 @@
         [_self.collectionView reloadData];
         [_self addEmptyLabelIfNeeded];
     }
-}
-
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
     if ([viewModel isNeedOpenInitialGuide]) {
         [self openInitialGuide];
     }
+
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -197,6 +200,7 @@
 
 - (void)openSafariViewInternalWithURL:(NSString*)url
 {
+    // 
     AppDelegate* delegate = [UIApplication sharedApplication].delegate;
     if (delegate.window.rootViewController.presentedViewController != nil) {
         [self dismissViewControllerAnimated:false completion:nil];
@@ -321,6 +325,9 @@
         case Device:
         {
             if ([viewModel.datasource count] < indexPath.section) {
+                break;
+            }
+            if ([[viewModel.datasource objectAtIndex:indexPath.section] count] < indexPath.row) {
                 break;
             }
             DConnectMessage* message = [[viewModel.datasource objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];

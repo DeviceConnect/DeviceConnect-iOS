@@ -139,7 +139,7 @@ static NSInteger maxIconCount = 8;
 - (void)updateDeviceList
 {
     _isDeviceLoading = YES;
-    [[GHDeviceUtil shareManager] updateDiveceList];
+    [[GHDeviceUtil shareManager] updateDeviceList];
 }
 
 //--------------------------------------------------------------//
