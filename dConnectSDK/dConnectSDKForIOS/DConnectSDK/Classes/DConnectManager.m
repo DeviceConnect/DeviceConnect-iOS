@@ -208,6 +208,10 @@ NSString *const DConnectAttributeNameRequestAccessToken = @"requestAccessToken";
     }
 }
 
+- (void)setAllowExternalIp {
+    [DConnectServerProtocol setExternalIPFlag:self.settings.useExternalIP];
+}
+
 - (void) stopByHttpServer {
     if (!self.mStartFlag) {
         return;
@@ -229,6 +233,23 @@ NSString *const DConnectAttributeNameRequestAccessToken = @"requestAccessToken";
 - (BOOL) isStarted {
     return self.mStartFlag;
 }
+
+- (void)startServiceDiscoveryForCallback:(DConnectResponseBlocks)callback
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        DConnectManagerServiceDiscoveryProfile *p = (DConnectManagerServiceDiscoveryProfile *) [self profileWithName:DConnectServiceDiscoveryProfileName];
+        DConnectResponseMessage *response = [DConnectResponseMessage message];
+        DConnectRequestMessage *request = [DConnectRequestMessage new];
+        [request setAction: DConnectMessageActionTypeGet];
+        [p getServicesRequest:request response:response];
+        if (callback) {
+            callback(response);
+        }
+    });
+}
+
+
+
 - (void) sendRequest:(DConnectRequestMessage *)request
               isHttp:(BOOL)isHttp
             callback:(DConnectResponseBlocks)callback
@@ -602,6 +623,10 @@ NSString *const DConnectAttributeNameRequestAccessToken = @"requestAccessToken";
 }
 
 - (BOOL) allowsOriginOfRequest:(DConnectRequestMessage *)requestMessage{
+    BOOL isEnable = [self.settings useOriginEnable];
+    if (!isEnable) {
+        return YES;
+    }
     NSString *originExp = [requestMessage origin];
     if (!originExp) {
         return NO;
@@ -763,6 +788,24 @@ NSString *const DConnectAttributeNameRequestAccessToken = @"requestAccessToken";
     
     // 新名称も旧名称もマッチしなかった
     return nil;
+}
+
+- (NSArray*)devicePluginsList
+{
+    return [self.mDeviceManager devicePluginList];
+}
+
+- (NSString *)devicePluginIdForServiceId:(NSString *)serviceId
+{
+    DConnectDevicePlugin *plugin = [self.mDeviceManager devicePluginForServiceId:serviceId];
+    return [plugin pluginId];
+}
+
+- (NSString *)iconFilePathForServiceId:(NSString *)serviceId isOnline:(BOOL)isOnline
+{
+    DConnectDevicePlugin *plugin = [self.mDeviceManager devicePluginForServiceId:serviceId];
+    return [plugin iconFilePath:isOnline];
+
 }
 
 @end

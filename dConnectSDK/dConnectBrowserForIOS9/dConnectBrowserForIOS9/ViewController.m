@@ -14,8 +14,12 @@
 #import <SafariServices/SafariServices.h>
 #import "AppDelegate.h"
 #import "BookmarkIconViewCell.h"
-#import "TopViewModel.h"
 #import "TopCollectionHeaderView.h"
+#import "InitialGuideViewController.h"
+#import "WebViewController.h"
+#import "DeviceIconViewCell.h"
+#import "DeviceMoreViewCell.h"
+#import "GHDeviceListViewController.h"
 
 @interface ViewController ()
 {
@@ -27,6 +31,7 @@
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (strong, nonatomic) UILabel* emptyBookmarksLabel;
 @property (strong, nonatomic) UILabel* emptyDevicesLabel;
+@property (strong, nonatomic) IBOutlet UIView* loadingView;
 
 - (IBAction)openBookmarkView:(id)sender;
 - (IBAction)onTapView:(id)sender;
@@ -40,6 +45,7 @@
     self = [super initWithCoder:aDecoder];
     if (self) {
         viewModel = [[TopViewModel alloc]init];
+        viewModel.delegate = self;
     }
     return self;
 }
@@ -54,6 +60,11 @@
                  [self openSafariViewInternalWithURL:redirectURL.absoluteString];
              }
          }];
+        [(AppDelegate *)appDelegate setRequestToCloseSafariView:^{
+            if (appDelegate.window.rootViewController.presentedViewController != nil) {
+                [self dismissViewControllerAnimated:false completion:nil];
+            }
+        }];
     }
 
     [super viewDidLoad];
@@ -74,16 +85,24 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    [viewModel updateDeviceList];
     [viewModel updateDatasource];
     [self.collectionView reloadData];
     [self addEmptyLabelIfNeeded];
 }
 
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    if ([viewModel isNeedOpenInitialGuide]) {
+        [self openInitialGuide];
+    }
+}
 
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    [viewModel saveOriginBlock];
+    [viewModel saveSettings];
 }
 
 // landscape時にはステータスバーが無くなるのでその分headerViewの高さを短くする
@@ -91,6 +110,11 @@
                                 duration:(NSTimeInterval)duration
 {
     [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
+
+    if ([[UIDevice currentDevice]userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
+        return;
+    }
+
     if ((toInterfaceOrientation == UIDeviceOrientationLandscapeLeft ||
          toInterfaceOrientation == UIDeviceOrientationLandscapeRight))
     {
@@ -112,21 +136,30 @@
 - (void)addEmptyLabelIfNeeded
 {
     if (viewModel.isBookmarksEmpty) {
-        self.emptyBookmarksLabel = [self makeEmptyLabel: CGRectMake(0, 50, 320, 220)
-                                             message:@"ブックマークがありません。\nブックマークを登録してください。"];
-        [self.collectionView addSubview:self.emptyBookmarksLabel];
+        if (!self.emptyBookmarksLabel) {
+            self.emptyBookmarksLabel = [self makeEmptyLabel: CGRectMake(0, 50, 320, 220)
+                                                    message:@"ブックマークがありません。\nブックマークを登録してください。"];
+            [self.collectionView addSubview:self.emptyBookmarksLabel];
+        }
     } else {
         [self.emptyBookmarksLabel removeFromSuperview];
         self.emptyBookmarksLabel = nil;
     }
 
-    if (viewModel.isDeviceEmpty) {
+    if (viewModel.isDeviceEmpty && !viewModel.isDeviceLoading) {
         self.emptyDevicesLabel = [self makeEmptyLabel: CGRectMake(0, 300, 320, 220)
                                              message:@"デバイスが接続されていません。\nプラグインから設定を行ってください。"];
         [self.collectionView addSubview:self.emptyDevicesLabel];
     } else {
         [self.emptyDevicesLabel removeFromSuperview];
         self.emptyDevicesLabel = nil;
+    }
+
+    if (viewModel.isDeviceLoading) {
+        self.loadingView.frame = CGRectMake(0, 300, self.collectionView.frame.size.width, 220);
+        [self.collectionView addSubview: self.loadingView];
+    } else {
+        [self.loadingView removeFromSuperview];
     }
 }
 
@@ -170,6 +203,31 @@
         [self presentViewController:sfSafariViewController animated:YES completion:nil];
     };
     loadSFSafariViewControllerBlock([NSURL URLWithString: [viewModel checkUrlString:url]]);
+}
+
+- (void)openInitialGuide
+{
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"InitialGuide" bundle:[NSBundle mainBundle]];
+    InitialGuideViewController *controller = (InitialGuideViewController*)[storyboard instantiateViewControllerWithIdentifier:@"InitialGuideViewController"];
+    [self presentViewController:controller animated:YES completion:nil];
+}
+
+- (IBAction)openHelpView
+{
+    NSString* path = [[NSBundle mainBundle]pathForResource:@"help" ofType:@"html"];
+    WebViewController* webView = [[WebViewController alloc]initWithPath: path];
+    UINavigationController* nav = [[UINavigationController alloc]initWithRootViewController:webView];
+    [self presentViewController:nav animated:YES completion:nil];
+}
+
+
+- (void)openDeviceDetail:(DConnectMessage*)message
+{
+    //TODO: デバイス確認画面用のhtmlのpathを渡す
+    NSString* path = [[NSBundle mainBundle]pathForResource:@"device" ofType:@"html"];
+    WebViewController* controller = [[WebViewController alloc]initWithPath:path];
+    UINavigationController* nav = [[UINavigationController alloc]initWithRootViewController:controller];
+    [self presentViewController:nav animated:YES completion:nil];
 }
 
 //--------------------------------------------------------------//
@@ -239,7 +297,7 @@
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     switch (indexPath.section) {
-        case 0:
+        case Bookmark:
         {
             BookmarkIconViewCell* cell = (BookmarkIconViewCell*)[collectionView dequeueReusableCellWithReuseIdentifier:@"BookmarkIconViewCell" forIndexPath:indexPath];
             Page* page = [[viewModel.datasource objectAtIndex:indexPath.section]objectAtIndex:indexPath.row];
@@ -254,7 +312,27 @@
             }
             return cell;
         }
-        case 1:
+            break;
+        case Device:
+        {
+            DConnectMessage* message = [[viewModel.datasource objectAtIndex:indexPath.section]objectAtIndex:indexPath.row];
+            if([message isKindOfClass:[DConnectMessage class]]) {
+                DeviceIconViewCell* cell = (DeviceIconViewCell*)[collectionView dequeueReusableCellWithReuseIdentifier:@"DeviceIconViewCell" forIndexPath:indexPath];
+                [cell setDevice:message];
+                __weak ViewController *weakSelf = self;
+                [cell setDidIconSelected: ^(DConnectMessage* message) {
+                    [weakSelf openDeviceDetail: message];
+                }];
+                return cell;
+            } else {
+                DeviceMoreViewCell* cell = (DeviceMoreViewCell*)[collectionView dequeueReusableCellWithReuseIdentifier:@"DeviceDetailIcon" forIndexPath:indexPath];
+                __weak ViewController *weakSelf = self;
+                [cell setDidDeviceMorelected: ^() {
+                    [weakSelf performSegueWithIdentifier:@"OpenDeviceList" sender:nil];
+                }];
+                return cell;
+            }
+        }
             break;
         default:
             break;
@@ -266,7 +344,7 @@
 - (TopCollectionHeaderView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
 {
     TopCollectionHeaderView* header = (TopCollectionHeaderView*)[collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:@"headerCell" forIndexPath:indexPath];
-    if (indexPath.section == 0) {
+    if (indexPath.section == Bookmark) {
         header.titleLabel.text = @"ブックマーク";
     } else {
         header.titleLabel.text = @"デバイス";
@@ -281,4 +359,17 @@
         [self openSafariViewInternalWithURL:cell.viewModel.page.url];
     }
 }
+
+
+//--------------------------------------------------------------//
+#pragma mark - TopViewModelDelegate
+//--------------------------------------------------------------//
+- (void)requestDatasourceReload
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.collectionView reloadSections: [NSIndexSet indexSetWithIndex:Device]];
+        [self addEmptyLabelIfNeeded];
+    });
+}
+
 @end

@@ -34,6 +34,11 @@
     __weak BookmarkIconViewCell* weakSelf = self;
     [self.viewModel bookmarkIconImage:^(UIImage *image) {
         weakSelf.iconImage.image = image;
+        if (image.size.height < 32) {
+            weakSelf.iconImage.contentMode = UIViewContentModeCenter;
+        } else {
+            weakSelf.iconImage.contentMode = UIViewContentModeScaleAspectFit;
+        }
     }];
 
     [self setEnabled:YES];
@@ -53,6 +58,7 @@
 - (IBAction)didTapItem:(UIButton *)sender {
     if (self.viewModel.page != nil) {
         self.didIconSelected(self.viewModel.page);
+        [self.viewModel updateOpenDate];
     }
     self.alpha = 1.0;
 }
@@ -61,6 +67,10 @@
     [UIView animateWithDuration:0.15 animations:^{
         self.alpha = 0.3;
     }];
+}
+
+- (IBAction)backNormal:(UIButton *)sender {
+    self.alpha = 1.0;
 }
 
 

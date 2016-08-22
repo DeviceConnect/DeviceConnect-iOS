@@ -103,6 +103,11 @@ extern NSString *const DConnectApplicationWillEnterForeground;
  */
 - (void) start;
 
+/**
+ @brief 外部IPを許可すためにHTTPServerを起動し直すためのメソッド。
+ */
+- (void)setAllowExternalIp;
+
 /*!
  @brief HTTPサーバによるDConnectManagerを開始する。
  
@@ -153,4 +158,19 @@ extern NSString *const DConnectApplicationWillEnterForeground;
  */
 - (void) sendResponse:(DConnectResponseMessage *)response;
 
+
+- (void)startServiceDiscoveryForCallback:(DConnectResponseBlocks)callback;
+
+/*!
+ @brief DConnectDevicePluginManagerから登録されているすべてのデバイスプラグインを取得する。
+ @return DConnectDevicePluginインスタンスの配列
+ */
+- (NSArray*)devicePluginsList;
+
+/*!
+ @brief serviceIdからPluginIdを取得する。
+ @return PluginId
+ */
+- (NSString *) devicePluginIdForServiceId:(NSString *)serviceId;
+- (NSString *)iconFilePathForServiceId:(NSString *)serviceId isOnline:(BOOL)isOnline;
 @end

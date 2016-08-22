@@ -14,4 +14,6 @@
  */
 @interface DConnectManagerServiceDiscoveryProfile : DConnectServiceDiscoveryProfile
 
+- (BOOL)getServicesRequest : (DConnectRequestMessage *) request response: (DConnectResponseMessage *) response;
+
 @end

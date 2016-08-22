@@ -76,8 +76,13 @@
 
 
 ///google検索APIの形式にする
+///strが'//start'または'//stop'の場合はgoogleトップを表示する
 - (NSString*)createSearchURL:(NSString*)str
 {
+    if ([str isEqualToString:@"//start"] || [str isEqualToString:@"//stop"]) {
+        return @"https://google.co.jp";
+    }
+
     NSArray *languages = [NSLocale preferredLanguages];
     NSString *lang = [languages objectAtIndex:0];
     NSString *encodedString = [str stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLHostAllowedCharacterSet]];
