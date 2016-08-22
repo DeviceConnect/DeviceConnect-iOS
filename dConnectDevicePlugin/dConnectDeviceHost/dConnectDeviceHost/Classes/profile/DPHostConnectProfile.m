@@ -64,7 +64,6 @@ typedef void (^DPHostConnectStatusBlock)(BOOL status);
 {
     self = [super init];
     if (self) {
-        self.delegate = self;
         
         _eventMgr = [DConnectEventManager sharedManagerForClass:[DPHostDevicePlugin class]];
         

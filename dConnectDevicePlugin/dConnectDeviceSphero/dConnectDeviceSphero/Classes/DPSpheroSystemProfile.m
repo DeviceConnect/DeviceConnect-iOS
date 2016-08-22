@@ -19,7 +19,6 @@
     self = [super init];
     if (self) {
         self.dataSource = self;
-        self.delegate = self;
         __weak DPSpheroSystemProfile *weakSelf = self;
         
         // API登録(dataSourceのsettingPageForRequestを実行する処理を登録)

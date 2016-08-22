@@ -67,7 +67,7 @@ DPIRKitManagerDetectionDelegate
         [manager setPlugin:self];
         
         // System Profileの追加
-        [self addProfile:[[DPIRKitSystemProfile alloc] initWithDelegate: nil dataSource: self]];
+        [self addProfile:[[DPIRKitSystemProfile alloc] initWithDataSource: self]];
         
         _devices = [NSMutableDictionary dictionary];
         id<DConnectEventCacheController> controller = [[DConnectMemoryCacheController alloc] init];
@@ -244,7 +244,6 @@ DPIRKitManagerDetectionDelegate
 {
     
     DConnectServiceInformationProfileConnectState state = DConnectServiceInformationProfileConnectStateOff;
-    // TODO: 実際に接続を確認した方が良いかの検討
     @synchronized (_devices) {
         if (_devices.count > 0) {
             DPIRKitDevice *device = [_devices objectForKey:serviceId];

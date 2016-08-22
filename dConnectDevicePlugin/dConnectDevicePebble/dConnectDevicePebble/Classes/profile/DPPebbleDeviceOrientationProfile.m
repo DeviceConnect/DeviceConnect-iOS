@@ -44,7 +44,6 @@
 {
 	self = [super init];
 	if (self) {
-		self.delegate = self;
         self.cacheOrientationData = nil;
         __weak DPPebbleDeviceOrientationProfile *weakSelf = self;
         

@@ -10,7 +10,7 @@
 #import "DConnectServiceDiscoveryProfile.h"
 #import <DConnectSDK/DConnectService.h>
 
-NSString *const DConnectServiceDiscoveryProfileName = @"servicediscovery";
+NSString *const DConnectServiceDiscoveryProfileName = @"serviceDiscovery";
 NSString *const DConnectServiceDiscoveryProfileAttrOnServiceChange = @"onservicechange";
 NSString *const DConnectServiceDiscoveryProfileParamNetworkService = @"networkService";
 NSString *const DConnectServiceDiscoveryProfileParamServices = @"services";
@@ -27,12 +27,6 @@ NSString *const DConnectServiceDiscoveryProfileNetworkTypeWiFi = @"WiFi";
 NSString *const DConnectServiceDiscoveryProfileNetworkTypeBluetooth = @"Bluetooth";
 NSString *const DConnectServiceDiscoveryProfileNetworkTypeNFC = @"NFC";
 NSString *const DConnectServiceDiscoveryProfileNetworkTypeBLE = @"BLE";
-
-@interface DConnectServiceDiscoveryProfile()
-
-- (BOOL) hasMethod:(SEL)method response:(DConnectResponseMessage *)response;
-
-@end
 
 @implementation DConnectServiceDiscoveryProfile
 
@@ -71,9 +65,6 @@ NSString *const DConnectServiceDiscoveryProfileNetworkTypeBLE = @"BLE";
 - (NSString *) profileName {
     return DConnectServiceDiscoveryProfileName;
 }
-
-
-
 
 #pragma mark - Setter
 + (void) setServices:(DConnectArray *)services target:(DConnectMessage *)message {
@@ -120,17 +111,6 @@ NSString *const DConnectServiceDiscoveryProfileNetworkTypeBLE = @"BLE";
 
 + (void) setState:(BOOL)state target:(DConnectMessage *)message {
     [message setBool:state forKey:DConnectServiceDiscoveryProfileParamState];
-}
-
-#pragma mark - Private Methods
-
-// TODO: 削除する
-- (BOOL) hasMethod:(SEL)method response:(DConnectResponseMessage *)response {
-    BOOL result = [_delegate respondsToSelector:method];
-    if (!result) {
-        [response setErrorToNotSupportAttribute];
-    }
-    return result;
 }
 
 @end

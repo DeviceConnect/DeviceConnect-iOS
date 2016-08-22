@@ -13,11 +13,10 @@
 
 @implementation DPIRKitSystemProfile
 
-- (id)initWithDelegate: (id<DConnectSystemProfileDelegate>) delegate dataSource:(id<DConnectSystemProfileDataSource>) dataSource {
+- (id)initWithDataSource: (id<DConnectSystemProfileDataSource>) dataSource {
     
     self = [super init];
     if (self) {
-        self.delegate = delegate;
         self.dataSource = dataSource;
         __weak DPIRKitSystemProfile *weakSelf = self;
         

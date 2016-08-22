@@ -274,12 +274,12 @@ typedef void (^CollisionBlock)(DConnectMessage *);
                                          profile:DPSpheroProfileName
                                        interface:interface
                                        attribute:attribute];
-    if (events == 0) {
-        if ([interface isEqualToString:DPSpheroProfileInterfaceQuaternion]) {
+    if (events == 0 && interface) {
+        if ([interface localizedCaseInsensitiveCompare:DPSpheroProfileInterfaceQuaternion] == NSOrderedSame) {
             [[DPSpheroManager sharedManager] stopSensorQuaternion];
-        } else if ([interface isEqualToString:DPSpheroProfileInterfaceLocator]) {
+        } else if ([interface localizedCaseInsensitiveCompare:DPSpheroProfileInterfaceLocator] == NSOrderedSame) {
             [[DPSpheroManager sharedManager] stopSensorLocator];
-        } else if ([interface isEqualToString:DPSpheroProfileInterfaceCollision]) {
+        } else if ([interface localizedCaseInsensitiveCompare:DPSpheroProfileInterfaceCollision] == NSOrderedSame) {
             [[DPSpheroManager sharedManager] stopSensorCollision];
         }
     }

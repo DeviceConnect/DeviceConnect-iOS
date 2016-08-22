@@ -21,7 +21,6 @@
 {
     self = [super init];
     if (self) {
-        self.delegate = self;
         __weak DPChromecastNotificationProfile *weakSelf = self;
         
         // API登録(didReceivePostNotifyRequest相当)

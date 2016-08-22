@@ -63,7 +63,6 @@ typedef NS_ENUM(NSUInteger, NotificationIndex) {
 {
     self = [super init];
     if (self) {
-        self.delegate = self;
         __weak DPHostNotificationProfile *weakSelf = self;
         
         // イベントマネージャを取得

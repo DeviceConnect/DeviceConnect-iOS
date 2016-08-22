@@ -68,21 +68,6 @@
 
 
 /*!
- @brief 本プロファイル実装を提供するサービスを設定する.
- 
- @param[in] service サービス
- */
-//- (void) setService: (DConnectService *) service;
-
-/*!
- @brief 本プロファイル実装を提供するサービスを取得する.
- 
- @retval サービス
- */
-//- (DConnectService *) service;
-
-
-/*!
  @brief Device Connect API 仕様定義リストを設定する.
  @param[in] profileSpec API 仕様定義リスト
  */
@@ -137,49 +122,48 @@
  */
 - (BOOL) didReceiveRequest:(DConnectRequestMessage *) request response:(DConnectResponseMessage *) response;
 
-/*!
- 
- @brief GETメソッドリクエスト受信時に呼び出される。
- 
- この関数でRESTfulのGETメソッドに対応する処理を記述する。
- @param[in] request リクエスト
- @param[in,out] response レスポンス
- @return responseが処理済みならYES、そうでなければNO。responseの非同期更新がまだ完了していないなどの理由でresponseを返却すべきでない状況ならばNOを返すべき。
- */
-- (BOOL) didReceiveGetRequest:(DConnectRequestMessage *) request response:(DConnectResponseMessage *) response;
-
-/*!
- @brief POSTメソッドリクエスト受信時に呼び出される。
- 
- この関数でRESTfulのPOSTメソッドに対応する処理を記述する。
- 
- @param[in] request リクエスト
- @param[in,out] response レスポンス
- @return responseが処理済みならYES、そうでなければNO。responseの非同期更新がまだ完了していないなどの理由でresponseを返却すべきでない状況ならばNOを返すべき。
- */
-- (BOOL) didReceivePostRequest:(DConnectRequestMessage *) request response:(DConnectResponseMessage *) response;
-
-/*!
- 
- @brief PUTメソッドリクエスト受信時に呼び出される。
- この関数でRESTfulのPUTメソッドに対応する処理を記述する。
- 
- @param[in] request リクエスト
- @param[in,out] response レスポンス
- @return responseが処理済みならYES、そうでなければNO。responseの非同期更新がまだ完了していないなどの理由でresponseを返却すべきでない状況ならばNOを返すべき。
- */
-- (BOOL) didReceivePutRequest:(DConnectRequestMessage *) request response:(DConnectResponseMessage *) response;
-
-/*!
- @brief DELETEメソッドリクエスト受信時に呼び出される。
- この関数でRESTfulのDELETEメソッドに対応する処理を記述する。
- 
- @param[in] request リクエスト
- @param[in,out] response レスポンス
- @return responseが処理済みならYES、そうでなければNO。responseの非同期更新がまだ完了していないなどの理由でresponseを返却すべきでない状況ならばNOを返すべき。
- */
-- (BOOL) didReceiveDeleteRequest:(DConnectRequestMessage *) request response:(DConnectResponseMessage *) response;
-
+///*!
+// 
+// @brief GETメソッドリクエスト受信時に呼び出される。
+// 
+// この関数でRESTfulのGETメソッドに対応する処理を記述する。
+// @param[in] request リクエスト
+// @param[in,out] response レスポンス
+// @return responseが処理済みならYES、そうでなければNO。responseの非同期更新がまだ完了していないなどの理由でresponseを返却すべきでない状況ならばNOを返すべき。
+// */
+//- (BOOL) didReceiveGetRequest:(DConnectRequestMessage *) request response:(DConnectResponseMessage *) response;
+//
+///*!
+// @brief POSTメソッドリクエスト受信時に呼び出される。
+// 
+// この関数でRESTfulのPOSTメソッドに対応する処理を記述する。
+// 
+// @param[in] request リクエスト
+// @param[in,out] response レスポンス
+// @return responseが処理済みならYES、そうでなければNO。responseの非同期更新がまだ完了していないなどの理由でresponseを返却すべきでない状況ならばNOを返すべき。
+// */
+//- (BOOL) didReceivePostRequest:(DConnectRequestMessage *) request response:(DConnectResponseMessage *) response;
+//
+///*!
+// 
+// @brief PUTメソッドリクエスト受信時に呼び出される。
+// この関数でRESTfulのPUTメソッドに対応する処理を記述する。
+// 
+// @param[in] request リクエスト
+// @param[in,out] response レスポンス
+// @return responseが処理済みならYES、そうでなければNO。responseの非同期更新がまだ完了していないなどの理由でresponseを返却すべきでない状況ならばNOを返すべき。
+// */
+//- (BOOL) didReceivePutRequest:(DConnectRequestMessage *) request response:(DConnectResponseMessage *) response;
+//
+///*!
+// @brief DELETEメソッドリクエスト受信時に呼び出される。
+// この関数でRESTfulのDELETEメソッドに対応する処理を記述する。
+// 
+// @param[in] request リクエスト
+// @param[in,out] response レスポンス
+// @return responseが処理済みならYES、そうでなければNO。responseの非同期更新がまだ完了していないなどの理由でresponseを返却すべきでない状況ならばNOを返すべき。
+// */
+//- (BOOL) didReceiveDeleteRequest:(DConnectRequestMessage *) request response:(DConnectResponseMessage *) response;
 
 /*!
  @brief GetメソッドのAPIパスと処理を登録する。

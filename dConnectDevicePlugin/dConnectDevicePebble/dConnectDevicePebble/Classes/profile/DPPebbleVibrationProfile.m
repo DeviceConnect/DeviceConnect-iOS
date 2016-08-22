@@ -23,7 +23,6 @@
 {
 	self = [super init];
 	if (self) {
-		self.delegate = self;
         __weak DPPebbleVibrationProfile *weakSelf = self;
         
         // API登録(didReceivePutVibrateRequest相当)

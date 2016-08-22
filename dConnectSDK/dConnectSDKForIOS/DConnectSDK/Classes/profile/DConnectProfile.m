@@ -34,11 +34,6 @@
     return self;
 }
 
-// TODO: 削除予定
-- (NSString *) apiPath: (DConnectApiEntity *) api {
-    return [api path];
-}
-
 - (NSString *) apiPath : (NSString *) interfaceName attributeName:(NSString *) attributeName {
     
     NSMutableString *path = [NSMutableString string];
@@ -137,29 +132,7 @@
     }
 }
 
-- (BOOL) didReceiveGetRequest:(DConnectRequestMessage *)request response:(DConnectResponseMessage *)response {
-    [response setErrorToNotSupportAction];
-    return YES;
-}
-
-- (BOOL) didReceivePostRequest:(DConnectRequestMessage *)request response:(DConnectResponseMessage *)response {
-    [response setErrorToNotSupportAction];
-    return  YES;
-}
-
-- (BOOL) didReceivePutRequest:(DConnectRequestMessage *)request response:(DConnectResponseMessage *)response {
-    [response setErrorToNotSupportAction];
-    return YES;
-}
-
-- (BOOL) didReceiveDeleteRequest:(DConnectRequestMessage *)request response:(DConnectResponseMessage *)response {
-    [response setErrorToNotSupportAction];
-    return YES;
-}
-
 #pragma mark - Blocks version
-
-
 
 - (void) addGetPath:(NSString *)path api:(DConnectApiFunction)api
 {

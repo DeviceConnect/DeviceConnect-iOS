@@ -13,6 +13,6 @@
 /*!
  @brief Canvas Profile for Host.
  */
-@interface DPHostCanvasProfile : DConnectCanvasProfile <DConnectCanvasProfileDelegate, DPHostCanvasViewControllerDelegate>
+@interface DPHostCanvasProfile : DConnectCanvasProfile <DPHostCanvasViewControllerDelegate>
 
 @end

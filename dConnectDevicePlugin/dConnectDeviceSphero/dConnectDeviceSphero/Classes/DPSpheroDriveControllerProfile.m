@@ -18,7 +18,6 @@
 {
     self = [super init];
     if (self) {
-        self.delegate = self;
         
         // API登録(didReceivePostDriveControllerMoveRequest相当)
         NSString *postDriveControllerMoveRequestApiPath = [self apiPath: nil

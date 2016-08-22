@@ -105,95 +105,95 @@ extern NSString *const DConnectServiceDiscoveryProfileNetworkTypeNFC;
  */
 extern NSString *const DConnectServiceDiscoveryProfileNetworkTypeBLE;
 
-@class DConnectServiceDiscoveryProfile;
-
-/*!
- @protocol DConnectServiceDiscoveryProfileDelegate
- @brief Network Service Dicovery Profileの各APIリクエスト通知用デリゲート。
- 
- Network Service Dicovery Profileの各APIへのリクエスト受信通知を受け取るデリゲート。
- */
-@protocol DConnectServiceDiscoveryProfileDelegate <NSObject>
-@optional
-
-#pragma mark - Get Methods
-
-/*!
- 
- @brief 接続されているデバイス一覧の取得リクエストを受け取ったことをデリゲートに通知する。
- 
- profileが接続されているデバイス一覧の取得リクエストを受け取ったことをデリゲートに通知する。<br>
- 実装されない場合には、Not supportのエラーが返却される。
- 
- <p>
- [対応するAPI] Service Discovery API [GET]
- </p>
- 
- @param[in] profile プロファイル
- @param[in] request リクエストパラメータ
- @param[in,out] response レスポンスパラメータ
- 
- @retval YES レスポンスパラメータを返却する。
- @retval NO レスポンスパラメータを返却しないので、@link DConnectManager::sendResponse: @endlinkで返却すること。
- */
-- (BOOL) profile:(DConnectServiceDiscoveryProfile *)profile didReceiveGetServicesRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response;
-
-#pragma mark - Put Methods
-
-/*!
- 
- @brief onservicechangeイベント登録リクエストを受け取ったことをデリゲートに通知する。
- 
- profileがonservicechangeイベント登録リクエストを受け取ったことをデリゲートに通知する。<br>
- 実装されない場合には、Not supportのエラーが返却される。
- 
- <p>
- [対応するAPI] Service Discovery Status Change Event API [PUT]
- </p>
- 
- @param[in] profile プロファイル
- @param[in] request リクエストパラメータ
- @param[in,out] response レスポンスパラメータ
- @param[in] serviceId サービスID
- @param[in] sessionKey セッションキー
- 
- @retval YES レスポンスパラメータを返却する。
- @retval NO レスポンスパラメータを返却しないので、@link DConnectManager::sendResponse: @endlinkで返却すること。
- */
-- (BOOL) profile:(DConnectServiceDiscoveryProfile *)profile didReceivePutOnServiceChangeRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response
-        serviceId:(NSString *)serviceId
-      sessionKey:(NSString *)sessionKey;
-
-#pragma mark - Delete Methods
-
-/*!
- 
- @brief onservicechangeイベント解除リクエストを受け取ったことをデリゲートに通知する。
- 
- profileがonservicechangeイベント解除リクエストを受け取ったことをデリゲートに通知する。<br>
- 実装されない場合には、Not supportのエラーが返却される。
- 
- <p>
- [対応するAPI] Service Discovery Status Change Event API [DELETE]
- </p>
- 
- @param[in] profile プロファイル
- @param[in] request リクエストパラメータ
- @param[in,out] response レスポンスパラメータ
- @param[in] serviceId サービスID
- @param[in] sessionKey セッションキー
- 
- @retval YES レスポンスパラメータを返却する。
- @retval NO レスポンスパラメータを返却しないので、@link DConnectManager::sendResponse: @endlinkで返却すること。
- */
-- (BOOL) profile:(DConnectServiceDiscoveryProfile *)profile didReceiveDeleteOnServiceChangeRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response
-        serviceId:(NSString *)serviceId
-      sessionKey:(NSString *)sessionKey;
-
-@end
+//@class DConnectServiceDiscoveryProfile;
+//
+///*!
+// @protocol DConnectServiceDiscoveryProfileDelegate
+// @brief Network Service Dicovery Profileの各APIリクエスト通知用デリゲート。
+// 
+// Network Service Dicovery Profileの各APIへのリクエスト受信通知を受け取るデリゲート。
+// */
+//@protocol DConnectServiceDiscoveryProfileDelegate <NSObject>
+//@optional
+//
+//#pragma mark - Get Methods
+//
+///*!
+// 
+// @brief 接続されているデバイス一覧の取得リクエストを受け取ったことをデリゲートに通知する。
+// 
+// profileが接続されているデバイス一覧の取得リクエストを受け取ったことをデリゲートに通知する。<br>
+// 実装されない場合には、Not supportのエラーが返却される。
+// 
+// <p>
+// [対応するAPI] Service Discovery API [GET]
+// </p>
+// 
+// @param[in] profile プロファイル
+// @param[in] request リクエストパラメータ
+// @param[in,out] response レスポンスパラメータ
+// 
+// @retval YES レスポンスパラメータを返却する。
+// @retval NO レスポンスパラメータを返却しないので、@link DConnectManager::sendResponse: @endlinkで返却すること。
+// */
+//- (BOOL) profile:(DConnectServiceDiscoveryProfile *)profile didReceiveGetServicesRequest:(DConnectRequestMessage *)request
+//        response:(DConnectResponseMessage *)response;
+//
+//#pragma mark - Put Methods
+//
+///*!
+// 
+// @brief onservicechangeイベント登録リクエストを受け取ったことをデリゲートに通知する。
+// 
+// profileがonservicechangeイベント登録リクエストを受け取ったことをデリゲートに通知する。<br>
+// 実装されない場合には、Not supportのエラーが返却される。
+// 
+// <p>
+// [対応するAPI] Service Discovery Status Change Event API [PUT]
+// </p>
+// 
+// @param[in] profile プロファイル
+// @param[in] request リクエストパラメータ
+// @param[in,out] response レスポンスパラメータ
+// @param[in] serviceId サービスID
+// @param[in] sessionKey セッションキー
+// 
+// @retval YES レスポンスパラメータを返却する。
+// @retval NO レスポンスパラメータを返却しないので、@link DConnectManager::sendResponse: @endlinkで返却すること。
+// */
+//- (BOOL) profile:(DConnectServiceDiscoveryProfile *)profile didReceivePutOnServiceChangeRequest:(DConnectRequestMessage *)request
+//        response:(DConnectResponseMessage *)response
+//        serviceId:(NSString *)serviceId
+//      sessionKey:(NSString *)sessionKey;
+//
+//#pragma mark - Delete Methods
+//
+///*!
+// 
+// @brief onservicechangeイベント解除リクエストを受け取ったことをデリゲートに通知する。
+// 
+// profileがonservicechangeイベント解除リクエストを受け取ったことをデリゲートに通知する。<br>
+// 実装されない場合には、Not supportのエラーが返却される。
+// 
+// <p>
+// [対応するAPI] Service Discovery Status Change Event API [DELETE]
+// </p>
+// 
+// @param[in] profile プロファイル
+// @param[in] request リクエストパラメータ
+// @param[in,out] response レスポンスパラメータ
+// @param[in] serviceId サービスID
+// @param[in] sessionKey セッションキー
+// 
+// @retval YES レスポンスパラメータを返却する。
+// @retval NO レスポンスパラメータを返却しないので、@link DConnectManager::sendResponse: @endlinkで返却すること。
+// */
+//- (BOOL) profile:(DConnectServiceDiscoveryProfile *)profile didReceiveDeleteOnServiceChangeRequest:(DConnectRequestMessage *)request
+//        response:(DConnectResponseMessage *)response
+//        serviceId:(NSString *)serviceId
+//      sessionKey:(NSString *)sessionKey;
+//
+//@end
 
 /*!
  @class DConnectServiceDiscoveryProfile
@@ -204,13 +204,13 @@ extern NSString *const DConnectServiceDiscoveryProfileNetworkTypeBLE;
  */
 @interface DConnectServiceDiscoveryProfile : DConnectProfile
 
-/*!
- @brief DConnectServiceDiscoveryProfileのデリゲートオブジェクト。
- 
- デリゲートは @link DConnectServiceDiscoveryProfileDelegate @endlink を実装しなくてはならない。
- デリゲートはretainされない。
- */
-@property (nonatomic, weak) id<DConnectServiceDiscoveryProfileDelegate> delegate;
+///*!
+// @brief DConnectServiceDiscoveryProfileのデリゲートオブジェクト。
+// 
+// デリゲートは @link DConnectServiceDiscoveryProfileDelegate @endlink を実装しなくてはならない。
+// デリゲートはretainされない。
+// */
+//@property (nonatomic, weak) id<DConnectServiceDiscoveryProfileDelegate> delegate;
 
 - (instancetype) initWithServiceProvider: (DConnectServiceProvider *) serviceProvider;
 
@@ -291,16 +291,3 @@ extern NSString *const DConnectServiceDiscoveryProfileNetworkTypeBLE;
 + (void) setState:(BOOL)state target:(DConnectMessage *)message;
 
 @end
-
-
-
-
-
-
-
-@interface DConnectServiceDiscoveryUtils : NSObject
-
-+ (BOOL) hasMethod:(SEL)method response:(DConnectResponseMessage *)response delegate: (id<DConnectServiceDiscoveryProfileDelegate>) delegate;
-
-@end
-

@@ -22,7 +22,6 @@
 {
 	self = [super init];
 	if (self) {
-		self.delegate = self;
         __weak id weakSelf = self;
         
         // API登録(didReceiveGetLevelRequest相当)

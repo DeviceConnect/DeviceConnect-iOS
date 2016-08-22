@@ -28,7 +28,6 @@ static NSString *const KEY_PATHS = @"paths";
 
 @interface DConnectServiceInformationProfile()
 
-- (BOOL) hasMethod:(SEL)method response:(DConnectResponseMessage *)response;
 + (void) message:(DConnectMessage *)message setConnectionState:(DConnectServiceInformationProfileConnectState)state
           forKey:(NSString *)aKey;
 @end
@@ -115,61 +114,6 @@ static NSString *const KEY_PATHS = @"paths";
 - (NSString *) profileName {
     return DConnectServiceInformationProfileName;
 }
-
-/*
-- (BOOL) didReceiveGetRequest:(DConnectRequestMessage *)request response:(DConnectResponseMessage *)response {
-    BOOL send = YES;
-    
-    NSString *interface = [request interface];
-    NSString *attribute = [request attribute];
-    NSString *serviceId = [request serviceId];
-    
-    if (!interface && !attribute) {
-        if ([_delegate respondsToSelector:@selector(profile:didReceiveGetInformationRequest:response:serviceId:)])
-        {
-            send = [_delegate profile:self didReceiveGetInformationRequest:request
-                             response:response serviceId:serviceId];
-        } else {
-            DConnectMessage *connect = [DConnectMessage message];
-            if (_dataSource) {
-                if ([_dataSource respondsToSelector:@selector(profile:wifiStateForServiceId:)]) {
-                    [DConnectServiceInformationProfile setWiFiState:
-                        [_dataSource profile:self wifiStateForServiceId:serviceId]
-                                             target:connect];
-                }
-                if ([_dataSource respondsToSelector:@selector(profile:bleStateForServiceId:)]) {
-                    [DConnectServiceInformationProfile setBLEState:
-                        [_dataSource profile:self bleStateForServiceId:serviceId]
-                                            target:connect];
-                }
-                if ([_dataSource respondsToSelector:@selector(profile:bluetoothStateForServiceId:)]) {
-                    [DConnectServiceInformationProfile setBluetoothState:
-                        [_dataSource profile:self bluetoothStateForServiceId:serviceId]
-                                                  target:connect];
-                }
-                if ([_dataSource respondsToSelector:@selector(profile:nfcStateForServiceId:)]) {
-                    [DConnectServiceInformationProfile setNFCState:
-                        [_dataSource profile:self nfcStateForServiceId:serviceId]
-                                            target:connect];
-                }
-            }
-            [DConnectServiceInformationProfile setConnect:connect target:response];
-            
-            DConnectArray *supports = [DConnectArray array];
-            NSArray *profiles = [self.provider profiles];
-            for (DConnectProfile *profile in profiles) {
-                [supports addString:[profile profileName]];
-            }
-            [DConnectServiceInformationProfile setSupports:supports target:response];
-            [response setResult:DConnectMessageResultTypeOk];
-        }
-    } else {
-        [response setErrorToNotSupportProfile];
-    }
-    
-    return send;
-}
-*/
 
 #pragma mark - Setter
 
@@ -321,14 +265,6 @@ static NSString *const KEY_PATHS = @"paths";
 }
 
 #pragma mark - Private Methods
-
-- (BOOL) hasMethod:(SEL)method response:(DConnectResponseMessage *)response {
-    BOOL result = [_delegate respondsToSelector:method];
-    if (!result) {
-        [response setErrorToNotSupportAttribute];
-    }
-    return result;
-}
 
 + (void) message:(DConnectMessage *)message setConnectionState:(DConnectServiceInformationProfileConnectState)state
           forKey:(NSString *)aKey

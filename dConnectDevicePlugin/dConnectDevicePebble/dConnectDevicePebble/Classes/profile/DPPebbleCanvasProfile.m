@@ -22,8 +22,6 @@
 {
 	self = [super init];
 	if (self) {
-		self.delegate = self;
-        
         __weak DPPebbleCanvasProfile *weakSelf = self;
         
         // API登録(didReceivePostDrawImageRequest相当)

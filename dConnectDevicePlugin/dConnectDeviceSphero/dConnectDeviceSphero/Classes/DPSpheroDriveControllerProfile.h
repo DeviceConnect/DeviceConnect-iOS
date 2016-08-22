@@ -17,6 +17,6 @@
  @class DPSpheroDriveControllerProfile
  @brief SpheroデバイスプラグインのDriveControllerProfile機能を提供する
  */
-@interface DPSpheroDriveControllerProfile : DCMDriveControllerProfile<DCMDriveControllerProfileDelegate>
+@interface DPSpheroDriveControllerProfile : DCMDriveControllerProfile
 
 @end

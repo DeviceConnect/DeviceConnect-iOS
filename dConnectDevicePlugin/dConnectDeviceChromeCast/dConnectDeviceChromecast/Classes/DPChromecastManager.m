@@ -146,7 +146,7 @@ static const NSTimeInterval DPSemaphoreTimeout = 20.0;
         for (NSDictionary *device in deviceList) {
             NSString *serviceId = device[@"id"];
             NSString *deviceName = device[@"name"];
-            DPChromecastService *service = [_serviceProvider service: serviceId];
+            DConnectService *service = [_serviceProvider service: serviceId];
             if (!service) {
                 service = [[DPChromecastService alloc] initWithServiceId:serviceId
                                                               deviceName:deviceName

@@ -26,7 +26,7 @@
 {
     self = [super init];
     if (self) {
-        self.delegate = self;
+
         _library = [ALAssetsLibrary new];
         __weak DPChromecastMediaPlayerProfile *weakSelf = self;
         

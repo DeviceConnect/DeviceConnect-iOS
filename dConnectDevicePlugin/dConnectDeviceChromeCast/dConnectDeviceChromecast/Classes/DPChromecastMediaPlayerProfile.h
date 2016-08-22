@@ -9,6 +9,6 @@
 
 #import <DConnectSDK/DConnectSDK.h>
 
-@interface DPChromecastMediaPlayerProfile : DConnectMediaPlayerProfile<DConnectMediaPlayerProfileDelegate>
+@interface DPChromecastMediaPlayerProfile : DConnectMediaPlayerProfile
 
 @end

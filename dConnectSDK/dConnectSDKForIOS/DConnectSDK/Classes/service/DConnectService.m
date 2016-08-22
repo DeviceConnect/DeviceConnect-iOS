@@ -45,8 +45,7 @@
     return self;
 }
 
-// TODO: didReceiveRequestに名称変更。
-- (BOOL) onRequest: (DConnectRequestMessage *) request response: (DConnectResponseMessage *)response {
+- (BOOL) didReceiveRequest: (DConnectRequestMessage *) request response: (DConnectResponseMessage *)response {
     DConnectProfile *profile = [self profileWithName: [request profile]];
     if (!profile) {
         [response setErrorToNotSupportProfile];

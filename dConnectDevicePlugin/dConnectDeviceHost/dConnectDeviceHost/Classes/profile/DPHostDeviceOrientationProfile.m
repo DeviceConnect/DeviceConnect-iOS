@@ -56,7 +56,6 @@ static const double EarthGravitationalAcceleration = 9.81;
     
     self = [super init];
     if (self) {
-        self.delegate = self;
         self.eventMgr = [DConnectEventManager sharedManagerForClass:[DPHostDevicePlugin class]];
         __weak DPHostDeviceOrientationProfile *weakSelf = self;
         __weak DConnectEventManager *weakEventMgr = self.eventMgr;

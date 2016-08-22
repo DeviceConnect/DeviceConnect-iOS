@@ -20,7 +20,6 @@
     self = [super init];
     if (self) {
         self.plugin = plugin;
-        self.delegate = self;
         
         __weak DPIRKitLightProfile *weakSelf = self;
         

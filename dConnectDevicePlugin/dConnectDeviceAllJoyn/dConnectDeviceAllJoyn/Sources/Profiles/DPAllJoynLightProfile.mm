@@ -36,7 +36,7 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
 #pragma mark - Interfaces
 
 
-@interface DPAllJoynLightProfile () <DConnectLightProfileDelegate> {
+@interface DPAllJoynLightProfile () {
     DPAllJoynHandler *_handler;
 }
 @end
@@ -90,7 +90,6 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
     
     self = [super init];
     if (self) {
-        self.delegate = self;
         _handler = handler;
         __weak DPAllJoynLightProfile *weakSelf = self;
         __weak DPAllJoynHandler *weakHandler = handler;

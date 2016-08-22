@@ -90,8 +90,7 @@
     DConnectServiceManager *serviceManager = [DConnectServiceManager sharedForClass: self.class];
     DConnectService *service = [serviceManager service: [request serviceId]];
     if (service) {
-        // TODO: onRequest → didReceiveRequest に名称変更。
-        return [service onRequest: request response: response];
+        return [service didReceiveRequest: request response: response];
     }
     
     // プロファイルが存在しないのでエラー
@@ -107,20 +106,22 @@
 #endif
 
     // Service Discovery APIのパスを変換
-    NSString *profileName = [request profile];
-    if ([profileName isEqualToString:DConnectProfileNameNetworkServiceDiscovery]) {
-        NSString *attribute = [request attribute];
-        if ([attribute isEqualToString:DConnectAttributeNameGetNetworkServices]) {
+    NSString *profileName = [[request profile] lowercaseString];
+    if (profileName && [profileName localizedCaseInsensitiveCompare:DConnectProfileNameNetworkServiceDiscovery] == NSOrderedSame) {
+        NSString *attribute = [[request attribute] lowercaseString];
+        if (attribute && [attribute localizedCaseInsensitiveCompare:DConnectAttributeNameGetNetworkServices] == NSOrderedSame) {
             profileName = DConnectServiceDiscoveryProfileName;
             [request setProfile:DConnectServiceDiscoveryProfileName];
             [request setAttribute:nil];
         }
-    } else if ([profileName isEqualToString:DConnectAuthorizationProfileName]) {
+    } else if (profileName && [profileName localizedCaseInsensitiveCompare:DConnectAuthorizationProfileName] == NSOrderedSame) {
         NSString *attribute = [request attribute];
-        if ([attribute isEqualToString:DConnectAttributeNameCreateClient]) {
-            [request setAttribute:DConnectAuthorizationProfileAttrGrant];
-        } else if ([attribute isEqualToString:DConnectAttributeNameRequestAccessToken]) {
-            [request setAttribute:DConnectAuthorizationProfileAttrAccessToken];
+        if (attribute) {
+            if ([attribute localizedCaseInsensitiveCompare: DConnectAttributeNameCreateClient] == NSOrderedSame) {
+                [request setAttribute:DConnectAuthorizationProfileAttrGrant];
+            } else if ([attribute localizedCaseInsensitiveCompare: DConnectAttributeNameRequestAccessToken] == NSOrderedSame) {
+                [request setAttribute:DConnectAuthorizationProfileAttrAccessToken];
+            }
         }
     }
     
@@ -129,7 +130,7 @@
         NSString *accessToken = [request accessToken];
         NSArray *scopes = DConnectPluginIgnoreProfiles();
         LocalOAuth2Main *oauth = [LocalOAuth2Main sharedOAuthForClass:[self class]];
-        LocalOAuthCheckAccessTokenResult *result = [oauth checkAccessTokenWithScope:profileName
+        LocalOAuthCheckAccessTokenResult *result = [oauth checkAccessTokenWithScope:[profileName lowercaseString]
                                                                       specialScopes:scopes
                                                                         accessToken:accessToken];
         if ([result checkResult]) {
@@ -198,7 +199,7 @@
 }
 
 - (void) removeProfile:(DConnectProfile *) profile {
-    NSString *name = [profile profileName];
+    NSString *name = [[profile profileName] lowercaseString];
     if (name) {
         [self.mProfileMap removeObjectForKey:name];
     }
@@ -206,7 +207,7 @@
 
 - (DConnectProfile *) profileWithName:(NSString *)name {
     if (name) {
-        return [self.mProfileMap objectForKey:name];
+        return [self.mProfileMap objectForKey:[name lowercaseString]];
     }
     return nil;
 }
