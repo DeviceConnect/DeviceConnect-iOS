@@ -17,9 +17,7 @@
 		8E0A4C351D1CC4BE00827DA6 /* GuideDataViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0A4C341D1CC4BE00827DA6 /* GuideDataViewController.m */; };
 		8E0A4C3A1D1CC92D00827DA6 /* InitialGuideViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0A4C391D1CC92D00827DA6 /* InitialGuideViewModel.m */; };
 		8E0A4C3F1D1D28B900827DA6 /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0A4C3E1D1D28B900827DA6 /* WebViewController.m */; };
-		8E0A4C441D1D32EF00827DA6 /* help.html in Resources */ = {isa = PBXBuildFile; fileRef = 8E0A4C431D1D32EF00827DA6 /* help.html */; };
 		8E1A05871D2DF0AA006A466B /* GHDeviceListViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E1A05861D2DF0AA006A466B /* GHDeviceListViewModel.m */; };
-		8E1A05891D2E12F5006A466B /* device.html in Resources */ = {isa = PBXBuildFile; fileRef = 8E1A05881D2E12F5006A466B /* device.html */; };
 		8E1A058D1D2E41BC006A466B /* GHDevicePluginTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E1A058C1D2E41BC006A466B /* GHDevicePluginTableViewController.m */; };
 		8E1A05911D2E423B006A466B /* GHDevicePluginViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E1A05901D2E423B006A466B /* GHDevicePluginViewModel.m */; };
 		8E3772441D24D577003D3124 /* HTMLNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E3772411D24D577003D3124 /* HTMLNode.m */; };
@@ -146,6 +144,7 @@
 		ABE71E2D1C76D3F40061973C /* bookmark@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = ABE71E2A1C76D3F40061973C /* bookmark@2x.png */; };
 		ABE71E2E1C76D3F40061973C /* folder@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = ABE71E2B1C76D3F40061973C /* folder@2x.png */; };
 		ABE71E2F1C76D3F40061973C /* star@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = ABE71E2C1C76D3F40061973C /* star@2x.png */; };
+		ABEB97C51D6AC994003BE6E7 /* help in Resources */ = {isa = PBXBuildFile; fileRef = ABEB97C41D6AC994003BE6E7 /* help */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -210,10 +209,8 @@
 		8E0A4C391D1CC92D00827DA6 /* InitialGuideViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InitialGuideViewModel.m; sourceTree = "<group>"; };
 		8E0A4C3D1D1D28B900827DA6 /* WebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebViewController.h; sourceTree = "<group>"; };
 		8E0A4C3E1D1D28B900827DA6 /* WebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebViewController.m; sourceTree = "<group>"; };
-		8E0A4C431D1D32EF00827DA6 /* help.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = help.html; sourceTree = "<group>"; };
 		8E1A05851D2DF0AA006A466B /* GHDeviceListViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHDeviceListViewModel.h; sourceTree = "<group>"; };
 		8E1A05861D2DF0AA006A466B /* GHDeviceListViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GHDeviceListViewModel.m; sourceTree = "<group>"; };
-		8E1A05881D2E12F5006A466B /* device.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = device.html; sourceTree = "<group>"; };
 		8E1A058B1D2E41BC006A466B /* GHDevicePluginTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHDevicePluginTableViewController.h; sourceTree = "<group>"; };
 		8E1A058C1D2E41BC006A466B /* GHDevicePluginTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GHDevicePluginTableViewController.m; sourceTree = "<group>"; };
 		8E1A058F1D2E423B006A466B /* GHDevicePluginViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHDevicePluginViewModel.h; sourceTree = "<group>"; };
@@ -397,6 +394,7 @@
 		ABE71E2A1C76D3F40061973C /* bookmark@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bookmark@2x.png"; sourceTree = "<group>"; };
 		ABE71E2B1C76D3F40061973C /* folder@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "folder@2x.png"; sourceTree = "<group>"; };
 		ABE71E2C1C76D3F40061973C /* star@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "star@2x.png"; sourceTree = "<group>"; };
+		ABEB97C41D6AC994003BE6E7 /* help */ = {isa = PBXFileReference; lastKnownFileType = folder; path = help; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -492,15 +490,6 @@
 				8E0A4C3E1D1D28B900827DA6 /* WebViewController.m */,
 			);
 			name = webview;
-			sourceTree = "<group>";
-		};
-		8E0A4C421D1D32EF00827DA6 /* html */ = {
-			isa = PBXGroup;
-			children = (
-				8E1A05881D2E12F5006A466B /* device.html */,
-				8E0A4C431D1D32EF00827DA6 /* help.html */,
-			);
-			path = html;
 			sourceTree = "<group>";
 		};
 		8E1A05841D2DF083006A466B /* device */ = {
@@ -946,7 +935,7 @@
 		ABE71E281C76D3620061973C /* resources */ = {
 			isa = PBXGroup;
 			children = (
-				8E0A4C421D1D32EF00827DA6 /* html */,
+				ABEB97341D6AC1E4003BE6E7 /* html */,
 				ABE71E291C76D3F40061973C /* images */,
 			);
 			name = resources;
@@ -960,6 +949,14 @@
 				ABE71E2C1C76D3F40061973C /* star@2x.png */,
 			);
 			path = images;
+			sourceTree = "<group>";
+		};
+		ABEB97341D6AC1E4003BE6E7 /* html */ = {
+			isa = PBXGroup;
+			children = (
+				ABEB97C41D6AC994003BE6E7 /* help */,
+			);
+			name = html;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1106,7 +1103,6 @@
 				AB1FAB0C1C7AC1E00013C434 /* dConnectDeviceAllJoyn_resources.bundle in Resources */,
 				AB00F49E1C71B16200689C70 /* LICENSE in Resources */,
 				8E9AE4EC1D2F421C007348DA /* DevicePlugin.storyboard in Resources */,
-				8E0A4C441D1D32EF00827DA6 /* help.html in Resources */,
 				AB00F2ED1C71A29D00689C70 /* GHFolderTitleCell.xib in Resources */,
 				AB00F2241C719B4B00689C70 /* dConnectDeviceHost_resources.bundle in Resources */,
 				AB00F49D1C71B16200689C70 /* GTMNSString-HTML.podspec in Resources */,
@@ -1122,9 +1118,9 @@
 				AB00F23A1C719B8100689C70 /* dConnectDeviceSonyCamera_resources.bundle in Resources */,
 				AB00F3281C71A93700689C70 /* Popup.storyboard in Resources */,
 				AB00F3271C71A93700689C70 /* Bookmark.storyboard in Resources */,
-				8E1A05891D2E12F5006A466B /* device.html in Resources */,
 				AB00F2361C719B7600689C70 /* dConnectDevicePebble_resources.bundle in Resources */,
 				AB00F2141C719AA800689C70 /* DConnectSDK_resources.bundle in Resources */,
+				ABEB97C51D6AC994003BE6E7 /* help in Resources */,
 				8E0A4C2F1D1CC2D500827DA6 /* InitialGuide.storyboard in Resources */,
 				AB00F2481C719B9C00689C70 /* dConnectDeviceTheta_resources.bundle in Resources */,
 				AB00F1ED1C71941800689C70 /* Main.storyboard in Resources */,

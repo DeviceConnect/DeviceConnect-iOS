@@ -214,9 +214,9 @@
 
 - (IBAction)openHelpView
 {
-    NSString* path = [[NSBundle mainBundle]pathForResource:@"help" ofType:@"html"];
-    WebViewController* webView = [[WebViewController alloc]initWithPath: path];
-    UINavigationController* nav = [[UINavigationController alloc]initWithRootViewController:webView];
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"index" ofType:@"html" inDirectory:@"help"];
+    WebViewController* webView = [[WebViewController alloc] initWithURL: [NSString stringWithFormat:@"file://%@", path]];
+    UINavigationController* nav = [[UINavigationController alloc] initWithRootViewController:webView];
     [self presentViewController:nav animated:YES completion:nil];
 }
 
