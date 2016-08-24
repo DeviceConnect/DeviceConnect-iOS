@@ -68,31 +68,6 @@ NSString *const UniquePingProfileParamPath = @"path";
 - (NSString *) profileName {
     return UniquePingProfileProfileName;
 }
-/*
-- (BOOL) didReceiveGetRequest:(DConnectRequestMessage *)request
-                     response:(DConnectResponseMessage *)response
-{
-    return [self didReceiveRequestCommon:request response:response];
-}
-
-- (BOOL) didReceivePostRequest:(DConnectRequestMessage *)request
-                     response:(DConnectResponseMessage *)response
-{
-    return [self didReceiveRequestCommon:request response:response];
-}
-
-- (BOOL) didReceivePutRequest:(DConnectRequestMessage *)request
-                      response:(DConnectResponseMessage *)response
-{
-    return [self didReceiveRequestCommon:request response:response];
-}
-
-- (BOOL) didReceiveDeleteRequest:(DConnectRequestMessage *)request
-                      response:(DConnectResponseMessage *)response
-{
-    return [self didReceiveRequestCommon:request response:response];
-}
-*/
 
 #pragma mark - Private Methods
 

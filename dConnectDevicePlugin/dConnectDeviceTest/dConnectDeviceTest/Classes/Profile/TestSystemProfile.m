@@ -34,20 +34,6 @@ NSString *const TestSystemVersion = @"2.0.0";
     return self;
 }
 
-
-#pragma mark - DConnectSystemProfileDelegate
-
-#pragma mark - Delete Methods
-
-/*
-- (BOOL) profile:(DConnectSystemProfile *)profile didReceiveDeleteEventsRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response sessionKey:(NSString *)sessionKey
-{
-    response.result = DConnectMessageResultTypeOk;
-    return YES;
-}
-*/
-
 #pragma mark - DConnectSystemProfileDataSource
 
 - (NSString *) versionOfSystemProfile:(DConnectSystemProfile *)profile {

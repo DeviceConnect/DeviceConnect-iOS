@@ -50,35 +50,4 @@
     return self;
 }
 
-#pragma mark - Put Methods
-
-/*
-- (BOOL) profile:(DConnectVibrationProfile *)profile didReceivePutVibrateRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response
-        serviceId:(NSString *)serviceId pattern:(NSArray *) pattern
-{
-    CheckDID(response, serviceId) {
-        response.result = DConnectMessageResultTypeOk;
-    }
-    
-    return YES;
-}
-*/
-
-#pragma mark - Delete Methods
-
-/*
-- (BOOL) profile:(DConnectVibrationProfile *)profile didReceiveDeleteVibrateRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response
-        serviceId:(NSString *)serviceId
-{
-    
-    CheckDID(response, serviceId) {
-        response.result = DConnectMessageResultTypeOk;
-    }
-    
-    return YES;
-}
-*/
-
 @end
