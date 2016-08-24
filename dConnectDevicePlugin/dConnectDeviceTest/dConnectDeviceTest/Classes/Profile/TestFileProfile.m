@@ -16,9 +16,11 @@ const int TestFileFileType = 0;
 NSString *const TestFileFileName = @"test.png";
 NSString *const TestFilePath = @"/test.png";
 
-@interface TestFileProfile() {
-    DConnectFileManager *_fm;
-}
+// イベント送信用のマクロ
+#define SELF_PLUGIN ((DeviceTestPlugin *)self.plugin)
+#define WEAKSELF_PLUGIN ((DeviceTestPlugin *)weakSelf.plugin)
+
+@interface TestFileProfile()
 
 - (NSString *) fileNameFromPath:(NSString *)path;
 
@@ -26,148 +28,145 @@ NSString *const TestFilePath = @"/test.png";
 
 @implementation TestFileProfile
 
-- (id) initWithDevicePlugin:(DeviceTestPlugin *)plugin {
+- (id) init {
     self = [super init];
     
     if (self) {
-        self.delegate = self;
-        _plugin = plugin;
-        _fm = [DConnectFileManager fileManagerForPlugin:_plugin];
+        __weak TestFileProfile *weakSelf = self;
+        
+        // API登録(didReceiveGetReceiveRequest相当)
+        NSString *getReceiveRequestApiPath =
+                [self apiPath: nil
+                attributeName: DConnectFileProfileAttrReceive];
+        [self addGetPath: getReceiveRequestApiPath api: ^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+
+            NSString *serviceId = request.serviceId;
+            NSString *path = [DConnectFileProfile pathFromRequest:request];
+            
+            CheckDID(response, serviceId)
+            if (path == nil) {
+                [response setErrorToInvalidRequestParameter];
+            } else {
+                response.result = DConnectMessageResultTypeOk;
+                
+                NSString *fileName = [weakSelf fileNameFromPath:path];
+                
+                NSString *uri = [[[[WEAKSELF_PLUGIN fm] URL] URLByAppendingPathComponent:fileName] absoluteString];
+                
+                [DConnectFileProfile setURI:uri target:response];
+                [DConnectFileProfile setMIMEType:TestFileMimeType target:response];
+            }
+            
+            return YES;
+        }];
+        
+        // API登録(didReceiveGetListRequest相当)
+        NSString *getListRequestApiPath =
+                [self apiPath: nil
+                attributeName: DConnectFileProfileAttrList];
+        [self addGetPath: getListRequestApiPath api: ^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+            
+            NSString *serviceId = request.serviceId;
+            CheckDID(response, serviceId) {
+                response.result = DConnectMessageResultTypeOk;
+                DConnectArray *files = [DConnectArray array];
+                DConnectMessage *file = [DConnectMessage message];
+                NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+                formatter.dateFormat = @"";
+                
+                [DConnectFileProfile setFileName:TestFileFileName target:file];
+                [DConnectFileProfile setPath:TestFilePath target:file];
+                [DConnectFileProfile setMIMEType:TestFileMimeType target:file];
+                [DConnectFileProfile setUpdateDate:[formatter stringFromDate:[NSDate date]] tareget:file];
+                [DConnectFileProfile setFileSize:TestFileFileSize target:file];
+                [DConnectFileProfile setFileType:TestFileFileType target:file];
+                
+                [files addMessage:file];
+                [DConnectFileProfile setFiles:files target:response];
+                [DConnectFileProfile setCount:files.count target:response];
+            }
+            
+            return YES;
+        }];
+        
+        // API登録(didReceivePostSendRequest相当)
+        NSString *postSendRequestApiPath =
+                [self apiPath: nil
+                attributeName: DConnectFileProfileAttrSend];
+        [self addPostPath: postSendRequestApiPath api: ^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+            
+            NSData *data = [DConnectFileProfile dataFromRequest:request];
+            NSString *serviceId = [request serviceId];
+            NSString *path = [DConnectFileProfile pathFromRequest:request];
+//            NSString *mimeType = [DConnectFileProfile mimeTypeFromRequest:request];
+            
+            CheckDID(response, serviceId)
+            if (path == nil) {
+                [response setErrorToInvalidRequestParameter];
+            } else {
+                NSString *fileName = [weakSelf fileNameFromPath:path];
+                NSString *url = [[WEAKSELF_PLUGIN fm] createFileForPath:fileName contents:data];
+                
+                if (url) {
+                    response.result = DConnectMessageResultTypeOk;
+                } else {
+                    [response setErrorToUnknown];
+                }
+            }
+            
+            return YES;
+        }];
+        
+//        // API登録(didReceivePutUpdateRequest相当)
+//        NSString *putUpdateRequestApiPath =
+//                [self apiPath: nil
+//                attributeName: ???];
+//        [self addPutPath: putUpdateRequestApiPath api: ^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+//            
+//            CheckDID(response, serviceId)
+//            if (path == nil || media == nil) {
+//                [response setErrorToInvalidRequestParameter];
+//            } else {
+//                NSString *fileName = [self fileNameFromPath:path];
+//                [_fm removeFileForPath:fileName];
+//                NSString *url = [_fm createFileForPath:fileName contents:media];
+//                
+//                if (url) {
+//                    response.result = DConnectMessageResultTypeOk;
+//                } else {
+//                    [response setErrorToUnknown];
+//                }
+//            }
+//            
+//            return YES;
+//        }];
+        
+        // API登録(didReceiveDeleteRemoveRequest相当)
+        NSString *deleteRemoveRequestApiPath =
+                [self apiPath: nil
+                attributeName: DConnectFileProfileAttrRemove];
+        [self addDeletePath: deleteRemoveRequestApiPath api: ^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+            
+            NSString *serviceId = [request serviceId];
+            NSString *path = [DConnectFileProfile pathFromRequest:request];
+
+            CheckDID(response, serviceId)
+            if (path == nil) {
+                [response setErrorToInvalidRequestParameter];
+            } else {
+                NSString *fileName = [weakSelf fileNameFromPath:path];
+                if([[WEAKSELF_PLUGIN fm] removeFileForPath:fileName]) {
+                    response.result = DConnectMessageResultTypeOk;
+                } else {
+                    [response setErrorToUnknownWithMessage:[NSString stringWithFormat:@"Failed to remove file: %@", path]];
+                }
+            }
+            
+            return YES;
+        }];
     }
     
     return self;
-}
-
-#pragma mark - Get Methods
-
-- (BOOL) profile:(DConnectFileProfile *)profile didReceiveGetReceiveRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response
-        serviceId:(NSString *)serviceId
-            path:(NSString *)path
-{
-    
-    CheckDID(response, serviceId)
-    if (path == nil) {
-        [response setErrorToInvalidRequestParameter];
-    } else {
-        response.result = DConnectMessageResultTypeOk;
-    
-        NSString *fileName = [self fileNameFromPath:path];
-        NSString *uri = [[[_fm URL] URLByAppendingPathComponent:fileName] absoluteString];
-    
-        [DConnectFileProfile setURI:uri target:response];
-        [DConnectFileProfile setMIMEType:TestFileMimeType target:response];
-    }
-    
-    return YES;
-}
-
-- (BOOL) profile:(DConnectFileProfile *)profile didReceiveGetListRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response
-        serviceId:(NSString *)serviceId
-            path:(NSString *)path
-        mimeType:(NSString *)mimeType
-           order:(NSArray *)order
-          offset:(NSNumber *)offset
-           limit:(NSNumber *)limit
-{
-    CheckDID(response, serviceId) {
-        response.result = DConnectMessageResultTypeOk;
-        DConnectArray *files = [DConnectArray array];
-        DConnectMessage *file = [DConnectMessage message];
-        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-        formatter.dateFormat = @"";
-        
-        [DConnectFileProfile setFileName:TestFileFileName target:file];
-        [DConnectFileProfile setPath:TestFilePath target:file];
-        [DConnectFileProfile setMIMEType:TestFileMimeType target:file];
-        [DConnectFileProfile setUpdateDate:[formatter stringFromDate:[NSDate date]] tareget:file];
-        [DConnectFileProfile setFileSize:TestFileFileSize target:file];
-        [DConnectFileProfile setFileType:TestFileFileType target:file];
-        
-        [files addMessage:file];
-        [DConnectFileProfile setFiles:files target:response];
-        [DConnectFileProfile setCount:files.count target:response];
-    }
-    
-    return YES;
-}
-
-#pragma mark - Post Methods
-
-- (BOOL) profile:(DConnectFileProfile *) profile didReceivePostSendRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response
-        serviceId:(NSString *)serviceId
-            path:(NSString *)path
-        mimeType:(NSString *)mimeType
-            data:(NSData *)data
-{
-    
-    CheckDID(response, serviceId)
-    if (path == nil) {
-        [response setErrorToInvalidRequestParameter];
-    } else {
-        NSString *fileName = [self fileNameFromPath:path];
-        NSString *url = [_fm createFileForPath:fileName contents:data];
-        
-        if (url) {
-            response.result = DConnectMessageResultTypeOk;
-        } else {
-            [response setErrorToUnknown];
-        }
-    }
-    
-    return YES;
-}
-
-
-#pragma mark - Put Methods
-
-- (BOOL) profile:(DConnectFileProfile *)profile didReceivePutUpdateRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response
-        serviceId:(NSString *)serviceId
-            path:(NSString *)path
-           media:(NSData *)media
-{
-    CheckDID(response, serviceId)
-    if (path == nil || media == nil) {
-        [response setErrorToInvalidRequestParameter];
-    } else {
-        NSString *fileName = [self fileNameFromPath:path];
-        [_fm removeFileForPath:fileName];
-        NSString *url = [_fm createFileForPath:fileName contents:media];
-        
-        if (url) {
-            response.result = DConnectMessageResultTypeOk;
-        } else {
-            [response setErrorToUnknown];
-        }
-    }
-    
-    return YES;
-}
-
-#pragma mark - Delete Methods
-
-- (BOOL) profile:(DConnectFileProfile *)profile didReceiveDeleteRemoveRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response
-        serviceId:(NSString *)serviceId
-            path:(NSString *)path
-{
-    
-    CheckDID(response, serviceId)
-    if (path == nil) {
-        [response setErrorToInvalidRequestParameter];
-    } else {
-        NSString *fileName = [self fileNameFromPath:path];
-        if([_fm removeFileForPath:fileName]) {
-            response.result = DConnectMessageResultTypeOk;
-        } else {
-            [response setErrorToUnknownWithMessage:[NSString stringWithFormat:@"Failed to remove file: %@", path]];
-        }
-    }
-    
-    return YES;
 }
 
 #pragma mark - Private

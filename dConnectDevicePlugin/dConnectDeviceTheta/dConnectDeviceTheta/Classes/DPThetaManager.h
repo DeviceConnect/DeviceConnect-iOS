@@ -20,7 +20,8 @@ return YES; \
 } \
 
 // イベント送信用のマクロ
-#define SELF_PLUGIN ((DPThetaDevicePlugin *)self.provider)
+#define SELF_PLUGIN ((DPThetaDevicePlugin *)self.plugin)
+#define WEAKSELF_PLUGIN ((DPThetaDevicePlugin *)weakSelf.plugin)
 
 
 /*!
@@ -30,6 +31,16 @@ return YES; \
  Thetaの機能を管理する。
  */
 @interface DPThetaManager : NSObject
+
+/*!
+ @brief ServiceProvider.
+ */
+@property(nonatomic, weak) DConnectServiceProvider *serviceProvider;
+
+/*!
+ @brief DevicePlugin.
+ */
+@property(nonatomic, weak) id plugin;
 
 /*!
  @brief DConnectのFileManager。

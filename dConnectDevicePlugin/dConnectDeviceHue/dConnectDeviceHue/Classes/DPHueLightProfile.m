@@ -22,7 +22,167 @@
 {
     self = [super init];
     if (self) {
-        self.delegate = self;
+        
+        __weak DPHueLightProfile *weakSelf = self;
+        
+        // API登録(didReceiveGetLightRequest相当)
+        NSString *getLightRequestApiPath = [self apiPath: nil
+                                           attributeName: nil];
+        [self addGetPath: getLightRequestApiPath
+                     api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+                         NSString *serviceId = [request serviceId];
+                         if (!serviceId) {
+                             [response setErrorToEmptyServiceId];
+                             return YES;
+                         }
+
+                         //Bridge Status Update
+                         [weakSelf initHueSdk:serviceId];
+                         
+                         _hueStatusBlock = ^(BridgeConnectState state){
+                             if (state != STATE_CONNECT) {
+                                 [weakSelf setErrRespose:response];
+                                 [[DConnectManager sharedManager] sendResponse:response];
+                                 return;
+                             }
+                             NSDictionary *lightList = [[DPHueManager sharedManager] getLightStatus];
+                             DConnectArray *lights = [DConnectArray array];
+                             
+                             for (PHLight *light in lightList.allValues) {
+                                 
+                                 //ライトの状態をメッセージにセットする（LightID,名前,点灯状態）
+                                 DConnectMessage *led = [DConnectMessage new];
+                                 [DConnectLightProfile setLightId:light.identifier target:led];
+                                 [DConnectLightProfile setLightName:light.name target:led];
+                                 [DConnectLightProfile setLightOn:[light.lightState.on boolValue] target:led];
+                                 [DConnectLightProfile setLightConfig:@"" target:led];
+                                 
+                                 [lights addMessage:led];
+                             }
+                             [response setResult:DConnectMessageResultTypeOk];
+                             [DConnectLightProfile setLights:lights target:response];
+                             [[DPHueManager sharedManager] deallocPHNotificationManagerWithReceiver:weakSelf];
+                             [[DPHueManager sharedManager] deallocHueSDK];
+                             [[DConnectManager sharedManager] sendResponse:response];
+                         };
+                         return NO;
+                     }];
+        
+        // API登録(didReceivePostLightRequest相当)
+        NSString *postLightRequestApiPath = [self apiPath: nil
+                                            attributeName: nil];
+        [self addPostPath: postLightRequestApiPath
+                      api:^(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+                          
+                          NSString *serviceId = [request serviceId];
+                          NSString *lightId = [DConnectLightProfile lightIdFromRequest: request];
+                          NSNumber *brightness = [DConnectLightProfile brightnessFromRequest: request];
+                          NSString *color = [DConnectLightProfile colorFromRequest: request];
+                          NSArray *flashing = [DConnectLightProfile parsePattern: [DConnectLightProfile flashingFromRequest: request] isId:NO];
+                          
+                          if (!brightness
+                              || (brightness && ([brightness doubleValue] < 0.0 || [brightness doubleValue] > 1.0))) {
+                              [response setErrorToInvalidRequestParameterWithMessage:
+                               @"Parameter 'brightness' must be a value between 0 and 1.0."];
+                              return YES;
+                          }
+                          
+                          if (!flashing) {
+                              [response setErrorToInvalidRequestParameterWithMessage:
+                               @"Parameter 'flashing' invalid."];
+                              return YES;
+                          }
+                          if (![weakSelf checkFlash:response flashing:flashing]) {
+                              return YES;
+                          }
+                          
+                          if (!serviceId) {
+                              [response setErrorToEmptyServiceId];
+                              return YES;
+                          }
+                          
+                          NSString* brightnessString = [request stringForKey:DConnectLightProfileParamBrightness];
+                          if (brightnessString
+                              && ![[DPHueManager sharedManager] isDigitWithString:brightnessString]) {
+                              [weakSelf setErrRespose:response];
+                              return YES;
+                          }
+                          return [weakSelf turnOnOffHueLightWithResponse:response
+                                                             lightId:lightId
+                                                                isOn:YES
+                                                          brightness:[brightness doubleValue]
+                                                            flashing:flashing
+                                                               color:color];
+                      }];
+        
+        // API登録(didReceivePutLightRequest相当)
+        NSString *putLightRequestApiPath = [self apiPath: nil
+                                           attributeName: nil];
+        [self addPutPath: putLightRequestApiPath
+                     api:^(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+                         
+                         NSString *serviceId = [request serviceId];
+                         NSString *lightId = [DConnectLightProfile lightIdFromRequest: request];
+                         NSNumber *brightness = [DConnectLightProfile brightnessFromRequest: request];
+                         if (!brightness
+                             || (brightness && ([brightness doubleValue] < 0.0 || [brightness doubleValue] > 1.0))) {
+                             [response setErrorToInvalidRequestParameterWithMessage:
+                              @"Parameter 'brightness' must be a value between 0 and 1.0."];
+                             return YES;
+                         }
+                         NSString *name = [request stringForKey:DConnectLightProfileParamName];
+                         NSString *color = [request stringForKey:DConnectLightProfileParamColor];
+                         NSArray *flashing = [DConnectLightProfile parsePattern: [DConnectLightProfile flashingFromRequest: request] isId:NO];
+                         if (!flashing) {
+                             [response setErrorToInvalidRequestParameterWithMessage:
+                              @"Parameter 'flashing' invalid."];
+                             return YES;
+                         }
+                         if (![weakSelf checkFlash:response flashing:flashing]) {
+                             return YES;
+                         }
+                         
+                         if (!serviceId) {
+                             [response setErrorToEmptyServiceId];
+                             return YES;
+                         }
+                         
+                         //nameが指定されてない場合はエラーで返す
+                         if (![[DPHueManager sharedManager] checkParamRequiredStringItemWithParam:name errorState:STATE_ERROR_NO_NAME]) {
+                             [weakSelf setErrRespose:response];
+                             return YES;
+                         }
+                         
+                         if (![[DPHueManager sharedManager] checkParamLightId:lightId]) {
+                             [weakSelf setErrRespose:response];
+                             return YES;
+                         }
+                         return [[DPHueManager sharedManager] changeLightNameWithLightId:lightId
+                                                                                    name:name
+                                                                                   color:color
+                                                                              brightness:[brightness doubleValue]
+                                                                                flashing:flashing
+                                                                              completion:^{
+                                                                                  [weakSelf setErrRespose:response];
+                                                                                  [[DConnectManager sharedManager] sendResponse:response];
+                                                                              }];
+                     }];
+        
+        // API登録(didReceiveDeleteLightRequest相当)
+        NSString *deleteLightRequestApiPath = [self apiPath: nil
+                                              attributeName: nil];
+        [self addDeletePath: deleteLightRequestApiPath
+                        api:^(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+                            
+                            NSString *serviceId = [request serviceId];
+                            NSString *lightId = [DConnectLightProfile lightIdFromRequest: request];
+                            
+                            if (!serviceId) {
+                                [response setErrorToEmptyServiceId];
+                                return YES;
+                            }
+                            return [weakSelf turnOnOffHueLightWithResponse:response lightId:lightId isOn:NO brightness:0  flashing:nil color:nil];
+                        }];
     }
     return self;
     
@@ -31,113 +191,11 @@
 - (void)dealloc {
     [[DPHueManager sharedManager] deallocPHNotificationManagerWithReceiver:self];
 }
-#pragma mark - light
-//Light GET ライトのリスト取得
-- (BOOL) profile:(DConnectLightProfile *)profile didReceiveGetLightRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response
-        serviceId:(NSString *)serviceId
-{
-    //Bridge Status Update
-    [self initHueSdk:serviceId];
-    __weak typeof(self) _self = self;
-    
-    _hueStatusBlock = ^(BridgeConnectState state){
-        if (state != STATE_CONNECT) {
-            [_self setErrRespose:response];
-            [[DConnectManager sharedManager] sendResponse:response];
-            return;
-        }
-        NSDictionary *lightList = [[DPHueManager sharedManager] getLightStatus];
-        DConnectArray *lights = [DConnectArray array];
-        
-        for (PHLight *light in lightList.allValues) {
-            
-            //ライトの状態をメッセージにセットする（LightID,名前,点灯状態）
-            DConnectMessage *led = [DConnectMessage new];
-            [DConnectLightProfile setLightId:light.identifier target:led];
-            [DConnectLightProfile setLightName:light.name target:led];
-            [DConnectLightProfile setLightOn:[light.lightState.on boolValue] target:led];
-            [DConnectLightProfile setLightConfig:@"" target:led];
-
-            [lights addMessage:led];
-        }
-        [response setResult:DConnectMessageResultTypeOk];
-        [DConnectLightProfile setLights:lights target:response];
-        [[DPHueManager sharedManager] deallocPHNotificationManagerWithReceiver:_self];
-        [[DPHueManager sharedManager] deallocHueSDK];
-        [[DConnectManager sharedManager] sendResponse:response];
-    };
-    return NO;
-}
-
-//Light Post 点灯
-- (BOOL) profile:(DConnectLightProfile *)profile
-    didReceivePostLightRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response serviceId:(NSString *)serviceId
-         lightId:(NSString*) lightId
-      brightness:(NSNumber*)brightness
-           color:(NSString*) color
-        flashing:(NSArray*) flashing
-{
-    NSString* brightnessString = [request stringForKey:DConnectLightProfileParamBrightness];
-    if (brightnessString
-        && ![[DPHueManager sharedManager] isDigitWithString:brightnessString]) {
-        [self setErrRespose:response];
-        return YES;
-    }
-    return [self turnOnOffHueLightWithResponse:response
-                                       lightId:lightId
-                                          isOn:YES
-                                    brightness:[brightness doubleValue]
-                                      flashing:flashing
-                                         color:color];
-}
-
-//Light Delete 消灯
-- (BOOL) profile:(DConnectLightProfile *)profile
-didReceiveDeleteLightRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response
-        serviceId:(NSString *)serviceId
-         lightId:(NSString*) lightId
-{
-    return [self turnOnOffHueLightWithResponse:response lightId:lightId isOn:NO brightness:0  flashing:nil color:nil];
-}
 
 
 
 
 
-//Light Put 名前変更
-- (BOOL) profile:(DConnectLightProfile *)profile didReceivePutLightRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response
-        serviceId:(NSString *)serviceId
-         lightId:(NSString*) lightId
-            name:(NSString *)name
-      brightness:(NSNumber*)brightness
-           color:(NSString*)color
-        flashing:(NSArray*) flashing
-{
-    //nameが指定されてない場合はエラーで返す
-    if (![[DPHueManager sharedManager] checkParamRequiredStringItemWithParam:name errorState:STATE_ERROR_NO_NAME]) {
-        [self setErrRespose:response];
-        return YES;
-    }
-
-    if (![[DPHueManager sharedManager] checkParamLightId:lightId]) {
-        [self setErrRespose:response];
-        return YES;
-    }
-    return [[DPHueManager sharedManager] changeLightNameWithLightId:lightId
-                                                                  name:name
-                                                                color:color
-                                                         brightness:[brightness doubleValue]
-                                                           flashing:flashing
-                                                         completion:^{
-                                                             [self setErrRespose:response];
-                                                             [[DConnectManager sharedManager] sendResponse:response];
-                                                         }];
-    
-}
 
 
 #pragma mark - private method

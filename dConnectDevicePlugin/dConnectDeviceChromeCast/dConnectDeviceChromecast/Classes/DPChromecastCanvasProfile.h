@@ -13,6 +13,6 @@
 /*!
  @brief Canvas Profile for ChromeCast.
  */
-@interface DPChromecastCanvasProfile:DConnectCanvasProfile<DConnectCanvasProfileDelegate>
+@interface DPChromecastCanvasProfile:DConnectCanvasProfile
 
 @end

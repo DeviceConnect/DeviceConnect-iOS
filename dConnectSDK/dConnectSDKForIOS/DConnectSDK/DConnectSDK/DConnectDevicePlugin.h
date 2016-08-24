@@ -15,6 +15,8 @@
 #import <DConnectSDK/DConnectProfileProvider.h>
 #import <DConnectSDK/DConnectRequestMessage.h>
 #import <DConnectSDK/DConnectResponseMessage.h>
+#import <DConnectSDK/DConnectServiceProvider.h>
+
 
 /*! 
  @class DConnectDevicePlugin
@@ -43,9 +45,11 @@
 
  @endcode
  */
-@interface DConnectDevicePlugin : NSObject <DConnectProfileProvider>
+@interface DConnectDevicePlugin : DConnectProfileProvider
 
-/*! 
+@property (nonatomic) DConnectServiceProvider *serviceProvider;
+
+/*!
  @brief デバイスプラグインの名前。
  
  プラグイン名を変更したい場合には、この変数に値を代入すること。
@@ -68,6 +72,17 @@
  </p>
  */
 @property (nonatomic) BOOL useLocalOAuth;
+
+
+/*!
+ @brief 任意のオブジェクトを指定してServiceManagerを初期化する。
+ オブジェクトはDConnectDevicePluginもしくはDConnectManagerのインスタンスでなければならない。
+ 
+ @param[in] object DConnectDevicePluginもしくはDConnectManagerのインスタンス
+ 
+ @retval ServiceManagerインスタンス。
+ */
+- (id) initWithObject: (id) object;
 
 /*!
  @brief イベントを送信する。
@@ -95,6 +110,8 @@
  @brief アプリケーションがフォアグランドへの遷移時に呼び出される。
  */
 - (void)applicationWillEnterForeground;
+
+- (NSArray *) serviceProfilesWithServiceId: (NSString *) serviceId;
 
 - (NSString*)iconFilePath:(BOOL)isOnline;
 

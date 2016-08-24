@@ -18,23 +18,20 @@ NSString *const TestSystemVersion = @"2.0.0";
     self = [super init];
     
     if (self) {
-        self.delegate = self;
         self.dataSource = self;
+        
+        // API登録(didReceiveDeleteEventsRequest相当)
+        NSString *getVolumeRequestApiPath =
+        [self apiPath: DConnectSettingsProfileInterfaceSound
+        attributeName: DConnectSettingsProfileAttrVolume];
+        [self addGetPath: getVolumeRequestApiPath api: ^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+        
+            response.result = DConnectMessageResultTypeOk;
+            return YES;
+        }];
     }
     
     return self;
-}
-
-
-#pragma mark - DConnectSystemProfileDelegate
-
-#pragma mark - Delete Methods
-
-- (BOOL) profile:(DConnectSystemProfile *)profile didReceiveDeleteEventsRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response sessionKey:(NSString *)sessionKey
-{
-    response.result = DConnectMessageResultTypeOk;
-    return YES;
 }
 
 #pragma mark - DConnectSystemProfileDataSource

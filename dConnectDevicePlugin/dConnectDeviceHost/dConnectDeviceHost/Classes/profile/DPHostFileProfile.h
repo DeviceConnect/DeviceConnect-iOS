@@ -9,6 +9,6 @@
 
 #import <DConnectSDK/DConnectSDK.h>
 
-@interface DPHostFileProfile : DConnectFileProfile<DConnectFileProfileDelegate>
+@interface DPHostFileProfile : DConnectFileProfile
 
 @end

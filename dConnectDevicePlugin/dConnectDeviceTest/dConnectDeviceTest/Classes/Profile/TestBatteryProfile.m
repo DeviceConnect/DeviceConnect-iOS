@@ -17,175 +17,179 @@ const BOOL TestBatteryCharging = NO;
 
 @implementation TestBatteryProfile
 
-- (id) initWithDevicePlugin:(DeviceTestPlugin *)plugin {
+- (id) init {
     self = [super init];
     
     if (self) {
-        self.delegate = self;
-        _plugin = plugin;
+        
+        __weak TestBatteryProfile *weakSelf = self;
+        
+        // API登録(didReceiveGetAllRequest相当)
+        NSString *getAllRequestApiPath = [self apiPath: nil
+                                         attributeName: nil];
+        [self addGetPath: getAllRequestApiPath api: ^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+            
+            NSString *serviceId = [request serviceId];
+            
+            CheckDID(response, serviceId) {
+                response.result = DConnectMessageResultTypeOk;
+                [DConnectBatteryProfile setCharging:TestBatteryCharging target:response];
+                [DConnectBatteryProfile setChargingTime:TestBatteryChargingTime target:response];
+                [DConnectBatteryProfile setDischargingTime:TestBatteryDischargingTime target:response];
+                [DConnectBatteryProfile setLevel:TestBatteryLevel target:response];
+            }
+            
+            return YES;
+        }];
+        
+        // API登録(didReceiveGetLevelRequest相当)
+        NSString *getLevelRequestApiPath = [self apiPath: nil
+                                           attributeName: DConnectBatteryProfileAttrLevel];
+        [self addGetPath: getLevelRequestApiPath api: ^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+            
+            NSString *serviceId = [request serviceId];
+            
+            CheckDID(response, serviceId) {
+                response.result = DConnectMessageResultTypeOk;
+                [DConnectBatteryProfile setLevel:TestBatteryLevel target:response];
+            }
+            
+            return YES;
+        }];
+        
+        // API登録(didReceiveGetChargingRequest相当)
+        NSString *getChargingRequestApiPath = [self apiPath: nil
+                                              attributeName: DConnectBatteryProfileAttrCharging];
+        [self addGetPath: getChargingRequestApiPath api: ^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+            
+            NSString *serviceId = [request serviceId];
+            
+            CheckDID(response, serviceId) {
+                response.result = DConnectMessageResultTypeOk;
+                [DConnectBatteryProfile setCharging:TestBatteryCharging target:response];
+            }
+            
+            return YES;
+        }];
+        
+        // API登録(didReceiveGetChargingTimeRequest相当)
+        NSString *getChargingTimeRequestApiPath = [self apiPath: nil
+                                              attributeName: DConnectBatteryProfileAttrChargingTime];
+        [self addGetPath: getChargingTimeRequestApiPath api: ^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+            
+            NSString *serviceId = [request serviceId];
+            
+            CheckDID(response, serviceId) {
+                response.result = DConnectMessageResultTypeOk;
+                [DConnectBatteryProfile setChargingTime:TestBatteryChargingTime target:response];
+            }
+            
+            return YES;
+        }];
+        
+        // API登録(didReceiveGetDischargingTimeRequest相当)
+        NSString *getDishargingTimeRequestApiPath = [self apiPath: nil
+                                                  attributeName: DConnectBatteryProfileAttrDischargingTime];
+        [self addGetPath: getDishargingTimeRequestApiPath api: ^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+            
+            NSString *serviceId = [request serviceId];
+            
+            CheckDID(response, serviceId) {
+                response.result = DConnectMessageResultTypeOk;
+                [DConnectBatteryProfile setDischargingTime:TestBatteryDischargingTime target:response];
+            }
+            
+            return YES;
+        }];
+
+        // API登録(didReceivePutOnChargingChangeRequest相当)
+        NSString *putOnChargingChangeRequestApiPath = [self apiPath: nil
+                                                      attributeName: DConnectBatteryProfileAttrOnChargingChange];
+        [self addPutPath: putOnChargingChangeRequestApiPath api: ^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+            
+            NSString *serviceId = [request serviceId];
+            NSString *sessionKey = [request sessionKey];
+            
+            CheckDIDAndSK(response, serviceId, sessionKey) {
+                response.result = DConnectMessageResultTypeOk;
+                
+                DConnectMessage *event = [DConnectMessage message];
+                [event setString:sessionKey forKey:DConnectMessageSessionKey];
+                [event setString:serviceId forKey:DConnectMessageServiceId];
+                [event setString:weakSelf.profileName forKey:DConnectMessageProfile];
+                [event setString:DConnectBatteryProfileAttrOnChargingChange forKey:DConnectMessageAttribute];
+                
+                DConnectMessage *battery = [DConnectMessage message];
+                [DConnectBatteryProfile setCharging:TestBatteryCharging target:battery];
+                
+                [DConnectBatteryProfile setBattery:battery target:event];
+                [weakSelf.plugin asyncSendEvent:event];
+            }
+            
+            return YES;
+        }];
+    
+        // API登録(didReceivePutOnBatteryChangeRequest相当)
+        NSString *putOnBatteryChangeRequestApiPath = [self apiPath: nil
+                                                     attributeName: DConnectBatteryProfileAttrOnBatteryChange];
+        [self addPutPath: putOnBatteryChangeRequestApiPath api: ^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+
+            NSString *serviceId = [request serviceId];
+            NSString *sessionKey = [request sessionKey];
+            
+            CheckDIDAndSK(response, serviceId, sessionKey) {
+                response.result = DConnectMessageResultTypeOk;
+                
+                DConnectMessage *event = [DConnectMessage message];
+                [event setString:sessionKey forKey:DConnectMessageSessionKey];
+                [event setString:serviceId forKey:DConnectMessageServiceId];
+                [event setString:weakSelf.profileName forKey:DConnectMessageProfile];
+                [event setString:DConnectBatteryProfileAttrOnBatteryChange forKey:DConnectMessageAttribute];
+                
+                
+                DConnectMessage *battery = [DConnectMessage message];
+                [DConnectBatteryProfile setChargingTime:TestBatteryChargingTime target:battery];
+                [DConnectBatteryProfile setDischargingTime:TestBatteryDischargingTime target:battery];
+                [DConnectBatteryProfile setLevel:TestBatteryLevel target:battery];
+                
+                [DConnectBatteryProfile setBattery:battery target:event];
+                [weakSelf.plugin asyncSendEvent:event];
+            }
+            
+            
+            return YES;
+        }];
+        // API登録(didReceiveDeleteOnChargingChangeRequest相当)
+        NSString *deleteOnChargingChangeRequestApiPath = [self apiPath: nil
+                                                         attributeName: DConnectBatteryProfileAttrOnChargingChange];
+        [self addDeletePath: deleteOnChargingChangeRequestApiPath api: ^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+            
+            NSString *serviceId = [request serviceId];
+            NSString *sessionKey = [request sessionKey];
+            
+            CheckDIDAndSK(response, serviceId, sessionKey) {
+                response.result = DConnectMessageResultTypeOk;
+            }
+            
+            return YES;
+        }];
+        // API登録(didReceiveDeleteOnBatteryChangeRequest相当)
+        NSString *deleteOnBatteryChangeRequestApiPath = [self apiPath: nil
+                                                        attributeName: DConnectBatteryProfileAttrOnBatteryChange];
+        [self addDeletePath: deleteOnBatteryChangeRequestApiPath api: ^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+            
+            NSString *serviceId = [request serviceId];
+            NSString *sessionKey = [request sessionKey];
+            
+            CheckDIDAndSK(response, serviceId, sessionKey) {
+                response.result = DConnectMessageResultTypeOk;
+            }
+            
+            return YES;
+        }];
     }
     
     return self;
 }
-
-#pragma mark - DConnectBatteryProfileDelegate
-
-- (BOOL)            profile:(DConnectBatteryProfile *)profile
-    didReceiveGetAllRequest:(DConnectRequestMessage *)request
-                   response:(DConnectResponseMessage *)response
-                  serviceId:(NSString *)serviceId
-{
-    
-    CheckDID(response, serviceId) {
-        response.result = DConnectMessageResultTypeOk;
-        [DConnectBatteryProfile setCharging:TestBatteryCharging target:response];
-        [DConnectBatteryProfile setChargingTime:TestBatteryChargingTime target:response];
-        [DConnectBatteryProfile setDischargingTime:TestBatteryDischargingTime target:response];
-        [DConnectBatteryProfile setLevel:TestBatteryLevel target:response];
-    }
-    
-    return YES;
-}
-
-- (BOOL)              profile:(DConnectBatteryProfile *)profile
-    didReceiveGetLevelRequest:(DConnectRequestMessage *)request
-                     response:(DConnectResponseMessage *)response
-                    serviceId:(NSString *)serviceId
-{
-    CheckDID(response, serviceId) {
-        response.result = DConnectMessageResultTypeOk;
-        [DConnectBatteryProfile setLevel:TestBatteryLevel target:response];
-    }
-    
-    return YES;
-}
-
-- (BOOL)                 profile:(DConnectBatteryProfile *)profile
-    didReceiveGetChargingRequest:(DConnectRequestMessage *)request
-                        response:(DConnectResponseMessage *)response
-                       serviceId:(NSString *)serviceId
-{
-    
-    CheckDID(response, serviceId) {
-        response.result = DConnectMessageResultTypeOk;
-        [DConnectBatteryProfile setCharging:TestBatteryCharging target:response];
-    }
-    
-    return YES;
-}
-
-- (BOOL)                     profile:(DConnectBatteryProfile *)profile
-    didReceiveGetChargingTimeRequest:(DConnectRequestMessage *)request
-                            response:(DConnectResponseMessage *)response
-                           serviceId:(NSString *)serviceId
-{
-    CheckDID(response, serviceId) {
-        response.result = DConnectMessageResultTypeOk;
-        [DConnectBatteryProfile setChargingTime:TestBatteryChargingTime target:response];
-    }
-    
-    return YES;
-}
-
-- (BOOL)                        profile:(DConnectBatteryProfile *)profile
-    didReceiveGetDischargingTimeRequest:(DConnectRequestMessage *)request
-                               response:(DConnectResponseMessage *)response
-                              serviceId:(NSString *)serviceId
-{
-    CheckDID(response, serviceId) {
-        response.result = DConnectMessageResultTypeOk;
-        [DConnectBatteryProfile setDischargingTime:TestBatteryDischargingTime target:response];
-    }
-    
-    return YES;
-}
-
-#pragma mark - Put Methods
-#pragma mark Event Registration
-
-- (BOOL)                         profile:(DConnectBatteryProfile *)profile
-    didReceivePutOnChargingChangeRequest:(DConnectRequestMessage *)request
-                                response:(DConnectResponseMessage *)response
-                               serviceId:(NSString *)serviceId
-                              sessionKey:(NSString *)sessionKey
-{
-    
-    CheckDIDAndSK(response, serviceId, sessionKey) {
-        response.result = DConnectMessageResultTypeOk;
-        
-        DConnectMessage *event = [DConnectMessage message];
-        [event setString:sessionKey forKey:DConnectMessageSessionKey];
-        [event setString:serviceId forKey:DConnectMessageServiceId];
-        [event setString:self.profileName forKey:DConnectMessageProfile];
-        [event setString:DConnectBatteryProfileAttrOnChargingChange forKey:DConnectMessageAttribute];
-        
-        DConnectMessage *battery = [DConnectMessage message];
-        [DConnectBatteryProfile setCharging:TestBatteryCharging target:battery];
-        
-        [DConnectBatteryProfile setBattery:battery target:event];
-        [_plugin asyncSendEvent:event];
-    }
-        
-    return YES;
-}
-
-- (BOOL)                        profile:(DConnectBatteryProfile *)profile
-    didReceivePutOnBatteryChangeRequest:(DConnectRequestMessage *)request
-                               response:(DConnectResponseMessage *)response
-                              serviceId:(NSString *)serviceId
-                             sessionKey:(NSString *)sessionKey
-{
-    CheckDIDAndSK(response, serviceId, sessionKey) {
-        response.result = DConnectMessageResultTypeOk;
-        
-        DConnectMessage *event = [DConnectMessage message];
-        [event setString:sessionKey forKey:DConnectMessageSessionKey];
-        [event setString:serviceId forKey:DConnectMessageServiceId];
-        [event setString:self.profileName forKey:DConnectMessageProfile];
-        [event setString:DConnectBatteryProfileAttrOnBatteryChange forKey:DConnectMessageAttribute];
-        
-        
-        DConnectMessage *battery = [DConnectMessage message];
-        [DConnectBatteryProfile setChargingTime:TestBatteryChargingTime target:battery];
-        [DConnectBatteryProfile setDischargingTime:TestBatteryDischargingTime target:battery];
-        [DConnectBatteryProfile setLevel:TestBatteryLevel target:battery];
-        
-        [DConnectBatteryProfile setBattery:battery target:event];
-        [_plugin asyncSendEvent:event];
-    }
-
-    
-    return YES;
-}
-
-#pragma mark - Delete Methods
-
-- (BOOL)                            profile:(DConnectBatteryProfile *)profile
-    didReceiveDeleteOnChargingChangeRequest:(DConnectRequestMessage *)request
-                                   response:(DConnectResponseMessage *)response
-                                  serviceId:(NSString *)serviceId
-                                 sessionKey:(NSString *)sessionKey
-{
-    
-    CheckDIDAndSK(response, serviceId, sessionKey) {
-        response.result = DConnectMessageResultTypeOk;
-    }
-    
-    return YES;
-}
-- (BOOL)                           profile:(DConnectBatteryProfile *)profile
-    didReceiveDeleteOnBatteryChangeRequest:(DConnectRequestMessage *)request
-                                  response:(DConnectResponseMessage *)response
-                                 serviceId:(NSString *)serviceId
-                                sessionKey:(NSString *)sessionKey
-{
-    
-    CheckDIDAndSK(response, serviceId, sessionKey) {
-        response.result = DConnectMessageResultTypeOk;
-    }
-    
-    return YES;
-}
-
 
 @end

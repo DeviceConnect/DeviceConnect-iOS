@@ -17,7 +17,36 @@
     self = [super init];
     if (self) {
         self.dataSource = self;
-        self.delegate = self;
+        __weak DPChromecastSystemProfile *weakSelf = self;
+        
+        // API登録(dataSourceのsettingPageForRequestを実行する処理を登録)
+        NSString *putSettingPageForRequestApiPath = [self apiPath: DConnectSystemProfileInterfaceDevice
+                                                    attributeName: DConnectSystemProfileAttrWakeUp];
+        [self addPutPath: putSettingPageForRequestApiPath
+                     api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+                         
+                         BOOL send = [weakSelf didReceivePutWakeupRequest:request response:response];
+                         return send;
+                     }];
+        
+        // API登録(didReceiveDeleteEventsRequest相当)
+        NSString *deleteEventsRequestApiPath = [self apiPath: nil
+                                               attributeName: DConnectSystemProfileAttrEvents];
+        [self addDeletePath: deleteEventsRequestApiPath
+                        api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+                            
+                            NSString *sessionKey = [request sessionKey];
+                            
+                            DConnectEventManager *eventMgr = [DConnectEventManager sharedManagerForClass:[DPChromecastDevicePlugin class]];
+                            if ([eventMgr removeEventsForSessionKey:sessionKey]) {
+                                [response setResult:DConnectMessageResultTypeOk];
+                            } else {
+                                [response setErrorToUnknownWithMessage:
+                                 @"Failed to remove events associated with the specified session key."];
+                            }
+                            
+                            return YES;
+                        }];
     }
     return self;
 }
@@ -45,20 +74,5 @@
     return [storyBoard instantiateInitialViewController];
 }
 
-- (BOOL)              profile:(DConnectSystemProfile *)profile
-didReceiveDeleteEventsRequest:(DConnectRequestMessage *)request
-                     response:(DConnectResponseMessage *)response
-                   sessionKey:(NSString *)sessionKey
-{
-    DConnectEventManager *eventMgr = [DConnectEventManager sharedManagerForClass:[DPChromecastDevicePlugin class]];
-    if ([eventMgr removeEventsForSessionKey:sessionKey]) {
-        [response setResult:DConnectMessageResultTypeOk];
-    } else {
-        [response setErrorToUnknownWithMessage:
-         @"Failed to remove events associated with the specified session key."];
-    }
-    
-    return YES;
-}
 
 @end

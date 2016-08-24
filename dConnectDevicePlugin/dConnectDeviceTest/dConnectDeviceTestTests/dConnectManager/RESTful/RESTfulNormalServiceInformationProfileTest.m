@@ -62,10 +62,10 @@
     [supports addObject:@"battery"];
     [supports addObject:@"connect"];
     [supports addObject:@"deviceorientation"];
-    [supports addObject:@"file_descriptor"];
+    [supports addObject:@"fileDescriptor"];
     [supports addObject:@"file"];
-    [supports addObject:@"mediastream_recording"];
-    [supports addObject:@"media_player"];
+    [supports addObject:@"mediaStreamRecording"];
+    [supports addObject:@"mediaPlayer"];
     [supports addObject:@"phone"];
     [supports addObject:@"proximity"];
     [supports addObject:@"servicediscovery"];

@@ -8,6 +8,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <DConnectSDK/DConnectServiceProvider.h>
 
 @class DPIRKitDevice;
 @class DPIRKitManager;
@@ -41,12 +42,23 @@ typedef NS_ENUM(NSUInteger, DPIRKitConnectionErrorCode) {
  */
 @interface DPIRKitManager : NSObject
 
+/*!
+ @brief ServiceProvider.
+ */
+@property (nonatomic, weak) DConnectServiceProvider *serviceProvider;
+
+/*!
+ @brief DevicePlugin.
+ */
+@property (nonatomic, weak) id plugin;
+
 @property (nonatomic, copy) NSString *apiKey;
 @property (nonatomic, weak) id<DPIRKitManagerDetectionDelegate> detectionDelegate;
 
 #pragma mark - Instance Methods
 
 @property (nonatomic, readonly) BOOL isDetecting;
+
 
 /**
  検知の開始、停止。

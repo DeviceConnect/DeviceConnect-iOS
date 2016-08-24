@@ -67,7 +67,6 @@
 		AB056F981B68DDF300E1482F /* DPIRKitVirtualProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB056F971B68DDF300E1482F /* DPIRKitVirtualProfileViewController.m */; };
 		AB056F9B1B69DDFD00E1482F /* DPIRKitRegisterIRViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB056F9A1B69DDFD00E1482F /* DPIRKitRegisterIRViewController.m */; };
 		AB056FA11B6B1A2800E1482F /* DCMDevicePluginSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB056FA01B6B1A2800E1482F /* DCMDevicePluginSDK.framework */; };
-		AB056FA41B6B29EC00E1482F /* DPIRKitServiceInformationProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = AB056FA31B6B29EC00E1482F /* DPIRKitServiceInformationProfile.m */; };
 		AB056FA71B6B51DE00E1482F /* DPIRKitLightProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = AB056FA61B6B51DE00E1482F /* DPIRKitLightProfile.m */; };
 		AB056FAA1B6B5D0200E1482F /* DPIRKitTVProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = AB056FA91B6B5D0200E1482F /* DPIRKitTVProfile.m */; };
 		AB4B68FC19B4671D009939C9 /* irkit01.png in Resources */ = {isa = PBXBuildFile; fileRef = AB4B68F419B4671D009939C9 /* irkit01.png */; };
@@ -104,6 +103,8 @@
 		ABC2DB151B685AD90034C08F /* DPIRKitDBManager.m in Sources */ = {isa = PBXBuildFile; fileRef = ABC2DB141B685AD90034C08F /* DPIRKitDBManager.m */; };
 		ABC2DB181B6898E20034C08F /* DPIRKitVirtualDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = ABC2DB171B6898E20034C08F /* DPIRKitVirtualDevice.m */; };
 		ABC2DB1B1B689BBE0034C08F /* DPIRKitRESTfulRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = ABC2DB1A1B689BBE0034C08F /* DPIRKitRESTfulRequest.m */; };
+		D673DA7C1D3BBD330021F1BF /* DPIRKitService.m in Sources */ = {isa = PBXBuildFile; fileRef = D673DA7B1D3BBD330021F1BF /* DPIRKitService.m */; };
+		D6D1727A1D63F95B00444337 /* DPIRKitSystemProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = D6D172791D63F95A00444337 /* DPIRKitSystemProfile.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -191,8 +192,6 @@
 		AB056F991B69DDFD00E1482F /* DPIRKitRegisterIRViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPIRKitRegisterIRViewController.h; sourceTree = "<group>"; };
 		AB056F9A1B69DDFD00E1482F /* DPIRKitRegisterIRViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPIRKitRegisterIRViewController.m; sourceTree = "<group>"; };
 		AB056FA01B6B1A2800E1482F /* DCMDevicePluginSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DCMDevicePluginSDK.framework; path = ../DCMDevicePluginSDK/bin/DCMDevicePluginSDK.framework; sourceTree = "<group>"; };
-		AB056FA21B6B29EC00E1482F /* DPIRKitServiceInformationProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPIRKitServiceInformationProfile.h; sourceTree = "<group>"; };
-		AB056FA31B6B29EC00E1482F /* DPIRKitServiceInformationProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPIRKitServiceInformationProfile.m; sourceTree = "<group>"; };
 		AB056FA51B6B51DE00E1482F /* DPIRKitLightProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPIRKitLightProfile.h; sourceTree = "<group>"; };
 		AB056FA61B6B51DE00E1482F /* DPIRKitLightProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPIRKitLightProfile.m; sourceTree = "<group>"; };
 		AB056FA81B6B5D0200E1482F /* DPIRKitTVProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPIRKitTVProfile.h; sourceTree = "<group>"; };
@@ -228,6 +227,10 @@
 		ABC2DB171B6898E20034C08F /* DPIRKitVirtualDevice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPIRKitVirtualDevice.m; sourceTree = "<group>"; };
 		ABC2DB191B689BBE0034C08F /* DPIRKitRESTfulRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPIRKitRESTfulRequest.h; sourceTree = "<group>"; };
 		ABC2DB1A1B689BBE0034C08F /* DPIRKitRESTfulRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPIRKitRESTfulRequest.m; sourceTree = "<group>"; };
+		D673DA7A1D3BBD330021F1BF /* DPIRKitService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPIRKitService.h; sourceTree = "<group>"; };
+		D673DA7B1D3BBD330021F1BF /* DPIRKitService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPIRKitService.m; sourceTree = "<group>"; };
+		D6D172781D63F95A00444337 /* DPIRKitSystemProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPIRKitSystemProfile.h; sourceTree = "<group>"; };
+		D6D172791D63F95A00444337 /* DPIRKitSystemProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPIRKitSystemProfile.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -406,6 +409,8 @@
 				30A0A2D119A3105300822B73 /* DPIRKitDevicePlugin.h */,
 				30A0A2D219A3105300822B73 /* DPIRKitDevicePlugin.m */,
 				3039F99119A70D0C00319429 /* DPIRKitConst.h */,
+				D673DA7A1D3BBD330021F1BF /* DPIRKitService.h */,
+				D673DA7B1D3BBD330021F1BF /* DPIRKitService.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -455,12 +460,12 @@
 			children = (
 				30A0A33119A4C3CD00822B73 /* DPIRKitRemoteControllerProfile.h */,
 				30A0A32D19A4B94600822B73 /* DPIRKitRemoteControllerProfile.m */,
-				AB056FA21B6B29EC00E1482F /* DPIRKitServiceInformationProfile.h */,
-				AB056FA31B6B29EC00E1482F /* DPIRKitServiceInformationProfile.m */,
 				AB056FA51B6B51DE00E1482F /* DPIRKitLightProfile.h */,
 				AB056FA61B6B51DE00E1482F /* DPIRKitLightProfile.m */,
 				AB056FA81B6B5D0200E1482F /* DPIRKitTVProfile.h */,
 				AB056FA91B6B5D0200E1482F /* DPIRKitTVProfile.m */,
+				D6D172781D63F95A00444337 /* DPIRKitSystemProfile.h */,
+				D6D172791D63F95A00444337 /* DPIRKitSystemProfile.m */,
 			);
 			path = profile;
 			sourceTree = "<group>";
@@ -694,9 +699,9 @@
 				3007FBFF19CD4735005F42CD /* DPIRKitWiFiSelectionGuideViewController.m in Sources */,
 				30A0A2DA19A3164A00822B73 /* DPIRKitDevice.m in Sources */,
 				AB056F9B1B69DDFD00E1482F /* DPIRKitRegisterIRViewController.m in Sources */,
+				D673DA7C1D3BBD330021F1BF /* DPIRKitService.m in Sources */,
 				ABC2DB151B685AD90034C08F /* DPIRKitDBManager.m in Sources */,
 				3039F92A19A5D97E00319429 /* NSString+Hex.m in Sources */,
-				AB056FA41B6B29EC00E1482F /* DPIRKitServiceInformationProfile.m in Sources */,
 				ABC2DB181B6898E20034C08F /* DPIRKitVirtualDevice.m in Sources */,
 				AB6A835E1B6619AC00E4F32F /* DPIRKitVirtualDeviceViewController.m in Sources */,
 				AB056FAA1B6B5D0200E1482F /* DPIRKitTVProfile.m in Sources */,
@@ -713,6 +718,7 @@
 				ABC2DB0D1B6773E60034C08F /* DPIRKitVirtualDeviceCreateDialog.m in Sources */,
 				3039F98419A5F69800319429 /* DPIRKitConnectionGuideViewController.m in Sources */,
 				30A1EBDF19A8D16600E6CCE9 /* DPIRKitWiFiFormViewController.m in Sources */,
+				D6D1727A1D63F95B00444337 /* DPIRKitSystemProfile.m in Sources */,
 				AB056F981B68DDF300E1482F /* DPIRKitVirtualProfileViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

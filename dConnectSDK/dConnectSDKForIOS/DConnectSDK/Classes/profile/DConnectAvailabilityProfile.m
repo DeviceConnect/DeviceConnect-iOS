@@ -14,14 +14,23 @@ NSString *const DConnectAvailabilityProfileName = @"availability";
 
 @implementation DConnectAvailabilityProfile
 
-- (NSString *) profileName {
-    return DConnectAvailabilityProfileName;
+- (id) init {
+    self = [super init];
+    if (self) {
+        
+        NSString *getApiPath = [self apiPath: nil
+                               attributeName: nil];
+        [self addGetPath: getApiPath
+                     api:^(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+                         [response setResult:DConnectMessageResultTypeOk];
+                         return YES;
+                     }];
+    }
+    return self;
 }
 
-- (BOOL) didReceiveGetRequest:(DConnectRequestMessage *)request response:(DConnectResponseMessage *)response
-{
-    [response setResult:DConnectMessageResultTypeOk];
-    return YES;
+- (NSString *) profileName {
+    return DConnectAvailabilityProfileName;
 }
 
 @end

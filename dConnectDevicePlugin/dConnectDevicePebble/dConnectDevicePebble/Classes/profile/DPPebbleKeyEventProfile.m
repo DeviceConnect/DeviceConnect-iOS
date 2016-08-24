@@ -33,11 +33,162 @@ static const UInt64 CACHE_RETENTION_TIME = 10000;
 {
     self = [super init];
     if (self) {
-        self.delegate = self;
+        __weak DPPebbleKeyEventProfile *weakSelf = self;
         mOnDownCache = nil;
         mOnDownCacheTime = 0;
         mOnUpCache = nil;
         mOnUpCacheTime = 0;
+        
+        // API登録(didReceiveGetOnDownRequest相当)
+        NSString *getOnDownRequestApiPath = [self apiPath: nil
+                                            attributeName: DConnectKeyEventProfileAttrOnDown];
+        [self addGetPath: getOnDownRequestApiPath
+                     api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+                         [response setResult:DConnectMessageResultTypeOk];
+                         DConnectMessage *keyevent = [weakSelf getKeyEventCache:DConnectKeyEventProfileAttrOnDown];
+                         [DConnectKeyEventProfile setKeyEvent:keyevent target:response];
+                         return YES;
+                     }];
+        
+        // API登録(didReceiveGetOnUpRequest相当)
+        NSString *getOnUpRequestApiPath = [self apiPath: nil
+                                          attributeName: DConnectKeyEventProfileAttrOnUp];
+        [self addGetPath: getOnUpRequestApiPath
+                     api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+                         [response setResult:DConnectMessageResultTypeOk];
+                         DConnectMessage *keyevent = [weakSelf getKeyEventCache:DConnectKeyEventProfileAttrOnUp];
+                         [DConnectKeyEventProfile setKeyEvent:keyevent target:response];
+                         return YES;
+                     }];
+        
+        // API登録(didReceivePutOnDownRequest相当)
+        NSString *putOnDownRequestApiPath = [self apiPath: nil
+                                            attributeName: DConnectKeyEventProfileAttrOnDown];
+        [self addPutPath: putOnDownRequestApiPath
+                     api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+                         __block BOOL responseFlg = YES;
+                         // Event registration.
+                         [DPPebbleProfileUtil handleRequest:request response:response isRemove:NO callback:^{
+                             NSString *serviceId = [request serviceId];
+                             
+                             // Register to Pebble.
+                             [[DPPebbleManager sharedManager] registOnDownEvent:serviceId callback:^(NSError *error) {
+                                 // Registration success.
+                                 // Error check.
+                                 [DPPebbleProfileUtil handleErrorNormal:error response:response];
+                                 
+                             } eventCallback:^(long attr, int keyId, int keyType) {
+                                 // Create DConnect message
+                                 DConnectMessage *message = [DConnectMessage message];
+                                 [DConnectKeyEventProfile setId:keyId + [weakSelf getKeyTypeFlagValue:keyType] target:message];
+                                 [DConnectKeyEventProfile setConfig:[weakSelf getConfig:keyType KeyCode:keyId] target:message];
+                                 
+                                 [weakSelf setKeyEventCache:(NSString *)DConnectKeyEventProfileAttrOnDown
+                                               keyeventData:(DConnectMessage *)message];
+                                 
+                                 // Send event to DConnect.
+                                 [DPPebbleProfileUtil sendMessageWithPlugin:weakSelf.plugin
+                                                                      profile:DConnectKeyEventProfileName
+                                                                    attribute:DConnectKeyEventProfileAttrOnDown
+                                                                    serviceID:serviceId
+                                                              messageCallback:^(DConnectMessage *eventMsg) {
+                                                                  // Add message to event.
+                                                                  [DConnectKeyEventProfile setKeyEvent:message target:eventMsg];
+                                                              } deleteCallback:^ {
+                                                                  // Remove Pebble of events.
+                                                                  [[DPPebbleManager sharedManager] deleteOnDownEvent:serviceId callback:^(NSError *error) {
+                                                                      if (error) NSLog(@"Error:%@", error);
+                                                                  }];
+                                                              }];
+                             }];
+                             
+                             responseFlg = NO;
+                         }];
+                         
+                         return responseFlg;
+                     }];
+        
+        // API登録(didReceivePutOnUpRequest相当)
+        NSString *putOnOnUpRequestApiPath = [self apiPath: nil
+                                            attributeName: DConnectKeyEventProfileAttrOnUp];
+        [self addPutPath: putOnOnUpRequestApiPath
+                     api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+                         __block BOOL responseFlg = YES;
+                         // Event registration.
+                         [DPPebbleProfileUtil handleRequest:request response:response isRemove:NO callback:^{
+                             NSString *serviceId = [request serviceId];
+                             
+                             // Register to Pebble.
+                             [[DPPebbleManager sharedManager] registOnUpEvent:serviceId callback:^(NSError *error) {
+                                 // Registration success.
+                                 // Error check.
+                                 [DPPebbleProfileUtil handleErrorNormal:error response:response];
+                                 
+                             } eventCallback:^(long attr, int keyId, int keyType) {
+                                 // Create DConnect message
+                                 DConnectMessage *message = [DConnectMessage message];
+                                 [DConnectKeyEventProfile setId:keyId + [weakSelf getKeyTypeFlagValue:keyType] target:message];
+                                 [DConnectKeyEventProfile setConfig:[weakSelf getConfig:keyType KeyCode:keyId] target:message];
+                                 
+                                 [weakSelf setKeyEventCache:(NSString *)DConnectKeyEventProfileAttrOnUp
+                                               keyeventData:(DConnectMessage *)message];
+                                 
+                                 // Send event to DConnect.
+                                 [DPPebbleProfileUtil sendMessageWithPlugin:weakSelf.plugin
+                                                                      profile:DConnectKeyEventProfileName
+                                                                    attribute:DConnectKeyEventProfileAttrOnUp
+                                                                    serviceID:serviceId
+                                                              messageCallback:^(DConnectMessage *eventMsg)
+                                  {
+                                      // Add message to event.
+                                      [DConnectKeyEventProfile setKeyEvent:message target:eventMsg];
+                                  } deleteCallback:^
+                                  {
+                                      // Remove Pebble of events.
+                                      [[DPPebbleManager sharedManager] deleteOnUpEvent:serviceId callback:^(NSError *error) {
+                                          if (error) NSLog(@"Error:%@", error);
+                                      }];
+                                  }];
+                             }];
+                             
+                             responseFlg = NO;
+                         }];
+                         
+                         return responseFlg;
+                     }];
+        
+        // API登録(didReceiveDeleteOnDownRequest相当)
+        NSString *deleteOnDownRequestApiPath = [self apiPath: nil
+                                               attributeName: DConnectKeyEventProfileAttrOnDown];
+        [self addPutPath: deleteOnDownRequestApiPath
+                     api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+                         NSString *serviceId = [request serviceId];
+                         // Remove event of DConnect.
+                         [DPPebbleProfileUtil handleRequest:request response:response isRemove:YES callback:^{
+                             // Remove event of Pebble.
+                             [[DPPebbleManager sharedManager] deleteOnDownEvent:serviceId callback:^(NSError *error) {
+                                 if (error) NSLog(@"Error:%@", error);
+                             }];
+                         }];
+                         return YES;
+                     }];
+        
+        // API登録(didReceiveDeleteOnUpRequest相当)
+        NSString *deleteOnOnUpRequestApiPath = [self apiPath: nil
+                                               attributeName: DConnectKeyEventProfileAttrOnUp];
+        [self addPutPath: deleteOnOnUpRequestApiPath
+                     api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+                         // Remove event of DConnect.
+                         [DPPebbleProfileUtil handleRequest:request response:response isRemove:YES callback:^{
+                             NSString *serviceId = [request serviceId];
+                             // Remove event of Pebble.
+                             [[DPPebbleManager sharedManager] deleteOnUpEvent:serviceId callback:^(NSError *error) {
+                                 if (error) NSLog(@"Error:%@", error);
+                             }];
+                         }];
+                         return YES;
+                     }];
+        
     }
     return self;
     
@@ -50,11 +201,13 @@ static const UInt64 CACHE_RETENTION_TIME = 10000;
  */
 - (DConnectMessage *) getKeyEventCache:(NSString *)attr {
     UInt64 CurrentTime = (UInt64)floor((CFAbsoluteTimeGetCurrent() + kCFAbsoluteTimeIntervalSince1970) * 1000.0);
-    if ([attr isEqualToString:DConnectKeyEventProfileAttrOnDown]) {
+    if (!attr) {
+        return nil;
+    } else if ([attr localizedCaseInsensitiveCompare: DConnectKeyEventProfileAttrOnDown] == NSOrderedSame) {
         if (CurrentTime - mOnDownCacheTime <= CACHE_RETENTION_TIME) {
             return mOnDownCache;
         }
-    } else if ([attr isEqualToString:DConnectKeyEventProfileAttrOnUp]
+    } else if ([attr localizedCaseInsensitiveCompare: DConnectKeyEventProfileAttrOnUp] == NSOrderedSame
                && (CurrentTime - mOnUpCacheTime <= CACHE_RETENTION_TIME)) {
         return mOnUpCache;
     }
@@ -69,10 +222,12 @@ static const UInt64 CACHE_RETENTION_TIME = 10000;
 - (void) setKeyEventCache:(NSString *)attr
              keyeventData:(DConnectMessage *)keyeventData {
     UInt64 CurrentTime = (UInt64)floor((CFAbsoluteTimeGetCurrent() + kCFAbsoluteTimeIntervalSince1970) * 1000.0);
-    if ([attr isEqualToString:DConnectKeyEventProfileAttrOnDown]) {
+    if (!attr) {
+        return;
+    } else if ([attr localizedCaseInsensitiveCompare: DConnectKeyEventProfileAttrOnDown] == NSOrderedSame) {
         mOnDownCache = keyeventData;
         mOnDownCacheTime = CurrentTime;
-    } else if ([attr isEqualToString:DConnectKeyEventProfileAttrOnUp]) {
+    } else if ([attr localizedCaseInsensitiveCompare: DConnectKeyEventProfileAttrOnUp] == NSOrderedSame) {
         mOnUpCache = keyeventData;
         mOnUpCacheTime = CurrentTime;
     }
@@ -164,164 +319,6 @@ static const UInt64 CACHE_RETENTION_TIME = 10000;
     default:
         return DConnectKeyEventProfileKeyTypeStdKey;
     }
-}
-
-#pragma mark - DConnectKeyEventProfileDelegate
-
-// Receive get onDown request.
-- (BOOL)           profile:(DConnectKeyEventProfile *)profile
-didReceiveGetOnDownRequest:(DConnectRequestMessage *)request
-                  response:(DConnectResponseMessage *)response
-                 serviceId:(NSString *)serviceId
-{
-    [response setResult:DConnectMessageResultTypeOk];
-    DConnectMessage *keyevent = [self getKeyEventCache:DConnectKeyEventProfileAttrOnDown];
-    [DConnectKeyEventProfile setKeyEvent:keyevent target:response];
-    return YES;
-}
-
-// Receive get onUp request.
-- (BOOL)         profile:(DConnectKeyEventProfile *)profile
-didReceiveGetOnUpRequest:(DConnectRequestMessage *)request
-                response:(DConnectResponseMessage *)response
-               serviceId:(NSString *)serviceId
-{
-    [response setResult:DConnectMessageResultTypeOk];
-    DConnectMessage *keyevent = [self getKeyEventCache:DConnectKeyEventProfileAttrOnUp];
-    [DConnectKeyEventProfile setKeyEvent:keyevent target:response];
-    return YES;
-}
-
-// Receive onDown event regustration request.
-- (BOOL)           profile:(DConnectKeyEventProfile *)profile
-didReceivePutOnDownRequest:(DConnectRequestMessage *)request
-                  response:(DConnectResponseMessage *)response
-                 serviceId:(NSString *)serviceId
-                sessionKey:(NSString *)sessionKey
-{
-    __block BOOL responseFlg = YES;
-    // Event registration.
-    [DPPebbleProfileUtil handleRequest:request response:response isRemove:NO callback:^{
-        
-        // Register to Pebble.
-        [[DPPebbleManager sharedManager] registOnDownEvent:serviceId callback:^(NSError *error) {
-            // Registration success.
-            // Error check.
-            [DPPebbleProfileUtil handleErrorNormal:error response:response];
-            
-        } eventCallback:^(long attr, int keyId, int keyType) {
-            // Create DConnect message
-            DConnectMessage *message = [DConnectMessage message];
-            [DConnectKeyEventProfile setId:keyId + [self getKeyTypeFlagValue:keyType] target:message];
-            [DConnectKeyEventProfile setConfig:[self getConfig:keyType KeyCode:keyId] target:message];
-
-            [self setKeyEventCache:(NSString *)DConnectKeyEventProfileAttrOnDown
-                      keyeventData:(DConnectMessage *)message];
-
-            // Send event to DConnect.
-            [DPPebbleProfileUtil sendMessageWithProvider:self.provider
-                                                 profile:DConnectKeyEventProfileName
-                                               attribute:DConnectKeyEventProfileAttrOnDown
-                                               serviceID:serviceId
-                                         messageCallback:^(DConnectMessage *eventMsg) {
-                 // Add message to event.
-                 [DConnectKeyEventProfile setKeyEvent:message target:eventMsg];
-             } deleteCallback:^ {
-                 // Remove Pebble of events.
-                 [[DPPebbleManager sharedManager] deleteOnDownEvent:serviceId callback:^(NSError *error) {
-                     if (error) NSLog(@"Error:%@", error);
-                 }];
-             }];
-        }];
-        
-        responseFlg = NO;
-    }];
-    
-    return responseFlg;
-}
-
-// Receive onUp event regustration request.
-- (BOOL)         profile:(DConnectKeyEventProfile *)profile
-didReceivePutOnUpRequest:(DConnectRequestMessage *)request
-                response:(DConnectResponseMessage *)response
-               serviceId:(NSString *)serviceId
-              sessionKey:(NSString *)sessionKey
-{
-    __block BOOL responseFlg = YES;
-    // Event registration.
-    [DPPebbleProfileUtil handleRequest:request response:response isRemove:NO callback:^{
-        
-        // Register to Pebble.
-        [[DPPebbleManager sharedManager] registOnUpEvent:serviceId callback:^(NSError *error) {
-            // Registration success.
-            // Error check.
-            [DPPebbleProfileUtil handleErrorNormal:error response:response];
-            
-        } eventCallback:^(long attr, int keyId, int keyType) {
-            // Create DConnect message
-            DConnectMessage *message = [DConnectMessage message];
-            [DConnectKeyEventProfile setId:keyId + [self getKeyTypeFlagValue:keyType] target:message];
-            [DConnectKeyEventProfile setConfig:[self getConfig:keyType KeyCode:keyId] target:message];
-            
-            [self setKeyEventCache:(NSString *)DConnectKeyEventProfileAttrOnUp
-                      keyeventData:(DConnectMessage *)message];
-            
-            // Send event to DConnect.
-            [DPPebbleProfileUtil sendMessageWithProvider:self.provider
-                                                 profile:DConnectKeyEventProfileName
-                                               attribute:DConnectKeyEventProfileAttrOnUp
-                                               serviceID:serviceId
-                                         messageCallback:^(DConnectMessage *eventMsg)
-             {
-                 // Add message to event.
-                 [DConnectKeyEventProfile setKeyEvent:message target:eventMsg];
-             } deleteCallback:^
-             {
-                 // Remove Pebble of events.
-                 [[DPPebbleManager sharedManager] deleteOnUpEvent:serviceId callback:^(NSError *error) {
-                     if (error) NSLog(@"Error:%@", error);
-                 }];
-             }];
-        }];
-        
-        responseFlg = NO;
-    }];
-    
-    return responseFlg;
-}
-
-// Receive onDown event unregustration request.
-- (BOOL)              profile:(DConnectKeyEventProfile *)profile
-didReceiveDeleteOnDownRequest:(DConnectRequestMessage *)request
-                     response:(DConnectResponseMessage *)response
-                    serviceId:(NSString *)serviceId
-                   sessionKey:(NSString *)sessionKey
-{
-    // Remove event of DConnect.
-    [DPPebbleProfileUtil handleRequest:request response:response isRemove:YES callback:^{
-        // Remove event of Pebble.
-        [[DPPebbleManager sharedManager] deleteOnDownEvent:serviceId callback:^(NSError *error) {
-            if (error) NSLog(@"Error:%@", error);
-        }];
-    }];
-    return YES;
-}
-
-// Receive onUp event unregustration request.
-- (BOOL)            profile:(DConnectKeyEventProfile *)profile
-didReceiveDeleteOnUpRequest:(DConnectRequestMessage *)request
-                   response:(DConnectResponseMessage *)response
-                  serviceId:(NSString *)serviceId
-                 sessionKey:(NSString *)sessionKey
-{
-    // Remove event of DConnect.
-    [DPPebbleProfileUtil handleRequest:request response:response isRemove:YES callback:^{
-        // Remove event of Pebble.
-        [[DPPebbleManager sharedManager] deleteOnUpEvent:serviceId callback:^(NSError *error) {
-            if (error) NSLog(@"Error:%@", error);
-        }];
-    }];
-    return YES;
 }
 
 @end
