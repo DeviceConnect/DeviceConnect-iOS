@@ -121,6 +121,20 @@
 			reqDic[@"action"] = @"delete";
 			break;
 	}
+	// serviceIdを処理
+	NSString *serviceId = reqDic[@"serviceId"];
+	if (!serviceId) {
+		[response setResult:DConnectMessageResultTypeError];
+		return YES;
+	}
+	NSArray *domains = [serviceId componentsSeparatedByString:@"."];
+	if (domains == nil || [domains count] < 2) {
+		[response setResult:DConnectMessageResultTypeError];
+		return YES;
+	}
+	NSString *managerUUID = [domains objectAtIndex:0];
+	serviceId = [serviceId stringByReplacingOccurrencesOfString:[managerUUID stringByAppendingString:@"."] withString:@""];
+	reqDic[@"serviceId"] = serviceId;
 	// リクエストjson構築
 	int requestCode = arc4random();
 	NSMutableDictionary *dic = [NSMutableDictionary dictionary];
@@ -136,7 +150,7 @@
 	// レスポンス保持
 	[_responses setObject:response forKey:[@(requestCode) stringValue]];
 	// MQTT送信
-	NSString *requestTopic = [NSString stringWithFormat:@"deviceconnect/%@/request", _managerUUID];
+	NSString *requestTopic = [NSString stringWithFormat:@"deviceconnect/%@/request", managerUUID];
 	[[DPAWSIoTManager sharedManager] publishWithTopic:requestTopic message:msg];
 	return NO;
 }

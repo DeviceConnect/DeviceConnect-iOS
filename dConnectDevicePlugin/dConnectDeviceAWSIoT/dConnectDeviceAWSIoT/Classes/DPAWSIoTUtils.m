@@ -122,6 +122,10 @@ static UIViewController *loadingHUD;
 
 // HTTP通信
 + (void)sendRequest:(NSDictionary*)request handler:(void (^)(NSData *data, NSError *error))handler {
+	if (!request) {
+		handler(nil, [NSError errorWithDomain:ERROR_DOMAIN code:-1 userInfo:nil]);
+		return;
+	}
 
 	// TODO: ポート番号を設定
 	NSString *path = [NSString stringWithFormat:@"http://localhost:%d", 4035];
