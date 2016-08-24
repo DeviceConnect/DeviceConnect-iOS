@@ -16,9 +16,8 @@ NSString *const DPIRKitRemoteControllerProfileName = @"remoteController";
 NSString *const DPIRKitRemoteControllerProfileParamMessage = @"message";
 
 @interface DPIRKitRemoteControllerProfile()
-{
-    DPIRKitManager *_irkit;
-}
+
+@property(nonatomic, strong) DPIRKitManager *irkit;
 
 - (void) setMessage:(NSString *)message target:(DConnectMessage *)target;
 - (NSString *) messageFromRequest:(DConnectRequestMessage *)request;
@@ -36,6 +35,79 @@ NSString *const DPIRKitRemoteControllerProfileParamMessage = @"message";
     if (self) {
         self.plugin = plugin;
         _irkit = [DPIRKitManager sharedInstance];
+        
+        __weak DPIRKitRemoteControllerProfile *weakSelf = self;
+        
+        // API登録(didReceiveGetRequest相当)
+        NSString *getRequestApiPath = [self apiPath: nil
+                                      attributeName: nil];
+        [self addGetPath: getRequestApiPath
+                     api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+                         
+                         BOOL send = YES;
+                         DPIRKitDevice *device = [weakSelf.plugin deviceForServiceId:request.serviceId];
+                         if (device) {
+                             send = NO;
+                             [weakSelf.irkit fetchMessageWithHostName:device.hostName completion:^(NSString *message) {
+                                 
+                                 if (message) {
+                                     [weakSelf setMessage:message target:response];
+                                     response.result = DConnectMessageResultTypeOk;
+                                 } else {
+                                     [response setErrorToUnknown];
+                                 }
+                                 [[DConnectManager sharedManager] sendResponse:response];
+                             }];
+                         } else {
+                             [response setErrorToNotFoundService];
+                         }
+                         
+                         return send;
+                     }];
+        
+        // API登録(didReceivePostRequest相当)
+        NSString *postRequestApiPath = [self apiPath: nil
+                                       attributeName: nil];
+        [self addPostPath: postRequestApiPath
+                      api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+                         
+                          BOOL send = YES;
+                          DPIRKitDevice *device = [weakSelf.plugin deviceForServiceId:request.serviceId];
+                          if (device) {
+                              
+                              NSString *message = [weakSelf messageFromRequest:request];
+                              if (message) {
+                                  NSData *jsonData = [message dataUsingEncoding:NSUnicodeStringEncoding];
+                                  id jsonObj = [NSJSONSerialization JSONObjectWithData:jsonData
+                                                                               options:NSJSONReadingAllowFragments
+                                                                                 error:NULL];
+                                  if (![NSJSONSerialization isValidJSONObject:jsonObj]) {
+                                      [response setErrorToInvalidRequestParameter];
+                                      return YES;
+                                  }
+                              }
+                              
+                              if (!message) {
+                                  [response setErrorToInvalidRequestParameter];
+                              } else {
+                                  send = NO;
+                                  [weakSelf.irkit sendMessage:message withHostName:device.hostName completion:^(BOOL success) {
+                                      if (success) {
+                                          response.result = DConnectMessageResultTypeOk;
+                                      } else {
+                                          [response setErrorToUnknown];
+                                      }
+                                      
+                                      [[DConnectManager sharedManager] sendResponse:response];
+                                  }];
+                              }
+                          } else {
+                              [response setErrorToNotFoundService];
+                          }
+                         
+                          return send;
+                      }];
+        
     }
     
     return self;
@@ -59,6 +131,7 @@ NSString *const DPIRKitRemoteControllerProfileParamMessage = @"message";
     return DPIRKitRemoteControllerProfileName;
 }
 
+/*
 - (BOOL) didReceiveGetRequest:(DConnectRequestMessage *)request response:(DConnectResponseMessage *)response {
     
     BOOL send = YES;
@@ -90,7 +163,8 @@ NSString *const DPIRKitRemoteControllerProfileParamMessage = @"message";
     
     return send;
 }
-
+*/
+/*
 - (BOOL) didReceivePostRequest:(DConnectRequestMessage *)request response:(DConnectResponseMessage *)response {
     
     BOOL send = YES;
@@ -137,5 +211,6 @@ NSString *const DPIRKitRemoteControllerProfileParamMessage = @"message";
     
     return send;
 }
+*/
 
 @end

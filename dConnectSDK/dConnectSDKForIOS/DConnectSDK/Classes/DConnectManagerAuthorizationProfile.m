@@ -84,11 +84,16 @@
                          dispatch_time_t timeout = dispatch_time(DISPATCH_TIME_NOW, NSEC_PER_SEC * 60);
                          BOOL isDevicePlugin = [object isKindOfClass:[DConnectDevicePlugin class]];
                          
+                         NSMutableArray *lowercaseScopes = [NSMutableArray array];
+                         for (NSString *scope in scopes) {
+                             [lowercaseScopes addObject: [scope lowercaseString]];
+                         }
+                         
                          LocalOAuthConfirmAuthParams *params = [LocalOAuthConfirmAuthParams new];
                          params.applicationName = applicationName;
                          params.clientId = clientId;
                          params.serviceId = serviceId;
-                         params.scope = scopes;
+                         params.scope = lowercaseScopes;
                          params.isForDevicePlugin = isDevicePlugin;
                          params.object = object;
                          

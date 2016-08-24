@@ -8,26 +8,11 @@
 //
 
 #import "DeviceTestPlugin.h"
-#import "TestLightProfile.h"
-#import "TestBatteryProfile.h"
-#import "TestConnectProfile.h"
-#import "TestServiceDiscoveryProfile.h"
-#import "TestDeviceOrientationProfile.h"
-#import "TestFileDescriptorProfile.h"
-#import "TestFileProfile.h"
-#import "TestMediaPlayerProfile.h"
-#import "TestMediaStreamRecordingProfile.h"
-#import "TestNotificationProfile.h"
-#import "TestPhoneProfile.h"
-#import "TestProximityProfile.h"
-#import "TestSettingsProfile.h"
+#import "TestService.h"
 #import "TestSystemProfile.h"
-#import "TestVibrationProfile.h"
-#import "TestUniquePingProfile.h"
-#import "TestUniqueTimeoutProfile.h"
-#import "TestUniqueEventProfile.h"
 
 @interface DeviceTestPlugin() <DConnectServiceInformationProfileDataSource>
+
 @end
 
 @implementation DeviceTestPlugin
@@ -38,29 +23,24 @@
     
     if (self) {
         self.useLocalOAuth = NO;
+        self.pluginName = @"Device Connect Device Plugin for Test";
+        
+        _fm = [DConnectFileManager fileManagerForPlugin:self];
+        
+        // プロファイルを追加
+        [self addProfile:[TestSystemProfile new]];
         
         [[DConnectEventManager sharedManagerForClass:[self class]]
          setController:[DConnectMemoryCacheController new]];
         
-        [self addProfile:[[TestLightProfile alloc] initWithDevicePlugin:self]];
-        [self addProfile:[[TestBatteryProfile alloc] initWithDevicePlugin:self]];
-        [self addProfile:[[TestConnectProfile alloc] initWithDevicePlugin:self]];
-        [self addProfile:[[TestDeviceOrientationProfile alloc] initWithDevicePlugin:self]];
-        [self addProfile:[[TestServiceDiscoveryProfile alloc] initWithDevicePlugin:self]];
-        [self addProfile:[[TestFileDescriptorProfile alloc] initWithDevicePlugin:self]];
-        [self addProfile:[[TestFileProfile alloc] initWithDevicePlugin:self]];
-        [self addProfile:[[TestMediaPlayerProfile alloc] initWithDevicePlugin:self]];
-        [self addProfile:[[TestMediaStreamRecordingProfile alloc] initWithDevicePlugin:self]];
-        [self addProfile:[[TestNotificationProfile alloc] initWithDevicePlugin:self]];
-        [self addProfile:[[TestPhoneProfile alloc] initWithDevicePlugin:self]];
-        [self addProfile:[[TestProximityProfile alloc] initWithDevicePlugin:self]];
-        [self addProfile:[[TestSettingsProfile alloc] initWithDevicePlugin:self]];
-        [self addProfile:[TestSystemProfile new]];
-        [self addProfile:[TestVibrationProfile new]];
+        // 典型的なサービス追加
+        DConnectService *service;
+        service = [[TestService alloc] initWithServiceId:TDPServiceId serviceName:TestNetworkDeviceName plugin:self];
+        [self.serviceProvider addService: service];
         
-        [self addProfile:[TestUniquePingProfile new]];
-        [self addProfile:[TestUniqueTimeoutProfile new]];
-        [self addProfile:[[TestUniqueEventProfile alloc] initWithDevicePlugin:self]];
+        // サービスIDが特殊なサービス
+        service = [[TestService alloc] initWithServiceId:TestNetworkServiceIdSpecialCharacters serviceName:TestNetworkDeviceNameSpecialCharacters plugin:self];
+        [self.serviceProvider addService: service];
     }
     
     return self;

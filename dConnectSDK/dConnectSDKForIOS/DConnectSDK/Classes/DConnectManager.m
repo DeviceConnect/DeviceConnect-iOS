@@ -720,6 +720,23 @@ NSString *const DConnectAttributeNameRequestAccessToken = @"requestAccessToken";
             }
             else if ([dp profileWithName: oldProfile]) {
                 dpIsOld = YES;
+            } else {
+                // serviceIdが"test_service_id.DeviceTestPlugin.dconnect"のようになっているので"test_service_id"に変換する
+                NSArray *domains = [serviceId componentsSeparatedByString:@"."];
+                if (domains && [domains count] > 0) {
+                    NSString *serviceId_ = domains[0];
+                    NSArray *serviceProfiles = [dp serviceProfilesWithServiceId: serviceId_];
+                    for (DConnectProfile *serviceProfile in serviceProfiles) {
+                        NSString *serviceProfileName = [[serviceProfile profileName] lowercaseString];
+                        if ([newProfile isEqualToString: serviceProfileName]) {
+                            dpIsNew = YES;
+                            break;
+                        } else if ([oldProfile isEqualToString: serviceProfileName]) {
+                            dpIsOld = YES;
+                            break;
+                        }
+                    }
+                }
             }
             
             // リクエストされたプロファイルとデバイスプラグインのプロファイルのレベルが合わない場合はデバイスプラグインに合わせて変換する
@@ -761,27 +778,27 @@ NSString *const DConnectAttributeNameRequestAccessToken = @"requestAccessToken";
 - (NSDictionary *) searchNameConvertTableWithName : (NSString *)name
                                      convertTable : (NSDictionary *)convertTable {
     
-    // 旧名称でマッチした
-    NSString *newName = convertTable[name];
-    if (newName != nil) {
+    // 新名称でマッチした
+    NSString *oldName = convertTable[name];
+    if (oldName != nil) {
         NSDictionary *result = @{
-                                 MATCH_YES:MATCH_OLD_NAME,
-                                 MATCH_NO:MATCH_NEW_NAME,
-                                 name:OLD_NAME,
-                                 newName:NEW_NAME,
+                                 MATCH_OLD_NAME:MATCH_NO,
+                                 MATCH_NEW_NAME:MATCH_YES,
+                                 OLD_NAME:oldName,
+                                 NEW_NAME:name,
                                  };
         return result;
     }
-    // 新名称でマッチした
-    NSArray *oldNames = [convertTable allKeysForObject: name];
-    if (oldNames != nil && [oldNames count] > 0) {
-        NSString *oldName = [oldNames objectAtIndex: 0];
+    // 旧名称でマッチした
+    NSArray *newNames = [convertTable allKeysForObject: name];
+    if (newNames != nil && [newNames count] > 0) {
+        NSString *newName = [newNames objectAtIndex: 0];
         
         NSDictionary *result = @{
-                                 MATCH_NO:MATCH_OLD_NAME,
-                                 MATCH_YES:MATCH_NEW_NAME,
-                                 oldName:OLD_NAME,
-                                 name:NEW_NAME,
+                                 MATCH_OLD_NAME:MATCH_YES,
+                                 MATCH_NEW_NAME:MATCH_NO,
+                                 OLD_NAME:name,
+                                 NEW_NAME:newName,
                                  };
         return result;
     }

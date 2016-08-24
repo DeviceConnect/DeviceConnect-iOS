@@ -9,10 +9,6 @@
 
 #import <DConnectSDK/DConnectLightProfile.h>
 
-@class DeviceTestPlugin;
-@interface TestLightProfile : DConnectLightProfile<DConnectLightProfileDelegate>
-@property (nonatomic, strong) DeviceTestPlugin *plugin;
-- (id) initWithDevicePlugin:(DeviceTestPlugin *)plugin;
-
+@interface TestLightProfile : DConnectLightProfile
 
 @end

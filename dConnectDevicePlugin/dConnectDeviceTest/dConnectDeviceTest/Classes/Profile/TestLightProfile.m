@@ -15,21 +15,77 @@ static NSString* TestLightId = @"1";
 static NSString* TestLightName = @"照明";
 static NSString* TestLightGroupId = @"2";
 static NSString* TestLightGroupName = @"リビング";
-static const BOOL TestLightStatus = NO;
+//static const BOOL TestLightStatus = NO;
 
 
 @implementation TestLightProfile
-- (id) initWithDevicePlugin:(DeviceTestPlugin *)plugin {
+- (id) init {
     self = [super init];
     
     if (self) {
-        self.delegate = self;
-        _plugin = plugin;
+        
+        // API登録(didReceiveGetLightRequest相当)
+        NSString *getLightRequestApiPath = [self apiPath: nil
+                                           attributeName: nil];
+        [self addGetPath: getLightRequestApiPath
+                     api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+                         NSString *serviceId = request.serviceId;
+                         CheckDID(response, serviceId) {
+                             response.result = DConnectMessageResultTypeOk;
+                             DConnectArray *lights = [DConnectArray array];
+                             //ライトの状態をメッセージにセットする（LightID,名前,点灯状態）
+                             DConnectMessage *led = [DConnectMessage new];
+                             [DConnectLightProfile setLightId:TestLightId target:led];
+                             [DConnectLightProfile setLightName:TestLightName target:led];
+                             [DConnectLightProfile setLightOn:NO target:led];
+                             [DConnectLightProfile setLightConfig:@"" target:led];
+                             [lights addMessage:led];
+                             [DConnectLightProfile setLights:lights target:response];
+                         }
+                         return YES;
+                     }];
+
+        // API登録(didReceivePostLightRequest相当)
+        NSString *postLightRequestApiPath = [self apiPath: nil
+                                            attributeName: nil];
+        [self addPostPath: postLightRequestApiPath
+                      api:^(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+                          NSString *serviceId = request.serviceId;
+                          CheckDID(response, serviceId) {
+                              response.result = DConnectMessageResultTypeOk;
+                          }
+                          return YES;
+                      }];
+        
+        // API登録(didReceivePutLightRequest相当)
+        NSString *putLightRequestApiPath = [self apiPath: nil
+                                           attributeName: nil];
+        [self addPutPath: putLightRequestApiPath
+                     api:^(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+                         NSString *serviceId = request.serviceId;
+                         CheckDID(response, serviceId) {
+                             response.result = DConnectMessageResultTypeOk;
+                         }
+                         return YES;
+                     }];
+         
+        // API登録(didReceiveDeleteLightRequest相当)
+        NSString *deleteLightRequestApiPath = [self apiPath: nil
+                                              attributeName: nil];
+        [self addDeletePath: deleteLightRequestApiPath
+                        api:^(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+                            NSString *serviceId = request.serviceId;
+                            CheckDID(response, serviceId) {
+                                response.result = DConnectMessageResultTypeOk;
+                            }
+                            return YES;
+                        }];
     }
     
     return self;
 }
 
+/*
 - (BOOL) profile:(DConnectLightProfile *)profile
 didReceiveGetLightRequest:(DConnectRequestMessage *)request
         response:(DConnectResponseMessage *)response
@@ -49,7 +105,9 @@ didReceiveGetLightRequest:(DConnectRequestMessage *)request
     }
     return YES;
 }
+*/
 
+/*
 //Light Post 点灯
 - (BOOL) profile:(DConnectLightProfile *)profile
     didReceivePostLightRequest:(DConnectRequestMessage *)request
@@ -64,8 +122,9 @@ didReceiveGetLightRequest:(DConnectRequestMessage *)request
     }
     return YES;
 }
+*/
 
-
+/*
 //Light Put 名前変更
 - (BOOL) profile:(DConnectLightProfile *)profile didReceivePutLightRequest:(DConnectRequestMessage *)request
         response:(DConnectResponseMessage *)response
@@ -82,7 +141,9 @@ didReceiveGetLightRequest:(DConnectRequestMessage *)request
     return YES;
     
 }
+*/
 
+/*
 //Light Delete 消灯
 - (BOOL) profile:(DConnectLightProfile *)profile
 didReceiveDeleteLightRequest:(DConnectRequestMessage *)request
@@ -95,6 +156,7 @@ didReceiveDeleteLightRequest:(DConnectRequestMessage *)request
     }
     return YES;
 }
+*/
 
 
 #pragma mark - light group
