@@ -67,6 +67,7 @@ static int const DPHitoeRetryCount = 30;
         api = [HitoeSdkAPI sharedManager];
         [api setAPIDelegate:self];
         _registeredDevices = [NSMutableArray array];
+        
 
     }
     
@@ -79,7 +80,7 @@ static int const DPHitoeRetryCount = 30;
         apiResorce:(int)apiResorce
             object:(id)object {
     NSString *responseData = (NSString*) object;
-    NSLog(@"cbCallback:%d:%d:%@", apiId, apiResorce, responseData);
+//    NSLog(@"cbCallback:%d:%d:%@", apiId, apiResorce, responseData);
     if (apiId == DPHitoeApiIdGetAvailableSensor) {
         [self notifyDiscoveryHitoeDeviceWithResponseId:apiResorce responseString:responseData];
     } else if (apiId == DPHitoeApiIdConnect) {
@@ -104,10 +105,10 @@ static int const DPHitoeRetryCount = 30;
                dataKey:(NSString *)dataKey
                   data:(NSString *)data
             responseId:(int)responseId {
-    NSLog(@"DataCallback:connectId=%@,dataKey=%@,rawData=%@",connectionId, dataKey, data);
+//    NSLog(@"DataCallback:connectId=%@,dataKey=%@,rawData=%@",connectionId, dataKey, data);
     int pos = [self currentDeviceForConnectionId:connectionId];
     if (pos == -1) {
-        NSLog(@"no connection ID:%@", connectionId);
+//        NSLog(@"no connection ID:%@", connectionId);
         return;
     }
     DPHitoeDevice *receiveDevice = _registeredDevices[pos];
@@ -164,13 +165,6 @@ static int const DPHitoeRetryCount = 30;
 }
 
 #pragma mark - Public method
-- (void)start {
-    
-}
-
-- (void)stop {
-    
-}
 
 - (void)discovery {
     NSString *param = [NSString stringWithFormat:@"search_time=%lld", DPHitoeSensorParamSearchTime];
@@ -331,7 +325,6 @@ static int const DPHitoeRetryCount = 30;
 //        NSLog(@"<================");
         DPHitoeDevice *device = [self getHitoeDeviceForServiceId:serviceId];
         if (isCallbackRunning && history == timeStamp && device.isRegisterFlag) { //切断された
-//            NSLog(@"retry1");
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
                 DPHitoeDevice *retryDevice = [self getHitoeDeviceForServiceId:serviceId];
                 if ([retryDevice isRegisterFlag]) {
@@ -342,7 +335,6 @@ static int const DPHitoeRetryCount = 30;
             isCallbackRunning = NO;
         } else if (!isCallbackRunning && history == timeStamp && retryCount < DPHitoeRetryCount
                    && device.isRegisterFlag) {
-//            NSLog(@"retry%d", retryCount);
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
                 DPHitoeDevice *retryDevice = [self getHitoeDeviceForServiceId:serviceId];
                 if ([retryDevice isRegisterFlag]) {
