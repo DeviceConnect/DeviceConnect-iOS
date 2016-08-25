@@ -405,7 +405,7 @@ typedef NS_ENUM(NSUInteger, OptionIndex) {
                      api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
                          
                          NSString *target = [DConnectMediaStreamRecordingProfile targetFromRequest:request];
-                         
+                         NSLog(@"target :%@", target);
                          unsigned long long idx;
                          if (target || (target && target.length > 0)) {
                              if ([target isEqualToString:@"video"]) {
@@ -596,7 +596,7 @@ typedef NS_ENUM(NSUInteger, OptionIndex) {
                           
                           NSString *target = [DConnectMediaStreamRecordingProfile targetFromRequest:request];
                           NSNumber *timeslice = [DConnectMediaStreamRecordingProfile timesliceFromRequest:request];
-                          
+
                           NSString *timesliceString = [request stringForKey:DConnectMediaStreamRecordingProfileParamTimeSlice];
                           if (![DPHostUtils existDigitWithString:timesliceString]
                               || (timeslice && timeslice < 0) || (timesliceString && timesliceString.length <= 0)) {
@@ -617,6 +617,7 @@ typedef NS_ENUM(NSUInteger, OptionIndex) {
                                       [response setErrorToInvalidRequestParameterWithMessage:@"target is invalid."];
                                       return YES;
                                   }
+                                  
                               }
                           } else if ([weakSelf defaultVideoRecorderId]) {
                               // target省略時はデフォルトのレコーダーを指定する。
@@ -678,6 +679,7 @@ typedef NS_ENUM(NSUInteger, OptionIndex) {
                               }
                           }
                           
+                          __block BOOL isSync = YES;
                           [recorder performWriting:
                            ^{
                                if (recorder.type != RecorderTypeMovie) {
@@ -725,9 +727,10 @@ typedef NS_ENUM(NSUInteger, OptionIndex) {
                                if (![recorder.session isRunning]) {
                                    [recorder.session startRunning];
                                }
+                               isSync = NO;
                            }];
                           
-                          return NO;
+                          return isSync;
                       }];
         
         // API登録(didReceivePutPauseRequest相当)
