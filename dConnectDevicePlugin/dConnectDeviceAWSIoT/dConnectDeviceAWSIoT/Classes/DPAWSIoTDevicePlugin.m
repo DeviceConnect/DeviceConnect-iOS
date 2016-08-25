@@ -9,7 +9,7 @@
 
 #import "DPAWSIoTDevicePlugin.h"
 #import "DPAWSIoTSystemProfile.h"
-#import "DPAWSIoTServiceDiscoveryProfile.h"
+#import "DPAWSIoTService.h"
 #import "DPAWSIoTUtils.h"
 #import "DPAWSIoTManager.h"
 #import "DPAWSIoTController.h"
@@ -29,23 +29,21 @@
 
 // 初期化
 - (id)init {
-	self = [super init];
+	self = [super initWithObject:self];
 	if (self) {
 		self.pluginName = @"AWSIoT (Device Connect Device Plug-in)";
 		_responses = [NSMutableDictionary dictionary];
 		_managerUUID = [DPAWSIoTController managerUUID];
 		self.useLocalOAuth = NO;
 		
-		// イベントマネージャの準備
-		Class key = [self class];
-		[[DConnectEventManager sharedManagerForClass:key]
-		 setController:[DConnectDBCacheController
-						controllerWithClass:key]];
-		
 		// プロファイルを追加
-		[self addProfile:[DPAWSIoTServiceDiscoveryProfile new]];
 		[self addProfile:[DPAWSIoTSystemProfile new]];
-		[self addProfile:[DConnectServiceInformationProfile new]];
+		//
+		DPAWSIoTService *service = [[DPAWSIoTService alloc] initWithServiceId:@"awsiot"
+																   deviceName:@"AWSIoT"
+																	   plugin:self];
+		[service setOnline:YES];
+		[self.serviceProvider addService:service];
 		
 		// アカウントの設定がある場合は
 		if ([DPAWSIoTUtils hasAccount] && ![DPAWSIoTManager sharedManager].isConnected) {
@@ -97,15 +95,15 @@
 - (BOOL)executeRequest:(DConnectRequestMessage *)request response:(DConnectResponseMessage *)response
 {
 	NSLog(@"*********** executeRequest: %@, %@,%@,%@", [request serviceId], [request profile], [request interface], [request attribute]);
-	if ([request serviceId]) {
+	if ([request serviceId] && ![[request profile] isEqualToString:DConnectSystemProfileName]) {
 		return [self sendRequestToMQTT:request response:response];
-	} else if ([[request profile] isEqualToString:@"servicediscovery"]) {
+	} else if ([[request profile] isEqualToString:DConnectServiceDiscoveryProfileName]) {
 		// servicediscoveryは独自処理
 		// 自分のServiceを検索
 		[super executeRequest:request response:response];
 		if (_managers) {
 			// サービス数を保持
-			[response setInteger:_managers.count forKey:@"servicecount"];
+			[response setInteger:(int)_managers.count forKey:@"servicecount"];
 			// クラウド上のServiceを検索
 			for (NSString *key in _managers.allKeys) {
 				// onlineじゃない場合は無視
@@ -150,7 +148,7 @@
 		return YES;
 	}
 	NSString *managerUUID;
-	if ([[request profile] isEqualToString:@"servicediscovery"]) {
+	if ([[request profile] isEqualToString:DConnectServiceDiscoveryProfileName]) {
 		// servicediscoveryは独自処理
 		managerUUID = reqDic[@"serviceId"];
 		[reqDic removeObjectForKey:@"serviceId"];

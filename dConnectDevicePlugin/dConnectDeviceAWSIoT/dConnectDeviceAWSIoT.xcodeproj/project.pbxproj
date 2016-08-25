@@ -22,9 +22,9 @@
 
 /* Begin PBXBuildFile section */
 		0D9A5AF3E331558BE11D5967 /* libPods-dConnectDeviceAWSIoT.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C1F919291C216B65FF160D5 /* libPods-dConnectDeviceAWSIoT.a */; };
+		78192D531D6E9DD90068E4F7 /* DPAWSIoTService.m in Sources */ = {isa = PBXBuildFile; fileRef = 78192D521D6E9DD90068E4F7 /* DPAWSIoTService.m */; };
 		78298A071D532D3500E9B90B /* DPAWSIoTDevicePlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 78298A061D532D3500E9B90B /* DPAWSIoTDevicePlugin.m */; };
 		78298A091D532DB900E9B90B /* DConnectSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78298A081D532DB900E9B90B /* DConnectSDK.framework */; };
-		78298A1A1D5334B000E9B90B /* DPAWSIoTServiceDiscoveryProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 78298A191D5334B000E9B90B /* DPAWSIoTServiceDiscoveryProfile.m */; };
 		782FCF771D5340B10084DE03 /* libAWSCore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 782FCF751D5340B10084DE03 /* libAWSCore.a */; };
 		782FCF781D5340B10084DE03 /* libAWSIoT.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 782FCF761D5340B10084DE03 /* libAWSIoT.a */; };
 		782FCFA61D54150C0084DE03 /* DPAWSIoTManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 782FCFA51D54150C0084DE03 /* DPAWSIoTManager.m */; };
@@ -67,12 +67,12 @@
 
 /* Begin PBXFileReference section */
 		6FAF38FDC94555EDF3019CB2 /* Pods-dConnectDeviceAWSIoT.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-dConnectDeviceAWSIoT.release.xcconfig"; path = "Pods/Target Support Files/Pods-dConnectDeviceAWSIoT/Pods-dConnectDeviceAWSIoT.release.xcconfig"; sourceTree = "<group>"; };
+		78192D511D6E9DD90068E4F7 /* DPAWSIoTService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPAWSIoTService.h; sourceTree = "<group>"; };
+		78192D521D6E9DD90068E4F7 /* DPAWSIoTService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPAWSIoTService.m; sourceTree = "<group>"; };
 		782989F81D532AF900E9B90B /* libdConnectDeviceAWSIoT.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libdConnectDeviceAWSIoT.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		78298A061D532D3500E9B90B /* DPAWSIoTDevicePlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPAWSIoTDevicePlugin.m; sourceTree = "<group>"; };
 		78298A081D532DB900E9B90B /* DConnectSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DConnectSDK.framework; path = ../../dConnectSDK/dConnectSDKForIOS/bin/DConnectSDK.framework; sourceTree = "<group>"; };
-		78298A191D5334B000E9B90B /* DPAWSIoTServiceDiscoveryProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPAWSIoTServiceDiscoveryProfile.m; sourceTree = "<group>"; };
 		78298A1C1D53351A00E9B90B /* DPAWSIoTDevicePlugin.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DPAWSIoTDevicePlugin.h; sourceTree = "<group>"; };
-		78298A1D1D53351A00E9B90B /* DPAWSIoTServiceDiscoveryProfile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DPAWSIoTServiceDiscoveryProfile.h; sourceTree = "<group>"; };
 		782FCF751D5340B10084DE03 /* libAWSCore.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libAWSCore.a; path = "../../../../../../Library/Developer/Xcode/DerivedData/dConnectDeviceAWSIoT-hjvzbykvepdftldcwismnygwtdiy/Build/Products/Debug-iphoneos/AWSCore/libAWSCore.a"; sourceTree = "<group>"; };
 		782FCF761D5340B10084DE03 /* libAWSIoT.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libAWSIoT.a; path = "../../../../../../Library/Developer/Xcode/DerivedData/dConnectDeviceAWSIoT-hjvzbykvepdftldcwismnygwtdiy/Build/Products/Debug-iphoneos/AWSIoT/libAWSIoT.a"; sourceTree = "<group>"; };
 		782FCFA41D54150C0084DE03 /* DPAWSIoTManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPAWSIoTManager.h; sourceTree = "<group>"; };
@@ -178,6 +178,8 @@
 				78298A061D532D3500E9B90B /* DPAWSIoTDevicePlugin.m */,
 				78B7F2BB1D66A0A100A5E520 /* DPAWSIoTController.h */,
 				78B7F2BC1D66A0A100A5E520 /* DPAWSIoTController.m */,
+				78192D511D6E9DD90068E4F7 /* DPAWSIoTService.h */,
+				78192D521D6E9DD90068E4F7 /* DPAWSIoTService.m */,
 				787527E61D656B73001876FD /* Category */,
 				78298A1E1D53352700E9B90B /* Profile */,
 				789AC49D1D5AF31400F12F45 /* Settings */,
@@ -216,8 +218,6 @@
 		78298A1E1D53352700E9B90B /* Profile */ = {
 			isa = PBXGroup;
 			children = (
-				78298A1D1D53351A00E9B90B /* DPAWSIoTServiceDiscoveryProfile.h */,
-				78298A191D5334B000E9B90B /* DPAWSIoTServiceDiscoveryProfile.m */,
 				789AC49E1D5AF79900F12F45 /* DPAWSIoTSystemProfile.h */,
 				789AC49F1D5AF79900F12F45 /* DPAWSIoTSystemProfile.m */,
 			);
@@ -462,8 +462,8 @@
 				78B7F2C01D66AE4A00A5E520 /* DPAWSIoTNetworkManager.m in Sources */,
 				782FCFA61D54150C0084DE03 /* DPAWSIoTManager.m in Sources */,
 				789AC4B01D5D7A7C00F12F45 /* DPAWSIoTDeviceListViewController.m in Sources */,
+				78192D531D6E9DD90068E4F7 /* DPAWSIoTService.m in Sources */,
 				78298A071D532D3500E9B90B /* DPAWSIoTDevicePlugin.m in Sources */,
-				78298A1A1D5334B000E9B90B /* DPAWSIoTServiceDiscoveryProfile.m in Sources */,
 				789AC4A01D5AF79900F12F45 /* DPAWSIoTSystemProfile.m in Sources */,
 				789AC49C1D5AF30F00F12F45 /* DPAWSIoTLoginViewController.m in Sources */,
 				78B7F2BA1D658DAF00A5E520 /* DPAWSIoTSettingViewController.m in Sources */,

@@ -9,6 +9,6 @@
 
 #import <DConnectSDK/DConnectSDK.h>
 
-@interface DPAWSIoTSystemProfile : DConnectSystemProfile<DConnectSystemProfileDataSource,DConnectSystemProfileDelegate>
+@interface DPAWSIoTSystemProfile : DConnectSystemProfile<DConnectSystemProfileDataSource>
 
 @end
