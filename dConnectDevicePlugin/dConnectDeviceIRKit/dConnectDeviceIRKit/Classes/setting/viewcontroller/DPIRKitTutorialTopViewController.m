@@ -59,6 +59,7 @@
         [_foundIRKitList setSeparatorInset:UIEdgeInsetsZero];
     }
 }
+
 - (IBAction)closeSettings:(id)sender {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
