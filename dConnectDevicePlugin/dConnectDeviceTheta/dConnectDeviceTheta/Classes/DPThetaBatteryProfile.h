@@ -9,6 +9,6 @@
 
 #import <DConnectSDK/DConnectSDK.h>
 
-@interface DPThetaBatteryProfile : DConnectBatteryProfile<DConnectBatteryProfileDelegate>
+@interface DPThetaBatteryProfile : DConnectBatteryProfile
 
 @end

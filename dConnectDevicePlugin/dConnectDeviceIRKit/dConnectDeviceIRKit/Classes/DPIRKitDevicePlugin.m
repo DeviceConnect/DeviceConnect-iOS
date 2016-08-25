@@ -14,9 +14,9 @@
 #import "DPIRKitDBManager.h"
 #import "DPIRKitRESTfulRequest.h"
 #import "DPIRKitVirtualDevice.h"
-#import "DPIRKitServiceInformationProfile.h"
-#import "DPIRKitLightProfile.h"
-#import "DPIRKitTVProfile.h"
+#import "DPIRKitSystemProfile.h"
+#import "DPIRKitService.h"
+#import "DPIRKitReachability.h"
 
 NSString *const DPIRKitInfoVersion = @"DPIRKitVersion";
 NSString *const DPIRKitInfoAPIKey = @"DPIRKitAPIKey";
@@ -30,7 +30,6 @@ NSString *const DPIRKitInfoPlistName = @"dConnectDeviceIRKit-Info";
 @interface DPIRKitDevicePlugin()
 <
 // プロファイルデリゲート
-DConnectServiceDiscoveryProfileDelegate,
 DConnectServiceInformationProfileDataSource,
 DConnectSystemProfileDataSource,
 
@@ -43,6 +42,8 @@ DPIRKitManagerDetectionDelegate
     DConnectEventManager *_eventManager;
     NSString *_version;
 }
+
+@property (nonatomic, strong) DPIRKitReachability *reachability;
 
 - (void) sendDeviceDetectionEventWithDevice:(DPIRKitDevice *)device online:(BOOL)online;
 
@@ -57,25 +58,17 @@ DPIRKitManagerDetectionDelegate
 
 - (id) init {
     
-    self = [super init];
+    self = [super initWithObject: self];
     
     if (self) {
-        DConnectServiceDiscoveryProfile *serviceDiscoveryProfile = [DConnectServiceDiscoveryProfile new];
-        DPIRKitServiceInformationProfile *serviceInformationProfile = [DPIRKitServiceInformationProfile new];
-        DConnectSystemProfile *systemProfile = [DConnectSystemProfile new];
-        DPIRKitRemoteControllerProfile *remoteControllerProfile
-                            = [[DPIRKitRemoteControllerProfile alloc] initWithDevicePlugin:self];
-        DPIRKitTVProfile *tvProfile = [[DPIRKitTVProfile alloc] initWithDevicePlugin:self];
-        DPIRKitLightProfile *lightProfile = [[DPIRKitLightProfile alloc] initWithDevicePlugin:self];
-        serviceDiscoveryProfile.delegate = self;
-        systemProfile.dataSource = self;
-        serviceInformationProfile.dataSource = self;
-        [self addProfile:serviceDiscoveryProfile];
-        [self addProfile:serviceInformationProfile];
-        [self addProfile:systemProfile];
-        [self addProfile:remoteControllerProfile];
-        [self addProfile:tvProfile];
-        [self addProfile:lightProfile];
+        
+        DPIRKitManager *manager = [DPIRKitManager sharedInstance];
+        [manager setServiceProvider: self.serviceProvider];
+        [manager setPlugin:self];
+        
+        // System Profileの追加
+        [self addProfile:[[DPIRKitSystemProfile alloc] initWithDataSource: self]];
+        
         _devices = [NSMutableDictionary dictionary];
         id<DConnectEventCacheController> controller = [[DConnectMemoryCacheController alloc] init];
         _eventManager = [DConnectEventManager sharedManagerForClass:[DPIRKitDevicePlugin class]];
@@ -93,13 +86,22 @@ DPIRKitManagerDetectionDelegate
             [notificationCenter addObserver:_self selector:@selector(stopObeservation)
                        name:UIApplicationDidEnterBackgroundNotification
                      object:application];
-            DPIRKitManager *manager = [DPIRKitManager sharedInstance];
+
             manager.apiKey = info[DPIRKitInfoAPIKey];
             manager.detectionDelegate = _self;
             
             [_self startObeservation];
         });
         self.pluginName = DPIRKitPluginName;
+        
+        // Reachabilityの初期処理
+        self.reachability = [DPIRKitReachability reachabilityWithHostName: @"www.google.com"];
+        [[NSNotificationCenter defaultCenter]
+         addObserver:self
+         selector:@selector(notifiedNetworkStatus:)
+         name:DPIRKitReachabilityChangedNotification
+         object:nil];
+        [self.reachability startNotifier];
     }
     
     return self;
@@ -129,7 +131,6 @@ DPIRKitManagerDetectionDelegate
 #pragma mark - Private Methods
 
 - (void) sendDeviceDetectionEventWithDevice:(DPIRKitDevice *)device online:(BOOL)online {
-    [[DPIRKitManager sharedInstance] startDetection];
     BOOL hit = NO;
     @synchronized (_devices) {
         
@@ -146,15 +147,26 @@ DPIRKitManagerDetectionDelegate
     }
     if ((!hit && online) || (hit && !online)) {
         
-        DConnectMessage *networkService = [DConnectMessage message];
-        [DConnectServiceDiscoveryProfile setId:device.name target:networkService];
-        [DConnectServiceDiscoveryProfile setName:device.name target:networkService];
-        [DConnectServiceDiscoveryProfile setType:DConnectServiceDiscoveryProfileNetworkTypeWiFi
-                                                 target:networkService];
-        [DConnectServiceDiscoveryProfile setState:online target:networkService];
-        [DConnectServiceDiscoveryProfile setOnline:online target:networkService];
-        [DConnectServiceDiscoveryProfile setScopesWithProvider:self
-                                                        target:networkService];
+        if (self.serviceProvider) {
+            if (online) {
+                // オンライン遷移の場合、デバイスが未登録なら登録し、登録済ならフラグをオンラインにする
+                NSString *serviceId = device.name;
+                if ([self.serviceProvider service: serviceId]) {
+                    DConnectService *service = [self.serviceProvider service: serviceId];
+                    [service setOnline: YES];
+                } else {
+                    DPIRKitService *service = [[DPIRKitService alloc] initWithServiceId: serviceId plugin: self];
+                    [self.serviceProvider addService: service];
+                }
+            } else {
+                // オフライン遷移の場合、デバイスが登録済ならフラグをオフラインにする
+                NSString *serviceId = device.name;
+                DConnectService *service = [self.serviceProvider service: serviceId];
+                if (service) {
+                    [service setOnline: NO];
+                }
+            }
+        }
         
         NSArray *events = [_eventManager eventListForProfile:DConnectServiceDiscoveryProfileName
                                                    attribute:DConnectServiceDiscoveryProfileAttrOnServiceChange];
@@ -165,7 +177,6 @@ DPIRKitManagerDetectionDelegate
             [message setString:DConnectServiceDiscoveryProfileName forKey:DConnectMessageProfile];
             [message setString:DConnectServiceDiscoveryProfileAttrOnServiceChange forKey:DConnectMessageAttribute];
             [message setString:event.sessionKey forKey:DConnectMessageSessionKey];
-            [DConnectServiceDiscoveryProfile setNetworkService:networkService target:message];
             [self sendEvent:message];
         }
     }
@@ -200,99 +211,6 @@ DPIRKitManagerDetectionDelegate
 
 
 #pragma mark - Profile Delegate
-#pragma mark DConnectServiceDiscoveryProfileDelegate
-
-- (BOOL)                       profile:(DConnectServiceDiscoveryProfile *)profile
-didReceiveGetServicesRequest:(DConnectRequestMessage *)request
-                              response:(DConnectResponseMessage *)response
-{
-    __weak typeof(self) _self = self;
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [_self startObeservation];
-    });
-
-    
-    DConnectArray *services = [DConnectArray array];
-
-    @synchronized (_devices) {
-        
-        for (DPIRKitDevice *device in _devices.allValues) {
-            DConnectMessage *service = [DConnectMessage message];
-            [DConnectServiceDiscoveryProfile setId:device.name target:service];
-            [DConnectServiceDiscoveryProfile setName:device.name target:service];
-            // WiFiでのみ接続するので常にWiFi。
-            [DConnectServiceDiscoveryProfile setType:DConnectServiceDiscoveryProfileNetworkTypeWiFi
-                                                     target:service];
-            // 見つかっている時点でWiFiにつながっているので常にYES。
-            [DConnectServiceDiscoveryProfile setOnline:YES target:service];
-            [services addMessage:service];
-            NSArray *virtuals = [[DPIRKitDBManager sharedInstance] queryVirtualDevice:nil];
-            if (virtuals.count > 0) {
-                for (DPIRKitVirtualDevice *virtual in virtuals) {
-                    NSRange range = [virtual.serviceId rangeOfString:device.name];
-                    if (range.location != NSNotFound
-                        && [self existIRForServiceId:virtual.serviceId]) {
-                        DConnectMessage *service = [DConnectMessage message];
-                        [DConnectServiceDiscoveryProfile setId:virtual.serviceId target:service];
-                        [DConnectServiceDiscoveryProfile setName:virtual.deviceName target:service];
-                        // 仮想デバイスはWiFiとする。
-                        [DConnectServiceDiscoveryProfile setType:DConnectServiceDiscoveryProfileNetworkTypeWiFi
-                                                          target:service];
-                        // 見つかっている時点でWiFiにつながっているので常にYES。
-                        [DConnectServiceDiscoveryProfile setOnline:YES target:service];
-                        [DConnectServiceDiscoveryProfile setConfig:@"Virtual Device" target:service];
-                        [services addMessage:service];
-                    }
-                }
-            }
-
-        }
-    }
-    
-    //仮想デバイスの追加
-    response.result = DConnectMessageResultTypeOk;
-    [DConnectServiceDiscoveryProfile setServices:services target:response];
-    return YES;
-}
-
-- (BOOL)                    profile:(DConnectServiceDiscoveryProfile *)profile
-didReceivePutOnServiceChangeRequest:(DConnectRequestMessage *)request
-                           response:(DConnectResponseMessage *)response
-                           serviceId:(NSString *)serviceId
-                         sessionKey:(NSString *)sessionKey
-{
-    
-    DConnectEventError error = [_eventManager addEventForRequest:request];
-    if (error == DConnectEventErrorNone) {
-        response.result = DConnectMessageResultTypeOk;
-        DPIRLog(@"Register ServiceChange Event. %@", sessionKey);
-    } else if (error == DConnectEventErrorInvalidParameter) {
-        [response setErrorToInvalidRequestParameter];
-    } else {
-        [response setErrorToUnknown];
-    }
-    return YES;
-}
-
-- (BOOL)                       profile:(DConnectServiceDiscoveryProfile *)profile
-didReceiveDeleteOnServiceChangeRequest:(DConnectRequestMessage *)request
-                              response:(DConnectResponseMessage *)response
-                              serviceId:(NSString *)serviceId
-                            sessionKey:(NSString *)sessionKey
-{
-    
-    DConnectEventError error = [_eventManager removeEventForRequest:request];
-    if (error == DConnectEventErrorNone) {
-        response.result = DConnectMessageResultTypeOk;
-        DPIRLog(@"Unregister ServiceChange Event. %@", sessionKey);
-    } else if (error == DConnectEventErrorInvalidParameter) {
-        [response setErrorToInvalidRequestParameter];
-    } else {
-        [response setErrorToUnknown];
-    }
-    return YES;
-}
-
 
 #pragma mark DConnectSystemProfileDataSource
 
@@ -326,7 +244,6 @@ didReceiveDeleteOnServiceChangeRequest:(DConnectRequestMessage *)request
 {
     
     DConnectServiceInformationProfileConnectState state = DConnectServiceInformationProfileConnectStateOff;
-    // TODO: 実際に接続を確認した方が良いかの検討
     @synchronized (_devices) {
         if (_devices.count > 0) {
             DPIRKitDevice *device = [_devices objectForKey:serviceId];
@@ -339,16 +256,28 @@ didReceiveDeleteOnServiceChangeRequest:(DConnectRequestMessage *)request
     return state;
 }
 
+// 通知を受け取るメソッド
+-(void)notifiedNetworkStatus:(NSNotification *)notification {
+    DPIRKitNetworkStatus networkStatus = [self.reachability currentReachabilityStatus];
+    if (networkStatus == DPIRKitNotReachable) {
+        // ネット接続が切断されたので全サービスをオフラインにする
+        for (DConnectService *service in self.serviceProvider.services) {
+            [service setOnline: NO];
+        }
+    }
+}
+
+
 #pragma mark - DPIRKitManagerDetectionDelegate
 
 - (void) manager:(DPIRKitManager *)manager didFindDevice:(DPIRKitDevice *)device {
     
-    NSLog(@"found a device : %@", device);
+    DPIRLog(@"found a device : %@", device);
     [self sendDeviceDetectionEventWithDevice:device online:YES];
 }
 
 - (void) manager:(DPIRKitManager *)manager didLoseDevice:(DPIRKitDevice *)device {
-    NSLog(@"lost a device : %@", device);
+    DPIRLog(@"lost a device : %@", device);
     [self sendDeviceDetectionEventWithDevice:device online:NO];
 }
 

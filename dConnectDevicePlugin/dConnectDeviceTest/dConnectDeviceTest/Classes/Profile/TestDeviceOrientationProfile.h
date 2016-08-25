@@ -9,12 +9,6 @@
 
 #import <DConnectSDK/DConnectSDK.h>
 
-@class DeviceTestPlugin;
-
 @interface TestDeviceOrientationProfile : DConnectDeviceOrientationProfile
-<DConnectDeviceOrientationProfileDelegate>
-
-@property (nonatomic, strong) DeviceTestPlugin *plugin;
-- (id) initWithDevicePlugin:(DeviceTestPlugin *)plugin;
 
 @end

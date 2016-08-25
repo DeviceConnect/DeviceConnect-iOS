@@ -11,10 +11,15 @@
 #import "DPThetaDevicePlugin.h"
 #import "PtpConnection.h"
 #import "PtpLogging.h"
+#import "DPThetaService.h"
+#import "DPThetaReachability.h"
 
 static NSString * const DPThetaRegexDecimalPoint = @"^[-+]?([0-9]*)?(\\.*)?([0-9]*)?$";
 static NSString * const DPThetaRegexDigit = @"^([0-9]*)?$";
 static NSString * const DPThetaRegexCSV = @"^([^,]*,)+";
+
+static NSString * const ROI_IMAGE_SERVICE = @"ROI Image Service";
+
 
 @interface DPThetaManager()<PtpIpEventListener>
 {
@@ -29,6 +34,9 @@ static NSString * const DPThetaRegexCSV = @"^([^,]*,)+";
     NSMutableDictionary* _onStatusEventList;
     CGSize _imageSize;
 }
+
+@property (nonatomic, strong) DPThetaReachability *reachability;
+
 @end
 
 @implementation DPThetaManager
@@ -61,16 +69,26 @@ static int const _timeout = 500;
         _batteryLevel = 0;
         _onPhotoEventList = [NSMutableDictionary new];
         _onStatusEventList = [NSMutableDictionary new];
+        
+        [self updateManageServices: YES];
 
         // Ready to PTP/IP.
         _ptpConnection = [[PtpConnection alloc] init];
         [_ptpConnection setLoglevel:PTPIP_LOGLEVEL_WARN];
         [_ptpConnection setEventListener:self];
 
+        
+        // Reachabilityの初期処理
+        self.reachability = [DPThetaReachability reachabilityWithHostName: @"www.google.com"];
+        [[NSNotificationCenter defaultCenter]
+         addObserver:self
+         selector:@selector(notifiedNetworkStatus:)
+         name:DPThetaReachabilityChangedNotification
+         object:nil];
+        [self.reachability startNotifier];
     }
     return self;
 }
-
 
 #pragma mark - PtpIpEventListener delegates.
 
@@ -101,6 +119,8 @@ static int const _timeout = 500;
                     if (callback) {
                         callback(objectInfo, @"stop", nil);
                     }
+                    // デバイス管理情報更新
+                    [self updateManageServices: YES];
                 }
             }
             
@@ -339,7 +359,11 @@ static int const _timeout = 500;
     dispatch_time_t timeout = dispatch_time(DISPATCH_TIME_NOW, NSEC_PER_SEC * _timeout);
 
     [_ptpConnection getDeviceInfo:^(const PtpIpDeviceInfo* info) {
-        _deviceInfo = [NSString stringWithFormat:@"%@ %@", info.model, info.serial_number];
+        if (info && info.model && info.serial_number) {
+            _deviceInfo = [NSString stringWithFormat:@"%@ %@", info.model, info.serial_number];
+        } else {
+            _deviceInfo = nil;
+        }
     
         dispatch_semaphore_signal(semaphore);
 
@@ -617,6 +641,79 @@ static int const _timeout = 500;
         return param;
     }
     return uri;
+}
+
+// デバイス管理情報更新
+- (void) updateManageServices: (BOOL) onlineForSet {
+
+    @synchronized(self) {
+        
+        // ServiceProvider未登録なら処理しない
+        if (!self.serviceProvider) {
+            return;
+        }
+        
+        // オフラインにする場合は、ROIを除く全サービスをオフラインにする
+        if (!onlineForSet) {
+            for (DConnectService *service in [self.serviceProvider services]) {
+                if ([[service name] isEqualToString: ROI_IMAGE_SERVICE]) {
+                    continue;
+                }
+                [service setOnline: NO];
+            }
+            return;
+        }
+        
+        // 接続を試みる(接続成功したらシリアル番号も取得できる)
+        BOOL isConnected = [self connect];
+        NSString* serial = [self getSerialNo];
+        
+        // 接続できた
+        if (isConnected && serial) {
+            
+            // サービス未登録なら登録する
+            if (![self.serviceProvider service: DPThetaDeviceServiceId]) {
+                DPThetaService *service = [[DPThetaService alloc] initWithServiceId: DPThetaDeviceServiceId plugin: self.plugin];
+                [service setName:serial];
+                [service setOnline:YES];
+                [self.serviceProvider addService: service];
+            } else {
+                // サービス登録済ならオンラインにする
+                DConnectService *service = [self.serviceProvider service: DPThetaDeviceServiceId];
+                [service setOnline:YES];
+            }
+        } else {
+            // 切断中でサービスが登録済ならオフラインにする
+            DConnectService *service = [self.serviceProvider service: DPThetaDeviceServiceId];
+            if (service) {
+                [service setOnline:NO];
+            }
+        }
+
+        // ROI接続中(常時)
+        // サービス未登録なら登録する
+        if (![self.serviceProvider service: DPThetaRoiServiceId]) {
+            DPThetaService *service = [[DPThetaService alloc] initWithServiceId: DPThetaRoiServiceId plugin: self.plugin];
+            [service setName: ROI_IMAGE_SERVICE];
+            [service setOnline:YES];
+            [self.serviceProvider addService: service];
+        }
+    }
+}
+
+// 通知を受け取るメソッド
+-(void)notifiedNetworkStatus:(NSNotification *)notification {
+    
+    // Thetaオンライン判定(Theta接続中はインターネット接続できないのでこの条件で判定する。
+    BOOL online = NO;
+    if ([self.reachability currentReachabilityStatus] == NotReachable) {
+        online = YES;
+    } else {
+        online = NO;
+    }
+    
+    // デバイス管理情報更新
+    [self updateManageServices: online];
 }
 
 @end

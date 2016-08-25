@@ -7,7 +7,7 @@
 //  http://opensource.org/licenses/mit-license.php
 //
 
-/*! @brief プロファイル名: remote_controller。 */
+/*! @brief プロファイル名: remoteController。 */
 extern NSString *const DPIRKitRemoteControllerProfileName;
 
 /*! @brief パラメータ: message。 */

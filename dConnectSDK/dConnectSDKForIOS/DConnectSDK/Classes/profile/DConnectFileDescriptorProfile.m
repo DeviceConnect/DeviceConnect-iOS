@@ -9,7 +9,7 @@
 
 #import "DConnectFileDescriptorProfile.h"
 
-NSString *const DConnectFileDescriptorProfileName = @"file_descriptor";
+NSString *const DConnectFileDescriptorProfileName = @"fileDescriptor";
 NSString *const DConnectFileDescriptorProfileAttrOpen = @"open";
 NSString *const DConnectFileDescriptorProfileAttrClose = @"close";
 NSString *const DConnectFileDescriptorProfileAttrRead = @"read";
@@ -27,136 +27,12 @@ NSString *const DConnectFileDescriptorProfileParamPrev = @"prev";
 NSString *const DConnectFileDescriptorProfileParamUri = @"uri";
 NSString *const DConnectFileDescriptorProfileParamPath = @"path";
 
-@interface DConnectFileDescriptorProfile()
-
-- (BOOL) hasMethod:(SEL)method response:(DConnectResponseMessage *)response;
-
-@end
-
 @implementation DConnectFileDescriptorProfile
 
 #pragma mark - DConnectProfile Methods
 
 - (NSString *) profileName {
     return DConnectFileDescriptorProfileName;
-}
-
-- (BOOL) didReceiveGetRequest:(DConnectRequestMessage *)request response:(DConnectResponseMessage *)response {
-    BOOL send = YES;
-    
-    if (!_delegate) {
-        [response setErrorToNotSupportAction];
-        return send;
-    }
-    
-    NSString *attribute = [request attribute];
-    if (attribute) {
-        
-        NSString *serviceId = [request serviceId];
-        NSString *path = [DConnectFileDescriptorProfile pathFromRequest:request];
-        
-        if ([attribute isEqualToString:DConnectFileDescriptorProfileAttrOpen]) {
-            if ([self hasMethod:@selector(profile:didReceiveGetOpenRequest:response:serviceId:path:flag:)
-                       response:response])
-            {
-                NSString *flag = [DConnectFileDescriptorProfile flagFromRequest:request];
-                send = [_delegate profile:self didReceiveGetOpenRequest:request response:response
-                                 serviceId:serviceId path:path flag:flag];
-            }
-        } else if ([attribute isEqualToString:DConnectFileDescriptorProfileAttrRead]) {
-            if ([self hasMethod:@selector(profile:didReceiveGetReadRequest:response:serviceId:path:length:position:)
-                       response:response])
-            {
-                NSNumber *length = [DConnectFileDescriptorProfile lengthFromRequest:request];
-                NSNumber *position = [DConnectFileDescriptorProfile positionFromRequest:request];
-                send = [_delegate profile:self didReceiveGetReadRequest:request response:response
-                                 serviceId:serviceId path:path length:length position:position];
-            }
-        } else {
-            [response setErrorToNotSupportProfile];
-        }
-    } else {
-        [response setErrorToNotSupportProfile];
-    }
-    
-    return send;
-}
-
-
-- (BOOL) didReceivePutRequest:(DConnectRequestMessage *)request response:(DConnectResponseMessage *)response {
-    BOOL send = YES;
-    
-    if (!_delegate) {
-        [response setErrorToNotSupportAction];
-        return send;
-    }
-    
-    NSString *attribute = [request attribute];
-    if (attribute) {
-        
-        NSString *serviceId = [request serviceId];
-        NSString *path = [DConnectFileDescriptorProfile pathFromRequest:request];
-        
-        if ([attribute isEqualToString:DConnectFileDescriptorProfileAttrClose]) {
-            
-            if ([self hasMethod:@selector(profile:didReceivePutCloseRequest:response:serviceId:path:)
-                       response:response])
-            {
-                send = [_delegate profile:self didReceivePutCloseRequest:request response:response
-                                 serviceId:serviceId path:path];
-            }
-        } else if ([attribute isEqualToString:DConnectFileDescriptorProfileAttrWrite]) {
-            if ([self hasMethod:@selector(profile:didReceivePutWriteRequest:response:serviceId:path:media:position:)
-                       response:response])
-            {
-                NSData *media = [DConnectFileDescriptorProfile mediaFromRequest:request];
-                NSNumber *position = [DConnectFileDescriptorProfile positionFromRequest:request];
-                
-                send = [_delegate profile:self didReceivePutWriteRequest:request response:response
-                                 serviceId:serviceId path:path media:media position:position];
-            }
-        } else if ([attribute isEqualToString:DConnectFileDescriptorProfileAttrOnWatchFile]) {
-            
-            if ([self hasMethod:@selector(profile:didReceivePutOnWatchFileRequest:response:serviceId:sessionKey:)
-                       response:response])
-            {
-                NSString *sessionKey = [request sessionKey];
-                send = [_delegate profile:self didReceivePutOnWatchFileRequest:request response:response
-                                 serviceId:serviceId sessionKey:sessionKey];
-            }
-        } else {
-            [response setErrorToNotSupportProfile];
-        }
-    } else {
-        [response setErrorToNotSupportProfile];
-    }
-    return send;
-}
-
-- (BOOL) didReceiveDeleteRequest:(DConnectRequestMessage *)request response:(DConnectResponseMessage *)response {
-    BOOL send = YES;
-    
-    if (!_delegate) {
-        [response setErrorToNotSupportAction];
-        return send;
-    }
-    
-    NSString *attribute = [request attribute];
-    
-    if ([DConnectFileDescriptorProfileAttrOnWatchFile isEqualToString:attribute]) {
-        
-        if ([self hasMethod:@selector(profile:didReceiveDeleteOnWatchFileRequest:response:serviceId:sessionKey:)
-                   response:response])
-        {
-            NSString *serviceId = [request serviceId];
-            NSString *sessionKey = [request sessionKey];
-            send = [_delegate profile:self didReceiveDeleteOnWatchFileRequest:request response:response
-                             serviceId:serviceId sessionKey:sessionKey];
-        }
-    } else {
-        [response setErrorToNotSupportProfile];
-    }
-    return send;
 }
 
 #pragma mark - Setter
@@ -209,15 +85,6 @@ NSString *const DConnectFileDescriptorProfileParamPath = @"path";
 
 + (NSString *) pathFromRequest:(DConnectMessage *)request {
     return [request stringForKey:DConnectFileDescriptorProfileParamPath];
-}
-
-#pragma mark - Private Methods
-- (BOOL) hasMethod:(SEL)method response:(DConnectResponseMessage *)response {
-    BOOL result = [_delegate respondsToSelector:method];
-    if (!result) {
-        [response setErrorToNotSupportAttribute];
-    }
-    return result;
 }
 
 @end

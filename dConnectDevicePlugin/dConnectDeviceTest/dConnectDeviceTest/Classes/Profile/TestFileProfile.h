@@ -9,11 +9,6 @@
 
 #import <DConnectSDK/DConnectSDK.h>
 
-@class DeviceTestPlugin;
-
-@interface TestFileProfile : DConnectFileProfile<DConnectFileProfileDelegate>
-
-@property (nonatomic, strong) DeviceTestPlugin *plugin;
-- (id) initWithDevicePlugin:(DeviceTestPlugin *)plugin;
+@interface TestFileProfile : DConnectFileProfile
 
 @end

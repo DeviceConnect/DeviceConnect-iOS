@@ -10,7 +10,7 @@
 
 #import "DPHostConnectProfile.h"
 #import "DPHostDevicePlugin.h"
-#import "DPHostServiceDiscoveryProfile.h"
+#import "DPHostService.h"
 #import "DPHostUtils.h"
 #import "DPHostReachability.h"
 /*
@@ -64,7 +64,6 @@ typedef void (^DPHostConnectStatusBlock)(BOOL status);
 {
     self = [super init];
     if (self) {
-        self.delegate = self;
         
         _eventMgr = [DConnectEventManager sharedManagerForClass:[DPHostDevicePlugin class]];
         
@@ -83,6 +82,172 @@ typedef void (^DPHostConnectStatusBlock)(BOOL status);
                          object:nil];
         });
 
+        // API登録(didReceiveGetWifiRequest相当)
+        NSString *getWifiRequestApiPath = [self apiPath: nil
+                                          attributeName: DConnectConnectProfileAttrWifi];
+        [self addGetPath: getWifiRequestApiPath api: ^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+            [_self scanForWifi];
+            NetworkStatus netStatus = [[_self wifiReachability] currentReachabilityStatus];
+            if (netStatus == NotReachable) {
+                [DConnectConnectProfile setEnable:NO target:response];
+            } else {
+                [DConnectConnectProfile setEnable:YES target:response];
+            }
+            [response setResult:DConnectMessageResultTypeOk];
+            return YES;
+        }];
+        
+        // API登録(didReceiveGetBluetoothRequest相当)
+        NSString *getBluetoothRequestApiPath = [self apiPath: nil
+                                               attributeName: DConnectConnectProfileAttrBluetooth];
+        [self addGetPath: getBluetoothRequestApiPath api: ^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+            DPHostConnectStatusBlock block = ^(BOOL isStatus) {
+                [DConnectConnectProfile setEnable:isStatus target:response];
+                [response setResult:DConnectMessageResultTypeOk];
+                if (![_self checkBluetoothBlocks]) {
+                    [[_self centralManager] stopScan];
+                }
+                [[DConnectManager sharedManager] sendResponse:response];
+            };
+            [[_self bluetoothStatusBlocks] addObject:block];
+            [_self scanForPeripherals];
+            
+            return NO;
+        }];
+        
+        
+        // API登録(didReceiveGetBLERequest相当)
+        NSString *getBLERequestApiPath = [self apiPath: nil
+                                         attributeName: DConnectConnectProfileAttrBLE];
+        [self addGetPath: getBLERequestApiPath api: ^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+            DPHostConnectStatusBlock block = ^(BOOL isStatus) {
+                [DConnectConnectProfile setEnable:isStatus target:response];
+                [response setResult:DConnectMessageResultTypeOk];
+                if (![_self checkBluetoothBlocks]) {
+                    [[_self centralManager] stopScan];
+                }
+                [[DConnectManager sharedManager] sendResponse:response];
+            };
+            [[_self bleStatusBlocks] addObject:block];
+            [_self scanForPeripherals];
+            
+            return NO;
+        }];
+        
+        // API登録(didReceivePutOnWifiChangeRequest相当)
+        NSString *putOnWifiChangeRequestApiPath = [self apiPath: nil
+                                                  attributeName: DConnectConnectProfileAttrOnWifiChange];
+        [self addPutPath: putOnWifiChangeRequestApiPath api: ^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+            BOOL result = [_self registerEventWithRequest:request response:response];
+            if (result) {
+                __block DConnectDevicePlugin *plugin = (DConnectDevicePlugin *)_self.plugin;
+                _wifiEventBlock = ^(BOOL isStatus) {
+                    NSArray *evts = [_self.eventMgr eventListForServiceId:DPHostDevicePluginServiceId
+                                                                  profile:DConnectConnectProfileName
+                                                                attribute:DConnectConnectProfileAttrOnWifiChange];
+                    // イベント送信
+                    for (DConnectEvent *evt in evts) {
+                        DConnectMessage *eventMsg = [DConnectEventManager createEventMessageWithEvent:evt];
+                        DConnectMessage *wifi = [DConnectMessage message];
+                        [DConnectConnectProfile setEnable:isStatus target:wifi];
+                        [DConnectConnectProfile setConnectStatus:wifi target:eventMsg];
+                        
+                        [plugin sendEvent:eventMsg];
+                    }
+                    
+                };
+                [_self scanForWifi];
+            }
+            return YES;
+        }];
+        
+        // API登録(didReceivePutOnBluetoothChangeRequest相当)
+        NSString *putOnBluetoothChangeRequestApiPath = [self apiPath: nil
+                                                       attributeName: DConnectConnectProfileAttrOnBluetoothChange];
+        [self addPutPath: putOnBluetoothChangeRequestApiPath api: ^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+            BOOL result = [_self registerEventWithRequest:request response:response];
+            if (result) {
+                __block DConnectDevicePlugin *plugin = (DConnectDevicePlugin *)_self.plugin;
+                _bluetoothEventBlock = ^(BOOL isStatus) {
+                    NSArray *evts = [_self.eventMgr eventListForServiceId:DPHostDevicePluginServiceId
+                                                                  profile:DConnectConnectProfileName
+                                                                attribute:DConnectConnectProfileAttrOnBluetoothChange];
+                    // イベント送信
+                    for (DConnectEvent *evt in evts) {
+                        DConnectMessage *eventMsg = [DConnectEventManager createEventMessageWithEvent:evt];
+                        DConnectMessage *bluetooth = [DConnectMessage message];
+                        [DConnectConnectProfile setEnable:isStatus target:bluetooth];
+                        [DConnectConnectProfile setConnectStatus:bluetooth target:eventMsg];
+                        [plugin sendEvent:eventMsg];
+                    }
+                };
+                [_self scanForPeripherals];
+            }
+            return YES;
+        }];
+        
+        // API登録(didReceivePutOnBLEChangeRequest相当)
+        NSString *putOnBLEChangeRequestApiPath = [self apiPath: nil
+                                                 attributeName: DConnectConnectProfileAttrOnBLEChange];
+        [self addPutPath: putOnBLEChangeRequestApiPath api: ^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+            BOOL result = [_self registerEventWithRequest:request response:response];
+            if (result) {
+                __block DConnectDevicePlugin *plugin = (DConnectDevicePlugin *)_self.plugin;
+                _bleEventBlock = ^(BOOL isStatus) {
+                    NSArray *evts = [_self.eventMgr eventListForServiceId:DPHostDevicePluginServiceId
+                                                                  profile:DConnectConnectProfileName
+                                                                attribute:DConnectConnectProfileAttrOnBLEChange];
+                    // イベント送信
+                    for (DConnectEvent *evt in evts) {
+                        DConnectMessage *eventMsg = [DConnectEventManager createEventMessageWithEvent:evt];
+                        DConnectMessage *ble = [DConnectMessage message];
+                        [DConnectConnectProfile setEnable:isStatus target:ble];
+                        [DConnectConnectProfile setConnectStatus:ble target:eventMsg];
+                        
+                        [plugin sendEvent:eventMsg];
+                    }
+                    
+                };
+                [_self scanForPeripherals];
+            }
+            return YES;
+        }];
+        
+        // API登録(didReceiveDeleteOnWifiChangeRequest相当)
+        NSString *deleteOnWifiChangeRequestApiPath = [self apiPath: nil
+                                                     attributeName: DConnectConnectProfileAttrOnWifiChange];
+        [self addDeletePath: deleteOnWifiChangeRequestApiPath api: ^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+            BOOL result = [_self unregisterEventWithRequest:request response:response];
+            if (result) {
+                _wifiEventBlock = nil;
+                [[_self wifiReachability] stopNotifier];
+            }
+            return YES;
+        }];
+        
+        // API登録(didReceiveDeleteOnBluetoothChangeRequest相当)
+        NSString *deleteOnBluetoothChangeRequestApiPath = [self apiPath: nil
+                                                          attributeName: DConnectConnectProfileAttrOnBluetoothChange];
+        [self addDeletePath: deleteOnBluetoothChangeRequestApiPath api: ^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+            BOOL result = [_self unregisterEventWithRequest:request response:response];
+            if (result) {
+                _bluetoothEventBlock = nil;
+                [[_self centralManager] stopScan];
+            }
+            return YES;
+        }];
+        
+        // API登録(didReceiveDeleteOnBLEChangeRequest相当)
+        NSString *deleteOnBLEChangeRequestApiPath = [self apiPath: nil
+                                                    attributeName: DConnectConnectProfileAttrOnBLEChange];
+        [self addDeletePath: deleteOnBLEChangeRequestApiPath api: ^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+            BOOL result = [_self unregisterEventWithRequest:request response:response];
+            if (result) {
+                _bleEventBlock = nil;
+                [[_self centralManager] stopScan];
+            }
+            return YES;
+        }];
     }
     return self;
 }
@@ -90,184 +255,6 @@ typedef void (^DPHostConnectStatusBlock)(BOOL status);
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kReachabilityChangedNotification object:nil];
-}
-
-#pragma mark - GET
-
-- (BOOL) profile:(DConnectConnectProfile *)profile didReceiveGetWifiRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response serviceId:(NSString *)serviceId {
-    [self scanForWifi];
-    NetworkStatus netStatus = [_wifiReachability currentReachabilityStatus];
-    if (netStatus == NotReachable) {
-        [DConnectConnectProfile setEnable:NO target:response];
-    } else {
-        [DConnectConnectProfile setEnable:YES target:response];
-    }
-    [response setResult:DConnectMessageResultTypeOk];
-    return YES;
-}
-
-- (BOOL) profile:(DConnectConnectProfile *)profile didReceiveGetBluetoothRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response serviceId:(NSString *)serviceId {
-    __weak typeof(self) _self = self;
-    DPHostConnectStatusBlock block = ^(BOOL isStatus) {
-        [DConnectConnectProfile setEnable:isStatus target:response];
-        [response setResult:DConnectMessageResultTypeOk];
-        if (![_self checkBluetoothBlocks]) {
-            [_centralManager stopScan];
-        }
-        [[DConnectManager sharedManager] sendResponse:response];
-    };
-    [_bluetoothStatusBlocks addObject:block];
-    [self scanForPeripherals];
-
-    return NO;
-}
-
-- (BOOL) profile:(DConnectConnectProfile *)profile didReceiveGetBLERequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response serviceId:(NSString *)serviceId {
-    __weak typeof(self) _self = self;
-    DPHostConnectStatusBlock block = ^(BOOL isStatus) {
-        [DConnectConnectProfile setEnable:isStatus target:response];
-        [response setResult:DConnectMessageResultTypeOk];
-        if (![_self checkBluetoothBlocks]) {
-            [_centralManager stopScan];
-        }
-        [[DConnectManager sharedManager] sendResponse:response];
-    };
-    [_bleStatusBlocks addObject:block];
-    [self scanForPeripherals];
-
-    return NO;
-}
-
-
-#pragma mark - PUT
-
-
-- (BOOL) profile:(DConnectConnectProfile *)profile didReceivePutOnWifiChangeRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response serviceId:(NSString *)serviceId sessionKey:(NSString *)sessionKey {
-    BOOL result = [self registerEventWithRequest:request response:response];
-    if (result) {
-        __weak typeof(self) _this = self;
-        __block DConnectDevicePlugin *_self = (DConnectDevicePlugin *)self.provider;
-        _wifiEventBlock = ^(BOOL isStatus) {
-            NSArray *evts = [_this.eventMgr eventListForServiceId:ServiceDiscoveryServiceId
-                                                         profile:DConnectConnectProfileName
-                                                       attribute:DConnectConnectProfileAttrOnWifiChange];
-            // イベント送信
-            for (DConnectEvent *evt in evts) {
-                DConnectMessage *eventMsg = [DConnectEventManager createEventMessageWithEvent:evt];
-                DConnectMessage *wifi = [DConnectMessage message];
-                [DConnectConnectProfile setEnable:isStatus target:wifi];
-                [DConnectConnectProfile setConnectStatus:wifi target:eventMsg];
-                
-                [_self sendEvent:eventMsg];
-            }
-            
-        };
-        [self scanForWifi];
-    }
-    return YES;
-}
-
-
-- (BOOL)                          profile:(DConnectConnectProfile *)profile
-    didReceivePutOnBluetoothChangeRequest:(DConnectRequestMessage *)request
-                                 response:(DConnectResponseMessage *)response
-                                serviceId:(NSString *)serviceId
-                               sessionKey:(NSString *)sessionKey
-{
-    BOOL result = [self registerEventWithRequest:request response:response];
-    if (result) {
-        __weak typeof(self) _this = self;
-        __block DConnectDevicePlugin *_self = (DConnectDevicePlugin *)self.provider;
-        _bluetoothEventBlock = ^(BOOL isStatus) {
-            NSArray *evts = [_this.eventMgr eventListForServiceId:ServiceDiscoveryServiceId
-                                                         profile:DConnectConnectProfileName
-                                                       attribute:DConnectConnectProfileAttrOnBluetoothChange];
-            // イベント送信
-            for (DConnectEvent *evt in evts) {
-                DConnectMessage *eventMsg = [DConnectEventManager createEventMessageWithEvent:evt];
-                DConnectMessage *bluetooth = [DConnectMessage message];
-                [DConnectConnectProfile setEnable:isStatus target:bluetooth];
-                [DConnectConnectProfile setConnectStatus:bluetooth target:eventMsg];
-                [_self sendEvent:eventMsg];
-            }
-        };
-        [self scanForPeripherals];
-    }
-    return YES;
-}
-
-- (BOOL) profile:(DConnectConnectProfile *)profile didReceivePutOnBLEChangeRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response serviceId:(NSString *)serviceId sessionKey:(NSString *)sessionKey {
-    BOOL result = [self registerEventWithRequest:request response:response];
-    if (result) {
-        __weak typeof(self) _this = self;
-        __block DConnectDevicePlugin *_self = (DConnectDevicePlugin *)self.provider;
-        _bleEventBlock = ^(BOOL isStatus) {
-            NSArray *evts = [_this.eventMgr eventListForServiceId:ServiceDiscoveryServiceId
-                                                         profile:DConnectConnectProfileName
-                                                       attribute:DConnectConnectProfileAttrOnBLEChange];
-            // イベント送信
-            for (DConnectEvent *evt in evts) {
-                DConnectMessage *eventMsg = [DConnectEventManager createEventMessageWithEvent:evt];
-                DConnectMessage *ble = [DConnectMessage message];
-                [DConnectConnectProfile setEnable:isStatus target:ble];
-                [DConnectConnectProfile setConnectStatus:ble target:eventMsg];
-
-                [_self sendEvent:eventMsg];
-            }
-            
-        };
-        [self scanForPeripherals];
-    }
-    return YES;
-}
-
-
-
-
-
-
-#pragma mark - DELETE
-- (BOOL) profile:(DConnectConnectProfile *)profile didReceiveDeleteOnWifiChangeRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response
-        serviceId:(NSString *)serviceId
-      sessionKey:(NSString *)sessionKey {
-    BOOL result = [self unregisterEventWithRequest:request response:response];
-    if (result) {
-        _wifiEventBlock = nil;
-        [_wifiReachability stopNotifier];
-    }
-    return YES;
-}
-
-- (BOOL)                             profile:(DConnectConnectProfile *)profile
-    didReceiveDeleteOnBluetoothChangeRequest:(DConnectRequestMessage *)request
-                                    response:(DConnectResponseMessage *)response
-                                   serviceId:(NSString *)serviceId
-                                  sessionKey:(NSString *)sessionKey
-{
-    BOOL result = [self unregisterEventWithRequest:request response:response];
-    if (result) {
-        _bluetoothEventBlock = nil;
-        [_centralManager stopScan];
-    }
-    return YES;
-}
-
-- (BOOL) profile:(DConnectConnectProfile *)profile didReceiveDeleteOnBLEChangeRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response
-        serviceId:(NSString *)serviceId
-      sessionKey:(NSString *)sessionKey {
-    BOOL result = [self unregisterEventWithRequest:request response:response];
-    if (result) {
-        _bleEventBlock = nil;
-        [_centralManager stopScan];
-    }
-    return YES;
 }
 
 #pragma mark - CoreBluetooth Delegate

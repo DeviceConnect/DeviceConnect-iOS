@@ -47,7 +47,7 @@ const float TestDevicePluginBatteryLevel = 0.5;
 @implementation TestDevicePlugin
 
 - (id) init {
-    self = [super init];
+    self = [super initWithObject: self];
     if (self) {
         // プラグインの名前を設定
         self.pluginName = TestDevicePluginAppName;

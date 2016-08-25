@@ -96,7 +96,7 @@
 }
 
 
-+ (NSArray *)supportedProfileNamesWithProvider:(id<DConnectProfileProvider>)provider
++ (NSArray *)supportedProfileNamesWithProvider:(id)provider
                                        service:(DPAllJoynServiceEntity *)service
 {
     if (!provider) {
@@ -113,14 +113,16 @@
     
     for (DConnectProfile *profile in [provider profiles]) {
         // Prerequisite profiles.
-        if ([profile.profileName isEqualToString:DConnectServiceDiscoveryProfileName]
-            || [profile.profileName isEqualToString:DConnectServiceInformationProfileName]
-            || [profile.profileName isEqualToString:DConnectSystemProfileName]
+        if (!profile.profileName) {
+            continue;
+        } else if ([profile.profileName localizedCaseInsensitiveCompare: DConnectServiceDiscoveryProfileName] == NSOrderedSame
+            || [profile.profileName localizedCaseInsensitiveCompare: DConnectServiceInformationProfileName] == NSOrderedSame
+            || [profile.profileName localizedCaseInsensitiveCompare: DConnectSystemProfileName] == NSOrderedSame
             ) {
             [supportedProfileNames addObject:profile.profileName];
         }
         // Optional profiles.
-        else if ([profile.profileName isEqualToString:DConnectLightProfileName]) {
+        else if ([profile.profileName localizedCaseInsensitiveCompare: DConnectLightProfileName] == NSOrderedSame) {
             if ([interfaces.allObjects
                  containsAll:DPAllJoynLampControllerInterfaceSet]
                 || [interfaces.allObjects

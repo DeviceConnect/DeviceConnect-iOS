@@ -16,34 +16,57 @@ NSString *const UniquePingProfileParamPath = @"path";
 
 @implementation TestUniquePingProfile
 
+- (id) init {
+    self = [super init];
+    
+    if (self) {
+        __weak TestUniquePingProfile *weakSelf = self;
+        
+        // API登録(didReceiveGetRequest相当)
+        NSString *getRequestApiPath =
+        [self apiPath: UniquePingProfileInterfacePing
+        attributeName: UniquePingProfileAttributePing];
+        [self addGetPath: getRequestApiPath api: ^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+            
+            return [weakSelf didReceiveRequestCommon:request response:response];
+        }];
+        
+        // API登録(didReceivePostRequest相当)
+        NSString *postRequestApiPath =
+        [self apiPath: UniquePingProfileInterfacePing
+        attributeName: UniquePingProfileAttributePing];
+        [self addPostPath: postRequestApiPath api: ^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+            
+            return [weakSelf didReceiveRequestCommon:request response:response];
+        }];
+        
+        // API登録(didReceivePutRequest相当)
+        NSString *putRequestApiPath =
+        [self apiPath: UniquePingProfileInterfacePing
+        attributeName: UniquePingProfileAttributePing];
+        [self addPutPath: putRequestApiPath api: ^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+            
+            return [weakSelf didReceiveRequestCommon:request response:response];
+        }];
+        
+        // API登録(didReceiveDeleteRequest相当)
+        NSString *deleteRequestApiPath =
+        [self apiPath: UniquePingProfileInterfacePing
+        attributeName: UniquePingProfileAttributePing];
+        [self addDeletePath: deleteRequestApiPath api: ^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+            
+            return [weakSelf didReceiveRequestCommon:request response:response];
+        }];
+        
+    }
+    
+    return self;
+}
+
 #pragma mark - DConnect Profile Methods
 
 - (NSString *) profileName {
     return UniquePingProfileProfileName;
-}
-
-- (BOOL) didReceiveGetRequest:(DConnectRequestMessage *)request
-                     response:(DConnectResponseMessage *)response
-{
-    return [self didReceiveRequestCommon:request response:response];
-}
-
-- (BOOL) didReceivePostRequest:(DConnectRequestMessage *)request
-                     response:(DConnectResponseMessage *)response
-{
-    return [self didReceiveRequestCommon:request response:response];
-}
-
-- (BOOL) didReceivePutRequest:(DConnectRequestMessage *)request
-                      response:(DConnectResponseMessage *)response
-{
-    return [self didReceiveRequestCommon:request response:response];
-}
-
-- (BOOL) didReceiveDeleteRequest:(DConnectRequestMessage *)request
-                      response:(DConnectResponseMessage *)response
-{
-    return [self didReceiveRequestCommon:request response:response];
 }
 
 #pragma mark - Private Methods

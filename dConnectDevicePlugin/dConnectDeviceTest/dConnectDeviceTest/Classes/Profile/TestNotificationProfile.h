@@ -9,11 +9,6 @@
 
 #import <DConnectSDK/DConnectSDK.h>
 
-@class DeviceTestPlugin;
-
-@interface TestNotificationProfile : DConnectNotificationProfile<DConnectNotificationProfileDelegate>
-
-@property (nonatomic, strong) DeviceTestPlugin *plugin;
-- (id) initWithDevicePlugin:(DeviceTestPlugin *)plugin;
+@interface TestNotificationProfile : DConnectNotificationProfile
 
 @end

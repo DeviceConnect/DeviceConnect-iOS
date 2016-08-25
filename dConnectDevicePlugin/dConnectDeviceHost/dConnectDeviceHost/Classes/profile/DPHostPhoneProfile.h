@@ -9,6 +9,6 @@
 
 #import <DConnectSDK/DConnectSDK.h>
 
-@interface DPHostPhoneProfile : DConnectPhoneProfile<DConnectPhoneProfileDelegate>
+@interface DPHostPhoneProfile : DConnectPhoneProfile
 
 @end

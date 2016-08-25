@@ -8,6 +8,15 @@
 //
 
 #import "DPHueManager.h"
+#import "DPHueService.h"
+#import "DPHueReachability.h"
+
+@interface DPHueManager()
+
+@property (nonatomic, strong) DPHueReachability *reachability;
+
+@end
+
 
 @implementation DPHueManager
 //見つけたブリッジのリスト
@@ -43,9 +52,23 @@ NSString *const DPHueBridgeListName = @"org.deviceconnect.ios.DPHue.ip";
         [phHueSDK enableLogging:NO];
         bridgeSearching = [[PHBridgeSearching alloc] initWithUpnpSearch:YES andPortalSearch:YES andIpAdressSearch:NO];
     }
+    
+    // Reachabilityの初期処理
+    self.reachability = [DPHueReachability reachabilityWithHostName: @"www.google.com"];
+    [[NSNotificationCenter defaultCenter]
+     addObserver:self
+     selector:@selector(notifiedNetworkStatus:)
+     name:DPHueReachabilityChangedNotification
+     object:nil];
+    [self.reachability startNotifier];
 }
 
-//ブリッジの検索
+// ServiceProviderを登録
+- (void)setServiceProvider: (DConnectServiceProvider *) serviceProvider {
+    self.mServiceProvider = serviceProvider;
+}
+
+//ブリッジ検索
 -(void)searchBridgeWithCompletion:(PHBridgeSearchCompletionHandler)completion
 {
     [bridgeSearching startSearchWithCompletionHandler:^(NSDictionary *bridgesFound) {
@@ -53,6 +76,7 @@ NSString *const DPHueBridgeListName = @"org.deviceconnect.ios.DPHue.ip";
         if (completion) {
             completion(bridgesFound);
         }
+        [self updateManageServices: YES];
     }];
 }
 
@@ -796,4 +820,60 @@ pushlinkAuthenticationSuccessSelector:(SEL)pushlinkAuthenticationSuccessSelector
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     _hueBridgeList = [userDefaults dictionaryForKey:DPHueBridgeListName].mutableCopy;
 }
+
+// 通知を受け取るメソッド
+-(void)notifiedNetworkStatus:(NSNotification *)notification {
+    NetworkStatus networkStatus = [self.reachability currentReachabilityStatus];
+    if (networkStatus == NotReachable) {
+        [self updateManageServices: NO];
+    } else {
+        [self updateManageServices: YES];
+    }
+}
+
+- (void)updateManageServices : (BOOL) onlineForSet {
+    @synchronized(self) {
+
+        // ServiceProvider未登録なら処理しない
+        if (!self.mServiceProvider) {
+            return;
+        }
+        
+        // オフラインにする場合は、全サービスをオフラインにする(Wifi Offにされたことを想定)
+        if (!onlineForSet) {
+            for (DConnectService *service in [self.mServiceProvider services]) {
+                [service setOnline: NO];
+            }
+            return;
+        }
+        
+        NSDictionary *bridgesFound = self.hueBridgeList;
+
+        // ServiceProviderに存在するデバイスが最新のリストに存在しなかったらそのサービスをオフラインにする
+        for (DPHueService *service in [self.mServiceProvider services]) {
+            NSString *serviceId = [service serviceId];
+            if (!bridgesFound[serviceId]) {
+                [service setOnline: NO];
+            }
+        }
+        
+        // ServiceProviderに未登録のデバイスが見つかったら追加登録する。登録済ならそのサービスをオンラインにする
+        if (bridgesFound.count > 0) {
+            for (id key in [bridgesFound keyEnumerator]) {
+                NSString *serviceId = [NSString stringWithFormat:@"%@_%@",[bridgesFound valueForKey:key],key];
+                DConnectService *service = [self.mServiceProvider service: serviceId];
+                if (service) {
+                    [service setOnline: YES];
+                } else {
+                    service = [[DPHueService alloc] initWithBridgeKey:key bridgeValue:[bridgesFound valueForKey:key] plugin: [self plugin]];
+                    [self.mServiceProvider addService: service];
+                }
+            }
+            
+        }
+    }
+}
+
+
+
 @end

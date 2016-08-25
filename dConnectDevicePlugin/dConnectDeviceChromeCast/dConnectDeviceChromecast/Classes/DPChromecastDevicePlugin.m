@@ -9,21 +9,19 @@
 
 #import "DPChromecastDevicePlugin.h"
 #import "DPChromecastSystemProfile.h"
-#import "DPChromecastServiceDiscoveryProfile.h"
-#import "DPChromecastNotificationProfile.h"
-#import "DPChromecastMediaPlayerProfile.h"
-#import "DPChromecastCanvasProfile.h"
 #import "DPChromecastManager.h"
 
 
 @implementation DPChromecastDevicePlugin
 
 - (id) init {
-    self = [super init];
+    self = [super initWithObject: self];
     if (self) {
         self.pluginName = @"ChromeCast (Device Connect Device Plug-in)";
         
-
+        [[DPChromecastManager sharedManager] setServiceProvider: self.serviceProvider];
+        [[DPChromecastManager sharedManager] setPlugin:self];
+        
         // イベントマネージャの準備
         Class key = [self class];
         [[DConnectEventManager sharedManagerForClass:key]
@@ -31,12 +29,8 @@
                   controllerWithClass:key]];
 
         // プロファイルを追加
-        [self addProfile:[DPChromecastServiceDiscoveryProfile new]];
         [self addProfile:[DPChromecastSystemProfile new]];
-        [self addProfile:[DPChromecastNotificationProfile new]];
-        [self addProfile:[DPChromecastMediaPlayerProfile new]];
-        [self addProfile:[DConnectServiceInformationProfile new]];
-        [self addProfile:[DPChromecastCanvasProfile new]];
+
         __weak typeof(self) _self = self;
         dispatch_async(dispatch_get_main_queue(), ^{
             NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
@@ -50,6 +44,8 @@
                        name:UIApplicationDidEnterBackgroundNotification
                      object:application];
             DPChromecastManager *mgr = [DPChromecastManager sharedManager];
+            [mgr setServiceProvider: self.serviceProvider];
+            [mgr setPlugin: self];
             [mgr startScan];
             [mgr startHttpServer];
 

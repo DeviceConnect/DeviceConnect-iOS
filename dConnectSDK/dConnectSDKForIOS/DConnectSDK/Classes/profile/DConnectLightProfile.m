@@ -30,12 +30,6 @@ NSString *const DConnectLightProfileParamLightGroups = @"lightGroups";
 NSString *const DConnectLightProfileParamLightIds = @"lightIds";
 NSString *const DConnectLightProfileParamGroupName = @"groupName";
 
-@interface DConnectLightProfile()
-
-- (BOOL) hasMethod:(SEL)method response:(DConnectResponseMessage *)response;
-
-@end
-
 @implementation DConnectLightProfile
 
 /*
@@ -45,412 +39,52 @@ NSString *const DConnectLightProfileParamGroupName = @"groupName";
     return DConnectLightProfileName;
 }
 
-#pragma mark - DConnectProfile Method
+#pragma mark - Getter
 
-/*
- GETリクエストを振り分ける。
- */
-- (BOOL) didReceiveGetRequest:(DConnectRequestMessage *)request
-                     response:(DConnectResponseMessage *)response {
-    BOOL send = YES;
-    
-    if (!_delegate) {
-        [response setErrorToNotSupportAction];
-        return send;
-    }
-    
-    NSString *serviceId = [request serviceId];
-    NSString *profile = [request profile];
-    NSString *attribute = [request attribute];
-    if (profile) {
-        if ([profile isEqualToString:DConnectLightProfileName]
-            && !attribute
-            && [self hasMethod:@selector(profile:didReceiveGetLightRequest:response:serviceId:) response:response])
-        {
-
-            send = [_delegate profile:self
-            didReceiveGetLightRequest:request
-                             response:response
-                            serviceId:serviceId];
-        } else if ([profile isEqualToString:DConnectLightProfileName]
-                   && attribute
-                   && [attribute isEqualToString:DConnectLightProfileInterfaceGroup]
-                   && [self hasMethod:@selector(profile:
-                                                didReceiveGetLightGroupRequest:
-                                                response:
-                                                serviceId:)
-                             response:response])
-        {
-            send = [_delegate profile:self
-       didReceiveGetLightGroupRequest:request
-                             response:response
-                            serviceId:serviceId];
-        } else {
-            [response setErrorToNotSupportAttribute];
-        }
-    } else {
-        [response setErrorToNotSupportProfile];
-    }
-    
-    return send;
++ (NSString *) lightIdFromRequest: (DConnectRequestMessage *) request {
+    NSString *lightId = [request stringForKey:DConnectLightProfileParamLightId];
+    return lightId;
 }
 
-
-/*
- POSTリクエストを振り分ける。
- */
-- (BOOL) didReceivePostRequest:(DConnectRequestMessage *)request
-                      response:(DConnectResponseMessage *)response {
-    BOOL send = YES;
-    
-    if (!_delegate) {
-        [response setErrorToNotSupportAction];
-        return send;
-    }
-    
-    NSString *serviceId = [request serviceId];
-    NSString *profile = [request profile];
-    NSString *interface = [request interface];
-    NSString *attribute = [request attribute];
-    
-    if (profile) {
-        if ([profile isEqualToString:DConnectLightProfileName]
-            && !interface
-            && !attribute
-            && [self hasMethod:@selector(profile:
-                                         didReceivePostLightRequest:
-                                         response:
-                                         serviceId:
-                                         lightId:
-                                         brightness:
-                                         color:
-                                         flashing:)
-                      response:response])
-        {
-            NSString *lightId = [request stringForKey:DConnectLightProfileParamLightId];
-            NSNumber *brightness = nil;
-            if ([request objectForKey:DConnectLightProfileParamBrightness]) {
-                brightness =
-                [DConnectLightProfile parseBrightParam:
-                 [request objectForKey:DConnectLightProfileParamBrightness]];
-                if (!brightness
-                    || (brightness && ([brightness doubleValue] < 0.0 || [brightness doubleValue] > 1.0))) {
-                    [response setErrorToInvalidRequestParameterWithMessage:
-                     @"Parameter 'brightness' must be a value between 0 and 1.0."];
-                    return YES;
-                }
-            }
-            NSString *color = [request stringForKey:DConnectLightProfileParamColor];
-            NSArray *flashing =
-            [DConnectLightProfile parsePattern:
-             [request stringForKey:DConnectLightProfileParamFlashing] isId:NO];
-            if (!flashing) {
-                [response setErrorToInvalidRequestParameterWithMessage:
-                 @"Parameter 'flashing' invalid."];
-                return YES;
-            }
-            if (![self checkFlash:response flashing:flashing]) {
-                return YES;
-            }
-            send = [_delegate profile:self
-           didReceivePostLightRequest:request
-                             response:response
-                            serviceId:serviceId
-                              lightId:lightId
-                           brightness:brightness
-                                color:color
-                             flashing:flashing];
-        } else if ([profile isEqualToString:DConnectLightProfileName]
-                   && !interface
-                   && attribute
-                   && [attribute isEqualToString:DConnectLightProfileInterfaceGroup]
-                   && [self hasMethod:@selector(profile:
-                                                didReceivePostLightGroupRequest:
-                                                response:
-                                                serviceId:
-                                                groupId:
-                                                brightness:
-                                                color:
-                                                flashing:)
-                             response:response])
-        {
-            NSString *groupId = [request stringForKey:DConnectLightProfileParamGroupId];
-            NSNumber *brightness = nil;
-            if ([request objectForKey:DConnectLightProfileParamBrightness]) {
-                brightness =
-                [DConnectLightProfile parseBrightParam:
-                 [request objectForKey:DConnectLightProfileParamBrightness]];
-                if (!brightness
-                    || (brightness && ([brightness doubleValue] < 0.0 || [brightness doubleValue] > 1.0))) {
-                    [response setErrorToInvalidRequestParameterWithMessage:
-                     @"Parameter 'brightness' must be a value between 0 and 1.0."];
-                    return YES;
-                }
-            }
-            NSString *color = [request stringForKey:DConnectLightProfileParamColor];
-            NSArray *flashing =
-            [DConnectLightProfile parsePattern:
-             [request stringForKey:DConnectLightProfileParamFlashing] isId:NO];
-            if (!flashing) {
-                [response setErrorToInvalidRequestParameterWithMessage:
-                 @"Parameter 'flashing' invalid."];
-                return YES;
-            }
-            if (![self checkFlash:response flashing:flashing]) {
-                return YES;
-            }
-
-            send = [_delegate profile:self
-      didReceivePostLightGroupRequest:request
-                             response:response
-                            serviceId:serviceId
-                              groupId:groupId
-                           brightness:brightness
-                                color:color
-                             flashing:flashing];
-        } else if ([profile isEqualToString:DConnectLightProfileName]
-                   && interface
-                   && attribute
-                   && [interface isEqualToString:DConnectLightProfileInterfaceGroup]
-                   && [attribute isEqualToString:DConnectLightProfileAttrCreate]
-                   && [self hasMethod:@selector(profile:
-                                                didReceivePostLightGroupCreateRequest:
-                                                response:
-                                                serviceId:
-                                                lightIds:
-                                                groupName:)
-                             response:response])
-        {
-            NSString *lightIds = [request stringForKey:DConnectLightProfileParamLightIds];
-            NSString *groupName = [request stringForKey:DConnectLightProfileParamGroupName];
-            NSArray *pattern = [DConnectLightProfile parsePattern:lightIds isId:YES];
-            send = [_delegate profile:self
-didReceivePostLightGroupCreateRequest:request
-                             response:response
-                            serviceId:serviceId
-                             lightIds:pattern
-                            groupName:groupName];
-        } else {
-            [response setErrorToNotSupportAttribute];
-        }
-        
-    } else {
-        [response setErrorToNotSupportProfile];
-    }
-    
-    return send;
++ (NSString *) lightIdsFromRequest: (DConnectRequestMessage *) request {
+    NSString *lightIds = [request stringForKey:DConnectLightProfileParamLightIds];
+    return lightIds;
 }
 
-/*
- PUTリクエストを振り分ける。
- */
-- (BOOL) didReceivePutRequest:(DConnectRequestMessage *)request
-                     response:(DConnectResponseMessage *)response {
-    BOOL send = YES;
-    
-    if (!_delegate) {
-        [response setErrorToNotSupportAction];
-        return send;
++ (NSNumber *) brightnessFromRequest: (DConnectRequestMessage *) request {
+    NSNumber *brightness = nil;
+    if ([request objectForKey:DConnectLightProfileParamBrightness]) {
+        brightness =
+        [DConnectLightProfile parseBrightParam:
+         [request objectForKey:DConnectLightProfileParamBrightness]];
     }
-    
-    NSString *serviceId = [request serviceId];
-    NSString *profile = [request profile];
-    NSString *interface = [request interface];
-    NSString *attribute = [request attribute];
-    
-    if (profile) {
-        if ([profile isEqualToString:DConnectLightProfileName]
-            && !interface
-            && !attribute
-            && [self hasMethod:@selector(profile:
-                                         didReceivePutLightRequest:
-                                         response:
-                                         serviceId:
-                                         lightId:
-                                         name:
-                                         brightness:
-                                         color:
-                                         flashing:)
-                      response:response])
-        {
-            NSString *lightId = [request stringForKey:DConnectLightProfileParamLightId];
-            NSNumber *brightness = nil;
-            if ([request objectForKey:DConnectLightProfileParamBrightness]) {
-                brightness =
-                [DConnectLightProfile parseBrightParam:
-                 [request objectForKey:DConnectLightProfileParamBrightness]];
-                if (!brightness
-                    || (brightness && ([brightness doubleValue] < 0.0 || [brightness doubleValue] > 1.0))) {
-                    [response setErrorToInvalidRequestParameterWithMessage:
-                     @"Parameter 'brightness' must be a value between 0 and 1.0."];
-                    return YES;
-                }
-            }
-            NSString *name = [request stringForKey:DConnectLightProfileParamName];
-            NSString *color = [request stringForKey:DConnectLightProfileParamColor];
-            NSArray *flashing =
-            [DConnectLightProfile parsePattern:
-             [request stringForKey:DConnectLightProfileParamFlashing] isId:NO];
-            if (!flashing) {
-                [response setErrorToInvalidRequestParameterWithMessage:
-                 @"Parameter 'flashing' invalid."];
-                return YES;
-            }
-            if (![self checkFlash:response flashing:flashing]) {
-                return YES;
-            }
-
-            
-            send = [_delegate profile:self
-            didReceivePutLightRequest:request
-                             response:response
-                            serviceId:serviceId
-                              lightId:lightId
-                                 name:name
-                           brightness:brightness
-                                color:color
-                             flashing:flashing];
-        } else if ([profile isEqualToString:DConnectLightProfileName]
-                   && !interface
-                   && attribute
-                   && [attribute isEqualToString:DConnectLightProfileInterfaceGroup]
-                   && [self hasMethod:@selector(profile:
-                                                didReceivePutLightGroupRequest:
-                                                response:
-                                                serviceId:
-                                                groupId:
-                                                name:
-                                                brightness:
-                                                color:
-                                                flashing:)
-                             response:response])
-        {
-            NSString *groupId = [request stringForKey:DConnectLightProfileParamGroupId];
-            NSNumber *brightness = nil;
-            if ([request objectForKey:DConnectLightProfileParamBrightness]) {
-                brightness =
-                [DConnectLightProfile parseBrightParam:
-                 [request objectForKey:DConnectLightProfileParamBrightness]];
-                if (!brightness
-                    || (brightness &&  ([brightness doubleValue] < 0.0 || [brightness doubleValue] > 1.0))) {
-                    [response setErrorToInvalidRequestParameterWithMessage:
-                     @"Parameter 'brightness' must be a value between 0 and 1.0."];
-                    return YES;
-                }
-                
-            }
-            NSString *name = [request stringForKey:DConnectLightProfileParamName];
-            NSString *color = [request stringForKey:DConnectLightProfileParamColor];
-            NSArray *flashing =
-            [DConnectLightProfile parsePattern:
-             [request stringForKey:DConnectLightProfileParamFlashing]
-                                     isId:NO];
-            if (!flashing) {
-                [response setErrorToInvalidRequestParameterWithMessage:
-                 @"Parameter 'flashing' invalid."];
-                return YES;
-            }
-            if (![self checkFlash:response flashing:flashing]) {
-                return YES;
-            }
-
-            send = [_delegate profile:self
-       didReceivePutLightGroupRequest:request
-                             response:response
-                            serviceId:serviceId
-                              groupId:groupId
-                                 name:name
-                           brightness:brightness
-                                color:color
-                             flashing:flashing];
-        } else {
-            [response setErrorToNotSupportAttribute];
-        }
-    } else {
-        [response setErrorToNotSupportProfile];
-    }
-    
-    return send;
+    return brightness;
 }
 
-/*
- DELETEリクエストを振り分ける。
- */
-- (BOOL) didReceiveDeleteRequest:(DConnectRequestMessage *)request
-                        response:(DConnectResponseMessage *)response {
-    BOOL send = YES;
-    
-    if (!_delegate) {
-        [response setErrorToNotSupportAction];
-        return send;
-    }
-    
-    NSString *serviceId = [request serviceId];
-    NSString *profile = [request profile];
-    NSString *interface = [request interface];
-    NSString *attribute = [request attribute];
-    
-    if (profile) {
-        if ([profile isEqualToString:DConnectLightProfileName]
-            && !interface
-            && !attribute
-            && [self hasMethod:@selector(profile:
-                                         didReceiveDeleteLightRequest:
-                                         response:
-                                         serviceId:
-                                         lightId:)
-                      response:response])
-        {
-            NSString *lightId = [request stringForKey:DConnectLightProfileParamLightId];
-            send = [_delegate profile:self
-         didReceiveDeleteLightRequest:request
-                             response:response
-                            serviceId:serviceId
-                              lightId:lightId];
-        } else if ([profile isEqualToString:DConnectLightProfileName]
-                   && !interface
-                   && attribute
-                   && [attribute isEqualToString:DConnectLightProfileInterfaceGroup]
-                   && [self hasMethod:@selector(profile:
-                                                didReceiveDeleteLightGroupRequest:
-                                                response:
-                                                serviceId:
-                                                groupId:)
-                             response:response])
-        {
-            NSString *groupId = [request stringForKey:DConnectLightProfileParamGroupId];
-            send = [_delegate profile:self
-    didReceiveDeleteLightGroupRequest:request
-                             response:response
-                            serviceId:serviceId
-                              groupId:groupId];
-        } else if ([profile isEqualToString:DConnectLightProfileName]
-                   && interface
-                   && attribute
-                   && [interface isEqualToString:DConnectLightProfileInterfaceGroup]
-                   && [attribute isEqualToString:DConnectLightProfileAttrClear]
-                   && [self hasMethod:@selector(profile:
-                                                didReceiveDeleteLightGroupClearRequest:
-                                                response:
-                                                serviceId:
-                                                groupId:) response:response])
-        {
-            NSString *groupId = [request stringForKey:DConnectLightProfileParamGroupId];
-            send = [_delegate          profile:self
-        didReceiveDeleteLightGroupClearRequest:request
-                                      response:response
-                                     serviceId:serviceId
-                                       groupId:groupId];
-        } else {
-            [response setErrorToNotSupportAttribute];
-        }
-    } else {
-        [response setErrorToNotSupportProfile];
-    }
-    
-    return send;
++ (NSString *) nameFromRequest: (DConnectRequestMessage *) request {
+    NSString *name = [request stringForKey:DConnectLightProfileParamName];
+    return name;
 }
 
++ (NSString *) colorFromRequest: (DConnectRequestMessage *) request {
+    NSString *color = [request stringForKey:DConnectLightProfileParamColor];
+    return color;
+}
+
++ (NSString *) flashingFromRequest: (DConnectRequestMessage *) request {
+    NSString *flashing = [request stringForKey:DConnectLightProfileParamFlashing];
+    return flashing;
+}
+
++ (NSString *) groupIdFromRequest: (DConnectRequestMessage *) request {
+    NSString *groupId = [request stringForKey:DConnectLightProfileParamGroupId];
+    return groupId;
+}
+
++ (NSString *) groupNameFromRequest: (DConnectRequestMessage *) request {
+    NSString *groupName = [request stringForKey:DConnectLightProfileParamGroupName];
+    return groupName;
+}
 
 #pragma mark - Setter
 + (void) setLights:(DConnectArray *)lights target:(DConnectMessage *)message {
@@ -489,18 +123,6 @@ didReceivePostLightGroupCreateRequest:request
 
 #pragma mark - Private Methods
 
-
-/*
- メソッドが存在するかを確認する。
- */
-- (BOOL) hasMethod:(SEL)method
-          response:(DConnectResponseMessage *)response {
-    BOOL result = [_delegate respondsToSelector:method];
-    if (!result) {
-        [response setErrorToNotSupportAttribute];
-    }
-    return result;
-}
 
 + (NSNumber *) parseBrightParam:(NSString *)brightnessParam
 {

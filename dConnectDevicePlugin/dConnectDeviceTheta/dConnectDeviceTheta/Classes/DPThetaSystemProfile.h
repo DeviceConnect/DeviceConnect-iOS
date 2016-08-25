@@ -9,6 +9,6 @@
 
 #import <DConnectSDK/DConnectSystemProfile.h>
 
-@interface DPThetaSystemProfile : DConnectSystemProfile<DConnectSystemProfileDelegate, DConnectSystemProfileDataSource>
+@interface DPThetaSystemProfile : DConnectSystemProfile<DConnectSystemProfileDataSource>
 
 @end

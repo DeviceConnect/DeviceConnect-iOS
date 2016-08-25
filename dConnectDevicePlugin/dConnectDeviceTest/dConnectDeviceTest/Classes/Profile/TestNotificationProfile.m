@@ -12,204 +12,236 @@
 
 @implementation TestNotificationProfile
 
-- (id) initWithDevicePlugin:(DeviceTestPlugin *)plugin {
+- (id) init {
     self = [super init];
     
     if (self) {
-        self.delegate = self;
-        _plugin = plugin;
+        __weak TestNotificationProfile *weakSelf = self;
+        
+        // API登録(didReceivePostNotifyRequest相当)
+        NSString *postNotifyRequestApiPath =
+        [self apiPath: nil
+        attributeName: DConnectNotificationProfileAttrNotify];
+        [self addPostPath: postNotifyRequestApiPath api: ^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+            
+            NSString *serviceId = [request serviceId];
+            NSNumber *type = [DConnectNotificationProfile typeFromRequest:request];
+            
+            CheckDID(response, serviceId)
+            if (type == nil) {
+                [response setErrorToInvalidRequestParameter];
+            } else {
+                NSString *_id = nil;
+                switch ([type intValue]) {
+                    case DConnectNotificationProfileNotificationTypePhone:
+                        _id = @"1";
+                        break;
+                    case DConnectNotificationProfileNotificationTypeMail:
+                        _id = @"2";
+                        break;
+                    case DConnectNotificationProfileNotificationTypeSMS:
+                        _id = @"3";
+                        break;
+                    case DConnectNotificationProfileNotificationTypeEvent:
+                        _id = @"4";
+                        break;
+                    case DConnectNotificationProfileNotificationTypeUnknown:
+                        _id = @"5";
+                        break;
+                        
+                    default:
+                        [response setErrorToInvalidRequestParameter];
+                        break;
+                }
+                
+                if (_id) {
+                    response.result = DConnectMessageResultTypeOk;
+                    [DConnectNotificationProfile setNotificationId:_id target:response];
+                }
+            }
+            
+            return YES;
+        }];
+        
+        // API登録(didReceivePutOnClickRequest相当)
+        NSString *putOnClickRequestApiPath =
+        [self apiPath: nil
+        attributeName: DConnectNotificationProfileAttrOnClick];
+        [self addPutPath: putOnClickRequestApiPath api: ^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+            
+            NSString *serviceId = [request serviceId];
+            NSString *sessionKey = [request sessionKey];
+            
+            CheckDIDAndSK(response, serviceId, sessionKey) {
+                response.result = DConnectMessageResultTypeOk;
+                
+                DConnectMessage *event = [DConnectMessage message];
+                [event setString:sessionKey forKey:DConnectMessageSessionKey];
+                [event setString:weakSelf.profileName forKey:DConnectMessageProfile];
+                [event setString:DConnectNotificationProfileAttrOnClick forKey:DConnectMessageAttribute];
+                [DConnectNotificationProfile setNotificationId:@"1" target:event];
+                [weakSelf.plugin asyncSendEvent:event];
+                
+            }
+            
+            return YES;
+        }];
+        
+        // API登録(didReceivePutOnShowRequest相当)
+        NSString *putOnShowRequestApiPath =
+        [self apiPath: nil
+        attributeName: DConnectNotificationProfileAttrOnShow];
+        [self addPutPath: putOnShowRequestApiPath api: ^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+            
+            NSString *serviceId = [request serviceId];
+            NSString *sessionKey = [request sessionKey];
+            
+            CheckDIDAndSK(response, serviceId, sessionKey) {
+                response.result = DConnectMessageResultTypeOk;
+                
+                DConnectMessage *event = [DConnectMessage message];
+                [event setString:sessionKey forKey:DConnectMessageSessionKey];
+                [event setString:weakSelf.profileName forKey:DConnectMessageProfile];
+                [event setString:DConnectNotificationProfileAttrOnShow forKey:DConnectMessageAttribute];
+                [DConnectNotificationProfile setNotificationId:@"1" target:event];
+                [weakSelf.plugin asyncSendEvent:event];
+                
+            }
+            
+            return YES;
+        }];
+        
+        // API登録(didReceivePutOnCloseRequest相当)
+        NSString *putOnCloseRequestApiPath =
+        [self apiPath: nil
+        attributeName: DConnectNotificationProfileAttrOnClose];
+        [self addPutPath: putOnCloseRequestApiPath api: ^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+            
+            NSString *serviceId = [request serviceId];
+            NSString *sessionKey = [request sessionKey];
+            
+            CheckDIDAndSK(response, serviceId, sessionKey) {
+                response.result = DConnectMessageResultTypeOk;
+                
+                DConnectMessage *event = [DConnectMessage message];
+                [event setString:sessionKey forKey:DConnectMessageSessionKey];
+                [event setString:weakSelf.profileName forKey:DConnectMessageProfile];
+                [event setString:DConnectNotificationProfileAttrOnClose forKey:DConnectMessageAttribute];
+                [DConnectNotificationProfile setNotificationId:@"1" target:event];
+                [weakSelf.plugin asyncSendEvent:event];
+                
+            }
+            
+            return YES;
+        }];
+        
+        // API登録(didReceivePutOnErrorRequest相当)
+        NSString *putOnErrorRequestApiPath =
+        [self apiPath: nil
+        attributeName: DConnectNotificationProfileAttrOnError];
+        [self addPutPath: putOnErrorRequestApiPath api: ^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+            
+            NSString *serviceId = [request serviceId];
+            NSString *sessionKey = [request sessionKey];
+            
+            CheckDIDAndSK(response, serviceId, sessionKey) {
+                response.result = DConnectMessageResultTypeOk;
+                
+                DConnectMessage *event = [DConnectMessage message];
+                [event setString:sessionKey forKey:DConnectMessageSessionKey];
+                [event setString:weakSelf.profileName forKey:DConnectMessageProfile];
+                [event setString:DConnectNotificationProfileAttrOnError forKey:DConnectMessageAttribute];
+                [DConnectNotificationProfile setNotificationId:@"1" target:event];
+                [weakSelf.plugin asyncSendEvent:event];
+                
+            }
+            
+            return YES;
+        }];
+        
+        // API登録(didReceiveDeleteNotifyRequest相当)
+        NSString *deleteNotifyRequestApiPath =
+        [self apiPath: nil
+        attributeName: DConnectNotificationProfileAttrNotify];
+        [self addDeletePath: deleteNotifyRequestApiPath api: ^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+            
+            NSString *serviceId = [request serviceId];
+            NSString *notificationId = [DConnectNotificationProfile notificationIdFromRequest:request];
+            
+            CheckDID(response, serviceId)
+            if (notificationId == nil) {
+                [response setErrorToInvalidRequestParameter];
+            } else {
+                response.result = DConnectMessageResultTypeOk;
+            }
+            
+            return YES;
+        }];
+        
+        // API登録(didReceiveDeleteOnClickRequest相当)
+        NSString *deleteOnClickRequestApiPath =
+        [self apiPath: nil
+        attributeName: DConnectNotificationProfileAttrNotify];
+        [self addDeletePath: deleteOnClickRequestApiPath api: ^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+            
+            NSString *serviceId = [request serviceId];
+            NSString *sessionKey = [request sessionKey];
+            
+            CheckDIDAndSK(response, serviceId, sessionKey) {
+                response.result = DConnectMessageResultTypeOk;
+            }
+            
+            return YES;
+        }];
+        
+        // API登録(didReceiveDeleteOnShowRequest相当)
+        NSString *deleteOnShowRequestApiPath =
+        [self apiPath: nil
+        attributeName: DConnectNotificationProfileAttrOnShow];
+        [self addDeletePath: deleteOnShowRequestApiPath api: ^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+            
+            NSString *serviceId = [request serviceId];
+            NSString *sessionKey = [request sessionKey];
+            
+            CheckDIDAndSK(response, serviceId, sessionKey) {
+                response.result = DConnectMessageResultTypeOk;
+            }
+            
+            return YES;
+        }];
+        
+        // API登録(didReceiveDeleteOnCloseRequest相当)
+        NSString *deleteOnCloseRequestApiPath =
+        [self apiPath: nil
+        attributeName: DConnectNotificationProfileAttrOnClose];
+        [self addDeletePath: deleteOnCloseRequestApiPath api: ^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+            
+            NSString *serviceId = [request serviceId];
+            NSString *sessionKey = [request sessionKey];
+            
+            CheckDIDAndSK(response, serviceId, sessionKey) {
+                response.result = DConnectMessageResultTypeOk;
+            }
+            return YES;
+        }];
+        
+        // API登録(didReceiveDeleteOnErrorRequest相当)
+        NSString *deleteOnErrorRequestApiPath =
+        [self apiPath: nil
+        attributeName: DConnectNotificationProfileAttrOnError];
+        [self addDeletePath: deleteOnErrorRequestApiPath api: ^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+            
+            NSString *serviceId = [request serviceId];
+            NSString *sessionKey = [request sessionKey];
+            
+            CheckDIDAndSK(response, serviceId, sessionKey) {
+                response.result = DConnectMessageResultTypeOk;
+            }
+            return YES;
+        }];
     }
     
     return self;
-}
-
-#pragma mark - Post Methods
-
-
-- (BOOL) profile:(DConnectNotificationProfile *)profile didReceivePostNotifyRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response
-        serviceId:(NSString *)serviceId type:(NSNumber *)type
-             dir:(NSString *)dir lang:(NSString *)lang
-            body:(NSString *)body tag:(NSString *)tag icon:(NSData *)icon
-{
-    
-    CheckDID(response, serviceId)
-    if (type == nil) {
-        [response setErrorToInvalidRequestParameter];
-    } else {
-        NSString *_id = nil;
-        switch ([type intValue]) {
-            case DConnectNotificationProfileNotificationTypePhone:
-                _id = @"1";
-                break;
-            case DConnectNotificationProfileNotificationTypeMail:
-                _id = @"2";
-                break;
-            case DConnectNotificationProfileNotificationTypeSMS:
-                _id = @"3";
-                break;
-            case DConnectNotificationProfileNotificationTypeEvent:
-                _id = @"4";
-                break;
-            case DConnectNotificationProfileNotificationTypeUnknown:
-                _id = @"5";
-                break;
-                
-            default:
-                [response setErrorToInvalidRequestParameter];
-                break;
-        }
-        
-        if (_id) {
-            response.result = DConnectMessageResultTypeOk;
-            [DConnectNotificationProfile setNotificationId:_id target:response];
-        }
-    }
-    
-    return YES;
-}
-
-#pragma mark - Put Methods
-#pragma mark Event Registration
-
-- (BOOL) profile:(DConnectNotificationProfile *)profile didReceivePutOnClickRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response serviceId:(NSString *)serviceId
-      sessionKey:(NSString *)sessionKey
-{
-    CheckDIDAndSK(response, serviceId, sessionKey) {
-        response.result = DConnectMessageResultTypeOk;
-        
-        DConnectMessage *event = [DConnectMessage message];
-        [event setString:sessionKey forKey:DConnectMessageSessionKey];
-        [event setString:self.profileName forKey:DConnectMessageProfile];
-        [event setString:DConnectNotificationProfileAttrOnClick forKey:DConnectMessageAttribute];
-        [DConnectNotificationProfile setNotificationId:@"1" target:event];
-        [_plugin asyncSendEvent:event];
-        
-    }
-    
-    return YES;
-}
-
-- (BOOL) profile:(DConnectNotificationProfile *)profile didReceivePutOnShowRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response serviceId:(NSString *)serviceId
-      sessionKey:(NSString *)sessionKey
-{
-    CheckDIDAndSK(response, serviceId, sessionKey) {
-        response.result = DConnectMessageResultTypeOk;
-        
-        DConnectMessage *event = [DConnectMessage message];
-        [event setString:sessionKey forKey:DConnectMessageSessionKey];
-        [event setString:self.profileName forKey:DConnectMessageProfile];
-        [event setString:DConnectNotificationProfileAttrOnShow forKey:DConnectMessageAttribute];
-        [DConnectNotificationProfile setNotificationId:@"1" target:event];
-        [_plugin asyncSendEvent:event];
-        
-    }
-
-    return YES;
-}
-
-- (BOOL) profile:(DConnectNotificationProfile *)profile didReceivePutOnCloseRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response serviceId:(NSString *)serviceId
-      sessionKey:(NSString *)sessionKey
-{
-    CheckDIDAndSK(response, serviceId, sessionKey) {
-        response.result = DConnectMessageResultTypeOk;
-        
-        DConnectMessage *event = [DConnectMessage message];
-        [event setString:sessionKey forKey:DConnectMessageSessionKey];
-        [event setString:self.profileName forKey:DConnectMessageProfile];
-        [event setString:DConnectNotificationProfileAttrOnClose forKey:DConnectMessageAttribute];
-        [DConnectNotificationProfile setNotificationId:@"1" target:event];
-        [_plugin asyncSendEvent:event];
-        
-    }
-
-    return YES;
-}
-
-- (BOOL) profile:(DConnectNotificationProfile *)profile didReceivePutOnErrorRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response serviceId:(NSString *)serviceId
-      sessionKey:(NSString *)sessionKey
-{
-    CheckDIDAndSK(response, serviceId, sessionKey) {
-        response.result = DConnectMessageResultTypeOk;
-        
-        DConnectMessage *event = [DConnectMessage message];
-        [event setString:sessionKey forKey:DConnectMessageSessionKey];
-        [event setString:self.profileName forKey:DConnectMessageProfile];
-        [event setString:DConnectNotificationProfileAttrOnError forKey:DConnectMessageAttribute];
-        [DConnectNotificationProfile setNotificationId:@"1" target:event];
-        [_plugin asyncSendEvent:event];
-        
-    }
-
-    
-    return YES;
-}
-
-#pragma mark - Delete Methods
-
-- (BOOL) profile:(DConnectNotificationProfile *)profile didReceiveDeleteNotifyRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response
-        serviceId:(NSString *)serviceId notificationId:(NSString *)notificationId
-{
-    
-    CheckDID(response, serviceId)
-    if (notificationId == nil) {
-        [response setErrorToInvalidRequestParameter];
-    } else {
-        response.result = DConnectMessageResultTypeOk;
-    }
-    
-    return YES;
-}
-
-#pragma mark Event Unregistration
-
-- (BOOL) profile:(DConnectNotificationProfile *)profile didReceiveDeleteOnClickRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response serviceId:(NSString *)serviceId
-      sessionKey:(NSString *)sessionKey
-{
-    
-    CheckDIDAndSK(response, serviceId, sessionKey) {
-        response.result = DConnectMessageResultTypeOk;
-    }
-    
-    return YES;
-}
-
-- (BOOL) profile:(DConnectNotificationProfile *)profile didReceiveDeleteOnShowRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response serviceId:(NSString *)serviceId
-      sessionKey:(NSString *)sessionKey
-{
-    
-    CheckDIDAndSK(response, serviceId, sessionKey) {
-        response.result = DConnectMessageResultTypeOk;
-    }
-    
-    return YES;
-}
-
-- (BOOL) profile:(DConnectNotificationProfile *)profile didReceiveDeleteOnCloseRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response serviceId:(NSString *)serviceId sessionKey:(NSString *)sessionKey
-{
-    
-    CheckDIDAndSK(response, serviceId, sessionKey) {
-        response.result = DConnectMessageResultTypeOk;
-    }
-    return YES;
-}
-
-- (BOOL) profile:(DConnectNotificationProfile *)profile didReceiveDeleteOnErrorRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response serviceId:(NSString *)serviceId sessionKey:(NSString *)sessionKey
-{
-    
-    CheckDIDAndSK(response, serviceId, sessionKey) {
-        response.result = DConnectMessageResultTypeOk;
-    }
-    return YES;
 }
 
 @end

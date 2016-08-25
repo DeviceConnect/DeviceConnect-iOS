@@ -25,7 +25,7 @@
 			 callback:(void(^)())callback;
 
 // 共通イベントメッセージ送信
-+ (void)sendMessageWithProvider:(id)provider
++ (void)sendMessageWithPlugin:(id)plugin
 						profile:(NSString *)profile
 					  attribute:(NSString *)attribute
 					   serviceID:(NSString*)serviceID

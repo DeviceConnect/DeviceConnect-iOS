@@ -21,7 +21,7 @@
 {
 	self = [super init];
 	if (self) {
-		self.delegate = self;
+        
 		// 通知許可を得る
 		UIApplication *application = [UIApplication sharedApplication];
 		if ([application respondsToSelector:@selector(registerUserNotificationSettings:)]) {
@@ -31,50 +31,48 @@
                                       categories:nil];
 			[application registerUserNotificationSettings:settings];
 		}
+        
+        // API登録(didReceivePostNotifyRequest相当)
+        NSString *postNotifyRequestApiPath = [self apiPath: nil
+                                             attributeName: DConnectNotificationProfileAttrNotify];
+        [self addPostPath: postNotifyRequestApiPath
+                      api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+                          
+//                          NSData *icon = [DConnectNotificationProfile iconFromRequest:request];
+                          NSNumber *type = [DConnectNotificationProfile typeFromRequest:request];
+//                          NSString *dir = [DConnectNotificationProfile dirFromRequest:request];
+//                          NSString *lang = [DConnectNotificationProfile langFromRequest:request];
+                          NSString *body = [DConnectNotificationProfile bodyFromRequest:request];
+//                          NSString *tag = [DConnectNotificationProfile tagFromRequest:request];
+//                          NSString *serviceId = [request serviceId];
+                          
+                          // パラメータチェック
+                          NSString *typeString = [request stringForKey:DConnectNotificationProfileParamType];
+                          
+                          if (!type || type.intValue < 0 || 3 < type.intValue
+                              || (type && ![[DPPebbleManager sharedManager] existDigitWithString:typeString])) {
+                              [response setErrorToInvalidRequestParameterWithMessage:@"type is null or invalid"];
+                              return YES;
+                          }
+                          if (!body) {
+                              [response setErrorToInvalidRequestParameterWithMessage:@"body is null"];
+                              return YES;
+                          }
+                          // LocalNotificationを発動させるとPebbleのNotificationに通知が行く
+                          // FIXME:この方式だとServiceID無視で全デバイスに通知が行ってしまう。
+                          UILocalNotification *notify = [[UILocalNotification alloc] init];
+                          notify.fireDate = [NSDate new];
+                          notify.alertBody = body.length>0 ? body : @" ";
+                          [[UIApplication sharedApplication] scheduleLocalNotification:notify];
+                          
+                          //IDは取得できないので、処理のしようがない
+                          [DConnectNotificationProfile setNotificationId:@"0" target:response];
+                          [response setResult:DConnectMessageResultTypeOk];
+                          
+                          return YES;
+                      }];
 	}
 	return self;
-}
-
-
-#pragma mark - DConnectNotificationProfileDelegate
-
-// ノーティフィケーションの表示リクエストを受け取った
-- (BOOL)            profile:(DConnectNotificationProfile *)profile
-didReceivePostNotifyRequest:(DConnectRequestMessage *)request
-                   response:(DConnectResponseMessage *)response
-                   serviceId:(NSString *)serviceId
-                       type:(NSNumber *)type
-                        dir:(NSString *)dir
-                       lang:(NSString *)lang
-                       body:(NSString *)body
-                        tag:(NSString *)tag
-                       icon:(NSData *)icon
-{
-    
-    // パラメータチェック
-    NSString *typeString = [request stringForKey:DConnectNotificationProfileParamType];
-    
-    if (!type || type.intValue < 0 || 3 < type.intValue
-        || (type && ![[DPPebbleManager sharedManager] existDigitWithString:typeString])) {
-        [response setErrorToInvalidRequestParameterWithMessage:@"type is null or invalid"];
-        return YES;
-    }
-    if (!body) {
-        [response setErrorToInvalidRequestParameterWithMessage:@"body is null"];
-        return YES;
-    }
-	// LocalNotificationを発動させるとPebbleのNotificationに通知が行く
-	// FIXME:この方式だとServiceID無視で全デバイスに通知が行ってしまう。
-	UILocalNotification *notify = [[UILocalNotification alloc] init];
-	notify.fireDate = [NSDate new];
-	notify.alertBody = body.length>0 ? body : @" ";
-	[[UIApplication sharedApplication] scheduleLocalNotification:notify];
-
-	//IDは取得できないので、処理のしようがない
-	[DConnectNotificationProfile setNotificationId:@"0" target:response];
-	[response setResult:DConnectMessageResultTypeOk];
-	
-    return YES;
 }
 
 @end

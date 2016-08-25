@@ -13,6 +13,6 @@
 /*!
  @brief Pebble用 Settingsプロファイル。
  */
-@interface DPPebbleSettingsProfile : DConnectSettingsProfile <DConnectSettingsProfileDelegate>
+@interface DPPebbleSettingsProfile : DConnectSettingsProfile
 
 @end
