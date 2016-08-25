@@ -21,6 +21,7 @@
 @interface DPAWSIoTDevicePlugin () {
 	NSMutableDictionary *_responses;
 	NSString *_managerUUID;
+	NSDictionary *_managers;
 }
 @end
 
@@ -62,6 +63,7 @@
 						NSLog(@"%@", error);
 						return;
 					}
+					_managers = managers;
 					// onlineの時だけRequestTopic購読
 					if ([myInfo[@"online"] boolValue]) {
 						[DPAWSIoTController subscribeRequest];
@@ -94,9 +96,29 @@
 // リクエスト処理
 - (BOOL)executeRequest:(DConnectRequestMessage *)request response:(DConnectResponseMessage *)response
 {
-	//NSLog(@"*********** executeRequest: %@, %@,%@,%@", [request serviceId], [request profile], [request interface], [request attribute]);
-	if ([request serviceId] && ![[request profile] isEqualToString:@"system"]) {
+	NSLog(@"*********** executeRequest: %@, %@,%@,%@", [request serviceId], [request profile], [request interface], [request attribute]);
+	if ([request serviceId]) {
 		return [self sendRequestToMQTT:request response:response];
+	} else if ([[request profile] isEqualToString:@"servicediscovery"]) {
+		// servicediscoveryは独自処理
+		// 自分のServiceを検索
+		[super executeRequest:request response:response];
+		if (_managers) {
+			// サービス数を保持
+			[response setInteger:_managers.count forKey:@"servicecount"];
+			// クラウド上のServiceを検索
+			for (NSString *key in _managers.allKeys) {
+				// onlineじゃない場合は無視
+				if (![_managers[key][@"online"] boolValue]) continue;
+				// ServiceIdにManagerのUUIDを埋め込む
+				[request setString:key forKey:@"serviceId"];
+				[self sendRequestToMQTT:request response:response];
+				// TODO: タイムアウトを実装（7秒以下で）
+			}
+			return NO;
+		} else {
+			return YES;
+		}
 	} else {
 		return [super executeRequest:request response:response];
 	}
@@ -127,14 +149,22 @@
 		[response setResult:DConnectMessageResultTypeError];
 		return YES;
 	}
-	NSArray *domains = [serviceId componentsSeparatedByString:@"."];
-	if (domains == nil || [domains count] < 2) {
-		[response setResult:DConnectMessageResultTypeError];
-		return YES;
+	NSString *managerUUID;
+	if ([[request profile] isEqualToString:@"servicediscovery"]) {
+		// servicediscoveryは独自処理
+		managerUUID = reqDic[@"serviceId"];
+		[reqDic removeObjectForKey:@"serviceId"];
+	} else {
+		// managerのUUIDをserviceIdから取得
+		NSArray *domains = [serviceId componentsSeparatedByString:@"."];
+		if (domains == nil || [domains count] < 2) {
+			[response setResult:DConnectMessageResultTypeError];
+			return YES;
+		}
+		managerUUID = [domains objectAtIndex:0];
+		serviceId = [serviceId stringByReplacingOccurrencesOfString:[managerUUID stringByAppendingString:@"."] withString:@""];
+		reqDic[@"serviceId"] = serviceId;
 	}
-	NSString *managerUUID = [domains objectAtIndex:0];
-	serviceId = [serviceId stringByReplacingOccurrencesOfString:[managerUUID stringByAppendingString:@"."] withString:@""];
-	reqDic[@"serviceId"] = serviceId;
 	// リクエストjson構築
 	int requestCode = arc4random();
 	NSMutableDictionary *dic = [NSMutableDictionary dictionary];
@@ -160,12 +190,19 @@
 	NSString *requestCode = [json[@"requestCode"] stringValue];
 	DConnectResponseMessage *response = _responses[requestCode];
 	if (response) {
-		NSDictionary *resJson = json[@"response"];
-		for (NSString *key in resJson.allKeys) {
-			id obj = resJson[key];
-			[response.internalDictionary setObject:obj forKey:key];
+		NSInteger count = [response integerForKey:@"servicecount"];
+		if (count > 0) {
+			// servicediscoveryの場合各サービスからのレスポンスを保持
+			// TODO: 実装
+		} else {
+			NSDictionary *resJson = json[@"response"];
+			for (NSString *key in resJson.allKeys) {
+				id obj = resJson[key];
+				[response.internalDictionary setObject:obj forKey:key];
+			}
+			[[DConnectManager sharedManager] sendResponse:response];
+			[_responses removeObjectForKey:requestCode];
 		}
-		[[DConnectManager sharedManager] sendResponse:response];
 	}
 }
 
