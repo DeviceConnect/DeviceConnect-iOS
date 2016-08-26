@@ -62,6 +62,12 @@
         [DConnectServiceDiscoveryProfile setOnline:[serviceEntity online] target:service];
 
         // TODO: scopes
+        NSArray *profiles = [serviceEntity profiles];
+        DConnectArray *scopes = [DConnectArray array];
+        for (DConnectProfile *profile in profiles) {
+            [scopes addString:[profile profileName]];
+        }
+        [service setArray:scopes forKey:@"scopes"];
         
         [services addMessage:service];
     }

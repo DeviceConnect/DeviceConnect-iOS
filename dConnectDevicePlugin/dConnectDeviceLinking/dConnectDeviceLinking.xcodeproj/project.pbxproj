@@ -81,6 +81,7 @@
 		BE58BE891D654C9300354F08 /* DPLinkingDeviceBatteryOnce.m in Sources */ = {isa = PBXBuildFile; fileRef = BE58BE881D654C9300354F08 /* DPLinkingDeviceBatteryOnce.m */; };
 		BEE64A491D700B8700CF287E /* DPLinkingBeaconKeyEventOnce.m in Sources */ = {isa = PBXBuildFile; fileRef = BEE64A481D700B8700CF287E /* DPLinkingBeaconKeyEventOnce.m */; };
 		BEE64A4C1D702C5300CF287E /* beacon_icon_white@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BE2859C41D630B2800CB9F95 /* beacon_icon_white@2x.png */; };
+		BEE64A4F1D70344E00CF287E /* DPLinkingBeaconBatteryOnce.m in Sources */ = {isa = PBXBuildFile; fileRef = BEE64A4E1D70344E00CF287E /* DPLinkingBeaconBatteryOnce.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -216,6 +217,8 @@
 		BE58BE881D654C9300354F08 /* DPLinkingDeviceBatteryOnce.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPLinkingDeviceBatteryOnce.m; sourceTree = "<group>"; };
 		BEE64A471D700B8700CF287E /* DPLinkingBeaconKeyEventOnce.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPLinkingBeaconKeyEventOnce.h; sourceTree = "<group>"; };
 		BEE64A481D700B8700CF287E /* DPLinkingBeaconKeyEventOnce.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPLinkingBeaconKeyEventOnce.m; sourceTree = "<group>"; };
+		BEE64A4D1D70344E00CF287E /* DPLinkingBeaconBatteryOnce.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPLinkingBeaconBatteryOnce.h; sourceTree = "<group>"; };
+		BEE64A4E1D70344E00CF287E /* DPLinkingBeaconBatteryOnce.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPLinkingBeaconBatteryOnce.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -496,6 +499,8 @@
 			children = (
 				BE58BE7D1D6465D900354F08 /* DPLinkingBeaconAtmosphericPressureOnce.h */,
 				BE58BE7E1D6465D900354F08 /* DPLinkingBeaconAtmosphericPressureOnce.m */,
+				BEE64A4D1D70344E00CF287E /* DPLinkingBeaconBatteryOnce.h */,
+				BEE64A4E1D70344E00CF287E /* DPLinkingBeaconBatteryOnce.m */,
 				BE58BE741D645E3800354F08 /* DPLinkingBeaconHumidityOnce.h */,
 				BE58BE751D645E3800354F08 /* DPLinkingBeaconHumidityOnce.m */,
 				BE58BE771D6461BB00354F08 /* DPLinkingBeaconTemperatureOnce.h */,
@@ -627,6 +632,7 @@
 				BE2859DF1D630B2800CB9F95 /* DPLinkingDeviceOrientationProfile.m in Sources */,
 				BE2859EF1D630B2800CB9F95 /* DPLinkingDeviceViewController.m in Sources */,
 				BE2859D51D630B2800CB9F95 /* DPLinkingBeaconService.m in Sources */,
+				BEE64A4F1D70344E00CF287E /* DPLinkingBeaconBatteryOnce.m in Sources */,
 				BE2859D41D630B2800CB9F95 /* DPLinkingBeaconTemperatureProfile.m in Sources */,
 				BE2859C91D630B2800CB9F95 /* DPLinkingBeacon.m in Sources */,
 				BE2859ED1D630B2800CB9F95 /* DPLinkingButton.m in Sources */,

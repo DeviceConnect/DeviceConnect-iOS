@@ -104,7 +104,9 @@
     DConnectEventError error = [mgr removeEventForRequest:request];
     if (error == DConnectEventErrorNone) {
         [response setResult:DConnectMessageResultTypeOk];
-        [beaconManager removeGattDataDelegate:self];
+        if ([self isEmptyEventList:serviceId]) {
+            [beaconManager removeGattDataDelegate:self];
+        }
     } else if (error == DConnectEventErrorInvalidParameter) {
         [response setErrorToInvalidRequestParameterWithMessage:@"sessionKey must be specified."];
     } else {
@@ -116,6 +118,15 @@
 - (DPLinkingBeaconService *) getLinkingBeaconService
 {
     return (DPLinkingBeaconService *)self.provider;
+}
+
+- (BOOL) isEmptyEventList:(NSString *)serviceId
+{
+    DConnectEventManager *mgr = [DConnectEventManager sharedManagerForClass:[DPLinkingDevicePlugin class]];
+    NSArray *events = [mgr eventListForServiceId:serviceId
+                                         profile:DConnectProximityProfileName
+                                       attribute:DConnectProximityProfileAttrOnDeviceProximity];
+    return events.count == 0;
 }
 
 #pragma mark - DPLinkingBeaconGattDataDelegate

@@ -1,5 +1,5 @@
 //
-//  DPLinkingBeaconKeyEventOnce.m
+//  DPLinkingBeaconBatteryOnce.m
 //  dConnectDeviceLinking
 //
 //  Copyright (c) 2016 NTT DOCOMO, INC.
@@ -7,9 +7,9 @@
 //  http://opensource.org/licenses/mit-license.php
 //
 
-#import "DPLinkingBeaconKeyEventOnce.h"
+#import "DPLinkingBeaconBatteryOnce.h"
 
-@implementation DPLinkingBeaconKeyEventOnce {
+@implementation DPLinkingBeaconBatteryOnce {
     DPLinkingBeaconManager *_beaconManager;
     DPLinkingBeacon *_beacon;
 }
@@ -20,23 +20,20 @@
     if (self) {
         _beacon = beacon;
         _beaconManager = [DPLinkingBeaconManager sharedInstance];
-        [_beaconManager addButtonIdDelegate:self];
+        [_beaconManager addBatteryDelegate:self];
     }
     return self;
 }
 
-#pragma mark - DPLinkingBeaconButtonIdDelegate
+#pragma mark - DPLinkingBeaconBatteryDelegate
 
-- (void) didReceivedBeacon:(DPLinkingBeacon *)beacon ButtonId:(int)buttonId
+- (void) didReceivedBeacon:(DPLinkingBeacon *)beacon battery:(DPLinkingBattryData *)battery
 {
     if (![beacon.beaconId isEqualToString:_beacon.beaconId]) {
         return;
     }
-    
     [self.response setResult:DConnectMessageResultTypeOk];
-    DConnectMessage *keyEvent = [DConnectMessage new];
-    [DConnectKeyEventProfile setId:buttonId target:keyEvent];
-    [DConnectKeyEventProfile setKeyEvent:keyEvent target:self.response];
+    [DConnectBatteryProfile setLevel:battery.batteryLevel / 100.0f target:self.response];
     [[DConnectManager sharedManager] sendResponse:self.response];
     [self cleanup];
 }
@@ -51,6 +48,7 @@
 
 - (void) onCleanup
 {
-    [_beaconManager removeButtonIdDelegate:self];
+    [_beaconManager removeBatteryDelegate:self];
 }
+
 @end
