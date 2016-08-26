@@ -21,6 +21,7 @@
     if (self) {
         NSString *name = [NSString stringWithFormat:@"Hue %@", bridgeKey];
         [self setName: name];
+        [self setNetworkType: DConnectServiceDiscoveryProfileNetworkTypeWiFi];
         [self setOnline: YES];
         
         // プロファイルを追加

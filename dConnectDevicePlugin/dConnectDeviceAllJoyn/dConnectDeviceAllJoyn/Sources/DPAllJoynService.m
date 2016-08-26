@@ -16,7 +16,6 @@
     self = [super initWithServiceId: serviceId plugin: plugin dataSource: self];
     if (self) {
         [self setName: serviceName];
-        [self setNetworkType: @"wifi"];
         [self setOnline: YES];
         
         [self addProfile:[[DPAllJoynLightProfile alloc] initWithHandler: handler]];
