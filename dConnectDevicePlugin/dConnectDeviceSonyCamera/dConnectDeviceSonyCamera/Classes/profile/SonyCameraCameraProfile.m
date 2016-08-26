@@ -17,12 +17,6 @@ NSString *const SonyCameraCameraProfileParamDirection = @"direction";
 NSString *const SonyCameraCameraProfileParamMovement = @"movement";
 NSString *const SonyCameraCameraProfileParamZoomdiameter = @"zoomPosition";
 
-@interface SonyCameraCameraProfile()
-
-- (BOOL) hasMethod:(SEL)method response:(DConnectResponseMessage *)response;
-
-@end
-
 @implementation SonyCameraCameraProfile
 
 - (NSString *) profileName {
@@ -118,16 +112,6 @@ NSString *const SonyCameraCameraProfileParamZoomdiameter = @"zoomPosition";
         }];
     }
     return self;
-}
-
-#pragma mark - Private Methods
-
-- (BOOL) hasMethod:(SEL)method response:(DConnectResponseMessage *)response {
-    BOOL result = [_delegate respondsToSelector:method];
-    if (!result) {
-        [response setErrorToNotSupportAttribute];
-    }
-    return result;
 }
 
 @end

@@ -21,7 +21,6 @@
 {
     self = [super init];
     if (self) {
-        self.delegate = self;
         
         // API登録(didReceiveGetLevelRequest相当)
         NSString *getLevelRequestApiPath = [self apiPath: nil

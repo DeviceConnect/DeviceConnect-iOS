@@ -9,7 +9,7 @@
 
 #import <DConnectSDK/DConnectService.h>
 
-@interface DPSpheroService : DConnectService
+@interface DPSpheroService : DConnectService<DConnectServiceInformationProfileDataSource>
 
 - (instancetype) initWithServiceId:(NSString *)serviceId deviceName: (NSString *) deviceName plugin: (id) plugin;
 

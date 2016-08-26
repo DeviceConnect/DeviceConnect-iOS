@@ -17,7 +17,7 @@
                             plugin: (id) plugin {
     // [NSString stringWithFormat:@"%@_%@",[bridgesFound valueForKey:key],key];
     NSString *serviceId = [NSString stringWithFormat:@"%@_%@", bridgeValue, bridgeKey];
-    self = [super initWithServiceId: serviceId plugin: plugin];
+    self = [super initWithServiceId: serviceId plugin: plugin dataSource:self];
     if (self) {
         NSString *name = [NSString stringWithFormat:@"Hue %@", bridgeKey];
         [self setName: name];
@@ -27,6 +27,20 @@
         [self addProfile:[DPHueLightProfile new]];
     }
     return self;
+}
+
+#pragma mark - DConnectServiceInformationProfileDataSource Implement.
+
+- (DConnectServiceInformationProfileConnectState)profile:(DConnectServiceInformationProfile *)profile
+                                   wifiStateForServiceId:(NSString *)serviceId {
+    
+    DConnectServiceInformationProfileConnectState wifiState;
+    if (self.online) {
+        wifiState = DConnectServiceInformationProfileConnectStateOn;
+    } else {
+        wifiState = DConnectServiceInformationProfileConnectStateOff;
+    }
+    return wifiState;
 }
 
 @end

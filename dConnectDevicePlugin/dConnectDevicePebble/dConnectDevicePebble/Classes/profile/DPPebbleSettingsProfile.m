@@ -22,7 +22,6 @@
 {
 	self = [super init];
 	if (self) {
-		self.delegate = self;
         
         // API登録(didReceiveGetDateRequest相当)
         NSString *getDateRequestApiPath = [self apiPath: nil

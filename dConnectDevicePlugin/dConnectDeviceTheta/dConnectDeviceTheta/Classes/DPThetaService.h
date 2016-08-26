@@ -12,7 +12,7 @@
 extern NSString *const DPThetaDeviceServiceId;
 extern NSString *const DPThetaRoiServiceId;
 
-@interface DPThetaService : DConnectService
+@interface DPThetaService : DConnectService<DConnectServiceInformationProfileDataSource>
 
 - (instancetype) initWithServiceId: (NSString *) serviceId plugin: (id) plugin;
 

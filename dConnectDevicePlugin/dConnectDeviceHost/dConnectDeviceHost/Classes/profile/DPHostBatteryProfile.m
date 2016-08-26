@@ -28,8 +28,6 @@
 {
     self = [super init];
     if (self) {
-        self.delegate = self;
-        
         // イベントマネージャを取得
         self.eventMgr = [DConnectEventManager sharedManagerForClass:[DPHostDevicePlugin class]];
         __weak id weakEventMgr = self.eventMgr;

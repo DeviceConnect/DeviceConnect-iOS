@@ -25,7 +25,6 @@
 {
     self = [super init];
     if (self) {
-        self.delegate = self;
         __weak DPHostFileProfile *weakSelf = self;
         
         // API登録(didReceiveGetReceiveRequest相当)

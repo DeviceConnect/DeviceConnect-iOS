@@ -9,7 +9,7 @@
 
 #import <DConnectSDK/DConnectSDK.h>
 
-@interface DPHostTouchProfile : DConnectTouchProfile<DConnectTouchProfileDelegate>
+@interface DPHostTouchProfile : DConnectTouchProfile
 
 - (void) sendTouchEvent:(DConnectMessage *)eventMsg;
 - (void) setTouchCache:(NSString *)attr

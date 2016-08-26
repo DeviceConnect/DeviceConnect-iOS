@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+    </dependencies>
+    <scenes>
+        <!--Initial Guide View Controller-->
+        <scene sceneID="X7t-GY-FCn">
+            <objects>
+                <viewController storyboardIdentifier="InitialGuideViewController" id="D10-Jw-SOE" customClass="InitialGuideViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="8Z0-4x-Q9V"/>
+                        <viewControllerLayoutGuide type="bottom" id="WrN-0d-hyy"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Izz-R3-pqI">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RHF-pd-Q9i">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <connections>
+                                    <segue destination="b5b-Ln-4sE" kind="embed" id="mhq-8D-jiv"/>
+                                </connections>
+                            </containerView>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="RHF-pd-Q9i" firstAttribute="top" secondItem="8Z0-4x-Q9V" secondAttribute="bottom" id="51K-9y-SQI"/>
+                            <constraint firstAttribute="trailing" secondItem="RHF-pd-Q9i" secondAttribute="trailing" id="IeV-AP-VxU"/>
+                            <constraint firstItem="WrN-0d-hyy" firstAttribute="top" secondItem="RHF-pd-Q9i" secondAttribute="bottom" id="US6-Ia-oOc"/>
+                            <constraint firstAttribute="bottom" secondItem="RHF-pd-Q9i" secondAttribute="bottom" id="Ybt-Bm-cmQ"/>
+                            <constraint firstItem="RHF-pd-Q9i" firstAttribute="leading" secondItem="Izz-R3-pqI" secondAttribute="leading" id="b07-Hb-Otg"/>
+                            <constraint firstItem="RHF-pd-Q9i" firstAttribute="top" secondItem="Izz-R3-pqI" secondAttribute="top" id="h66-oH-GO5"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="51K-9y-SQI"/>
+                                <exclude reference="US6-Ia-oOc"/>
+                            </mask>
+                        </variation>
+                    </view>
+                    <connections>
+                        <outlet property="containerView" destination="RHF-pd-Q9i" id="j0F-Wu-5pV"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Bpo-mP-whg" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-343" y="433"/>
+        </scene>
+        <!--Page View Controller-->
+        <scene sceneID="lcX-RY-UUm">
+            <objects>
+                <pageViewController autoresizesArchivedViewToFullSize="NO" transitionStyle="scroll" navigationOrientation="horizontal" spineLocation="min" id="b5b-Ln-4sE" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="DhF-mb-tkY" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="354" y="433"/>
+        </scene>
+        <!--Guide Data View Controller-->
+        <scene sceneID="oul-iv-bcp">
+            <objects>
+                <viewController storyboardIdentifier="GuideDataViewController" id="khG-Gb-HcH" customClass="GuideDataViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="HFz-za-thh"/>
+                        <viewControllerLayoutGuide type="bottom" id="dVo-SA-Fuy"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="ycg-5h-KJY">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="mjR-NC-mTJ">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="mjR-NC-mTJ" firstAttribute="top" secondItem="ycg-5h-KJY" secondAttribute="top" id="HoM-Pj-1k1"/>
+                            <constraint firstAttribute="trailing" secondItem="mjR-NC-mTJ" secondAttribute="trailing" id="IRY-Mm-imz"/>
+                            <constraint firstItem="mjR-NC-mTJ" firstAttribute="top" secondItem="HFz-za-thh" secondAttribute="bottom" id="bc9-vz-cmn"/>
+                            <constraint firstItem="mjR-NC-mTJ" firstAttribute="top" secondItem="HFz-za-thh" secondAttribute="bottom" id="d3E-i1-cXj"/>
+                            <constraint firstItem="dVo-SA-Fuy" firstAttribute="top" secondItem="mjR-NC-mTJ" secondAttribute="bottom" id="i5L-NQ-7cv"/>
+                            <constraint firstItem="mjR-NC-mTJ" firstAttribute="leading" secondItem="ycg-5h-KJY" secondAttribute="leading" id="lxU-0P-GhL"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="bc9-vz-cmn"/>
+                                <exclude reference="d3E-i1-cXj"/>
+                            </mask>
+                        </variation>
+                    </view>
+                    <connections>
+                        <outlet property="imageView" destination="mjR-NC-mTJ" id="UHi-Da-LwU"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="eE6-b2-qVF" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1020" y="433"/>
+        </scene>
+    </scenes>
+</document>

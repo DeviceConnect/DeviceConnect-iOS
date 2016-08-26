@@ -9,12 +9,6 @@
 
 #import <DConnectSDK/DConnectSDK.h>
 
-@class DeviceTestPlugin;
-
-@interface TestMediaStreamRecordingProfile : DConnectMediaStreamRecordingProfile<DConnectMediaStreamRecordingProfileDelegate>
-
-
-@property (nonatomic, strong) DeviceTestPlugin *plugin;
-- (id) initWithDevicePlugin:(DeviceTestPlugin *)plugin;
+@interface TestMediaStreamRecordingProfile : DConnectMediaStreamRecordingProfile
 
 @end

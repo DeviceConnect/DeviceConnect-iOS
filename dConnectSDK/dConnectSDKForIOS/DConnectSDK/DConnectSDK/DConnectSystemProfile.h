@@ -75,67 +75,6 @@ extern NSString *const DConnectSystemProfileParamVersion;
 @class DConnectSystemProfile;
 
 /*!
- @protocol DConnectSystemProfileDelegate
- @brief System Profileの各APIリクエスト通知用デリゲート。
- 
- System Profileの各APIへのリクエスト受信通知を受け取るデリゲート。
- */
-@protocol DConnectSystemProfileDelegate <NSObject>
-@optional
-
-#pragma mark - Put Methods
-
-/*!
- 
- @brief DConnectManager設定キーワード表示リクエストを受け取ったことをデリゲートに通知する。
- 
- profileがDConnectManager設定キーワード表示リクエストを受け取ったことをデリゲートに通知する。<br>
- 実装されない場合には、Not supportのエラーが返却される。
- @attention DConnectManager以外で実装する必要はない。
- 
- <p>
- [対応するAPI] System Show Keyword API [PUT]
- </p>
- 
- @param[in] profile プロファイル
- @param[in] request リクエストパラメータ
- @param[in,out] response レスポンスパラメータ
- 
- @retval YES レスポンスパラメータを返却する。
- @retval NO レスポンスパラメータを返却しないので、@link DConnectManager::sendResponse: @endlinkで返却すること。
- */
-- (BOOL) profile:(DConnectSystemProfile *)profile didReceivePutKeywordRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response;
-
-#pragma mark - Delete Methods
-
-/*!
- 
- @brief イベント一括解除リクエストを受け取ったことをデリゲートに通知する。
- 
- profileがイベント一括解除リクエストを受け取ったことをデリゲートに通知する。<br>
- 実装されない場合には、Not supportのエラーが返却される。
- 
- <p>
- [対応するAPI] System Events Unregister API [DELETE]
- </p>
- 
- @param[in] profile プロファイル
- @param[in] request リクエストパラメータ
- @param[in,out] response レスポンスパラメータ
- @param[in] sessionKey セッションキー
- 
- @retval YES レスポンスパラメータを返却する。
- @retval NO レスポンスパラメータを返却しないので、@link DConnectManager::sendResponse: @endlinkで返却すること。
- */
-- (BOOL) profile:(DConnectSystemProfile *)profile didReceiveDeleteEventsRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response
-      sessionKey:(NSString *)sessionKey;
-
-@end
-
-
-/*!
  @protocol DConnectSystemProfileDataSource
  @brief Systemプロファイルのデータソース。
 
@@ -176,14 +115,6 @@ extern NSString *const DConnectSystemProfileParamVersion;
  受信したリクエストは各API毎にデリゲートに通知される。
  */
 @interface DConnectSystemProfile : DConnectProfile
-
-/*!
-@brief DConnectSystemProfileのデリゲートオブジェクト。
-
-デリゲートは @link DConnectSystemProfileDelegate @endlink を実装しなくてはならない。
-デリゲートはretainされない。
-*/
-@property (nonatomic, weak) id<DConnectSystemProfileDelegate> delegate;
 
 /*!
  @brief DConnectSystemProfileのデータソースオブジェクト。

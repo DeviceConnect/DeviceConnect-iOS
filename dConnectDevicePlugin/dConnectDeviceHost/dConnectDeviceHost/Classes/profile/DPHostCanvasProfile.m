@@ -32,7 +32,6 @@ top = top.presentedViewController; \
 {
     self = [super init];
     if (self) {
-        self.delegate = self;
         [self setDisplayViewController: nil];
         __weak DPHostCanvasProfile *weakSelf = self;
         

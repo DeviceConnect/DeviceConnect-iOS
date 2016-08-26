@@ -9,6 +9,12 @@
 #import "TopViewModel.h"
 #import <DConnectSDK/DConnectSDK.h>
 #import "GHDataManager.h"
+#import "GHDeviceUtil.h"
+#import "AppDelegate.h"
+
+@interface TopViewModel()
+@property(nonatomic, strong) NSArray* devices;
+@end
 
 @implementation TopViewModel
 
@@ -21,10 +27,15 @@
     if (self) {
         self.manager = [[GHURLManager alloc]init];
         self.url = @"http://www.google.com";
+        self.devices = [[NSArray alloc]init];
         self.datasource = [[NSMutableArray alloc]initWithObjects:
                            [[NSArray alloc]init],
-                           [[NSArray alloc]init],
+                           self.devices,
                            nil];
+        __weak TopViewModel *_self = self;
+        [[GHDeviceUtil shareManager] setRecieveDeviceList:^(DConnectArray *deviceList){
+            [_self updateDevice:deviceList];
+        }];
         [self updateDatasource];
     }
     return self;
@@ -35,6 +46,7 @@
     self.manager = nil;
     self.url = nil;
     self.datasource = nil;
+    [[GHDeviceUtil shareManager] setRecieveDeviceList: nil];
 }
 
 //--------------------------------------------------------------//
@@ -42,8 +54,8 @@
 //--------------------------------------------------------------//
 - (void)updateDatasource
 {
-    [self.datasource replaceObjectAtIndex:0 withObject:[self setupBookmarks]];
-    [self.datasource replaceObjectAtIndex:1 withObject:[self setupDevices]];
+    [self.datasource replaceObjectAtIndex:Bookmark withObject:[self setupBookmarks]];
+    [self.datasource replaceObjectAtIndex:Device withObject:[self showableDevices]];
 }
 
 
@@ -54,8 +66,7 @@ static NSInteger maxIconCount = 8;
 - (NSArray*)setupBookmarks
 {
     NSMutableArray* bookmarks = [[self fetchBookmarks]mutableCopy];
-    _isBookmarksEmpty = (bookmarks == nil);
-    if (_isBookmarksEmpty) {
+    if ([bookmarks count] == 0) {
         bookmarks = [[NSMutableArray alloc]init];
     }
     //maxIconCountに達していない場合はダミーを作成する
@@ -69,7 +80,7 @@ static NSInteger maxIconCount = 8;
 
 - (NSArray*)fetchBookmarks
 {
-    NSPredicate* predicate = [NSPredicate predicateWithFormat:@"latest_opened_date != NULL"];
+    NSPredicate* predicate = [NSPredicate predicateWithFormat:@"type == %@ AND latest_opened_date != NULL AND priority > %d", TYPE_BOOKMARK, PRIORITY-1];
     NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"latest_opened_date" ascending:NO];
     NSArray* bookmarks = [[GHDataManager shareManager]getModelDataByPredicate:predicate
                                                           withSortDescriptors:@[sortDescriptor]
@@ -79,17 +90,57 @@ static NSInteger maxIconCount = 8;
     return bookmarks;
 }
 
+- (BOOL)isBookmarksEmpty
+{
+    for (GHPageModel* page in [self.datasource objectAtIndex:Bookmark]) {
+        if (![page.type isEqualToString:TYPE_BOOKMARK_DUMMY]) {
+            return NO;
+        }
+    }
+    return YES;
+}
 
 
 //--------------------------------------------------------------//
 #pragma mark - Devices
 //--------------------------------------------------------------//
-- (NSArray*)setupDevices
+- (void)updateDevice:(DConnectArray*)deviceList
 {
-    _isDeviceEmpty = YES;
-    return [[NSArray alloc]init]; // FIXME:
+    NSMutableArray* array = [[NSMutableArray alloc]init];
+    for (int s = 0; s < [deviceList count]; s++) {
+        DConnectMessage *service = [deviceList messageAtIndex: s];
+        [array addObject:service];
+    }
+    self.devices = array;
+    _isDeviceLoading = NO;
+    [self updateDatasource];
+    [self.delegate requestDatasourceReload];
 }
 
+- (NSArray*)showableDevices
+{
+    if([self.devices count] > maxIconCount) {
+        NSMutableArray* reduce = [self.devices mutableCopy];
+        NSRange range = NSMakeRange(maxIconCount-1, [self.devices count] - maxIconCount+1); //NOTE:+1は詳細ボタンを追加するため
+        [reduce removeObjectsInRange:range];
+
+        //最後の1つを詳細表示用にNSStringを入れる
+        [reduce addObject: @"deviceDeteilButtonKey"];
+        return reduce;
+    }
+    return self.devices;
+}
+
+- (BOOL)isDeviceEmpty
+{
+    return ([self.devices count] == 0);
+}
+
+- (void)updateDeviceList
+{
+    _isDeviceLoading = YES;
+    [[GHDeviceUtil shareManager]updateDiveceList];
+}
 
 //--------------------------------------------------------------//
 #pragma mark - useOriginBlocking 更新
@@ -99,12 +150,22 @@ static NSInteger maxIconCount = 8;
     DConnectManager *mgr = [DConnectManager sharedManager];
     BOOL isOriginBlock = [[NSUserDefaults standardUserDefaults] boolForKey:IS_ORIGIN_BLOCKING];
     mgr.settings.useOriginBlocking = isOriginBlock;
+    BOOL isLocalOAuth = [[NSUserDefaults standardUserDefaults] boolForKey:IS_USE_LOCALOAUTH];
+    mgr.settings.useLocalOAuth = isLocalOAuth;
+    BOOL isOriginEnable = [[NSUserDefaults standardUserDefaults] boolForKey:IS_ORIGIN_ENABLE];
+    mgr.settings.useOriginEnable = isOriginEnable;
+    BOOL isExternalIp = [[NSUserDefaults standardUserDefaults] boolForKey:IS_EXTERNAL_IP];
+    mgr.settings.useExternalIP = isExternalIp;
+    [mgr setAllowExternalIp];
 }
 
-- (void)saveOriginBlock
+- (void)saveSettings
 {
     DConnectManager *mgr = [DConnectManager sharedManager];
     [[NSUserDefaults standardUserDefaults] setBool:mgr.settings.useOriginBlocking forKey:IS_ORIGIN_BLOCKING];
+    [[NSUserDefaults standardUserDefaults] setBool:mgr.settings.useLocalOAuth forKey:IS_USE_LOCALOAUTH];
+    [[NSUserDefaults standardUserDefaults] setBool:mgr.settings.useOriginEnable forKey:IS_ORIGIN_ENABLE];
+    [[NSUserDefaults standardUserDefaults] setBool:mgr.settings.useExternalIP forKey:IS_EXTERNAL_IP];
 }
 
 
@@ -120,6 +181,7 @@ static NSInteger maxIconCount = 8;
     } else if (!self.url) {
         self.url = [self.manager createSearchURL:url];
     }
+    [self setLatestURL:self.url];
     return self.url;
 }
 
@@ -134,7 +196,32 @@ static NSInteger maxIconCount = 8;
     } else if (![self.manager isURLString:self.url]) {
         self.url = [self.manager createSearchURL:url];
     }
+
+    [self setLatestURL:self.url];
     return self.url;
+}
+
+- (void)setLatestURL:(NSString*)url
+{
+    AppDelegate* app = [UIApplication sharedApplication].delegate;
+    app.latestURL = [NSURL URLWithString: url];
+}
+
+
+
+//--------------------------------------------------------------//
+#pragma mark - 初期ガイド表示
+//--------------------------------------------------------------//
+- (BOOL)isNeedOpenInitialGuide
+{
+    NSUserDefaults* def = [NSUserDefaults standardUserDefaults];
+    if ([def boolForKey:IS_INITIAL_GUIDE_OPEN]) {
+        return NO;
+    } else {
+        [def setBool:YES forKey:IS_INITIAL_GUIDE_OPEN];
+        [def synchronize];
+        return YES;
+    }
 }
 
 @end

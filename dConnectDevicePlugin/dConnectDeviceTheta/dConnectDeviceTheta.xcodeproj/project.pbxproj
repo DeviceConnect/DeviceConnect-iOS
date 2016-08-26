@@ -32,6 +32,8 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		8EB8545C1D4244FC0035C0DC /* dconnect_icon_off.png in Resources */ = {isa = PBXBuildFile; fileRef = 8EB8545A1D4244FC0035C0DC /* dconnect_icon_off.png */; };
+		8EB8545D1D4244FC0035C0DC /* dconnect_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 8EB8545B1D4244FC0035C0DC /* dconnect_icon.png */; };
 		AB055EA31B8AAB1D0078128B /* DPOmnidirectionalImageProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = AB055EA21B8AAB1D0078128B /* DPOmnidirectionalImageProfile.m */; };
 		AB39FEB01B4D0FE200A8139E /* DPThetaFileProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = AB39FEAF1B4D0FE200A8139E /* DPThetaFileProfile.m */; };
 		AB39FEE61B4F4D0500A8139E /* DPThetaGuideViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB39FEE31B4F4D0500A8139E /* DPThetaGuideViewController.m */; };
@@ -99,6 +101,7 @@
 		ABDC9ACF1B54987B002AF9DD /* thetaStandby@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = ABDC9ACA1B54987B002AF9DD /* thetaStandby@2x.png */; };
 		ABDC9AD01B54987B002AF9DD /* thetaWiFi@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = ABDC9ACB1B54987B002AF9DD /* thetaWiFi@2x.png */; };
 		D6C8602F1D39F1D900232EEF /* DPThetaService.m in Sources */ = {isa = PBXBuildFile; fileRef = D6C8602E1D39F1D900232EEF /* DPThetaService.m */; };
+		D6D172771D6301C000444337 /* DPThetaReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = D6D172761D6301C000444337 /* DPThetaReachability.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -115,6 +118,8 @@
 
 /* Begin PBXFileReference section */
 		2590B6C21C2171AA00E73336 /* require_theta_sdk.rb */ = {isa = PBXFileReference; lastKnownFileType = text.script.ruby; path = require_theta_sdk.rb; sourceTree = "<group>"; };
+		8EB8545A1D4244FC0035C0DC /* dconnect_icon_off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dconnect_icon_off.png; sourceTree = "<group>"; };
+		8EB8545B1D4244FC0035C0DC /* dconnect_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dconnect_icon.png; sourceTree = "<group>"; };
 		AB055EA21B8AAB1D0078128B /* DPOmnidirectionalImageProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPOmnidirectionalImageProfile.m; sourceTree = "<group>"; };
 		AB39FEAE1B4D0FE200A8139E /* DPThetaFileProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPThetaFileProfile.h; sourceTree = "<group>"; };
 		AB39FEAF1B4D0FE200A8139E /* DPThetaFileProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPThetaFileProfile.m; sourceTree = "<group>"; };
@@ -244,6 +249,8 @@
 		ABDC9ACB1B54987B002AF9DD /* thetaWiFi@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "thetaWiFi@2x.png"; sourceTree = "<group>"; };
 		D6C8602D1D39F1D900232EEF /* DPThetaService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPThetaService.h; sourceTree = "<group>"; };
 		D6C8602E1D39F1D900232EEF /* DPThetaService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPThetaService.m; sourceTree = "<group>"; };
+		D6D172751D6301C000444337 /* DPThetaReachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPThetaReachability.h; sourceTree = "<group>"; };
+		D6D172761D6301C000444337 /* DPThetaReachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPThetaReachability.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -346,6 +353,8 @@
 				AB50D0EF1B40F32B00EB9F94 /* DPThetaManager.m */,
 				D6C8602D1D39F1D900232EEF /* DPThetaService.h */,
 				D6C8602E1D39F1D900232EEF /* DPThetaService.m */,
+				D6D172751D6301C000444337 /* DPThetaReachability.h */,
+				D6D172761D6301C000444337 /* DPThetaReachability.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -461,6 +470,8 @@
 		AB50D0CB1B40DF6E00EB9F94 /* dConnectDeviceTheta_resources */ = {
 			isa = PBXGroup;
 			children = (
+				8EB8545A1D4244FC0035C0DC /* dconnect_icon_off.png */,
+				8EB8545B1D4244FC0035C0DC /* dconnect_icon.png */,
 				AB50D0CC1B40DF6E00EB9F94 /* Supporting Files */,
 			);
 			path = dConnectDeviceTheta_resources;
@@ -669,6 +680,7 @@
 				ABDC9ABB1B549119002AF9DD /* thetaWiFi.png in Resources */,
 				ABDC9AAD1B53528C002AF9DD /* Theta_iPad.storyboard in Resources */,
 				ABDC9AB91B549119002AF9DD /* thetaOn.png in Resources */,
+				8EB8545D1D4244FC0035C0DC /* dconnect_icon.png in Resources */,
 				ABDC9ACC1B54987B002AF9DD /* theta@2x.png in Resources */,
 				ABDC9ACD1B54987B002AF9DD /* thetaMovie@2x.png in Resources */,
 				ABDC9ACE1B54987B002AF9DD /* thetaOn@2x.png in Resources */,
@@ -678,6 +690,7 @@
 				ABDC9AD01B54987B002AF9DD /* thetaWiFi@2x.png in Resources */,
 				ABDC9AB81B549119002AF9DD /* theta.png in Resources */,
 				ABDC9ABC1B549119002AF9DD /* thetaMovie.png in Resources */,
+				8EB8545C1D4244FC0035C0DC /* dconnect_icon_off.png in Resources */,
 				AB39FEE91B4F60F600A8139E /* WiFiTheta.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -723,6 +736,7 @@
 				AB50D0AB1B40DE1600EB9F94 /* ExifTags.m in Sources */,
 				AB50D0AC1B40DE1600EB9F94 /* RicohEXIF.mm in Sources */,
 				AB50D0AD1B40DE1600EB9F94 /* LibLogging.mm in Sources */,
+				D6D172771D6301C000444337 /* DPThetaReachability.m in Sources */,
 				AB50D0AE1B40DE1600EB9F94 /* logger.cpp in Sources */,
 				ABCA99A11B44F73E001C2AA1 /* DPThetaMediaStreamRecordingProfile.m in Sources */,
 				AB50D0AF1B40DE1600EB9F94 /* ObjcLogger.mm in Sources */,

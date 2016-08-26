@@ -26,7 +26,6 @@ NSString *const DPHueBundleName = @"dConnectDeviceHue_resources";
     
     if (self) {
         
-        self.serviceProvider = [[DConnectServiceManager alloc] init];
         [[DPHueManager sharedManager] setServiceProvider: self.serviceProvider];
         [[DPHueManager sharedManager] setPlugin: self];
         
@@ -71,6 +70,14 @@ NSString *const DPHueBundleName = @"dConnectDeviceHue_resources";
  */
 - (void) enterForeground {
     [[DPHueManager sharedManager] readBridgeList];
+}
+
+- (NSString*)iconFilePath:(BOOL)isOnline
+{
+    NSString *bundlePath = [[NSBundle mainBundle] pathForResource:@"dConnectDeviceHue_resources" ofType:@"bundle"];
+    NSBundle *bundle = [NSBundle bundleWithPath:bundlePath];
+    NSString* filename = isOnline ? @"dconnect_icon" : @"dconnect_icon_off";
+    return [bundle pathForResource:filename ofType:@"png"];
 }
 
 @end

@@ -29,6 +29,8 @@ static NSString *scheme = @"http";
 
 static RoutingHTTPServer *mHttpServer;
 
+static BOOL useExternalIP = NO;
+
 + (BOOL)startServerWithHost:(NSString*)host port:(int)port
 {
     mHttpServer = [[RoutingHTTPServer alloc] init];
@@ -76,11 +78,15 @@ static RoutingHTTPServer *mHttpServer;
     }
 }
 
++ (void)setExternalIPFlag:(BOOL)flag {
+    useExternalIP = flag;
+}
+
 #pragma mark - Private Method
 
 + (void)handleHttpRequest:(RouteRequest*)request response:(RouteResponse*)response
 {
-    if (![[[request url] host] isEqualToString:@"localhost"]) {
+    if (!useExternalIP && ![[[request url] host] isEqualToString:@"localhost"]) {
         // todo: 外部からリクエストを受け付けるかどうか
         NSString *dataStr =
         [NSString stringWithFormat:

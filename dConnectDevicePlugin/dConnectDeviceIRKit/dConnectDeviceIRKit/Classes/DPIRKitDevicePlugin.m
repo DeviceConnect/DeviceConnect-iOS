@@ -14,9 +14,9 @@
 #import "DPIRKitDBManager.h"
 #import "DPIRKitRESTfulRequest.h"
 #import "DPIRKitVirtualDevice.h"
-#import "DPIRKitLightProfile.h"
-#import "DPIRKitTVProfile.h"
+#import "DPIRKitSystemProfile.h"
 #import "DPIRKitService.h"
+#import "DPIRKitReachability.h"
 
 NSString *const DPIRKitInfoVersion = @"DPIRKitVersion";
 NSString *const DPIRKitInfoAPIKey = @"DPIRKitAPIKey";
@@ -41,12 +41,9 @@ DPIRKitManagerDetectionDelegate
     NSMutableDictionary *_devices;
     DConnectEventManager *_eventManager;
     NSString *_version;
-    
-    /*!
-     @brief Service生成時に登録するプロファイル(DConnectProfile *)の配列
-     */
-    NSArray *mServiceProfiles;
 }
+
+@property (nonatomic, strong) DPIRKitReachability *reachability;
 
 - (void) sendDeviceDetectionEventWithDevice:(DPIRKitDevice *)device online:(BOOL)online;
 
@@ -64,16 +61,13 @@ DPIRKitManagerDetectionDelegate
     self = [super initWithObject: self];
     
     if (self) {
-        DConnectSystemProfile *systemProfile = [DConnectSystemProfile new];
-        systemProfile.dataSource = self;
-        [self addProfile:systemProfile];
         
-        // サービスで登録するProfile
-        DPIRKitRemoteControllerProfile *remoteControllerProfile
-                            = [[DPIRKitRemoteControllerProfile alloc] initWithDevicePlugin:self];
-        DPIRKitTVProfile *tvProfile = [[DPIRKitTVProfile alloc] initWithDevicePlugin:self];
-        DPIRKitLightProfile *lightProfile = [[DPIRKitLightProfile alloc] initWithDevicePlugin:self];
-        mServiceProfiles = @[ remoteControllerProfile, tvProfile, lightProfile ];
+        DPIRKitManager *manager = [DPIRKitManager sharedInstance];
+        [manager setServiceProvider: self.serviceProvider];
+        [manager setPlugin:self];
+        
+        // System Profileの追加
+        [self addProfile:[[DPIRKitSystemProfile alloc] initWithDataSource: self]];
         
         _devices = [NSMutableDictionary dictionary];
         id<DConnectEventCacheController> controller = [[DConnectMemoryCacheController alloc] init];
@@ -92,13 +86,22 @@ DPIRKitManagerDetectionDelegate
             [notificationCenter addObserver:_self selector:@selector(stopObeservation)
                        name:UIApplicationDidEnterBackgroundNotification
                      object:application];
-            DPIRKitManager *manager = [DPIRKitManager sharedInstance];
+
             manager.apiKey = info[DPIRKitInfoAPIKey];
             manager.detectionDelegate = _self;
             
             [_self startObeservation];
         });
         self.pluginName = DPIRKitPluginName;
+        
+        // Reachabilityの初期処理
+        self.reachability = [DPIRKitReachability reachabilityWithHostName: @"www.google.com"];
+        [[NSNotificationCenter defaultCenter]
+         addObserver:self
+         selector:@selector(notifiedNetworkStatus:)
+         name:DPIRKitReachabilityChangedNotification
+         object:nil];
+        [self.reachability startNotifier];
     }
     
     return self;
@@ -128,7 +131,6 @@ DPIRKitManagerDetectionDelegate
 #pragma mark - Private Methods
 
 - (void) sendDeviceDetectionEventWithDevice:(DPIRKitDevice *)device online:(BOOL)online {
-    [[DPIRKitManager sharedInstance] startDetection];
     BOOL hit = NO;
     @synchronized (_devices) {
         
@@ -145,11 +147,25 @@ DPIRKitManagerDetectionDelegate
     }
     if ((!hit && online) || (hit && !online)) {
         
-        // デバイスが未登録なら登録する
-        NSString *serviceId = device.name;
-        if (![self.serviceProvider service: serviceId]) {
-            DPIRKitService *service = [[DPIRKitService alloc] initWithServiceId: serviceId profiles: mServiceProfiles plugin: self];
-            [self.serviceProvider addService: service];
+        if (self.serviceProvider) {
+            if (online) {
+                // オンライン遷移の場合、デバイスが未登録なら登録し、登録済ならフラグをオンラインにする
+                NSString *serviceId = device.name;
+                if ([self.serviceProvider service: serviceId]) {
+                    DConnectService *service = [self.serviceProvider service: serviceId];
+                    [service setOnline: YES];
+                } else {
+                    DPIRKitService *service = [[DPIRKitService alloc] initWithServiceId: serviceId plugin: self];
+                    [self.serviceProvider addService: service];
+                }
+            } else {
+                // オフライン遷移の場合、デバイスが登録済ならフラグをオフラインにする
+                NSString *serviceId = device.name;
+                DConnectService *service = [self.serviceProvider service: serviceId];
+                if (service) {
+                    [service setOnline: NO];
+                }
+            }
         }
         
         NSArray *events = [_eventManager eventListForProfile:DConnectServiceDiscoveryProfileName
@@ -163,14 +179,6 @@ DPIRKitManagerDetectionDelegate
             [message setString:event.sessionKey forKey:DConnectMessageSessionKey];
             [self sendEvent:message];
         }
-    } else {
-        // デバイスが登録済なら登録解除する
-        NSString *serviceId = device.name;
-        DConnectService *service = [self.serviceProvider service: serviceId];
-        if (service) {
-            [self.serviceProvider removeService: service];
-        }
-        
     }
 }
 
@@ -236,7 +244,6 @@ DPIRKitManagerDetectionDelegate
 {
     
     DConnectServiceInformationProfileConnectState state = DConnectServiceInformationProfileConnectStateOff;
-    // TODO: 実際に接続を確認した方が良いかの検討
     @synchronized (_devices) {
         if (_devices.count > 0) {
             DPIRKitDevice *device = [_devices objectForKey:serviceId];
@@ -249,16 +256,28 @@ DPIRKitManagerDetectionDelegate
     return state;
 }
 
+// 通知を受け取るメソッド
+-(void)notifiedNetworkStatus:(NSNotification *)notification {
+    DPIRKitNetworkStatus networkStatus = [self.reachability currentReachabilityStatus];
+    if (networkStatus == DPIRKitNotReachable) {
+        // ネット接続が切断されたので全サービスをオフラインにする
+        for (DConnectService *service in self.serviceProvider.services) {
+            [service setOnline: NO];
+        }
+    }
+}
+
+
 #pragma mark - DPIRKitManagerDetectionDelegate
 
 - (void) manager:(DPIRKitManager *)manager didFindDevice:(DPIRKitDevice *)device {
     
-    NSLog(@"found a device : %@", device);
+    DPIRLog(@"found a device : %@", device);
     [self sendDeviceDetectionEventWithDevice:device online:YES];
 }
 
 - (void) manager:(DPIRKitManager *)manager didLoseDevice:(DPIRKitDevice *)device {
-    NSLog(@"lost a device : %@", device);
+    DPIRLog(@"lost a device : %@", device);
     [self sendDeviceDetectionEventWithDevice:device online:NO];
 }
 
@@ -297,5 +316,11 @@ DPIRKitManagerDetectionDelegate
     return send;
 }
 
-
+- (NSString*)iconFilePath:(BOOL)isOnline
+{
+    NSString *bundlePath = [[NSBundle mainBundle] pathForResource:@"dConnectDeviceIRKit_resources" ofType:@"bundle"];
+    NSBundle *bundle = [NSBundle bundleWithPath:bundlePath];
+    NSString* filename = isOnline ? @"dconnect_icon" : @"dconnect_icon_off";
+    return [bundle pathForResource:filename ofType:@"png"];
+}
 @end

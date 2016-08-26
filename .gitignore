@@ -288,6 +288,8 @@ DerivedData
 *.ipa
 *.xcuserstate
 
+dConnectSDK/dConnectBrowserForIOS9/dConnectBrowserForIOS9/libs/Objective-C-HMTL-Parser/*
+
 # CocoaPods
 #
 # We recommend against adding the Pods directory to your .gitignore. However

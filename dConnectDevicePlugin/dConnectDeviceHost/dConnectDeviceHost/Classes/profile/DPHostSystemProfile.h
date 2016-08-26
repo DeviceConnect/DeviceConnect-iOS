@@ -9,6 +9,6 @@
 
 #import <DConnectSDK/DConnectSystemProfile.h>
 
-@interface DPHostSystemProfile : DConnectSystemProfile<DConnectSystemProfileDelegate, DConnectSystemProfileDataSource>
+@interface DPHostSystemProfile : DConnectSystemProfile<DConnectSystemProfileDataSource>
 
 @end

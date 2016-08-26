@@ -22,7 +22,6 @@
 {
     self = [super init];
     if (self) {
-        self.delegate = self;
         
         __weak DPHueLightProfile *weakSelf = self;
         

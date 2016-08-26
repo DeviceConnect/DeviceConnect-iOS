@@ -40,7 +40,6 @@
         if (![[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"tel://"]]) {
             return nil;
         }
-        self.delegate = self;
         self.eventMgr = [DConnectEventManager sharedManagerForClass:[DPHostDevicePlugin class]];
         _callCenter = [CTCallCenter new];
         __weak DPHostPhoneProfile *weakSelf = self;

@@ -19,6 +19,6 @@
  スワイプで現れるiOS標準パネルUI）経由での曲再生ができなくなる）。
  この場合、ユーザがMusic.app側で、購入した曲をタップして再生するなどの動作でEULA承認画面を表示し、承認を行ってもらう必要がある。
  */
-@interface DPHostMediaPlayerProfile : DConnectMediaPlayerProfile <DConnectMediaPlayerProfileDelegate>
+@interface DPHostMediaPlayerProfile : DConnectMediaPlayerProfile
 
 @end

@@ -292,7 +292,6 @@ typedef DConnectParameterSpec * (^ParameterObjectParser)(NSDictionary *json, NSE
         
         // ARRAY_PARAM_PARSER = new ArrayParameterParser();
         self.ARRAY_PARAM_PARSER = ^ DConnectParameterSpec * (NSDictionary *json, NSError **error) {
-            NSLog(@"      ARRAY_PARAM_PARSER - start json(class): %@", [[json class] description]);
             ArrayDataSpec *dataSpec = (ArrayDataSpec *) weakSelf.ARRAY_ITEMS_PARSER(json, error);
             if (!dataSpec) {
                 return nil;
@@ -406,7 +405,6 @@ typedef DConnectParameterSpec * (^ParameterObjectParser)(NSDictionary *json, NSE
                 return nil;
             }
             
-            NSLog(@"      STRING_PARAM_PARSER - StringParameterSpecBuilder init");
             StringParameterSpecBuilder *builder = [[StringParameterSpecBuilder alloc] init];
             [builder setName: json[ParameterObjectParserKeyName]];
             if (json[ParameterObjectParserKeyRequied]) {

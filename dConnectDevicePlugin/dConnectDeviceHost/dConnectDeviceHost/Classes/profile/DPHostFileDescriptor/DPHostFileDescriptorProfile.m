@@ -28,7 +28,6 @@
 {
     self = [super init];
     if (self) {
-        self.delegate = self;
         _fileHandleDict = [NSMutableDictionary dictionary];
         __weak DPHostFileDescriptorProfile *weakSelf = self;
         

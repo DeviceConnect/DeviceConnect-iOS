@@ -21,8 +21,6 @@
 {
 	self = [super init];
 	if (self) {
-		self.delegate = self;
-//        __weak DPPebbleNotificationProfile *weakSelf = self;
         
 		// 通知許可を得る
 		UIApplication *application = [UIApplication sharedApplication];

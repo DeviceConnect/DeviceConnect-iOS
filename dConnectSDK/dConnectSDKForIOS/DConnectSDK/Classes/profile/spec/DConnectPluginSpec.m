@@ -41,7 +41,6 @@
  @retval NO 追加失敗。API仕様定義JSONファイル解析に失敗等。
  */
 - (BOOL) addProfileSpec: (NSString *) profileName error: (NSError **) error {
-    // TODO: エラー通知をthrowからBOOL(return NO)に変更している。呼び出し側の処理を確認する
 
     // プロファイル名を元にBundle内のJSONファイルを読み込みファイル内容(JSON文字列)を返す。
     NSString *json = [self loadFile: profileName];

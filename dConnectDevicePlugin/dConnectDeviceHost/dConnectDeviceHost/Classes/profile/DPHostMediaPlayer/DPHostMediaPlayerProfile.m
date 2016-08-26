@@ -90,7 +90,6 @@
 {
     self = [super init];
     if (self) {
-        self.delegate = self;
         __weak DPHostMediaPlayerProfile *weakSelf = self;
         
         // イベントマネージャを取得
@@ -310,45 +309,16 @@
         [self addPutPath: putMediaRequestApiPath
                      api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
                          
+                         NSString *serviceId = [request serviceId];
                          NSString *mediaId = [DConnectMediaPlayerProfile mediaIdFromRequest:request];
-                         
                          if (!mediaId) {
                              [response setErrorToInvalidRequestParameterWithMessage:@"mediaId must be specified."];
                              return YES;
                          }
-                         NSURL *url = [NSURL URLWithString:mediaId];
-                         DPHostMediaContext *ctx = [DPHostMediaContext contextWithURL:url];
-                         if (!ctx) {
-                             [response setErrorToInvalidRequestParameterWithMessage:@"MediaId is Invalid."];
-                             return YES;
-                         }
-                         _nowPlayingMediaId = mediaId;
-                         NSNumber *persistentId;
-                         MPMediaItem *mediaItem;
-                         BOOL isIPodAudioMedia = [url.scheme isEqualToString:MediaContextMediaIdSchemeIPodAudio];
-                         BOOL isIPodMovieMedia = [url.scheme isEqualToString:MediaContextMediaIdSchemeIPodMovie];
-                         if (isIPodAudioMedia || isIPodMovieMedia) {
-                             persistentId = [DPHostMediaContext persistentIdWithMediaIdURL:url];
-                             
-                             MPMediaQuery *mediaQuery = [weakSelf defaultMediaQuery].copy;
-                             [mediaQuery addFilterPredicate:
-                              [MPMediaPropertyPredicate predicateWithValue:persistentId
-                                                               forProperty:MPMediaItemPropertyPersistentID]];
-                             NSArray *items = [mediaQuery items];
-                             
-                             if (items.count == 0) {
-                                 [response setErrorToInvalidRequestParameterWithMessage:@"Media specified by mediaId does not found."];
-                                 return YES;
-                             }
-                             mediaItem = items[0];
-                         }
-                         
-                         if (isIPodAudioMedia) {
-                             [weakSelf setIpodMusicMediaWithItem:mediaItem response:response];
-                             return YES;
-                         }
-                         [weakSelf setIpodMovieMediaWithResponse:response url:url mediaItem:mediaItem isIPodMovieMedia:isIPodMovieMedia];
-                         return NO;
+                         return [weakSelf putMediaRequest: request
+                                                 response: response
+                                                serviceId: serviceId
+                                                  mediaId: mediaId];
                      }];
         
         // API登録(didReceivePutPlayRequest相当)
@@ -363,8 +333,7 @@
                              MPMediaItem *mediaItem = [weakSelf musicPlayer].nowPlayingItem;
                              if ((!mediaItem || _nowPlayingMediaId) && [_musicPlayer playbackState] == MPMusicPlaybackStateStopped) {
                                  
-                                 [weakSelf         profile:weakSelf
-                                 didReceivePutMediaRequest:request
+                                 [weakSelf putMediaRequest:request
                                                   response:response
                                                  serviceId:serviceId
                                                    mediaId:[weakSelf nowPlayingMediaId]];
@@ -413,11 +382,11 @@
                              [response setResult:DConnectMessageResultTypeOk];
                          } else if (_currentMediaPlayer == MediaPlayerTypeMoviePlayer) {
                              if (_nowPlayingMediaId && _viewController.moviePlayer.playbackState == MPMoviePlaybackStateStopped) {
-                                 [weakSelf             profile:weakSelf
-                                     didReceivePutMediaRequest:request
-                                                      response:response
-                                                     serviceId:serviceId
-                                                       mediaId:[weakSelf nowPlayingMediaId]];
+                                 
+                                 [weakSelf putMediaRequest:request
+                                                  response:response
+                                                 serviceId:serviceId
+                                                   mediaId:[weakSelf nowPlayingMediaId]];
                                  [NSThread sleepForTimeInterval:0.5]; //Viewが開くまで待つ
                              }
                              
@@ -1377,6 +1346,48 @@
         }
      }];
 }
+
+- (BOOL) putMediaRequest:(DConnectRequestMessage *) request
+                response:(DConnectResponseMessage *)response
+               serviceId:(NSString *)serviceId
+                 mediaId:(NSString *)mediaId
+{
+    NSURL *url = [NSURL URLWithString:mediaId];
+    DPHostMediaContext *ctx = [DPHostMediaContext contextWithURL:url];
+    if (!ctx) {
+        [response setErrorToInvalidRequestParameterWithMessage:@"MediaId is Invalid."];
+        return YES;
+    }
+    _nowPlayingMediaId = mediaId;
+    NSNumber *persistentId;
+    MPMediaItem *mediaItem;
+    BOOL isIPodAudioMedia = [url.scheme isEqualToString:MediaContextMediaIdSchemeIPodAudio];
+    BOOL isIPodMovieMedia = [url.scheme isEqualToString:MediaContextMediaIdSchemeIPodMovie];
+    if (isIPodAudioMedia || isIPodMovieMedia) {
+        persistentId = [DPHostMediaContext persistentIdWithMediaIdURL:url];
+        
+        MPMediaQuery *mediaQuery = [self defaultMediaQuery].copy;
+        [mediaQuery addFilterPredicate:
+         [MPMediaPropertyPredicate predicateWithValue:persistentId
+                                          forProperty:MPMediaItemPropertyPersistentID]];
+        NSArray *items = [mediaQuery items];
+        
+        if (items.count == 0) {
+            [response setErrorToInvalidRequestParameterWithMessage:@"Media specified by mediaId does not found."];
+            return YES;
+        }
+        mediaItem = items[0];
+    }
+    
+    if (isIPodAudioMedia) {
+        [self setIpodMusicMediaWithItem:mediaItem response:response];
+        return YES;
+    }
+    [self setIpodMovieMediaWithResponse:response url:url mediaItem:mediaItem isIPodMovieMedia:isIPodMovieMedia];
+    return NO;
+}
+
+
 
 #pragma mark - Get topMost viewController
 - (UIViewController *)topViewController{

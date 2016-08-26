@@ -10,8 +10,9 @@
 #import <UIKit/UIKit.h>
 #import "GHHeaderView.h"
 #import <SafariServices/SafariServices.h>
+#import "TopViewModel.h"
 
-@interface ViewController : UIViewController<GHHeaderViewDelegate, SFSafariViewControllerDelegate, UICollectionViewDelegate, UICollectionViewDataSource>
+@interface ViewController : UIViewController<GHHeaderViewDelegate, SFSafariViewControllerDelegate, UICollectionViewDelegate, UICollectionViewDataSource, TopViewModelDelegate>
 
 
 @end

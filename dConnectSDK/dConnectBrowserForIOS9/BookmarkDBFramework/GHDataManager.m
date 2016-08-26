@@ -393,6 +393,7 @@ static GHDataManager* mgr = nil;
     page.created_date = [NSDate date];
     page.sectionIndex = [GHUtils dateToString:page.created_date];
     page.identifier   = [GHUtils createUUID];
+    page.latest_opened_date = [NSDate date];
     
     return page;
 }
@@ -583,7 +584,7 @@ NSString *defaultBookmarkURL = @"https://device-webapi.org/";
     defaultBookmark.title = @"DeviceWebAPIコンソーシアム";
     defaultBookmark.url = defaultBookmarkURL;
     defaultBookmark.type = TYPE_BOOKMARK;
-    defaultBookmark.priority = @(3);
+    defaultBookmark.priority = @(DeviceWebAPI_priority);
     [self createPageEntity:defaultBookmark context:nil];
 }
 

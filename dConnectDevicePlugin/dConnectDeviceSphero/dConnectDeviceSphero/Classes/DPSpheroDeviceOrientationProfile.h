@@ -16,5 +16,6 @@
  @class DPSpheroDeviceOrientationProfile
  @brief SpheroデバイスプラグインのDeviceOrientationProfile機能を提供する
  */
-@interface DPSpheroDeviceOrientationProfile : DConnectDeviceOrientationProfile<DConnectDeviceOrientationProfileDelegate>
+@interface DPSpheroDeviceOrientationProfile : DConnectDeviceOrientationProfile
+
 @end

@@ -12,6 +12,6 @@
 /*!
  @brief Pebble用バッテリープロファイル。
  */
-@interface DPPebbleBatteryProfile : DConnectBatteryProfile <DConnectBatteryProfileDelegate>
+@interface DPPebbleBatteryProfile : DConnectBatteryProfile
 
 @end

@@ -32,7 +32,6 @@ typedef void (^OrientationBlock)(DPGyroData gyroData, DPPoint3D accel, int inter
 - (id)init {
     self = [super init];
     if (self) {
-        self.delegate = self;
         [DPSpheroManager sharedManager].orientationDelegate = self;
         self.orientationBlkArray = [NSMutableArray new];
         __weak DPSpheroDeviceOrientationProfile *weakSelf = self;

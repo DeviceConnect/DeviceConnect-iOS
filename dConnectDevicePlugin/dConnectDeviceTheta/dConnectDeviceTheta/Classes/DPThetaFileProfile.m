@@ -16,7 +16,6 @@
 {
     self = [super init];
     if (self) {
-        self.delegate = self;
         __weak DPThetaFileProfile *weakSelf = self;
         
         // API登録(didReceiveGetReceiveRequest相当)

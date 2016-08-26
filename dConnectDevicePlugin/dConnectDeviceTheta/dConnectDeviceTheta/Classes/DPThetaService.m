@@ -20,7 +20,7 @@ NSString *const DPThetaRoiServiceId = @"roi";
 
 - (instancetype) initWithServiceId: (NSString *) serviceId plugin: (id) plugin {
 
-    self = [super initWithServiceId: serviceId plugin: plugin];
+    self = [super initWithServiceId: serviceId plugin: plugin dataSource: self];
     if (self) {
         [self addProfile:[DPThetaBatteryProfile new]];
         [self addProfile:[DPThetaFileProfile new]];
@@ -28,6 +28,20 @@ NSString *const DPThetaRoiServiceId = @"roi";
         [self addProfile:[DPThetaOmnidirectionalImageProfile new]];
     }
     return self;
+}
+
+#pragma mark - DConnectServiceInformationProfileDataSource Implement.
+
+- (DConnectServiceInformationProfileConnectState)profile:(DConnectServiceInformationProfile *)profile
+                                   wifiStateForServiceId:(NSString *)serviceId {
+    
+    DConnectServiceInformationProfileConnectState wifiState;
+    if (self.online) {
+        wifiState = DConnectServiceInformationProfileConnectStateOn;
+    } else {
+        wifiState = DConnectServiceInformationProfileConnectStateOff;
+    }
+    return wifiState;
 }
 
 @end

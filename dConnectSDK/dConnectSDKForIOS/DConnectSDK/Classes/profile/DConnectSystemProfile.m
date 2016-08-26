@@ -25,70 +25,12 @@ NSString *const DConnectSystemProfileParamId = @"id";
 NSString *const DConnectSystemProfileParamName = @"name";
 NSString *const DConnectSystemProfileParamVersion = @"version";
 
-@interface DConnectSystemProfile()
-
-- (BOOL) hasMethod:(SEL)method response:(DConnectResponseMessage *)response;
-@end
-
 @implementation DConnectSystemProfile
 
 - (NSString *) profileName {
     return DConnectSystemProfileName;
 }
 
-/*
-- (BOOL) didReceivePutRequest:(DConnectRequestMessage *)request response:(DConnectResponseMessage *)response {
-    BOOL send = YES;
-    
-    NSString *interface = [request interface];
-    NSString *attribute = [request attribute];
-    
-    if (interface && attribute && [attribute isEqualToString:DConnectSystemProfileAttrWakeUp] && _dataSource)
-    {
-        send = [self didReceivePutWakeupRequest: request, response: response];
-    } else if ([attribute isEqualToString:DConnectSystemProfileAttrKeyword]) {
-        if (_delegate && [_delegate respondsToSelector:@selector(profile:didReceivePutKeywordRequest:response:)])
-        {
-            send = [_delegate profile:self didReceivePutKeywordRequest:request response:response];
-        } else {
-            [response setErrorToNotSupportAttribute];
-        }
-    } else {
-        [response setErrorToNotSupportProfile];
-    }
-    
-    return send;
-}
-
-- (BOOL) didReceiveDeleteRequest:(DConnectRequestMessage *)request response:(DConnectResponseMessage *)response {
-    
-    BOOL send = YES;
-    
-    if (!_delegate) {
-        [response setErrorToNotSupportAction];
-        return send;
-    }
-    
-    NSString *attribute = [request attribute];
-    if ([DConnectSystemProfileAttrEvents isEqualToString:attribute]) {
-        if ([_delegate respondsToSelector:@selector(profile:
-                                                    didReceiveDeleteEventsRequest:
-                                                    response:
-                                                    sessionKey:)]) {
-            [_delegate                    profile:self
-                    didReceiveDeleteEventsRequest:request
-                                         response:response
-                                       sessionKey:[request sessionKey]];
-        } else {
-            [response setErrorToNotSupportAttribute];
-        }
-    } else {
-        [response setErrorToNotSupportProfile];
-    }
-    
-    return send;
-}
-*/
 - (BOOL) didReceivePutWakeupRequest:(DConnectRequestMessage *)request response:(DConnectResponseMessage *)response {
     
     dispatch_async(dispatch_get_main_queue(), ^{
@@ -131,16 +73,6 @@ NSString *const DConnectSystemProfileParamVersion = @"version";
 
 + (NSString *) pluginIdFromRequest:(DConnectMessage *)request {
     return [request stringForKey:DConnectSystemProfileParamPluginId];
-}
-
-#pragma mark - Private Methods
-
-- (BOOL) hasMethod:(SEL)method response:(DConnectResponseMessage *)response {
-    BOOL result = [_delegate respondsToSelector:method];
-    if (!result) {
-        [response setErrorToNotSupportAttribute];
-    }
-    return result;
 }
 
 @end

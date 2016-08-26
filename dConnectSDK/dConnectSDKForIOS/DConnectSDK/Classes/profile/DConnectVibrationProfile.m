@@ -18,8 +18,6 @@ const long long DConnectVibrationProfileDefaultMaxVibrationTime = 500;
 
 @interface DConnectVibrationProfile()
 
-- (BOOL) hasMethod:(SEL)method response:(DConnectResponseMessage *)response;
-
 - (BOOL) isNumberString:(NSString *)str;
 
 @end
@@ -39,63 +37,6 @@ const long long DConnectVibrationProfileDefaultMaxVibrationTime = 500;
 - (NSString *) profileName {
     return DConnectVibrationProfileName;
 }
-
-/*
-- (BOOL) didReceivePutRequest:(DConnectRequestMessage *)request response:(DConnectResponseMessage *)response {
-    
-    BOOL send = YES;
-    
-    if (!_delegate) {
-        [response setErrorToNotSupportAction];
-        return send;
-    }
-    
-    NSString *attribute = [request attribute];
-    
-    if ([attribute isEqualToString:DConnectVibrationProfileAttrVibrate]) {
-        if ([self hasMethod:@selector(profile:
-                                      didReceivePutVibrateRequest:
-                                      response:
-                                      serviceId:
-                                      pattern:)
-                   response:response])
-        {
-            NSString *patternStr = [DConnectVibrationProfile patternFromRequest:request];
-            NSArray *pattern = [self parsePattern:patternStr];
-            send = [_delegate profile:self didReceivePutVibrateRequest:request response:response
-                             serviceId:[request serviceId] pattern:pattern];
-        }
-    } else {
-        [response setErrorToNotSupportProfile];
-    }
-    
-    return send;
-}
-
-- (BOOL) didReceiveDeleteRequest:(DConnectRequestMessage *)request response:(DConnectResponseMessage *)response {
-    
-    BOOL send = YES;
-    
-    if (!_delegate) {
-        [response setErrorToNotSupportAction];
-        return send;
-    }
-    
-    NSString *attribute = [request attribute];
-    
-    if ([attribute isEqualToString:DConnectVibrationProfileAttrVibrate]) {
-        if ([self hasMethod:@selector(profile:didReceiveDeleteVibrateRequest:response:serviceId:) response:response])
-        {
-            send = [_delegate profile:self didReceiveDeleteVibrateRequest:request response:response
-                             serviceId:[request serviceId]];
-        }
-    } else {
-        [response setErrorToNotSupportProfile];
-    }
-    
-    return send;
-}
-*/
 
 #pragma mark - Getter
 
@@ -152,14 +93,6 @@ const long long DConnectVibrationProfileDefaultMaxVibrationTime = 500;
 }
 
 #pragma mark - Private Methods
-
-- (BOOL) hasMethod:(SEL)method response:(DConnectResponseMessage *)response {
-    BOOL result = [_delegate respondsToSelector:method];
-    if (!result) {
-        [response setErrorToNotSupportAttribute];
-    }
-    return result;
-}
 
 - (BOOL) isNumberString:(NSString *)str {
     NSCharacterSet *digitCharSet = [NSCharacterSet characterSetWithCharactersInString:@"0123456789"];

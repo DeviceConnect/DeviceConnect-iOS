@@ -113,4 +113,6 @@
 
 - (NSArray *) serviceProfilesWithServiceId: (NSString *) serviceId;
 
+- (NSString*)iconFilePath:(BOOL)isOnline;
+
 @end

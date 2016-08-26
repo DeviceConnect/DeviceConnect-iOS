@@ -273,4 +273,11 @@ typedef struct DPGyroData_ {
  */
 - (void)removeResponseObserver;
 
+
+/*!
+ @brief デバイス管理情報更新
+ */
+- (void) updateManageServices;
+
+
 @end

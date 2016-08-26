@@ -29,12 +29,6 @@ NSString *const DConnectCanvasProfileModeScales = @"scales";
 NSString *const DConnectCanvasProfileModeFills  = @"fills";
 
 
-@interface DConnectCanvasProfile()
-
-- (BOOL) hasMethod:(SEL)method response:(DConnectResponseMessage *)response;
-
-@end
-
 @implementation DConnectCanvasProfile
 
 #pragma mark - DConnectProfile Methods -
@@ -42,85 +36,6 @@ NSString *const DConnectCanvasProfileModeFills  = @"fills";
 - (NSString *) profileName {
     return DConnectCanvasProfileName;
 }
-
-/*
-- (BOOL) didReceivePostRequest:(DConnectRequestMessage *)request response:(DConnectResponseMessage *)response {
-    BOOL send = YES;
-    
-    if (!_delegate) {
-        [response setErrorToNotSupportAction];
-        return send;
-    }
-    
-    NSString *attribute = [request attribute];
-    if ([attribute isEqualToString:DConnectCanvasProfileAttrDrawImage]) {
-        
-        if ([self hasMethod:@selector(profile:didReceivePostDrawImageRequest:response:serviceId:mimeType:data:uri:imageX:imageY:mode:)
-                   response:response])
-        {
-            NSData *data = [DConnectCanvasProfile dataFromRequest:request];
-            NSString *uri = [DConnectCanvasProfile uriFromRequest:request];
-            NSString *serviceId = [request serviceId];
-            NSString *mimeType = [DConnectCanvasProfile mimeTypeFromRequest:request];
-            NSString *strX = [DConnectCanvasProfile xFromRequest: request];
-            NSString *strY = [DConnectCanvasProfile yFromRequest: request];
-            
-            if (mimeType != nil && ![self isMimeTypeWithString: mimeType]) {
-                [response setErrorToInvalidRequestParameterWithMessage: @"mimeType format is incorrect."];
-                return send;
-            }
-            if (strX != nil && ![self isFloatWithString: strX]) {
-                [response setErrorToInvalidRequestParameterWithMessage: @"x is different type."];
-                return send;
-            }
-            if (strY != nil && ![self isFloatWithString: strY]) {
-                [response setErrorToInvalidRequestParameterWithMessage: @"y is different type."];
-                return send;
-            }
-            double x = strX.doubleValue;
-            double y = strY.doubleValue;
-            NSString *mode = [DConnectCanvasProfile modeFromRequest: request];
-            
-            send = [_delegate profile:self didReceivePostDrawImageRequest:request response:response
-                            serviceId:serviceId mimeType:mimeType data:data uri:uri imageX:x imageY:y mode:mode];
-        }
-
-    } else {
-        [response setErrorToNotSupportProfile];
-    }
-    
-    return send;
-}
-
-
-- (BOOL) didReceiveDeleteRequest:(DConnectRequestMessage *)request response:(DConnectResponseMessage *)response
-{
-    BOOL send = YES;
-    
-    if (!_delegate) {
-        [response setErrorToNotSupportAction];
-        return send;
-    }
-    
-    NSString *attribute = [request attribute];
-    if ([attribute isEqualToString:DConnectCanvasProfileAttrDrawImage]) {
-        
-        if ([self hasMethod:@selector(profile:didReceiveDeleteDrawImageRequest:response:serviceId:)
-                   response:response])
-        {
-            NSString *serviceId = [request serviceId];
-            send = [_delegate profile:self didReceiveDeleteDrawImageRequest:request
-                             response:response
-                            serviceId:serviceId];
-        }
-        
-    } else {
-        [response setErrorToNotSupportProfile];
-    }
-    
-    return send;
-}
-*/
 
 #pragma mark - Setter
 
@@ -177,14 +92,6 @@ NSString *const DConnectCanvasProfileModeFills  = @"fills";
 }
 
 #pragma mark - Private Methods
-
-- (BOOL) hasMethod:(SEL)method response:(DConnectResponseMessage *)response {
-    BOOL result = [_delegate respondsToSelector:method];
-    if (!result) {
-        [response setErrorToNotSupportAttribute];
-    }
-    return result;
-}
 
 - (BOOL) isMimeTypeWithString: (NSString *)mimeTypeString {
 

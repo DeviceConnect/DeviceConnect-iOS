@@ -21,7 +21,6 @@
     self = [super init];
     if (self) {
         self.plugin = plugin;
-        self.delegate = self;
         __weak DPIRKitTVProfile *weakSelf = self;
         
         // API登録(didReceivePutTVRequest相当)

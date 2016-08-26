@@ -43,7 +43,6 @@ typedef void (^DPHostProximityBlock)(DConnectMessage *);
         }
         
         // YESを設定してYES；近接センサーがサポートされている。
-        self.delegate = self;
         __weak DPHostProximityProfile *weakSelf = self;
         self.proximityBlock = nil;
         self.onceProximityBlock = nil;

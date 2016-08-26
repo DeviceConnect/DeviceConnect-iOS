@@ -16,6 +16,6 @@
  @class DPSpheroSystemProfile
  @brief SpheroデバイスプラグインのSystemProfile機能を提供する
  */
-@interface DPSpheroSystemProfile : DConnectSystemProfile<DConnectSystemProfileDataSource,DConnectSystemProfileDelegate>
+@interface DPSpheroSystemProfile : DConnectSystemProfile<DConnectSystemProfileDataSource>
 
 @end

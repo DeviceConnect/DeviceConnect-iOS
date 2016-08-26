@@ -10,6 +10,7 @@
 #import <Foundation/Foundation.h>
 #import <DConnectSDK/DConnectServiceProvider.h>
 #import <DConnectSDK/DConnectProfileProvider.h>
+#import <DConnectSDK/DConnectServiceInformationProfile.h>
 
 @interface DConnectService : DConnectProfileProvider
 
@@ -27,8 +28,8 @@
 @property(nonatomic, strong) NSString *config;
 
 
-- (instancetype) initWithServiceId: (NSString *)serviceId plugin: (id) plugin;
+- (instancetype) initWithServiceId: (NSString *)serviceId plugin: (id) plugin dataSource: (id<DConnectServiceInformationProfileDataSource>) dataSource;
 
-- (BOOL) onRequest: request response: response;
+- (BOOL) didReceiveRequest: (DConnectRequestMessage *) request response: (DConnectResponseMessage *)response;
 
 @end
