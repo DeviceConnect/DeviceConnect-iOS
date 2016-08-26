@@ -234,25 +234,6 @@ NSString *const DConnectAttributeNameRequestAccessToken = @"requestAccessToken";
     return self.mStartFlag;
 }
 
-<<<<<<< HEAD
-=======
-- (void)startServiceDiscoveryForCallback:(DConnectResponseBlocks)callback
-{
-    dispatch_async(dispatch_get_main_queue(), ^{
-        DConnectManagerServiceDiscoveryProfile *p = (DConnectManagerServiceDiscoveryProfile *) [self profileWithName:DConnectServiceDiscoveryProfileName];
-        DConnectResponseMessage *response = [DConnectResponseMessage message];
-        DConnectRequestMessage *request = [DConnectRequestMessage new];
-        [request setAction: DConnectMessageActionTypeGet];
-        [p getServicesRequest:request response:response];
-        if (callback) {
-            callback(response);
-        }
-    });
-}
-
-
-
->>>>>>> master
 - (void) sendRequest:(DConnectRequestMessage *)request
               isHttp:(BOOL)isHttp
             callback:(DConnectResponseBlocks)callback

@@ -36,21 +36,18 @@
         self.stressReceived = ^(DPHitoeDevice *device, DPHitoeStressEstimationData *stress) {
             [weakSelf notifyReceiveDataForDevice:device data:stress];
         };
-        NSString *didReceiveGetOnStressEstimationRequest = [self apiPathWithProfile: self.profileName
-                                                                       interfaceName: nil
-                                                                       attributeName: DCMStressEstimationProfileAttrOnStressEstimation];
+        NSString *didReceiveGetOnStressEstimationRequest = [self apiPath: nil
+                                                           attributeName: DCMStressEstimationProfileAttrOnStressEstimation];
         [self addGetPath:didReceiveGetOnStressEstimationRequest api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
             return [weakSelf didReceiveGetOnStressEstimationRequest:request response:response serviceId:[request serviceId]];
         }];
-        NSString *didReceivePutOnStressEstimationRequest = [self apiPathWithProfile: self.profileName
-                                                                       interfaceName: nil
-                                                                       attributeName: DCMStressEstimationProfileAttrOnStressEstimation];
+        NSString *didReceivePutOnStressEstimationRequest = [self apiPath: nil
+                                                           attributeName: DCMStressEstimationProfileAttrOnStressEstimation];
         [self addPutPath:didReceivePutOnStressEstimationRequest api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
             return [weakSelf didReceivePutOnStressEstimationRequest:request response:response serviceId:[request serviceId] sessionKey:[request sessionKey]];
         }];
-        NSString *didReceiveDeleteOnStressEstimationRequest = [self apiPathWithProfile: self.profileName
-                                                                          interfaceName: nil
-                                                                          attributeName: DCMStressEstimationProfileAttrOnStressEstimation];
+        NSString *didReceiveDeleteOnStressEstimationRequest = [self apiPath: nil
+                                                              attributeName: DCMStressEstimationProfileAttrOnStressEstimation];
         [self addDeletePath:didReceiveDeleteOnStressEstimationRequest api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
             return [weakSelf didReceiveDeleteOnStressEstimationRequest:request response:response serviceId:[request serviceId] sessionKey:[request sessionKey]];
         }];
@@ -109,7 +106,7 @@
                 {
                     [response setResult:DConnectMessageResultTypeOk];
                     mgr.stressEstimationReceived = self.stressReceived;
-                    DPHitoeEventDispatcher *dispatcher = [DPHitoeEventDispatcherFactory createEventDispatcherForDevicePlugin:self.provider
+                    DPHitoeEventDispatcher *dispatcher = [DPHitoeEventDispatcherFactory createEventDispatcherForDevicePlugin:self.plugin
                                                                                                                      request:request];
                     [_dispatcherManager addEventDispatcherForServiceId:serviceId dispatcher:dispatcher];
 

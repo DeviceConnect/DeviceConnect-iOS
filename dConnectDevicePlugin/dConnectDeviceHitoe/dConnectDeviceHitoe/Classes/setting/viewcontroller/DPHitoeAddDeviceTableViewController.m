@@ -58,7 +58,7 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    [DPHitoeManager sharedInstance].connectionDelegate = self;
+//    [DPHitoeManager sharedInstance].connectionDelegate = self;
     NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
     BOOL sw = [def boolForKey:DPHitoeWakeUpNever];
     if (!sw) {
@@ -72,8 +72,31 @@
     NSArray *services = @[];
     NSDictionary *options = @{CBCentralManagerScanOptionAllowDuplicatesKey:@(NO)};
     [cManager scanForPeripheralsWithServices:services options:options];
+    __weak typeof(self) _self = self;
+    dispatch_async(dispatch_get_main_queue(), ^{
 
+    
+    NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
+    UIApplication *application = [UIApplication sharedApplication];
+    
+    [notificationCenter addObserver:_self selector:@selector(didConnectWithDevice:)
+                               name:DPHitoeConnectDeviceNotification
+                             object:nil];
+    [notificationCenter addObserver:_self selector:@selector(didConnectFailWithDevice:)
+                               name:DPHitoeConnectFailedDeviceNotification
+                             object:nil];
+    [notificationCenter addObserver:_self selector:@selector(didDisconnectWithDevice:)
+                               name:DPHitoeDisconnectNotification
+                             object:nil];
+    [notificationCenter addObserver:_self selector:@selector(didDiscoveryForDevices:)
+                               name:DPHitoeDiscoveryDeviceNotification
+                             object:nil];
+    [notificationCenter addObserver:_self selector:@selector(didDeleteAtDevice:)
+                               name:DPHitoeDeleteDeviceNotification
+                             object:nil];
+    });
 }
+
 
 - (void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
@@ -85,6 +108,16 @@
     }
 
     isConnecting = NO;
+    
+    NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
+    UIApplication *application = [UIApplication sharedApplication];
+    
+    [notificationCenter removeObserver:self name:DPHitoeConnectDeviceNotification object:nil];
+    [notificationCenter removeObserver:self name:DPHitoeConnectFailedDeviceNotification object:nil];
+    [notificationCenter removeObserver:self name:DPHitoeDisconnectNotification object:nil];
+    [notificationCenter removeObserver:self name:DPHitoeDiscoveryDeviceNotification object:nil];
+    [notificationCenter removeObserver:self name:DPHitoeDeleteDeviceNotification object:nil];
+
 }
 
 - (void)didReceiveMemoryWarning {
@@ -167,7 +200,9 @@
 
 
 #pragma mark - Hitoe delegate
--(void)didConnectWithDevice:(DPHitoeDevice*)device {
+-(void)didConnectWithDevice:(NSNotification *)notification {
+    NSDictionary *userInfo = (NSDictionary *)[notification userInfo];
+    DPHitoeDevice *device = userInfo[DPHitoeConnectDeviceObject];
     for (int i = 0; i < [discoveries count]; i++) {
         DPHitoeDevice *discovery = [discoveries objectAtIndex:i];
         if ([discovery.serviceId isEqualToString:device.serviceId]) {
@@ -184,7 +219,9 @@
     isConnecting = NO;
 }
 
--(void)didConnectFailWithDevice:(DPHitoeDevice*)device {
+-(void)didConnectFailWithDevice:(NSNotification *)notification {
+    NSDictionary *userInfo = (NSDictionary *)[notification userInfo];
+    DPHitoeDevice *device = userInfo[DPHitoeConnectFailedDeviceObject];
     for (int i = 0; i < [discoveries count]; i++) {
         if ([device.serviceId isEqualToString:((DPHitoeDevice*) discoveries[i]).serviceId]) {
             ((DPHitoeDevice*) discoveries[i]).pinCode = nil;
@@ -202,11 +239,15 @@
 
 }
 
--(void)didDisconnectWithDevice:(DPHitoeDevice*)device {
+-(void)didDisconnectWithDevice:(NSNotification *)notification {
+
     
 }
 
--(void)didDiscoveryForDevices:(NSMutableArray*)devices {
+-(void)didDiscoveryForDevices:(NSNotification *)notification {
+    NSDictionary *userInfo = (NSDictionary *)[notification userInfo];
+    NSMutableArray *devices = userInfo[DPHitoeDiscoveryDeviceObject];
+
     discoveries = [devices mutableCopy];
     for (int i = 0; i < [discoveries count]; i++) {
         DPHitoeDevice *discovery = [discoveries objectAtIndex:i];
@@ -218,7 +259,7 @@
     [DPHitoeProgressDialog closeProgressDialog];
 }
 
--(void)didDeleteAtDevice:(DPHitoeDevice*)device {
+-(void)didDeleteAtDevice:(NSNotification *)notification {
     
 }
 

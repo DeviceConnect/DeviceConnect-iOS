@@ -18,15 +18,13 @@
     if (self) {
         __unsafe_unretained typeof(self) weakSelf = self;
         
-        NSString *didReceiveGetAllRequest = [self apiPathWithProfile: self.profileName
-                                                                interfaceName: nil
-                                                                attributeName: nil];
+        NSString *didReceiveGetAllRequest = [self apiPath: nil
+                                            attributeName: nil];
         [self addGetPath:didReceiveGetAllRequest api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
             return [weakSelf getBatteryLevelWithRequest:request response:response serviceId:[request serviceId]];
         }];
-        NSString *didReceiveGetLevelRequest = [self apiPathWithProfile: self.profileName
-                                                                interfaceName: nil
-                                                                attributeName: DConnectBatteryProfileAttrLevel];
+        NSString *didReceiveGetLevelRequest = [self apiPath: nil
+                                              attributeName: DConnectBatteryProfileAttrLevel];
         [self addGetPath:didReceiveGetLevelRequest api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
             return [weakSelf getBatteryLevelWithRequest:request response:response serviceId:[request serviceId]];
         }];

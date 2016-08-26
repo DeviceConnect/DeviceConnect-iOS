@@ -9,6 +9,6 @@
 
 #import <DConnectSDK/DConnectSDK.h>
 
-@interface DPHitoeServiceDiscoveryProfle : DConnectServiceDiscoveryProfile<DConnectServiceDiscoveryProfileDelegate>
+@interface DPHitoeServiceDiscoveryProfle : NSObject//DConnectServiceDiscoveryProfile<DConnectServiceDiscoveryProfileDelegate>
 
 @end

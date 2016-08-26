@@ -81,7 +81,7 @@ static NSString *const DPHitoeOpenBluetooth = @"BluetoothがOFFになってい�
             [discoveries removeObjectAtIndex:i];
         }
     }
-    [DPHitoeManager sharedInstance].connectionDelegate = self;
+//    [DPHitoeManager sharedInstance].connectionDelegate = self;
 
     cManager = [[CBCentralManager alloc] initWithDelegate:self queue:nil];
     NSArray *services = @[];
@@ -94,6 +94,29 @@ static NSString *const DPHitoeOpenBluetooth = @"BluetoothがOFFになってい�
             [self enableTableView];
         });
     });
+    __weak typeof(self) _self = self;
+    dispatch_async(dispatch_get_main_queue(), ^{
+
+    NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
+    UIApplication *application = [UIApplication sharedApplication];
+    
+    [notificationCenter addObserver:_self selector:@selector(didConnectWithDevice:)
+                               name:DPHitoeConnectDeviceNotification
+                             object:nil];
+    [notificationCenter addObserver:_self selector:@selector(didConnectFailWithDevice:)
+                               name:DPHitoeConnectFailedDeviceNotification
+                             object:nil];
+    [notificationCenter addObserver:_self selector:@selector(didDisconnectWithDevice:)
+                               name:DPHitoeDisconnectNotification
+                             object:nil];
+    [notificationCenter addObserver:_self selector:@selector(didDiscoveryForDevices:)
+                               name:DPHitoeDiscoveryDeviceNotification
+                             object:nil];
+    [notificationCenter addObserver:_self selector:@selector(didDeleteAtDevice:)
+                               name:DPHitoeDeleteDeviceNotification
+                             object:nil];
+    });
+
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
@@ -103,6 +126,15 @@ static NSString *const DPHitoeOpenBluetooth = @"BluetoothがOFFになってい�
     }
     
     isConnecting = NO;
+    NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
+    UIApplication *application = [UIApplication sharedApplication];
+    
+    [notificationCenter removeObserver:self name:DPHitoeConnectDeviceNotification object:nil];
+    [notificationCenter removeObserver:self name:DPHitoeConnectFailedDeviceNotification object:nil];
+    [notificationCenter removeObserver:self name:DPHitoeDisconnectNotification object:nil];
+    [notificationCenter removeObserver:self name:DPHitoeDiscoveryDeviceNotification object:nil];
+    [notificationCenter removeObserver:self name:DPHitoeDeleteDeviceNotification object:nil];
+
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -231,7 +263,7 @@ static NSString *const DPHitoeOpenBluetooth = @"BluetoothがOFFになってい�
 
 
 #pragma mark - Hitoe's Delegate
--(void)didConnectWithDevice:(DPHitoeDevice*)device {
+-(void)didConnectWithDevice:(NSNotification *)notification {
     dispatch_async(dispatch_get_main_queue(), ^{
         [self.registerDeviceList reloadData];
     });
@@ -239,7 +271,7 @@ static NSString *const DPHitoeOpenBluetooth = @"BluetoothがOFFになってい�
     isConnecting = NO;
 }
 
--(void)didConnectFailWithDevice:(DPHitoeDevice*)device {
+-(void)didConnectFailWithDevice:(NSNotification *)notification {
     dispatch_async(dispatch_get_main_queue(), ^{
         [self.registerDeviceList reloadData];
     });
@@ -253,16 +285,16 @@ static NSString *const DPHitoeOpenBluetooth = @"BluetoothがOFFになってい�
 
     isConnecting = NO;
 }
--(void)didDisconnectWithDevice:(DPHitoeDevice*)device {
+-(void)didDisconnectWithDevice:(NSNotification *)notification {
+
     [DPHitoeProgressDialog closeProgressDialog];
     dispatch_async(dispatch_get_main_queue(), ^{
         [self.registerDeviceList reloadData];
     });
 }
--(void)didDiscoveryForDevices:(NSMutableArray*)devices {
-    
+-(void)didDiscoveryForDevices:(NSNotification *)notification {
 }
--(void)didDeleteAtDevice:(DPHitoeDevice*)device {
+-(void)didDeleteAtDevice:(NSNotification *)notification {
     [DPHitoeProgressDialog closeProgressDialog];
     dispatch_async(dispatch_get_main_queue(), ^{
         [self enableTableView];

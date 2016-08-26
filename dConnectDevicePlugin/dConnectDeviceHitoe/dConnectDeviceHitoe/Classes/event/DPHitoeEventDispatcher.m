@@ -16,11 +16,6 @@
 @implementation DPHitoeEventDispatcher
 
 - (instancetype)initWithDevicePlugin:(DConnectDevicePlugin *)devicePlugin {
-    if (!devicePlugin) {
-        [NSException raise:NSInternalInconsistencyException
-                    format:@"Service is nil"];
-
-    }
     self = [super init];
     if (self) {
         _plugin = devicePlugin;

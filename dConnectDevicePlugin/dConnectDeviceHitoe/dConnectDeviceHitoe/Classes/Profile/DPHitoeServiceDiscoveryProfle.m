@@ -19,7 +19,7 @@
 {
     self = [super init];
     if (self) {
-        self.delegate = self;
+//        self.delegate = self;
     }
     return self;
     
@@ -46,8 +46,6 @@
         [DConnectServiceDiscoveryProfile setType:DConnectServiceDiscoveryProfileNetworkTypeBLE
                                           target:service];
         [DConnectServiceDiscoveryProfile setOnline:device.isRegisterFlag target:service];
-        [DConnectServiceDiscoveryProfile setScopesWithProvider:self.provider
-                                                        target:service];
         [services addMessage:service];
     }
     [response setResult:DConnectMessageResultTypeOk];

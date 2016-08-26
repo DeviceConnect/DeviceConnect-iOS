@@ -80,94 +80,6 @@ extern NSString *const DCMPoseEstimationProfileStateStanding;
 
 @class DCMPoseEstimationProfile;
 
-/*!
- @protocol DCMPoseEstimationProfileDelegate
- @brief PoseEstimationProfile各APIリクエスト通知用デリゲート。
- 
- PoseEstimation Profileの各APIへのリクエスト受信通知を受け取るデリゲート。
- */
-@protocol DCMPoseEstimationProfileDelegate<NSObject>
-@optional
-
-#pragma mark - Get Methods
-
-/*!
- @brief PoseEstimation取得リクエストを受け取ったことをデリゲートに通知する。
- 
- profileがPoseEstimation取得リクエストを受け取ったことをデリゲートに通知する。<br>
- 実装されない場合には、Not supportのエラーが返却される。
- 
- <p>
- [対応するAPI] PoseEstimation API [GET]
- </p>
- 
- @param[in] profile このイベントを通知するDCMPoseEstimationrofileのオブジェクト
- @param[in] request リクエスト
- @param[in,out] response レスポンス
- @param[in] serviceId サービスID
- @retval YES レスポンスパラメータを返却する
- @retval NO レスポンスパラメータを返却しないので、@link DConnectManager::sendResponse: @endlinkで返却すること。
- */
-- (BOOL)          profile:(DCMPoseEstimationProfile *)profile
-didReceiveGetOnPoseEstimationRequest:(DConnectRequestMessage *)request
-                 response:(DConnectResponseMessage *)response
-                serviceId:(NSString *)serviceId;
-#pragma mark - Put Methods
-#pragma mark Event Registration
-
-/*!
- @brief PoseEstimationイベント登録リクエストを受け取ったことをデリゲートに通知する。
- 
- profileがPoseEstimationイベント登録リクエストを受け取ったことをデリゲートに通知する。<br>
- 実装されない場合には、Not supportのエラーが返却される。
- 
- <p>
- [対応するAPI] PoseEstimation Event API [Register]
- </p>
- 
- @param[in] profile このイベントを通知するDCMPoseEstimationProfileのオブジェクト
- @param[in] request リクエスト
- @param[in,out] response レスポンス
- @param[in] serviceId サービスID
- @param[in] sessionKey セッションキー
- @retval YES レスポンスパラメータを返却する
- @retval NO レスポンスパラメータを返却しないので、@link DConnectManager::sendResponse: @endlinkで返却すること。
- */
-- (BOOL)           profile:(DCMPoseEstimationProfile *)profile
-didReceivePutOnPoseEstimationRequest:(DConnectRequestMessage *)request
-                  response:(DConnectResponseMessage *)response
-                 serviceId:(NSString *)serviceId
-                sessionKey:(NSString *)sessionKey;
-
-
-#pragma mark - Delete Methods
-#pragma mark Event Unregistration
-
-/*!
- @brief PoseEstimationイベント解除リクエストを受け取ったことをデリゲートに通知する。
- 
- profileがPoseEstimationイベント解除リクエストを受け取ったことをデリゲートに通知する。<br>
- 実装されない場合には、Not supportのエラーが返却される。
- 
- <p>
- [対応するAPI] PoseEstimation Event API [Unregister]
- </p>
- 
- @param[in] profile このイベントを通知するDCMPoseEstimationProfileのオブジェクト
- @param[in] request リクエスト
- @param[in,out] response レスポンス
- @param[in] serviceId サービスID
- @param[in] sessionKey セッションキー
- @retval YES レスポンスパラメータを返却する
- @retval NO レスポンスパラメータを返却しないので、@link DConnectManager::sendResponse: @endlinkで返却すること。
- */
-- (BOOL)                           profile:(DCMPoseEstimationProfile *)profile
- didReceiveDeleteOnPoseEstimationRequest:(DConnectRequestMessage *)request
-                                  response:(DConnectResponseMessage *)response
-                                 serviceId:(NSString *)serviceId
-                                sessionKey:(NSString *)sessionKey;
-
-@end
 
 /*!
  @class DCMPoseEstimationProfile
@@ -177,14 +89,6 @@ didReceivePutOnPoseEstimationRequest:(DConnectRequestMessage *)request
  受信したリクエストは各API毎にデリゲートに通知される。
  */
 @interface DCMPoseEstimationProfile : DConnectProfile
-/*!
- @brief DCMPoseEstimationProfileのデリゲートオブジェクト。
- 
- デリゲートは @link DCMPoseEstimationProfileDelegate @endlink を実装しなくてはならない。
- デリゲートはretainされない。
- */
-@property (nonatomic, weak) id<DCMPoseEstimationProfileDelegate> delegate;
-
 
 #pragma mark - Setters
 /*!

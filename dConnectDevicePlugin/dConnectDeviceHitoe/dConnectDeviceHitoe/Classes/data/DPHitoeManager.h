@@ -32,6 +32,20 @@
 
 
 @interface DPHitoeManager : NSObject<HitoeSdkAPIDelegate, DataReceiveDelegate>
+#pragma mark - Notification key
+extern NSString *const DPHitoeConnectDeviceNotification;
+extern NSString *const DPHitoeConnectFailedDeviceNotification;
+extern NSString *const DPHitoeDisconnectNotification;
+extern NSString *const DPHitoeDiscoveryDeviceNotification;
+extern NSString *const DPHitoeDeleteDeviceNotification;
+
+#pragma mark - Notification object key
+
+extern NSString *const DPHitoeConnectDeviceObject;
+extern NSString *const DPHitoeConnectFailedDeviceObject;
+extern NSString *const DPHitoeDisconnectObject;
+extern NSString *const DPHitoeDiscoveryDeviceObject;
+extern NSString *const DPHitoeDeleteDevicObject;
 
 #pragma mark - Delegate object
 @property (nonatomic, weak) id<DPHitoeConnectionDelegate> connectionDelegate;

@@ -75,94 +75,6 @@ extern NSString *const DCMWalkStateProfileStateRunning;
 
 @class DCMWalkStateProfile;
 
-/*!
- @protocol DCMWalkStateProfileDelegate
- @brief WalkStateProfile各APIリクエスト通知用デリゲート。
- 
- WalkState Profileの各APIへのリクエスト受信通知を受け取るデリゲート。
- */
-@protocol DCMWalkStateProfileDelegate<NSObject>
-@optional
-
-#pragma mark - Get Methods
-
-/*!
- @brief WalkState取得リクエストを受け取ったことをデリゲートに通知する。
- 
- profileがWalkState取得リクエストを受け取ったことをデリゲートに通知する。<br>
- 実装されない場合には、Not supportのエラーが返却される。
- 
- <p>
- [対応するAPI] WalkState API [GET]
- </p>
- 
- @param[in] profile このイベントを通知するDCMWalkStaterofileのオブジェクト
- @param[in] request リクエスト
- @param[in,out] response レスポンス
- @param[in] serviceId サービスID
- @retval YES レスポンスパラメータを返却する
- @retval NO レスポンスパラメータを返却しないので、@link DConnectManager::sendResponse: @endlinkで返却すること。
- */
-- (BOOL)          profile:(DCMWalkStateProfile *)profile
-didReceiveGetOnWalkStateRequest:(DConnectRequestMessage *)request
-                 response:(DConnectResponseMessage *)response
-                serviceId:(NSString *)serviceId;
-#pragma mark - Put Methods
-#pragma mark Event Registration
-
-/*!
- @brief WalkStateイベント登録リクエストを受け取ったことをデリゲートに通知する。
- 
- profileがWalkStateイベント登録リクエストを受け取ったことをデリゲートに通知する。<br>
- 実装されない場合には、Not supportのエラーが返却される。
- 
- <p>
- [対応するAPI] WalkState Event API [Register]
- </p>
- 
- @param[in] profile このイベントを通知するDCMWalkStateProfileのオブジェクト
- @param[in] request リクエスト
- @param[in,out] response レスポンス
- @param[in] serviceId サービスID
- @param[in] sessionKey セッションキー
- @retval YES レスポンスパラメータを返却する
- @retval NO レスポンスパラメータを返却しないので、@link DConnectManager::sendResponse: @endlinkで返却すること。
- */
-- (BOOL)           profile:(DCMWalkStateProfile *)profile
-didReceivePutOnWalkStateRequest:(DConnectRequestMessage *)request
-                  response:(DConnectResponseMessage *)response
-                 serviceId:(NSString *)serviceId
-                sessionKey:(NSString *)sessionKey;
-
-
-#pragma mark - Delete Methods
-#pragma mark Event Unregistration
-
-/*!
- @brief WalkStateイベント解除リクエストを受け取ったことをデリゲートに通知する。
- 
- profileがWalkStateイベント解除リクエストを受け取ったことをデリゲートに通知する。<br>
- 実装されない場合には、Not supportのエラーが返却される。
- 
- <p>
- [対応するAPI] WalkState Event API [Unregister]
- </p>
- 
- @param[in] profile このイベントを通知するDCMWalkStateProfileのオブジェクト
- @param[in] request リクエスト
- @param[in,out] response レスポンス
- @param[in] serviceId サービスID
- @param[in] sessionKey セッションキー
- @retval YES レスポンスパラメータを返却する
- @retval NO レスポンスパラメータを返却しないので、@link DConnectManager::sendResponse: @endlinkで返却すること。
- */
-- (BOOL)                           profile:(DCMWalkStateProfile *)profile
-        didReceiveDeleteOnWalkStateRequest:(DConnectRequestMessage *)request
-                                  response:(DConnectResponseMessage *)response
-                                 serviceId:(NSString *)serviceId
-                                sessionKey:(NSString *)sessionKey;
-
-@end
 
 /*!
  @class DCMWalkStateProfile
@@ -172,13 +84,6 @@ didReceivePutOnWalkStateRequest:(DConnectRequestMessage *)request
  受信したリクエストは各API毎にデリゲートに通知される。
  */
 @interface DCMWalkStateProfile : DConnectProfile
-/*!
- @brief DCMWalkStateProfileのデリゲートオブジェクト。
- 
- デリゲートは @link DCMWalkStateProfileDelegate @endlink を実装しなくてはならない。
- デリゲートはretainされない。
- */
-@property (nonatomic, weak) id<DCMWalkStateProfileDelegate> delegate;
 
 
 #pragma mark - Setters

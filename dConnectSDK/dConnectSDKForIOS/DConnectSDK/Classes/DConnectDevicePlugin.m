@@ -232,28 +232,6 @@
 }
 
 
-
-// デバイスプラグインがaddProfile()した後にSDK側で処理を実行するタイミングがないので[loadApiSpecList]をそのまま使えない。
-// [addProfile]する毎に[loadApiSpec]を実行してApiSpecを設定する。
-- (void) loadApiSpec: (NSString *)profileName {
-    
-    if (!profileName ||
-        [DConnectAuthorizationProfileName localizedCaseInsensitiveCompare: profileName] == NSOrderedSame ||
-        [DConnectServiceDiscoveryProfileName localizedCaseInsensitiveCompare: profileName] == NSOrderedSame ||
-        [DConnectServiceInformationProfileName localizedCaseInsensitiveCompare: profileName] == NSOrderedSame ||
-        [DConnectSystemProfileName localizedCaseInsensitiveCompare: profileName] == NSOrderedSame) {
-        return;
-    }
-    
-    @try {
-        DConnectApiSpecList *specList = [DConnectApiSpecList shared];
-        [specList addApiSpecList: profileName];
-    } @catch (NSString *e) {
-        DCLogW(@"Device Connect API Specs is invalid. %@", e);
-        return;
-    }
-}
-
 - (NSString*)iconFilePath:(BOOL)isOnline
 {
     return nil; //should be overrided

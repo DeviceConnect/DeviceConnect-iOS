@@ -40,21 +40,18 @@
         self.ecgReceived = ^(DPHitoeDevice *device, DPHitoeHeartRateData *ecg) {
             [weakSelf notifyReceiveDataForDevice:device data:ecg];
         };
-        NSString *didReceiveGetOnECGRequest = [self apiPathWithProfile: self.profileName
-                                                                interfaceName: nil
-                                                                attributeName: DCMECGProfileAttrOnECG];
+        NSString *didReceiveGetOnECGRequest = [self apiPath: nil
+                                              attributeName: DCMECGProfileAttrOnECG];
         [self addGetPath:didReceiveGetOnECGRequest api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
             return [weakSelf didReceiveGetOnECGRequest:request response:response serviceId:[request serviceId]];
         }];
-        NSString *didReceivePutOnECGRequest = [self apiPathWithProfile: self.profileName
-                                                         interfaceName: nil
-                                                         attributeName: DCMECGProfileAttrOnECG];
+        NSString *didReceivePutOnECGRequest = [self apiPath: nil
+                                              attributeName: DCMECGProfileAttrOnECG];
         [self addPutPath:didReceivePutOnECGRequest api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
             return [weakSelf didReceivePutOnECGRequest:request response:response serviceId:[request serviceId] sessionKey:[request sessionKey]];
         }];
-        NSString *didReceiveDeleteOnECGRequest = [self apiPathWithProfile: self.profileName
-                                                            interfaceName: nil
-                                                            attributeName: DCMECGProfileAttrOnECG];
+        NSString *didReceiveDeleteOnECGRequest = [self apiPath: nil
+                                                 attributeName: DCMECGProfileAttrOnECG];
         [self addDeletePath:didReceiveDeleteOnECGRequest api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
             return [weakSelf didReceiveDeleteOnECGRequest:request response:response serviceId:[request serviceId] sessionKey:[request sessionKey]];
         }];
@@ -113,7 +110,7 @@
                 {
                     [response setResult:DConnectMessageResultTypeOk];
                     mgr.ecgReceived = self.ecgReceived;
-                    DPHitoeEventDispatcher *dispatcher = [DPHitoeEventDispatcherFactory createEventDispatcherForDevicePlugin:self.provider
+                    DPHitoeEventDispatcher *dispatcher = [DPHitoeEventDispatcherFactory createEventDispatcherForDevicePlugin:self.plugin
                                                                                                                      request:request];
                     [_dispatcherManager addEventDispatcherForServiceId:serviceId dispatcher:dispatcher];
 

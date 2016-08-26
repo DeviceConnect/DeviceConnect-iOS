@@ -26,11 +26,31 @@
 {
     self = [super init];
     if (self) {
-        self.delegate = self;
         self.dataSource = self;
-        
+        __weak DPHitoeSystemProfile *weakSelf = self;
+
         // イベントマネージャを取得
         self.eventMgr = [DConnectEventManager sharedManagerForClass:[DPHitoeDevicePlugin class]];
+        // API登録(dataSourceのsettingPageForRequestを実行する処理を登録)
+        NSString *putSettingPageForRequestApiPath = [self apiPath: DConnectSystemProfileInterfaceDevice
+                                                    attributeName: DConnectSystemProfileAttrWakeUp];
+        [self addPutPath: putSettingPageForRequestApiPath
+                     api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+                         
+                         return [weakSelf didReceivePutWakeupRequest:request response:response];
+                     }];
+        
+        // API登録(didReceiveDeleteEventsRequest相当)
+        NSString *deleteEventsRequestApiPath = [self apiPath: nil
+                                               attributeName: DConnectSystemProfileAttrEvents];
+        [self addDeletePath: deleteEventsRequestApiPath
+                        api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+                            
+                            NSString *sessionKey = [request sessionKey];
+                            
+                            return [weakSelf didReceiveDeleteEventsRequest:request response:response sessionKey:sessionKey];
+                        }];
+
     }
     return self;
 }
@@ -40,7 +60,7 @@
 
 #pragma mark - Delete Methods
 
-- (BOOL)              profile:(DConnectSystemProfile *)profile
+- (BOOL)
 didReceiveDeleteEventsRequest:(DConnectRequestMessage *)request
                      response:(DConnectResponseMessage *)response
                    sessionKey:(NSString *)sessionKey

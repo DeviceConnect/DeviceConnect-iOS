@@ -13,7 +13,17 @@
 #import "DPHitoeStringUtil.h"
 #import "DPHitoeRawDataParseUtil.h"
 
+NSString *const DPHitoeConnectDeviceNotification = @"DPHitoeConnectDeviceNotification";
+NSString *const DPHitoeConnectFailedDeviceNotification = @"DPHitoeConnectFailedDeviceNotification";
+NSString *const DPHitoeDisconnectNotification = @"DPHitoeDisconnectNotification";
+NSString *const DPHitoeDiscoveryDeviceNotification = @"DPHitoeDiscoveryDeviceNotification";
+NSString *const DPHitoeDeleteDeviceNotification = @"DPHitoeDeleteDeviceNotification";
 
+NSString *const DPHitoeConnectDeviceObject = @"DPHitoeConnectDeviceObject";
+NSString *const DPHitoeConnectFailedDeviceObject = @"DPHitoeConnectFailedDeviceObject";
+NSString *const DPHitoeDisconnectObject = @"DPHitoeDisconnectObject";
+NSString *const DPHitoeDiscoveryDeviceObject = @"DPHitoeDiscoveryDeviceObject";
+NSString *const DPHitoeDeleteDevicObject = @"DPHitoeDeleteDevicObject";
 
 static int const DPHitoeRetryCount = 30;
 
@@ -24,6 +34,8 @@ static int const DPHitoeRetryCount = 30;
     int retryCount;
 
 }
+
+
 @property (nonatomic, strong) NSMutableDictionary *hrData;
 @property (nonatomic, strong) NSMutableDictionary *accelData;
 @property (nonatomic, strong) NSMutableDictionary *ecgData;
@@ -212,6 +224,10 @@ static int const DPHitoeRetryCount = 30;
     current.sessionId = nil;
     [[DPHitoeDBManager sharedInstance] updateHitoeDevice:current];
     
+    NSDictionary *userInfo = @{DPHitoeDisconnectObject: device};
+    NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
+    [notificationCenter postNotificationName:DPHitoeDisconnectNotification object:self userInfo:userInfo];
+
     
     if (_connectionDelegate) {
         [_connectionDelegate didDisconnectWithDevice:current];
@@ -219,6 +235,9 @@ static int const DPHitoeRetryCount = 30;
 }
 - (void)deleteAtHitoe:(DPHitoeDevice *)device {
     [[DPHitoeDBManager sharedInstance] deleteHitoeDeviceWithServiceId:device.serviceId];
+    NSDictionary *userInfo = @{DPHitoeDeleteDevicObject: device};
+    NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
+    [notificationCenter postNotificationName:DPHitoeDeleteDeviceNotification object:self userInfo:userInfo];
 
     if (_connectionDelegate) {
         [_connectionDelegate didDeleteAtDevice:device];
@@ -453,6 +472,11 @@ static int const DPHitoeRetryCount = 30;
             }
         }
     }
+    
+    NSDictionary *userInfo = @{DPHitoeDiscoveryDeviceObject: _registeredDevices};
+    NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
+    [notificationCenter postNotificationName:DPHitoeDiscoveryDeviceNotification object:self userInfo:userInfo];
+    
     if (_connectionDelegate) {
         [_connectionDelegate didDiscoveryForDevices:_registeredDevices];
     }
@@ -462,6 +486,10 @@ static int const DPHitoeRetryCount = 30;
                                   responseString:(NSString *)responseString {
     int pos = [self currentPosForResponseId:responseId];
     if (pos == -1) {
+        NSDictionary *userInfo = @{DPHitoeConnectFailedDeviceObject: [DPHitoeDevice new]};
+        NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
+        [notificationCenter postNotificationName:DPHitoeConnectFailedDeviceNotification object:self userInfo:userInfo];
+
         if (_connectionDelegate) {
             [_connectionDelegate didConnectFailWithDevice:nil];
         }
@@ -469,16 +497,28 @@ static int const DPHitoeRetryCount = 30;
     }
     DPHitoeDevice *currentDevice = _registeredDevices[pos];
     if (responseId == DPHitoeResIdSensorDisconnectNotice) {
+        NSDictionary *userInfo = @{DPHitoeConnectFailedDeviceObject: currentDevice};
+        NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
+        [notificationCenter postNotificationName:DPHitoeConnectFailedDeviceNotification object:self userInfo:userInfo];
+
         if (_connectionDelegate) {
             [_connectionDelegate didConnectFailWithDevice:currentDevice];
         }
         return;
     } else if (responseId == DPHitoeResIdSensorConnectNotice) {
+        NSDictionary *userInfo = @{DPHitoeConnectDeviceObject: currentDevice};
+        NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
+        [notificationCenter postNotificationName:DPHitoeConnectDeviceNotification object:self userInfo:userInfo];
+
         if (_connectionDelegate) {
             [_connectionDelegate didConnectWithDevice:currentDevice];
         }
         return;
     } else if (responseId != DPHitoeResIdSensorConnect) {
+        NSDictionary *userInfo = @{DPHitoeConnectFailedDeviceObject: currentDevice};
+        NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
+        [notificationCenter postNotificationName:DPHitoeConnectFailedDeviceNotification object:self userInfo:userInfo];
+
         if (_connectionDelegate) {
            [_connectionDelegate didConnectFailWithDevice:currentDevice];
         }
@@ -491,6 +531,10 @@ static int const DPHitoeRetryCount = 30;
 
     [self notifyAddRawReceiverWithDevice:currentDevice
                                 responseString:@"raw.ecg\nraw.acc\nraw.rri\nraw.bat\nraw.hr"];
+
+    NSDictionary *userInfo = @{DPHitoeConnectDeviceObject: currentDevice};
+    NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
+    [notificationCenter postNotificationName:DPHitoeConnectDeviceNotification object:self userInfo:userInfo];
 
     if (_connectionDelegate) {
         [_connectionDelegate didConnectWithDevice:currentDevice];

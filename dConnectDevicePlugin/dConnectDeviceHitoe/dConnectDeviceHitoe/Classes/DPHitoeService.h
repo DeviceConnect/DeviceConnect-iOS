@@ -9,9 +9,11 @@
 
 #import <DConnectSDK/DConnectService.h>
 #import <DConnectSDK/DConnectFileManager.h>
+#import <DConnectSDK/DConnectServiceInformationProfile.h>
 #import "DPHitoeDevice.h"
 
-@interface DPHitoeService : DConnectService
-- (instancetype) initWithDevice:(DPHitoeDevice *)device;
-- (void)setOnline:(BOOL)isOnline;
+@interface DPHitoeService : DConnectService<DConnectServiceInformationProfileDataSource>
+
+- (instancetype) initWithServiceId: (NSString *) serviceId plugin: (id) plugin;
+
 @end

@@ -108,27 +108,28 @@ int const DPHitoeDataKeyExtension = 0x04;
 
 - (id) init
 {
-    self = [super init];
+    self = [super initWithObject: self];
     if (self) {
-        [self addProfile:[DPHitoeSystemProfile new]];
         self.pluginName = @"Hitoe (Device Connect Device Plug-in)";
 
         
         DPHitoeManager *mgr = [DPHitoeManager sharedInstance];
-        mgr.connectionDelegate = self;
+//        mgr.connectionDelegate = self;
         [mgr readHitoeData];
         NSMutableArray *devices = mgr.registeredDevices;
         for (DPHitoeDevice *device in devices) {
-            DConnectService *hitoeService = [[DPHitoeService alloc] initWithDevice:device];
-            [self.mServiceProvider addService: hitoeService];
+            DConnectService *hitoeService = [[DPHitoeService alloc] initWithServiceId:device.serviceId plugin:self];
+            [hitoeService setName:device.name];
+            [hitoeService setOnline:device.registerFlag];
+            [self.serviceProvider addService: hitoeService];
         }
-        
-        
+
+        [self addProfile:[DPHitoeSystemProfile new]];
         // イベントマネージャの準備
         Class key = [self class];
-        [[DConnectEventManager sharedManagerForClass:key]
-         setController:[DConnectDBCacheController
-                        controllerWithClass:key]];
+        [[DConnectEventManager sharedManagerForClass:key] setController:[DConnectMemoryCacheController new]];
+
+
         __weak typeof(self) _self = self;
         dispatch_async(dispatch_get_main_queue(), ^{
             NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
@@ -136,52 +137,90 @@ int const DPHitoeDataKeyExtension = 0x04;
             
             [notificationCenter addObserver:_self selector:@selector(enterForeground)
                                        name:UIApplicationWillEnterForegroundNotification
-                                     object:application];
-            
+                                     object:nil];
+            [notificationCenter addObserver:_self selector:@selector(didConnectWithDevice:)
+                                       name:DPHitoeConnectDeviceNotification
+                                     object:nil];
+            [notificationCenter addObserver:_self selector:@selector(didConnectFailWithDevice:)
+                                       name:DPHitoeConnectFailedDeviceNotification
+                                     object:nil];
+            [notificationCenter addObserver:_self selector:@selector(didDisconnectWithDevice:)
+                                       name:DPHitoeDisconnectNotification
+                                     object:nil];
+            [notificationCenter addObserver:_self selector:@selector(didDiscoveryForDevices:)
+                                       name:DPHitoeDiscoveryDeviceNotification
+                                     object:nil];
+            [notificationCenter addObserver:_self selector:@selector(didDeleteAtDevice:)
+                                       name:DPHitoeDeleteDeviceNotification
+                                     object:nil];
+
         });
+
     }
     
     return self;
 }
 
-
+- (void) dealloc {
+    
+    NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
+    UIApplication *application = [UIApplication sharedApplication];
+    
+    [notificationCenter removeObserver:self name:UIApplicationDidEnterBackgroundNotification object:nil];
+    [notificationCenter removeObserver:self name:DPHitoeConnectDeviceNotification object:nil];
+    [notificationCenter removeObserver:self name:DPHitoeConnectFailedDeviceNotification object:nil];
+    [notificationCenter removeObserver:self name:DPHitoeDisconnectNotification object:nil];
+    [notificationCenter removeObserver:self name:DPHitoeDiscoveryDeviceNotification object:nil];
+    [notificationCenter removeObserver:self name:DPHitoeDeleteDeviceNotification object:nil];
+}
 - (void)enterForeground {
     [[DPHitoeManager sharedInstance] startRetryTimer];
 }
 
 #pragma mark - Hitoe Delegate
 
--(void)didConnectWithDevice:(DPHitoeDevice*)device {
-    DConnectService *hitoeService = [self.mServiceProvider service:device.serviceId];
+-(void)didConnectWithDevice:(NSNotification *)notification {
+    NSDictionary *userInfo = (NSDictionary *)[notification userInfo];
+    DPHitoeDevice *device = userInfo[DPHitoeConnectDeviceObject];
+    DConnectService *hitoeService = [self.serviceProvider service:device.serviceId];
     if (hitoeService) {
         [hitoeService setOnline:YES];
     }
     
 }
--(void)didConnectFailWithDevice:(DPHitoeDevice*)device {
-    DConnectService *hitoeService = [self.mServiceProvider service:device.serviceId];
+-(void)didConnectFailWithDevice:(NSNotification *)notification {
+    NSDictionary *userInfo = (NSDictionary *)[notification userInfo];
+    DPHitoeDevice *device = userInfo[DPHitoeConnectFailedDeviceObject];
+    DConnectService *hitoeService = [self.serviceProvider service:device.serviceId];
     if (hitoeService) {
         [hitoeService setOnline:NO];
     }
 }
 
--(void)didDisconnectWithDevice:(DPHitoeDevice*)device {
-    DConnectService *hitoeService = [self.mServiceProvider service:device.serviceId];
+-(void)didDisconnectWithDevice:(NSNotification *)notification {
+    NSDictionary *userInfo = (NSDictionary *)[notification userInfo];
+    DPHitoeDevice *device = userInfo[DPHitoeDiscoveryDeviceObject];
+    DConnectService *hitoeService = [self.serviceProvider service:device.serviceId];
     if (hitoeService) {
         [hitoeService setOnline:NO];
     }
 }
--(void)didDiscoveryForDevices:(NSMutableArray*)devices {
+-(void)didDiscoveryForDevices:(NSNotification *)notification {
+    NSDictionary *userInfo = (NSDictionary *)[notification userInfo];
+    NSMutableArray *devices = userInfo[DPHitoeDiscoveryDeviceObject];
     for (DPHitoeDevice *device in devices) {
-        if (device.pinCode) {
-            DConnectService *hitoeService = [[DPHitoeService alloc] initWithDevice:device];
-            [self.mServiceProvider addService: hitoeService];
-        }
+        DConnectService *hitoeService = [[DPHitoeService alloc] initWithServiceId:device.serviceId
+                                                                           plugin:self];
+        [hitoeService setName:device.name];
+        [hitoeService setOnline:device.registerFlag];
+        [self.serviceProvider addService: hitoeService];
     }
 }
--(void)didDeleteAtDevice:(DPHitoeDevice*)device {
-    DConnectService *hitoeService = [self.mServiceProvider service:device.serviceId];
-    [self.mServiceProvider removeService:hitoeService];
+-(void)didDeleteAtDevice:(NSNotification *)notification {
+    NSDictionary *userInfo = (NSDictionary *)[notification userInfo];
+    DPHitoeDevice *device = userInfo[DPHitoeDeleteDevicObject];
+    DConnectService *hitoeService = [self.serviceProvider service:device.serviceId];
+    [self.serviceProvider removeService:hitoeService];
 }
 
 

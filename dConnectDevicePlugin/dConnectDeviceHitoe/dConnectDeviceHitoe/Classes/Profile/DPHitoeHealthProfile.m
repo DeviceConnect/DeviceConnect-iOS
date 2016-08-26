@@ -40,21 +40,18 @@
             [weakSelf notifyReceiveDataForDevice:device data:heartRate];
         };
         
-        NSString *didReceiveGetHeartRequestApiPath = [self apiPathWithProfile: self.profileName
-                                                                    interfaceName: nil
-                                                                    attributeName: DCMHealthProfileAttrHeart];
+        NSString *didReceiveGetHeartRequestApiPath = [self apiPath: nil
+                                                     attributeName: DCMHealthProfileAttrHeart];
         [self addGetPath:didReceiveGetHeartRequestApiPath api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
             return [weakSelf didReceiveGetHeartRequest:request response:response serviceId:[request serviceId]];
         }];
-        NSString *didReceivePutHeartRequest = [self apiPathWithProfile: self.profileName
-                                                         interfaceName: nil
-                                                         attributeName: DCMHealthProfileAttrHeart];
+        NSString *didReceivePutHeartRequest = [self apiPath: nil
+                                              attributeName: DCMHealthProfileAttrHeart];
         [self addPutPath:didReceivePutHeartRequest api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
             return [weakSelf didReceivePutHeartRequest:request response:response serviceId:[request serviceId] sessionKey:[request sessionKey]];
         }];
-        NSString *didReceiveDeleteHeartRequest = [self apiPathWithProfile: self.profileName
-                                                         interfaceName: nil
-                                                         attributeName: DCMHealthProfileAttrHeart];
+        NSString *didReceiveDeleteHeartRequest = [self apiPath: nil
+                                                 attributeName: DCMHealthProfileAttrHeart];
         [self addDeletePath:didReceiveDeleteHeartRequest api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
             return [weakSelf didReceiveDeleteHeartRequest:request response:response serviceId:[request serviceId] sessionKey:[request sessionKey]];
         }];
@@ -113,7 +110,7 @@
                 {
                     [response setResult:DConnectMessageResultTypeOk];
                     mgr.heartRateReceived = self.heartRateReceived;
-                    DPHitoeEventDispatcher *dispatcher = [DPHitoeEventDispatcherFactory createEventDispatcherForDevicePlugin:self.provider
+                    DPHitoeEventDispatcher *dispatcher = [DPHitoeEventDispatcherFactory createEventDispatcherForDevicePlugin:self.plugin
                                                                                                                      request:request];
                     [_dispatcherManager addEventDispatcherForServiceId:serviceId dispatcher:dispatcher];
 

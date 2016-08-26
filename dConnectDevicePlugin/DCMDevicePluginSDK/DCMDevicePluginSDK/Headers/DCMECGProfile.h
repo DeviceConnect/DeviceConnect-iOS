@@ -74,94 +74,7 @@ extern NSString *const DCMECGProfileParamTimeStampString;
 
 @class DCMECGProfile;
 
-/*!
- @protocol DCMECGProfileDelegate
- @brief ECGProfile各APIリクエスト通知用デリゲート。
- 
- ECG Profileの各APIへのリクエスト受信通知を受け取るデリゲート。
- */
-@protocol DCMECGProfileDelegate<NSObject>
-@optional
 
-#pragma mark - Get Methods
-
-/*!
- @brief onECG取得リクエストを受け取ったことをデリゲートに通知する。
- 
- profileがonECG取得リクエストを受け取ったことをデリゲートに通知する。<br>
- 実装されない場合には、Not supportのエラーが返却される。
- 
- <p>
- [対応するAPI] ECG API [GET]
- </p>
- 
- @param[in] profile このイベントを通知するDCMECGrofileのオブジェクト
- @param[in] request リクエスト
- @param[in,out] response レスポンス
- @param[in] serviceId サービスID
- @retval YES レスポンスパラメータを返却する
- @retval NO レスポンスパラメータを返却しないので、@link DConnectManager::sendResponse: @endlinkで返却すること。
- */
-- (BOOL)          profile:(DCMECGProfile *)profile
-didReceiveGetOnECGRequest:(DConnectRequestMessage *)request
-                 response:(DConnectResponseMessage *)response
-                serviceId:(NSString *)serviceId;
-#pragma mark - Put Methods
-#pragma mark Event Registration
-
-/*!
- @brief onECGイベント登録リクエストを受け取ったことをデリゲートに通知する。
- 
- profileがonECGイベント登録リクエストを受け取ったことをデリゲートに通知する。<br>
- 実装されない場合には、Not supportのエラーが返却される。
- 
- <p>
- [対応するAPI] ECG Event API [Register]
- </p>
- 
- @param[in] profile このイベントを通知するDCMECGProfileのオブジェクト
- @param[in] request リクエスト
- @param[in,out] response レスポンス
- @param[in] serviceId サービスID
- @param[in] sessionKey セッションキー
- @retval YES レスポンスパラメータを返却する
- @retval NO レスポンスパラメータを返却しないので、@link DConnectManager::sendResponse: @endlinkで返却すること。
- */
-- (BOOL)           profile:(DCMECGProfile *)profile
- didReceivePutOnECGRequest:(DConnectRequestMessage *)request
-                  response:(DConnectResponseMessage *)response
-                 serviceId:(NSString *)serviceId
-                sessionKey:(NSString *)sessionKey;
-
-
-#pragma mark - Delete Methods
-#pragma mark Event Unregistration
-
-/*!
- @brief onECGイベント解除リクエストを受け取ったことをデリゲートに通知する。
- 
- profileがonECGイベント解除リクエストを受け取ったことをデリゲートに通知する。<br>
- 実装されない場合には、Not supportのエラーが返却される。
- 
- <p>
- [対応するAPI] ECG Event API [Unregister]
- </p>
- 
- @param[in] profile このイベントを通知するDCMECGProfileのオブジェクト
- @param[in] request リクエスト
- @param[in,out] response レスポンス
- @param[in] serviceId サービスID
- @param[in] sessionKey セッションキー
- @retval YES レスポンスパラメータを返却する
- @retval NO レスポンスパラメータを返却しないので、@link DConnectManager::sendResponse: @endlinkで返却すること。
- */
-- (BOOL)                           profile:(DCMECGProfile *)profile
-              didReceiveDeleteOnECGRequest:(DConnectRequestMessage *)request
-                                  response:(DConnectResponseMessage *)response
-                                 serviceId:(NSString *)serviceId
-                                sessionKey:(NSString *)sessionKey;
-
-@end
 
 /*!
  @class DCMECGProfile
@@ -171,14 +84,6 @@ didReceiveGetOnECGRequest:(DConnectRequestMessage *)request
  受信したリクエストは各API毎にデリゲートに通知される。
  */
 @interface DCMECGProfile : DConnectProfile
-/*!
- @brief DCMECGProfileのデリゲートオブジェクト。
- 
- デリゲートは @link DCMECGProfileDelegate @endlink を実装しなくてはならない。
- デリゲートはretainされない。
- */
-@property (nonatomic, weak) id<DCMECGProfileDelegate> delegate;
-
 
 #pragma mark - Setters
 /*!

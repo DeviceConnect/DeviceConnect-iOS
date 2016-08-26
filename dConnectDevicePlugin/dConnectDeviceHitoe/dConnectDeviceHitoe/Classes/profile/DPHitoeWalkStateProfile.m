@@ -38,21 +38,18 @@
         self.walkReceived = ^(DPHitoeDevice *device, DPHitoeWalkStateData *walk) {
             [weakSelf notifyReceiveDataForDevice:device data:walk];
         };
-        NSString *didReceiveGetOnWalkStateRequest = [self apiPathWithProfile: self.profileName
-                                                                      interfaceName: nil
-                                                                      attributeName: DCMWalkStateProfileAttrOnWalkState];
+        NSString *didReceiveGetOnWalkStateRequest = [self apiPath: nil
+                                                    attributeName: DCMWalkStateProfileAttrOnWalkState];
         [self addGetPath:didReceiveGetOnWalkStateRequest api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
             return [weakSelf didReceiveGetOnWalkStateRequest:request response:response serviceId:[request serviceId]];
         }];
-        NSString *didReceivePutOnWalkStateRequest = [self apiPathWithProfile: self.profileName
-                                                                      interfaceName: nil
-                                                                      attributeName: DCMWalkStateProfileAttrOnWalkState];
+        NSString *didReceivePutOnWalkStateRequest = [self apiPath: nil
+                                                    attributeName: DCMWalkStateProfileAttrOnWalkState];
         [self addPutPath:didReceivePutOnWalkStateRequest api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
             return [weakSelf didReceivePutOnWalkStateRequest:request response:response serviceId:[request serviceId] sessionKey:[request sessionKey]];
         }];
-        NSString *didReceiveDeleteOnWalkStateRequest = [self apiPathWithProfile: self.profileName
-                                                                         interfaceName: nil
-                                                                         attributeName: DCMWalkStateProfileAttrOnWalkState];
+        NSString *didReceiveDeleteOnWalkStateRequest = [self apiPath: nil
+                                                       attributeName: DCMWalkStateProfileAttrOnWalkState];
         [self addDeletePath:didReceiveDeleteOnWalkStateRequest api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
             return [weakSelf didReceiveDeleteOnWalkStateRequest:request response:response serviceId:[request serviceId] sessionKey:[request sessionKey]];
         }];
@@ -111,7 +108,7 @@
                 {
                     [response setResult:DConnectMessageResultTypeOk];
                     mgr.walkStateReceived = self.walkReceived;
-                    DPHitoeEventDispatcher *dispatcher = [DPHitoeEventDispatcherFactory createEventDispatcherForDevicePlugin:self.provider
+                    DPHitoeEventDispatcher *dispatcher = [DPHitoeEventDispatcherFactory createEventDispatcherForDevicePlugin:self.plugin
                                                                                                                      request:request];
                     [_dispatcherManager addEventDispatcherForServiceId:serviceId dispatcher:dispatcher];
 

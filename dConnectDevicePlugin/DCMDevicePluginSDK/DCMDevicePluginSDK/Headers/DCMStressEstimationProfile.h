@@ -46,94 +46,7 @@ extern NSString *const DCMStressEstimationProfileParamTimeStampString;
 
 @class DCMStressEstimationProfile;
 
-/*!
- @protocol DCMStressEstimationProfileDelegate
- @brief StressEstimationProfile各APIリクエスト通知用デリゲート。
- 
- StressEstimation Profileの各APIへのリクエスト受信通知を受け取るデリゲート。
- */
-@protocol DCMStressEstimationProfileDelegate<NSObject>
-@optional
 
-#pragma mark - Get Methods
-
-/*!
- @brief StressEstimation取得リクエストを受け取ったことをデリゲートに通知する。
- 
- profileがStressEstimation取得リクエストを受け取ったことをデリゲートに通知する。<br>
- 実装されない場合には、Not supportのエラーが返却される。
- 
- <p>
- [対応するAPI] StressEstimation API [GET]
- </p>
- 
- @param[in] profile このイベントを通知するDCMStressEstimationrofileのオブジェクト
- @param[in] request リクエスト
- @param[in,out] response レスポンス
- @param[in] serviceId サービスID
- @retval YES レスポンスパラメータを返却する
- @retval NO レスポンスパラメータを返却しないので、@link DConnectManager::sendResponse: @endlinkで返却すること。
- */
-- (BOOL)          profile:(DCMStressEstimationProfile *)profile
-didReceiveGetOnStressEstimationRequest:(DConnectRequestMessage *)request
-                 response:(DConnectResponseMessage *)response
-                serviceId:(NSString *)serviceId;
-#pragma mark - Put Methods
-#pragma mark Event Registration
-
-/*!
- @brief StressEstimationイベント登録リクエストを受け取ったことをデリゲートに通知する。
- 
- profileがStressEstimationイベント登録リクエストを受け取ったことをデリゲートに通知する。<br>
- 実装されない場合には、Not supportのエラーが返却される。
- 
- <p>
- [対応するAPI] StressEstimation Event API [Register]
- </p>
- 
- @param[in] profile このイベントを通知するDCMStressEstimationProfileのオブジェクト
- @param[in] request リクエスト
- @param[in,out] response レスポンス
- @param[in] serviceId サービスID
- @param[in] sessionKey セッションキー
- @retval YES レスポンスパラメータを返却する
- @retval NO レスポンスパラメータを返却しないので、@link DConnectManager::sendResponse: @endlinkで返却すること。
- */
-- (BOOL)           profile:(DCMStressEstimationProfile *)profile
-didReceivePutOnStressEstimationRequest:(DConnectRequestMessage *)request
-                  response:(DConnectResponseMessage *)response
-                 serviceId:(NSString *)serviceId
-                sessionKey:(NSString *)sessionKey;
-
-
-#pragma mark - Delete Methods
-#pragma mark Event Unregistration
-
-/*!
- @brief StressEstimationイベント解除リクエストを受け取ったことをデリゲートに通知する。
- 
- profileがStressEstimationイベント解除リクエストを受け取ったことをデリゲートに通知する。<br>
- 実装されない場合には、Not supportのエラーが返却される。
- 
- <p>
- [対応するAPI] StressEstimation Event API [Unregister]
- </p>
- 
- @param[in] profile このイベントを通知するDCMStressEstimationProfileのオブジェクト
- @param[in] request リクエスト
- @param[in,out] response レスポンス
- @param[in] serviceId サービスID
- @param[in] sessionKey セッションキー
- @retval YES レスポンスパラメータを返却する
- @retval NO レスポンスパラメータを返却しないので、@link DConnectManager::sendResponse: @endlinkで返却すること。
- */
-- (BOOL)                           profile:(DCMStressEstimationProfile *)profile
- didReceiveDeleteOnStressEstimationRequest:(DConnectRequestMessage *)request
-                                  response:(DConnectResponseMessage *)response
-                                 serviceId:(NSString *)serviceId
-                                sessionKey:(NSString *)sessionKey;
-
-@end
 
 /*!
  @class DCMStressEstimationProfile
@@ -143,13 +56,6 @@ didReceivePutOnStressEstimationRequest:(DConnectRequestMessage *)request
  受信したリクエストは各API毎にデリゲートに通知される。
  */
 @interface DCMStressEstimationProfile : DConnectProfile
-/*!
- @brief DCMStressEstimationProfileのデリゲートオブジェクト。
- 
- デリゲートは @link DCMStressEstimationProfileDelegate @endlink を実装しなくてはならない。
- デリゲートはretainされない。
- */
-@property (nonatomic, weak) id<DCMStressEstimationProfileDelegate> delegate;
 
 
 #pragma mark - Setters

@@ -40,21 +40,18 @@
         self.accelReceived = ^(DPHitoeDevice *device, DPHitoeAccelerationData *accel) {
             [weakSelf notifyReceiveDataForDevice:device data:accel];
         };
-        NSString *didReceiveGetOnDeviceOrientationRequest = [self apiPathWithProfile: self.profileName
-                                                                interfaceName: nil
-                                                                attributeName: DConnectDeviceOrientationProfileAttrOnDeviceOrientation];
+        NSString *didReceiveGetOnDeviceOrientationRequest = [self apiPath: nil
+                                                            attributeName: DConnectDeviceOrientationProfileAttrOnDeviceOrientation];
         [self addGetPath:didReceiveGetOnDeviceOrientationRequest api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
             return [weakSelf didReceiveGetOnDeviceOrientationRequest:request response:response serviceId:[request serviceId]];
         }];
-        NSString *didReceivePutOnDeviceOrientationRequest = [self apiPathWithProfile: self.profileName
-                                                         interfaceName: nil
-                                                         attributeName: DConnectDeviceOrientationProfileAttrOnDeviceOrientation];
+        NSString *didReceivePutOnDeviceOrientationRequest = [self apiPath: nil
+                                                            attributeName: DConnectDeviceOrientationProfileAttrOnDeviceOrientation];
         [self addPutPath:didReceivePutOnDeviceOrientationRequest api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
             return [weakSelf didReceivePutOnDeviceOrientationRequest:request response:response serviceId:[request serviceId] sessionKey:[request sessionKey]];
         }];
-        NSString *didReceiveDeleteOnDeviceOrientationRequest = [self apiPathWithProfile: self.profileName
-                                                            interfaceName: nil
-                                                            attributeName: DConnectDeviceOrientationProfileAttrOnDeviceOrientation];
+        NSString *didReceiveDeleteOnDeviceOrientationRequest = [self apiPath: nil
+                                                               attributeName: DConnectDeviceOrientationProfileAttrOnDeviceOrientation];
         [self addDeletePath:didReceiveDeleteOnDeviceOrientationRequest api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
             return [weakSelf didReceiveDeleteOnDeviceOrientationRequest:request response:response serviceId:[request serviceId] sessionKey:[request sessionKey]];
         }];
@@ -120,7 +117,7 @@
                         interval = [intervalString longLongValue];
                     }
                     ((DPHitoeAccelerationData *) [mgr getAccelerationDataForServiceId:serviceId]).interval = interval;
-                    DPHitoeEventDispatcher *dispatcher = [DPHitoeEventDispatcherFactory createEventDispatcherForDevicePlugin:self.provider
+                    DPHitoeEventDispatcher *dispatcher = [DPHitoeEventDispatcherFactory createEventDispatcherForDevicePlugin:self.plugin
                                                                                                                      request:request];
                     [_dispatcherManager addEventDispatcherForServiceId:serviceId dispatcher:dispatcher];
                 }

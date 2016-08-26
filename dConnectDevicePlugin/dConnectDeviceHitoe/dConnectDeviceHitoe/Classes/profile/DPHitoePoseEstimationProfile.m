@@ -37,21 +37,18 @@
         self.poseReceived = ^(DPHitoeDevice *device, DPHitoePoseEstimationData *pose) {
             [weakSelf notifyReceiveDataForDevice:device data:pose];
         };
-        NSString *didReceiveGetOnPoseEstimationRequest = [self apiPathWithProfile: self.profileName
-                                                                       interfaceName: nil
-                                                                       attributeName: DCMPoseEstimationProfileAttrOnPoseEstimation];
+        NSString *didReceiveGetOnPoseEstimationRequest = [self apiPath: nil
+                                                         attributeName: DCMPoseEstimationProfileAttrOnPoseEstimation];
         [self addGetPath:didReceiveGetOnPoseEstimationRequest api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
             return [weakSelf didReceiveGetOnPoseEstimationRequest:request response:response serviceId:[request serviceId]];
         }];
-        NSString *didReceivePutOnPoseEstimationRequest = [self apiPathWithProfile: self.profileName
-                                                                       interfaceName: nil
-                                                                       attributeName: DCMPoseEstimationProfileAttrOnPoseEstimation];
+        NSString *didReceivePutOnPoseEstimationRequest = [self apiPath: nil
+                                                         attributeName: DCMPoseEstimationProfileAttrOnPoseEstimation];
         [self addPutPath:didReceivePutOnPoseEstimationRequest api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
             return [weakSelf didReceivePutOnPoseEstimationRequest:request response:response serviceId:[request serviceId] sessionKey:[request sessionKey]];
         }];
-        NSString *didReceiveDeleteOnPoseEstimationRequest = [self apiPathWithProfile: self.profileName
-                                                                          interfaceName: nil
-                                                                          attributeName: DCMPoseEstimationProfileAttrOnPoseEstimation];
+        NSString *didReceiveDeleteOnPoseEstimationRequest = [self apiPath: nil
+                                                            attributeName: DCMPoseEstimationProfileAttrOnPoseEstimation];
         [self addDeletePath:didReceiveDeleteOnPoseEstimationRequest api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
             return [weakSelf didReceiveDeleteOnPoseEstimationRequest:request response:response serviceId:[request serviceId] sessionKey:[request sessionKey]];
         }];
@@ -110,7 +107,7 @@
                 {
                     [response setResult:DConnectMessageResultTypeOk];
                     mgr.poseEstimationReceived = self.poseReceived;
-                    DPHitoeEventDispatcher *dispatcher = [DPHitoeEventDispatcherFactory createEventDispatcherForDevicePlugin:self.provider
+                    DPHitoeEventDispatcher *dispatcher = [DPHitoeEventDispatcherFactory createEventDispatcherForDevicePlugin:self.plugin
                                                                                                                      request:request];
                     [_dispatcherManager addEventDispatcherForServiceId:serviceId dispatcher:dispatcher];
 
