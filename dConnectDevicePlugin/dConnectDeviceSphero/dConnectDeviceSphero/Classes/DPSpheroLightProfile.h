@@ -18,6 +18,6 @@
  @class DPSpheroLightProfile
  @brief SpheroデバイスプラグインのLightProfile機能を提供する
  */
-@interface DPSpheroLightProfile : DConnectLightProfile<DConnectLightProfileDelegate>
+@interface DPSpheroLightProfile : DConnectLightProfile
 
 @end

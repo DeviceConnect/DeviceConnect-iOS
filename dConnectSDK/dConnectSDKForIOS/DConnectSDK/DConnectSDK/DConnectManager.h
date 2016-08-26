@@ -64,7 +64,7 @@ extern NSString *const DConnectApplicationWillEnterForeground;
  
  @endcode
  */
-@interface DConnectManager : NSObject <DConnectProfileProvider>
+@interface DConnectManager : DConnectProfileProvider
 
 /*!
  @brief DConnectManagerの設定。

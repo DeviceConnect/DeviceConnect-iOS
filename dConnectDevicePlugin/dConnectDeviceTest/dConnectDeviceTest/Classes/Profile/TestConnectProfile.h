@@ -11,9 +11,6 @@
 
 @class DeviceTestPlugin;
 
-@interface TestConnectProfile : DConnectConnectProfile<DConnectConnectProfileDelegate>
-
-@property (nonatomic, strong) DeviceTestPlugin *plugin;
-- (id) initWithDevicePlugin:(DeviceTestPlugin *)plugin;
+@interface TestConnectProfile : DConnectConnectProfile
 
 @end

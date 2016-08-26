@@ -9,7 +9,7 @@
 
 #import <DConnectSDK/DConnectSDK.h>
 
-@interface DPThetaFileProfile : DConnectFileProfile<DConnectFileProfileDelegate>
+@interface DPThetaFileProfile : DConnectFileProfile
 
 
 @end

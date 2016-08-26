@@ -19,7 +19,10 @@
     self = [super initWithObject: self];
     if (self) {
         self.pluginName = @"Theta (Device Connect Device Plug-in)";
-        [[DPThetaManager sharedManager] setServiceProvider: self.mServiceProvider];
+        [[DPThetaManager sharedManager] setServiceProvider: self.serviceProvider];
+        [[DPThetaManager sharedManager] setPlugin:self];
+        [[DPThetaManager sharedManager] init];
+        
         self.fileMgr = [DConnectFileManager fileManagerForPlugin:self];
         [self addProfile:[DPThetaSystemProfile new]];
         
@@ -28,9 +31,6 @@
         [[DConnectEventManager sharedManagerForClass:key]
          setController:[DConnectDBCacheController
                         controllerWithClass:key]];
-        
-        // プロファイルを追加
-        [self addProfile:[DConnectServiceInformationProfile new]];
     }
     
     return self;

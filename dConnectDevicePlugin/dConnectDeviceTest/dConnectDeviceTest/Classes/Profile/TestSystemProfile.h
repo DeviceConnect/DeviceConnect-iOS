@@ -9,7 +9,7 @@
 
 #import <DConnectSDK/DConnectSDK.h>
 
-@interface TestSystemProfile : DConnectSystemProfile<DConnectSystemProfileDelegate, DConnectSystemProfileDataSource>
+@interface TestSystemProfile : DConnectSystemProfile<DConnectSystemProfileDataSource>
 
 #pragma mark - DConnectSystemProfileDataSource
 - (NSString *) versionOfSystemProfile:(DConnectSystemProfile *)profile;

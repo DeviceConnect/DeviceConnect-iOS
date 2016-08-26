@@ -35,19 +35,13 @@ NSString *const DConnectAuthorizationProfileGrantTypeAuthorizationCode = @"autho
     if (self) {
         __weak id weakObject = object;
         
-        NSString *getCreateClientApiPath = [self apiPathWithProfile: self.profileName
-                                                      interfaceName: nil
-                                                      attributeName: DConnectAuthorizationProfileAttrGrant];
+        NSString *getCreateClientApiPath = [self apiPath: nil
+                                           attributeName: DConnectAuthorizationProfileAttrGrant];
         [self addGetPath: getCreateClientApiPath
                      api:^(DConnectRequestMessage *request, DConnectResponseMessage *response) {
                          
             NSString *serviceId = [request serviceId];
             NSString *package = [DConnectAuthorizationProfile packageFromRequest:request];
-            /***/
-            NSLog(@"onRequest - serviceId: {%@}", serviceId);
-            NSLog(@"onRequest - package: {%@}", package);
-            NSLog(@"onRequest - request(JSON): {%@}", [request convertToJSONString]);
-            /***/
             
             if (package == nil || package.length <= 0) {
                 [response setErrorToInvalidRequestParameter];
@@ -67,9 +61,8 @@ NSString *const DConnectAuthorizationProfileGrantTypeAuthorizationCode = @"autho
             return YES;
         }];
         
-        NSString *getRequestAccessTokenApiPath = [self apiPathWithProfile: self.profileName
-                                                            interfaceName: nil
-                                                            attributeName: DConnectAuthorizationProfileAttrAccessToken];
+        NSString *getRequestAccessTokenApiPath = [self apiPath: nil
+                                                 attributeName: DConnectAuthorizationProfileAttrAccessToken];
         [self addGetPath:getRequestAccessTokenApiPath
                      api:^(DConnectRequestMessage *request, DConnectResponseMessage *response) {
                          
@@ -108,11 +101,16 @@ NSString *const DConnectAuthorizationProfileGrantTypeAuthorizationCode = @"autho
             dispatch_time_t timeout = dispatch_time(DISPATCH_TIME_NOW, NSEC_PER_SEC * 60);
             BOOL isDevicePlugin = [object isKindOfClass:[DConnectDevicePlugin class]];
             
+            NSMutableArray *lowercaseScopes = [NSMutableArray array];
+            for (NSString *scope in scopes) {
+                [lowercaseScopes addObject: [scope lowercaseString]];
+            }
+                         
             LocalOAuthConfirmAuthParams *params = [LocalOAuthConfirmAuthParams new];
             params.applicationName = applicationName;
             params.clientId = clientId;
             params.serviceId = serviceId;
-            params.scope = scopes;
+            params.scope = lowercaseScopes;
             params.isForDevicePlugin = isDevicePlugin;
             params.object = object;
             
@@ -168,7 +166,6 @@ NSString *const DConnectAuthorizationProfileGrantTypeAuthorizationCode = @"autho
 - (NSString *) profileName {
     return DConnectAuthorizationProfileName;
 }
-
 
 #pragma mark - Setter
 

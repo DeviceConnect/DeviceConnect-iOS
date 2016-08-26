@@ -17,9 +17,8 @@
     self = [super initWithObject: object];
     if (self) {
         
-        NSString *getCreateClientApiPath = [self apiPathWithProfile: self.profileName
-                                                      interfaceName: nil
-                                                      attributeName: DConnectAuthorizationProfileAttrGrant];
+        NSString *getCreateClientApiPath = [self apiPath: nil
+                                           attributeName: DConnectAuthorizationProfileAttrGrant];
         [self addGetPath: getCreateClientApiPath
                      api:^(DConnectRequestMessage *request, DConnectResponseMessage *response) {
                          
@@ -47,9 +46,8 @@
                          return YES;
                      }];
         
-        NSString *getRequestAccessTokenApiPath = [self apiPathWithProfile: self.profileName
-                                                            interfaceName: nil
-                                                            attributeName: DConnectAuthorizationProfileAttrAccessToken];
+        NSString *getRequestAccessTokenApiPath = [self apiPath: nil
+                                                 attributeName: DConnectAuthorizationProfileAttrAccessToken];
         [self addGetPath: getRequestAccessTokenApiPath
                      api:^(DConnectRequestMessage *request, DConnectResponseMessage *response) {
                          NSString *serviceId = [request serviceId];
@@ -86,11 +84,16 @@
                          dispatch_time_t timeout = dispatch_time(DISPATCH_TIME_NOW, NSEC_PER_SEC * 60);
                          BOOL isDevicePlugin = [object isKindOfClass:[DConnectDevicePlugin class]];
                          
+                         NSMutableArray *lowercaseScopes = [NSMutableArray array];
+                         for (NSString *scope in scopes) {
+                             [lowercaseScopes addObject: [scope lowercaseString]];
+                         }
+                         
                          LocalOAuthConfirmAuthParams *params = [LocalOAuthConfirmAuthParams new];
                          params.applicationName = applicationName;
                          params.clientId = clientId;
                          params.serviceId = serviceId;
-                         params.scope = scopes;
+                         params.scope = lowercaseScopes;
                          params.isForDevicePlugin = isDevicePlugin;
                          params.object = object;
                          
@@ -135,9 +138,9 @@
                                response:(DConnectResponseMessage *)response
 {
     NSString *attribute = [request attribute];
-    if ([attribute isEqualToString:DConnectAuthorizationProfileAttrGrant]) {
+    if (attribute && [attribute localizedCaseInsensitiveCompare:DConnectAuthorizationProfileAttrGrant] == NSOrderedSame) {
         [response setString:@"" forKey:DConnectAuthorizationProfileParamClientId];
-    } else if ([attribute isEqualToString:DConnectAuthorizationProfileAttrAccessToken]) {
+    } else if (attribute && [attribute localizedCaseInsensitiveCompare:DConnectAuthorizationProfileAttrAccessToken] == NSOrderedSame) {
         [response setString:@"" forKey:DConnectAuthorizationProfileParamAccessToken];
     }
 }

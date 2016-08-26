@@ -9,7 +9,8 @@
 #import <Foundation/Foundation.h>
 
 @protocol GHDeviceListViewModelDelegate <NSObject>
-- (void)requestDatasourceReload;
+- (void)startReloadDeviceList;
+- (void)finishReloadDeviceList;
 @end
 
 @interface GHDeviceListViewModel : NSObject

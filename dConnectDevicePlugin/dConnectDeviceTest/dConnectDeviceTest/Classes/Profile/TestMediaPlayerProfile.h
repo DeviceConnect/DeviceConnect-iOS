@@ -11,9 +11,6 @@
 
 @class DeviceTestPlugin;
 
-@interface TestMediaPlayerProfile : DConnectMediaPlayerProfile<DConnectMediaPlayerProfileDelegate>
-
-@property (nonatomic, strong) DeviceTestPlugin *plugin;
-- (id) initWithDevicePlugin:(DeviceTestPlugin *)plugin;
+@interface TestMediaPlayerProfile : DConnectMediaPlayerProfile
 
 @end

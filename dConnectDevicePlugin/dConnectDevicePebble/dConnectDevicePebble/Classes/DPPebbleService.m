@@ -18,8 +18,8 @@
 
 @implementation DPPebbleService
 
-- (instancetype) initWithServiceId: (NSString *) serviceId deviceName: (NSString *) deviceName {
-    self = [super initWithServiceId: serviceId];
+- (instancetype) initWithServiceId: (NSString *) serviceId deviceName: (NSString *) deviceName plugin: (id) plugin {
+    self = [super initWithServiceId: serviceId plugin: plugin dataSource:self];
     if (self) {
         [self setName: deviceName];
         [self setNetworkType: DConnectServiceDiscoveryProfileNetworkTypeBluetooth];
@@ -31,10 +31,23 @@
         [self addProfile:[DPPebbleVibrationProfile new]];
         [self addProfile:[DPPebbleDeviceOrientationProfile new]];
         [self addProfile:[DPPebbleCanvasProfile new]];
-        [self addProfile:[DConnectServiceInformationProfile new]];
         [self addProfile:[DPPebbleKeyEventProfile new]];
     }
     return self;
+}
+
+#pragma mark - DConnectServiceInformationProfileDataSource Implement.
+
+- (DConnectServiceInformationProfileConnectState)profile:(DConnectServiceInformationProfile *)profile
+                              bluetoothStateForServiceId:(NSString *)serviceId {
+    
+    DConnectServiceInformationProfileConnectState bluetoothState;
+    if (self.online) {
+        bluetoothState = DConnectServiceInformationProfileConnectStateOn;
+    } else {
+        bluetoothState = DConnectServiceInformationProfileConnectStateOff;
+    }
+    return bluetoothState;
 }
 
 @end

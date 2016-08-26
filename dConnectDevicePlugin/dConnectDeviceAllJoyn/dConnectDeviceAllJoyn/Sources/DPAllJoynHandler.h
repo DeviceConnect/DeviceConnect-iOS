@@ -16,6 +16,9 @@
 
 @interface DPAllJoynHandler : NSObject
 
+@property (nonatomic, weak) DConnectServiceProvider *serviceProvider;
+@property (nonatomic, weak) id plugin;
+
 - (void)initAllJoynContextWithBlock:(void(^)(BOOL result))block;
 - (void)destroyAllJoynContextWithBlock:(void(^)(BOOL result))block;
 - (void) setServiceProvider: (DConnectServiceProvider *) serviceProvider;

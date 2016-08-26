@@ -68,6 +68,11 @@ typedef enum BridgeConnectState : NSInteger {
  */
 @property (nonatomic) BridgeConnectState bridgeConnectState;
 
+/*!
+ @brief デバイスプラグイン。
+ */
+@property(nonatomic, weak) id plugin;
+
 
 /*!
  @brief Lightのステートを返すブロック。

@@ -25,7 +25,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: GET
- * Path: /mediastream_recording/mediarecorder
+ * Path: /mediaStreamRecording/mediarecorder
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -34,7 +34,7 @@
  */
 - (void) testHttpFailMediaStreamRecordingMediaRecorderGetNoServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/mediastream_recording/mediarecorder"];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/mediaStreamRecording/mediarecorder"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
 
@@ -46,7 +46,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: GET
- * Path: /mediastream_recording/mediarecorder?serviceId=
+ * Path: /mediaStreamRecording/mediarecorder?serviceId=
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -55,7 +55,7 @@
  */
 - (void) testHttpFailMediaStreamRecordingMediaRecorderGetEmptyServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/mediastream_recording/mediarecorder?serviceId="];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/mediaStreamRecording/mediarecorder?serviceId="];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
 
@@ -67,7 +67,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: GET
- * Path: /mediastream_recording/mediarecorder?serviceId=123456789
+ * Path: /mediaStreamRecording/mediarecorder?serviceId=123456789
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -77,7 +77,7 @@
 - (void) testHttpFailMediaStreamRecordingMediaRecorderGetInvalidServiceId
 {
     NSURL *uri = [NSURL URLWithString:
-                  @"http://localhost:4035/gotapi/mediastream_recording/mediarecorder?serviceId=12345678"];
+                  @"http://localhost:4035/gotapi/mediaStreamRecording/mediarecorder?serviceId=12345678"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
 
@@ -89,7 +89,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: POST
- * Path: /mediastream_recording/mediarecorder?serviceId=xxxx
+ * Path: /mediaStreamRecording/mediarecorder?serviceId=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -100,7 +100,7 @@
 {
     NSURL *uri = [NSURL URLWithString:
                   [NSString stringWithFormat:@"http://localhost:4035/gotapi/"
-                   "mediastream_recording/mediarecorder?serviceId=%@", self.serviceId]];
+                   "mediaStreamRecording/mediarecorder?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"POST"];
 
@@ -112,7 +112,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /mediastream_recording/mediarecorder?serviceId=xxxx
+ * Path: /mediaStreamRecording/mediarecorder?serviceId=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -123,7 +123,7 @@
 {
     NSURL *uri = [NSURL URLWithString:
                   [NSString stringWithFormat:
-                   @"http://localhost:4035/gotapi/mediastream_recording/mediarecorder?serviceId=%@",
+                   @"http://localhost:4035/gotapi/mediaStreamRecording/mediarecorder?serviceId=%@",
                    self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
@@ -136,7 +136,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /mediastream_recording/mediarecorder?serviceId=xxxx
+ * Path: /mediaStreamRecording/mediarecorder?serviceId=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -147,7 +147,7 @@
 {
     NSURL *uri = [NSURL URLWithString:
                   [NSString stringWithFormat:
-                   @"http://localhost:4035/gotapi/mediastream_recording/mediarecorder?serviceId=%@",
+                   @"http://localhost:4035/gotapi/mediaStreamRecording/mediarecorder?serviceId=%@",
                    self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
@@ -160,7 +160,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: POST
- * Path: /mediastream_recording/takephoto
+ * Path: /mediaStreamRecording/takephoto
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -169,7 +169,7 @@
  */
 - (void) testHttpFailMediaStreamRecordingTakePhotoPostNoServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/mediastream_recording/takephoto"];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/mediaStreamRecording/takephoto"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"POST"];
 
@@ -181,7 +181,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: POST
- * Path: /mediastream_recording/takephoto?serviceId=
+ * Path: /mediaStreamRecording/takephoto?serviceId=
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -190,7 +190,7 @@
  */
 - (void) testHttpFailMediaStreamRecordingTakePhotoPostEmptyServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/mediastream_recording/takephoto?serviceId="];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/mediaStreamRecording/takephoto?serviceId="];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"POST"];
 
@@ -202,7 +202,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: POST
- * Path: /mediastream_recording/takephoto?serviceId=123456789
+ * Path: /mediaStreamRecording/takephoto?serviceId=123456789
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -212,7 +212,7 @@
 - (void) testHttpFailMediaStreamRecordingTakePhotoPostInvalidServiceId
 {
     NSURL *uri = [NSURL URLWithString:
-                  @"http://localhost:4035/gotapi/mediastream_recording/takephoto?serviceId=12345678"];
+                  @"http://localhost:4035/gotapi/mediaStreamRecording/takephoto?serviceId=12345678"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"POST"];
 
@@ -224,7 +224,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: GET
- * Path: /mediastream_recording/takephoto?serviceId=xxxx
+ * Path: /mediaStreamRecording/takephoto?serviceId=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -235,7 +235,7 @@
 {
     NSURL *uri = [NSURL URLWithString:
                   [NSString stringWithFormat:
-                   @"http://localhost:4035/gotapi/mediastream_recording/takephoto?serviceId=%@",
+                   @"http://localhost:4035/gotapi/mediaStreamRecording/takephoto?serviceId=%@",
                    self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
@@ -248,7 +248,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /mediastream_recording/takephoto?serviceId=xxxx
+ * Path: /mediaStreamRecording/takephoto?serviceId=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -259,7 +259,7 @@
 {
     NSURL *uri = [NSURL URLWithString:
                   [NSString stringWithFormat:
-                   @"http://localhost:4035/gotapi/mediastream_recording/takephoto?serviceId=%@",
+                   @"http://localhost:4035/gotapi/mediaStreamRecording/takephoto?serviceId=%@",
                    self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
@@ -272,7 +272,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /mediastream_recording/takephoto?serviceId=xxxx
+ * Path: /mediaStreamRecording/takephoto?serviceId=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -283,7 +283,7 @@
 {
     NSURL *uri = [NSURL URLWithString:
                   [NSString stringWithFormat:
-                   @"http://localhost:4035/gotapi/mediastream_recording/takephoto?serviceId=%@",
+                   @"http://localhost:4035/gotapi/mediaStreamRecording/takephoto?serviceId=%@",
                    self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
@@ -296,7 +296,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: POST
- * Path: /mediastream_recording/record
+ * Path: /mediaStreamRecording/record
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -305,7 +305,7 @@
  */
 - (void) testHttpFailMediaStreamRecordingRecordPostNoServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/mediastream_recording/record"];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/mediaStreamRecording/record"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"POST"];
 
@@ -317,7 +317,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: POST
- * Path: /mediastream_recording/record?serviceId=
+ * Path: /mediaStreamRecording/record?serviceId=
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -326,7 +326,7 @@
  */
 - (void) testHttpFailMediaStreamRecordingRecordPostEmptyServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/mediastream_recording/record?serviceId="];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/mediaStreamRecording/record?serviceId="];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"POST"];
 
@@ -338,7 +338,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: POST
- * Path: /mediastream_recording/record?serviceId=123456789
+ * Path: /mediaStreamRecording/record?serviceId=123456789
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -347,7 +347,7 @@
  */
 - (void) testHttpFailMediaStreamRecordingRecordPostInvalidServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/mediastream_recording/record?serviceId=12345678"];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/mediaStreamRecording/record?serviceId=12345678"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"POST"];
 
@@ -359,7 +359,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: GET
- * Path: /mediastream_recording/record?serviceId=xxxx
+ * Path: /mediaStreamRecording/record?serviceId=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -370,7 +370,7 @@
 {
     NSURL *uri = [NSURL URLWithString:
                   [NSString stringWithFormat:
-                   @"http://localhost:4035/gotapi/mediastream_recording/record?serviceId=%@",
+                   @"http://localhost:4035/gotapi/mediaStreamRecording/record?serviceId=%@",
                    self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
@@ -383,7 +383,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /mediastream_recording/record?serviceId=xxxx
+ * Path: /mediaStreamRecording/record?serviceId=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -394,7 +394,7 @@
 {
     NSURL *uri = [NSURL URLWithString:
                   [NSString stringWithFormat:
-                   @"http://localhost:4035/gotapi/mediastream_recording/record?serviceId=%@",
+                   @"http://localhost:4035/gotapi/mediaStreamRecording/record?serviceId=%@",
                    self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
@@ -407,7 +407,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /mediastream_recording/record?serviceId=xxxx
+ * Path: /mediaStreamRecording/record?serviceId=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -418,7 +418,7 @@
 {
     NSURL *uri = [NSURL URLWithString:
                   [NSString stringWithFormat:
-                   @"http://localhost:4035/gotapi/mediastream_recording/record?serviceId=%@",
+                   @"http://localhost:4035/gotapi/mediaStreamRecording/record?serviceId=%@",
                    self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
@@ -431,7 +431,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /mediastream_recording/pause
+ * Path: /mediaStreamRecording/pause
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -440,7 +440,7 @@
  */
 - (void) testHttpFailMediaStreamRecordingPausePutNoServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/mediastream_recording/pause"];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/mediaStreamRecording/pause"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
 
@@ -452,7 +452,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /mediastream_recording/pause?serviceId=
+ * Path: /mediaStreamRecording/pause?serviceId=
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -461,7 +461,7 @@
  */
 - (void) testHttpFailMediaStreamRecordingPausePutEmptyServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/mediastream_recording/pause?serviceId="];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/mediaStreamRecording/pause?serviceId="];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
 
@@ -473,7 +473,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /mediastream_recording/pause?serviceId=123456789
+ * Path: /mediaStreamRecording/pause?serviceId=123456789
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -482,7 +482,7 @@
  */
 - (void) testHttpFailMediaStreamRecordingPausePutInvalidServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/mediastream_recording/pause?serviceId=12345678"];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/mediaStreamRecording/pause?serviceId=12345678"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
 
@@ -494,7 +494,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: GET
- * Path: /mediastream_recording/pause?serviceId=xxxx
+ * Path: /mediaStreamRecording/pause?serviceId=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -504,7 +504,7 @@
 - (void) testHttpFailMediaStreamRecordingPausePutInvalidMethodGet
 {
     NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:
-                                       @"http://localhost:4035/gotapi/mediastream_recording/pause?serviceId=%@", self.serviceId]];
+                                       @"http://localhost:4035/gotapi/mediaStreamRecording/pause?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
 
@@ -516,7 +516,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: POST
- * Path: /mediastream_recording/pause?serviceId=xxxx
+ * Path: /mediaStreamRecording/pause?serviceId=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -526,7 +526,7 @@
 - (void) testHttpFailMediaStreamRecordingPausePutInvalidMethodPost
 {
     NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:
-                                       @"http://localhost:4035/gotapi/mediastream_recording/pause?serviceId=%@",
+                                       @"http://localhost:4035/gotapi/mediaStreamRecording/pause?serviceId=%@",
                                        self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"POST"];
@@ -539,7 +539,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /mediastream_recording/pause?serviceId=xxxx
+ * Path: /mediaStreamRecording/pause?serviceId=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -549,7 +549,7 @@
 - (void) testHttpFailMediaStreamRecordingPausePutInvalidMethodDelete
 {
     NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:
-                                       @"http://localhost:4035/gotapi/mediastream_recording/pause?serviceId=%@",
+                                       @"http://localhost:4035/gotapi/mediaStreamRecording/pause?serviceId=%@",
                                        self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
@@ -562,7 +562,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /mediastream_recording/resume
+ * Path: /mediaStreamRecording/resume
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -571,7 +571,7 @@
  */
 - (void) testHttpFailMediaStreamRecordingResumePutNoServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/mediastream_recording/resume"];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/mediaStreamRecording/resume"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
 
@@ -583,7 +583,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /mediastream_recording/resume?serviceId=
+ * Path: /mediaStreamRecording/resume?serviceId=
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -592,7 +592,7 @@
  */
 - (void) testHttpFailMediaStreamRecordingResumePutEmptyServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/mediastream_recording/resume?serviceId="];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/mediaStreamRecording/resume?serviceId="];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
 
@@ -604,7 +604,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /mediastream_recording/resume?serviceId=123456789
+ * Path: /mediaStreamRecording/resume?serviceId=123456789
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -613,7 +613,7 @@
  */
 - (void) testHttpFailMediaStreamRecordingResumePutInvalidServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/mediastream_recording/resume?serviceId=12345678"];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/mediaStreamRecording/resume?serviceId=12345678"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
 
@@ -625,7 +625,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: GET
- * Path: /mediastream_recording/resume?serviceId=xxxx
+ * Path: /mediaStreamRecording/resume?serviceId=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -635,7 +635,7 @@
 - (void) testHttpFailMediaStreamRecordingResumePutInvalidMethodGet
 {
     NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:
-                                       @"http://localhost:4035/gotapi/mediastream_recording/resume?serviceId=%@",
+                                       @"http://localhost:4035/gotapi/mediaStreamRecording/resume?serviceId=%@",
                                        self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
@@ -648,7 +648,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: POST
- * Path: /mediastream_recording/resume?serviceId=xxxx
+ * Path: /mediaStreamRecording/resume?serviceId=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -658,7 +658,7 @@
 - (void) testHttpFailMediaStreamRecordingResumePutInvalidMethodPost
 {
     NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:
-                                       @"http://localhost:4035/gotapi/mediastream_recording/resume?serviceId=%@",
+                                       @"http://localhost:4035/gotapi/mediaStreamRecording/resume?serviceId=%@",
                                        self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"POST"];
@@ -671,7 +671,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /mediastream_recording/resume?serviceId=xxxx
+ * Path: /mediaStreamRecording/resume?serviceId=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -681,7 +681,7 @@
 - (void) testHttpFailMediaStreamRecordingResumePutInvalidMethodDelete
 {
     NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:
-                                       @"http://localhost:4035/gotapi/mediastream_recording/resume?serviceId=%@",
+                                       @"http://localhost:4035/gotapi/mediaStreamRecording/resume?serviceId=%@",
                                        self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
@@ -694,7 +694,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /mediastream_recording/stop
+ * Path: /mediaStreamRecording/stop
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -703,7 +703,7 @@
  */
 - (void) testHttpFailMediaStreamRecordingStopPutNoServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/mediastream_recording/stop"];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/mediaStreamRecording/stop"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
 
@@ -715,7 +715,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /mediastream_recording/stop?serviceId=
+ * Path: /mediaStreamRecording/stop?serviceId=
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -724,7 +724,7 @@
  */
 - (void) testHttpFailMediaStreamRecordingStopPutEmptyServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/mediastream_recording/stop?serviceId="];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/mediaStreamRecording/stop?serviceId="];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
 
@@ -736,7 +736,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /mediastream_recording/stop?serviceId=123456789
+ * Path: /mediaStreamRecording/stop?serviceId=123456789
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -745,7 +745,7 @@
  */
 - (void) testHttpFailMediaStreamRecordingStopPutInvalidServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/mediastream_recording/stop?serviceId=12345678"];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/mediaStreamRecording/stop?serviceId=12345678"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
 
@@ -757,7 +757,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: GET
- * Path: /mediastream_recording/stop?serviceId=xxxx
+ * Path: /mediaStreamRecording/stop?serviceId=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -767,7 +767,7 @@
 - (void) testHttpFailMediaStreamRecordingStopPutInvalidMethodGet
 {
     NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:
-                                       @"http://localhost:4035/gotapi/mediastream_recording/stop?serviceId=%@",
+                                       @"http://localhost:4035/gotapi/mediaStreamRecording/stop?serviceId=%@",
                                        self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
@@ -780,7 +780,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: POST
- * Path: /mediastream_recording/stop?serviceId=xxxx
+ * Path: /mediaStreamRecording/stop?serviceId=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -790,7 +790,7 @@
 - (void) testHttpFailMediaStreamRecordingStopPutInvalidMethodPost
 {
     NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:
-                                       @"http://localhost:4035/gotapi/mediastream_recording/stop?serviceId=%@",
+                                       @"http://localhost:4035/gotapi/mediaStreamRecording/stop?serviceId=%@",
                                        self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"POST"];
@@ -803,7 +803,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /mediastream_recording/stop?serviceId=xxxx
+ * Path: /mediaStreamRecording/stop?serviceId=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -813,7 +813,7 @@
 - (void) testHttpFailMediaStreamRecordingStopPutInvalidMethodDelete
 {
     NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:
-                                       @"http://localhost:4035/gotapi/mediastream_recording/stop?serviceId=%@",
+                                       @"http://localhost:4035/gotapi/mediaStreamRecording/stop?serviceId=%@",
                                        self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
@@ -826,7 +826,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /mediastream_recording/mutetrack
+ * Path: /mediaStreamRecording/mutetrack
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -835,7 +835,7 @@
  */
 - (void) testHttpFailMediaStreamRecordingMuteTrackPutNoServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/mediastream_recording/mutetrack"];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/mediaStreamRecording/mutetrack"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
 
@@ -847,7 +847,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /mediastream_recording/mutetrack?serviceId=
+ * Path: /mediaStreamRecording/mutetrack?serviceId=
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -856,7 +856,7 @@
  */
 - (void) testHttpFailMediaStreamRecordingMuteTrackPutEmptyServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/mediastream_recording/mutetrack?serviceId="];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/mediaStreamRecording/mutetrack?serviceId="];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
 
@@ -868,7 +868,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /mediastream_recording/mutetrack?serviceId=123456789
+ * Path: /mediaStreamRecording/mutetrack?serviceId=123456789
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -878,7 +878,7 @@
 - (void) testHttpFailMediaStreamRecordingMuteTrackPutInvalidServiceId
 {
     NSURL *uri = [NSURL URLWithString:
-                  @"http://localhost:4035/gotapi/mediastream_recording/mutetrack?serviceId=12345678"];
+                  @"http://localhost:4035/gotapi/mediaStreamRecording/mutetrack?serviceId=12345678"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
 
@@ -890,7 +890,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: GET
- * Path: /mediastream_recording/mutetrack?serviceId=xxxx
+ * Path: /mediaStreamRecording/mutetrack?serviceId=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -900,7 +900,7 @@
 - (void) testHttpFailMediaStreamRecordingMuteTrackPutInvalidMethodGet
 {
     NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:
-                                       @"http://localhost:4035/gotapi/mediastream_recording/mutetrack?serviceId=%@",
+                                       @"http://localhost:4035/gotapi/mediaStreamRecording/mutetrack?serviceId=%@",
                                        self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
@@ -913,7 +913,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: POST
- * Path: /mediastream_recording/mutetrack?serviceId=xxxx
+ * Path: /mediaStreamRecording/mutetrack?serviceId=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -923,7 +923,7 @@
 - (void) testHttpFailMediaStreamRecordingMuteTrackPutInvalidMethodPost
 {
     NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:
-                                       @"http://localhost:4035/gotapi/mediastream_recording/mutetrack?serviceId=%@",
+                                       @"http://localhost:4035/gotapi/mediaStreamRecording/mutetrack?serviceId=%@",
                                        self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"POST"];
@@ -936,7 +936,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /mediastream_recording/mutetrack?serviceId=xxxx
+ * Path: /mediaStreamRecording/mutetrack?serviceId=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -946,7 +946,7 @@
 - (void) testHttpFailMediaStreamRecordingMuteTrackPutInvalidMethodDelete
 {
     NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:
-                                       @"http://localhost:4035/gotapi/mediastream_recording/mutetrack?serviceId=%@",
+                                       @"http://localhost:4035/gotapi/mediaStreamRecording/mutetrack?serviceId=%@",
                                        self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
@@ -959,7 +959,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /mediastream_recording/unmutetrack
+ * Path: /mediaStreamRecording/unmutetrack
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -968,7 +968,7 @@
  */
 - (void) testHttpFailMediaStreamRecordingUnmuteTrackPutNoServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/mediastream_recording/unmutetrack"];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/mediaStreamRecording/unmutetrack"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
 
@@ -980,7 +980,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /mediastream_recording/unmutetrack
+ * Path: /mediaStreamRecording/unmutetrack
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -989,7 +989,7 @@
  */
 - (void) testHttpFailMediaStreamRecordingUnmuteTrackPutEmptyServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/mediastream_recording/unmutetrack?serviceId="];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/mediaStreamRecording/unmutetrack?serviceId="];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
 
@@ -1001,7 +1001,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /mediastream_recording/unmutetrack?serviceId=123456789
+ * Path: /mediaStreamRecording/unmutetrack?serviceId=123456789
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -1011,7 +1011,7 @@
 - (void) testHttpFailMediaStreamRecordingUnmuteTrackPutInvalidServiceId
 {
     NSURL *uri = [NSURL URLWithString:
-                  @"http://localhost:4035/gotapi/mediastream_recording/unmutetrack?serviceId=12345678"];
+                  @"http://localhost:4035/gotapi/mediaStreamRecording/unmutetrack?serviceId=12345678"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
 
@@ -1024,7 +1024,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: GET
- * Path: /mediastream_recording/unmutetrack?serviceId=xxxx
+ * Path: /mediaStreamRecording/unmutetrack?serviceId=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -1034,7 +1034,7 @@
 - (void) testHttpFailMediaStreamRecordingUnmuteTrackPutInvalidMethodGet
 {
     NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:
-                                       @"http://localhost:4035/gotapi/mediastream_recording/unmutetrack?serviceId=%@",
+                                       @"http://localhost:4035/gotapi/mediaStreamRecording/unmutetrack?serviceId=%@",
                                        self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
@@ -1048,7 +1048,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: POST
- * Path: /mediastream_recording/unmutetrack?serviceId=xxxx
+ * Path: /mediaStreamRecording/unmutetrack?serviceId=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -1058,7 +1058,7 @@
 - (void) testHttpFailMediaStreamRecordingUnmuteTrackPutInvalidMethodPost
 {
     NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:
-                                       @"http://localhost:4035/gotapi/mediastream_recording/unmutetrack?serviceId=%@",
+                                       @"http://localhost:4035/gotapi/mediaStreamRecording/unmutetrack?serviceId=%@",
                                        self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"POST"];
@@ -1072,7 +1072,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /mediastream_recording/unmutetrack?serviceId=xxxx
+ * Path: /mediaStreamRecording/unmutetrack?serviceId=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -1082,7 +1082,7 @@
 - (void) testHttpFailMediaStreamRecordingUnmuteTrackPutInvalidMethodDelete
 {
     NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:
-                                       @"http://localhost:4035/gotapi/mediastream_recording/unmutetrack?serviceId=%@",
+                                       @"http://localhost:4035/gotapi/mediaStreamRecording/unmutetrack?serviceId=%@",
                                        self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
@@ -1095,7 +1095,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: GET
- * Path: /mediastream_recording/options
+ * Path: /mediaStreamRecording/options
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -1104,7 +1104,7 @@
  */
 - (void) testHttpFailMediaStreamRecordingOptionsGetNoServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/mediastream_recording/options"];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/mediaStreamRecording/options"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
 
@@ -1116,7 +1116,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: GET
- * Path: /mediastream_recording/options?serviceId=
+ * Path: /mediaStreamRecording/options?serviceId=
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -1125,7 +1125,7 @@
  */
 - (void) testHttpFailMediaStreamRecordingOptionsGetEmptyServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/mediastream_recording/options?serviceId="];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/mediaStreamRecording/options?serviceId="];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
 
@@ -1137,7 +1137,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: GET
- * Path: /mediastream_recording/options?serviceId=123456789
+ * Path: /mediaStreamRecording/options?serviceId=123456789
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -1146,7 +1146,7 @@
  */
 - (void) testHttpFailMediaStreamRecordingOptionsGetInvalidServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/mediastream_recording/options?serviceId=12345678"];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/mediaStreamRecording/options?serviceId=12345678"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
 
@@ -1158,7 +1158,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /mediastream_recording/options?imageHeight=1080&target=test_camera_id&mimeType=video/mp4&imageWidth=1920
+ * Path: /mediaStreamRecording/options?imageHeight=1080&target=test_camera_id&mimeType=video/mp4&imageWidth=1920
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -1168,7 +1168,7 @@
 - (void) testHttpFailMediaStreamRecordingOptionsPutNoServiceId
 {
     NSURL *uri = [NSURL URLWithString:
-                  @"http://localhost:4035/gotapi/mediastream_recording/options?"
+                  @"http://localhost:4035/gotapi/mediaStreamRecording/options?"
                   "imageHeight=1080&target=test_camera_id&mimeType=video/mp4&imageWidth=1920"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
@@ -1181,7 +1181,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /mediastream_recording/options?
+ * Path: /mediaStreamRecording/options?
  *          serviceId=&imageHeight=1080&
  *            target=test_camera_id&mimeType=video/mp4&imageWidth=1920
  * </pre>
@@ -1193,7 +1193,7 @@
 - (void) testHttpFailMediaStreamRecordingOptionsPutEmptyServiceId
 {
     NSURL *uri = [NSURL URLWithString:
-                  @"http://localhost:4035/gotapi/mediastream_recording/options?"
+                  @"http://localhost:4035/gotapi/mediaStreamRecording/options?"
                   "imageHeight=1080&target=test_camera_id&mimeType=video/mp4&imageWidth=1920&serviceId="];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
@@ -1206,7 +1206,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /mediastream_recording/options?
+ * Path: /mediaStreamRecording/options?
  *          serviceId=122345678&imageHeight=1080&
  *          target=test_camera_id&mimeType=video/mp4&imageWidth=1920
  * </pre>
@@ -1218,7 +1218,7 @@
 - (void) testHttpFailMediaStreamRecordingOptionsPutInvalidServiceId
 {
     NSURL *uri = [NSURL URLWithString:
-                  @"http://localhost:4035/gotapi/mediastream_recording/options?"
+                  @"http://localhost:4035/gotapi/mediaStreamRecording/options?"
                   "imageHeight=1080&target=test_camera_id&mimeType=video/mp4&imageWidth=1920&serviceId=12345678"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
@@ -1231,7 +1231,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: POST
- * Path: /mediastream_recording/options?serviceId=xxxx
+ * Path: /mediaStreamRecording/options?serviceId=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -1241,7 +1241,7 @@
 - (void) testHttpFailMediaStreamRecordingOptionsInvalidMethodPost
 {
     NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:
-                                       @"http://localhost:4035/gotapi/mediastream_recording/options?serviceId=%@",
+                                       @"http://localhost:4035/gotapi/mediaStreamRecording/options?serviceId=%@",
                                        self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"POST"];
@@ -1254,7 +1254,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /mediastream_recording/options?serviceId=xxxx
+ * Path: /mediaStreamRecording/options?serviceId=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -1265,7 +1265,7 @@
 {
     NSURL *uri = [NSURL URLWithString:
                   [NSString stringWithFormat:
-                    @"http://localhost:4035/gotapi/mediastream_recording/options?serviceId=%@",
+                    @"http://localhost:4035/gotapi/mediaStreamRecording/options?serviceId=%@",
                    self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
@@ -1278,7 +1278,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /mediastream_recording/onphoto?sessionKey=xxxx
+ * Path: /mediaStreamRecording/onphoto?sessionKey=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -1287,7 +1287,7 @@
  */
 - (void) testHttpFailMediaStreamRecordingOnPhotoPutNoServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/mediastream_recording/onphoto"];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/mediaStreamRecording/onphoto"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
 
@@ -1299,7 +1299,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /mediastream_recording/onphoto?serviceId=&sessionKey=xxxx
+ * Path: /mediaStreamRecording/onphoto?serviceId=&sessionKey=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -1308,7 +1308,7 @@
  */
 - (void) testHttpFailMediaStreamRecordingOnPhotoPutEmptyServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/mediastream_recording/onphoto?serviceId="];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/mediaStreamRecording/onphoto?serviceId="];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
 
@@ -1320,7 +1320,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /mediastream_recording/onphoto?serviceId=123456789&sessionKey=xxxx
+ * Path: /mediaStreamRecording/onphoto?serviceId=123456789&sessionKey=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -1329,7 +1329,7 @@
  */
 - (void) testHttpFailMediaStreamRecordingOnPhotoPutInvalidServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/mediastream_recording/onphoto?serviceId=12345678"];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/mediaStreamRecording/onphoto?serviceId=12345678"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
 
@@ -1341,7 +1341,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /mediastream_recording/onphoto?serviceId=xxxx
+ * Path: /mediaStreamRecording/onphoto?serviceId=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -1351,7 +1351,7 @@
 - (void) testHttpFailMediaStreamRecordingOnPhotoPutNoSessionKey
 {
     NSURL *uri = [NSURL URLWithString:
-                    [NSString stringWithFormat:@"http://localhost:4035/gotapi/mediastream_recording/onphoto?serviceId=%@",
+                    [NSString stringWithFormat:@"http://localhost:4035/gotapi/mediaStreamRecording/onphoto?serviceId=%@",
                             self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
@@ -1364,7 +1364,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /mediastream_recording/onphoto?sessionKey=xxxx
+ * Path: /mediaStreamRecording/onphoto?sessionKey=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -1373,7 +1373,7 @@
  */
 - (void) testHttpFailMediaStreamRecordingOnPhotoDeleteNoServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/mediastream_recording/onphoto"];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/mediaStreamRecording/onphoto"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
 
@@ -1385,7 +1385,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /mediastream_recording/onphoto?serviceId=&sessionKey=xxxx
+ * Path: /mediaStreamRecording/onphoto?serviceId=&sessionKey=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -1394,7 +1394,7 @@
  */
 - (void) testHttpFailMediaStreamRecordingOnPhotoDeleteEmptyServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/mediastream_recording/onphoto?serviceId="];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/mediaStreamRecording/onphoto?serviceId="];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
 
@@ -1406,7 +1406,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /mediastream_recording/onphoto?serviceId=123456789&sessionKey=xxxx
+ * Path: /mediaStreamRecording/onphoto?serviceId=123456789&sessionKey=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -1415,7 +1415,7 @@
  */
 - (void) testHttpFailMediaStreamRecordingOnPhotoDeleteInvalidServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/mediastream_recording/onphoto?serviceId=12345678"];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/mediaStreamRecording/onphoto?serviceId=12345678"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
 
@@ -1427,7 +1427,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /mediastream_recording/onphoto?serviceId=xxxx
+ * Path: /mediaStreamRecording/onphoto?serviceId=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -1438,7 +1438,7 @@
 {
     NSURL *uri = [NSURL URLWithString:
                   [NSString stringWithFormat:
-                   @"http://localhost:4035/gotapi/mediastream_recording/onphoto?serviceId=%@", self.serviceId]];
+                   @"http://localhost:4035/gotapi/mediaStreamRecording/onphoto?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
 
@@ -1450,7 +1450,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: GET
- * Path: /mediastream_recording/onphoto?serviceId=xxxx&sessionKey=xxxx
+ * Path: /mediaStreamRecording/onphoto?serviceId=xxxx&sessionKey=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -1461,7 +1461,7 @@
 {
     NSURL *uri = [NSURL URLWithString:
                   [NSString stringWithFormat:
-                    @"http://localhost:4035/gotapi/mediastream_recording/onphoto?serviceId=%@",
+                    @"http://localhost:4035/gotapi/mediaStreamRecording/onphoto?serviceId=%@",
                    self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
@@ -1474,7 +1474,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: POST
- * Path: /mediastream_recording/onphoto?serviceId=xxxx&sessionKey=xxxx
+ * Path: /mediaStreamRecording/onphoto?serviceId=xxxx&sessionKey=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -1485,7 +1485,7 @@
 {
     NSURL *uri = [NSURL URLWithString:
                     [NSString stringWithFormat:
-                        @"http://localhost:4035/gotapi/mediastream_recording/onphoto?serviceId=%@",
+                        @"http://localhost:4035/gotapi/mediaStreamRecording/onphoto?serviceId=%@",
                      self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"POST"];
@@ -1498,7 +1498,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /mediastream_recording/ondataavailable?sessionKey=xxxx
+ * Path: /mediaStreamRecording/ondataavailable?sessionKey=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -1507,7 +1507,7 @@
  */
 - (void) testHttpFailMediaStreamRecordingOnDataAvailablePutNoServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/mediastream_recording/ondataavailable"];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/mediaStreamRecording/ondataavailable"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
 
@@ -1519,7 +1519,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /mediastream_recording/ondataavailable?serviceId=&sessionKey=xxxx
+ * Path: /mediaStreamRecording/ondataavailable?serviceId=&sessionKey=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -1528,7 +1528,7 @@
  */
 - (void) testHttpFailMediaStreamRecordingOnDataAvailablePutEmptyServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/mediastream_recording/ondataavailable?serviceId="];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/mediaStreamRecording/ondataavailable?serviceId="];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
 
@@ -1540,7 +1540,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /mediastream_recording/ondataavailable?serviceId=123456789&sessionKey=xxxx
+ * Path: /mediaStreamRecording/ondataavailable?serviceId=123456789&sessionKey=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -1550,7 +1550,7 @@
 - (void) testHttpFailMediaStreamRecordingOnDataAvailablePutInvalidServiceId
 {
     NSURL *uri = [NSURL URLWithString:
-                  @"http://localhost:4035/gotapi/mediastream_recording/ondataavailable?serviceId=12345678"];
+                  @"http://localhost:4035/gotapi/mediaStreamRecording/ondataavailable?serviceId=12345678"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
 
@@ -1562,7 +1562,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /mediastream_recording/ondataavailable?serviceId=xxxx
+ * Path: /mediaStreamRecording/ondataavailable?serviceId=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -1573,7 +1573,7 @@
 {
     NSURL *uri = [NSURL URLWithString:
                     [NSString stringWithFormat:
-                        @"http://localhost:4035/gotapi/mediastream_recording/ondataavailable?serviceId=%@",
+                        @"http://localhost:4035/gotapi/mediaStreamRecording/ondataavailable?serviceId=%@",
                      self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
@@ -1586,7 +1586,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /mediastream_recording/ondataavailable?sessionKey=xxxx
+ * Path: /mediaStreamRecording/ondataavailable?sessionKey=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -1595,7 +1595,7 @@
  */
 - (void) testHttpFailMediaStreamRecordingOnDataAvailableDeleteNoServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/mediastream_recording/ondataavailable"];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/mediaStreamRecording/ondataavailable"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
 
@@ -1607,7 +1607,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /mediastream_recording/ondataavailable?serviceId=&sessionKey=xxxx
+ * Path: /mediaStreamRecording/ondataavailable?serviceId=&sessionKey=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -1616,7 +1616,7 @@
  */
 - (void) testHttpFailMediaStreamRecordingOnDataAvailableDeleteEmptyServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/mediastream_recording/ondataavailable?serviceId="];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/mediaStreamRecording/ondataavailable?serviceId="];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
 
@@ -1628,7 +1628,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /mediastream_recording/ondataavailable?serviceId=123456789&sessionKey=xxxx
+ * Path: /mediaStreamRecording/ondataavailable?serviceId=123456789&sessionKey=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -1638,7 +1638,7 @@
 - (void) testHttpFailMediaStreamRecordingOnDataAvailableDeleteInvalidServiceId
 {
     NSURL *uri = [NSURL URLWithString:
-                  @"http://localhost:4035/gotapi/mediastream_recording/ondataavailable?serviceId=12345678"];
+                  @"http://localhost:4035/gotapi/mediaStreamRecording/ondataavailable?serviceId=12345678"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
 
@@ -1650,7 +1650,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /mediastream_recording/ondataavailable?serviceId=xxxx
+ * Path: /mediaStreamRecording/ondataavailable?serviceId=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -1661,7 +1661,7 @@
 {
     NSURL *uri = [NSURL URLWithString:
                     [NSString stringWithFormat:
-                        @"http://localhost:4035/gotapi/mediastream_recording/ondataavailable?serviceId=%@",
+                        @"http://localhost:4035/gotapi/mediaStreamRecording/ondataavailable?serviceId=%@",
                      self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
@@ -1674,7 +1674,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: GET
- * Path: /mediastream_recording/ondataavailable?serviceId=xxxx&sessionKey=xxxx
+ * Path: /mediaStreamRecording/ondataavailable?serviceId=xxxx&sessionKey=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -1685,7 +1685,7 @@
 {
     NSURL *uri = [NSURL URLWithString:
                     [NSString stringWithFormat:
-                        @"http://localhost:4035/gotapi/mediastream_recording/"
+                        @"http://localhost:4035/gotapi/mediaStreamRecording/"
                             "ondataavailable?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
@@ -1698,7 +1698,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: POST
- * Path: /mediastream_recording/ondataavailable?serviceId=xxxx&sessionKey=xxxx
+ * Path: /mediaStreamRecording/ondataavailable?serviceId=xxxx&sessionKey=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -1710,7 +1710,7 @@
     NSURL *uri = [NSURL URLWithString:
                     [NSString stringWithFormat:
                         @"http://localhost:4035/gotapi/"
-                            "mediastream_recording/ondataavailable?serviceId=%@",
+                            "mediaStreamRecording/ondataavailable?serviceId=%@",
                                 self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"POST"];
@@ -1723,7 +1723,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /mediastream_recording/onrecordingchange?sessionKey=xxxx
+ * Path: /mediaStreamRecording/onrecordingchange?sessionKey=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -1732,7 +1732,7 @@
  */
 - (void) testHttpFailMediaStreamRecordingOnRecordingChangePutNoServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/mediastream_recording/onrecordingchange"];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/mediaStreamRecording/onrecordingchange"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
 
@@ -1744,7 +1744,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /mediastream_recording/onrecordingchange?serviceId=&sessionKey=xxxx
+ * Path: /mediaStreamRecording/onrecordingchange?serviceId=&sessionKey=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -1754,7 +1754,7 @@
 - (void) testHttpFailMediaStreamRecordingOnRecordingChangePutEmptyServiceId
 {
     NSURL *uri = [NSURL URLWithString:
-                    @"http://localhost:4035/gotapi/mediastream_recording/onrecordingchange?serviceId="];
+                    @"http://localhost:4035/gotapi/mediaStreamRecording/onrecordingchange?serviceId="];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
 
@@ -1766,7 +1766,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /mediastream_recording/onrecordingchange?serviceId=123456789&sessionKey=xxxx
+ * Path: /mediaStreamRecording/onrecordingchange?serviceId=123456789&sessionKey=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -1776,7 +1776,7 @@
 - (void) testHttpFailMediaStreamRecordingOnRecordingChangePutInvalidServiceId
 {
     NSURL *uri = [NSURL URLWithString:
-                  @"http://localhost:4035/gotapi/mediastream_recording/onrecordingchange?serviceId=12345678"];
+                  @"http://localhost:4035/gotapi/mediaStreamRecording/onrecordingchange?serviceId=12345678"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
 
@@ -1788,7 +1788,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /mediastream_recording/onrecordingchange?serviceId=xxxx
+ * Path: /mediaStreamRecording/onrecordingchange?serviceId=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -1800,7 +1800,7 @@
     NSURL *uri = [NSURL URLWithString:
                     [NSString stringWithFormat:
                         @"http://localhost:4035/gotapi/"
-                            "mediastream_recording/onrecordingchange?serviceId=%@",
+                            "mediaStreamRecording/onrecordingchange?serviceId=%@",
                                 self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
@@ -1813,7 +1813,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /mediastream_recording/onrecordingchange?sessionKey=xxxx
+ * Path: /mediaStreamRecording/onrecordingchange?sessionKey=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -1822,7 +1822,7 @@
  */
 - (void) testHttpFailMediaStreamRecordingOnRecordingChangeDeleteNoServiceId
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/mediastream_recording/onrecordingchange"];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/mediaStreamRecording/onrecordingchange"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
 
@@ -1834,7 +1834,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /mediastream_recording/onrecordingchange?serviceId=&sessionKey=xxxx
+ * Path: /mediaStreamRecording/onrecordingchange?serviceId=&sessionKey=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -1844,7 +1844,7 @@
 - (void) testHttpFailMediaStreamRecordingOnRecordingChangeDeleteEmptyServiceId
 {
     NSURL *uri = [NSURL URLWithString:
-                  @"http://localhost:4035/gotapi/mediastream_recording/onrecordingchange?serviceId="];
+                  @"http://localhost:4035/gotapi/mediaStreamRecording/onrecordingchange?serviceId="];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
 
@@ -1856,7 +1856,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /mediastream_recording/onrecordingchange?serviceId=123456789&sessionKey=xxxx
+ * Path: /mediaStreamRecording/onrecordingchange?serviceId=123456789&sessionKey=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -1867,7 +1867,7 @@
 {
     NSURL *uri = [NSURL URLWithString:
                   @"http://localhost:4035/gotapi/"
-                    "mediastream_recording/onrecordingchange?serviceId=12345678"];
+                    "mediaStreamRecording/onrecordingchange?serviceId=12345678"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
 
@@ -1879,7 +1879,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /mediastream_recording/onrecordingchange?serviceId=xxxx
+ * Path: /mediaStreamRecording/onrecordingchange?serviceId=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -1891,7 +1891,7 @@
     NSURL *uri = [NSURL URLWithString:
                     [NSString stringWithFormat:
                         @"http://localhost:4035/gotapi/"
-                            "mediastream_recording/onrecordingchange?serviceId=%@", self.serviceId]];
+                            "mediaStreamRecording/onrecordingchange?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
 
@@ -1903,7 +1903,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: GET
- * Path: /mediastream_recording/onrecordingchange?serviceId=xxxx&sessionKey=xxxx
+ * Path: /mediaStreamRecording/onrecordingchange?serviceId=xxxx&sessionKey=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -1912,7 +1912,7 @@
  */
 - (void) testHttpFailMediaStreamRecordingOnRecordingChangeInvalidMethodGet
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/mediastream_recording/onrecordingchange?serviceId=%@", self.serviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/mediaStreamRecording/onrecordingchange?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
 
@@ -1924,7 +1924,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: POST
- * Path: /mediastream_recording/onrecordingchange?serviceId=xxxx&sessionKey=xxxx
+ * Path: /mediaStreamRecording/onrecordingchange?serviceId=xxxx&sessionKey=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -1933,7 +1933,7 @@
  */
 - (void) testHttpFailMediaStreamRecordingOnRecordingChangeInvalidMethodPost
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/mediastream_recording/onrecordingchange?serviceId=%@", self.serviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/mediaStreamRecording/onrecordingchange?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"POST"];
 

@@ -12,7 +12,7 @@
 	if (self = [super initWithAsyncSocket:newSocket configuration:aConfig]) {
 		NSAssert([config.server isKindOfClass:[RoutingHTTPServer class]],
 				 @"A RoutingConnection is being used with a server that is not a RoutingHTTPServer");
-
+        
 		http = (RoutingHTTPServer *)config.server;
 	}
 	return self;
@@ -88,16 +88,15 @@
 }
 
 - (void)setHeadersForResponse:(HTTPMessage *)response isError:(BOOL)isError {
-	[http.defaultHeaders enumerateKeysAndObjectsUsingBlock:^(id field, id value, BOOL *stop) {
-		[response setHeaderField:field value:value];
-	}];
+//	[http.defaultHeaders enumerateKeysAndObjectsUsingBlock:^(id field, id value, BOOL *stop) {
+//		[response setHeaderField:field value:value];
+//	}];
 
 	if (headers && !isError) {
 		[headers enumerateKeysAndObjectsUsingBlock:^(id field, id value, BOOL *stop) {
 			[response setHeaderField:field value:value];
 		}];
 	}
-
 	// Set the connection header if not already specified
 	NSString *connection = [response headerField:@"Connection"];
 	if (!connection) {

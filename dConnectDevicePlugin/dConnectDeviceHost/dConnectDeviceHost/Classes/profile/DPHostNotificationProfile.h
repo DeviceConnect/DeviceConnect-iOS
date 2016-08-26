@@ -9,6 +9,6 @@
 
 #import <DConnectSDK/DConnectSDK.h>
 
-@interface DPHostNotificationProfile : DConnectNotificationProfile<DConnectNotificationProfileDelegate>
+@interface DPHostNotificationProfile : DConnectNotificationProfile
 
 @end

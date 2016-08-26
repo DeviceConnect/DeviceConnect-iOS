@@ -34,6 +34,11 @@
     if (!sw) {
         [[DConnectManager sharedManager] startByHttpServer];
         [def setObject:@(YES) forKey:IS_FIRST_LAUNCH];
+        DConnectManager *mgr = [DConnectManager sharedManager];
+        [def setBool:mgr.settings.useOriginBlocking forKey:IS_ORIGIN_BLOCKING];
+        [def setBool:mgr.settings.useLocalOAuth forKey:IS_USE_LOCALOAUTH];
+        [def setBool:mgr.settings.useOriginEnable forKey:IS_ORIGIN_ENABLE];
+        [def setBool:mgr.settings.useExternalIP forKey:IS_EXTERNAL_IP];
         [def synchronize];
     
     }
@@ -85,9 +90,22 @@
 
 - (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<NSString *,id> *)options
 {
-    //NOTE:safariViewからのリダイレクトは無視する(つまりBookmarkShare)
+    //safariViewからgotapi://stopが叩かれた場合
     NSString* value =  options[@"UIApplicationOpenURLOptionsSourceApplicationKey"];
-    if ((![url.scheme isEqualToString:@"dconnect"] && ![url.scheme isEqualToString:@"gotapi"]) || [value isEqualToString:@"com.apple.SafariViewService"]) {
+    if ([value isEqualToString:@"com.apple.SafariViewService"] && [url.absoluteString isEqualToString:@"gotapi://stop"]) {
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0) , ^{
+            dispatch_async(dispatch_get_main_queue() , ^{
+                [[UIApplication sharedApplication] openURL: self.latestURL];
+                _requestToCloseSafariView();
+            });
+        });
+        return NO;
+
+    }
+
+    //NOTE:BookmarkShareからのリダイレクトは無視する
+    if ((![url.scheme isEqualToString:@"dconnect"] && ![url.scheme isEqualToString:@"gotapi"]) ||
+        [value isEqualToString:@"com.apple.SafariViewService"]) {
         return NO;
     }
 

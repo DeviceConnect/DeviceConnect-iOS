@@ -10,8 +10,7 @@
 #import <DConnectSDK/DConnectService.h>
 #import "DPAllJoynHandler.h"
 
-@interface DPAllJoynService : DConnectService
+@interface DPAllJoynService : DConnectService<DConnectServiceInformationProfileDataSource>
 
-- (instancetype) initWithServiceId: (NSString *) serviceId serviceName: (NSString *)serviceName handler: (DPAllJoynHandler *) handler;
-
+- (instancetype) initWithServiceId: (NSString *) serviceId serviceName: (NSString *)serviceName plugin: (id) plugin handler: (DPAllJoynHandler *) handler;
 @end

@@ -9,6 +9,6 @@
 
 #import <DConnectSDK/DConnectSDK.h>
 
-@interface DPHostSettingsProfile : DConnectSettingsProfile<DConnectSettingsProfileDelegate>
+@interface DPHostSettingsProfile : DConnectSettingsProfile
 
 @end

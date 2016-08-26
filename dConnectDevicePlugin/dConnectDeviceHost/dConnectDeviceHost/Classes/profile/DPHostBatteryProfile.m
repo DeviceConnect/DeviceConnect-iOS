@@ -28,8 +28,6 @@
 {
     self = [super init];
     if (self) {
-        self.delegate = self;
-        
         // イベントマネージャを取得
         self.eventMgr = [DConnectEventManager sharedManagerForClass:[DPHostDevicePlugin class]];
         __weak id weakEventMgr = self.eventMgr;
@@ -45,9 +43,8 @@
                                                    object:nil];
         
         // API登録(didReceiveGetLevelRequest相当)
-        NSString *getLevelRequestApiPath = [self apiPathWithProfile: self.profileName
-                                                      interfaceName: nil
-                                                      attributeName: DConnectBatteryProfileAttrLevel];
+        NSString *getLevelRequestApiPath = [self apiPath: nil
+                                           attributeName: DConnectBatteryProfileAttrLevel];
         [self addGetPath: getLevelRequestApiPath api: ^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
             
             float level = [[UIDevice currentDevice] batteryLevel];
@@ -63,9 +60,8 @@
         }];
         
         // API登録(didReceiveGetChargingRequest相当)
-        NSString *getChargingRequestApiPath = [self apiPathWithProfile: self.profileName
-                                                      interfaceName: nil
-                                                      attributeName: DConnectBatteryProfileAttrCharging];
+        NSString *getChargingRequestApiPath = [self apiPath: nil
+                                              attributeName: DConnectBatteryProfileAttrCharging];
         [self addGetPath: getChargingRequestApiPath api: ^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
             NSNumber *charging;
             switch ([[UIDevice currentDevice] batteryState]) {
@@ -88,9 +84,8 @@
         }];
         
         // API登録(didReceiveGetAllRequest相当)
-        NSString *getAllRequestApiPath = [self apiPathWithProfile: self.profileName
-                                                    interfaceName: nil
-                                                    attributeName: nil];
+        NSString *getAllRequestApiPath = [self apiPath: nil
+                                         attributeName: nil];
         [self addGetPath: getAllRequestApiPath api: ^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
             float level = [[UIDevice currentDevice] batteryLevel];
             NSNumber *charging;
@@ -124,9 +119,8 @@
          }];
 
         // API登録(didReceivePutOnChargingChangeRequest相当)
-        NSString *putOnChargingChangeRequestApiPath = [self apiPathWithProfile: self.profileName
-                                                                 interfaceName: nil
-                                                                 attributeName: DConnectBatteryProfileAttrOnChargingChange];
+        NSString *putOnChargingChangeRequestApiPath = [self apiPath: nil
+                                                      attributeName: DConnectBatteryProfileAttrOnChargingChange];
         [self addPutPath: putOnChargingChangeRequestApiPath api: ^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
             switch ([weakEventMgr addEventForRequest:request]) {
                 case DConnectEventErrorNone:             // エラー無し.
@@ -145,9 +139,8 @@
         }];
         
         // API登録(didReceivePutOnBatteryChangeRequest相当)
-        NSString *putOnBatteryChangeRequestApiPath = [self apiPathWithProfile: self.profileName
-                                                                 interfaceName: nil
-                                                                 attributeName: DConnectBatteryProfileAttrOnBatteryChange];
+        NSString *putOnBatteryChangeRequestApiPath = [self apiPath: nil
+                                                     attributeName: DConnectBatteryProfileAttrOnBatteryChange];
         [self addPutPath: putOnBatteryChangeRequestApiPath api: ^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
             switch ([weakEventMgr addEventForRequest:request]) {
                 case DConnectEventErrorNone:             // エラー無し.
@@ -166,9 +159,8 @@
         }];
         
         // API登録(didReceiveDeleteOnChargingChangeRequest相当)
-        NSString *deleteOnChargingChangeRequestApiPath = [self apiPathWithProfile: self.profileName
-                                                                    interfaceName: nil
-                                                                    attributeName: DConnectBatteryProfileAttrOnChargingChange];
+        NSString *deleteOnChargingChangeRequestApiPath = [self apiPath: nil
+                                                         attributeName: DConnectBatteryProfileAttrOnChargingChange];
         [self addDeletePath: deleteOnChargingChangeRequestApiPath api: ^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
             switch ([weakEventMgr removeEventForRequest:request]) {
                 case DConnectEventErrorNone:             // エラー無し.
@@ -187,9 +179,8 @@
         }];
         
         // API登録(didReceiveDeleteOnBatteryChangeRequest相当)
-        NSString *deleteOnBatteryChangeRequestApiPath = [self apiPathWithProfile: self.profileName
-                                                                   interfaceName: nil
-                                                                   attributeName: DConnectBatteryProfileAttrOnBatteryChange];
+        NSString *deleteOnBatteryChangeRequestApiPath = [self apiPath: nil
+                                                        attributeName: DConnectBatteryProfileAttrOnBatteryChange];
         [self addDeletePath: deleteOnBatteryChangeRequestApiPath api: ^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
             switch ([weakEventMgr removeEventForRequest:request]) {
                 case DConnectEventErrorNone:             // エラー無し.

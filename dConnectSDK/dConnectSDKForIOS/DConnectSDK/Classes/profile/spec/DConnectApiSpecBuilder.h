@@ -9,22 +9,16 @@
 
 #import <Foundation/Foundation.h>
 #import "DConnectApiSpec.h"
+#import "DConnectSpecConstants.h"
 
 @interface DConnectApiSpecBuilder : NSObject
 
-- (id)init;
+@property(nonatomic) DConnectSpecType type;
 
-- (id)name: (NSString *) name;
+@property(nonatomic) DConnectSpecMethod method;
 
-- (id)type: (DConnectApiSpecType) type;
-
-- (id)method: (DConnectApiSpecMethod) method;
-
-- (id)path: (NSString *) path;
-
-- (id)requestParamSpecList:(NSArray *) requestParamSpecList;
+@property(nonatomic, strong) NSArray *params;        // List<DConnectParameterSpec>
 
 - (DConnectApiSpec *)build;
-
 
 @end

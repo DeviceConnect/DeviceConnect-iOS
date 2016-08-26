@@ -18,9 +18,8 @@ NSString *const DConnectAvailabilityProfileName = @"availability";
     self = [super init];
     if (self) {
         
-        NSString *getApiPath = [self apiPathWithProfile: [self profileName]
-                                          interfaceName: nil
-                                          attributeName: nil];
+        NSString *getApiPath = [self apiPath: nil
+                               attributeName: nil];
         [self addGetPath: getApiPath
                      api:^(DConnectRequestMessage *request, DConnectResponseMessage *response) {
                          [response setResult:DConnectMessageResultTypeOk];

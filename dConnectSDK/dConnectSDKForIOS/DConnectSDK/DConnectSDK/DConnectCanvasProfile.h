@@ -68,78 +68,6 @@ extern NSString *const DConnectCanvasProfileModeFills;
 
 
 
-@class DConnectCanvasProfile;
-
-/*!
- @protocol DConnectCanvasProfileDelegate
- @brief Canvas Profile各のAPIリクエスト通知用デリゲート。
- 
- Canvas Profileの各APIへのリクエスト受信通知を受け取るデリゲート。
- */
-@protocol DConnectCanvasProfileDelegate <NSObject>
-@optional
-
-#pragma mark - Post Methods
-
-/*!
- @brief 画像描画リクエストを受け取ったことをデリゲートに通知する。
- 
- profileが画像リクエストを受け取ったことをデリゲートに通知する。<br>
- 実装されない場合には、Not supportのエラーが返却される。
- 
- <p>
- [対応するAPI] Canvas DrawImage API [POST]
- </p>
- 
- @param[in] profile このイベントを通知するDConnectCanvasProfileのオブジェクト
- @param[in] request リクエスト
- @param[in,out] response レスポンス
- @param[in] serviceId サービスID
- @param[in] mimeType マイムタイプ。省略された場合はnil。
- @param[in] data ファイルのバイナリデータ
- @param[in] uri ファイルのURLデータ
- @param[in] x X座標
- @param[in] y Y座標
- @param[in] mode 画像描画モード
- @retval YES レスポンスパラメータを返却する
- @retval NO レスポンスパラメータを返却しないので、@link DConnectManager::sendResponse: @endlink で返却すること。
- */
-- (BOOL) profile:(DConnectCanvasProfile *)profile didReceivePostDrawImageRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response
-        serviceId:(NSString *)serviceId
-        mimeType:(NSString *)mimeType
-            data:(NSData *)data
-             uri:(NSString *)uri
-               imageX:(double)imageX
-               imageY:(double)imageY
-            mode:(NSString *)mode;
-
-
-#pragma mark - Delete Methods
-
-/*!
- @brief 画像描画削除リクエストを受け取ったことをデリゲートに通知する。
- 
- profileが画像描画削除リクエストを受け取ったことをデリゲートに通知する。<br>
- 実装されない場合には、Not supportのエラーが返却される。
- 
- <p>
- [対応するAPI] Canvas DrawImage API [DELETE]
- </p>
- 
- @param[in] profile このイベントを通知するDConnectCanvasProfileのオブジェクト
- @param[in] request リクエスト
- @param[in,out] response レスポンス
- @param[in] serviceId サービスID
- @retval YES レスポンスパラメータを返却する
- @retval NO レスポンスパラメータを返却しないので、@link DConnectManager::sendResponse: @endlink で返却すること。
- */
-- (BOOL) profile:(DConnectCanvasProfile *)profile didReceiveDeleteDrawImageRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response
-       serviceId:(NSString *)serviceId;
-
-@end
-
 
 /*!
  @class DConnectCanvasProfile
@@ -149,14 +77,6 @@ extern NSString *const DConnectCanvasProfileModeFills;
  受信したリクエストは各API毎にデリゲートに通知される。
  */
 @interface DConnectCanvasProfile : DConnectProfile
-
-/*!
- @brief DConnectCanvasProfileのデリゲートオブジェクト。
- 
- デリゲートは @link DConnectCanvasProfileDelegate @endlink を実装しなくてはならない。
- デリゲートはretainされない。
- */
-@property (nonatomic, weak) id<DConnectCanvasProfileDelegate> delegate;
 
 #pragma mark - Setter
 

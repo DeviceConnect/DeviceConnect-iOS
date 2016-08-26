@@ -2,13 +2,18 @@
 //  DConnectServiceProvider.m
 //  DConnectSDK
 //
-//  Created by Mitsuhiro Suzuki on 2016/07/15.
-//  Copyright © 2016年 NTT DOCOMO, INC. All rights reserved.
+//  Copyright (c) 2016 NTT DOCOMO,INC.
+//  Released under the MIT license
+//  http://opensource.org/licenses/mit-license.php
 //
 
 #import "DConnectServiceProvider.h"
 
 @implementation DConnectServiceProvider
+
+- (id) plugin {
+    return nil;
+}
 
 - (BOOL) hasService: (NSString *) serviceId {
     return NO;

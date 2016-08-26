@@ -12,6 +12,6 @@
 /*!
  @brief Pebble用 Notificationプロファイル。
  */
-@interface DPPebbleNotificationProfile : DConnectNotificationProfile <DConnectNotificationProfileDelegate>
+@interface DPPebbleNotificationProfile : DConnectNotificationProfile
 
 @end

@@ -8,19 +8,17 @@
 //
 
 #import "DPAllJoynService.h"
-#import <DConnectSDK/DConnectServiceInformationProfile.h>
 #import "DPAllJoynLightProfile.h"
 
 @implementation DPAllJoynService
 
-- (instancetype) initWithServiceId: (NSString *) serviceId serviceName: (NSString *)serviceName handler: (DPAllJoynHandler *) handler {
-    self = [super initWithServiceId: serviceId];
+- (instancetype) initWithServiceId: (NSString *) serviceId serviceName: (NSString *)serviceName plugin: (id) plugin handler: (DPAllJoynHandler *) handler {
+    self = [super initWithServiceId: serviceId plugin: plugin dataSource: self];
     if (self) {
         [self setName: serviceName];
         [self setNetworkType: @"wifi"];
         [self setOnline: YES];
         
-        [self addProfile:[DConnectServiceInformationProfile new]];
         [self addProfile:[[DPAllJoynLightProfile alloc] initWithHandler: handler]];
     }
     return self;

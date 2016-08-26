@@ -49,16 +49,16 @@ NSString *const DConnectMemoryCacheControllerEmptyServiceId = @"";
         _eventMap[serviceId] = events;
     }
     
-    NSMutableString *path = [NSMutableString stringWithString:event.profile];
+    NSMutableString *path = [NSMutableString stringWithString:[event.profile lowercaseString]];
     if (event.interface) {
-        [path appendString:event.interface];
+        [path appendString:[event.interface lowercaseString]];
     }
-    [path appendString:event.attribute];
+    [path appendString:[event.attribute lowercaseString]];
     
-    NSMutableArray *eventList = [events objectForKey:path];
+    NSMutableArray *eventList = [events objectForKey:[path lowercaseString]];
     if (!eventList) {
         eventList = [NSMutableArray array];
-        events[path] = eventList;
+        events[[path lowercaseString]] = eventList;
     }
     
     for (DConnectEvent *e in eventList) {
@@ -116,13 +116,13 @@ NSString *const DConnectMemoryCacheControllerEmptyServiceId = @"";
         return DConnectEventErrorNotFound;
     }
     
-    NSMutableString *path = [NSMutableString stringWithString:event.profile];
+    NSMutableString *path = [NSMutableString stringWithString:[event.profile lowercaseString]];
     if (event.interface) {
-        [path appendString:event.interface];
+        [path appendString:[event.interface lowercaseString]];
     }
-    [path appendString:event.attribute];
+    [path appendString:[event.attribute lowercaseString]];
     
-    NSMutableArray *eventList = [events objectForKey:path];
+    NSMutableArray *eventList = [events objectForKey:[path lowercaseString]];
     if (!eventList) {
         return DConnectEventErrorNotFound;
     }
@@ -131,7 +131,7 @@ NSString *const DConnectMemoryCacheControllerEmptyServiceId = @"";
         if ([e isEqual:event]) {
             [eventList removeObject:e];
             if (eventList.count == 0) {
-                [events removeObjectForKey:path];
+                [events removeObjectForKey:[path lowercaseString]];
             }
             return DConnectEventErrorNone;
         }
@@ -157,14 +157,14 @@ NSString *const DConnectMemoryCacheControllerEmptyServiceId = @"";
         return @[];
     }
     
-    NSMutableString *path = [NSMutableString stringWithString:profile];
+    NSMutableString *path = [NSMutableString stringWithString:[profile lowercaseString]];
     if (interface) {
-        [path appendString:interface];
+        [path appendString:[interface lowercaseString]];
         
     }
-    [path appendString:attribute];
+    [path appendString:[attribute lowercaseString]];
     
-    NSMutableArray *eventList = [events objectForKey:path];
+    NSMutableArray *eventList = [events objectForKey:[path lowercaseString]];
     if (!eventList) {
         return @[];
     }
@@ -182,9 +182,9 @@ NSString *const DConnectMemoryCacheControllerEmptyServiceId = @"";
     
     do {
         NSArray *eventList = [self eventsForServiceId:serviceId
-                                             profile:profile
-                                           interface:interface
-                                           attribute:attribute];
+                                             profile:[profile lowercaseString]
+                                           interface:[interface lowercaseString]
+                                           attribute:[attribute lowercaseString]];
         
         for (DConnectEvent *e in eventList) {
             if ([event.sessionKey isEqualToString:sessionKey]) {

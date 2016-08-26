@@ -73,12 +73,6 @@ static NSString * const kDPPebbleRegexCSV = @"^([^,]*,)+";
 	return self;
 }
 
-- (void) setServiceProvider: (DConnectServiceProvider *) serviceProvider {
-    @synchronized(self) {
-        self.mServiceProvider = serviceProvider;
-    }
-}
-
 - (void)pebbleCentral:(PBPebbleCentral*)central watchDidConnect:(PBWatch*)watch isNew:(BOOL)isNew {
     // デバイス管理情報更新
     [self updateManageServices];
@@ -143,16 +137,22 @@ static NSString * const kDPPebbleRegexCSV = @"^([^,]*,)+";
     @synchronized(self) {
         
         // ServiceProvider未登録なら処理しない
-        if (!_mServiceProvider) {
+        if (!self.serviceProvider) {
             return;
         }
         
         NSArray *deviceList = [self deviceList];
         
         // ServiceProviderに存在するサービスが検出されなかったならオフラインにする
-        for (DConnectService *service in [_mServiceProvider services]) {
+        for (DConnectService *service in [self.serviceProvider services]) {
             NSString *serviceId = [service serviceId];
             
+            // Pebble以外は対象外
+            if (![[[service name] lowercaseString] hasPrefix: @"pebble"]) {
+                continue;
+            }
+            
+            // ServiceProviderにあって最新のリストに無い場合はオフラインにする。有ればオンラインにする
             BOOL isFindDevice = NO;
             for (NSDictionary *device in deviceList) {
                 NSString *deviceServiceId = device[@"id"];
@@ -161,8 +161,9 @@ static NSString * const kDPPebbleRegexCSV = @"^([^,]*,)+";
                     break;
                 }
             }
-            
-            if (!isFindDevice) {
+            if (isFindDevice) {
+                [service setOnline: YES];
+            } else {
                 [service setOnline: NO];
             }
         }
@@ -171,10 +172,11 @@ static NSString * const kDPPebbleRegexCSV = @"^([^,]*,)+";
         for (NSDictionary *device in deviceList) {
             NSString *serviceId = device[@"id"];
             NSString *deviceName = device[@"name"];
-            if (![_mServiceProvider service: serviceId]) {
+            if (![self.serviceProvider service: serviceId]) {
                 DPPebbleService *service = [[DPPebbleService alloc] initWithServiceId:serviceId
-                                                                           deviceName:deviceName];
-                [_mServiceProvider addService: service];
+                                                                           deviceName:deviceName
+                                            plugin: self.plugin];
+                [self.serviceProvider addService: service];
             }
         }
     }

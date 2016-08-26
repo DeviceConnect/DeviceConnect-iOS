@@ -19,7 +19,9 @@
     if (self) {
         self.pluginName = @"ChromeCast (Device Connect Device Plug-in)";
         
-
+        [[DPChromecastManager sharedManager] setServiceProvider: self.serviceProvider];
+        [[DPChromecastManager sharedManager] setPlugin:self];
+        
         // イベントマネージャの準備
         Class key = [self class];
         [[DConnectEventManager sharedManagerForClass:key]
@@ -42,6 +44,8 @@
                        name:UIApplicationDidEnterBackgroundNotification
                      object:application];
             DPChromecastManager *mgr = [DPChromecastManager sharedManager];
+            [mgr setServiceProvider: self.serviceProvider];
+            [mgr setPlugin: self];
             [mgr startScan];
             [mgr startHttpServer];
 
@@ -85,7 +89,7 @@
 
 - (NSString*)iconFilePath:(BOOL)isOnline
 {
-    NSString *bundlePath = [[NSBundle mainBundle] pathForResource:@"dConnectDeviceChromeCast_resources" ofType:@"bundle"];
+    NSString *bundlePath = [[NSBundle mainBundle] pathForResource:@"dConnectDeviceChromecast_resources" ofType:@"bundle"];
     NSBundle *bundle = [NSBundle bundleWithPath:bundlePath];
     NSString* filename = isOnline ? @"dconnect_icon" : @"dconnect_icon_off";
     return [bundle pathForResource:filename ofType:@"png"];

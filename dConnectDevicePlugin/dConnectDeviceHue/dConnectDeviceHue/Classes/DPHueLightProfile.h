@@ -22,7 +22,7 @@
  @class DPHueLightProfile
  @brief Hue用 Light プロファイル。
  */
-@interface DPHueLightProfile : DConnectLightProfile<DConnectLightProfileDelegate>
+@interface DPHueLightProfile : DConnectLightProfile
 
 
 @end

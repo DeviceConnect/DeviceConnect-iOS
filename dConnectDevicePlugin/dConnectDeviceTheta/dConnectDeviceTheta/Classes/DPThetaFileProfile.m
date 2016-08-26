@@ -16,13 +16,11 @@
 {
     self = [super init];
     if (self) {
-        self.delegate = self;
         __weak DPThetaFileProfile *weakSelf = self;
         
         // API登録(didReceiveGetReceiveRequest相当)
-        NSString *getReceiveRequestApiPath = [self apiPathWithProfile: self.profileName
-                                                        interfaceName: nil
-                                                        attributeName: DConnectFileProfileAttrReceive];
+        NSString *getReceiveRequestApiPath = [self apiPath: nil
+                                             attributeName: DConnectFileProfileAttrReceive];
         [self addGetPath: getReceiveRequestApiPath
                      api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
                          
@@ -47,9 +45,8 @@
                      }];
         
         // API登録(didReceiveGetListRequest相当)
-        NSString *getListRequestApiPath = [self apiPathWithProfile: self.profileName
-                                                     interfaceName: nil
-                                                     attributeName: DConnectFileProfileAttrList];
+        NSString *getListRequestApiPath = [self apiPath: nil
+                                          attributeName: DConnectFileProfileAttrList];
         [self addGetPath: getListRequestApiPath
                      api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
                          
@@ -130,9 +127,8 @@
                      }];
         
         // API登録(didReceiveDeleteRemoveRequest相当)
-        NSString *deleteRemoveRequestApiPath = [self apiPathWithProfile: self.profileName
-                                                          interfaceName: nil
-                                                          attributeName: DConnectFileProfileAttrRemove];
+        NSString *deleteRemoveRequestApiPath = [self apiPath: nil
+                                               attributeName: DConnectFileProfileAttrRemove];
         [self addDeletePath: deleteRemoveRequestApiPath
                         api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
                             

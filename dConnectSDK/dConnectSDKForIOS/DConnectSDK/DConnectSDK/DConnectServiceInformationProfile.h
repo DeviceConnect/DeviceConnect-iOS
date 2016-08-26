@@ -6,14 +6,6 @@
 //  Released under the MIT license
 //  http://opensource.org/licenses/mit-license.php
 //
-//
-//  DConnectServiceInformationProfile.h
-//  dConnectManager
-//
-//  Copyright (c) 2014 NTT DOCOMO,INC.
-//  Released under the MIT license
-//  http://opensource.org/licenses/mit-license.php
-//
 
 /*!
  @file
@@ -76,43 +68,6 @@ typedef NS_ENUM(NSInteger, DConnectServiceInformationProfileConnectState) {
 };
 
 @class DConnectServiceInformationProfile;
-
-/*!
- @protocol DConnectServiceInformationProfileDelegate
- @brief Service Information Profileの各APIリクエスト通知用デリゲート。
- 
- System Profileの各APIへのリクエスト受信通知を受け取るデリゲート。
- */
-@protocol DConnectServiceInformationProfileDelegate <NSObject>
-@optional
-
-#pragma mark - Get Methods
-
-/*!
- 
- @brief 周辺機器のシステム情報取得リクエストを受け取ったことをデリゲートに通知する。
- 
- profileが周辺機器のシステム情報取得リクエストを受け取ったことをデリゲートに通知する。<br>
- 実装されない場合には、Not supportのエラーが返却される。
- 
- <p>
- [対応するAPI] Service Information API [GET]
- </p>
- 
- @param[in] profile プロファイル
- @param[in] request リクエストパラメータ
- @param[in,out] response レスポンスパラメータ
- @param[in] serviceId サービスID
- 
- @retval YES レスポンスパラメータを返却する。
- @retval NO レスポンスパラメータを返却しないので、@link DConnectManager::sendResponse: @endlinkで返却すること。
- */
-- (BOOL) profile:(DConnectServiceInformationProfile *)profile didReceiveGetInformationRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response
-       serviceId:(NSString *)serviceId;
-
-@end
-
 
 /*!
  @protocol DConnectServiceInformationProfileDataSource
@@ -197,14 +152,6 @@ typedef NS_ENUM(NSInteger, DConnectServiceInformationProfileConnectState) {
 @interface DConnectServiceInformationProfile : DConnectProfile
 
 /*!
- @brief DConnectServiceInformationProfileのデリゲートオブジェクト。
- 
- デリゲートは @link DConnectServiceInformationProfileDelegate @endlink を実装しなくてはならない。
- デリゲートはretainされない。
- */
-@property (nonatomic, weak) id<DConnectServiceInformationProfileDelegate> delegate;
-
-/*!
  @brief DConnectServiceInformationProfileのデータソースオブジェクト。
  
  データソースは @link DConnectServiceInformationProfileDataSource @endlink を実装しなくてはならない。
@@ -212,15 +159,6 @@ typedef NS_ENUM(NSInteger, DConnectServiceInformationProfileConnectState) {
  */
 @property (nonatomic, weak) id<DConnectServiceInformationProfileDataSource> dataSource;
 
-
-/*!
- @brief DConnectProfileProviderオブジェクトを指定して初期化する。
- 
- @param[in] provider DConnectProfileProviderインスタンス
- 
- @retval DConnectServiceInformationProfileインスタンス。
- */
-- (instancetype) initWithProvider: (id<DConnectProfileProvider>) provider;
 
 #pragma mark - Setter
 
@@ -237,8 +175,11 @@ typedef NS_ENUM(NSInteger, DConnectServiceInformationProfileConnectState) {
  
  @param[in] profiles サポートしているI/F一覧
  @param[in,out] message I/Fの一覧を格納するメッセージ
+ @param[out] error エラー
+ @retval YES 成功
+ @retval NO エラー
  */
-+ (void) setSupportApis:(NSArray *)profiles target:(DConnectMessage *)message;
++ (BOOL) setSupportApis:(NSArray *)profiles target:(DConnectMessage *)message error:(NSError **) error;
 
 /*!
  @brief メッセージにデバイスの接続状態を設定する。

@@ -10,6 +10,7 @@
 #import <DConnectSDK/DConnectSDK.h>
 #import "GHDataManager.h"
 #import "GHDeviceUtil.h"
+#import "AppDelegate.h"
 
 @interface TopViewModel()
 @property(nonatomic, strong) NSArray* devices;
@@ -24,17 +25,17 @@
 {
     self = [super init];
     if (self) {
-        __weak TopViewModel *_self = self;
         self.manager = [[GHURLManager alloc]init];
-        [[GHDeviceUtil shareManager] setRecieveDeviceList:^(DConnectArray *deviceList){
-            [_self updateDevice:deviceList];
-        }];
         self.url = @"http://www.google.com";
         self.devices = [[NSArray alloc]init];
         self.datasource = [[NSMutableArray alloc]initWithObjects:
                            [[NSArray alloc]init],
                            self.devices,
                            nil];
+        __weak TopViewModel *_self = self;
+        [[GHDeviceUtil shareManager] setRecieveDeviceList:^(DConnectArray *deviceList){
+            [_self updateDevice:deviceList];
+        }];
         [self updateDatasource];
     }
     return self;
@@ -111,6 +112,7 @@ static NSInteger maxIconCount = 8;
         [array addObject:service];
     }
     self.devices = array;
+    _isDeviceLoading = NO;
     [self updateDatasource];
     [self.delegate requestDatasourceReload];
 }
@@ -132,6 +134,12 @@ static NSInteger maxIconCount = 8;
 - (BOOL)isDeviceEmpty
 {
     return ([self.devices count] == 0);
+}
+
+- (void)updateDeviceList
+{
+    _isDeviceLoading = YES;
+    [[GHDeviceUtil shareManager]updateDiveceList];
 }
 
 //--------------------------------------------------------------//
@@ -173,6 +181,7 @@ static NSInteger maxIconCount = 8;
     } else if (!self.url) {
         self.url = [self.manager createSearchURL:url];
     }
+    [self setLatestURL:self.url];
     return self.url;
 }
 
@@ -187,8 +196,17 @@ static NSInteger maxIconCount = 8;
     } else if (![self.manager isURLString:self.url]) {
         self.url = [self.manager createSearchURL:url];
     }
+
+    [self setLatestURL:self.url];
     return self.url;
 }
+
+- (void)setLatestURL:(NSString*)url
+{
+    AppDelegate* app = [UIApplication sharedApplication].delegate;
+    app.latestURL = [NSURL URLWithString: url];
+}
+
 
 
 //--------------------------------------------------------------//

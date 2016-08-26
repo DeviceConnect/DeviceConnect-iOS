@@ -15,10 +15,9 @@
 #import <Foundation/Foundation.h>
 #import <DConnectSDK/DConnectRequestMessage.h>
 #import <DConnectSDK/DConnectResponseMessage.h>
-#import <DConnectSDK/DConnectProfileProvider.h>
-//#import "DConnectService.h"
 #import <DConnectSDK/DConnectApiEntity.h>
-#import <DConnectSDK/DConnectProfileProvider.h>
+#import <DConnectSDK/DConnectApiSpec.h>
+#import "DConnectProfileSpec.h"
 
 /*!
  @class DConnectProfile
@@ -31,21 +30,18 @@
 @interface DConnectProfile : NSObject
 
 /*!
- @brief プロファイルプロバイダ。
+ @brief プロファイルプロバイダ。(DConnectProfileProvider型のポインタ)
+        ※DConnectServiceの仕組みに変更したことにより、意味合いが変わった。
+            以前はproviderは{ DConnectDevicePlugin & DConnectProfileProvider }の値を設定したが、
+            DConnectServiceにてaddProfileしているプロファイルのproviderはDConnectServiceでありDConnectDevicePluginではない。
+            1つの変数で同等の機能を実現できないので、pluginを追加してDConnectDevicePluginの参照ポインタを持たせることにした。
  */
-@property (nonatomic, weak) id<DConnectProfileProvider> provider;
-
-
-
+@property (nonatomic, weak) id provider;
 
 /*!
- @brief DConnectProfileProviderオブジェクトを指定して初期化する。
- 
- @param[in] provider DConnectProfileProviderインスタンス
- 
- @retval DConnectProfileインスタンス。
+ @brief デバイスプラグイン。(DConnectDevicePlugin型のポインタ)
  */
-- (instancetype) initWithProvider: (id<DConnectProfileProvider>) provider;
+@property (nonatomic, weak) id plugin;
 
 /*!
  @brief プロファイルに設定されているDevice Connect API実装のリストを返す.
@@ -60,30 +56,28 @@
  @param[in] method リクエストされたAPIのメソッド
  @retval 指定されたリクエストに対応するAPI実装を返す. 存在しない場合は<code>null</code>
  */
-- (DConnectApiEntity *) findApiWithPath: (NSString *) path method: (DConnectApiSpecMethod) method;
+- (DConnectApiEntity *) findApiWithPath: (NSString *) path method: (DConnectSpecMethod) method;
 
 /*!
- @brief プロファイル名、インターフェース名、アトリビュート名からパスを作成する.
- @param[in] profileName プロファイル名
+ @brief インターフェース名、アトリビュート名からパスを作成する.
  @param[in] interfaceName インターフェース名
  @param[in] attributeName アトリビュート名
  @retval パス
  */
-- (NSString *) apiPathWithProfile : (NSString *) profileName interfaceName: (NSString *) interfaceName attributeName:(NSString *) attributeName;
+- (NSString *) apiPath : (NSString *) interfaceName attributeName:(NSString *) attributeName;
+
 
 /*!
- @brief 本プロファイル実装を提供するサービスを設定する.
- 
- @param[in] service サービス
+ @brief Device Connect API 仕様定義リストを設定する.
+ @param[in] profileSpec API 仕様定義リスト
  */
-//- (void) setService: (DConnectService *) service;
+- (void) setProfileSpec: (DConnectProfileSpec *) profileSpec;
 
-/*!
- @brief 本プロファイル実装を提供するサービスを取得する.
- 
- @retval サービス
+/**
+ * Device Connect API 仕様定義リストを取得する.
+ * @return API 仕様定義リスト
  */
-//- (DConnectService *) service;
+- (DConnectProfileSpec *) profileSpec;
 
 /*!
  @brief プロファイル名を取得する。
@@ -128,49 +122,48 @@
  */
 - (BOOL) didReceiveRequest:(DConnectRequestMessage *) request response:(DConnectResponseMessage *) response;
 
-/*!
- 
- @brief GETメソッドリクエスト受信時に呼び出される。
- 
- この関数でRESTfulのGETメソッドに対応する処理を記述する。
- @param[in] request リクエスト
- @param[in,out] response レスポンス
- @return responseが処理済みならYES、そうでなければNO。responseの非同期更新がまだ完了していないなどの理由でresponseを返却すべきでない状況ならばNOを返すべき。
- */
-- (BOOL) didReceiveGetRequest:(DConnectRequestMessage *) request response:(DConnectResponseMessage *) response;
-
-/*!
- @brief POSTメソッドリクエスト受信時に呼び出される。
- 
- この関数でRESTfulのPOSTメソッドに対応する処理を記述する。
- 
- @param[in] request リクエスト
- @param[in,out] response レスポンス
- @return responseが処理済みならYES、そうでなければNO。responseの非同期更新がまだ完了していないなどの理由でresponseを返却すべきでない状況ならばNOを返すべき。
- */
-- (BOOL) didReceivePostRequest:(DConnectRequestMessage *) request response:(DConnectResponseMessage *) response;
-
-/*!
- 
- @brief PUTメソッドリクエスト受信時に呼び出される。
- この関数でRESTfulのPUTメソッドに対応する処理を記述する。
- 
- @param[in] request リクエスト
- @param[in,out] response レスポンス
- @return responseが処理済みならYES、そうでなければNO。responseの非同期更新がまだ完了していないなどの理由でresponseを返却すべきでない状況ならばNOを返すべき。
- */
-- (BOOL) didReceivePutRequest:(DConnectRequestMessage *) request response:(DConnectResponseMessage *) response;
-
-/*!
- @brief DELETEメソッドリクエスト受信時に呼び出される。
- この関数でRESTfulのDELETEメソッドに対応する処理を記述する。
- 
- @param[in] request リクエスト
- @param[in,out] response レスポンス
- @return responseが処理済みならYES、そうでなければNO。responseの非同期更新がまだ完了していないなどの理由でresponseを返却すべきでない状況ならばNOを返すべき。
- */
-- (BOOL) didReceiveDeleteRequest:(DConnectRequestMessage *) request response:(DConnectResponseMessage *) response;
-
+///*!
+// 
+// @brief GETメソッドリクエスト受信時に呼び出される。
+// 
+// この関数でRESTfulのGETメソッドに対応する処理を記述する。
+// @param[in] request リクエスト
+// @param[in,out] response レスポンス
+// @return responseが処理済みならYES、そうでなければNO。responseの非同期更新がまだ完了していないなどの理由でresponseを返却すべきでない状況ならばNOを返すべき。
+// */
+//- (BOOL) didReceiveGetRequest:(DConnectRequestMessage *) request response:(DConnectResponseMessage *) response;
+//
+///*!
+// @brief POSTメソッドリクエスト受信時に呼び出される。
+// 
+// この関数でRESTfulのPOSTメソッドに対応する処理を記述する。
+// 
+// @param[in] request リクエスト
+// @param[in,out] response レスポンス
+// @return responseが処理済みならYES、そうでなければNO。responseの非同期更新がまだ完了していないなどの理由でresponseを返却すべきでない状況ならばNOを返すべき。
+// */
+//- (BOOL) didReceivePostRequest:(DConnectRequestMessage *) request response:(DConnectResponseMessage *) response;
+//
+///*!
+// 
+// @brief PUTメソッドリクエスト受信時に呼び出される。
+// この関数でRESTfulのPUTメソッドに対応する処理を記述する。
+// 
+// @param[in] request リクエスト
+// @param[in,out] response レスポンス
+// @return responseが処理済みならYES、そうでなければNO。responseの非同期更新がまだ完了していないなどの理由でresponseを返却すべきでない状況ならばNOを返すべき。
+// */
+//- (BOOL) didReceivePutRequest:(DConnectRequestMessage *) request response:(DConnectResponseMessage *) response;
+//
+///*!
+// @brief DELETEメソッドリクエスト受信時に呼び出される。
+// この関数でRESTfulのDELETEメソッドに対応する処理を記述する。
+// 
+// @param[in] request リクエスト
+// @param[in,out] response レスポンス
+// @return responseが処理済みならYES、そうでなければNO。responseの非同期更新がまだ完了していないなどの理由でresponseを返却すべきでない状況ならばNOを返すべき。
+// */
+//- (BOOL) didReceiveDeleteRequest:(DConnectRequestMessage *) request response:(DConnectResponseMessage *) response;
 
 /*!
  @brief GetメソッドのAPIパスと処理を登録する。
@@ -210,5 +203,13 @@
  */
 - (void) removeApi: (DConnectApiEntity *) apiEntity;
 
+/*!
+ @brief APIが実装済か確認する。
+ @param[in] path パス
+ @param[in] method メソッド
+ @retval YES APIが実装済である
+ @retval NO APIが実装済ではない
+ */
+- (BOOL) hasApi: (NSString *) path method: (DConnectSpecMethod) method;
 
 @end

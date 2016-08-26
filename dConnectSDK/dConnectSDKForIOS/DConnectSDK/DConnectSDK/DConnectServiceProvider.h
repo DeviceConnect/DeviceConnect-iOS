@@ -14,6 +14,8 @@
 
 @interface DConnectServiceProvider : NSObject
 
+- (id) plugin;
+
 - (BOOL) hasService: (NSString *) serviceId;
 
 - (DConnectService *) service: (NSString *) serviceId;

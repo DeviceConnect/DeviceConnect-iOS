@@ -23,7 +23,6 @@
 #import "DPHostVibrationProfile.h"
 #import "DPHostConnectProfile.h"
 #import "DPHostCanvasProfile.h"
-#import <DConnectSDK/DConnectServiceInformationProfile.h>
 #import "DPHostTouchProfile.h"
 
 
@@ -32,8 +31,8 @@ NSString *const DPHostDevicePluginServiceId = @"host";
 
 @implementation DPHostService
 
-- (instancetype) initWithFileManager: (DConnectFileManager *) fileMgr {
-    self = [super initWithServiceId: DPHostDevicePluginServiceId];
+- (instancetype) initWithFileManager: (DConnectFileManager *) fileMgr plugin: (id) plugin {
+    self = [super initWithServiceId: DPHostDevicePluginServiceId plugin: plugin dataSource:self];
     if (self) {
         UIDevice *device = [UIDevice currentDevice];
         NSString *name = [NSString stringWithFormat:@"Host: %@", device.name];
@@ -57,7 +56,6 @@ NSString *const DPHostDevicePluginServiceId = @"host";
         [self addProfile:[DPHostVibrationProfile new]];
         [self addProfile:[DPHostConnectProfile new]];
         [self addProfile:[DPHostCanvasProfile new]];
-        [self addProfile:[[DConnectServiceInformationProfile alloc] initWithProvider: self]];
         [self addProfile:[DPHostTouchProfile new]];
     }
     return self;

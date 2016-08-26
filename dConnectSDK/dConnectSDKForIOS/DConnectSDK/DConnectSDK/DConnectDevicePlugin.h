@@ -45,9 +45,9 @@
 
  @endcode
  */
-@interface DConnectDevicePlugin : NSObject <DConnectProfileProvider>
+@interface DConnectDevicePlugin : DConnectProfileProvider
 
-@property (nonatomic) DConnectServiceProvider *mServiceProvider;
+@property (nonatomic) DConnectServiceProvider *serviceProvider;
 
 /*!
  @brief デバイスプラグインの名前。
@@ -110,6 +110,8 @@
  @brief アプリケーションがフォアグランドへの遷移時に呼び出される。
  */
 - (void)applicationWillEnterForeground;
+
+- (NSArray *) serviceProfilesWithServiceId: (NSString *) serviceId;
 
 - (NSString*)iconFilePath:(BOOL)isOnline;
 
