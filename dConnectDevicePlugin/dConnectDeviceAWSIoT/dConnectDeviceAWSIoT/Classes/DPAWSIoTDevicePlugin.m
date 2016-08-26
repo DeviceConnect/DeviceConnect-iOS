@@ -73,13 +73,14 @@
 						
 						// Topicを購読
 						NSString *responseTopic = [NSString stringWithFormat:@"deviceconnect/%@/response", key];
+						NSLog(@"subscribeWithTopic:%@, %@", responseTopic, key);
 						[[DPAWSIoTManager sharedManager] subscribeWithTopic:responseTopic messageHandler:^(id json, NSError *error) {
 							if (error) {
 								// TODO: エラー処理
 								NSLog(@"%@", error);
 								return;
 							}
-							[self receivedResponseFromMQTT:json];
+							[self receivedResponseFromMQTT:json from:managers[key] uuid:key];
 						}];
 					}
 				}];
@@ -95,36 +96,63 @@
 - (BOOL)executeRequest:(DConnectRequestMessage *)request response:(DConnectResponseMessage *)response
 {
 	NSLog(@"*********** executeRequest: %@, %@,%@,%@", [request serviceId], [request profile], [request interface], [request attribute]);
+	// リクエストコード生成
+	u_int32_t requestCode = arc4random();
+	
 	if ([request serviceId] && ![[request profile] isEqualToString:DConnectSystemProfileName]) {
-		return [self sendRequestToMQTT:request response:response];
+		// 通常処理
+		return [self sendRequestToMQTT:request code:requestCode response:response];
 	} else if ([[request profile] isEqualToString:DConnectServiceDiscoveryProfileName]) {
 		// servicediscoveryは独自処理
 		// 自分のServiceを検索
 		[super executeRequest:request response:response];
+		// フラグでloop防止
+		if ([request hasKey:@"_awsiot"]) {
+			return YES;
+		}
+		[request setString:@"true" forKey:@"_awsiot"];
+		// クラウド上のServiceを検索
 		if (_managers) {
+			// TODO: 最適化
 			// サービス数を保持
-			[response setInteger:(int)_managers.count forKey:@"servicecount"];
+			int count = 0;
+			for (NSString *key in _managers.allKeys) {
+				// onlineじゃない場合は無視
+				if (![_managers[key][@"online"] boolValue]) continue;
+				count++;
+			}
+			[response setInteger:count forKey:@"servicecount"];
 			// クラウド上のServiceを検索
 			for (NSString *key in _managers.allKeys) {
 				// onlineじゃない場合は無視
 				if (![_managers[key][@"online"] boolValue]) continue;
 				// ServiceIdにManagerのUUIDを埋め込む
 				[request setString:key forKey:@"serviceId"];
-				[self sendRequestToMQTT:request response:response];
-				// TODO: タイムアウトを実装（7秒以下で）
+				[self sendRequestToMQTT:request code:requestCode response:response];
 			}
+			// タイムアウトの処理（servicediscoveryのタイムアウトが8秒なので、こちらは7秒）
+			dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(7 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+				NSString *requestCodeStr = [@(requestCode) stringValue];
+				if (_responses[requestCodeStr]) {
+					[[DConnectManager sharedManager] sendResponse:response];
+					[_responses removeObjectForKey:requestCodeStr];
+				}
+				NSLog(@"timeout!!:%@, %@", _responses, requestCodeStr);
+			});
 			return NO;
 		} else {
 			return YES;
 		}
 	} else {
+		// 自分のServiceを検索
 		return [super executeRequest:request response:response];
 	}
 }
 
 // MQTTにリクエストを送信
-- (BOOL)sendRequestToMQTT:(DConnectRequestMessage *)request response:(DConnectResponseMessage *)response {
+- (BOOL)sendRequestToMQTT:(DConnectRequestMessage *)request code:(u_int32_t)requestCode response:(DConnectResponseMessage *)response {
 	// Actionコードを文字列に修正
+	NSString *requestCodeStr = [@(requestCode) stringValue];
 	NSMutableDictionary *reqDic = [request internalDictionary];
 	NSInteger actionCode = [reqDic[@"action"] integerValue];
 	switch (actionCode) {
@@ -157,14 +185,17 @@
 		NSArray *domains = [serviceId componentsSeparatedByString:@"."];
 		if (domains == nil || [domains count] < 2) {
 			[response setResult:DConnectMessageResultTypeError];
+			[_responses removeObjectForKey:requestCodeStr];
 			return YES;
 		}
 		managerUUID = [domains objectAtIndex:0];
 		serviceId = [serviceId stringByReplacingOccurrencesOfString:[managerUUID stringByAppendingString:@"."] withString:@""];
 		reqDic[@"serviceId"] = serviceId;
 	}
+	// 不要なパラメータ削除
+	[reqDic removeObjectForKey:@"accessToken"];
+	[reqDic removeObjectForKey:@"version"];
 	// リクエストjson構築
-	int requestCode = arc4random();
 	NSMutableDictionary *dic = [NSMutableDictionary dictionary];
 	[dic setObject:@(requestCode) forKey:@"requestCode"];
 	[dic setObject:[request internalDictionary] forKey:@"request"];
@@ -176,7 +207,7 @@
 	}
 	NSString *msg = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
 	// レスポンス保持
-	[_responses setObject:response forKey:[@(requestCode) stringValue]];
+	[_responses setObject:response forKey:requestCodeStr];
 	// MQTT送信
 	NSString *requestTopic = [NSString stringWithFormat:@"deviceconnect/%@/request", managerUUID];
 	[[DPAWSIoTManager sharedManager] publishWithTopic:requestTopic message:msg];
@@ -184,15 +215,53 @@
 }
 
 // MQTTからレスポンスを受診
-- (void)receivedResponseFromMQTT:(id)json {
+- (void)receivedResponseFromMQTT:(id)json from:(NSDictionary*)manager uuid:(NSString*)uuid {
+	NSLog(@"receivedResponseFromMQTT:%@", json);
 	NSString *requestCode = [json[@"requestCode"] stringValue];
 	DConnectResponseMessage *response = _responses[requestCode];
+	//NSLog(@"%@, %@, %@", response, _responses, requestCode);
 	if (response) {
-		NSInteger count = [response integerForKey:@"servicecount"];
+		int count = (int)[response integerForKey:@"servicecount"];
+		NSLog(@"count:%d", count);
 		if (count > 0) {
 			// servicediscoveryの場合各サービスからのレスポンスを保持
-			// TODO: 実装
+			NSDictionary *resJson = json[@"response"];
+			int result = [resJson[DConnectMessageResult] intValue];
+			if (result == DConnectMessageResultTypeOk) {
+				NSArray *foundServices = resJson[DConnectServiceDiscoveryProfileParamServices];
+				if ([foundServices count] > 0) {
+					// responseに追加
+					DConnectArray *services = [response arrayForKey:DConnectServiceDiscoveryProfileParamServices];
+					for (id item in foundServices) {
+						// idとnameを加工
+						DConnectMessage *msg = [DConnectMessage initWithDictionary:item];
+						NSString *serviceId = [msg stringForKey:DConnectServiceDiscoveryProfileParamId];
+						if (serviceId) {
+							serviceId = [uuid stringByAppendingString:[@"." stringByAppendingString:serviceId]];
+							[msg setString:serviceId forKey:DConnectServiceDiscoveryProfileParamId];
+						}
+						NSString *serviceName = [msg stringForKey:DConnectServiceDiscoveryProfileParamName];
+						if (serviceName) {
+							NSString *str = [NSString stringWithFormat:@" (%@)", manager[@"name"]];
+							NSString *name = [serviceName stringByAppendingString:str];
+							[msg setString:name forKey:DConnectServiceDiscoveryProfileParamName];
+						}
+						[services addMessage:msg];
+					}
+				}
+			}
+			// カウントダウン
+			count -= 1;
+			if (count == 0) {
+				// 送信
+				[[DConnectManager sharedManager] sendResponse:response];
+				[_responses removeObjectForKey:requestCode];
+			} else {
+				// カウントダウンの値を保持
+				[response setInteger:(int)count forKey:@"servicecount"];
+			}
 		} else {
+			// 通常の処理
 			NSDictionary *resJson = json[@"response"];
 			for (NSString *key in resJson.allKeys) {
 				id obj = resJson[key];

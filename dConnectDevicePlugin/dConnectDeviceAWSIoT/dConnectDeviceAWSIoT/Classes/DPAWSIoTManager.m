@@ -31,6 +31,7 @@
 // 接続
 - (void)connectWithAccessKey:(NSString*)accessKey secretKey:(NSString*)secretKey region:(AWSRegionType)region completionHandler:(void (^)(NSError *error))handler {
 	
+	[AWSLogger defaultLogger].logLevel = AWSLogLevelWarn;
 	// 切断
 	if (_isConnected) {
 		[self disconnect];
