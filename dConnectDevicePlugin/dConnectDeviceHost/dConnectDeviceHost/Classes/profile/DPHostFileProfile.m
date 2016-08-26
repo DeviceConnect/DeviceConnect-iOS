@@ -152,9 +152,17 @@
                       api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
                          
                           NSData *data = [DConnectFileProfile dataFromRequest:request];
+                          NSString *uri = [DConnectCanvasProfile uriFromRequest:request];
                           NSString *path = [DConnectFileProfile pathFromRequest:request];
+
+                          NSData *fileData = nil;
+                          if (data && data.length > 0) {
+                              fileData = data;
+                          } else if (uri) {
+                              fileData = [NSData dataWithContentsOfURL:[NSURL URLWithString:uri]];
+                          }
                           
-                          if (!data || data.length == 0) {
+                          if (!fileData || fileData.length <= 0) {
                               [response setErrorToInvalidRequestParameterWithMessage:@"No file data"];
                               return YES;
                           }
@@ -177,7 +185,7 @@
                               [response setErrorToInvalidRequestParameterWithMessage:
                                @"File already exists at the specified path."];
                           } else {
-                              NSString *resultPath = [fileMgr createFileForPath:dstPath contents:data];
+                              NSString *resultPath = [fileMgr createFileForPath:dstPath contents:fileData];
                               if (resultPath) {
                                   [DConnectFileProfile setPath:dstPath target:response];
                                   [response setResult:DConnectMessageResultTypeOk];
