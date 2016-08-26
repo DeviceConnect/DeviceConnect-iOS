@@ -44,6 +44,8 @@
 {
     [_serviceProvider removeAllServices];
 
+    [[DPLinkingBeaconManager sharedInstance] startBeaconScanWithTimeout:10];
+    
     [self createLinkingDeviceList];
     [self createLinkingBeaconList];
     
