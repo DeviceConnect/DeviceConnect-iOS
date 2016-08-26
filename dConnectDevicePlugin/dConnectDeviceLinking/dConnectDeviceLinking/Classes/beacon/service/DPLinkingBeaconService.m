@@ -15,13 +15,7 @@
 #import "DPLinkingBeaconProximityProfile.h"
 #import "DPLinkingBeaconTemperatureProfile.h"
 
-@interface DPLinkingBeaconService () <DConnectServiceInformationProfileDataSource>
-
-@end
-
-@implementation DPLinkingBeaconService {
-    DPLinkingBeacon *_beacon;
-}
+@implementation DPLinkingBeaconService 
 
 - (instancetype) initWithBeacon:(DPLinkingBeacon *)beacon plugin:(DConnectDevicePlugin *)plugin
 {
@@ -30,6 +24,7 @@
         _beacon = beacon;
 
         [self setName:beacon.displayName];
+        [self setOnline:beacon.online];
         [self setNetworkType:DConnectServiceDiscoveryProfileNetworkTypeBLE];
         
         [self addProfile:[DPLinkingBeaconAtmosphericPressureProfile new]];

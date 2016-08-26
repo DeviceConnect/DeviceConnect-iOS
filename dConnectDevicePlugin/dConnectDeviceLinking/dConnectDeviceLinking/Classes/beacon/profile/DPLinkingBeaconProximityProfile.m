@@ -11,6 +11,7 @@
 #import "DPLinkingBeaconProximityOnce.h"
 #import "DPLinkingBeaconManager.h"
 #import "DPLinkingDevicePlugin.h"
+#import "DPLinkingBeaconService.h"
 
 @interface DPLinkingBeaconProximityProfile () <DPLinkingBeaconGattDataDelegate>
 
@@ -112,10 +113,19 @@
     return YES;
 }
 
+- (DPLinkingBeaconService *) getLinkingBeaconService
+{
+    return (DPLinkingBeaconService *)self.provider;
+}
+
 #pragma mark - DPLinkingBeaconGattDataDelegate
 
 - (void) didReceivedBeacon:(DPLinkingBeacon *)beacon gattData:(DPLinkingGattData *)gatt
 {
+    if (![beacon.beaconId isEqualToString:[self getLinkingBeaconService].beacon.beaconId]) {
+        return;
+    }
+    
     DConnectEventManager *mgr = [DConnectEventManager sharedManagerForClass:[DPLinkingDevicePlugin class]];
     NSArray *events  = [mgr eventListForServiceId:beacon.beaconId
                                           profile:DConnectProximityProfileName

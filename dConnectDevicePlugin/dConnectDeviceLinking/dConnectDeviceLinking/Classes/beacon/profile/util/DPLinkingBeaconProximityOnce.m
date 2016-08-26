@@ -11,12 +11,14 @@
 
 @implementation DPLinkingBeaconProximityOnce {
     DPLinkingBeaconManager *_beaconManager;
+    DPLinkingBeacon *_beacon;
 }
 
 - (instancetype) initWithBeacon:(DPLinkingBeacon *)beacon
 {
     self = [super initWithTimeout:30.0f];
     if (self) {
+        _beacon = beacon;
         _beaconManager = [DPLinkingBeaconManager sharedInstance];
         [_beaconManager addGattDataDelegate:self];
     }
@@ -27,6 +29,10 @@
 
 - (void) didReceivedBeacon:(DPLinkingBeacon *)beacon gattData:(DPLinkingGattData *)gatt
 {
+    if (![beacon.beaconId isEqualToString:_beacon.beaconId]) {
+        return;
+    }
+
     [self.response setResult:DConnectMessageResultTypeOk];
     
     DConnectMessage *proximity = [DConnectMessage new];

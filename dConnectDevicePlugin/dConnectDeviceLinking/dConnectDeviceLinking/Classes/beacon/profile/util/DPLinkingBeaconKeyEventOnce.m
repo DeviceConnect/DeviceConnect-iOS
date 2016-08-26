@@ -1,5 +1,5 @@
 //
-//  DPLinkingBeaconTemperatureOnce.m
+//  DPLinkingBeaconKeyEventOnce.m
 //  dConnectDeviceLinking
 //
 //  Copyright (c) 2016 NTT DOCOMO, INC.
@@ -7,10 +7,9 @@
 //  http://opensource.org/licenses/mit-license.php
 //
 
-#import "DPLinkingBeaconTemperatureOnce.h"
-#import <DCMDevicePluginSDK/DCMTemperatureProfile.h>
+#import "DPLinkingBeaconKeyEventOnce.h"
 
-@implementation DPLinkingBeaconTemperatureOnce {
+@implementation DPLinkingBeaconKeyEventOnce{
     DPLinkingBeaconManager *_beaconManager;
     DPLinkingBeacon *_beacon;
 }
@@ -21,25 +20,23 @@
     if (self) {
         _beacon = beacon;
         _beaconManager = [DPLinkingBeaconManager sharedInstance];
-        [_beaconManager addTemperatureDelegate:self];
+        [_beaconManager addGattDataDelegate:self];
     }
     return self;
 }
 
-#pragma mark - DPLinkingBeaconTemperatureDelegate
+#pragma mark - DPLinkingBeaconButtonIdDelegate
 
-- (void) didReceivedBeacon:(DPLinkingBeacon *)beacon temperature:(DPLinkingTemperatureData *)temperature
+- (void) didReceivedBeacon:(DPLinkingBeacon *)beacon ButtonId:(int)buttonId
 {
     if (![beacon.beaconId isEqualToString:_beacon.beaconId]) {
         return;
     }
-
+    
     [self.response setResult:DConnectMessageResultTypeOk];
-    
-    [DCMTemperatureProfile setTemperature:temperature.value target:self.response];
-    [DCMTemperatureProfile setTimeStamp:temperature.timeStamp target:self.response];
-    [DCMTemperatureProfile setType:DCMTemperatureProfileEnumCelsius target:self.response];
-    
+    DConnectMessage *keyEvent = [DConnectMessage new];
+    [DConnectKeyEventProfile setId:buttonId target:keyEvent];
+    [DConnectKeyEventProfile setKeyEvent:keyEvent target:self.response];
     [[DConnectManager sharedManager] sendResponse:self.response];
     [self cleanup];
 }
@@ -54,7 +51,6 @@
 
 - (void) onCleanup
 {
-    [_beaconManager removeTemperatureDelegate:self];
+    [_beaconManager removeGattDataDelegate:self];
 }
-
 @end

@@ -12,12 +12,14 @@
 
 @implementation DPLinkingBeaconAtmosphericPressureOnce {
     DPLinkingBeaconManager *_beaconManager;
+    DPLinkingBeacon *_beacon;
 }
 
 - (instancetype) initWithBeacon:(DPLinkingBeacon *)beacon
 {
     self = [super initWithTimeout:30.0f];
     if (self) {
+        _beacon = beacon;
         _beaconManager = [DPLinkingBeaconManager sharedInstance];
         [_beaconManager addAtmosphericPressureDelegate:self];
     }
@@ -28,6 +30,10 @@
 
 - (void) didReceivedBeacon:(DPLinkingBeacon *)beacon AtmosphericPressure:(DPLinkingAtmosphericPressureData *)atmosphericPressure
 {
+    if (![beacon.beaconId isEqualToString:_beacon.beaconId]) {
+        return;
+    }
+
     [self.response setResult:DConnectMessageResultTypeOk];
     [DConnectAtmosphericPressureProfile setAtmosphericPressure:atmosphericPressure.value target:self.response];
     [DConnectAtmosphericPressureProfile setTimeStamp:atmosphericPressure.timeStamp target:self.response];

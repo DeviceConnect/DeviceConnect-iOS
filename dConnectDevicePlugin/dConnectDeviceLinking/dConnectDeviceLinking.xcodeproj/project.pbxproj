@@ -82,6 +82,7 @@
 		BE58BE821D646ABB00354F08 /* DPLinkingBeaconProximityOnce.m in Sources */ = {isa = PBXBuildFile; fileRef = BE58BE811D646ABB00354F08 /* DPLinkingBeaconProximityOnce.m */; };
 		BE58BE861D65489C00354F08 /* DPLinkingDeviceProximityOnce.m in Sources */ = {isa = PBXBuildFile; fileRef = BE58BE851D65489C00354F08 /* DPLinkingDeviceProximityOnce.m */; };
 		BE58BE891D654C9300354F08 /* DPLinkingDeviceBatteryOnce.m in Sources */ = {isa = PBXBuildFile; fileRef = BE58BE881D654C9300354F08 /* DPLinkingDeviceBatteryOnce.m */; };
+		BEE64A491D700B8700CF287E /* DPLinkingBeaconKeyEventOnce.m in Sources */ = {isa = PBXBuildFile; fileRef = BEE64A481D700B8700CF287E /* DPLinkingBeaconKeyEventOnce.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -215,6 +216,8 @@
 		BE58BE851D65489C00354F08 /* DPLinkingDeviceProximityOnce.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPLinkingDeviceProximityOnce.m; sourceTree = "<group>"; };
 		BE58BE871D654C9300354F08 /* DPLinkingDeviceBatteryOnce.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPLinkingDeviceBatteryOnce.h; sourceTree = "<group>"; };
 		BE58BE881D654C9300354F08 /* DPLinkingDeviceBatteryOnce.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPLinkingDeviceBatteryOnce.m; sourceTree = "<group>"; };
+		BEE64A471D700B8700CF287E /* DPLinkingBeaconKeyEventOnce.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPLinkingBeaconKeyEventOnce.h; sourceTree = "<group>"; };
+		BEE64A481D700B8700CF287E /* DPLinkingBeaconKeyEventOnce.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPLinkingBeaconKeyEventOnce.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -501,6 +504,8 @@
 				BE58BE781D6461BB00354F08 /* DPLinkingBeaconTemperatureOnce.m */,
 				BE58BE801D646ABB00354F08 /* DPLinkingBeaconProximityOnce.h */,
 				BE58BE811D646ABB00354F08 /* DPLinkingBeaconProximityOnce.m */,
+				BEE64A471D700B8700CF287E /* DPLinkingBeaconKeyEventOnce.h */,
+				BEE64A481D700B8700CF287E /* DPLinkingBeaconKeyEventOnce.m */,
 			);
 			path = util;
 			sourceTree = "<group>";
@@ -654,6 +659,7 @@
 				BE2859CD1D630B2800CB9F95 /* DPLinkingRawData.m in Sources */,
 				BE2859E81D630B2800CB9F95 /* DPLinkingServiceDiscoveryProfile.m in Sources */,
 				BE2859E61D630B2800CB9F95 /* DPLinkingDeviceService.m in Sources */,
+				BEE64A491D700B8700CF287E /* DPLinkingBeaconKeyEventOnce.m in Sources */,
 				BE2859DE1D630B2800CB9F95 /* DPLinkingDeviceNotificationProfile.m in Sources */,
 				BE58BE791D6461BB00354F08 /* DPLinkingBeaconTemperatureOnce.m in Sources */,
 				BE2859EB1D630B2800CB9F95 /* DPLinkingBeaconListViewController.m in Sources */,

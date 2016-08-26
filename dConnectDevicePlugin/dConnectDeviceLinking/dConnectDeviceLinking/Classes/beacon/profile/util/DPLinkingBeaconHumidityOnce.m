@@ -12,12 +12,14 @@
 
 @implementation DPLinkingBeaconHumidityOnce {
     DPLinkingBeaconManager *_beaconManager;
+    DPLinkingBeacon *_beacon;
 }
 
 - (instancetype) initWithBeacon:(DPLinkingBeacon *)beacon
 {
     self = [super initWithTimeout:30.0f];
     if (self) {
+        _beacon = beacon;
         _beaconManager = [DPLinkingBeaconManager sharedInstance];
         [_beaconManager addHumidityDelegate:self];
     }
@@ -28,6 +30,9 @@
 
 - (void) didReceivedBeacon:(DPLinkingBeacon *)beacon humidty:(DPLinkingHumidityData *)humidity
 {
+    if (![beacon.beaconId isEqualToString:_beacon.beaconId]) {
+        return;
+    }
     [self.response setResult:DConnectMessageResultTypeOk];
     [DCMHumidityProfile setHumidity:humidity.value / 100.0 target:self.response];
     [DCMHumidityProfile setTimeStamp:humidity.timeStamp target:self.response];
