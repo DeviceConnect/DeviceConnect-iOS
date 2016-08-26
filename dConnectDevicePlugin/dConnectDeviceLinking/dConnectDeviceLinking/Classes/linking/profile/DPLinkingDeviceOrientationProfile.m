@@ -13,7 +13,7 @@
 #import "DPLinkingDeviceSensorHolder.h"
 #import "DPLinkingDeviceSensorOnce.h"
 
-@interface DPLinkingDeviceOrientationProfile () <DConnectDeviceOrientationProfileDelegate, DPLinkingDeviceSensorDelegate>
+@interface DPLinkingDeviceOrientationProfile () <DPLinkingDeviceSensorDelegate>
 @end
 
 @implementation DPLinkingDeviceOrientationProfile {

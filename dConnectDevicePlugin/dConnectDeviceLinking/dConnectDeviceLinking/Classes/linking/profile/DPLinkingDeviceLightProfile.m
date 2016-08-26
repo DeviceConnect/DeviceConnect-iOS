@@ -11,7 +11,7 @@
 #import "DPLinkingDeviceManager.h"
 #import "DPLinkingDeviceRepeatExecutor.h"
 
-@interface DPLinkingDeviceLightProfile () <DConnectLightProfileDelegate>
+@interface DPLinkingDeviceLightProfile ()
 @end
 
 @implementation DPLinkingDeviceLightProfile {

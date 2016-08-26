@@ -14,4 +14,9 @@
 
 @interface DPLinkingDeviceBatteryOnce : DPLinkingTimeoutSchedule <DPLinkingDeviceBatteryDelegate>
 
+@property (nonatomic) DConnectRequestMessage *request;
+@property (nonatomic) DConnectResponseMessage *response;
+
+- (instancetype) initWithDevice:(DPLinkingDevice *)device;
+
 @end

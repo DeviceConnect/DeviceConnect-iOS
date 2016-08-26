@@ -15,18 +15,22 @@
 #import "DPLinkingBeaconProximityProfile.h"
 #import "DPLinkingBeaconTemperatureProfile.h"
 
+@interface DPLinkingBeaconService () <DConnectServiceInformationProfileDataSource>
+
+@end
+
 @implementation DPLinkingBeaconService {
     DPLinkingBeacon *_beacon;
 }
 
 - (instancetype) initWithBeacon:(DPLinkingBeacon *)beacon plugin:(DConnectDevicePlugin *)plugin
 {
-    self = [super initWithServiceId:beacon.beaconId plugin:plugin];
+    self = [super initWithServiceId:beacon.beaconId plugin:plugin dataSource:self];
     if (self) {
         _beacon = beacon;
 
         [self setName:beacon.displayName];
-        [self setNetworkType:DConnectServiceInformationProfileParamBLE];
+        [self setNetworkType:DConnectServiceDiscoveryProfileNetworkTypeBLE];
         
         [self addProfile:[DPLinkingBeaconAtmosphericPressureProfile new]];
         [self addProfile:[DPLinkingBeaconBatteryProfile new]];
@@ -38,9 +42,16 @@
     return self;
 }
 
-- (BOOL) isOnline
+#pragma mark - DConnectServiceInformationProfileDataSource
+
+- (DConnectServiceInformationProfileConnectState) profile:(DConnectServiceInformationProfile *)profile
+                               bluetoothStateForServiceId:(NSString *)serviceId
 {
-    return _beacon.online;
+    if (_beacon.online) {
+        return DConnectServiceInformationProfileConnectStateOn;
+    } else {
+        return DConnectServiceInformationProfileConnectStateOff;
+    }
 }
 
 @end

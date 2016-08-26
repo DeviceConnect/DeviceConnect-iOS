@@ -59,7 +59,6 @@
         [DConnectServiceDiscoveryProfile setType:[serviceEntity networkType] target:service];
         [DConnectServiceDiscoveryProfile setOnline:[serviceEntity online] target:service];
 
-
         // TODO: scopes
         
         [services addMessage:service];

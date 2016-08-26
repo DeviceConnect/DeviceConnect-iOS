@@ -18,19 +18,24 @@
 #import "DPLinkingDeviceTemperatureProfile.h"
 #import "DPLinkingDeviceVibrationProfile.h"
 
+@interface DPLinkingDeviceService () <DConnectServiceInformationProfileDataSource>
+
+@end
+
 @implementation DPLinkingDeviceService {
     DPLinkingDevice *_device;
 }
 
 - (instancetype) initWithDevice: (DPLinkingDevice *)device plugin:(DConnectDevicePlugin *)plugin
 {
-    self = [super initWithServiceId:device.identifier plugin:plugin];
+    self = [super initWithServiceId:device.identifier plugin:plugin dataSource:self];
     if (self) {
         _device = device;
 
-        [self setName:device.setting.name];
-        [self setNetworkType:DConnectServiceInformationProfileParamBLE];
-        
+        [self setName:_device.name];
+        [self setOnline:_device.online];
+        [self setNetworkType:DConnectServiceDiscoveryProfileNetworkTypeBLE];
+
         [self addProfile:[DPLinkingDeviceNotificationProfile new]];
         [self addProfile:[DPLinkingDeviceProximityProfile new]];
         
@@ -65,9 +70,16 @@
     return self;
 }
 
-- (BOOL) isOnline
+#pragma mark - DConnectServiceInformationProfileDataSource
+
+- (DConnectServiceInformationProfileConnectState) profile:(DConnectServiceInformationProfile *)profile
+                               bluetoothStateForServiceId:(NSString *)serviceId
 {
-    return _device.online;
+    if (_device.online) {
+        return DConnectServiceInformationProfileConnectStateOn;
+    } else {
+        return DConnectServiceInformationProfileConnectStateOff;
+    }
 }
 
 @end

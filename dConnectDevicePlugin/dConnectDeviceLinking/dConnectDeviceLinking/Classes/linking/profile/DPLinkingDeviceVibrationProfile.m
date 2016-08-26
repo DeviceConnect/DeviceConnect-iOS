@@ -11,10 +11,6 @@
 #import "DPLinkingDeviceRepeatExecutor.h"
 #import "DPLinkingDeviceManager.h"
 
-@interface DPLinkingDeviceVibrationProfile () <DConnectVibrationProfileDelegate>
-
-@end
-
 @implementation DPLinkingDeviceVibrationProfile {
     DPLinkingDeviceRepeatExecutor *_repeatExecutor;
 }

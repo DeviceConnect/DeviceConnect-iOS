@@ -25,12 +25,6 @@ NSString *const DConnectProximityProfileRangeNear = @"NEAR";
 NSString *const DConnectProximityProfileRangeFar = @"FAR";
 NSString *const DConnectProximityProfileRangeUnknown = @"UNKNOWN";
 
-@interface DConnectProximityProfile()
-
-- (BOOL) hasMethod:(SEL)method response:(DConnectResponseMessage *)response;
-
-@end
-
 @implementation DConnectProximityProfile
 
 - (NSString *) profileName {
@@ -65,16 +59,6 @@ NSString *const DConnectProximityProfileRangeUnknown = @"UNKNOWN";
 
 + (void) setRange:(NSString *)range target:(DConnectMessage *)message {
     [message setString:range forKey:DConnectProximityProfileParamRange];
-}
-
-#pragma mark - Private Methods
-
-- (BOOL) hasMethod:(SEL)method response:(DConnectResponseMessage *)response {
-    BOOL result = [_delegate respondsToSelector:method];
-    if (!result) {
-        [response setErrorToNotSupportAttribute];
-    }
-    return result;
 }
 
 @end
