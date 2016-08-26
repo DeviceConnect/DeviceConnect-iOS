@@ -136,13 +136,6 @@
 
 - (IBAction) switchDeviceStatus:(UISwitch *) sender {
     NSIndexPath *indexPath = [self.tableView indexPathForCell:[self getUITableViewCell:sender]];
-
-    
-    NSLog(@"THAT %ld", indexPath.row);
-    for (DPLinkingDevice *d in [self.deviceManager getDPLinkingDevices]) {
-        NSLog(@"AAAAAAAAAAA: %@", d.name);
-    }
-
     
     BOOL online = sender.on;
     DPLinkingDevice *device = [[self.deviceManager getDPLinkingDevices] objectAtIndex:indexPath.row];

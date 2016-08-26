@@ -70,7 +70,7 @@
 }
 
 - (void) paringPeripheral:(CBPeripheral *)peripheral {
-    NSLog(@"paringPeripheral");
+    DCLogInfo(@"paringPeripheral");
     
     _disconnectCount = 0;
     
@@ -165,7 +165,7 @@
 - (void) didDisonnectedDevice:(DPLinkingDevice *)device {
     _disconnectCount++;
     if (_disconnectCount > 5) {
-        NSLog(@"################## 接続失敗");
+        DCLogInfo(@"################## 接続失敗");
         [self.deviceManager disconnectDPLinkingDevice:device];
         [self.deviceManager removeDPLinkingDevice:device];
         [self closePairingDialog];

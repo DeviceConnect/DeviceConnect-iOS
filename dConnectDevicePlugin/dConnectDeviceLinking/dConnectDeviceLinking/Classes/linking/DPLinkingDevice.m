@@ -31,11 +31,11 @@ static NSString *const kVibrationOffPatternId = @"vibrationOffPatternId";
         self.ledOffPatternId = [[coder decodeObjectForKey:kLedOffPatternId] intValue];
         self.vibrationOffPatternId = [[coder decodeObjectForKey:kVibrationOffPatternId] intValue];
         
-        NSLog(@"LDPDevice");
-        NSLog(@"    name: %@", self.name);
-        NSLog(@"    id: %@", self.identifier);
-        NSLog(@"    led: %d", self.ledOffPatternId);
-        NSLog(@"    vibration: %d", self.vibrationOffPatternId);
+        DCLogInfo(@"LDPDevice");
+        DCLogInfo(@"    name: %@", self.name);
+        DCLogInfo(@"    id: %@", self.identifier);
+        DCLogInfo(@"    led: %d", self.ledOffPatternId);
+        DCLogInfo(@"    vibration: %d", self.vibrationOffPatternId);
     }
     return self;
 }

@@ -11,7 +11,7 @@
 			isa = PBXAggregateTarget;
 			buildConfigurationList = BE285A001D630BEE00CB9F95 /* Build configuration list for PBXAggregateTarget "dConnectDeviceLinking_framework" */;
 			buildPhases = (
-				BE285A031D630BF300CB9F95 /* ShellScript */,
+				BE285A031D630BF300CB9F95 /* Run Script */,
 			);
 			dependencies = (
 			);
@@ -72,9 +72,6 @@
 		BE2859F91D630B6200CB9F95 /* DCMDevicePluginSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE2859F81D630B6100CB9F95 /* DCMDevicePluginSDK.framework */; };
 		BE2859FB1D630B6C00CB9F95 /* LinkingLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE2859FA1D630B6C00CB9F95 /* LinkingLibrary.framework */; };
 		BE285A041D630C1000CB9F95 /* LinkingLibrary.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = BE2859FA1D630B6C00CB9F95 /* LinkingLibrary.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		BE285A381D63160E00CB9F95 /* beacon_icon_blue.png in Resources */ = {isa = PBXBuildFile; fileRef = BE2859C21D630B2800CB9F95 /* beacon_icon_blue.png */; };
-		BE285A391D63160E00CB9F95 /* beacon_icon_white.png in Resources */ = {isa = PBXBuildFile; fileRef = BE2859C31D630B2800CB9F95 /* beacon_icon_white.png */; };
-		BE285A3A1D63160E00CB9F95 /* beacon_icon_white@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BE2859C41D630B2800CB9F95 /* beacon_icon_white@2x.png */; };
 		BE285A3B1D63160E00CB9F95 /* Linking.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BE2859C61D630B2800CB9F95 /* Linking.storyboard */; };
 		BE58BE761D645E3800354F08 /* DPLinkingBeaconHumidityOnce.m in Sources */ = {isa = PBXBuildFile; fileRef = BE58BE751D645E3800354F08 /* DPLinkingBeaconHumidityOnce.m */; };
 		BE58BE791D6461BB00354F08 /* DPLinkingBeaconTemperatureOnce.m in Sources */ = {isa = PBXBuildFile; fileRef = BE58BE781D6461BB00354F08 /* DPLinkingBeaconTemperatureOnce.m */; };
@@ -83,6 +80,7 @@
 		BE58BE861D65489C00354F08 /* DPLinkingDeviceProximityOnce.m in Sources */ = {isa = PBXBuildFile; fileRef = BE58BE851D65489C00354F08 /* DPLinkingDeviceProximityOnce.m */; };
 		BE58BE891D654C9300354F08 /* DPLinkingDeviceBatteryOnce.m in Sources */ = {isa = PBXBuildFile; fileRef = BE58BE881D654C9300354F08 /* DPLinkingDeviceBatteryOnce.m */; };
 		BEE64A491D700B8700CF287E /* DPLinkingBeaconKeyEventOnce.m in Sources */ = {isa = PBXBuildFile; fileRef = BEE64A481D700B8700CF287E /* DPLinkingBeaconKeyEventOnce.m */; };
+		BEE64A4C1D702C5300CF287E /* beacon_icon_white@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BE2859C41D630B2800CB9F95 /* beacon_icon_white@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -591,9 +589,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BE285A381D63160E00CB9F95 /* beacon_icon_blue.png in Resources */,
-				BE285A391D63160E00CB9F95 /* beacon_icon_white.png in Resources */,
-				BE285A3A1D63160E00CB9F95 /* beacon_icon_white@2x.png in Resources */,
+				BEE64A4C1D702C5300CF287E /* beacon_icon_white@2x.png in Resources */,
 				BE285A3B1D63160E00CB9F95 /* Linking.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -601,13 +597,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		BE285A031D630BF300CB9F95 /* ShellScript */ = {
+		BE285A031D630BF300CB9F95 /* Run Script */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
+			name = "Run Script";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
