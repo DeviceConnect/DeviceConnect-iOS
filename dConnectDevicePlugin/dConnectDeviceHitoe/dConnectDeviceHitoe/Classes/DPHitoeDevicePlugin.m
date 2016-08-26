@@ -114,7 +114,6 @@ int const DPHitoeDataKeyExtension = 0x04;
 
         
         DPHitoeManager *mgr = [DPHitoeManager sharedInstance];
-//        mgr.connectionDelegate = self;
         [mgr readHitoeData];
         NSMutableArray *devices = mgr.registeredDevices;
         for (DPHitoeDevice *device in devices) {
@@ -133,8 +132,6 @@ int const DPHitoeDataKeyExtension = 0x04;
         __weak typeof(self) _self = self;
         dispatch_async(dispatch_get_main_queue(), ^{
             NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
-            UIApplication *application = [UIApplication sharedApplication];
-            
             [notificationCenter addObserver:_self selector:@selector(enterForeground)
                                        name:UIApplicationWillEnterForegroundNotification
                                      object:nil];
@@ -164,8 +161,6 @@ int const DPHitoeDataKeyExtension = 0x04;
 - (void) dealloc {
     
     NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
-    UIApplication *application = [UIApplication sharedApplication];
-    
     [notificationCenter removeObserver:self name:UIApplicationDidEnterBackgroundNotification object:nil];
     [notificationCenter removeObserver:self name:DPHitoeConnectDeviceNotification object:nil];
     [notificationCenter removeObserver:self name:DPHitoeConnectFailedDeviceNotification object:nil];

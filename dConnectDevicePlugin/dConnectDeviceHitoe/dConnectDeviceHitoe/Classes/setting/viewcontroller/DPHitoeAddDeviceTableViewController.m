@@ -58,7 +58,6 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-//    [DPHitoeManager sharedInstance].connectionDelegate = self;
     NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
     BOOL sw = [def boolForKey:DPHitoeWakeUpNever];
     if (!sw) {
@@ -77,7 +76,6 @@
 
     
     NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
-    UIApplication *application = [UIApplication sharedApplication];
     
     [notificationCenter addObserver:_self selector:@selector(didConnectWithDevice:)
                                name:DPHitoeConnectDeviceNotification
@@ -110,8 +108,6 @@
     isConnecting = NO;
     
     NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
-    UIApplication *application = [UIApplication sharedApplication];
-    
     [notificationCenter removeObserver:self name:DPHitoeConnectDeviceNotification object:nil];
     [notificationCenter removeObserver:self name:DPHitoeConnectFailedDeviceNotification object:nil];
     [notificationCenter removeObserver:self name:DPHitoeDisconnectNotification object:nil];

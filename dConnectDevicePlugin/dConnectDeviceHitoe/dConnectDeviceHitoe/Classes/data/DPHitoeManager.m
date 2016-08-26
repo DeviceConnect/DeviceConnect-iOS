@@ -227,21 +227,12 @@ static int const DPHitoeRetryCount = 30;
     NSDictionary *userInfo = @{DPHitoeDisconnectObject: device};
     NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
     [notificationCenter postNotificationName:DPHitoeDisconnectNotification object:self userInfo:userInfo];
-
-    
-    if (_connectionDelegate) {
-        [_connectionDelegate didDisconnectWithDevice:current];
-    }
 }
 - (void)deleteAtHitoe:(DPHitoeDevice *)device {
     [[DPHitoeDBManager sharedInstance] deleteHitoeDeviceWithServiceId:device.serviceId];
     NSDictionary *userInfo = @{DPHitoeDeleteDevicObject: device};
     NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
     [notificationCenter postNotificationName:DPHitoeDeleteDeviceNotification object:self userInfo:userInfo];
-
-    if (_connectionDelegate) {
-        [_connectionDelegate didDeleteAtDevice:device];
-    }
     int pos = -1;
     for (int i = 0; i < [_registeredDevices count]; i++) {
         if ([((DPHitoeDevice *) _registeredDevices[i]).serviceId isEqualToString:device.serviceId]) {
@@ -476,10 +467,6 @@ static int const DPHitoeRetryCount = 30;
     NSDictionary *userInfo = @{DPHitoeDiscoveryDeviceObject: _registeredDevices};
     NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
     [notificationCenter postNotificationName:DPHitoeDiscoveryDeviceNotification object:self userInfo:userInfo];
-    
-    if (_connectionDelegate) {
-        [_connectionDelegate didDiscoveryForDevices:_registeredDevices];
-    }
 }
 
 - (void)notifyConnectHitoeDeviceWithResponseId:(int)responseId
@@ -490,9 +477,6 @@ static int const DPHitoeRetryCount = 30;
         NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
         [notificationCenter postNotificationName:DPHitoeConnectFailedDeviceNotification object:self userInfo:userInfo];
 
-        if (_connectionDelegate) {
-            [_connectionDelegate didConnectFailWithDevice:nil];
-        }
         return;
     }
     DPHitoeDevice *currentDevice = _registeredDevices[pos];
@@ -500,28 +484,16 @@ static int const DPHitoeRetryCount = 30;
         NSDictionary *userInfo = @{DPHitoeConnectFailedDeviceObject: currentDevice};
         NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
         [notificationCenter postNotificationName:DPHitoeConnectFailedDeviceNotification object:self userInfo:userInfo];
-
-        if (_connectionDelegate) {
-            [_connectionDelegate didConnectFailWithDevice:currentDevice];
-        }
         return;
     } else if (responseId == DPHitoeResIdSensorConnectNotice) {
         NSDictionary *userInfo = @{DPHitoeConnectDeviceObject: currentDevice};
         NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
         [notificationCenter postNotificationName:DPHitoeConnectDeviceNotification object:self userInfo:userInfo];
-
-        if (_connectionDelegate) {
-            [_connectionDelegate didConnectWithDevice:currentDevice];
-        }
         return;
     } else if (responseId != DPHitoeResIdSensorConnect) {
         NSDictionary *userInfo = @{DPHitoeConnectFailedDeviceObject: currentDevice};
         NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
         [notificationCenter postNotificationName:DPHitoeConnectFailedDeviceNotification object:self userInfo:userInfo];
-
-        if (_connectionDelegate) {
-           [_connectionDelegate didConnectFailWithDevice:currentDevice];
-        }
         return;
     }
     currentDevice.sessionId = responseString;
@@ -535,11 +507,6 @@ static int const DPHitoeRetryCount = 30;
     NSDictionary *userInfo = @{DPHitoeConnectDeviceObject: currentDevice};
     NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
     [notificationCenter postNotificationName:DPHitoeConnectDeviceNotification object:self userInfo:userInfo];
-
-    if (_connectionDelegate) {
-        [_connectionDelegate didConnectWithDevice:currentDevice];
-    }
-    
     for (int i = 0; i < [_registeredDevices count]; i++) {
         DPHitoeDevice *pos = _registeredDevices[i];
         if ([pos.serviceId isEqualToString:currentDevice.serviceId]) {

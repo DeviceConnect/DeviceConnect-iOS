@@ -81,7 +81,6 @@ static NSString *const DPHitoeOpenBluetooth = @"BluetoothがOFFになってい�
             [discoveries removeObjectAtIndex:i];
         }
     }
-//    [DPHitoeManager sharedInstance].connectionDelegate = self;
 
     cManager = [[CBCentralManager alloc] initWithDelegate:self queue:nil];
     NSArray *services = @[];
@@ -98,7 +97,6 @@ static NSString *const DPHitoeOpenBluetooth = @"BluetoothがOFFになってい�
     dispatch_async(dispatch_get_main_queue(), ^{
 
     NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
-    UIApplication *application = [UIApplication sharedApplication];
     
     [notificationCenter addObserver:_self selector:@selector(didConnectWithDevice:)
                                name:DPHitoeConnectDeviceNotification
@@ -127,8 +125,6 @@ static NSString *const DPHitoeOpenBluetooth = @"BluetoothがOFFになってい�
     
     isConnecting = NO;
     NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
-    UIApplication *application = [UIApplication sharedApplication];
-    
     [notificationCenter removeObserver:self name:DPHitoeConnectDeviceNotification object:nil];
     [notificationCenter removeObserver:self name:DPHitoeConnectFailedDeviceNotification object:nil];
     [notificationCenter removeObserver:self name:DPHitoeDisconnectNotification object:nil];

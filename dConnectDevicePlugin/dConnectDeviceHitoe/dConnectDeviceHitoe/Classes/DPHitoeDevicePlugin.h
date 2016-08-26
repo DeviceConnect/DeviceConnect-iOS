@@ -11,6 +11,6 @@
 #import <DConnectSDK/DConnectSDK.h>
 #import "DPHitoeManager.h"
 
-@interface DPHitoeDevicePlugin : DConnectDevicePlugin<DPHitoeConnectionDelegate>
+@interface DPHitoeDevicePlugin : DConnectDevicePlugin
 
 @end

@@ -12,6 +12,6 @@
 
 #import "DPHitoeManager.h"
 
-@interface DPHitoeAddDeviceTableViewController : UITableViewController<DPHitoeConnectionDelegate,CBCentralManagerDelegate>
+@interface DPHitoeAddDeviceTableViewController : UITableViewController<CBCentralManagerDelegate>
 
 @end

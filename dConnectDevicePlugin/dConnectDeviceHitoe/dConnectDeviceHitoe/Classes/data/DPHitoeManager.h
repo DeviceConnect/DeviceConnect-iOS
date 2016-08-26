@@ -21,14 +21,7 @@
 #import "DPHitoeHeartData.h"
 
 
-@protocol DPHitoeConnectionDelegate<NSObject>
 
--(void)didConnectWithDevice:(DPHitoeDevice*)device;
--(void)didConnectFailWithDevice:(DPHitoeDevice*)device;
--(void)didDisconnectWithDevice:(DPHitoeDevice*)device;
--(void)didDiscoveryForDevices:(NSMutableArray*)devices;
--(void)didDeleteAtDevice:(DPHitoeDevice*)device;
-@end
 
 
 @interface DPHitoeManager : NSObject<HitoeSdkAPIDelegate, DataReceiveDelegate>
@@ -48,8 +41,6 @@ extern NSString *const DPHitoeDiscoveryDeviceObject;
 extern NSString *const DPHitoeDeleteDevicObject;
 
 #pragma mark - Delegate object
-@property (nonatomic, weak) id<DPHitoeConnectionDelegate> connectionDelegate;
-
 @property (nonatomic, copy) void (^heartRateReceived)(DPHitoeDevice *device, DPHitoeHeartRateData *heartRate);
 @property (nonatomic, copy) void (^ecgReceived)(DPHitoeDevice *device, DPHitoeHeartRateData *ecg);
 @property (nonatomic, copy) void (^stressEstimationReceived)(DPHitoeDevice *device, DPHitoeStressEstimationData *stress);
