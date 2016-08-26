@@ -202,7 +202,7 @@
         sfSafariViewController.delegate = self;
         [self presentViewController:sfSafariViewController animated:YES completion:nil];
     };
-    loadSFSafariViewControllerBlock([NSURL URLWithString: [viewModel checkUrlString:url]]);
+    loadSFSafariViewControllerBlock([NSURL URLWithString: [viewModel checkUrlString:url].stringByRemovingPercentEncoding]);
 }
 
 - (void)openInitialGuide
