@@ -140,6 +140,11 @@
 
             currentDevice.pinCode = pinCode;
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                for (DPHitoeDevice *d in [DPHitoeManager sharedInstance].registeredDevices) {
+                    if (![d.serviceId isEqualToString:currentDevice.serviceId] && d.isRegisterFlag) {
+                        [[DPHitoeManager sharedInstance] disconnectForHitoe:d];
+                    }
+                }
                 [[DPHitoeManager sharedInstance] connectForHitoe:currentDevice];
                 
             });

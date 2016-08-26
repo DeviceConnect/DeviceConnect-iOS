@@ -167,7 +167,13 @@ static NSString *const DPHitoeOpenBluetooth = @"BluetoothがOFFになってい�
     } else {
         btnColor = [self connectedBtnColor];
         btnName = @"解除";
+        
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            for (DPHitoeDevice *d in [DPHitoeManager sharedInstance].registeredDevices) {
+                if (![d.serviceId isEqualToString:device.serviceId] && d.isRegisterFlag) {
+                    [[DPHitoeManager sharedInstance] disconnectForHitoe:d];
+                }
+            }
             [[DPHitoeManager sharedInstance] connectForHitoe:device];
         });
         [DPHitoeProgressDialog showProgressDialog];
@@ -191,7 +197,10 @@ static NSString *const DPHitoeOpenBluetooth = @"BluetoothがOFFになってい�
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"削除" message:message preferredStyle:UIAlertControllerStyleAlert];
         [alertController addAction:[UIAlertAction actionWithTitle:@"削除" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
             [discoveries removeObject:device];
-            [[DPHitoeManager sharedInstance] deleteAtHitoe:device];
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                [[DPHitoeManager sharedInstance] deleteAtHitoe:device];
+            });
+
             
         }]];
         [alertController addAction:[UIAlertAction actionWithTitle:@"キャンセル" style:UIAlertActionStyleDefault handler:nil]];

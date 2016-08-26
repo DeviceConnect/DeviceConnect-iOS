@@ -14,9 +14,14 @@
 #import "DPHitoeManager.h"
 #import "DPHitoeWalkStateData.h"
 #import "DPHitoeDevice.h"
+#import "DPHitoeEventDispatcher.h"
+#import "DPHitoeEventDispatcherFactory.h"
+#import "DPHitoeEventDispatcherManager.h"
+
 
 @interface DPHitoeWalkStateProfile()
 @property DConnectEventManager *eventMgr;
+@property DPHitoeEventDispatcherManager *dispatcherManager;
 @property (nonatomic, copy) void (^walkReceived)(DPHitoeDevice *device, DPHitoeWalkStateData *walk);
 
 @end
@@ -28,6 +33,7 @@
     if (self) {
         // イベントマネージャを取得
         self.eventMgr = [DConnectEventManager sharedManagerForClass:[DPHitoeDevicePlugin class]];
+        self.dispatcherManager = [DPHitoeEventDispatcherManager new];
         __unsafe_unretained typeof(self) weakSelf = self;
         self.walkReceived = ^(DPHitoeDevice *device, DPHitoeWalkStateData *walk) {
             [weakSelf notifyReceiveDataForDevice:device data:walk];
@@ -102,8 +108,14 @@
         } else {
             switch ([_eventMgr addEventForRequest:request]) {
                 case DConnectEventErrorNone:             // エラー無し.
+                {
                     [response setResult:DConnectMessageResultTypeOk];
                     mgr.walkStateReceived = self.walkReceived;
+                    DPHitoeEventDispatcher *dispatcher = [DPHitoeEventDispatcherFactory createEventDispatcherForDevicePlugin:self.provider
+                                                                                                                     request:request];
+                    [_dispatcherManager addEventDispatcherForServiceId:serviceId dispatcher:dispatcher];
+
+                }
                     break;
                 case DConnectEventErrorInvalidParameter: // 不正なパラメータ.
                     [response setErrorToInvalidRequestParameter];
@@ -138,7 +150,7 @@
             [response setErrorToNotFoundService];
             return YES;
         } else {
-            
+            [_dispatcherManager removeEventDispacherForServiceId:serviceId];
             switch ([_eventMgr removeEventForRequest:request]) {
                 case DConnectEventErrorNone:             // エラー無し.
                     [response setResult:DConnectMessageResultTypeOk];
@@ -168,7 +180,7 @@
     for (DConnectEvent *evt in evts) {
         DConnectMessage *eventMsg = [DConnectEventManager createEventMessageWithEvent:evt];
         [DCMWalkStateProfile setWalk:[data toDConnectMessage] target:eventMsg];
-        [((DPHitoeDevicePlugin *)self.provider) sendEvent:eventMsg];
+        [_dispatcherManager sendEventForServiceId:device.serviceId message:eventMsg];
     }
 }
 

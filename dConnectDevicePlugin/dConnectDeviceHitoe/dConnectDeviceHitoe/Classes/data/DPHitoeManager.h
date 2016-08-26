@@ -46,8 +46,6 @@
 #pragma mark - store data
 @property (nonatomic, copy) NSMutableArray *registeredDevices;
 #pragma mark - Public method
-- (void)start;
-- (void)stop;
 - (void)discovery;
 
 - (void)readHitoeData;

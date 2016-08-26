@@ -2,9 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:dConnectDevicePlugin/dConnectDeviceHitoe/dConnectDeviceHitoe.xcodeproj">
-   </FileRef>
-   <FileRef
       location = "group:dConnectSDK/dConnectBrowserForIOS9/dConnectBrowserForIOS9.xcodeproj">
    </FileRef>
    <FileRef

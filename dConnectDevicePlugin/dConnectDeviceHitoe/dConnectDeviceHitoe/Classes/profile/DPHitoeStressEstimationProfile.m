@@ -13,9 +13,13 @@
 #import "DPHitoeManager.h"
 #import "DPHitoeStressEstimationData.h"
 #import "DPHitoeDevice.h"
+#import "DPHitoeEventDispatcher.h"
+#import "DPHitoeEventDispatcherFactory.h"
+#import "DPHitoeEventDispatcherManager.h"
 
 @interface DPHitoeStressEstimationProfile()
 @property DConnectEventManager *eventMgr;
+@property DPHitoeEventDispatcherManager *dispatcherManager;
 @property (nonatomic, copy) void (^stressReceived)(DPHitoeDevice *device, DPHitoeStressEstimationData *stress);
 
 @end
@@ -27,6 +31,7 @@
     if (self) {
         // イベントマネージャを取得
         self.eventMgr = [DConnectEventManager sharedManagerForClass:[DPHitoeDevicePlugin class]];
+        self.dispatcherManager = [DPHitoeEventDispatcherManager new];
         __unsafe_unretained typeof(self) weakSelf = self;
         self.stressReceived = ^(DPHitoeDevice *device, DPHitoeStressEstimationData *stress) {
             [weakSelf notifyReceiveDataForDevice:device data:stress];
@@ -101,8 +106,14 @@
         } else {
             switch ([_eventMgr addEventForRequest:request]) {
                 case DConnectEventErrorNone:             // エラー無し.
+                {
                     [response setResult:DConnectMessageResultTypeOk];
                     mgr.stressEstimationReceived = self.stressReceived;
+                    DPHitoeEventDispatcher *dispatcher = [DPHitoeEventDispatcherFactory createEventDispatcherForDevicePlugin:self.provider
+                                                                                                                     request:request];
+                    [_dispatcherManager addEventDispatcherForServiceId:serviceId dispatcher:dispatcher];
+
+                }
                     break;
                 case DConnectEventErrorInvalidParameter: // 不正なパラメータ.
                     [response setErrorToInvalidRequestParameter];
@@ -137,7 +148,7 @@
             [response setErrorToNotFoundService];
             return YES;
         } else {
-            
+            [_dispatcherManager removeEventDispacherForServiceId:serviceId];
             switch ([_eventMgr removeEventForRequest:request]) {
                 case DConnectEventErrorNone:             // エラー無し.
                     [response setResult:DConnectMessageResultTypeOk];
@@ -167,7 +178,7 @@
     for (DConnectEvent *evt in evts) {
         DConnectMessage *eventMsg = [DConnectEventManager createEventMessageWithEvent:evt];
         [DCMStressEstimationProfile setStress:[data toDConnectMessage] target:eventMsg];
-        [((DPHitoeDevicePlugin *)self.provider) sendEvent:eventMsg];
+        [_dispatcherManager sendEventForServiceId:device.serviceId message:eventMsg];
     }
 }
 
