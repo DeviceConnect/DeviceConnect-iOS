@@ -8,6 +8,7 @@
 //
 
 #import "DPLinkingBeaconManager.h"
+#import "DPLinkingUtil.h"
 
 static const NSInteger kCheckConnectionInterval = 30;
 
@@ -56,6 +57,7 @@ typedef NS_ENUM(NSInteger, DPLinkingServiceId) {
     BOOL _isStartBeaconScanFlag;
     BOOL _isStartBeaconScanTimeoutFlag;
     dispatch_source_t _checkConnectionTimer;
+    DPLinkingUtilTimerCancelBlock _cancelBlock;
 }
 
 static DPLinkingBeaconManager* _sharedInstance = nil;
@@ -85,9 +87,7 @@ static DPLinkingBeaconManager* _sharedInstance = nil;
         self.buttonIdDelegates = [[NSMutableArray alloc] init];
         [[BLEConnecter sharedInstance] addListener:self deviceUUID:nil];
         [self loadDPLinkingBeacon];
-        
         [self startCheckConnectionOfBeacon];
-        
     }
     return self;
 }
@@ -147,20 +147,26 @@ static DPLinkingBeaconManager* _sharedInstance = nil;
 }
 
 - (void) startBeaconScanWithTimeout:(float)timeout {
-    if (_isStartBeaconScanFlag || _isStartBeaconScanTimeoutFlag) {
+    if (_isStartBeaconScanFlag) {
         DCLogWarn(@"beacon scan already started.");
         return;
     }
 
     DCLogInfo(@"startBeaconScanWithTimeout: %f", timeout);
 
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, timeout * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+    if (_isStartBeaconScanTimeoutFlag && _cancelBlock) {
+        _cancelBlock();
+    }
+    
+    __weak typeof(self) weakSelf = self;
+
+    _cancelBlock = [DPLinkingUtil asyncAfterDelay:timeout block:^{
         DCLogInfo(@"startBeaconScanWithTimeout: timeout");
         if (!_isStartBeaconScanFlag) {
-            [self stopBeaconScanInternal];
+            [weakSelf stopBeaconScanInternal];
         }
         _isStartBeaconScanTimeoutFlag = NO;
-    });
+    }];
     [self startBeaconScanInternal];
     _isStartBeaconScanTimeoutFlag = YES;
 }
@@ -286,7 +292,7 @@ static DPLinkingBeaconManager* _sharedInstance = nil;
 }
 
 - (void) startCheckConnectionOfBeacon {
-    __block DPLinkingBeaconManager *_self = self;
+    __weak typeof(self) *_self = self;
     _checkConnectionTimer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, dispatch_get_main_queue());
     dispatch_source_set_timer(_checkConnectionTimer, dispatch_time(DISPATCH_TIME_NOW, 0), (kCheckConnectionInterval / 2.0) * NSEC_PER_SEC, 0);
     dispatch_source_set_event_handler(_checkConnectionTimer, ^{
@@ -302,8 +308,8 @@ static DPLinkingBeaconManager* _sharedInstance = nil;
 - (void) checkConnectionOfBeacon {
     DCLogInfo(@"DPLinkingBeaconManager::checkConnectionOfBeacon");
 
-    __block NSTimeInterval now = [NSDate date].timeIntervalSince1970;
-    __block DPLinkingBeaconManager *_self = self;
+    __weak typeof(self) *_self = self;
+    __weak NSTimeInterval now = [NSDate date].timeIntervalSince1970;
     [self.beacons enumerateObjectsUsingBlock:^(DPLinkingBeacon *obj, NSUInteger idx, BOOL *stop) {
         if (obj.online) {
             if (now - obj.gattData.timeStamp > kCheckConnectionInterval) {

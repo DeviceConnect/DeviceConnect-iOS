@@ -158,7 +158,7 @@ static DPLinkingDeviceManager* _sharedInstance = nil;
 }
 
 - (void) connectDPLinkingDevice:(DPLinkingDevice *)device {
-    __block DPLinkingDeviceManager *_self = self;
+    __weak typeof(self) *_self = self;
 
     self.connectingDevice = device;
 
