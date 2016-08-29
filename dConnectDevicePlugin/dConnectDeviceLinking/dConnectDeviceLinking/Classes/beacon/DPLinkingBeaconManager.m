@@ -292,11 +292,11 @@ static DPLinkingBeaconManager* _sharedInstance = nil;
 }
 
 - (void) startCheckConnectionOfBeacon {
-    __weak typeof(self) *_self = self;
+    __weak typeof(self) weakSelf = self;
     _checkConnectionTimer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, dispatch_get_main_queue());
     dispatch_source_set_timer(_checkConnectionTimer, dispatch_time(DISPATCH_TIME_NOW, 0), (kCheckConnectionInterval / 2.0) * NSEC_PER_SEC, 0);
     dispatch_source_set_event_handler(_checkConnectionTimer, ^{
-        [_self checkConnectionOfBeacon];
+        [weakSelf checkConnectionOfBeacon];
     });
     dispatch_resume(_checkConnectionTimer);
 }
@@ -308,13 +308,13 @@ static DPLinkingBeaconManager* _sharedInstance = nil;
 - (void) checkConnectionOfBeacon {
     DCLogInfo(@"DPLinkingBeaconManager::checkConnectionOfBeacon");
 
-    __weak typeof(self) *_self = self;
-    __weak NSTimeInterval now = [NSDate date].timeIntervalSince1970;
+    __weak typeof(self) weakSelf = self;
+    NSTimeInterval now = [NSDate date].timeIntervalSince1970;
     [self.beacons enumerateObjectsUsingBlock:^(DPLinkingBeacon *obj, NSUInteger idx, BOOL *stop) {
         if (obj.online) {
             if (now - obj.gattData.timeStamp > kCheckConnectionInterval) {
                 obj.online = NO;
-                [_self notifyDisconnectBeacon:obj];
+                [weakSelf notifyDisconnectBeacon:obj];
             }
         }
     }];

@@ -158,7 +158,7 @@ static DPLinkingDeviceManager* _sharedInstance = nil;
 }
 
 - (void) connectDPLinkingDevice:(DPLinkingDevice *)device {
-    __weak typeof(self) *_self = self;
+    __weak typeof(self) weakSelf = self;
 
     self.connectingDevice = device;
 
@@ -166,16 +166,16 @@ static DPLinkingDeviceManager* _sharedInstance = nil;
         DCLogInfo(@"connectDPLinkingDevice: %@", device.peripheral);
         
         _connectingCancelBlock = [DPLinkingUtil asyncAfterDelay:60.0 block:^{
-            [_self notifyFailToConnectDevice:device];
-            [_self disconnectDPLinkingDevice:device];
-            _self.connectingDevice = nil;
+            [weakSelf notifyFailToConnectDevice:device];
+            [weakSelf disconnectDPLinkingDevice:device];
+            weakSelf.connectingDevice = nil;
         }];
         [[BLEConnecter sharedInstance] connectDevice:device.peripheral];
     } else {
         _scanTimerCancelBlock = [DPLinkingUtil asyncAfterDelay:10.0 block:^{
-            [_self notifyFailToConnectDevice:device];
-            [_self stopScan];
-            _self.connectingDevice = nil;
+            [weakSelf notifyFailToConnectDevice:device];
+            [weakSelf stopScan];
+            weakSelf.connectingDevice = nil;
         }];
         [self startScan];
     }

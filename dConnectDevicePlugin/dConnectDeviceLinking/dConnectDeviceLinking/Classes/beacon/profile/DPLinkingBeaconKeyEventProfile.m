@@ -144,7 +144,7 @@
                                         attribute:DConnectKeyEventProfileAttrOnDown];
     if (events == 0) {
         DPLinkingBeaconManager *beaconManager = [DPLinkingBeaconManager sharedInstance];
-        [beaconManager removeGattDataDelegate:self];
+        [beaconManager removeButtonIdDelegate:self];
     } else {
         DConnectMessage *keyEvent = [DConnectMessage new];
         [DConnectKeyEventProfile setId:buttonId target:keyEvent];

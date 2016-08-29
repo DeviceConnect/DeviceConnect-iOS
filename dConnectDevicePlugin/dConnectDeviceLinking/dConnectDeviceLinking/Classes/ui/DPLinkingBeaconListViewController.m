@@ -41,15 +41,15 @@
 
 
 - (void) openConfirmRemoveBeaconDialog:(NSIndexPath *)indexPath {
-    __block DPLinkingBeaconListViewController *_self = self;
+    __weak typeof(self) weakSelf = self;
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"削除"
                                                                    message:@"ビーコンを削除して良いですか？"
                                                             preferredStyle:UIAlertControllerStyleAlert];
     
     [alert addAction:[UIAlertAction actionWithTitle:@"はい" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        [_self.beaconManager removeBeacon:indexPath.row];
-        [_self.tableView deleteRowsAtIndexPaths:@[indexPath]
-                               withRowAnimation:UITableViewRowAnimationAutomatic];
+        [weakSelf.beaconManager removeBeacon:(int)indexPath.row];
+        [weakSelf.tableView deleteRowsAtIndexPaths:@[indexPath]
+                                  withRowAnimation:UITableViewRowAnimationAutomatic];
     }]];
     [alert addAction:[UIAlertAction actionWithTitle:@"いいえ" style:UIAlertActionStyleDefault handler:nil]];
     
