@@ -39,6 +39,13 @@
         return YES;
     }
     
+    if (beacon.atmosphericPressureData && [[NSDate date] timeIntervalSince1970] - beacon.atmosphericPressureData.timeStamp < 30.0f) {
+        [response setResult:DConnectMessageResultTypeOk];
+        [DConnectAtmosphericPressureProfile setAtmosphericPressure:beacon.atmosphericPressureData.value target:response];
+        [DConnectAtmosphericPressureProfile setTimeStamp:beacon.atmosphericPressureData.timeStamp target:response];
+        return YES;
+    }
+
     DPLinkingBeaconAtmosphericPressureOnce *ap = [[DPLinkingBeaconAtmosphericPressureOnce alloc] initWithBeacon:beacon];
     ap.request = request;
     ap.response = response;

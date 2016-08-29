@@ -39,7 +39,14 @@
         [response setErrorToNotFoundService];
         return YES;
     }
-    
+
+    if (beacon.humidityData && [[NSDate date] timeIntervalSince1970] - beacon.humidityData.timeStamp < 30.0f) {
+        [response setResult:DConnectMessageResultTypeOk];
+        [DCMHumidityProfile setHumidity:beacon.humidityData.value / 100.0 target:response];
+        [DCMHumidityProfile setTimeStamp:beacon.humidityData.timeStamp target:response];
+        return YES;
+    }
+
     DPLinkingBeaconHumidityOnce *humidity = [[DPLinkingBeaconHumidityOnce alloc] initWithBeacon:beacon];
     humidity.request = request;
     humidity.response = response;

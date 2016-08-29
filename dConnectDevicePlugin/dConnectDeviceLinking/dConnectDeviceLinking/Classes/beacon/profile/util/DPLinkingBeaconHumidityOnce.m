@@ -22,6 +22,7 @@
         _beacon = beacon;
         _beaconManager = [DPLinkingBeaconManager sharedInstance];
         [_beaconManager addHumidityDelegate:self];
+        [_beaconManager startBeaconScanWithTimeout:30.0f];
     }
     return self;
 }

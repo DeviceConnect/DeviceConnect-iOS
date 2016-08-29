@@ -12,6 +12,7 @@
 #import "DPLinkingBeaconBatteryOnce.h"
 #import "DPLinkingDevicePlugin.h"
 #import "DPLinkingBeaconService.h"
+#import "DPLinkingBeaconUtil.h"
 
 @interface DPLinkingBeaconBatteryProfile () <DPLinkingBeaconBatteryDelegate>
 @end
@@ -107,10 +108,13 @@
     DConnectEventManager *mgr = [DConnectEventManager sharedManagerForClass:[DPLinkingDevicePlugin class]];
     DConnectEventError error = [mgr removeEventForRequest:request];
     if (error == DConnectEventErrorNone) {
-        [response setResult:DConnectMessageResultTypeOk];
         if ([self isEmptyEventList:serviceId]) {
             [beaconManager removeBatteryDelegate:self];
         }
+        if ([DPLinkingBeaconUtil isEmptyEvent]) {
+            [beaconManager stopBeaconScan];
+        }
+        [response setResult:DConnectMessageResultTypeOk];
     } else if (error == DConnectEventErrorInvalidParameter) {
         [response setErrorToInvalidRequestParameterWithMessage:@"sessionKey must be specified."];
     } else {

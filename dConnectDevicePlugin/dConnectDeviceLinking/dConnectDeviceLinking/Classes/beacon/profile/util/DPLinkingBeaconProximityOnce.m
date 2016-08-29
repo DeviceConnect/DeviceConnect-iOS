@@ -21,6 +21,7 @@
         _beacon = beacon;
         _beaconManager = [DPLinkingBeaconManager sharedInstance];
         [_beaconManager addGattDataDelegate:self];
+        [_beaconManager startBeaconScanWithTimeout:30.0f];
     }
     return self;
 }

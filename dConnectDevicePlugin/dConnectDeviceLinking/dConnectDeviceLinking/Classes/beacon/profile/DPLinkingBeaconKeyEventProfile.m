@@ -12,6 +12,7 @@
 #import "DPLinkingDevicePlugin.h"
 #import "DPLinkingBeaconService.h"
 #import "DPLinkingBeaconKeyEventOnce.h"
+#import "DPLinkingBeaconUtil.h"
 
 @interface DPLinkingBeaconKeyEventProfile () <DPLinkingBeaconButtonIdDelegate>
 
@@ -100,8 +101,13 @@
     DConnectEventManager *mgr = [DConnectEventManager sharedManagerForClass:[DPLinkingDevicePlugin class]];
     DConnectEventError error = [mgr removeEventForRequest:request];
     if (error == DConnectEventErrorNone) {
+        if ([self isEmptyEventList:serviceId]) {
+            [beaconManager removeButtonIdDelegate:self];
+        }
+        if ([DPLinkingBeaconUtil isEmptyEvent]) {
+            [beaconManager stopBeaconScan];
+        }
         [response setResult:DConnectMessageResultTypeOk];
-        [beaconManager removeButtonIdDelegate:self];
     } else if (error == DConnectEventErrorInvalidParameter) {
         [response setErrorToInvalidRequestParameterWithMessage:@"sessionKey must be specified."];
     } else {
@@ -113,6 +119,15 @@
 - (DPLinkingBeaconService *) getLinkingBeaconService
 {
     return (DPLinkingBeaconService *)self.provider;
+}
+
+- (BOOL) isEmptyEventList:(NSString *)serviceId
+{
+    DConnectEventManager *mgr = [DConnectEventManager sharedManagerForClass:[DPLinkingDevicePlugin class]];
+    NSArray *events = [mgr eventListForServiceId:serviceId
+                                         profile:DConnectBatteryProfileName
+                                       attribute:DConnectBatteryProfileAttrOnBatteryChange];
+    return events.count == 0;
 }
 
 #pragma mark - DPLinkingBeaconButtonIdDelegate

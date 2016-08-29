@@ -38,6 +38,14 @@
         [response setErrorToNotFoundService];
         return YES;
     }
+
+    if (beacon.temperatureData && [[NSDate date] timeIntervalSince1970] - beacon.temperatureData.timeStamp < 30.0f) {
+        [response setResult:DConnectMessageResultTypeOk];
+        [DCMTemperatureProfile setTemperature:beacon.temperatureData.value target:response];
+        [DCMTemperatureProfile setTimeStamp:beacon.temperatureData.timeStamp target:response];
+        [DCMTemperatureProfile setType:DCMTemperatureProfileEnumCelsius target:response];
+        return YES;
+    }
     
     DPLinkingBeaconTemperatureOnce *temperature = [[DPLinkingBeaconTemperatureOnce alloc] initWithBeacon:beacon];
     temperature.request = request;

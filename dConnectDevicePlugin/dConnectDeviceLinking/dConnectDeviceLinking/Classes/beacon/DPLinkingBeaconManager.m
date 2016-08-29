@@ -152,7 +152,7 @@ static DPLinkingBeaconManager* _sharedInstance = nil;
         return;
     }
 
-    DCLogInfo(@"startBeaconScanWithTimeout");
+    DCLogInfo(@"startBeaconScanWithTimeout: %f", timeout);
 
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, timeout * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
         DCLogInfo(@"startBeaconScanWithTimeout: timeout");
@@ -277,13 +277,11 @@ static DPLinkingBeaconManager* _sharedInstance = nil;
 
 - (void) startBeaconScanInternal {
     DCLogInfo(@"startBeaconScanInternal");
-//    [[BLEConnecter sharedInstance] scanDevice];
     [[BLEConnecter sharedInstance] startPartialScanDevice];
 }
 
 - (void) stopBeaconScanInternal {
     DCLogInfo(@"stopBeaconScanInternal");
-//    [[BLEConnecter sharedInstance] stopScan];
     [[BLEConnecter sharedInstance] stopPartialScanDevice];
 }
 
