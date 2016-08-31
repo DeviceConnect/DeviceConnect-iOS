@@ -226,10 +226,12 @@
 		return;
 	}
 	// onlineの時だけRequestTopic購読
-	if ([myInfo[@"online"] boolValue]) {
-		[DPAWSIoTController subscribeRequest];
-	} else {
-		[DPAWSIoTController unsubscribeRequest];
+	if (myInfo) {
+		if ([myInfo[@"online"] boolValue]) {
+			[DPAWSIoTController subscribeRequest];
+		} else {
+			[DPAWSIoTController unsubscribeRequest];
+		}
 	}
 	// ResponseTopic購読・解除
 	for (NSString *key in managers.allKeys) {
@@ -297,6 +299,11 @@
 			return YES;
 		}
 		managerUUID = [domains objectAtIndex:0];
+		// 許可されていない場合はエラー
+		if (![DPAWSIoTUtils hasAllowedManager:managerUUID]) {
+			[response setErrorToNotFoundService];
+			return YES;
+		}
 		serviceId = [serviceId stringByReplacingOccurrencesOfString:[managerUUID stringByAppendingString:@"."] withString:@""];
 		reqDic[@"serviceId"] = serviceId;
 	}
