@@ -42,12 +42,7 @@
 			NSLog(@"%@", error);
 			return;
 		}
-		// リクエストの購読/解除
-		if (_statusSwitch.on) {
-			[DPAWSIoTController subscribeRequest];
-		} else {
-			[DPAWSIoTController unsubscribeRequest];
-		}
+		// リクエストの購読/解除はThings経由
 	}];
 }
 

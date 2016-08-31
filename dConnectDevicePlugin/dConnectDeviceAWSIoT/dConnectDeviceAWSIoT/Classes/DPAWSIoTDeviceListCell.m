@@ -9,6 +9,7 @@
 
 #import "DPAWSIoTDeviceListCell.h"
 #import "DPAWSIoTUtils.h"
+#import "DPAWSIoTController.h"
 
 @interface DPAWSIoTDeviceListCell () {
 	NSString *_key;

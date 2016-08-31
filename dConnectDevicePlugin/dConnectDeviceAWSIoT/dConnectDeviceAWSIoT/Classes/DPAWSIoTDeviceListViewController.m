@@ -48,6 +48,12 @@
 	}
 }
 
+// View非表示時
+- (void)viewWillDisappear:(BOOL)animated {
+	[super viewWillDisappear:animated];
+	[[DPAWSIoTController sharedManager] fetchManagerInfo];
+}
+
 // Shadowを同期
 - (void)syncShadow {
 	// Shadow取得
