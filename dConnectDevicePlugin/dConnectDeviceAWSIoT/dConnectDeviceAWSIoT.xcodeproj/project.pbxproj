@@ -38,6 +38,7 @@
 		789AC4B31D5D7D4A00F12F45 /* DPAWSIoTKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = 789AC4B21D5D7D4A00F12F45 /* DPAWSIoTKeychain.m */; };
 		789AC4B51D5D7DA000F12F45 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 789AC4B41D5D7DA000F12F45 /* Security.framework */; };
 		789AC4B91D5D8DFF00F12F45 /* DPAWSIoTUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 789AC4B81D5D8DFF00F12F45 /* DPAWSIoTUtils.m */; };
+		78A2DE031D7042FA001DCA6A /* DPAWSIoTDeviceListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 78A2DE021D7042FA001DCA6A /* DPAWSIoTDeviceListCell.m */; };
 		78B7F2BA1D658DAF00A5E520 /* DPAWSIoTSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 78B7F2B91D658DAF00A5E520 /* DPAWSIoTSettingViewController.m */; };
 		78B7F2BD1D66A0A100A5E520 /* DPAWSIoTController.m in Sources */ = {isa = PBXBuildFile; fileRef = 78B7F2BC1D66A0A100A5E520 /* DPAWSIoTController.m */; };
 		78B7F2C01D66AE4A00A5E520 /* DPAWSIoTNetworkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 78B7F2BF1D66AE4A00A5E520 /* DPAWSIoTNetworkManager.m */; };
@@ -97,6 +98,8 @@
 		789AC4B41D5D7DA000F12F45 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		789AC4B71D5D8DFF00F12F45 /* DPAWSIoTUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPAWSIoTUtils.h; sourceTree = "<group>"; };
 		789AC4B81D5D8DFF00F12F45 /* DPAWSIoTUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPAWSIoTUtils.m; sourceTree = "<group>"; };
+		78A2DE011D7042FA001DCA6A /* DPAWSIoTDeviceListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPAWSIoTDeviceListCell.h; sourceTree = "<group>"; };
+		78A2DE021D7042FA001DCA6A /* DPAWSIoTDeviceListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPAWSIoTDeviceListCell.m; sourceTree = "<group>"; };
 		78B7F2B81D658DAF00A5E520 /* DPAWSIoTSettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPAWSIoTSettingViewController.h; sourceTree = "<group>"; };
 		78B7F2B91D658DAF00A5E520 /* DPAWSIoTSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPAWSIoTSettingViewController.m; sourceTree = "<group>"; };
 		78B7F2BB1D66A0A100A5E520 /* DPAWSIoTController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPAWSIoTController.h; sourceTree = "<group>"; };
@@ -247,6 +250,8 @@
 			children = (
 				789AC4AE1D5D7A7C00F12F45 /* DPAWSIoTDeviceListViewController.h */,
 				789AC4AF1D5D7A7C00F12F45 /* DPAWSIoTDeviceListViewController.m */,
+				78A2DE011D7042FA001DCA6A /* DPAWSIoTDeviceListCell.h */,
+				78A2DE021D7042FA001DCA6A /* DPAWSIoTDeviceListCell.m */,
 				789AC49A1D5AF30F00F12F45 /* DPAWSIoTLoginViewController.h */,
 				789AC49B1D5AF30F00F12F45 /* DPAWSIoTLoginViewController.m */,
 				78B7F2B81D658DAF00A5E520 /* DPAWSIoTSettingViewController.h */,
@@ -460,6 +465,7 @@
 			files = (
 				78B7F2BD1D66A0A100A5E520 /* DPAWSIoTController.m in Sources */,
 				78B7F2C01D66AE4A00A5E520 /* DPAWSIoTNetworkManager.m in Sources */,
+				78A2DE031D7042FA001DCA6A /* DPAWSIoTDeviceListCell.m in Sources */,
 				782FCFA61D54150C0084DE03 /* DPAWSIoTManager.m in Sources */,
 				789AC4B01D5D7A7C00F12F45 /* DPAWSIoTDeviceListViewController.m in Sources */,
 				78192D531D6E9DD90068E4F7 /* DPAWSIoTService.m in Sources */,

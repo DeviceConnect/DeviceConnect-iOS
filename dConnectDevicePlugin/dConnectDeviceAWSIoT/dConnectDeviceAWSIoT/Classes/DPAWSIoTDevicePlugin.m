@@ -68,8 +68,8 @@
 					}
 					// ResponseTopic購読
 					for (NSString *key in managers.allKeys) {
-						// onlineじゃない場合は無視
-						if (![managers[key][@"online"] boolValue]) continue;
+						// 許可されていない場合は無視
+						if (![DPAWSIoTUtils hasAllowedManager:key]) continue;
 						
 						// Topicを購読
 						NSString *responseTopic = [NSString stringWithFormat:@"deviceconnect/%@/response", key];
@@ -117,15 +117,15 @@
 			// サービス数を保持
 			int count = 0;
 			for (NSString *key in _managers.allKeys) {
-				// onlineじゃない場合は無視
-				if (![_managers[key][@"online"] boolValue]) continue;
+				// 許可されていない場合は無視
+				if (![DPAWSIoTUtils hasAllowedManager:key]) continue;
 				count++;
 			}
 			[response setInteger:count forKey:@"servicecount"];
 			// クラウド上のServiceを検索
 			for (NSString *key in _managers.allKeys) {
-				// onlineじゃない場合は無視
-				if (![_managers[key][@"online"] boolValue]) continue;
+				// 許可されていない場合は無視
+				if (![DPAWSIoTUtils hasAllowedManager:key]) continue;
 				// ServiceIdにManagerのUUIDを埋め込む
 				[request setString:key forKey:@"serviceId"];
 				[self sendRequestToMQTT:request code:requestCode response:response];

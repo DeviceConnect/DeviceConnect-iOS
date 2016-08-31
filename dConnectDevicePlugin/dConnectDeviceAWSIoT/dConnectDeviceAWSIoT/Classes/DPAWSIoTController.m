@@ -55,7 +55,14 @@
 		 NSDictionary *myInfo = json[@"state"][@"reported"][kManagerUUID];
 		 // 自分以外の情報
 		 NSMutableDictionary *managers = [json[@"state"][@"reported"] mutableCopy];
+		 // 自分の情報は削除
 		 [managers removeObjectForKey:kManagerUUID];
+		 // onlineじゃない場合は削除
+		 for (NSString *key in managers.allKeys) {
+			 if (![managers[key][@"online"] boolValue]) {
+				 [managers removeObjectForKey:key];
+			 }
+		 }
 		 handler(managers, myInfo, nil);
 	 }];
 }

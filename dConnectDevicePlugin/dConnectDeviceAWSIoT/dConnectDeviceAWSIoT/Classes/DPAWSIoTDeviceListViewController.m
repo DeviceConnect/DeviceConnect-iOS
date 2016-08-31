@@ -11,6 +11,7 @@
 #import "DPAWSIoTUtils.h"
 #import "DPAWSIoTManager.h"
 #import "DPAWSIoTController.h"
+#import "DPAWSIoTDeviceListCell.h"
 
 @interface DPAWSIoTDeviceListViewController () <UITableViewDataSource> {
 	NSDictionary *_devices;
@@ -110,12 +111,9 @@
 // テーブル内容
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
-	UILabel *label = [cell viewWithTag:1];
-//	UISwitch *sw = [cell viewWithTag:2];
+	DPAWSIoTDeviceListCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
 	id key = [_devices.allKeys objectAtIndex:indexPath.row];
-	label.text = _devices[key][@"name"];
-//	[sw setOn:[_devices[key][@"online"] boolValue]];
+	[cell setName:_devices[key][@"name"] key:key];
 	return cell;
 }
 

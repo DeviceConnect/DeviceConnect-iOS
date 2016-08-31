@@ -153,7 +153,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="524"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" rowHeight="55" id="Ia1-K1-p7W">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" rowHeight="55" id="Ia1-K1-p7W" customClass="DPAWSIoTDeviceListCell">
                                         <rect key="frame" x="0.0" y="92" width="320" height="55"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Ia1-K1-p7W" id="N7q-Z7-Ing">
@@ -162,6 +162,9 @@
                                             <subviews>
                                                 <switch opaque="NO" tag="2" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="cWz-f9-zEK">
                                                     <rect key="frame" x="253" y="12" width="51" height="31"/>
+                                                    <connections>
+                                                        <action selector="switchChanged:" destination="Ia1-K1-p7W" eventType="valueChanged" id="Db2-Q9-ioP"/>
+                                                    </connections>
                                                 </switch>
                                                 <label opaque="NO" userInteractionEnabled="NO" tag="1" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7cn-1h-Gsn">
                                                     <rect key="frame" x="18" y="17" width="42" height="21"/>
@@ -177,6 +180,10 @@
                                                 <constraint firstItem="7cn-1h-Gsn" firstAttribute="centerY" secondItem="N7q-Z7-Ing" secondAttribute="centerY" id="tOA-xR-e5h"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="stateSwitch" destination="cWz-f9-zEK" id="Ito-bo-WKj"/>
+                                            <outlet property="titleLabel" destination="7cn-1h-Gsn" id="f1V-fb-l4k"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>

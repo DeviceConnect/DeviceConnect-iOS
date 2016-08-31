@@ -46,6 +46,43 @@ static UIViewController *loadingHUD;
 	[DPAWSIoTKeychain updateValue:[@(region) stringValue] key:kRegionKey];
 }
 
+// Managerを許可
++ (void)addAllowManager:(NSString*)uuid {
+	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+	NSMutableArray *array = [[defaults arrayForKey:@"allowManagers"] mutableCopy];
+	if (!array) {
+		array = [NSMutableArray array];
+	}
+	if (![array containsObject:uuid]) {
+		[array addObject:uuid];
+	}
+	[defaults setObject:array forKey:@"allowManagers"];
+	[defaults synchronize];
+}
+
+// Managerの許可を解除
++ (void)removeAllowManager:(NSString*)uuid {
+	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+	NSMutableArray *array = [[defaults arrayForKey:@"allowManagers"] mutableCopy];
+	if (!array) {
+		return;
+	}
+	[array removeObject:uuid];
+	[defaults setObject:array forKey:@"allowManagers"];
+	[defaults synchronize];
+}
+
+// Managerが許可されているか
++ (BOOL)hasAllowedManager:(NSString*)uuid {
+	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+	NSArray *array = [defaults arrayForKey:@"allowManagers"];
+	if (array) {
+		return [array containsObject:uuid];
+	} else {
+		return NO;
+	}
+}
+
 // ログイン
 + (void)loginWithHandler:(void (^)(NSError *error))handler {
 	NSString *accessKey = [DPAWSIoTKeychain findWithKey:kAccessKeyID];

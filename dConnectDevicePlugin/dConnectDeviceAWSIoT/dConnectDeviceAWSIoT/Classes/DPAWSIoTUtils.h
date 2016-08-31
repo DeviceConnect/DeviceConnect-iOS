@@ -18,6 +18,13 @@
 // アカウントを設定
 + (void)setAccount:(NSString*)accessKey secretKey:(NSString*)secretKey region:(NSInteger)region;
 
+// Managerを許可
++ (void)addAllowManager:(NSString*)uuid;
+// Managerが許可されているか
++ (BOOL)hasAllowedManager:(NSString*)uuid;
+// Managerの許可を解除
++ (void)removeAllowManager:(NSString*)uuid;
+
 // ローディング画面表示
 + (void)showLoadingHUD:(UIStoryboard*)storyboard;
 // ローディング画面非表示
