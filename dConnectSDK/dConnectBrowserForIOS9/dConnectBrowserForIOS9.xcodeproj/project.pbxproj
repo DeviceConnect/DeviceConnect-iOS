@@ -118,6 +118,7 @@
 		AB1FAB131C7AC1EE0013C434 /* RobotUIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB1FAB101C7AC1EE0013C434 /* RobotUIKit.framework */; };
 		AB1FAB161C7AC1F60013C434 /* dConnectDeviceSphero_resources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = AB1FAB141C7AC1F60013C434 /* dConnectDeviceSphero_resources.bundle */; };
 		AB1FAB171C7AC1F60013C434 /* dConnectDeviceSphero.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB1FAB151C7AC1F60013C434 /* dConnectDeviceSphero.framework */; };
+		AB7A81A81D799E7F00DF7B05 /* demo in Resources */ = {isa = PBXBuildFile; fileRef = AB7A81A71D799E7F00DF7B05 /* demo */; };
 		AB94E85F1C755EB300DAE749 /* BookmarkDBFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB94E8581C755EB200DAE749 /* BookmarkDBFramework.framework */; };
 		AB94E8601C755EB300DAE749 /* BookmarkDBFramework.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = AB94E8581C755EB200DAE749 /* BookmarkDBFramework.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		AB94E86D1C75611700DAE749 /* db.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = AB94E8651C75611700DAE749 /* db.xcdatamodeld */; };
@@ -365,6 +366,7 @@
 		AB1FAB101C7AC1EE0013C434 /* RobotUIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RobotUIKit.framework; path = ../../dConnectDevicePlugin/dConnectDeviceSphero/RobotUIKit.framework; sourceTree = "<group>"; };
 		AB1FAB141C7AC1F60013C434 /* dConnectDeviceSphero_resources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = dConnectDeviceSphero_resources.bundle; path = ../../dConnectDevicePlugin/dConnectDeviceSphero/bin/dConnectDeviceSphero_resources.bundle; sourceTree = "<group>"; };
 		AB1FAB151C7AC1F60013C434 /* dConnectDeviceSphero.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = dConnectDeviceSphero.framework; path = ../../dConnectDevicePlugin/dConnectDeviceSphero/bin/dConnectDeviceSphero.framework; sourceTree = "<group>"; };
+		AB7A81A71D799E7F00DF7B05 /* demo */ = {isa = PBXFileReference; lastKnownFileType = folder; path = demo; sourceTree = "<group>"; };
 		AB94E8581C755EB200DAE749 /* BookmarkDBFramework.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = BookmarkDBFramework.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB94E85C1C755EB300DAE749 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AB94E8661C75611700DAE749 /* db 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "db 2.xcdatamodel"; sourceTree = "<group>"; };
@@ -954,6 +956,7 @@
 		ABEB97341D6AC1E4003BE6E7 /* html */ = {
 			isa = PBXGroup;
 			children = (
+				AB7A81A71D799E7F00DF7B05 /* demo */,
 				ABEB97C41D6AC994003BE6E7 /* help */,
 			);
 			name = html;
@@ -1118,6 +1121,7 @@
 				AB00F23A1C719B8100689C70 /* dConnectDeviceSonyCamera_resources.bundle in Resources */,
 				AB00F3281C71A93700689C70 /* Popup.storyboard in Resources */,
 				AB00F3271C71A93700689C70 /* Bookmark.storyboard in Resources */,
+				AB7A81A81D799E7F00DF7B05 /* demo in Resources */,
 				AB00F2361C719B7600689C70 /* dConnectDevicePebble_resources.bundle in Resources */,
 				AB00F2141C719AA800689C70 /* DConnectSDK_resources.bundle in Resources */,
 				ABEB97C51D6AC994003BE6E7 /* help in Resources */,

@@ -232,10 +232,11 @@
 
 - (void)openDeviceDetail:(DConnectMessage*)message
 {
-    //TODO: デバイス確認画面用のhtmlのpathを渡す
-    NSString* path = [[NSBundle mainBundle]pathForResource:@"device" ofType:@"html"];
-    WebViewController* controller = [[WebViewController alloc]initWithPath:path];
-    UINavigationController* nav = [[UINavigationController alloc]initWithRootViewController:controller];
+    NSString *serviceId = [message stringForKey: DConnectServiceDiscoveryProfileParamId];
+    
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"index" ofType:@"html" inDirectory:@"demo"];
+    WebViewController* webView = [[WebViewController alloc] initWithURL: [NSString stringWithFormat:@"file://%@?serviceId=%@", path, serviceId]];
+    UINavigationController* nav = [[UINavigationController alloc] initWithRootViewController:webView];
     [self presentViewController:nav animated:YES completion:nil];
 }
 
