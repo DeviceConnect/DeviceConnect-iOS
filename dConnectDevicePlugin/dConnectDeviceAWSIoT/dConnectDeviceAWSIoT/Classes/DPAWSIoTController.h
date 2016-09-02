@@ -8,8 +8,11 @@
 //
 
 #import <DConnectSDK/DConnectSDK.h>
+#import "DPAWSIoTDevicePlugin.h"
 
 @interface DPAWSIoTController : NSObject
+
+@property (nonatomic, weak) DPAWSIoTDevicePlugin *plugin;
 
 // 共有インスタンス
 + (instancetype)sharedManager;
@@ -26,11 +29,6 @@
 // 自分のデバイス情報をShadowに登録
 + (void)setManagerInfo:(BOOL)online handler:(void (^)(NSError *error))handler;
 
-// RequestTopic購読
-+ (void)subscribeRequest;
-// RequestTopic購読解除
-+ (void)unsubscribeRequest;
-
 
 // ログイン
 - (void)login;
@@ -42,5 +40,8 @@
 - (void)receivedResponseFromMQTT:(id)json from:(NSDictionary*)manager uuid:(NSString*)uuid;
 // ServiceDiscoveryのRequestを処理
 - (BOOL)executeServiceDiscoveryRequest:(DConnectRequestMessage *)request response:(DConnectResponseMessage *)response requestCode:(u_int32_t)requestCode;
+
+// Eventを発行
+- (void)publishEvent:(NSString*)msg;
 
 @end

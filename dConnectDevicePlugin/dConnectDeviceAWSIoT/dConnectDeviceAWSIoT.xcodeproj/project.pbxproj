@@ -31,6 +31,15 @@
 		782FCFB91D54514C0084DE03 /* Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 782FCFB81D54514C0084DE03 /* Tests.m */; };
 		782FCFBB1D54514C0084DE03 /* libdConnectDeviceAWSIoT.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 782989F81D532AF900E9B90B /* libdConnectDeviceAWSIoT.a */; };
 		782FCFC41D5453BC0084DE03 /* DConnectSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78298A081D532DB900E9B90B /* DConnectSDK.framework */; };
+		78430F431D77E20600B20FDA /* DPAWSIoTWebSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 78430F421D77E20600B20FDA /* DPAWSIoTWebSocket.m */; };
+		78430F5C1D7802C200B20FDA /* PSWebSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 78430F4B1D7802C200B20FDA /* PSWebSocket.m */; };
+		78430F5D1D7802C200B20FDA /* PSWebSocketBuffer.m in Sources */ = {isa = PBXBuildFile; fileRef = 78430F4D1D7802C200B20FDA /* PSWebSocketBuffer.m */; };
+		78430F5E1D7802C200B20FDA /* PSWebSocketDeflater.m in Sources */ = {isa = PBXBuildFile; fileRef = 78430F4F1D7802C200B20FDA /* PSWebSocketDeflater.m */; };
+		78430F5F1D7802C200B20FDA /* PSWebSocketDriver.m in Sources */ = {isa = PBXBuildFile; fileRef = 78430F511D7802C200B20FDA /* PSWebSocketDriver.m */; };
+		78430F601D7802C200B20FDA /* PSWebSocketInflater.m in Sources */ = {isa = PBXBuildFile; fileRef = 78430F531D7802C200B20FDA /* PSWebSocketInflater.m */; };
+		78430F611D7802C200B20FDA /* PSWebSocketNetworkThread.m in Sources */ = {isa = PBXBuildFile; fileRef = 78430F561D7802C200B20FDA /* PSWebSocketNetworkThread.m */; };
+		78430F621D7802C200B20FDA /* PSWebSocketServer.m in Sources */ = {isa = PBXBuildFile; fileRef = 78430F581D7802C200B20FDA /* PSWebSocketServer.m */; };
+		78430F631D7802C200B20FDA /* PSWebSocketUTF8Decoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 78430F5B1D7802C200B20FDA /* PSWebSocketUTF8Decoder.m */; };
 		789AC49C1D5AF30F00F12F45 /* DPAWSIoTLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 789AC49B1D5AF30F00F12F45 /* DPAWSIoTLoginViewController.m */; };
 		789AC4A01D5AF79900F12F45 /* DPAWSIoTSystemProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 789AC49F1D5AF79900F12F45 /* DPAWSIoTSystemProfile.m */; };
 		789AC4AB1D5B07CC00F12F45 /* AWSIoT.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 789AC4991D5ABF0200F12F45 /* AWSIoT.storyboard */; };
@@ -82,6 +91,27 @@
 		782FCFB61D54514C0084DE03 /* Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		782FCFB81D54514C0084DE03 /* Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Tests.m; sourceTree = "<group>"; };
 		782FCFBA1D54514C0084DE03 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		78430F411D77E20600B20FDA /* DPAWSIoTWebSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPAWSIoTWebSocket.h; sourceTree = "<group>"; };
+		78430F421D77E20600B20FDA /* DPAWSIoTWebSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPAWSIoTWebSocket.m; sourceTree = "<group>"; };
+		78430F491D7802C200B20FDA /* PocketSocket-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "PocketSocket-Prefix.pch"; sourceTree = "<group>"; };
+		78430F4A1D7802C200B20FDA /* PSWebSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSWebSocket.h; sourceTree = "<group>"; };
+		78430F4B1D7802C200B20FDA /* PSWebSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSWebSocket.m; sourceTree = "<group>"; };
+		78430F4C1D7802C200B20FDA /* PSWebSocketBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSWebSocketBuffer.h; sourceTree = "<group>"; };
+		78430F4D1D7802C200B20FDA /* PSWebSocketBuffer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSWebSocketBuffer.m; sourceTree = "<group>"; };
+		78430F4E1D7802C200B20FDA /* PSWebSocketDeflater.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSWebSocketDeflater.h; sourceTree = "<group>"; };
+		78430F4F1D7802C200B20FDA /* PSWebSocketDeflater.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSWebSocketDeflater.m; sourceTree = "<group>"; };
+		78430F501D7802C200B20FDA /* PSWebSocketDriver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSWebSocketDriver.h; sourceTree = "<group>"; };
+		78430F511D7802C200B20FDA /* PSWebSocketDriver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSWebSocketDriver.m; sourceTree = "<group>"; };
+		78430F521D7802C200B20FDA /* PSWebSocketInflater.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSWebSocketInflater.h; sourceTree = "<group>"; };
+		78430F531D7802C200B20FDA /* PSWebSocketInflater.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSWebSocketInflater.m; sourceTree = "<group>"; };
+		78430F541D7802C200B20FDA /* PSWebSocketInternal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSWebSocketInternal.h; sourceTree = "<group>"; };
+		78430F551D7802C200B20FDA /* PSWebSocketNetworkThread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSWebSocketNetworkThread.h; sourceTree = "<group>"; };
+		78430F561D7802C200B20FDA /* PSWebSocketNetworkThread.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSWebSocketNetworkThread.m; sourceTree = "<group>"; };
+		78430F571D7802C200B20FDA /* PSWebSocketServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSWebSocketServer.h; sourceTree = "<group>"; };
+		78430F581D7802C200B20FDA /* PSWebSocketServer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSWebSocketServer.m; sourceTree = "<group>"; };
+		78430F591D7802C200B20FDA /* PSWebSocketTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSWebSocketTypes.h; sourceTree = "<group>"; };
+		78430F5A1D7802C200B20FDA /* PSWebSocketUTF8Decoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSWebSocketUTF8Decoder.h; sourceTree = "<group>"; };
+		78430F5B1D7802C200B20FDA /* PSWebSocketUTF8Decoder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSWebSocketUTF8Decoder.m; sourceTree = "<group>"; };
 		787527E41D65683E001876FD /* DConnectMessage+Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "DConnectMessage+Private.h"; sourceTree = "<group>"; };
 		787527E51D656B6A001876FD /* DConnectDevicePlugin+Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "DConnectDevicePlugin+Private.h"; sourceTree = "<group>"; };
 		789AC4991D5ABF0200F12F45 /* AWSIoT.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = AWSIoT.storyboard; sourceTree = "<group>"; };
@@ -177,6 +207,7 @@
 		78298A041D532CBE00E9B90B /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				78430F481D7802C200B20FDA /* PocketSocket */,
 				78298A1C1D53351A00E9B90B /* DPAWSIoTDevicePlugin.h */,
 				78298A061D532D3500E9B90B /* DPAWSIoTDevicePlugin.m */,
 				78B7F2BB1D66A0A100A5E520 /* DPAWSIoTController.h */,
@@ -236,6 +267,32 @@
 			path = Tests;
 			sourceTree = "<group>";
 		};
+		78430F481D7802C200B20FDA /* PocketSocket */ = {
+			isa = PBXGroup;
+			children = (
+				78430F491D7802C200B20FDA /* PocketSocket-Prefix.pch */,
+				78430F4A1D7802C200B20FDA /* PSWebSocket.h */,
+				78430F4B1D7802C200B20FDA /* PSWebSocket.m */,
+				78430F4C1D7802C200B20FDA /* PSWebSocketBuffer.h */,
+				78430F4D1D7802C200B20FDA /* PSWebSocketBuffer.m */,
+				78430F4E1D7802C200B20FDA /* PSWebSocketDeflater.h */,
+				78430F4F1D7802C200B20FDA /* PSWebSocketDeflater.m */,
+				78430F501D7802C200B20FDA /* PSWebSocketDriver.h */,
+				78430F511D7802C200B20FDA /* PSWebSocketDriver.m */,
+				78430F521D7802C200B20FDA /* PSWebSocketInflater.h */,
+				78430F531D7802C200B20FDA /* PSWebSocketInflater.m */,
+				78430F541D7802C200B20FDA /* PSWebSocketInternal.h */,
+				78430F551D7802C200B20FDA /* PSWebSocketNetworkThread.h */,
+				78430F561D7802C200B20FDA /* PSWebSocketNetworkThread.m */,
+				78430F571D7802C200B20FDA /* PSWebSocketServer.h */,
+				78430F581D7802C200B20FDA /* PSWebSocketServer.m */,
+				78430F591D7802C200B20FDA /* PSWebSocketTypes.h */,
+				78430F5A1D7802C200B20FDA /* PSWebSocketUTF8Decoder.h */,
+				78430F5B1D7802C200B20FDA /* PSWebSocketUTF8Decoder.m */,
+			);
+			path = PocketSocket;
+			sourceTree = "<group>";
+		};
 		787527E61D656B73001876FD /* Category */ = {
 			isa = PBXGroup;
 			children = (
@@ -279,6 +336,8 @@
 				782FCFA51D54150C0084DE03 /* DPAWSIoTManager.m */,
 				789AC4B11D5D7D4A00F12F45 /* DPAWSIoTKeychain.h */,
 				789AC4B21D5D7D4A00F12F45 /* DPAWSIoTKeychain.m */,
+				78430F411D77E20600B20FDA /* DPAWSIoTWebSocket.h */,
+				78430F421D77E20600B20FDA /* DPAWSIoTWebSocket.m */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -463,17 +522,26 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				78430F601D7802C200B20FDA /* PSWebSocketInflater.m in Sources */,
+				78430F611D7802C200B20FDA /* PSWebSocketNetworkThread.m in Sources */,
 				78B7F2BD1D66A0A100A5E520 /* DPAWSIoTController.m in Sources */,
 				78B7F2C01D66AE4A00A5E520 /* DPAWSIoTNetworkManager.m in Sources */,
+				78430F5D1D7802C200B20FDA /* PSWebSocketBuffer.m in Sources */,
+				78430F5F1D7802C200B20FDA /* PSWebSocketDriver.m in Sources */,
 				78A2DE031D7042FA001DCA6A /* DPAWSIoTDeviceListCell.m in Sources */,
 				782FCFA61D54150C0084DE03 /* DPAWSIoTManager.m in Sources */,
+				78430F621D7802C200B20FDA /* PSWebSocketServer.m in Sources */,
+				78430F631D7802C200B20FDA /* PSWebSocketUTF8Decoder.m in Sources */,
 				789AC4B01D5D7A7C00F12F45 /* DPAWSIoTDeviceListViewController.m in Sources */,
 				78192D531D6E9DD90068E4F7 /* DPAWSIoTService.m in Sources */,
 				78298A071D532D3500E9B90B /* DPAWSIoTDevicePlugin.m in Sources */,
 				789AC4A01D5AF79900F12F45 /* DPAWSIoTSystemProfile.m in Sources */,
 				789AC49C1D5AF30F00F12F45 /* DPAWSIoTLoginViewController.m in Sources */,
+				78430F5E1D7802C200B20FDA /* PSWebSocketDeflater.m in Sources */,
+				78430F431D77E20600B20FDA /* DPAWSIoTWebSocket.m in Sources */,
 				78B7F2BA1D658DAF00A5E520 /* DPAWSIoTSettingViewController.m in Sources */,
 				789AC4B91D5D8DFF00F12F45 /* DPAWSIoTUtils.m in Sources */,
+				78430F5C1D7802C200B20FDA /* PSWebSocket.m in Sources */,
 				789AC4B31D5D7D4A00F12F45 /* DPAWSIoTKeychain.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

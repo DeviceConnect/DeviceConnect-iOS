@@ -39,6 +39,7 @@
 		[self.serviceProvider addService:service];
 
 		// AWSIoTログイン処理
+		[DPAWSIoTController sharedManager].plugin = self;
 		[[DPAWSIoTController sharedManager] login];
 	}
 	

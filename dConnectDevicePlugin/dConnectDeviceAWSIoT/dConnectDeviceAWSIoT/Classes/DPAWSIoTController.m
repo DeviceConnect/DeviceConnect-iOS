@@ -13,6 +13,7 @@
 #import "DPAWSIoTManager.h"
 #import "DPAWSIoTController.h"
 #import "DConnectMessage+Private.h"
+#import "DPAWSIoTWebSocket.h"
 
 // TODO: 名前を決める
 #define kShadowName @"dconnect"
@@ -20,6 +21,7 @@
 @interface DPAWSIoTController () {
 	NSMutableDictionary *_responses;
 	NSDictionary *_managers;
+	DPAWSIoTWebSocket *_webSocket;
 }
 @end
 
@@ -41,6 +43,11 @@
 	self = [super init];
 	if (self) {
 		_responses = [NSMutableDictionary dictionary];
+		_webSocket = [[DPAWSIoTWebSocket alloc] init];
+		_webSocket.receivedHandler = ^(NSString *message) {
+			// イベント送信
+			[[DPAWSIoTController sharedManager] publishEvent:message];
+		};
 	}
 	return self;
 }
@@ -132,7 +139,7 @@
 }
 
 // RequestTopic購読
-+ (void)subscribeRequest {
+- (void)subscribeRequest {
 	NSString *requestTopic = [NSString stringWithFormat:@"deviceconnect/%@/request", [DPAWSIoTController managerUUID]];
 	NSLog(@"subscribeRequest:%@", requestTopic);
 	[[DPAWSIoTManager sharedManager] subscribeWithTopic:requestTopic messageHandler:^(id json, NSError *error) {
@@ -140,6 +147,12 @@
 			// TODO: エラー処理
 			NSLog(@"%@", error);
 			return;
+		}
+		if ([json[@"request"][@"action"] isEqualToString:@"put"]) {
+			// WebSocketにつなぐ
+			NSString *key = json[@"request"][@"sessionKey"];
+			NSLog(@"sessionKey:%@", key);
+			[_webSocket addSocket:key];
 		}
 		// MQTTからHTTPへ
 		//NSLog(@"request:%@", json);
@@ -163,7 +176,7 @@
 			// レスポンスをMQTT送信
 			NSString *msg = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
 			NSString *responseTopic = [NSString stringWithFormat:@"deviceconnect/%@/response", [DPAWSIoTController managerUUID]];
-			NSLog(@"%@, %@", responseTopic, msg);
+			NSLog(@"publish:%@, %@", responseTopic, msg);
 			if (![[DPAWSIoTManager sharedManager] publishWithTopic:responseTopic message:msg]) {
 				// TODO: エラー処理
 			}
@@ -172,10 +185,64 @@
 }
 
 // RequestTopic購読解除
-+ (void)unsubscribeRequest {
+- (void)unsubscribeRequest {
 	NSString *requestTopic = [NSString stringWithFormat:@"deviceconnect/%@/request", [DPAWSIoTController managerUUID]];
 	NSLog(@"unsubscribeRequest:%@", requestTopic);
 	[[DPAWSIoTManager sharedManager] unsubscribeWithTopic:requestTopic];
+}
+
+// EventTopic購読
+- (void)subscribeEvent:(NSString*)uuid {
+	NSString *topic = [NSString stringWithFormat:@"deviceconnect/%@/event", uuid];
+	NSLog(@"subscribeEvent:%@", topic);
+	[[DPAWSIoTManager sharedManager] subscribeWithTopic:topic messageHandler:^(id json, NSError *error) {
+		if (error) {
+			// TODO: エラー処理
+			NSLog(@"%@", error);
+			return;
+		}
+		// イベント送信
+		DConnectMessage *message = [self convertJsonToMessage:json];
+		[_plugin sendEvent:message];
+	}];
+}
+
+// JsonからDConnectMessageへ変換
+- (id)convertJsonToMessage:(id)json {
+	if ([json isKindOfClass:[NSDictionary class]]) {
+		DConnectMessage *dicMessage = [DConnectMessage message];
+		for (NSString *key in [json allKeys]) {
+			id msg = [self convertJsonToMessage:json[key]];
+			[dicMessage.internalDictionary setObject:msg forKey:key];
+		}
+		return dicMessage;
+	} else if ([json isKindOfClass:[NSArray class]]) {
+		DConnectArray *arrayMessage = [DConnectArray array];
+		for (id obj in json) {
+			id msg = [self convertJsonToMessage:obj];
+			[arrayMessage.internalArray addObject:msg];
+		}
+		return arrayMessage;
+	} else {
+		return json;
+	}
+}
+
+// EventTopic購読解除
+- (void)unsubscribeEvent:(NSString*)uuid {
+	NSString *topic = [NSString stringWithFormat:@"deviceconnect/%@/event", uuid];
+	NSLog(@"unsubscribeEvent:%@", topic);
+	[[DPAWSIoTManager sharedManager] unsubscribeWithTopic:topic];
+}
+
+// Eventを発行
+- (void)publishEvent:(NSString*)msg {
+	NSString *topic = [NSString stringWithFormat:@"deviceconnect/%@/event", [DPAWSIoTController managerUUID]];
+	NSLog(@"publishEvent:%@, %@", topic, msg);
+	if (![[DPAWSIoTManager sharedManager] publishWithTopic:topic message:msg]) {
+		// TODO: エラー処理
+	}
+
 }
 
 
@@ -228,9 +295,9 @@
 	// onlineの時だけRequestTopic購読
 	if (myInfo) {
 		if ([myInfo[@"online"] boolValue]) {
-			[DPAWSIoTController subscribeRequest];
+			[self subscribeRequest];
 		} else {
-			[DPAWSIoTController unsubscribeRequest];
+			[self unsubscribeRequest];
 		}
 	}
 	// ResponseTopic購読・解除
@@ -250,9 +317,13 @@
 				}
 				[self receivedResponseFromMQTT:json from:managers[key] uuid:key];
 			}];
+			// イベント購読
+			[self subscribeEvent:key];
 		} else {
 			NSLog(@"unsubscribeWithTopic:%@, %@", responseTopic, key);
 			[[DPAWSIoTManager sharedManager] unsubscribeWithTopic:responseTopic];
+			// イベント購読解除
+			[self unsubscribeEvent:key];
 		}
 		
 	}

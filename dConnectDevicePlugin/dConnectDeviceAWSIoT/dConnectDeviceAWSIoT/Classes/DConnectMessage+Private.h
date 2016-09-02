@@ -11,7 +11,7 @@
 
 @interface DConnectArray ()
 
-- (NSArray *) internalArray;
+- (NSMutableArray *) internalArray;
 
 @end
 
