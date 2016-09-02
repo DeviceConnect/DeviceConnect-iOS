@@ -7,11 +7,13 @@
 //
 
 #import "GHDeviceUtil.h"
+static const NSTimeInterval DPSemaphoreTimeout = 20.0;
 
 @interface GHDeviceUtil()
 {
     DConnectManager *manager;
     dispatch_queue_t q_global;
+    dispatch_semaphore_t _semaphore;
 }
 @end
 
@@ -33,6 +35,7 @@ static GHDeviceUtil* mgr = nil;
 {
     self = [super init];
     if(self){
+        _semaphore = dispatch_semaphore_create(1);
         [self setup];
     }
     return self;
@@ -43,7 +46,7 @@ static GHDeviceUtil* mgr = nil;
     manager = [DConnectManager sharedManager];
     [manager startByHttpServer];
     q_global = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
-    [self updateDiveceList];
+//    [self updateDeviceList];
 }
 
 - (void)debug:(DConnectArray*)array
@@ -63,11 +66,13 @@ static GHDeviceUtil* mgr = nil;
 //--------------------------------------------------------------//
 #pragma mark - デバイス一覧取得
 //--------------------------------------------------------------//
-- (void)updateDiveceList
+- (void)updateDeviceList
 {
     __weak GHDeviceUtil *_self = self;
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         dispatch_async(dispatch_get_main_queue(), ^{
+            [self callRequestAccessTokenAPI];
+
             [self discoverDevices:^(DConnectArray *result) {
                 _self.currentDevices = result;
                 _self.recieveDeviceList(result);
@@ -78,18 +83,18 @@ static GHDeviceUtil* mgr = nil;
 
 - (void)discoverDevices:(DiscoverDeviceCompletion)completion
 {
-    BOOL isLocalOAuth = manager.settings.useLocalOAuth;
-    
-    if (isLocalOAuth) {
-        manager.settings.useLocalOAuth = NO;
+    NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
+    NSString *accessToken = [def stringForKey:ACCESS_TOKEN];
+    if (!accessToken) {
+        completion(nil);
+        return;
     }
-    
     DConnectRequestMessage *request = [DConnectRequestMessage new];
     [request setAction: DConnectMessageActionTypeGet];
     [request setApi: DConnectMessageDefaultAPI];
     [request setProfile: DConnectServiceDiscoveryProfileName];
+    [request setAccessToken:accessToken];
     [request setString:[self packageName] forKey:DConnectMessageOrigin];
-    
     [manager sendRequest: request callback:^(DConnectResponseMessage *response) {
         if (response != nil) {
             if ([response result] == DConnectMessageResultTypeOk) {
@@ -108,12 +113,46 @@ static GHDeviceUtil* mgr = nil;
                 completion(nil);
             }
         }
-        if (isLocalOAuth) {
-            manager.settings.useLocalOAuth = YES;
-        }
-
     }];
 }
+
+- (void)callRequestAccessTokenAPI {
+    NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
+    NSString *accessToken = [def stringForKey:ACCESS_TOKEN];
+    if (accessToken) {
+        return;
+    }    
+    NSArray *scopes = [@[DConnectServiceDiscoveryProfileName]
+                       sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];;
+    
+    
+    /* セマフォ準備 */
+    dispatch_semaphore_t semaphore = dispatch_semaphore_create(1);
+    dispatch_time_t timeout = dispatch_time(DISPATCH_TIME_NOW, NSEC_PER_SEC * DPSemaphoreTimeout);
+    
+    /* 応答が返るまでWait */
+    dispatch_semaphore_wait(semaphore, timeout);
+
+    [DConnectUtil asyncAuthorizeWithOrigin: [self packageName]
+                                   appName: @"Browser"
+                                    scopes: scopes
+                                   success: ^(NSString *clientId, NSString *accessToken) {
+                                       NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
+                                       [def setObject:accessToken forKey:ACCESS_TOKEN];
+                                       [def synchronize];
+                                       NSLog(@" - response - accessToken: %@", accessToken);
+                                       /* Wait解除 */
+                                       dispatch_semaphore_signal(semaphore);
+                                       
+                                   }
+                                     error:^(DConnectMessageErrorCodeType errorCode){
+                                         NSLog(@" - response - errorCode: %d", errorCode);
+                                         /* Wait解除 */
+                                         dispatch_semaphore_signal(semaphore);
+                                         
+                                     }];
+}
+
 
 - (NSString *)packageName {
     NSBundle *bundle = [NSBundle mainBundle];

@@ -58,7 +58,7 @@
         if ([result resultType] == NSTextCheckingTypeLink) {
             NSURL *url = [result URL];
             if ([[url scheme] isEqualToString: @"http"] || [[url scheme] isEqualToString: @"https"]) {
-                return [url description];
+                return str;
             } else if ([[url scheme] isEqualToString: @"gotapi"] && [[url host] isEqualToString: @"start"]) {
                 //gotapiの場合
                 NSString* queryURL = @"url=";
