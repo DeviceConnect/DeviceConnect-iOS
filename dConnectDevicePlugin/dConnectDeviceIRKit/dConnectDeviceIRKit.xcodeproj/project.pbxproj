@@ -86,6 +86,7 @@
 		AB4B690A19B46FC9009939C9 /* irkit07.png in Resources */ = {isa = PBXBuildFile; fileRef = AB4B68FA19B4671D009939C9 /* irkit07.png */; };
 		AB4B690B19B46FC9009939C9 /* irkit08.png in Resources */ = {isa = PBXBuildFile; fileRef = AB4B68FB19B4671D009939C9 /* irkit08.png */; };
 		AB506F7419B05CA9004D6C41 /* DConnectSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB506F7319B05CA9004D6C41 /* DConnectSDK.framework */; };
+		AB693D6E1D6ED55400BD3D72 /* DPIRKitVirtualService.m in Sources */ = {isa = PBXBuildFile; fileRef = AB693D6D1D6ED55400BD3D72 /* DPIRKitVirtualService.m */; };
 		AB6A83581B65CA7200E4F32F /* DPIRKitTutorialTopViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB6A83571B65CA7200E4F32F /* DPIRKitTutorialTopViewController.m */; };
 		AB6A835A1B65E07A00E4F32F /* irkit10.png in Resources */ = {isa = PBXBuildFile; fileRef = AB6A83591B65E07A00E4F32F /* irkit10.png */; };
 		AB6A835B1B65FE7A00E4F32F /* irkit10.png in Resources */ = {isa = PBXBuildFile; fileRef = AB6A83591B65E07A00E4F32F /* irkit10.png */; };
@@ -205,6 +206,8 @@
 		AB4B68FA19B4671D009939C9 /* irkit07.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = irkit07.png; sourceTree = "<group>"; };
 		AB4B68FB19B4671D009939C9 /* irkit08.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = irkit08.png; sourceTree = "<group>"; };
 		AB506F7319B05CA9004D6C41 /* DConnectSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DConnectSDK.framework; path = ../../dConnectSDK/dConnectSDKForIOS/DConnectSDK/DConnectSDK.framework; sourceTree = "<group>"; };
+		AB693D6C1D6ED55400BD3D72 /* DPIRKitVirtualService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPIRKitVirtualService.h; sourceTree = "<group>"; };
+		AB693D6D1D6ED55400BD3D72 /* DPIRKitVirtualService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPIRKitVirtualService.m; sourceTree = "<group>"; };
 		AB6A83561B65CA7200E4F32F /* DPIRKitTutorialTopViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPIRKitTutorialTopViewController.h; sourceTree = "<group>"; };
 		AB6A83571B65CA7200E4F32F /* DPIRKitTutorialTopViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPIRKitTutorialTopViewController.m; sourceTree = "<group>"; };
 		AB6A83591B65E07A00E4F32F /* irkit10.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = irkit10.png; sourceTree = "<group>"; };
@@ -411,6 +414,8 @@
 				3039F99119A70D0C00319429 /* DPIRKitConst.h */,
 				D673DA7A1D3BBD330021F1BF /* DPIRKitService.h */,
 				D673DA7B1D3BBD330021F1BF /* DPIRKitService.m */,
+				AB693D6C1D6ED55400BD3D72 /* DPIRKitVirtualService.h */,
+				AB693D6D1D6ED55400BD3D72 /* DPIRKitVirtualService.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -720,6 +725,7 @@
 				30A1EBDF19A8D16600E6CCE9 /* DPIRKitWiFiFormViewController.m in Sources */,
 				D6D1727A1D63F95B00444337 /* DPIRKitSystemProfile.m in Sources */,
 				AB056F981B68DDF300E1482F /* DPIRKitVirtualProfileViewController.m in Sources */,
+				AB693D6E1D6ED55400BD3D72 /* DPIRKitVirtualService.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
