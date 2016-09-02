@@ -8,11 +8,15 @@
 //
 
 #import "DPIRKitManager.h"
+#import "DPIRKitDBManager.h"
 #import "DPIRKitDevice.h"
 #import <CoreTelephony/CTTelephonyNetworkInfo.h>
 #import <CoreTelephony/CTCarrier.h>
 #import "NSString+Hex.h"
 #import "DPIRKitConst.h"
+#import "DPIRKitService.h"
+#import "DPIRKitVirtualService.h"
+#import "DPIRKitVirtualDevice.h"
 
 NSString *const DPIRKitInternetHost = @"api.getirkit.com";
 NSString *const DPIRKitDeviceHost = @"192.168.1.1";
@@ -78,8 +82,6 @@ struct DPIRKitCRCInfo
     
     if (self) {
         // UIスレッドで生成しないといけないため、使用側でUIスレッドで作成する。
-        _browser = [NSNetServiceBrowser new];
-        _browser.delegate = self;
         _services = [NSMutableDictionary dictionary];
         _devices = [NSMutableDictionary dictionary];
     }
@@ -216,12 +218,20 @@ struct DPIRKitCRCInfo
 - (void) startDetection {
     DPIRLog(@"startDetection");
     [_services removeAllObjects];
+    if (_browser) {
+        [self stopDetection];
+    }
+    _browser = [NSNetServiceBrowser new];
+    _browser.delegate = self;
     [_browser searchForServicesOfType:DPIRKitServiceType inDomain:DPIRKitDomain];
 }
 
 - (void) stopDetection {
     DPIRLog(@"stopDetection");
     [_browser stop];
+    [_browser removeFromRunLoop:[NSRunLoop currentRunLoop]
+                        forMode:NSRunLoopCommonModes];
+    _browser = nil;
 }
 
 - (void) fetchMessageWithHostName:(NSString *)hostName completion:(void (^)(NSString *))completion {
@@ -589,6 +599,9 @@ struct DPIRKitCRCInfo
     
     DPIR_ASYNC_E
 }
+
+
+
 
 #pragma mark - NSNetServiceBrowserDelegate
 

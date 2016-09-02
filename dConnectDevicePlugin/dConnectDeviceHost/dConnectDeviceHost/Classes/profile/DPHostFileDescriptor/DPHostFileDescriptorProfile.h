@@ -9,7 +9,7 @@
 
 #import <DConnectSDK/DConnectSDK.h>
 
-@interface DPHostFileDescriptorProfile : DConnectFileDescriptorProfile<DConnectFileDescriptorProfileDelegate>
+@interface DPHostFileDescriptorProfile : DConnectFileDescriptorProfile
 
 /*!
  @param fileMgr dConnectファイルマネージャ

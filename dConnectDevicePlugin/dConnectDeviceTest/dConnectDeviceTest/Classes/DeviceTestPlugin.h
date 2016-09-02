@@ -11,6 +11,8 @@
 
 @interface DeviceTestPlugin : DConnectDevicePlugin
 
+@property (nonatomic, strong) DConnectFileManager * fm;
+
 - (void) asyncSendEvent:(DConnectMessage *)event;
 - (void) asyncSendEvent:(DConnectMessage *)event delay:(NSTimeInterval)delay;
 

@@ -15,9 +15,6 @@
  */
 @interface DConnectAuthorizationProfile : DConnectProfile
 
-@property (nonatomic) id object;
-
-
 /*!
  @brief 任意のオブジェクトを指定してAuthorizationProfileを初期化する。
  オブジェクトはDConnectDevicePluginもしくはDConnectManagerのインスタンスでなければならない。
@@ -29,32 +26,6 @@
  */
 - (id) initWithObject:(id)object;
 
-#pragma mark - Get Methods
-
-/*!
- @brief Local OAuthで使用するクライアントの作成要求の受信を通知する。
- 
- @param[in] requst リクエストパラメータ
- @param[in,out] response レスポンスパラメータ
- 
- @retval YES レスポンスパラメータを返却する。
- @retval NO レスポンスパラメータを返却しないので、@link DConnectManager::sendResponse: @endlinkで返却すること。
- */
-- (BOOL) didReceiveGetCreateClientRequest:(DConnectRequestMessage *)request
-                                 response:(DConnectResponseMessage *)response;
-
-/*!
- 
- @brief Local OAuthで使用するアクセストークンの作成要求の受信を通知する。
- 
- @param[in] requst リクエストパラメータ
- @param[in,out] response レスポンスパラメータ
- 
- @retval YES レスポンスパラメータを返却する。
- @retval NO レスポンスパラメータを返却しないので、@link DConnectManager::sendResponse: @endlinkで返却すること。
- */
-- (BOOL) didReceiveGetRequestAccessTokenRequest:(DConnectRequestMessage *)request
-                                       response:(DConnectResponseMessage *)response;
 
 #pragma mark - Setter
 

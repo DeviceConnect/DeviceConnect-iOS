@@ -211,7 +211,7 @@ static NSString *const DPAllJoynAboutDataException =
         _serviceName = _deviceName;
     } else {
         _serviceName =
-        [NSString stringWithFormat:@"Alljoyn service (%d)", _busName.hash];
+        [NSString stringWithFormat:@"Alljoyn service (%d)", (int)_busName.hash];
     }
 }
 

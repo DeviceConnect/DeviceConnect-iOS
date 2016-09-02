@@ -28,142 +28,12 @@ NSString *const DConnectBatteryProfileParamLevel           = @"level";
 NSString *const DConnectBatteryProfileParamBattery         = @"battery";
 
 
-@interface DConnectBatteryProfile()
-
-- (BOOL) hasMethod:(SEL)method response:(DConnectResponseMessage *)response;
-
-@end
-
 @implementation DConnectBatteryProfile
 
 #pragma mark - DConnectProfile Methods
 
 - (NSString *) profileName {
     return DConnectBatteryProfileName;
-}
-
-- (BOOL) didReceiveGetRequest:(DConnectRequestMessage *)request response:(DConnectResponseMessage *)response {
-    BOOL send = YES;
-    
-    if (!_delegate) {
-        [response setErrorToNotSupportAction];
-        return send;
-    }
-    
-    NSString *serviceId = [request serviceId];
-    NSString *attribute = [request attribute];
-    
-    if (attribute) {
-        if ([attribute isEqualToString:DConnectBatteryProfileAttrLevel]) {
-            if ([self hasMethod:@selector(profile:didReceiveGetLevelRequest:response:serviceId:) response:response])
-            {
-                send = [_delegate profile:self didReceiveGetLevelRequest:request
-                                 response:response serviceId:serviceId];
-            }
-        } else if ([attribute isEqualToString:DConnectBatteryProfileAttrCharging]) {
-            if ([self hasMethod:@selector(profile:didReceiveGetChargingRequest:response:serviceId:) response:response])
-            {
-                send = [_delegate profile:self didReceiveGetChargingRequest:request
-                                 response:response serviceId:serviceId];
-            }
-        } else if ([attribute isEqualToString:DConnectBatteryProfileAttrChargingTime]) {
-            if ([self hasMethod:@selector(profile:didReceiveGetChargingTimeRequest:response:serviceId:) response:response])
-            {
-                send = [_delegate profile:self didReceiveGetChargingTimeRequest:request
-                                 response:response serviceId:serviceId];
-            }
-        } else if ([attribute isEqualToString:DConnectBatteryProfileAttrDischargingTime]) {
-            if ([self hasMethod:@selector(profile:didReceiveGetDischargingTimeRequest:response:serviceId:) response:response])
-            {
-                send = [_delegate profile:self didReceiveGetDischargingTimeRequest:request
-                                 response:response serviceId:serviceId];
-            }
-        } else {
-            [response setErrorToNotSupportProfile];
-        }
-    } else if ([self hasMethod:@selector(profile:didReceiveGetAllRequest:response:serviceId:) response:response])
-    {
-        // attributeが存在しない場合には全属性を取得する
-        send = [_delegate profile:self didReceiveGetAllRequest:request response:response serviceId:serviceId];
-    }
-    
-    return send;
-}
-
-- (BOOL) didReceivePutRequest:(DConnectRequestMessage *)request response:(DConnectResponseMessage *)response {
-    BOOL send = YES;
-    
-    if (!_delegate) {
-        [response setErrorToNotSupportAction];
-        return send;
-    }
-    
-    NSString *serviceId = [request serviceId];
-    NSString *sessionKey = [request sessionKey];
-    NSString *attribute = [request attribute];
-    
-    if (attribute) {
-        if ([attribute isEqualToString:DConnectBatteryProfileAttrOnChargingChange]) {
-            
-            if ([self hasMethod:@selector(profile:didReceivePutOnChargingChangeRequest:response:serviceId:sessionKey:)
-                       response:response])
-            {
-                send = [_delegate profile:self didReceivePutOnChargingChangeRequest:request response:response
-                                 serviceId:serviceId sessionKey:sessionKey];
-            }
-            
-        } else if ([attribute isEqualToString:DConnectBatteryProfileAttrOnBatteryChange]) {
-            
-            if ([self hasMethod:@selector(profile:didReceivePutOnBatteryChangeRequest:response:serviceId:sessionKey:)
-                       response:response])
-            {
-                send = [_delegate profile:self didReceivePutOnBatteryChangeRequest:request response:response
-                                 serviceId:serviceId sessionKey:sessionKey];
-            }
-            
-        } else {
-            [response setErrorToNotSupportProfile];
-        }
-    } else {
-        [response setErrorToNotSupportProfile];
-    }
-    
-    return send;
-}
-
-- (BOOL) didReceiveDeleteRequest:(DConnectRequestMessage *)request response:(DConnectResponseMessage *)response {
-    
-    BOOL send = YES;
-    
-    if (!_delegate) {
-        [response setErrorToNotSupportAction];
-        return send;
-    }
-    
-    NSString *serviceId = [request serviceId];
-    NSString *sessionKey = [request sessionKey];
-    NSString *attribute = [request attribute];
-    
-    if ([DConnectBatteryProfileAttrOnChargingChange isEqualToString:attribute]) {
-        
-        if ([self hasMethod:@selector(profile:didReceiveDeleteOnChargingChangeRequest:response:serviceId:sessionKey:)
-                   response:response])
-        {
-            send = [_delegate profile:self didReceiveDeleteOnChargingChangeRequest:request response:response
-                             serviceId:serviceId sessionKey:sessionKey];
-        }
-        
-    } else if ([DConnectBatteryProfileAttrOnBatteryChange isEqualToString:attribute]) {
-        if ([self hasMethod:@selector(profile:didReceiveDeleteOnBatteryChangeRequest:response:serviceId:sessionKey:)
-                   response:response])
-        {
-            send = [_delegate profile:self didReceiveDeleteOnBatteryChangeRequest:request response:response
-                             serviceId:serviceId sessionKey:sessionKey];
-        }
-    } else {
-        [response setErrorToNotSupportProfile];
-    }
-    return send;
 }
 
 #pragma mark - Setter
@@ -211,16 +81,6 @@ NSString *const DConnectBatteryProfileParamBattery         = @"battery";
     } else {
         [message setMessage:battery forKey:DConnectBatteryProfileParamBattery];
     }
-}
-
-#pragma mark - Private Methods
-
-- (BOOL) hasMethod:(SEL)method response:(DConnectResponseMessage *)response {
-    BOOL result = [_delegate respondsToSelector:method];
-    if (!result) {
-        [response setErrorToNotSupportAttribute];
-    }
-    return result;
 }
 
 @end

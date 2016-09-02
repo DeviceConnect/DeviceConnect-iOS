@@ -12,6 +12,6 @@
 /*!
  @brief Pebble用 DeviceOrientationプロファイル。
  */
-@interface DPPebbleDeviceOrientationProfile : DConnectDeviceOrientationProfile <DConnectDeviceOrientationProfileDelegate>
+@interface DPPebbleDeviceOrientationProfile : DConnectDeviceOrientationProfile
 
 @end

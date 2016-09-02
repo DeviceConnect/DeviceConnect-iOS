@@ -66,7 +66,7 @@
 }
 
 // 共通イベントメッセージ送信
-+ (void)sendMessageWithProvider:(id)provider
++ (void)sendMessageWithPlugin:(id)plugin
 						profile:(NSString *)profile
 					  attribute:(NSString *)attribute
 					   serviceID:(NSString*)serviceID
@@ -83,8 +83,7 @@
 	for (DConnectEvent *event in events) {
 		DConnectMessage *eventMsg = [DConnectEventManager createEventMessageWithEvent:event];
 		messageCallback(eventMsg);
-		DConnectDevicePlugin *plugin = (DConnectDevicePlugin *)provider;
-		[plugin sendEvent:eventMsg];
+		[((DConnectDevicePlugin *)plugin) sendEvent:eventMsg];
 	}
 }
 

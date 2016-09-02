@@ -23,7 +23,61 @@
 {
 	self = [super init];
 	if (self) {
-		self.delegate = self;
+        __weak DPPebbleVibrationProfile *weakSelf = self;
+        
+        // API登録(didReceivePutVibrateRequest相当)
+        NSString *putVibrateRequestApiPath = [self apiPath: nil
+                                             attributeName: DConnectVibrationProfileAttrVibrate];
+        [self addPutPath: putVibrateRequestApiPath
+                     api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+                         
+                         NSString *serviceId = [request serviceId];
+                         NSString *patternStr = [DConnectVibrationProfile patternFromRequest:request];
+                         NSArray *pattern = patternStr ? [weakSelf parsePattern:patternStr] : nil;
+                         
+                         NSString *patternString = [request stringForKey:DConnectVibrationProfileParamPattern];
+                         if ((patternString
+                              && ![[DPPebbleManager sharedManager] existCSVWithString:patternString]
+                              && ![[DPPebbleManager sharedManager] existDigitWithString:patternString])
+                             || (patternString
+                                 && [[DPPebbleManager sharedManager] existCSVWithString:patternString]
+                                 && ![self existNumberInArray:pattern])
+                             || (patternString
+                                 && [[DPPebbleManager sharedManager] existCSVWithString:patternString]
+                                 && ![[DPPebbleManager sharedManager] existDigitWithString:patternString]
+                                 && ![self existNumberInArray:pattern])
+                             ) {
+                             [response setErrorToInvalidRequestParameter];
+                             return YES;
+                         }
+                         // Pebbleに通知
+                         [[DPPebbleManager sharedManager] startVibration:serviceId
+                                                                 pattern:pattern
+                                                                callback:^(NSError *error)
+                          {
+                              // エラーチェック
+                              [DPPebbleProfileUtil handleErrorNormal:error response:response];
+                          }];
+                         return NO;
+                     }];
+        
+        // API登録(didReceiveDeleteVibrateRequest相当)
+        NSString *deleteVibrateRequestApiPath = [self apiPath: nil
+                                                attributeName: DConnectVibrationProfileAttrVibrate];
+        [self addDeletePath: deleteVibrateRequestApiPath
+                        api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+                            
+                            NSString *serviceId = [request serviceId];
+                            
+                            // Pebbleに通知
+                            [[DPPebbleManager sharedManager] stopVibration:serviceId
+                                                                  callback:^(NSError *error)
+                             {
+                                 // エラーチェック
+                                 [DPPebbleProfileUtil handleErrorNormal:error response:response];
+                             }];
+                            return NO;
+                        }];
 	}
 	return self;
 	
@@ -41,57 +95,6 @@
         return YES;
     }
     return NO;
-}
-
-#pragma mark - DConnectVibrationProfileDelegate
-
-// バイブ鳴動開始リクエストを受け取った
-- (BOOL)            profile:(DConnectVibrationProfile *)profile
-didReceivePutVibrateRequest:(DConnectRequestMessage *)request
-                   response:(DConnectResponseMessage *)response
-                   serviceId:(NSString *)serviceId
-                    pattern:(NSArray *) pattern
-{
-    NSString *patternString = [request stringForKey:DConnectVibrationProfileParamPattern];
-    if ((patternString
-               && ![[DPPebbleManager sharedManager] existCSVWithString:patternString]
-               && ![[DPPebbleManager sharedManager] existDigitWithString:patternString])
-        || (patternString
-            && [[DPPebbleManager sharedManager] existCSVWithString:patternString]
-            && ![self existNumberInArray:pattern])
-        || (patternString
-               && [[DPPebbleManager sharedManager] existCSVWithString:patternString]
-               && ![[DPPebbleManager sharedManager] existDigitWithString:patternString]
-               && ![self existNumberInArray:pattern])
-        ) {
-        [response setErrorToInvalidRequestParameter];
-        return YES;        
-    }
-	// Pebbleに通知
-	[[DPPebbleManager sharedManager] startVibration:serviceId
-											pattern:pattern
-										   callback:^(NSError *error)
-	{
-		// エラーチェック
-		[DPPebbleProfileUtil handleErrorNormal:error response:response];
-	}];
-	return NO;
-}
-
-// バイブ鳴動停止リクエストを受け取った
-- (BOOL)               profile:(DConnectVibrationProfile *)profile
-didReceiveDeleteVibrateRequest:(DConnectRequestMessage *)request
-                      response:(DConnectResponseMessage *)response
-                      serviceId:(NSString *)serviceId
-{
-	// Pebbleに通知
-	[[DPPebbleManager sharedManager] stopVibration:serviceId
-										  callback:^(NSError *error)
-	 {
-		 // エラーチェック
-		 [DPPebbleProfileUtil handleErrorNormal:error response:response];
-	 }];
-	return NO;
 }
 
 @end

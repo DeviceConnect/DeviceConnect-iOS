@@ -9,7 +9,8 @@
 
 #import <Foundation/Foundation.h>
 
-#define SELF_PLUGIN ((DPHostDevicePlugin *)self.provider)
+#define SELF_PLUGIN ((DPHostDevicePlugin *)self.plugin)
+#define WEAKSELF_PLUGIN ((DPHostDevicePlugin *)weakSelf.plugin)
 
 @interface DPHostUtils : NSObject
 

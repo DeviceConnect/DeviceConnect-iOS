@@ -15,7 +15,7 @@
 #import <DConnectSDK/DConnectProfile.h>
 
 /*! 
- @brief プロファイル名: mediastream_recording。 
+ @brief プロファイル名: mediastreamRecording。 
  */
 extern NSString *const DConnectMediaStreamRecordingProfileName;
 

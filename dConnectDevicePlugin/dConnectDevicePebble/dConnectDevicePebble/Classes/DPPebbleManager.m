@@ -10,6 +10,8 @@
 #import "DPPebbleManager.h"
 #import <PebbleKit/PebbleKit.h>
 #import "pebble_device_plugin_defines.h"
+#import <DConnectSDK/DConnectService.h>
+#import "DPPebbleService.h"
 
 /** milli G を m/s^2 の値にする係数. */
 #define G_TO_MS2_COEFFICIENT 9.81/1000.0
@@ -71,6 +73,16 @@ static NSString * const kDPPebbleRegexCSV = @"^([^,]*,)+";
 	return self;
 }
 
+- (void)pebbleCentral:(PBPebbleCentral*)central watchDidConnect:(PBWatch*)watch isNew:(BOOL)isNew {
+    // デバイス管理情報更新
+    [self updateManageServices];
+}
+
+- (void)pebbleCentral:(PBPebbleCentral*)central watchDidDisconnect:(PBWatch*)watch {
+    // デバイス管理情報更新
+    [self updateManageServices];
+}
+
 // アプリがバックグラウンドに入った時に呼ぶ
 - (void)applicationDidEnterBackground
 {
@@ -120,6 +132,55 @@ static NSString * const kDPPebbleRegexCSV = @"^([^,]*,)+";
 	return nil;
 }
 
+// デバイス管理情報更新
+- (void) updateManageServices {
+    @synchronized(self) {
+        
+        // ServiceProvider未登録なら処理しない
+        if (!self.serviceProvider) {
+            return;
+        }
+        
+        NSArray *deviceList = [self deviceList];
+        
+        // ServiceProviderに存在するサービスが検出されなかったならオフラインにする
+        for (DConnectService *service in [self.serviceProvider services]) {
+            NSString *serviceId = [service serviceId];
+            
+            // Pebble以外は対象外
+            if (![[[service name] lowercaseString] hasPrefix: @"pebble"]) {
+                continue;
+            }
+            
+            // ServiceProviderにあって最新のリストに無い場合はオフラインにする。有ればオンラインにする
+            BOOL isFindDevice = NO;
+            for (NSDictionary *device in deviceList) {
+                NSString *deviceServiceId = device[@"id"];
+                if (deviceServiceId && [serviceId localizedCaseInsensitiveCompare: deviceServiceId] == NSOrderedSame) {
+                    isFindDevice = YES;
+                    break;
+                }
+            }
+            if (isFindDevice) {
+                [service setOnline: YES];
+            } else {
+                [service setOnline: NO];
+            }
+        }
+        
+        // サービス未登録なら登録する
+        for (NSDictionary *device in deviceList) {
+            NSString *serviceId = device[@"id"];
+            NSString *deviceName = device[@"name"];
+            if (![self.serviceProvider service: serviceId]) {
+                DPPebbleService *service = [[DPPebbleService alloc] initWithServiceId:serviceId
+                                                                           deviceName:deviceName
+                                            plugin: self.plugin];
+                [self.serviceProvider addService: service];
+            }
+        }
+    }
+}
 
 
 #pragma mark - Battery

@@ -20,7 +20,7 @@ NSString *DPIRKitReachabilityChangedNotification = @"DPIRKitNetworkReachabilityC
 
 #pragma mark - Supporting functions
 
-#define kShouldPrintReachabilityFlags 0
+//#define kShouldPrintReachabilityFlags 0
 
 static void PrintReachabilityFlags(SCNetworkReachabilityFlags flags, const char* comment)
 {

@@ -8,7 +8,7 @@
 //
 
 #import <AJNSessionOptions.h>
-
+#import <DConnectSDK/DConnectServiceProvider.h>
 
 @class AJNProxyBusObject;
 @class DPAllJoynServiceEntity;
@@ -16,8 +16,12 @@
 
 @interface DPAllJoynHandler : NSObject
 
+@property (nonatomic, weak) DConnectServiceProvider *serviceProvider;
+@property (nonatomic, weak) id plugin;
+
 - (void)initAllJoynContextWithBlock:(void(^)(BOOL result))block;
 - (void)destroyAllJoynContextWithBlock:(void(^)(BOOL result))block;
+- (void) setServiceProvider: (DConnectServiceProvider *) serviceProvider;
 - (void)discoverServices:(void(^)(BOOL result))block;
 - (void)joinSessionWithBusName:(NSString *)busName
                           port:(AJNSessionPort)port

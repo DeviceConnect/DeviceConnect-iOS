@@ -16,7 +16,8 @@
 #import "DPAllJoynServiceEntity.h"
 #import "DPAllJoynSupportCheck.h"
 #import "DPAllJoynSynchronizedMutableDictionary.h"
-
+#import "DPAllJoynService.h"
+#import "DPAlljoynReachability.h"
 
 static int const DPAllJoynAliveTimeout = 30000;
 static int const DPAllJoynPingTimeout = 5000;
@@ -48,6 +49,7 @@ static size_t const DPAllJoynJoinRetryMax = 5;
 //@property (nonatomic, strong) BasicObjectProxy *basicObjectProxy;
 @property (nonatomic, strong) AJNAboutProxy *aboutProxy;
 @property BOOL wasNameAlreadyFound;
+@property (nonatomic, strong) DPAlljoynReachability *reachability;
 
 @end
 
@@ -62,6 +64,15 @@ static size_t const DPAllJoynJoinRetryMax = 5;
         dispatch_queue_create("org.deviceconnect.deviceplugin.handlerQueue",
                               DISPATCH_QUEUE_SERIAL);
         _discoveredServices = [DPAllJoynSynchronizedMutableDictionary new];
+        
+        // Reachabilityの初期処理
+        self.reachability = [DPAlljoynReachability reachabilityWithHostName: @"www.google.com"];
+        [[NSNotificationCenter defaultCenter]
+         addObserver:self
+         selector:@selector(notifiedNetworkStatus:)
+         name:DPAlljoynReachabilityChangedNotification
+         object:nil];
+        [self.reachability startNotifier];
     }
     return self;
 }
@@ -134,7 +145,6 @@ static size_t const DPAllJoynJoinRetryMax = 5;
         block(YES);
     });
 }
-
 
 - (void)destroyAllJoynContextWithBlock:(void(^)(BOOL result))block
 {
@@ -359,6 +369,9 @@ static size_t const DPAllJoynJoinRetryMax = 5;
                      [_discoveredServices removeObjectForKey:serviceEntity.appId];
                  }
              }
+             
+             // デバイス管理情報更新
+             [self updateManageServices: YES];
          }];
     }
 }
@@ -383,6 +396,58 @@ static size_t const DPAllJoynJoinRetryMax = 5;
                                  (int64_t)(delayMillis * NSEC_PER_MSEC)),
                    dispatch_get_main_queue(), block);
 }
+
+// 通知を受け取るメソッド
+-(void)notifiedNetworkStatus:(NSNotification *)notification {
+    NetworkStatus networkStatus = [self.reachability currentReachabilityStatus];
+    if (networkStatus == NotReachable) {
+        [self updateManageServices: NO];
+    } else {
+        [self updateManageServices: YES];
+    }
+}
+
+// デバイス管理情報更新
+- (void) updateManageServices: (BOOL) onlineForSet {
+    @synchronized(self) {
+        
+        // ServiceProvider未登録なら処理しない
+        if (!_serviceProvider) {
+            return;
+        }
+
+        // オフラインにする場合は、全サービスをオフラインにする(Wifi Offにされたことを想定)
+        if (!onlineForSet) {
+            for (DConnectService *service in [_serviceProvider services]) {
+                [service setOnline: NO];
+            }
+            return;
+        }
+
+        // ServiceProviderに存在するサービスが検出されなかったならオフラインにする
+        for (DConnectService *service in [_serviceProvider services]) {
+            NSString *serviceId = [service serviceId];
+            if (!self.discoveredAllJoynServices[serviceId]) {
+                [service setOnline: NO];
+            }
+        }
+        
+        // サービス未登録なら登録する、登録済みならオンラインにする
+        for (DPAllJoynServiceEntity *serviceEntity in [self.discoveredAllJoynServices allValues]) {
+            DConnectService *service = [_serviceProvider service: serviceEntity.appId];
+            if (service) {
+                [service setOnline: YES];
+            } else {
+                service = [[DPAllJoynService alloc] initWithServiceId:serviceEntity.appId
+                                                          serviceName:serviceEntity.serviceName
+                                                               plugin: self.plugin
+                                                              handler:self];
+                [_serviceProvider addService: service];
+            }
+        }
+    }
+}
+
 
 
 // =============================================================================
@@ -418,6 +483,9 @@ static size_t const DPAllJoynJoinRetryMax = 5;
         service.lastAlive = oldService.lastAlive;
     }
     [_discoveredServices setObject:service forKey:service.appId];
+    
+    // デバイス管理情報更新
+    [self updateManageServices: YES];
 }
 
 

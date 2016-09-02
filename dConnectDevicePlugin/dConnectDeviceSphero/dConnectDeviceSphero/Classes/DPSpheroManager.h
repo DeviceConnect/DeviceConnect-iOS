@@ -9,6 +9,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <DConnectSDK/DConnectServiceProvider.h>
 
 /*!
  @brief 3次元構造体
@@ -95,6 +96,16 @@ typedef struct DPGyroData_ {
 @interface DPSpheroManager : NSObject
 
 /*!
+ @brief ServiceProvider.
+ */
+@property (nonatomic, weak) DConnectServiceProvider *serviceProvider;
+
+/*!
+ @brief DevicePlugin.
+ */
+@property (nonatomic, weak) id plugin;
+
+/*!
  @brief Spheroのセンサー処理用デリゲート。
  */
 @property (nonatomic, weak) id<DPSpheroManagerSensorDelegate> sensorDelegate;
@@ -140,6 +151,8 @@ typedef struct DPGyroData_ {
  */
 + (instancetype)sharedManager;
 
+
+- (void) setServiceProvider: (DConnectServiceProvider *) serviceProvider;
 
 /*!
  @brief アプリがバックグラウンドに入った。
@@ -259,5 +272,12 @@ typedef struct DPGyroData_ {
  @brief Observerの削除。
  */
 - (void)removeResponseObserver;
+
+
+/*!
+ @brief デバイス管理情報更新
+ */
+- (void) updateManageServices;
+
 
 @end

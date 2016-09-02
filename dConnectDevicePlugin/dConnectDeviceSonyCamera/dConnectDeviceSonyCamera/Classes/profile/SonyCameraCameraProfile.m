@@ -8,6 +8,8 @@
 //
 
 #import "SonyCameraCameraProfile.h"
+#import "SonyCameraManager.h"
+#import "RemoteApiList.h"
 
 NSString *const SonyCameraCameraProfileName = @"camera";
 NSString *const SonyCameraCameraProfileAttrZoom = @"zoom";
@@ -15,89 +17,101 @@ NSString *const SonyCameraCameraProfileParamDirection = @"direction";
 NSString *const SonyCameraCameraProfileParamMovement = @"movement";
 NSString *const SonyCameraCameraProfileParamZoomdiameter = @"zoomPosition";
 
-@interface SonyCameraCameraProfile()
-
-- (BOOL) hasMethod:(SEL)method response:(DConnectResponseMessage *)response;
-
-@end
-
 @implementation SonyCameraCameraProfile
 
 - (NSString *) profileName {
     return SonyCameraCameraProfileName;
 }
 
-- (BOOL) didReceivePutRequest:(DConnectRequestMessage *)request response:(DConnectResponseMessage *)response {
-    BOOL send = YES;
+- (instancetype) init {
     
-    NSString *serviceId = [request serviceId];
-    NSString *attribute = [request attribute];
-    
-    if (attribute) {
-        if ([attribute isEqualToString:SonyCameraCameraProfileAttrZoom]) {
+    self = [super init];
+    if (self) {
+        
+        // API登録(didReceiveGetZoomRequest相当)
+        NSString *getZoomRequestApiPath = [self apiPath: nil
+                                          attributeName: SonyCameraCameraProfileAttrZoom];
+        [self addGetPath: getZoomRequestApiPath api: ^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+            
+            NSString *serviceId = [request serviceId];
+            
+            SonyCameraManager *manager = [SonyCameraManager sharedManager];
+            
+            // サービスIDのチェック
+            if (![manager selectServiceId:serviceId response:response]) {
+                return YES;
+            }
+            
+            // サポートしていない
+            if (![manager.remoteApi isApiAvailable:API_actZoom]) {
+                [response setErrorToNotSupportAttribute];
+                return YES;
+            }
+            
+            if (manager.remoteApi.zoomPosition < 0) {
+                [response setErrorToIllegalDeviceState];
+            } else {
+                // ズームのデータ
+                [response setResult:DConnectMessageResultTypeOk];
+                [response setDouble:manager.remoteApi.zoomPosition
+                             forKey:SonyCameraCameraProfileParamZoomdiameter];
+            }
+            return YES;
+        }];
+        
+        // API登録(didReceivePutZoomRequest相当)
+        NSString *putZoomRequestApiPath = [self apiPath: nil
+                                          attributeName: SonyCameraCameraProfileAttrZoom];
+        [self addPutPath: putZoomRequestApiPath api: ^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+            
+            NSString *serviceId = [request serviceId];
             NSString *direction = [request stringForKey:SonyCameraCameraProfileParamDirection];
             NSString *movement = [request stringForKey:SonyCameraCameraProfileParamMovement];
-            if ([self hasMethod:
-                    @selector(profile:
-                              didReceivePutZoomRequest:
-                              response:
-                              serviceId:
-                              direction:
-                              movement:)
-                    response:response]) {
-                send = [_delegate        profile:self
-                        didReceivePutZoomRequest:request
-                                        response:response
-                                       serviceId:serviceId
-                                       direction:direction
-                                        movement:movement];
+            
+            SonyCameraManager *manager = [SonyCameraManager sharedManager];
+            
+            // サービスIDのチェック
+            if (![manager selectServiceId:serviceId response:response]) {
+                return YES;
             }
-        } else {
-            [response setErrorToNotSupportProfile];
-        }
-    } else {
-        [response setErrorToNotSupportProfile];
-    }
-    
-    return send;
-}
-
-- (BOOL) didReceiveGetRequest:(DConnectRequestMessage *)request response:(DConnectResponseMessage *)response {
-    BOOL send = YES;
-    
-    NSString *serviceId = [request serviceId];
-    NSString *attribute = [request attribute];
-    
-    if (attribute) {
-        if ([attribute isEqualToString:SonyCameraCameraProfileAttrZoom]) {
-            if ([self hasMethod:@selector(profile:
-                                          didReceiveGetZoomRequest:
-                                          response:
-                                          serviceId:)
-                       response:response]) {
-                send = [_delegate        profile:self
-                        didReceiveGetZoomRequest:request
-                                        response:response
-                                       serviceId:serviceId];
+            
+            // サポートしていない
+            if (![manager.remoteApi isApiAvailable:API_actZoom]) {
+                [response setErrorToNotSupportAttribute];
+                return YES;
             }
-        } else {
-            [response setErrorToNotSupportProfile];
-        }
-    } else {
-        [response setErrorToNotSupportProfile];
+            
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                NSDictionary *dict = [manager.remoteApi actZoom:direction movement:movement];
+                if (dict == nil) {
+                    [response setErrorToTimeout];
+                } else {
+                    NSString *errorMessage = @"";
+                    NSInteger errorCode = -1;
+                    NSArray *resultArray = dict[@"result"];
+                    NSArray *errorArray = dict[@"error"];
+                    if (errorArray && errorArray.count > 0) {
+                        errorCode = (NSInteger) errorArray[0];
+                        errorMessage = errorArray[1];
+                    }
+                    
+                    // レスポンス作成
+                    if (resultArray.count <= 0 && errorCode >= 0) {
+                        [response setErrorToInvalidRequestParameter];
+                    } else {
+                        [response setResult:DConnectMessageResultTypeOk];
+                    }
+                }
+                
+                // レスポンスを返却
+                [[DConnectManager sharedManager] sendResponse:response];
+            });
+            
+            // レスポンスは非同期で返却するので
+            return NO;
+        }];
     }
-    
-    return send;
-}
-
-#pragma mark - Private Methods
-
-- (BOOL) hasMethod:(SEL)method response:(DConnectResponseMessage *)response {
-    BOOL result = [_delegate respondsToSelector:method];
-    if (!result) {
-        [response setErrorToNotSupportAttribute];
-    }
-    return result;
+    return self;
 }
 
 @end

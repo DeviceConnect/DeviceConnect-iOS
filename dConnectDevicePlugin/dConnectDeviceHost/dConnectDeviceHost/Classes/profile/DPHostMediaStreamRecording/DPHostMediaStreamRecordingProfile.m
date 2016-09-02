@@ -11,7 +11,7 @@
 #import <DConnectSDK/DConnectFileManager.h>
 
 #import "DPHostDevicePlugin.h"
-#import "DPHostServiceDiscoveryProfile.h"
+#import "DPHostService.h"
 #import "DPHostMediaStreamRecordingProfile.h"
 #import "DPHostRecorderContext.h"
 #import "DPHostUtils.h"
@@ -155,6 +155,7 @@ typedef NS_ENUM(NSUInteger, OptionIndex) {
     if (self) {
         self.delegate = self;
         self.eventMgr = [DConnectEventManager sharedManagerForClass:[DPHostDevicePlugin class]];
+        __weak DPHostMediaStreamRecordingProfile *weakSelf = self;
         
         self.recorderArr = [NSMutableArray array];
         NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
@@ -343,6 +344,993 @@ typedef NS_ENUM(NSUInteger, OptionIndex) {
             [self.recorderArr addObject:recorder];
         }
         self.defaultAudioRecorderId = [NSNumber numberWithUnsignedInteger:self.recorderArr.count - 1];
+        
+        // API登録(didReceiveGetMediaRecorderRequest相当)
+        NSString *getPlayStatusRequestApiPath = [self apiPath: nil
+                                                attributeName: DConnectMediaStreamRecordingProfileAttrMediaRecorder];
+        [self addGetPath: getPlayStatusRequestApiPath
+                     api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+                         DConnectArray *recorders = [DConnectArray array];
+                         for (size_t i = 0; i < _recorderArr.count; ++i) {
+                             DPHostRecorderContext *recorderItr = [weakSelf recorderArr][i];
+                             
+                             
+                             [recorderItr performReading:
+                              ^{
+                                  DConnectMessage *recorder = [DConnectMessage message];
+                                  
+                                  [DConnectMediaStreamRecordingProfile setRecorderId:[NSString stringWithFormat:@"%lu", i] target:recorder];
+                                  [DConnectMediaStreamRecordingProfile setRecorderName:recorderItr.name target:recorder];
+                                  
+                                  NSString *state;
+                                  switch (recorderItr.state) {
+                                      case RecorderStateInactive:
+                                          state = DConnectMediaStreamRecordingProfileRecorderStateInactive;
+                                          break;
+                                      case RecorderStatePaused:
+                                          state = DConnectMediaStreamRecordingProfileRecorderStatePaused;
+                                          break;
+                                      case RecorderStateRecording:
+                                          state = DConnectMediaStreamRecordingProfileRecorderStateRecording;
+                                          break;
+                                  }
+                                  [DConnectMediaStreamRecordingProfile setRecorderState:state target:recorder];
+                                  
+                                  if (recorderItr.videoDevice) {
+                                      if (recorderItr.videoDevice.imageWidth) {
+                                          [DConnectMediaStreamRecordingProfile setRecorderImageWidth:
+                                           [recorderItr.videoDevice.imageWidth intValue] target:recorder];
+                                      }
+                                      if (recorderItr.videoDevice.imageHeight) {
+                                          [DConnectMediaStreamRecordingProfile setRecorderImageHeight:
+                                           [recorderItr.videoDevice.imageHeight intValue] target:recorder];
+                                      }
+                                  }
+                                  [DConnectMediaStreamRecordingProfile setRecorderMIMEType:recorderItr.mimeType target:recorder];
+                                  [DConnectMediaStreamRecordingProfile setRecorderConfig:@"[]" target:recorder];
+                                  
+                                  [recorders addMessage:recorder];
+                              }];
+                         }
+                         [DConnectMediaStreamRecordingProfile setRecorders:recorders target:response];
+                         [response setResult:DConnectMessageResultTypeOk];
+                         
+                         return YES;
+                     }];
+         
+        // API登録(didReceivePostTakePhotoRequest相当)
+        NSString *postTakePhotoRequestApiPath = [self apiPath: nil
+                                                attributeName: DConnectMediaStreamRecordingProfileAttrTakePhoto];
+        [self addPostPath: postTakePhotoRequestApiPath
+                     api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+                         
+                         NSString *target = [DConnectMediaStreamRecordingProfile targetFromRequest:request];
+                         NSLog(@"target :%@", target);
+                         unsigned long long idx;
+                         if (target || (target && target.length > 0)) {
+                             if ([target isEqualToString:@"video"]) {
+                                 idx = [_defaultVideoRecorderId unsignedLongLongValue];
+                             } else if ([target isEqualToString:@"audio"]) {
+                                 idx = [_defaultAudioRecorderId unsignedLongLongValue];
+                             } else {
+                                 BOOL success = [[NSScanner scannerWithString:target] scanUnsignedLongLong:&idx];
+                                 if (!success) {
+                                     [response setErrorToInvalidRequestParameterWithMessage:@"target is invalid."];
+                                     return YES;
+                                 }
+                             }
+                         } else if ([weakSelf defaultPhotoRecorderId]) {
+                             // target省略時はデフォルトのレコーダーを指定する。
+                             idx = [_defaultPhotoRecorderId unsignedLongLongValue];
+                         } else {
+                             [response setErrorToInvalidRequestParameterWithMessage:
+                              @"target was not specified, and no default target was set; please specify an existing target."];
+                             return YES;
+                         }
+                         unsigned long long count = (unsigned)[weakSelf recorderArr].count;
+                         
+                         if (!_recorderArr || count < idx) {
+                             [response setErrorToInvalidRequestParameterWithMessage:
+                              @"target was not specified, and no default target was set; please specify an existing target."];
+                             return YES;
+                         }
+                         
+                         DPHostRecorderContext *recorder;
+                         @try {
+                             recorder = _recorderArr[(NSUInteger)idx];
+                         }
+                         @catch (NSException *exception) {
+                             NSString *message;
+                             if ([[exception name] isEqualToString:NSRangeException]) {
+                                 message = @"target is not found in the recorder ID list.";
+                             } else {
+                                 message = @"Exception encountered while trying to access the recorder ID list.";
+                             }
+                             [response setErrorToInvalidRequestParameterWithMessage:message];
+                             return YES;
+                         }
+                         
+                         for (DPHostRecorderContext *recorderItr in [weakSelf recorderArr]) {
+                             if (recorderItr == recorder) {
+                                 continue;
+                             }
+                             if ((recorderItr.state == RecorderStateRecording)
+                                 && recorder.videoDevice && recorderItr.videoDevice &&
+                                 [recorder.videoDevice.uniqueId isEqualToString:recorderItr.videoDevice.uniqueId]) {
+                                 // ビデオ入力デバイスが既に他のコンテキストで使われている。
+                                 [response setErrorToUnknownWithMessage:
+                                  [NSString stringWithFormat:@"Video device is currently used by %@.",
+                                   recorderItr.name]];
+                                 return YES;
+                             }
+                         }
+                         
+                         __block BOOL isSync = YES;
+                         [recorder performWriting:
+                          ^{
+                              if (recorder.type != RecorderTypePhoto) {
+                                  [response setErrorToInvalidRequestParameterWithMessage:
+                                   @"target is not a video device; it is not capable of taking a photo."];
+                                  isSync = YES;
+                                  return;
+                              }
+                              
+                              if (![recorder.session isRunning]) {
+                                  [recorder.session startRunning];
+                              }
+                              
+                              // 写真を撮影する。
+                              __block AVCaptureDevice *captureDevice = [AVCaptureDevice deviceWithUniqueID:recorder.videoDevice.uniqueId];
+                              NSError *error;
+                              [captureDevice lockForConfiguration:&error];
+                              if (error) {
+                                  NSLog(@"Failed to acquire a configuration lock for %@.", captureDevice.uniqueID);
+                              } else {
+                                  
+                                  if (captureDevice.focusMode != AVCaptureFocusModeContinuousAutoFocus &&
+                                      [captureDevice isFocusModeSupported:AVCaptureFocusModeContinuousAutoFocus]) {
+                                      captureDevice.focusMode = AVCaptureFocusModeContinuousAutoFocus;
+                                  } else if (captureDevice.focusMode != AVCaptureFocusModeAutoFocus &&
+                                             [captureDevice isFocusModeSupported:AVCaptureFocusModeAutoFocus]) {
+                                      captureDevice.focusMode = AVCaptureFocusModeAutoFocus;
+                                  } else if (captureDevice.focusMode != AVCaptureFocusModeLocked &&
+                                             [captureDevice isFocusModeSupported:AVCaptureFocusModeLocked]) {
+                                      captureDevice.focusMode = AVCaptureFocusModeLocked;
+                                  }
+                                  if (captureDevice.exposureMode != AVCaptureExposureModeContinuousAutoExposure &&
+                                      [captureDevice isExposureModeSupported:AVCaptureExposureModeContinuousAutoExposure]) {
+                                      captureDevice.exposureMode = AVCaptureExposureModeContinuousAutoExposure;
+                                  } else if (captureDevice.exposureMode != AVCaptureExposureModeAutoExpose &&
+                                             [captureDevice isExposureModeSupported:AVCaptureExposureModeAutoExpose]) {
+                                      captureDevice.exposureMode = AVCaptureExposureModeAutoExpose;
+                                  } else if (captureDevice.exposureMode != AVCaptureExposureModeLocked &&
+                                             [captureDevice isExposureModeSupported:AVCaptureExposureModeLocked]) {
+                                      captureDevice.exposureMode = AVCaptureExposureModeLocked;
+                                  }
+                                  if (captureDevice.whiteBalanceMode != AVCaptureWhiteBalanceModeContinuousAutoWhiteBalance &&
+                                      [captureDevice isWhiteBalanceModeSupported:AVCaptureWhiteBalanceModeContinuousAutoWhiteBalance]) {
+                                      captureDevice.whiteBalanceMode = AVCaptureWhiteBalanceModeContinuousAutoWhiteBalance;
+                                  } else if (captureDevice.whiteBalanceMode != AVCaptureWhiteBalanceModeAutoWhiteBalance &&
+                                             [captureDevice isWhiteBalanceModeSupported:AVCaptureWhiteBalanceModeAutoWhiteBalance]) {
+                                      captureDevice.whiteBalanceMode = AVCaptureWhiteBalanceModeAutoWhiteBalance;
+                                  } else if (captureDevice.whiteBalanceMode != AVCaptureWhiteBalanceModeLocked &&
+                                             [captureDevice isWhiteBalanceModeSupported:AVCaptureWhiteBalanceModeLocked]) {
+                                      captureDevice.whiteBalanceMode = AVCaptureWhiteBalanceModeLocked;
+                                  }
+                                  if (captureDevice.automaticallyEnablesLowLightBoostWhenAvailable != NO &&
+                                      captureDevice.lowLightBoostSupported) {
+                                      captureDevice.automaticallyEnablesLowLightBoostWhenAvailable = YES;
+                                  }
+                                  [captureDevice unlockForConfiguration];
+                                  
+                                  [NSThread sleepForTimeInterval:0.5];
+                              }
+                              
+                              AVCaptureStillImageOutput *stillImageOutput = (AVCaptureStillImageOutput *)recorder.videoConnection.output;
+                              [stillImageOutput captureStillImageAsynchronouslyFromConnection:recorder.videoConnection
+                                                                            completionHandler:
+                               ^(CMSampleBufferRef imageDataSampleBuffer, NSError *error) {
+                                   if (!imageDataSampleBuffer || error) {
+                                       [response setErrorToUnknownWithMessage:@"Failed to take a photo."];
+                                       [[DConnectManager sharedManager] sendResponse:response];
+                                       return;
+                                   }
+                                   NSData *jpegData;
+                                   @try {
+                                       jpegData = [AVCaptureStillImageOutput jpegStillImageNSDataRepresentation:imageDataSampleBuffer];
+                                   }
+                                   @catch (NSException *exception) {
+                                       NSString *message;
+                                       if ([[exception name] isEqualToString:NSInvalidArgumentException]) {
+                                           message = @"Non-JPEG data was given.";
+                                       } else {
+                                           message = [NSString stringWithFormat:@"%@ encountered.", [exception name]];
+                                       }
+                                       [response setErrorToUnknownWithMessage:message];
+                                       [[DConnectManager sharedManager] sendResponse:response];
+                                       return;
+                                   }
+                                   
+                                   // 新たな画像アセットとしてカメラロールに保存
+                                   CFDictionaryRef attachments = CMCopyDictionaryOfAttachments(kCFAllocatorDefault,
+                                                                                               imageDataSampleBuffer,
+                                                                                               kCMAttachmentMode_ShouldPropagate);
+                                   [[weakSelf library] writeImageDataToSavedPhotosAlbum:jpegData metadata:(__bridge id)attachments
+                                                              completionBlock:
+                                    ^(NSURL *assetURL, NSError *error) {
+                                        if (!assetURL || error) {
+                                            [response setErrorToUnknownWithMessage:@"Failed to save a photo to camera roll."];
+                                            [[DConnectManager sharedManager] sendResponse:response];
+                                            return;
+                                        }
+                                        [DConnectMediaStreamRecordingProfile setUri:[assetURL absoluteString] target:response];
+                                        [response setResult:DConnectMessageResultTypeOk];
+                                        
+                                        if ([recorder.session isRunning]) {
+                                            [recorder.session stopRunning];
+                                        }
+                                        
+                                        [[DConnectManager sharedManager] sendResponse:response];
+                                        
+                                        NSString *mimeType = [DConnectFileManager searchMimeTypeForExtension:assetURL.path.pathExtension];
+                                        [weakSelf sendOnPhotoEventWithPath:[assetURL absoluteString] mimeType:mimeType];
+                                        
+                                        return;
+                                    }];
+                               }];
+                              
+                              // 非同期の「- captureStillImageAsynchronouslyFromConnection:completionHandler:」の処理内
+                              // でHTTPレスポンスを返却させる。
+                              isSync = NO;
+                              return;
+                          }];
+                         
+                         return isSync;
+                     }];
+        
+        // API登録(didReceivePostRecordRequest相当)
+        NSString *postRecordRequestApiPath = [self apiPath: nil
+                                             attributeName: DConnectMediaStreamRecordingProfileAttrRecord];
+        [self addPostPath: postRecordRequestApiPath
+                      api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+                          
+                          NSString *target = [DConnectMediaStreamRecordingProfile targetFromRequest:request];
+                          NSNumber *timeslice = [DConnectMediaStreamRecordingProfile timesliceFromRequest:request];
+
+                          NSString *timesliceString = [request stringForKey:DConnectMediaStreamRecordingProfileParamTimeSlice];
+                          if (![DPHostUtils existDigitWithString:timesliceString]
+                              || (timeslice && timeslice < 0) || (timesliceString && timesliceString.length <= 0)) {
+                              [response setErrorToInvalidRequestParameterWithMessage:
+                               @"timeslice is not supported; please omit this parameter."];
+                              return YES;
+                          }
+                          
+                          unsigned long long idx;
+                          if (target) {
+                              if ([target isEqualToString:@"video"]) {
+                                  idx = [_defaultVideoRecorderId unsignedLongLongValue];
+                              } else if ([target isEqualToString:@"audio"]) {
+                                  idx = [_defaultAudioRecorderId unsignedLongLongValue];
+                              } else {
+                                  BOOL success = [[NSScanner scannerWithString:target] scanUnsignedLongLong:&idx];
+                                  if (!success) {
+                                      [response setErrorToInvalidRequestParameterWithMessage:@"target is invalid."];
+                                      return YES;
+                                  }
+                                  
+                              }
+                          } else if ([weakSelf defaultVideoRecorderId]) {
+                              // target省略時はデフォルトのレコーダーを指定する。
+                              idx = [_defaultVideoRecorderId unsignedLongLongValue];
+                          } else if ([weakSelf currentRecorderId]) {
+                              idx = [[weakSelf currentRecorderId] unsignedLongLongValue];
+                          } else {
+                              [response setErrorToInvalidRequestParameterWithMessage:
+                               @"target was not specified, and no default target was set; please specify an existing target."];
+                              return YES;
+                          }
+                          if (!_recorderArr || _recorderArr.count < idx) {
+                              [response setErrorToInvalidRequestParameterWithMessage:@"target is invalid."];
+                              return YES;
+                          }
+                          _currentRecorderId = [NSNumber numberWithUnsignedLongLong:idx];
+                          DPHostRecorderContext *recorder;
+                          @try {
+                              recorder = _recorderArr[(NSUInteger)idx];
+                          }
+                          @catch (NSException *exception) {
+                              NSString *message;
+                              if ([[exception name] isEqualToString:NSRangeException]) {
+                                  message = @"target is not found in the recorder ID list.";
+                              } else {
+                                  message = @"Exception encountered while trying to access the recorder ID list.";
+                              }
+                              [response setErrorToInvalidRequestParameterWithMessage:message];
+                              return YES;
+                          }
+                          
+                          if (recorder.state == RecorderStateRecording) {
+                              [response setErrorToIllegalDeviceStateWithMessage:@"target is already recording."];
+                              return YES;
+                          }
+                          
+                          // 入力デバイスが既に他のレコーダーで使われていないかをチェックする
+                          for (DPHostRecorderContext *recorderItr in [weakSelf recorderArr]) {
+                              if (recorderItr == recorder) {
+                                  continue;
+                              }
+                              if (recorderItr.state == RecorderStateRecording) {
+                                  if (recorder.audioDevice && recorderItr.audioDevice &&
+                                      [recorder.audioDevice.uniqueId isEqualToString:recorderItr.audioDevice.uniqueId]) {
+                                      // 音声入力デバイスが既に他のコンテキストで使われている。
+                                      [response setErrorToUnknownWithMessage:
+                                       [NSString stringWithFormat:@"Audio device is currently used by %@.",
+                                        recorderItr.name]];
+                                      return YES;
+                                  }
+                                  if (recorder.videoDevice && recorderItr.videoDevice &&
+                                      [recorder.videoDevice.uniqueId isEqualToString:recorderItr.videoDevice.uniqueId]) {
+                                      // ビデオ入力デバイスが既に他のコンテキストで使われている。
+                                      [response setErrorToUnknownWithMessage:
+                                       [NSString stringWithFormat:@"Video device is currently used by %@.",
+                                        recorderItr.name]];
+                                      return YES;
+                                  }
+                              }
+                          }
+                          
+                          __block BOOL isSync = YES;
+                          [recorder performWriting:
+                           ^{
+                               if (recorder.type != RecorderTypeMovie) {
+                                   [response setErrorToInvalidRequestParameterWithMessage:
+                                    @"target is not an audiovisual device; it is not capable of taking a movie."];
+                                   return;
+                               }
+                               
+                               recorder.videoOrientation = [recorder.videoConnection videoOrientation];
+                               
+                               AVCaptureDevice *captureDevice = [AVCaptureDevice deviceWithUniqueID:recorder.videoDevice.uniqueId];
+                               NSError *error;
+                               [captureDevice lockForConfiguration:&error];
+                               if (error) {
+                                   NSLog(@"Failed to acquire a configuration lock for %@.", captureDevice.uniqueID);
+                               } else {
+                                   
+                                   // 画面中央に露光やフォーカスが調整される様にする。
+                                   CGPoint pointOfInterest = CGPointMake(.5, .5);
+                                   if ([captureDevice isFocusPointOfInterestSupported] &&
+                                       [captureDevice isFocusModeSupported:AVCaptureFocusModeAutoFocus]) {
+                                       captureDevice.focusPointOfInterest = pointOfInterest;
+                                       captureDevice.focusMode = AVCaptureFocusModeAutoFocus;
+                                   }
+                                   if ([captureDevice isExposurePointOfInterestSupported] &&
+                                       [captureDevice isExposureModeSupported:AVCaptureExposureModeContinuousAutoExposure]) {
+                                       captureDevice.exposurePointOfInterest = pointOfInterest;
+                                       captureDevice.exposureMode =
+                                       AVCaptureExposureModeContinuousAutoExposure;
+                                   }
+                                   [captureDevice unlockForConfiguration];
+                                   
+                                   // 露光の為に少し待つ
+                                   [NSThread sleepForTimeInterval:0.5];
+                               }
+                               
+                               [recorder setupAssetWriterWithResponse:response];
+                               recorder.state = RecorderStateRecording;
+                               
+                               // ポーズ関連の変数を初期化
+                               _lastPreviewTimestamp = kCMTimeInvalid;
+                               _totalPauseDuration = kCMTimeInvalid;
+                               _needRecalculationOfTotalPauseDuration = NO;
+                               
+                               if (![recorder.session isRunning]) {
+                                   [recorder.session startRunning];
+                               }
+                               isSync = NO;
+                           }];
+                          
+                          return isSync;
+                      }];
+        
+        // API登録(didReceivePutPauseRequest相当)
+        NSString *putPauseRequestApiPath = [self apiPath: nil
+                                           attributeName: DConnectMediaStreamRecordingProfileAttrPause];
+        [self addPutPath: putPauseRequestApiPath
+                     api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+                         
+                         NSString *target = [DConnectMediaStreamRecordingProfile targetFromRequest:request];
+
+                         unsigned long long idx;
+                         if (target) {
+                             if ([target isEqualToString:@"video"]) {
+                                 idx = [_defaultVideoRecorderId unsignedLongLongValue];
+                             } else if ([target isEqualToString:@"audio"]) {
+                                 idx = [_defaultAudioRecorderId unsignedLongLongValue];
+                             } else {
+                                 idx = [_currentRecorderId unsignedLongLongValue];
+                                 BOOL success = [[NSScanner scannerWithString:target] scanUnsignedLongLong:&idx];
+                                 if (!success) {
+                                     [response setErrorToInvalidRequestParameterWithMessage:@"target is invalid."];
+                                     return YES;
+                                 }
+                             }
+                         } else if ([weakSelf currentRecorderId]) {
+                             idx = [[weakSelf currentRecorderId] unsignedLongLongValue];
+                         } else if ([weakSelf defaultVideoRecorderId]) {
+                             // target省略時はデフォルトのレコーダーを指定する。
+                             idx = [[weakSelf defaultVideoRecorderId] unsignedLongLongValue];
+                         } else {
+                             [response setErrorToInvalidRequestParameterWithMessage:
+                              @"target was not specified, and no default target was set; please specify an existing target."];
+                             return YES;
+                         }
+                         if (![weakSelf recorderArr] || [weakSelf recorderArr].count < idx) {
+                             [response setErrorToInvalidRequestParameterWithMessage:@"target is invalid."];
+                             return YES;
+                         }
+                         
+                         [weakSelf setCurrentRecorderId: [NSNumber numberWithUnsignedLongLong:idx]];
+                         DPHostRecorderContext *recorder;
+                         @try {
+                             recorder = [weakSelf recorderArr][(NSUInteger)idx];
+                         }
+                         @catch (NSException *exception) {
+                             NSString *message;
+                             if ([[exception name] isEqualToString:NSRangeException]) {
+                                 message = @"target is not found in the recorder ID list.";
+                             } else {
+                                 message = @"Exception encountered while trying to access the recorder ID list.";
+                             }
+                             [response setErrorToInvalidRequestParameterWithMessage:message];
+                             return YES;
+                         }
+                         
+                         if (recorder.state == RecorderStatePaused) {
+                             [response setErrorToIllegalDeviceStateWithMessage:@"target is already pausing."];
+                             return YES;
+                         }
+                         
+                         if (recorder.state == RecorderStateRecording) {
+                             if ([recorder.session isRunning]) {
+                                 [recorder.session stopRunning];
+                                 if ([recorder.session isRunning]) {
+                                     [response setErrorToUnknownWithMessage:
+                                      @"Failed to pause the specified recorder; failed to stop capture session."];
+                                     return YES;
+                                 }
+                             }
+                             
+                             recorder.state = RecorderStatePaused;
+                             
+                             [weakSelf sendOnRecordingChangeEventWithStatus:DConnectMediaStreamRecordingProfileRecordingStatePause
+                                                                   path:nil mimeType:nil errorMessage:nil];
+                             
+                             [weakSelf setNeedRecalculationOfTotalPauseDuration: YES];
+                             
+                             [response setResult:DConnectMessageResultTypeOk];
+                         } else {
+                             [response setErrorToIllegalDeviceStateWithMessage:
+                              @"The specified recorder is not recording; no need for pause."];
+                         }
+                         
+                         return YES;
+                     }];
+        
+        // API登録(didReceivePutResumeRequest相当)
+        NSString *putResumeRequestApiPath = [self apiPath: nil
+                                            attributeName: DConnectMediaStreamRecordingProfileAttrResume];
+        [self addPutPath: putResumeRequestApiPath
+                     api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+
+                         NSString *target = [DConnectMediaStreamRecordingProfile targetFromRequest:request];
+                         
+                         unsigned long long idx;
+                         if (target) {
+                             if ([target isEqualToString:@"video"]) {
+                                 idx = [_defaultVideoRecorderId unsignedLongLongValue];
+                             } else if ([target isEqualToString:@"audio"]) {
+                                 idx = [_defaultAudioRecorderId unsignedLongLongValue];
+                             } else {
+                                 idx = [_currentRecorderId unsignedLongLongValue];
+                                 BOOL success = [[NSScanner scannerWithString:target] scanUnsignedLongLong:&idx];
+                                 if (!success) {
+                                     [response setErrorToInvalidRequestParameterWithMessage:@"target is invalid."];
+                                     return YES;
+                                 }
+                             }
+                         } else if ([weakSelf currentRecorderId]) {
+                             idx = [[weakSelf currentRecorderId] unsignedLongLongValue];
+                             
+                         } else if ([weakSelf defaultVideoRecorderId]) {
+                             // target省略時はデフォルトのレコーダーを指定する。
+                             idx = [[weakSelf defaultVideoRecorderId] unsignedLongLongValue];
+                         } else {
+                             [response setErrorToInvalidRequestParameterWithMessage:
+                              @"target was not specified, and no default target was set; please specify an existing target."];
+                             return YES;
+                         }
+                         if (![weakSelf recorderArr] || [weakSelf recorderArr].count < idx) {
+                             [response setErrorToInvalidRequestParameterWithMessage:@"target is invalid."];
+                             return YES;
+                         }
+                         [weakSelf setCurrentRecorderId: [NSNumber numberWithUnsignedLongLong:idx]];
+                         DPHostRecorderContext *recorder;
+                         @try {
+                             recorder = [weakSelf recorderArr][(NSUInteger)idx];
+                         }
+                         @catch (NSException *exception) {
+                             NSString *message;
+                             if ([[exception name] isEqualToString:NSRangeException]) {
+                                 message = @"target is not found in the recorder ID list.";
+                             } else {
+                                 message = @"Exception encountered while trying to access the recorder ID list.";
+                             }
+                             [response setErrorToInvalidRequestParameterWithMessage:message];
+                             return YES;
+                         }
+                         if (recorder.state == RecorderStateRecording) {
+                             [response setErrorToIllegalDeviceStateWithMessage:@"target is not pausing."];
+                             return YES;
+                         }
+                         if (recorder.state == RecorderStatePaused) {
+                             if (![recorder.session isRunning]) {
+                                 [recorder.session startRunning];
+                                 if (![recorder.session isRunning]) {
+                                     [response setErrorToUnknownWithMessage:
+                                      @"Failed to resume the specified recorder; failed to start capture session."];
+                                     return YES;
+                                 }
+                             }
+                             recorder.state = RecorderStateRecording;
+                             
+                             [weakSelf sendOnRecordingChangeEventWithStatus:DConnectMediaStreamRecordingProfileRecordingStateResume
+                                                                   path:nil mimeType:nil errorMessage:nil];
+                             [response setResult:DConnectMessageResultTypeOk];
+                         } else {
+                             [response setErrorToIllegalDeviceStateWithMessage:
+                              @"The specified recorder is not recording; no need for pause."];
+                         }
+                         
+                         return YES;
+                     }];
+        
+        // API登録(didReceivePutStopRequest相当)
+        NSString *putStopRequestApiPath = [self apiPath: nil
+                                          attributeName: DConnectMediaStreamRecordingProfileAttrStop];
+        [self addPutPath: putStopRequestApiPath
+                     api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+
+                         NSString *target = [DConnectMediaStreamRecordingProfile targetFromRequest:request];
+                         
+                         unsigned long long idx;
+                         if (target) {
+                             if ([target isEqualToString:@"video"]) {
+                                 idx = [_defaultVideoRecorderId unsignedLongLongValue];
+                             } else if ([target isEqualToString:@"audio"]) {
+                                 idx = [_defaultAudioRecorderId unsignedLongLongValue];
+                             } else {
+                                 idx = [_currentRecorderId unsignedLongLongValue];
+                                 BOOL success = [[NSScanner scannerWithString:target] scanUnsignedLongLong:&idx];
+                                 if (!success) {
+                                     [response setErrorToInvalidRequestParameterWithMessage:@"target is invalid."];
+                                     return YES;
+                                 }
+                             }
+                         } else if ([weakSelf currentRecorderId]) {
+                             idx = [[weakSelf currentRecorderId] unsignedLongLongValue];
+                         } else if ([weakSelf defaultVideoRecorderId]) {
+                             // target省略時はデフォルトのレコーダーを指定する。
+                             idx = [_defaultVideoRecorderId unsignedLongLongValue];
+                         } else {
+                             [response setErrorToInvalidRequestParameterWithMessage:
+                              @"target was not specified, and no default target was set; please specify an existing target."];
+                             return YES;
+                         }
+                         if (!_recorderArr || _recorderArr.count < idx) {
+                             [response setErrorToInvalidRequestParameterWithMessage:@"target is invalid."];
+                             return YES;
+                         }
+                         
+                         _currentRecorderId = [NSNumber numberWithUnsignedLongLong:idx];
+                         DPHostRecorderContext *recorder;
+                         @try {
+                             recorder = _recorderArr[(NSUInteger)idx];
+                         }
+                         @catch (NSException *exception) {
+                             NSString *message;
+                             if ([[exception name] isEqualToString:NSRangeException]) {
+                                 message = @"target is not found in the recorder ID list.";
+                             } else {
+                                 message = @"Exception encountered while trying to access the recorder ID list.";
+                             }
+                             [response setErrorToInvalidRequestParameterWithMessage:message];
+                             return YES;
+                         }
+                         if (recorder.state == RecorderStateInactive) {
+                             [response setErrorToIllegalDeviceStateWithMessage:@"target is not recording."];
+                             return YES;
+                         }
+                         
+                         [recorder performWriting:
+                          ^{
+                              // レコーディングサンプルの配信を停止する。
+                              [recorder.session stopRunning];
+                              
+                              if (recorder.audioWriterInput) {
+                                  if (recorder.writer.status != AVAssetWriterStatusUnknown) {
+                                      [recorder.audioWriterInput markAsFinished];
+                                  }
+                              }
+                              if (recorder.videoWriterInput) {
+                                  if (recorder.writer.status != AVAssetWriterStatusUnknown) {
+                                      [recorder.videoWriterInput markAsFinished];
+                                  }
+                              }
+                              
+                              recorder.state = RecorderStateInactive;
+                              recorder.audioReady = recorder.videoReady = NO;
+                          }];
+                         
+                         if (!recorder.writer) {
+                             [response setErrorToIllegalDeviceStateWithMessage:@"Writer is non exist."];
+                             return YES;
+                         }
+                         if (recorder.writer.status == AVAssetWriterStatusUnknown) {
+                             [response setErrorToIllegalDeviceStateWithMessage:@"Unknown Failed to finishing an aseet writer"];
+                             return YES;
+                         }
+                         
+                         [recorder.writer finishWritingWithCompletionHandler:
+                          ^{
+                              
+                              if (recorder.writer.status == AVAssetWriterStatusFailed) {
+                                  [response setErrorToUnknownWithMessage:@"Failed to finishing an aseet writer"];
+                                  [[DConnectManager sharedManager] sendResponse:response];
+                                  return;
+                              }
+                              NSURL *fileUrl = recorder.writer.outputURL;
+                              
+                              // 動画をカメラロールに追加。
+                              [[weakSelf library] writeVideoAtPathToSavedPhotosAlbum:fileUrl
+                                                           completionBlock:
+                               ^(NSURL *assetURL, NSError *error) {
+                                   if (error) {
+                                       [response setErrorToUnknownWithMessage:@"Failed to save a movie to camera roll (1)."];
+                                       [[DConnectManager sharedManager] sendResponse:response];
+                                       return;
+                                   } else if (!assetURL) {
+                                       [response setErrorToUnknownWithMessage:@"Failed to save a movie to camera roll (2)."];
+                                       [[DConnectManager sharedManager] sendResponse:response];
+                                       return;
+                                   }
+                                   NSFileManager *fileMgr = [NSFileManager defaultManager];
+                                   if ([fileMgr fileExistsAtPath:[fileUrl path]]
+                                       && ![fileMgr removeItemAtURL:fileUrl error:nil]) {
+                                       NSLog(@"Failed to remove a movie file.");
+                                   }
+                                   
+                                   [DConnectMediaStreamRecordingProfile setUri:[assetURL absoluteString] target:response];
+                                   [response setResult:DConnectMessageResultTypeOk];
+                                   
+                                   [weakSelf sendOnRecordingChangeEventWithStatus:DConnectMediaStreamRecordingProfileRecordingStateStop
+                                                                         path:[assetURL absoluteString] mimeType:recorder.mimeType
+                                                                 errorMessage:nil];
+                                   [[DConnectManager sharedManager] sendResponse:response];
+                                   _currentRecorderId = nil;
+                                   recorder.writer = nil;
+                                   recorder.audioWriterInput = recorder.videoWriterInput = nil;
+                                   
+                               }];
+                          }];
+                         
+                         // 「- finishWritingWithCompletionHandler:」の中でHTTPレスポンスを返却させる
+                         return NO;
+                     }];
+        
+        // API登録(didReceivePutMuteTrackRequest相当)
+        NSString *putMuteTrackRequestApiPath = [self apiPath: nil
+                                               attributeName: DConnectMediaStreamRecordingProfileAttrMuteTrack];
+        [self addPutPath: putMuteTrackRequestApiPath
+                     api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+
+                         NSString *target = [DConnectMediaStreamRecordingProfile targetFromRequest:request];
+                         
+                         unsigned long long idx;
+                         if (target) {
+                             if ([target isEqualToString:@"video"]) {
+                                 idx = [_defaultVideoRecorderId unsignedLongLongValue];
+                             } else if ([target isEqualToString:@"audio"]) {
+                                 idx = [_defaultAudioRecorderId unsignedLongLongValue];
+                             } else {
+                                 idx = [_currentRecorderId unsignedLongLongValue];
+                                 BOOL success = [[NSScanner scannerWithString:target] scanUnsignedLongLong:&idx];
+                                 if (!success) {
+                                     [response setErrorToInvalidRequestParameterWithMessage:@"target is invalid."];
+                                     return YES;
+                                 }
+                             }
+                         } else if ([weakSelf currentRecorderId]) {
+                             idx = [[weakSelf currentRecorderId] unsignedLongLongValue];
+                             
+                         } else if ([weakSelf defaultVideoRecorderId]) {
+                             // target省略時はデフォルトのレコーダーを指定する。
+                             idx = [_defaultVideoRecorderId unsignedLongLongValue];
+                         } else {
+                             [response setErrorToInvalidRequestParameterWithMessage:
+                              @"target was not specified, and no default target was set; please specify an existing target."];
+                             return YES;
+                         }
+                         if (!_recorderArr || _recorderArr.count < idx) {
+                             [response setErrorToInvalidRequestParameterWithMessage:@"target is invalid."];
+                             return YES;
+                         }
+                         
+                         _currentRecorderId = [NSNumber numberWithUnsignedLongLong:idx];
+                         DPHostRecorderContext *recorder;
+                         @try {
+                             recorder = _recorderArr[(NSUInteger)idx];
+                         }
+                         @catch (NSException *exception) {
+                             NSString *message;
+                             if ([[exception name] isEqualToString:NSRangeException]) {
+                                 message = @"target is not found in the recorder ID list.";
+                             } else {
+                                 message = @"Exception encountered while trying to access the recorder ID list.";
+                             }
+                             [response setErrorToInvalidRequestParameterWithMessage:message];
+                             return YES;
+                         }
+                         
+                         if (!recorder.audioDevice) {
+                             [response setErrorToUnknownWithMessage:
+                              @"The specified target does not capture audio and can not be muted."];
+                             return YES;
+                         }
+                         
+                         if (!recorder.isMuted) {
+                             recorder.isMuted = YES;
+                             
+                             [weakSelf sendOnRecordingChangeEventWithStatus:DConnectMediaStreamRecordingProfileRecordingStateMutetrack
+                                                                   path:nil mimeType:nil errorMessage:nil];
+                             
+                             [response setResult:DConnectMessageResultTypeOk];
+                         } else {
+                             [response setErrorToIllegalDeviceStateWithMessage:@"The specified recorder is already muted."];
+                         }
+                         
+                         return YES;
+                     }];
+        
+        // API登録(didReceivePutUnmuteTrackRequest相当)
+        NSString *putUnmuteTrackRequestApiPath = [self apiPath: nil
+                                                 attributeName: DConnectMediaStreamRecordingProfileAttrUnmuteTrack];
+        [self addPutPath: putUnmuteTrackRequestApiPath
+                     api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+
+                         NSString *target = [DConnectMediaStreamRecordingProfile targetFromRequest:request];
+                         
+                         unsigned long long idx;
+                         if (target) {
+                             if ([target isEqualToString:@"video"]) {
+                                 idx = [_defaultVideoRecorderId unsignedLongLongValue];
+                             } else if ([target isEqualToString:@"audio"]) {
+                                 idx = [_defaultAudioRecorderId unsignedLongLongValue];
+                             } else {
+                                 idx = [_currentRecorderId unsignedLongLongValue];
+                                 BOOL success = [[NSScanner scannerWithString:target] scanUnsignedLongLong:&idx];
+                                 if (!success) {
+                                     [response setErrorToInvalidRequestParameterWithMessage:@"target is invalid."];
+                                     return YES;
+                                 }
+                             }
+                         } else if ([weakSelf currentRecorderId]) {
+                             idx = [[weakSelf currentRecorderId] unsignedLongLongValue];
+                             
+                         } else if ([weakSelf defaultVideoRecorderId]) {
+                             // target省略時はデフォルトのレコーダーを指定する。
+                             idx = [[weakSelf defaultVideoRecorderId] unsignedLongLongValue];
+                         } else {
+                             [response setErrorToInvalidRequestParameterWithMessage:
+                              @"target was not specified, and no default target was set; please specify an existing target."];
+                             return YES;
+                         }
+                         if (!_recorderArr || _recorderArr.count < idx) {
+                             [response setErrorToInvalidRequestParameterWithMessage:@"target is invalid."];
+                             return YES;
+                         }
+                         _currentRecorderId = [NSNumber numberWithUnsignedLongLong:idx];
+                         DPHostRecorderContext *recorder;
+                         @try {
+                             recorder = _recorderArr[(NSUInteger)idx];
+                         }
+                         @catch (NSException *exception) {
+                             NSString *message;
+                             if ([[exception name] isEqualToString:NSRangeException]) {
+                                 message = @"target is not found in the recorder ID list.";
+                             } else {
+                                 message = @"Exception encountered while trying to access the recorder ID list.";
+                             }
+                             [response setErrorToInvalidRequestParameterWithMessage:message];
+                             return YES;
+                         }
+                         
+                         if (!recorder.audioDevice) {
+                             [response setErrorToUnknownWithMessage:
+                              @"The specified target does not capture audio and can not be unmuted."];
+                             return YES;
+                         }
+                         
+                         if (recorder.isMuted) {
+                             recorder.isMuted = NO;
+                             
+                             [weakSelf sendOnRecordingChangeEventWithStatus:DConnectMediaStreamRecordingProfileRecordingStateUnmutetrack
+                                                                   path:nil mimeType:nil errorMessage:nil];
+                             
+                             [response setResult:DConnectMessageResultTypeOk];
+                         } else {
+                             [response setErrorToIllegalDeviceStateWithMessage:@"The specified recorder is not muted."];
+                         }
+                         
+                         return YES;
+                     }];
+        
+        // API登録(didReceivePutOnPhotoRequest相当)
+        NSString *putOnPhotoRequestApiPath = [self apiPath: nil
+                                             attributeName: DConnectMediaStreamRecordingProfileAttrOnPhoto];
+        [self addPutPath: putOnPhotoRequestApiPath
+                     api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+                         switch ([[weakSelf eventMgr] addEventForRequest:request]) {
+                             case DConnectEventErrorNone:             // エラー無し.
+                                 [response setResult:DConnectMessageResultTypeOk];
+                                 break;
+                             case DConnectEventErrorInvalidParameter: // 不正なパラメータ.
+                                 [response setErrorToInvalidRequestParameter];
+                                 break;
+                             case DConnectEventErrorNotFound:         // マッチするイベント無し.
+                             case DConnectEventErrorFailed:           // 処理失敗.
+                                 [response setErrorToUnknown];
+                                 break;
+                         }
+                         
+                         return YES;
+                     }];
+        
+        // API登録(didReceivePutOnRecordingChangeRequest相当)
+        NSString *putOnRecordingChangeRequestApiPath = [self apiPath: nil
+                                                       attributeName: DConnectMediaStreamRecordingProfileAttrOnRecordingChange];
+        [self addPutPath: putOnRecordingChangeRequestApiPath
+                     api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+                         switch ([[weakSelf eventMgr] addEventForRequest:request]) {
+                             case DConnectEventErrorNone:             // エラー無し.
+                                 [response setResult:DConnectMessageResultTypeOk];
+                                 break;
+                             case DConnectEventErrorInvalidParameter: // 不正なパラメータ.
+                                 [response setErrorToInvalidRequestParameter];
+                                 break;
+                             case DConnectEventErrorNotFound:         // マッチするイベント無し.
+                             case DConnectEventErrorFailed:           // 処理失敗.
+                                 [response setErrorToUnknown];
+                                 break;
+                         }
+                         
+                         return YES;
+                     }];
+        
+        // API登録(didReceivePutOnDataAvailableRequest相当)
+        NSString *putOnDataAvailableRequestApiPath = [self apiPath: nil
+                                                     attributeName: DConnectMediaStreamRecordingProfileAttrOnDataAvailable];
+        [self addPutPath: putOnDataAvailableRequestApiPath
+                     api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+
+                         NSString *serviceId = [request serviceId];
+
+                         NSArray *evts = [[weakSelf eventMgr] eventListForServiceId:serviceId
+                                                                  profile:DConnectMediaStreamRecordingProfileName
+                                                                attribute:DConnectMediaStreamRecordingProfileAttrOnDataAvailable];
+                         if (evts.count == 0) {
+                             [weakSelf profile:weakSelf didReceivePostRecordRequest:nil response:[response copy]
+                                 serviceId:serviceId target:nil timeslice:nil];
+                             
+                             // プレビュー画像URIの配送処理が開始されていないのなら、開始する。
+                             _sendPreview = YES;
+                         }
+                         
+                         switch ([[weakSelf eventMgr] addEventForRequest:request]) {
+                             case DConnectEventErrorNone:             // エラー無し.
+                                 [response setResult:DConnectMessageResultTypeOk];
+                                 break;
+                             case DConnectEventErrorInvalidParameter: // 不正なパラメータ.
+                                 [response setErrorToInvalidRequestParameter];
+                                 break;
+                             case DConnectEventErrorNotFound:         // マッチするイベント無し.
+                             case DConnectEventErrorFailed:           // 処理失敗.
+                                 [response setErrorToUnknown];
+                                 break;
+                         }
+                         
+                         return YES;
+                     }];
+        
+        // API登録(didReceiveDeleteOnPhotoRequest相当)
+        NSString *deleteOnPhotoRequestApiPath = [self apiPath: nil
+                                                attributeName: DConnectMediaStreamRecordingProfileAttrOnPhoto];
+        [self addDeletePath: deleteOnPhotoRequestApiPath
+                        api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+                            switch ([[weakSelf eventMgr] removeEventForRequest:request]) {
+                                case DConnectEventErrorNone:             // エラー無し.
+                                    [response setResult:DConnectMessageResultTypeOk];
+                                    break;
+                                case DConnectEventErrorInvalidParameter: // 不正なパラメータ.
+                                    [response setErrorToInvalidRequestParameter];
+                                    break;
+                                case DConnectEventErrorNotFound:         // マッチするイベント無し.
+                                case DConnectEventErrorFailed:           // 処理失敗.
+                                    [response setErrorToUnknown];
+                                    break;
+                            }
+                            
+                            return YES;
+                        }];
+
+        // API登録(didReceiveDeleteOnRecordingChangeRequest相当)
+        NSString *deleteOnRecordingChangeRequestApiPath = [self apiPath: nil
+                                                          attributeName: DConnectMediaStreamRecordingProfileAttrOnRecordingChange];
+        [self addDeletePath: deleteOnRecordingChangeRequestApiPath
+                        api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+                            switch ([[weakSelf eventMgr] removeEventForRequest:request]) {
+                                case DConnectEventErrorNone:             // エラー無し.
+                                    [response setResult:DConnectMessageResultTypeOk];
+                                    break;
+                                case DConnectEventErrorInvalidParameter: // 不正なパラメータ.
+                                    [response setErrorToInvalidRequestParameter];
+                                    break;
+                                case DConnectEventErrorNotFound:         // マッチするイベント無し.
+                                case DConnectEventErrorFailed:           // 処理失敗.
+                                    [response setErrorToUnknown];
+                                    break;
+                            }
+                            
+                            return YES;
+                        }];
+        
+        // API登録(didReceiveDeleteOnDataAvailableRequest相当)
+        NSString *deleteOnDataAvailableRequestApiPath = [self apiPath: nil
+                                                        attributeName: DConnectMediaStreamRecordingProfileAttrOnDataAvailable];
+        [self addDeletePath: deleteOnDataAvailableRequestApiPath
+                        api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+
+                            NSString *serviceId = [request serviceId];
+                            
+                            switch ([[weakSelf eventMgr] removeEventForRequest:request]) {
+                                case DConnectEventErrorNone:             // エラー無し.
+                                    [response setResult:DConnectMessageResultTypeOk];
+                                    break;
+                                case DConnectEventErrorInvalidParameter: // 不正なパラメータ.
+                                    [response setErrorToInvalidRequestParameter];
+                                    break;
+                                case DConnectEventErrorNotFound:         // マッチするイベント無し.
+                                case DConnectEventErrorFailed:           // 処理失敗.
+                                    [response setErrorToUnknown];
+                                    break;
+                            }
+                            
+                            NSArray *evts = [[weakSelf eventMgr] eventListForServiceId:serviceId
+                                                                     profile:DConnectMediaStreamRecordingProfileName
+                                                                   attribute:DConnectMediaStreamRecordingProfileAttrOnDataAvailable];
+                            if (evts.count == 0) {
+                                [weakSelf profile:weakSelf didReceivePutStopRequest:nil response:[response copy]
+                                    serviceId:serviceId target:nil];
+                                
+                                // イベント受領先が存在しないなら、プレビュー画像URIの配送処理を停止する。
+                                _sendPreview = NO;
+                                // 次回プレビュー開始時に影響を与えない為に、初期値（無効値）を設定する。
+                                _lastPreviewTimestamp = kCMTimeInvalid;
+                            }
+                            
+                            return YES;
+                        }];
+        
     }
     return self;
 }
@@ -513,7 +1501,7 @@ typedef NS_ENUM(NSUInteger, OptionIndex) {
     });
     
     // イベントの取得
-    NSArray *evts = [_eventMgr eventListForServiceId:ServiceDiscoveryServiceId
+    NSArray *evts = [_eventMgr eventListForServiceId:DPHostDevicePluginServiceId
                                             profile:DConnectMediaStreamRecordingProfileName
                                           attribute:DConnectMediaStreamRecordingProfileAttrOnPhoto];
     // イベント送信
@@ -540,7 +1528,7 @@ typedef NS_ENUM(NSUInteger, OptionIndex) {
                                  errorMessage:(NSString *)errorMsg
 {
     // イベントの取得
-    NSArray *evts = [_eventMgr eventListForServiceId:ServiceDiscoveryServiceId
+    NSArray *evts = [_eventMgr eventListForServiceId:DPHostDevicePluginServiceId
                                             profile:DConnectMediaStreamRecordingProfileName
                                            attribute:DConnectMediaStreamRecordingProfileAttrOnRecordingChange];
 
@@ -623,7 +1611,7 @@ typedef NS_ENUM(NSUInteger, OptionIndex) {
         }
         
         // イベントの取得
-        evts = [_eventMgr eventListForServiceId:ServiceDiscoveryServiceId
+        evts = [_eventMgr eventListForServiceId:DPHostDevicePluginServiceId
                                        profile:DConnectMediaStreamRecordingProfileName
                                      attribute:DConnectMediaStreamRecordingProfileAttrOnDataAvailable];
         
@@ -953,986 +1941,6 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
     if ( UIDeviceOrientationIsPortrait(orientation) || UIDeviceOrientationIsLandscape(orientation) ) {
         _referenceOrientation = orientation;
     }
-}
-#pragma mark - Get Methods
-
-- (BOOL)                  profile:(DConnectMediaStreamRecordingProfile *)profile
-didReceiveGetMediaRecorderRequest:(DConnectRequestMessage *)request
-                         response:(DConnectResponseMessage *)response
-                         serviceId:(NSString *)serviceId
-{
-    DConnectArray *recorders = [DConnectArray array];
-    for (size_t i = 0; i < _recorderArr.count; ++i) {
-        DPHostRecorderContext *recorderItr = _recorderArr[i];
-        
-        
-        [recorderItr performReading:
-         ^{
-             DConnectMessage *recorder = [DConnectMessage message];
-             
-             [DConnectMediaStreamRecordingProfile setRecorderId:[NSString stringWithFormat:@"%lu", i] target:recorder];
-             [DConnectMediaStreamRecordingProfile setRecorderName:recorderItr.name target:recorder];
-             
-             NSString *state;
-             switch (recorderItr.state) {
-                 case RecorderStateInactive:
-                     state = DConnectMediaStreamRecordingProfileRecorderStateInactive;
-                     break;
-                 case RecorderStatePaused:
-                     state = DConnectMediaStreamRecordingProfileRecorderStatePaused;
-                     break;
-                 case RecorderStateRecording:
-                     state = DConnectMediaStreamRecordingProfileRecorderStateRecording;
-                     break;
-             }
-             [DConnectMediaStreamRecordingProfile setRecorderState:state target:recorder];
-             
-             if (recorderItr.videoDevice) {
-                 if (recorderItr.videoDevice.imageWidth) {
-                     [DConnectMediaStreamRecordingProfile setRecorderImageWidth:
-                      [recorderItr.videoDevice.imageWidth intValue] target:recorder];
-                 }
-                 if (recorderItr.videoDevice.imageHeight) {
-                     [DConnectMediaStreamRecordingProfile setRecorderImageHeight:
-                      [recorderItr.videoDevice.imageHeight intValue] target:recorder];
-                 }
-             }
-             [DConnectMediaStreamRecordingProfile setRecorderMIMEType:recorderItr.mimeType target:recorder];
-             [DConnectMediaStreamRecordingProfile setRecorderConfig:@"[]" target:recorder];
-             
-             [recorders addMessage:recorder];
-         }];
-    }
-    [DConnectMediaStreamRecordingProfile setRecorders:recorders target:response];
-    [response setResult:DConnectMessageResultTypeOk];
-    
-    return YES;
-}
-
-#pragma mark - Post Methods
-
-- (BOOL)               profile:(DConnectMediaStreamRecordingProfile *)profile
-didReceivePostTakePhotoRequest:(DConnectRequestMessage *)request
-                      response:(DConnectResponseMessage *)response
-                      serviceId:(NSString *)serviceId
-                        target:(NSString *)target
-{
-    unsigned long long idx;
-    if (target || (target && target.length > 0)) {
-        if ([target isEqualToString:@"video"]) {
-            idx = [_defaultVideoRecorderId unsignedLongLongValue];
-        } else if ([target isEqualToString:@"audio"]) {
-            idx = [_defaultAudioRecorderId unsignedLongLongValue];
-        } else {
-            BOOL success = [[NSScanner scannerWithString:target] scanUnsignedLongLong:&idx];
-            if (!success) {
-                [response setErrorToInvalidRequestParameterWithMessage:@"target is invalid."];
-                return YES;
-            }
-        }
-    } else if (_defaultPhotoRecorderId) {
-        // target省略時はデフォルトのレコーダーを指定する。
-        idx = [_defaultPhotoRecorderId unsignedLongLongValue];
-    } else {
-        [response setErrorToInvalidRequestParameterWithMessage:
-         @"target was not specified, and no default target was set; please specify an existing target."];
-        return YES;
-    }
-    unsigned long long count = (unsigned)_recorderArr.count;
-
-    if (!_recorderArr || count < idx) {
-        [response setErrorToInvalidRequestParameterWithMessage:
-         @"target was not specified, and no default target was set; please specify an existing target."];
-        return YES;
-    }
-
-    DPHostRecorderContext *recorder;
-    @try {
-        recorder = _recorderArr[(NSUInteger)idx];
-    }
-    @catch (NSException *exception) {
-        NSString *message;
-        if ([[exception name] isEqualToString:NSRangeException]) {
-            message = @"target is not found in the recorder ID list.";
-        } else {
-            message = @"Exception encountered while trying to access the recorder ID list.";
-        }
-        [response setErrorToInvalidRequestParameterWithMessage:message];
-        return YES;
-    }
-    
-    for (DPHostRecorderContext *recorderItr in _recorderArr) {
-        if (recorderItr == recorder) {
-            continue;
-        }
-        if ((recorderItr.state == RecorderStateRecording)
-            && recorder.videoDevice && recorderItr.videoDevice &&
-            [recorder.videoDevice.uniqueId isEqualToString:recorderItr.videoDevice.uniqueId]) {
-            // ビデオ入力デバイスが既に他のコンテキストで使われている。
-            [response setErrorToUnknownWithMessage:
-             [NSString stringWithFormat:@"Video device is currently used by %@.",
-              recorderItr.name]];
-            return YES;
-        }
-    }
-    
-    __weak DPHostMediaStreamRecordingProfile *weakSelf = self;
-    __block BOOL isSync = YES;
-    [recorder performWriting:
-     ^{
-         if (recorder.type != RecorderTypePhoto) {
-             [response setErrorToInvalidRequestParameterWithMessage:
-                    @"target is not a video device; it is not capable of taking a photo."];
-             isSync = YES;
-             return;
-         }
-         
-         if (![recorder.session isRunning]) {
-             [recorder.session startRunning];
-         }
-         
-         // 写真を撮影する。
-         __block AVCaptureDevice *captureDevice = [AVCaptureDevice deviceWithUniqueID:recorder.videoDevice.uniqueId];
-         NSError *error;
-         [captureDevice lockForConfiguration:&error];
-         if (error) {
-             NSLog(@"Failed to acquire a configuration lock for %@.", captureDevice.uniqueID);
-         } else {
-             
-             if (captureDevice.focusMode != AVCaptureFocusModeContinuousAutoFocus &&
-                 [captureDevice isFocusModeSupported:AVCaptureFocusModeContinuousAutoFocus]) {
-                 captureDevice.focusMode = AVCaptureFocusModeContinuousAutoFocus;
-             } else if (captureDevice.focusMode != AVCaptureFocusModeAutoFocus &&
-                        [captureDevice isFocusModeSupported:AVCaptureFocusModeAutoFocus]) {
-                 captureDevice.focusMode = AVCaptureFocusModeAutoFocus;
-             } else if (captureDevice.focusMode != AVCaptureFocusModeLocked &&
-                        [captureDevice isFocusModeSupported:AVCaptureFocusModeLocked]) {
-                 captureDevice.focusMode = AVCaptureFocusModeLocked;
-             }
-             if (captureDevice.exposureMode != AVCaptureExposureModeContinuousAutoExposure &&
-                 [captureDevice isExposureModeSupported:AVCaptureExposureModeContinuousAutoExposure]) {
-                 captureDevice.exposureMode = AVCaptureExposureModeContinuousAutoExposure;
-             } else if (captureDevice.exposureMode != AVCaptureExposureModeAutoExpose &&
-                        [captureDevice isExposureModeSupported:AVCaptureExposureModeAutoExpose]) {
-                 captureDevice.exposureMode = AVCaptureExposureModeAutoExpose;
-             } else if (captureDevice.exposureMode != AVCaptureExposureModeLocked &&
-                        [captureDevice isExposureModeSupported:AVCaptureExposureModeLocked]) {
-                 captureDevice.exposureMode = AVCaptureExposureModeLocked;
-             }
-             if (captureDevice.whiteBalanceMode != AVCaptureWhiteBalanceModeContinuousAutoWhiteBalance &&
-                 [captureDevice isWhiteBalanceModeSupported:AVCaptureWhiteBalanceModeContinuousAutoWhiteBalance]) {
-                 captureDevice.whiteBalanceMode = AVCaptureWhiteBalanceModeContinuousAutoWhiteBalance;
-             } else if (captureDevice.whiteBalanceMode != AVCaptureWhiteBalanceModeAutoWhiteBalance &&
-                        [captureDevice isWhiteBalanceModeSupported:AVCaptureWhiteBalanceModeAutoWhiteBalance]) {
-                 captureDevice.whiteBalanceMode = AVCaptureWhiteBalanceModeAutoWhiteBalance;
-             } else if (captureDevice.whiteBalanceMode != AVCaptureWhiteBalanceModeLocked &&
-                        [captureDevice isWhiteBalanceModeSupported:AVCaptureWhiteBalanceModeLocked]) {
-                 captureDevice.whiteBalanceMode = AVCaptureWhiteBalanceModeLocked;
-             }
-             if (captureDevice.automaticallyEnablesLowLightBoostWhenAvailable != NO &&
-                 captureDevice.lowLightBoostSupported) {
-                 captureDevice.automaticallyEnablesLowLightBoostWhenAvailable = YES;
-             }
-             [captureDevice unlockForConfiguration];
-             
-             [NSThread sleepForTimeInterval:0.5];
-         }
-         
-         AVCaptureStillImageOutput *stillImageOutput = (AVCaptureStillImageOutput *)recorder.videoConnection.output;
-         [stillImageOutput captureStillImageAsynchronouslyFromConnection:recorder.videoConnection
-                                                       completionHandler:
-          ^(CMSampleBufferRef imageDataSampleBuffer, NSError *error) {
-              if (!imageDataSampleBuffer || error) {
-                  [response setErrorToUnknownWithMessage:@"Failed to take a photo."];
-                  [[DConnectManager sharedManager] sendResponse:response];
-                  return;
-              }
-              NSData *jpegData;
-              @try {
-                  jpegData = [AVCaptureStillImageOutput jpegStillImageNSDataRepresentation:imageDataSampleBuffer];
-              }
-              @catch (NSException *exception) {
-                  NSString *message;
-                  if ([[exception name] isEqualToString:NSInvalidArgumentException]) {
-                      message = @"Non-JPEG data was given.";
-                  } else {
-                      message = [NSString stringWithFormat:@"%@ encountered.", [exception name]];
-                  }
-                  [response setErrorToUnknownWithMessage:message];
-                  [[DConnectManager sharedManager] sendResponse:response];
-                  return;
-              }
-              
-              // 新たな画像アセットとしてカメラロールに保存
-              CFDictionaryRef attachments = CMCopyDictionaryOfAttachments(kCFAllocatorDefault,
-                                                                          imageDataSampleBuffer,
-                                                                          kCMAttachmentMode_ShouldPropagate);
-              [_library writeImageDataToSavedPhotosAlbum:jpegData metadata:(__bridge id)attachments
-                                        completionBlock:
-               ^(NSURL *assetURL, NSError *error) {
-                   if (!assetURL || error) {
-                       [response setErrorToUnknownWithMessage:@"Failed to save a photo to camera roll."];
-                       [[DConnectManager sharedManager] sendResponse:response];
-                       return;
-                   }
-                   [DConnectMediaStreamRecordingProfile setUri:[assetURL absoluteString] target:response];
-                   [response setResult:DConnectMessageResultTypeOk];
-                   
-                   if ([recorder.session isRunning]) {
-                       [recorder.session stopRunning];
-                   }
-                   
-                   [[DConnectManager sharedManager] sendResponse:response];
-                   
-                   NSString *mimeType = [DConnectFileManager searchMimeTypeForExtension:assetURL.path.pathExtension];
-                   [weakSelf sendOnPhotoEventWithPath:[assetURL absoluteString] mimeType:mimeType];
-                   
-                   return;
-               }];
-          }];
-         
-         // 非同期の「- captureStillImageAsynchronouslyFromConnection:completionHandler:」の処理内
-         // でHTTPレスポンスを返却させる。
-         isSync = NO;
-         return;
-     }];
-    
-    return isSync;
-}
-
-- (BOOL)            profile:(DConnectMediaStreamRecordingProfile *)profile
-didReceivePostRecordRequest:(DConnectRequestMessage *)request
-                   response:(DConnectResponseMessage *)response
-                   serviceId:(NSString *)serviceId
-                     target:(NSString *)target
-                  timeslice:(NSNumber *)timeslice
-{
-    NSString *timesliceString = [request stringForKey:DConnectMediaStreamRecordingProfileParamTimeSlice];
-    if (![DPHostUtils existDigitWithString:timesliceString]
-        || (timeslice && timeslice < 0) || (timesliceString && timesliceString.length <= 0)) {
-        [response setErrorToInvalidRequestParameterWithMessage:
-         @"timeslice is not supported; please omit this parameter."];
-        return YES;
-    }
-    
-    unsigned long long idx;
-    if (target) {
-        if ([target isEqualToString:@"video"]) {
-            idx = [_defaultVideoRecorderId unsignedLongLongValue];
-        } else if ([target isEqualToString:@"audio"]) {
-            idx = [_defaultAudioRecorderId unsignedLongLongValue];
-        } else {
-            BOOL success = [[NSScanner scannerWithString:target] scanUnsignedLongLong:&idx];
-            if (!success) {
-                [response setErrorToInvalidRequestParameterWithMessage:@"target is invalid."];
-                return YES;
-            }
-        }
-    } else if (_defaultVideoRecorderId) {
-        // target省略時はデフォルトのレコーダーを指定する。
-        idx = [_defaultVideoRecorderId unsignedLongLongValue];
-    } else if (_currentRecorderId) {
-        idx = [_currentRecorderId unsignedLongLongValue];
-    } else {
-        [response setErrorToInvalidRequestParameterWithMessage:
-         @"target was not specified, and no default target was set; please specify an existing target."];
-        return YES;
-    }
-    if (!_recorderArr || _recorderArr.count < idx) {
-        [response setErrorToInvalidRequestParameterWithMessage:@"target is invalid."];
-        return YES;
-    }
-    _currentRecorderId = [NSNumber numberWithUnsignedLongLong:idx];
-    DPHostRecorderContext *recorder;
-    @try {
-        recorder = _recorderArr[(NSUInteger)idx];
-    }
-    @catch (NSException *exception) {
-        NSString *message;
-        if ([[exception name] isEqualToString:NSRangeException]) {
-            message = @"target is not found in the recorder ID list.";
-        } else {
-            message = @"Exception encountered while trying to access the recorder ID list.";
-        }
-        [response setErrorToInvalidRequestParameterWithMessage:message];
-        return YES;
-    }
-    
-    if (recorder.state == RecorderStateRecording) {
-        [response setErrorToIllegalDeviceStateWithMessage:@"target is already recording."];
-        return YES;
-    }
-    
-    // 入力デバイスが既に他のレコーダーで使われていないかをチェックする
-    for (DPHostRecorderContext *recorderItr in _recorderArr) {
-        if (recorderItr == recorder) {
-            continue;
-        }
-        if (recorderItr.state == RecorderStateRecording) {
-            if (recorder.audioDevice && recorderItr.audioDevice &&
-                [recorder.audioDevice.uniqueId isEqualToString:recorderItr.audioDevice.uniqueId]) {
-                // 音声入力デバイスが既に他のコンテキストで使われている。
-                [response setErrorToUnknownWithMessage:
-                 [NSString stringWithFormat:@"Audio device is currently used by %@.",
-                  recorderItr.name]];
-                return YES;
-            }
-            if (recorder.videoDevice && recorderItr.videoDevice &&
-                [recorder.videoDevice.uniqueId isEqualToString:recorderItr.videoDevice.uniqueId]) {
-                // ビデオ入力デバイスが既に他のコンテキストで使われている。
-                [response setErrorToUnknownWithMessage:
-                 [NSString stringWithFormat:@"Video device is currently used by %@.",
-                  recorderItr.name]];
-                return YES;
-            }
-        }
-    }
-    
-    [recorder performWriting:
-     ^{
-         if (recorder.type != RecorderTypeMovie) {
-             [response setErrorToInvalidRequestParameterWithMessage:
-              @"target is not an audiovisual device; it is not capable of taking a movie."];
-             return;
-         }
-         
-         recorder.videoOrientation = [recorder.videoConnection videoOrientation];
-         
-         AVCaptureDevice *captureDevice = [AVCaptureDevice deviceWithUniqueID:recorder.videoDevice.uniqueId];
-         NSError *error;
-         [captureDevice lockForConfiguration:&error];
-         if (error) {
-             NSLog(@"Failed to acquire a configuration lock for %@.", captureDevice.uniqueID);
-         } else {
-             
-             // 画面中央に露光やフォーカスが調整される様にする。
-             CGPoint pointOfInterest = CGPointMake(.5, .5);
-             if ([captureDevice isFocusPointOfInterestSupported] &&
-                 [captureDevice isFocusModeSupported:AVCaptureFocusModeAutoFocus]) {
-                 captureDevice.focusPointOfInterest = pointOfInterest;
-                 captureDevice.focusMode = AVCaptureFocusModeAutoFocus;
-             }
-             if ([captureDevice isExposurePointOfInterestSupported] &&
-                 [captureDevice isExposureModeSupported:AVCaptureExposureModeContinuousAutoExposure]) {
-                 captureDevice.exposurePointOfInterest = pointOfInterest;
-                 captureDevice.exposureMode =
-                 AVCaptureExposureModeContinuousAutoExposure;
-             }
-             [captureDevice unlockForConfiguration];
-             
-             // 露光の為に少し待つ
-             [NSThread sleepForTimeInterval:0.5];
-         }
-         
-         [recorder setupAssetWriterWithResponse:response];
-         recorder.state = RecorderStateRecording;
-         
-         // ポーズ関連の変数を初期化
-         _lastPreviewTimestamp = kCMTimeInvalid;
-         _totalPauseDuration = kCMTimeInvalid;
-         _needRecalculationOfTotalPauseDuration = NO;
-         
-         if (![recorder.session isRunning]) {
-             [recorder.session startRunning];
-         }
-     }];
-    
-    return NO;
-}
-
-#pragma mark - Put Methods
-
-- (BOOL)          profile:(DConnectMediaStreamRecordingProfile *)profile
-didReceivePutPauseRequest:(DConnectRequestMessage *)request
-                 response:(DConnectResponseMessage *)response
-                 serviceId:(NSString *)serviceId
-                   target:(NSString *)target
-{
-    unsigned long long idx;
-    if (target) {
-        if ([target isEqualToString:@"video"]) {
-            idx = [_defaultVideoRecorderId unsignedLongLongValue];
-        } else if ([target isEqualToString:@"audio"]) {
-            idx = [_defaultAudioRecorderId unsignedLongLongValue];
-        } else {
-            idx = [_currentRecorderId unsignedLongLongValue];
-            BOOL success = [[NSScanner scannerWithString:target] scanUnsignedLongLong:&idx];
-            if (!success) {
-                [response setErrorToInvalidRequestParameterWithMessage:@"target is invalid."];
-                return YES;
-            }
-        }
-    } else if (_currentRecorderId) {
-        idx = [_currentRecorderId unsignedLongLongValue];
-    } else if (_defaultVideoRecorderId) {
-        // target省略時はデフォルトのレコーダーを指定する。
-        idx = [_defaultVideoRecorderId unsignedLongLongValue];
-    } else {
-        [response setErrorToInvalidRequestParameterWithMessage:
-         @"target was not specified, and no default target was set; please specify an existing target."];
-        return YES;
-    }
-    if (!_recorderArr || _recorderArr.count < idx) {
-        [response setErrorToInvalidRequestParameterWithMessage:@"target is invalid."];
-        return YES;
-    }
-
-    _currentRecorderId = [NSNumber numberWithUnsignedLongLong:idx];
-    DPHostRecorderContext *recorder;
-    @try {
-        recorder = _recorderArr[(NSUInteger)idx];
-    }
-    @catch (NSException *exception) {
-        NSString *message;
-        if ([[exception name] isEqualToString:NSRangeException]) {
-            message = @"target is not found in the recorder ID list.";
-        } else {
-            message = @"Exception encountered while trying to access the recorder ID list.";
-        }
-        [response setErrorToInvalidRequestParameterWithMessage:message];
-        return YES;
-    }
-    
-    if (recorder.state == RecorderStatePaused) {
-        [response setErrorToIllegalDeviceStateWithMessage:@"target is already pausing."];
-        return YES;
-    }
-    
-    if (recorder.state == RecorderStateRecording) {
-        if ([recorder.session isRunning]) {
-            [recorder.session stopRunning];
-            if ([recorder.session isRunning]) {
-                [response setErrorToUnknownWithMessage:
-                 @"Failed to pause the specified recorder; failed to stop capture session."];
-                return YES;
-            }
-        }
-        
-        recorder.state = RecorderStatePaused;
-        
-        [self sendOnRecordingChangeEventWithStatus:DConnectMediaStreamRecordingProfileRecordingStatePause
-                                              path:nil mimeType:nil errorMessage:nil];
-        
-        _needRecalculationOfTotalPauseDuration = YES;
-        
-        [response setResult:DConnectMessageResultTypeOk];
-    } else {
-        [response setErrorToIllegalDeviceStateWithMessage:
-         @"The specified recorder is not recording; no need for pause."];
-    }
-
-    return YES;
-}
-
-- (BOOL)           profile:(DConnectMediaStreamRecordingProfile *)profile
-didReceivePutResumeRequest:(DConnectRequestMessage *)request
-                  response:(DConnectResponseMessage *)response
-                  serviceId:(NSString *)serviceId
-                    target:(NSString *)target
-{
-    unsigned long long idx;
-    if (target) {
-        if ([target isEqualToString:@"video"]) {
-            idx = [_defaultVideoRecorderId unsignedLongLongValue];
-        } else if ([target isEqualToString:@"audio"]) {
-            idx = [_defaultAudioRecorderId unsignedLongLongValue];
-        } else {
-            idx = [_currentRecorderId unsignedLongLongValue];
-            BOOL success = [[NSScanner scannerWithString:target] scanUnsignedLongLong:&idx];
-            if (!success) {
-                [response setErrorToInvalidRequestParameterWithMessage:@"target is invalid."];
-                return YES;
-            }
-        }
-    } else if (_currentRecorderId) {
-        idx = [_currentRecorderId unsignedLongLongValue];
-        
-    } else if (_defaultVideoRecorderId) {
-        // target省略時はデフォルトのレコーダーを指定する。
-        idx = [_defaultVideoRecorderId unsignedLongLongValue];
-    } else {
-        [response setErrorToInvalidRequestParameterWithMessage:
-         @"target was not specified, and no default target was set; please specify an existing target."];
-        return YES;
-    }
-    if (!_recorderArr || _recorderArr.count < idx) {
-        [response setErrorToInvalidRequestParameterWithMessage:@"target is invalid."];
-        return YES;
-    }
-    _currentRecorderId = [NSNumber numberWithUnsignedLongLong:idx];
-    DPHostRecorderContext *recorder;
-    @try {
-        recorder = _recorderArr[(NSUInteger)idx];
-    }
-    @catch (NSException *exception) {
-        NSString *message;
-        if ([[exception name] isEqualToString:NSRangeException]) {
-            message = @"target is not found in the recorder ID list.";
-        } else {
-            message = @"Exception encountered while trying to access the recorder ID list.";
-        }
-        [response setErrorToInvalidRequestParameterWithMessage:message];
-        return YES;
-    }
-    if (recorder.state == RecorderStateRecording) {
-        [response setErrorToIllegalDeviceStateWithMessage:@"target is not pausing."];
-        return YES;
-    }
-    if (recorder.state == RecorderStatePaused) {
-        if (![recorder.session isRunning]) {
-            [recorder.session startRunning];
-            if (![recorder.session isRunning]) {
-                [response setErrorToUnknownWithMessage:
-                 @"Failed to resume the specified recorder; failed to start capture session."];
-                return YES;
-            }
-        }
-        recorder.state = RecorderStateRecording;
-        
-        [self sendOnRecordingChangeEventWithStatus:DConnectMediaStreamRecordingProfileRecordingStateResume
-                                              path:nil mimeType:nil errorMessage:nil];
-        [response setResult:DConnectMessageResultTypeOk];
-    } else {
-        [response setErrorToIllegalDeviceStateWithMessage:
-         @"The specified recorder is not recording; no need for pause."];
-    }
-
-    return YES;
-}
-
-- (BOOL)         profile:(DConnectMediaStreamRecordingProfile *)profile
-didReceivePutStopRequest:(DConnectRequestMessage *)request
-                response:(DConnectResponseMessage *)response
-                serviceId:(NSString *)serviceId
-                  target:(NSString *)target
-{
-    unsigned long long idx;
-    if (target) {
-        if ([target isEqualToString:@"video"]) {
-            idx = [_defaultVideoRecorderId unsignedLongLongValue];
-        } else if ([target isEqualToString:@"audio"]) {
-            idx = [_defaultAudioRecorderId unsignedLongLongValue];
-        } else {
-            idx = [_currentRecorderId unsignedLongLongValue];
-            BOOL success = [[NSScanner scannerWithString:target] scanUnsignedLongLong:&idx];
-            if (!success) {
-                [response setErrorToInvalidRequestParameterWithMessage:@"target is invalid."];
-                return YES;
-            }
-        }
-    } else if (_currentRecorderId) {
-        idx = [_currentRecorderId unsignedLongLongValue];
-    } else if (_defaultVideoRecorderId) {
-        // target省略時はデフォルトのレコーダーを指定する。
-        idx = [_defaultVideoRecorderId unsignedLongLongValue];
-    } else {
-        [response setErrorToInvalidRequestParameterWithMessage:
-         @"target was not specified, and no default target was set; please specify an existing target."];
-        return YES;
-    }
-    if (!_recorderArr || _recorderArr.count < idx) {
-        [response setErrorToInvalidRequestParameterWithMessage:@"target is invalid."];
-        return YES;
-    }
-
-    _currentRecorderId = [NSNumber numberWithUnsignedLongLong:idx];
-    DPHostRecorderContext *recorder;
-    @try {
-        recorder = _recorderArr[(NSUInteger)idx];
-    }
-    @catch (NSException *exception) {
-        NSString *message;
-        if ([[exception name] isEqualToString:NSRangeException]) {
-            message = @"target is not found in the recorder ID list.";
-        } else {
-            message = @"Exception encountered while trying to access the recorder ID list.";
-        }
-        [response setErrorToInvalidRequestParameterWithMessage:message];
-        return YES;
-    }
-    if (recorder.state == RecorderStateInactive) {
-        [response setErrorToIllegalDeviceStateWithMessage:@"target is not recording."];
-        return YES;
-    }
-
-    [recorder performWriting:
-     ^{
-         // レコーディングサンプルの配信を停止する。
-         [recorder.session stopRunning];
-
-         if (recorder.audioWriterInput) {
-			 if (recorder.writer.status != AVAssetWriterStatusUnknown) {
-				 [recorder.audioWriterInput markAsFinished];
-			 }
-         }
-         if (recorder.videoWriterInput) {
-			 if (recorder.writer.status != AVAssetWriterStatusUnknown) {
-				 [recorder.videoWriterInput markAsFinished];
-			 }
-         }
-
-         recorder.state = RecorderStateInactive;
-         recorder.audioReady = recorder.videoReady = NO;
-     }];
-
-    if (!recorder.writer) {
-        [response setErrorToIllegalDeviceStateWithMessage:@"Writer is non exist."];
-        return YES;
-    }
-    if (recorder.writer.status == AVAssetWriterStatusUnknown) {
-        [response setErrorToIllegalDeviceStateWithMessage:@"Unknown Failed to finishing an aseet writer"];
-        return YES;
-    }
-
-    [recorder.writer finishWritingWithCompletionHandler:
-     ^{
-
-         if (recorder.writer.status == AVAssetWriterStatusFailed) {
-             [response setErrorToUnknownWithMessage:@"Failed to finishing an aseet writer"];
-             [[DConnectManager sharedManager] sendResponse:response];
-             return;
-         }
-         NSURL *fileUrl = recorder.writer.outputURL;
-
-         // 動画をカメラロールに追加。
-         [_library writeVideoAtPathToSavedPhotosAlbum:fileUrl
-                                     completionBlock:
-          ^(NSURL *assetURL, NSError *error) {
-              if (error) {
-                  [response setErrorToUnknownWithMessage:@"Failed to save a movie to camera roll (1)."];
-                  [[DConnectManager sharedManager] sendResponse:response];
-                  return;
-              } else if (!assetURL) {
-                  [response setErrorToUnknownWithMessage:@"Failed to save a movie to camera roll (2)."];
-                  [[DConnectManager sharedManager] sendResponse:response];
-                  return;
-              }
-              NSFileManager *fileMgr = [NSFileManager defaultManager];
-              if ([fileMgr fileExistsAtPath:[fileUrl path]]
-                  && ![fileMgr removeItemAtURL:fileUrl error:nil]) {
-                  NSLog(@"Failed to remove a movie file.");
-              }
-              
-              [DConnectMediaStreamRecordingProfile setUri:[assetURL absoluteString] target:response];
-              [response setResult:DConnectMessageResultTypeOk];
-              
-              [self sendOnRecordingChangeEventWithStatus:DConnectMediaStreamRecordingProfileRecordingStateStop
-                                                    path:[assetURL absoluteString] mimeType:recorder.mimeType
-                                            errorMessage:nil];
-              [[DConnectManager sharedManager] sendResponse:response];
-              _currentRecorderId = nil;
-              recorder.writer = nil;
-              recorder.audioWriterInput = recorder.videoWriterInput = nil;
-
-          }];
-     }];
-
-    // 「- finishWritingWithCompletionHandler:」の中でHTTPレスポンスを返却させる
-    return NO;
-}
-
-- (BOOL)              profile:(DConnectMediaStreamRecordingProfile *)profile
-didReceivePutMuteTrackRequest:(DConnectRequestMessage *)request
-                     response:(DConnectResponseMessage *)response
-                     serviceId:(NSString *)serviceId
-                       target:(NSString *)target
-{
-    unsigned long long idx;
-    if (target) {
-        if ([target isEqualToString:@"video"]) {
-            idx = [_defaultVideoRecorderId unsignedLongLongValue];
-        } else if ([target isEqualToString:@"audio"]) {
-            idx = [_defaultAudioRecorderId unsignedLongLongValue];
-        } else {
-            idx = [_currentRecorderId unsignedLongLongValue];
-            BOOL success = [[NSScanner scannerWithString:target] scanUnsignedLongLong:&idx];
-            if (!success) {
-                [response setErrorToInvalidRequestParameterWithMessage:@"target is invalid."];
-                return YES;
-            }
-        }
-    } else if (_currentRecorderId) {
-        idx = [_currentRecorderId unsignedLongLongValue];
-        
-    } else if (_defaultVideoRecorderId) {
-        // target省略時はデフォルトのレコーダーを指定する。
-        idx = [_defaultVideoRecorderId unsignedLongLongValue];
-    } else {
-        [response setErrorToInvalidRequestParameterWithMessage:
-         @"target was not specified, and no default target was set; please specify an existing target."];
-        return YES;
-    }
-    if (!_recorderArr || _recorderArr.count < idx) {
-        [response setErrorToInvalidRequestParameterWithMessage:@"target is invalid."];
-        return YES;
-    }
-
-    _currentRecorderId = [NSNumber numberWithUnsignedLongLong:idx];
-    DPHostRecorderContext *recorder;
-    @try {
-        recorder = _recorderArr[(NSUInteger)idx];
-    }
-    @catch (NSException *exception) {
-        NSString *message;
-        if ([[exception name] isEqualToString:NSRangeException]) {
-            message = @"target is not found in the recorder ID list.";
-        } else {
-            message = @"Exception encountered while trying to access the recorder ID list.";
-        }
-        [response setErrorToInvalidRequestParameterWithMessage:message];
-        return YES;
-    }
-    
-    if (!recorder.audioDevice) {
-        [response setErrorToUnknownWithMessage:
-         @"The specified target does not capture audio and can not be muted."];
-        return YES;
-    }
-    
-    if (!recorder.isMuted) {
-        recorder.isMuted = YES;
-        
-        [self sendOnRecordingChangeEventWithStatus:DConnectMediaStreamRecordingProfileRecordingStateMutetrack
-                                              path:nil mimeType:nil errorMessage:nil];
-        
-        [response setResult:DConnectMessageResultTypeOk];
-    } else {
-        [response setErrorToIllegalDeviceStateWithMessage:@"The specified recorder is already muted."];
-    }
-    
-    return YES;
-}
-
-- (BOOL)                profile:(DConnectMediaStreamRecordingProfile *)profile
-didReceivePutUnmuteTrackRequest:(DConnectRequestMessage *)request
-                       response:(DConnectResponseMessage *)response
-                       serviceId:(NSString *)serviceId
-                         target:(NSString *)target
-{
-    unsigned long long idx;
-    if (target) {
-        if ([target isEqualToString:@"video"]) {
-            idx = [_defaultVideoRecorderId unsignedLongLongValue];
-        } else if ([target isEqualToString:@"audio"]) {
-            idx = [_defaultAudioRecorderId unsignedLongLongValue];
-        } else {
-            idx = [_currentRecorderId unsignedLongLongValue];
-            BOOL success = [[NSScanner scannerWithString:target] scanUnsignedLongLong:&idx];
-            if (!success) {
-                [response setErrorToInvalidRequestParameterWithMessage:@"target is invalid."];
-                return YES;
-            }
-        }
-    } else if (_currentRecorderId) {
-        idx = [_currentRecorderId unsignedLongLongValue];
-        
-    } else if (_defaultVideoRecorderId) {
-        // target省略時はデフォルトのレコーダーを指定する。
-        idx = [_defaultVideoRecorderId unsignedLongLongValue];
-    } else {
-        [response setErrorToInvalidRequestParameterWithMessage:
-         @"target was not specified, and no default target was set; please specify an existing target."];
-        return YES;
-    }
-    if (!_recorderArr || _recorderArr.count < idx) {
-        [response setErrorToInvalidRequestParameterWithMessage:@"target is invalid."];
-        return YES;
-    }
-    _currentRecorderId = [NSNumber numberWithUnsignedLongLong:idx];
-    DPHostRecorderContext *recorder;
-    @try {
-        recorder = _recorderArr[(NSUInteger)idx];
-    }
-    @catch (NSException *exception) {
-        NSString *message;
-        if ([[exception name] isEqualToString:NSRangeException]) {
-            message = @"target is not found in the recorder ID list.";
-        } else {
-            message = @"Exception encountered while trying to access the recorder ID list.";
-        }
-        [response setErrorToInvalidRequestParameterWithMessage:message];
-        return YES;
-    }
-    
-    if (!recorder.audioDevice) {
-        [response setErrorToUnknownWithMessage:
-         @"The specified target does not capture audio and can not be unmuted."];
-        return YES;
-    }
-    
-    if (recorder.isMuted) {
-        recorder.isMuted = NO;
-        
-        [self sendOnRecordingChangeEventWithStatus:DConnectMediaStreamRecordingProfileRecordingStateUnmutetrack
-                                              path:nil mimeType:nil errorMessage:nil];
-        
-        [response setResult:DConnectMessageResultTypeOk];
-    } else {
-        [response setErrorToIllegalDeviceStateWithMessage:@"The specified recorder is not muted."];
-    }
-
-    return YES;
-}
-
-#pragma mark Event Registration
-
-- (BOOL)            profile:(DConnectMediaStreamRecordingProfile *)profile
-didReceivePutOnPhotoRequest:(DConnectRequestMessage *)request
-                   response:(DConnectResponseMessage *)response
-                   serviceId:(NSString *)serviceId
-                 sessionKey:(NSString *)sessionKey
-{
-    switch ([_eventMgr addEventForRequest:request]) {
-        case DConnectEventErrorNone:             // エラー無し.
-            [response setResult:DConnectMessageResultTypeOk];
-            break;
-        case DConnectEventErrorInvalidParameter: // 不正なパラメータ.
-            [response setErrorToInvalidRequestParameter];
-            break;
-        case DConnectEventErrorNotFound:         // マッチするイベント無し.
-        case DConnectEventErrorFailed:           // 処理失敗.
-            [response setErrorToUnknown];
-            break;
-    }
-    
-    return YES;
-}
-
-- (BOOL)                      profile:(DConnectMediaStreamRecordingProfile *)profile
-didReceivePutOnRecordingChangeRequest:(DConnectRequestMessage *)request
-                             response:(DConnectResponseMessage *)response
-                             serviceId:(NSString *)serviceId
-                           sessionKey:(NSString *)sessionKey
-{
-    switch ([_eventMgr addEventForRequest:request]) {
-        case DConnectEventErrorNone:             // エラー無し.
-            [response setResult:DConnectMessageResultTypeOk];
-            break;
-        case DConnectEventErrorInvalidParameter: // 不正なパラメータ.
-            [response setErrorToInvalidRequestParameter];
-            break;
-        case DConnectEventErrorNotFound:         // マッチするイベント無し.
-        case DConnectEventErrorFailed:           // 処理失敗.
-            [response setErrorToUnknown];
-            break;
-    }
-    
-    return YES;
-}
-
-- (BOOL)                    profile:(DConnectMediaStreamRecordingProfile *)profile
-didReceivePutOnDataAvailableRequest:(DConnectRequestMessage *)request
-                           response:(DConnectResponseMessage *)response
-                           serviceId:(NSString *)serviceId
-                         sessionKey:(NSString *)sessionKey
-{
-    NSArray *evts = [_eventMgr eventListForServiceId:serviceId
-                                            profile:DConnectMediaStreamRecordingProfileName
-                                          attribute:DConnectMediaStreamRecordingProfileAttrOnDataAvailable];
-    if (evts.count == 0) {
-        [self profile:profile didReceivePostRecordRequest:nil response:[response copy]
-             serviceId:serviceId target:nil timeslice:nil];
-        
-        // プレビュー画像URIの配送処理が開始されていないのなら、開始する。
-        _sendPreview = YES;
-    }
-    
-    switch ([_eventMgr addEventForRequest:request]) {
-        case DConnectEventErrorNone:             // エラー無し.
-            [response setResult:DConnectMessageResultTypeOk];
-            break;
-        case DConnectEventErrorInvalidParameter: // 不正なパラメータ.
-            [response setErrorToInvalidRequestParameter];
-            break;
-        case DConnectEventErrorNotFound:         // マッチするイベント無し.
-        case DConnectEventErrorFailed:           // 処理失敗.
-            [response setErrorToUnknown];
-            break;
-    }
-    
-    return YES;
-}
-
-#pragma mark - Delete Methods
-#pragma mark Event Unregstration
-
-- (BOOL)               profile:(DConnectMediaStreamRecordingProfile *)profile
-didReceiveDeleteOnPhotoRequest:(DConnectRequestMessage *)request
-                      response:(DConnectResponseMessage *)response
-                      serviceId:(NSString *)serviceId
-                    sessionKey:(NSString *)sessionKey
-{
-    switch ([_eventMgr removeEventForRequest:request]) {
-        case DConnectEventErrorNone:             // エラー無し.
-            [response setResult:DConnectMessageResultTypeOk];
-            break;
-        case DConnectEventErrorInvalidParameter: // 不正なパラメータ.
-            [response setErrorToInvalidRequestParameter];
-            break;
-        case DConnectEventErrorNotFound:         // マッチするイベント無し.
-        case DConnectEventErrorFailed:           // 処理失敗.
-            [response setErrorToUnknown];
-            break;
-    }
-    
-    return YES;
-}
-
-- (BOOL)                         profile:(DConnectMediaStreamRecordingProfile *)profile
-didReceiveDeleteOnRecordingChangeRequest:(DConnectRequestMessage *)request
-                                response:(DConnectResponseMessage *)response
-                                serviceId:(NSString *)serviceId
-                              sessionKey:(NSString *)sessionKey
-{
-    switch ([_eventMgr removeEventForRequest:request]) {
-        case DConnectEventErrorNone:             // エラー無し.
-            [response setResult:DConnectMessageResultTypeOk];
-            break;
-        case DConnectEventErrorInvalidParameter: // 不正なパラメータ.
-            [response setErrorToInvalidRequestParameter];
-            break;
-        case DConnectEventErrorNotFound:         // マッチするイベント無し.
-        case DConnectEventErrorFailed:           // 処理失敗.
-            [response setErrorToUnknown];
-            break;
-    }
-    
-    return YES;
-}
-
-- (BOOL)                       profile:(DConnectMediaStreamRecordingProfile *)profile
-didReceiveDeleteOnDataAvailableRequest:(DConnectRequestMessage *)request
-                              response:(DConnectResponseMessage *)response
-                              serviceId:(NSString *)serviceId
-                            sessionKey:(NSString *)sessionKey
-{
-    switch ([_eventMgr removeEventForRequest:request]) {
-        case DConnectEventErrorNone:             // エラー無し.
-            [response setResult:DConnectMessageResultTypeOk];
-            break;
-        case DConnectEventErrorInvalidParameter: // 不正なパラメータ.
-            [response setErrorToInvalidRequestParameter];
-            break;
-        case DConnectEventErrorNotFound:         // マッチするイベント無し.
-        case DConnectEventErrorFailed:           // 処理失敗.
-            [response setErrorToUnknown];
-            break;
-    }
-    
-    NSArray *evts = [_eventMgr eventListForServiceId:serviceId
-                                            profile:DConnectMediaStreamRecordingProfileName
-                                          attribute:DConnectMediaStreamRecordingProfileAttrOnDataAvailable];
-    if (evts.count == 0) {
-        [self profile:profile didReceivePutStopRequest:nil response:[response copy]
-             serviceId:serviceId target:nil];
-        
-        // イベント受領先が存在しないなら、プレビュー画像URIの配送処理を停止する。
-        _sendPreview = NO;
-        // 次回プレビュー開始時に影響を与えない為に、初期値（無効値）を設定する。
-        _lastPreviewTimestamp = kCMTimeInvalid;
-    }
-    
-    return YES;
 }
 
 @end

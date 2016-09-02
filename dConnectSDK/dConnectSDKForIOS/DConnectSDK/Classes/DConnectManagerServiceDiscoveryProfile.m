@@ -8,6 +8,7 @@
 //
 
 #import "DConnectManagerServiceDiscoveryProfile.h"
+#import <DConnectSDK/DConnectServiceDiscoveryProfile.h>
 #import "DConnectManager+Private.h"
 #import "DConnectEventManager.h"
 
@@ -18,20 +19,70 @@
 
 - (id) init {
     
-    self = [super init];
+    self = [super initWithServiceProvider: nil];
     if (self) {
-        self.delegate = self;
+        __weak DConnectManagerServiceDiscoveryProfile *weakSelf = self;
+
+        NSString *getServicesRequestApiPath = [self apiPath: nil
+                                              attributeName: nil];
+        [self addGetPath: getServicesRequestApiPath
+                     api:^(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+                         return [weakSelf getServicesRequest: request response: response];
+                     }];
+        
+        NSString *putOnServiceChangeRequestApiPath = [self apiPath: nil
+                                                     attributeName: DConnectServiceDiscoveryProfileAttrOnServiceChange];
+        [self addPutPath: putOnServiceChangeRequestApiPath
+                     api:^(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+                         DConnectEventManager *mgr = [DConnectEventManager sharedManagerForClass:[DConnectManager class]];
+                         
+                         DConnectEventError error = [mgr addEventForRequest:request];
+                         switch (error) {
+                             case DConnectEventErrorNone:
+                                 [response setResult:DConnectMessageResultTypeOk];
+                                 break;
+                             case DConnectEventErrorInvalidParameter:
+                                 [response setErrorToInvalidRequestParameter];
+                                 break;
+                             case DConnectEventErrorFailed:
+                             default:
+                                 [response setErrorToUnknown];
+                                 break;
+                         }
+                         return YES;
+                     }];
+        
+        NSString *deleteOnServiceChangeRequestApiPath = [self apiPath: nil
+                                                        attributeName: DConnectServiceDiscoveryProfileAttrOnServiceChange];
+        [self addDeletePath: deleteOnServiceChangeRequestApiPath
+                        api:^(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+                            DConnectEventManager *mgr = [DConnectEventManager sharedManagerForClass:[DConnectManager class]];
+                            
+                            DConnectEventError error = [mgr removeEventForRequest:request];
+                            switch (error) {
+                                case DConnectEventErrorNone:
+                                    [response setResult:DConnectMessageResultTypeOk];
+                                    break;
+                                case DConnectEventErrorInvalidParameter:
+                                    [response setErrorToInvalidRequestParameter];
+                                    break;
+                                case DConnectEventErrorNotFound:
+                                    [response setErrorToInvalidRequestParameterWithMessage:@"event does not exist."];
+                                    break;
+                                case DConnectEventErrorFailed:
+                                default:
+                                    [response setErrorToUnknown];
+                                    break;
+                            }
+                            return YES;
+                     }];
     }
 
     return self;
 }
 
-#pragma mark - DConnectServiceDiscoveryProfileDelegate
-
-- (BOOL)                       profile:(DConnectServiceDiscoveryProfile *)profile
-didReceiveGetServicesRequest:(DConnectRequestMessage *)request
-                              response:(DConnectResponseMessage *)response
-{
+- (BOOL)getServicesRequest : (DConnectRequestMessage *) request response: (DConnectResponseMessage *) response {
+    
     // GotAPI対応: プラグイン側のI/Fに変換
     //    GET /servicediscovery -> GET /networkServiceDiscovery/getNetworkServices
     [request setProfile:DConnectProfileNameNetworkServiceDiscovery];
@@ -92,7 +143,7 @@ didReceiveGetServicesRequest:(DConnectRequestMessage *)request
             dispatch_semaphore_wait(sem, timeout);
         });
     }
-
+    
     long result = dispatch_group_wait(discoveryGroup, timeout);
     
     DConnectArray *responseServices = nil;
@@ -118,56 +169,11 @@ didReceiveGetServicesRequest:(DConnectRequestMessage *)request
     return YES;
 }
 
-- (BOOL)                    profile:(DConnectServiceDiscoveryProfile *)profile
-didReceivePutOnServiceChangeRequest:(DConnectRequestMessage *)request
-                           response:(DConnectResponseMessage *)response
-                           serviceId:(NSString *)serviceId
-                         sessionKey:(NSString *)sessionKey
-{
-    DConnectEventManager *mgr = [DConnectEventManager sharedManagerForClass:[DConnectManager class]];
-    
-    DConnectEventError error = [mgr addEventForRequest:request];
-    switch (error) {
-        case DConnectEventErrorNone:
-            [response setResult:DConnectMessageResultTypeOk];
-            break;
-        case DConnectEventErrorInvalidParameter:
-            [response setErrorToInvalidRequestParameter];
-            break;
-        case DConnectEventErrorFailed:
-        default:
-            [response setErrorToUnknown];
-            break;
-    }
-    return YES;
+
+
+#pragma mark - DConnectProfile Methods -
+
+- (NSString *) profileName {
+    return DConnectServiceDiscoveryProfileName;
 }
-
-- (BOOL)                       profile:(DConnectServiceDiscoveryProfile *)profile
-didReceiveDeleteOnServiceChangeRequest:(DConnectRequestMessage *)request
-                              response:(DConnectResponseMessage *)response
-                              serviceId:(NSString *)serviceId
-                            sessionKey:(NSString *)sessionKey
-{
-    DConnectEventManager *mgr = [DConnectEventManager sharedManagerForClass:[DConnectManager class]];
-    
-    DConnectEventError error = [mgr removeEventForRequest:request];
-    switch (error) {
-        case DConnectEventErrorNone:
-            [response setResult:DConnectMessageResultTypeOk];
-            break;
-        case DConnectEventErrorInvalidParameter:
-            [response setErrorToInvalidRequestParameter];
-            break;
-        case DConnectEventErrorNotFound:
-            [response setErrorToInvalidRequestParameterWithMessage:@"event does not exist."];
-            break;
-        case DConnectEventErrorFailed:
-        default:
-            [response setErrorToUnknown];
-            break;
-    }
-    return YES;
-}
-
-
 @end

@@ -7,15 +7,15 @@
 	objects = {
 
 /* Begin PBXAggregateTarget section */
-		300D50251990BD81007C9EDD /* dConnectDeviceTestFramework */ = {
+		300D50251990BD81007C9EDD /* dConnectDeviceTest_framework */ = {
 			isa = PBXAggregateTarget;
-			buildConfigurationList = 300D50281990BD81007C9EDD /* Build configuration list for PBXAggregateTarget "dConnectDeviceTestFramework" */;
+			buildConfigurationList = 300D50281990BD81007C9EDD /* Build configuration list for PBXAggregateTarget "dConnectDeviceTest_framework" */;
 			buildPhases = (
-				300D50291990BD88007C9EDD /* ShellScript */,
+				300D50291990BD88007C9EDD /* Run Script */,
 			);
 			dependencies = (
 			);
-			name = dConnectDeviceTestFramework;
+			name = dConnectDeviceTest_framework;
 			productName = dConnectDeviceTestFramework;
 		};
 		AB5B2B501A9ABEA40038CCF6 /* dConnectDeviceTest_OCLint */ = {
@@ -45,7 +45,6 @@
 		309CD545198B2E31002A5684 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 309CD544198B2E31002A5684 /* Info.plist */; };
 		309CD54D198B3BFE002A5684 /* DeviceTestPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 309CD54C198B3BFE002A5684 /* DeviceTestPlugin.m */; };
 		309CD553198B3CF9002A5684 /* TestBatteryProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 309CD552198B3CF9002A5684 /* TestBatteryProfile.m */; };
-		309CD556198B3F72002A5684 /* TestServiceDiscoveryProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 309CD555198B3F72002A5684 /* TestServiceDiscoveryProfile.m */; };
 		309CD55C198B692B002A5684 /* TestConnectProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 309CD55B198B692B002A5684 /* TestConnectProfile.m */; };
 		309CD55F198F2F7A002A5684 /* TestDeviceOrientationProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 309CD55E198F2F7A002A5684 /* TestDeviceOrientationProfile.m */; };
 		309CD562198F31E4002A5684 /* TestFileDescriptorProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 309CD561198F31E4002A5684 /* TestFileDescriptorProfile.m */; };
@@ -74,7 +73,6 @@
 		8428954619A2002500D9ECFF /* RESTfulNormalSystemProfileTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 8428953C19A2002500D9ECFF /* RESTfulNormalSystemProfileTest.m */; };
 		8428954719A2002500D9ECFF /* RESTfulNormalVibrationProfileTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 8428953D19A2002500D9ECFF /* RESTfulNormalVibrationProfileTest.m */; };
 		845458A71998E5BE0017F06D /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 845458A61998E5BE0017F06D /* libsqlite3.0.dylib */; };
-		845458A81998E5D50017F06D /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 845458A61998E5BE0017F06D /* libsqlite3.0.dylib */; };
 		845458AE1998E9D50017F06D /* SRWebSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 845458AC1998E9D50017F06D /* SRWebSocket.m */; };
 		845458B21998EA350017F06D /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 845458B01998EA1D0017F06D /* libicucore.dylib */; };
 		845458B41998EA450017F06D /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 845458B31998EA450017F06D /* CFNetwork.framework */; };
@@ -109,6 +107,10 @@
 		AB043C931BDF6B4000B35D96 /* TestLightProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = AB043C921BDF6B3F00B35D96 /* TestLightProfile.m */; };
 		AB81AC881BDF7C250069F6EB /* RESTfulFailLightProfileTest.m in Sources */ = {isa = PBXBuildFile; fileRef = AB81AC871BDF7C250069F6EB /* RESTfulFailLightProfileTest.m */; };
 		ABF842BC19E3E07300B8AC46 /* DConnectSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABF842BB19E3E07300B8AC46 /* DConnectSDK.framework */; };
+		D63350C11D6C3E2600CB9E5A /* TestService.m in Sources */ = {isa = PBXBuildFile; fileRef = D63350C01D6C3E2600CB9E5A /* TestService.m */; };
+		D646EDC71D6D1AEE0092CBA7 /* TestDriveControllerProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = D646EDC61D6D1AEE0092CBA7 /* TestDriveControllerProfile.m */; };
+		D646EDCA1D6D1BC20092CBA7 /* TestRemoteControllerProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = D646EDC91D6D1BC20092CBA7 /* TestRemoteControllerProfile.m */; };
+		D646EDCD1D6D21690092CBA7 /* TestOmnidirectionalImageProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = D646EDCC1D6D21690092CBA7 /* TestOmnidirectionalImageProfile.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -194,8 +196,6 @@
 		309CD54C198B3BFE002A5684 /* DeviceTestPlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeviceTestPlugin.m; sourceTree = "<group>"; };
 		309CD551198B3CF9002A5684 /* TestBatteryProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestBatteryProfile.h; sourceTree = "<group>"; };
 		309CD552198B3CF9002A5684 /* TestBatteryProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestBatteryProfile.m; sourceTree = "<group>"; };
-		309CD554198B3F72002A5684 /* TestServiceDiscoveryProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestServiceDiscoveryProfile.h; sourceTree = "<group>"; };
-		309CD555198B3F72002A5684 /* TestServiceDiscoveryProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestServiceDiscoveryProfile.m; sourceTree = "<group>"; };
 		309CD55A198B692B002A5684 /* TestConnectProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestConnectProfile.h; sourceTree = "<group>"; };
 		309CD55B198B692B002A5684 /* TestConnectProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestConnectProfile.m; sourceTree = "<group>"; };
 		309CD55D198F2F7A002A5684 /* TestDeviceOrientationProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestDeviceOrientationProfile.h; sourceTree = "<group>"; };
@@ -209,6 +209,8 @@
 		309CD569198F5FEE002A5684 /* TestMediaStreamRecordingProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestMediaStreamRecordingProfile.h; sourceTree = "<group>"; };
 		309CD56A198F5FEE002A5684 /* TestMediaStreamRecordingProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestMediaStreamRecordingProfile.m; sourceTree = "<group>"; };
 		6B19E86D1A6FBBB900161F21 /* RESTfulNormalAvailabilityProfileTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RESTfulNormalAvailabilityProfileTest.m; path = dConnectManager/RESTful/RESTfulNormalAvailabilityProfileTest.m; sourceTree = "<group>"; };
+		6BBFF5E21D24F4D300BB3DC6 /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
+		6BBFF6481D24FACD00BB3DC6 /* dConnectDeviceTest_resources.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = dConnectDeviceTest_resources.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		6BD1F6EF1A9EBE65005956F5 /* RESTfulNormalServiceInformationProfileTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RESTfulNormalServiceInformationProfileTest.m; path = dConnectManager/RESTful/RESTfulNormalServiceInformationProfileTest.m; sourceTree = "<group>"; };
 		6BD1F6F11A9EC6B2005956F5 /* RESTfulFailServiceInformationProfileTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RESTfulFailServiceInformationProfileTest.m; path = dConnectManager/RESTful/RESTfulFailServiceInformationProfileTest.m; sourceTree = "<group>"; };
 		840DC9C819A6D7AC00CA2EA0 /* RESTfulFailSettingsProfileTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RESTfulFailSettingsProfileTest.m; path = dConnectManager/RESTful/RESTfulFailSettingsProfileTest.m; sourceTree = "<group>"; };
@@ -274,6 +276,14 @@
 		AB67AAD11C637A6400B4C62C /* Pods.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Pods.xcodeproj; path = ../../../../../sample/SFSafariViewController/pod/Pods/Pods.xcodeproj; sourceTree = "<group>"; };
 		AB81AC871BDF7C250069F6EB /* RESTfulFailLightProfileTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RESTfulFailLightProfileTest.m; path = dConnectManager/RESTful/RESTfulFailLightProfileTest.m; sourceTree = "<group>"; };
 		ABF842BB19E3E07300B8AC46 /* DConnectSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DConnectSDK.framework; path = ../../dConnectSDK/dConnectSDKForIOS/bin/DConnectSDK.framework; sourceTree = "<group>"; };
+		D63350BF1D6C3E2600CB9E5A /* TestService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestService.h; sourceTree = "<group>"; };
+		D63350C01D6C3E2600CB9E5A /* TestService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestService.m; sourceTree = "<group>"; };
+		D646EDC51D6D1AEE0092CBA7 /* TestDriveControllerProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestDriveControllerProfile.h; sourceTree = "<group>"; };
+		D646EDC61D6D1AEE0092CBA7 /* TestDriveControllerProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestDriveControllerProfile.m; sourceTree = "<group>"; };
+		D646EDC81D6D1BC20092CBA7 /* TestRemoteControllerProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestRemoteControllerProfile.h; sourceTree = "<group>"; };
+		D646EDC91D6D1BC20092CBA7 /* TestRemoteControllerProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestRemoteControllerProfile.m; sourceTree = "<group>"; };
+		D646EDCB1D6D21690092CBA7 /* TestOmnidirectionalImageProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestOmnidirectionalImageProfile.h; sourceTree = "<group>"; };
+		D646EDCC1D6D21690092CBA7 /* TestOmnidirectionalImageProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestOmnidirectionalImageProfile.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -281,7 +291,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				845458A81998E5D50017F06D /* libsqlite3.0.dylib in Frameworks */,
 				309CD51C198B2CCE002A5684 /* Foundation.framework in Frameworks */,
 				ABF842BC19E3E07300B8AC46 /* DConnectSDK.framework in Frameworks */,
 			);
@@ -303,6 +312,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		6BBFF6451D24FACD00BB3DC6 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -312,6 +328,7 @@
 				AB67AAD11C637A6400B4C62C /* Pods.xcodeproj */,
 				309CD51D198B2CCE002A5684 /* dConnectDeviceTest */,
 				309CD531198B2CCF002A5684 /* dConnectDeviceTestTests */,
+				6BBFF63F1D24F9AD00BB3DC6 /* dConnectDeviceTest_resources */,
 				309CD51A198B2CCE002A5684 /* Frameworks */,
 				309CD519198B2CCE002A5684 /* Products */,
 			);
@@ -322,6 +339,7 @@
 			children = (
 				309CD518198B2CCE002A5684 /* libdConnectDeviceTest.a */,
 				309CD528198B2CCF002A5684 /* dConnectDeviceTestTests.xctest */,
+				6BBFF6481D24FACD00BB3DC6 /* dConnectDeviceTest_resources.bundle */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -329,6 +347,7 @@
 		309CD51A198B2CCE002A5684 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				6BBFF5E21D24F4D300BB3DC6 /* libsqlite3.0.tbd */,
 				ABF842BB19E3E07300B8AC46 /* DConnectSDK.framework */,
 				84EBE7E919B6EE480089AD35 /* UIKit.framework */,
 				845458B51998EA520017F06D /* Security.framework */,
@@ -384,6 +403,8 @@
 		309CD541198B2DF9002A5684 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				D63350BF1D6C3E2600CB9E5A /* TestService.h */,
+				D63350C01D6C3E2600CB9E5A /* TestService.m */,
 				309CD550198B3CBE002A5684 /* Profile */,
 				309CD54B198B3BFE002A5684 /* DeviceTestPlugin.h */,
 				309CD54C198B3BFE002A5684 /* DeviceTestPlugin.m */,
@@ -408,8 +429,6 @@
 				309CD552198B3CF9002A5684 /* TestBatteryProfile.m */,
 				309CD55A198B692B002A5684 /* TestConnectProfile.h */,
 				309CD55B198B692B002A5684 /* TestConnectProfile.m */,
-				309CD554198B3F72002A5684 /* TestServiceDiscoveryProfile.h */,
-				309CD555198B3F72002A5684 /* TestServiceDiscoveryProfile.m */,
 				309CD55D198F2F7A002A5684 /* TestDeviceOrientationProfile.h */,
 				309CD55E198F2F7A002A5684 /* TestDeviceOrientationProfile.m */,
 				309CD560198F31E4002A5684 /* TestFileDescriptorProfile.h */,
@@ -432,6 +451,12 @@
 				301B89C5198F8A20006EC109 /* TestSystemProfile.m */,
 				301B89C7198F8C4E006EC109 /* TestVibrationProfile.h */,
 				301B89C8198F8C4E006EC109 /* TestVibrationProfile.m */,
+				D646EDC51D6D1AEE0092CBA7 /* TestDriveControllerProfile.h */,
+				D646EDC61D6D1AEE0092CBA7 /* TestDriveControllerProfile.m */,
+				D646EDC81D6D1BC20092CBA7 /* TestRemoteControllerProfile.h */,
+				D646EDC91D6D1BC20092CBA7 /* TestRemoteControllerProfile.m */,
+				D646EDCB1D6D21690092CBA7 /* TestOmnidirectionalImageProfile.h */,
+				D646EDCC1D6D21690092CBA7 /* TestOmnidirectionalImageProfile.m */,
 				84FA975619A5D3580053B2FD /* TestUniquePingProfile.h */,
 				84FA975719A5D3580053B2FD /* TestUniquePingProfile.m */,
 				84FA975919A5F1DE0053B2FD /* TestUniqueTimeoutProfile.h */,
@@ -440,6 +465,13 @@
 				847B3B1D19BD7A3A003ED5F4 /* TestUniqueEventProfile.m */,
 			);
 			path = Profile;
+			sourceTree = "<group>";
+		};
+		6BBFF63F1D24F9AD00BB3DC6 /* dConnectDeviceTest_resources */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = dConnectDeviceTest_resources;
 			sourceTree = "<group>";
 		};
 		845458AA1998E9D50017F06D /* SocketRocket */ = {
@@ -579,6 +611,23 @@
 			productReference = 309CD528198B2CCF002A5684 /* dConnectDeviceTestTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		6BBFF6471D24FACD00BB3DC6 /* dConnectDeviceTest_resources */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6BBFF64B1D24FACD00BB3DC6 /* Build configuration list for PBXNativeTarget "dConnectDeviceTest_resources" */;
+			buildPhases = (
+				6BBFF6441D24FACD00BB3DC6 /* Sources */,
+				6BBFF6451D24FACD00BB3DC6 /* Frameworks */,
+				6BBFF6461D24FACD00BB3DC6 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = dConnectDeviceTest_resources;
+			productName = dConnectDeviceTest_resources;
+			productReference = 6BBFF6481D24FACD00BB3DC6 /* dConnectDeviceTest_resources.bundle */;
+			productType = "com.apple.product-type.bundle";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -588,6 +637,9 @@
 				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = "NTT DOCOMO, INC";
 				TargetAttributes = {
+					6BBFF6471D24FACD00BB3DC6 = {
+						CreatedOnToolsVersion = 7.2.1;
+					};
 					AB5B2B501A9ABEA40038CCF6 = {
 						CreatedOnToolsVersion = 6.1.1;
 					};
@@ -613,8 +665,9 @@
 			targets = (
 				309CD517198B2CCE002A5684 /* dConnectDeviceTest */,
 				309CD527198B2CCF002A5684 /* dConnectDeviceTestTests */,
-				300D50251990BD81007C9EDD /* dConnectDeviceTestFramework */,
+				300D50251990BD81007C9EDD /* dConnectDeviceTest_framework */,
 				AB5B2B501A9ABEA40038CCF6 /* dConnectDeviceTest_OCLint */,
+				6BBFF6471D24FACD00BB3DC6 /* dConnectDeviceTest_resources */,
 			);
 		};
 /* End PBXProject section */
@@ -667,21 +720,29 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		6BBFF6461D24FACD00BB3DC6 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		300D50291990BD88007C9EDD /* ShellScript */ = {
+		300D50291990BD88007C9EDD /* Run Script */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
+			name = "Run Script";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Environment Variables\nFRAMEWORK_NAME=${PROJECT_NAME}\nFRAMEWORK_VERSION=A\nFRAMEWORK_VERSION_NUMBER=1.0\nCONFIGURATION=\"Release\"\nFRAMEWORK_BUILD_PATH=\"${SRCROOT}/build/${CONFIGURATION}-framework\"\nFRAMEWORK_DIR=\"${FRAMEWORK_BUILD_PATH}/${FRAMEWORK_NAME}.framework\"\nSTATICLIB_BUILD_PATH=\"${SRCROOT}/build/${CONFIGURATION}-universal\"\n\n# Clean directories\nrm -rf \"${FRAMEWORK_BUILD_PATH}\"\n\n# Build simulator and device binaries.\n# A target to build a static library *must* have the name ${PROJECT_NAME}.\nxcodebuild -project ${PROJECT_NAME}.xcodeproj -sdk iphonesimulator -target ${PROJECT_NAME} -configuration ${CONFIGURATION} clean build\nxcodebuild -project ${PROJECT_NAME}.xcodeproj -sdk iphoneos -target ${PROJECT_NAME} -configuration ${CONFIGURATION} clean build\n# A target to build a bundle *must* have the name ${PROJECT_NAME}_resources. This target is optional.\nxcodebuild -project ${PROJECT_NAME}.xcodeproj -sdk iphonesimulator -target ${PROJECT_NAME}_resources -configuration ${CONFIGURATION} clean build || true\nxcodebuild -project ${PROJECT_NAME}.xcodeproj -sdk iphoneos -target ${PROJECT_NAME}_resources -configuration ${CONFIGURATION} clean build || true\n\n# create directories.\nmkdir -p ${FRAMEWORK_DIR}/Versions/${FRAMEWORK_VERSION}/Headers\n#mkdir -p ${FRAMEWORK_DIR}/Versions/${FRAMEWORK_VERSION}/Resources\nmkdir -p ${STATICLIB_BUILD_PATH}\n# create symlinks\ncd ${FRAMEWORK_DIR}\nln -s ../Versions/${FRAMEWORK_VERSION} Versions/Current\nln -s Versions/Current/Headers Headers\n#ln -s Versions/Current/Resources Resources\nln -s Versions/Current/${FRAMEWORK_NAME} ${FRAMEWORK_NAME}\ncd ${SRCROOT}\n\n# create the universal library, and strip internal symbols from it\nlipo ${SRCROOT}/build/${CONFIGURATION}-iphoneos/lib${FRAMEWORK_NAME}.a ${SRCROOT}/build/${CONFIGURATION}-iphonesimulator/lib${FRAMEWORK_NAME}.a -create -output \"${STATICLIB_BUILD_PATH}/lib${FRAMEWORK_NAME}.a\"\n#strip -x \"${STATICLIB_BUILD_PATH}/lib${FRAMEWORK_NAME}.a\"\ncp \"${STATICLIB_BUILD_PATH}/lib${FRAMEWORK_NAME}.a\" \"${FRAMEWORK_DIR}/Versions/Current/${FRAMEWORK_NAME}\"\n\n# copy files\ncp -r ${SRCROOT}/${PROJECT_NAME}/Headers/ ${FRAMEWORK_DIR}/Headers/\n\n# copy binary to bin folder\ncd ${SRCROOT}\n\ncd bin\nls | grep -v -E '.gitignore$' | xargs rm -rf\ncd ..\ncp -r ${FRAMEWORK_DIR} bin\ncp -r build/${CONFIGURATION}-resources/${PROJECT_NAME}_resources.bundle bin";
+			shellScript = "# Environment Variables\nFRAMEWORK_NAME=${PROJECT_NAME}\nFRAMEWORK_VERSION=A\nFRAMEWORK_VERSION_NUMBER=1.0\nCONFIGURATION=\"Release\"\nFRAMEWORK_BUILD_PATH=\"${SRCROOT}/build/${CONFIGURATION}-framework\"\nFRAMEWORK_DIR=\"${FRAMEWORK_BUILD_PATH}/${FRAMEWORK_NAME}.framework\"\nSTATICLIB_BUILD_PATH=\"${SRCROOT}/build/${CONFIGURATION}-universal\"\n\n# Clean directories\nrm -rf \"${FRAMEWORK_BUILD_PATH}\"\n\n# Build simulator and device binaries.\n# A target to build a static library *must* have the name ${PROJECT_NAME}.\nxcodebuild -project ${PROJECT_NAME}.xcodeproj -sdk iphonesimulator -target ${PROJECT_NAME} -configuration ${CONFIGURATION} clean build\nxcodebuild -project ${PROJECT_NAME}.xcodeproj -sdk iphoneos -target ${PROJECT_NAME} -configuration ${CONFIGURATION} clean build\n# A target to build a bundle *must* have the name ${PROJECT_NAME}_resources. This target is optional.\nxcodebuild -project ${PROJECT_NAME}.xcodeproj -sdk iphonesimulator -target ${PROJECT_NAME}_resources -configuration ${CONFIGURATION} clean build || true\nxcodebuild -project ${PROJECT_NAME}.xcodeproj -sdk iphoneos -target ${PROJECT_NAME}_resources -configuration ${CONFIGURATION} clean build || true\n\n# create directories.\nmkdir -p ${FRAMEWORK_DIR}/Versions/${FRAMEWORK_VERSION}/Headers\n#mkdir -p ${FRAMEWORK_DIR}/Versions/${FRAMEWORK_VERSION}/Resources\nmkdir -p ${STATICLIB_BUILD_PATH}\n# create symlinks\ncd ${FRAMEWORK_DIR}\nln -s ../Versions/${FRAMEWORK_VERSION} Versions/Current\nln -s Versions/Current/Headers Headers\n#ln -s Versions/Current/Resources Resources\nln -s Versions/Current/${FRAMEWORK_NAME} ${FRAMEWORK_NAME}\ncd ${SRCROOT}\n\n# create the universal library, and strip internal symbols from it\nlipo ${SRCROOT}/build/${CONFIGURATION}-iphoneos/lib${FRAMEWORK_NAME}.a ${SRCROOT}/build/${CONFIGURATION}-iphonesimulator/lib${FRAMEWORK_NAME}.a -create -output \"${STATICLIB_BUILD_PATH}/lib${FRAMEWORK_NAME}.a\"\n#strip -x \"${STATICLIB_BUILD_PATH}/lib${FRAMEWORK_NAME}.a\"\ncp \"${STATICLIB_BUILD_PATH}/lib${FRAMEWORK_NAME}.a\" \"${FRAMEWORK_DIR}/Versions/Current/${FRAMEWORK_NAME}\"\n\n# copy files\n#cp -r ${SRCROOT}/${PROJECT_NAME}/Headers/ ${FRAMEWORK_DIR}/Headers/\n\n# copy binary to bin folder\ncd ${SRCROOT}\n#rm -rf bin\n#mkdir bin\ncd bin\nls | grep -v -E '.gitignore$' | xargs rm -rf\ncd ..\ncp -R ${FRAMEWORK_DIR} bin\ncp -r build/${CONFIGURATION}-resources/${PROJECT_NAME}_resources.bundle bin";
 		};
 		AB5B2B541A9ABEA90038CCF6 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -703,15 +764,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D646EDCA1D6D1BC20092CBA7 /* TestRemoteControllerProfile.m in Sources */,
+				D646EDCD1D6D21690092CBA7 /* TestOmnidirectionalImageProfile.m in Sources */,
 				309CD565198F3732002A5684 /* TestFileProfile.m in Sources */,
 				AB043C931BDF6B4000B35D96 /* TestLightProfile.m in Sources */,
 				309CD56B198F5FEE002A5684 /* TestMediaStreamRecordingProfile.m in Sources */,
 				309CD568198F3D5D002A5684 /* TestMediaPlayerProfile.m in Sources */,
 				309CD562198F31E4002A5684 /* TestFileDescriptorProfile.m in Sources */,
 				309CD54D198B3BFE002A5684 /* DeviceTestPlugin.m in Sources */,
+				D646EDC71D6D1AEE0092CBA7 /* TestDriveControllerProfile.m in Sources */,
 				84FA975B19A5F1DE0053B2FD /* TestUniqueTimeoutProfile.m in Sources */,
-				309CD556198B3F72002A5684 /* TestServiceDiscoveryProfile.m in Sources */,
 				847B3B1E19BD7A3A003ED5F4 /* TestUniqueEventProfile.m in Sources */,
+				D63350C11D6C3E2600CB9E5A /* TestService.m in Sources */,
 				84FA975819A5D3580053B2FD /* TestUniquePingProfile.m in Sources */,
 				301B89BA198F7799006EC109 /* TestNotificationProfile.m in Sources */,
 				301B89C0198F848F006EC109 /* TestProximityProfile.m in Sources */,
@@ -776,6 +840,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		6BBFF6441D24FACD00BB3DC6 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -801,7 +872,9 @@
 		300D50261990BD81007C9EDD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)-resources";
 				FRAMEWORK_SEARCH_PATHS = "../../dConnectSDK/dConnectSDKForIOS/build/Debug-framework";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -809,7 +882,9 @@
 		300D50271990BD81007C9EDD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)-resources";
 				FRAMEWORK_SEARCH_PATHS = "../../dConnectSDK/dConnectSDKForIOS/build/Debug-framework";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -847,8 +922,10 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_MODULE_NAME = dConnectDeviceTest_framework;
+				PRODUCT_NAME = dConnectDeviceTest_framework;
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "armv7 armv7s";
 			};
@@ -881,7 +958,9 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				PRODUCT_MODULE_NAME = dConnectDeviceTest_framework;
+				PRODUCT_NAME = dConnectDeviceTest_framework;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 				VALID_ARCHS = "armv7 armv7s";
@@ -891,6 +970,7 @@
 		309CD53C198B2CCF002A5684 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_ENABLE_CODE_COVERAGE = NO;
 				DSTROOT = /tmp/dConnectDeviceTest.dst;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -900,6 +980,7 @@
 				GCC_GENERATE_TEST_COVERAGE_FILES = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "dConnectDeviceTest/dConnectDeviceTest-Prefix.pch";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -909,13 +990,14 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
-				VALID_ARCHS = "armv7 armv7s";
+				VALID_ARCHS = "armv7 armv7s arm64 x86_64";
 			};
 			name = Debug;
 		};
 		309CD53D198B2CCF002A5684 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_ENABLE_CODE_COVERAGE = NO;
 				DSTROOT = /tmp/dConnectDeviceTest.dst;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -925,6 +1007,7 @@
 				GCC_GENERATE_TEST_COVERAGE_FILES = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "dConnectDeviceTest/dConnectDeviceTest-Prefix.pch";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -933,7 +1016,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
-				VALID_ARCHS = "armv7 armv7s";
+				VALID_ARCHS = "armv7 armv7s arm64 x86_64";
 			};
 			name = Release;
 		};
@@ -956,6 +1039,7 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = "dConnectDeviceTestTests/dConnectDeviceTestTests-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -987,6 +1071,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "dConnectDeviceTest/dConnectDeviceTest-Prefix.pch";
 				INFOPLIST_FILE = "dConnectDeviceTestTests/dConnectDeviceTestTests-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -1000,6 +1085,56 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				VALID_ARCHS = "armv7 armv7s arm64";
 				WRAPPER_EXTENSION = xctest;
+			};
+			name = Release;
+		};
+		6BBFF64C1D24FACD00BB3DC6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = YES;
+				CONFIGURATION_BUILD_DIR = "$(SRCROOT)/build/$(CONFIGURATION)-resources";
+				CONFIGURATION_TEMP_DIR = "$(SRCROOT)/build/$(CONFIGURATION)-resources";
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = "dConnectDeviceTest_resources/dConnectDeviceTest_resources-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "org.deviceconnect.dConnectDeviceTest-resources";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
+				WRAPPER_EXTENSION = bundle;
+			};
+			name = Debug;
+		};
+		6BBFF64D1D24FACD00BB3DC6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = YES;
+				CONFIGURATION_BUILD_DIR = "$(SRCROOT)/build/$(CONFIGURATION)-resources";
+				CONFIGURATION_TEMP_DIR = "$(SRCROOT)/build/$(CONFIGURATION)-resources";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = "dConnectDeviceTest_resources/dConnectDeviceTest_resources-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = "org.deviceconnect.dConnectDeviceTest-resources";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
+				WRAPPER_EXTENSION = bundle;
 			};
 			name = Release;
 		};
@@ -1020,7 +1155,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		300D50281990BD81007C9EDD /* Build configuration list for PBXAggregateTarget "dConnectDeviceTestFramework" */ = {
+		300D50281990BD81007C9EDD /* Build configuration list for PBXAggregateTarget "dConnectDeviceTest_framework" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				300D50261990BD81007C9EDD /* Debug */,
@@ -1052,6 +1187,15 @@
 			buildConfigurations = (
 				309CD53F198B2CCF002A5684 /* Debug */,
 				309CD540198B2CCF002A5684 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		6BBFF64B1D24FACD00BB3DC6 /* Build configuration list for PBXNativeTarget "dConnectDeviceTest_resources" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6BBFF64C1D24FACD00BB3DC6 /* Debug */,
+				6BBFF64D1D24FACD00BB3DC6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

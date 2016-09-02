@@ -10,6 +10,6 @@
 #import <DConnectSDK/DConnectSDK.h>
 #import <CoreBluetooth/CoreBluetooth.h>
 
-@interface DPHostConnectProfile : DConnectConnectProfile<DConnectConnectProfileDelegate, CBCentralManagerDelegate>
+@interface DPHostConnectProfile : DConnectConnectProfile<CBCentralManagerDelegate>
 
 @end

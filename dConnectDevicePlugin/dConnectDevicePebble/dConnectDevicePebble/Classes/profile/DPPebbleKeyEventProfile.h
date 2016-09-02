@@ -12,6 +12,6 @@
 /*!
  @brief KeyEvent Profile foe Pebble.
  */
-@interface DPPebbleKeyEventProfile : DConnectKeyEventProfile <DConnectKeyEventProfileDelegate>
+@interface DPPebbleKeyEventProfile : DConnectKeyEventProfile
 
 @end

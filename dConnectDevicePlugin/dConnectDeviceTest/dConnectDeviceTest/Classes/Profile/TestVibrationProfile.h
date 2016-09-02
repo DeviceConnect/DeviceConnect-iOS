@@ -9,6 +9,6 @@
 
 #import <DConnectSDK/DConnectSDK.h>
 
-@interface TestVibrationProfile : DConnectVibrationProfile<DConnectVibrationProfileDelegate>
+@interface TestVibrationProfile : DConnectVibrationProfile
 
 @end
