@@ -10,6 +10,7 @@
 #import "DConnectSystemProfile.h"
 #import "DConnectProfileProvider.h"
 #import "DConnectManager+Private.h"
+#import "DConnectServiceListViewController.h"
 
 NSString *const DConnectSystemProfileName = @"system";
 
@@ -36,9 +37,28 @@ NSString *const DConnectSystemProfileParamVersion = @"version";
     dispatch_async(dispatch_get_main_queue(), ^{
         UIViewController *viewController = [_dataSource profile:self settingPageForRequest:request];
         if (viewController) {
+            
+            /***/
+            if (viewController && [viewController isKindOfClass: [UINavigationController class]]) {
+                UINavigationController *navigationController =(UINavigationController *)viewController;
+                
+                NSLog(@"[navigationController.viewControllers count]:%d", (int)[navigationController.viewControllers count]);
+                if ([navigationController.viewControllers count] > 0) {
+                    NSLog(@"[navigationController.viewControllers[0]: %@", [[navigationController.viewControllers[0] class] description]);
+//                    if ([navigationController.viewControllers[0] isKindOfClass: [DConnectServiceListTableViewController class]]) {
+//                        ((DConnectServiceListTableViewController *)navigationController.viewControllers[0]).delegate = self.delegate;
+//                    }
+                    ((DConnectServiceListViewController *)navigationController.viewControllers[0]).delegate = self.delegate;
+                }
+            }
+//            if ([viewController isKindOfClass: [DConnectServiceListViewController class]]) {
+//                ((DConnectServiceListViewController *)viewController).delegate = self.delegate;
+//            }
+            /***/
+            
             UIViewController *rootView;
             DCPutPresentedViewController(rootView);
-            
+            NSLog(@"viewController class:%@", [[viewController class] description]);
             [rootView presentViewController:viewController animated:YES completion:nil];
             [response setResult:DConnectMessageResultTypeOk];
         } else {

@@ -8,9 +8,13 @@
 //
 
 #import "DPAllJoynSystemProfile.h"
+#import <DConnectSDK/DConnectServiceListViewController.h>
+#import "DPAllJoynSettingMasterViewController.h"
 
+#define DCBundle() \
+[NSBundle bundleWithPath:[[NSBundle mainBundle] pathForResource:@"DConnectSDK_resources" ofType:@"bundle"]]
 
-@interface DPAllJoynSystemProfile () <DConnectSystemProfileDataSource>
+@interface DPAllJoynSystemProfile () <DConnectSystemProfileDelegate, DConnectSystemProfileDataSource>
 
 @property NSString *const version;
 
@@ -23,6 +27,7 @@
 {
     self = [super init];
     if (self) {
+        self.delegate = self;
         self.dataSource = self;
         self.version = version;
         __weak DPAllJoynSystemProfile *weakSelf = self;
@@ -65,12 +70,25 @@
 {
     UIStoryboard *storyBoard;
     //    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
-    storyBoard = [UIStoryboard storyboardWithName:@"Storyboard"
-                                           bundle:DPAllJoynResourceBundle()];
-    //    } else{
-    //        storyBoard = [UIStoryboard storyboardWithName:@"HueSetting_iPad" bundle:bundle];
-    //    }
-    return [storyBoard instantiateInitialViewController];
+    storyBoard = [UIStoryboard storyboardWithName:@"DConnectSDK-iPhone"
+                                           bundle:DCBundle()];
+    UINavigationController *top = [storyBoard instantiateViewControllerWithIdentifier:@"ServiceList"];
+    DConnectServiceListViewController *serviceListViewController = (DConnectServiceListViewController *) top.viewControllers[0];
+    serviceListViewController.delegate = self;
+    return top;
+}
+
+#pragma mark - DConnectSystemProfileDelegate
+
+- (DConnectServiceProvider *)serviceProvider {
+    return ((DConnectDevicePlugin *)self.plugin).serviceProvider;
+}
+
+- (UIViewController *)settingViewController {
+    UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Storyboard"
+                                                         bundle:DPAllJoynResourceBundle()];
+    UIViewController *setting = [storyBoard instantiateInitialViewController];
+    return setting;
 }
 
 @end
