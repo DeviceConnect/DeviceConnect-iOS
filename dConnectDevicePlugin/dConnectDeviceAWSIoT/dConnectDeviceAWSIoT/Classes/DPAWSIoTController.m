@@ -12,8 +12,11 @@
 #import "DPAWSIoTUtils.h"
 #import "DPAWSIoTManager.h"
 #import "DPAWSIoTController.h"
-#import "DConnectMessage+Private.h"
 #import "DPAWSIoTWebSocket.h"
+
+#import "DConnectMessage+Private.h"
+#import "DConnectDevicePlugin+Private.h"
+#import "DConnectManager+Private.h"
 
 // TODO: 名前を決める
 #define kShadowName @"dconnect"
@@ -292,6 +295,36 @@
 	}
 }
 
+// サービス一覧を取得
+- (void)fetchServicesWithHandler:(void (^)(DConnectArray *services))handler {
+	[[DConnectManager sharedManager] startServiceDiscoveryForCallback:^(DConnectResponseMessage *response) {
+		if (response.result == DConnectMessageResultTypeOk) {
+			handler(response.internalDictionary[@"services"]);
+		} else {
+			handler(nil);
+		}
+	}];
+}
+
+// サービス情報を取得
+- (DConnectResponseMessage*)fetchServiceInformationWithId:(NSString*)serviceId {
+	DConnectManager *mgr = [DConnectManager sharedManager];
+	DConnectDevicePlugin *plugin = [mgr.mDeviceManager devicePluginForServiceId:serviceId];
+	if (plugin) {
+		NSLog(@"plugin:%@", plugin.pluginName);
+		DConnectResponseMessage *response = [DConnectResponseMessage message];
+		DConnectRequestMessage *request = [DConnectRequestMessage new];
+		[request setProfile:DConnectServiceInformationProfileName];
+		[request setAction:DConnectMessageActionTypeGet];
+		NSArray *names = [serviceId componentsSeparatedByString:@"."];
+		[request setServiceId:names[0]];
+		[plugin executeRequest:request response:response];
+		NSLog(@"plugin-info:%@", response.internalDictionary);
+		return response;
+	} else {
+		return nil;
+	}
+}
 
 #pragma mark - Private
 

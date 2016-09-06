@@ -174,8 +174,8 @@ static UIViewController *loadingHUD;
 	NSString *method = request[@"action"];
 	NSString *origin = request[@"origin"];
 	// 不要なパラメータを削除
-	[params removeObjectForKey:@"accessToken"];
-	[params removeObjectForKey:@"action"];
+//	[params removeObjectForKey:@"accessToken"];
+//	[params removeObjectForKey:@"action"];
 	[params removeObjectForKey:@"origin"];
 	[params removeObjectForKey:@"_type"];
 	[params removeObjectForKey:@"version"];

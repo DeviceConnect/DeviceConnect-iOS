@@ -231,6 +231,7 @@
                         <outlet property="tableView" destination="27N-r2-OlW" id="c5N-kq-NGa"/>
                         <segue destination="NpT-dD-Uuq" kind="presentation" identifier="LoginSegue" id="ohk-Yl-9YH"/>
                         <segue destination="dMt-hg-fsY" kind="show" identifier="SettingSegue" id="ofS-5H-12q"/>
+                        <segue destination="IRb-vo-5eC" kind="show" identifier="AuthSegue" id="PgW-93-BrA"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OAw-Yw-0VI" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -295,6 +296,59 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vVH-q1-vDU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="488" y="438"/>
+        </scene>
+        <!--Auth LocalOAuth-->
+        <scene sceneID="gpg-Ak-SvV">
+            <objects>
+                <tableViewController hidesBottomBarWhenPushed="YES" id="IRb-vo-5eC" customClass="DPAWSIoTAuthViewController" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="tgk-vA-9yd">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" rowHeight="55" id="cfM-vz-cHH" customClass="DPAWSIoTAuthListCell">
+                                <rect key="frame" x="0.0" y="92" width="320" height="55"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="cfM-vz-cHH" id="3hw-Bp-W0t">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="54.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="T0e-HE-iyD">
+                                            <rect key="frame" x="18" y="17" width="42" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Y8c-PD-LEB">
+                                            <rect key="frame" x="270" y="12" width="32" height="30"/>
+                                            <state key="normal" title="Auth"/>
+                                            <connections>
+                                                <action selector="authButtonPressed:" destination="cfM-vz-cHH" eventType="touchUpInside" id="gkh-1V-acv"/>
+                                            </connections>
+                                        </button>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="trailing" secondItem="Y8c-PD-LEB" secondAttribute="trailing" constant="18" id="BVB-dH-wVJ"/>
+                                        <constraint firstItem="Y8c-PD-LEB" firstAttribute="centerY" secondItem="3hw-Bp-W0t" secondAttribute="centerY" id="Lrm-Zg-JSP"/>
+                                        <constraint firstItem="T0e-HE-iyD" firstAttribute="leading" secondItem="3hw-Bp-W0t" secondAttribute="leading" constant="18" id="WbO-ig-7bI"/>
+                                        <constraint firstItem="T0e-HE-iyD" firstAttribute="centerY" secondItem="3hw-Bp-W0t" secondAttribute="centerY" id="ZLZ-Mr-1QM"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="titleLabel" destination="T0e-HE-iyD" id="gNx-HR-yg6"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="IRb-vo-5eC" id="RcA-8b-jMn"/>
+                            <outlet property="delegate" destination="IRb-vo-5eC" id="n6v-nO-wOJ"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Auth LocalOAuth" id="jIe-U8-Go0"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="iff-Ig-lK4" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="488" y="-217"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="MoT-mR-GUX">

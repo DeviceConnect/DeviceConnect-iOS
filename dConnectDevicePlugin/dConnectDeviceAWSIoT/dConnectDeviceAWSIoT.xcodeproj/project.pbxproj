@@ -40,6 +40,8 @@
 		78430F611D7802C200B20FDA /* PSWebSocketNetworkThread.m in Sources */ = {isa = PBXBuildFile; fileRef = 78430F561D7802C200B20FDA /* PSWebSocketNetworkThread.m */; };
 		78430F621D7802C200B20FDA /* PSWebSocketServer.m in Sources */ = {isa = PBXBuildFile; fileRef = 78430F581D7802C200B20FDA /* PSWebSocketServer.m */; };
 		78430F631D7802C200B20FDA /* PSWebSocketUTF8Decoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 78430F5B1D7802C200B20FDA /* PSWebSocketUTF8Decoder.m */; };
+		78430F6D1D795DC900B20FDA /* DPAWSIoTAuthViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 78430F6C1D795DC900B20FDA /* DPAWSIoTAuthViewController.m */; };
+		78430F741D79802F00B20FDA /* DPAWSIoTAuthListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 78430F731D79802F00B20FDA /* DPAWSIoTAuthListCell.m */; };
 		789AC49C1D5AF30F00F12F45 /* DPAWSIoTLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 789AC49B1D5AF30F00F12F45 /* DPAWSIoTLoginViewController.m */; };
 		789AC4A01D5AF79900F12F45 /* DPAWSIoTSystemProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 789AC49F1D5AF79900F12F45 /* DPAWSIoTSystemProfile.m */; };
 		789AC4AB1D5B07CC00F12F45 /* AWSIoT.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 789AC4991D5ABF0200F12F45 /* AWSIoT.storyboard */; };
@@ -112,6 +114,12 @@
 		78430F591D7802C200B20FDA /* PSWebSocketTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSWebSocketTypes.h; sourceTree = "<group>"; };
 		78430F5A1D7802C200B20FDA /* PSWebSocketUTF8Decoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSWebSocketUTF8Decoder.h; sourceTree = "<group>"; };
 		78430F5B1D7802C200B20FDA /* PSWebSocketUTF8Decoder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSWebSocketUTF8Decoder.m; sourceTree = "<group>"; };
+		78430F6B1D795DC900B20FDA /* DPAWSIoTAuthViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPAWSIoTAuthViewController.h; sourceTree = "<group>"; };
+		78430F6C1D795DC900B20FDA /* DPAWSIoTAuthViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPAWSIoTAuthViewController.m; sourceTree = "<group>"; };
+		78430F6E1D7975C200B20FDA /* DConnectManager+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DConnectManager+Private.h"; sourceTree = "<group>"; };
+		78430F711D7976B900B20FDA /* DConnectDevicePluginManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DConnectDevicePluginManager.h; sourceTree = "<group>"; };
+		78430F721D79802F00B20FDA /* DPAWSIoTAuthListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPAWSIoTAuthListCell.h; sourceTree = "<group>"; };
+		78430F731D79802F00B20FDA /* DPAWSIoTAuthListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPAWSIoTAuthListCell.m; sourceTree = "<group>"; };
 		787527E41D65683E001876FD /* DConnectMessage+Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "DConnectMessage+Private.h"; sourceTree = "<group>"; };
 		787527E51D656B6A001876FD /* DConnectDevicePlugin+Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "DConnectDevicePlugin+Private.h"; sourceTree = "<group>"; };
 		789AC4991D5ABF0200F12F45 /* AWSIoT.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = AWSIoT.storyboard; sourceTree = "<group>"; };
@@ -296,8 +304,10 @@
 		787527E61D656B73001876FD /* Category */ = {
 			isa = PBXGroup;
 			children = (
+				78430F711D7976B900B20FDA /* DConnectDevicePluginManager.h */,
 				787527E51D656B6A001876FD /* DConnectDevicePlugin+Private.h */,
 				787527E41D65683E001876FD /* DConnectMessage+Private.h */,
+				78430F6E1D7975C200B20FDA /* DConnectManager+Private.h */,
 			);
 			name = Category;
 			sourceTree = "<group>";
@@ -313,6 +323,10 @@
 				789AC49B1D5AF30F00F12F45 /* DPAWSIoTLoginViewController.m */,
 				78B7F2B81D658DAF00A5E520 /* DPAWSIoTSettingViewController.h */,
 				78B7F2B91D658DAF00A5E520 /* DPAWSIoTSettingViewController.m */,
+				78430F6B1D795DC900B20FDA /* DPAWSIoTAuthViewController.h */,
+				78430F6C1D795DC900B20FDA /* DPAWSIoTAuthViewController.m */,
+				78430F721D79802F00B20FDA /* DPAWSIoTAuthListCell.h */,
+				78430F731D79802F00B20FDA /* DPAWSIoTAuthListCell.m */,
 			);
 			name = Settings;
 			sourceTree = "<group>";
@@ -483,7 +497,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Environment Variables\nFRAMEWORK_NAME=${PROJECT_NAME}\nFRAMEWORK_VERSION=A\nFRAMEWORK_VERSION_NUMBER=1.0\nCONFIGURATION=\"Release\"\nFRAMEWORK_BUILD_PATH=\"${SRCROOT}/build/${CONFIGURATION}-framework\"\nFRAMEWORK_DIR=\"${FRAMEWORK_BUILD_PATH}/${FRAMEWORK_NAME}.framework\"\nSTATICLIB_BUILD_PATH=\"${SRCROOT}/build/${CONFIGURATION}-universal\"\nCONFIG_PATH=\"${SRCROOT}/Pods/Target Support Files/Pods-dConnectDeviceAWSIoT/Pods-dConnectDeviceAWSIoT.debug.xcconfig\"\n\necho ${PROJECT_NAME}\necho ${SRCROOT}\necho ${FRAMEWORK_BUILD_PATH}\necho ${CONFIG_PATH}\n\n# Clean directories\nrm -rf \"${FRAMEWORK_BUILD_PATH}\"\n\n# Build simulator and device binaries.\n# A target to build a static library *must* have the name ${PROJECT_NAME}.\nxcodebuild -workspace ${PROJECT_NAME}.xcworkspace -sdk iphonesimulator -scheme ${PROJECT_NAME}  -configuration ${CONFIGURATION} -derivedDataPath build clean build\nxcodebuild -workspace ${PROJECT_NAME}.xcworkspace -sdk iphoneos -scheme ${PROJECT_NAME} -configuration ${CONFIGURATION} -derivedDataPath build clean build\n\n# A target to build a bundle *must* have the name ${PROJECT_NAME}_resources. This target is optional.\n#xcodebuild -project ${PROJECT_NAME}.xcodeproj -sdk iphonesimulator -target ${PROJECT_NAME}_resources -configuration ${CONFIGURATION} clean build || true\nxcodebuild -project ${PROJECT_NAME}.xcodeproj -sdk iphoneos -target ${PROJECT_NAME}_resources -configuration ${CONFIGURATION} clean build || true\n\n# create directories.\nmkdir -p ${FRAMEWORK_DIR}/Versions/${FRAMEWORK_VERSION}/Headers\n#mkdir -p ${FRAMEWORK_DIR}/Versions/${FRAMEWORK_VERSION}/Resources\nmkdir -p ${STATICLIB_BUILD_PATH}\n# create symlinks\ncd ${FRAMEWORK_DIR}\nln -s ../Versions/${FRAMEWORK_VERSION} Versions/Current\nln -s Versions/Current/Headers Headers\n#ln -s Versions/Current/Resources Resources\nln -s Versions/Current/${FRAMEWORK_NAME} ${FRAMEWORK_NAME}\ncd ${SRCROOT}\n\n# create the universal library, and strip internal symbols from it\nlipo ${SRCROOT}/build/Build/Products/${CONFIGURATION}-iphoneos/lib${FRAMEWORK_NAME}.a ${SRCROOT}/build/Build/Products/${CONFIGURATION}-iphonesimulator/lib${FRAMEWORK_NAME}.a -create -output \"${STATICLIB_BUILD_PATH}/lib${FRAMEWORK_NAME}.a\"\n#strip -x \"${STATICLIB_BUILD_PATH}/lib${FRAMEWORK_NAME}.a\"\ncp \"${STATICLIB_BUILD_PATH}/lib${FRAMEWORK_NAME}.a\" \"${FRAMEWORK_DIR}/Versions/Current/${FRAMEWORK_NAME}\"\n\n# copy files\ncp -r ${SRCROOT}/${PROJECT_NAME}/Headers/ ${FRAMEWORK_DIR}/Headers/\n\n# copy binary to bin folder\ncd ${SRCROOT}\n\nmkdir -p bin\ncd bin\nls | grep -v -E '.gitignore$' | xargs rm -rf\ncd ..\ncp -R ${FRAMEWORK_DIR} bin\ncp -r build/${CONFIGURATION}-iphoneos/${PROJECT_NAME}_resources.bundle bin";
+			shellScript = "# Environment Variables\nFRAMEWORK_NAME=${PROJECT_NAME}\nFRAMEWORK_VERSION=A\nFRAMEWORK_VERSION_NUMBER=1.0\nCONFIGURATION=\"Debug\"\nFRAMEWORK_BUILD_PATH=\"${SRCROOT}/build/${CONFIGURATION}-framework\"\nFRAMEWORK_DIR=\"${FRAMEWORK_BUILD_PATH}/${FRAMEWORK_NAME}.framework\"\nSTATICLIB_BUILD_PATH=\"${SRCROOT}/build/${CONFIGURATION}-universal\"\nCONFIG_PATH=\"${SRCROOT}/Pods/Target Support Files/Pods-dConnectDeviceAWSIoT/Pods-dConnectDeviceAWSIoT.debug.xcconfig\"\n\necho ${PROJECT_NAME}\necho ${SRCROOT}\necho ${FRAMEWORK_BUILD_PATH}\necho ${CONFIG_PATH}\n\n# Clean directories\nrm -rf \"${FRAMEWORK_BUILD_PATH}\"\n\n# Build simulator and device binaries.\n# A target to build a static library *must* have the name ${PROJECT_NAME}.\nxcodebuild -workspace ${PROJECT_NAME}.xcworkspace -sdk iphonesimulator -scheme ${PROJECT_NAME}  -configuration ${CONFIGURATION} -derivedDataPath build clean build\nxcodebuild -workspace ${PROJECT_NAME}.xcworkspace -sdk iphoneos -scheme ${PROJECT_NAME} -configuration ${CONFIGURATION} -derivedDataPath build clean build\n\n# A target to build a bundle *must* have the name ${PROJECT_NAME}_resources. This target is optional.\n#xcodebuild -project ${PROJECT_NAME}.xcodeproj -sdk iphonesimulator -target ${PROJECT_NAME}_resources -configuration ${CONFIGURATION} clean build || true\nxcodebuild -project ${PROJECT_NAME}.xcodeproj -sdk iphoneos -target ${PROJECT_NAME}_resources -configuration ${CONFIGURATION} clean build || true\n\n# create directories.\nmkdir -p ${FRAMEWORK_DIR}/Versions/${FRAMEWORK_VERSION}/Headers\n#mkdir -p ${FRAMEWORK_DIR}/Versions/${FRAMEWORK_VERSION}/Resources\nmkdir -p ${STATICLIB_BUILD_PATH}\n# create symlinks\ncd ${FRAMEWORK_DIR}\nln -s ../Versions/${FRAMEWORK_VERSION} Versions/Current\nln -s Versions/Current/Headers Headers\n#ln -s Versions/Current/Resources Resources\nln -s Versions/Current/${FRAMEWORK_NAME} ${FRAMEWORK_NAME}\ncd ${SRCROOT}\n\n# create the universal library, and strip internal symbols from it\nlipo ${SRCROOT}/build/Build/Products/${CONFIGURATION}-iphoneos/lib${FRAMEWORK_NAME}.a ${SRCROOT}/build/Build/Products/${CONFIGURATION}-iphonesimulator/lib${FRAMEWORK_NAME}.a -create -output \"${STATICLIB_BUILD_PATH}/lib${FRAMEWORK_NAME}.a\"\n#strip -x \"${STATICLIB_BUILD_PATH}/lib${FRAMEWORK_NAME}.a\"\ncp \"${STATICLIB_BUILD_PATH}/lib${FRAMEWORK_NAME}.a\" \"${FRAMEWORK_DIR}/Versions/Current/${FRAMEWORK_NAME}\"\n\n# copy files\ncp -r ${SRCROOT}/${PROJECT_NAME}/Headers/ ${FRAMEWORK_DIR}/Headers/\n\n# copy binary to bin folder\ncd ${SRCROOT}\n\nmkdir -p bin\ncd bin\nls | grep -v -E '.gitignore$' | xargs rm -rf\ncd ..\ncp -R ${FRAMEWORK_DIR} bin\ncp -r build/${CONFIGURATION}-iphoneos/${PROJECT_NAME}_resources.bundle bin";
 		};
 		C59EAF795197306587FA2DD1 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -523,6 +537,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				78430F601D7802C200B20FDA /* PSWebSocketInflater.m in Sources */,
+				78430F741D79802F00B20FDA /* DPAWSIoTAuthListCell.m in Sources */,
 				78430F611D7802C200B20FDA /* PSWebSocketNetworkThread.m in Sources */,
 				78B7F2BD1D66A0A100A5E520 /* DPAWSIoTController.m in Sources */,
 				78B7F2C01D66AE4A00A5E520 /* DPAWSIoTNetworkManager.m in Sources */,
@@ -537,6 +552,7 @@
 				78298A071D532D3500E9B90B /* DPAWSIoTDevicePlugin.m in Sources */,
 				789AC4A01D5AF79900F12F45 /* DPAWSIoTSystemProfile.m in Sources */,
 				789AC49C1D5AF30F00F12F45 /* DPAWSIoTLoginViewController.m in Sources */,
+				78430F6D1D795DC900B20FDA /* DPAWSIoTAuthViewController.m in Sources */,
 				78430F5E1D7802C200B20FDA /* PSWebSocketDeflater.m in Sources */,
 				78430F431D77E20600B20FDA /* DPAWSIoTWebSocket.m in Sources */,
 				78B7F2BA1D658DAF00A5E520 /* DPAWSIoTSettingViewController.m in Sources */,

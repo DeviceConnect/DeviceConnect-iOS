@@ -27,7 +27,6 @@
 // 自分のデバイス情報をShadowに登録
 + (void)setManagerInfo:(BOOL)online handler:(void (^)(NSError *error))handler;
 
-
 // ログイン
 - (void)login;
 // マネージャー情報を取得
@@ -39,5 +38,11 @@
 
 // Eventを発行
 - (void)publishEvent:(NSString*)msg;
+
+// サービス一覧を取得
+- (void)fetchServicesWithHandler:(void (^)(DConnectArray *services))handler;
+// サービス情報を取得
+- (DConnectResponseMessage*)fetchServiceInformationWithId:(NSString*)serviceId;
+
 
 @end

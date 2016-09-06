@@ -100,6 +100,9 @@
 			case 0:
 				[self performSegueWithIdentifier:@"SettingSegue" sender:self];
 				break;
+			case 1:
+				[self performSegueWithIdentifier:@"AuthSegue" sender:self];
+				break;
 		}
 	}];
 	[self presentViewController:ac animated:YES completion:nil];
