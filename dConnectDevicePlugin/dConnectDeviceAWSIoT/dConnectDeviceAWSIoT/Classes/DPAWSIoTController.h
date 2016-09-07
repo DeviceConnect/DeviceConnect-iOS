@@ -29,6 +29,8 @@
 
 // ログイン
 - (void)login;
+// ログアウト
+- (void)logout;
 // マネージャー情報を取得
 - (void)fetchManagerInfo;
 // MQTTにリクエストを送信

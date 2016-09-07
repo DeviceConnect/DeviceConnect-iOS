@@ -36,14 +36,15 @@
 	if (_isConnected) {
 		[self disconnect];
 	}
-	_isConnected = NO;
 	// 認証設定
+	[AWSIoTDataManager removeIoTDataManagerForKey:@"dconnect"];
 	AWSStaticCredentialsProvider *provider = [[AWSStaticCredentialsProvider alloc] initWithAccessKey:accessKey secretKey:secretKey];
 	AWSServiceConfiguration *config = [[AWSServiceConfiguration alloc] initWithRegion:region credentialsProvider:provider];
-	[[AWSServiceManager defaultServiceManager] setDefaultServiceConfiguration:config];
+	[AWSIoTDataManager registerIoTDataManagerWithConfiguration:config forKey:@"dconnect"];
+	[AWSIoTData registerIoTDataWithConfiguration:config forKey:@"dconnect"];
 	
+	AWSIoTDataManager *manager = [AWSIoTDataManager IoTDataManagerForKey:@"dconnect"];
 	// MQTT接続
-	AWSIoTDataManager *manager = [AWSIoTDataManager defaultIoTDataManager];
 	NSString *clientID = [[NSUUID UUID] UUIDString];
 	if (![manager connectUsingWebSocketWithClientId:clientID cleanSession:YES statusCallback:^(AWSIoTMQTTStatus status) {
 		NSLog(@"* mqtt status: %ld", (long)status);
@@ -78,7 +79,8 @@
 
 // 切断
 - (void)disconnect {
-	AWSIoTDataManager *manager = [AWSIoTDataManager defaultIoTDataManager];
+	_isConnected = NO;
+	AWSIoTDataManager *manager = [AWSIoTDataManager IoTDataManagerForKey:@"dconnect"];
 	[manager disconnect];
 }
 
@@ -90,7 +92,7 @@
 		}
 		return;
 	}
-	AWSIoTData *iotData = [AWSIoTData defaultIoTData];
+	AWSIoTData *iotData = [AWSIoTData IoTDataForKey:@"dconnect"];
 	AWSIoTDataGetThingShadowRequest *request = [AWSIoTDataGetThingShadowRequest new];
 	request.thingName = name;
 	[iotData getThingShadow:request
@@ -118,7 +120,7 @@
 		}
 		return;
 	}
-	AWSIoTData *iotData = [AWSIoTData defaultIoTData];
+	AWSIoTData *iotData = [AWSIoTData IoTDataForKey:@"dconnect"];
 	AWSIoTDataUpdateThingShadowRequest *request = [AWSIoTDataUpdateThingShadowRequest new];
 	request.thingName = name;
 	request.payload = [str dataUsingEncoding:NSUTF8StringEncoding];
@@ -132,7 +134,7 @@
 
 // MQTTのTopicを購読
 - (BOOL)subscribeWithTopic:(NSString*)topic messageHandler:(void (^)(id json, NSError *error))handler {
-	AWSIoTDataManager *manager = [AWSIoTDataManager defaultIoTDataManager];
+	AWSIoTDataManager *manager = [AWSIoTDataManager IoTDataManagerForKey:@"dconnect"];
 	return [manager subscribeToTopic:topic QoS:AWSIoTMQTTQoSMessageDeliveryAttemptedAtMostOnce messageCallback:^(NSData *data) {
 		if (handler) {
 			NSError *error;
@@ -144,14 +146,14 @@
 
 // MQTTのTopicの購読を解除
 - (void)unsubscribeWithTopic:(NSString*)topic {
-	AWSIoTDataManager *manager = [AWSIoTDataManager defaultIoTDataManager];
+	AWSIoTDataManager *manager = [AWSIoTDataManager IoTDataManagerForKey:@"dconnect"];
 	[manager unsubscribeTopic:topic];
 }
 
 // MQTTのTopicにメッセージを配信
 - (BOOL)publishWithTopic:(NSString*)topic message:(NSString*)message {
 //	NSLog(@"publish: %@, %@", topic, message);
-	AWSIoTDataManager *manager = [AWSIoTDataManager defaultIoTDataManager];
+	AWSIoTDataManager *manager = [AWSIoTDataManager IoTDataManagerForKey:@"dconnect"];
 	return [manager publishString:message onTopic:topic QoS:AWSIoTMQTTQoSMessageDeliveryAttemptedAtMostOnce];
 }
 

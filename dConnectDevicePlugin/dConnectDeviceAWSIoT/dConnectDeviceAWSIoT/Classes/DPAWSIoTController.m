@@ -161,6 +161,12 @@
 	}
 }
 
+// ログアウト
+- (void)logout {
+	[[DPAWSIoTManager sharedManager] disconnect];
+	[DPAWSIoTUtils clearAccount];
+}
+
 // マネージャー情報を取得
 - (void)fetchManagerInfo {
 	// Shadow取得

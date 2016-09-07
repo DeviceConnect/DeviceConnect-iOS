@@ -103,6 +103,10 @@
 			case 1:
 				[self performSegueWithIdentifier:@"AuthSegue" sender:self];
 				break;
+			case 2:
+				[[DPAWSIoTController sharedManager] logout];
+				[self performSegueWithIdentifier:@"LoginSegue" sender:self];
+				break;
 		}
 	}];
 	[self presentViewController:ac animated:YES completion:nil];
