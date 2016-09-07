@@ -1926,6 +1926,7 @@
 		D64EF65B1D7D44EE005AC8B2 /* DConnectServiceListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DConnectServiceListViewController.h; sourceTree = "<group>"; };
 		D64EF6611D7D9200005AC8B2 /* DConnectServiceListViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DConnectServiceListViewCell.m; path = viewcontroller/DConnectServiceListViewCell.m; sourceTree = "<group>"; };
 		D64EF6641D7DA877005AC8B2 /* DConnectServiceListViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DConnectServiceListViewCell.h; path = viewcontroller/DConnectServiceListViewCell.h; sourceTree = "<group>"; };
+		D64EF6691D7E8A35005AC8B2 /* DConnectServiceListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DConnectServiceListener.h; sourceTree = "<group>"; };
 		D65E24C91D1A5E8C00312134 /* battery.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = battery.json; sourceTree = "<group>"; };
 		D65E24D21D1B956500312134 /* health.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = health.json; sourceTree = "<group>"; };
 		D65E24D41D1B959900312134 /* vibration.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = vibration.json; sourceTree = "<group>"; };
@@ -3820,6 +3821,7 @@
 		BE6F93151A70DB0400BFA51F /* DConnectSDK */ = {
 			isa = PBXGroup;
 			children = (
+				D64EF6691D7E8A35005AC8B2 /* DConnectServiceListener.h */,
 				D64EF65B1D7D44EE005AC8B2 /* DConnectServiceListViewController.h */,
 				D62E463D1D53924800E3C489 /* DConnectPluginSpec.h */,
 				D662DFD91D52FDC900C0F476 /* DConnectProfileSpec.h */,

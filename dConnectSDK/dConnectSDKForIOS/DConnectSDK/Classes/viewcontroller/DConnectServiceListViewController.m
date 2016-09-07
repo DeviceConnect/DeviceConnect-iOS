@@ -9,9 +9,10 @@
 
 #import <DConnectSDK/DConnectServiceListViewController.h>
 #import <DConnectSDK/DConnectService.h>
+#import "DConnectServiceListener.h"
 #import "DConnectServiceListViewCell.h"
 
-@interface DConnectServiceListViewController ()
+@interface DConnectServiceListViewController()
 
 @end
 
@@ -26,6 +27,18 @@
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    if (self.delegate) {
+        [self.delegate.serviceProvider addServiceListener:self];
+    }
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    if (self.delegate) {
+        [self.delegate.serviceProvider removeServiceListener: self];
+    }
 }
 
 - (void)didReceiveMemoryWarning {
@@ -134,5 +147,50 @@
 - (IBAction)tapCloseButton:(id)sender {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
+
+#pragma mark - DConnectServiceListener
+
+- (void)didServiceAdded:(DConnectService *)service {
+    NSLog(@"ServiceListViewController - didServiceAdded - serviceId:%@", service.serviceId);
+    [self.tableView reloadData];
+}
+
+- (void)didServiceRemoved:(DConnectService *)service {
+    NSLog(@"ServiceListViewController - didServiceRemoved - serviceId:%@", service.serviceId);
+    [self.tableView reloadData];
+}
+
+- (void)didStatusChange:(DConnectService *)service {
+    NSLog(@"ServiceListViewController - didStatusChange - serviceId:%@", service.serviceId);
+    
+    // サービスのインデックスを取得し、サービスのセルを更新する
+    if (self.delegate) {
+        DConnectServiceProvider *serviceProvider = [self.delegate serviceProvider];
+        if (serviceProvider) {
+            NSIndexPath *indexPath = [self tableIndexPathByServiceId: service.serviceId];
+            if (indexPath) {
+                NSLog(@"ServiceListViewController - didStatusChange - indexPath.row:%d", (int)indexPath.row);
+                [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+            }
+        }
+    }
+}
+
+#pragma mark - private methods.
+
+- (NSIndexPath *) tableIndexPathByServiceId: (NSString *) serviceId {
+    int index = 0;
+
+    for (DConnectService *service in self.delegate.serviceProvider.services) {
+        if (service.serviceId && [serviceId localizedCaseInsensitiveCompare: service.serviceId] == NSOrderedSame) {
+            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:0];
+            return indexPath;
+        }
+        index ++;
+    }
+    return nil;
+}
+
+
 
 @end

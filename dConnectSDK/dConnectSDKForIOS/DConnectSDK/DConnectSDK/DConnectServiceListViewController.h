@@ -9,8 +9,9 @@
 
 #import <UIKit/UIKit.h>
 #import <DConnectSDK/DConnectSystemProfile.h>
+#import <DConnectSDK/DConnectServiceListener.h>
 
-@interface DConnectServiceListViewController : UITableViewController
+@interface DConnectServiceListViewController : UITableViewController<DConnectServiceListener>
 
 @property (nonatomic, weak) id<DConnectSystemProfileDelegate> delegate;
 

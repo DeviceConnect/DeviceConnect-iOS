@@ -35,6 +35,8 @@ static NSMutableDictionary *_instanceArray = nil;
 
 @property(nonatomic, weak) id plugin_;
 
+@property(nonatomic, strong) NSMutableArray<__kindof id<DConnectServiceListener>> *serviceListeners;
+
 @end
 
 
@@ -77,6 +79,7 @@ static NSMutableDictionary *_instanceArray = nil;
     if (self) {
         [self setPluginSpec: [[DConnectPluginSpec alloc] init]];
         mDConnectServices = [NSMutableDictionary dictionary];
+        self.serviceListeners = [NSMutableArray array];
     }
     return self;
 }
@@ -94,6 +97,8 @@ static NSMutableDictionary *_instanceArray = nil;
 - (void) addService: (DConnectService *) service {
     
     NSString *serviceId = [service serviceId];
+    
+    [service setStatusListener: self];
     
     if ([self pluginSpec]) {
         for (DConnectProfile *profile in [service profiles]) {
@@ -128,11 +133,20 @@ static NSMutableDictionary *_instanceArray = nil;
     }
     
     mDConnectServices[serviceId] = service;
+    
+    [self notifyOnServiceAdded: service];
 }
 
 - (void) removeService: (DConnectService *) service {
     NSString *serviceId = [service serviceId];
-    [mDConnectServices removeObjectForKey: serviceId];
+    if (mDConnectServices[serviceId]) {
+        [mDConnectServices removeObjectForKey: serviceId];
+        [self notifyOnServiceRemoved: service];
+    }
+}
+
+- (void) onStatusChange: (DConnectService *) service {
+    [self notifyOnStatusChange: service];
 }
 
 - (DConnectService *) service: (NSString *) serviceId {
@@ -155,6 +169,52 @@ static NSMutableDictionary *_instanceArray = nil;
         return YES;
     }
     return NO;
+}
+
+- (void) addServiceListener: (id<DConnectServiceListener>) listener {
+    @synchronized(self.serviceListeners) {
+        if (![self.serviceListeners containsObject: listener]) {
+            [self.serviceListeners addObject:listener];
+        }
+    }
+}
+
+- (void) removeServiceListener: (id<DConnectServiceListener>) listener {
+    @synchronized(self.serviceListeners) {
+        [self.serviceListeners removeObject:listener];
+    }
+}
+
+#pragma mark - OnStatusChangeListener Methods.
+
+- (void)didStatusChange:(DConnectService *)service {
+    [self notifyOnStatusChange: service];
+}
+
+#pragma mark - private methods.
+
+- (void) notifyOnServiceAdded: (DConnectService *) service {
+    @synchronized (self.serviceListeners) {
+        for (id<DConnectServiceListener> l in self.serviceListeners) {
+            [l didServiceAdded: service];
+        }
+    }
+}
+
+- (void) notifyOnServiceRemoved: (DConnectService *) service {
+    @synchronized (self.serviceListeners) {
+        for (id<DConnectServiceListener> l in self.serviceListeners) {
+            [l didServiceRemoved: service];
+        }
+    }
+}
+
+- (void) notifyOnStatusChange: (DConnectService *) service {
+    @synchronized (self.serviceListeners) {
+        for (id<DConnectServiceListener> l in self.serviceListeners) {
+            [l didStatusChange: service];
+        }
+    }
 }
 
 @end
