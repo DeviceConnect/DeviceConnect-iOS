@@ -70,7 +70,7 @@ static const NSTimeInterval DPSemaphoreTimeout = 20.0;
 	if (self) {
         [CastDeviceController sharedInstance].applicationID = kReceiverAppID;
         _deviceScanner = [GCKDeviceScanner new];
-		[_deviceScanner addListener:self];
+        [_deviceScanner addListener:self];
 		_dataDict = [NSMutableDictionary dictionary];
 		_semaphore = dispatch_semaphore_create(1);
         // HTTP Server Activate.

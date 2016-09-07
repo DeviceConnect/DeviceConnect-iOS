@@ -34,8 +34,6 @@
 /* Begin PBXBuildFile section */
 		8E69A6C31D49C98B00326F42 /* dconnect_icon_off.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E69A6C11D49C98B00326F42 /* dconnect_icon_off.png */; };
 		8E69A6C41D49C98B00326F42 /* dconnect_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E69A6C21D49C98B00326F42 /* dconnect_icon.png */; };
-		AB311F8E1D7E86B000B2D886 /* GoogleCast.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB311F8D1D7E86B000B2D886 /* GoogleCast.framework */; };
-		AB311F901D7E86BC00B2D886 /* GoogleCastResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = AB311F8F1D7E86BC00B2D886 /* GoogleCastResources.bundle */; };
 		AB311FDA1D7E879100B2D886 /* CastComponents.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AB311FC91D7E879100B2D886 /* CastComponents.storyboard */; };
 		AB311FE31D7E897800B2D886 /* CastContainerController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB311FCB1D7E879100B2D886 /* CastContainerController.m */; };
 		AB311FE41D7E897800B2D886 /* CastDeviceController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB311FCD1D7E879100B2D886 /* CastDeviceController.m */; };
@@ -52,11 +50,11 @@
 		AB311FFE1D7E905600B2D886 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB311FFD1D7E905600B2D886 /* AVFoundation.framework */; };
 		AB3120001D7E905F00B2D886 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB311FFF1D7E905F00B2D886 /* CoreGraphics.framework */; };
 		AB596B5D1AB7EDB000A56E27 /* DPChromecastMediaContext.m in Sources */ = {isa = PBXBuildFile; fileRef = AB596B5C1AB7EDAF00A56E27 /* DPChromecastMediaContext.m */; };
-		ABAC40411D7E981800BBDD34 /* CastFrameworkAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ABAC40401D7E980800BBDD34 /* CastFrameworkAssets.xcassets */; };
+		ABA303FC1D7FC84100B1CEEB /* CastFrameworkAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ABA303FB1D7FC84100B1CEEB /* CastFrameworkAssets.xcassets */; };
+		ABA303FE1D7FC84A00B1CEEB /* GoogleCast.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABA303FD1D7FC84A00B1CEEB /* GoogleCast.framework */; };
+		ABA304001D7FC84F00B1CEEB /* GoogleCastResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = ABA303FF1D7FC84F00B1CEEB /* GoogleCastResources.bundle */; };
 		ABAC40451D7E9E2600BBDD34 /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABAC40441D7E9E2600BBDD34 /* CoreBluetooth.framework */; };
 		ABAC40471D7E9E3600BBDD34 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABAC40461D7E9E3600BBDD34 /* Accelerate.framework */; };
-		ABAC406E1D7EAEA700BBDD34 /* logo_castvideos.png in Resources */ = {isa = PBXBuildFile; fileRef = ABAC406C1D7EAEA700BBDD34 /* logo_castvideos.png */; };
-		ABAC406F1D7EAEA700BBDD34 /* logo_castvideos@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = ABAC406D1D7EAEA700BBDD34 /* logo_castvideos@2x.png */; };
 		ABC5E3E41A973741003D2634 /* DPChromecastDevicePlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = ABC5E3E11A973741003D2634 /* DPChromecastDevicePlugin.m */; };
 		ABC5E3EA1A97375D003D2634 /* DPChromecastGuideViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABC5E3E71A97375D003D2634 /* DPChromecastGuideViewController.m */; };
 		ABC5E3EB1A97375D003D2634 /* DPChromecastSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABC5E3E91A97375D003D2634 /* DPChromecastSettingViewController.m */; };
@@ -101,8 +99,6 @@
 /* Begin PBXFileReference section */
 		8E69A6C11D49C98B00326F42 /* dconnect_icon_off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = dconnect_icon_off.png; path = dConnectDeviceChromeCast_resources/dconnect_icon_off.png; sourceTree = SOURCE_ROOT; };
 		8E69A6C21D49C98B00326F42 /* dconnect_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = dconnect_icon.png; path = dConnectDeviceChromeCast_resources/dconnect_icon.png; sourceTree = SOURCE_ROOT; };
-		AB311F8D1D7E86B000B2D886 /* GoogleCast.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleCast.framework; sourceTree = "<group>"; };
-		AB311F8F1D7E86BC00B2D886 /* GoogleCastResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = GoogleCastResources.bundle; sourceTree = "<group>"; };
 		AB311FC91D7E879100B2D886 /* CastComponents.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = CastComponents.storyboard; sourceTree = "<group>"; };
 		AB311FCA1D7E879100B2D886 /* CastContainerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CastContainerController.h; sourceTree = "<group>"; };
 		AB311FCB1D7E879100B2D886 /* CastContainerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CastContainerController.m; sourceTree = "<group>"; };
@@ -133,11 +129,11 @@
 		AB596B5B1AB7EDAF00A56E27 /* DPChromecastMediaContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DPChromecastMediaContext.h; path = dConnectDeviceChromecast/Classes/DPChromecastMediaContext.h; sourceTree = SOURCE_ROOT; };
 		AB596B5C1AB7EDAF00A56E27 /* DPChromecastMediaContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DPChromecastMediaContext.m; path = dConnectDeviceChromecast/Classes/DPChromecastMediaContext.m; sourceTree = SOURCE_ROOT; };
 		AB596B5E1AB95F7500A56E27 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
-		ABAC40401D7E980800BBDD34 /* CastFrameworkAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = CastFrameworkAssets.xcassets; path = dConnectDeviceChromecast/Resources/CastFrameworkAssets.xcassets; sourceTree = SOURCE_ROOT; };
+		ABA303FB1D7FC84100B1CEEB /* CastFrameworkAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = CastFrameworkAssets.xcassets; path = "deps/CocoaPods/Pods/google-cast-sdk/GoogleCastSDK-2.10.4-Release/CastFrameworkAssets.xcassets"; sourceTree = SOURCE_ROOT; };
+		ABA303FD1D7FC84A00B1CEEB /* GoogleCast.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleCast.framework; path = "deps/CocoaPods/Pods/google-cast-sdk/GoogleCastSDK-2.10.4-Release/GoogleCast.framework"; sourceTree = "<group>"; };
+		ABA303FF1D7FC84F00B1CEEB /* GoogleCastResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = GoogleCastResources.bundle; path = "deps/CocoaPods/Pods/google-cast-sdk/GoogleCastSDK-2.10.4-Release/GoogleCast.framework/GoogleCastResources.bundle"; sourceTree = "<group>"; };
 		ABAC40441D7E9E2600BBDD34 /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
 		ABAC40461D7E9E3600BBDD34 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
-		ABAC406C1D7EAEA700BBDD34 /* logo_castvideos.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = logo_castvideos.png; path = dConnectDeviceChromecast/Resources/logo_castvideos.png; sourceTree = SOURCE_ROOT; };
-		ABAC406D1D7EAEA700BBDD34 /* logo_castvideos@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "logo_castvideos@2x.png"; path = "dConnectDeviceChromecast/Resources/logo_castvideos@2x.png"; sourceTree = SOURCE_ROOT; };
 		ABC5E3CD1A9736E2003D2634 /* dConnectDeviceChromecast-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "dConnectDeviceChromecast-Prefix.pch"; path = "dConnectDeviceChromecast/dConnectDeviceChromecast-Prefix.pch"; sourceTree = SOURCE_ROOT; };
 		ABC5E3CE1A9736F9003D2634 /* icon-cast-connected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon-cast-connected.png"; path = "dConnectDeviceChromecast/Resources/icon-cast-connected.png"; sourceTree = SOURCE_ROOT; };
 		ABC5E3CF1A9736F9003D2634 /* icon-cast-identified.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon-cast-identified.png"; path = "dConnectDeviceChromecast/Resources/icon-cast-identified.png"; sourceTree = SOURCE_ROOT; };
@@ -213,6 +209,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ABA303FE1D7FC84A00B1CEEB /* GoogleCast.framework in Frameworks */,
 				ABCB4A571AB53FC200805F25 /* CoreFoundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -231,7 +228,6 @@
 				AB311FFE1D7E905600B2D886 /* AVFoundation.framework in Frameworks */,
 				FF94393719C06152006B4A33 /* MediaAccessibility.framework in Frameworks */,
 				AB311FFC1D7E904500B2D886 /* SystemConfiguration.framework in Frameworks */,
-				AB311F8E1D7E86B000B2D886 /* GoogleCast.framework in Frameworks */,
 				ABCB49B31AB416D600805F25 /* MessageUI.framework in Frameworks */,
 				ABCB49B11AB416CD00805F25 /* CFNetwork.framework in Frameworks */,
 				FF94393919C06161006B4A33 /* MediaToolbox.framework in Frameworks */,
@@ -427,14 +423,14 @@
 		FF65A97319B709B500DE9EF8 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				ABA303FF1D7FC84F00B1CEEB /* GoogleCastResources.bundle */,
+				ABA303FD1D7FC84A00B1CEEB /* GoogleCast.framework */,
 				ABAC40461D7E9E3600BBDD34 /* Accelerate.framework */,
 				ABAC40441D7E9E2600BBDD34 /* CoreBluetooth.framework */,
 				AB3120071D7E928D00B2D886 /* CoreText.framework */,
 				AB311FFF1D7E905F00B2D886 /* CoreGraphics.framework */,
 				AB311FFD1D7E905600B2D886 /* AVFoundation.framework */,
 				AB311FFB1D7E904500B2D886 /* SystemConfiguration.framework */,
-				AB311F8F1D7E86BC00B2D886 /* GoogleCastResources.bundle */,
-				AB311F8D1D7E86B000B2D886 /* GoogleCast.framework */,
 				AB596B5E1AB95F7500A56E27 /* MobileCoreServices.framework */,
 				ABCB4A3C1AB4480D00805F25 /* DConnectSDK.framework */,
 				ABCB49C41AB4176800805F25 /* UIKit.framework */,
@@ -518,9 +514,7 @@
 		FF65A99C19B709E700DE9EF8 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				ABAC40401D7E980800BBDD34 /* CastFrameworkAssets.xcassets */,
-				ABAC406C1D7EAEA700BBDD34 /* logo_castvideos.png */,
-				ABAC406D1D7EAEA700BBDD34 /* logo_castvideos@2x.png */,
+				ABA303FB1D7FC84100B1CEEB /* CastFrameworkAssets.xcassets */,
 				ABCB4A5A1AB5415700805F25 /* Chromecast_iPad.storyboard */,
 				ABCB4A5B1AB5415700805F25 /* Chromecast_iPhone.storyboard */,
 				ABC5E3CE1A9736F9003D2634 /* icon-cast-connected.png */,
@@ -631,21 +625,19 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				ABAC40411D7E981800BBDD34 /* CastFrameworkAssets.xcassets in Resources */,
-				ABAC406E1D7EAEA700BBDD34 /* logo_castvideos.png in Resources */,
 				ABCB4A511AB53E0100805F25 /* icon-cast-connected.png in Resources */,
 				AB311FDA1D7E879100B2D886 /* CastComponents.storyboard in Resources */,
 				ABCB4A521AB53E0100805F25 /* icon-cast-identified.png in Resources */,
 				ABCB4A531AB53E0100805F25 /* img01.png in Resources */,
+				ABA303FC1D7FC84100B1CEEB /* CastFrameworkAssets.xcassets in Resources */,
 				ABCB4A5C1AB5415700805F25 /* Chromecast_iPad.storyboard in Resources */,
 				ABCB4A541AB53E0100805F25 /* img02.png in Resources */,
 				ABCB4A551AB53E0100805F25 /* img03.png in Resources */,
 				ABCB4A5D1AB5415700805F25 /* Chromecast_iPhone.storyboard in Resources */,
 				8E69A6C31D49C98B00326F42 /* dconnect_icon_off.png in Resources */,
 				8E69A6C41D49C98B00326F42 /* dconnect_icon.png in Resources */,
+				ABA304001D7FC84F00B1CEEB /* GoogleCastResources.bundle in Resources */,
 				ABCB4A561AB53E0100805F25 /* Info.plist in Resources */,
-				ABAC406F1D7EAEA700BBDD34 /* logo_castvideos@2x.png in Resources */,
-				AB311F901D7E86BC00B2D886 /* GoogleCastResources.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -760,6 +752,10 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CONFIGURATION_BUILD_DIR = "build/$(CONFIGURATION)-resources";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/deps/CocoaPods/Pods/google-cast-sdk/GoogleCastSDK-2.10.4-Release",
+				);
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -784,6 +780,10 @@
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/deps/CocoaPods/Pods/google-cast-sdk/GoogleCastSDK-2.10.4-Release",
+				);
 				INFOPLIST_FILE = dConnectDeviceChromecast/Resources/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
@@ -871,6 +871,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/../../dConnectSDK/dConnectSDKForIOS/bin",
 					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/deps/CocoaPods/Pods/google-cast-sdk/GoogleCastSDK-2.10.4-Release",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "dConnectDeviceChromecast/dConnectDeviceChromecast-Prefix.pch";
@@ -888,6 +889,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/../../dConnectSDK/dConnectSDKForIOS/bin",
 					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/deps/CocoaPods/Pods/google-cast-sdk/GoogleCastSDK-2.10.4-Release",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "dConnectDeviceChromecast/dConnectDeviceChromecast-Prefix.pch";

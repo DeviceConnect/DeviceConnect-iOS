@@ -119,8 +119,6 @@
 		AB1FAB131C7AC1EE0013C434 /* RobotUIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB1FAB101C7AC1EE0013C434 /* RobotUIKit.framework */; };
 		AB1FAB161C7AC1F60013C434 /* dConnectDeviceSphero_resources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = AB1FAB141C7AC1F60013C434 /* dConnectDeviceSphero_resources.bundle */; };
 		AB1FAB171C7AC1F60013C434 /* dConnectDeviceSphero.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB1FAB151C7AC1F60013C434 /* dConnectDeviceSphero.framework */; };
-		AB311FFA1D7E8CEE00B2D886 /* GoogleCastResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = AB311FF81D7E8CEE00B2D886 /* GoogleCastResources.bundle */; };
-		AB3120021D7E90A100B2D886 /* GoogleCast.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB3120011D7E90A100B2D886 /* GoogleCast.framework */; };
 		AB3120041D7E916600B2D886 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB3120031D7E916600B2D886 /* SystemConfiguration.framework */; };
 		AB3120061D7E927600B2D886 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB3120051D7E927600B2D886 /* CoreText.framework */; };
 		AB94E85F1C755EB300DAE749 /* BookmarkDBFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB94E8581C755EB200DAE749 /* BookmarkDBFramework.framework */; };
@@ -146,6 +144,8 @@
 		AB94E8A41C759BD700DAE749 /* GHURLManager.h in Headers */ = {isa = PBXBuildFile; fileRef = AB94E8A21C759BD600DAE749 /* GHURLManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AB94E8A51C759BD700DAE749 /* GHURLManager.m in Sources */ = {isa = PBXBuildFile; fileRef = AB94E8A31C759BD600DAE749 /* GHURLManager.m */; };
 		AB94E8A61C75A40F00DAE749 /* BookmarkDBFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB94E8581C755EB200DAE749 /* BookmarkDBFramework.framework */; };
+		ABA304021D7FC8A100B1CEEB /* GoogleCast.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABA304011D7FC8A100B1CEEB /* GoogleCast.framework */; };
+		ABA304041D7FC8A700B1CEEB /* GoogleCastResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = ABA304031D7FC8A700B1CEEB /* GoogleCastResources.bundle */; };
 		ABAC40431D7E9DB200BBDD34 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABAC40421D7E9DB200BBDD34 /* AVFoundation.framework */; };
 		ABAC40491D7E9E8700BBDD34 /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABAC40481D7E9E8700BBDD34 /* CoreBluetooth.framework */; };
 		ABAC404B1D7E9E9000BBDD34 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABAC404A1D7E9E9000BBDD34 /* MediaPlayer.framework */; };
@@ -286,7 +286,6 @@
 		AB00F2161C719AB700689C70 /* DCMDevicePluginSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DCMDevicePluginSDK.framework; path = ../../dConnectDevicePlugin/DCMDevicePluginSDK/bin/DCMDevicePluginSDK.framework; sourceTree = "<group>"; };
 		AB00F21C1C719B3900689C70 /* dConnectDeviceChromecast_resources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = dConnectDeviceChromecast_resources.bundle; path = ../../dConnectDevicePlugin/dConnectDeviceChromeCast/bin/dConnectDeviceChromecast_resources.bundle; sourceTree = "<group>"; };
 		AB00F21D1C719B3900689C70 /* dConnectDeviceChromecast.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = dConnectDeviceChromecast.framework; path = ../../dConnectDevicePlugin/dConnectDeviceChromeCast/bin/dConnectDeviceChromecast.framework; sourceTree = "<group>"; };
-		AB00F2201C719B4000689C70 /* GoogleCast.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleCast.framework; path = "../../dConnectDevicePlugin/dConnectDeviceChromeCast/GoogleCastSDK-2.6.0-Release/GoogleCast.framework"; sourceTree = "<group>"; };
 		AB00F2221C719B4B00689C70 /* dConnectDeviceHost_resources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = dConnectDeviceHost_resources.bundle; path = ../../dConnectDevicePlugin/dConnectDeviceHost/bin/dConnectDeviceHost_resources.bundle; sourceTree = "<group>"; };
 		AB00F2231C719B4B00689C70 /* dConnectDeviceHost.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = dConnectDeviceHost.framework; path = ../../dConnectDevicePlugin/dConnectDeviceHost/bin/dConnectDeviceHost.framework; sourceTree = "<group>"; };
 		AB00F2261C719B5500689C70 /* dConnectDeviceHue_resources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = dConnectDeviceHue_resources.bundle; path = ../../dConnectDevicePlugin/dConnectDeviceHue/bin/dConnectDeviceHue_resources.bundle; sourceTree = "<group>"; };
@@ -375,8 +374,6 @@
 		AB1FAB101C7AC1EE0013C434 /* RobotUIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RobotUIKit.framework; path = ../../dConnectDevicePlugin/dConnectDeviceSphero/RobotUIKit.framework; sourceTree = "<group>"; };
 		AB1FAB141C7AC1F60013C434 /* dConnectDeviceSphero_resources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = dConnectDeviceSphero_resources.bundle; path = ../../dConnectDevicePlugin/dConnectDeviceSphero/bin/dConnectDeviceSphero_resources.bundle; sourceTree = "<group>"; };
 		AB1FAB151C7AC1F60013C434 /* dConnectDeviceSphero.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = dConnectDeviceSphero.framework; path = ../../dConnectDevicePlugin/dConnectDeviceSphero/bin/dConnectDeviceSphero.framework; sourceTree = "<group>"; };
-		AB311FF81D7E8CEE00B2D886 /* GoogleCastResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = GoogleCastResources.bundle; path = ../../dConnectDevicePlugin/dConnectDeviceChromeCast/GoogleCastResources.bundle; sourceTree = "<group>"; };
-		AB3120011D7E90A100B2D886 /* GoogleCast.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleCast.framework; path = ../../dConnectDevicePlugin/dConnectDeviceChromeCast/GoogleCast.framework; sourceTree = "<group>"; };
 		AB3120031D7E916600B2D886 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		AB3120051D7E927600B2D886 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 		AB94E8581C755EB200DAE749 /* BookmarkDBFramework.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = BookmarkDBFramework.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -405,6 +402,8 @@
 		AB94E8A01C75999D00DAE749 /* AddBookmarkPreprocessor.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = AddBookmarkPreprocessor.js; sourceTree = "<group>"; };
 		AB94E8A21C759BD600DAE749 /* GHURLManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GHURLManager.h; path = BookmarkDBFramework/GHURLManager.h; sourceTree = SOURCE_ROOT; };
 		AB94E8A31C759BD600DAE749 /* GHURLManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GHURLManager.m; path = BookmarkDBFramework/GHURLManager.m; sourceTree = SOURCE_ROOT; };
+		ABA304011D7FC8A100B1CEEB /* GoogleCast.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleCast.framework; path = "../../dConnectDevicePlugin/dConnectDeviceChromeCast/deps/CocoaPods/Pods/google-cast-sdk/GoogleCastSDK-2.10.4-Release/GoogleCast.framework"; sourceTree = "<group>"; };
+		ABA304031D7FC8A700B1CEEB /* GoogleCastResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = GoogleCastResources.bundle; path = "../../dConnectDevicePlugin/dConnectDeviceChromeCast/deps/CocoaPods/Pods/google-cast-sdk/GoogleCastSDK-2.10.4-Release/GoogleCast.framework/GoogleCastResources.bundle"; sourceTree = "<group>"; };
 		ABAC40421D7E9DB200BBDD34 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		ABAC40481D7E9E8700BBDD34 /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
 		ABAC404A1D7E9E9000BBDD34 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
@@ -451,11 +450,11 @@
 				AB00F1FF1C7199B800689C70 /* libstdc++.6.0.9.tbd in Frameworks */,
 				AB00F1FD1C7199AC00689C70 /* libiconv.2.4.0.tbd in Frameworks */,
 				AB00F2491C719B9C00689C70 /* dConnectDeviceTheta.framework in Frameworks */,
-				AB3120021D7E90A100B2D886 /* GoogleCast.framework in Frameworks */,
 				AB00F22B1C719B5B00689C70 /* HueSDK_iOS.framework in Frameworks */,
 				AB1FAB131C7AC1EE0013C434 /* RobotUIKit.framework in Frameworks */,
 				AB00F2291C719B5500689C70 /* dConnectDeviceHue.framework in Frameworks */,
 				AB00F2321C719B6E00689C70 /* PebbleKit.framework in Frameworks */,
+				ABA304021D7FC8A100B1CEEB /* GoogleCast.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -700,14 +699,14 @@
 		AB00F1F91C71961500689C70 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				ABA304031D7FC8A700B1CEEB /* GoogleCastResources.bundle */,
+				ABA304011D7FC8A100B1CEEB /* GoogleCast.framework */,
 				ABAC404C1D7E9E9700BBDD34 /* Accelerate.framework */,
 				ABAC404A1D7E9E9000BBDD34 /* MediaPlayer.framework */,
 				ABAC40481D7E9E8700BBDD34 /* CoreBluetooth.framework */,
 				ABAC40421D7E9DB200BBDD34 /* AVFoundation.framework */,
 				AB3120051D7E927600B2D886 /* CoreText.framework */,
 				AB3120031D7E916600B2D886 /* SystemConfiguration.framework */,
-				AB3120011D7E90A100B2D886 /* GoogleCast.framework */,
-				AB311FF81D7E8CEE00B2D886 /* GoogleCastResources.bundle */,
 				8E3772461D24D5B3003D3124 /* libxml2.tbd */,
 				AB1FAB141C7AC1F60013C434 /* dConnectDeviceSphero_resources.bundle */,
 				AB1FAB151C7AC1F60013C434 /* dConnectDeviceSphero.framework */,
@@ -732,7 +731,6 @@
 				AB00F2271C719B5500689C70 /* dConnectDeviceHue.framework */,
 				AB00F2221C719B4B00689C70 /* dConnectDeviceHost_resources.bundle */,
 				AB00F2231C719B4B00689C70 /* dConnectDeviceHost.framework */,
-				AB00F2201C719B4000689C70 /* GoogleCast.framework */,
 				AB00F21C1C719B3900689C70 /* dConnectDeviceChromecast_resources.bundle */,
 				AB00F21D1C719B3900689C70 /* dConnectDeviceChromecast.framework */,
 				AB00F2161C719AB700689C70 /* DCMDevicePluginSDK.framework */,
@@ -1131,7 +1129,7 @@
 			files = (
 				ABE71E2F1C76D3F40061973C /* star@2x.png in Resources */,
 				AB00F21E1C719B3900689C70 /* dConnectDeviceChromecast_resources.bundle in Resources */,
-				AB311FFA1D7E8CEE00B2D886 /* GoogleCastResources.bundle in Resources */,
+				ABA304041D7FC8A700B1CEEB /* GoogleCastResources.bundle in Resources */,
 				AB00F22E1C719B6500689C70 /* dConnectDeviceIRKit_resources.bundle in Resources */,
 				AB1FAB0C1C7AC1E00013C434 /* dConnectDeviceAllJoyn_resources.bundle in Resources */,
 				AB00F49E1C71B16200689C70 /* LICENSE in Resources */,
@@ -1451,7 +1449,7 @@
 					"$(PROJECT_DIR)/../../dConnectDevicePlugin/dConnectDeviceSphero",
 					"$(PROJECT_DIR)/../../dConnectDevicePlugin/DCMDevicePluginSDK/bin",
 					"$(PROJECT_DIR)/../../dConnectDevicePlugin/dConnectDeviceIRKit/bin",
-					"$(PROJECT_DIR)/../../dConnectDevicePlugin/dConnectDeviceChromeCast",
+					"$(PROJECT_DIR)/../../dConnectDevicePlugin/dConnectDeviceChromeCast/deps/CocoaPods/Pods/google-cast-sdk/GoogleCastSDK-2.10.4-Release",
 					"$(PROJECT_DIR)/../../dConnectDevicePlugin/dConnectDeviceChromeCast/bin",
 					"$(PROJECT_DIR)/../../dConnectDevicePlugin/dConnectDevicePebble/bin",
 					"$(PROJECT_DIR)/../../dConnectDevicePlugin/dConnectDevicePebble",
@@ -1494,7 +1492,7 @@
 					"$(PROJECT_DIR)/../../dConnectDevicePlugin/dConnectDeviceSphero",
 					"$(PROJECT_DIR)/../../dConnectDevicePlugin/DCMDevicePluginSDK/bin",
 					"$(PROJECT_DIR)/../../dConnectDevicePlugin/dConnectDeviceIRKit/bin",
-					"$(PROJECT_DIR)/../../dConnectDevicePlugin/dConnectDeviceChromeCast",
+					"$(PROJECT_DIR)/../../dConnectDevicePlugin/dConnectDeviceChromeCast/deps/CocoaPods/Pods/google-cast-sdk/GoogleCastSDK-2.10.4-Release",
 					"$(PROJECT_DIR)/../../dConnectDevicePlugin/dConnectDeviceChromeCast/bin",
 					"$(PROJECT_DIR)/../../dConnectDevicePlugin/dConnectDevicePebble/bin",
 					"$(PROJECT_DIR)/../../dConnectDevicePlugin/dConnectDevicePebble",
