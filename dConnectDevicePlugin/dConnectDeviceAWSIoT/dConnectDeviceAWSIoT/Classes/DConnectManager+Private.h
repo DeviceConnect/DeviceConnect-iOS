@@ -14,4 +14,6 @@
 
 @property (nonatomic) DConnectDevicePluginManager *mDeviceManager;
 
+- (DConnectProfile *) profileWithName:(NSString *)name;
+
 @end

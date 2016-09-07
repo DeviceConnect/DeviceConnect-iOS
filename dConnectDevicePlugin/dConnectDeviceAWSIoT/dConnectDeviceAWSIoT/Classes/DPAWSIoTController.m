@@ -17,6 +17,7 @@
 #import "DConnectMessage+Private.h"
 #import "DConnectDevicePlugin+Private.h"
 #import "DConnectManager+Private.h"
+#import "DConnectManagerServiceDiscoveryProfile.h"
 
 // TODO: 名前を決める
 #define kShadowName @"dconnect"
@@ -297,13 +298,20 @@
 
 // サービス一覧を取得
 - (void)fetchServicesWithHandler:(void (^)(DConnectArray *services))handler {
-	[[DConnectManager sharedManager] startServiceDiscoveryForCallback:^(DConnectResponseMessage *response) {
+	dispatch_async(dispatch_get_main_queue(), ^{
+		DConnectManager *mgr = [DConnectManager sharedManager];
+		DConnectManagerServiceDiscoveryProfile *p = (DConnectManagerServiceDiscoveryProfile*)[mgr profileWithName:DConnectServiceDiscoveryProfileName];
+		DConnectResponseMessage *response = [DConnectResponseMessage message];
+		DConnectRequestMessage *request = [DConnectRequestMessage new];
+		[request setString:@"true" forKey:@"_awsiot"];
+		[request setAction: DConnectMessageActionTypeGet];
+		[p getServicesRequest:request response:response];
 		if (response.result == DConnectMessageResultTypeOk) {
 			handler(response.internalDictionary[@"services"]);
 		} else {
 			handler(nil);
 		}
-	}];
+	});
 }
 
 // サービス情報を取得
@@ -358,8 +366,14 @@
 		if ([json[@"request"][DConnectMessageAction] isEqualToString:@"put"]) {
 			// WebSocketにつなぐ
 			NSString *key = json[@"request"][DConnectMessageSessionKey];
-			NSLog(@"sessionKey:%@", key);
+			NSLog(@"put:sessionKey:%@", key);
 			[_webSocket addSocket:key];
+		}
+		if ([json[@"request"][DConnectMessageAction] isEqualToString:@"delete"]) {
+			// WebSocketの接続解除
+			NSString *key = json[@"request"][DConnectMessageSessionKey];
+			NSLog(@"delete:sessionKey:%@", key);
+			[_webSocket removeSocket:key];
 		}
 		// MQTTからHTTPへ
 		//NSLog(@"request:%@", json);

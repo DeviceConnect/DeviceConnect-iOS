@@ -8,6 +8,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <DConnectSDK/DConnectSDK.h>
 
 @interface DPAWSIoTUtils : NSObject
 
@@ -37,5 +38,13 @@
 + (void)loginWithHandler:(void (^)(NSError *error))handler;
 // HTTP通信
 + (void)sendRequest:(NSDictionary*)request handler:(void (^)(NSData *data, NSError *error))handler;
+
+// Packege名取得
++ (NSString *)packageName;
+
+// AccessTokenを取得
++ (NSString*)accessTokenWithServiceId:(NSString*)serviceId;
+// AccessTokenを追加
++ (void)addAccessToken:(NSString*)token serviceId:(NSString*)serviceId;
 
 @end

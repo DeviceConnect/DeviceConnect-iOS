@@ -10,6 +10,7 @@
 #import "DPAWSIoTAuthListCell.h"
 #import "DPAWSIoTController.h"
 #import "DConnectMessage+Private.h"
+#import "DPAWSIoTUtils.h"
 
 @interface DPAWSIoTAuthListCell () {
 }
@@ -38,6 +39,7 @@
 		{
 			NSLog(@"clientId:%@", clientId);
 			NSLog(@"accessToken:%@", accessToken);
+			[DPAWSIoTUtils addAccessToken:accessToken serviceId:serviceId];
 		} error:^(DConnectMessageErrorCodeType errorCode) {
 			// TDDO: エラー処理
 			NSLog(@"Error on Authorize:%zd", errorCode);

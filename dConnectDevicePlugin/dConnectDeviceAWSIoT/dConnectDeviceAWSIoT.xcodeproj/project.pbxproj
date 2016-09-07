@@ -122,6 +122,7 @@
 		78430F731D79802F00B20FDA /* DPAWSIoTAuthListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPAWSIoTAuthListCell.m; sourceTree = "<group>"; };
 		787527E41D65683E001876FD /* DConnectMessage+Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "DConnectMessage+Private.h"; sourceTree = "<group>"; };
 		787527E51D656B6A001876FD /* DConnectDevicePlugin+Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "DConnectDevicePlugin+Private.h"; sourceTree = "<group>"; };
+		78805E801D7FD2D7003B4C21 /* DConnectManagerServiceDiscoveryProfile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DConnectManagerServiceDiscoveryProfile.h; sourceTree = "<group>"; };
 		789AC4991D5ABF0200F12F45 /* AWSIoT.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = AWSIoT.storyboard; sourceTree = "<group>"; };
 		789AC49A1D5AF30F00F12F45 /* DPAWSIoTLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPAWSIoTLoginViewController.h; sourceTree = "<group>"; };
 		789AC49B1D5AF30F00F12F45 /* DPAWSIoTLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPAWSIoTLoginViewController.m; sourceTree = "<group>"; };
@@ -222,7 +223,7 @@
 				78B7F2BC1D66A0A100A5E520 /* DPAWSIoTController.m */,
 				78192D511D6E9DD90068E4F7 /* DPAWSIoTService.h */,
 				78192D521D6E9DD90068E4F7 /* DPAWSIoTService.m */,
-				787527E61D656B73001876FD /* Category */,
+				787527E61D656B73001876FD /* Category&Header */,
 				78298A1E1D53352700E9B90B /* Profile */,
 				789AC49D1D5AF31400F12F45 /* Settings */,
 				789AC4B61D5D8DB600F12F45 /* Utils */,
@@ -301,15 +302,16 @@
 			path = PocketSocket;
 			sourceTree = "<group>";
 		};
-		787527E61D656B73001876FD /* Category */ = {
+		787527E61D656B73001876FD /* Category&Header */ = {
 			isa = PBXGroup;
 			children = (
+				78805E801D7FD2D7003B4C21 /* DConnectManagerServiceDiscoveryProfile.h */,
 				78430F711D7976B900B20FDA /* DConnectDevicePluginManager.h */,
 				787527E51D656B6A001876FD /* DConnectDevicePlugin+Private.h */,
 				787527E41D65683E001876FD /* DConnectMessage+Private.h */,
 				78430F6E1D7975C200B20FDA /* DConnectManager+Private.h */,
 			);
-			name = Category;
+			name = "Category&Header";
 			sourceTree = "<group>";
 		};
 		789AC49D1D5AF31400F12F45 /* Settings */ = {

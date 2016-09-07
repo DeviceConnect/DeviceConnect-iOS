@@ -46,6 +46,21 @@ static UIViewController *loadingHUD;
 	[DPAWSIoTKeychain updateValue:[@(region) stringValue] key:kRegionKey];
 }
 
+// AccessTokenを取得
++ (NSString*)accessTokenWithServiceId:(NSString*)serviceId {
+	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+	NSString *key = [NSString stringWithFormat:@"token_%@", serviceId];
+	return [defaults objectForKey:key];
+}
+
+// AccessTokenを追加
++ (void)addAccessToken:(NSString*)token serviceId:(NSString*)serviceId {
+	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+	NSString *key = [NSString stringWithFormat:@"token_%@", serviceId];
+	[defaults setObject:token forKey:key];
+	[defaults synchronize];
+}
+
 // Managerを許可
 + (void)addAllowManager:(NSString*)uuid {
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -93,7 +108,7 @@ static UIViewController *loadingHUD;
 			// TODO: アラート
 			NSLog(@"%@", error);
 			// 失敗したアカウントはクリアする
-			[DPAWSIoTUtils clearAccount];
+			[self clearAccount];
 		}
 		if (handler) {
 			handler(error);
@@ -167,15 +182,27 @@ static UIViewController *loadingHUD;
 	// TODO: ポート番号を設定
 	NSString *path = [NSString stringWithFormat:@"http://localhost:%d", 4035];
 	NSMutableDictionary *params = [request mutableCopy];
-	path = [DPAWSIoTUtils appendPath:path params:params name:@"api"];
-	path = [DPAWSIoTUtils appendPath:path params:params name:@"profile"];
-	path = [DPAWSIoTUtils appendPath:path params:params name:@"interface"];
-	path = [DPAWSIoTUtils appendPath:path params:params name:@"attribute"];
+	path = [self appendPath:path params:params name:@"api"];
+	path = [self appendPath:path params:params name:@"profile"];
+	path = [self appendPath:path params:params name:@"interface"];
+	path = [self appendPath:path params:params name:@"attribute"];
 	NSString *method = request[@"action"];
-	NSString *origin = request[@"origin"];
+	NSString *origin = [self packageName];
+	// accessTokenを設定
+	NSString *serviceId = request[DConnectMessageServiceId];
+	NSLog(@"params:%@", params);
+	if (serviceId) {
+		NSLog(@"**************:%@", serviceId);
+		NSString *token = [self accessTokenWithServiceId:serviceId];
+		NSLog(@"**************:%@", token);
+		if (token) {
+			params[@"accessToken"] = token;
+		}
+	}
+	
 	// 不要なパラメータを削除
 //	[params removeObjectForKey:@"accessToken"];
-//	[params removeObjectForKey:@"action"];
+	[params removeObjectForKey:@"action"];
 	[params removeObjectForKey:@"origin"];
 	[params removeObjectForKey:@"_type"];
 	[params removeObjectForKey:@"version"];
@@ -203,6 +230,13 @@ static UIViewController *loadingHUD;
 		[params removeObjectForKey:name];
 	}
 	return path;
+}
+
+// Packege名取得
++ (NSString *)packageName {
+	NSBundle *bundle = [NSBundle mainBundle];
+	NSString *package = [bundle bundleIdentifier];
+	return package;
 }
 
 @end
