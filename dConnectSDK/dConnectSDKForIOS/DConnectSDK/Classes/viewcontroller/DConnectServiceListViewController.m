@@ -14,6 +14,10 @@
 
 @interface DConnectServiceListViewController()
 
+@property(nonatomic, strong) NSString *addButtonTitle;
+
+@property(nonatomic, strong) NSString *finishButtonTitle;
+
 @end
 
 @implementation DConnectServiceListViewController
@@ -26,7 +30,13 @@
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+
+    // ボタンタイトル名を保存
+    self.addButtonTitle = self.addButton.title;
+    self.finishButtonTitle = self.finishButton.title;
     
+    // ボタン状態更新
+    [self setButtonLayout];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -54,6 +64,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 
+    // ServiceProviderに格納されているサービス数分、行を表示する
     NSInteger rows = 0;
     if (self.delegate) {
         DConnectServiceProvider *serviceProvider = [self.delegate serviceProvider];
@@ -90,25 +101,44 @@
     return cell;
 }
 
-/*
-// Override to support conditional editing of the table view.
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
+    
+    // 削除可能か判定(オフラインなら削除可能)
+    if (indexPath.row < self.delegate.serviceProvider.services.count) {
+        DConnectService *service = [self.delegate.serviceProvider.services objectAtIndex: indexPath.row];
+        if (!service.online) {
+            return YES;
+        }
+    }
+    
+    return NO;
 }
-*/
 
-/*
 // Override to support editing the table view.
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        
+        // データ削除
+        if (indexPath.row < self.delegate.serviceProvider.services.count) {
+            DConnectService *service = [self.delegate.serviceProvider.services objectAtIndex: indexPath.row];
+            if (!service.online) {
+                
+                // サービスを削除し、対応するtableViewの行も削除する
+                [tableView beginUpdates];
+                [self.delegate.serviceProvider removeService: service];
+                [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+                [tableView endUpdates];
+                
+                // 削除後にオフラインのサービスが1件以上あればRemoveボタンを有効にする
+                [self setButtonLayout];
+            }
+        }
+        
+        
     } else if (editingStyle == UITableViewCellEditingStyleInsert) {
         // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
     }   
 }
-*/
 
 /*
 // Override to support rearranging the table view.
@@ -135,13 +165,51 @@
 */
 
 - (IBAction)tapAddButton:(id)sender {
-    UIViewController *setting = self.delegate.settingViewController;
-    if (setting) {
-        [self presentViewController:setting animated:YES completion:nil];
+    if (![self isEditing]) {
+        // サービス追加画面を表示する
+        UIViewController *setting = self.delegate.settingViewController;
+        if (setting) {
+            [self presentViewController:setting animated:YES completion:nil];
+        }
+    }
+}
+
+- (IBAction)tapFinishButton:(id)sender {
+    if ([self isEditing]) {
+        
+        // 削除モードを終了する
+        [self setEditing:NO animated:YES];
+        
+        // ボタンを[Add][Remove]に変更する
+        [self setButtonLayout];
+        
     }
 }
 
 - (IBAction)tapRemoveButton:(id)sender {
+    
+    if ([self isEditing]) {
+
+        // チェックしたサービスを削除する
+        
+        // 削除モードを終了する
+        [self setEditing:NO animated:YES];
+
+        // ボタンを[Add][Remove]に変更する
+        [self setButtonLayout];
+        
+    } else {
+    
+        // 削除モードへ遷移
+        [self setEditing:YES animated:YES];
+        
+        // ボタンを[完了][削除]に変更する
+        [self setButtonLayout];
+        
+        // 削除チェックが1件以上なら[削除]ボタンを使用可能にし、0件なら使用不可にする
+        
+    }
+    
 }
 
 - (IBAction)tapCloseButton:(id)sender {
@@ -151,17 +219,39 @@
 #pragma mark - DConnectServiceListener
 
 - (void)didServiceAdded:(DConnectService *)service {
-    NSLog(@"ServiceListViewController - didServiceAdded - serviceId:%@", service.serviceId);
+    
+    // 編集モードなら標準モードに戻す
+    if ([self isEditing]) {
+        [self setEditing:NO animated:YES];
+    }
+    
+    // サービスが追加されたらtableViewを更新する
     [self.tableView reloadData];
+    
+    // ボタン状態更新
+    [self setButtonLayout];
 }
 
 - (void)didServiceRemoved:(DConnectService *)service {
-    NSLog(@"ServiceListViewController - didServiceRemoved - serviceId:%@", service.serviceId);
+
+    // 編集モードなら標準モードに戻す
+    if ([self isEditing]) {
+        [self setEditing:NO animated:YES];
+    }
+    
+    // サービスが追加されたらtableViewを更新する
     [self.tableView reloadData];
+    
+    // ボタン状態更新
+    [self setButtonLayout];
 }
 
 - (void)didStatusChange:(DConnectService *)service {
-    NSLog(@"ServiceListViewController - didStatusChange - serviceId:%@", service.serviceId);
+
+    // 編集モードなら標準モードに戻す
+    if ([self isEditing]) {
+        [self setEditing:NO animated:YES];
+    }
     
     // サービスのインデックスを取得し、サービスのセルを更新する
     if (self.delegate) {
@@ -169,11 +259,13 @@
         if (serviceProvider) {
             NSIndexPath *indexPath = [self tableIndexPathByServiceId: service.serviceId];
             if (indexPath) {
-                NSLog(@"ServiceListViewController - didStatusChange - indexPath.row:%d", (int)indexPath.row);
                 [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
             }
         }
     }
+    
+    // ボタン状態更新
+    [self setButtonLayout];
 }
 
 #pragma mark - private methods.
@@ -191,6 +283,40 @@
     return nil;
 }
 
+- (void) setButtonLayout {
+    if (self.isEditing) {
+        // Finishボタンを表示し、Addボタンを非表示にする
+        self.finishButton.enabled = YES;
+        self.finishButton.title = self.finishButtonTitle;
+        self.addButton.enabled = NO;
+        self.addButton.title = @"";
+        
+        // Removeボタンを無効にする
+        self.removeButton.enabled = NO;
+        
+    } else {
+        // Finishボタンを非表示にし、Addボタンを表示する
+        self.finishButton.enabled = NO;
+        self.finishButton.title = @"";
+        self.addButton.enabled = YES;
+        self.addButton.title = self.addButtonTitle;
+        
+        // オフラインのサービスが1件以上存在する場合はRemoveボタンを有効にする
+        if ([self isExistOfflineService]) {
+            self.removeButton.enabled = YES;
+        } else {
+            self.removeButton.enabled = NO;
+        }
+    }
+}
 
+- (BOOL) isExistOfflineService {
+    for (DConnectService *service in self.delegate.serviceProvider.services) {
+        if (!service.online) {
+            return YES;
+        }
+    }
+    return NO;
+}
 
 @end
