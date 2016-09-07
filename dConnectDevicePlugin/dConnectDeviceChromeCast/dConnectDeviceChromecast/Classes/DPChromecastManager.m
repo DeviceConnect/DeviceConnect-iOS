@@ -8,6 +8,7 @@
 //
 
 #import "DPChromecastManager.h"
+#import "CastDeviceController.h"
 #import <GoogleCast/GoogleCast.h>
 #import "GCIPUtil.h"
 #import "HTTPServer.h"
@@ -15,7 +16,7 @@
 #import "DPChromecastService.h"
 #import "DPChromecastReachability.h"
 
-static NSString *const kReceiverAppID = @"[YOUR APPLICATION ID]";
+static NSString *const kReceiverAppID = @"1F0ABF07";
 static NSString *const kReceiverNamespace
     = @"urn:x-cast:com.name.space.chromecast.test.receiver";
 static NSString * const kDPChromeRegexDecimalPoint = @"^[-+]?([0-9]*)?(\\.)?([0-9]*)?$";
@@ -67,6 +68,7 @@ static const NSTimeInterval DPSemaphoreTimeout = 20.0;
 {
 	self = [super init];
 	if (self) {
+        [CastDeviceController sharedInstance].applicationID = kReceiverAppID;
         _deviceScanner = [GCKDeviceScanner new];
 		[_deviceScanner addListener:self];
 		_dataDict = [NSMutableDictionary dictionary];

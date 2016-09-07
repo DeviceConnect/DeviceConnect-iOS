@@ -8,10 +8,17 @@
 //
 
 #import "DPChromecastSettingViewController.h"
+#import "CastDeviceController.h"
+#import "NotificationConstants.h"
+#import "SimpleImageFetcher.h"
 
-@interface DPChromecastSettingViewController () <UIPageViewControllerDataSource>{
+#import <GoogleCast/GCKDeviceManager.h>
+#import <GoogleCast/GCKMediaControlChannel.h>
+
+@interface DPChromecastSettingViewController () <UIPageViewControllerDataSource, CastDeviceControllerDelegate>{
     NSArray *_pages;
 }
+@property(nonatomic, strong) UIBarButtonItem *showQueueButton;
 
 @end
 
@@ -52,6 +59,13 @@
                     animated:NO
                   completion:nil];
     self.dataSource = self;
+    CastDeviceController *controller = [CastDeviceController sharedInstance];
+    controller.delegate = self;
+
+    UIBarButtonItem *item = [controller queueItemForController:self];
+    
+    self.navigationItem.rightBarButtonItems = @[item];
+
 }
 
 // indexに対応するViewControllerを取得
@@ -123,6 +137,13 @@
 - (NSInteger)presentationIndexForPageViewController:(UIPageViewController *)pageViewController
 {
     return [self indexOfViewController:pageViewController];
+}
+#pragma mark - CastDeviceControllerDelegate
+
+- (void)didConnectToDevice:(GCKDevice *)device {
+}
+
+- (void)didDisconnect {
 }
 
 @end
