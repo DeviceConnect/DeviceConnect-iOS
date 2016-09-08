@@ -101,6 +101,21 @@
     return cell;
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    if (self.delegate) {
+        DConnectServiceProvider *serviceProvider = [self.delegate serviceProvider];
+        if (serviceProvider) {
+            DConnectService *service = serviceProvider.services[indexPath.row];
+            if (service) {
+                if ([self.delegate respondsToSelector:@selector(didSelectService:)]) {
+                    [self.delegate didSelectService: service];
+                }
+            }
+        }
+    }
+}
+
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
     
     // 削除可能か判定(オフラインなら削除可能)

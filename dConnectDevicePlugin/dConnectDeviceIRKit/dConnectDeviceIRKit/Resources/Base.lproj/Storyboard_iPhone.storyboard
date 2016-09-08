@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="jlY-bb-rwW">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="14F1808" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="jlY-bb-rwW">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
@@ -554,11 +554,7 @@
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="3z2-qy-gkf"/>
-                                    <barButtonItem title="IRKit登録" id="Tx2-3u-KRv">
-                                        <connections>
-                                            <segue destination="8EN-7c-0iy" kind="modal" id="uEL-D5-QZa"/>
-                                        </connections>
-                                    </barButtonItem>
+                                    <barButtonItem title="IRKit登録" id="Tx2-3u-KRv"/>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="iLX-JJ-Pge"/>
                                 </items>
                                 <color key="tintColor" red="0.98532261264001542" green="1" blue="0.98412206763554044" alpha="1" colorSpace="calibratedRGB"/>
@@ -593,17 +589,16 @@
                         <outlet property="foundIRKitList" destination="x9E-cA-mGo" id="ead-oe-jNO"/>
                         <outlet property="indicatorView" destination="Kcu-rg-clq" id="evw-iD-Ca6"/>
                         <outlet property="progressView" destination="xBb-cg-Eev" id="U5L-nx-7TP"/>
-                        <segue destination="Jed-es-tTO" kind="push" identifier="showDetail" id="kqj-Ib-18W"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="10X-Um-CoU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="224" y="-24"/>
         </scene>
-        <!--Kit Virtual Device View Controller-->
+        <!--Kit Virtual Device View Controllernitial Guide View Controller-->
         <scene sceneID="bpv-w3-hY1">
             <objects>
-                <viewController id="Jed-es-tTO" customClass="DPIRKitVirtualDeviceViewController" sceneMemberID="viewController">
+                <viewController id="Jed-es-tTO" customClass="DPIRKitVirtualDeviceViewControllernitialGuideViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="xuU-QM-SuX"/>
                         <viewControllerLayoutGuide type="bottom" id="e4m-YB-66I"/>
@@ -672,7 +667,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9Sb-gs-g2u" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-331" y="755"/>
+            <point key="canvasLocation" x="201" y="755"/>
         </scene>
         <!--Kit Virtual Profile View Controller-->
         <scene sceneID="g2T-oo-gWk">
@@ -715,7 +710,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="T9i-vK-MJX" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="127" y="778"/>
+            <point key="canvasLocation" x="659" y="778"/>
         </scene>
         <!--Kit RegisterIR View Controller-->
         <scene sceneID="FRT-7P-p68">
@@ -735,7 +730,7 @@
                                 <color key="textColor" red="1" green="0.098723787859882006" blue="0.067934493412554531" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LQl-mi-W8I">
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LQl-mi-W8I">
                                 <rect key="frame" x="145" y="341" width="30" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="2X6-hd-ncY"/>
@@ -823,12 +818,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="R6v-uY-0dd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="559" y="778"/>
+            <point key="canvasLocation" x="1091" y="778"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="8dH-6F-IkI">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="8EN-7c-0iy" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="setting" automaticallyAdjustsScrollViewInsets="NO" id="8EN-7c-0iy" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="MyX-ry-AQG"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="xk6-f5-56Z">
@@ -861,6 +856,24 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RXq-ZW-EnD" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-308" y="-24"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="yhY-FR-iH9">
+            <objects>
+                <navigationController storyboardIdentifier="virtualDeviceList" automaticallyAdjustsScrollViewInsets="NO" id="Cf2-1y-kBP" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="FQD-5l-D7Z">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="Jed-es-tTO" kind="relationship" relationship="rootViewController" id="cOb-tB-hEe"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="BpL-0i-8hy" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-331" y="755"/>
         </scene>
     </scenes>
     <resources>

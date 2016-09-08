@@ -81,6 +81,10 @@ extern NSString *const DConnectSystemProfileParamVersion;
 
 - (UIViewController *) settingViewController;
 
+@optional
+
+- (void) didSelectService: (DConnectService *) service;
+
 @end
 
 /*!
