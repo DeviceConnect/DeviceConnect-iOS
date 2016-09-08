@@ -240,7 +240,22 @@
 	// リクエストjson構築
 	NSMutableDictionary *dic = [NSMutableDictionary dictionary];
 	[dic setObject:@(requestCode) forKey:@"requestCode"];
-	[dic setObject:[request internalDictionary] forKey:@"request"];
+	// 余計なオブジェクトを削除
+	NSArray *keys = [request.allKeys copy];
+	for (id key in keys) {
+		if (![key isKindOfClass:[NSString class]]) {
+			continue;
+		}
+		id value = request.internalDictionary[key];
+		if ([value isKindOfClass:[NSString class]] ||
+			[value isKindOfClass:[NSNumber class]] ||
+			[value isKindOfClass:[NSArray class]] ||
+			[value isKindOfClass:[NSDictionary class]] ) {
+		} else {
+			[request.internalDictionary removeObjectForKey:key];
+		}
+	}
+	[dic setObject:request.internalDictionary forKey:@"request"];
 	NSError *err;
 	NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dic options:0 error:&err];
 	if (err) {
