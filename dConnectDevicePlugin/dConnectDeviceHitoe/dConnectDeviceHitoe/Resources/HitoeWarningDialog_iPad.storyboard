@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="nMI-yT-PMo">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+    </dependencies>
+    <scenes>
+        <!--Hitoe Warning Dialog-->
+        <scene sceneID="zUA-XN-EI6">
+            <objects>
+                <viewController id="nMI-yT-PMo" customClass="DPHitoeWarningDialog" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="dlw-er-Hak"/>
+                        <viewControllerLayoutGuide type="bottom" id="RRP-HO-IFe"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="ww4-Px-EhG">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CTG-j0-TWa">
+                                <rect key="frame" x="60" y="59" width="480" height="481"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="749" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="j2j-5A-Igo">
+                                        <rect key="frame" x="151" y="321" width="80" height="58.5"/>
+                                        <state key="normal" image="check_off.png"/>
+                                        <state key="selected" image="check_on.png"/>
+                                        <connections>
+                                            <action selector="onCheck:" destination="nMI-yT-PMo" eventType="touchUpInside" id="BnM-mn-f5p"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zH6-dK-DHv">
+                                        <rect key="frame" x="215" y="410" width="51" height="42"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                        <state key="normal" title="OK"/>
+                                        <connections>
+                                            <action selector="onClose:" destination="nMI-yT-PMo" eventType="touchUpInside" id="rlZ-D2-Ivh"/>
+                                        </connections>
+                                    </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="次回以降省略" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="d0R-nk-c7r">
+                                        <rect key="frame" x="253" y="338" width="138" height="24.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="23"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Hitoeの接続" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="s7e-Z8-9vp">
+                                        <rect key="frame" x="158" y="50" width="165" height="36"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="6" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ALH-vO-bKz">
+                                        <rect key="frame" x="22" y="112.5" width="436" height="179.5"/>
+                                        <string key="text">すでに接続されているデバイスがある場合に、新たにデバイスが接続されようとした場合は、新たに接続されたデバイスと接続しなおされます。
+すでに接続されているデバイスとは接続が切断されます。</string>
+                                        <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" red="0.90929728403141363" green="0.90929728403141363" blue="0.90929728403141363" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstItem="d0R-nk-c7r" firstAttribute="top" secondItem="ALH-vO-bKz" secondAttribute="bottom" constant="46" id="7Rv-8i-iif"/>
+                                    <constraint firstItem="zH6-dK-DHv" firstAttribute="top" secondItem="j2j-5A-Igo" secondAttribute="bottom" constant="30.5" id="BIA-Ff-Fw3"/>
+                                    <constraint firstItem="s7e-Z8-9vp" firstAttribute="top" secondItem="CTG-j0-TWa" secondAttribute="top" constant="50" id="H1b-eK-g3s"/>
+                                    <constraint firstAttribute="height" constant="481" id="KCB-SD-5I1"/>
+                                    <constraint firstAttribute="trailing" secondItem="d0R-nk-c7r" secondAttribute="trailing" constant="89" id="KWX-BN-aPg"/>
+                                    <constraint firstAttribute="bottom" secondItem="zH6-dK-DHv" secondAttribute="bottom" constant="29" id="Kuk-EC-EuN"/>
+                                    <constraint firstItem="zH6-dK-DHv" firstAttribute="top" secondItem="d0R-nk-c7r" secondAttribute="bottom" constant="47.5" id="Qod-0I-xmZ"/>
+                                    <constraint firstItem="j2j-5A-Igo" firstAttribute="leading" secondItem="CTG-j0-TWa" secondAttribute="leading" constant="151" id="Ra6-HL-3mB"/>
+                                    <constraint firstItem="ALH-vO-bKz" firstAttribute="leading" secondItem="CTG-j0-TWa" secondAttribute="leading" constant="22" id="ULV-vn-08K"/>
+                                    <constraint firstAttribute="trailing" secondItem="s7e-Z8-9vp" secondAttribute="trailing" constant="157" id="WkP-gN-ucf"/>
+                                    <constraint firstItem="s7e-Z8-9vp" firstAttribute="leading" secondItem="CTG-j0-TWa" secondAttribute="leading" constant="158" id="YJs-NG-JeQ"/>
+                                    <constraint firstItem="d0R-nk-c7r" firstAttribute="leading" secondItem="j2j-5A-Igo" secondAttribute="trailing" constant="22" id="ape-Ud-Teo"/>
+                                    <constraint firstAttribute="trailing" secondItem="ALH-vO-bKz" secondAttribute="trailing" constant="22" id="cRp-fg-taB"/>
+                                    <constraint firstItem="ALH-vO-bKz" firstAttribute="top" secondItem="s7e-Z8-9vp" secondAttribute="bottom" constant="26.5" id="fYy-Ps-9Zs"/>
+                                    <constraint firstAttribute="width" constant="480" id="hgm-0Z-7ZC"/>
+                                    <constraint firstAttribute="trailing" secondItem="zH6-dK-DHv" secondAttribute="trailing" constant="214" id="hlz-Dm-KV4"/>
+                                    <constraint firstItem="j2j-5A-Igo" firstAttribute="top" secondItem="ALH-vO-bKz" secondAttribute="bottom" constant="29" id="pce-Oj-fmA"/>
+                                    <constraint firstItem="zH6-dK-DHv" firstAttribute="leading" secondItem="CTG-j0-TWa" secondAttribute="leading" constant="215" id="tUm-OF-wxZ"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="CTG-j0-TWa" firstAttribute="centerX" secondItem="ww4-Px-EhG" secondAttribute="centerX" id="cuc-5h-0fe"/>
+                            <constraint firstItem="CTG-j0-TWa" firstAttribute="centerY" secondItem="ww4-Px-EhG" secondAttribute="centerY" id="tVL-Ph-4QY"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="nextAbridgement" destination="j2j-5A-Igo" id="6aT-dj-gpj"/>
+                        <outlet property="warningDialogView" destination="CTG-j0-TWa" id="a6W-wG-SWM"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Rwb-2y-uL7" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="330" y="459"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="check_off.png" width="50" height="50"/>
+        <image name="check_on.png" width="50" height="50"/>
+    </resources>
+</document>

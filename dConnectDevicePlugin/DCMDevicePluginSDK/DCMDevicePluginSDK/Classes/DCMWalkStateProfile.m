@@ -57,13 +57,5 @@ NSString *const DCMWalkStateProfileStateRunning = @"Running";
     [message setString:timeStampString forKey:DCMWalkStateProfileParamTimeStampString];
 }
 
-#pragma mark - Private Methods
-- (BOOL) hasMethod:(SEL)method response:(DConnectResponseMessage *)response {
-    BOOL result = [_delegate respondsToSelector:method];
-    if (!result) {
-        [response setErrorToNotSupportAttribute];
-    }
-    return result;
-}
 
 @end

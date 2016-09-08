@@ -50,13 +50,5 @@ NSString *const DCMPoseEstimationProfileStateStanding = @"Standing";
     [message setString:timeStampString forKey:DCMPoseEstimationProfileParamTimeStampString];
 }
 
-#pragma mark - Private Methods
-- (BOOL) hasMethod:(SEL)method response:(DConnectResponseMessage *)response {
-    BOOL result = [_delegate respondsToSelector:method];
-    if (!result) {
-        [response setErrorToNotSupportAttribute];
-    }
-    return result;
-}
 
 @end

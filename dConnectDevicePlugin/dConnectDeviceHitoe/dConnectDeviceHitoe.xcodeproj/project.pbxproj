@@ -50,6 +50,9 @@
 		AB3D3E6B1D2B890F004290BA /* Hitoe_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AB3D3E691D2B88D6004290BA /* Hitoe_iPad.storyboard */; };
 		AB3D3EB21D2CC40D004290BA /* DPHitoeSystemProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = AB3D3EB11D2CC40D004290BA /* DPHitoeSystemProfile.m */; };
 		AB3D3EB61D2CC7F3004290BA /* DCMDevicePluginSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB3D3EB51D2CC7F2004290BA /* DCMDevicePluginSDK.framework */; };
+		AB40C2EE1D80F01F00355F3E /* DPHitoeWarningDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = AB40C2ED1D80F01F00355F3E /* DPHitoeWarningDialog.m */; };
+		AB40C2EF1D80F5E300355F3E /* HitoeWarningDialog_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AB40C2EB1D80EEC300355F3E /* HitoeWarningDialog_iPhone.storyboard */; };
+		AB40C2F11D80F72A00355F3E /* HitoeWarningDialog_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AB40C2F01D80F72A00355F3E /* HitoeWarningDialog_iPad.storyboard */; };
 		AB507ED31D30D5760014C504 /* DPHitoeTable.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = AB507ED11D30D5760014C504 /* DPHitoeTable.xcdatamodeld */; };
 		AB507ED41D30D6500014C504 /* DPHitoeTable.xcdatamodeld in Resources */ = {isa = PBXBuildFile; fileRef = AB507ED11D30D5760014C504 /* DPHitoeTable.xcdatamodeld */; };
 		AB507ED71D30DE270014C504 /* DPHitoeDBManager.m in Sources */ = {isa = PBXBuildFile; fileRef = AB507ED61D30DE270014C504 /* DPHitoeDBManager.m */; };
@@ -189,6 +192,10 @@
 		AB3D3EB01D2CC40D004290BA /* DPHitoeSystemProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHitoeSystemProfile.h; sourceTree = "<group>"; };
 		AB3D3EB11D2CC40D004290BA /* DPHitoeSystemProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHitoeSystemProfile.m; sourceTree = "<group>"; };
 		AB3D3EB51D2CC7F2004290BA /* DCMDevicePluginSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DCMDevicePluginSDK.framework; path = ../DCMDevicePluginSDK/bin/DCMDevicePluginSDK.framework; sourceTree = "<group>"; };
+		AB40C2EB1D80EEC300355F3E /* HitoeWarningDialog_iPhone.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = HitoeWarningDialog_iPhone.storyboard; sourceTree = "<group>"; };
+		AB40C2EC1D80F01F00355F3E /* DPHitoeWarningDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHitoeWarningDialog.h; sourceTree = "<group>"; };
+		AB40C2ED1D80F01F00355F3E /* DPHitoeWarningDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHitoeWarningDialog.m; sourceTree = "<group>"; };
+		AB40C2F01D80F72A00355F3E /* HitoeWarningDialog_iPad.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = HitoeWarningDialog_iPad.storyboard; sourceTree = "<group>"; };
 		AB507ED21D30D5760014C504 /* DPHitoeTable.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DPHitoeTable.xcdatamodel; sourceTree = "<group>"; };
 		AB507ED51D30DE270014C504 /* DPHitoeDBManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHitoeDBManager.h; sourceTree = "<group>"; };
 		AB507ED61D30DE270014C504 /* DPHitoeDBManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHitoeDBManager.m; sourceTree = "<group>"; };
@@ -359,6 +366,8 @@
 				AB7E736E1D3DC4040080AD22 /* DPHitoeWakeupDialog.m */,
 				AB7E73751D3DD7FD0080AD22 /* DPHitoeSetShirtDialog.h */,
 				AB7E73761D3DD7FD0080AD22 /* DPHitoeSetShirtDialog.m */,
+				AB40C2EC1D80F01F00355F3E /* DPHitoeWarningDialog.h */,
+				AB40C2ED1D80F01F00355F3E /* DPHitoeWarningDialog.m */,
 			);
 			name = dialog;
 			path = dConnectDeviceHitoe/Classes/setting/dialog;
@@ -584,6 +593,8 @@
 				ABD3345B1D45B84300D05903 /* HitoeWakeupDialog_iPad.storyboard */,
 				AB7E73741D3DCE9E0080AD22 /* HitoeShirtDialog_iPhone.storyboard */,
 				ABD3345A1D45B67F00D05903 /* HitoeShirtDialog_iPad.storyboard */,
+				AB40C2EB1D80EEC300355F3E /* HitoeWarningDialog_iPhone.storyboard */,
+				AB40C2F01D80F72A00355F3E /* HitoeWarningDialog_iPad.storyboard */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -768,6 +779,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AB40C2EF1D80F5E300355F3E /* HitoeWarningDialog_iPhone.storyboard in Resources */,
 				ABD3345D1D45C97000D05903 /* PinCodeDialog_iPad.storyboard in Resources */,
 				ABD3345E1D45C97000D05903 /* HitoeWakeupDialog_iPad.storyboard in Resources */,
 				ABD3345F1D45C97000D05903 /* HitoeShirtDialog_iPad.storyboard in Resources */,
@@ -800,6 +812,7 @@
 				ABC25AC21D33854D00CD9DA0 /* PinCodeDialog_iPhone.storyboard in Resources */,
 				ABC4299E1D443B3400668396 /* hitoe_explain960.png in Resources */,
 				ABC4297B1D4438F200668396 /* pose_facedown.png in Resources */,
+				AB40C2F11D80F72A00355F3E /* HitoeWarningDialog_iPad.storyboard in Resources */,
 				ABC429AB1D443B3400668396 /* pose_faceright960.png in Resources */,
 				ABC429751D4438F200668396 /* mark_battery03.png in Resources */,
 				AB507ED41D30D6500014C504 /* DPHitoeTable.xcdatamodeld in Resources */,
@@ -892,6 +905,7 @@
 				AB2E14EE1D2F64D300564A5E /* DPHitoeDialog.m in Sources */,
 				ABC25ABD1D33627000CD9DA0 /* DPHitoeAddDeviceCell.m in Sources */,
 				AB507EEE1D31EE530014C504 /* DPHitoeHeartData.m in Sources */,
+				AB40C2EE1D80F01F00355F3E /* DPHitoeWarningDialog.m in Sources */,
 				ABC25AF51D3735FE00CD9DA0 /* DPHitoeRawDataParseUtil.m in Sources */,
 				ABC25AC11D33841900CD9DA0 /* DPHitoePinCodeDialog.m in Sources */,
 				AB1F4AB81D38DFFC005784D9 /* DPHitoeBatteryProfile.m in Sources */,

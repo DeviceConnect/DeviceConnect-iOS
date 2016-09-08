@@ -14,6 +14,7 @@
 #import "DPHitoeAddDeviceTableViewController.h"
 #import "DPHitoeProgressDialog.h"
 #import "DPHitoeDeviceControlViewController.h"
+#import "DPHitoeWarningDialog.h"
 
 static NSString *const DPHitoeOpenAddDevice = @"Hitoeが追加されていません。\n"
                                             "「デバイス追加画面へ」ボタンを押して、\n"
@@ -71,6 +72,11 @@ static NSString *const DPHitoeOpenBluetooth = @"BluetoothがOFFになってい�
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
+    NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
+    BOOL sw = [def boolForKey:DPHitoeWarningNever];
+    if (!sw) {
+        [DPHitoeWarningDialog showHitoeWarningDialogWithComplition:nil];
+    }
     if ([[DPHitoeManager sharedInstance].registeredDevices count] == 0) {
         [[DPHitoeManager sharedInstance] readHitoeData];
     }
