@@ -106,12 +106,6 @@ static UIViewController *loadingHUD;
 	NSString *secretKey = [DPAWSIoTKeychain findWithKey:kSecretKey];
 	NSInteger region = [[DPAWSIoTKeychain findWithKey:kRegionKey] integerValue];
 	[[DPAWSIoTManager sharedManager] connectWithAccessKey:accessKey secretKey:secretKey region:region completionHandler:^(NSError *error) {
-		if (error) {
-			// TODO: アラート
-			NSLog(@"%@", error);
-			// 失敗したアカウントはクリアする
-			[self clearAccount];
-		}
 		if (handler) {
 			handler(error);
 		}
@@ -181,8 +175,9 @@ static UIViewController *loadingHUD;
 		return;
 	}
 
-	// TODO: ポート番号を設定
-	NSString *path = [NSString stringWithFormat:@"http://localhost:%d", 4035];
+	// localhostへアクセス
+	DConnectManager *mgr = [DConnectManager sharedManager];
+	NSString *path = [NSString stringWithFormat:@"http://localhost:%d", mgr.settings.port];
 	NSMutableDictionary *params = [request mutableCopy];
 	path = [self appendPath:path params:params name:@"api"];
 	path = [self appendPath:path params:params name:@"profile"];
@@ -193,7 +188,7 @@ static UIViewController *loadingHUD;
 	// accessTokenを設定
 	NSString *profile = request[DConnectMessageProfile];
 	NSString *serviceId = request[DConnectMessageServiceId];
-	NSLog(@"params:%@", params);
+	//NSLog(@"params:%@", params);
 	if (serviceId) {
 		NSString *token = [self accessTokenWithServiceId:serviceId];
 		if (token) {
@@ -208,12 +203,13 @@ static UIViewController *loadingHUD;
 	[params removeObjectForKey:@"version"];
 	
 	if ([profile isEqualToString:DConnectServiceDiscoveryProfileName]) {
+		// ServiceDiscoveryはLocalOAuthをやらないように別アクセス
 		dispatch_async(dispatch_get_main_queue(), ^{
 			DConnectManager *mgr = [DConnectManager sharedManager];
 			DConnectManagerServiceDiscoveryProfile *p = (DConnectManagerServiceDiscoveryProfile*)[mgr profileWithName:DConnectServiceDiscoveryProfileName];
 			DConnectResponseMessage *response = [DConnectResponseMessage message];
 			DConnectRequestMessage *request = [DConnectRequestMessage new];
-			[request setString:@"true" forKey:@"_awsiot"];
+			[request setString:@"true" forKey:@"_selfOnly"];
 			[request setAction: DConnectMessageActionTypeGet];
 			[p getServicesRequest:request response:response];
 			NSString *json = [response convertToJSONString];
@@ -221,6 +217,7 @@ static UIViewController *loadingHUD;
 			handler(data, nil);
 		});
 	} else {
+		// 通常の処理
 		[DPAWSIoTNetworkManager sendRequestWithPath:path method:method
 											 params:params headers:@{@"X-GotAPI-Origin": origin}
 											handler:^(NSData *data, NSURLResponse *response, NSError *error)
@@ -253,6 +250,22 @@ static UIViewController *loadingHUD;
 	NSBundle *bundle = [NSBundle mainBundle];
 	NSString *package = [bundle bundleIdentifier];
 	return package;
+}
+
+// アラート表示
++ (void)showAlert:(UIViewController*)vc title:(NSString*)title message:(NSString*)message handler:(void (^)())handler {
+	UIAlertController *alertController = [UIAlertController alertControllerWithTitle:title
+																			 message:message
+																	  preferredStyle:UIAlertControllerStyleAlert];
+	UIAlertAction *action =
+	[UIAlertAction actionWithTitle:@"OK"
+							 style:UIAlertActionStyleCancel
+						   handler:^(UIAlertAction *action)
+	 {
+		 handler();
+	 }];
+	[alertController addAction:action];
+	[vc presentViewController:alertController animated:YES completion:nil];
 }
 
 @end

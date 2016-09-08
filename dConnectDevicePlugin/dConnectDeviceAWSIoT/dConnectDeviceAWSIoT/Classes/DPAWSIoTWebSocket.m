@@ -45,11 +45,17 @@
 {
 	self = [super init];
 	if (self) {
-		// TODO:
-		_url = [NSURL URLWithString:@"ws://localhost:4035"];
+		[self setPort:4035];
 		_sockets = [NSMutableDictionary dictionary];
 	}
 	return self;
+}
+
+// ポート番号設定
+- (void)setPort:(int)port {
+	NSString *url = [NSString stringWithFormat:@"ws://localhost:%d", port];
+	_url = [NSURL URLWithString:url];
+	
 }
 
 // WebSocketを追加

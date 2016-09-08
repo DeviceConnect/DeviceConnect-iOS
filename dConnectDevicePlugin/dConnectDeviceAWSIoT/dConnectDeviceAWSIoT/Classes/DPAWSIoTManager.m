@@ -47,7 +47,7 @@
 	// MQTT接続
 	NSString *clientID = [[NSUUID UUID] UUIDString];
 	if (![manager connectUsingWebSocketWithClientId:clientID cleanSession:YES statusCallback:^(AWSIoTMQTTStatus status) {
-		NSLog(@"* mqtt status: %ld", (long)status);
+		//NSLog(@"* mqtt status: %ld", (long)status);
 		dispatch_async(dispatch_get_main_queue(), ^{
 			// 接続成功
 			if (status == AWSIoTMQTTStatusConnected) {
@@ -74,7 +74,13 @@
 			handler([NSError errorWithDomain:ERROR_DOMAIN code:-1 userInfo:nil]);
 		}
 	}
+}
 
+// 自分のRegion名を取得
+- (NSString*)regionName {
+	AWSIoTDataManager *manager = [AWSIoTDataManager IoTDataManagerForKey:@"dconnect"];
+	AWSRegionType type = manager.configuration.regionType;
+	return [DPAWSIoTManager regionNameFromType:type];
 }
 
 // 切断
@@ -161,31 +167,31 @@
 + (NSString *)regionNameFromType:(AWSRegionType)regionType {
 	switch (regionType) {
 		case AWSRegionUSEast1:
-			return @"us-east-1";
+			return @"米国東部 (バージニア北部)";
 		case AWSRegionUSWest2:
-			return @"us-west-2";
+			return @"米国西部 (北カリフォルニア)";
 		case AWSRegionUSWest1:
-			return @"us-west-1";
+			return @"米国西部 (オレゴン)";
 		case AWSRegionEUWest1:
-			return @"eu-west-1";
+			return @"EU (アイルランド)";
 		case AWSRegionEUCentral1:
-			return @"eu-central-1";
+			return @"EU (フランクフルト)";
 		case AWSRegionAPSoutheast1:
-			return @"ap-southeast-1";
+			return @"アジアパシフィック (シンガポール)";
 		case AWSRegionAPSoutheast2:
-			return @"ap-southeast-2";
+			return @"アジアパシフィック (シドニー)";
 		case AWSRegionAPNortheast1:
-			return @"ap-northeast-1";
+			return @"アジアパシフィック (東京)";
 		case AWSRegionAPNortheast2:
-			return @"ap-northeast-2";
+			return @"アジアパシフィック (ソウル)";
 		case AWSRegionAPSouth1:
-			return @"ap-south-1";
+			return @"アジアパシフィック (ムンバイ)";
 		case AWSRegionSAEast1:
-			return @"sa-east-1";
+			return @"南アメリカ (サンパウロ)";
 		case AWSRegionCNNorth1:
-			return @"cn-north-1";
+			return @"中国 (北京)";
 		case AWSRegionUSGovWest1:
-			return @"us-gov-west-1";
+			return @"AWS GovCloud (US)";
 		default:
 			return nil;
 	}

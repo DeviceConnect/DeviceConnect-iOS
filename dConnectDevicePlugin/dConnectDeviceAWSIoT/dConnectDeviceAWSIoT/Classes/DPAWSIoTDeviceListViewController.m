@@ -60,15 +60,17 @@
 	[DPAWSIoTController fetchManagerInfoWithHandler:^(NSDictionary *managers, NSDictionary *myInfo, NSError *error) {
 		// ローディング画面非表示
 		[DPAWSIoTUtils hideLoadingHUD];
-		// TODO: 処理
 		if (error) {
-			// TODO: エラー処理
+			// エラー処理
+			NSLog(@"Error on FetchManagerInfo: %@", error);
+			NSString *msg = @"エラーが発生しました";
+			[DPAWSIoTUtils showAlert:self title:@"Error" message:msg handler:^{
+			}];
 			return;
 		}
 		// テーブル再読み込み
 		_devices = managers;
 		[self.tableView reloadData];
-		NSLog(@"%@", _devices);
 	}];
 }
 
@@ -91,10 +93,9 @@
 
 // メニューボタンイベント
 - (IBAction)menuButtonPressed:(id)sender {
-	// TODO: ローカライズ
-	NSString *menu1 = @"Setting AWSIoT";
-	NSString *menu2 = @"Authentication";
-	NSString *menu3 = @"Logout";
+	NSString *menu1 = @"AWSIoT設定";
+	NSString *menu2 = @"LocalOAuth認証";
+	NSString *menu3 = @"ログアウト";
 	UIAlertController *ac = [DPAWSIoTUtils createMenu:@[menu1, menu2, menu3] handler:^(int index) {
 		switch (index) {
 			case 0:

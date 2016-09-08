@@ -38,5 +38,7 @@
 
 // リージョンIDから名前を取得
 + (NSString *)regionNameFromType:(AWSRegionType)regionType;
+// 自分のRegion名を取得
+- (NSString*)regionName;
 
 @end

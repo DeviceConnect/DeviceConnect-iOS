@@ -14,6 +14,9 @@
 
 @property (nonatomic) void(^receivedHandler)(NSString *message);
 
+// ポート番号設定
+- (void)setPort:(int)port;
+
 // WebSocketを追加
 - (void)addSocket:(NSString*)key;
 // WebSocketを削除

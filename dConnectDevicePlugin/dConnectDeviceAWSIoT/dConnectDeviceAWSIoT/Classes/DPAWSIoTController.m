@@ -21,6 +21,8 @@
 
 // Shadow名
 #define kShadowName @"DeviceConnect"
+// Topic名の前置詞
+#define kTopicPrefix kShadowName
 
 @interface DPAWSIoTController () {
 	NSMutableDictionary *_responses;
@@ -115,6 +117,10 @@
 	}];
 }
 
+// Topicを作成
++ (NSString*)myTopic:(NSString*)type {
+	return [NSString stringWithFormat:@"%@/%@/%@", kTopicPrefix, [DPAWSIoTController managerUUID], type];
+}
 
 #pragma mark - Public
 
@@ -125,6 +131,8 @@
 	if (self) {
 		_responses = [NSMutableDictionary dictionary];
 		_webSocket = [[DPAWSIoTWebSocket alloc] init];
+		DConnectManager *mgr = [DConnectManager sharedManager];
+		[_webSocket setPort:mgr.settings.port];
 		_webSocket.receivedHandler = ^(NSString *message) {
 			// イベント送信
 			[[DPAWSIoTController sharedManager] publishEvent:message];
@@ -140,8 +148,7 @@
 		// ログイン
 		[DPAWSIoTUtils loginWithHandler:^(NSError *error) {
 			if (error) {
-				// TODO: エラー処理
-				NSLog(@"%@", error);
+				NSLog(@"Error on Login: %@", error);
 				return;
 			}
 			// Shadow更新時の処理
@@ -244,7 +251,7 @@
 	// レスポンス保持
 	[_responses setObject:response forKey:requestCodeStr];
 	// MQTT送信
-	NSString *requestTopic = [NSString stringWithFormat:@"deviceconnect/%@/request", managerUUID];
+	NSString *requestTopic = [NSString stringWithFormat:@"%@/%@/request", kTopicPrefix, managerUUID];
 	[[DPAWSIoTManager sharedManager] publishWithTopic:requestTopic message:msg];
 	return NO;
 }
@@ -252,10 +259,10 @@
 // ServiceDiscoveryのRequestを処理
 - (BOOL)executeServiceDiscoveryRequest:(DConnectRequestMessage *)request response:(DConnectResponseMessage *)response requestCode:(u_int32_t)requestCode {
 	// フラグでloop防止
-	if ([request hasKey:@"_awsiot"]) {
+	if ([request hasKey:@"_selfOnly"]) {
 		return YES;
 	}
-	[request setString:@"true" forKey:@"_awsiot"];
+	[request setString:@"true" forKey:@"_selfOnly"];
 	if (_managers) {
 		// サービス数を保持
 		int count = 0;
@@ -274,7 +281,7 @@
 			if (![DPAWSIoTUtils hasAllowedManager:key]) continue;
 			// ServiceIdにManagerのUUIDを埋め込む
 			[request setString:key forKey:DConnectMessageServiceId];
-			NSLog(@"sendRequestToMQTT:%@", key);
+			//NSLog(@"sendRequestToMQTT:%@", key);
 			[self sendRequestToMQTT:request code:requestCode response:response];
 		}
 		// タイムアウトの処理（servicediscoveryのタイムアウトが8秒なので、こちらは7秒）
@@ -284,7 +291,7 @@
 				[[DConnectManager sharedManager] sendResponse:response];
 				[_responses removeObjectForKey:requestCodeStr];
 			}
-			NSLog(@"timeout!!:%@, %@", _responses, requestCodeStr);
+			//NSLog(@"timeout!!:%@, %@", _responses, requestCodeStr);
 		});
 		return NO;
 	} else {
@@ -295,10 +302,10 @@
 
 // Eventを発行
 - (void)publishEvent:(NSString*)msg {
-	NSString *topic = [NSString stringWithFormat:@"deviceconnect/%@/event", [DPAWSIoTController managerUUID]];
-	NSLog(@"publishEvent:%@, %@", topic, msg);
+	NSString *topic = [NSString stringWithFormat:@"%@/%@/event", kTopicPrefix, [DPAWSIoTController managerUUID]];
+	//NSLog(@"publishEvent:%@, %@", topic, msg);
 	if (![[DPAWSIoTManager sharedManager] publishWithTopic:topic message:msg]) {
-		// TODO: エラー処理
+		NSLog(@"Error on PublishEvent:[%@] %@", topic, msg);
 	}
 }
 
@@ -309,7 +316,7 @@
 		DConnectManagerServiceDiscoveryProfile *p = (DConnectManagerServiceDiscoveryProfile*)[mgr profileWithName:DConnectServiceDiscoveryProfileName];
 		DConnectResponseMessage *response = [DConnectResponseMessage message];
 		DConnectRequestMessage *request = [DConnectRequestMessage new];
-		[request setString:@"true" forKey:@"_awsiot"];
+		[request setString:@"true" forKey:@"_selfOnly"];
 		[request setAction: DConnectMessageActionTypeGet];
 		[p getServicesRequest:request response:response];
 		if (response.result == DConnectMessageResultTypeOk) {
@@ -325,7 +332,7 @@
 	DConnectManager *mgr = [DConnectManager sharedManager];
 	DConnectDevicePlugin *plugin = [mgr.mDeviceManager devicePluginForServiceId:serviceId];
 	if (plugin) {
-		NSLog(@"plugin:%@", plugin.pluginName);
+		//NSLog(@"plugin:%@", plugin.pluginName);
 		DConnectResponseMessage *response = [DConnectResponseMessage message];
 		DConnectRequestMessage *request = [DConnectRequestMessage new];
 		[request setProfile:DConnectServiceInformationProfileName];
@@ -333,7 +340,7 @@
 		NSArray *names = [serviceId componentsSeparatedByString:@"."];
 		[request setServiceId:names[0]];
 		[plugin executeRequest:request response:response];
-		NSLog(@"plugin-info:%@", response.internalDictionary);
+		//NSLog(@"plugin-info:%@", response.internalDictionary);
 		return response;
 	} else {
 		return nil;
@@ -361,19 +368,18 @@
 
 // RequestTopic購読
 - (void)subscribeRequest {
-	NSString *requestTopic = [NSString stringWithFormat:@"deviceconnect/%@/request", [DPAWSIoTController managerUUID]];
-	NSLog(@"subscribeRequest:%@", requestTopic);
+	NSString *requestTopic = [NSString stringWithFormat:@"%@/%@/request", kTopicPrefix, [DPAWSIoTController managerUUID]];
+	//NSLog(@"subscribeRequest:%@", requestTopic);
 	[[DPAWSIoTManager sharedManager] subscribeWithTopic:requestTopic messageHandler:^(id json, NSError *error) {
 		if (error) {
-			// TODO: エラー処理
-			NSLog(@"%@", error);
+			NSLog(@"Error on SubscribeWithTopic: [%@] %@", requestTopic, error);
 			return;
 		}
 		if ([json[@"request"][DConnectMessageAction] isEqualToString:@"put"]) {
 			// WebSocketにつなぐ
 			NSString *key = json[@"request"][DConnectMessageSessionKey];
 			if (key) {
-				NSLog(@"put:sessionKey:%@", key);
+				//NSLog(@"put:sessionKey:%@", key);
 				[_webSocket addSocket:key];
 			}
 		}
@@ -381,7 +387,7 @@
 			// WebSocketの接続解除
 			NSString *key = json[@"request"][DConnectMessageSessionKey];
 			if (key) {
-				NSLog(@"delete:sessionKey:%@", key);
+				//NSLog(@"delete:sessionKey:%@", key);
 				[_webSocket removeSocket:key];
 			}
 		}
@@ -389,8 +395,7 @@
 		//NSLog(@"request:%@", json);
 		[DPAWSIoTUtils sendRequest:json[@"request"] handler:^(NSData *data, NSError *error) {
 			if (error) {
-				// TODO: エラー処理
-				NSLog(@"%@", error);
+				NSLog(@"Error on SendRequest:%@", error);
 				return;
 			}
 			// 返却形式にフォーマット
@@ -400,16 +405,15 @@
 			[dic setObject:resJson forKey:@"response"];
 			NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dic options:0 error:&error];
 			if (error) {
-				// TODO: エラー処理
-				NSLog(@"%@", error);
+				NSLog(@"Error: %@", error);
 				return;
 			}
 			// レスポンスをMQTT送信
 			NSString *msg = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-			NSString *responseTopic = [NSString stringWithFormat:@"deviceconnect/%@/response", [DPAWSIoTController managerUUID]];
-			NSLog(@"publish:%@, %@", responseTopic, msg);
+			NSString *responseTopic = [NSString stringWithFormat:@"%@/%@/response", kTopicPrefix, [DPAWSIoTController managerUUID]];
+			//NSLog(@"publish:%@, %@", responseTopic, msg);
 			if (![[DPAWSIoTManager sharedManager] publishWithTopic:responseTopic message:msg]) {
-				// TODO: エラー処理
+				NSLog(@"Error on PublishWithTopic: [%@] %@", responseTopic, msg);
 			}
 		}];
 	}];
@@ -417,19 +421,18 @@
 
 // RequestTopic購読解除
 - (void)unsubscribeRequest {
-	NSString *requestTopic = [NSString stringWithFormat:@"deviceconnect/%@/request", [DPAWSIoTController managerUUID]];
-	NSLog(@"unsubscribeRequest:%@", requestTopic);
+	NSString *requestTopic = [NSString stringWithFormat:@"%@/%@/request", kTopicPrefix, [DPAWSIoTController managerUUID]];
+	//NSLog(@"unsubscribeRequest:%@", requestTopic);
 	[[DPAWSIoTManager sharedManager] unsubscribeWithTopic:requestTopic];
 }
 
 // EventTopic購読
 - (void)subscribeEvent:(NSString*)uuid {
-	NSString *topic = [NSString stringWithFormat:@"deviceconnect/%@/event", uuid];
-	NSLog(@"subscribeEvent:%@", topic);
+	NSString *topic = [NSString stringWithFormat:@"%@/%@/event", kTopicPrefix, uuid];
+	//NSLog(@"subscribeEvent:%@", topic);
 	[[DPAWSIoTManager sharedManager] subscribeWithTopic:topic messageHandler:^(id json, NSError *error) {
 		if (error) {
-			// TODO: エラー処理
-			NSLog(@"%@", error);
+			NSLog(@"Error on SubscribeWithTopic: [%@] %@", topic, error);
 			return;
 		}
 		// イベント送信
@@ -440,16 +443,15 @@
 
 // EventTopic購読解除
 - (void)unsubscribeEvent:(NSString*)uuid {
-	NSString *topic = [NSString stringWithFormat:@"deviceconnect/%@/event", uuid];
-	NSLog(@"unsubscribeEvent:%@", topic);
+	NSString *topic = [NSString stringWithFormat:@"%@/%@/event", kTopicPrefix, uuid];
+	//NSLog(@"unsubscribeEvent:%@", topic);
 	[[DPAWSIoTManager sharedManager] unsubscribeWithTopic:topic];
 }
 
 // マネージャー情報を更新
 - (void)updateManagers:(NSDictionary*)managers myInfo:(NSDictionary*)myInfo error:(NSError*)error {
 	if (error) {
-		// TODO: エラー処理
-		NSLog(@"%@", error);
+		NSLog(@"Error on UpdateManagers: %@", error);
 		return;
 	}
 	// onlineの時だけRequestTopic購読
@@ -463,16 +465,15 @@
 	// ResponseTopic購読・解除
 	for (NSString *key in managers.allKeys) {
 		// Topic名
-		NSString *responseTopic = [NSString stringWithFormat:@"deviceconnect/%@/response", key];
+		NSString *responseTopic = [NSString stringWithFormat:@"%@/%@/response", kTopicPrefix, key];
 		// Onlineかつ許可されている場合は購読対象
 		if ([DPAWSIoTUtils hasAllowedManager:key] &&
 			[managers[key][@"online"] boolValue])
 		{
-			NSLog(@"subscribeWithTopic:%@, %@", responseTopic, key);
+			//NSLog(@"subscribeWithTopic:%@, %@", responseTopic, key);
 			[[DPAWSIoTManager sharedManager] subscribeWithTopic:responseTopic messageHandler:^(id json, NSError *error) {
 				if (error) {
-					// TODO: エラー処理
-					NSLog(@"%@", error);
+					NSLog(@"Error on SubscribeWithTopic: %@, %@", responseTopic, error);
 					return;
 				}
 				[self receivedResponseFromMQTT:json from:managers[key] uuid:key];
@@ -480,7 +481,7 @@
 			// イベント購読
 			[self subscribeEvent:key];
 		} else {
-			NSLog(@"unsubscribeWithTopic:%@, %@", responseTopic, key);
+			//NSLog(@"unsubscribeWithTopic:%@, %@", responseTopic, key);
 			[[DPAWSIoTManager sharedManager] unsubscribeWithTopic:responseTopic];
 			// イベント購読解除
 			[self unsubscribeEvent:key];
@@ -491,13 +492,13 @@
 }
 // MQTTからレスポンスを受診
 - (void)receivedResponseFromMQTT:(id)json from:(NSDictionary*)manager uuid:(NSString*)uuid {
-	NSLog(@"receivedResponseFromMQTT:%@", json);
+	//NSLog(@"receivedResponseFromMQTT:%@", json);
 	NSString *requestCode = [json[@"requestCode"] stringValue];
 	DConnectResponseMessage *response = _responses[requestCode];
 	//NSLog(@"%@, %@, %@", response, _responses, requestCode);
 	if (response) {
 		int count = (int)[response integerForKey:@"servicecount"];
-		NSLog(@"count:%d", count);
+		//NSLog(@"count:%d", count);
 		if (count > 0) {
 			// servicediscoveryの場合各サービスからのレスポンスを保持
 			NSDictionary *resJson = json[@"response"];

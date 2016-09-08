@@ -6,7 +6,7 @@
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
-        <!--AWS IoT-->
+        <!--AWS IoT 認証-->
         <scene sceneID="SNF-bZ-4x9">
             <objects>
                 <tableViewController storyboardIdentifier="LoginView" id="NQc-gy-3HF" customClass="DPAWSIoTLoginViewController" sceneMemberID="viewController">
@@ -119,7 +119,7 @@
                             <outlet property="delegate" destination="NQc-gy-3HF" id="8tC-Zo-XgA"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="AWS IoT" id="Q5e-sm-VqK">
+                    <navigationItem key="navigationItem" title="AWS IoT 認証" id="Q5e-sm-VqK">
                         <barButtonItem key="rightBarButtonItem" title="Login" id="0Gf-vl-AAg">
                             <connections>
                                 <action selector="loginButtonPressed:" destination="NQc-gy-3HF" id="qhY-8d-6fV"/>
@@ -238,7 +238,7 @@
             </objects>
             <point key="canvasLocation" x="34" y="438"/>
         </scene>
-        <!--Setting AWSIoT-->
+        <!--AWSIoT設定-->
         <scene sceneID="aA3-bs-Km4">
             <objects>
                 <tableViewController hidesBottomBarWhenPushed="YES" id="dMt-hg-fsY" customClass="DPAWSIoTSettingViewController" sceneMemberID="viewController">
@@ -249,21 +249,21 @@
                         <sections>
                             <tableViewSection id="tIq-vj-WjD">
                                 <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="55" id="Oea-p4-bgx">
-                                        <rect key="frame" x="0.0" y="64" width="320" height="55"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="65" id="Oea-p4-bgx">
+                                        <rect key="frame" x="0.0" y="64" width="320" height="65"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Oea-p4-bgx" id="ixG-23-gis">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="55"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="65"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="jKJ-sw-mic">
-                                                    <rect key="frame" x="253" y="12" width="51" height="31"/>
+                                                    <rect key="frame" x="253" y="17" width="51" height="31"/>
                                                     <connections>
                                                         <action selector="stateSwitchChanged:" destination="dMt-hg-fsY" eventType="valueChanged" id="rdV-Vz-uhS"/>
                                                     </connections>
                                                 </switch>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mZk-9f-iz8">
-                                                    <rect key="frame" x="18" y="17" width="42" height="21"/>
+                                                    <rect key="frame" x="18" y="22" width="42" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -277,6 +277,104 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="280" id="FSh-le-0xK">
+                                        <rect key="frame" x="0.0" y="129" width="320" height="280"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="FSh-le-0xK" id="n23-Hj-nnF">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="280"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="AWS IoT情報" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hln-Ti-njq">
+                                                    <rect key="frame" x="16" y="9" width="98" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ff3-qF-JA7">
+                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="1"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="1" id="8J7-ep-GzC"/>
+                                                    </constraints>
+                                                </view>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Region" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ja9-rT-MfP">
+                                                    <rect key="frame" x="39" y="42" width="53" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Request Topic" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="feN-ML-dub">
+                                                    <rect key="frame" x="39" y="100" width="109" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="V2J-31-z6e">
+                                                    <rect key="frame" x="54" y="71" width="37.5" height="18"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="XkW-YW-fUc">
+                                                    <rect key="frame" x="54" y="129" width="37.5" height="18"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Response Topic" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VpK-2E-MQA">
+                                                    <rect key="frame" x="39" y="158" width="121.5" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="NUM-iE-9tP">
+                                                    <rect key="frame" x="54" y="187" width="37.5" height="18"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Event Topic" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GRe-sw-aVq">
+                                                    <rect key="frame" x="39" y="217" width="89" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="8" translatesAutoresizingMaskIntoConstraints="NO" id="hUN-nf-7fY">
+                                                    <rect key="frame" x="54" y="246" width="37.5" height="18"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="GRe-sw-aVq" firstAttribute="leading" secondItem="VpK-2E-MQA" secondAttribute="leading" id="53j-Iy-i6c"/>
+                                                <constraint firstItem="Ja9-rT-MfP" firstAttribute="top" secondItem="Hln-Ti-njq" secondAttribute="bottom" constant="12" id="6lA-jH-9kv"/>
+                                                <constraint firstItem="V2J-31-z6e" firstAttribute="leading" secondItem="Ja9-rT-MfP" secondAttribute="leading" constant="15" id="BBf-Ch-d2n"/>
+                                                <constraint firstItem="GRe-sw-aVq" firstAttribute="top" secondItem="NUM-iE-9tP" secondAttribute="bottom" constant="12" id="FE1-u1-PUR"/>
+                                                <constraint firstItem="feN-ML-dub" firstAttribute="leading" secondItem="Ja9-rT-MfP" secondAttribute="leading" id="Gmh-60-npH"/>
+                                                <constraint firstItem="hUN-nf-7fY" firstAttribute="top" secondItem="GRe-sw-aVq" secondAttribute="bottom" constant="8" id="Ju8-1R-g4O"/>
+                                                <constraint firstItem="Hln-Ti-njq" firstAttribute="leading" secondItem="n23-Hj-nnF" secondAttribute="leading" constant="16" id="REe-e9-082"/>
+                                                <constraint firstItem="NUM-iE-9tP" firstAttribute="leading" secondItem="XkW-YW-fUc" secondAttribute="leading" id="Sc1-ha-VSg"/>
+                                                <constraint firstItem="Ja9-rT-MfP" firstAttribute="leading" secondItem="n23-Hj-nnF" secondAttribute="leading" constant="39" id="Vtr-gt-xD5"/>
+                                                <constraint firstItem="Hln-Ti-njq" firstAttribute="top" secondItem="Ff3-qF-JA7" secondAttribute="bottom" constant="8" id="aMo-a7-dCf"/>
+                                                <constraint firstItem="V2J-31-z6e" firstAttribute="top" secondItem="Ja9-rT-MfP" secondAttribute="bottom" constant="8" id="bCZ-dF-TXq"/>
+                                                <constraint firstAttribute="trailing" secondItem="Ff3-qF-JA7" secondAttribute="trailing" id="e3T-yF-1uH"/>
+                                                <constraint firstItem="VpK-2E-MQA" firstAttribute="leading" secondItem="feN-ML-dub" secondAttribute="leading" id="hlu-bc-FHg"/>
+                                                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="XkW-YW-fUc" secondAttribute="trailing" constant="12" id="hrA-Kj-oab"/>
+                                                <constraint firstItem="XkW-YW-fUc" firstAttribute="leading" secondItem="V2J-31-z6e" secondAttribute="leading" id="iQo-31-EoJ"/>
+                                                <constraint firstItem="NUM-iE-9tP" firstAttribute="top" secondItem="VpK-2E-MQA" secondAttribute="bottom" constant="8" id="iqT-rj-ie3"/>
+                                                <constraint firstItem="XkW-YW-fUc" firstAttribute="top" secondItem="feN-ML-dub" secondAttribute="bottom" constant="8" id="okw-PO-Xxe"/>
+                                                <constraint firstItem="feN-ML-dub" firstAttribute="top" secondItem="V2J-31-z6e" secondAttribute="bottom" constant="11" id="pNH-DW-Ko8"/>
+                                                <constraint firstItem="Ff3-qF-JA7" firstAttribute="leading" secondItem="n23-Hj-nnF" secondAttribute="leading" id="pn1-9c-Wvi"/>
+                                                <constraint firstItem="Ff3-qF-JA7" firstAttribute="top" secondItem="n23-Hj-nnF" secondAttribute="top" id="qbx-vv-xks"/>
+                                                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="hUN-nf-7fY" secondAttribute="trailing" constant="12" id="ucd-tO-cqC"/>
+                                                <constraint firstItem="VpK-2E-MQA" firstAttribute="top" secondItem="XkW-YW-fUc" secondAttribute="bottom" constant="11" id="wxY-vm-15p"/>
+                                                <constraint firstItem="hUN-nf-7fY" firstAttribute="leading" secondItem="NUM-iE-9tP" secondAttribute="leading" id="x9d-GR-ehF"/>
+                                                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="V2J-31-z6e" secondAttribute="trailing" constant="12" id="yC9-dU-dzE"/>
+                                                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="NUM-iE-9tP" secondAttribute="trailing" constant="12" id="yHQ-UL-QoG"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
                                 </cells>
                             </tableViewSection>
                         </sections>
@@ -285,11 +383,15 @@
                             <outlet property="delegate" destination="dMt-hg-fsY" id="MAH-DB-Mgh"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Setting AWSIoT" id="CwC-Ds-YEi">
+                    <navigationItem key="navigationItem" title="AWSIoT設定" id="CwC-Ds-YEi">
                         <barButtonItem key="backBarButtonItem" title="Back" id="1JL-Wx-jfk"/>
                     </navigationItem>
                     <connections>
+                        <outlet property="eventTopicLabel" destination="hUN-nf-7fY" id="YvA-23-BUo"/>
                         <outlet property="nameLabel" destination="mZk-9f-iz8" id="KqU-hG-XA6"/>
+                        <outlet property="regionLabel" destination="V2J-31-z6e" id="YvX-xA-vst"/>
+                        <outlet property="requestTopicLabel" destination="XkW-YW-fUc" id="Oxx-k6-Oxt"/>
+                        <outlet property="responseTopicLabel" destination="NUM-iE-9tP" id="gq6-uS-Rgb"/>
                         <outlet property="statusSwitch" destination="jKJ-sw-mic" id="vUx-a1-wtq"/>
                     </connections>
                 </tableViewController>
@@ -297,7 +399,7 @@
             </objects>
             <point key="canvasLocation" x="488" y="438"/>
         </scene>
-        <!--Auth LocalOAuth-->
+        <!--LocalOAuth認証-->
         <scene sceneID="gpg-Ak-SvV">
             <objects>
                 <tableViewController hidesBottomBarWhenPushed="YES" id="IRb-vo-5eC" customClass="DPAWSIoTAuthViewController" sceneMemberID="viewController">
@@ -320,8 +422,8 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Y8c-PD-LEB">
-                                            <rect key="frame" x="270" y="12" width="32" height="30"/>
-                                            <state key="normal" title="Auth"/>
+                                            <rect key="frame" x="272" y="12" width="30" height="30"/>
+                                            <state key="normal" title="認証"/>
                                             <connections>
                                                 <action selector="authButtonPressed:" destination="cfM-vz-cHH" eventType="touchUpInside" id="gkh-1V-acv"/>
                                             </connections>
@@ -344,7 +446,7 @@
                             <outlet property="delegate" destination="IRb-vo-5eC" id="n6v-nO-wOJ"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Auth LocalOAuth" id="jIe-U8-Go0"/>
+                    <navigationItem key="navigationItem" title="LocalOAuth認証" id="jIe-U8-Go0"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iff-Ig-lK4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

@@ -35,12 +35,22 @@
 		[DPAWSIoTUtils setAccount:accessKey secretKey:secretKey region:region];
 		// ログイン
 		[DPAWSIoTUtils loginWithHandler:^(NSError *error) {
-			if (!error) {
+			if (error) {
+				// 失敗したアカウントはクリアする
+				[DPAWSIoTUtils clearAccount];
+				// アラート
+				NSString *msg = @"ログインに失敗しました";
+				[DPAWSIoTUtils showAlert:self title:@"Error" message:msg handler:^{
+				}];
+			} else {
 				[self dismissViewControllerAnimated:YES completion:nil];
 			}
 		}];
 	} else {
-		// TODO: アラート
+		// アラート
+		NSString *msg = @"ログインに失敗しました";
+		[DPAWSIoTUtils showAlert:self title:@"Error" message:msg handler:^{
+		}];
 	}
 }
 

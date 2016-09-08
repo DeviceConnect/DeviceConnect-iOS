@@ -17,6 +17,10 @@
 }
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UISwitch *statusSwitch;
+@property (weak, nonatomic) IBOutlet UILabel *regionLabel;
+@property (weak, nonatomic) IBOutlet UILabel *requestTopicLabel;
+@property (weak, nonatomic) IBOutlet UILabel *responseTopicLabel;
+@property (weak, nonatomic) IBOutlet UILabel *eventTopicLabel;
 @end
 
 
@@ -26,9 +30,13 @@
 - (void)viewWillAppear:(BOOL)animated {
 	// 自分のデバイス情報を取得
 	_nameLabel.text = [DPAWSIoTController managerName];
+	_regionLabel.text = [[DPAWSIoTManager sharedManager] regionName];
+	_requestTopicLabel.text = [DPAWSIoTController myTopic:@"request"];
+	_responseTopicLabel.text = [DPAWSIoTController myTopic:@"response"];
+	_eventTopicLabel.text = [DPAWSIoTController myTopic:@"event"];
 	[DPAWSIoTController fetchManagerInfoWithHandler:^(NSDictionary *managers, NSDictionary *myInfo, NSError *error) {
 		if (myInfo) {
-			NSLog(@"myInfo:%@", myInfo);
+			//NSLog(@"myInfo:%@", myInfo);
 			_statusSwitch.on = [myInfo[@"online"] boolValue];
 		}
 	}];
@@ -38,8 +46,10 @@
 - (IBAction)stateSwitchChanged:(id)sender {
 	[DPAWSIoTController setManagerInfo:_statusSwitch.on handler:^(NSError *error) {
 		if (error) {
-			// TODO: エラー処理
-			NSLog(@"%@", error);
+			// アラート
+			NSString *msg = @"状態の同期に失敗しました";
+			[DPAWSIoTUtils showAlert:self title:@"Error" message:msg handler:^{
+			}];
 			return;
 		}
 		// リクエストの購読/解除はThings経由

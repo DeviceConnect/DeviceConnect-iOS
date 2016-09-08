@@ -26,6 +26,8 @@
 + (void)fetchManagerInfoWithHandler:(void (^)(NSDictionary *managers, NSDictionary *myInfo, NSError *error))handler;
 // 自分のデバイス情報をShadowに登録
 + (void)setManagerInfo:(BOOL)online handler:(void (^)(NSError *error))handler;
+// Topicを作成
++ (NSString*)myTopic:(NSString*)type;
 
 // ログイン
 - (void)login;

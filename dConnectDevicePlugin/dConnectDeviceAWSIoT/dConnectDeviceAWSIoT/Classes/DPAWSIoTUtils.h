@@ -47,4 +47,7 @@
 // AccessTokenを追加
 + (void)addAccessToken:(NSString*)token serviceId:(NSString*)serviceId;
 
+// アラート表示
++ (void)showAlert:(UIViewController*)vc title:(NSString*)title message:(NSString*)message handler:(void (^)())handler;
+
 @end
