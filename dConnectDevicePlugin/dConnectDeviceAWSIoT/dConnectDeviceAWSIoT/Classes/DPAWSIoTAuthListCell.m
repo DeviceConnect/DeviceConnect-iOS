@@ -31,14 +31,14 @@
 	DConnectResponseMessage *response = [[DPAWSIoTController sharedManager] fetchServiceInformationWithId:serviceId];
 	if (response.result == DConnectMessageResultTypeOk) {
 		DConnectArray *supports = response.internalDictionary[@"supports"];
-		NSLog(@"supports:%@", supports.internalArray);
+		//NSLog(@"supports:%@", supports.internalArray);
 		[DConnectUtil asyncAuthorizeWithOrigin:[self packageName]
 									   appName:@"AWSIoT"
 										scopes:supports.internalArray
 									   success:^(NSString *clientId, NSString *accessToken)
 		{
-			NSLog(@"clientId:%@", clientId);
-			NSLog(@"accessToken:%@", accessToken);
+			//NSLog(@"clientId:%@", clientId);
+			//NSLog(@"accessToken:%@", accessToken);
 			[DPAWSIoTUtils addAccessToken:accessToken serviceId:serviceId];
 		} error:^(DConnectMessageErrorCodeType errorCode) {
 			// TDDO: エラー処理

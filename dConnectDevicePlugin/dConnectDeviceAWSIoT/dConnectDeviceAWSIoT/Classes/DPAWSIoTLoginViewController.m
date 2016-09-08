@@ -19,12 +19,6 @@
 
 @implementation DPAWSIoTLoginViewController
 
-- (void)viewWillAppear:(BOOL)animated {
-	// debug用
-	_textAccessKey.text = @"AKIAJYDTLD4DPFGZ4PAQ";
-	_textSecretKey.text = @"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";
-}
-
 // ログインボタンイベント
 - (IBAction)loginButtonPressed:(id)sender {
 	NSString *accessKey = _textAccessKey.text;

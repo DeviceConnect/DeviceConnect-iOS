@@ -88,7 +88,7 @@
 #pragma mark - PSWebSocketDelegate
 
 - (void)webSocketDidOpen:(PSWebSocket *)webSocket {
-	NSLog(@"The websocket handshake completed and is now open!");
+	//NSLog(@"The websocket handshake completed and is now open!");
 	webSocket.retryCount = 3;
 	[webSocket send:[NSString stringWithFormat:@"{\"sessionKey\":\"%@\"}", webSocket.key]];
 }

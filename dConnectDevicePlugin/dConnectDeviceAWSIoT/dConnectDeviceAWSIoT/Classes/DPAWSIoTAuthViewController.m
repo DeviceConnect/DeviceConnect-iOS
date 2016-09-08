@@ -41,7 +41,7 @@
 {
 	DPAWSIoTAuthListCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
 	DConnectMessage *msg = [_services objectAtIndex:indexPath.row];
-	NSLog(@"%@", msg.internalDictionary);
+	//NSLog(@"%@", msg.internalDictionary);
 	cell.msg = msg;
 	return cell;
 }
