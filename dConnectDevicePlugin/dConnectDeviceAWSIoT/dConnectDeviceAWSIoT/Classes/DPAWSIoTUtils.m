@@ -11,6 +11,8 @@
 #import "DPAWSIoTKeychain.h"
 #import "DPAWSIoTManager.h"
 #import "DPAWSIoTNetworkManager.h"
+#import "DConnectManager+Private.h"
+#import "DConnectManagerServiceDiscoveryProfile.h"
 
 #define kAccessKeyID @"accessKey"
 #define kSecretKey @"secretKey"
@@ -189,38 +191,52 @@ static UIViewController *loadingHUD;
 	NSString *method = request[@"action"];
 	NSString *origin = [self packageName];
 	// accessTokenを設定
+	NSString *profile = request[DConnectMessageProfile];
 	NSString *serviceId = request[DConnectMessageServiceId];
 	NSLog(@"params:%@", params);
 	if (serviceId) {
-		NSLog(@"**************:%@", serviceId);
 		NSString *token = [self accessTokenWithServiceId:serviceId];
-		NSLog(@"**************:%@", token);
 		if (token) {
 			params[@"accessToken"] = token;
 		}
 	}
 	
 	// 不要なパラメータを削除
-//	[params removeObjectForKey:@"accessToken"];
 	[params removeObjectForKey:@"action"];
 	[params removeObjectForKey:@"origin"];
 	[params removeObjectForKey:@"_type"];
 	[params removeObjectForKey:@"version"];
-	[DPAWSIoTNetworkManager sendRequestWithPath:path method:method
-										 params:params headers:@{@"X-GotAPI-Origin": origin}
-										handler:^(NSData *data, NSURLResponse *response, NSError *error)
-	{
-		if (error) {
-			handler(nil, error);
-			return;
-		}
-		NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
-		if (httpResponse.statusCode == 200) {
+	
+	if ([profile isEqualToString:DConnectServiceDiscoveryProfileName]) {
+		dispatch_async(dispatch_get_main_queue(), ^{
+			DConnectManager *mgr = [DConnectManager sharedManager];
+			DConnectManagerServiceDiscoveryProfile *p = (DConnectManagerServiceDiscoveryProfile*)[mgr profileWithName:DConnectServiceDiscoveryProfileName];
+			DConnectResponseMessage *response = [DConnectResponseMessage message];
+			DConnectRequestMessage *request = [DConnectRequestMessage new];
+			[request setString:@"true" forKey:@"_awsiot"];
+			[request setAction: DConnectMessageActionTypeGet];
+			[p getServicesRequest:request response:response];
+			NSString *json = [response convertToJSONString];
+			NSData *data = [json dataUsingEncoding:NSUTF8StringEncoding];
 			handler(data, nil);
-		} else {
-			handler(data, [NSError errorWithDomain:ERROR_DOMAIN code:-1 userInfo:nil]);
-		}
-	}];
+		});
+	} else {
+		[DPAWSIoTNetworkManager sendRequestWithPath:path method:method
+											 params:params headers:@{@"X-GotAPI-Origin": origin}
+											handler:^(NSData *data, NSURLResponse *response, NSError *error)
+		 {
+			 if (error) {
+				 handler(nil, error);
+				 return;
+			 }
+			 NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
+			 if (httpResponse.statusCode == 200) {
+				 handler(data, nil);
+			 } else {
+				 handler(data, [NSError errorWithDomain:ERROR_DOMAIN code:-1 userInfo:nil]);
+			 }
+		 }];
+	}
 }
 
 // パス追加
