@@ -19,8 +19,8 @@
 #import "DConnectManager+Private.h"
 #import "DConnectManagerServiceDiscoveryProfile.h"
 
-// TODO: 名前を決める
-#define kShadowName @"dconnect"
+// Shadow名
+#define kShadowName @"DeviceConnect"
 
 @interface DPAWSIoTController () {
 	NSMutableDictionary *_responses;
@@ -372,14 +372,18 @@
 		if ([json[@"request"][DConnectMessageAction] isEqualToString:@"put"]) {
 			// WebSocketにつなぐ
 			NSString *key = json[@"request"][DConnectMessageSessionKey];
-			NSLog(@"put:sessionKey:%@", key);
-			[_webSocket addSocket:key];
+			if (key) {
+				NSLog(@"put:sessionKey:%@", key);
+				[_webSocket addSocket:key];
+			}
 		}
 		if ([json[@"request"][DConnectMessageAction] isEqualToString:@"delete"]) {
 			// WebSocketの接続解除
 			NSString *key = json[@"request"][DConnectMessageSessionKey];
-			NSLog(@"delete:sessionKey:%@", key);
-			[_webSocket removeSocket:key];
+			if (key) {
+				NSLog(@"delete:sessionKey:%@", key);
+				[_webSocket removeSocket:key];
+			}
 		}
 		// MQTTからHTTPへ
 		//NSLog(@"request:%@", json);
