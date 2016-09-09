@@ -103,7 +103,12 @@
 
 // 自分のデバイス情報をShadowに登録
 + (void)setManagerInfo:(BOOL)online handler:(void (^)(NSError *error))handler {
-	NSDictionary *info = @{@"name": [DPAWSIoTController managerName], @"online": @(online), @"timeStamp": @([[NSDate date] timeIntervalSince1970])};
+	id info;
+	if (online) {
+		info = @{@"name": [DPAWSIoTController managerName], @"online": @(online), @"timeStamp": @([[NSDate date] timeIntervalSince1970])};
+	} else {
+		info = [NSNull null];
+	}
 	NSDictionary *dic = @{@"state": @{@"reported": @{[DPAWSIoTController managerUUID]: info}}};
 	NSError *error;
 	NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dic options:0 error:&error];
