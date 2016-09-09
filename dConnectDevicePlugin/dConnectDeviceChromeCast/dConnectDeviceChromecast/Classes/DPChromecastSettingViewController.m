@@ -11,7 +11,7 @@
 #import "CastDeviceController.h"
 #import "NotificationConstants.h"
 #import "SimpleImageFetcher.h"
-
+#import "CastInstructionsViewController.h"
 #import <GoogleCast/GCKDeviceManager.h>
 #import <GoogleCast/GCKMediaControlChannel.h>
 
@@ -63,7 +63,8 @@
     controller.delegate = self;
 
     UIBarButtonItem *item = [controller queueItemForController:self];
-    
+    [CastInstructionsViewController showIfFirstTimeOverViewController:self];
+
     self.navigationItem.rightBarButtonItems = @[item];
 
 }

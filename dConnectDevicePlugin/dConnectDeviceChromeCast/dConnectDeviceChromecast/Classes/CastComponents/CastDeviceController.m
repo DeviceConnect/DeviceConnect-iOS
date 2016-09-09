@@ -208,11 +208,6 @@ NSString * const kCastViewController = @"castViewController";
     _castIconButton.status = CIBCastUnavailable;
   } else {
     _castIconButton.status = CIBCastAvailable;
-    // Show cast icon. If this is the first time the cast icon is appearing, show an overlay with
-    // instructions highlighting the cast icon.
-    if (self.controller) {
-      [CastInstructionsViewController showIfFirstTimeOverViewController:self.controller];
-    }
   }
 }
 
