@@ -283,7 +283,7 @@ DPIRKitManagerDetectionDelegate
 #pragma mark DConnectSystemProfileDelegate
 
 - (DConnectServiceProvider *)serviceProvider {
-    return self.serviceProvider;
+    return super.serviceProvider;
 }
 
 - (UIViewController *)settingViewController {
