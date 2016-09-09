@@ -38,7 +38,8 @@ typedef void (^DPChromeCastCallback)(BOOL success, NSString *error);
 
 // Get Server Host Name
 - (NSString *)getIPString;
-
+- (void) updateManageServiceWithId:(NSString*)serviceId
+                            online: (BOOL) onlineForSet;
 // デバイスに接続
 - (void)connectToDeviceWithID:(NSString*)deviceid
 				   completion:(void (^)(BOOL success, NSString *error))completion;
@@ -64,7 +65,6 @@ typedef void (^DPChromeCastCallback)(BOOL success, NSString *error);
                     mode:(NSString*)mode;
 // Canvasのクリア
 - (void)clearCanvasWithID:(NSString*)deviceID;
-
 
 
 // メディアプレイヤーの状態取得

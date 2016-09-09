@@ -16,7 +16,7 @@
 #import "DPChromecastService.h"
 #import "DPChromecastReachability.h"
 
-static NSString *const kReceiverAppID = @"[Your Application ID]";
+static NSString *const kReceiverAppID = @"1F0ABF07";
 static NSString *const kReceiverNamespace
     = @"urn:x-cast:com.name.space.chromecast.test.receiver";
 static NSString * const kDPChromeRegexDecimalPoint = @"^[-+]?([0-9]*)?(\\.)?([0-9]*)?$";
@@ -161,6 +161,35 @@ static const NSTimeInterval DPSemaphoreTimeout = 20.0;
     }
 }
 
+- (void) updateManageServiceWithId:(NSString*)serviceId
+                            online: (BOOL) onlineForSet {
+    @synchronized(self) {
+        
+        // ServiceProvider未登録なら処理しない
+        if (!_serviceProvider) {
+            return;
+        }
+        
+        
+        NSArray *deviceList = [self deviceList];
+
+        // サービス未登録なら登録する。登録済ならオンラインにする
+        for (NSDictionary *device in deviceList) {
+            NSString *serviceId = device[@"id"];
+            NSString *deviceName = device[@"name"];
+            DConnectService *service = [_serviceProvider service: serviceId];
+            if (!service) {
+                service = [[DPChromecastService alloc] initWithServiceId:serviceId
+                                                              deviceName:deviceName
+                                                                  plugin: self.plugin];
+                [service setOnline: onlineForSet];
+                [_serviceProvider addService: service];
+            } else {
+                [service setOnline: onlineForSet];
+            }
+        }
+    }
+}
 
 #pragma mark - GCKLoggerDelegate
 
@@ -212,7 +241,8 @@ static const NSTimeInterval DPSemaphoreTimeout = 20.0;
 	if (data) {
 		// 既に接続済み
 		GCKDeviceManager *deviceManager = data.deviceManager;
-		return deviceManager.isConnected;
+		return deviceManager.connectionState == GCKConnectionStateConnected
+            || deviceManager.connectionState == GCKConnectionStateDisconnecting;
 	}
 	return NO;
 }
@@ -246,7 +276,8 @@ static const NSTimeInterval DPSemaphoreTimeout = 20.0;
         if (cache) {
             GCKDeviceManager *deviceManager = cache.deviceManager;
             [cache.connectCallbacks addObject:completion];
-            if (deviceManager.isConnected) {
+            if (deviceManager.connectionState == GCKConnectionStateConnected
+                || deviceManager.connectionState == GCKConnectionStateDisconnecting) {
                 dispatch_semaphore_signal(_semaphore);
                 completion(YES, nil);
             } else {

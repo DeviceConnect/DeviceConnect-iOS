@@ -19,8 +19,8 @@
 #import "DeviceTableViewController.h"
 #import "NotificationConstants.h"
 #import "RepeatingTimerManager.h"
-
 #import <GoogleCast/GoogleCast.h>
+#import "DPChromecastManager.h"
 
 /**
  *  Constant for the storyboard ID for the device table view controller.
@@ -235,6 +235,7 @@ NSString * const kCastViewController = @"castViewController";
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSString *lastSessionID = [defaults valueForKey:@"lastSessionID"];
     [self.deviceManager joinApplication:_applicationID sessionID:lastSessionID];
+    
   } else {
     // Explicit connect request.
     [self.deviceManager launchApplication:_applicationID];
@@ -258,6 +259,7 @@ NSString * const kCastViewController = @"castViewController";
   if ([_delegate respondsToSelector:@selector(didConnectToDevice:)]) {
     [_delegate didConnectToDevice:deviceManager.device];
   }
+    [[DPChromecastManager sharedManager] updateManageServiceWithId:sessionID online:YES];
 
   self.isReconnecting = NO;
   // Store sessionID in case of restart
@@ -305,6 +307,9 @@ NSString * const kCastViewController = @"castViewController";
   [self updateCastIconButtonStates];
   [[NSNotificationCenter defaultCenter]
       postNotificationName:kCastApplicationDisconnectedNotification object:self];
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSString *lastSessionID = [defaults valueForKey:@"lastSessionID"];
+    [[DPChromecastManager sharedManager] updateManageServiceWithId:lastSessionID online:NO];
 
   if ([_delegate respondsToSelector:@selector(didDisconnect)]) {
     [_delegate didDisconnect];
