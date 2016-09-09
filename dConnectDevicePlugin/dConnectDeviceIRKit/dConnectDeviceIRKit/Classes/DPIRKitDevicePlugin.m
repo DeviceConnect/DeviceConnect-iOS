@@ -273,11 +273,10 @@ DPIRKitManagerDetectionDelegate
                                                bundle:bundle];
     }
     UINavigationController *top = [storyBoard instantiateViewControllerWithIdentifier:@"virtualDeviceList"];
-    DPIRKitVirtualDeviceViewController *viewController = (DPIRKitVirtualDeviceViewController *) top.viewControllers[0];
     
     UIViewController *rootView;
     DCPutPresentedViewController(rootView);
-    [rootView presentViewController:viewController animated:YES completion:nil];
+    [rootView presentViewController:top animated:YES completion:nil];
 }
 
 #pragma mark DConnectSystemProfileDelegate
