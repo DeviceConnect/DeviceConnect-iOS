@@ -17,6 +17,7 @@
 #import "DPIRKitSystemProfile.h"
 #import "DPIRKitService.h"
 #import "DPIRKitReachability.h"
+#import "DPIRKitVirtualService.h"
 
 NSString *const DPIRKitInfoVersion = @"DPIRKitVersion";
 NSString *const DPIRKitInfoAPIKey = @"DPIRKitAPIKey";
@@ -102,6 +103,7 @@ DPIRKitManagerDetectionDelegate
          name:DPIRKitReachabilityChangedNotification
          object:nil];
         [self.reachability startNotifier];
+        [self registerVirtualDevices];
     }
     
     return self;
@@ -130,6 +132,28 @@ DPIRKitManagerDetectionDelegate
 
 #pragma mark - Private Methods
 
+- (void)registerVirtualDevices {
+    NSArray *virtuals = [[DPIRKitDBManager sharedInstance] queryVirtualDevice:nil];
+    for (DPIRKitVirtualDevice* device in virtuals) {
+        if ([self existIRForServiceId:device.serviceId]) {
+            DPIRKitVirtualService *service = [[DPIRKitVirtualService alloc] initWithServiceId: device.serviceId
+                                                                                       plugin:self
+                                                                                         name:device.deviceName];
+            if ([self.serviceProvider service:device.serviceId]) {
+                [service setOnline:YES];
+            } else {
+                [service setOnline:NO];
+            }
+            [self.serviceProvider addService: service];
+        } else {
+            if ([self.serviceProvider service: device.serviceId]) {
+                DConnectService *service = [self.serviceProvider service: device.serviceId];
+                [service setOnline: YES];
+            }
+        }
+    }
+}
+
 - (void) sendDeviceDetectionEventWithDevice:(DPIRKitDevice *)device online:(BOOL)online {
     BOOL hit = NO;
     @synchronized (_devices) {
@@ -145,12 +169,14 @@ DPIRKitManagerDetectionDelegate
             _devices[device.name] = device;
         }
     }
+    [self registerVirtualDevices];
     if ((!hit && online) || (hit && !online)) {
         
         if (self.serviceProvider) {
             if (online) {
                 // オンライン遷移の場合、デバイスが未登録なら登録し、登録済ならフラグをオンラインにする
                 NSString *serviceId = device.name;
+
                 if ([self.serviceProvider service: serviceId]) {
                     DConnectService *service = [self.serviceProvider service: serviceId];
                     [service setOnline: YES];
