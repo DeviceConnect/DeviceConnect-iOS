@@ -546,6 +546,9 @@
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5Yc-06-q64">
                                 <rect key="frame" x="0.0" y="524" width="320" height="44"/>
                                 <color key="backgroundColor" red="0.98514646765850289" green="0.95044657694217582" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="dPc-wz-JAY"/>
+                                </constraints>
                                 <items>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="2hR-qx-YG8"/>
                                     <barButtonItem title="IRKit検索" id="B6q-Tx-eFW">
@@ -560,7 +563,7 @@
                                 <color key="tintColor" red="0.98532261264001542" green="1" blue="0.98412206763554044" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="barTintColor" red="0.09992029320462581" green="0.57549031261152028" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             </toolbar>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" restorationIdentifier="cellIRKit" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="x9E-cA-mGo">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="cellIRKit" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="x9E-cA-mGo">
                                 <rect key="frame" x="0.0" y="64" width="320" height="460"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </tableView>
@@ -568,6 +571,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="x9E-cA-mGo" firstAttribute="leading" secondItem="dxl-JY-Ozs" secondAttribute="leadingMargin" constant="-16" id="0MN-OR-p0n"/>
+                            <constraint firstItem="EKQ-gW-1TX" firstAttribute="top" secondItem="x9E-cA-mGo" secondAttribute="bottom" id="1nx-X1-hPe"/>
                             <constraint firstItem="2S2-vp-5eR" firstAttribute="top" secondItem="dxl-JY-Ozs" secondAttribute="topMargin" constant="26" id="66o-jM-OLO"/>
                             <constraint firstAttribute="centerX" secondItem="xBb-cg-Eev" secondAttribute="centerX" id="Cm8-gE-h5z"/>
                             <constraint firstAttribute="centerY" secondItem="xBb-cg-Eev" secondAttribute="centerY" id="Cvh-oC-D7U"/>
@@ -607,13 +611,16 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" restorationIdentifier="cellVirtualDevice" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="iXG-uC-lfN">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="cellVirtualDevice" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="iXG-uC-lfN">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="524"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </tableView>
-                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4Tp-8o-Iiu">
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4Tp-8o-Iiu">
                                 <rect key="frame" x="0.0" y="524" width="320" height="44"/>
                                 <color key="backgroundColor" red="0.92948921668113893" green="0.95337431840641318" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="mG0-Va-4H3"/>
+                                </constraints>
                                 <items>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="ChG-V7-MSC"/>
                                     <barButtonItem title="追加" id="DI3-Wm-h5B">
@@ -630,12 +637,17 @@
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="F6z-zw-hlJ"/>
                                 </items>
                                 <color key="tintColor" red="0.92948921669999995" green="0.95337431839999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <color key="barTintColor" red="0.012980836755136616" green="0.63658504849897413" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="barTintColor" red="0.19607843137254902" green="0.58039215686274515" blue="0.98039215686274506" alpha="1" colorSpace="calibratedRGB"/>
                             </toolbar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="4Tp-8o-Iiu" firstAttribute="leading" secondItem="Lb6-Y4-q3c" secondAttribute="leadingMargin" constant="-20" id="5zK-H9-RgY"/>
+                            <constraint firstItem="iXG-uC-lfN" firstAttribute="top" secondItem="Lb6-Y4-q3c" secondAttribute="topMargin" id="62C-VT-yHu"/>
+                            <constraint firstItem="4Tp-8o-Iiu" firstAttribute="top" secondItem="iXG-uC-lfN" secondAttribute="bottom" id="77R-xr-YRL"/>
                             <constraint firstAttribute="trailingMargin" secondItem="iXG-uC-lfN" secondAttribute="trailing" constant="-16" id="MC4-00-h4i"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="4Tp-8o-Iiu" secondAttribute="trailing" constant="-20" id="iQP-6g-Tuk"/>
+                            <constraint firstItem="e4m-YB-66I" firstAttribute="top" secondItem="4Tp-8o-Iiu" secondAttribute="bottom" id="jkI-Jr-I4m"/>
                             <constraint firstItem="iXG-uC-lfN" firstAttribute="leading" secondItem="Lb6-Y4-q3c" secondAttribute="leadingMargin" constant="-16" id="swQ-0v-DKs"/>
                         </constraints>
                     </view>
@@ -865,6 +877,8 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="FQD-5l-D7Z">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="tintColor" red="0.92948921669999995" green="0.95337431839999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="barTintColor" red="0.19607843137254902" green="0.58039215686274503" blue="0.98039215686274506" alpha="1" colorSpace="calibratedRGB"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>

@@ -59,14 +59,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <toolbarItems/>
-                    <navigationItem key="navigationItem" id="Wpx-LF-uNS">
-                        <barButtonItem key="rightBarButtonItem" title="CLOSE" id="xVq-os-Nvh">
-                            <color key="tintColor" red="0.99553721699999997" green="1" blue="0.97946144160000004" alpha="1" colorSpace="calibratedRGB"/>
-                            <connections>
-                                <action selector="closeDeviceSetting:" destination="WBJ-9Q-AJJ" id="OFn-HZ-QmE"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" id="Wpx-LF-uNS"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
@@ -823,6 +816,7 @@ Cgo
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="cVo-Lf-3Mx">
                         <rect key="frame" x="0.0" y="0.0" width="768" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" red="0.1960784314" green="0.58039215690000001" blue="0.98039215690000003" alpha="1" colorSpace="calibratedRGB"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
