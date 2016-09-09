@@ -79,7 +79,7 @@ DPIRKitManagerDetectionDelegate
         [manager setPlugin:self];
         
         // System Profileの追加
-        [self addProfile:[[DPIRKitSystemProfile alloc] initWithDataSource: self]];
+        [self addProfile:[[DPIRKitSystemProfile alloc] initWithDelegate:self dataSource:self]];
         
         _devices = [NSMutableDictionary dictionary];
         id<DConnectEventCacheController> controller = [[DConnectMemoryCacheController alloc] init];
