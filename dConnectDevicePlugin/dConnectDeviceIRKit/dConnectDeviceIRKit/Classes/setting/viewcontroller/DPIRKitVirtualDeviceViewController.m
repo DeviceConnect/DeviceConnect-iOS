@@ -73,7 +73,7 @@
 
 
 - (IBAction)popUIViewController:(id)sender {
-    [self.navigationController popToRootViewControllerAnimated:YES];
+    [self dismissViewControllerAnimated:YES completion:nil];
     if (_isRemoved) {
         [self switchButton];
     }

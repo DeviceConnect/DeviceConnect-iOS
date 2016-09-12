@@ -7,8 +7,12 @@
 //  http://opensource.org/licenses/mit-license.php
 //
 
+#import <DConnectSDK/DConnectServiceListViewController.h>
 #import "DPChromecastSystemProfile.h"
 #import "DPChromecastDevicePlugin.h"
+
+#define DCBundle() \
+[NSBundle bundleWithPath:[[NSBundle mainBundle] pathForResource:@"DConnectSDK_resources" ofType:@"bundle"]]
 
 @implementation DPChromecastSystemProfile
 
@@ -61,6 +65,37 @@
 -(UIViewController *) profile:(DConnectSystemProfile *)sender
         settingPageForRequest:(DConnectRequestMessage *)request
 {
+    UIStoryboard *storyBoard;
+    storyBoard = [UIStoryboard storyboardWithName:@"DConnectSDK-iPhone"
+                                           bundle:DCBundle()];
+    UINavigationController *top = [storyBoard instantiateViewControllerWithIdentifier:@"ServiceList"];
+    DConnectServiceListViewController *serviceListViewController = (DConnectServiceListViewController *) top.viewControllers[0];
+    serviceListViewController.delegate = self;
+    return top;
+    
+/*
+    // 設定画面用のViewControllerをStoryboardから生成する
+    NSString *bundlePath = [[NSBundle mainBundle] pathForResource:@"dConnectDeviceChromecast_resources" ofType:@"bundle"];
+    NSBundle *bundle = [NSBundle bundleWithPath:bundlePath];
+    
+    UIStoryboard *storyBoard;
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
+        storyBoard = [UIStoryboard storyboardWithName:@"Chromecast_iPhone" bundle:bundle];
+    } else {
+        storyBoard = [UIStoryboard storyboardWithName:@"Chromecast_iPad" bundle:bundle];
+    }
+    return [storyBoard instantiateInitialViewController];
+*/
+}
+
+
+#pragma mark - DConnectSystemProfileDelegate
+
+- (DConnectServiceProvider *)serviceProvider {
+    return ((DConnectDevicePlugin *)self.plugin).serviceProvider;
+}
+
+- (UIViewController *)settingViewController {
     // 設定画面用のViewControllerをStoryboardから生成する
     NSString *bundlePath = [[NSBundle mainBundle] pathForResource:@"dConnectDeviceChromecast_resources" ofType:@"bundle"];
     NSBundle *bundle = [NSBundle bundleWithPath:bundlePath];
@@ -73,6 +108,5 @@
     }
     return [storyBoard instantiateInitialViewController];
 }
-
 
 @end

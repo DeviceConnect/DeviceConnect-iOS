@@ -443,6 +443,7 @@ static size_t const DPAllJoynJoinRetryMax = 5;
                                                                plugin: self.plugin
                                                               handler:self];
                 [_serviceProvider addService: service];
+                [service setOnline:YES];
             }
         }
     }

@@ -35,8 +35,20 @@
     return;
 }
 
+- (void) onStatusChange: (DConnectService *) service {
+    return;
+}
+
 - (void) removeAllServices {
     return;
+}
+
+- (void) addServiceListener: (id<DConnectServiceListener>) listener {
+    
+}
+
+- (void) removeServiceListener: (id<DConnectServiceListener>) listener {
+    
 }
 
 @end

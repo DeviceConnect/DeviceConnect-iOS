@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="jlY-bb-rwW">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="14F1808" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="jlY-bb-rwW">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
@@ -546,6 +546,9 @@
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5Yc-06-q64">
                                 <rect key="frame" x="0.0" y="524" width="320" height="44"/>
                                 <color key="backgroundColor" red="0.98514646765850289" green="0.95044657694217582" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="dPc-wz-JAY"/>
+                                </constraints>
                                 <items>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="2hR-qx-YG8"/>
                                     <barButtonItem title="IRKit検索" id="B6q-Tx-eFW">
@@ -554,17 +557,13 @@
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="3z2-qy-gkf"/>
-                                    <barButtonItem title="IRKit登録" id="Tx2-3u-KRv">
-                                        <connections>
-                                            <segue destination="8EN-7c-0iy" kind="modal" id="uEL-D5-QZa"/>
-                                        </connections>
-                                    </barButtonItem>
+                                    <barButtonItem title="IRKit登録" id="Tx2-3u-KRv"/>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="iLX-JJ-Pge"/>
                                 </items>
                                 <color key="tintColor" red="0.98532261264001542" green="1" blue="0.98412206763554044" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="barTintColor" red="0.09992029320462581" green="0.57549031261152028" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             </toolbar>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" restorationIdentifier="cellIRKit" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="x9E-cA-mGo">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="cellIRKit" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="x9E-cA-mGo">
                                 <rect key="frame" x="0.0" y="64" width="320" height="460"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </tableView>
@@ -572,6 +571,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="x9E-cA-mGo" firstAttribute="leading" secondItem="dxl-JY-Ozs" secondAttribute="leadingMargin" constant="-16" id="0MN-OR-p0n"/>
+                            <constraint firstItem="EKQ-gW-1TX" firstAttribute="top" secondItem="x9E-cA-mGo" secondAttribute="bottom" id="1nx-X1-hPe"/>
                             <constraint firstItem="2S2-vp-5eR" firstAttribute="top" secondItem="dxl-JY-Ozs" secondAttribute="topMargin" constant="26" id="66o-jM-OLO"/>
                             <constraint firstAttribute="centerX" secondItem="xBb-cg-Eev" secondAttribute="centerX" id="Cm8-gE-h5z"/>
                             <constraint firstAttribute="centerY" secondItem="xBb-cg-Eev" secondAttribute="centerY" id="Cvh-oC-D7U"/>
@@ -593,17 +593,16 @@
                         <outlet property="foundIRKitList" destination="x9E-cA-mGo" id="ead-oe-jNO"/>
                         <outlet property="indicatorView" destination="Kcu-rg-clq" id="evw-iD-Ca6"/>
                         <outlet property="progressView" destination="xBb-cg-Eev" id="U5L-nx-7TP"/>
-                        <segue destination="Jed-es-tTO" kind="push" identifier="showDetail" id="kqj-Ib-18W"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="10X-Um-CoU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="224" y="-24"/>
         </scene>
-        <!--Kit Virtual Device View Controller-->
+        <!--Kit Virtual Device View Controllernitial Guide View Controller-->
         <scene sceneID="bpv-w3-hY1">
             <objects>
-                <viewController id="Jed-es-tTO" customClass="DPIRKitVirtualDeviceViewController" sceneMemberID="viewController">
+                <viewController id="Jed-es-tTO" customClass="DPIRKitVirtualDeviceViewControllernitialGuideViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="xuU-QM-SuX"/>
                         <viewControllerLayoutGuide type="bottom" id="e4m-YB-66I"/>
@@ -612,13 +611,16 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" restorationIdentifier="cellVirtualDevice" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="iXG-uC-lfN">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="cellVirtualDevice" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="iXG-uC-lfN">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="524"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </tableView>
-                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4Tp-8o-Iiu">
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4Tp-8o-Iiu">
                                 <rect key="frame" x="0.0" y="524" width="320" height="44"/>
                                 <color key="backgroundColor" red="0.92948921668113893" green="0.95337431840641318" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="mG0-Va-4H3"/>
+                                </constraints>
                                 <items>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="ChG-V7-MSC"/>
                                     <barButtonItem title="追加" id="DI3-Wm-h5B">
@@ -635,12 +637,17 @@
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="F6z-zw-hlJ"/>
                                 </items>
                                 <color key="tintColor" red="0.92948921669999995" green="0.95337431839999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <color key="barTintColor" red="0.012980836755136616" green="0.63658504849897413" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="barTintColor" red="0.19607843137254902" green="0.58039215686274515" blue="0.98039215686274506" alpha="1" colorSpace="calibratedRGB"/>
                             </toolbar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="4Tp-8o-Iiu" firstAttribute="leading" secondItem="Lb6-Y4-q3c" secondAttribute="leadingMargin" constant="-20" id="5zK-H9-RgY"/>
+                            <constraint firstItem="iXG-uC-lfN" firstAttribute="top" secondItem="Lb6-Y4-q3c" secondAttribute="topMargin" id="62C-VT-yHu"/>
+                            <constraint firstItem="4Tp-8o-Iiu" firstAttribute="top" secondItem="iXG-uC-lfN" secondAttribute="bottom" id="77R-xr-YRL"/>
                             <constraint firstAttribute="trailingMargin" secondItem="iXG-uC-lfN" secondAttribute="trailing" constant="-16" id="MC4-00-h4i"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="4Tp-8o-Iiu" secondAttribute="trailing" constant="-20" id="iQP-6g-Tuk"/>
+                            <constraint firstItem="e4m-YB-66I" firstAttribute="top" secondItem="4Tp-8o-Iiu" secondAttribute="bottom" id="jkI-Jr-I4m"/>
                             <constraint firstItem="iXG-uC-lfN" firstAttribute="leading" secondItem="Lb6-Y4-q3c" secondAttribute="leadingMargin" constant="-16" id="swQ-0v-DKs"/>
                         </constraints>
                     </view>
@@ -672,7 +679,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9Sb-gs-g2u" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-331" y="755"/>
+            <point key="canvasLocation" x="201" y="755"/>
         </scene>
         <!--Kit Virtual Profile View Controller-->
         <scene sceneID="g2T-oo-gWk">
@@ -715,7 +722,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="T9i-vK-MJX" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="127" y="778"/>
+            <point key="canvasLocation" x="659" y="778"/>
         </scene>
         <!--Kit RegisterIR View Controller-->
         <scene sceneID="FRT-7P-p68">
@@ -735,7 +742,7 @@
                                 <color key="textColor" red="1" green="0.098723787859882006" blue="0.067934493412554531" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LQl-mi-W8I">
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LQl-mi-W8I">
                                 <rect key="frame" x="145" y="341" width="30" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="2X6-hd-ncY"/>
@@ -823,12 +830,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="R6v-uY-0dd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="559" y="778"/>
+            <point key="canvasLocation" x="1091" y="778"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="8dH-6F-IkI">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="8EN-7c-0iy" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="setting" automaticallyAdjustsScrollViewInsets="NO" id="8EN-7c-0iy" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="MyX-ry-AQG"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="xk6-f5-56Z">
@@ -861,6 +868,26 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RXq-ZW-EnD" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-308" y="-24"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="yhY-FR-iH9">
+            <objects>
+                <navigationController storyboardIdentifier="virtualDeviceList" automaticallyAdjustsScrollViewInsets="NO" id="Cf2-1y-kBP" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="FQD-5l-D7Z">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="tintColor" red="0.92948921669999995" green="0.95337431839999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="barTintColor" red="0.19607843137254902" green="0.58039215686274503" blue="0.98039215686274506" alpha="1" colorSpace="calibratedRGB"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="Jed-es-tTO" kind="relationship" relationship="rootViewController" id="cOb-tB-hEe"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="BpL-0i-8hy" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-331" y="755"/>
         </scene>
     </scenes>
     <resources>

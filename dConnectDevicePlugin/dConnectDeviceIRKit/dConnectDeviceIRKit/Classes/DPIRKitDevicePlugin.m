@@ -17,6 +17,17 @@
 #import "DPIRKitSystemProfile.h"
 #import "DPIRKitService.h"
 #import "DPIRKitReachability.h"
+#import <DConnectSDK/DConnectServiceListViewController.h>
+#import "DPIRKitVirtualDeviceViewController.h"
+
+#define DCBundle() \
+[NSBundle bundleWithPath:[[NSBundle mainBundle] pathForResource:@"DConnectSDK_resources" ofType:@"bundle"]]
+
+#define DCPutPresentedViewController(top) \
+top = [UIApplication sharedApplication].keyWindow.rootViewController; \
+while (top.presentedViewController) { \
+top = top.presentedViewController; \
+}
 
 NSString *const DPIRKitInfoVersion = @"DPIRKitVersion";
 NSString *const DPIRKitInfoAPIKey = @"DPIRKitAPIKey";
@@ -31,6 +42,7 @@ NSString *const DPIRKitInfoPlistName = @"dConnectDeviceIRKit-Info";
 <
 // プロファイルデリゲート
 DConnectServiceInformationProfileDataSource,
+DConnectSystemProfileDelegate,
 DConnectSystemProfileDataSource,
 
 // デバイス検知デリゲート
@@ -67,7 +79,7 @@ DPIRKitManagerDetectionDelegate
         [manager setPlugin:self];
         
         // System Profileの追加
-        [self addProfile:[[DPIRKitSystemProfile alloc] initWithDataSource: self]];
+        [self addProfile:[[DPIRKitSystemProfile alloc] initWithDelegate:self dataSource:self]];
         
         _devices = [NSMutableDictionary dictionary];
         id<DConnectEventCacheController> controller = [[DConnectMemoryCacheController alloc] init];
@@ -157,6 +169,7 @@ DPIRKitManagerDetectionDelegate
                 } else {
                     DPIRKitService *service = [[DPIRKitService alloc] initWithServiceId: serviceId plugin: self];
                     [self.serviceProvider addService: service];
+                    [service setOnline: YES];
                 }
             } else {
                 // オフライン遷移の場合、デバイスが登録済ならフラグをオフラインにする
@@ -221,7 +234,14 @@ DPIRKitManagerDetectionDelegate
 - (UIViewController *) profile:(DConnectSystemProfile *)sender
          settingPageForRequest:(DConnectRequestMessage *)request
 {
-    
+    UIStoryboard *storyBoard;
+    storyBoard = [UIStoryboard storyboardWithName:@"DConnectSDK-iPhone"
+                                           bundle:DCBundle()];
+    UINavigationController *top = [storyBoard instantiateViewControllerWithIdentifier:@"ServiceList"];
+    DConnectServiceListViewController *serviceListViewController = (DConnectServiceListViewController *) top.viewControllers[0];
+    serviceListViewController.delegate = self;
+    return top;
+/*
     NSBundle *bundle = DPIRBundle();
     
     // iphoneとipadでストーリーボードを切り替える
@@ -235,9 +255,59 @@ DPIRKitManagerDetectionDelegate
     }
     UINavigationController *viewController = [storyBoard instantiateInitialViewController];
     return viewController;
+*/
 }
 
-#pragma mark DConnectSystemProfileDataSource
+- (void)didSelectService:(DConnectService *)service {
+    
+    // サービスが選択されたら、仮想デバイス一覧画面を表示する
+    
+    // iphoneとipadでストーリーボードを切り替える
+    NSBundle *bundle = DPIRBundle();
+    UIStoryboard *storyBoard;
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
+        storyBoard = [UIStoryboard storyboardWithName:[NSString stringWithFormat:@"%@iPhone", DPIRKitStoryBoardName]
+                                               bundle:bundle];
+    } else{
+        storyBoard = [UIStoryboard storyboardWithName:[NSString stringWithFormat:@"%@iPad", DPIRKitStoryBoardName]
+                                               bundle:bundle];
+    }
+    UINavigationController *top = [storyBoard instantiateViewControllerWithIdentifier:@"virtualDeviceList"];
+    
+    UIViewController *rootView;
+    DCPutPresentedViewController(rootView);
+    [rootView presentViewController:top animated:YES completion:nil];
+}
+
+- (void) serviceListViewControllerDidWillAppear {
+    [self startObeservation];
+}
+
+
+
+#pragma mark DConnectSystemProfileDelegate
+
+- (DConnectServiceProvider *)serviceProvider {
+    return super.serviceProvider;
+}
+
+- (UIViewController *)settingViewController {
+    NSBundle *bundle = DPIRBundle();
+    
+    // iphoneとipadでストーリーボードを切り替える
+    UIStoryboard *storyBoard;
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
+        storyBoard = [UIStoryboard storyboardWithName:[NSString stringWithFormat:@"%@iPhone", DPIRKitStoryBoardName]
+                                               bundle:bundle];
+    } else{
+        storyBoard = [UIStoryboard storyboardWithName:[NSString stringWithFormat:@"%@iPad", DPIRKitStoryBoardName]
+                                               bundle:bundle];
+    }
+    UINavigationController *top = [storyBoard instantiateViewControllerWithIdentifier:@"setting"];
+    return top;
+}
+
+#pragma mark DConnectInformationProfileDataSource
 
 - (DConnectServiceInformationProfileConnectState) profile:(DConnectServiceInformationProfile *)profile
                         wifiStateForServiceId:(NSString *)serviceId
