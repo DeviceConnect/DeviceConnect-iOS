@@ -14,6 +14,10 @@
 
 @interface DConnectServiceListViewController()
 
+@property(nonatomic, strong) NSString *localizeStatusOnline;
+
+@property(nonatomic, strong) NSString *localizeStatusOffline;
+
 @property(nonatomic, strong) NSString *addButtonTitle;
 
 @property(nonatomic, strong) NSString *finishButtonTitle;
@@ -31,6 +35,11 @@
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 
+    // ローカライズ文字列取得
+    NSBundle *bundle = DCBundle();
+    self.localizeStatusOnline = DCLocalizedString(bundle, @"status_online");
+    self.localizeStatusOffline = DCLocalizedString(bundle, @"status_offline");
+    
     // ボタンタイトル名を保存
     self.addButtonTitle = self.addButton.title;
     self.finishButtonTitle = self.finishButton.title;
@@ -102,10 +111,10 @@
                 if (service) {
                     serviceName = [service name];
                     if ([service online]) {
-                        onlineStatus = @"Online";
+                        onlineStatus = self.localizeStatusOnline;
                         backgroundColor = [UIColor whiteColor];
                     } else {
-                        onlineStatus = @"Offline";
+                        onlineStatus = self.localizeStatusOffline;
                         backgroundColor = [UIColor lightGrayColor];
                     }
                 }

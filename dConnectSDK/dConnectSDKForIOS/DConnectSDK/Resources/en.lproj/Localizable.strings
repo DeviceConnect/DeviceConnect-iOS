@@ -34,6 +34,8 @@
 "token_list_scopes" = "%@ and %d others.";
 "token_expiration_date" = "Expiration date : %@";
 "token_default_expiration_date" = "You can access the profile after approval until %@.";
+"status_online" = "Online";
+"status_offline" = "Offline";
 
 // Alert Title
 "alert_title_all_delete" = "Delete All";
