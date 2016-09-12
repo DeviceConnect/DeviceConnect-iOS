@@ -93,6 +93,7 @@
         
         NSString *serviceName = @"";
         NSString *onlineStatus = @"";
+        UIColor *backgroundColor = [UIColor whiteColor];
         
         if (self.delegate) {
             DConnectServiceProvider *serviceProvider = [self.delegate serviceProvider];
@@ -100,13 +101,20 @@
                 DConnectService *service = serviceProvider.services[indexPath.row];
                 if (service) {
                     serviceName = [service name];
-                    onlineStatus = [service online] ? @"Online" : @"Offline";
+                    if ([service online]) {
+                        onlineStatus = @"Online";
+                        backgroundColor = [UIColor whiteColor];
+                    } else {
+                        onlineStatus = @"Offline";
+                        backgroundColor = [UIColor lightGrayColor];
+                    }
                 }
             }
         }
         
         cell.serviceNameLabel.text = serviceName;
         cell.onlineStatusLabel.text = onlineStatus;
+        cell.backgroundColor  = backgroundColor;
     }
     
     return cell;
