@@ -154,6 +154,7 @@ static const NSTimeInterval DPSemaphoreTimeout = 20.0;
                                                               deviceName:deviceName
                                                                   plugin: self.plugin];
                 [_serviceProvider addService: service];
+                [service setOnline: YES];
             } else {
                 [service setOnline: YES];
             }

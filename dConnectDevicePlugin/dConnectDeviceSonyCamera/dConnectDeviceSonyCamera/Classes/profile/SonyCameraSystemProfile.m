@@ -9,9 +9,13 @@
 
 #import "SonyCameraSystemProfile.h"
 #import <DConnectSDK/DConnectEventManager.h>
+#import <DConnectSDK/DConnectServiceListViewController.h>
 #import "SonyCameraDevicePlugin.h"
 #import "SonyCameraViewController.h"
 #import "SonyCameraManager.h"
+
+#define DCBundle() \
+[NSBundle bundleWithPath:[[NSBundle mainBundle] pathForResource:@"DConnectSDK_resources" ofType:@"bundle"]]
 
 /*!
  @brief バージョン。
@@ -33,6 +37,7 @@ NSString *const SonyDevicePluginVersion = @"2.0.0";
 {
     self = [super init];
     if (self) {
+        self.delegate = self;
         self.dataSource = self;
         __weak SonyCameraSystemProfile *weakSelf = self;
         
@@ -89,6 +94,49 @@ NSString *const SonyDevicePluginVersion = @"2.0.0";
 - (UIViewController *) profile:(DConnectSystemProfile *)sender
          settingPageForRequest:(DConnectRequestMessage *)request
 {
+    UIStoryboard *storyBoard;
+    storyBoard = [UIStoryboard storyboardWithName:@"DConnectSDK-iPhone"
+                                           bundle:DCBundle()];
+    UINavigationController *top = [storyBoard instantiateViewControllerWithIdentifier:@"ServiceList"];
+    DConnectServiceListViewController *serviceListViewController = (DConnectServiceListViewController *) top.viewControllers[0];
+    serviceListViewController.delegate = self;
+    return top;
+    
+/*
+    NSString *bundlePath = [[NSBundle mainBundle]
+                            pathForResource:@"dConnectDeviceSonyCamera_resources"
+                            ofType:@"bundle"];
+    NSBundle *bundle = [NSBundle bundleWithPath:bundlePath];
+    
+    // iphoneとipadでストーリーボードを切り替える
+    UIStoryboard *storyBoard;
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
+        storyBoard = [UIStoryboard storyboardWithName:@"SonyCameraDevicePlugin_iPhone" bundle:bundle];
+    } else{
+        storyBoard = [UIStoryboard storyboardWithName:@"SonyCameraDevicePlugin_iPad" bundle:bundle];
+    }
+    UINavigationController *viewController = [storyBoard instantiateInitialViewController];
+    SonyCameraManager *manager = [SonyCameraManager sharedManager];
+    for (int i = 0; i < viewController.viewControllers.count; i++) {
+        UIViewController *ctl = viewController.viewControllers[i];
+        NSString *className = NSStringFromClass([ctl class]);
+        if ([className isEqualToString:@"SonyCameraViewController"]) {
+            SonyCameraViewController *scvc = (SonyCameraViewController *) ctl;
+            scvc.deviceplugin = manager.plugin;
+        }
+    }
+    return viewController;
+*/
+}
+
+
+#pragma mark - DConnectSystemProfileDelegate
+
+- (DConnectServiceProvider *)serviceProvider {
+    return ((DConnectDevicePlugin *)self.plugin).serviceProvider;
+}
+
+- (UIViewController *)settingViewController {
     NSString *bundlePath = [[NSBundle mainBundle]
                             pathForResource:@"dConnectDeviceSonyCamera_resources"
                             ofType:@"bundle"];
@@ -113,6 +161,7 @@ NSString *const SonyDevicePluginVersion = @"2.0.0";
     }
     return viewController;
 }
+
 
 #pragma mark - Primate Methods.
 

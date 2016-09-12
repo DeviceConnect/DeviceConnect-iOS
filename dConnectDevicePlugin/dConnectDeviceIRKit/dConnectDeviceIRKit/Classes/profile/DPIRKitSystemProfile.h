@@ -12,6 +12,5 @@
 
 @interface DPIRKitSystemProfile : DConnectSystemProfile
 
-- (id)initWithDataSource: (id<DConnectSystemProfileDataSource>) dataSource;
-
+- (id)initWithDelegate: (id<DConnectSystemProfileDelegate>) delegate dataSource: (id<DConnectSystemProfileDataSource>) dataSource;
 @end

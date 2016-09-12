@@ -241,8 +241,8 @@ BOOL _startedCollisionSensor;
                 service = [[DPSpheroService alloc] initWithServiceId:serviceId
                                                           deviceName:deviceName
                                                               plugin: self.plugin];
-                [service setOnline: isOnline];
                 [self.serviceProvider addService: service];
+                [service setOnline: isOnline];
             }
         }
     }
