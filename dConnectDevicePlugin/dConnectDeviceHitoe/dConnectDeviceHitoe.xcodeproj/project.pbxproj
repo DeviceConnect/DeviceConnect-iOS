@@ -32,6 +32,8 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		AB1C77701D8692BF0019EA09 /* dconnect_icon_off.png in Resources */ = {isa = PBXBuildFile; fileRef = AB1C776E1D8692BF0019EA09 /* dconnect_icon_off.png */; };
+		AB1C77711D8692BF0019EA09 /* dconnect_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = AB1C776F1D8692BF0019EA09 /* dconnect_icon.png */; };
 		AB1EC28A1D41ACAD005172E7 /* DPHitoeControlViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB1EC2891D41ACAD005172E7 /* DPHitoeControlViewController.m */; };
 		AB1EC2911D41CFEE005172E7 /* DPHitoeControlBatteryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB1EC2901D41CFEE005172E7 /* DPHitoeControlBatteryViewController.m */; };
 		AB1EC2941D41E19B005172E7 /* DPHioteControlDeviceOrientationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB1EC2931D41E19B005172E7 /* DPHioteControlDeviceOrientationViewController.m */; };
@@ -160,6 +162,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		AB1C776E1D8692BF0019EA09 /* dconnect_icon_off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dconnect_icon_off.png; sourceTree = "<group>"; };
+		AB1C776F1D8692BF0019EA09 /* dconnect_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dconnect_icon.png; sourceTree = "<group>"; };
 		AB1EC2881D41ACAD005172E7 /* DPHitoeControlViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHitoeControlViewController.h; sourceTree = "<group>"; };
 		AB1EC2891D41ACAD005172E7 /* DPHitoeControlViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHitoeControlViewController.m; sourceTree = "<group>"; };
 		AB1EC28F1D41CFEE005172E7 /* DPHitoeControlBatteryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHitoeControlBatteryViewController.h; sourceTree = "<group>"; };
@@ -581,6 +585,8 @@
 		ABF6C37B1D2B4B7B006B1B91 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				AB1C776E1D8692BF0019EA09 /* dconnect_icon_off.png */,
+				AB1C776F1D8692BF0019EA09 /* dconnect_icon.png */,
 				ABC429561D4438A200668396 /* Drawable_iPad */,
 				AB3D3E6D1D2B9E5C004290BA /* Drawable_iPhone */,
 				ABF6C39F1D2B5202006B1B91 /* Hitoe_iPhone.storyboard */,
@@ -804,12 +810,14 @@
 				ABC429B01D443B3400668396 /* pose_running960.png in Resources */,
 				ABC429A71D443B3400668396 /* pose_backward960.png in Resources */,
 				ABC429831D4438F200668396 /* pose_standing.png in Resources */,
+				AB1C77701D8692BF0019EA09 /* dconnect_icon_off.png in Resources */,
 				ABC429A31D443B3400668396 /* mark_battery03_960.png in Resources */,
 				AB7E736C1D3DC08C0080AD22 /* HitoeWakeupDialog_iPhone.storyboard in Resources */,
 				ABC429A51D443B3400668396 /* mark_battery05_960.png in Resources */,
 				ABC4297C1D4438F200668396 /* pose_faceleft.png in Resources */,
 				ABC429841D4438F200668396 /* pose_walking.png in Resources */,
 				ABC25AC21D33854D00CD9DA0 /* PinCodeDialog_iPhone.storyboard in Resources */,
+				AB1C77711D8692BF0019EA09 /* dconnect_icon.png in Resources */,
 				ABC4299E1D443B3400668396 /* hitoe_explain960.png in Resources */,
 				ABC4297B1D4438F200668396 /* pose_facedown.png in Resources */,
 				AB40C2F11D80F72A00355F3E /* HitoeWarningDialog_iPad.storyboard in Resources */,

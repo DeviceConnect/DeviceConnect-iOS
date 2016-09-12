@@ -223,10 +223,10 @@ int const DPHitoeDataKeyExtension = 0x04;
 
 - (NSString*)iconFilePath:(BOOL)isOnline
 {
-//    NSString *bundlePath = [DPHitoeBundle() pathForResource:@"dConnectDeviceHost_resources" ofType:@"bundle"];
-//    NSBundle *bundle = [NSBundle bundleWithPath:bundlePath];
-//    NSString* filename = isOnline ? @"dconnect_icon" : @"dconnect_icon_off";
-//    return [bundle pathForResource:filename ofType:@"png"];
+    NSString *bundlePath = [[NSBundle mainBundle] pathForResource:@"dConnectDeviceHitoe_resources" ofType:@"bundle"];
+    NSBundle *bundle = [NSBundle bundleWithPath:bundlePath];
+    NSString* filename = isOnline ? @"dconnect_icon" : @"dconnect_icon_off";
+    return [bundle pathForResource:filename ofType:@"png"];
     return nil;
 }
 
