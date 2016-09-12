@@ -16,7 +16,7 @@
 #import "DPChromecastService.h"
 #import "DPChromecastReachability.h"
 
-static NSString *const kReceiverAppID = @"[Your Application Id]";
+static NSString *const kReceiverAppID = @"Your Application Id";
 static NSString *const kReceiverNamespace
     = @"urn:x-cast:com.name.space.chromecast.test.receiver";
 static NSString * const kDPChromeRegexDecimalPoint = @"^[-+]?([0-9]*)?(\\.)?([0-9]*)?$";
@@ -98,7 +98,7 @@ static const NSTimeInterval DPSemaphoreTimeout = 20.0;
 -(void)notifiedNetworkStatus:(NSNotification *)notification {
     NetworkStatus networkStatus = [self.reachability currentReachabilityStatus];
     if (networkStatus == NotReachable) {
-        [self updateManageServices: NO];
+//        [self updateManageServices: NO];
     } else {
         [self startScan];
     }
@@ -337,7 +337,7 @@ static const NSTimeInterval DPSemaphoreTimeout = 20.0;
     [self stopScan];
     
     // デバイス管理情報更新
-    [self updateManageServices: YES];
+//    [self updateManageServices: YES];
 }
 
 // テキストの送信
@@ -528,17 +528,17 @@ static const NSTimeInterval DPSemaphoreTimeout = 20.0;
 
 - (void)deviceDidComeOnline:(GCKDevice *)device {
     // デバイス管理情報更新
-    [self updateManageServices: YES];
+//    [self updateManageServices: YES];
 }
 
 - (void)deviceDidGoOffline:(GCKDevice *)device {
     // デバイス管理情報更新
-    [self updateManageServices: YES];
+//    [self updateManageServices: YES];
 }
 
 - (void)deviceDidChange:(GCKDevice *)device {
     // デバイス管理情報更新
-    [self updateManageServices: YES];
+//    [self updateManageServices: YES];
 }
 
 
