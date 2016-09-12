@@ -42,6 +42,10 @@
 - (void)viewWillAppear:(BOOL)animated {
     if (self.delegate) {
         [self.delegate.serviceProvider addServiceListener:self];
+        
+        if ([self.delegate respondsToSelector:@selector(serviceListViewControllerDidWillAppear)]) {
+            [self.delegate serviceListViewControllerDidWillAppear];
+        }
     }
 }
 

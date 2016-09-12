@@ -279,6 +279,12 @@ DPIRKitManagerDetectionDelegate
     [rootView presentViewController:top animated:YES completion:nil];
 }
 
+- (void) serviceListViewControllerDidWillAppear {
+    [self startObeservation];
+}
+
+
+
 #pragma mark DConnectSystemProfileDelegate
 
 - (DConnectServiceProvider *)serviceProvider {
