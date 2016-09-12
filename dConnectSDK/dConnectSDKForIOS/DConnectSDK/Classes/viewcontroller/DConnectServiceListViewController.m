@@ -44,6 +44,9 @@
     // 再表示(バックグラウンド中に通知されたDConnectServiceListener(サービス追加／削除／状態変化)がTableViewに適用されていないので再表示する)
     [self.tableView reloadData];
     
+    // ボタン状態更新
+    [self setButtonLayout];
+    
     if (self.delegate) {
         [self.delegate.serviceProvider addServiceListener:self];
         
