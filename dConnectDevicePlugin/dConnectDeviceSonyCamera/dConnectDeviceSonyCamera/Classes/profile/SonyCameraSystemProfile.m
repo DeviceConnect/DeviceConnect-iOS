@@ -37,6 +37,7 @@ NSString *const SonyDevicePluginVersion = @"2.0.0";
 {
     self = [super init];
     if (self) {
+        self.delegate = self;
         self.dataSource = self;
         __weak SonyCameraSystemProfile *weakSelf = self;
         
