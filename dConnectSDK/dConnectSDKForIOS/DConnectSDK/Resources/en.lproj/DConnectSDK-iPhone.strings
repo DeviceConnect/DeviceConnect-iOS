@@ -66,13 +66,13 @@
 "zP9-4Q-Kum.title" = "Close";
 
 /* Class = "IBUINavigationItem"; title = "ServiceList"; ObjectID = "85O-bV-LaT"; */
-"85O-bV-LaT.title" = "ServiceList";
+"85O-bV-LaT.title" = "サービス一覧";
 
 /* Class = "IBUIBarButtonItem"; title = "Add"; ObjectID = "N34-3A-ecw"; */
-"N34-3A-ecw.title" = "Add";
+"N34-3A-ecw.title" = "追加";
 
 /* Class = "IBUIBarButtonItem"; title = "Finish"; ObjectID = "eo8-1P-ti2"; */
-"eo8-1P-ti2.title" = "Finish";
+"eo8-1P-ti2.title" = "完了";
 
 /* Class = "IBUIBarButtonItem"; title = "Remove"; ObjectID = "uRa-Ko-l5K"; */
-"uRa-Ko-l5K.title" = "Remove";
+"uRa-Ko-l5K.title" = "削除";

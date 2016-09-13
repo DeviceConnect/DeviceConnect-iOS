@@ -462,7 +462,7 @@
             </objects>
             <point key="canvasLocation" x="864" y="1205"/>
         </scene>
-        <!--ServiceList-->
+        <!--サービス一覧-->
         <scene sceneID="h3B-eT-EYR">
             <objects>
                 <tableViewController id="hAx-5V-OT2" customClass="DConnectServiceListViewController" sceneMemberID="viewController">
@@ -513,25 +513,25 @@
                     </tableView>
                     <toolbarItems>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="grc-pA-axh"/>
-                        <barButtonItem title="Add" id="N34-3A-ecw">
+                        <barButtonItem title="追加" id="N34-3A-ecw">
                             <connections>
                                 <action selector="tapAddButton:" destination="hAx-5V-OT2" id="6JV-ru-Dhm"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem title="Finish" id="eo8-1P-ti2">
+                        <barButtonItem title="完了" id="eo8-1P-ti2">
                             <connections>
                                 <action selector="tapFinishButton:" destination="hAx-5V-OT2" id="4mw-lI-m72"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="jYW-rh-eX9"/>
-                        <barButtonItem title="Remove" id="uRa-Ko-l5K">
+                        <barButtonItem title="削除" id="uRa-Ko-l5K">
                             <connections>
                                 <action selector="tapRemoveButton:" destination="hAx-5V-OT2" id="s19-lE-91K"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="kFk-bj-ZCd"/>
                     </toolbarItems>
-                    <navigationItem key="navigationItem" title="ServiceList" id="85O-bV-LaT">
+                    <navigationItem key="navigationItem" title="サービス一覧" id="85O-bV-LaT">
                         <barButtonItem key="leftBarButtonItem" title="&lt; CLOSE" id="2QO-Xe-APX">
                             <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>
