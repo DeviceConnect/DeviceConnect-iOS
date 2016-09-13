@@ -1,0 +1,1203 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXAggregateTarget section */
+		ABF6C37E1D2B4C3C006B1B91 /* dConnectDeviceHitoe_framework */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = ABF6C37F1D2B4C3C006B1B91 /* Build configuration list for PBXAggregateTarget "dConnectDeviceHitoe_framework" */;
+			buildPhases = (
+				ABF6C3821D2B4C58006B1B91 /* ShellScript */,
+			);
+			dependencies = (
+			);
+			name = dConnectDeviceHitoe_framework;
+			productName = dConnectDeviceHitoe_Framework;
+		};
+		ABF6C3971D2B4D58006B1B91 /* dConnectDeviceHitoe_OCLint */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = ABF6C3981D2B4D58006B1B91 /* Build configuration list for PBXAggregateTarget "dConnectDeviceHitoe_OCLint" */;
+			buildPhases = (
+				ABF6C39B1D2B4D5F006B1B91 /* ShellScript */,
+			);
+			dependencies = (
+			);
+			name = dConnectDeviceHitoe_OCLint;
+			productName = dConnectDeviceHitoe_OCLint;
+		};
+/* End PBXAggregateTarget section */
+
+/* Begin PBXBuildFile section */
+		AB1C77701D8692BF0019EA09 /* dconnect_icon_off.png in Resources */ = {isa = PBXBuildFile; fileRef = AB1C776E1D8692BF0019EA09 /* dconnect_icon_off.png */; };
+		AB1C77711D8692BF0019EA09 /* dconnect_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = AB1C776F1D8692BF0019EA09 /* dconnect_icon.png */; };
+		AB1EC28A1D41ACAD005172E7 /* DPHitoeControlViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB1EC2891D41ACAD005172E7 /* DPHitoeControlViewController.m */; };
+		AB1EC2911D41CFEE005172E7 /* DPHitoeControlBatteryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB1EC2901D41CFEE005172E7 /* DPHitoeControlBatteryViewController.m */; };
+		AB1EC2941D41E19B005172E7 /* DPHioteControlDeviceOrientationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB1EC2931D41E19B005172E7 /* DPHioteControlDeviceOrientationViewController.m */; };
+		AB1EC2971D41E22F005172E7 /* DPHitoeACCChartView.m in Sources */ = {isa = PBXBuildFile; fileRef = AB1EC2961D41E22F005172E7 /* DPHitoeACCChartView.m */; };
+		AB1F4AAB1D387B45005784D9 /* DPHitoeHealthProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = AB1F4AAA1D387B45005784D9 /* DPHitoeHealthProfile.m */; };
+		AB1F4AAE1D3881C2005784D9 /* DPHitoeServiceDiscoveryProfle.m in Sources */ = {isa = PBXBuildFile; fileRef = AB1F4AAD1D3881C2005784D9 /* DPHitoeServiceDiscoveryProfle.m */; };
+		AB1F4AB51D38D76F005784D9 /* DPHitoeECGProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = AB1F4AB41D38D76F005784D9 /* DPHitoeECGProfile.m */; };
+		AB1F4AB81D38DFFC005784D9 /* DPHitoeBatteryProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = AB1F4AB71D38DFFC005784D9 /* DPHitoeBatteryProfile.m */; };
+		AB1F4ABB1D38E3E0005784D9 /* DPHitoeDeviceOrientationProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = AB1F4ABA1D38E3E0005784D9 /* DPHitoeDeviceOrientationProfile.m */; };
+		AB281C161D2DE35B0092A2B2 /* DPHitoeDeviceListTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB281C151D2DE35B0092A2B2 /* DPHitoeDeviceListTableViewController.m */; };
+		AB2E14EE1D2F64D300564A5E /* DPHitoeDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = AB2E14ED1D2F64D300564A5E /* DPHitoeDialog.m */; };
+		AB2E14F21D2F661700564A5E /* DPHitoeProgressDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = AB2E14F11D2F661700564A5E /* DPHitoeProgressDialog.m */; };
+		AB2E14F31D2F6D2400564A5E /* ProgressDialog.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AB2E14EF1D2F656700564A5E /* ProgressDialog.storyboard */; };
+		AB2E14F71D2F79A700564A5E /* DPHitoeDeviceListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AB2E14F61D2F79A700564A5E /* DPHitoeDeviceListCell.m */; };
+		AB3D3E681D2B85E7004290BA /* Hitoe_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ABF6C39F1D2B5202006B1B91 /* Hitoe_iPhone.storyboard */; };
+		AB3D3E6B1D2B890F004290BA /* Hitoe_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AB3D3E691D2B88D6004290BA /* Hitoe_iPad.storyboard */; };
+		AB3D3EB21D2CC40D004290BA /* DPHitoeSystemProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = AB3D3EB11D2CC40D004290BA /* DPHitoeSystemProfile.m */; };
+		AB3D3EB61D2CC7F3004290BA /* DCMDevicePluginSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB3D3EB51D2CC7F2004290BA /* DCMDevicePluginSDK.framework */; };
+		AB40C2EE1D80F01F00355F3E /* DPHitoeWarningDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = AB40C2ED1D80F01F00355F3E /* DPHitoeWarningDialog.m */; };
+		AB40C2EF1D80F5E300355F3E /* HitoeWarningDialog_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AB40C2EB1D80EEC300355F3E /* HitoeWarningDialog_iPhone.storyboard */; };
+		AB40C2F11D80F72A00355F3E /* HitoeWarningDialog_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AB40C2F01D80F72A00355F3E /* HitoeWarningDialog_iPad.storyboard */; };
+		AB507ED31D30D5760014C504 /* DPHitoeTable.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = AB507ED11D30D5760014C504 /* DPHitoeTable.xcdatamodeld */; };
+		AB507ED41D30D6500014C504 /* DPHitoeTable.xcdatamodeld in Resources */ = {isa = PBXBuildFile; fileRef = AB507ED11D30D5760014C504 /* DPHitoeTable.xcdatamodeld */; };
+		AB507ED71D30DE270014C504 /* DPHitoeDBManager.m in Sources */ = {isa = PBXBuildFile; fileRef = AB507ED61D30DE270014C504 /* DPHitoeDBManager.m */; };
+		AB507ED91D30E31A0014C504 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB507ED81D30E31A0014C504 /* CoreData.framework */; };
+		AB507EDC1D3102680014C504 /* DPHitoeDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = AB507EDB1D3102680014C504 /* DPHitoeDevice.m */; };
+		AB507EE51D31CFF90014C504 /* DPHitoeAddDeviceTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB507EE41D31CFF90014C504 /* DPHitoeAddDeviceTableViewController.m */; };
+		AB507EE81D31E87A0014C504 /* DPHitoeManager.m in Sources */ = {isa = PBXBuildFile; fileRef = AB507EE71D31E87A0014C504 /* DPHitoeManager.m */; };
+		AB507EEB1D31EB920014C504 /* DPHitoeAccelerationData.m in Sources */ = {isa = PBXBuildFile; fileRef = AB507EEA1D31EB920014C504 /* DPHitoeAccelerationData.m */; };
+		AB507EEE1D31EE530014C504 /* DPHitoeHeartData.m in Sources */ = {isa = PBXBuildFile; fileRef = AB507EED1D31EE530014C504 /* DPHitoeHeartData.m */; };
+		AB507EF11D31F82D0014C504 /* DPHitoeTargetDeviceData.m in Sources */ = {isa = PBXBuildFile; fileRef = AB507EF01D31F82D0014C504 /* DPHitoeTargetDeviceData.m */; };
+		AB507EF41D31F9BF0014C504 /* DPHitoeHeartRateData.m in Sources */ = {isa = PBXBuildFile; fileRef = AB507EF31D31F9BF0014C504 /* DPHitoeHeartRateData.m */; };
+		AB507EF71D31FB4D0014C504 /* DPHitoePoseEstimationData.m in Sources */ = {isa = PBXBuildFile; fileRef = AB507EF61D31FB4D0014C504 /* DPHitoePoseEstimationData.m */; };
+		AB507EFA1D31FBC60014C504 /* DPHitoeStressEstimationData.m in Sources */ = {isa = PBXBuildFile; fileRef = AB507EF91D31FBC60014C504 /* DPHitoeStressEstimationData.m */; };
+		AB507EFD1D31FDE10014C504 /* DPHitoeWalkStateData.m in Sources */ = {isa = PBXBuildFile; fileRef = AB507EFC1D31FDE10014C504 /* DPHitoeWalkStateData.m */; };
+		AB7E736C1D3DC08C0080AD22 /* HitoeWakeupDialog_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AB7E736B1D3DC0740080AD22 /* HitoeWakeupDialog_iPhone.storyboard */; };
+		AB7E736F1D3DC4040080AD22 /* DPHitoeWakeupDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = AB7E736E1D3DC4040080AD22 /* DPHitoeWakeupDialog.m */; };
+		AB7E73771D3DD7FD0080AD22 /* DPHitoeSetShirtDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = AB7E73761D3DD7FD0080AD22 /* DPHitoeSetShirtDialog.m */; };
+		AB7E73781D3DE4C90080AD22 /* HitoeShirtDialog_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AB7E73741D3DCE9E0080AD22 /* HitoeShirtDialog_iPhone.storyboard */; };
+		AB7E737A1D3DE7D10080AD22 /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB7E73791D3DE7D10080AD22 /* CoreBluetooth.framework */; };
+		AB7E737D1D3F07470080AD22 /* DPHitoeDeviceControlViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB7E737C1D3F07470080AD22 /* DPHitoeDeviceControlViewController.m */; };
+		AB7E73851D3F0E370080AD22 /* DPHitoeControlHealthViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB7E73841D3F0E370080AD22 /* DPHitoeControlHealthViewController.m */; };
+		AB7E738B1D3F3EC90080AD22 /* DPHitoeECGChartView.m in Sources */ = {isa = PBXBuildFile; fileRef = AB7E738A1D3F3EC90080AD22 /* DPHitoeECGChartView.m */; };
+		AB7E738D1D3F40FB0080AD22 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB7E738C1D3F40FB0080AD22 /* CoreGraphics.framework */; };
+		AB7E73901D3F55C20080AD22 /* DPHitoeControlECGViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB7E738F1D3F55C20080AD22 /* DPHitoeControlECGViewController.m */; };
+		ABA7D0B61D42550D00ED7E31 /* DPHitoeControlPoseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABA7D0B51D42550D00ED7E31 /* DPHitoeControlPoseViewController.m */; };
+		ABA7D0B91D42EB6E00ED7E31 /* DPHitoeControlWalkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABA7D0B81D42EB6E00ED7E31 /* DPHitoeControlWalkViewController.m */; };
+		ABA7D0BC1D42F2C500ED7E31 /* DPHitoeControlStressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABA7D0BB1D42F2C500ED7E31 /* DPHitoeControlStressViewController.m */; };
+		ABC25ABD1D33627000CD9DA0 /* DPHitoeAddDeviceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = ABC25ABC1D33627000CD9DA0 /* DPHitoeAddDeviceCell.m */; };
+		ABC25AC11D33841900CD9DA0 /* DPHitoePinCodeDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = ABC25AC01D33841900CD9DA0 /* DPHitoePinCodeDialog.m */; };
+		ABC25AC21D33854D00CD9DA0 /* PinCodeDialog_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ABC25ABE1D33805700CD9DA0 /* PinCodeDialog_iPhone.storyboard */; };
+		ABC25ACA1D34929200CD9DA0 /* DPHitoeStringUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = ABC25AC91D34929200CD9DA0 /* DPHitoeStringUtil.m */; };
+		ABC25AF01D37204900CD9DA0 /* DPHitoeMDERFloatConvertUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = ABC25AEF1D37204900CD9DA0 /* DPHitoeMDERFloatConvertUtil.m */; };
+		ABC25AF51D3735FE00CD9DA0 /* DPHitoeRawDataParseUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = ABC25AF41D3735FE00CD9DA0 /* DPHitoeRawDataParseUtil.m */; };
+		ABC4296E1D4438F200668396 /* check_off.png in Resources */ = {isa = PBXBuildFile; fileRef = ABC429571D4438F200668396 /* check_off.png */; };
+		ABC4296F1D4438F200668396 /* check_on.png in Resources */ = {isa = PBXBuildFile; fileRef = ABC429581D4438F200668396 /* check_on.png */; };
+		ABC429701D4438F200668396 /* hitoe_explain.png in Resources */ = {isa = PBXBuildFile; fileRef = ABC429591D4438F200668396 /* hitoe_explain.png */; };
+		ABC429711D4438F200668396 /* hitoe_input_pin.png in Resources */ = {isa = PBXBuildFile; fileRef = ABC4295A1D4438F200668396 /* hitoe_input_pin.png */; };
+		ABC429721D4438F200668396 /* hitoe_set.png in Resources */ = {isa = PBXBuildFile; fileRef = ABC4295B1D4438F200668396 /* hitoe_set.png */; };
+		ABC429731D4438F200668396 /* mark_battery01.png in Resources */ = {isa = PBXBuildFile; fileRef = ABC4295C1D4438F200668396 /* mark_battery01.png */; };
+		ABC429741D4438F200668396 /* mark_battery02.png in Resources */ = {isa = PBXBuildFile; fileRef = ABC4295D1D4438F200668396 /* mark_battery02.png */; };
+		ABC429751D4438F200668396 /* mark_battery03.png in Resources */ = {isa = PBXBuildFile; fileRef = ABC4295E1D4438F200668396 /* mark_battery03.png */; };
+		ABC429761D4438F200668396 /* mark_battery04.png in Resources */ = {isa = PBXBuildFile; fileRef = ABC4295F1D4438F200668396 /* mark_battery04.png */; };
+		ABC429771D4438F200668396 /* mark_battery05.png in Resources */ = {isa = PBXBuildFile; fileRef = ABC429601D4438F200668396 /* mark_battery05.png */; };
+		ABC429781D4438F200668396 /* mark_heartrate.png in Resources */ = {isa = PBXBuildFile; fileRef = ABC429611D4438F200668396 /* mark_heartrate.png */; };
+		ABC429791D4438F200668396 /* pose_backward.png in Resources */ = {isa = PBXBuildFile; fileRef = ABC429621D4438F200668396 /* pose_backward.png */; };
+		ABC4297A1D4438F200668396 /* pose_default.png in Resources */ = {isa = PBXBuildFile; fileRef = ABC429631D4438F200668396 /* pose_default.png */; };
+		ABC4297B1D4438F200668396 /* pose_facedown.png in Resources */ = {isa = PBXBuildFile; fileRef = ABC429641D4438F200668396 /* pose_facedown.png */; };
+		ABC4297C1D4438F200668396 /* pose_faceleft.png in Resources */ = {isa = PBXBuildFile; fileRef = ABC429651D4438F200668396 /* pose_faceleft.png */; };
+		ABC4297D1D4438F200668396 /* pose_faceright.png in Resources */ = {isa = PBXBuildFile; fileRef = ABC429661D4438F200668396 /* pose_faceright.png */; };
+		ABC4297E1D4438F200668396 /* pose_faceup.png in Resources */ = {isa = PBXBuildFile; fileRef = ABC429671D4438F200668396 /* pose_faceup.png */; };
+		ABC4297F1D4438F200668396 /* pose_forward.png in Resources */ = {isa = PBXBuildFile; fileRef = ABC429681D4438F200668396 /* pose_forward.png */; };
+		ABC429801D4438F200668396 /* pose_leftside.png in Resources */ = {isa = PBXBuildFile; fileRef = ABC429691D4438F200668396 /* pose_leftside.png */; };
+		ABC429811D4438F200668396 /* pose_rightside.png in Resources */ = {isa = PBXBuildFile; fileRef = ABC4296A1D4438F200668396 /* pose_rightside.png */; };
+		ABC429821D4438F200668396 /* pose_running.png in Resources */ = {isa = PBXBuildFile; fileRef = ABC4296B1D4438F200668396 /* pose_running.png */; };
+		ABC429831D4438F200668396 /* pose_standing.png in Resources */ = {isa = PBXBuildFile; fileRef = ABC4296C1D4438F200668396 /* pose_standing.png */; };
+		ABC429841D4438F200668396 /* pose_walking.png in Resources */ = {isa = PBXBuildFile; fileRef = ABC4296D1D4438F200668396 /* pose_walking.png */; };
+		ABC4299E1D443B3400668396 /* hitoe_explain960.png in Resources */ = {isa = PBXBuildFile; fileRef = ABC429881D443B3400668396 /* hitoe_explain960.png */; };
+		ABC4299F1D443B3400668396 /* hitoe_input_pin960.png in Resources */ = {isa = PBXBuildFile; fileRef = ABC429891D443B3400668396 /* hitoe_input_pin960.png */; };
+		ABC429A01D443B3400668396 /* hitoe_set960.png in Resources */ = {isa = PBXBuildFile; fileRef = ABC4298A1D443B3400668396 /* hitoe_set960.png */; };
+		ABC429A11D443B3400668396 /* mark_battery01_960.png in Resources */ = {isa = PBXBuildFile; fileRef = ABC4298B1D443B3400668396 /* mark_battery01_960.png */; };
+		ABC429A21D443B3400668396 /* mark_battery02_960.png in Resources */ = {isa = PBXBuildFile; fileRef = ABC4298C1D443B3400668396 /* mark_battery02_960.png */; };
+		ABC429A31D443B3400668396 /* mark_battery03_960.png in Resources */ = {isa = PBXBuildFile; fileRef = ABC4298D1D443B3400668396 /* mark_battery03_960.png */; };
+		ABC429A41D443B3400668396 /* mark_battery04_960.png in Resources */ = {isa = PBXBuildFile; fileRef = ABC4298E1D443B3400668396 /* mark_battery04_960.png */; };
+		ABC429A51D443B3400668396 /* mark_battery05_960.png in Resources */ = {isa = PBXBuildFile; fileRef = ABC4298F1D443B3400668396 /* mark_battery05_960.png */; };
+		ABC429A61D443B3400668396 /* mark_heartrate960.png in Resources */ = {isa = PBXBuildFile; fileRef = ABC429901D443B3400668396 /* mark_heartrate960.png */; };
+		ABC429A71D443B3400668396 /* pose_backward960.png in Resources */ = {isa = PBXBuildFile; fileRef = ABC429911D443B3400668396 /* pose_backward960.png */; };
+		ABC429A81D443B3400668396 /* pose_default960.png in Resources */ = {isa = PBXBuildFile; fileRef = ABC429921D443B3400668396 /* pose_default960.png */; };
+		ABC429A91D443B3400668396 /* pose_facedown960.png in Resources */ = {isa = PBXBuildFile; fileRef = ABC429931D443B3400668396 /* pose_facedown960.png */; };
+		ABC429AA1D443B3400668396 /* pose_faceleft960.png in Resources */ = {isa = PBXBuildFile; fileRef = ABC429941D443B3400668396 /* pose_faceleft960.png */; };
+		ABC429AB1D443B3400668396 /* pose_faceright960.png in Resources */ = {isa = PBXBuildFile; fileRef = ABC429951D443B3400668396 /* pose_faceright960.png */; };
+		ABC429AC1D443B3400668396 /* pose_faceup960.png in Resources */ = {isa = PBXBuildFile; fileRef = ABC429961D443B3400668396 /* pose_faceup960.png */; };
+		ABC429AD1D443B3400668396 /* pose_forward960.png in Resources */ = {isa = PBXBuildFile; fileRef = ABC429971D443B3400668396 /* pose_forward960.png */; };
+		ABC429AE1D443B3400668396 /* pose_leftside960.png in Resources */ = {isa = PBXBuildFile; fileRef = ABC429981D443B3400668396 /* pose_leftside960.png */; };
+		ABC429AF1D443B3400668396 /* pose_rightside960.png in Resources */ = {isa = PBXBuildFile; fileRef = ABC429991D443B3400668396 /* pose_rightside960.png */; };
+		ABC429B01D443B3400668396 /* pose_running960.png in Resources */ = {isa = PBXBuildFile; fileRef = ABC4299A1D443B3400668396 /* pose_running960.png */; };
+		ABC429B11D443B3400668396 /* pose_standing960.png in Resources */ = {isa = PBXBuildFile; fileRef = ABC4299B1D443B3400668396 /* pose_standing960.png */; };
+		ABC429B21D443B3400668396 /* pose_walking960.png in Resources */ = {isa = PBXBuildFile; fileRef = ABC4299C1D443B3400668396 /* pose_walking960.png */; };
+		ABD3345D1D45C97000D05903 /* PinCodeDialog_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ABD3345C1D45BBFA00D05903 /* PinCodeDialog_iPad.storyboard */; };
+		ABD3345E1D45C97000D05903 /* HitoeWakeupDialog_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ABD3345B1D45B84300D05903 /* HitoeWakeupDialog_iPad.storyboard */; };
+		ABD3345F1D45C97000D05903 /* HitoeShirtDialog_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ABD3345A1D45B67F00D05903 /* HitoeShirtDialog_iPad.storyboard */; };
+		ABDDDF821D485153002EFF57 /* DPHitoeService.m in Sources */ = {isa = PBXBuildFile; fileRef = ABDDDF811D485153002EFF57 /* DPHitoeService.m */; };
+		ABDDDF871D487799002EFF57 /* DPHitoeEventDispatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = ABDDDF861D487799002EFF57 /* DPHitoeEventDispatcher.m */; };
+		ABDDDF8A1D487A74002EFF57 /* DPHItoeImmediateEventDispatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = ABDDDF891D487A74002EFF57 /* DPHItoeImmediateEventDispatcher.m */; };
+		ABDDDF8D1D487B1E002EFF57 /* DPHitoeIntervalEventDispatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = ABDDDF8C1D487B1E002EFF57 /* DPHitoeIntervalEventDispatcher.m */; };
+		ABDDDF901D48802E002EFF57 /* DPHitoeEventDispatcherFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = ABDDDF8F1D48802E002EFF57 /* DPHitoeEventDispatcherFactory.m */; };
+		ABDDDF931D488399002EFF57 /* DPHitoeEventDispatcherManager.m in Sources */ = {isa = PBXBuildFile; fileRef = ABDDDF921D488399002EFF57 /* DPHitoeEventDispatcherManager.m */; };
+		ABE4EBBA1D38FF2B0007B0A2 /* DPHitoePoseEstimationProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE4EBB91D38FF2B0007B0A2 /* DPHitoePoseEstimationProfile.m */; };
+		ABE4EBBD1D3906DA0007B0A2 /* DPHitoeStressEstimationProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE4EBBC1D3906DA0007B0A2 /* DPHitoeStressEstimationProfile.m */; };
+		ABE4EBC01D3909850007B0A2 /* DPHitoeWalkStateProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE4EBBF1D3909850007B0A2 /* DPHitoeWalkStateProfile.m */; };
+		ABF6C3AB1D2B7722006B1B91 /* DConnectSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABF6C3AA1D2B7722006B1B91 /* DConnectSDK.framework */; };
+		ABF6C3AD1D2B7741006B1B91 /* hitoeAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABF6C3AC1D2B7741006B1B91 /* hitoeAPI.framework */; };
+		ABF6C3B31D2B7903006B1B91 /* DPHitoeDevicePlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = ABF6C3B21D2B7903006B1B91 /* DPHitoeDevicePlugin.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		ABF6C36A1D2B4A0D006B1B91 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/$(PRODUCT_NAME)";
+			dstSubfolderSpec = 16;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		AB1C776E1D8692BF0019EA09 /* dconnect_icon_off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dconnect_icon_off.png; sourceTree = "<group>"; };
+		AB1C776F1D8692BF0019EA09 /* dconnect_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dconnect_icon.png; sourceTree = "<group>"; };
+		AB1EC2881D41ACAD005172E7 /* DPHitoeControlViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHitoeControlViewController.h; sourceTree = "<group>"; };
+		AB1EC2891D41ACAD005172E7 /* DPHitoeControlViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHitoeControlViewController.m; sourceTree = "<group>"; };
+		AB1EC28F1D41CFEE005172E7 /* DPHitoeControlBatteryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHitoeControlBatteryViewController.h; sourceTree = "<group>"; };
+		AB1EC2901D41CFEE005172E7 /* DPHitoeControlBatteryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHitoeControlBatteryViewController.m; sourceTree = "<group>"; };
+		AB1EC2921D41E19A005172E7 /* DPHitoeControlDeviceOrientationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHitoeControlDeviceOrientationViewController.h; sourceTree = "<group>"; };
+		AB1EC2931D41E19B005172E7 /* DPHioteControlDeviceOrientationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHioteControlDeviceOrientationViewController.m; sourceTree = "<group>"; };
+		AB1EC2951D41E22F005172E7 /* DPHitoeACCChartView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHitoeACCChartView.h; sourceTree = "<group>"; };
+		AB1EC2961D41E22F005172E7 /* DPHitoeACCChartView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHitoeACCChartView.m; sourceTree = "<group>"; };
+		AB1F4AA91D387B45005784D9 /* DPHitoeHealthProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHitoeHealthProfile.h; sourceTree = "<group>"; };
+		AB1F4AAA1D387B45005784D9 /* DPHitoeHealthProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHitoeHealthProfile.m; sourceTree = "<group>"; };
+		AB1F4AAC1D3881C2005784D9 /* DPHitoeServiceDiscoveryProfle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHitoeServiceDiscoveryProfle.h; sourceTree = "<group>"; };
+		AB1F4AAD1D3881C2005784D9 /* DPHitoeServiceDiscoveryProfle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHitoeServiceDiscoveryProfle.m; sourceTree = "<group>"; };
+		AB1F4AB31D38D76F005784D9 /* DPHitoeECGProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHitoeECGProfile.h; sourceTree = "<group>"; };
+		AB1F4AB41D38D76F005784D9 /* DPHitoeECGProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHitoeECGProfile.m; sourceTree = "<group>"; };
+		AB1F4AB61D38DFFC005784D9 /* DPHitoeBatteryProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DPHitoeBatteryProfile.h; path = dConnectDeviceHitoe/Classes/profile/DPHitoeBatteryProfile.h; sourceTree = SOURCE_ROOT; };
+		AB1F4AB71D38DFFC005784D9 /* DPHitoeBatteryProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DPHitoeBatteryProfile.m; path = dConnectDeviceHitoe/Classes/profile/DPHitoeBatteryProfile.m; sourceTree = SOURCE_ROOT; };
+		AB1F4AB91D38E3E0005784D9 /* DPHitoeDeviceOrientationProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DPHitoeDeviceOrientationProfile.h; path = dConnectDeviceHitoe/Classes/profile/DPHitoeDeviceOrientationProfile.h; sourceTree = SOURCE_ROOT; };
+		AB1F4ABA1D38E3E0005784D9 /* DPHitoeDeviceOrientationProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DPHitoeDeviceOrientationProfile.m; path = dConnectDeviceHitoe/Classes/profile/DPHitoeDeviceOrientationProfile.m; sourceTree = SOURCE_ROOT; };
+		AB281C141D2DE35B0092A2B2 /* DPHitoeDeviceListTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHitoeDeviceListTableViewController.h; sourceTree = "<group>"; };
+		AB281C151D2DE35B0092A2B2 /* DPHitoeDeviceListTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHitoeDeviceListTableViewController.m; sourceTree = "<group>"; };
+		AB2E14EC1D2F64D300564A5E /* DPHitoeDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHitoeDialog.h; sourceTree = "<group>"; };
+		AB2E14ED1D2F64D300564A5E /* DPHitoeDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHitoeDialog.m; sourceTree = "<group>"; };
+		AB2E14EF1D2F656700564A5E /* ProgressDialog.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ProgressDialog.storyboard; sourceTree = "<group>"; };
+		AB2E14F01D2F661700564A5E /* DPHitoeProgressDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHitoeProgressDialog.h; sourceTree = "<group>"; };
+		AB2E14F11D2F661700564A5E /* DPHitoeProgressDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHitoeProgressDialog.m; sourceTree = "<group>"; };
+		AB2E14F51D2F79A700564A5E /* DPHitoeDeviceListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHitoeDeviceListCell.h; sourceTree = "<group>"; };
+		AB2E14F61D2F79A700564A5E /* DPHitoeDeviceListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHitoeDeviceListCell.m; sourceTree = "<group>"; };
+		AB3D3E671D2B7D44004290BA /* DPHitoeConsts.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DPHitoeConsts.h; sourceTree = "<group>"; };
+		AB3D3E691D2B88D6004290BA /* Hitoe_iPad.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Hitoe_iPad.storyboard; sourceTree = "<group>"; };
+		AB3D3EB01D2CC40D004290BA /* DPHitoeSystemProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHitoeSystemProfile.h; sourceTree = "<group>"; };
+		AB3D3EB11D2CC40D004290BA /* DPHitoeSystemProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHitoeSystemProfile.m; sourceTree = "<group>"; };
+		AB3D3EB51D2CC7F2004290BA /* DCMDevicePluginSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DCMDevicePluginSDK.framework; path = ../DCMDevicePluginSDK/bin/DCMDevicePluginSDK.framework; sourceTree = "<group>"; };
+		AB40C2EB1D80EEC300355F3E /* HitoeWarningDialog_iPhone.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = HitoeWarningDialog_iPhone.storyboard; sourceTree = "<group>"; };
+		AB40C2EC1D80F01F00355F3E /* DPHitoeWarningDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHitoeWarningDialog.h; sourceTree = "<group>"; };
+		AB40C2ED1D80F01F00355F3E /* DPHitoeWarningDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHitoeWarningDialog.m; sourceTree = "<group>"; };
+		AB40C2F01D80F72A00355F3E /* HitoeWarningDialog_iPad.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = HitoeWarningDialog_iPad.storyboard; sourceTree = "<group>"; };
+		AB507ED21D30D5760014C504 /* DPHitoeTable.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DPHitoeTable.xcdatamodel; sourceTree = "<group>"; };
+		AB507ED51D30DE270014C504 /* DPHitoeDBManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHitoeDBManager.h; sourceTree = "<group>"; };
+		AB507ED61D30DE270014C504 /* DPHitoeDBManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHitoeDBManager.m; sourceTree = "<group>"; };
+		AB507ED81D30E31A0014C504 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		AB507EDA1D3102680014C504 /* DPHitoeDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHitoeDevice.h; sourceTree = "<group>"; };
+		AB507EDB1D3102680014C504 /* DPHitoeDevice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHitoeDevice.m; sourceTree = "<group>"; };
+		AB507EE31D31CFF90014C504 /* DPHitoeAddDeviceTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHitoeAddDeviceTableViewController.h; sourceTree = "<group>"; };
+		AB507EE41D31CFF90014C504 /* DPHitoeAddDeviceTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHitoeAddDeviceTableViewController.m; sourceTree = "<group>"; };
+		AB507EE61D31E87A0014C504 /* DPHitoeManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DPHitoeManager.h; path = dConnectDeviceHitoe/Classes/data/DPHitoeManager.h; sourceTree = SOURCE_ROOT; };
+		AB507EE71D31E87A0014C504 /* DPHitoeManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DPHitoeManager.m; path = dConnectDeviceHitoe/Classes/data/DPHitoeManager.m; sourceTree = SOURCE_ROOT; };
+		AB507EE91D31EB920014C504 /* DPHitoeAccelerationData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DPHitoeAccelerationData.h; path = dConnectDeviceHitoe/Classes/data/DPHitoeAccelerationData.h; sourceTree = SOURCE_ROOT; };
+		AB507EEA1D31EB920014C504 /* DPHitoeAccelerationData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DPHitoeAccelerationData.m; path = dConnectDeviceHitoe/Classes/data/DPHitoeAccelerationData.m; sourceTree = SOURCE_ROOT; };
+		AB507EEC1D31EE530014C504 /* DPHitoeHeartData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DPHitoeHeartData.h; path = dConnectDeviceHitoe/Classes/data/DPHitoeHeartData.h; sourceTree = SOURCE_ROOT; };
+		AB507EED1D31EE530014C504 /* DPHitoeHeartData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DPHitoeHeartData.m; path = dConnectDeviceHitoe/Classes/data/DPHitoeHeartData.m; sourceTree = SOURCE_ROOT; };
+		AB507EEF1D31F82D0014C504 /* DPHitoeTargetDeviceData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DPHitoeTargetDeviceData.h; path = dConnectDeviceHitoe/Classes/data/DPHitoeTargetDeviceData.h; sourceTree = SOURCE_ROOT; };
+		AB507EF01D31F82D0014C504 /* DPHitoeTargetDeviceData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DPHitoeTargetDeviceData.m; path = dConnectDeviceHitoe/Classes/data/DPHitoeTargetDeviceData.m; sourceTree = SOURCE_ROOT; };
+		AB507EF21D31F9BE0014C504 /* DPHitoeHeartRateData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DPHitoeHeartRateData.h; path = dConnectDeviceHitoe/Classes/data/DPHitoeHeartRateData.h; sourceTree = SOURCE_ROOT; };
+		AB507EF31D31F9BF0014C504 /* DPHitoeHeartRateData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DPHitoeHeartRateData.m; path = dConnectDeviceHitoe/Classes/data/DPHitoeHeartRateData.m; sourceTree = SOURCE_ROOT; };
+		AB507EF51D31FB4D0014C504 /* DPHitoePoseEstimationData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DPHitoePoseEstimationData.h; path = dConnectDeviceHitoe/Classes/data/DPHitoePoseEstimationData.h; sourceTree = SOURCE_ROOT; };
+		AB507EF61D31FB4D0014C504 /* DPHitoePoseEstimationData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DPHitoePoseEstimationData.m; path = dConnectDeviceHitoe/Classes/data/DPHitoePoseEstimationData.m; sourceTree = SOURCE_ROOT; };
+		AB507EF81D31FBC60014C504 /* DPHitoeStressEstimationData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DPHitoeStressEstimationData.h; path = dConnectDeviceHitoe/Classes/data/DPHitoeStressEstimationData.h; sourceTree = SOURCE_ROOT; };
+		AB507EF91D31FBC60014C504 /* DPHitoeStressEstimationData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DPHitoeStressEstimationData.m; path = dConnectDeviceHitoe/Classes/data/DPHitoeStressEstimationData.m; sourceTree = SOURCE_ROOT; };
+		AB507EFB1D31FDE10014C504 /* DPHitoeWalkStateData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DPHitoeWalkStateData.h; path = dConnectDeviceHitoe/Classes/data/DPHitoeWalkStateData.h; sourceTree = SOURCE_ROOT; };
+		AB507EFC1D31FDE10014C504 /* DPHitoeWalkStateData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DPHitoeWalkStateData.m; path = dConnectDeviceHitoe/Classes/data/DPHitoeWalkStateData.m; sourceTree = SOURCE_ROOT; };
+		AB7E736B1D3DC0740080AD22 /* HitoeWakeupDialog_iPhone.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = HitoeWakeupDialog_iPhone.storyboard; sourceTree = "<group>"; };
+		AB7E736D1D3DC4040080AD22 /* DPHitoeWakeupDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHitoeWakeupDialog.h; sourceTree = "<group>"; };
+		AB7E736E1D3DC4040080AD22 /* DPHitoeWakeupDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHitoeWakeupDialog.m; sourceTree = "<group>"; };
+		AB7E73741D3DCE9E0080AD22 /* HitoeShirtDialog_iPhone.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = HitoeShirtDialog_iPhone.storyboard; sourceTree = "<group>"; };
+		AB7E73751D3DD7FD0080AD22 /* DPHitoeSetShirtDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHitoeSetShirtDialog.h; sourceTree = "<group>"; };
+		AB7E73761D3DD7FD0080AD22 /* DPHitoeSetShirtDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHitoeSetShirtDialog.m; sourceTree = "<group>"; };
+		AB7E73791D3DE7D10080AD22 /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
+		AB7E737B1D3F07470080AD22 /* DPHitoeDeviceControlViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHitoeDeviceControlViewController.h; sourceTree = "<group>"; };
+		AB7E737C1D3F07470080AD22 /* DPHitoeDeviceControlViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHitoeDeviceControlViewController.m; sourceTree = "<group>"; };
+		AB7E73831D3F0E370080AD22 /* DPHitoeControlHealthViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHitoeControlHealthViewController.h; sourceTree = "<group>"; };
+		AB7E73841D3F0E370080AD22 /* DPHitoeControlHealthViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHitoeControlHealthViewController.m; sourceTree = "<group>"; };
+		AB7E73891D3F3EC90080AD22 /* DPHitoeECGChartView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHitoeECGChartView.h; sourceTree = "<group>"; };
+		AB7E738A1D3F3EC90080AD22 /* DPHitoeECGChartView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHitoeECGChartView.m; sourceTree = "<group>"; };
+		AB7E738C1D3F40FB0080AD22 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		AB7E738E1D3F55C20080AD22 /* DPHitoeControlECGViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHitoeControlECGViewController.h; sourceTree = "<group>"; };
+		AB7E738F1D3F55C20080AD22 /* DPHitoeControlECGViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHitoeControlECGViewController.m; sourceTree = "<group>"; };
+		ABA7D0B41D42550D00ED7E31 /* DPHitoeControlPoseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHitoeControlPoseViewController.h; sourceTree = "<group>"; };
+		ABA7D0B51D42550D00ED7E31 /* DPHitoeControlPoseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHitoeControlPoseViewController.m; sourceTree = "<group>"; };
+		ABA7D0B71D42EB6E00ED7E31 /* DPHitoeControlWalkViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHitoeControlWalkViewController.h; sourceTree = "<group>"; };
+		ABA7D0B81D42EB6E00ED7E31 /* DPHitoeControlWalkViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHitoeControlWalkViewController.m; sourceTree = "<group>"; };
+		ABA7D0BA1D42F2C500ED7E31 /* DPHitoeControlStressViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHitoeControlStressViewController.h; sourceTree = "<group>"; };
+		ABA7D0BB1D42F2C500ED7E31 /* DPHitoeControlStressViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHitoeControlStressViewController.m; sourceTree = "<group>"; };
+		ABC25ABB1D33627000CD9DA0 /* DPHitoeAddDeviceCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHitoeAddDeviceCell.h; sourceTree = "<group>"; };
+		ABC25ABC1D33627000CD9DA0 /* DPHitoeAddDeviceCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHitoeAddDeviceCell.m; sourceTree = "<group>"; };
+		ABC25ABE1D33805700CD9DA0 /* PinCodeDialog_iPhone.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = PinCodeDialog_iPhone.storyboard; sourceTree = "<group>"; };
+		ABC25ABF1D33841900CD9DA0 /* DPHitoePinCodeDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHitoePinCodeDialog.h; sourceTree = "<group>"; };
+		ABC25AC01D33841900CD9DA0 /* DPHitoePinCodeDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHitoePinCodeDialog.m; sourceTree = "<group>"; };
+		ABC25AC81D34929200CD9DA0 /* DPHitoeStringUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHitoeStringUtil.h; sourceTree = "<group>"; };
+		ABC25AC91D34929200CD9DA0 /* DPHitoeStringUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHitoeStringUtil.m; sourceTree = "<group>"; };
+		ABC25AEE1D37204900CD9DA0 /* DPHitoeMDERFloatConvertUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHitoeMDERFloatConvertUtil.h; sourceTree = "<group>"; };
+		ABC25AEF1D37204900CD9DA0 /* DPHitoeMDERFloatConvertUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHitoeMDERFloatConvertUtil.m; sourceTree = "<group>"; };
+		ABC25AF31D3735FE00CD9DA0 /* DPHitoeRawDataParseUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHitoeRawDataParseUtil.h; sourceTree = "<group>"; };
+		ABC25AF41D3735FE00CD9DA0 /* DPHitoeRawDataParseUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHitoeRawDataParseUtil.m; sourceTree = "<group>"; };
+		ABC429571D4438F200668396 /* check_off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = check_off.png; path = dConnectDeviceHitoe/Resources/Drawable_iPhone/check_off.png; sourceTree = SOURCE_ROOT; };
+		ABC429581D4438F200668396 /* check_on.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = check_on.png; path = dConnectDeviceHitoe/Resources/Drawable_iPhone/check_on.png; sourceTree = SOURCE_ROOT; };
+		ABC429591D4438F200668396 /* hitoe_explain.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = hitoe_explain.png; path = dConnectDeviceHitoe/Resources/Drawable_iPhone/hitoe_explain.png; sourceTree = SOURCE_ROOT; };
+		ABC4295A1D4438F200668396 /* hitoe_input_pin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = hitoe_input_pin.png; path = dConnectDeviceHitoe/Resources/Drawable_iPhone/hitoe_input_pin.png; sourceTree = SOURCE_ROOT; };
+		ABC4295B1D4438F200668396 /* hitoe_set.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = hitoe_set.png; path = dConnectDeviceHitoe/Resources/Drawable_iPhone/hitoe_set.png; sourceTree = SOURCE_ROOT; };
+		ABC4295C1D4438F200668396 /* mark_battery01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = mark_battery01.png; path = dConnectDeviceHitoe/Resources/Drawable_iPhone/mark_battery01.png; sourceTree = SOURCE_ROOT; };
+		ABC4295D1D4438F200668396 /* mark_battery02.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = mark_battery02.png; path = dConnectDeviceHitoe/Resources/Drawable_iPhone/mark_battery02.png; sourceTree = SOURCE_ROOT; };
+		ABC4295E1D4438F200668396 /* mark_battery03.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = mark_battery03.png; path = dConnectDeviceHitoe/Resources/Drawable_iPhone/mark_battery03.png; sourceTree = SOURCE_ROOT; };
+		ABC4295F1D4438F200668396 /* mark_battery04.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = mark_battery04.png; path = dConnectDeviceHitoe/Resources/Drawable_iPhone/mark_battery04.png; sourceTree = SOURCE_ROOT; };
+		ABC429601D4438F200668396 /* mark_battery05.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = mark_battery05.png; path = dConnectDeviceHitoe/Resources/Drawable_iPhone/mark_battery05.png; sourceTree = SOURCE_ROOT; };
+		ABC429611D4438F200668396 /* mark_heartrate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = mark_heartrate.png; path = dConnectDeviceHitoe/Resources/Drawable_iPhone/mark_heartrate.png; sourceTree = SOURCE_ROOT; };
+		ABC429621D4438F200668396 /* pose_backward.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = pose_backward.png; path = dConnectDeviceHitoe/Resources/Drawable_iPhone/pose_backward.png; sourceTree = SOURCE_ROOT; };
+		ABC429631D4438F200668396 /* pose_default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = pose_default.png; path = dConnectDeviceHitoe/Resources/Drawable_iPhone/pose_default.png; sourceTree = SOURCE_ROOT; };
+		ABC429641D4438F200668396 /* pose_facedown.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = pose_facedown.png; path = dConnectDeviceHitoe/Resources/Drawable_iPhone/pose_facedown.png; sourceTree = SOURCE_ROOT; };
+		ABC429651D4438F200668396 /* pose_faceleft.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = pose_faceleft.png; path = dConnectDeviceHitoe/Resources/Drawable_iPhone/pose_faceleft.png; sourceTree = SOURCE_ROOT; };
+		ABC429661D4438F200668396 /* pose_faceright.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = pose_faceright.png; path = dConnectDeviceHitoe/Resources/Drawable_iPhone/pose_faceright.png; sourceTree = SOURCE_ROOT; };
+		ABC429671D4438F200668396 /* pose_faceup.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = pose_faceup.png; path = dConnectDeviceHitoe/Resources/Drawable_iPhone/pose_faceup.png; sourceTree = SOURCE_ROOT; };
+		ABC429681D4438F200668396 /* pose_forward.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = pose_forward.png; path = dConnectDeviceHitoe/Resources/Drawable_iPhone/pose_forward.png; sourceTree = SOURCE_ROOT; };
+		ABC429691D4438F200668396 /* pose_leftside.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = pose_leftside.png; path = dConnectDeviceHitoe/Resources/Drawable_iPhone/pose_leftside.png; sourceTree = SOURCE_ROOT; };
+		ABC4296A1D4438F200668396 /* pose_rightside.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = pose_rightside.png; path = dConnectDeviceHitoe/Resources/Drawable_iPhone/pose_rightside.png; sourceTree = SOURCE_ROOT; };
+		ABC4296B1D4438F200668396 /* pose_running.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = pose_running.png; path = dConnectDeviceHitoe/Resources/Drawable_iPhone/pose_running.png; sourceTree = SOURCE_ROOT; };
+		ABC4296C1D4438F200668396 /* pose_standing.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = pose_standing.png; path = dConnectDeviceHitoe/Resources/Drawable_iPhone/pose_standing.png; sourceTree = SOURCE_ROOT; };
+		ABC4296D1D4438F200668396 /* pose_walking.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = pose_walking.png; path = dConnectDeviceHitoe/Resources/Drawable_iPhone/pose_walking.png; sourceTree = SOURCE_ROOT; };
+		ABC429881D443B3400668396 /* hitoe_explain960.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hitoe_explain960.png; sourceTree = "<group>"; };
+		ABC429891D443B3400668396 /* hitoe_input_pin960.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hitoe_input_pin960.png; sourceTree = "<group>"; };
+		ABC4298A1D443B3400668396 /* hitoe_set960.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hitoe_set960.png; sourceTree = "<group>"; };
+		ABC4298B1D443B3400668396 /* mark_battery01_960.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mark_battery01_960.png; sourceTree = "<group>"; };
+		ABC4298C1D443B3400668396 /* mark_battery02_960.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mark_battery02_960.png; sourceTree = "<group>"; };
+		ABC4298D1D443B3400668396 /* mark_battery03_960.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mark_battery03_960.png; sourceTree = "<group>"; };
+		ABC4298E1D443B3400668396 /* mark_battery04_960.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mark_battery04_960.png; sourceTree = "<group>"; };
+		ABC4298F1D443B3400668396 /* mark_battery05_960.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mark_battery05_960.png; sourceTree = "<group>"; };
+		ABC429901D443B3400668396 /* mark_heartrate960.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mark_heartrate960.png; sourceTree = "<group>"; };
+		ABC429911D443B3400668396 /* pose_backward960.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pose_backward960.png; sourceTree = "<group>"; };
+		ABC429921D443B3400668396 /* pose_default960.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pose_default960.png; sourceTree = "<group>"; };
+		ABC429931D443B3400668396 /* pose_facedown960.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pose_facedown960.png; sourceTree = "<group>"; };
+		ABC429941D443B3400668396 /* pose_faceleft960.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pose_faceleft960.png; sourceTree = "<group>"; };
+		ABC429951D443B3400668396 /* pose_faceright960.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pose_faceright960.png; sourceTree = "<group>"; };
+		ABC429961D443B3400668396 /* pose_faceup960.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pose_faceup960.png; sourceTree = "<group>"; };
+		ABC429971D443B3400668396 /* pose_forward960.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pose_forward960.png; sourceTree = "<group>"; };
+		ABC429981D443B3400668396 /* pose_leftside960.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pose_leftside960.png; sourceTree = "<group>"; };
+		ABC429991D443B3400668396 /* pose_rightside960.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pose_rightside960.png; sourceTree = "<group>"; };
+		ABC4299A1D443B3400668396 /* pose_running960.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pose_running960.png; sourceTree = "<group>"; };
+		ABC4299B1D443B3400668396 /* pose_standing960.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pose_standing960.png; sourceTree = "<group>"; };
+		ABC4299C1D443B3400668396 /* pose_walking960.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pose_walking960.png; sourceTree = "<group>"; };
+		ABD3345A1D45B67F00D05903 /* HitoeShirtDialog_iPad.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = HitoeShirtDialog_iPad.storyboard; sourceTree = "<group>"; };
+		ABD3345B1D45B84300D05903 /* HitoeWakeupDialog_iPad.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = HitoeWakeupDialog_iPad.storyboard; sourceTree = "<group>"; };
+		ABD3345C1D45BBFA00D05903 /* PinCodeDialog_iPad.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = PinCodeDialog_iPad.storyboard; sourceTree = "<group>"; };
+		ABDDDF801D485153002EFF57 /* DPHitoeService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHitoeService.h; sourceTree = "<group>"; };
+		ABDDDF811D485153002EFF57 /* DPHitoeService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHitoeService.m; sourceTree = "<group>"; };
+		ABDDDF851D487799002EFF57 /* DPHitoeEventDispatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHitoeEventDispatcher.h; sourceTree = "<group>"; };
+		ABDDDF861D487799002EFF57 /* DPHitoeEventDispatcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHitoeEventDispatcher.m; sourceTree = "<group>"; };
+		ABDDDF881D487A74002EFF57 /* DPHItoeImmediateEventDispatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHItoeImmediateEventDispatcher.h; sourceTree = "<group>"; };
+		ABDDDF891D487A74002EFF57 /* DPHItoeImmediateEventDispatcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHItoeImmediateEventDispatcher.m; sourceTree = "<group>"; };
+		ABDDDF8B1D487B1E002EFF57 /* DPHitoeIntervalEventDispatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHitoeIntervalEventDispatcher.h; sourceTree = "<group>"; };
+		ABDDDF8C1D487B1E002EFF57 /* DPHitoeIntervalEventDispatcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHitoeIntervalEventDispatcher.m; sourceTree = "<group>"; };
+		ABDDDF8E1D48802E002EFF57 /* DPHitoeEventDispatcherFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHitoeEventDispatcherFactory.h; sourceTree = "<group>"; };
+		ABDDDF8F1D48802E002EFF57 /* DPHitoeEventDispatcherFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHitoeEventDispatcherFactory.m; sourceTree = "<group>"; };
+		ABDDDF911D488399002EFF57 /* DPHitoeEventDispatcherManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHitoeEventDispatcherManager.h; sourceTree = "<group>"; };
+		ABDDDF921D488399002EFF57 /* DPHitoeEventDispatcherManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHitoeEventDispatcherManager.m; sourceTree = "<group>"; };
+		ABE4EBB81D38FF2B0007B0A2 /* DPHitoePoseEstimationProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DPHitoePoseEstimationProfile.h; path = dConnectDeviceHitoe/Classes/profile/DPHitoePoseEstimationProfile.h; sourceTree = SOURCE_ROOT; };
+		ABE4EBB91D38FF2B0007B0A2 /* DPHitoePoseEstimationProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DPHitoePoseEstimationProfile.m; path = dConnectDeviceHitoe/Classes/profile/DPHitoePoseEstimationProfile.m; sourceTree = SOURCE_ROOT; };
+		ABE4EBBB1D3906DA0007B0A2 /* DPHitoeStressEstimationProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DPHitoeStressEstimationProfile.h; path = dConnectDeviceHitoe/Classes/profile/DPHitoeStressEstimationProfile.h; sourceTree = SOURCE_ROOT; };
+		ABE4EBBC1D3906DA0007B0A2 /* DPHitoeStressEstimationProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DPHitoeStressEstimationProfile.m; path = dConnectDeviceHitoe/Classes/profile/DPHitoeStressEstimationProfile.m; sourceTree = SOURCE_ROOT; };
+		ABE4EBBE1D3909850007B0A2 /* DPHitoeWalkStateProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DPHitoeWalkStateProfile.h; path = dConnectDeviceHitoe/Classes/profile/DPHitoeWalkStateProfile.h; sourceTree = SOURCE_ROOT; };
+		ABE4EBBF1D3909850007B0A2 /* DPHitoeWalkStateProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DPHitoeWalkStateProfile.m; path = dConnectDeviceHitoe/Classes/profile/DPHitoeWalkStateProfile.m; sourceTree = SOURCE_ROOT; };
+		ABF6C36C1D2B4A0D006B1B91 /* libdConnectDeviceHitoe.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libdConnectDeviceHitoe.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		ABF6C3911D2B4CF6006B1B91 /* dConnectDeviceHitoe_resources.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = dConnectDeviceHitoe_resources.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		ABF6C3931D2B4CF6006B1B91 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		ABF6C39F1D2B5202006B1B91 /* Hitoe_iPhone.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Hitoe_iPhone.storyboard; sourceTree = "<group>"; };
+		ABF6C3A91D2B7722006B1B91 /* DConnectSDK_resources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = DConnectSDK_resources.bundle; path = ../../dConnectSDK/dConnectSDKForIOS/bin/DConnectSDK_resources.bundle; sourceTree = "<group>"; };
+		ABF6C3AA1D2B7722006B1B91 /* DConnectSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DConnectSDK.framework; path = ../../dConnectSDK/dConnectSDKForIOS/bin/DConnectSDK.framework; sourceTree = "<group>"; };
+		ABF6C3AC1D2B7741006B1B91 /* hitoeAPI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = hitoeAPI.framework; sourceTree = "<group>"; };
+		ABF6C3B11D2B7903006B1B91 /* DPHitoeDevicePlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHitoeDevicePlugin.h; sourceTree = "<group>"; };
+		ABF6C3B21D2B7903006B1B91 /* DPHitoeDevicePlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHitoeDevicePlugin.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		ABF6C3691D2B4A0D006B1B91 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AB7E738D1D3F40FB0080AD22 /* CoreGraphics.framework in Frameworks */,
+				AB7E737A1D3DE7D10080AD22 /* CoreBluetooth.framework in Frameworks */,
+				AB507ED91D30E31A0014C504 /* CoreData.framework in Frameworks */,
+				ABF6C3AB1D2B7722006B1B91 /* DConnectSDK.framework in Frameworks */,
+				ABF6C3AD1D2B7741006B1B91 /* hitoeAPI.framework in Frameworks */,
+				AB3D3EB61D2CC7F3004290BA /* DCMDevicePluginSDK.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		ABF6C38E1D2B4CF6006B1B91 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		AB2E14EB1D2F64C900564A5E /* dialog */ = {
+			isa = PBXGroup;
+			children = (
+				AB2E14EC1D2F64D300564A5E /* DPHitoeDialog.h */,
+				AB2E14ED1D2F64D300564A5E /* DPHitoeDialog.m */,
+				AB2E14F01D2F661700564A5E /* DPHitoeProgressDialog.h */,
+				AB2E14F11D2F661700564A5E /* DPHitoeProgressDialog.m */,
+				ABC25ABF1D33841900CD9DA0 /* DPHitoePinCodeDialog.h */,
+				ABC25AC01D33841900CD9DA0 /* DPHitoePinCodeDialog.m */,
+				AB7E736D1D3DC4040080AD22 /* DPHitoeWakeupDialog.h */,
+				AB7E736E1D3DC4040080AD22 /* DPHitoeWakeupDialog.m */,
+				AB7E73751D3DD7FD0080AD22 /* DPHitoeSetShirtDialog.h */,
+				AB7E73761D3DD7FD0080AD22 /* DPHitoeSetShirtDialog.m */,
+				AB40C2EC1D80F01F00355F3E /* DPHitoeWarningDialog.h */,
+				AB40C2ED1D80F01F00355F3E /* DPHitoeWarningDialog.m */,
+			);
+			name = dialog;
+			path = dConnectDeviceHitoe/Classes/setting/dialog;
+			sourceTree = SOURCE_ROOT;
+		};
+		AB2E14F41D2F797F00564A5E /* cell */ = {
+			isa = PBXGroup;
+			children = (
+				AB2E14F51D2F79A700564A5E /* DPHitoeDeviceListCell.h */,
+				AB2E14F61D2F79A700564A5E /* DPHitoeDeviceListCell.m */,
+				ABC25ABB1D33627000CD9DA0 /* DPHitoeAddDeviceCell.h */,
+				ABC25ABC1D33627000CD9DA0 /* DPHitoeAddDeviceCell.m */,
+			);
+			name = cell;
+			path = dConnectDeviceHitoe/Classes/setting/cell;
+			sourceTree = SOURCE_ROOT;
+		};
+		AB3D3E6D1D2B9E5C004290BA /* Drawable_iPhone */ = {
+			isa = PBXGroup;
+			children = (
+				ABC429571D4438F200668396 /* check_off.png */,
+				ABC429581D4438F200668396 /* check_on.png */,
+				ABC429591D4438F200668396 /* hitoe_explain.png */,
+				ABC4295A1D4438F200668396 /* hitoe_input_pin.png */,
+				ABC4295B1D4438F200668396 /* hitoe_set.png */,
+				ABC4295C1D4438F200668396 /* mark_battery01.png */,
+				ABC4295D1D4438F200668396 /* mark_battery02.png */,
+				ABC4295E1D4438F200668396 /* mark_battery03.png */,
+				ABC4295F1D4438F200668396 /* mark_battery04.png */,
+				ABC429601D4438F200668396 /* mark_battery05.png */,
+				ABC429611D4438F200668396 /* mark_heartrate.png */,
+				ABC429621D4438F200668396 /* pose_backward.png */,
+				ABC429631D4438F200668396 /* pose_default.png */,
+				ABC429641D4438F200668396 /* pose_facedown.png */,
+				ABC429651D4438F200668396 /* pose_faceleft.png */,
+				ABC429661D4438F200668396 /* pose_faceright.png */,
+				ABC429671D4438F200668396 /* pose_faceup.png */,
+				ABC429681D4438F200668396 /* pose_forward.png */,
+				ABC429691D4438F200668396 /* pose_leftside.png */,
+				ABC4296A1D4438F200668396 /* pose_rightside.png */,
+				ABC4296B1D4438F200668396 /* pose_running.png */,
+				ABC4296C1D4438F200668396 /* pose_standing.png */,
+				ABC4296D1D4438F200668396 /* pose_walking.png */,
+			);
+			name = Drawable_iPhone;
+			path = Drawable;
+			sourceTree = "<group>";
+		};
+		AB3D3EB41D2CC72D004290BA /* db */ = {
+			isa = PBXGroup;
+			children = (
+				AB507ED51D30DE270014C504 /* DPHitoeDBManager.h */,
+				AB507ED61D30DE270014C504 /* DPHitoeDBManager.m */,
+				AB507EDA1D3102680014C504 /* DPHitoeDevice.h */,
+				AB507EDB1D3102680014C504 /* DPHitoeDevice.m */,
+			);
+			path = db;
+			sourceTree = "<group>";
+		};
+		AB3D3EB71D2CCAA9004290BA /* viewcontroller */ = {
+			isa = PBXGroup;
+			children = (
+				AB281C141D2DE35B0092A2B2 /* DPHitoeDeviceListTableViewController.h */,
+				AB281C151D2DE35B0092A2B2 /* DPHitoeDeviceListTableViewController.m */,
+				AB507EE31D31CFF90014C504 /* DPHitoeAddDeviceTableViewController.h */,
+				AB507EE41D31CFF90014C504 /* DPHitoeAddDeviceTableViewController.m */,
+				AB7E737B1D3F07470080AD22 /* DPHitoeDeviceControlViewController.h */,
+				AB7E737C1D3F07470080AD22 /* DPHitoeDeviceControlViewController.m */,
+			);
+			name = viewcontroller;
+			path = dConnectDeviceHitoe/Classes/setting/viewcontroller;
+			sourceTree = SOURCE_ROOT;
+		};
+		AB7E73821D3F0DE90080AD22 /* control */ = {
+			isa = PBXGroup;
+			children = (
+				AB1EC2881D41ACAD005172E7 /* DPHitoeControlViewController.h */,
+				AB1EC2891D41ACAD005172E7 /* DPHitoeControlViewController.m */,
+				AB7E73881D3F3E710080AD22 /* view */,
+				AB7E73831D3F0E370080AD22 /* DPHitoeControlHealthViewController.h */,
+				AB7E73841D3F0E370080AD22 /* DPHitoeControlHealthViewController.m */,
+				AB7E738E1D3F55C20080AD22 /* DPHitoeControlECGViewController.h */,
+				AB7E738F1D3F55C20080AD22 /* DPHitoeControlECGViewController.m */,
+				AB1EC28F1D41CFEE005172E7 /* DPHitoeControlBatteryViewController.h */,
+				AB1EC2901D41CFEE005172E7 /* DPHitoeControlBatteryViewController.m */,
+				AB1EC2921D41E19A005172E7 /* DPHitoeControlDeviceOrientationViewController.h */,
+				AB1EC2931D41E19B005172E7 /* DPHioteControlDeviceOrientationViewController.m */,
+				ABA7D0B41D42550D00ED7E31 /* DPHitoeControlPoseViewController.h */,
+				ABA7D0B51D42550D00ED7E31 /* DPHitoeControlPoseViewController.m */,
+				ABA7D0B71D42EB6E00ED7E31 /* DPHitoeControlWalkViewController.h */,
+				ABA7D0B81D42EB6E00ED7E31 /* DPHitoeControlWalkViewController.m */,
+				ABA7D0BA1D42F2C500ED7E31 /* DPHitoeControlStressViewController.h */,
+				ABA7D0BB1D42F2C500ED7E31 /* DPHitoeControlStressViewController.m */,
+			);
+			name = control;
+			path = dConnectDeviceHitoe/Classes/setting/control;
+			sourceTree = SOURCE_ROOT;
+		};
+		AB7E73881D3F3E710080AD22 /* view */ = {
+			isa = PBXGroup;
+			children = (
+				AB7E73891D3F3EC90080AD22 /* DPHitoeECGChartView.h */,
+				AB7E738A1D3F3EC90080AD22 /* DPHitoeECGChartView.m */,
+				AB1EC2951D41E22F005172E7 /* DPHitoeACCChartView.h */,
+				AB1EC2961D41E22F005172E7 /* DPHitoeACCChartView.m */,
+			);
+			path = view;
+			sourceTree = "<group>";
+		};
+		ABC25AC71D34926A00CD9DA0 /* util */ = {
+			isa = PBXGroup;
+			children = (
+				ABC25AC81D34929200CD9DA0 /* DPHitoeStringUtil.h */,
+				ABC25AC91D34929200CD9DA0 /* DPHitoeStringUtil.m */,
+				ABC25AEE1D37204900CD9DA0 /* DPHitoeMDERFloatConvertUtil.h */,
+				ABC25AEF1D37204900CD9DA0 /* DPHitoeMDERFloatConvertUtil.m */,
+				ABC25AF31D3735FE00CD9DA0 /* DPHitoeRawDataParseUtil.h */,
+				ABC25AF41D3735FE00CD9DA0 /* DPHitoeRawDataParseUtil.m */,
+			);
+			path = util;
+			sourceTree = "<group>";
+		};
+		ABC429561D4438A200668396 /* Drawable_iPad */ = {
+			isa = PBXGroup;
+			children = (
+				ABC429881D443B3400668396 /* hitoe_explain960.png */,
+				ABC429891D443B3400668396 /* hitoe_input_pin960.png */,
+				ABC4298A1D443B3400668396 /* hitoe_set960.png */,
+				ABC4298B1D443B3400668396 /* mark_battery01_960.png */,
+				ABC4298C1D443B3400668396 /* mark_battery02_960.png */,
+				ABC4298D1D443B3400668396 /* mark_battery03_960.png */,
+				ABC4298E1D443B3400668396 /* mark_battery04_960.png */,
+				ABC4298F1D443B3400668396 /* mark_battery05_960.png */,
+				ABC429901D443B3400668396 /* mark_heartrate960.png */,
+				ABC429911D443B3400668396 /* pose_backward960.png */,
+				ABC429921D443B3400668396 /* pose_default960.png */,
+				ABC429931D443B3400668396 /* pose_facedown960.png */,
+				ABC429941D443B3400668396 /* pose_faceleft960.png */,
+				ABC429951D443B3400668396 /* pose_faceright960.png */,
+				ABC429961D443B3400668396 /* pose_faceup960.png */,
+				ABC429971D443B3400668396 /* pose_forward960.png */,
+				ABC429981D443B3400668396 /* pose_leftside960.png */,
+				ABC429991D443B3400668396 /* pose_rightside960.png */,
+				ABC4299A1D443B3400668396 /* pose_running960.png */,
+				ABC4299B1D443B3400668396 /* pose_standing960.png */,
+				ABC4299C1D443B3400668396 /* pose_walking960.png */,
+			);
+			path = Drawable_iPad;
+			sourceTree = "<group>";
+		};
+		ABDDDF841D485F7E002EFF57 /* event */ = {
+			isa = PBXGroup;
+			children = (
+				ABDDDF851D487799002EFF57 /* DPHitoeEventDispatcher.h */,
+				ABDDDF861D487799002EFF57 /* DPHitoeEventDispatcher.m */,
+				ABDDDF881D487A74002EFF57 /* DPHItoeImmediateEventDispatcher.h */,
+				ABDDDF891D487A74002EFF57 /* DPHItoeImmediateEventDispatcher.m */,
+				ABDDDF8B1D487B1E002EFF57 /* DPHitoeIntervalEventDispatcher.h */,
+				ABDDDF8C1D487B1E002EFF57 /* DPHitoeIntervalEventDispatcher.m */,
+				ABDDDF8E1D48802E002EFF57 /* DPHitoeEventDispatcherFactory.h */,
+				ABDDDF8F1D48802E002EFF57 /* DPHitoeEventDispatcherFactory.m */,
+				ABDDDF911D488399002EFF57 /* DPHitoeEventDispatcherManager.h */,
+				ABDDDF921D488399002EFF57 /* DPHitoeEventDispatcherManager.m */,
+			);
+			path = event;
+			sourceTree = "<group>";
+		};
+		ABF6C3631D2B4A0D006B1B91 = {
+			isa = PBXGroup;
+			children = (
+				ABF6C3921D2B4CF6006B1B91 /* dConnectDeviceHitoe_resources */,
+				ABF6C3781D2B4AB1006B1B91 /* Frameworks */,
+				ABF6C36E1D2B4A0D006B1B91 /* dConnectDeviceHitoe */,
+				ABF6C36D1D2B4A0D006B1B91 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		ABF6C36D1D2B4A0D006B1B91 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				ABF6C36C1D2B4A0D006B1B91 /* libdConnectDeviceHitoe.a */,
+				ABF6C3911D2B4CF6006B1B91 /* dConnectDeviceHitoe_resources.bundle */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		ABF6C36E1D2B4A0D006B1B91 /* dConnectDeviceHitoe */ = {
+			isa = PBXGroup;
+			children = (
+				ABF6C37D1D2B4BBB006B1B91 /* Headers */,
+				ABF6C37C1D2B4BA9006B1B91 /* Classes */,
+				ABF6C37B1D2B4B7B006B1B91 /* Resources */,
+			);
+			path = dConnectDeviceHitoe;
+			sourceTree = "<group>";
+		};
+		ABF6C3781D2B4AB1006B1B91 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				AB7E738C1D3F40FB0080AD22 /* CoreGraphics.framework */,
+				AB7E73791D3DE7D10080AD22 /* CoreBluetooth.framework */,
+				AB507ED81D30E31A0014C504 /* CoreData.framework */,
+				AB3D3EB51D2CC7F2004290BA /* DCMDevicePluginSDK.framework */,
+				ABF6C3AC1D2B7741006B1B91 /* hitoeAPI.framework */,
+				ABF6C3A91D2B7722006B1B91 /* DConnectSDK_resources.bundle */,
+				ABF6C3AA1D2B7722006B1B91 /* DConnectSDK.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		ABF6C37B1D2B4B7B006B1B91 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				AB1C776E1D8692BF0019EA09 /* dconnect_icon_off.png */,
+				AB1C776F1D8692BF0019EA09 /* dconnect_icon.png */,
+				ABC429561D4438A200668396 /* Drawable_iPad */,
+				AB3D3E6D1D2B9E5C004290BA /* Drawable_iPhone */,
+				ABF6C39F1D2B5202006B1B91 /* Hitoe_iPhone.storyboard */,
+				AB3D3E691D2B88D6004290BA /* Hitoe_iPad.storyboard */,
+				AB2E14EF1D2F656700564A5E /* ProgressDialog.storyboard */,
+				AB507ED11D30D5760014C504 /* DPHitoeTable.xcdatamodeld */,
+				ABC25ABE1D33805700CD9DA0 /* PinCodeDialog_iPhone.storyboard */,
+				ABD3345C1D45BBFA00D05903 /* PinCodeDialog_iPad.storyboard */,
+				AB7E736B1D3DC0740080AD22 /* HitoeWakeupDialog_iPhone.storyboard */,
+				ABD3345B1D45B84300D05903 /* HitoeWakeupDialog_iPad.storyboard */,
+				AB7E73741D3DCE9E0080AD22 /* HitoeShirtDialog_iPhone.storyboard */,
+				ABD3345A1D45B67F00D05903 /* HitoeShirtDialog_iPad.storyboard */,
+				AB40C2EB1D80EEC300355F3E /* HitoeWarningDialog_iPhone.storyboard */,
+				AB40C2F01D80F72A00355F3E /* HitoeWarningDialog_iPad.storyboard */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		ABF6C37C1D2B4BA9006B1B91 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				ABDDDF841D485F7E002EFF57 /* event */,
+				ABC25AC71D34926A00CD9DA0 /* util */,
+				AB3D3EB41D2CC72D004290BA /* db */,
+				ABF6C39E1D2B50B2006B1B91 /* data */,
+				ABF6C39D1D2B4F45006B1B91 /* setting */,
+				ABF6C39C1D2B4E10006B1B91 /* profile */,
+				ABF6C3B11D2B7903006B1B91 /* DPHitoeDevicePlugin.h */,
+				ABF6C3B21D2B7903006B1B91 /* DPHitoeDevicePlugin.m */,
+				AB3D3E671D2B7D44004290BA /* DPHitoeConsts.h */,
+				ABDDDF801D485153002EFF57 /* DPHitoeService.h */,
+				ABDDDF811D485153002EFF57 /* DPHitoeService.m */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		ABF6C37D1D2B4BBB006B1B91 /* Headers */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Headers;
+			sourceTree = "<group>";
+		};
+		ABF6C3921D2B4CF6006B1B91 /* dConnectDeviceHitoe_resources */ = {
+			isa = PBXGroup;
+			children = (
+				ABF6C3931D2B4CF6006B1B91 /* Info.plist */,
+			);
+			path = dConnectDeviceHitoe_resources;
+			sourceTree = "<group>";
+		};
+		ABF6C39C1D2B4E10006B1B91 /* profile */ = {
+			isa = PBXGroup;
+			children = (
+				AB3D3EB01D2CC40D004290BA /* DPHitoeSystemProfile.h */,
+				AB3D3EB11D2CC40D004290BA /* DPHitoeSystemProfile.m */,
+				AB1F4AA91D387B45005784D9 /* DPHitoeHealthProfile.h */,
+				AB1F4AAA1D387B45005784D9 /* DPHitoeHealthProfile.m */,
+				AB1F4AAC1D3881C2005784D9 /* DPHitoeServiceDiscoveryProfle.h */,
+				AB1F4AAD1D3881C2005784D9 /* DPHitoeServiceDiscoveryProfle.m */,
+				AB1F4AB31D38D76F005784D9 /* DPHitoeECGProfile.h */,
+				AB1F4AB41D38D76F005784D9 /* DPHitoeECGProfile.m */,
+				AB1F4AB61D38DFFC005784D9 /* DPHitoeBatteryProfile.h */,
+				AB1F4AB71D38DFFC005784D9 /* DPHitoeBatteryProfile.m */,
+				AB1F4AB91D38E3E0005784D9 /* DPHitoeDeviceOrientationProfile.h */,
+				AB1F4ABA1D38E3E0005784D9 /* DPHitoeDeviceOrientationProfile.m */,
+				ABE4EBB81D38FF2B0007B0A2 /* DPHitoePoseEstimationProfile.h */,
+				ABE4EBB91D38FF2B0007B0A2 /* DPHitoePoseEstimationProfile.m */,
+				ABE4EBBB1D3906DA0007B0A2 /* DPHitoeStressEstimationProfile.h */,
+				ABE4EBBC1D3906DA0007B0A2 /* DPHitoeStressEstimationProfile.m */,
+				ABE4EBBE1D3909850007B0A2 /* DPHitoeWalkStateProfile.h */,
+				ABE4EBBF1D3909850007B0A2 /* DPHitoeWalkStateProfile.m */,
+			);
+			name = profile;
+			path = Profile;
+			sourceTree = "<group>";
+		};
+		ABF6C39D1D2B4F45006B1B91 /* setting */ = {
+			isa = PBXGroup;
+			children = (
+				AB7E73821D3F0DE90080AD22 /* control */,
+				AB2E14F41D2F797F00564A5E /* cell */,
+				AB2E14EB1D2F64C900564A5E /* dialog */,
+				AB3D3EB71D2CCAA9004290BA /* viewcontroller */,
+			);
+			name = setting;
+			path = Setting;
+			sourceTree = "<group>";
+		};
+		ABF6C39E1D2B50B2006B1B91 /* data */ = {
+			isa = PBXGroup;
+			children = (
+				AB507EE61D31E87A0014C504 /* DPHitoeManager.h */,
+				AB507EE71D31E87A0014C504 /* DPHitoeManager.m */,
+				AB507EE91D31EB920014C504 /* DPHitoeAccelerationData.h */,
+				AB507EEA1D31EB920014C504 /* DPHitoeAccelerationData.m */,
+				AB507EEC1D31EE530014C504 /* DPHitoeHeartData.h */,
+				AB507EED1D31EE530014C504 /* DPHitoeHeartData.m */,
+				AB507EEF1D31F82D0014C504 /* DPHitoeTargetDeviceData.h */,
+				AB507EF01D31F82D0014C504 /* DPHitoeTargetDeviceData.m */,
+				AB507EF21D31F9BE0014C504 /* DPHitoeHeartRateData.h */,
+				AB507EF31D31F9BF0014C504 /* DPHitoeHeartRateData.m */,
+				AB507EF51D31FB4D0014C504 /* DPHitoePoseEstimationData.h */,
+				AB507EF61D31FB4D0014C504 /* DPHitoePoseEstimationData.m */,
+				AB507EF81D31FBC60014C504 /* DPHitoeStressEstimationData.h */,
+				AB507EF91D31FBC60014C504 /* DPHitoeStressEstimationData.m */,
+				AB507EFB1D31FDE10014C504 /* DPHitoeWalkStateData.h */,
+				AB507EFC1D31FDE10014C504 /* DPHitoeWalkStateData.m */,
+			);
+			name = data;
+			path = Data;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		ABF6C36B1D2B4A0D006B1B91 /* dConnectDeviceHitoe */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = ABF6C3751D2B4A0D006B1B91 /* Build configuration list for PBXNativeTarget "dConnectDeviceHitoe" */;
+			buildPhases = (
+				ABF6C3681D2B4A0D006B1B91 /* Sources */,
+				ABF6C3691D2B4A0D006B1B91 /* Frameworks */,
+				ABF6C36A1D2B4A0D006B1B91 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = dConnectDeviceHitoe;
+			productName = dConnectDeviceHitoe;
+			productReference = ABF6C36C1D2B4A0D006B1B91 /* libdConnectDeviceHitoe.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		ABF6C3901D2B4CF6006B1B91 /* dConnectDeviceHitoe_resources */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = ABF6C3941D2B4CF6006B1B91 /* Build configuration list for PBXNativeTarget "dConnectDeviceHitoe_resources" */;
+			buildPhases = (
+				ABF6C38D1D2B4CF6006B1B91 /* Sources */,
+				ABF6C38E1D2B4CF6006B1B91 /* Frameworks */,
+				ABF6C38F1D2B4CF6006B1B91 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = dConnectDeviceHitoe_resources;
+			productName = dConnectDeviceHitoe_resources;
+			productReference = ABF6C3911D2B4CF6006B1B91 /* dConnectDeviceHitoe_resources.bundle */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		ABF6C3641D2B4A0D006B1B91 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0720;
+				ORGANIZATIONNAME = DOCOMO;
+				TargetAttributes = {
+					ABF6C36B1D2B4A0D006B1B91 = {
+						CreatedOnToolsVersion = 7.2.1;
+					};
+					ABF6C37E1D2B4C3C006B1B91 = {
+						CreatedOnToolsVersion = 7.2.1;
+					};
+					ABF6C3901D2B4CF6006B1B91 = {
+						CreatedOnToolsVersion = 7.2.1;
+					};
+					ABF6C3971D2B4D58006B1B91 = {
+						CreatedOnToolsVersion = 7.2.1;
+					};
+				};
+			};
+			buildConfigurationList = ABF6C3671D2B4A0D006B1B91 /* Build configuration list for PBXProject "dConnectDeviceHitoe" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = ABF6C3631D2B4A0D006B1B91;
+			productRefGroup = ABF6C36D1D2B4A0D006B1B91 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				ABF6C36B1D2B4A0D006B1B91 /* dConnectDeviceHitoe */,
+				ABF6C37E1D2B4C3C006B1B91 /* dConnectDeviceHitoe_framework */,
+				ABF6C3901D2B4CF6006B1B91 /* dConnectDeviceHitoe_resources */,
+				ABF6C3971D2B4D58006B1B91 /* dConnectDeviceHitoe_OCLint */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		ABF6C38F1D2B4CF6006B1B91 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AB40C2EF1D80F5E300355F3E /* HitoeWarningDialog_iPhone.storyboard in Resources */,
+				ABD3345D1D45C97000D05903 /* PinCodeDialog_iPad.storyboard in Resources */,
+				ABD3345E1D45C97000D05903 /* HitoeWakeupDialog_iPad.storyboard in Resources */,
+				ABD3345F1D45C97000D05903 /* HitoeShirtDialog_iPad.storyboard in Resources */,
+				ABC429731D4438F200668396 /* mark_battery01.png in Resources */,
+				ABC4296E1D4438F200668396 /* check_off.png in Resources */,
+				ABC429A91D443B3400668396 /* pose_facedown960.png in Resources */,
+				ABC429821D4438F200668396 /* pose_running.png in Resources */,
+				ABC429A11D443B3400668396 /* mark_battery01_960.png in Resources */,
+				AB7E73781D3DE4C90080AD22 /* HitoeShirtDialog_iPhone.storyboard in Resources */,
+				ABC429811D4438F200668396 /* pose_rightside.png in Resources */,
+				ABC429AC1D443B3400668396 /* pose_faceup960.png in Resources */,
+				ABC4296F1D4438F200668396 /* check_on.png in Resources */,
+				ABC429A41D443B3400668396 /* mark_battery04_960.png in Resources */,
+				ABC429A61D443B3400668396 /* mark_heartrate960.png in Resources */,
+				ABC429AE1D443B3400668396 /* pose_leftside960.png in Resources */,
+				ABC4297E1D4438F200668396 /* pose_faceup.png in Resources */,
+				ABC4299F1D443B3400668396 /* hitoe_input_pin960.png in Resources */,
+				ABC429AF1D443B3400668396 /* pose_rightside960.png in Resources */,
+				ABC429B21D443B3400668396 /* pose_walking960.png in Resources */,
+				ABC429791D4438F200668396 /* pose_backward.png in Resources */,
+				ABC4297D1D4438F200668396 /* pose_faceright.png in Resources */,
+				ABC429B01D443B3400668396 /* pose_running960.png in Resources */,
+				ABC429A71D443B3400668396 /* pose_backward960.png in Resources */,
+				ABC429831D4438F200668396 /* pose_standing.png in Resources */,
+				AB1C77701D8692BF0019EA09 /* dconnect_icon_off.png in Resources */,
+				ABC429A31D443B3400668396 /* mark_battery03_960.png in Resources */,
+				AB7E736C1D3DC08C0080AD22 /* HitoeWakeupDialog_iPhone.storyboard in Resources */,
+				ABC429A51D443B3400668396 /* mark_battery05_960.png in Resources */,
+				ABC4297C1D4438F200668396 /* pose_faceleft.png in Resources */,
+				ABC429841D4438F200668396 /* pose_walking.png in Resources */,
+				ABC25AC21D33854D00CD9DA0 /* PinCodeDialog_iPhone.storyboard in Resources */,
+				AB1C77711D8692BF0019EA09 /* dconnect_icon.png in Resources */,
+				ABC4299E1D443B3400668396 /* hitoe_explain960.png in Resources */,
+				ABC4297B1D4438F200668396 /* pose_facedown.png in Resources */,
+				AB40C2F11D80F72A00355F3E /* HitoeWarningDialog_iPad.storyboard in Resources */,
+				ABC429AB1D443B3400668396 /* pose_faceright960.png in Resources */,
+				ABC429751D4438F200668396 /* mark_battery03.png in Resources */,
+				AB507ED41D30D6500014C504 /* DPHitoeTable.xcdatamodeld in Resources */,
+				ABC429B11D443B3400668396 /* pose_standing960.png in Resources */,
+				ABC429771D4438F200668396 /* mark_battery05.png in Resources */,
+				ABC429A21D443B3400668396 /* mark_battery02_960.png in Resources */,
+				ABC429781D4438F200668396 /* mark_heartrate.png in Resources */,
+				ABC429AA1D443B3400668396 /* pose_faceleft960.png in Resources */,
+				AB2E14F31D2F6D2400564A5E /* ProgressDialog.storyboard in Resources */,
+				ABC429741D4438F200668396 /* mark_battery02.png in Resources */,
+				AB3D3E6B1D2B890F004290BA /* Hitoe_iPad.storyboard in Resources */,
+				ABC429AD1D443B3400668396 /* pose_forward960.png in Resources */,
+				ABC4297A1D4438F200668396 /* pose_default.png in Resources */,
+				ABC429A01D443B3400668396 /* hitoe_set960.png in Resources */,
+				ABC429A81D443B3400668396 /* pose_default960.png in Resources */,
+				ABC429721D4438F200668396 /* hitoe_set.png in Resources */,
+				AB3D3E681D2B85E7004290BA /* Hitoe_iPhone.storyboard in Resources */,
+				ABC429701D4438F200668396 /* hitoe_explain.png in Resources */,
+				ABC429761D4438F200668396 /* mark_battery04.png in Resources */,
+				ABC429711D4438F200668396 /* hitoe_input_pin.png in Resources */,
+				ABC429801D4438F200668396 /* pose_leftside.png in Resources */,
+				ABC4297F1D4438F200668396 /* pose_forward.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		ABF6C3821D2B4C58006B1B91 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Environment Variables\nFRAMEWORK_NAME=${PROJECT_NAME}\nFRAMEWORK_VERSION=A\nFRAMEWORK_VERSION_NUMBER=1.0\nCONFIGURATION=\"Release\"\nFRAMEWORK_BUILD_PATH=\"${SRCROOT}/build/${CONFIGURATION}-framework\"\nFRAMEWORK_DIR=\"${FRAMEWORK_BUILD_PATH}/${FRAMEWORK_NAME}.framework\"\nSTATICLIB_BUILD_PATH=\"${SRCROOT}/build/${CONFIGURATION}-universal\"\n\n# Clean directories\nrm -rf \"${FRAMEWORK_BUILD_PATH}\"\n\n# Build simulator and device binaries.\n# A target to build a static library *must* have the name ${PROJECT_NAME}.\nxcodebuild -project ${PROJECT_NAME}.xcodeproj -sdk iphonesimulator -target ${PROJECT_NAME} -configuration ${CONFIGURATION} clean build\nxcodebuild -project ${PROJECT_NAME}.xcodeproj -sdk iphoneos -target ${PROJECT_NAME} -configuration ${CONFIGURATION} clean build\n# A target to build a bundle *must* have the name ${PROJECT_NAME}_resources. This target is optional.\nxcodebuild -project ${PROJECT_NAME}.xcodeproj -sdk iphonesimulator -target ${PROJECT_NAME}_resources -configuration ${CONFIGURATION} clean build || true\nxcodebuild -project ${PROJECT_NAME}.xcodeproj -sdk iphoneos -target ${PROJECT_NAME}_resources -configuration ${CONFIGURATION} clean build || true\n\n# create directories.\nmkdir -p ${FRAMEWORK_DIR}/Versions/${FRAMEWORK_VERSION}/Headers\n#mkdir -p ${FRAMEWORK_DIR}/Versions/${FRAMEWORK_VERSION}/Resources\nmkdir -p ${STATICLIB_BUILD_PATH}\n# create symlinks\ncd ${FRAMEWORK_DIR}\nln -s ../Versions/${FRAMEWORK_VERSION} Versions/Current\nln -s Versions/Current/Headers Headers\n#ln -s Versions/Current/Resources Resources\nln -s Versions/Current/${FRAMEWORK_NAME} ${FRAMEWORK_NAME}\ncd ${SRCROOT}\n\n# create the universal library, and strip internal symbols from it\nlipo ${SRCROOT}/build/${CONFIGURATION}-iphoneos/lib${FRAMEWORK_NAME}.a ${SRCROOT}/build/${CONFIGURATION}-iphonesimulator/lib${FRAMEWORK_NAME}.a -create -output \"${STATICLIB_BUILD_PATH}/lib${FRAMEWORK_NAME}.a\"\n#strip -x \"${STATICLIB_BUILD_PATH}/lib${FRAMEWORK_NAME}.a\"\ncp \"${STATICLIB_BUILD_PATH}/lib${FRAMEWORK_NAME}.a\" \"${FRAMEWORK_DIR}/Versions/Current/${FRAMEWORK_NAME}\"\n\n# copy files\ncp -r ${SRCROOT}/${PROJECT_NAME}/Headers/ ${FRAMEWORK_DIR}/Headers/\n\n# copy binary to bin folder\ncd ${SRCROOT}\n\ncd bin\nls | grep -v -E '.gitignore$' | xargs rm -rf\ncd ..\ncp -R ${FRAMEWORK_DIR} bin\ncp -r build/${CONFIGURATION}-resources/${PROJECT_NAME}_resources.bundle bin";
+		};
+		ABF6C39B1D2B4D5F006B1B91 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "XCTOOL=/usr/local\nexport PATH=$XCTOOL/bin:$PATH\nOCLINT_HOME=${HOME}/bin/oclint-0.8.1\nexport PATH=$OCLINT_HOME/bin:$PATH\n\ncd ${SRCROOT}\nxctool -project ${PROJECT}.xcodeproj -scheme ${PROJECT} -reporter json-compilation-database:compile_commands.json clean\nxctool -project ${PROJECT}.xcodeproj -scheme ${PROJECT} -reporter json-compilation-database:compile_commands.json build\n\noclint-json-compilation-database oclint_args oclint_args \"-disable-rule=UnusedMethodParameter -disable-rule=InvertedLogic -disable-rule=DoubleNegative -disable-rule=MultipleUnaryOperator -disable-rule=MustOverrideHashWithIsEqual -disable-rule=BitwiseOperatorInConditional -disable-rule=IvarAssignmentOutsideAccessorsOrInit -disable-rule=SwitchStatementsDon\\'TNeedDefaultWhenFullyCovered -rc LONG_LINE=120 -rc MAXIMUM_IF_LENGTH=50 -rc NCSS_METHOD=50 -rc LONG_METHOD=500 -rc LONG_CLASS=2000 -rc NCSS_METHOD=100 -rc LONG_VARIABLE_NAME=100 -rc CYCLOMATIC_COMPLEXITY=100 -rc NPATH_COMPLEXITY=5000 -rc NESTED_BLOCK_DEPTH=10 -rc TOO_MANY_METHODS=100\" | sed 's/\\(.*\\.\\m\\{1,2\\}:[0-9]*:[0-9]*:\\)/\\1 warning:/'";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		ABF6C3681D2B4A0D006B1B91 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AB281C161D2DE35B0092A2B2 /* DPHitoeDeviceListTableViewController.m in Sources */,
+				AB7E73851D3F0E370080AD22 /* DPHitoeControlHealthViewController.m in Sources */,
+				ABDDDF871D487799002EFF57 /* DPHitoeEventDispatcher.m in Sources */,
+				ABE4EBC01D3909850007B0A2 /* DPHitoeWalkStateProfile.m in Sources */,
+				AB7E736F1D3DC4040080AD22 /* DPHitoeWakeupDialog.m in Sources */,
+				AB1F4AAE1D3881C2005784D9 /* DPHitoeServiceDiscoveryProfle.m in Sources */,
+				AB1F4ABB1D38E3E0005784D9 /* DPHitoeDeviceOrientationProfile.m in Sources */,
+				ABDDDF931D488399002EFF57 /* DPHitoeEventDispatcherManager.m in Sources */,
+				AB507EF71D31FB4D0014C504 /* DPHitoePoseEstimationData.m in Sources */,
+				ABC25AF01D37204900CD9DA0 /* DPHitoeMDERFloatConvertUtil.m in Sources */,
+				AB507ED31D30D5760014C504 /* DPHitoeTable.xcdatamodeld in Sources */,
+				AB7E737D1D3F07470080AD22 /* DPHitoeDeviceControlViewController.m in Sources */,
+				AB7E73771D3DD7FD0080AD22 /* DPHitoeSetShirtDialog.m in Sources */,
+				AB507EF41D31F9BF0014C504 /* DPHitoeHeartRateData.m in Sources */,
+				ABE4EBBD1D3906DA0007B0A2 /* DPHitoeStressEstimationProfile.m in Sources */,
+				AB507EFD1D31FDE10014C504 /* DPHitoeWalkStateData.m in Sources */,
+				AB1F4AB51D38D76F005784D9 /* DPHitoeECGProfile.m in Sources */,
+				AB1EC2911D41CFEE005172E7 /* DPHitoeControlBatteryViewController.m in Sources */,
+				AB507EE81D31E87A0014C504 /* DPHitoeManager.m in Sources */,
+				ABDDDF821D485153002EFF57 /* DPHitoeService.m in Sources */,
+				AB2E14F21D2F661700564A5E /* DPHitoeProgressDialog.m in Sources */,
+				AB507ED71D30DE270014C504 /* DPHitoeDBManager.m in Sources */,
+				AB1F4AAB1D387B45005784D9 /* DPHitoeHealthProfile.m in Sources */,
+				AB7E738B1D3F3EC90080AD22 /* DPHitoeECGChartView.m in Sources */,
+				AB507EEB1D31EB920014C504 /* DPHitoeAccelerationData.m in Sources */,
+				ABDDDF8D1D487B1E002EFF57 /* DPHitoeIntervalEventDispatcher.m in Sources */,
+				ABDDDF901D48802E002EFF57 /* DPHitoeEventDispatcherFactory.m in Sources */,
+				ABDDDF8A1D487A74002EFF57 /* DPHItoeImmediateEventDispatcher.m in Sources */,
+				AB2E14EE1D2F64D300564A5E /* DPHitoeDialog.m in Sources */,
+				ABC25ABD1D33627000CD9DA0 /* DPHitoeAddDeviceCell.m in Sources */,
+				AB507EEE1D31EE530014C504 /* DPHitoeHeartData.m in Sources */,
+				AB40C2EE1D80F01F00355F3E /* DPHitoeWarningDialog.m in Sources */,
+				ABC25AF51D3735FE00CD9DA0 /* DPHitoeRawDataParseUtil.m in Sources */,
+				ABC25AC11D33841900CD9DA0 /* DPHitoePinCodeDialog.m in Sources */,
+				AB1F4AB81D38DFFC005784D9 /* DPHitoeBatteryProfile.m in Sources */,
+				AB7E73901D3F55C20080AD22 /* DPHitoeControlECGViewController.m in Sources */,
+				AB3D3EB21D2CC40D004290BA /* DPHitoeSystemProfile.m in Sources */,
+				AB507EF11D31F82D0014C504 /* DPHitoeTargetDeviceData.m in Sources */,
+				ABA7D0B61D42550D00ED7E31 /* DPHitoeControlPoseViewController.m in Sources */,
+				ABE4EBBA1D38FF2B0007B0A2 /* DPHitoePoseEstimationProfile.m in Sources */,
+				ABC25ACA1D34929200CD9DA0 /* DPHitoeStringUtil.m in Sources */,
+				AB507EDC1D3102680014C504 /* DPHitoeDevice.m in Sources */,
+				ABA7D0B91D42EB6E00ED7E31 /* DPHitoeControlWalkViewController.m in Sources */,
+				ABA7D0BC1D42F2C500ED7E31 /* DPHitoeControlStressViewController.m in Sources */,
+				ABF6C3B31D2B7903006B1B91 /* DPHitoeDevicePlugin.m in Sources */,
+				AB1EC2941D41E19B005172E7 /* DPHioteControlDeviceOrientationViewController.m in Sources */,
+				AB1EC2971D41E22F005172E7 /* DPHitoeACCChartView.m in Sources */,
+				AB1EC28A1D41ACAD005172E7 /* DPHitoeControlViewController.m in Sources */,
+				AB507EE51D31CFF90014C504 /* DPHitoeAddDeviceTableViewController.m in Sources */,
+				AB2E14F71D2F79A700564A5E /* DPHitoeDeviceListCell.m in Sources */,
+				AB507EFA1D31FBC60014C504 /* DPHitoeStressEstimationData.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		ABF6C38D1D2B4CF6006B1B91 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		ABF6C3731D2B4A0D006B1B91 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		ABF6C3741D2B4A0D006B1B91 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = NO;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		ABF6C3761D2B4A0D006B1B91 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/../../dConnectSDK/dConnectSDKForIOS/bin",
+					"$(PROJECT_DIR)/../DCMDevicePluginSDK/bin",
+				);
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		ABF6C3771D2B4A0D006B1B91 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/../../dConnectSDK/dConnectSDKForIOS/bin",
+					"$(PROJECT_DIR)/../DCMDevicePluginSDK/bin",
+				);
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+		ABF6C3801D2B4C3C006B1B91 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = NO;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		ABF6C3811D2B4C3C006B1B91 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = NO;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		ABF6C3951D2B4CF6006B1B91 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = YES;
+				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)-resources";
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = NO;
+				INFOPLIST_FILE = dConnectDeviceHitoe_resources/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				OTHER_LDFLAGS = "";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.deviceconnect.ios.dConnectDeviceHitoe-resources";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				VALID_ARCHS = "arm64 armv7 armv7s";
+				WRAPPER_EXTENSION = bundle;
+			};
+			name = Debug;
+		};
+		ABF6C3961D2B4CF6006B1B91 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = YES;
+				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)-resources";
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = NO;
+				INFOPLIST_FILE = dConnectDeviceHitoe_resources/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				OTHER_LDFLAGS = "";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.deviceconnect.ios.dConnectDeviceHitoe-resources";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				VALID_ARCHS = "arm64 armv7 armv7s";
+				WRAPPER_EXTENSION = bundle;
+			};
+			name = Release;
+		};
+		ABF6C3991D2B4D58006B1B91 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = NO;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		ABF6C39A1D2B4D58006B1B91 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = NO;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		ABF6C3671D2B4A0D006B1B91 /* Build configuration list for PBXProject "dConnectDeviceHitoe" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				ABF6C3731D2B4A0D006B1B91 /* Debug */,
+				ABF6C3741D2B4A0D006B1B91 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		ABF6C3751D2B4A0D006B1B91 /* Build configuration list for PBXNativeTarget "dConnectDeviceHitoe" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				ABF6C3761D2B4A0D006B1B91 /* Debug */,
+				ABF6C3771D2B4A0D006B1B91 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		ABF6C37F1D2B4C3C006B1B91 /* Build configuration list for PBXAggregateTarget "dConnectDeviceHitoe_framework" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				ABF6C3801D2B4C3C006B1B91 /* Debug */,
+				ABF6C3811D2B4C3C006B1B91 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		ABF6C3941D2B4CF6006B1B91 /* Build configuration list for PBXNativeTarget "dConnectDeviceHitoe_resources" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				ABF6C3951D2B4CF6006B1B91 /* Debug */,
+				ABF6C3961D2B4CF6006B1B91 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		ABF6C3981D2B4D58006B1B91 /* Build configuration list for PBXAggregateTarget "dConnectDeviceHitoe_OCLint" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				ABF6C3991D2B4D58006B1B91 /* Debug */,
+				ABF6C39A1D2B4D58006B1B91 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		AB507ED11D30D5760014C504 /* DPHitoeTable.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				AB507ED21D30D5760014C504 /* DPHitoeTable.xcdatamodel */,
+			);
+			currentVersion = AB507ED21D30D5760014C504 /* DPHitoeTable.xcdatamodel */;
+			path = DPHitoeTable.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = ABF6C3641D2B4A0D006B1B91 /* Project object */;
+}

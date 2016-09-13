@@ -12,6 +12,14 @@
 #import <DConnectSDK/DConnectProfileProvider.h>
 #import <DConnectSDK/DConnectServiceInformationProfile.h>
 
+@class DConnectService;
+
+@protocol OnStatusChangeListener <NSObject>
+
+- (void) didStatusChange: (DConnectService *)service;
+
+@end
+
 @interface DConnectService : DConnectProfileProvider
 
 /*!
@@ -23,9 +31,11 @@
 
 @property(nonatomic, strong) NSString *networkType;
 
-@property(nonatomic) BOOL online;
+@property(readwrite, getter=online, setter=setOnline:) BOOL online;
 
 @property(nonatomic, strong) NSString *config;
+
+@property(nonatomic, weak) id<OnStatusChangeListener> statusListener;
 
 
 - (instancetype) initWithServiceId: (NSString *)serviceId plugin: (id) plugin dataSource: (id<DConnectServiceInformationProfileDataSource>) dataSource;

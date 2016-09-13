@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="VCn-X7-MUS">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+    </dependencies>
+    <scenes>
+        <!--Hitoe Warning Dialog-->
+        <scene sceneID="dQd-YF-OGU">
+            <objects>
+                <viewController id="VCn-X7-MUS" customClass="DPHitoeWarningDialog" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="kEb-Ze-E8y"/>
+                        <viewControllerLayoutGuide type="bottom" id="rMu-9h-GP5"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="U3R-4a-8O9">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DAl-4X-1tH">
+                                <rect key="frame" x="180" y="183" width="240" height="234"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="749" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ni8-RX-O3a">
+                                        <rect key="frame" x="47" y="135.5" width="50" height="44"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="50" id="IIt-qf-IW7"/>
+                                            <constraint firstAttribute="height" constant="44" id="hgA-er-2ZU"/>
+                                        </constraints>
+                                        <state key="normal" image="check_off.png"/>
+                                        <state key="selected" image="check_on.png"/>
+                                        <connections>
+                                            <action selector="onCheck:" destination="VCn-X7-MUS" eventType="touchUpInside" id="VrD-s4-25Y"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Po6-dm-UBj">
+                                        <rect key="frame" x="105" y="184" width="30" height="41.5"/>
+                                        <state key="normal" title="OK"/>
+                                        <connections>
+                                            <action selector="onClose:" destination="VCn-X7-MUS" eventType="touchUpInside" id="Ap1-P0-wR8"/>
+                                        </connections>
+                                    </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="6" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pbY-zM-h2K">
+                                        <rect key="frame" x="21" y="42" width="198" height="79"/>
+                                        <string key="text">すでに接続されているデバイスがある場合に、新たにデバイスが接続されようとした場合は、新たに接続されたデバイスと接続しなおされます。
+すでに接続されているデバイスとは接続が切断されます。</string>
+                                        <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Hitoeの接続" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Olg-i5-64u">
+                                        <rect key="frame" x="66" y="13" width="108" height="21.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="次回以降省略" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VcP-gd-ea6">
+                                        <rect key="frame" x="105" y="141" width="102" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" red="0.96420975129999997" green="0.96420975129999997" blue="0.96420975129999997" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstItem="VcP-gd-ea6" firstAttribute="leading" secondItem="ni8-RX-O3a" secondAttribute="trailing" constant="8" id="1kx-gF-ZqQ"/>
+                                    <constraint firstAttribute="trailing" secondItem="VcP-gd-ea6" secondAttribute="trailing" constant="33" id="7qO-6a-fuh"/>
+                                    <constraint firstAttribute="trailing" secondItem="Olg-i5-64u" secondAttribute="trailing" constant="66" id="ClI-cE-0qJ"/>
+                                    <constraint firstItem="Po6-dm-UBj" firstAttribute="top" secondItem="VcP-gd-ea6" secondAttribute="bottom" constant="22.5" id="Eme-dr-rXC"/>
+                                    <constraint firstAttribute="bottom" secondItem="ni8-RX-O3a" secondAttribute="bottom" constant="54.5" id="QYp-Kc-09t"/>
+                                    <constraint firstItem="pbY-zM-h2K" firstAttribute="leading" secondItem="DAl-4X-1tH" secondAttribute="leading" constant="21" id="R3G-p5-mNj"/>
+                                    <constraint firstAttribute="trailing" secondItem="Po6-dm-UBj" secondAttribute="trailing" constant="105" id="SFd-TP-Wn7"/>
+                                    <constraint firstItem="pbY-zM-h2K" firstAttribute="top" secondItem="Olg-i5-64u" secondAttribute="bottom" constant="8" id="WhP-Nu-fhb"/>
+                                    <constraint firstItem="Olg-i5-64u" firstAttribute="top" secondItem="DAl-4X-1tH" secondAttribute="top" constant="13" id="bPC-DR-HMp"/>
+                                    <constraint firstAttribute="trailing" secondItem="pbY-zM-h2K" secondAttribute="trailing" constant="21" id="dYX-vP-aRK"/>
+                                    <constraint firstItem="VcP-gd-ea6" firstAttribute="top" secondItem="pbY-zM-h2K" secondAttribute="bottom" constant="20" id="dcB-vX-Pid"/>
+                                    <constraint firstAttribute="bottom" secondItem="Po6-dm-UBj" secondAttribute="bottom" constant="8" id="iUg-Pw-VfF"/>
+                                    <constraint firstItem="ni8-RX-O3a" firstAttribute="leading" secondItem="DAl-4X-1tH" secondAttribute="leading" constant="47" id="jNh-Jx-Ebc"/>
+                                    <constraint firstItem="Po6-dm-UBj" firstAttribute="leading" secondItem="DAl-4X-1tH" secondAttribute="leading" constant="105" id="kCs-2h-99O"/>
+                                    <constraint firstItem="Olg-i5-64u" firstAttribute="leading" secondItem="DAl-4X-1tH" secondAttribute="leading" constant="66" id="ljN-8V-Z9O"/>
+                                    <constraint firstAttribute="height" constant="234" id="s76-oY-fwK"/>
+                                    <constraint firstAttribute="width" constant="240" id="zIf-eB-vll"/>
+                                    <constraint firstItem="ni8-RX-O3a" firstAttribute="top" secondItem="pbY-zM-h2K" secondAttribute="bottom" constant="14" id="zJ5-eC-hdr"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="DAl-4X-1tH" firstAttribute="centerY" secondItem="U3R-4a-8O9" secondAttribute="centerY" id="oQW-Vz-p4e"/>
+                            <constraint firstItem="DAl-4X-1tH" firstAttribute="centerX" secondItem="U3R-4a-8O9" secondAttribute="centerX" id="pGC-OF-VKc"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="nextAbridgement" destination="ni8-RX-O3a" id="nhB-fR-d8D"/>
+                        <outlet property="warningDialogView" destination="DAl-4X-1tH" id="LyU-Ik-NSQ"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="fdx-Wg-gEC" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="381" y="543"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="check_off.png" width="50" height="50"/>
+        <image name="check_on.png" width="50" height="50"/>
+    </resources>
+</document>
