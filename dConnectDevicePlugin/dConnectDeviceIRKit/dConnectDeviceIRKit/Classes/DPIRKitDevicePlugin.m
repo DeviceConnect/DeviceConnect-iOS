@@ -17,6 +17,7 @@
 #import "DPIRKitSystemProfile.h"
 #import "DPIRKitService.h"
 #import "DPIRKitReachability.h"
+#import "DPIRKitVirtualService.h"
 #import <DConnectSDK/DConnectServiceListViewController.h>
 #import "DPIRKitVirtualDeviceViewController.h"
 
@@ -28,8 +29,6 @@ top = [UIApplication sharedApplication].keyWindow.rootViewController; \
 while (top.presentedViewController) { \
 top = top.presentedViewController; \
 }
-#import "DPIRKitVirtualService.h"
-
 NSString *const DPIRKitInfoVersion = @"DPIRKitVersion";
 NSString *const DPIRKitInfoAPIKey = @"DPIRKitAPIKey";
 NSString *const DPIRKitStoryBoardName = @"Storyboard_";

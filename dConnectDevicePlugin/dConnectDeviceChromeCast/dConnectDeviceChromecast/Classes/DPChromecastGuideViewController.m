@@ -9,18 +9,35 @@
 
 #import "DPChromecastGuideViewController.h"
 #import "DPChromecastManager.h"
+#import "CastDeviceController.h"
+#import "NotificationConstants.h"
+#import "SimpleImageFetcher.h"
+#import <GoogleCast/GCKDeviceManager.h>
+#import <GoogleCast/GCKMediaControlChannel.h>
 
-@interface DPChromecastGuideViewController () {
+
+@interface DPChromecastGuideViewController (){
     DPChromecastManager *_manager;
 }
 @end
 
 @implementation DPChromecastGuideViewController
 
+- (void)viewDidLoad {
+    [super viewDidLoad];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+}
+
+
 - (IBAction)rulButtonPressed:(id)sender
 {
     NSURL *url = [NSURL URLWithString: @"http://www.google.com/chromecast/setup"];
     [[UIApplication sharedApplication] openURL:url];
 }
+
+
 
 @end

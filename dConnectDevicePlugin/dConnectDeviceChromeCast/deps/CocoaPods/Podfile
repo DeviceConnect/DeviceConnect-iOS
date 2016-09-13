@@ -1,0 +1,6 @@
+platform :ios, '9.0'
+xcodeproj './Pods/Cast'
+target "Cast" do 
+  pod 'google-cast-sdk', '2.10.4.1'
+end
+
