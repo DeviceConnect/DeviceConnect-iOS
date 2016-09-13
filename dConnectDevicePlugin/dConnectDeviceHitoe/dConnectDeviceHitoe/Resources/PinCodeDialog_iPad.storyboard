@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="lAy-Ca-zy5">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+    </dependencies>
+    <scenes>
+        <!--Hitoe Pin Code Dialog-->
+        <scene sceneID="Oll-JV-rIO">
+            <objects>
+                <viewController id="lAy-Ca-zy5" customClass="DPHitoePinCodeDialog" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="vmk-mp-s0t"/>
+                        <viewControllerLayoutGuide type="bottom" id="0fr-Wm-Ua2"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="apr-gc-mF3">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AmP-co-gjG">
+                                <rect key="frame" x="60" y="220" width="480" height="430"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="hitoe_input_pin960.png" translatesAutoresizingMaskIntoConstraints="NO" id="IVP-ur-HPM">
+                                        <rect key="frame" x="66" y="52" width="349" height="220"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="220" id="cal-hd-6c5"/>
+                                            <constraint firstAttribute="width" constant="349" id="clX-zj-Pn3"/>
+                                        </constraints>
+                                    </imageView>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="25" translatesAutoresizingMaskIntoConstraints="NO" id="HgE-IU-k53">
+                                        <rect key="frame" x="36" y="334" width="407" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="407" id="B1i-QQ-l8X"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="枠の中の数字を入力してください。" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ozj-RT-XMw">
+                                        <rect key="frame" x="36" y="287" width="407" height="39"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="407" id="Hwz-vS-SYd"/>
+                                            <constraint firstAttribute="height" constant="39" id="ZiO-le-6gw"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="PINコードの入力" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IjZ-hw-nYf">
+                                        <rect key="frame" x="117" y="10" width="245" height="34"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="245" id="XH8-fi-F0L"/>
+                                            <constraint firstAttribute="height" constant="34" id="dZX-lT-Gky"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qnl-al-ruD">
+                                        <rect key="frame" x="106" y="378" width="44" height="39"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="44" id="4td-Ac-XQZ"/>
+                                            <constraint firstAttribute="height" constant="39" id="JiP-UB-FMK"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                        <state key="normal" title="OK"/>
+                                        <connections>
+                                            <action selector="okBtn:" destination="lAy-Ca-zy5" eventType="touchUpInside" id="OAP-sf-b29"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XnC-qH-Aaf">
+                                        <rect key="frame" x="293" y="373" width="99" height="48"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="99" id="95Z-MQ-CLa"/>
+                                            <constraint firstAttribute="height" constant="48" id="Ida-Sw-0Zf"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                        <state key="normal" title="Cancel"/>
+                                        <connections>
+                                            <action selector="cancelBtn:" destination="lAy-Ca-zy5" eventType="touchUpInside" id="zfU-dD-YjX"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" red="0.94588514397905754" green="0.94588514397905754" blue="0.94588514397905754" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="480" id="567-2y-hNY"/>
+                                    <constraint firstItem="Qnl-al-ruD" firstAttribute="top" secondItem="HgE-IU-k53" secondAttribute="bottom" constant="14" id="67d-dv-fED"/>
+                                    <constraint firstItem="IVP-ur-HPM" firstAttribute="top" secondItem="IjZ-hw-nYf" secondAttribute="bottom" constant="8" id="6Ij-WE-0yq"/>
+                                    <constraint firstItem="ozj-RT-XMw" firstAttribute="top" secondItem="IVP-ur-HPM" secondAttribute="bottom" constant="15" id="7wQ-H2-uHC"/>
+                                    <constraint firstItem="HgE-IU-k53" firstAttribute="centerX" secondItem="AmP-co-gjG" secondAttribute="centerX" id="99O-hY-6Om"/>
+                                    <constraint firstAttribute="height" constant="430" id="Avl-iu-gvf"/>
+                                    <constraint firstItem="XnC-qH-Aaf" firstAttribute="top" secondItem="HgE-IU-k53" secondAttribute="bottom" constant="9" id="BCY-kt-bvB"/>
+                                    <constraint firstItem="IjZ-hw-nYf" firstAttribute="top" secondItem="AmP-co-gjG" secondAttribute="top" constant="10" id="CqB-bw-KWk"/>
+                                    <constraint firstItem="ozj-RT-XMw" firstAttribute="centerX" secondItem="AmP-co-gjG" secondAttribute="centerX" id="E06-4p-Kz6"/>
+                                    <constraint firstItem="HgE-IU-k53" firstAttribute="top" secondItem="ozj-RT-XMw" secondAttribute="bottom" constant="8" id="Iqe-CR-hwQ"/>
+                                    <constraint firstItem="XnC-qH-Aaf" firstAttribute="leading" secondItem="Qnl-al-ruD" secondAttribute="trailing" constant="143" id="PvQ-BQ-uzd"/>
+                                    <constraint firstItem="Qnl-al-ruD" firstAttribute="leading" secondItem="AmP-co-gjG" secondAttribute="leading" constant="106" id="TLa-kH-voe"/>
+                                    <constraint firstItem="IjZ-hw-nYf" firstAttribute="centerX" secondItem="AmP-co-gjG" secondAttribute="centerX" id="l1u-Jh-Yze"/>
+                                    <constraint firstItem="IVP-ur-HPM" firstAttribute="centerX" secondItem="AmP-co-gjG" secondAttribute="centerX" id="xAu-8q-jbj"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="AmP-co-gjG" firstAttribute="top" secondItem="vmk-mp-s0t" secondAttribute="bottom" constant="200" id="dgg-QH-cdQ"/>
+                            <constraint firstItem="AmP-co-gjG" firstAttribute="centerX" secondItem="apr-gc-mF3" secondAttribute="centerX" id="jCJ-Db-6hI"/>
+                            <constraint firstItem="AmP-co-gjG" firstAttribute="top" secondItem="vmk-mp-s0t" secondAttribute="bottom" constant="40" id="nqX-mC-lSL"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="nqX-mC-lSL"/>
+                            </mask>
+                        </variation>
+                    </view>
+                    <connections>
+                        <outlet property="pinCodeDialogView" destination="AmP-co-gjG" id="fG3-hH-9X5"/>
+                        <outlet property="pinCodeField" destination="HgE-IU-k53" id="QaO-Ov-AHZ"/>
+                        <outlet property="pinDialogHeight" destination="Avl-iu-gvf" id="nuY-3g-Zyg"/>
+                        <outlet property="pinDialogTop" destination="dgg-QH-cdQ" id="BGX-m8-hJn"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="sEc-bX-v66" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="256" y="210"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="hitoe_input_pin960.png" width="960" height="720"/>
+    </resources>
+</document>

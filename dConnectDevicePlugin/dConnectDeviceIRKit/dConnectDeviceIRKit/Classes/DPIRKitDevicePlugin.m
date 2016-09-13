@@ -29,7 +29,6 @@ top = [UIApplication sharedApplication].keyWindow.rootViewController; \
 while (top.presentedViewController) { \
 top = top.presentedViewController; \
 }
-
 NSString *const DPIRKitInfoVersion = @"DPIRKitVersion";
 NSString *const DPIRKitInfoAPIKey = @"DPIRKitAPIKey";
 NSString *const DPIRKitStoryBoardName = @"Storyboard_";

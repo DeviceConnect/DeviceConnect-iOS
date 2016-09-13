@@ -183,6 +183,11 @@ static NSInteger maxIconCount = 8;
     } else if (!self.url) {
         self.url = [self.manager createSearchURL:url];
     }
+    // http:// https://が省略されているときは付加する
+    if (![[self.url lowercaseString] hasPrefix:@"http://"]
+        && ![[self.url lowercaseString] hasPrefix:@"https://"]) {
+        self.url = [NSString stringWithFormat:@"http://%@", self.url];
+    }
     [self setLatestURL:self.url];
     return self.url;
 }
