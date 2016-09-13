@@ -8,11 +8,15 @@
 //
 
 #import "DPIRKitManager.h"
+#import "DPIRKitDBManager.h"
 #import "DPIRKitDevice.h"
 #import <CoreTelephony/CTTelephonyNetworkInfo.h>
 #import <CoreTelephony/CTCarrier.h>
 #import "NSString+Hex.h"
 #import "DPIRKitConst.h"
+#import "DPIRKitService.h"
+#import "DPIRKitVirtualService.h"
+#import "DPIRKitVirtualDevice.h"
 
 NSString *const DPIRKitInternetHost = @"api.getirkit.com";
 NSString *const DPIRKitDeviceHost = @"192.168.1.1";
@@ -595,6 +599,9 @@ struct DPIRKitCRCInfo
     
     DPIR_ASYNC_E
 }
+
+
+
 
 #pragma mark - NSNetServiceBrowserDelegate
 

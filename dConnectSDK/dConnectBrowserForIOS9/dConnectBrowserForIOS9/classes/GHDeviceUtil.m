@@ -104,11 +104,18 @@ static GHDeviceUtil* mgr = nil;
                 }
             } else {
                 LOG(@" - response - errorCode: %d", [response errorCode]);
+                NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
+                [def removeObjectForKey:ACCESS_TOKEN];
+                [def synchronize];
+
                 if (completion) {
                     completion(nil);
                 }
             }
         } else {
+            NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
+            [def removeObjectForKey:ACCESS_TOKEN];
+            [def synchronize];
             if (completion) {
                 completion(nil);
             }

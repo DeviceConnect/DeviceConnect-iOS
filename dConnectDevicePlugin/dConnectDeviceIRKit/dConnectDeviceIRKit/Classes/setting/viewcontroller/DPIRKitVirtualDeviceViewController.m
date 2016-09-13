@@ -60,7 +60,14 @@
     title.text = @"デバイス一覧";
     [title sizeToFit];
     self.navigationItem.titleView = title;
-
+    self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:0.00
+                                                                           green:0.63
+                                                                            blue:0.91
+                                                                           alpha:1.0];
+    [_menuBar setBarTintColor:[UIColor colorWithRed:0.00
+                                              green:0.63
+                                               blue:0.91
+                                              alpha:1.0]];
     _virtualDeviceList.delegate = self;
     _virtualDeviceList.dataSource = self;
     [_virtualDeviceList registerClass:[UITableViewCell class] forCellReuseIdentifier:@"cellVirtualDevice"];
@@ -200,11 +207,11 @@
     if (!_isRemoved) {
         _virtualDeviceList.allowsMultipleSelection = YES;
         self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:0.93
-                                                                               green:0.65
+                                           green:0.65
                                                                                 blue:0.70
                                                                                alpha:1.0];
 
-//        [_menuBar setBarTintColor:[UIColor colorWithRed:0.93 green:0.65 blue:0.70 alpha:1.0]];
+        [_menuBar setBarTintColor:[UIColor colorWithRed:0.93 green:0.65 blue:0.70 alpha:1.0]];
         [_leftButton setTitle:@"キャンセル"];
         [_rightButton setTitle:@"削除"];
         _isRemoved = YES;
@@ -215,10 +222,10 @@
                                                                                green:0.63
                                                                                 blue:0.91
                                                                                alpha:1.0];
-//        [_menuBar setBarTintColor:[UIColor colorWithRed:0.00
-//                                                    green:0.63
-//                                                     blue:0.91
-//                                                    alpha:1.0]];
+        [_menuBar setBarTintColor:[UIColor colorWithRed:0.00
+                                                    green:0.63
+                                                     blue:0.91
+                                                    alpha:1.0]];
         [_leftButton setTitle:@"追加"];
         [_rightButton setTitle:@"削除"];
         _isRemoved = NO;

@@ -11,6 +11,7 @@
 #import <DConnectSDK/DConnectServiceDiscoveryProfile.h>
 #import "DConnectManager+Private.h"
 #import "DConnectEventManager.h"
+#import "DConnectService.h"
 
 /** NetworkDiscoveryのタイムアウト. */
 #define DISCOVERY_TIMEOUT 8
@@ -120,6 +121,13 @@
                             NSString *did = [deviceMgr serviceIdByAppedingPluginIdWithDevicePlugin:plugin
                                                                                          serviceId:serviceId];
                             [msg setString:did forKey:DConnectServiceDiscoveryProfileParamId];
+                            DConnectArray *profile = [DConnectArray new];
+                            for (DConnectService *service in plugin.serviceProvider.services) {
+                                for (DConnectProfile *p in service.profiles) {
+                                    [profile addString:p.profileName];
+                                }
+                            }
+                            [msg setArray:profile forKey:DConnectServiceDiscoveryProfileParamScopes];
                             @synchronized (services) {
                                 [services addMessage:msg];
                             }
