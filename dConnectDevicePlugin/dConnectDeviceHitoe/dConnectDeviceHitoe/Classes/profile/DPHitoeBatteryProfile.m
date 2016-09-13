@@ -51,7 +51,7 @@
             [response setErrorToNotFoundService];
             return YES;
         }
-        double level = data.target.batteryLevel;
+        double level = (data.target.batteryLevel + 1) / 4;
         if (level < 0) {
             [response setErrorToUnknownWithMessage:@"Battery level is unknown."];
         } else {

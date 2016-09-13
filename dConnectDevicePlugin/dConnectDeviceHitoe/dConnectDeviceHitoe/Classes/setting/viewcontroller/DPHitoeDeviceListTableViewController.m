@@ -266,17 +266,14 @@ static NSString *const DPHitoeOpenBluetooth = @"BluetoothがOFFになってい�
 
 #pragma mark - Hitoe's Delegate
 -(void)didConnectWithDevice:(NSNotification *)notification {
+    [DPHitoeProgressDialog closeProgressDialog];
+    isConnecting = NO;
     dispatch_async(dispatch_get_main_queue(), ^{
         [self.registerDeviceList reloadData];
     });
-    [DPHitoeProgressDialog closeProgressDialog];
-    isConnecting = NO;
 }
 
 -(void)didConnectFailWithDevice:(NSNotification *)notification {
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [self.registerDeviceList reloadData];
-    });
     [DPHitoeProgressDialog closeProgressDialog];
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"接続失敗"
                                                                              message:@"Hitoeとの接続に失敗しました。"
@@ -286,6 +283,9 @@ static NSString *const DPHitoeOpenBluetooth = @"BluetoothがOFFになってい�
     [self presentViewController:alertController animated:YES completion:nil];
 
     isConnecting = NO;
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.registerDeviceList reloadData];
+    });
 }
 -(void)didDisconnectWithDevice:(NSNotification *)notification {
 
@@ -396,6 +396,10 @@ static NSString *const DPHitoeOpenBluetooth = @"BluetoothがOFFになってい�
         [alertController addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil]];
         [self presentViewController:alertController animated:YES completion:nil];
         isConnecting = NO;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.registerDeviceList reloadData];
+        });
+
     }
 }
 
