@@ -274,8 +274,12 @@ DPIRKitManagerDetectionDelegate
     }
     UINavigationController *top = [storyBoard instantiateViewControllerWithIdentifier:@"virtualDeviceList"];
     
+    
     UIViewController *rootView;
     DCPutPresentedViewController(rootView);
+    DPIRKitVirtualDeviceViewController *view = (DPIRKitVirtualDeviceViewController*) top.viewControllers[0];
+    DPIRKitDevice *irkit = _devices[service.serviceId];
+    [view setDetailItem:irkit];
     [rootView presentViewController:top animated:YES completion:nil];
 }
 
