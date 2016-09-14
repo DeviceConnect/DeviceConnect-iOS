@@ -127,6 +127,8 @@ char const HEADER[4] = {
 
 - (void) close
 {
+    NSLog(@"DPAWSIoTSocketTask::close.");
+    
     if (_closeFlag) {
         return;
     }

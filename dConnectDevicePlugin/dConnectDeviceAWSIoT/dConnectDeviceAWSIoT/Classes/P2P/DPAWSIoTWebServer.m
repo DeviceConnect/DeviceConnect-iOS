@@ -102,8 +102,10 @@
 {
     NSLog(@"DPAWSIoTWebServer::connection:didRetrievedAddress:%@:%d", address, port);
     
-    if ([_delegate respondsToSelector:@selector(server:didRetrievedAddress:port:)]) {
-        [_delegate server:self didRetrievedAddress:address port:port];
+    NSData *data = [DPAWSIoTP2PManager createSignaling:conn.connectionId address:address port:port];
+    NSString *signaling = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    if ([_delegate respondsToSelector:@selector(server:didNotifiedSignaling:)]) {
+        [_delegate server:self didNotifiedSignaling:signaling];
     }
 }
 

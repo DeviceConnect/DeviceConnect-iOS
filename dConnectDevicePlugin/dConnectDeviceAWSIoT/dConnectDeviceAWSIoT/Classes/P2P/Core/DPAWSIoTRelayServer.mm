@@ -109,7 +109,11 @@ using namespace std;
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         UDT::startup();
-        [weakSelf execute:port];
+        if (![weakSelf execute:port]) {
+            if ([weakSelf.delegate respondsToSelector:@selector(didNotConnected)]) {
+                [weakSelf.delegate didNotConnected];
+            }
+        }
         UDT::cleanup();
     });
 }

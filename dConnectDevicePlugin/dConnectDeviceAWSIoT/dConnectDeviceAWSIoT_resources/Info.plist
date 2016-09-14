@@ -24,5 +24,10 @@
 	<string>Copyright © 2016年 NTT DOCOMO, INC. All rights reserved.</string>
 	<key>NSPrincipalClass</key>
 	<string></string>
+    <key>NSAppTransportSecurity</key>
+    <dict>
+        <key>NSAllowsArbitraryLoads</key>
+        <true/>
+    </dict>
 </dict>
 </plist>

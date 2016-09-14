@@ -9,7 +9,18 @@
 
 #import <Foundation/Foundation.h>
 
+@class DPAWSIoTRemoteClientManager;
+
+@protocol DPAWSIoTRemoteClientManagerDelegate <NSObject>
+
+-(void) remoteClientManager:(DPAWSIoTRemoteClientManager *)client didNotifiedSignaling:(NSString *)signaling to:(NSString *)uuid;
+
+@end
+
+
 @interface DPAWSIoTRemoteClientManager : NSObject
+
+@property (nonatomic, assign) id<DPAWSIoTRemoteClientManagerDelegate> delegate;
 
 - (void) destroy;
 - (void) didReceivedSignaling:(NSString *)signaling;

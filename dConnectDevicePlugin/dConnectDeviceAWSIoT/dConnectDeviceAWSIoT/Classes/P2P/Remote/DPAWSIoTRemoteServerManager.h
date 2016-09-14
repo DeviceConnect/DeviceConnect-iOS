@@ -10,9 +10,11 @@
 #import <Foundation/Foundation.h>
 
 
+@class DPAWSIoTRemoteServerManager;
+
 @protocol DPAWSIoTRemoteServerManagerDelegate <NSObject>
 
--(void)didReceivedAddress:(NSString *)address port:(int)port;
+-(void) remoteServerManager:(DPAWSIoTRemoteServerManager *)manager didNotifiedSignaling:(NSString *)signaling to:(NSString *)uuid;
 
 @end
 
@@ -21,8 +23,7 @@
 
 @property (nonatomic, assign) id<DPAWSIoTRemoteServerManagerDelegate> delegate;
 
-
-- (NSString*) createWebServer:(NSString *)address port:(int)port path:(NSString *)path;
+- (NSString*) createWebServer:(NSString *)address port:(int)port path:(NSString *)path to:(NSString *)uuid;
 - (void) destroy;
 - (void) didReceivedSignaling:(NSString *)signaling;
 

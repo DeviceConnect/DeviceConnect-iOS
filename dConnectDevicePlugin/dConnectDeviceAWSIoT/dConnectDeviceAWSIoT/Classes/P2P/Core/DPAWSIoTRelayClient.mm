@@ -76,11 +76,9 @@ using namespace std;
     struct addrinfo hints, *local, *peer;
     
     memset(&hints, 0, sizeof(struct addrinfo));
-    
     hints.ai_flags = AI_PASSIVE;
     hints.ai_family = AF_INET;
     hints.ai_socktype = SOCK_STREAM;
-//    hints.ai_socktype = SOCK_DGRAM;
     
     NSString *service = [NSString stringWithFormat:@"%d", port];
     

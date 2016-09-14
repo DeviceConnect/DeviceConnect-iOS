@@ -9,6 +9,7 @@
 
 #import "DPAWSIoTRemoteServerManager.h"
 #import "DPAWSIoTWebServer.h"
+#import "DPAWSIoTP2PManager.h"
 
 @interface DPAWSIoTRemoteServerManager () <DPAWSIoTWebServerDelegate>
 
@@ -28,13 +29,14 @@
     return self;
 }
 
-- (NSString*) createWebServer:(NSString *)address port:(int)port path:(NSString *)path
+- (NSString*) createWebServer:(NSString *)address port:(int)port path:(NSString *)path to:(NSString *)uuid
 {
     DPAWSIoTWebServer *server = [DPAWSIoTWebServer new];
     server.delegate = self;
     server.host = address;
     server.port = port;
     server.path = path;
+    server.target = uuid;
     NSString *url = [server start];
     if (url) {
         [_serverList addObject:server];
@@ -57,20 +59,19 @@
 
 #pragma mark - DPAWSIoTWebServerDelegate
 
-- (void) server:(DPAWSIoTWebServer *)server didRetrievedAddress:(NSString *)address port:(int)port
+- (void) server:(DPAWSIoTWebServer *)server didNotifiedSignaling:(NSString *)signaling
 {
-    // TODO 通知
-    
-    [self.delegate didReceivedAddress:address port:port];
+    [self.delegate remoteServerManager:self didNotifiedSignaling:signaling to:(NSString *)server.target];
 }
 
 - (void) serverDidConnected:(DPAWSIoTWebServer *)server
 {
-    
+    NSLog(@"DPAWSIoTRemoteServerManager::serverDidConnected");
 }
 
 - (void) serverDidDisconnected:(DPAWSIoTWebServer *)server
 {
+    NSLog(@"DPAWSIoTRemoteServerManager::serverDidDisconnected");
     [_serverList removeObject:server];
 }
 

@@ -45,12 +45,9 @@
 
 #pragma mark - DPAWSIoTWebClientDelegate
 
-- (void) client:(DPAWSIoTWebClient *)client didRetrievedAddress:(NSString *)address port:(int)port
+- (void) client:(DPAWSIoTWebClient *)client didNotifiedSignaling:(NSString *)signaling
 {
-    // TODO
-    NSLog(@"DPAWSIoTLocalClientManager::client:didRetrievedAddress %@:%@", address, @(port));
-    
-    [self.delegate didReceivedAddress:address port:port];
+    [self.delegate localClientManager:self didNotifiedSignaling:signaling];
 }
 
 - (void) clientDidConnected:(DPAWSIoTWebClient *)client

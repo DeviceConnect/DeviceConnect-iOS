@@ -18,13 +18,15 @@
 @optional
 - (void) clientDidConnected:(DPAWSIoTWebClient *)client;
 - (void) clientDidDisconnected:(DPAWSIoTWebClient *)client;
-- (void) client:(DPAWSIoTWebClient *)client didRetrievedAddress:(NSString *)address port:(int)port;
+- (void) client:(DPAWSIoTWebClient *)client didNotifiedSignaling:(NSString *)signaling;
 @end
 
 
 @interface DPAWSIoTWebClient : DPAWSIoTP2PManager
 
 @property (nonatomic, assign) id<DPAWSIoTWebClientDelegate> delegate;
+
+@property (nonatomic) NSObject *target;
 
 - (void) connect:(NSString *)address port:(int)port;
 - (void) close;

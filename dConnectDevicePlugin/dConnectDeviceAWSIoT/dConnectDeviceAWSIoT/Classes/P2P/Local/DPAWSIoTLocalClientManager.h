@@ -9,9 +9,11 @@
 
 #import <Foundation/Foundation.h>
 
+@class DPAWSIoTLocalClientManager;
+
 @protocol DPAWSIoTLocalClientManagerDelegate <NSObject>
 
--(void)didReceivedAddress:(NSString *)address port:(int)port;
+-(void) localClientManager:(DPAWSIoTLocalClientManager *)manager didNotifiedSignaling:(NSString *)signaling;
 
 @end
 
@@ -19,7 +21,6 @@
 @interface DPAWSIoTLocalClientManager : NSObject
 
 @property (nonatomic, assign) id<DPAWSIoTLocalClientManagerDelegate> delegate;
-
 
 - (void) destroy;
 - (void) didReceivedSignaling:(NSString *)signaling;

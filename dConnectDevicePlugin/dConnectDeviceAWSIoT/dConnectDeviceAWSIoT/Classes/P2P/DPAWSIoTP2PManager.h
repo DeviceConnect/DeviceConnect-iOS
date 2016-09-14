@@ -16,6 +16,7 @@
 
 - (DPAWSIoTP2PConnection *) createP2PConnection:(NSString *)signaling delegate:(id<DPAWSIoTP2PConnectionDelegate>)delegate;
 
-- (NSData *)createSignaling:(int)connectionId address:(NSString *)address port:(int)port;
++ (NSData *)createSignaling:(int)connectionId address:(NSString *)address port:(int)port;
+
 
 @end

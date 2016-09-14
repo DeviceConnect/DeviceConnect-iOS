@@ -469,6 +469,8 @@
 		BE2B6DEF1D88ED8C009A02CE /* P2P */ = {
 			isa = PBXGroup;
 			children = (
+				BE2B6E0D1D88ED8C009A02CE /* Local */,
+				BE2B6E121D88ED8C009A02CE /* Remote */,
 				BE2B6DF01D88ED8C009A02CE /* Core */,
 				BE2B6E011D88ED8C009A02CE /* DPAWSIoTNetworkInfo.h */,
 				BE2B6E021D88ED8C009A02CE /* DPAWSIoTNetworkInfo.m */,
@@ -482,8 +484,6 @@
 				BE2B6E0A1D88ED8C009A02CE /* DPAWSIoTWebClient.m */,
 				BE2B6E0B1D88ED8C009A02CE /* DPAWSIoTWebServer.h */,
 				BE2B6E0C1D88ED8C009A02CE /* DPAWSIoTWebServer.m */,
-				BE2B6E0D1D88ED8C009A02CE /* Local */,
-				BE2B6E121D88ED8C009A02CE /* Remote */,
 			);
 			path = P2P;
 			sourceTree = "<group>";
@@ -877,7 +877,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -919,7 +919,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
@@ -930,6 +930,11 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 88658FBE182227BAC71710AD /* Pods-dConnectDeviceAWSIoT.debug.xcconfig */;
 			buildSettings = {
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					OSX,
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -940,6 +945,11 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 6FAF38FDC94555EDF3019CB2 /* Pods-dConnectDeviceAWSIoT.release.xcconfig */;
 			buildSettings = {
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					OSX,
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -949,6 +959,10 @@
 		78298A111D532F4F00E9B90B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					OSX,
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -956,6 +970,10 @@
 		78298A121D532F4F00E9B90B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					OSX,
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;

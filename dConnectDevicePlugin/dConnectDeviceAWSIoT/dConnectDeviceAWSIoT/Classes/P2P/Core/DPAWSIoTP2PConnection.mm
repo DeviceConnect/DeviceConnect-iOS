@@ -62,6 +62,8 @@
     if (!address || port == 0) {
         return NO;
     }
+    
+    NSLog(@"DPAWSIoTP2PConnection::connectToAddress:%@ port:%@", address, @(port));
 
     _client = [DPAWSIoTRelayClient new];
     _client.delegate = self;

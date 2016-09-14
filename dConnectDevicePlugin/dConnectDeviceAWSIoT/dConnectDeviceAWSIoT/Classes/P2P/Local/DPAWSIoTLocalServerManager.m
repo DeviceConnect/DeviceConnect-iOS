@@ -64,9 +64,9 @@
 
 #pragma mark - DPAWSIoTWebServerDelegate
 
-- (void) server:(DPAWSIoTWebServer *)server didRetrievedAddress:(NSString *)address port:(int)port
+- (void) server:(DPAWSIoTWebServer *)server didNotifiedSignaling:(NSString *)signaling
 {
-    // TODO
+    [self.delegate localServerManager:self didNotifiedSignaling:signaling];
 }
 
 - (void) serverDidConnected:(DPAWSIoTWebServer *)server

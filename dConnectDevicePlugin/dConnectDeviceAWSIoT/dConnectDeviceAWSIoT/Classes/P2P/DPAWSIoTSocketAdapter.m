@@ -86,9 +86,10 @@
 {
     NSLog(@"DPAWSIoTSocketAdapter::socketDidDisconnect");
     
-    if (self.connection) {
-        [self.connection close];
-    }
+    // TODO UDPが送り終わっていないのにcloseしてしまうと問題があるので、一旦保留
+//    if (self.connection) {
+//        [self.connection close];
+//    }
 }
 
 @end

@@ -81,7 +81,7 @@ NSString *const kPort = @"port";
     return NO;
 }
 
-- (NSData *)createSignaling:(int)connectionId address:(NSString *)address port:(int)port
++ (NSData *)createSignaling:(int)connectionId address:(NSString *)address port:(int)port
 {
     NSMutableDictionary *global = [NSMutableDictionary dictionary];
     [global setObject:address forKey:kAddress];

@@ -165,8 +165,10 @@
 {
     NSLog(@"connection:didRetrievedAddress:%@:%d", address, port);
     
-    if ([_delegate respondsToSelector:@selector(client:didRetrievedAddress:port:)]) {
-        [_delegate client:self didRetrievedAddress:address port:port];
+    NSData *data = [DPAWSIoTP2PManager createSignaling:conn.connectionId address:address port:port];
+    NSString *signaling = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    if ([_delegate respondsToSelector:@selector(client:didNotifiedSignaling:)]) {
+        [_delegate client:self didNotifiedSignaling:signaling];
     }
 }
 

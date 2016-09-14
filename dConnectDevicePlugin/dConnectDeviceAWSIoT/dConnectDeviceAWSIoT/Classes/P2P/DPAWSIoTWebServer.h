@@ -18,7 +18,7 @@
 @optional
 - (void) serverDidConnected:(DPAWSIoTWebServer *)server;
 - (void) serverDidDisconnected:(DPAWSIoTWebServer *)server;
-- (void) server:(DPAWSIoTWebServer *)server didRetrievedAddress:(NSString *)address port:(int)port;
+- (void) server:(DPAWSIoTWebServer *)server didNotifiedSignaling:(NSString *)signaling;
 @end
 
 
@@ -30,6 +30,7 @@
 @property (nonatomic) NSInteger port;
 @property (nonatomic) NSString *host;
 @property (nonatomic) NSString *path;
+@property (nonatomic) NSObject *target;
 
 - (NSString *) start;
 - (void) stop;
