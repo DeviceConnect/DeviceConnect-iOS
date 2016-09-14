@@ -1,5 +1,5 @@
 //
-//  DPIRKitService.m
+//  DPIRKitVirtualService.m
 //  dConnectDeviceIRKit
 //
 //  Copyright (c) 2016 NTT DOCOMO, INC.
@@ -7,14 +7,17 @@
 //  http://opensource.org/licenses/mit-license.php
 //
 
-#import "DPIRKitService.h"
+#import "DPIRKitVirtualService.h"
 #import <DConnectSDK/DConnectServiceDiscoveryProfile.h>
 #import <DConnectSDK/DConnectProfile.h>
+#import <DConnectSDK/DConnectLightProfile.h>
 #import "DPIRKitRemoteControllerProfile.h"
+#import "DPIRKitTVProfile.h"
+#import "DPIRKitLightProfile.h"
+#import "DPIRKitDialog.h"
+@implementation DPIRKitVirtualService
 
-@implementation DPIRKitService
-
-- (instancetype) initWithServiceId: (NSString *)serviceId plugin: (id)plugin{
+- (instancetype) initWithServiceId: (NSString *)serviceId plugin:(id)plugin profileName:(NSString *)profileName {
     self = [super initWithServiceId: serviceId plugin: plugin dataSource: self];
     if (self) {
         [self setName: serviceId];
@@ -23,6 +26,11 @@
         
         // サービスで登録するProfile
         [self addProfile: [[DPIRKitRemoteControllerProfile alloc] initWithDevicePlugin:plugin]];
+        if ([profileName isEqualToString:DPIRKitCategoryLight]) {
+            [self addProfile: [[DPIRKitLightProfile alloc] initWithDevicePlugin:plugin]];
+        } else {
+            [self addProfile: [[DPIRKitTVProfile alloc] initWithDevicePlugin:plugin]];
+        }
     }
     return self;
 }
@@ -40,5 +48,6 @@
     }
     return wifiState;
 }
+
 
 @end

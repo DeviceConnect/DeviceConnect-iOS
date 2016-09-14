@@ -19,6 +19,7 @@
 #import "DPIRKitReachability.h"
 #import <DConnectSDK/DConnectServiceListViewController.h>
 #import "DPIRKitVirtualDeviceViewController.h"
+#import "DPIRKitVirtualService.h"
 
 #define DCBundle() \
 [NSBundle bundleWithPath:[[NSBundle mainBundle] pathForResource:@"DConnectSDK_resources" ofType:@"bundle"]]
@@ -179,6 +180,40 @@ DPIRKitManagerDetectionDelegate
                     [service setOnline: NO];
                 }
             }
+            
+            //仮想デバイスの追加
+            NSArray *virtuals = [[DPIRKitDBManager sharedInstance] queryVirtualDevice:nil];
+            if (virtuals.count > 0) {
+                for (DPIRKitVirtualDevice *virtual in virtuals) {
+                    NSRange range = [virtual.serviceId rangeOfString:device.name];
+                    if (range.location != NSNotFound
+                        && [self existIRForServiceId:virtual.serviceId]) {
+                        if (online) {
+                            // オンライン遷移の場合、デバイスが未登録なら登録し、登録済ならフラグをオンラインにする
+                            NSString *serviceId = virtual.serviceId;
+                            if ([self.serviceProvider service: serviceId]) {
+                                DConnectService *service = [self.serviceProvider service: serviceId];
+                                [service setOnline: YES];
+                            } else {
+                                NSString *profileName = virtual.categoryName;
+                                DPIRKitVirtualService *service = [[DPIRKitVirtualService alloc] initWithServiceId: serviceId plugin:self
+                                                           profileName:profileName];
+                                [self.serviceProvider addService: service];
+                                [service setOnline: YES];
+                            }
+                        } else {
+                            // オフライン遷移の場合、デバイスが登録済ならフラグをオフラインにする
+                            NSString *serviceId = virtual.serviceId;
+                            DConnectService *service = [self.serviceProvider service: serviceId];
+                            if (service) {
+                                [service setOnline: NO];
+                            }
+                        }
+
+                    }
+                }
+            }
+            
         }
         
         NSArray *events = [_eventManager eventListForProfile:DConnectServiceDiscoveryProfileName
@@ -279,8 +314,18 @@ DPIRKitManagerDetectionDelegate
     DCPutPresentedViewController(rootView);
     DPIRKitVirtualDeviceViewController *view = (DPIRKitVirtualDeviceViewController*) top.viewControllers[0];
     DPIRKitDevice *irkit = _devices[service.serviceId];
-    [view setDetailItem:irkit];
-    [rootView presentViewController:top animated:YES completion:nil];
+    
+    if (irkit) {
+        [view setDetailItem:irkit];
+        [rootView presentViewController:top animated:YES completion:nil];
+    } else {
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"仮想デバイス"
+                                                                                 message:@"このデバイスは仮想デバイスです"
+                                                                          preferredStyle:UIAlertControllerStyleAlert];
+        [alertController addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil]];
+        [rootView presentViewController:alertController animated:YES completion:nil];
+
+    }
 }
 
 - (void) serviceListViewControllerDidWillAppear {
