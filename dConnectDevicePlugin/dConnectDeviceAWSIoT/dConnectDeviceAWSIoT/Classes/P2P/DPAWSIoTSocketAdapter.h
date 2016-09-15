@@ -13,13 +13,7 @@
 
 @interface DPAWSIoTSocketAdapter : NSObject
 
-@property (readonly, nonatomic) NSString* hostname;
-@property (readonly, nonatomic) UInt32 port;
-@property (nonatomic) NSInteger timeoutSec;
-
 @property (nonatomic) DPAWSIoTP2PConnection *connection;
-
-- (id)initWithHostname:(NSString*)hostname port:(UInt32)port timeout:(int)timeoutSec;
 
 - (BOOL)openSocket;
 - (void)closeSocket;

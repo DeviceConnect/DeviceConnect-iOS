@@ -10,6 +10,8 @@
 #import "DPAWSIoTWebClient.h"
 #import "DPAWSIoTP2PConnection.h"
 #import "DPAWSIoTSocketAdapter.h"
+#import "DPAWSIoTHttpSocketAdapter.h"
+#import "DPAWSIoTFileSocketAdapter.h"
 
 
 @interface DPAWSIoTWebClient () <DPAWSIoTP2PConnectionDelegate>
@@ -87,7 +89,11 @@
     // TODO
     NSString *uri = [array objectAtIndex:1];
     if ([uri hasPrefix:@"/contentProvider"]) {
-        return NO;
+        NSURL *url =  [NSURL URLWithString:uri];
+        NSData *data = [self.dataSource getData:[url query]];
+        _socketAdapter = [[DPAWSIoTFileSocketAdapter alloc] initWithData:data timeout:30];
+        _socketAdapter.connection = _connection;
+        return [_socketAdapter openSocket];
     }
     
     NSString *line;
@@ -114,9 +120,9 @@
     
     NSLog(@"openSocket: %@:%d", address, port);
     
-    _socketAdapter = [[DPAWSIoTSocketAdapter alloc] initWithHostname:address port:(UInt32)port timeout:30];
+    _socketAdapter = [[DPAWSIoTHttpSocketAdapter alloc] initWithHostname:address port:(UInt32)port timeout:30];
     _socketAdapter.connection = _connection;
-    return[_socketAdapter openSocket];
+    return [_socketAdapter openSocket];
 }
 
 - (int) findHeaderEnd:(const char *)buf length:(int)rlen

@@ -202,7 +202,12 @@
     }];
     
     if (runnable) {
+        [runnable close];
         [_connections removeObject:runnable];
+    }
+    
+    if ([_connections count] == 0) {
+        [self stop];
     }
 }
 

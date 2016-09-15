@@ -94,7 +94,7 @@
         [scanner scanUpToCharactersFromSet:chSet intoString:&line];
 
         if ([[line lowercaseString] hasPrefix:@"host"]) {
-            NSString *newHost = [NSString stringWithFormat:@"Host: %@:%d", self.host, self.port];
+            NSString *newHost = [NSString stringWithFormat:@"Host: %@:%@", self.host, @(self.port)];
             [newData appendData:[newHost dataUsingEncoding:NSUTF8StringEncoding]];
         } else {
             [newData appendData:[line dataUsingEncoding:NSUTF8StringEncoding]];

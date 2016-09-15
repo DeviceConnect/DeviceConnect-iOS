@@ -23,13 +23,14 @@
 #import "DPAWSIoTRemoteServerManager.h"
 #import "DPAWSIoTLocalClientManager.h"
 #import "DPAWSIoTLocalServerManager.h"
+#import "DPAWSIoTWebClient.h"
 
-// Shadow名 TODO nobu
-#define kShadowName @"DeviceConnect2"
+// Shadow名
+#define kShadowName @"DeviceConnect"
 // Topic名の前置詞
 #define kTopicPrefix kShadowName
 
-@interface DPAWSIoTController () <DPAWSIoTRemoteServerManagerDelegate, DPAWSIoTLocalClientManagerDelegate, DPAWSIoTLocalServerManagerDelegate, DPAWSIoTRemoteClientManagerDelegate> {
+@interface DPAWSIoTController () <DPAWSIoTWebClientDataSource, DPAWSIoTRemoteServerManagerDelegate, DPAWSIoTLocalClientManagerDelegate, DPAWSIoTLocalServerManagerDelegate, DPAWSIoTRemoteClientManagerDelegate> {
 	NSMutableDictionary *_responses;
 	NSDictionary *_managers;
 	DPAWSIoTWebSocket *_webSocket;
@@ -38,6 +39,8 @@
     DPAWSIoTRemoteServerManager *_remoteServerManager;
     DPAWSIoTLocalClientManager *_localClientManager;
     DPAWSIoTLocalServerManager *_localServerManager;
+    
+    NSMutableDictionary *_tempDataDic;
 }
 @end
 
@@ -165,6 +168,8 @@
         
         _localServerManager = [DPAWSIoTLocalServerManager new];
         _localServerManager.delegate = self;
+        
+        _tempDataDic = [NSMutableDictionary dictionary];
         // TODO P2Pの処理 ここまで
 	}
 	return self;
@@ -283,6 +288,16 @@
 		} else {
 			[request.internalDictionary removeObjectForKey:key];
 		}
+        
+        // TODO URI変換
+        if ([@"uri" isEqualToString:key]) {
+            NSData *data = request.internalDictionary[@"data"];
+            if (data) {
+                NSString *uuid = [self addData:data];
+                request.internalDictionary[key] = [NSString stringWithFormat:@"http://localhost/contentProvider?%@", uuid];
+            }
+        }
+        // TODO URI変換 ここまで
 	}
 	[dic setObject:request.internalDictionary forKey:@"request"];
 	NSError *err;
@@ -446,14 +461,38 @@
                     NSLog(@"Error: %@", error);
                     return;
                 }
-                [_localClientManager didReceivedSignaling:[[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding]];
+                [_localClientManager didReceivedSignaling:[[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding] dataSource:self];
             }
         }
         // TODO P2Pの処理 ここまで
 
-		if ([json[@"request"][DConnectMessageAction] isEqualToString:@"put"]) {
+        NSMutableDictionary *requestDic = [json[@"request"] mutableCopy];
+
+        // TODO localhost
+        if (requestDic[@"uri"]) {
+            NSURL *url = [NSURL URLWithString:(NSString *)requestDic[@"uri"]];
+            NSString *path = [NSString stringWithFormat:@"%@", [url path]];
+            if ([url query]) {
+                path = [path stringByAppendingString:@"?"];
+                path = [path stringByAppendingString:[url query]];
+            }
+            int port = 80;
+            if ([url port]) {
+                port = [[url port] intValue];
+            }
+            NSString *uri = [_localServerManager createWebServer:[url host] port:port path:path];
+            NSLog(@"###### %@", uri);
+            if (uri) {
+                requestDic[@"uri"] = uri;
+            }
+            NSLog(@"###### TEST");
+        }
+        // TODO localhost ここまで
+        
+        
+		if ([requestDic[DConnectMessageAction] isEqualToString:@"put"]) {
 			// WebSocketにつなぐ
-			NSString *key = json[@"request"][DConnectMessageSessionKey];
+			NSString *key = requestDic[DConnectMessageSessionKey];
 			if (key) {
 				//NSLog(@"put:sessionKey:%@", key);
 				[_webSocket addSocket:key];
@@ -461,7 +500,7 @@
 		}
 		if ([json[@"request"][DConnectMessageAction] isEqualToString:@"delete"]) {
 			// WebSocketの接続解除
-			NSString *key = json[@"request"][DConnectMessageSessionKey];
+			NSString *key = requestDic[DConnectMessageSessionKey];
 			if (key) {
 				//NSLog(@"delete:sessionKey:%@", key);
 				[_webSocket removeSocket:key];
@@ -469,7 +508,7 @@
 		}
 		// MQTTからHTTPへ
 		//NSLog(@"request:%@", json);
-		[DPAWSIoTUtils sendRequest:json[@"request"] handler:^(NSData *data, NSError *error) {
+		[DPAWSIoTUtils sendRequest:requestDic handler:^(NSData *data, NSError *error) {
 			if (error) {
 				NSLog(@"Error on SendRequest:%@", error);
 				return;
@@ -568,14 +607,16 @@
 }
 // MQTTからレスポンスを受診
 - (void)receivedResponseFromMQTT:(id)json from:(NSDictionary*)manager uuid:(NSString*)uuid {
-	//NSLog(@"receivedResponseFromMQTT:%@", json);
+	NSLog(@"receivedResponseFromMQTT:%@", json);
 	NSString *requestCode = [json[@"requestCode"] stringValue];
 	DConnectResponseMessage *response = _responses[requestCode];
 	//NSLog(@"%@, %@, %@", response, _responses, requestCode);
 	if (response) {
+        NSLog(@"!!!");
 		int count = (int)[response integerForKey:@"servicecount"];
 		//NSLog(@"count:%d", count);
 		if (count > 0) {
+            NSLog(@"!!!1");
 			// servicediscoveryの場合各サービスからのレスポンスを保持
 			NSDictionary *resJson = json[@"response"];
 			int result = [resJson[DConnectMessageResult] intValue];
@@ -613,38 +654,6 @@
 				[response setInteger:(int)count forKey:@"servicecount"];
 			}
 		} else {
-            // TODO P2Pの処理
-            if (json[@"p2p_local"]) {
-                NSLog(@"###### p2p_local");
-
-                NSDictionary *p2pLocalJson = json[@"p2p_local"];
-                if (p2pLocalJson) {
-                    NSError *error = nil;
-                    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:p2pLocalJson options:0 error:&error];
-                    if (error) {
-                        NSLog(@"Error: %@", error);
-                        return;
-                    }
-                    [_remoteClientManager didReceivedSignaling:[[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding]];
-                }
-            }
-            
-            if (json[@"p2p_remote"]) {
-                NSLog(@"###### p2p_remote");
-
-                NSDictionary *p2pRemoteJson = json[@"p2p_remote"];
-                if (p2pRemoteJson) {
-                    NSError *error = nil;
-                    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:p2pRemoteJson options:0 error:&error];
-                    if (error) {
-                        NSLog(@"Error: %@", error);
-                        return;
-                    }
-                    [_remoteServerManager didReceivedSignaling:[[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding]];
-                }
-            }
-            // TODO P2Pの処理 ここまで
-
             // 通常の処理
 			NSDictionary *resJson = json[@"response"];
 			for (NSString *key in resJson.allKeys) {
@@ -673,6 +682,38 @@
 			[_responses removeObjectForKey:requestCode];
 		}
 	}
+    
+    // TODO P2Pの処理
+    if (json[@"p2p_local"]) {
+        NSLog(@"###### p2p_local");
+        
+        NSDictionary *p2pLocalJson = json[@"p2p_local"];
+        if (p2pLocalJson) {
+            NSError *error = nil;
+            NSData *jsonData = [NSJSONSerialization dataWithJSONObject:p2pLocalJson options:0 error:&error];
+            if (error) {
+                NSLog(@"Error: %@", error);
+                return;
+            }
+            [_remoteClientManager didReceivedSignaling:[[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding] dataSource:self];
+        }
+    }
+    
+    if (json[@"p2p_remote"]) {
+        NSLog(@"###### p2p_remote");
+        
+        NSDictionary *p2pRemoteJson = json[@"p2p_remote"];
+        if (p2pRemoteJson) {
+            NSError *error = nil;
+            NSData *jsonData = [NSJSONSerialization dataWithJSONObject:p2pRemoteJson options:0 error:&error];
+            if (error) {
+                NSLog(@"Error: %@", error);
+                return;
+            }
+            [_remoteServerManager didReceivedSignaling:[[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding]];
+        }
+    }
+    // TODO P2Pの処理 ここまで
 }
 
 // JsonからDConnectMessageへ変換
@@ -722,6 +763,7 @@
 
 -(void) localClientManager:(DPAWSIoTLocalClientManager *)manager didNotifiedSignaling:(NSString *)signaling;
 {
+    NSLog(@"####### localClientManager");
     NSString *uuid = [DPAWSIoTController managerUUID];
     
     NSString *msg = [NSString stringWithFormat:@"{\"requestCode\": 10001, \"p2p_remote\": %@}", signaling];
@@ -735,6 +777,7 @@
 
 -(void) localServerManager:(DPAWSIoTLocalServerManager *)manager didNotifiedSignaling:(NSString *)signaling
 {
+    NSLog(@"####### localServerManager");
     NSString *uuid = [DPAWSIoTController managerUUID];
     
     NSString *msg = [NSString stringWithFormat:@"{\"requestCode\": 10001, \"p2p_local\": %@}", signaling];
@@ -742,6 +785,29 @@
     if (![[DPAWSIoTManager sharedManager] publishWithTopic:responseTopic message:msg]) {
         NSLog(@"Failed to publish topic. topic=%@", responseTopic);
     }
+}
+
+#pragma mark - DPAWSIoTWebClientDataSource
+
+- (NSString *) addData:(NSData *)data
+{
+    NSString *uuid = [NSUUID UUID].UUIDString;
+    _tempDataDic[uuid] = data;
+    return uuid;
+}
+
+- (NSData *) getData:(NSString *)uuid
+{
+    NSData *data = _tempDataDic[uuid];
+    if (data) {
+        [_tempDataDic removeObjectForKey:uuid];
+    }
+    return data;
+}
+
+- (void) removeData:(NSString *)uuid
+{
+    [_tempDataDic removeObjectForKey:uuid];
 }
 
 @end

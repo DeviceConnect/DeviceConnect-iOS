@@ -21,10 +21,19 @@
 - (void) client:(DPAWSIoTWebClient *)client didNotifiedSignaling:(NSString *)signaling;
 @end
 
+@protocol DPAWSIoTWebClientDataSource <NSObject>
+
+- (NSString *) addData:(NSData *)data;
+- (NSData *) getData:(NSString *)uuid;
+- (void) removeData:(NSString *)uuid;
+
+@end
+
 
 @interface DPAWSIoTWebClient : DPAWSIoTP2PManager
 
 @property (nonatomic, assign) id<DPAWSIoTWebClientDelegate> delegate;
+@property (nonatomic, assign) id<DPAWSIoTWebClientDataSource> dataSource;
 
 @property (nonatomic) NSObject *target;
 
