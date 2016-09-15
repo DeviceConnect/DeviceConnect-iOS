@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="9525" systemVersion="15F34" minimumToolsVersion="Xcode 7.0">
+    <entity name="HitoeDevice" syncable="YES">
+        <attribute name="connectMode" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="pinCode" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="registerFlag" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="serviceId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="HitoeDevice" positionX="-63" positionY="-18" width="128" height="135"/>
+    </elements>
+</model>

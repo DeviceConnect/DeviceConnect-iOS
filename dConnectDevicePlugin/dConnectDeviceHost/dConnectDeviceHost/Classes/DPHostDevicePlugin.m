@@ -35,6 +35,7 @@
         // サービス追加
         DConnectService *hostService = [[DPHostService alloc] initWithFileManager: self.fileMgr plugin: self];
         [self.serviceProvider addService: hostService];
+        [hostService setOnline: YES];
         
         // プロファイルを追加
         [self addProfile:[DPHostSystemProfile new]];

@@ -13,6 +13,7 @@
  @author NTT DOCOMO
  */
 #import <DConnectSDK/DConnectProfile.h>
+#import <DConnectSDK/DConnectServiceProvider.h>
 #import <UIKit/UIKit.h>
 
 /*!
@@ -74,6 +75,20 @@ extern NSString *const DConnectSystemProfileParamVersion;
 
 @class DConnectSystemProfile;
 
+@protocol DConnectSystemProfileDelegate <NSObject>
+
+- (DConnectServiceProvider *) serviceProvider;
+
+- (UIViewController *) settingViewController;
+
+@optional
+
+- (void) didSelectService: (DConnectService *) service;
+
+- (void) serviceListViewControllerDidWillAppear;
+
+@end
+
 /*!
  @protocol DConnectSystemProfileDataSource
  @brief Systemプロファイルのデータソース。
@@ -115,6 +130,8 @@ extern NSString *const DConnectSystemProfileParamVersion;
  受信したリクエストは各API毎にデリゲートに通知される。
  */
 @interface DConnectSystemProfile : DConnectProfile
+
+@property (nonatomic, weak) id<DConnectSystemProfileDelegate> delegate;
 
 /*!
  @brief DConnectSystemProfileのデータソースオブジェクト。

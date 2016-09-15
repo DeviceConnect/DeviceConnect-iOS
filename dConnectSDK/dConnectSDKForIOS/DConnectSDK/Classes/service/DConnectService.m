@@ -24,6 +24,12 @@
  */
 @property(nonatomic, strong) NSMutableDictionary *profiles_;
 
+
+/*!
+ @brief オンライン状態
+ */
+@property(nonatomic) BOOL online_;
+
 @end
 
 @implementation DConnectService
@@ -53,6 +59,18 @@
     }
     
     return [profile didReceiveRequest: request response: response];
+}
+
+- (BOOL) online {
+    return self.online_;
+}
+
+- (void) setOnline:(BOOL) online {
+    self.online_ = online;
+    
+    if (self.statusListener) {
+        [self.statusListener didStatusChange: self];
+    }
 }
 
 #pragma mark - DConnectProfileProvider Implement.
