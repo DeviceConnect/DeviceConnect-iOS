@@ -416,8 +416,8 @@ typedef DConnectParameterSpec * (^ParameterObjectParser)(NSDictionary *json, NSE
                 [builder setIsRequired: required];
             }
             [builder setDataFormat: [dataSpec dataFormat]];
-            [builder setMaxLength: [[dataSpec maxLength] longValue]];
-            [builder setMinLength: [[dataSpec minLength] longValue]];
+            [builder setMaxLength: [dataSpec maxLength]];
+            [builder setMinLength: [dataSpec minLength]];
             [builder setEnums: [dataSpec enums]];
             
             return [builder build];
