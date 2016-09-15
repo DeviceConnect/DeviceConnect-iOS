@@ -54,7 +54,12 @@
 
 - (void) didReceivedSignaling:(NSString *)signaling
 {
-    // TODO 通知
+    [_serverList enumerateObjectsUsingBlock:^(DPAWSIoTWebServer *server, NSUInteger idx, BOOL *stop) {
+        if ([server hasConnectionId:signaling]) {
+            [server didReceivedSignaling:signaling];
+            *stop = YES;
+        }
+    }];
 }
 
 #pragma mark - DPAWSIoTWebServerDelegate
