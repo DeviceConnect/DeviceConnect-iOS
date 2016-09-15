@@ -9,6 +9,6 @@
 
 #import <DConnectSDK/DConnectSDK.h>
 
-@interface DPPebbleSystemProfile : DConnectSystemProfile <DConnectSystemProfileDataSource>
+@interface DPPebbleSystemProfile : DConnectSystemProfile <DConnectSystemProfileDelegate, DConnectSystemProfileDataSource>
 
 @end

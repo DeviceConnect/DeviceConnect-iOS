@@ -12,7 +12,7 @@
 #import <DConnectSDK/DConnectServiceProvider.h>
 #import <DConnectSDK/DConnectPluginSpec.h>
 
-@interface DConnectServiceManager : DConnectServiceProvider
+@interface DConnectServiceManager : DConnectServiceProvider<OnStatusChangeListener>
 
 @property(nonatomic, strong) DConnectPluginSpec *pluginSpec;
 

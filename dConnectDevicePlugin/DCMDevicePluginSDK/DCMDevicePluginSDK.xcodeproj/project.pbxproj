@@ -33,6 +33,11 @@
 
 /* Begin PBXBuildFile section */
 		AB056F9E1B6A327B00E1482F /* DCMTVProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = AB056F9D1B6A327B00E1482F /* DCMTVProfile.m */; };
+		AB3D3E9E1D2B9FD1004290BA /* DCMHealthProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = AB3D3E9D1D2B9FD1004290BA /* DCMHealthProfile.m */; };
+		AB3D3EA21D2BBAD2004290BA /* DCMECGProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = AB3D3EA11D2BBAD2004290BA /* DCMECGProfile.m */; };
+		AB3D3EA61D2C9560004290BA /* DCMStressEstimationProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = AB3D3EA51D2C9560004290BA /* DCMStressEstimationProfile.m */; };
+		AB3D3EAA1D2C9C76004290BA /* DCMPoseEstimationProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = AB3D3EA91D2C9C76004290BA /* DCMPoseEstimationProfile.m */; };
+		AB3D3EAE1D2CA77F004290BA /* DCMWalkStateProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = AB3D3EAD1D2CA77F004290BA /* DCMWalkStateProfile.m */; };
 		ABBD5F241987767600B81007 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABBD5F231987767600B81007 /* Foundation.framework */; };
 		ABBD5F321987767600B81007 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABBD5F311987767600B81007 /* XCTest.framework */; };
 		ABBD5F331987767600B81007 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABBD5F231987767600B81007 /* Foundation.framework */; };
@@ -70,6 +75,16 @@
 /* Begin PBXFileReference section */
 		AB056F9D1B6A327B00E1482F /* DCMTVProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DCMTVProfile.m; sourceTree = "<group>"; };
 		AB056F9F1B6A329C00E1482F /* DCMTVProfile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DCMTVProfile.h; sourceTree = "<group>"; };
+		AB3D3E9D1D2B9FD1004290BA /* DCMHealthProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DCMHealthProfile.m; sourceTree = "<group>"; };
+		AB3D3E9F1D2B9FF7004290BA /* DCMHealthProfile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DCMHealthProfile.h; sourceTree = "<group>"; };
+		AB3D3EA11D2BBAD2004290BA /* DCMECGProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DCMECGProfile.m; sourceTree = "<group>"; };
+		AB3D3EA31D2BBAF5004290BA /* DCMECGProfile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DCMECGProfile.h; sourceTree = "<group>"; };
+		AB3D3EA51D2C9560004290BA /* DCMStressEstimationProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DCMStressEstimationProfile.m; sourceTree = "<group>"; };
+		AB3D3EA71D2C95A0004290BA /* DCMStressEstimationProfile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DCMStressEstimationProfile.h; sourceTree = "<group>"; };
+		AB3D3EA91D2C9C76004290BA /* DCMPoseEstimationProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DCMPoseEstimationProfile.m; sourceTree = "<group>"; };
+		AB3D3EAB1D2C9C8E004290BA /* DCMPoseEstimationProfile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DCMPoseEstimationProfile.h; sourceTree = "<group>"; };
+		AB3D3EAD1D2CA77F004290BA /* DCMWalkStateProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DCMWalkStateProfile.m; sourceTree = "<group>"; };
+		AB3D3EAF1D2CA793004290BA /* DCMWalkStateProfile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DCMWalkStateProfile.h; sourceTree = "<group>"; };
 		AB3D7482199B26AB00FC4FE5 /* DCMDevicePluginSDK.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DCMDevicePluginSDK.h; sourceTree = "<group>"; };
 		ABBD5F201987767600B81007 /* libDCMDevicePluginSDK.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libDCMDevicePluginSDK.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		ABBD5F231987767600B81007 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -180,6 +195,11 @@
 		ABBD5F49198776CC00B81007 /* Headers */ = {
 			isa = PBXGroup;
 			children = (
+				AB3D3EAF1D2CA793004290BA /* DCMWalkStateProfile.h */,
+				AB3D3EAB1D2C9C8E004290BA /* DCMPoseEstimationProfile.h */,
+				AB3D3EA71D2C95A0004290BA /* DCMStressEstimationProfile.h */,
+				AB3D3EA31D2BBAF5004290BA /* DCMECGProfile.h */,
+				AB3D3E9F1D2B9FF7004290BA /* DCMHealthProfile.h */,
 				AB056F9F1B6A329C00E1482F /* DCMTVProfile.h */,
 				ABBD5F52198777EC00B81007 /* DCMTemperatureProfile.h */,
 				ABBD5F511987775500B81007 /* DCMDriveControllerProfile.h */,
@@ -194,6 +214,11 @@
 				ABBD5F53198777F200B81007 /* DCMTemperatureProfile.m */,
 				ABBD5F4F1987774B00B81007 /* DCMDriveControllerProfile.m */,
 				AB056F9D1B6A327B00E1482F /* DCMTVProfile.m */,
+				AB3D3E9D1D2B9FD1004290BA /* DCMHealthProfile.m */,
+				AB3D3EA11D2BBAD2004290BA /* DCMECGProfile.m */,
+				AB3D3EA51D2C9560004290BA /* DCMStressEstimationProfile.m */,
+				AB3D3EA91D2C9C76004290BA /* DCMPoseEstimationProfile.m */,
+				AB3D3EAD1D2CA77F004290BA /* DCMWalkStateProfile.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -315,9 +340,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AB3D3EAA1D2C9C76004290BA /* DCMPoseEstimationProfile.m in Sources */,
+				AB3D3E9E1D2B9FD1004290BA /* DCMHealthProfile.m in Sources */,
 				AB056F9E1B6A327B00E1482F /* DCMTVProfile.m in Sources */,
 				ABBD5F501987774B00B81007 /* DCMDriveControllerProfile.m in Sources */,
+				AB3D3EA21D2BBAD2004290BA /* DCMECGProfile.m in Sources */,
+				AB3D3EAE1D2CA77F004290BA /* DCMWalkStateProfile.m in Sources */,
 				ABBD5F54198777F200B81007 /* DCMTemperatureProfile.m in Sources */,
+				AB3D3EA61D2C9560004290BA /* DCMStressEstimationProfile.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

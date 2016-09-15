@@ -9,6 +9,6 @@
 
 #import <DConnectSDK/DConnectSDK.h>
 
-@interface DPChromecastSystemProfile : DConnectSystemProfile<DConnectSystemProfileDataSource>
+@interface DPChromecastSystemProfile : DConnectSystemProfile<DConnectSystemProfileDelegate, DConnectSystemProfileDataSource>
 
 @end

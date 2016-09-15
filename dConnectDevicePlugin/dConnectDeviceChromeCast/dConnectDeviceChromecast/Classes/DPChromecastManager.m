@@ -8,6 +8,7 @@
 //
 
 #import "DPChromecastManager.h"
+#import "CastDeviceController.h"
 #import <GoogleCast/GoogleCast.h>
 #import "GCIPUtil.h"
 #import "HTTPServer.h"
@@ -15,7 +16,7 @@
 #import "DPChromecastService.h"
 #import "DPChromecastReachability.h"
 
-static NSString *const kReceiverAppID = @"[YOUR APPLICATION ID]";
+static NSString *const kReceiverAppID = @"Your Application Id";
 static NSString *const kReceiverNamespace
     = @"urn:x-cast:com.name.space.chromecast.test.receiver";
 static NSString * const kDPChromeRegexDecimalPoint = @"^[-+]?([0-9]*)?(\\.)?([0-9]*)?$";
@@ -67,8 +68,9 @@ static const NSTimeInterval DPSemaphoreTimeout = 20.0;
 {
 	self = [super init];
 	if (self) {
+        [CastDeviceController sharedInstance].applicationID = kReceiverAppID;
         _deviceScanner = [GCKDeviceScanner new];
-		[_deviceScanner addListener:self];
+        [_deviceScanner addListener:self];
 		_dataDict = [NSMutableDictionary dictionary];
 		_semaphore = dispatch_semaphore_create(1);
         // HTTP Server Activate.
@@ -96,7 +98,7 @@ static const NSTimeInterval DPSemaphoreTimeout = 20.0;
 -(void)notifiedNetworkStatus:(NSNotification *)notification {
     NetworkStatus networkStatus = [self.reachability currentReachabilityStatus];
     if (networkStatus == NotReachable) {
-        [self updateManageServices: NO];
+//        [self updateManageServices: NO];
     } else {
         [self startScan];
     }
@@ -152,6 +154,7 @@ static const NSTimeInterval DPSemaphoreTimeout = 20.0;
                                                               deviceName:deviceName
                                                                   plugin: self.plugin];
                 [_serviceProvider addService: service];
+                [service setOnline: YES];
             } else {
                 [service setOnline: YES];
             }
@@ -159,6 +162,35 @@ static const NSTimeInterval DPSemaphoreTimeout = 20.0;
     }
 }
 
+- (void) updateManageServiceWithId:(NSString*)serviceId
+                            online: (BOOL) onlineForSet {
+    @synchronized(self) {
+        
+        // ServiceProvider未登録なら処理しない
+        if (!_serviceProvider) {
+            return;
+        }
+        
+        
+        NSArray *deviceList = [self deviceList];
+
+        // サービス未登録なら登録する。登録済ならオンラインにする
+        for (NSDictionary *device in deviceList) {
+            NSString *serviceId = device[@"id"];
+            NSString *deviceName = device[@"name"];
+            DConnectService *service = [_serviceProvider service: serviceId];
+            if (!service) {
+                service = [[DPChromecastService alloc] initWithServiceId:serviceId
+                                                              deviceName:deviceName
+                                                                  plugin: self.plugin];
+                [service setOnline: onlineForSet];
+                [_serviceProvider addService: service];
+            } else {
+                [service setOnline: onlineForSet];
+            }
+        }
+    }
+}
 
 #pragma mark - GCKLoggerDelegate
 
@@ -210,7 +242,8 @@ static const NSTimeInterval DPSemaphoreTimeout = 20.0;
 	if (data) {
 		// 既に接続済み
 		GCKDeviceManager *deviceManager = data.deviceManager;
-		return deviceManager.isConnected;
+		return deviceManager.connectionState == GCKConnectionStateConnected
+            || deviceManager.connectionState == GCKConnectionStateDisconnecting;
 	}
 	return NO;
 }
@@ -244,7 +277,8 @@ static const NSTimeInterval DPSemaphoreTimeout = 20.0;
         if (cache) {
             GCKDeviceManager *deviceManager = cache.deviceManager;
             [cache.connectCallbacks addObject:completion];
-            if (deviceManager.isConnected) {
+            if (deviceManager.connectionState == GCKConnectionStateConnected
+                || deviceManager.connectionState == GCKConnectionStateDisconnecting) {
                 dispatch_semaphore_signal(_semaphore);
                 completion(YES, nil);
             } else {
@@ -303,7 +337,7 @@ static const NSTimeInterval DPSemaphoreTimeout = 20.0;
     [self stopScan];
     
     // デバイス管理情報更新
-    [self updateManageServices: YES];
+//    [self updateManageServices: YES];
 }
 
 // テキストの送信
@@ -494,17 +528,17 @@ static const NSTimeInterval DPSemaphoreTimeout = 20.0;
 
 - (void)deviceDidComeOnline:(GCKDevice *)device {
     // デバイス管理情報更新
-    [self updateManageServices: YES];
+//    [self updateManageServices: YES];
 }
 
 - (void)deviceDidGoOffline:(GCKDevice *)device {
     // デバイス管理情報更新
-    [self updateManageServices: YES];
+//    [self updateManageServices: YES];
 }
 
 - (void)deviceDidChange:(GCKDevice *)device {
     // デバイス管理情報更新
-    [self updateManageServices: YES];
+//    [self updateManageServices: YES];
 }
 
 
