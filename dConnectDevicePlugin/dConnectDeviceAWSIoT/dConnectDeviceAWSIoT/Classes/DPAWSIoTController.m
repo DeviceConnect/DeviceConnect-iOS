@@ -157,7 +157,7 @@
 		};
         
         // TODO P2Pの処理
-        _remoteClientManager = [DPAWSIoTLocalClientManager new];
+        _remoteClientManager = [DPAWSIoTRemoteClientManager new];
         _remoteClientManager.delegate = self;
         
         _remoteServerManager = [DPAWSIoTRemoteServerManager new];
@@ -686,7 +686,7 @@
                 NSLog(@"Error: %@", error);
                 return;
             }
-            [_remoteClientManager didReceivedSignaling:[[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding] dataSource:self];
+            [_remoteClientManager didReceivedSignaling:[[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding] dataSource:self to:uuid];
         }
     }
     
@@ -752,7 +752,6 @@
 
 -(void) localClientManager:(DPAWSIoTLocalClientManager *)manager didNotifiedSignaling:(NSString *)signaling;
 {
-    NSLog(@"####### localClientManager");
     NSString *uuid = [DPAWSIoTController managerUUID];
     
     NSString *msg = [NSString stringWithFormat:@"{\"requestCode\": 10001, \"p2p_remote\": %@}", signaling];
@@ -766,7 +765,6 @@
 
 -(void) localServerManager:(DPAWSIoTLocalServerManager *)manager didNotifiedSignaling:(NSString *)signaling
 {
-    NSLog(@"####### localServerManager");
     NSString *uuid = [DPAWSIoTController managerUUID];
     
     NSString *msg = [NSString stringWithFormat:@"{\"requestCode\": 10001, \"p2p_local\": %@}", signaling];

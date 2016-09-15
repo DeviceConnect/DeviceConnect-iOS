@@ -35,11 +35,12 @@
     [_clientList removeAllObjects];
 }
 
-- (void) didReceivedSignaling:(NSString *)signaling dataSource:(id)dataSource
+- (void) didReceivedSignaling:(NSString *)signaling dataSource:(id)dataSource to:(NSString *)uuid;
 {
     DPAWSIoTWebClient *client = [DPAWSIoTWebClient new];
     client.delegate = self;
     client.dataSource = dataSource;
+    client.target = uuid;
     [client didReceivedSignaling:signaling];
     [_clientList addObject:client];
 }

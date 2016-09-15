@@ -23,6 +23,6 @@
 @property (nonatomic, assign) id<DPAWSIoTRemoteClientManagerDelegate> delegate;
 
 - (void) destroy;
-- (void) didReceivedSignaling:(NSString *)signaling dataSource:(id)dataSource;
+- (void) didReceivedSignaling:(NSString *)signaling dataSource:(id)dataSource to:(NSString *)uuid;
 
 @end
