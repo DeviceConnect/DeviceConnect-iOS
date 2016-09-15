@@ -139,7 +139,7 @@ static NSInteger maxIconCount = 8;
 - (void)updateDeviceList
 {
     _isDeviceLoading = YES;
-    [[GHDeviceUtil shareManager]updateDiveceList];
+    [[GHDeviceUtil shareManager] updateDeviceList];
 }
 
 //--------------------------------------------------------------//
@@ -162,10 +162,12 @@ static NSInteger maxIconCount = 8;
 - (void)saveSettings
 {
     DConnectManager *mgr = [DConnectManager sharedManager];
-    [[NSUserDefaults standardUserDefaults] setBool:mgr.settings.useOriginBlocking forKey:IS_ORIGIN_BLOCKING];
-    [[NSUserDefaults standardUserDefaults] setBool:mgr.settings.useLocalOAuth forKey:IS_USE_LOCALOAUTH];
-    [[NSUserDefaults standardUserDefaults] setBool:mgr.settings.useOriginEnable forKey:IS_ORIGIN_ENABLE];
-    [[NSUserDefaults standardUserDefaults] setBool:mgr.settings.useExternalIP forKey:IS_EXTERNAL_IP];
+    NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
+    [def setBool:mgr.settings.useOriginBlocking forKey:IS_ORIGIN_BLOCKING];
+    [def setBool:mgr.settings.useLocalOAuth forKey:IS_USE_LOCALOAUTH];
+    [def setBool:mgr.settings.useOriginEnable forKey:IS_ORIGIN_ENABLE];
+    [def setBool:mgr.settings.useExternalIP forKey:IS_EXTERNAL_IP];
+    [def synchronize];
 }
 
 
@@ -180,6 +182,11 @@ static NSInteger maxIconCount = 8;
         self.url = url;
     } else if (!self.url) {
         self.url = [self.manager createSearchURL:url];
+    }
+    // http:// https://が省略されているときは付加する
+    if (![[self.url lowercaseString] hasPrefix:@"http://"]
+        && ![[self.url lowercaseString] hasPrefix:@"https://"]) {
+        self.url = [NSString stringWithFormat:@"http://%@", self.url];
     }
     [self setLatestURL:self.url];
     return self.url;

@@ -25,8 +25,6 @@
         
         // サービスで登録するProfile
         [self addProfile: [[DPIRKitRemoteControllerProfile alloc] initWithDevicePlugin:plugin]];
-        [self addProfile: [[DPIRKitTVProfile alloc] initWithDevicePlugin:plugin]];
-        [self addProfile: [[DPIRKitLightProfile alloc] initWithDevicePlugin:plugin]];
     }
     return self;
 }

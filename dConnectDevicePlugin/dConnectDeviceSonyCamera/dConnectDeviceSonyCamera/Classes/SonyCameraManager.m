@@ -112,6 +112,7 @@
                                                                          liveViewDelegate:self.liveViewDelegate
                                                                     remoteApiUtilDelegate:self.remoteApiUtilDelegate];
                 [self.serviceProvider addService: service];
+                [service setOnline: YES];
             }
         }
     }

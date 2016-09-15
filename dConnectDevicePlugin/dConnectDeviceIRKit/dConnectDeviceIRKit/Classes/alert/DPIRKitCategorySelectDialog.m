@@ -53,9 +53,8 @@ static NSString *_DPIRKitVirtualDeviceServiceId;
     void (^roundCorner)(UIView*) = ^void(UIView *v) {
         CALayer *layer = v.layer;
         layer.masksToBounds = YES;
-        layer.cornerRadius = 3.;
+        layer.cornerRadius = 4.;
     };
-    
     roundCorner(self.containerView);
     roundCorner(self.closeButton);
     roundCorner(self.tvButton);

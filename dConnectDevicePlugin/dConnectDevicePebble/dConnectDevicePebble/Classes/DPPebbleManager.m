@@ -177,6 +177,7 @@ static NSString * const kDPPebbleRegexCSV = @"^([^,]*,)+";
                                                                            deviceName:deviceName
                                             plugin: self.plugin];
                 [self.serviceProvider addService: service];
+                [service setOnline:YES];
             }
         }
     }
