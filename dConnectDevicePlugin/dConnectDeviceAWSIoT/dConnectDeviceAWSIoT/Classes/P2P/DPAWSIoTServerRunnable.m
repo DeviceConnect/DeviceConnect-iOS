@@ -108,7 +108,7 @@
 
 - (int) findHeaderEnd:(NSData *)data
 {
-    return [self findHeaderEnd:[data bytes] length:[data length]];
+    return [self findHeaderEnd:(const char *)data.bytes length:(int)data.length];
 }
 
 - (int) findHeaderEnd:(const char *)buf length:(int)rlen

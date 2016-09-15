@@ -24,6 +24,8 @@ char const HEADER[4] = {
     
     char _sendBuffer[4];
     char _recvBuffer[4];
+    
+    NSMutableData *_temp;
 }
 
 - (instancetype) initWithSocket:(UDTSOCKET)socket
@@ -31,6 +33,7 @@ char const HEADER[4] = {
     self = [super init];
     if (self) {
         _socket = socket;
+        _temp = [NSMutableData data];
         _closeFlag = NO;
     }
     return self;
@@ -101,11 +104,13 @@ char const HEADER[4] = {
         if (![self readHeader]) {
             NSLog(@"DPAWSIoTSocketTask header error.");
         }
+        
         int size = [self readSize];
         if (size == -1) {
             NSLog(@"DPAWSIoTSocketTask size error.");
             break;
         }
+
         while (size > 0 && !_closeFlag) {
             int rs = UDT::recv(_socket, data, BUFFER_SIZE, 0);
             if (_closeFlag || UDT::ERROR == rs) {
@@ -113,11 +118,15 @@ char const HEADER[4] = {
                 break;
             }
             size -= rs;
-            
+            [_temp appendBytes:data length:rs];
+        }
+        
+        if (!_closeFlag) {
             if ([_delegate respondsToSelector:@selector(didReceivedData:length:)]) {
-                [_delegate didReceivedData:data length:rs];
+                [_delegate didReceivedData:(const char *)_temp.bytes length:(int)_temp.length];
             }
         }
+        [_temp setLength:0];
     }
     
     if ([_delegate respondsToSelector:@selector(didDisconnetedAdderss:port:)]) {
@@ -134,6 +143,7 @@ char const HEADER[4] = {
     }
     _closeFlag = YES;
     _delegate = nil;
+    _temp = nil;
     
     UDT::close(_socket);
 }

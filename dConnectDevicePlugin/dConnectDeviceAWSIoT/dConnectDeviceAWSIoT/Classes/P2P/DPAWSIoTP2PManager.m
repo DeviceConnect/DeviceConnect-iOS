@@ -57,28 +57,27 @@ NSString *const kPort = @"port";
     NSDictionary *global = [dic objectForKey:kGlobal];
     NSDictionary *local = [dic objectForKey:kLocal];
     
-    NSString *address = [global objectForKey:kAddress];
-    int port = [[global objectForKey:kPort] intValue];
-    
-    if (![self connect:connection address:address port:port]) {
-        address = [local objectForKey:kAddress];
-        port = [[local objectForKey:kPort] intValue];
-        if (![self connect:connection address:address port:port]) {
-            return nil;
+    for (int i = 0; i < 3; i++) {
+        if ([self connect:connection global:global local:local]) {
+            return connection;
         }
     }
-    return connection;
+    [connection close];
+    return nil;
 }
 
-- (BOOL) connect:(DPAWSIoTP2PConnection *)connection address:(NSString *)address port:(int)port
+- (BOOL) connect:(DPAWSIoTP2PConnection *)connection global:(NSDictionary *)global local:(NSDictionary *)local
 {
-    for (int i = 0; i < 3; i++) {
-        if ([connection connectToAddress:address port:port]) {
-            return YES;
+    NSString *address = [global objectForKey:kAddress];
+    int port = [[global objectForKey:kPort] intValue];
+    if (![connection connectToAddress:address port:port]) {
+        address = [local objectForKey:kAddress];
+        port = [[local objectForKey:kPort] intValue];
+        if (![connection connectToAddress:address port:port]) {
+            return NO;
         }
-        [connection close];
     }
-    return NO;
+    return YES;
 }
 
 + (NSData *)createSignaling:(int)connectionId address:(NSString *)address port:(int)port

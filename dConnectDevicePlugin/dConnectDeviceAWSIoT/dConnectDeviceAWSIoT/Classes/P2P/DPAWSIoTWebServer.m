@@ -20,14 +20,14 @@
 
 @implementation DPAWSIoTWebServer {
     GCDAsyncSocket *_listenSocket;
-    NSMutableArray *_connections;
+    NSMutableArray *_serverRunnableList;
 }
 
 - (instancetype)init
 {
     self = [super init];
     if (self) {
-        _connections = [NSMutableArray array];
+        _serverRunnableList = [NSMutableArray array];
     }
     return self;
 }
@@ -61,31 +61,47 @@
 {
     int connectionId = [self getConnectionId:signaling];
     
-    __weak typeof(self) weakSelf = self;
-    
-    [_connections enumerateObjectsUsingBlock:^(DPAWSIoTServerRunnable *serverRunnable, NSUInteger idx, BOOL *stop) {
-        if (serverRunnable.connection.connectionId == connectionId) {
-            [serverRunnable.connection close];
-            serverRunnable.connection = [weakSelf createP2PConnection:signaling delegate:weakSelf];
-            if (!serverRunnable.connection) {
-                [serverRunnable sendErrorResponse];
-                [serverRunnable close];
-                [_connections removeObject:serverRunnable];
-            }
-            *stop = YES;
+    DPAWSIoTServerRunnable *serverRunnable = [self findServerRunnableByConnectionId:connectionId];
+    if (serverRunnable) {
+        [serverRunnable.connection close];
+
+        serverRunnable.connection = [self createP2PConnection:signaling delegate:self];
+        if (!serverRunnable.connection) {
+            [serverRunnable sendErrorResponse];
+            [serverRunnable close];
+            [_serverRunnableList removeObject:serverRunnable];
         }
-    }];
+    }
 }
 
 - (BOOL) hasConnectionId:(NSString *)signaling
 {
-    int connectionId = [self getConnectionId:signaling];
+    return [self findServerRunnableByConnectionId:[self getConnectionId:signaling]] != nil;
+}
 
-    __block BOOL result = NO;
+#pragma mark - Private Method
 
-    [_connections enumerateObjectsUsingBlock:^(DPAWSIoTServerRunnable *serverRunnable, NSUInteger idx, BOOL *stop) {
+- (DPAWSIoTServerRunnable *) findServerRunnableByConnectionId:(int)connectionId
+{
+    __block DPAWSIoTServerRunnable *result = nil;
+    
+    [_serverRunnableList enumerateObjectsUsingBlock:^(DPAWSIoTServerRunnable *serverRunnable, NSUInteger idx, BOOL *stop) {
         if (serverRunnable.connection.connectionId == connectionId) {
-            result = YES;
+            result = serverRunnable;
+            *stop = YES;
+        }
+    }];
+    
+    return result;
+}
+
+- (DPAWSIoTServerRunnable *) findServerRunnableByConn:(DPAWSIoTP2PConnection *)conn
+{
+    __block DPAWSIoTServerRunnable *result = nil;
+    
+    [_serverRunnableList enumerateObjectsUsingBlock:^(DPAWSIoTServerRunnable *serverRunnable, NSUInteger idx, BOOL *stop) {
+        if (serverRunnable.connection == conn) {
+            result = serverRunnable;
             *stop = YES;
         }
     }];
@@ -93,8 +109,19 @@
     return result;
 }
 
-#pragma mark - Private Method
-
+- (DPAWSIoTServerRunnable *) findServerRunnableBySocket:(GCDAsyncSocket *)socket
+{
+    __block DPAWSIoTServerRunnable *result = nil;
+    
+    [_serverRunnableList enumerateObjectsUsingBlock:^(DPAWSIoTServerRunnable *serverRunnable, NSUInteger idx, BOOL *stop) {
+        if (serverRunnable.fromSocket == socket) {
+            result = serverRunnable;
+            *stop = YES;
+        }
+    }];
+    
+    return result;
+}
 
 #pragma mark - DPAWSIoTP2PConnectionDelegate
 
@@ -117,24 +144,20 @@
         [_delegate serverDidConnected:self];
     }
     
-    [_connections enumerateObjectsUsingBlock:^(DPAWSIoTServerRunnable *serverRunnable, NSUInteger idx, BOOL *stop) {
-        if (serverRunnable.connection == conn) {
-            [serverRunnable.fromSocket readDataWithTimeout:5 tag:0];
-            *stop = YES;
-        }
-    }];
+    DPAWSIoTServerRunnable *serverRunnable = [self findServerRunnableByConn:conn];
+    if (serverRunnable) {
+        [serverRunnable.fromSocket readDataWithTimeout:5 tag:0];
+    }
 }
 
 - (void) connection:(DPAWSIoTP2PConnection *)conn didReceivedData:(const char *)data length:(int)length
 {
     NSLog(@"DPAWSIoTWebServer::connection:didReceivedData: %d", length);
 
-    [_connections enumerateObjectsUsingBlock:^(DPAWSIoTServerRunnable *serverRunnable, NSUInteger idx, BOOL *stop) {
-        if (serverRunnable.connection == conn) {
-            [serverRunnable w:[NSData dataWithBytes:data length:length]];
-            *stop = YES;
-        }
-    }];
+    DPAWSIoTServerRunnable *serverRunnable = [self findServerRunnableByConn:conn];
+    if (serverRunnable) {
+        [serverRunnable w:[NSData dataWithBytes:data length:length]];
+    }
 }
 
 - (void) connection:(DPAWSIoTP2PConnection *)conn didDisconnetedAdderss:(NSString *)address port:(int)port
@@ -144,27 +167,23 @@
     if ([_delegate respondsToSelector:@selector(serverDidDisconnected:)]) {
         [_delegate serverDidDisconnected:self];
     }
-    
-    [_connections enumerateObjectsUsingBlock:^(DPAWSIoTServerRunnable *serverRunnable, NSUInteger idx, BOOL *stop) {
-        if (serverRunnable.connection == conn) {
-            [_connections removeObject:serverRunnable];
-            *stop = YES;
-        }
-    }];
+
+    DPAWSIoTServerRunnable *serverRunnable = [self findServerRunnableByConn:conn];
+    if (serverRunnable) {
+        [_serverRunnableList removeObject:serverRunnable];
+    }
 }
 
 - (void) connectionDidTimeout:(DPAWSIoTP2PConnection *)conn
 {
     NSLog(@"DPAWSIoTWebServer::connectionDidTimeout");
     
-    [_connections enumerateObjectsUsingBlock:^(DPAWSIoTServerRunnable *serverRunnable, NSUInteger idx, BOOL *stop) {
-        if (serverRunnable.connection == conn) {
-            [serverRunnable sendErrorResponse];
-            [serverRunnable close];
-            [_connections removeObject:serverRunnable];
-            *stop = YES;
-        }
-    }];
+    DPAWSIoTServerRunnable *serverRunnable = [self findServerRunnableByConn:conn];
+    if (serverRunnable) {
+        [serverRunnable sendErrorResponse];
+        [serverRunnable close];
+        [_serverRunnableList removeObject:serverRunnable];
+    }
 }
 
 #pragma mark - GCDAsyncSocketDelegate
@@ -180,7 +199,7 @@
     serverRunnable.connection = [DPAWSIoTP2PConnection new];
     serverRunnable.connection.delegate = self;
     [serverRunnable.connection open];
-    [_connections addObject:serverRunnable];
+    [_serverRunnableList addObject:serverRunnable];
 }
 
 - (void)socketDidCloseReadStream:(GCDAsyncSocket *)sock
@@ -192,21 +211,13 @@
 {
     NSLog(@"DPAWSIoTWebServer::socketDidDisconnect: %p", sock);
     
-    __block DPAWSIoTServerRunnable *runnable = nil;
-    
-    [_connections enumerateObjectsUsingBlock:^(DPAWSIoTServerRunnable *serverRunnable, NSUInteger idx, BOOL *stop) {
-        if (serverRunnable.fromSocket == sock) {
-            runnable = serverRunnable;
-            *stop = YES;
-        }
-    }];
-    
-    if (runnable) {
-        [runnable close];
-        [_connections removeObject:runnable];
+    DPAWSIoTServerRunnable *serverRunnable = [self findServerRunnableBySocket:sock];
+    if (serverRunnable) {
+        [_serverRunnableList removeObject:serverRunnable];
+        [serverRunnable close];
     }
     
-    if ([_connections count] == 0) {
+    if ([_serverRunnableList count] == 0) {
         [self stop];
     }
 }
@@ -220,12 +231,10 @@
 {
     NSLog(@"DPAWSIoTWebServer::socket:didReadData:%p %@", sock, @([data length]));
     
-    [_connections enumerateObjectsUsingBlock:^(DPAWSIoTServerRunnable *serverRunnable, NSUInteger idx, BOOL *stop) {
-        if (serverRunnable.fromSocket == sock) {
-            [serverRunnable r:data];
-            *stop = YES;
-        }
-    }];
+    DPAWSIoTServerRunnable *serverRunnable = [self findServerRunnableBySocket:sock];
+    if (serverRunnable) {
+        [serverRunnable r:data];
+    }
 }
 
 - (NSTimeInterval)socket:(GCDAsyncSocket *)sock shouldTimeoutReadWithTag:(long)tag

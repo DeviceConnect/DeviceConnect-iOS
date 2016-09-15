@@ -78,7 +78,7 @@
     [newData appendData:[@"\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
     [newData appendData:_data];
     
-    [self.connection sendData:newData.bytes length:newData.length];
+    [self.connection sendData:(const char *)newData.bytes length:(int)newData.length];
 }
 
 - (void) sendHttpError
@@ -98,7 +98,7 @@
     [newData appendData:[@"\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
     [newData appendData:[@"ERROR" dataUsingEncoding:NSUTF8StringEncoding]];
     
-    [self.connection sendData:newData.bytes length:newData.length];
+    [self.connection sendData:(const char *)newData.bytes length:(int)newData.length];
 }
 
 @end

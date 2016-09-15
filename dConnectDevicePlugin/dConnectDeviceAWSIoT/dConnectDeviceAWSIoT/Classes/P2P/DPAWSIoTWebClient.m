@@ -68,6 +68,7 @@
     
     int headerSize = [self findHeaderEnd:data length:length];
     if (headerSize == 0) {
+        NSLog(@"DPAWSIoTWebClient::openSocket: Not found the http header.");
         return NO;
     }
     
@@ -75,6 +76,7 @@
     NSScanner *scanner = [NSScanner scannerWithString:http];
     NSCharacterSet *chSet = [NSCharacterSet newlineCharacterSet];
     if (!scanner) {
+        NSLog(@"DPAWSIoTWebClient::openSocket: No scanner.");
         return NO;
     }
     
@@ -83,6 +85,7 @@
 
     NSArray *array = [requestLine componentsSeparatedByString:@" "];
     if ([array count] <= 2) {
+        NSLog(@"DPAWSIoTWebClient::openSocket: No http method.");
         return NO;
     }
 
@@ -115,10 +118,9 @@
     }
     
     if (address == nil || port == 0) {
+        NSLog(@"DPAWSIoTWebClient::openSocket: Cannot parse http header.");
         return NO;
     }
-    
-    NSLog(@"openSocket: %@:%d", address, port);
     
     _socketAdapter = [[DPAWSIoTHttpSocketAdapter alloc] initWithHostname:address port:(UInt32)port timeout:30];
     _socketAdapter.connection = _connection;

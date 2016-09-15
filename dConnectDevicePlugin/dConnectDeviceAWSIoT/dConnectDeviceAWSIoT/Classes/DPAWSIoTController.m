@@ -280,7 +280,18 @@
 		if (![key isKindOfClass:[NSString class]]) {
 			continue;
 		}
-		id value = request.internalDictionary[key];
+
+        // TODO URI変換
+        if ([@"data" isEqualToString:key]) {
+            NSData *data = request.internalDictionary[@"data"];
+            if (data) {
+                NSString *uuid = [self addData:data];
+                request.internalDictionary[@"uri"] = [NSString stringWithFormat:@"http://localhost/contentProvider?%@", uuid];
+            }
+        }
+        // TODO URI変換 ここまで
+
+        id value = request.internalDictionary[key];
 		if ([value isKindOfClass:[NSString class]] ||
 			[value isKindOfClass:[NSNumber class]] ||
 			[value isKindOfClass:[NSArray class]] ||
@@ -288,18 +299,9 @@
 		} else {
 			[request.internalDictionary removeObjectForKey:key];
 		}
-        
-        // TODO URI変換
-        if ([@"uri" isEqualToString:key]) {
-            NSData *data = request.internalDictionary[@"data"];
-            if (data) {
-                NSString *uuid = [self addData:data];
-                request.internalDictionary[key] = [NSString stringWithFormat:@"http://localhost/contentProvider?%@", uuid];
-            }
-        }
-        // TODO URI変換 ここまで
 	}
 	[dic setObject:request.internalDictionary forKey:@"request"];
+    
 	NSError *err;
 	NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dic options:0 error:&err];
 	if (err) {
@@ -428,7 +430,7 @@
 // RequestTopic購読
 - (void)subscribeRequest {
 	NSString *requestTopic = [NSString stringWithFormat:@"%@/%@/request", kTopicPrefix, [DPAWSIoTController managerUUID]];
-	NSLog(@"subscribeRequest:%@", requestTopic);
+//	NSLog(@"subscribeRequest:%@", requestTopic);
 	[[DPAWSIoTManager sharedManager] subscribeWithTopic:requestTopic messageHandler:^(id json, NSError *error) {
 		if (error) {
 			NSLog(@"Error on SubscribeWithTopic: [%@] %@", requestTopic, error);
@@ -436,10 +438,7 @@
 		}
 
         // TODO P2Pの処理
-        NSLog(@"Received subscribeRequest %@", json[@"request"]);
         if (json[@"p2p_local"]) {
-            NSLog(@"received p2p_local");
-
             NSDictionary *p2pLocalJson = json[@"p2p_local"];
             if (p2pLocalJson) {
                 NSData *jsonData = [NSJSONSerialization dataWithJSONObject:p2pLocalJson options:0 error:&error];
@@ -452,8 +451,6 @@
         }
 
         if (json[@"p2p_remote"]) {
-            NSLog(@"received p2p_remote");
-
             NSDictionary *p2pRemoteJson = json[@"p2p_remote"];
             if (p2pRemoteJson) {
                 NSData *jsonData = [NSJSONSerialization dataWithJSONObject:p2pRemoteJson options:0 error:&error];
@@ -481,11 +478,9 @@
                 port = [[url port] intValue];
             }
             NSString *uri = [_localServerManager createWebServer:[url host] port:port path:path];
-            NSLog(@"###### %@", uri);
             if (uri) {
                 requestDic[@"uri"] = uri;
             }
-            NSLog(@"###### TEST");
         }
         // TODO localhost ここまで
         
@@ -607,16 +602,14 @@
 }
 // MQTTからレスポンスを受診
 - (void)receivedResponseFromMQTT:(id)json from:(NSDictionary*)manager uuid:(NSString*)uuid {
-	NSLog(@"receivedResponseFromMQTT:%@", json);
+//	NSLog(@"receivedResponseFromMQTT:%@", json);
 	NSString *requestCode = [json[@"requestCode"] stringValue];
 	DConnectResponseMessage *response = _responses[requestCode];
 	//NSLog(@"%@, %@, %@", response, _responses, requestCode);
 	if (response) {
-        NSLog(@"!!!");
 		int count = (int)[response integerForKey:@"servicecount"];
 		//NSLog(@"count:%d", count);
 		if (count > 0) {
-            NSLog(@"!!!1");
 			// servicediscoveryの場合各サービスからのレスポンスを保持
 			NSDictionary *resJson = json[@"response"];
 			int result = [resJson[DConnectMessageResult] intValue];
@@ -685,8 +678,6 @@
     
     // TODO P2Pの処理
     if (json[@"p2p_local"]) {
-        NSLog(@"###### p2p_local");
-        
         NSDictionary *p2pLocalJson = json[@"p2p_local"];
         if (p2pLocalJson) {
             NSError *error = nil;
@@ -700,8 +691,6 @@
     }
     
     if (json[@"p2p_remote"]) {
-        NSLog(@"###### p2p_remote");
-        
         NSDictionary *p2pRemoteJson = json[@"p2p_remote"];
         if (p2pRemoteJson) {
             NSError *error = nil;

@@ -16,6 +16,7 @@
 
 @implementation DPAWSIoTHttpSocketAdapter {
     GCDAsyncSocket *_socket;
+    int _retryCount;
 }
 
 - (id) initWithHostname:(NSString *)hostname port:(UInt32)port timeout:(int)timeoutSec
@@ -25,6 +26,7 @@
         _hostname = hostname;
         _port = port;
         _timeoutSec = timeoutSec;
+        _retryCount = 0;
     }
     return self;
 }

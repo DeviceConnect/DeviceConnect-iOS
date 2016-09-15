@@ -152,7 +152,12 @@
                       api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
                          
                           NSData *data = [DConnectFileProfile dataFromRequest:request];
+                          NSString *uri = [DConnectFileProfile uriFromRequest:request];
                           NSString *path = [DConnectFileProfile pathFromRequest:request];
+                          
+                          if (!data && uri) {
+                              data = [NSData dataWithContentsOfURL:[NSURL URLWithString:uri]];
+                          }
                           
                           if (!data || data.length == 0) {
                               [response setErrorToInvalidRequestParameterWithMessage:@"No file data"];
