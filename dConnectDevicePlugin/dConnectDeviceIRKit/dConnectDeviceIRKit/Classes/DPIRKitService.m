@@ -11,8 +11,6 @@
 #import <DConnectSDK/DConnectServiceDiscoveryProfile.h>
 #import <DConnectSDK/DConnectProfile.h>
 #import "DPIRKitRemoteControllerProfile.h"
-#import "DPIRKitTVProfile.h"
-#import "DPIRKitLightProfile.h"
 
 @implementation DPIRKitService
 

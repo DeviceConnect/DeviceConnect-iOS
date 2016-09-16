@@ -10,23 +10,27 @@
 #import "DPIRKitVirtualService.h"
 #import <DConnectSDK/DConnectServiceDiscoveryProfile.h>
 #import <DConnectSDK/DConnectProfile.h>
+#import <DConnectSDK/DConnectLightProfile.h>
 #import "DPIRKitRemoteControllerProfile.h"
 #import "DPIRKitTVProfile.h"
 #import "DPIRKitLightProfile.h"
-
-
+#import "DPIRKitDialog.h"
 @implementation DPIRKitVirtualService
-- (instancetype) initWithServiceId:(NSString *)serviceId plugin:(id)plugin name:(NSString*)name {
+
+- (instancetype) initWithServiceId: (NSString *)serviceId plugin:(id)plugin profileName:(NSString *)profileName {
     self = [super initWithServiceId: serviceId plugin: plugin dataSource: self];
     if (self) {
         [self setName: serviceId];
         [self setNetworkType: DConnectServiceDiscoveryProfileNetworkTypeWiFi];
         [self setOnline: YES];
-        [self setName:name];
         
         // サービスで登録するProfile
-        [self addProfile: [[DPIRKitTVProfile alloc] initWithDevicePlugin:plugin]];
-        [self addProfile: [[DPIRKitLightProfile alloc] initWithDevicePlugin:plugin]];
+        [self addProfile: [[DPIRKitRemoteControllerProfile alloc] initWithDevicePlugin:plugin]];
+        if ([profileName isEqualToString:DPIRKitCategoryLight]) {
+            [self addProfile: [[DPIRKitLightProfile alloc] initWithDevicePlugin:plugin]];
+        } else {
+            [self addProfile: [[DPIRKitTVProfile alloc] initWithDevicePlugin:plugin]];
+        }
     }
     return self;
 }
@@ -44,5 +48,6 @@
     }
     return wifiState;
 }
+
 
 @end

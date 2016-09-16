@@ -35,6 +35,8 @@
 "token_list_scopes" = "%@ 他%d件";
 "token_expiration_date" = "有効期限 %@ まで";
 "token_default_expiration_date" = "承認後プロファイルにアクセスできるのは %@ まで";
+"status_online" = "オンライン";
+"status_offline" = "オフライン";
 
 // Alert Title
 "alert_title_all_delete" = "全削除";

@@ -20,6 +20,7 @@
 {
     self = [super init];
     if (self) {
+        self.delegate = self;
         self.dataSource = self;
         __weak DPChromecastSystemProfile *weakSelf = self;
         
