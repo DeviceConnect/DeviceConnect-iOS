@@ -8,8 +8,9 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <DConnectSDK/DConnectService.h>
+#import <DConnectSDK/DConnectServiceListener.h>
 
-//#import <DConnectSDK/DConnectService.h>
 @class DConnectService;
 
 @interface DConnectServiceProvider : NSObject
@@ -31,5 +32,17 @@
 - (void) removeService: (DConnectService *) service;
 
 - (void) removeAllServices;
+
+/*!
+ * @brief サービスの追加または削除イベントを受信するためのリスナーを追加する.
+ * @param[in] listener リスナー
+ */
+- (void) addServiceListener: (id<DConnectServiceListener>) listener;
+
+/*!
+ * サービスの追加または削除イベントを受信するためのリスナーを削除する.
+ * @param[in] listener リスナー
+ */
+- (void) removeServiceListener: (id<DConnectServiceListener>) listener;
 
 @end

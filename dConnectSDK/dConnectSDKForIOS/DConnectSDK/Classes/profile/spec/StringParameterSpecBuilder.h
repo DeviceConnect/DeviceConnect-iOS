@@ -14,8 +14,8 @@
 @interface StringParameterSpecBuilder : DConnectParameterSpecBaseBuilder
 
 @property(nonatomic) DConnectSpecDataFormat dataFormat;
-@property(nonatomic) int maxLength;
-@property(nonatomic) int minLength;
+@property(nonatomic) NSNumber *maxLength;
+@property(nonatomic) NSNumber *minLength;
 @property(nonatomic, strong) NSArray *enums;
 
 - (StringParameterSpec *) build;

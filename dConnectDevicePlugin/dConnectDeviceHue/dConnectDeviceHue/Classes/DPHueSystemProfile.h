@@ -19,5 +19,5 @@
  @class DPHueSystemProfile
  @brief Hue用 System プロファイル。
  */
-@interface DPHueSystemProfile : DConnectSystemProfile<DConnectSystemProfileDataSource>
+@interface DPHueSystemProfile : DConnectSystemProfile<DConnectSystemProfileDelegate, DConnectSystemProfileDataSource>
 @end

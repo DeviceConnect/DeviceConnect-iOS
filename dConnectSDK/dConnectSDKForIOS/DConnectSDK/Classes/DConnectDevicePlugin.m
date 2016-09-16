@@ -231,6 +231,7 @@
     return nil;
 }
 
+
 - (NSString*)iconFilePath:(BOOL)isOnline
 {
     return nil; //should be overrided

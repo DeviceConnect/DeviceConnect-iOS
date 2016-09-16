@@ -867,6 +867,7 @@ pushlinkAuthenticationSuccessSelector:(SEL)pushlinkAuthenticationSuccessSelector
                 } else {
                     service = [[DPHueService alloc] initWithBridgeKey:key bridgeValue:[bridgesFound valueForKey:key] plugin: [self plugin]];
                     [self.mServiceProvider addService: service];
+                    [service setOnline:YES];
                 }
             }
             
