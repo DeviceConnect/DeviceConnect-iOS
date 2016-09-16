@@ -17,7 +17,6 @@
 #import "DPIRKitSystemProfile.h"
 #import "DPIRKitService.h"
 #import "DPIRKitReachability.h"
-#import "DPIRKitVirtualService.h"
 #import <DConnectSDK/DConnectServiceListViewController.h>
 #import "DPIRKitVirtualDeviceViewController.h"
 #import "DPIRKitVirtualService.h"
@@ -30,6 +29,7 @@ top = [UIApplication sharedApplication].keyWindow.rootViewController; \
 while (top.presentedViewController) { \
 top = top.presentedViewController; \
 }
+
 NSString *const DPIRKitInfoVersion = @"DPIRKitVersion";
 NSString *const DPIRKitInfoAPIKey = @"DPIRKitAPIKey";
 NSString *const DPIRKitStoryBoardName = @"Storyboard_";
@@ -94,12 +94,12 @@ DPIRKitManagerDetectionDelegate
             NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
             UIApplication *application = [UIApplication sharedApplication];
             [notificationCenter addObserver:_self selector:@selector(startObeservation)
-                       name:UIApplicationWillEnterForegroundNotification
-                     object:application];
+                                       name:UIApplicationWillEnterForegroundNotification
+                                     object:application];
             [notificationCenter addObserver:_self selector:@selector(stopObeservation)
-                       name:UIApplicationDidEnterBackgroundNotification
-                     object:application];
-
+                                       name:UIApplicationDidEnterBackgroundNotification
+                                     object:application];
+            
             manager.apiKey = info[DPIRKitInfoAPIKey];
             manager.detectionDelegate = _self;
             
@@ -115,7 +115,6 @@ DPIRKitManagerDetectionDelegate
          name:DPIRKitReachabilityChangedNotification
          object:nil];
         [self.reachability startNotifier];
-        [self registerVirtualDevices];
     }
     
     return self;
@@ -130,7 +129,7 @@ DPIRKitManagerDetectionDelegate
     
     [notificationCenter removeObserver:self name:UIApplicationDidBecomeActiveNotification object:application];
     [notificationCenter removeObserver:self name:UIApplicationDidEnterBackgroundNotification object:application];
-
+    
     [self stopObeservation];
 }
 
@@ -143,28 +142,6 @@ DPIRKitManagerDetectionDelegate
 }
 
 #pragma mark - Private Methods
-
-- (void)registerVirtualDevices {
-    NSArray *virtuals = [[DPIRKitDBManager sharedInstance] queryVirtualDevice:nil];
-    for (DPIRKitVirtualDevice* device in virtuals) {
-        if ([self existIRForServiceId:device.serviceId]) {
-            DPIRKitVirtualService *service = [[DPIRKitVirtualService alloc] initWithServiceId: device.serviceId
-                                                                                       plugin:self
-                                                                                         name:device.deviceName];
-            if ([self.serviceProvider service:device.serviceId]) {
-                [service setOnline:YES];
-            } else {
-                [service setOnline:NO];
-            }
-            [self.serviceProvider addService: service];
-        } else {
-            if ([self.serviceProvider service: device.serviceId]) {
-                DConnectService *service = [self.serviceProvider service: device.serviceId];
-                [service setOnline: YES];
-            }
-        }
-    }
-}
 
 - (void) sendDeviceDetectionEventWithDevice:(DPIRKitDevice *)device online:(BOOL)online {
     BOOL hit = NO;
@@ -181,14 +158,12 @@ DPIRKitManagerDetectionDelegate
             _devices[device.name] = device;
         }
     }
-    [self registerVirtualDevices];
     if ((!hit && online) || (hit && !online)) {
         
         if (self.serviceProvider) {
             if (online) {
                 // オンライン遷移の場合、デバイスが未登録なら登録し、登録済ならフラグをオンラインにする
                 NSString *serviceId = device.name;
-
                 if ([self.serviceProvider service: serviceId]) {
                     DConnectService *service = [self.serviceProvider service: serviceId];
                     [service setOnline: YES];
@@ -222,7 +197,7 @@ DPIRKitManagerDetectionDelegate
                             } else {
                                 NSString *profileName = virtual.categoryName;
                                 DPIRKitVirtualService *service = [[DPIRKitVirtualService alloc] initWithServiceId: serviceId plugin:self
-                                                           profileName:profileName];
+                                                                                                      profileName:profileName];
                                 [self.serviceProvider addService: service];
                                 [service setOnline: YES];
                             }
@@ -234,7 +209,7 @@ DPIRKitManagerDetectionDelegate
                                 [service setOnline: NO];
                             }
                         }
-
+                        
                     }
                 }
             }
@@ -301,21 +276,21 @@ DPIRKitManagerDetectionDelegate
     DConnectServiceListViewController *serviceListViewController = (DConnectServiceListViewController *) top.viewControllers[0];
     serviceListViewController.delegate = self;
     return top;
-/*
-    NSBundle *bundle = DPIRBundle();
-    
-    // iphoneとipadでストーリーボードを切り替える
-    UIStoryboard *storyBoard;
-    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
-        storyBoard = [UIStoryboard storyboardWithName:[NSString stringWithFormat:@"%@iPhone", DPIRKitStoryBoardName]
-                                       bundle:bundle];
-    } else{
-        storyBoard = [UIStoryboard storyboardWithName:[NSString stringWithFormat:@"%@iPad", DPIRKitStoryBoardName]
-                                       bundle:bundle];
-    }
-    UINavigationController *viewController = [storyBoard instantiateInitialViewController];
-    return viewController;
-*/
+    /*
+     NSBundle *bundle = DPIRBundle();
+     
+     // iphoneとipadでストーリーボードを切り替える
+     UIStoryboard *storyBoard;
+     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
+     storyBoard = [UIStoryboard storyboardWithName:[NSString stringWithFormat:@"%@iPhone", DPIRKitStoryBoardName]
+     bundle:bundle];
+     } else{
+     storyBoard = [UIStoryboard storyboardWithName:[NSString stringWithFormat:@"%@iPad", DPIRKitStoryBoardName]
+     bundle:bundle];
+     }
+     UINavigationController *viewController = [storyBoard instantiateInitialViewController];
+     return viewController;
+     */
 }
 
 - (void)didSelectService:(DConnectService *)service {
@@ -349,7 +324,7 @@ DPIRKitManagerDetectionDelegate
                                                                           preferredStyle:UIAlertControllerStyleAlert];
         [alertController addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil]];
         [rootView presentViewController:alertController animated:YES completion:nil];
-
+        
     }
 }
 
@@ -384,7 +359,7 @@ DPIRKitManagerDetectionDelegate
 #pragma mark DConnectInformationProfileDataSource
 
 - (DConnectServiceInformationProfileConnectState) profile:(DConnectServiceInformationProfile *)profile
-                        wifiStateForServiceId:(NSString *)serviceId
+                                    wifiStateForServiceId:(NSString *)serviceId
 {
     
     DConnectServiceInformationProfileConnectState state = DConnectServiceInformationProfileConnectStateOff;
