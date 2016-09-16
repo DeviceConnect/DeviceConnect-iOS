@@ -22,6 +22,17 @@
 @implementation DPAWSIoTWebClient {
     DPAWSIoTP2PConnection *_connection;
     DPAWSIoTSocketAdapter *_socketAdapter;
+    
+    NSMutableData *_httpHeaderData;
+}
+
+- (instancetype) init
+{
+    self = [super init];
+    if (self) {
+        _httpHeaderData = [NSMutableData data];
+    }
+    return self;
 }
 
 - (void) connect:(NSString *)address port:(int)port
@@ -89,7 +100,7 @@
         return NO;
     }
 
-    // TODO
+    // iOS内のファイルアクセスをするための処理
     NSString *uri = [array objectAtIndex:1];
     if ([uri hasPrefix:@"/contentProvider"]) {
         NSURL *url =  [NSURL URLWithString:uri];
@@ -164,7 +175,7 @@
     [newData appendData:[@"\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
     [newData appendData:[@"ERROR" dataUsingEncoding:NSUTF8StringEncoding]];
     
-    [_connection sendData:newData.bytes length:newData.length];
+    [_connection sendData:newData.bytes length:(int) newData.length];
 }
 
 #pragma mark - DPAWSIoTP2PConnectionDelegate
@@ -195,14 +206,18 @@
     NSLog(@"data=%s length=%d", data, length);
     
     if (!_socketAdapter) {
-        if (![self openSocket:data length:length]) {
-            [self sendHttpError];
-            [_connection close];
-            return;
+        [_httpHeaderData appendBytes:data length:length];
+        
+        if ([self findHeaderEnd:_httpHeaderData.bytes length:(int) _httpHeaderData.length] > 0) {
+            if (![self openSocket:_httpHeaderData.bytes length:(int) _httpHeaderData.length]) {
+                [self sendHttpError];
+                [_connection close];
+                return;
+            }
+            [_socketAdapter writeData:_httpHeaderData.bytes length:_httpHeaderData.length];
+            _httpHeaderData = nil;
         }
-    }
-
-    if (_socketAdapter) {
+    } else {
         [_socketAdapter writeData:data length:length];
     }
 }
@@ -226,6 +241,12 @@
 - (void) connectionDidTimeout:(DPAWSIoTP2PConnection *)conn
 {
     NSLog(@"connectionDidTimeout");
+    
+    if ([_delegate respondsToSelector:@selector(clientDidTimeout:)]) {
+        [_delegate clientDidTimeout:self];
+    }
+    
+    [_socketAdapter closeSocket];
 }
 
 @end

@@ -180,9 +180,13 @@
     
     DPAWSIoTServerRunnable *serverRunnable = [self findServerRunnableByConn:conn];
     if (serverRunnable) {
+        [_serverRunnableList removeObject:serverRunnable];
         [serverRunnable sendErrorResponse];
         [serverRunnable close];
-        [_serverRunnableList removeObject:serverRunnable];
+    }
+
+    if ([_serverRunnableList count] == 0) {
+        [self stop];
     }
 }
 
@@ -242,6 +246,13 @@
                bytesDone:(NSUInteger)length
 {
     NSLog(@"shouldTimeoutReadWithTag: %@", @(tag));
+    
+    DPAWSIoTServerRunnable *serverRunnable = [self findServerRunnableBySocket:sock];
+    if (serverRunnable) {
+        if (![serverRunnable isRetry]) {
+            [serverRunnable close];
+        }
+    }
     return 3;
 }
 
@@ -250,8 +261,14 @@
                bytesDone:(NSUInteger)length
 {
     NSLog(@"shouldTimeoutWriteWithTag: %@", @(tag));
+
+    DPAWSIoTServerRunnable *serverRunnable = [self findServerRunnableBySocket:sock];
+    if (serverRunnable) {
+        if (![serverRunnable isRetry]) {
+            [serverRunnable close];
+        }
+    }
     return 3;
 }
-
 
 @end

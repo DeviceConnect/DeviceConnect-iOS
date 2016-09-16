@@ -274,17 +274,17 @@
 	// リクエストjson構築
 	NSMutableDictionary *dic = [NSMutableDictionary dictionary];
 	[dic setObject:@(requestCode) forKey:@"requestCode"];
+
 	// 余計なオブジェクトを削除
 	NSArray *keys = [request.allKeys copy];
 	for (id key in keys) {
 		if (![key isKindOfClass:[NSString class]]) {
 			continue;
 		}
-
         // TODO URI変換
         if ([@"data" isEqualToString:key]) {
             NSData *data = request.internalDictionary[@"data"];
-            if (data) {
+            if (data && data.length > 0) {
                 NSString *uuid = [self addData:data];
                 request.internalDictionary[@"uri"] = [NSString stringWithFormat:@"http://localhost/contentProvider?%@", uuid];
             }

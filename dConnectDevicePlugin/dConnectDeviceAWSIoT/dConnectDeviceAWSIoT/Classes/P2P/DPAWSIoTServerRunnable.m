@@ -14,6 +14,7 @@
 @implementation DPAWSIoTServerRunnable {
     NSMutableData *_headerData;
     BOOL _headerEndFlag;
+    int _retryCount;
 }
 
 - (instancetype) init
@@ -21,15 +22,21 @@
     self = [super init];
     if (self) {
         _headerData = [NSMutableData data];
+        _retryCount = 0;
     }
     return self;
 }
 
 #pragma mark - Public Method
 
+- (BOOL) isRetry
+{
+    return (_retryCount++) < 10;
+}
+
 - (void) w:(NSData *)data
 {
-    [self.fromSocket writeData:data withTimeout:-1 tag:0];
+    [self.fromSocket writeData:data withTimeout:5 tag:0];
 }
 
 - (void) r:(NSData *)data

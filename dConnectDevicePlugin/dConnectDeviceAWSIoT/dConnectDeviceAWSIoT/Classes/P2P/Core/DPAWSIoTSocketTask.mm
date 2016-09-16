@@ -24,8 +24,6 @@ char const HEADER[4] = {
     
     char _sendBuffer[4];
     char _recvBuffer[4];
-    
-    NSMutableData *_temp;
 }
 
 - (instancetype) initWithSocket:(UDTSOCKET)socket
@@ -33,7 +31,6 @@ char const HEADER[4] = {
     self = [super init];
     if (self) {
         _socket = socket;
-        _temp = [NSMutableData data];
         _closeFlag = NO;
     }
     return self;
@@ -118,15 +115,11 @@ char const HEADER[4] = {
                 break;
             }
             size -= rs;
-            [_temp appendBytes:data length:rs];
-        }
-        
-        if (!_closeFlag) {
+
             if ([_delegate respondsToSelector:@selector(didReceivedData:length:)]) {
-                [_delegate didReceivedData:(const char *)_temp.bytes length:(int)_temp.length];
+                [_delegate didReceivedData:(const char *)data length:(int)rs];
             }
         }
-        [_temp setLength:0];
     }
     
     if ([_delegate respondsToSelector:@selector(didDisconnetedAdderss:port:)]) {
@@ -143,7 +136,6 @@ char const HEADER[4] = {
     }
     _closeFlag = YES;
     _delegate = nil;
-    _temp = nil;
     
     UDT::close(_socket);
 }

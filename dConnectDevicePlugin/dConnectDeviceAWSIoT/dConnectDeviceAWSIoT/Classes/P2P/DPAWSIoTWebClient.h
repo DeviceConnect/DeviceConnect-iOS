@@ -18,6 +18,7 @@
 @optional
 - (void) clientDidConnected:(DPAWSIoTWebClient *)client;
 - (void) clientDidDisconnected:(DPAWSIoTWebClient *)client;
+- (void) clientDidTimeout:(DPAWSIoTWebClient *)client;
 - (void) client:(DPAWSIoTWebClient *)client didNotifiedSignaling:(NSString *)signaling;
 @end
 

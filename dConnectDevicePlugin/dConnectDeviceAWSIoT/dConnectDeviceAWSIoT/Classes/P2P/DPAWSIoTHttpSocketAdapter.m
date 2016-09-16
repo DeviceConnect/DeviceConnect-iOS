@@ -60,9 +60,16 @@
     if (!data || len == 0) {
         return NO;
     } else {
-        [_socket writeData:[NSData dataWithBytes:data length:len] withTimeout:-1 tag:0];
+        [_socket writeData:[NSData dataWithBytes:data length:len] withTimeout:5 tag:0];
         return YES;
     }
+}
+
+#pragma mark - Private Method
+
+- (BOOL) isRetry
+{
+    return (_retryCount++) < 10;
 }
 
 #pragma mark - GCDAsyncSocketDelegate
@@ -70,7 +77,7 @@
 - (void)socket:(GCDAsyncSocket *)sock didConnectToHost:(NSString *)host port:(uint16_t)port
 {
     NSLog(@"DPAWSIoTSocketAdapter::socket:didConnectToHost: %@", host);
-    [_socket readDataWithTimeout:-1 tag:0];
+    [_socket readDataWithTimeout:5 tag:0];
 }
 
 - (void)socket:(GCDAsyncSocket *)sock didReadData:(NSData *)data withTag:(long)tag
@@ -79,7 +86,7 @@
     
     if (self.connection) {
         [self.connection sendData:[data bytes] length:(int)[data length]];
-        [_socket readDataWithTimeout:-1 tag:0];
+        [_socket readDataWithTimeout:5 tag:0];
     }
 }
 
@@ -91,6 +98,30 @@
     //    if (self.connection) {
     //        [self.connection close];
     //    }
+}
+
+- (NSTimeInterval)socket:(GCDAsyncSocket *)sock shouldTimeoutReadWithTag:(long)tag
+                 elapsed:(NSTimeInterval)elapsed
+               bytesDone:(NSUInteger)length
+{
+    NSLog(@"DPAWSIoTSocketAdapter::shouldTimeoutReadWithTag: %@", @(tag));
+    
+    if (![self isRetry]) {
+        [self closeSocket];
+    }
+    return 3;
+}
+
+- (NSTimeInterval)socket:(GCDAsyncSocket *)sock shouldTimeoutWriteWithTag:(long)tag
+                 elapsed:(NSTimeInterval)elapsed
+               bytesDone:(NSUInteger)length
+{
+    NSLog(@"DPAWSIoTSocketAdapter::shouldTimeoutWriteWithTag: %@", @(tag));
+    
+    if (![self isRetry]) {
+        [self closeSocket];
+    }
+    return 3;
 }
 
 @end

@@ -25,4 +25,6 @@
 - (void) close;
 - (void) sendErrorResponse;
 
+- (BOOL) isRetry;
+
 @end
