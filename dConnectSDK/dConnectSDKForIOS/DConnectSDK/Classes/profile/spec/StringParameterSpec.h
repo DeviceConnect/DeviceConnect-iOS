@@ -24,25 +24,25 @@
  @brief 文字列の最大長を取得する.
  @return 文字列の最大長
  */
-- (int) maxLength;
+- (NSNumber *) maxLength;
 
 /*!
  @brief 文字列の最大長を設定する.
  @param maxLength 文字列の最大長
  */
-- (void) setMaxLength: (int) maxLength;
+- (void) setMaxLength: (NSNumber *) maxLength;
 
 /*!
  @brief 文字列の最小長を取得する.
  @return 文字列の最小長
  */
-- (int) minLength;
+- (NSNumber *) minLength;
 
 /*!
  @brief 文字列の最小長を設定する.
  @param minLength 文字列の最小長
  */
-- (void) setMinLength: (int) minLength;
+- (void) setMinLength: (NSNumber *) minLength;
 
 /*!
  @brief 定数一覧を取得する.

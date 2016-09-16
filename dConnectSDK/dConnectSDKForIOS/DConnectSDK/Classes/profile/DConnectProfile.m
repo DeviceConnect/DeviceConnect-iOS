@@ -172,13 +172,7 @@
 }
 
 - (NSArray *) apis {
-    
-    NSArray *apisCopy;
-    @synchronized(mApis) {
-        // ディープコピーして返す
-        apisCopy = [[NSArray alloc] initWithArray: mApis copyItems: YES];
-    }
-    return apisCopy;
+    return mApis;
 }
 
 - (DConnectApiEntity *) findApi: (DConnectRequestMessage *) request {
