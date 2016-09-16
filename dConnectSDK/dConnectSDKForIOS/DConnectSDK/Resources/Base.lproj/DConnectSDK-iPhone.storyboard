@@ -436,7 +436,7 @@
                     </toolbarItems>
                     <navigationItem key="navigationItem" title="Whitelist" id="JPN-YQ-AbA">
                         <barButtonItem key="backBarButtonItem" title="Back" id="M36-ZG-aoV"/>
-                        <barButtonItem key="leftBarButtonItem" title="Close" id="7pQ-H3-EUa">
+                        <barButtonItem key="leftBarButtonItem" title="閉じる" id="7pQ-H3-EUa">
                             <connections>
                                 <action selector="closeAction:" destination="NCI-g6-GrP" id="apk-we-Gqf"/>
                             </connections>

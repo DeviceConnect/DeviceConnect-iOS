@@ -21,7 +21,10 @@
 #import "DeviceMoreViewCell.h"
 #import "GHDeviceListViewController.h"
 #import "GHDeviceUtil.h"
-
+#import "GHDevicePluginViewModel.h"
+#import "GHDevicePluginDetailViewModel.h"
+#import <DConnectSDK/DConnectSystemProfile.h>
+#import <DConnectSDK/DConnectService.h>
 @interface ViewController ()
 {
     TopViewModel *viewModel;
@@ -223,20 +226,69 @@
 
 - (IBAction)openHelpView
 {
-    NSString* path = [[NSBundle mainBundle]pathForResource:@"help" ofType:@"html"];
-    WebViewController* webView = [[WebViewController alloc]initWithPath: path];
-    UINavigationController* nav = [[UINavigationController alloc]initWithRootViewController:webView];
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"index" ofType:@"html" inDirectory:@"help"];
+    WebViewController* webView = [[WebViewController alloc] initWithURL: [NSString stringWithFormat:@"file://%@", path]];
+    UINavigationController* nav = [[UINavigationController alloc] initWithRootViewController:webView];
     [self presentViewController:nav animated:YES completion:nil];
 }
 
 
 - (void)openDeviceDetail:(DConnectMessage*)message
 {
-    //TODO: デバイス確認画面用のhtmlのpathを渡す
-    NSString* path = [[NSBundle mainBundle]pathForResource:@"device" ofType:@"html"];
-    WebViewController* controller = [[WebViewController alloc]initWithPath:path];
-    UINavigationController* nav = [[UINavigationController alloc]initWithRootViewController:controller];
-    [self presentViewController:nav animated:YES completion:nil];
+    NSString *serviceId = [message stringForKey: DConnectServiceDiscoveryProfileParamId];
+    NSString *name = [message stringForKey:DConnectServiceDiscoveryProfileParamName];
+    BOOL isOnline = [message boolForKey:DConnectServiceDiscoveryProfileParamOnline];
+    GHDevicePluginViewModel *viewModel = [[GHDevicePluginViewModel alloc] init];
+    DConnectDevicePlugin *plugin = nil;
+    for (DConnectDevicePlugin *p in viewModel.datasource) {
+        for (DConnectService *s in p.serviceProvider.services) {
+            NSRange range = [serviceId rangeOfString:s.serviceId];
+            if (range.location != NSNotFound) {
+                plugin = p;
+                break;
+            }
+        }
+    }
+    if (isOnline) {
+        NSString *path = [[NSBundle mainBundle] pathForResource:@"index" ofType:@"html" inDirectory:@"demo"];
+        WebViewController* webView = [[WebViewController alloc] initWithURL: [NSString stringWithFormat:@"file://%@?serviceId=%@", path, serviceId]];
+        UINavigationController* nav = [[UINavigationController alloc] initWithRootViewController:webView];
+        [self presentViewController:nav animated:YES completion:nil];
+    } else {
+    
+        NSString *mes = [NSString stringWithFormat:@"%@は、接続されていません。デバイスプラグインの設定を確認してください。", name];
+        UIAlertController * ac =
+        [UIAlertController alertControllerWithTitle:@"デバイス起動"
+                                            message:mes
+                                     preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction * cancelAction =
+        [UIAlertAction actionWithTitle:@"閉じる"
+                                 style:UIAlertActionStyleCancel
+                               handler:nil];
+        UIAlertAction * okAction =
+        [UIAlertAction actionWithTitle:@"設定を開く"
+                                 style:UIAlertActionStyleDefault
+                               handler:^(UIAlertAction * action) {
+                                   NSDictionary* plugins = [viewModel makePlguinAndPlugins:plugin];
+                                   GHDevicePluginDetailViewModel *model = [[GHDevicePluginDetailViewModel alloc] initWithPlugin:plugins];
+
+                                   DConnectSystemProfile *systemProfile = [model findSystemProfile];
+                                   if (systemProfile) {
+                                       UIViewController* controller = [systemProfile.dataSource profile:nil settingPageForRequest:nil];
+                                       if (controller) {
+                                           [self presentViewController:controller animated:YES completion:nil];
+                                       } else {
+                                           UIAlertController* alert = [UIAlertController alertControllerWithTitle:nil message:@"設定画面はありません" preferredStyle:UIAlertControllerStyleAlert];
+                                           [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil]];
+                                           [self presentViewController:alert animated:YES completion:nil];
+                                       }
+                                   }
+
+                               }];
+        [ac addAction:cancelAction];
+        [ac addAction:okAction];
+        [self presentViewController:ac animated:YES completion:nil];
+    }
 }
 
 //--------------------------------------------------------------//
