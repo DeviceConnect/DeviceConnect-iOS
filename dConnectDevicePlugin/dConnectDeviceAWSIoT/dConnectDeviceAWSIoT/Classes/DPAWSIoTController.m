@@ -28,6 +28,8 @@
 	NSMutableDictionary *_responses;
 	NSDictionary *_managers;
 	DPAWSIoTWebSocket *_webSocket;
+	NSMutableDictionary *_lastPublishedEvents;
+	NSTimer *_publishEventTimer;
 }
 @end
 
@@ -71,6 +73,7 @@
 	static dispatch_once_t onceToken;
 	dispatch_once(&onceToken, ^{
 		_sharedInstance = [[DPAWSIoTController alloc] init];
+		_sharedInstance->_lastPublishedEvents = [NSMutableDictionary dictionary];
 	});
 	return _sharedInstance;
 }
@@ -87,14 +90,21 @@
 		 }
 		 // 自分の情報
 		 NSDictionary *myInfo = json[@"state"][@"reported"][[DPAWSIoTController managerUUID]];
+		 if ([myInfo isKindOfClass:[NSNull class]]) {
+			 myInfo = nil;
+		 }
 		 // 自分以外の情報
 		 NSMutableDictionary *managers = [json[@"state"][@"reported"] mutableCopy];
-		 // 自分の情報は削除
-		 [managers removeObjectForKey:[DPAWSIoTController managerUUID]];
-		 // onlineじゃない場合は削除
-		 for (NSString *key in managers.allKeys) {
-			 if (![managers[key][@"online"] boolValue]) {
-				 [managers removeObjectForKey:key];
+		 if ([managers isKindOfClass:[NSNull class]]) {
+			 managers = nil;
+		 } else {
+			 // 自分の情報は削除
+			 [managers removeObjectForKey:[DPAWSIoTController managerUUID]];
+			 // onlineじゃない場合は削除
+			 for (NSString *key in managers.allKeys) {
+				 if (![managers[key][@"online"] boolValue]) {
+					 [managers removeObjectForKey:key];
+				 }
 			 }
 		 }
 		 handler(managers, myInfo, nil);
@@ -138,9 +148,9 @@
 		_webSocket = [[DPAWSIoTWebSocket alloc] init];
 		DConnectManager *mgr = [DConnectManager sharedManager];
 		[_webSocket setPort:mgr.settings.port];
-		_webSocket.receivedHandler = ^(NSString *message) {
+		_webSocket.receivedHandler = ^(NSString *key, NSString *message) {
 			// イベント送信
-			[[DPAWSIoTController sharedManager] publishEvent:message];
+			[[DPAWSIoTController sharedManager] publishEvent:message key:key];
 		};
 	}
 	return self;
@@ -321,11 +331,47 @@
 }
 
 // Eventを発行
-- (void)publishEvent:(NSString*)msg {
+- (void)publishEvent:(NSString*)msg key:(NSString*)key {
+	NSInteger syncInterval = [DPAWSIoTUtils eventSyncInterval];
+	if (syncInterval > 0) {
+		// 最後のイベントを保持
+		_lastPublishedEvents[key] = msg;
+		// タイマーのインターバルが変わったら再生成
+		if (syncInterval != _publishEventTimer.timeInterval) {
+			[_publishEventTimer invalidate];
+			_publishEventTimer = nil;
+		}
+		// タイマーを生成
+		if (!_publishEventTimer) {
+			_publishEventTimer = [NSTimer scheduledTimerWithTimeInterval:syncInterval target:self selector:@selector(timerFireMethod:) userInfo:nil repeats:YES];
+		}
+	} else {
+		// リアルタイム
+		NSString *topic = [NSString stringWithFormat:@"%@/%@/event", kTopicPrefix, [DPAWSIoTController managerUUID]];
+		//NSLog(@"publishEvent:%@, %@", topic, msg);
+		if (![[DPAWSIoTManager sharedManager] publishWithTopic:topic message:msg]) {
+			NSLog(@"Error on PublishEvent:[%@] %@", topic, msg);
+		}
+		// タイマーがあったら削除
+		if (_publishEventTimer) {
+			[_publishEventTimer invalidate];
+			_publishEventTimer = nil;
+		}
+	}
+}
+
+// タイマーでイベントを送信
+- (void)timerFireMethod:(NSTimer *)timer {
+	if (_lastPublishedEvents.count == 0) return;
 	NSString *topic = [NSString stringWithFormat:@"%@/%@/event", kTopicPrefix, [DPAWSIoTController managerUUID]];
 	//NSLog(@"publishEvent:%@, %@", topic, msg);
-	if (![[DPAWSIoTManager sharedManager] publishWithTopic:topic message:msg]) {
-		NSLog(@"Error on PublishEvent:[%@] %@", topic, msg);
+	for (id key in _lastPublishedEvents.allKeys) {
+		NSString *msg = _lastPublishedEvents[key];
+		if (![[DPAWSIoTManager sharedManager] publishWithTopic:topic message:msg]) {
+			NSLog(@"Error on PublishEvent:[%@] %@", topic, msg);
+		} else {
+			[_lastPublishedEvents removeObjectForKey:key];
+		}
 	}
 }
 
@@ -379,8 +425,14 @@
 		}
 		// 自分の情報
 		NSDictionary *myInfo = json[@"state"][@"reported"][[DPAWSIoTController managerUUID]];
+		if ([myInfo isKindOfClass:[NSNull class]]) {
+			myInfo = nil;
+		}
 		// 自分以外の情報
 		NSMutableDictionary *managers = [json[@"state"][@"reported"] mutableCopy];
+		if ([managers isKindOfClass:[NSNull class]]) {
+			managers = nil;
+		}
 		[managers removeObjectForKey:[DPAWSIoTController managerUUID]];
 		handler(managers, myInfo, nil);
 	}];
@@ -483,20 +535,23 @@
 		}
 	}
 	// ResponseTopic購読・解除
+	if (!managers) return;
 	for (NSString *key in managers.allKeys) {
 		// Topic名
 		NSString *responseTopic = [NSString stringWithFormat:@"%@/%@/response", kTopicPrefix, key];
 		// Onlineかつ許可されている場合は購読対象
 		if ([DPAWSIoTUtils hasAllowedManager:key] &&
+			![managers[key] isKindOfClass:[NSNull class]] &&
 			[managers[key][@"online"] boolValue])
 		{
 			//NSLog(@"subscribeWithTopic:%@, %@", responseTopic, key);
+			NSDictionary *from = managers[key];
 			[[DPAWSIoTManager sharedManager] subscribeWithTopic:responseTopic messageHandler:^(id json, NSError *error) {
 				if (error) {
 					NSLog(@"Error on SubscribeWithTopic: %@, %@", responseTopic, error);
 					return;
 				}
-				[self receivedResponseFromMQTT:json from:managers[key] uuid:key];
+				[self receivedResponseFromMQTT:json from:from uuid:key];
 			}];
 			// イベント購読
 			[self subscribeEvent:key];

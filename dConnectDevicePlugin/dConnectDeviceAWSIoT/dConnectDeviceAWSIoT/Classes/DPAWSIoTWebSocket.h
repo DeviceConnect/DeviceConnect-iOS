@@ -12,7 +12,7 @@
 
 @interface DPAWSIoTWebSocket : NSObject
 
-@property (nonatomic) void(^receivedHandler)(NSString *message);
+@property (nonatomic) void(^receivedHandler)(NSString *key, NSString *message);
 
 // ポート番号設定
 - (void)setPort:(int)port;

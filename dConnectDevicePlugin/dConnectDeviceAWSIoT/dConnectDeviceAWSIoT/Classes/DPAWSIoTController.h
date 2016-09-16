@@ -41,7 +41,7 @@
 - (BOOL)executeServiceDiscoveryRequest:(DConnectRequestMessage *)request response:(DConnectResponseMessage *)response requestCode:(u_int32_t)requestCode;
 
 // Eventを発行
-- (void)publishEvent:(NSString*)msg;
+- (void)publishEvent:(NSString*)msg key:(NSString*)key;
 
 // サービス一覧を取得
 - (void)fetchServicesWithHandler:(void (^)(DConnectArray *services))handler;
