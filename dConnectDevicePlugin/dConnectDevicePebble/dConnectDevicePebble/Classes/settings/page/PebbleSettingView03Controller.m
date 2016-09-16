@@ -78,7 +78,7 @@ textHeight;
 
 
 - (IBAction)getToPebble:(id)sender {
-    NSURL *myURL = [NSURL URLWithString: @"https://itunes.apple.com/jp/app/pebble-smartwatch/id592012721?mt=8"];
+    NSURL *myURL = [NSURL URLWithString: @"https://itunes.apple.com/jp/app/pebble/id957997620?mt=8"];
     
     [[UIApplication sharedApplication] openURL:myURL];
     

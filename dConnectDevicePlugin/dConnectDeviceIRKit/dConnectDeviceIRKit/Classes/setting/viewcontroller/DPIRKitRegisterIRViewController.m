@@ -55,6 +55,15 @@
     _profileNameLabel.text = _virtualRequest.name;
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+}
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    //仮想デバイスのサービスを登録する。
+    [[DPIRKitManager sharedInstance] startDetection];
+    
+}
 - (IBAction)popUIViewController:(id)sender {
     [self.navigationController popViewControllerAnimated:YES];
 }

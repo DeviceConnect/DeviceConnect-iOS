@@ -64,5 +64,11 @@ static NSString *const VERSION = @"2.0.0";
     [AJNInit alljoynRouterShutdown];
     [AJNInit alljoynShutdown];
 }
-
+- (NSString*)iconFilePath:(BOOL)isOnline
+{
+    NSString *bundlePath = [[NSBundle mainBundle] pathForResource:@"dConnectDeviceAllJoyn_resources" ofType:@"bundle"];
+    NSBundle *bundle = [NSBundle bundleWithPath:bundlePath];
+    NSString* filename = isOnline ? @"dconnect_icon" : @"dconnect_icon_off";
+    return [bundle pathForResource:filename ofType:@"png"];
+}
 @end

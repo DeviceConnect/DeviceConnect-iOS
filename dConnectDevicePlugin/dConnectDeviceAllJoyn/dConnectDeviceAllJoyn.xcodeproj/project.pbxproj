@@ -82,6 +82,10 @@
 		25E1A0721B5DE05A00308AFC /* DPAllJoynSynchronizedMutableDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 25E1A0701B5DE05A00308AFC /* DPAllJoynSynchronizedMutableDictionary.m */; };
 		25F136491B67112600ADD8CB /* DPAllJoynColorUtility.h in Headers */ = {isa = PBXBuildFile; fileRef = 25F136471B67112600ADD8CB /* DPAllJoynColorUtility.h */; };
 		25F1364A1B67112600ADD8CB /* DPAllJoynColorUtility.mm in Sources */ = {isa = PBXBuildFile; fileRef = 25F136481B67112600ADD8CB /* DPAllJoynColorUtility.mm */; };
+		AB6F63191D8699A80027A2A2 /* dconnect_icon_off.png in Resources */ = {isa = PBXBuildFile; fileRef = AB6F63171D8699A80027A2A2 /* dconnect_icon_off.png */; };
+		AB6F631A1D8699A80027A2A2 /* dconnect_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = AB6F63181D8699A80027A2A2 /* dconnect_icon.png */; };
+		AB6F631B1D8699BB0027A2A2 /* dconnect_icon_off.png in Resources */ = {isa = PBXBuildFile; fileRef = AB6F63171D8699A80027A2A2 /* dconnect_icon_off.png */; };
+		AB6F631C1D8699BB0027A2A2 /* dconnect_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = AB6F63181D8699A80027A2A2 /* dconnect_icon.png */; };
 		ABC861A61BDA2B4A00E86FA9 /* libAllJoynFramework_iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ABC861A51BDA2B4A00E86FA9 /* libAllJoynFramework_iOS.a */; };
 		D6C860321D3A1D2100232EEF /* DPAllJoynService.h in Headers */ = {isa = PBXBuildFile; fileRef = D6C860301D3A1D2000232EEF /* DPAllJoynService.h */; };
 		D6C860331D3A1D2100232EEF /* DPAllJoynService.m in Sources */ = {isa = PBXBuildFile; fileRef = D6C860311D3A1D2000232EEF /* DPAllJoynService.m */; };
@@ -162,6 +166,8 @@
 		25E1A0701B5DE05A00308AFC /* DPAllJoynSynchronizedMutableDictionary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPAllJoynSynchronizedMutableDictionary.m; sourceTree = "<group>"; };
 		25F136471B67112600ADD8CB /* DPAllJoynColorUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPAllJoynColorUtility.h; sourceTree = "<group>"; };
 		25F136481B67112600ADD8CB /* DPAllJoynColorUtility.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DPAllJoynColorUtility.mm; sourceTree = "<group>"; };
+		AB6F63171D8699A80027A2A2 /* dconnect_icon_off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dconnect_icon_off.png; sourceTree = "<group>"; };
+		AB6F63181D8699A80027A2A2 /* dconnect_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dconnect_icon.png; sourceTree = "<group>"; };
 		ABC861A51BDA2B4A00E86FA9 /* libAllJoynFramework_iOS.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libAllJoynFramework_iOS.a; path = deps/AllJoyn/darwin/arm/iphoneos/release/dist/about/lib/libAllJoynFramework_iOS.a; sourceTree = "<group>"; };
 		D6C860301D3A1D2000232EEF /* DPAllJoynService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPAllJoynService.h; sourceTree = "<group>"; };
 		D6C860311D3A1D2000232EEF /* DPAllJoynService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPAllJoynService.m; sourceTree = "<group>"; };
@@ -358,6 +364,8 @@
 		25A06C261B5637DB005B6F8A /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				AB6F63171D8699A80027A2A2 /* dconnect_icon_off.png */,
+				AB6F63181D8699A80027A2A2 /* dconnect_icon.png */,
 				258843CD1B5F942D003E5257 /* AllJoynIntrospectionXML */,
 				25851BF61B57CDC000CB732E /* back-arrow@2x.png */,
 				25851BBF1B57409500CB732E /* Storyboard.storyboard */,
@@ -556,6 +564,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AB6F631A1D8699A80027A2A2 /* dconnect_icon.png in Resources */,
+				AB6F63191D8699A80027A2A2 /* dconnect_icon_off.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -570,6 +580,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AB6F631B1D8699BB0027A2A2 /* dconnect_icon_off.png in Resources */,
+				AB6F631C1D8699BB0027A2A2 /* dconnect_icon.png in Resources */,
 				25851BFB1B57CF3D00CB732E /* Download_on_the_App_Store_JP_135x40@2x.png in Resources */,
 				25851BF71B57CDC000CB732E /* back-arrow@2x.png in Resources */,
 				25851BF11B57C47900CB732E /* LIFX_Logo@2.jpg in Resources */,

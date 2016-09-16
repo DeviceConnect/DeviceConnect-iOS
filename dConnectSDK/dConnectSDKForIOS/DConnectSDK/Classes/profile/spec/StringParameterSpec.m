@@ -32,32 +32,32 @@
  @brief 文字列の最大長を取得する.
  @return 文字列の最大長
  */
-- (int) maxLength {
-    return [[[self stringDataSpec] maxLength] intValue];
+- (NSNumber *) maxLength {
+    return [[self stringDataSpec] maxLength];
 }
 
 /*!
  @brief 文字列の最大長を設定する.
  @param maxLength 文字列の最大長
  */
-- (void) setMaxLength: (int) maxLength {
-    [[self stringDataSpec] setMaxLength: [NSNumber numberWithInt: maxLength]];
+- (void) setMaxLength: (NSNumber *) maxLength {
+    [[self stringDataSpec] setMaxLength: maxLength];
 }
 
 /*!
  @brief 文字列の最小長を取得する.
  @return 文字列の最小長
  */
-- (int) minLength {
-    return [[[self stringDataSpec] minLength] intValue];
+- (NSNumber *) minLength {
+    return [[self stringDataSpec] minLength];
 }
 
 /*!
  @brief 文字列の最小長を設定する.
  @param minLength 文字列の最小長
  */
-- (void) setMinLength: (int) minLength {
-    [[self stringDataSpec] setMinLength: [NSNumber numberWithInt: minLength]];
+- (void) setMinLength: (NSNumber *) minLength {
+    [[self stringDataSpec] setMinLength: minLength];
 }
 
 /*!

@@ -65,7 +65,9 @@
 
 - (NSString *) loadFile: (NSString *) profileName {
     
-    NSString *filePath = [self jsonFilePathWithProfileName: profileName];
+    // プロファイル名とJSONファイル名は大文字小文字が区別されるので、一致するよう小文字で統一する。(jsonファイル名も全て小文字にする)
+    
+    NSString *filePath = [self jsonFilePathWithProfileName: [profileName lowercaseString]];
     
     NSError *error = nil;
     NSString *jsonString = [NSString stringWithContentsOfFile: (NSString *)filePath

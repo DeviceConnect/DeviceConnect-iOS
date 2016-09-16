@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="OAC-cO-aFl">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+    </dependencies>
+    <scenes>
+        <!--Hitoe Set Shirt Dialog-->
+        <scene sceneID="nCx-Yf-b4q">
+            <objects>
+                <viewController id="OAC-cO-aFl" customClass="DPHitoeSetShirtDialog" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Bu3-qq-LgJ"/>
+                        <viewControllerLayoutGuide type="bottom" id="Hbr-7m-yGq"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="qP6-pF-FaE">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="N7z-nB-u55">
+                                <rect key="frame" x="60" y="75" width="480" height="450"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Hitoeの装着" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oR0-hX-yft">
+                                        <rect key="frame" x="159" y="8" width="162" height="36"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="35.5" id="0Sn-Qo-fkx"/>
+                                            <constraint firstAttribute="width" constant="162" id="c8F-lK-kkx"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" image="hitoe_set960.png" translatesAutoresizingMaskIntoConstraints="NO" id="NfX-33-ELu">
+                                        <rect key="frame" x="63" y="64" width="355" height="232"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="231.5" id="8sH-aZ-zPI"/>
+                                            <constraint firstAttribute="width" constant="355" id="FZl-Zt-76n"/>
+                                        </constraints>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Hitoeをシャツに装着してください。" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZWD-B3-xEt">
+                                        <rect key="frame" x="33" y="303" width="415" height="48"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="415" id="ppe-b5-X6X"/>
+                                            <constraint firstAttribute="height" constant="48" id="uBf-bb-awY"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="erP-xH-Y6i">
+                                        <rect key="frame" x="216" y="367" width="49" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="49" id="XJW-go-Xnl"/>
+                                            <constraint firstAttribute="height" constant="30" id="m4O-Ww-TcQ"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                        <state key="normal" title="OK"/>
+                                        <connections>
+                                            <action selector="onClose:" destination="OAC-cO-aFl" eventType="touchUpInside" id="bTx-kJ-zFH"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" red="0.93518897251308897" green="0.93518897251308897" blue="0.93518897251308897" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstItem="NfX-33-ELu" firstAttribute="top" secondItem="oR0-hX-yft" secondAttribute="bottom" constant="20.5" id="0sc-lI-b7j"/>
+                                    <constraint firstItem="ZWD-B3-xEt" firstAttribute="centerX" secondItem="N7z-nB-u55" secondAttribute="centerX" id="1Ek-MV-HPS"/>
+                                    <constraint firstItem="NfX-33-ELu" firstAttribute="centerX" secondItem="N7z-nB-u55" secondAttribute="centerX" id="Dth-LF-wk8"/>
+                                    <constraint firstItem="NfX-33-ELu" firstAttribute="leading" secondItem="N7z-nB-u55" secondAttribute="leading" constant="63" id="H1K-dH-uhC"/>
+                                    <constraint firstItem="oR0-hX-yft" firstAttribute="leading" secondItem="N7z-nB-u55" secondAttribute="leading" constant="159" id="L63-Ub-FRk"/>
+                                    <constraint firstItem="ZWD-B3-xEt" firstAttribute="top" secondItem="NfX-33-ELu" secondAttribute="bottom" constant="7.5" id="YaD-hI-EhC"/>
+                                    <constraint firstAttribute="height" constant="450" id="fzc-El-T1R"/>
+                                    <constraint firstItem="oR0-hX-yft" firstAttribute="top" secondItem="N7z-nB-u55" secondAttribute="top" constant="8" id="gDj-Et-q7P"/>
+                                    <constraint firstItem="erP-xH-Y6i" firstAttribute="centerX" secondItem="ZWD-B3-xEt" secondAttribute="centerX" id="get-h7-w6y"/>
+                                    <constraint firstItem="oR0-hX-yft" firstAttribute="centerX" secondItem="N7z-nB-u55" secondAttribute="centerX" id="jhg-Py-fk9"/>
+                                    <constraint firstItem="ZWD-B3-xEt" firstAttribute="leading" secondItem="N7z-nB-u55" secondAttribute="leading" constant="33" id="kTl-UL-ApM"/>
+                                    <constraint firstAttribute="width" constant="480" id="lU5-Wt-3g2"/>
+                                    <constraint firstItem="erP-xH-Y6i" firstAttribute="top" secondItem="ZWD-B3-xEt" secondAttribute="bottom" constant="16" id="pjB-YN-KWZ"/>
+                                    <constraint firstItem="ZWD-B3-xEt" firstAttribute="top" secondItem="NfX-33-ELu" secondAttribute="bottom" constant="7.5" id="uU7-hP-4oa"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="N7z-nB-u55" firstAttribute="centerY" secondItem="qP6-pF-FaE" secondAttribute="centerY" id="3OT-4g-pBe"/>
+                            <constraint firstItem="N7z-nB-u55" firstAttribute="centerX" secondItem="qP6-pF-FaE" secondAttribute="centerX" id="iXv-Wp-OQl"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="hitoeShirtView" destination="N7z-nB-u55" id="scf-NV-R2F"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="wkO-6V-6IK" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="259" y="418"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="hitoe_set960.png" width="960" height="720"/>
+    </resources>
+</document>

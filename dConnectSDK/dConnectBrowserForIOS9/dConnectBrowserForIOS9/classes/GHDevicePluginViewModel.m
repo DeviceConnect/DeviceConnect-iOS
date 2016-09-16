@@ -7,7 +7,6 @@
 //
 
 #import "GHDevicePluginViewModel.h"
-#import <DConnectSDK/DConnectSDK.h>
 
 @implementation GHDevicePluginViewModel
 
@@ -34,7 +33,13 @@
              @"profiles": [plugin profiles]
              };
 }
-
+- (NSDictionary*)makePlguinAndPlugins:(DConnectDevicePlugin*)plugin
+{
+    return @{
+             @"plugin": plugin,
+             @"profiles": [plugin profiles]
+             };
+}
 - (void)dealloc
 {
     self.datasource = nil;
