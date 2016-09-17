@@ -122,7 +122,6 @@
 		782FCF761D5340B10084DE03 /* libAWSIoT.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libAWSIoT.a; path = "../../../../../../Library/Developer/Xcode/DerivedData/dConnectDeviceAWSIoT-hjvzbykvepdftldcwismnygwtdiy/Build/Products/Debug-iphoneos/AWSIoT/libAWSIoT.a"; sourceTree = "<group>"; };
 		782FCFA41D54150C0084DE03 /* DPAWSIoTManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPAWSIoTManager.h; sourceTree = "<group>"; };
 		782FCFA51D54150C0084DE03 /* DPAWSIoTManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPAWSIoTManager.m; sourceTree = "<group>"; };
-		782FCFAE1D544D8A0084DE03 /* Pods-dConnectDeviceAWSIoT.app.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "Pods-dConnectDeviceAWSIoT.app.xcconfig"; path = "Pods/Target Support Files/Pods-dConnectDeviceAWSIoT/Pods-dConnectDeviceAWSIoT.app.xcconfig"; sourceTree = "<group>"; };
 		782FCFB61D54514C0084DE03 /* Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		782FCFB81D54514C0084DE03 /* Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Tests.m; sourceTree = "<group>"; };
 		782FCFBA1D54514C0084DE03 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -465,7 +464,6 @@
 		BCA6B25A08249B8A21B87253 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				782FCFAE1D544D8A0084DE03 /* Pods-dConnectDeviceAWSIoT.app.xcconfig */,
 				88658FBE182227BAC71710AD /* Pods-dConnectDeviceAWSIoT.debug.xcconfig */,
 				6FAF38FDC94555EDF3019CB2 /* Pods-dConnectDeviceAWSIoT.release.xcconfig */,
 			);
@@ -992,7 +990,6 @@
 		};
 		782FCFBF1D54514C0084DE03 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 782FCFAE1D544D8A0084DE03 /* Pods-dConnectDeviceAWSIoT.app.xcconfig */;
 			buildSettings = {
 				INFOPLIST_FILE = Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -1003,7 +1000,6 @@
 		};
 		782FCFC01D54514C0084DE03 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 782FCFAE1D544D8A0084DE03 /* Pods-dConnectDeviceAWSIoT.app.xcconfig */;
 			buildSettings = {
 				INFOPLIST_FILE = Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";

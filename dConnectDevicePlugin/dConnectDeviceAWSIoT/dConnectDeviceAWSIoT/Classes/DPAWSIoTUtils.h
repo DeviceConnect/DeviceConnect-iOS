@@ -26,6 +26,11 @@
 // Managerの許可を解除
 + (void)removeAllowManager:(NSString*)uuid;
 
+// イベント更新間隔を設定
++ (void)setEventSyncInterval:(NSInteger)interval;
+// イベント更新間隔を取得
++ (NSInteger)eventSyncInterval;
+
 // ローディング画面表示
 + (void)showLoadingHUD:(UIStoryboard*)storyboard;
 // ローディング画面非表示

@@ -17,6 +17,7 @@
 #define kAccessKeyID @"accessKey"
 #define kSecretKey @"secretKey"
 #define kRegionKey @"regionKey"
+#define kSyncKey @"syncInterval"
 
 #define ERROR_DOMAIN @"DPAWSIoTUtils"
 
@@ -46,6 +47,20 @@ static UIViewController *loadingHUD;
 	[DPAWSIoTKeychain updateValue:accessKey key:kAccessKeyID];
 	[DPAWSIoTKeychain updateValue:secretKey key:kSecretKey];
 	[DPAWSIoTKeychain updateValue:[@(region) stringValue] key:kRegionKey];
+}
+
+// イベント更新間隔を設定
++ (void)setEventSyncInterval:(NSInteger)interval {
+	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+	[defaults setInteger:interval forKey:kSyncKey];
+	[defaults synchronize];
+}
+
+// イベント更新間隔を取得
++ (NSInteger)eventSyncInterval {
+	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+	[defaults registerDefaults:@{kSyncKey:@(10)}];
+	return [defaults integerForKey:kSyncKey];
 }
 
 // AccessTokenを取得

@@ -21,6 +21,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *requestTopicLabel;
 @property (weak, nonatomic) IBOutlet UILabel *responseTopicLabel;
 @property (weak, nonatomic) IBOutlet UILabel *eventTopicLabel;
+@property (weak, nonatomic) IBOutlet UITextField *syncText;
 @end
 
 
@@ -34,16 +35,22 @@
 	_requestTopicLabel.text = [DPAWSIoTController myTopic:@"request"];
 	_responseTopicLabel.text = [DPAWSIoTController myTopic:@"response"];
 	_eventTopicLabel.text = [DPAWSIoTController myTopic:@"event"];
+	_syncText.text = [@([DPAWSIoTUtils eventSyncInterval]) stringValue];
 	[DPAWSIoTController fetchManagerInfoWithHandler:^(NSDictionary *managers, NSDictionary *myInfo, NSError *error) {
 		if (myInfo) {
 			//NSLog(@"myInfo:%@", myInfo);
 			_statusSwitch.on = [myInfo[@"online"] boolValue];
+			_syncText.enabled = !_statusSwitch.on;
 		}
 	}];
 }
 
 // Statusスイッチイベント
 - (IBAction)stateSwitchChanged:(id)sender {
+	_syncText.enabled = !_statusSwitch.on;
+	if (_statusSwitch.on) {
+		[DPAWSIoTUtils setEventSyncInterval:[_syncText.text integerValue]];
+	}
 	[DPAWSIoTController setManagerInfo:_statusSwitch.on handler:^(NSError *error) {
 		if (error) {
 			// アラート
