@@ -202,7 +202,7 @@ static UIViewController *loadingHUD;
 	[params removeObjectForKey:@"_type"];
 	[params removeObjectForKey:@"version"];
 	
-	if ([profile isEqualToString:DConnectServiceDiscoveryProfileName]) {
+	if ([profile localizedCaseInsensitiveContainsString:DConnectServiceDiscoveryProfileName]) {
 		// ServiceDiscoveryはLocalOAuthをやらないように別アクセス
 		dispatch_async(dispatch_get_main_queue(), ^{
 			DConnectManager *mgr = [DConnectManager sharedManager];
