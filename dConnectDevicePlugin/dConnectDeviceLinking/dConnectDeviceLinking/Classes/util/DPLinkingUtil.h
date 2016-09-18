@@ -17,6 +17,8 @@ typedef void (^DPLinkingUtilTimerCancelBlock)();
 + (DPLinkingUtilTimerCancelBlock) asyncAfterDelay:(NSTimeInterval)delay block:(DPLinkingUtilTimerBlock)block;
 + (DPLinkingUtilTimerCancelBlock) asyncAfterDelay:(NSTimeInterval)delay block:(DPLinkingUtilTimerBlock)block queue:(dispatch_queue_t)queue;
 
++ (int) byteToShort:(const char *)d;
+
 + (int) floatToInt:(float)value fraction:(int)fraction exponent:(int) exponent sign:(BOOL)sign;
 + (float) intToFloat:(int)value fraction:(int)fraction exponent:(int) exponent sign:(BOOL)sign;
 

@@ -77,31 +77,23 @@ static NSString *const kConnectFlag = @"connectFlag";
 }
 
 - (BOOL) isSupportButtonId {
-    if (!self.setting.exSensorType) {
-        return NO;
-    }
-    
-    const unsigned char *ptr = [self.setting.exSensorType bytes];
-    unsigned long length = [self.setting.exSensorType length];
-    if (!ptr || length <= 0) {
-        return NO;
-    }
-    return (ptr[0] & kButton) != 0;
+    return self.setting.hasExButton;
 }
 
 - (BOOL) isSupportBattery {
-    // TODO: 未実装
-    return NO;
+    return self.setting.hasBatteryPower;
 }
 
 - (BOOL) isSupportTemperature {
-    // TODO: 未実装
-    return NO;
+    return self.setting.hasTemperature;
 }
 
 - (BOOL) isSupportHumidity {
-    // TODO: 未実装
-    return NO;
+    return self.setting.hasHumidity;
+}
+
+- (BOOL) isSupportAtmosphericPressure {
+    return self.setting.hasAtmosphericPressure;
 }
 
 @end

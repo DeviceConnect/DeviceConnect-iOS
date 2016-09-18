@@ -62,6 +62,11 @@ dispatch_time_t getDispatchTimeByDate(NSDate *date) {
     return milestone;
 }
 
++ (int) byteToShort:(const char *)buf {
+    return (((buf[1] << 8) & 0xFF00) | (buf[0] & 0xff));
+}
+
+
 + (double) pow:(int)count
 {
     double t = 1;

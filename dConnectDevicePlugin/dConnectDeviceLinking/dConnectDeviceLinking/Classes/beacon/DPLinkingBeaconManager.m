@@ -12,6 +12,10 @@
 
 static const NSInteger kCheckConnectionInterval = 30;
 
+static NSString *const kFileName = @"LinkingBeacon.dat";
+static NSString *const kParamBeacons = @"beacons";
+static NSString *const kParamScanFlag = @"isStartBeaconScanFlag";
+
 static NSString *const kDate = @"date";
 static NSString *const kHeaderIdentifier = @"headerIdentifier";
 static NSString *const kIndividualNumber = @"individualNumber";
@@ -37,7 +41,7 @@ typedef NS_ENUM(NSInteger, DPLinkingServiceId) {
     DPLinkingServiceIdRawData = 15
 };
 
-@interface DPLinkingBeaconManager () <BLEConnecterDelegate>
+@interface DPLinkingBeaconManager () <BLEDelegateModelDelegate>
 
 @property (nonatomic) NSMutableArray *beacons;
 
@@ -425,12 +429,13 @@ static DPLinkingBeaconManager* _sharedInstance = nil;
 - (void) saveDPLinkingBeacon {
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentDirectory = [paths objectAtIndex:0];
-    NSString *path = [documentDirectory stringByAppendingPathComponent:@"LinkingBeacon.dat"];
+    NSString *path = [documentDirectory stringByAppendingPathComponent:kFileName];
     
     NSMutableData *data = [NSMutableData data];
     
     NSKeyedArchiver *encoder = [[NSKeyedArchiver alloc] initForWritingWithMutableData:data];
-    [encoder encodeObject:self.beacons forKey:@"beacons"];
+    [encoder encodeObject:@(_isStartBeaconScanFlag) forKey:kParamScanFlag];
+    [encoder encodeObject:self.beacons forKey:kParamBeacons];
     [encoder finishEncoding];
     
     [data writeToFile:path atomically:YES];
@@ -439,12 +444,13 @@ static DPLinkingBeaconManager* _sharedInstance = nil;
 - (void) loadDPLinkingBeacon {
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentDirectory = [paths objectAtIndex:0];
-    NSString *path = [documentDirectory stringByAppendingPathComponent:@"LinkingBeacon.dat"];
+    NSString *path = [documentDirectory stringByAppendingPathComponent:kFileName];
     NSFileManager *fileManager = [NSFileManager defaultManager];
     if ([fileManager fileExistsAtPath:path]) {
         NSMutableData *data  = [NSMutableData dataWithContentsOfFile:path];
         NSKeyedUnarchiver *decoder = [[NSKeyedUnarchiver alloc] initForReadingWithData:data];
-        self.beacons = [decoder decodeObjectForKey:@"beacons"];
+        _isStartBeaconScanFlag = [[decoder decodeObjectForKey:kParamScanFlag] boolValue];
+        self.beacons = [decoder decodeObjectForKey:kParamBeacons];
     }
 }
 

@@ -11,11 +11,12 @@
 
 typedef NS_ENUM(NSInteger, DPLinkingSensorType) {
     DPLinkingSensorTypeGyroscope = 0,
-    DPLinkingSensorTypeAccelerometer,
-    DPLinkingSensorTypeOrientation,
-    DPLinkingSensorTypeBattery,
-    DPLinkingSensorTypeTemperature,
-    DPLinkingSensorTypeHumidity
+    DPLinkingSensorTypeAccelerometer = 0x01,
+    DPLinkingSensorTypeOrientation = 0x02,
+    DPLinkingSensorTypeBattery = 0x03,
+    DPLinkingSensorTypeTemperature = 0x04,
+    DPLinkingSensorTypeHumidity = 0x05,
+    DPLinkingSensorTypeAtmosphericPressure = 0x06
 };
 
 @interface DPLinkingSensorData : NSObject

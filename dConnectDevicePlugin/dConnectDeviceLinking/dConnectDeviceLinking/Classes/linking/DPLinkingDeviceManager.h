@@ -52,6 +52,12 @@
 @end
 
 
+@protocol DPLinkingDeviceAtmosphericPressureDelegate <NSObject>
+@optional
+- (void) didReceivedDevice:(DPLinkingDevice *)device atmosphericPressure:(float)atmosphericPressure;
+@end
+
+
 @protocol DPLinkingDeviceRangeDelegate <NSObject>
 @optional
 - (void) didReceivedDevice:(DPLinkingDevice *)device range:(DPLinkingRange)range;
@@ -102,6 +108,9 @@
 
 - (void) enableListenHumidity:(DPLinkingDevice *)device delegate:(id<DPLinkingDeviceHumidityDelegate>)delegate;
 - (void) disableListenHumidity:(DPLinkingDevice *)device delegate:(id<DPLinkingDeviceHumidityDelegate>)delegate;
+
+- (void) enableListenAtmosphericPressure:(DPLinkingDevice *)device delegate:(id<DPLinkingDeviceAtmosphericPressureDelegate>)delegate;
+- (void) disableListenAtmosphericPressure:(DPLinkingDevice *)device delegate:(id<DPLinkingDeviceAtmosphericPressureDelegate>)delegate;
 
 - (void) setDefaultLED:(DPLinkingDevice *)device;
 - (void) setDefaultVibration:(DPLinkingDevice *)device;

@@ -9,7 +9,7 @@
 
 #import "DPLinkingDeviceViewController.h"
 
-@interface DPLinkingDeviceViewController () <DPLinkingDeviceConnectDelegate, DPLinkingDeviceSensorDelegate, DPLinkingDeviceButtonIdDelegate, DPLinkingDeviceRangeDelegate, DPLinkingDeviceBatteryDelegate, DPLinkingDeviceTemperatureDelegate, DPLinkingDeviceHumidityDelegate>
+@interface DPLinkingDeviceViewController () <DPLinkingDeviceConnectDelegate, DPLinkingDeviceSensorDelegate, DPLinkingDeviceButtonIdDelegate, DPLinkingDeviceRangeDelegate, DPLinkingDeviceBatteryDelegate, DPLinkingDeviceTemperatureDelegate, DPLinkingDeviceHumidityDelegate, DPLinkingDeviceAtmosphericPressureDelegate>
 
 @property (nonatomic) IBOutlet UILabel *deviceNameLabel;
 @property (nonatomic) IBOutlet UIButton *ledPatternButton;
@@ -43,6 +43,11 @@
 @property (nonatomic) IBOutlet UILabel *compassXLabel;
 @property (nonatomic) IBOutlet UILabel *compassYLabel;
 @property (nonatomic) IBOutlet UILabel *compassZLabel;
+
+@property (nonatomic) IBOutlet UILabel *batteryLabel;
+@property (nonatomic) IBOutlet UILabel *humidityLabel;
+@property (nonatomic) IBOutlet UILabel *temperatureLabel;
+@property (nonatomic) IBOutlet UILabel *atmosphericPressureLabel;
 
 @end
 
@@ -356,19 +361,25 @@
 #pragma mark - DPLinkingDeviceBatteryDelegate
 
 - (void) didReceivedDevice:(DPLinkingDevice *)device lowBattery:(BOOL)lowBattery level:(float)level {
-    
+    self.batteryLabel.text = [NSString stringWithFormat:@"%@", @(level)];
 }
 
 #pragma mark - DPLinkingDeviceTemperatureDelegate
 
 - (void) didReceivedDevice:(DPLinkingDevice *)device temperature:(float)temperature {
-    
+    self.temperatureLabel.text = [NSString stringWithFormat:@"%@", @(temperature)];
 }
 
 #pragma mark - DPLinkingDeviceHumidityDelegate
 
 - (void) didReceivedDevice:(DPLinkingDevice *)device humidity:(float)humidity {
-    
+    self.humidityLabel.text = [NSString stringWithFormat:@"%@", @(humidity)];
+}
+
+#pragma mark - DPLinkingDeviceAtmosphericPressureDelegate
+
+- (void) didReceivedDevice:(DPLinkingDevice *)device atmosphericPressure:(float)atmosphericPressure {
+    self.atmosphericPressureLabel.text = [NSString stringWithFormat:@"%@", @(atmosphericPressure)];
 }
 
 #pragma mark - IBAction

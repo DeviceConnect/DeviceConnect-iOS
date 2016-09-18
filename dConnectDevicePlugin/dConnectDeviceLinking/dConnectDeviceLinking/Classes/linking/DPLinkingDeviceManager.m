@@ -14,7 +14,7 @@ static const NSInteger kDistanceThresholdImmediate = 3.0f;
 static const NSInteger kDistanceThresholdNear = 10.0f;
 static const NSInteger kDistanceThresholdFar = 20.0f;
 
-@interface DPLinkingDeviceManager() <BLEConnecterDelegate>
+@interface DPLinkingDeviceManager() <BLEDelegateModelDelegate>
 
 @property (nonatomic) NSMutableArray *devices;
 @property (nonatomic) NSMutableArray *connectDelegates;
@@ -26,6 +26,7 @@ static const NSInteger kDistanceThresholdFar = 20.0f;
 @property (nonatomic) NSMutableDictionary *batteryDic;
 @property (nonatomic) NSMutableDictionary *temperatureDic;
 @property (nonatomic) NSMutableDictionary *humidityDic;
+@property (nonatomic) NSMutableDictionary *atmospheircPressureDic;
 
 @property (nonatomic) DPLinkingDevice *connectingDevice;
 
@@ -60,6 +61,7 @@ static DPLinkingDeviceManager* _sharedInstance = nil;
         self.batteryDic = [NSMutableDictionary dictionary];
         self.temperatureDic = [NSMutableDictionary dictionary];
         self.humidityDic = [NSMutableDictionary dictionary];
+        self.atmospheircPressureDic = [NSMutableDictionary dictionary];
         
         [[BLEConnecter sharedInstance] addListener:self deviceUUID:nil];
         [self loadDPLinkingDevice];
@@ -566,6 +568,58 @@ static DPLinkingDeviceManager* _sharedInstance = nil;
                              disconnect:NO];
 }
 
+- (void) enableListenAtmosphericPressure:(DPLinkingDevice *)device delegate:(id<DPLinkingDeviceAtmosphericPressureDelegate>)delegate {
+    if (![device isSupportAtmosphericPressure]) {
+        return;
+    }
+    
+    NSMutableArray *array = [self.atmospheircPressureDic objectForKey:device.identifier];
+    if (!array) {
+        array = [NSMutableArray array];
+        [self.atmospheircPressureDic setObject:array forKey:device.identifier];
+    } else if ([array containsObject:delegate]) {
+        return;
+    }
+    [array addObject:delegate];
+    
+    if (array.count > 1) {
+        return;
+    }
+    
+    DCLogInfo(@"atmospheric pressure sensor start. device=%@", device.name);
+    
+    BLERequestController *request = [BLERequestController sharedInstance];
+    [request setNotifySensorInfoMessage:device.peripheral
+                             sensorType:DPLinkingSensorTypeAtmosphericPressure
+                                 status:DPLinkingSensorStatusStart
+                             disconnect:NO];
+}
+
+- (void) disableListenAtmosphericPressure:(DPLinkingDevice *)device delegate:(id<DPLinkingDeviceAtmosphericPressureDelegate>)delegate {
+    if (![device isSupportAtmosphericPressure]) {
+        return;
+    }
+    
+    NSMutableArray *array = [self.atmospheircPressureDic objectForKey:device.identifier];
+    if (!array || array.count == 0) {
+        return;
+    } else {
+        [array removeObject:delegate];
+        if (array.count == 0) {
+            [self.atmospheircPressureDic removeObjectForKey:device.identifier];
+        } else {
+            return;
+        }
+    }
+    
+    DCLogInfo(@"atmospheric pressure sensor stop. device=%@", device.name);
+    
+    BLERequestController *request = [BLERequestController sharedInstance];
+    [request setNotifySensorInfoMessage:device.peripheral
+                             sensorType:DPLinkingSensorTypeAtmosphericPressure
+                                 status:DPLinkingSensorStatusStop
+                             disconnect:NO];
+}
 
 - (void) addConnectDelegate:(id<DPLinkingDeviceConnectDelegate>)delegate {
     [self.connectDelegates addObject:delegate];
@@ -680,6 +734,39 @@ static DPLinkingDeviceManager* _sharedInstance = nil;
             [obj didRemovedDeviceAll];
         }
     }];
+}
+
+- (void) notifyTemperature:(float)temperature device:(DPLinkingDevice *)device {
+    NSMutableArray *array = [self.temperatureDic objectForKey:device.identifier];
+    if (array) {
+        [array enumerateObjectsUsingBlock:^(id<DPLinkingDeviceTemperatureDelegate> obj, NSUInteger idx, BOOL *stop) {
+            if ([obj respondsToSelector:@selector(didReceivedDevice:temperature:)]) {
+                [obj didReceivedDevice:device temperature:temperature];
+            }
+        }];
+    }
+}
+
+- (void) notifyHumidity:(float)humidity device:(DPLinkingDevice *)device {
+    NSMutableArray *array = [self.humidityDic objectForKey:device.identifier];
+    if (array) {
+        [array enumerateObjectsUsingBlock:^(id<DPLinkingDeviceHumidityDelegate> obj, NSUInteger idx, BOOL *stop) {
+            if ([obj respondsToSelector:@selector(didReceivedDevice:humidity:)]) {
+                [obj didReceivedDevice:device humidity:humidity];
+            }
+        }];
+    }
+}
+
+- (void) notifyAtmosphericPressure:(float)atmosphericPressure device:(DPLinkingDevice *)device {
+    NSMutableArray *array = [self.atmospheircPressureDic objectForKey:device.identifier];
+    if (array) {
+        [array enumerateObjectsUsingBlock:^(id<DPLinkingDeviceAtmosphericPressureDelegate> obj, NSUInteger idx, BOOL *stop) {
+            if ([obj respondsToSelector:@selector(didReceivedDevice:atmosphericPressure:)]) {
+                [obj didReceivedDevice:device atmosphericPressure:atmosphericPressure];
+            }
+        }];
+    }
 }
 
 - (BOOL) isEqualDeviceUuid:(CBPeripheral *)peripheral {
@@ -946,18 +1033,65 @@ static DPLinkingDeviceManager* _sharedInstance = nil;
     DCLogInfo(@"方位センサーの取得が終了しました。");
 }
 
+#pragma mark - BLEConnecterDelegate Temperature
 
-
-- (void)sendSetNotifySensorInfoRespData:(CBPeripheral *)peripheral data:(NSData *)data {
-    DCLogInfo(@"sendSetNotifySensorInfoRespData: %@", data);
+- (void)temperatureDidUpDateDelegate:(CBPeripheral *)peripheral sensor:(BLESensorTemperature *)sensor; {
+    NSLog(@"temperatureDidUpDateDelegate: %@", sensor);
+    
+    DPLinkingDevice *device = [self findDPLinkingDeviceByPeripheral:peripheral];
+    if (device) {
+        int value = [DPLinkingUtil byteToShort:sensor.originalData.bytes];
+        float temperature = [DPLinkingUtil intToFloat:value fraction:7 exponent:4 sign:YES];
+        [self notifyTemperature:temperature device:device];
+    }
 }
 
-- (void)setNotifySensorInfoRespSuccessDelegate:(CBPeripheral *)peripheral {
-    DCLogInfo(@"setNotifySensorInfoRespSuccessDelegate: %@", peripheral);
+- (void)temperatureDidUpDateWithIntervalDelegate:(CBPeripheral *)peripheral sensor:(BLESensorTemperature *)sensor {
+    NSLog(@"temperatureDidUpDateWithIntervalDelegate: %@", sensor);
 }
 
-- (void)setNotifySensorInfoRespError:(CBPeripheral *)peripheral result:(char)result {
-    DCLogInfo(@"setNotifySensorInfoRespError: %@", peripheral);
+- (void)temperatureDidUpDateDelegate:(CBPeripheral *)peripheral {
+    NSLog(@"temperatureDidUpDateWithIntervalDelegate");
+}
+
+#pragma mark - BLEConnecterDelegate Humidiy
+
+- (void)humidityDidUpDateDelegate:(CBPeripheral *)peripheral sensor:(BLESensorHumidity *)sensor {
+    NSLog(@"humidityDidUpDateDelegate: %@", sensor);
+
+    DPLinkingDevice *device = [self findDPLinkingDeviceByPeripheral:peripheral];
+    if (device) {
+        int value = [DPLinkingUtil byteToShort:sensor.originalData.bytes];
+        float humidity = [DPLinkingUtil intToFloat:value fraction:8 exponent:4 sign:NO];
+        [self notifyHumidity:humidity device:device];
+    }
+}
+
+- (void)humidityDidUpDateWithIntervalDelegate:(CBPeripheral *)peripheral sensor:(BLESensorHumidity *)sensor {
+    NSLog(@"humidityDidUpDateWithIntervalDelegate: %@", sensor);
+}
+
+- (void)humidityDidUpDateDelegate:(CBPeripheral*)peripheral {
+    NSLog(@"humidityDidUpDateDelegate");
+}
+
+#pragma mark - BLEConnecterDelegate AtmosphericPressure
+
+- (void)atmosphericPressureDidUpDateDelegate:(CBPeripheral *)peripheral sensor:(BLESensorAtmosphericPressure *)sensor {
+    NSLog(@"atmosphericPressureDidUpDateDelegate: %@", sensor);
+
+    DPLinkingDevice *device = [self findDPLinkingDeviceByPeripheral:peripheral];
+    if (device) {
+        [self notifyAtmosphericPressure:sensor.xValue device:device];
+    }
+}
+
+- (void)atmosphericPressureDidUpDateWithIntervalDelegate:(CBPeripheral *)peripheral sensor:(BLESensorAtmosphericPressure *)sensor {
+    NSLog(@"atmosphericPressureDidUpDateWithIntervalDelegate: %@", sensor);
+}
+
+- (void)atmosphericPressureDidUpDateDelegate:(CBPeripheral *)peripheral {
+    NSLog(@"atmosphericPressureDidUpDateDelegate");
 }
 
 @end
