@@ -2,10 +2,10 @@
 //  GHDeviceProfileViewCell.h
 //  dConnectBrowserForIOS9
 //
-//  Created by Tetsuya Hirano on 2016/07/08.
-//  Copyright © 2016年 GClue,Inc. All rights reserved.
+//  Copyright (c) 2016 NTT DOCOMO,INC.
+//  Released under the MIT license
+//  http://opensource.org/licenses/mit-license.php
 //
-
 #import <UIKit/UIKit.h>
 #import <DConnectSDK/DConnectSDK.h>
 
