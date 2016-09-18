@@ -10,6 +10,7 @@
 #import "DPLinkingDevicePlugin.h"
 #import "DPLinkingServiceDiscoveryProfile.h"
 #import "DPLinkingSystemProfile.h"
+#import "DPLinkingDeviceManager.h"
 
 @implementation DPLinkingDevicePlugin
 
@@ -24,6 +25,8 @@
 
         [self addProfile:[[DPLinkingServiceDiscoveryProfile alloc] initWithServiceProvider: self.serviceProvider]];
         [self addProfile:[DPLinkingSystemProfile systemProfileWithVersion:@"1.0"]];
+        
+        [[DPLinkingDeviceManager sharedInstance] startScanWithTimeout:30];
     }
     return self;
 }

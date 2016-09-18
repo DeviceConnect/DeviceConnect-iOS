@@ -15,6 +15,7 @@ static NSString *const kName = @"name";
 static NSString *const kId = @"id";
 static NSString *const kLedOffPatternId = @"ledOffPatternId";
 static NSString *const kVibrationOffPatternId = @"vibrationOffPatternId";
+static NSString *const kConnectFlag = @"connectFlag";
 
 @implementation DPLinkingDevice
 
@@ -30,7 +31,8 @@ static NSString *const kVibrationOffPatternId = @"vibrationOffPatternId";
         self.identifier = [coder decodeObjectForKey:kId];
         self.ledOffPatternId = [[coder decodeObjectForKey:kLedOffPatternId] intValue];
         self.vibrationOffPatternId = [[coder decodeObjectForKey:kVibrationOffPatternId] intValue];
-        
+        self.connectFlag = [[coder decodeObjectForKey:kConnectFlag] boolValue];
+
         DCLogInfo(@"LDPDevice");
         DCLogInfo(@"    name: %@", self.name);
         DCLogInfo(@"    id: %@", self.identifier);
@@ -45,6 +47,7 @@ static NSString *const kVibrationOffPatternId = @"vibrationOffPatternId";
     [coder encodeObject:self.identifier forKey:kId];
     [coder encodeObject:@(self.ledOffPatternId) forKey:kLedOffPatternId];
     [coder encodeObject:@(self.vibrationOffPatternId) forKey:kVibrationOffPatternId];
+    [coder encodeObject:@(self.connectFlag) forKey:kConnectFlag];
 }
 
 - (BOOL) isSupportLED {

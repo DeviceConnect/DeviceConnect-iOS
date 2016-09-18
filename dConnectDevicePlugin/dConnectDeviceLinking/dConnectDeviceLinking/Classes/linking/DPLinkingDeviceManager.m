@@ -35,6 +35,7 @@ static const NSInteger kDistanceThresholdFar = 20.0f;
 @implementation DPLinkingDeviceManager {
     DPLinkingUtilTimerCancelBlock _scanTimerCancelBlock;
     DPLinkingUtilTimerCancelBlock _connectingCancelBlock;
+    BOOL _initFlag;
 }
 
 static DPLinkingDeviceManager* _sharedInstance = nil;
@@ -67,6 +68,15 @@ static DPLinkingDeviceManager* _sharedInstance = nil;
 }
 
 #pragma mark - Public Method
+
+- (void) startScanWithTimeout:(NSTimeInterval)timeout {
+    [DPLinkingUtil asyncAfterDelay:timeout block:^{
+        _initFlag = NO;
+        [[BLEConnecter sharedInstance] stopScan];
+    }];
+    _initFlag = YES;
+    [[BLEConnecter sharedInstance] scanDevice];
+}
 
 - (void) startScan {
     if ([BLEConnecter sharedInstance].canDiscovery) {
@@ -179,6 +189,8 @@ static DPLinkingDeviceManager* _sharedInstance = nil;
         }];
         [self startScan];
     }
+    device.connectFlag = YES;
+    [self saveDPLinkingDevice];
 }
 
 - (void) disconnectDPLinkingDevice:(DPLinkingDevice *)device {
@@ -189,6 +201,8 @@ static DPLinkingDeviceManager* _sharedInstance = nil;
     }
     
     [[BLEConnecter sharedInstance] disconnectByDeviceUUID:device.peripheral.identifier.UUIDString];
+    device.connectFlag = NO;
+    [self saveDPLinkingDevice];
 }
 
 - (void) sendLEDCommand:(DPLinkingDevice *)device power:(BOOL)on {
@@ -704,13 +718,19 @@ static DPLinkingDeviceManager* _sharedInstance = nil;
     if (device) {
         device.peripheral = peripheral;
 
-        if ([self isEqualDeviceUuid:peripheral]) {
-            if (_scanTimerCancelBlock) {
-                _scanTimerCancelBlock();
-                _scanTimerCancelBlock = nil;
+        if (_initFlag) {
+            if (device.connectFlag) {
+                [self connectDPLinkingDevice:device];
             }
-            [self stopScan];
-            [self connectDPLinkingDevice:device];
+        } else {
+            if ([self isEqualDeviceUuid:peripheral]) {
+                if (_scanTimerCancelBlock) {
+                    _scanTimerCancelBlock();
+                    _scanTimerCancelBlock = nil;
+                }
+                [self stopScan];
+                [self connectDPLinkingDevice:device];
+            }
         }
     }
     

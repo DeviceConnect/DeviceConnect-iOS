@@ -42,6 +42,7 @@ typedef NS_ENUM(NSInteger, DPLinkingResultCode) {
 @property (nonatomic) NSString *identifier;
 @property (nonatomic) int ledOffPatternId;
 @property (nonatomic) int vibrationOffPatternId;
+@property (nonatomic) BOOL connectFlag;
 
 @property (nonatomic) CBPeripheral *peripheral;
 @property (nonatomic) BLEDeviceSetting *setting;
