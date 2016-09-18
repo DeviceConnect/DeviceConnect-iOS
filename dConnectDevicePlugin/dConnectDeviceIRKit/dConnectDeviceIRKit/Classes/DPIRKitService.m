@@ -11,8 +11,6 @@
 #import <DConnectSDK/DConnectServiceDiscoveryProfile.h>
 #import <DConnectSDK/DConnectProfile.h>
 #import "DPIRKitRemoteControllerProfile.h"
-#import "DPIRKitTVProfile.h"
-#import "DPIRKitLightProfile.h"
 
 @implementation DPIRKitService
 
@@ -25,8 +23,6 @@
         
         // サービスで登録するProfile
         [self addProfile: [[DPIRKitRemoteControllerProfile alloc] initWithDevicePlugin:plugin]];
-        [self addProfile: [[DPIRKitTVProfile alloc] initWithDevicePlugin:plugin]];
-        [self addProfile: [[DPIRKitLightProfile alloc] initWithDevicePlugin:plugin]];
     }
     return self;
 }

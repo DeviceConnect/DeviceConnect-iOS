@@ -12,3 +12,8 @@
 #import "DCMTemperatureProfile.h"
 #import "DCMDriveControllerProfile.h"
 #import "DCMTVProfile.h"
+#import "DCMWalkStateProfile.h"
+#import "DCMPoseEstimationProfile.h"
+#import "DCMStressEstimationProfile.h"
+#import "DCMECGProfile.h"
+#import "DCMHealthProfile.h"

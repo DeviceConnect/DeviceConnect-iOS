@@ -16,6 +16,7 @@ typedef void (^RecieveDeviceList)(DConnectArray *deviceList);
 @property (nonatomic, strong) DConnectArray* currentDevices;
 @property (nonatomic, copy) RecieveDeviceList recieveDeviceList;
 + (GHDeviceUtil*)shareManager;
-- (void)updateDiveceList;
+- (void)updateDeviceList;
 - (void)discoverDevices:(DiscoverDeviceCompletion)completion;
+- (void)callRequestAccessTokenAPI;
 @end

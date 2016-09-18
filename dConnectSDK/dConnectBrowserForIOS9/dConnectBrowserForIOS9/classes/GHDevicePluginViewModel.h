@@ -7,8 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <DConnectSDK/DConnectSDK.h>
 
 @interface GHDevicePluginViewModel : NSObject
 @property (nonatomic, strong) NSArray* datasource;
 - (NSDictionary*)makePlguinAndProfiles:(NSInteger)index;
+- (NSDictionary*)makePlguinAndPlugins:(DConnectDevicePlugin*)plugin;
 @end

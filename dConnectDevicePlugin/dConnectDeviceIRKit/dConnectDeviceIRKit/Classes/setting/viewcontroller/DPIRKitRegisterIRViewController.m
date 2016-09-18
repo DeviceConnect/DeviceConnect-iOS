@@ -55,6 +55,15 @@
     _profileNameLabel.text = _virtualRequest.name;
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+}
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    //仮想デバイスのサービスを登録する。
+    [[DPIRKitManager sharedInstance] startDetection];
+    
+}
 - (IBAction)popUIViewController:(id)sender {
     [self.navigationController popViewControllerAnimated:YES];
 }
@@ -73,7 +82,7 @@
     DPIRKitDevice *device = [mgr deviceForServiceId:ids[0]];
     dispatch_queue_t updateQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
 
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(10 * NSEC_PER_SEC)), updateQueue, ^{
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5 * NSEC_PER_SEC)), updateQueue, ^{
         [mgr fetchMessageWithHostName:device.hostName completion:^(NSString *message) {
             dispatch_async(dispatch_get_main_queue(), ^{
                 NSRange range = [message rangeOfString:@"{\"format\":\"raw\","];

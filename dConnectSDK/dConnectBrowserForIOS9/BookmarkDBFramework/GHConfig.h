@@ -27,6 +27,9 @@
 #define IS_ORIGIN_ENABLE @"is_origin_enable"
 #define IS_EXTERNAL_IP @"is_external_ip"
 
+// アクセストークン
+#define ACCESS_TOKEN @"access_token"
+
 #define IS_INITIAL_GUIDE_OPEN @"is_initial_guide_open"
 
 #define PAGE_URL @"pageurl"

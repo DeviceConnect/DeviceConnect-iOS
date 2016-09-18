@@ -71,6 +71,9 @@
         self.progressView.layer.cornerRadius = 20;
         self.progressView.clipsToBounds = true;
         [self.indicator startAnimating];
+    } else {
+        // viewDidLoadの時点ではデバイスを認識できておらずその後認識された場合は、ボタンがタップされたタイミングでConnectedと表示する
+        self.ssidLabel.text = @"Sony Camera Connected.";
     }
 }
 

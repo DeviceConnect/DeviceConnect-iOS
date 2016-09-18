@@ -10,6 +10,7 @@
 #import "DConnectSystemProfile.h"
 #import "DConnectProfileProvider.h"
 #import "DConnectManager+Private.h"
+#import "DConnectServiceListViewController.h"
 
 NSString *const DConnectSystemProfileName = @"system";
 
@@ -36,9 +37,17 @@ NSString *const DConnectSystemProfileParamVersion = @"version";
     dispatch_async(dispatch_get_main_queue(), ^{
         UIViewController *viewController = [_dataSource profile:self settingPageForRequest:request];
         if (viewController) {
+            
+            if (viewController && [viewController isKindOfClass: [UINavigationController class]]) {
+                UINavigationController *navigationController =(UINavigationController *)viewController;
+                
+                if ([navigationController.viewControllers count] > 0) {
+                    ((DConnectServiceListViewController *)navigationController.viewControllers[0]).delegate = self.delegate;
+                }
+            }
+            
             UIViewController *rootView;
             DCPutPresentedViewController(rootView);
-            
             [rootView presentViewController:viewController animated:YES completion:nil];
             [response setResult:DConnectMessageResultTypeOk];
         } else {

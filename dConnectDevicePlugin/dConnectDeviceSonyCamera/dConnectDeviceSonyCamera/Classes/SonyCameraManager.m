@@ -13,6 +13,21 @@
 #import "SonyCameraService.h"
 #import "SonyCameraReachability.h"
 
+/*!
+ @brief IDのプレフィックス。
+ */
+NSString *const SonyServiceId = @"sony_camera_";
+
+/*!
+ @brief デバイス名。
+ */
+NSString *const SonyDeviceName = @"Sony Camera";
+
+/*!
+ @brief ファイルのプレフィックス。
+ */
+NSString *const SonyFilePrefix = @"sony";
+
 @interface SonyCameraManager()
 
 @property (nonatomic, strong) SonyCameraReachability *reachability;
@@ -112,6 +127,7 @@
                                                                          liveViewDelegate:self.liveViewDelegate
                                                                     remoteApiUtilDelegate:self.remoteApiUtilDelegate];
                 [self.serviceProvider addService: service];
+                [service setOnline: YES];
             }
         }
     }

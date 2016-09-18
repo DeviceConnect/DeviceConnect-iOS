@@ -94,6 +94,7 @@
 		AB8658011B82FD2100A0F896 /* tv.png in Resources */ = {isa = PBXBuildFile; fileRef = AB8657FF1B82FD2100A0F896 /* tv.png */; };
 		AB8658021B82FF4900A0F896 /* light.png in Resources */ = {isa = PBXBuildFile; fileRef = AB8657FE1B82FD2100A0F896 /* light.png */; };
 		AB8658031B82FF4900A0F896 /* tv.png in Resources */ = {isa = PBXBuildFile; fileRef = AB8657FF1B82FD2100A0F896 /* tv.png */; };
+		ABB52E171D8943F6006F57D0 /* DPIRKitVirtualService.m in Sources */ = {isa = PBXBuildFile; fileRef = ABB52E161D8943F6006F57D0 /* DPIRKitVirtualService.m */; };
 		ABC2DB021B6743C60034C08F /* DPIRKitCategorySelectDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = ABC2DB011B6743C60034C08F /* DPIRKitCategorySelectDialog.m */; };
 		ABC2DB051B6744E00034C08F /* DPIRKitDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = ABC2DB041B6744E00034C08F /* DPIRKitDialog.m */; };
 		ABC2DB061B674DC00034C08F /* CategorySelectDialog.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ABC2DAFF1B673B610034C08F /* CategorySelectDialog.storyboard */; };
@@ -212,6 +213,8 @@
 		AB6A835D1B6619AC00E4F32F /* DPIRKitVirtualDeviceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPIRKitVirtualDeviceViewController.m; sourceTree = "<group>"; };
 		AB8657FE1B82FD2100A0F896 /* light.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = light.png; sourceTree = "<group>"; };
 		AB8657FF1B82FD2100A0F896 /* tv.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tv.png; sourceTree = "<group>"; };
+		ABB52E151D8943F6006F57D0 /* DPIRKitVirtualService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPIRKitVirtualService.h; sourceTree = "<group>"; };
+		ABB52E161D8943F6006F57D0 /* DPIRKitVirtualService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPIRKitVirtualService.m; sourceTree = "<group>"; };
 		ABC2DAFF1B673B610034C08F /* CategorySelectDialog.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = CategorySelectDialog.storyboard; sourceTree = "<group>"; };
 		ABC2DB001B6743C60034C08F /* DPIRKitCategorySelectDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DPIRKitCategorySelectDialog.h; path = dConnectDeviceIRKit/Classes/alert/DPIRKitCategorySelectDialog.h; sourceTree = SOURCE_ROOT; };
 		ABC2DB011B6743C60034C08F /* DPIRKitCategorySelectDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DPIRKitCategorySelectDialog.m; path = dConnectDeviceIRKit/Classes/alert/DPIRKitCategorySelectDialog.m; sourceTree = SOURCE_ROOT; };
@@ -411,6 +414,8 @@
 				3039F99119A70D0C00319429 /* DPIRKitConst.h */,
 				D673DA7A1D3BBD330021F1BF /* DPIRKitService.h */,
 				D673DA7B1D3BBD330021F1BF /* DPIRKitService.m */,
+				ABB52E151D8943F6006F57D0 /* DPIRKitVirtualService.h */,
+				ABB52E161D8943F6006F57D0 /* DPIRKitVirtualService.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -720,6 +725,7 @@
 				30A1EBDF19A8D16600E6CCE9 /* DPIRKitWiFiFormViewController.m in Sources */,
 				D6D1727A1D63F95B00444337 /* DPIRKitSystemProfile.m in Sources */,
 				AB056F981B68DDF300E1482F /* DPIRKitVirtualProfileViewController.m in Sources */,
+				ABB52E171D8943F6006F57D0 /* DPIRKitVirtualService.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

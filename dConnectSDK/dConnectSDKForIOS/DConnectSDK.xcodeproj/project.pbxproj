@@ -190,10 +190,12 @@
 		D647CFA31D2BDD0D006BF6A9 /* IntegerDataSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = D647CFA01D2BDD0D006BF6A9 /* IntegerDataSpec.m */; };
 		D647CFA41D2BDD0D006BF6A9 /* NumberDataSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = D647CFA21D2BDD0D006BF6A9 /* NumberDataSpec.m */; };
 		D647CFA81D2BDF94006BF6A9 /* DConnectApiSpecBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = D647CFA71D2BDF94006BF6A9 /* DConnectApiSpecBuilder.m */; };
+		D64EF65A1D7D4481005AC8B2 /* DConnectServiceListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D64EF6591D7D4481005AC8B2 /* DConnectServiceListViewController.m */; };
+		D64EF6621D7D9200005AC8B2 /* DConnectServiceListViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D64EF6611D7D9200005AC8B2 /* DConnectServiceListViewCell.m */; };
 		D65E24CA1D1A5E8C00312134 /* battery.json in Resources */ = {isa = PBXBuildFile; fileRef = D65E24C91D1A5E8C00312134 /* battery.json */; };
 		D65E24D31D1B956500312134 /* health.json in Resources */ = {isa = PBXBuildFile; fileRef = D65E24D21D1B956500312134 /* health.json */; };
 		D65E24D51D1B959900312134 /* vibration.json in Resources */ = {isa = PBXBuildFile; fileRef = D65E24D41D1B959900312134 /* vibration.json */; };
-		D65F83181D28FBBC0024685D /* deviceOrientation.json in Resources */ = {isa = PBXBuildFile; fileRef = D65F83171D28FBBC0024685D /* deviceOrientation.json */; };
+		D65F83181D28FBBC0024685D /* deviceorientation.json in Resources */ = {isa = PBXBuildFile; fileRef = D65F83171D28FBBC0024685D /* deviceorientation.json */; };
 		D65F831A1D28FC390024685D /* humidity.json in Resources */ = {isa = PBXBuildFile; fileRef = D65F83191D28FC390024685D /* humidity.json */; };
 		D65F831C1D28FC6B0024685D /* keyevent.json in Resources */ = {isa = PBXBuildFile; fileRef = D65F831B1D28FC6B0024685D /* keyevent.json */; };
 		D65F831E1D28FC9F0024685D /* light.json in Resources */ = {isa = PBXBuildFile; fileRef = D65F831D1D28FC9F0024685D /* light.json */; };
@@ -220,25 +222,25 @@
 		D662DFCD1D51E19000C0F476 /* DConnectProfileSpecBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = D662DFCC1D51E19000C0F476 /* DConnectProfileSpecBuilder.m */; };
 		D662DFD31D52300500C0F476 /* DConnectProfileProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = D662DFD21D52300500C0F476 /* DConnectProfileProvider.m */; };
 		D662DFDD1D530B8500C0F476 /* DConnectPluginSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = D662DFDC1D530B8500C0F476 /* DConnectPluginSpec.m */; };
-		D662E9BB1D4AEAA000919C69 /* airConditioner.json in Resources */ = {isa = PBXBuildFile; fileRef = D662E9A61D4AEA9F00919C69 /* airConditioner.json */; };
+		D662E9BB1D4AEAA000919C69 /* airconditioner.json in Resources */ = {isa = PBXBuildFile; fileRef = D662E9A61D4AEA9F00919C69 /* airconditioner.json */; };
 		D662E9BC1D4AEAA000919C69 /* authorization.json in Resources */ = {isa = PBXBuildFile; fileRef = D662E9A71D4AEA9F00919C69 /* authorization.json */; };
 		D662E9BD1D4AEAA000919C69 /* camera.json in Resources */ = {isa = PBXBuildFile; fileRef = D662E9A81D4AEA9F00919C69 /* camera.json */; };
 		D662E9BE1D4AEAA000919C69 /* canvas.json in Resources */ = {isa = PBXBuildFile; fileRef = D662E9A91D4AEA9F00919C69 /* canvas.json */; };
 		D662E9BF1D4AEAA000919C69 /* connect.json in Resources */ = {isa = PBXBuildFile; fileRef = D662E9AA1D4AEA9F00919C69 /* connect.json */; };
-		D662E9C01D4AEAA000919C69 /* driveController.json in Resources */ = {isa = PBXBuildFile; fileRef = D662E9AB1D4AEA9F00919C69 /* driveController.json */; };
+		D662E9C01D4AEAA000919C69 /* drivecontroller.json in Resources */ = {isa = PBXBuildFile; fileRef = D662E9AB1D4AEA9F00919C69 /* drivecontroller.json */; };
 		D662E9C11D4AEAA000919C69 /* file.json in Resources */ = {isa = PBXBuildFile; fileRef = D662E9AC1D4AEA9F00919C69 /* file.json */; };
-		D662E9C21D4AEAA000919C69 /* fileDescriptor.json in Resources */ = {isa = PBXBuildFile; fileRef = D662E9AD1D4AEA9F00919C69 /* fileDescriptor.json */; };
+		D662E9C21D4AEAA000919C69 /* filedescriptor.json in Resources */ = {isa = PBXBuildFile; fileRef = D662E9AD1D4AEA9F00919C69 /* filedescriptor.json */; };
 		D662E9C31D4AEAA000919C69 /* gpio.json in Resources */ = {isa = PBXBuildFile; fileRef = D662E9AE1D4AEA9F00919C69 /* gpio.json */; };
-		D662E9C41D4AEAA000919C69 /* humanDetect.json in Resources */ = {isa = PBXBuildFile; fileRef = D662E9AF1D4AEA9F00919C69 /* humanDetect.json */; };
+		D662E9C41D4AEAA000919C69 /* humandetect.json in Resources */ = {isa = PBXBuildFile; fileRef = D662E9AF1D4AEA9F00919C69 /* humandetect.json */; };
 		D662E9C51D4AEAA000919C69 /* illuminance.json in Resources */ = {isa = PBXBuildFile; fileRef = D662E9B01D4AEA9F00919C69 /* illuminance.json */; };
 		D662E9C61D4AEAA000919C69 /* mediaplayer.json in Resources */ = {isa = PBXBuildFile; fileRef = D662E9B11D4AEA9F00919C69 /* mediaplayer.json */; };
-		D662E9C71D4AEAA000919C69 /* mediaStreamRecording.json in Resources */ = {isa = PBXBuildFile; fileRef = D662E9B21D4AEA9F00919C69 /* mediaStreamRecording.json */; };
-		D662E9C81D4AEAA000919C69 /* omnidirectionalImage.json in Resources */ = {isa = PBXBuildFile; fileRef = D662E9B31D4AEA9F00919C69 /* omnidirectionalImage.json */; };
+		D662E9C71D4AEAA000919C69 /* mediastreamrecording.json in Resources */ = {isa = PBXBuildFile; fileRef = D662E9B21D4AEA9F00919C69 /* mediastreamrecording.json */; };
+		D662E9C81D4AEAA000919C69 /* omnidirectionalimage.json in Resources */ = {isa = PBXBuildFile; fileRef = D662E9B31D4AEA9F00919C69 /* omnidirectionalimage.json */; };
 		D662E9C91D4AEAA000919C69 /* phone.json in Resources */ = {isa = PBXBuildFile; fileRef = D662E9B41D4AEA9F00919C69 /* phone.json */; };
-		D662E9CA1D4AEAA000919C69 /* powerMeter.json in Resources */ = {isa = PBXBuildFile; fileRef = D662E9B51D4AEA9F00919C69 /* powerMeter.json */; };
-		D662E9CB1D4AEAA000919C69 /* remoteController.json in Resources */ = {isa = PBXBuildFile; fileRef = D662E9B61D4AEA9F00919C69 /* remoteController.json */; };
+		D662E9CA1D4AEAA000919C69 /* powermeter.json in Resources */ = {isa = PBXBuildFile; fileRef = D662E9B51D4AEA9F00919C69 /* powermeter.json */; };
+		D662E9CB1D4AEAA000919C69 /* remotecontroller.json in Resources */ = {isa = PBXBuildFile; fileRef = D662E9B61D4AEA9F00919C69 /* remotecontroller.json */; };
 		D662E9CC1D4AEAA000919C69 /* servicediscovery.json in Resources */ = {isa = PBXBuildFile; fileRef = D662E9B71D4AEA9F00919C69 /* servicediscovery.json */; };
-		D662E9CD1D4AEAA000919C69 /* serviceInformation.json in Resources */ = {isa = PBXBuildFile; fileRef = D662E9B81D4AEAA000919C69 /* serviceInformation.json */; };
+		D662E9CD1D4AEAA000919C69 /* serviceinformation.json in Resources */ = {isa = PBXBuildFile; fileRef = D662E9B81D4AEAA000919C69 /* serviceinformation.json */; };
 		D662E9CE1D4AEAA000919C69 /* system.json in Resources */ = {isa = PBXBuildFile; fileRef = D662E9B91D4AEAA000919C69 /* system.json */; };
 		D662E9CF1D4AEAA000919C69 /* touch.json in Resources */ = {isa = PBXBuildFile; fileRef = D662E9BA1D4AEAA000919C69 /* touch.json */; };
 		D662E9D61D4AF2A900919C69 /* SwaggerJsonParser.m in Sources */ = {isa = PBXBuildFile; fileRef = D662E9D51D4AF2A900919C69 /* SwaggerJsonParser.m */; };
@@ -1920,10 +1922,15 @@
 		D647CFA21D2BDD0D006BF6A9 /* NumberDataSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NumberDataSpec.m; path = spec/NumberDataSpec.m; sourceTree = "<group>"; };
 		D647CFA61D2BDF94006BF6A9 /* DConnectApiSpecBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DConnectApiSpecBuilder.h; path = spec/DConnectApiSpecBuilder.h; sourceTree = "<group>"; };
 		D647CFA71D2BDF94006BF6A9 /* DConnectApiSpecBuilder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DConnectApiSpecBuilder.m; path = spec/DConnectApiSpecBuilder.m; sourceTree = "<group>"; };
+		D64EF6591D7D4481005AC8B2 /* DConnectServiceListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DConnectServiceListViewController.m; path = viewcontroller/DConnectServiceListViewController.m; sourceTree = "<group>"; };
+		D64EF65B1D7D44EE005AC8B2 /* DConnectServiceListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DConnectServiceListViewController.h; sourceTree = "<group>"; };
+		D64EF6611D7D9200005AC8B2 /* DConnectServiceListViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DConnectServiceListViewCell.m; path = viewcontroller/DConnectServiceListViewCell.m; sourceTree = "<group>"; };
+		D64EF6641D7DA877005AC8B2 /* DConnectServiceListViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DConnectServiceListViewCell.h; path = viewcontroller/DConnectServiceListViewCell.h; sourceTree = "<group>"; };
+		D64EF6691D7E8A35005AC8B2 /* DConnectServiceListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DConnectServiceListener.h; sourceTree = "<group>"; };
 		D65E24C91D1A5E8C00312134 /* battery.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = battery.json; sourceTree = "<group>"; };
 		D65E24D21D1B956500312134 /* health.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = health.json; sourceTree = "<group>"; };
 		D65E24D41D1B959900312134 /* vibration.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = vibration.json; sourceTree = "<group>"; };
-		D65F83171D28FBBC0024685D /* deviceOrientation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = deviceOrientation.json; sourceTree = "<group>"; };
+		D65F83171D28FBBC0024685D /* deviceorientation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = deviceorientation.json; sourceTree = "<group>"; };
 		D65F83191D28FC390024685D /* humidity.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = humidity.json; sourceTree = "<group>"; };
 		D65F831B1D28FC6B0024685D /* keyevent.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = keyevent.json; sourceTree = "<group>"; };
 		D65F831D1D28FC9F0024685D /* light.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = light.json; sourceTree = "<group>"; };
@@ -1969,25 +1976,25 @@
 		D662DFD91D52FDC900C0F476 /* DConnectProfileSpec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DConnectProfileSpec.h; sourceTree = "<group>"; };
 		D662DFDA1D52FDC900C0F476 /* DConnectSpecConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DConnectSpecConstants.h; sourceTree = "<group>"; };
 		D662DFDC1D530B8500C0F476 /* DConnectPluginSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DConnectPluginSpec.m; path = spec/DConnectPluginSpec.m; sourceTree = "<group>"; };
-		D662E9A61D4AEA9F00919C69 /* airConditioner.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = airConditioner.json; sourceTree = "<group>"; };
+		D662E9A61D4AEA9F00919C69 /* airconditioner.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = airconditioner.json; sourceTree = "<group>"; };
 		D662E9A71D4AEA9F00919C69 /* authorization.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = authorization.json; sourceTree = "<group>"; };
 		D662E9A81D4AEA9F00919C69 /* camera.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = camera.json; sourceTree = "<group>"; };
 		D662E9A91D4AEA9F00919C69 /* canvas.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = canvas.json; sourceTree = "<group>"; };
 		D662E9AA1D4AEA9F00919C69 /* connect.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = connect.json; sourceTree = "<group>"; };
-		D662E9AB1D4AEA9F00919C69 /* driveController.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = driveController.json; sourceTree = "<group>"; };
+		D662E9AB1D4AEA9F00919C69 /* drivecontroller.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = drivecontroller.json; sourceTree = "<group>"; };
 		D662E9AC1D4AEA9F00919C69 /* file.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = file.json; sourceTree = "<group>"; };
-		D662E9AD1D4AEA9F00919C69 /* fileDescriptor.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = fileDescriptor.json; sourceTree = "<group>"; };
+		D662E9AD1D4AEA9F00919C69 /* filedescriptor.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = filedescriptor.json; sourceTree = "<group>"; };
 		D662E9AE1D4AEA9F00919C69 /* gpio.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = gpio.json; sourceTree = "<group>"; };
-		D662E9AF1D4AEA9F00919C69 /* humanDetect.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = humanDetect.json; sourceTree = "<group>"; };
+		D662E9AF1D4AEA9F00919C69 /* humandetect.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = humandetect.json; sourceTree = "<group>"; };
 		D662E9B01D4AEA9F00919C69 /* illuminance.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = illuminance.json; sourceTree = "<group>"; };
 		D662E9B11D4AEA9F00919C69 /* mediaplayer.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = mediaplayer.json; sourceTree = "<group>"; };
-		D662E9B21D4AEA9F00919C69 /* mediaStreamRecording.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = mediaStreamRecording.json; sourceTree = "<group>"; };
-		D662E9B31D4AEA9F00919C69 /* omnidirectionalImage.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = omnidirectionalImage.json; sourceTree = "<group>"; };
+		D662E9B21D4AEA9F00919C69 /* mediastreamrecording.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = mediastreamrecording.json; sourceTree = "<group>"; };
+		D662E9B31D4AEA9F00919C69 /* omnidirectionalimage.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = omnidirectionalimage.json; sourceTree = "<group>"; };
 		D662E9B41D4AEA9F00919C69 /* phone.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = phone.json; sourceTree = "<group>"; };
-		D662E9B51D4AEA9F00919C69 /* powerMeter.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = powerMeter.json; sourceTree = "<group>"; };
-		D662E9B61D4AEA9F00919C69 /* remoteController.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = remoteController.json; sourceTree = "<group>"; };
+		D662E9B51D4AEA9F00919C69 /* powermeter.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = powermeter.json; sourceTree = "<group>"; };
+		D662E9B61D4AEA9F00919C69 /* remotecontroller.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = remotecontroller.json; sourceTree = "<group>"; };
 		D662E9B71D4AEA9F00919C69 /* servicediscovery.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = servicediscovery.json; sourceTree = "<group>"; };
-		D662E9B81D4AEAA000919C69 /* serviceInformation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = serviceInformation.json; sourceTree = "<group>"; };
+		D662E9B81D4AEAA000919C69 /* serviceinformation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = serviceinformation.json; sourceTree = "<group>"; };
 		D662E9B91D4AEAA000919C69 /* system.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = system.json; sourceTree = "<group>"; };
 		D662E9BA1D4AEAA000919C69 /* touch.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = touch.json; sourceTree = "<group>"; };
 		D662E9D41D4AF2A900919C69 /* SwaggerJsonParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SwaggerJsonParser.h; path = spec/parser/SwaggerJsonParser.h; sourceTree = "<group>"; };
@@ -3814,6 +3821,8 @@
 		BE6F93151A70DB0400BFA51F /* DConnectSDK */ = {
 			isa = PBXGroup;
 			children = (
+				D64EF6691D7E8A35005AC8B2 /* DConnectServiceListener.h */,
+				D64EF65B1D7D44EE005AC8B2 /* DConnectServiceListViewController.h */,
 				D62E463D1D53924800E3C489 /* DConnectPluginSpec.h */,
 				D662DFD91D52FDC900C0F476 /* DConnectProfileSpec.h */,
 				D662DFDA1D52FDC900C0F476 /* DConnectSpecConstants.h */,
@@ -3947,6 +3956,7 @@
 		C29D3317191B2679001015CC /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				D63CC6451D78018D00F86F93 /* viewcontroller */,
 				D60DD5FE1D2F380200DEBE5C /* service */,
 				ABE747151C688608001D8F0D /* websocket */,
 				ABE7470E1C688473001D8F0D /* protocol */,
@@ -4204,6 +4214,16 @@
 			name = dao;
 			sourceTree = "<group>";
 		};
+		D63CC6451D78018D00F86F93 /* viewcontroller */ = {
+			isa = PBXGroup;
+			children = (
+				D64EF6641D7DA877005AC8B2 /* DConnectServiceListViewCell.h */,
+				D64EF6611D7D9200005AC8B2 /* DConnectServiceListViewCell.m */,
+				D64EF6591D7D4481005AC8B2 /* DConnectServiceListViewController.m */,
+			);
+			name = viewcontroller;
+			sourceTree = "<group>";
+		};
 		D65F83271D2A294C0024685D /* api */ = {
 			isa = PBXGroup;
 			children = (
@@ -4308,25 +4328,25 @@
 		D6ECC6D519A4B78900FE3161 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				D662E9A61D4AEA9F00919C69 /* airConditioner.json */,
+				D662E9A61D4AEA9F00919C69 /* airconditioner.json */,
 				D662E9A71D4AEA9F00919C69 /* authorization.json */,
 				D662E9A81D4AEA9F00919C69 /* camera.json */,
 				D662E9A91D4AEA9F00919C69 /* canvas.json */,
 				D662E9AA1D4AEA9F00919C69 /* connect.json */,
-				D662E9AB1D4AEA9F00919C69 /* driveController.json */,
+				D662E9AB1D4AEA9F00919C69 /* drivecontroller.json */,
 				D662E9AC1D4AEA9F00919C69 /* file.json */,
-				D662E9AD1D4AEA9F00919C69 /* fileDescriptor.json */,
+				D662E9AD1D4AEA9F00919C69 /* filedescriptor.json */,
 				D662E9AE1D4AEA9F00919C69 /* gpio.json */,
-				D662E9AF1D4AEA9F00919C69 /* humanDetect.json */,
+				D662E9AF1D4AEA9F00919C69 /* humandetect.json */,
 				D662E9B01D4AEA9F00919C69 /* illuminance.json */,
 				D662E9B11D4AEA9F00919C69 /* mediaplayer.json */,
-				D662E9B21D4AEA9F00919C69 /* mediaStreamRecording.json */,
-				D662E9B31D4AEA9F00919C69 /* omnidirectionalImage.json */,
+				D662E9B21D4AEA9F00919C69 /* mediastreamrecording.json */,
+				D662E9B31D4AEA9F00919C69 /* omnidirectionalimage.json */,
 				D662E9B41D4AEA9F00919C69 /* phone.json */,
-				D662E9B51D4AEA9F00919C69 /* powerMeter.json */,
-				D662E9B61D4AEA9F00919C69 /* remoteController.json */,
+				D662E9B51D4AEA9F00919C69 /* powermeter.json */,
+				D662E9B61D4AEA9F00919C69 /* remotecontroller.json */,
 				D662E9B71D4AEA9F00919C69 /* servicediscovery.json */,
-				D662E9B81D4AEAA000919C69 /* serviceInformation.json */,
+				D662E9B81D4AEAA000919C69 /* serviceinformation.json */,
 				D662E9B91D4AEAA000919C69 /* system.json */,
 				D662E9BA1D4AEAA000919C69 /* touch.json */,
 				D6ECC6D619A4B78900FE3161 /* DConnectSDK_resources-Info.plist */,
@@ -4335,7 +4355,7 @@
 				D65E24C91D1A5E8C00312134 /* battery.json */,
 				D65E24D21D1B956500312134 /* health.json */,
 				D65E24D41D1B959900312134 /* vibration.json */,
-				D65F83171D28FBBC0024685D /* deviceOrientation.json */,
+				D65F83171D28FBBC0024685D /* deviceorientation.json */,
 				D65F83191D28FC390024685D /* humidity.json */,
 				D65F831B1D28FC6B0024685D /* keyevent.json */,
 				D65F831D1D28FC9F0024685D /* light.json */,
@@ -4469,36 +4489,36 @@
 			buildActionMask = 2147483647;
 			files = (
 				6B9B12C21AB3042D00CC99E1 /* DConnectSDK-iPhone.storyboard in Resources */,
-				D662E9CA1D4AEAA000919C69 /* powerMeter.json in Resources */,
+				D662E9CA1D4AEAA000919C69 /* powermeter.json in Resources */,
 				3056BF1119BC3425003B62E1 /* DConnectSDK-iPad.storyboard in Resources */,
 				D65F831E1D28FC9F0024685D /* light.json in Resources */,
 				D662E9CC1D4AEAA000919C69 /* servicediscovery.json in Resources */,
 				D662E9BE1D4AEAA000919C69 /* canvas.json in Resources */,
 				D662E9C51D4AEAA000919C69 /* illuminance.json in Resources */,
-				D662E9C81D4AEAA000919C69 /* omnidirectionalImage.json in Resources */,
+				D662E9C81D4AEAA000919C69 /* omnidirectionalimage.json in Resources */,
 				D662E9C61D4AEAA000919C69 /* mediaplayer.json in Resources */,
-				D662E9C01D4AEAA000919C69 /* driveController.json in Resources */,
+				D662E9C01D4AEAA000919C69 /* drivecontroller.json in Resources */,
 				D65F83241D28FD490024685D /* settings.json in Resources */,
 				D65E24D31D1B956500312134 /* health.json in Resources */,
-				D662E9BB1D4AEAA000919C69 /* airConditioner.json in Resources */,
+				D662E9BB1D4AEAA000919C69 /* airconditioner.json in Resources */,
 				D662E9CF1D4AEAA000919C69 /* touch.json in Resources */,
 				30E9A16419AC6A850013F545 /* Localizable.strings in Resources */,
 				D65F83261D28FD840024685D /* temperature.json in Resources */,
-				D662E9C21D4AEAA000919C69 /* fileDescriptor.json in Resources */,
+				D662E9C21D4AEAA000919C69 /* filedescriptor.json in Resources */,
 				D662E9BF1D4AEAA000919C69 /* connect.json in Resources */,
 				D65E24D51D1B959900312134 /* vibration.json in Resources */,
 				D662E9C31D4AEAA000919C69 /* gpio.json in Resources */,
 				D6ECC6DE19A4B7C800FE3161 /* Info.plist in Resources */,
 				D662E9CE1D4AEAA000919C69 /* system.json in Resources */,
-				D662E9CB1D4AEAA000919C69 /* remoteController.json in Resources */,
+				D662E9CB1D4AEAA000919C69 /* remotecontroller.json in Resources */,
 				D65F831A1D28FC390024685D /* humidity.json in Resources */,
-				D662E9C41D4AEAA000919C69 /* humanDetect.json in Resources */,
+				D662E9C41D4AEAA000919C69 /* humandetect.json in Resources */,
 				D6ECC6D919A4B78900FE3161 /* InfoPlist.strings in Resources */,
-				D65F83181D28FBBC0024685D /* deviceOrientation.json in Resources */,
+				D65F83181D28FBBC0024685D /* deviceorientation.json in Resources */,
 				D65E24CA1D1A5E8C00312134 /* battery.json in Resources */,
-				D662E9CD1D4AEAA000919C69 /* serviceInformation.json in Resources */,
+				D662E9CD1D4AEAA000919C69 /* serviceinformation.json in Resources */,
 				D65F83221D28FD170024685D /* proximity.json in Resources */,
-				D662E9C71D4AEAA000919C69 /* mediaStreamRecording.json in Resources */,
+				D662E9C71D4AEAA000919C69 /* mediastreamrecording.json in Resources */,
 				D662E9C11D4AEAA000919C69 /* file.json in Resources */,
 				D65F83201D28FCCE0024685D /* notification.json in Resources */,
 				D65F831C1D28FC6B0024685D /* keyevent.json in Resources */,
@@ -4576,6 +4596,7 @@
 				30954E261976122800D92C66 /* DConnectMemoryCacheController.m in Sources */,
 				BE4FDFD219878014001A3C86 /* DConnectAuthorizationProfile.m in Sources */,
 				30424CF91973EADC0084371F /* DConnectSQLiteCursor.m in Sources */,
+				D64EF65A1D7D4481005AC8B2 /* DConnectServiceListViewController.m in Sources */,
 				D62622E2199232BC004F01E6 /* LocalOAuthResponseType.m in Sources */,
 				D6FD02131999EC7A000DB674 /* CipherSignatureFactory.m in Sources */,
 				AB67AB1C1C642AB200B4C62C /* HTTPRedirectResponse.m in Sources */,
@@ -4613,6 +4634,7 @@
 				D62622D3199232BC004F01E6 /* LocalOAuthClient.m in Sources */,
 				AB67AB2C1C642AC500B4C62C /* HTTPResponseProxy.m in Sources */,
 				97FE24BC191CBB77007C4769 /* multipart_parser.c in Sources */,
+				D64EF6621D7D9200005AC8B2 /* DConnectServiceListViewCell.m in Sources */,
 				D62622E4199232BC004F01E6 /* LocalOAuthSampleUserManager.m in Sources */,
 				D62E464E1D542E2300E3C489 /* FileDataSpec.m in Sources */,
 				C2F89D541920AAAF005F1C5F /* DConnectManagerServiceDiscoveryProfile.m in Sources */,

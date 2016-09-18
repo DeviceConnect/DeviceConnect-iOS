@@ -7,9 +7,13 @@
 //  http://opensource.org/licenses/mit-license.php
 //
 
+#import <DConnectSDK/DConnectServiceListViewController.h>
 #import "DPSpheroSystemProfile.h"
 #import "DPSpheroManager.h"
 #import "DPSpheroDevicePlugin.h"
+
+#define DCBundle() \
+[NSBundle bundleWithPath:[[NSBundle mainBundle] pathForResource:@"DConnectSDK_resources" ofType:@"bundle"]]
 
 @implementation DPSpheroSystemProfile
 
@@ -18,6 +22,7 @@
 {
     self = [super init];
     if (self) {
+        self.delegate = self;
         self.dataSource = self;
         __weak DPSpheroSystemProfile *weakSelf = self;
         
@@ -62,7 +67,36 @@
 - (UIViewController *) profile:(DConnectSystemProfile *)sender
          settingPageForRequest:(DConnectRequestMessage *)request
 {
+    UIStoryboard *storyBoard;
+    storyBoard = [UIStoryboard storyboardWithName:@"DConnectSDK-iPhone"
+                                           bundle:DCBundle()];
+    UINavigationController *top = [storyBoard instantiateViewControllerWithIdentifier:@"ServiceList"];
+    DConnectServiceListViewController *serviceListViewController = (DConnectServiceListViewController *) top.viewControllers[0];
+    serviceListViewController.delegate = self;
+    return top;
     
+/*
+    // 設定画面用のViewControllerをStoryboardから生成する
+    NSString *bundlePath = [[NSBundle mainBundle] pathForResource:@"dConnectDeviceSphero_resources" ofType:@"bundle"];
+    NSBundle *bundle = [NSBundle bundleWithPath:bundlePath];
+    
+    UIStoryboard *storyBoard;
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
+        storyBoard = [UIStoryboard storyboardWithName:@"SpheroDevicePlugin_iPhone" bundle:bundle];
+    } else{
+        storyBoard = [UIStoryboard storyboardWithName:@"SpheroDevicePlugin_iPad" bundle:bundle];
+    }
+    return [storyBoard instantiateInitialViewController];
+*/
+}
+
+#pragma mark - DConnectSystemProfileDelegate
+
+- (DConnectServiceProvider *)serviceProvider {
+    return ((DConnectDevicePlugin *)self.plugin).serviceProvider;
+}
+
+- (UIViewController *)settingViewController {
     // 設定画面用のViewControllerをStoryboardから生成する
     NSString *bundlePath = [[NSBundle mainBundle] pathForResource:@"dConnectDeviceSphero_resources" ofType:@"bundle"];
     NSBundle *bundle = [NSBundle bundleWithPath:bundlePath];
