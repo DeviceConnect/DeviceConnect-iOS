@@ -27,8 +27,14 @@
 
 // Shadow名
 #define kShadowName @"DeviceConnect"
+
 // Topic名の前置詞
-#define kTopicPrefix kShadowName
+static NSString *const kTopicPrefix = kShadowName;
+
+// Topic名のタイプ
+static NSString *const kTopicRequest = @"request";
+static NSString *const kTopicResponse = @"response";
+static NSString *const kTopicEvent = @"event";
 
 @interface DPAWSIoTController () <DPAWSIoTWebClientDataSource, DPAWSIoTRemoteServerManagerDelegate, DPAWSIoTLocalClientManagerDelegate, DPAWSIoTLocalServerManagerDelegate, DPAWSIoTRemoteClientManagerDelegate> {
 	NSMutableDictionary *_responses;
@@ -92,7 +98,6 @@
 	return _sharedInstance;
 }
 
-
 // Shadowからデバイス情報を取得する
 + (void)fetchManagerInfoWithHandler:(void (^)(NSDictionary *managers, NSDictionary *myInfo, NSError *error))handler {
 	[[DPAWSIoTManager sharedManager] fetchShadowWithName:kShadowName
@@ -148,7 +153,11 @@
 
 // Topicを作成
 + (NSString*)myTopic:(NSString*)type {
-	return [NSString stringWithFormat:@"%@/%@/%@", kTopicPrefix, [DPAWSIoTController managerUUID], type];
+    return [DPAWSIoTController topic:type uuid:[DPAWSIoTController managerUUID]];
+}
+
++ (NSString *)topic:(NSString *)type uuid:(NSString *)uuid {
+    return [NSString stringWithFormat:@"%@/%@/%@", kTopicPrefix, uuid, type];
 }
 
 #pragma mark - Public
@@ -167,7 +176,7 @@
 			[[DPAWSIoTController sharedManager] publishEvent:message key:key];
 		};
         
-        // TODO P2Pの処理
+        // P2Pの処理
         _remoteClientManager = [DPAWSIoTRemoteClientManager new];
         _remoteClientManager.delegate = self;
         
@@ -181,7 +190,7 @@
         _localServerManager.delegate = self;
         
         _tempDataDic = [NSMutableDictionary dictionary];
-        // TODO P2Pの処理 ここまで
+        // P2Pの処理 ここまで
 	}
 	return self;
 }
@@ -292,7 +301,7 @@
 		if (![key isKindOfClass:[NSString class]]) {
 			continue;
 		}
-        // TODO URI変換
+        // URI変換 dataパラメータが存在する場合にはローカルサーバとして動作するようにURIに変換
         if ([@"data" isEqualToString:key]) {
             NSData *data = request.internalDictionary[@"data"];
             if (data && data.length > 0) {
@@ -300,7 +309,7 @@
                 request.internalDictionary[@"uri"] = [NSString stringWithFormat:@"http://localhost/contentProvider?%@", uuid];
             }
         }
-        // TODO URI変換 ここまで
+        // URI変換 ここまで
 
         id value = request.internalDictionary[key];
 		if ([value isKindOfClass:[NSString class]] ||
@@ -323,7 +332,7 @@
 	// レスポンス保持
 	[_responses setObject:response forKey:requestCodeStr];
 	// MQTT送信
-	NSString *requestTopic = [NSString stringWithFormat:@"%@/%@/request", kTopicPrefix, managerUUID];
+    NSString *requestTopic = [DPAWSIoTController topic:kTopicRequest uuid:managerUUID];
 	[[DPAWSIoTManager sharedManager] publishWithTopic:requestTopic message:msg];
 	return NO;
 }
@@ -353,7 +362,6 @@
 			if (![DPAWSIoTUtils hasAllowedManager:key]) continue;
 			// ServiceIdにManagerのUUIDを埋め込む
 			[request setString:key forKey:DConnectMessageServiceId];
-			//NSLog(@"sendRequestToMQTT:%@", key);
 			[self sendRequestToMQTT:request code:requestCode response:response];
 		}
 		// タイムアウトの処理（servicediscoveryのタイムアウトが8秒なので、こちらは7秒）
@@ -363,13 +371,11 @@
 				[[DConnectManager sharedManager] sendResponse:response];
 				[_responses removeObjectForKey:requestCodeStr];
 			}
-			//NSLog(@"timeout!!:%@, %@", _responses, requestCodeStr);
 		});
 		return NO;
 	} else {
 		return YES;
 	}
-	
 }
 
 // Eventを発行
@@ -389,8 +395,7 @@
 		}
 	} else {
 		// リアルタイム
-		NSString *topic = [NSString stringWithFormat:@"%@/%@/event", kTopicPrefix, [DPAWSIoTController managerUUID]];
-		//NSLog(@"publishEvent:%@, %@", topic, msg);
+        NSString *topic = [DPAWSIoTController myTopic:kTopicEvent];
 		if (![[DPAWSIoTManager sharedManager] publishWithTopic:topic message:msg]) {
 			NSLog(@"Error on PublishEvent:[%@] %@", topic, msg);
 		}
@@ -405,8 +410,7 @@
 // タイマーでイベントを送信
 - (void)timerFireMethod:(NSTimer *)timer {
 	if (_lastPublishedEvents.count == 0) return;
-	NSString *topic = [NSString stringWithFormat:@"%@/%@/event", kTopicPrefix, [DPAWSIoTController managerUUID]];
-	//NSLog(@"publishEvent:%@, %@", topic, msg);
+    NSString *topic = [DPAWSIoTController myTopic:kTopicEvent];
 	for (id key in _lastPublishedEvents.allKeys) {
 		NSString *msg = _lastPublishedEvents[key];
 		if (![[DPAWSIoTManager sharedManager] publishWithTopic:topic message:msg]) {
@@ -440,15 +444,14 @@
 	DConnectManager *mgr = [DConnectManager sharedManager];
 	DConnectDevicePlugin *plugin = [mgr.mDeviceManager devicePluginForServiceId:serviceId];
 	if (plugin) {
-		//NSLog(@"plugin:%@", plugin.pluginName);
 		DConnectResponseMessage *response = [DConnectResponseMessage message];
 		DConnectRequestMessage *request = [DConnectRequestMessage new];
 		[request setProfile:DConnectServiceInformationProfileName];
 		[request setAction:DConnectMessageActionTypeGet];
-		NSArray *names = [serviceId componentsSeparatedByString:@"."];
+
+        NSArray *names = [serviceId componentsSeparatedByString:@"."];
 		[request setServiceId:names[0]];
 		[plugin executeRequest:request response:response];
-		//NSLog(@"plugin-info:%@", response.internalDictionary);
 		return response;
 	} else {
 		return nil;
@@ -482,15 +485,14 @@
 
 // RequestTopic購読
 - (void)subscribeRequest {
-	NSString *requestTopic = [NSString stringWithFormat:@"%@/%@/request", kTopicPrefix, [DPAWSIoTController managerUUID]];
-//	NSLog(@"subscribeRequest:%@", requestTopic);
+    NSString *requestTopic = [DPAWSIoTController myTopic:kTopicRequest];
 	[[DPAWSIoTManager sharedManager] subscribeWithTopic:requestTopic messageHandler:^(id json, NSError *error) {
 		if (error) {
 			NSLog(@"Error on SubscribeWithTopic: [%@] %@", requestTopic, error);
 			return;
 		}
 
-        // TODO P2Pの処理
+        // P2Pの処理
         if (json[@"p2p_local"]) {
             NSDictionary *p2pLocalJson = json[@"p2p_local"];
             if (p2pLocalJson) {
@@ -514,11 +516,11 @@
                 [_localClientManager didReceivedSignaling:[[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding] dataSource:self];
             }
         }
-        // TODO P2Pの処理 ここまで
+        // P2Pの処理 ここまで
 
         NSMutableDictionary *requestDic = [json[@"request"] mutableCopy];
 
-        // TODO localhost
+        // URI変換
         if (requestDic[@"uri"]) {
             NSURL *url = [NSURL URLWithString:(NSString *)requestDic[@"uri"]];
             NSString *path = [NSString stringWithFormat:@"%@", [url path]];
@@ -535,7 +537,7 @@
                 requestDic[@"uri"] = uri;
             }
         }
-        // TODO localhost ここまで
+        // URI変換 ここまで
         
         
 		if ([requestDic[DConnectMessageAction] isEqualToString:@"put"]) {
@@ -550,18 +552,17 @@
 			// WebSocketの接続解除
 			NSString *key = requestDic[DConnectMessageSessionKey];
 			if (key) {
-				//NSLog(@"delete:sessionKey:%@", key);
 				[_webSocket removeSocket:key];
 			}
 		}
 		// MQTTからHTTPへ
-		//NSLog(@"request:%@", json);
 		[DPAWSIoTUtils sendRequest:requestDic handler:^(NSData *data, NSError *error) {
 			if (error) {
 				NSLog(@"Error on SendRequest:%@", error);
 				return;
 			}
-			// 返却形式にフォーマット
+
+            // 返却形式にフォーマット
 			NSDictionary *resJson = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
 			NSMutableDictionary *dic = [NSMutableDictionary dictionary];
 			[dic setObject:json[@"requestCode"] forKey:@"requestCode"];
@@ -573,8 +574,7 @@
 			}
 			// レスポンスをMQTT送信
 			NSString *msg = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-			NSString *responseTopic = [NSString stringWithFormat:@"%@/%@/response", kTopicPrefix, [DPAWSIoTController managerUUID]];
-			//NSLog(@"publish:%@, %@", responseTopic, msg);
+            NSString *responseTopic = [DPAWSIoTController myTopic:kTopicResponse];
 			if (![[DPAWSIoTManager sharedManager] publishWithTopic:responseTopic message:msg]) {
 				NSLog(@"Error on PublishWithTopic: [%@] %@", responseTopic, msg);
 			}
@@ -584,15 +584,13 @@
 
 // RequestTopic購読解除
 - (void)unsubscribeRequest {
-	NSString *requestTopic = [NSString stringWithFormat:@"%@/%@/request", kTopicPrefix, [DPAWSIoTController managerUUID]];
-	//NSLog(@"unsubscribeRequest:%@", requestTopic);
+    NSString *requestTopic = [DPAWSIoTController myTopic:kTopicRequest];
 	[[DPAWSIoTManager sharedManager] unsubscribeWithTopic:requestTopic];
 }
 
 // EventTopic購読
 - (void)subscribeEvent:(NSString*)uuid {
-	NSString *topic = [NSString stringWithFormat:@"%@/%@/event", kTopicPrefix, uuid];
-	//NSLog(@"subscribeEvent:%@", topic);
+    NSString *topic = [DPAWSIoTController topic:kTopicEvent uuid:uuid];
 	[[DPAWSIoTManager sharedManager] subscribeWithTopic:topic messageHandler:^(id json, NSError *error) {
 		if (error) {
 			NSLog(@"Error on SubscribeWithTopic: [%@] %@", topic, error);
@@ -606,8 +604,7 @@
 
 // EventTopic購読解除
 - (void)unsubscribeEvent:(NSString*)uuid {
-	NSString *topic = [NSString stringWithFormat:@"%@/%@/event", kTopicPrefix, uuid];
-	//NSLog(@"unsubscribeEvent:%@", topic);
+    NSString *topic = [DPAWSIoTController topic:kTopicEvent uuid:uuid];
 	[[DPAWSIoTManager sharedManager] unsubscribeWithTopic:topic];
 }
 
@@ -628,14 +625,12 @@
 	// ResponseTopic購読・解除
 	if (!managers) return;
 	for (NSString *key in managers.allKeys) {
-		// Topic名
-		NSString *responseTopic = [NSString stringWithFormat:@"%@/%@/response", kTopicPrefix, key];
+        NSString *responseTopic = [DPAWSIoTController topic:kTopicResponse uuid:key];
 		// Onlineかつ許可されている場合は購読対象
 		if ([DPAWSIoTUtils hasAllowedManager:key] &&
 			![managers[key] isKindOfClass:[NSNull class]] &&
 			[managers[key][@"online"] boolValue])
 		{
-			//NSLog(@"subscribeWithTopic:%@, %@", responseTopic, key);
 			NSDictionary *from = managers[key];
 			[[DPAWSIoTManager sharedManager] subscribeWithTopic:responseTopic messageHandler:^(id json, NSError *error) {
 				if (error) {
@@ -647,7 +642,6 @@
 			// イベント購読
 			[self subscribeEvent:key];
 		} else {
-			//NSLog(@"unsubscribeWithTopic:%@, %@", responseTopic, key);
 			[[DPAWSIoTManager sharedManager] unsubscribeWithTopic:responseTopic];
 			// イベント購読解除
 			[self unsubscribeEvent:key];
@@ -658,13 +652,10 @@
 }
 // MQTTからレスポンスを受診
 - (void)receivedResponseFromMQTT:(id)json from:(NSDictionary*)manager uuid:(NSString*)uuid {
-//	NSLog(@"receivedResponseFromMQTT:%@", json);
 	NSString *requestCode = [json[@"requestCode"] stringValue];
 	DConnectResponseMessage *response = _responses[requestCode];
-	//NSLog(@"%@, %@, %@", response, _responses, requestCode);
 	if (response) {
 		int count = (int)[response integerForKey:@"servicecount"];
-		//NSLog(@"count:%d", count);
 		if (count > 0) {
 			// servicediscoveryの場合各サービスからのレスポンスを保持
 			NSDictionary *resJson = json[@"response"];
@@ -709,7 +700,7 @@
 				id obj = resJson[key];
                 
                 if ([key isEqualToString:@"uri"]) {
-                    // TODO URIの変換処理
+                    // URIの変換処理
                     NSURL *url = [NSURL URLWithString:(NSString *)obj];
                     NSString *path = [NSString stringWithFormat:@"%@", [url path]];
                     if ([url query]) {
@@ -722,7 +713,7 @@
                     }
                     NSString *uri = [_remoteServerManager createWebServer:[url host] port:port path:path to:uuid];
                     [response.internalDictionary setObject:uri forKey:key];
-                    // TODO URIの変換処理 ここまで
+                    // URIの変換処理 ここまで
                 } else {
                     [response.internalDictionary setObject:obj forKey:key];
                 }
@@ -732,7 +723,7 @@
 		}
 	}
     
-    // TODO P2Pの処理
+    // P2Pの処理
     if (json[@"p2p_local"]) {
         NSDictionary *p2pLocalJson = json[@"p2p_local"];
         if (p2pLocalJson) {
@@ -758,7 +749,7 @@
             [_remoteServerManager didReceivedSignaling:[[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding]];
         }
     }
-    // TODO P2Pの処理 ここまで
+    // P2Pの処理 ここまで
 }
 
 // JsonからDConnectMessageへ変換
@@ -782,12 +773,22 @@
 	}
 }
 
+- (NSString *) createP2PRemoteSignaling:(NSString *)signaling
+{
+    return [NSString stringWithFormat:@"{\"requestCode\": %@, \"p2p_remote\": %@}", @(arc4random()), signaling];
+}
+
+- (NSString *) createP2PLocalSignaling:(NSString *)signaling
+{
+    return [NSString stringWithFormat:@"{\"requestCode\": %@, \"p2p_local\": %@}", @(arc4random()),signaling];
+}
+
 #pragma mark - DPAWSIoTRemoteServerManagerDelegate
 
 -(void) remoteServerManager:(DPAWSIoTRemoteServerManager *)manager didNotifiedSignaling:(NSString *)signaling to:(NSString *)uuid
 {
-    NSString *msg = [NSString stringWithFormat:@"{\"requestCode\": 10001, \"p2p_remote\": %@}", signaling];
-    NSString *requestTopic = [NSString stringWithFormat:@"%@/%@/request", kTopicPrefix, uuid];
+    NSString *msg = [self createP2PRemoteSignaling: signaling];
+    NSString *requestTopic = [DPAWSIoTController topic:kTopicRequest uuid:uuid];
     if (![[DPAWSIoTManager sharedManager] publishWithTopic:requestTopic message:msg]) {
         NSLog(@"Failed to publish topic. topic=%@", requestTopic);
     }
@@ -797,8 +798,8 @@
 
 -(void) remoteClientManager:(DPAWSIoTRemoteClientManager *)client didNotifiedSignaling:(NSString *)signaling to:(NSString *)uuid
 {
-    NSString *msg = [NSString stringWithFormat:@"{\"requestCode\": 10001, \"p2p_local\": %@}", signaling];
-    NSString *requestTopic = [NSString stringWithFormat:@"%@/%@/request", kTopicPrefix, uuid];
+    NSString *msg = [self createP2PLocalSignaling:signaling];
+    NSString *requestTopic = [DPAWSIoTController topic:kTopicRequest uuid:uuid];
     if (![[DPAWSIoTManager sharedManager] publishWithTopic:requestTopic message:msg]) {
         NSLog(@"Failed to publish topic. topic=%@", requestTopic);
     }
@@ -808,10 +809,8 @@
 
 -(void) localClientManager:(DPAWSIoTLocalClientManager *)manager didNotifiedSignaling:(NSString *)signaling;
 {
-    NSString *uuid = [DPAWSIoTController managerUUID];
-    
-    NSString *msg = [NSString stringWithFormat:@"{\"requestCode\": 10001, \"p2p_remote\": %@}", signaling];
-    NSString *responseTopic = [NSString stringWithFormat:@"%@/%@/response", kTopicPrefix, uuid];
+    NSString *msg = [self createP2PRemoteSignaling: signaling];
+    NSString *responseTopic = [DPAWSIoTController myTopic:kTopicResponse];
     if (![[DPAWSIoTManager sharedManager] publishWithTopic:responseTopic message:msg]) {
         NSLog(@"Failed to publish topic. topic=%@", responseTopic);
     }
@@ -821,10 +820,8 @@
 
 -(void) localServerManager:(DPAWSIoTLocalServerManager *)manager didNotifiedSignaling:(NSString *)signaling
 {
-    NSString *uuid = [DPAWSIoTController managerUUID];
-    
-    NSString *msg = [NSString stringWithFormat:@"{\"requestCode\": 10001, \"p2p_local\": %@}", signaling];
-    NSString *responseTopic = [NSString stringWithFormat:@"%@/%@/response", kTopicPrefix, uuid];
+    NSString *msg = [self createP2PLocalSignaling:signaling];
+    NSString *responseTopic = [DPAWSIoTController myTopic:kTopicResponse];
     if (![[DPAWSIoTManager sharedManager] publishWithTopic:responseTopic message:msg]) {
         NSLog(@"Failed to publish topic. topic=%@", responseTopic);
     }

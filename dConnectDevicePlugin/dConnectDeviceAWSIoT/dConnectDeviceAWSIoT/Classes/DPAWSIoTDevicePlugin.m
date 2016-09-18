@@ -31,18 +31,11 @@
 		
 		// プロファイルを追加
 		[self addProfile:[DPAWSIoTSystemProfile new]];
-		// サービスを追加
-		DPAWSIoTService *service = [[DPAWSIoTService alloc] initWithServiceId:@"awsiot"
-																   deviceName:@"AWSIoT"
-																	   plugin:self];
-		[service setOnline:YES];
-		[self.serviceProvider addService:service];
 
 		// AWSIoTログイン処理
 		[DPAWSIoTController sharedManager].plugin = self;
 		[[DPAWSIoTController sharedManager] login];
-	}
-	
+	}	
 	return self;
 }
 
