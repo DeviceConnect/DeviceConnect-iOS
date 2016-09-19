@@ -40,7 +40,7 @@ static NSString *const TestNetworkDeviceConfig = @"test config";
 
 - (instancetype) initWithServiceId:(NSString *)serviceId serviceName: (NSString *) serviceName plugin:(id)plugin {
     
-    self = [super initWithServiceId: serviceId plugin:plugin dataSource:self];
+    self = [super initWithServiceId: serviceId plugin:plugin];
     if (self) {
         
         [self setName: serviceName];

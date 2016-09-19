@@ -18,7 +18,7 @@
 @implementation DPIRKitVirtualService
 
 - (instancetype) initWithServiceId: (NSString *)serviceId plugin:(id)plugin profileName:(NSString *)profileName {
-    self = [super initWithServiceId: serviceId plugin: plugin dataSource: self];
+    self = [super initWithServiceId: serviceId plugin: plugin];
     if (self) {
         [self setName: serviceId];
         [self setNetworkType: DConnectServiceDiscoveryProfileNetworkTypeWiFi];

@@ -34,7 +34,7 @@
 
 @implementation DConnectService
 
-- (instancetype) initWithServiceId: (NSString *)serviceId plugin: (id) plugin dataSource: (id<DConnectServiceInformationProfileDataSource>) dataSource {
+- (instancetype) initWithServiceId: (NSString *)serviceId plugin: (id) plugin {
     if (!serviceId) {
         @throw @"id is null.";
     }
@@ -45,7 +45,7 @@
         [self setProfiles_: [NSMutableDictionary dictionary]];
         
         DConnectServiceInformationProfile *serviceInformationProfile = [[DConnectServiceInformationProfile alloc] init];
-        serviceInformationProfile.dataSource = dataSource;
+        serviceInformationProfile.dataSource = self;
         [self addProfile: serviceInformationProfile];
     }
     return self;

@@ -20,7 +20,7 @@ NSString *const DPThetaRoiServiceId = @"roi";
 
 - (instancetype) initWithServiceId: (NSString *) serviceId plugin: (id) plugin {
 
-    self = [super initWithServiceId: serviceId plugin: plugin dataSource: self];
+    self = [super initWithServiceId: serviceId plugin: plugin];
     if (self) {
         [self addProfile:[DPThetaBatteryProfile new]];
         [self addProfile:[DPThetaFileProfile new]];
