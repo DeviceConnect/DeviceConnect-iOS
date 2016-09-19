@@ -8,6 +8,7 @@
 //
 
 #import "DPLinkingDeviceManager.h"
+#import "DPLinkingBeaconManager.h"
 #import "DPLinkingUtil.h"
 
 static const NSInteger kDistanceThresholdImmediate = 3.0f;
@@ -65,20 +66,19 @@ static DPLinkingDeviceManager* _sharedInstance = nil;
         
         [[BLEConnecter sharedInstance] addListener:self deviceUUID:nil];
         [self loadDPLinkingDevice];
+        
+        __weak typeof(self) weakSelf = self;
+        
+        double delayInSeconds = 2.0;
+        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+            [weakSelf startScanWithTimeout:20];
+        });
     }
     return self;
 }
 
 #pragma mark - Public Method
-
-- (void) startScanWithTimeout:(NSTimeInterval)timeout {
-    [DPLinkingUtil asyncAfterDelay:timeout block:^{
-        _initFlag = NO;
-        [[BLEConnecter sharedInstance] stopScan];
-    }];
-    _initFlag = YES;
-    [[BLEConnecter sharedInstance] scanDevice];
-}
 
 - (void) startScan {
     if ([BLEConnecter sharedInstance].canDiscovery) {
@@ -90,7 +90,7 @@ static DPLinkingDeviceManager* _sharedInstance = nil;
 }
 
 - (void) stopScan {
-    if ([[BLEConnecter sharedInstance] isScanning]) {
+    if ([[BLEConnecter sharedInstance] isScanning] && ![[DPLinkingBeaconManager sharedInstance] isStartBeaconScan]) {
         DCLogInfo(@"stopScan");
         [[BLEConnecter sharedInstance] stopScan];
     } else {
@@ -466,7 +466,7 @@ static DPLinkingDeviceManager* _sharedInstance = nil;
     if (![device isSupportTemperature]) {
         return;
     }
-    
+        
     NSMutableArray *array = [self.temperatureDic objectForKey:device.identifier];
     if (!array) {
         array = [NSMutableArray array];
@@ -519,7 +519,7 @@ static DPLinkingDeviceManager* _sharedInstance = nil;
     if (![device isSupportHumidity]) {
         return;
     }
-    
+
     NSMutableArray *array = [self.humidityDic objectForKey:device.identifier];
     if (!array) {
         array = [NSMutableArray array];
@@ -572,7 +572,7 @@ static DPLinkingDeviceManager* _sharedInstance = nil;
     if (![device isSupportAtmosphericPressure]) {
         return;
     }
-    
+
     NSMutableArray *array = [self.atmospheircPressureDic objectForKey:device.identifier];
     if (!array) {
         array = [NSMutableArray array];
@@ -631,6 +631,22 @@ static DPLinkingDeviceManager* _sharedInstance = nil;
 
 
 #pragma mark - Private Method
+
+- (void) startScanWithTimeout:(NSTimeInterval)timeout {
+    if ([BLEConnecter sharedInstance].canDiscovery) {
+        [DPLinkingUtil asyncAfterDelay:timeout block:^{
+            DCLogWarn(@"Timeout.");
+            _initFlag = NO;
+            if (![[DPLinkingBeaconManager sharedInstance] isStartBeaconScan]) {
+                [[BLEConnecter sharedInstance] stopScan];
+            }
+        }];
+        _initFlag = YES;
+        [[BLEConnecter sharedInstance] scanDevice];
+    } else {
+        DCLogWarn(@"Cannot start a scan.");
+    }
+}
 
 - (void) addDPLinkingDevice:(DPLinkingDevice *)device {
     [self.devices addObject:device];
@@ -855,7 +871,7 @@ static DPLinkingDeviceManager* _sharedInstance = nil;
     
     DPLinkingDevice *device = [self findDPLinkingDeviceByPeripheral:setting.peripheral];
     if (device) {
-        setting.distanceThreshold = kDistanceThresholdImmediate;
+        setting.distanceThreshold = kDistanceThresholdNear;
         device.setting = setting;
         device.peripheral = setting.peripheral;
         device.online = YES;
@@ -863,6 +879,11 @@ static DPLinkingDeviceManager* _sharedInstance = nil;
         [self notifyConnectDevice:device];
     }
     [self cancelConnectingDevice:peripheral];
+    
+    // BLEConnector::connectDeviceを行うとscanが止まってしまうので、終了した後にスキャンを再開する
+    if (_initFlag || [[DPLinkingBeaconManager sharedInstance] isStartBeaconScan]) {
+        [[BLEConnecter sharedInstance] scanDevice];
+    }
 }
 
 - (void)didDisconnectPeripheral:(CBPeripheral *)peripheral {
@@ -1082,7 +1103,9 @@ static DPLinkingDeviceManager* _sharedInstance = nil;
 
     DPLinkingDevice *device = [self findDPLinkingDeviceByPeripheral:peripheral];
     if (device) {
-        [self notifyAtmosphericPressure:sensor.xValue device:device];
+        int value = [DPLinkingUtil byteToShort:sensor.originalData.bytes];
+        float atmosphericPressure = [DPLinkingUtil intToFloat:value fraction:7 exponent:5 sign:NO];
+        [self notifyAtmosphericPressure:atmosphericPressure device:device];
     }
 }
 

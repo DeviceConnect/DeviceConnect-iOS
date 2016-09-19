@@ -68,7 +68,6 @@
 
 + (DPLinkingDeviceManager *) sharedInstance;
 
-- (void) startScanWithTimeout:(NSTimeInterval)timeout;
 - (void) startScan;
 - (void) stopScan;
 - (BOOL) isStartScan;

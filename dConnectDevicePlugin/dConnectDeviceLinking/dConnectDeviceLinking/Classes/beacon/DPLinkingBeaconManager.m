@@ -92,6 +92,10 @@ static DPLinkingBeaconManager* _sharedInstance = nil;
         [[BLEConnecter sharedInstance] addListener:self deviceUUID:nil];
         [self loadDPLinkingBeacon];
         [self startCheckConnectionOfBeacon];
+        
+        if (_isStartBeaconScanFlag) {
+            [self startBeaconScanInternal];
+        }
     }
     return self;
 }
@@ -139,11 +143,13 @@ static DPLinkingBeaconManager* _sharedInstance = nil;
 - (void) startBeaconScan {
     [self startBeaconScanInternal];
     _isStartBeaconScanFlag = YES;
+    [self saveDPLinkingBeacon];
 }
 
 - (void) stopBeaconScan {
     [self stopBeaconScanInternal];
     _isStartBeaconScanFlag = NO;
+    [self saveDPLinkingBeacon];
 }
 
 - (BOOL) isStartBeaconScan {

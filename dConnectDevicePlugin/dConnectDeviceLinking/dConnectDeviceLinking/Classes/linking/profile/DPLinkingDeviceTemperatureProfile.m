@@ -8,6 +8,7 @@
 //
 
 #import "DPLinkingDeviceTemperatureProfile.h"
+#import "DPLinkingDeviceTemperatureOnce.h"
 
 @implementation DPLinkingDeviceTemperatureProfile
 
@@ -29,8 +30,24 @@
 
 - (BOOL) onGetTemperature:(DConnectRequestMessage *)request response:(DConnectResponseMessage *)response
 {
-    [response setErrorToNotSupportProfile];
-    return YES;
+    NSString *serviceId = [request serviceId];
+    
+    DPLinkingDeviceManager *mgr = [DPLinkingDeviceManager sharedInstance];
+    DPLinkingDevice *device = [mgr findDPLinkingDeviceByServiceId:serviceId];
+    if (!device) {
+        [response setErrorToNotFoundService];
+        return YES;
+    }
+    
+    if (![device isSupportTemperature]) {
+        [response setErrorToNotSupportProfile];
+        return YES;
+    }
+    
+    DPLinkingDeviceTemperatureOnce *temperature = [[DPLinkingDeviceTemperatureOnce alloc] initWithDevice:device];
+    temperature.request = request;
+    temperature.response = response;
+    return NO;
 }
 
 @end

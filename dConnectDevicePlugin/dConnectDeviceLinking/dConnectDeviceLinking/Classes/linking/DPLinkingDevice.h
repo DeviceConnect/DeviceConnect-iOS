@@ -59,5 +59,6 @@ typedef NS_ENUM(NSInteger, DPLinkingResultCode) {
 - (BOOL) isSupportTemperature;
 - (BOOL) isSupportHumidity;
 - (BOOL) isSupportAtmosphericPressure;
+- (BOOL) isInDistanceThreshold;
 
 @end

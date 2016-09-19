@@ -96,4 +96,8 @@ static NSString *const kConnectFlag = @"connectFlag";
     return self.setting.hasAtmosphericPressure;
 }
 
+- (BOOL) isInDistanceThreshold {
+    return self.setting.isInDistanceThreshold;
+}
+
 @end

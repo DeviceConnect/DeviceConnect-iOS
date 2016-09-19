@@ -942,8 +942,103 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="96" id="uOh-9s-1Sa">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="96" id="M9J-Vx-qO3">
                                         <rect key="frame" x="0.0" y="620" width="600" height="96"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="M9J-Vx-qO3" id="kQV-8c-ftT">
+                                            <frame key="frameInset" width="600" height="96"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="気圧" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wBe-oq-tQO" userLabel="気圧">
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FXE-jo-O6O" customClass="DPLinkingButton">
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="34" id="HSs-Ed-2Bq"/>
+                                                        <constraint firstAttribute="width" constant="83" id="NzN-T7-8yP"/>
+                                                    </constraints>
+                                                    <state key="normal" title="登録">
+                                                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                            <real key="value" value="8"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                                            <color key="value" red="0.094117647060000004" green="0.53725490200000003" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="color" keyPath="normalBackgroundColor">
+                                                            <color key="value" red="0.094117647060000004" green="0.53725490200000003" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="color" keyPath="highlitedBackgroundColor">
+                                                            <color key="value" white="0.90476831899999999" alpha="1" colorSpace="calibratedWhite"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="color" keyPath="disabledBackgroundColor">
+                                                            <color key="value" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                                            <real key="value" value="1"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                    </userDefinedRuntimeAttributes>
+                                                    <connections>
+                                                        <action selector="atmosphericPressureRegisterButtonTap:" destination="CHH-wd-Xib" eventType="touchUpInside" id="Ja9-iH-LO0"/>
+                                                    </connections>
+                                                </button>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AW4-p6-o7o" customClass="DPLinkingButton">
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="83" id="0Oi-bq-Cn4"/>
+                                                        <constraint firstAttribute="height" constant="34" id="VDV-wV-7ig"/>
+                                                    </constraints>
+                                                    <state key="normal" title="解除">
+                                                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                                            <color key="value" red="0.094117647060000004" green="0.53725490200000003" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                                            <real key="value" value="1"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="color" keyPath="normalBackgroundColor">
+                                                            <color key="value" red="0.094117647060000004" green="0.53725490200000003" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="color" keyPath="highlitedBackgroundColor">
+                                                            <color key="value" white="0.90476831899999999" alpha="1" colorSpace="calibratedWhite"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="color" keyPath="disabledBackgroundColor">
+                                                            <color key="value" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                            <real key="value" value="8"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                    </userDefinedRuntimeAttributes>
+                                                    <connections>
+                                                        <action selector="atmosphericPressureUnregisterButtonTap:" destination="CHH-wd-Xib" eventType="touchUpInside" id="7LP-py-YcF"/>
+                                                    </connections>
+                                                </button>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pWJ-XN-Spp">
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="FXE-jo-O6O" firstAttribute="leading" secondItem="wBe-oq-tQO" secondAttribute="trailing" constant="8" id="7Vl-Lz-xTt"/>
+                                                <constraint firstItem="wBe-oq-tQO" firstAttribute="leading" secondItem="kQV-8c-ftT" secondAttribute="leadingMargin" constant="8" id="Eo6-b7-02M"/>
+                                                <constraint firstItem="pWJ-XN-Spp" firstAttribute="leading" secondItem="kQV-8c-ftT" secondAttribute="leadingMargin" constant="107" id="IJf-O6-vtO"/>
+                                                <constraint firstItem="pWJ-XN-Spp" firstAttribute="top" secondItem="FXE-jo-O6O" secondAttribute="bottom" constant="16" id="Jwm-TU-Por"/>
+                                                <constraint firstAttribute="trailing" secondItem="AW4-p6-o7o" secondAttribute="trailing" constant="12" id="Lm0-Je-0Sq"/>
+                                                <constraint firstItem="AW4-p6-o7o" firstAttribute="top" secondItem="kQV-8c-ftT" secondAttribute="top" constant="6" id="UOv-dg-hi8"/>
+                                                <constraint firstItem="FXE-jo-O6O" firstAttribute="top" secondItem="kQV-8c-ftT" secondAttribute="top" constant="6" id="USY-zc-2tY"/>
+                                                <constraint firstItem="AW4-p6-o7o" firstAttribute="leading" secondItem="FXE-jo-O6O" secondAttribute="trailing" constant="8" id="qhx-Vw-9GQ"/>
+                                                <constraint firstItem="wBe-oq-tQO" firstAttribute="top" secondItem="kQV-8c-ftT" secondAttribute="topMargin" constant="5" id="t7b-x0-dby"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="96" id="uOh-9s-1Sa">
+                                        <rect key="frame" x="0.0" y="716" width="600" height="96"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="uOh-9s-1Sa" id="jVA-DJ-d1w">
                                             <frame key="frameInset" width="600" height="96"/>
@@ -1043,7 +1138,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="96" id="p7G-m8-Vvq">
-                                        <rect key="frame" x="0.0" y="716" width="600" height="96"/>
+                                        <rect key="frame" x="0.0" y="812" width="600" height="96"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="p7G-m8-Vvq" id="bWt-sV-J22">
                                             <frame key="frameInset" width="600" height="96"/>
@@ -1146,7 +1241,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="96" id="kzD-Z1-scI">
-                                        <rect key="frame" x="0.0" y="812" width="600" height="96"/>
+                                        <rect key="frame" x="0.0" y="908" width="600" height="96"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="kzD-Z1-scI" id="qEu-cj-CIZ">
                                             <frame key="frameInset" width="600" height="96"/>
@@ -1249,7 +1344,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="128" id="1Uw-aq-atj">
-                                        <rect key="frame" x="0.0" y="908" width="600" height="128"/>
+                                        <rect key="frame" x="0.0" y="1004" width="600" height="128"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="1Uw-aq-atj" id="Yi9-zn-NC8">
                                             <frame key="frameInset" width="600" height="128"/>
@@ -1369,6 +1464,9 @@
                         <outlet property="accelerationXLabel" destination="zrl-1U-AC8" id="1Zr-4p-r4p"/>
                         <outlet property="accelerationYLabel" destination="yuG-PV-e8M" id="Fko-kL-IQC"/>
                         <outlet property="accelerationZLabel" destination="iFd-iB-ZmL" id="kbp-fj-nbp"/>
+                        <outlet property="atmosphericPressureLabel" destination="pWJ-XN-Spp" id="hyQ-pk-w5R"/>
+                        <outlet property="atmosphericPressureOffButton" destination="AW4-p6-o7o" id="EH3-DS-qZM"/>
+                        <outlet property="atmosphericPressureOnButton" destination="FXE-jo-O6O" id="2P5-Ro-fgW"/>
                         <outlet property="batteryLabel" destination="xdl-H6-AHL" id="fuZ-62-cMV"/>
                         <outlet property="batteryOffButton" destination="mUA-GR-moQ" id="It3-gQ-Oye"/>
                         <outlet property="batteryOnButton" destination="5a4-OH-hXW" id="omw-mq-XQw"/>
@@ -1402,7 +1500,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lqK-vR-E1A" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2146" y="893"/>
+            <point key="canvasLocation" x="2145.5999999999999" y="892.3538230884559"/>
         </scene>
         <!--Linking Beacon View Controller-->
         <scene sceneID="em7-CZ-Il6">

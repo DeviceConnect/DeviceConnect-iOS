@@ -23,6 +23,8 @@
 @property (nonatomic) IBOutlet UIButton *sensorOffButton;
 @property (nonatomic) IBOutlet UIButton *batteryOnButton;
 @property (nonatomic) IBOutlet UIButton *batteryOffButton;
+@property (nonatomic) IBOutlet UIButton *atmosphericPressureOnButton;
+@property (nonatomic) IBOutlet UIButton *atmosphericPressureOffButton;
 @property (nonatomic) IBOutlet UIButton *temperatureOnButton;
 @property (nonatomic) IBOutlet UIButton *temperatureOffButton;
 @property (nonatomic) IBOutlet UIButton *humidityOnButton;
@@ -70,6 +72,7 @@
     [self setTemperatureOnOffButton];
     [self setHumidityOnOffButton];
     [self setButtonIdOnOffButton];
+    [self setAtmosphericPressureOnOffButton];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -90,6 +93,7 @@
     [self.deviceManager disableListenHumidity:self.device delegate:self];
     [self.deviceManager disableListenRange:self.device delegate:self];
     [self.deviceManager disableListenButtonId:self.device delegate:self];
+    [self.deviceManager disableListenAtmosphericPressure:self.device delegate:self];
 }
 
 #pragma mark - Private Method
@@ -166,6 +170,13 @@
     if (![self.device isSupportHumidity]) {
         self.humidityOnButton.enabled = NO;
         self.humidityOffButton.enabled = NO;
+    }
+}
+
+- (void) setAtmosphericPressureOnOffButton {
+    if (![self.device isSupportAtmosphericPressure]) {
+        self.atmosphericPressureOnButton.enabled = NO;
+        self.atmosphericPressureOffButton.enabled = NO;
     }
 }
 
@@ -367,13 +378,13 @@
 #pragma mark - DPLinkingDeviceTemperatureDelegate
 
 - (void) didReceivedDevice:(DPLinkingDevice *)device temperature:(float)temperature {
-    self.temperatureLabel.text = [NSString stringWithFormat:@"%@", @(temperature)];
+    self.temperatureLabel.text = [NSString stringWithFormat:@"%@℃", @(temperature)];
 }
 
 #pragma mark - DPLinkingDeviceHumidityDelegate
 
 - (void) didReceivedDevice:(DPLinkingDevice *)device humidity:(float)humidity {
-    self.humidityLabel.text = [NSString stringWithFormat:@"%@", @(humidity)];
+    self.humidityLabel.text = [NSString stringWithFormat:@"%@%", @(humidity)];
 }
 
 #pragma mark - DPLinkingDeviceAtmosphericPressureDelegate
@@ -485,6 +496,22 @@
         [self.deviceManager disableListenTemperature:self.device delegate:self];
     } else {
         [self openNotSupportDialog:@"気温センサーはサポートしていません。"];
+    }
+}
+
+- (IBAction)atmosphericPressureRegisterButtonTap:(id)sender {
+    if ([self.device isSupportAtmosphericPressure]) {
+        [self.deviceManager enableListenAtmosphericPressure:self.device delegate:self];
+    } else {
+        [self openNotSupportDialog:@"気圧センサーはサポートしていません。"];
+    }
+}
+
+- (IBAction)atmosphericPressureUnregisterButtonTap:(id)sender {
+    if ([self.device isSupportAtmosphericPressure]) {
+        [self.deviceManager disableListenAtmosphericPressure:self.device delegate:self];
+    } else {
+        [self openNotSupportDialog:@"気圧センサーはサポートしていません。"];
     }
 }
 

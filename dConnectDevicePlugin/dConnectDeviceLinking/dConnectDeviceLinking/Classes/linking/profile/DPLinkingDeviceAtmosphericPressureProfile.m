@@ -1,5 +1,5 @@
 //
-//  DPLinkingDeviceHumidityProfile.m
+//  DPLinkingDeviceAtmosphericPressureProfile.m
 //  dConnectDeviceLinking
 //
 //  Copyright (c) 2016 NTT DOCOMO, INC.
@@ -7,10 +7,10 @@
 //  http://opensource.org/licenses/mit-license.php
 //
 
-#import "DPLinkingDeviceHumidityProfile.h"
-#import "DPLinkingDeviceHumidityOnce.h"
+#import "DPLinkingDeviceAtmosphericPressureProfile.h"
+#import "DPLinkingDeviceAtmosphericPressureOnce.h"
 
-@implementation DPLinkingDeviceHumidityProfile
+@implementation DPLinkingDeviceAtmosphericPressureProfile
 
 - (instancetype) init
 {
@@ -20,7 +20,7 @@
         
         [self addGetPath: @"/"
                      api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
-                         return [_self onGetHumidity:request response:response];
+                         return [_self onGetAtmosphericPressure:request response:response];
                      }];
     }
     return self;
@@ -28,7 +28,7 @@
 
 #pragma mark - Private Method
 
-- (BOOL) onGetHumidity:(DConnectRequestMessage *)request response:(DConnectResponseMessage *)response
+- (BOOL) onGetAtmosphericPressure:(DConnectRequestMessage *)request response:(DConnectResponseMessage *)response
 {
     NSString *serviceId = [request serviceId];
     
@@ -39,15 +39,15 @@
         return YES;
     }
     
-    if (![device isSupportHumidity]) {
+    if (![device isSupportAtmosphericPressure]) {
         [response setErrorToNotSupportProfile];
         return YES;
     }
     
-    DPLinkingDeviceHumidityOnce *humidity = [[DPLinkingDeviceHumidityOnce alloc] initWithDevice:device];
-    humidity.request = request;
-    humidity.response = response;
+    DPLinkingDeviceAtmosphericPressureOnce *atmosphericPressure = [[DPLinkingDeviceAtmosphericPressureOnce alloc] initWithDevice:device];
+    atmosphericPressure.request = request;
+    atmosphericPressure.response = response;
+    
     return NO;
 }
-
 @end

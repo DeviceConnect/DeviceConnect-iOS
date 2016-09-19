@@ -17,6 +17,7 @@
 #import "DPLinkingDeviceProximityProfile.h"
 #import "DPLinkingDeviceTemperatureProfile.h"
 #import "DPLinkingDeviceVibrationProfile.h"
+#import "DPLinkingDeviceAtmosphericPressureProfile.h"
 
 @interface DPLinkingDeviceService () <DConnectServiceInformationProfileDataSource>
 
@@ -65,6 +66,10 @@
         
         if ([device isSupportBattery]) {
             [self addProfile:[DPLinkingDeviceBatteryProfile new]];
+        }
+        
+        if ([device isSupportAtmosphericPressure]) {
+            [self addProfile:[DPLinkingDeviceAtmosphericPressureProfile new]];
         }
     }
     return self;
