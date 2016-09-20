@@ -117,13 +117,9 @@
 		AB1FAB131C7AC1EE0013C434 /* RobotUIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB1FAB101C7AC1EE0013C434 /* RobotUIKit.framework */; };
 		AB1FAB161C7AC1F60013C434 /* dConnectDeviceSphero_resources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = AB1FAB141C7AC1F60013C434 /* dConnectDeviceSphero_resources.bundle */; };
 		AB1FAB171C7AC1F60013C434 /* dConnectDeviceSphero.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB1FAB151C7AC1F60013C434 /* dConnectDeviceSphero.framework */; };
-		AB7A81A81D799E7F00DF7B05 /* demo in Resources */ = {isa = PBXBuildFile; fileRef = AB7A81A71D799E7F00DF7B05 /* demo */; };
 		AB3120041D7E916600B2D886 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB3120031D7E916600B2D886 /* SystemConfiguration.framework */; };
 		AB3120061D7E927600B2D886 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB3120051D7E927600B2D886 /* CoreText.framework */; };
-		AB281C0C1D2D0C1C0092A2B2 /* hitoeAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB281C0A1D2D05740092A2B2 /* hitoeAPI.framework */; };
-		AB281C0D1D2D0C1C0092A2B2 /* hitoeAPI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = AB281C0A1D2D05740092A2B2 /* hitoeAPI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		AB281C101D2D0D6B0092A2B2 /* dConnectDeviceHitoe_resources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = AB281C0E1D2D0D6A0092A2B2 /* dConnectDeviceHitoe_resources.bundle */; };
-		AB281C111D2D0D6B0092A2B2 /* dConnectDeviceHitoe.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB281C0F1D2D0D6B0092A2B2 /* dConnectDeviceHitoe.framework */; };
+		AB7A81A81D799E7F00DF7B05 /* demo in Resources */ = {isa = PBXBuildFile; fileRef = AB7A81A71D799E7F00DF7B05 /* demo */; };
 		AB94E85F1C755EB300DAE749 /* BookmarkDBFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB94E8581C755EB200DAE749 /* BookmarkDBFramework.framework */; };
 		AB94E8601C755EB300DAE749 /* BookmarkDBFramework.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = AB94E8581C755EB200DAE749 /* BookmarkDBFramework.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		AB94E86D1C75611700DAE749 /* db.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = AB94E8651C75611700DAE749 /* db.xcdatamodeld */; };
@@ -184,7 +180,6 @@
 			dstSubfolderSpec = 10;
 			files = (
 				AB94E8601C755EB300DAE749 /* BookmarkDBFramework.framework in Embed Frameworks */,
-				AB281C0D1D2D0C1C0092A2B2 /* hitoeAPI.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -377,12 +372,9 @@
 		AB1FAB101C7AC1EE0013C434 /* RobotUIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RobotUIKit.framework; path = ../../dConnectDevicePlugin/dConnectDeviceSphero/RobotUIKit.framework; sourceTree = "<group>"; };
 		AB1FAB141C7AC1F60013C434 /* dConnectDeviceSphero_resources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = dConnectDeviceSphero_resources.bundle; path = ../../dConnectDevicePlugin/dConnectDeviceSphero/bin/dConnectDeviceSphero_resources.bundle; sourceTree = "<group>"; };
 		AB1FAB151C7AC1F60013C434 /* dConnectDeviceSphero.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = dConnectDeviceSphero.framework; path = ../../dConnectDevicePlugin/dConnectDeviceSphero/bin/dConnectDeviceSphero.framework; sourceTree = "<group>"; };
-		AB7A81A71D799E7F00DF7B05 /* demo */ = {isa = PBXFileReference; lastKnownFileType = folder; path = demo; sourceTree = "<group>"; };
 		AB3120031D7E916600B2D886 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		AB3120051D7E927600B2D886 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
-		AB281C0A1D2D05740092A2B2 /* hitoeAPI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = hitoeAPI.framework; path = ../../dConnectDevicePlugin/dConnectDeviceHitoe/hitoeAPI.framework; sourceTree = "<group>"; };
-		AB281C0E1D2D0D6A0092A2B2 /* dConnectDeviceHitoe_resources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = dConnectDeviceHitoe_resources.bundle; path = ../../dConnectDevicePlugin/dConnectDeviceHitoe/bin/dConnectDeviceHitoe_resources.bundle; sourceTree = "<group>"; };
-		AB281C0F1D2D0D6B0092A2B2 /* dConnectDeviceHitoe.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = dConnectDeviceHitoe.framework; path = ../../dConnectDevicePlugin/dConnectDeviceHitoe/bin/dConnectDeviceHitoe.framework; sourceTree = "<group>"; };
+		AB7A81A71D799E7F00DF7B05 /* demo */ = {isa = PBXFileReference; lastKnownFileType = folder; path = demo; sourceTree = "<group>"; };
 		AB94E8581C755EB200DAE749 /* BookmarkDBFramework.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = BookmarkDBFramework.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB94E85C1C755EB300DAE749 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AB94E8661C75611700DAE749 /* db 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "db 2.xcdatamodel"; sourceTree = "<group>"; };
@@ -437,7 +429,6 @@
 				AB3120041D7E916600B2D886 /* SystemConfiguration.framework in Frameworks */,
 				8E3772471D24D5B3003D3124 /* libxml2.tbd in Frameworks */,
 				AB00F20F1C719A8600689C70 /* CoreGraphics.framework in Frameworks */,
-				AB281C0C1D2D0C1C0092A2B2 /* hitoeAPI.framework in Frameworks */,
 				AB00F20D1C719A7D00689C70 /* Foundation.framework in Frameworks */,
 				AB00F20B1C719A6A00689C70 /* CoreData.framework in Frameworks */,
 				AB00F2151C719AA800689C70 /* DConnectSDK.framework in Frameworks */,
@@ -449,7 +440,6 @@
 				AB00F21F1C719B3900689C70 /* dConnectDeviceChromecast.framework in Frameworks */,
 				AB00F2371C719B7600689C70 /* dConnectDevicePebble.framework in Frameworks */,
 				AB00F22F1C719B6500689C70 /* dConnectDeviceIRKit.framework in Frameworks */,
-				AB281C111D2D0D6B0092A2B2 /* dConnectDeviceHitoe.framework in Frameworks */,
 				AB1FAB0D1C7AC1E00013C434 /* dConnectDeviceAllJoyn.framework in Frameworks */,
 				AB94E85F1C755EB300DAE749 /* BookmarkDBFramework.framework in Frameworks */,
 				AB00F2331C719B6E00689C70 /* PebbleVendor.framework in Frameworks */,
@@ -709,9 +699,6 @@
 				ABAC40421D7E9DB200BBDD34 /* AVFoundation.framework */,
 				AB3120051D7E927600B2D886 /* CoreText.framework */,
 				AB3120031D7E916600B2D886 /* SystemConfiguration.framework */,
-				AB281C0E1D2D0D6A0092A2B2 /* dConnectDeviceHitoe_resources.bundle */,
-				AB281C0F1D2D0D6B0092A2B2 /* dConnectDeviceHitoe.framework */,
-				AB281C0A1D2D05740092A2B2 /* hitoeAPI.framework */,
 				8E3772461D24D5B3003D3124 /* libxml2.tbd */,
 				AB1FAB141C7AC1F60013C434 /* dConnectDeviceSphero_resources.bundle */,
 				AB1FAB151C7AC1F60013C434 /* dConnectDeviceSphero.framework */,
@@ -1145,7 +1132,6 @@
 				AB00F21E1C719B3900689C70 /* dConnectDeviceChromecast_resources.bundle in Resources */,
 				ABA304041D7FC8A700B1CEEB /* GoogleCastResources.bundle in Resources */,
 				AB00F22E1C719B6500689C70 /* dConnectDeviceIRKit_resources.bundle in Resources */,
-				AB281C101D2D0D6B0092A2B2 /* dConnectDeviceHitoe_resources.bundle in Resources */,
 				AB1FAB0C1C7AC1E00013C434 /* dConnectDeviceAllJoyn_resources.bundle in Resources */,
 				AB00F49E1C71B16200689C70 /* LICENSE in Resources */,
 				8E9AE4EC1D2F421C007348DA /* DevicePlugin.storyboard in Resources */,
@@ -1477,8 +1463,6 @@
 					"$(PROJECT_DIR)/../../dConnectDevicePlugin/dConnectDevicePebble",
 					"$(PROJECT_DIR)/../../dConnectDevicePlugin/dConnectDeviceTheta/bin",
 					"$(PROJECT_DIR)/../../dConnectDevicePlugin/dConnectDeviceAllJoyn/bin",
-					"$(PROJECT_DIR)/../../dConnectDevicePlugin/dConnectDeviceHitoe",
-					"$(PROJECT_DIR)/../../dConnectDevicePlugin/dConnectDeviceHitoe/bin",
 				);
 				GCC_PREFIX_HEADER = "dConnectBrowserForIOS9/dConnectBrowserForIOS9-Prefix.pch";
 				HEADER_SEARCH_PATHS = "$(SDKROOT)/usr/include/libxml2";
@@ -1524,8 +1508,6 @@
 					"$(PROJECT_DIR)/../../dConnectDevicePlugin/dConnectDevicePebble",
 					"$(PROJECT_DIR)/../../dConnectDevicePlugin/dConnectDeviceTheta/bin",
 					"$(PROJECT_DIR)/../../dConnectDevicePlugin/dConnectDeviceAllJoyn/bin",
-					"$(PROJECT_DIR)/../../dConnectDevicePlugin/dConnectDeviceHitoe",
-					"$(PROJECT_DIR)/../../dConnectDevicePlugin/dConnectDeviceHitoe/bin",
 				);
 				GCC_PREFIX_HEADER = "dConnectBrowserForIOS9/dConnectBrowserForIOS9-Prefix.pch";
 				HEADER_SEARCH_PATHS = "$(SDKROOT)/usr/include/libxml2";
