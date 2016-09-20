@@ -687,6 +687,7 @@ static int const _timeout = 500;
             if (![self.serviceProvider service: DPThetaDeviceServiceId]) {
                 DPThetaService *service = [[DPThetaService alloc] initWithServiceId: DPThetaDeviceServiceId plugin: self.plugin];
                 [service setName:serial];
+                [service setNetworkType: DConnectServiceDiscoveryProfileNetworkTypeWiFi];
                 [self.serviceProvider addService: service];
                 [service setOnline:YES];
             } else {

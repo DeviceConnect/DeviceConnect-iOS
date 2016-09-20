@@ -33,11 +33,6 @@
 
 /* Begin PBXBuildFile section */
 		AB056F9E1B6A327B00E1482F /* DCMTVProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = AB056F9D1B6A327B00E1482F /* DCMTVProfile.m */; };
-		AB3D3E9E1D2B9FD1004290BA /* DCMHealthProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = AB3D3E9D1D2B9FD1004290BA /* DCMHealthProfile.m */; };
-		AB3D3EA21D2BBAD2004290BA /* DCMECGProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = AB3D3EA11D2BBAD2004290BA /* DCMECGProfile.m */; };
-		AB3D3EA61D2C9560004290BA /* DCMStressEstimationProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = AB3D3EA51D2C9560004290BA /* DCMStressEstimationProfile.m */; };
-		AB3D3EAA1D2C9C76004290BA /* DCMPoseEstimationProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = AB3D3EA91D2C9C76004290BA /* DCMPoseEstimationProfile.m */; };
-		AB3D3EAE1D2CA77F004290BA /* DCMWalkStateProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = AB3D3EAD1D2CA77F004290BA /* DCMWalkStateProfile.m */; };
 		ABBD5F241987767600B81007 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABBD5F231987767600B81007 /* Foundation.framework */; };
 		ABBD5F321987767600B81007 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABBD5F311987767600B81007 /* XCTest.framework */; };
 		ABBD5F331987767600B81007 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABBD5F231987767600B81007 /* Foundation.framework */; };
@@ -47,7 +42,14 @@
 		ABBD5F401987767600B81007 /* DCMDevicePluginSDKTests.m in Sources */ = {isa = PBXBuildFile; fileRef = ABBD5F3F1987767600B81007 /* DCMDevicePluginSDKTests.m */; };
 		ABBD5F501987774B00B81007 /* DCMDriveControllerProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = ABBD5F4F1987774B00B81007 /* DCMDriveControllerProfile.m */; };
 		ABBD5F54198777F200B81007 /* DCMTemperatureProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = ABBD5F53198777F200B81007 /* DCMTemperatureProfile.m */; };
-		ABBD5F5D19877A4900B81007 /* DConnectSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABBD5F5C19877A4900B81007 /* DConnectSDK.framework */; };
+		BE58BE7C1D6463B500354F08 /* DCMUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = BE58BE7B1D6463B500354F08 /* DCMUtil.m */; };
+		BEB89BEE1D8E5F790032C5A3 /* DCMECGProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = BEB89BE91D8E5F790032C5A3 /* DCMECGProfile.m */; };
+		BEB89BEF1D8E5F790032C5A3 /* DCMHealthProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = BEB89BEA1D8E5F790032C5A3 /* DCMHealthProfile.m */; };
+		BEB89BF01D8E5F790032C5A3 /* DCMPoseEstimationProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = BEB89BEB1D8E5F790032C5A3 /* DCMPoseEstimationProfile.m */; };
+		BEB89BF11D8E5F790032C5A3 /* DCMStressEstimationProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = BEB89BEC1D8E5F790032C5A3 /* DCMStressEstimationProfile.m */; };
+		BEB89BF21D8E5F790032C5A3 /* DCMWalkStateProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = BEB89BED1D8E5F790032C5A3 /* DCMWalkStateProfile.m */; };
+		BEBA9D0A1D3DD62900970FDC /* DCMHumidityProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = BEBA9D091D3DD62900970FDC /* DCMHumidityProfile.m */; };
+		BEF9F63A1D52D8200006FF2D /* DConnectSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BEF9F6391D52D8200006FF2D /* DConnectSDK.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -75,16 +77,6 @@
 /* Begin PBXFileReference section */
 		AB056F9D1B6A327B00E1482F /* DCMTVProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DCMTVProfile.m; sourceTree = "<group>"; };
 		AB056F9F1B6A329C00E1482F /* DCMTVProfile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DCMTVProfile.h; sourceTree = "<group>"; };
-		AB3D3E9D1D2B9FD1004290BA /* DCMHealthProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DCMHealthProfile.m; sourceTree = "<group>"; };
-		AB3D3E9F1D2B9FF7004290BA /* DCMHealthProfile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DCMHealthProfile.h; sourceTree = "<group>"; };
-		AB3D3EA11D2BBAD2004290BA /* DCMECGProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DCMECGProfile.m; sourceTree = "<group>"; };
-		AB3D3EA31D2BBAF5004290BA /* DCMECGProfile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DCMECGProfile.h; sourceTree = "<group>"; };
-		AB3D3EA51D2C9560004290BA /* DCMStressEstimationProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DCMStressEstimationProfile.m; sourceTree = "<group>"; };
-		AB3D3EA71D2C95A0004290BA /* DCMStressEstimationProfile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DCMStressEstimationProfile.h; sourceTree = "<group>"; };
-		AB3D3EA91D2C9C76004290BA /* DCMPoseEstimationProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DCMPoseEstimationProfile.m; sourceTree = "<group>"; };
-		AB3D3EAB1D2C9C8E004290BA /* DCMPoseEstimationProfile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DCMPoseEstimationProfile.h; sourceTree = "<group>"; };
-		AB3D3EAD1D2CA77F004290BA /* DCMWalkStateProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DCMWalkStateProfile.m; sourceTree = "<group>"; };
-		AB3D3EAF1D2CA793004290BA /* DCMWalkStateProfile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DCMWalkStateProfile.h; sourceTree = "<group>"; };
 		AB3D7482199B26AB00FC4FE5 /* DCMDevicePluginSDK.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DCMDevicePluginSDK.h; sourceTree = "<group>"; };
 		ABBD5F201987767600B81007 /* libDCMDevicePluginSDK.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libDCMDevicePluginSDK.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		ABBD5F231987767600B81007 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -100,6 +92,21 @@
 		ABBD5F52198777EC00B81007 /* DCMTemperatureProfile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DCMTemperatureProfile.h; sourceTree = "<group>"; };
 		ABBD5F53198777F200B81007 /* DCMTemperatureProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DCMTemperatureProfile.m; sourceTree = "<group>"; };
 		ABBD5F5C19877A4900B81007 /* DConnectSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DConnectSDK.framework; path = ../../dConnectSDK/dConnectSDKForIOS/DConnectSDK/DConnectSDK.framework; sourceTree = "<group>"; };
+		BE58BE7A1D6463B500354F08 /* DCMUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DCMUtil.h; sourceTree = "<group>"; };
+		BE58BE7B1D6463B500354F08 /* DCMUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DCMUtil.m; sourceTree = "<group>"; };
+		BEB89BE91D8E5F790032C5A3 /* DCMECGProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DCMECGProfile.m; sourceTree = "<group>"; };
+		BEB89BEA1D8E5F790032C5A3 /* DCMHealthProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DCMHealthProfile.m; sourceTree = "<group>"; };
+		BEB89BEB1D8E5F790032C5A3 /* DCMPoseEstimationProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DCMPoseEstimationProfile.m; sourceTree = "<group>"; };
+		BEB89BEC1D8E5F790032C5A3 /* DCMStressEstimationProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DCMStressEstimationProfile.m; sourceTree = "<group>"; };
+		BEB89BED1D8E5F790032C5A3 /* DCMWalkStateProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DCMWalkStateProfile.m; sourceTree = "<group>"; };
+		BEB89BF31D8E5F820032C5A3 /* DCMECGProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DCMECGProfile.h; sourceTree = "<group>"; };
+		BEB89BF41D8E5F820032C5A3 /* DCMHealthProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DCMHealthProfile.h; sourceTree = "<group>"; };
+		BEB89BF51D8E5F820032C5A3 /* DCMPoseEstimationProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DCMPoseEstimationProfile.h; sourceTree = "<group>"; };
+		BEB89BF61D8E5F820032C5A3 /* DCMStressEstimationProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DCMStressEstimationProfile.h; sourceTree = "<group>"; };
+		BEB89BF71D8E5F820032C5A3 /* DCMWalkStateProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DCMWalkStateProfile.h; sourceTree = "<group>"; };
+		BEBA9D081D3DD5B000970FDC /* DCMHumidityProfile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DCMHumidityProfile.h; sourceTree = "<group>"; };
+		BEBA9D091D3DD62900970FDC /* DCMHumidityProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DCMHumidityProfile.m; sourceTree = "<group>"; };
+		BEF9F6391D52D8200006FF2D /* DConnectSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DConnectSDK.framework; path = ../../dConnectSDK/dConnectSDKForIOS/bin/DConnectSDK.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,8 +114,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BEF9F63A1D52D8200006FF2D /* DConnectSDK.framework in Frameworks */,
 				ABBD5F241987767600B81007 /* Foundation.framework in Frameworks */,
-				ABBD5F5D19877A4900B81007 /* DConnectSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -148,6 +155,7 @@
 		ABBD5F221987767600B81007 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				BEF9F6391D52D8200006FF2D /* DConnectSDK.framework */,
 				ABBD5F5C19877A4900B81007 /* DConnectSDK.framework */,
 				ABBD5F231987767600B81007 /* Foundation.framework */,
 				ABBD5F311987767600B81007 /* XCTest.framework */,
@@ -195,12 +203,13 @@
 		ABBD5F49198776CC00B81007 /* Headers */ = {
 			isa = PBXGroup;
 			children = (
-				AB3D3EAF1D2CA793004290BA /* DCMWalkStateProfile.h */,
-				AB3D3EAB1D2C9C8E004290BA /* DCMPoseEstimationProfile.h */,
-				AB3D3EA71D2C95A0004290BA /* DCMStressEstimationProfile.h */,
-				AB3D3EA31D2BBAF5004290BA /* DCMECGProfile.h */,
-				AB3D3E9F1D2B9FF7004290BA /* DCMHealthProfile.h */,
+				BEB89BF31D8E5F820032C5A3 /* DCMECGProfile.h */,
+				BEB89BF41D8E5F820032C5A3 /* DCMHealthProfile.h */,
+				BEB89BF51D8E5F820032C5A3 /* DCMPoseEstimationProfile.h */,
+				BEB89BF61D8E5F820032C5A3 /* DCMStressEstimationProfile.h */,
+				BEB89BF71D8E5F820032C5A3 /* DCMWalkStateProfile.h */,
 				AB056F9F1B6A329C00E1482F /* DCMTVProfile.h */,
+				BEBA9D081D3DD5B000970FDC /* DCMHumidityProfile.h */,
 				ABBD5F52198777EC00B81007 /* DCMTemperatureProfile.h */,
 				ABBD5F511987775500B81007 /* DCMDriveControllerProfile.h */,
 				AB3D7482199B26AB00FC4FE5 /* DCMDevicePluginSDK.h */,
@@ -211,14 +220,17 @@
 		ABBD5F4B1987772900B81007 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				ABBD5F53198777F200B81007 /* DCMTemperatureProfile.m */,
+				BEB89BE91D8E5F790032C5A3 /* DCMECGProfile.m */,
+				BEB89BEA1D8E5F790032C5A3 /* DCMHealthProfile.m */,
+				BEB89BEB1D8E5F790032C5A3 /* DCMPoseEstimationProfile.m */,
+				BEB89BEC1D8E5F790032C5A3 /* DCMStressEstimationProfile.m */,
+				BEB89BED1D8E5F790032C5A3 /* DCMWalkStateProfile.m */,
 				ABBD5F4F1987774B00B81007 /* DCMDriveControllerProfile.m */,
+				BEBA9D091D3DD62900970FDC /* DCMHumidityProfile.m */,
+				ABBD5F53198777F200B81007 /* DCMTemperatureProfile.m */,
 				AB056F9D1B6A327B00E1482F /* DCMTVProfile.m */,
-				AB3D3E9D1D2B9FD1004290BA /* DCMHealthProfile.m */,
-				AB3D3EA11D2BBAD2004290BA /* DCMECGProfile.m */,
-				AB3D3EA51D2C9560004290BA /* DCMStressEstimationProfile.m */,
-				AB3D3EA91D2C9C76004290BA /* DCMPoseEstimationProfile.m */,
-				AB3D3EAD1D2CA77F004290BA /* DCMWalkStateProfile.m */,
+				BE58BE7A1D6463B500354F08 /* DCMUtil.h */,
+				BE58BE7B1D6463B500354F08 /* DCMUtil.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -340,14 +352,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AB3D3EAA1D2C9C76004290BA /* DCMPoseEstimationProfile.m in Sources */,
-				AB3D3E9E1D2B9FD1004290BA /* DCMHealthProfile.m in Sources */,
+				BE58BE7C1D6463B500354F08 /* DCMUtil.m in Sources */,
+				BEB89BF21D8E5F790032C5A3 /* DCMWalkStateProfile.m in Sources */,
 				AB056F9E1B6A327B00E1482F /* DCMTVProfile.m in Sources */,
+				BEB89BEE1D8E5F790032C5A3 /* DCMECGProfile.m in Sources */,
+				BEBA9D0A1D3DD62900970FDC /* DCMHumidityProfile.m in Sources */,
 				ABBD5F501987774B00B81007 /* DCMDriveControllerProfile.m in Sources */,
-				AB3D3EA21D2BBAD2004290BA /* DCMECGProfile.m in Sources */,
-				AB3D3EAE1D2CA77F004290BA /* DCMWalkStateProfile.m in Sources */,
+				BEB89BF11D8E5F790032C5A3 /* DCMStressEstimationProfile.m in Sources */,
+				BEB89BEF1D8E5F790032C5A3 /* DCMHealthProfile.m in Sources */,
+				BEB89BF01D8E5F790032C5A3 /* DCMPoseEstimationProfile.m in Sources */,
 				ABBD5F54198777F200B81007 /* DCMTemperatureProfile.m in Sources */,
-				AB3D3EA61D2C9560004290BA /* DCMStressEstimationProfile.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -19,7 +19,7 @@
 @implementation DPPebbleService
 
 - (instancetype) initWithServiceId: (NSString *) serviceId deviceName: (NSString *) deviceName plugin: (id) plugin {
-    self = [super initWithServiceId: serviceId plugin: plugin dataSource:self];
+    self = [super initWithServiceId: serviceId plugin: plugin];
     if (self) {
         [self setName: deviceName];
         [self setNetworkType: DConnectServiceDiscoveryProfileNetworkTypeBluetooth];
