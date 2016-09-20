@@ -59,27 +59,33 @@ static NSString *const kTopicEvent = @"event";
 
 // ManagerUUIDを返す
 + (NSString*)managerUUID {
-	// TODO: 仮
-	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-	NSString *managerUUID = [defaults stringForKey:@"ManagerUUID"];
+	DConnectManager *manager = [DConnectManager sharedManager];
+	NSString *managerUUID = [manager managerUUID];
 	if (!managerUUID) {
-		managerUUID = [[NSUUID UUID] UUIDString];
-		[defaults setObject:managerUUID forKey:@"ManagerUUID"];
-		[defaults synchronize];
+		NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+		NSString *managerUUID = [defaults stringForKey:@"ManagerUUID"];
+		if (!managerUUID) {
+			managerUUID = [[NSUUID UUID] UUIDString];
+			[defaults setObject:managerUUID forKey:@"ManagerUUID"];
+			[defaults synchronize];
+		}
 	}
 	return managerUUID;
 }
 
 // ManagerNameを返す
 + (NSString*)managerName {
-	// TODO: 仮
-	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-	NSString *managerName = [defaults stringForKey:@"ManagerName"];
+	DConnectManager *manager = [DConnectManager sharedManager];
+	NSString *managerName = [manager managerName];
 	if (!managerName) {
-		int num = abs((int)arc4random() % 1000);
-		managerName = [NSString stringWithFormat:@"manager-%04d", num];
-		[defaults setObject:managerName forKey:@"ManagerName"];
-		[defaults synchronize];
+		NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+		NSString *managerName = [defaults stringForKey:@"ManagerName"];
+		if (!managerName) {
+			int num = abs((int)arc4random() % 1000);
+			managerName = [NSString stringWithFormat:@"Manager-%04d", num];
+			[defaults setObject:managerName forKey:@"ManagerName"];
+			[defaults synchronize];
+		}
 	}
 	return managerName;
 }

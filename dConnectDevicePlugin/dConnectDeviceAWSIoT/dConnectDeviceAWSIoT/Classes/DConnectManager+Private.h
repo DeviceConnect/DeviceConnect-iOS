@@ -16,4 +16,15 @@
 
 - (DConnectProfile *) profileWithName:(NSString *)name;
 
+/*!
+ @brief DConnectManagerを識別するUUIDを取得します。
+ */
+- (NSString *) managerUUID;
+
+/*!
+ @brief DConnectManagerの名前を取得します。
+ */
+- (NSString *) managerName;
+
+
 @end
