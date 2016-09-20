@@ -12,7 +12,7 @@ var AddBookmarkPreprocessor = function() {};
 AddBookmarkPreprocessor.prototype = {
     run: function(arguments) {
         arguments.completionFunction({"URL": document.URL, "pageSource": document.documentElement.outerHTML, "title": document.title, "selection": window.getSelection().toString()});
-        location.href = "gotapi:" + document.URL;
+        location.href = "gotapi://start?url=" + document.URL;
     }
 };
 
