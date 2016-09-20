@@ -51,7 +51,9 @@
             }
             temp_addr = temp_addr->ifa_next;
         }
-    } else {
+    }
+    
+    if (!address) {
         address = @"0.0.0.0";
     }
     freeifaddrs(interfaces);
