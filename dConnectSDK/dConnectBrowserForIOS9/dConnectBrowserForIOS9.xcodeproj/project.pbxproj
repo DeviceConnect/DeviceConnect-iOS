@@ -120,6 +120,10 @@
 		AB3120041D7E916600B2D886 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB3120031D7E916600B2D886 /* SystemConfiguration.framework */; };
 		AB3120061D7E927600B2D886 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB3120051D7E927600B2D886 /* CoreText.framework */; };
 		AB7A81A81D799E7F00DF7B05 /* demo in Resources */ = {isa = PBXBuildFile; fileRef = AB7A81A71D799E7F00DF7B05 /* demo */; };
+		AB868FF51D90F89900959C7F /* dConnectDeviceLinking_resources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = AB868FF31D90F89900959C7F /* dConnectDeviceLinking_resources.bundle */; };
+		AB868FF61D90F89900959C7F /* dConnectDeviceLinking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB868FF41D90F89900959C7F /* dConnectDeviceLinking.framework */; };
+		AB868FFA1D90FD2D00959C7F /* LinkingLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB868FF91D90FD2D00959C7F /* LinkingLibrary.framework */; };
+		AB868FFB1D90FD2D00959C7F /* LinkingLibrary.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = AB868FF91D90FD2D00959C7F /* LinkingLibrary.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		AB94E85F1C755EB300DAE749 /* BookmarkDBFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB94E8581C755EB200DAE749 /* BookmarkDBFramework.framework */; };
 		AB94E8601C755EB300DAE749 /* BookmarkDBFramework.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = AB94E8581C755EB200DAE749 /* BookmarkDBFramework.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		AB94E86D1C75611700DAE749 /* db.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = AB94E8651C75611700DAE749 /* db.xcdatamodeld */; };
@@ -180,6 +184,7 @@
 			dstSubfolderSpec = 10;
 			files = (
 				AB94E8601C755EB300DAE749 /* BookmarkDBFramework.framework in Embed Frameworks */,
+				AB868FFB1D90FD2D00959C7F /* LinkingLibrary.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -375,6 +380,10 @@
 		AB3120031D7E916600B2D886 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		AB3120051D7E927600B2D886 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 		AB7A81A71D799E7F00DF7B05 /* demo */ = {isa = PBXFileReference; lastKnownFileType = folder; path = demo; sourceTree = "<group>"; };
+		AB868FF31D90F89900959C7F /* dConnectDeviceLinking_resources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = dConnectDeviceLinking_resources.bundle; path = ../../dConnectDevicePlugin/dConnectDeviceLinking/bin/dConnectDeviceLinking_resources.bundle; sourceTree = "<group>"; };
+		AB868FF41D90F89900959C7F /* dConnectDeviceLinking.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = dConnectDeviceLinking.framework; path = ../../dConnectDevicePlugin/dConnectDeviceLinking/bin/dConnectDeviceLinking.framework; sourceTree = "<group>"; };
+		AB868FF91D90FD2D00959C7F /* LinkingLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LinkingLibrary.framework; path = ../../dConnectDevicePlugin/dConnectDeviceLinking/LinkingLibrary.framework; sourceTree = "<group>"; };
+		AB8690001D90FDF200959C7F /* hitoeAPI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = hitoeAPI.framework; path = ../../dConnectDevicePlugin/dConnectDeviceHitoe/hitoeAPI.framework; sourceTree = "<group>"; };
 		AB94E8581C755EB200DAE749 /* BookmarkDBFramework.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = BookmarkDBFramework.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB94E85C1C755EB300DAE749 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AB94E8661C75611700DAE749 /* db 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "db 2.xcdatamodel"; sourceTree = "<group>"; };
@@ -423,6 +432,7 @@
 				ABAC40491D7E9E8700BBDD34 /* CoreBluetooth.framework in Frameworks */,
 				ABAC40431D7E9DB200BBDD34 /* AVFoundation.framework in Frameworks */,
 				AB00F20D1C719A7D00689C70 /* Foundation.framework in Frameworks */,
+				AB868FFA1D90FD2D00959C7F /* LinkingLibrary.framework in Frameworks */,
 				AB00F2111C719A8F00689C70 /* UIKit.framework in Frameworks */,
 				AB00F2091C719A6100689C70 /* MediaAccessibility.framework in Frameworks */,
 				AB3120061D7E927600B2D886 /* CoreText.framework in Frameworks */,
@@ -431,6 +441,7 @@
 				AB00F20F1C719A8600689C70 /* CoreGraphics.framework in Frameworks */,
 				AB00F20D1C719A7D00689C70 /* Foundation.framework in Frameworks */,
 				AB00F20B1C719A6A00689C70 /* CoreData.framework in Frameworks */,
+				AB868FF61D90F89900959C7F /* dConnectDeviceLinking.framework in Frameworks */,
 				AB00F2151C719AA800689C70 /* DConnectSDK.framework in Frameworks */,
 				AB00F2171C719AB700689C70 /* DCMDevicePluginSDK.framework in Frameworks */,
 				AB00F23B1C719B8100689C70 /* dConnectDeviceSonyCamera.framework in Frameworks */,
@@ -638,6 +649,8 @@
 		AB00F1D61C71941800689C70 = {
 			isa = PBXGroup;
 			children = (
+				AB8690001D90FDF200959C7F /* hitoeAPI.framework */,
+				AB868FF91D90FD2D00959C7F /* LinkingLibrary.framework */,
 				AB00F1E11C71941800689C70 /* dConnectBrowserForIOS9 */,
 				AB94E8591C755EB300DAE749 /* BookmarkDBFramework */,
 				AB94E88E1C75704300DAE749 /* BookmarkShare */,
@@ -691,6 +704,8 @@
 		AB00F1F91C71961500689C70 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				AB868FF31D90F89900959C7F /* dConnectDeviceLinking_resources.bundle */,
+				AB868FF41D90F89900959C7F /* dConnectDeviceLinking.framework */,
 				ABA304031D7FC8A700B1CEEB /* GoogleCastResources.bundle */,
 				ABA304011D7FC8A100B1CEEB /* GoogleCast.framework */,
 				ABAC404C1D7E9E9700BBDD34 /* Accelerate.framework */,
@@ -1134,6 +1149,7 @@
 				AB00F22E1C719B6500689C70 /* dConnectDeviceIRKit_resources.bundle in Resources */,
 				AB1FAB0C1C7AC1E00013C434 /* dConnectDeviceAllJoyn_resources.bundle in Resources */,
 				AB00F49E1C71B16200689C70 /* LICENSE in Resources */,
+				AB868FF51D90F89900959C7F /* dConnectDeviceLinking_resources.bundle in Resources */,
 				8E9AE4EC1D2F421C007348DA /* DevicePlugin.storyboard in Resources */,
 				AB00F2ED1C71A29D00689C70 /* GHFolderTitleCell.xib in Resources */,
 				AB00F2241C719B4B00689C70 /* dConnectDeviceHost_resources.bundle in Resources */,
@@ -1444,7 +1460,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = dConnectBrowserForIOS9/dConnectBrowserForIOS9.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = NO;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1460,9 +1476,11 @@
 					"$(PROJECT_DIR)/../../dConnectDevicePlugin/dConnectDeviceChromeCast/deps/CocoaPods/Pods/google-cast-sdk/GoogleCastSDK-2.10.4-Release",
 					"$(PROJECT_DIR)/../../dConnectDevicePlugin/dConnectDeviceChromeCast/bin",
 					"$(PROJECT_DIR)/../../dConnectDevicePlugin/dConnectDevicePebble/bin",
+					"$(PROJECT_DIR)/../../dConnectDevicePlugin/dConnectDeviceLinking",
 					"$(PROJECT_DIR)/../../dConnectDevicePlugin/dConnectDevicePebble",
 					"$(PROJECT_DIR)/../../dConnectDevicePlugin/dConnectDeviceTheta/bin",
 					"$(PROJECT_DIR)/../../dConnectDevicePlugin/dConnectDeviceAllJoyn/bin",
+					"$(PROJECT_DIR)/../../dConnectDevicePlugin/dConnectDeviceLinking/bin",
 				);
 				GCC_PREFIX_HEADER = "dConnectBrowserForIOS9/dConnectBrowserForIOS9-Prefix.pch";
 				HEADER_SEARCH_PATHS = "$(SDKROOT)/usr/include/libxml2";
@@ -1489,7 +1507,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = dConnectBrowserForIOS9/dConnectBrowserForIOS9.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = NO;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1505,9 +1523,11 @@
 					"$(PROJECT_DIR)/../../dConnectDevicePlugin/dConnectDeviceChromeCast/deps/CocoaPods/Pods/google-cast-sdk/GoogleCastSDK-2.10.4-Release",
 					"$(PROJECT_DIR)/../../dConnectDevicePlugin/dConnectDeviceChromeCast/bin",
 					"$(PROJECT_DIR)/../../dConnectDevicePlugin/dConnectDevicePebble/bin",
+					"$(PROJECT_DIR)/../../dConnectDevicePlugin/dConnectDeviceLinking",
 					"$(PROJECT_DIR)/../../dConnectDevicePlugin/dConnectDevicePebble",
 					"$(PROJECT_DIR)/../../dConnectDevicePlugin/dConnectDeviceTheta/bin",
 					"$(PROJECT_DIR)/../../dConnectDevicePlugin/dConnectDeviceAllJoyn/bin",
+					"$(PROJECT_DIR)/../../dConnectDevicePlugin/dConnectDeviceLinking/bin",
 				);
 				GCC_PREFIX_HEADER = "dConnectBrowserForIOS9/dConnectBrowserForIOS9-Prefix.pch";
 				HEADER_SEARCH_PATHS = "$(SDKROOT)/usr/include/libxml2";
