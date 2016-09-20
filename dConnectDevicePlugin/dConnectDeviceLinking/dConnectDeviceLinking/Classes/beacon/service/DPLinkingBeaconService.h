@@ -11,7 +11,7 @@
 #import <DConnectSDK/DConnectService.h>
 #import "DPLinkingBeaconManager.h"
 
-@interface DPLinkingBeaconService : DConnectService <DConnectServiceInformationProfileDataSource>
+@interface DPLinkingBeaconService : DConnectService
 
 @property (nonatomic) DPLinkingBeacon *beacon;
 

@@ -19,17 +19,13 @@
 #import "DPLinkingDeviceVibrationProfile.h"
 #import "DPLinkingDeviceAtmosphericPressureProfile.h"
 
-@interface DPLinkingDeviceService () <DConnectServiceInformationProfileDataSource>
-
-@end
-
 @implementation DPLinkingDeviceService {
     DPLinkingDevice *_device;
 }
 
 - (instancetype) initWithDevice: (DPLinkingDevice *)device plugin:(DConnectDevicePlugin *)plugin
 {
-    self = [super initWithServiceId:device.identifier plugin:plugin dataSource:self];
+    self = [super initWithServiceId:device.identifier plugin:plugin];
     if (self) {
         _device = device;
 

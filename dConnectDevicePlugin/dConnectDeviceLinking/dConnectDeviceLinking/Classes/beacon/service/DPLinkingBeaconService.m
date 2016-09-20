@@ -19,7 +19,7 @@
 
 - (instancetype) initWithBeacon:(DPLinkingBeacon *)beacon plugin:(DConnectDevicePlugin *)plugin
 {
-    self = [super initWithServiceId:beacon.beaconId plugin:plugin dataSource:self];
+    self = [super initWithServiceId:beacon.beaconId plugin:plugin];
     if (self) {
         _beacon = beacon;
 
