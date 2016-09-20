@@ -35,6 +35,8 @@ static NSString *const MATCH_NEW_NAME = @"matchNewName";
 static NSString *const OLD_NAME = @"oldName";
 static NSString *const NEW_NAME = @"newName";
 
+static NSString *const KEY_MANAGER_UUID = @"_dconnectManagerUUID";
+static NSString *const KEY_MANAGER_NAME = @"_dconnectManagerName";
 
 NSString *const DConnectApplicationDidEnterBackground = @"DConnectApplicationDidEnterBackground";
 NSString *const DConnectApplicationWillEnterForeground = @"DConnectApplicationWillEnterForeground";
@@ -165,6 +167,29 @@ NSString *const DConnectAttributeNameRequestAccessToken = @"requestAccessToken";
         sharedDConnectManager = [DConnectManager new];
     });
     return sharedDConnectManager;
+}
+
+- (NSString  *) managerUUID {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSString *managerUUID = [defaults stringForKey:KEY_MANAGER_UUID];
+    if (!managerUUID) {
+        managerUUID = [[NSUUID UUID] UUIDString];
+        [defaults setObject:managerUUID forKey:KEY_MANAGER_UUID];
+        [defaults synchronize];
+    }
+    return managerUUID;
+}
+
+- (NSString  *) managerName {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSString *managerName = [defaults stringForKey:KEY_MANAGER_NAME];
+    if (!managerName) {
+        int num = abs((int)arc4random() % 1000);
+        managerName = [NSString stringWithFormat:@"Manager-%04d", num];
+        [defaults setObject:managerName forKey:KEY_MANAGER_NAME];
+        [defaults synchronize];
+    }
+    return managerName;
 }
 
 - (void) start {
