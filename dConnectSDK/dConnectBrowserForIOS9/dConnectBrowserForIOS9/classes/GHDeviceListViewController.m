@@ -121,7 +121,7 @@
         NSString *path = [[NSBundle mainBundle] pathForResource:@"index" ofType:@"html" inDirectory:@"demo"];
         WebViewController* webView = [[WebViewController alloc] initWithURL: [NSString stringWithFormat:@"file://%@?serviceId=%@", path, serviceId]];
         UINavigationController* nav = [[UINavigationController alloc] initWithRootViewController:webView];
-        [self presentViewController:nav animated:YES completion:nil];
+        [webView presentationDeviceView:nav];
     } else {
         
         NSString *mes = [NSString stringWithFormat:@"%@は、接続されていません。デバイスプラグインの設定を確認してください。", name];

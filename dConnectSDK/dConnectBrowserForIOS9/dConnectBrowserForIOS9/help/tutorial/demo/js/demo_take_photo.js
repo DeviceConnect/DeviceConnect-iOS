@@ -50,7 +50,17 @@ var demoTakePhoto = (function(parent, global) {
             mPreviewSizes = json.previewSizes;
             createOptions();
         }, function(errorCode, errorMessage) {
-            util.showAlert("カメラ情報の取得に失敗しました。。", errorCode, errorMessage);
+             var imageSizes = document.recorder.imageSize;
+             var iOption = document.createElement('option');
+             iOption.setAttribute('value', '0');
+             iOption.innerHTML = 'Unsupported size';
+             imageSizes.appendChild(iOption);
+             var previewSizes = document.recorder.previewSize;
+             var pOption = document.createElement('option');
+             pOption.setAttribute('value', '0');
+             pOption.innerHTML = 'Unsupported size';
+             previewSizes.appendChild(pOption);
+             util.showAlert("カメラ情報の取得に失敗しました。。", errorCode, errorMessage);
         });
     }
 
@@ -85,7 +95,7 @@ var demoTakePhoto = (function(parent, global) {
 
         minWidth = 10000000;
         var previewSizes = document.recorder.previewSize;
-        for (var i = 0; i < mMediaRecorders.length; i++) {
+        for (var i = 0; i < mPreviewSizes.length; i++) {
             var option = document.createElement('option');
             option.setAttribute('value', i);
             option.innerHTML = mPreviewSizes[i].width + "x" + mPreviewSizes[i].height;
@@ -95,6 +105,11 @@ var demoTakePhoto = (function(parent, global) {
                 minWidth = mImageSizes[i].width
             }
 
+            previewSizes.appendChild(option);
+        }
+        if (mMediaRecorders.length == 0) {
+            var option = document.createElement('option');
+            option.setAttribute('value', 'Unsupported size');
             previewSizes.appendChild(option);
         }
 
@@ -114,9 +129,7 @@ var demoTakePhoto = (function(parent, global) {
         }
         var uri = builder.build();
         dConnect.put(uri, null, null, function(json) {
-            var myUri = json.uri;
-            myUri = myUri.replace('localhost', "192.168.1.82");
-            refreshImg(myUri, 'preview');
+            refreshImg(json.uri, 'preview');
         }, function(errorCode, errorMessage) {
             util.showAlert("プレビュー開始に失敗しました。", errorCode, errorMessage);
         });
@@ -167,8 +180,7 @@ var demoTakePhoto = (function(parent, global) {
         }
         var uri = builder.build();
         dConnect.post(uri, null, null, function(json) {
-            var myUri = json.uri;
-            addPhoto(myUri);
+            refreshImg(json.uri, 'preview');
         }, function(errorCode, errorMessage) {
             util.showAlert("撮影に失敗しました。", errorCode, errorMessage);
         });

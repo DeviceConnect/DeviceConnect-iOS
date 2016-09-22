@@ -60,6 +60,7 @@ var main = (function(parent, global) {
                     if (isHiddenParam(elem.name)) {
                         // 隠しパラメータ
                     } else if (elem.type == 'file') {
+                    console.log(elem.name + ":" + elem.files[0]);
                         formData.append(elem.name, elem.files[0]);
                     } else if (elem.name.indexOf('t_') != 0) {
                         if (elem.value.length != 0) {
@@ -71,6 +72,7 @@ var main = (function(parent, global) {
                 }
             }
         }
+
         return formData;
     }
 

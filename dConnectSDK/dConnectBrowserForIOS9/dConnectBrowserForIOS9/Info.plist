@@ -9,6 +9,8 @@
 	</dict>
 	<key>NSHumanReadableCopyright</key>
 	<string>Copyright © 2016年 NTT DOCOMO, INC. All rights reserved.</string>
+	<key>LSApplicationCategoryType</key>
+	<string></string>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
@@ -48,14 +50,16 @@
 	<string>1</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
-    <key>NSAppleMusicUsageDescription</key>
-    <string>端末のメディアを再生できます。</string>
-    <key>NSBluetoothPeripheralUsageDescription</key>
-    <string>Bluetoothの状態を取得します。</string>
-    <key>NSCameraUsageDescription</key>
-    <string>写真を撮影します。</string>
-    <key>NSMicrophoneUsageDescription</key>
-    <string>電話をかけます。</string>
+	<key>NSAppleMusicUsageDescription</key>
+	<string>端末のメディアを再生できます。</string>
+	<key>NSBluetoothPeripheralUsageDescription</key>
+	<string>Bluetoothの状態を取得します。</string>
+	<key>NSCameraUsageDescription</key>
+	<string>写真を撮影します。</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>電話をかけます。</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>写真を参照します。</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>

@@ -39,11 +39,15 @@ var util = (function(parent, global) {
             'videochat',
             'airconditioner',
             'atmosphericpressure',
+            'ecg',
+            'poseEstimation',
+            'stressEstimation',
+            'walkState',
             'gpio');
 
     function init(callback) {
         dConnect.setHost(mHost);
-        dConnect.setExtendedOrigin("file://android_asset/");
+        dConnect.setExtendedOrigin("http://ios_asset/");
         checkDeviceConnect(callback);
     }
     parent.init = init;
@@ -87,6 +91,7 @@ var util = (function(parent, global) {
                         return;
                     }
                 }
+                alert('指定されたサービスが見つかりません。\n serviceId=' + serviceId);
             });
         });
     }
@@ -133,15 +138,44 @@ var util = (function(parent, global) {
 
     function openWebSocketIfNeeded() {
         if (!dConnect.isConnectedWebSocket()) {
-            dConnect.connectWebSocket(mSessionKey, function(errorCode, errorMessage) {
-                console.log('Failed to open websocket: ' + errorCode + ' - ' + errorMessage);
+            dConnect.connectWebSocket(mSessionKey, function(code, message) {
+                if (code > 0) {
+                    alert('WebSocketが切れました。\n code=' + code + " message=" + message);
+                }
+                console.log('websocket: ' + code + ' - ' + message);
             });
             console.log('WebSocket opened.');
         } else {
             console.log('WebSocket has opened already.');
         }
     }
-
+    function doMediaPlayerMediaPut(serviceId, accessToken, id, callback) {
+        var builder = new dConnect.URIBuilder();
+        builder.setProfile('mediaplayer');
+        builder.setAttribute('media');
+        builder.setServiceId(serviceId);
+        builder.setAccessToken(accessToken);
+        builder.addParameter('mediaId', id);
+        var uri = builder.build();
+        dConnect.put(uri, null, null, function(json) {
+            var builder = new dConnect.URIBuilder();
+            builder.setProfile('mediaplayer');
+            builder.setAttribute('play');
+            builder.setServiceId(serviceId);
+            builder.setAccessToken(accessToken);
+            var uri = builder.build();
+            dConnect.put(uri, null, null, function(json) {
+            if (callback) {
+                callback();
+            }
+        }, function(errorCode, errorMessage) {
+            console.log("error:" + errorMessage);
+      });
+     }, function(errorCode, errorMessage) {
+         console.log("error:" + errorMessage);
+     });
+    }
+    parent.doMediaPlayerMediaPut = doMediaPlayerMediaPut;
     function setCookieInternal(key, value) {
         document.cookie = key + '=' + value;
     }
@@ -272,7 +306,7 @@ var util = (function(parent, global) {
              case 1: {
                  console.log("サーバ接続を確立しました。\n xhr.readyState=" + xhr.readyState + "\n xhr.statusText=" + xhr.statusText);
                  try {
-                     xhr.setRequestHeader("X-GotAPI-Origin".toLowerCase(), "file://android_assets");
+                     xhr.setRequestHeader("X-GotAPI-Origin".toLowerCase(), "http://ios_assets");
                  } catch (e) {
                      return;
                  }
@@ -350,6 +384,10 @@ var util = (function(parent, global) {
     }
     parent.getAccessToken = getAccessToken;
 
+    function getAccessTokenQuery() {
+        return getQuery('accessToken');
+    }
+    parent.getAccessTokenQuery = getAccessTokenQuery;
 
     function getSessionKey() {
         return mSessionKey;
@@ -384,7 +422,8 @@ var util = (function(parent, global) {
                     if (jsonObject['mimeType']) {
                         mimeType = jsonObject['mimeType'];
                     }
-                    jsonObject[key] = '<a href=resource.html?mimeType=' + encodeURIComponent(mimeType) + '&resource=' + encodeURIComponent(value) + '>' + value + "</a>";
+                    jsonObject[key] = '<a href=resource.html?mimeType=' + encodeURIComponent(mimeType) + '&resource=' + encodeURIComponent(value)
+                                     + '&serviceId=' + getServiceId() + '&accessToken=' + getAccessToken() + '>' + value + "</a>";
                 }
             }
         }
