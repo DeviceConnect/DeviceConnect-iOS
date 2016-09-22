@@ -12,6 +12,12 @@
 #import <DConnectSDK/DConnectProfileProvider.h>
 #import <DConnectSDK/DConnectServiceInformationProfile.h>
 
+extern NSString * const DConnectServiceAnonymousOrigin;
+
+extern NSString * const DConnectServiceInnerType;
+extern NSString * const DConnectServiceInnerTypeHttp;
+
+
 @class DConnectService;
 
 @protocol OnStatusChangeListener <NSObject>

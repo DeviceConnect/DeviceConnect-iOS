@@ -67,6 +67,12 @@
 - (void)didReceiveMessage:(NSString *)msg;
 - (void)didClose;
 
+// MODIFIED HTTPリクエストデータからuriやheader情報を取得するAPIが無かったので追加した。
+/**
+ * 情報取得API
+ */
+- (HTTPMessage *) getRequest;
+
 @end
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

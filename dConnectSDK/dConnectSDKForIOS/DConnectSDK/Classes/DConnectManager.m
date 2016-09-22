@@ -226,7 +226,9 @@ NSString *const DConnectAttributeNameRequestAccessToken = @"requestAccessToken";
         [self.mWebsocket stop];
     }
     self.mWebsocket = [[DConnectWebSocket alloc] initWithHost:self.settings.host
-                                                         port:self.settings.port];
+                                                         port:self.settings.port
+                                                       object:self];
+    self.mWebsocket.settings = self.settings;
     [self.mWebsocket start];
 }
 
@@ -375,6 +377,11 @@ NSString *const DConnectAttributeNameRequestAccessToken = @"requestAccessToken";
         }
     }
 }
+
+- (BOOL) requiresOrigin {
+    return self.settings.useOriginEnable;
+}
+
 
 #pragma mark - Private Methods -
 

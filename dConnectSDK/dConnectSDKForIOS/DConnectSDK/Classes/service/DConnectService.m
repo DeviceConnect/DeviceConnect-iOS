@@ -11,6 +11,32 @@
 #import "DConnectProfile.h"
 #import "DConnectServiceInformationProfile.h"
 
+/*
+ public static final String ACTION_DISCONNECT_WEB_SOCKET = "disconnect.WebSocket";
+ public static final String ACTION_SETTINGS_KEEP_ALIVE = "settings.KeepAlive";
+ public static final String EXTRA_SESSION_KEY = "sessionKey";
+ public static final String EXTRA_KEEP_ALIVE_ENABLED = "enabled";
+ public static final String ANONYMOUS_ORIGIN = "<anonymous>";
+*/
+NSString * const DConnectServiceAnonymousOrigin = @"<anonymous>";
+
+ /** 内部用: 通信タイプを定義する. */
+//public static final String EXTRA_INNER_TYPE = "_type";
+NSString * const DConnectServiceInnerType = @"_type";
+
+/** 通信タイプがHTTPであることを示す定数. */
+//public static final String INNER_TYPE_HTTP = "http";
+NSString * const DConnectServiceInnerTypeHttp = @"http";
+
+/** 内部用: アプリケーションタイプを定義する. */
+//public static final String EXTRA_INNER_APP_TYPE = "_app_type";
+
+/** 通信相手がWebアプリケーションであることを示す定数. */
+//public static final String INNER_APP_TYPE_WEB = "web";
+
+
+
+
 @interface DConnectService()
 
 

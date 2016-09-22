@@ -89,6 +89,26 @@
     return nil;
 }
 
+#pragma mark - Static Methods -
+
+/*!
+ * @brief サービスIDを分解して、Device Connect Managerのドメイン名を省いた本来のサービスIDにする.
+ * Device Connect Managerのドメインを省いたときに、何もない場合には空文字を返します。
+ * @param[in] plugin デバイスプラグイン
+ * @param[in] serviceId サービスID
+ * @retval Device Connect Managerのドメインが省かれたサービスID
+ */
++ (NSString *) splitServiceId: (DConnectDevicePlugin *) plugin serviceId:(NSString *) serviceId {
+    NSString *p = plugin.pluginId;
+    NSRange range = [serviceId rangeOfString: p];
+    if (range.location != NSNotFound) {
+        return [serviceId substringWithRange: NSMakeRange(0, range.location - 1)];
+    }
+    return @"";
+}
+
+
+
 #pragma mark - Private Methods -
 
 - (void) addDevicePlugin:(DConnectDevicePlugin *)plugin {

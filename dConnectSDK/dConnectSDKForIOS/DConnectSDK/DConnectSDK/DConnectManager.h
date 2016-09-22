@@ -169,5 +169,13 @@ extern NSString *const DConnectApplicationWillEnterForeground;
  @return PluginId
  */
 - (NSString *) devicePluginIdForServiceId:(NSString *)serviceId;
+
+/*!
+ @brief Originが有効な設定かを返す。
+ @retval YES:有効 / NO:無効
+ */
+- (BOOL) requiresOrigin;
+
+
 - (NSString *)iconFilePathForServiceId:(NSString *)serviceId isOnline:(BOOL)isOnline;
 @end

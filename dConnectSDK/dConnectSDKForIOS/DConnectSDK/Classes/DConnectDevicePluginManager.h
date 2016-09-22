@@ -71,4 +71,14 @@
  */
 - (NSString *) spliteServiceId:(NSString *)serviceId byDevicePlugin:(DConnectDevicePlugin *)plugin;
 
+
+/*!
+ * @brief サービスIDを分解して、Device Connect Managerのドメイン名を省いた本来のサービスIDにする.
+ * Device Connect Managerのドメインを省いたときに、何もない場合には空文字を返します。
+ * @param[in] plugin デバイスプラグイン
+ * @param[in] serviceId サービスID
+ * @retval Device Connect Managerのドメインが省かれたサービスID
+ */
++ (NSString *) splitServiceId: (DConnectDevicePlugin *) plugin serviceId:(NSString *) serviceId;
+
 @end

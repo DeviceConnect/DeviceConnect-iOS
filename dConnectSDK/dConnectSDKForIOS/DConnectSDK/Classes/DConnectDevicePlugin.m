@@ -17,6 +17,8 @@
 #import "DConnectServiceManager.h"
 #import "DConnectServiceInformationProfile.h"
 #import <DConnectSDK/DConnectPluginSpec.h>
+#import "CipherSignatureProc.h"
+#import "CipherSignatureFactory.h"
 
 @interface DConnectDevicePlugin ()
 
@@ -46,10 +48,12 @@
     if (self) {
         
         // デバイスプラグインデータ設定
+        CipherSignatureProc *md5Proc = [CipherSignatureFactory getInstance: CIPHER_SIGNATURE_KIND_MD5];
         self.useLocalOAuth = YES;
         self.mProfileMap = [NSMutableDictionary dictionary];
         self.pluginName = NSStringFromClass([self class]);
         self.pluginVersionName = @"1.0.0";
+        self.pluginId = [md5Proc generateSignature: self.pluginName];
         [self setPluginSpec: [[DConnectPluginSpec alloc] init]];
 
         DConnectServiceManager *serviceManager = [DConnectServiceManager sharedForClass: [object class]];
