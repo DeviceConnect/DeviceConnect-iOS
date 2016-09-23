@@ -49,7 +49,7 @@
     return cancel_block;
 }
 
-dispatch_time_t getDispatchTimeByDate(NSDate *date) {
+static dispatch_time_t getDispatchTimeByDate(NSDate *date) {
     NSTimeInterval interval;
     double second, subsecond;
     struct timespec time;
