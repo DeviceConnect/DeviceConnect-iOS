@@ -105,12 +105,10 @@
 
 - (void) onEvent: (/* Intent */ DConnectMessage *) event {
     
-    // TODO: この処理は不要？
-    // [Android]
-//    if ([self isServiceChangeEvent: event]) {
-//        [self onServiceChangeEvent: event];
-//        return;
-//    }
+    if ([self isServiceChangeEvent: event]) {
+        [self onServiceChangeEvent: event];
+        return;
+    }
     
     NSString *pluginAccessToken = [event stringForKey:DConnectMessageAccessToken];
     NSString *serviceId = [event stringForKey:DConnectMessageServiceId];
@@ -161,6 +159,55 @@
     
     return profileName && [profileName localizedCaseInsensitiveCompare:DConnectServiceDiscoveryProfileName] == NSOrderedSame
         && attributeName && [attributeName localizedCaseInsensitiveCompare:DConnectServiceDiscoveryProfileAttrOnServiceChange] == NSOrderedSame;
+}
+
+- (void) onServiceChangeEvent: (DConnectMessage *) event {
+    DConnectDevicePlugin *plugin = [self findPluginForServiceChange: event];
+    if (!plugin) {
+        DCLogW(@"onServiceChangeEvent: plugin is not found");
+        return;
+    }
+    
+//    // network service discoveryの場合には、networkServiceのオブジェクトの中にデータが含まれる
+//    DConnectMessage *service = [event messageForKey:DConnectServiceDiscoveryProfileParamNetworkService];
+//    NSString *serviceId = [service stringForKey:DConnectServiceDiscoveryProfileParamId];
+    
+    // サービスIDを変更
+    [self replaceServiceId: event plugin: plugin];
+    
+    // 送信先のセッションを取得
+    DConnectEventManager *eventManager = [DConnectEventManager sharedManagerForClass: self.context.class];
+    NSArray * evts = [eventManager eventListForProfile:DConnectServiceDiscoveryProfileName
+                                             attribute:DConnectServiceDiscoveryProfileAttrOnServiceChange];
+    for (int i = 0; i < evts.count; i++) {
+        DConnectEvent *evt = evts[i];
+        DConnectMessage *eventMsg = [DConnectEventManager createEventMessageWithEvent:evt];
+        
+        [plugin sendEvent: eventMsg];
+        // [Android]
+//        mContext.sendEvent(evt.getReceiverName(), event);
+    }
+}
+
+- (DConnectDevicePlugin *) findPluginForServiceChange: (DConnectMessage *) event {
+    
+    
+    NSString *pluginAccessToken = [event stringForKey: DConnectMessageAccessToken];
+    if (pluginAccessToken) {
+        return [self.pluginManager devicePluginForServiceId: pluginAccessToken];
+    } else {
+        NSString *sessionKey = [event stringForKey:DConnectMessageSessionKey];
+        if (sessionKey) {
+            NSString *pluginId = [DConnectEventProtocol convertSessionKey2PluginId: sessionKey];
+            return [self.pluginManager devicePluginForPluginId: pluginId];
+        }
+    }
+    return nil;
+}
+
+- (void) replaceServiceId: (/*Intent*/DConnectMessage *)event plugin:(DConnectDevicePlugin *) plugin {
+    NSString *serviceId = [event stringForKey: DConnectMessageServiceId];
+    [event setString:[self.pluginManager appendServiceId: plugin serviceId: serviceId] forKey:DConnectMessageServiceId];
 }
 
 - (BOOL) isSameName: (NSString *) str cmp: (NSString *) cmp {

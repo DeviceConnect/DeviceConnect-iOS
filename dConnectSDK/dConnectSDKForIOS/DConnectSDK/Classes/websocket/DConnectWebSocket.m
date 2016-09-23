@@ -182,12 +182,10 @@
                 eventKey = dic[DConnectMessageSessionKey];
                 
                 // NOTE: 既存のイベントセッションを破棄する.
-
-                // TODO: DConnectServiceを参照する方法がないのでこの処理は不要？
-                // [Android]
-//                if ([self.webSocketInfoManager webSocketInfo: eventKey]) {
-//                    ((DConnectService) mContext).sendDisconnectWebSocket(eventKey);
-//                }
+                DConnectWebSocketInfo *webSocketInfo = [self.webSocketInfoManager webSocketInfoForEventKey: eventKey];
+                if (webSocketInfo) {
+                    [webSocketInfo.socket stop];
+                }
             }
             if (!eventKey) {
                 DCLogW([NSString stringWithFormat: @"onWebSocketMessage: Failed to generate eventKey: uri = %@, origin = %@", uri, origin]);

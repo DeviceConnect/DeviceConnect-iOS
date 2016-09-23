@@ -35,7 +35,8 @@ static NSString *const MATCH_NEW_NAME = @"matchNewName";
 static NSString *const OLD_NAME = @"oldName";
 static NSString *const NEW_NAME = @"newName";
 
-
+NSString *const DConnectApplicationDConnectDomain = @".deviceconnect.org";
+NSString *const DConnectApplicationLocalhostDConnect = @"localhost.deviceconnect.org";
 NSString *const DConnectApplicationDidEnterBackground = @"DConnectApplicationDidEnterBackground";
 NSString *const DConnectApplicationWillEnterForeground = @"DConnectApplicationWillEnterForeground";
 NSString *const DConnectStoryboardName = @"DConnectSDK";
@@ -403,6 +404,7 @@ NSString *const DConnectAttributeNameRequestAccessToken = @"requestAccessToken";
                                             controllerWithClass:key]];
 
         self.mDeviceManager = [DConnectDevicePluginManager new];
+        self.mDeviceManager.dConnectDomain = DConnectApplicationLocalhostDConnect;
         self.mProfileMap = [NSMutableDictionary dictionary];
         self.mResponseBlockMap = [NSMutableDictionary dictionary];
         

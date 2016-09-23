@@ -89,6 +89,25 @@
     return nil;
 }
 
+
+/*!
+ * @brief サービスIDにDevice Connect Managerのドメイン名を追加する.
+ *
+ * サービスIDがnullのときには、サービスIDは無視します。
+ *
+ * @param[in] plugin デバイスプラグイン
+ * @param[in] serviceId サービスID
+ * @retval Device Connect Managerのドメインなどが追加されたサービスID
+ */
+- (NSString *) appendServiceId: (DConnectDevicePlugin *) plugin serviceId:(NSString *) serviceId {
+    NSString * const separator = @".";
+    if (!serviceId) {
+        return [NSString stringWithFormat:@"%@%@%@", plugin.pluginId, separator, self.dConnectDomain];
+    } else {
+        return [NSString stringWithFormat:@"%@%@%@%@%@", serviceId, separator, plugin.pluginId, separator, self.dConnectDomain];
+    }
+}
+
 #pragma mark - Static Methods -
 
 /*!

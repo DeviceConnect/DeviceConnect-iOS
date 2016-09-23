@@ -17,6 +17,13 @@
 #import <DConnectSDK/DConnectProfileProvider.h>
 #import <DConnectSDk/DConnectSettings.h>
 
+
+/*! @brief ドメイン名. */
+extern NSString *const DConnectApplicationDConnectDomain;
+
+/*! @brief ローカルのドメイン名. */
+extern NSString *const DConnectApplicationLocalhostDConnect;
+
 /*!
  @brief アプリケーションがホームボタン押下で一時停止されたことを通知するイベント名。
  */
