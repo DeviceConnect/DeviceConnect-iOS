@@ -147,10 +147,17 @@
         }
     }
     if (targetSession) {
-        [event setString:targetSession.receiverId forKey:DConnectMessageSessionKey];
-        [targetSession sendEvent: event];
+        DConnectDevicePlugin *plugin = [self.pluginManager devicePluginForPluginId: targetSession.pluginId];
+        if (plugin) {
+            [event setString:targetSession.receiverId forKey:DConnectMessageSessionKey];
+            [event setString:[self.pluginManager appendServiceId: plugin serviceId: serviceId] forKey:DConnectMessageServiceId];
+            [targetSession sendEvent: event];
+        } else {
+            DCLogW([NSString stringWithFormat: @"onEvent: Plugin is not found: id = %@", targetSession.pluginId]);
+        }
     }
 }
+
 
 - (BOOL) isServiceChangeEvent: (DConnectMessage *) event {
     
