@@ -32,7 +32,7 @@
 - (void)testExample {
 	XCTestExpectation *okExpectation = [self expectationWithDescription:@"ok!"];
 	// 接続
-	[[DPAWSIoTManager sharedManager] connectWithAccessKey:@"AKIAJYDTLD4DPFGZ4PAQ" secretKey:@"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" region:AWSRegionAPNortheast1 completionHandler:^(NSError *error) {
+	[[DPAWSIoTManager sharedManager] connectWithAccessKey:@"Your Access Key" secretKey:@"Your Secret Key" region:AWSRegionAPNortheast1 completionHandler:^(NSError *error) {
 		int test = 5;
 		
 		switch (test) {
