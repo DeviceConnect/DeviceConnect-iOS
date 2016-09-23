@@ -11,6 +11,15 @@
 
 @implementation DConnectProfileSpecBuilder
 
+- (instancetype) init {
+    
+    self = [super init];
+    if (self) {
+        self.allApiSpecs = [NSMutableDictionary dictionary];
+    }
+    return self;
+}
+
 - (BOOL) addApiSpec: (NSString *) path method: (DConnectSpecMethod) method apiSpec: (DConnectApiSpec *) apiSpec error: (NSError **) error {
     NSString *pathKey = [path lowercaseString];
     NSMutableDictionary *apiSpecs = [self allApiSpecs][pathKey];        // Map<Method, DConnectApiSpec>

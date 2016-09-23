@@ -17,9 +17,7 @@
 		8E0A4C351D1CC4BE00827DA6 /* GuideDataViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0A4C341D1CC4BE00827DA6 /* GuideDataViewController.m */; };
 		8E0A4C3A1D1CC92D00827DA6 /* InitialGuideViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0A4C391D1CC92D00827DA6 /* InitialGuideViewModel.m */; };
 		8E0A4C3F1D1D28B900827DA6 /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0A4C3E1D1D28B900827DA6 /* WebViewController.m */; };
-		8E0A4C441D1D32EF00827DA6 /* help.html in Resources */ = {isa = PBXBuildFile; fileRef = 8E0A4C431D1D32EF00827DA6 /* help.html */; };
 		8E1A05871D2DF0AA006A466B /* GHDeviceListViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E1A05861D2DF0AA006A466B /* GHDeviceListViewModel.m */; };
-		8E1A05891D2E12F5006A466B /* device.html in Resources */ = {isa = PBXBuildFile; fileRef = 8E1A05881D2E12F5006A466B /* device.html */; };
 		8E1A058D1D2E41BC006A466B /* GHDevicePluginTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E1A058C1D2E41BC006A466B /* GHDevicePluginTableViewController.m */; };
 		8E1A05911D2E423B006A466B /* GHDevicePluginViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E1A05901D2E423B006A466B /* GHDevicePluginViewModel.m */; };
 		8E3772441D24D577003D3124 /* HTMLNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E3772411D24D577003D3124 /* HTMLNode.m */; };
@@ -121,10 +119,11 @@
 		AB1FAB171C7AC1F60013C434 /* dConnectDeviceSphero.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB1FAB151C7AC1F60013C434 /* dConnectDeviceSphero.framework */; };
 		AB3120041D7E916600B2D886 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB3120031D7E916600B2D886 /* SystemConfiguration.framework */; };
 		AB3120061D7E927600B2D886 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB3120051D7E927600B2D886 /* CoreText.framework */; };
-		AB281C0C1D2D0C1C0092A2B2 /* hitoeAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB281C0A1D2D05740092A2B2 /* hitoeAPI.framework */; };
-		AB281C0D1D2D0C1C0092A2B2 /* hitoeAPI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = AB281C0A1D2D05740092A2B2 /* hitoeAPI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		AB281C101D2D0D6B0092A2B2 /* dConnectDeviceHitoe_resources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = AB281C0E1D2D0D6A0092A2B2 /* dConnectDeviceHitoe_resources.bundle */; };
-		AB281C111D2D0D6B0092A2B2 /* dConnectDeviceHitoe.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB281C0F1D2D0D6B0092A2B2 /* dConnectDeviceHitoe.framework */; };
+		AB7A81A81D799E7F00DF7B05 /* demo in Resources */ = {isa = PBXBuildFile; fileRef = AB7A81A71D799E7F00DF7B05 /* demo */; };
+		AB868FF51D90F89900959C7F /* dConnectDeviceLinking_resources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = AB868FF31D90F89900959C7F /* dConnectDeviceLinking_resources.bundle */; };
+		AB868FF61D90F89900959C7F /* dConnectDeviceLinking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB868FF41D90F89900959C7F /* dConnectDeviceLinking.framework */; };
+		AB868FFA1D90FD2D00959C7F /* LinkingLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB868FF91D90FD2D00959C7F /* LinkingLibrary.framework */; };
+		AB868FFB1D90FD2D00959C7F /* LinkingLibrary.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = AB868FF91D90FD2D00959C7F /* LinkingLibrary.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		AB94E85F1C755EB300DAE749 /* BookmarkDBFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB94E8581C755EB200DAE749 /* BookmarkDBFramework.framework */; };
 		AB94E8601C755EB300DAE749 /* BookmarkDBFramework.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = AB94E8581C755EB200DAE749 /* BookmarkDBFramework.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		AB94E86D1C75611700DAE749 /* db.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = AB94E8651C75611700DAE749 /* db.xcdatamodeld */; };
@@ -157,6 +156,7 @@
 		ABE71E2D1C76D3F40061973C /* bookmark@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = ABE71E2A1C76D3F40061973C /* bookmark@2x.png */; };
 		ABE71E2E1C76D3F40061973C /* folder@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = ABE71E2B1C76D3F40061973C /* folder@2x.png */; };
 		ABE71E2F1C76D3F40061973C /* star@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = ABE71E2C1C76D3F40061973C /* star@2x.png */; };
+		ABEB97C51D6AC994003BE6E7 /* help in Resources */ = {isa = PBXBuildFile; fileRef = ABEB97C41D6AC994003BE6E7 /* help */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -184,7 +184,7 @@
 			dstSubfolderSpec = 10;
 			files = (
 				AB94E8601C755EB300DAE749 /* BookmarkDBFramework.framework in Embed Frameworks */,
-				AB281C0D1D2D0C1C0092A2B2 /* hitoeAPI.framework in Embed Frameworks */,
+				AB868FFB1D90FD2D00959C7F /* LinkingLibrary.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -222,10 +222,8 @@
 		8E0A4C391D1CC92D00827DA6 /* InitialGuideViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InitialGuideViewModel.m; sourceTree = "<group>"; };
 		8E0A4C3D1D1D28B900827DA6 /* WebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebViewController.h; sourceTree = "<group>"; };
 		8E0A4C3E1D1D28B900827DA6 /* WebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebViewController.m; sourceTree = "<group>"; };
-		8E0A4C431D1D32EF00827DA6 /* help.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = help.html; sourceTree = "<group>"; };
 		8E1A05851D2DF0AA006A466B /* GHDeviceListViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHDeviceListViewModel.h; sourceTree = "<group>"; };
 		8E1A05861D2DF0AA006A466B /* GHDeviceListViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GHDeviceListViewModel.m; sourceTree = "<group>"; };
-		8E1A05881D2E12F5006A466B /* device.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = device.html; sourceTree = "<group>"; };
 		8E1A058B1D2E41BC006A466B /* GHDevicePluginTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHDevicePluginTableViewController.h; sourceTree = "<group>"; };
 		8E1A058C1D2E41BC006A466B /* GHDevicePluginTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GHDevicePluginTableViewController.m; sourceTree = "<group>"; };
 		8E1A058F1D2E423B006A466B /* GHDevicePluginViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GHDevicePluginViewModel.h; sourceTree = "<group>"; };
@@ -381,9 +379,11 @@
 		AB1FAB151C7AC1F60013C434 /* dConnectDeviceSphero.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = dConnectDeviceSphero.framework; path = ../../dConnectDevicePlugin/dConnectDeviceSphero/bin/dConnectDeviceSphero.framework; sourceTree = "<group>"; };
 		AB3120031D7E916600B2D886 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		AB3120051D7E927600B2D886 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
-		AB281C0A1D2D05740092A2B2 /* hitoeAPI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = hitoeAPI.framework; path = ../../dConnectDevicePlugin/dConnectDeviceHitoe/hitoeAPI.framework; sourceTree = "<group>"; };
-		AB281C0E1D2D0D6A0092A2B2 /* dConnectDeviceHitoe_resources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = dConnectDeviceHitoe_resources.bundle; path = ../../dConnectDevicePlugin/dConnectDeviceHitoe/bin/dConnectDeviceHitoe_resources.bundle; sourceTree = "<group>"; };
-		AB281C0F1D2D0D6B0092A2B2 /* dConnectDeviceHitoe.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = dConnectDeviceHitoe.framework; path = ../../dConnectDevicePlugin/dConnectDeviceHitoe/bin/dConnectDeviceHitoe.framework; sourceTree = "<group>"; };
+		AB7A81A71D799E7F00DF7B05 /* demo */ = {isa = PBXFileReference; lastKnownFileType = folder; path = demo; sourceTree = "<group>"; };
+		AB868FF31D90F89900959C7F /* dConnectDeviceLinking_resources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = dConnectDeviceLinking_resources.bundle; path = ../../dConnectDevicePlugin/dConnectDeviceLinking/bin/dConnectDeviceLinking_resources.bundle; sourceTree = "<group>"; };
+		AB868FF41D90F89900959C7F /* dConnectDeviceLinking.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = dConnectDeviceLinking.framework; path = ../../dConnectDevicePlugin/dConnectDeviceLinking/bin/dConnectDeviceLinking.framework; sourceTree = "<group>"; };
+		AB868FF91D90FD2D00959C7F /* LinkingLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LinkingLibrary.framework; path = ../../dConnectDevicePlugin/dConnectDeviceLinking/LinkingLibrary.framework; sourceTree = "<group>"; };
+		AB8690001D90FDF200959C7F /* hitoeAPI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = hitoeAPI.framework; path = ../../dConnectDevicePlugin/dConnectDeviceHitoe/hitoeAPI.framework; sourceTree = "<group>"; };
 		AB94E8581C755EB200DAE749 /* BookmarkDBFramework.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = BookmarkDBFramework.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB94E85C1C755EB300DAE749 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AB94E8661C75611700DAE749 /* db 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "db 2.xcdatamodel"; sourceTree = "<group>"; };
@@ -419,6 +419,7 @@
 		ABE71E2A1C76D3F40061973C /* bookmark@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bookmark@2x.png"; sourceTree = "<group>"; };
 		ABE71E2B1C76D3F40061973C /* folder@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "folder@2x.png"; sourceTree = "<group>"; };
 		ABE71E2C1C76D3F40061973C /* star@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "star@2x.png"; sourceTree = "<group>"; };
+		ABEB97C41D6AC994003BE6E7 /* help */ = {isa = PBXFileReference; lastKnownFileType = folder; path = help; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -431,15 +432,16 @@
 				ABAC40491D7E9E8700BBDD34 /* CoreBluetooth.framework in Frameworks */,
 				ABAC40431D7E9DB200BBDD34 /* AVFoundation.framework in Frameworks */,
 				AB00F20D1C719A7D00689C70 /* Foundation.framework in Frameworks */,
+				AB868FFA1D90FD2D00959C7F /* LinkingLibrary.framework in Frameworks */,
 				AB00F2111C719A8F00689C70 /* UIKit.framework in Frameworks */,
 				AB00F2091C719A6100689C70 /* MediaAccessibility.framework in Frameworks */,
 				AB3120061D7E927600B2D886 /* CoreText.framework in Frameworks */,
 				AB3120041D7E916600B2D886 /* SystemConfiguration.framework in Frameworks */,
 				8E3772471D24D5B3003D3124 /* libxml2.tbd in Frameworks */,
 				AB00F20F1C719A8600689C70 /* CoreGraphics.framework in Frameworks */,
-				AB281C0C1D2D0C1C0092A2B2 /* hitoeAPI.framework in Frameworks */,
 				AB00F20D1C719A7D00689C70 /* Foundation.framework in Frameworks */,
 				AB00F20B1C719A6A00689C70 /* CoreData.framework in Frameworks */,
+				AB868FF61D90F89900959C7F /* dConnectDeviceLinking.framework in Frameworks */,
 				AB00F2151C719AA800689C70 /* DConnectSDK.framework in Frameworks */,
 				AB00F2171C719AB700689C70 /* DCMDevicePluginSDK.framework in Frameworks */,
 				AB00F23B1C719B8100689C70 /* dConnectDeviceSonyCamera.framework in Frameworks */,
@@ -449,7 +451,6 @@
 				AB00F21F1C719B3900689C70 /* dConnectDeviceChromecast.framework in Frameworks */,
 				AB00F2371C719B7600689C70 /* dConnectDevicePebble.framework in Frameworks */,
 				AB00F22F1C719B6500689C70 /* dConnectDeviceIRKit.framework in Frameworks */,
-				AB281C111D2D0D6B0092A2B2 /* dConnectDeviceHitoe.framework in Frameworks */,
 				AB1FAB0D1C7AC1E00013C434 /* dConnectDeviceAllJoyn.framework in Frameworks */,
 				AB94E85F1C755EB300DAE749 /* BookmarkDBFramework.framework in Frameworks */,
 				AB00F2331C719B6E00689C70 /* PebbleVendor.framework in Frameworks */,
@@ -523,15 +524,6 @@
 				8E0A4C3E1D1D28B900827DA6 /* WebViewController.m */,
 			);
 			name = webview;
-			sourceTree = "<group>";
-		};
-		8E0A4C421D1D32EF00827DA6 /* html */ = {
-			isa = PBXGroup;
-			children = (
-				8E1A05881D2E12F5006A466B /* device.html */,
-				8E0A4C431D1D32EF00827DA6 /* help.html */,
-			);
-			path = html;
 			sourceTree = "<group>";
 		};
 		8E1A05841D2DF083006A466B /* device */ = {
@@ -657,6 +649,8 @@
 		AB00F1D61C71941800689C70 = {
 			isa = PBXGroup;
 			children = (
+				AB8690001D90FDF200959C7F /* hitoeAPI.framework */,
+				AB868FF91D90FD2D00959C7F /* LinkingLibrary.framework */,
 				AB00F1E11C71941800689C70 /* dConnectBrowserForIOS9 */,
 				AB94E8591C755EB300DAE749 /* BookmarkDBFramework */,
 				AB94E88E1C75704300DAE749 /* BookmarkShare */,
@@ -710,6 +704,8 @@
 		AB00F1F91C71961500689C70 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				AB868FF31D90F89900959C7F /* dConnectDeviceLinking_resources.bundle */,
+				AB868FF41D90F89900959C7F /* dConnectDeviceLinking.framework */,
 				ABA304031D7FC8A700B1CEEB /* GoogleCastResources.bundle */,
 				ABA304011D7FC8A100B1CEEB /* GoogleCast.framework */,
 				ABAC404C1D7E9E9700BBDD34 /* Accelerate.framework */,
@@ -718,9 +714,6 @@
 				ABAC40421D7E9DB200BBDD34 /* AVFoundation.framework */,
 				AB3120051D7E927600B2D886 /* CoreText.framework */,
 				AB3120031D7E916600B2D886 /* SystemConfiguration.framework */,
-				AB281C0E1D2D0D6A0092A2B2 /* dConnectDeviceHitoe_resources.bundle */,
-				AB281C0F1D2D0D6B0092A2B2 /* dConnectDeviceHitoe.framework */,
-				AB281C0A1D2D05740092A2B2 /* hitoeAPI.framework */,
 				8E3772461D24D5B3003D3124 /* libxml2.tbd */,
 				AB1FAB141C7AC1F60013C434 /* dConnectDeviceSphero_resources.bundle */,
 				AB1FAB151C7AC1F60013C434 /* dConnectDeviceSphero.framework */,
@@ -987,7 +980,7 @@
 		ABE71E281C76D3620061973C /* resources */ = {
 			isa = PBXGroup;
 			children = (
-				8E0A4C421D1D32EF00827DA6 /* html */,
+				ABEB97341D6AC1E4003BE6E7 /* html */,
 				ABE71E291C76D3F40061973C /* images */,
 			);
 			name = resources;
@@ -1001,6 +994,15 @@
 				ABE71E2C1C76D3F40061973C /* star@2x.png */,
 			);
 			path = images;
+			sourceTree = "<group>";
+		};
+		ABEB97341D6AC1E4003BE6E7 /* html */ = {
+			isa = PBXGroup;
+			children = (
+				AB7A81A71D799E7F00DF7B05 /* demo */,
+				ABEB97C41D6AC994003BE6E7 /* help */,
+			);
+			name = html;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1145,11 +1147,10 @@
 				AB00F21E1C719B3900689C70 /* dConnectDeviceChromecast_resources.bundle in Resources */,
 				ABA304041D7FC8A700B1CEEB /* GoogleCastResources.bundle in Resources */,
 				AB00F22E1C719B6500689C70 /* dConnectDeviceIRKit_resources.bundle in Resources */,
-				AB281C101D2D0D6B0092A2B2 /* dConnectDeviceHitoe_resources.bundle in Resources */,
 				AB1FAB0C1C7AC1E00013C434 /* dConnectDeviceAllJoyn_resources.bundle in Resources */,
 				AB00F49E1C71B16200689C70 /* LICENSE in Resources */,
+				AB868FF51D90F89900959C7F /* dConnectDeviceLinking_resources.bundle in Resources */,
 				8E9AE4EC1D2F421C007348DA /* DevicePlugin.storyboard in Resources */,
-				8E0A4C441D1D32EF00827DA6 /* help.html in Resources */,
 				AB00F2ED1C71A29D00689C70 /* GHFolderTitleCell.xib in Resources */,
 				AB00F2241C719B4B00689C70 /* dConnectDeviceHost_resources.bundle in Resources */,
 				AB00F49D1C71B16200689C70 /* GTMNSString-HTML.podspec in Resources */,
@@ -1165,9 +1166,10 @@
 				AB00F23A1C719B8100689C70 /* dConnectDeviceSonyCamera_resources.bundle in Resources */,
 				AB00F3281C71A93700689C70 /* Popup.storyboard in Resources */,
 				AB00F3271C71A93700689C70 /* Bookmark.storyboard in Resources */,
-				8E1A05891D2E12F5006A466B /* device.html in Resources */,
+				AB7A81A81D799E7F00DF7B05 /* demo in Resources */,
 				AB00F2361C719B7600689C70 /* dConnectDevicePebble_resources.bundle in Resources */,
 				AB00F2141C719AA800689C70 /* DConnectSDK_resources.bundle in Resources */,
+				ABEB97C51D6AC994003BE6E7 /* help in Resources */,
 				8E0A4C2F1D1CC2D500827DA6 /* InitialGuide.storyboard in Resources */,
 				AB00F2481C719B9C00689C70 /* dConnectDeviceTheta_resources.bundle in Resources */,
 				AB00F1ED1C71941800689C70 /* Main.storyboard in Resources */,
@@ -1458,7 +1460,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = dConnectBrowserForIOS9/dConnectBrowserForIOS9.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = NO;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1474,11 +1476,11 @@
 					"$(PROJECT_DIR)/../../dConnectDevicePlugin/dConnectDeviceChromeCast/deps/CocoaPods/Pods/google-cast-sdk/GoogleCastSDK-2.10.4-Release",
 					"$(PROJECT_DIR)/../../dConnectDevicePlugin/dConnectDeviceChromeCast/bin",
 					"$(PROJECT_DIR)/../../dConnectDevicePlugin/dConnectDevicePebble/bin",
+					"$(PROJECT_DIR)/../../dConnectDevicePlugin/dConnectDeviceLinking",
 					"$(PROJECT_DIR)/../../dConnectDevicePlugin/dConnectDevicePebble",
 					"$(PROJECT_DIR)/../../dConnectDevicePlugin/dConnectDeviceTheta/bin",
 					"$(PROJECT_DIR)/../../dConnectDevicePlugin/dConnectDeviceAllJoyn/bin",
-					"$(PROJECT_DIR)/../../dConnectDevicePlugin/dConnectDeviceHitoe",
-					"$(PROJECT_DIR)/../../dConnectDevicePlugin/dConnectDeviceHitoe/bin",
+					"$(PROJECT_DIR)/../../dConnectDevicePlugin/dConnectDeviceLinking/bin",
 				);
 				GCC_PREFIX_HEADER = "dConnectBrowserForIOS9/dConnectBrowserForIOS9-Prefix.pch";
 				HEADER_SEARCH_PATHS = "$(SDKROOT)/usr/include/libxml2";
@@ -1505,7 +1507,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = dConnectBrowserForIOS9/dConnectBrowserForIOS9.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = NO;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1521,11 +1523,11 @@
 					"$(PROJECT_DIR)/../../dConnectDevicePlugin/dConnectDeviceChromeCast/deps/CocoaPods/Pods/google-cast-sdk/GoogleCastSDK-2.10.4-Release",
 					"$(PROJECT_DIR)/../../dConnectDevicePlugin/dConnectDeviceChromeCast/bin",
 					"$(PROJECT_DIR)/../../dConnectDevicePlugin/dConnectDevicePebble/bin",
+					"$(PROJECT_DIR)/../../dConnectDevicePlugin/dConnectDeviceLinking",
 					"$(PROJECT_DIR)/../../dConnectDevicePlugin/dConnectDevicePebble",
 					"$(PROJECT_DIR)/../../dConnectDevicePlugin/dConnectDeviceTheta/bin",
 					"$(PROJECT_DIR)/../../dConnectDevicePlugin/dConnectDeviceAllJoyn/bin",
-					"$(PROJECT_DIR)/../../dConnectDevicePlugin/dConnectDeviceHitoe",
-					"$(PROJECT_DIR)/../../dConnectDevicePlugin/dConnectDeviceHitoe/bin",
+					"$(PROJECT_DIR)/../../dConnectDevicePlugin/dConnectDeviceLinking/bin",
 				);
 				GCC_PREFIX_HEADER = "dConnectBrowserForIOS9/dConnectBrowserForIOS9-Prefix.pch";
 				HEADER_SEARCH_PATHS = "$(SDKROOT)/usr/include/libxml2";

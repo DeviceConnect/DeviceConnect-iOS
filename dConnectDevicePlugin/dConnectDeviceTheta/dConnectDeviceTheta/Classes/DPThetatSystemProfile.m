@@ -29,6 +29,7 @@
 {
     self = [super init];
     if (self) {
+        self.delegate = self;
         self.dataSource = self;
         __weak DPThetaSystemProfile *weakSelf = self;
         

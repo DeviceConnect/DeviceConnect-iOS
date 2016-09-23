@@ -1,0 +1,12 @@
+img#image  {
+    width: 100%;
+}
+div.title {
+    background-color: #3EA3D3;
+    padding: 10px;
+    font-weight: bold;
+    color: #FFFFFF;
+}
+a.back{
+color:#FFFFFF;
+}

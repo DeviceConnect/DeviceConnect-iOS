@@ -61,6 +61,16 @@ extern NSString *const DConnectProximityProfileParamProximity;
 extern NSString *const DConnectProximityProfileParamNear;
 
 /*!
+ @brief パラメータ: range。
+ */
+extern NSString *const DConnectProximityProfileParamRange;
+
+extern NSString *const DConnectProximityProfileRangeImmediate;
+extern NSString *const DConnectProximityProfileRangeNear;
+extern NSString *const DConnectProximityProfileRangeFar;
+extern NSString *const DConnectProximityProfileRangeUnknown;;
+
+/*!
  @class DConnectProximityProfile
  @brief Proximityプロファイル。
  
@@ -118,5 +128,13 @@ extern NSString *const DConnectProximityProfileParamNear;
  @param[in,out] message 近接センサー情報を格納するメッセージ
  */
 + (void) setNear:(BOOL)near target:(DConnectMessage *)message;
+
+/*!
+ @brief メッセージにRange情報を設定する。
+ 
+ @param[in] rage 距離に応じた文字列。(IMMEDIATE,NEAR,FAR,UNKNOWN)
+ @param[in,out] message Range情報を格納するメッセージ
+ */
++ (void) setRange:(NSString *)range target:(DConnectMessage *)message;
 
 @end

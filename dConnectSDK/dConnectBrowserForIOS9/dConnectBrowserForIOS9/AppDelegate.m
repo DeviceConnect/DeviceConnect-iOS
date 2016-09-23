@@ -110,7 +110,7 @@
     }
 
     NSString *directURLStr = [url.resourceSpecifier stringByRemovingPercentEncoding];
-    NSURL *redirectURL = [NSURL URLWithString:directURLStr];
+    NSURL *redirectURL = [NSURL URLWithString:[directURLStr stringByReplacingOccurrencesOfString:@"//start?url=" withString:@""]];
     if (_URLLoadingCallback && redirectURL) {
         // UIApplicationWillEnterForegroundNotification通知オブザベーションによりコールバックが呼ばれた場合、
         // NSURLを引数に取るコールバックが保持される。その上で「dconnect」または「gotapi」URLスキーム経由でリダイレクト先URLが飛んできたのなら、

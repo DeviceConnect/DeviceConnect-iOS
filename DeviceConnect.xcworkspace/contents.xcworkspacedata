@@ -2,6 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:dConnectDevicePlugin/dConnectDeviceLinking/dConnectDeviceLinking.xcodeproj">
+   </FileRef>
+   <FileRef
       location = "group:dConnectDevicePlugin/dConnectDeviceHitoe/dConnectDeviceHitoe.xcodeproj">
    </FileRef>
    <FileRef

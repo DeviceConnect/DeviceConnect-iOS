@@ -33,6 +33,7 @@ static NSString * const ROI_IMAGE_SERVICE = @"ROI Image Service";
     NSMutableDictionary* _onPhotoEventList;
     NSMutableDictionary* _onStatusEventList;
     CGSize _imageSize;
+    BOOL _isUpdateManageServicesRunning;
 }
 
 @property (nonatomic, strong) DPThetaReachability *reachability;
@@ -69,14 +70,15 @@ static int const _timeout = 500;
         _batteryLevel = 0;
         _onPhotoEventList = [NSMutableDictionary new];
         _onStatusEventList = [NSMutableDictionary new];
+        _isUpdateManageServicesRunning = NO;
         
-        [self updateManageServices: YES];
-
         // Ready to PTP/IP.
         _ptpConnection = [[PtpConnection alloc] init];
         [_ptpConnection setLoglevel:PTPIP_LOGLEVEL_WARN];
         [_ptpConnection setEventListener:self];
 
+        [self updateManageServices: YES];
+        
         
         // Reachabilityの初期処理
         self.reachability = [DPThetaReachability reachabilityWithHostName: @"www.google.com"];
@@ -646,10 +648,19 @@ static int const _timeout = 500;
 // デバイス管理情報更新
 - (void) updateManageServices: (BOOL) onlineForSet {
 
+    // 実行中に呼び出されたらなにもしないで終了
+    if (_isUpdateManageServicesRunning) {
+        return;
+    }
+    
+    // 実行中フラグを立てる
+    _isUpdateManageServicesRunning = YES;
+    
     @synchronized(self) {
         
         // ServiceProvider未登録なら処理しない
         if (!self.serviceProvider) {
+            _isUpdateManageServicesRunning = NO;
             return;
         }
         
@@ -661,6 +672,7 @@ static int const _timeout = 500;
                 }
                 [service setOnline: NO];
             }
+            _isUpdateManageServicesRunning = NO;
             return;
         }
         
@@ -675,6 +687,7 @@ static int const _timeout = 500;
             if (![self.serviceProvider service: DPThetaDeviceServiceId]) {
                 DPThetaService *service = [[DPThetaService alloc] initWithServiceId: DPThetaDeviceServiceId plugin: self.plugin];
                 [service setName:serial];
+                [service setNetworkType: DConnectServiceDiscoveryProfileNetworkTypeWiFi];
                 [self.serviceProvider addService: service];
                 [service setOnline:YES];
             } else {
@@ -698,6 +711,8 @@ static int const _timeout = 500;
             [self.serviceProvider addService: service];
             [service setOnline:YES];
         }
+        
+        _isUpdateManageServicesRunning = NO;
     }
 }
 
@@ -713,7 +728,10 @@ static int const _timeout = 500;
     }
     
     // デバイス管理情報更新
-    [self updateManageServices: online];
+    dispatch_queue_t updateQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    dispatch_async(updateQueue, ^{
+        [self updateManageServices: online];
+    });
 }
 
 @end

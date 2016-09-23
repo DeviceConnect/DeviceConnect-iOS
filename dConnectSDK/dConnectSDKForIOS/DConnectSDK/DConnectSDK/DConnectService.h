@@ -20,7 +20,7 @@
 
 @end
 
-@interface DConnectService : DConnectProfileProvider
+@interface DConnectService : DConnectProfileProvider<DConnectServiceInformationProfileDataSource>
 
 /*!
  @brief サービスID.
@@ -38,7 +38,7 @@
 @property(nonatomic, weak) id<OnStatusChangeListener> statusListener;
 
 
-- (instancetype) initWithServiceId: (NSString *)serviceId plugin: (id) plugin dataSource: (id<DConnectServiceInformationProfileDataSource>) dataSource;
+- (instancetype) initWithServiceId: (NSString *)serviceId plugin: (id) plugin;
 
 - (BOOL) didReceiveRequest: (DConnectRequestMessage *) request response: (DConnectResponseMessage *)response;
 

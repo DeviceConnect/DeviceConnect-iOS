@@ -13,7 +13,7 @@
 @implementation DPAllJoynService
 
 - (instancetype) initWithServiceId: (NSString *) serviceId serviceName: (NSString *)serviceName plugin: (id) plugin handler: (DPAllJoynHandler *) handler {
-    self = [super initWithServiceId: serviceId plugin: plugin dataSource: self];
+    self = [super initWithServiceId: serviceId plugin: plugin];
     if (self) {
         [self setName: serviceName];
         [self setOnline: YES];
