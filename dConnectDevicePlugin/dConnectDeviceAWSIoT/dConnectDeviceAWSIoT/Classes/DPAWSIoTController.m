@@ -36,6 +36,9 @@ static NSString *const kTopicRequest = @"request";
 static NSString *const kTopicResponse = @"response";
 static NSString *const kTopicEvent = @"event";
 
+// 生存報告間隔
+#define kAliveInterval (5 * 60)
+
 @interface DPAWSIoTController () <DPAWSIoTWebClientDataSource, DPAWSIoTRemoteServerManagerDelegate, DPAWSIoTLocalClientManagerDelegate, DPAWSIoTLocalServerManagerDelegate, DPAWSIoTRemoteClientManagerDelegate> {
 	NSMutableDictionary *_responses;
 	NSDictionary *_managers;
@@ -50,12 +53,13 @@ static NSString *const kTopicEvent = @"event";
 
     NSMutableDictionary *_lastPublishedEvents;
 	NSTimer *_publishEventTimer;
+	
+	NSTimer *_sendAliveTimer;
 }
 @end
 
 @implementation DPAWSIoTController
 
-#pragma mark - **仮**
 
 // ManagerUUIDを返す
 + (NSString*)managerUUID {
@@ -125,12 +129,6 @@ static NSString *const kTopicEvent = @"event";
 		 } else {
 			 // 自分の情報は削除
 			 [managers removeObjectForKey:[DPAWSIoTController managerUUID]];
-			 // onlineじゃない場合は削除
-			 for (NSString *key in managers.allKeys) {
-				 if (![managers[key][@"online"] boolValue]) {
-					 [managers removeObjectForKey:key];
-				 }
-			 }
 		 }
 		 handler(managers, myInfo, nil);
 	 }];
@@ -140,7 +138,7 @@ static NSString *const kTopicEvent = @"event";
 + (void)setManagerInfo:(BOOL)online handler:(void (^)(NSError *error))handler {
 	id info;
 	if (online) {
-		info = @{@"name": [DPAWSIoTController managerName], @"online": @(online), @"timeStamp": @([[NSDate date] timeIntervalSince1970])};
+		info = @{@"name": [DPAWSIoTController managerName], @"online": @(online), @"timeStamp": @(floor([[NSDate date] timeIntervalSince1970] *  1000.0))};
 	} else {
 		info = [NSNull null];
 	}
@@ -356,8 +354,12 @@ static NSString *const kTopicEvent = @"event";
 		for (NSString *key in _managers.allKeys) {
 			// 許可されていない場合は無視
 			if (![DPAWSIoTUtils hasAllowedManager:key]) continue;
+			// 時間が経っているマネージャーは生存していないとみなす
+			if (![self checkIfManagerIsAlive:_managers[key]]) continue;
 			count++;
 		}
+		NSLog(@"a******************");
+		NSLog(@"%d", count);
 		if (count == 0) {
 			return YES;
 		}
@@ -366,6 +368,8 @@ static NSString *const kTopicEvent = @"event";
 		for (NSString *key in _managers.allKeys) {
 			// 許可されていない場合は無視
 			if (![DPAWSIoTUtils hasAllowedManager:key]) continue;
+			// 時間が経っているマネージャーは生存していないとみなす
+			if (![self checkIfManagerIsAlive:_managers[key]]) continue;
 			// ServiceIdにManagerのUUIDを埋め込む
 			[request setString:key forKey:DConnectMessageServiceId];
 			[self sendRequestToMQTT:request code:requestCode response:response];
@@ -614,6 +618,15 @@ static NSString *const kTopicEvent = @"event";
 	[[DPAWSIoTManager sharedManager] unsubscribeWithTopic:topic];
 }
 
+// 生存報告
+- (void)sendAliveTimerEvent:(id)sender {
+	[DPAWSIoTController setManagerInfo:YES handler:^(NSError *error) {
+		if (error) {
+			NSLog(@"Error on Sending Alive State.");
+		}
+	}];
+}
+
 // マネージャー情報を更新
 - (void)updateManagers:(NSDictionary*)managers myInfo:(NSDictionary*)myInfo error:(NSError*)error {
 	if (error) {
@@ -624,10 +637,24 @@ static NSString *const kTopicEvent = @"event";
 	if (myInfo) {
 		if ([myInfo[@"online"] boolValue]) {
 			[self subscribeRequest];
+			// 生存報告タイマー開始
+			if (!_sendAliveTimer) {
+				_sendAliveTimer = [NSTimer scheduledTimerWithTimeInterval:kAliveInterval target:self selector:@selector(sendAliveTimerEvent:) userInfo:nil repeats:YES];
+				[self sendAliveTimerEvent:nil];
+			}
 		} else {
 			[self unsubscribeRequest];
+			// 生存報告タイマー停止
+			[_sendAliveTimer invalidate];
+			_sendAliveTimer = nil;
 		}
+	} else {
+		[self unsubscribeRequest];
+		// 生存報告タイマー停止
+		[_sendAliveTimer invalidate];
+		_sendAliveTimer = nil;
 	}
+	
 	// ResponseTopic購読・解除
 	if (!managers) return;
 	for (NSString *key in managers.allKeys) {
@@ -635,7 +662,8 @@ static NSString *const kTopicEvent = @"event";
 		// Onlineかつ許可されている場合は購読対象
 		if ([DPAWSIoTUtils hasAllowedManager:key] &&
 			![managers[key] isKindOfClass:[NSNull class]] &&
-			[managers[key][@"online"] boolValue])
+			[managers[key][@"online"] boolValue] &&
+			[self checkIfManagerIsAlive:managers[key]])
 		{
 			NSDictionary *from = managers[key];
 			[[DPAWSIoTManager sharedManager] subscribeWithTopic:responseTopic messageHandler:^(id json, NSError *error) {
@@ -654,8 +682,16 @@ static NSString *const kTopicEvent = @"event";
 		}
 		
 	}
-	
 }
+
+// 時間が経っているマネージャーは生存していないとみなす
+- (BOOL)checkIfManagerIsAlive:(id)manager {
+	NSInteger timestamp = [manager[@"timeStamp"] integerValue];
+	NSInteger limit = kAliveInterval * 2 * 1000;
+	NSInteger now = [@(floor([[NSDate date] timeIntervalSince1970] * 1000.0)) integerValue];
+	return now < timestamp + limit;
+}
+
 // MQTTからレスポンスを受診
 - (void)receivedResponseFromMQTT:(id)json from:(NSDictionary*)manager uuid:(NSString*)uuid {
 	NSString *requestCode = [json[@"requestCode"] stringValue];

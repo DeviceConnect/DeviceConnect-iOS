@@ -9,7 +9,6 @@
 
 #import "DPAWSIoTDevicePlugin.h"
 #import "DPAWSIoTSystemProfile.h"
-#import "DPAWSIoTService.h"
 #import "DPAWSIoTUtils.h"
 #import "DPAWSIoTController.h"
 #import "DConnectDevicePlugin+Private.h"
