@@ -153,7 +153,7 @@
             [event setString:[self.pluginManager appendServiceId: plugin serviceId: serviceId] forKey:DConnectMessageServiceId];
             [targetSession sendEvent: event];
         } else {
-            DCLogW([NSString stringWithFormat: @"onEvent: Plugin is not found: id = %@", targetSession.pluginId]);
+            DCLogW(@"onEvent: Plugin is not found: id = %@", targetSession.pluginId);
         }
     }
 }

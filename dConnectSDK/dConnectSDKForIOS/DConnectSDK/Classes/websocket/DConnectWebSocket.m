@@ -188,7 +188,7 @@
                 }
             }
             if (!eventKey) {
-                DCLogW([NSString stringWithFormat: @"onWebSocketMessage: Failed to generate eventKey: uri = %@, origin = %@", uri, origin]);
+                DCLogW(@"onWebSocketMessage: Failed to generate eventKey: uri = %@, origin = %@", uri, origin);
                 return;
             }
             

@@ -163,7 +163,7 @@ typedef DConnectEventSession * (^CreateSessionBlocks)(DConnectRequestMessage *re
                                   createSessionBlocks: blocks];
         
     } else {
-        DCLogW([NSString stringWithFormat: @"getInstance : not support apptype. %@", appType]);
+        DCLogW(@"getInstance : not support apptype. %@", appType);
         return nil;
     }
 }
