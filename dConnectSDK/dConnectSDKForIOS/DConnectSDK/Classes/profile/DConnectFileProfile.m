@@ -96,6 +96,10 @@ NSString *const DConnectFileProfileOrderDESC = @"desc";
     return [request dataForKey:DConnectFileProfileParamData];
 }
 
++ (NSString *) uriFromRequest:(DConnectMessage *)request {
+    return [request stringForKey:DConnectFileProfileParamUri];
+}
+
 + (NSString *) pathFromRequest:(DConnectMessage *)request {
     return [request stringForKey:DConnectFileProfileParamPath];
 }

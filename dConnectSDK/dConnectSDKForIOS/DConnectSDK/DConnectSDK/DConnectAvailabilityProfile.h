@@ -19,6 +19,9 @@
  */
 extern NSString *const DConnectAvailabilityProfileName;
 
+extern NSString *const DConnectAvailabilityProfileParamName;
+extern NSString *const DConnectAvailabilityProfileParamUUID;
+
 @interface DConnectAvailabilityProfile : DConnectProfile
 
 - (id) init;
