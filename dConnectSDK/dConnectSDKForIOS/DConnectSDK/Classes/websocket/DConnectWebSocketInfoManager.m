@@ -57,7 +57,7 @@
     [self.webSocketInfos removeAllObjects];
 }
 
-- (DConnectWebSocketInfo *) webSocketInfo: (NSString *) eventKey {
+- (DConnectWebSocketInfo *) webSocketInfoForEventKey: (NSString *) eventKey {
     return self.webSocketInfos[eventKey];
 }
 

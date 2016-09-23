@@ -101,8 +101,9 @@
     [self.webSocketInfoManager removeAllWebSocketInfos];
 }
 
-- (void) sendEvent:(NSString *)event forSessionKey:(NSString *)sessionKey {
-    DConnectWebSocketInfo *webSocketInfo = [self.webSocketInfoManager webSocketInfo: sessionKey];
+- (void) sendEvent:(NSString *)event forOrigin:(NSString *)origin {
+    NSString *eventKey = origin;
+    DConnectWebSocketInfo *webSocketInfo = [self.webSocketInfoManager webSocketInfoForEventKey: eventKey];
     WebSocket *socket = webSocketInfo.socket;
     if (socket) {
         [socket sendMessage:event];
@@ -166,7 +167,7 @@
                 eventKey = origin;
                 // NOTE: 既存のイベントセッションを保持する.
                 
-                if ([self.webSocketInfoManager webSocketInfo: eventKey]) {
+                if ([self.webSocketInfoManager webSocketInfoForEventKey: eventKey]) {
                     DCLogW(@"onWebSocketMessage: already established.");
                     [self sendError: webSocket errorCode:4 errorMessage:@"already established."];
                     [webSocket stop];   // webSocket.disconnectWebSocket();

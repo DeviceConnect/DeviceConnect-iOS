@@ -20,6 +20,6 @@
 
 - (void) removeAllWebSocketInfos;
 
-- (DConnectWebSocketInfo *) webSocketInfo: (NSString *) eventKey;
+- (DConnectWebSocketInfo *) webSocketInfoForEventKey: (NSString *) eventKey;
 
 @end

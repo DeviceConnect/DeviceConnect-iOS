@@ -105,9 +105,9 @@ NSString *const DConnectFileCacheControllerFileName = @"com_nttdocomo_dconnect_e
     DC_SYNC_END;
 }
 
-- (BOOL) removeEventsForSessionKey:(NSString *)sessionKey {
+- (BOOL) removeEventsForOrigin:(NSString *)origin {
     DC_SYNC_START(self);
-    BOOL result = [super removeEventsForSessionKey:sessionKey];
+    BOOL result = [super removeEventsForOrigin:origin];
     if (_autoFlush) {
         [self flush];
     }

@@ -146,7 +146,7 @@ NSString *const DConnectDBCacheControllerDBName = @"__dconnect_event.db";
     return error;
 }
 
-- (BOOL) removeEventsForSessionKey:(NSString *)sessionKey {
+- (BOOL) removeEventsForOrigin:(NSString *)origin {
     
     __block BOOL result = false;
     [_helper execQueryInQueue:^(DConnectSQLiteDatabase *database) {
@@ -156,7 +156,7 @@ NSString *const DConnectDBCacheControllerDBName = @"__dconnect_event.db";
         
         do {
             [database beginTransaction];
-            NSArray *clients = [DConnectClientDao clientsForSessionKey:sessionKey
+            NSArray *clients = [DConnectClientDao clientsForOrigin:origin
                                                             onDatabase:database];
             if (!clients) {
                 break;
@@ -225,7 +225,7 @@ NSString *const DConnectDBCacheControllerDBName = @"__dconnect_event.db";
 
 - (DConnectEvent *) eventForServiceId:(NSString *)serviceId profile:(NSString *)profile
                            interface:(NSString *)interface attribute:(NSString *)attribute
-                          sessionKey:(NSString *)sessionKey
+                          origin:(NSString *)origin
 {
     
     __block DConnectEvent *event = nil;
@@ -242,13 +242,13 @@ NSString *const DConnectDBCacheControllerDBName = @"__dconnect_event.db";
         search.profile = profile;
         search.interface = interface;
         search.attribute = attribute;
-        search.sessionKey = sessionKey;
+        search.origin = origin;
         
         if (![_self checkParameterOfEvent:search]) {
             return;
         }
         
-        DConnectEventSession *data = [DConnectEventSessionDao eventSessionForEvent:search
+        DConnectEventSessionData *data = [DConnectEventSessionDao eventSessionForEvent:search
                                                                         onDatabase:database];
         if (!data) {
             return;
@@ -289,7 +289,7 @@ NSString *const DConnectDBCacheControllerDBName = @"__dconnect_event.db";
         search.profile = profile;
         search.interface = interface;
         search.attribute = attribute;
-        search.sessionKey = @"dummy";
+        search.origin = @"dummy";
         
         if (![_self checkParameterOfEvent:search]) {
             return;
@@ -306,7 +306,7 @@ NSString *const DConnectDBCacheControllerDBName = @"__dconnect_event.db";
             event.profile = profile;
             event.interface = interface;
             event.attribute = attribute;
-            event.sessionKey = client.sessionKey;
+            event.origin = client.origin;
             event.accessToken = client.accessToken;
             event.createDate = client.esCreateDate;
             event.updateDate = client.esUpdateDate;

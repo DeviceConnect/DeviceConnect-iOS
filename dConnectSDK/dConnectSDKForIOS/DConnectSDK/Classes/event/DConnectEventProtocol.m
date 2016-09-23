@@ -59,9 +59,11 @@ typedef DConnectEventSession * (^CreateSessionBlocks)(DConnectRequestMessage *re
             if ([self isSameSession: query cmp:session]) {
                 [table remove: session];
 
-                if ([[plugin pluginVersionName] isEqualToString: [V100 toString]]) {
-                    [request setSessionKey: [DConnectEventProtocol createSessionKeyForPlugin: session]];
-                }
+                // TODO: iOSはSDKとプラグインは同梱なのでバージョン違いは起きないため、互換処理は不要？
+                // [Android]
+//                if (plugin.getPluginSdkVersionName().compareTo(V100) == 0) {
+//                    DConnectProfile.setSessionKey(request, createSessionKeyForPlugin(session));
+//                }
                 return YES;
             }
         }
@@ -85,9 +87,11 @@ typedef DConnectEventSession * (^CreateSessionBlocks)(DConnectRequestMessage *re
         DConnectEventSession *session = self.createSessionBlocks(request, serviceId, receiverId, plugin.pluginId);
         [table add: session];
         
-        if ([plugin.pluginVersionName isEqualToString: [V100 toString]]) {
-            [request setSessionKey: [DConnectEventProtocol createSessionKeyForPlugin: session]];
-        }
+        // TODO: iOSはSDKとプラグインは同梱なのでバージョン違いは起きないため、互換処理は不要？
+        // [Android]
+//        if (plugin.getPluginSdkVersionName().compareTo(V100) == 0) {
+//            DConnectProfile.setSessionKey(request, createSessionKeyForPlugin(session));
+//        }
     }
     return YES;
 }
@@ -159,28 +163,8 @@ typedef DConnectEventSession * (^CreateSessionBlocks)(DConnectRequestMessage *re
                                   createSessionBlocks: blocks];
         
     } else {
-        CreateSessionBlocks blocks = ^(DConnectRequestMessage *request, NSString *serviceId, NSString *receiverId, NSString *pluginId) {
-            NSString *accessToken = request.accessToken;
-            NSString *profileName = request.profile;
-            NSString *interfaceName = request.interface;
-            NSString *attributeName = request.attribute;
-            
-            DConnectEventSession *session = [DConnectEventSession new];
-            session.accessToken = accessToken;
-            session.receiverId = receiverId;
-            session.serviceId = serviceId;
-            session.pluginId = pluginId;
-            session.profileName = profileName;
-            session.interfaceName = interfaceName;
-            session.attributeName = attributeName;
-            //[Android]
-            // session.context = context;
-            // session.broadcastReceiver = receiver;
-            
-            return session;
-        };
-        
-        return [[DConnectEventProtocol alloc] initWithContext: context createSessionBlocks: blocks];
+        DCLogW([NSString stringWithFormat: @"getInstance : not support apptype. %@", appType]);
+        return nil;
     }
 }
 
@@ -192,12 +176,6 @@ typedef DConnectEventSession * (^CreateSessionBlocks)(DConnectRequestMessage *re
     [result appendString: session.receiverId];
     [result appendString: separator];
     [result appendString: session.pluginId];
-    if ([session isKindOfClass: [DConnectEventSession class]]) {
-        [result appendString:separator];
-        // TODO: broadcastReceiverに相当する文字列を連結する必要があるか？
-        //[Android]
-//        [result appendString:[session broadcastReceiver]];
-    }
     return result;
 }
 
@@ -320,9 +298,11 @@ typedef DConnectEventSession * (^CreateSessionBlocks)(DConnectRequestMessage *re
     //[Android]
     //[request.putExtra(DConnectMessage.EXTRA_RECEIVER,
     //                 new ComponentName(context, DConnectBroadcastReceiver.class));
-    if ([plugin.pluginVersionName isEqualToString: [V100 toString]]) {
-        [request setSessionKey: plugin.pluginId];
-    }
+    // TODO: iOSはSDKとプラグインは同梱なのでバージョン違いは起きないため、互換処理は不要？
+    // [Android]
+//    if (plugin.getPluginSdkVersionName().compareTo(V100) == 0) {
+//        request.putExtra(DConnectMessage.EXTRA_SESSION_KEY, plugin.getServiceId());
+//    }
     return request;
 }
 

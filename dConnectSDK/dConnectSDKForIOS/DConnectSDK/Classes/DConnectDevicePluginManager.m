@@ -122,7 +122,7 @@
             [request setAction:DConnectMessageActionTypePut];
             [request setProfile:DConnectServiceDiscoveryProfileName];
             [request setAttribute:DConnectServiceDiscoveryProfileAttrOnServiceChange];
-            [request setSessionKey:NSStringFromClass([plugin class])];
+//            [request setSessionKey:NSStringFromClass([plugin class])];
             
             DConnectResponseMessage *response = [DConnectResponseMessage message];
             [plugin didReceiveRequest:request response:response];

@@ -69,8 +69,8 @@
 
 /*! @brief イベントを送信する.
  @param[in] event 送信するイベント
- @param[in] sessionKey 送信先のセッションキー
+ @param[in] origin 送信先のオリジン
  */
-- (void) sendEvent:(NSString *)event forSessionKey:(NSString *)sessionKey;
+- (void) sendEvent:(NSString *)event forOrigin:(NSString *)origin;
 
 @end

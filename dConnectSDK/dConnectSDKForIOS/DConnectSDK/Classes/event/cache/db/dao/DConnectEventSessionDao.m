@@ -20,7 +20,7 @@ NSString *const DConnectEventSessionDaoTableName = @"EventSession";
 NSString *const DConnectEventSessionDaoClmEDId = @"ed_id";
 NSString *const DConnectEventSessionDaoClmCId = @"c_id";
 
-@implementation DConnectEventSession
+@implementation DConnectEventSessionData
 
 @end
 
@@ -87,7 +87,7 @@ NSString *const DConnectEventSessionDaoClmCId = @"c_id";
                         onDatabase:(DConnectSQLiteDatabase *)database
 {
     
-    DConnectEventSession *eventSession = [DConnectEventSessionDao eventSessionForEvent:event onDatabase:database];
+    DConnectEventSessionData *eventSession = [DConnectEventSessionDao eventSessionForEvent:event onDatabase:database];
     if (!eventSession) {
         return DConnectEventErrorNotFound;
     }
@@ -152,9 +152,9 @@ NSString *const DConnectEventSessionDaoClmCId = @"c_id";
     return DConnectEventErrorNone;
 }
 
-+ (DConnectEventSession *) eventSessionForEvent:(DConnectEvent *)event onDatabase:(DConnectSQLiteDatabase *)database
++ (DConnectEventSessionData *) eventSessionForEvent:(DConnectEvent *)event onDatabase:(DConnectSQLiteDatabase *)database
 {
-    DConnectEventSession *eventSession = nil;
+    DConnectEventSessionData *eventSession = nil;
     NSString *sql
     = DCEForm(@"SELECT es.%@, es.%@, "
               "es.%@, es.%@, es.%@ FROM %@ AS p INNER JOIN "
@@ -191,7 +191,7 @@ NSString *const DConnectEventSessionDaoClmCId = @"c_id";
               DConnectInterfaceDaoClmName,
               DConnectAttributeDaoClmName,
               DConnectDeviceDaoClmServiceId,
-              DConnectClientDaoClmSessionKey);
+              DConnectClientDaoClmOrigin);
     
     NSString *interface = (event.interface) ? event.interface : DConnectInterfaceDaoEmptyName;
     NSString *serviceId = (event.serviceId) ? event.serviceId : DConnectDeviceDaoEmptyServiceId;
@@ -199,14 +199,14 @@ NSString *const DConnectEventSessionDaoClmCId = @"c_id";
     DConnectSQLiteCursor *cursor = [database queryWithSQL:sql
                                                bindParams:@[event.profile, interface,
                                                             event.attribute, serviceId,
-                                                            event.sessionKey]];
+                                                            event.origin]];
     
     if (!cursor) {
         return eventSession;
     }
     
     if ([cursor moveToFirst]) {
-        eventSession = [DConnectEventSession new];
+        eventSession = [DConnectEventSessionData new];
         eventSession.rowId = [cursor longLongValueAtIndex:0];
         eventSession.edId = [cursor longLongValueAtIndex:1];
         eventSession.cId = [cursor longLongValueAtIndex:2];

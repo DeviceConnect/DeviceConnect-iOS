@@ -289,16 +289,16 @@ NSString *const DConnectAttributeNameRequestAccessToken = @"requestAccessToken";
         NSArray *evts = [mgr eventListForProfile:profile attribute:attribute];
         
         for (DConnectEvent *evt in evts) {
-            [event setString:evt.sessionKey forKey:DConnectMessageSessionKey];
+            [event setString:evt.origin forKey:DConnectMessageOrigin];
             
             if (hasDelegate) {
                 [self.delegate manager:self didReceiveDConnectMessage:event];
             } else {
                 NSString *json = [event convertToJSONString];
                 if (self.mWebsocket) {
-                    [self.mWebsocket sendEvent:json forSessionKey:evt.sessionKey];
+                    [self.mWebsocket sendEvent:json forOrigin:evt.origin];
                 }
-                [DConnectServerProtocol sendEvent:json forSessionKey:evt.sessionKey];
+                [DConnectServerProtocol sendEvent:json forOrigin:evt.origin];
             }
         }
     } else {
@@ -315,30 +315,30 @@ NSString *const DConnectAttributeNameRequestAccessToken = @"requestAccessToken";
         } else {
             NSString *json = [event convertToJSONString];
             if (self.mWebsocket) {
-                [self.mWebsocket sendEvent:json forSessionKey:key];
+                [self.mWebsocket sendEvent:json forOrigin:key];
             }
-            [DConnectServerProtocol sendEvent:json forSessionKey:key];
+            [DConnectServerProtocol sendEvent:json forOrigin:key];
         }
     }
 }
 
 - (BOOL) sendEvent:(DConnectMessage *)event {
-    NSString *sessionKey = [event stringForKey:DConnectMessageSessionKey];
-    if (sessionKey) {
-        NSArray *names = [sessionKey componentsSeparatedByString:@"."];
+    NSString *origin = [event stringForKey:DConnectMessageOrigin];
+    if (origin) {
+        NSArray *names = [origin componentsSeparatedByString:@"."];
         NSString *pluginId = names[names.count - 1];
-        NSRange range = [sessionKey rangeOfString:pluginId];
+        NSRange range = [origin rangeOfString:pluginId];
         NSString *key;
         if (range.location != NSNotFound) {
             if (range.location == 0) {
-                key = sessionKey;
+                key = origin;
             } else {
-                key = [sessionKey substringToIndex:range.location - 1];
+                key = [origin substringToIndex:range.location - 1];
             }
         } else {
-            key = sessionKey;
+            key = origin;
         }
-        [event setString:key forKey:DConnectMessageSessionKey];
+        [event setString:key forKey:DConnectMessageOrigin];
 
         DConnectDevicePlugin *plugin = [_mDeviceManager devicePluginForPluginId:pluginId];
         
