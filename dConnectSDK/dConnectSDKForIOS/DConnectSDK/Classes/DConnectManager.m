@@ -309,6 +309,7 @@ NSString *const DConnectAttributeNameRequestAccessToken = @"requestAccessToken";
         for (DConnectEvent *evt in evts) {
             [event setString:evt.origin forKey:DConnectMessageOrigin];
             
+/* [DConnectMessageEventSession sendEvent]に移動。
             if (hasDelegate) {
                 [self.delegate manager:self didReceiveDConnectMessage:event];
             } else {
@@ -317,6 +318,10 @@ NSString *const DConnectAttributeNameRequestAccessToken = @"requestAccessToken";
                     [self.mWebsocket sendEvent:json forOrigin:evt.origin];
                 }
                 [DConnectServerProtocol sendEvent:json forOrigin:evt.origin];
+            }
+*/
+            if (self.mEventBroker) {
+                [self.mEventBroker onEvent:event];
             }
         }
     } else {
@@ -328,6 +333,7 @@ NSString *const DConnectAttributeNameRequestAccessToken = @"requestAccessToken";
                                                                                serviceId:serviceId];
             [event setString:did forKey:DConnectMessageServiceId];
         }
+/* [DConnectMessageEventSession sendEvent]に移動。
         if (hasDelegate) {
             [self.delegate manager:self didReceiveDConnectMessage:event];
         } else {
@@ -336,6 +342,10 @@ NSString *const DConnectAttributeNameRequestAccessToken = @"requestAccessToken";
                 [self.mWebsocket sendEvent:json forOrigin:origin];
             }
             [DConnectServerProtocol sendEvent:json forOrigin:origin];
+        }
+*/
+        if (self.mEventBroker) {
+            [self.mEventBroker onEvent:event];
         }
     }
 }
@@ -358,8 +368,7 @@ NSString *const DConnectAttributeNameRequestAccessToken = @"requestAccessToken";
                 // イベントのJSONにあるURIをFilesプロファイルに変換
                 [DConnectURLProtocol convertUri:event];
             }
-            [self.mEventBroker onRequest:event plugin:plugin];
-            // [self makeEventMessage:event origin:origin hasDelegate:hasDelegate plugin:plugin];
+            [self makeEventMessage:event origin:origin hasDelegate:hasDelegate plugin:plugin];
         }
     }
     return NO;
@@ -423,7 +432,7 @@ NSString *const DConnectAttributeNameRequestAccessToken = @"requestAccessToken";
         
         // イベントブローカーの初期化
         self.mEventSessionTable = [DConnectEventSessionTable new];
-        self.mEventBroker = [[DConnectEventBroker alloc] initWithContext:self table:self.mEventSessionTable localOAuth:self.mLocalOAuth pluginManager:self.mDeviceManager];
+        self.mEventBroker = [[DConnectEventBroker alloc] initWithContext:self table:self.mEventSessionTable localOAuth:self.mLocalOAuth pluginManager:self.mDeviceManager delegate:self.delegate];
         
         // プロファイルの追加
         [self addProfile:[DConnectManagerServiceDiscoveryProfile new]];
@@ -436,6 +445,7 @@ NSString *const DConnectAttributeNameRequestAccessToken = @"requestAccessToken";
         self.mDeliveryProfile = [DConnectManagerDeliveryProfile new];
         self.mDeliveryProfile.provider = self;
         self.mDeliveryProfile.eventBroker = self.mEventBroker;
+        self.mDeliveryProfile.webSocket = self.mWebsocket;
     }
     return self;
 }

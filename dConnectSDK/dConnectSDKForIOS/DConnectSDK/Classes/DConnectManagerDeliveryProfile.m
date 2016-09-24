@@ -112,7 +112,7 @@
         if (plugin) {
             NSString *origin = [request stringForKey:DConnectMessageOrigin];
             if (self.eventBroker) {
-                [self.eventBroker onRequest: request plugin: plugin];
+                [self.eventBroker onRequest: request plugin: plugin webSocket:self.webSocket];
             }
             
             // セッションキーにデバイスプラグインIDを付加する

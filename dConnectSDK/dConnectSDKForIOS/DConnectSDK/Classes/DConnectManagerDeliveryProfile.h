@@ -17,4 +17,6 @@
 
 @property(nonatomic, weak) DConnectEventBroker *eventBroker;
 
+@property(nonatomic, weak) DConnectWebSocket *webSocket;
+
 @end

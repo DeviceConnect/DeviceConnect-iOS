@@ -24,6 +24,8 @@
 
 @property(nonatomic, strong) id<DConnectEventRegistrationListener> listener;
 
+@property(nonatomic, weak) id<DConnectManagerDelegate> delegate;
+
 @end
 
 @implementation DConnectEventBroker
@@ -32,7 +34,9 @@
 - (instancetype) initWithContext : (/* DConnectMessageService */DConnectManager *) context
                             table: (DConnectEventSessionTable *) table
                        localOAuth: (DConnectLocalOAuthDB *) localOAuth
-                    pluginManager: (DConnectDevicePluginManager *)pluginManager {
+                    pluginManager: (DConnectDevicePluginManager *)pluginManager
+                         delegate: (id<DConnectManagerDelegate>) delegate
+{
     self = [super init];
     
     if (self) {
@@ -40,6 +44,7 @@
         self.context = context;
         self.localOAuth = localOAuth;
         self.pluginManager = pluginManager;
+        self.delegate = delegate;
     }
 
     return self;
@@ -49,7 +54,7 @@
     self.listener = listener;
 }
 
-- (void) onRequest: (DConnectMessage *) request plugin: (DConnectDevicePlugin *) dest {
+- (void) onRequest: (DConnectMessage *) request plugin: (DConnectDevicePlugin *) dest webSocket: (DConnectWebSocket *) webSocket {
     
     NSString *serviceId = [request stringForKey: DConnectMessageServiceId];
     if (!serviceId) {
@@ -63,14 +68,15 @@
     }
     
     if ([self isRegistrationRequest: request]) {
-        [self onRegistrationRequest: request plugin: dest];
+        [self onRegistrationRequest: request plugin: dest webSocket: webSocket];
     } else if ([self isUnregistrationRequest: request]) {
-        [self onUnregistrationRequest: request plugin: dest];
+        [self onUnregistrationRequest: request plugin: dest webSocket: webSocket];
     }
 }
 
-- (void) onRegistrationRequest: (DConnectMessage *) request plugin: (DConnectDevicePlugin *) dest {
-    DConnectEventProtocol *protocol = [DConnectEventProtocol getInstance:self.context request:request];
+- (void) onRegistrationRequest: (DConnectMessage *) request plugin: (DConnectDevicePlugin *) dest webSocket: (DConnectWebSocket *) webSocket {
+
+    DConnectEventProtocol *protocol = [DConnectEventProtocol getInstance:self.context request:request delegate:self.delegate webSocket:webSocket];
     if (!protocol) {
         DCLogW(@"Failed to identify a event receiver.");
         return;
@@ -82,9 +88,9 @@
     }
 }
 
-- (void) onUnregistrationRequest: (DConnectMessage *) request plugin: (DConnectDevicePlugin *) dest {
+- (void) onUnregistrationRequest: (DConnectMessage *) request plugin: (DConnectDevicePlugin *) dest webSocket: (DConnectWebSocket *) webSocket {
 
-    DConnectEventProtocol *protocol = [DConnectEventProtocol getInstance:self.context request:request];
+    DConnectEventProtocol *protocol = [DConnectEventProtocol getInstance:self.context request:request delegate:self.delegate webSocket:webSocket];
     if (!protocol) {
         DCLogW(@"Failed to identify a event receiver.");
         return;
@@ -117,11 +123,19 @@
     NSString *interfaceName = [event stringForKey: DConnectMessageInterface];
     NSString *attributeName = [event stringForKey: DConnectMessageAttribute];
     
+    NSString *serviceId_;
+    NSArray *serviceIdParts = [serviceId componentsSeparatedByString:@"."];
+    if (serviceIdParts.count > 1) {
+        serviceId_ = serviceIdParts[0];
+    } else {
+        serviceId_ = serviceId;
+    }
+    
     DConnectEventSession *targetSession = nil;
     if (pluginAccessToken) {
         for (DConnectEventSession *session in [self.table all]) {
             if ([self isSameName: pluginAccessToken cmp: session.accessToken] &&
-                [self isSameName: serviceId cmp: session.serviceId] &&
+                [self isSameName: serviceId_ cmp: session.serviceId] &&
                 [self isSameName: profileName cmp: session.profileName] &&
                 [self isSameName: interfaceName cmp: session.interfaceName] &&
                 [self isSameName: attributeName cmp: session.attributeName]) {
@@ -137,7 +151,7 @@
             for (DConnectEventSession *session in [self.table all]) {
                 if ([self isSameName: pluginId cmp: session.pluginId] &&
                     [self isSameName: receiverId cmp: session.receiverId] &&
-                    [self isSameName: serviceId cmp: session.serviceId] &&
+                    [self isSameName: serviceId_ cmp: session.serviceId] &&
                     [self isSameName: profileName cmp: session.profileName] &&
                     [self isSameName: interfaceName cmp: session.interfaceName] &&
                     [self isSameName: attributeName cmp: session.attributeName]) {
@@ -148,7 +162,14 @@
         }
     }
     if (targetSession) {
-        DConnectDevicePlugin *plugin = [self.pluginManager devicePluginForPluginId: targetSession.pluginId];
+        NSString *pluginId;
+        NSArray *pluginIdParts = [targetSession.pluginId componentsSeparatedByString:@"."];
+        if (pluginIdParts.count > 1) {
+            pluginId = pluginIdParts[0];
+        } else {
+            pluginId = targetSession.pluginId;
+        }
+        DConnectDevicePlugin *plugin = [self.pluginManager devicePluginForPluginId: pluginId];
         if (plugin) {
             [event setString:targetSession.receiverId forKey:DConnectMessageSessionKey];
             [event setString:[self.pluginManager appendServiceId: plugin serviceId: serviceId] forKey:DConnectMessageServiceId];

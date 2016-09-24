@@ -14,6 +14,7 @@
 #import "DConnectLocalOAuthDB.h"
 #import "DConnectDevicePluginManager.h"
 #import "DConnectDevicePlugin.h"
+#import "DConnectWebSocket.h"
 
 @protocol DConnectEventRegistrationListener <NSObject>
 
@@ -27,11 +28,13 @@
 - (instancetype) initWithContext : (/* DConnectMessageService */DConnectManager *) context
                             table: (DConnectEventSessionTable *) table
                        localOAuth: (DConnectLocalOAuthDB *) localOAuth
-                    pluginManager: (DConnectDevicePluginManager *)pluginManager;
-
+                    pluginManager: (DConnectDevicePluginManager *)pluginManager
+                         delegate: (id<DConnectManagerDelegate>) delegate;
 
 - (void) setRegistrationListener: (id<DConnectEventRegistrationListener>) listener;
 
-- (void) onRequest: (DConnectMessage *) request plugin: (DConnectDevicePlugin *) dest;
+- (void) onRequest: (DConnectMessage *) request plugin: (DConnectDevicePlugin *) dest webSocket: (DConnectWebSocket *) websocket;
+
+- (void) onEvent: (/* Intent */ DConnectMessage *) event;
 
 @end

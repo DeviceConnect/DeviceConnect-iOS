@@ -10,6 +10,7 @@
 #import "DConnectEventProtocol.h"
 #import "DConnectVersionName.h"
 #import "DConnectDevicePluginManager.h"
+#import "DConnectMessageEventSession.h"
 
 static DConnectVersionName *V100;
 
@@ -25,21 +26,27 @@ typedef DConnectEventSession * (^CreateSessionBlocks)(DConnectMessage *request, 
 
 @interface DConnectEventProtocol()
 
+@property(nonatomic, weak) DConnectManager *context;
+
+@property(nonatomic, weak) DConnectWebSocket *webSocket;
+
 @property(nonatomic, strong) CreateSessionBlocks createSessionBlocks;
 
 @end
 
 @implementation DConnectEventProtocol
 
-- (instancetype) initWithContext: (DConnectManager *) context createSessionBlocks: (CreateSessionBlocks) createSessionBlocks {
+- (instancetype) initWithContext: (DConnectManager *) context webSocket: (DConnectWebSocket *)webSocket createSessionBlocks: (CreateSessionBlocks) createSessionBlocks {
     
     self = [super init];
     if (self) {
         if (!V100 || !V110) {
             V100 = [DConnectVersionName parse: @"1.0.0"];
             V110 = [DConnectVersionName parse: @"1.1.0"];
-            self.createSessionBlocks = createSessionBlocks;
         }
+        self.context = context;
+        self.webSocket = webSocket;
+        self.createSessionBlocks = createSessionBlocks;
     }
     return self;
 }
@@ -129,7 +136,10 @@ typedef DConnectEventSession * (^CreateSessionBlocks)(DConnectMessage *request, 
 #pragma marker - Static Methods.
 
 + (DConnectEventProtocol *) getInstance: (/*DConnectMessageService * */DConnectManager *) context
-                                request: (DConnectMessage *) request {
+                                request: (DConnectMessage *) request
+                               delegate: (id<DConnectManagerDelegate>) delegate
+                              webSocket: (DConnectWebSocket *) webSocket
+{
     
     // request.getStringExtra(DConnectService.EXTRA_INNER_TYPE);
     NSString *appType = [request stringForKey: DConnectServiceInnerType];
@@ -145,8 +155,9 @@ typedef DConnectEventSession * (^CreateSessionBlocks)(DConnectMessage *request, 
             NSString *profileName = [request stringForKey:DConnectMessageProfile];
             NSString *interfaceName = [request stringForKey:DConnectMessageInterface];
             NSString *attributeName = [request stringForKey:DConnectMessageAttribute];
+            NSString *origin = [request stringForKey:DConnectMessageOrigin];
             
-            DConnectEventSession *session = [DConnectEventSession new];
+            DConnectMessageEventSession *session = [[DConnectMessageEventSession alloc] initWithDelegate:delegate webSocket:webSocket origin:origin];
             [session setAccessToken: accessToken];
             [session setReceiverId: receiverId];
             [session setServiceId: serviceId];
@@ -158,8 +169,7 @@ typedef DConnectEventSession * (^CreateSessionBlocks)(DConnectMessage *request, 
             return session;
         };
         
-        return [[DConnectEventProtocol alloc] initWithContext:context
-                                  createSessionBlocks: blocks];
+        return [[DConnectEventProtocol alloc] initWithContext:context webSocket:webSocket createSessionBlocks:blocks];
         
     } else {
         DCLogW(@"getInstance : not support apptype. %@", appType);
