@@ -328,34 +328,21 @@ NSString *const DConnectAttributeNameRequestAccessToken = @"requestAccessToken";
     NSString *accessToken = [event stringForKey:DConnectMessageAccessToken];
     NSString *pluginId;
     if (origin && accessToken && (pluginId = [self findRequestPluginId: accessToken])) {
-        NSString *key = origin;
-/*
-        NSArray *names = [serviceId componentsSeparatedByString:@"."];
-        NSString *pluginId = names[names.count - 1];
-        NSRange range = [serviceId rangeOfString:pluginId];
-        NSString *key;
-        if (range.location != NSNotFound) {
-            if (range.location == 0) {
-                key = serviceId;
-            } else {
-                key = [serviceId substringToIndex:range.location - 1];
-            }
-        } else {
-            key = origin;
-        }
-        [event setString:key forKey:DConnectMessageOrigin];
- */
-
-        DConnectDevicePlugin *plugin = [_mDeviceManager devicePluginForPluginId:pluginId];
         
-        BOOL hasDelegate = NO;
-        if ([self.delegate respondsToSelector:@selector(manager:didReceiveDConnectMessage:)]) {
-            hasDelegate = YES;
-        } else {
-            // イベントのJSONにあるURIをFilesプロファイルに変換
-            [DConnectURLProtocol convertUri:event];
+        NSArray *names = [pluginId componentsSeparatedByString:@"."];
+        if (names.count > 0) {
+            NSString *pluginId_ = names[0];
+            DConnectDevicePlugin *plugin = [_mDeviceManager devicePluginForPluginId:pluginId_];
+            
+            BOOL hasDelegate = NO;
+            if ([self.delegate respondsToSelector:@selector(manager:didReceiveDConnectMessage:)]) {
+                hasDelegate = YES;
+            } else {
+                // イベントのJSONにあるURIをFilesプロファイルに変換
+                [DConnectURLProtocol convertUri:event];
+            }
+            [self makeEventMessage:event origin:origin hasDelegate:hasDelegate plugin:plugin];
         }
-        [self makeEventMessage:event origin:origin hasDelegate:hasDelegate plugin:plugin];
     }
     return NO;
 }
@@ -577,7 +564,7 @@ NSString *const DConnectAttributeNameRequestAccessToken = @"requestAccessToken";
             if (oauth) {
                 LocalOAuthClientPackageInfo *info = [oauth findClientPackageInfoByAccessToken:accessToken];
                 if (info) {
-                    return [plugin.class description];
+                    return plugin.pluginId;
                 }
             }
         }
