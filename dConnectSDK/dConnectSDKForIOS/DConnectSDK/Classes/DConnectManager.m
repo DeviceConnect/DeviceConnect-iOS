@@ -271,7 +271,7 @@ NSString *const DConnectAttributeNameRequestAccessToken = @"requestAccessToken";
 }
 
 - (void)makeEventMessage:(DConnectMessage *)event
-                     key:(NSString *)key
+                  origin:(NSString *)origin
              hasDelegate:(BOOL)hasDelegate
                   plugin:(DConnectDevicePlugin *)plugin
 {
@@ -316,30 +316,35 @@ NSString *const DConnectAttributeNameRequestAccessToken = @"requestAccessToken";
         } else {
             NSString *json = [event convertToJSONString];
             if (self.mWebsocket) {
-                [self.mWebsocket sendEvent:json forOrigin:key];
+                [self.mWebsocket sendEvent:json forOrigin:origin];
             }
-            [DConnectServerProtocol sendEvent:json forOrigin:key];
+            [DConnectServerProtocol sendEvent:json forOrigin:origin];
         }
     }
 }
 
 - (BOOL) sendEvent:(DConnectMessage *)event {
     NSString *origin = [event stringForKey:DConnectMessageOrigin];
-    if (origin) {
-        NSArray *names = [origin componentsSeparatedByString:@"."];
+    NSString *accessToken = [event stringForKey:DConnectMessageAccessToken];
+    NSString *pluginId;
+    if (origin && accessToken && (pluginId = [self findRequestPluginId: accessToken])) {
+        NSString *key = origin;
+/*
+        NSArray *names = [serviceId componentsSeparatedByString:@"."];
         NSString *pluginId = names[names.count - 1];
-        NSRange range = [origin rangeOfString:pluginId];
+        NSRange range = [serviceId rangeOfString:pluginId];
         NSString *key;
         if (range.location != NSNotFound) {
             if (range.location == 0) {
-                key = origin;
+                key = serviceId;
             } else {
-                key = [origin substringToIndex:range.location - 1];
+                key = [serviceId substringToIndex:range.location - 1];
             }
         } else {
             key = origin;
         }
         [event setString:key forKey:DConnectMessageOrigin];
+ */
 
         DConnectDevicePlugin *plugin = [_mDeviceManager devicePluginForPluginId:pluginId];
         
@@ -350,7 +355,7 @@ NSString *const DConnectAttributeNameRequestAccessToken = @"requestAccessToken";
             // イベントのJSONにあるURIをFilesプロファイルに変換
             [DConnectURLProtocol convertUri:event];
         }
-        [self makeEventMessage:event key:key hasDelegate:hasDelegate plugin:plugin];
+        [self makeEventMessage:event origin:origin hasDelegate:hasDelegate plugin:plugin];
     }
     return NO;
 }
@@ -562,6 +567,22 @@ NSString *const DConnectAttributeNameRequestAccessToken = @"requestAccessToken";
     @synchronized (_mResponseBlockMap) {
         [_mResponseBlockMap removeObjectForKey:key];
     }
+}
+
+- (NSString *) findRequestPluginId: (NSString *) accessToken {
+    
+    @synchronized(self.mDeviceManager) {
+        for (DConnectDevicePlugin *plugin in [self.mDeviceManager devicePluginList]) {
+            LocalOAuth2Main *oauth = [LocalOAuth2Main sharedOAuthForClass:plugin.class];
+            if (oauth) {
+                LocalOAuthClientPackageInfo *info = [oauth findClientPackageInfoByAccessToken:accessToken];
+                if (info) {
+                    return [plugin.class description];
+                }
+            }
+        }
+    }
+    return nil;
 }
 
 #pragma mark - DConnectProfileProvider Methods -

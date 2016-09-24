@@ -130,6 +130,7 @@
         [message setString:event.interface forKey:DConnectMessageInterface];
     }
     [message setString:event.attribute forKey:DConnectMessageAttribute];
+    [message setString:event.accessToken forKey:DConnectMessageAccessToken];
     [message setString:event.origin forKey:DConnectMessageOrigin];
     if (event.serviceId) {
         [message setString:event.serviceId forKey:DConnectMessageServiceId];
