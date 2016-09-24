@@ -17,8 +17,8 @@
 
 @protocol DConnectEventRegistrationListener <NSObject>
 
-- (void) onPutEventSession: (DConnectRequestMessage *) request plugin: (DConnectDevicePlugin *) plugin;
-- (void) onDeleteEventSession: (DConnectRequestMessage *) request plugin: (DConnectDevicePlugin *) plugin;
+- (void) onPutEventSession: (DConnectMessage *) request plugin: (DConnectDevicePlugin *) plugin;
+- (void) onDeleteEventSession: (DConnectMessage *) request plugin: (DConnectDevicePlugin *) plugin;
 
 @end
 
@@ -32,10 +32,6 @@
 
 - (void) setRegistrationListener: (id<DConnectEventRegistrationListener>) listener;
 
-- (void) onRequest: (DConnectRequestMessage *) request plugin: (DConnectDevicePlugin *) dest;
-
-- (void) onRegistrationRequest: (DConnectRequestMessage *) request plugin: (DConnectDevicePlugin *) dest;
-
-- (void) onUnregistrationRequest: (DConnectRequestMessage *) request plugin: (DConnectDevicePlugin *) dest;
+- (void) onRequest: (DConnectMessage *) request plugin: (DConnectDevicePlugin *) dest;
 
 @end

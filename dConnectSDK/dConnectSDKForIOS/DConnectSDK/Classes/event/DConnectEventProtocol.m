@@ -21,7 +21,7 @@ static DConnectVersionName *V110;
  
  @param response レスポンスメッセージ
  */
-typedef DConnectEventSession * (^CreateSessionBlocks)(DConnectRequestMessage *request, NSString *serviceId, NSString *receiverId, NSString *pluginId);
+typedef DConnectEventSession * (^CreateSessionBlocks)(DConnectMessage *request, NSString *serviceId, NSString *receiverId, NSString *pluginId);
 
 
 @interface DConnectEventProtocol()
@@ -45,8 +45,8 @@ typedef DConnectEventSession * (^CreateSessionBlocks)(DConnectRequestMessage *re
     return self;
 }
 
-- (BOOL) removeSession: (DConnectEventSessionTable *) table request: (DConnectRequestMessage *) request plugin: (DConnectDevicePlugin *) plugin {
-    NSString *serviceId = [DConnectDevicePluginManager splitServiceId: plugin serviceId: request.serviceId];
+- (BOOL) removeSession: (DConnectEventSessionTable *) table request: (DConnectMessage *) request plugin: (DConnectDevicePlugin *) plugin {
+    NSString *serviceId = [DConnectDevicePluginManager splitServiceId: plugin serviceId: [request stringForKey:DConnectMessageServiceId]];
     NSString *receiverId = [DConnectEventProtocol createReceiverId: self.messageService  request:request];
     if (!receiverId) {
         return NO;
@@ -71,13 +71,13 @@ typedef DConnectEventSession * (^CreateSessionBlocks)(DConnectRequestMessage *re
     return NO;
 }
 
-- (BOOL) addSession: (DConnectEventSessionTable *) table request: (DConnectRequestMessage *) request plugin: (DConnectDevicePlugin *) plugin {
-    NSString *accessToken = [request accessToken];
+- (BOOL) addSession: (DConnectEventSessionTable *) table request: (DConnectMessage *) request plugin: (DConnectDevicePlugin *) plugin {
+    NSString *accessToken = [request stringForKey:DConnectMessageAccessToken];
     if (!accessToken) {
-        [request setAccessToken: plugin.pluginId];
+        [request setString:plugin.pluginId forKey:DConnectMessageAccessToken];
     }
     
-    NSString *serviceId = [DConnectDevicePluginManager splitServiceId: plugin serviceId: request.serviceId];
+    NSString *serviceId = [DConnectDevicePluginManager splitServiceId: plugin serviceId: [request stringForKey:DConnectMessageServiceId]];
     NSString *receiverId = [DConnectEventProtocol createReceiverId: self.messageService request: request];
     if (!receiverId) {
         return NO;
@@ -130,7 +130,7 @@ typedef DConnectEventSession * (^CreateSessionBlocks)(DConnectRequestMessage *re
 #pragma marker - Static Methods.
 
 + (DConnectEventProtocol *) getInstance: (/*DConnectMessageService * */DConnectManager *) context
-                                request: (DConnectRequestMessage *) request {
+                                request: (DConnectMessage *) request {
     
     // request.getStringExtra(DConnectService.EXTRA_INNER_TYPE);
     NSString *appType = [request stringForKey: DConnectServiceInnerType];
@@ -140,12 +140,12 @@ typedef DConnectEventSession * (^CreateSessionBlocks)(DConnectRequestMessage *re
         // [Android]
         // return new EventProtocol(context)
         // @Override EventSession createSession(Intent request, String serviceId, String receiverId, String pluginId) { ... }
-        CreateSessionBlocks blocks = ^(DConnectRequestMessage *request, NSString *serviceId, NSString *receiverId, NSString *pluginId) {
+        CreateSessionBlocks blocks = ^(DConnectMessage *request, NSString *serviceId, NSString *receiverId, NSString *pluginId) {
             
-            NSString *accessToken = request.accessToken;
-            NSString *profileName = request.profile;
-            NSString *interfaceName = request.interface;
-            NSString *attributeName = request.attribute;
+            NSString *accessToken = [request stringForKey:DConnectMessageAccessToken];
+            NSString *profileName = [request stringForKey:DConnectMessageProfile];
+            NSString *interfaceName = [request stringForKey:DConnectMessageInterface];
+            NSString *attributeName = [request stringForKey:DConnectMessageAttribute];
             
             DConnectEventSession *session = [DConnectEventSession new];
             [session setAccessToken: accessToken];
@@ -181,7 +181,7 @@ typedef DConnectEventSession * (^CreateSessionBlocks)(DConnectRequestMessage *re
 
 
 + (NSString *) createReceiverId: (/*)DConnectMessageService*/DConnectManager *) messageService
-                        request: (DConnectRequestMessage *) request {
+                        request: (DConnectMessage *) request {
     
     NSString *origin = [request stringForKey: DConnectMessageOrigin];
     if (!origin && !messageService.requiresOrigin) {
@@ -189,7 +189,7 @@ typedef DConnectEventSession * (^CreateSessionBlocks)(DConnectRequestMessage *re
     }
     
     NSString *receiverId;
-    NSString *sessionKey = [request sessionKey];
+    NSString *sessionKey = [request stringForKey:DConnectMessageSessionKey];
     if (sessionKey) {
         receiverId = sessionKey;
     } else {

@@ -27,6 +27,9 @@
 #import "DConnectOriginParser.h"
 #import "LocalOAuth2Main.h"
 #import "DConnectServerProtocol.h"
+#import "DConnectEventBroker.h"
+#import "DConnectEventSessionTable.h"
+#import "DConnectLocalOAuthDB.h"
 
 static NSString *const MATCH_YES = @"YES";
 static NSString *const MATCH_NO = @"NO";
@@ -92,6 +95,20 @@ NSString *const DConnectAttributeNameRequestAccessToken = @"requestAccessToken";
  * リクエスト配送用のプロファイル.
  */
 @property (nonatomic) DConnectManagerDeliveryProfile *mDeliveryProfile;
+
+/**
+ * Local OAuthのデータを管理するクラス.
+ */
+@property(nonatomic) DConnectLocalOAuthDB *mLocalOAuth;
+
+/** イベントセッション管理テーブル. */
+@property(nonatomic) DConnectEventSessionTable *mEventSessionTable;
+
+/**
+ * イベントブローカー.
+ */
+@property (nonatomic) DConnectEventBroker *mEventBroker;
+
 
 /*!
  @brief DConnectManager起動フラグ。
@@ -341,7 +358,8 @@ NSString *const DConnectAttributeNameRequestAccessToken = @"requestAccessToken";
                 // イベントのJSONにあるURIをFilesプロファイルに変換
                 [DConnectURLProtocol convertUri:event];
             }
-            [self makeEventMessage:event origin:origin hasDelegate:hasDelegate plugin:plugin];
+            [self.mEventBroker onRequest:event plugin:plugin];
+            // [self makeEventMessage:event origin:origin hasDelegate:hasDelegate plugin:plugin];
         }
     }
     return NO;
@@ -400,6 +418,13 @@ NSString *const DConnectAttributeNameRequestAccessToken = @"requestAccessToken";
         self.mProfileMap = [NSMutableDictionary dictionary];
         self.mResponseBlockMap = [NSMutableDictionary dictionary];
         
+        // Local OAuthのデータを管理するクラス
+        self.mLocalOAuth = [DConnectLocalOAuthDB sharedLocalOAuthDB];
+        
+        // イベントブローカーの初期化
+        self.mEventSessionTable = [DConnectEventSessionTable new];
+        self.mEventBroker = [[DConnectEventBroker alloc] initWithContext:self table:self.mEventSessionTable localOAuth:self.mLocalOAuth pluginManager:self.mDeviceManager];
+        
         // プロファイルの追加
         [self addProfile:[DConnectManagerServiceDiscoveryProfile new]];
         [self addProfile:[DConnectManagerSystemProfile new]];
@@ -410,6 +435,7 @@ NSString *const DConnectAttributeNameRequestAccessToken = @"requestAccessToken";
         // デバイスプラグイン配送用プロファイル
         self.mDeliveryProfile = [DConnectManagerDeliveryProfile new];
         self.mDeliveryProfile.provider = self;
+        self.mDeliveryProfile.eventBroker = self.mEventBroker;
     }
     return self;
 }

@@ -49,16 +49,17 @@
     self.listener = listener;
 }
 
-- (void) onRequest: (DConnectRequestMessage *) request plugin: (DConnectDevicePlugin *) dest {
-    NSString *serviceId = [request serviceId];
+- (void) onRequest: (DConnectMessage *) request plugin: (DConnectDevicePlugin *) dest {
+    
+    NSString *serviceId = [request stringForKey: DConnectMessageServiceId];
     if (!serviceId) {
         return;
     }
     NSString *accessToken = [self getAccessToken: serviceId];
     if (accessToken) {
-        [request setAccessToken: accessToken];
+        [request setString:accessToken forKey:DConnectMessageAccessToken];
     } else {
-        [request setAccessToken: nil];
+        [request setString:nil forKey:DConnectMessageAccessToken];
     }
     
     if ([self isRegistrationRequest: request]) {
@@ -68,7 +69,7 @@
     }
 }
 
-- (void) onRegistrationRequest: (DConnectRequestMessage *) request plugin: (DConnectDevicePlugin *) dest {
+- (void) onRegistrationRequest: (DConnectMessage *) request plugin: (DConnectDevicePlugin *) dest {
     DConnectEventProtocol *protocol = [DConnectEventProtocol getInstance:self.context request:request];
     if (!protocol) {
         DCLogW(@"Failed to identify a event receiver.");
@@ -81,7 +82,7 @@
     }
 }
 
-- (void) onUnregistrationRequest: (DConnectRequestMessage *) request plugin: (DConnectDevicePlugin *) dest {
+- (void) onUnregistrationRequest: (DConnectMessage *) request plugin: (DConnectDevicePlugin *) dest {
 
     DConnectEventProtocol *protocol = [DConnectEventProtocol getInstance:self.context request:request];
     if (!protocol) {
@@ -229,12 +230,14 @@
     }
 }
 
-- (BOOL) isRegistrationRequest: (DConnectRequestMessage *) request {
-    return request.action == DConnectMessageActionTypePut;
+- (BOOL) isRegistrationRequest: (DConnectMessage *) request {
+    DConnectMessageActionType action = (DConnectMessageActionType)[request integerForKey:DConnectMessageAction];
+    return action == DConnectMessageActionTypePut;
 }
 
-- (BOOL) isUnregistrationRequest: (DConnectRequestMessage *) request {
-    return request.action == DConnectMessageActionTypeDelete;
+- (BOOL) isUnregistrationRequest: (DConnectMessage *) request {
+    DConnectMessageActionType action = (DConnectMessageActionType)[request integerForKey:DConnectMessageAction];
+    return action == DConnectMessageActionTypeDelete;
 }
 
 @end

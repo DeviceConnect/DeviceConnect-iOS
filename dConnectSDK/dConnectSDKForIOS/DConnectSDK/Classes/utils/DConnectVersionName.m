@@ -43,7 +43,7 @@
     if (!versionName) {
         return nil;
     }
-    NSArray *array = [versionName componentsSeparatedByString:@"\\."];
+    NSArray *array = [versionName componentsSeparatedByString:@"."];
     if (array.count != 3) {
         return nil;
     }
