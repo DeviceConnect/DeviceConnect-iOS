@@ -28,7 +28,7 @@
         NSMutableString *exp = [NSMutableString string];
         for (int i = 0; i < [self.version count]; i++) {
             if (i > 0) {
-                [exp appendString:@","];
+                [exp appendString:@"."];
             }
             NSNumber *no = (NSNumber *) version[i];
             [exp appendString:[NSString stringWithFormat: @"%d", [no intValue]]];

@@ -10,7 +10,6 @@
 #import "DConnectEventProtocol.h"
 #import "DConnectVersionName.h"
 #import "DConnectDevicePluginManager.h"
-#import "CipherSignatureFactory.h"
 
 static DConnectVersionName *V100;
 
@@ -193,14 +192,9 @@ typedef DConnectEventSession * (^CreateSessionBlocks)(DConnectMessage *request, 
     if (sessionKey) {
         receiverId = sessionKey;
     } else {
-        receiverId = [self md5: origin];
+        receiverId = origin;
     }
     return receiverId;
-}
-
-+ (NSString *) md5 : (NSString *) s {
-    CipherSignatureProc *md5Proc = [CipherSignatureFactory getInstance: CIPHER_SIGNATURE_KIND_MD5];
-    return [md5Proc generateSignature: s];
 }
 
 /*!
