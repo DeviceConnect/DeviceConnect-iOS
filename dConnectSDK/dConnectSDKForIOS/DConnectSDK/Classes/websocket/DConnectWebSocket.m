@@ -121,7 +121,7 @@
 
 #pragma mark - WebSocketDelegate Methods -
 
-- (void)webSocketDidOpen:(WebSocket *)webSocket {
+- (void)webSocketDidOpen:(WebSocket *)webSocket origin: (NSString *)origin {
     [self.websocketList addObject:webSocket];
 }
 
@@ -239,7 +239,8 @@
             if ([WebSocket isWebSocketRequest:self.request]) {
                 WebSocket *websocket = [[WebSocket alloc] initWithRequest:self.request socket:socket];
                 websocket.delegate = self;
-                [websocket start];
+                NSString *origin = [self.request headerField:@"origin"];
+                [websocket start: origin];
             }
         }
     }

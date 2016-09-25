@@ -130,6 +130,7 @@
 /*! @brief websocketとsessionKeyの対応表.
  */
 @property (nonatomic) NSMutableDictionary *websocketDic;
+
 @end
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -140,6 +141,9 @@
 
 static dispatch_queue_t recentNonceQueue;
 static NSMutableArray *recentNonces;
+
+// MODIFIED originとwebSocket対応テーブルを追加。
+static NSMutableDictionary *originTable;    // key:origin / value: websocket
 
 /**
  * This method is automatically called (courtesy of Cocoa) before the first instantiation of this class.
@@ -319,7 +323,14 @@ static NSMutableArray *recentNonces;
 
 #pragma mark - WebSocketDelegate Methods -
 
-- (void)webSocketDidOpen:(WebSocket *)webSocket {
+- (void)webSocketDidOpen:(WebSocket *)webSocket origin: (NSString *) origin {
+    
+    // MODIFIED webSocketとoriginの対応テーブルを追加。
+    if (!originTable) {
+        originTable = [NSMutableDictionary dictionary];
+    }
+    originTable[origin] = webSocket;
+    
     [self.websocketList addObject:webSocket];
 }
 
@@ -333,7 +344,7 @@ static NSMutableArray *recentNonces;
                                                               error:&error];
         if (!error) {
             // MODIFIED ORIGINをキーにWebSocketを管理する。
-            NSString *origin = dic[DConnectMessageOrigin];
+            NSString *origin = [self originForWebSocket: webSocket];
             if (origin) {
                 [self.websocketDic setObject:webSocket forKey:origin];
             }
@@ -1046,7 +1057,9 @@ static NSMutableArray *recentNonces;
 		}
 		else
 		{
-			[ws start];
+            NSDictionary *allHeaderFields = [request allHeaderFields];
+            NSString *origin = [request headerField: @"origin"];
+            [ws start: origin];
 			
 //			[[config server] addWebSocket:ws];
 			
@@ -2740,6 +2753,18 @@ static NSMutableArray *recentNonces;
 	// Post notification of dead connection
 	// This will allow our server to release us from its array of connections
 	[[NSNotificationCenter defaultCenter] postNotificationName:HTTPConnectionDidDieNotification object:self];
+}
+
+#pragma mark origin
+
+// MODIFIED originとwebSocket対応テーブルの検索処理を追加。
+- (NSString *) originForWebSocket: (WebSocket *) webSocket {
+    for (NSString *origin in originTable.allKeys) {
+        if (originTable[origin] == webSocket) {
+            return origin;
+        }
+    }
+    return nil;
 }
 
 @end
