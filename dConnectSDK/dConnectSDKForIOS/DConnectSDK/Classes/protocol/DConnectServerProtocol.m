@@ -74,7 +74,7 @@ static BOOL useExternalIP = NO;
 + (void) sendEvent:(NSString *)event forOrigin:(NSString *)origin
 {
     if (mHttpServer) {
-        [mHttpServer sendEvent:event forSessionKey:origin];
+        [mHttpServer sendEvent:event forOrigin:origin];
     }
 }
 

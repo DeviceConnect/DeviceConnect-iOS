@@ -111,7 +111,7 @@
 
 - (BOOL)shouldDie;
 - (void)die;
-- (void)sendEvent:(NSString *)event forSessionKey:(NSString *)sessionKey;
+- (void)sendEvent:(NSString *)event forOrigin:(NSString *)origin;
 - (void)stopWebSocket;
 - (NSInteger)numberOfWebSocket;
 @end

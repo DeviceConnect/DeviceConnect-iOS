@@ -483,10 +483,11 @@
 	[webSocketsLock unlock];
 }
 
-- (void)sendEvent:(NSString *)event forSessionKey:(NSString *)sessionKey
+// MODIFIED ORIGINをキーにする。
+- (void)sendEvent:(NSString *)event forOrigin:(NSString *)origin
 {
     for (HTTPConnection *connection in connections) {
-        [connection sendEvent:event forSessionKey:sessionKey];
+        [connection sendEvent:event forOrigin:origin];
     }
 }
 

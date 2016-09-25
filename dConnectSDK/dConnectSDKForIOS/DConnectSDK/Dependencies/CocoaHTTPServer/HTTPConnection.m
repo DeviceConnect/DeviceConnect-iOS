@@ -277,8 +277,9 @@ static NSMutableArray *recentNonces;
     [self.websocketDic removeAllObjects];
 }
 
-- (void) sendEvent:(NSString *)event forSessionKey:(NSString *)sessionKey {
-    WebSocket *socket = [self.websocketDic objectForKey:sessionKey];
+// MODIFIED originをキーにする。
+- (void) sendEvent:(NSString *)event forOrigin:(NSString *)origin {
+    WebSocket *socket = [self.websocketDic objectForKey:origin];
     if (socket) {
         [socket sendMessage:event];
     }
@@ -331,9 +332,10 @@ static NSMutableArray *recentNonces;
                                                             options:NSJSONReadingAllowFragments
                                                               error:&error];
         if (!error) {
-            NSString *sessionKey = dic[DConnectMessageSessionKey];
-            if (sessionKey) {
-                [self.websocketDic setObject:webSocket forKey:sessionKey];
+            // MODIFIED ORIGINをキーにWebSocketを管理する。
+            NSString *origin = dic[DConnectMessageOrigin];
+            if (origin) {
+                [self.websocketDic setObject:webSocket forKey:origin];
             }
         }
     }

@@ -172,7 +172,7 @@
         DConnectDevicePlugin *plugin = [self.pluginManager devicePluginForPluginId: pluginId];
         if (plugin) {
             [event setString:targetSession.receiverId forKey:DConnectMessageSessionKey];
-            [event setString:[self.pluginManager appendServiceId: plugin serviceId: serviceId] forKey:DConnectMessageServiceId];
+            [event setString:[self.pluginManager appendServiceId: plugin serviceId: serviceId_] forKey:DConnectMessageServiceId];
             [targetSession sendEvent: event];
         } else {
             DCLogW(@"onEvent: Plugin is not found: id = %@", targetSession.pluginId);
