@@ -71,10 +71,10 @@ static BOOL useExternalIP = NO;
 }
 
 
-+ (void) sendEvent:(NSString *)event forOrigin:(NSString *)origin
++ (void) sendEvent:(NSString *)event forReceiverId:(NSString *)receiverId
 {
     if (mHttpServer) {
-        [mHttpServer sendEvent:event forOrigin:origin];
+        [mHttpServer sendEvent:event forReceiverId:receiverId];
     }
 }
 

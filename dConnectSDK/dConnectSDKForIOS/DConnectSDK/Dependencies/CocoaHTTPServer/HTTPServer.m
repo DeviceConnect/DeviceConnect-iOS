@@ -484,10 +484,10 @@
 }
 
 // MODIFIED ORIGINをキーにする。
-- (void)sendEvent:(NSString *)event forOrigin:(NSString *)origin
+- (void)sendEvent:(NSString *)event forReceiverId:(NSString *)receiverId
 {
     for (HTTPConnection *connection in connections) {
-        [connection sendEvent:event forOrigin:origin];
+        [connection sendEvent:event forReceiverId:receiverId];
     }
 }
 

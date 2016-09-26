@@ -47,7 +47,7 @@
         if (self.webSocket) {
             [self.webSocket sendEvent:json forOrigin:self.origin];
         }
-        [DConnectServerProtocol sendEvent:json forOrigin:self.origin];
+        [DConnectServerProtocol sendEvent:json forReceiverId:self.receiverId];
     }
 }
 

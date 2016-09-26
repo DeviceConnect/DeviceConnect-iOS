@@ -18,5 +18,5 @@
 + (void)stopServer;
 + (void)setExternalIPFlag:(BOOL)flag;
 
-+ (void)sendEvent:(NSString *)event forOrigin:(NSString *)origin;
++ (void)sendEvent:(NSString *)event forReceiverId:(NSString *)receiverId;
 @end
