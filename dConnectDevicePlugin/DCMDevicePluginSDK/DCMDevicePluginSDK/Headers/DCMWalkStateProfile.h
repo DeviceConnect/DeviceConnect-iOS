@@ -73,9 +73,6 @@ extern NSString *const DCMWalkStateProfileStateRunning;
 
 
 
-@class DCMWalkStateProfile;
-
-
 /*!
  @class DCMWalkStateProfile
  @brief WalkStateプロファイル。

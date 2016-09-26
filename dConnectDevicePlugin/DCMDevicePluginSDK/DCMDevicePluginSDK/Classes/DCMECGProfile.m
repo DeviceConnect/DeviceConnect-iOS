@@ -22,11 +22,6 @@ NSString *const DCMECGProfileParamUnitCode = @"unitCode";
 NSString *const DCMECGProfileParamTimeStamp = @"timeStamp";
 NSString *const DCMECGProfileParamTimeStampString = @"timeStampString";
 
-@interface DCMECGProfile()
-
-- (BOOL) hasMethod:(SEL)method response:(DConnectResponseMessage *)response;
-
-@end
 @implementation DCMECGProfile
 
 - (NSString *) profileName {
