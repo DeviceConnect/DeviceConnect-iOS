@@ -36,7 +36,7 @@ typedef void (^CollisionBlock)(DConnectMessage *);
 {
     self = [super init];
     if (self) {
-        self.delegate = self;
+
         self.quaternionOnceBlock = nil;
         self.locatorOnceBlock = nil;
         self.collisionOnceBlock = nil;
