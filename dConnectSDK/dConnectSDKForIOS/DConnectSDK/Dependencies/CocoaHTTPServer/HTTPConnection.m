@@ -340,11 +340,11 @@ static NSMutableDictionary *originTable;    // key:origin / value: websocket
                                                               error:&error];
         if (!error) {
             HTTPMessage *httpRequest = [webSocket getRequest];
-            NSString *uri = httpRequest.url.absoluteString;
+            NSString *path = httpRequest.url.path;
             NSString *origin = httpRequest.allHeaderFields[@"origin"];
             NSString *receiverId;
             
-            if (uri && [uri localizedCaseInsensitiveCompare: @"/gotapi/websocket"]) {
+            if (path && [path localizedCaseInsensitiveCompare: @"/gotapi/websocket"] == NSOrderedSame) {
                 NSString *accessToken = json[DConnectMessageAccessToken];
                 if (!accessToken) {
                     DCLogW(@"onWebSocketMessage: accessToken is not specified");
