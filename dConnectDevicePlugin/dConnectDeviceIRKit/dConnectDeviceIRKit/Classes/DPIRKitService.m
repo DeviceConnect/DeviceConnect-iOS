@@ -15,7 +15,7 @@
 @implementation DPIRKitService
 
 - (instancetype) initWithServiceId: (NSString *)serviceId plugin: (id)plugin{
-    self = [super initWithServiceId: serviceId plugin: plugin dataSource: self];
+    self = [super initWithServiceId: serviceId plugin: plugin];
     if (self) {
         [self setName: serviceId];
         [self setNetworkType: DConnectServiceDiscoveryProfileNetworkTypeWiFi];

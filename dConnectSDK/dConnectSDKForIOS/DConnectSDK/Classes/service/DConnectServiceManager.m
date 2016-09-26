@@ -104,9 +104,9 @@ static NSMutableDictionary *_instanceArray = nil;
         for (DConnectProfile *profile in [service profiles]) {
 
             // プロファイルのJSONファイルを読み込み、内部生成したprofileSpecを新規登録する
-            if (![[self pluginSpec] findProfileSpec: [profile profileName]]) {
+            if (![[self pluginSpec] findProfileSpec: [[profile profileName] lowercaseString]]) {
                 NSError *error = nil;
-                [[self pluginSpec] addProfileSpec: [profile profileName] error: &error];
+                [[self pluginSpec] addProfileSpec: [[profile profileName] lowercaseString] error: &error];
                 if (error) {
                     DCLogE(@"addService error ! %@", [error description]);
                 }

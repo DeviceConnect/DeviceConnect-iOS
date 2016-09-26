@@ -110,6 +110,10 @@
 		AB00F4AB1C71B16200689C70 /* RATreeView+TableViewDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = AB00F4861C71B16200689C70 /* RATreeView+TableViewDelegate.m */; };
 		AB00F4AC1C71B16200689C70 /* RATreeView+UIScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = AB00F4881C71B16200689C70 /* RATreeView+UIScrollView.m */; };
 		AB00F4AD1C71B16200689C70 /* RATreeView.m in Sources */ = {isa = PBXBuildFile; fileRef = AB00F48A1C71B16200689C70 /* RATreeView.m */; };
+		AB1521831D95253D00FE4210 /* dConnectDeviceAWSIoT_resources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = AB1521811D95253D00FE4210 /* dConnectDeviceAWSIoT_resources.bundle */; };
+		AB1521841D95253D00FE4210 /* dConnectDeviceAWSIoT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB1521821D95253D00FE4210 /* dConnectDeviceAWSIoT.framework */; };
+		AB1521861D95256400FE4210 /* LinkingLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB1521851D95256400FE4210 /* LinkingLibrary.framework */; };
+		AB1521871D95256400FE4210 /* LinkingLibrary.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = AB1521851D95256400FE4210 /* LinkingLibrary.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		AB1FAB0C1C7AC1E00013C434 /* dConnectDeviceAllJoyn_resources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = AB1FAB0A1C7AC1E00013C434 /* dConnectDeviceAllJoyn_resources.bundle */; };
 		AB1FAB0D1C7AC1E00013C434 /* dConnectDeviceAllJoyn.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB1FAB0B1C7AC1E00013C434 /* dConnectDeviceAllJoyn.framework */; };
 		AB1FAB111C7AC1EE0013C434 /* RobotKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB1FAB0E1C7AC1EE0013C434 /* RobotKit.framework */; };
@@ -117,13 +121,11 @@
 		AB1FAB131C7AC1EE0013C434 /* RobotUIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB1FAB101C7AC1EE0013C434 /* RobotUIKit.framework */; };
 		AB1FAB161C7AC1F60013C434 /* dConnectDeviceSphero_resources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = AB1FAB141C7AC1F60013C434 /* dConnectDeviceSphero_resources.bundle */; };
 		AB1FAB171C7AC1F60013C434 /* dConnectDeviceSphero.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB1FAB151C7AC1F60013C434 /* dConnectDeviceSphero.framework */; };
-		AB7A81A81D799E7F00DF7B05 /* demo in Resources */ = {isa = PBXBuildFile; fileRef = AB7A81A71D799E7F00DF7B05 /* demo */; };
 		AB3120041D7E916600B2D886 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB3120031D7E916600B2D886 /* SystemConfiguration.framework */; };
 		AB3120061D7E927600B2D886 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB3120051D7E927600B2D886 /* CoreText.framework */; };
-		AB281C0C1D2D0C1C0092A2B2 /* hitoeAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB281C0A1D2D05740092A2B2 /* hitoeAPI.framework */; };
-		AB281C0D1D2D0C1C0092A2B2 /* hitoeAPI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = AB281C0A1D2D05740092A2B2 /* hitoeAPI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		AB281C101D2D0D6B0092A2B2 /* dConnectDeviceHitoe_resources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = AB281C0E1D2D0D6A0092A2B2 /* dConnectDeviceHitoe_resources.bundle */; };
-		AB281C111D2D0D6B0092A2B2 /* dConnectDeviceHitoe.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB281C0F1D2D0D6B0092A2B2 /* dConnectDeviceHitoe.framework */; };
+		AB7A81A81D799E7F00DF7B05 /* demo in Resources */ = {isa = PBXBuildFile; fileRef = AB7A81A71D799E7F00DF7B05 /* demo */; };
+		AB868FF51D90F89900959C7F /* dConnectDeviceLinking_resources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = AB868FF31D90F89900959C7F /* dConnectDeviceLinking_resources.bundle */; };
+		AB868FF61D90F89900959C7F /* dConnectDeviceLinking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB868FF41D90F89900959C7F /* dConnectDeviceLinking.framework */; };
 		AB94E85F1C755EB300DAE749 /* BookmarkDBFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB94E8581C755EB200DAE749 /* BookmarkDBFramework.framework */; };
 		AB94E8601C755EB300DAE749 /* BookmarkDBFramework.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = AB94E8581C755EB200DAE749 /* BookmarkDBFramework.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		AB94E86D1C75611700DAE749 /* db.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = AB94E8651C75611700DAE749 /* db.xcdatamodeld */; };
@@ -184,7 +186,7 @@
 			dstSubfolderSpec = 10;
 			files = (
 				AB94E8601C755EB300DAE749 /* BookmarkDBFramework.framework in Embed Frameworks */,
-				AB281C0D1D2D0C1C0092A2B2 /* hitoeAPI.framework in Embed Frameworks */,
+				AB1521871D95256400FE4210 /* LinkingLibrary.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -370,6 +372,9 @@
 		AB00F4881C71B16200689C70 /* RATreeView+UIScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "RATreeView+UIScrollView.m"; sourceTree = "<group>"; };
 		AB00F4891C71B16200689C70 /* RATreeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RATreeView.h; sourceTree = "<group>"; };
 		AB00F48A1C71B16200689C70 /* RATreeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RATreeView.m; sourceTree = "<group>"; };
+		AB1521811D95253D00FE4210 /* dConnectDeviceAWSIoT_resources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = dConnectDeviceAWSIoT_resources.bundle; path = ../../dConnectDevicePlugin/dConnectDeviceAWSIoT/bin/dConnectDeviceAWSIoT_resources.bundle; sourceTree = "<group>"; };
+		AB1521821D95253D00FE4210 /* dConnectDeviceAWSIoT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = dConnectDeviceAWSIoT.framework; path = ../../dConnectDevicePlugin/dConnectDeviceAWSIoT/bin/dConnectDeviceAWSIoT.framework; sourceTree = "<group>"; };
+		AB1521851D95256400FE4210 /* LinkingLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LinkingLibrary.framework; path = ../../dConnectDevicePlugin/dConnectDeviceLinking/Libs/Release/LinkingLibrary.framework; sourceTree = "<group>"; };
 		AB1FAB0A1C7AC1E00013C434 /* dConnectDeviceAllJoyn_resources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = dConnectDeviceAllJoyn_resources.bundle; path = ../../dConnectDevicePlugin/dConnectDeviceAllJoyn/bin/dConnectDeviceAllJoyn_resources.bundle; sourceTree = "<group>"; };
 		AB1FAB0B1C7AC1E00013C434 /* dConnectDeviceAllJoyn.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = dConnectDeviceAllJoyn.framework; path = ../../dConnectDevicePlugin/dConnectDeviceAllJoyn/bin/dConnectDeviceAllJoyn.framework; sourceTree = "<group>"; };
 		AB1FAB0E1C7AC1EE0013C434 /* RobotKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RobotKit.framework; path = ../../dConnectDevicePlugin/dConnectDeviceSphero/RobotKit.framework; sourceTree = "<group>"; };
@@ -377,12 +382,11 @@
 		AB1FAB101C7AC1EE0013C434 /* RobotUIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RobotUIKit.framework; path = ../../dConnectDevicePlugin/dConnectDeviceSphero/RobotUIKit.framework; sourceTree = "<group>"; };
 		AB1FAB141C7AC1F60013C434 /* dConnectDeviceSphero_resources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = dConnectDeviceSphero_resources.bundle; path = ../../dConnectDevicePlugin/dConnectDeviceSphero/bin/dConnectDeviceSphero_resources.bundle; sourceTree = "<group>"; };
 		AB1FAB151C7AC1F60013C434 /* dConnectDeviceSphero.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = dConnectDeviceSphero.framework; path = ../../dConnectDevicePlugin/dConnectDeviceSphero/bin/dConnectDeviceSphero.framework; sourceTree = "<group>"; };
-		AB7A81A71D799E7F00DF7B05 /* demo */ = {isa = PBXFileReference; lastKnownFileType = folder; path = demo; sourceTree = "<group>"; };
 		AB3120031D7E916600B2D886 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		AB3120051D7E927600B2D886 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
-		AB281C0A1D2D05740092A2B2 /* hitoeAPI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = hitoeAPI.framework; path = ../../dConnectDevicePlugin/dConnectDeviceHitoe/hitoeAPI.framework; sourceTree = "<group>"; };
-		AB281C0E1D2D0D6A0092A2B2 /* dConnectDeviceHitoe_resources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = dConnectDeviceHitoe_resources.bundle; path = ../../dConnectDevicePlugin/dConnectDeviceHitoe/bin/dConnectDeviceHitoe_resources.bundle; sourceTree = "<group>"; };
-		AB281C0F1D2D0D6B0092A2B2 /* dConnectDeviceHitoe.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = dConnectDeviceHitoe.framework; path = ../../dConnectDevicePlugin/dConnectDeviceHitoe/bin/dConnectDeviceHitoe.framework; sourceTree = "<group>"; };
+		AB7A81A71D799E7F00DF7B05 /* demo */ = {isa = PBXFileReference; lastKnownFileType = folder; path = demo; sourceTree = "<group>"; };
+		AB868FF31D90F89900959C7F /* dConnectDeviceLinking_resources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = dConnectDeviceLinking_resources.bundle; path = ../../dConnectDevicePlugin/dConnectDeviceLinking/bin/dConnectDeviceLinking_resources.bundle; sourceTree = "<group>"; };
+		AB868FF41D90F89900959C7F /* dConnectDeviceLinking.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = dConnectDeviceLinking.framework; path = ../../dConnectDevicePlugin/dConnectDeviceLinking/bin/dConnectDeviceLinking.framework; sourceTree = "<group>"; };
 		AB94E8581C755EB200DAE749 /* BookmarkDBFramework.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = BookmarkDBFramework.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB94E85C1C755EB300DAE749 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AB94E8661C75611700DAE749 /* db 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "db 2.xcdatamodel"; sourceTree = "<group>"; };
@@ -437,19 +441,19 @@
 				AB3120041D7E916600B2D886 /* SystemConfiguration.framework in Frameworks */,
 				8E3772471D24D5B3003D3124 /* libxml2.tbd in Frameworks */,
 				AB00F20F1C719A8600689C70 /* CoreGraphics.framework in Frameworks */,
-				AB281C0C1D2D0C1C0092A2B2 /* hitoeAPI.framework in Frameworks */,
 				AB00F20D1C719A7D00689C70 /* Foundation.framework in Frameworks */,
 				AB00F20B1C719A6A00689C70 /* CoreData.framework in Frameworks */,
+				AB868FF61D90F89900959C7F /* dConnectDeviceLinking.framework in Frameworks */,
 				AB00F2151C719AA800689C70 /* DConnectSDK.framework in Frameworks */,
 				AB00F2171C719AB700689C70 /* DCMDevicePluginSDK.framework in Frameworks */,
 				AB00F23B1C719B8100689C70 /* dConnectDeviceSonyCamera.framework in Frameworks */,
+				AB1521861D95256400FE4210 /* LinkingLibrary.framework in Frameworks */,
 				AB00F24B1C719F3100689C70 /* ExternalAccessory.framework in Frameworks */,
 				AB1FAB171C7AC1F60013C434 /* dConnectDeviceSphero.framework in Frameworks */,
 				AB00F2071C719A5700689C70 /* CoreMotion.framework in Frameworks */,
 				AB00F21F1C719B3900689C70 /* dConnectDeviceChromecast.framework in Frameworks */,
 				AB00F2371C719B7600689C70 /* dConnectDevicePebble.framework in Frameworks */,
 				AB00F22F1C719B6500689C70 /* dConnectDeviceIRKit.framework in Frameworks */,
-				AB281C111D2D0D6B0092A2B2 /* dConnectDeviceHitoe.framework in Frameworks */,
 				AB1FAB0D1C7AC1E00013C434 /* dConnectDeviceAllJoyn.framework in Frameworks */,
 				AB94E85F1C755EB300DAE749 /* BookmarkDBFramework.framework in Frameworks */,
 				AB00F2331C719B6E00689C70 /* PebbleVendor.framework in Frameworks */,
@@ -464,6 +468,7 @@
 				AB00F22B1C719B5B00689C70 /* HueSDK_iOS.framework in Frameworks */,
 				AB1FAB131C7AC1EE0013C434 /* RobotUIKit.framework in Frameworks */,
 				AB00F2291C719B5500689C70 /* dConnectDeviceHue.framework in Frameworks */,
+				AB1521841D95253D00FE4210 /* dConnectDeviceAWSIoT.framework in Frameworks */,
 				AB00F2321C719B6E00689C70 /* PebbleKit.framework in Frameworks */,
 				ABA304021D7FC8A100B1CEEB /* GoogleCast.framework in Frameworks */,
 			);
@@ -648,6 +653,7 @@
 		AB00F1D61C71941800689C70 = {
 			isa = PBXGroup;
 			children = (
+				AB1521851D95256400FE4210 /* LinkingLibrary.framework */,
 				AB00F1E11C71941800689C70 /* dConnectBrowserForIOS9 */,
 				AB94E8591C755EB300DAE749 /* BookmarkDBFramework */,
 				AB94E88E1C75704300DAE749 /* BookmarkShare */,
@@ -701,6 +707,10 @@
 		AB00F1F91C71961500689C70 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				AB1521811D95253D00FE4210 /* dConnectDeviceAWSIoT_resources.bundle */,
+				AB1521821D95253D00FE4210 /* dConnectDeviceAWSIoT.framework */,
+				AB868FF31D90F89900959C7F /* dConnectDeviceLinking_resources.bundle */,
+				AB868FF41D90F89900959C7F /* dConnectDeviceLinking.framework */,
 				ABA304031D7FC8A700B1CEEB /* GoogleCastResources.bundle */,
 				ABA304011D7FC8A100B1CEEB /* GoogleCast.framework */,
 				ABAC404C1D7E9E9700BBDD34 /* Accelerate.framework */,
@@ -709,9 +719,6 @@
 				ABAC40421D7E9DB200BBDD34 /* AVFoundation.framework */,
 				AB3120051D7E927600B2D886 /* CoreText.framework */,
 				AB3120031D7E916600B2D886 /* SystemConfiguration.framework */,
-				AB281C0E1D2D0D6A0092A2B2 /* dConnectDeviceHitoe_resources.bundle */,
-				AB281C0F1D2D0D6B0092A2B2 /* dConnectDeviceHitoe.framework */,
-				AB281C0A1D2D05740092A2B2 /* hitoeAPI.framework */,
 				8E3772461D24D5B3003D3124 /* libxml2.tbd */,
 				AB1FAB141C7AC1F60013C434 /* dConnectDeviceSphero_resources.bundle */,
 				AB1FAB151C7AC1F60013C434 /* dConnectDeviceSphero.framework */,
@@ -1144,10 +1151,11 @@
 				ABE71E2F1C76D3F40061973C /* star@2x.png in Resources */,
 				AB00F21E1C719B3900689C70 /* dConnectDeviceChromecast_resources.bundle in Resources */,
 				ABA304041D7FC8A700B1CEEB /* GoogleCastResources.bundle in Resources */,
+				AB1521831D95253D00FE4210 /* dConnectDeviceAWSIoT_resources.bundle in Resources */,
 				AB00F22E1C719B6500689C70 /* dConnectDeviceIRKit_resources.bundle in Resources */,
-				AB281C101D2D0D6B0092A2B2 /* dConnectDeviceHitoe_resources.bundle in Resources */,
 				AB1FAB0C1C7AC1E00013C434 /* dConnectDeviceAllJoyn_resources.bundle in Resources */,
 				AB00F49E1C71B16200689C70 /* LICENSE in Resources */,
+				AB868FF51D90F89900959C7F /* dConnectDeviceLinking_resources.bundle in Resources */,
 				8E9AE4EC1D2F421C007348DA /* DevicePlugin.storyboard in Resources */,
 				AB00F2ED1C71A29D00689C70 /* GHFolderTitleCell.xib in Resources */,
 				AB00F2241C719B4B00689C70 /* dConnectDeviceHost_resources.bundle in Resources */,
@@ -1387,7 +1395,7 @@
 				ONLY_ACTIVE_ARCH = NO;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				VALID_ARCHS = "arm64 armv7s";
+				VALID_ARCHS = "arm64 armv7s armv7";
 			};
 			name = Debug;
 		};
@@ -1448,7 +1456,7 @@
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
-				VALID_ARCHS = "arm64 armv7s";
+				VALID_ARCHS = "arm64 armv7s armv7";
 			};
 			name = Release;
 		};
@@ -1458,7 +1466,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = dConnectBrowserForIOS9/dConnectBrowserForIOS9.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = NO;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1477,8 +1485,9 @@
 					"$(PROJECT_DIR)/../../dConnectDevicePlugin/dConnectDevicePebble",
 					"$(PROJECT_DIR)/../../dConnectDevicePlugin/dConnectDeviceTheta/bin",
 					"$(PROJECT_DIR)/../../dConnectDevicePlugin/dConnectDeviceAllJoyn/bin",
-					"$(PROJECT_DIR)/../../dConnectDevicePlugin/dConnectDeviceHitoe",
-					"$(PROJECT_DIR)/../../dConnectDevicePlugin/dConnectDeviceHitoe/bin",
+					"$(PROJECT_DIR)/../../dConnectDevicePlugin/dConnectDeviceLinking/bin",
+					"$(PROJECT_DIR)/../../dConnectDevicePlugin/dConnectDeviceLinking/Libs/Release",
+					"$(PROJECT_DIR)/../../dConnectDevicePlugin/dConnectDeviceAWSIoT/bin",
 				);
 				GCC_PREFIX_HEADER = "dConnectBrowserForIOS9/dConnectBrowserForIOS9-Prefix.pch";
 				HEADER_SEARCH_PATHS = "$(SDKROOT)/usr/include/libxml2";
@@ -1492,6 +1501,7 @@
 					"-lsqlite3",
 					"-lstdc++",
 					"-lc++",
+					"-lz",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.deviceconnect.dConnectBrowserForIOS9.dConnectBrowserForIOS9;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1505,7 +1515,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = dConnectBrowserForIOS9/dConnectBrowserForIOS9.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = NO;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1524,8 +1534,9 @@
 					"$(PROJECT_DIR)/../../dConnectDevicePlugin/dConnectDevicePebble",
 					"$(PROJECT_DIR)/../../dConnectDevicePlugin/dConnectDeviceTheta/bin",
 					"$(PROJECT_DIR)/../../dConnectDevicePlugin/dConnectDeviceAllJoyn/bin",
-					"$(PROJECT_DIR)/../../dConnectDevicePlugin/dConnectDeviceHitoe",
-					"$(PROJECT_DIR)/../../dConnectDevicePlugin/dConnectDeviceHitoe/bin",
+					"$(PROJECT_DIR)/../../dConnectDevicePlugin/dConnectDeviceLinking/bin",
+					"$(PROJECT_DIR)/../../dConnectDevicePlugin/dConnectDeviceLinking/Libs/Release",
+					"$(PROJECT_DIR)/../../dConnectDevicePlugin/dConnectDeviceAWSIoT/bin",
 				);
 				GCC_PREFIX_HEADER = "dConnectBrowserForIOS9/dConnectBrowserForIOS9-Prefix.pch";
 				HEADER_SEARCH_PATHS = "$(SDKROOT)/usr/include/libxml2";
@@ -1538,6 +1549,7 @@
 					"-lsqlite3",
 					"-lstdc++",
 					"-lc++",
+					"-lz",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.deviceconnect.dConnectBrowserForIOS9.dConnectBrowserForIOS9;
 				PRODUCT_NAME = "$(TARGET_NAME)";

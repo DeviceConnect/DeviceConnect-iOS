@@ -302,3 +302,5 @@ dConnectSDK/dConnectBrowserForIOS9/dConnectBrowserForIOS9/libs/Objective-C-HMTL-
 ant.properties
 build.xml
 
+dConnectDevicePlugin/dConnectDeviceAWSIoT/bin
+dConnectDevicePlugin/dConnectDeviceAWSIoT/Pods

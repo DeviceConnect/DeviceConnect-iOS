@@ -78,7 +78,6 @@ NSString *const DConnectCanvasProfileModeFills  = @"fills";
     return [request stringForKey:DConnectCanvasProfileParamURI];
 }
 
-
 + (NSString *) xFromRequest:(DConnectMessage *)request {
     return [request stringForKey:DConnectCanvasProfileParamX];
 }

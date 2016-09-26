@@ -18,6 +18,12 @@ NSString *const DConnectProximityProfileParamMax = @"max";
 NSString *const DConnectProximityProfileParamThreshold = @"threshold";
 NSString *const DConnectProximityProfileParamProximity = @"proximity";
 NSString *const DConnectProximityProfileParamNear = @"near";
+NSString *const DConnectProximityProfileParamRange = @"range";
+
+NSString *const DConnectProximityProfileRangeImmediate = @"IMMEDIATE";
+NSString *const DConnectProximityProfileRangeNear = @"NEAR";
+NSString *const DConnectProximityProfileRangeFar = @"FAR";
+NSString *const DConnectProximityProfileRangeUnknown = @"UNKNOWN";
 
 @implementation DConnectProximityProfile
 
@@ -49,6 +55,10 @@ NSString *const DConnectProximityProfileParamNear = @"near";
 
 + (void) setNear:(BOOL)near target:(DConnectMessage *)message {
     [message setBool:near forKey:DConnectProximityProfileParamNear];
+}
+
++ (void) setRange:(NSString *)range target:(DConnectMessage *)message {
+    [message setString:range forKey:DConnectProximityProfileParamRange];
 }
 
 @end

@@ -26,7 +26,7 @@ extern NSString * const DConnectServiceInnerTypeHttp;
 
 @end
 
-@interface DConnectService : DConnectProfileProvider
+@interface DConnectService : DConnectProfileProvider<DConnectServiceInformationProfileDataSource>
 
 /*!
  @brief サービスID.
@@ -44,7 +44,7 @@ extern NSString * const DConnectServiceInnerTypeHttp;
 @property(nonatomic, weak) id<OnStatusChangeListener> statusListener;
 
 
-- (instancetype) initWithServiceId: (NSString *)serviceId plugin: (id) plugin dataSource: (id<DConnectServiceInformationProfileDataSource>) dataSource;
+- (instancetype) initWithServiceId: (NSString *)serviceId plugin: (id) plugin;
 
 - (BOOL) didReceiveRequest: (DConnectRequestMessage *) request response: (DConnectResponseMessage *)response;
 

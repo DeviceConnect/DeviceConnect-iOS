@@ -20,7 +20,7 @@
 @implementation DPHitoeService
 - (instancetype) initWithServiceId: (NSString *) serviceId plugin: (id) plugin {
 
-    self = [super initWithServiceId: serviceId plugin: plugin dataSource: self];
+    self = [super initWithServiceId: serviceId plugin: plugin];
     if (self) {
         //ServiceDiscoveryの定義
         [self setNetworkType:DConnectServiceDiscoveryProfileNetworkTypeBLE];
