@@ -14,7 +14,7 @@ extern NSString *const DConnectEventSessionDaoTableName;
 extern NSString *const DConnectEventSessionDaoClmEDId;
 extern NSString *const DConnectEventSessionDaoClmCId;
 
-@interface DConnectEventSession : NSObject
+@interface DConnectEventSessionData : NSObject
 
 @property (nonatomic) long long rowId;
 @property (nonatomic) long long edId;
@@ -33,6 +33,6 @@ extern NSString *const DConnectEventSessionDaoClmCId;
 
 + (DConnectEventError) deleteEvent:(DConnectEvent *)event onDatabase:(DConnectSQLiteDatabase *)database;
 + (DConnectEventError) deleteWithIds:(NSArray *)ids onDatabase:(DConnectSQLiteDatabase *)database;
-+ (DConnectEventSession *) eventSessionForEvent:(DConnectEvent *)event onDatabase:(DConnectSQLiteDatabase *)database;
++ (DConnectEventSessionData *) eventSessionForEvent:(DConnectEvent *)event onDatabase:(DConnectSQLiteDatabase *)database;
 
 @end

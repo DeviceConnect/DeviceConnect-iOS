@@ -197,6 +197,6 @@
 
 - (NSUInteger)numberOfHTTPConnections;
 - (NSUInteger)numberOfWebSocketConnections;
-- (void)sendEvent:(NSString *)event forSessionKey:(NSString *)sessionKey;
+- (void)sendEvent:(NSString *)event forReceiverId:(NSString *)receiverId;
 
 @end

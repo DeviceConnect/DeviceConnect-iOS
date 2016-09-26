@@ -111,6 +111,9 @@
         DConnectDevicePlugin *plugin = [mgr.mDeviceManager devicePluginForServiceId:serviceId];
         if (plugin) {
             NSString *origin = [request stringForKey:DConnectMessageOrigin];
+            if (self.eventBroker) {
+                [self.eventBroker onRequest: request plugin: plugin webSocket:self.webSocket];
+            }
             
             // セッションキーにデバイスプラグインIDを付加する
             NSString *sessionKey = [request stringForKey:DConnectMessageSessionKey];

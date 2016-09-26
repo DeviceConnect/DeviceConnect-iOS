@@ -120,7 +120,8 @@
         if ([params count] == 5) {
             
             NSString *serviceId = [params[0] stringByRemovingPercentEncoding];
-            NSString *sessionKey = [params[1] stringByRemovingPercentEncoding];
+//            NSString *sessionKey = [params[1] stringByRemovingPercentEncoding];
+            NSString *origin = [params[1] stringByRemovingPercentEncoding];
             NSString *profile = [params[2] stringByRemovingPercentEncoding];
             NSString *interface = [params[3] stringByRemovingPercentEncoding];
             NSString *attribute = [params[4] stringByRemovingPercentEncoding];
@@ -142,7 +143,8 @@
                 req.attribute = attribute;
             }
 
-            req.sessionKey = sessionKey;
+//            req.sessionKey = sessionKey;
+            req.origin = origin;
             req.accessToken = accessToken;
             
             [dconnectManager sendRequest:req callback:nil];
@@ -167,11 +169,18 @@
     
     [key appendString:@" "];
     
-    if (![self isEmptyString:[message stringForKey:DConnectMessageSessionKey]]) {
-        [key appendString:[[message stringForKey:DConnectMessageSessionKey]
+//    if (![self isEmptyString:[message stringForKey:DConnectMessageSessionKey]]) {
+//        [key appendString:[[message stringForKey:DConnectMessageSessionKey]
+//                           stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+//    }
+//    
+//    [key appendString:@" "];
+//    
+    if (![self isEmptyString:[message stringForKey:DConnectMessageOrigin]]) {
+        [key appendString:[[message stringForKey:DConnectMessageOrigin]
                            stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
     }
-
+    
     [key appendString:@" "];
     
     if (![self isEmptyString:[message stringForKey:DConnectMessageProfile]]) {

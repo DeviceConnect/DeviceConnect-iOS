@@ -77,13 +77,13 @@ NSString *const DConnectMemoryCacheControllerEmptyServiceId = @"";
     return DConnectEventErrorNone;
 }
 
-- (BOOL) removeEventsForSessionKey:(NSString *)sessionKey {
+- (BOOL) removeEventsForOrigin:(NSString *)origin {
     
     for (NSMutableDictionary *events in _eventMap.allValues) {
         for (NSMutableArray *eventList in events.allValues) {
             NSMutableArray *removes = [NSMutableArray array];
             for (DConnectEvent *event in eventList) {
-                if ([event.sessionKey isEqualToString:sessionKey]) {
+                if ([event.origin isEqualToString:origin]) {
                     [removes addObject:event];
                 }
             }
@@ -175,7 +175,7 @@ NSString *const DConnectMemoryCacheControllerEmptyServiceId = @"";
 
 - (DConnectEvent *) eventForServiceId:(NSString *)serviceId profile:(NSString *)profile
                            interface:(NSString *)interface attribute:(NSString *)attribute
-                          sessionKey:(NSString *)sessionKey
+                          origin:(NSString *)origin
 {
     DConnectEvent *event = nil;
     DC_SYNC_START(self);
@@ -187,7 +187,7 @@ NSString *const DConnectMemoryCacheControllerEmptyServiceId = @"";
                                            attribute:[attribute lowercaseString]];
         
         for (DConnectEvent *e in eventList) {
-            if ([event.sessionKey isEqualToString:sessionKey]) {
+            if ([event.origin isEqualToString:origin]) {
                 event = e;
                 break;
             }

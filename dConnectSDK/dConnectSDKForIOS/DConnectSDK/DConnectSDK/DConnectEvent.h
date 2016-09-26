@@ -60,9 +60,9 @@ typedef NS_ENUM(NSUInteger, DConnectEventError) {
 @property (nonatomic, strong) NSString *accessToken;
 
 /*!
- @brief イベント登録時に指定されたセッションキー。
+ @brief イベント登録時に指定されたオリジン。
  */
-@property (nonatomic, strong) NSString *sessionKey;
+@property (nonatomic, strong) NSString *origin;
 
 /*!
  @brief イベント登録日。

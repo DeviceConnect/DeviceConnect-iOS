@@ -44,12 +44,12 @@
 - (DConnectEventError) removeEvent:(DConnectEvent *)event;
 
 /*!
- @brief 指定されたセッションキーに紐づくイベント情報を全て削除する。
+ @brief 指定されたオリジンに紐づくイベント情報を全て削除する。
  
- @param[in] sessionKey セッションキー
+ @param[in] origin オリジン
  @return 成功の場合YES、その他はNOを返す
  */
-- (BOOL) removeEventsForSessionKey:(NSString *)sessionKey;
+- (BOOL) removeEventsForOrigin:(NSString *)origin;
 
 /*!
  @brief キャッシュからデータを全て削除する。
@@ -65,12 +65,12 @@
  @param[in] profile プロファイル名
  @param[in] interface インターフェース名
  @param[in] attribute アトリビュート名
- @param[in] sessionKey セッションキー
+ @param[in] origin オリジン
  @return イベントデータ。条件に合うものが無い場合はnilを返す。
  */
 - (DConnectEvent *) eventForServiceId:(NSString *)serviceId profile:(NSString *)profile
                            interface:(NSString *)interface attribute:(NSString *)attribute
-                          sessionKey:(NSString *)sessionKey;
+                          origin:(NSString *)origin;
 
 /*!
  @brief キャッシュから条件にあうイベントデータの一覧を取得する。

@@ -46,9 +46,9 @@
         [self addDeletePath: deleteEventsRequestApiPath
                         api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
                             
-                            NSString *sessionKey = [request sessionKey];
+                            NSString *origin = [request origin];
                             
-                            return [weakSelf didReceiveDeleteEventsRequest:request response:response sessionKey:sessionKey];
+                            return [weakSelf didReceiveDeleteEventsRequest:request response:response origin:origin];
                         }];
 
     }
@@ -63,9 +63,9 @@
 - (BOOL)
 didReceiveDeleteEventsRequest:(DConnectRequestMessage *)request
                      response:(DConnectResponseMessage *)response
-                   sessionKey:(NSString *)sessionKey
+                       origin:(NSString *)origin
 {
-    if ([_eventMgr removeEventsForSessionKey:sessionKey]) {
+    if ([_eventMgr removeEventsForOrigin:origin]) {
         [response setResult:DConnectMessageResultTypeOk];
     } else {
         [response setErrorToUnknownWithMessage:

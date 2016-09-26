@@ -18,7 +18,7 @@
 
 NSString *const DConnectClientDaoTableName = @"Client";
 NSString *const DConnectClientDaoClmAccessToken = @"access_token";
-NSString *const DConnectClientDaoClmSessionKey = @"session_key";
+NSString *const DConnectClientDaoClmOrigin = @"origin";
 
 @implementation DConnectClient
 @end
@@ -34,11 +34,11 @@ NSString *const DConnectClientDaoClmSessionKey = @"session_key";
                             "%@ INTEGER NOT NULL, UNIQUE(%@));",
                             DConnectClientDaoTableName,
                             DConnectEventDaoClmId,
-                            DConnectClientDaoClmSessionKey,
+                            DConnectClientDaoClmOrigin,
                             DConnectClientDaoClmAccessToken,
                             DConnectEventDaoClmCreateDate,
                             DConnectEventDaoClmUpdateDate,
-                            DConnectClientDaoClmSessionKey);
+                            DConnectClientDaoClmOrigin);
     
     if (![database execSQL:sql]){
         @throw @"error";
@@ -54,8 +54,8 @@ NSString *const DConnectClientDaoClmSessionKey = @"session_key";
         DConnectSQLiteCursor *cursor
         = [database selectFromTable:DConnectClientDaoTableName
                             columns:@[DConnectEventDaoClmId]
-                              where:DCEForm(@"%@=?", DConnectClientDaoClmSessionKey)
-                         bindParams:@[event.sessionKey]];
+                              where:DCEForm(@"%@=?", DConnectClientDaoClmOrigin)
+                         bindParams:@[event.origin]];
         
         if (!cursor) {
             break;
@@ -66,9 +66,9 @@ NSString *const DConnectClientDaoClmSessionKey = @"session_key";
         if (cursor.count == 0) {
             
             result = [database insertIntoTable:DConnectClientDaoTableName
-                                       columns:@[DConnectClientDaoClmSessionKey, DConnectClientDaoClmAccessToken,
+                                       columns:@[DConnectClientDaoClmOrigin, DConnectClientDaoClmAccessToken,
                                                  DConnectEventDaoClmCreateDate, DConnectEventDaoClmUpdateDate]
-                                        params:@[event.sessionKey, accessToken, current, current]];
+                                        params:@[event.origin, accessToken, current, current]];
             
         } else if ([cursor moveToFirst]) {
             result = [cursor longLongValueAtIndex:0];
@@ -87,17 +87,17 @@ NSString *const DConnectClientDaoClmSessionKey = @"session_key";
     return result;
 }
 
-+ (NSArray *) clientsForSessionKey:(NSString *)sessionKey
++ (NSArray *) clientsForOrigin:(NSString *)origin
                         onDatabase:(DConnectSQLiteDatabase *)database {
     
     NSMutableArray *clients = nil;
     DConnectSQLiteCursor *cursor
     = [database selectFromTable:DConnectClientDaoTableName
                         columns:@[DConnectEventDaoClmId,
-                                  DConnectClientDaoClmSessionKey,
+                                  DConnectClientDaoClmOrigin,
                                   DConnectClientDaoClmAccessToken]
-                          where:DCEForm(@"%@=?", DConnectClientDaoClmSessionKey)
-                     bindParams:@[sessionKey]];
+                          where:DCEForm(@"%@=?", DConnectClientDaoClmOrigin)
+                     bindParams:@[origin]];
     
     if (!cursor) {
         return clients;
@@ -109,7 +109,7 @@ NSString *const DConnectClientDaoClmSessionKey = @"session_key";
         do {
             DConnectClient *client = [DConnectClient new];
             client.rowId = [cursor intValueAtIndex:0];
-            client.sessionKey = [cursor stringValueAtIndex:1];
+            client.origin = [cursor stringValueAtIndex:1];
             client.accessToken = [cursor stringValueAtIndex:2];
             [clients addObject:client];
         } while ([cursor moveToNext]);
@@ -125,7 +125,7 @@ NSString *const DConnectClientDaoClmSessionKey = @"session_key";
     DConnectClient *client = nil;
     DConnectSQLiteCursor *cursor
     = [database selectFromTable:DConnectClientDaoTableName
-                        columns:@[DConnectClientDaoClmSessionKey, DConnectClientDaoClmAccessToken]
+                        columns:@[DConnectClientDaoClmOrigin, DConnectClientDaoClmAccessToken]
                           where:DCEForm(@"%@=?", DConnectEventDaoClmId)
                      bindParams:@[[NSNumber numberWithLongLong:rowId]]];
     
@@ -137,7 +137,7 @@ NSString *const DConnectClientDaoClmSessionKey = @"session_key";
     if ([cursor moveToFirst]) {
         client = [DConnectClient new];
         client.rowId = rowId;
-        client.sessionKey = [cursor stringValueAtIndex:0];
+        client.origin = [cursor stringValueAtIndex:0];
         client.accessToken = [cursor stringValueAtIndex:1];
     }
     
@@ -160,7 +160,7 @@ NSString *const DConnectClientDaoClmSessionKey = @"session_key";
               "INNER JOIN %@ AS c ON es.%@ = c.%@ WHERE p.%@ = ? "
               "AND i.%@ = ? AND a.%@ = ? AND d.%@ = ?;",
               DConnectEventDaoClmId,
-              DConnectClientDaoClmSessionKey,
+              DConnectClientDaoClmOrigin,
               DConnectClientDaoClmAccessToken,
               DConnectEventDaoClmCreateDate,
               DConnectEventDaoClmUpdateDate,
@@ -204,7 +204,7 @@ NSString *const DConnectClientDaoClmSessionKey = @"session_key";
         do {
             DConnectClient *client = [DConnectClient new];
             client.rowId = [cursor longLongValueAtIndex:0];
-            client.sessionKey = [cursor stringValueAtIndex:1];
+            client.origin = [cursor stringValueAtIndex:1];
             client.accessToken = [cursor stringValueAtIndex:2];
             client.esCreateDate = [NSDate dateWithTimeIntervalSince1970:[cursor longLongValueAtIndex:3]];
             client.esUpdateDate = [NSDate dateWithTimeIntervalSince1970:[cursor longLongValueAtIndex:4]];
