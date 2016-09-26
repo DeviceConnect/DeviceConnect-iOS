@@ -84,13 +84,9 @@ var main = (function(parent, global) {
         var xType = formElem['deviceconnect.type'].value;
         var body = null;
 
-        console.log('method:' + method)
-        console.log('path:' + path)
-        console.log('xtype:' + xType)
-
         if (xType == 'event') {
             // TODO
-            var uri = "http://localhost:4035" + path.toLowerCase() + "?" + createBody(nav).join('&') + "&sessionKey=" + util.getSessionKey();
+            var uri = "http://localhost:4035" + path.toLowerCase() + "?" + createBody(nav).join('&');
             console.log(uri);
 
             setRequestText(nav, createRequest(method + " " + path));

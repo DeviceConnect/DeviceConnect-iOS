@@ -78,8 +78,6 @@ var util = (function(parent, global) {
 
             mAccessToken = getCookie('accessToken');
 
-            openWebSocketIfNeeded();
-
             serviceDiscovery(function(services) {
                 var serviceId = getServiceId();
                 for (var i = 0; i < services.length; i++) {
@@ -97,7 +95,7 @@ var util = (function(parent, global) {
     }
 
     function authorization(callback) {
-        dConnect.authorization(mScopes, 'ヘルプ',
+        dConnect.authorization(mScopes, 'デバイス確認画面',
             function(clientId, accessToken) {
                 mAccessToken = accessToken;
                 setCookie('accessToken', mAccessToken);
@@ -137,16 +135,18 @@ var util = (function(parent, global) {
     }
 
     function openWebSocketIfNeeded() {
-        if (!dConnect.isConnectedWebSocket()) {
-            dConnect.connectWebSocket(mSessionKey, function(code, message) {
-                if (code > 0) {
-                    alert('WebSocketが切れました。\n code=' + code + " message=" + message);
-                }
-                console.log('websocket: ' + code + ' - ' + message);
-            });
-            console.log('WebSocket opened.');
-        } else {
-            console.log('WebSocket has opened already.');
+        try {
+            if (!dConnect.isConnectedWebSocket()) {
+                var accessToken = mAccessToken ? mAccessToken : mSessionKey;
+                dConnect.connectWebSocket(accessToken, function(code, message) {
+                    if (code > 0) {
+                        alert('WebSocketが切れました。\n code=' + code + " message=" + message);
+                    }
+                    console.log("WebSocket: code=" + code + " message=" +message);
+                });
+            }
+        } catch (e) {
+            alert("この端末は、WebSocketをサポートしていません。");
         }
     }
     function doMediaPlayerMediaPut(serviceId, accessToken, id, callback) {
