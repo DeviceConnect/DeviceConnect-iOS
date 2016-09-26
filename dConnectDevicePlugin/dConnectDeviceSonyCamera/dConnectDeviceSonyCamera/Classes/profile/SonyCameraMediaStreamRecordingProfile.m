@@ -318,7 +318,7 @@
         [self addPutPath: putOnPhotoRequestApiPath api: ^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
             
             NSString *serviceId = [request serviceId];
-            NSString *sessionKey = [request sessionKey];
+            NSString *origin = [request origin];
             
             SonyCameraManager *manager = [SonyCameraManager sharedManager];
             
@@ -327,9 +327,9 @@
                 return YES;
             }
             
-            // セッションキー確認
-            if (!sessionKey) {
-                [response setErrorToInvalidRequestParameterWithMessage:@"sessionKey is nil."];
+            // オリジン確認
+            if (!origin) {
+                [response setErrorToInvalidRequestParameterWithMessage:@"origin is nil."];
                 return YES;
             }
             
@@ -351,7 +351,7 @@
         [self addDeletePath: deleteOnPhotoRequestApiPath api: ^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
             
             NSString *serviceId = [request serviceId];
-            NSString *sessionKey = [request sessionKey];
+            NSString *origin = [request origin];
             
             SonyCameraManager *manager = [SonyCameraManager sharedManager];
             
@@ -360,9 +360,9 @@
                 return YES;
             }
             
-            // セッションキー確認
-            if (!sessionKey) {
-                [response setErrorToInvalidRequestParameterWithMessage:@"sessionKey is nil."];
+            // オリジン確認
+            if (!origin) {
+                [response setErrorToInvalidRequestParameterWithMessage:@"origin is nil."];
                 return YES;
             }
             
@@ -385,7 +385,7 @@
         [self addPutPath: putOnDataAvailableRequestApiPath api: ^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
             
             NSString *serviceId = [request serviceId];
-            NSString *sessionKey = [request sessionKey];
+            NSString *origin = [request origin];
             
             SonyCameraManager *manager = [SonyCameraManager sharedManager];
             
@@ -394,9 +394,9 @@
                 return YES;
             }
             
-            // セッションキー確認
-            if (!sessionKey) {
-                [response setErrorToInvalidRequestParameterWithMessage:@"sessionKey is nil."];
+            // オリジン確認
+            if (!origin) {
+                [response setErrorToInvalidRequestParameterWithMessage:@"origin is nil."];
                 return YES;
             }
             
@@ -428,7 +428,7 @@
         [self addDeletePath: deleteOnDataAvailableRequestApiPath api: ^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
             
             NSString *serviceId = [request serviceId];
-            NSString *sessionKey = [request sessionKey];
+            NSString *origin = [request origin];
             
             SonyCameraManager *manager = [SonyCameraManager sharedManager];
             
@@ -437,9 +437,9 @@
                 return YES;
             }
             
-            // セッションキー確認
-            if (!sessionKey) {
-                [response setErrorToInvalidRequestParameterWithMessage:@"sessionKey is nil."];
+            // オリジン確認
+            if (!origin) {
+                [response setErrorToInvalidRequestParameterWithMessage:@"origin is nil."];
                 return YES;
             }
             
