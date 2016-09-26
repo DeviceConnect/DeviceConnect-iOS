@@ -83,6 +83,7 @@ var util = (function(parent, global) {
                 for (var i = 0; i < services.length; i++) {
                     if (serviceId === services[i].id) {
                         var service = services[i];
+                        
                         serviceInformation(function(json) {
                             openWebSocketIfNeeded();
                             callback(service.name, json);
@@ -99,6 +100,7 @@ var util = (function(parent, global) {
         dConnect.authorization(mScopes, 'デバイス確認画面',
             function(clientId, accessToken) {
                 mAccessToken = accessToken;
+                openWebSocketIfNeeded();
                 setCookie('accessToken', mAccessToken);
                 callback();
             },
@@ -127,7 +129,6 @@ var util = (function(parent, global) {
         }, function(errorCode, errorMessage) {
             if (errorCode == 11 || errorCode == 12 || errorCode == 13 || errorCode == 15) {
                 authorization(function() {
-                    openWebSocketIfNeeded();
                     serviceInformation(callback);
                 });
             } else {
@@ -138,9 +139,10 @@ var util = (function(parent, global) {
 
     function openWebSocketIfNeeded() {
         try {
-            console.log("ifneed");
-            if (!dConnect.isConnectedWebSocket()) {
-            console.log("1");
+            if (!dConnect.isWebSocketReady()) {
+                if (dConnect.isConnectedWebSocket()) {
+                    dConnect.disconnectWebSocket();
+                }
                 var accessToken = mAccessToken ? mAccessToken : mSessionKey;
                 dConnect.connectWebSocket(accessToken, function(code, message) {
                     if (code > 0) {
@@ -150,7 +152,6 @@ var util = (function(parent, global) {
                 });
              }
         } catch (e) {
-            console.log("2" + e);
             alert("この端末は、WebSocketをサポートしていません。");
         }
     }

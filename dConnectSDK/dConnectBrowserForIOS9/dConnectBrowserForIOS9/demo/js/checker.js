@@ -22,7 +22,6 @@ var main = (function(parent, global) {
     function createBody(nav) {
         var data = [];
 
-        data.push("accessToken=" + util.getAccessToken());
 
         var formElem = document.forms[nav];
         for (var key in formElem) {
@@ -43,6 +42,7 @@ var main = (function(parent, global) {
                 }
             }
         }
+        data.push("accessToken=" + util.getAccessToken());
 
         return data;
     }
@@ -93,7 +93,7 @@ var main = (function(parent, global) {
 
             if (method == 'PUT') {
                 dConnect.addEventListener(uri, function(json) {
-                    setEventText(nav, createEvent(util.formatJSON(json)));
+                    setEventText(nav, createEvent(util.formatJSON(JSON.stringify(json))));
                 }, function(json) {
                     setResponseText(nav, createResponse(util.formatJSON(JSON.stringify(json))));
                 }, function(errorCode, errorMessage) {
