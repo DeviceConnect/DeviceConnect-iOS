@@ -219,7 +219,7 @@ pushlinkAuthenticationSuccessSelector:(SEL)pushlinkAuthenticationSuccessSelector
 //ライトグループの点灯
 -(BOOL)setLightGroupOnWithResponse:(DConnectResponseMessage*)response
                            groupId:(NSString*)groupId
-                        brightness:(double)brightness
+                        brightness:(NSNumber *)brightness
                              color:(NSString*)color
 {
     //groupIdチェック
@@ -549,7 +549,7 @@ pushlinkAuthenticationSuccessSelector:(SEL)pushlinkAuthenticationSuccessSelector
 
 //エラーの場合、エラー情報をresponseに設定しnilをreturn
 - (PHLightState*) getLightStateIsOn:(BOOL)isOn
-                     brightness:(double)brightness
+                     brightness:(NSNumber *)brightness
                           color:(NSString *)color
 {
     PHLightState *lightState = [[PHLightState alloc] init];
@@ -559,12 +559,13 @@ pushlinkAuthenticationSuccessSelector:(SEL)pushlinkAuthenticationSuccessSelector
     if (isOn) {
         double dBlightness = 0;
 
-        if (brightness == DBL_MIN ||
-            (brightness != DBL_MIN && brightness > 1.0) ||
-            (brightness != DBL_MIN && brightness < 0.0) ) {
+        if (!brightness ||
+            [brightness doubleValue] == DBL_MIN ||
+            ([brightness doubleValue] != DBL_MIN && [brightness doubleValue] > 1.0) ||
+            ([brightness doubleValue] != DBL_MIN && [brightness doubleValue] < 0.0) ) {
             dBlightness = 1.0;
         } else {
-            dBlightness = brightness;
+            dBlightness = [brightness doubleValue];
         }
         unsigned int redValue, greenValue, blueValue;
 
@@ -647,15 +648,21 @@ pushlinkAuthenticationSuccessSelector:(SEL)pushlinkAuthenticationSuccessSelector
 -(BOOL)changeLightNameWithLightId:(NSString *)lightId
                              name:(NSString *)name
                             color:(NSString *)color
-                       brightness:(double)brightness
+                       brightness:(NSNumber *)brightness
                          flashing:(NSArray*)flashing
                        completion:(void(^)())completion
 {
     unsigned int redValue, greenValue, blueValue;
 
+    // 省略時はMax値(1.0)を設定する
+    double brightness_ = 1;
+    if (brightness) {
+        brightness_ = [brightness doubleValue];
+    }
+    
     int myBlightness;
     NSString *uicolor;
-    [self checkColor:brightness blueValue:blueValue greenValue:greenValue
+    [self checkColor:brightness_ blueValue:blueValue greenValue:greenValue
             redValue:redValue color:color myBlightnessPointer:&myBlightness uicolorPointer:&uicolor];
 
     if (!uicolor) {
