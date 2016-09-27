@@ -137,7 +137,7 @@
         
         // API登録(didReceivePutOnBatteryChangeRequest相当)
         NSString *putOnBatteryChangeRequestApiPath = [self apiPath: nil
-                                                     attributeName: DConnectBatteryProfileAttrOnChargingChange];
+                                                     attributeName: DConnectBatteryProfileAttrOnBatteryChange];
         [self addPutPath: putOnBatteryChangeRequestApiPath api: ^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
             __block BOOL responseFlg = YES;
             // イベント登録
