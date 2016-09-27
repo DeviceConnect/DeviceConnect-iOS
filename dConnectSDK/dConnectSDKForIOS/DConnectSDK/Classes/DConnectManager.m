@@ -30,6 +30,7 @@
 #import "DConnectEventBroker.h"
 #import "DConnectEventSessionTable.h"
 #import "DConnectLocalOAuthDB.h"
+#import "DConnectPluginSpec.h"
 
 static NSString *const MATCH_YES = @"YES";
 static NSString *const MATCH_NO = @"NO";
@@ -123,6 +124,9 @@ NSString *const DConnectAttributeNameRequestAccessToken = @"requestAccessToken";
  * レスポンスとブロックを管理するマップ.
  */
 @property (nonatomic, strong) NSMutableDictionary *mResponseBlockMap;
+
+
+@property (nonatomic, strong) DConnectPluginSpec *managerSpec;
 
 
 /**
@@ -443,6 +447,9 @@ NSString *const DConnectAttributeNameRequestAccessToken = @"requestAccessToken";
         self.productName = [[NSBundle mainBundle] objectForInfoDictionaryKey: @"CFBundleDisplayName"];
         self.versionName = [[NSBundle mainBundle] objectForInfoDictionaryKey: @"CFBundleShortVersionString"];
         
+        // ManagerのサポートするAPI仕様
+        self.managerSpec = [[DConnectPluginSpec alloc] init];
+        
         // イベント管理クラス
         Class key = [self class];
         [[DConnectEventManager sharedManagerForClass:key]
@@ -639,9 +646,22 @@ NSString *const DConnectAttributeNameRequestAccessToken = @"requestAccessToken";
 #pragma mark - DConnectProfileProvider Methods -
 
 - (void) addProfile:(DConnectProfile *) profile {
-    NSString *name = [[profile profileName] lowercaseString];
-    if (name) {
-        [self.mProfileMap setObject:profile forKey:name];
+    NSString *profileName = [[profile profileName] lowercaseString];
+    if (profileName) {
+        // プロファイルのJSONファイルを読み込み、内部生成したprofileSpecを新規登録する
+        NSError *error = nil;
+        [[self managerSpec] addProfileSpec: profileName error: &error];
+        if (error) {
+            DCLogE(@"addProfileSpec error ! %@", [error description]);
+        }
+        
+        // プロファイルに仕様データを設定する
+        DConnectProfileSpec *profileSpec = [[self managerSpec] findProfileSpec: profileName];
+        if (profileSpec) {
+            [profile setProfileSpec: profileSpec];
+        }
+        
+        [self.mProfileMap setObject:profile forKey:profileName];
         profile.provider = self;
         profile.plugin = nil;
     }
