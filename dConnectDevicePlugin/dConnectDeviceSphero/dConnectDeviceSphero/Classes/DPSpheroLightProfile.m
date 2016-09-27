@@ -89,8 +89,7 @@ NSString *const SpheroCalibrationName = @"Sphero CalibrationLED";
                          NSString *serviceId = [request serviceId];
                          NSString *lightId = [DConnectLightProfile lightIdFromRequest: request];
                          NSNumber *brightness = [DConnectLightProfile brightnessFromRequest: request];
-                         if (!brightness
-                             || (brightness && ([brightness doubleValue] < 0.0 || [brightness doubleValue] > 1.0))) {
+                         if (brightness && ([brightness doubleValue] < 0.0 || [brightness doubleValue] > 1.0)) {
                              [response setErrorToInvalidRequestParameterWithMessage:
                               @"Parameter 'brightness' must be a value between 0 and 1.0."];
                              return YES;
@@ -98,12 +97,8 @@ NSString *const SpheroCalibrationName = @"Sphero CalibrationLED";
                          NSString *name = [request stringForKey:DConnectLightProfileParamName];
                          NSString *color = [request stringForKey:DConnectLightProfileParamColor];
                          NSArray *flashing = [DConnectLightProfile parsePattern: [DConnectLightProfile flashingFromRequest: request] isId:NO];
-                         if (!flashing) {
-                             [response setErrorToInvalidRequestParameterWithMessage:
-                              @"Parameter 'flashing' invalid."];
-                             return YES;
-                         }
-                         if (![weakSelf checkFlash:response flashing:flashing]) {
+                         if (flashing && ![weakSelf checkFlash:response flashing:flashing]) {
+                             [response setErrorToInvalidRequestParameter];
                              return YES;
                          }
                          
@@ -165,19 +160,14 @@ NSString *const SpheroCalibrationName = @"Sphero CalibrationLED";
                    color:(NSString *)color
                 flashing:(NSArray *)flashing {
     
-    if (!brightness
-        || (brightness && ([brightness doubleValue] < 0.0 || [brightness doubleValue] > 1.0))) {
+    if (brightness && ([brightness doubleValue] < 0.0 || [brightness doubleValue] > 1.0)) {
         [response setErrorToInvalidRequestParameterWithMessage:
          @"Parameter 'brightness' must be a value between 0 and 1.0."];
         return YES;
     }
     
-    if (!flashing) {
-        [response setErrorToInvalidRequestParameterWithMessage:
-         @"Parameter 'flashing' invalid."];
-        return YES;
-    }
-    if (![self checkFlash:response flashing:flashing]) {
+    if (flashing && ![self checkFlash:response flashing:flashing]) {
+        [response setErrorToInvalidRequestParameter];
         return YES;
     }
     
