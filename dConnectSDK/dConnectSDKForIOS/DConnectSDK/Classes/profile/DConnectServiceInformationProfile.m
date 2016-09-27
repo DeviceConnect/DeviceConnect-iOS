@@ -46,46 +46,30 @@ static NSString *const KEY_PATHS = @"paths";
                          
                          NSString *serviceId = [request serviceId];
 
-                         BOOL isAllNone = YES;
                          DConnectMessage *connect = [DConnectMessage message];
                          if (blockSelf.dataSource) {
                              if ([blockSelf.dataSource respondsToSelector:@selector(profile:wifiStateForServiceId:)]) {
                                  DConnectServiceInformationProfileConnectState wifiState = [blockSelf.dataSource profile:blockSelf wifiStateForServiceId:serviceId];
                                  [DConnectServiceInformationProfile setWiFiState: wifiState
                                                                           target: connect];
-                                 if (wifiState != DConnectServiceInformationProfileConnectStateNone) {
-                                     isAllNone = NO;
-                                 }
                              }
                              if ([blockSelf.dataSource respondsToSelector:@selector(profile:bleStateForServiceId:)]) {
                                  DConnectServiceInformationProfileConnectState bleState = [blockSelf.dataSource profile:blockSelf bleStateForServiceId:serviceId];
                                  [DConnectServiceInformationProfile setBLEState:bleState
                                                                          target:connect];
-                                 if (bleState != DConnectServiceInformationProfileConnectStateNone) {
-                                     isAllNone = NO;
-                                 }
                              }
                              if ([blockSelf.dataSource respondsToSelector:@selector(profile:bluetoothStateForServiceId:)]) {
                                  DConnectServiceInformationProfileConnectState bluetoothState = [blockSelf.dataSource profile:blockSelf bluetoothStateForServiceId:serviceId];
                                  [DConnectServiceInformationProfile setBluetoothState:bluetoothState
                                                                                target:connect];
-                                 if (bluetoothState != DConnectServiceInformationProfileConnectStateNone) {
-                                     isAllNone = NO;
-                                 }
                              }
                              if ([blockSelf.dataSource respondsToSelector:@selector(profile:nfcStateForServiceId:)]) {
                                  DConnectServiceInformationProfileConnectState nfcState = [blockSelf.dataSource profile:blockSelf nfcStateForServiceId:serviceId];
                                  [DConnectServiceInformationProfile setNFCState: nfcState
                                                                          target:connect];
-                                 if (nfcState != DConnectServiceInformationProfileConnectStateNone) {
-                                     isAllNone = NO;
-                                 }
                              }
                          }
-                         // 全てnoneならconnectを出力しない
-                         if (!isAllNone) {
-                             [DConnectServiceInformationProfile setConnect:connect target:response];
-                         }
+                         [DConnectServiceInformationProfile setConnect:connect target:response];
                          
                          // supports, supportApis
                          NSArray *profiles = [[blockSelf provider] profiles];
