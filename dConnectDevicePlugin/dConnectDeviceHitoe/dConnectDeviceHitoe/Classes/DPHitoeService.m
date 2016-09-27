@@ -38,19 +38,15 @@
     return self;
 }
 
-#pragma mark - DConnectServiceInformationProfileDataSource Implement.
+#pragma mark - DConnectServiceInformationProfileDataSource
 
-- (DConnectServiceInformationProfileConnectState)profile:(DConnectServiceInformationProfile *)profile
-                                   wifiStateForServiceId:(NSString *)serviceId {
-    
-    DConnectServiceInformationProfileConnectState bleState;
+- (DConnectServiceInformationProfileConnectState) profile:(DConnectServiceInformationProfile *)profile
+                               bluetoothStateForServiceId:(NSString *)serviceId
+{
     if (self.online) {
-        bleState = DConnectServiceInformationProfileConnectStateOn;
+        return DConnectServiceInformationProfileConnectStateOn;
     } else {
-        bleState = DConnectServiceInformationProfileConnectStateOff;
+        return DConnectServiceInformationProfileConnectStateOff;
     }
-    return bleState;
 }
-
-
 @end
