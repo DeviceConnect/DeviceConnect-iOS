@@ -17,15 +17,16 @@
 #import "DPIRKitDialog.h"
 @implementation DPIRKitVirtualService
 
-- (instancetype) initWithServiceId: (NSString *)serviceId plugin:(id)plugin profileName:(NSString *)profileName {
+- (instancetype) initWithServiceId: (NSString *)serviceId name:(NSString*)name
+                            plugin:(id)plugin profileName:(NSString *)profileName {
     self = [super initWithServiceId: serviceId plugin: plugin];
     if (self) {
-        [self setName: serviceId];
+        [self setServiceId:serviceId];
+        [self setName: name];
         [self setNetworkType: DConnectServiceDiscoveryProfileNetworkTypeWiFi];
         [self setOnline: YES];
         
         // サービスで登録するProfile
-        [self addProfile: [[DPIRKitRemoteControllerProfile alloc] initWithDevicePlugin:plugin]];
         if ([profileName isEqualToString:DPIRKitCategoryLight]) {
             [self addProfile: [[DPIRKitLightProfile alloc] initWithDevicePlugin:plugin]];
         } else {

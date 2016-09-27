@@ -17,6 +17,7 @@
 - (instancetype) initWithServiceId: (NSString *)serviceId plugin: (id)plugin{
     self = [super initWithServiceId: serviceId plugin: plugin];
     if (self) {
+        [self setServiceId:serviceId];
         [self setName: serviceId];
         [self setNetworkType: DConnectServiceDiscoveryProfileNetworkTypeWiFi];
         [self setOnline: YES];

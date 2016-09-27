@@ -196,7 +196,9 @@ DPIRKitManagerDetectionDelegate
                                 [service setOnline: YES];
                             } else {
                                 NSString *profileName = virtual.categoryName;
-                                DPIRKitVirtualService *service = [[DPIRKitVirtualService alloc] initWithServiceId: serviceId plugin:self
+                                DPIRKitVirtualService *service = [[DPIRKitVirtualService alloc] initWithServiceId: serviceId
+                                                                                                             name:virtual.deviceName
+                                                                                                           plugin:self
                                                                                                       profileName:profileName];
                                 [self.serviceProvider addService: service];
                                 [service setOnline: YES];
