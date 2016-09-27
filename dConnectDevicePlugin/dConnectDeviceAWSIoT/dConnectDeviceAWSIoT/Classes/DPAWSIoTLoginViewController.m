@@ -19,6 +19,10 @@
 
 @implementation DPAWSIoTLoginViewController
 
+- (IBAction)closeButtonPressed:(id)sender {
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
 // ログインボタンイベント
 - (IBAction)loginButtonPressed:(id)sender {
 	NSString *accessKey = _textAccessKey.text;
