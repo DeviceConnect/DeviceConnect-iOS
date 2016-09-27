@@ -340,9 +340,12 @@ static NSMutableDictionary *originTable;    // key:origin / value: websocket
                                                               error:&error];
         if (!error) {
             HTTPMessage *httpRequest = [webSocket getRequest];
+            NSString *receiverId;
             NSString *path = httpRequest.url.path;
             NSString *origin = httpRequest.allHeaderFields[@"origin"];
-            NSString *receiverId;
+            if (origin && [origin isEqualToString:@"null"]) {
+                origin = @"file://";
+            }
             
             if (path && [path localizedCaseInsensitiveCompare: @"/gotapi/websocket"] == NSOrderedSame) {
                 NSString *accessToken = json[DConnectMessageAccessToken];
@@ -357,8 +360,7 @@ static NSMutableDictionary *originTable;    // key:origin / value: websocket
                         [self sendError: webSocket errorCode:2 errorMessage: @"origin is not specified."];
                         return;
                     }
-                    if ([DConnectManager sharedManager].settings.useLocalOAuth
-                        && ![self isValidAccessToken: accessToken origin: origin]) {
+                    if (![self isValidAccessToken: accessToken origin: origin]) {
                         DCLogW(@"onWebSocketMessage: accessToken is invalid.");
                         [self sendError: webSocket errorCode:3 errorMessage:@"accessToken is invalid."];
                         return;
@@ -391,8 +393,9 @@ static NSMutableDictionary *originTable;    // key:origin / value: websocket
                     [otherSocket stop];
                 }
             }
+
             if (!receiverId) {
-                DCLogW(@"onWebSocketMessage: Failed to generate receiverId: uri = %@, origin = %@", uri, origin);
+                DCLogW(@"onWebSocketMessage: Failed to generate receiverId: path = %@, origin = %@", path, origin);
                 return;
             }
             
