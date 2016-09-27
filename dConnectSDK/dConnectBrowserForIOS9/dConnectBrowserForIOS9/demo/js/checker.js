@@ -93,7 +93,7 @@ var main = (function(parent, global) {
 
             if (method == 'PUT') {
                 dConnect.addEventListener(uri, function(json) {
-                    setEventText(nav, createEvent(util.formatJSON(JSON.stringify(json))));
+                    setEventText(nav, createEvent(util.formatJSON(json)));
                 }, function(json) {
                     setResponseText(nav, createResponse(util.formatJSON(JSON.stringify(json))));
                 }, function(errorCode, errorMessage) {
