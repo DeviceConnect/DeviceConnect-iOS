@@ -123,15 +123,12 @@ NSString *const TestFileDescriptorPrev = @"2014-06-01T00:00:00+0900";
                 response.result = DConnectMessageResultTypeOk;
                 
                 DConnectMessage *event = [DConnectMessage message];
+                [event setString:serviceId forKey:DConnectMessageServiceId];
                 [event setString:sessionKey forKey:DConnectMessageSessionKey];
                 [event setString:weakSelf.profileName forKey:DConnectMessageProfile];
                 [event setString:DConnectFileDescriptorProfileAttrOnWatchFile forKey:DConnectMessageAttribute];
                 
                 DConnectMessage *file = [DConnectMessage message];
-                [DConnectFileDescriptorProfile setPath:TestFileDescriptorPath target:file];
-                [DConnectFileDescriptorProfile setCurr:TestFileDescriptorCurr target:file];
-                [DConnectFileDescriptorProfile setPrev:TestFileDescriptorPrev target:file];
-                
                 [DConnectFileDescriptorProfile setFile:file target:event];
                 [weakSelf.plugin asyncSendEvent:event];
             }

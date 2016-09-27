@@ -45,7 +45,7 @@
     } else {
         NSString *json = [event convertToJSONString];
         if (self.webSocket) {
-            [self.webSocket sendEvent:json forOrigin:self.origin];
+            [self.webSocket sendEvent:json forReceiverId:self.receiverId];
         }
         [DConnectServerProtocol sendEvent:json forReceiverId:self.receiverId];
     }

@@ -63,6 +63,7 @@
                 response.result = DConnectMessageResultTypeOk;
                 
                 DConnectMessage *event = [DConnectMessage message];
+                [event setString:serviceId forKey:DConnectMessageServiceId];
                 [event setString:sessionKey forKey:DConnectMessageSessionKey];
                 [event setString:weakSelf.profileName forKey:DConnectMessageProfile];
                 [event setString:DConnectProximityProfileAttrOnDeviceProximity forKey:DConnectMessageAttribute];
@@ -86,6 +87,7 @@
                 response.result = DConnectMessageResultTypeOk;
                 
                 DConnectMessage *event = [DConnectMessage message];
+                [event setString:serviceId forKey:DConnectMessageServiceId];
                 [event setString:sessionKey forKey:DConnectMessageSessionKey];
                 [event setString:weakSelf.profileName forKey:DConnectMessageProfile];
                 [event setString:DConnectProximityProfileAttrOnUserProximity forKey:DConnectMessageAttribute];

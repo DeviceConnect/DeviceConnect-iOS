@@ -49,7 +49,7 @@
                 [event setString:sessionKey forKey:DConnectMessageSessionKey];
                 [event setString:serviceId forKey:DConnectMessageServiceId];
                 [event setString:weakSelf.profileName forKey:DConnectMessageProfile];
-                [event setString:DConnectDeviceOrientationProfileName
+                [event setString:DConnectDeviceOrientationProfileAttrOnDeviceOrientation
                           forKey:DConnectMessageAttribute];
                 [weakSelf setOrientation:event];
                 [weakSelf.plugin asyncSendEvent:event];
