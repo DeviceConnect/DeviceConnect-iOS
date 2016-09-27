@@ -15,11 +15,7 @@ NSString *const DCMStressEstimationProfileParamStress = @"stress";
 NSString *const DCMStressEstimationProfileParamLFHF = @"lfhf";
 NSString *const DCMStressEstimationProfileParamTimeStamp = @"timeStamp";
 NSString *const DCMStressEstimationProfileParamTimeStampString = @"timeStampString";
-@interface DCMStressEstimationProfile()
 
-- (BOOL) hasMethod:(SEL)method response:(DConnectResponseMessage *)response;
-
-@end
 @implementation DCMStressEstimationProfile
 
 - (NSString *) profileName {

@@ -39,11 +39,15 @@ var util = (function(parent, global) {
             'videochat',
             'airconditioner',
             'atmosphericpressure',
+            'ecg',
+            'poseEstimation',
+            'stressEstimation',
+            'walkState',
             'gpio');
 
     function init(callback) {
         dConnect.setHost(mHost);
-        dConnect.setExtendedOrigin("file://android_asset/");
+        dConnect.setExtendedOrigin("file://");
         checkDeviceConnect(callback);
     }
     parent.init = init;
@@ -74,27 +78,29 @@ var util = (function(parent, global) {
 
             mAccessToken = getCookie('accessToken');
 
-            openWebSocketIfNeeded();
-
             serviceDiscovery(function(services) {
                 var serviceId = getServiceId();
                 for (var i = 0; i < services.length; i++) {
                     if (serviceId === services[i].id) {
                         var service = services[i];
+                        
                         serviceInformation(function(json) {
+                            openWebSocketIfNeeded();
                             callback(service.name, json);
                         });
                         return;
                     }
                 }
+                alert('指定されたサービスが見つかりません。\n serviceId=' + serviceId);
             });
         });
     }
 
     function authorization(callback) {
-        dConnect.authorization(mScopes, 'ヘルプ',
+        dConnect.authorization(mScopes, 'デバイス確認画面',
             function(clientId, accessToken) {
                 mAccessToken = accessToken;
+                openWebSocketIfNeeded();
                 setCookie('accessToken', mAccessToken);
                 callback();
             },
@@ -132,16 +138,50 @@ var util = (function(parent, global) {
     }
 
     function openWebSocketIfNeeded() {
-        if (!dConnect.isConnectedWebSocket()) {
-            dConnect.connectWebSocket(mSessionKey, function(errorCode, errorMessage) {
-                console.log('Failed to open websocket: ' + errorCode + ' - ' + errorMessage);
-            });
-            console.log('WebSocket opened.');
-        } else {
-            console.log('WebSocket has opened already.');
+        try {
+            if (!dConnect.isWebSocketReady()) {
+                if (dConnect.isConnectedWebSocket()) {
+                    dConnect.disconnectWebSocket();
+                }
+                var accessToken = mAccessToken ? mAccessToken : mSessionKey;
+                dConnect.connectWebSocket(accessToken, function(code, message) {
+                    if (code > 0) {
+                        alert('WebSocketが切れました。\n code=' + code + " message=" + message);
+                    }
+                    console.log("WebSocket: code=" + code + " message=" +message);
+                });
+             }
+        } catch (e) {
+            alert("この端末は、WebSocketをサポートしていません。");
         }
     }
-
+    function doMediaPlayerMediaPut(serviceId, accessToken, id, callback) {
+        var builder = new dConnect.URIBuilder();
+        builder.setProfile('mediaplayer');
+        builder.setAttribute('media');
+        builder.setServiceId(serviceId);
+        builder.setAccessToken(accessToken);
+        builder.addParameter('mediaId', id);
+        var uri = builder.build();
+        dConnect.put(uri, null, null, function(json) {
+            var builder = new dConnect.URIBuilder();
+            builder.setProfile('mediaplayer');
+            builder.setAttribute('play');
+            builder.setServiceId(serviceId);
+            builder.setAccessToken(accessToken);
+            var uri = builder.build();
+            dConnect.put(uri, null, null, function(json) {
+            if (callback) {
+                callback();
+            }
+        }, function(errorCode, errorMessage) {
+            console.log("error:" + errorMessage);
+      });
+     }, function(errorCode, errorMessage) {
+         console.log("error:" + errorMessage);
+     });
+    }
+    parent.doMediaPlayerMediaPut = doMediaPlayerMediaPut;
     function setCookieInternal(key, value) {
         document.cookie = key + '=' + value;
     }
@@ -272,7 +312,7 @@ var util = (function(parent, global) {
              case 1: {
                  console.log("サーバ接続を確立しました。\n xhr.readyState=" + xhr.readyState + "\n xhr.statusText=" + xhr.statusText);
                  try {
-                     xhr.setRequestHeader("X-GotAPI-Origin".toLowerCase(), "file://android_assets");
+                     xhr.setRequestHeader("X-GotAPI-Origin".toLowerCase(), "file://");
                  } catch (e) {
                      return;
                  }
@@ -350,6 +390,10 @@ var util = (function(parent, global) {
     }
     parent.getAccessToken = getAccessToken;
 
+    function getAccessTokenQuery() {
+        return getQuery('accessToken');
+    }
+    parent.getAccessTokenQuery = getAccessTokenQuery;
 
     function getSessionKey() {
         return mSessionKey;
@@ -384,7 +428,8 @@ var util = (function(parent, global) {
                     if (jsonObject['mimeType']) {
                         mimeType = jsonObject['mimeType'];
                     }
-                    jsonObject[key] = '<a href=resource.html?mimeType=' + encodeURIComponent(mimeType) + '&resource=' + encodeURIComponent(value) + '>' + value + "</a>";
+                    jsonObject[key] = '<a href=resource.html?mimeType=' + encodeURIComponent(mimeType) + '&resource=' + encodeURIComponent(value)
+                                     + '&serviceId=' + getServiceId() + '&accessToken=' + getAccessToken() + '>' + value + "</a>";
                 }
             }
         }

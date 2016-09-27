@@ -47,7 +47,7 @@
  * These methods are automatically called by the HTTPServer.
  * You may invoke the stop method yourself to close the WebSocket manually.
 **/
-- (void)start;
+- (void)start: (NSString *) origin;
 - (void)stop;
 
 /**
@@ -66,6 +66,12 @@
 - (void)didOpen;
 - (void)didReceiveMessage:(NSString *)msg;
 - (void)didClose;
+
+// MODIFIED HTTPリクエストデータからuriやheader情報を取得するAPIが無かったので追加した。
+/**
+ * 情報取得API
+ */
+- (HTTPMessage *) getRequest;
 
 @end
 
@@ -88,7 +94,7 @@
 @protocol WebSocketDelegate
 @optional
 
-- (void)webSocketDidOpen:(WebSocket *)ws;
+- (void)webSocketDidOpen:(WebSocket *)ws origin: (NSString *)origin;
 
 - (void)webSocket:(WebSocket *)ws didReceiveMessage:(NSString *)msg;
 

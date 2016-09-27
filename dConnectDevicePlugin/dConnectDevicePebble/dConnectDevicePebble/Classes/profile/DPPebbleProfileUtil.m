@@ -59,7 +59,7 @@
         [response setResult:DConnectMessageResultTypeOk];
         callback();
     } else if (error == DConnectEventErrorInvalidParameter) {
-        [response setErrorToInvalidRequestParameterWithMessage:@"sessionKey must be specified."];
+        [response setErrorToInvalidRequestParameterWithMessage:@"origin must be specified."];
     } else {
         [response setErrorToUnknown];
     }

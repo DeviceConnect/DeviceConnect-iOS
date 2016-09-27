@@ -36,7 +36,7 @@ typedef void (^CollisionBlock)(DConnectMessage *);
 {
     self = [super init];
     if (self) {
-        self.delegate = self;
+
         self.quaternionOnceBlock = nil;
         self.locatorOnceBlock = nil;
         self.collisionOnceBlock = nil;
@@ -309,7 +309,7 @@ typedef void (^CollisionBlock)(DConnectMessage *);
         callback();
         [response setResult:DConnectMessageResultTypeOk];
     } else if (error == DConnectEventErrorInvalidParameter) {
-        [response setErrorToInvalidRequestParameterWithMessage:@"sessionKey must be specified."];
+        [response setErrorToInvalidRequestParameterWithMessage:@"origin must be specified."];
     } else {
         [response setErrorToUnknown];
     }

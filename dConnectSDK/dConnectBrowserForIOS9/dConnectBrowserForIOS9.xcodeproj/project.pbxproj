@@ -159,6 +159,8 @@
 		ABE71E2E1C76D3F40061973C /* folder@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = ABE71E2B1C76D3F40061973C /* folder@2x.png */; };
 		ABE71E2F1C76D3F40061973C /* star@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = ABE71E2C1C76D3F40061973C /* star@2x.png */; };
 		ABEB97C51D6AC994003BE6E7 /* help in Resources */ = {isa = PBXBuildFile; fileRef = ABEB97C41D6AC994003BE6E7 /* help */; };
+		ABFA0D561D92150600B49BFE /* LinkingLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABFA0D551D92150600B49BFE /* LinkingLibrary.framework */; };
+		ABFA0D571D92150600B49BFE /* LinkingLibrary.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = ABFA0D551D92150600B49BFE /* LinkingLibrary.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -186,7 +188,7 @@
 			dstSubfolderSpec = 10;
 			files = (
 				AB94E8601C755EB300DAE749 /* BookmarkDBFramework.framework in Embed Frameworks */,
-				AB1521871D95256400FE4210 /* LinkingLibrary.framework in Embed Frameworks */,
+				ABFA0D571D92150600B49BFE /* LinkingLibrary.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -423,6 +425,7 @@
 		ABE71E2B1C76D3F40061973C /* folder@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "folder@2x.png"; sourceTree = "<group>"; };
 		ABE71E2C1C76D3F40061973C /* star@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "star@2x.png"; sourceTree = "<group>"; };
 		ABEB97C41D6AC994003BE6E7 /* help */ = {isa = PBXFileReference; lastKnownFileType = folder; path = help; sourceTree = "<group>"; };
+		ABFA0D551D92150600B49BFE /* LinkingLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LinkingLibrary.framework; path = ../../dConnectDevicePlugin/dConnectDeviceLinking/Libs/Release/LinkingLibrary.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -435,6 +438,7 @@
 				ABAC40491D7E9E8700BBDD34 /* CoreBluetooth.framework in Frameworks */,
 				ABAC40431D7E9DB200BBDD34 /* AVFoundation.framework in Frameworks */,
 				AB00F20D1C719A7D00689C70 /* Foundation.framework in Frameworks */,
+				ABFA0D561D92150600B49BFE /* LinkingLibrary.framework in Frameworks */,
 				AB00F2111C719A8F00689C70 /* UIKit.framework in Frameworks */,
 				AB00F2091C719A6100689C70 /* MediaAccessibility.framework in Frameworks */,
 				AB3120061D7E927600B2D886 /* CoreText.framework in Frameworks */,
@@ -653,7 +657,7 @@
 		AB00F1D61C71941800689C70 = {
 			isa = PBXGroup;
 			children = (
-				AB1521851D95256400FE4210 /* LinkingLibrary.framework */,
+				ABFA0D551D92150600B49BFE /* LinkingLibrary.framework */,
 				AB00F1E11C71941800689C70 /* dConnectBrowserForIOS9 */,
 				AB94E8591C755EB300DAE749 /* BookmarkDBFramework */,
 				AB94E88E1C75704300DAE749 /* BookmarkShare */,
@@ -1335,6 +1339,7 @@
 		AB00F1F41C71941800689C70 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -1402,6 +1407,7 @@
 		AB00F1F51C71941800689C70 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -1454,6 +1460,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				SWIFT_VERSION = 2.1;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 				VALID_ARCHS = "arm64 armv7s armv7";
@@ -1463,10 +1470,12 @@
 		AB00F1F71C71941800689C70 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = dConnectBrowserForIOS9/dConnectBrowserForIOS9.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = NO;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				EMBED_ASSET_PACKS_IN_PRODUCT_BUNDLE = NO;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1505,6 +1514,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.deviceconnect.dConnectBrowserForIOS9.dConnectBrowserForIOS9;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 2.1;
 				VALID_ARCHS = "armv7 armv7s";
 			};
 			name = Debug;
@@ -1512,10 +1522,12 @@
 		AB00F1F81C71941800689C70 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = dConnectBrowserForIOS9/dConnectBrowserForIOS9.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = NO;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				EMBED_ASSET_PACKS_IN_PRODUCT_BUNDLE = NO;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",

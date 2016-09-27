@@ -58,7 +58,7 @@
         [response setResult:DConnectMessageResultTypeOk];
         [deviceMgr enableListenButtonId:device delegate:self];
     } else if (error == DConnectEventErrorInvalidParameter) {
-        [response setErrorToInvalidRequestParameterWithMessage:@"sessionKey must be specified."];
+        [response setErrorToInvalidRequestParameterWithMessage:@"origin must be specified."];
     } else {
         [response setErrorToUnknown];
     }
@@ -84,7 +84,7 @@
             [deviceMgr disableListenButtonId:device delegate:self];
         }
     } else if (error == DConnectEventErrorInvalidParameter) {
-        [response setErrorToInvalidRequestParameterWithMessage:@"sessionKey must be specified."];
+        [response setErrorToInvalidRequestParameterWithMessage:@"origin must be specified."];
     } else {
         [response setErrorToUnknown];
     }

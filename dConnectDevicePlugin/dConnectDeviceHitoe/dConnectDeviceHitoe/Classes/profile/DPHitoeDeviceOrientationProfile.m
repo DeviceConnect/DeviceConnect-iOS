@@ -48,12 +48,12 @@
         NSString *didReceivePutOnDeviceOrientationRequest = [self apiPath: nil
                                                             attributeName: DConnectDeviceOrientationProfileAttrOnDeviceOrientation];
         [self addPutPath:didReceivePutOnDeviceOrientationRequest api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
-            return [weakSelf didReceivePutOnDeviceOrientationRequest:request response:response serviceId:[request serviceId] sessionKey:[request sessionKey]];
+            return [weakSelf didReceivePutOnDeviceOrientationRequest:request response:response serviceId:[request serviceId] origin:[request origin]];
         }];
         NSString *didReceiveDeleteOnDeviceOrientationRequest = [self apiPath: nil
                                                                attributeName: DConnectDeviceOrientationProfileAttrOnDeviceOrientation];
         [self addDeletePath:didReceiveDeleteOnDeviceOrientationRequest api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
-            return [weakSelf didReceiveDeleteOnDeviceOrientationRequest:request response:response serviceId:[request serviceId] sessionKey:[request sessionKey]];
+            return [weakSelf didReceiveDeleteOnDeviceOrientationRequest:request response:response serviceId:[request serviceId] origin:[request origin]];
         }];
 
     }
@@ -89,11 +89,11 @@
 - (BOOL)didReceivePutOnDeviceOrientationRequest:(DConnectRequestMessage *)request
                   response:(DConnectResponseMessage *)response
                  serviceId:(NSString *)serviceId
-                sessionKey:(NSString *)sessionKey {
+                origin:(NSString *)origin {
     if (!serviceId) {
         [response setErrorToNotFoundServiceWithMessage:@"Not found serviceID"];
-    } else if (!sessionKey) {
-        [response setErrorToInvalidRequestParameterWithMessage:@"Not found sessionKey"];
+    } else if (!origin) {
+        [response setErrorToInvalidRequestParameterWithMessage:@"Not found origin"];
     } else {
         DPHitoeManager *mgr = [DPHitoeManager sharedInstance];
         if (!mgr) {
@@ -139,11 +139,11 @@
 - (BOOL)didReceiveDeleteOnDeviceOrientationRequest:(DConnectRequestMessage *)request
                                   response:(DConnectResponseMessage *)response
                                  serviceId:(NSString *)serviceId
-                                sessionKey:(NSString *)sessionKey {
+                                    origin:(NSString *)origin {
     if (!serviceId) {
         [response setErrorToNotFoundServiceWithMessage:@"Not found serviceID"];
-    } else if (!sessionKey) {
-        [response setErrorToInvalidRequestParameterWithMessage:@"Not found sessionKey"];
+    } else if (!origin) {
+        [response setErrorToInvalidRequestParameterWithMessage:@"Not found origin"];
     } else {
         DPHitoeManager *mgr = [DPHitoeManager sharedInstance];
         if (!mgr) {

@@ -22,7 +22,6 @@ var main = (function(parent, global) {
     function createBody(nav) {
         var data = [];
 
-        data.push("accessToken=" + util.getAccessToken());
 
         var formElem = document.forms[nav];
         for (var key in formElem) {
@@ -43,6 +42,7 @@ var main = (function(parent, global) {
                 }
             }
         }
+        data.push("accessToken=" + util.getAccessToken());
 
         return data;
     }
@@ -60,6 +60,7 @@ var main = (function(parent, global) {
                     if (isHiddenParam(elem.name)) {
                         // 隠しパラメータ
                     } else if (elem.type == 'file') {
+                    console.log(elem.name + ":" + elem.files[0]);
                         formData.append(elem.name, elem.files[0]);
                     } else if (elem.name.indexOf('t_') != 0) {
                         if (elem.value.length != 0) {
@@ -71,6 +72,7 @@ var main = (function(parent, global) {
                 }
             }
         }
+
         return formData;
     }
 
@@ -82,13 +84,9 @@ var main = (function(parent, global) {
         var xType = formElem['deviceconnect.type'].value;
         var body = null;
 
-        console.log('method:' + method)
-        console.log('path:' + path)
-        console.log('xtype:' + xType)
-
         if (xType == 'event') {
             // TODO
-            var uri = "http://localhost:4035" + path.toLowerCase() + "?" + createBody(nav).join('&') + "&sessionKey=" + util.getSessionKey();
+            var uri = "http://localhost:4035" + path.toLowerCase() + "?" + createBody(nav).join('&');
             console.log(uri);
 
             setRequestText(nav, createRequest(method + " " + path));

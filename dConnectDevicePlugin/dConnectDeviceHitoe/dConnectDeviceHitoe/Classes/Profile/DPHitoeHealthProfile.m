@@ -48,12 +48,12 @@
         NSString *didReceivePutHeartRequest = [self apiPath: nil
                                               attributeName: DCMHealthProfileAttrHeart];
         [self addPutPath:didReceivePutHeartRequest api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
-            return [weakSelf didReceivePutHeartRequest:request response:response serviceId:[request serviceId] sessionKey:[request sessionKey]];
+            return [weakSelf didReceivePutHeartRequest:request response:response serviceId:[request serviceId] origin:[request origin]];
         }];
         NSString *didReceiveDeleteHeartRequest = [self apiPath: nil
                                                  attributeName: DCMHealthProfileAttrHeart];
         [self addDeletePath:didReceiveDeleteHeartRequest api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
-            return [weakSelf didReceiveDeleteHeartRequest:request response:response serviceId:[request serviceId] sessionKey:[request sessionKey]];
+            return [weakSelf didReceiveDeleteHeartRequest:request response:response serviceId:[request serviceId] origin:[request origin]];
         }];
         
     }
@@ -89,11 +89,11 @@
 - (BOOL) didReceivePutHeartRequest:(DConnectRequestMessage *)request
                   response:(DConnectResponseMessage *)response
                  serviceId:(NSString *)serviceId
-                sessionKey:(NSString *)sessionKey {
+                    origin:(NSString *)origin {
     if (!serviceId) {
         [response setErrorToNotFoundServiceWithMessage:@"Not found serviceID"];
-    } else if (!sessionKey) {
-        [response setErrorToInvalidRequestParameterWithMessage:@"Not found sessionKey"];
+    } else if (!origin) {
+        [response setErrorToInvalidRequestParameterWithMessage:@"Not found origin"];
     } else {
         DPHitoeManager *mgr = [DPHitoeManager sharedInstance];
         if (!mgr) {
@@ -133,11 +133,11 @@
 - (BOOL)didReceiveDeleteHeartRequest:(DConnectRequestMessage *)request
                             response:(DConnectResponseMessage *)response
                            serviceId:(NSString *)serviceId
-                          sessionKey:(NSString *)sessionKey {
+                              origin:(NSString *)origin {
     if (!serviceId) {
         [response setErrorToNotFoundServiceWithMessage:@"Not found serviceID"];
-    } else if (!sessionKey) {
-        [response setErrorToInvalidRequestParameterWithMessage:@"Not found sessionKey"];
+    } else if (!origin) {
+        [response setErrorToInvalidRequestParameterWithMessage:@"Not found origin"];
     } else {
         DPHitoeManager *mgr = [DPHitoeManager sharedInstance];
         if (!mgr) {

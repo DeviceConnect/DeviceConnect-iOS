@@ -224,7 +224,7 @@ DPIRKitManagerDetectionDelegate
             [message setString:@"" forKey:DConnectMessageServiceId];
             [message setString:DConnectServiceDiscoveryProfileName forKey:DConnectMessageProfile];
             [message setString:DConnectServiceDiscoveryProfileAttrOnServiceChange forKey:DConnectMessageAttribute];
-            [message setString:event.sessionKey forKey:DConnectMessageSessionKey];
+            [message setString:event.origin forKey:DConnectMessageOrigin];
             [self sendEvent:message];
         }
     }

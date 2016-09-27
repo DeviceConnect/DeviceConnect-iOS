@@ -42,10 +42,10 @@
         [self addDeletePath: deleteEventsRequestApiPath
                         api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
                             
-                            NSString *sessionKey = [request sessionKey];
+                            NSString *origin = [request origin];
                             
                             DConnectEventManager *eventMgr = [DConnectEventManager sharedManagerForClass:[DPSpheroDevicePlugin class]];
-                            if ([eventMgr removeEventsForSessionKey:sessionKey]) {
+                            if ([eventMgr removeEventsForOrigin:origin]) {
                                 [response setResult:DConnectMessageResultTypeOk];
                             } else {
                                 [response setErrorToUnknownWithMessage:

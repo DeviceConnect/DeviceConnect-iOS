@@ -24,9 +24,6 @@ NSString *const DCMPoseEstimationProfileStateFaceLeft = @"FaceLeft";
 NSString *const DCMPoseEstimationProfileStateFaceDown = @"FaceDown";
 NSString *const DCMPoseEstimationProfileStateFaceRight = @"FaceRight";
 NSString *const DCMPoseEstimationProfileStateStanding = @"Standing";
-@interface DCMPoseEstimationProfile()
-- (BOOL) hasMethod:(SEL)method response:(DConnectResponseMessage *)response;
-@end
 
 @implementation DCMPoseEstimationProfile
 

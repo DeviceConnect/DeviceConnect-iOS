@@ -23,9 +23,6 @@ NSString *const DCMWalkStateProfileStateStop = @"Stop";
 NSString *const DCMWalkStateProfileStateWalking = @"Walking";
 NSString *const DCMWalkStateProfileStateRunning = @"Running";
 
-@interface DCMWalkStateProfile()
-- (BOOL) hasMethod:(SEL)method response:(DConnectResponseMessage *)response;
-@end
 @implementation DCMWalkStateProfile
 - (NSString *) profileName {
     return DCMWalkStateProfileName;

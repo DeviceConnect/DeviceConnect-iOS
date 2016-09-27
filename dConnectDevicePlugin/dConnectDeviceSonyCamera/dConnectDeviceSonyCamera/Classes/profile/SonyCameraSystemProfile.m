@@ -60,13 +60,13 @@ NSString *const SonyDevicePluginVersion = @"2.0.0";
         [self addDeletePath: deleteEventsRequestApiPath
                         api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
                             
-                            NSString *sessionKey = [request sessionKey];
+                            NSString *origin = [request origin];
                             
-                            if (sessionKey == nil) {
-                                [response setErrorToInvalidRequestParameterWithMessage:@"sessionKey is nil"];
+                            if (origin == nil) {
+                                [response setErrorToInvalidRequestParameterWithMessage:@"origin is nil"];
                             } else {
                                 DConnectEventManager *mgr = [DConnectEventManager sharedManagerForClass:[SonyCameraDevicePlugin class]];
-                                if ([mgr removeEventsForSessionKey:sessionKey]) {
+                                if ([mgr removeEventsForOrigin:origin]) {
                                     [response setResult:DConnectMessageResultTypeOk];
                                     
                                     // 削除した時にイベントが残っていなければ、プレビューを止める

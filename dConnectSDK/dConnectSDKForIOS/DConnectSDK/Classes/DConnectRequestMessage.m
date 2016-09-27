@@ -45,8 +45,8 @@
     [self setString:interface forKey:DConnectMessageInterface];
 }
 
-- (void) setSessionKey:(NSString *)sessionKey {
-    [self setString:sessionKey forKey:DConnectMessageSessionKey];
+- (void) setOrigin:(NSString *)origin {
+    [self setString:origin forKey:DConnectMessageOrigin];
 }
 
 - (void) setServiceId:(NSString *)serviceId {

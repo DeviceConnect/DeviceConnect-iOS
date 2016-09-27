@@ -12,13 +12,13 @@
 
 extern NSString *const DConnectClientDaoTableName;
 extern NSString *const DConnectClientDaoClmAccessToken;
-extern NSString *const DConnectClientDaoClmSessionKey;
+extern NSString *const DConnectClientDaoClmOrigin;
 
 @interface DConnectClient : NSObject
 
 @property (nonatomic) long long rowId;
 @property (nonatomic, strong) NSString *accessToken;
-@property (nonatomic, strong) NSString *sessionKey;
+@property (nonatomic, strong) NSString *origin;
 @property (nonatomic, strong) NSDate *esCreateDate;
 @property (nonatomic, strong) NSDate *esUpdateDate;
 
@@ -28,7 +28,7 @@ extern NSString *const DConnectClientDaoClmSessionKey;
 
 + (void) createWithDatabase:(DConnectSQLiteDatabase *)database;
 + (long long) insertWithEvent:(DConnectEvent *)event toDatabase:(DConnectSQLiteDatabase *)database;
-+ (NSArray *) clientsForSessionKey:(NSString *)sessionKey onDatabase:(DConnectSQLiteDatabase *)database;
++ (NSArray *) clientsForOrigin:(NSString *)origin onDatabase:(DConnectSQLiteDatabase *)database;
 + (DConnectClient *) clientWithId:(long long) rowId onDatabase:(DConnectSQLiteDatabase *)database;
 + (NSArray *) clientsForAPIWithServiceId:(DConnectEvent *)event onDatabase:(DConnectSQLiteDatabase *)database;
 

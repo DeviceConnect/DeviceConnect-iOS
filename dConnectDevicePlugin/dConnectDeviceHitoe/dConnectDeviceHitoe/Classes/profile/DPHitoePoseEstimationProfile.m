@@ -45,12 +45,12 @@
         NSString *didReceivePutOnPoseEstimationRequest = [self apiPath: nil
                                                          attributeName: DCMPoseEstimationProfileAttrOnPoseEstimation];
         [self addPutPath:didReceivePutOnPoseEstimationRequest api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
-            return [weakSelf didReceivePutOnPoseEstimationRequest:request response:response serviceId:[request serviceId] sessionKey:[request sessionKey]];
+            return [weakSelf didReceivePutOnPoseEstimationRequest:request response:response serviceId:[request serviceId] origin:[request origin]];
         }];
         NSString *didReceiveDeleteOnPoseEstimationRequest = [self apiPath: nil
                                                             attributeName: DCMPoseEstimationProfileAttrOnPoseEstimation];
         [self addDeletePath:didReceiveDeleteOnPoseEstimationRequest api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
-            return [weakSelf didReceiveDeleteOnPoseEstimationRequest:request response:response serviceId:[request serviceId] sessionKey:[request sessionKey]];
+            return [weakSelf didReceiveDeleteOnPoseEstimationRequest:request response:response serviceId:[request serviceId] origin:[request origin]];
         }];
 
     }
@@ -86,11 +86,11 @@
 - (BOOL)didReceivePutOnPoseEstimationRequest:(DConnectRequestMessage *)request
                   response:(DConnectResponseMessage *)response
                  serviceId:(NSString *)serviceId
-                sessionKey:(NSString *)sessionKey {
+                    origin:(NSString *)origin {
     if (!serviceId) {
         [response setErrorToNotFoundServiceWithMessage:@"Not found serviceID"];
-    } else if (!sessionKey) {
-        [response setErrorToInvalidRequestParameterWithMessage:@"Not found sessionKey"];
+    } else if (!origin) {
+        [response setErrorToInvalidRequestParameterWithMessage:@"Not found origin"];
     } else {
         DPHitoeManager *mgr = [DPHitoeManager sharedInstance];
         if (!mgr) {
@@ -130,11 +130,11 @@
 - (BOOL)didReceiveDeleteOnPoseEstimationRequest:(DConnectRequestMessage *)request
                                   response:(DConnectResponseMessage *)response
                                  serviceId:(NSString *)serviceId
-                                sessionKey:(NSString *)sessionKey {
+                                    origin:(NSString *)origin {
     if (!serviceId) {
         [response setErrorToNotFoundServiceWithMessage:@"Not found serviceID"];
-    } else if (!sessionKey) {
-        [response setErrorToInvalidRequestParameterWithMessage:@"Not found sessionKey"];
+    } else if (!origin) {
+        [response setErrorToInvalidRequestParameterWithMessage:@"Not found origin"];
     } else {
         DPHitoeManager *mgr = [DPHitoeManager sharedInstance];
         if (!mgr) {
