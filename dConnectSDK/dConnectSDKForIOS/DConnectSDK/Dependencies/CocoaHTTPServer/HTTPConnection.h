@@ -111,7 +111,7 @@
 
 - (BOOL)shouldDie;
 - (void)die;
-- (void)sendEvent:(NSString *)event forOrigin:(NSString *)origin;
+- (void)sendEvent:(NSString *)event forReceiverId:(NSString *)receiverId;
 - (void)stopWebSocket;
 - (NSInteger)numberOfWebSocket;
 @end

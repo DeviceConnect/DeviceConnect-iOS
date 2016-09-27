@@ -9,7 +9,9 @@
 
 #import <UIKit/UIKit.h>
 #import <WebKit/WebKit.h>
-@interface WebViewController : UIViewController<WKNavigationDelegate>
+@interface WebViewController : UIViewController<WKNavigationDelegate, WKUIDelegate>
 - (instancetype)initWithURL:(NSString*)urlString;
 - (instancetype)initWithPath:(NSString*)path;
+
+- (void)presentationDeviceView:(UIViewController*)viewController;
 @end
