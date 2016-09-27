@@ -72,18 +72,15 @@ var util = (function(parent, global) {
 
     function openWebSocketIfNeeded() {
        try {
-            if (!dConnect.isWebSocketReady()) {
-                 if (dConnect.isConnectedWebSocket()) {
-                     dConnect.disconnectWebSocket();
-                 }
-                 var accessToken = mAccessToken ? mAccessToken : mSessionKey;
-                  dConnect.connectWebSocket(accessToken, function(code, message) {
-                         if (code > 0) {
-                             alert('WebSocketが切れました。\n code=' + code + " message=" + message);
-                         }
-                         console.log("WebSocket: code=" + code + " message=" +message);
-                   });
-                 }
+            if (!dConnect.isConnectedWebSocket()) {
+                var accessToken = mAccessToken ? mAccessToken : mSessionKey;
+                dConnect.connectWebSocket(accessToken, function(code, message) {
+                     if (code > 0) {
+                          alert('WebSocketが切れました。\n code=' + code + " message=" + message);
+                     }
+                     console.log("WebSocket: code=" + code + " message=" +message);
+                 });
+            }
         } catch (e) {
             alert("この端末は、WebSocketをサポートしていません。");
         }

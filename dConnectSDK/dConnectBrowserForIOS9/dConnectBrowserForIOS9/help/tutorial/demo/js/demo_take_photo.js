@@ -22,7 +22,7 @@ var demoTakePhoto = (function(parent, global) {
 
     function getCameraTarget() {
         var builder = new dConnect.URIBuilder();
-        builder.setProfile('mediastream_recording');
+        builder.setProfile('mediastreamrecording');
         builder.setAttribute('mediarecorder');
         builder.setServiceId(mServiceId);
         builder.setAccessToken(util.getAccessToken());
@@ -37,7 +37,7 @@ var demoTakePhoto = (function(parent, global) {
 
     function getCameraOption(target) {
         var builder = new dConnect.URIBuilder();
-        builder.setProfile('mediastream_recording');
+        builder.setProfile('mediastreamrecording');
         builder.setAttribute('options');
         builder.setServiceId(mServiceId);
         builder.setAccessToken(util.getAccessToken());
@@ -120,7 +120,7 @@ var demoTakePhoto = (function(parent, global) {
         var target = document.recorder.target.value;
 
         var builder = new dConnect.URIBuilder();
-        builder.setProfile('mediastream_recording');
+        builder.setProfile('mediastreamrecording');
         builder.setAttribute('preview');
         builder.setServiceId(mServiceId);
         builder.setAccessToken(util.getAccessToken());
@@ -139,7 +139,7 @@ var demoTakePhoto = (function(parent, global) {
         var target = document.recorder.target.value;
 
         var builder = new dConnect.URIBuilder();
-        builder.setProfile('mediastream_recording');
+        builder.setProfile('mediastreamrecording');
         builder.setAttribute('preview');
         builder.setServiceId(mServiceId);
         builder.setAccessToken(util.getAccessToken());
@@ -171,7 +171,7 @@ var demoTakePhoto = (function(parent, global) {
         var target = document.recorder.target.value;
 
         var builder = new dConnect.URIBuilder();
-        builder.setProfile('mediastream_recording');
+        builder.setProfile('mediastreamrecording');
         builder.setAttribute('takephoto');
         builder.setServiceId(mServiceId);
         builder.setAccessToken(util.getAccessToken());
@@ -209,7 +209,7 @@ var demoTakePhoto = (function(parent, global) {
             var previewHeight = mPreviewSizes[previewSizeIndex].height;
 
             var builder = new dConnect.URIBuilder();
-            builder.setProfile('mediastream_recording');
+            builder.setProfile('mediastreamrecording');
             builder.setAttribute('options');
             builder.setServiceId(mServiceId);
             builder.setAccessToken(util.getAccessToken());
