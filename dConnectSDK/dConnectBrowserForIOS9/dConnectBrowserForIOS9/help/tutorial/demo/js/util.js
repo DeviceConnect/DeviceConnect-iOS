@@ -6,7 +6,7 @@ var util = (function(parent, global) {
 
     function init(callback) {
         dConnect.setHost("localhost");
-        dConnect.setExtendedOrigin("org.deviceconnect.ios.demo");
+        dConnect.setExtendedOrigin("file://");
         checkDeviceConnect(callback);
     }
     parent.init = init;
@@ -57,6 +57,7 @@ var util = (function(parent, global) {
         dConnect.authorization(scopes, 'ヘルプ画面',
             function(clientId, accessToken) {
                 mAccessToken = accessToken;
+                openWebSocketIfNeeded();
                 if (window.Android) {
                     Android.setCookie("accessToken", mAccessToken);
                 } else {
