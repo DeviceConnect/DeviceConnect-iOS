@@ -37,6 +37,10 @@
  */
 @property (nonatomic) NSMutableArray *websocketList;
 
+/*! @brief websocketとsessionKeyの対応表.
+ */
+@property (nonatomic) NSMutableDictionary *websocketDic;
+
 /*! @brief WebSocket管理情報の配列.
  */
 @property(nonatomic, strong) DConnectWebSocketInfoManager *webSocketInfoManager;
@@ -52,6 +56,7 @@
     if (self) {
         self.object = object;
         self.websocketList = [NSMutableArray array];
+        self.websocketDic = [NSMutableDictionary dictionary];
         self.webSocketInfoManager = [DConnectWebSocketInfoManager new];
         self.host = @"localhost";
         self.port = 4035;
@@ -64,6 +69,7 @@
     if (self) {
         self.object = object;
         self.websocketList = [NSMutableArray array];
+        self.websocketDic = [NSMutableDictionary dictionary];
         self.webSocketInfoManager = [DConnectWebSocketInfoManager new];
         self.host = host;
         self.port = port;
@@ -98,13 +104,11 @@
         [socket stop];
     }
     [self.websocketList removeAllObjects];
-    [self.webSocketInfoManager removeAllWebSocketInfos];
+    [self.websocketDic removeAllObjects];
 }
 
-- (void) sendEvent:(NSString *)event forOrigin:(NSString *)origin {
-    NSString *eventKey = origin;
-    DConnectWebSocketInfo *webSocketInfo = [self.webSocketInfoManager webSocketInfoForEventKey: eventKey];
-    WebSocket *socket = webSocketInfo.socket;
+- (void) sendEvent:(NSString *)event forReceiverId:(NSString *)receiverId {
+    WebSocket *socket = [self.websocketDic objectForKey:receiverId];
     if (socket) {
         [socket sendMessage:event];
     }
@@ -130,76 +134,46 @@
     if (jsonData) {
         // JSONをNSDictionaryに変換する
         NSError *error = nil;
-        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:jsonData
-                                                            options:NSJSONReadingAllowFragments
-                                                              error:&error];
+        NSDictionary *json = [NSJSONSerialization JSONObjectWithData:jsonData
+                                                             options:NSJSONReadingAllowFragments
+                                                               error:&error];
         if (!error) {
-            
-            NSString *webSocketId = [[NSUUID UUID] UUIDString];
             HTTPMessage *httpRequest = [webSocket getRequest];
-            NSString *uri = httpRequest.url.absoluteString;
-            NSString *origin = httpRequest.allHeaderFields[@"origin"];
-            NSString *eventKey;
-            
-            if (uri && [uri localizedCaseInsensitiveCompare: @"/gotapi/websocket"]) {
-                NSString *accessToken = dic[DConnectMessageAccessToken];
-                if (!accessToken) {
-                    DCLogW(@"onWebSocketMessage: accessToken is not specified");
-                    [self sendError: webSocket errorCode:1 errorMessage:@"accessToken is not specified."];
-                    return;
-                }
-                if ([self requiresOrigin]) {
-                    if (!origin) {
-                        DCLogW(@"onWebSocketMessage: origin is not specified.");
-                        [self sendError: webSocket errorCode:2 errorMessage: @"origin is not specified."];
-                        return;
-                    }
-                    if ([self usesLocalOAuth] && ![self isValidAccessToken: accessToken origin: origin]) {
-                        DCLogW(@"onWebSocketMessage: accessToken is invalid.");
-                        [self sendError: webSocket errorCode:3 errorMessage:@"accessToken is invalid."];
-                        return;
-                    }
-                } else {
-                    if (!origin) {
-                        origin = DConnectServiceAnonymousOrigin;
-                    }
-                }
-                eventKey = origin;
-                // NOTE: 既存のイベントセッションを保持する.
-                
-                if ([self.webSocketInfoManager webSocketInfoForEventKey: eventKey]) {
-                    DCLogW(@"onWebSocketMessage: already established.");
-                    [self sendError: webSocket errorCode:4 errorMessage:@"already established."];
-                    [webSocket stop];   // webSocket.disconnectWebSocket();
-                    return;
-                }
-                [self sendSuccess: webSocket];
+            NSString *receiverId;
+            NSString *path = httpRequest.url.path;
+            if (path && [path localizedCaseInsensitiveCompare: @"/gotapi/websocket"] == NSOrderedSame) {
+                // NOP.
             } else {
-                if (!origin) {
-                    origin = DConnectServiceAnonymousOrigin;
-                }
-                
-                eventKey = dic[DConnectMessageSessionKey];
+                receiverId = json[DConnectMessageSessionKey];
                 
                 // NOTE: 既存のイベントセッションを破棄する.
-                DConnectWebSocketInfo *webSocketInfo = [self.webSocketInfoManager webSocketInfoForEventKey: eventKey];
-                if (webSocketInfo) {
-                    [webSocketInfo.socket stop];
+                WebSocket *otherSocket = [self.websocketDic valueForKey:receiverId];
+                if (otherSocket) {
+                    [otherSocket stop];
                 }
             }
-            if (!eventKey) {
-                DCLogW(@"onWebSocketMessage: Failed to generate eventKey: uri = %@, origin = %@", uri, origin);
+            
+            if (!receiverId) {
+                DCLogW(@"onWebSocketMessage: Failed to generate receiverId: path = %@, receiverId = %@", path, receiverId);
                 return;
             }
             
-            [self.webSocketInfoManager addWebSocketInfo: eventKey uri: [NSString stringWithFormat: @"%@%@", origin, uri] webSocketId: webSocketId socket: webSocket];
+            // イベント送信経路を確立
+            [self.websocketDic setObject:webSocket forKey:receiverId];
         }
     }
 }
 
 - (void)webSocketDidClose:(WebSocket *)webSocket {
     [self.websocketList removeObject:webSocket];
-    [self.webSocketInfoManager removeWebSocketInfoForSocket:webSocket];
+    
+    for (id key in [self.websocketDic keyEnumerator]) {
+        WebSocket *socket = [self.websocketDic objectForKey:key];
+        if (webSocket == socket) {
+            [self.websocketDic removeObjectForKey:key];
+            return;
+        }
+    }
 }
 
 #pragma mark - GCDAsyncSocketDelegate Methods -
@@ -249,51 +223,6 @@
         DCLogW(@"NO Websocket request.");
 	}
 #endif
-}
-
-- (BOOL) requiresOrigin {
-    return self.settings.useOriginEnable;
-}
-
-- (BOOL) usesLocalOAuth {
-    return self.settings.useLocalOAuth;
-}
-
-- (BOOL) isValidAccessToken: (NSString *) accessToken origin: (NSString *) origin {
-    
-    LocalOAuth2Main *oauth = [LocalOAuth2Main sharedOAuthForClass: [self.object class]];
-    LocalOAuthClientPackageInfo *client = [oauth findClientPackageInfoByAccessToken: accessToken];
-    if (!client) {
-        return NO;
-    }
-    LocalOAuthPackageInfo *packageInfo = [client packageInfo];
-    if (!packageInfo) {
-        return NO;
-    }
-    
-    return [packageInfo.packageName isEqualToString: origin];
-}
-
-- (void) sendSuccess: (WebSocket *) webSocket {
-    
-    NSDictionary *message = @{@"result" : [NSNumber numberWithInt:0]};
-    NSData *messageData = [NSJSONSerialization dataWithJSONObject:message options:0 error:nil];
-    NSString *messageJson = [[NSString alloc] initWithData:messageData encoding:NSUTF8StringEncoding];
-    [webSocket sendMessage:messageJson];
-}
-
-- (void) sendError: (WebSocket *) webSocket
-         errorCode: (int) errorCode
-      errorMessage: (NSString *) errorMessage {
-    
-    NSDictionary *message = @{
-                              @"result" : [NSNumber numberWithInt:1],
-                              @"errorCode" : [NSNumber numberWithInt:errorCode],
-                              @"errorMessage" : errorMessage,
-                              };
-    NSData *messageData = [NSJSONSerialization dataWithJSONObject:message options:0 error:nil];
-    NSString *messageJson = [[NSString alloc] initWithData:messageData encoding:NSUTF8StringEncoding];
-    [webSocket sendMessage:messageJson];
 }
 
 @end

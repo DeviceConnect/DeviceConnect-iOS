@@ -104,7 +104,7 @@
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"POST"];
 
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":2}", request);
+    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":3}", request);
 }
 
 /*!
@@ -128,7 +128,7 @@
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
 
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":2}", request);
+    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":3}", request);
 }
 
 /*!
@@ -152,7 +152,7 @@
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
 
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":2}", request);
+    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":3}", request);
 }
 
 /*!
@@ -240,7 +240,7 @@
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
 
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":2}", request);
+    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":3}", request);
 }
 
 /*!
@@ -264,7 +264,7 @@
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
 
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":2}", request);
+    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":3}", request);
 }
 
 /*!
@@ -288,7 +288,7 @@
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
 
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":2}", request);
+    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":3}", request);
 }
 
 /*!
@@ -375,7 +375,7 @@
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
 
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":2}", request);
+    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":3}", request);
 }
 
 /*!
@@ -399,7 +399,7 @@
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
 
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":2}", request);
+    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":3}", request);
 }
 
 /*!
@@ -423,7 +423,7 @@
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
 
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":2}", request);
+    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":3}", request);
 }
 
 /*!
@@ -508,7 +508,7 @@
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
 
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":2}", request);
+    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":3}", request);
 }
 
 /*!
@@ -531,7 +531,7 @@
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"POST"];
 
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":2}", request);
+    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":3}", request);
 }
 
 /*!
@@ -554,7 +554,7 @@
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
 
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":2}", request);
+    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":3}", request);
 }
 
 /*!
@@ -640,7 +640,7 @@
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
 
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":2}", request);
+    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":3}", request);
 }
 
 /*!
@@ -663,7 +663,7 @@
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"POST"];
 
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":2}", request);
+    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":3}", request);
 }
 
 /*!
@@ -686,7 +686,7 @@
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
 
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":2}", request);
+    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":3}", request);
 }
 
 /*!
@@ -772,7 +772,7 @@
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
 
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":2}", request);
+    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":3}", request);
 }
 
 /*!
@@ -795,7 +795,7 @@
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"POST"];
 
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":2}", request);
+    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":3}", request);
 }
 
 /*!
@@ -818,7 +818,7 @@
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
 
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":2}", request);
+    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":3}", request);
 }
 
 /*!
@@ -905,7 +905,7 @@
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
 
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":2}", request);
+    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":3}", request);
 }
 
 /*!
@@ -928,7 +928,7 @@
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"POST"];
 
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":2}", request);
+    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":3}", request);
 }
 
 /*!
@@ -951,7 +951,7 @@
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
 
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":2}", request);
+    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":3}", request);
 }
 
 /*!
@@ -1039,7 +1039,7 @@
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
 
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":2}", request);
+    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":3}", request);
 }
 
 /*!
@@ -1063,7 +1063,7 @@
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"POST"];
 
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":2}", request);
+    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":3}", request);
 }
 
 /*!
@@ -1087,7 +1087,7 @@
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
 
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":2}", request);
+    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":3}", request);
 }
 
 /*!
@@ -1246,7 +1246,7 @@
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"POST"];
 
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":2}", request);
+    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":3}", request);
 }
 
 /*!
@@ -1270,7 +1270,7 @@
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
 
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":2}", request);
+    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":3}", request);
 }
 
 /*!
@@ -1466,7 +1466,7 @@
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
 
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":2}", request);
+    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":3}", request);
 }
 
 /*!
@@ -1490,232 +1490,7 @@
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"POST"];
 
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":2}", request);
-}
-
-/*!
- * @brief serviceIdが無い状態でondataavailable属性のコールバック解除テストを行う.
- * <pre>
- * 【HTTP通信】
- * Method: PUT
- * Path: /mediaStreamRecording/ondataavailable?sessionKey=xxxx
- * </pre>
- * <pre>
- * 【期待する動作】
- * ・resultに1が返ってくること。
- * </pre>
- */
-- (void) testHttpFailMediaStreamRecordingOnDataAvailablePutNoServiceId
-{
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/mediaStreamRecording/ondataavailable"];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
-    [request setHTTPMethod:@"PUT"];
-
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":5}", request);
-}
-
-/*!
- * @brief serviceIdが空状態でondataavailable属性のコールバック解除テストを行う.
- * <pre>
- * 【HTTP通信】
- * Method: PUT
- * Path: /mediaStreamRecording/ondataavailable?serviceId=&sessionKey=xxxx
- * </pre>
- * <pre>
- * 【期待する動作】
- * ・resultに1が返ってくること。
- * </pre>
- */
-- (void) testHttpFailMediaStreamRecordingOnDataAvailablePutEmptyServiceId
-{
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/mediaStreamRecording/ondataavailable?serviceId="];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
-    [request setHTTPMethod:@"PUT"];
-
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":6}", request);
-}
-
-/*!
- * @brief 存在しないserviceIdでondataavailable属性のコールバック解除テストを行う.
- * <pre>
- * 【HTTP通信】
- * Method: PUT
- * Path: /mediaStreamRecording/ondataavailable?serviceId=123456789&sessionKey=xxxx
- * </pre>
- * <pre>
- * 【期待する動作】
- * ・resultに1が返ってくること。
- * </pre>
- */
-- (void) testHttpFailMediaStreamRecordingOnDataAvailablePutInvalidServiceId
-{
-    NSURL *uri = [NSURL URLWithString:
-                  @"http://localhost:4035/gotapi/mediaStreamRecording/ondataavailable?serviceId=12345678"];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
-    [request setHTTPMethod:@"PUT"];
-
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":6}", request);
-}
-
-/*!
- * @brief sessionKeyなしでondataavailable属性のコールバック解除テストを行う.
- * <pre>
- * 【HTTP通信】
- * Method: PUT
- * Path: /mediaStreamRecording/ondataavailable?serviceId=xxxx
- * </pre>
- * <pre>
- * 【期待する動作】
- * ・resultに1が返ってくること。
- * </pre>
- */
-- (void) testHttpFailMediaStreamRecordingOnDataAvailablePutNoSessionKey
-{
-    NSURL *uri = [NSURL URLWithString:
-                    [NSString stringWithFormat:
-                        @"http://localhost:4035/gotapi/mediaStreamRecording/ondataavailable?serviceId=%@",
-                     self.serviceId]];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
-    [request setHTTPMethod:@"PUT"];
-
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":10}", request);
-}
-
-/*!
- * @brief serviceIdが無い状態でondataavailable属性のコールバック解除テストを行う.
- * <pre>
- * 【HTTP通信】
- * Method: DELETE
- * Path: /mediaStreamRecording/ondataavailable?sessionKey=xxxx
- * </pre>
- * <pre>
- * 【期待する動作】
- * ・resultに1が返ってくること。
- * </pre>
- */
-- (void) testHttpFailMediaStreamRecordingOnDataAvailableDeleteNoServiceId
-{
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/mediaStreamRecording/ondataavailable"];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
-    [request setHTTPMethod:@"DELETE"];
-
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":5}", request);
-}
-
-/*!
- * @brief serviceIdが空状態でondataavailable属性のコールバック解除テストを行う.
- * <pre>
- * 【HTTP通信】
- * Method: DELETE
- * Path: /mediaStreamRecording/ondataavailable?serviceId=&sessionKey=xxxx
- * </pre>
- * <pre>
- * 【期待する動作】
- * ・resultに1が返ってくること。
- * </pre>
- */
-- (void) testHttpFailMediaStreamRecordingOnDataAvailableDeleteEmptyServiceId
-{
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/mediaStreamRecording/ondataavailable?serviceId="];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
-    [request setHTTPMethod:@"DELETE"];
-
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":6}", request);
-}
-
-/*!
- * @brief 存在しないserviceIdでondataavailable属性のコールバック解除テストを行う.
- * <pre>
- * 【HTTP通信】
- * Method: DELETE
- * Path: /mediaStreamRecording/ondataavailable?serviceId=123456789&sessionKey=xxxx
- * </pre>
- * <pre>
- * 【期待する動作】
- * ・resultに1が返ってくること。
- * </pre>
- */
-- (void) testHttpFailMediaStreamRecordingOnDataAvailableDeleteInvalidServiceId
-{
-    NSURL *uri = [NSURL URLWithString:
-                  @"http://localhost:4035/gotapi/mediaStreamRecording/ondataavailable?serviceId=12345678"];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
-    [request setHTTPMethod:@"DELETE"];
-
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":6}", request);
-}
-
-/*!
- * @brief sessionKey無しでondataavailable属性のコールバック解除テストを行う.
- * <pre>
- * 【HTTP通信】
- * Method: DELETE
- * Path: /mediaStreamRecording/ondataavailable?serviceId=xxxx
- * </pre>
- * <pre>
- * 【期待する動作】
- * ・resultに1が返ってくること。
- * </pre>
- */
-- (void) testHttpFailMediaStreamRecordingOnDataAvailableDeleteNoSessionKey
-{
-    NSURL *uri = [NSURL URLWithString:
-                    [NSString stringWithFormat:
-                        @"http://localhost:4035/gotapi/mediaStreamRecording/ondataavailable?serviceId=%@",
-                     self.serviceId]];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
-    [request setHTTPMethod:@"DELETE"];
-
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":10}", request);
-}
-
-/*!
- * @brief メソッドにGETを指定してondataavailable属性のリクエストテストを行う.
- * <pre>
- * 【HTTP通信】
- * Method: GET
- * Path: /mediaStreamRecording/ondataavailable?serviceId=xxxx&sessionKey=xxxx
- * </pre>
- * <pre>
- * 【期待する動作】
- * ・resultに1が返ってくること。
- * </pre>
- */
-- (void) testHttpFailMediaStreamRecordingOnDataAvailableInvalidMethodGet
-{
-    NSURL *uri = [NSURL URLWithString:
-                    [NSString stringWithFormat:
-                        @"http://localhost:4035/gotapi/mediaStreamRecording/"
-                            "ondataavailable?serviceId=%@", self.serviceId]];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
-    [request setHTTPMethod:@"GET"];
-
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":2}", request);
-}
-
-/*!
- * @brief メソッドにPOSTを指定してondataavailable属性のリクエストテストを行う.
- * <pre>
- * 【HTTP通信】
- * Method: POST
- * Path: /mediaStreamRecording/ondataavailable?serviceId=xxxx&sessionKey=xxxx
- * </pre>
- * <pre>
- * 【期待する動作】
- * ・resultに1が返ってくること。
- * </pre>
- */
-- (void) testHttpFailMediaStreamRecordingOnDataAvailableInvalidMethodPost
-{
-    NSURL *uri = [NSURL URLWithString:
-                    [NSString stringWithFormat:
-                        @"http://localhost:4035/gotapi/"
-                            "mediaStreamRecording/ondataavailable?serviceId=%@",
-                                self.serviceId]];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
-    [request setHTTPMethod:@"POST"];
-
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":2}", request);
+    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":3}", request);
 }
 
 /*!
@@ -1916,7 +1691,7 @@
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
 
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":2}", request);
+    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":3}", request);
 }
 
 /*!
@@ -1937,7 +1712,7 @@
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"POST"];
 
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":2}", request);
+    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":3}", request);
 }
 
 @end

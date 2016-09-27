@@ -76,6 +76,7 @@
                 response.result = DConnectMessageResultTypeOk;
                 
                 DConnectMessage *event = [DConnectMessage message];
+                [event setString:serviceId forKey:DConnectMessageServiceId];
                 [event setString:sessionKey forKey:DConnectMessageSessionKey];
                 [event setString:weakSelf.profileName forKey:DConnectMessageProfile];
                 [event setString:DConnectNotificationProfileAttrOnClick forKey:DConnectMessageAttribute];
@@ -100,6 +101,7 @@
                 response.result = DConnectMessageResultTypeOk;
                 
                 DConnectMessage *event = [DConnectMessage message];
+                [event setString:serviceId forKey:DConnectMessageServiceId];
                 [event setString:sessionKey forKey:DConnectMessageSessionKey];
                 [event setString:weakSelf.profileName forKey:DConnectMessageProfile];
                 [event setString:DConnectNotificationProfileAttrOnShow forKey:DConnectMessageAttribute];
@@ -124,6 +126,7 @@
                 response.result = DConnectMessageResultTypeOk;
                 
                 DConnectMessage *event = [DConnectMessage message];
+                [event setString:serviceId forKey:DConnectMessageServiceId];
                 [event setString:sessionKey forKey:DConnectMessageSessionKey];
                 [event setString:weakSelf.profileName forKey:DConnectMessageProfile];
                 [event setString:DConnectNotificationProfileAttrOnClose forKey:DConnectMessageAttribute];
@@ -148,6 +151,7 @@
                 response.result = DConnectMessageResultTypeOk;
                 
                 DConnectMessage *event = [DConnectMessage message];
+                [event setString:serviceId forKey:DConnectMessageServiceId];
                 [event setString:sessionKey forKey:DConnectMessageSessionKey];
                 [event setString:weakSelf.profileName forKey:DConnectMessageProfile];
                 [event setString:DConnectNotificationProfileAttrOnError forKey:DConnectMessageAttribute];
@@ -181,7 +185,7 @@
         // API登録(didReceiveDeleteOnClickRequest相当)
         NSString *deleteOnClickRequestApiPath =
         [self apiPath: nil
-        attributeName: DConnectNotificationProfileAttrNotify];
+        attributeName: DConnectNotificationProfileAttrOnClick];
         [self addDeletePath: deleteOnClickRequestApiPath api: ^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
             
             NSString *serviceId = [request serviceId];

@@ -261,7 +261,7 @@
         
         // API登録(didReceiveDeleteWiFiRequest相当)
         NSString *deleteWiFiRequestApiPath = [self apiPath: nil
-                                             attributeName: DConnectConnectProfileAttrOnWifiChange];
+                                             attributeName: DConnectConnectProfileAttrWifi];
         [self addDeletePath: deleteWiFiRequestApiPath api: ^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
             
             NSString *serviceId = [request serviceId];

@@ -190,7 +190,7 @@
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":2}", request);
+    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":3}", request);
 }
 
 /*!
@@ -343,29 +343,6 @@
 }
 
 /*!
- * @brief sessionKeyが無い状態でonclick属性のコールバック解除テストを行う.
- * <pre>
- * 【HTTP通信】
- * Method: DELETE
- * Path: /notification/onclick?serviceId=xxxx
- * </pre>
- * <pre>
- * 【期待する動作】
- * ・resultに1が返ってくること。
- * </pre>
- */
-- (void) testHttpFailNotificationOnClickDeleteNoSessionKey
-{
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:
-                                       @"http://localhost:4035/gotapi/notification/onclick?serviceId=%@",
-                                       self.serviceId]];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
-    [request setHTTPMethod:@"DELETE"];
-    
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":10}", request);
-}
-
-/*!
  * @brief メソッドにGETを指定してonclick属性のリクエストテストを行う.
  * <pre>
  * 【HTTP通信】
@@ -408,7 +385,7 @@
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"POST"];
     
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":2}", request);
+    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":3}", request);
 }
 
 /*!
@@ -626,7 +603,7 @@
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"POST"];
     
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":2}", request);
+    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":3}", request);
 }
 
 /*!
@@ -844,7 +821,7 @@
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"POST"];
     
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":2}", request);
+    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":3}", request);
 }
 
 /*!
@@ -1062,7 +1039,7 @@
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"POST"];
     
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":2}", request);
+    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":3}", request);
 }
 
 @end

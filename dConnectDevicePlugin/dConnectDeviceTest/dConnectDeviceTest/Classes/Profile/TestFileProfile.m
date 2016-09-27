@@ -117,30 +117,6 @@ NSString *const TestFilePath = @"/test.png";
             return YES;
         }];
         
-//        // API登録(didReceivePutUpdateRequest相当)
-//        NSString *putUpdateRequestApiPath =
-//                [self apiPath: nil
-//                attributeName: ???];
-//        [self addPutPath: putUpdateRequestApiPath api: ^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
-//            
-//            CheckDID(response, serviceId)
-//            if (path == nil || media == nil) {
-//                [response setErrorToInvalidRequestParameter];
-//            } else {
-//                NSString *fileName = [self fileNameFromPath:path];
-//                [_fm removeFileForPath:fileName];
-//                NSString *url = [_fm createFileForPath:fileName contents:media];
-//                
-//                if (url) {
-//                    response.result = DConnectMessageResultTypeOk;
-//                } else {
-//                    [response setErrorToUnknown];
-//                }
-//            }
-//            
-//            return YES;
-//        }];
-        
         // API登録(didReceiveDeleteRemoveRequest相当)
         NSString *deleteRemoveRequestApiPath =
                 [self apiPath: nil

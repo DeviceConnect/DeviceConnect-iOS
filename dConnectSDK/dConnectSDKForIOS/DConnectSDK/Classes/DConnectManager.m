@@ -402,6 +402,35 @@ NSString *const DConnectAttributeNameRequestAccessToken = @"requestAccessToken";
             }
             [self makeEventMessage:event origin:origin hasDelegate:hasDelegate plugin:plugin];
         }
+    } else {
+        NSString *sessionKey = [event stringForKey:DConnectMessageSessionKey];
+        if (sessionKey) {
+            NSArray *names = [sessionKey componentsSeparatedByString:@"."];
+            NSString *pluginId = names[names.count - 1];
+            NSRange range = [sessionKey rangeOfString:pluginId];
+            NSString *key;
+            if (range.location != NSNotFound) {
+                if (range.location == 0) {
+                    key = sessionKey;
+                } else {
+                    key = [sessionKey substringToIndex:range.location - 1];
+                }
+            } else {
+                key = sessionKey;
+            }
+            [event setString:key forKey:DConnectMessageSessionKey];
+            
+            DConnectDevicePlugin *plugin = [_mDeviceManager devicePluginForPluginId:pluginId];
+            
+            BOOL hasDelegate = NO;
+            if ([self.delegate respondsToSelector:@selector(manager:didReceiveDConnectMessage:)]) {
+                hasDelegate = YES;
+            } else {
+                // イベントのJSONにあるURIをFilesプロファイルに変換
+                [DConnectURLProtocol convertUri:event];
+            }
+            [self makeEventMessage:event origin:key hasDelegate:hasDelegate plugin:plugin];
+        }
     }
     return NO;
 }

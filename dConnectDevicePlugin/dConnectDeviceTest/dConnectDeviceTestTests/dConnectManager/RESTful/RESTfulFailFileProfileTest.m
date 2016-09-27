@@ -101,7 +101,7 @@
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
     
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":2}", request);
+    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":3}", request);
 }
 
 /*!
@@ -143,7 +143,7 @@
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":2}", request);
+    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":3}", request);
 }
 
 /*!
@@ -227,7 +227,7 @@
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"POST"];
     
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":2}", request);
+    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":3}", request);
 }
 
 /*!
@@ -269,7 +269,7 @@
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":2}", request);
+    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":3}", request);
 }
 
 /*!
@@ -353,7 +353,7 @@
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"POST"];
     
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":2}", request);
+    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":3}", request);
 }
 
 /*!
@@ -395,133 +395,7 @@
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
 
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":2}", request);
-}
-
-/*!
- * @brief serviceIdが無い状態でファイル更新テストを行う.
- * <pre>
- * 【HTTP通信】
- * Method: GET
- * Path: /file/update
- * </pre>
- * <pre>
- * 【期待する動作】
- * ・resultに1が返ってくること。
- * </pre>
- */
-- (void) testHttpFailFileUpdatePutNoServiceId
-{
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/file/update"];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
-    [request setHTTPMethod:@"PUT"];
-    
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":5}", request);
-}
-
-/*!
- * @brief serviceIdが空状態でファイル更新テストを行う.
- * <pre>
- * 【HTTP通信】
- * Method: GET
- * Path: /file/update
- * </pre>
- * <pre>
- * 【期待する動作】
- * ・resultに1が返ってくること。
- * </pre>
- */
-- (void) testHttpFailFileUpdatePutEmptyServiceId
-{
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/file/update?serviceId="];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
-    [request setHTTPMethod:@"PUT"];
-    
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":6}", request);
-}
-
-/*!
- * @brief 不正なserviceIdでファイル更新テストを行う.
- * <pre>
- * 【HTTP通信】
- * Method: GET
- * Path: /file/update
- * </pre>
- * <pre>
- * 【期待する動作】
- * ・resultに1が返ってくること。
- * </pre>
- */
-- (void) testHttpFailFileUpdatePutInvalidServiceId
-{
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/file/update?serviceId=12345678"];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
-    [request setHTTPMethod:@"PUT"];
-    
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":6}", request);
-}
-
-/*!
- * @brief メソッドにGETを指定してファイル削除テストを行う.
- * <pre>
- * 【HTTP通信】
- * Method: GET
- * Path: /file/update?serviceId=xxxx
- * </pre>
- * <pre>
- * 【期待する動作】
- * ・resultに1が返ってくること。
- * </pre>
- */
-- (void) testHttpFailFileUpdatePutInvalidMethodGet
-{
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/file/update?serviceId=%@", self.serviceId]];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
-    [request setHTTPMethod:@"GET"];
-    
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":2}", request);
-}
-
-/*!
- * @brief メソッドにPOSTを指定してファイル削除テストを行う.
- * <pre>
- * 【HTTP通信】
- * Method: GET
- * Path: /file/update?serviceId=xxxx
- * </pre>
- * <pre>
- * 【期待する動作】
- * ・resultに1が返ってくること。
- * </pre>
- */
-- (void) testHttpFailFileUpdatePutInvalidMethodPost
-{
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/file/update?serviceId=%@", self.serviceId]];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
-    [request setHTTPMethod:@"POST"];
-    
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":2}", request);
-}
-
-/*!
- * @brief メソッドにDELETEを指定してファイル削除テストを行う.
- * <pre>
- * 【HTTP通信】
- * Method: GET
- * Path: /file/update?serviceId=xxxx
- * </pre>
- * <pre>
- * 【期待する動作】
- * ・resultに1が返ってくること。
- * </pre>
- */
-- (void) testHttpFailFileUpdatePutInvalidMethodDelete
-{
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/file/update?serviceId=%@", self.serviceId]];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
-    [request setHTTPMethod:@"DELETE"];
-    
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":2}", request);
+    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":3}", request);
 }
 
 /*!
@@ -605,7 +479,7 @@
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
     
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":2}", request);
+    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":3}", request);
 }
 
 /*!
@@ -626,7 +500,7 @@
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"POST"];
     
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":2}", request);
+    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":3}", request);
 }
 
 /*!
