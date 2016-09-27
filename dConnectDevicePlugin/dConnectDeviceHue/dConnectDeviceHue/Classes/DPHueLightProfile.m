@@ -80,8 +80,7 @@
                           NSString *color = [DConnectLightProfile colorFromRequest: request];
                           NSArray *flashing = [DConnectLightProfile parsePattern: [DConnectLightProfile flashingFromRequest: request] isId:NO];
                           
-                          if (!brightness
-                              || (brightness && ([brightness doubleValue] < 0.0 || [brightness doubleValue] > 1.0))) {
+                          if (brightness && ([brightness doubleValue] < 0.0 || [brightness doubleValue] > 1.0)) {
                               [response setErrorToInvalidRequestParameterWithMessage:
                                @"Parameter 'brightness' must be a value between 0 and 1.0."];
                               return YES;
@@ -110,7 +109,7 @@
                           return [weakSelf turnOnOffHueLightWithResponse:response
                                                              lightId:lightId
                                                                 isOn:YES
-                                                          brightness:[brightness doubleValue]
+                                                          brightness:brightness
                                                             flashing:flashing
                                                                color:color];
                       }];
@@ -124,8 +123,7 @@
                          NSString *serviceId = [request serviceId];
                          NSString *lightId = [DConnectLightProfile lightIdFromRequest: request];
                          NSNumber *brightness = [DConnectLightProfile brightnessFromRequest: request];
-                         if (!brightness
-                             || (brightness && ([brightness doubleValue] < 0.0 || [brightness doubleValue] > 1.0))) {
+                         if (brightness && ([brightness doubleValue] < 0.0 || [brightness doubleValue] > 1.0)) {
                              [response setErrorToInvalidRequestParameterWithMessage:
                               @"Parameter 'brightness' must be a value between 0 and 1.0."];
                              return YES;
@@ -160,7 +158,7 @@
                          return [[DPHueManager sharedManager] changeLightNameWithLightId:lightId
                                                                                     name:name
                                                                                    color:color
-                                                                              brightness:[brightness doubleValue]
+                                                                              brightness:brightness
                                                                                 flashing:flashing
                                                                               completion:^{
                                                                                   [weakSelf setErrRespose:response];
@@ -181,7 +179,7 @@
                                 [response setErrorToEmptyServiceId];
                                 return YES;
                             }
-                            return [weakSelf turnOnOffHueLightWithResponse:response lightId:lightId isOn:NO brightness:0  flashing:nil color:nil];
+                            return [weakSelf turnOnOffHueLightWithResponse:response lightId:lightId isOn:NO brightness:[NSNumber numberWithDouble:0]  flashing:nil color:nil];
                         }];
     }
     return self;
@@ -254,7 +252,7 @@
 - (BOOL)turnOnOffHueLightWithResponse:(DConnectResponseMessage*)response
                               lightId:(NSString*)lightId
                                 isOn:(BOOL)isOn
-                          brightness:(double)brightness
+                          brightness:(NSNumber *)brightness
                              flashing:(NSArray*)flashing
                                color:(NSString*)color
 {
@@ -262,7 +260,7 @@
         [self setErrRespose:response];
         return YES;
     }
-    if (brightness < 0 || brightness > 1) {
+    if (brightness && ([brightness doubleValue] < 0 || [brightness doubleValue] > 1)) {
         [response setErrorToInvalidRequestParameterWithMessage:@"invalid brightness value."];
         return YES;
     }
@@ -284,7 +282,7 @@
 -(BOOL)turnOnOffHueLightGroupWithResponse:(DConnectResponseMessage*)response
                                   groupId:(NSString*)groupId
                                      isOn:(BOOL)isOn
-                               brightness:(double)brightness
+                               brightness:(NSNumber *)brightness
                                     color:(NSString*)color
 {
     //groupIdチェック

@@ -186,7 +186,7 @@ pushlinkAuthenticationSuccessSelector:(SEL)pushlinkAuthenticationSuccessSelector
  @retval PHLightState
  */
 - (PHLightState*) getLightStateIsOn:(BOOL)isOn
-                         brightness:(double)brightness
+                         brightness:(NSNumber *)brightness
                               color:(NSString *)color;
 
 
@@ -228,7 +228,7 @@ pushlinkAuthenticationSuccessSelector:(SEL)pushlinkAuthenticationSuccessSelector
 -(BOOL)changeLightNameWithLightId:(NSString *)lightId
                              name:(NSString *)name
                             color:(NSString *)color
-                       brightness:(double)brightness
+                       brightness:(NSNumber *)brightness
                          flashing:(NSArray*)flashing
                        completion:(void(^)())completion;
 
