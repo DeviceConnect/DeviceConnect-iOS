@@ -181,17 +181,11 @@ NSString *const DConnectLightProfileParamGroupName = @"groupName";
 
 - (BOOL)checkFlash:(DConnectResponseMessage *)response flashing:(NSArray *)flashing
 {
-    for (NSString *flash in flashing) {
+    for (NSNumber *flash in flashing) {
         if (flash && [flash doubleValue] <= 0.0) {
             [response setErrorToInvalidRequestParameterWithMessage:
              @"Parameter 'flashing' must be a x >= 1."];
             return NO;
-        } else if (flash && ![DConnectLightProfile existDigitWithString:flash]
-                             && [DConnectLightProfile existDecimalWithString:flash]) {
-            [response setErrorToInvalidRequestParameterWithMessage:
-             @"Parameter 'flashing' must not be decimal."];
-            return NO;
-            
         }
     }
     return YES;
