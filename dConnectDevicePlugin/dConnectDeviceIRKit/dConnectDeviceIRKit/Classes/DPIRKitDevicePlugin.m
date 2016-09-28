@@ -358,6 +358,19 @@ DPIRKitManagerDetectionDelegate
     return top;
 }
 
+- (NSArray *) displayServiceFilter:(NSArray *)services {
+    
+    NSMutableArray *filterServices = [NSMutableArray array];
+    
+    // 仮想デバイスを表示しないので、それを除いたservicesを作成して返す
+    for (DConnectService *service in services) {
+        if (![service isMemberOfClass: [DPIRKitVirtualService class]]) {
+            [filterServices addObject: service];
+        }
+    }
+    return filterServices;
+}
+
 #pragma mark DConnectInformationProfileDataSource
 
 - (DConnectServiceInformationProfileConnectState) profile:(DConnectServiceInformationProfile *)profile
