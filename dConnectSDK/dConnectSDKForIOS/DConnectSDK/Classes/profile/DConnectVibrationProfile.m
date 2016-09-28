@@ -95,11 +95,23 @@ const long long DConnectVibrationProfileDefaultMaxVibrationTime = 500;
 #pragma mark - Private Methods
 
 - (BOOL) isNumberString:(NSString *)str {
-    NSCharacterSet *digitCharSet = [NSCharacterSet characterSetWithCharactersInString:@"0123456789"];
-    NSScanner *aScanner = [NSScanner localizedScannerWithString:str];
-    [aScanner setCharactersToBeSkipped:nil];
-    [aScanner scanCharactersFromSet:digitCharSet intoString:NULL];
-    return [aScanner isAtEnd];
+    if (!str || str.length == 0) {
+        return NO;
+    }
+    
+    NSString *expression = @"^[-+]?([0-9]*)?$";
+    NSError *error = nil;
+    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:expression
+                                                                           options:NSRegularExpressionCaseInsensitive
+                                                                             error:&error];
+    if (error) {
+        return NO;
+    }
+    
+    NSUInteger numberOfMatches = [regex numberOfMatchesInString:str
+                                                        options:0
+                                                          range:NSMakeRange(0, [str length])];
+    return (numberOfMatches != 0);
 }
 
 @end
