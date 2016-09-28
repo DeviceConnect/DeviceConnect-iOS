@@ -89,7 +89,7 @@
     if (self.delegate) {
         DConnectServiceProvider *serviceProvider = [self.delegate serviceProvider];
         if (serviceProvider) {
-            rows = [serviceProvider.services count];
+            rows = [[self serviceFilter: serviceProvider.services] count];
         }
     }
     
@@ -107,7 +107,7 @@
         if (self.delegate) {
             DConnectServiceProvider *serviceProvider = [self.delegate serviceProvider];
             if (serviceProvider) {
-                DConnectService *service = serviceProvider.services[indexPath.row];
+                DConnectService *service = [self serviceFilter: serviceProvider.services][indexPath.row];
                 if (service) {
                     serviceName = [service name];
                     if ([service online]) {
@@ -134,7 +134,7 @@
     if (self.delegate) {
         DConnectServiceProvider *serviceProvider = [self.delegate serviceProvider];
         if (serviceProvider) {
-            DConnectService *service = serviceProvider.services[indexPath.row];
+            DConnectService *service = [self serviceFilter: serviceProvider.services][indexPath.row];
             if (service) {
                 if ([self.delegate respondsToSelector:@selector(didSelectService:)]) {
                     [self.delegate didSelectService: service];
@@ -147,8 +147,8 @@
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
     
     // 削除可能か判定(オフラインなら削除可能)
-    if (indexPath.row < self.delegate.serviceProvider.services.count) {
-        DConnectService *service = [self.delegate.serviceProvider.services objectAtIndex: indexPath.row];
+    if (indexPath.row < [self serviceFilter: self.delegate.serviceProvider.services].count) {
+        DConnectService *service = [[self serviceFilter: self.delegate.serviceProvider.services] objectAtIndex: indexPath.row];
         if (!service.online) {
             return YES;
         }
@@ -162,8 +162,9 @@
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         
         // データ削除
-        if (indexPath.row < self.delegate.serviceProvider.services.count) {
-            DConnectService *service = [self.delegate.serviceProvider.services objectAtIndex: indexPath.row];
+        NSArray *services = [self serviceFilter: self.delegate.serviceProvider.services];
+        if (indexPath.row < services.count) {
+            DConnectService *service = [services objectAtIndex: indexPath.row];
             if (!service.online) {
                 
                 // サービスを削除し、対応するtableViewの行も削除する
@@ -311,12 +312,26 @@
     [self setButtonLayout];
 }
 
+/*!
+ @brief 表示するserviceをフィルタリングする
+ @param[in] serviceProviderから取得したservices
+ @retval 表示するserviceだけを抽出したservices
+ */
+- (NSArray *) serviceFilter: (NSArray *) services {
+    if (self.delegate) {
+        if ([self.delegate respondsToSelector:@selector(displayServiceFilter:)]) {
+            return [self.delegate displayServiceFilter: services];
+        }
+    }
+    return services;
+}
+
 #pragma mark - private methods.
 
 - (NSIndexPath *) tableIndexPathByServiceId: (NSString *) serviceId {
     int index = 0;
 
-    for (DConnectService *service in self.delegate.serviceProvider.services) {
+    for (DConnectService *service in [self serviceFilter: self.delegate.serviceProvider.services]) {
         if (service.serviceId && [serviceId localizedCaseInsensitiveCompare: service.serviceId] == NSOrderedSame) {
             NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:0];
             return indexPath;
@@ -354,7 +369,7 @@
 }
 
 - (BOOL) isExistOfflineService {
-    for (DConnectService *service in self.delegate.serviceProvider.services) {
+    for (DConnectService *service in [self serviceFilter: self.delegate.serviceProvider.services]) {
         if (!service.online) {
             return YES;
         }
