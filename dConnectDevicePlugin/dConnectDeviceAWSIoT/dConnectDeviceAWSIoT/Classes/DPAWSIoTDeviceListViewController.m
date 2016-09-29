@@ -119,6 +119,13 @@
 				break;
 		}
 	}];
+	if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
+		[ac setModalPresentationStyle:UIModalPresentationPopover];
+		UIPopoverPresentationController *popPresenter = [ac popoverPresentationController];
+		UIView *view = [sender valueForKey:@"view"];
+		popPresenter.sourceView = view;
+		popPresenter.sourceRect = [view bounds];
+	}
 	[self presentViewController:ac animated:YES completion:nil];
 }
 
