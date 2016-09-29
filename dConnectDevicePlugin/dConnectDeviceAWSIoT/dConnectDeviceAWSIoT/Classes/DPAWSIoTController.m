@@ -358,8 +358,6 @@ static NSString *const kTopicEvent = @"event";
 			if (![self checkIfManagerIsAlive:_managers[key]]) continue;
 			count++;
 		}
-		NSLog(@"a******************");
-		NSLog(@"%d", count);
 		if (count == 0) {
 			return YES;
 		}
