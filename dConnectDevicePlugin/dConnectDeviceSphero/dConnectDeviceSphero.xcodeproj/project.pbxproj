@@ -50,6 +50,9 @@
 		AB1061AE197E3B290005BB3F /* DPSpheroDriveControllerProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = AB1061AD197E3B290005BB3F /* DPSpheroDriveControllerProfile.m */; };
 		AB1061B6197F46A30005BB3F /* DPSpheroLightProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = AB1061B5197F46A30005BB3F /* DPSpheroLightProfile.m */; };
 		AB1061B919809C4F0005BB3F /* DPSpheroDeviceOrientationProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = AB1061B819809C4F0005BB3F /* DPSpheroDeviceOrientationProfile.m */; };
+		AB39B5791D9FBB5400766689 /* DPSpheroTimeoutSchedule.m in Sources */ = {isa = PBXBuildFile; fileRef = AB39B5761D9FBB5400766689 /* DPSpheroTimeoutSchedule.m */; };
+		AB39B57A1D9FBB5400766689 /* DPSpheroUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = AB39B5781D9FBB5400766689 /* DPSpheroUtil.m */; };
+		AB39B57D1D9FC15A00766689 /* DPSpheroDeviceRepeatExecutor.m in Sources */ = {isa = PBXBuildFile; fileRef = AB39B57C1D9FC15A00766689 /* DPSpheroDeviceRepeatExecutor.m */; };
 		AB39FEC01B4E19C000A8139E /* RobotKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB39FEBD1B4E19C000A8139E /* RobotKit.framework */; };
 		AB917003196157D80084DB70 /* DPSpheroDevicePlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = AB916FF7196157D80084DB70 /* DPSpheroDevicePlugin.m */; };
 		AB917004196157D80084DB70 /* DPSpheroProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = AB916FF8196157D80084DB70 /* DPSpheroProfile.m */; };
@@ -130,6 +133,12 @@
 		AB1061B819809C4F0005BB3F /* DPSpheroDeviceOrientationProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DPSpheroDeviceOrientationProfile.m; path = dConnectDeviceSphero/Classes/DPSpheroDeviceOrientationProfile.m; sourceTree = SOURCE_ROOT; };
 		AB3520AF1BACDE6A0010FF55 /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
 		AB3520B01BACDE6A0010FF55 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
+		AB39B5751D9FBB5400766689 /* DPSpheroTimeoutSchedule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPSpheroTimeoutSchedule.h; sourceTree = "<group>"; };
+		AB39B5761D9FBB5400766689 /* DPSpheroTimeoutSchedule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPSpheroTimeoutSchedule.m; sourceTree = "<group>"; };
+		AB39B5771D9FBB5400766689 /* DPSpheroUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPSpheroUtil.h; sourceTree = "<group>"; };
+		AB39B5781D9FBB5400766689 /* DPSpheroUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPSpheroUtil.m; sourceTree = "<group>"; };
+		AB39B57B1D9FC15A00766689 /* DPSpheroDeviceRepeatExecutor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPSpheroDeviceRepeatExecutor.h; sourceTree = "<group>"; };
+		AB39B57C1D9FC15A00766689 /* DPSpheroDeviceRepeatExecutor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPSpheroDeviceRepeatExecutor.m; sourceTree = "<group>"; };
 		AB39FEBD1B4E19C000A8139E /* RobotKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = RobotKit.framework; sourceTree = "<group>"; };
 		AB39FED81B4E253F00A8139E /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
 		AB6ABD6819AEF657006B3F1D /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -213,6 +222,20 @@
 			);
 			name = Resources;
 			path = dConnectDeviceSphero/Resources;
+			sourceTree = SOURCE_ROOT;
+		};
+		AB39B5741D9FBB5400766689 /* util */ = {
+			isa = PBXGroup;
+			children = (
+				AB39B57B1D9FC15A00766689 /* DPSpheroDeviceRepeatExecutor.h */,
+				AB39B57C1D9FC15A00766689 /* DPSpheroDeviceRepeatExecutor.m */,
+				AB39B5751D9FBB5400766689 /* DPSpheroTimeoutSchedule.h */,
+				AB39B5761D9FBB5400766689 /* DPSpheroTimeoutSchedule.m */,
+				AB39B5771D9FBB5400766689 /* DPSpheroUtil.h */,
+				AB39B5781D9FBB5400766689 /* DPSpheroUtil.m */,
+			);
+			name = util;
+			path = dConnectDeviceSphero/Classes/util;
 			sourceTree = SOURCE_ROOT;
 		};
 		AB8913B41974D1C90069CDA3 /* profile */ = {
@@ -362,6 +385,7 @@
 		ABE8C5901957FEEB0083D672 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				AB39B5741D9FBB5400766689 /* util */,
 				AB8913B61974D1F60069CDA3 /* extension */,
 				AB8913B51974D1DF0069CDA3 /* setting */,
 				AB8913B41974D1C90069CDA3 /* profile */,
@@ -538,7 +562,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AB39B57D1D9FC15A00766689 /* DPSpheroDeviceRepeatExecutor.m in Sources */,
 				6611B2F619C1A1EF0034893E /* DPSpheroSettingViewController.m in Sources */,
+				AB39B5791D9FBB5400766689 /* DPSpheroTimeoutSchedule.m in Sources */,
+				AB39B57A1D9FBB5400766689 /* DPSpheroUtil.m in Sources */,
 				AB917015196158EB0084DB70 /* DPSpheroDevicePlugin.m in Sources */,
 				AB1061B919809C4F0005BB3F /* DPSpheroDeviceOrientationProfile.m in Sources */,
 				6611B37F19C28A830034893E /* DPGuideViewController.m in Sources */,
