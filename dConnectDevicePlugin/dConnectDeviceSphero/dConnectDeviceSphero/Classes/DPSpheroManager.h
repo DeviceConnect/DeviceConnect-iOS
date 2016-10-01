@@ -195,17 +195,6 @@ typedef struct DPGyroData_ {
  */
 - (void)stop;
 
-/*!
- @brief LEDを点滅。
- */
-- (void)flashLightWithColor:(UIColor*)color
-                  flashData:(NSArray*)flashData;
-
-/*!
- @brief キャリブレーションライトの点滅。
- */
-- (void)flashLightWithBrightness:(float)brightness
-                       flashData:(NSArray*)flashData;
 
 /*!
  @brief 姿勢センサーのスタート。

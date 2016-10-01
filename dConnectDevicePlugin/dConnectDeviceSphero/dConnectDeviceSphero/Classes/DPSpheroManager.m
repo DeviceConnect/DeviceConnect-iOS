@@ -379,48 +379,6 @@ BOOL _startedCollisionSensor;
     return red > 0 && green > 0 && blue > 0 && alpha > 0;
 }
 
-// キャリブレーションライトの点滅
-- (void)flashLightWithBrightness:(float)brightness
-                       flashData:(NSArray*)flashData
-{
-    
-    RKMacroObject *macro = [RKMacroObject new];
-    for (int i=0; i<flashData.count; i++) {
-        int delay = [flashData[i] intValue];
-        if (i%2==0) {
-            // 点灯
-            [macro addCommand:[RKMCFrontLED commandWithIntensity:brightness delay:delay]];
-        } else {
-            // 消灯
-            [macro addCommand:[RKMCFrontLED commandWithIntensity:0 delay:delay]];
-        }
-    }
-    // 最後は現状復帰で終わる
-    [macro addCommand:[RKMCFrontLED commandWithIntensity:_calibrationLightBright delay:0]];
-    [macro playMacro];
-}
-
-// LEDを点滅
-- (void)flashLightWithColor:(UIColor*)color flashData:(NSArray*)flashData
-{
-    RKMacroObject *macro = [RKMacroObject new];
-    for (int i=0; i<flashData.count; i++) {
-        int delay = [flashData[i] intValue];
-        if (i%2==0) {
-            // 点灯
-            CGFloat red, green, blue, alpha;
-            [color getRed:&red green:&green blue:&blue alpha:&alpha];
-            [macro addCommand:[RKMCRGB commandWithRed:red * alpha
-                                                green:green * alpha
-                                                 blue:blue * alpha
-                                                delay:delay]];
-        } else {
-            // 消灯
-            [macro addCommand:[RKMCRGB commandWithRed:0 green:0 blue:0 delay:delay]];
-        }
-    }
-    [macro playMacro];
-}
 
 #pragma mark - Move
 

@@ -201,7 +201,6 @@ static NSString *const SpheroCalibrationName = @"Sphero CalibrationLED";
         // キャリブレーションライト点灯。 colorは変えられない。点灯、消灯のみ
         if (flashing.count>0) {
             // 点滅
-//            [[DPSpheroManager sharedManager] flashLightWithBrightness:[brightness doubleValue] flashData:flashing];
             _flashingExecutor = [[DPSpheroDeviceRepeatExecutor alloc] initWithPattern:flashing on:^{
                 [DPSpheroManager sharedManager].calibrationLightBright = [brightness doubleValue];
             } off:^{
@@ -247,7 +246,6 @@ static NSString *const SpheroCalibrationName = @"Sphero CalibrationLED";
         }
         if (flashing.count>0) {
             // 点滅
-//            [[DPSpheroManager sharedManager] flashLightWithColor:ledColor flashData:flashing];
             _flashingExecutor = [[DPSpheroDeviceRepeatExecutor alloc] initWithPattern:flashing on:^{
                 [DPSpheroManager sharedManager].LEDLightColor = ledColor;
             } off:^{
