@@ -1,7 +1,7 @@
 {
     "swagger": "2.0",
     "info": {
-        "title": "Vibration Profile",
+        "title": "WalkState Profile",
         "version": "2.0.0",
         "description": ""
     },
@@ -10,9 +10,27 @@
         "multipart/form-data"
     ],
     "paths": {
-        "/vibrate": {
-            "put": {
+        "/onWalkState": {
+            "get": {
                 "x-type": "one-shot",
+                "summary": "",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "serviceId",
+                        "in": "query",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                }
+            },
+            "put": {
+                "x-type": "event",
                 "summary": "",
                 "description": "",
                 "parameters": [
@@ -21,17 +39,6 @@
                         "in": "formData",
                         "required": true,
                         "type": "string"
-                    },
-                    {
-                        "name": "pattern",
-                        "in": "formData",
-                        "required": false,
-                        "type": "array",
-                        "items": {
-                            "type": "integer",
-                            "format": "int64",
-                            "minimum": 0
-                        }
                     }
                 ],
                 "responses": {
@@ -41,7 +48,7 @@
                 }
             },
             "delete": {
-                "x-type": "one-shot",
+                "x-type": "event",
                 "summary": "",
                 "description": "",
                 "parameters": [
@@ -59,6 +66,5 @@
                 }
             }
         }
-
     }
 }

@@ -84,10 +84,11 @@
  オブジェクトはDConnectDevicePluginもしくはDConnectManagerのインスタンスでなければならない。
  
  @param[in] object DConnectDevicePluginもしくはDConnectManagerのインスタンス
+ @param[in] bundle デバイスプラグインのbundle。無ければnilを設定する。
  
  @retval ServiceManagerインスタンス。
  */
-- (id) initWithObject: (id) object;
+- (id) initWithObject: (id) object bundle: (NSBundle *) selfBundle;
 
 /*!
  @brief イベントを送信する。

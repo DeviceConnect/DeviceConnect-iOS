@@ -33,7 +33,7 @@ static NSString *const VERSION = @"2.0.0";
         return nil;
     }
     
-    self = [super initWithObject: self];
+    self = [super initWithObject: self bundle: DPAllJoynResourceBundle()];
     if (self) {
         self.pluginName = @"AllJoyn (Device Connect Device Plug-in)";
         
@@ -66,8 +66,7 @@ static NSString *const VERSION = @"2.0.0";
 }
 - (NSString*)iconFilePath:(BOOL)isOnline
 {
-    NSString *bundlePath = [[NSBundle mainBundle] pathForResource:@"dConnectDeviceAllJoyn_resources" ofType:@"bundle"];
-    NSBundle *bundle = [NSBundle bundleWithPath:bundlePath];
+    NSBundle *bundle = DPAllJoynResourceBundle();
     NSString* filename = isOnline ? @"dconnect_icon" : @"dconnect_icon_off";
     return [bundle pathForResource:filename ofType:@"png"];
 }

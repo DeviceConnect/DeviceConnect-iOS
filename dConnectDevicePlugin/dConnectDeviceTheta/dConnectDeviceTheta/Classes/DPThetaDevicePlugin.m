@@ -11,12 +11,15 @@
 #import "DPThetaSystemProfile.h"
 #import "DPThetaManager.h"
 
+#define DPThetaBundle() \
+[NSBundle bundleWithPath:[[NSBundle mainBundle] pathForResource:@"dConnectDeviceTheta_resources" ofType:@"bundle"]]
+
 @implementation DPThetaDevicePlugin
 
 
 - (id) init
 {
-    self = [super initWithObject: self];
+    self = [super initWithObject: self bundle: DPThetaBundle()];
     if (self) {
         self.pluginName = @"Theta (Device Connect Device Plug-in)";
         [[DPThetaManager sharedManager] setServiceProvider: self.serviceProvider];
@@ -38,8 +41,7 @@
 
 - (NSString*)iconFilePath:(BOOL)isOnline
 {
-    NSString *bundlePath = [[NSBundle mainBundle] pathForResource:@"dConnectDeviceTheta_resources" ofType:@"bundle"];
-    NSBundle *bundle = [NSBundle bundleWithPath:bundlePath];
+    NSBundle *bundle = DPThetaBundle();
     NSString* filename = isOnline ? @"dconnect_icon" : @"dconnect_icon_off";
     return [bundle pathForResource:filename ofType:@"png"];
 }

@@ -19,6 +19,8 @@
 #import "SonyCameraSystemProfile.h"
 #import <SystemConfiguration/CaptiveNetwork.h>
 
+#define DPSonyCameraBundle() \
+[NSBundle bundleWithPath:[[NSBundle mainBundle] pathForResource:@"dConnectDeviceSonyCamera_resources" ofType:@"bundle"]]
 
 /*!
  @brief Sony Remote Camera用デバイスプラグイン。
@@ -48,7 +50,7 @@
 @implementation SonyCameraDevicePlugin
 
 - (instancetype) init {
-    self = [super initWithObject: self];
+    self = [super initWithObject: self bundle:DPSonyCameraBundle()];
     if (self) {
         self.pluginName = @"Sony Camera (Device Connect Device Plug-in)";
         
@@ -266,8 +268,7 @@
 
 - (NSString*)iconFilePath:(BOOL)isOnline
 {
-    NSString *bundlePath = [[NSBundle mainBundle] pathForResource:@"dConnectDeviceSonyCamera_resources" ofType:@"bundle"];
-    NSBundle *bundle = [NSBundle bundleWithPath:bundlePath];
+    NSBundle *bundle = DPSonyCameraBundle();
     NSString* filename = isOnline ? @"dconnect_icon" : @"dconnect_icon_off";
     return [bundle pathForResource:filename ofType:@"png"];
 }
