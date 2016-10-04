@@ -131,12 +131,6 @@ extern NSString *const DConnectApplicationWillEnterForeground;
  */
 - (void) stopByHttpServer;
 
-
-/*!
- @brief Websocketサーバを起動する。
- */
-- (void) startWebsocket;
-
 /*!
  @brief DConnectManagerが動作しているかをチェックする。
  @retval YES 動作している

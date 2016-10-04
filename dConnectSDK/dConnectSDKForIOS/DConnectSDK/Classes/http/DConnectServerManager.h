@@ -20,4 +20,6 @@
 
 - (NSArray *) getWebSockets;
 
++ (void) convertUriOfMessage:(DConnectMessage *)message;
+
 @end

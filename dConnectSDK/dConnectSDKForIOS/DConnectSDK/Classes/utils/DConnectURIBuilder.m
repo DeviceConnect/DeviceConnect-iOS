@@ -9,7 +9,8 @@
 
 #import "DConnectMessage.h"
 #import "DConnectURIBuilder.h"
-#import "DConnectURLProtocol.h"
+#import "DConnectManager+Private.h"
+#import "DConnectSettings.h"
 
 @interface DConnectURIBuilder()
 
@@ -24,10 +25,11 @@
     self = [super init];
     
     if (self) {
-        _host = [DConnectURLProtocol host];
-        _port = [DConnectURLProtocol port];
-        _scheme = [DConnectURLProtocol scheme];
+        DConnectManager *mgr = [DConnectManager sharedManager];
+        _host = mgr.settings.host;
+        _port = mgr.settings.port;
         _api = DConnectMessageDefaultAPI;
+        _scheme = @"http";
     }
     
     return self;

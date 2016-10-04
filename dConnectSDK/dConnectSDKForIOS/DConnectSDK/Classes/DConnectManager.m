@@ -9,7 +9,6 @@
 
 #import "DConnectManager+Private.h"
 #import "DConnectDevicePlugin+Private.h"
-#import "DConnectURLProtocol.h"
 #import "DConnectManagerAuthorizationProfile.h"
 #import "DConnectManagerDeliveryProfile.h"
 #import "DConnectManagerServiceDiscoveryProfile.h"
@@ -348,7 +347,7 @@ NSString *const DConnectAttributeNameRequestAccessToken = @"requestAccessToken";
                 hasDelegate = YES;
             } else {
                 // イベントのJSONにあるURIをFilesプロファイルに変換
-                [DConnectURLProtocol convertUri:event];
+                [DConnectServerManager convertUriOfMessage:event];
             }
             [self makeEventMessage:event origin:origin hasDelegate:hasDelegate plugin:plugin];
         }
@@ -377,7 +376,7 @@ NSString *const DConnectAttributeNameRequestAccessToken = @"requestAccessToken";
                 hasDelegate = YES;
             } else {
                 // イベントのJSONにあるURIをFilesプロファイルに変換
-                [DConnectURLProtocol convertUri:event];
+                [DConnectServerManager convertUriOfMessage:event];
             }
             [self makeEventMessage:event origin:key hasDelegate:hasDelegate plugin:plugin];
         }

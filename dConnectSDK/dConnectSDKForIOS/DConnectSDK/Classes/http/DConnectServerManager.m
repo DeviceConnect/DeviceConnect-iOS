@@ -88,6 +88,43 @@ typedef NS_ENUM(NSInteger, RequestExceptionType) {
     return [_httpServer getWebSockets];
 }
 
++ (void) convertUriOfMessage:(DConnectMessage *) response
+{
+    NSArray *keys = [response allKeys];
+    for (NSString *key in keys) {
+        NSObject *obj = [response objectForKey:key];
+        if ([key isEqualToString:@"uri"]) {
+            NSString *uri = (NSString *)obj;
+            
+            // http, httpsで指定されているURLは直接アクセスできるのでFilesAPIを利用しない
+            NSString *pattern = @"^https?://.+";
+            NSRegularExpression *expression = [NSRegularExpression regularExpressionWithPattern:pattern
+                                                                                        options:0 error:nil];
+            NSTextCheckingResult *result = [expression firstMatchInString:uri
+                                                                  options:0
+                                                                    range:NSMakeRange(0, uri.length)];
+            if (!result || result.numberOfRanges < 1) {
+                // http, https以外の場合はuriパラメータ値を
+                // DeviceConnectManager Files API向けURLに置き換える。
+                DConnectURIBuilder *builder = [DConnectURIBuilder new];
+                [builder setProfile:DConnectFilesProfileName];
+                [builder addParameter:uri forName:DConnectFilesProfileParamUri];
+                [response setString:[[builder build] absoluteString] forKey:@"uri"];
+            }
+        } else if ([obj isKindOfClass:[DConnectMessage class]]) {
+            [self convertUriOfMessage:(DConnectMessage *)obj];
+        } else if ([obj isKindOfClass:[DConnectArray class]]) {
+            DConnectArray *arr = (DConnectArray *) obj;
+            for (int i = 0; i < arr.count; i++) {
+                NSObject *message = [arr objectAtIndex:i];
+                if ([message isKindOfClass:[DConnectMessage class]]) {
+                    [self convertUriOfMessage:(DConnectMessage *) message];
+                }
+            }
+        }
+    }
+}
+
 #pragma mark - Private Method
 
 - (void) handleHttpRequest:(RouteRequest *)request response:(RouteResponse *)response
@@ -415,7 +452,7 @@ typedef NS_ENUM(NSInteger, RequestExceptionType) {
             [response respondWithString:@"unkknown result type."];
         }
     } else {
-        [self convertUriOfResponse:responseMessage];
+        [DConnectServerManager convertUriOfMessage:responseMessage];
         
         NSString *json = [responseMessage convertToJSONString];
         if (!json) {
@@ -435,43 +472,6 @@ typedef NS_ENUM(NSInteger, RequestExceptionType) {
                                                        mimeType:mimeType
                                                   contentLength:response.response.contentLength];
     [self setHeaders:headerDict toResponse:response];
-}
-
-- (void) convertUriOfResponse:(DConnectMessage *) response
-{
-    NSArray *keys = [response allKeys];
-    for (NSString *key in keys) {
-        NSObject *obj = [response objectForKey:key];
-        if ([key isEqualToString:@"uri"]) {
-            NSString *uri = (NSString *)obj;
-            
-            // http, httpsで指定されているURLは直接アクセスできるのでFilesAPIを利用しない
-            NSString *pattern = @"^https?://.+";
-            NSRegularExpression *expression = [NSRegularExpression regularExpressionWithPattern:pattern
-                                                                                        options:0 error:nil];
-            NSTextCheckingResult *result = [expression firstMatchInString:uri
-                                                                  options:0
-                                                                    range:NSMakeRange(0, uri.length)];
-            if (!result || result.numberOfRanges < 1) {
-                // http, https以外の場合はuriパラメータ値を
-                // DeviceConnectManager Files API向けURLに置き換える。
-                DConnectURIBuilder *builder = [DConnectURIBuilder new];
-                [builder setProfile:DConnectFilesProfileName];
-                [builder addParameter:uri forName:DConnectFilesProfileParamUri];
-                [response setString:[[builder build] absoluteString] forKey:@"uri"];
-            }
-        } else if ([obj isKindOfClass:[DConnectMessage class]]) {
-            [self convertUriOfResponse:(DConnectMessage *)obj];
-        } else if ([obj isKindOfClass:[DConnectArray class]]) {
-            DConnectArray *arr = (DConnectArray *) obj;
-            for (int i = 0; i < arr.count; i++) {
-                NSObject *message = [arr objectAtIndex:i];
-                if ([message isKindOfClass:[DConnectMessage class]]) {
-                    [self convertUriOfResponse:(DConnectMessage *) message];
-                }
-            }
-        }
-    }
 }
 
 - (void) setHeaders:(NSDictionary *)headers toResponse:(RouteResponse *)response
