@@ -40,7 +40,7 @@
 #pragma mark - DConnectServiceInformationProfileDataSource
 
 - (DConnectServiceInformationProfileConnectState) profile:(DConnectServiceInformationProfile *)profile
-                               bluetoothStateForServiceId:(NSString *)serviceId
+                               bleStateForServiceId:(NSString *)serviceId
 {
     if (_beacon.online) {
         return DConnectServiceInformationProfileConnectStateOn;

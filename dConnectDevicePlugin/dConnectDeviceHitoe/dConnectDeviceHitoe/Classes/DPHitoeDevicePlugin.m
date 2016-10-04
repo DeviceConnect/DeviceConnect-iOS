@@ -194,7 +194,7 @@ int const DPHitoeDataKeyExtension = 0x04;
 
 -(void)didDisconnectWithDevice:(NSNotification *)notification {
     NSDictionary *userInfo = (NSDictionary *)[notification userInfo];
-    DPHitoeDevice *device = userInfo[DPHitoeDiscoveryDeviceObject];
+    DPHitoeDevice *device = userInfo[DPHitoeDisconnectObject];
     DConnectService *hitoeService = [self.serviceProvider service:device.serviceId];
     if (hitoeService) {
         [hitoeService setOnline:NO];
