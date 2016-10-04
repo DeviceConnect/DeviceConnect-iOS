@@ -43,7 +43,7 @@
 
 @implementation DConnectDevicePlugin
 
-- (id) initWithObject: (id) object {
+- (id) initWithObject: (id) object bundle: (NSBundle *) selfBundle {
     self = [super init];
     if (self) {
         
@@ -54,7 +54,7 @@
         self.pluginName = NSStringFromClass([self class]);
         self.pluginVersionName = @"1.0.0";
         self.pluginId = [md5Proc generateSignature: self.pluginName];
-        [self setPluginSpec: [[DConnectPluginSpec alloc] init]];
+        [self setPluginSpec: [[DConnectPluginSpec alloc] initWithSelfBundle: selfBundle]];
 
         DConnectServiceManager *serviceManager = [DConnectServiceManager sharedForClass: [object class]];
         [serviceManager setPlugin: self];

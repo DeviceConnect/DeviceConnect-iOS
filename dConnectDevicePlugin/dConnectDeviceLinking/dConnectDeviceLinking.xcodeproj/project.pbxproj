@@ -87,6 +87,7 @@
 		BEE64A4F1D70344E00CF287E /* DPLinkingBeaconBatteryOnce.m in Sources */ = {isa = PBXBuildFile; fileRef = BEE64A4E1D70344E00CF287E /* DPLinkingBeaconBatteryOnce.m */; };
 		BEE64A521D7049D300CF287E /* DPLinkingBeaconUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = BEE64A511D7049D300CF287E /* DPLinkingBeaconUtil.m */; };
 		BEF550A71D8FA6A100C8AE7B /* DPLinkingDeviceAtmosphericPressureProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = BEF550A61D8FA6A100C8AE7B /* DPLinkingDeviceAtmosphericPressureProfile.m */; };
+		D63BB8C61DA206D300892E5E /* atmosphericpressure.json in Resources */ = {isa = PBXBuildFile; fileRef = D63BB8C51DA206D300892E5E /* atmosphericpressure.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -234,6 +235,7 @@
 		BEE64A511D7049D300CF287E /* DPLinkingBeaconUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPLinkingBeaconUtil.m; sourceTree = "<group>"; };
 		BEF550A51D8FA6A100C8AE7B /* DPLinkingDeviceAtmosphericPressureProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPLinkingDeviceAtmosphericPressureProfile.h; sourceTree = "<group>"; };
 		BEF550A61D8FA6A100C8AE7B /* DPLinkingDeviceAtmosphericPressureProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPLinkingDeviceAtmosphericPressureProfile.m; sourceTree = "<group>"; };
+		D63BB8C51DA206D300892E5E /* atmosphericpressure.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = atmosphericpressure.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -512,6 +514,7 @@
 		BE285A331D6315FD00CB9F95 /* dConnectDeviceLinking_resources */ = {
 			isa = PBXGroup;
 			children = (
+				D63BB8C51DA206D300892E5E /* atmosphericpressure.json */,
 				BE285A341D6315FD00CB9F95 /* Info.plist */,
 			);
 			path = dConnectDeviceLinking_resources;
@@ -620,6 +623,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BEE64A4C1D702C5300CF287E /* beacon_icon_white@2x.png in Resources */,
+				D63BB8C61DA206D300892E5E /* atmosphericpressure.json in Resources */,
 				BE285A3B1D63160E00CB9F95 /* Linking.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

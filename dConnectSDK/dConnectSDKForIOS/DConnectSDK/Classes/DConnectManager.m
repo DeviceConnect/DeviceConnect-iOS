@@ -477,7 +477,7 @@ NSString *const DConnectAttributeNameRequestAccessToken = @"requestAccessToken";
         self.versionName = [[NSBundle mainBundle] objectForInfoDictionaryKey: @"CFBundleShortVersionString"];
         
         // ManagerのサポートするAPI仕様
-        self.managerSpec = [[DConnectPluginSpec alloc] init];
+        self.managerSpec = [[DConnectPluginSpec alloc] initWithSelfBundle: nil];
         
         // イベント管理クラス
         Class key = [self class];

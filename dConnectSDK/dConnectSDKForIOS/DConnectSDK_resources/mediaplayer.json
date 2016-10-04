@@ -13,19 +13,19 @@
                 "summary": "",
                 "description": "",
                 "parameters": [
-                               {
-                               "name": "serviceId",
-                               "in": "query",
-                               "required": true,
-                               "type": "string"
-                               },
-                               {
-                               "name": "mediaId",
-                               "in": "query",
-                               "required": true,
-                               "type": "string"
-                               }
-                               ],
+                    {
+                        "name": "serviceId",
+                        "in": "query",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "mediaId",
+                        "in": "query",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": ""
@@ -37,19 +37,19 @@
                 "summary": "",
                 "description": "",
                 "parameters": [
-                               {
-                               "name": "serviceId",
-                               "in": "formData",
-                               "required": true,
-                               "type": "string"
-                               },
-                               {
-                               "name": "mediaId",
-                               "in": "formData",
-                               "required": true,
-                               "type": "string"
-                               }
-                               ],
+                    {
+                        "name": "serviceId",
+                        "in": "formData",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "mediaId",
+                        "in": "formData",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": ""
@@ -63,13 +63,13 @@
                 "summary": "",
                 "description": "",
                 "parameters": [
-                               {
-                               "name": "serviceId",
-                               "in": "formData",
-                               "required": true,
-                               "type": "string"
-                               }
-                               ],
+                    {
+                        "name": "serviceId",
+                        "in": "formData",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": ""
@@ -83,13 +83,13 @@
                 "summary": "",
                 "description": "",
                 "parameters": [
-                               {
-                               "name": "serviceId",
-                               "in": "query",
-                               "required": true,
-                               "type": "string"
-                               }
-                               ],
+                    {
+                        "name": "serviceId",
+                        "in": "query",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": ""
@@ -103,13 +103,13 @@
                 "summary": "",
                 "description": "",
                 "parameters": [
-                               {
-                               "name": "serviceId",
-                               "in": "formData",
-                               "required": true,
-                               "type": "string"
-                               }
-                               ],
+                    {
+                        "name": "serviceId",
+                        "in": "formData",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": ""
@@ -123,13 +123,13 @@
                 "summary": "",
                 "description": "",
                 "parameters": [
-                               {
-                               "name": "serviceId",
-                               "in": "formData",
-                               "required": true,
-                               "type": "string"
-                               }
-                               ],
+                    {
+                        "name": "serviceId",
+                        "in": "formData",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": ""
@@ -143,13 +143,13 @@
                 "summary": "",
                 "description": "",
                 "parameters": [
-                               {
-                               "name": "serviceId",
-                               "in": "formData",
-                               "required": true,
-                               "type": "string"
-                               }
-                               ],
+                    {
+                        "name": "serviceId",
+                        "in": "formData",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": ""
@@ -163,13 +163,13 @@
                 "summary": "",
                 "description": "",
                 "parameters": [
-                               {
-                               "name": "serviceId",
-                               "in": "formData",
-                               "required": true,
-                               "type": "string"
-                               }
-                               ],
+                    {
+                        "name": "serviceId",
+                        "in": "formData",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": ""
@@ -183,21 +183,21 @@
                 "summary": "",
                 "description": "",
                 "parameters": [
-                               {
-                               "name": "serviceId",
-                               "in": "formData",
-                               "required": true,
-                               "type": "string"
-                               },
-                               {
-                               "name": "pos",
-                               "in": "formData",
-                               "required": true,
-                               "type": "integer",
-                               "format": "int64",
-                               "minimum": 0
-                               }
-                               ],
+                    {
+                        "name": "serviceId",
+                        "in": "formData",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "pos",
+                        "in": "formData",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int64",
+                        "minimum": 0
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": ""
@@ -209,13 +209,13 @@
                 "summary": "",
                 "description": "",
                 "parameters": [
-                               {
-                               "name": "serviceId",
-                               "in": "query",
-                               "required": true,
-                               "type": "string"
-                               }
-                               ],
+                    {
+                        "name": "serviceId",
+                        "in": "query",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": ""
@@ -229,21 +229,21 @@
                 "summary": "",
                 "description": "",
                 "parameters": [
-                               {
-                               "name": "serviceId",
-                               "in": "formData",
-                               "required": true,
-                               "type": "string"
-                               },
-                               {
-                               "name": "volume",
-                               "in": "formData",
-                               "required": true,
-                               "type": "number",
-                               "minimum": 0.0,
-                               "maximum": 1.0
-                               }
-                               ],
+                    {
+                        "name": "serviceId",
+                        "in": "formData",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "volume",
+                        "in": "formData",
+                        "required": true,
+                        "type": "number",
+                        "minimum": 0.0,
+                        "maximum": 1.0
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": ""
@@ -255,13 +255,13 @@
                 "summary": "",
                 "description": "",
                 "parameters": [
-                               {
-                               "name": "serviceId",
-                               "in": "query",
-                               "required": true,
-                               "type": "string"
-                               }
-                               ],
+                    {
+                        "name": "serviceId",
+                        "in": "query",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": ""
@@ -275,13 +275,13 @@
                 "summary": "",
                 "description": "",
                 "parameters": [
-                               {
-                               "name": "serviceId",
-                               "in": "formData",
-                               "required": true,
-                               "type": "string"
-                               }
-                               ],
+                    {
+                        "name": "serviceId",
+                        "in": "formData",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": ""
@@ -293,13 +293,13 @@
                 "summary": "",
                 "description": "",
                 "parameters": [
-                               {
-                               "name": "serviceId",
-                               "in": "query",
-                               "required": true,
-                               "type": "string"
-                               }
-                               ],
+                    {
+                        "name": "serviceId",
+                        "in": "query",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": ""
@@ -311,13 +311,13 @@
                 "summary": "",
                 "description": "",
                 "parameters": [
-                               {
-                               "name": "serviceId",
-                               "in": "query",
-                               "required": true,
-                               "type": "string"
-                               }
-                               ],
+                    {
+                        "name": "serviceId",
+                        "in": "query",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": ""
@@ -331,13 +331,13 @@
                 "summary": "",
                 "description": "",
                 "parameters": [
-                               {
-                               "name": "serviceId",
-                               "in": "query",
-                               "required": true,
-                               "type": "string"
-                               }
-                               ],
+                    {
+                        "name": "serviceId",
+                        "in": "query",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": ""
@@ -349,13 +349,13 @@
                 "summary": "",
                 "description": "",
                 "parameters": [
-                               {
-                               "name": "serviceId",
-                               "in": "formData",
-                               "required": true,
-                               "type": "string"
-                               }
-                               ],
+                    {
+                        "name": "serviceId",
+                        "in": "formData",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": ""
@@ -367,13 +367,13 @@
                 "summary": "",
                 "description": "",
                 "parameters": [
-                               {
-                               "name": "serviceId",
-                               "in": "query",
-                               "required": true,
-                               "type": "string"
-                               }
-                               ],
+                    {
+                        "name": "serviceId",
+                        "in": "query",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": ""

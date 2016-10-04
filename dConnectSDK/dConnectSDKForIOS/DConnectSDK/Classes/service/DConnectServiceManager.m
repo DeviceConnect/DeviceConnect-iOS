@@ -77,7 +77,7 @@ static NSMutableDictionary *_instanceArray = nil;
     
     /* デフォルト値を設定 */
     if (self) {
-        [self setPluginSpec: [[DConnectPluginSpec alloc] init]];
+        [self setPluginSpec: [[DConnectPluginSpec alloc] initWithSelfBundle: nil]];
         mDConnectServices = [NSMutableDictionary dictionary];
         self.serviceListeners = [NSMutableArray array];
     }

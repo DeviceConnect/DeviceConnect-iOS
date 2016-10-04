@@ -13,6 +13,14 @@
 @interface DConnectPluginSpec : NSObject
 
 /*!
+ @brief 初期化処理.
+
+ @param[in] selfBundle デバイスプラグイン自身のBundle。無ければnilを設定する。
+ @retval インスタンス
+ */
+- (instancetype) initWithSelfBundle: (NSBundle *) selfBundle;
+
+/*!
  @brief 入力ファイルからDevice Connectプロファイルの仕様定義を追加する.
  
  @param[in] profileName プロファイル名
