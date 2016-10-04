@@ -8,7 +8,7 @@
 //
 
 #import "DConnectMessageEventSession.h"
-#import "DConnectServerProtocol.h"
+#import "DConnectManager+Private.h"
 
 @interface DConnectMessageEventSession()
 
@@ -47,7 +47,7 @@
         if (self.webSocket) {
             [self.webSocket sendEvent:json forReceiverId:self.receiverId];
         }
-        [DConnectServerProtocol sendEvent:json forReceiverId:self.receiverId];
+        [[DConnectManager sharedManager].webServer sendEvent:json forReceiverId:self.receiverId];
     }
 }
 

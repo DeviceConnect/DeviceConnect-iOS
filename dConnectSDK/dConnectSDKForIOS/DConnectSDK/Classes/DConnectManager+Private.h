@@ -9,6 +9,7 @@
 
 #import "DConnectManager.h"
 #import "DConnectDevicePluginManager.h"
+#import "DConnectServerProtocol.h"
 
 /*!
  @brief Manager-プラグイン間のデバイス検索APIのプロファイル名。
@@ -39,6 +40,12 @@ extern NSString *const DConnectAttributeNameRequestAccessToken;
  * デバイスプラグインを管理するクラス.
  */
 @property (nonatomic) DConnectDevicePluginManager *mDeviceManager;
+
+/**
+ * Webサーバを管理するクラス.
+ */
+@property (nonatomic) DConnectServerProtocol *webServer;
+
 
 /*!
  @brief DConnectManagerを識別するUUIDを取得します。

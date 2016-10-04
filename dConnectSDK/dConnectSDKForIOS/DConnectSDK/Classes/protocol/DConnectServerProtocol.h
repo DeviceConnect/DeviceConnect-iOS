@@ -8,15 +8,16 @@
 //
 
 #import "DConnectRequestMessage.h"
-#import "DConnectURLProtocol.h"
-#import "GCDAsyncSocket.h"
+#import "DConnectSettings.h"
 
-@interface DConnectServerProtocol : DConnectURLProtocol
+@interface DConnectServerProtocol : NSObject
 
+@property (nonatomic) DConnectSettings *settings;
 
-+ (BOOL)startServerWithHost:(NSString*)host port:(int)port;
-+ (void)stopServer;
-+ (void)setExternalIPFlag:(BOOL)flag;
+- (BOOL)startServer;
+- (void)stopServer;
+- (void)sendEvent:(NSString *)event forReceiverId:(NSString *)receiverId;
 
-+ (void)sendEvent:(NSString *)event forReceiverId:(NSString *)receiverId;
+- (NSArray *) getWebSockets;
+
 @end

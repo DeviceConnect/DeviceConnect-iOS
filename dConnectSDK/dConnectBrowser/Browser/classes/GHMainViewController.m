@@ -1292,7 +1292,6 @@ typedef enum{
     // dConnect Managerを初期化する。
     DConnectManager *mgr = [DConnectManager sharedManager];
     [mgr start];
-    [mgr startWebsocket];
 
     NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
     BOOL isOriginBlock = [def boolForKey:IS_ORIGIN_BLOCKING];

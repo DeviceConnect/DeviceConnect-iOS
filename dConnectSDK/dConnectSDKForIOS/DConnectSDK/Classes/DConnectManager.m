@@ -223,43 +223,27 @@ NSString *const DConnectAttributeNameRequestAccessToken = @"requestAccessToken";
         return;
     }
     self.mStartFlag = YES;
-    _requestQueue = dispatch_queue_create("org.deviceconnect.manager.queue.request", DISPATCH_QUEUE_SERIAL);
-    
-    // デバイスプラグインの検索
-    [self.mDeviceManager searchDevicePlugin];
-    
-    // サーバの設定
-    [DConnectURLProtocol setHost:self.settings.host];
-    [DConnectURLProtocol setPort:self.settings.port];
-    
-    // NSURLProtocolへ登録
-    [NSURLProtocol registerClass:[DConnectURLProtocol class]];
-}
 
-- (void) startByHttpServer {
-    // 開始フラグをチェック
-    if (self.mStartFlag) {
-        return;
-    }
-    self.mStartFlag = YES;
     _requestQueue = dispatch_queue_create("org.deviceconnect.manager.queue.request", DISPATCH_QUEUE_SERIAL);
     
     // デバイスプラグインの検索
     [self.mDeviceManager searchDevicePlugin];
     
-    // サーバの設定
-    [DConnectServerProtocol setHost:self.settings.host];
-    [DConnectServerProtocol setPort:self.settings.port];
+    _webServer = [DConnectServerProtocol new];
+    _webServer.settings = self.settings;
     
-    BOOL isSuccess = [DConnectServerProtocol startServerWithHost:self.settings.host
-                                                            port:self.settings.port];
-    if (!isSuccess) {
+    BOOL success = [_webServer startServer];
+    if (!success) {
         self.mStartFlag = NO;
     }
 }
 
+- (void) startByHttpServer {
+    [self start];
+}
+
 - (void)setAllowExternalIp {
-    [DConnectServerProtocol setExternalIPFlag:self.settings.useExternalIP];
+//    [DConnectServerProtocol setExternalIPFlag:self.settings.useExternalIP];
 }
 
 - (void) stopByHttpServer {
@@ -267,20 +251,20 @@ NSString *const DConnectAttributeNameRequestAccessToken = @"requestAccessToken";
         return;
     }
     self.mStartFlag = NO;
-    [DConnectServerProtocol stopServer];
 
+    [_webServer stopServer];
 }
 
-- (void) startWebsocket {
-    if (self.mWebsocket) {
-        [self.mWebsocket stop];
-    }
-    self.mWebsocket = [[DConnectWebSocket alloc] initWithHost:self.settings.host
-                                                         port:self.settings.port
-                                                       object:self];
-    self.mWebsocket.settings = self.settings;
-    [self.mWebsocket start];
-}
+//- (void) startWebsocket {
+//    if (self.mWebsocket) {
+//        [self.mWebsocket stop];
+//    }
+//    self.mWebsocket = [[DConnectWebSocket alloc] initWithHost:self.settings.host
+//                                                         port:self.settings.port
+//                                                       object:self];
+//    self.mWebsocket.settings = self.settings;
+//    [self.mWebsocket start];
+//}
 
 - (BOOL) isStarted {
     return self.mStartFlag;
@@ -340,18 +324,7 @@ NSString *const DConnectAttributeNameRequestAccessToken = @"requestAccessToken";
         
         for (DConnectEvent *evt in evts) {
             [event setString:evt.origin forKey:DConnectMessageOrigin];
-            
-/* [DConnectMessageEventSession sendEvent]に移動。
-            if (hasDelegate) {
-                [self.delegate manager:self didReceiveDConnectMessage:event];
-            } else {
-                NSString *json = [event convertToJSONString];
-                if (self.mWebsocket) {
-                    [self.mWebsocket sendEvent:json forOrigin:evt.origin];
-                }
-                [DConnectServerProtocol sendEvent:json forOrigin:evt.origin];
-            }
-*/
+
             if (self.mEventBroker) {
                 [self.mEventBroker onEvent:event];
             }
@@ -365,17 +338,7 @@ NSString *const DConnectAttributeNameRequestAccessToken = @"requestAccessToken";
                                                                                serviceId:serviceId];
             [event setString:did forKey:DConnectMessageServiceId];
         }
-/* [DConnectMessageEventSession sendEvent]に移動。
-        if (hasDelegate) {
-            [self.delegate manager:self didReceiveDConnectMessage:event];
-        } else {
-            NSString *json = [event convertToJSONString];
-            if (self.mWebsocket) {
-                [self.mWebsocket sendEvent:json forOrigin:origin];
-            }
-            [DConnectServerProtocol sendEvent:json forOrigin:origin];
-        }
-*/
+
         if (self.mEventBroker) {
             [self.mEventBroker onEvent:event];
         }

@@ -733,7 +733,7 @@ static inline NSUInteger WS_PAYLOAD_LENGTH(UInt8 frame)
 	else if (tag == TAG_MSG_MASKING_KEY)
 	{
 		maskingKey = data.copy;
-        [self didClose];
+//        [self didClose];
         // TODO: ?
 	}
 	else

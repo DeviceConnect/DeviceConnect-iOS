@@ -1150,7 +1150,7 @@ static NSMutableDictionary *originTable;    // key:origin / value: websocket
             NSString *origin = [request headerField: @"origin"];
             [ws start: origin];
 			
-//			[[config server] addWebSocket:ws];
+			[[config server] addWebSocket:ws];
 			
 			// The WebSocket should now be the delegate of the underlying socket.
 			// But gracefully handle the situation if it forgot.

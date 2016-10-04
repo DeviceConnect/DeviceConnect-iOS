@@ -527,12 +527,12 @@ int getDConnectMethod(NSString *httpMethod) {
 
 - (void)addParametersFromMultipartToRequestMessage:(DConnectMessage *)requestMessage
 {
-    UserData *userData = [UserData userDataWithRequest:requestMessage];
-    DConnectMultipartParser *multiParser =
-    [DConnectMultipartParser multipartParserWithURL:self
-                                   userData:userData];
-    
-    [multiParser parse];
+//    UserData *userData = [UserData userDataWithRequest:requestMessage];
+//    DConnectMultipartParser *multiParser =
+//    [DConnectMultipartParser multipartParserWithURL:self
+//                                   userData:userData];
+//    
+//    [multiParser parse];
 }
 
 - (void)addParametersFromHTTPBodyToRequestMessage:(DConnectRequestMessage *)requestMessage
