@@ -15,7 +15,7 @@
 
 - (id) init
 {
-    self = [super initWithObject: self];
+    self = [super initWithObject: self bundle:DPLinkingResourceBundle()];
     if (self) {
         self.pluginName = @"Linking (Device Connect Device Plug-in)";
 

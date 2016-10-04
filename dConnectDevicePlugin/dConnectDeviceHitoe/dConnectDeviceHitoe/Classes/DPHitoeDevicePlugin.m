@@ -108,7 +108,7 @@ int const DPHitoeDataKeyExtension = 0x04;
 
 - (id) init
 {
-    self = [super initWithObject: self];
+    self = [super initWithObject: self bundle: DPHitoeBundle()];
     if (self) {
         self.pluginName = @"Hitoe (Device Connect Device Plug-in)";
 
@@ -194,7 +194,7 @@ int const DPHitoeDataKeyExtension = 0x04;
 
 -(void)didDisconnectWithDevice:(NSNotification *)notification {
     NSDictionary *userInfo = (NSDictionary *)[notification userInfo];
-    DPHitoeDevice *device = userInfo[DPHitoeDiscoveryDeviceObject];
+    DPHitoeDevice *device = userInfo[DPHitoeDisconnectObject];
     DConnectService *hitoeService = [self.serviceProvider service:device.serviceId];
     if (hitoeService) {
         [hitoeService setOnline:NO];
@@ -223,8 +223,7 @@ int const DPHitoeDataKeyExtension = 0x04;
 
 - (NSString*)iconFilePath:(BOOL)isOnline
 {
-    NSString *bundlePath = [[NSBundle mainBundle] pathForResource:@"dConnectDeviceHitoe_resources" ofType:@"bundle"];
-    NSBundle *bundle = [NSBundle bundleWithPath:bundlePath];
+    NSBundle *bundle = DPHitoeBundle();
     NSString* filename = isOnline ? @"dconnect_icon" : @"dconnect_icon_off";
     return [bundle pathForResource:filename ofType:@"png"];
     return nil;

@@ -104,6 +104,8 @@
 		ABC2DB151B685AD90034C08F /* DPIRKitDBManager.m in Sources */ = {isa = PBXBuildFile; fileRef = ABC2DB141B685AD90034C08F /* DPIRKitDBManager.m */; };
 		ABC2DB181B6898E20034C08F /* DPIRKitVirtualDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = ABC2DB171B6898E20034C08F /* DPIRKitVirtualDevice.m */; };
 		ABC2DB1B1B689BBE0034C08F /* DPIRKitRESTfulRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = ABC2DB1A1B689BBE0034C08F /* DPIRKitRESTfulRequest.m */; };
+		D63BB8C31DA2068000892E5E /* remotecontroller.json in Resources */ = {isa = PBXBuildFile; fileRef = D63BB8C11DA2068000892E5E /* remotecontroller.json */; };
+		D63BB8C41DA2068000892E5E /* tv.json in Resources */ = {isa = PBXBuildFile; fileRef = D63BB8C21DA2068000892E5E /* tv.json */; };
 		D673DA7C1D3BBD330021F1BF /* DPIRKitService.m in Sources */ = {isa = PBXBuildFile; fileRef = D673DA7B1D3BBD330021F1BF /* DPIRKitService.m */; };
 		D6D1727A1D63F95B00444337 /* DPIRKitSystemProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = D6D172791D63F95A00444337 /* DPIRKitSystemProfile.m */; };
 /* End PBXBuildFile section */
@@ -230,6 +232,8 @@
 		ABC2DB171B6898E20034C08F /* DPIRKitVirtualDevice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPIRKitVirtualDevice.m; sourceTree = "<group>"; };
 		ABC2DB191B689BBE0034C08F /* DPIRKitRESTfulRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPIRKitRESTfulRequest.h; sourceTree = "<group>"; };
 		ABC2DB1A1B689BBE0034C08F /* DPIRKitRESTfulRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPIRKitRESTfulRequest.m; sourceTree = "<group>"; };
+		D63BB8C11DA2068000892E5E /* remotecontroller.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = remotecontroller.json; sourceTree = "<group>"; };
+		D63BB8C21DA2068000892E5E /* tv.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = tv.json; sourceTree = "<group>"; };
 		D673DA7A1D3BBD330021F1BF /* DPIRKitService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPIRKitService.h; sourceTree = "<group>"; };
 		D673DA7B1D3BBD330021F1BF /* DPIRKitService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPIRKitService.m; sourceTree = "<group>"; };
 		D6D172781D63F95A00444337 /* DPIRKitSystemProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPIRKitSystemProfile.h; sourceTree = "<group>"; };
@@ -488,6 +492,8 @@
 		30A0A33B19A5952D00822B73 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				D63BB8C11DA2068000892E5E /* remotecontroller.json */,
+				D63BB8C21DA2068000892E5E /* tv.json */,
 				30A0A33C19A5952D00822B73 /* dConnectDeviceIRKit_resources-Info.plist */,
 				30A0A34019A5952D00822B73 /* dConnectDeviceIRKit_resources-Prefix.pch */,
 			);
@@ -648,10 +654,12 @@
 				AB4B690419B46FC9009939C9 /* irkit01.png in Resources */,
 				AB4B690519B46FC9009939C9 /* irkit02.png in Resources */,
 				AB4B690619B46FC9009939C9 /* irkit03.png in Resources */,
+				D63BB8C41DA2068000892E5E /* tv.json in Resources */,
 				AB4B690719B46FC9009939C9 /* irkit04.png in Resources */,
 				AB4B690819B46FC9009939C9 /* irkit05.png in Resources */,
 				8EB8544C1D42403E0035C0DC /* dconnect_icon_off.png in Resources */,
 				AB4B690919B46FC9009939C9 /* irkit06.png in Resources */,
+				D63BB8C31DA2068000892E5E /* remotecontroller.json in Resources */,
 				AB4B690A19B46FC9009939C9 /* irkit07.png in Resources */,
 				AB4B690B19B46FC9009939C9 /* irkit08.png in Resources */,
 				3039F9A219A8AF4900319429 /* Localizable.strings in Resources */,

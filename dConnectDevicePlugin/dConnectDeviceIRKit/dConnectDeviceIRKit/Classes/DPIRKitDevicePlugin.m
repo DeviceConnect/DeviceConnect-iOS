@@ -71,7 +71,7 @@ DPIRKitManagerDetectionDelegate
 
 - (id) init {
     
-    self = [super initWithObject: self];
+    self = [super initWithObject: self bundle:DPIRBundle()];
     
     if (self) {
         

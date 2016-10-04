@@ -10,7 +10,13 @@
 #import <DConnectSDK/DConnectPluginSpec.h>
 #import "DConnectProfileSpecJsonParserFactory.h"
 
+static NSString * const dConnectSDKBundleName = @"DConnectSDK_resources";
+
+#define DConnectSDKBundle() ([NSBundle bundleWithPath: [[NSBundle mainBundle] pathForResource:dConnectSDKBundleName ofType:@"bundle"]])
+
 @interface DConnectPluginSpec()
+
+@property(nonatomic, strong) NSBundle *selfBundle;
 
 @property(nonatomic, strong) DConnectProfileSpecJsonParser *jsonParser;
 
@@ -21,9 +27,10 @@
 
 @implementation DConnectPluginSpec
 
-- (instancetype) init {
+- (instancetype) initWithSelfBundle: (NSBundle *) selfBundle {
     self = [super init];
     if (self) {
+        _selfBundle = selfBundle;
         [self setJsonParser: [[DConnectProfileSpecJsonParserFactory getDefaultFactory] createParser]];
         [self setProfileSpecs: [NSMutableDictionary dictionary]];
     }
@@ -69,12 +76,31 @@
     
     // プロファイル名とJSONファイル名は大文字小文字が区別されるので、一致するよう小文字で統一する。(jsonファイル名も全て小文字にする)
     
-    NSString *filePath = [self jsonFilePathWithProfileName: [profileName lowercaseString]];
+    NSString *profileNameLower = [profileName lowercaseString];
     
-    NSError *error = nil;
-    NSString *jsonString = [NSString stringWithContentsOfFile: (NSString *)filePath
-                                                     encoding: NSUTF8StringEncoding
-                                                        error: &error];
+    NSString *filePath;
+    NSError *error;
+    NSString *jsonString;
+    
+    if (_selfBundle) {
+        // 自身のbundle内にあるか確認する。
+        filePath = [self jsonFilePathWithProfileName: profileNameLower bundle: _selfBundle];
+        error = nil;
+        jsonString = [NSString stringWithContentsOfFile: (NSString *)filePath
+                                               encoding: NSUTF8StringEncoding
+                                                  error: &error];
+        if (!error) {
+            // 該当するJSONファイルが見つかったので読み込んだJSON文字列を返す。
+            return jsonString;
+        }
+    }
+    
+    // DConnectSDKのBundleに存在すれば読み込む。
+    filePath = [self jsonFilePathWithProfileName: profileNameLower bundle: DConnectSDKBundle()];
+    error = nil;
+    jsonString = [NSString stringWithContentsOfFile: (NSString *)filePath
+                                           encoding: NSUTF8StringEncoding
+                                              error: &error];
     if (error) {
         // @throw [NSString stringWithFormat: @"json file open error : %@", error.localizedDescription];
         return nil;
@@ -119,19 +145,15 @@
 #pragma mark - Private Method
 
 /*!
- @brief プロファイル名を元にDConnectSDK_resources.Bundleに格納されたAPI定義JSONファイル名(<プロファイル名>.json)のファイルパスを返す。存在しないときはnilを返す。
+ @brief プロファイル名を元にbundleに格納されたAPI定義JSONファイル名(<プロファイル名>.json)のファイルパスを返す。
  @param[in] jsonFilename JSONファイル名(=プロファイル名)
- @retval Bundleファイルパス名
+ @param[in] bundle jsonFilenameを探すBundle
+ @retval Bundle内のJSONファイルパス
  */
-- (NSString *)jsonFilePathWithProfileName: (NSString *)jsonFilename {
+- (NSString *)jsonFilePathWithProfileName: (NSString *)jsonFilename bundle: (NSBundle *) bundle {
     
     NSString *filetype = @"json";
-    
-    NSString *bundlePath = [[NSBundle mainBundle] pathForResource:@"DConnectSDK_resources" ofType:@"bundle"];
-    NSBundle *bundle = [NSBundle bundleWithPath:bundlePath];
-    
     NSString *pathName = [bundle pathForResource:jsonFilename ofType:filetype];
-    
     return pathName;
 }
 
