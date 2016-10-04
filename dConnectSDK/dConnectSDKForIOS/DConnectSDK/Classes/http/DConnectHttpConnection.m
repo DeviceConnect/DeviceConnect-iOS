@@ -17,8 +17,7 @@
 - (WebSocket *)webSocketForURI:(NSString *)path
 {
     DConnectWebSocket *websocket = [[DConnectWebSocket alloc] initWithRequest:request socket:asyncSocket];
-    websocket.delegate = websocket;
-    websocket.httpServer = (DConnectHttpServer *)config.server;
+    websocket.delegate = config.server;
     websocket.connectTime = [NSDate date].timeIntervalSince1970;
     return websocket;
 }

@@ -13,7 +13,6 @@
 
 @interface DConnectWebSocket : WebSocket <WebSocketDelegate>
 
-@property (nonatomic) DConnectHttpServer *httpServer;
 @property (nonatomic) NSString *receiverId;
 @property(nonatomic) long connectTime;
 

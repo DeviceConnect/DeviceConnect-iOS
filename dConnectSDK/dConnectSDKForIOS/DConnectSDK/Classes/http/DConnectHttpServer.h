@@ -8,10 +8,11 @@
 //
 
 #import "RoutingHTTPServer.h"
+#import "WebSocket.h"
 
 @class DConnectWebSocket;
 
-@interface DConnectHttpServer : RoutingHTTPServer
+@interface DConnectHttpServer : RoutingHTTPServer <WebSocketDelegate>
 
 - (void) sendEvent:(NSString *)event forReceiverId:(NSString *)eventKey;
 
