@@ -110,9 +110,6 @@
 		AB67AB311C642AC500B4C62C /* RoutingHTTPServer.m in Sources */ = {isa = PBXBuildFile; fileRef = AB67AB2B1C642AC500B4C62C /* RoutingHTTPServer.m */; };
 		AB67AB641C644BC700B4C62C /* GCIPUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = AB67AB631C644BC700B4C62C /* GCIPUtil.m */; };
 		AB702E311A70FAF8002D21CB /* DConnectCanvasProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = AB702E301A70FAF8002D21CB /* DConnectCanvasProfile.m */; };
-		ABE747131C688473001D8F0D /* DConnectServerProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE747101C688473001D8F0D /* DConnectServerProtocol.m */; };
-		ABE747141C688473001D8F0D /* DConnectURLProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE747121C688473001D8F0D /* DConnectURLProtocol.m */; };
-		ABE7471A1C688608001D8F0D /* DConnectWebSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE747171C688608001D8F0D /* DConnectWebSocket.m */; };
 		BE21BC67197E109B00BAF018 /* DConnectSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE24744B197914940035E83B /* DConnectSDK.framework */; };
 		BE21BC6F197E11B600BAF018 /* Hash.m in Sources */ = {isa = PBXBuildFile; fileRef = BE21BC6B197E11B600BAF018 /* Hash.m */; };
 		BE21BC70197E11B600BAF018 /* Multipart.m in Sources */ = {isa = PBXBuildFile; fileRef = BE21BC6D197E11B600BAF018 /* Multipart.m */; };
@@ -121,6 +118,10 @@
 		BE24744D1979149B0035E83B /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 300564B0196FB68600A4E708 /* libsqlite3.0.dylib */; };
 		BE31742819A7266200E33B21 /* DConnectSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = BE31742719A7266200E33B21 /* DConnectSettings.m */; };
 		BE4FDFD219878014001A3C86 /* DConnectAuthorizationProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = BE4FDFD119878014001A3C86 /* DConnectAuthorizationProfile.m */; };
+		BE71FD601DA3787100B5E209 /* DConnectHttpServer.m in Sources */ = {isa = PBXBuildFile; fileRef = BE71FD5F1DA3787100B5E209 /* DConnectHttpServer.m */; };
+		BE71FD631DA3791800B5E209 /* DConnectWebSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = BE71FD621DA3791800B5E209 /* DConnectWebSocket.m */; };
+		BE71FD661DA3797D00B5E209 /* DConnectHttpConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = BE71FD651DA3797D00B5E209 /* DConnectHttpConnection.m */; };
+		BE71FD691DA37A3200B5E209 /* DConnectServerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BE71FD681DA37A3200B5E209 /* DConnectServerManager.m */; };
 		BEEFA8B71D8FD9DF001CC88C /* atmosphericpressure.json in Resources */ = {isa = PBXBuildFile; fileRef = BEEFA8B61D8FD9DF001CC88C /* atmosphericpressure.json */; };
 		BEF208AD19AC70530027E0CE /* DConnectLocalOAuthDB.m in Sources */ = {isa = PBXBuildFile; fileRef = BEF208AC19AC70530027E0CE /* DConnectLocalOAuthDB.m */; };
 		C29D32EC191B202A001015CC /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C29D32EB191B202A001015CC /* Foundation.framework */; };
@@ -280,8 +281,6 @@
 		D6FD02151999EC7A000DB674 /* CipherSignatureProcMD.m in Sources */ = {isa = PBXBuildFile; fileRef = D6FD02101999EC7A000DB674 /* CipherSignatureProcMD.m */; };
 		D6FF6C811D8FDA9D00B9165B /* DConnectEventProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = D6FF6C801D8FDA9D00B9165B /* DConnectEventProtocol.m */; };
 		D6FF6C8C1D9101C300B9165B /* DConnectVersionName.m in Sources */ = {isa = PBXBuildFile; fileRef = D6FF6C8B1D9101C300B9165B /* DConnectVersionName.m */; };
-		D6FF6C991D9263D600B9165B /* DConnectWebSocketInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = D6FF6C981D9263D600B9165B /* DConnectWebSocketInfo.m */; };
-		D6FF6C9C1D92672900B9165B /* DConnectWebSocketInfoManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D6FF6C9B1D92672900B9165B /* DConnectWebSocketInfoManager.m */; };
 		EF8B64941AAC78D7007C590B /* DConnectKeyEventProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = EF8B64931AAC78D7007C590B /* DConnectKeyEventProfile.m */; };
 		EFC27C2E1AB5B97B0029B257 /* DConnectTouchProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = EFC27C2D1AB5B97B0029B257 /* DConnectTouchProfile.m */; };
 /* End PBXBuildFile section */
@@ -451,12 +450,6 @@
 		AB67AB621C644BC700B4C62C /* GCIPUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCIPUtil.h; sourceTree = "<group>"; };
 		AB67AB631C644BC700B4C62C /* GCIPUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCIPUtil.m; sourceTree = "<group>"; };
 		AB702E301A70FAF8002D21CB /* DConnectCanvasProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DConnectCanvasProfile.m; sourceTree = "<group>"; };
-		ABE7470F1C688473001D8F0D /* DConnectServerProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DConnectServerProtocol.h; sourceTree = "<group>"; };
-		ABE747101C688473001D8F0D /* DConnectServerProtocol.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DConnectServerProtocol.m; sourceTree = "<group>"; };
-		ABE747111C688473001D8F0D /* DConnectURLProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DConnectURLProtocol.h; sourceTree = "<group>"; };
-		ABE747121C688473001D8F0D /* DConnectURLProtocol.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DConnectURLProtocol.m; sourceTree = "<group>"; };
-		ABE747161C688608001D8F0D /* DConnectWebSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DConnectWebSocket.h; sourceTree = "<group>"; };
-		ABE747171C688608001D8F0D /* DConnectWebSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DConnectWebSocket.m; sourceTree = "<group>"; };
 		BE21B730197E108900BAF018 /* build-state.dat */ = {isa = PBXFileReference; lastKnownFileType = text; path = "build-state.dat"; sourceTree = "<group>"; };
 		BE21B731197E108900BAF018 /* DConnectSDK-all-target-headers.hmap */ = {isa = PBXFileReference; lastKnownFileType = file; path = "DConnectSDK-all-target-headers.hmap"; sourceTree = "<group>"; };
 		BE21B732197E108900BAF018 /* DConnectSDK-generated-files.hmap */ = {isa = PBXFileReference; lastKnownFileType = file; path = "DConnectSDK-generated-files.hmap"; sourceTree = "<group>"; };
@@ -1827,6 +1820,14 @@
 		BE6F93371A70DB0400BFA51F /* DConnectURIBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DConnectURIBuilder.h; sourceTree = "<group>"; };
 		BE6F93381A70DB0400BFA51F /* DConnectUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DConnectUtil.h; sourceTree = "<group>"; };
 		BE6F93391A70DB0400BFA51F /* DConnectVibrationProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DConnectVibrationProfile.h; sourceTree = "<group>"; };
+		BE71FD5E1DA3787100B5E209 /* DConnectHttpServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DConnectHttpServer.h; sourceTree = "<group>"; };
+		BE71FD5F1DA3787100B5E209 /* DConnectHttpServer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DConnectHttpServer.m; sourceTree = "<group>"; };
+		BE71FD611DA3791800B5E209 /* DConnectWebSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DConnectWebSocket.h; sourceTree = "<group>"; };
+		BE71FD621DA3791800B5E209 /* DConnectWebSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DConnectWebSocket.m; sourceTree = "<group>"; };
+		BE71FD641DA3797D00B5E209 /* DConnectHttpConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DConnectHttpConnection.h; sourceTree = "<group>"; };
+		BE71FD651DA3797D00B5E209 /* DConnectHttpConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DConnectHttpConnection.m; sourceTree = "<group>"; };
+		BE71FD671DA37A3200B5E209 /* DConnectServerManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DConnectServerManager.h; sourceTree = "<group>"; };
+		BE71FD681DA37A3200B5E209 /* DConnectServerManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DConnectServerManager.m; sourceTree = "<group>"; };
 		BEEFA8B61D8FD9DF001CC88C /* atmosphericpressure.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = atmosphericpressure.json; sourceTree = "<group>"; };
 		BEF208A719AB3CF60027E0CE /* CipherAuthSignature.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CipherAuthSignature.h; path = cipher/CipherAuthSignature.h; sourceTree = "<group>"; };
 		BEF208A819AB3D070027E0CE /* LocalOAuthConfirmAuthViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LocalOAuthConfirmAuthViewController.h; path = localoauth/LocalOAuthConfirmAuthViewController.h; sourceTree = "<group>"; };
@@ -2096,10 +2097,6 @@
 		D6FF6C801D8FDA9D00B9165B /* DConnectEventProtocol.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DConnectEventProtocol.m; sourceTree = "<group>"; };
 		D6FF6C8A1D9101C300B9165B /* DConnectVersionName.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DConnectVersionName.h; path = utils/DConnectVersionName.h; sourceTree = "<group>"; };
 		D6FF6C8B1D9101C300B9165B /* DConnectVersionName.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DConnectVersionName.m; path = utils/DConnectVersionName.m; sourceTree = "<group>"; };
-		D6FF6C971D9263D600B9165B /* DConnectWebSocketInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DConnectWebSocketInfo.h; sourceTree = "<group>"; };
-		D6FF6C981D9263D600B9165B /* DConnectWebSocketInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DConnectWebSocketInfo.m; sourceTree = "<group>"; };
-		D6FF6C9A1D92672900B9165B /* DConnectWebSocketInfoManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DConnectWebSocketInfoManager.h; sourceTree = "<group>"; };
-		D6FF6C9B1D92672900B9165B /* DConnectWebSocketInfoManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DConnectWebSocketInfoManager.m; sourceTree = "<group>"; };
 		EF8B64931AAC78D7007C590B /* DConnectKeyEventProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DConnectKeyEventProfile.m; sourceTree = "<group>"; };
 		EF8B64951AAC78F2007C590B /* DConnectKeyEventProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DConnectKeyEventProfile.h; sourceTree = "<group>"; };
 		EFC27C2C1AB5B96B0029B257 /* DConnectTouchProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DConnectTouchProfile.h; sourceTree = "<group>"; };
@@ -2259,6 +2256,14 @@
 		9721075419205FB000529618 /* http */ = {
 			isa = PBXGroup;
 			children = (
+				BE71FD671DA37A3200B5E209 /* DConnectServerManager.h */,
+				BE71FD681DA37A3200B5E209 /* DConnectServerManager.m */,
+				BE71FD5E1DA3787100B5E209 /* DConnectHttpServer.h */,
+				BE71FD5F1DA3787100B5E209 /* DConnectHttpServer.m */,
+				BE71FD641DA3797D00B5E209 /* DConnectHttpConnection.h */,
+				BE71FD651DA3797D00B5E209 /* DConnectHttpConnection.m */,
+				BE71FD611DA3791800B5E209 /* DConnectWebSocket.h */,
+				BE71FD621DA3791800B5E209 /* DConnectWebSocket.m */,
 				972107551920604E00529618 /* DConnectMultipartParser.h */,
 				972107561920604E00529618 /* DConnectMultipartParser.m */,
 				251AD37C19BEE31E00438A03 /* NSURLRequest+BodyAndBodyStreamInOne.h */,
@@ -2392,30 +2397,6 @@
 				AB67AB2B1C642AC500B4C62C /* RoutingHTTPServer.m */,
 			);
 			path = RoutingHTTPServer;
-			sourceTree = "<group>";
-		};
-		ABE7470E1C688473001D8F0D /* protocol */ = {
-			isa = PBXGroup;
-			children = (
-				ABE7470F1C688473001D8F0D /* DConnectServerProtocol.h */,
-				ABE747101C688473001D8F0D /* DConnectServerProtocol.m */,
-				ABE747111C688473001D8F0D /* DConnectURLProtocol.h */,
-				ABE747121C688473001D8F0D /* DConnectURLProtocol.m */,
-			);
-			path = protocol;
-			sourceTree = "<group>";
-		};
-		ABE747151C688608001D8F0D /* websocket */ = {
-			isa = PBXGroup;
-			children = (
-				ABE747161C688608001D8F0D /* DConnectWebSocket.h */,
-				ABE747171C688608001D8F0D /* DConnectWebSocket.m */,
-				D6FF6C971D9263D600B9165B /* DConnectWebSocketInfo.h */,
-				D6FF6C981D9263D600B9165B /* DConnectWebSocketInfo.m */,
-				D6FF6C9A1D92672900B9165B /* DConnectWebSocketInfoManager.h */,
-				D6FF6C9B1D92672900B9165B /* DConnectWebSocketInfoManager.m */,
-			);
-			path = websocket;
 			sourceTree = "<group>";
 		};
 		BE21B72D197E108900BAF018 /* DConnectSDK.build */ = {
@@ -4000,8 +3981,6 @@
 			children = (
 				D63CC6451D78018D00F86F93 /* viewcontroller */,
 				D60DD5FE1D2F380200DEBE5C /* service */,
-				ABE747151C688608001D8F0D /* websocket */,
-				ABE7470E1C688473001D8F0D /* protocol */,
 				D6FD01F51999E593000DB674 /* cipher */,
 				D6262285199231ED004F01E6 /* localoauth */,
 				30424CF11973EAA10084371F /* db */,
@@ -4628,6 +4607,7 @@
 				D6960ED619A0759200BE4D1B /* LocalOAuthSQLiteScopeInfo.m in Sources */,
 				C2F89D571920AB0B005F1C5F /* DConnectManagerDeliveryProfile.m in Sources */,
 				309B0B811944B454001A39B6 /* DConnectProximityProfile.m in Sources */,
+				BE71FD691DA37A3200B5E209 /* DConnectServerManager.m in Sources */,
 				30424D121974C0260084371F /* DConnectClientDao.m in Sources */,
 				D62622E0199232BC004F01E6 /* LocalOAuthPackageInfo.m in Sources */,
 				97AD0D5C192A0BC500A1A84D /* DConnectPhoneProfile.m in Sources */,
@@ -4641,7 +4621,6 @@
 				30954E261976122800D92C66 /* DConnectMemoryCacheController.m in Sources */,
 				BE4FDFD219878014001A3C86 /* DConnectAuthorizationProfile.m in Sources */,
 				30424CF91973EADC0084371F /* DConnectSQLiteCursor.m in Sources */,
-				D6FF6C991D9263D600B9165B /* DConnectWebSocketInfo.m in Sources */,
 				D64EF65A1D7D4481005AC8B2 /* DConnectServiceListViewController.m in Sources */,
 				D62622E2199232BC004F01E6 /* LocalOAuthResponseType.m in Sources */,
 				D6FD02131999EC7A000DB674 /* CipherSignatureFactory.m in Sources */,
@@ -4714,7 +4693,6 @@
 				D662DFCD1D51E19000C0F476 /* DConnectProfileSpecBuilder.m in Sources */,
 				D6DA6ACF1D4DA5B500974D43 /* DConnectParameterSpec.m in Sources */,
 				6B4EEF6A1AB0823B00A92E0D /* DConnectWhitelistViewController.m in Sources */,
-				ABE747141C688473001D8F0D /* DConnectURLProtocol.m in Sources */,
 				972107571920604E00529618 /* DConnectMultipartParser.m in Sources */,
 				6BC64F771AB199C80095BFC9 /* DConnectWhitelistUtil.m in Sources */,
 				D6C8601E1D38964400232EEF /* DConnectServiceProvider.m in Sources */,
@@ -4726,7 +4704,6 @@
 				30954E241976122800D92C66 /* DConnectBaseCacheController.m in Sources */,
 				C2F89D4E1920A192005F1C5F /* DConnectNotificationProfile.m in Sources */,
 				D62622911992326E004F01E6 /* LocalOAuthClientDao.m in Sources */,
-				D6FF6C9C1D92672900B9165B /* DConnectWebSocketInfoManager.m in Sources */,
 				6BD474901AAF0B2D0014FB15 /* DConnectWebAppOrigin.m in Sources */,
 				D66393671D55F2E3008974E8 /* DConnectSpecErrorFactory.m in Sources */,
 				309CD50E198A3B45002A5684 /* DConnectEventHelper.m in Sources */,
@@ -4738,6 +4715,7 @@
 				AB67AB121C642AB200B4C62C /* HTTPConnection.m in Sources */,
 				D662DFBE1D50BCCD00C0F476 /* BooleanParameterSpec.m in Sources */,
 				D647CFA41D2BDD0D006BF6A9 /* NumberDataSpec.m in Sources */,
+				BE71FD601DA3787100B5E209 /* DConnectHttpServer.m in Sources */,
 				309B0B9A1945A671001A39B6 /* DConnectResponseMessage.m in Sources */,
 				D662DFD31D52300500C0F476 /* DConnectProfileProvider.m in Sources */,
 				AB67AB2E1C642AC500B4C62C /* RouteRequest.m in Sources */,
@@ -4748,6 +4726,7 @@
 				EF8B64941AAC78D7007C590B /* DConnectKeyEventProfile.m in Sources */,
 				AB67AB101C642AB200B4C62C /* DDRange.m in Sources */,
 				D662DFC11D50BF3F00C0F476 /* BooleanParameterSpecBuilder.m in Sources */,
+				BE71FD631DA3791800B5E209 /* DConnectWebSocket.m in Sources */,
 				D646C7B919A5BDC500C2D91B /* LocalOAuthUtils.m in Sources */,
 				AB67AB191C642AB200B4C62C /* HTTPDataResponse.m in Sources */,
 				D699E71F19C070C3002F334C /* LocalOAuthScopeUtil.m in Sources */,
@@ -4792,17 +4771,16 @@
 				D62622E7199232BC004F01E6 /* LocalOAuthSQLiteToken.m in Sources */,
 				C29D33AA191B957B001015CC /* CoverageExportSetting.m in Sources */,
 				97A999BB19545237006F8474 /* DConnectFilesProfile.m in Sources */,
+				BE71FD661DA3797D00B5E209 /* DConnectHttpConnection.m in Sources */,
 				D62622941992326E004F01E6 /* LocalOAuthTokenDao.m in Sources */,
 				C29D332E191B2679001015CC /* DConnectDevicePluginManager.m in Sources */,
 				D62622DC199232BC004F01E6 /* LocalOAuth2Settings.m in Sources */,
-				ABE747131C688473001D8F0D /* DConnectServerProtocol.m in Sources */,
 				AB0C3C211BDF1FBD000F4C5D /* DConnectLightProfile.m in Sources */,
 				D6A413C31D4B9E2700730C9B /* DConnectProfileSpecJsonParser.m in Sources */,
 				D60DD6011D2F383F00DEBE5C /* DConnectService.m in Sources */,
 				6B4EEF5C1AAF2A1800A92E0D /* DConnectWhitelist.m in Sources */,
 				D6A413DB1D4CA51900730C9B /* DConnectDataSpec.m in Sources */,
 				AB67AB301C642AC500B4C62C /* RoutingConnection.m in Sources */,
-				ABE7471A1C688608001D8F0D /* DConnectWebSocket.m in Sources */,
 				D642265F1D3F09890010CE40 /* DConnectApiEntity.m in Sources */,
 				D65F834A1D2A2AF80024685D /* DConnectApiSpec.m in Sources */,
 				D65F83551D2A2AF80024685D /* BooleanDataSpecBuilder.m in Sources */,
