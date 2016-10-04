@@ -55,6 +55,16 @@
     }
 }
 
+- (BOOL) validate: (DConnectRequestMessage *) request {
+    for (DConnectParameterSpec *paramSpec in [self requestParamSpecList]) {
+        id paramValue = [request objectForKey: [paramSpec name]];
+        if (![paramSpec validate: paramValue]) {
+            return false;
+        }
+    }
+    return true;
+}
+
 
 #pragma mark - NSCopying Implement.
 
@@ -71,16 +81,6 @@
     [copyInstance setRequestParamSpecList: [[NSArray alloc] initWithArray: [self requestParamSpecList] copyItems: YES]];
     
     return copyInstance;
-}
-
-- (BOOL) validate: (DConnectRequestMessage *) request {
-    for (DConnectParameterSpec *paramSpec in [self requestParamSpecList]) {
-        id paramValue = [request objectForKey: [paramSpec name]];
-        if (![paramSpec validate: paramValue]) {
-            return false;
-        }
-    }
-    return true;
 }
 
 @end
