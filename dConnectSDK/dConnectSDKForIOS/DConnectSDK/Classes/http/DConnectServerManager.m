@@ -1,27 +1,21 @@
 //
-//  DConnectServerProtocol.m
+//  DConnectServerManager.m
 //  DConnectSDK
 //
-//  Copyright (c) 2014 NTT DOCOMO,INC.
+//  Copyright (c) 2016 NTT DOCOMO,INC.
 //  Released under the MIT license
 //  http://opensource.org/licenses/mit-license.php
 //
 
-#import "DConnectServerProtocol.h"
-
+#import "DConnectServerManager.h"
 #import "DConnectManager+Private.h"
 #import "DConnectMessage+Private.h"
-#import "DConnectFilesProfile.h"
-#import "DConnectMultipartParser.h"
-#import "DConnectFileManager.h"
-#import "DConnectURIBuilder.h"
-#import "LocalOAuth2Main.h"
-#import "RoutingHTTPServer.h"
-#import "RoutingConnection.h"
-#import "HTTPMessage.h"
-#import "WebSocket.h"
 #import "DConnectHttpServer.h"
 #import "DConnectHttpConnection.h"
+#import "DConnectFilesProfile.h"
+#import "DConnectFileManager.h"
+#import "DConnectMultipartParser.h"
+#import "DConnectURIBuilder.h"
 
 /// 内部用タイプを定義する。
 #define EXTRA_INNER_TYPE @"_type"
@@ -38,231 +32,15 @@ typedef NS_ENUM(NSInteger, RequestExceptionType) {
     NOT_SUPPORT_ACTION_EXCEPTION
 };
 
-#pragma mark - DConnectWebSocket2
 
-@interface DConnectWebSocket2 : WebSocket
-
-@property (nonatomic) NSString *receiverId;
-@property(nonatomic) long connectTime;
-
-@end
-
-@implementation DConnectWebSocket2
-
-@end
-
-
-#pragma mark - DConnectHttpServer
-
-//@interface DConnectHttpServer : RoutingHTTPServer
-//
-//- (void) sendEvent:(NSString *)event forReceiverId:(NSString *)receiverId;
-//
-//@end
-//
-//
-//@implementation DConnectHttpServer
-//
-//- (void) sendEvent:(NSString *)event forReceiverId:(NSString *)receiverId
-//{
-//    DConnectWebSocket2 *websocket = [self findWebSocketById:receiverId];
-//    if (websocket) {
-//        [websocket sendMessage:event];
-//    }
-//}
-//
-//- (void) stopWebSocket
-//{
-//    [webSocketsLock lock];
-//
-//    for (WebSocket *websocket in webSockets) {
-//        [websocket stop];
-//    }
-//
-//    [webSocketsLock unlock];
-//}
-//
-//- (DConnectWebSocket2 *) findWebSocketById:(NSString *)receiverId
-//{
-//    [webSocketsLock lock];
-//    
-//    DConnectWebSocket2 *w = nil;
-//    for (DConnectWebSocket2 *websocket in webSockets) {
-//        if ([receiverId isEqualToString:websocket.receiverId]) {
-//            w = websocket;
-//            break;
-//        }
-//    }
-//
-//    [webSocketsLock unlock];
-//    return w;
-//}
-//
-//- (NSArray *) getWebSockets
-//{
-//    return webSockets.copy;
-//}
-//
-//@end
-
-
-#pragma mark - DConnectHttpConnection
-
-//@interface DConnectHttpConnection : RoutingConnection <WebSocketDelegate>
-//
-//@end
-//
-//@implementation DConnectHttpConnection
-//
-//- (WebSocket *)webSocketForURI:(NSString *)path
-//                        socket:(GCDAsyncSocket *)socket
-//{
-//    DConnectWebSocket2 *websocket = [[DConnectWebSocket2 alloc] initWithRequest:request socket:socket];
-//    websocket.delegate = self;
-//    websocket.connectTime = [NSDate date].timeIntervalSince1970;
-//    return websocket;
-//}
-//
-//
-//#pragma mark - WebSocketDelegate Methods -
-//
-//- (void)webSocketDidOpen:(WebSocket *)webSocket origin: (NSString *) origin
-//{
-//}
-//
-//- (void)webSocket:(WebSocket *)webSocket didReceiveMessage:(NSString *)msg
-//{
-//    NSData *jsonData = [msg dataUsingEncoding:NSUnicodeStringEncoding];
-//    if (jsonData) {
-//        DConnectHttpServer *httpServer = (DConnectHttpServer *)config.server;
-//        NSError *error = nil;
-//        NSDictionary *json = [NSJSONSerialization JSONObjectWithData:jsonData
-//                                                             options:NSJSONReadingAllowFragments
-//                                                               error:&error];
-//        if (!error) {
-//            HTTPMessage *httpRequest = [webSocket getRequest];
-//            NSString *receiverId;
-//            NSString *path = httpRequest.url.path;
-//            NSString *origin = httpRequest.allHeaderFields[@"origin"];
-//            if (origin && [origin isEqualToString:@"null"]) {
-//                origin = @"file://";
-//            }
-//            
-//            if (path && [path localizedCaseInsensitiveCompare: @"/gotapi/websocket"] == NSOrderedSame) {
-//                NSString *accessToken = json[DConnectMessageAccessToken];
-//                if (!accessToken) {
-//                    DCLogW(@"onWebSocketMessage: accessToken is not specified");
-//                    [self sendError: webSocket errorCode:1 errorMessage:@"accessToken is not specified."];
-//                    return;
-//                }
-//                if ([DConnectManager sharedManager].settings.useOriginEnable) {
-//                    if (!origin) {
-//                        DCLogW(@"onWebSocketMessage: origin is not specified.");
-//                        [self sendError: webSocket errorCode:2 errorMessage: @"origin is not specified."];
-//                        return;
-//                    }
-//                    if (![self isValidAccessToken: accessToken origin: origin]) {
-//                        DCLogW(@"onWebSocketMessage: accessToken is invalid.");
-//                        [self sendError: webSocket errorCode:3 errorMessage:@"accessToken is invalid."];
-//                        return;
-//                    }
-//                } else {
-//                    if (!origin) {
-//                        origin = @"<anonymous>";
-//                    }
-//                }
-//                receiverId = origin;
-//                
-//                // NOTE: 既存のイベントセッションを保持する.
-//                WebSocket *existWebSocket = [httpServer findWebSocketById:receiverId];
-//                if (existWebSocket) {
-//                    DCLogW(@"onWebSocketMessage: already established.");
-//                    [self sendError: webSocket errorCode:4 errorMessage:@"already established."];
-//                    [webSocket stop];
-//                    return;
-//                }
-//                [self sendSuccess: webSocket];
-//            } else {
-//                if (!origin) {
-//                    origin = @"<anonymous>";
-//                }
-//                
-//                receiverId = json[DConnectMessageSessionKey];
-//                
-//                // NOTE: 既存のイベントセッションを破棄する.
-//                WebSocket *otherSocket = [httpServer findWebSocketById:receiverId];
-//                if (otherSocket) {
-//                    [otherSocket stop];
-//                }
-//            }
-//            
-//            if (!receiverId) {
-//                DCLogW(@"onWebSocketMessage: Failed to generate receiverId: path = %@, origin = %@", path, origin);
-//                return;
-//            }
-//            
-//            // イベント送信経路を確立
-//            DConnectWebSocket2 *w = (DConnectWebSocket2 *)webSocket;
-//            w.receiverId = receiverId;
-//        } else {
-//            DCLogE(@"onWebSocketMessage:  JSON format is invalid.");
-//            [self sendError: webSocket errorCode:5 errorMessage:@"JSON format is invalid."];
-//        }
-//    }
-//}
-//
-//- (void) webSocketDidClose:(WebSocket *)webSocket
-//{
-//}
-//
-//- (BOOL) isValidAccessToken: (NSString *) accessToken origin: (NSString *) origin
-//{
-//    LocalOAuth2Main *oauth = [LocalOAuth2Main sharedOAuthForClass: [DConnectManager class]];
-//    LocalOAuthClientPackageInfo *client = [oauth findClientPackageInfoByAccessToken: accessToken];
-//    if (!client) {
-//        return NO;
-//    }
-//    LocalOAuthPackageInfo *packageInfo = [client packageInfo];
-//    if (!packageInfo) {
-//        return NO;
-//    }
-//    return [packageInfo.packageName isEqualToString: origin];
-//}
-//
-//- (void) sendSuccess: (WebSocket *) webSocket
-//{
-//    NSDictionary *message = @{@"result" : [NSNumber numberWithInt:0]};
-//    NSData *messageData = [NSJSONSerialization dataWithJSONObject:message options:0 error:nil];
-//    NSString *messageJson = [[NSString alloc] initWithData:messageData encoding:NSUTF8StringEncoding];
-//    [webSocket sendMessage:messageJson];
-//}
-//
-//- (void) sendError: (WebSocket *) webSocket
-//         errorCode: (int) errorCode
-//      errorMessage: (NSString *) errorMessage
-//{
-//    NSDictionary *message = @{
-//                              @"result" : [NSNumber numberWithInt:1],
-//                              @"errorCode" : [NSNumber numberWithInt:errorCode],
-//                              @"errorMessage" : errorMessage,
-//                              };
-//    NSData *messageData = [NSJSONSerialization dataWithJSONObject:message options:0 error:nil];
-//    NSString *messageJson = [[NSString alloc] initWithData:messageData encoding:NSUTF8StringEncoding];
-//    [webSocket sendMessage:messageJson];
-//}
-//
-//@end
-
-#pragma - mark DConnectServerProtocol
-
-@implementation DConnectServerProtocol {
+@implementation DConnectServerManager {
     DConnectHttpServer *_httpServer;
 }
 
 - (BOOL) startServer
 {
     _httpServer = [DConnectHttpServer new];
-
+    
     [_httpServer setConnectionClass:[DConnectHttpConnection class]];
     [_httpServer setPort:self.settings.port];
     [_httpServer setDefaultHeader:@"Server" value:@"DeviceConnect/1.0"];
@@ -315,10 +93,13 @@ typedef NS_ENUM(NSInteger, RequestExceptionType) {
 - (void) handleHttpRequest:(RouteRequest *)request response:(RouteResponse *)response
 {
     if (!self.settings.useExternalIP && ![[[request url] host] isEqualToString:@"localhost"]) {
-        [self setResponse:response errorCode:DConnectMessageErrorCodeIllegalServerState errorMessage:@"Not localhost."];
+        [self settingErrorCode:DConnectMessageErrorCodeIllegalServerState
+                  errorMessage:@"Not localhost."
+                    toResponse:response
+                   withRequest:request];
         return;
     }
-
+    
     dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
     dispatch_time_t timeout = dispatch_time(DISPATCH_TIME_NOW, NSEC_PER_SEC * HTTP_REQUEST_TIMEOUT);
     
@@ -329,12 +110,13 @@ typedef NS_ENUM(NSInteger, RequestExceptionType) {
             dispatch_semaphore_signal(semaphore);
         }];
     });
-
+    
     long result = dispatch_semaphore_wait(semaphore, timeout);
     if (result != 0) {
-        [self setResponse:response
-                errorCode:DConnectMessageErrorCodeTimeout
-             errorMessage:@"Response timeout."];
+        [self settingErrorCode:DConnectMessageErrorCodeTimeout
+                  errorMessage:@"Response timeout."
+                    toResponse:response
+                   withRequest:request];
     }
 }
 
@@ -400,7 +182,7 @@ typedef NS_ENUM(NSInteger, RequestExceptionType) {
 - (DConnectRequestMessage *)requestMessageWithHTTPReqeust:(RouteRequest *)request error:(NSError **)error
 {
     NSURL *url = request.url;
-
+    
     DConnectRequestMessage *requestMessage = [DConnectRequestMessage message];
     
     // HTTPリクエストのURLのパスセグメントを取得
@@ -413,7 +195,7 @@ typedef NS_ENUM(NSInteger, RequestExceptionType) {
     [self setURLParametersFromString:url.query
                     toRequestMessage:requestMessage
                      percentDecoding:YES];
-
+    
     // URLのパスセグメントの数から、
     // プロファイル・属性・インターフェースが何なのかを判定する。
     NSString *api, *profile, *attr, *interface;
@@ -577,6 +359,10 @@ typedef NS_ENUM(NSInteger, RequestExceptionType) {
     [NSRegularExpression regularExpressionWithPattern:boundaryParamRegex
                                               options:0
                                                 error:&error];
+    if (error) {
+        return nil;
+    }
+
     NSTextCheckingResult *result =
     [regex firstMatchInString:contentType
                       options:NSMatchingReportProgress
@@ -584,20 +370,27 @@ typedef NS_ENUM(NSInteger, RequestExceptionType) {
     
     
     if (result.numberOfRanges < 2) {
-        @throw @"valid boundary parameter was not found in Content-Type \"multipart/*\"!";
+        return nil;
     }
     
     return [contentType substringWithRange:[result rangeAtIndex:1]];
 }
 
-- (void) setResponse:(RouteResponse *)response errorCode:(DConnectMessageErrorCodeType)errorCode errorMessage:(NSString *)errorMessage
+- (void) settingErrorCode:(DConnectMessageErrorCodeType)errorCode
+             errorMessage:(NSString *)errorMessage
+               toResponse:(RouteResponse *)response
+              withRequest:(RouteRequest *)request
 {
     NSString *dataStr = [NSString stringWithFormat:@"{\"%@\":%@,\"%@\":%@,\"%@\":\"%@\"}",
                          DConnectMessageResult, @(DConnectMessageResultTypeError),
                          DConnectMessageErrorCode, @(errorCode),
                          DConnectMessageErrorMessage, errorMessage];
-    [response setHeader:@"Content-Type" value:@"application/json"];
     [response respondWithString:dataStr];
+    
+    NSDictionary *headerDict = [self generateHeadersWithRequest:request
+                                                       mimeType:MIME_TYPE_JSON
+                                                  contentLength:response.response.contentLength];
+    [self setHeaders:headerDict toResponse:response];
 }
 
 - (void) convertDConnectResponse:(DConnectResponseMessage *)responseMessage
@@ -626,7 +419,10 @@ typedef NS_ENUM(NSInteger, RequestExceptionType) {
         
         NSString *json = [responseMessage convertToJSONString];
         if (!json) {
-            [self setResponse:response errorCode:DConnectMessageErrorCodeUnknown errorMessage:@"Failed to generate a JSON body."];
+            [self settingErrorCode:DConnectMessageErrorCodeUnknown
+                      errorMessage:@"Failed to generate a JSON body."
+                        toResponse:response
+                       withRequest:request];
         } else {
             [response setStatusCode:200];
             [response respondWithString:json encoding:NSUTF8StringEncoding];
@@ -705,8 +501,8 @@ typedef NS_ENUM(NSInteger, RequestExceptionType) {
 }
 
 - (NSDictionary *)generateHeadersWithAllowHeaders:(NSString *)allowHeader
-                                          mimeType:(NSString *)mimeType
-                                     contentLength:(NSUInteger)contentLength
+                                         mimeType:(NSString *)mimeType
+                                    contentLength:(NSUInteger)contentLength
 {
     NSMutableString *allowHeaders = @"XMLHttpRequest".mutableCopy;
     if (allowHeader) {
@@ -776,5 +572,4 @@ typedef NS_ENUM(NSInteger, RequestExceptionType) {
     url = [url stringByRemovingPercentEncoding];
     return url;
 }
-
 @end

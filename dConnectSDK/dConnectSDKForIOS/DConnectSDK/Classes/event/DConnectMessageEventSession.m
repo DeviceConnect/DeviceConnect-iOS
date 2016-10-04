@@ -44,9 +44,6 @@
         [self.delegate manager:self.context didReceiveDConnectMessage:event];
     } else {
         NSString *json = [event convertToJSONString];
-        if (self.webSocket) {
-            [self.webSocket sendEvent:json forReceiverId:self.receiverId];
-        }
         [[DConnectManager sharedManager].webServer sendEvent:json forReceiverId:self.receiverId];
     }
 }

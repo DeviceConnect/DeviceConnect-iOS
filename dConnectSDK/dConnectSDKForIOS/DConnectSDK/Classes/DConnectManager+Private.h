@@ -9,7 +9,7 @@
 
 #import "DConnectManager.h"
 #import "DConnectDevicePluginManager.h"
-#import "DConnectServerProtocol.h"
+#import "DConnectServerManager.h"
 
 /*!
  @brief Manager-プラグイン間のデバイス検索APIのプロファイル名。
@@ -44,7 +44,7 @@ extern NSString *const DConnectAttributeNameRequestAccessToken;
 /**
  * Webサーバを管理するクラス.
  */
-@property (nonatomic) DConnectServerProtocol *webServer;
+@property (nonatomic) DConnectServerManager *webServer;
 
 
 /*!

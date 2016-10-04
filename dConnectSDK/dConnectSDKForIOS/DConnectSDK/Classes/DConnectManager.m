@@ -17,7 +17,6 @@
 #import "DConnectFilesProfile.h"
 #import "DConnectManagerAuthorizationProfile.h"
 #import "DConnectAvailabilityProfile.h"
-#import "DConnectWebSocket.h"
 #import "DConnectMessage+Private.h"
 #import "DConnectSettings.h"
 #import "DConnectEventManager.h"
@@ -26,7 +25,7 @@
 #import "DConnectWhitelist.h"
 #import "DConnectOriginParser.h"
 #import "LocalOAuth2Main.h"
-#import "DConnectServerProtocol.h"
+#import "DConnectServerManager.h"
 #import "DConnectEventBroker.h"
 #import "DConnectEventSessionTable.h"
 #import "DConnectLocalOAuthDB.h"
@@ -229,7 +228,7 @@ NSString *const DConnectAttributeNameRequestAccessToken = @"requestAccessToken";
     // デバイスプラグインの検索
     [self.mDeviceManager searchDevicePlugin];
     
-    _webServer = [DConnectServerProtocol new];
+    _webServer = [DConnectServerManager new];
     _webServer.settings = self.settings;
     
     BOOL success = [_webServer startServer];
@@ -243,7 +242,6 @@ NSString *const DConnectAttributeNameRequestAccessToken = @"requestAccessToken";
 }
 
 - (void)setAllowExternalIp {
-//    [DConnectServerProtocol setExternalIPFlag:self.settings.useExternalIP];
 }
 
 - (void) stopByHttpServer {
@@ -254,17 +252,6 @@ NSString *const DConnectAttributeNameRequestAccessToken = @"requestAccessToken";
 
     [_webServer stopServer];
 }
-
-//- (void) startWebsocket {
-//    if (self.mWebsocket) {
-//        [self.mWebsocket stop];
-//    }
-//    self.mWebsocket = [[DConnectWebSocket alloc] initWithHost:self.settings.host
-//                                                         port:self.settings.port
-//                                                       object:self];
-//    self.mWebsocket.settings = self.settings;
-//    [self.mWebsocket start];
-//}
 
 - (BOOL) isStarted {
     return self.mStartFlag;

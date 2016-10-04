@@ -1,5 +1,5 @@
 //
-//  DConnectWebSocketInfo.m
+//  DConnectWebSocket.m
 //  DConnectSDK
 //
 //  Copyright (c) 2016 NTT DOCOMO,INC.
@@ -7,8 +7,13 @@
 //  http://opensource.org/licenses/mit-license.php
 //
 
-#import "DConnectWebSocketInfo.h"
+#import "DConnectWebSocket.h"
 
-@implementation DConnectWebSocketInfo
+@implementation DConnectWebSocket
+
+- (HTTPMessage *) getRequest
+{
+    return request;
+}
 
 @end
