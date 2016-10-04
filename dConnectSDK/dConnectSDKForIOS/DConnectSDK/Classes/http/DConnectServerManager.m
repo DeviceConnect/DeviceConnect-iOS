@@ -163,8 +163,6 @@ typedef NS_ENUM(NSInteger, RequestExceptionType) {
     }
     
     [self setHeaderInResponse:response withRequest:request];
-    
-    NSLog(@"%@", response.headers);
 }
 
 - (void) executeWithRequest:(RouteRequest *)request response:(RouteResponse *)response callback:(DConnectResponseBlocks)callback
