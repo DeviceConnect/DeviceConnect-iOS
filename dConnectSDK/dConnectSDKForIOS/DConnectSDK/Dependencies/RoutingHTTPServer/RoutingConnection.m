@@ -88,9 +88,9 @@
 }
 
 - (void)setHeadersForResponse:(HTTPMessage *)response isError:(BOOL)isError {
-//	[http.defaultHeaders enumerateKeysAndObjectsUsingBlock:^(id field, id value, BOOL *stop) {
-//		[response setHeaderField:field value:value];
-//	}];
+	[http.defaultHeaders enumerateKeysAndObjectsUsingBlock:^(id field, id value, BOOL *stop) {
+		[response setHeaderField:field value:value];
+	}];
 
 	if (headers && !isError) {
 		[headers enumerateKeysAndObjectsUsingBlock:^(id field, id value, BOOL *stop) {

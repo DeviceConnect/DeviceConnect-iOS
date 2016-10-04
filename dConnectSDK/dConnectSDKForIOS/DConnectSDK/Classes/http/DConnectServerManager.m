@@ -35,14 +35,23 @@ typedef NS_ENUM(NSInteger, RequestExceptionType) {
 
 @implementation DConnectServerManager {
     DConnectHttpServer *_httpServer;
+    NSDateFormatter *_dateFormatter;
 }
 
 - (BOOL) startServer
 {
+    NSLocale *locale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"];
+    _dateFormatter = [NSDateFormatter new];
+    _dateFormatter.locale = locale;
+    _dateFormatter.dateFormat = @"EEE, dd MMM yyyy HH:mm:ss z";
+    _dateFormatter.timeZone = [NSTimeZone timeZoneWithAbbreviation:@"GMT"];
+    
     _httpServer = [DConnectHttpServer new];
     
     [_httpServer setConnectionClass:[DConnectHttpConnection class]];
     [_httpServer setPort:self.settings.port];
+    [_httpServer setDefaultHeader:@"Connection" value:@"close"];
+    [_httpServer setDefaultHeader:@"Cache-Control" value:@"private, max-age=0, no-cache"];
     [_httpServer setDefaultHeader:@"Server" value:@"DeviceConnect/1.0"];
     [_httpServer setDefaultHeader:@"Access-Control-Allow-Origin" value:@"*"];
     [_httpServer get:@"/*" withBlock:^(RouteRequest *request, RouteResponse *response) {
@@ -132,41 +141,39 @@ typedef NS_ENUM(NSInteger, RequestExceptionType) {
     if (!self.settings.useExternalIP && ![[[request url] host] isEqualToString:@"localhost"]) {
         [self settingErrorCode:DConnectMessageErrorCodeIllegalServerState
                   errorMessage:@"Not localhost."
-                    toResponse:response
-                   withRequest:request];
-        return;
+                    toResponse:response];
+    } else {
+        dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
+        dispatch_time_t timeout = dispatch_time(DISPATCH_TIME_NOW, NSEC_PER_SEC * HTTP_REQUEST_TIMEOUT);
+        
+        __weak typeof(self) weakSelf = self;
+        
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            [weakSelf executeWithRequest:request response:response callback:^(DConnectResponseMessage *responseMessage) {
+                dispatch_semaphore_signal(semaphore);
+            }];
+        });
+        
+        long result = dispatch_semaphore_wait(semaphore, timeout);
+        if (result != 0) {
+            [self settingErrorCode:DConnectMessageErrorCodeTimeout
+                      errorMessage:@"Response timeout."
+                        toResponse:response];
+        }
     }
     
-    dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
-    dispatch_time_t timeout = dispatch_time(DISPATCH_TIME_NOW, NSEC_PER_SEC * HTTP_REQUEST_TIMEOUT);
+    [self setHeaderInResponse:response withRequest:request];
     
-    __weak typeof(self) weakSelf = self;
-    
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        [weakSelf executeWithRequest:request response:response callback:^(DConnectResponseMessage *responseMessage) {
-            dispatch_semaphore_signal(semaphore);
-        }];
-    });
-    
-    long result = dispatch_semaphore_wait(semaphore, timeout);
-    if (result != 0) {
-        [self settingErrorCode:DConnectMessageErrorCodeTimeout
-                  errorMessage:@"Response timeout."
-                    toResponse:response
-                   withRequest:request];
-    }
+    NSLog(@"%@", response.headers);
 }
 
 - (void) executeWithRequest:(RouteRequest *)request response:(RouteResponse *)response callback:(DConnectResponseBlocks)callback
 {
     if ([[request method] isEqualToString:@"OPTIONS"]) {
         // CORS処理
-        NSMutableDictionary *headerDict = [self generateHeadersWithRequest:request
-                                                                  mimeType:@"text/plain"
-                                                                      data:nil].mutableCopy;
-        [headerDict setValue:@"POST, GET, PUT, DELETE" forKey:@"Access-Control-Allow-Methods"];
         [response setStatusCode:200];
-        [self setHeaders:headerDict toResponse:response];
+        [response setHeader:@"Content-Type" value:@"text/plain"];
+        [response setHeader:@"Access-Control-Allow-Methods" value:@"POST, GET, PUT, DELETE"];
         callback(nil);
     } else {
         __weak typeof(self) weakSelf = self;
@@ -333,6 +340,58 @@ typedef NS_ENUM(NSInteger, RequestExceptionType) {
     return -1;
 }
 
+- (void)setURLParametersFromString:(NSString *)urlParameterStr
+                  toRequestMessage:(DConnectRequestMessage *)requestMessage
+                   percentDecoding:(BOOL)doDecode
+{
+    if (!urlParameterStr) {
+        return;
+    }
+    NSArray *paramArr = [urlParameterStr componentsSeparatedByString:@"&"];
+    [paramArr enumerateObjectsWithOptions:NSEnumerationConcurrent
+                               usingBlock:^(id obj, NSUInteger idx, BOOL *stop)
+     {
+         NSArray *keyValArr = [(NSString *)obj componentsSeparatedByString:@"="];
+         NSString *key;
+         NSString *val;
+         
+#ifdef DEBUG_LEVEL
+#if DEBUG_LEVEL > 3
+         // valが無くkeyのみのパラメータ
+         if ([keyValArr count] == 1) {
+             key = doDecode ?
+             [DConnectURLProtocol stringByURLDecodingWithString:(NSString *)keyValArr[0]]
+             : keyValArr[0];
+             DCLogD(@"Key-only URL query parameter \"%@\" will be ignored.", key);
+         }
+#endif
+#endif
+         // key&valのパラメータ
+         if ([keyValArr count] == 2) {
+             
+             if (doDecode) {
+                 key = [self stringByURLDecodingWithString:(NSString *)keyValArr[0]];
+                 val = [self stringByURLDecodingWithString:(NSString *)keyValArr[1]];
+             } else {
+                 key = keyValArr[0];
+                 val = keyValArr[1];
+             }
+             
+             if (key && val) {
+                 @synchronized (requestMessage) {
+                     [requestMessage setString:val forKey:key];
+                 }
+             }
+         }
+     }];
+}
+
+- (NSString *) stringByURLDecodingWithString:(NSString *)string {
+    NSString *url = [string stringByReplacingOccurrencesOfString:@"+" withString:@" "];
+    url = [url stringByRemovingPercentEncoding];
+    return url;
+}
+
 - (void) setHeaderFromRequset:(RouteRequest *)request toRequestMessage:(DConnectRequestMessage *)requestMessage
 {
     // オリジンの解析
@@ -416,18 +475,14 @@ typedef NS_ENUM(NSInteger, RequestExceptionType) {
 - (void) settingErrorCode:(DConnectMessageErrorCodeType)errorCode
              errorMessage:(NSString *)errorMessage
                toResponse:(RouteResponse *)response
-              withRequest:(RouteRequest *)request
 {
     NSString *dataStr = [NSString stringWithFormat:@"{\"%@\":%@,\"%@\":%@,\"%@\":\"%@\"}",
                          DConnectMessageResult, @(DConnectMessageResultTypeError),
                          DConnectMessageErrorCode, @(errorCode),
                          DConnectMessageErrorMessage, errorMessage];
+    [response setHeader:@"Content-Type" value:MIME_TYPE_JSON];
     [response respondWithString:dataStr];
-    
-    NSDictionary *headerDict = [self generateHeadersWithRequest:request
-                                                       mimeType:MIME_TYPE_JSON
-                                                  contentLength:response.response.contentLength];
-    [self setHeaders:headerDict toResponse:response];
+    [response setStatusCode:200];
 }
 
 - (void) convertDConnectResponse:(DConnectResponseMessage *)responseMessage
@@ -435,20 +490,18 @@ typedef NS_ENUM(NSInteger, RequestExceptionType) {
                       toResponse:(RouteResponse *)response
                          Request:(RouteRequest *)request
 {
-    NSString *mimeType;
-    
     if (requestMessage && [requestMessage.profile isEqualToString:DConnectFilesProfileName]) {
         if ([responseMessage result] == DConnectMessageResultTypeOk) {
-            mimeType = [responseMessage stringForKey:DConnectFilesProfileParamMimeType];
             [response setStatusCode:200];
+            [response setHeader:@"Content-Type" value:[responseMessage stringForKey:DConnectFilesProfileParamMimeType]];
             [response respondWithData:[responseMessage dataForKey:DConnectFilesProfileParamData]];
         } else if ([responseMessage result] == DConnectMessageResultTypeError) {
-            mimeType = @"text/plain";
             [response setStatusCode:404];
+            [response setHeader:@"Content-Type" value:@"text/plain"];
             [response respondWithString:@"Not found."];
         } else {
-            mimeType = @"text/plain";
             [response setStatusCode:500];
+            [response setHeader:@"Content-Type" value:@"text/plain"];
             [response respondWithString:@"unkknown result type."];
         }
     } else {
@@ -458,118 +511,34 @@ typedef NS_ENUM(NSInteger, RequestExceptionType) {
         if (!json) {
             [self settingErrorCode:DConnectMessageErrorCodeUnknown
                       errorMessage:@"Failed to generate a JSON body."
-                        toResponse:response
-                       withRequest:request];
+                        toResponse:response];
         } else {
-            [response setStatusCode:200];
             [response respondWithString:json encoding:NSUTF8StringEncoding];
-            [response setHeader:@"Content-Type" value:MIME_TYPE_JSON];
         }
-        mimeType = MIME_TYPE_JSON;
-    }
-    
-    NSDictionary *headerDict = [self generateHeadersWithRequest:request
-                                                       mimeType:mimeType
-                                                  contentLength:response.response.contentLength];
-    [self setHeaders:headerDict toResponse:response];
-}
-
-- (void) setHeaders:(NSDictionary *)headers toResponse:(RouteResponse *)response
-{
-    for (id key in [headers keyEnumerator]) {
-        [response setHeader:key value:[headers valueForKey:key]];
+        [response setStatusCode:200];
+        [response setHeader:@"Content-Type" value:MIME_TYPE_JSON];
     }
 }
 
-- (NSDictionary *)generateHeadersWithRequest:(RouteRequest *)request
-                                    mimeType:(NSString *)mimeType
-                                        data:(NSData *)data
+- (void) setHeaderInResponse:(RouteResponse *)response withRequest:(RouteRequest *)request
 {
-    return [self generateHeadersWithRequest:request
-                                   mimeType:mimeType
-                              contentLength:data ? data.length : 0];
-}
-
-- (NSDictionary *)generateHeadersWithRequest:(RouteRequest *)request
-                                    mimeType:(NSString *)mimeType
-                               contentLength:(NSUInteger)contentLength
-{
-    NSString *allowHeaders = [request header:@"Access-Control-Request-Headers"];
-    return [self generateHeadersWithAllowHeaders:allowHeaders
-                                        mimeType:mimeType
-                                   contentLength:contentLength];
-}
-
-- (NSDictionary *)generateHeadersWithAllowHeaders:(NSString *)allowHeader
-                                         mimeType:(NSString *)mimeType
-                                    contentLength:(NSUInteger)contentLength
-{
+    NSString *requestHeaders = [request header:@"Access-Control-Request-Headers"];
     NSMutableString *allowHeaders = @"XMLHttpRequest".mutableCopy;
-    if (allowHeader) {
-        [allowHeaders appendString:[NSString stringWithFormat:@", %@", allowHeader]];
+    if (requestHeaders) {
+        [allowHeaders appendString:[NSString stringWithFormat:@", %@", requestHeaders]];
     }
     
-    return @{@"Content-Type" : mimeType,
-             @"Content-Length" : [NSString stringWithFormat:@"%@", @(contentLength)],
-             @"Date": [[NSDate date] descriptionWithLocale:nil],
-             @"Access-Control-Allow-Origin" : @"*",
-             @"Access-Control-Allow-Headers" : allowHeaders,
-             @"Connection": @"close",
-             @"Server" : @"dConnectServer",
-             @"Last-Modified" : @"Fri, 26 May 2014 00:00:00 +0900",
-             @"Cache-Control" : @"private, max-age=0, no-cache"
-             };
-}
-
-- (void)setURLParametersFromString:(NSString *)urlParameterStr
-                  toRequestMessage:(DConnectRequestMessage *)requestMessage
-                   percentDecoding:(BOOL)doDecode
-{
-    if (!urlParameterStr) {
-        return;
+    NSString *contentLength;
+    if (response.response && response.response.contentLength > 0) {
+        contentLength = [NSString stringWithFormat:@"%@", @(response.response.contentLength)];
+    } else {
+        contentLength = @"0";
     }
-    NSArray *paramArr = [urlParameterStr componentsSeparatedByString:@"&"];
-    [paramArr enumerateObjectsWithOptions:NSEnumerationConcurrent
-                               usingBlock:^(id obj, NSUInteger idx, BOOL *stop)
-     {
-         NSArray *keyValArr = [(NSString *)obj componentsSeparatedByString:@"="];
-         NSString *key;
-         NSString *val;
-         
-#ifdef DEBUG_LEVEL
-#if DEBUG_LEVEL > 3
-         // valが無くkeyのみのパラメータ
-         if ([keyValArr count] == 1) {
-             key = doDecode ?
-             [DConnectURLProtocol stringByURLDecodingWithString:(NSString *)keyValArr[0]]
-             : keyValArr[0];
-             DCLogD(@"Key-only URL query parameter \"%@\" will be ignored.", key);
-         }
-#endif
-#endif
-         // key&valのパラメータ
-         if ([keyValArr count] == 2) {
-             
-             if (doDecode) {
-                 key = [self stringByURLDecodingWithString:(NSString *)keyValArr[0]];
-                 val = [self stringByURLDecodingWithString:(NSString *)keyValArr[1]];
-             } else {
-                 key = keyValArr[0];
-                 val = keyValArr[1];
-             }
-             
-             if (key && val) {
-                 @synchronized (requestMessage) {
-                     [requestMessage setString:val forKey:key];
-                 }
-             }
-         }
-     }];
+
+    [response setHeader:@"Content-Length" value:contentLength];
+    [response setHeader:@"Date" value:[[NSDate date] descriptionWithLocale:nil]];
+    [response setHeader:@"Access-Control-Allow-Headers" value:allowHeaders];
+    [response setHeader:@"Last-Modified" value:[_dateFormatter stringFromDate:[NSDate date]]];
 }
 
-- (NSString *) stringByURLDecodingWithString:(NSString *)string {
-    NSString *url = [string stringByReplacingOccurrencesOfString:@"+" withString:@" "];
-    url = [url stringByRemovingPercentEncoding];
-    return url;
-}
 @end
