@@ -122,6 +122,7 @@
 		BE71FD631DA3791800B5E209 /* DConnectWebSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = BE71FD621DA3791800B5E209 /* DConnectWebSocket.m */; };
 		BE71FD661DA3797D00B5E209 /* DConnectHttpConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = BE71FD651DA3797D00B5E209 /* DConnectHttpConnection.m */; };
 		BE71FD691DA37A3200B5E209 /* DConnectServerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BE71FD681DA37A3200B5E209 /* DConnectServerManager.m */; };
+		BE71FD6F1DA39E5700B5E209 /* HTTPErrorResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = BE71FD6E1DA39E5700B5E209 /* HTTPErrorResponse.m */; };
 		BEEFA8B71D8FD9DF001CC88C /* atmosphericpressure.json in Resources */ = {isa = PBXBuildFile; fileRef = BEEFA8B61D8FD9DF001CC88C /* atmosphericpressure.json */; };
 		BEF208AD19AC70530027E0CE /* DConnectLocalOAuthDB.m in Sources */ = {isa = PBXBuildFile; fileRef = BEF208AC19AC70530027E0CE /* DConnectLocalOAuthDB.m */; };
 		C29D32EC191B202A001015CC /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C29D32EB191B202A001015CC /* Foundation.framework */; };
@@ -1828,6 +1829,8 @@
 		BE71FD651DA3797D00B5E209 /* DConnectHttpConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DConnectHttpConnection.m; sourceTree = "<group>"; };
 		BE71FD671DA37A3200B5E209 /* DConnectServerManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DConnectServerManager.h; sourceTree = "<group>"; };
 		BE71FD681DA37A3200B5E209 /* DConnectServerManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DConnectServerManager.m; sourceTree = "<group>"; };
+		BE71FD6D1DA39E5700B5E209 /* HTTPErrorResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HTTPErrorResponse.h; sourceTree = "<group>"; };
+		BE71FD6E1DA39E5700B5E209 /* HTTPErrorResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HTTPErrorResponse.m; sourceTree = "<group>"; };
 		BEEFA8B61D8FD9DF001CC88C /* atmosphericpressure.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = atmosphericpressure.json; sourceTree = "<group>"; };
 		BEF208A719AB3CF60027E0CE /* CipherAuthSignature.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CipherAuthSignature.h; path = cipher/CipherAuthSignature.h; sourceTree = "<group>"; };
 		BEF208A819AB3D070027E0CE /* LocalOAuthConfirmAuthViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LocalOAuthConfirmAuthViewController.h; path = localoauth/LocalOAuthConfirmAuthViewController.h; sourceTree = "<group>"; };
@@ -2365,6 +2368,8 @@
 		AB67AB011C642AB200B4C62C /* Responses */ = {
 			isa = PBXGroup;
 			children = (
+				BE71FD6D1DA39E5700B5E209 /* HTTPErrorResponse.h */,
+				BE71FD6E1DA39E5700B5E209 /* HTTPErrorResponse.m */,
 				AB67AB021C642AB200B4C62C /* HTTPAsyncFileResponse.h */,
 				AB67AB031C642AB200B4C62C /* HTTPAsyncFileResponse.m */,
 				AB67AB041C642AB200B4C62C /* HTTPDataResponse.h */,
@@ -4604,6 +4609,7 @@
 				6B4EEF631AB06E2B00A92E0D /* DConnectOriginParser.m in Sources */,
 				D62622DF199232BC004F01E6 /* LocalOAuth2Main.m in Sources */,
 				D62622921992326E004F01E6 /* LocalOAuthProfileDao.m in Sources */,
+				BE71FD6F1DA39E5700B5E209 /* HTTPErrorResponse.m in Sources */,
 				D6960ED619A0759200BE4D1B /* LocalOAuthSQLiteScopeInfo.m in Sources */,
 				C2F89D571920AB0B005F1C5F /* DConnectManagerDeliveryProfile.m in Sources */,
 				309B0B811944B454001A39B6 /* DConnectProximityProfile.m in Sources */,

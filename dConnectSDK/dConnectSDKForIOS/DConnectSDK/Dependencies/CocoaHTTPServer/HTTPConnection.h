@@ -91,8 +91,7 @@
 - (NSString *)filePathForURI:(NSString *)path;
 - (NSString *)filePathForURI:(NSString *)path allowDirectory:(BOOL)allowDirectory;
 - (NSObject<HTTPResponse> *)httpResponseForMethod:(NSString *)method URI:(NSString *)path;
-- (WebSocket *)webSocketForURI:(NSString *)path
-                        socket:(GCDAsyncSocket *)socket;
+- (WebSocket *)webSocketForURI:(NSString *)path;
 
 - (void)prepareForBodyWithSize:(UInt64)contentLength;
 - (void)processBodyData:(NSData *)postDataChunk;
@@ -111,9 +110,7 @@
 
 - (BOOL)shouldDie;
 - (void)die;
-- (void)sendEvent:(NSString *)event forReceiverId:(NSString *)receiverId;
-- (void)stopWebSocket;
-- (NSInteger)numberOfWebSocket;
+
 @end
 
 @interface HTTPConnection (AsynchronousHTTPResponse)

@@ -9,8 +9,11 @@
 
 #import "WebSocket.h"
 
-@interface DConnectWebSocket : WebSocket
+@class DConnectHttpServer;
 
+@interface DConnectWebSocket : WebSocket <WebSocketDelegate>
+
+@property (nonatomic) DConnectHttpServer *httpServer;
 @property (nonatomic) NSString *receiverId;
 @property(nonatomic) long connectTime;
 
