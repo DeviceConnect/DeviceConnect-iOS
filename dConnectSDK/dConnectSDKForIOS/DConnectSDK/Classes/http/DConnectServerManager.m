@@ -421,9 +421,14 @@ typedef NS_ENUM(NSInteger, RequestExceptionType) {
 
 - (void) setMultipartFromRequest:(RouteRequest *)request toRequestMessage:(DConnectRequestMessage *)requestMessage
 {
+    NSString *boundary = [self boundary:request];
+    if (!boundary) {
+        return;
+    }
+    
     UserData *userData = [UserData userDataWithRequest:requestMessage];
     DConnectMultipartParser *multiParser = [DConnectMultipartParser multipartParserWithURL:request.url
-                                                                                  boundary:[self boundary:request]
+                                                                                  boundary:boundary
                                                                                   userData:userData];
     [multiParser parse:request.body];
 }
