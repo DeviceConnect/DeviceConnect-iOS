@@ -43,6 +43,10 @@
 
 @implementation DConnectDevicePlugin
 
+- (id) initWithObject: (id) object {
+    return [self initWithObject: object bundle: nil];
+}
+
 - (id) initWithObject: (id) object bundle: (NSBundle *) selfBundle {
     self = [super init];
     if (self) {
