@@ -33,7 +33,7 @@ static NSString *const VERSION = @"2.0.0";
         return nil;
     }
     
-    self = [super initWithObject: self bundle: DPAllJoynResourceBundle()];
+    self = [super initWithObject: self];
     if (self) {
         self.pluginName = @"AllJoyn (Device Connect Device Plug-in)";
         

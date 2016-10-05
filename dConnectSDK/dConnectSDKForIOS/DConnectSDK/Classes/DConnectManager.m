@@ -477,7 +477,7 @@ NSString *const DConnectAttributeNameRequestAccessToken = @"requestAccessToken";
         self.versionName = [[NSBundle mainBundle] objectForInfoDictionaryKey: @"CFBundleShortVersionString"];
         
         // ManagerのサポートするAPI仕様
-        self.managerSpec = [[DConnectPluginSpec alloc] initWithSelfBundle: nil];
+        self.managerSpec = [[DConnectPluginSpec alloc] init];
         
         // イベント管理クラス
         Class key = [self class];
@@ -679,7 +679,7 @@ NSString *const DConnectAttributeNameRequestAccessToken = @"requestAccessToken";
     if (profileName) {
         // プロファイルのJSONファイルを読み込み、内部生成したprofileSpecを新規登録する
         NSError *error = nil;
-        [[self managerSpec] addProfileSpec: profileName error: &error];
+        [[self managerSpec] addProfileSpec: profileName bundle: nil error: &error];
         if (error) {
             DCLogE(@"addProfileSpec error ! %@", [error description]);
         }

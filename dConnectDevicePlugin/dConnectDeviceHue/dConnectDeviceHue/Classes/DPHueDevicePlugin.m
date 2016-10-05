@@ -23,7 +23,7 @@ NSString *const DPHueBundleName = @"dConnectDeviceHue_resources";
 
 - (id) init {
     
-    self = [super initWithObject: self bundle:DPHueBundle()];
+    self = [super initWithObject: self];
     
     if (self) {
         

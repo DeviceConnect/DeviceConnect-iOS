@@ -28,7 +28,11 @@
 }
 
 - (void) addService: (DConnectService *) service {
-    return;
+    [self addService: service bundle:nil];
+}
+
+- (void) addService: (DConnectService *) service bundle:(NSBundle *) selfBundle {
+    
 }
 
 - (void) removeService: (DConnectService *) service {

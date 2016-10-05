@@ -50,7 +50,7 @@
 @implementation SonyCameraDevicePlugin
 
 - (instancetype) init {
-    self = [super initWithObject: self bundle:DPSonyCameraBundle()];
+    self = [super initWithObject: self];
     if (self) {
         self.pluginName = @"Sony Camera (Device Connect Device Plug-in)";
         

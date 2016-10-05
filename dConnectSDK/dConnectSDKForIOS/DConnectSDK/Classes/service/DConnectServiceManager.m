@@ -77,7 +77,7 @@ static NSMutableDictionary *_instanceArray = nil;
     
     /* デフォルト値を設定 */
     if (self) {
-        [self setPluginSpec: [[DConnectPluginSpec alloc] initWithSelfBundle: nil]];
+        [self setPluginSpec: [[DConnectPluginSpec alloc] init]];
         mDConnectServices = [NSMutableDictionary dictionary];
         self.serviceListeners = [NSMutableArray array];
     }
@@ -94,7 +94,7 @@ static NSMutableDictionary *_instanceArray = nil;
     [self setPlugin_: plugin];
 }
 
-- (void) addService: (DConnectService *) service {
+- (void) addService: (DConnectService *) service bundle:(NSBundle *) selfBundle {
     
     NSString *serviceId = [service serviceId];
     
@@ -106,7 +106,7 @@ static NSMutableDictionary *_instanceArray = nil;
             // プロファイルのJSONファイルを読み込み、内部生成したprofileSpecを新規登録する
             if (![[self pluginSpec] findProfileSpec: [[profile profileName] lowercaseString]]) {
                 NSError *error = nil;
-                [[self pluginSpec] addProfileSpec: [[profile profileName] lowercaseString] error: &error];
+                [[self pluginSpec] addProfileSpec: [[profile profileName] lowercaseString] bundle: selfBundle error: &error];
                 if (error) {
                     DCLogE(@"addService error ! %@", [error description]);
                 }

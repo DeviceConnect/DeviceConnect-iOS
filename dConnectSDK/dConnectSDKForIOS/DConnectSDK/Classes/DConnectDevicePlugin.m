@@ -44,10 +44,6 @@
 @implementation DConnectDevicePlugin
 
 - (id) initWithObject: (id) object {
-    return [self initWithObject: object bundle: nil];
-}
-
-- (id) initWithObject: (id) object bundle: (NSBundle *) selfBundle {
     self = [super init];
     if (self) {
         
@@ -58,7 +54,7 @@
         self.pluginName = NSStringFromClass([self class]);
         self.pluginVersionName = @"1.0.0";
         self.pluginId = [md5Proc generateSignature: self.pluginName];
-        [self setPluginSpec: [[DConnectPluginSpec alloc] initWithSelfBundle: selfBundle]];
+        [self setPluginSpec: [[DConnectPluginSpec alloc] init]];
 
         DConnectServiceManager *serviceManager = [DConnectServiceManager sharedForClass: [object class]];
         [serviceManager setPlugin: self];
@@ -187,7 +183,7 @@
 
     // プロファイルのJSONファイルを読み込み、内部生成したprofileSpecを新規登録する
     NSError *error = nil;
-    [[self pluginSpec] addProfileSpec: profileName error: &error];
+    [[self pluginSpec] addProfileSpec: profileName bundle: nil error: &error];
     if (error) {
         DCLogE(@"addProfileSpec error ! %@", [error description]);
     }

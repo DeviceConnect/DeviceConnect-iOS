@@ -23,7 +23,7 @@
 
 - (instancetype) init
 {
-	self = [super initWithObject: self bundle:DCPebbleBundle()];
+	self = [super initWithObject: self];
 	if (self) {
 		// プラグイン名を設定
 		self.pluginName = @"Pebble (Device Connect Device Plug-in)";

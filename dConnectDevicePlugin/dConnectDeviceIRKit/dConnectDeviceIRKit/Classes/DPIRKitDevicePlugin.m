@@ -71,7 +71,7 @@ DPIRKitManagerDetectionDelegate
 
 - (id) init {
     
-    self = [super initWithObject: self bundle:DPIRBundle()];
+    self = [super initWithObject: self];
     
     if (self) {
         
@@ -169,7 +169,7 @@ DPIRKitManagerDetectionDelegate
                     [service setOnline: YES];
                 } else {
                     DPIRKitService *service = [[DPIRKitService alloc] initWithServiceId: serviceId plugin: self];
-                    [self.serviceProvider addService: service];
+                    [self.serviceProvider addService: service bundle: DPIRBundle()];
                     [service setOnline: YES];
                 }
             } else {
@@ -200,7 +200,7 @@ DPIRKitManagerDetectionDelegate
                                                                                                              name:virtual.deviceName
                                                                                                            plugin:self
                                                                                                       profileName:profileName];
-                                [self.serviceProvider addService: service];
+                                [self.serviceProvider addService: service bundle: DPIRBundle()];
                                 [service setOnline: YES];
                             }
                         } else {
