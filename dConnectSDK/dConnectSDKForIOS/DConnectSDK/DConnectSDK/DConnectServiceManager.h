@@ -14,8 +14,6 @@
 
 @interface DConnectServiceManager : DConnectServiceProvider<OnStatusChangeListener>
 
-@property(nonatomic, strong) DConnectPluginSpec *pluginSpec;
-
 
 /*!
  DConnectServiceManagerインスタンス取得.

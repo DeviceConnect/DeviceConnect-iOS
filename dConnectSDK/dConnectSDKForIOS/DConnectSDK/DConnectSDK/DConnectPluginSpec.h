@@ -13,6 +13,11 @@
 @interface DConnectPluginSpec : NSObject
 
 /*!
+ @brief DConnectPluginSpecのシングルトンを返す.
+ */
++ (DConnectPluginSpec *) shared;
+
+/*!
  @brief 入力ファイルからDevice Connectプロファイルの仕様定義を追加する.
  
  @param[in] profileName プロファイル名
