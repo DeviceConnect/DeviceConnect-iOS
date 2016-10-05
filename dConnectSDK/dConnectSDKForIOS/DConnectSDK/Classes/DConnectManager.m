@@ -215,10 +215,10 @@ NSString *const DConnectAttributeNameRequestAccessToken = @"requestAccessToken";
     return managerName;
 }
 
-- (void) start {
+- (BOOL) start {
     // 開始フラグをチェック
     if (self.mStartFlag) {
-        return;
+        return YES;
     }
     self.mStartFlag = YES;
 
@@ -234,16 +234,10 @@ NSString *const DConnectAttributeNameRequestAccessToken = @"requestAccessToken";
     if (!success) {
         self.mStartFlag = NO;
     }
+    return success;
 }
 
-- (void) startByHttpServer {
-    [self start];
-}
-
-- (void)setAllowExternalIp {
-}
-
-- (void) stopByHttpServer {
+- (void) stop {
     if (!self.mStartFlag) {
         return;
     }

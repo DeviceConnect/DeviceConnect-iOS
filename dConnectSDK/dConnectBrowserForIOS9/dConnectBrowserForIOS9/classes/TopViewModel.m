@@ -157,7 +157,6 @@ static NSInteger maxIconCount = 8;
     mgr.settings.useOriginEnable = isOriginEnable;
     BOOL isExternalIp = [[NSUserDefaults standardUserDefaults] boolForKey:IS_EXTERNAL_IP];
     mgr.settings.useExternalIP = isExternalIp;
-    [mgr setAllowExternalIp];
 }
 
 - (void)saveSettings
