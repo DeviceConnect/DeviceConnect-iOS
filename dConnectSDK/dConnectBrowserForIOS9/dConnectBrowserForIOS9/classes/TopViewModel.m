@@ -190,6 +190,10 @@ static NSInteger maxIconCount = 8;
         self.url = [NSString stringWithFormat:@"http://%@", self.url];
     }
     [self setLatestURL:self.url];
+    if ([self.url rangeOfString:@"%23"].location != NSNotFound) {
+        self.url = [self.url stringByReplacingOccurrencesOfString:@"%23" withString:@"#"] ;
+    }
+
     return self.url;
 }
 
