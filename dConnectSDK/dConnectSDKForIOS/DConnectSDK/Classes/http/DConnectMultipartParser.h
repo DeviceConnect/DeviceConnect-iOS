@@ -10,12 +10,12 @@
 
 @interface DConnectMultipartParser : NSObject
 
-+ (instancetype)multipartParserWithURL:(NSURLRequest *)url
++ (instancetype)multipartParserWithURL:(NSURL *)url
+                              boundary:(NSString *)boundary
                               userData:(id)userData;
 
-- (void)parse;
+- (void)parse:(NSData *)bodyData;
 
-@property NSURLRequest *url;
 @property id userData;
 
 @end

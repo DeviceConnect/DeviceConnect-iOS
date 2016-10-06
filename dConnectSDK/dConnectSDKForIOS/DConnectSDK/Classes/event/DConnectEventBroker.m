@@ -16,9 +16,9 @@
 
 @property(nonatomic, weak) DConnectEventSessionTable *table;
 
-@property(nonatomic, weak) /*DConnectMessageService*/DConnectManager *context;
+@property(nonatomic, weak) DConnectManager *context;
 
-@property(nonatomic, weak) /*DConnectLocalOAuth*/DConnectLocalOAuthDB *localOAuth;
+@property(nonatomic, weak) DConnectLocalOAuthDB *localOAuth;
 
 @property(nonatomic, weak) DConnectDevicePluginManager *pluginManager;
 
@@ -31,7 +31,7 @@
 @implementation DConnectEventBroker
 
 /*public EventBroker() コンストラクタ */
-- (instancetype) initWithContext : (/* DConnectMessageService */DConnectManager *) context
+- (instancetype) initWithContext : (DConnectManager *) context
                             table: (DConnectEventSessionTable *) table
                        localOAuth: (DConnectLocalOAuthDB *) localOAuth
                     pluginManager: (DConnectDevicePluginManager *)pluginManager
@@ -110,7 +110,7 @@
     return nil;
 }
 
-- (void) onEvent: (/* Intent */ DConnectMessage *) event {
+- (void) onEvent:(DConnectMessage *) event {
     
     if ([self isServiceChangeEvent: event]) {
         [self onServiceChangeEvent: event];
@@ -241,7 +241,7 @@
     return nil;
 }
 
-- (void) replaceServiceId: (/*Intent*/DConnectMessage *)event plugin:(DConnectDevicePlugin *) plugin {
+- (void) replaceServiceId:(DConnectMessage *)event plugin:(DConnectDevicePlugin *) plugin {
     NSString *serviceId = [event stringForKey: DConnectMessageServiceId];
     [event setString:[self.pluginManager appendServiceId: plugin serviceId: serviceId] forKey:DConnectMessageServiceId];
 }

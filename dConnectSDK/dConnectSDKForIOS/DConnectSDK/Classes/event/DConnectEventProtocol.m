@@ -135,22 +135,14 @@ typedef DConnectEventSession * (^CreateSessionBlocks)(DConnectMessage *request, 
 
 #pragma marker - Static Methods.
 
-+ (DConnectEventProtocol *) getInstance: (/*DConnectMessageService * */DConnectManager *) context
++ (DConnectEventProtocol *) getInstance: (DConnectManager *) context
                                 request: (DConnectMessage *) request
                                delegate: (id<DConnectManagerDelegate>) delegate
                               webSocket: (DConnectWebSocket *) webSocket
 {
-    
-    // request.getStringExtra(DConnectService.EXTRA_INNER_TYPE);
     NSString *appType = [request stringForKey: DConnectServiceInnerType];
-    
-    if ([appType isEqualToString: DConnectServiceInnerTypeHttp]) {   // DConnectService.INNER_TYPE_HTTP
-        
-        // [Android]
-        // return new EventProtocol(context)
-        // @Override EventSession createSession(Intent request, String serviceId, String receiverId, String pluginId) { ... }
+    if ([appType isEqualToString: DConnectServiceInnerTypeHttp]) {
         CreateSessionBlocks blocks = ^(DConnectMessage *request, NSString *serviceId, NSString *receiverId, NSString *pluginId) {
-            
             NSString *accessToken = [request stringForKey:DConnectMessageAccessToken];
             NSString *profileName = [request stringForKey:DConnectMessageProfile];
             NSString *interfaceName = [request stringForKey:DConnectMessageInterface];
@@ -168,9 +160,7 @@ typedef DConnectEventSession * (^CreateSessionBlocks)(DConnectMessage *request, 
             [session setContext: context];
             return session;
         };
-        
         return [[DConnectEventProtocol alloc] initWithContext:context webSocket:webSocket createSessionBlocks:blocks];
-        
     } else {
         DCLogW(@"getInstance : not support apptype. %@", appType);
         return nil;

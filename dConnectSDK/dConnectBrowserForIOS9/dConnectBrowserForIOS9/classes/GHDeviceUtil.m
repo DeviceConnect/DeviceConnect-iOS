@@ -45,7 +45,7 @@ static GHDeviceUtil* mgr = nil;
 - (void)setup
 {
     manager = [DConnectManager sharedManager];
-    [manager startByHttpServer];
+    [manager start];
     q_global = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
 //    [self updateDeviceList];
 }

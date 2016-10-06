@@ -1,5 +1,5 @@
 //
-//  DConnectWebSocketInfo.m
+//  DConnectHttpConnection.h
 //  DConnectSDK
 //
 //  Copyright (c) 2016 NTT DOCOMO,INC.
@@ -7,8 +7,10 @@
 //  http://opensource.org/licenses/mit-license.php
 //
 
-#import "DConnectWebSocketInfo.h"
+#import "RoutingConnection.h"
+#import "WebSocket.h"
 
-@implementation DConnectWebSocketInfo
+@interface DConnectHttpConnection : RoutingConnection <WebSocketDelegate>
+
 
 @end
