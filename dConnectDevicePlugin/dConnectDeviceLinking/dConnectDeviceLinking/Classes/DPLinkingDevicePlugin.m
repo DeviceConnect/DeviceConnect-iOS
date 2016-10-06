@@ -27,5 +27,14 @@
     }
     return self;
 }
+#pragma mark - DevicePlugin's icon image
+
+- (NSString*)iconFilePath:(BOOL)isOnline
+{
+    NSBundle *bundle = [NSBundle bundleWithPath:[[NSBundle mainBundle] pathForResource:@"dConnectDeviceLinking_resources" ofType:@"bundle"]];
+    NSString* filename = isOnline ? @"dconnect_icon" : @"dconnect_icon_off";
+    return [bundle pathForResource:filename ofType:@"png"];
+    return nil;
+}
 
 @end
