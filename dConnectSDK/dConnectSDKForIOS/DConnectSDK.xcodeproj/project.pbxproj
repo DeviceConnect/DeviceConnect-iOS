@@ -261,6 +261,11 @@
 		D662E9CE1D4AEAA000919C69 /* system.json in Resources */ = {isa = PBXBuildFile; fileRef = D662E9B91D4AEAA000919C69 /* system.json */; };
 		D662E9CF1D4AEAA000919C69 /* touch.json in Resources */ = {isa = PBXBuildFile; fileRef = D662E9BA1D4AEAA000919C69 /* touch.json */; };
 		D66AC06A1D96CFBB009316D6 /* DConnectMessageEventSession.m in Sources */ = {isa = PBXBuildFile; fileRef = D66AC0691D96CFBB009316D6 /* DConnectMessageEventSession.m */; };
+		D68563C11DA65401003818F2 /* ecg.json in Resources */ = {isa = PBXBuildFile; fileRef = D68563BC1DA65401003818F2 /* ecg.json */; };
+		D68563C21DA65401003818F2 /* poseestimation.json in Resources */ = {isa = PBXBuildFile; fileRef = D68563BD1DA65401003818F2 /* poseestimation.json */; };
+		D68563C31DA65401003818F2 /* sphero.json in Resources */ = {isa = PBXBuildFile; fileRef = D68563BE1DA65401003818F2 /* sphero.json */; };
+		D68563C41DA65401003818F2 /* stressestimation.json in Resources */ = {isa = PBXBuildFile; fileRef = D68563BF1DA65401003818F2 /* stressestimation.json */; };
+		D68563C51DA65401003818F2 /* walkstate.json in Resources */ = {isa = PBXBuildFile; fileRef = D68563C01DA65401003818F2 /* walkstate.json */; };
 		D68ED35B199BBA4800D8BF71 /* LocalOAuthClientPackageInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = D68ED35A199BBA4800D8BF71 /* LocalOAuthClientPackageInfo.m */; };
 		D6960ED3199FAEB400BE4D1B /* LocalOAuthSQLiteProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = D6960ED2199FAEB400BE4D1B /* LocalOAuthSQLiteProfile.m */; };
 		D6960ED619A0759200BE4D1B /* LocalOAuthSQLiteScopeInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = D6960ED519A0759200BE4D1B /* LocalOAuthSQLiteScopeInfo.m */; };
@@ -2040,6 +2045,11 @@
 		D67225EA1D34B566008641EA /* DConnectService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DConnectService.h; sourceTree = "<group>"; };
 		D67225EB1D34B566008641EA /* DConnectServiceManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DConnectServiceManager.h; sourceTree = "<group>"; };
 		D67225EC1D34B566008641EA /* DConnectServiceProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DConnectServiceProvider.h; sourceTree = "<group>"; };
+		D68563BC1DA65401003818F2 /* ecg.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ecg.json; sourceTree = "<group>"; };
+		D68563BD1DA65401003818F2 /* poseestimation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = poseestimation.json; sourceTree = "<group>"; };
+		D68563BE1DA65401003818F2 /* sphero.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = sphero.json; sourceTree = "<group>"; };
+		D68563BF1DA65401003818F2 /* stressestimation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = stressestimation.json; sourceTree = "<group>"; };
+		D68563C01DA65401003818F2 /* walkstate.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = walkstate.json; sourceTree = "<group>"; };
 		D68ED359199BBA4800D8BF71 /* LocalOAuthClientPackageInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LocalOAuthClientPackageInfo.h; path = localoauth/LocalOAuthClientPackageInfo.h; sourceTree = "<group>"; };
 		D68ED35A199BBA4800D8BF71 /* LocalOAuthClientPackageInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LocalOAuthClientPackageInfo.m; path = localoauth/LocalOAuthClientPackageInfo.m; sourceTree = "<group>"; };
 		D6960ED1199FAEB400BE4D1B /* LocalOAuthSQLiteProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LocalOAuthSQLiteProfile.h; path = localoauth/LocalOAuthSQLiteProfile.h; sourceTree = "<group>"; };
@@ -4346,6 +4356,11 @@
 		D6ECC6D519A4B78900FE3161 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				D68563BC1DA65401003818F2 /* ecg.json */,
+				D68563BD1DA65401003818F2 /* poseestimation.json */,
+				D68563BE1DA65401003818F2 /* sphero.json */,
+				D68563BF1DA65401003818F2 /* stressestimation.json */,
+				D68563C01DA65401003818F2 /* walkstate.json */,
 				D662E9A61D4AEA9F00919C69 /* airconditioner.json */,
 				D662E9A71D4AEA9F00919C69 /* authorization.json */,
 				D662E9A81D4AEA9F00919C69 /* camera.json */,
@@ -4526,17 +4541,22 @@
 				D65F831A1D28FC390024685D /* humidity.json in Resources */,
 				D662E9C41D4AEAA000919C69 /* humandetect.json in Resources */,
 				D6ECC6D919A4B78900FE3161 /* InfoPlist.strings in Resources */,
+				D68563C11DA65401003818F2 /* ecg.json in Resources */,
 				D65F83181D28FBBC0024685D /* deviceorientation.json in Resources */,
 				D65E24CA1D1A5E8C00312134 /* battery.json in Resources */,
 				D662E9CD1D4AEAA000919C69 /* serviceinformation.json in Resources */,
 				D65F83221D28FD170024685D /* proximity.json in Resources */,
+				D68563C41DA65401003818F2 /* stressestimation.json in Resources */,
 				D662E9C71D4AEAA000919C69 /* mediastreamrecording.json in Resources */,
+				D68563C31DA65401003818F2 /* sphero.json in Resources */,
+				D68563C51DA65401003818F2 /* walkstate.json in Resources */,
 				D662E9C11D4AEAA000919C69 /* file.json in Resources */,
 				D65F83201D28FCCE0024685D /* notification.json in Resources */,
 				D65F831C1D28FC6B0024685D /* keyevent.json in Resources */,
 				D662E9BD1D4AEAA000919C69 /* camera.json in Resources */,
 				D662E9C91D4AEAA000919C69 /* phone.json in Resources */,
 				D662E9BC1D4AEAA000919C69 /* authorization.json in Resources */,
+				D68563C21DA65401003818F2 /* poseestimation.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
