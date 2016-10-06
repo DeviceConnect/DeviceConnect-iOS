@@ -1046,7 +1046,6 @@
 {
     MPMoviePlayerViewController *viewController = [[MPMoviePlayerViewController alloc] initWithContentURL:url];
     viewController.moviePlayer.shouldAutoplay = NO;
-    
     // 再生完了通知をさせない様にする
     // MPMoviePlayerViewControllerの初期動作だと、再生完了時に閉じる。
     // 再生完了時に閉じる処理を実行させたくないので、再生完了通知を一旦消す。
@@ -1069,8 +1068,17 @@
 
 - (BOOL)moviePlayerViewControllerIsPresented
 {
-    UIViewController *rootView = [UIApplication sharedApplication].keyWindow.rootViewController;
-    return [rootView.presentedViewController class] == [MPMoviePlayerViewController class];
+    UIViewController *rootView = [self topViewController];
+    [self topViewController:rootView];
+    UIViewController *top = [UIApplication sharedApplication].keyWindow.rootViewController;
+    while (top.presentedViewController) {
+        top = top.presentedViewController;
+    }
+    return ([rootView class] == [MPMoviePlayerViewController class]);
+//    if (!_viewController) {
+//        return NO;
+//    }
+//    return (_viewController.moviePlayer.playbackState == MPMoviePlaybackStatePlaying);
 }
 
 - (void) videoFinished:(NSNotification*)notification
@@ -1335,14 +1343,27 @@
          };
          if ([self moviePlayerViewControllerIsPresented]) {
              block();
-         }
-         else {
+         } else {
+             
+//             if ([[self topViewController] isKindOfClass:[MPMoviePlayerViewController class]]) {
+//                 //すでにMPMoviePlayerViewControllerが開いている時は閉じる
+//                 dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
+//                 dispatch_time_t timeout = dispatch_time(DISPATCH_TIME_NOW, NSEC_PER_SEC * 60);
+//                 dispatch_async(dispatch_get_main_queue(), ^{
+//                    [[self topViewController] dismissViewControllerAnimated:NO completion:^{
+//                        dispatch_semaphore_signal(semaphore);
+//                    }];
+//                 });
+//                 dispatch_semaphore_wait(semaphore, timeout);
+//             }
              dispatch_async(dispatch_get_main_queue(), ^{
                  self.viewController = [self viewControllerWithURL:movieURL];
-                 block();                 
-                 [[self topViewController] presentMoviePlayerViewControllerAnimated:_viewController];
+                 block();
+                 if (![[self topViewController] isKindOfClass:[MPMoviePlayerViewController class]]) {
+                     NSLog(@"SFSafariview?:%@", [[self topViewController] class]);
+                     [[self topViewController] presentMoviePlayerViewControllerAnimated:_viewController];
+                 }
              });
-
         }
      }];
 }
