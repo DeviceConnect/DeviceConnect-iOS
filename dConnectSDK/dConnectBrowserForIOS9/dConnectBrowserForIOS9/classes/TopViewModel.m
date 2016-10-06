@@ -157,7 +157,6 @@ static NSInteger maxIconCount = 8;
     mgr.settings.useOriginEnable = isOriginEnable;
     BOOL isExternalIp = [[NSUserDefaults standardUserDefaults] boolForKey:IS_EXTERNAL_IP];
     mgr.settings.useExternalIP = isExternalIp;
-    [mgr setAllowExternalIp];
 }
 
 - (void)saveSettings
@@ -190,6 +189,10 @@ static NSInteger maxIconCount = 8;
         self.url = [NSString stringWithFormat:@"http://%@", self.url];
     }
     [self setLatestURL:self.url];
+    if ([self.url rangeOfString:@"%23"].location != NSNotFound) {
+        self.url = [self.url stringByReplacingOccurrencesOfString:@"%23" withString:@"#"] ;
+    }
+
     return self.url;
 }
 

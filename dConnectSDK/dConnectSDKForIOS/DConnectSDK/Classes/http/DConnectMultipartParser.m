@@ -39,15 +39,14 @@ int part_data_end(multipart_parser* p);
     multipart_parser* parser;
     /// マルチパートパーサ本体の設定（コールバック設定）
     multipart_parser_settings callbacks;
-    
-    NSMutableData *bodyBuf;
 }
 
-+ (instancetype)multipartParserWithURL:(NSURLRequest *)url
-                              userData:(id)userData {
++ (instancetype)multipartParserWithURL:(NSURL *)uri
+                              boundary:(NSString *)boundary
+                              userData:(id)userData
+{
     DConnectMultipartParser *multi = [DConnectMultipartParser new];
     
-    multi.url = url;
     multi.userData = userData;
     
     // 各解析ステージ毎に呼び出されるコールバックの設定
@@ -59,14 +58,13 @@ int part_data_end(multipart_parser* p);
     multi->callbacks.on_part_data_end = part_data_end;
     //    multi->callbacks.on_body_end = body_end;
     
-    multi->parser = multipart_parser_init([[url boundary] UTF8String], &multi->callbacks);
+    multi->parser = multipart_parser_init([boundary UTF8String], &multi->callbacks);
     multipart_parser_set_data(multi->parser, (__bridge void *)(userData));
     
     return multi;
 }
 
-- (void)parse {
-    NSData *bodyData = [_url body];
+- (void)parse:(NSData *)bodyData {
     if (bodyData) {
         multipart_parser_execute(self->parser, [bodyData bytes], [bodyData length]);
     } else {
@@ -97,21 +95,15 @@ int part_data_end(multipart_parser* p);
 
 int header_field(multipart_parser* p, const char *at, size_t length) {
     // ユーザデータを取得
-    UserData *userData =
-    (__bridge UserData *)multipart_parser_get_data(p);
-    
+    UserData *userData = (__bridge UserData *)multipart_parser_get_data(p);
     NSString *str = [NSString stringWithUTF8StringAddingNullTermination:at length:length];
-    
-    userData.isContentDisposition =
-    [str caseInsensitiveCompare:@"Content-Disposition"] == NSOrderedSame;
-    
+    userData.isContentDisposition = [str caseInsensitiveCompare:@"Content-Disposition"] == NSOrderedSame;
     return 0;
 }
 
 int header_value(multipart_parser* p, const char *at, size_t length) {
     // ユーザデータを取得
-    UserData *userData =
-    (__bridge UserData *)multipart_parser_get_data(p);
+    UserData *userData = (__bridge UserData *)multipart_parser_get_data(p);
     
     if (userData.isContentDisposition) {
         NSString *str = [NSString stringWithUTF8StringAddingNullTermination:at length:length];
@@ -120,14 +112,10 @@ int header_value(multipart_parser* p, const char *at, size_t length) {
             NSArray *keyVal = [paramEntry componentsSeparatedByString:@"="];
             // キーと値のペアになっている。
             if (keyVal.count == 2) {
-                NSString *key =
-                [keyVal[0] stringByTrimmingCharactersInSet:
-                 [NSCharacterSet whitespaceCharacterSet]];
+                NSString *key = [keyVal[0] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
                 NSMutableCharacterSet *charSet = [NSMutableCharacterSet whitespaceCharacterSet];
-                [charSet formUnionWithCharacterSet:
-                 [NSMutableCharacterSet characterSetWithCharactersInString:@"\"'"]];
-                NSString *val =
-                [keyVal[1] stringByTrimmingCharactersInSet:charSet];
+                [charSet formUnionWithCharacterSet:[NSMutableCharacterSet characterSetWithCharactersInString:@"\"'"]];
+                NSString *val = [keyVal[1] stringByTrimmingCharactersInSet:charSet];
                 if ([key isEqualToString:@"name"]) {
                     userData.name = val;
                 } else if ([key isEqualToString:@"filename"]) {
@@ -142,33 +130,25 @@ int header_value(multipart_parser* p, const char *at, size_t length) {
 int part_data_begin(multipart_parser* p)
 {
     // ユーザデータを取得
-    UserData *userData =
-    (__bridge UserData *)multipart_parser_get_data(p);
-    
+    UserData *userData = (__bridge UserData *)multipart_parser_get_data(p);
     // ボディ用のバッファを用意。
     userData.bodyBuf = [NSMutableData data];
-    
     return 0;
 }
 
 int part_data(multipart_parser* p, const char *at, size_t length)
 {
     // ユーザデータを取得
-    UserData *userData =
-    (__bridge UserData *)multipart_parser_get_data(p);
-    
+    UserData *userData = (__bridge UserData *)multipart_parser_get_data(p);
     // 新たな追加分バイトをバッファに追加。
     [userData.bodyBuf appendBytes:at length:length];
-    
     return 0;
 }
 
 int part_data_end(multipart_parser* p)
 {
     // ユーザデータを取得
-    UserData *userData =
-    (__bridge UserData *)multipart_parser_get_data(p);
-    
+    UserData *userData = (__bridge UserData *)multipart_parser_get_data(p);
     if (!userData.name) {
         return 0;
     }
@@ -178,8 +158,7 @@ int part_data_end(multipart_parser* p)
         [userData.request setData:userData.bodyBuf forKey:userData.name];
     } else {
         // ファイルデータ以外（文字列）
-        NSString *val =
-        [[NSString alloc] initWithData:userData.bodyBuf encoding:NSUTF8StringEncoding];
+        NSString *val = [[NSString alloc] initWithData:userData.bodyBuf encoding:NSUTF8StringEncoding];
         [userData.request setString:val forKey:userData.name];
     }
     userData.name = nil;
@@ -188,8 +167,6 @@ int part_data_end(multipart_parser* p)
     
     return 0;
 }
-
-
 
 @end
 

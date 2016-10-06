@@ -19,7 +19,7 @@
 	BOOL isOpen;
 	BOOL isVersion76;
 	
-	id /*__unsafe_unretained*/ delegate;
+	id __unsafe_unretained delegate;
 }
 
 + (BOOL)isWebSocketRequest:(HTTPMessage *)request;
@@ -32,7 +32,7 @@
  * In most cases it will be easier to subclass WebSocket,
  * but some circumstances may lead one to prefer standard delegate callbacks instead.
 **/
-@property /*( atomic unsafe_unretained)*/ id delegate;
+@property (/* atomic */ unsafe_unretained) id delegate;
 
 /**
  * The WebSocket class is thread-safe, generally via it's GCD queue.
@@ -47,16 +47,24 @@
  * These methods are automatically called by the HTTPServer.
  * You may invoke the stop method yourself to close the WebSocket manually.
 **/
-- (void)start: (NSString *) origin;
+- (void)start;
 - (void)stop;
 
 /**
  * Public API
- * 
+ *
  * Sends a message over the WebSocket.
  * This method is thread-safe.
-**/
+ **/
 - (void)sendMessage:(NSString *)msg;
+
+/**
+ * Public API
+ *
+ * Sends a message over the WebSocket.
+ * This method is thread-safe.
+ **/
+- (void)sendData:(NSData *)msg;
 
 /**
  * Subclass API
@@ -66,12 +74,6 @@
 - (void)didOpen;
 - (void)didReceiveMessage:(NSString *)msg;
 - (void)didClose;
-
-// MODIFIED HTTPリクエストデータからuriやheader情報を取得するAPIが無かったので追加した。
-/**
- * 情報取得API
- */
-- (HTTPMessage *) getRequest;
 
 @end
 
@@ -94,7 +96,7 @@
 @protocol WebSocketDelegate
 @optional
 
-- (void)webSocketDidOpen:(WebSocket *)ws origin: (NSString *)origin;
+- (void)webSocketDidOpen:(WebSocket *)ws;
 
 - (void)webSocket:(WebSocket *)ws didReceiveMessage:(NSString *)msg;
 
