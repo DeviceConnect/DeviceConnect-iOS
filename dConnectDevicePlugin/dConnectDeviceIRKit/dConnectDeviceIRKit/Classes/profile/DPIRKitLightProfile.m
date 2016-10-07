@@ -148,17 +148,20 @@
         return send;
     }
 
+    DPIRKitRESTfulRequest *sendReq = nil;
     for (DPIRKitRESTfulRequest *req in requests) {
         NSString *uri = [NSString stringWithFormat:@"/%@",[request profile]];
-        if ([req.uri isEqualToString:uri] && [req.method isEqualToString:method]
-            && req.ir) {
-            return [self.plugin sendIRWithServiceId:serviceId message:req.ir response:response];
-            
-        } else {
-            [response setErrorToInvalidRequestParameterWithMessage:@"IR is not registered for that request"];
+        if ([req.uri isEqualToString:uri] && [req.method isEqualToString:method] && req.ir) {
+            sendReq = req;
+            break;
         }
     }
-    return YES;
+    if (sendReq) {
+        send = [self.plugin sendIRWithServiceId:serviceId message:sendReq.ir response:response];
+    } else {
+        [response setErrorToInvalidRequestParameterWithMessage:@"IR is not registered for that request"];
+    }
+    return send;
 }
 
 - (void)checkColor:(double)dBlightness blueValue:(unsigned int)blueValue greenValue:(unsigned int)greenValue redValue:(unsigned int)redValue color:(NSString *)color myBlightnessPointer:(int *)myBlightnessPointer uicolorPointer:(NSString **)uicolorPointer
