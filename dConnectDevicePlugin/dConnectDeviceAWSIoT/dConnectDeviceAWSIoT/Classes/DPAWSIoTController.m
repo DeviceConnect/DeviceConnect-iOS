@@ -466,6 +466,10 @@ static NSString *const kTopicEvent = @"event";
 	}
 }
 
+- (void) openWebSocket:(NSString*) accessToken {
+    [_webSocket addSocket:accessToken];
+}
+
 #pragma mark - Private
 
 // Shadowのデバイスの更新情報を購読する
@@ -547,22 +551,6 @@ static NSString *const kTopicEvent = @"event";
         }
         // URI変換 ここまで
         
-        
-		if ([requestDic[DConnectMessageAction] isEqualToString:@"put"]) {
-			// WebSocketにつなぐ
-			NSString *key = requestDic[DConnectMessageSessionKey];
-			if (key) {
-				//NSLog(@"put:sessionKey:%@", key);
-				[_webSocket addSocket:key];
-			}
-		}
-		if ([json[@"request"][DConnectMessageAction] isEqualToString:@"delete"]) {
-			// WebSocketの接続解除
-			NSString *key = requestDic[DConnectMessageSessionKey];
-			if (key) {
-				[_webSocket removeSocket:key];
-			}
-		}
 		// MQTTからHTTPへ
 		[DPAWSIoTUtils sendRequest:requestDic handler:^(NSData *data, NSError *error) {
 			if (error) {
@@ -606,6 +594,10 @@ static NSString *const kTopicEvent = @"event";
 		}
 		// イベント送信
 		DConnectMessage *message = [self convertJsonToMessage:json];
+        NSString *localServiceId = [message stringForKey:DConnectMessageServiceId];
+        NSString *serviceId = [NSString stringWithFormat:@"%@.%@", uuid, localServiceId];
+        [message setString:serviceId forKey:DConnectMessageServiceId];
+        [message setString:_plugin.pluginId  forKey:DConnectMessageAccessToken]; // リモートのサービスIDに差し替え
 		[_plugin sendEvent:message];
 	}];
 }

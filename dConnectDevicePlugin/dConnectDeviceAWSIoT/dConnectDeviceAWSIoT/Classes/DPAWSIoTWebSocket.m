@@ -53,7 +53,7 @@
 
 // ポート番号設定
 - (void)setPort:(int)port {
-	NSString *url = [NSString stringWithFormat:@"ws://localhost:%d", port];
+	NSString *url = [NSString stringWithFormat:@"ws://localhost:%d/gotapi/websocket", port];
 	_url = [NSURL URLWithString:url];
 	
 }
@@ -90,7 +90,7 @@
 - (void)webSocketDidOpen:(PSWebSocket *)webSocket {
 	//NSLog(@"The websocket handshake completed and is now open!");
 	webSocket.retryCount = 3;
-	[webSocket send:[NSString stringWithFormat:@"{\"sessionKey\":\"%@\"}", webSocket.key]];
+	[webSocket send:[NSString stringWithFormat:@"{\"accessToken\":\"%@\"}", webSocket.key]];
 }
 
 - (void)webSocket:(PSWebSocket *)webSocket didReceiveMessage:(id)message {

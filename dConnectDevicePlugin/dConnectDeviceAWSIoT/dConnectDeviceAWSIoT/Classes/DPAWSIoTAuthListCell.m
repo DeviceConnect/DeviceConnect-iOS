@@ -32,7 +32,7 @@
 	if (response.result == DConnectMessageResultTypeOk) {
 		DConnectArray *supports = response.internalDictionary[@"supports"];
 		//NSLog(@"supports:%@", supports.internalArray);
-		[DConnectUtil asyncAuthorizeWithOrigin:[self packageName]
+		[DConnectUtil asyncAuthorizeWithOrigin:@"http://localhost:4035" //[self packageName]
 									   appName:@"AWSIoT"
 										scopes:supports.internalArray
 									   success:^(NSString *clientId, NSString *accessToken)
@@ -40,6 +40,9 @@
 			//NSLog(@"clientId:%@", clientId);
 			//NSLog(@"accessToken:%@", accessToken);
 			[DPAWSIoTUtils addAccessToken:accessToken serviceId:serviceId];
+            
+            // WebSocketを開く
+            [[DPAWSIoTController sharedManager] openWebSocket:accessToken];
 		} error:^(DConnectMessageErrorCodeType errorCode) {
 			// TDDO: エラー処理
 			NSLog(@"Error on Authorize:%zd", errorCode);
