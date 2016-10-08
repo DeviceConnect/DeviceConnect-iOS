@@ -17,7 +17,7 @@
 @implementation DPChromecastDevicePlugin
 
 - (id) init {
-    self = [super initWithObject: self bundle:DPChromecastBundle()];
+    self = [super initWithObject: self];
     if (self) {
         self.pluginName = @"ChromeCast (Device Connect Device Plug-in)";
         

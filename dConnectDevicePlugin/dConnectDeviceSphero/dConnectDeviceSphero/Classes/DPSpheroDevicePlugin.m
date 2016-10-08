@@ -23,7 +23,7 @@
 // 初期化
 - (id) init
 {
-    self = [super initWithObject: self bundle: DPSpheroBundle()];
+    self = [super initWithObject: self];
     
     if (self) {
         self.pluginName = @"Sphero (Device Connect Device Plug-in)";

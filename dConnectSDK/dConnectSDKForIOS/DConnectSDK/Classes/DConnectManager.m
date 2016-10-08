@@ -124,8 +124,6 @@ NSString *const DConnectAttributeNameRequestAccessToken = @"requestAccessToken";
 @property (nonatomic, strong) NSMutableDictionary *mResponseBlockMap;
 
 
-@property (nonatomic, strong) DConnectPluginSpec *managerSpec;
-
 
 /**
  * 受け取ったリクエストの処理を行う.
@@ -419,9 +417,6 @@ NSString *const DConnectAttributeNameRequestAccessToken = @"requestAccessToken";
         self.productName = [[NSBundle mainBundle] objectForInfoDictionaryKey: @"CFBundleDisplayName"];
         self.versionName = [[NSBundle mainBundle] objectForInfoDictionaryKey: @"CFBundleShortVersionString"];
         
-        // ManagerのサポートするAPI仕様
-        self.managerSpec = [[DConnectPluginSpec alloc] initWithSelfBundle: nil];
-        
         // イベント管理クラス
         Class key = [self class];
         [[DConnectEventManager sharedManagerForClass:key]
@@ -622,13 +617,13 @@ NSString *const DConnectAttributeNameRequestAccessToken = @"requestAccessToken";
     if (profileName) {
         // プロファイルのJSONファイルを読み込み、内部生成したprofileSpecを新規登録する
         NSError *error = nil;
-        [[self managerSpec] addProfileSpec: profileName error: &error];
+        [[DConnectPluginSpec shared] addProfileSpec: profileName bundle: nil error: &error];
         if (error) {
             DCLogE(@"addProfileSpec error ! %@", [error description]);
         }
         
         // プロファイルに仕様データを設定する
-        DConnectProfileSpec *profileSpec = [[self managerSpec] findProfileSpec: profileName];
+        DConnectProfileSpec *profileSpec = [[DConnectPluginSpec shared] findProfileSpec: profileName];
         if (profileSpec) {
             [profile setProfileSpec: profileSpec];
         }

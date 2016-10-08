@@ -108,7 +108,7 @@ int const DPHitoeDataKeyExtension = 0x04;
 
 - (id) init
 {
-    self = [super initWithObject: self bundle: DPHitoeBundle()];
+    self = [super initWithObject: self];
     if (self) {
         self.pluginName = @"Hitoe (Device Connect Device Plug-in)";
 

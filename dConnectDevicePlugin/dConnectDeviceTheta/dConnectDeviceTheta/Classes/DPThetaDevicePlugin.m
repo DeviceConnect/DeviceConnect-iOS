@@ -11,15 +11,12 @@
 #import "DPThetaSystemProfile.h"
 #import "DPThetaManager.h"
 
-#define DPThetaBundle() \
-[NSBundle bundleWithPath:[[NSBundle mainBundle] pathForResource:@"dConnectDeviceTheta_resources" ofType:@"bundle"]]
-
 @implementation DPThetaDevicePlugin
 
 
 - (id) init
 {
-    self = [super initWithObject: self bundle: DPThetaBundle()];
+    self = [super initWithObject: self];
     if (self) {
         self.pluginName = @"Theta (Device Connect Device Plug-in)";
         [[DPThetaManager sharedManager] setServiceProvider: self.serviceProvider];

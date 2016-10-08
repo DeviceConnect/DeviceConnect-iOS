@@ -16,8 +16,6 @@ static NSString * const dConnectSDKBundleName = @"DConnectSDK_resources";
 
 @interface DConnectPluginSpec()
 
-@property(nonatomic, strong) NSBundle *selfBundle;
-
 @property(nonatomic, strong) DConnectProfileSpecJsonParser *jsonParser;
 
 @property(nonatomic, strong) NSMutableDictionary *profileSpecs_; // Map<String, DConnectProfileSpec>
@@ -27,10 +25,18 @@ static NSString * const dConnectSDKBundleName = @"DConnectSDK_resources";
 
 @implementation DConnectPluginSpec
 
-- (instancetype) initWithSelfBundle: (NSBundle *) selfBundle {
++ (DConnectPluginSpec *) shared {
+    static DConnectPluginSpec *sharedPluginSpec = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        sharedPluginSpec = [[DConnectPluginSpec alloc] init];
+    });
+    return sharedPluginSpec;
+}
+
+- (instancetype) init {
     self = [super init];
     if (self) {
-        _selfBundle = selfBundle;
         [self setJsonParser: [[DConnectProfileSpecJsonParserFactory getDefaultFactory] createParser]];
         [self setProfileSpecs: [NSMutableDictionary dictionary]];
     }
@@ -43,16 +49,33 @@ static NSString * const dConnectSDKBundleName = @"DConnectSDK_resources";
  @brief 入力ファイルからDevice Connectプロファイルの仕様定義を追加する.
  
  @param[in] profileName プロファイル名
- @param[in] filename 入力ファイル
+ @param[in] selfBundle 独自拡張プロファイル用SwaggerJsonファイルが含まれるBundle。渡す必要がない場合はnilを渡す。
  @retval YES 追加成功。
  @retval NO 追加失敗。API仕様定義JSONファイル解析に失敗等。
  */
-- (BOOL) addProfileSpec: (NSString *) profileName error: (NSError **) error {
+- (BOOL) addProfileSpec: (NSString *) profileName bundle: (NSBundle *) selfBundle error: (NSError **) error {
 
     NSString *profileNameLow = [profileName lowercaseString];
     
+    // 読み込み済みなら再読み込みしないで成功を返す
+    if ([self findProfileSpec: profileNameLow]) {
+        return YES;
+    }
+    
     // プロファイル名を元にBundle内のJSONファイルを読み込みファイル内容(JSON文字列)を返す。
-    NSString *json = [self loadFile: profileNameLow];
+    NSString *json = nil;
+    
+    // selfBundleが指定されている場合はselfBundleから読み込む
+    if (selfBundle) {
+        json = [self loadFile: profileNameLow bundle: selfBundle];
+    }
+    
+    // DConnectSDKのBundleから読み込む
+    if (!json) {
+        json = [self loadFile: profileNameLow bundle: DCBundle()];
+    }
+    
+    // 読み込めなかったらNOを返す
     if (!json) {
         return NO;
     }
@@ -72,35 +95,18 @@ static NSString * const dConnectSDKBundleName = @"DConnectSDK_resources";
     return YES;
 }
 
-- (NSString *) loadFile: (NSString *) profileName {
+- (NSString *) loadFile: (NSString *) profileName bundle: (NSBundle *) bundle {
     
     // プロファイル名とJSONファイル名は大文字小文字が区別されるので、一致するよう小文字で統一する。(jsonファイル名も全て小文字にする)
     
     NSString *profileNameLower = [profileName lowercaseString];
     
-    NSString *filePath;
-    NSError *error;
-    NSString *jsonString;
-    
-    if (_selfBundle) {
-        // 自身のbundle内にあるか確認する。
-        filePath = [self jsonFilePathWithProfileName: profileNameLower bundle: _selfBundle];
-        error = nil;
-        jsonString = [NSString stringWithContentsOfFile: (NSString *)filePath
-                                               encoding: NSUTF8StringEncoding
-                                                  error: &error];
-        if (!error) {
-            // 該当するJSONファイルが見つかったので読み込んだJSON文字列を返す。
-            return jsonString;
-        }
-    }
-    
     // DConnectSDKのBundleに存在すれば読み込む。
-    filePath = [self jsonFilePathWithProfileName: profileNameLower bundle: DConnectSDKBundle()];
-    error = nil;
-    jsonString = [NSString stringWithContentsOfFile: (NSString *)filePath
-                                           encoding: NSUTF8StringEncoding
-                                              error: &error];
+    NSString *filePath = [self jsonFilePathWithProfileName: profileNameLower bundle: bundle];
+    NSError *error = nil;
+    NSString *jsonString = [NSString stringWithContentsOfFile: (NSString *)filePath
+                                                     encoding: NSUTF8StringEncoding
+                                                        error: &error];
     if (error) {
         // @throw [NSString stringWithFormat: @"json file open error : %@", error.localizedDescription];
         return nil;
