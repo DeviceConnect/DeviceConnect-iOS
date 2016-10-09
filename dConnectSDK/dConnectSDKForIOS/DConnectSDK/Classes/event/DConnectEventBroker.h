@@ -35,6 +35,6 @@
 
 - (void) onRequest: (DConnectMessage *) request plugin: (DConnectDevicePlugin *) dest webSocket: (DConnectWebSocket *) websocket;
 
-- (void) onEvent: (/* Intent */ DConnectMessage *) event;
+- (void) onEvent: (/* Intent */ DConnectMessage *) event plugin:(DConnectDevicePlugin *)plugin;
 
 @end

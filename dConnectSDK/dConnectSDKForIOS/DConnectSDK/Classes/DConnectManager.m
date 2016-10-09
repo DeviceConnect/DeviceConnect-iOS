@@ -304,7 +304,7 @@ NSString *const DConnectAttributeNameRequestAccessToken = @"requestAccessToken";
             [event setString:evt.origin forKey:DConnectMessageOrigin];
 
             if (self.mEventBroker) {
-                [self.mEventBroker onEvent:event];
+                [self.mEventBroker onEvent:event plugin:plugin];
             }
         }
     } else {
@@ -318,17 +318,26 @@ NSString *const DConnectAttributeNameRequestAccessToken = @"requestAccessToken";
         }
 
         if (self.mEventBroker) {
-            [self.mEventBroker onEvent:event];
+            [self.mEventBroker onEvent:event plugin:plugin];
         }
     }
 }
 
 - (BOOL) sendEvent:(DConnectMessage *)event {
+    return [self sendEvent:event authorized:YES];
+}
+
+- (BOOL) sendEvent:(DConnectMessage *)event authorized:(BOOL)authorized {
     NSString *origin = [event stringForKey:DConnectMessageOrigin];
     NSString *accessToken = [event stringForKey:DConnectMessageAccessToken];
     NSString *pluginId;
-    if (origin && accessToken && (pluginId = [self findRequestPluginId: accessToken])) {
-        
+    if (authorized) {
+        pluginId = [self findRequestPluginId: accessToken];
+    } else {
+        pluginId = accessToken;
+    }
+    
+    if (origin && accessToken && pluginId) {
         NSArray *names = [pluginId componentsSeparatedByString:@"."];
         if (names.count > 0) {
             NSString *pluginId_ = names[0];

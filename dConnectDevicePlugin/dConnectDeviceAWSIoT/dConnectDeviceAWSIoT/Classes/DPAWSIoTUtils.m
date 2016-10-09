@@ -199,7 +199,7 @@ static UIViewController *loadingHUD;
 	path = [self appendPath:path params:params name:@"interface"];
 	path = [self appendPath:path params:params name:@"attribute"];
 	NSString *method = request[@"action"];
-	NSString *origin = [self packageName];
+	NSString *origin = @"http://localhost:4035"; //[self packageName];
 	// accessTokenを設定
 	NSString *profile = request[DConnectMessageProfile];
 	NSString *serviceId = request[DConnectMessageServiceId];

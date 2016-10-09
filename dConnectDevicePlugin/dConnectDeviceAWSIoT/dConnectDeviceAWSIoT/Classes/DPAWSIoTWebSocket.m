@@ -94,7 +94,11 @@
 }
 
 - (void)webSocket:(PSWebSocket *)webSocket didReceiveMessage:(id)message {
-	//NSLog(@"The websocket received a message: %@", message);
+	NSLog(@"The websocket received a message: %@", message);
+    if ([message isEqualToString:@"{\"result\":0}"]) {
+        return;
+    }
+    
 	if (self.receivedHandler) {
 		self.receivedHandler(webSocket.key, message);
 	}

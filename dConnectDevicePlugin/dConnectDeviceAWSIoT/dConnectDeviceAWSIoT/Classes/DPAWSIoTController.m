@@ -176,7 +176,7 @@ static NSString *const kTopicEvent = @"event";
 		DConnectManager *mgr = [DConnectManager sharedManager];
 		[_webSocket setPort:mgr.settings.port];
 		_webSocket.receivedHandler = ^(NSString *key, NSString *message) {
-			// イベント送信
+            // イベント送信
 			[[DPAWSIoTController sharedManager] publishEvent:message key:key];
 		};
         
@@ -419,7 +419,7 @@ static NSString *const kTopicEvent = @"event";
 - (void)timerFireMethod:(NSTimer *)timer {
 	if (_lastPublishedEvents.count == 0) return;
     NSString *topic = [DPAWSIoTController myTopic:kTopicEvent];
-	for (id key in _lastPublishedEvents.allKeys) {
+    for (id key in _lastPublishedEvents.allKeys) {
 		NSString *msg = _lastPublishedEvents[key];
 		if (![[DPAWSIoTManager sharedManager] publishWithTopic:topic message:msg]) {
 			NSLog(@"Error on PublishEvent:[%@] %@", topic, msg);
@@ -587,6 +587,7 @@ static NSString *const kTopicEvent = @"event";
 // EventTopic購読
 - (void)subscribeEvent:(NSString*)uuid {
     NSString *topic = [DPAWSIoTController topic:kTopicEvent uuid:uuid];
+    NSLog(@"subscribeEvent: topic = %@", topic);
 	[[DPAWSIoTManager sharedManager] subscribeWithTopic:topic messageHandler:^(id json, NSError *error) {
 		if (error) {
 			NSLog(@"Error on SubscribeWithTopic: [%@] %@", topic, error);
@@ -605,6 +606,7 @@ static NSString *const kTopicEvent = @"event";
 // EventTopic購読解除
 - (void)unsubscribeEvent:(NSString*)uuid {
     NSString *topic = [DPAWSIoTController topic:kTopicEvent uuid:uuid];
+    NSLog(@"unsubscribeEvent: topic = %@", topic);
 	[[DPAWSIoTManager sharedManager] unsubscribeWithTopic:topic];
 }
 
