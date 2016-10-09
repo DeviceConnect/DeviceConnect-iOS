@@ -1074,11 +1074,7 @@
     while (top.presentedViewController) {
         top = top.presentedViewController;
     }
-    return ([rootView class] == [MPMoviePlayerViewController class]);
-//    if (!_viewController) {
-//        return NO;
-//    }
-//    return (_viewController.moviePlayer.playbackState == MPMoviePlaybackStatePlaying);
+    return ([rootView isKindOfClass:[MPMoviePlayerViewController class]]);
 }
 
 - (void) videoFinished:(NSNotification*)notification
@@ -1360,7 +1356,6 @@
                  self.viewController = [self viewControllerWithURL:movieURL];
                  block();
                  if (![[self topViewController] isKindOfClass:[MPMoviePlayerViewController class]]) {
-                     NSLog(@"SFSafariview?:%@", [[self topViewController] class]);
                      [[self topViewController] presentMoviePlayerViewControllerAnimated:_viewController];
                  }
              });
