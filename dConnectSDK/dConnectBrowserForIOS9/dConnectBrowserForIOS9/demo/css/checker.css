@@ -30,15 +30,13 @@ table.request tr td.include {
     padding-left: 10px;
 }
 
-table.required tr td {
+table.included tr td {
     background-color: #9ECDF9;
 }
 
-table.optional tr td {
+table.excluded tr td {
     background-color: #CCCCCC;
 }
-
-
 
 table.request tr td span {
     margin: 8px;
@@ -52,7 +50,16 @@ table.request tr td div {
     width: 100%;
     margin: 0px;
     padding: 0px;
+
     text-align: center;
+}
+
+table.included tr td div {
+    border: solid 2px #9ECDF9;
+}
+
+table.excluded tr td div {
+    border: solid 2px #CCCCCC;
 }
 
 table.request tr td div input.text {
@@ -97,14 +104,6 @@ table.request tr td div span.max {
 div.send_request {
     text-align: right;
 }
-table.required tr td div {
-    border: solid 2px #9ECDF9;
-}
-
-table.optional tr td div {
-    border: solid 2px #CCCCCC;
-}
-
 
 div.send_request button {
     background-color: #E589D5;
@@ -157,5 +156,6 @@ div.title {
     color: #FFFFFF;
 }
 a.back{
-color:#FFFFFF;
+    color:#FFFFFF;
 }
+
