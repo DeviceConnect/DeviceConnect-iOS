@@ -172,13 +172,6 @@ static NSString *const kTopicEvent = @"event";
 	self = [super init];
 	if (self) {
 		_responses = [NSMutableDictionary dictionary];
-		_webSocket = [[DPAWSIoTWebSocket alloc] init];
-		DConnectManager *mgr = [DConnectManager sharedManager];
-		[_webSocket setPort:mgr.settings.port];
-		_webSocket.receivedHandler = ^(NSString *key, NSString *message) {
-            // イベント送信
-			[[DPAWSIoTController sharedManager] publishEvent:message key:key];
-		};
         
         // P2Pの処理
         _remoteClientManager = [DPAWSIoTRemoteClientManager new];
@@ -467,7 +460,14 @@ static NSString *const kTopicEvent = @"event";
 }
 
 - (void) openWebSocket:(NSString*) accessToken {
-    [_webSocket addSocket:accessToken];
+    DConnectManager *mgr = [DConnectManager sharedManager];
+    
+    _webSocket = [DPAWSIoTWebSocket new];
+    _webSocket.receivedHandler = ^(NSString *key, NSString *message) {
+        [[DPAWSIoTController sharedManager] publishEvent:message key:key];
+    };
+    [_webSocket setPort:mgr.settings.port];
+    [_webSocket openWebSocketWithAccessToken:accessToken];
 }
 
 #pragma mark - Private
