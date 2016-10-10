@@ -142,8 +142,8 @@
     DConnectEventSession *targetSession = nil;
     if (pluginAccessToken) {
         for (DConnectEventSession *session in [self.table all]) {
-            if ([self isSameName: pluginAccessToken cmp: session.accessToken] &&
-                [self isSameName: serviceId_ cmp: session.serviceId] &&
+            if ([self isSameNameCaseSensitive: pluginAccessToken cmp: session.accessToken] &&
+                [self isSameNameCaseSensitive: serviceId_ cmp: session.serviceId] &&
                 [self isSameName: profileName cmp: session.profileName] &&
                 [self isSameName: interfaceName cmp: session.interfaceName] &&
                 [self isSameName: attributeName cmp: session.attributeName]) {
@@ -156,9 +156,9 @@
         if (sessionKey) {
             NSString *receiverId = [DConnectEventProtocol convertSessionKey2Key: sessionKey];
             for (DConnectEventSession *session in [self.table all]) {
-                if ([self isSameName: pluginId cmp: session.pluginId] &&
-                    [self isSameName: receiverId cmp: session.receiverId] &&
-                    [self isSameName: serviceId_ cmp: session.serviceId] &&
+                if ([self isSameNameCaseSensitive: pluginId cmp: session.pluginId] &&
+                    [self isSameNameCaseSensitive: receiverId cmp: session.receiverId] &&
+                    [self isSameNameCaseSensitive: serviceId_ cmp: session.serviceId] &&
                     [self isSameName: profileName cmp: session.profileName] &&
                     [self isSameName: interfaceName cmp: session.interfaceName] &&
                     [self isSameName: attributeName cmp: session.attributeName]) {
@@ -252,6 +252,18 @@
     } else if (!str || !cmp) {
         return NO;
     } else if ([str localizedCaseInsensitiveCompare: cmp] == NSOrderedSame) {
+        return YES;
+    } else {
+        return NO;
+    }
+}
+
+- (BOOL) isSameNameCaseSensitive: (NSString *) str cmp: (NSString *) cmp {
+    if (!str && !cmp) {
+        return YES;
+    } else if (!str || !cmp) {
+        return NO;
+    } else if ([str localizedCompare: cmp] == NSOrderedSame) {
         return YES;
     } else {
         return NO;
