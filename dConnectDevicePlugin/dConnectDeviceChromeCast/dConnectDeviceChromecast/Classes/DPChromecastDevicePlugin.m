@@ -6,7 +6,8 @@
 //  Released under the MIT license
 //  http://opensource.org/licenses/mit-license.php
 //
-
+#import <DConnectSDK/DConnectEventManager.h>
+#import <DConnectSDK/DConnectMemoryCacheController.h>
 #import "DPChromecastDevicePlugin.h"
 #import "DPChromecastSystemProfile.h"
 #import "DPChromecastManager.h"
@@ -26,9 +27,8 @@
         
         // イベントマネージャの準備
         Class key = [self class];
-        [[DConnectEventManager sharedManagerForClass:key]
-                        setController:[DConnectDBCacheController
-                  controllerWithClass:key]];
+        DConnectEventManager *eventMgr = [DConnectEventManager sharedManagerForClass:key];
+        [eventMgr setController:[DConnectMemoryCacheController new]];
 
         // プロファイルを追加
         [self addProfile:[DPChromecastSystemProfile new]];
