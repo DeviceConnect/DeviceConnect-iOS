@@ -382,15 +382,12 @@
                              [response setResult:DConnectMessageResultTypeOk];
                          } else if (_currentMediaPlayer == MediaPlayerTypeMoviePlayer) {
                              if (_nowPlayingMediaId && _viewController.moviePlayer.playbackState == MPMoviePlaybackStateStopped) {
-                                 
                                  [weakSelf putMediaRequest:request
                                                   response:response
                                                  serviceId:serviceId
                                                    mediaId:[weakSelf nowPlayingMediaId]];
                                  [NSThread sleepForTimeInterval:0.5]; //Viewが開くまで待つ
                              }
-                             
-                             
                              if (![weakSelf moviePlayerViewControllerIsPresented]) {
                                  [response setErrorToUnknownWithMessage:
                                   @"Movie player view controller is not presented;"
@@ -403,13 +400,11 @@
                                              NSString *status = DConnectMediaPlayerProfileStatusPlay;
                                              [DConnectMediaPlayerProfile setStatus:status target:mediaPlayer];
                                              [weakSelf sendEventMovieWithMessage:mediaPlayer];
-                                             
                                              [[weakSelf viewController].moviePlayer setCurrentPlaybackTime:0.0f];
-                                             
                                              [[weakSelf viewController].moviePlayer play];
                                              [response setResult:DConnectMessageResultTypeOk];
-                                             
                                              [[DConnectManager sharedManager] sendResponse:response];
+
                                          };
                                          if ([NSThread isMainThread]) {
                                              block();
@@ -437,7 +432,6 @@
                                           attributeName: DConnectMediaPlayerProfileAttrStop];
         [self addPutPath: putStopRequestApiPath
                      api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
-                         
                          void(^block)(void) = nil;
                          if (_currentMediaPlayer == MediaPlayerTypeIPod) {
                              if (_musicPlayer.playbackState == MPMusicPlaybackStateStopped) {
@@ -1070,10 +1064,6 @@
 {
     UIViewController *rootView = [self topViewController];
     [self topViewController:rootView];
-    UIViewController *top = [UIApplication sharedApplication].keyWindow.rootViewController;
-    while (top.presentedViewController) {
-        top = top.presentedViewController;
-    }
     return ([rootView isKindOfClass:[MPMoviePlayerViewController class]]);
 }
 
@@ -1340,27 +1330,31 @@
          if ([self moviePlayerViewControllerIsPresented]) {
              block();
          } else {
-             
-//             if ([[self topViewController] isKindOfClass:[MPMoviePlayerViewController class]]) {
-//                 //すでにMPMoviePlayerViewControllerが開いている時は閉じる
-//                 dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
-//                 dispatch_time_t timeout = dispatch_time(DISPATCH_TIME_NOW, NSEC_PER_SEC * 60);
-//                 dispatch_async(dispatch_get_main_queue(), ^{
-//                    [[self topViewController] dismissViewControllerAnimated:NO completion:^{
-//                        dispatch_semaphore_signal(semaphore);
-//                    }];
-//                 });
-//                 dispatch_semaphore_wait(semaphore, timeout);
+//              if ([[self topViewController] isKindOfClass:[MPMoviePlayerViewController class]]) {
+//                  //すでにMPMoviePlayerViewControllerが開いている時は閉じる
+//                  dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
+//                  dispatch_time_t timeout = dispatch_time(DISPATCH_TIME_NOW, NSEC_PER_SEC * 60);
+//                  dispatch_async(dispatch_get_main_queue(), ^{
+//                     [[_self topViewController] dismissViewControllerAnimated:NO completion:^{
+//                         dispatch_semaphore_signal(semaphore);
+//                     }];
+//                  });
+//                  dispatch_semaphore_wait(semaphore, timeout);
+//              }
+//             if ([NSThread isMainThread]) {
+//                 self.viewController = [self viewControllerWithURL:movieURL];
+//                 block();
+//                 [[self topViewController] presentMoviePlayerViewControllerAnimated:_viewController];
+//             } else {
+                dispatch_sync(dispatch_get_main_queue(), ^{
+                     _self.viewController = [_self viewControllerWithURL:movieURL];
+                     block();
+                     [[_self topViewController] presentMoviePlayerViewControllerAnimated:_viewController];
+                 });
 //             }
-             dispatch_async(dispatch_get_main_queue(), ^{
-                 self.viewController = [self viewControllerWithURL:movieURL];
-                 block();
-                 if (![[self topViewController] isKindOfClass:[MPMoviePlayerViewController class]]) {
-                     [[self topViewController] presentMoviePlayerViewControllerAnimated:_viewController];
-                 }
-             });
         }
      }];
+
 }
 
 - (BOOL) putMediaRequest:(DConnectRequestMessage *) request
