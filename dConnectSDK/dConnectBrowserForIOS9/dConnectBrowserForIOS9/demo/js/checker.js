@@ -5,10 +5,14 @@ var main = (function(parent, global) {
         util.init(function(name, json) {
             createSupportApis(json);
         });
+            
     }
     parent.init = init;
 
-
+    function back() {
+            location.href = "./index.html?serviceId=" + util.getServiceId();
+    }
+    parent.back = back;
     function onChangeValue(nav, name) {
         var elem = document.forms[nav];
         elem['t_' + name].value = elem[name].value;
