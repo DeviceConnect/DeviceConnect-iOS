@@ -47,11 +47,6 @@
 // Packege名取得
 + (NSString *)packageName;
 
-// AccessTokenを取得
-+ (NSString*)accessTokenWithServiceId:(NSString*)serviceId;
-// AccessTokenを追加
-+ (void)addAccessToken:(NSString*)token serviceId:(NSString*)serviceId;
-
 // アラート表示
 + (void)showAlert:(UIViewController*)vc title:(NSString*)title message:(NSString*)message handler:(void (^)())handler;
 

@@ -48,5 +48,6 @@
 // サービス情報を取得
 - (DConnectResponseMessage*)fetchServiceInformationWithId:(NSString*)serviceId;
 
+- (void) openWebSocket:(NSString*)accessToken;
 
 @end

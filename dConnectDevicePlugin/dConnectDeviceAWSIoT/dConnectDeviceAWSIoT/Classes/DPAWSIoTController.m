@@ -172,13 +172,6 @@ static NSString *const kTopicEvent = @"event";
 	self = [super init];
 	if (self) {
 		_responses = [NSMutableDictionary dictionary];
-		_webSocket = [[DPAWSIoTWebSocket alloc] init];
-		DConnectManager *mgr = [DConnectManager sharedManager];
-		[_webSocket setPort:mgr.settings.port];
-		_webSocket.receivedHandler = ^(NSString *key, NSString *message) {
-			// イベント送信
-			[[DPAWSIoTController sharedManager] publishEvent:message key:key];
-		};
         
         // P2Pの処理
         _remoteClientManager = [DPAWSIoTRemoteClientManager new];
@@ -419,7 +412,7 @@ static NSString *const kTopicEvent = @"event";
 - (void)timerFireMethod:(NSTimer *)timer {
 	if (_lastPublishedEvents.count == 0) return;
     NSString *topic = [DPAWSIoTController myTopic:kTopicEvent];
-	for (id key in _lastPublishedEvents.allKeys) {
+    for (id key in _lastPublishedEvents.allKeys) {
 		NSString *msg = _lastPublishedEvents[key];
 		if (![[DPAWSIoTManager sharedManager] publishWithTopic:topic message:msg]) {
 			NSLog(@"Error on PublishEvent:[%@] %@", topic, msg);
@@ -464,6 +457,17 @@ static NSString *const kTopicEvent = @"event";
 	} else {
 		return nil;
 	}
+}
+
+- (void) openWebSocket:(NSString*) accessToken {
+    DConnectManager *mgr = [DConnectManager sharedManager];
+    
+    _webSocket = [DPAWSIoTWebSocket new];
+    _webSocket.receivedHandler = ^(NSString *key, NSString *message) {
+        [[DPAWSIoTController sharedManager] publishEvent:message key:key];
+    };
+    [_webSocket setPort:mgr.settings.port];
+    [_webSocket openWebSocketWithAccessToken:accessToken];
 }
 
 #pragma mark - Private
@@ -547,22 +551,6 @@ static NSString *const kTopicEvent = @"event";
         }
         // URI変換 ここまで
         
-        
-		if ([requestDic[DConnectMessageAction] isEqualToString:@"put"]) {
-			// WebSocketにつなぐ
-			NSString *key = requestDic[DConnectMessageSessionKey];
-			if (key) {
-				//NSLog(@"put:sessionKey:%@", key);
-				[_webSocket addSocket:key];
-			}
-		}
-		if ([json[@"request"][DConnectMessageAction] isEqualToString:@"delete"]) {
-			// WebSocketの接続解除
-			NSString *key = requestDic[DConnectMessageSessionKey];
-			if (key) {
-				[_webSocket removeSocket:key];
-			}
-		}
 		// MQTTからHTTPへ
 		[DPAWSIoTUtils sendRequest:requestDic handler:^(NSData *data, NSError *error) {
 			if (error) {
@@ -599,6 +587,7 @@ static NSString *const kTopicEvent = @"event";
 // EventTopic購読
 - (void)subscribeEvent:(NSString*)uuid {
     NSString *topic = [DPAWSIoTController topic:kTopicEvent uuid:uuid];
+    NSLog(@"subscribeEvent: topic = %@", topic);
 	[[DPAWSIoTManager sharedManager] subscribeWithTopic:topic messageHandler:^(id json, NSError *error) {
 		if (error) {
 			NSLog(@"Error on SubscribeWithTopic: [%@] %@", topic, error);
@@ -606,6 +595,10 @@ static NSString *const kTopicEvent = @"event";
 		}
 		// イベント送信
 		DConnectMessage *message = [self convertJsonToMessage:json];
+        NSString *localServiceId = [message stringForKey:DConnectMessageServiceId];
+        NSString *serviceId = [NSString stringWithFormat:@"%@.%@", uuid, localServiceId];
+        [message setString:serviceId forKey:DConnectMessageServiceId];
+        [message setString:_plugin.pluginId  forKey:DConnectMessageAccessToken]; // リモートのサービスIDに差し替え
 		[_plugin sendEvent:message];
 	}];
 }
@@ -613,6 +606,7 @@ static NSString *const kTopicEvent = @"event";
 // EventTopic購読解除
 - (void)unsubscribeEvent:(NSString*)uuid {
     NSString *topic = [DPAWSIoTController topic:kTopicEvent uuid:uuid];
+    NSLog(@"unsubscribeEvent: topic = %@", topic);
 	[[DPAWSIoTManager sharedManager] unsubscribeWithTopic:topic];
 }
 

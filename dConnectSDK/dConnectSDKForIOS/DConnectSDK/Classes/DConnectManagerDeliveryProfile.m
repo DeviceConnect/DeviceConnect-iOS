@@ -134,7 +134,7 @@
             // 特定のプロファイルはアクセストークン無しでもアクセスできるので無視する
             NSString *accessToken = nil;
             NSArray *scopes = DConnectPluginIgnoreProfiles();
-            if (plugin.useLocalOAuth && ![scopes containsObject:profileName]) {
+            if (![scopes containsObject:profileName]) {
                 accessToken = [self authorizationToDevicePlugin:plugin
                                                          origin:origin
                                                       serviceId:serviceId];
@@ -183,7 +183,25 @@
                                  serviceId:(NSString *)serviceId
 {
     DConnectLocalOAuthDB *authDB = [DConnectLocalOAuthDB sharedLocalOAuthDB];
-    DConnectAuthData *data = [authDB getAuthDataByServiceId:serviceId];
+    DConnectAuthData *data;
+    NSString *accessToken;
+    
+    if (!plugin.useLocalOAuth) {
+        // ダミーの認可情報を保存
+        data = [authDB getAuthDataByServiceId:serviceId];
+        if (!data) {
+            [authDB addAuthDataWithServiceId:serviceId clientId:[plugin pluginId]];
+            data =[authDB getAuthDataByServiceId:serviceId];
+        }
+        accessToken = [authDB getAccessTokenByAuthData:data];
+        if (!accessToken) {
+            accessToken = [plugin pluginId]; // プラグインIDをダミーのアクセストークンとする.
+            [authDB addAccessToken:accessToken withAuthData:data];
+        }
+        return accessToken;
+    }
+
+    data = [authDB getAuthDataByServiceId:serviceId];
     if (data == nil) {
 		DConnectResponseMessage *response = [self createClientToDevicePlugin:plugin
                                                                       origin:origin
@@ -198,7 +216,7 @@
         }
     }
     
-    NSString *accessToken = [authDB getAccessTokenByAuthData:data];
+    accessToken = [authDB getAccessTokenByAuthData:data];
     if (accessToken == nil) {
         DConnectResponseMessage *response =
         [self requestAccessTokenToDevicePlugin:plugin
