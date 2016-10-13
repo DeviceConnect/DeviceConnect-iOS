@@ -12,8 +12,7 @@
 #import "DConnectMessage+Private.h"
 #import "DPAWSIoTUtils.h"
 
-@interface DPAWSIoTAuthListCell () {
-}
+@interface DPAWSIoTAuthListCell ()
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @end
 
@@ -27,11 +26,12 @@
 
 // 認証ボタンイベント
 - (IBAction)authButtonPressed:(id)sender {
-	NSString *serviceId = [_msg stringForKey:@"id"];
-	DConnectResponseMessage *response = [[DPAWSIoTController sharedManager] fetchServiceInformationWithId:serviceId];
-	if (response.result == DConnectMessageResultTypeError) {
-        // TODO 認証エラー
-	}
+    NSString *serviceId = [_msg stringForKey:@"id"];
+    [DPAWSIoTUtils fetchServiceInformationWithId:serviceId callback:^(DConnectResponseMessage *response) {
+        if (response.result == DConnectMessageResultTypeError) {
+            // TODO エラー処理
+        }
+    }];
 }
 
 // Packege名取得

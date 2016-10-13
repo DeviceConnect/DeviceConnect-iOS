@@ -50,4 +50,10 @@
 // アラート表示
 + (void)showAlert:(UIViewController*)vc title:(NSString*)title message:(NSString*)message handler:(void (^)())handler;
 
+// サービス一覧を取得
++ (void)fetchServicesWithHandler:(DConnectResponseBlocks)callback;
+
+// サービス情報を取得
++ (void)fetchServiceInformationWithId:(NSString*)serviceId callback:(DConnectResponseBlocks)callback;
+
 @end

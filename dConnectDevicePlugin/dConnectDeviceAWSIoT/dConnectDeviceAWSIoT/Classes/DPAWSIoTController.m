@@ -422,43 +422,6 @@ static NSString *const kTopicEvent = @"event";
 	}
 }
 
-// サービス一覧を取得
-- (void)fetchServicesWithHandler:(void (^)(DConnectArray *services))handler {
-	dispatch_async(dispatch_get_main_queue(), ^{
-		DConnectManager *mgr = [DConnectManager sharedManager];
-		DConnectManagerServiceDiscoveryProfile *p = (DConnectManagerServiceDiscoveryProfile*)[mgr profileWithName:DConnectServiceDiscoveryProfileName];
-		DConnectResponseMessage *response = [DConnectResponseMessage message];
-		DConnectRequestMessage *request = [DConnectRequestMessage new];
-		[request setString:@"true" forKey:@"_selfOnly"];
-		[request setAction: DConnectMessageActionTypeGet];
-		[p getServicesRequest:request response:response];
-		if (response.result == DConnectMessageResultTypeOk) {
-			handler(response.internalDictionary[@"services"]);
-		} else {
-			handler(nil);
-		}
-	});
-}
-
-// サービス情報を取得
-- (DConnectResponseMessage*)fetchServiceInformationWithId:(NSString*)serviceId {
-	DConnectManager *mgr = [DConnectManager sharedManager];
-	DConnectDevicePlugin *plugin = [mgr.mDeviceManager devicePluginForServiceId:serviceId];
-	if (plugin) {
-		DConnectResponseMessage *response = [DConnectResponseMessage message];
-		DConnectRequestMessage *request = [DConnectRequestMessage new];
-		[request setProfile:DConnectServiceInformationProfileName];
-		[request setAction:DConnectMessageActionTypeGet];
-
-        NSArray *names = [serviceId componentsSeparatedByString:@"."];
-		[request setServiceId:names[0]];
-		[plugin executeRequest:request response:response];
-		return response;
-	} else {
-		return nil;
-	}
-}
-
 - (void) openWebSocket:(NSString*) accessToken {
     DConnectManager *mgr = [DConnectManager sharedManager];
     

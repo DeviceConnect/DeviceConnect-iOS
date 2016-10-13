@@ -189,6 +189,30 @@ static UIViewController *loadingHUD;
                                    }];
 }
 
+// サービス一覧を取得
++ (void)fetchServicesWithHandler:(DConnectResponseBlocks)callback {
+    DConnectManager *mgr = [DConnectManager sharedManager];
+    DConnectRequestMessage *request = [DConnectRequestMessage new];
+    [request setAction: DConnectMessageActionTypeGet];
+    [request setProfile:DConnectServiceDiscoveryProfileName];
+    [request setAccessToken:[DPAWSIoTUtils accessToken]];
+    [request setOrigin:kOrigin];
+    [request setString:@"true" forKey:@"_selfOnly"];
+    [mgr sendRequest:request callback:callback];
+}
+
+// サービス情報を取得
++ (void)fetchServiceInformationWithId:(NSString*)serviceId callback:(DConnectResponseBlocks)callback {
+    DConnectManager *mgr = [DConnectManager sharedManager];
+    DConnectRequestMessage *request = [DConnectRequestMessage new];
+    [request setAction:DConnectMessageActionTypeGet];
+    [request setProfile:DConnectServiceInformationProfileName];
+    [request setServiceId:serviceId];
+    [request setAccessToken:[DPAWSIoTUtils accessToken]];
+    [request setOrigin:kOrigin];
+    [mgr sendRequest:request callback:callback];
+}
+
 // ローディング画面表示
 + (void)showLoadingHUD:(UIStoryboard*)storyboard {
 	if (!loadingHUD) {

@@ -16,10 +16,6 @@
 #import "CipherAuthSignature.h"
 #import "LocalOAuth2Main.h"
 
-@interface DConnectUtil()
-+ (DConnectResponseMessage *) executeRequest:(DConnectRequestMessage *)request;
-@end
-
 @implementation DConnectUtil
 
 #pragma mark - Authorization
@@ -137,18 +133,6 @@
     }
     
     return str;
-}
-
-+ (DConnectResponseMessage *) executeRequest:(DConnectRequestMessage *)request {
-    
-    dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
-    __block DConnectResponseMessage *res = nil;
-    [[DConnectManager sharedManager] sendRequest:request callback:^(DConnectResponseMessage *response) {
-        res = response;
-        dispatch_semaphore_signal(semaphore);
-    }];
-    dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
-    return res;
 }
 
 + (void) showAccessTokenList {
