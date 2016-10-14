@@ -55,9 +55,19 @@
                                                    range:NSMakeRange(0,[urlString length])];
     
     for (NSTextCheckingResult *result in resultArray){
-        if ([result resultType] == NSTextCheckingTypeLink){
+        if ([result resultType] == NSTextCheckingTypeLink) {
             NSURL *url = [result URL];
-            return [url description];
+            if ([[url scheme] isEqualToString: @"http"] || [[url scheme] isEqualToString: @"https"]) {
+                return str;
+            } else if ([[url scheme] isEqualToString: @"gotapi"] && [[url host] isEqualToString: @"start"]) {
+                //gotapiの場合
+                NSString* queryURL = @"url=";
+                NSInteger queryWordLenght = queryURL.length;
+                NSString* query = [url query];
+                if (query.length > queryWordLenght && [[query substringWithRange:NSMakeRange(0, queryWordLenght)] isEqualToString:queryURL])  {
+                    return [self isURLString: [query substringFromIndex: queryWordLenght]];
+                }
+            }
         }
     }
     
@@ -66,8 +76,13 @@
 
 
 ///google検索APIの形式にする
+///strが'//start'または'//stop'の場合はgoogleトップを表示する
 - (NSString*)createSearchURL:(NSString*)str
 {
+    if ([str isEqualToString:@"//start"] || [str isEqualToString:@"//stop"]) {
+        return @"https://google.co.jp";
+    }
+
     NSArray *languages = [NSLocale preferredLanguages];
     NSString *lang = [languages objectAtIndex:0];
     NSString *encodedString = [str stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLHostAllowedCharacterSet]];

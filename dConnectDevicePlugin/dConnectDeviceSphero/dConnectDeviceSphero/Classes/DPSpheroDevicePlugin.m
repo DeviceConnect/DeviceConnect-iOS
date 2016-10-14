@@ -8,12 +8,7 @@
 //
 
 #import "DPSpheroDevicePlugin.h"
-#import "DPSpheroServiceDiscoveryProfile.h"
-#import "DPSpheroSensorProfile.h"
 #import "DPSpheroSystemProfile.h"
-#import "DPSpheroDriveControllerProfile.h"
-#import "DPSpheroLightProfile.h"
-#import "DPSpheroDeviceOrientationProfile.h"
 #import "DPSpheroManager.h"
 #import <RobotKit/RobotKit.h>
 
@@ -25,7 +20,7 @@
 // 初期化
 - (id) init
 {
-    self = [super init];
+    self = [super initWithObject: self];
     
     if (self) {
         self.pluginName = @"Sphero (Device Connect Device Plug-in)";
@@ -33,24 +28,13 @@
         Class key = [self class];
         [[DConnectEventManager sharedManagerForClass:key]
                 setController:[DConnectMemoryCacheController new]];
-
-        // Service Discovery Profileの追加
-        DPSpheroServiceDiscoveryProfile *networkProfile = [DPSpheroServiceDiscoveryProfile new];
         
+        [[DPSpheroManager sharedManager] setServiceProvider: self.serviceProvider];
+        [[DPSpheroManager sharedManager] setPlugin:self];
+
         // System Profileの追加
-        DPSpheroSystemProfile *systemProfile = [DPSpheroSystemProfile new];
-        // Sphero Profileの追加
-        DPSpheroSensorProfile *spheroProfile = [DPSpheroSensorProfile new];
-        DPSpheroDriveControllerProfile *DCMDriveControllerProfile = [DPSpheroDriveControllerProfile new];
-        DPSpheroLightProfile *DConnectLightProfile = [DPSpheroLightProfile new];
-        DPSpheroDeviceOrientationProfile *deviceorientationProfile = [DPSpheroDeviceOrientationProfile new];
-        [self addProfile:networkProfile];
-        [self addProfile:systemProfile];
-        [self addProfile:spheroProfile];
-        [self addProfile:DCMDriveControllerProfile];
-        [self addProfile:DConnectLightProfile];
-        [self addProfile:deviceorientationProfile];
-        [self addProfile:[DConnectServiceInformationProfile new]];
+        [self addProfile:[DPSpheroSystemProfile new]];
+
         __weak typeof(self) _self = self;
         dispatch_async(dispatch_get_main_queue(), ^{
             NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
@@ -67,6 +51,18 @@
                                        name:RKRobotIsNoLongerAvailableNotification
                                      object:application];
 
+            /* Regained connection noitification */
+            [notificationCenter addObserver:_self
+                                   selector:@selector(handleRobotOnline)
+                                       name:RKRobotDidGainControlNotification
+                                     object:nil];
+            
+            // Takes ~20 seconds to recognize a ball going offline
+            // Recognizes immediately when we close the connection to the ball
+            [notificationCenter addObserver:_self
+                                   selector:@selector(handleRobotOffline)
+                                       name:RKRobotIsNoLongerAvailableNotification
+                                     object:nil];
         });
     }
     
@@ -82,6 +78,22 @@
 - (void)enterNoLongerAvailable {
     [[DPSpheroManager sharedManager] applicationDidEnterBackground];
 }
+
+- (void)handleRobotOnline {
+    [[DPSpheroManager sharedManager] updateManageServices];
+}
+- (void)handleRobotOffline {
+    [[DPSpheroManager sharedManager] updateManageServices];
+}
+
+- (NSString*)iconFilePath:(BOOL)isOnline
+{
+    NSString *bundlePath = [[NSBundle mainBundle] pathForResource:@"dConnectDeviceSphero_resources" ofType:@"bundle"];
+    NSBundle *bundle = [NSBundle bundleWithPath:bundlePath];
+    NSString* filename = isOnline ? @"dconnect_icon" : @"dconnect_icon_off";
+    return [bundle pathForResource:filename ofType:@"png"];
+}
+
 - (void) dealloc {
     
     NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
@@ -89,6 +101,8 @@
     
     [notificationCenter removeObserver:self name:UIApplicationDidBecomeActiveNotification object:application];
     [notificationCenter removeObserver:self name:UIApplicationDidEnterBackgroundNotification object:application];
+    [notificationCenter removeObserver:self name:RKRobotIsNoLongerAvailableNotification object:application];
+    [notificationCenter removeObserver:self name:RKRobotDidGainControlNotification object:application];
     [notificationCenter removeObserver:self name:RKRobotIsNoLongerAvailableNotification object:application];
 }
 @end

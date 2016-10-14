@@ -10,8 +10,87 @@
 #import "DConnectProfile.h"
 #import "DConnectManager.h"
 #import "LocalOAuth2Settings.h"
+#import <DConnectSDK/DConnectApiSpec.h>
+#import "DConnectProfileSpec.h"
 
-@implementation DConnectProfile
+@implementation DConnectProfile {
+    
+    /**
+     * Device Connect API 仕様定義リスト.
+     */
+    DConnectProfileSpec *mProfileSpec;
+    
+    /*!
+     @brief サポートするAPI(DConnectApiEntityの配列).
+     */
+    NSMutableArray *mApis;
+}
+
+- (instancetype) init {
+    self = [super init];
+    if (self) {
+        mApis = [NSMutableArray array];
+    }
+    return self;
+}
+
+- (NSString *) apiPath : (NSString *) interfaceName attributeName:(NSString *) attributeName {
+    
+    NSMutableString *path = [NSMutableString string];
+    [path appendString: @"/"];
+    if (interfaceName) {
+        [path appendString: interfaceName];
+        [path appendString: @"/"];
+    }
+    if (attributeName) {
+        [path appendString: attributeName];
+    }
+    return path;
+}
+
+- (BOOL) isKnownPath: (DConnectRequestMessage *) request {
+    NSString *path = [self apiPath:[request interface] attributeName:[request attribute]];
+    if (!mProfileSpec) {
+        return NO;
+    }
+    return [mProfileSpec findApiSpecs: path] != nil;
+}
+
+- (BOOL) isKnownMethod: (DConnectRequestMessage *) request {
+    
+    NSError *error;
+    DConnectSpecMethod method;
+    if (![DConnectSpecConstants toMethodFromAction:[request action] outMethod:&method error:&error]) {
+        DCLogE(@"isKnownMethod error: %@", [error localizedDescription]);
+        return NO;
+    }
+    if (!method) {
+        return NO;
+    }
+    NSString *path = [self apiPath: [request interface] attributeName: [request attribute]];
+    if (!mProfileSpec) {
+        return NO;
+    }
+    return [mProfileSpec findApiSpec: path method: method] != nil;
+}
+
+/**
+ * Device Connect API 仕様定義リストを設定する.
+ * @param profileSpec API 仕様定義リスト
+ */
+- (void) setProfileSpec: (DConnectProfileSpec *) profileSpec {
+    mProfileSpec = profileSpec;
+}
+
+/**
+ * Device Connect API 仕様定義リストを取得する.
+ * @return API 仕様定義リスト
+ */
+- (DConnectProfileSpec *) profileSpec {
+    return mProfileSpec;
+}
+
+
 
 - (NSString *) profileName {
     return nil;
@@ -30,42 +109,132 @@
 }
 
 - (BOOL) didReceiveRequest:(DConnectRequestMessage *) request response:(DConnectResponseMessage *) response {
-    NSUInteger action = [request action];
     
-    BOOL send = YES;
-    if (DConnectMessageActionTypeGet == action) {
-        send = [self didReceiveGetRequest:request response:response];
-    } else if (DConnectMessageActionTypePost == action) {
-        send = [self didReceivePostRequest:request response:response];
-    } else if (DConnectMessageActionTypePut == action) {
-        send = [self didReceivePutRequest:request response:response];
-    } else if (DConnectMessageActionTypeDelete == action) {
-        send = [self didReceiveDeleteRequest:request response:response];
+    DConnectApiEntity *api = [self findApi: request];
+    if (api) {
+        DConnectApiSpec *spec = [api apiSpec];
+        if (spec && ![spec validate: request]) {
+            [response setErrorToInvalidRequestParameter];
+            return YES;
+        }
+        return [api api](request, response);
     } else {
-        [response setErrorToNotSupportAction];
+        if ([self isKnownPath: request]) {
+            if ([self isKnownMethod: request]) {
+                [response setErrorToNotSupportAttribute];
+            } else {
+                [response setErrorToNotSupportAction];
+            }
+        } else {
+            [response setErrorToUnknownAttribute];
+        }
+        return YES;
+    }
+}
+
+#pragma mark - Blocks version
+
+- (void) addGetPath:(NSString *)path api:(DConnectApiFunction)api
+{
+    [self addMethod: @"GET" path: path api: api];
+}
+
+- (void) addPostPath:(NSString *)path api:(DConnectApiFunction)api
+{
+    [self addMethod: @"POST" path: path api: api];
+}
+
+- (void) addPutPath:(NSString *)path api:(DConnectApiFunction)api
+{
+    [self addMethod: @"PUT" path: path api: api];
+}
+
+- (void) addDeletePath:(NSString *)path api:(DConnectApiFunction)api
+{
+    [self addMethod: @"DELETE" path: path api: api];
+}
+
+- (void) addMethod:(NSString *)method path:(NSString *)path api:(DConnectApiFunction)api
+{
+    DConnectApiEntity *apiEntity = [DConnectApiEntity new];
+    [apiEntity setMethod: [NSString stringWithString: method]];
+    [apiEntity setPath: [NSString stringWithString: path]];
+    [apiEntity setApi: [api copy]];
+    
+    @synchronized(mApis) {
+        
+        // 同名のメソッドとパスがすでに存在する場合は、削除する
+        [self removeApi: apiEntity];
+
+        // APIを追加する
+        [mApis addObject: apiEntity];
+    }
+}
+
+- (NSArray *) apis {
+    
+    NSArray *apisCopy;
+    @synchronized(mApis) {
+        // ディープコピーして返す
+        apisCopy = [[NSArray alloc] initWithArray: mApis copyItems: YES];
+    }
+    return apisCopy;
+}
+
+- (DConnectApiEntity *) findApi: (DConnectRequestMessage *) request {
+    
+    DConnectMessageActionType action = [request action];
+    
+    NSError *error;
+    DConnectSpecMethod method;
+    if (![DConnectSpecConstants toMethodFromAction: action outMethod: &method error:&error]) {
+        return nil;
     }
     
-    return send;
+    NSString *path = [self apiPath: [request interface] attributeName:[request attribute]];
+    return [self findApiWithPath: path method: method];
 }
 
-- (BOOL) didReceiveGetRequest:(DConnectRequestMessage *)request response:(DConnectResponseMessage *)response {
-    [response setErrorToNotSupportAction];
-    return YES;
+- (DConnectApiEntity *) findApiWithPath: (NSString *) path method: (DConnectSpecMethod) method {
+
+    NSError *error;
+    NSString *strMethod = [DConnectSpecConstants toMethodString:method error: &error];
+    if (!strMethod) {
+        return nil;
+    }
+
+    @synchronized(mApis) {
+        
+        for (DConnectApiEntity *api in mApis) {
+            if ([api path] && [path localizedCaseInsensitiveCompare: [api path]] == NSOrderedSame &&
+                [api method] && [strMethod localizedCaseInsensitiveCompare:[api method]] == NSOrderedSame) {
+                return api;
+            }
+        }
+    }
+    return nil;
 }
 
-- (BOOL) didReceivePostRequest:(DConnectRequestMessage *)request response:(DConnectResponseMessage *)response {
-    [response setErrorToNotSupportAction];
-    return  YES;
+- (void) removeApi: (DConnectApiEntity *) apiEntity {
+    
+    NSString *path = [apiEntity path];
+    NSString *strMethod = [apiEntity method];
+    
+    @synchronized(mApis) {
+        for (int index = [mApis count] - 1; index >= 0; index --) {
+            DConnectApiEntity *api = mApis[index];
+            
+            if ([api path] && [path localizedCaseInsensitiveCompare: [api path]] == NSOrderedSame &&
+                [api method] && [strMethod localizedCaseInsensitiveCompare:[api method]] == NSOrderedSame) {
+                
+                [mApis removeObjectAtIndex: index];
+            }
+        }
+    }
 }
 
-- (BOOL) didReceivePutRequest:(DConnectRequestMessage *)request response:(DConnectResponseMessage *)response {
-    [response setErrorToNotSupportAction];
-    return YES;
-}
-
-- (BOOL) didReceiveDeleteRequest:(DConnectRequestMessage *)request response:(DConnectResponseMessage *)response {
-    [response setErrorToNotSupportAction];
-    return YES;
+- (BOOL) hasApi: (NSString *) path method: (DConnectSpecMethod) method {
+    return [self findApiWithPath: path method: method] != nil;
 }
 
 @end

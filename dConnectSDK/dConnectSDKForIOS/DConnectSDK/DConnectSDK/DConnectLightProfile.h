@@ -77,265 +77,6 @@ extern NSString *const DConnectLightProfileParamLightIds;
 extern NSString *const DConnectLightProfileParamGroupName;
 
 
-@class DConnectLightProfile;
-
-/*!
- @brief Light プロファイル。
- <p>
- デバイスのライト機能を提供するAPI。<br/>
- デバイスのライト機能を提供するデバイスプラグインは当クラスを継承し、対応APIを実装すること。 <br/>
- </p>
- */
-@protocol DConnectLightProfileDelegate<NSObject>
-@optional
-
-/*!
- @brief デバイスのライトのステータスを取得する.<br>
- 
- 実装されない場合には、Not supportのエラーが返却される。
- <pre>
- [対応するRESTful]
- GET http://{ドメイン}/light?serviceId=xxxxx
- </pre>
- @param[in] profile プロファイル
-@param[in] request リクエスト
- @param[in,out] response レスポンス
- @param[in] serviceId サービスID
- @retval YES レスポンスパラメータを返却する。
- @retval NO レスポンスパラメータを返却しないので、@link DConnectManager::sendResponse: @endlinkで返却すること。
- */
-- (BOOL)              profile:(DConnectLightProfile *)profile
-    didReceiveGetLightRequest:(DConnectRequestMessage *)request
-                     response:(DConnectResponseMessage *)response
-                     serviceId:(NSString *)serviceId;
-
-/*!
- @brief デバイスのライトを点灯する<br>
- 
- 実装されない場合には、Not supportのエラーが返却される。
- <pre>
- [対応するRESTful]
- POST http://{ドメイン}/light?serviceId=xxxxx&lightId=yyyy
- </pre>
- @param[in] profile プロファイル
- @param[in] request リクエスト
- @param[in,out] response レスポンス
- @param[in] serviceId サービスID
- @param[in] lightId ライトID
- @param[in] brightness 明るさ
- @param[in] color 色
- @param[in] flashing 点滅
- @retval YES レスポンスパラメータを返却する。
- @retval NO レスポンスパラメータを返却しないので、@link DConnectManager::sendResponse: @endlinkで返却すること。
- */
-- (BOOL)            profile:(DConnectLightProfile *)profile
- didReceivePostLightRequest:(DConnectRequestMessage *)request
-                   response:(DConnectResponseMessage *)response
-                   serviceId:(NSString *)serviceId
-                    lightId:(NSString*)lightId
-                 brightness:(NSNumber*)brightness
-                      color:(NSString*)color
-                   flashing:(NSArray*)flashing;
-/*!
- @brief デバイスのライトのステータスを変更する.<br>
- 
- 実装されない場合には、Not supportのエラーが返却される。
- <pre>
- [対応するRESTful]
- PUT http://{ドメイン}/light?serviceId=xxxxx&lightId=yyyy
- </pre>
- @param[in] profile プロファイル
- @param[in] request リクエスト
- @param[in,out] response レスポンス
- @param[in] serviceId サービスID
- @param[in] lightId ライトID
- @param[in] name ライト名
- @param[in] brightness 明るさ
- @param[in] color 色
- @param[in] flashing 点滅
- @retval YES レスポンスパラメータを返却する。
- @retval NO レスポンスパラメータを返却しないので、@link DConnectManager::sendResponse: @endlinkで返却すること。
- */
-- (BOOL)            profile:(DConnectLightProfile *)profile
-  didReceivePutLightRequest:(DConnectRequestMessage *)request
-                   response:(DConnectResponseMessage *)response
-                   serviceId:(NSString *)serviceId
-                    lightId:(NSString*)lightId
-                       name:(NSString*)name
-                 brightness:(NSNumber*)brightness
-                      color:(NSString*)color
-                   flashing:(NSArray*)flashing;
-/*!
- @brief デバイスのライトを消灯させる<br>
- 
- 実装されない場合には、Not supportのエラーが返却される。
- <pre>
- [対応するRESTful]
- DELETE http://{ドメイン}/light?serviceId=xxxxx&lightId=yyyy
- </pre>
- @param[in] profile プロファイル
- @param[in] request リクエスト
- @param[in,out] response レスポンス
- @param[in] serviceId サービスID
- @param[in] lightId ライトID
- @retval YES レスポンスパラメータを返却する。
- @retval NO レスポンスパラメータを返却しないので、@link DConnectManager::sendResponse: @endlinkで返却すること。
- */
-- (BOOL)                 profile:(DConnectLightProfile *)profile
-    didReceiveDeleteLightRequest:(DConnectRequestMessage *)request
-                        response:(DConnectResponseMessage *)response
-                        serviceId:(NSString *)serviceId
-                         lightId:(NSString*)lightId;
-
-
-
-
-/*!
- @brief デバイスのライトグループのステータスを取得する.<br>
- 
- 実装されない場合には、Not supportのエラーが返却される。
- <pre>
- [対応するRESTful]
- GET http://{ドメイン}/light/group?serviceId=xxxxx
- </pre>
- @param[in] profile プロファイル
- @param[in] request リクエスト
- @param[in,out] response レスポンス
- @param[in] serviceId サービスID
- @retval YES レスポンスパラメータを返却する。
- @retval NO レスポンスパラメータを返却しないので、@link DConnectManager::sendResponse: @endlinkで返却すること。
- */
-- (BOOL)                profile:(DConnectLightProfile *)profile
- didReceiveGetLightGroupRequest:(DConnectRequestMessage *)request
-                       response:(DConnectResponseMessage *)response
-                       serviceId:(NSString *)serviceId;
-
-/*!
- @brief デバイスのライトグループを点灯する<br>
- 
- 実装されない場合には、Not supportのエラーが返却される。
- <pre>
- [対応するRESTful]
- POST http://{ドメイン}/light/group?serviceId=xxxxx&groupId=yyyy
- </pre>
- @param[in] profile プロファイル
- @param[in] request リクエスト
- @param[in,out] response レスポンス
- @param[in] serviceId サービスID
- @param[in] groupId ライトグループID
- @param[in] brightness 明るさ
- @param[in] color 色
- @param[in] flashing 点滅
- @retval YES レスポンスパラメータを返却する。
- @retval NO レスポンスパラメータを返却しないので、@link DConnectManager::sendResponse: @endlinkで返却すること。
- */
-- (BOOL)                profile:(DConnectLightProfile *)profile
-didReceivePostLightGroupRequest:(DConnectRequestMessage *)request
-                       response:(DConnectResponseMessage *)response
-                       serviceId:(NSString *)serviceId
-                        groupId:(NSString*)groupId
-                     brightness:(NSNumber*)brightness
-                          color:(NSString*)color
-                       flashing:(NSArray*)flashing;
-/*!
- @brief デバイスのライトグループのステータスを変更する.<br>
- 
- 実装されない場合には、Not supportのエラーが返却される。
- <pre>
- [対応するRESTful]
- PUT http://{ドメイン}/light/group?serviceId=xxxxx&groupId=yyyy
- </pre>
- @param[in] profile プロファイル
- @param[in] request リクエスト
- @param[in,out] response レスポンス
- @param[in] serviceId サービスID
- @param[in] groupId ライトグループID
- @param[in] name ライト名
- @param[in] brightness 明るさ
- @param[in] color 色
- @param[in] flashing 点滅
- @retval YES レスポンスパラメータを返却する。
- @retval NO レスポンスパラメータを返却しないので、@link DConnectManager::sendResponse: @endlinkで返却すること。
- */
-- (BOOL)                profile:(DConnectLightProfile *)profile
- didReceivePutLightGroupRequest:(DConnectRequestMessage *)request
-                       response:(DConnectResponseMessage *)response
-                       serviceId:(NSString *)serviceId
-                        groupId:(NSString*)groupId
-                           name:(NSString*)name
-                     brightness:(NSNumber*)brightness
-                          color:(NSString*)color
-                       flashing:(NSArray*)flashing;
-/*!
- @brief デバイスのライトグループを消灯させる<br>
- 
- 実装されない場合には、Not supportのエラーが返却される。
- <pre>
- [対応するRESTful]
- DELETE http://{ドメイン}/light/group?serviceId=xxxxx&groupId=yyyy
- </pre>
- @param[in] profile プロファイル
- @param[in] request リクエスト
- @param[in,out] response レスポンス
- @param[in] serviceId サービスID
- @param[in] groupId ライトID
- @retval YES レスポンスパラメータを返却する。
- @retval NO レスポンスパラメータを返却しないので、@link DConnectManager::sendResponse: @endlinkで返却すること。
- */
-- (BOOL)                    profile:(DConnectLightProfile *)profile
-  didReceiveDeleteLightGroupRequest:(DConnectRequestMessage *)request
-                           response:(DConnectResponseMessage *)response
-                           serviceId:(NSString *)serviceId
-                            groupId:(NSString*)groupId;
-
-/*!
- @brief デバイスのライトグループを作成<br>
- 
- 実装されない場合には、Not supportのエラーが返却される。
- <pre>
- [対応するRESTful]
- POST http://{ドメイン}/light/group/create?serviceId=xxxxx&groupId=yyyy&groupName=bathroom
- </pre>
- @param[in] profile プロファイル
- @param[in] request リクエスト
- @param[in,out] response レスポンス
- @param[in] serviceId サービスID
- @param[in] groupId ライトグループID
- @param[in] groupName ライトグループ名
- @retval YES レスポンスパラメータを返却する。
- @retval NO レスポンスパラメータを返却しないので、@link DConnectManager::sendResponse: @endlinkで返却すること。
- */
-- (BOOL)                        profile:(DConnectLightProfile *)profile
-  didReceivePostLightGroupCreateRequest:(DConnectRequestMessage *)request
-                               response:(DConnectResponseMessage *)response
-                               serviceId:(NSString *)serviceId
-                               lightIds:(NSArray*)lightIds
-                              groupName:(NSString*)groupName;
-
-/*!
- @brief デバイスのライトグループを削除する<br>
- 
- 実装されない場合には、Not supportのエラーが返却される。
- <pre>
- [対応するRESTful]
- DELETE http://{ドメイン}/light/group/clear?serviceId=xxxxx&groupId=yyyy
- </pre>
- @param[in] profile プロファイル
- @param[in] request リクエスト
- @param[in,out] response レスポンス
- @param[in] serviceId サービスID
- @param[in] groupId ライトID
- @retval YES レスポンスパラメータを返却する。
- @retval NO レスポンスパラメータを返却しないので、@link DConnectManager::sendResponse: @endlinkで返却すること。
- */
-- (BOOL)                        profile:(DConnectLightProfile *)profile
- didReceiveDeleteLightGroupClearRequest:(DConnectRequestMessage *)request
-                               response:(DConnectResponseMessage *)response
-                               serviceId:(NSString *)serviceId
-                                groupId:(NSString*)groupId;
-
-
-@end
 /*!
  @class DConnectLightProfile
  @brief Lightプロファイル。
@@ -344,13 +85,73 @@ didReceivePostLightGroupRequest:(DConnectRequestMessage *)request
  受信したリクエストは各API毎にデリゲートに通知される。
  */
 @interface DConnectLightProfile : DConnectProfile
+
+#pragma mark - Getter
+
 /*!
- @brief DConnectLightProfileのデリゲートオブジェクト。
- 
- デリゲートは @link DConnectLightProfileDelegate @endlink を実装しなくてはならない。
- デリゲートはretainされない。
+ @brief リクエストからlightIdを取得する。
+ @retval lightId
+ @retval nil リクエストにlightIdが指定されていない場合
  */
-@property (nonatomic, assign) id<DConnectLightProfileDelegate> delegate;
++ (NSString *) lightIdFromRequest: (DConnectRequestMessage *) request;
+
+/*!
+ @brief リクエストからlightIdsを取得する。
+ @retval lightIds
+ @retval nil リクエストにlightIdsが指定されていない場合
+ */
++ (NSString *) lightIdsFromRequest: (DConnectRequestMessage *) request;
+
+/*!
+ @brief リクエストからbrightnessを取得する。
+ @retval brightness
+ @retval nil リクエストにbrightnessが指定されていない場合
+ */
++ (NSNumber *) brightnessFromRequest: (DConnectRequestMessage *) request;
+
+/*!
+ @brief リクエストからnameを取得する。
+ @retval name
+ @retval nil リクエストにnameが指定されていない場合
+ */
++ (NSString *) nameFromRequest: (DConnectRequestMessage *) request;
+
+/*!
+ @brief リクエストからcolorを取得する。
+ @retval color
+ @retval nil リクエストにcolorが指定されていない場合
+ */
++ (NSString *) colorFromRequest: (DConnectRequestMessage *) request;
+
+/*!
+ @brief リクエストからflashingを取得する。
+ @retval flashing
+ @retval nil リクエストにflashingが指定されていない場合
+ */
++ (NSString *) flashingFromRequest: (DConnectRequestMessage *) request;
+
+/*!
+ @brief リクエストからgroupIdを取得する。
+ @retval groupId
+ @retval nil リクエストにgroupIdが指定されていない場合
+ */
++ (NSString *) groupIdFromRequest: (DConnectRequestMessage *) request;
+
+/*!
+ @brief リクエストからgroupNameを取得する。
+ @retval groupName
+ @retval nil リクエストにgroupNameが指定されていない場合
+ */
++ (NSString *) groupNameFromRequest: (DConnectRequestMessage *) request;
+
+/*
+ flashingをパースする。
+ */
++ (NSArray *) parsePattern:(NSString *)pattern
+                      isId:(BOOL)isId;
+
+- (BOOL)checkFlash:(DConnectResponseMessage *)response flashing:(NSArray *)flashing;
+
 
 #pragma mark - Setter
 

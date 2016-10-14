@@ -10,11 +10,8 @@
 #import "DPAllJoynDevicePlugin.h"
 
 #import "AJNInit.h"
-#import <DConnectSDK/DConnectServiceInformationProfile.h>
 #import "DPAllJoynHandler.h"
 #import "DPAllJoynLightProfile.h"
-#import "DPAllJoynServiceDiscoveryProfile.h"
-#import "DPAllJoynServiceInformationProfile.h"
 #import "DPAllJoynSystemProfile.h"
 
 
@@ -36,19 +33,16 @@ static NSString *const VERSION = @"2.0.0";
         return nil;
     }
     
-    self = [super init];
+    self = [super initWithObject: self];
     if (self) {
         self.pluginName = @"AllJoyn (Device Connect Device Plug-in)";
         
         _handler = [DPAllJoynHandler new];
+        [_handler setServiceProvider: self.serviceProvider];
+        [_handler setPlugin: self];
         
         // Add profiles.
-        [self addProfile:[[DPAllJoynServiceDiscoveryProfile alloc]
-                          initWithHandler:_handler]];
         [self addProfile:[DPAllJoynSystemProfile systemProfileWithVersion:VERSION]];
-        [self addProfile:[DConnectServiceInformationProfile new]];
-        [self addProfile:[[DPAllJoynLightProfile alloc]
-                          initWithHandler:_handler]];
         
         id block;
         block = ^(BOOL result) {

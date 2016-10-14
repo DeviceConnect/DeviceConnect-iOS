@@ -10,6 +10,6 @@
 
 #import <DCMDevicePluginSDK/DCMDevicePluginSDK.h>
 #import "DPIRKitDevicePlugin.h"
-@interface DPIRKitTVProfile : DCMTVProfile<DCMTVProfileDelegate>
+@interface DPIRKitTVProfile : DCMTVProfile
 - (id) initWithDevicePlugin:(DPIRKitDevicePlugin *)plugin;
 @end

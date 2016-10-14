@@ -8,8 +8,15 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <DConnectSDK/DConnectServiceProvider.h>
 
 @interface DPPebbleManager : NSObject
+
+// ServiceProvider
+@property (nonatomic, weak) DConnectServiceProvider *serviceProvider;
+
+// DevicePlugin
+@property(nonatomic, weak) id plugin;
 
 // 接続可能なデバイスリスト取得
 @property (nonatomic, readonly) NSArray *deviceList;
@@ -21,6 +28,9 @@
 - (void)applicationDidEnterBackground;
 // アプリがフォアグラウンドに入った時に呼ぶ
 - (void)applicationWillEnterForeground;
+
+// デバイス管理情報更新
+- (void) updateManageServices;
 
 // バッテリー情報取得
 - (void)fetchBatteryInfo:(NSString*)serviceID callback:(void(^)(float level, BOOL isCharging, NSError *error))callback;

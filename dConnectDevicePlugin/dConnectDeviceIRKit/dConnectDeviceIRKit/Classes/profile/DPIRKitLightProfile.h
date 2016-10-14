@@ -9,6 +9,6 @@
 
 #import <DConnectSDK/DConnectLightProfile.h>
 #import "DPIRKitDevicePlugin.h"
-@interface DPIRKitLightProfile : DConnectLightProfile<DConnectLightProfileDelegate>
+@interface DPIRKitLightProfile : DConnectLightProfile
 - (id) initWithDevicePlugin:(DPIRKitDevicePlugin *)plugin;
 @end

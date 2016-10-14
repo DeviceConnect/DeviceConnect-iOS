@@ -172,6 +172,32 @@ static GHDataManager* mgr = nil;
     }
 }
 
+//NSPredicateからエンティティをlimit付で取得
+- (NSArray*)getModelDataByPredicate:(NSPredicate*)pred
+                withSortDescriptors:(NSArray *)sortDescriptors
+                         entityName:(NSString*)name
+                              limit:(NSInteger)limit
+                            context:(NSManagedObjectContext *)moc
+{
+    //NSManagedObjectContextがnilの場合
+    if (!moc) {
+        moc = _managedObjectContext;
+    }
+
+    NSFetchRequest *request = [self fetchRequest:pred withSortDescriptors:sortDescriptors entityName:name context:moc];
+    request.returnsObjectsAsFaults = NO;
+    request.fetchLimit = limit;
+
+    NSError *error;
+    NSArray *objects = [moc executeFetchRequest:request error:&error];
+
+    if ([objects count] > 0) {
+        return objects;
+    }else{
+        return nil;
+    }
+}
+
 
 //エンティティのタイプでフェッチ
 - (NSManagedObject*)getModelDataByType:(NSString*)type
@@ -338,9 +364,6 @@ static GHDataManager* mgr = nil;
     [moc insertObject:data];
 }
 
-
-
-
 //--------------------------------------------------------------//
 #pragma mark - Pageエンティティ
 //--------------------------------------------------------------//
@@ -370,6 +393,7 @@ static GHDataManager* mgr = nil;
     page.created_date = [NSDate date];
     page.sectionIndex = [GHUtils dateToString:page.created_date];
     page.identifier   = [GHUtils createUUID];
+    page.latest_opened_date = [NSDate date];
     
     return page;
 }
@@ -396,6 +420,7 @@ static GHDataManager* mgr = nil;
     page.created_date = [NSDate date];
     page.sectionIndex = [GHUtils dateToString:page.created_date];
     page.identifier   = [GHUtils createUUID];
+    page.latest_opened_date = [NSDate date];
     
     NSArray *parents = [self getModelDataByPredicate:[NSPredicate predicateWithFormat:@"type = %@", TYPE_HISTORY]
                                       withEntityName:@"Page" context:moc];
@@ -431,6 +456,7 @@ static GHDataManager* mgr = nil;
     page.created_date = [NSDate date];
     page.sectionIndex = [GHUtils dateToString:page.created_date];
     page.identifier   = [GHUtils createUUID];
+    page.latest_opened_date = [NSDate date];
     
     //リレーションセット
     page.parent = parent;
@@ -523,37 +549,43 @@ static GHDataManager* mgr = nil;
     NSArray* prefs = [self getModelDataByPredicate:pred withEntityName:@"Page" context:nil];
     if ([prefs count] == 0) {
         //初期値セット
-        
         GHPageModel *favor = [[GHPageModel alloc]init];
         favor.title = @"お気に入り";
         favor.type = TYPE_FAVORITE;
         favor.priority = @(1);
         [self createPageEntity:favor context:nil];
         
-//        GHPageModel *history = [[GHPageModel alloc]init];
-//        history.title = @"履歴";
-//        history.type = TYPE_HISTORY;
-//        history.priority = @(2);
-//        [self createPageEntity:history context:nil];
-        
         GHPageModel *bookmark = [[GHPageModel alloc]init];
         bookmark.title = @"ブックマーク";
         bookmark.type = TYPE_BOOKMARK_FOLDER;
         bookmark.priority = @(2);
         [self createPageEntity:bookmark context:nil];
-        
-        NSLog(@"default");
-        GHPageModel *defaultBookmark = [[GHPageModel alloc]init];
-        defaultBookmark.title = @"Device Web API Manager";
-        defaultBookmark.url = @"https://www.gclue.io/dwa/";
-        defaultBookmark.type = TYPE_BOOKMARK;
-        defaultBookmark.priority = @(3);
-        [self createPageEntity:defaultBookmark context:nil];
-    }else{
+
+    } else {
         [GHUtils clearCashes];
+    }
+
+    if (![self isBookmarkExist: [NSPredicate predicateWithFormat:@"url = %@", defaultBookmarkURL]]){
+        [self addNewBookMark];
     }
 }
 
+- (BOOL)isBookmarkExist:(NSPredicate*)predicate
+{
+    return ([[self getModelDataByPredicate: predicate
+                          withEntityName:@"Page"
+                                 context:nil] count] != 0);
+}
 
+NSString *defaultBookmarkURL = @"https://device-webapi.org/";
+- (void)addNewBookMark
+{
+    GHPageModel *defaultBookmark = [[GHPageModel alloc]init];
+    defaultBookmark.title = @"DeviceWebAPIコンソーシアム";
+    defaultBookmark.url = defaultBookmarkURL;
+    defaultBookmark.type = TYPE_BOOKMARK;
+    defaultBookmark.priority = @(DeviceWebAPI_priority);
+    [self createPageEntity:defaultBookmark context:nil];
+}
 
 @end

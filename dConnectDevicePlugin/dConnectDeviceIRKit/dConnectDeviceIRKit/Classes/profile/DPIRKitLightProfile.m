@@ -13,12 +13,6 @@
 #import "DPIRKitVirtualDevice.h"
 #import "DPIRKitRESTfulRequest.h"
 
-@interface DPIRKitLightProfile()
-@property (nonatomic, weak) DPIRKitDevicePlugin *plugin;
-
-
-@end
-
 @implementation DPIRKitLightProfile
 // 初期化
 - (id) initWithDevicePlugin:(DPIRKitDevicePlugin *)plugin
@@ -26,83 +20,119 @@
     self = [super init];
     if (self) {
         self.plugin = plugin;
-        self.delegate = self;
+        
+        __weak DPIRKitLightProfile *weakSelf = self;
+        
+        // API登録(didReceiveGetLightRequest相当)
+        NSString *getLightRequestApiPath = [self apiPath: nil
+                                           attributeName: nil];
+        [self addGetPath: getLightRequestApiPath
+                     api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+                         NSString *serviceId = [request serviceId];
+                         if (!serviceId) {
+                             [response setErrorToEmptyServiceId];
+                             return YES;
+                         }
+
+                         NSArray *requests = [[DPIRKitDBManager sharedInstance] queryRESTfulRequestByServiceId:serviceId
+                                                                                                       profile:@"/light"];
+                         if (requests.count == 0) {
+                             [response setErrorToNotSupportProfile];
+                             return YES;
+                         }
+                         
+                         DConnectArray *lights = [DConnectArray array];
+                         DConnectMessage *virtualLight = [DConnectMessage new];
+                         
+                         [response setResult:DConnectMessageResultTypeOk];
+                         
+                         //全体の色を変えるためのID
+                         [DConnectLightProfile setLightId:@"1" target:virtualLight];
+                         [DConnectLightProfile setLightName:@"照明" target:virtualLight];
+                         [DConnectLightProfile setLightOn:NO target:virtualLight];
+                         [DConnectLightProfile setLightConfig:@"" target:virtualLight];
+                         
+                         [lights addMessage:virtualLight];
+                         
+                         [DConnectLightProfile setLights:lights target:response];
+                         return YES;
+                     }];
+        
+        // API登録(didReceivePostLightRequest相当)
+        NSString *postLightRequestApiPath = [self apiPath: nil
+                                            attributeName: nil];
+        [self addPostPath: postLightRequestApiPath
+                      api:^(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+                          
+                          NSString *serviceId = [request serviceId];
+                          NSString *lightId = [DConnectLightProfile lightIdFromRequest: request];
+                          NSNumber *brightness = [DConnectLightProfile brightnessFromRequest: request];
+                          NSString *color = [DConnectLightProfile colorFromRequest: request];
+                          NSArray *flashing = [DConnectLightProfile parsePattern: [DConnectLightProfile flashingFromRequest: request] isId:NO];
+                          
+                          if (!brightness
+                              || (brightness && ([brightness doubleValue] < 0.0 || [brightness doubleValue] > 1.0))) {
+                              [response setErrorToInvalidRequestParameterWithMessage:
+                               @"Parameter 'brightness' must be a value between 0 and 1.0."];
+                              return YES;
+                          }
+                          
+                          if (!flashing) {
+                              [response setErrorToInvalidRequestParameterWithMessage:
+                               @"Parameter 'flashing' invalid."];
+                              return YES;
+                          }
+                          if (![weakSelf checkFlash:response flashing:flashing]) {
+                              return YES;
+                          }
+                          
+                          if (!serviceId) {
+                              [response setErrorToEmptyServiceId];
+                              return YES;
+                          }
+
+                          int myBlightness;
+                          NSString *uicolor;
+                          unsigned int redValue, greenValue, blueValue;
+                          [weakSelf checkColor:[brightness doubleValue] blueValue:blueValue greenValue:greenValue
+                                  redValue:redValue color:color myBlightnessPointer:&myBlightness uicolorPointer:&uicolor];
+                          
+                          if (!uicolor && color) {
+                              [response setErrorToInvalidRequestParameterWithMessage:@"Invalid Color String"];
+                              return YES;
+                          }
+                          return [weakSelf sendLightIRRequestWithServiceId:serviceId
+                                                                   lightId:lightId
+                                                                    method:@"POST"
+                                                                   request:request
+                                                                  response:response];
+                      }];
+        
+        
+        // API登録(didReceiveDeleteLightRequest相当)
+        NSString *deleteLightRequestApiPath = [self apiPath: nil
+                                              attributeName: nil];
+        [self addDeletePath: deleteLightRequestApiPath
+                        api:^(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+                            
+                            NSString *serviceId = [request serviceId];
+                            NSString *lightId = [DConnectLightProfile lightIdFromRequest: request];
+                            
+                            if (!serviceId) {
+                                [response setErrorToEmptyServiceId];
+                                return YES;
+                            }
+                            
+                            return [weakSelf sendLightIRRequestWithServiceId:serviceId
+                                                                     lightId:lightId
+                                                                      method:@"DELETE"
+                                                                     request:request
+                                                                    response:response];
+                            
+                        }];
     }
     return self;
     
-}
-
-
-- (BOOL)              profile:(DConnectLightProfile *)profile
-    didReceiveGetLightRequest:(DConnectRequestMessage *)request
-                     response:(DConnectResponseMessage *)response
-                    serviceId:(NSString *)serviceId
-{
-    NSArray *requests = [[DPIRKitDBManager sharedInstance] queryRESTfulRequestByServiceId:serviceId
-                                                                                  profile:@"/light"];
-    if (requests.count == 0) {
-        [response setErrorToNotSupportProfile];
-        return YES;
-    }
-
-    DConnectArray *lights = [DConnectArray array];
-    DConnectMessage *virtualLight = [DConnectMessage new];
-    
-    [response setResult:DConnectMessageResultTypeOk];
-    
-    //全体の色を変えるためのID
-    [DConnectLightProfile setLightId:@"1" target:virtualLight];
-    [DConnectLightProfile setLightName:@"照明" target:virtualLight];
-    [DConnectLightProfile setLightOn:NO target:virtualLight];
-    [DConnectLightProfile setLightConfig:@"" target:virtualLight];
-
-    [lights addMessage:virtualLight];
-    
-    [DConnectLightProfile setLights:lights target:response];
-    return YES;
-}
-
-
-
-- (BOOL)            profile:(DConnectLightProfile *)profile
- didReceivePostLightRequest:(DConnectRequestMessage *)request
-                   response:(DConnectResponseMessage *)response
-                  serviceId:(NSString *)serviceId
-                    lightId:(NSString*)lightId
-                 brightness:(NSNumber*)brightness
-                      color:(NSString*)color
-                   flashing:(NSArray*)flashing
-{
-    int myBlightness;
-    NSString *uicolor;
-    unsigned int redValue, greenValue, blueValue;
-    [self checkColor:[brightness doubleValue] blueValue:blueValue greenValue:greenValue
-            redValue:redValue color:color myBlightnessPointer:&myBlightness uicolorPointer:&uicolor];
-    
-    if (!uicolor && color) {
-        [response setErrorToInvalidRequestParameterWithMessage:@"Invalid Color String"];
-        return YES;
-    }
-    return [self sendLightIRRequestWithServiceId:serviceId
-                                         lightId:lightId
-                                          method:@"POST"
-                                         request:request
-                                        response:response];
-
-}
-
-
-- (BOOL)                 profile:(DConnectLightProfile *)profile
-    didReceiveDeleteLightRequest:(DConnectRequestMessage *)request
-                        response:(DConnectResponseMessage *)response
-                       serviceId:(NSString *)serviceId
-                         lightId:(NSString*)lightId
-{
-    return [self sendLightIRRequestWithServiceId:serviceId
-                                         lightId:lightId
-                                          method:@"DELETE"
-                                         request:request
-                                        response:response];
 }
 
 #pragma mark - private method
@@ -129,7 +159,7 @@
         NSString *uri = [NSString stringWithFormat:@"/%@",[request profile]];
         if ([req.uri isEqualToString:uri] && [req.method isEqualToString:method]
             && req.ir) {
-            send = [_plugin sendIRWithServiceId:serviceId message:req.ir response:response];
+            send = [self.plugin sendIRWithServiceId:serviceId message:req.ir response:response];
         } else {
             [response setErrorToInvalidRequestParameterWithMessage:@"IR is not registered for that request"];
         }

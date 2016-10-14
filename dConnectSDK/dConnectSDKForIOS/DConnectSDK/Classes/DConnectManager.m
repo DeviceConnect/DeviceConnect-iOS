@@ -28,6 +28,13 @@
 #import "LocalOAuth2Main.h"
 #import "DConnectServerProtocol.h"
 
+static NSString *const MATCH_YES = @"YES";
+static NSString *const MATCH_NO = @"NO";
+static NSString *const MATCH_OLD_NAME = @"matchOldName";
+static NSString *const MATCH_NEW_NAME = @"matchNewName";
+static NSString *const OLD_NAME = @"oldName";
+static NSString *const NEW_NAME = @"newName";
+
 
 NSString *const DConnectApplicationDidEnterBackground = @"DConnectApplicationDidEnterBackground";
 NSString *const DConnectApplicationWillEnterForeground = @"DConnectApplicationWillEnterForeground";
@@ -123,6 +130,29 @@ NSString *const DConnectAttributeNameRequestAccessToken = @"requestAccessToken";
 
 - (BOOL) allowsOriginOfRequest:(DConnectRequestMessage *)requestMessage;
 
+/*!
+ @brief Profile,Interface,Attribute名を小文字に変換(キャメルケース等で大文字が含まれていた場合は小文字に変換する)。
+ @param[in][out] request 変換対象のリクエスト。実行終了後にProfile,Interface,Attribute名を更新する。
+ */
+- (void)convertLowerProfileInterfaceAttributeWithRequest: (DConnectRequestMessage *)request;
+
+/*!
+ @brief APIパス名をデバイスプラグインのバージョンに合わせて新旧変換する。
+ @param[in][out] request 変換対象のリクエスト。実行終了後にProfile,Interface,Attribute名を更新する。
+ */
+- (void) matchingProfileInterfaceAttributeWithRequest: (DConnectRequestMessage *)request;
+
+/*!
+ @brief 新旧名称変換テーブルを検索し該当するデータがあれば新旧どちらにマッチしたかを返す。
+ @param[in] name 検索キーの名称
+ @param [in] 新旧名称変換テーブル(key:旧名称 object:新名称)
+ @retval nil nameに該当するデータなし
+ @retval not nil nameが該当するデータあり。
+ */
+- (NSDictionary *) searchNameConvertTableWithName : (NSString *)name
+                                     convertTable : (NSDictionary *)convertTable;
+
+
 @end
 
 
@@ -178,6 +208,10 @@ NSString *const DConnectAttributeNameRequestAccessToken = @"requestAccessToken";
     }
 }
 
+- (void)setAllowExternalIp {
+    [DConnectServerProtocol setExternalIPFlag:self.settings.useExternalIP];
+}
+
 - (void) stopByHttpServer {
     if (!self.mStartFlag) {
         return;
@@ -199,6 +233,23 @@ NSString *const DConnectAttributeNameRequestAccessToken = @"requestAccessToken";
 - (BOOL) isStarted {
     return self.mStartFlag;
 }
+
+- (void)startServiceDiscoveryForCallback:(DConnectResponseBlocks)callback
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        DConnectManagerServiceDiscoveryProfile *p = (DConnectManagerServiceDiscoveryProfile *) [self profileWithName:DConnectServiceDiscoveryProfileName];
+        DConnectResponseMessage *response = [DConnectResponseMessage message];
+        DConnectRequestMessage *request = [DConnectRequestMessage new];
+        [request setAction: DConnectMessageActionTypeGet];
+        [p getServicesRequest:request response:response];
+        if (callback) {
+            callback(response);
+        }
+    });
+}
+
+
+
 - (void) sendRequest:(DConnectRequestMessage *)request
               isHttp:(BOOL)isHttp
             callback:(DConnectResponseBlocks)callback
@@ -239,8 +290,8 @@ NSString *const DConnectAttributeNameRequestAccessToken = @"requestAccessToken";
 {
     NSString *profile = [event stringForKey:DConnectMessageProfile];
     NSString *attribute = [event stringForKey:DConnectMessageAttribute];
-    if ([profile isEqualToString:DConnectServiceDiscoveryProfileName] &&
-        [attribute isEqualToString:DConnectServiceDiscoveryProfileAttrOnServiceChange]) {
+    if (profile && [profile localizedCaseInsensitiveCompare:DConnectServiceDiscoveryProfileName] == NSOrderedSame &&
+        attribute && [attribute localizedCaseInsensitiveCompare:DConnectServiceDiscoveryProfileAttrOnServiceChange] == NSOrderedSame) {
         
         // サービスIDを付加する
         DConnectMessage *service = [event messageForKey:DConnectServiceDiscoveryProfileParamNetworkService];
@@ -413,6 +464,9 @@ NSString *const DConnectAttributeNameRequestAccessToken = @"requestAccessToken";
 {
     __weak DConnectManager *_self = self;
     
+    // プロファイル名を小文字に変換
+    [self convertLowerProfileInterfaceAttributeWithRequest: request];
+    
     // 常に待つので0を指定しておく
     dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
     dispatch_time_t timeout = dispatch_time(DISPATCH_TIME_NOW, NSEC_PER_SEC * HTTP_REQUEST_TIMEOUT);
@@ -448,10 +502,13 @@ NSString *const DConnectAttributeNameRequestAccessToken = @"requestAccessToken";
                 NSArray *scopes = DConnectIgnoreProfiles();
                 NSString *accessToken = [request accessToken];
                 LocalOAuth2Main *oauth = [LocalOAuth2Main sharedOAuthForClass:[DConnectManager class]];
-                LocalOAuthCheckAccessTokenResult *result = [oauth checkAccessTokenWithScope:profileName
+                LocalOAuthCheckAccessTokenResult *result = [oauth checkAccessTokenWithScope:[profileName lowercaseString]
                                                                               specialScopes:scopes
                                                                                 accessToken:accessToken];
                 if ([result checkResult]) {
+                    
+                    // デバイスプラグインのバージョンに合わせて新旧変換する
+                    [self matchingProfileInterfaceAttributeWithRequest: request];
                     
                     [_self executeRequest:request response:response callback:callback];
                 } else {
@@ -476,6 +533,9 @@ NSString *const DConnectAttributeNameRequestAccessToken = @"requestAccessToken";
                 [_self sendResponse:response];
             }
         } else {
+            // デバイスプラグインのバージョンに合わせて新旧変換する
+            [self matchingProfileInterfaceAttributeWithRequest: request];
+            
             [_self executeRequest:request
                          response:response
                          callback:callback];
@@ -514,15 +574,16 @@ NSString *const DConnectAttributeNameRequestAccessToken = @"requestAccessToken";
 #pragma mark - DConnectProfileProvider Methods -
 
 - (void) addProfile:(DConnectProfile *) profile {
-    NSString *name = [profile profileName];
+    NSString *name = [[profile profileName] lowercaseString];
     if (name) {
         [self.mProfileMap setObject:profile forKey:name];
         profile.provider = self;
+        profile.plugin = nil;
     }
 }
 
 - (void) removeProfile:(DConnectProfile *)profile {
-    NSString *name = [profile profileName];
+    NSString *name = [[profile profileName] lowercaseString];
     if (name) {
         [self.mProfileMap removeObjectForKey:name];
     }
@@ -530,7 +591,8 @@ NSString *const DConnectAttributeNameRequestAccessToken = @"requestAccessToken";
 
 - (DConnectProfile *) profileWithName:(NSString *)name {
     if (name) {
-        return [_mProfileMap objectForKey:name];
+        NSString *lowerName = [name lowercaseString];
+        return [_mProfileMap objectForKey:lowerName];
     }
     return nil;
 }
@@ -561,6 +623,10 @@ NSString *const DConnectAttributeNameRequestAccessToken = @"requestAccessToken";
 }
 
 - (BOOL) allowsOriginOfRequest:(DConnectRequestMessage *)requestMessage{
+    BOOL isEnable = [self.settings useOriginEnable];
+    if (!isEnable) {
+        return YES;
+    }
     NSString *originExp = [requestMessage origin];
     if (!originExp) {
         return NO;
@@ -574,6 +640,189 @@ NSString *const DConnectAttributeNameRequestAccessToken = @"requestAccessToken";
     }
     id<DConnectOrigin> origin = [DConnectOriginParser parse:originExp];
     return [[DConnectWhitelist sharedWhitelist] allows:origin];
+}
+
+- (void)convertLowerProfileInterfaceAttributeWithRequest: (DConnectRequestMessage *)request {
+    
+    NSString *profile = [request profile];
+    NSString *attribute = [request attribute];
+    NSString *interface = [request interface];
+    
+    if (profile != nil) {
+        [request setProfile: [profile lowercaseString]];
+    }
+    if (attribute != nil) {
+        [request setAttribute: [attribute lowercaseString]];
+    }
+    if (interface != nil) {
+        [request setInterface:[interface lowercaseString]];
+    }
+}
+
+- (void) matchingProfileInterfaceAttributeWithRequest: (DConnectRequestMessage *)request {
+    
+    // Profile新旧対応テーブル(key:新 / val:旧)
+    NSDictionary *profileConvertTable = @{
+                                         @"drivecontroller":@"drive_controller",
+                                         @"filedescriptor":@"file_descriptor",
+                                         @"mediaplayer":@"media_player",
+                                         @"mediastreamrecording":@"mediastream_recording",
+                                         @"omnidirectionalimage":@"omnidirectional_image",
+                                         @"remotecontroller":@"remote_controller"
+                                         };
+    // attribute新旧対応テーブル(key:新 / val:旧)
+    NSDictionary *attributeConvertTable = @{
+                                           @"medialist":@"media_list",
+                                           @"playstatus":@"play_status"
+                                           };
+    
+    // リクエストのProfile,Attributeが新旧対応テーブルに存在しなければ変換しない
+    NSString *serviceId = [request serviceId];
+    NSString *profile = [request profile];
+    NSString *attribute = [request attribute];
+    
+    // ServiceIdが存在しない場合はなにもしないで終了
+    if (serviceId == nil) {
+        return;
+    }
+    
+    // デバイスプラグインのプロファイル一覧が取得できなかったらなにもしないで終了
+    DConnectDevicePlugin *dp = [self.mDeviceManager devicePluginForServiceId:serviceId];
+    if (dp == nil) {
+        return;
+    }
+    NSArray *dpProfiles = [dp profiles];
+    if (dpProfiles == nil) {
+        return;
+    }
+    
+    // リクエストされたプロファイルが変換テーブル上に存在する？
+    BOOL dpIsNew = NO;
+    BOOL dpIsOld = NO;
+    if (profile != nil) {
+        NSDictionary *resultWithRequestProfile =
+        [self searchNameConvertTableWithName : profile
+                                convertTable : profileConvertTable];
+        if (resultWithRequestProfile != nil) {
+            
+            // テーブルに存在する(新旧どちらにマッチしたかも分かる)
+            BOOL requestProfileIsNew = [resultWithRequestProfile[MATCH_NEW_NAME]
+                                        isEqualToString: MATCH_YES];
+            BOOL requestProfileIsOld = [resultWithRequestProfile [MATCH_OLD_NAME]
+                                        isEqualToString: MATCH_YES];
+            NSString *newProfile = resultWithRequestProfile[NEW_NAME];
+            NSString *oldProfile = resultWithRequestProfile[OLD_NAME];
+            
+            // デバイスプラグインが持っているプロファイルが新旧どちらなのか判定する
+            
+            if ([dp profileWithName: newProfile]) {
+                dpIsNew = YES;
+            }
+            else if ([dp profileWithName: oldProfile]) {
+                dpIsOld = YES;
+            } else {
+                // serviceIdが"test_service_id.DeviceTestPlugin.dconnect"のようになっているので"test_service_id"に変換する
+                NSArray *domains = [serviceId componentsSeparatedByString:@"."];
+                if (domains && [domains count] > 0) {
+                    NSString *serviceId_ = domains[0];
+                    NSArray *serviceProfiles = [dp serviceProfilesWithServiceId: serviceId_];
+                    for (DConnectProfile *serviceProfile in serviceProfiles) {
+                        NSString *serviceProfileName = [[serviceProfile profileName] lowercaseString];
+                        if ([newProfile isEqualToString: serviceProfileName]) {
+                            dpIsNew = YES;
+                            break;
+                        } else if ([oldProfile isEqualToString: serviceProfileName]) {
+                            dpIsOld = YES;
+                            break;
+                        }
+                    }
+                }
+            }
+            
+            // リクエストされたプロファイルとデバイスプラグインのプロファイルのレベルが合わない場合はデバイスプラグインに合わせて変換する
+            if (requestProfileIsOld && dpIsNew) {
+                [request setProfile: newProfile];
+            }
+            else if (requestProfileIsNew && dpIsOld) {
+                [request setProfile: oldProfile];
+            }
+        }
+    }
+    
+    // リクエストされたattributeが変換テーブル上に存在する？
+    if (attribute != nil) {
+        NSDictionary *resultWithRequestAttribute =
+        [self searchNameConvertTableWithName : attribute
+                                convertTable : attributeConvertTable];
+        if (resultWithRequestAttribute != nil) {
+            
+            // テーブルに存在する(新旧どちらにマッチしたかも分かる)
+            BOOL requestAttributeIsNew = [resultWithRequestAttribute[MATCH_NEW_NAME]
+                                          isEqualToString: MATCH_YES];
+            BOOL requestAttributeIsOld = [resultWithRequestAttribute[MATCH_OLD_NAME]
+                                          isEqualToString: MATCH_YES];
+            NSString *newAttribute = resultWithRequestAttribute[NEW_NAME];
+            NSString *oldAttribute = resultWithRequestAttribute[OLD_NAME];
+            
+            // リクエストされたattributeとデバイスプラグインのattributeのレベルが合わない場合はデバイスプラグインに合わせて変換する
+            if (requestAttributeIsOld && dpIsNew) {
+                [request setAttribute: newAttribute];
+            }
+            else if (requestAttributeIsNew && dpIsOld) {
+                [request setAttribute: oldAttribute];
+            }
+        }
+    }
+}
+
+- (NSDictionary *) searchNameConvertTableWithName : (NSString *)name
+                                     convertTable : (NSDictionary *)convertTable {
+    
+    // 新名称でマッチした
+    NSString *oldName = convertTable[name];
+    if (oldName != nil) {
+        NSDictionary *result = @{
+                                 MATCH_OLD_NAME:MATCH_NO,
+                                 MATCH_NEW_NAME:MATCH_YES,
+                                 OLD_NAME:oldName,
+                                 NEW_NAME:name,
+                                 };
+        return result;
+    }
+    // 旧名称でマッチした
+    NSArray *newNames = [convertTable allKeysForObject: name];
+    if (newNames != nil && [newNames count] > 0) {
+        NSString *newName = [newNames objectAtIndex: 0];
+        
+        NSDictionary *result = @{
+                                 MATCH_OLD_NAME:MATCH_YES,
+                                 MATCH_NEW_NAME:MATCH_NO,
+                                 OLD_NAME:name,
+                                 NEW_NAME:newName,
+                                 };
+        return result;
+    }
+    
+    // 新名称も旧名称もマッチしなかった
+    return nil;
+}
+
+- (NSArray*)devicePluginsList
+{
+    return [self.mDeviceManager devicePluginList];
+}
+
+- (NSString *)devicePluginIdForServiceId:(NSString *)serviceId
+{
+    DConnectDevicePlugin *plugin = [self.mDeviceManager devicePluginForServiceId:serviceId];
+    return [plugin pluginId];
+}
+
+- (NSString *)iconFilePathForServiceId:(NSString *)serviceId isOnline:(BOOL)isOnline
+{
+    DConnectDevicePlugin *plugin = [self.mDeviceManager devicePluginForServiceId:serviceId];
+    return [plugin iconFilePath:isOnline];
+
 }
 
 @end

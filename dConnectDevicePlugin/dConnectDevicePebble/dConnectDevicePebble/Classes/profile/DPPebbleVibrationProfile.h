@@ -12,6 +12,6 @@
 /*!
  @brief Pebble用 Vibrationプロファイル。
  */
-@interface DPPebbleVibrationProfile : DConnectVibrationProfile <DConnectVibrationProfileDelegate>
+@interface DPPebbleVibrationProfile : DConnectVibrationProfile
 
 @end

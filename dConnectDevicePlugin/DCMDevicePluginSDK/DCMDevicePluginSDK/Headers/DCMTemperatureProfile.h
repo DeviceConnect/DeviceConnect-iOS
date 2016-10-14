@@ -37,39 +37,6 @@ enum {
 };
 
 
-@class DCMTemperatureProfile;
-
-
-/*!
- @protocol DCMTemperatureProfileDelegate
- @brief TemperatureProfile各APIリクエスト通知用デリゲート。
- 
-  Temperature Profileの各APIへのリクエスト受信通知を受け取るデリゲート。
- */
-@protocol DCMTemperatureProfileDelegate<NSObject>
-@optional
-
-/*!
- @brief 温度の取得.<br>
- 
- 実装されない場合には、Not supportのエラーが返却される。
- <pre>
- [対応するRESTful]
- PUT http://{dConnectドメイン}/temperature?serviceId=xxxxx
- </pre>
- @param[in] profile プロファイル
- @param[in] request リクエスト
- @param[in,out] response レスポンス
- @param[in] serviceId サービスID
- @retval YES レスポンスパラメータを返却する
- @retval NO レスポンスパラメータを返却しないので、@link DConnectManager::sendResponse: @endlinkで返却すること。
- */
-- (BOOL)                        profile:(DCMTemperatureProfile *)profile
-        didReceiveGetTemperatureRequest:(DConnectRequestMessage *)request
-                               response:(DConnectResponseMessage *)response
-                               serviceId:(NSString *)serviceId;
-@end
-
 /*!
  @class DCMTemperatureProfile
  @brief Temperatureプロファイル。
@@ -78,11 +45,5 @@ enum {
  受信したリクエストは各API毎にデリゲートに通知される。
  */
 @interface DCMTemperatureProfile : DConnectProfile
-/*!
- @brief DCMTemperatureProfileのデリゲートオブジェクト。
- 
- デリゲートは @link DCMTemperatureProfileDelegate @endlink を実装しなくてはならない。
- デリゲートはretainされない。
- */
-@property (nonatomic, assign) id<DCMTemperatureProfileDelegate> delegate;
+
 @end

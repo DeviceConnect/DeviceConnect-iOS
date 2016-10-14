@@ -38,71 +38,6 @@ extern NSString *const DConnectVibrationProfileVibrationDurationDelim;
  */
 extern const long long DConnectVibrationProfileDefaultMaxVibrationTime;
 
-@class DConnectVibrationProfile;
-
-/*!
- @protocol DConnectVibrationProfileDelegate
- @brief Vibration Profileの各APIリクエスト通知用デリゲート。
- 
- Vibration Profileの各APIへのリクエスト受信通知を受け取るデリゲート。
- */
-@protocol DConnectVibrationProfileDelegate <NSObject>
-@optional
-
-#pragma mark - Put Methods
-
-/*!
- 
- @brief バイブ鳴動開始リクエストを受け取ったことをデリゲートに通知する。
- 
- profileがバイブ鳴動開始リクエストを受け取ったことをデリゲートに通知する。<br>
- 実装されない場合には、Not supportのエラーが返却される。
- 
- <p>
- [対応するAPI] Vibration Start API [PUT]
- </p>
- 
- @param[in] profile プロファイル
- @param[in] request リクエストパラメータ
- @param[in,out] response レスポンスパラメータ
- @param[in] serviceId サービスID
- @param[in] pattern 鳴動パターン
- 
- @retval YES レスポンスパラメータを返却する。
- @retval NO レスポンスパラメータを返却しないので、@link DConnectManager::sendResponse: @endlinkで返却すること。
- */
-- (BOOL) profile:(DConnectVibrationProfile *)profile didReceivePutVibrateRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response
-        serviceId:(NSString *)serviceId
-         pattern:(NSArray *) pattern;
-
-#pragma mark - Delete Methods
-
-/*!
- 
- @brief バイブ鳴動停止リクエストを受け取ったことをデリゲートに通知する。
- 
- profileがバイブ鳴動停止リクエストを受け取ったことをデリゲートに通知する。<br>
- 実装されない場合には、Not supportのエラーが返却される。
- 
- <p>
- [対応するAPI] Vibration Stop API [DELETE]
- </p>
- 
- @param[in] profile プロファイル
- @param[in] request リクエストパラメータ
- @param[in,out] response レスポンスパラメータ
- @param[in] serviceId サービスID
- 
- @retval YES レスポンスパラメータを返却する。
- @retval NO レスポンスパラメータを返却しないので、@link DConnectManager::sendResponse: @endlinkで返却すること。
- */
-- (BOOL) profile:(DConnectVibrationProfile *)profile didReceiveDeleteVibrateRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response
-        serviceId:(NSString *)serviceId;
-
-@end
-
 /*!
  @class DConnectVibrationProfile
  @brief Vibrationプロファイル。
@@ -111,15 +46,6 @@ extern const long long DConnectVibrationProfileDefaultMaxVibrationTime;
  受信したリクエストは各API毎にデリゲートに通知される。
  */
 @interface DConnectVibrationProfile : DConnectProfile
-
-
-/*!
-@brief DConnectVibrationProfileのデリゲートオブジェクト。
-
-デリゲートは @link DConnectVibrationProfileDelegate @endlink を実装しなくてはならない。
-デリゲートはretainされない。
-*/
-@property (nonatomic, weak) id<DConnectVibrationProfileDelegate> delegate;
 
 /*!
  @brief バイブレーションの最大鳴動時間。

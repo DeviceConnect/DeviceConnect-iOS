@@ -164,6 +164,9 @@
     
         //ブックマークまたは履歴なのでPageモデルを渡す
         if([page.type isEqualToString:TYPE_BOOKMARK]){
+            page.latest_opened_date = [NSDate date];
+            [[GHDataManager shareManager]save];
+            
             NSDictionary* dict = @{PAGE_URL:page.url};
             [GHUtils postNotification:dict withKey:SHOW_WEBPAGE];
             [self dismissViewControllerAnimated:YES completion:nil];

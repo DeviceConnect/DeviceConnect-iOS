@@ -15,7 +15,7 @@
  */
 #import <DConnectSDK/DConnectSDK.h>
 
-/*! @brief プロファイル名: omnidirectional_image。 */
+/*! @brief プロファイル名: omnidirectionalImage。 */
 extern NSString *const DPOmnidirectionalImageProfileName;
 
 
@@ -89,7 +89,7 @@ extern NSString *const DPOmnidirectionalImageProfileParamURI;
  実装されない場合には、Not supportのエラーが返却される。
  <pre>
  [対応するRESTful]
- GET http://{dConnectドメイン}/omnidirectional_image/roi?serviceId=xxxxx
+ GET http://{dConnectドメイン}/omnidirectionalImage/roi?serviceId=xxxxx
  </pre>
  @param[in] profile プロファイル
  @param[in] request リクエスト
@@ -112,7 +112,7 @@ extern NSString *const DPOmnidirectionalImageProfileParamURI;
  実装されない場合には、Not supportのエラーが返却される。
  <pre>
  [対応するRESTful]
- PUT http://{dConnectドメイン}/omnidirectional_image/roi?serviceId=xxxxx&source=yyyyyyyyy
+ PUT http://{dConnectドメイン}/omnidirectionalImage/roi?serviceId=xxxxx&source=yyyyyyyyy
  </pre>
  @param[in] profile プロファイル
  @param[in] request リクエスト
@@ -133,7 +133,7 @@ extern NSString *const DPOmnidirectionalImageProfileParamURI;
  実装されない場合には、Not supportのエラーが返却される。
  <pre>
  [対応するRESTful]
- PUT http://{dConnectドメイン}/omnidirectional_image/roi/settings?serviceId=xxxxx
+ PUT http://{dConnectドメイン}/omnidirectionalImage/roi/settings?serviceId=xxxxx
  </pre>
  @param[in] profile プロファイル
  @param[in] request リクエスト
@@ -153,7 +153,7 @@ extern NSString *const DPOmnidirectionalImageProfileParamURI;
  実装されない場合には、Not supportのエラーが返却される。
  <pre>
  [対応するRESTful]
- DELETE http://{dConnectドメイン}/omnidirectional_image/roi?serviceId=xxxxx
+ DELETE http://{dConnectドメイン}/omnidirectionalImage/roi?serviceId=xxxxx
  </pre>
  @param[in] profile プロファイル
  @param[in] request リクエスト

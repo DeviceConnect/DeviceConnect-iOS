@@ -165,7 +165,8 @@
 - (GHBookmarkCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     GHBookmarkCell *cell = [tableView dequeueReusableCellWithIdentifier:CELL_ID forIndexPath:indexPath];
-    [self configureCell:cell atIndexPath:indexPath controller:self.fetchedResultsController];
+    Page* page = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    [cell configureCell:page atIndexPath:indexPath isEditing:isEditing];
     return cell;
 }
 
@@ -184,6 +185,7 @@
         }
     }else{
         if ([page.type isEqualToString:TYPE_BOOKMARK]){
+            page.latest_opened_date = [NSDate date];
 
             //ブックマーク
             NSDictionary* dict = @{PAGE_URL:page.url};
@@ -338,9 +340,11 @@
             break;
             
         case NSFetchedResultsChangeUpdate:
-            [self configureCell:(GHBookmarkCell *)[tableView cellForRowAtIndexPath:indexPath]
-                    atIndexPath:indexPath
-                     controller:controller];
+        {
+            GHBookmarkCell *cell = (GHBookmarkCell *)[tableView cellForRowAtIndexPath:indexPath];
+            Page* page = [self.fetchedResultsController objectAtIndexPath:indexPath];
+            [cell configureCell:page atIndexPath:indexPath isEditing:isEditing];
+        }
             break;
             
         case NSFetchedResultsChangeMove:
@@ -356,45 +360,6 @@
 {
     [self.tableView endUpdates];
 }
-
-/**
- * セルの表示内容をセット
- * @param cell 対象のセル
- * @param indexPath indexPath
- * @param controller NSFetchedResultsController
- */
-- (void)configureCell:(GHBookmarkCell *)cell atIndexPath:(NSIndexPath *)indexPath
-           controller:(NSFetchedResultsController *)controller
-{
-    cell.accessoryType = UITableViewCellAccessoryNone;
-    cell.editingAccessoryType = UITableViewCellAccessoryNone;
-    
-    Page* page = [controller objectAtIndexPath:indexPath];
-    cell.textLabel.text = page.title;
-    
-    if ([page.type isEqualToString:TYPE_FAVORITE]) {
-        //お気に入り
-        cell.imageView.image = [UIImage imageNamed:@"star"];
-        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        
-        if (isEditing) {
-            cell.textLabel.tintColor = [UIColor grayColor];
-        }
-        
-    }else if ([page.type isEqualToString:TYPE_BOOKMARK]){
-        //ブックマーク
-        cell.imageView.image = [UIImage imageNamed:@"bookmark"];
-        
-        //編集中のアクセサリー
-        cell.editingAccessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        
-    }else if ([page.type isEqualToString:TYPE_FOLDER]){
-        //フォルダ
-        cell.imageView.image = [UIImage imageNamed:@"folder"];
-        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    }
-}
-
 
  - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
  {

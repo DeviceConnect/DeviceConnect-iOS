@@ -13,27 +13,43 @@
 #import <DConnectSDK/DConnectSDK.h>
 #import <SafariServices/SafariServices.h>
 #import "AppDelegate.h"
-@interface ViewController (){
-    SFSafariViewController *sfSafariViewController;
+#import "BookmarkIconViewCell.h"
+#import "TopCollectionHeaderView.h"
+#import "InitialGuideViewController.h"
+#import "WebViewController.h"
+#import "DeviceIconViewCell.h"
+#import "DeviceMoreViewCell.h"
+#import "GHDeviceListViewController.h"
+#import "GHDeviceUtil.h"
+
+@interface ViewController ()
+{
+    TopViewModel *viewModel;
 }
 
-@property (nonatomic, strong) GHURLManager *manager;
-@property (nonatomic) NSString* url;
-@property (strong, nonatomic) IBOutlet UIView *searchView;
-@property (nonatomic, strong) GHHeaderView *headerView;
+@property (nonatomic, strong) IBOutlet GHHeaderView *headerView;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *headerHeight;
+@property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
+@property (strong, nonatomic) UILabel* emptyBookmarksLabel;
+@property (strong, nonatomic) UILabel* emptyDevicesLabel;
+@property (strong, nonatomic) IBOutlet UIView* loadingView;
 
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *iconTopLeading;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *iconWidthSize;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *iconHeightSize;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *searchViewWidthSize;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *searchViewHeightSize;
 - (IBAction)openBookmarkView:(id)sender;
-- (IBAction)openSettingView:(id)sender;
 - (IBAction)onTapView:(id)sender;
 
 @end
 
 @implementation ViewController
+
+- (instancetype)initWithCoder:(NSCoder *)aDecoder
+{
+    self = [super initWithCoder:aDecoder];
+    if (self) {
+        viewModel = [[TopViewModel alloc] init];
+        viewModel.delegate = self;
+    }
+    return self;
+}
 
 - (void)viewDidLoad {
     id<UIApplicationDelegate> appDelegate
@@ -45,66 +61,77 @@
                  [self openSafariViewInternalWithURL:redirectURL.absoluteString];
              }
          }];
+        [(AppDelegate *)appDelegate setRequestToCloseSafariView:^{
+            if (appDelegate.window.rootViewController.presentedViewController != nil) {
+                [self dismissViewControllerAnimated:false completion:nil];
+            }
+        }];
     }
 
-    DConnectManager *mgr = [DConnectManager sharedManager];
-
     [super viewDidLoad];
-    CGFloat barW = 300;
-    NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
+    [viewModel initialSetup];
 
-    BOOL isOriginBlock = [def boolForKey:IS_ORIGIN_BLOCKING];
-    mgr.settings.useOriginBlocking = isOriginBlock;
+    self.headerView.delegate = self;
 
-    CGRect frame = CGRectMake(15, 10, barW, 44);
-    _manager = [[GHURLManager alloc]init];
-    _url = @"http://www.google.com";
-    _headerView = [[GHHeaderView alloc] initWithFrame:frame];
-    _headerView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-    _headerView.delegate = self;
-    [_searchView addSubview:_headerView];
+
     //ブックマークのweb表示通知
     [[NSNotificationCenter defaultCenter] addObserver:self
                                             selector:@selector(showWebPage:)
                                                 name:SHOW_WEBPAGE object:nil];
-    
-    [[NSNotificationCenter defaultCenter]addObserver:self
-                                            selector:@selector(keyboardWillBeShown:)
-                                                name:UIKeyboardWillShowNotification object:nil];
-    [[NSNotificationCenter defaultCenter]addObserver:self
-                                            selector:@selector(keyboardWillBeHidden:)
-                                                name:UIKeyboardWillHideNotification object:nil];
-    
-}
-- (void)viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
-    DConnectManager *mgr = [DConnectManager sharedManager];
-    NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
-    [def setBool:mgr.settings.useOriginBlocking forKey:IS_ORIGIN_BLOCKING];
-}
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(enterForeground:)
+                                                 name:UIApplicationWillEnterForegroundNotification object:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
+
     [super viewWillAppear:animated];
-    [self rotateOrientation:[[UIApplication sharedApplication] statusBarOrientation]];
-    NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
-    [center addObserver:self selector:@selector(enterForeground:)
-                   name:UIApplicationWillEnterForegroundNotification object:nil];
 
 }
 
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    __weak ViewController* _self = self;
+    NSUserDefaults* def = [NSUserDefaults standardUserDefaults];
+    if ([def boolForKey:IS_INITIAL_GUIDE_OPEN]) {
+        [viewModel updateDeviceList];
+        [viewModel updateDatasource];
+        [_self.collectionView reloadData];
+        [_self addEmptyLabelIfNeeded];
+    }
+    if ([viewModel isNeedOpenInitialGuide]) {
+        [self openInitialGuide];
+    }
 
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+//    [viewModel saveSettings];
+}
+
+// landscape時にはステータスバーが無くなるのでその分headerViewの高さを短くする
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
                                 duration:(NSTimeInterval)duration
 {
     [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
-    [self rotateOrientation:toInterfaceOrientation];
+
+    if ([[UIDevice currentDevice]userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
+        return;
+    }
+
+    if ((toInterfaceOrientation == UIDeviceOrientationLandscapeLeft ||
+         toInterfaceOrientation == UIDeviceOrientationLandscapeRight))
+    {
+        self.headerHeight.constant = 44;
+    } else {
+        self.headerHeight.constant = 64;
+    }
+
+    [self.view setNeedsUpdateConstraints];
 }
 
 - (void)dealloc
@@ -113,8 +140,51 @@
     [[NSNotificationCenter defaultCenter]removeObserver:self];
 }
 
-#pragma mark - open UI
 
+- (void)addEmptyLabelIfNeeded
+{
+    if (viewModel.isBookmarksEmpty) {
+        if (!self.emptyBookmarksLabel) {
+            self.emptyBookmarksLabel = [self makeEmptyLabel: CGRectMake(0, 50, 320, 220)
+                                                    message:@"ブックマークがありません。\nブックマークを登録してください。"];
+            [self.collectionView addSubview:self.emptyBookmarksLabel];
+        }
+    } else {
+        [self.emptyBookmarksLabel removeFromSuperview];
+        self.emptyBookmarksLabel = nil;
+    }
+
+    if (viewModel.isDeviceEmpty && !viewModel.isDeviceLoading) {
+        self.emptyDevicesLabel = [self makeEmptyLabel: CGRectMake(0, 300, 320, 220)
+                                             message:@"デバイスが接続されていません。\nプラグインから設定を行ってください。"];
+        [self.collectionView addSubview:self.emptyDevicesLabel];
+    } else {
+        [self.emptyDevicesLabel removeFromSuperview];
+        self.emptyDevicesLabel = nil;
+    }
+
+    if (viewModel.isDeviceLoading) {
+        self.loadingView.frame = CGRectMake(0, 300, self.collectionView.frame.size.width, 220);
+        [self.collectionView addSubview: self.loadingView];
+    } else {
+        [self.loadingView removeFromSuperview];
+    }
+}
+
+- (UILabel*)makeEmptyLabel:(CGRect)rect message:(NSString*)message
+{
+    UILabel *label = [[UILabel alloc]initWithFrame:rect];
+    label.text = message;
+    label.numberOfLines = 2;
+    label.textAlignment = NSTextAlignmentCenter;
+    label.textColor = HEXCOLOR(0x666666);
+    label.backgroundColor = [UIColor whiteColor];
+    return label;
+}
+
+//--------------------------------------------------------------//
+#pragma mark - open UI
+//--------------------------------------------------------------//
 
 - (IBAction)openBookmarkView:(id)sender {
     //ストーリーボードから取得
@@ -123,11 +193,6 @@
     [self presentViewController:bookmark animated:YES completion:nil];
 }
 
-- (IBAction)openSettingView:(id)sender {
-    GHSettingController *setting = [[GHSettingController alloc]initWithStyle:UITableViewStyleGrouped];
-    UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:setting];
-    [self presentViewController:nav animated:YES completion:nil];
-}
 
 - (IBAction)onTapView:(id)sender {
     [self.view endEditing:YES];
@@ -135,40 +200,51 @@
 
 - (void)openSafariViewInternalWithURL:(NSString*)url
 {
-    //文字列がURLの場合
-    _url = [self.manager isURLString:url];
-    if ([url rangeOfString:@"#"].location != NSNotFound) {
-        _url = url;
-    } else if (!_url) {
-        _url = [self.manager createSearchURL:url];
+    // 
+    AppDelegate* delegate = [UIApplication sharedApplication].delegate;
+    if (delegate.window.rootViewController.presentedViewController != nil) {
+        [self dismissViewControllerAnimated:false completion:nil];
     }
+
     void (^loadSFSafariViewControllerBlock)(NSURL *) = ^(NSURL *url) {
-        sfSafariViewController = [[SFSafariViewController alloc] initWithURL:url entersReaderIfAvailable:YES];
+        SFSafariViewController* sfSafariViewController = [[SFSafariViewController alloc] initWithURL:url entersReaderIfAvailable:YES];
         sfSafariViewController.delegate = self;
         [self presentViewController:sfSafariViewController animated:YES completion:nil];
     };
-    loadSFSafariViewControllerBlock([NSURL URLWithString:_url]);
+    loadSFSafariViewControllerBlock([NSURL URLWithString: [viewModel checkUrlString:url].stringByRemovingPercentEncoding]);
+}
+
+- (void)openInitialGuide
+{
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"InitialGuide" bundle:[NSBundle mainBundle]];
+    InitialGuideViewController *controller = (InitialGuideViewController*)[storyboard instantiateViewControllerWithIdentifier:@"InitialGuideViewController"];
+    [self presentViewController:controller animated:YES completion:nil];
+}
+
+- (IBAction)openHelpView
+{
+    NSString* path = [[NSBundle mainBundle]pathForResource:@"help" ofType:@"html"];
+    WebViewController* webView = [[WebViewController alloc]initWithPath: path];
+    UINavigationController* nav = [[UINavigationController alloc]initWithRootViewController:webView];
+    [self presentViewController:nav animated:YES completion:nil];
+}
+
+
+- (void)openDeviceDetail:(DConnectMessage*)message
+{
+    //TODO: デバイス確認画面用のhtmlのpathを渡す
+    NSString* path = [[NSBundle mainBundle]pathForResource:@"device" ofType:@"html"];
+    WebViewController* controller = [[WebViewController alloc]initWithPath:path];
+    UINavigationController* nav = [[UINavigationController alloc]initWithRootViewController:controller];
+    [self presentViewController:nav animated:YES completion:nil];
 }
 
 //--------------------------------------------------------------//
 #pragma mark - GHHeaderViewDelegate delegate
 //--------------------------------------------------------------//
-
 - (void)urlUpadated:(NSString*)urlStr
 {
-    NSString *u = _headerView.searchBar.text;
-    [self openSafariViewInternalWithURL:u];
-}
-
-- (void)reload
-{
-    NSString *u = _headerView.searchBar.text;
-    [self openSafariViewInternalWithURL:u];
-}
-
-
-- (void)cancelLoading
-{
+    [self openSafariViewInternalWithURL:urlStr];
 }
 
 //--------------------------------------------------------------//
@@ -180,40 +256,7 @@
 }
 
 -(void)safariViewControllerDidFinish:(SFSafariViewController *)controller {
-    [sfSafariViewController dismissViewControllerAnimated:YES completion:nil];
-}
-
-
-#pragma mark - private method
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-    return YES;
-}
-- (void)rotateOrientation:(UIInterfaceOrientation)toInterfaceOrientation
-{
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-        [self iphoneLayoutWithOrientation:toInterfaceOrientation];
-    } else {
-        [self ipadLayoutWithOrientation:toInterfaceOrientation];
-    }
-    [self.view setNeedsUpdateConstraints];
-}
-
-- (void)iphoneLayoutWithOrientation:(int)toInterfaceOrientation
-{
-    if ((toInterfaceOrientation == UIDeviceOrientationLandscapeLeft ||
-        toInterfaceOrientation == UIDeviceOrientationLandscapeRight))
-    {
-        _iconTopLeading.constant = 20;
-    } else {
-        _iconTopLeading.constant = 70;
-    }
-}
-
-- (void)ipadLayoutWithOrientation:(int)toInterfaceOrientation
-{
-    _iconHeightSize.constant = 400;
-    _iconWidthSize.constant = 400;
-    _searchViewWidthSize.constant = 500;
+    [controller dismissViewControllerAnimated:YES completion:nil];
 }
 
 
@@ -226,21 +269,9 @@
  */
 - (void)showWebPage:(NSNotification*)notif
 {
-    NSDictionary *dict = notif.userInfo;
-    _url = [dict objectForKey:PAGE_URL];
-    
-    NSString *url = [self.manager isURLString:_url];
-    if ([_url rangeOfString:@"%23"].location != NSNotFound) {
-        _url = [_url stringByReplacingOccurrencesOfString:@"%23" withString:@"#"] ;
-    } else if (!url) {
-        url = [self.manager createSearchURL:url];
-    } 
-    [self performSelector:@selector(openSafariViewInternalWithURL:) withObject:_url afterDelay:0.75];
-    
-
+    NSString *url = [viewModel makeURLFromNotification: notif];
+    [self performSelector:@selector(openSafariViewInternalWithURL:) withObject:url afterDelay:0.75];
 }
-
-
 
 - (void) enterForeground:(NSNotification *)notification
 {
@@ -259,28 +290,101 @@
     }
 }
 
-
-
-- (void)keyboardWillBeShown:(NSNotification*)notif
+//--------------------------------------------------------------//
+#pragma mark - collectionViewDelegate
+//--------------------------------------------------------------//
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    if (([[UIApplication sharedApplication] statusBarOrientation] == UIDeviceOrientationLandscapeLeft ||
-         [[UIApplication sharedApplication] statusBarOrientation] == UIDeviceOrientationLandscapeRight))
-    {
-        _iconTopLeading.constant = 20 - _iconHeightSize.constant;
+    return [[viewModel.datasource objectAtIndex:section]count];
+}
+
+- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
+{
+    return [viewModel.datasource count];
+}
+
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    switch (indexPath.section) {
+        case Bookmark:
+        {
+            BookmarkIconViewCell* cell = (BookmarkIconViewCell*)[collectionView dequeueReusableCellWithReuseIdentifier:@"BookmarkIconViewCell" forIndexPath:indexPath];
+            Page* page = [[viewModel.datasource objectAtIndex:indexPath.section]objectAtIndex:indexPath.row];
+            if ([page isKindOfClass:[GHPageModel class]] && [page.type isEqualToString: TYPE_BOOKMARK_DUMMY]) {
+                [cell setEnabled:NO];
+            } else {
+                [cell setBookmark:page];
+                __weak ViewController *weakSelf = self;
+                [cell setDidIconSelected: ^(Page* page){
+                    [weakSelf openSafariViewInternalWithURL:page.url];
+                }];
+            }
+            return cell;
+        }
+            break;
+        case Device:
+        {
+            if ([viewModel.datasource count] < indexPath.section) {
+                break;
+            }
+            if ([[viewModel.datasource objectAtIndex:indexPath.section] count] < indexPath.row) {
+                break;
+            }
+            DConnectMessage* message = [[viewModel.datasource objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
+            if([message isKindOfClass:[DConnectMessage class]]) {
+                DeviceIconViewCell* cell = (DeviceIconViewCell*)[collectionView dequeueReusableCellWithReuseIdentifier:@"DeviceIconViewCell" forIndexPath:indexPath];
+                [cell setDevice:message];
+                __weak ViewController *weakSelf = self;
+                [cell setDidIconSelected: ^(DConnectMessage* message) {
+                    [weakSelf openDeviceDetail: message];
+                }];
+                return cell;
+            } else {
+                DeviceMoreViewCell* cell = (DeviceMoreViewCell*)[collectionView dequeueReusableCellWithReuseIdentifier:@"DeviceDetailIcon" forIndexPath:indexPath];
+                __weak ViewController *weakSelf = self;
+                [cell setDidDeviceMorelected: ^() {
+                    [weakSelf performSegueWithIdentifier:@"OpenDeviceList" sender:nil];
+                }];
+                return cell;
+            }
+        }
+            break;
+        default:
+            break;
+    }
+    UICollectionViewCell* cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"BookmarkIconViewCell" forIndexPath:indexPath];
+    return cell;
+}
+
+- (TopCollectionHeaderView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
+{
+    TopCollectionHeaderView* header = (TopCollectionHeaderView*)[collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:@"headerCell" forIndexPath:indexPath];
+    if (indexPath.section == Bookmark) {
+        header.titleLabel.text = @"ブックマーク";
     } else {
-        _iconTopLeading.constant = 70;
+        header.titleLabel.text = @"デバイス";
+    }
+    return header;
+}
+
+- (IBAction)didSelectItem:(UICollectionViewCell*)sender
+{
+    if ( [sender isKindOfClass:[BookmarkIconViewCell class]]) {
+        BookmarkIconViewCell* cell = (BookmarkIconViewCell*)sender;
+        [self openSafariViewInternalWithURL:cell.viewModel.page.url];
     }
 }
 
-- (void)keyboardWillBeHidden:(NSNotification*)notif
+
+//--------------------------------------------------------------//
+#pragma mark - TopViewModelDelegate
+//--------------------------------------------------------------//
+- (void)requestDatasourceReload
 {
-    if (([[UIApplication sharedApplication] statusBarOrientation] == UIDeviceOrientationLandscapeLeft ||
-         [[UIApplication sharedApplication] statusBarOrientation] == UIDeviceOrientationLandscapeRight))
-    {
-        _iconTopLeading.constant = 20;
-    } else {
-        _iconTopLeading.constant = 70;
-    }
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.collectionView reloadSections: [NSIndexSet indexSetWithIndex:Device]];
+        [self addEmptyLabelIfNeeded];
+    });
 }
 
 @end

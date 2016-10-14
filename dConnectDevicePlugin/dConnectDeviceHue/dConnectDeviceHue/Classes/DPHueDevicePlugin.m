@@ -8,12 +8,9 @@
 //
 
 #import "DPHueDevicePlugin.h"
-#import "DPHueServiceDiscoveryProfile.h"
 #import "DPHueSystemProfile.h"
-#import "DPHueLightProfile.h"
 #import "DPHueManager.h"
 #import "DPHueConst.h"
-
 
 NSString *const DPHueBundleName = @"dConnectDeviceHue_resources";
 
@@ -25,25 +22,17 @@ NSString *const DPHueBundleName = @"dConnectDeviceHue_resources";
 
 - (id) init {
     
-    self = [super init];
+    self = [super initWithObject: self];
     
     if (self) {
         
+        [[DPHueManager sharedManager] setServiceProvider: self.serviceProvider];
+        [[DPHueManager sharedManager] setPlugin: self];
+        
         self.pluginName = @"hue (Device Connect Device Plug-in)";
         
-        // Service Discovery Profileの追加
-        DPHueServiceDiscoveryProfile *networkProfile = [DPHueServiceDiscoveryProfile new];
+        [self addProfile:[DPHueSystemProfile new]];
         
-        // System Profileの追加
-        DPHueSystemProfile *systemProfile = [DPHueSystemProfile new];
-        
-        // Hue Profileの追加
-        DPHueLightProfile *hueProfile = [DPHueLightProfile new];
-        
-        [self addProfile:networkProfile];
-        [self addProfile:systemProfile];
-        [self addProfile:hueProfile];
-        [self addProfile:[DConnectServiceInformationProfile new]];
         __weak typeof(self) _self = self;
         dispatch_async(dispatch_get_main_queue(), ^{
             NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
@@ -81,6 +70,14 @@ NSString *const DPHueBundleName = @"dConnectDeviceHue_resources";
  */
 - (void) enterForeground {
     [[DPHueManager sharedManager] readBridgeList];
+}
+
+- (NSString*)iconFilePath:(BOOL)isOnline
+{
+    NSString *bundlePath = [[NSBundle mainBundle] pathForResource:@"dConnectDeviceHue_resources" ofType:@"bundle"];
+    NSBundle *bundle = [NSBundle bundleWithPath:bundlePath];
+    NSString* filename = isOnline ? @"dconnect_icon" : @"dconnect_icon_off";
+    return [bundle pathForResource:filename ofType:@"png"];
 }
 
 @end

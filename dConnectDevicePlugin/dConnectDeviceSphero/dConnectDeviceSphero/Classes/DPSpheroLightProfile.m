@@ -25,54 +25,167 @@ NSString *const SpheroCalibrationName = @"Sphero CalibrationLED";
 {
     self = [super init];
     if (self) {
-        self.delegate = self;
+        __weak DPSpheroLightProfile *weakSelf = self;
+
+        // API登録(didReceiveGetLightRequest相当)
+        NSString *getLightRequestApiPath = [self apiPath: nil
+                                           attributeName: nil];
+        [self addGetPath: getLightRequestApiPath
+                     api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+                         NSString *serviceId = [request serviceId];
+                         if (!serviceId) {
+                             [response setErrorToEmptyServiceId];
+                             return YES;
+                         }
+                         
+                         // 接続確認
+                         CONNECT_CHECK();
+                         
+                         DConnectArray *lights = [DConnectArray array];
+                         DConnectMessage *led = [DConnectMessage new];
+                         DConnectMessage *calibration = [DConnectMessage new];
+                         
+                         [response setResult:DConnectMessageResultTypeOk];
+                         
+                         //全体の色を変えるためのID
+                         [DConnectLightProfile setLightId:SpheroLED target:led];
+                         [DConnectLightProfile setLightName:SpheroLEDName target:led];
+                         [DConnectLightProfile setLightOn:[DPSpheroManager sharedManager].isLEDOn target:led];
+                         [DConnectLightProfile setLightConfig:@"" target:led];
+                         [lights addMessage:led];
+                         //CalibrationのライトをつけるためのID(ON/OFFのみ)
+                         [DConnectLightProfile setLightId:SpheroCalibration target:calibration];
+                         [DConnectLightProfile setLightName:SpheroCalibrationName target:calibration];
+                         [DConnectLightProfile setLightOn:[DPSpheroManager sharedManager].calibrationLightBright>0 target:calibration];
+                         [DConnectLightProfile setLightConfig:@"" target:calibration];
+                         [lights addMessage:calibration];
+                         
+                         [DConnectLightProfile setLights:lights target:response];
+                         
+                         return YES;
+                     }];
+        
+        // API登録(didReceivePostLightRequest相当)
+        NSString *postLightRequestApiPath = [self apiPath: nil
+                                            attributeName: nil];
+        [self addPostPath: postLightRequestApiPath
+                      api:^(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+                          
+                          NSString *serviceId = [request serviceId];
+                          NSString *lightId = [DConnectLightProfile lightIdFromRequest: request];
+                          NSNumber *brightness = [DConnectLightProfile brightnessFromRequest: request];
+                          NSString *color = [DConnectLightProfile colorFromRequest: request];
+                          NSArray *flashing = [DConnectLightProfile parsePattern: [DConnectLightProfile flashingFromRequest: request] isId:NO];
+                          
+                          return [weakSelf postLightRequest:request response:response serviceId:serviceId lightId:lightId brightness:brightness color:color flashing:flashing];
+                      }];
+        
+        // API登録(didReceivePutLightRequest相当)
+        NSString *putLightRequestApiPath = [self apiPath: nil
+                                           attributeName: nil];
+        [self addPutPath: putLightRequestApiPath
+                     api:^(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+                         
+                         NSString *serviceId = [request serviceId];
+                         NSString *lightId = [DConnectLightProfile lightIdFromRequest: request];
+                         NSNumber *brightness = [DConnectLightProfile brightnessFromRequest: request];
+                         if (!brightness
+                             || (brightness && ([brightness doubleValue] < 0.0 || [brightness doubleValue] > 1.0))) {
+                             [response setErrorToInvalidRequestParameterWithMessage:
+                              @"Parameter 'brightness' must be a value between 0 and 1.0."];
+                             return YES;
+                         }
+                         NSString *name = [request stringForKey:DConnectLightProfileParamName];
+                         NSString *color = [request stringForKey:DConnectLightProfileParamColor];
+                         NSArray *flashing = [DConnectLightProfile parsePattern: [DConnectLightProfile flashingFromRequest: request] isId:NO];
+                         if (!flashing) {
+                             [response setErrorToInvalidRequestParameterWithMessage:
+                              @"Parameter 'flashing' invalid."];
+                             return YES;
+                         }
+                         if (![weakSelf checkFlash:response flashing:flashing]) {
+                             return YES;
+                         }
+                         
+                         if (!serviceId) {
+                             [response setErrorToEmptyServiceId];
+                             return YES;
+                         }
+                         
+                         if (name == nil || [name isEqualToString:@""]) {
+                             [response setErrorToInvalidRequestParameterWithMessage:@"name is invalid."];
+                             return YES;
+                         }
+                         
+                         return [weakSelf postLightRequest:request response:response serviceId:serviceId lightId:lightId brightness:brightness color:color flashing:flashing];
+                     }];
+        
+        // API登録(didReceiveDeleteLightRequest相当)
+        NSString *deleteLightRequestApiPath = [self apiPath: nil
+                                              attributeName: nil];
+        [self addDeletePath: deleteLightRequestApiPath
+                        api:^(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+                            
+                            NSString *serviceId = [request serviceId];
+                            NSString *lightId = [DConnectLightProfile lightIdFromRequest: request];
+                            
+                            if (!serviceId) {
+                                [response setErrorToEmptyServiceId];
+                                return YES;
+                            }
+                            
+                            // 接続確認
+                            CONNECT_CHECK();
+                            
+                            if ([lightId isEqualToString:SpheroCalibration]) {
+                                // キャリブレーションライト消灯。
+                                [DPSpheroManager sharedManager].calibrationLightBright = 0;
+                            } else if ([lightId isEqualToString:SpheroLED]) {
+                                // LED消灯
+                                [DPSpheroManager sharedManager].LEDLightColor = [UIColor blackColor];
+                            } else {
+                                // lightId確認
+                                [response setErrorToInvalidRequestParameterWithMessage:@"lightId is Invalid."];
+                                return YES;
+                            }
+                            [response setResult:DConnectMessageResultTypeOk];
+                            
+                            return YES;
+                        }];
     }
     return self;
     
 }
 
-// デバイスのライトのステータスを取得する
-- (BOOL) profile:(DConnectLightProfile *)profile didReceiveGetLightRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response serviceId:(NSString *)serviceId
-{
-    // 接続確認
-    CONNECT_CHECK();
+-(BOOL) postLightRequest:(DConnectRequestMessage *)request
+                response:(DConnectResponseMessage *)response
+               serviceId:(NSString *)serviceId
+                 lightId:(NSString *)lightId
+              brightness:(NSNumber *)brightness
+                   color:(NSString *)color
+                flashing:(NSArray *)flashing {
     
-    DConnectArray *lights = [DConnectArray array];
-    DConnectMessage *led = [DConnectMessage new];
-    DConnectMessage *calibration = [DConnectMessage new];
+    if (!brightness
+        || (brightness && ([brightness doubleValue] < 0.0 || [brightness doubleValue] > 1.0))) {
+        [response setErrorToInvalidRequestParameterWithMessage:
+         @"Parameter 'brightness' must be a value between 0 and 1.0."];
+        return YES;
+    }
     
-    [response setResult:DConnectMessageResultTypeOk];
+    if (!flashing) {
+        [response setErrorToInvalidRequestParameterWithMessage:
+         @"Parameter 'flashing' invalid."];
+        return YES;
+    }
+    if (![self checkFlash:response flashing:flashing]) {
+        return YES;
+    }
     
-    //全体の色を変えるためのID
-    [DConnectLightProfile setLightId:SpheroLED target:led];
-    [DConnectLightProfile setLightName:SpheroLEDName target:led];
-    [DConnectLightProfile setLightOn:[DPSpheroManager sharedManager].isLEDOn target:led];
-    [DConnectLightProfile setLightConfig:@"" target:led];
-    [lights addMessage:led];
-    //CalibrationのライトをつけるためのID(ON/OFFのみ)
-    [DConnectLightProfile setLightId:SpheroCalibration target:calibration];
-    [DConnectLightProfile setLightName:SpheroCalibrationName target:calibration];
-    [DConnectLightProfile setLightOn:[DPSpheroManager sharedManager].calibrationLightBright>0 target:calibration];
-    [DConnectLightProfile setLightConfig:@"" target:calibration];
-    [lights addMessage:calibration];
+    if (!serviceId) {
+        [response setErrorToEmptyServiceId];
+        return YES;
+    }
     
-    [DConnectLightProfile setLights:lights target:response];
-    
-    return YES;
-}
-
-
-// デバイスのライトを点灯する
-- (BOOL)               profile:(DConnectLightProfile *)profile
-    didReceivePostLightRequest:(DConnectRequestMessage *)request
-                      response:(DConnectResponseMessage *)response
-                     serviceId:(NSString *)serviceId
-                       lightId:(NSString*)lightId
-                    brightness:(NSNumber*)brightness
-                         color:(NSString*)color
-                      flashing:(NSArray*)flashing
-{
     // 接続確認
     CONNECT_CHECK();
     
@@ -86,9 +199,9 @@ NSString *const SpheroCalibrationName = @"Sphero CalibrationLED";
     if (brightnessString &&
         (![[DPSpheroManager sharedManager] existDecimalWithString:brightnessString]
          || [brightness doubleValue] < 0 || [brightness doubleValue] > 1.0)) {
-        [response setErrorToInvalidRequestParameterWithMessage:@"invalid brightness value."];
-        return YES;
-    }
+            [response setErrorToInvalidRequestParameterWithMessage:@"invalid brightness value."];
+            return YES;
+        }
     
     if ([lightId isEqualToString:SpheroCalibration]) {
         // キャリブレーションライト点灯。 colorは変えられない。点灯、消灯のみ
@@ -139,48 +252,6 @@ NSString *const SpheroCalibrationName = @"Sphero CalibrationLED";
             // 点灯
             [DPSpheroManager sharedManager].LEDLightColor = ledColor;
         }
-    }
-    [response setResult:DConnectMessageResultTypeOk];
-    
-    return YES;
-}
-
-// デバイスのライトのステータスを変更する
-- (BOOL)              profile:(DConnectLightProfile *)profile
-    didReceivePutLightRequest:(DConnectRequestMessage *)request
-                     response:(DConnectResponseMessage *)response
-                    serviceId:(NSString *)serviceId
-                      lightId:(NSString*)lightId
-                         name:(NSString *)name
-                   brightness:(NSNumber*)brightness
-                        color:(NSString*)color
-                     flashing:(NSArray*)flashing
-{
-    if (name == nil || [name isEqualToString:@""]) {
-        [response setErrorToInvalidRequestParameterWithMessage:@"name is invalid."];
-        return YES;
-    }
-    return [self profile:profile didReceivePostLightRequest:request response:response serviceId:serviceId lightId:lightId brightness:brightness color:color flashing:flashing];
-}
-
-// デバイスのライトを消灯させる
-- (BOOL) profile:(DConnectLightProfile *)profile didReceiveDeleteLightRequest:(DConnectRequestMessage *)request
-        response:(DConnectResponseMessage *)response serviceId:(NSString *)serviceId
-         lightId:(NSString*) lightId
-{
-    // 接続確認
-    CONNECT_CHECK();
-    
-    if ([lightId isEqualToString:SpheroCalibration]) {
-        // キャリブレーションライト消灯。
-        [DPSpheroManager sharedManager].calibrationLightBright = 0;
-    } else if ([lightId isEqualToString:SpheroLED]) {
-        // LED消灯
-        [DPSpheroManager sharedManager].LEDLightColor = [UIColor blackColor];
-    } else {
-        // lightId確認
-        [response setErrorToInvalidRequestParameterWithMessage:@"lightId is Invalid."];
-        return YES;
     }
     [response setResult:DConnectMessageResultTypeOk];
     

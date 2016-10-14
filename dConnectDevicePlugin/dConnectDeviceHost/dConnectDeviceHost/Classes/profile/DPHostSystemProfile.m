@@ -25,47 +25,42 @@
 {
     self = [super init];
     if (self) {
-        self.delegate = self;
         self.dataSource = self;
+        __weak DPHostSystemProfile *weakSelf = self;
         
         // イベントマネージャを取得
         self.eventMgr = [DConnectEventManager sharedManagerForClass:[DPHostDevicePlugin class]];
+        
+        // API登録(settingPageForRequest相当)
+        NSString *putSettingPageForRequestApiPath = [self apiPath: DConnectSystemProfileInterfaceDevice
+                                                    attributeName: DConnectSystemProfileAttrWakeUp];
+        [self addPutPath: putSettingPageForRequestApiPath
+                     api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+                         
+                         BOOL send = [weakSelf didReceivePutWakeupRequest:request response:response];
+                         return send;
+                     }];
+        
+        // API登録(didReceiveDeleteEventsRequest相当)
+        NSString *deleteEventsRequestApiPath = [self apiPath: nil
+                                               attributeName: DConnectSystemProfileAttrEvents];
+        [self addDeletePath: deleteEventsRequestApiPath
+                     api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+                         
+                         NSString *sessionKey = [request sessionKey];
+                         
+                         if ([[weakSelf eventMgr] removeEventsForSessionKey:sessionKey]) {
+                             [response setResult:DConnectMessageResultTypeOk];
+                         } else {
+                             [response setErrorToUnknownWithMessage:
+                              @"Failed to remove events associated with the specified session key."];
+                         }
+                         
+                         return YES;
+                     }];
+
     }
     return self;
-}
-
-#pragma mark - DConnectSystemProfileDelegate
-
-#pragma mark - Put Methods
-
-//- (BOOL)            profile:(DConnectSystemProfile *)profile
-//didReceivePutKeywordRequest:(DConnectRequestMessage *)request
-//                   response:(DConnectResponseMessage *)response
-//{
-//    DPHostDevicePlugin *devicePlugin = SELF_PLUGIN;
-//    NSString *title = [NSString stringWithFormat:@"Keyword for %@", devicePlugin.pluginName];
-//    UIAlertView *alertView =
-//    [[UIAlertView alloc] initWithTitle:title message:devicePlugin.keyword
-//                              delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-//    [alertView show];
-//    return YES;
-//}
-
-#pragma mark - Delete Methods
-
-- (BOOL)              profile:(DConnectSystemProfile *)profile
-didReceiveDeleteEventsRequest:(DConnectRequestMessage *)request
-                     response:(DConnectResponseMessage *)response
-                   sessionKey:(NSString *)sessionKey
-{
-    if ([_eventMgr removeEventsForSessionKey:sessionKey]) {
-        [response setResult:DConnectMessageResultTypeOk];
-    } else {
-        [response setErrorToUnknownWithMessage:
-         @"Failed to remove events associated with the specified session key."];
-    }
-    
-    return YES;
 }
 
 #pragma mark - DConnectSystemProfileDataSource

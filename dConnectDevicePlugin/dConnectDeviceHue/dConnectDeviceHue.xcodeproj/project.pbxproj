@@ -44,6 +44,8 @@
 		64A6938A19BBEBBC0084D904 /* DPHueItemBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 64A6938919BBEBBC0084D904 /* DPHueItemBridge.m */; };
 		64BAEB541998D6A000BCDBDA /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 64BAEB531998D6A000BCDBDA /* UIKit.framework */; };
 		64BB087D19C335EE00C66903 /* HueSDK_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 64BB087C19C335EE00C66903 /* HueSDK_iOS.framework */; };
+		8EB854441D423FDD0035C0DC /* dconnect_icon_off.png in Resources */ = {isa = PBXBuildFile; fileRef = 8EB854421D423FDD0035C0DC /* dconnect_icon_off.png */; };
+		8EB854451D423FDD0035C0DC /* dconnect_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 8EB854431D423FDD0035C0DC /* dconnect_icon.png */; };
 		AB08A0F019920F8F0024C996 /* hue001.png in Resources */ = {isa = PBXBuildFile; fileRef = AB08A0E719920C860024C996 /* hue001.png */; };
 		AB08A0F119920F8F0024C996 /* hue002.png in Resources */ = {isa = PBXBuildFile; fileRef = AB08A0E819920C860024C996 /* hue002.png */; };
 		AB08A0F219920F8F0024C996 /* hue003.png in Resources */ = {isa = PBXBuildFile; fileRef = AB08A0E919920C860024C996 /* hue003.png */; };
@@ -57,7 +59,6 @@
 		AB1815E1196A3651000BE265 /* dConnectDeviceHueTests.m in Sources */ = {isa = PBXBuildFile; fileRef = AB1815E0196A3651000BE265 /* dConnectDeviceHueTests.m */; };
 		AB1815ED196A388B000BE265 /* DPHueDevicePlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = AB1815EC196A388B000BE265 /* DPHueDevicePlugin.m */; };
 		AB1815F1196A3B72000BE265 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = AB1815F0196A3B72000BE265 /* Info.plist */; };
-		AB181668196A3E89000BE265 /* DPHueServiceDiscoveryProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = AB181665196A3E89000BE265 /* DPHueServiceDiscoveryProfile.m */; };
 		AB181669196A3E89000BE265 /* DPHueSystemProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = AB181667196A3E89000BE265 /* DPHueSystemProfile.m */; };
 		AB181677196A6916000BE265 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB181676196A6916000BE265 /* CoreFoundation.framework */; };
 		AB18167D196A6916000BE265 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = AB18167B196A6916000BE265 /* InfoPlist.strings */; };
@@ -67,6 +68,8 @@
 		AB3A3FCC1B145B5000C40A88 /* hue_small_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = AB3A3FCA1B142C8200C40A88 /* hue_small_icon.png */; };
 		AB4E025319EE4C9900F385D0 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = AB4E025519EE4C9900F385D0 /* Localizable.strings */; };
 		AB85126B19E77C760038AD54 /* DPHueManager.m in Sources */ = {isa = PBXBuildFile; fileRef = AB85126A19E77C760038AD54 /* DPHueManager.m */; };
+		D6C860281D390C0300232EEF /* DPHueService.m in Sources */ = {isa = PBXBuildFile; fileRef = D6C860271D390C0300232EEF /* DPHueService.m */; };
+		D6D172811D647B7200444337 /* DPHueReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = D6D172801D647B7200444337 /* DPHueReachability.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -112,6 +115,8 @@
 		64A6938919BBEBBC0084D904 /* DPHueItemBridge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHueItemBridge.m; sourceTree = "<group>"; };
 		64BAEB531998D6A000BCDBDA /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		64BB087C19C335EE00C66903 /* HueSDK_iOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HueSDK_iOS.framework; path = "deps/PhilipsHueSDK-iOS-OSX/HueSDK_iOS.framework"; sourceTree = "<group>"; };
+		8EB854421D423FDD0035C0DC /* dconnect_icon_off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dconnect_icon_off.png; sourceTree = "<group>"; };
+		8EB854431D423FDD0035C0DC /* dconnect_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dconnect_icon.png; sourceTree = "<group>"; };
 		AB08A0E719920C860024C996 /* hue001.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hue001.png; sourceTree = "<group>"; };
 		AB08A0E819920C860024C996 /* hue002.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hue002.png; sourceTree = "<group>"; };
 		AB08A0E919920C860024C996 /* hue003.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hue003.png; sourceTree = "<group>"; };
@@ -127,8 +132,6 @@
 		AB1815EB196A388B000BE265 /* DPHueDevicePlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHueDevicePlugin.h; sourceTree = "<group>"; };
 		AB1815EC196A388B000BE265 /* DPHueDevicePlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHueDevicePlugin.m; sourceTree = "<group>"; };
 		AB1815F0196A3B72000BE265 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		AB181664196A3E89000BE265 /* DPHueServiceDiscoveryProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHueServiceDiscoveryProfile.h; sourceTree = "<group>"; };
-		AB181665196A3E89000BE265 /* DPHueServiceDiscoveryProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHueServiceDiscoveryProfile.m; sourceTree = "<group>"; };
 		AB181666196A3E89000BE265 /* DPHueSystemProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHueSystemProfile.h; sourceTree = "<group>"; };
 		AB181667196A3E89000BE265 /* DPHueSystemProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHueSystemProfile.m; sourceTree = "<group>"; };
 		AB181675196A6916000BE265 /* dConnectDeviceHue_resources.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = dConnectDeviceHue_resources.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -147,6 +150,10 @@
 		AB4E025819EE4CB000F385D0 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		AB85126919E77C760038AD54 /* DPHueManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHueManager.h; sourceTree = "<group>"; };
 		AB85126A19E77C760038AD54 /* DPHueManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHueManager.m; sourceTree = "<group>"; };
+		D6C860261D390C0300232EEF /* DPHueService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHueService.h; sourceTree = "<group>"; };
+		D6C860271D390C0300232EEF /* DPHueService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHueService.m; sourceTree = "<group>"; };
+		D6D1727F1D647B7200444337 /* DPHueReachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHueReachability.h; sourceTree = "<group>"; };
+		D6D172801D647B7200444337 /* DPHueReachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHueReachability.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -293,6 +300,10 @@
 				64A3E56519B93D1700B83DAF /* DPHueConst.h */,
 				AB85126919E77C760038AD54 /* DPHueManager.h */,
 				AB85126A19E77C760038AD54 /* DPHueManager.m */,
+				D6C860261D390C0300232EEF /* DPHueService.h */,
+				D6C860271D390C0300232EEF /* DPHueService.m */,
+				D6D1727F1D647B7200444337 /* DPHueReachability.h */,
+				D6D172801D647B7200444337 /* DPHueReachability.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -323,6 +334,8 @@
 		AB181678196A6916000BE265 /* dConnectDeviceHue_resources */ = {
 			isa = PBXGroup;
 			children = (
+				8EB854421D423FDD0035C0DC /* dconnect_icon_off.png */,
+				8EB854431D423FDD0035C0DC /* dconnect_icon.png */,
 				AB181679196A6916000BE265 /* Supporting Files */,
 			);
 			path = dConnectDeviceHue_resources;
@@ -341,8 +354,6 @@
 		AB8913B71974D2210069CDA3 /* profile */ = {
 			isa = PBXGroup;
 			children = (
-				AB181664196A3E89000BE265 /* DPHueServiceDiscoveryProfile.h */,
-				AB181665196A3E89000BE265 /* DPHueServiceDiscoveryProfile.m */,
 				AB181666196A3E89000BE265 /* DPHueSystemProfile.h */,
 				AB181667196A3E89000BE265 /* DPHueSystemProfile.m */,
 				AB181735196BE431000BE265 /* DPHueLightProfile.h */,
@@ -466,11 +477,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8EB854441D423FDD0035C0DC /* dconnect_icon_off.png in Resources */,
 				AB3A3FCC1B145B5000C40A88 /* hue_small_icon.png in Resources */,
 				AB4E025319EE4C9900F385D0 /* Localizable.strings in Resources */,
 				64278B5C19B896D500AC54E5 /* HueSetting_iPad.storyboard in Resources */,
 				AB08A0FE19930F260024C996 /* Info.plist in Resources */,
 				AB08A0F019920F8F0024C996 /* hue001.png in Resources */,
+				8EB854451D423FDD0035C0DC /* dconnect_icon.png in Resources */,
 				AB08A0F119920F8F0024C996 /* hue002.png in Resources */,
 				AB08A0F219920F8F0024C996 /* hue003.png in Resources */,
 				AB08A0F319920F8F0024C996 /* hue004.png in Resources */,
@@ -520,9 +533,10 @@
 				64278B6A19B8AEA800AC54E5 /* DPHueViewController.m in Sources */,
 				64278B6119B8ABAB00AC54E5 /* DPHueSettingViewController1.m in Sources */,
 				64278B6719B8AC6C00AC54E5 /* DPHueSettingViewController3.m in Sources */,
+				D6D172811D647B7200444337 /* DPHueReachability.m in Sources */,
 				AB3A3FC91B14088100C40A88 /* DPHueSettingViewController4.m in Sources */,
 				64278B6419B8AC5100AC54E5 /* DPHueSettingViewController2.m in Sources */,
-				AB181668196A3E89000BE265 /* DPHueServiceDiscoveryProfile.m in Sources */,
+				D6C860281D390C0300232EEF /* DPHueService.m in Sources */,
 				AB181737196BE431000BE265 /* DPHueLightProfile.m in Sources */,
 				AB181669196A3E89000BE265 /* DPHueSystemProfile.m in Sources */,
 				64A6938A19BBEBBC0084D904 /* DPHueItemBridge.m in Sources */,

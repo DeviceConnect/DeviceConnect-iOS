@@ -9,7 +9,7 @@
 
 #import "DPHostDevicePlugin.h"
 #import "DPHostProximityProfile.h"
-#import "DPHostServiceDiscoveryProfile.h"
+#import "DPHostService.h"
 #import "DPHostUtils.h"
 
 typedef void (^DPHostProximityBlock)(DConnectMessage *);
@@ -43,13 +43,12 @@ typedef void (^DPHostProximityBlock)(DConnectMessage *);
         }
         
         // YESを設定してYES；近接センサーがサポートされている。
-        self.delegate = self;
+        __weak DPHostProximityProfile *weakSelf = self;
         self.proximityBlock = nil;
         self.onceProximityBlock = nil;
         self.proximityState = NO;
         // イベントマネージャを取得
         self.eventMgr = [DConnectEventManager sharedManagerForClass:[DPHostDevicePlugin class]];
-        __unsafe_unretained typeof(self) weakSelf = self;
 
         dispatch_async(dispatch_get_main_queue(), ^{
             [UIDevice currentDevice].proximityMonitoringEnabled = YES;
@@ -58,6 +57,109 @@ typedef void (^DPHostProximityBlock)(DConnectMessage *);
                                                      selector:@selector(sendOnUserProximityEvent:)
                                                          name:UIDeviceProximityStateDidChangeNotification
                                                        object:nil];
+
+            // API登録(didReceiveGetOnUserProximityRequest相当)
+            NSString *getOnUserProximityRequestApiPath = [self apiPath: nil
+                                                         attributeName: DConnectProximityProfileAttrOnUserProximity];
+            [self addGetPath: getOnUserProximityRequestApiPath
+                          api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+                              
+                              DConnectMessage *proximity = [DConnectMessage message];
+                              [response setResult:DConnectMessageResultTypeOk];
+                              
+                              [DConnectProximityProfile setNear:weakSelf.proximityState target:proximity];
+                              [DConnectProximityProfile setProximity:proximity target:response];
+                              
+                              return YES;
+                          }];
+
+            // API登録(didReceivePutOnUserProximityRequest相当)
+            NSString *putOnUserProximityRequestApiPath = [self apiPath: nil
+                                                         attributeName: DConnectProximityProfileAttrOnUserProximity];
+            [self addPutPath: putOnUserProximityRequestApiPath
+                         api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+                             
+                             NSString *serviceId = [request serviceId];
+                             
+                             NSArray *evts = [[weakSelf eventMgr] eventListForServiceId:serviceId
+                                                                      profile:DConnectProximityProfileName
+                                                                    attribute:DConnectProximityProfileAttrOnUserProximity];
+                             if (evts.count == 0) {
+                                 weakSelf.proximityBlock = ^(DConnectMessage *message) {
+                                     // イベントの取得
+                                     NSArray *evts = [weakSelf.eventMgr eventListForServiceId:DPHostDevicePluginServiceId
+                                                                                      profile:DConnectProximityProfileName
+                                                                                    attribute:DConnectProximityProfileAttrOnUserProximity];
+                                     
+                                     DPHostDevicePlugin *plugin = (DPHostDevicePlugin *)weakSelf.plugin;
+                                     // イベント送信
+                                     for (DConnectEvent *evt in evts) {
+                                         DConnectMessage *eventMsg = [DConnectEventManager createEventMessageWithEvent:evt];
+                                         [DConnectProximityProfile setProximity:message target:eventMsg];
+                                         [plugin sendEvent:eventMsg];
+                                     }
+                                 };
+                                 dispatch_async(dispatch_get_main_queue(), ^{
+                                     [UIDevice currentDevice].proximityMonitoringEnabled = YES;
+                                     
+                                     [[NSNotificationCenter defaultCenter] addObserver:weakSelf
+                                                                              selector:@selector(sendOnUserProximityEvent:)
+                                                                                  name:UIDeviceProximityStateDidChangeNotification
+                                                                                object:nil];
+                                 });
+                             }
+                             
+                             switch ([[weakSelf eventMgr] addEventForRequest:request]) {
+                                 case DConnectEventErrorNone:             // エラー無し.
+                                     [response setResult:DConnectMessageResultTypeOk];
+                                     break;
+                                 case DConnectEventErrorInvalidParameter: // 不正なパラメータ.
+                                     [response setErrorToInvalidRequestParameter];
+                                     break;
+                                 case DConnectEventErrorNotFound:         // マッチするイベント無し.
+                                 case DConnectEventErrorFailed:           // 処理失敗.
+                                     [response setErrorToUnknown];
+                                     break;
+                             }
+                             
+                             return YES;
+                         }];
+
+            // API登録(didReceiveDeleteOnUserProximityRequest相当)
+            NSString *deleteOnUserProximityRequestApiPath = [self apiPath: nil
+                                                            attributeName: DConnectProximityProfileAttrOnUserProximity];
+            [self addDeletePath: deleteOnUserProximityRequestApiPath
+                            api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+                             
+                                NSString *serviceId = [request serviceId];
+                                
+                                switch ([[weakSelf eventMgr] removeEventForRequest:request]) {
+                                    case DConnectEventErrorNone:             // エラー無し.
+                                        [response setResult:DConnectMessageResultTypeOk];
+                                        break;
+                                    case DConnectEventErrorInvalidParameter: // 不正なパラメータ.
+                                        [response setErrorToInvalidRequestParameter];
+                                        break;
+                                    case DConnectEventErrorNotFound:         // マッチするイベント無し.
+                                    case DConnectEventErrorFailed:           // 処理失敗.
+                                        [response setErrorToUnknown];
+                                        break;
+                                }
+                                
+                                NSArray *evts = [[weakSelf eventMgr] eventListForServiceId:serviceId
+                                                                         profile:DConnectProximityProfileName
+                                                                       attribute:DConnectProximityProfileAttrOnUserProximity];
+                                if (evts.count == 0) {
+                                    [UIDevice currentDevice].proximityMonitoringEnabled = NO;
+                                    
+                                    [[NSNotificationCenter defaultCenter] removeObserver:weakSelf
+                                                                                    name:UIDeviceProximityStateDidChangeNotification
+                                                                                  object:nil];
+                                    weakSelf.proximityBlock = nil;
+                                }
+                                
+                                return YES;
+                            }];
         });
 
     }
@@ -89,114 +191,6 @@ typedef void (^DPHostProximityBlock)(DConnectMessage *);
         block(proximity);
     }
     
-}
-
-#pragma mark - Get Methods
-
-- (BOOL)                    profile:(DConnectProximityProfile *)profile
-didReceiveGetOnUserProximityRequest:(DConnectRequestMessage *)request
-                           response:(DConnectResponseMessage *)response
-                          serviceId:(NSString *)serviceId
-{
-    DConnectMessage *proximity = [DConnectMessage message];
-    [response setResult:DConnectMessageResultTypeOk];
-
-    [DConnectProximityProfile setNear:self.proximityState target:proximity];
-    [DConnectProximityProfile setProximity:proximity target:response];
-
-    return YES;
-}
-
-#pragma mark - Put Methods
-#pragma mark Event Regstration
-
-- (BOOL)                    profile:(DConnectProximityProfile *)profile
-didReceivePutOnUserProximityRequest:(DConnectRequestMessage *)request
-                           response:(DConnectResponseMessage *)response
-                           serviceId:(NSString *)serviceId
-                         sessionKey:(NSString *)sessionKey
-{
-    __unsafe_unretained typeof(self) weakSelf = self;
-
-    NSArray *evts = [_eventMgr eventListForServiceId:serviceId
-                                            profile:DConnectProximityProfileName
-                                          attribute:DConnectProximityProfileAttrOnUserProximity];
-    if (evts.count == 0) {
-        self.proximityBlock = ^(DConnectMessage *message) {
-            // イベントの取得
-            NSArray *evts = [weakSelf.eventMgr eventListForServiceId:ServiceDiscoveryServiceId
-                                                             profile:DConnectProximityProfileName
-                                                           attribute:DConnectProximityProfileAttrOnUserProximity];
-            
-            DPHostDevicePlugin *plugin = (DPHostDevicePlugin *)weakSelf.provider;
-            // イベント送信
-            for (DConnectEvent *evt in evts) {
-                DConnectMessage *eventMsg = [DConnectEventManager createEventMessageWithEvent:evt];
-                [DConnectProximityProfile setProximity:message target:eventMsg];
-                [plugin sendEvent:eventMsg];
-            }
-        };
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [UIDevice currentDevice].proximityMonitoringEnabled = YES;
-
-            [[NSNotificationCenter defaultCenter] addObserver:weakSelf
-                                                     selector:@selector(sendOnUserProximityEvent:)
-                                                         name:UIDeviceProximityStateDidChangeNotification
-                                                       object:nil];
-        });
-    }
-    
-    switch ([_eventMgr addEventForRequest:request]) {
-        case DConnectEventErrorNone:             // エラー無し.
-            [response setResult:DConnectMessageResultTypeOk];
-            break;
-        case DConnectEventErrorInvalidParameter: // 不正なパラメータ.
-            [response setErrorToInvalidRequestParameter];
-            break;
-        case DConnectEventErrorNotFound:         // マッチするイベント無し.
-        case DConnectEventErrorFailed:           // 処理失敗.
-            [response setErrorToUnknown];
-            break;
-    }
-    
-    return YES;
-}
-
-#pragma mark - Delete Methods
-#pragma mark Event Unregstration
-
-- (BOOL)                       profile:(DConnectProximityProfile *)profile
-didReceiveDeleteOnUserProximityRequest:(DConnectRequestMessage *)request
-                              response:(DConnectResponseMessage *)response
-                              serviceId:(NSString *)serviceId
-                            sessionKey:(NSString *)sessionKey
-{
-    switch ([_eventMgr removeEventForRequest:request]) {
-        case DConnectEventErrorNone:             // エラー無し.
-            [response setResult:DConnectMessageResultTypeOk];
-            break;
-        case DConnectEventErrorInvalidParameter: // 不正なパラメータ.
-            [response setErrorToInvalidRequestParameter];
-            break;
-        case DConnectEventErrorNotFound:         // マッチするイベント無し.
-        case DConnectEventErrorFailed:           // 処理失敗.
-            [response setErrorToUnknown];
-            break;
-    }
-    
-    NSArray *evts = [_eventMgr eventListForServiceId:serviceId
-                                            profile:DConnectProximityProfileName
-                                          attribute:DConnectProximityProfileAttrOnUserProximity];
-    if (evts.count == 0) {
-        [UIDevice currentDevice].proximityMonitoringEnabled = NO;
-
-        [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                        name:UIDeviceProximityStateDidChangeNotification
-                                                      object:nil];
-        self.proximityBlock = nil;
-    }
-    
-    return YES;
 }
 
 @end

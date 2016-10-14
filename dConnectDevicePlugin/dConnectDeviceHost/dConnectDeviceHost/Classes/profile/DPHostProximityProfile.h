@@ -9,6 +9,6 @@
 
 #import <DConnectSDK/DConnectSDK.h>
 
-@interface DPHostProximityProfile : DConnectProximityProfile<DConnectProximityProfileDelegate>
+@interface DPHostProximityProfile : DConnectProximityProfile
 
 @end

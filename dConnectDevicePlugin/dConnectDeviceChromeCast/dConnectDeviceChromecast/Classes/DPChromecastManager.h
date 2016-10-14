@@ -8,8 +8,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <DConnectSDK/DConnectServiceProvider.h>
 
 @interface DPChromecastManager : NSObject
+
+@property (nonatomic, weak) DConnectServiceProvider *serviceProvider;
+
+@property (nonatomic, weak) id plugin;
 
 // 接続可能なデバイスリスト取得
 @property (nonatomic, readonly) NSArray *deviceList;

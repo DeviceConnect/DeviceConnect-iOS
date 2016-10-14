@@ -12,7 +12,7 @@
 
 #import "DPHostDevicePlugin.h"
 #import "DPHostDeviceOrientationProfile.h"
-#import "DPHostServiceDiscoveryProfile.h"
+#import "DPHostService.h"
 #import "DPHostUtils.h"
 
 // CMDeviceMotionオブジェクトが配送されるインターバル（ミリ秒）
@@ -56,14 +56,15 @@ static const double EarthGravitationalAcceleration = 9.81;
     
     self = [super init];
     if (self) {
-        self.delegate = self;
         self.eventMgr = [DConnectEventManager sharedManagerForClass:[DPHostDevicePlugin class]];
+        __weak DPHostDeviceOrientationProfile *weakSelf = self;
+        __weak DConnectEventManager *weakEventMgr = self.eventMgr;
+        __weak CMMotionManager *weakMotionManager = motionMgr;
         
         _orientation = nil;
         _motionManager = motionMgr;
         _motionManager.deviceMotionUpdateInterval = MotionDeviceIntervalMilliSec/1000.0;
         _deviceOrientationOpQueue = [NSOperationQueue new];
-        __unsafe_unretained typeof(self) weakSelf = self;
         _deviceOrientationOp = ^(CMDeviceMotion *motion, NSError *error) {
             if (error) {
                 NSLog(@"DPHostDeviceOrientationProfile Error:\n%@", error.description);
@@ -71,6 +72,95 @@ static const double EarthGravitationalAcceleration = 9.81;
             }
             [weakSelf sendOnDeviceOrientationEventWithMotion:motion];
         };
+
+        // API登録(didReceiveGetOnDeviceOrientationRequest相当)
+        NSString *getOnDeviceOrientationRequestApiPath = [self apiPath: nil
+                                                         attributeName: DConnectDeviceOrientationProfileAttrOnDeviceOrientation];
+        [self addGetPath: getOnDeviceOrientationRequestApiPath
+                      api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+                          NSString *serviceId = [request serviceId];
+                          if ([weakSelf isEmptyEventList:serviceId]) {
+                              CMDeviceMotionHandler handler = ^(CMDeviceMotion *motion, NSError *error) {
+                                  DConnectMessage *orientation = [weakSelf createOrientationWithMotion:motion];
+                                  [response setResult:DConnectMessageResultTypeOk];
+                                  [DConnectDeviceOrientationProfile setOrientation:orientation target:response];
+                                  
+                                  DConnectManager *mgr = [DConnectManager sharedManager];
+                                  [mgr sendResponse:response];
+                                  
+                                  if ([weakSelf isEmptyEventList:serviceId]) {
+                                      [weakMotionManager stopDeviceMotionUpdates];
+                                  }
+                              };
+                              
+                              [weakMotionManager startDeviceMotionUpdatesToQueue:[weakSelf deviceOrientationOpQueue]
+                                                                     withHandler:handler];
+                              return NO;
+                          } else {
+                              if ([weakSelf orientation]) {
+                                  [response setResult:DConnectMessageResultTypeOk];
+                                  [DConnectDeviceOrientationProfile setOrientation:[weakSelf orientation] target:response];
+                              } else {
+                                  [response setErrorToUnknownWithMessage:@"device is not ready."];
+                              }
+                              return YES;
+                          }
+                      }];
+        
+        // API登録(didReceivePutOnDeviceOrientationRequest相当)
+        NSString *putOnDeviceOrientationRequestApiPath = [self apiPath: nil
+                                                         attributeName: DConnectDeviceOrientationProfileAttrOnDeviceOrientation];
+        [self addPutPath: putOnDeviceOrientationRequestApiPath
+                     api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+                         NSString *serviceId = [request serviceId];
+                         if ([weakSelf isEmptyEventList:serviceId]) {
+                             // CMMotionDeviceの配送処理が開始されていないのなら、開始する。
+                             [weakMotionManager startDeviceMotionUpdatesToQueue:[weakSelf deviceOrientationOpQueue]
+                                                                 withHandler:[weakSelf deviceOrientationOp]];
+                         }
+                         
+                         switch ([weakEventMgr addEventForRequest:request]) {
+                             case DConnectEventErrorNone:             // エラー無し.
+                                 [response setResult:DConnectMessageResultTypeOk];
+                                 break;
+                             case DConnectEventErrorInvalidParameter: // 不正なパラメータ.
+                                 [response setErrorToInvalidRequestParameter];
+                                 break;
+                             case DConnectEventErrorNotFound:         // マッチするイベント無し.
+                             case DConnectEventErrorFailed:           // 処理失敗.
+                                 [response setErrorToUnknown];
+                                 break;
+                         }
+                         
+                         return YES;
+                     }];
+        
+        // API登録(didReceiveDeleteOnDeviceOrientationRequest相当)
+        NSString *deleteOnDeviceOrientationRequestApiPath = [self apiPath: nil
+                                                            attributeName: DConnectDeviceOrientationProfileAttrOnDeviceOrientation];
+        [self addDeletePath: deleteOnDeviceOrientationRequestApiPath
+                     api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+                         NSString *serviceId = [request serviceId];
+                         switch ([weakEventMgr removeEventForRequest:request]) {
+                             case DConnectEventErrorNone:             // エラー無し.
+                                 [response setResult:DConnectMessageResultTypeOk];
+                                 break;
+                             case DConnectEventErrorInvalidParameter: // 不正なパラメータ.
+                                 [response setErrorToInvalidRequestParameter];
+                                 break;
+                             case DConnectEventErrorNotFound:         // マッチするイベント無し.
+                             case DConnectEventErrorFailed:           // 処理失敗.
+                                 [response setErrorToUnknown];
+                                 break;
+                         }
+                         
+                         if ([weakSelf isEmptyEventList:serviceId]) {
+                             [[NSNotificationCenter defaultCenter]
+                              removeObserver:weakSelf name:UIDeviceBatteryStateDidChangeNotification object:nil];
+                         }
+                         
+                         return YES;
+                     }];
     }
     return self;
 }
@@ -129,7 +219,7 @@ static const double EarthGravitationalAcceleration = 9.81;
     DConnectMessage *orientation = [self createOrientationWithMotion:motion];
     _orientation = orientation;
     
-    NSArray *evts = [_eventMgr eventListForServiceId:ServiceDiscoveryServiceId
+    NSArray *evts = [_eventMgr eventListForServiceId:DPHostDevicePluginServiceId
                                             profile:DConnectDeviceOrientationProfileName
                                           attribute:DConnectDeviceOrientationProfileAttrOnDeviceOrientation];
     for (DConnectEvent *evt in evts) {
@@ -144,105 +234,6 @@ static const double EarthGravitationalAcceleration = 9.81;
                                              profile:DConnectDeviceOrientationProfileName
                                            attribute:DConnectDeviceOrientationProfileAttrOnDeviceOrientation];
     return evts == nil || [evts count] == 0;
-}
-
-#pragma mark - Get Methods
-
-- (BOOL)                        profile:(DConnectDeviceOrientationProfile *)profile
-didReceiveGetOnDeviceOrientationRequest:(DConnectRequestMessage *)request
-                               response:(DConnectResponseMessage *)response
-                              serviceId:(NSString *)serviceId
-{
-    __unsafe_unretained typeof(self) weakSelf = self;
-
-    if ([self isEmptyEventList:serviceId]) {
-        CMDeviceMotionHandler handler = ^(CMDeviceMotion *motion, NSError *error) {
-            DConnectMessage *orientation = [weakSelf createOrientationWithMotion:motion];
-            [response setResult:DConnectMessageResultTypeOk];
-            [DConnectDeviceOrientationProfile setOrientation:orientation target:response];
-            
-            DConnectManager *mgr = [DConnectManager sharedManager];
-            [mgr sendResponse:response];
-            
-            if ([weakSelf isEmptyEventList:serviceId]) {
-                [_motionManager stopDeviceMotionUpdates];
-            }
-        };
-        
-        [_motionManager startDeviceMotionUpdatesToQueue:_deviceOrientationOpQueue
-                                            withHandler:handler];
-        return NO;
-    } else {
-        if (_orientation) {
-            [response setResult:DConnectMessageResultTypeOk];
-            [DConnectDeviceOrientationProfile setOrientation:_orientation target:response];
-        } else {
-            [response setErrorToUnknownWithMessage:@"device is not ready."];
-        }
-        return YES;
-    }
-}
-
-
-#pragma mark - Put Methods
-#pragma mark Event Registration
-
-- (BOOL)                        profile:(DConnectDeviceOrientationProfile *)profile
-didReceivePutOnDeviceOrientationRequest:(DConnectRequestMessage *)request
-                               response:(DConnectResponseMessage *)response
-                               serviceId:(NSString *)serviceId
-                             sessionKey:(NSString *)sessionKey
-{
-    if ([self isEmptyEventList:serviceId]) {
-        // CMMotionDeviceの配送処理が開始されていないのなら、開始する。
-        [_motionManager startDeviceMotionUpdatesToQueue:_deviceOrientationOpQueue
-                                            withHandler:_deviceOrientationOp];
-    }
-    
-    switch ([_eventMgr addEventForRequest:request]) {
-        case DConnectEventErrorNone:             // エラー無し.
-            [response setResult:DConnectMessageResultTypeOk];
-            break;
-        case DConnectEventErrorInvalidParameter: // 不正なパラメータ.
-            [response setErrorToInvalidRequestParameter];
-            break;
-        case DConnectEventErrorNotFound:         // マッチするイベント無し.
-        case DConnectEventErrorFailed:           // 処理失敗.
-            [response setErrorToUnknown];
-            break;
-    }
-    
-    return YES;
-}
-
-#pragma mark - Delete Methods
-#pragma mark Event Unregistration
-
-- (BOOL)                           profile:(DConnectDeviceOrientationProfile *)profile
-didReceiveDeleteOnDeviceOrientationRequest:(DConnectRequestMessage *)request
-                                  response:(DConnectResponseMessage *)response
-                                  serviceId:(NSString *)serviceId
-                                sessionKey:(NSString *)sessionKey
-{
-    switch ([_eventMgr removeEventForRequest:request]) {
-        case DConnectEventErrorNone:             // エラー無し.
-            [response setResult:DConnectMessageResultTypeOk];
-            break;
-        case DConnectEventErrorInvalidParameter: // 不正なパラメータ.
-            [response setErrorToInvalidRequestParameter];
-            break;
-        case DConnectEventErrorNotFound:         // マッチするイベント無し.
-        case DConnectEventErrorFailed:           // 処理失敗.
-            [response setErrorToUnknown];
-            break;
-    }
-    
-    if ([self isEmptyEventList:serviceId]) {
-        [[NSNotificationCenter defaultCenter]
-         removeObserver:self name:UIDeviceBatteryStateDidChangeNotification object:nil];
-    }
-    
-    return YES;
 }
 
 @end
