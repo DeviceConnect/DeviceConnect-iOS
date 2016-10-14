@@ -19,7 +19,7 @@
 
 - (instancetype) initWithServiceId: (NSString *) serviceId deviceName: (NSString *) deviceName plugin: (id) plugin liveViewDelegate: (id<SampleLiveviewDelegate>) liveViewDelegate remoteApiUtilDelegate:(id<SonyCameraRemoteApiUtilDelegate>) remoteApiUtilDelegate {
     
-    self = [super initWithServiceId: serviceId plugin: plugin dataSource: self];
+    self = [super initWithServiceId: serviceId plugin: plugin];
     if (self) {
         [self setName: deviceName];
         [self setNetworkType: DConnectServiceDiscoveryProfileNetworkTypeWiFi];

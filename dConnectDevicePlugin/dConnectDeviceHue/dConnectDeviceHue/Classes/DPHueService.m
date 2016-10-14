@@ -17,7 +17,7 @@
                             plugin: (id) plugin {
     // [NSString stringWithFormat:@"%@_%@",[bridgesFound valueForKey:key],key];
     NSString *serviceId = [NSString stringWithFormat:@"%@_%@", bridgeValue, bridgeKey];
-    self = [super initWithServiceId: serviceId plugin: plugin dataSource:self];
+    self = [super initWithServiceId: serviceId plugin: plugin];
     if (self) {
         NSString *name = [NSString stringWithFormat:@"Hue %@", bridgeKey];
         [self setName: name];

@@ -8,19 +8,31 @@
 //
 
 #import "DCMTemperatureProfile.h"
-#import <DConnectSDK/DConnectUtil.h>
+#import "DCMUtil.h"
 
 NSString *const DCMTemperatureProfileName = @"temperature";
 NSString *const DCMTemperatureProfileParamTemperature = @"temperature";
 NSString *const DCMTemperatureProfileParamType = @"type";
+NSString *const DCMTemperatureProfileParamTimeStamp = @"timeStamp";
+NSString *const DCMTemperatureProfileParamTimeStampString = @"timeStampString";
 
 @implementation DCMTemperatureProfile
 
-/*
- プロファイル名。
- */
 - (NSString *) profileName {
     return DCMTemperatureProfileName;
+}
+
++ (void) setTemperature:(float)temperature target:(DConnectMessage *)message {
+    [message setFloat:temperature forKey:DCMTemperatureProfileParamTemperature];
+}
+
++ (void) setTimeStamp:(long)timeStamp target:(DConnectMessage *)message {
+    [message setLong:timeStamp forKey:DCMTemperatureProfileParamTimeStamp];
+    [message setString:[DCMUtil timeStampToString:timeStamp] forKey:DCMTemperatureProfileParamTimeStampString];
+}
+
++ (void) setType:(DCMTemperatureType)type target:(DConnectMessage *)message {
+    [message setInteger:type forKey:DCMTemperatureProfileParamType];
 }
 
 @end

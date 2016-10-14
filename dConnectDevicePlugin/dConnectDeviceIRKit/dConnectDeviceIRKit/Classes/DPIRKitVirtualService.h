@@ -7,10 +7,12 @@
 //  http://opensource.org/licenses/mit-license.php
 //
 
-#import <DConnectSDK/DConnectService.h>
+#import <DConnectSDK/DConnectSDK.h>
 
 @interface DPIRKitVirtualService : DConnectService<DConnectServiceInformationProfileDataSource>
 
-- (instancetype) initWithServiceId:(NSString *)serviceId plugin:(id)plugin name:(NSString*)name;
+- (instancetype) initWithServiceId: (NSString *)serviceId
+                            plugin: (id) plugin
+                       profileName: (NSString*)profileName;
 
 @end

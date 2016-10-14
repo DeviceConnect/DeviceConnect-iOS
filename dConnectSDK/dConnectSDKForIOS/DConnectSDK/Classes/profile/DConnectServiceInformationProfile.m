@@ -204,6 +204,9 @@ static NSString *const KEY_PATHS = @"paths";
             } else {
                 [message setDouble:[number doubleValue] forKey:key];
             }
+        } else if ([value isKindOfClass: [NSString class]]) {
+            NSString *string = (NSString *)value;
+            [message setString:string forKey:key];
         }
     }
     return message;
@@ -227,7 +230,11 @@ static NSString *const KEY_PATHS = @"paths";
             } else {
                 [dcArray addDouble:[number doubleValue]];
             }
+        } else if ([value isKindOfClass: [NSString class]]) {
+            NSString *string = (NSString *) value;
+            [dcArray addString: string];
         }
+        
     }
     
     return dcArray;

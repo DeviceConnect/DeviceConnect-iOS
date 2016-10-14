@@ -13,24 +13,24 @@
 #import "SonyCameraDevicePlugin.h"
 
 /*!
+ @define サービスID.
+ */
+#define SERVICE_ID @"0"
+
+/*!
  @brief IDのプレフィックス。
  */
-NSString *const SonyServiceId = @"sony_camera_";
+extern NSString *const SonyServiceId;
 
 /*!
  @brief デバイス名。
  */
-NSString *const SonyDeviceName = @"Sony Camera";
+extern NSString *const SonyDeviceName;
 
 /*!
  @brief ファイルのプレフィックス。
  */
-NSString *const SonyFilePrefix = @"sony";
-
-/*!
- @define サービスID.
- */
-#define SERVICE_ID @"0"
+extern NSString *const SonyFilePrefix;
 
 
 

@@ -14,6 +14,10 @@
 
 @interface DConnectServiceListViewController()
 
+@property(nonatomic, strong) NSString *localizeStatusOnline;
+
+@property(nonatomic, strong) NSString *localizeStatusOffline;
+
 @property(nonatomic, strong) NSString *addButtonTitle;
 
 @property(nonatomic, strong) NSString *finishButtonTitle;
@@ -31,6 +35,11 @@
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 
+    // ローカライズ文字列取得
+    NSBundle *bundle = DCBundle();
+    self.localizeStatusOnline = DCLocalizedString(bundle, @"status_online");
+    self.localizeStatusOffline = DCLocalizedString(bundle, @"status_offline");
+    
     // ボタンタイトル名を保存
     self.addButtonTitle = self.addButton.title;
     self.finishButtonTitle = self.finishButton.title;
@@ -43,6 +52,9 @@
     
     // 再表示(バックグラウンド中に通知されたDConnectServiceListener(サービス追加／削除／状態変化)がTableViewに適用されていないので再表示する)
     [self.tableView reloadData];
+    
+    // ボタン状態更新
+    [self setButtonLayout];
     
     if (self.delegate) {
         [self.delegate.serviceProvider addServiceListener:self];
@@ -90,6 +102,7 @@
         
         NSString *serviceName = @"";
         NSString *onlineStatus = @"";
+        UIColor *backgroundColor = [UIColor whiteColor];
         
         if (self.delegate) {
             DConnectServiceProvider *serviceProvider = [self.delegate serviceProvider];
@@ -97,13 +110,20 @@
                 DConnectService *service = serviceProvider.services[indexPath.row];
                 if (service) {
                     serviceName = [service name];
-                    onlineStatus = [service online] ? @"Online" : @"Offline";
+                    if ([service online]) {
+                        onlineStatus = self.localizeStatusOnline;
+                        backgroundColor = [UIColor whiteColor];
+                    } else {
+                        onlineStatus = self.localizeStatusOffline;
+                        backgroundColor = [UIColor lightGrayColor];
+                    }
                 }
             }
         }
         
         cell.serviceNameLabel.text = serviceName;
         cell.onlineStatusLabel.text = onlineStatus;
+        cell.backgroundColor  = backgroundColor;
     }
     
     return cell;

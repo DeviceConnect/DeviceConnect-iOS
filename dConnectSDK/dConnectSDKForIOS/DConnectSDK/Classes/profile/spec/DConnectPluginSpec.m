@@ -42,8 +42,10 @@
  */
 - (BOOL) addProfileSpec: (NSString *) profileName error: (NSError **) error {
 
+    NSString *profileNameLow = [profileName lowercaseString];
+    
     // プロファイル名を元にBundle内のJSONファイルを読み込みファイル内容(JSON文字列)を返す。
-    NSString *json = [self loadFile: profileName];
+    NSString *json = [self loadFile: profileNameLow];
     if (!json) {
         return NO;
     }
@@ -59,13 +61,15 @@
     NSDictionary *jsonObj = (NSDictionary *) jsonObj_;
     
     // NSDictionaryをDConnectProfileSpecに変換して格納
-    [self profileSpecs_][profileName] = [[self jsonParser] parseJson: jsonObj error: error];
+    [self profileSpecs_][profileNameLow] = [[self jsonParser] parseJson: jsonObj error: error];
     return YES;
 }
 
 - (NSString *) loadFile: (NSString *) profileName {
     
-    NSString *filePath = [self jsonFilePathWithProfileName: profileName];
+    // プロファイル名とJSONファイル名は大文字小文字が区別されるので、一致するよう小文字で統一する。(jsonファイル名も全て小文字にする)
+    
+    NSString *filePath = [self jsonFilePathWithProfileName: [profileName lowercaseString]];
     
     NSError *error = nil;
     NSString *jsonString = [NSString stringWithContentsOfFile: (NSString *)filePath
@@ -85,7 +89,8 @@
  @return {@link DConnectProfileSpec}のインスタンス
  */
 - (DConnectProfileSpec *) findProfileSpec: (NSString *) profileName {
-    return [self profileSpecs_][profileName];
+    NSString *profileNameLow = [profileName lowercaseString];
+    return [self profileSpecs_][profileNameLow];
 }
 
 /*!

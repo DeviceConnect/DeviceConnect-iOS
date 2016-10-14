@@ -163,7 +163,7 @@ NSString *const DConnectLightProfileParamGroupName = @"groupName";
                 }
                 break;
             }
-            [result addObject:valueStr];
+            [result addObject:@([valueStr intValue])];
         }
         
         if (result.count == 0) {
