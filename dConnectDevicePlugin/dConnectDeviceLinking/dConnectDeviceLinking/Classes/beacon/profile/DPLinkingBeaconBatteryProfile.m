@@ -87,7 +87,7 @@
         [response setResult:DConnectMessageResultTypeOk];
         [beaconManager addBatteryDelegate:self];
     } else if (error == DConnectEventErrorInvalidParameter) {
-        [response setErrorToInvalidRequestParameterWithMessage:@"sessionKey must be specified."];
+        [response setErrorToInvalidRequestParameterWithMessage:@"origin must be specified."];
     } else {
         [response setErrorToUnknown];
     }
@@ -116,7 +116,7 @@
         }
         [response setResult:DConnectMessageResultTypeOk];
     } else if (error == DConnectEventErrorInvalidParameter) {
-        [response setErrorToInvalidRequestParameterWithMessage:@"sessionKey must be specified."];
+        [response setErrorToInvalidRequestParameterWithMessage:@"origin must be specified."];
     } else {
         [response setErrorToUnknown];
     }

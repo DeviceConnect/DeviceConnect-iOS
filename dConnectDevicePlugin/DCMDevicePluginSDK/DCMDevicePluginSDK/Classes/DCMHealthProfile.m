@@ -37,11 +37,6 @@ NSString *const DCMHealthProfileParamProtocolRevision = @"protocolRevision";
 NSString *const DCMHealthProfileParamSystemId = @"systemId";
 NSString *const DCMHealthProfileParamBatteryLevel = @"batteryLevel";
 
-@interface DCMHealthProfile()
-
-- (BOOL) hasMethod:(SEL)method response:(DConnectResponseMessage *)response;
-
-@end
 @implementation DCMHealthProfile
 
 - (NSString *) profileName {

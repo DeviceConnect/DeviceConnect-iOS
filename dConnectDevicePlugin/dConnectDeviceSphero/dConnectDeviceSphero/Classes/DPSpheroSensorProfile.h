@@ -18,5 +18,5 @@
  @class DPSpheroSensorProfile
  @brief Spheroのセンサー関連の機能を提供するクラス
  */
-@interface DPSpheroSensorProfile : DPSpheroProfile<DPSpheroProfileDelegate>
+@interface DPSpheroSensorProfile : DPSpheroProfile
 @end

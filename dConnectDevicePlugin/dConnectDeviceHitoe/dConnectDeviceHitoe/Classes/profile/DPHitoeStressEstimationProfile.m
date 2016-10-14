@@ -44,12 +44,12 @@
         NSString *didReceivePutOnStressEstimationRequest = [self apiPath: nil
                                                            attributeName: DCMStressEstimationProfileAttrOnStressEstimation];
         [self addPutPath:didReceivePutOnStressEstimationRequest api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
-            return [weakSelf didReceivePutOnStressEstimationRequest:request response:response serviceId:[request serviceId] sessionKey:[request sessionKey]];
+            return [weakSelf didReceivePutOnStressEstimationRequest:request response:response serviceId:[request serviceId] origin:[request origin]];
         }];
         NSString *didReceiveDeleteOnStressEstimationRequest = [self apiPath: nil
                                                               attributeName: DCMStressEstimationProfileAttrOnStressEstimation];
         [self addDeletePath:didReceiveDeleteOnStressEstimationRequest api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
-            return [weakSelf didReceiveDeleteOnStressEstimationRequest:request response:response serviceId:[request serviceId] sessionKey:[request sessionKey]];
+            return [weakSelf didReceiveDeleteOnStressEstimationRequest:request response:response serviceId:[request serviceId] origin:[request origin]];
         }];
 
     }
@@ -85,11 +85,11 @@
 - (BOOL)didReceivePutOnStressEstimationRequest:(DConnectRequestMessage *)request
                   response:(DConnectResponseMessage *)response
                  serviceId:(NSString *)serviceId
-                sessionKey:(NSString *)sessionKey {
+                    origin:(NSString *)origin {
     if (!serviceId) {
         [response setErrorToNotFoundServiceWithMessage:@"Not found serviceID"];
-    } else if (!sessionKey) {
-        [response setErrorToInvalidRequestParameterWithMessage:@"Not found sessionKey"];
+    } else if (!origin) {
+        [response setErrorToInvalidRequestParameterWithMessage:@"Not found origin"];
     } else {
         DPHitoeManager *mgr = [DPHitoeManager sharedInstance];
         if (!mgr) {
@@ -129,11 +129,11 @@
 - (BOOL)didReceiveDeleteOnStressEstimationRequest:(DConnectRequestMessage *)request
                                   response:(DConnectResponseMessage *)response
                                  serviceId:(NSString *)serviceId
-                                sessionKey:(NSString *)sessionKey {
+                                    origin:(NSString *)origin {
     if (!serviceId) {
         [response setErrorToNotFoundServiceWithMessage:@"Not found serviceID"];
-    } else if (!sessionKey) {
-        [response setErrorToInvalidRequestParameterWithMessage:@"Not found sessionKey"];
+    } else if (!origin) {
+        [response setErrorToInvalidRequestParameterWithMessage:@"Not found origin"];
     } else {
         DPHitoeManager *mgr = [DPHitoeManager sharedInstance];
         if (!mgr) {

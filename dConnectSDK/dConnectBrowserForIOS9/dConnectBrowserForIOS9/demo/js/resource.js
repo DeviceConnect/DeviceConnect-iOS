@@ -3,12 +3,17 @@ var main = (function(parent, global) {
     function init() {
         var mimeType = decodeURIComponent(util.getMimeType());
         var uri = decodeURIComponent(util.getResourceUri());
-        if (mimeType.indexOf('image') === 0) {
+        console.log("uri:" + uri);
+        if (mimeType.indexOf('image') != -1 && uri.indexOf('mp4') == -1) {
             var elem = document.getElementById('image');
-            elem.src = decodeURIComponent(util.getResourceUri());
+            elem.src = util.getResourceUri();
+            elem.crossorigin = "anonymous";
             elem.onload = function() {
                 console.log("onload: " + decodeURIComponent(util.getResourceUri()));
             }
+        } else  if (mimeType.indexOf('image') != -1 && uri.indexOf('mp4') != -1) {
+           var mediaId = uri.replace("http://localhost:4035/gotapi/files?uri=", "");
+           util.doMediaPlayerMediaPut(util.getServiceId(), util.getAccessTokenQuery(), mediaId,null);
         } else {
             sendRequest('GET', uri, null, function(status, responseText) {
                 var elem = document.getElementById('text');
@@ -45,7 +50,7 @@ var main = (function(parent, global) {
              switch (xhr.readyState) {
              case 1:
                  try {
-                     xhr.setRequestHeader("X-GotAPI-Origin".toLowerCase(), "file://android_assets");
+                     xhr.setRequestHeader("X-GotAPI-Origin".toLowerCase(), "http://ios_assets");
                  } catch (e) {
                      return;
                  }

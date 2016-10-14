@@ -8,10 +8,15 @@
 //
 
 #import "DConnectProfile.h"
+#import "DConnectEventBroker.h"
 
 /**
  * デバイスプラグインにリクエストを配送するためのプロファイル.
  */
 @interface DConnectManagerDeliveryProfile : DConnectProfile
+
+@property(nonatomic, weak) DConnectEventBroker *eventBroker;
+
+@property(nonatomic, weak) DConnectWebSocket *webSocket;
 
 @end

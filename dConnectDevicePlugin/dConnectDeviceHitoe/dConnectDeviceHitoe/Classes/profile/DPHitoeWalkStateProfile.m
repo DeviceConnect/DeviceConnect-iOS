@@ -46,12 +46,12 @@
         NSString *didReceivePutOnWalkStateRequest = [self apiPath: nil
                                                     attributeName: DCMWalkStateProfileAttrOnWalkState];
         [self addPutPath:didReceivePutOnWalkStateRequest api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
-            return [weakSelf didReceivePutOnWalkStateRequest:request response:response serviceId:[request serviceId] sessionKey:[request sessionKey]];
+            return [weakSelf didReceivePutOnWalkStateRequest:request response:response serviceId:[request serviceId] origin:[request origin]];
         }];
         NSString *didReceiveDeleteOnWalkStateRequest = [self apiPath: nil
                                                        attributeName: DCMWalkStateProfileAttrOnWalkState];
         [self addDeletePath:didReceiveDeleteOnWalkStateRequest api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
-            return [weakSelf didReceiveDeleteOnWalkStateRequest:request response:response serviceId:[request serviceId] sessionKey:[request sessionKey]];
+            return [weakSelf didReceiveDeleteOnWalkStateRequest:request response:response serviceId:[request serviceId] origin:[request origin]];
         }];
 
     }
@@ -87,11 +87,11 @@
 - (BOOL)didReceivePutOnWalkStateRequest:(DConnectRequestMessage *)request
                   response:(DConnectResponseMessage *)response
                  serviceId:(NSString *)serviceId
-                sessionKey:(NSString *)sessionKey {
+                    origin:(NSString *)origin {
     if (!serviceId) {
         [response setErrorToNotFoundServiceWithMessage:@"Not found serviceID"];
-    } else if (!sessionKey) {
-        [response setErrorToInvalidRequestParameterWithMessage:@"Not found sessionKey"];
+    } else if (!origin) {
+        [response setErrorToInvalidRequestParameterWithMessage:@"Not found origin"];
     } else {
         DPHitoeManager *mgr = [DPHitoeManager sharedInstance];
         if (!mgr) {
@@ -131,11 +131,11 @@
 - (BOOL)didReceiveDeleteOnWalkStateRequest:(DConnectRequestMessage *)request
                                   response:(DConnectResponseMessage *)response
                                  serviceId:(NSString *)serviceId
-                                sessionKey:(NSString *)sessionKey {
+                                    origin:(NSString *)origin {
     if (!serviceId) {
         [response setErrorToNotFoundServiceWithMessage:@"Not found serviceID"];
-    } else if (!sessionKey) {
-        [response setErrorToInvalidRequestParameterWithMessage:@"Not found sessionKey"];
+    } else if (!origin) {
+        [response setErrorToInvalidRequestParameterWithMessage:@"Not found origin"];
     } else {
         DPHitoeManager *mgr = [DPHitoeManager sharedInstance];
         if (!mgr) {

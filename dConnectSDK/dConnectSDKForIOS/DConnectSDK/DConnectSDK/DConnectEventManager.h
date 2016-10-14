@@ -81,12 +81,12 @@
 - (DConnectEventError) removeEventForRequest:(DConnectRequestMessage *)request;
 
 /*!
- @brief 指定されたセッションキーに紐づくイベント情報を解除する。
+ @brief 指定されたオリジンに紐づくイベント情報を解除する。
  
- @param[in] sessionKey セッションキー
+ @param[in] origin オリジン
  @return 削除に成功した場合はYES、その他はNOを返す。
  */
-- (BOOL) removeEventsForSessionKey:(NSString *)sessionKey;
+- (BOOL) removeEventsForOrigin:(NSString *)origin;
 
 /*!
  @brief イベントを全て削除する。

@@ -2,8 +2,9 @@
 //  GHSettingViewModel.m
 //  dConnectBrowserForIOS9
 //
-//  Created by Tetsuya Hirano on 2016/06/23.
-//  Copyright © 2016年 GClue,Inc. All rights reserved.
+//  Copyright (c) 2016 NTT DOCOMO,INC.
+//  Released under the MIT license
+//  http://opensource.org/licenses/mit-license.php
 //
 
 #import "GHSettingViewModel.h"
@@ -50,6 +51,10 @@
             }
             temp_addr = temp_addr->ifa_next;
         }
+    }
+    
+    if (!address) {
+        address = @"0.0.0.0";
     }
     freeifaddrs(interfaces);
     return address;

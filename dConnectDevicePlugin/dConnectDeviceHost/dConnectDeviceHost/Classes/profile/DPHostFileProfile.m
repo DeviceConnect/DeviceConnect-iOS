@@ -152,7 +152,7 @@
                       api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
                          
                           NSData *data = [DConnectFileProfile dataFromRequest:request];
-                          NSString *uri = [DConnectCanvasProfile uriFromRequest:request];
+                          NSString *uri = [DConnectFileProfile uriFromRequest:request];
                           NSString *path = [DConnectFileProfile pathFromRequest:request];
 
                           NSData *fileData = nil;

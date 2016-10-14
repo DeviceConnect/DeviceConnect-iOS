@@ -74,6 +74,8 @@ extern NSString *const DConnectFileProfileParamFileSize;
  */
 extern NSString *const DConnectFileProfileParamData;
 
+extern NSString *const DConnectFileProfileParamUri;
+
 /*!
  @brief パラメータ: path。
  */
@@ -239,6 +241,8 @@ typedef NS_ENUM(NSUInteger, DConnectFileProfileFileType) {
  @return ファイルパス。無い場合はnilを返す。
  */
 + (NSString *) pathFromRequest:(DConnectMessage *)request;
+
++ (NSString *) uriFromRequest:(DConnectMessage *)request;
 
 /*!
  @brief リクエストデータから並び順を取得する。

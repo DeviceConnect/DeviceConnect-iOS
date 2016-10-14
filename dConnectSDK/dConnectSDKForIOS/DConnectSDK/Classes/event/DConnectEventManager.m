@@ -86,9 +86,9 @@
     return [_controller removeEvent:event];
 }
 
-- (BOOL) removeEventsForSessionKey:(NSString *)sessionKey {
+- (BOOL) removeEventsForOrigin:(NSString *)origin {
     [self checkControllerState];
-    return [_controller removeEventsForSessionKey:sessionKey];
+    return [_controller removeEventsForOrigin:origin];
 }
 
 - (BOOL) removeAll {
@@ -130,7 +130,8 @@
         [message setString:event.interface forKey:DConnectMessageInterface];
     }
     [message setString:event.attribute forKey:DConnectMessageAttribute];
-    [message setString:event.sessionKey forKey:DConnectMessageSessionKey];
+    [message setString:event.accessToken forKey:DConnectMessageAccessToken];
+    [message setString:event.origin forKey:DConnectMessageOrigin];
     if (event.serviceId) {
         [message setString:event.serviceId forKey:DConnectMessageServiceId];
     }
@@ -150,7 +151,7 @@
     event.profile = request.profile;
     event.interface = request.interface;
     event.attribute = request.attribute;
-    event.sessionKey = request.sessionKey;
+    event.origin = request.origin;
     event.accessToken = request.accessToken;
     
     return event;

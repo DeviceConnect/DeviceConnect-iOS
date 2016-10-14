@@ -89,6 +89,45 @@
     return nil;
 }
 
+
+/*!
+ * @brief サービスIDにDevice Connect Managerのドメイン名を追加する.
+ *
+ * サービスIDがnullのときには、サービスIDは無視します。
+ *
+ * @param[in] plugin デバイスプラグイン
+ * @param[in] serviceId サービスID
+ * @retval Device Connect Managerのドメインなどが追加されたサービスID
+ */
+- (NSString *) appendServiceId: (DConnectDevicePlugin *) plugin serviceId:(NSString *) serviceId {
+    NSString * const separator = @".";
+    if (!serviceId) {
+        return [NSString stringWithFormat:@"%@%@%@", plugin.pluginId, separator, self.dConnectDomain];
+    } else {
+        return [NSString stringWithFormat:@"%@%@%@%@%@", serviceId, separator, plugin.pluginId, separator, self.dConnectDomain];
+    }
+}
+
+#pragma mark - Static Methods -
+
+/*!
+ * @brief サービスIDを分解して、Device Connect Managerのドメイン名を省いた本来のサービスIDにする.
+ * Device Connect Managerのドメインを省いたときに、何もない場合には空文字を返します。
+ * @param[in] plugin デバイスプラグイン
+ * @param[in] serviceId サービスID
+ * @retval Device Connect Managerのドメインが省かれたサービスID
+ */
++ (NSString *) splitServiceId: (DConnectDevicePlugin *) plugin serviceId:(NSString *) serviceId {
+    NSString *p = plugin.pluginId;
+    NSRange range = [serviceId rangeOfString: p];
+    if (range.location != NSNotFound) {
+        return [serviceId substringWithRange: NSMakeRange(0, range.location - 1)];
+    }
+    return @"";
+}
+
+
+
 #pragma mark - Private Methods -
 
 - (void) addDevicePlugin:(DConnectDevicePlugin *)plugin {
@@ -102,7 +141,7 @@
             [request setAction:DConnectMessageActionTypePut];
             [request setProfile:DConnectServiceDiscoveryProfileName];
             [request setAttribute:DConnectServiceDiscoveryProfileAttrOnServiceChange];
-            [request setSessionKey:NSStringFromClass([plugin class])];
+//            [request setSessionKey:NSStringFromClass([plugin class])];
             
             DConnectResponseMessage *response = [DConnectResponseMessage message];
             [plugin didReceiveRequest:request response:response];

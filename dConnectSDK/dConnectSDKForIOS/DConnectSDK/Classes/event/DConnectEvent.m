@@ -37,7 +37,7 @@
             interfaceMatch &&
             [_attribute isEqualToString:other.attribute] &&
             serviceIdMatch &&
-            [_sessionKey isEqualToString:other.sessionKey]);
+            [_origin isEqualToString:other.origin]);
     
 }
 
@@ -49,7 +49,7 @@
     [aCoder encodeObject:_attribute forKey:@"attribute"];
     [aCoder encodeObject:_serviceId forKey:@"serviceId"];
     [aCoder encodeObject:_accessToken forKey:@"accessToken"];
-    [aCoder encodeObject:_sessionKey forKey:@"sessionKey"];
+    [aCoder encodeObject:_origin forKey:@"origin"];
     [aCoder encodeObject:_createDate forKey:@"createDate"];
     [aCoder encodeObject:_updateDate forKey:@"updateDate"];
 }
@@ -64,7 +64,7 @@
         _attribute = [aDecode decodeObjectOfClass:[NSString class] forKey:@"attribute"];
         _serviceId = [aDecode decodeObjectOfClass:[NSString class] forKey:@"serviceId"];
         _accessToken = [aDecode decodeObjectOfClass:[NSString class] forKey:@"accessToken"];
-        _sessionKey = [aDecode decodeObjectOfClass:[NSString class] forKey:@"sessionKey"];
+        _origin = [aDecode decodeObjectOfClass:[NSString class] forKey:@"origin"];
         _createDate = [aDecode decodeObjectOfClass:[NSDate class] forKey:@"createDate"];
         _updateDate = [aDecode decodeObjectOfClass:[NSDate class] forKey:@"updateDate"];
     }

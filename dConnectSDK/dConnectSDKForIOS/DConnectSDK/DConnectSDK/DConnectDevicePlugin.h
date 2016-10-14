@@ -50,6 +50,11 @@
 @property (nonatomic) DConnectServiceProvider *serviceProvider;
 
 /*!
+ @brief デバイスプラグインのID。
+ */
+@property (nonatomic) NSString *pluginId;
+
+/*!
  @brief デバイスプラグインの名前。
  
  プラグイン名を変更したい場合には、この変数に値を代入すること。

@@ -163,6 +163,8 @@ static inline NSUInteger WS_PAYLOAD_LENGTH(UInt8 frame)
 	return isRFC6455;
 }
 
+
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark Setup and Teardown
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -226,11 +228,12 @@ static inline NSUInteger WS_PAYLOAD_LENGTH(UInt8 frame)
 #pragma mark Start and Stop
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+// MODIFIED WebSocketオープン時にoriginを渡して関連づける。
 /**
  * Starting point for the WebSocket after it has been fully initialized (including subclasses).
  * This method is called by the HTTPConnection it is spawned from.
 **/
-- (void)start
+- (void)start: (NSString *) origin
 {
 	// This method is not exactly designed to be overriden.
 	// Subclasses are encouraged to override the didOpen method instead.
@@ -247,7 +250,7 @@ static inline NSUInteger WS_PAYLOAD_LENGTH(UInt8 frame)
 		else
 		{
 			[self sendResponseHeaders];
-			[self didOpen];
+            [self didOpen: origin];
 		}
 	}});
 }
@@ -485,7 +488,7 @@ static inline NSUInteger WS_PAYLOAD_LENGTH(UInt8 frame)
 #pragma mark Core Functionality
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-- (void)didOpen
+- (void)didOpen: (NSString *) origin
 {
 
 	
@@ -498,9 +501,9 @@ static inline NSUInteger WS_PAYLOAD_LENGTH(UInt8 frame)
 	[asyncSocket readDataToLength:1 withTimeout:TIMEOUT_NONE tag:(isRFC6455 ? TAG_PAYLOAD_PREFIX : TAG_PREFIX)];
 	
 	// Notify delegate
-	if ([delegate respondsToSelector:@selector(webSocketDidOpen:)])
+    if ([delegate respondsToSelector:@selector(webSocketDidOpen:origin:)])
 	{
-		[delegate webSocketDidOpen:self];
+        [delegate webSocketDidOpen:self origin: origin];
 	}
 }
 
@@ -750,6 +753,15 @@ static inline NSUInteger WS_PAYLOAD_LENGTH(UInt8 frame)
 - (void)socketDidDisconnect:(GCDAsyncSocket *)sock withError:(NSError *)error
 {
 	[self didClose];
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+#pragma mark - 情報取得API
+// MODIFIED HTTPリクエストデータからuriやheader情報を取得するAPIが無かったので追加した。
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+- (HTTPMessage *) getRequest {
+    return request;
 }
 
 @end

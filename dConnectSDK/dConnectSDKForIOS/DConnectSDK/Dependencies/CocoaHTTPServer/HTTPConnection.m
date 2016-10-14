@@ -13,7 +13,10 @@
 #import "HTTPLogging.h"
 #import "WebSocket.h"
 #import "HTTPMessage.h"
+
+#import "DConnectManager.h"
 #import "DConnectMessage.h"
+#import "LocalOAuth2Main.h"
 
 #if ! __has_feature(objc_arc)
 #warning This file must be compiled with ARC. Use -fobjc-arc flag (or convert project to ARC).
@@ -130,6 +133,7 @@
 /*! @brief websocketとsessionKeyの対応表.
  */
 @property (nonatomic) NSMutableDictionary *websocketDic;
+
 @end
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -140,6 +144,9 @@
 
 static dispatch_queue_t recentNonceQueue;
 static NSMutableArray *recentNonces;
+
+// MODIFIED originとwebSocket対応テーブルを追加。
+static NSMutableDictionary *originTable;    // key:origin / value: websocket
 
 /**
  * This method is automatically called (courtesy of Cocoa) before the first instantiation of this class.
@@ -277,8 +284,9 @@ static NSMutableArray *recentNonces;
     [self.websocketDic removeAllObjects];
 }
 
-- (void) sendEvent:(NSString *)event forSessionKey:(NSString *)sessionKey {
-    WebSocket *socket = [self.websocketDic objectForKey:sessionKey];
+// MODIFIED receiverIdをキーにする。
+- (void) sendEvent:(NSString *)event forReceiverId:(NSString *)receiverId {
+    WebSocket *socket = [self.websocketDic objectForKey:receiverId];
     if (socket) {
         [socket sendMessage:event];
     }
@@ -318,7 +326,7 @@ static NSMutableArray *recentNonces;
 
 #pragma mark - WebSocketDelegate Methods -
 
-- (void)webSocketDidOpen:(WebSocket *)webSocket {
+- (void)webSocketDidOpen:(WebSocket *)webSocket origin: (NSString *) origin {
     [self.websocketList addObject:webSocket];
 }
 
@@ -327,19 +335,77 @@ static NSMutableArray *recentNonces;
     if (jsonData) {
         // JSONをNSDictionaryに変換する
         NSError *error = nil;
-        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:jsonData
+        NSDictionary *json = [NSJSONSerialization JSONObjectWithData:jsonData
                                                             options:NSJSONReadingAllowFragments
                                                               error:&error];
         if (!error) {
-            NSString *sessionKey = dic[DConnectMessageSessionKey];
-            if (sessionKey) {
-                [self.websocketDic setObject:webSocket forKey:sessionKey];
+            HTTPMessage *httpRequest = [webSocket getRequest];
+            NSString *receiverId;
+            NSString *path = httpRequest.url.path;
+            NSString *origin = httpRequest.allHeaderFields[@"origin"];
+            if (origin && [origin isEqualToString:@"null"]) {
+                origin = @"file://";
             }
+            
+            if (path && [path localizedCaseInsensitiveCompare: @"/gotapi/websocket"] == NSOrderedSame) {
+                NSString *accessToken = json[DConnectMessageAccessToken];
+                if (!accessToken) {
+                    DCLogW(@"onWebSocketMessage: accessToken is not specified");
+                    [self sendError: webSocket errorCode:1 errorMessage:@"accessToken is not specified."];
+                    return;
+                }
+                if ([DConnectManager sharedManager].settings.useOriginEnable) {
+                    if (!origin) {
+                        DCLogW(@"onWebSocketMessage: origin is not specified.");
+                        [self sendError: webSocket errorCode:2 errorMessage: @"origin is not specified."];
+                        return;
+                    }
+                    if (![self isValidAccessToken: accessToken origin: origin]) {
+                        DCLogW(@"onWebSocketMessage: accessToken is invalid.");
+                        [self sendError: webSocket errorCode:3 errorMessage:@"accessToken is invalid."];
+                        return;
+                    }
+                } else {
+                    if (!origin) {
+                        origin = @"<anonymous>";
+                    }
+                }
+                receiverId = origin;
+                
+                // NOTE: 既存のイベントセッションを保持する.
+                if ([self.websocketDic valueForKey:receiverId]) {
+                    DCLogW(@"onWebSocketMessage: already established.");
+                    [self sendError: webSocket errorCode:4 errorMessage:@"already established."];
+                    [webSocket stop];   // webSocket.disconnectWebSocket();
+                    return;
+                }
+                [self sendSuccess: webSocket];
+            } else {
+                if (!origin) {
+                    origin = @"<anonymous>";
+                }
+                
+                receiverId = json[DConnectMessageSessionKey];
+                
+                // NOTE: 既存のイベントセッションを破棄する.
+                WebSocket *otherSocket = [self.websocketDic valueForKey:receiverId];
+                if (otherSocket) {
+                    [otherSocket stop];
+                }
+            }
+
+            if (!receiverId) {
+                DCLogW(@"onWebSocketMessage: Failed to generate receiverId: path = %@, origin = %@", path, origin);
+                return;
+            }
+            
+            // イベント送信経路を確立
+            [self.websocketDic setObject:webSocket forKey:receiverId];
         }
     }
 }
 
-- (void)webSocketDidClose:(WebSocket *)webSocket {
+- (void) webSocketDidClose:(WebSocket *)webSocket {
     [self.websocketList removeObject:webSocket];
     for (id key in [self.websocketDic keyEnumerator]) {
         WebSocket *socket = [self.websocketDic objectForKey:key];
@@ -348,7 +414,43 @@ static NSMutableArray *recentNonces;
             return;
         }
     }
+}
 
+- (BOOL) isValidAccessToken: (NSString *) accessToken origin: (NSString *) origin {
+    
+    LocalOAuth2Main *oauth = [LocalOAuth2Main sharedOAuthForClass: [DConnectManager class]];
+    LocalOAuthClientPackageInfo *client = [oauth findClientPackageInfoByAccessToken: accessToken];
+    if (!client) {
+        return NO;
+    }
+    LocalOAuthPackageInfo *packageInfo = [client packageInfo];
+    if (!packageInfo) {
+        return NO;
+    }
+    
+    return [packageInfo.packageName isEqualToString: origin];
+}
+
+- (void) sendSuccess: (WebSocket *) webSocket {
+    
+    NSDictionary *message = @{@"result" : [NSNumber numberWithInt:0]};
+    NSData *messageData = [NSJSONSerialization dataWithJSONObject:message options:0 error:nil];
+    NSString *messageJson = [[NSString alloc] initWithData:messageData encoding:NSUTF8StringEncoding];
+    [webSocket sendMessage:messageJson];
+}
+
+- (void) sendError: (WebSocket *) webSocket
+         errorCode: (int) errorCode
+      errorMessage: (NSString *) errorMessage {
+    
+    NSDictionary *message = @{
+                              @"result" : [NSNumber numberWithInt:1],
+                              @"errorCode" : [NSNumber numberWithInt:errorCode],
+                              @"errorMessage" : errorMessage,
+                              };
+    NSData *messageData = [NSJSONSerialization dataWithJSONObject:message options:0 error:nil];
+    NSString *messageJson = [[NSString alloc] initWithData:messageData encoding:NSUTF8StringEncoding];
+    [webSocket sendMessage:messageJson];
 }
 
 
@@ -1044,7 +1146,9 @@ static NSMutableArray *recentNonces;
 		}
 		else
 		{
-			[ws start];
+            NSDictionary *allHeaderFields = [request allHeaderFields];
+            NSString *origin = [request headerField: @"origin"];
+            [ws start: origin];
 			
 //			[[config server] addWebSocket:ws];
 			
@@ -2738,6 +2842,18 @@ static NSMutableArray *recentNonces;
 	// Post notification of dead connection
 	// This will allow our server to release us from its array of connections
 	[[NSNotificationCenter defaultCenter] postNotificationName:HTTPConnectionDidDieNotification object:self];
+}
+
+#pragma mark origin
+
+// MODIFIED originとwebSocket対応テーブルの検索処理を追加。
+- (NSString *) originForWebSocket: (WebSocket *) webSocket {
+    for (NSString *origin in originTable.allKeys) {
+        if (originTable[origin] == webSocket) {
+            return origin;
+        }
+    }
+    return nil;
 }
 
 @end

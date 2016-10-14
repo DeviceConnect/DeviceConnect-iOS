@@ -54,10 +54,10 @@
 - (void) setInterface:(NSString *)interface;
 
 /*!
- @brief セッションキーを設定する。
- @param[in] sessionKey セッションキー
+ @brief オリジンを設定する。
+ @param[in] origin オリジン
  */
-- (void) setSessionKey:(NSString *)sessionKey;
+- (void) setOrigin:(NSString *)origin;
 
 /*!
  @brief サービスIDを設定する。

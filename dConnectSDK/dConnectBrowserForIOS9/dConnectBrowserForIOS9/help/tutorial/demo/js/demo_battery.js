@@ -56,7 +56,6 @@ var demoBattery = (function(parent, global) {
         builder.setAttribute('onchargingchange');
         builder.setServiceId(mServiceId);
         builder.setAccessToken(util.getAccessToken());
-        builder.setSessionKey(util.getSessionKey());
         var uri = builder.build();
 
         dConnect.addEventListener(uri, function(message) {
@@ -74,7 +73,6 @@ var demoBattery = (function(parent, global) {
         builder.setAttribute('onbatterychange');
         builder.setServiceId(mServiceId);
         builder.setAccessToken(util.getAccessToken());
-        builder.setSessionKey(util.getSessionKey());
         var uri = builder.build();
 
         dConnect.addEventListener(uri, function(message) {

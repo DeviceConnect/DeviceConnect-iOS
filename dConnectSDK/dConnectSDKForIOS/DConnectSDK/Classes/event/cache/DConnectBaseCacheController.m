@@ -16,7 +16,7 @@
     if (event == nil
         || event.profile == nil
         || event.attribute == nil
-        || event.sessionKey == nil)
+        || event.origin == nil)
     {
         return NO;
     }
@@ -34,7 +34,7 @@
     return DConnectEventErrorFailed;
 }
 
-- (BOOL) removeEventsForSessionKey:(NSString *)sessionKey {
+- (BOOL) removeEventsForOrigin:(NSString *)origin {
     return NO;
 }
 
@@ -45,7 +45,7 @@
 
 - (DConnectEvent *) eventForServiceId:(NSString *)serviceId profile:(NSString *)profile
                            interface:(NSString *)interface attribute:(NSString *)attribute
-                          sessionKey:(NSString *)sessionKey
+                          origin:(NSString *)origin
 {
     return nil;
 }
