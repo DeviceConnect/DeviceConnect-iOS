@@ -20,13 +20,22 @@
 @end
 
 
-@implementation DPAWSIoTDeviceListViewController
+@implementation DPAWSIoTDeviceListViewController {
+    BOOL _loginViewFlag;
+}
 
 // View表示時
 - (void)viewWillAppear:(BOOL)animated {
 	// アカウントの設定がない場合はログイン画面へ
 	if (![DPAWSIoTUtils hasAccount]) {
-		[self performSegueWithIdentifier:@"LoginSegue" sender:self];
+        // ログイン画面から戻ってきた時には画面を閉じる
+        if (_loginViewFlag) {
+            _loginViewFlag = NO;
+            [self dismissViewControllerAnimated:YES completion:nil];
+        } else {
+            _loginViewFlag = YES;
+            [self performSegueWithIdentifier:@"LoginSegue" sender:self];
+        }
 	} else {
 		// ローディング画面表示
 		[DPAWSIoTUtils showLoadingHUD:self.storyboard];
@@ -110,6 +119,13 @@
 				break;
 		}
 	}];
+	if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
+		[ac setModalPresentationStyle:UIModalPresentationPopover];
+		UIPopoverPresentationController *popPresenter = [ac popoverPresentationController];
+		UIView *view = [sender valueForKey:@"view"];
+		popPresenter.sourceView = view;
+		popPresenter.sourceRect = [view bounds];
+	}
 	[self presentViewController:ac animated:YES completion:nil];
 }
 

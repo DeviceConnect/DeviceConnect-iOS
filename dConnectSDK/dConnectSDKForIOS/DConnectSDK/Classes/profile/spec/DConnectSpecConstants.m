@@ -274,33 +274,77 @@ NSString * const DConnectSpecBoolTrue = @"true";
 
 + (BOOL)isDigit:(NSString *)text {
     
+    NSCharacterSet *signDigitCharSet = [NSCharacterSet characterSetWithCharactersInString:@"+-0123456789"];
+    NSCharacterSet *digitCharSet = [NSCharacterSet characterSetWithCharactersInString:@"0123456789"];
+    
     if (![text isKindOfClass: [NSString class]]) {
         return NO;
     }
+    if (text.length <= 0) {
+        return NO;
+    }
     
-    NSCharacterSet *digitCharSet = [NSCharacterSet characterSetWithCharactersInString:@"+-0123456789"];
+    // 1文字目が符号または数値か判定
+    NSString *str = [text substringWithRange:NSMakeRange(0, 1)];
+    NSScanner *scanner = [NSScanner localizedScannerWithString:str];
+    [scanner setCharactersToBeSkipped:nil];
+    [scanner scanCharactersFromSet:signDigitCharSet intoString:NULL];
+    if (![scanner isAtEnd]) {
+        return NO;
+    }
     
-    NSScanner *aScanner = [NSScanner localizedScannerWithString:text];
-    [aScanner setCharactersToBeSkipped:nil];
-    
-    [aScanner scanCharactersFromSet:digitCharSet intoString:NULL];
-    return [aScanner isAtEnd];
+    // 2文字目以降が数値か判定
+    str = [text substringFromIndex:1];
+    scanner = [NSScanner localizedScannerWithString:str];
+    [scanner setCharactersToBeSkipped:nil];
+    [scanner scanCharactersFromSet:digitCharSet intoString:NULL];
+    if (![scanner isAtEnd]) {
+        return NO;
+    }
+    return YES;
 }
 
 + (BOOL)isNumber:(NSString *)text {
     
+    NSCharacterSet *signDigitCharSet = [NSCharacterSet characterSetWithCharactersInString:@"+-0123456789."];
+    NSCharacterSet *digitCharSet = [NSCharacterSet characterSetWithCharactersInString:@"0123456789."];
+    NSString *dot = @".";
+    
     if (![text isKindOfClass: [NSString class]]) {
         return NO;
     }
+    if (text.length <= 0) {
+        return NO;
+    }
     
-    NSCharacterSet *digitCharSet = [NSCharacterSet characterSetWithCharactersInString:@"+-0123456789."];
+    // 1文字目が符号または数値またはか判定
+    NSString *str = [text substringWithRange:NSMakeRange(0, 1)];
+    NSScanner *scanner = [NSScanner localizedScannerWithString:str];
+    [scanner setCharactersToBeSkipped:nil];
+    [scanner scanCharactersFromSet:signDigitCharSet intoString:NULL];
+    if (![scanner isAtEnd]) {
+        return NO;
+    }
     
-    NSScanner *aScanner = [NSScanner localizedScannerWithString:text];
-    [aScanner setCharactersToBeSkipped:nil];
+    // 2文字目以降が数値またはドットか判定
+    str = [text substringFromIndex:1];
+    scanner = [NSScanner localizedScannerWithString:str];
+    [scanner setCharactersToBeSkipped:nil];
+    [scanner scanCharactersFromSet:digitCharSet intoString:NULL];
+    if (![scanner isAtEnd]) {
+        return NO;
+    }
     
-    [aScanner scanCharactersFromSet:digitCharSet intoString:NULL];
-    return [aScanner isAtEnd];
+    // ドットの数が１個以下か判定(前後から検索して検出位置が異なれば2個以上存在する)
+    NSRange forwardRange = [text rangeOfString:dot];
+    NSRange backwardRange = [text rangeOfString:dot options:NSBackwardsSearch];
+    if (forwardRange.location != NSNotFound &&
+        backwardRange.location != NSBackwardsSearch &&
+        forwardRange.location != backwardRange.location) {
+        return NO;
+    }
+    
+    return YES;
 }
-
 
 @end

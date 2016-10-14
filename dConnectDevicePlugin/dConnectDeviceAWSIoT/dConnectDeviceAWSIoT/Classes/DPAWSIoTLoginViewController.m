@@ -19,11 +19,22 @@
 
 @implementation DPAWSIoTLoginViewController
 
+- (BOOL) testCharactorCode:(NSString *)text {
+    if (!text || text.length == 0) {
+        return NO;
+    }
+    return [text canBeConvertedToEncoding:NSASCIIStringEncoding];
+}
+
+- (IBAction)closeButtonPressed:(id)sender {
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
 // ログインボタンイベント
 - (IBAction)loginButtonPressed:(id)sender {
 	NSString *accessKey = _textAccessKey.text;
 	NSString *secretKey = _textSecretKey.text;
-	if (accessKey.length && secretKey.length) {
+    if ([self testCharactorCode:accessKey] && [self testCharactorCode:secretKey]) {
 		// 保存
 		NSInteger region = [_regionPicker selectedRowInComponent:0] +1;
 		[DPAWSIoTUtils setAccount:accessKey secretKey:secretKey region:region];
@@ -42,7 +53,7 @@
 		}];
 	} else {
 		// アラート
-		NSString *msg = @"ログインに失敗しました";
+        NSString *msg = @"入力値が不正です。";
 		[DPAWSIoTUtils showAlert:self title:@"Error" message:msg handler:^{
 		}];
 	}

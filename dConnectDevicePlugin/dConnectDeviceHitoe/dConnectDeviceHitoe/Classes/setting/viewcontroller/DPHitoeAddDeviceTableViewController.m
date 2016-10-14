@@ -22,8 +22,10 @@
     BOOL isConnecting;
     DPHitoeDevice *currentDevice;
 }
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *updateBtn;
 @property (nonatomic) NSTimer *timer;
 @property (nonatomic) NSTimer *connectedTimeout;
+@property (nonatomic) NSTimer *searchTimeout;
 @end
 
 @implementation DPHitoeAddDeviceTableViewController
@@ -75,23 +77,23 @@
     dispatch_async(dispatch_get_main_queue(), ^{
 
     
-    NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
-    
-    [notificationCenter addObserver:_self selector:@selector(didConnectWithDevice:)
-                               name:DPHitoeConnectDeviceNotification
-                             object:nil];
-    [notificationCenter addObserver:_self selector:@selector(didConnectFailWithDevice:)
-                               name:DPHitoeConnectFailedDeviceNotification
-                             object:nil];
-    [notificationCenter addObserver:_self selector:@selector(didDisconnectWithDevice:)
-                               name:DPHitoeDisconnectNotification
-                             object:nil];
-    [notificationCenter addObserver:_self selector:@selector(didDiscoveryForDevices:)
-                               name:DPHitoeDiscoveryDeviceNotification
-                             object:nil];
-    [notificationCenter addObserver:_self selector:@selector(didDeleteAtDevice:)
-                               name:DPHitoeDeleteDeviceNotification
-                             object:nil];
+        NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
+        
+        [notificationCenter addObserver:_self selector:@selector(didConnectWithDevice:)
+                                   name:DPHitoeConnectDeviceNotification
+                                 object:nil];
+        [notificationCenter addObserver:_self selector:@selector(didConnectFailWithDevice:)
+                                   name:DPHitoeConnectFailedDeviceNotification
+                                 object:nil];
+        [notificationCenter addObserver:_self selector:@selector(didDisconnectWithDevice:)
+                                   name:DPHitoeDisconnectNotification
+                                 object:nil];
+        [notificationCenter addObserver:_self selector:@selector(didDiscoveryForDevices:)
+                                   name:DPHitoeDiscoveryDeviceNotification
+                                 object:nil];
+        [notificationCenter addObserver:_self selector:@selector(didDeleteAtDevice:)
+                                   name:DPHitoeDeleteDeviceNotification
+                                 object:nil];
     });
 }
 
@@ -106,14 +108,7 @@
     }
 
     isConnecting = NO;
-    
-    NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
-    [notificationCenter removeObserver:self name:DPHitoeConnectDeviceNotification object:nil];
-    [notificationCenter removeObserver:self name:DPHitoeConnectFailedDeviceNotification object:nil];
-    [notificationCenter removeObserver:self name:DPHitoeDisconnectNotification object:nil];
-    [notificationCenter removeObserver:self name:DPHitoeDiscoveryDeviceNotification object:nil];
-    [notificationCenter removeObserver:self name:DPHitoeDeleteDeviceNotification object:nil];
-
+ 
 }
 
 - (void)didReceiveMemoryWarning {
@@ -122,6 +117,14 @@
 }
 - (IBAction)closeSettings:(id)sender {
     [self dismissViewControllerAnimated:YES completion:nil];
+    
+    NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
+    [notificationCenter removeObserver:self name:DPHitoeConnectDeviceNotification object:nil];
+    [notificationCenter removeObserver:self name:DPHitoeConnectFailedDeviceNotification object:nil];
+    [notificationCenter removeObserver:self name:DPHitoeDisconnectNotification object:nil];
+    [notificationCenter removeObserver:self name:DPHitoeDiscoveryDeviceNotification object:nil];
+    [notificationCenter removeObserver:self name:DPHitoeDeleteDeviceNotification object:nil];
+
 }
 
 #pragma mark - Table view data source
@@ -181,6 +184,7 @@
             dispatch_async(updateQueue, ^{
                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                     [DPHitoeProgressDialog showProgressDialog];
+                    _updateBtn.enabled = NO;
                 });
             });
             [self startTimeoutTimer];
@@ -190,6 +194,7 @@
             [[DPHitoeManager sharedInstance] connectForHitoe:currentDevice];
         });
         [DPHitoeProgressDialog showProgressDialog];
+        _updateBtn.enabled = NO;
         [self startTimeoutTimer];
     }
 }
@@ -210,6 +215,7 @@
         [DPHitoeSetShirtDialog showHitoeSetShirtDialogWithComplition:^{
             [self startTimer];
             [DPHitoeProgressDialog closeProgressDialog];
+            _updateBtn.enabled = YES;
         }];
     });
     isConnecting = NO;
@@ -231,6 +237,7 @@
     [self presentViewController:alertController animated:YES completion:nil];
     [self startTimer];
     [DPHitoeProgressDialog closeProgressDialog];
+    _updateBtn.enabled = YES;
     isConnecting = NO;
 
 }
@@ -253,6 +260,8 @@
     }
     [self.tableView reloadData];
     [DPHitoeProgressDialog closeProgressDialog];
+    _updateBtn.enabled = YES;
+
 }
 
 -(void)didDeleteAtDevice:(NSNotification *)notification {
@@ -277,6 +286,10 @@
 - (IBAction)searchDevices:(id)sender {
     [[DPHitoeManager sharedInstance] discovery];
     [DPHitoeProgressDialog showProgressDialog];
+    _updateBtn.enabled = NO;
+    [self startSearchoutTimer];
+
+
 }
 
 
@@ -300,6 +313,16 @@
                          repeats:NO];
 
 }
+
+- (void)startSearchoutTimer {
+    _searchTimeout = [NSTimer
+                         scheduledTimerWithTimeInterval:10.0
+                         target:self
+                         selector:@selector(onSearchout:)
+                         userInfo:nil
+                         repeats:NO];
+    
+}
 #pragma mark - Timer
 
 - (void)onTimer:(NSTimer*)timer {
@@ -309,6 +332,8 @@
 - (void)onTimeout:(NSTimer*)timer {
     if (isConnecting) {
         [DPHitoeProgressDialog closeProgressDialog];
+        _updateBtn.enabled = YES;
+
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"接続失敗"
                                                                                  message:@"Hitoeとの接続に失敗しました。"
                                                                           preferredStyle:UIAlertControllerStyleAlert];
@@ -323,4 +348,10 @@
     }
 
 }
+
+- (void)onSearchout:(NSTimer*)timer {
+    [DPHitoeProgressDialog closeProgressDialog];
+    _updateBtn.enabled = YES;
+}
+
 @end

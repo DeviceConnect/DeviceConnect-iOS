@@ -27,19 +27,6 @@
 #import <DConnectSDK/DConnectService.h>
 #import <objc/runtime.h>
 
-static const char kAssocKey_Window;
-
-@interface DPHitoeProgress : UIWindow
-
-@end
-
-@implementation DPHitoeProgress
-
--(void)dealloc
-{
-}
-
-@end
 @interface ViewController ()
 {
     TopViewModel *viewModel;

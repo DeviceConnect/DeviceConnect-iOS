@@ -149,20 +149,9 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
                          NSNumber *brightness = [DConnectLightProfile brightnessFromRequest: request];
                          NSString *color = [DConnectLightProfile colorFromRequest: request];
                          NSArray *flashing = [DConnectLightProfile parsePattern: [DConnectLightProfile flashingFromRequest: request] isId:NO];
-                         
-                         if (!brightness
-                             || (brightness && ([brightness doubleValue] < 0.0 || [brightness doubleValue] > 1.0))) {
-                             [response setErrorToInvalidRequestParameterWithMessage:
-                              @"Parameter 'brightness' must be a value between 0 and 1.0."];
-                             return YES;
-                         }
-                         
-                         if (!flashing) {
-                             [response setErrorToInvalidRequestParameterWithMessage:
-                              @"Parameter 'flashing' invalid."];
-                             return YES;
-                         }
-                         if (![weakSelf checkFlash:response flashing:flashing]) {
+
+                         if (flashing && ![weakSelf checkFlash:response flashing:flashing]) {
+                             [response setErrorToInvalidRequestParameter];
                              return YES;
                          }
                          
@@ -171,9 +160,7 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
                              return YES;
                          }
                          
-                         DPAllJoynServiceEntity *service =
-                         weakHandler.discoveredAllJoynServices[serviceId];
-                         
+                         DPAllJoynServiceEntity *service = weakHandler.discoveredAllJoynServices[serviceId];
                          if (!service) {
                              [response setErrorToNotFoundService];
                              return YES;
@@ -184,15 +171,7 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
                               @"Parameter 'lightId' must be specified."];
                              return YES;
                          }
-                         
-                         if (brightness
-                             && (brightness.doubleValue < 0 || brightness.doubleValue > 1)) {
-                             [response setErrorToInvalidRequestParameterWithMessage:
-                              @"Parameter 'brightness' must be a value between 0 and 1.0 ."];
-                             [[DConnectManager sharedManager] sendResponse:response];
-                             return YES;
-                         }
-                         
+                        
                          if (color
                              && (color.length != 6
                                  || ![[NSScanner scannerWithString:color] scanHexInt:nil]))
@@ -202,13 +181,7 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
                              [[DConnectManager sharedManager] sendResponse:response];
                              return YES;
                          }
-                         
-                         //    if (flashing && flashing.count > 0) {
-                         //        [response setErrorToInvalidRequestParameterWithMessage:
-                         //         @"Parameter 'flashing' is not supported."];
-                         //        return YES;
-                         //    }
-                         
+
                          switch ([weakSelf serviceTypeFromService:service]) {
                                  
                              case DPAllJoynLightServiceTypeSingleLamp: {
@@ -245,21 +218,12 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
                           NSString *serviceId = [request serviceId];
                           NSString *lightId = [DConnectLightProfile lightIdFromRequest: request];
                           NSNumber *brightness = [DConnectLightProfile brightnessFromRequest: request];
-                          if (!brightness
-                              || (brightness && ([brightness doubleValue] < 0.0 || [brightness doubleValue] > 1.0))) {
-                              [response setErrorToInvalidRequestParameterWithMessage:
-                               @"Parameter 'brightness' must be a value between 0 and 1.0."];
-                              return YES;
-                          }
                           NSString *name = [request stringForKey:DConnectLightProfileParamName];
                           NSString *color = [request stringForKey:DConnectLightProfileParamColor];
                           NSArray *flashing = [DConnectLightProfile parsePattern: [DConnectLightProfile flashingFromRequest: request] isId:NO];
-                          if (!flashing) {
-                              [response setErrorToInvalidRequestParameterWithMessage:
-                               @"Parameter 'flashing' invalid."];
-                              return YES;
-                          }
-                          if (![weakSelf checkFlash:response flashing:flashing]) {
+
+                          if (flashing && ![weakSelf checkFlash:response flashing:flashing]) {
+                              [response setErrorToInvalidRequestParameter];
                               return YES;
                           }
                           
@@ -268,8 +232,7 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
                               return YES;
                           }
                           
-                          DPAllJoynServiceEntity *service =
-                          weakHandler.discoveredAllJoynServices[serviceId];
+                          DPAllJoynServiceEntity *service = weakHandler.discoveredAllJoynServices[serviceId];
                           
                           if (!service) {
                               [response setErrorToNotFoundService];
@@ -279,14 +242,6 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
                           if (!lightId) {
                               [response setErrorToInvalidRequestParameterWithMessage:
                                @"Parameter 'lightId' must be specified."];
-                              return YES;
-                          }
-                          
-                          if (brightness
-                              && (brightness.doubleValue < 0 || brightness.doubleValue > 1)) {
-                              [response setErrorToInvalidRequestParameterWithMessage:
-                               @"Parameter 'brightness' must be a value between 0 and 1.0 ."];
-                              [[DConnectManager sharedManager] sendResponse:response];
                               return YES;
                           }
                           
@@ -300,17 +255,12 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
                               return YES;
                           }
                           
-                          //    if (flashing && flashing.count > 0) {
-                          //        [response setErrorToInvalidRequestParameterWithMessage:
-                          //         @"Parameter 'flashing' is not supported."];
-                          //        return YES;
-                          //    }
                           if (!name || (name && name.length == 0)) {
                               [response setErrorToInvalidRequestParameterWithMessage:
                                @"Parameter 'name' is invalid."];
                               return YES;
-                              
                           }
+                          
                           switch ([weakSelf serviceTypeFromService:service]) {
                                   
                               case DPAllJoynLightServiceTypeSingleLamp: {
@@ -352,8 +302,7 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
                              return YES;
                          }
                          
-                         DPAllJoynServiceEntity *service =
-                         weakHandler.discoveredAllJoynServices[serviceId];
+                         DPAllJoynServiceEntity *service = weakHandler.discoveredAllJoynServices[serviceId];
                          
                          if (!service) {
                              [response setErrorToNotFoundService];

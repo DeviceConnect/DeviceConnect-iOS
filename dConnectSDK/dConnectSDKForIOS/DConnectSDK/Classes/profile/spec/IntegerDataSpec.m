@@ -29,10 +29,6 @@
 #pragma mark - Abstruct Methods Implement.
 
 - (BOOL) validate: (id) obj {
-    
-    if (![super validate: obj]) {
-        return NO;
-    }
     if (obj == nil) {
         return YES;
     }

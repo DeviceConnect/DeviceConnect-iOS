@@ -583,6 +583,11 @@ static int const _timeout = 500;
     if (_ptpConnection) {
         [self connect];
     }
+    dispatch_queue_t updateQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    dispatch_async(updateQueue, ^{
+        [self updateManageServices: YES];
+    });
+
 }
 
 - (NSString *) pathByAppendingPathComponent:(NSString *)pathComponent
@@ -679,7 +684,6 @@ static int const _timeout = 500;
         // 接続を試みる(接続成功したらシリアル番号も取得できる)
         BOOL isConnected = [self connect];
         NSString* serial = [self getSerialNo];
-        
         // 接続できた
         if (isConnected && serial) {
             
@@ -718,7 +722,6 @@ static int const _timeout = 500;
 
 // 通知を受け取るメソッド
 -(void)notifiedNetworkStatus:(NSNotification *)notification {
-    
     // Thetaオンライン判定(Theta接続中はインターネット接続できないのでこの条件で判定する。
     BOOL online = NO;
     if ([self.reachability currentReachabilityStatus] == NotReachable) {
@@ -728,10 +731,9 @@ static int const _timeout = 500;
     }
     
     // デバイス管理情報更新
-    dispatch_queue_t updateQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
-    dispatch_async(updateQueue, ^{
-        [self updateManageServices: online];
-    });
+//    dispatch_queue_t updateQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+//    dispatch_async(updateQueue, ^{
+//        [self updateManageServices: online];
+//    });
 }
-
 @end
