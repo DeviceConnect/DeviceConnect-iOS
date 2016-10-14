@@ -221,8 +221,8 @@ static NSString *const kTopicEvent = @"event";
 
 // ログアウト
 - (void)logout {
+    [self updateManagers:nil myInfo:nil error:nil];
 	[[DPAWSIoTManager sharedManager] disconnect];
-	[DPAWSIoTUtils clearAccount];
 }
 
 // マネージャー情報を取得
@@ -514,31 +514,19 @@ static NSString *const kTopicEvent = @"event";
         }
         // URI変換 ここまで
         
+        
 		// MQTTからHTTPへ
-		[DPAWSIoTUtils sendRequest:requestDic handler:^(NSData *data, NSError *error) {
-			if (error) {
-				NSLog(@"Error on SendRequest:%@", error);
-				return;
-			}
-
+        [DPAWSIoTUtils sendRequestDictionary:requestDic callback:^(DConnectResponseMessage *response) {
             // 返却形式にフォーマット
-			NSDictionary *resJson = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
-			NSMutableDictionary *dic = [NSMutableDictionary dictionary];
-			[dic setObject:json[@"requestCode"] forKey:@"requestCode"];
-			[dic setObject:resJson forKey:@"response"];
-			NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dic options:0 error:&error];
-			if (error) {
-				NSLog(@"Error: %@", error);
-				return;
-			}
-			// レスポンスをMQTT送信
-			NSString *msg = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+            NSString *responseJson = [response convertToJSONString];
+            NSString *msg = [NSString stringWithFormat:@"{\"requestCode\":%@,\"response\":%@}", json[@"requestCode"], responseJson];
+            // レスポンスをMQTT送信
             NSString *responseTopic = [DPAWSIoTController myTopic:kTopicResponse];
-			if (![[DPAWSIoTManager sharedManager] publishWithTopic:responseTopic message:msg]) {
-				NSLog(@"Error on PublishWithTopic: [%@] %@", responseTopic, msg);
-			}
-		}];
-	}];
+            if (![[DPAWSIoTManager sharedManager] publishWithTopic:responseTopic message:msg]) {
+                NSLog(@"Error on PublishWithTopic: [%@] %@", responseTopic, msg);
+            }
+        }];
+    }];
 }
 
 // RequestTopic購読解除
@@ -635,7 +623,6 @@ static NSString *const kTopicEvent = @"event";
 			// イベント購読解除
 			[self unsubscribeEvent:key];
 		}
-		
 	}
 }
 

@@ -115,6 +115,7 @@
 				break;
 			case 2:
 				[[DPAWSIoTController sharedManager] logout];
+                [DPAWSIoTUtils clearAccount];
 				[self performSegueWithIdentifier:@"LoginSegue" sender:self];
 				break;
 		}

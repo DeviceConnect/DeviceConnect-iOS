@@ -41,8 +41,9 @@
 
 // ログイン
 + (void)loginWithHandler:(void (^)(NSError *error))handler;
+
 // HTTP通信
-+ (void)sendRequest:(NSDictionary*)request handler:(void (^)(NSData *data, NSError *error))handler;
++ (void)sendRequestDictionary:(NSDictionary*)requestDic callback:(DConnectResponseBlocks)callback;
 
 // Packege名取得
 + (NSString *)packageName;
@@ -55,5 +56,7 @@
 
 // サービス情報を取得
 + (void)fetchServiceInformationWithId:(NSString*)serviceId callback:(DConnectResponseBlocks)callback;
+
++ (NSString *)accessToken;
 
 @end
