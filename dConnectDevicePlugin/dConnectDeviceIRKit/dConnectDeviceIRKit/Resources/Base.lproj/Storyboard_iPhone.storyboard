@@ -725,6 +725,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8iq-1O-pfa">
                                 <rect key="frame" x="16" y="210" width="288" height="148"/>
                                 <subviews>

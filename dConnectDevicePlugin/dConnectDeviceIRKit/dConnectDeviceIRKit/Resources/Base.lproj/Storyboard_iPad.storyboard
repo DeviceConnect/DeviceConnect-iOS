@@ -286,11 +286,8 @@
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="foundIRKitList" destination="qNK-n3-lyi" id="gl3-YX-XjN"/>
-<<<<<<< HEAD
-=======
                         <outlet property="toolBar" destination="WtD-36-Ro1" id="EHL-EI-qws"/>
                         <segue destination="WBJ-9Q-AJJ" kind="push" identifier="showDetail" id="4sO-4Q-Q23"/>
->>>>>>> master
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZSV-4l-JuL" userLabel="First Responder" sceneMemberID="firstResponder"/>
