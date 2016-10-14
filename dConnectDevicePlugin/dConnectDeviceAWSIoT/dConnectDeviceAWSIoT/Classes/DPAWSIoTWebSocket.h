@@ -18,8 +18,9 @@
 - (void)setPort:(int)port;
 
 // WebSocketを追加
-- (void)addSocket:(NSString*)key;
+- (void)openWebSocketWithAccessToken:(NSString*)key;
+
 // WebSocketを削除
-- (void)removeSocket:(NSString*)key;
+- (void)closeWebSocket;
 
 @end

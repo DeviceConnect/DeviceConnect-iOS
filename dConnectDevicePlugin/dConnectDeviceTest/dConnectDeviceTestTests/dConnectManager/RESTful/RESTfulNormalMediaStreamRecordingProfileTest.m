@@ -333,49 +333,4 @@
     
 }
 
-/*!
- * @brief 動画撮影または音声録音の一定時間経過イベントのコールバック登録テストを行う.
- * <pre>
- * 【HTTP通信】
- * Method: PUT
- * Path: /mediaStreamRecording/ondeviceavailable?serviceId=xxxx&session_key=xxxx
- * </pre>
- * <pre>
- * 【期待する動作】
- * ・resultに0が返ってくること。
- * ・コールバック登録後にイベントを受信すること。
- * </pre>
- */
-- (void) testHttpNormalMediaStreamRecordingOnDataAvailablePut
-{
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/mediaStreamRecording/ondataavailable?sessionKey=%@&serviceId=%@", self.clientId, self.serviceId]];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
-    [request setHTTPMethod:@"PUT"];
-    
-    CHECK_RESPONSE(@"{\"result\":0}", request);
-    CHECK_EVENT(@"{\"media\":{\"uri\":\"http://localhost:4035/gotapi/files?uri=content%3A%2F%2Ftest%2Ftest%2Emp4\",\"mimeType\":\"video/mp4\"}}");
-}
-
-/*!
- * @brief 動画撮影または音声録音の一定時間経過イベントのコールバック解除テストを行う.
- * <pre>
- * 【HTTP通信】
- * Method: DELETE
- * Path: /mediaStreamRecording/ondeviceavailable?serviceId=xxxx&session_key=xxxx
- * </pre>
- * <pre>
- * 【期待する動作】
- * ・resultに0が返ってくること。
- * </pre>
- */
-- (void) testHttpNormalMediaStreamRecordingOnDataAvailableDelete
-{
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/mediaStreamRecording/ondataavailable?sessionKey=%@&serviceId=%@", self.clientId, self.serviceId]];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
-    [request setHTTPMethod:@"DELETE"];
-    
-    CHECK_RESPONSE(@"{\"result\":0}", request);
-    
-}
-
 @end

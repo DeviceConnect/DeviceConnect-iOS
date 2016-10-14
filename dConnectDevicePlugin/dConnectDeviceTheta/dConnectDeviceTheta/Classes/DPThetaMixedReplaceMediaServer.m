@@ -36,6 +36,8 @@ static int const DPThetaTagHeader = 0;
 @property (nonatomic) NSString *segment;
 @property (nonatomic) NSMutableDictionary *connectedSockets;
 @property (nonatomic) NSMutableDictionary *broadcastROIImages;
+@property (strong, nonatomic)  GCDAsyncSocket *listenSocket;;
+
 @end
 
 @implementation DPThetaMixedReplaceMediaServer
@@ -51,7 +53,7 @@ static int const DPThetaTagHeader = 0;
         _connectedSockets = [NSMutableDictionary dictionary];
         _broadcastROIImages = [NSMutableDictionary dictionary];
         socketQueue = dispatch_queue_create("org.deviceconnect.ios.mixedreplacemediaserver.THETA", NULL);
-        listenSocket = [[GCDAsyncSocket alloc] initWithDelegate:self delegateQueue:socketQueue];
+        _listenSocket = [[GCDAsyncSocket alloc] initWithDelegate:self delegateQueue:socketQueue];
         _isRunning = NO;
 
         
@@ -66,7 +68,7 @@ static int const DPThetaTagHeader = 0;
         NSError *error = nil;
         for (int i = 9000; i <= 10000; i++) {
             _port = i;
-            if (![listenSocket acceptOnPort:_port error:&error]) {
+            if (![_listenSocket acceptOnPort:_port error:&error]) {
                 if (_port >= 10000) {
                     NSLog(@"error:%@", error);
                     return;
@@ -115,13 +117,13 @@ static int const DPThetaTagHeader = 0;
             });
         });
         dispatch_source_set_timer(_timerSource, dispatch_time(DISPATCH_TIME_NOW, 0),
-                                  NSEC_PER_SEC * 0.1, NSEC_PER_SEC);
+                                  NSEC_PER_SEC * 0.3, NSEC_PER_SEC);
         dispatch_resume(_timerSource);
     } else {
         if(_timerSource){
             dispatch_source_cancel(_timerSource);
         }
-        [listenSocket disconnect];
+        [_listenSocket disconnect];
         @synchronized (_connectedSockets) {
             for (GCDAsyncSocket *sock in _connectedSockets.allValues) {
                 [sock disconnect];
@@ -171,12 +173,14 @@ static int const DPThetaTagHeader = 0;
 
 - (void)socket:(GCDAsyncSocket *)sock didAcceptNewSocket:(GCDAsyncSocket *)newSocket
 {
+    NSLog(@"Accepted new socket from %@:%hu", [newSocket connectedHost], [newSocket connectedPort]);
     [newSocket readDataToData:[GCDAsyncSocket CRLFData] withTimeout:15.0 tag:DPThetaTagHeader];
 }
 
 
 - (void)socket:(GCDAsyncSocket *)sock didReadData:(NSData *)data withTag:(long)tag
 {
+    NSLog(@"Accepted new socket from %@:%hu", [sock connectedHost], [sock connectedPort]);
     NSData *strData = [data subdataWithRange:NSMakeRange(0, [data length] - 2)];
     NSString *msg = [[NSString alloc] initWithData:strData encoding:NSUTF8StringEncoding];
     if (tag == DPThetaTagHeader) {

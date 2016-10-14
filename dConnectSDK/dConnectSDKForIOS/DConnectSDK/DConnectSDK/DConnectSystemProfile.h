@@ -87,6 +87,8 @@ extern NSString *const DConnectSystemProfileParamVersion;
 
 - (void) serviceListViewControllerDidWillAppear;
 
+- (NSArray *) displayServiceFilter: (NSArray *) services;
+
 @end
 
 /*!

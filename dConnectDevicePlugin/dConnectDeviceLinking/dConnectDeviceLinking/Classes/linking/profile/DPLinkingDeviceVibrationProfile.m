@@ -49,6 +49,13 @@
     }
 
     if (pattern) {
+        for (NSNumber *v in pattern) {
+            if ([v integerValue] < 0) {
+                [response setErrorToInvalidRequestParameter];
+                return YES;
+            }
+        }
+        
         _repeatExecutor = [[DPLinkingDeviceRepeatExecutor alloc] initWithPattern:pattern on:^{
             [deviceMgr sendVibrationCommand:device power:YES];
         } off:^{

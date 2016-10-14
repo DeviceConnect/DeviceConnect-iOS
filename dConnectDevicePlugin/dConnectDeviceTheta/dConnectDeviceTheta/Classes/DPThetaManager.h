@@ -23,6 +23,10 @@ return YES; \
 #define SELF_PLUGIN ((DPThetaDevicePlugin *)self.plugin)
 #define WEAKSELF_PLUGIN ((DPThetaDevicePlugin *)weakSelf.plugin)
 
+// Bundle取得用マクロ
+#define DPThetaBundle() \
+[NSBundle bundleWithPath:[[NSBundle mainBundle] pathForResource:@"dConnectDeviceTheta_resources" ofType:@"bundle"]]
+
 
 /*!
  @class DPThetaManager

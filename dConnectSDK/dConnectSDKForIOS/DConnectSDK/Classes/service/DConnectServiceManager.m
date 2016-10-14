@@ -77,7 +77,6 @@ static NSMutableDictionary *_instanceArray = nil;
     
     /* デフォルト値を設定 */
     if (self) {
-        [self setPluginSpec: [[DConnectPluginSpec alloc] init]];
         mDConnectServices = [NSMutableDictionary dictionary];
         self.serviceListeners = [NSMutableArray array];
     }
@@ -94,40 +93,38 @@ static NSMutableDictionary *_instanceArray = nil;
     [self setPlugin_: plugin];
 }
 
-- (void) addService: (DConnectService *) service {
+- (void) addService: (DConnectService *) service bundle:(NSBundle *) selfBundle {
     
     NSString *serviceId = [service serviceId];
     
     [service setStatusListener: self];
     
-    if ([self pluginSpec]) {
-        for (DConnectProfile *profile in [service profiles]) {
+    for (DConnectProfile *profile in [service profiles]) {
 
-            // プロファイルのJSONファイルを読み込み、内部生成したprofileSpecを新規登録する
-            if (![[self pluginSpec] findProfileSpec: [[profile profileName] lowercaseString]]) {
-                NSError *error = nil;
-                [[self pluginSpec] addProfileSpec: [[profile profileName] lowercaseString] error: &error];
-                if (error) {
-                    DCLogE(@"addService error ! %@", [error description]);
-                }
+        // プロファイルのJSONファイルを読み込み、内部生成したprofileSpecを新規登録する
+        if (![[DConnectPluginSpec shared] findProfileSpec: [[profile profileName] lowercaseString]]) {
+            NSError *error = nil;
+            [[DConnectPluginSpec shared] addProfileSpec: [[profile profileName] lowercaseString] bundle: selfBundle error: &error];
+            if (error) {
+                DCLogE(@"addService error ! %@", [error description]);
             }
-            
-            DConnectProfileSpec *profileSpec = [[self pluginSpec] findProfileSpec: [[profile profileName] lowercaseString]];
-            if (!profileSpec) {
+        }
+        
+        DConnectProfileSpec *profileSpec = [[DConnectPluginSpec shared] findProfileSpec: [[profile profileName] lowercaseString]];
+        if (!profileSpec) {
+            continue;
+        }
+        [profile setProfileSpec: profileSpec];
+        for (DConnectApiEntity *api in [profile apis]) {
+            DConnectSpecMethod method;
+            NSError *error;
+            if (![DConnectSpecConstants parseMethod:[api method] outMethod: &method error:&error]) {
+                DCLogW(@"addService error, %@", [error description]);
                 continue;
             }
-            [profile setProfileSpec: profileSpec];
-            for (DConnectApiEntity *api in [profile apis]) {
-                DConnectSpecMethod method;
-                NSError *error;
-                if (![DConnectSpecConstants parseMethod:[api method] outMethod: &method error:&error]) {
-                    DCLogW(@"addService error, %@", [error description]);
-                    continue;
-                }
-                DConnectApiSpec *spec = [profileSpec findApiSpec: [api path] method: method];
-                if (spec) {
-                    [api setApiSpec: spec];
-                }
+            DConnectApiSpec *spec = [profileSpec findApiSpec: [api path] method: method];
+            if (spec) {
+                [api setApiSpec: spec];
             }
         }
     }

@@ -129,7 +129,7 @@
     [request setHTTPMethod:@"PUT"];
     
     CHECK_RESPONSE(@"{\"result\":0}", request);
-    CHECK_EVENT(@"{\"file\":{\"curr\":\"2014-06-01T00:00:00+0900\",\"path\":\"test.txt\",\"prev\":\"2014-06-01T00:00:00+0900\"}}");
+    CHECK_EVENT(@"{\"file\":{}");
 }
 
 /*!

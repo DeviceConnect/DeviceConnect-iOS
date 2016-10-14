@@ -692,7 +692,7 @@ static int const _timeout = 500;
                 DPThetaService *service = [[DPThetaService alloc] initWithServiceId: DPThetaDeviceServiceId plugin: self.plugin];
                 [service setName:serial];
                 [service setNetworkType: DConnectServiceDiscoveryProfileNetworkTypeWiFi];
-                [self.serviceProvider addService: service];
+                [self.serviceProvider addService: service bundle: DPThetaBundle()];
                 [service setOnline:YES];
             } else {
                 // サービス登録済ならオンラインにする
@@ -712,7 +712,7 @@ static int const _timeout = 500;
         if (![self.serviceProvider service: DPThetaRoiServiceId]) {
             DPThetaService *service = [[DPThetaService alloc] initWithServiceId: DPThetaRoiServiceId plugin: self.plugin];
             [service setName: ROI_IMAGE_SERVICE];
-            [self.serviceProvider addService: service];
+            [self.serviceProvider addService: service bundle: DPThetaBundle()];
             [service setOnline:YES];
         }
         

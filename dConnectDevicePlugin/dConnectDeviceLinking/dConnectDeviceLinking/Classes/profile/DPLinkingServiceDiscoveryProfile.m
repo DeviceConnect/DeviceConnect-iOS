@@ -84,7 +84,7 @@
 
     NSArray *devices = [_deviceManager getDPLinkingDevices];
     [devices enumerateObjectsUsingBlock:^(DPLinkingDevice *device, NSUInteger idx, BOOL *stop) {
-        [_provider addService:[[DPLinkingDeviceService alloc] initWithDevice:device plugin:_plugin]];
+        [_provider addService:[[DPLinkingDeviceService alloc] initWithDevice:device plugin:_plugin] bundle: DPLinkingResourceBundle()];
     }];
 }
 
@@ -95,7 +95,7 @@
     
     NSArray *beacons = [_beaconManager getBeacons];
     [beacons enumerateObjectsUsingBlock:^(DPLinkingBeacon *beacon, NSUInteger idx, BOOL *stop) {
-        [_provider addService:[[DPLinkingBeaconService alloc] initWithBeacon:beacon plugin:_plugin]];
+        [_provider addService:[[DPLinkingBeaconService alloc] initWithBeacon:beacon plugin:_plugin] bundle: DPLinkingResourceBundle()];
     }];
 }
 

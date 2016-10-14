@@ -78,7 +78,6 @@
  */
 @property (nonatomic) BOOL useLocalOAuth;
 
-
 /*!
  @brief 任意のオブジェクトを指定してServiceManagerを初期化する。
  オブジェクトはDConnectDevicePluginもしくはDConnectManagerのインスタンスでなければならない。

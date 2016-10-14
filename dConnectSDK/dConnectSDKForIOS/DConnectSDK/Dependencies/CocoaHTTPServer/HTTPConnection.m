@@ -11,55 +11,28 @@
 #import "HTTPAsyncFileResponse.h"
 #import "WebSocket.h"
 #import "HTTPLogging.h"
-#import "WebSocket.h"
-#import "HTTPMessage.h"
-
-#import "DConnectManager.h"
-#import "DConnectMessage.h"
-#import "LocalOAuth2Main.h"
 
 #if ! __has_feature(objc_arc)
 #warning This file must be compiled with ARC. Use -fobjc-arc flag (or convert project to ARC).
 #endif
 
-// Does ARC support support GCD objects?
-// It does if the minimum deployment target is iOS 6+ or Mac OS X 8+
-
-#if TARGET_OS_IPHONE
-
-  // Compiling for iOS
-
-  #if __IPHONE_OS_VERSION_MIN_REQUIRED >= 60000 // iOS 6.0 or later
-    #define NEEDS_DISPATCH_RETAIN_RELEASE 0
-  #else                                         // iOS 5.X or earlier
-    #define NEEDS_DISPATCH_RETAIN_RELEASE 1
-  #endif
-
-#else
-
-  // Compiling for Mac OS X
-
-  #if MAC_OS_X_VERSION_MIN_REQUIRED >= 1080     // Mac OS X 10.8 or later
-    #define NEEDS_DISPATCH_RETAIN_RELEASE 0
-  #else
-    #define NEEDS_DISPATCH_RETAIN_RELEASE 1     // Mac OS X 10.7 or earlier
-  #endif
-
-#endif
+// Log levels: off, error, warn, info, verbose
+// Other flags: trace
+static const int httpLogLevel = HTTP_LOG_LEVEL_WARN; // | HTTP_LOG_FLAG_TRACE;
 
 // Define chunk size used to read in data for responses
 // This is how much data will be read from disk into RAM at a time
 #if TARGET_OS_IPHONE
-  #define READ_CHUNKSIZE  (1024 * 128)
+  #define READ_CHUNKSIZE  (1024 * 256)
 #else
   #define READ_CHUNKSIZE  (1024 * 512)
 #endif
 
 // Define chunk size used to read in POST upload data
 #if TARGET_OS_IPHONE
-  #define POST_CHUNKSIZE  (1024 * 32)
+  #define POST_CHUNKSIZE  (1024 * 256)
 #else
-  #define POST_CHUNKSIZE  (1024 * 128)
+  #define POST_CHUNKSIZE  (1024 * 512)
 #endif
 
 // Define the various timeouts (in seconds) for various parts of the HTTP process
@@ -113,28 +86,6 @@
 - (void)startReadingRequest;
 - (void)sendResponseHeadersAndBody;
 @end
-@interface HTTPConnection()
-/*! @brief Websocketの処理を行うキュー.
- */
-@property (nonatomic) dispatch_queue_t websocketQueue;
-
-/*! @brief ソケット.
- */
-//@property (nonatomic) GCDAsyncSocket *asyncSocket;
-
-/*! @brief HTTPリクエスト.
- */
-@property (nonatomic) HTTPMessage *request;
-
-/*! @brief websocketの一覧.
- */
-@property (nonatomic) NSMutableArray *websocketList;
-
-/*! @brief websocketとsessionKeyの対応表.
- */
-@property (nonatomic) NSMutableDictionary *websocketDic;
-
-@end
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark -
@@ -144,9 +95,6 @@
 
 static dispatch_queue_t recentNonceQueue;
 static NSMutableArray *recentNonces;
-
-// MODIFIED originとwebSocket対応テーブルを追加。
-static NSMutableDictionary *originTable;    // key:origin / value: websocket
 
 /**
  * This method is automatically called (courtesy of Cocoa) before the first instantiation of this class.
@@ -160,7 +108,6 @@ static NSMutableDictionary *originTable;    // key:origin / value: websocket
 		// Initialize class variables
 		recentNonceQueue = dispatch_queue_create("HTTPConnection-Nonce", NULL);
 		recentNonces = [[NSMutableArray alloc] initWithCapacity:5];
-
 	});
 }
 
@@ -230,11 +177,12 @@ static NSMutableDictionary *originTable;    // key:origin / value: websocket
 {
 	if ((self = [super init]))
 	{
+		HTTPLogTrace();
 		
 		if (aConfig.queue)
 		{
 			connectionQueue = aConfig.queue;
-			#if NEEDS_DISPATCH_RETAIN_RELEASE
+			#if !OS_OBJECT_USE_OBJC
 			dispatch_retain(connectionQueue);
 			#endif
 		}
@@ -242,17 +190,7 @@ static NSMutableDictionary *originTable;    // key:origin / value: websocket
 		{
 			connectionQueue = dispatch_queue_create("HTTPConnection", NULL);
 		}
-        self.request = [[HTTPMessage alloc] initEmptyRequest];
-        self.websocketQueue = dispatch_queue_create("WebSocketServer", NULL);
-        
-        self.websocketList = [NSMutableArray array];
-        self.websocketDic = [NSMutableDictionary dictionary];
-        if ([self isUseSSL]) {
-            NSDictionary *settings = [self createSSLConfiguration];
-            if (settings) {
-                [asyncSocket startTLS:settings];
-            }
-        }
+		
 		// Take over ownership of the socket
 		asyncSocket = newSocket;
 		[asyncSocket setDelegate:self delegateQueue:connectionQueue];
@@ -274,44 +212,15 @@ static NSMutableDictionary *originTable;    // key:origin / value: websocket
 	}
 	return self;
 }
-- (void) stopWebSocket {
-    for (int i = 0; i < self.websocketList.count; i++) {
-        WebSocket *socket = self.websocketList[i];
-        [socket stop];
-    }
-    [self.websocketList removeAllObjects];
-    
-    [self.websocketDic removeAllObjects];
-}
-
-// MODIFIED receiverIdをキーにする。
-- (void) sendEvent:(NSString *)event forReceiverId:(NSString *)receiverId {
-    WebSocket *socket = [self.websocketDic objectForKey:receiverId];
-    if (socket) {
-        [socket sendMessage:event];
-    }
-}
-
-- (BOOL) isUseSSL {
-    return NO;
-}
-
-- (NSDictionary *) createSSLConfiguration {
-    // TODO: SSLの実装
-    return nil;
-}
-
-- (NSInteger)numberOfWebSocket
-{
-    return [self.websocketList count];
-}
 
 /**
  * Standard Deconstructor.
 **/
 - (void)dealloc
 {
-	#if NEEDS_DISPATCH_RETAIN_RELEASE
+	HTTPLogTrace();
+	
+	#if !OS_OBJECT_USE_OBJC
 	dispatch_release(connectionQueue);
 	#endif
 	
@@ -324,137 +233,6 @@ static NSMutableDictionary *originTable;    // key:origin / value: websocket
 	}
 }
 
-#pragma mark - WebSocketDelegate Methods -
-
-- (void)webSocketDidOpen:(WebSocket *)webSocket origin: (NSString *) origin {
-    [self.websocketList addObject:webSocket];
-}
-
-- (void)webSocket:(WebSocket *)webSocket didReceiveMessage:(NSString *)msg {
-    NSData *jsonData = [msg dataUsingEncoding:NSUnicodeStringEncoding];
-    if (jsonData) {
-        // JSONをNSDictionaryに変換する
-        NSError *error = nil;
-        NSDictionary *json = [NSJSONSerialization JSONObjectWithData:jsonData
-                                                            options:NSJSONReadingAllowFragments
-                                                              error:&error];
-        if (!error) {
-            HTTPMessage *httpRequest = [webSocket getRequest];
-            NSString *receiverId;
-            NSString *path = httpRequest.url.path;
-            NSString *origin = httpRequest.allHeaderFields[@"origin"];
-            if (origin && [origin isEqualToString:@"null"]) {
-                origin = @"file://";
-            }
-            
-            if (path && [path localizedCaseInsensitiveCompare: @"/gotapi/websocket"] == NSOrderedSame) {
-                NSString *accessToken = json[DConnectMessageAccessToken];
-                if (!accessToken) {
-                    DCLogW(@"onWebSocketMessage: accessToken is not specified");
-                    [self sendError: webSocket errorCode:1 errorMessage:@"accessToken is not specified."];
-                    return;
-                }
-                if ([DConnectManager sharedManager].settings.useOriginEnable) {
-                    if (!origin) {
-                        DCLogW(@"onWebSocketMessage: origin is not specified.");
-                        [self sendError: webSocket errorCode:2 errorMessage: @"origin is not specified."];
-                        return;
-                    }
-                    if (![self isValidAccessToken: accessToken origin: origin]) {
-                        DCLogW(@"onWebSocketMessage: accessToken is invalid.");
-                        [self sendError: webSocket errorCode:3 errorMessage:@"accessToken is invalid."];
-                        return;
-                    }
-                } else {
-                    if (!origin) {
-                        origin = @"<anonymous>";
-                    }
-                }
-                receiverId = origin;
-                
-                // NOTE: 既存のイベントセッションを保持する.
-                if ([self.websocketDic valueForKey:receiverId]) {
-                    DCLogW(@"onWebSocketMessage: already established.");
-                    [self sendError: webSocket errorCode:4 errorMessage:@"already established."];
-                    [webSocket stop];   // webSocket.disconnectWebSocket();
-                    return;
-                }
-                [self sendSuccess: webSocket];
-            } else {
-                if (!origin) {
-                    origin = @"<anonymous>";
-                }
-                
-                receiverId = json[DConnectMessageSessionKey];
-                
-                // NOTE: 既存のイベントセッションを破棄する.
-                WebSocket *otherSocket = [self.websocketDic valueForKey:receiverId];
-                if (otherSocket) {
-                    [otherSocket stop];
-                }
-            }
-
-            if (!receiverId) {
-                DCLogW(@"onWebSocketMessage: Failed to generate receiverId: path = %@, origin = %@", path, origin);
-                return;
-            }
-            
-            // イベント送信経路を確立
-            [self.websocketDic setObject:webSocket forKey:receiverId];
-        }
-    }
-}
-
-- (void) webSocketDidClose:(WebSocket *)webSocket {
-    [self.websocketList removeObject:webSocket];
-    for (id key in [self.websocketDic keyEnumerator]) {
-        WebSocket *socket = [self.websocketDic objectForKey:key];
-        if (webSocket == socket) {
-            [self.websocketDic removeObjectForKey:key];
-            return;
-        }
-    }
-}
-
-- (BOOL) isValidAccessToken: (NSString *) accessToken origin: (NSString *) origin {
-    
-    LocalOAuth2Main *oauth = [LocalOAuth2Main sharedOAuthForClass: [DConnectManager class]];
-    LocalOAuthClientPackageInfo *client = [oauth findClientPackageInfoByAccessToken: accessToken];
-    if (!client) {
-        return NO;
-    }
-    LocalOAuthPackageInfo *packageInfo = [client packageInfo];
-    if (!packageInfo) {
-        return NO;
-    }
-    
-    return [packageInfo.packageName isEqualToString: origin];
-}
-
-- (void) sendSuccess: (WebSocket *) webSocket {
-    
-    NSDictionary *message = @{@"result" : [NSNumber numberWithInt:0]};
-    NSData *messageData = [NSJSONSerialization dataWithJSONObject:message options:0 error:nil];
-    NSString *messageJson = [[NSString alloc] initWithData:messageData encoding:NSUTF8StringEncoding];
-    [webSocket sendMessage:messageJson];
-}
-
-- (void) sendError: (WebSocket *) webSocket
-         errorCode: (int) errorCode
-      errorMessage: (NSString *) errorMessage {
-    
-    NSDictionary *message = @{
-                              @"result" : [NSNumber numberWithInt:1],
-                              @"errorCode" : [NSNumber numberWithInt:errorCode],
-                              @"errorMessage" : errorMessage,
-                              };
-    NSData *messageData = [NSJSONSerialization dataWithJSONObject:message options:0 error:nil];
-    NSString *messageJson = [[NSString alloc] initWithData:messageData encoding:NSUTF8StringEncoding];
-    [webSocket sendMessage:messageJson];
-}
-
-
-
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark Method Support
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -465,7 +243,7 @@ static NSMutableDictionary *originTable;    // key:origin / value: websocket
 **/
 - (BOOL)supportsMethod:(NSString *)method atPath:(NSString *)path
 {
-
+	HTTPLogTrace();
 	
 	// Override me to support methods such as POST.
 	// 
@@ -498,7 +276,7 @@ static NSMutableDictionary *originTable;    // key:origin / value: websocket
 **/
 - (BOOL)expectsRequestBodyFromMethod:(NSString *)method atPath:(NSString *)path
 {
-
+	HTTPLogTrace();
 	
 	// Override me to add support for other methods that expect the client
 	// to send a body along with the request header.
@@ -531,7 +309,7 @@ static NSMutableDictionary *originTable;    // key:origin / value: websocket
 **/
 - (BOOL)isSecureServer
 {
-
+	HTTPLogTrace();
 	
 	// Override me to create an https server...
 	
@@ -544,7 +322,7 @@ static NSMutableDictionary *originTable;    // key:origin / value: websocket
 **/
 - (NSArray *)sslIdentityAndCertificates
 {
-
+	HTTPLogTrace();
 	
 	// Override me to provide the proper required SSL identity.
 	
@@ -561,7 +339,7 @@ static NSMutableDictionary *originTable;    // key:origin / value: websocket
 **/
 - (BOOL)isPasswordProtected:(NSString *)path
 {
-
+	HTTPLogTrace();
 	
 	// Override me to provide password protection...
 	// You can configure it for the entire server, or based on the current request
@@ -578,7 +356,7 @@ static NSMutableDictionary *originTable;    // key:origin / value: websocket
 **/
 - (BOOL)useDigestAccessAuthentication
 {
-
+	HTTPLogTrace();
 	
 	// Override me to customize the authentication scheme
 	// Make sure you understand the security risks of using the weaker basic authentication
@@ -592,7 +370,7 @@ static NSMutableDictionary *originTable;    // key:origin / value: websocket
 **/
 - (NSString *)realm
 {
-
+	HTTPLogTrace();
 	
 	// Override me to provide a custom realm...
 	// You can configure it for the entire server, or based on the current request
@@ -605,7 +383,7 @@ static NSMutableDictionary *originTable;    // key:origin / value: websocket
 **/
 - (NSString *)passwordForUser:(NSString *)username
 {
-
+	HTTPLogTrace();
 	
 	// Override me to provide proper password authentication
 	// You can configure a password for the entire server, or custom passwords for users and/or resources
@@ -622,7 +400,7 @@ static NSMutableDictionary *originTable;    // key:origin / value: websocket
 **/
 - (BOOL)isAuthenticated
 {
-
+	HTTPLogTrace();
 	
 	// Extract the authentication information from the Authorization header
 	HTTPAuthenticationRequest *auth = [[HTTPAuthenticationRequest alloc] initWithRequest:request];
@@ -757,7 +535,7 @@ static NSMutableDictionary *originTable;    // key:origin / value: websocket
 **/
 - (void)addDigestAuthChallenge:(HTTPMessage *)response
 {
-
+	HTTPLogTrace();
 	
 	NSString *authFormat = @"Digest realm=\"%@\", qop=\"auth\", nonce=\"%@\"";
 	NSString *authInfo = [NSString stringWithFormat:authFormat, [self realm], [[self class] generateNonce]];
@@ -770,7 +548,7 @@ static NSMutableDictionary *originTable;    // key:origin / value: websocket
 **/
 - (void)addBasicAuthChallenge:(HTTPMessage *)response
 {
-
+	HTTPLogTrace();
 	
 	NSString *authFormat = @"Basic realm=\"%@\"";
 	NSString *authInfo = [NSString stringWithFormat:authFormat, [self realm]];
@@ -821,7 +599,7 @@ static NSMutableDictionary *originTable;    // key:origin / value: websocket
 	// 
 	// Be sure to invoke [super startConnection] when you're done.
 	
-
+	HTTPLogTrace();
 	
 	if ([self isSecureServer])
 	{
@@ -858,7 +636,7 @@ static NSMutableDictionary *originTable;    // key:origin / value: websocket
 **/
 - (void)startReadingRequest
 {
-
+	HTTPLogTrace();
 	
 	[asyncSocket readDataToData:[GCDAsyncSocket CRLFData]
 	                withTimeout:TIMEOUT_READ_FIRST_HEADER_LINE
@@ -956,7 +734,7 @@ static NSMutableDictionary *originTable;    // key:origin / value: websocket
  **/
 - (BOOL)parseRangeRequest:(NSString *)rangeHeader withContentLength:(UInt64)contentLength
 {
-
+	HTTPLogTrace();
 	
 	// Examples of byte-ranges-specifier values (assuming an entity-body of length 10000):
 	// 
@@ -1111,9 +889,17 @@ static NSMutableDictionary *originTable;    // key:origin / value: websocket
  * This method is called after a full HTTP request has been received.
  * The current request is in the HTTPMessage request variable.
 **/
-- (void)replyToHTTPRequestWithSocket:(GCDAsyncSocket*)socket
+- (void)replyToHTTPRequest
 {
-
+	HTTPLogTrace();
+	
+	if (HTTP_LOG_VERBOSE)
+	{
+		NSData *tempData = [request messageData];
+		
+		NSString *tempStr = [[NSString alloc] initWithData:tempData encoding:NSUTF8StringEncoding];
+		HTTPLogVerbose(@"%@[%p]: Received HTTP request:\n%@", THIS_FILE, self, tempStr);
+	}
 	
 	// Check the HTTP version
 	// We only support version 1.0 and 1.1
@@ -1127,35 +913,29 @@ static NSMutableDictionary *originTable;    // key:origin / value: websocket
 	
 	// Extract requested URI
 	NSString *uri = [self requestURI];
+	
 	// Check for WebSocket request
 	if ([WebSocket isWebSocketRequest:request])
 	{
+		HTTPLogVerbose(@"isWebSocket");
 		
-        for (int i = 0; i < [self.websocketList count]; i++) {
-            WebSocket *w = [self.websocketList objectAtIndex:i];
-            [w stop];
-        }
-        
-		WebSocket *ws = [self webSocketForURI:uri
-                                       socket:socket];
-        ws.delegate = self;
-        
+		WebSocket *ws = [self webSocketForURI:uri];
+		
 		if (ws == nil)
 		{
 			[self handleResourceNotFound];
 		}
 		else
 		{
-            NSDictionary *allHeaderFields = [request allHeaderFields];
-            NSString *origin = [request headerField: @"origin"];
-            [ws start: origin];
+			[ws start];
 			
-//			[[config server] addWebSocket:ws];
+			[[config server] addWebSocket:ws];
 			
 			// The WebSocket should now be the delegate of the underlying socket.
 			// But gracefully handle the situation if it forgot.
 			if ([asyncSocket delegate] == self)
 			{
+				HTTPLogWarn(@"%@[%p]: WebSocket forgot to set itself as socket delegate", THIS_FILE, self);
 				
 				// Disconnect the socket.
 				// The socketDidDisconnect delegate method will handle everything else.
@@ -1227,7 +1007,7 @@ static NSMutableDictionary *originTable;    // key:origin / value: websocket
 **/
 - (HTTPMessage *)newUniRangeResponse:(UInt64)contentLength
 {
-
+	HTTPLogTrace();
 	
 	// Status Code 206 - Partial Content
 	HTTPMessage *response = [[HTTPMessage alloc] initResponseWithStatusCode:206 description:nil version:HTTPVersion1_1];
@@ -1251,7 +1031,7 @@ static NSMutableDictionary *originTable;    // key:origin / value: websocket
 **/
 - (HTTPMessage *)newMultiRangeResponse:(UInt64)contentLength
 {
-
+	HTTPLogTrace();
 	
 	// Status Code 206 - Partial Content
 	HTTPMessage *response = [[HTTPMessage alloc] initResponseWithStatusCode:206 description:nil version:HTTPVersion1_1];
@@ -1555,7 +1335,7 @@ static NSMutableDictionary *originTable;    // key:origin / value: websocket
 **/
 - (void)continueSendingStandardResponseBody
 {
-
+	HTTPLogTrace();
 	
 	// This method is called when either asyncSocket has finished writing one of the response data chunks,
 	// or when an asynchronous HTTPResponse object informs us that it has more available data for us to send.
@@ -1623,7 +1403,7 @@ static NSMutableDictionary *originTable;    // key:origin / value: websocket
 **/
 - (void)continueSendingSingleRangeResponseBody
 {
-
+	HTTPLogTrace();
 	
 	// This method is called when either asyncSocket has finished writing one of the response data chunks,
 	// or when an asynchronous response informs us that is has more available data for us to send.
@@ -1674,7 +1454,7 @@ static NSMutableDictionary *originTable;    // key:origin / value: websocket
 **/
 - (void)continueSendingMultiRangeResponseBody
 {
-
+	HTTPLogTrace();
 	
 	// This method is called when either asyncSocket has finished writing one of the response data chunks,
 	// or when an asynchronous HTTPResponse object informs us that is has more available data for us to send.
@@ -1760,7 +1540,7 @@ static NSMutableDictionary *originTable;    // key:origin / value: websocket
 **/
 - (NSArray *)directoryIndexFileNames
 {
-
+	HTTPLogTrace();
 	
 	// Override me to support other index pages.
 	
@@ -1777,7 +1557,7 @@ static NSMutableDictionary *originTable;    // key:origin / value: websocket
 **/
 - (NSString *)filePathForURI:(NSString *)path allowDirectory:(BOOL)allowDirectory
 {
-
+	HTTPLogTrace();
 	
 	// Override me to perform custom path mapping.
 	// For example you may want to use a default file other than index.html, or perhaps support multiple types.
@@ -1791,6 +1571,7 @@ static NSMutableDictionary *originTable;    // key:origin / value: websocket
 	
 	if (documentRoot == nil)
 	{
+		HTTPLogWarn(@"%@[%p]: No configured document root", THIS_FILE, self);
 		return nil;
 	}
 	
@@ -1801,6 +1582,7 @@ static NSMutableDictionary *originTable;    // key:origin / value: websocket
 	NSURL *docRoot = [NSURL fileURLWithPath:documentRoot isDirectory:YES];
 	if (docRoot == nil)
 	{
+		HTTPLogWarn(@"%@[%p]: Document root is invalid file path", THIS_FILE, self);
 		return nil;
 	}
 	
@@ -1842,6 +1624,7 @@ static NSMutableDictionary *originTable;    // key:origin / value: websocket
 	
 	if (![fullPath hasPrefix:documentRoot])
 	{
+		HTTPLogWarn(@"%@[%p]: Request for file outside document root", THIS_FILE, self);
 		return nil;
 	}
 	
@@ -1880,7 +1663,7 @@ static NSMutableDictionary *originTable;    // key:origin / value: websocket
 **/
 - (NSObject<HTTPResponse> *)httpResponseForMethod:(NSString *)method URI:(NSString *)path
 {
-
+	HTTPLogTrace();
 	
 	// Override me to provide custom responses.
 	
@@ -1902,27 +1685,23 @@ static NSMutableDictionary *originTable;    // key:origin / value: websocket
 }
 
 - (WebSocket *)webSocketForURI:(NSString *)path
-                        socket:(GCDAsyncSocket *)socket
 {
-    // Override me to provide custom WebSocket responses.
-    // To do so, simply override the base WebSocket implementation, and add your custom functionality.
-    // Then return an instance of your custom WebSocket here.
-    //
-    // For example:
-    //
-    // if ([path isEqualToString:@"/myAwesomeWebSocketStream"])
-    // {
-    //     return [[[MyWebSocket alloc] initWithRequest:request socket:asyncSocket] autorelease];
-    // }
-    //
-    // return [super webSocketForURI:path];
-    
-    WebSocket *websocket = [[WebSocket alloc] initWithRequest:request socket:socket];
-
-    
-    
-    
-    return websocket;
+	HTTPLogTrace();
+	
+	// Override me to provide custom WebSocket responses.
+	// To do so, simply override the base WebSocket implementation, and add your custom functionality.
+	// Then return an instance of your custom WebSocket here.
+	// 
+	// For example:
+	// 
+	// if ([path isEqualToString:@"/myAwesomeWebSocketStream"])
+	// {
+	//     return [[[MyWebSocket alloc] initWithRequest:request socket:asyncSocket] autorelease];
+	// }
+	// 
+	// return [super webSocketForURI:path];
+	
+	return nil;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1976,6 +1755,8 @@ static NSMutableDictionary *originTable;    // key:origin / value: websocket
 	// If you simply want to add a few extra header fields, see the preprocessErrorResponse: method.
 	// You can also use preprocessErrorResponse: to add an optional HTML body.
 	
+	HTTPLogWarn(@"HTTP Server: Error 505 - Version Not Supported: %@ (%@)", version, [self requestURI]);
+	
 	HTTPMessage *response = [[HTTPMessage alloc] initResponseWithStatusCode:505 description:nil version:HTTPVersion1_1];
 	[response setHeaderField:@"Content-Length" value:@"0"];
     
@@ -1993,6 +1774,8 @@ static NSMutableDictionary *originTable;    // key:origin / value: websocket
 	// If you simply want to add a few extra header fields, see the preprocessErrorResponse: method.
 	// You can also use preprocessErrorResponse: to add an optional HTML body.
 	
+	HTTPLogInfo(@"HTTP Server: Error 401 - Unauthorized (%@)", [self requestURI]);
+		
 	// Status Code 401 - Unauthorized
 	HTTPMessage *response = [[HTTPMessage alloc] initResponseWithStatusCode:401 description:nil version:HTTPVersion1_1];
 	[response setHeaderField:@"Content-Length" value:@"0"];
@@ -2022,6 +1805,8 @@ static NSMutableDictionary *originTable;    // key:origin / value: websocket
 	// If you simply want to add a few extra header fields, see the preprocessErrorResponse: method.
 	// You can also use preprocessErrorResponse: to add an optional HTML body.
 	
+	HTTPLogWarn(@"HTTP Server: Error 400 - Bad Request (%@)", [self requestURI]);
+	
 	// Status Code 400 - Bad Request
 	HTTPMessage *response = [[HTTPMessage alloc] initResponseWithStatusCode:400 description:nil version:HTTPVersion1_1];
 	[response setHeaderField:@"Content-Length" value:@"0"];
@@ -2048,6 +1833,8 @@ static NSMutableDictionary *originTable;    // key:origin / value: websocket
 	// 
 	// See also: supportsMethod:atPath:
 	
+	HTTPLogWarn(@"HTTP Server: Error 405 - Method Not Allowed: %@ (%@)", method, [self requestURI]);
+	
 	// Status code 405 - Method Not Allowed
 	HTTPMessage *response = [[HTTPMessage alloc] initResponseWithStatusCode:405 description:nil version:HTTPVersion1_1];
 	[response setHeaderField:@"Content-Length" value:@"0"];
@@ -2070,6 +1857,8 @@ static NSMutableDictionary *originTable;    // key:origin / value: websocket
 	// Override me for custom error handling of 404 not found responses
 	// If you simply want to add a few extra header fields, see the preprocessErrorResponse: method.
 	// You can also use preprocessErrorResponse: to add an optional HTML body.
+	
+	HTTPLogInfo(@"HTTP Server: Error 404 - Not Found (%@)", [self requestURI]);
 	
 	// Status Code 404 - Not Found
 	HTTPMessage *response = [[HTTPMessage alloc] initResponseWithStatusCode:404 description:nil version:HTTPVersion1_1];
@@ -2128,7 +1917,7 @@ static NSMutableDictionary *originTable;    // key:origin / value: websocket
 **/
 - (NSData *)preprocessResponse:(HTTPMessage *)response
 {
-
+	HTTPLogTrace();
 	
 	// Override me to customize the response headers
 	// You'll likely want to add your own custom headers, and then return [super preprocessResponse:response]
@@ -2165,7 +1954,7 @@ static NSMutableDictionary *originTable;    // key:origin / value: websocket
 **/
 - (NSData *)preprocessErrorResponse:(HTTPMessage *)response
 {
-
+	HTTPLogTrace();
 	
 	// Override me to customize the error response headers
 	// You'll likely want to add your own custom headers, and then return [super preprocessErrorResponse:response]
@@ -2228,6 +2017,8 @@ static NSMutableDictionary *originTable;    // key:origin / value: websocket
 		BOOL result = [request appendData:data];
 		if (!result)
 		{
+			HTTPLogWarn(@"%@[%p]: Malformed request", THIS_FILE, self);
+			
 			[self handleInvalidRequest:data];
 		}
 		else if (![request isHeaderComplete])
@@ -2281,6 +2072,8 @@ static NSMutableDictionary *originTable;    // key:origin / value: websocket
 				{
 					if (contentLength == nil)
 					{
+						HTTPLogWarn(@"%@[%p]: Method expects request body, but had no specified Content-Length",
+									THIS_FILE, self);
 						
 						[self handleInvalidRequest:nil];
 						return;
@@ -2288,6 +2081,8 @@ static NSMutableDictionary *originTable;    // key:origin / value: websocket
 					
 					if (![NSNumber parseString:(NSString *)contentLength intoUInt64:&requestContentLength])
 					{
+						HTTPLogWarn(@"%@[%p]: Unable to parse Content-Length header into a valid number",
+									THIS_FILE, self);
 						
 						[self handleInvalidRequest:nil];
 						return;
@@ -2303,12 +2098,17 @@ static NSMutableDictionary *originTable;    // key:origin / value: websocket
 					
 					if (![NSNumber parseString:(NSString *)contentLength intoUInt64:&requestContentLength])
 					{
+						HTTPLogWarn(@"%@[%p]: Unable to parse Content-Length header into a valid number",
+									THIS_FILE, self);
+						
 						[self handleInvalidRequest:nil];
 						return;
 					}
 					
 					if (requestContentLength > 0)
 					{
+						HTTPLogWarn(@"%@[%p]: Method not expecting request body had non-zero Content-Length",
+									THIS_FILE, self);
 						
 						[self handleInvalidRequest:nil];
 						return;
@@ -2365,13 +2165,13 @@ static NSMutableDictionary *originTable;    // key:origin / value: websocket
 				{
 					// Empty upload
 					[self finishBody];
-					[self replyToHTTPRequestWithSocket:sock];
+					[self replyToHTTPRequest];
 				}
 			}
 			else
 			{
 				// Now we need to reply to the request
-                [self replyToHTTPRequestWithSocket:sock];
+				[self replyToHTTPRequest];
 			}
 		}
 	}
@@ -2411,6 +2211,7 @@ static NSMutableDictionary *originTable;    // key:origin / value: websocket
 			
 			if (errno != 0)
 			{
+				HTTPLogWarn(@"%@[%p]: Method expects chunk size, but received something else", THIS_FILE, self);
 				
 				[self handleInvalidRequest:nil];
 				return;
@@ -2475,6 +2276,7 @@ static NSMutableDictionary *originTable;    // key:origin / value: websocket
 			
 			if (![data isEqualToData:[GCDAsyncSocket CRLFData]])
 			{
+				HTTPLogWarn(@"%@[%p]: Method expects chunk trailer, but is missing", THIS_FILE, self);
 				
 				[self handleInvalidRequest:nil];
 				return;
@@ -2546,7 +2348,7 @@ static NSMutableDictionary *originTable;    // key:origin / value: websocket
 		if (doneReadingRequest)
 		{
 			[self finishBody];
-            [self replyToHTTPRequestWithSocket:sock];
+			[self replyToHTTPRequest];
 		}
 	}
 }
@@ -2561,7 +2363,9 @@ static NSMutableDictionary *originTable;    // key:origin / value: websocket
 	if (tag == HTTP_PARTIAL_RESPONSE_BODY)
 	{
 		// Update the amount of data we have in asyncSocket's write queue
-		[responseDataSizes removeObjectAtIndex:0];
+        if ([responseDataSizes count] > 0) {
+            [responseDataSizes removeObjectAtIndex:0];
+        }
 		
 		// We only wrote a part of the response - there may be more
 		[self continueSendingStandardResponseBody];
@@ -2570,8 +2374,9 @@ static NSMutableDictionary *originTable;    // key:origin / value: websocket
 	{
 		// Update the amount of data we have in asyncSocket's write queue.
 		// This will allow asynchronous responses to continue sending more data.
-		[responseDataSizes removeObjectAtIndex:0];
-		
+        if ([responseDataSizes count] > 0) {
+            [responseDataSizes removeObjectAtIndex:0];
+        }
 		// Don't continue sending the response yet.
 		// The chunked footer that was sent after the body will tell us if we have more data to send.
 	}
@@ -2583,16 +2388,18 @@ static NSMutableDictionary *originTable;    // key:origin / value: websocket
 	else if (tag == HTTP_PARTIAL_RANGE_RESPONSE_BODY)
 	{
 		// Update the amount of data we have in asyncSocket's write queue
-		[responseDataSizes removeObjectAtIndex:0];
-		
+        if ([responseDataSizes count] > 0) {
+            [responseDataSizes removeObjectAtIndex:0];
+        }
 		// We only wrote a part of the range - there may be more
 		[self continueSendingSingleRangeResponseBody];
 	}
 	else if (tag == HTTP_PARTIAL_RANGES_RESPONSE_BODY)
 	{
 		// Update the amount of data we have in asyncSocket's write queue
-		[responseDataSizes removeObjectAtIndex:0];
-		
+        if ([responseDataSizes count] > 0) {
+            [responseDataSizes removeObjectAtIndex:0];
+        }
 		// We only wrote part of the range - there may be more, or there may be more ranges
 		[self continueSendingMultiRangeResponseBody];
 	}
@@ -2668,7 +2475,7 @@ static NSMutableDictionary *originTable;    // key:origin / value: websocket
 **/
 - (void)socketDidDisconnect:(GCDAsyncSocket *)sock withError:(NSError *)err
 {
-
+	HTTPLogTrace();
 	
 	asyncSocket = nil;
 	
@@ -2687,7 +2494,7 @@ static NSMutableDictionary *originTable;    // key:origin / value: websocket
 **/
 - (void)responseHasAvailableData:(NSObject<HTTPResponse> *)sender
 {
-
+	HTTPLogTrace();
 	
 	// We always dispatch this asynchronously onto our connectionQueue,
 	// even if the connectionQueue is the current queue.
@@ -2699,6 +2506,7 @@ static NSMutableDictionary *originTable;    // key:origin / value: websocket
 		
 		if (sender != httpResponse)
 		{
+			HTTPLogWarn(@"%@[%p]: %@ - Sender is not current httpResponse", THIS_FILE, self, THIS_METHOD);
 			return;
 		}
 		
@@ -2729,7 +2537,7 @@ static NSMutableDictionary *originTable;    // key:origin / value: websocket
 **/
 - (void)responseDidAbort:(NSObject<HTTPResponse> *)sender
 {
-
+	HTTPLogTrace();
 	
 	// We always dispatch this asynchronously onto our connectionQueue,
 	// even if the connectionQueue is the current queue.
@@ -2741,6 +2549,7 @@ static NSMutableDictionary *originTable;    // key:origin / value: websocket
 		
 		if (sender != httpResponse)
 		{
+			HTTPLogWarn(@"%@[%p]: %@ - Sender is not current httpResponse", THIS_FILE, self, THIS_METHOD);
 			return;
 		}
 		
@@ -2759,7 +2568,7 @@ static NSMutableDictionary *originTable;    // key:origin / value: websocket
 **/
 - (void)finishResponse
 {
-
+	HTTPLogTrace();
 	
 	// Override me if you want to perform any custom actions after a response has been fully sent.
 	// This is the place to release memory or resources associated with the last request.
@@ -2781,7 +2590,7 @@ static NSMutableDictionary *originTable;    // key:origin / value: websocket
 **/
 - (BOOL)shouldDie
 {
-
+	HTTPLogTrace();
 	
 	// Override me if you have any need to force close the connection.
 	// You may do so by simply returning YES.
@@ -2820,7 +2629,7 @@ static NSMutableDictionary *originTable;    // key:origin / value: websocket
 
 - (void)die
 {
-
+	HTTPLogTrace();
 	
 	// Override me if you want to perform any custom actions when a connection is closed.
 	// Then call [super die] when you're done.
@@ -2842,18 +2651,6 @@ static NSMutableDictionary *originTable;    // key:origin / value: websocket
 	// Post notification of dead connection
 	// This will allow our server to release us from its array of connections
 	[[NSNotificationCenter defaultCenter] postNotificationName:HTTPConnectionDidDieNotification object:self];
-}
-
-#pragma mark origin
-
-// MODIFIED originとwebSocket対応テーブルの検索処理を追加。
-- (NSString *) originForWebSocket: (WebSocket *) webSocket {
-    for (NSString *origin in originTable.allKeys) {
-        if (originTable[origin] == webSocket) {
-            return origin;
-        }
-    }
-    return nil;
 }
 
 @end
@@ -2893,7 +2690,7 @@ static NSMutableDictionary *originTable;    // key:origin / value: websocket
 		if (q)
 		{
 			queue = q;
-			#if NEEDS_DISPATCH_RETAIN_RELEASE
+			#if !OS_OBJECT_USE_OBJC
 			dispatch_retain(queue);
 			#endif
 		}
@@ -2903,7 +2700,7 @@ static NSMutableDictionary *originTable;    // key:origin / value: websocket
 
 - (void)dealloc
 {
-	#if NEEDS_DISPATCH_RETAIN_RELEASE
+	#if !OS_OBJECT_USE_OBJC
 	if (queue) dispatch_release(queue);
 	#endif
 }

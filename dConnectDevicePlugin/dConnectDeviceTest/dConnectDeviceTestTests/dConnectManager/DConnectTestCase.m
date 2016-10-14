@@ -25,7 +25,6 @@
         DConnectManager *mgr = [DConnectManager sharedManager];
         mgr.settings.useLocalOAuth = NO;
         [mgr start];
-        [mgr startWebsocket];
     });
 }
 

@@ -12,6 +12,8 @@
 #import "PebbleViewController.h"
 #import "DPPebbleManager.h"
 
+#define DCPebbleBundle() \
+[NSBundle bundleWithPath:[[NSBundle mainBundle] pathForResource:@"dConnectDevicePebble_resources" ofType:@"bundle"]]
 
 @interface DPPebbleDevicePlugin ()
 @end
@@ -77,8 +79,7 @@
 
 - (NSString*)iconFilePath:(BOOL)isOnline
 {
-    NSString *bundlePath = [[NSBundle mainBundle] pathForResource:@"dConnectDevicePebble_resources" ofType:@"bundle"];
-    NSBundle *bundle = [NSBundle bundleWithPath:bundlePath];
+    NSBundle *bundle = DCPebbleBundle();
     NSString* filename = isOnline ? @"dconnect_icon" : @"dconnect_icon_off";
     return [bundle pathForResource:filename ofType:@"png"];
 }

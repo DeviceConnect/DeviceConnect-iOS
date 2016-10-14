@@ -70,13 +70,6 @@
                           NSString *color = [DConnectLightProfile colorFromRequest: request];
                           NSArray *flashing = [DConnectLightProfile parsePattern: [DConnectLightProfile flashingFromRequest: request] isId:NO];
                           
-                          if (!brightness
-                              || (brightness && ([brightness doubleValue] < 0.0 || [brightness doubleValue] > 1.0))) {
-                              [response setErrorToInvalidRequestParameterWithMessage:
-                               @"Parameter 'brightness' must be a value between 0 and 1.0."];
-                              return YES;
-                          }
-                          
                           if (!flashing) {
                               [response setErrorToInvalidRequestParameterWithMessage:
                                @"Parameter 'flashing' invalid."];
@@ -155,14 +148,18 @@
         return send;
     }
 
+    DPIRKitRESTfulRequest *sendReq = nil;
     for (DPIRKitRESTfulRequest *req in requests) {
         NSString *uri = [NSString stringWithFormat:@"/%@",[request profile]];
-        if ([req.uri isEqualToString:uri] && [req.method isEqualToString:method]
-            && req.ir) {
-            send = [self.plugin sendIRWithServiceId:serviceId message:req.ir response:response];
-        } else {
-            [response setErrorToInvalidRequestParameterWithMessage:@"IR is not registered for that request"];
+        if ([req.uri isEqualToString:uri] && [req.method isEqualToString:method] && req.ir) {
+            sendReq = req;
+            break;
         }
+    }
+    if (sendReq) {
+        send = [self.plugin sendIRWithServiceId:serviceId message:sendReq.ir response:response];
+    } else {
+        [response setErrorToInvalidRequestParameterWithMessage:@"IR is not registered for that request"];
     }
     return send;
 }

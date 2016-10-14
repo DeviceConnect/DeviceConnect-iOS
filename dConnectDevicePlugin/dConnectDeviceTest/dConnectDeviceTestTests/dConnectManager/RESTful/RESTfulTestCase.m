@@ -146,7 +146,7 @@
         event = nil;
         _semaphore = dispatch_semaphore_create(0);
         if (!socket) {
-            socket = [[SRWebSocket new] initWithURLRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"ws://localhost:4035/gotapi/websocket"]]];
+            socket = [[SRWebSocket new] initWithURLRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"ws://localhost:4035/websocket"]]];
             [socket setDelegateOperationQueue:[NSOperationQueue new]];
             [socket setDelegate:self];
             [socket open];

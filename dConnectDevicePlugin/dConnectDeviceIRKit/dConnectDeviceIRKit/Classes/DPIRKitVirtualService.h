@@ -11,8 +11,7 @@
 
 @interface DPIRKitVirtualService : DConnectService<DConnectServiceInformationProfileDataSource>
 
-- (instancetype) initWithServiceId: (NSString *)serviceId
-                            plugin: (id) plugin
-                       profileName: (NSString*)profileName;
+- (instancetype) initWithServiceId: (NSString *)serviceId name:(NSString*)name
+                            plugin:(id)plugin profileName:(NSString *)profileName;
 
 @end

@@ -16,9 +16,9 @@
 
 @property(nonatomic, weak) DConnectEventSessionTable *table;
 
-@property(nonatomic, weak) /*DConnectMessageService*/DConnectManager *context;
+@property(nonatomic, weak) DConnectManager *context;
 
-@property(nonatomic, weak) /*DConnectLocalOAuth*/DConnectLocalOAuthDB *localOAuth;
+@property(nonatomic, weak) DConnectLocalOAuthDB *localOAuth;
 
 @property(nonatomic, weak) DConnectDevicePluginManager *pluginManager;
 
@@ -31,7 +31,7 @@
 @implementation DConnectEventBroker
 
 /*public EventBroker() コンストラクタ */
-- (instancetype) initWithContext : (/* DConnectMessageService */DConnectManager *) context
+- (instancetype) initWithContext : (DConnectManager *) context
                             table: (DConnectEventSessionTable *) table
                        localOAuth: (DConnectLocalOAuthDB *) localOAuth
                     pluginManager: (DConnectDevicePluginManager *)pluginManager
@@ -60,7 +60,11 @@
     if (!serviceId) {
         return;
     }
-    NSString *accessToken = [self getAccessToken: serviceId];
+    NSString *origin = [request stringForKey: DConnectMessageOrigin];
+    if (!origin) {
+        return;
+    }
+    NSString *accessToken = [self getAccessToken: serviceId origin:origin];
     if (accessToken) {
         [request setString:accessToken forKey:DConnectMessageAccessToken];
     } else {
@@ -102,7 +106,7 @@
     }
 }
 
-- (NSString *) getAccessToken: (NSString *) serviceId {
+- (NSString *) getAccessToken: (NSString *) serviceId origin:(NSString *) origin {
     DConnectAuthData *oauth = [self.localOAuth getAuthDataByServiceId: serviceId];
     if (oauth) {
         return [self.localOAuth getAccessTokenByAuthData: oauth];
@@ -110,7 +114,7 @@
     return nil;
 }
 
-- (void) onEvent: (/* Intent */ DConnectMessage *) event {
+- (void) onEvent:(DConnectMessage *) event plugin:(DConnectDevicePlugin *)plugin{
     
     if ([self isServiceChangeEvent: event]) {
         [self onServiceChangeEvent: event];
@@ -123,19 +127,14 @@
     NSString *interfaceName = [event stringForKey: DConnectMessageInterface];
     NSString *attributeName = [event stringForKey: DConnectMessageAttribute];
     
-    NSString *serviceId_;
-    NSArray *serviceIdParts = [serviceId componentsSeparatedByString:@"."];
-    if (serviceIdParts.count > 1) {
-        serviceId_ = serviceIdParts[0];
-    } else {
-        serviceId_ = serviceId;
-    }
+    NSString *serviceId_ = [DConnectDevicePluginManager splitServiceId:plugin serviceId: serviceId];
+    NSString *pluginId = plugin.pluginId;
     
     DConnectEventSession *targetSession = nil;
     if (pluginAccessToken) {
         for (DConnectEventSession *session in [self.table all]) {
-            if ([self isSameName: pluginAccessToken cmp: session.accessToken] &&
-                [self isSameName: serviceId_ cmp: session.serviceId] &&
+            if ([self isSameNameCaseSensitive: pluginAccessToken cmp: session.accessToken] &&
+                [self isSameNameCaseSensitive: serviceId_ cmp: session.serviceId] &&
                 [self isSameName: profileName cmp: session.profileName] &&
                 [self isSameName: interfaceName cmp: session.interfaceName] &&
                 [self isSameName: attributeName cmp: session.attributeName]) {
@@ -146,12 +145,11 @@
     } else {
         NSString *sessionKey = [event stringForKey: DConnectMessageSessionKey];
         if (sessionKey) {
-            NSString *pluginId = [DConnectEventProtocol convertSessionKey2PluginId: sessionKey];
             NSString *receiverId = [DConnectEventProtocol convertSessionKey2Key: sessionKey];
             for (DConnectEventSession *session in [self.table all]) {
-                if ([self isSameName: pluginId cmp: session.pluginId] &&
-                    [self isSameName: receiverId cmp: session.receiverId] &&
-                    [self isSameName: serviceId_ cmp: session.serviceId] &&
+                if ([self isSameNameCaseSensitive: pluginId cmp: session.pluginId] &&
+                    [self isSameNameCaseSensitive: receiverId cmp: session.receiverId] &&
+                    [self isSameNameCaseSensitive: serviceId_ cmp: session.serviceId] &&
                     [self isSameName: profileName cmp: session.profileName] &&
                     [self isSameName: interfaceName cmp: session.interfaceName] &&
                     [self isSameName: attributeName cmp: session.attributeName]) {
@@ -172,7 +170,7 @@
         DConnectDevicePlugin *plugin = [self.pluginManager devicePluginForPluginId: pluginId];
         if (plugin) {
             [event setString:targetSession.receiverId forKey:DConnectMessageSessionKey];
-            [event setString:[self.pluginManager appendServiceId: plugin serviceId: serviceId_] forKey:DConnectMessageServiceId];
+            [event setString:[self.pluginManager serviceIdByAppedingPluginIdWithDevicePlugin:plugin serviceId:serviceId_] forKey:DConnectMessageServiceId];
             [targetSession sendEvent: event];
         } else {
             DCLogW(@"onEvent: Plugin is not found: id = %@", targetSession.pluginId);
@@ -234,9 +232,9 @@
     return nil;
 }
 
-- (void) replaceServiceId: (/*Intent*/DConnectMessage *)event plugin:(DConnectDevicePlugin *) plugin {
+- (void) replaceServiceId:(DConnectMessage *)event plugin:(DConnectDevicePlugin *) plugin {
     NSString *serviceId = [event stringForKey: DConnectMessageServiceId];
-    [event setString:[self.pluginManager appendServiceId: plugin serviceId: serviceId] forKey:DConnectMessageServiceId];
+    [event setString:[self.pluginManager serviceIdByAppedingPluginIdWithDevicePlugin:plugin serviceId:serviceId] forKey:DConnectMessageServiceId];
 }
 
 - (BOOL) isSameName: (NSString *) str cmp: (NSString *) cmp {
@@ -245,6 +243,18 @@
     } else if (!str || !cmp) {
         return NO;
     } else if ([str localizedCaseInsensitiveCompare: cmp] == NSOrderedSame) {
+        return YES;
+    } else {
+        return NO;
+    }
+}
+
+- (BOOL) isSameNameCaseSensitive: (NSString *) str cmp: (NSString *) cmp {
+    if (!str && !cmp) {
+        return YES;
+    } else if (!str || !cmp) {
+        return NO;
+    } else if ([str localizedCompare: cmp] == NSOrderedSame) {
         return YES;
     } else {
         return NO;

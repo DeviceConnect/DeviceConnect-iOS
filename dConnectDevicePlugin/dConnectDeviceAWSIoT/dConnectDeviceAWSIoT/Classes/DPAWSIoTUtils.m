@@ -13,6 +13,7 @@
 #import "DPAWSIoTNetworkManager.h"
 #import "DConnectManager+Private.h"
 #import "DConnectManagerServiceDiscoveryProfile.h"
+#import "DPAWSIoTController.h"
 
 #define kAccessKeyID @"accessKey"
 #define kSecretKey @"secretKey"
@@ -21,6 +22,7 @@
 
 #define ERROR_DOMAIN @"DPAWSIoTUtils"
 
+#define kOrigin @"http://localhost:4035"
 
 @implementation DPAWSIoTUtils
 
@@ -64,18 +66,16 @@ static UIViewController *loadingHUD;
 }
 
 // AccessTokenを取得
-+ (NSString*)accessTokenWithServiceId:(NSString*)serviceId {
-	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-	NSString *key = [NSString stringWithFormat:@"token_%@", serviceId];
-	return [defaults objectForKey:key];
++ (NSString*)accessToken {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    return [defaults objectForKey:@"_access_token_"];
 }
 
 // AccessTokenを追加
-+ (void)addAccessToken:(NSString*)token serviceId:(NSString*)serviceId {
-	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-	NSString *key = [NSString stringWithFormat:@"token_%@", serviceId];
-	[defaults setObject:token forKey:key];
-	[defaults synchronize];
++ (void)addAccessToken:(NSString*)token {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setObject:token forKey:@"_access_token_"];
+    [defaults synchronize];
 }
 
 // Managerを許可
@@ -121,10 +121,72 @@ static UIViewController *loadingHUD;
 	NSString *secretKey = [DPAWSIoTKeychain findWithKey:kSecretKey];
 	NSInteger region = [[DPAWSIoTKeychain findWithKey:kRegionKey] integerValue];
 	[[DPAWSIoTManager sharedManager] connectWithAccessKey:accessKey secretKey:secretKey region:region completionHandler:^(NSError *error) {
-		if (handler) {
-			handler(error);
-		}
+        if (error) {
+            if (handler) {
+                handler(error);
+            }
+        } else {
+            [DPAWSIoTUtils auth:handler];
+        }
 	}];
+}
+
++ (void) auth:(void (^)(NSError *error))handler {
+    NSArray *supports = @[@"servicediscovery",
+                          @"serviceinformation",
+                          @"system",
+                          @"battery",
+                          @"connect",
+                          @"deviceorientation",
+                          @"filedescriptor",
+                          @"file",
+                          @"mediaplayer",
+                          @"mediastreamrecording",
+                          @"notification",
+                          @"phone",
+                          @"proximity",
+                          @"settings",
+                          @"vibration",
+                          @"light",
+                          @"remotecontroller",
+                          @"drivecontroller",
+                          @"mhealth",
+                          @"sphero",
+                          @"dice",
+                          @"temperature",
+                          @"camera",
+                          @"canvas",
+                          @"health",
+                          @"touch",
+                          @"humandetect",
+                          @"keyevent",
+                          @"omnidirectionalimage",
+                          @"tv",
+                          @"powermeter",
+                          @"humidity",
+                          @"illuminance",
+                          @"videochat",
+                          @"airconditioner",
+                          @"atmosphericpressure",
+                          @"ecg",
+                          @"poseEstimation",
+                          @"stressEstimation",
+                          @"walkState",
+                          @"gpio"];
+    [DConnectUtil asyncAuthorizeWithOrigin:kOrigin
+                                   appName:@"AWSIoT"
+                                    scopes:supports
+                                   success:^(NSString *clientId, NSString *accessToken) {
+                                       [DPAWSIoTUtils addAccessToken:accessToken];
+                                       [[DPAWSIoTController sharedManager] openWebSocket:accessToken];
+                                       if (handler) {
+                                           handler(nil);
+                                       }
+                                   } error:^(DConnectMessageErrorCodeType errorCode) {
+                                       if (handler) {
+                                           handler(nil);
+                                       }
+                                   }];
 }
 
 // ローディング画面表示
@@ -199,13 +261,12 @@ static UIViewController *loadingHUD;
 	path = [self appendPath:path params:params name:@"interface"];
 	path = [self appendPath:path params:params name:@"attribute"];
 	NSString *method = request[@"action"];
-	NSString *origin = [self packageName];
+    NSString *origin = kOrigin;
 	// accessTokenを設定
 	NSString *profile = request[DConnectMessageProfile];
 	NSString *serviceId = request[DConnectMessageServiceId];
-	//NSLog(@"params:%@", params);
 	if (serviceId) {
-		NSString *token = [self accessTokenWithServiceId:serviceId];
+        NSString *token = [self accessToken];
 		if (token) {
 			params[@"accessToken"] = token;
 		}

@@ -6,11 +6,14 @@
 //  Released under the MIT license
 //  http://opensource.org/licenses/mit-license.php
 //
-
+#import <DConnectSDK/DConnectEventManager.h>
+#import <DConnectSDK/DConnectMemoryCacheController.h>
 #import "DPChromecastDevicePlugin.h"
 #import "DPChromecastSystemProfile.h"
 #import "DPChromecastManager.h"
 
+#define DPChromecastBundle() \
+[NSBundle bundleWithPath:[[NSBundle mainBundle] pathForResource:@"dConnectDeviceChromecast_resources" ofType:@"bundle"]]
 
 @implementation DPChromecastDevicePlugin
 
@@ -24,9 +27,8 @@
         
         // イベントマネージャの準備
         Class key = [self class];
-        [[DConnectEventManager sharedManagerForClass:key]
-                        setController:[DConnectDBCacheController
-                  controllerWithClass:key]];
+        DConnectEventManager *eventMgr = [DConnectEventManager sharedManagerForClass:key];
+        [eventMgr setController:[DConnectMemoryCacheController new]];
 
         // プロファイルを追加
         [self addProfile:[DPChromecastSystemProfile new]];
@@ -89,8 +91,7 @@
 
 - (NSString*)iconFilePath:(BOOL)isOnline
 {
-    NSString *bundlePath = [[NSBundle mainBundle] pathForResource:@"dConnectDeviceChromecast_resources" ofType:@"bundle"];
-    NSBundle *bundle = [NSBundle bundleWithPath:bundlePath];
+    NSBundle *bundle = DPChromecastBundle();
     NSString* filename = isOnline ? @"dconnect_icon" : @"dconnect_icon_off";
     return [bundle pathForResource:filename ofType:@"png"];
 }

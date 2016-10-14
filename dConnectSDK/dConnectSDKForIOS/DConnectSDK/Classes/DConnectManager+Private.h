@@ -9,6 +9,8 @@
 
 #import "DConnectManager.h"
 #import "DConnectDevicePluginManager.h"
+#import "DConnectServerManager.h"
+#import "DConnectEventBroker.h"
 
 /*!
  @brief Manager-プラグイン間のデバイス検索APIのプロファイル名。
@@ -40,6 +42,12 @@ extern NSString *const DConnectAttributeNameRequestAccessToken;
  */
 @property (nonatomic) DConnectDevicePluginManager *mDeviceManager;
 
+/**
+ * Webサーバを管理するクラス.
+ */
+@property (nonatomic) DConnectServerManager *webServer;
+
+
 /*!
  @brief DConnectManagerを識別するUUIDを取得します。
  */
@@ -53,9 +61,17 @@ extern NSString *const DConnectAttributeNameRequestAccessToken;
 /**
  * dConnectManagerから相手にイベントを送信する.
  * @param[in] event イベント
- * @return 送信に成功した場合はtrue、それ以外はfalse
+ * @return 送信に成功した場合はYES、それ以外はNO
  */
 - (BOOL) sendEvent:(DConnectMessage *)event;
+
+/**
+ * dConnectManagerから相手にイベントを送信する.
+ * @param[in] event イベント
+ * @param[in] authorized プラグインのLocal OAuthがONの場合はYES、それ以外はNO
+ * @return 送信に成功した場合はYES、それ以外はNO
+ */
+- (BOOL) sendEvent:(DConnectMessage *)event authorized:(BOOL) authorized;
 
 /**
  * リクエストへのコールバックを登録する.

@@ -160,7 +160,7 @@ static const UInt64 CACHE_RETENTION_TIME = 10000;
         // API登録(didReceiveDeleteOnDownRequest相当)
         NSString *deleteOnDownRequestApiPath = [self apiPath: nil
                                                attributeName: DConnectKeyEventProfileAttrOnDown];
-        [self addPutPath: deleteOnDownRequestApiPath
+        [self addDeletePath: deleteOnDownRequestApiPath
                      api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
                          NSString *serviceId = [request serviceId];
                          // Remove event of DConnect.
@@ -176,7 +176,7 @@ static const UInt64 CACHE_RETENTION_TIME = 10000;
         // API登録(didReceiveDeleteOnUpRequest相当)
         NSString *deleteOnOnUpRequestApiPath = [self apiPath: nil
                                                attributeName: DConnectKeyEventProfileAttrOnUp];
-        [self addPutPath: deleteOnOnUpRequestApiPath
+        [self addDeletePath: deleteOnOnUpRequestApiPath
                      api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
                          // Remove event of DConnect.
                          [DPPebbleProfileUtil handleRequest:request response:response isRemove:YES callback:^{
