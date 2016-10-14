@@ -11,6 +11,10 @@
 #import "PebbleViewController.h"
 #import "DPPebbleManager.h"
 #import "DPPebbleProfileUtil.h"
+#import <DConnectSDK/DConnectServiceListViewController.h>
+
+#define DCBundle() \
+[NSBundle bundleWithPath:[[NSBundle mainBundle] pathForResource:@"DConnectSDK_resources" ofType:@"bundle"]]
 
 @interface DPPebbleSystemProfile ()
 @end
@@ -63,6 +67,15 @@
 - (UIViewController *) profile:(DConnectSystemProfile *)sender
          settingPageForRequest:(DConnectRequestMessage *)request
 {
+    UIStoryboard *storyBoard;
+    storyBoard = [UIStoryboard storyboardWithName:@"DConnectSDK-iPhone"
+                                           bundle:DCBundle()];
+    UINavigationController *top = [storyBoard instantiateViewControllerWithIdentifier:@"ServiceList"];
+    DConnectServiceListViewController *serviceListViewController = (DConnectServiceListViewController *) top.viewControllers[0];
+    serviceListViewController.delegate = self;
+    return top;
+    
+/*
 	NSString *bundlePath = [[NSBundle mainBundle] pathForResource:@"dConnectDevicePebble_resources" ofType:@"bundle"];
 	NSBundle *bundle = [NSBundle bundleWithPath:bundlePath];
 
@@ -76,6 +89,29 @@
 	UINavigationController *viewController = [storyBoard instantiateInitialViewController];
 
 	return viewController;
+*/
+}
+
+#pragma mark - DConnectSystemProfileDelegate
+
+- (DConnectServiceProvider *)serviceProvider {
+    return ((DConnectDevicePlugin *)self.plugin).serviceProvider;
+}
+
+- (UIViewController *)settingViewController {
+    NSString *bundlePath = [[NSBundle mainBundle] pathForResource:@"dConnectDevicePebble_resources" ofType:@"bundle"];
+    NSBundle *bundle = [NSBundle bundleWithPath:bundlePath];
+    
+    // iphoneとipadでストーリーボードを切り替える
+    UIStoryboard *storyBoard;
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
+        storyBoard = [UIStoryboard storyboardWithName:@"dConnectDevicePebble_iPhone" bundle:bundle];
+    } else{
+        storyBoard = [UIStoryboard storyboardWithName:@"dConnectDevicePebble_iPad" bundle:bundle];
+    }
+    UINavigationController *viewController = [storyBoard instantiateInitialViewController];
+    
+    return viewController;
 }
 
 @end

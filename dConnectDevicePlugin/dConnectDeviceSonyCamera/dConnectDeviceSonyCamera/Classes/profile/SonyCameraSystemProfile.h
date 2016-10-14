@@ -9,6 +9,6 @@
 
 #import <DConnectSDK/DConnectSystemProfile.h>
 
-@interface SonyCameraSystemProfile : DConnectSystemProfile<DConnectSystemProfileDataSource>
+@interface SonyCameraSystemProfile : DConnectSystemProfile<DConnectSystemProfileDelegate, DConnectSystemProfileDataSource>
 
 @end

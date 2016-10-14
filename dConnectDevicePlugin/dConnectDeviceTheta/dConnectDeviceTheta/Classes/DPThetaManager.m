@@ -675,8 +675,8 @@ static int const _timeout = 500;
             if (![self.serviceProvider service: DPThetaDeviceServiceId]) {
                 DPThetaService *service = [[DPThetaService alloc] initWithServiceId: DPThetaDeviceServiceId plugin: self.plugin];
                 [service setName:serial];
-                [service setOnline:YES];
                 [self.serviceProvider addService: service];
+                [service setOnline:YES];
             } else {
                 // サービス登録済ならオンラインにする
                 DConnectService *service = [self.serviceProvider service: DPThetaDeviceServiceId];
@@ -695,8 +695,8 @@ static int const _timeout = 500;
         if (![self.serviceProvider service: DPThetaRoiServiceId]) {
             DPThetaService *service = [[DPThetaService alloc] initWithServiceId: DPThetaRoiServiceId plugin: self.plugin];
             [service setName: ROI_IMAGE_SERVICE];
-            [service setOnline:YES];
             [self.serviceProvider addService: service];
+            [service setOnline:YES];
         }
     }
 }
