@@ -87,12 +87,8 @@ textHeight;
     NSString *dataFilePath = [bundle pathForResource:@"dConnectDevicePebble" ofType:@"pbw"];
     
     NSURL *url = [NSURL fileURLWithPath:dataFilePath];
-   self.docInterCon = [UIDocumentInteractionController interactionControllerWithURL:url];
-    BOOL isValid;
-//    if ([diController presentOptionsMenuFromRect:self.view.frame inView:self.view animated:YES])
-//        [diCo
-//    [diController presentOptionsMenuFromBarButtonItem:sender animated:YES]
-    isValid = [self.docInterCon presentOpenInMenuFromRect:self.installButton.frame inView:self.view animated:NO];
+    self.docInterCon = [UIDocumentInteractionController interactionControllerWithURL:url];
+    BOOL isValid = [self.docInterCon presentOpenInMenuFromRect:self.installButton.frame inView:self.view animated:NO];
     if (!isValid) {
         //pebble管理アプリが無い時のアラートを生成
         UIAlertView *alert =
@@ -111,7 +107,7 @@ textHeight;
 }
 
 - (IBAction)getToPebble:(id)sender {
-    NSURL *myURL = [NSURL URLWithString: @"https://itunes.apple.com/jp/app/pebble-smartwatch/id592012721?mt=8"];
+    NSURL *myURL = [NSURL URLWithString: @"https://itunes.apple.com/jp/app/pebble/id957997620?mt=8"];
     
     [[UIApplication sharedApplication] openURL:myURL];
     
