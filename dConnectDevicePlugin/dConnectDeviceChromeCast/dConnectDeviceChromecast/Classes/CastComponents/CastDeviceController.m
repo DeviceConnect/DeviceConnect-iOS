@@ -230,6 +230,7 @@ NSString * const kCastViewController = @"castViewController";
 # pragma mark - GCKDeviceManagerDelegate
 
 - (void)deviceManagerDidConnect:(GCKDeviceManager *)deviceManager {
+
   if (_isReconnecting) {
     // Reconnect, if our app is playing. Attempt to join our session if current.
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -259,7 +260,7 @@ NSString * const kCastViewController = @"castViewController";
   if ([_delegate respondsToSelector:@selector(didConnectToDevice:)]) {
     [_delegate didConnectToDevice:deviceManager.device];
   }
-    [[DPChromecastManager sharedManager] updateManageServiceWithId:sessionID online:YES];
+  [[DPChromecastManager sharedManager] updateManageServiceWithId:deviceManager.device.deviceID online:YES];
 
   self.isReconnecting = NO;
   // Store sessionID in case of restart
@@ -307,9 +308,7 @@ NSString * const kCastViewController = @"castViewController";
   [self updateCastIconButtonStates];
   [[NSNotificationCenter defaultCenter]
       postNotificationName:kCastApplicationDisconnectedNotification object:self];
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSString *lastSessionID = [defaults valueForKey:@"lastSessionID"];
-    [[DPChromecastManager sharedManager] updateManageServiceWithId:lastSessionID online:NO];
+    [[DPChromecastManager sharedManager] updateManageServiceWithId:deviceManager.device.deviceID online:NO];
 
   if ([_delegate respondsToSelector:@selector(didDisconnect)]) {
     [_delegate didDisconnect];
