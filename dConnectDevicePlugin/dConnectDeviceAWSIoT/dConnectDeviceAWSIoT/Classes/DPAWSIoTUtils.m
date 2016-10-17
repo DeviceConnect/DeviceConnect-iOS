@@ -78,6 +78,17 @@ static UIViewController *loadingHUD;
     [defaults synchronize];
 }
 
++ (void) setOnline:(BOOL)online {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setBool:online forKey:@"_manager_online_status_"];
+    [defaults synchronize];
+}
+
++ (BOOL) isOnline {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    return [defaults boolForKey:@"_manager_online_status_"];
+}
+
 // Managerを許可
 + (void)addAllowManager:(NSString*)uuid {
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -288,81 +299,130 @@ static UIViewController *loadingHUD;
 
 + (void)sendRequestDictionary:(NSDictionary*)requestDic callback:(DConnectResponseBlocks)callback
 {
-	if (!requestDic) {
-		return;
-	}
-    
-    DConnectRequestMessage *request = [DConnectRequestMessage new];
-    [request.internalDictionary addEntriesFromDictionary:requestDic];
-    [request setOrigin:kOrigin];
-    [request setString:DConnectServiceInnerTypeHttp forKey:DConnectServiceInnerType];
-    
+    if (!requestDic) {
+        return;
+    }
+
+    NSMutableURLRequest *request = [NSMutableURLRequest new];
+    [request setValue:kOrigin forHTTPHeaderField:@"Origin"];
+
     NSString *method = requestDic[@"action"];
     if ([method localizedCaseInsensitiveContainsString:@"get"]) {
-        [request setAction:DConnectMessageActionTypeGet];
+        [request setHTTPMethod:@"GET"];
     } else if ([method localizedCaseInsensitiveContainsString:@"put"]) {
-        [request setAction:DConnectMessageActionTypePut];
+        [request setHTTPMethod:@"PUT"];
     } else if ([method localizedCaseInsensitiveContainsString:@"post"]) {
-        [request setAction:DConnectMessageActionTypePost];
+        [request setHTTPMethod:@"POST"];
     } else if ([method localizedCaseInsensitiveContainsString:@"delete"]) {
-        [request setAction:DConnectMessageActionTypeDelete];
+        [request setHTTPMethod:@"DELETE"];
+    }
+
+    NSMutableString* uri = [NSMutableString string];
+    [uri setString:@"http://localhost:4035"];
+    if ([requestDic.allKeys containsObject:@"api"]) {
+        [uri appendString:@"/"];
+        [uri appendString:requestDic[@"api"]];
+    }
+    if ([requestDic.allKeys containsObject:@"profile"]) {
+        [uri appendString:@"/"];
+        [uri appendString:requestDic[@"profile"]];
+    }
+    if ([requestDic.allKeys containsObject:@"interface"]) {
+        [uri appendString:@"/"];
+        [uri appendString:requestDic[@"interface"]];
+    }
+    if ([requestDic.allKeys containsObject:@"attribute"]) {
+        [uri appendString:@"/"];
+        [uri appendString:requestDic[@"attribute"]];
+    }
+
+    NSMutableArray *array = [NSMutableArray array];
+    for (NSString *key in requestDic.allKeys) {
+        NSString *value = requestDic[key];
+        if ([key localizedCaseInsensitiveContainsString:@"api"]) {
+        } else if ([key localizedCaseInsensitiveContainsString:@"profile"]) {
+        } else if ([key localizedCaseInsensitiveContainsString:@"interface"]) {
+        } else if ([key localizedCaseInsensitiveContainsString:@"attribute"]) {
+        } else if ([key localizedCaseInsensitiveContainsString:@"action"]) {
+        } else if ([key localizedCaseInsensitiveContainsString:@"origin"]) {
+        } else if ([key localizedCaseInsensitiveContainsString:@"accessToken"]) {
+        } else if ([key localizedCaseInsensitiveContainsString:@"_type"]) {
+        } else {
+            [array addObject:[NSURLQueryItem queryItemWithName:key value:value]];
+        }
+    }
+    [array addObject:[NSURLQueryItem queryItemWithName:@"accessToken" value:[DPAWSIoTUtils accessToken]]];
+    
+    NSURLComponents *components = [NSURLComponents componentsWithString:uri];
+    [components setQueryItems:array];
+
+    if ([method localizedCaseInsensitiveContainsString:@"get"] ||
+        [method localizedCaseInsensitiveContainsString:@"delete"]) {
+        [request setURL:components.URL];
+    } else {
+        [request setURL:[NSURL URLWithString:uri]];
+        request.HTTPBody = [components.query dataUsingEncoding:NSUTF8StringEncoding];
     }
     
-    NSString *token = [DPAWSIoTUtils accessToken];
-    if (!token) {
-        [DPAWSIoTUtils auth:^(NSError *error) {
-            if (error) {
-                DConnectResponseMessage *response = [DConnectResponseMessage new];
-                [response setErrorToAuthorization];
-                callback(response);
+    [DPAWSIoTNetworkManager sendRequest:request handler:^(NSData *data, NSURLResponse *resp, NSError *error) {
+        NSInteger statusCode = ((NSHTTPURLResponse *)resp).statusCode;
+        if (statusCode == 200) {
+            DConnectResponseMessage *response = [DPAWSIoTUtils createResponse:data];
+            if (response.result == DConnectMessageResultTypeError) {
+                DConnectMessageErrorCodeType errorCode = response.errorCode;
+                switch (errorCode) {
+                    default:
+                        callback(response);
+                        break;
+                    case DConnectMessageErrorCodeScope: {
+                        [DPAWSIoTUtils authProfile:requestDic[@"profile"] handler:^(NSError *error) {
+                            if (error) {
+                                callback(response);
+                            } else {
+                                [DPAWSIoTUtils sendRequestDictionary:requestDic callback:callback];
+                            }
+                        }];
+                    }   break;
+                    case DConnectMessageErrorCodeAuthorization:
+                    case DConnectMessageErrorCodeExpiredAccessToken:
+                    case DConnectMessageErrorCodeEmptyAccessToken:
+                    case DConnectMessageErrorCodeNotFoundClientId: {
+                        [DPAWSIoTUtils auth:^(NSError *error) {
+                            if (error) {
+                                callback(response);
+                            } else {
+                                [DPAWSIoTUtils sendRequestDictionary:requestDic callback:callback];
+                            }
+                        }];
+                    }   break;
+                }
             } else {
-                [DPAWSIoTUtils sendRequest:request callback:callback];
-            }
-        }];
-    } else {
-        [DPAWSIoTUtils sendRequest:request callback:callback];
-    }
-}
-
-+ (void)sendRequest:(DConnectRequestMessage*)request callback:(DConnectResponseBlocks)callback
-{
-    [request setOrigin:kOrigin];
-    [request setAccessToken:[DPAWSIoTUtils accessToken]];
-
-    DConnectManager *mgr = [DConnectManager sharedManager];
-    [mgr sendRequest:request callback:^(DConnectResponseMessage *response) {
-        if (response.result == DConnectMessageResultTypeError) {
-            DConnectMessageErrorCodeType errorCode = response.errorCode;
-            switch (errorCode) {
-                default:
-                    callback(response);
-                    break;
-                case DConnectMessageErrorCodeScope: {
-                    [DPAWSIoTUtils authProfile:[request profile] handler:^(NSError *error) {
-                        if (error) {
-                            callback(response);
-                        } else {
-                            [DPAWSIoTUtils sendRequest:request callback:callback];
-                        }
-                    }];
-                }   break;
-                case DConnectMessageErrorCodeAuthorization:
-                case DConnectMessageErrorCodeExpiredAccessToken:
-                case DConnectMessageErrorCodeEmptyAccessToken:
-                case DConnectMessageErrorCodeNotFoundClientId: {
-                    [DPAWSIoTUtils auth:^(NSError *error) {
-                        if (error) {
-                            callback(response);
-                        } else {
-                            [DPAWSIoTUtils sendRequest:request callback:callback];
-                        }
-                    }];
-                }   break;
+                callback(response);
             }
         } else {
+            DConnectResponseMessage *response = [DConnectResponseMessage new];
+            [response setErrorToUnknown];
             callback(response);
         }
     }];
+}
+
++ (DConnectResponseMessage *) createResponse:(NSData *)data
+{
+    NSError *error = nil;
+    @try {
+        NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
+        if (!error) {
+            DConnectResponseMessage *response = [DConnectResponseMessage initWithDictionary:json];
+            return response;
+        }
+    }
+    @catch (NSException *exception) {
+        // do nothing
+    }
+    DConnectResponseMessage *response = [DConnectResponseMessage new];
+    [response setErrorToUnknown];
+    return response;
 }
 
 // パス追加

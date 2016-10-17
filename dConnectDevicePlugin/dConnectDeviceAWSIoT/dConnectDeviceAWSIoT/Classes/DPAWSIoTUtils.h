@@ -59,4 +59,8 @@
 
 + (NSString *)accessToken;
 
+
++ (void) setOnline:(BOOL)online;
++ (BOOL) isOnline;
+
 @end

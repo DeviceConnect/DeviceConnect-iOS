@@ -138,11 +138,11 @@ static NSString *const kTopicEvent = @"event";
 + (void)setManagerInfo:(BOOL)online handler:(void (^)(NSError *error))handler {
 	id info;
 	if (online) {
-		info = @{@"name": [DPAWSIoTController managerName], @"online": @(online), @"timeStamp": @(floor([[NSDate date] timeIntervalSince1970] *  1000.0))};
+		info = @{@"name": [DPAWSIoTController managerName], @"online": @(online), @"timeStamp": @(floor([[NSDate date] timeIntervalSince1970] * 1000.0))};
 	} else {
 		info = [NSNull null];
 	}
-	NSDictionary *dic = @{@"state": @{@"reported": @{[DPAWSIoTController managerUUID]: info}}};
+    NSDictionary *dic = @{@"state": @{@"reported": @{[DPAWSIoTController managerUUID]: info}}};
 	NSError *error;
 	NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dic options:0 error:&error];
 	if (error) {
@@ -202,6 +202,15 @@ static NSString *const kTopicEvent = @"event";
 				NSLog(@"Error on Login: %@", error);
 				return;
 			}
+
+            if ([DPAWSIoTUtils isOnline]) {
+                [DPAWSIoTController setManagerInfo:YES handler:^(NSError *error) {
+                    if (error) {
+                        NSLog(@"enterForeground: %@", error);
+                    }
+                }];
+            }
+
 			// Shadow更新時の処理
 			[self subscribeManagerUpdateInfoWithHandler:^(NSDictionary *managers, NSDictionary *myInfo, NSError *error) {
 				if (!error) {
@@ -221,7 +230,6 @@ static NSString *const kTopicEvent = @"event";
 
 // ログアウト
 - (void)logout {
-    [self updateManagers:nil myInfo:nil error:nil];
 	[[DPAWSIoTManager sharedManager] disconnect];
 }
 
