@@ -20,7 +20,7 @@
 - (id) init {
     self = [super initWithObject: self];
     if (self) {
-        self.pluginName = @"ChromeCast (Device Connect Device Plug-in)";
+        self.pluginName = @"Chromecast (Device Connect Device Plug-in)";
         
         [[DPChromecastManager sharedManager] setServiceProvider: self.serviceProvider];
         [[DPChromecastManager sharedManager] setPlugin:self];
