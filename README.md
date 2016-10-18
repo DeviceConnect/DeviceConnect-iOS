@@ -30,6 +30,7 @@ In this guide I will continue to discuss the following.
 |dConnectDeviceHost|Device Plug-in for iOS.|
 |dConnectDeviceHue|Device Plug-in for Hue.|
 |dConnectDeviceIRKit|Device Plug-in for IRKit.|
+|dConnectDeviceLinking|Device Plug-in for Linking.|
 |dConnectDevicePebble|Device Plug-in for Pebble.|
 |dConnectDeviceSonyCamera|Device Plug-in for SonyCamera such as QX10.|
 |dConnectDeviceSphero|Device Plug-in for Sphero.|
@@ -59,6 +60,7 @@ Basically, you work with start-up of dConnectBrowser only, such as when you make
 * [Host](https://github.com/DeviceConnect/DeviceConnect-iOS/wiki/Host-Build)
 * [Hue](https://github.com/DeviceConnect/DeviceConnect-iOS/wiki/Hue-Build)
 * [IRKit](https://github.com/DeviceConnect/DeviceConnect-iOS/wiki/IRKit-Build)
+* [Linking](https://github.com/DeviceConnect/DeviceConnect-iOS/wiki/Linking-Build)
 * [Pebble](https://github.com/DeviceConnect/DeviceConnect-iOS/wiki/Pebble-Build)
 * [SonyCamera](https://github.com/DeviceConnect/DeviceConnect-iOS/wiki/SonyCamera-Build)
 * [Sphero](https://github.com/DeviceConnect/DeviceConnect-iOS/wiki/Sphero-Build)

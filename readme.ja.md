@@ -22,6 +22,7 @@ Device Connect iOSはiOS版のDeviceConnectのプラットフォームになり�
 |dConnectDeviceHost|iOS端末のデバイスプラグイン。|
 |dConnectDeviceHue|Hueのデバイスプラグイン。|
 |dConnectDeviceIRKit|IRKitのデバイスプラグイン。|
+|dConnectDeviceLinking|Linkingのデバイスプラグイン。|
 |dConnectDevicePebble|Pebbleのデバイスプラグイン。|
 |dConnectDeviceSonyCamera|QX10などのSonyCameraのデバイスプラグイン。|
 |dConnectDeviceSphero|Spheroのデバイスプラグイン。|
@@ -50,6 +51,7 @@ Device Connect iOSはiOS版のDeviceConnectのプラットフォームになり�
 * [Host](https://github.com/DeviceConnect/DeviceConnect-iOS/wiki/Host-Build)
 * [Hue](https://github.com/DeviceConnect/DeviceConnect-iOS/wiki/Hue-Build)
 * [IRKit](https://github.com/DeviceConnect/DeviceConnect-iOS/wiki/IRKit-Build)
+* [Linking](https://github.com/DeviceConnect/DeviceConnect-iOS/wiki/Linking-Build)
 * [Pebble](https://github.com/DeviceConnect/DeviceConnect-iOS/wiki/Pebble-Build)
 * [SonyCamera](https://github.com/DeviceConnect/DeviceConnect-iOS/wiki/SonyCamera-Build)
 * [Sphero](https://github.com/DeviceConnect/DeviceConnect-iOS/wiki/Sphero-Build)
