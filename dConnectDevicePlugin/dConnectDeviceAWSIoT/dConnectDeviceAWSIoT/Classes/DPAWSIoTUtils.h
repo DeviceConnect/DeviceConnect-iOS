@@ -41,13 +41,26 @@
 
 // ログイン
 + (void)loginWithHandler:(void (^)(NSError *error))handler;
+
 // HTTP通信
-+ (void)sendRequest:(NSDictionary*)request handler:(void (^)(NSData *data, NSError *error))handler;
++ (void)sendRequestDictionary:(NSDictionary*)requestDic callback:(DConnectResponseBlocks)callback;
 
 // Packege名取得
 + (NSString *)packageName;
 
 // アラート表示
 + (void)showAlert:(UIViewController*)vc title:(NSString*)title message:(NSString*)message handler:(void (^)())handler;
+
+// サービス一覧を取得
++ (void)fetchServicesWithHandler:(DConnectResponseBlocks)callback;
+
+// サービス情報を取得
++ (void)fetchServiceInformationWithId:(NSString*)serviceId callback:(DConnectResponseBlocks)callback;
+
++ (NSString *)accessToken;
+
+
++ (void) setOnline:(BOOL)online;
++ (BOOL) isOnline;
 
 @end

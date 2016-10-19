@@ -51,6 +51,7 @@
 	if (_statusSwitch.on) {
 		[DPAWSIoTUtils setEventSyncInterval:[_syncText.text integerValue]];
 	}
+    [DPAWSIoTUtils setOnline:_statusSwitch.on];
 	[DPAWSIoTController setManagerInfo:_statusSwitch.on handler:^(NSError *error) {
 		if (error) {
 			// アラート

@@ -13,6 +13,7 @@
 #import "DPAWSIoTNetworkManager.h"
 #import "DConnectManager+Private.h"
 #import "DConnectManagerServiceDiscoveryProfile.h"
+#import "DConnectMessage+Private.h"
 #import "DPAWSIoTController.h"
 
 #define kAccessKeyID @"accessKey"
@@ -28,7 +29,6 @@
 
 // ローディング画面
 static UIViewController *loadingHUD;
-
 
 // アカウントの設定があるか
 + (BOOL)hasAccount {
@@ -76,6 +76,17 @@ static UIViewController *loadingHUD;
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults setObject:token forKey:@"_access_token_"];
     [defaults synchronize];
+}
+
++ (void) setOnline:(BOOL)online {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setBool:online forKey:@"_manager_online_status_"];
+    [defaults synchronize];
+}
+
++ (BOOL) isOnline {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    return [defaults boolForKey:@"_manager_online_status_"];
 }
 
 // Managerを許可
@@ -126,56 +137,72 @@ static UIViewController *loadingHUD;
                 handler(error);
             }
         } else {
-            [DPAWSIoTUtils auth:handler];
+            NSString *accessToken = [DPAWSIoTUtils accessToken];
+            if (!accessToken) {
+                [DPAWSIoTUtils auth:handler];
+            } else {
+                [[DPAWSIoTController sharedManager] openWebSocket:accessToken];
+                if (handler) {
+                    handler(nil);
+                }
+            }
         }
 	}];
 }
 
 + (void) auth:(void (^)(NSError *error))handler {
-    NSArray *supports = @[@"servicediscovery",
-                          @"serviceinformation",
-                          @"system",
-                          @"battery",
-                          @"connect",
-                          @"deviceorientation",
-                          @"filedescriptor",
-                          @"file",
-                          @"mediaplayer",
-                          @"mediastreamrecording",
-                          @"notification",
-                          @"phone",
-                          @"proximity",
-                          @"settings",
-                          @"vibration",
-                          @"light",
-                          @"remotecontroller",
-                          @"drivecontroller",
-                          @"mhealth",
-                          @"sphero",
-                          @"dice",
-                          @"temperature",
-                          @"camera",
-                          @"canvas",
-                          @"health",
-                          @"touch",
-                          @"humandetect",
-                          @"keyevent",
-                          @"omnidirectionalimage",
-                          @"tv",
-                          @"powermeter",
-                          @"humidity",
-                          @"illuminance",
-                          @"videochat",
-                          @"airconditioner",
-                          @"atmosphericpressure",
-                          @"ecg",
-                          @"poseEstimation",
-                          @"stressEstimation",
-                          @"walkState",
-                          @"gpio"];
+    [self authProfile:nil handler:handler];
+}
+
++ (void) authProfile:(NSString *)profile handler:(void (^)(NSError *error))handler {
+    NSMutableArray *requestScopes = [@[@"servicediscovery",
+                                       @"serviceinformation",
+                                       @"system",
+                                       @"battery",
+                                       @"connect",
+                                       @"deviceorientation",
+                                       @"filedescriptor",
+                                       @"file",
+                                       @"mediaplayer",
+                                       @"mediastreamrecording",
+                                       @"notification",
+                                       @"phone",
+                                       @"proximity",
+                                       @"settings",
+                                       @"vibration",
+                                       @"light",
+                                       @"remotecontroller",
+                                       @"drivecontroller",
+                                       @"mhealth",
+                                       @"sphero",
+                                       @"dice",
+                                       @"temperature",
+                                       @"camera",
+                                       @"canvas",
+                                       @"health",
+                                       @"touch",
+                                       @"humandetect",
+                                       @"keyevent",
+                                       @"omnidirectionalimage",
+                                       @"tv",
+                                       @"powermeter",
+                                       @"humidity",
+                                       @"illuminance",
+                                       @"videochat",
+                                       @"airconditioner",
+                                       @"atmosphericpressure",
+                                       @"ecg",
+                                       @"poseEstimation",
+                                       @"stressEstimation",
+                                       @"walkState",
+                                       @"gpio"] mutableCopy];
+    if (profile && ![requestScopes containsObject:profile]) {
+        [requestScopes addObject:profile];
+    }
+    
     [DConnectUtil asyncAuthorizeWithOrigin:kOrigin
                                    appName:@"AWSIoT"
-                                    scopes:supports
+                                    scopes:requestScopes
                                    success:^(NSString *clientId, NSString *accessToken) {
                                        [DPAWSIoTUtils addAccessToken:accessToken];
                                        [[DPAWSIoTController sharedManager] openWebSocket:accessToken];
@@ -184,9 +211,34 @@ static UIViewController *loadingHUD;
                                        }
                                    } error:^(DConnectMessageErrorCodeType errorCode) {
                                        if (handler) {
-                                           handler(nil);
+                                           NSError *error = [NSError errorWithDomain:@"Failed to authorization." code:errorCode userInfo:nil];
+                                           handler(error);
                                        }
                                    }];
+}
+
+// サービス一覧を取得
++ (void)fetchServicesWithHandler:(DConnectResponseBlocks)callback {
+    DConnectManager *mgr = [DConnectManager sharedManager];
+    DConnectRequestMessage *request = [DConnectRequestMessage new];
+    [request setAction: DConnectMessageActionTypeGet];
+    [request setProfile:DConnectServiceDiscoveryProfileName];
+    [request setAccessToken:[DPAWSIoTUtils accessToken]];
+    [request setOrigin:kOrigin];
+    [request setString:@"true" forKey:@"_selfOnly"];
+    [mgr sendRequest:request callback:callback];
+}
+
+// サービス情報を取得
++ (void)fetchServiceInformationWithId:(NSString*)serviceId callback:(DConnectResponseBlocks)callback {
+    DConnectManager *mgr = [DConnectManager sharedManager];
+    DConnectRequestMessage *request = [DConnectRequestMessage new];
+    [request setAction:DConnectMessageActionTypeGet];
+    [request setProfile:DConnectServiceInformationProfileName];
+    [request setServiceId:serviceId];
+    [request setAccessToken:[DPAWSIoTUtils accessToken]];
+    [request setOrigin:kOrigin];
+    [mgr sendRequest:request callback:callback];
 }
 
 // ローディング画面表示
@@ -245,71 +297,132 @@ static UIViewController *loadingHUD;
 	return alert;
 }
 
-// HTTP通信
-+ (void)sendRequest:(NSDictionary*)request handler:(void (^)(NSData *data, NSError *error))handler {
-	if (!request) {
-		handler(nil, [NSError errorWithDomain:ERROR_DOMAIN code:-1 userInfo:nil]);
-		return;
-	}
++ (void)sendRequestDictionary:(NSDictionary*)requestDic callback:(DConnectResponseBlocks)callback
+{
+    if (!requestDic) {
+        return;
+    }
 
-	// localhostへアクセス
-	DConnectManager *mgr = [DConnectManager sharedManager];
-	NSString *path = [NSString stringWithFormat:@"http://localhost:%d", mgr.settings.port];
-	NSMutableDictionary *params = [request mutableCopy];
-	path = [self appendPath:path params:params name:@"api"];
-	path = [self appendPath:path params:params name:@"profile"];
-	path = [self appendPath:path params:params name:@"interface"];
-	path = [self appendPath:path params:params name:@"attribute"];
-	NSString *method = request[@"action"];
-    NSString *origin = kOrigin;
-	// accessTokenを設定
-	NSString *profile = request[DConnectMessageProfile];
-	NSString *serviceId = request[DConnectMessageServiceId];
-	if (serviceId) {
-        NSString *token = [self accessToken];
-		if (token) {
-			params[@"accessToken"] = token;
-		}
-	}
-	
-	// 不要なパラメータを削除
-	[params removeObjectForKey:@"action"];
-	[params removeObjectForKey:@"origin"];
-	[params removeObjectForKey:@"_type"];
-	[params removeObjectForKey:@"version"];
-	
-	if ([profile localizedCaseInsensitiveContainsString:DConnectServiceDiscoveryProfileName]) {
-		// ServiceDiscoveryはLocalOAuthをやらないように別アクセス
-		dispatch_async(dispatch_get_main_queue(), ^{
-			DConnectManager *mgr = [DConnectManager sharedManager];
-			DConnectManagerServiceDiscoveryProfile *p = (DConnectManagerServiceDiscoveryProfile*)[mgr profileWithName:DConnectServiceDiscoveryProfileName];
-			DConnectResponseMessage *response = [DConnectResponseMessage message];
-			DConnectRequestMessage *request = [DConnectRequestMessage new];
-			[request setString:@"true" forKey:@"_selfOnly"];
-			[request setAction: DConnectMessageActionTypeGet];
-			[p getServicesRequest:request response:response];
-			NSString *json = [response convertToJSONString];
-			NSData *data = [json dataUsingEncoding:NSUTF8StringEncoding];
-			handler(data, nil);
-		});
-	} else {
-		// 通常の処理
-		[DPAWSIoTNetworkManager sendRequestWithPath:path method:method
-											 params:params headers:@{@"X-GotAPI-Origin": origin}
-											handler:^(NSData *data, NSURLResponse *response, NSError *error)
-		 {
-			 if (error) {
-				 handler(nil, error);
-				 return;
-			 }
-			 NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
-			 if (httpResponse.statusCode == 200) {
-				 handler(data, nil);
-			 } else {
-				 handler(data, [NSError errorWithDomain:ERROR_DOMAIN code:-1 userInfo:nil]);
-			 }
-		 }];
-	}
+    NSMutableURLRequest *request = [NSMutableURLRequest new];
+    [request setValue:kOrigin forHTTPHeaderField:@"Origin"];
+
+    NSString *method = requestDic[@"action"];
+    if ([method localizedCaseInsensitiveContainsString:@"get"]) {
+        [request setHTTPMethod:@"GET"];
+    } else if ([method localizedCaseInsensitiveContainsString:@"put"]) {
+        [request setHTTPMethod:@"PUT"];
+    } else if ([method localizedCaseInsensitiveContainsString:@"post"]) {
+        [request setHTTPMethod:@"POST"];
+    } else if ([method localizedCaseInsensitiveContainsString:@"delete"]) {
+        [request setHTTPMethod:@"DELETE"];
+    }
+
+    NSMutableString* uri = [NSMutableString string];
+    [uri setString:@"http://localhost:4035"];
+    if ([requestDic.allKeys containsObject:@"api"]) {
+        [uri appendString:@"/"];
+        [uri appendString:requestDic[@"api"]];
+    }
+    if ([requestDic.allKeys containsObject:@"profile"]) {
+        [uri appendString:@"/"];
+        [uri appendString:requestDic[@"profile"]];
+    }
+    if ([requestDic.allKeys containsObject:@"interface"]) {
+        [uri appendString:@"/"];
+        [uri appendString:requestDic[@"interface"]];
+    }
+    if ([requestDic.allKeys containsObject:@"attribute"]) {
+        [uri appendString:@"/"];
+        [uri appendString:requestDic[@"attribute"]];
+    }
+
+    NSMutableArray *array = [NSMutableArray array];
+    for (NSString *key in requestDic.allKeys) {
+        NSString *value = requestDic[key];
+        if ([key localizedCaseInsensitiveContainsString:@"api"]) {
+        } else if ([key localizedCaseInsensitiveContainsString:@"profile"]) {
+        } else if ([key localizedCaseInsensitiveContainsString:@"interface"]) {
+        } else if ([key localizedCaseInsensitiveContainsString:@"attribute"]) {
+        } else if ([key localizedCaseInsensitiveContainsString:@"action"]) {
+        } else if ([key localizedCaseInsensitiveContainsString:@"origin"]) {
+        } else if ([key localizedCaseInsensitiveContainsString:@"accessToken"]) {
+        } else if ([key localizedCaseInsensitiveContainsString:@"_type"]) {
+        } else {
+            [array addObject:[NSURLQueryItem queryItemWithName:key value:value]];
+        }
+    }
+    [array addObject:[NSURLQueryItem queryItemWithName:@"accessToken" value:[DPAWSIoTUtils accessToken]]];
+    
+    NSURLComponents *components = [NSURLComponents componentsWithString:uri];
+    [components setQueryItems:array];
+
+    if ([method localizedCaseInsensitiveContainsString:@"get"] ||
+        [method localizedCaseInsensitiveContainsString:@"delete"]) {
+        [request setURL:components.URL];
+    } else {
+        [request setURL:[NSURL URLWithString:uri]];
+        request.HTTPBody = [components.query dataUsingEncoding:NSUTF8StringEncoding];
+    }
+    
+    [DPAWSIoTNetworkManager sendRequest:request handler:^(NSData *data, NSURLResponse *resp, NSError *error) {
+        NSInteger statusCode = ((NSHTTPURLResponse *)resp).statusCode;
+        if (statusCode == 200) {
+            DConnectResponseMessage *response = [DPAWSIoTUtils createResponse:data];
+            if (response.result == DConnectMessageResultTypeError) {
+                DConnectMessageErrorCodeType errorCode = response.errorCode;
+                switch (errorCode) {
+                    default:
+                        callback(response);
+                        break;
+                    case DConnectMessageErrorCodeScope: {
+                        [DPAWSIoTUtils authProfile:requestDic[@"profile"] handler:^(NSError *error) {
+                            if (error) {
+                                callback(response);
+                            } else {
+                                [DPAWSIoTUtils sendRequestDictionary:requestDic callback:callback];
+                            }
+                        }];
+                    }   break;
+                    case DConnectMessageErrorCodeAuthorization:
+                    case DConnectMessageErrorCodeExpiredAccessToken:
+                    case DConnectMessageErrorCodeEmptyAccessToken:
+                    case DConnectMessageErrorCodeNotFoundClientId: {
+                        [DPAWSIoTUtils auth:^(NSError *error) {
+                            if (error) {
+                                callback(response);
+                            } else {
+                                [DPAWSIoTUtils sendRequestDictionary:requestDic callback:callback];
+                            }
+                        }];
+                    }   break;
+                }
+            } else {
+                callback(response);
+            }
+        } else {
+            DConnectResponseMessage *response = [DConnectResponseMessage new];
+            [response setErrorToUnknown];
+            callback(response);
+        }
+    }];
+}
+
++ (DConnectResponseMessage *) createResponse:(NSData *)data
+{
+    NSError *error = nil;
+    @try {
+        NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
+        if (!error) {
+            DConnectResponseMessage *response = [DConnectResponseMessage initWithDictionary:json];
+            return response;
+        }
+    }
+    @catch (NSException *exception) {
+        // do nothing
+    }
+    DConnectResponseMessage *response = [DConnectResponseMessage new];
+    [response setErrorToUnknown];
+    return response;
 }
 
 // パス追加

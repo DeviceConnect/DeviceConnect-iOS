@@ -138,11 +138,11 @@ static NSString *const kTopicEvent = @"event";
 + (void)setManagerInfo:(BOOL)online handler:(void (^)(NSError *error))handler {
 	id info;
 	if (online) {
-		info = @{@"name": [DPAWSIoTController managerName], @"online": @(online), @"timeStamp": @(floor([[NSDate date] timeIntervalSince1970] *  1000.0))};
+		info = @{@"name": [DPAWSIoTController managerName], @"online": @(online), @"timeStamp": @(floor([[NSDate date] timeIntervalSince1970] * 1000.0))};
 	} else {
 		info = [NSNull null];
 	}
-	NSDictionary *dic = @{@"state": @{@"reported": @{[DPAWSIoTController managerUUID]: info}}};
+    NSDictionary *dic = @{@"state": @{@"reported": @{[DPAWSIoTController managerUUID]: info}}};
 	NSError *error;
 	NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dic options:0 error:&error];
 	if (error) {
@@ -202,6 +202,15 @@ static NSString *const kTopicEvent = @"event";
 				NSLog(@"Error on Login: %@", error);
 				return;
 			}
+
+            if ([DPAWSIoTUtils isOnline]) {
+                [DPAWSIoTController setManagerInfo:YES handler:^(NSError *error) {
+                    if (error) {
+                        NSLog(@"enterForeground: %@", error);
+                    }
+                }];
+            }
+
 			// Shadow更新時の処理
 			[self subscribeManagerUpdateInfoWithHandler:^(NSDictionary *managers, NSDictionary *myInfo, NSError *error) {
 				if (!error) {
@@ -222,7 +231,6 @@ static NSString *const kTopicEvent = @"event";
 // ログアウト
 - (void)logout {
 	[[DPAWSIoTManager sharedManager] disconnect];
-	[DPAWSIoTUtils clearAccount];
 }
 
 // マネージャー情報を取得
@@ -422,43 +430,6 @@ static NSString *const kTopicEvent = @"event";
 	}
 }
 
-// サービス一覧を取得
-- (void)fetchServicesWithHandler:(void (^)(DConnectArray *services))handler {
-	dispatch_async(dispatch_get_main_queue(), ^{
-		DConnectManager *mgr = [DConnectManager sharedManager];
-		DConnectManagerServiceDiscoveryProfile *p = (DConnectManagerServiceDiscoveryProfile*)[mgr profileWithName:DConnectServiceDiscoveryProfileName];
-		DConnectResponseMessage *response = [DConnectResponseMessage message];
-		DConnectRequestMessage *request = [DConnectRequestMessage new];
-		[request setString:@"true" forKey:@"_selfOnly"];
-		[request setAction: DConnectMessageActionTypeGet];
-		[p getServicesRequest:request response:response];
-		if (response.result == DConnectMessageResultTypeOk) {
-			handler(response.internalDictionary[@"services"]);
-		} else {
-			handler(nil);
-		}
-	});
-}
-
-// サービス情報を取得
-- (DConnectResponseMessage*)fetchServiceInformationWithId:(NSString*)serviceId {
-	DConnectManager *mgr = [DConnectManager sharedManager];
-	DConnectDevicePlugin *plugin = [mgr.mDeviceManager devicePluginForServiceId:serviceId];
-	if (plugin) {
-		DConnectResponseMessage *response = [DConnectResponseMessage message];
-		DConnectRequestMessage *request = [DConnectRequestMessage new];
-		[request setProfile:DConnectServiceInformationProfileName];
-		[request setAction:DConnectMessageActionTypeGet];
-
-        NSArray *names = [serviceId componentsSeparatedByString:@"."];
-		[request setServiceId:names[0]];
-		[plugin executeRequest:request response:response];
-		return response;
-	} else {
-		return nil;
-	}
-}
-
 - (void) openWebSocket:(NSString*) accessToken {
     DConnectManager *mgr = [DConnectManager sharedManager];
     
@@ -551,31 +522,19 @@ static NSString *const kTopicEvent = @"event";
         }
         // URI変換 ここまで
         
+        
 		// MQTTからHTTPへ
-		[DPAWSIoTUtils sendRequest:requestDic handler:^(NSData *data, NSError *error) {
-			if (error) {
-				NSLog(@"Error on SendRequest:%@", error);
-				return;
-			}
-
+        [DPAWSIoTUtils sendRequestDictionary:requestDic callback:^(DConnectResponseMessage *response) {
             // 返却形式にフォーマット
-			NSDictionary *resJson = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
-			NSMutableDictionary *dic = [NSMutableDictionary dictionary];
-			[dic setObject:json[@"requestCode"] forKey:@"requestCode"];
-			[dic setObject:resJson forKey:@"response"];
-			NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dic options:0 error:&error];
-			if (error) {
-				NSLog(@"Error: %@", error);
-				return;
-			}
-			// レスポンスをMQTT送信
-			NSString *msg = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+            NSString *responseJson = [response convertToJSONString];
+            NSString *msg = [NSString stringWithFormat:@"{\"requestCode\":%@,\"response\":%@}", json[@"requestCode"], responseJson];
+            // レスポンスをMQTT送信
             NSString *responseTopic = [DPAWSIoTController myTopic:kTopicResponse];
-			if (![[DPAWSIoTManager sharedManager] publishWithTopic:responseTopic message:msg]) {
-				NSLog(@"Error on PublishWithTopic: [%@] %@", responseTopic, msg);
-			}
-		}];
-	}];
+            if (![[DPAWSIoTManager sharedManager] publishWithTopic:responseTopic message:msg]) {
+                NSLog(@"Error on PublishWithTopic: [%@] %@", responseTopic, msg);
+            }
+        }];
+    }];
 }
 
 // RequestTopic購読解除
@@ -672,7 +631,6 @@ static NSString *const kTopicEvent = @"event";
 			// イベント購読解除
 			[self unsubscribeEvent:key];
 		}
-		
 	}
 }
 

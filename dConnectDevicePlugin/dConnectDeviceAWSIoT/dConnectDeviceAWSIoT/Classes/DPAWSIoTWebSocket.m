@@ -53,24 +53,27 @@
 	return self;
 }
 
-// ポート番号設定
 - (void)setPort:(int)port {
 	NSString *url = [NSString stringWithFormat:@"ws://localhost:%d/gotapi/websocket", port];
 	_url = [NSURL URLWithString:url];
 }
 
-// WebSocketを追加
 - (void)openWebSocketWithAccessToken:(NSString*)key {
     [self closeWebSocket];
     _socket = [self createSocket:key];
     [_socket open];
 }
 
-// WebSocketを削除
 - (void)closeWebSocket {
     [_socket close];
     _socket = nil;
 }
+
+- (BOOL)isOpened {
+    return _socket && _socket.readyState == PSWebSocketReadyStateOpen;
+}
+
+#pragma mark - Private method
 
 // WebSocketを作成
 - (PSWebSocket*)createSocket:(NSString*)key {
@@ -91,7 +94,7 @@
     if ([message isEqualToString:@"{\"result\":0}"]) {
         return;
     }
-    
+
 	if (self.receivedHandler) {
 		self.receivedHandler(webSocket.key, message);
 	}

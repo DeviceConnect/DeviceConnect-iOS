@@ -47,7 +47,7 @@
 	// MQTT接続
 	NSString *clientID = [[NSUUID UUID] UUIDString];
 	if (![manager connectUsingWebSocketWithClientId:clientID cleanSession:YES statusCallback:^(AWSIoTMQTTStatus status) {
-		//NSLog(@"* mqtt status: %ld", (long)status);
+//		NSLog(@"* mqtt status: %ld", (long)status);
 		dispatch_async(dispatch_get_main_queue(), ^{
 			// 接続成功
 			if (status == AWSIoTMQTTStatusConnected) {
@@ -158,7 +158,7 @@
 
 // MQTTのTopicにメッセージを配信
 - (BOOL)publishWithTopic:(NSString*)topic message:(NSString*)message {
-	NSLog(@"publish: %@, %@", topic, message);
+//	NSLog(@"publish: %@, %@", topic, message);
 	AWSIoTDataManager *manager = [AWSIoTDataManager IoTDataManagerForKey:@"dconnect"];
 	return [manager publishString:message onTopic:topic QoS:AWSIoTMQTTQoSMessageDeliveryAttemptedAtMostOnce];
 }

@@ -61,4 +61,14 @@
 	}] resume];
 }
 
++ (void)sendRequest:(NSURLRequest *)request
+            handler:(void (^)(NSData *data, NSURLResponse *response, NSError *error))handler {
+    NSURLSession *session = [NSURLSession sharedSession];
+    [[session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        if (handler) {
+            handler(data, response, error);
+        }
+    }] resume];
+}
+
 @end
