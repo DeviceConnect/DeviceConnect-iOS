@@ -191,7 +191,7 @@ shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)strin
     DPHueItemBridge *item = [self getSelectedItemBridge];
     [[DPHueManager sharedManager] initHue];
     [[DPHueManager sharedManager] startAuthenticateBridgeWithIpAddress:item.ipAddress
-                                                            macAddress:item.macAddress
+                                                            bridgeId:item.bridgeId
                                                               receiver:self
                                         localConnectionSuccessSelector:@selector(didBridgeSuccess)
                                                      noLocalConnection:@selector(didBridgeFailed)

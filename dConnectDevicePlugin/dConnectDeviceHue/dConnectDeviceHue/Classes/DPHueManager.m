@@ -14,7 +14,7 @@
 @interface DPHueManager()
 
 @property (nonatomic, strong) DPHueReachability *reachability;
-
+@property (nonatomic, strong) PHBridgeSendErrorArrayCompletionHandler completionHandler;
 @end
 
 
@@ -50,7 +50,7 @@ NSString *const DPHueBridgeListName = @"org.deviceconnect.ios.DPHue.ip";
         phHueSDK = [[PHHueSDK alloc] init];
         [phHueSDK startUpSDK];
         [phHueSDK enableLogging:NO];
-        bridgeSearching = [[PHBridgeSearching alloc] initWithUpnpSearch:YES andPortalSearch:YES andIpAdressSearch:NO];
+        bridgeSearching = [[PHBridgeSearching alloc] initWithUpnpSearch:YES andPortalSearch:YES andIpAddressSearch:NO];
     }
     
     // Reachabilityの初期処理
@@ -82,7 +82,7 @@ NSString *const DPHueBridgeListName = @"org.deviceconnect.ios.DPHue.ip";
 
 //ブリッジへの認証依頼
 -(void)startAuthenticateBridgeWithIpAddress:(NSString*)ipAddress
-                                        macAddress:(NSString*)macAddress
+                                        bridgeId:(NSString*)bridgeId
                                           receiver:(id)receiver
                     localConnectionSuccessSelector:(SEL)localConnectionSuccessSelector
                                  noLocalConnection:(SEL)noLocalConnection
@@ -110,10 +110,12 @@ NSString *const DPHueBridgeListName = @"org.deviceconnect.ios.DPHue.ip";
         [notificationManager registerObject:registerReceiver withSelector:notAuthenticated forNotification:
          NO_LOCAL_AUTHENTICATION_NOTIFICATION];
     }
-    if ((ipAddress != nil) && (macAddress != nil)) {
-        [phHueSDK setBridgeToUseWithIpAddress:ipAddress macAddress:macAddress];
+    if ((ipAddress != nil) && (bridgeId != nil)) {
+        [phHueSDK setBridgeToUseWithId:bridgeId ipAddress:ipAddress];
     }
-    [self enableHeartbeat];
+//    [self enableHeartbeat];
+    [self performSelector:@selector(enableHeartbeat) withObject:nil afterDelay:1];
+
 }
 
 //Pushlinkの確認開始
@@ -362,19 +364,19 @@ pushlinkAuthenticationSuccessSelector:(SEL)pushlinkAuthenticationSuccessSelector
 //使用できるライトの検索
 -(void)searchLightWithCompletion:(PHBridgeSendErrorArrayCompletionHandler)completion {
     PHBridgeSendAPI *bridgeSendAPI = [[PHBridgeSendAPI alloc] init];
-    [bridgeSendAPI searchForNewLights:completion];
+    [bridgeSendAPI searchForNewLightsWithDelegate:self];
+    _completionHandler = completion;
 }
 
 
 //Serialを指定してライトを登録する
 -(void)registerLightForSerialNo:(NSArray*)serialNos
-                     completion:
-(PHBridgeSendErrorArrayCompletionHandler)completion
+                     completion:(PHBridgeSendErrorArrayCompletionHandler)completion
 {
     
     PHBridgeSendAPI *bridgeSendAPI = [[PHBridgeSendAPI alloc] init];
-    [bridgeSendAPI searchForNewLightsWithSerials:serialNos completionHandler:completion];
-    
+    [bridgeSendAPI searchForNewLightsWithSerials:serialNos delegate:self];
+    _completionHandler = completion;
 }
 
 
@@ -418,6 +420,22 @@ pushlinkAuthenticationSuccessSelector:(SEL)pushlinkAuthenticationSuccessSelector
         phHueSDK = nil;
     }
 }
+
+
+#pragma mark - PHSearchForNewDevicesDelegate delegate
+- (void)hueDeviceSearchStarted {
+}
+- (void)hueDeviceSearchFailed:(NSArray*)errors {
+    if (_completionHandler) {
+        _completionHandler(errors);
+    }
+}
+- (void)hueDeviceSearchFinished {
+    if (_completionHandler) {
+        _completionHandler([NSArray array]);
+    }
+}
+
 
 #pragma mark - private method
 

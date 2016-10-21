@@ -135,9 +135,7 @@ static DPHueItemBridge *mSelectedItemBridge;
 
 - (BOOL)isSelectedItemBridge
 {
-    if (mSelectedItemBridge == nil
-        || mSelectedItemBridge.ipAddress.length < 7
-        || mSelectedItemBridge.macAddress.length < 17) {
+    if (mSelectedItemBridge == nil) {
         return NO;
     }
     return YES;

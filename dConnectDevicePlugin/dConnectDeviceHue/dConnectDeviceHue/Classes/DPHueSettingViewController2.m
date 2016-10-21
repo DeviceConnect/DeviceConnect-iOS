@@ -55,7 +55,7 @@
     [self startIndicator];
     DPHueItemBridge *item = [self getSelectedItemBridge];
     _selectedIpAddressLabel.text = item.ipAddress;
-    _selectedMacAddressLabel.text = item.macAddress;
+    _selectedMacAddressLabel.text = item.bridgeId;
     _authorizeStateLabel.text = @"---";
     [manager            startPushlinkWithReceiver:self
             pushlinkAuthenticationSuccessSelector:@selector(didPushlinkAuthenticationSuccess)
@@ -85,7 +85,7 @@
     DPHueItemBridge *item = [self getSelectedItemBridge];    
     [[DPHueManager sharedManager] initHue];
     [[DPHueManager sharedManager] startAuthenticateBridgeWithIpAddress:item.ipAddress
-                                                            macAddress:item.macAddress
+                                                            bridgeId:item.bridgeId
                                                               receiver:self
                                         localConnectionSuccessSelector:@selector(didBridgeAuthenticationSuccess)
                                                      noLocalConnection:@selector(didFailed)
@@ -96,7 +96,6 @@
 {
 
     [self showAleart:DPHueLocalizedString(_bundle, @"HueRegisterApp")];
-    NSLog(@"success");
     dispatch_queue_t updateQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
     dispatch_async(updateQueue, ^{
         dispatch_async(dispatch_get_main_queue(), ^{

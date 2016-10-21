@@ -14,8 +14,14 @@
 typedef void (^PHHttpRequesterCompletionHandler)(NSInteger statusCode, NSData *responseData, PHError *error);
 
 /**
+ Block for the NSURLSessionDataTask
+ */
+typedef void (^PHNSURLSessionDataTaskCompletionHandler)(NSData *data, NSURLResponse *response, NSError *error);
+
+/**
  Class used for sending http requests to the bridge and portal. The http connections are done asynchronous
  and will call the completionhandler given when done.
+ @note Only supports data tasks at the moment
  */
 @interface PHHttpRequester : NSObject
 
@@ -41,6 +47,13 @@ typedef void (^PHHttpRequesterCompletionHandler)(NSInteger statusCode, NSData *r
 @property (nonatomic, strong) NSMutableURLRequest *urlRequest;
 
 /**
+ Initializes the http requester with a given timeout interval set (overrides default timeout of 8 seconds)
+ @param completionHandler block called when done
+ @see PHHttpRequesterCompletionHandler
+ */
+- (id)initWithTimeoutInterval:(NSInteger)timeOutInterval;
+
+/**
  Starts the actual connection and tries to execute the request.
  @param completionHandler block called when done
  @see PHHttpRequesterCompletionHandler
@@ -48,14 +61,14 @@ typedef void (^PHHttpRequesterCompletionHandler)(NSInteger statusCode, NSData *r
 - (void)runWithCompletionHandler:(PHHttpRequesterCompletionHandler)completionHandler;
 
 /**
- Creates a urlConnection object for the given request object.
+ Creates a data task object for the given request object.
  @param request the request object
- @return an NSURLConnection object
+ @return a NSURLSessionDataTask object
  */
-- (NSURLConnection *)createURLConnectionForRequest:(NSURLRequest *)request;
+- (NSURLSessionDataTask *)createDataTaskSessionForRequest:(NSURLRequest *)request completionHandler:(PHNSURLSessionDataTaskCompletionHandler)completionHandler;
 
 /**
- Cancels the request / connection if it currently running
+ Cancels the request / data task if it currently running
  */
 - (void)cancelRequest;
 

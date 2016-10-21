@@ -75,7 +75,7 @@
         // Check for results
         if (bridgesFound.count > 0) {
             for (id key in [bridgesFound keyEnumerator]) {
-                [self addItem:[bridgesFound valueForKey:key] macAdress:key];
+                [self addItem:bridgesFound[key] macAdress:key];
             }
         }
         [self stopIndicator];
@@ -173,7 +173,7 @@
     // セルを設定する
     DPHueItemBridge *item = self.bridgeItems[indexPath.row];
     
-    cell.textLabel.text = [NSString stringWithFormat:@"%@\n ( %@ )",item.macAddress ,item.ipAddress];
+    cell.textLabel.text = [NSString stringWithFormat:@"%@\n ( %@ )",item.bridgeId ,item.ipAddress];
     return cell;
 }
 
@@ -199,7 +199,7 @@ canEditRowAtIndexPath:(NSIndexPath *)indexPath {
     DPHueItemBridge *newItem = [[DPHueItemBridge alloc] init];
     
     newItem.ipAddress = ipAdress;
-    newItem.macAddress = macAdress;
+    newItem.bridgeId = macAdress;
     
     NSIndexPath *indexPathToInsert =
     [NSIndexPath indexPathForRow:self.bridgeItems.count inSection:0];
@@ -216,7 +216,7 @@ canEditRowAtIndexPath:(NSIndexPath *)indexPath {
     _processingLabel.text = DPHueLocalizedString(_bundle, @"HueBridgeConnecting");
     [self startIndicator];
     [manager startAuthenticateBridgeWithIpAddress:selectedItemBridge.ipAddress
-                                       macAddress:selectedItemBridge.macAddress
+                                       bridgeId:selectedItemBridge.bridgeId
                                         receiver:self
                    localConnectionSuccessSelector:@selector(didLocalConnectionSuccess)
                                 noLocalConnection:@selector(didNoLocalConnection)
