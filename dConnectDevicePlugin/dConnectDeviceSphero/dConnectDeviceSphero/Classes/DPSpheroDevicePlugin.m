@@ -12,6 +12,9 @@
 #import "DPSpheroManager.h"
 #import <RobotKit/RobotKit.h>
 
+#define DPSpheroBundle() \
+[NSBundle bundleWithPath:[[NSBundle mainBundle] pathForResource:@"dConnectDeviceSphero_resources" ofType:@"bundle"]]
+
 @interface DPSpheroDevicePlugin()
 @end
 
@@ -88,8 +91,7 @@
 
 - (NSString*)iconFilePath:(BOOL)isOnline
 {
-    NSString *bundlePath = [[NSBundle mainBundle] pathForResource:@"dConnectDeviceSphero_resources" ofType:@"bundle"];
-    NSBundle *bundle = [NSBundle bundleWithPath:bundlePath];
+    NSBundle *bundle = DPSpheroBundle();
     NSString* filename = isOnline ? @"dconnect_icon" : @"dconnect_icon_off";
     return [bundle pathForResource:filename ofType:@"png"];
 }

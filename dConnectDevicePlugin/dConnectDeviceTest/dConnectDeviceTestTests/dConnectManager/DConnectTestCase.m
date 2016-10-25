@@ -24,7 +24,7 @@
     dispatch_once(&onceToken, ^{
         DConnectManager *mgr = [DConnectManager sharedManager];
         mgr.settings.useLocalOAuth = NO;
-        [mgr startByHttpServer];
+        [mgr start];
     });
 }
 

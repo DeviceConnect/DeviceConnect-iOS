@@ -100,6 +100,7 @@
 		ABDC9ACE1B54987B002AF9DD /* thetaOn@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = ABDC9AC91B54987B002AF9DD /* thetaOn@2x.png */; };
 		ABDC9ACF1B54987B002AF9DD /* thetaStandby@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = ABDC9ACA1B54987B002AF9DD /* thetaStandby@2x.png */; };
 		ABDC9AD01B54987B002AF9DD /* thetaWiFi@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = ABDC9ACB1B54987B002AF9DD /* thetaWiFi@2x.png */; };
+		D63BB8C81DA2070600892E5E /* omnidirectionalimage.json in Resources */ = {isa = PBXBuildFile; fileRef = D63BB8C71DA2070600892E5E /* omnidirectionalimage.json */; };
 		D6C8602F1D39F1D900232EEF /* DPThetaService.m in Sources */ = {isa = PBXBuildFile; fileRef = D6C8602E1D39F1D900232EEF /* DPThetaService.m */; };
 		D6D172771D6301C000444337 /* DPThetaReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = D6D172761D6301C000444337 /* DPThetaReachability.m */; };
 /* End PBXBuildFile section */
@@ -247,6 +248,7 @@
 		ABDC9AC91B54987B002AF9DD /* thetaOn@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "thetaOn@2x.png"; sourceTree = "<group>"; };
 		ABDC9ACA1B54987B002AF9DD /* thetaStandby@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "thetaStandby@2x.png"; sourceTree = "<group>"; };
 		ABDC9ACB1B54987B002AF9DD /* thetaWiFi@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "thetaWiFi@2x.png"; sourceTree = "<group>"; };
+		D63BB8C71DA2070600892E5E /* omnidirectionalimage.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = omnidirectionalimage.json; sourceTree = "<group>"; };
 		D6C8602D1D39F1D900232EEF /* DPThetaService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPThetaService.h; sourceTree = "<group>"; };
 		D6C8602E1D39F1D900232EEF /* DPThetaService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPThetaService.m; sourceTree = "<group>"; };
 		D6D172751D6301C000444337 /* DPThetaReachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPThetaReachability.h; sourceTree = "<group>"; };
@@ -480,6 +482,7 @@
 		AB50D0CC1B40DF6E00EB9F94 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				D63BB8C71DA2070600892E5E /* omnidirectionalimage.json */,
 				AB50D0CD1B40DF6E00EB9F94 /* Info.plist */,
 			);
 			name = "Supporting Files";
@@ -682,6 +685,7 @@
 				ABDC9AB91B549119002AF9DD /* thetaOn.png in Resources */,
 				8EB8545D1D4244FC0035C0DC /* dconnect_icon.png in Resources */,
 				ABDC9ACC1B54987B002AF9DD /* theta@2x.png in Resources */,
+				D63BB8C81DA2070600892E5E /* omnidirectionalimage.json in Resources */,
 				ABDC9ACD1B54987B002AF9DD /* thetaMovie@2x.png in Resources */,
 				ABDC9ACE1B54987B002AF9DD /* thetaOn@2x.png in Resources */,
 				ABDC9ABA1B549119002AF9DD /* thetaStandby.png in Resources */,

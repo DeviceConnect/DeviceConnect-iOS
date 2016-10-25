@@ -14,8 +14,6 @@
 
 @interface DConnectServiceManager : DConnectServiceProvider<OnStatusChangeListener>
 
-@property(nonatomic, strong) DConnectPluginSpec *pluginSpec;
-
 
 /*!
  DConnectServiceManagerインスタンス取得.
@@ -32,20 +30,5 @@
 + (DConnectServiceManager *)sharedForKey: (NSString *)key;
 
 - (void) setPlugin: (id) plugin;
-
-#pragma mark - DConnectServiceProvider Implement.
-
-- (id) plugin;
-
-- (void) addService: (DConnectService *) service;
-
-- (void) removeService: (NSString *) serviceId;
-
-- (DConnectService *) service: (NSString *) serviceId;
-
-- (NSArray *) services;
-
-- (BOOL) hasService: (NSString *)serviceId;
-
 
 @end

@@ -52,6 +52,8 @@
 		78B7F2BA1D658DAF00A5E520 /* DPAWSIoTSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 78B7F2B91D658DAF00A5E520 /* DPAWSIoTSettingViewController.m */; };
 		78B7F2BD1D66A0A100A5E520 /* DPAWSIoTController.m in Sources */ = {isa = PBXBuildFile; fileRef = 78B7F2BC1D66A0A100A5E520 /* DPAWSIoTController.m */; };
 		78B7F2C01D66AE4A00A5E520 /* DPAWSIoTNetworkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 78B7F2BF1D66AE4A00A5E520 /* DPAWSIoTNetworkManager.m */; };
+		AB77BC191DA63CE500959525 /* dconnect_icon_off.png in Resources */ = {isa = PBXBuildFile; fileRef = AB77BC171DA63CE500959525 /* dconnect_icon_off.png */; };
+		AB77BC1A1DA63CE500959525 /* dconnect_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = AB77BC181DA63CE500959525 /* dconnect_icon.png */; };
 		BE2B6E331D88ED8C009A02CE /* DPAWSIoTDomainResolution.mm in Sources */ = {isa = PBXBuildFile; fileRef = BE2B6DF21D88ED8C009A02CE /* DPAWSIoTDomainResolution.mm */; };
 		BE2B6E341D88ED8C009A02CE /* DPAWSIoTP2PConnection.mm in Sources */ = {isa = PBXBuildFile; fileRef = BE2B6DF41D88ED8C009A02CE /* DPAWSIoTP2PConnection.mm */; };
 		BE2B6E351D88ED8C009A02CE /* DPAWSIoTP2PUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = BE2B6DF61D88ED8C009A02CE /* DPAWSIoTP2PUtil.m */; };
@@ -176,6 +178,8 @@
 		78B7F2BF1D66AE4A00A5E520 /* DPAWSIoTNetworkManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPAWSIoTNetworkManager.m; sourceTree = "<group>"; };
 		88658FBE182227BAC71710AD /* Pods-dConnectDeviceAWSIoT.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-dConnectDeviceAWSIoT.debug.xcconfig"; path = "Pods/Target Support Files/Pods-dConnectDeviceAWSIoT/Pods-dConnectDeviceAWSIoT.debug.xcconfig"; sourceTree = "<group>"; };
 		9C1F919291C216B65FF160D5 /* libPods-dConnectDeviceAWSIoT.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-dConnectDeviceAWSIoT.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		AB77BC171DA63CE500959525 /* dconnect_icon_off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dconnect_icon_off.png; sourceTree = "<group>"; };
+		AB77BC181DA63CE500959525 /* dconnect_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dconnect_icon.png; sourceTree = "<group>"; };
 		BE2B6DF11D88ED8C009A02CE /* DPAWSIoTDomainResolution.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPAWSIoTDomainResolution.h; sourceTree = "<group>"; };
 		BE2B6DF21D88ED8C009A02CE /* DPAWSIoTDomainResolution.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DPAWSIoTDomainResolution.mm; sourceTree = "<group>"; };
 		BE2B6DF31D88ED8C009A02CE /* DPAWSIoTP2PConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPAWSIoTP2PConnection.h; sourceTree = "<group>"; };
@@ -351,6 +355,8 @@
 		78298A161D53334200E9B90B /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				AB77BC171DA63CE500959525 /* dconnect_icon_off.png */,
+				AB77BC181DA63CE500959525 /* dconnect_icon.png */,
 				789AC4991D5ABF0200F12F45 /* AWSIoT.storyboard */,
 			);
 			path = Resources;
@@ -699,6 +705,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AB77BC1A1DA63CE500959525 /* dconnect_icon.png in Resources */,
+				AB77BC191DA63CE500959525 /* dconnect_icon_off.png in Resources */,
 				789AC4AB1D5B07CC00F12F45 /* AWSIoT.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -9,7 +9,6 @@
 
 #import "DConnectMessageFactory.h"
 #import "DConnectURIBuilder.h"
-#import "DConnectURLProtocol.h"
 
 #define _DC_S2D(...) [[NSString stringWithFormat:__VA_ARGS__] dataUsingEncoding:NSUTF8StringEncoding]
 
@@ -140,10 +139,6 @@
     return urlReq;
 }
 
-+ (DConnectRequestMessage *) messageForRequest:(NSURLRequest *)request {
-    DConnectRequestMessage *message = [DConnectURLProtocol requestMessageWithHTTPReqeust:request];
-    return message;
-}
 
 + (DConnectResponseMessage *) messageForResponse:(NSURLResponse *)response data:(NSData *)data {
     

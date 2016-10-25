@@ -10,6 +10,10 @@
 #import <DConnectSDK/DConnectPluginSpec.h>
 #import "DConnectProfileSpecJsonParserFactory.h"
 
+static NSString * const dConnectSDKBundleName = @"DConnectSDK_resources";
+
+#define DConnectSDKBundle() ([NSBundle bundleWithPath: [[NSBundle mainBundle] pathForResource:dConnectSDKBundleName ofType:@"bundle"]])
+
 @interface DConnectPluginSpec()
 
 @property(nonatomic, strong) DConnectProfileSpecJsonParser *jsonParser;
@@ -20,6 +24,15 @@
 
 
 @implementation DConnectPluginSpec
+
++ (DConnectPluginSpec *) shared {
+    static DConnectPluginSpec *sharedPluginSpec = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        sharedPluginSpec = [[DConnectPluginSpec alloc] init];
+    });
+    return sharedPluginSpec;
+}
 
 - (instancetype) init {
     self = [super init];
@@ -36,16 +49,33 @@
  @brief 入力ファイルからDevice Connectプロファイルの仕様定義を追加する.
  
  @param[in] profileName プロファイル名
- @param[in] filename 入力ファイル
+ @param[in] selfBundle 独自拡張プロファイル用SwaggerJsonファイルが含まれるBundle。渡す必要がない場合はnilを渡す。
  @retval YES 追加成功。
  @retval NO 追加失敗。API仕様定義JSONファイル解析に失敗等。
  */
-- (BOOL) addProfileSpec: (NSString *) profileName error: (NSError **) error {
+- (BOOL) addProfileSpec: (NSString *) profileName bundle: (NSBundle *) selfBundle error: (NSError **) error {
 
     NSString *profileNameLow = [profileName lowercaseString];
     
+    // 読み込み済みなら再読み込みしないで成功を返す
+    if ([self findProfileSpec: profileNameLow]) {
+        return YES;
+    }
+    
     // プロファイル名を元にBundle内のJSONファイルを読み込みファイル内容(JSON文字列)を返す。
-    NSString *json = [self loadFile: profileNameLow];
+    NSString *json = nil;
+    
+    // selfBundleが指定されている場合はselfBundleから読み込む
+    if (selfBundle) {
+        json = [self loadFile: profileNameLow bundle: selfBundle];
+    }
+    
+    // DConnectSDKのBundleから読み込む
+    if (!json) {
+        json = [self loadFile: profileNameLow bundle: DCBundle()];
+    }
+    
+    // 読み込めなかったらNOを返す
     if (!json) {
         return NO;
     }
@@ -65,12 +95,14 @@
     return YES;
 }
 
-- (NSString *) loadFile: (NSString *) profileName {
+- (NSString *) loadFile: (NSString *) profileName bundle: (NSBundle *) bundle {
     
     // プロファイル名とJSONファイル名は大文字小文字が区別されるので、一致するよう小文字で統一する。(jsonファイル名も全て小文字にする)
     
-    NSString *filePath = [self jsonFilePathWithProfileName: [profileName lowercaseString]];
+    NSString *profileNameLower = [profileName lowercaseString];
     
+    // DConnectSDKのBundleに存在すれば読み込む。
+    NSString *filePath = [self jsonFilePathWithProfileName: profileNameLower bundle: bundle];
     NSError *error = nil;
     NSString *jsonString = [NSString stringWithContentsOfFile: (NSString *)filePath
                                                      encoding: NSUTF8StringEncoding
@@ -119,19 +151,15 @@
 #pragma mark - Private Method
 
 /*!
- @brief プロファイル名を元にDConnectSDK_resources.Bundleに格納されたAPI定義JSONファイル名(<プロファイル名>.json)のファイルパスを返す。存在しないときはnilを返す。
+ @brief プロファイル名を元にbundleに格納されたAPI定義JSONファイル名(<プロファイル名>.json)のファイルパスを返す。
  @param[in] jsonFilename JSONファイル名(=プロファイル名)
- @retval Bundleファイルパス名
+ @param[in] bundle jsonFilenameを探すBundle
+ @retval Bundle内のJSONファイルパス
  */
-- (NSString *)jsonFilePathWithProfileName: (NSString *)jsonFilename {
+- (NSString *)jsonFilePathWithProfileName: (NSString *)jsonFilename bundle: (NSBundle *) bundle {
     
     NSString *filetype = @"json";
-    
-    NSString *bundlePath = [[NSBundle mainBundle] pathForResource:@"DConnectSDK_resources" ofType:@"bundle"];
-    NSBundle *bundle = [NSBundle bundleWithPath:bundlePath];
-    
     NSString *pathName = [bundle pathForResource:jsonFilename ofType:filetype];
-    
     return pathName;
 }
 

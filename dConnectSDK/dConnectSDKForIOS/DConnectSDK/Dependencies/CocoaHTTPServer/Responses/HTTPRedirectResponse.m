@@ -5,6 +5,10 @@
 #warning This file must be compiled with ARC. Use -fobjc-arc flag (or convert project to ARC).
 #endif
 
+// Log levels : off, error, warn, info, verbose
+// Other flags: trace
+static const int httpLogLevel = HTTP_LOG_LEVEL_OFF; // | HTTP_LOG_FLAG_TRACE;
+
 
 @implementation HTTPRedirectResponse
 
@@ -12,6 +16,8 @@
 {
 	if ((self = [super init]))
 	{
+		HTTPLogTrace();
+		
 		redirectPath = [path copy];
 	}
 	return self;
@@ -34,6 +40,8 @@
 
 - (NSData *)readDataOfLength:(NSUInteger)length
 {
+	HTTPLogTrace();
+	
 	return nil;
 }
 
@@ -44,16 +52,22 @@
 
 - (NSDictionary *)httpHeaders
 {
+	HTTPLogTrace();
+	
 	return [NSDictionary dictionaryWithObject:redirectPath forKey:@"Location"];
 }
 
 - (NSInteger)status
 {
+	HTTPLogTrace();
+	
 	return 302;
 }
 
 - (void)dealloc
 {
+	HTTPLogTrace();
+	
 }
 
 @end

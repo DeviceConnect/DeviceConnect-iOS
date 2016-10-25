@@ -14,6 +14,7 @@
 
 NSString *const DPHueBundleName = @"dConnectDeviceHue_resources";
 
+
 @interface DPHueDevicePlugin()
 
 @property (nonatomic, strong) NSMutableDictionary *hueBridgeListTemp;

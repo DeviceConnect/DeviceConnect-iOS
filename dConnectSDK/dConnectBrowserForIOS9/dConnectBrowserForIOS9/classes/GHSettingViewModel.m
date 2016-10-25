@@ -143,7 +143,6 @@
             break;
         case SecurityCellTypeExternIP:
             [DConnectManager sharedManager].settings.useExternalIP = isOn;
-            [[DConnectManager sharedManager] setAllowExternalIp];
             break;
         default:
             break;

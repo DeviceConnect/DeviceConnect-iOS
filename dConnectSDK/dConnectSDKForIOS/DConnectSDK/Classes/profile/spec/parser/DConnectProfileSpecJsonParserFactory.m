@@ -8,7 +8,7 @@
 //
 
 #import "DConnectProfileSpecJsonParserFactory.h"
-#import "SwaggerJsonParserFactory.h"
+#import "DConnectSwaggerJsonParserFactory.h"
 
 @implementation DConnectProfileSpecJsonParserFactory
 
@@ -17,7 +17,7 @@
 }
 
 + (DConnectProfileSpecJsonParserFactory *) getDefaultFactory {
-    return [[SwaggerJsonParserFactory alloc] init];
+    return [[DConnectSwaggerJsonParserFactory alloc] init];
 }
 
 @end

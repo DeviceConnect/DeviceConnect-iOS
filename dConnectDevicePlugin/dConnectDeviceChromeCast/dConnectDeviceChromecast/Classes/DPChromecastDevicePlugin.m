@@ -11,6 +11,8 @@
 #import "DPChromecastSystemProfile.h"
 #import "DPChromecastManager.h"
 
+#define DPChromecastBundle() \
+[NSBundle bundleWithPath:[[NSBundle mainBundle] pathForResource:@"dConnectDeviceChromecast_resources" ofType:@"bundle"]]
 
 @implementation DPChromecastDevicePlugin
 
@@ -89,8 +91,7 @@
 
 - (NSString*)iconFilePath:(BOOL)isOnline
 {
-    NSString *bundlePath = [[NSBundle mainBundle] pathForResource:@"dConnectDeviceChromecast_resources" ofType:@"bundle"];
-    NSBundle *bundle = [NSBundle bundleWithPath:bundlePath];
+    NSBundle *bundle = DPChromecastBundle();
     NSString* filename = isOnline ? @"dconnect_icon" : @"dconnect_icon_off";
     return [bundle pathForResource:filename ofType:@"png"];
 }

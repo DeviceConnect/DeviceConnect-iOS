@@ -28,11 +28,6 @@
 @property(nonatomic, weak) id plugin_;
 
 /*!
- @brief PluginSpec。
- */
-@property(nonatomic, strong) DConnectPluginSpec *pluginSpec;
-
-/*!
  @brief プロファイルを格納するマップ.
  */
 @property (nonatomic) NSMutableDictionary *mProfileMap;
@@ -54,11 +49,9 @@
         self.pluginName = NSStringFromClass([self class]);
         self.pluginVersionName = @"1.0.0";
         self.pluginId = [md5Proc generateSignature: self.pluginName];
-        [self setPluginSpec: [[DConnectPluginSpec alloc] init]];
 
         DConnectServiceManager *serviceManager = [DConnectServiceManager sharedForClass: [object class]];
         [serviceManager setPlugin: self];
-        [serviceManager setPluginSpec: [self pluginSpec]];
         [self setServiceProvider: serviceManager];
         
         // プロファイル追加
@@ -183,13 +176,13 @@
 
     // プロファイルのJSONファイルを読み込み、内部生成したprofileSpecを新規登録する
     NSError *error = nil;
-    [[self pluginSpec] addProfileSpec: profileName error: &error];
+    [[DConnectPluginSpec shared] addProfileSpec: profileName bundle: nil error: &error];
     if (error) {
         DCLogE(@"addProfileSpec error ! %@", [error description]);
     }
     
     // プロファイルに仕様データを設定する
-    DConnectProfileSpec *profileSpec = [[self pluginSpec] findProfileSpec: profileName];
+    DConnectProfileSpec *profileSpec = [[DConnectPluginSpec shared] findProfileSpec: profileName];
     if (profileSpec) {
         [profile setProfileSpec: profileSpec];
     }

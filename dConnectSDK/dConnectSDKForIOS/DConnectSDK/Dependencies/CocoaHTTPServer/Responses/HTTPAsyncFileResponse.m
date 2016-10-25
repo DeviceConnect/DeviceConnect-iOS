@@ -9,32 +9,9 @@
 #warning This file must be compiled with ARC. Use -fobjc-arc flag (or convert project to ARC).
 #endif
 
-/**
- * Does ARC support support GCD objects?
- * It does if the minimum deployment target is iOS 6+ or Mac OS X 8+
-**/
-#if TARGET_OS_IPHONE
-
-  // Compiling for iOS
-
-  #if __IPHONE_OS_VERSION_MIN_REQUIRED >= 60000 // iOS 6.0 or later
-    #define NEEDS_DISPATCH_RETAIN_RELEASE 0
-  #else                                         // iOS 5.X or earlier
-    #define NEEDS_DISPATCH_RETAIN_RELEASE 1
-  #endif
-
-#else
-
-  // Compiling for Mac OS X
-
-  #if MAC_OS_X_VERSION_MIN_REQUIRED >= 1080     // Mac OS X 10.8 or later
-    #define NEEDS_DISPATCH_RETAIN_RELEASE 0
-  #else
-    #define NEEDS_DISPATCH_RETAIN_RELEASE 1     // Mac OS X 10.7 or earlier
-  #endif
-
-#endif
-
+// Log levels : off, error, warn, info, verbose
+// Other flags: trace
+static const int httpLogLevel = HTTP_LOG_LEVEL_WARN; // | HTTP_LOG_FLAG_TRACE;
 
 #define NULL_FD  -1
 
@@ -61,18 +38,24 @@
 {
 	if ((self = [super init]))
 	{
+		HTTPLogTrace();
+		
 		connection = parent; // Parents retain children, children do NOT retain parents
 		
 		fileFD = NULL_FD;
 		filePath = [fpath copy];
 		if (filePath == nil)
 		{
+			HTTPLogWarn(@"%@: Init failed - Nil filePath", THIS_FILE);
+			
 			return nil;
 		}
 		
 		NSDictionary *fileAttributes = [[NSFileManager defaultManager] attributesOfItemAtPath:filePath error:NULL];
 		if (fileAttributes == nil)
 		{
+			HTTPLogWarn(@"%@: Init failed - Unable to get file attributes. filePath: %@", THIS_FILE, filePath);
+			
 			return nil;
 		}
 		
@@ -89,6 +72,8 @@
 
 - (void)abort
 {
+	HTTPLogTrace();
+	
 	[connection responseDidAbort:self];
 	aborted = YES;
 }
@@ -116,6 +101,8 @@
 {
 	if (!readSourceSuspended)
 	{
+		HTTPLogVerbose(@"%@[%p]: Suspending readSource", THIS_FILE, self);
+		
 		readSourceSuspended = YES;
 		dispatch_suspend(readSource);
 	}
@@ -125,6 +112,8 @@
 {
 	if (readSourceSuspended)
 	{
+		HTTPLogVerbose(@"%@[%p]: Resuming readSource", THIS_FILE, self);
+		
 		readSourceSuspended = NO;
 		dispatch_resume(readSource);
 	}
@@ -132,6 +121,8 @@
 
 - (void)cancelReadSource
 {
+	HTTPLogVerbose(@"%@[%p]: Canceling readSource", THIS_FILE, self);
+	
 	dispatch_source_cancel(readSource);
 	
 	// Cancelling a dispatch source doesn't
@@ -146,17 +137,25 @@
 
 - (BOOL)openFileAndSetupReadSource
 {
+	HTTPLogTrace();
+	
 	fileFD = open([filePath UTF8String], (O_RDONLY | O_NONBLOCK));
 	if (fileFD == NULL_FD)
 	{
+		HTTPLogError(@"%@: Unable to open file. filePath: %@", THIS_FILE, filePath);
+		
 		return NO;
 	}
+	
+	HTTPLogVerbose(@"%@[%p]: Open fd[%i] -> %@", THIS_FILE, self, fileFD, filePath);
 	
 	readQueue = dispatch_queue_create("HTTPAsyncFileResponse", NULL);
 	readSource = dispatch_source_create(DISPATCH_SOURCE_TYPE_READ, fileFD, 0, readQueue);
 	
 	
 	dispatch_source_set_event_handler(readSource, ^{
+		
+		HTTPLogTrace2(@"%@: eventBlock - fd[%i]", THIS_FILE, fileFD);
 		
 		// Determine how much data we should read.
 		// 
@@ -189,6 +188,8 @@
 			
 			if (readBuffer == NULL)
 			{
+				HTTPLogError(@"%@[%p]: Unable to allocate buffer", THIS_FILE, self);
+				
 				[self pauseReadSource];
 				[self abort];
 				
@@ -198,21 +199,29 @@
 		
 		// Perform the read
 		
+		HTTPLogVerbose(@"%@[%p]: Attempting to read %lu bytes from file", THIS_FILE, self, (unsigned long)bytesToRead);
+		
 		ssize_t result = read(fileFD, readBuffer + readBufferOffset, (size_t)bytesToRead);
 		
 		// Check the results
 		if (result < 0)
 		{
+			HTTPLogError(@"%@: Error(%i) reading file(%@)", THIS_FILE, errno, filePath);
+			
 			[self pauseReadSource];
 			[self abort];
 		}
 		else if (result == 0)
 		{
+			HTTPLogError(@"%@: Read EOF on file(%@)", THIS_FILE, filePath);
+			
 			[self pauseReadSource];
 			[self abort];
 		}
 		else // (result > 0)
 		{
+			HTTPLogVerbose(@"%@[%p]: Read %lu bytes from file", THIS_FILE, self, (unsigned long)result);
+			
 			readOffset += result;
 			readBufferOffset += result;
 			
@@ -223,7 +232,7 @@
 	});
 	
 	int theFileFD = fileFD;
-	#if NEEDS_DISPATCH_RETAIN_RELEASE
+	#if !OS_OBJECT_USE_OBJC
 	dispatch_source_t theReadSource = readSource;
 	#endif
 	
@@ -232,7 +241,10 @@
 		// Do not access self from within this block in any way, shape or form.
 		// 
 		// Note: You access self if you reference an iVar.
-		#if NEEDS_DISPATCH_RETAIN_RELEASE
+		
+		HTTPLogTrace2(@"%@: cancelBlock - Close fd[%i]", THIS_FILE, theFileFD);
+		
+		#if !OS_OBJECT_USE_OBJC
 		dispatch_release(theReadSource);
 		#endif
 		close(theFileFD);
@@ -264,17 +276,21 @@
 
 - (UInt64)contentLength
 {
+	HTTPLogTrace2(@"%@[%p]: contentLength - %llu", THIS_FILE, self, fileLength);
 	
 	return fileLength;
 }
 
 - (UInt64)offset
 {
+	HTTPLogTrace();
+	
 	return fileOffset;
 }
 
 - (void)setOffset:(UInt64)offset
 {
+	HTTPLogTrace2(@"%@[%p]: setOffset:%llu", THIS_FILE, self, offset);
 	
 	if (![self openFileIfNeeded])
 	{
@@ -289,6 +305,7 @@
 	off_t result = lseek(fileFD, (off_t)offset, SEEK_SET);
 	if (result == -1)
 	{
+		HTTPLogError(@"%@[%p]: lseek failed - errno(%i) filePath(%@)", THIS_FILE, self, errno, filePath);
 		
 		[self abort];
 	}
@@ -296,9 +313,14 @@
 
 - (NSData *)readDataOfLength:(NSUInteger)length
 {
+	HTTPLogTrace2(@"%@[%p]: readDataOfLength:%lu", THIS_FILE, self, (unsigned long)length);
+	
 	if (data)
 	{
 		NSUInteger dataLength = [data length];
+		
+		HTTPLogVerbose(@"%@[%p]: Returning data of length %lu", THIS_FILE, self, (unsigned long)dataLength);
+		
 		fileOffset += dataLength;
 		
 		NSData *result = data;
@@ -331,6 +353,8 @@
 {
 	BOOL result = (fileOffset == fileLength);
 	
+	HTTPLogTrace2(@"%@[%p]: isDone - %@", THIS_FILE, self, (result ? @"YES" : @"NO"));
+	
 	return result;
 }
 
@@ -341,11 +365,15 @@
 
 - (BOOL)isAsynchronous
 {
+	HTTPLogTrace();
+	
 	return YES;
 }
 
 - (void)connectionDidClose
 {
+	HTTPLogTrace();
+	
 	if (fileFD != NULL_FD)
 	{
 		dispatch_sync(readQueue, ^{
@@ -364,7 +392,9 @@
 
 - (void)dealloc
 {
-	#if NEEDS_DISPATCH_RETAIN_RELEASE
+	HTTPLogTrace();
+	
+	#if !OS_OBJECT_USE_OBJC
 	if (readQueue) dispatch_release(readQueue);
 	#endif
 	

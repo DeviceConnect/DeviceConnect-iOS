@@ -21,6 +21,8 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		AB77BC151DA63BF800959525 /* dconnect_icon_off.png in Resources */ = {isa = PBXBuildFile; fileRef = AB77BC131DA63BF800959525 /* dconnect_icon_off.png */; };
+		AB77BC161DA63BF800959525 /* dconnect_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = AB77BC141DA63BF800959525 /* dconnect_icon.png */; };
 		BE145CA41D8E8A4D0005D926 /* DPLinkingDeviceTemperatureOnce.m in Sources */ = {isa = PBXBuildFile; fileRef = BE145CA31D8E8A4D0005D926 /* DPLinkingDeviceTemperatureOnce.m */; };
 		BE145CA71D8E8B710005D926 /* DPLinkingDeviceHumidityOnce.m in Sources */ = {isa = PBXBuildFile; fileRef = BE145CA61D8E8B710005D926 /* DPLinkingDeviceHumidityOnce.m */; };
 		BE145CAB1D8F92670005D926 /* DPLinkingDeviceAtmosphericPressureOnce.m in Sources */ = {isa = PBXBuildFile; fileRef = BE145CAA1D8F92670005D926 /* DPLinkingDeviceAtmosphericPressureOnce.m */; };
@@ -87,6 +89,7 @@
 		BEE64A4F1D70344E00CF287E /* DPLinkingBeaconBatteryOnce.m in Sources */ = {isa = PBXBuildFile; fileRef = BEE64A4E1D70344E00CF287E /* DPLinkingBeaconBatteryOnce.m */; };
 		BEE64A521D7049D300CF287E /* DPLinkingBeaconUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = BEE64A511D7049D300CF287E /* DPLinkingBeaconUtil.m */; };
 		BEF550A71D8FA6A100C8AE7B /* DPLinkingDeviceAtmosphericPressureProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = BEF550A61D8FA6A100C8AE7B /* DPLinkingDeviceAtmosphericPressureProfile.m */; };
+		D63BB8C61DA206D300892E5E /* atmosphericpressure.json in Resources */ = {isa = PBXBuildFile; fileRef = D63BB8C51DA206D300892E5E /* atmosphericpressure.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -103,6 +106,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		AB77BC131DA63BF800959525 /* dconnect_icon_off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dconnect_icon_off.png; sourceTree = "<group>"; };
+		AB77BC141DA63BF800959525 /* dconnect_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dconnect_icon.png; sourceTree = "<group>"; };
 		BE145CA21D8E8A4D0005D926 /* DPLinkingDeviceTemperatureOnce.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPLinkingDeviceTemperatureOnce.h; sourceTree = "<group>"; };
 		BE145CA31D8E8A4D0005D926 /* DPLinkingDeviceTemperatureOnce.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPLinkingDeviceTemperatureOnce.m; sourceTree = "<group>"; };
 		BE145CA51D8E8B710005D926 /* DPLinkingDeviceHumidityOnce.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPLinkingDeviceHumidityOnce.h; sourceTree = "<group>"; };
@@ -234,6 +239,7 @@
 		BEE64A511D7049D300CF287E /* DPLinkingBeaconUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPLinkingBeaconUtil.m; sourceTree = "<group>"; };
 		BEF550A51D8FA6A100C8AE7B /* DPLinkingDeviceAtmosphericPressureProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPLinkingDeviceAtmosphericPressureProfile.h; sourceTree = "<group>"; };
 		BEF550A61D8FA6A100C8AE7B /* DPLinkingDeviceAtmosphericPressureProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPLinkingDeviceAtmosphericPressureProfile.m; sourceTree = "<group>"; };
+		D63BB8C51DA206D300892E5E /* atmosphericpressure.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = atmosphericpressure.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -484,6 +490,8 @@
 		BE2859C11D630B2800CB9F95 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				AB77BC131DA63BF800959525 /* dconnect_icon_off.png */,
+				AB77BC141DA63BF800959525 /* dconnect_icon.png */,
 				BE2859C21D630B2800CB9F95 /* beacon_icon_blue.png */,
 				BE2859C31D630B2800CB9F95 /* beacon_icon_white.png */,
 				BE2859C41D630B2800CB9F95 /* beacon_icon_white@2x.png */,
@@ -512,6 +520,7 @@
 		BE285A331D6315FD00CB9F95 /* dConnectDeviceLinking_resources */ = {
 			isa = PBXGroup;
 			children = (
+				D63BB8C51DA206D300892E5E /* atmosphericpressure.json */,
 				BE285A341D6315FD00CB9F95 /* Info.plist */,
 			);
 			path = dConnectDeviceLinking_resources;
@@ -619,7 +628,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AB77BC151DA63BF800959525 /* dconnect_icon_off.png in Resources */,
 				BEE64A4C1D702C5300CF287E /* beacon_icon_white@2x.png in Resources */,
+				D63BB8C61DA206D300892E5E /* atmosphericpressure.json in Resources */,
+				AB77BC161DA63BF800959525 /* dconnect_icon.png in Resources */,
 				BE285A3B1D63160E00CB9F95 /* Linking.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

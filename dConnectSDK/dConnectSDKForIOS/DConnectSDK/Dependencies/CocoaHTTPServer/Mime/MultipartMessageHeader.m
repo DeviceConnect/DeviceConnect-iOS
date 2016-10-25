@@ -13,6 +13,12 @@
 //-----------------------------------------------------------------
 #pragma mark log level
 
+#ifdef DEBUG
+static const int httpLogLevel = HTTP_LOG_LEVEL_WARN;
+#else
+static const int httpLogLevel = HTTP_LOG_LEVEL_WARN;
+#endif
+
 //-----------------------------------------------------------------
 // implementation MultipartMessageHeader
 //-----------------------------------------------------------------
@@ -33,7 +39,7 @@
 	encoding = contentTransferEncoding_unknown;
 
 	char* bytes = (char*)data.bytes;
-	int length = data.length;
+	NSUInteger length = data.length;
 	int offset = 0;
 
 	// split header into header fields, separated by \r\n
@@ -46,9 +52,11 @@
 			MultipartMessageHeaderField* field = [[MultipartMessageHeaderField alloc] initWithData: fieldData  contentEncoding:formEncoding];
 			if( field ) {
 				[fields setObject:field forKey:field.name];
+				HTTPLogVerbose(@"MultipartFormDataParser: Processed Header field '%@'",field.name);
 			}
 			else {
 				NSString* fieldStr = [[NSString  alloc] initWithData:fieldData encoding:NSASCIIStringEncoding];
+				HTTPLogWarn(@"MultipartFormDataParser: Failed to parse MIME header field. Input ASCII string:%@",fieldStr);
 			}
 
 			// move to the next header field

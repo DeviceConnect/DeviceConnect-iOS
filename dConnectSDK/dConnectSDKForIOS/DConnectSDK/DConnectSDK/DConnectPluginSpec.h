@@ -13,14 +13,20 @@
 @interface DConnectPluginSpec : NSObject
 
 /*!
+ @brief DConnectPluginSpecのシングルトンを返す.
+ */
++ (DConnectPluginSpec *) shared;
+
+/*!
  @brief 入力ファイルからDevice Connectプロファイルの仕様定義を追加する.
  
  @param[in] profileName プロファイル名
- @param[in] filename 入力ファイル
+ @param[in] selfBundle 独自拡張プロファイルのSwaggerJsonファイルをデバイスプラグインのBundleから提供する場合は、そのBundleを渡す。渡す必要がなければnilを渡す。
  @retval YES 追加成功。
  @retval NO 追加失敗。API仕様定義JSONファイル解析に失敗等。
  */
-- (BOOL) addProfileSpec: (NSString *) profileName error: (NSError **) error;
+- (BOOL) addProfileSpec: (NSString *) profileName bundle: (NSBundle *) selfBundle error: (NSError **) error;
+
 /*!
  @brief 指定したプロファイルの仕様定義を取得する.
  @param profileName プロファイル名
@@ -40,7 +46,9 @@
 
 /*!
  @brief profileSpecJSONファイルを読み込み
+ @param[in] プロファイル名
+ @param[in] デバイスプラグインのBundle(独自拡張プロファイルのSwaggerJsonがデバイスプラグインのBundleに含まれる場合にそのBundleを渡す。渡す必要がなければnilを渡す)
  */
-- (NSString *) loadFile: (NSString *) profileName;
+- (NSString *) loadFile: (NSString *) profileName bundle: (NSBundle *) selfBundle;
 
 @end

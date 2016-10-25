@@ -169,7 +169,7 @@ DPIRKitManagerDetectionDelegate
                     [service setOnline: YES];
                 } else {
                     DPIRKitService *service = [[DPIRKitService alloc] initWithServiceId: serviceId plugin: self];
-                    [self.serviceProvider addService: service];
+                    [self.serviceProvider addService: service bundle: DPIRBundle()];
                     [service setOnline: YES];
                 }
             } else {
@@ -200,7 +200,7 @@ DPIRKitManagerDetectionDelegate
                                                                                                              name:virtual.deviceName
                                                                                                            plugin:self
                                                                                                       profileName:profileName];
-                                [self.serviceProvider addService: service];
+                                [self.serviceProvider addService: service bundle: DPIRBundle()];
                                 [service setOnline: YES];
                             }
                         } else {
@@ -321,8 +321,32 @@ DPIRKitManagerDetectionDelegate
         [view setDetailItem:irkit];
         [rootView presentViewController:top animated:YES completion:nil];
     } else {
-        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"仮想デバイス"
-                                                                                 message:@"このデバイスは仮想デバイスです"
+        NSString *title = nil;
+        NSString *message = nil;
+        DConnectService *service_ = [self.serviceProvider service:service.serviceId];
+        if (service_) {
+            if ([service_ isMemberOfClass: [DPIRKitService class]] ) {
+                if (!service_.online) {
+                    title = @"オフライン";
+                    message = @"このデバイスはオフラインです";
+                }
+            } else if ([service_ isMemberOfClass: [DPIRKitVirtualService class]] ) {
+                if (!service_.online) {
+                    title = @"仮想デバイス";
+                    message = @"このデバイスは仮想デバイスです";
+                }
+            }
+        } else {
+            title = @"認識されていないデバイス";
+            message = @"このデバイスは認識されていません";
+        }
+        if (!title) {
+            title = @"不明なデバイス";
+            message = @"このデバイスは不明です";
+        }
+        
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:title
+                                                                                 message:message
                                                                           preferredStyle:UIAlertControllerStyleAlert];
         [alertController addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil]];
         [rootView presentViewController:alertController animated:YES completion:nil];

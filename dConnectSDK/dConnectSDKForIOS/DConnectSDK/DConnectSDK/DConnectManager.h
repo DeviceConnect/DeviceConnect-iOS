@@ -107,35 +107,15 @@ extern NSString *const DConnectApplicationWillEnterForeground;
  この関数が呼び出されることでDConnectManagerが起動する。<br/>
  2回目以降startが呼び出されてもDConnectManagerは何も処理を行わない。
  </p>
+ @retval YES 起動に成功
+ @retval NO 起動に失敗
  */
-- (void) start;
-
-/**
- @brief 外部IPを許可すためにHTTPServerを起動し直すためのメソッド。
- */
-- (void)setAllowExternalIp;
-
-/*!
- @brief HTTPサーバによるDConnectManagerを開始する。
- 
- <p>
- この関数が呼び出されることでDConnectManagerが起動する。<br/>
- 2回目以降startが呼び出されてもDConnectManagerは何も処理を行わない。
- </p>
- */
-- (void) startByHttpServer;
+- (BOOL) start;
 
 /*!
  @brief DConnectManagerを停止する。
- 
  */
-- (void) stopByHttpServer;
-
-
-/*!
- @brief Websocketサーバを起動する。
- */
-- (void) startWebsocket;
+- (void) stop;
 
 /*!
  @brief DConnectManagerが動作しているかをチェックする。

@@ -1,40 +1,17 @@
 #import "HTTPServer.h"
 #import "GCDAsyncSocket.h"
 #import "HTTPConnection.h"
-#import "HTTPLogging.h"
 #import "WebSocket.h"
+#import "HTTPLogging.h"
+
 #if ! __has_feature(objc_arc)
 #warning This file must be compiled with ARC. Use -fobjc-arc flag (or convert project to ARC).
 #endif
 
-// Does ARC support support GCD objects?
-// It does if the minimum deployment target is iOS 6+ or Mac OS X 8+
+// Log levels: off, error, warn, info, verbose
+// Other flags: trace
+static const int httpLogLevel = HTTP_LOG_LEVEL_INFO; // | HTTP_LOG_FLAG_TRACE;
 
-#if TARGET_OS_IPHONE
-
-  // Compiling for iOS
-
-  #if __IPHONE_OS_VERSION_MIN_REQUIRED >= 60000 // iOS 6.0 or later
-    #define NEEDS_DISPATCH_RETAIN_RELEASE 0
-  #else                                         // iOS 5.X or earlier
-    #define NEEDS_DISPATCH_RETAIN_RELEASE 1
-  #endif
-
-#else
-
-  // Compiling for Mac OS X
-
-  #if MAC_OS_X_VERSION_MIN_REQUIRED >= 1080     // Mac OS X 10.8 or later
-    #define NEEDS_DISPATCH_RETAIN_RELEASE 0
-  #else
-    #define NEEDS_DISPATCH_RETAIN_RELEASE 1     // Mac OS X 10.7 or earlier
-  #endif
-
-#endif
-#define TIMEOUT_READ_FIRST_HEADER_LINE       30
-#define TIMEOUT_READ_SUBSEQUENT_HEADER_LINE  30
-#define MAX_HEADER_LINE_LENGTH             8190
-#define HTTP_REQUEST_HEADER                  10
 @interface HTTPServer (PrivateAPI)
 
 - (void)unpublishBonjour;
@@ -44,7 +21,6 @@
 + (void)performBonjourBlock:(dispatch_block_t)block;
 
 @end
-
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark -
@@ -60,13 +36,24 @@
 {
 	if ((self = [super init]))
 	{
-
-		// Initialize underlying dispatch queue and GCD based tcp socket
+		HTTPLogTrace();
+		
+		// Setup underlying dispatch queues
 		serverQueue = dispatch_queue_create("HTTPServer", NULL);
-		asyncSocket = [[GCDAsyncSocket alloc] initWithDelegate:self delegateQueue:serverQueue];
-
-		// Use default connection class of HTTPConnection
 		connectionQueue = dispatch_queue_create("HTTPConnection", NULL);
+		
+		IsOnServerQueueKey = &IsOnServerQueueKey;
+		IsOnConnectionQueueKey = &IsOnConnectionQueueKey;
+		
+		void *nonNullUnusedPointer = (__bridge void *)self; // Whatever, just not null
+		
+		dispatch_queue_set_specific(serverQueue, IsOnServerQueueKey, nonNullUnusedPointer, NULL);
+		dispatch_queue_set_specific(connectionQueue, IsOnConnectionQueueKey, nonNullUnusedPointer, NULL);
+		
+		// Initialize underlying GCD based tcp socket
+		asyncSocket = [[GCDAsyncSocket alloc] initWithDelegate:self delegateQueue:serverQueue];
+		
+		// Use default connection class of HTTPConnection
 		connectionClass = [HTTPConnection self];
 		
 		// By default bind on all available interfaces, en1, wifi etc
@@ -110,24 +97,24 @@
 	}
 	return self;
 }
+
 /**
  * Standard Deconstructor.
  * Stops the server, and clients, and releases any resources connected with this instance.
 **/
 - (void)dealloc
 {
+	HTTPLogTrace();
 	
 	// Remove notification observer
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 	
 	// Stop the server if it's running
 	[self stop];
-    for (HTTPConnection *con in connections) {
-        [con stopWebSocket];
-    }
+	
 	// Release all instance variables
 	
-	#if NEEDS_DISPATCH_RETAIN_RELEASE
+	#if !OS_OBJECT_USE_OBJC
 	dispatch_release(serverQueue);
 	dispatch_release(connectionQueue);
 	#endif
@@ -157,11 +144,15 @@
 
 - (void)setDocumentRoot:(NSString *)value
 {
+	HTTPLogTrace();
+	
 	// Document root used to be of type NSURL.
 	// Add type checking for early warning to developers upgrading from older versions.
 	
 	if (value && ![value isKindOfClass:[NSString class]])
 	{
+		HTTPLogWarn(@"%@: %@ - Expecting NSString parameter, received %@ parameter",
+					THIS_FILE, THIS_METHOD, NSStringFromClass([value class]));
 		return;
 	}
 	
@@ -192,6 +183,8 @@
 
 - (void)setConnectionClass:(Class)value
 {
+	HTTPLogTrace();
+	
 	dispatch_async(serverQueue, ^{
 		connectionClass = value;
 	});
@@ -253,6 +246,8 @@
 
 - (void)setPort:(UInt16)value
 {
+	HTTPLogTrace();
+	
 	dispatch_async(serverQueue, ^{
 		port = value;
 	});
@@ -275,6 +270,8 @@
 
 - (void)setDomain:(NSString *)value
 {
+	HTTPLogTrace();
+	
 	NSString *valueCopy = [value copy];
 	
 	dispatch_async(serverQueue, ^{
@@ -371,8 +368,11 @@
 	
 	return result;
 }
+
 - (void)setTXTRecordDictionary:(NSDictionary *)value
 {
+	HTTPLogTrace();
+	
 	NSDictionary *valueCopy = [value copy];
 	
 	dispatch_async(serverQueue, ^{
@@ -397,14 +397,14 @@
 	
 }
 
-
-
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark Server Control
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 - (BOOL)start:(NSError **)errPtr
 {
+	HTTPLogTrace();
+	
 	__block BOOL success = YES;
 	__block NSError *err = nil;
 	
@@ -413,8 +413,14 @@
 		success = [asyncSocket acceptOnInterface:interface port:port error:&err];
 		if (success)
 		{
+			HTTPLogInfo(@"%@: Started HTTP server on port %hu", THIS_FILE, [asyncSocket localPort]);
+			
 			isRunning = YES;
 			[self publishBonjour];
+		}
+		else
+		{
+			HTTPLogError(@"%@: Failed to start HTTP Server: %@", THIS_FILE, err);
 		}
 	}});
 	
@@ -431,6 +437,8 @@
 
 - (void)stop:(BOOL)keepExistingConnections
 {
+	HTTPLogTrace();
+	
 	dispatch_sync(serverQueue, ^{ @autoreleasepool {
 		
 		// First stop publishing the service via bonjour
@@ -478,19 +486,11 @@
 {
 	[webSocketsLock lock];
 	
+	HTTPLogTrace();
 	[webSockets addObject:ws];
 	
 	[webSocketsLock unlock];
 }
-
-// MODIFIED ORIGINをキーにする。
-- (void)sendEvent:(NSString *)event forReceiverId:(NSString *)receiverId
-{
-    for (HTTPConnection *connection in connections) {
-        [connection sendEvent:event forReceiverId:receiverId];
-    }
-}
-
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark Server Status
@@ -551,10 +551,9 @@
 	[connectionsLock lock];
 	[connections addObject:newConnection];
 	[connectionsLock unlock];
+	
 	[newConnection start];
 }
-
-
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark Bonjour
@@ -562,7 +561,9 @@
 
 - (void)publishBonjour
 {
-	NSAssert(dispatch_get_current_queue() == serverQueue, @"Invalid queue");
+	HTTPLogTrace();
+	
+	NSAssert(dispatch_get_specific(IsOnServerQueueKey) != NULL, @"Must be on serverQueue");
 	
 	if (type)
 	{
@@ -595,7 +596,9 @@
 
 - (void)unpublishBonjour
 {
-	NSAssert(dispatch_get_current_queue() == serverQueue, @"Invalid queue");
+	HTTPLogTrace();
+	
+	NSAssert(dispatch_get_specific(IsOnServerQueueKey) != NULL, @"Must be on serverQueue");
 	
 	if (netService)
 	{
@@ -618,6 +621,8 @@
 **/
 - (void)republishBonjour
 {
+	HTTPLogTrace();
+	
 	dispatch_async(serverQueue, ^{
 		
 		[self unpublishBonjour];
@@ -635,6 +640,7 @@
 	// 
 	// Note: This method is invoked on our bonjour thread.
 	
+	HTTPLogInfo(@"Bonjour Service Published: domain(%@) type(%@) name(%@)", [ns domain], [ns type], [ns name]);
 }
 
 /**
@@ -646,6 +652,9 @@
 	// Override me to do something here...
 	// 
 	// Note: This method in invoked on our bonjour thread.
+	
+	HTTPLogWarn(@"Failed to Publish Service: domain(%@) type(%@) name(%@) - %@",
+	                                         [ns domain], [ns type], [ns name], errorDict);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -658,20 +667,14 @@
 **/
 - (void)connectionDidDie:(NSNotification *)notification
 {
-//    NSLog(@"connectionDidDie:%d", [connections count]);
 	// Note: This method is called on the connection queue that posted the notification
-//	[connectionsLock lock];
-//    HTTPConnection *con = (HTTPConnection *) [notification object];
-//    if ([con numberOfWebSocket] == 0) {
-//        [connections removeObject:[notification object]];
-//    }
-//    for (int i = 0; i < [connections count]; i++) {
-//        NSLog(@"connections websocket count:%d", [connections[i] numberOfWebSocket]);
-//        if ([connections[i] numberOfWebSocket] == 0) {  //No websocket?
-//            [connections removeObjectAtIndex:i];
-//        }
-//    }
-//	[connectionsLock unlock];
+	
+	[connectionsLock lock];
+	
+	HTTPLogTrace();
+	[connections removeObject:[notification object]];
+	
+	[connectionsLock unlock];
 }
 
 /**
@@ -681,8 +684,10 @@
 - (void)webSocketDidDie:(NSNotification *)notification
 {
 	// Note: This method is called on the connection queue that posted the notification
+	
 	[webSocketsLock lock];
 	
+	HTTPLogTrace();
 	[webSockets removeObject:[notification object]];
 	
 	[webSocketsLock unlock];
@@ -707,8 +712,12 @@ static NSThread *bonjourThread;
 
 + (void)startBonjourThreadIfNeeded
 {
+	HTTPLogTrace();
+	
 	static dispatch_once_t predicate;
 	dispatch_once(&predicate, ^{
+		
+		HTTPLogVerbose(@"%@: Starting bonjour thread...", THIS_FILE);
 		
 		bonjourThread = [[NSThread alloc] initWithTarget:self
 		                                        selector:@selector(bonjourThread)
@@ -720,22 +729,31 @@ static NSThread *bonjourThread;
 + (void)bonjourThread
 {
 	@autoreleasepool {
+	
+		HTTPLogVerbose(@"%@: BonjourThread: Started", THIS_FILE);
+		
 		// We can't run the run loop unless it has an associated input source or a timer.
 		// So we'll just create a timer that will never fire - unless the server runs for 10,000 years.
-		
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wundeclared-selector"
 		[NSTimer scheduledTimerWithTimeInterval:[[NSDate distantFuture] timeIntervalSinceNow]
 		                                 target:self
 		                               selector:@selector(donothingatall:)
 		                               userInfo:nil
 		                                repeats:YES];
-		
+#pragma clang diagnostic pop
+
 		[[NSRunLoop currentRunLoop] run];
+		
+		HTTPLogVerbose(@"%@: BonjourThread: Aborted", THIS_FILE);
 	
 	}
 }
 
 + (void)executeBonjourBlock:(dispatch_block_t)block
 {
+	HTTPLogTrace();
+	
 	NSAssert([NSThread currentThread] == bonjourThread, @"Executed on incorrect thread");
 	
 	block();
@@ -743,6 +761,8 @@ static NSThread *bonjourThread;
 
 + (void)performBonjourBlock:(dispatch_block_t)block
 {
+	HTTPLogTrace();
+	
 	[self performSelector:@selector(executeBonjourBlock:)
 	             onThread:bonjourThread
 	           withObject:block

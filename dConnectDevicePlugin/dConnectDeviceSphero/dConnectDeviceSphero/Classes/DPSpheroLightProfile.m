@@ -10,15 +10,19 @@
 #import "DPSpheroLightProfile.h"
 #import "DPSpheroDevicePlugin.h"
 #import "DPSpheroManager.h"
+#import "DPSpheroDeviceRepeatExecutor.h"
 
 //LEDは色を変えられる
-NSString *const SpheroLED = @"1";
-NSString *const SpheroLEDName = @"Sphero LED";
+static NSString *const SpheroLED = @"1";
+static NSString *const SpheroLEDName = @"Sphero LED";
 //Calibrationは色を変えられない
-NSString *const SpheroCalibration = @"2";
-NSString *const SpheroCalibrationName = @"Sphero CalibrationLED";
+static NSString *const SpheroCalibration = @"2";
+static NSString *const SpheroCalibrationName = @"Sphero CalibrationLED";
 
-@implementation DPSpheroLightProfile
+@implementation DPSpheroLightProfile {
+    DPSpheroDeviceRepeatExecutor *_flashingExecutor;
+}
+
 
 // 初期化
 - (id)init
@@ -197,7 +201,12 @@ NSString *const SpheroCalibrationName = @"Sphero CalibrationLED";
         // キャリブレーションライト点灯。 colorは変えられない。点灯、消灯のみ
         if (flashing.count>0) {
             // 点滅
-            [[DPSpheroManager sharedManager] flashLightWithBrightness:[brightness doubleValue] flashData:flashing];
+            _flashingExecutor = [[DPSpheroDeviceRepeatExecutor alloc] initWithPattern:flashing on:^{
+                [DPSpheroManager sharedManager].calibrationLightBright = [brightness doubleValue];
+            } off:^{
+                [DPSpheroManager sharedManager].calibrationLightBright = 0;
+            }];
+
         } else {
             // 点灯
             [DPSpheroManager sharedManager].calibrationLightBright = [brightness doubleValue];
@@ -237,7 +246,12 @@ NSString *const SpheroCalibrationName = @"Sphero CalibrationLED";
         }
         if (flashing.count>0) {
             // 点滅
-            [[DPSpheroManager sharedManager] flashLightWithColor:ledColor flashData:flashing];
+            _flashingExecutor = [[DPSpheroDeviceRepeatExecutor alloc] initWithPattern:flashing on:^{
+                [DPSpheroManager sharedManager].LEDLightColor = ledColor;
+            } off:^{
+                [DPSpheroManager sharedManager].LEDLightColor = [UIColor blackColor];
+            }];
+
         } else {
             // 点灯
             [DPSpheroManager sharedManager].LEDLightColor = ledColor;

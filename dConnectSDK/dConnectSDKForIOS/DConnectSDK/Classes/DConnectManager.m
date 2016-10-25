@@ -9,7 +9,6 @@
 
 #import "DConnectManager+Private.h"
 #import "DConnectDevicePlugin+Private.h"
-#import "DConnectURLProtocol.h"
 #import "DConnectManagerAuthorizationProfile.h"
 #import "DConnectManagerDeliveryProfile.h"
 #import "DConnectManagerServiceDiscoveryProfile.h"
@@ -17,7 +16,6 @@
 #import "DConnectFilesProfile.h"
 #import "DConnectManagerAuthorizationProfile.h"
 #import "DConnectAvailabilityProfile.h"
-#import "DConnectWebSocket.h"
 #import "DConnectMessage+Private.h"
 #import "DConnectSettings.h"
 #import "DConnectEventManager.h"
@@ -26,7 +24,7 @@
 #import "DConnectWhitelist.h"
 #import "DConnectOriginParser.h"
 #import "LocalOAuth2Main.h"
-#import "DConnectServerProtocol.h"
+#import "DConnectServerManager.h"
 #import "DConnectEventBroker.h"
 #import "DConnectEventSessionTable.h"
 #import "DConnectLocalOAuthDB.h"
@@ -126,8 +124,6 @@ NSString *const DConnectAttributeNameRequestAccessToken = @"requestAccessToken";
 @property (nonatomic, strong) NSMutableDictionary *mResponseBlockMap;
 
 
-@property (nonatomic, strong) DConnectPluginSpec *managerSpec;
-
 
 /**
  * 受け取ったリクエストの処理を行う.
@@ -217,69 +213,35 @@ NSString *const DConnectAttributeNameRequestAccessToken = @"requestAccessToken";
     return managerName;
 }
 
-- (void) start {
+- (BOOL) start {
     // 開始フラグをチェック
     if (self.mStartFlag) {
-        return;
+        return YES;
     }
     self.mStartFlag = YES;
-    _requestQueue = dispatch_queue_create("org.deviceconnect.manager.queue.request", DISPATCH_QUEUE_SERIAL);
-    
-    // デバイスプラグインの検索
-    [self.mDeviceManager searchDevicePlugin];
-    
-    // サーバの設定
-    [DConnectURLProtocol setHost:self.settings.host];
-    [DConnectURLProtocol setPort:self.settings.port];
-    
-    // NSURLProtocolへ登録
-    [NSURLProtocol registerClass:[DConnectURLProtocol class]];
-}
 
-- (void) startByHttpServer {
-    // 開始フラグをチェック
-    if (self.mStartFlag) {
-        return;
-    }
-    self.mStartFlag = YES;
     _requestQueue = dispatch_queue_create("org.deviceconnect.manager.queue.request", DISPATCH_QUEUE_SERIAL);
     
     // デバイスプラグインの検索
     [self.mDeviceManager searchDevicePlugin];
     
-    // サーバの設定
-    [DConnectServerProtocol setHost:self.settings.host];
-    [DConnectServerProtocol setPort:self.settings.port];
+    _webServer = [DConnectServerManager new];
+    _webServer.settings = self.settings;
     
-    BOOL isSuccess = [DConnectServerProtocol startServerWithHost:self.settings.host
-                                                            port:self.settings.port];
-    if (!isSuccess) {
+    BOOL success = [_webServer startServer];
+    if (!success) {
         self.mStartFlag = NO;
     }
+    return success;
 }
 
-- (void)setAllowExternalIp {
-    [DConnectServerProtocol setExternalIPFlag:self.settings.useExternalIP];
-}
-
-- (void) stopByHttpServer {
+- (void) stop {
     if (!self.mStartFlag) {
         return;
     }
     self.mStartFlag = NO;
-    [DConnectServerProtocol stopServer];
 
-}
-
-- (void) startWebsocket {
-    if (self.mWebsocket) {
-        [self.mWebsocket stop];
-    }
-    self.mWebsocket = [[DConnectWebSocket alloc] initWithHost:self.settings.host
-                                                         port:self.settings.port
-                                                       object:self];
-    self.mWebsocket.settings = self.settings;
-    [self.mWebsocket start];
+    [_webServer stopServer];
 }
 
 - (BOOL) isStarted {
@@ -340,18 +302,7 @@ NSString *const DConnectAttributeNameRequestAccessToken = @"requestAccessToken";
         
         for (DConnectEvent *evt in evts) {
             [event setString:evt.origin forKey:DConnectMessageOrigin];
-            
-/* [DConnectMessageEventSession sendEvent]に移動。
-            if (hasDelegate) {
-                [self.delegate manager:self didReceiveDConnectMessage:event];
-            } else {
-                NSString *json = [event convertToJSONString];
-                if (self.mWebsocket) {
-                    [self.mWebsocket sendEvent:json forOrigin:evt.origin];
-                }
-                [DConnectServerProtocol sendEvent:json forOrigin:evt.origin];
-            }
-*/
+
             if (self.mEventBroker) {
                 [self.mEventBroker onEvent:event];
             }
@@ -365,17 +316,7 @@ NSString *const DConnectAttributeNameRequestAccessToken = @"requestAccessToken";
                                                                                serviceId:serviceId];
             [event setString:did forKey:DConnectMessageServiceId];
         }
-/* [DConnectMessageEventSession sendEvent]に移動。
-        if (hasDelegate) {
-            [self.delegate manager:self didReceiveDConnectMessage:event];
-        } else {
-            NSString *json = [event convertToJSONString];
-            if (self.mWebsocket) {
-                [self.mWebsocket sendEvent:json forOrigin:origin];
-            }
-            [DConnectServerProtocol sendEvent:json forOrigin:origin];
-        }
-*/
+
         if (self.mEventBroker) {
             [self.mEventBroker onEvent:event];
         }
@@ -398,7 +339,7 @@ NSString *const DConnectAttributeNameRequestAccessToken = @"requestAccessToken";
                 hasDelegate = YES;
             } else {
                 // イベントのJSONにあるURIをFilesプロファイルに変換
-                [DConnectURLProtocol convertUri:event];
+                [DConnectServerManager convertUriOfMessage:event];
             }
             [self makeEventMessage:event origin:origin hasDelegate:hasDelegate plugin:plugin];
         }
@@ -427,7 +368,7 @@ NSString *const DConnectAttributeNameRequestAccessToken = @"requestAccessToken";
                 hasDelegate = YES;
             } else {
                 // イベントのJSONにあるURIをFilesプロファイルに変換
-                [DConnectURLProtocol convertUri:event];
+                [DConnectServerManager convertUriOfMessage:event];
             }
             [self makeEventMessage:event origin:key hasDelegate:hasDelegate plugin:plugin];
         }
@@ -475,9 +416,6 @@ NSString *const DConnectAttributeNameRequestAccessToken = @"requestAccessToken";
         _settings = [DConnectSettings new];
         self.productName = [[NSBundle mainBundle] objectForInfoDictionaryKey: @"CFBundleDisplayName"];
         self.versionName = [[NSBundle mainBundle] objectForInfoDictionaryKey: @"CFBundleShortVersionString"];
-        
-        // ManagerのサポートするAPI仕様
-        self.managerSpec = [[DConnectPluginSpec alloc] init];
         
         // イベント管理クラス
         Class key = [self class];
@@ -679,13 +617,13 @@ NSString *const DConnectAttributeNameRequestAccessToken = @"requestAccessToken";
     if (profileName) {
         // プロファイルのJSONファイルを読み込み、内部生成したprofileSpecを新規登録する
         NSError *error = nil;
-        [[self managerSpec] addProfileSpec: profileName error: &error];
+        [[DConnectPluginSpec shared] addProfileSpec: profileName bundle: nil error: &error];
         if (error) {
             DCLogE(@"addProfileSpec error ! %@", [error description]);
         }
         
         // プロファイルに仕様データを設定する
-        DConnectProfileSpec *profileSpec = [[self managerSpec] findProfileSpec: profileName];
+        DConnectProfileSpec *profileSpec = [[DConnectPluginSpec shared] findProfileSpec: profileName];
         if (profileSpec) {
             [profile setProfileSpec: profileSpec];
         }
