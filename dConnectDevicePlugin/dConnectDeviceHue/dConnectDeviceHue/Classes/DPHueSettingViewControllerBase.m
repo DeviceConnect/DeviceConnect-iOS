@@ -16,6 +16,8 @@ static DPHueItemBridge *mSelectedItemBridge;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    portConstraints = [NSArray array];
+    landConstraints = [NSArray array];
     manager = [DPHueManager sharedManager];
     [manager initHue];
     _bundle = DPHueBundle();
@@ -29,6 +31,20 @@ static DPHueItemBridge *mSelectedItemBridge;
     [self setLayoutConstraint];
 
 }
+
+- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
+    [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
+    [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext>  _Nonnull context) {
+        if (size.width <= size.height) {
+            [NSLayoutConstraint deactivateConstraints:landConstraints];
+            [NSLayoutConstraint activateConstraints:portConstraints];
+        } else {
+            [NSLayoutConstraint deactivateConstraints:portConstraints];
+            [NSLayoutConstraint activateConstraints:landConstraints];
+        }
+    } completion:nil];
+}
+
 
 - (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
                                          duration:(NSTimeInterval)duration
@@ -77,19 +93,19 @@ static DPHueItemBridge *mSelectedItemBridge;
     [alert show];
 }
 
-- (BOOL)isIpad
+- (BOOL)ipad
 {
     return (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad);
 }
 
-- (BOOL)isIphone
+- (BOOL)iphone
 {
     return (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone);
 }
 
-- (BOOL)isIpadMini
+- (BOOL)ipadMini
 {
-    if (!self.isIpad) {
+    if (!self.ipad) {
         return false;
     }
     
@@ -98,18 +114,40 @@ static DPHueItemBridge *mSelectedItemBridge;
     return ((int)rect.size.height <= 1024);
 }
 
-- (BOOL)isIphoneLong
+- (BOOL)iphone5
 {
-    if (!self.isIphone) {
+    if (!self.iphone) {
         return false;
     }
     
     CGRect rect = [[UIScreen mainScreen] bounds];
 
-    return ((int)rect.size.height > 480);
+    return ((int)rect.size.height == 568);
+    
+}
+- (BOOL)iphone6
+{
+    if (!self.iphone) {
+        return false;
+    }
+    
+    CGRect rect = [[UIScreen mainScreen] bounds];
+    
+    return ((int)rect.size.height == 667);
     
 }
 
+- (BOOL)iphone6p
+{
+    if (!self.iphone) {
+        return false;
+    }
+    
+    CGRect rect = [[UIScreen mainScreen] bounds];
+    
+    return ((int)rect.size.height == 736);
+    
+}
 
 - (void)setSelectedItemBridge:(DPHueItemBridge*)itemBridge
 {

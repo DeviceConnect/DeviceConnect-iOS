@@ -33,7 +33,14 @@
      @brief NSBundle。
      */
     NSBundle *_bundle;
-    
+    /*!
+     @brief たて画面の時に有効にするConstraint。
+     */
+    NSArray *portConstraints;
+    /*!
+     @brief 横画面の時に有効になるConstraint。
+     */
+    NSArray *landConstraints;
 }
 /*!
  @brief 設定画面を表示するViewController。
@@ -44,6 +51,9 @@
  @brief ViewControllerのページ数。
  */
 @property (nonatomic) NSUInteger objectIndex;
+
+
+
 
 #pragma mark Protected Methods
 
@@ -58,28 +68,43 @@
  @retval YES iPad。
  @retval NO それ以外。
  */
-- (BOOL)isIpad;
+- (BOOL)ipad;
 
 /*!
  @brief 端末がiPadMiniかどうか。
  @retval YES iPadMini。
  @retval NO それ以外。
  */
-- (BOOL)isIpadMini;
+- (BOOL)ipadMini;
 
 /*!
  @brief 端末がiPhone4/4Sかどうか。
  @retval YES iPhone4/4S。
  @retval NO それ以外。
  */
-- (BOOL)isIphone;
+- (BOOL)iphone;
 
 /*!
  @brief 端末がiPhone5以降かどうか。
  @retval YES iPhone5以降。
  @retval NO それ以外。
  */
-- (BOOL)isIphoneLong;
+- (BOOL)iphone5;
+
+/*!
+ @brief 端末がiPhone6以降かどうか。
+ @retval YES iPhone6以降。
+ @retval NO それ以外。
+ */
+- (BOOL)iphone6;
+
+/*!
+ @brief 端末がiPhone6p以降かどうか。
+ @retval YES iPhone6p以降。
+ @retval NO それ以外。
+ */
+
+- (BOOL)iphone6p;
 
 /*!
  @brief 縦画面のときのConstraintの設定。

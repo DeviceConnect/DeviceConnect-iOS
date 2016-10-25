@@ -160,7 +160,7 @@
 - (void)setLayoutConstraintPortrait
 {
     //iPadの時だけ回転時座標調整する
-    if (self.isIpad) {
+    if (self.ipad) {
         
         _pushlinkIconXConstraint.constant = 128;
         _pushlinkIcomYConstraint.constant = 110;
@@ -171,7 +171,7 @@
         _bridgeInfoXConstraint.constant = 55;
         _bridgeInfoYConstraint.constant = 184;
 
-        if (self.isIpadMini) {
+        if (self.ipadMini) {
             _bridgeInfoYConstraint.constant = _bridgeInfoYConstraint.constant- 50;
         }
 
@@ -184,7 +184,7 @@
         _bridgeInfoXConstraint.constant = 44;
         _bridgeInfoYConstraint.constant = 7;
         
-        if ([self isIphoneLong]) {
+        if ([self iphone5]) {
             _bridgeInfoYConstraint.constant = _bridgeInfoYConstraint.constant + 50;
         }
 
@@ -196,7 +196,7 @@
 //横向き座標調整
 - (void)setLayoutConstraintLandscape
 {
-    if (self.isIpad) {
+    if (self.ipad) {
         
         _pushlinkIconXConstraint.constant = 50;
         _pushlinkIcomYConstraint.constant = 150;
@@ -216,7 +216,7 @@
         _bridgeInfoXConstraint.constant = 20;
         _bridgeInfoYConstraint.constant = 30;
         
-        if ([self isIphoneLong]) {
+        if ([self iphone5]) {
             _pushlinkIconXConstraint.constant = _pushlinkIconXConstraint.constant + 25;
             _searchButtonXConstraint.constant = _searchButtonXConstraint.constant + 25;
             

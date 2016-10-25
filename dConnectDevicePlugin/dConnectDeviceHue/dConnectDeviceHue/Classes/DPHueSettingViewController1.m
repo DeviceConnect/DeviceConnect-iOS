@@ -17,12 +17,23 @@
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *searchingBridgeIndicator;
 @property (weak, nonatomic) IBOutlet UIView *searchingView;
 @property (weak, nonatomic) IBOutlet UILabel *processingLabel;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *bridgeIconYConstraint;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *bridgeIconXConstraint;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *searchButtonYConstraint;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *searchButtonXConstraint;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *bridgeListYConstraint;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *bridgeListXConstraint;
+
+#pragma mark - Portrait Constraints
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *portCenterTopX;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *portCenterMiddleX;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *portCenterBottomX;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *portCenterMainX;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *portBottomRight;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *portBottomBottom;
+#pragma mark - Landscape Constraints
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *landLeftCenterY;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *landRightRight;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *landRightTop;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *landLeftBottom;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *landLeftBottomBottom;
+#pragma mark - etc constraints
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *commonLeft;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *commonLeftMessage;
 
 @end
 
@@ -51,6 +62,20 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    if (![super iphone6p]) {
+        portConstraints = [NSArray arrayWithObjects:
+                           _commonLeft,
+                           _commonLeftMessage,
+                           _portCenterTopX, _portCenterMiddleX, _portCenterBottomX,
+                           _portCenterMainX, _portBottomRight, _portBottomBottom, nil];
+    } else {
+        portConstraints = [NSArray arrayWithObjects:
+                           _portCenterTopX, _portCenterMiddleX, _portCenterBottomX,
+                           _portCenterMainX, _portBottomRight, _portBottomBottom, nil];
+    }
+    landConstraints = [NSArray arrayWithObjects:_landLeftCenterY, _landRightRight, _landRightTop,
+                       _landLeftBottom, _landLeftBottomBottom, nil];
     _bridgeListTableView.delegate = self;
     _bridgeListTableView.dataSource = self;
 
@@ -85,69 +110,39 @@
 //縦向き座標調整
 - (void)setLayoutConstraintPortrait
 {
-    //iPadの時だけ回転時座標調整する
-    if (self.isIpad) {
-    
-        _bridgeIconXConstraint.constant = 128;
-        _bridgeIconYConstraint.constant = 110;
-        
-        _searchButtonXConstraint.constant = 128;
-        _searchButtonYConstraint.constant = 2;
-        
-        _bridgeListXConstraint.constant = 184;
-        _bridgeListYConstraint.constant = 89;
-
-        if (self.isIpadMini) {
-            _bridgeListYConstraint.constant = _bridgeListYConstraint.constant- 50;
+    if ([super iphone]) {
+        if ([super iphone5]) {
+            _commonLeft.constant = 29;
+            _commonLeftMessage.constant = 29;
+            _portBottomRight.constant = 35;
+        } else if ([super iphone6]) {
+            _commonLeft.constant = 59;
+            _commonLeftMessage.constant = 59;
+            _portBottomRight.constant = 60;
+        } else if ([super iphone6p]) {
+            _commonLeft.constant = 80;
+            _commonLeftMessage.constant = 80;
+            _portBottomRight.constant = 80;
+            _portBottomBottom.constant = 80;
         }
-    }else{
+    } else {
         
-        _bridgeIconXConstraint.constant = 32;
-        
-        _searchButtonXConstraint.constant = 32;
-        
-        _bridgeListXConstraint.constant = 44;
-        _bridgeListYConstraint.constant = 7;
-        
-        if ([self isIphoneLong]) {
-            _bridgeListYConstraint.constant = _bridgeListYConstraint.constant + 50;
-        }
     }
-
 }
 
 //横向き座標調整
 - (void)setLayoutConstraintLandscape
 {
-    if (self.isIpad) {
-
-        _bridgeIconXConstraint.constant = 50;
-        _bridgeIconYConstraint.constant = 150;
-
-        _searchButtonXConstraint.constant = 50;
-        _searchButtonYConstraint.constant = 80;
-
-        _bridgeListXConstraint.constant = 60;
-        _bridgeListYConstraint.constant = 200;
-
-    }else{
-
-        _bridgeIconXConstraint.constant = 0;
-
-        _searchButtonXConstraint.constant = 0;
-
-        _bridgeListXConstraint.constant = 20;
-
-        _bridgeListYConstraint.constant = 30;
-
-        if ([self isIphoneLong]) {
-            _bridgeIconXConstraint.constant = _bridgeIconXConstraint.constant + 25;
-            _searchButtonXConstraint.constant = _searchButtonXConstraint.constant + 25;
-
-            _bridgeListXConstraint.constant = _bridgeListXConstraint.constant + 10;
-
+    if ([super iphone]) {
+        if ([super iphone5]) {
+            _landRightRight.constant = 29;
+        } else if ([super iphone6]) {
+            _landRightRight.constant = 70;
+        } else if ([super iphone6p]) {
+            _landRightRight.constant = 140;
         }
-
+    } else {
+        
     }
 }
 

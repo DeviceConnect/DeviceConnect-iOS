@@ -76,7 +76,7 @@ NSString *const DPHueBridgeListName = @"org.deviceconnect.ios.DPHue.ip";
         if (completion) {
             completion(bridgesFound);
         }
-        [self updateManageServices: YES];
+        [self updateManageServices: NO];
     }];
 }
 
