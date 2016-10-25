@@ -156,7 +156,7 @@
 }
 
 - (BOOL) sendEvent:(DConnectMessage *)event {
-    return [[DConnectManager sharedManager] sendEvent:event];
+    return [[DConnectManager sharedManager] sendEvent:event authorized:self.useLocalOAuth];
 }
 
 - (void)applicationDidEnterBackground {

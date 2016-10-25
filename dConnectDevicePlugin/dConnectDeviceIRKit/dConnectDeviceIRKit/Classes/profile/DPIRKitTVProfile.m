@@ -154,14 +154,19 @@
         [response setErrorToNotSupportProfile];
         return send;
     }
+    DPIRKitRESTfulRequest *sendReq = nil;
     for (DPIRKitRESTfulRequest *req in requests) {
         if ([req.uri isEqualToString:uri] && [req.method isEqualToString:method] && req.ir) {
-            sleep(0.5);
-            send = [self.plugin sendIRWithServiceId:serviceId message:req.ir response:response];
-        } else {
-            [response setErrorToInvalidRequestParameterWithMessage:@"IR is not registered for that request"];
+            sendReq = req;
+            break;
         }
     }
+    if (sendReq) {
+        send = [self.plugin sendIRWithServiceId:serviceId message:sendReq.ir response:response];
+    } else {
+        [response setErrorToInvalidRequestParameterWithMessage:@"IR is not registered for that request"];
+    }
+
     return send;
 }
 

@@ -17,9 +17,13 @@
 // ポート番号設定
 - (void)setPort:(int)port;
 
-// WebSocketを追加
-- (void)addSocket:(NSString*)key;
-// WebSocketを削除
-- (void)removeSocket:(NSString*)key;
+// WebSocketを開く
+- (void)openWebSocketWithAccessToken:(NSString*)key;
+
+// WebSocketを閉じる
+- (void)closeWebSocket;
+
+// WebSocketが接続されているか
+- (BOOL)isOpened;
 
 @end

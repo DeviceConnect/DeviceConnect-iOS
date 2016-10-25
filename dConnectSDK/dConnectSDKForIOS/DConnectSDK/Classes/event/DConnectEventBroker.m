@@ -60,7 +60,11 @@
     if (!serviceId) {
         return;
     }
-    NSString *accessToken = [self getAccessToken: serviceId];
+    NSString *origin = [request stringForKey: DConnectMessageOrigin];
+    if (!origin) {
+        return;
+    }
+    NSString *accessToken = [self getAccessToken: serviceId origin:origin];
     if (accessToken) {
         [request setString:accessToken forKey:DConnectMessageAccessToken];
     } else {
@@ -102,7 +106,7 @@
     }
 }
 
-- (NSString *) getAccessToken: (NSString *) serviceId {
+- (NSString *) getAccessToken: (NSString *) serviceId origin:(NSString *) origin {
     DConnectAuthData *oauth = [self.localOAuth getAuthDataByServiceId: serviceId];
     if (oauth) {
         return [self.localOAuth getAccessTokenByAuthData: oauth];
@@ -110,7 +114,7 @@
     return nil;
 }
 
-- (void) onEvent:(DConnectMessage *) event {
+- (void) onEvent:(DConnectMessage *) event plugin:(DConnectDevicePlugin *)plugin{
     
     if ([self isServiceChangeEvent: event]) {
         [self onServiceChangeEvent: event];
@@ -123,27 +127,14 @@
     NSString *interfaceName = [event stringForKey: DConnectMessageInterface];
     NSString *attributeName = [event stringForKey: DConnectMessageAttribute];
     
-    NSString *serviceId_;
-    NSMutableString *pluginId;
-    NSArray *serviceIdParts = [serviceId componentsSeparatedByString:@"."];
-    if (serviceIdParts.count > 1) {
-        serviceId_ = serviceIdParts[0];
-        pluginId = [NSMutableString new];
-        for (int i = 1; i < serviceIdParts.count; i++) {
-            if (i > 1) {
-                [pluginId appendString:@"."];
-            }
-            [pluginId appendString:serviceIdParts[i]];
-        }
-    } else {
-        serviceId_ = serviceId;
-    }
+    NSString *serviceId_ = [DConnectDevicePluginManager splitServiceId:plugin serviceId: serviceId];
+    NSString *pluginId = plugin.pluginId;
     
     DConnectEventSession *targetSession = nil;
     if (pluginAccessToken) {
         for (DConnectEventSession *session in [self.table all]) {
-            if ([self isSameName: pluginAccessToken cmp: session.accessToken] &&
-                [self isSameName: serviceId_ cmp: session.serviceId] &&
+            if ([self isSameNameCaseSensitive: pluginAccessToken cmp: session.accessToken] &&
+                [self isSameNameCaseSensitive: serviceId_ cmp: session.serviceId] &&
                 [self isSameName: profileName cmp: session.profileName] &&
                 [self isSameName: interfaceName cmp: session.interfaceName] &&
                 [self isSameName: attributeName cmp: session.attributeName]) {
@@ -156,9 +147,9 @@
         if (sessionKey) {
             NSString *receiverId = [DConnectEventProtocol convertSessionKey2Key: sessionKey];
             for (DConnectEventSession *session in [self.table all]) {
-                if ([self isSameName: pluginId cmp: session.pluginId] &&
-                    [self isSameName: receiverId cmp: session.receiverId] &&
-                    [self isSameName: serviceId_ cmp: session.serviceId] &&
+                if ([self isSameNameCaseSensitive: pluginId cmp: session.pluginId] &&
+                    [self isSameNameCaseSensitive: receiverId cmp: session.receiverId] &&
+                    [self isSameNameCaseSensitive: serviceId_ cmp: session.serviceId] &&
                     [self isSameName: profileName cmp: session.profileName] &&
                     [self isSameName: interfaceName cmp: session.interfaceName] &&
                     [self isSameName: attributeName cmp: session.attributeName]) {
@@ -179,7 +170,7 @@
         DConnectDevicePlugin *plugin = [self.pluginManager devicePluginForPluginId: pluginId];
         if (plugin) {
             [event setString:targetSession.receiverId forKey:DConnectMessageSessionKey];
-            [event setString:[self.pluginManager appendServiceId: plugin serviceId: serviceId_] forKey:DConnectMessageServiceId];
+            [event setString:[self.pluginManager serviceIdByAppedingPluginIdWithDevicePlugin:plugin serviceId:serviceId_] forKey:DConnectMessageServiceId];
             [targetSession sendEvent: event];
         } else {
             DCLogW(@"onEvent: Plugin is not found: id = %@", targetSession.pluginId);
@@ -243,7 +234,7 @@
 
 - (void) replaceServiceId:(DConnectMessage *)event plugin:(DConnectDevicePlugin *) plugin {
     NSString *serviceId = [event stringForKey: DConnectMessageServiceId];
-    [event setString:[self.pluginManager appendServiceId: plugin serviceId: serviceId] forKey:DConnectMessageServiceId];
+    [event setString:[self.pluginManager serviceIdByAppedingPluginIdWithDevicePlugin:plugin serviceId:serviceId] forKey:DConnectMessageServiceId];
 }
 
 - (BOOL) isSameName: (NSString *) str cmp: (NSString *) cmp {
@@ -252,6 +243,18 @@
     } else if (!str || !cmp) {
         return NO;
     } else if ([str localizedCaseInsensitiveCompare: cmp] == NSOrderedSame) {
+        return YES;
+    } else {
+        return NO;
+    }
+}
+
+- (BOOL) isSameNameCaseSensitive: (NSString *) str cmp: (NSString *) cmp {
+    if (!str && !cmp) {
+        return YES;
+    } else if (!str || !cmp) {
+        return NO;
+    } else if ([str localizedCompare: cmp] == NSOrderedSame) {
         return YES;
     } else {
         return NO;

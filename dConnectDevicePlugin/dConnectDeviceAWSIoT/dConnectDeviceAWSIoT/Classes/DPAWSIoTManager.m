@@ -47,7 +47,7 @@
 	// MQTT接続
 	NSString *clientID = [[NSUUID UUID] UUIDString];
 	if (![manager connectUsingWebSocketWithClientId:clientID cleanSession:YES statusCallback:^(AWSIoTMQTTStatus status) {
-		//NSLog(@"* mqtt status: %ld", (long)status);
+//		NSLog(@"* mqtt status: %ld", (long)status);
 		dispatch_async(dispatch_get_main_queue(), ^{
 			// 接続成功
 			if (status == AWSIoTMQTTStatusConnected) {

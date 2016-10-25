@@ -40,6 +40,7 @@ span.serviceName {
 
 span.serviceId {
     font-size: xx-small;
+    word-break: break-all;
 }
 div.title {
     background-color: #3EA3D3;

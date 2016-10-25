@@ -16,4 +16,7 @@
 					 params:(NSDictionary*)params headers:(NSDictionary*)headers
 					handler:(void (^)(NSData *data, NSURLResponse *response, NSError *error))handler;
 
++ (void)sendRequest:(NSURLRequest *)request
+            handler:(void (^)(NSData *data, NSURLResponse *response, NSError *error))handler;
+
 @end

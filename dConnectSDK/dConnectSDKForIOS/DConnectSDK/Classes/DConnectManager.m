@@ -282,8 +282,6 @@ NSString *const DConnectAttributeNameRequestAccessToken = @"requestAccessToken";
 }
 
 - (void)makeEventMessage:(DConnectMessage *)event
-                  origin:(NSString *)origin
-             hasDelegate:(BOOL)hasDelegate
                   plugin:(DConnectDevicePlugin *)plugin
 {
     NSString *profile = [event stringForKey:DConnectMessageProfile];
@@ -304,7 +302,7 @@ NSString *const DConnectAttributeNameRequestAccessToken = @"requestAccessToken";
             [event setString:evt.origin forKey:DConnectMessageOrigin];
 
             if (self.mEventBroker) {
-                [self.mEventBroker onEvent:event];
+                [self.mEventBroker onEvent:event plugin:plugin];
             }
         }
     } else {
@@ -318,30 +316,38 @@ NSString *const DConnectAttributeNameRequestAccessToken = @"requestAccessToken";
         }
 
         if (self.mEventBroker) {
-            [self.mEventBroker onEvent:event];
+            [self.mEventBroker onEvent:event plugin:plugin];
         }
     }
 }
 
 - (BOOL) sendEvent:(DConnectMessage *)event {
-    NSString *origin = [event stringForKey:DConnectMessageOrigin];
+    return [self sendEvent:event authorized:YES];
+}
+
+- (BOOL) sendEvent:(DConnectMessage *)event authorized:(BOOL)authorized {
     NSString *accessToken = [event stringForKey:DConnectMessageAccessToken];
     NSString *pluginId;
-    if (origin && accessToken && (pluginId = [self findRequestPluginId: accessToken])) {
-        
+    if (authorized) {
+        pluginId = [self findRequestPluginId: accessToken];
+    } else {
+        pluginId = accessToken;
+    }
+    
+    if (accessToken && pluginId) {
         NSArray *names = [pluginId componentsSeparatedByString:@"."];
         if (names.count > 0) {
             NSString *pluginId_ = names[0];
             DConnectDevicePlugin *plugin = [_mDeviceManager devicePluginForPluginId:pluginId_];
+            if (!plugin) {
+                DCLogW(@"Not found a plugin. pluginId=%@", pluginId);
+                return NO;
+            }
             
-            BOOL hasDelegate = NO;
-            if ([self.delegate respondsToSelector:@selector(manager:didReceiveDConnectMessage:)]) {
-                hasDelegate = YES;
-            } else {
-                // イベントのJSONにあるURIをFilesプロファイルに変換
+            if (![self.delegate respondsToSelector:@selector(manager:didReceiveDConnectMessage:)]) {
                 [DConnectServerManager convertUriOfMessage:event];
             }
-            [self makeEventMessage:event origin:origin hasDelegate:hasDelegate plugin:plugin];
+            [self makeEventMessage:event plugin:plugin];
         }
     } else {
         NSString *sessionKey = [event stringForKey:DConnectMessageSessionKey];
@@ -362,15 +368,15 @@ NSString *const DConnectAttributeNameRequestAccessToken = @"requestAccessToken";
             [event setString:key forKey:DConnectMessageSessionKey];
             
             DConnectDevicePlugin *plugin = [_mDeviceManager devicePluginForPluginId:pluginId];
-            
-            BOOL hasDelegate = NO;
-            if ([self.delegate respondsToSelector:@selector(manager:didReceiveDConnectMessage:)]) {
-                hasDelegate = YES;
-            } else {
-                // イベントのJSONにあるURIをFilesプロファイルに変換
+            if (plugin) {
+                DCLogW(@"Not found a plugin. pluginId=%@", pluginId);
+                return NO;
+            }
+
+            if (![self.delegate respondsToSelector:@selector(manager:didReceiveDConnectMessage:)]) {
                 [DConnectServerManager convertUriOfMessage:event];
             }
-            [self makeEventMessage:event origin:key hasDelegate:hasDelegate plugin:plugin];
+            [self makeEventMessage:event plugin:plugin];
         }
     }
     return NO;

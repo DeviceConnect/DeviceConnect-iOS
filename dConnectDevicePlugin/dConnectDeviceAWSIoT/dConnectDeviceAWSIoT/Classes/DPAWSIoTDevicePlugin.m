@@ -7,10 +7,13 @@
 //  http://opensource.org/licenses/mit-license.php
 //
 
+#import <Foundation/Foundation.h>
+
 #import "DPAWSIoTDevicePlugin.h"
 #import "DPAWSIoTSystemProfile.h"
 #import "DPAWSIoTUtils.h"
 #import "DPAWSIoTController.h"
+#import "DPAWSIoTManager.h"
 #import "DConnectDevicePlugin+Private.h"
 
 #import <AWSIoT.h>
@@ -27,15 +30,45 @@
 	if (self) {
 		self.pluginName = @"AWSIoT (Device Connect Device Plug-in)";
 		self.useLocalOAuth = NO;
+        
+        [[DConnectEventManager sharedManagerForClass:[self class]]
+            setController:[DConnectMemoryCacheController new]];
 		
-		// プロファイルを追加
+        // プロファイルを追加
 		[self addProfile:[DPAWSIoTSystemProfile new]];
 
 		// AWSIoTログイン処理
 		[DPAWSIoTController sharedManager].plugin = self;
 		[[DPAWSIoTController sharedManager] login];
+        
+        __weak typeof(self) weakSelf = self;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
+            UIApplication *application = [UIApplication sharedApplication];
+            
+            [notificationCenter addObserver:weakSelf selector:@selector(enterForeground)
+                                       name:UIApplicationWillEnterForegroundNotification
+                                     object:application];
+            
+            [notificationCenter addObserver:weakSelf selector:@selector(enterBackground)
+                                       name:UIApplicationDidEnterBackgroundNotification
+                                     object:application];
+        });
 	}	
 	return self;
+}
+
+- (void)enterBackground {
+//    [[DPAWSIoTController sharedManager] logout];
+}
+
+- (void)enterForeground {
+//    [[DPAWSIoTController sharedManager] login];
+    NSString *accessToken = [DPAWSIoTUtils accessToken];
+    if (accessToken) {
+        [[DPAWSIoTController sharedManager] openWebSocket:accessToken];
+    }
+    [[DPAWSIoTController sharedManager] fetchManagerInfo];
 }
 
 // リクエスト処理
@@ -50,20 +83,18 @@
 		return [[DPAWSIoTController sharedManager] sendRequestToMQTT:request code:requestCode response:response];
 	} else if ([[request profile] isEqualToString:DConnectServiceDiscoveryProfileName]) {
 		// servicediscoveryは独自処理
-		// 自分のServiceを検索
-		[super executeRequest:request response:response];
-		// 他のServiceを検索
 		return [[DPAWSIoTController sharedManager] executeServiceDiscoveryRequest:request response:response requestCode:requestCode];
 	} else {
 		// 自分のServiceを検索
 		return [super executeRequest:request response:response];
 	}
 }
+
 - (NSString*)iconFilePath:(BOOL)isOnline
 {
     NSBundle *bundle = [NSBundle bundleWithPath:[[NSBundle mainBundle] pathForResource:@"dConnectDeviceAWSIoT_resources" ofType:@"bundle"]];
     NSString* filename = isOnline ? @"dconnect_icon" : @"dconnect_icon_off";
     return [bundle pathForResource:filename ofType:@"png"];
-    return nil;
 }
+
 @end

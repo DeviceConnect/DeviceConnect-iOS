@@ -11,6 +11,7 @@
 #import "DPAWSIoTController.h"
 #import "DPAWSIoTAuthListCell.h"
 #import "DConnectMessage+Private.h"
+#import "DPAWSIoTUtils.h"
 
 @interface DPAWSIoTAuthViewController () {
 	DConnectArray *_services;
@@ -21,12 +22,11 @@
 @implementation DPAWSIoTAuthViewController
 
 - (void)viewDidLoad {
-	[[DPAWSIoTController sharedManager] fetchServicesWithHandler:^(DConnectArray *services) {
-		_services = services;
+	[DPAWSIoTUtils fetchServicesWithHandler:^(DConnectResponseMessage *response) {
+		_services = response.internalDictionary[@"services"];
 		[self.tableView reloadData];
 	}];
 }
-
 
 #pragma mark - UITableView
 
@@ -41,7 +41,6 @@
 {
 	DPAWSIoTAuthListCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
 	DConnectMessage *msg = [_services objectAtIndex:indexPath.row];
-	//NSLog(@"%@", msg.internalDictionary);
 	cell.msg = msg;
 	return cell;
 }

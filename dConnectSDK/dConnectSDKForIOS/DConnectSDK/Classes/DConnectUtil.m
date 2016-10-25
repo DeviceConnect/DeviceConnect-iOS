@@ -16,10 +16,6 @@
 #import "CipherAuthSignature.h"
 #import "LocalOAuth2Main.h"
 
-@interface DConnectUtil()
-+ (DConnectResponseMessage *) executeRequest:(DConnectRequestMessage *)request;
-@end
-
 @implementation DConnectUtil
 
 #pragma mark - Authorization
@@ -45,31 +41,23 @@
                                      userInfo:nil];
     }
     
-    DConnectRequestMessage *req = [DConnectRequestMessage message];
-    req.action = DConnectMessageActionTypeGet;
-    req.profile = DConnectAuthorizationProfileName;
-    req.attribute = DConnectAuthorizationProfileAttrGrant;
-    [req setString:origin forKey:DConnectMessageOrigin];
+    DConnectRequestMessage *request = [DConnectRequestMessage message];
+    request.action = DConnectMessageActionTypeGet;
+    request.profile = DConnectAuthorizationProfileName;
+    request.attribute = DConnectAuthorizationProfileAttrGrant;
+    [request setString:origin forKey:DConnectMessageOrigin];
     
-    DConnectResponseMessage *res = [self executeRequest:req];
-    
-    if (res.result == DConnectMessageResultTypeError) {
-        error([res integerForKey:DConnectMessageErrorCode]);
-        return;
-    }
-    
-    NSString *clientId = [res stringForKey:DConnectAuthorizationProfileParamClientId];
-    
-    if (!clientId) {
-        error(DConnectMessageErrorCodeUnknown);
-    } else {
-        [self refreshAccessTokenWithClientId:clientId
-                                      origin:origin
-                                     appName:appName scopes:scopes
-                                     success:success error:error];
-    }
-    
-    
+    [[DConnectManager sharedManager] sendRequest:request callback:^(DConnectResponseMessage *response) {
+        if (response.result == DConnectMessageResultTypeError) {
+            error([response integerForKey:DConnectMessageErrorCode]);
+        } else {
+            NSString *clientId = [response stringForKey:DConnectAuthorizationProfileParamClientId];
+            [self refreshAccessTokenWithClientId:clientId
+                                          origin:origin
+                                         appName:appName scopes:scopes
+                                         success:success error:error];
+        }
+    }];
 }
 
 + (void) asyncAuthorizeWithOrigin:(NSString *)origin
@@ -114,23 +102,23 @@
                                      userInfo:nil];
     }
     
-    DConnectRequestMessage *req = [DConnectRequestMessage message];
-    req.action = DConnectMessageActionTypeGet;
-    req.profile = DConnectAuthorizationProfileName;
-    req.attribute = DConnectAuthorizationProfileAttrAccessToken;
-    [DConnectAuthorizationProfile setClientId:clientId target:req];
-    [DConnectAuthorizationProfile setScope:[self combineScopes:scopes] target:req];
-    [req setString:appName forKey:DConnectAuthorizationProfileParamApplicationName];
-    [req setString:origin forKey:DConnectMessageOrigin];
+    DConnectRequestMessage *request = [DConnectRequestMessage message];
+    request.action = DConnectMessageActionTypeGet;
+    request.profile = DConnectAuthorizationProfileName;
+    request.attribute = DConnectAuthorizationProfileAttrAccessToken;
+    [DConnectAuthorizationProfile setClientId:clientId target:request];
+    [DConnectAuthorizationProfile setScope:[self combineScopes:scopes] target:request];
+    [request setString:appName forKey:DConnectAuthorizationProfileParamApplicationName];
+    [request setString:origin forKey:DConnectMessageOrigin];
     
-    DConnectResponseMessage *res = [self executeRequest:req];
-    
-    if (res.result == DConnectMessageResultTypeError) {
-        error([res integerForKey:DConnectMessageErrorCode]);
-    } else {
-        NSString *accessToken = [res stringForKey:DConnectAuthorizationProfileParamAccessToken];
-        success(clientId, accessToken);
-    }
+    [[DConnectManager sharedManager] sendRequest:request callback:^(DConnectResponseMessage *response) {
+        if (response.result == DConnectMessageResultTypeError) {
+            error([response integerForKey:DConnectMessageErrorCode]);
+        } else {
+            NSString *accessToken = [response stringForKey:DConnectAuthorizationProfileParamAccessToken];
+            success(clientId, accessToken);
+        }
+    }];
 }
 
 + (NSString *) combineScopes:(NSArray *)scopes {
@@ -145,18 +133,6 @@
     }
     
     return str;
-}
-
-+ (DConnectResponseMessage *) executeRequest:(DConnectRequestMessage *)request {
-    
-    dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
-    __block DConnectResponseMessage *res = nil;
-    [[DConnectManager sharedManager] sendRequest:request callback:^(DConnectResponseMessage *response) {
-        res = response;
-        dispatch_semaphore_signal(semaphore);
-    }];
-    dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
-    return res;
 }
 
 + (void) showAccessTokenList {

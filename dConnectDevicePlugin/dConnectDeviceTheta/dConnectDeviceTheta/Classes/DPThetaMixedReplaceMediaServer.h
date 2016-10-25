@@ -24,11 +24,11 @@
 
 @class GCDAsyncSocket;
 
-@interface DPThetaMixedReplaceMediaServer : NSObject
+@interface DPThetaMixedReplaceMediaServer : NSObject<GCDAsyncSocketDelegate>
 {
     dispatch_queue_t socketQueue;
     dispatch_source_t _timerSource;
-    GCDAsyncSocket *listenSocket;
+   
 }
 @property (nonatomic, assign) id<DPThetaMixedReplaceMediaServerDelegate> delegate;
 @property (nonatomic) BOOL isRunning;

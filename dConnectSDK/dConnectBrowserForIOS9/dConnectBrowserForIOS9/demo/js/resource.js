@@ -3,7 +3,6 @@ var main = (function(parent, global) {
     function init() {
         var mimeType = decodeURIComponent(util.getMimeType());
         var uri = decodeURIComponent(util.getResourceUri());
-        console.log("uri:" + uri);
         if (mimeType.indexOf('image') != -1 && uri.indexOf('mp4') == -1) {
             var elem = document.getElementById('image');
             elem.src = util.getResourceUri();
@@ -27,7 +26,10 @@ var main = (function(parent, global) {
     }
     parent.init = init;
 
-
+    function back() {
+        location.href = "./checker.html?serviceId=" + util.getServiceId() + '&profile=' + util.getProfileQuery();
+    }
+    parent.back = back;
     function createXMLHttpRequest() {
         try {
             return new XMLHttpRequest();
