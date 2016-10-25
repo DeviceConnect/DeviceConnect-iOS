@@ -196,7 +196,9 @@ DPIRKitManagerDetectionDelegate
                                 [service setOnline: YES];
                             } else {
                                 NSString *profileName = virtual.categoryName;
-                                DPIRKitVirtualService *service = [[DPIRKitVirtualService alloc] initWithServiceId: serviceId plugin:self
+                                DPIRKitVirtualService *service = [[DPIRKitVirtualService alloc] initWithServiceId: serviceId
+                                                                                                             name:virtual.deviceName
+                                                                                                           plugin:self
                                                                                                       profileName:profileName];
                                 [self.serviceProvider addService: service];
                                 [service setOnline: YES];
@@ -354,6 +356,19 @@ DPIRKitManagerDetectionDelegate
     }
     UINavigationController *top = [storyBoard instantiateViewControllerWithIdentifier:@"setting"];
     return top;
+}
+
+- (NSArray *) displayServiceFilter:(NSArray *)services {
+    
+    NSMutableArray *filterServices = [NSMutableArray array];
+    
+    // 仮想デバイスを表示しないので、それを除いたservicesを作成して返す
+    for (DConnectService *service in services) {
+        if (![service isMemberOfClass: [DPIRKitVirtualService class]]) {
+            [filterServices addObject: service];
+        }
+    }
+    return filterServices;
 }
 
 #pragma mark DConnectInformationProfileDataSource

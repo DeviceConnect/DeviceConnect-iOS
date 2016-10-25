@@ -72,12 +72,18 @@
 - (BOOL) onPostLight:(DConnectRequestMessage *)request response:(DConnectResponseMessage *)response
 {
     NSString *serviceId = [request serviceId];
+    NSString *lightId = [DConnectLightProfile lightIdFromRequest:request];
     NSArray *flashing = [DConnectLightProfile parsePattern:[DConnectLightProfile flashingFromRequest:request] isId:NO];
     
     DPLinkingDeviceManager *deviceMgr = [DPLinkingDeviceManager sharedInstance];
     DPLinkingDevice *device = [deviceMgr findDPLinkingDeviceByServiceId:serviceId];
     if (!device) {
         [response setErrorToNotFoundService];
+        return YES;
+    }
+    
+    if (lightId && ![device.identifier isEqualToString:lightId]) {
+        [response setErrorToInvalidRequestParameter];
         return YES;
     }
     
@@ -99,14 +105,20 @@
 - (BOOL) onDeleteLight:(DConnectRequestMessage *)request response:(DConnectResponseMessage *)response
 {
     NSString *serviceId = [request serviceId];
-    
+    NSString *lightId = [DConnectLightProfile lightIdFromRequest:request];
+
     DPLinkingDeviceManager *deviceMgr = [DPLinkingDeviceManager sharedInstance];
     DPLinkingDevice *device = [deviceMgr findDPLinkingDeviceByServiceId:serviceId];
     if (!device) {
         [response setErrorToNotFoundService];
         return YES;
     }
-    
+
+    if (lightId && ![device.identifier isEqualToString:lightId]) {
+        [response setErrorToInvalidRequestParameter];
+        return YES;
+    }
+
     if (_flashingExecutor) {
         [_flashingExecutor cancel];
     }

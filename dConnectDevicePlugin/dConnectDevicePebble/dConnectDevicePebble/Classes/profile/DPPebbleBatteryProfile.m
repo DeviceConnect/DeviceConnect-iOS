@@ -48,7 +48,7 @@
         // API登録(didReceiveGetChargingRequest相当)
         NSString *getChargingRequestApiPath = [self apiPath: nil
                                               attributeName: DConnectBatteryProfileAttrCharging];
-        [self addPutPath: getChargingRequestApiPath api: ^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+        [self addGetPath: getChargingRequestApiPath api: ^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
             NSString *serviceId = [request serviceId];
             [[DPPebbleManager sharedManager] fetchBatteryCharging:serviceId callback:^(BOOL isCharging, NSError *error) {
                 
@@ -137,7 +137,7 @@
         
         // API登録(didReceivePutOnBatteryChangeRequest相当)
         NSString *putOnBatteryChangeRequestApiPath = [self apiPath: nil
-                                                     attributeName: DConnectBatteryProfileAttrOnChargingChange];
+                                                     attributeName: DConnectBatteryProfileAttrOnBatteryChange];
         [self addPutPath: putOnBatteryChangeRequestApiPath api: ^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
             __block BOOL responseFlg = YES;
             // イベント登録

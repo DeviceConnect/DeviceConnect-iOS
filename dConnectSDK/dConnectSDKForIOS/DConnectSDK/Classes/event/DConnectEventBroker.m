@@ -124,9 +124,17 @@
     NSString *attributeName = [event stringForKey: DConnectMessageAttribute];
     
     NSString *serviceId_;
+    NSMutableString *pluginId;
     NSArray *serviceIdParts = [serviceId componentsSeparatedByString:@"."];
     if (serviceIdParts.count > 1) {
         serviceId_ = serviceIdParts[0];
+        pluginId = [NSMutableString new];
+        for (int i = 1; i < serviceIdParts.count; i++) {
+            if (i > 1) {
+                [pluginId appendString:@"."];
+            }
+            [pluginId appendString:serviceIdParts[i]];
+        }
     } else {
         serviceId_ = serviceId;
     }
@@ -146,7 +154,6 @@
     } else {
         NSString *sessionKey = [event stringForKey: DConnectMessageSessionKey];
         if (sessionKey) {
-            NSString *pluginId = [DConnectEventProtocol convertSessionKey2PluginId: sessionKey];
             NSString *receiverId = [DConnectEventProtocol convertSessionKey2Key: sessionKey];
             for (DConnectEventSession *session in [self.table all]) {
                 if ([self isSameName: pluginId cmp: session.pluginId] &&

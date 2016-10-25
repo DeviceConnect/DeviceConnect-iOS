@@ -42,7 +42,8 @@ NSString *const DConnectSystemProfileParamVersion = @"version";
                 UINavigationController *navigationController =(UINavigationController *)viewController;
                 
                 if ([navigationController.viewControllers count] > 0) {
-                    ((DConnectServiceListViewController *)navigationController.viewControllers[0]).delegate = self.delegate;
+                    DConnectServiceListViewController *viewController = (DConnectServiceListViewController *)navigationController.viewControllers[0];
+                    viewController.delegate = self.delegate;
                 }
             }
             

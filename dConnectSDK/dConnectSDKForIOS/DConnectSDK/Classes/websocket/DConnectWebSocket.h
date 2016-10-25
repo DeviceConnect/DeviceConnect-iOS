@@ -69,8 +69,8 @@
 
 /*! @brief イベントを送信する.
  @param[in] event 送信するイベント
- @param[in] origin 送信先のオリジン
+ @param[in] receiverId 送信先のレシーバーID
  */
-- (void) sendEvent:(NSString *)event forOrigin:(NSString *)origin;
+- (void) sendEvent:(NSString *)event forReceiverId:(NSString *)receiverId;
 
 @end

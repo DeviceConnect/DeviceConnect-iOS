@@ -70,13 +70,6 @@
                           NSString *color = [DConnectLightProfile colorFromRequest: request];
                           NSArray *flashing = [DConnectLightProfile parsePattern: [DConnectLightProfile flashingFromRequest: request] isId:NO];
                           
-                          if (!brightness
-                              || (brightness && ([brightness doubleValue] < 0.0 || [brightness doubleValue] > 1.0))) {
-                              [response setErrorToInvalidRequestParameterWithMessage:
-                               @"Parameter 'brightness' must be a value between 0 and 1.0."];
-                              return YES;
-                          }
-                          
                           if (!flashing) {
                               [response setErrorToInvalidRequestParameterWithMessage:
                                @"Parameter 'flashing' invalid."];
