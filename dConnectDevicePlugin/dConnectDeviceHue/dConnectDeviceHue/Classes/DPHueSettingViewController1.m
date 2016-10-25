@@ -21,8 +21,6 @@
 #pragma mark - Portrait Constraints
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *portCenterTopX;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *portCenterMiddleX;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *portCenterBottomX;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *portCenterMainX;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *portBottomRight;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *portBottomBottom;
 #pragma mark - Landscape Constraints
@@ -31,9 +29,8 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *landRightTop;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *landLeftBottom;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *landLeftBottomBottom;
-#pragma mark - etc constraints
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *commonLeft;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *commonLeftMessage;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *landImageLeft;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *landMessageLeft;
 
 @end
 
@@ -63,19 +60,17 @@
 {
     [super viewDidLoad];
     
-    if (![super iphone6p]) {
-        portConstraints = [NSArray arrayWithObjects:
-                           _commonLeft,
-                           _commonLeftMessage,
-                           _portCenterTopX, _portCenterMiddleX, _portCenterBottomX,
-                           _portCenterMainX, _portBottomRight, _portBottomBottom, nil];
-    } else {
-        portConstraints = [NSArray arrayWithObjects:
-                           _portCenterTopX, _portCenterMiddleX, _portCenterBottomX,
-                           _portCenterMainX, _portBottomRight, _portBottomBottom, nil];
-    }
-    landConstraints = [NSArray arrayWithObjects:_landLeftCenterY, _landRightRight, _landRightTop,
-                       _landLeftBottom, _landLeftBottomBottom, nil];
+            portConstraints = [NSArray arrayWithObjects:
+                           _portCenterTopX, _portCenterMiddleX,  _portBottomRight, _portBottomBottom, nil];
+
+    landConstraints = [NSArray arrayWithObjects:
+                       _landLeftCenterY,
+                       _landRightRight,
+                       _landRightTop,
+                       _landLeftBottom,
+                       _landLeftBottomBottom,
+                       _landImageLeft,
+                       _landMessageLeft, nil];
     _bridgeListTableView.delegate = self;
     _bridgeListTableView.dataSource = self;
 
@@ -112,16 +107,10 @@
 {
     if ([super iphone]) {
         if ([super iphone5]) {
-            _commonLeft.constant = 29;
-            _commonLeftMessage.constant = 29;
             _portBottomRight.constant = 35;
         } else if ([super iphone6]) {
-            _commonLeft.constant = 59;
-            _commonLeftMessage.constant = 59;
             _portBottomRight.constant = 60;
         } else if ([super iphone6p]) {
-            _commonLeft.constant = 80;
-            _commonLeftMessage.constant = 80;
             _portBottomRight.constant = 80;
             _portBottomBottom.constant = 80;
         }
@@ -136,10 +125,13 @@
     if ([super iphone]) {
         if ([super iphone5]) {
             _landRightRight.constant = 29;
+            _landRightTop.constant = 33;
         } else if ([super iphone6]) {
             _landRightRight.constant = 70;
+            _landRightTop.constant = 15;
         } else if ([super iphone6p]) {
             _landRightRight.constant = 140;
+            _landRightTop.constant = 5;
         }
     } else {
         

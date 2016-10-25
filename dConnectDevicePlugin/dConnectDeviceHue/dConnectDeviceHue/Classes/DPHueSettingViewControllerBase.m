@@ -31,20 +31,20 @@ static DPHueItemBridge *mSelectedItemBridge;
     [self setLayoutConstraint];
 
 }
-
-- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
-    [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
-    [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext>  _Nonnull context) {
-        if (size.width <= size.height) {
-            [NSLayoutConstraint deactivateConstraints:landConstraints];
-            [NSLayoutConstraint activateConstraints:portConstraints];
-        } else {
-            [NSLayoutConstraint deactivateConstraints:portConstraints];
-            [NSLayoutConstraint activateConstraints:landConstraints];
-        }
-    } completion:nil];
+- (void)viewDidLayoutSubviews
+{
+    [super viewDidLayoutSubviews];
+    UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
+    if(orientation == UIInterfaceOrientationLandscapeLeft
+       || orientation == UIInterfaceOrientationLandscapeRight)
+    {
+        [NSLayoutConstraint deactivateConstraints:portConstraints];
+        [NSLayoutConstraint activateConstraints:landConstraints];
+    } else {
+        [NSLayoutConstraint deactivateConstraints:landConstraints];
+        [NSLayoutConstraint activateConstraints:portConstraints];
+    }
 }
-
 
 - (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
                                          duration:(NSTimeInterval)duration
