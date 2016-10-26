@@ -114,7 +114,7 @@ NSString *const DPHueBridgeListName = @"org.deviceconnect.ios.DPHue.ip";
         [phHueSDK setBridgeToUseWithId:bridgeId ipAddress:ipAddress];
     }
 //    [self enableHeartbeat];
-    [self performSelector:@selector(enableHeartbeat) withObject:nil afterDelay:1];
+    [self performSelector:@selector(enableHeartbeat) withObject:nil afterDelay:0.5];
 
 }
 
@@ -428,11 +428,13 @@ pushlinkAuthenticationSuccessSelector:(SEL)pushlinkAuthenticationSuccessSelector
 - (void)hueDeviceSearchFailed:(NSArray*)errors {
     if (_completionHandler) {
         _completionHandler(errors);
+        _completionHandler = nil;
     }
 }
 - (void)hueDeviceSearchFinished {
     if (_completionHandler) {
         _completionHandler([NSArray array]);
+        _completionHandler = nil;
     }
 }
 

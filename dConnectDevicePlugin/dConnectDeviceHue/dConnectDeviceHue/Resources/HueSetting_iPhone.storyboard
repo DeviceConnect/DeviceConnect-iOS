@@ -205,6 +205,7 @@
                         <outlet property="selectedIpAddressLabel" destination="9zA-4j-M9D" id="Oek-Xd-Q2d"/>
                         <outlet property="selectedMacAddressLabel" destination="9zA-4j-M9D" id="olP-rK-5tO"/>
                         <outlet property="settingMsgLabel" destination="wnB-nS-Bae" id="YwF-Qr-0eU"/>
+                        <outlet property="statusLabel" destination="3GD-9d-9jQ" id="rur-e5-a9L"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fCd-TJ-EL8" sceneMemberID="firstResponder"/>
@@ -335,11 +336,11 @@
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
-                                <exclude reference="XNh-UL-q9b"/>
-                                <exclude reference="fuw-25-RIo"/>
                                 <exclude reference="12n-es-n2Q"/>
                                 <exclude reference="Amy-AM-ARR"/>
                                 <exclude reference="uPz-as-RTp"/>
+                                <exclude reference="fuw-25-RIo"/>
+                                <exclude reference="XNh-UL-q9b"/>
                                 <exclude reference="6UT-gn-aKQ"/>
                                 <exclude reference="CgH-md-PCZ"/>
                             </mask>
@@ -383,40 +384,24 @@
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bAd-o7-Anb">
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="hue004.png" translatesAutoresizingMaskIntoConstraints="NO" id="AjM-qC-5IG">
-                                        <frame key="frameInset" minX="38" minY="5" width="180" height="140"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    </imageView>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="hue003.png" translatesAutoresizingMaskIntoConstraints="NO" id="faL-eg-SRg">
-                                        <frame key="frameInset" minX="38" minY="5" width="180" height="140"/>
+                                        <frame key="frameInset" minX="10" minY="5" width="180" height="140"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    </imageView>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="hue004.png" translatesAutoresizingMaskIntoConstraints="NO" id="AjM-qC-5IG">
+                                        <frame key="frameInset" minX="8" minY="5" width="180" height="140"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     </imageView>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="150" id="4JW-9s-mWf"/>
-                                    <constraint firstAttribute="width" constant="256" id="sjC-DJ-Oq3"/>
-                                </constraints>
-                            </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hmo-rD-NTE">
-                                <subviews>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" lineBreakMode="tailTruncation" numberOfLines="6" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="192" translatesAutoresizingMaskIntoConstraints="NO" id="lEF-QF-gkU">
-                                        <frame key="frameInset" minX="20" minY="30" width="192" height="91"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <string key="text">新しいライトを追加したい場合は、上記のボタンを押下してください。ライトの追加がない場合はhueの設定は完了です。
-</string>
-                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                </subviews>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="232" id="9HZ-lO-1hY"/>
-                                    <constraint firstAttribute="height" constant="201" id="YkP-B0-2hG"/>
+                                    <constraint firstAttribute="height" constant="154" id="VY6-xd-2WB"/>
+                                    <constraint firstAttribute="width" constant="200" id="XGO-gA-wQM"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xqr-mw-Mfb">
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" restorationIdentifier="btnSearchLight" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zyx-mK-3Kc">
-                                        <frame key="frameInset" minX="38" minY="3" width="180" height="30"/>
+                                        <frame key="frameInset" minX="12" minY="5" width="180" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <state key="normal" title="ブリッジにライトを登録">
                                             <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -426,18 +411,18 @@
                                         </connections>
                                     </button>
                                     <view hidden="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9ad-iI-6wa">
-                                        <frame key="frameInset" width="256" height="35"/>
+                                        <frame key="frameInset" minX="18" minY="3" width="168" height="28"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <subviews>
                                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="認証中!!" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jBe-2V-Edj">
-                                                <frame key="frameInset" minX="78" minY="7" width="100" height="21"/>
+                                                <frame key="frameInset" minX="83" minY="4" width="62" height="21"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <activityIndicatorView hidden="YES" opaque="NO" contentMode="center" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="ldZ-xI-vWV">
-                                                <frame key="frameInset" minX="78" minY="8" width="20" height="20"/>
+                                                <frame key="frameInset" minX="38" minY="5" width="20" height="20"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             </activityIndicatorView>
                                         </subviews>
@@ -446,36 +431,67 @@
                                 </subviews>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="35" id="Ayd-bg-P19"/>
-                                    <constraint firstAttribute="width" constant="256" id="Spb-XX-Ymu"/>
+                                    <constraint firstAttribute="width" constant="205" id="KPb-PI-g2f"/>
+                                    <constraint firstAttribute="height" constant="35" id="R5p-zM-E0f"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hmo-rD-NTE">
+                                <subviews>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" lineBreakMode="tailTruncation" numberOfLines="7" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="192" translatesAutoresizingMaskIntoConstraints="NO" id="lEF-QF-gkU">
+                                        <frame key="frameInset" minX="20" width="192" height="128"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <string key="text">新しいライトを追加したい場合は、上記のボタンを押下してください。ライトの追加がない場合はhueの設定は完了です。
+</string>
+                                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="232" id="K2u-4E-nJG"/>
+                                    <constraint firstAttribute="height" constant="201" id="fvI-SP-grd"/>
                                 </constraints>
                             </view>
                         </subviews>
                         <constraints>
-                            <constraint firstItem="xqr-mw-Mfb" firstAttribute="leading" secondItem="pkY-3f-DIk" secondAttribute="leading" constant="32" id="0qo-LP-q9P"/>
-                            <constraint firstItem="xqr-mw-Mfb" firstAttribute="top" secondItem="iQr-d6-5kh" secondAttribute="bottom" constant="209" id="4Da-gQ-e7t"/>
-                            <constraint firstItem="xQn-sq-kDN" firstAttribute="top" secondItem="hmo-rD-NTE" secondAttribute="bottom" constant="14" id="CEL-8V-p1k"/>
-                            <constraint firstItem="bAd-o7-Anb" firstAttribute="top" secondItem="iQr-d6-5kh" secondAttribute="bottom" constant="60" id="Mq1-nx-Qu8"/>
-                            <constraint firstAttribute="trailing" secondItem="hmo-rD-NTE" secondAttribute="trailing" constant="44" id="kZF-Dq-SqL"/>
-                            <constraint firstItem="bAd-o7-Anb" firstAttribute="leading" secondItem="pkY-3f-DIk" secondAttribute="leading" constant="32" id="uA5-Ha-6PS"/>
+                            <constraint firstItem="bAd-o7-Anb" firstAttribute="leading" secondItem="pkY-3f-DIk" secondAttribute="leading" constant="60" id="6K9-TV-2vZ"/>
+                            <constraint firstAttribute="trailing" secondItem="hmo-rD-NTE" secondAttribute="trailing" constant="52" id="BpW-PK-C7C"/>
+                            <constraint firstItem="xqr-mw-Mfb" firstAttribute="centerX" secondItem="pkY-3f-DIk" secondAttribute="centerX" id="Nhn-2K-oHH"/>
+                            <constraint firstItem="hmo-rD-NTE" firstAttribute="top" secondItem="iQr-d6-5kh" secondAttribute="bottom" constant="43" id="fUb-Df-iwx"/>
+                            <constraint firstItem="xQn-sq-kDN" firstAttribute="top" secondItem="hmo-rD-NTE" secondAttribute="bottom" constant="14" id="gNG-X8-0SQ"/>
+                            <constraint firstItem="bAd-o7-Anb" firstAttribute="top" secondItem="iQr-d6-5kh" secondAttribute="bottom" constant="47" id="hd1-fz-KnI"/>
+                            <constraint firstItem="xqr-mw-Mfb" firstAttribute="top" secondItem="bAd-o7-Anb" secondAttribute="bottom" constant="8" id="o2u-Vb-B60"/>
+                            <constraint firstItem="hmo-rD-NTE" firstAttribute="centerX" secondItem="pkY-3f-DIk" secondAttribute="centerX" id="pT7-SX-avU"/>
+                            <constraint firstAttribute="trailing" secondItem="hmo-rD-NTE" secondAttribute="trailing" constant="44" id="pUL-md-owg"/>
+                            <constraint firstItem="bAd-o7-Anb" firstAttribute="centerX" secondItem="pkY-3f-DIk" secondAttribute="centerX" id="rCv-t5-Ufo"/>
+                            <constraint firstItem="xqr-mw-Mfb" firstAttribute="leading" secondItem="pkY-3f-DIk" secondAttribute="leading" constant="58" id="rJZ-tl-KoI"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="BpW-PK-C7C"/>
+                                <exclude reference="fUb-Df-iwx"/>
+                            </mask>
+                        </variation>
                     </view>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
-                        <outlet property="lightIcomYConstraint" destination="Mq1-nx-Qu8" id="sn7-GG-5G9"/>
-                        <outlet property="lightIconXConstraint" destination="uA5-Ha-6PS" id="fcV-fc-kfV"/>
+                        <outlet property="landInfoRight" destination="BpW-PK-C7C" id="FvY-ae-9vn"/>
+                        <outlet property="landInfoTop" destination="fUb-Df-iwx" id="ucF-rw-vKN"/>
                         <outlet property="lightOffIconImageView" destination="faL-eg-SRg" id="KCE-hc-2Vi"/>
                         <outlet property="lightOnIconImageView" destination="AjM-qC-5IG" id="RNG-cL-F7y"/>
-                        <outlet property="lightSearchButtonXConstraint" destination="0qo-LP-q9P" id="Zwh-TW-rqJ"/>
-                        <outlet property="lightSearchButtonYConstraint" destination="4Da-gQ-e7t" id="sCi-EM-xKu"/>
-                        <outlet property="lightSearchDescriptionXConstraint" destination="kZF-Dq-SqL" id="tLU-IF-b1G"/>
-                        <outlet property="lightSearchDescriptionYConstraint" destination="CEL-8V-p1k" id="CFb-O9-bIf"/>
+                        <outlet property="lightSearchingIndicator" destination="ldZ-xI-vWV" id="iwF-JS-fgd"/>
+                        <outlet property="portImageCenter" destination="rCv-t5-Ufo" id="QvN-Gc-LPg"/>
+                        <outlet property="portImageLeft" destination="6K9-TV-2vZ" id="5IW-m0-VuA"/>
+                        <outlet property="portInfoBottom" destination="gNG-X8-0SQ" id="EjO-xR-8yj"/>
+                        <outlet property="portInfoCenter" destination="pT7-SX-avU" id="Tn8-Zf-fxR"/>
+                        <outlet property="portInfoRight" destination="pUL-md-owg" id="16q-9W-1o2"/>
+                        <outlet property="portMessageCenter" destination="Nhn-2K-oHH" id="0GR-Vi-Ps3"/>
+                        <outlet property="portMessageLeft" destination="rJZ-tl-KoI" id="n0F-37-zFA"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gq8-As-gaE" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-482" y="2575"/>
+            <point key="canvasLocation" x="-483.75" y="2574.2957746478874"/>
         </scene>
         <!--Hue Setting View Controller4-->
         <scene sceneID="M46-s8-xJm">
@@ -489,9 +505,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RlS-jF-fia">
-                                <frame key="frameInset" minX="33" minY="72" width="80" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RlS-jF-fia">
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="JV6-oq-YTc"/>
+                                    <constraint firstAttribute="width" constant="80" id="Jbn-Tv-oSK"/>
+                                </constraints>
                                 <state key="normal" title="自動検索">
                                     <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
@@ -499,9 +517,11 @@
                                     <action selector="searchAutomatic:" destination="Gde-dV-7f5" eventType="touchUpInside" id="YEE-GD-o0u"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KY6-se-HEz">
-                                <frame key="frameInset" minX="196" minY="72" width="85" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KY6-se-HEz">
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="85" id="YlS-nd-hHr"/>
+                                    <constraint firstAttribute="height" constant="30" id="fAU-i8-Rys"/>
+                                </constraints>
                                 <state key="normal" title="手動検索">
                                     <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
@@ -509,38 +529,53 @@
                                     <action selector="searchManual:" destination="Gde-dV-7f5" eventType="touchUpInside" id="sao-bW-Rkd"/>
                                 </connections>
                             </button>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" restorationIdentifier="cellLight" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="KaE-N8-LGQ">
-                                <frame key="frameInset" minX="3" minY="110" width="312" height="414"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="cellLight" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="KaE-N8-LGQ">
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </tableView>
-                            <view hidden="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="D91-nA-g9j">
-                                <frame key="frameInset" minX="4" minY="267" width="312" height="35"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <view hidden="YES" alpha="0.55000000000000004" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="D91-nA-g9j">
                                 <subviews>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="ライト検索中" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WAa-FZ-F0m">
-                                        <frame key="frameInset" minX="98" minY="7" width="179" height="21"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <activityIndicatorView hidden="YES" opaque="NO" contentMode="center" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="jat-yf-T6z">
-                                        <frame key="frameInset" minX="70" minY="8" width="20" height="20"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <activityIndicatorView hidden="YES" opaque="NO" contentMode="center" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="jat-yf-T6z">
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="40" id="9HJ-cX-Iie"/>
+                                            <constraint firstAttribute="width" constant="40" id="QX6-78-jZK"/>
+                                        </constraints>
+                                        <color key="color" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     </activityIndicatorView>
                                 </subviews>
-                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" red="0.066163374352331661" green="0.066163374352331661" blue="0.066163374352331661" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="150" id="HhF-mA-B3A"/>
+                                    <constraint firstItem="jat-yf-T6z" firstAttribute="centerX" secondItem="D91-nA-g9j" secondAttribute="centerX" id="gdX-s2-x9Y"/>
+                                    <constraint firstAttribute="width" constant="150" id="pE7-V5-yIc"/>
+                                    <constraint firstItem="jat-yf-T6z" firstAttribute="centerY" secondItem="D91-nA-g9j" secondAttribute="centerY" id="rBp-SN-Si8"/>
+                                </constraints>
                             </view>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="RlS-jF-fia" firstAttribute="leading" secondItem="mvl-PP-Tzz" secondAttribute="leading" constant="33" id="3lH-S0-vlv"/>
+                            <constraint firstItem="KaE-N8-LGQ" firstAttribute="top" secondItem="KY6-se-HEz" secondAttribute="bottom" constant="8" id="B6d-Fb-OgI"/>
+                            <constraint firstAttribute="trailing" secondItem="KY6-se-HEz" secondAttribute="trailing" constant="39" id="E2l-fT-ndP"/>
+                            <constraint firstItem="D91-nA-g9j" firstAttribute="centerY" secondItem="mvl-PP-Tzz" secondAttribute="centerY" id="L7u-uo-pZH"/>
+                            <constraint firstItem="KaE-N8-LGQ" firstAttribute="top" secondItem="KY6-se-HEz" secondAttribute="bottom" constant="8" id="Pcf-3Q-UNl"/>
+                            <constraint firstItem="D91-nA-g9j" firstAttribute="centerX" secondItem="mvl-PP-Tzz" secondAttribute="centerX" id="ZCb-nY-ufh"/>
+                            <constraint firstItem="KaE-N8-LGQ" firstAttribute="leading" secondItem="mvl-PP-Tzz" secondAttribute="leading" id="hVE-kY-EFi"/>
+                            <constraint firstItem="yXU-KZ-o7V" firstAttribute="top" secondItem="KaE-N8-LGQ" secondAttribute="bottom" id="hla-8N-2JR"/>
+                            <constraint firstItem="KaE-N8-LGQ" firstAttribute="top" secondItem="RlS-jF-fia" secondAttribute="bottom" constant="8" id="uJA-AY-w91"/>
+                            <constraint firstAttribute="trailing" secondItem="KaE-N8-LGQ" secondAttribute="trailing" id="ubW-J0-m7X"/>
+                            <constraint firstItem="RlS-jF-fia" firstAttribute="top" secondItem="acq-oe-7q9" secondAttribute="bottom" constant="8" id="wYj-hq-ZGL"/>
+                            <constraint firstItem="KaE-N8-LGQ" firstAttribute="centerX" secondItem="mvl-PP-Tzz" secondAttribute="centerX" id="xlV-3D-LuX"/>
+                            <constraint firstItem="KY6-se-HEz" firstAttribute="top" secondItem="acq-oe-7q9" secondAttribute="bottom" constant="8" id="zvV-YG-cLh"/>
+                        </constraints>
                     </view>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="autoSearchBtn" destination="RlS-jF-fia" id="EsL-I0-oFq"/>
                         <outlet property="foundLightListView" destination="KaE-N8-LGQ" id="Yry-bm-biZ"/>
                         <outlet property="indicator" destination="D91-nA-g9j" id="3tD-Hs-ypI"/>
                         <outlet property="lightSearchingIndicator" destination="jat-yf-T6z" id="z9o-sb-80u"/>
+                        <outlet property="manualSearchBtn" destination="KY6-se-HEz" id="d6C-st-1fb"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fVx-z9-fnN" userLabel="First Responder" sceneMemberID="firstResponder"/>

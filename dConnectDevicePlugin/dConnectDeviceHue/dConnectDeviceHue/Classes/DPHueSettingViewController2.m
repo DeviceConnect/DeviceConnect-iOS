@@ -17,7 +17,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *selectedIpAddressLabel;
 @property (weak, nonatomic) IBOutlet UILabel *authorizeStateLabel;
 @property (weak, nonatomic) IBOutlet UILabel *settingMsgLabel;
-
+@property (weak, nonatomic) IBOutlet UILabel *statusLabel;
 #pragma mark - Portrait Constraints
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *portImageLeft;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *portMessageLeft;
@@ -47,15 +47,27 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    portConstraints = [NSArray arrayWithObjects:
-                       _portInfoRight,
-                       _portInfoBottom,
-                       _portImageCenter,
-                       _portMessageCenter,
-                       _portInfoCenter, nil];
+    if ([super iphone]) {
+        portConstraints = [NSArray arrayWithObjects:
+                           _portInfoRight,
+                           _portInfoBottom,
+                           _portImageCenter,
+                           _portInfoCenter,
+                           _portMessageCenter,
+                           _portInfoCenter, nil];
+    } else {
+        portConstraints = [NSArray arrayWithObjects:
+                           _portInfoBottom,
+                           _portImageCenter,
+                           _portInfoCenter,
+                           _portMessageCenter,
+                           _portInfoCenter, nil];
+
+    }
     landConstraints = [NSArray arrayWithObjects:
                        _landInfoRight,
                        _landInfoTop, nil];
+
     [manager deallocPHNotificationManagerWithReceiver:self];
     [self startHueAuthentication];
 }
@@ -86,8 +98,8 @@
 
 - (void)didPushlinkAuthenticationSuccess
 {
-    [self stopIndicator];
     [manager disableHeartbeat];
+    _statusLabel.text = @"ライト検索中!!";
     _authorizeStateLabel.text = DPHueLocalizedString(_bundle, @"HueBridgeAuthorized");
     [manager searchLightWithCompletion:^(NSArray *errors) {
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -100,7 +112,7 @@
 
 - (void)initHueSdk
 {
-    DPHueItemBridge *item = [self getSelectedItemBridge];    
+    DPHueItemBridge *item = [self getSelectedItemBridge];
     [[DPHueManager sharedManager] initHue];
     [[DPHueManager sharedManager] startAuthenticateBridgeWithIpAddress:item.ipAddress
                                                             bridgeId:item.bridgeId
@@ -112,7 +124,7 @@
 
 - (void)didBridgeAuthenticationSuccess
 {
-
+    [self stopIndicator];
     [self showAleart:DPHueLocalizedString(_bundle, @"HueRegisterApp")];
     dispatch_queue_t updateQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
     dispatch_async(updateQueue, ^{
@@ -126,6 +138,8 @@
 
 - (void)didFailed
 {
+    [self stopIndicator];
+
     dispatch_queue_t updateQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
     dispatch_async(updateQueue, ^{
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -196,7 +210,13 @@
         }
  
     }else{
-        
+        if ([super ipadMini]) {
+            _portImageLeft.constant = 128;
+            _portMessageLeft.constant = 128;
+        } else {
+            _portImageLeft.constant = 268;
+            _portMessageLeft.constant = 268;
+        }
     }
 
 }
@@ -216,8 +236,14 @@
             _landInfoTop.constant = 15;
         }
 
-    }else{
-
+    } else {
+        if ([super ipadMini]) {
+            _portImageLeft.constant = 30;
+            _portMessageLeft.constant = 30;
+        } else {
+            _portImageLeft.constant = 250;
+            _portMessageLeft.constant = 250;
+        }
     }
 
 }

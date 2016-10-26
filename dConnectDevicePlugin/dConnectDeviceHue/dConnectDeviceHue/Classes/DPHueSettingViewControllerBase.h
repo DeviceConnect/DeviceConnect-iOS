@@ -46,6 +46,10 @@
  @brief 設定画面を表示するViewController。
  */
 @property (atomic) DPHueViewController *hueViewController;
+/*!
+ @brief PageViewControllerのroot。
+ */
+@property (nonatomic, weak) UIViewController *root;
 
 /*!
  @brief ViewControllerのページ数。
@@ -161,6 +165,9 @@
  */
 - (void)showLightListPage;
 
-
+/*!
+ @brief Closeボタンのタップ可を切り替える。
+ */
+- (void) setCloseBtn:(BOOL)closeEnable;
 
 @end

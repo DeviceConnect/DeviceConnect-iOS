@@ -209,4 +209,8 @@ static DPHueItemBridge *mSelectedItemBridge;
     [self showPage:3];
 }
 
+- (void) setCloseBtn:(BOOL)closeEnable {
+    self.root.navigationItem.leftBarButtonItem.enabled = closeEnable;
+}
+
 @end
