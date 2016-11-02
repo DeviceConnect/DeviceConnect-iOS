@@ -9,16 +9,20 @@ Device Connect iOSはiOS版のDeviceConnectのプラットフォームになり�
 * [dConnectBrowserのビルドと起動](#section2)
 * [動作確認](#section3)
 * [DeviceConnectアプリの開発](#section4)
+* [サポートするXcodeのバージョン](#section5)
 
 # <a name="section1">プロジェクトの説明</a>
 ## dConnectDevicePlugin
 | プロジェクト名|内容  |
 |:-----------|:---------|
 |dConnectDeviceAllJoyn|AllJoynのデバイスプラグイン。|
+|dConnectDeviceAWSIoT|AWSIoTのデバイスプラグイン。|
 |dConnectDeviceChromeCast|Chromecastのデバイスプラグイン。|
+|dConnectDeviceHitoe|Hitoeのデバイスプラグイン。|
 |dConnectDeviceHost|iOS端末のデバイスプラグイン。|
 |dConnectDeviceHue|Hueのデバイスプラグイン。|
 |dConnectDeviceIRKit|IRKitのデバイスプラグイン。|
+|dConnectDeviceLinking|Linkingのデバイスプラグイン。|
 |dConnectDevicePebble|Pebbleのデバイスプラグイン。|
 |dConnectDeviceSonyCamera|QX10などのSonyCameraのデバイスプラグイン。|
 |dConnectDeviceSphero|Spheroのデバイスプラグイン。|
@@ -47,19 +51,22 @@ Device Connect iOSはiOS版のDeviceConnectのプラットフォームになり�
 * [Host](https://github.com/DeviceConnect/DeviceConnect-iOS/wiki/Host-Build)
 * [Hue](https://github.com/DeviceConnect/DeviceConnect-iOS/wiki/Hue-Build)
 * [IRKit](https://github.com/DeviceConnect/DeviceConnect-iOS/wiki/IRKit-Build)
+* [Linking](https://github.com/DeviceConnect/DeviceConnect-iOS/wiki/Linking-Build)
 * [Pebble](https://github.com/DeviceConnect/DeviceConnect-iOS/wiki/Pebble-Build)
 * [SonyCamera](https://github.com/DeviceConnect/DeviceConnect-iOS/wiki/SonyCamera-Build)
 * [Sphero](https://github.com/DeviceConnect/DeviceConnect-iOS/wiki/Sphero-Build)
 * [Theta](https://github.com/DeviceConnect/DeviceConnect-iOS/wiki/Theta-Build)
+* [Hitoe](https://github.com/DeviceConnect/DeviceConnect-iOS/wiki/Hitoe-Build)
+* [AWSIoT](https://github.com/DeviceConnect/DeviceConnect-iOS/wiki/AWSIoT-Build)
 
 
 # <a name="section3">動作確認</a>
  dConnectBrowserのアドレスバーに`http://localhost:4035/gotapi/availability`を入力してください。<br>
 以下のようなJSONのレスポンスが返って来れば、DeviceConnectが動作していることを確認することができます。<br>
 
- <center><a href="https://raw.githubusercontent.com/wiki/DeviceConnect/DeviceConnect-iOS/imageX.PNG" target="_blank">
-<img src="https://raw.githubusercontent.com/wiki/DeviceConnect/DeviceConnect-iOS/imageX.PNG" border="0"
- width="320" height="550" alt="" /></a></center>
+ <center><a href="./assets/availability.PNG" target="_blank">
+<img src="./assets/availability.PNG" border="0"
+ width="375" height="667" alt="" /></a></center>
 
  リクエスト
 
@@ -71,8 +78,10 @@ Device Connect iOSはiOS版のDeviceConnectのプラットフォームになり�
 
  ```
  {
-     "product":"Device Connect Manager",
+     "product":"dConnectBrowser",
      "version":"x.x",
+     "name":"Manager-0702",
+     "uuid":"xxxx-yyyyy-zzz-aaaa",
      "result":0,
 }
  ```
@@ -87,3 +96,22 @@ Device Connect の APIを使用してアプリケーションを作成する場�
  Device Connect Managerを使用したアプリケーションを開発したい場合には、こちらのデバイスプラグイン開発マニュアルをご参照ください。
 * [デバイスプラグイン開発マニュアル](https://github.com/DeviceConnect/DeviceConnect-iOS/wiki/DevicePluginManual)<br>
 Device Connect Managerに対応するデバイスプラグインを開発したい場合には、こちらのデバイスプラグイン開発マニュアルをご参照ください。
+
+# <a name="section5">サポートするXcodeのバージョン</a>
+DeviceConnectのデバイスプラグインは、下記に記すXcode以外でのビルド・実行をサポートしていません。
+
+
+|デバイスプラグイン名|Xcodeバージョン|
+|:--|:--|
+|ChromeCast|8.0|
+|Host|8.0|
+|Hue|8.0|
+|IRKit|8.0|
+|Pebble|8.0|
+|SonyCamera|8.0|
+|Sphero|8.0|
+|Theta|8.0|
+|AllJoyn|8.0|
+|Linking|8.0|
+|Hitoe|7.2.1以下|
+|AWSIoT|8.0|

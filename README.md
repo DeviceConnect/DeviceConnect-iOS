@@ -16,16 +16,21 @@ In this guide I will continue to discuss the following.
 * [Build and start-up of dConnectBrowser](#section2)
 * [Operation check](#section3)
 * [Development of DeviceConnect app](#section4)
+* [Xcode version to support](#section5)
+
 
 # <a name="section1">Project description</a>
 ## dConnectDevicePlugin
 | Project Name|Content  |
 |:-----------|:---------|
 |dConnectDeviceAllJoyn|Device Plug-in for AllJoyn.|
+|dConnectDeviceAWSIoT|Device Plug-in for AWSIoT|
 |dConnectDeviceChromeCast|Device Plug-in for Chromecast.|
-|dConnectDeviceHost|Device Plug-in for iOS terminal.|
+|dConnectDeviceHitoe|Device Plug-in for Hitoe.|
+|dConnectDeviceHost|Device Plug-in for iOS.|
 |dConnectDeviceHue|Device Plug-in for Hue.|
 |dConnectDeviceIRKit|Device Plug-in for IRKit.|
+|dConnectDeviceLinking|Device Plug-in for Linking.|
 |dConnectDevicePebble|Device Plug-in for Pebble.|
 |dConnectDeviceSonyCamera|Device Plug-in for SonyCamera such as QX10.|
 |dConnectDeviceSphero|Device Plug-in for Sphero.|
@@ -55,19 +60,22 @@ Basically, you work with start-up of dConnectBrowser only, such as when you make
 * [Host](https://github.com/DeviceConnect/DeviceConnect-iOS/wiki/Host-Build)
 * [Hue](https://github.com/DeviceConnect/DeviceConnect-iOS/wiki/Hue-Build)
 * [IRKit](https://github.com/DeviceConnect/DeviceConnect-iOS/wiki/IRKit-Build)
+* [Linking](https://github.com/DeviceConnect/DeviceConnect-iOS/wiki/Linking-Build)
 * [Pebble](https://github.com/DeviceConnect/DeviceConnect-iOS/wiki/Pebble-Build)
 * [SonyCamera](https://github.com/DeviceConnect/DeviceConnect-iOS/wiki/SonyCamera-Build)
 * [Sphero](https://github.com/DeviceConnect/DeviceConnect-iOS/wiki/Sphero-Build)
 * [Theta](https://github.com/DeviceConnect/DeviceConnect-iOS/wiki/Theta-Build)
+* [Hitoe](https://github.com/DeviceConnect/DeviceConnect-iOS/wiki/Hitoe-Build)
+* [AWSIoT](https://github.com/DeviceConnect/DeviceConnect-iOS/wiki/AWSIoT-Build)
 
 
 # <a name="section3">Operation check</a>
  To dConnectBrowser the address bar `http://localhost:4035/gotapi/availability` Please enter the.<br>
 If this response is returned in the following, such as JSON, you will be able to make sure that DeviceConnect is running.<br>
 
- <center><a href="https://raw.githubusercontent.com/wiki/DeviceConnect/DeviceConnect-iOS/imageX.PNG" target="_blank">
-<img src="https://raw.githubusercontent.com/wiki/DeviceConnect/DeviceConnect-iOS/imageX.PNG" border="0"
- width="320" height="550" alt="" /></a></center>
+  <center><a href="./assets/availability.PNG" target="_blank">
+<img src="./assets/availability.PNG" border="0"
+ width="375" height="667" alt="" /></a></center>
 
  Request
 
@@ -79,8 +87,10 @@ If this response is returned in the following, such as JSON, you will be able to
 
  ```
  {
-     "product":"Device Connect Manager",
+     "product":"dConnectBrowser",
      "version":"x.x",
+     "name":"Manager-0702",
+     "uuid":"xxxx-yyyyy-zzz-aaaa",
      "result":0,
 }
  ```
@@ -96,3 +106,23 @@ Application and using the DeviceConnect, regard the development of the applicati
 If you want to develop an application that uses the Device Connect Manager, please refer to this device plug-in development manual.
 * [Device plug-in development manual](https://github.com/DeviceConnect/DeviceConnect-iOS/wiki/DevicePluginManual)<br>
 If you want to develop a plug-in device that corresponds to the Device Connect Manager, please refer to this device plug-in development manual.
+
+
+# <a name="section5">Xcode version to support</a>
+Device plug-ins DeviceConnect does not support the build execution other than Xcode referred to below.
+
+
+|Device Plug-in Name|Xcode version|
+|:--|:--|
+|ChromeCast|8.0|
+|Host|8.0|
+|Hue|8.0|
+|IRKit|8.0|
+|Pebble|8.0|
+|SonyCamera|8.0|
+|Sphero|8.0|
+|Theta|8.0|
+|AllJoyn|8.0|
+|Linking|8.0|
+|Hitoe|7.2.1 or under|
+|AWSIoT|8.0|
