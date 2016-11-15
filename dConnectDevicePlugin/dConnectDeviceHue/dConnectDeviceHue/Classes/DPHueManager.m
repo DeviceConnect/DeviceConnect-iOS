@@ -10,6 +10,7 @@
 #import "DPHueManager.h"
 #import "DPHueService.h"
 #import "DPHueReachability.h"
+#import "DPHueDeviceRepeatExecutor.h"
 
 @interface DPHueManager()
 
@@ -18,7 +19,10 @@
 @end
 
 
-@implementation DPHueManager
+@implementation DPHueManager {
+    DPHueDeviceRepeatExecutor *_flashingExecutor;
+}
+
 //見つけたブリッジのリスト
 NSString *const DPHueBridgeListName = @"org.deviceconnect.ios.DPHue.ip";
 
@@ -631,22 +635,16 @@ pushlinkAuthenticationSuccessSelector:(SEL)pushlinkAuthenticationSuccessSelector
                                                errors:nil
                                            errorState:STATE_ERROR_UPDATE_FAIL_LIGHT_STATE];
 
-            for (int i = 0; i < flashing.count; i++) {
-                int delay = [flashing[i] intValue];
-                if (i % 2 == 0) {
-                    [bridgeSendAPI updateLightStateForId:lightId withLightState:lightState completionHandler:^(NSArray *errors) {
-                        
-                        
-                    }];
-                    sleep(delay / 1000);
-                } else {
-                    [bridgeSendAPI updateLightStateForId:lightId withLightState:offState completionHandler:^(NSArray *errors) {
-                        
-                        
-                    }];
-                    sleep(delay / 1000);
-                }
-            }
+            _flashingExecutor = [[DPHueDeviceRepeatExecutor alloc] initWithPattern:flashing on:^{
+                [bridgeSendAPI updateLightStateForId:lightId withLightState:lightState completionHandler:^(NSArray *errors) {
+                }];
+            } off:^{
+                [bridgeSendAPI updateLightStateForId:lightId withLightState:offState completionHandler:^(NSArray *errors) {
+                    
+                    
+                }];
+            }];
+
         } else {
             [bridgeSendAPI updateLightStateForId:lightId withLightState:lightState completionHandler:^(NSArray *errors) {
                 
