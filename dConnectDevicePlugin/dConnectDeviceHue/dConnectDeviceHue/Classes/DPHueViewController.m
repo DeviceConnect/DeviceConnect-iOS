@@ -98,7 +98,7 @@
 - (DPHueModelController *)DPHueModelController
 {
     if (!_hueModelController) {
-        _hueModelController = [[DPHueModelController alloc] init];
+        _hueModelController = [[DPHueModelController alloc] initWithRootViewController:self];
     }
     
     _hueModelController.hueViewController = self;

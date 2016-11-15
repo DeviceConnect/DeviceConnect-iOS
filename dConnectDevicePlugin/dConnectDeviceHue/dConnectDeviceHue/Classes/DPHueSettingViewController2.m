@@ -17,13 +17,22 @@
 @property (weak, nonatomic) IBOutlet UILabel *selectedIpAddressLabel;
 @property (weak, nonatomic) IBOutlet UILabel *authorizeStateLabel;
 @property (weak, nonatomic) IBOutlet UILabel *settingMsgLabel;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *pushlinkIcomYConstraint;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *pushlinkIconXConstraint;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *searchButtonYConstraint;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *searchButtonXConstraint;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *bridgeInfoYConstraint;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *bridgeInfoXConstraint;
-@property (nonatomic) id hueStatusBlock;
+@property (weak, nonatomic) IBOutlet UILabel *statusLabel;
+#pragma mark - Portrait Constraints
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *portImageLeft;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *portMessageLeft;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *portInfoRight;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *portInfoBottom;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *portImageCenter;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *portMessageCenter;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *portInfoCenter;
+
+#pragma mark - Landscape Constraints
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *landInfoRight;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *landInfoTop;
+
+#pragma mark - Common Constraints
+
 @end
 
 @implementation DPHueSettingViewController2
@@ -38,6 +47,27 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    if ([super iphone]) {
+        portConstraints = [NSArray arrayWithObjects:
+                           _portInfoRight,
+                           _portInfoBottom,
+                           _portImageCenter,
+                           _portInfoCenter,
+                           _portMessageCenter,
+                           _portInfoCenter, nil];
+    } else {
+        portConstraints = [NSArray arrayWithObjects:
+                           _portInfoBottom,
+                           _portImageCenter,
+                           _portInfoCenter,
+                           _portMessageCenter,
+                           _portInfoCenter, nil];
+
+    }
+    landConstraints = [NSArray arrayWithObjects:
+                       _landInfoRight,
+                       _landInfoTop, nil];
+
     [manager deallocPHNotificationManagerWithReceiver:self];
     [self startHueAuthentication];
 }
@@ -55,7 +85,7 @@
     [self startIndicator];
     DPHueItemBridge *item = [self getSelectedItemBridge];
     _selectedIpAddressLabel.text = item.ipAddress;
-    _selectedMacAddressLabel.text = item.macAddress;
+    _selectedMacAddressLabel.text = item.bridgeId;
     _authorizeStateLabel.text = @"---";
     [manager            startPushlinkWithReceiver:self
             pushlinkAuthenticationSuccessSelector:@selector(didPushlinkAuthenticationSuccess)
@@ -68,8 +98,8 @@
 
 - (void)didPushlinkAuthenticationSuccess
 {
-    [self stopIndicator];
     [manager disableHeartbeat];
+    _statusLabel.text = @"ライト検索中!!";
     _authorizeStateLabel.text = DPHueLocalizedString(_bundle, @"HueBridgeAuthorized");
     [manager searchLightWithCompletion:^(NSArray *errors) {
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -82,10 +112,10 @@
 
 - (void)initHueSdk
 {
-    DPHueItemBridge *item = [self getSelectedItemBridge];    
+    DPHueItemBridge *item = [self getSelectedItemBridge];
     [[DPHueManager sharedManager] initHue];
     [[DPHueManager sharedManager] startAuthenticateBridgeWithIpAddress:item.ipAddress
-                                                            macAddress:item.macAddress
+                                                            bridgeId:item.bridgeId
                                                               receiver:self
                                         localConnectionSuccessSelector:@selector(didBridgeAuthenticationSuccess)
                                                      noLocalConnection:@selector(didFailed)
@@ -94,9 +124,8 @@
 
 - (void)didBridgeAuthenticationSuccess
 {
-
+    [self stopIndicator];
     [self showAleart:DPHueLocalizedString(_bundle, @"HueRegisterApp")];
-    NSLog(@"success");
     dispatch_queue_t updateQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
     dispatch_async(updateQueue, ^{
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -109,6 +138,8 @@
 
 - (void)didFailed
 {
+    [self stopIndicator];
+
     dispatch_queue_t updateQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
     dispatch_async(updateQueue, ^{
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -160,36 +191,32 @@
 //縦向き座標調整
 - (void)setLayoutConstraintPortrait
 {
-    //iPadの時だけ回転時座標調整する
-    if (self.isIpad) {
-        
-        _pushlinkIconXConstraint.constant = 128;
-        _pushlinkIcomYConstraint.constant = 110;
-        
-        _searchButtonXConstraint.constant = 128;
-        _searchButtonYConstraint.constant = 2;
-        
-        _bridgeInfoXConstraint.constant = 55;
-        _bridgeInfoYConstraint.constant = 184;
-
-        if (self.isIpadMini) {
-            _bridgeInfoYConstraint.constant = _bridgeInfoYConstraint.constant- 50;
+    if (self.iphone) {
+        if ([super iphone5]) {
+            _portImageLeft.constant = 32;
+            _portMessageLeft.constant = 32;
+            _portInfoRight.constant = 35;
+            _portInfoBottom.constant = 4;
+        } else if ([super iphone6]) {
+            _portImageLeft.constant = 62;
+            _portMessageLeft.constant = 62;
+            _portInfoRight.constant = 65;
+            _portInfoBottom.constant = 45;
+        } else if ([super iphone6p]) {
+            _portImageLeft.constant = 72;
+            _portMessageLeft.constant = 72;
+            _portInfoRight.constant = 85;
+            _portInfoBottom.constant = 55;
         }
-
+ 
     }else{
-        
-        _pushlinkIconXConstraint.constant = 32;
-        
-        _searchButtonXConstraint.constant = 32;
-        
-        _bridgeInfoXConstraint.constant = 44;
-        _bridgeInfoYConstraint.constant = 7;
-        
-        if ([self isIphoneLong]) {
-            _bridgeInfoYConstraint.constant = _bridgeInfoYConstraint.constant + 50;
+        if ([super ipadMini]) {
+            _portImageLeft.constant = 128;
+            _portMessageLeft.constant = 128;
+        } else {
+            _portImageLeft.constant = 268;
+            _portMessageLeft.constant = 268;
         }
-
-        
     }
 
 }
@@ -197,34 +224,26 @@
 //横向き座標調整
 - (void)setLayoutConstraintLandscape
 {
-    if (self.isIpad) {
-        
-        _pushlinkIconXConstraint.constant = 50;
-        _pushlinkIcomYConstraint.constant = 150;
-        
-        _searchButtonXConstraint.constant = 50;
-        _searchButtonYConstraint.constant = 80;
-        
-        _bridgeInfoXConstraint.constant = 160;
-        _bridgeInfoYConstraint.constant = 150;
-        
-    }else{
-        
-        _pushlinkIconXConstraint.constant = 0;
-        
-        _searchButtonXConstraint.constant = 0;
-        
-        _bridgeInfoXConstraint.constant = 20;
-        _bridgeInfoYConstraint.constant = 30;
-        
-        if ([self isIphoneLong]) {
-            _pushlinkIconXConstraint.constant = _pushlinkIconXConstraint.constant + 25;
-            _searchButtonXConstraint.constant = _searchButtonXConstraint.constant + 25;
-            
-            _bridgeInfoXConstraint.constant = _bridgeInfoXConstraint.constant + 10;
-
+    if (self.iphone) {
+        if ([super iphone5]) {
+            _landInfoRight.constant = 34;
+            _landInfoTop.constant = 45;
+        } else if ([super iphone6]) {
+            _landInfoRight.constant = 84;
+            _landInfoTop.constant = 25;
+        } else if ([super iphone6p]) {
+            _landInfoRight.constant = 114;
+            _landInfoTop.constant = 15;
         }
 
+    } else {
+        if ([super ipadMini]) {
+            _portImageLeft.constant = 30;
+            _portMessageLeft.constant = 30;
+        } else {
+            _portImageLeft.constant = 250;
+            _portMessageLeft.constant = 250;
+        }
     }
 
 }
