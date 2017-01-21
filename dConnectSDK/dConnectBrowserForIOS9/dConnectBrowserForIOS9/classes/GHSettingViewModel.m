@@ -129,8 +129,12 @@
 - (void)updateSwitch:(SecurityCellType)type switchState:(BOOL)isOn
 {
     switch (type) {
-        case SecurityCellTypeAvailability:  //TODO 確認ダイアログ
-            [DConnectManager sharedManager].settings.useManagerName = isOn;
+        case SecurityCellTypeAvailability:
+            if (isOn) {
+                [self checkShowManagerName];
+            } else {
+                [DConnectManager sharedManager].settings.useManagerName = NO;
+            }
             break;
         case SecurityCellTypeOriginBlock:
             [DConnectManager sharedManager].settings.useOriginBlocking = isOn;
@@ -225,6 +229,12 @@
 }
 
 
+/*!
+ @brief OriginとLocalOAuthのチェック状態を確認する。
+ @param[in] isOn YES:状態をONにするか。 NO:状態をOFFにするか。
+ @param[in] type 設定項目
+ @param[out] completion コールバックオブジェクト
+ */
 - (void)checkOriginAndLocalOAuth:(BOOL)isOn type:(int)type copmletion:(void (^)())completion
 {
     if (type == SecurityCellTypeOrigin
@@ -253,7 +263,7 @@
     } else if (type == SecurityCellTypeLocalOAuth
                && ![[NSUserDefaults standardUserDefaults] boolForKey:IS_USE_LOCALOAUTH]
                && ![[NSUserDefaults standardUserDefaults] boolForKey:IS_ORIGIN_ENABLE]) {
-        NSString *message = @"本機能はアプリのOriginを参照するため、下記もONに切り替わります。\n- Origin(有効/無効)\nよろしいですか？";
+        NSString *message = @"本機能はアプリのOriginを参照するため、下記もONに切り替わります。\n- Origin(有効/無効)\nよろしいでしょうか？";
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"警告" message:message preferredStyle:UIAlertControllerStyleAlert];
         [alertController addAction:[UIAlertAction actionWithTitle:@"はい" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
             [DConnectManager sharedManager].settings.useLocalOAuth = isOn;
@@ -278,6 +288,30 @@
         completion();
     }
 }
+
+- (void)checkShowManagerName
+{
+    NSString *message = @"AvailabilityAPIでManagerの名前を表示します。\n\nhttp://localhost:4035/gotapi/availability\nにより、Managerの名前が取得できるようになります。\n\n有効にしてもよろしいでしょうか？";
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"警告" message:message preferredStyle:UIAlertControllerStyleAlert];
+    [alertController addAction:[UIAlertAction actionWithTitle:@"はい" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        [DConnectManager sharedManager].settings.useManagerName = YES;
+        [self updateSwitchState];
+        if (self.delegate) {
+            [self.delegate updateViews];
+        }
+        
+    }]];
+    [alertController addAction:[UIAlertAction actionWithTitle:@"いいえ" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        [DConnectManager sharedManager].settings.useManagerName = NO;
+        [self updateSwitchState];
+        if (self.delegate) {
+            [self.delegate updateViews];
+        }
+    }]];
+    [[self rootViewController] presentViewController:alertController animated:YES completion:nil];
+    
+}
+
 
 /*!
  @brief Managerの名前を変更するためのダイアログを表示する。
