@@ -69,6 +69,11 @@ extern NSString *const DConnectSystemProfileParamId;
 extern NSString *const DConnectSystemProfileParamName;
 
 /*!
+ @brief パラメータ: uuid。
+ */
+extern NSString *const DConnectSystemProfileParamUUID;
+
+/*!
  @brief パラメータ: version。
  */
 extern NSString *const DConnectSystemProfileParamVersion;
@@ -171,12 +176,20 @@ extern NSString *const DConnectSystemProfileParamVersion;
 
 /*!
  @brief メッセージにデバイスプラグイン名を格納する。
+ DeviceConnectManagerの名前も兼ねている。
  
- @param[in] name デバイスプラグイン名
+ @param[in] name デバイスプラグイン名、あるいはDevice Connect Manager名
  @param[in,out] message デバイスプラグイン名を格納するメッセージ
  */
 + (void) setName:(NSString *)name target:(DConnectMessage *)message;
 
+/*!
+ @brief メッセージにDeviceConnectManagerのUUIDを格納する。
+ 
+ @param[in] uuid DeviceConnectManagerのUUID
+ @param[in,out] message デバイスプラグイン名を格納するメッセージ
+ */
++ (void) setUUID:(NSString *)uuid target:(DConnectMessage *)message;
 #pragma mark - Getter
 
 /*!

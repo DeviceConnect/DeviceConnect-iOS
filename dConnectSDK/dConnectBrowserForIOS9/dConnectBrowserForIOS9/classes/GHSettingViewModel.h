@@ -10,7 +10,7 @@
 
 @protocol GHSettingViewModelDelegate <NSObject>
 - (void)openDevicePluginList;
-- (void)updateSwitches;
+- (void)updateViews;
 @end
 
 @interface GHSettingViewModel : NSObject
@@ -23,7 +23,10 @@ typedef NS_ENUM (NSInteger, SettingSectionType) {
 
 typedef NS_ENUM (NSInteger, SettingCellType) {
     SettingCellTypeIpAddress,
-    SettingCellTypePortNumber
+    SettingCellTypePortNumber,
+    SettingCellTypeManagerName,
+    SettingCellTypeManagerUUID
+
 };
 
 typedef NS_ENUM (NSInteger, DeviceCellType) {
@@ -31,6 +34,7 @@ typedef NS_ENUM (NSInteger, DeviceCellType) {
 };
 
 typedef NS_ENUM (NSInteger, SecurityCellType) {
+    SecurityCellTypeAvailability,
     SecurityCellTypeDeleteAccessToken,
     SecurityCellTypeOriginWhitelist,
     SecurityCellTypeOriginBlock,

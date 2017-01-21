@@ -20,9 +20,12 @@
     self = [super init];
     if (self) {
         self.datasource = @[@[@(SettingCellTypeIpAddress),
-                              @(SettingCellTypePortNumber)],
+                              @(SettingCellTypePortNumber),
+                              @(SettingCellTypeManagerName),
+                              @(SettingCellTypeManagerUUID)],
                             @[@(DeviceCellTypeList)],
-                            @[@(SecurityCellTypeDeleteAccessToken),
+                            @[@(SecurityCellTypeAvailability),
+                              @(SecurityCellTypeDeleteAccessToken),
                               @(SecurityCellTypeOriginWhitelist),
                               @(SecurityCellTypeOriginBlock),
                               @(SecurityCellTypeLocalOAuth),
@@ -87,10 +90,12 @@
             switch (type) {
                 case SettingCellTypeIpAddress:
                     return [NSString stringWithFormat: @"IP %@", [self myIPAddress]];
-                    break;
                 case SettingCellTypePortNumber:
                     return @"Port 4035";
-                    break;
+                case SettingCellTypeManagerName:
+                    return [NSString stringWithFormat:@"Name %@", [[DConnectManager sharedManager] managerName]];
+                case SettingCellTypeManagerUUID:
+                    return [NSString stringWithFormat:@"UUID %@", [[DConnectManager sharedManager] managerUUID]];
             }
             break;
         case SectionTypeDevice:
@@ -98,24 +103,20 @@
             break;
         case SectionTypeSecurity:
             switch (type) {
+                case SecurityCellTypeAvailability:
+                    return @"Manager名の表示";
                 case SecurityCellTypeDeleteAccessToken:
                     return @"アクセストークン削除";
-                    break;
                 case SecurityCellTypeOriginWhitelist:
                     return @"Originホワイトリスト管理";
-                    break;
                 case SecurityCellTypeOriginBlock:
                     return @"Originブロック機能";
-                    break;
                 case SecurityCellTypeLocalOAuth:
                     return @"LocalAuth (ON/OFF)";
-                    break;
                 case SecurityCellTypeOrigin:
                     return @"Origin (有効/無効)";
-                    break;
                 case SecurityCellTypeExternIP:
                     return @"外部IPを許可 (有効/無効)";
-                    break;
             }
             break;
     }
@@ -128,6 +129,9 @@
 - (void)updateSwitch:(SecurityCellType)type switchState:(BOOL)isOn
 {
     switch (type) {
+        case SecurityCellTypeAvailability:  //TODO 確認ダイアログ
+            [DConnectManager sharedManager].settings.useManagerName = isOn;
+            break;
         case SecurityCellTypeOriginBlock:
             [DConnectManager sharedManager].settings.useOriginBlocking = isOn;
             break;
@@ -159,6 +163,7 @@
     [def setBool:settings.useLocalOAuth forKey:IS_USE_LOCALOAUTH];
     [def setBool:settings.useOriginEnable forKey:IS_ORIGIN_ENABLE];
     [def setBool:settings.useExternalIP forKey:IS_EXTERNAL_IP];
+    [def setBool:settings.useManagerName forKey:IS_AVAILABILITY];
     [def synchronize];
 }
 
@@ -166,6 +171,12 @@
 {
     NSInteger type = [(NSNumber*)[[self.datasource objectAtIndex:indexPath.section] objectAtIndex:indexPath.row] integerValue];
     switch (indexPath.section) {
+        case SectionTypeSetting:
+            switch (type) {
+                case SettingCellTypeManagerName:
+                    [self changeManagerName];
+                    break;
+            }
         case SectionTypeDevice:
             [self.delegate openDevicePluginList];
             break;
@@ -190,27 +201,27 @@
             [DConnectManager sharedManager].settings.useOriginBlocking
               = [[NSUserDefaults standardUserDefaults] boolForKey:IS_ORIGIN_BLOCKING];
             return [DConnectManager sharedManager].settings.useOriginBlocking;
-            break;
         case SecurityCellTypeLocalOAuth:
             [DConnectManager sharedManager].settings.useLocalOAuth
                     = [[NSUserDefaults standardUserDefaults] boolForKey:IS_USE_LOCALOAUTH];
             return [DConnectManager sharedManager].settings.useLocalOAuth;
-            break;
         case SecurityCellTypeOrigin:
            [DConnectManager sharedManager].settings.useOriginEnable
              = [[NSUserDefaults standardUserDefaults] boolForKey:IS_ORIGIN_ENABLE];
             return [DConnectManager sharedManager].settings.useOriginEnable;
-            break;
         case SecurityCellTypeExternIP:
             [DConnectManager sharedManager].settings.useExternalIP
                 = [[NSUserDefaults standardUserDefaults] boolForKey:IS_EXTERNAL_IP];
             return [DConnectManager sharedManager].settings.useExternalIP;
-            break;
+        case SecurityCellTypeAvailability:
+            [DConnectManager sharedManager].settings.useManagerName
+            = [[NSUserDefaults standardUserDefaults] boolForKey:IS_AVAILABILITY];
+            return [DConnectManager sharedManager].settings.useManagerName;
+
         default:
-            return NO;
             break;
     }
-    return NO; //FIXME:
+    return NO;
 }
 
 
@@ -226,7 +237,7 @@
             [DConnectManager sharedManager].settings.useOriginEnable = isOn;
             [self updateSwitchState];
             if (self.delegate) {
-                [self.delegate updateSwitches];
+                [self.delegate updateViews];
             }
             
         }]];
@@ -234,14 +245,11 @@
             [DConnectManager sharedManager].settings.useOriginEnable = YES;
             [self updateSwitchState];
             if (self.delegate) {
-                [self.delegate updateSwitches];
+                [self.delegate updateViews];
             }
         }]];
-        UIViewController *baseView = [UIApplication sharedApplication].keyWindow.rootViewController;
-        while (baseView.presentedViewController != nil && !baseView.presentedViewController.isBeingDismissed) {
-            baseView = baseView.presentedViewController;
-        }
-        [baseView presentViewController:alertController animated:YES completion:nil];
+    
+        [[self rootViewController] presentViewController:alertController animated:YES completion:nil];
     } else if (type == SecurityCellTypeLocalOAuth
                && ![[NSUserDefaults standardUserDefaults] boolForKey:IS_USE_LOCALOAUTH]
                && ![[NSUserDefaults standardUserDefaults] boolForKey:IS_ORIGIN_ENABLE]) {
@@ -252,7 +260,7 @@
             [DConnectManager sharedManager].settings.useOriginEnable = isOn;
             [self updateSwitchState];
             if (self.delegate) {
-                [self.delegate updateSwitches];
+                [self.delegate updateViews];
             }
             
         }]];
@@ -260,18 +268,66 @@
             [DConnectManager sharedManager].settings.useLocalOAuth = NO;
             [self updateSwitchState];
             if (self.delegate) {
-                [self.delegate updateSwitches];
+                [self.delegate updateViews];
             }
         }]];
-        UIViewController *baseView = [UIApplication sharedApplication].keyWindow.rootViewController;
-        while (baseView.presentedViewController != nil && !baseView.presentedViewController.isBeingDismissed) {
-            baseView = baseView.presentedViewController;
-        }
-        [baseView presentViewController:alertController animated:YES completion:nil];
+        
+        [[self rootViewController] presentViewController:alertController animated:YES completion:nil];
         
     } else {
         completion();
     }
+}
+
+/*!
+ @brief Managerの名前を変更するためのダイアログを表示する。
+ */
+- (void)changeManagerName
+{
+    UIAlertController * alertController = [UIAlertController alertControllerWithTitle:@"Device Connect Manager"
+                                                                              message:@"名前を入力してください。"
+                                                                       preferredStyle:UIAlertControllerStyleAlert];
+    [alertController addTextFieldWithConfigurationHandler:^(UITextField * textField) {
+        textField.placeholder = @"Manager名";
+        textField.text = [[DConnectManager sharedManager] managerName];
+    }];
+    UIAlertAction * cancelAction =
+    [UIAlertAction actionWithTitle:@"キャンセル"
+                             style:UIAlertActionStyleCancel
+                           handler:nil];
+    [alertController addAction:cancelAction];
+    
+    UIAlertAction * createAction =
+    [UIAlertAction actionWithTitle:@"変更"
+                             style:UIAlertActionStyleDefault
+                           handler:^(UIAlertAction * action) {
+                               UITextField * textField = alertController.textFields[0];
+                               if (textField.text.length > 0) {
+                                   dispatch_async(dispatch_get_main_queue(), ^{
+                                       [[DConnectManager sharedManager] updateManagerName:textField.text];
+                                       if (self.delegate) {
+                                           [self.delegate updateViews];
+                                       }
+                                   });
+                               }
+                           }];
+
+    [alertController addAction:createAction];
+    
+    [[self rootViewController] presentViewController:alertController animated:YES completion:nil];
+}
+
+
+/*!
+ @brief 最前面のViewControllerを取得する。
+ */
+- (UIViewController*)rootViewController
+{
+    UIViewController *baseView = [UIApplication sharedApplication].keyWindow.rootViewController;
+    while (baseView.presentedViewController != nil && !baseView.presentedViewController.isBeingDismissed) {
+        baseView = baseView.presentedViewController;
+    }
+    return baseView;
 }
 
 @end
