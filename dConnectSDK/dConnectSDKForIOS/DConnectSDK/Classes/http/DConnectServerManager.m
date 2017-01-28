@@ -240,37 +240,62 @@ typedef NS_ENUM(NSInteger, RequestExceptionType) {
     
     // URLのパスセグメントの数から、
     // プロファイル・属性・インターフェースが何なのかを判定する。
-    NSString *api, *profile, *attr, *interface;
-    api = profile = attr = interface = nil;
+    NSString *api, *profile, *attr, *interface, *httpMethod;
+    api = profile = attr = interface = httpMethod = nil;
     
-    if ([pathComponentArr count] == 1 &&
-        [pathComponentArr[0] length] != 0)
+    if ([pathComponentArr count] == 1
+        && [pathComponentArr[0] length] != 0)
     {
         api = pathComponentArr[0];
-    } else if ([pathComponentArr count] == 2 &&
-               [pathComponentArr[0] length] != 0 &&
-               [pathComponentArr[1] length] != 0)
+    } else if ([pathComponentArr count] == 2
+               && [pathComponentArr[0] length] != 0 && [pathComponentArr[1] length] != 0)
     {
         api = pathComponentArr[0];
         profile = pathComponentArr[1];
-    } else if ([pathComponentArr count] == 3 &&
-               [pathComponentArr[0] length] != 0 &&
-               [pathComponentArr[1] length] != 0 &&
-               [pathComponentArr[2] length] != 0)
+    } else if ([pathComponentArr count] == 3
+               && [pathComponentArr[0] length] != 0 && [pathComponentArr[1] length] != 0 && [pathComponentArr[2] length] != 0
+               && ![self existHttpMethod:pathComponentArr[1]])
     {
+        // パスが3つあり、HTTPメソッドがパスに指定されていない。
         api = pathComponentArr[0];
         profile = pathComponentArr[1];
         attr = pathComponentArr[2];
-    } else if ([pathComponentArr count] == 4 &&
-               [pathComponentArr[0] length] != 0 &&
-               [pathComponentArr[1] length] != 0 &&
-               [pathComponentArr[2] length] != 0 &&
-               [pathComponentArr[3] length] != 0)
+    } else if ([pathComponentArr count] == 3
+               && [pathComponentArr[0] length] != 0 && [pathComponentArr[1] length] != 0 && [pathComponentArr[2] length] != 0
+               && [self existHttpMethod:pathComponentArr[1]])
     {
+        // パスが3つあり、HTTPメソッドがパスに指定されている。
+        api = pathComponentArr[0];
+        httpMethod = pathComponentArr[1];
+        profile = pathComponentArr[2];
+    } else if ([pathComponentArr count] == 4
+            && [pathComponentArr[0] length] != 0 && [pathComponentArr[1] length] != 0 && [pathComponentArr[2] length] != 0
+            && [pathComponentArr[3] length] != 0 && ![self existHttpMethod:pathComponentArr[1]])
+    {
+        // パスが4つあり、HTTPメソッドがパスに指定されていない。
         api = pathComponentArr[0];
         profile = pathComponentArr[1];
         interface = pathComponentArr[2];
         attr = pathComponentArr[3];
+    } else if ([pathComponentArr count] == 4
+               && [pathComponentArr[0] length] != 0 && [pathComponentArr[1] length] != 0 && [pathComponentArr[2] length] != 0
+               && [pathComponentArr[3] length] != 0 && [self existHttpMethod:pathComponentArr[1]])
+    {
+        // パスが4つあり、HTTPメソッドがパスに指定されている。
+        api = pathComponentArr[0];
+        httpMethod = pathComponentArr[1];
+        profile = pathComponentArr[2];
+        attr = pathComponentArr[3];
+    } else if ([pathComponentArr count] == 5
+               && [pathComponentArr[0] length] != 0 && [pathComponentArr[1] length] != 0 && [pathComponentArr[2] length] != 0
+               && [pathComponentArr[3] length] != 0 && [pathComponentArr[4] length] != 0 && [self existHttpMethod:pathComponentArr[1]])
+    {
+        // パスが4つあり、HTTPメソッドがパスに指定されている。
+        api = pathComponentArr[0];
+        httpMethod = pathComponentArr[1];
+        profile = pathComponentArr[2];
+        interface = pathComponentArr[3];
+        attr = pathComponentArr[4];
     }
     
     if (api == nil || ![api isEqualToString:DConnectMessageDefaultAPI]) {
@@ -289,6 +314,13 @@ typedef NS_ENUM(NSInteger, RequestExceptionType) {
                                      userInfo:nil];
         }
         return nil;
+    } else if ([self existHttpMethod:profile]) {
+        if (error) {
+            *error = [NSError errorWithDomain:@"Profile name is invalid."
+                                         code:20
+                                     userInfo:nil];
+        }
+        return nil;
     }
     
     // リクエストメッセージにHTTPリクエストのメソッドに対応するアクション名を格納する
@@ -301,6 +333,20 @@ typedef NS_ENUM(NSInteger, RequestExceptionType) {
         }
         return nil;
     }
+    
+    // URLにmethodが指定されている場合は、そちらのHTTPメソッドを優先する
+    if (httpMethod && methodId == DConnectMessageActionTypeGet) {
+        methodId = [self getDConnectMethod:[httpMethod uppercaseString]];
+    } else if (httpMethod && methodId != DConnectMessageActionTypeGet) {
+        if (error) {
+            *error = [NSError errorWithDomain:@"Request url is invalid"
+                                         code:19
+                                     userInfo:nil];
+        }
+        return nil;
+    }
+    
+    
     [requestMessage setAction:methodId];
     [requestMessage setApi:api];
     [requestMessage setProfile:profile];
@@ -544,4 +590,11 @@ typedef NS_ENUM(NSInteger, RequestExceptionType) {
     [response setHeader:@"Last-Modified" value:[_dateFormatter stringFromDate:[NSDate date]]];
 }
 
+- (BOOL)existHttpMethod:(NSString*)method
+{
+    return [[method uppercaseString] isEqualToString:@"GET"]
+        || [[method uppercaseString] isEqualToString:@"POST"]
+        || [[method uppercaseString] isEqualToString:@"PUT"]
+        || [[method uppercaseString] isEqualToString:@"DELETE"];
+}
 @end
