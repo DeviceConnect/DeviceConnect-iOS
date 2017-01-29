@@ -196,7 +196,7 @@
 }
 
 - (void) setErrorToInvalidProfile {
-    [self setErrorToInvalidURLWithMessage:@"Profile name is invalid."];
+    [self setErrorToInvalidProfileWithMessage:@"Profile name is invalid."];
 }
 
 - (void) setErrorToInvalidProfileWithMessage:(NSString *)message {

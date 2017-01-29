@@ -106,6 +106,7 @@
 		ABF1B0981E3CC7B90033B059 /* dConnectDeviceTestTests-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 309CD533198B2CCF002A5684 /* dConnectDeviceTestTests-Info.plist */; };
 		ABF1B09B1E3CD8B30033B059 /* TestAllGetControlProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = ABF1B09A1E3CD8B30033B059 /* TestAllGetControlProfile.m */; };
 		ABF1B09D1E3D97630033B059 /* RESTfulNormalAllGetControlTest.m in Sources */ = {isa = PBXBuildFile; fileRef = ABF1B09C1E3D97630033B059 /* RESTfulNormalAllGetControlTest.m */; };
+		ABF1B09F1E3DA7A00033B059 /* RESTfulFailAllGetControlTest.m in Sources */ = {isa = PBXBuildFile; fileRef = ABF1B09E1E3DA7A00033B059 /* RESTfulFailAllGetControlTest.m */; };
 		ABF842BC19E3E07300B8AC46 /* DConnectSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABF842BB19E3E07300B8AC46 /* DConnectSDK.framework */; };
 		D63350C11D6C3E2600CB9E5A /* TestService.m in Sources */ = {isa = PBXBuildFile; fileRef = D63350C01D6C3E2600CB9E5A /* TestService.m */; };
 		D646EDC71D6D1AEE0092CBA7 /* TestDriveControllerProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = D646EDC61D6D1AEE0092CBA7 /* TestDriveControllerProfile.m */; };
@@ -275,6 +276,7 @@
 		ABF1B0991E3CD8B30033B059 /* TestAllGetControlProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestAllGetControlProfile.h; sourceTree = "<group>"; };
 		ABF1B09A1E3CD8B30033B059 /* TestAllGetControlProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestAllGetControlProfile.m; sourceTree = "<group>"; };
 		ABF1B09C1E3D97630033B059 /* RESTfulNormalAllGetControlTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RESTfulNormalAllGetControlTest.m; path = dConnectManager/RESTful/RESTfulNormalAllGetControlTest.m; sourceTree = "<group>"; };
+		ABF1B09E1E3DA7A00033B059 /* RESTfulFailAllGetControlTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RESTfulFailAllGetControlTest.m; path = dConnectManager/RESTful/RESTfulFailAllGetControlTest.m; sourceTree = "<group>"; };
 		ABF842BB19E3E07300B8AC46 /* DConnectSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DConnectSDK.framework; path = ../../dConnectSDK/dConnectSDKForIOS/bin/DConnectSDK.framework; sourceTree = "<group>"; };
 		D63350BF1D6C3E2600CB9E5A /* TestService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestService.h; sourceTree = "<group>"; };
 		D63350C01D6C3E2600CB9E5A /* TestService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestService.m; sourceTree = "<group>"; };
@@ -526,6 +528,7 @@
 				6BD1F6F11A9EC6B2005956F5 /* RESTfulFailServiceInformationProfileTest.m */,
 				84FA976019A615400053B2FD /* RESTfulFailVibrationProfileTest.m */,
 				ABF1B09C1E3D97630033B059 /* RESTfulNormalAllGetControlTest.m */,
+				ABF1B09E1E3DA7A00033B059 /* RESTfulFailAllGetControlTest.m */,
 			);
 			name = RESTful;
 			sourceTree = "<group>";
@@ -798,6 +801,7 @@
 				8428954019A2002500D9ECFF /* RESTfulNormalMediaPlayerProfileTest.m in Sources */,
 				84EBE8EE19B88BFB0089AD35 /* RESTfulFailAuthorizationProfileTest.m in Sources */,
 				848EB54D19A33394001F307F /* RESTfulNormalServiceDiscoveryProfileTest.m in Sources */,
+				ABF1B09F1E3DA7A00033B059 /* RESTfulFailAllGetControlTest.m in Sources */,
 				8428954719A2002500D9ECFF /* RESTfulNormalVibrationProfileTest.m in Sources */,
 				840DC9CD19A70FF500CA2EA0 /* RESTfulFailNotificationProfileTest.m in Sources */,
 				840DC9CB19A6FD7200CA2EA0 /* RESTfulFailPhoneProfileTest.m in Sources */,

@@ -29,7 +29,9 @@
 typedef NS_ENUM(NSInteger, RequestExceptionType) {
     HAVE_NO_API_EXCEPTION,
     HAVE_NO_PROFILE_EXCEPTION,
-    NOT_SUPPORT_ACTION_EXCEPTION
+    NOT_SUPPORT_ACTION_EXCEPTION,
+    INVALID_URL_EXCEPTION,
+    INVALID_PROFILE_EXCEPTION
 };
 
 
@@ -196,6 +198,23 @@ typedef NS_ENUM(NSInteger, RequestExceptionType) {
                     [response setStatusCode:501];
                     [response respondWithString:error.domain encoding:NSUTF8StringEncoding];
                 }   break;
+                case INVALID_URL_EXCEPTION: {
+                    DConnectResponseMessage *responseMessage = [DConnectResponseMessage new];
+                    [responseMessage setResult:DConnectMessageResultTypeError];
+                    [responseMessage setVersion:[DConnectManager sharedManager].versionName];
+                    [responseMessage setProduct:[DConnectManager sharedManager].productName];
+                    [responseMessage setErrorToInvalidURL];
+                    [self convertDConnectResponse:responseMessage DConnectRequest:nil toResponse:response Request:request];
+                }   break;
+                case INVALID_PROFILE_EXCEPTION: {
+                    DConnectResponseMessage *responseMessage = [DConnectResponseMessage new];
+                    [responseMessage setResult:DConnectMessageResultTypeError];
+                    [responseMessage setVersion:[DConnectManager sharedManager].versionName];
+                    [responseMessage setProduct:[DConnectManager sharedManager].productName];
+                    [responseMessage setErrorToInvalidProfile];
+                    [self convertDConnectResponse:responseMessage DConnectRequest:nil toResponse:response Request:request];
+                }   break;
+
                 default: {
                     DConnectResponseMessage *responseMessage = [DConnectResponseMessage new];
                     [responseMessage setResult:DConnectMessageResultTypeError];
@@ -317,7 +336,7 @@ typedef NS_ENUM(NSInteger, RequestExceptionType) {
     } else if ([self existHttpMethod:profile]) {
         if (error) {
             *error = [NSError errorWithDomain:@"Profile name is invalid."
-                                         code:20
+                                         code:INVALID_PROFILE_EXCEPTION
                                      userInfo:nil];
         }
         return nil;
@@ -340,7 +359,7 @@ typedef NS_ENUM(NSInteger, RequestExceptionType) {
     } else if (httpMethod && methodId != DConnectMessageActionTypeGet) {
         if (error) {
             *error = [NSError errorWithDomain:@"Request url is invalid"
-                                         code:19
+                                         code:INVALID_URL_EXCEPTION
                                      userInfo:nil];
         }
         return nil;
