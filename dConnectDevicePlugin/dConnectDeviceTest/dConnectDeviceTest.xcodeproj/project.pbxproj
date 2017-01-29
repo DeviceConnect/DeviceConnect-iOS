@@ -104,6 +104,8 @@
 		AB043C931BDF6B4000B35D96 /* TestLightProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = AB043C921BDF6B3F00B35D96 /* TestLightProfile.m */; };
 		AB81AC881BDF7C250069F6EB /* RESTfulFailLightProfileTest.m in Sources */ = {isa = PBXBuildFile; fileRef = AB81AC871BDF7C250069F6EB /* RESTfulFailLightProfileTest.m */; };
 		ABF1B0981E3CC7B90033B059 /* dConnectDeviceTestTests-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 309CD533198B2CCF002A5684 /* dConnectDeviceTestTests-Info.plist */; };
+		ABF1B09B1E3CD8B30033B059 /* TestAllGetControlProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = ABF1B09A1E3CD8B30033B059 /* TestAllGetControlProfile.m */; };
+		ABF1B09D1E3D97630033B059 /* RESTfulNormalAllGetControlTest.m in Sources */ = {isa = PBXBuildFile; fileRef = ABF1B09C1E3D97630033B059 /* RESTfulNormalAllGetControlTest.m */; };
 		ABF842BC19E3E07300B8AC46 /* DConnectSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABF842BB19E3E07300B8AC46 /* DConnectSDK.framework */; };
 		D63350C11D6C3E2600CB9E5A /* TestService.m in Sources */ = {isa = PBXBuildFile; fileRef = D63350C01D6C3E2600CB9E5A /* TestService.m */; };
 		D646EDC71D6D1AEE0092CBA7 /* TestDriveControllerProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = D646EDC61D6D1AEE0092CBA7 /* TestDriveControllerProfile.m */; };
@@ -270,6 +272,9 @@
 		AB043C921BDF6B3F00B35D96 /* TestLightProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestLightProfile.m; sourceTree = "<group>"; };
 		AB67AAD11C637A6400B4C62C /* Pods.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Pods.xcodeproj; path = ../../../../../sample/SFSafariViewController/pod/Pods/Pods.xcodeproj; sourceTree = "<group>"; };
 		AB81AC871BDF7C250069F6EB /* RESTfulFailLightProfileTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RESTfulFailLightProfileTest.m; path = dConnectManager/RESTful/RESTfulFailLightProfileTest.m; sourceTree = "<group>"; };
+		ABF1B0991E3CD8B30033B059 /* TestAllGetControlProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestAllGetControlProfile.h; sourceTree = "<group>"; };
+		ABF1B09A1E3CD8B30033B059 /* TestAllGetControlProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestAllGetControlProfile.m; sourceTree = "<group>"; };
+		ABF1B09C1E3D97630033B059 /* RESTfulNormalAllGetControlTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RESTfulNormalAllGetControlTest.m; path = dConnectManager/RESTful/RESTfulNormalAllGetControlTest.m; sourceTree = "<group>"; };
 		ABF842BB19E3E07300B8AC46 /* DConnectSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DConnectSDK.framework; path = ../../dConnectSDK/dConnectSDKForIOS/bin/DConnectSDK.framework; sourceTree = "<group>"; };
 		D63350BF1D6C3E2600CB9E5A /* TestService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestService.h; sourceTree = "<group>"; };
 		D63350C01D6C3E2600CB9E5A /* TestService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestService.m; sourceTree = "<group>"; };
@@ -458,6 +463,8 @@
 				84FA975A19A5F1DE0053B2FD /* TestUniqueTimeoutProfile.m */,
 				847B3B1C19BD7A3A003ED5F4 /* TestUniqueEventProfile.h */,
 				847B3B1D19BD7A3A003ED5F4 /* TestUniqueEventProfile.m */,
+				ABF1B0991E3CD8B30033B059 /* TestAllGetControlProfile.h */,
+				ABF1B09A1E3CD8B30033B059 /* TestAllGetControlProfile.m */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -518,6 +525,7 @@
 				AB81AC871BDF7C250069F6EB /* RESTfulFailLightProfileTest.m */,
 				6BD1F6F11A9EC6B2005956F5 /* RESTfulFailServiceInformationProfileTest.m */,
 				84FA976019A615400053B2FD /* RESTfulFailVibrationProfileTest.m */,
+				ABF1B09C1E3D97630033B059 /* RESTfulNormalAllGetControlTest.m */,
 			);
 			name = RESTful;
 			sourceTree = "<group>";
@@ -770,6 +778,7 @@
 				847B3B1E19BD7A3A003ED5F4 /* TestUniqueEventProfile.m in Sources */,
 				D63350C11D6C3E2600CB9E5A /* TestService.m in Sources */,
 				84FA975819A5D3580053B2FD /* TestUniquePingProfile.m in Sources */,
+				ABF1B09B1E3CD8B30033B059 /* TestAllGetControlProfile.m in Sources */,
 				301B89BA198F7799006EC109 /* TestNotificationProfile.m in Sources */,
 				301B89C0198F848F006EC109 /* TestProximityProfile.m in Sources */,
 				309CD55F198F2F7A002A5684 /* TestDeviceOrientationProfile.m in Sources */,
@@ -795,6 +804,7 @@
 				8428954419A2002500D9ECFF /* RESTfulNormalProximityProfileTest.m in Sources */,
 				8490A34F19A488350031FD1E /* RESTfulFailSystemProfileTest.m in Sources */,
 				8428953F19A2002500D9ECFF /* RESTfulNormalFileProfileTest.m in Sources */,
+				ABF1B09D1E3D97630033B059 /* RESTfulNormalAllGetControlTest.m in Sources */,
 				8428954219A2002500D9ECFF /* RESTfulNormalNotificationProfileTest.m in Sources */,
 				8428954519A2002500D9ECFF /* RESTfulNormalSettingsProfileTest.m in Sources */,
 				8490A35019A488350031FD1E /* RESTfulFailNetworkServiceDiscoveryProfileTest.m in Sources */,
