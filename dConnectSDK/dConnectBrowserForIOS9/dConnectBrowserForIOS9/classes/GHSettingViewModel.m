@@ -291,7 +291,7 @@
 
 - (void)checkShowManagerName
 {
-    NSString *message = @"AvailabilityAPIでManagerの名前を表示します。\n\nhttp://localhost:4035/gotapi/availability\nにより、Managerの名前が取得できるようになります。\n\n有効にしてもよろしいでしょうか？";
+    NSString *message = @"AvailabilityAPIでManagerの名前を表示します。\n\nhttp://localhost:4035/gotapi/availability\nにより、Managerの名前が確認ダイアログなしで取得できるようになります。\n\n有効にしてもよろしいでしょうか？";
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"警告" message:message preferredStyle:UIAlertControllerStyleAlert];
     [alertController addAction:[UIAlertAction actionWithTitle:@"はい" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         [DConnectManager sharedManager].settings.useManagerName = YES;
