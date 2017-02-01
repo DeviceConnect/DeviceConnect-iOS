@@ -27,6 +27,7 @@
 #import "TestRemoteControllerProfile.h"
 #import "TestDriveControllerProfile.h"
 #import "TestOmnidirectionalImageProfile.h"
+#import "TestAllGetControlProfile.h"
 
 NSString *const TestNetworkServiceIdSpecialCharacters = @"!#$'()-~¥@[;+:*],._/=?&%^|`\"{}<>";
 NSString *const TestNetworkDeviceName = @"Test Success Device";
@@ -69,6 +70,7 @@ static NSString *const TestNetworkDeviceConfig = @"test config";
         [self addProfile:[TestUniquePingProfile new]];
         [self addProfile:[TestUniqueTimeoutProfile new]];
         [self addProfile:[TestUniqueEventProfile new]];
+        [self addProfile:[TestAllGetControlProfile new]];
     }
     return self;
     

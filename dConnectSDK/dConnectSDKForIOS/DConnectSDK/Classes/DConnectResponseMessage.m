@@ -186,4 +186,21 @@
     [self setError:DConnectMessageErrorCodeInvalidOrigin message:message];
 }
 
+
+- (void) setErrorToInvalidURL {
+    [self setErrorToInvalidURLWithMessage:@"Request url is invalid."];
+}
+
+- (void) setErrorToInvalidURLWithMessage:(NSString *)message {
+    [self setError:DConnectMessageErrorCodeInvalidURL message:message];
+}
+
+- (void) setErrorToInvalidProfile {
+    [self setErrorToInvalidProfileWithMessage:@"Profile name is invalid."];
+}
+
+- (void) setErrorToInvalidProfileWithMessage:(NSString *)message {
+    [self setError:DConnectMessageErrorCodeInvalidProfile message:message];
+}
+
 @end
