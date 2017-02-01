@@ -21,7 +21,7 @@
 #import "DPHostProximityProfile.h"
 #import "DPHostSettingsProfile.h"
 #import "DPHostVibrationProfile.h"
-#import "DPHostConnectProfile.h"
+#import "DPHostConnectionProfile.h"
 #import "DPHostCanvasProfile.h"
 #import "DPHostTouchProfile.h"
 
@@ -54,7 +54,7 @@ NSString *const DPHostDevicePluginServiceId = @"host";
         [self addProfile:[DPHostProximityProfile new]];
         [self addProfile:[DPHostSettingsProfile new]];
         [self addProfile:[DPHostVibrationProfile new]];
-        [self addProfile:[DPHostConnectProfile new]];
+        [self addProfile:[DPHostConnectionProfile new]];
         [self addProfile:[DPHostCanvasProfile new]];
         [self addProfile:[DPHostTouchProfile new]];
     }

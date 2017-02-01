@@ -1,6 +1,6 @@
 /**
- @preserve Device Connect SDK Library v2.1.0
- Copyright (c) 2014 NTT DOCOMO,INC.
+ @preserve Device Connect SDK Library v2.2.0
+ Copyright (c) 2017 NTT DOCOMO,INC.
  Released under the MIT license
  http://opensource.org/licenses/mit-license.php
  */
@@ -202,7 +202,12 @@ var dConnect = (function(parent, global) {
       /** エラーコード: サーバの状態異常エラー. */
       ILLEGAL_SERVER_STATE: 17,
       /** エラーコード: 不正オリジンエラー. */
-      INVALID_ORIGIN: 18
+      INVALID_ORIGIN: 18,
+      /** エラーコード: 不正URLエラー. */
+      INVALID_URL: 19,
+      /** エラーコード: 不正Profileエラー. */
+      INVALID_PROFILE: 20
+
     },
 
     /**
@@ -319,14 +324,14 @@ var dConnect = (function(parent, global) {
     },
 
     /**
-     * Connectプロファイルの定数
+     * Connectionプロファイルの定数
      * @namespace
      * @type {Object.<String, String>}
      */
-    connect: {
+    connection: {
       // Profile Name
       /** プロファイル名。 */
-      PROFILE_NAME: 'connect',
+      PROFILE_NAME: 'connection',
 
       // Interface
       /** インターフェース: bluetooth */
@@ -1292,9 +1297,17 @@ var dConnect = (function(parent, global) {
     if (state === undefined) {
         state = '';
     }
-    url = uriSchemeName + '://start/' + state
-              + '?origin=' + origin
-              + '&key=' + _currentHmacKey;
+    if (isFirefox()) {
+        url = uriSchemeName + '://start/' + state
+                  + '?origin=' + origin
+                  + '&key=' + _currentHmacKey;
+    } else {
+       urlScheme.setPath('start/' + state);
+      urlScheme.addParameter('package', 'org.deviceconnect.android.manager');
+      urlScheme.addParameter('S.origin', origin);
+      urlScheme.addParameter('S.key', _currentHmacKey);
+      url = urlScheme.build();
+    }
     location.href = url;
   };
 
@@ -1342,9 +1355,17 @@ var dConnect = (function(parent, global) {
     if (state === undefined) {
         state = '';
     }
-    url = uriSchemeName + '://stop/' + state
+    if (isFirefox()) {
+        url = uriSchemeName + '://stop/' + state
               + '?origin=' + origin
               + '&key=' + _currentHmacKey;
+    } else {
+       urlScheme.setPath('stop/' + state);
+      urlScheme.addParameter('package', 'org.deviceconnect.android.manager');
+      urlScheme.addParameter('S.origin', origin);
+      urlScheme.addParameter('S.key', _currentHmacKey);
+      url = urlScheme.build();
+    }
     location.href = url;
   };
 
@@ -2150,7 +2171,7 @@ var dConnect = (function(parent, global) {
    * @return {String} URIスキームの文字列表現
    */
   AndroidURISchemeBuilder.prototype.build = function() {
-    var urlScheme = 'intent://' + this.path + '/#Intent;scheme=' +
+    var urlScheme = 'intent://' + this.path + '#Intent;scheme=' +
                             this.scheme + ';';
     for (var key in this.params) {
       urlScheme += key + '=' + this.params[key] + ';';

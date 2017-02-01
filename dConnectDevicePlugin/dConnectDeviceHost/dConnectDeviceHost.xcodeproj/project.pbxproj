@@ -64,7 +64,7 @@
 		AB0B13281A80A12300D655D5 /* DPHostFileDescriptorProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = AB0B13261A80A12300D655D5 /* DPHostFileDescriptorProfile.m */; };
 		AB3B2C281BCF311000C5E3A2 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB3B2C261BCF311000C5E3A2 /* AVFoundation.framework */; };
 		AB3B2C291BCF311000C5E3A2 /* AVKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB3B2C271BCF311000C5E3A2 /* AVKit.framework */; };
-		ABDA3C6D1A0C58F3001F30A0 /* DPHostConnectProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = ABDA3C6C1A0C58F3001F30A0 /* DPHostConnectProfile.m */; };
+		ABDA3C6D1A0C58F3001F30A0 /* DPHostConnectionProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = ABDA3C6C1A0C58F3001F30A0 /* DPHostConnectionProfile.m */; };
 		ABDA3C701A0C743A001F30A0 /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABDA3C6F1A0C743A001F30A0 /* CoreBluetooth.framework */; };
 		D62F0D1A1AA6E2CB00BC0ADA /* close_small_button_focus.png in Resources */ = {isa = PBXBuildFile; fileRef = D62F0D171AA6E2CB00BC0ADA /* close_small_button_focus.png */; };
 		D62F0D1B1AA6E2CB00BC0ADA /* close_small_button_normal.png in Resources */ = {isa = PBXBuildFile; fileRef = D62F0D181AA6E2CB00BC0ADA /* close_small_button_normal.png */; };
@@ -147,8 +147,8 @@
 		AB0B13261A80A12300D655D5 /* DPHostFileDescriptorProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHostFileDescriptorProfile.m; sourceTree = "<group>"; };
 		AB3B2C261BCF311000C5E3A2 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		AB3B2C271BCF311000C5E3A2 /* AVKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVKit.framework; path = System/Library/Frameworks/AVKit.framework; sourceTree = SDKROOT; };
-		ABDA3C6B1A0C58F3001F30A0 /* DPHostConnectProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHostConnectProfile.h; sourceTree = "<group>"; };
-		ABDA3C6C1A0C58F3001F30A0 /* DPHostConnectProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHostConnectProfile.m; sourceTree = "<group>"; };
+		ABDA3C6B1A0C58F3001F30A0 /* DPHostConnectionProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHostConnectionProfile.h; sourceTree = "<group>"; };
+		ABDA3C6C1A0C58F3001F30A0 /* DPHostConnectionProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHostConnectionProfile.m; sourceTree = "<group>"; };
 		ABDA3C6F1A0C743A001F30A0 /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
 		D62F0D171AA6E2CB00BC0ADA /* close_small_button_focus.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = close_small_button_focus.png; path = dConnectDeviceHost_resources/close_small_button_focus.png; sourceTree = SOURCE_ROOT; };
 		D62F0D181AA6E2CB00BC0ADA /* close_small_button_normal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = close_small_button_normal.png; path = dConnectDeviceHost_resources/close_small_button_normal.png; sourceTree = SOURCE_ROOT; };
@@ -354,8 +354,8 @@
 				D6384EA71A7625BD00384167 /* DPHostCanvasProfile.h */,
 				D6384EA81A7625BD00384167 /* DPHostCanvasProfile.m */,
 				D6384EAA1A7625CF00384167 /* DPHostCanvas */,
-				ABDA3C6B1A0C58F3001F30A0 /* DPHostConnectProfile.h */,
-				ABDA3C6C1A0C58F3001F30A0 /* DPHostConnectProfile.m */,
+				ABDA3C6B1A0C58F3001F30A0 /* DPHostConnectionProfile.h */,
+				ABDA3C6C1A0C58F3001F30A0 /* DPHostConnectionProfile.m */,
 				25DF80D4196CCD7D003F6FF3 /* DPHostBatteryProfile.h */,
 				25DF80D5196CCD7D003F6FF3 /* DPHostBatteryProfile.m */,
 				25FF1DB8196AA53400EA7F72 /* DPHostDeviceOrientationProfile.h */,
@@ -625,7 +625,7 @@
 				257FC23719BAAF5200358536 /* DPHostReachability.m in Sources */,
 				D69997481A7F1AD800EF934F /* DPHostCanvasDrawObject.m in Sources */,
 				2585BB941980D89F00AAE43C /* DPHostSettingsProfile.m in Sources */,
-				ABDA3C6D1A0C58F3001F30A0 /* DPHostConnectProfile.m in Sources */,
+				ABDA3C6D1A0C58F3001F30A0 /* DPHostConnectionProfile.m in Sources */,
 				25C710EB1981E578004C6484 /* DPHostMediaStreamRecordingProfile.m in Sources */,
 				EFDD96A81AB805F70068E984 /* DPHostTouchView.m in Sources */,
 				AB0B13271A80A12300D655D5 /* DPHostFileDescriptorContext.m in Sources */,

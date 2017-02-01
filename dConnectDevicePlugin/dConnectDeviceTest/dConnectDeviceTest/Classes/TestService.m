@@ -10,7 +10,7 @@
 #import "TestService.h"
 #import "TestLightProfile.h"
 #import "TestBatteryProfile.h"
-#import "TestConnectProfile.h"
+#import "TestConnectionProfile.h"
 #import "TestDeviceOrientationProfile.h"
 #import "TestFileDescriptorProfile.h"
 #import "TestFileProfile.h"
@@ -51,7 +51,7 @@ static NSString *const TestNetworkDeviceConfig = @"test config";
         // プロファイルを追加
         [self addProfile:[TestLightProfile new]];
         [self addProfile:[TestBatteryProfile new]];
-        [self addProfile:[TestConnectProfile new]];
+        [self addProfile:[TestConnectionProfile new]];
         [self addProfile:[TestDeviceOrientationProfile new]];
         [self addProfile:[TestFileDescriptorProfile new]];
         [self addProfile:[TestFileProfile new]];
