@@ -260,6 +260,10 @@ typedef NS_ENUM(NSInteger, RequestExceptionType) {
     // URLのパスセグメントの数から、
     // プロファイル・属性・インターフェースが何なのかを判定する。
     NSString *api, *profile, *attr, *interface, *httpMethod;
+    BOOL existMethod = NO;
+    if ([pathComponentArr count] >= 2) {
+        existMethod = [self existHttpMethod:pathComponentArr[1]];
+    }
     api = profile = attr = interface = httpMethod = nil;
     
     if ([pathComponentArr count] == 1
@@ -273,7 +277,7 @@ typedef NS_ENUM(NSInteger, RequestExceptionType) {
         profile = pathComponentArr[1];
     } else if ([pathComponentArr count] == 3
                && [pathComponentArr[0] length] != 0 && [pathComponentArr[1] length] != 0 && [pathComponentArr[2] length] != 0
-               && ![self existHttpMethod:pathComponentArr[1]])
+               && !existMethod)
     {
         // パスが3つあり、HTTPメソッドがパスに指定されていない。
         api = pathComponentArr[0];
@@ -281,7 +285,7 @@ typedef NS_ENUM(NSInteger, RequestExceptionType) {
         attr = pathComponentArr[2];
     } else if ([pathComponentArr count] == 3
                && [pathComponentArr[0] length] != 0 && [pathComponentArr[1] length] != 0 && [pathComponentArr[2] length] != 0
-               && [self existHttpMethod:pathComponentArr[1]])
+               && existMethod)
     {
         // パスが3つあり、HTTPメソッドがパスに指定されている。
         api = pathComponentArr[0];
@@ -289,7 +293,7 @@ typedef NS_ENUM(NSInteger, RequestExceptionType) {
         profile = pathComponentArr[2];
     } else if ([pathComponentArr count] == 4
             && [pathComponentArr[0] length] != 0 && [pathComponentArr[1] length] != 0 && [pathComponentArr[2] length] != 0
-            && [pathComponentArr[3] length] != 0 && ![self existHttpMethod:pathComponentArr[1]])
+            && [pathComponentArr[3] length] != 0 && !existMethod)
     {
         // パスが4つあり、HTTPメソッドがパスに指定されていない。
         api = pathComponentArr[0];
@@ -298,7 +302,7 @@ typedef NS_ENUM(NSInteger, RequestExceptionType) {
         attr = pathComponentArr[3];
     } else if ([pathComponentArr count] == 4
                && [pathComponentArr[0] length] != 0 && [pathComponentArr[1] length] != 0 && [pathComponentArr[2] length] != 0
-               && [pathComponentArr[3] length] != 0 && [self existHttpMethod:pathComponentArr[1]])
+               && [pathComponentArr[3] length] != 0 && existMethod)
     {
         // パスが4つあり、HTTPメソッドがパスに指定されている。
         api = pathComponentArr[0];
@@ -307,7 +311,7 @@ typedef NS_ENUM(NSInteger, RequestExceptionType) {
         attr = pathComponentArr[3];
     } else if ([pathComponentArr count] == 5
                && [pathComponentArr[0] length] != 0 && [pathComponentArr[1] length] != 0 && [pathComponentArr[2] length] != 0
-               && [pathComponentArr[3] length] != 0 && [pathComponentArr[4] length] != 0 && [self existHttpMethod:pathComponentArr[1]])
+               && [pathComponentArr[3] length] != 0 && [pathComponentArr[4] length] != 0 && existMethod)
     {
         // パスが4つあり、HTTPメソッドがパスに指定されている。
         api = pathComponentArr[0];
@@ -354,15 +358,17 @@ typedef NS_ENUM(NSInteger, RequestExceptionType) {
     }
     
     // URLにmethodが指定されている場合は、そちらのHTTPメソッドを優先する
-    if (httpMethod && methodId == DConnectMessageActionTypeGet) {
-        methodId = [self getDConnectMethod:[httpMethod uppercaseString]];
-    } else if (httpMethod && methodId != DConnectMessageActionTypeGet) {
-        if (error) {
-            *error = [NSError errorWithDomain:@"Request url is invalid"
-                                         code:INVALID_URL_EXCEPTION
-                                     userInfo:nil];
+    if (httpMethod) {
+        if (methodId == DConnectMessageActionTypeGet) {
+            methodId = [self getDConnectMethod:[httpMethod uppercaseString]];
+        } else {
+            if (error) {
+                *error = [NSError errorWithDomain:@"Request url is invalid"
+                                             code:INVALID_URL_EXCEPTION
+                                         userInfo:nil];
+            }
+            return nil;
         }
-        return nil;
     }
     
     
