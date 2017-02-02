@@ -131,7 +131,7 @@
 		BE71FE101DA3B25B00B5E209 /* DConnectProximityProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = BE71FDAA1DA3B25B00B5E209 /* DConnectProximityProfile.m */; };
 		BE71FE111DA3B25B00B5E209 /* DConnectServiceDiscoveryProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = BE71FDAB1DA3B25B00B5E209 /* DConnectServiceDiscoveryProfile.m */; };
 		BE71FE121DA3B25B00B5E209 /* DConnectServiceInformationProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = BE71FDAC1DA3B25B00B5E209 /* DConnectServiceInformationProfile.m */; };
-		BE71FE131DA3B25B00B5E209 /* DConnectSettingsProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = BE71FDAD1DA3B25B00B5E209 /* DConnectSettingsProfile.m */; };
+		BE71FE131DA3B25B00B5E209 /* DConnectSettingProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = BE71FDAD1DA3B25B00B5E209 /* DConnectSettingProfile.m */; };
 		BE71FE141DA3B25B00B5E209 /* DConnectSystemProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = BE71FDAE1DA3B25B00B5E209 /* DConnectSystemProfile.m */; };
 		BE71FE151DA3B25B00B5E209 /* DConnectTouchProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = BE71FDAF1DA3B25B00B5E209 /* DConnectTouchProfile.m */; };
 		BE71FE161DA3B25B00B5E209 /* DConnectVibrationProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = BE71FDB01DA3B25B00B5E209 /* DConnectVibrationProfile.m */; };
@@ -1800,7 +1800,7 @@
 		BE6F93321A70DB0400BFA51F /* DConnectResponseMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DConnectResponseMessage.h; sourceTree = "<group>"; };
 		BE6F93331A70DB0400BFA51F /* DConnectSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DConnectSDK.h; sourceTree = "<group>"; };
 		BE6F93341A70DB0400BFA51F /* DConnectSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DConnectSettings.h; sourceTree = "<group>"; };
-		BE6F93351A70DB0400BFA51F /* DConnectSettingsProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DConnectSettingsProfile.h; sourceTree = "<group>"; };
+		BE6F93351A70DB0400BFA51F /* DConnectSettingProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DConnectSettingProfile.h; sourceTree = "<group>"; };
 		BE6F93361A70DB0400BFA51F /* DConnectSystemProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DConnectSystemProfile.h; sourceTree = "<group>"; };
 		BE6F93371A70DB0400BFA51F /* DConnectURIBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DConnectURIBuilder.h; sourceTree = "<group>"; };
 		BE6F93381A70DB0400BFA51F /* DConnectUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DConnectUtil.h; sourceTree = "<group>"; };
@@ -1840,7 +1840,7 @@
 		BE71FDAA1DA3B25B00B5E209 /* DConnectProximityProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DConnectProximityProfile.m; sourceTree = "<group>"; };
 		BE71FDAB1DA3B25B00B5E209 /* DConnectServiceDiscoveryProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DConnectServiceDiscoveryProfile.m; sourceTree = "<group>"; };
 		BE71FDAC1DA3B25B00B5E209 /* DConnectServiceInformationProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DConnectServiceInformationProfile.m; sourceTree = "<group>"; };
-		BE71FDAD1DA3B25B00B5E209 /* DConnectSettingsProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DConnectSettingsProfile.m; sourceTree = "<group>"; };
+		BE71FDAD1DA3B25B00B5E209 /* DConnectSettingProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DConnectSettingProfile.m; sourceTree = "<group>"; };
 		BE71FDAE1DA3B25B00B5E209 /* DConnectSystemProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DConnectSystemProfile.m; sourceTree = "<group>"; };
 		BE71FDAF1DA3B25B00B5E209 /* DConnectTouchProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DConnectTouchProfile.m; sourceTree = "<group>"; };
 		BE71FDB01DA3B25B00B5E209 /* DConnectVibrationProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DConnectVibrationProfile.m; sourceTree = "<group>"; };
@@ -3879,7 +3879,7 @@
 				BE6F93331A70DB0400BFA51F /* DConnectSDK.h */,
 				6B96959E1A9DCB5200D25A4B /* DConnectServiceInformationProfile.h */,
 				BE6F93341A70DB0400BFA51F /* DConnectSettings.h */,
-				BE6F93351A70DB0400BFA51F /* DConnectSettingsProfile.h */,
+				BE6F93351A70DB0400BFA51F /* DConnectSettingProfile.h */,
 				BE6F93361A70DB0400BFA51F /* DConnectSystemProfile.h */,
 				BE6F93371A70DB0400BFA51F /* DConnectURIBuilder.h */,
 				BE6F93381A70DB0400BFA51F /* DConnectUtil.h */,
@@ -3932,7 +3932,7 @@
 				BE71FDAA1DA3B25B00B5E209 /* DConnectProximityProfile.m */,
 				BE71FDAB1DA3B25B00B5E209 /* DConnectServiceDiscoveryProfile.m */,
 				BE71FDAC1DA3B25B00B5E209 /* DConnectServiceInformationProfile.m */,
-				BE71FDAD1DA3B25B00B5E209 /* DConnectSettingsProfile.m */,
+				BE71FDAD1DA3B25B00B5E209 /* DConnectSettingProfile.m */,
 				BE71FDAE1DA3B25B00B5E209 /* DConnectSystemProfile.m */,
 				BE71FDAF1DA3B25B00B5E209 /* DConnectTouchProfile.m */,
 				BE71FDB01DA3B25B00B5E209 /* DConnectVibrationProfile.m */,
@@ -4698,7 +4698,7 @@
 				D6010D121D8FA3CF00DD0D83 /* DConnectEventSessionTable.m in Sources */,
 				D62622DD199232BC004F01E6 /* LocalOAuthDbCacheController.m in Sources */,
 				D6EE82E919B38E9F008E855E /* LocalOAuthAccessTokenListViewController.m in Sources */,
-				BE71FE131DA3B25B00B5E209 /* DConnectSettingsProfile.m in Sources */,
+				BE71FE131DA3B25B00B5E209 /* DConnectSettingProfile.m in Sources */,
 				309CD48619877C9E002A5684 /* DConnectMessageFactory.m in Sources */,
 				6B4EEF571AAF248000A92E0D /* DConnectOriginInfo.m in Sources */,
 				BE71FE0D1DA3B25B00B5E209 /* DConnectPhoneProfile.m in Sources */,

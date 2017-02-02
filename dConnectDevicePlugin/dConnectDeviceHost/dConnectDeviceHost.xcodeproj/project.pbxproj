@@ -36,7 +36,7 @@
 		2515192519A86FC800430980 /* DPHostMediaPlayerProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 25E029701991BD3400AFC171 /* DPHostMediaPlayerProfile.m */; };
 		252F870319736DEB00142BAE /* DPHostPhoneProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 252F870219736DEB00142BAE /* DPHostPhoneProfile.m */; };
 		257FC23719BAAF5200358536 /* DPHostReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 257FC23619BAAF5200358536 /* DPHostReachability.m */; };
-		2585BB941980D89F00AAE43C /* DPHostSettingsProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 2585BB931980D89F00AAE43C /* DPHostSettingsProfile.m */; };
+		2585BB941980D89F00AAE43C /* DPHostSettingProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 2585BB931980D89F00AAE43C /* DPHostSettingProfile.m */; };
 		25B42C6519865F1000B65E83 /* DPHostRecorderContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 25B42C6419865F1000B65E83 /* DPHostRecorderContext.m */; };
 		25C710EB1981E578004C6484 /* DPHostMediaStreamRecordingProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 25C710EA1981E578004C6484 /* DPHostMediaStreamRecordingProfile.m */; };
 		25DAFD18196A61E50002734B /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25DAFD17196A61E50002734B /* CoreFoundation.framework */; };
@@ -97,8 +97,8 @@
 		252F870219736DEB00142BAE /* DPHostPhoneProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHostPhoneProfile.m; sourceTree = "<group>"; };
 		257FC23519BAAF5200358536 /* DPHostReachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHostReachability.h; sourceTree = "<group>"; };
 		257FC23619BAAF5200358536 /* DPHostReachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHostReachability.m; sourceTree = "<group>"; };
-		2585BB921980D89F00AAE43C /* DPHostSettingsProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHostSettingsProfile.h; sourceTree = "<group>"; };
-		2585BB931980D89F00AAE43C /* DPHostSettingsProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHostSettingsProfile.m; sourceTree = "<group>"; };
+		2585BB921980D89F00AAE43C /* DPHostSettingProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHostSettingProfile.h; sourceTree = "<group>"; };
+		2585BB931980D89F00AAE43C /* DPHostSettingProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHostSettingProfile.m; sourceTree = "<group>"; };
 		25B42C6319865F1000B65E83 /* DPHostRecorderContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHostRecorderContext.h; sourceTree = "<group>"; };
 		25B42C6419865F1000B65E83 /* DPHostRecorderContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHostRecorderContext.m; sourceTree = "<group>"; };
 		25C710E91981E578004C6484 /* DPHostMediaStreamRecordingProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = DPHostMediaStreamRecordingProfile.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -370,8 +370,8 @@
 				252F870219736DEB00142BAE /* DPHostPhoneProfile.m */,
 				25FF0C0C196FBECF00E8C7C3 /* DPHostProximityProfile.h */,
 				25FF0C0D196FBECF00E8C7C3 /* DPHostProximityProfile.m */,
-				2585BB921980D89F00AAE43C /* DPHostSettingsProfile.h */,
-				2585BB931980D89F00AAE43C /* DPHostSettingsProfile.m */,
+				2585BB921980D89F00AAE43C /* DPHostSettingProfile.h */,
+				2585BB931980D89F00AAE43C /* DPHostSettingProfile.m */,
 				97FE1A1F192B6DA400808FA5 /* DPHostSystemProfile.h */,
 				97FE1A20192B6DA400808FA5 /* DPHostSystemProfile.m */,
 				EFDD969F1AB805840068E984 /* DPHostTouchProfile.h */,
@@ -624,7 +624,7 @@
 				D699974B1A7F264900EF934F /* DPHostCanvasDrawImage.m in Sources */,
 				257FC23719BAAF5200358536 /* DPHostReachability.m in Sources */,
 				D69997481A7F1AD800EF934F /* DPHostCanvasDrawObject.m in Sources */,
-				2585BB941980D89F00AAE43C /* DPHostSettingsProfile.m in Sources */,
+				2585BB941980D89F00AAE43C /* DPHostSettingProfile.m in Sources */,
 				ABDA3C6D1A0C58F3001F30A0 /* DPHostConnectProfile.m in Sources */,
 				25C710EB1981E578004C6484 /* DPHostMediaStreamRecordingProfile.m in Sources */,
 				EFDD96A81AB805F70068E984 /* DPHostTouchView.m in Sources */,

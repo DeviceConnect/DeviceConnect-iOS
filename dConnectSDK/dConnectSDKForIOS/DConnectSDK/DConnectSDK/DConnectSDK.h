@@ -48,7 +48,7 @@
 
 #import <DConnectSDK/DConnectVibrationProfile.h>
 #import <DConnectSDK/DConnectSystemProfile.h>
-#import <DConnectSDK/DConnectSettingsProfile.h>
+#import <DConnectSDK/DConnectSettingProfile.h>
 #import <DConnectSDK/DConnectServiceInformationProfile.h>
 #import <DConnectSDK/DConnectProximityProfile.h>
 #import <DConnectSDK/DConnectPhoneProfile.h>

@@ -12,9 +12,8 @@
 #import <DConnectSDK/DConnectProfile.h>
 #import <DConnectSDK/DConnectSystemProfile.h>
 #import "SonyCameraMediaStreamRecordingProfile.h"
-#import <DConnectSDK/DConnectSettingsProfile.h>
+#import <DConnectSDK/DConnectSettingProfile.h>
 #import "SonyCameraCameraProfile.h"
-#import "SonyCameraSettingsProfile.h"
 
 @implementation SonyCameraService
 
@@ -28,7 +27,6 @@
         
         [self addProfile: [DConnectSystemProfile new]];
         [self addProfile: [[SonyCameraMediaStreamRecordingProfile alloc] initWithLiveViewDelegate: liveViewDelegate remoteApiUtilDelegate: remoteApiUtilDelegate]];
-        [self addProfile: [SonyCameraSettingsProfile new]];
         [self addProfile: [SonyCameraCameraProfile new]];
     }
     return self;
