@@ -16,7 +16,7 @@ var util = (function(parent, global) {
             'notification',
             'phone',
             'proximity',
-            'settings',
+            'setting',
             'vibration',
             'light',
             'remotecontroller',
@@ -101,6 +101,7 @@ var util = (function(parent, global) {
             function(clientId, accessToken) {
                 mAccessToken = accessToken;
                 openWebSocketIfNeeded();
+                               console.log("accessToken:" + mAccessToken);
                 setCookie('accessToken', mAccessToken);
                 callback();
             },
@@ -330,15 +331,17 @@ var util = (function(parent, global) {
              case 4: {
                  if (xhr.status == 200) {
                     var json = JSON.parse(xhr.responseText);
+            console.log("uri before:" + uri);
                     if (json.result == 1 && json.errorCode == 14) {
                         appendScope(uri);
+            console.log("14");
                         authorization(function() {
                             if (method.toUpperCase() == 'GET' || method.toUpperCase() == 'DELETE') {
                                 uri = rebuildUri(uri);
                             } else {
                                 body.set('accessToken', mAccessToken);
                             }
-                            sendRequest(method, uri, body, callback);
+//                            sendRequest(method, uri, body, callback);
                         });
                         return;
                     }

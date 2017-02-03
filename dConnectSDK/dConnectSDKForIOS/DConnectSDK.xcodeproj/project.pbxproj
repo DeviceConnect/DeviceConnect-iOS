@@ -240,7 +240,7 @@
 		D65F831E1D28FC9F0024685D /* light.json in Resources */ = {isa = PBXBuildFile; fileRef = D65F831D1D28FC9F0024685D /* light.json */; };
 		D65F83201D28FCCE0024685D /* notification.json in Resources */ = {isa = PBXBuildFile; fileRef = D65F831F1D28FCCE0024685D /* notification.json */; };
 		D65F83221D28FD170024685D /* proximity.json in Resources */ = {isa = PBXBuildFile; fileRef = D65F83211D28FD170024685D /* proximity.json */; };
-		D65F83241D28FD490024685D /* settings.json in Resources */ = {isa = PBXBuildFile; fileRef = D65F83231D28FD490024685D /* settings.json */; };
+		D65F83241D28FD490024685D /* setting.json in Resources */ = {isa = PBXBuildFile; fileRef = D65F83231D28FD490024685D /* setting.json */; };
 		D65F83261D28FD840024685D /* temperature.json in Resources */ = {isa = PBXBuildFile; fileRef = D65F83251D28FD840024685D /* temperature.json */; };
 		D662E9BB1D4AEAA000919C69 /* airconditioner.json in Resources */ = {isa = PBXBuildFile; fileRef = D662E9A61D4AEA9F00919C69 /* airconditioner.json */; };
 		D662E9BC1D4AEAA000919C69 /* authorization.json in Resources */ = {isa = PBXBuildFile; fileRef = D662E9A71D4AEA9F00919C69 /* authorization.json */; };
@@ -2017,7 +2017,7 @@
 		D65F831D1D28FC9F0024685D /* light.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = light.json; sourceTree = "<group>"; };
 		D65F831F1D28FCCE0024685D /* notification.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = notification.json; sourceTree = "<group>"; };
 		D65F83211D28FD170024685D /* proximity.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = proximity.json; sourceTree = "<group>"; };
-		D65F83231D28FD490024685D /* settings.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = settings.json; sourceTree = "<group>"; };
+		D65F83231D28FD490024685D /* setting.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = setting.json; sourceTree = "<group>"; };
 		D65F83251D28FD840024685D /* temperature.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = temperature.json; sourceTree = "<group>"; };
 		D662DFD51D52318900C0F476 /* DConnectProfileProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DConnectProfileProvider.h; sourceTree = "<group>"; };
 		D662DFD91D52FDC900C0F476 /* DConnectProfileSpec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DConnectProfileSpec.h; sourceTree = "<group>"; };
@@ -4391,7 +4391,7 @@
 				D65F831D1D28FC9F0024685D /* light.json */,
 				D65F831F1D28FCCE0024685D /* notification.json */,
 				D65F83211D28FD170024685D /* proximity.json */,
-				D65F83231D28FD490024685D /* settings.json */,
+				D65F83231D28FD490024685D /* setting.json */,
 				D65F83251D28FD840024685D /* temperature.json */,
 			);
 			name = "Supporting Files";
@@ -4527,7 +4527,7 @@
 				D662E9C51D4AEAA000919C69 /* illuminance.json in Resources */,
 				D662E9C61D4AEAA000919C69 /* mediaplayer.json in Resources */,
 				D662E9C01D4AEAA000919C69 /* drivecontroller.json in Resources */,
-				D65F83241D28FD490024685D /* settings.json in Resources */,
+				D65F83241D28FD490024685D /* setting.json in Resources */,
 				D65E24D31D1B956500312134 /* health.json in Resources */,
 				D662E9BB1D4AEAA000919C69 /* airconditioner.json in Resources */,
 				D662E9CF1D4AEAA000919C69 /* touch.json in Resources */,
