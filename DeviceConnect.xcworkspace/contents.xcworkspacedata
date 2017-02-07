@@ -17,9 +17,6 @@
       location = "group:dConnectSDK/dConnectSDKForIOS/DConnectSDK.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:dConnectSDK/dConnectBrowser/dConnectBrowser.xcodeproj">
-   </FileRef>
-   <FileRef
       location = "group:dConnectDevicePlugin/dConnectDeviceAllJoyn/dConnectDeviceAllJoyn.xcodeproj">
    </FileRef>
    <FileRef
