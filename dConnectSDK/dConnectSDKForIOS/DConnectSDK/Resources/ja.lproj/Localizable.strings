@@ -29,6 +29,7 @@
 "display_scope_canvas" = "キャンバス";
 "display_scope_touch" = "タッチ";
 "display_scope_keyevent" = "キーイベント";
+"display_scope_geolocation" = "位置情報";
 
 
 // Wording
