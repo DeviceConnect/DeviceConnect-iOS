@@ -249,7 +249,7 @@ static NSString *const kTopicEvent = @"event";
 - (BOOL)sendRequestToMQTT:(DConnectRequestMessage *)request code:(u_int32_t)requestCode response:(DConnectResponseMessage *)response {
 	// Actionコードを文字列に修正
 	NSString *requestCodeStr = [@(requestCode) stringValue];
-	NSMutableDictionary *reqDic = [request internalDictionary];
+	NSMutableDictionary *reqDic = [[request internalDictionary] mutableCopy];
 	NSInteger actionCode = [reqDic[DConnectMessageAction] integerValue];
 	switch (actionCode) {
 		case DConnectMessageActionTypeGet:
@@ -301,31 +301,31 @@ static NSString *const kTopicEvent = @"event";
 	[dic setObject:@(requestCode) forKey:@"requestCode"];
 
 	// 余計なオブジェクトを削除
-	NSArray *keys = [request.allKeys copy];
+	NSArray *keys = [reqDic.allKeys copy];
 	for (id key in keys) {
 		if (![key isKindOfClass:[NSString class]]) {
 			continue;
 		}
         // URI変換 dataパラメータが存在する場合にはローカルサーバとして動作するようにURIに変換
         if ([@"data" isEqualToString:key]) {
-            NSData *data = request.internalDictionary[@"data"];
+            NSData *data = reqDic[@"data"];
             if (data && data.length > 0) {
                 NSString *uuid = [self addData:data];
-                request.internalDictionary[@"uri"] = [NSString stringWithFormat:@"http://localhost/contentProvider?%@", uuid];
+                reqDic[@"uri"] = [NSString stringWithFormat:@"http://localhost/contentProvider?%@", uuid];
             }
         }
         // URI変換 ここまで
 
-        id value = request.internalDictionary[key];
+        id value = reqDic[key];
 		if ([value isKindOfClass:[NSString class]] ||
 			[value isKindOfClass:[NSNumber class]] ||
 			[value isKindOfClass:[NSArray class]] ||
 			[value isKindOfClass:[NSDictionary class]] ) {
 		} else {
-			[request.internalDictionary removeObjectForKey:key];
+			[reqDic removeObjectForKey:key];
 		}
 	}
-	[dic setObject:request.internalDictionary forKey:@"request"];
+	[dic setObject:reqDic forKey:@"request"];
     
 	NSError *err;
 	NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dic options:0 error:&err];
@@ -348,6 +348,7 @@ static NSString *const kTopicEvent = @"event";
 	if ([request hasKey:@"_selfOnly"]) {
 		return YES;
 	}
+    
 	[request setString:@"true" forKey:@"_selfOnly"];
 	if (_managers) {
 		// サービス数を保持
@@ -654,9 +655,9 @@ static NSString *const kTopicEvent = @"event";
 			int result = [resJson[DConnectMessageResult] intValue];
 			if (result == DConnectMessageResultTypeOk) {
 				NSArray *foundServices = resJson[DConnectServiceDiscoveryProfileParamServices];
+                DConnectArray *services = [DConnectArray array];
 				if ([foundServices count] > 0) {
 					// responseに追加
-					DConnectArray *services = [response arrayForKey:DConnectServiceDiscoveryProfileParamServices];
 					for (id item in foundServices) {
 						// idとnameを加工
 						DConnectMessage *msg = [DConnectMessage initWithDictionary:item];
@@ -674,7 +675,9 @@ static NSString *const kTopicEvent = @"event";
 						[services addMessage:msg];
 					}
 				}
-			}
+                [response setArray:services forKey:DConnectServiceDiscoveryProfileParamServices];
+                [response setResult:DConnectMessageResultTypeOk];
+            }
 			// カウントダウン
 			count -= 1;
 			if (count == 0) {
