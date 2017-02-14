@@ -274,4 +274,27 @@
  */
 - (void) setErrorToInvalidOriginWithMessage:(NSString *)message;
 
+
+/*!
+ @brief レスポンスエラーを不正URLに設定する。
+ */
+- (void) setErrorToInvalidURL;
+
+/*!
+ @brief レスポンスエラーを不正URLに設定し、指定された文字列をエラーメッセージに設定する。
+ 
+ @param[in] message エラーメッセージ
+ */
+- (void) setErrorToInvalidURLWithMessage:(NSString *)message;
+/*!
+ @brief レスポンスエラーを不正Profileエラーに設定する。
+ */
+- (void) setErrorToInvalidProfile;
+
+/*!
+ @brief レスポンスエラーを不正Profileエラーに設定し、指定された文字列をエラーメッセージに設定する。
+ 
+ @param[in] message エラーメッセージ
+ */
+- (void) setErrorToInvalidProfileWithMessage:(NSString *)message;
 @end

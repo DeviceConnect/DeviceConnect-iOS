@@ -405,13 +405,20 @@ NSString *const DConnectMessageHeaderGotAPIOrigin = @"X-GotAPI-Origin";
             } else {
                 return nil;
             }
-        }
-        else {
+        } else {
             int val;
             if ([[NSScanner scannerWithString:obj] scanInt:&val]) {
                 return [NSNumber numberWithInt:val];
             } else {
-                return nil;
+                NSString *strValue = (NSString *) obj;
+                // true/falseの場合は、YES/NOに変換。それ以外はnil
+                if ([[strValue lowercaseString] isEqualToString:@"true"]) {
+                    return [NSNumber numberWithBool:YES];
+                } else if ([[strValue lowercaseString] isEqualToString:@"false"]) {
+                    return [NSNumber numberWithBool:NO];
+                } else {
+                    return nil;
+                }
             }
         }
     }
