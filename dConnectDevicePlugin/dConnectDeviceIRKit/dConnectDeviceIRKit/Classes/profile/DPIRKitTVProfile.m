@@ -12,6 +12,7 @@
 #import "DPIRKitManager.h"
 #import "DPIRKitVirtualDevice.h"
 #import "DPIRKitRESTfulRequest.h"
+#import "DPIRKitDevicePlugin.h"
 
 
 @implementation DPIRKitTVProfile
@@ -32,7 +33,7 @@
                          NSString *serviceId = [request serviceId];
                          NSString *uri = [NSString stringWithFormat:@"/%@",[request profile]];
                          
-                         return [weakSelf sendTVIRRequestWithServiceId:serviceId
+                         return [weakSelf.plugin sendTVIRRequestWithServiceId:serviceId
                                                                 method:@"PUT"
                                                                    uri:uri
                                                               response:response];
@@ -47,7 +48,7 @@
                             NSString *serviceId = [request serviceId];
                             NSString *uri = [NSString stringWithFormat:@"/%@",[request profile]];
                             
-                            return [weakSelf sendTVIRRequestWithServiceId:serviceId
+                            return [weakSelf.plugin sendTVIRRequestWithServiceId:serviceId
                                                                    method:@"DELETE"
                                                                       uri:uri
                                                                  response:response];
@@ -85,7 +86,7 @@
                              
                          }
                          
-                         return [weakSelf sendTVIRRequestWithServiceId:serviceId
+                         return [weakSelf.plugin sendTVIRRequestWithServiceId:serviceId
                                                                 method:@"PUT"
                                                                    uri:uri
                                                               response:response];
@@ -107,7 +108,7 @@
                                           DCMTVProfileParamControl,
                                           control];
                          
-                         return [weakSelf sendTVIRRequestWithServiceId:serviceId
+                         return [weakSelf.plugin sendTVIRRequestWithServiceId:serviceId
                                                                 method:@"PUT"
                                                                    uri:uri
                                                               response:response];
@@ -128,7 +129,7 @@
                                           DCMTVProfileParamSelect,
                                           select];
                          
-                         return [weakSelf sendTVIRRequestWithServiceId:serviceId
+                         return [weakSelf.plugin sendTVIRRequestWithServiceId:serviceId
                                                                 method:@"PUT"
                                                                    uri:uri
                                                               response:response];
@@ -139,35 +140,5 @@
     
 }
 
-
-#pragma mark - private method
-
-- (BOOL)sendTVIRRequestWithServiceId:(NSString *)serviceId
-                                 method:(NSString *)method
-                                    uri:(NSString *)uri
-                               response:(DConnectResponseMessage *)response
-{
-    BOOL send = YES;
-    NSArray *requests = [[DPIRKitDBManager sharedInstance] queryRESTfulRequestByServiceId:serviceId
-                                                                                  profile:@"/tv"];
-    if (requests.count == 0) {
-        [response setErrorToNotSupportProfile];
-        return send;
-    }
-    DPIRKitRESTfulRequest *sendReq = nil;
-    for (DPIRKitRESTfulRequest *req in requests) {
-        if ([req.uri isEqualToString:uri] && [req.method isEqualToString:method] && req.ir) {
-            sendReq = req;
-            break;
-        }
-    }
-    if (sendReq) {
-        send = [self.plugin sendIRWithServiceId:serviceId message:sendReq.ir response:response];
-    } else {
-        [response setErrorToInvalidRequestParameterWithMessage:@"IR is not registered for that request"];
-    }
-
-    return send;
-}
 
 @end
