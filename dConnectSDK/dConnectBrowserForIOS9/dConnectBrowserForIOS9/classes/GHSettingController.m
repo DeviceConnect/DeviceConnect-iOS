@@ -53,7 +53,7 @@
     [self presentViewController:nav animated:YES completion:nil];
 }
 
-- (void)updateSwitches
+- (void)updateViews
 {
     [self.tableView reloadData];
 }
@@ -127,6 +127,14 @@
         {
             GrayLabelCell *cell = (GrayLabelCell*)[tableView dequeueReusableCellWithIdentifier:@"GrayLabelCell"
                                                                                   forIndexPath:indexPath];
+            switch(type) {
+                case SettingCellTypeManagerUUID:
+                    [cell.titleLabel setFont:[UIFont systemFontOfSize:11.0]] ;
+
+                case SettingCellTypeManagerName:
+                    cell.titleLabel.textColor = [UIColor blackColor];
+                    break;
+            }
             cell.titleLabel.text = [viewModel cellTitle: indexPath];
             return cell;
         }
@@ -144,6 +152,7 @@
                 case SecurityCellTypeLocalOAuth:
                 case SecurityCellTypeOrigin:
                 case SecurityCellTypeExternIP:
+                case SecurityCellTypeAvailability:
                 {
                     SwitchableCell *cell = (SwitchableCell*)[tableView dequeueReusableCellWithIdentifier:@"SwitchableCell"
                                                                                             forIndexPath:indexPath];
