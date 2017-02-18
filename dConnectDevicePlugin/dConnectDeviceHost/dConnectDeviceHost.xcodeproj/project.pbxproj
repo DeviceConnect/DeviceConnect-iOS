@@ -60,8 +60,6 @@
 		97FE1A05192B2FB500808FA5 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 97FE1A03192B2FB500808FA5 /* InfoPlist.strings */; };
 		97FE1A07192B2FB500808FA5 /* dConnectDeviceHostTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 97FE1A06192B2FB500808FA5 /* dConnectDeviceHostTests.m */; };
 		97FE1A21192B6DA400808FA5 /* DPHostSystemProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 97FE1A20192B6DA400808FA5 /* DPHostSystemProfile.m */; };
-		AB0B13271A80A12300D655D5 /* DPHostFileDescriptorContext.m in Sources */ = {isa = PBXBuildFile; fileRef = AB0B13241A80A12300D655D5 /* DPHostFileDescriptorContext.m */; };
-		AB0B13281A80A12300D655D5 /* DPHostFileDescriptorProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = AB0B13261A80A12300D655D5 /* DPHostFileDescriptorProfile.m */; };
 		AB3B2C281BCF311000C5E3A2 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB3B2C261BCF311000C5E3A2 /* AVFoundation.framework */; };
 		AB3B2C291BCF311000C5E3A2 /* AVKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB3B2C271BCF311000C5E3A2 /* AVKit.framework */; };
 		ABDA3C6D1A0C58F3001F30A0 /* DPHostConnectProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = ABDA3C6C1A0C58F3001F30A0 /* DPHostConnectProfile.m */; };
@@ -141,10 +139,6 @@
 		97FE1A06192B2FB500808FA5 /* dConnectDeviceHostTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = dConnectDeviceHostTests.m; sourceTree = "<group>"; };
 		97FE1A1F192B6DA400808FA5 /* DPHostSystemProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHostSystemProfile.h; sourceTree = "<group>"; };
 		97FE1A20192B6DA400808FA5 /* DPHostSystemProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHostSystemProfile.m; sourceTree = "<group>"; };
-		AB0B13231A80A12300D655D5 /* DPHostFileDescriptorContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHostFileDescriptorContext.h; sourceTree = "<group>"; };
-		AB0B13241A80A12300D655D5 /* DPHostFileDescriptorContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHostFileDescriptorContext.m; sourceTree = "<group>"; };
-		AB0B13251A80A12300D655D5 /* DPHostFileDescriptorProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHostFileDescriptorProfile.h; sourceTree = "<group>"; };
-		AB0B13261A80A12300D655D5 /* DPHostFileDescriptorProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHostFileDescriptorProfile.m; sourceTree = "<group>"; };
 		AB3B2C261BCF311000C5E3A2 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		AB3B2C271BCF311000C5E3A2 /* AVKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVKit.framework; path = System/Library/Frameworks/AVKit.framework; sourceTree = SDKROOT; };
 		ABDA3C6B1A0C58F3001F30A0 /* DPHostConnectProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHostConnectProfile.h; sourceTree = "<group>"; };
@@ -350,7 +344,6 @@
 		97FE1A1B192B5A5600808FA5 /* profile */ = {
 			isa = PBXGroup;
 			children = (
-				AB0B13221A80A07900D655D5 /* DPHostFileDescriptor */,
 				D6384EA71A7625BD00384167 /* DPHostCanvasProfile.h */,
 				D6384EA81A7625BD00384167 /* DPHostCanvasProfile.m */,
 				D6384EAA1A7625CF00384167 /* DPHostCanvas */,
@@ -381,17 +374,6 @@
 				25DF80D8196CE622003F6FF3 /* DPHostVibrationProfile.m */,
 			);
 			path = profile;
-			sourceTree = "<group>";
-		};
-		AB0B13221A80A07900D655D5 /* DPHostFileDescriptor */ = {
-			isa = PBXGroup;
-			children = (
-				AB0B13231A80A12300D655D5 /* DPHostFileDescriptorContext.h */,
-				AB0B13241A80A12300D655D5 /* DPHostFileDescriptorContext.m */,
-				AB0B13251A80A12300D655D5 /* DPHostFileDescriptorProfile.h */,
-				AB0B13261A80A12300D655D5 /* DPHostFileDescriptorProfile.m */,
-			);
-			path = DPHostFileDescriptor;
 			sourceTree = "<group>";
 		};
 		D6384EAA1A7625CF00384167 /* DPHostCanvas */ = {
@@ -628,9 +610,7 @@
 				ABDA3C6D1A0C58F3001F30A0 /* DPHostConnectProfile.m in Sources */,
 				25C710EB1981E578004C6484 /* DPHostMediaStreamRecordingProfile.m in Sources */,
 				EFDD96A81AB805F70068E984 /* DPHostTouchView.m in Sources */,
-				AB0B13271A80A12300D655D5 /* DPHostFileDescriptorContext.m in Sources */,
 				97FE1A21192B6DA400808FA5 /* DPHostSystemProfile.m in Sources */,
-				AB0B13281A80A12300D655D5 /* DPHostFileDescriptorProfile.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
