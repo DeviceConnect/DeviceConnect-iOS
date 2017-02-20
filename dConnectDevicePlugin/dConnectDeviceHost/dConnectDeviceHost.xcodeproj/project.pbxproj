@@ -77,6 +77,8 @@
 		D699974B1A7F264900EF934F /* DPHostCanvasDrawImage.m in Sources */ = {isa = PBXBuildFile; fileRef = D699974A1A7F264900EF934F /* DPHostCanvasDrawImage.m */; };
 		D6C860251D38D3AF00232EEF /* DPHostService.m in Sources */ = {isa = PBXBuildFile; fileRef = D6C860241D38D3AF00232EEF /* DPHostService.m */; };
 		EF36CA051E383B56008E6F3E /* DPHostLightProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = EF36CA041E383B56008E6F3E /* DPHostLightProfile.m */; };
+		EF19A24F1E446BDD00F00439 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EF19A24E1E446BDD00F00439 /* CoreLocation.framework */; };
+		EFA3EC4E1E45DD95007E559E /* DPHostGeolocationProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = EF19A24A1E4467B200F00439 /* DPHostGeolocationProfile.m */; };
 		EFDD96A11AB805980068E984 /* DPHostTouchProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = EFDD96A01AB805980068E984 /* DPHostTouchProfile.m */; };
 		EFDD96A71AB805F70068E984 /* DPHostTouchUIViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EFDD96A41AB805F70068E984 /* DPHostTouchUIViewController.m */; };
 		EFDD96A81AB805F70068E984 /* DPHostTouchView.m in Sources */ = {isa = PBXBuildFile; fileRef = EFDD96A61AB805F70068E984 /* DPHostTouchView.m */; };
@@ -175,6 +177,9 @@
 		D6C860241D38D3AF00232EEF /* DPHostService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHostService.m; sourceTree = "<group>"; };
 		EF36CA041E383B56008E6F3E /* DPHostLightProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHostLightProfile.m; sourceTree = "<group>"; };
 		EF36CA061E383C04008E6F3E /* DPHostLightProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHostLightProfile.h; sourceTree = "<group>"; };
+		EF19A2491E4467B200F00439 /* DPHostGeolocationProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHostGeolocationProfile.h; sourceTree = "<group>"; };
+		EF19A24A1E4467B200F00439 /* DPHostGeolocationProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHostGeolocationProfile.m; sourceTree = "<group>"; };
+		EF19A24E1E446BDD00F00439 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		EFDD969F1AB805840068E984 /* DPHostTouchProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHostTouchProfile.h; sourceTree = "<group>"; };
 		EFDD96A01AB805980068E984 /* DPHostTouchProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHostTouchProfile.m; sourceTree = "<group>"; };
 		EFDD96A31AB805F70068E984 /* DPHostTouchUIViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHostTouchUIViewController.h; sourceTree = "<group>"; };
@@ -202,6 +207,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EF19A24F1E446BDD00F00439 /* CoreLocation.framework in Frameworks */,
 				AB3B2C281BCF311000C5E3A2 /* AVFoundation.framework in Frameworks */,
 				AB3B2C291BCF311000C5E3A2 /* AVKit.framework in Frameworks */,
 				ABDA3C701A0C743A001F30A0 /* CoreBluetooth.framework in Frameworks */,
@@ -290,6 +296,7 @@
 		97FE19E9192B2FB400808FA5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				EF19A24E1E446BDD00F00439 /* CoreLocation.framework */,
 				AB3B2C261BCF311000C5E3A2 /* AVFoundation.framework */,
 				AB3B2C271BCF311000C5E3A2 /* AVKit.framework */,
 				ABDA3C6F1A0C743A001F30A0 /* CoreBluetooth.framework */,
@@ -368,6 +375,8 @@
 				EFF228C91E3A05DF0006F100 /* util */,
 				EF36CA061E383C04008E6F3E /* DPHostLightProfile.h */,
 				EF36CA041E383B56008E6F3E /* DPHostLightProfile.m */,
+				EF19A2491E4467B200F00439 /* DPHostGeolocationProfile.h */,
+				EF19A24A1E4467B200F00439 /* DPHostGeolocationProfile.m */,
 				AB0B13221A80A07900D655D5 /* DPHostFileDescriptor */,
 				D6384EA71A7625BD00384167 /* DPHostCanvasProfile.h */,
 				D6384EA81A7625BD00384167 /* DPHostCanvasProfile.m */,
@@ -635,6 +644,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2515192519A86FC800430980 /* DPHostMediaPlayerProfile.m in Sources */,
+				EFA3EC4E1E45DD95007E559E /* DPHostGeolocationProfile.m in Sources */,
 				97FE19F2192B2FB400808FA5 /* DPHostDevicePlugin.m in Sources */,
 				D6384EA91A7625BD00384167 /* DPHostCanvasProfile.m in Sources */,
 				D6C860251D38D3AF00232EEF /* DPHostService.m in Sources */,
