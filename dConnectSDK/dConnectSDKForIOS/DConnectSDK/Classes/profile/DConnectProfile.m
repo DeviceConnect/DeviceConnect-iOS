@@ -126,7 +126,7 @@
                 [response setErrorToNotSupportAction];
             }
         } else {
-            [response setErrorToUnknownAttribute];
+            [response setErrorToNotSupportAction];
         }
         return YES;
     }
