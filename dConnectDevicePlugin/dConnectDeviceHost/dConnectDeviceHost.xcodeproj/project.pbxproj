@@ -82,13 +82,10 @@
 		EFDD96A81AB805F70068E984 /* DPHostTouchView.m in Sources */ = {isa = PBXBuildFile; fileRef = EFDD96A61AB805F70068E984 /* DPHostTouchView.m */; };
 		EFF228D01E3A05DF0006F100 /* DPHostDeviceRepeatExecutor.m in Sources */ = {isa = PBXBuildFile; fileRef = EFF228CB1E3A05DF0006F100 /* DPHostDeviceRepeatExecutor.m */; };
 		EFF228D11E3A05DF0006F100 /* DPHostDeviceRepeatExecutor.m in Sources */ = {isa = PBXBuildFile; fileRef = EFF228CB1E3A05DF0006F100 /* DPHostDeviceRepeatExecutor.m */; };
-		EFF228D21E3A05DF0006F100 /* DPHostDeviceRepeatExecutor.m in Sources */ = {isa = PBXBuildFile; fileRef = EFF228CB1E3A05DF0006F100 /* DPHostDeviceRepeatExecutor.m */; };
 		EFF228D31E3A05DF0006F100 /* DPHostTimeoutSchedule.m in Sources */ = {isa = PBXBuildFile; fileRef = EFF228CD1E3A05DF0006F100 /* DPHostTimeoutSchedule.m */; };
 		EFF228D41E3A05DF0006F100 /* DPHostTimeoutSchedule.m in Sources */ = {isa = PBXBuildFile; fileRef = EFF228CD1E3A05DF0006F100 /* DPHostTimeoutSchedule.m */; };
-		EFF228D51E3A05DF0006F100 /* DPHostTimeoutSchedule.m in Sources */ = {isa = PBXBuildFile; fileRef = EFF228CD1E3A05DF0006F100 /* DPHostTimeoutSchedule.m */; };
 		EFF228D61E3A05DF0006F100 /* DPHostUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = EFF228CF1E3A05DF0006F100 /* DPHostUtil.m */; };
 		EFF228D71E3A05DF0006F100 /* DPHostUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = EFF228CF1E3A05DF0006F100 /* DPHostUtil.m */; };
-		EFF228D81E3A05DF0006F100 /* DPHostUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = EFF228CF1E3A05DF0006F100 /* DPHostUtil.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -630,9 +627,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EFF228D51E3A05DF0006F100 /* DPHostTimeoutSchedule.m in Sources */,
-				EFF228D81E3A05DF0006F100 /* DPHostUtil.m in Sources */,
-				EFF228D21E3A05DF0006F100 /* DPHostDeviceRepeatExecutor.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
