@@ -213,6 +213,15 @@ NSString *const DConnectAttributeNameRequestAccessToken = @"requestAccessToken";
     return managerName;
 }
 
+- (void)updateManagerName:(NSString*)name {
+    if (name) {
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        [defaults setObject:name forKey:KEY_MANAGER_NAME];
+        [defaults synchronize];
+    }
+}
+
+
 - (BOOL) start {
     // 開始フラグをチェック
     if (self.mStartFlag) {

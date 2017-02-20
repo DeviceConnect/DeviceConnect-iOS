@@ -164,5 +164,29 @@ extern NSString *const DConnectApplicationWillEnterForeground;
 - (BOOL) requiresOrigin;
 
 
+/*!
+ @brief デバイスプラグインのアイコンのパスを返す。
+ @param[in] serviceId サービスID
+ @param[in] isOnline YES:デバイスがオンラインの画像, NO:デバイスがオフラインの時の画像
+ @return デバイスプラグインのアイコン画像を返す。
+ */
 - (NSString *)iconFilePathForServiceId:(NSString *)serviceId isOnline:(BOOL)isOnline;
+
+
+/*!
+ @brief DConnectManagerを識別するUUIDを取得します。
+ */
+- (NSString *) managerUUID;
+
+/*!
+ @brief DConnectManagerの名前を取得します。
+ */
+- (NSString *) managerName;
+
+
+/*!
+ @brief DConnectManagerの名前を設定します。
+ @param[in] name DConnectManager名
+ */
+- (void)updateManagerName:(NSString*)name;
 @end

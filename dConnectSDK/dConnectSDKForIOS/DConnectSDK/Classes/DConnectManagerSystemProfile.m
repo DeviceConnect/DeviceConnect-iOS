@@ -9,6 +9,7 @@
 
 #import "DConnectManagerSystemProfile.h"
 #import "DConnectManager+Private.h"
+#import "DConnectManager.h"
 
 @implementation DConnectManagerSystemProfile
 
@@ -156,6 +157,11 @@
     }
     
     [response setResult:DConnectMessageResultTypeOk];
+    
+    // Managerの名前とUUID
+    [DConnectSystemProfile setName:[[DConnectManager sharedManager] managerName] target:response];
+    [DConnectSystemProfile setUUID:[[DConnectManager sharedManager] managerUUID] target:response];
+    
     [DConnectSystemProfile setSupports:supports target:response];
     [DConnectSystemProfile setPlugins:plugins target:response];
     return YES;
