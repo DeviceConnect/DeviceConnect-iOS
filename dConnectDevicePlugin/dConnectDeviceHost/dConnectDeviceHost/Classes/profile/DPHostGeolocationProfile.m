@@ -244,7 +244,7 @@ static const long long MaximumAgeMilliSec = 0;
     [DConnectGeolocationProfile setSpeed:location.speed target:coordinates];
     
     DConnectMessage *position = [DConnectMessage message];
-    [DConnectGeolocationProfile setPosition:coordinates target:position];
+    [DConnectGeolocationProfile setCoordinates:coordinates target:position];
     [DConnectGeolocationProfile setTimeStamp:([location.timestamp timeIntervalSince1970] * 1000) target:position];
     NSDate *timeDate = location.timestamp;
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
