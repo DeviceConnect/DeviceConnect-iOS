@@ -159,7 +159,7 @@ static NSString *const DPHostFileProfileParamNewPath = @"newPath";
                               [response setErrorToInvalidRequestParameterWithMessage:@"OldPath File does not exist."];
                               return YES;
                           } else if (isDirectory) {
-                              [response setErrorToUnknownWithMessage:@"Directory can not be specified; use Move Directory API instead."];
+                              [response setErrorToInvalidRequestParameterWithMessage:@"Directory can not be specified; use Move Directory API instead."];
                               return YES;
                           }
                           if ([sysFileMgr fileExistsAtPath:dstNewPath isDirectory:&isDirectory]
@@ -172,8 +172,11 @@ static NSString *const DPHostFileProfileParamNewPath = @"newPath";
                                   && !forceOverwrite) {
                                   [response setErrorToInvalidRequestParameterWithMessage:@"NewPath File already exist."];
                                   return YES;
+                              } else if ([sysFileMgr fileExistsAtPath:dstNewPath isDirectory:&isDirectory]
+                                         && forceOverwrite) {
+                                  [sysFileMgr removeItemAtPath:dstNewPath error:nil];
                               } else if ([[dstNewPath pathExtension] isEqualToString:@""]) {
-                                  [response setErrorToUnknownWithMessage:@"Directory can not be specified; use Move Directory API instead."];
+                                  [response setErrorToInvalidRequestParameterWithMessage:@"Directory can not be specified; use Move Directory API instead."];
                                   return YES;
                               }
                           }
@@ -304,7 +307,7 @@ static NSString *const DPHostFileProfileParamNewPath = @"newPath";
                 [response setErrorToInvalidRequestParameterWithMessage:@"OldPath File does not exist."];
                 return YES;
             } else if (!isDirectory) {
-                [response setErrorToUnknownWithMessage:@"Directory can not be specified; use Move File API instead."];
+                [response setErrorToInvalidRequestParameterWithMessage:@"Directory can not be specified; use Move File API instead."];
                 return YES;
             }
             if ([sysFileMgr fileExistsAtPath:dstNewPath isDirectory:&isDirectory]
