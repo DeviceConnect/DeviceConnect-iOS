@@ -283,6 +283,8 @@
 		D6FD02151999EC7A000DB674 /* CipherSignatureProcMD.m in Sources */ = {isa = PBXBuildFile; fileRef = D6FD02101999EC7A000DB674 /* CipherSignatureProcMD.m */; };
 		D6FF6C811D8FDA9D00B9165B /* DConnectEventProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = D6FF6C801D8FDA9D00B9165B /* DConnectEventProtocol.m */; };
 		D6FF6C8C1D9101C300B9165B /* DConnectVersionName.m in Sources */ = {isa = PBXBuildFile; fileRef = D6FF6C8B1D9101C300B9165B /* DConnectVersionName.m */; };
+		EF19A2471E44647500F00439 /* DConnectGeolocationProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = EF19A2461E44647400F00439 /* DConnectGeolocationProfile.m */; };
+		EF19A24D1E446B1C00F00439 /* geolocation.json in Resources */ = {isa = PBXBuildFile; fileRef = EF19A24C1E446B1C00F00439 /* geolocation.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -2099,6 +2101,9 @@
 		D6FF6C801D8FDA9D00B9165B /* DConnectEventProtocol.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DConnectEventProtocol.m; sourceTree = "<group>"; };
 		D6FF6C8A1D9101C300B9165B /* DConnectVersionName.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DConnectVersionName.h; path = utils/DConnectVersionName.h; sourceTree = "<group>"; };
 		D6FF6C8B1D9101C300B9165B /* DConnectVersionName.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DConnectVersionName.m; path = utils/DConnectVersionName.m; sourceTree = "<group>"; };
+		EF19A2461E44647400F00439 /* DConnectGeolocationProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DConnectGeolocationProfile.m; sourceTree = "<group>"; };
+		EF19A2481E4464C400F00439 /* DConnectGeolocationProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DConnectGeolocationProfile.h; sourceTree = "<group>"; };
+		EF19A24C1E446B1C00F00439 /* geolocation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = geolocation.json; sourceTree = "<group>"; };
 		EF8B64951AAC78F2007C590B /* DConnectKeyEventProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DConnectKeyEventProfile.h; sourceTree = "<group>"; };
 		EFC27C2C1AB5B96B0029B257 /* DConnectTouchProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DConnectTouchProfile.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -3827,6 +3832,7 @@
 		BE6F93151A70DB0400BFA51F /* DConnectSDK */ = {
 			isa = PBXGroup;
 			children = (
+				EF19A2481E4464C400F00439 /* DConnectGeolocationProfile.h */,
 				D64EF6691D7E8A35005AC8B2 /* DConnectServiceListener.h */,
 				D64EF65B1D7D44EE005AC8B2 /* DConnectServiceListViewController.h */,
 				D62E463D1D53924800E3C489 /* DConnectPluginSpec.h */,
@@ -3904,6 +3910,7 @@
 		BE71FD961DA3B25B00B5E209 /* profile */ = {
 			isa = PBXGroup;
 			children = (
+				EF19A2461E44647400F00439 /* DConnectGeolocationProfile.m */,
 				BE71FD971DA3B25B00B5E209 /* api */,
 				BE71FDB11DA3B25B00B5E209 /* spec */,
 				BE71FD991DA3B25B00B5E209 /* DConnectAuthorizationProfile+Private.h */,
@@ -4349,6 +4356,7 @@
 		D6ECC6D519A4B78900FE3161 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				EF19A24C1E446B1C00F00439 /* geolocation.json */,
 				D68563BC1DA65401003818F2 /* ecg.json */,
 				D68563BD1DA65401003818F2 /* poseestimation.json */,
 				D68563BE1DA65401003818F2 /* sphero.json */,
@@ -4522,6 +4530,7 @@
 				D65F83241D28FD490024685D /* settings.json in Resources */,
 				D65E24D31D1B956500312134 /* health.json in Resources */,
 				D662E9BB1D4AEAA000919C69 /* airconditioner.json in Resources */,
+				EF19A24D1E446B1C00F00439 /* geolocation.json in Resources */,
 				D662E9CF1D4AEAA000919C69 /* touch.json in Resources */,
 				30E9A16419AC6A850013F545 /* Localizable.strings in Resources */,
 				D65F83261D28FD840024685D /* temperature.json in Resources */,
@@ -4654,6 +4663,7 @@
 				BE71FE291DA3B25B00B5E209 /* DConnectNumberDataSpec.m in Sources */,
 				D6BBC79E19A2585D00F090CA /* LocalOAuthConfirmAuthViewController.m in Sources */,
 				BE71FE201DA3B25B00B5E209 /* DConnectBooleanParameterSpecBuilder.m in Sources */,
+				EF19A2471E44647500F00439 /* DConnectGeolocationProfile.m in Sources */,
 				D6960ED3199FAEB400BE4D1B /* LocalOAuthSQLiteProfile.m in Sources */,
 				D62622E1199232BC004F01E6 /* LocalOAuthRedirectionURI.m in Sources */,
 				D62622E3199232BC004F01E6 /* LocalOAuthSampleUser.m in Sources */,
