@@ -40,7 +40,7 @@
                                                 attribute:DConnectTouchProfileAttrOnTouch];
     if (evtsTouch != nil) {
         // Send event.
-        [self sendEventData:touches evts:evtsTouch];
+        [self sendEventData:touches evts:evtsTouch state:DConnectTouchProfileEnumStart];
     }
     
     // Get event (ontouchstart).
@@ -49,7 +49,14 @@
                                                      attribute:DConnectTouchProfileAttrOnTouchStart];
     if (evtsTouchStart != nil) {
         // Send event.
-        [self sendEventData:touches evts:evtsTouchStart];
+        [self sendEventData:touches evts:evtsTouchStart state:DConnectTouchProfileEnumStart];
+    }
+    NSArray *evtsTouchChange= [_eventMgr eventListForServiceId:DPHostDevicePluginServiceId
+                                                       profile:DConnectTouchProfileName
+                                                     attribute:DConnectTouchProfileAttrOnTouchChange];
+    if (evtsTouchChange != nil) {
+        // Send event.
+        [self sendEventData:touches evts:evtsTouchChange state:DConnectTouchProfileEnumStart];
     }
 }
 
@@ -63,7 +70,14 @@
                                                             attribute:DConnectTouchProfileAttrOnDoubleTap];
             if (evtsDoubleTap != nil) {
                 // Send event.
-                [self sendEventData:touches evts:evtsDoubleTap];
+                [self sendEventData:touches evts:evtsDoubleTap state:DConnectTouchProfileEnumDoubleTap];
+            }
+            NSArray *evtsTouchChange= [_eventMgr eventListForServiceId:DPHostDevicePluginServiceId
+                                                               profile:DConnectTouchProfileName
+                                                             attribute:DConnectTouchProfileAttrOnTouchChange];
+            if (evtsTouchChange != nil) {
+                // Send event.
+                [self sendEventData:touches evts:evtsTouchChange state:DConnectTouchProfileEnumDoubleTap];
             }
         } else {
             // Get event (ontouchend).
@@ -72,7 +86,14 @@
                                                            attribute:DConnectTouchProfileAttrOnTouchEnd];
             if (evtsTouchEnd != nil) {
                 // Send event.
-                [self sendEventData:touches evts:evtsTouchEnd];
+                [self sendEventData:touches evts:evtsTouchEnd state:DConnectTouchProfileEnumEnd];
+            }
+            NSArray *evtsTouchChange= [_eventMgr eventListForServiceId:DPHostDevicePluginServiceId
+                                                               profile:DConnectTouchProfileName
+                                                             attribute:DConnectTouchProfileAttrOnTouchChange];
+            if (evtsTouchChange != nil) {
+                // Send event.
+                [self sendEventData:touches evts:evtsTouchChange state:DConnectTouchProfileEnumEnd];
             }
         }
     }
@@ -86,7 +107,14 @@
                                                attribute:DConnectTouchProfileAttrOnTouchMove];
     if (evtsMove != nil) {
         // Send event.
-        [self sendEventData:touches evts:evtsMove];
+        [self sendEventData:touches evts:evtsMove state:DConnectTouchProfileEnumMove];
+    }
+    NSArray *evtsTouchChange= [_eventMgr eventListForServiceId:DPHostDevicePluginServiceId
+                                                       profile:DConnectTouchProfileName
+                                                     attribute:DConnectTouchProfileAttrOnTouchChange];
+    if (evtsTouchChange != nil) {
+        // Send event.
+        [self sendEventData:touches evts:evtsTouchChange state:DConnectTouchProfileEnumMove];
     }
 }
 
@@ -98,12 +126,20 @@
                                                  attribute:DConnectTouchProfileAttrOnTouchCancel];
     if (evtsCancel != nil) {
         // Send event.
-        [self sendEventData:touches evts:evtsCancel];
+        [self sendEventData:touches evts:evtsCancel state:DConnectTouchProfileEnumCancel];
+    }
+    NSArray *evtsTouchChange= [_eventMgr eventListForServiceId:DPHostDevicePluginServiceId
+                                                       profile:DConnectTouchProfileName
+                                                     attribute:DConnectTouchProfileAttrOnTouchChange];
+    if (evtsTouchChange != nil) {
+        // Send event.
+        [self sendEventData:touches evts:evtsTouchChange state:DConnectTouchProfileEnumCancel];
     }
 }
 
 - (void) sendEventData:(NSSet *)allTouches
                   evts:(NSArray *)evts
+                 state:(NSString *)state
 {
     // Send event data.
     for (DConnectEvent *evt in evts) {
@@ -121,6 +157,9 @@
             [DConnectTouchProfile setY:pos.y target:touchdata];
             [touches addMessage:touchdata];
             nCount++;
+        }
+        if ([[evt attribute] localizedCaseInsensitiveCompare: DConnectTouchProfileAttrOnTouchChange] == NSOrderedSame) {
+            [DConnectTouchProfile setState:state target:touch];
         }
         [DConnectTouchProfile setTouches:touches target:touch];
         [DConnectTouchProfile setTouch:touch target:eventMsg];
