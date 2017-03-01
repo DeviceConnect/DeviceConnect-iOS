@@ -163,7 +163,7 @@ static NSString *const DPHostFileProfileParamNewPath = @"newPath";
                               return YES;
                           }
                           if ([sysFileMgr fileExistsAtPath:dstNewPath isDirectory:&isDirectory]
-                               && ![[dstNewPath pathExtension] isEqualToString:@""]) {
+                               && ![[dstNewPath pathExtension] isEqualToString:@""] && !forceOverwrite) {
                               [response setErrorToInvalidRequestParameterWithMessage:@"NewPath File already exist."];
                               return YES;
                           } else if (isDirectory) {
@@ -174,11 +174,16 @@ static NSString *const DPHostFileProfileParamNewPath = @"newPath";
                                   return YES;
                               } else if ([sysFileMgr fileExistsAtPath:dstNewPath isDirectory:&isDirectory]
                                          && forceOverwrite) {
-                                  [sysFileMgr removeItemAtPath:dstNewPath error:nil];
+                                  NSError *error;
+                                  [sysFileMgr removeItemAtPath:dstNewPath error:&error];
                               } else if ([[dstNewPath pathExtension] isEqualToString:@""]) {
                                   [response setErrorToInvalidRequestParameterWithMessage:@"Directory can not be specified; use Move Directory API instead."];
                                   return YES;
                               }
+                          } else if ([sysFileMgr fileExistsAtPath:dstNewPath isDirectory:&isDirectory]
+                                     && forceOverwrite) {
+                              NSError *error;
+                              [sysFileMgr removeItemAtPath:dstNewPath error:&error];
                           }
                           [sysFileMgr moveItemAtPath:dstOldPath toPath:dstNewPath error:&error];
                           if (![sysFileMgr fileExistsAtPath:dstNewPath] || error) {
