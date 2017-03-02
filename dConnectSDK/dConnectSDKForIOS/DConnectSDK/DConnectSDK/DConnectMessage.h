@@ -206,6 +206,12 @@ typedef void (^DConnectResponseBlocks)(DConnectResponseMessage *response);
 - (void)addDouble:(double)num;
 
 /*!
+ @brief BOOLを最後尾に追加する。
+ @param[in] num 追加する値
+ */
+- (void)addBool:(BOOL)num;
+
+/*!
  @brief NSDataを最後尾に追加する。
  @param[in] data 追加する値
  */
@@ -274,6 +280,14 @@ typedef void (^DConnectResponseBlocks)(DConnectResponseMessage *response);
  @retval DBL_MIN 指定されたインデックスがなかった場合
  */
 - (double)doubleAtIndex:(NSUInteger)index;
+
+/*!
+ @brief 指定されたインデックスの値をBOOLとして取得する。
+ @param[in] index インデックス
+ @retval 指定されたインデックスの値
+ @retval NO キーが登録されていない場合
+ */
+- (BOOL) boolAtIndex:(NSUInteger)index;
 
 /*!
  @brief 指定されたインデックスの値をNSDataとして取得する。

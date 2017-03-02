@@ -140,6 +140,10 @@ NSString *const DConnectMessageHeaderGotAPIOrigin = @"X-GotAPI-Origin";
     [self.array addObject:[NSNumber numberWithDouble:num]];
 }
 
+- (void) addBool:(BOOL)num {
+    [self.array addObject:[NSNumber numberWithBool:num]];
+}
+
 - (void) addData:(NSData *)data {
     [self.array addObject:data];
 }
@@ -198,6 +202,14 @@ NSString *const DConnectMessageHeaderGotAPIOrigin = @"X-GotAPI-Origin";
         return [num doubleValue];
     }
     return DBL_MIN;
+}
+
+- (BOOL) boolAtIndex:(NSUInteger)index {
+    NSNumber *num = [self numberAtIndex:index];
+    if (num) {
+        return [num boolValue];
+    }
+    return NO;
 }
 
 - (NSData *) dataAtIndex:(NSUInteger)index {
