@@ -128,6 +128,10 @@ NSString *const DConnectMessageHeaderGotAPIOrigin = @"X-GotAPI-Origin";
     [self.array addObject:[NSNumber numberWithLong:num]];
 }
 
+- (void) addLongLong:(long long)num {
+    [self.array addObject:[NSNumber numberWithLongLong:num]];
+}
+
 - (void) addFloat:(float)num {
     [self.array addObject:[NSNumber numberWithFloat:num]];
 }
@@ -170,6 +174,14 @@ NSString *const DConnectMessageHeaderGotAPIOrigin = @"X-GotAPI-Origin";
         return [num longValue];
     }
     return LONG_MIN;
+}
+
+- (long long) longLongAtIndex:(NSUInteger)index {
+    NSNumber *num = [self numberAtIndex:index];
+    if (num) {
+        return [num longLongValue];
+    }
+    return LONG_LONG_MIN;
 }
 
 - (float) floatAtIndex:(NSUInteger)index {

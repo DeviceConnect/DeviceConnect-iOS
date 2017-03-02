@@ -188,6 +188,12 @@ typedef void (^DConnectResponseBlocks)(DConnectResponseMessage *response);
 - (void)addLong:(long)num;
 
 /*!
+ @brief long longを最後尾に追加する。
+ @param num 追加する値
+ */
+- (void)addLongLong:(long long)num;
+
+/*!
  @brief floatを最後尾に追加する。
  @param[in] num 追加する値
  */
@@ -244,6 +250,14 @@ typedef void (^DConnectResponseBlocks)(DConnectResponseMessage *response);
  @retval LONG_MIN 指定されたインデックスがなかった場合
  */
 - (long)longAtIndex:(NSUInteger)index;
+
+/*!
+ @brief 指定されたインデックスの値をlong longとして取得する。
+ @param[in] index インデックス
+ @retval 指定されたインデックスの値
+ @retval LONG_LONG_MIN 指定されたインデックスがなかった場合
+ */
+- (long long)longLongAtIndex:(NSUInteger)index;
 
 /*!
  @brief 指定されたインデックスの値をfloatとして取得する。
