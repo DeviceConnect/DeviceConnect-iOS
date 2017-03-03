@@ -49,10 +49,6 @@ extern NSString *const DConnectTouchProfileAttrOnTouchMove;
  */
 extern NSString *const DConnectTouchProfileAttrOnTouchCancel;
 /*!
- @brief Attribute: ontouchchange.
- */
-extern NSString *const DConnectTouchProfileAttrOnTouchChange;
-/*!
  @brief Parameter: state.
  */
 extern NSString *const DConnectTouchProfileParamState;
@@ -82,26 +78,6 @@ extern NSString *const DConnectTouchProfileParamX;
  */
 extern NSString *const DConnectTouchProfileParamY;
 
-/*!
- @brief Enumeration: start.
- */
-extern NSString *const DConnectTouchProfileEnumStart;
-/*!
- @brief Enumaration: end.
- */
-extern NSString *const DConnectTouchProfileEnumEnd;
-/*!
- @brief Enumaration: doubletap.
- */
-extern NSString *const DConnectTouchProfileEnumDoubleTap;
-/*!
- @brief Enumaration: move.
- */
-extern NSString *const DConnectTouchProfileEnumMove;
-/*!
- @brief Enumaration: cancel.
- */
-extern NSString *const DConnectTouchProfileEnumCancel;
 
 
 /*!
@@ -150,11 +126,5 @@ extern NSString *const DConnectTouchProfileEnumCancel;
  */
 + (void) setY:(int)y target:(DConnectMessage *)message;
 
-/*!
- @brief Set the Touch State to message.
- @param[in] state Touch State.
- @param[in,out] message message for storing touch state.
- */
-+ (void) setState:(NSString*)state target:(DConnectMessage *)message;
 
 @end

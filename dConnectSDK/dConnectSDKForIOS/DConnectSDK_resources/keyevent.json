@@ -16,13 +16,13 @@
                 "summary": "",
                 "description": "",
                 "parameters": [
-                    {
-                        "name": "serviceId",
-                        "in": "query",
-                        "required": true,
-                        "type": "string"
-                    }
-                ],
+                               {
+                               "name": "serviceId",
+                               "in": "query",
+                               "required": true,
+                               "type": "string"
+                               }
+                               ],
                 "responses": {
                     "200": {
                         "description": ""
@@ -34,13 +34,13 @@
                 "summary": "",
                 "description": "",
                 "parameters": [
-                    {
-                        "name": "serviceId",
-                        "in": "formData",
-                        "required": true,
-                        "type": "string"
-                    }
-                ],
+                               {
+                               "name": "serviceId",
+                               "in": "formData",
+                               "required": true,
+                               "type": "string"
+                               }
+                               ],
                 "responses": {
                     "200": {
                         "description": ""
@@ -52,13 +52,13 @@
                 "summary": "",
                 "description": "",
                 "parameters": [
-                    {
-                        "name": "serviceId",
-                        "in": "query",
-                        "required": true,
-                        "type": "string"
-                    }
-                ],
+                               {
+                               "name": "serviceId",
+                               "in": "query",
+                               "required": true,
+                               "type": "string"
+                               }
+                               ],
                 "responses": {
                     "200": {
                         "description": ""

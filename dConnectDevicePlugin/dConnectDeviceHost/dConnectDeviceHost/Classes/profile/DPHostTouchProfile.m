@@ -21,7 +21,13 @@ top = top.presentedViewController; \
 
 #define _Bundle() \
 [NSBundle bundleWithPath:[[NSBundle mainBundle] pathForResource:@"dConnectDeviceHost_resources" ofType:@"bundle"]]
+NSString *const DPHostTouchProfileEnumStart = @"start";
+NSString *const DPHostTouchProfileEnumEnd = @"end";
+NSString *const DPHostTouchProfileEnumDoubleTap = @"doubletap";
+NSString *const DPHosttTouchProfileEnumMove = @"move";
+NSString *const DPHostTouchProfileEnumCancel = @"cancel";
 
+NSString *const DPHostTouchProfileAttrOnTouchChange = @"ontouchchange";
 @interface DPHostTouchProfile ()
 {
     // Touch profile OnTouch cache.
@@ -105,10 +111,10 @@ static const long FLAG_ON_TOUCH_CHANGE = 0x00000040;
         
         // API登録(didReceiveGetOnTouchChangeRequest相当)
         NSString *getOnTouchChangeRequestApiPath = [self apiPath: nil
-                                             attributeName: DConnectTouchProfileAttrOnTouchChange];
+                                             attributeName: DPHostTouchProfileAttrOnTouchChange];
         [self addGetPath: getOnTouchChangeRequestApiPath
                      api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
-                         DConnectMessage *touch = [weakSelf getTouchCache:DConnectTouchProfileAttrOnTouchChange];
+                         DConnectMessage *touch = [weakSelf getTouchCache:DPHostTouchProfileAttrOnTouchChange];
                          [DConnectTouchProfile setTouch:touch target:response];
                          [response setResult:DConnectMessageResultTypeOk];
                          return YES;
@@ -180,7 +186,7 @@ static const long FLAG_ON_TOUCH_CHANGE = 0x00000040;
                      }];
         // API登録(didReceivePutOnTouchChangeRequest相当)
         NSString *putOnTouchChangeRequestApiPath = [self apiPath: nil
-                                             attributeName: DConnectTouchProfileAttrOnTouchChange];
+                                             attributeName: DPHostTouchProfileAttrOnTouchChange];
         [self addPutPath: putOnTouchChangeRequestApiPath
                      api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
                          switch ([weakEventMgr addEventForRequest:request]) {
@@ -340,7 +346,7 @@ static const long FLAG_ON_TOUCH_CHANGE = 0x00000040;
 
         // API登録(didReceiveDeleteOnTouchChangeRequest相当)
         NSString *deleteOnTouchChangeRequestApiPath = [self apiPath: nil
-                                                attributeName: DConnectTouchProfileAttrOnTouchChange];
+                                                attributeName: DPHostTouchProfileAttrOnTouchChange];
         [self addDeletePath: deleteOnTouchChangeRequestApiPath
                         api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
                             switch ([weakEventMgr removeEventForRequest:request]) {
@@ -623,7 +629,7 @@ static const long FLAG_ON_TOUCH_CHANGE = 0x00000040;
         } else {
             return nil;
         }
-    } else if ([attr localizedCaseInsensitiveCompare: DConnectTouchProfileAttrOnTouchChange] == NSOrderedSame) {
+    } else if ([attr localizedCaseInsensitiveCompare: DPHostTouchProfileAttrOnTouchChange] == NSOrderedSame) {
         if (CurrentTime - mOnTouchChangeCacheTime <= CACHE_RETENTION_TIME) {
             return mOnTouchChangeCache;
         } else {
@@ -662,7 +668,7 @@ static const long FLAG_ON_TOUCH_CHANGE = 0x00000040;
     } else if ([attr localizedCaseInsensitiveCompare: DConnectTouchProfileAttrOnTouchCancel] == NSOrderedSame) {
         mOnTouchCancelCache = touchData;
         mOnTouchCancelCacheTime = CurrentTime;
-    } else if ([attr localizedCaseInsensitiveCompare: DConnectTouchProfileAttrOnTouchChange] == NSOrderedSame) {
+    } else if ([attr localizedCaseInsensitiveCompare: DPHostTouchProfileAttrOnTouchChange] == NSOrderedSame) {
         mOnTouchChangeCache = touchData;
         mOnTouchChangeCacheTime = CurrentTime;
     }
