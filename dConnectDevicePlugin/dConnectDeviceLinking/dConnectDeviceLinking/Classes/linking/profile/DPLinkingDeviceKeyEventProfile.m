@@ -10,7 +10,7 @@
 #import "DPLinkingDeviceKeyEventProfile.h"
 #import "DPLinkingDeviceManager.h"
 #import "DPLinkingDevicePlugin.h"
-
+#import "DPLinkingDeviceButtonOnce.h"
 
 @interface DPLinkingDeviceKeyEventProfile () <DPLinkingDeviceButtonIdDelegate>
 @end
@@ -72,8 +72,25 @@
 
 - (BOOL) onGetKeyChange:(DConnectRequestMessage *)request response:(DConnectResponseMessage *)response
 {
-    [response setErrorToUnknownWithMessage:@"Not implemented yet."];
-    return YES;
+    NSString *serviceId = [request serviceId];
+    
+    DPLinkingDeviceManager *mgr = [DPLinkingDeviceManager sharedInstance];
+    DPLinkingDevice *device = [mgr findDPLinkingDeviceByServiceId:serviceId];
+    if (!device) {
+        [response setErrorToNotFoundService];
+        return YES;
+    }
+    
+    if (![device isSupportButtonId]) {
+        [response setErrorToNotSupportProfile];
+        return YES;
+    }
+    
+    DPLinkingDeviceButtonOnce *button = [[DPLinkingDeviceButtonOnce alloc] initWithDevice:device];
+    button.type = DPLinkingKeyEventTypeChange;
+    button.request = request;
+    button.response = response;
+    return NO;
 }
 
 // PUT /keyEevent/onKeyChange
@@ -134,8 +151,24 @@
 
 - (BOOL) onGetKeyDown:(DConnectRequestMessage *)request response:(DConnectResponseMessage *)response
 {
-    [response setErrorToUnknownWithMessage:@"Not implemented yet."];
-    return YES;
+    NSString *serviceId = [request serviceId];
+    
+    DPLinkingDeviceManager *mgr = [DPLinkingDeviceManager sharedInstance];
+    DPLinkingDevice *device = [mgr findDPLinkingDeviceByServiceId:serviceId];
+    if (!device) {
+        [response setErrorToNotFoundService];
+        return YES;
+    }
+    
+    if (![device isSupportButtonId]) {
+        [response setErrorToNotSupportProfile];
+        return YES;
+    }
+    
+    DPLinkingDeviceButtonOnce *button = [[DPLinkingDeviceButtonOnce alloc] initWithDevice:device];
+    button.request = request;
+    button.response = response;
+    return NO;
 }
 
 // PUT /keyEevent/onKeyDown
