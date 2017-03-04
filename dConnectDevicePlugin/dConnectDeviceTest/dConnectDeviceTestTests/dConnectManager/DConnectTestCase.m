@@ -24,6 +24,7 @@
     dispatch_once(&onceToken, ^{
         DConnectManager *mgr = [DConnectManager sharedManager];
         mgr.settings.useLocalOAuth = NO;
+        mgr.settings.useOriginEnable = NO;
         [mgr start];
     });
 }
