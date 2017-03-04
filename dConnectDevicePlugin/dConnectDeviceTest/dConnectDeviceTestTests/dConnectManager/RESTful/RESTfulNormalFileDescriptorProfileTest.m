@@ -124,7 +124,7 @@
  */
 - (void) testHttpNormalFileDescriptorOnWatchFilePut
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/fileDescriptor/onwatchfile?sessionKey=%@&serviceId=%@", self.clientId, self.serviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/fileDescriptor/onwatchfile?accessToken=%@&serviceId=%@", self.clientId, self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
@@ -146,7 +146,7 @@
  */
 - (void) testHttpNormalFileDescriptorOnWatchFileDelete
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/fileDescriptor/onwatchfile?sessionKey=%@&serviceId=%@", self.clientId, self.serviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/fileDescriptor/onwatchfile?accessToken=%@&serviceId=%@", self.clientId, self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     

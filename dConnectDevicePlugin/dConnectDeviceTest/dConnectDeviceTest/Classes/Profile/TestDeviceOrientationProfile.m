@@ -40,13 +40,13 @@
         [self addPutPath: putOnDeviceOrientationRequestApiPath api: ^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
             
             NSString *serviceId = [request serviceId];
-            NSString *sessionKey = [request sessionKey];
+            NSString *accessToken = [request accessToken];
             
-            CheckDIDAndSK(response, serviceId, sessionKey) {
+            CheckDIDAndSK(response, serviceId, accessToken) {
                 response.result = DConnectMessageResultTypeOk;
                 
                 DConnectMessage *event = [DConnectMessage message];
-                [event setString:sessionKey forKey:DConnectMessageSessionKey];
+                [event setString:accessToken forKey:DConnectMessageAccessToken];
                 [event setString:serviceId forKey:DConnectMessageServiceId];
                 [event setString:weakSelf.profileName forKey:DConnectMessageProfile];
                 [event setString:DConnectDeviceOrientationProfileAttrOnDeviceOrientation
@@ -65,9 +65,9 @@
         [self addDeletePath: deleteOnDeviceOrientationRequestApiPath api: ^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
             
             NSString *serviceId = [request serviceId];
-            NSString *sessionKey = [request sessionKey];
+            NSString *accessToken = [request accessToken];
             
-            CheckDIDAndSK(response, serviceId, sessionKey) {
+            CheckDIDAndSK(response, serviceId, accessToken) {
                 response.result = DConnectMessageResultTypeOk;
             }
             

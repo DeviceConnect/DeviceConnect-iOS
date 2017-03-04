@@ -56,7 +56,7 @@
 - (void) testHttpNormalProximityOnDeviceProximityPut
 {
     NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:
-                                       @"http://localhost:4035/gotapi/proximity/ondeviceproximity?sessionKey=%@&serviceId=%@",
+                                       @"http://localhost:4035/gotapi/proximity/ondeviceproximity?accessToken=%@&serviceId=%@",
                                        self.clientId, self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
@@ -80,7 +80,7 @@
 - (void) testHttpNormalProximityOnDeviceProximityDelete
 {
     NSURL *uri = [NSURL URLWithString:
-                  [NSString stringWithFormat:@"http://localhost:4035/gotapi/proximity/ondeviceproximity?sessionKey=%@&serviceId=%@",
+                  [NSString stringWithFormat:@"http://localhost:4035/gotapi/proximity/ondeviceproximity?accessToken=%@&serviceId=%@",
                    self.clientId, self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
@@ -125,7 +125,7 @@
 - (void) testHttpNormalProximityOnUserProximityPut
 {
     NSURL *uri = [NSURL URLWithString:
-                  [NSString stringWithFormat:@"http://localhost:4035/gotapi/proximity/onuserproximity?sessionKey=%@&serviceId=%@",
+                  [NSString stringWithFormat:@"http://localhost:4035/gotapi/proximity/onuserproximity?accessToken=%@&serviceId=%@",
                    self.clientId, self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
@@ -149,7 +149,7 @@
 - (void) testHttpNormalProximityOnUserProximityDelete
 {
     NSURL *uri = [NSURL URLWithString:
-                  [NSString stringWithFormat:@"http://localhost:4035/gotapi/proximity/onuserproximity?sessionKey=%@&serviceId=%@",
+                  [NSString stringWithFormat:@"http://localhost:4035/gotapi/proximity/onuserproximity?accessToken=%@&serviceId=%@",
                    self.clientId, self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];

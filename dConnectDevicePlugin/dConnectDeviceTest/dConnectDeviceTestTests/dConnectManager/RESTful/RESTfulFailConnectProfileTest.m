@@ -7,6 +7,7 @@
 //  http://opensource.org/licenses/mit-license.php
 //
 
+#import <DConnectSDK/DConnectSDK.h>
 #import "RESTfulTestCase.h"
 
 @interface RESTfulFailConnectProfileTest : RESTfulTestCase
@@ -167,7 +168,7 @@
 }
 
 /*!
- * @brief sessionKey無しでonwifichange属性のコールバック登録テストを行う.
+ * @brief accessToken無しでonwifichange属性のコールバック登録テストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: PUT
@@ -178,13 +179,17 @@
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailConnectOnWifiChangePutNoSessionKey
+- (void) testHttpFailConnectOnWifiChangePutNoAccessToken
 {
+    [DConnectManager sharedManager].settings.useLocalOAuth = YES;
+    [DConnectManager sharedManager].settings.useOriginEnable = YES;
     NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/connect/onwifichange?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":10}", request);
+    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":13}", request);
+    [DConnectManager sharedManager].settings.useLocalOAuth = NO;
+    [DConnectManager sharedManager].settings.useOriginEnable = NO;
 }
 
 /*!
@@ -262,13 +267,17 @@
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailConnectOnWifiChangeDeleteNoSessionKey
+- (void) testHttpFailConnectOnWifiChangeDeleteNoAccessToken
 {
+    [DConnectManager sharedManager].settings.useLocalOAuth = YES;
+    [DConnectManager sharedManager].settings.useOriginEnable = YES;
     NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/connect/onwifichange?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":10}", request);
+    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":13}", request);
+    [DConnectManager sharedManager].settings.useLocalOAuth = NO;
+    [DConnectManager sharedManager].settings.useOriginEnable = NO;
 }
 
 /*!
@@ -276,7 +285,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: GET
- * Path: /connect/onwifichange?serviceId=xxxx&sessionKey=xxxx
+ * Path: /connect/onwifichange?serviceId=xxxx&accessToken=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -297,7 +306,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: POST
- * Path: /connect/onwifichange?serviceId=xxxx&sessionKey=xxxx
+ * Path: /connect/onwifichange?serviceId=xxxx&accessToken=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -629,7 +638,7 @@
 }
 
 /*!
- * @brief sessionKey無しでonbluetoothchange属性のコールバック登録テストを行う.
+ * @brief accessToken無しでonbluetoothchange属性のコールバック登録テストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: PUT
@@ -640,13 +649,17 @@
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailConnectOnBluetoothChangePutNoSessionKey
+- (void) testHttpFailConnectOnBluetoothChangePutNoAccessToken
 {
+    [DConnectManager sharedManager].settings.useLocalOAuth = YES;
+    [DConnectManager sharedManager].settings.useOriginEnable = YES;
     NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/connect/onbluetoothchange?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":10}", request);
+    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":13}", request);
+    [DConnectManager sharedManager].settings.useLocalOAuth = NO;
+    [DConnectManager sharedManager].settings.useOriginEnable = NO;
 }
 
 /*!
@@ -713,7 +726,7 @@
 }
 
 /*!
- * @brief sessionKey無しでonbluetoothchange属性のコールバック解除テストを行う.
+ * @brief accessToken無しでonbluetoothchange属性のコールバック解除テストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
@@ -724,13 +737,17 @@
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailConnectOnBluetoothChangeDeleteNoSessionKey
+- (void) testHttpFailConnectOnBluetoothChangeDeleteNoAccessToken
 {
+    [DConnectManager sharedManager].settings.useLocalOAuth = YES;
+    [DConnectManager sharedManager].settings.useOriginEnable = YES;
     NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/connect/onbluetoothchange?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":10}", request);
+    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":13}", request);
+    [DConnectManager sharedManager].settings.useLocalOAuth = NO;
+    [DConnectManager sharedManager].settings.useOriginEnable = NO;
 }
 
 /*!
@@ -738,7 +755,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: GET
- * Path: /connect/onbluetoothchange?serviceId=xxxx&sessionKey=xxxx
+ * Path: /connect/onbluetoothchange?serviceId=xxxx&accessToken=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -759,7 +776,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: POST
- * Path: /connect/onbluetoothchange?serviceId=xxxx&sessionKey=xxxx
+ * Path: /connect/onbluetoothchange?serviceId=xxxx&accessToken=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -923,7 +940,7 @@
 }
 
 /*!
- * @brief sessionKey無しでonnfcchange属性のコールバック登録テストを行う.
+ * @brief accessToken無しでonnfcchange属性のコールバック登録テストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: PUT
@@ -934,13 +951,17 @@
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailConnectOnNFCChangePutNoSessionKey
+- (void) testHttpFailConnectOnNFCChangePutNoAccessToken
 {
+    [DConnectManager sharedManager].settings.useLocalOAuth = YES;
+    [DConnectManager sharedManager].settings.useOriginEnable = YES;
     NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/connect/onnfcchange?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":10}", request);
+    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":13}", request);
+    [DConnectManager sharedManager].settings.useLocalOAuth = NO;
+    [DConnectManager sharedManager].settings.useOriginEnable = NO;
 }
 
 /*!
@@ -1007,7 +1028,7 @@
 }
 
 /*!
- * @brief sessionKeyが無い状態でonnfcchange属性のコールバック解除テストを行う.
+ * @brief accessTokenが無い状態でonnfcchange属性のコールバック解除テストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
@@ -1018,13 +1039,17 @@
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailConnectOnNFCChangeDeleteNoSessionKey
+- (void) testHttpFailConnectOnNFCChangeDeleteNoAccessToken
 {
+    [DConnectManager sharedManager].settings.useLocalOAuth = YES;
+    [DConnectManager sharedManager].settings.useOriginEnable = YES;
     NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/connect/onnfcchange?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":10}", request);
+    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":13}", request);
+    [DConnectManager sharedManager].settings.useLocalOAuth = NO;
+    [DConnectManager sharedManager].settings.useOriginEnable = NO;
 }
 
 /*!
@@ -1032,7 +1057,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: GET
- * Path: /connect/onnfcchange?serviceId=xxxx&sessionKey=xxxx
+ * Path: /connect/onnfcchange?serviceId=xxxx&accessToken=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -1053,7 +1078,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: POST
- * Path: /connect/onnfcchange?serviceId=xxxx&sessionKey=xxxx
+ * Path: /connect/onnfcchange?serviceId=xxxx&accessToken=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -1217,7 +1242,7 @@
 }
 
 /*!
- * @brief sessionKey無しでonblechange属性のコールバック登録テストを行う.
+ * @brief accessToken無しでonblechange属性のコールバック登録テストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: PUT
@@ -1228,13 +1253,17 @@
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailConnectOnBLEChangePutNoSessionKey
+- (void) testHttpFailConnectOnBLEChangePutNoAccessToken
 {
+    [DConnectManager sharedManager].settings.useLocalOAuth = YES;
+    [DConnectManager sharedManager].settings.useOriginEnable = YES;
     NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/connect/onblechange?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":10}", request);
+    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":13}", request);
+    [DConnectManager sharedManager].settings.useLocalOAuth = NO;
+    [DConnectManager sharedManager].settings.useOriginEnable = NO;
 }
 
 /*!
@@ -1302,7 +1331,7 @@
 
 
 /*!
- * @brief sessionKey無しでonblechange属性のコールバック解除テストを行う.
+ * @brief accessToken無しでonblechange属性のコールバック解除テストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
@@ -1313,13 +1342,17 @@
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailConnectOnBLEChangeDeleteNoSessionKey
+- (void) testHttpFailConnectOnBLEChangeDeleteNoAccessToken
 {
+    [DConnectManager sharedManager].settings.useLocalOAuth = YES;
+    [DConnectManager sharedManager].settings.useOriginEnable = YES;
     NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/connect/onblechange?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":10}", request);
+    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":13}", request);
+    [DConnectManager sharedManager].settings.useLocalOAuth = NO;
+    [DConnectManager sharedManager].settings.useOriginEnable = NO;
 }
 
 /*!
@@ -1327,7 +1360,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: GET
- * Path: /connect/onblechange?serviceId=xxxx&sessionKey=xxxx
+ * Path: /connect/onblechange?serviceId=xxxx&accessToken=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -1348,7 +1381,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: POST
- * Path: /connect/onblechange?serviceId=xxxx&sessionKey=xxxx
+ * Path: /connect/onblechange?serviceId=xxxx&accessToken=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】

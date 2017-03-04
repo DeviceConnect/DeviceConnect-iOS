@@ -117,14 +117,14 @@ NSString *const TestFileDescriptorPrev = @"2014-06-01T00:00:00+0900";
         [self addPutPath: putOnWatchFileRequestApiPath api: ^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
             
             NSString *serviceId = [request serviceId];
-            NSString *sessionKey = [request sessionKey];
+            NSString *accessToken = [request accessToken];
             
-            CheckDIDAndSK(response, serviceId, sessionKey) {
+            CheckDIDAndSK(response, serviceId, accessToken) {
                 response.result = DConnectMessageResultTypeOk;
                 
                 DConnectMessage *event = [DConnectMessage message];
                 [event setString:serviceId forKey:DConnectMessageServiceId];
-                [event setString:sessionKey forKey:DConnectMessageSessionKey];
+                [event setString:accessToken forKey:DConnectMessageAccessToken];
                 [event setString:weakSelf.profileName forKey:DConnectMessageProfile];
                 [event setString:DConnectFileDescriptorProfileAttrOnWatchFile forKey:DConnectMessageAttribute];
                 
@@ -143,9 +143,9 @@ NSString *const TestFileDescriptorPrev = @"2014-06-01T00:00:00+0900";
         [self addDeletePath: deleteOnWatchFileRequestApiPath api: ^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
             
             NSString *serviceId = [request serviceId];
-            NSString *sessionKey = [request sessionKey];
+            NSString *accessToken = [request accessToken];
             
-            CheckDIDAndSK(response, serviceId, sessionKey) {
+            CheckDIDAndSK(response, serviceId, accessToken) {
                 response.result = DConnectMessageResultTypeOk;
             }
             

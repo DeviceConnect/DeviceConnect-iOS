@@ -98,7 +98,7 @@
  */
 - (void) testHttpNormalConnectOnWifiChangePut
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/connect/onwifichange?sessionKey=%@&serviceId=%@", self.clientId, self.serviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/connect/onwifichange?accessToken=%@&serviceId=%@", self.clientId, self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
@@ -120,7 +120,7 @@
  */
 - (void) testHttpNormalConnectOnWifiChangeDelete
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/connect/onwifichange?sessionKey=%@&serviceId=%@", self.clientId, self.serviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/connect/onwifichange?accessToken=%@&serviceId=%@", self.clientId, self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     
@@ -205,7 +205,7 @@
  */
 - (void) testHttpNormalConnectOnBluetoothChangePut
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/connect/onbluetoothchange?sessionKey=%@&serviceId=%@", self.clientId, self.serviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/connect/onbluetoothchange?accessToken=%@&serviceId=%@", self.clientId, self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
@@ -227,7 +227,7 @@
  */
 - (void) testHttpNormalConnectOnBluetoothChangeDelete
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/connect/onbluetoothchange?sessionKey=%@&serviceId=%@", self.clientId, self.serviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/connect/onbluetoothchange?accessToken=%@&serviceId=%@", self.clientId, self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     
@@ -313,7 +313,7 @@
  */
 - (void) testHttpNormalConnectOnNfcChangePut
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/connect/onnfcchange?sessionKey=%@&serviceId=%@", self.clientId, self.serviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/connect/onnfcchange?accessToken=%@&serviceId=%@", self.clientId, self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
@@ -335,7 +335,7 @@
  */
 - (void) testHttpNormalConnectOnNfcChangeDelete
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/connect/onnfcchange?sessionKey=%@&serviceId=%@", self.clientId, self.serviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/connect/onnfcchange?accessToken=%@&serviceId=%@", self.clientId, self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     
@@ -421,7 +421,7 @@
  */
 - (void) testHttpNormalConnectOnBleChangePut
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/connect/onblechange?sessionKey=%@&serviceId=%@", self.clientId, self.serviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/connect/onblechange?accessToken=%@&serviceId=%@", self.clientId, self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
@@ -443,7 +443,7 @@
  */
 - (void) testHttpNormalConnectOnBleChangeDelete
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/connect/onblechange?sessionKey=%@&serviceId=%@", self.clientId, self.serviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/connect/onblechange?accessToken=%@&serviceId=%@", self.clientId, self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     

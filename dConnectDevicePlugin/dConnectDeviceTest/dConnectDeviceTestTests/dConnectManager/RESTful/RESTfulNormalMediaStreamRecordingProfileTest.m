@@ -258,7 +258,7 @@
  */
 - (void) testHttpNormalMediaStreamRecordingOnPhotoPut
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/mediaStreamRecording/onphoto?sessionKey=%@&serviceId=%@", self.clientId, self.serviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/mediaStreamRecording/onphoto?accessToken=%@&serviceId=%@", self.clientId, self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
@@ -280,7 +280,7 @@
  */
 - (void) testHttpNormalMediaStreamRecordingOnPhotoDelete
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/mediaStreamRecording/onphoto?sessionKey=%@&serviceId=%@", self.clientId, self.serviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/mediaStreamRecording/onphoto?accessToken=%@&serviceId=%@", self.clientId, self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     
@@ -303,7 +303,7 @@
  */
 - (void) testHttpNormalMediaStreamRecordingOnRecordingChangePut
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/mediaStreamRecording/onrecordingchange?sessionKey=%@&serviceId=%@", self.clientId, self.serviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/mediaStreamRecording/onrecordingchange?accessToken=%@&serviceId=%@", self.clientId, self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
@@ -325,7 +325,7 @@
  */
 - (void) testHttpNormalMediaStreamRecordingOnRecordingChangeDelete
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/mediaStreamRecording/onrecordingchange?sessionKey=%@&serviceId=%@", self.clientId, self.serviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/mediaStreamRecording/onrecordingchange?accessToken=%@&serviceId=%@", self.clientId, self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     

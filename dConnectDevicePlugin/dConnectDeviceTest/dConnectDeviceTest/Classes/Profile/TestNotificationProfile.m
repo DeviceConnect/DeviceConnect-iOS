@@ -70,14 +70,14 @@
         [self addPutPath: putOnClickRequestApiPath api: ^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
             
             NSString *serviceId = [request serviceId];
-            NSString *sessionKey = [request sessionKey];
+            NSString *accessToken = [request accessToken];
             
-            CheckDIDAndSK(response, serviceId, sessionKey) {
+            CheckDIDAndSK(response, serviceId, accessToken) {
                 response.result = DConnectMessageResultTypeOk;
                 
                 DConnectMessage *event = [DConnectMessage message];
                 [event setString:serviceId forKey:DConnectMessageServiceId];
-                [event setString:sessionKey forKey:DConnectMessageSessionKey];
+                [event setString:accessToken forKey:DConnectMessageAccessToken];
                 [event setString:weakSelf.profileName forKey:DConnectMessageProfile];
                 [event setString:DConnectNotificationProfileAttrOnClick forKey:DConnectMessageAttribute];
                 [DConnectNotificationProfile setNotificationId:@"1" target:event];
@@ -95,14 +95,14 @@
         [self addPutPath: putOnShowRequestApiPath api: ^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
             
             NSString *serviceId = [request serviceId];
-            NSString *sessionKey = [request sessionKey];
+            NSString *accessToken = [request accessToken];
             
-            CheckDIDAndSK(response, serviceId, sessionKey) {
+            CheckDIDAndSK(response, serviceId, accessToken) {
                 response.result = DConnectMessageResultTypeOk;
                 
                 DConnectMessage *event = [DConnectMessage message];
                 [event setString:serviceId forKey:DConnectMessageServiceId];
-                [event setString:sessionKey forKey:DConnectMessageSessionKey];
+                [event setString:accessToken forKey:DConnectMessageAccessToken];
                 [event setString:weakSelf.profileName forKey:DConnectMessageProfile];
                 [event setString:DConnectNotificationProfileAttrOnShow forKey:DConnectMessageAttribute];
                 [DConnectNotificationProfile setNotificationId:@"1" target:event];
@@ -120,14 +120,14 @@
         [self addPutPath: putOnCloseRequestApiPath api: ^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
             
             NSString *serviceId = [request serviceId];
-            NSString *sessionKey = [request sessionKey];
+            NSString *accessToken = [request accessToken];
             
-            CheckDIDAndSK(response, serviceId, sessionKey) {
+            CheckDIDAndSK(response, serviceId, accessToken) {
                 response.result = DConnectMessageResultTypeOk;
                 
                 DConnectMessage *event = [DConnectMessage message];
                 [event setString:serviceId forKey:DConnectMessageServiceId];
-                [event setString:sessionKey forKey:DConnectMessageSessionKey];
+                [event setString:accessToken forKey:DConnectMessageAccessToken];
                 [event setString:weakSelf.profileName forKey:DConnectMessageProfile];
                 [event setString:DConnectNotificationProfileAttrOnClose forKey:DConnectMessageAttribute];
                 [DConnectNotificationProfile setNotificationId:@"1" target:event];
@@ -145,14 +145,14 @@
         [self addPutPath: putOnErrorRequestApiPath api: ^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
             
             NSString *serviceId = [request serviceId];
-            NSString *sessionKey = [request sessionKey];
+            NSString *accessToken = [request accessToken];
             
-            CheckDIDAndSK(response, serviceId, sessionKey) {
+            CheckDIDAndSK(response, serviceId, accessToken) {
                 response.result = DConnectMessageResultTypeOk;
                 
                 DConnectMessage *event = [DConnectMessage message];
                 [event setString:serviceId forKey:DConnectMessageServiceId];
-                [event setString:sessionKey forKey:DConnectMessageSessionKey];
+                [event setString:accessToken forKey:DConnectMessageAccessToken];
                 [event setString:weakSelf.profileName forKey:DConnectMessageProfile];
                 [event setString:DConnectNotificationProfileAttrOnError forKey:DConnectMessageAttribute];
                 [DConnectNotificationProfile setNotificationId:@"1" target:event];
@@ -189,9 +189,9 @@
         [self addDeletePath: deleteOnClickRequestApiPath api: ^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
             
             NSString *serviceId = [request serviceId];
-            NSString *sessionKey = [request sessionKey];
+            NSString *accessToken = [request accessToken];
             
-            CheckDIDAndSK(response, serviceId, sessionKey) {
+            CheckDIDAndSK(response, serviceId, accessToken) {
                 response.result = DConnectMessageResultTypeOk;
             }
             
@@ -205,9 +205,9 @@
         [self addDeletePath: deleteOnShowRequestApiPath api: ^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
             
             NSString *serviceId = [request serviceId];
-            NSString *sessionKey = [request sessionKey];
+            NSString *accessToken = [request accessToken];
             
-            CheckDIDAndSK(response, serviceId, sessionKey) {
+            CheckDIDAndSK(response, serviceId, accessToken) {
                 response.result = DConnectMessageResultTypeOk;
             }
             
@@ -221,9 +221,9 @@
         [self addDeletePath: deleteOnCloseRequestApiPath api: ^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
             
             NSString *serviceId = [request serviceId];
-            NSString *sessionKey = [request sessionKey];
+            NSString *accessToken = [request accessToken];
             
-            CheckDIDAndSK(response, serviceId, sessionKey) {
+            CheckDIDAndSK(response, serviceId, accessToken) {
                 response.result = DConnectMessageResultTypeOk;
             }
             return YES;
@@ -236,9 +236,9 @@
         [self addDeletePath: deleteOnErrorRequestApiPath api: ^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
             
             NSString *serviceId = [request serviceId];
-            NSString *sessionKey = [request sessionKey];
+            NSString *accessToken = [request accessToken];
             
-            CheckDIDAndSK(response, serviceId, sessionKey) {
+            CheckDIDAndSK(response, serviceId, accessToken) {
                 response.result = DConnectMessageResultTypeOk;
             }
             return YES;

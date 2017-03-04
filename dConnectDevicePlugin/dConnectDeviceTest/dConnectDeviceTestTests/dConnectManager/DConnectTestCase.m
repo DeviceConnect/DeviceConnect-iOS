@@ -15,10 +15,10 @@
 {
     [super setUp];
     self.clientId = @"test_client";
-    [DConnectTestCase startDConnectManager];
+    [self startDConnectManager];
 }
 
-+ (void)startDConnectManager
+- (void)startDConnectManager
 {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
