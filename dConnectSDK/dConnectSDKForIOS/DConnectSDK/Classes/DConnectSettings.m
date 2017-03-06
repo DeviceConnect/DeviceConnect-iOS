@@ -20,6 +20,7 @@
         self.useOriginBlocking = NO;
         self.useOriginEnable = YES;
         self.useExternalIP = NO;
+        self.useManagerName = NO;
     }
     return self;
 }

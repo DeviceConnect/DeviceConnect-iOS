@@ -29,6 +29,7 @@
 "display_scope_canvas" = "canvas";
 "display_scope_touch" = "touch";
 "display_scope_keyevent" = "keyevent";
+"display_scope_geolocation" = "geolocation";
 
 // Wording
 "token_list_scopes" = "%@ and %d others.";

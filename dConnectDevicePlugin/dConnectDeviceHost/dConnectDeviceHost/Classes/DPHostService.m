@@ -24,7 +24,8 @@
 #import "DPHostConnectProfile.h"
 #import "DPHostCanvasProfile.h"
 #import "DPHostTouchProfile.h"
-
+#import "DPHostGeolocationProfile.h"
+#import "DPHostLightProfile.h"
 
 
 NSString *const DPHostDevicePluginServiceId = @"host";
@@ -57,6 +58,8 @@ NSString *const DPHostDevicePluginServiceId = @"host";
         [self addProfile:[DPHostConnectProfile new]];
         [self addProfile:[DPHostCanvasProfile new]];
         [self addProfile:[DPHostTouchProfile new]];
+        [self addProfile:[DPHostGeolocationProfile new]];
+        [self addProfile:[DPHostLightProfile new]];
     }
     return self;
 }

@@ -17,6 +17,9 @@
 
 @property (atomic) DPHueViewController *hueViewController;
 
+
+- (id) initWithRootViewController:(UIViewController *)root;
+
 /*!
  指定されたインデックスに対応するViewControllerを返却する。
  

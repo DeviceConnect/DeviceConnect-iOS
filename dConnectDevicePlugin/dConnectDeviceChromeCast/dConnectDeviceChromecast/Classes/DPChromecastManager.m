@@ -176,17 +176,25 @@ static const NSTimeInterval DPSemaphoreTimeout = 20.0;
 
         // サービス未登録なら登録する。登録済ならオンラインにする
         for (NSDictionary *device in deviceList) {
-            NSString *serviceId = device[@"id"];
+            NSString *sId = device[@"id"];
             NSString *deviceName = device[@"name"];
-            DConnectService *service = [_serviceProvider service: serviceId];
+            DConnectService *service = [_serviceProvider service: sId];
             if (!service) {
-                service = [[DPChromecastService alloc] initWithServiceId:serviceId
+                service = [[DPChromecastService alloc] initWithServiceId:sId
                                                               deviceName:deviceName
                                                                   plugin: self.plugin];
-                [service setOnline: onlineForSet];
+                if ([sId isEqualToString:serviceId]) {
+                    [service setOnline: onlineForSet];
+                } else {
+                    [service setOnline:NO];
+                }
                 [_serviceProvider addService: service];
             } else {
-                [service setOnline: onlineForSet];
+                if ([sId isEqualToString:serviceId]) {
+                    [service setOnline: onlineForSet];
+                } else {
+                    [service setOnline:NO];
+                }
             }
         }
     }

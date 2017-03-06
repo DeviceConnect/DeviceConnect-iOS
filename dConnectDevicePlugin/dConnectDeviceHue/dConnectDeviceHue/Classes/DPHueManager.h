@@ -23,7 +23,7 @@
  
  Hueの機能を管理する。
  */
-@interface DPHueManager : NSObject {
+@interface DPHueManager : NSObject <PHSearchForNewDevicesDelegate>{
     PHHueSDK *phHueSDK;
     PHNotificationManager *notificationManager;
     PHBridgeSearching *bridgeSearching;
@@ -104,14 +104,14 @@ typedef void (^DPHueLightStatusBlock)(BridgeConnectState state);
 /*!
  @brief ブリッジへの認証依頼を行う。
  @param[in] ipAddress ブリッジのIPアドレス。
- @param[in] macAddress ブリッジのMacアドレス。
+ @param[in] bridgeId ブリッジのMacアドレス。
  @param[in, out] receiver ブリッジからのレスポンスを通知されるインスタンス。
  @param[in, out] localConnectionSuccessSelector ブリッジからの成功レスポンスが通知されるセレクター。
  @param[in, out] noLocalConnection ブリッジからの失敗レスポンスが通知されるセレクター。
  @param[in, out] notAuthenticated ブリッジからの認証失敗のレスポンスが通知されるセレクター。
  */
 -(void)startAuthenticateBridgeWithIpAddress:(NSString*)ipAddress
-                                 macAddress:(NSString*)macAddress
+                                 bridgeId:(NSString*)bridgeId
                                    receiver:(id)receiver
              localConnectionSuccessSelector:(SEL)localConnectionSuccessSelector
                           noLocalConnection:(SEL)noLocalConnection

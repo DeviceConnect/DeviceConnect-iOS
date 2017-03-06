@@ -19,9 +19,9 @@
 - (DConnectMessage*)toDConnectMessage {
     DConnectMessage *message = [DConnectMessage new];
     DConnectMessage *accel = [DConnectMessage new];
-    [DConnectDeviceOrientationProfile setX:self.accelX target:accel];
-    [DConnectDeviceOrientationProfile setY:self.accelY target:accel];
-    [DConnectDeviceOrientationProfile setZ:self.accelZ target:accel];
+    [DConnectDeviceOrientationProfile setX:self.accelX * 9.81 target:accel];
+    [DConnectDeviceOrientationProfile setY:self.accelY * 9.81 target:accel];
+    [DConnectDeviceOrientationProfile setZ:self.accelZ * 9.81 target:accel];
     
     [DConnectDeviceOrientationProfile setAcceleration:accel target:message];
     [DConnectDeviceOrientationProfile setInterval:self.interval target:message];

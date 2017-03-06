@@ -35,4 +35,13 @@ NSString *const DCMTemperatureProfileParamTimeStampString = @"timeStampString";
     [message setInteger:type forKey:DCMTemperatureProfileParamType];
 }
 
+// Convert Celsius to Fahrenheit.
++(float) convertCelsiusToFahrenheit:(float)celsius {
+    return (float) (1.8 * celsius + 32);
+}
+
+// Convert Fahrenheit to Celsius.
++(float) convertFahrenheitToCelsius:(float)fahrenheit {
+    return (float) ((0.56) * (fahrenheit - 32));
+}
 @end

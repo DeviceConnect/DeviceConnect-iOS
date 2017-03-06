@@ -22,12 +22,12 @@
 @interface DPHueItemBridge : NSObject <NSCopying>
 
 /*!
- @brief HueのブリッジのMacアドレス。
+ @brief HueのブリッジのID。
  */
-@property (nonatomic, copy) NSString *macAddress;
+@property (nonatomic, copy) NSString *bridgeId;
 
 /*!
- @brief HueのブリッジのIPアドレス。
+ @brief HueのブリッジのID。
  */
 @property (nonatomic, copy) NSString *ipAddress;
 @end

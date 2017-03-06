@@ -208,7 +208,7 @@
             NSString * macAdr = arr[1];
             [[DPHueManager sharedManager] initHue];
             [[DPHueManager sharedManager] startAuthenticateBridgeWithIpAddress:ipAdr
-                                                                    macAddress:macAdr
+                                                                    bridgeId:macAdr
                                                                       receiver:self
                                                 localConnectionSuccessSelector:@selector(willLocalConnectionSuccess)
                                                              noLocalConnection:@selector(willNoLocalConnection)
@@ -220,7 +220,6 @@
 //接続した時のイベント
 - (void)willLocalConnectionSuccess {
     [DPHueManager sharedManager].bridgeConnectState = STATE_CONNECT;
-
     DPHueLightStatusBlock block = _hueStatusBlock;
     if (block) {
         block(STATE_CONNECT);

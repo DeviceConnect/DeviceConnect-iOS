@@ -104,7 +104,6 @@
          [MPMediaPropertyPredicate predicateWithValue:[NSNumber numberWithInteger:TargetMPMediaType]
                                           forProperty:MPMediaItemPropertyMediaType]];
         self.library = [ALAssetsLibrary new];
-        
         // 初期はiPodミュージックプレイヤーを設定しておく。
         _currentMediaPlayer = MediaPlayerTypeIPod;
         
@@ -290,13 +289,11 @@
                              [response setErrorToUnknownWithMessage:@"Unknown player type; this must be a bug."];
                              return YES;
                          }
-                         
                          if ([NSThread isMainThread]) {
                              block();
                          } else {
                              dispatch_sync(dispatch_get_main_queue(), block);
                          }
-                         
                          [DConnectMediaPlayerProfile setPos:pos target:response];
                          [response setResult:DConnectMessageResultTypeOk];
                          
@@ -308,17 +305,18 @@
                                            attributeName: DConnectMediaPlayerProfileAttrMedia];
         [self addPutPath: putMediaRequestApiPath
                      api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
-                         
-                         NSString *serviceId = [request serviceId];
-                         NSString *mediaId = [DConnectMediaPlayerProfile mediaIdFromRequest:request];
-                         if (!mediaId) {
-                             [response setErrorToInvalidRequestParameterWithMessage:@"mediaId must be specified."];
-                             return YES;
+                         @synchronized (weakSelf) {
+                             NSString *serviceId = [request serviceId];
+                             NSString *mediaId = [DConnectMediaPlayerProfile mediaIdFromRequest:request];
+                             if (!mediaId) {
+                                 [response setErrorToInvalidRequestParameterWithMessage:@"mediaId must be specified."];
+                                 return YES;
+                             }
+                             return [weakSelf putMediaRequest: request
+                                                     response: response
+                                                    serviceId: serviceId
+                                                      mediaId: mediaId];
                          }
-                         return [weakSelf putMediaRequest: request
-                                                 response: response
-                                                serviceId: serviceId
-                                                  mediaId: mediaId];
                      }];
         
         // API登録(didReceivePutPlayRequest相当)
@@ -326,110 +324,107 @@
                                           attributeName: DConnectMediaPlayerProfileAttrPlay];
         [self addPutPath: putPlayRequestApiPath
                      api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
-                         
-                         NSString *serviceId = [request serviceId];
-                         
-                         if (_currentMediaPlayer == MediaPlayerTypeIPod) {
-                             MPMediaItem *mediaItem = [weakSelf musicPlayer].nowPlayingItem;
-                             if ((!mediaItem || _nowPlayingMediaId) && [_musicPlayer playbackState] == MPMusicPlaybackStateStopped) {
-                                 
-                                 [weakSelf putMediaRequest:request
-                                                  response:response
-                                                 serviceId:serviceId
-                                                   mediaId:[weakSelf nowPlayingMediaId]];
-                                 mediaItem = _musicPlayer.nowPlayingItem;
-                             }
-                             NSNumber *isCloudItem = [mediaItem valueForProperty:MPMediaItemPropertyIsCloudItem];
-                             if (isCloudItem) {
-                                 DPHostReachability *networkReachability
-                                 = [DPHostReachability reachabilityForInternetConnection];
-                                 NetworkStatus networkStatus = [networkReachability currentReachabilityStatus];
-                                 if ([isCloudItem boolValue] && networkStatus == NotReachable) {
-                                     // iCloud上の音楽項目
-                                     // （つまりiOSデバイス側にまだダウンロードされていない）で、
-                                     // 尚かつインターネット接続が無い場合は
-                                     // 再生できない。
-                                     [response setErrorToUnknownWithMessage:
-                                      @"Internet is not reachable; the specified audio media item "
-                                      "is an iClould item and its playback requires an Internet connection."];
-                                     return YES;
+                         @synchronized (weakSelf) {
+                             NSString *serviceId = [request serviceId];
+                             
+                             if (_currentMediaPlayer == MediaPlayerTypeIPod) {
+                                 MPMediaItem *mediaItem = [weakSelf musicPlayer].nowPlayingItem;
+                                 if ((!mediaItem || _nowPlayingMediaId) && [_musicPlayer playbackState] == MPMusicPlaybackStateStopped) {
+                                     
+                                     [weakSelf putMediaRequest:request
+                                                      response:response
+                                                     serviceId:serviceId
+                                                       mediaId:[weakSelf nowPlayingMediaId]];
+                                     mediaItem = _musicPlayer.nowPlayingItem;
                                  }
-                             }
-                             void(^block)(void) = ^{
-                                 DConnectMessage *mediaPlayer = [DConnectMessage message];
-                                 NSString *status = DConnectMediaPlayerProfileStatusPlay;
-                                 [DConnectMediaPlayerProfile setStatus:status target:mediaPlayer];
-                                 [weakSelf sendEventMusicWithMessage:mediaPlayer];
-                                 [[weakSelf musicPlayer] setCurrentPlaybackTime:0.0f];
-                                 [[weakSelf musicPlayer] play];
-                                 
-                                 NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
-                                 // 現在再生中の曲が変わった時の通知
-                                 [notificationCenter addObserver:weakSelf
-                                                        selector:@selector(nowPlayingItemChangedInIPod:)
-                                                            name:MPMusicPlayerControllerNowPlayingItemDidChangeNotification
-                                                          object:[weakSelf musicPlayer]];
-                                 
-                                 // 通知開始
-                                 [[weakSelf musicPlayer] beginGeneratingPlaybackNotifications];
-                                 
-                             };
-                             if ([NSThread isMainThread]) {
-                                 block();
-                             } else {
-                                 dispatch_sync(dispatch_get_main_queue(), block);
-                             }
-                             [response setResult:DConnectMessageResultTypeOk];
-                         } else if (_currentMediaPlayer == MediaPlayerTypeMoviePlayer) {
-                             if (_nowPlayingMediaId && _viewController.moviePlayer.playbackState == MPMoviePlaybackStateStopped) {
-                                 
-                                 [weakSelf putMediaRequest:request
-                                                  response:response
-                                                 serviceId:serviceId
-                                                   mediaId:[weakSelf nowPlayingMediaId]];
-                                 [NSThread sleepForTimeInterval:0.5]; //Viewが開くまで待つ
-                             }
-                             
-                             
-                             if (![weakSelf moviePlayerViewControllerIsPresented]) {
-                                 [response setErrorToUnknownWithMessage:
-                                  @"Movie player view controller is not presented;"
-                                  " please perform Media PUT API first to present the view controller."];
-                             } else {
-                                 if ([weakSelf viewController].moviePlayer.playbackState != MPMoviePlaybackStatePlaying) {
-                                     if ([weakSelf viewController].moviePlayer.contentURL) {
-                                         void(^block)(void) = ^{
-                                             DConnectMessage *mediaPlayer = [DConnectMessage message];
-                                             NSString *status = DConnectMediaPlayerProfileStatusPlay;
-                                             [DConnectMediaPlayerProfile setStatus:status target:mediaPlayer];
-                                             [weakSelf sendEventMovieWithMessage:mediaPlayer];
-                                             
-                                             [[weakSelf viewController].moviePlayer setCurrentPlaybackTime:0.0f];
-                                             
-                                             [[weakSelf viewController].moviePlayer play];
-                                             [response setResult:DConnectMessageResultTypeOk];
-                                             
-                                             [[DConnectManager sharedManager] sendResponse:response];
-                                         };
-                                         if ([NSThread isMainThread]) {
-                                             block();
-                                         } else {
-                                             dispatch_sync(dispatch_get_main_queue(), block);
-                                         }
-                                         return NO;
+                                 NSNumber *isCloudItem = [mediaItem valueForProperty:MPMediaItemPropertyIsCloudItem];
+                                 if (isCloudItem) {
+                                     DPHostReachability *networkReachability
+                                     = [DPHostReachability reachabilityForInternetConnection];
+                                     NetworkStatus networkStatus = [networkReachability currentReachabilityStatus];
+                                     if ([isCloudItem boolValue] && networkStatus == NotReachable) {
+                                         // iCloud上の音楽項目
+                                         // （つまりiOSデバイス側にまだダウンロードされていない）で、
+                                         // 尚かつインターネット接続が無い場合は
+                                         // 再生できない。
+                                         [response setErrorToUnknownWithMessage:
+                                          @"Internet is not reachable; the specified audio media item "
+                                          "is an iClould item and its playback requires an Internet connection."];
+                                         return YES;
                                      }
-                                     [response setErrorToUnknownWithMessage:
-                                      @"Media cannot be played; media is not specified."];
-                                 } else {
-                                     [response setErrorToUnknownWithMessage:
-                                      @"Media cannot be played; it is already playing."];
                                  }
+                                 void(^block)(void) = ^{
+                                     DConnectMessage *mediaPlayer = [DConnectMessage message];
+                                     NSString *status = DConnectMediaPlayerProfileStatusPlay;
+                                     [DConnectMediaPlayerProfile setStatus:status target:mediaPlayer];
+                                     [weakSelf sendEventMusicWithMessage:mediaPlayer];
+                                     [[weakSelf musicPlayer] setCurrentPlaybackTime:0.0f];
+                                     [[weakSelf musicPlayer] play];
+                                     
+                                     NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
+                                     // 現在再生中の曲が変わった時の通知
+                                     [notificationCenter addObserver:weakSelf
+                                                            selector:@selector(nowPlayingItemChangedInIPod:)
+                                                                name:MPMusicPlayerControllerNowPlayingItemDidChangeNotification
+                                                              object:[weakSelf musicPlayer]];
+                                     
+                                     // 通知開始
+                                     [[weakSelf musicPlayer] beginGeneratingPlaybackNotifications];
+                                     
+                                 };
+                                 if ([NSThread isMainThread]) {
+                                     block();
+                                 } else {
+                                     dispatch_sync(dispatch_get_main_queue(), block);
+                                 }
+                                 [response setResult:DConnectMessageResultTypeOk];
+                             } else if (_currentMediaPlayer == MediaPlayerTypeMoviePlayer) {
+                                 if (![weakSelf moviePlayerViewControllerIsPresented]) {
+                                     [response setErrorToUnknownWithMessage:
+                                      @"Movie player view controller is not presented;"
+                                      " please perform Media PUT API first to present the view controller."];
+                                 } else {
+                                     if ([weakSelf viewController].moviePlayer.playbackState != MPMoviePlaybackStatePlaying) {
+                                         if ([weakSelf viewController].moviePlayer.contentURL) {
+                                             void(^block)(void) = ^{
+                                                 DConnectMessage *mediaPlayer = [DConnectMessage message];
+                                                 NSString *status = DConnectMediaPlayerProfileStatusPlay;
+                                                 [DConnectMediaPlayerProfile setStatus:status target:mediaPlayer];
+                                                 [weakSelf sendEventMovieWithMessage:mediaPlayer];
+                                                 [[weakSelf viewController].moviePlayer setCurrentPlaybackTime:0.0f];
+                                                 [[weakSelf viewController].moviePlayer play];
+                                                 [response setResult:DConnectMessageResultTypeOk];
+                                                 [[DConnectManager sharedManager] sendResponse:response];
+
+                                             };
+                                             NSLog(@"play movie Main Thread? start");
+                                             if ([NSThread isMainThread]) {
+                                                 NSLog(@"play movie Main Thread? YES");
+                                                 
+                                                 block();
+                                             } else {
+                                                 NSLog(@"play movie Main Thread? NO");
+                                                 
+                                                 dispatch_sync(dispatch_get_main_queue(), block);
+                                             }
+                                             NSLog(@"play movie Main Thread? end");
+                                             
+
+                                             return NO;
+                                         }
+                                         [response setErrorToUnknownWithMessage:
+                                          @"Media cannot be played; media is not specified."];
+                                     } else {
+                                         [response setErrorToUnknownWithMessage:
+                                          @"Media cannot be played; it is already playing."];
+                                     }
+                                 }
+                             } else {
+                                 [response setErrorToUnknownWithMessage:@"Unknown player type; this must be a bug."];
                              }
-                         } else {
-                             [response setErrorToUnknownWithMessage:@"Unknown player type; this must be a bug."];
+                             
+                             return YES;
                          }
-                         
-                         return YES;
                      }];
 
         // API登録(didReceivePutStopRequest相当)
@@ -437,67 +432,71 @@
                                           attributeName: DConnectMediaPlayerProfileAttrStop];
         [self addPutPath: putStopRequestApiPath
                      api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
-                         
-                         void(^block)(void) = nil;
-                         if (_currentMediaPlayer == MediaPlayerTypeIPod) {
-                             if (_musicPlayer.playbackState == MPMusicPlaybackStateStopped) {
-                                 //[response setErrorToIllegalServerState];
-                                 [response setResult:DConnectMessageResultTypeOk];
-                                 return YES;
-                             }
-                             block = ^{
-                                 // iTunes関連の通知の削除
-                                 NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
-                                 
-                                 [notificationCenter removeObserver:weakSelf
-                                                               name:MPMusicPlayerControllerNowPlayingItemDidChangeNotification
-                                                             object:_musicPlayer];
-                                 // 通知終了
-                                 [_musicPlayer endGeneratingPlaybackNotifications];
-                                 
-                                 DConnectMessage *mediaPlayer = [DConnectMessage message];
-                                 NSString *status = DConnectMediaPlayerProfileStatusStop;
-                                 [DConnectMediaPlayerProfile setStatus:status target:mediaPlayer];
-                                 [weakSelf sendEventMusicWithMessage:mediaPlayer];
-                                 [[weakSelf musicPlayer] stop];
-                                 [response setResult:DConnectMessageResultTypeOk];
-                             };
-                         } else if (_currentMediaPlayer == MediaPlayerTypeMoviePlayer) {
-                             if (_viewController.moviePlayer.playbackState == MPMoviePlaybackStateStopped) {
-                                 //[response setErrorToIllegalServerState];
-                                 [response setResult:DConnectMessageResultTypeOk];
-                                 return YES;
-                             }
-                             if (![weakSelf moviePlayerViewControllerIsPresented]) {
-                                 [response setErrorToUnknownWithMessage:
-                                  @"Movie player view controller is not presented;"
-                                  "please perform Media PUT API first to present the view controller."];
-                             } else {
+                         @synchronized(weakSelf) {
+                             void(^block)(void) = nil;
+                             if (_currentMediaPlayer == MediaPlayerTypeIPod) {
+                                 if (_musicPlayer.playbackState == MPMusicPlaybackStateStopped) {
+                                     //[response setErrorToIllegalServerState];
+                                     [response setResult:DConnectMessageResultTypeOk];
+                                     return YES;
+                                 }
                                  block = ^{
+                                     // iTunes関連の通知の削除
+                                     NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
+                                     
+                                     [notificationCenter removeObserver:weakSelf
+                                                                   name:MPMusicPlayerControllerNowPlayingItemDidChangeNotification
+                                                                 object:_musicPlayer];
+                                     // 通知終了
+                                     [_musicPlayer endGeneratingPlaybackNotifications];
+                                     
                                      DConnectMessage *mediaPlayer = [DConnectMessage message];
                                      NSString *status = DConnectMediaPlayerProfileStatusStop;
                                      [DConnectMediaPlayerProfile setStatus:status target:mediaPlayer];
-                                     [weakSelf sendEventMovieWithMessage:mediaPlayer];
-                                     // ムービープレイヤーを閉じる。
-                                     [_viewController.moviePlayer stop];
-                                     [_viewController dismissMoviePlayerViewControllerAnimated];
+                                     [weakSelf sendEventMusicWithMessage:mediaPlayer];
+                                     [[weakSelf musicPlayer] stop];
                                      [response setResult:DConnectMessageResultTypeOk];
                                  };
+                             } else if (_currentMediaPlayer == MediaPlayerTypeMoviePlayer) {
+                                 if (_viewController.moviePlayer.playbackState == MPMoviePlaybackStateStopped) {
+                                     //[response setErrorToIllegalServerState];
+                                     [response setResult:DConnectMessageResultTypeOk];
+                                     return YES;
+                                 }
+                                 if (![weakSelf moviePlayerViewControllerIsPresented]) {
+                                     [response setErrorToUnknownWithMessage:
+                                      @"Movie player view controller is not presented;"
+                                      "please perform Media PUT API first to present the view controller."];
+                                 } else {
+                                     block = ^{
+                                         DConnectMessage *mediaPlayer = [DConnectMessage message];
+                                         NSString *status = DConnectMediaPlayerProfileStatusStop;
+                                         [DConnectMediaPlayerProfile setStatus:status target:mediaPlayer];
+                                         [weakSelf sendEventMovieWithMessage:mediaPlayer];
+                                         // ムービープレイヤーを閉じる。
+                                         [_viewController.moviePlayer stop];
+                                         [_viewController dismissMoviePlayerViewControllerAnimated];
+                                         [response setResult:DConnectMessageResultTypeOk];
+                                     };
+                                 }
+                             } else {
+                                 [response setErrorToUnknownWithMessage:@"Unknown player type; this must be a bug."];
+                                 return YES;
                              }
-                         } else {
-                             [response setErrorToUnknownWithMessage:@"Unknown player type; this must be a bug."];
+                             
+                             if (block) {
+                                 if ([NSThread isMainThread]) {
+                                     block();
+                                 } else {
+                                     dispatch_sync(dispatch_get_main_queue(), block);
+                                 }
+                                 // ViewControllerが閉じるのを待つ
+                                 [NSThread sleepForTimeInterval:0.5];
+
+                             }
+                             
                              return YES;
                          }
-                         
-                         if (block) {
-                             if ([NSThread isMainThread]) {
-                                 block();
-                             } else {
-                                 dispatch_sync(dispatch_get_main_queue(), block);
-                             }
-                         }
-                         
-                         return YES;
                      }];
         
         // API登録(didReceivePutPauseRequest相当)
@@ -694,7 +693,6 @@
                          } else {
                              dispatch_sync(dispatch_get_main_queue(), block);
                          }
-                         
                          [response setResult:DConnectMessageResultTypeOk];
                          return YES;
                      }];
@@ -1046,7 +1044,6 @@
 {
     MPMoviePlayerViewController *viewController = [[MPMoviePlayerViewController alloc] initWithContentURL:url];
     viewController.moviePlayer.shouldAutoplay = NO;
-    
     // 再生完了通知をさせない様にする
     // MPMoviePlayerViewControllerの初期動作だと、再生完了時に閉じる。
     // 再生完了時に閉じる処理を実行させたくないので、再生完了通知を一旦消す。
@@ -1069,8 +1066,9 @@
 
 - (BOOL)moviePlayerViewControllerIsPresented
 {
-    UIViewController *rootView = [UIApplication sharedApplication].keyWindow.rootViewController;
-    return [rootView.presentedViewController class] == [MPMoviePlayerViewController class];
+    UIViewController *rootView = [self topViewController];
+    [self topViewController:rootView];
+    return ([rootView isKindOfClass:[MPMoviePlayerViewController class]]);
 }
 
 - (void) videoFinished:(NSNotification*)notification
@@ -1335,16 +1333,15 @@
          };
          if ([self moviePlayerViewControllerIsPresented]) {
              block();
-         }
-         else {
-             dispatch_async(dispatch_get_main_queue(), ^{
-                 self.viewController = [self viewControllerWithURL:movieURL];
-                 block();                 
-                 [[self topViewController] presentMoviePlayerViewControllerAnimated:_viewController];
+         } else {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                 _self.viewController = [_self viewControllerWithURL:movieURL];
+                 block();
+                 [[_self topViewController] presentMoviePlayerViewControllerAnimated:_viewController];
              });
-
         }
      }];
+
 }
 
 - (BOOL) putMediaRequest:(DConnectRequestMessage *) request

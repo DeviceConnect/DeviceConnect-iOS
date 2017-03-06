@@ -141,6 +141,8 @@ typedef NS_ENUM(NSUInteger, DConnectMessageErrorCodeType) {
     DConnectMessageErrorCodeIllegalDeviceState,       /*!< デバイスの状態異常エラー */
     DConnectMessageErrorCodeIllegalServerState,       /*!< サーバーの状態異常エラー */
     DConnectMessageErrorCodeInvalidOrigin,            /*!< 不正なオリジンからリクエストを受信した */
+    DConnectMessageErrorCodeInvalidURL,               /*!< 不正なリクエストURLを受信した */
+    DConnectMessageErrorCodeInvalidProfile,            /*!< 不正なProfileを受信した */
 };
 
 @class DConnectResponseMessage;
