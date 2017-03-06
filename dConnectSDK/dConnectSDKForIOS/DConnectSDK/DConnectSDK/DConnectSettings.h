@@ -81,4 +81,11 @@
  デフォルトではOFF。
  */
 @property (nonatomic) BOOL useExternalIP;
+
+/*!
+ @brief AvailabilityでのManagerの名前表示のON/OFF。
+ 
+ デフォルトではOFF。
+ */
+@property (nonatomic) BOOL useManagerName;
 @end

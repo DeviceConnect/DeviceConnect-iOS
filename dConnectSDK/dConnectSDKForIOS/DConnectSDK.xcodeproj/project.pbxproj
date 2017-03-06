@@ -116,7 +116,7 @@
 		BE71FE011DA3B25B00B5E209 /* DConnectAvailabilityProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = BE71FD9B1DA3B25B00B5E209 /* DConnectAvailabilityProfile.m */; };
 		BE71FE021DA3B25B00B5E209 /* DConnectBatteryProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = BE71FD9C1DA3B25B00B5E209 /* DConnectBatteryProfile.m */; };
 		BE71FE031DA3B25B00B5E209 /* DConnectCanvasProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = BE71FD9D1DA3B25B00B5E209 /* DConnectCanvasProfile.m */; };
-		BE71FE041DA3B25B00B5E209 /* DConnectConnectProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = BE71FD9E1DA3B25B00B5E209 /* DConnectConnectProfile.m */; };
+		BE71FE041DA3B25B00B5E209 /* DConnectConnectionProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = BE71FD9E1DA3B25B00B5E209 /* DConnectConnectionProfile.m */; };
 		BE71FE051DA3B25B00B5E209 /* DConnectDeviceOrientationProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = BE71FD9F1DA3B25B00B5E209 /* DConnectDeviceOrientationProfile.m */; };
 		BE71FE061DA3B25B00B5E209 /* DConnectFileDescriptorProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = BE71FDA01DA3B25B00B5E209 /* DConnectFileDescriptorProfile.m */; };
 		BE71FE071DA3B25B00B5E209 /* DConnectFileProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = BE71FDA11DA3B25B00B5E209 /* DConnectFileProfile.m */; };
@@ -246,7 +246,7 @@
 		D662E9BC1D4AEAA000919C69 /* authorization.json in Resources */ = {isa = PBXBuildFile; fileRef = D662E9A71D4AEA9F00919C69 /* authorization.json */; };
 		D662E9BD1D4AEAA000919C69 /* camera.json in Resources */ = {isa = PBXBuildFile; fileRef = D662E9A81D4AEA9F00919C69 /* camera.json */; };
 		D662E9BE1D4AEAA000919C69 /* canvas.json in Resources */ = {isa = PBXBuildFile; fileRef = D662E9A91D4AEA9F00919C69 /* canvas.json */; };
-		D662E9BF1D4AEAA000919C69 /* connect.json in Resources */ = {isa = PBXBuildFile; fileRef = D662E9AA1D4AEA9F00919C69 /* connect.json */; };
+		D662E9BF1D4AEAA000919C69 /* connection.json in Resources */ = {isa = PBXBuildFile; fileRef = D662E9AA1D4AEA9F00919C69 /* connection.json */; };
 		D662E9C01D4AEAA000919C69 /* drivecontroller.json in Resources */ = {isa = PBXBuildFile; fileRef = D662E9AB1D4AEA9F00919C69 /* drivecontroller.json */; };
 		D662E9C11D4AEAA000919C69 /* file.json in Resources */ = {isa = PBXBuildFile; fileRef = D662E9AC1D4AEA9F00919C69 /* file.json */; };
 		D662E9C21D4AEAA000919C69 /* filedescriptor.json in Resources */ = {isa = PBXBuildFile; fileRef = D662E9AD1D4AEA9F00919C69 /* filedescriptor.json */; };
@@ -285,6 +285,8 @@
 		D6FD02151999EC7A000DB674 /* CipherSignatureProcMD.m in Sources */ = {isa = PBXBuildFile; fileRef = D6FD02101999EC7A000DB674 /* CipherSignatureProcMD.m */; };
 		D6FF6C811D8FDA9D00B9165B /* DConnectEventProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = D6FF6C801D8FDA9D00B9165B /* DConnectEventProtocol.m */; };
 		D6FF6C8C1D9101C300B9165B /* DConnectVersionName.m in Sources */ = {isa = PBXBuildFile; fileRef = D6FF6C8B1D9101C300B9165B /* DConnectVersionName.m */; };
+		EF19A2471E44647500F00439 /* DConnectGeolocationProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = EF19A2461E44647400F00439 /* DConnectGeolocationProfile.m */; };
+		EF19A24D1E446B1C00F00439 /* geolocation.json in Resources */ = {isa = PBXBuildFile; fileRef = EF19A24C1E446B1C00F00439 /* geolocation.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1774,7 +1776,7 @@
 		BE6F93161A70DB0400BFA51F /* DConnectAuthorizationProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DConnectAuthorizationProfile.h; sourceTree = "<group>"; };
 		BE6F93171A70DB0400BFA51F /* DConnectBaseCacheController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DConnectBaseCacheController.h; sourceTree = "<group>"; };
 		BE6F93181A70DB0400BFA51F /* DConnectBatteryProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DConnectBatteryProfile.h; sourceTree = "<group>"; };
-		BE6F93191A70DB0400BFA51F /* DConnectConnectProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DConnectConnectProfile.h; sourceTree = "<group>"; };
+		BE6F93191A70DB0400BFA51F /* DConnectConnectionProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DConnectConnectionProfile.h; sourceTree = "<group>"; };
 		BE6F931A1A70DB0400BFA51F /* DConnectDBCacheController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DConnectDBCacheController.h; sourceTree = "<group>"; };
 		BE6F931B1A70DB0400BFA51F /* DConnectDeviceOrientationProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DConnectDeviceOrientationProfile.h; sourceTree = "<group>"; };
 		BE6F931C1A70DB0400BFA51F /* DConnectDevicePlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DConnectDevicePlugin.h; sourceTree = "<group>"; };
@@ -1825,7 +1827,7 @@
 		BE71FD9B1DA3B25B00B5E209 /* DConnectAvailabilityProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DConnectAvailabilityProfile.m; sourceTree = "<group>"; };
 		BE71FD9C1DA3B25B00B5E209 /* DConnectBatteryProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DConnectBatteryProfile.m; sourceTree = "<group>"; };
 		BE71FD9D1DA3B25B00B5E209 /* DConnectCanvasProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DConnectCanvasProfile.m; sourceTree = "<group>"; };
-		BE71FD9E1DA3B25B00B5E209 /* DConnectConnectProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DConnectConnectProfile.m; sourceTree = "<group>"; };
+		BE71FD9E1DA3B25B00B5E209 /* DConnectConnectionProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DConnectConnectionProfile.m; sourceTree = "<group>"; };
 		BE71FD9F1DA3B25B00B5E209 /* DConnectDeviceOrientationProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DConnectDeviceOrientationProfile.m; sourceTree = "<group>"; };
 		BE71FDA01DA3B25B00B5E209 /* DConnectFileDescriptorProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DConnectFileDescriptorProfile.m; sourceTree = "<group>"; };
 		BE71FDA11DA3B25B00B5E209 /* DConnectFileProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DConnectFileProfile.m; sourceTree = "<group>"; };
@@ -2026,7 +2028,7 @@
 		D662E9A71D4AEA9F00919C69 /* authorization.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = authorization.json; sourceTree = "<group>"; };
 		D662E9A81D4AEA9F00919C69 /* camera.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = camera.json; sourceTree = "<group>"; };
 		D662E9A91D4AEA9F00919C69 /* canvas.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = canvas.json; sourceTree = "<group>"; };
-		D662E9AA1D4AEA9F00919C69 /* connect.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = connect.json; sourceTree = "<group>"; };
+		D662E9AA1D4AEA9F00919C69 /* connection.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = connection.json; sourceTree = "<group>"; };
 		D662E9AB1D4AEA9F00919C69 /* drivecontroller.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = drivecontroller.json; sourceTree = "<group>"; };
 		D662E9AC1D4AEA9F00919C69 /* file.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = file.json; sourceTree = "<group>"; };
 		D662E9AD1D4AEA9F00919C69 /* filedescriptor.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = filedescriptor.json; sourceTree = "<group>"; };
@@ -2104,6 +2106,9 @@
 		D6FF6C801D8FDA9D00B9165B /* DConnectEventProtocol.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DConnectEventProtocol.m; sourceTree = "<group>"; };
 		D6FF6C8A1D9101C300B9165B /* DConnectVersionName.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DConnectVersionName.h; path = utils/DConnectVersionName.h; sourceTree = "<group>"; };
 		D6FF6C8B1D9101C300B9165B /* DConnectVersionName.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DConnectVersionName.m; path = utils/DConnectVersionName.m; sourceTree = "<group>"; };
+		EF19A2461E44647400F00439 /* DConnectGeolocationProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DConnectGeolocationProfile.m; sourceTree = "<group>"; };
+		EF19A2481E4464C400F00439 /* DConnectGeolocationProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DConnectGeolocationProfile.h; sourceTree = "<group>"; };
+		EF19A24C1E446B1C00F00439 /* geolocation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = geolocation.json; sourceTree = "<group>"; };
 		EF8B64951AAC78F2007C590B /* DConnectKeyEventProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DConnectKeyEventProfile.h; sourceTree = "<group>"; };
 		EFC27C2C1AB5B96B0029B257 /* DConnectTouchProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DConnectTouchProfile.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -3832,6 +3837,7 @@
 		BE6F93151A70DB0400BFA51F /* DConnectSDK */ = {
 			isa = PBXGroup;
 			children = (
+				EF19A2481E4464C400F00439 /* DConnectGeolocationProfile.h */,
 				D64EF6691D7E8A35005AC8B2 /* DConnectServiceListener.h */,
 				D64EF65B1D7D44EE005AC8B2 /* DConnectServiceListViewController.h */,
 				D62E463D1D53924800E3C489 /* DConnectPluginSpec.h */,
@@ -3851,7 +3857,7 @@
 				BE6F93161A70DB0400BFA51F /* DConnectAuthorizationProfile.h */,
 				BE6F93171A70DB0400BFA51F /* DConnectBaseCacheController.h */,
 				BE6F93181A70DB0400BFA51F /* DConnectBatteryProfile.h */,
-				BE6F93191A70DB0400BFA51F /* DConnectConnectProfile.h */,
+				BE6F93191A70DB0400BFA51F /* DConnectConnectionProfile.h */,
 				BE6F931A1A70DB0400BFA51F /* DConnectDBCacheController.h */,
 				BE6F931B1A70DB0400BFA51F /* DConnectDeviceOrientationProfile.h */,
 				BE6F931C1A70DB0400BFA51F /* DConnectDevicePlugin.h */,
@@ -3910,6 +3916,7 @@
 		BE71FD961DA3B25B00B5E209 /* profile */ = {
 			isa = PBXGroup;
 			children = (
+				EF19A2461E44647400F00439 /* DConnectGeolocationProfile.m */,
 				BE71FD971DA3B25B00B5E209 /* api */,
 				BE71FDB11DA3B25B00B5E209 /* spec */,
 				BE71FD991DA3B25B00B5E209 /* DConnectAuthorizationProfile+Private.h */,
@@ -3917,7 +3924,7 @@
 				BE71FD9B1DA3B25B00B5E209 /* DConnectAvailabilityProfile.m */,
 				BE71FD9C1DA3B25B00B5E209 /* DConnectBatteryProfile.m */,
 				BE71FD9D1DA3B25B00B5E209 /* DConnectCanvasProfile.m */,
-				BE71FD9E1DA3B25B00B5E209 /* DConnectConnectProfile.m */,
+				BE71FD9E1DA3B25B00B5E209 /* DConnectConnectionProfile.m */,
 				BE71FD9F1DA3B25B00B5E209 /* DConnectDeviceOrientationProfile.m */,
 				BE71FDA01DA3B25B00B5E209 /* DConnectFileDescriptorProfile.m */,
 				BE71FDA11DA3B25B00B5E209 /* DConnectFileProfile.m */,
@@ -4356,6 +4363,7 @@
 		D6ECC6D519A4B78900FE3161 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				EF19A24C1E446B1C00F00439 /* geolocation.json */,
 				D68563BC1DA65401003818F2 /* ecg.json */,
 				D68563BD1DA65401003818F2 /* poseestimation.json */,
 				D68563BE1DA65401003818F2 /* sphero.json */,
@@ -4365,7 +4373,7 @@
 				D662E9A71D4AEA9F00919C69 /* authorization.json */,
 				D662E9A81D4AEA9F00919C69 /* camera.json */,
 				D662E9A91D4AEA9F00919C69 /* canvas.json */,
-				D662E9AA1D4AEA9F00919C69 /* connect.json */,
+				D662E9AA1D4AEA9F00919C69 /* connection.json */,
 				D662E9AB1D4AEA9F00919C69 /* drivecontroller.json */,
 				D662E9AC1D4AEA9F00919C69 /* file.json */,
 				D662E9AD1D4AEA9F00919C69 /* filedescriptor.json */,
@@ -4530,11 +4538,12 @@
 				D65F83241D28FD490024685D /* setting.json in Resources */,
 				D65E24D31D1B956500312134 /* health.json in Resources */,
 				D662E9BB1D4AEAA000919C69 /* airconditioner.json in Resources */,
+				EF19A24D1E446B1C00F00439 /* geolocation.json in Resources */,
 				D662E9CF1D4AEAA000919C69 /* touch.json in Resources */,
 				30E9A16419AC6A850013F545 /* Localizable.strings in Resources */,
 				D65F83261D28FD840024685D /* temperature.json in Resources */,
 				D662E9C21D4AEAA000919C69 /* filedescriptor.json in Resources */,
-				D662E9BF1D4AEAA000919C69 /* connect.json in Resources */,
+				D662E9BF1D4AEAA000919C69 /* connection.json in Resources */,
 				D65E24D51D1B959900312134 /* vibration.json in Resources */,
 				D6ECC6DE19A4B7C800FE3161 /* Info.plist in Resources */,
 				D662E9CE1D4AEAA000919C69 /* system.json in Resources */,
@@ -4663,6 +4672,7 @@
 				BE71FE291DA3B25B00B5E209 /* DConnectNumberDataSpec.m in Sources */,
 				D6BBC79E19A2585D00F090CA /* LocalOAuthConfirmAuthViewController.m in Sources */,
 				BE71FE201DA3B25B00B5E209 /* DConnectBooleanParameterSpecBuilder.m in Sources */,
+				EF19A2471E44647500F00439 /* DConnectGeolocationProfile.m in Sources */,
 				D6960ED3199FAEB400BE4D1B /* LocalOAuthSQLiteProfile.m in Sources */,
 				D62622E1199232BC004F01E6 /* LocalOAuthRedirectionURI.m in Sources */,
 				D62622E3199232BC004F01E6 /* LocalOAuthSampleUser.m in Sources */,
@@ -4721,7 +4731,7 @@
 				30954E241976122800D92C66 /* DConnectBaseCacheController.m in Sources */,
 				D62622911992326E004F01E6 /* LocalOAuthClientDao.m in Sources */,
 				6BD474901AAF0B2D0014FB15 /* DConnectWebAppOrigin.m in Sources */,
-				BE71FE041DA3B25B00B5E209 /* DConnectConnectProfile.m in Sources */,
+				BE71FE041DA3B25B00B5E209 /* DConnectConnectionProfile.m in Sources */,
 				BE71FE261DA3B25B00B5E209 /* DConnectIntegerDataSpecBuilder.m in Sources */,
 				309CD50E198A3B45002A5684 /* DConnectEventHelper.m in Sources */,
 				AB67AB311C642AC500B4C62C /* RoutingHTTPServer.m in Sources */,
