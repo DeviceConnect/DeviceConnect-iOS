@@ -561,7 +561,7 @@
 		ABF6C36E1D2B4A0D006B1B91 /* dConnectDeviceHitoe */ = {
 			isa = PBXGroup;
 			children = (
-				ABF6C37D1D2B4BBB006B1B91 /* Headers */,
+				ABFBBE4D1E4DB54C008C4CC3 /* Headers */,
 				ABF6C37C1D2B4BA9006B1B91 /* Classes */,
 				ABF6C37B1D2B4B7B006B1B91 /* Resources */,
 			);
@@ -621,13 +621,6 @@
 				ABDDDF811D485153002EFF57 /* DPHitoeService.m */,
 			);
 			path = Classes;
-			sourceTree = "<group>";
-		};
-		ABF6C37D1D2B4BBB006B1B91 /* Headers */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Headers;
 			sourceTree = "<group>";
 		};
 		ABF6C3921D2B4CF6006B1B91 /* dConnectDeviceHitoe_resources */ = {
@@ -698,6 +691,13 @@
 			);
 			name = data;
 			path = Data;
+			sourceTree = "<group>";
+		};
+		ABFBBE4D1E4DB54C008C4CC3 /* Headers */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Headers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

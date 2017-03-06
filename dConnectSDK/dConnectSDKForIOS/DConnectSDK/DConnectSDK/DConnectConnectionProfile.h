@@ -1,5 +1,5 @@
 //
-//  DConnectConnectProfile.h
+//  DConnectConnectionProfile.h
 //  DConnectSDK
 //
 //  Copyright (c) 2014 NTT DOCOMO,INC.
@@ -9,7 +9,7 @@
 
 /*! 
  @file
- @brief Connectプロファイルを実装するための機能を提供する。
+ @brief Connectionプロファイルを実装するための機能を提供する。
  @author NTT DOCOMO
  */
 #import <DConnectSDK/DConnectProfile.h>
@@ -17,76 +17,76 @@
 /*!
  @brief プロファイル名。
  */
-extern NSString *const DConnectConnectProfileName;
+extern NSString *const DConnectConnectionProfileName;
 
 /*!
  @brief インターフェース: bluethooth。
  */
-extern NSString *const DConnectConnectProfileInterfaceBluetooth;
+extern NSString *const DConnectConnectionProfileInterfaceBluetooth;
 
 /*!
  @brief アトリビュート: wifi。
  */
-extern NSString *const DConnectConnectProfileAttrWifi;
+extern NSString *const DConnectConnectionProfileAttrWifi;
 
 /*!
  @brief アトリビュート: bluetooth。
  */
-extern NSString *const DConnectConnectProfileAttrBluetooth;
+extern NSString *const DConnectConnectionProfileAttrBluetooth;
 
 /*!
  @brief アトリビュート: discoverable。
  */
-extern NSString *const DConnectConnectProfileAttrDiscoverable;
+extern NSString *const DConnectConnectionProfileAttrDiscoverable;
 
 /*!
  @brief アトリビュート: ble。
  */
-extern NSString *const DConnectConnectProfileAttrBLE;
+extern NSString *const DConnectConnectionProfileAttrBLE;
 
 /*!
  @brief アトリビュート: nfc。
  */
-extern NSString *const DConnectConnectProfileAttrNFC;
+extern NSString *const DConnectConnectionProfileAttrNFC;
 
 /*!
  @brief アトリビュート: wifichange。
  */
-extern NSString *const DConnectConnectProfileAttrOnWifiChange;
+extern NSString *const DConnectConnectionProfileAttrOnWifiChange;
 
 /*!
  @brief アトリビュート: bluetoothchange。
  */
-extern NSString *const DConnectConnectProfileAttrOnBluetoothChange;
+extern NSString *const DConnectConnectionProfileAttrOnBluetoothChange;
 
 /*!
  @brief アトリビュート: blechange。
  */
-extern NSString *const DConnectConnectProfileAttrOnBLEChange;
+extern NSString *const DConnectConnectionProfileAttrOnBLEChange;
 
 /*!
  @brief アトリビュート: nfcchange。
  */
-extern NSString *const DConnectConnectProfileAttrOnNFCChange;
+extern NSString *const DConnectConnectionProfileAttrOnNFCChange;
 
 /*!
  @brief パラメータ: enable。
  */
-extern NSString *const DConnectConnectProfileParamEnable;
+extern NSString *const DConnectConnectionProfileParamEnable;
 
 /*!
  @brief パラメータ: connectStatus。
  */
-extern NSString *const DConnectConnectProfileParamConnectStatus;
+extern NSString *const DConnectConnectionProfileParamConnectStatus;
 
 /*!
- @class DConnectConnectProfile
+ @class DConnectConnectionProfile
  @brief Connectプロファイル。
  
  Connect Profileの各APIへのリクエストを受信する。
  受信したリクエストは各API毎にデリゲートに通知される。
  */
-@interface DConnectConnectProfile : DConnectProfile
+@interface DConnectConnectionProfile : DConnectProfile
 
 #pragma mark - Setters
 

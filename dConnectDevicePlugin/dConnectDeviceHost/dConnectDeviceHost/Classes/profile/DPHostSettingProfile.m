@@ -1,5 +1,5 @@
 //
-//  DPHostSettingsProfile.m
+//  DPHostSettingProfile.m
 //  dConnectDeviceHost
 //
 //  Copyright (c) 2014 NTT DOCOMO, INC.
@@ -7,10 +7,10 @@
 //  http://opensource.org/licenses/mit-license.php
 //
 
-#import "DPHostSettingsProfile.h"
+#import "DPHostSettingProfile.h"
 #import "DPHostUtils.h"
 
-@implementation DPHostSettingsProfile
+@implementation DPHostSettingProfile
 
 - (instancetype)init
 {
@@ -19,7 +19,7 @@
         
         // API登録(didReceiveGetDateRequest相当)
         NSString *getDateRequestApiPath = [self apiPath: nil
-                                          attributeName: DConnectSettingsProfileAttrDate];
+                                          attributeName: DConnectSettingProfileAttrDate];
         [self addGetPath: getDateRequestApiPath
                       api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
                           
@@ -30,36 +30,36 @@
                           [rfc3339DateFormatter setDateFormat:@"yyyy'-'MM'-'dd'T'HH':'mm':'ssZZZ"];
                           [rfc3339DateFormatter setTimeZone:[NSTimeZone systemTimeZone]];
                           
-                          [DConnectSettingsProfile setDate:[rfc3339DateFormatter stringFromDate:[NSDate date]] target:response];
+                          [DConnectSettingProfile setDate:[rfc3339DateFormatter stringFromDate:[NSDate date]] target:response];
                           [response setResult:DConnectMessageResultTypeOk];
                           
                           return YES;
                       }];
 
         // API登録(didReceiveGetLightRequest相当)
-        NSString *getLightRequestApiPath = [self apiPath: DConnectSettingsProfileInterfaceDisplay
-                                           attributeName: DConnectSettingsProfileAttrLight];
+        NSString *getLightRequestApiPath = [self apiPath: DConnectSettingProfileInterfaceDisplay
+                                           attributeName: DConnectSettingProfileAttrBrightness];
         [self addGetPath: getLightRequestApiPath
                      api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
                          
-                         [DConnectSettingsProfile setLightLevel:[UIScreen mainScreen].brightness target:response];
+                         [DConnectSettingProfile setLightLevel:[UIScreen mainScreen].brightness target:response];
                          [response setResult:DConnectMessageResultTypeOk];
                          return YES;
                      }];
 
         // API登録(didReceivePutLightRequest相当)
-        NSString *putLightRequestApiPath = [self apiPath: DConnectSettingsProfileInterfaceDisplay
-                                           attributeName: DConnectSettingsProfileAttrLight];
+        NSString *putLightRequestApiPath = [self apiPath: DConnectSettingProfileInterfaceDisplay
+                                           attributeName: DConnectSettingProfileAttrBrightness];
         [self addPutPath: putLightRequestApiPath
                      api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
                          
-                         NSNumber *level = [DConnectSettingsProfile levelFromRequest:request];
+                         NSNumber *level = [DConnectSettingProfile levelFromRequest:request];
                          
                          if (!level) {
                              [response setErrorToInvalidRequestParameterWithMessage:@"level must be specified."];
                              return YES;
                          }
-                         NSString *levelString = [request stringForKey:DConnectSettingsProfileParamLevel];
+                         NSString *levelString = [request stringForKey:DConnectSettingProfileParamLevel];
                          if ([level compare:@0] == NSOrderedAscending || [level compare:@1] == NSOrderedDescending
                              || !levelString || ![DPHostUtils existFloatWithString:levelString]) {
                              [response setErrorToInvalidRequestParameterWithMessage:@"level must be within range of [0, 1.0]."];

@@ -35,7 +35,7 @@
 		301B89BA198F7799006EC109 /* TestNotificationProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 301B89B9198F7799006EC109 /* TestNotificationProfile.m */; };
 		301B89BD198F7F66006EC109 /* TestPhoneProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 301B89BC198F7F66006EC109 /* TestPhoneProfile.m */; };
 		301B89C0198F848F006EC109 /* TestProximityProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 301B89BF198F848F006EC109 /* TestProximityProfile.m */; };
-		301B89C3198F871B006EC109 /* TestSettingsProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 301B89C2198F871B006EC109 /* TestSettingsProfile.m */; };
+		301B89C3198F871B006EC109 /* TestSettingProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 301B89C2198F871B006EC109 /* TestSettingProfile.m */; };
 		301B89C6198F8A20006EC109 /* TestSystemProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 301B89C5198F8A20006EC109 /* TestSystemProfile.m */; };
 		301B89C9198F8C4E006EC109 /* TestVibrationProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 301B89C8198F8C4E006EC109 /* TestVibrationProfile.m */; };
 		309CD51C198B2CCE002A5684 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 309CD51B198B2CCE002A5684 /* Foundation.framework */; };
@@ -45,7 +45,7 @@
 		309CD545198B2E31002A5684 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 309CD544198B2E31002A5684 /* Info.plist */; };
 		309CD54D198B3BFE002A5684 /* DeviceTestPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 309CD54C198B3BFE002A5684 /* DeviceTestPlugin.m */; };
 		309CD553198B3CF9002A5684 /* TestBatteryProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 309CD552198B3CF9002A5684 /* TestBatteryProfile.m */; };
-		309CD55C198B692B002A5684 /* TestConnectProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 309CD55B198B692B002A5684 /* TestConnectProfile.m */; };
+		309CD55C198B692B002A5684 /* TestConnectionProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 309CD55B198B692B002A5684 /* TestConnectionProfile.m */; };
 		309CD55F198F2F7A002A5684 /* TestDeviceOrientationProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 309CD55E198F2F7A002A5684 /* TestDeviceOrientationProfile.m */; };
 		309CD562198F31E4002A5684 /* TestFileDescriptorProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 309CD561198F31E4002A5684 /* TestFileDescriptorProfile.m */; };
 		309CD565198F3732002A5684 /* TestFileProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 309CD564198F3732002A5684 /* TestFileProfile.m */; };
@@ -56,7 +56,7 @@
 		6B2C778F1A708E2800ED8F17 /* DConnectSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABF842BB19E3E07300B8AC46 /* DConnectSDK.framework */; };
 		6BD1F6F01A9EBE65005956F5 /* RESTfulNormalServiceInformationProfileTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BD1F6EF1A9EBE65005956F5 /* RESTfulNormalServiceInformationProfileTest.m */; };
 		6BD1F6F21A9EC6B2005956F5 /* RESTfulFailServiceInformationProfileTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BD1F6F11A9EC6B2005956F5 /* RESTfulFailServiceInformationProfileTest.m */; };
-		840DC9C919A6D7AC00CA2EA0 /* RESTfulFailSettingsProfileTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 840DC9C819A6D7AC00CA2EA0 /* RESTfulFailSettingsProfileTest.m */; };
+		840DC9C919A6D7AC00CA2EA0 /* RESTfulFailSettingProfileTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 840DC9C819A6D7AC00CA2EA0 /* RESTfulFailSettingProfileTest.m */; };
 		840DC9CB19A6FD7200CA2EA0 /* RESTfulFailPhoneProfileTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 840DC9CA19A6FD7200CA2EA0 /* RESTfulFailPhoneProfileTest.m */; };
 		840DC9CD19A70FF500CA2EA0 /* RESTfulFailNotificationProfileTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 840DC9CC19A70FF500CA2EA0 /* RESTfulFailNotificationProfileTest.m */; };
 		840DC9CF19A717A600CA2EA0 /* RESTfulFailFileDescriptorProfileTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 840DC9CE19A717A600CA2EA0 /* RESTfulFailFileDescriptorProfileTest.m */; };
@@ -80,7 +80,7 @@
 		845458B91999A4EB0017F06D /* RESTfulTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = 845458B81999A4EB0017F06D /* RESTfulTestCase.m */; };
 		845458BE1999A6730017F06D /* DConnectTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = 845458BD1999A6730017F06D /* DConnectTestCase.m */; };
 		845458C01999D2160017F06D /* RESTfulNormalBatteryProfileTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 845458BF1999D2160017F06D /* RESTfulNormalBatteryProfileTest.m */; };
-		845458C319A199F50017F06D /* RESTfulNormalConnectProfileTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 845458C219A199F50017F06D /* RESTfulNormalConnectProfileTest.m */; };
+		845458C319A199F50017F06D /* RESTfulNormalConnectionProfileTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 845458C219A199F50017F06D /* RESTfulNormalConnectionProfileTest.m */; };
 		845458C919A1C2A90017F06D /* RESTfulNormalFileDescriptorProfileTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 845458C819A1C2A90017F06D /* RESTfulNormalFileDescriptorProfileTest.m */; };
 		845458D019A1C34D0017F06D /* Hash.m in Sources */ = {isa = PBXBuildFile; fileRef = 845458CD19A1C34D0017F06D /* Hash.m */; };
 		845458D119A1C34D0017F06D /* Multipart.m in Sources */ = {isa = PBXBuildFile; fileRef = 845458CF19A1C34D0017F06D /* Multipart.m */; };
@@ -95,7 +95,7 @@
 		84FA974F19A5942E0053B2FD /* RESTfulFailBatteryProfileTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 84FA974E19A5942E0053B2FD /* RESTfulFailBatteryProfileTest.m */; };
 		84FA975819A5D3580053B2FD /* TestUniquePingProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 84FA975719A5D3580053B2FD /* TestUniquePingProfile.m */; };
 		84FA975B19A5F1DE0053B2FD /* TestUniqueTimeoutProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 84FA975A19A5F1DE0053B2FD /* TestUniqueTimeoutProfile.m */; };
-		84FA975D19A608ED0053B2FD /* RESTfulFailConnectProfileTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 84FA975C19A608ED0053B2FD /* RESTfulFailConnectProfileTest.m */; };
+		84FA975D19A608ED0053B2FD /* RESTfulFailConnectionProfileTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 84FA975C19A608ED0053B2FD /* RESTfulFailConnectionProfileTest.m */; };
 		84FA975F19A610BA0053B2FD /* RESTfulFailDeviceOrientationProfileTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 84FA975E19A610BA0053B2FD /* RESTfulFailDeviceOrientationProfileTest.m */; };
 		84FA976119A615400053B2FD /* RESTfulFailVibrationProfileTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 84FA976019A615400053B2FD /* RESTfulFailVibrationProfileTest.m */; };
 		84FA976319A61A890053B2FD /* RESTfulFailProximityProfileTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 84FA976219A61A890053B2FD /* RESTfulFailProximityProfileTest.m */; };
@@ -178,8 +178,8 @@
 		301B89BC198F7F66006EC109 /* TestPhoneProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestPhoneProfile.m; sourceTree = "<group>"; };
 		301B89BE198F848F006EC109 /* TestProximityProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestProximityProfile.h; sourceTree = "<group>"; };
 		301B89BF198F848F006EC109 /* TestProximityProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestProximityProfile.m; sourceTree = "<group>"; };
-		301B89C1198F871B006EC109 /* TestSettingsProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestSettingsProfile.h; sourceTree = "<group>"; };
-		301B89C2198F871B006EC109 /* TestSettingsProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestSettingsProfile.m; sourceTree = "<group>"; };
+		301B89C1198F871B006EC109 /* TestSettingProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestSettingProfile.h; sourceTree = "<group>"; };
+		301B89C2198F871B006EC109 /* TestSettingProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestSettingProfile.m; sourceTree = "<group>"; };
 		301B89C4198F8A20006EC109 /* TestSystemProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestSystemProfile.h; sourceTree = "<group>"; };
 		301B89C5198F8A20006EC109 /* TestSystemProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestSystemProfile.m; sourceTree = "<group>"; };
 		301B89C7198F8C4E006EC109 /* TestVibrationProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestVibrationProfile.h; sourceTree = "<group>"; };
@@ -197,8 +197,8 @@
 		309CD54C198B3BFE002A5684 /* DeviceTestPlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeviceTestPlugin.m; sourceTree = "<group>"; };
 		309CD551198B3CF9002A5684 /* TestBatteryProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestBatteryProfile.h; sourceTree = "<group>"; };
 		309CD552198B3CF9002A5684 /* TestBatteryProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestBatteryProfile.m; sourceTree = "<group>"; };
-		309CD55A198B692B002A5684 /* TestConnectProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestConnectProfile.h; sourceTree = "<group>"; };
-		309CD55B198B692B002A5684 /* TestConnectProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestConnectProfile.m; sourceTree = "<group>"; };
+		309CD55A198B692B002A5684 /* TestConnectionProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestConnectionProfile.h; sourceTree = "<group>"; };
+		309CD55B198B692B002A5684 /* TestConnectionProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestConnectionProfile.m; sourceTree = "<group>"; };
 		309CD55D198F2F7A002A5684 /* TestDeviceOrientationProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestDeviceOrientationProfile.h; sourceTree = "<group>"; };
 		309CD55E198F2F7A002A5684 /* TestDeviceOrientationProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestDeviceOrientationProfile.m; sourceTree = "<group>"; };
 		309CD560198F31E4002A5684 /* TestFileDescriptorProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestFileDescriptorProfile.h; sourceTree = "<group>"; };
@@ -214,7 +214,7 @@
 		6BBFF6481D24FACD00BB3DC6 /* dConnectDeviceTest_resources.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = dConnectDeviceTest_resources.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		6BD1F6EF1A9EBE65005956F5 /* RESTfulNormalServiceInformationProfileTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RESTfulNormalServiceInformationProfileTest.m; path = dConnectManager/RESTful/RESTfulNormalServiceInformationProfileTest.m; sourceTree = "<group>"; };
 		6BD1F6F11A9EC6B2005956F5 /* RESTfulFailServiceInformationProfileTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RESTfulFailServiceInformationProfileTest.m; path = dConnectManager/RESTful/RESTfulFailServiceInformationProfileTest.m; sourceTree = "<group>"; };
-		840DC9C819A6D7AC00CA2EA0 /* RESTfulFailSettingsProfileTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RESTfulFailSettingsProfileTest.m; path = dConnectManager/RESTful/RESTfulFailSettingsProfileTest.m; sourceTree = "<group>"; };
+		840DC9C819A6D7AC00CA2EA0 /* RESTfulFailSettingProfileTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RESTfulFailSettingProfileTest.m; path = dConnectManager/RESTful/RESTfulFailSettingProfileTest.m; sourceTree = "<group>"; };
 		840DC9CA19A6FD7200CA2EA0 /* RESTfulFailPhoneProfileTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RESTfulFailPhoneProfileTest.m; path = dConnectManager/RESTful/RESTfulFailPhoneProfileTest.m; sourceTree = "<group>"; };
 		840DC9CC19A70FF500CA2EA0 /* RESTfulFailNotificationProfileTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RESTfulFailNotificationProfileTest.m; path = dConnectManager/RESTful/RESTfulFailNotificationProfileTest.m; sourceTree = "<group>"; };
 		840DC9CE19A717A600CA2EA0 /* RESTfulFailFileDescriptorProfileTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = RESTfulFailFileDescriptorProfileTest.m; path = dConnectManager/RESTful/RESTfulFailFileDescriptorProfileTest.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
@@ -241,7 +241,7 @@
 		845458BC1999A6730017F06D /* DConnectTestCase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DConnectTestCase.h; path = dConnectManager/DConnectTestCase.h; sourceTree = "<group>"; };
 		845458BD1999A6730017F06D /* DConnectTestCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DConnectTestCase.m; path = dConnectManager/DConnectTestCase.m; sourceTree = "<group>"; };
 		845458BF1999D2160017F06D /* RESTfulNormalBatteryProfileTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RESTfulNormalBatteryProfileTest.m; path = dConnectManager/RESTful/RESTfulNormalBatteryProfileTest.m; sourceTree = "<group>"; };
-		845458C219A199F50017F06D /* RESTfulNormalConnectProfileTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RESTfulNormalConnectProfileTest.m; path = dConnectManager/RESTful/RESTfulNormalConnectProfileTest.m; sourceTree = "<group>"; };
+		845458C219A199F50017F06D /* RESTfulNormalConnectionProfileTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RESTfulNormalConnectionProfileTest.m; path = dConnectManager/RESTful/RESTfulNormalConnectionProfileTest.m; sourceTree = "<group>"; };
 		845458C819A1C2A90017F06D /* RESTfulNormalFileDescriptorProfileTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RESTfulNormalFileDescriptorProfileTest.m; path = dConnectManager/RESTful/RESTfulNormalFileDescriptorProfileTest.m; sourceTree = "<group>"; };
 		845458CC19A1C34D0017F06D /* Hash.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Hash.h; sourceTree = "<group>"; };
 		845458CD19A1C34D0017F06D /* Hash.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Hash.m; sourceTree = "<group>"; };
@@ -263,7 +263,7 @@
 		84FA975719A5D3580053B2FD /* TestUniquePingProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestUniquePingProfile.m; sourceTree = "<group>"; };
 		84FA975919A5F1DE0053B2FD /* TestUniqueTimeoutProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestUniqueTimeoutProfile.h; sourceTree = "<group>"; };
 		84FA975A19A5F1DE0053B2FD /* TestUniqueTimeoutProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestUniqueTimeoutProfile.m; sourceTree = "<group>"; };
-		84FA975C19A608ED0053B2FD /* RESTfulFailConnectProfileTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = RESTfulFailConnectProfileTest.m; path = dConnectManager/RESTful/RESTfulFailConnectProfileTest.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		84FA975C19A608ED0053B2FD /* RESTfulFailConnectionProfileTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = RESTfulFailConnectionProfileTest.m; path = dConnectManager/RESTful/RESTfulFailConnectionProfileTest.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		84FA975E19A610BA0053B2FD /* RESTfulFailDeviceOrientationProfileTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = RESTfulFailDeviceOrientationProfileTest.m; path = dConnectManager/RESTful/RESTfulFailDeviceOrientationProfileTest.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		84FA976019A615400053B2FD /* RESTfulFailVibrationProfileTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RESTfulFailVibrationProfileTest.m; path = dConnectManager/RESTful/RESTfulFailVibrationProfileTest.m; sourceTree = "<group>"; };
 		84FA976219A61A890053B2FD /* RESTfulFailProximityProfileTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RESTfulFailProximityProfileTest.m; path = dConnectManager/RESTful/RESTfulFailProximityProfileTest.m; sourceTree = "<group>"; };
@@ -429,8 +429,8 @@
 				AB043C921BDF6B3F00B35D96 /* TestLightProfile.m */,
 				309CD551198B3CF9002A5684 /* TestBatteryProfile.h */,
 				309CD552198B3CF9002A5684 /* TestBatteryProfile.m */,
-				309CD55A198B692B002A5684 /* TestConnectProfile.h */,
-				309CD55B198B692B002A5684 /* TestConnectProfile.m */,
+				309CD55A198B692B002A5684 /* TestConnectionProfile.h */,
+				309CD55B198B692B002A5684 /* TestConnectionProfile.m */,
 				309CD55D198F2F7A002A5684 /* TestDeviceOrientationProfile.h */,
 				309CD55E198F2F7A002A5684 /* TestDeviceOrientationProfile.m */,
 				309CD560198F31E4002A5684 /* TestFileDescriptorProfile.h */,
@@ -447,8 +447,8 @@
 				301B89BC198F7F66006EC109 /* TestPhoneProfile.m */,
 				301B89BE198F848F006EC109 /* TestProximityProfile.h */,
 				301B89BF198F848F006EC109 /* TestProximityProfile.m */,
-				301B89C1198F871B006EC109 /* TestSettingsProfile.h */,
-				301B89C2198F871B006EC109 /* TestSettingsProfile.m */,
+				301B89C1198F871B006EC109 /* TestSettingProfile.h */,
+				301B89C2198F871B006EC109 /* TestSettingProfile.m */,
 				301B89C4198F8A20006EC109 /* TestSystemProfile.h */,
 				301B89C5198F8A20006EC109 /* TestSystemProfile.m */,
 				301B89C7198F8C4E006EC109 /* TestVibrationProfile.h */,
@@ -496,7 +496,7 @@
 				6B19E86D1A6FBBB900161F21 /* RESTfulNormalAvailabilityProfileTest.m */,
 				84EBE7D319B5CB1B0089AD35 /* RESTfulNormalAuthorizationProfileTest.m */,
 				845458BF1999D2160017F06D /* RESTfulNormalBatteryProfileTest.m */,
-				845458C219A199F50017F06D /* RESTfulNormalConnectProfileTest.m */,
+				845458C219A199F50017F06D /* RESTfulNormalConnectionProfileTest.m */,
 				8490A34B19A488210031FD1E /* RESTfulNormalDeviceOrientationProfileTest.m */,
 				845458C819A1C2A90017F06D /* RESTfulNormalFileDescriptorProfileTest.m */,
 				8428953519A2002500D9ECFF /* RESTfulNormalFileProfileTest.m */,
@@ -512,7 +512,7 @@
 				8428953D19A2002500D9ECFF /* RESTfulNormalVibrationProfileTest.m */,
 				84EBE8ED19B88BFB0089AD35 /* RESTfulFailAuthorizationProfileTest.m */,
 				84FA974E19A5942E0053B2FD /* RESTfulFailBatteryProfileTest.m */,
-				84FA975C19A608ED0053B2FD /* RESTfulFailConnectProfileTest.m */,
+				84FA975C19A608ED0053B2FD /* RESTfulFailConnectionProfileTest.m */,
 				84FA975E19A610BA0053B2FD /* RESTfulFailDeviceOrientationProfileTest.m */,
 				840DC9CE19A717A600CA2EA0 /* RESTfulFailFileDescriptorProfileTest.m */,
 				840DC9D019A71B9000CA2EA0 /* RESTfulFailFileProfileTest.m */,
@@ -522,7 +522,7 @@
 				840DC9CC19A70FF500CA2EA0 /* RESTfulFailNotificationProfileTest.m */,
 				840DC9CA19A6FD7200CA2EA0 /* RESTfulFailPhoneProfileTest.m */,
 				84FA976219A61A890053B2FD /* RESTfulFailProximityProfileTest.m */,
-				840DC9C819A6D7AC00CA2EA0 /* RESTfulFailSettingsProfileTest.m */,
+				840DC9C819A6D7AC00CA2EA0 /* RESTfulFailSettingProfileTest.m */,
 				8490A34D19A488350031FD1E /* RESTfulFailSystemProfileTest.m */,
 				AB81AC871BDF7C250069F6EB /* RESTfulFailLightProfileTest.m */,
 				6BD1F6F11A9EC6B2005956F5 /* RESTfulFailServiceInformationProfileTest.m */,
@@ -785,10 +785,10 @@
 				301B89BA198F7799006EC109 /* TestNotificationProfile.m in Sources */,
 				301B89C0198F848F006EC109 /* TestProximityProfile.m in Sources */,
 				309CD55F198F2F7A002A5684 /* TestDeviceOrientationProfile.m in Sources */,
-				309CD55C198B692B002A5684 /* TestConnectProfile.m in Sources */,
+				309CD55C198B692B002A5684 /* TestConnectionProfile.m in Sources */,
 				301B89C9198F8C4E006EC109 /* TestVibrationProfile.m in Sources */,
 				301B89BD198F7F66006EC109 /* TestPhoneProfile.m in Sources */,
-				301B89C3198F871B006EC109 /* TestSettingsProfile.m in Sources */,
+				301B89C3198F871B006EC109 /* TestSettingProfile.m in Sources */,
 				301B89C6198F8A20006EC109 /* TestSystemProfile.m in Sources */,
 				309CD553198B3CF9002A5684 /* TestBatteryProfile.m in Sources */,
 			);
@@ -822,7 +822,7 @@
 				840DC9D319A7286700CA2EA0 /* RESTfulFailMediaPlayerProfileTest.m in Sources */,
 				840DC9D119A71B9000CA2EA0 /* RESTfulFailFileProfileTest.m in Sources */,
 				84FA976319A61A890053B2FD /* RESTfulFailProximityProfileTest.m in Sources */,
-				84FA975D19A608ED0053B2FD /* RESTfulFailConnectProfileTest.m in Sources */,
+				84FA975D19A608ED0053B2FD /* RESTfulFailConnectionProfileTest.m in Sources */,
 				845458BE1999A6730017F06D /* DConnectTestCase.m in Sources */,
 				84FA974F19A5942E0053B2FD /* RESTfulFailBatteryProfileTest.m in Sources */,
 				8490A34C19A488210031FD1E /* RESTfulNormalDeviceOrientationProfileTest.m in Sources */,
@@ -834,12 +834,12 @@
 				84FA975F19A610BA0053B2FD /* RESTfulFailDeviceOrientationProfileTest.m in Sources */,
 				845458C919A1C2A90017F06D /* RESTfulNormalFileDescriptorProfileTest.m in Sources */,
 				84EBE7D719B5E2340089AD35 /* AccessToken.m in Sources */,
-				845458C319A199F50017F06D /* RESTfulNormalConnectProfileTest.m in Sources */,
+				845458C319A199F50017F06D /* RESTfulNormalConnectionProfileTest.m in Sources */,
 				AB81AC881BDF7C250069F6EB /* RESTfulFailLightProfileTest.m in Sources */,
 				8428954319A2002500D9ECFF /* RESTfulNormalPhoneProfileTest.m in Sources */,
 				84FA976119A615400053B2FD /* RESTfulFailVibrationProfileTest.m in Sources */,
 				6BD1F6F01A9EBE65005956F5 /* RESTfulNormalServiceInformationProfileTest.m in Sources */,
-				840DC9C919A6D7AC00CA2EA0 /* RESTfulFailSettingsProfileTest.m in Sources */,
+				840DC9C919A6D7AC00CA2EA0 /* RESTfulFailSettingProfileTest.m in Sources */,
 				840DC9CF19A717A600CA2EA0 /* RESTfulFailFileDescriptorProfileTest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

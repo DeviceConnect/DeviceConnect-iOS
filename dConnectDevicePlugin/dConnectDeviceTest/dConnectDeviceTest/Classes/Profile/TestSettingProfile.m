@@ -1,5 +1,5 @@
 //
-//  TestSettingsProfile.m
+//  TestSettingProfile.m
 //  dConnectDeviceTest
 //
 //  Copyright (c) 2014 NTT DOCOMO, INC.
@@ -7,12 +7,12 @@
 //  http://opensource.org/licenses/mit-license.php
 //
 
-#import "TestSettingsProfile.h"
+#import "TestSettingProfile.h"
 
-const double TestSettingsLevel = 0.5;
-NSString *const TestSettingsDate = @"2014-01-01T01:01:01+09:00";
+const double TestSettingLevel = 0.5;
+NSString *const TestSettingDate = @"2014-01-01T01:01:01+09:00";
 
-@implementation TestSettingsProfile
+@implementation TestSettingProfile
 
 - (id) init {
     self = [super init];
@@ -21,19 +21,19 @@ NSString *const TestSettingsDate = @"2014-01-01T01:01:01+09:00";
         
         // API登録(didReceiveGetVolumeRequest相当)
         NSString *getVolumeRequestApiPath =
-        [self apiPath: DConnectSettingsProfileInterfaceSound
-        attributeName: DConnectSettingsProfileAttrVolume];
+        [self apiPath: DConnectSettingProfileInterfaceSound
+        attributeName: DConnectSettingProfileAttrVolume];
         [self addGetPath: getVolumeRequestApiPath api: ^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
             
             NSString *serviceId = [request serviceId];
-            DConnectSettingsProfileVolumeKind kind = [DConnectSettingsProfile volumeKindFromRequest:request];
+            DConnectSettingProfileVolumeKind kind = [DConnectSettingProfile volumeKindFromRequest:request];
             
             CheckDID(response, serviceId)
-            if (kind == DConnectSettingsProfileVolumeKindUnknown) {
+            if (kind == DConnectSettingProfileVolumeKindUnknown) {
                 [response setErrorToInvalidRequestParameter];
             } else {
                 response.result = DConnectMessageResultTypeOk;
-                [DConnectSettingsProfile setVolumeLevel:TestSettingsLevel target:response];
+                [DConnectSettingProfile setVolumeLevel:TestSettingLevel target:response];
             }
             
             return YES;
@@ -42,14 +42,14 @@ NSString *const TestSettingsDate = @"2014-01-01T01:01:01+09:00";
         // API登録(didReceiveGetDateRequest相当)
         NSString *getDateRequestApiPath =
         [self apiPath: nil
-        attributeName: DConnectSettingsProfileAttrDate];
+        attributeName: DConnectSettingProfileAttrDate];
         [self addGetPath: getDateRequestApiPath api: ^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
             
             NSString *serviceId = [request serviceId];
             
             CheckDID(response, serviceId) {
                 response.result = DConnectMessageResultTypeOk;
-                [DConnectSettingsProfile setDate:TestSettingsDate target:response];
+                [DConnectSettingProfile setDate:TestSettingDate target:response];
             }
             
             return YES;
@@ -57,15 +57,15 @@ NSString *const TestSettingsDate = @"2014-01-01T01:01:01+09:00";
         
         // API登録(didReceiveGetLightRequest相当)
         NSString *getLightRequestApiPath =
-        [self apiPath: DConnectSettingsProfileInterfaceDisplay
-        attributeName: DConnectSettingsProfileAttrLight];
+        [self apiPath: DConnectSettingProfileInterfaceDisplay
+        attributeName: DConnectSettingProfileAttrBrightness];
         [self addGetPath: getLightRequestApiPath api: ^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
             
             NSString *serviceId = [request serviceId];
             
             CheckDID(response, serviceId) {
                 response.result = DConnectMessageResultTypeOk;
-                [DConnectSettingsProfile setLightLevel:TestSettingsLevel target:response];
+                [DConnectSettingProfile setLightLevel:TestSettingLevel target:response];
             }
             
             return YES;
@@ -73,15 +73,15 @@ NSString *const TestSettingsDate = @"2014-01-01T01:01:01+09:00";
         
         // API登録(didReceiveGetSleepRequest相当)
         NSString *getSleepRequestApiPath =
-        [self apiPath: DConnectSettingsProfileInterfaceDisplay
-        attributeName: DConnectSettingsProfileAttrSleep];
+        [self apiPath: DConnectSettingProfileInterfaceDisplay
+        attributeName: DConnectSettingProfileAttrSleep];
         [self addGetPath: getSleepRequestApiPath api: ^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
             
             NSString *serviceId = [request serviceId];
             
             CheckDID(response, serviceId) {
                 response.result = DConnectMessageResultTypeOk;
-                [DConnectSettingsProfile setTime:1 target:response];
+                [DConnectSettingProfile setTime:1 target:response];
             }
             
             return YES;
@@ -89,18 +89,18 @@ NSString *const TestSettingsDate = @"2014-01-01T01:01:01+09:00";
         
         // API登録(didReceivePutVolumeRequest相当)
         NSString *putVolumeRequestApiPath =
-        [self apiPath: DConnectSettingsProfileInterfaceSound
-        attributeName: DConnectSettingsProfileAttrVolume];
+        [self apiPath: DConnectSettingProfileInterfaceSound
+        attributeName: DConnectSettingProfileAttrVolume];
         [self addPutPath: putVolumeRequestApiPath api: ^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
             
             NSString *serviceId = [request serviceId];
-            DConnectSettingsProfileVolumeKind kind = [DConnectSettingsProfile volumeKindFromRequest:request];
-            NSNumber *level = [DConnectSettingsProfile levelFromRequest:request];
+            DConnectSettingProfileVolumeKind kind = [DConnectSettingProfile volumeKindFromRequest:request];
+            NSNumber *level = [DConnectSettingProfile levelFromRequest:request];
             
             CheckDID(response, serviceId)
-            if (kind == DConnectSettingsProfileVolumeKindUnknown
-                || level == nil || [level doubleValue] < DConnectSettingsProfileMinLevel
-                || [level doubleValue] > DConnectSettingsProfileMaxLevel)
+            if (kind == DConnectSettingProfileVolumeKindUnknown
+                || level == nil || [level doubleValue] < DConnectSettingProfileMinLevel
+                || [level doubleValue] > DConnectSettingProfileMaxLevel)
             {
                 [response setErrorToInvalidRequestParameter];
             } else {
@@ -113,11 +113,11 @@ NSString *const TestSettingsDate = @"2014-01-01T01:01:01+09:00";
         // API登録(didReceivePutDateRequest相当)
         NSString *putDateRequestApiPath =
         [self apiPath: nil
-        attributeName: DConnectSettingsProfileAttrDate];
+        attributeName: DConnectSettingProfileAttrDate];
         [self addPutPath: putDateRequestApiPath api: ^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
             
             NSString *serviceId = [request serviceId];
-            NSString *date = [DConnectSettingsProfile dateFromRequest:request];
+            NSString *date = [DConnectSettingProfile dateFromRequest:request];
             
             CheckDID(response, serviceId)
             if (date == nil) {
@@ -131,16 +131,16 @@ NSString *const TestSettingsDate = @"2014-01-01T01:01:01+09:00";
         
         // API登録(didReceivePutLightRequest相当)
         NSString *putLightRequestApiPath =
-        [self apiPath: DConnectSettingsProfileInterfaceDisplay
-        attributeName: DConnectSettingsProfileAttrLight];
+        [self apiPath: DConnectSettingProfileInterfaceDisplay
+        attributeName: DConnectSettingProfileAttrBrightness];
         [self addPutPath: putLightRequestApiPath api: ^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
             
             NSString *serviceId = [request serviceId];
-            NSNumber *level = [DConnectSettingsProfile levelFromRequest:request];
+            NSNumber *level = [DConnectSettingProfile levelFromRequest:request];
             
             CheckDID(response, serviceId)
-            if (level == nil || [level doubleValue] < DConnectSettingsProfileMinLevel
-                || [level doubleValue] > DConnectSettingsProfileMaxLevel)
+            if (level == nil || [level doubleValue] < DConnectSettingProfileMinLevel
+                || [level doubleValue] > DConnectSettingProfileMaxLevel)
             {
                 [response setErrorToInvalidRequestParameter];
             } else {
@@ -152,12 +152,12 @@ NSString *const TestSettingsDate = @"2014-01-01T01:01:01+09:00";
         
         // API登録(didReceivePutSleepRequest相当)
         NSString *putSleepRequestApiPath =
-                [self apiPath: DConnectSettingsProfileInterfaceDisplay
-                attributeName: DConnectSettingsProfileAttrSleep];
+                [self apiPath: DConnectSettingProfileInterfaceDisplay
+                attributeName: DConnectSettingProfileAttrSleep];
         [self addPutPath: putSleepRequestApiPath api: ^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
             
             NSString *serviceId = [request serviceId];
-            NSNumber *time = [DConnectSettingsProfile timeFromRequest:request];
+            NSNumber *time = [DConnectSettingProfile timeFromRequest:request];
             
             CheckDID(response, serviceId)
             if (time == nil) {
