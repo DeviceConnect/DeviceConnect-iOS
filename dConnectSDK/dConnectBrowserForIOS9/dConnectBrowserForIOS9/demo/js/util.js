@@ -16,7 +16,7 @@ var util = (function(parent, global) {
             'notification',
             'phone',
             'proximity',
-            'settings',
+            'setting',
             'vibration',
             'light',
             'remotecontroller',
@@ -102,6 +102,7 @@ var util = (function(parent, global) {
             function(clientId, accessToken) {
                 mAccessToken = accessToken;
                 openWebSocketIfNeeded();
+                               console.log("accessToken:" + mAccessToken);
                 setCookie('accessToken', mAccessToken);
                 callback();
             },

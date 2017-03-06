@@ -1,5 +1,5 @@
 //
-//  DConnectSettingsProfile.h
+//  DConnectSettingProfile.h
 //  DConnectSDK
 //
 //  Copyright (c) 2014 NTT DOCOMO,INC.
@@ -9,99 +9,99 @@
 
 /*! 
  @file
- @brief Settingsプロファイルを実装するための機能を提供する。
+ @brief Settingプロファイルを実装するための機能を提供する。
  @author NTT DOCOMO
  */
 #import <DConnectSDK/DConnectProfile.h>
 
 /*!
- @brief プロファイル名: settings。
+ @brief プロファイル名: setting。
  */
-extern NSString *const DConnectSettingsProfileName;
+extern NSString *const DConnectSettingProfileName;
 
 /*!
  @brief インターフェース: sound。
  */
-extern NSString *const DConnectSettingsProfileInterfaceSound;
+extern NSString *const DConnectSettingProfileInterfaceSound;
 
 /*!
  @brief インターフェース: display。
  */
-extern NSString *const DConnectSettingsProfileInterfaceDisplay;
+extern NSString *const DConnectSettingProfileInterfaceDisplay;
 
 /*!
  @brief アトリビュート: volume。
  */
-extern NSString *const DConnectSettingsProfileAttrVolume;
+extern NSString *const DConnectSettingProfileAttrVolume;
 
 /*!
  @brief アトリビュート: date。
  */
-extern NSString *const DConnectSettingsProfileAttrDate;
+extern NSString *const DConnectSettingProfileAttrDate;
 
 /*!
  @brief アトリビュート: light。
  */
-extern NSString *const DConnectSettingsProfileAttrLight;
+extern NSString *const DConnectSettingProfileAttrBrightness;
 
 /*!
  @brief アトリビュート: sleep。
  */
-extern NSString *const DConnectSettingsProfileAttrSleep;
+extern NSString *const DConnectSettingProfileAttrSleep;
 
 /*!
  @brief パラメータ: kind。
  */
-extern NSString *const DConnectSettingsProfileParamKind;
+extern NSString *const DConnectSettingProfileParamKind;
 
 /*!
  @brief パラメータ: level。
  */
-extern NSString *const DConnectSettingsProfileParamLevel;
+extern NSString *const DConnectSettingProfileParamLevel;
 
 /*!
  @brief パラメータ: date。
  */
-extern NSString *const DConnectSettingsProfileParamDate;
+extern NSString *const DConnectSettingProfileParamDate;
 
 /*!
  @brief パラメータ: time。
  */
-extern NSString *const DConnectSettingsProfileParamTime;
+extern NSString *const DConnectSettingProfileParamTime;
 
 /*!
  @brief ボリュームのレベルの最大値: 1.0。
  */
-extern const double DConnectSettingsProfileMaxLevel;
+extern const double DConnectSettingProfileMaxLevel;
 
 /*!
  @brief ボリュームのレベルの最小値: 0.0。
  */
-extern const double DConnectSettingsProfileMinLevel;
+extern const double DConnectSettingProfileMinLevel;
 
 /*!
- @enum DConnectSettingsProfileVolumeKind
+ @enum DConnectSettingProfileVolumeKind
  @brief 音量の種別定数。
  */
-typedef NS_ENUM(NSInteger, DConnectSettingsProfileVolumeKind) {
-    DConnectSettingsProfileVolumeKindUnknown = -1,  /*!< 未定義値 */
-    DConnectSettingsProfileVolumeKindAlarm = 1,     /*!< アラーム */
-    DConnectSettingsProfileVolumeKindCall,          /*!< 通話音 */
-    DConnectSettingsProfileVolumeKindRingtone,      /*!< 着信音 */
-    DConnectSettingsProfileVolumeKindMail,          /*!< メール着信音 */
-    DConnectSettingsProfileVolumeKindOther,         /*!< その他SNS等の着信音 */
-    DConnectSettingsProfileVolumeKindMediaPlay,     /*!< メディアプレーヤーの音量 */
+typedef NS_ENUM(NSInteger, DConnectSettingProfileVolumeKind) {
+    DConnectSettingProfileVolumeKindUnknown = -1,  /*!< 未定義値 */
+    DConnectSettingProfileVolumeKindAlarm = 1,     /*!< アラーム */
+    DConnectSettingProfileVolumeKindCall,          /*!< 通話音 */
+    DConnectSettingProfileVolumeKindRingtone,      /*!< 着信音 */
+    DConnectSettingProfileVolumeKindMail,          /*!< メール着信音 */
+    DConnectSettingProfileVolumeKindOther,         /*!< その他SNS等の着信音 */
+    DConnectSettingProfileVolumeKindMediaPlay,     /*!< メディアプレーヤーの音量 */
 };
 
-@class DConnectSettingsProfile;
+@class DConnectSettingProfile;
 /*!
- @class DConnectSettingsProfile
- @brief Settingsプロファイル.
+ @class DConnectSettingProfile
+ @brief Settingプロファイル.
  
- Settings Profileの各APIへのリクエストを受信する。
+ Setting Profileの各APIへのリクエストを受信する。
  受信したリクエストは各API毎にデリゲートに通知される。
  */
-@interface DConnectSettingsProfile : DConnectProfile
+@interface DConnectSettingProfile : DConnectProfile
 
 #pragma mark - Getter
 
@@ -110,15 +110,15 @@ typedef NS_ENUM(NSInteger, DConnectSettingsProfileVolumeKind) {
  
  @param[in] request リクエストパラメータ
  
- @retval DConnectSettingsProfileVolumeKindUnknown
- @retval DConnectSettingsProfileVolumeKindAlarm
- @retval DConnectSettingsProfileVolumeKindCall
- @retval DConnectSettingsProfileVolumeKindRingtone
- @retval DConnectSettingsProfileVolumeKindMail
- @retval DConnectSettingsProfileVolumeKindOther
- @retval DConnectSettingsProfileVolumeKindMediaPlay
+ @retval DConnectSettingProfileVolumeKindUnknown
+ @retval DConnectSettingProfileVolumeKindAlarm
+ @retval DConnectSettingProfileVolumeKindCall
+ @retval DConnectSettingProfileVolumeKindRingtone
+ @retval DConnectSettingProfileVolumeKindMail
+ @retval DConnectSettingProfileVolumeKindOther
+ @retval DConnectSettingProfileVolumeKindMediaPlay
  */
-+ (DConnectSettingsProfileVolumeKind) volumeKindFromRequest:(DConnectMessage *)request;
++ (DConnectSettingProfileVolumeKind) volumeKindFromRequest:(DConnectMessage *)request;
 
 /*!
  @brief リクエストから音量を取得する。

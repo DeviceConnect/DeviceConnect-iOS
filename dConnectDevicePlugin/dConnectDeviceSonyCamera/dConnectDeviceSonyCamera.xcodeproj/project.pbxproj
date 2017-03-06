@@ -75,7 +75,6 @@
 		C2540C8B195ACD8500AE012C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2540C8A195ACD8500AE012C /* UIKit.framework */; };
 		D662E99C1D49F5D900919C69 /* SonyCameraSystemProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = D662E99B1D49F5D900919C69 /* SonyCameraSystemProfile.m */; };
 		D662E99F1D49F61600919C69 /* SonyCameraMediaStreamRecordingProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = D662E99E1D49F61600919C69 /* SonyCameraMediaStreamRecordingProfile.m */; };
-		D662E9A21D49F66B00919C69 /* SonyCameraSettingsProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = D662E9A11D49F66B00919C69 /* SonyCameraSettingsProfile.m */; };
 		D662E9A51D4A16B300919C69 /* SonyCameraManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D662E9A41D4A16B300919C69 /* SonyCameraManager.m */; };
 		D6C860481D3B436400232EEF /* SonyCameraService.m in Sources */ = {isa = PBXBuildFile; fileRef = D6C860471D3B436400232EEF /* SonyCameraService.m */; };
 		D6D172741D62E7CD00444337 /* SonyCameraReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = D6D172731D62E7CD00444337 /* SonyCameraReachability.m */; };
@@ -175,8 +174,6 @@
 		D662E99B1D49F5D900919C69 /* SonyCameraSystemProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SonyCameraSystemProfile.m; sourceTree = "<group>"; };
 		D662E99D1D49F61600919C69 /* SonyCameraMediaStreamRecordingProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SonyCameraMediaStreamRecordingProfile.h; sourceTree = "<group>"; };
 		D662E99E1D49F61600919C69 /* SonyCameraMediaStreamRecordingProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SonyCameraMediaStreamRecordingProfile.m; sourceTree = "<group>"; };
-		D662E9A01D49F66B00919C69 /* SonyCameraSettingsProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SonyCameraSettingsProfile.h; sourceTree = "<group>"; };
-		D662E9A11D49F66B00919C69 /* SonyCameraSettingsProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SonyCameraSettingsProfile.m; sourceTree = "<group>"; };
 		D662E9A31D4A16B300919C69 /* SonyCameraManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SonyCameraManager.h; sourceTree = "<group>"; };
 		D662E9A41D4A16B300919C69 /* SonyCameraManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SonyCameraManager.m; sourceTree = "<group>"; };
 		D6C860461D3B436400232EEF /* SonyCameraService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SonyCameraService.h; sourceTree = "<group>"; };
@@ -240,8 +237,6 @@
 				D662E99B1D49F5D900919C69 /* SonyCameraSystemProfile.m */,
 				D662E99D1D49F61600919C69 /* SonyCameraMediaStreamRecordingProfile.h */,
 				D662E99E1D49F61600919C69 /* SonyCameraMediaStreamRecordingProfile.m */,
-				D662E9A01D49F66B00919C69 /* SonyCameraSettingsProfile.h */,
-				D662E9A11D49F66B00919C69 /* SonyCameraSettingsProfile.m */,
 			);
 			path = profile;
 			sourceTree = "<group>";
@@ -617,7 +612,6 @@
 				D662E9A51D4A16B300919C69 /* SonyCameraManager.m in Sources */,
 				BE75D31319949D4F00F1BFC9 /* SonyCameraSettingView03Controller.m in Sources */,
 				BE24CF04197F7BC4007BBC69 /* SampleLiveviewManager.m in Sources */,
-				D662E9A21D49F66B00919C69 /* SonyCameraSettingsProfile.m in Sources */,
 				C2540C68195A853600AE012C /* UdpRequest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

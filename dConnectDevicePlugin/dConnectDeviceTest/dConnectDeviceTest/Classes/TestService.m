@@ -19,7 +19,7 @@
 #import "TestNotificationProfile.h"
 #import "TestPhoneProfile.h"
 #import "TestProximityProfile.h"
-#import "TestSettingsProfile.h"
+#import "TestSettingProfile.h"
 #import "TestVibrationProfile.h"
 #import "TestUniquePingProfile.h"
 #import "TestUniqueTimeoutProfile.h"
@@ -61,7 +61,7 @@ static NSString *const TestNetworkDeviceConfig = @"test config";
         [self addProfile:[TestNotificationProfile new]];
         [self addProfile:[TestPhoneProfile new]];
         [self addProfile:[TestProximityProfile new]];
-        [self addProfile:[TestSettingsProfile new]];
+        [self addProfile:[TestSettingProfile new]];
         [self addProfile:[TestVibrationProfile new]];
         [self addProfile:[TestRemoteControllerProfile new]];
         [self addProfile:[TestDriveControllerProfile new]];
