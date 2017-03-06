@@ -19,6 +19,8 @@
     UInt64 mOnDownCacheTime;
     DConnectMessage *mOnUpCache;
     UInt64 mOnUpCacheTime;
+    DConnectMessage *mOnKeyChangeCache;
+    UInt64 mOnKeyChangeCacheTime;
 }
 
 @end
@@ -26,8 +28,8 @@
 @implementation DPPebbleKeyEventProfile
 
 // Touch profile cache retention time (mSec).
-static const UInt64 CACHE_RETENTION_TIME = 10000;
-
+static UInt64 const CACHE_RETENTION_TIME = 10000;
+static NSString *const DPHostKeyEventProfileAttrOnKeyChange = @"onkeychange";
 // initialize.
 - (id)init
 {
@@ -38,6 +40,19 @@ static const UInt64 CACHE_RETENTION_TIME = 10000;
         mOnDownCacheTime = 0;
         mOnUpCache = nil;
         mOnUpCacheTime = 0;
+        mOnKeyChangeCache = nil;
+        mOnKeyChangeCacheTime = 0;
+        
+        // API登録
+        NSString *getOnKeyChangeRequestApiPath = [self apiPath: nil
+                                            attributeName: DPHostKeyEventProfileAttrOnKeyChange];
+        [self addGetPath: getOnKeyChangeRequestApiPath
+                     api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+                         [response setResult:DConnectMessageResultTypeOk];
+                         DConnectMessage *keyevent = [weakSelf getKeyEventCache:DPHostKeyEventProfileAttrOnKeyChange];
+                         [DConnectKeyEventProfile setKeyEvent:keyevent target:response];
+                         return YES;
+                     }];
         
         // API登録(didReceiveGetOnDownRequest相当)
         NSString *getOnDownRequestApiPath = [self apiPath: nil
@@ -60,7 +75,56 @@ static const UInt64 CACHE_RETENTION_TIME = 10000;
                          [DConnectKeyEventProfile setKeyEvent:keyevent target:response];
                          return YES;
                      }];
-        
+        // API登録
+        NSString *putOnKeyChangeRequestApiPath = [self apiPath: nil
+                                            attributeName: DPHostKeyEventProfileAttrOnKeyChange];
+        [self addPutPath: putOnKeyChangeRequestApiPath
+                     api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+                         __block BOOL responseFlg = YES;
+                         // Event registration.
+                         [DPPebbleProfileUtil handleRequest:request response:response isRemove:NO callback:^{
+                             NSString *serviceId = [request serviceId];
+                             
+                             // Register to Pebble.
+                             [[DPPebbleManager sharedManager] registOnKeyChangeEvent:serviceId callback:^(NSError *error) {
+                                 // Registration success.
+                                 // Error check.
+                                 [DPPebbleProfileUtil handleErrorNormal:error response:response];
+                                 
+                             } eventCallback:^(long attr, int keyId, int keyType, int keyState) {
+                                 // Create DConnect message
+                                 DConnectMessage *message = [DConnectMessage message];
+                                 [DConnectKeyEventProfile setId:keyId + [weakSelf getKeyTypeFlagValue:keyType] target:message];
+                                 [DConnectKeyEventProfile setConfig:[weakSelf getConfig:keyType KeyCode:keyId] target:message];
+                                 if (keyState == KEY_EVENT_ATTRIBUTE_ON_DOWN) {
+                                     [message setString:@"down" forKey:@"state"];
+                                 } else if (keyState == KEY_EVENT_ATTRIBUTE_ON_UP) {
+                                     [message setString:@"up" forKey:@"state"];
+                                 }
+                                 [weakSelf setKeyEventCache:(NSString *)DPHostKeyEventProfileAttrOnKeyChange
+                                               keyeventData:(DConnectMessage *)message];
+                                 
+                                 // Send event to DConnect.
+                                 [DPPebbleProfileUtil sendMessageWithPlugin:weakSelf.plugin
+                                                                    profile:DConnectKeyEventProfileName
+                                                                  attribute:DPHostKeyEventProfileAttrOnKeyChange
+                                                                  serviceID:serviceId
+                                                            messageCallback:^(DConnectMessage *eventMsg) {
+                                                                // Add message to event.
+                                                                [DConnectKeyEventProfile setKeyEvent:message target:eventMsg];
+                                                            } deleteCallback:^ {
+                                                                // Remove Pebble of events.
+                                                                [[DPPebbleManager sharedManager] deleteOnDownEvent:serviceId callback:^(NSError *error) {
+                                                                    if (error) NSLog(@"Error:%@", error);
+                                                                }];
+                                                            }];
+                             }];
+                             
+                             responseFlg = NO;
+                         }];
+                         
+                         return responseFlg;
+                     }];
         // API登録(didReceivePutOnDownRequest相当)
         NSString *putOnDownRequestApiPath = [self apiPath: nil
                                             attributeName: DConnectKeyEventProfileAttrOnDown];
@@ -174,9 +238,9 @@ static const UInt64 CACHE_RETENTION_TIME = 10000;
                      }];
         
         // API登録(didReceiveDeleteOnUpRequest相当)
-        NSString *deleteOnOnUpRequestApiPath = [self apiPath: nil
+        NSString *deleteOnUpRequestApiPath = [self apiPath: nil
                                                attributeName: DConnectKeyEventProfileAttrOnUp];
-        [self addDeletePath: deleteOnOnUpRequestApiPath
+        [self addDeletePath: deleteOnUpRequestApiPath
                      api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
                          // Remove event of DConnect.
                          [DPPebbleProfileUtil handleRequest:request response:response isRemove:YES callback:^{
@@ -188,6 +252,21 @@ static const UInt64 CACHE_RETENTION_TIME = 10000;
                          }];
                          return YES;
                      }];
+        // API登録
+        NSString *deleteOnKeyChangeRequestApiPath = [self apiPath: nil
+                                               attributeName: DPHostKeyEventProfileAttrOnKeyChange];
+        [self addDeletePath: deleteOnKeyChangeRequestApiPath
+                        api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+                            // Remove event of DConnect.
+                            [DPPebbleProfileUtil handleRequest:request response:response isRemove:YES callback:^{
+                                NSString *serviceId = [request serviceId];
+                                // Remove event of Pebble.
+                                [[DPPebbleManager sharedManager] deleteOnKeyChangeEvent:serviceId callback:^(NSError *error) {
+                                    if (error) NSLog(@"Error:%@", error);
+                                }];
+                            }];
+                            return YES;
+                        }];
         
     }
     return self;
@@ -210,6 +289,9 @@ static const UInt64 CACHE_RETENTION_TIME = 10000;
     } else if ([attr localizedCaseInsensitiveCompare: DConnectKeyEventProfileAttrOnUp] == NSOrderedSame
                && (CurrentTime - mOnUpCacheTime <= CACHE_RETENTION_TIME)) {
         return mOnUpCache;
+    } else if ([attr localizedCaseInsensitiveCompare: DPHostKeyEventProfileAttrOnKeyChange] == NSOrderedSame
+               && (CurrentTime - mOnKeyChangeCacheTime <= CACHE_RETENTION_TIME)) {
+        return mOnKeyChangeCache;
     }
     return nil;
 }
@@ -230,6 +312,9 @@ static const UInt64 CACHE_RETENTION_TIME = 10000;
     } else if ([attr localizedCaseInsensitiveCompare: DConnectKeyEventProfileAttrOnUp] == NSOrderedSame) {
         mOnUpCache = keyeventData;
         mOnUpCacheTime = CurrentTime;
+    } else if ([attr localizedCaseInsensitiveCompare: DPHostKeyEventProfileAttrOnKeyChange] == NSOrderedSame) {
+        mOnKeyChangeCache = keyeventData;
+        mOnKeyChangeCacheTime = CurrentTime;
     }
 }
 

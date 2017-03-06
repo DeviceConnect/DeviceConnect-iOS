@@ -84,6 +84,7 @@
 		BE58BE821D646ABB00354F08 /* DPLinkingBeaconProximityOnce.m in Sources */ = {isa = PBXBuildFile; fileRef = BE58BE811D646ABB00354F08 /* DPLinkingBeaconProximityOnce.m */; };
 		BE58BE861D65489C00354F08 /* DPLinkingDeviceProximityOnce.m in Sources */ = {isa = PBXBuildFile; fileRef = BE58BE851D65489C00354F08 /* DPLinkingDeviceProximityOnce.m */; };
 		BE58BE891D654C9300354F08 /* DPLinkingDeviceBatteryOnce.m in Sources */ = {isa = PBXBuildFile; fileRef = BE58BE881D654C9300354F08 /* DPLinkingDeviceBatteryOnce.m */; };
+		BEA2E6841E691C8900A79204 /* DPLinkingDeviceButtonOnce.m in Sources */ = {isa = PBXBuildFile; fileRef = BEA2E6831E691C8900A79204 /* DPLinkingDeviceButtonOnce.m */; };
 		BEE64A491D700B8700CF287E /* DPLinkingBeaconKeyEventOnce.m in Sources */ = {isa = PBXBuildFile; fileRef = BEE64A481D700B8700CF287E /* DPLinkingBeaconKeyEventOnce.m */; };
 		BEE64A4C1D702C5300CF287E /* beacon_icon_white@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BE2859C41D630B2800CB9F95 /* beacon_icon_white@2x.png */; };
 		BEE64A4F1D70344E00CF287E /* DPLinkingBeaconBatteryOnce.m in Sources */ = {isa = PBXBuildFile; fileRef = BEE64A4E1D70344E00CF287E /* DPLinkingBeaconBatteryOnce.m */; };
@@ -231,6 +232,8 @@
 		BE58BE851D65489C00354F08 /* DPLinkingDeviceProximityOnce.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPLinkingDeviceProximityOnce.m; sourceTree = "<group>"; };
 		BE58BE871D654C9300354F08 /* DPLinkingDeviceBatteryOnce.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPLinkingDeviceBatteryOnce.h; sourceTree = "<group>"; };
 		BE58BE881D654C9300354F08 /* DPLinkingDeviceBatteryOnce.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPLinkingDeviceBatteryOnce.m; sourceTree = "<group>"; };
+		BEA2E6821E691C8900A79204 /* DPLinkingDeviceButtonOnce.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPLinkingDeviceButtonOnce.h; sourceTree = "<group>"; };
+		BEA2E6831E691C8900A79204 /* DPLinkingDeviceButtonOnce.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPLinkingDeviceButtonOnce.m; sourceTree = "<group>"; };
 		BEE64A471D700B8700CF287E /* DPLinkingBeaconKeyEventOnce.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPLinkingBeaconKeyEventOnce.h; sourceTree = "<group>"; };
 		BEE64A481D700B8700CF287E /* DPLinkingBeaconKeyEventOnce.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPLinkingBeaconKeyEventOnce.m; sourceTree = "<group>"; };
 		BEE64A4D1D70344E00CF287E /* DPLinkingBeaconBatteryOnce.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPLinkingBeaconBatteryOnce.h; sourceTree = "<group>"; };
@@ -423,6 +426,8 @@
 				BE145CA61D8E8B710005D926 /* DPLinkingDeviceHumidityOnce.m */,
 				BE145CA91D8F92670005D926 /* DPLinkingDeviceAtmosphericPressureOnce.h */,
 				BE145CAA1D8F92670005D926 /* DPLinkingDeviceAtmosphericPressureOnce.m */,
+				BEA2E6821E691C8900A79204 /* DPLinkingDeviceButtonOnce.h */,
+				BEA2E6831E691C8900A79204 /* DPLinkingDeviceButtonOnce.m */,
 			);
 			path = util;
 			sourceTree = "<group>";
@@ -664,6 +669,7 @@
 				BE2859D91D630B2800CB9F95 /* DPLinkingSensorData.m in Sources */,
 				BE2859F21D630B2800CB9F95 /* DPLinkingPopoverViewController.m in Sources */,
 				BE2859EA1D630B2800CB9F95 /* DPLinkingAppInfoViewController.m in Sources */,
+				BEA2E6841E691C8900A79204 /* DPLinkingDeviceButtonOnce.m in Sources */,
 				BE2859DD1D630B2800CB9F95 /* DPLinkingDeviceLightProfile.m in Sources */,
 				BE2859D61D630B2800CB9F95 /* DPLinkingDevicePlugin.m in Sources */,
 				BEE64A521D7049D300CF287E /* DPLinkingBeaconUtil.m in Sources */,
