@@ -36,7 +36,7 @@
     }
 
     [self.response setResult:DConnectMessageResultTypeOk];
-    if (type == DCMTemperatureProfileEnumCelsiusFahrenheit) {
+    if (_beacon.temperatureData.temperatureType == DCMTemperatureProfileEnumCelsiusFahrenheit) {
         [DCMTemperatureProfile setTemperature:[DCMTemperatureProfile convertFahrenheitToCelsius:temperature.value] target:self.response];
     } else {
         [DCMTemperatureProfile setTemperature:temperature.value target:self.response];

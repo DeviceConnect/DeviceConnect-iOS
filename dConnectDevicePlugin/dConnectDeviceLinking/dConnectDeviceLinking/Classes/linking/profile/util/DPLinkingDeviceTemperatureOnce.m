@@ -32,7 +32,7 @@
 - (void) didReceivedDevice:(DPLinkingDevice *)device temperature:(float)temperature
 {
     [self.response setResult:DConnectMessageResultTypeOk];
-    if (type == DCMTemperatureProfileEnumCelsiusFahrenheit) {
+    if (_device.temperatureType == DCMTemperatureProfileEnumCelsiusFahrenheit) {
         [DCMTemperatureProfile setTemperature:[DCMTemperatureProfile convertFahrenheitToCelsius:temperature] target:self.response];
     } else {
         [DCMTemperatureProfile setTemperature:temperature target:self.response];
