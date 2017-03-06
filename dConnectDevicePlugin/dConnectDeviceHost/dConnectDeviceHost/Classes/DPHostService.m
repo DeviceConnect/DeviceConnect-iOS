@@ -12,7 +12,6 @@
 #import "DPHostDevicePlugin.h"
 #import "DPHostBatteryProfile.h"
 #import "DPHostDeviceOrientationProfile.h"
-#import "DPHostFileDescriptorProfile.h"
 #import "DPHostFileProfile.h"
 #import "DPHostMediaPlayerProfile.h"
 #import "DPHostMediaStreamRecordingProfile.h"
@@ -46,7 +45,6 @@ NSString *const DPHostDevicePluginServiceId = @"host";
         // プロファイルを追加
         [self addProfile:[DPHostBatteryProfile new]];
         [self addProfile:[DPHostDeviceOrientationProfile new]];
-        [self addProfile:[[DPHostFileDescriptorProfile alloc] initWithFileManager: fileMgr]];
         [self addProfile:[DPHostFileProfile new]];
         [self addProfile:[DPHostMediaPlayerProfile new]];
         [self addProfile:[DPHostMediaStreamRecordingProfile new]];
