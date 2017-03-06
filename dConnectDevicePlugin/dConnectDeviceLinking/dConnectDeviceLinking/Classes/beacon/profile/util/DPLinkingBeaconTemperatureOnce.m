@@ -36,10 +36,13 @@
     }
 
     [self.response setResult:DConnectMessageResultTypeOk];
-    
-    [DCMTemperatureProfile setTemperature:temperature.value target:self.response];
+    if (type == DCMTemperatureProfileEnumCelsiusFahrenheit) {
+        [DCMTemperatureProfile setTemperature:[DCMTemperatureProfile convertFahrenheitToCelsius:temperature.value] target:self.response];
+    } else {
+        [DCMTemperatureProfile setTemperature:temperature.value target:self.response];
+    }
     [DCMTemperatureProfile setTimeStamp:temperature.timeStamp target:self.response];
-    [DCMTemperatureProfile setType:DCMTemperatureProfileEnumCelsius target:self.response];
+    [DCMTemperatureProfile setType:temperature.temperatureType target:self.response];
     
     [[DConnectManager sharedManager] sendResponse:self.response];
     [self cleanup];
