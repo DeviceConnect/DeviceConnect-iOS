@@ -33,7 +33,7 @@
 {
     [self.response setResult:DConnectMessageResultTypeOk];
     if (_device.temperatureType == DCMTemperatureProfileEnumCelsiusFahrenheit) {
-        [DCMTemperatureProfile setTemperature:[DCMTemperatureProfile convertFahrenheitToCelsius:temperature] target:self.response];
+        [DCMTemperatureProfile setTemperature:[DCMTemperatureProfile convertCelsiusToFahrenheit:temperature] target:self.response];
     } else {
         [DCMTemperatureProfile setTemperature:temperature target:self.response];
     }
