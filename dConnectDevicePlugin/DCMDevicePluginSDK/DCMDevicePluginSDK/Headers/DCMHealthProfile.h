@@ -23,6 +23,10 @@ extern NSString *const DCMHealthProfileName;
  @brief アトリビュート: heart。
  */
 extern NSString *const DCMHealthProfileAttrHeart;
+/*!
+ @brief アトリビュート: onHeart。
+ */
+extern NSString *const DCMHealthProfileAttrOnHeart;
 
 
 /*!
