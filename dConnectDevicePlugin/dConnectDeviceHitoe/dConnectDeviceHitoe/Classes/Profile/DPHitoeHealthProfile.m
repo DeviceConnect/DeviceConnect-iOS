@@ -56,6 +56,22 @@
             return [weakSelf didReceiveDeleteHeartRequest:request response:response serviceId:[request serviceId] origin:[request origin]];
         }];
         
+        NSString *didReceiveGetOnHeartRequestApiPath = [self apiPath: nil
+                                                     attributeName: DCMHealthProfileAttrOnHeart];
+        [self addGetPath:didReceiveGetOnHeartRequestApiPath api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+            return [weakSelf didReceiveGetHeartRequest:request response:response serviceId:[request serviceId]];
+        }];
+        NSString *didReceivePutOnHeartRequest = [self apiPath: nil
+                                              attributeName: DCMHealthProfileAttrOnHeart];
+        [self addPutPath:didReceivePutOnHeartRequest api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+            return [weakSelf didReceivePutHeartRequest:request response:response serviceId:[request serviceId] origin:[request origin]];
+        }];
+        NSString *didReceiveDeleteOnHeartRequest = [self apiPath: nil
+                                                 attributeName: DCMHealthProfileAttrOnHeart];
+        [self addDeletePath:didReceiveDeleteOnHeartRequest api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+            return [weakSelf didReceiveDeleteHeartRequest:request response:response serviceId:[request serviceId] origin:[request origin]];
+        }];
+        
     }
     return self;
 }
@@ -191,6 +207,14 @@
     NSArray *evts = [_eventMgr eventListForServiceId:device.serviceId
                                              profile:DCMHealthProfileName
                                            attribute:DCMHealthProfileAttrHeart];
+    for (DConnectEvent *evt in evts) {
+        DConnectMessage *eventMsg = [DConnectEventManager createEventMessageWithEvent:evt];
+        [DCMHealthProfile setHeart:[self getHeartRateMessageForHeartRateData:data] target:eventMsg];
+        [_dispatcherManager sendEventForServiceId:device.serviceId message:eventMsg];
+    }
+    evts = [_eventMgr eventListForServiceId:device.serviceId
+                                    profile:DCMHealthProfileName
+                                  attribute:DCMHealthProfileAttrOnHeart];
     for (DConnectEvent *evt in evts) {
         DConnectMessage *eventMsg = [DConnectEventManager createEventMessageWithEvent:evt];
         [DCMHealthProfile setHeart:[self getHeartRateMessageForHeartRateData:data] target:eventMsg];

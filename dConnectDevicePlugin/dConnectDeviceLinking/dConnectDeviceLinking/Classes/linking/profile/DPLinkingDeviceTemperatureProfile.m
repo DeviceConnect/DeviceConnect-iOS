@@ -43,7 +43,13 @@
         [response setErrorToNotSupportProfile];
         return YES;
     }
-    
+    int type = [request integerForKey:DCMTemperatureProfileParamType];
+    if (type != DCMTemperatureProfileEnumCelsiusFahrenheit) {
+        // 2以外は摂氏とする。
+        type = DCMTemperatureProfileEnumCelsius;
+    }
+    device.temperatureType = type;
+
     DPLinkingDeviceTemperatureOnce *temperature = [[DPLinkingDeviceTemperatureOnce alloc] initWithDevice:device];
     temperature.request = request;
     temperature.response = response;

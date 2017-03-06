@@ -1,6 +1,6 @@
 //
-//  DPHostConnectProfile.h
-//  dConnectDeviceHost
+//  TestConnectionProfile.h
+//  dConnectDeviceTest
 //
 //  Copyright (c) 2014 NTT DOCOMO, INC.
 //  Released under the MIT license
@@ -8,8 +8,9 @@
 //
 
 #import <DConnectSDK/DConnectSDK.h>
-#import <CoreBluetooth/CoreBluetooth.h>
 
-@interface DPHostConnectProfile : DConnectConnectProfile<CBCentralManagerDelegate>
+@class DeviceTestPlugin;
+
+@interface TestConnectionProfile : DConnectConnectionProfile
 
 @end

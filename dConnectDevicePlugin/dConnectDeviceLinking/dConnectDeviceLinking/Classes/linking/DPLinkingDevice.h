@@ -47,6 +47,7 @@ typedef NS_ENUM(NSInteger, DPLinkingResultCode) {
 @property (nonatomic) CBPeripheral *peripheral;
 @property (nonatomic) BLEDeviceSetting *setting;
 @property (nonatomic) BOOL online;
+@property (nonatomic) int temperatureType;
 
 - (BOOL) isSupportLED;
 - (BOOL) isSupportVibration;

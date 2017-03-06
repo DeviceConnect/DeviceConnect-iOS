@@ -98,5 +98,6 @@ typedef NS_ENUM(NSInteger, DCMTemperatureType) {
 + (void) setTemperature:(float)temperature target:(DConnectMessage *)message;
 + (void) setTimeStamp:(long)timeStamp target:(DConnectMessage *)message;
 + (void) setType:(DCMTemperatureType)type target:(DConnectMessage *)message;
-
++ (float) convertCelsiusToFahrenheit:(float)celsius;
++ (float) convertFahrenheitToCelsius:(float)fahrenheit;
 @end

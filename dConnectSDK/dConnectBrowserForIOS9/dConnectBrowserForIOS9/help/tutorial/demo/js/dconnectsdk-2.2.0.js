@@ -1,6 +1,6 @@
 /**
- @preserve Device Connect SDK Library v2.1.0
- Copyright (c) 2014 NTT DOCOMO,INC.
+ @preserve Device Connect SDK Library v2.2.0
+ Copyright (c) 2017 NTT DOCOMO,INC.
  Released under the MIT license
  http://opensource.org/licenses/mit-license.php
  */
@@ -202,7 +202,12 @@ var dConnect = (function(parent, global) {
       /** エラーコード: サーバの状態異常エラー. */
       ILLEGAL_SERVER_STATE: 17,
       /** エラーコード: 不正オリジンエラー. */
-      INVALID_ORIGIN: 18
+      INVALID_ORIGIN: 18,
+      /** エラーコード: 不正URLエラー. */
+      INVALID_URL: 19,
+      /** エラーコード: 不正Profileエラー. */
+      INVALID_PROFILE: 20
+
     },
 
     /**
@@ -319,14 +324,14 @@ var dConnect = (function(parent, global) {
     },
 
     /**
-     * Connectプロファイルの定数
+     * Connectionプロファイルの定数
      * @namespace
      * @type {Object.<String, String>}
      */
-    connect: {
+    connection: {
       // Profile Name
       /** プロファイル名。 */
-      PROFILE_NAME: 'connect',
+      PROFILE_NAME: 'connection',
 
       // Interface
       /** インターフェース: bluetooth */
@@ -986,14 +991,14 @@ var dConnect = (function(parent, global) {
     },
 
     /**
-     * Settingsプロファイルの定数
+     * Settingプロファイルの定数
      * @namespace
      * @type {Object.<String, (String|Number)>}
      */
-    settings: {
+    setting: {
       // Profile name
       /** プロファイル名。 */
-      PROFILE_NAME: 'settings',
+      PROFILE_NAME: 'setting',
 
       // Interface
       /** インターフェース: sound */
@@ -1006,8 +1011,8 @@ var dConnect = (function(parent, global) {
       ATTR_VOLUME: 'volume',
       /** アトリビュート: date */
       ATTR_DATE: 'date',
-      /** アトリビュート: light */
-      ATTR_LIGHT: 'light',
+      /** アトリビュート: brightness */
+      ATTR_BRIGHTNESS: 'brightness',
       /** アトリビュート: sleep */
       ATTR_SLEEP: 'sleep',
 
@@ -1165,6 +1170,47 @@ var dConnect = (function(parent, global) {
 
       /** モードフラグ：フィルモード */
       MODE_FILLS: 'fills'
+    },
+
+    /**
+     * Geolocationプロファイルの定数
+     * @namespace
+     * @type {Object.<String, String>}
+     */
+    geolocation: {
+      // Profile name
+      /** プロファイル名。 */
+      PROFILE_NAME: 'geolocation',
+
+      // Attribute
+      /** アトリビュート: currentposition */
+      ATTR_CURRENT_POSITION: 'currentposition',
+      /** アトリビュート: onwatchposition */
+      ATTR_ON_WATCH_POSITION: 'onwatchposition',
+
+      // Parameter
+      /** パラメータ: position */
+      PARAM_POSITION: 'position',
+      /** パラメータ: coordinates */
+      PARAM_COORDINATES: 'coordinates',
+      /** パラメータ: latitude */
+      PARAM_LATITUDE: 'latitude',
+      /** パラメータ: longitude */
+      PARAM_LONGNITUDE: 'longitude',
+      /** パラメータ: altitude */
+      PARAM_ALTITUDE: 'altitude',
+      /** パラメータ: accuracy */
+      PARAM_ACCURACY: 'accuracy',
+      /** パラメータ: altitudeAccuracy */
+      PARAM_ALTITUDE_ACCURACY: 'altitudeAccuracy',
+      /** パラメータ: heading */
+      PARAM_HEADING: 'heading',
+      /** パラメータ: speed */
+      PARAM_SPEED: 'speed',
+      /** パラメータ: timeStamp */
+      PARAM_TIME_STAMP: 'timeStamp',
+      /** パラメータ: timeStampString */
+      PARAM_TIME_STAMP_STRING: 'timeStampString'
     }
   };
   parent.constants = constants;
@@ -1292,9 +1338,17 @@ var dConnect = (function(parent, global) {
     if (state === undefined) {
         state = '';
     }
-    url = uriSchemeName + '://start/' + state
-              + '?origin=' + origin
-              + '&key=' + _currentHmacKey;
+    if (isFirefox()) {
+        url = uriSchemeName + '://start/' + state
+                  + '?origin=' + origin
+                  + '&key=' + _currentHmacKey;
+    } else {
+       urlScheme.setPath('start/' + state);
+      urlScheme.addParameter('package', 'org.deviceconnect.android.manager');
+      urlScheme.addParameter('S.origin', origin);
+      urlScheme.addParameter('S.key', _currentHmacKey);
+      url = urlScheme.build();
+    }
     location.href = url;
   };
 
@@ -1342,9 +1396,17 @@ var dConnect = (function(parent, global) {
     if (state === undefined) {
         state = '';
     }
-    url = uriSchemeName + '://stop/' + state
+    if (isFirefox()) {
+        url = uriSchemeName + '://stop/' + state
               + '?origin=' + origin
               + '&key=' + _currentHmacKey;
+    } else {
+       urlScheme.setPath('stop/' + state);
+      urlScheme.addParameter('package', 'org.deviceconnect.android.manager');
+      urlScheme.addParameter('S.origin', origin);
+      urlScheme.addParameter('S.key', _currentHmacKey);
+      url = urlScheme.build();
+    }
     location.href = url;
   };
 
@@ -2150,7 +2212,7 @@ var dConnect = (function(parent, global) {
    * @return {String} URIスキームの文字列表現
    */
   AndroidURISchemeBuilder.prototype.build = function() {
-    var urlScheme = 'intent://' + this.path + '/#Intent;scheme=' +
+    var urlScheme = 'intent://' + this.path + '#Intent;scheme=' +
                             this.scheme + ';';
     for (var key in this.params) {
       urlScheme += key + '=' + this.params[key] + ';';

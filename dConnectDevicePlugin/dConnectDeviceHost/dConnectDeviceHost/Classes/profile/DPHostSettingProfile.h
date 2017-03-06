@@ -1,6 +1,6 @@
 //
-//  TestConnectProfile.h
-//  dConnectDeviceTest
+//  DPHostSettingProfile.h
+//  dConnectDeviceHost
 //
 //  Copyright (c) 2014 NTT DOCOMO, INC.
 //  Released under the MIT license
@@ -9,8 +9,6 @@
 
 #import <DConnectSDK/DConnectSDK.h>
 
-@class DeviceTestPlugin;
-
-@interface TestConnectProfile : DConnectConnectProfile
+@interface DPHostSettingProfile : DConnectSettingProfile
 
 @end

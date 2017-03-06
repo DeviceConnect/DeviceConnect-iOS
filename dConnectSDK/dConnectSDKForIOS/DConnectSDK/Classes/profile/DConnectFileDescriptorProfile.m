@@ -1,5 +1,5 @@
 //
-//  DConnectConnectProfile.m
+//  DConnectFileDescriptorProfile.m
 //  DConnectSDK
 //
 //  Copyright (c) 2014 NTT DOCOMO,INC.
