@@ -7,6 +7,7 @@
 //  http://opensource.org/licenses/mit-license.php
 //
 
+#import <DCMDevicePluginSDK/DCMDevicePluginSDK.h>
 #import "DPLinkingBeacon.h"
 
 static NSString *const kGattDate = @"gatt_date";
@@ -63,6 +64,7 @@ static NSString *const kButtonIdentifier = @"buttonIdentifier";
             self.temperatureData = [[DPLinkingTemperatureData alloc] init];
             self.temperatureData.value = [[coder decodeObjectForKey:kTemperature] floatValue];
             self.temperatureData.timeStamp = [[coder decodeObjectForKey:kTemperatureDate] doubleValue];
+            self.temperatureData.temperatureType = DCMTemperatureProfileEnumCelsius;
         }
         
         if ([coder containsValueForKey:kHumidity]) {
