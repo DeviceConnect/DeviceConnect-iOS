@@ -73,6 +73,7 @@
 		971BC07B1924A8A000D21FE3 /* DConnectBatteryProfileTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 971BC07A1924A8A000D21FE3 /* DConnectBatteryProfileTest.m */; };
 		97A999BB19545237006F8474 /* DConnectFilesProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 97A999BA19545237006F8474 /* DConnectFilesProfile.m */; };
 		97FE24BC191CBB77007C4769 /* multipart_parser.c in Sources */ = {isa = PBXBuildFile; fileRef = 97FE24B8191CBB77007C4769 /* multipart_parser.c */; };
+		AB5555B71E56B2F10086E5D5 /* power.json in Resources */ = {isa = PBXBuildFile; fileRef = AB5555B61E56B2F10086E5D5 /* power.json */; };
 		AB67AAE61C642A7900B4C62C /* GCDAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = AB67AAE51C642A7900B4C62C /* GCDAsyncSocket.m */; };
 		AB67AB0E1C642AB200B4C62C /* DDData.m in Sources */ = {isa = PBXBuildFile; fileRef = AB67AAEB1C642AB200B4C62C /* DDData.m */; };
 		AB67AB0F1C642AB200B4C62C /* DDNumber.m in Sources */ = {isa = PBXBuildFile; fileRef = AB67AAED1C642AB200B4C62C /* DDNumber.m */; };
@@ -387,6 +388,7 @@
 		AB0A87761A8067860016FF77 /* DConnectCanvasProfile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DConnectCanvasProfile.h; sourceTree = "<group>"; };
 		AB0A87771A808BFC0016FF77 /* DConnectServiceDiscoveryProfile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DConnectServiceDiscoveryProfile.h; sourceTree = "<group>"; };
 		AB3520C31BAD4BA90010FF55 /* DConnectLightProfile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DConnectLightProfile.h; sourceTree = "<group>"; };
+		AB5555B61E56B2F10086E5D5 /* power.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = power.json; sourceTree = "<group>"; };
 		AB67AAE41C642A7900B4C62C /* GCDAsyncSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GCDAsyncSocket.h; path = CocoaAsyncSocket/GCDAsyncSocket.h; sourceTree = "<group>"; };
 		AB67AAE51C642A7900B4C62C /* GCDAsyncSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GCDAsyncSocket.m; path = CocoaAsyncSocket/GCDAsyncSocket.m; sourceTree = "<group>"; };
 		AB67AAEA1C642AB200B4C62C /* DDData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDData.h; sourceTree = "<group>"; };
@@ -4363,6 +4365,7 @@
 		D6ECC6D519A4B78900FE3161 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				AB5555B61E56B2F10086E5D5 /* power.json */,
 				EF19A24C1E446B1C00F00439 /* geolocation.json */,
 				D68563BC1DA65401003818F2 /* ecg.json */,
 				D68563BD1DA65401003818F2 /* poseestimation.json */,
@@ -4542,6 +4545,7 @@
 				D662E9CF1D4AEAA000919C69 /* touch.json in Resources */,
 				30E9A16419AC6A850013F545 /* Localizable.strings in Resources */,
 				D65F83261D28FD840024685D /* temperature.json in Resources */,
+				AB5555B71E56B2F10086E5D5 /* power.json in Resources */,
 				D662E9C21D4AEAA000919C69 /* filedescriptor.json in Resources */,
 				D662E9BF1D4AEAA000919C69 /* connection.json in Resources */,
 				D65E24D51D1B959900312134 /* vibration.json in Resources */,

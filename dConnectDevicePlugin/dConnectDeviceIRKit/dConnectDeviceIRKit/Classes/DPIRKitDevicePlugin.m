@@ -141,6 +141,68 @@ DPIRKitManagerDetectionDelegate
     }
 }
 
+- (BOOL)sendTVIRRequestWithServiceId:(NSString *)serviceId
+                              method:(NSString *)method
+                                 uri:(NSString *)uri
+                            response:(DConnectResponseMessage *)response
+{
+    BOOL send = YES;
+    NSArray *requests = [[DPIRKitDBManager sharedInstance] queryRESTfulRequestByServiceId:serviceId
+                                                                                  profile:@"/tv"];
+    if (requests.count == 0) {
+        [response setErrorToNotSupportProfile];
+        return send;
+    }
+    DPIRKitRESTfulRequest *sendReq = nil;
+    for (DPIRKitRESTfulRequest *req in requests) {
+        if ([req.uri isEqualToString:uri] && [req.method isEqualToString:method] && req.ir) {
+            sendReq = req;
+            break;
+        }
+    }
+    if (sendReq) {
+        send = [self sendIRWithServiceId:serviceId message:sendReq.ir response:response];
+    } else {
+        [response setErrorToInvalidRequestParameterWithMessage:@"IR is not registered for that request"];
+    }
+    
+    return send;
+}
+
+- (BOOL)sendIRWithServiceId:(NSString *)serviceId
+                    message:(NSString *)message
+                   response:(DConnectResponseMessage *)response
+{
+    BOOL send = YES;
+    NSArray *ids = [serviceId componentsSeparatedByString:@"."];
+    DPIRKitDevice *device = [[DPIRKitManager sharedInstance] deviceForServiceId:ids[0]];
+    if (message) {
+        NSData *jsonData = [message dataUsingEncoding:NSUnicodeStringEncoding];
+        id jsonObj = [NSJSONSerialization JSONObjectWithData:jsonData
+                                                     options:NSJSONReadingAllowFragments
+                                                       error:NULL];
+        if (![NSJSONSerialization isValidJSONObject:jsonObj]) {
+            [response setErrorToInvalidRequestParameter];
+            return send;
+        }
+    }
+    if (!message) {
+        [response setErrorToInvalidRequestParameter];
+    } else {
+        send = NO;
+        [[DPIRKitManager sharedInstance] sendMessage:message withHostName:device.hostName completion:^(BOOL success) {
+            if (success) {
+                response.result = DConnectMessageResultTypeOk;
+            } else {
+                [response setErrorToUnknown];
+            }
+            
+            [[DConnectManager sharedManager] sendResponse:response];
+        }];
+    }
+    return send;
+}
+
 #pragma mark - Private Methods
 
 - (void) sendDeviceDetectionEventWithDevice:(DPIRKitDevice *)device online:(BOOL)online {
@@ -440,39 +502,6 @@ DPIRKitManagerDetectionDelegate
 }
 
 
-- (BOOL)sendIRWithServiceId:(NSString *)serviceId
-                    message:(NSString *)message
-                   response:(DConnectResponseMessage *)response
-{
-    BOOL send = YES;
-    NSArray *ids = [serviceId componentsSeparatedByString:@"."];
-    DPIRKitDevice *device = [[DPIRKitManager sharedInstance] deviceForServiceId:ids[0]];
-    if (message) {
-        NSData *jsonData = [message dataUsingEncoding:NSUnicodeStringEncoding];
-        id jsonObj = [NSJSONSerialization JSONObjectWithData:jsonData
-                                                     options:NSJSONReadingAllowFragments
-                                                       error:NULL];
-        if (![NSJSONSerialization isValidJSONObject:jsonObj]) {
-            [response setErrorToInvalidRequestParameter];
-            return send;
-        }
-    }
-    if (!message) {
-        [response setErrorToInvalidRequestParameter];
-    } else {
-        send = NO;
-        [[DPIRKitManager sharedInstance] sendMessage:message withHostName:device.hostName completion:^(BOOL success) {
-            if (success) {
-                response.result = DConnectMessageResultTypeOk;
-            } else {
-                [response setErrorToUnknown];
-            }
-            
-            [[DConnectManager sharedManager] sendResponse:response];
-        }];
-    }
-    return send;
-}
 
 - (NSString*)iconFilePath:(BOOL)isOnline
 {
