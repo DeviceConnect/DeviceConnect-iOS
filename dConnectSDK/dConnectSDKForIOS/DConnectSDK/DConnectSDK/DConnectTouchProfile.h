@@ -48,6 +48,10 @@ extern NSString *const DConnectTouchProfileAttrOnTouchMove;
  @brief Attribute: ontouchcancel.
  */
 extern NSString *const DConnectTouchProfileAttrOnTouchCancel;
+/*!
+ @brief Parameter: state.
+ */
+extern NSString *const DConnectTouchProfileParamState;
 
 /*!
  @brief Parameter: touch.
@@ -73,6 +77,8 @@ extern NSString *const DConnectTouchProfileParamX;
  @brief Parameter: y.
  */
 extern NSString *const DConnectTouchProfileParamY;
+
+
 
 /*!
  @class DConnectTouchProfile
@@ -119,5 +125,6 @@ extern NSString *const DConnectTouchProfileParamY;
  @param[in,out] message message for storing Y coordinate.
  */
 + (void) setY:(int)y target:(DConnectMessage *)message;
+
 
 @end
