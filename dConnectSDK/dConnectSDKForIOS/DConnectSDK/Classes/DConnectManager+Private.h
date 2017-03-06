@@ -48,15 +48,6 @@ extern NSString *const DConnectAttributeNameRequestAccessToken;
 @property (nonatomic) DConnectServerManager *webServer;
 
 
-/*!
- @brief DConnectManagerを識別するUUIDを取得します。
- */
-- (NSString *) managerUUID;
-
-/*!
- @brief DConnectManagerの名前を取得します。
- */
-- (NSString *) managerName;
 
 /**
  * dConnectManagerから相手にイベントを送信する.

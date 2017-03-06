@@ -1,24 +1,24 @@
 //
-//  DPLinkingDeviceRepeatExecutor.m
-//  dConnectDeviceLinking
+//  DPHostDeviceRepeatExecutor.m
+//  dConnectDeviceHost
 //
-//  Copyright (c) 2016 NTT DOCOMO, INC.
+//  Copyright (c) 2017 NTT DOCOMO, INC.
 //  Released under the MIT license
 //  http://opensource.org/licenses/mit-license.php
 //
 
-#import "DPLinkingDeviceRepeatExecutor.h"
-#import "DPLinkingUtil.h"
+#import "DPHostDeviceRepeatExecutor.h"
+#import "DPHostUtil.h"
 
-@implementation DPLinkingDeviceRepeatExecutor {
-    DPLinkingUtilTimerCancelBlock _cancelBlock;
-    DPLRepeateBlock _onBlock;
-    DPLRepeateBlock _offBlock;
+@implementation DPHostDeviceRepeatExecutor {
+    DPHostUtilTimerCancelBlock _cancelBlock;
+    DPHRepeateBlock _onBlock;
+    DPHRepeateBlock _offBlock;
     NSArray *_pattern;
     int _index;
 }
 
-- (instancetype)initWithPattern:(NSArray *)pattern on:(DPLRepeateBlock)onBlock off:(DPLRepeateBlock)offBlock
+- (instancetype)initWithPattern:(NSArray *)pattern on:(DPHRepeateBlock)onBlock off:(DPHRepeateBlock)offBlock
 {
     self = [super init];
     if (self) {
@@ -57,7 +57,7 @@
     double time = [[_pattern objectAtIndex:_index] integerValue] / 1000.0;
 
     __weak typeof(self) _self = self;
-    _cancelBlock = [DPLinkingUtil asyncAfterDelay:time block:^{
+    _cancelBlock = [DPHostUtil asyncAfterDelay:time block:^{
         [_self nextStep];
     }];
 }
