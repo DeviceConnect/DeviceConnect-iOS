@@ -5,7 +5,6 @@ var main = (function(parent, global) {
         util.init(function(name, json) {
             createSupportApis(json);
         });
-            
     }
     parent.init = init;
 
@@ -13,6 +12,7 @@ var main = (function(parent, global) {
             location.href = "./index.html?serviceId=" + util.getServiceId();
     }
     parent.back = back;
+
     function onChangeValue(nav, name) {
         var elem = document.forms[nav];
         elem['t_' + name].value = elem[name].value;
@@ -243,6 +243,7 @@ var main = (function(parent, global) {
         };
         return util.createTemplate('param_slider', data);
     }
+
     function createBooleanParam(name, value, on) {
         var data = {
             'name' : name,
@@ -252,7 +253,6 @@ var main = (function(parent, global) {
         };
         return util.createTemplate('param_boolean', data);
     }
-            
 
     function createRequest(body) {
         var data = {
@@ -381,3 +381,17 @@ var main = (function(parent, global) {
 
     return parent;
 })(main || {}, this.self || global);
+
+
+function onToggleIcon(obj, id) {
+    var minus = obj.getElementsByClassName('minus')[0];
+    var plus = obj.getElementsByClassName('plus')[0];
+    var elem = document.getElementById(id);
+    if (elem.checked) {
+        minus.style.display = 'none';
+        plus.style.display = 'inline';
+    } else {
+        minus.style.display = 'inline';
+        plus.style.display = 'none';
+    }
+}
