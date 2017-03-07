@@ -178,7 +178,10 @@ var main = (function(parent, global) {
         document.getElementById(nav + '_event').innerHTML = "";
     }
 
-    function createDConnectPath(path) {
+    function createDConnectPath(basePath, path) {
+        if (basePath !== undefined) {
+            return basePath + path;
+        }
         return '/gotapi/' + util.getProfile() + path;
     }
 
@@ -327,49 +330,51 @@ var main = (function(parent, global) {
         return contentHtml;
     }
 
-    function createParameter(method, path, xType, params) {
+    function createParameter(method, basePath, path, xType, params) {
         var nav = method + '_' + path;
         var data = {
             'nav' : nav,
             'method' : method.toUpperCase(),
-            'path' : createDConnectPath(path),
+            'path' : createDConnectPath(basePath, path),
             'xtype' : xType,
             'content' : createParams(nav, params)
         };
         return util.createTemplate('param', data);
     }
 
-    function createCommand(method, path, param) {
+    function createCommand(method, basePath, path, param) {
         var data = {
-            'title': method.toUpperCase() + ' ' + createDConnectPath(path),
+            'title': method.toUpperCase() + ' ' + createDConnectPath(basePath, path),
             'nav' : method + '_' + path,
-            'content' : createParameter(method, path, param['x-type'], param.parameters)
+            'content' : createParameter(method, basePath, path, param['x-type'], param.parameters)
         };
         return util.createTemplate('command', data);
     }
 
-    function createSupportMethod(path, data) {
+    function createSupportMethod(basePath, path, data) {
         var contentHtml = "";
         for (var method in data) {
-            contentHtml += createCommand(method, path, data[method]);
+            contentHtml += createCommand(method, basePath, path, data[method]);
         }
         return contentHtml;
     }
 
-    function createSupportPath(paths) {
+    function createSupportPath(basePath, paths) {
         var contentHtml = "";
         for (var path in paths) {
-            contentHtml += createSupportMethod(path, paths[path]);
+            contentHtml += createSupportMethod(basePath, path, paths[path]);
         }
         return contentHtml;
     }
 
     function createSupportApis(json) {
         var profile = util.getProfile().toLowerCase();
+        var supportApi;
         if (json.supportApis) {
             for (var p in json.supportApis) {
                 if (profile == p.toLowerCase()) {
-                    document.getElementById('main').innerHTML = createSupportPath(json.supportApis[p].paths);
+                    supportApi = json.supportApis[p];
+                    document.getElementById('main').innerHTML = createSupportPath(supportApi.basePath, supportApi.paths);
                     return;
                 }
             }

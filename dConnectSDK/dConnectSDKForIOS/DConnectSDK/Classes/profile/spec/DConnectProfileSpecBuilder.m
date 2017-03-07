@@ -44,6 +44,8 @@
     DConnectProfileSpec *profileSpec = [[DConnectProfileSpec alloc] init];
     [profileSpec setAllApiSpecs: [self allApiSpecs]];
     [profileSpec setBundle: [self bundle]];
+    [profileSpec setApi:[self api] ? [self api] : DConnectMessageDefaultAPI];
+    [profileSpec setProfile:[self profile]];
     return profileSpec;
 }
 
