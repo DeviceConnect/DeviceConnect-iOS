@@ -73,12 +73,8 @@
 		971BC07B1924A8A000D21FE3 /* DConnectBatteryProfileTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 971BC07A1924A8A000D21FE3 /* DConnectBatteryProfileTest.m */; };
 		97A999BB19545237006F8474 /* DConnectFilesProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 97A999BA19545237006F8474 /* DConnectFilesProfile.m */; };
 		97FE24BC191CBB77007C4769 /* multipart_parser.c in Sources */ = {isa = PBXBuildFile; fileRef = 97FE24B8191CBB77007C4769 /* multipart_parser.c */; };
-<<<<<<< HEAD
 		AB24217C1E67CBDD005887C8 /* fileDescriptor.json in Resources */ = {isa = PBXBuildFile; fileRef = AB24217B1E67CBDC005887C8 /* fileDescriptor.json */; };
-		AB24217F1E67CC1F005887C8 /* DConnectFileDescriptorProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = AB24217E1E67CC1F005887C8 /* DConnectFileDescriptorProfile.m */; };
-=======
 		AB5555B71E56B2F10086E5D5 /* power.json in Resources */ = {isa = PBXBuildFile; fileRef = AB5555B61E56B2F10086E5D5 /* power.json */; };
->>>>>>> master
 		AB67AAE61C642A7900B4C62C /* GCDAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = AB67AAE51C642A7900B4C62C /* GCDAsyncSocket.m */; };
 		AB67AB0E1C642AB200B4C62C /* DDData.m in Sources */ = {isa = PBXBuildFile; fileRef = AB67AAEB1C642AB200B4C62C /* DDData.m */; };
 		AB67AB0F1C642AB200B4C62C /* DDNumber.m in Sources */ = {isa = PBXBuildFile; fileRef = AB67AAED1C642AB200B4C62C /* DDNumber.m */; };
