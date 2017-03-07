@@ -34,6 +34,10 @@
     return self;
 }
 
+- (NSString *) apiPath : (DConnectRequestMessage *) request {
+    return [self apiPath:[request interface] attributeName:[request attribute]];
+}
+
 - (NSString *) apiPath : (NSString *) interfaceName attributeName:(NSString *) attributeName {
     
     NSMutableString *path = [NSMutableString string];
@@ -183,6 +187,12 @@
     DConnectSpecMethod method;
     if (![DConnectSpecConstants toMethodFromAction: action outMethod: &method error:&error]) {
         return nil;
+    }
+    
+    if (self.profileSpec && self.profileSpec.api && request.api) {
+        if (![self.profileSpec.api.lowercaseString isEqualToString: request.api.lowercaseString]) {
+            return nil;
+        }
     }
     
     NSString *path = [self apiPath: [request interface] attributeName:[request attribute]];

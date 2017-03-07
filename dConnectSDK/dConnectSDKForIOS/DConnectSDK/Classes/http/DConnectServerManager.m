@@ -321,7 +321,7 @@ typedef NS_ENUM(NSInteger, RequestExceptionType) {
         attr = pathComponentArr[4];
     }
     
-    if (api == nil || ![api isEqualToString:DConnectMessageDefaultAPI]) {
+    if (api == nil) {
         if (error) {
             *error = [NSError errorWithDomain:@"No valid api was detected in URL."
                                          code:HAVE_NO_API_EXCEPTION

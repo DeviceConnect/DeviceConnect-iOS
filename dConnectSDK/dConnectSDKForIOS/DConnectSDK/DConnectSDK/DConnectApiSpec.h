@@ -18,6 +18,8 @@
 
 @property(nonatomic) DConnectSpecMethod method;
 
+@property(nonatomic, strong) NSString *apiName;
+
 @property(nonatomic, strong) NSString *profileName;
 
 @property(nonatomic, strong) NSString *interfaceName;
