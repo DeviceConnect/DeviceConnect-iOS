@@ -1,6 +1,6 @@
-# DeviceConnect iOS について
+# DeviceConnect-iOS について
 
-Device Connect iOSはiOS版のDeviceConnectのプラットフォームになります。
+DeviceConnect-iOSはiOS版のDeviceConnectのプラットフォームになります。
 
 このガイドでは以下のことについて解説していきます。
 
@@ -26,7 +26,6 @@ $ xcodebuild -scheme DConnectSDK_framework -configuration Release
 ```
 
 `DeviceConnect-iOS-master/dConnectSDK/dConnectSDKForIOS/bin` フォルダに framework と bundle が生成されます。
-
 
 # プロジェクトの説明
 ## dConnectDevicePlugin
