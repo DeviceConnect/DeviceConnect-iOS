@@ -1,5 +1,5 @@
 //
-//  DPHostConnectProfile.h
+//  DPHostConnectionProfile.h
 //  dConnectDeviceHost
 //
 //  Copyright (c) 2014 NTT DOCOMO, INC.
@@ -10,6 +10,6 @@
 #import <DConnectSDK/DConnectSDK.h>
 #import <CoreBluetooth/CoreBluetooth.h>
 
-@interface DPHostConnectProfile : DConnectConnectProfile<CBCentralManagerDelegate>
+@interface DPHostConnectionProfile : DConnectConnectionProfile<CBCentralManagerDelegate>
 
 @end

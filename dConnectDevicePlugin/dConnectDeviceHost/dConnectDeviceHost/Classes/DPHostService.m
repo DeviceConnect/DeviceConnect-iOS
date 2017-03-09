@@ -12,16 +12,15 @@
 #import "DPHostDevicePlugin.h"
 #import "DPHostBatteryProfile.h"
 #import "DPHostDeviceOrientationProfile.h"
-#import "DPHostFileDescriptorProfile.h"
 #import "DPHostFileProfile.h"
 #import "DPHostMediaPlayerProfile.h"
 #import "DPHostMediaStreamRecordingProfile.h"
 #import "DPHostNotificationProfile.h"
 #import "DPHostPhoneProfile.h"
 #import "DPHostProximityProfile.h"
-#import "DPHostSettingsProfile.h"
+#import "DPHostSettingProfile.h"
 #import "DPHostVibrationProfile.h"
-#import "DPHostConnectProfile.h"
+#import "DPHostConnectionProfile.h"
 #import "DPHostCanvasProfile.h"
 #import "DPHostTouchProfile.h"
 #import "DPHostGeolocationProfile.h"
@@ -46,16 +45,15 @@ NSString *const DPHostDevicePluginServiceId = @"host";
         // プロファイルを追加
         [self addProfile:[DPHostBatteryProfile new]];
         [self addProfile:[DPHostDeviceOrientationProfile new]];
-        [self addProfile:[[DPHostFileDescriptorProfile alloc] initWithFileManager: fileMgr]];
         [self addProfile:[DPHostFileProfile new]];
         [self addProfile:[DPHostMediaPlayerProfile new]];
         [self addProfile:[DPHostMediaStreamRecordingProfile new]];
         [self addProfile:[DPHostNotificationProfile new]];
         [self addProfile:[DPHostPhoneProfile new]];
         [self addProfile:[DPHostProximityProfile new]];
-        [self addProfile:[DPHostSettingsProfile new]];
+        [self addProfile:[DPHostSettingProfile new]];
         [self addProfile:[DPHostVibrationProfile new]];
-        [self addProfile:[DPHostConnectProfile new]];
+        [self addProfile:[DPHostConnectionProfile new]];
         [self addProfile:[DPHostCanvasProfile new]];
         [self addProfile:[DPHostTouchProfile new]];
         [self addProfile:[DPHostGeolocationProfile new]];

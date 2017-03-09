@@ -12,6 +12,7 @@
 
 NSString *const DCMHealthProfileName = @"health";
 NSString *const DCMHealthProfileAttrHeart = @"heart";
+NSString *const DCMHealthProfileAttrOnHeart = @"onHeart";
 NSString *const DCMHealthProfileParamHeart = @"heart";
 NSString *const DCMHealthProfileParamRate = @"rate";
 NSString *const DCMHealthProfileParamValue = @"value";

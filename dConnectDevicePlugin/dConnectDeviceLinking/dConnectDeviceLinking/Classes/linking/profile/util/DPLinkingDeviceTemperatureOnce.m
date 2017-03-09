@@ -32,8 +32,12 @@
 - (void) didReceivedDevice:(DPLinkingDevice *)device temperature:(float)temperature
 {
     [self.response setResult:DConnectMessageResultTypeOk];
-    [DCMTemperatureProfile setTemperature:temperature target:self.response];
-    [DCMTemperatureProfile setType:DCMTemperatureProfileEnumCelsius target:self.response];
+    if (_device.temperatureType == DCMTemperatureProfileEnumCelsiusFahrenheit) {
+        [DCMTemperatureProfile setTemperature:[DCMTemperatureProfile convertCelsiusToFahrenheit:temperature] target:self.response];
+    } else {
+        [DCMTemperatureProfile setTemperature:temperature target:self.response];
+    }
+    [DCMTemperatureProfile setType:_device.temperatureType target:self.response];
     [DCMTemperatureProfile setTimeStamp:[NSDate date].timeIntervalSince1970 target:self.response];
     [[DConnectManager sharedManager] sendResponse:self.response];
     [self cleanup];

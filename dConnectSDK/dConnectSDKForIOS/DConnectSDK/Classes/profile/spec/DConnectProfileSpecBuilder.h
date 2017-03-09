@@ -16,6 +16,10 @@
 
 @property(nonatomic, strong) NSDictionary *bundle;
 
+@property (nonatomic, strong) NSString * api;
+
+@property (nonatomic, strong) NSString * profile;
+
 /*!
  @brief APIの仕様定義を追加する.
  

@@ -91,7 +91,15 @@ static NSString * const dConnectSDKBundleName = @"DConnectSDK_resources";
     NSDictionary *jsonObj = (NSDictionary *) jsonObj_;
     
     // NSDictionaryをDConnectProfileSpecに変換して格納
-    [self profileSpecs_][profileNameLow] = [[self jsonParser] parseJson: jsonObj error: error];
+    DConnectProfileSpec *profileSpec =[[self jsonParser] parseJson: jsonObj error: error];
+    if (!profileSpec.profile) {
+        [profileSpec setProfile:profileName];
+    }
+    for (DConnectApiSpec *apiSpec in [profileSpec apiSpecList]) {
+        [apiSpec setApiName:profileSpec.api];
+        [apiSpec setProfileName:profileSpec.profile];
+    }
+    [self profileSpecs_][profileNameLow] = profileSpec;
     return YES;
 }
 

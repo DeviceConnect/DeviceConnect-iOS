@@ -34,16 +34,25 @@
     
     DPLinkingBeaconManager *beaconManager = [DPLinkingBeaconManager sharedInstance];
     DPLinkingBeacon *beacon = [beaconManager findBeaconByBeaconId:serviceId];
-    if (!beacon) {
+   if (!beacon) {
         [response setErrorToNotFoundService];
         return YES;
     }
-
+    float temp = beacon.temperatureData.value;
+    int type = [request integerForKey:DCMTemperatureProfileParamType];
+    if (type == DCMTemperatureProfileEnumCelsiusFahrenheit) {
+        temp = [DCMTemperatureProfile convertFahrenheitToCelsius:temp];
+    } else {
+        // 1,2以外は摂氏とする。
+        type = DCMTemperatureProfileEnumCelsius;
+    }
+    beacon.temperatureData.temperatureType = type;
+    
     if (beacon.temperatureData && [[NSDate date] timeIntervalSince1970] - beacon.temperatureData.timeStamp < 30.0f) {
         [response setResult:DConnectMessageResultTypeOk];
-        [DCMTemperatureProfile setTemperature:beacon.temperatureData.value target:response];
+        [DCMTemperatureProfile setTemperature:temp target:response];
         [DCMTemperatureProfile setTimeStamp:beacon.temperatureData.timeStamp target:response];
-        [DCMTemperatureProfile setType:DCMTemperatureProfileEnumCelsius target:response];
+        [DCMTemperatureProfile setType:type target:response];
         return YES;
     }
     

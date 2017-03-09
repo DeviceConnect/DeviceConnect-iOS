@@ -12,11 +12,6 @@
 
 NSString *const DConnectFileProfileName = @"file";
 NSString *const DConnectFileProfileAttrList = @"list";
-NSString *const DConnectFileProfileAttrReceive = @"receive";
-NSString *const DConnectFileProfileAttrRemove = @"remove";
-NSString *const DConnectFileProfileAttrSend = @"send";
-NSString *const DConnectFileProfileAttrMkdir = @"mkdir";
-NSString *const DConnectFileProfileAttrRmdir = @"rmdir";
 NSString *const DConnectFileProfileParamMIMEType = @"mimeType";
 NSString *const DConnectFileProfileParamFiles = @"files";
 NSString *const DConnectFileProfileParamFileName = @"fileName";
@@ -30,7 +25,6 @@ NSString *const DConnectFileProfileParamOffset = @"offset";
 NSString *const DConnectFileProfileParamLimit = @"limit";
 NSString *const DConnectFileProfileParamCount = @"count";
 NSString *const DConnectFileProfileParamUpdateDate = @"updateDate";
-NSString *const DConnectFileProfileParamForce = @"force";
 
 NSString *const DConnectFileProfileOrderASC = @"asc";
 NSString *const DConnectFileProfileOrderDESC = @"desc";
@@ -116,8 +110,5 @@ NSString *const DConnectFileProfileOrderDESC = @"desc";
     return [request numberForKey:DConnectFileProfileParamLimit];
 }
 
-+ (BOOL) forceFromRequest:(DConnectMessage *)request {
-    return [request boolForKey:DConnectFileProfileParamForce];
-}
 
 @end

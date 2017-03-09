@@ -13,14 +13,17 @@ NSString *const DConnectKeyEventProfileName = @"keyEvent";
 NSString *const DConnectKeyEventProfileAttrKeyEvent = @"keyevent";
 NSString *const DConnectKeyEventProfileAttrOnDown = @"ondown";
 NSString *const DConnectKeyEventProfileAttrOnUp = @"onup";
+NSString *const DConnectKeyEventProfileAttrOnKeyChange = @"onkeychange";
 NSString *const DConnectKeyEventProfileParamKeyEvent = @"keyevent";
 NSString *const DConnectKeyEventProfileParamId = @"id";
 NSString *const DConnectKeyEventProfileParamConfig = @"config";
+NSString *const DConnectKeyEventProfileParamState = @"state";
 int const DConnectKeyEventProfileKeyTypeStdKey = 0x00000000;
 int const DConnectKeyEventProfileKeyTypeMediaCtrl = 0x00000200;
 int const DConnectKeyEventProfileKeyTypeDpadButton = 0x00000400;
 int const DConnectKeyEventProfileKeyTypeUser = 0x00000800;
-
+NSString *const DConnectKeyEventProfileKeyStateDown = @"down";
+NSString *const DConnectKeyEventProfileKeyStateUp = @"up";
 @implementation DConnectKeyEventProfile
 
 - (NSString *) profileName {
@@ -38,6 +41,10 @@ int const DConnectKeyEventProfileKeyTypeUser = 0x00000800;
 
 + (void) setConfig:(NSString *)config target:(DConnectMessage *)message {
     [message setString:config forKey:DConnectKeyEventProfileParamConfig];
+}
+
++ (void) setState:(NSString *)state target:(DConnectMessage *)message {
+    [message setString:state forKey:DConnectKeyEventProfileParamState];
 }
 
 @end

@@ -86,6 +86,7 @@
 		AB4B690A19B46FC9009939C9 /* irkit07.png in Resources */ = {isa = PBXBuildFile; fileRef = AB4B68FA19B4671D009939C9 /* irkit07.png */; };
 		AB4B690B19B46FC9009939C9 /* irkit08.png in Resources */ = {isa = PBXBuildFile; fileRef = AB4B68FB19B4671D009939C9 /* irkit08.png */; };
 		AB506F7419B05CA9004D6C41 /* DConnectSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB506F7319B05CA9004D6C41 /* DConnectSDK.framework */; };
+		AB5555BA1E56B33B0086E5D5 /* DPIRKitPowerProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = AB5555B91E56B33B0086E5D5 /* DPIRKitPowerProfile.m */; };
 		AB6A83581B65CA7200E4F32F /* DPIRKitTutorialTopViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB6A83571B65CA7200E4F32F /* DPIRKitTutorialTopViewController.m */; };
 		AB6A835A1B65E07A00E4F32F /* irkit10.png in Resources */ = {isa = PBXBuildFile; fileRef = AB6A83591B65E07A00E4F32F /* irkit10.png */; };
 		AB6A835B1B65FE7A00E4F32F /* irkit10.png in Resources */ = {isa = PBXBuildFile; fileRef = AB6A83591B65E07A00E4F32F /* irkit10.png */; };
@@ -208,6 +209,8 @@
 		AB4B68FA19B4671D009939C9 /* irkit07.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = irkit07.png; sourceTree = "<group>"; };
 		AB4B68FB19B4671D009939C9 /* irkit08.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = irkit08.png; sourceTree = "<group>"; };
 		AB506F7319B05CA9004D6C41 /* DConnectSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DConnectSDK.framework; path = ../../dConnectSDK/dConnectSDKForIOS/DConnectSDK/DConnectSDK.framework; sourceTree = "<group>"; };
+		AB5555B81E56B33B0086E5D5 /* DPIRKitPowerProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPIRKitPowerProfile.h; sourceTree = "<group>"; };
+		AB5555B91E56B33B0086E5D5 /* DPIRKitPowerProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPIRKitPowerProfile.m; sourceTree = "<group>"; };
 		AB6A83561B65CA7200E4F32F /* DPIRKitTutorialTopViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPIRKitTutorialTopViewController.h; sourceTree = "<group>"; };
 		AB6A83571B65CA7200E4F32F /* DPIRKitTutorialTopViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPIRKitTutorialTopViewController.m; sourceTree = "<group>"; };
 		AB6A83591B65E07A00E4F32F /* irkit10.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = irkit10.png; sourceTree = "<group>"; };
@@ -467,6 +470,8 @@
 		30A0A32B19A4B92C00822B73 /* profile */ = {
 			isa = PBXGroup;
 			children = (
+				AB5555B81E56B33B0086E5D5 /* DPIRKitPowerProfile.h */,
+				AB5555B91E56B33B0086E5D5 /* DPIRKitPowerProfile.m */,
 				30A0A33119A4C3CD00822B73 /* DPIRKitRemoteControllerProfile.h */,
 				30A0A32D19A4B94600822B73 /* DPIRKitRemoteControllerProfile.m */,
 				AB056FA51B6B51DE00E1482F /* DPIRKitLightProfile.h */,
@@ -718,6 +723,7 @@
 				ABC2DB181B6898E20034C08F /* DPIRKitVirtualDevice.m in Sources */,
 				AB6A835E1B6619AC00E4F32F /* DPIRKitVirtualDeviceViewController.m in Sources */,
 				AB056FAA1B6B5D0200E1482F /* DPIRKitTVProfile.m in Sources */,
+				AB5555BA1E56B33B0086E5D5 /* DPIRKitPowerProfile.m in Sources */,
 				3039F93119A5E20A00319429 /* DPIRKitSettingViewController.m in Sources */,
 				3039F92219A5C1CB00319429 /* DPIRKitWiFiUtil.m in Sources */,
 				30A0A2D319A3105300822B73 /* DPIRKitDevicePlugin.m in Sources */,

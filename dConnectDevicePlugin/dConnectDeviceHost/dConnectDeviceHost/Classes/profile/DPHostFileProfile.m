@@ -12,6 +12,12 @@
 #import "DPHostDevicePlugin.h"
 #import "DPHostUtils.h"
 
+static NSString *const DPHostFileProfileAttrDirectory = @"directory";
+static NSString *const DPHostFileProfileParamForceRemove = @"forceRemove";
+static NSString *const DPHostFileProfileParamForceOverwrite = @"forceOverwrite";
+static NSString *const DPHostFileProfileParamOldPath = @"oldPath";
+static NSString *const DPHostFileProfileParamNewPath = @"newPath";
+
 @interface DPHostFileProfile ()
 
 //@property NSMutableDictionary *mimeExtDict;
@@ -21,6 +27,7 @@
 
 @implementation DPHostFileProfile
 
+
 - (instancetype)init
 {
     self = [super init];
@@ -29,17 +36,16 @@
         
         // API登録(didReceiveGetReceiveRequest相当)
         NSString *getReceiveRequestApiPath = [self apiPath: nil
-                                             attributeName: DConnectFileProfileAttrReceive];
+                                             attributeName: nil];
         [self addGetPath: getReceiveRequestApiPath
                      api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
                          
                          NSString *path = [DConnectFileProfile pathFromRequest:request];
                          
-                         if (!path || path.length == 0) {
-                             [response setErrorToInvalidRequestParameterWithMessage:@"path must be specified."];
+                         if ([weakSelf existNilForPath:path response:response]) {
                              return YES;
                          }
-                         
+                         path = [weakSelf removeSlashForPath:path];
                          // pathが絶対であれ相対であれベースURLに追加する。
                          NSString *dstPath = [WEAKSELF_PLUGIN pathByAppendingPathComponent:path];
                          if ([weakSelf checkPath:dstPath]) {
@@ -66,95 +72,21 @@
                          return YES;
                      }];
         
-        // API登録(didReceiveGetListRequest相当)
-        NSString *getListRequestApiPath = [self apiPath: nil
-                                          attributeName: DConnectFileProfileAttrList];
-        [self addGetPath: getListRequestApiPath
-                     api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
-                         
-                         NSString *path = [DConnectFileProfile pathFromRequest:request];
-                         NSString *orderStr = [DConnectFileProfile orderFromRequest:request];
-                         NSNumber *offset = [DConnectFileProfile offsetFromRequest:request];
-                         NSNumber *limit = [DConnectFileProfile limitFromRequest:request];
-                         NSString *mimeType = [DConnectFileProfile mimeTypeFromRequest:request];
-                         NSArray *order = nil;
-                         
-                         if (orderStr) {
-                             order = [orderStr componentsSeparatedByString:@","];
-                         }
-                         
-                         DConnectFileManager *fileMgr = [WEAKSELF_PLUGIN fileMgr];
-                         NSFileManager *sysFileMgr = [NSFileManager defaultManager];
-                         
-                         NSString *listPath;
-                         NSString *sortTarget;
-                         NSString *sortOrder;
-                         listPath = [self checkParameters:request
-                                                 response:response
-                                                     path:path
-                                                  fileMgr:fileMgr
-                                               sysFileMgr:sysFileMgr
-                                                sortOrder:&sortOrder
-                                               sortTarget:&sortTarget
-                                                    order:order];
-                         if (!listPath) {
-                             [response setErrorToInvalidRequestParameter];
-                             return YES;
-                         }
-                         NSComparator comp;
-                         [weakSelf compareOrderWithResponse:response sortTarget:sortTarget comp:&comp sortOrder:sortOrder];
-                         if ([response integerForKey:DConnectMessageResult] == DConnectMessageResultTypeError) {
-                             [response setErrorToInvalidRequestParameter];
-                             return YES;
-                         }
-                         
-                         if (offset && offset.integerValue < 0) {
-                             [response setErrorToInvalidRequestParameterWithMessage:@"offset must be a non-negative value."];
-                             return YES;
-                         }
-                         
-                         if (limit && limit.integerValue < 0) {
-                             [response setErrorToInvalidRequestParameterWithMessage:@"limit must be a positive value."];
-                             return YES;
-                         }
-                         
-                         NSMutableArray *fileArr;
-                         fileArr = [self searchFilesWithFileManager:fileMgr listPath:listPath sysFileMgr:sysFileMgr mimeType:mimeType];
-                         
-                         if (offset && offset.integerValue >= fileArr.count) {
-                             [response setErrorToInvalidRequestParameterWithMessage:@"offset exceeds the size of the media list."];
-                             return YES;
-                         }
-                         
-                         // 並び替えを実行
-                         NSArray *tmpArr = [fileArr sortedArrayUsingComparator:comp];
-                         
-                         // ページングのために配列の一部分だけ抜き出し
-                         if (offset || limit) {
-                             NSUInteger offsetVal = offset ? offset.unsignedIntegerValue : 0;
-                             NSUInteger limitVal = limit ? limit.unsignedIntegerValue : fileArr.count;
-                             tmpArr = [tmpArr subarrayWithRange:
-                                       NSMakeRange(offset.unsignedIntegerValue,
-                                                   MIN(fileArr.count - offsetVal, limitVal))];
-                         }
-                         
-                         [DConnectFileProfile setCount:(int)tmpArr.count target:response];
-                         [DConnectFileProfile setFiles:[DConnectArray initWithArray:tmpArr] target:response];
-                         [response setResult:DConnectMessageResultTypeOk];
-                         
-                         return YES;
-                     }];
+
         
         // API登録(didReceivePostSendRequest相当)
         NSString *postSendRequestApiPath = [self apiPath: nil
-                                           attributeName: DConnectFileProfileAttrSend];
+                                           attributeName: nil];
         [self addPostPath: postSendRequestApiPath
                       api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
                          
+                          NSString *path = [DConnectFileProfile pathFromRequest:request];
+                          path = [weakSelf removeSlashForPath:path];
+
                           NSData *data = [DConnectFileProfile dataFromRequest:request];
                           NSString *uri = [DConnectFileProfile uriFromRequest:request];
-                          NSString *path = [DConnectFileProfile pathFromRequest:request];
 
+                          BOOL forceOverwrite = [request boolForKey:DPHostFileProfileParamForceOverwrite];
                           NSData *fileData = nil;
                           if (data && data.length > 0) {
                               fileData = data;
@@ -167,8 +99,7 @@
                               return YES;
                           }
                           
-                          if (!path || path.length == 0) {
-                              [response setErrorToInvalidRequestParameterWithMessage:@"path must be specified."];
+                          if ([weakSelf existNilForPath:path response:response]) {
                               return YES;
                           }
                           
@@ -180,7 +111,7 @@
                           if ([weakSelf checkPath:dstPath]) {
                               dstPath = path;
                           }
-                          if ([sysFileMgr fileExistsAtPath:dstPath]) {
+                          if ([sysFileMgr fileExistsAtPath:dstPath] && !forceOverwrite) {
                               // ファイルが既に存在している
                               [response setErrorToInvalidRequestParameterWithMessage:
                                @"File already exists at the specified path."];
@@ -196,54 +127,80 @@
                           
                           return YES;
                       }];
-        
-        // API登録(didReceivePostMkdirRequest相当)
-        NSString *postMkdirRequestApiPath = [self apiPath: nil
-                                            attributeName: DConnectFileProfileAttrMkdir];
-        [self addPostPath: postMkdirRequestApiPath
+        NSString *putMoveRequestApiPath = [self apiPath: nil
+                                           attributeName: nil];
+        [self addPutPath: putMoveRequestApiPath
                       api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
-
-                          NSString *path = [DConnectFileProfile pathFromRequest:request];
-                          
-                          if (!path) {
-                              [response setErrorToInvalidRequestParameterWithMessage:@"path must be specified."];
+                          NSString *oldPath = [request stringForKey:DPHostFileProfileParamOldPath];
+                          NSString *newPath = [request stringForKey:DPHostFileProfileParamNewPath];
+                          BOOL forceOverwrite = [request boolForKey:DPHostFileProfileParamForceOverwrite];
+                          if ([weakSelf existNilForPath:oldPath response:response]) {
                               return YES;
                           }
-                          
+                          if ([weakSelf existNilForPath:newPath response:response]) {
+                              return YES;
+                          }
+                          oldPath = [weakSelf removeSlashForPath:oldPath];
+                          newPath = [weakSelf removeSlashForPath:newPath];
                           NSFileManager *sysFileMgr = [NSFileManager defaultManager];
+                          NSError *error;
                           
                           // pathが絶対であれ相対であれベースURLに追加する。
-                          NSString *dstPath = [WEAKSELF_PLUGIN pathByAppendingPathComponent:path];
-                          if ([weakSelf checkPath:dstPath]) {
-                              dstPath = path;
+                          NSString *dstOldPath = [WEAKSELF_PLUGIN pathByAppendingPathComponent:oldPath];
+                          if ([weakSelf checkPath:dstOldPath]) {
+                              dstOldPath = oldPath;
                           }
-                          if ([sysFileMgr fileExistsAtPath:dstPath]) {
-                              // ディレクトリが既に存在している
-                              [response setErrorToInvalidRequestParameterWithMessage:
-                               @"File/directory already exists at the specified path."];
-                          } else {
-                              BOOL result = [sysFileMgr createDirectoryAtPath:dstPath
-                                                  withIntermediateDirectories:YES attributes:nil error:nil];
-                              if (result) {
-                                  [response setResult:DConnectMessageResultTypeOk];
-                              } else {
-                                  [response setErrorToUnknownWithMessage:@"File creation failed"];
+                          NSString *dstNewPath = [WEAKSELF_PLUGIN pathByAppendingPathComponent:newPath];
+                          if ([weakSelf checkPath:dstNewPath]) {
+                              dstNewPath = newPath;
+                          }
+                          BOOL isDirectory;
+                          if (![sysFileMgr fileExistsAtPath:dstOldPath isDirectory:&isDirectory]) {
+                              [response setErrorToInvalidRequestParameterWithMessage:@"OldPath File does not exist."];
+                              return YES;
+                          } else if (isDirectory) {
+                              [response setErrorToInvalidRequestParameterWithMessage:@"Directory can not be specified; use Move Directory API instead."];
+                              return YES;
+                          }
+                          if ([sysFileMgr fileExistsAtPath:dstNewPath isDirectory:&isDirectory]
+                               && ![[dstNewPath pathExtension] isEqualToString:@""] && !forceOverwrite) {
+                              [response setErrorToInvalidRequestParameterWithMessage:@"NewPath File already exist."];
+                              return YES;
+                          } else if (isDirectory) {
+                              dstNewPath = [NSString stringWithFormat:@"%@/%@", dstNewPath, [dstOldPath lastPathComponent]];
+                              if ([sysFileMgr fileExistsAtPath:dstNewPath isDirectory:&isDirectory]
+                                  && !forceOverwrite) {
+                                  [response setErrorToInvalidRequestParameterWithMessage:@"NewPath File already exist."];
+                                  return YES;
+                              } else if ([sysFileMgr fileExistsAtPath:dstNewPath isDirectory:&isDirectory]
+                                         && forceOverwrite) {
+                                  NSError *error;
+                                  [sysFileMgr removeItemAtPath:dstNewPath error:&error];
+                              } else if ([[dstNewPath pathExtension] isEqualToString:@""]) {
+                                  [response setErrorToInvalidRequestParameterWithMessage:@"Directory can not be specified; use Move Directory API instead."];
+                                  return YES;
                               }
+                          } else if ([sysFileMgr fileExistsAtPath:dstNewPath isDirectory:&isDirectory]
+                                     && forceOverwrite) {
+                              NSError *error;
+                              [sysFileMgr removeItemAtPath:dstNewPath error:&error];
                           }
-                          
+                          [sysFileMgr moveItemAtPath:dstOldPath toPath:dstNewPath error:&error];
+                          if (![sysFileMgr fileExistsAtPath:dstNewPath] || error) {
+                              [response setErrorToUnknownWithMessage:@"File operation failed."];
+                          } else {
+                              [response setResult:DConnectMessageResultTypeOk];
+                          }
                           return YES;
                       }];
-
         // API登録(didReceiveDeleteRemoveRequest相当)
         NSString *deleteRemoveRequestApiPath = [self apiPath: nil
-                                               attributeName: DConnectFileProfileAttrRemove];
+                                               attributeName: nil];
         [self addDeletePath: deleteRemoveRequestApiPath
                         api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
                             
                             NSString *path = [DConnectFileProfile pathFromRequest:request];
-                            
-                            if (!path || path.length == 0) {
-                                [response setErrorToInvalidRequestParameterWithMessage:@"path must be specified."];
+                            if ([weakSelf existNilForPath:path response:response]) {
                                 return YES;
                             }
                             
@@ -274,17 +231,124 @@
                             return YES;
                         }];
         
+        // API登録(didReceiveGetListRequest相当)
+        NSString *getListRequestApiPath = [self apiPath: nil
+                                          attributeName: DConnectFileProfileAttrList];
+        [self addGetPath: getListRequestApiPath
+                     api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+                         
+                         return [weakSelf fileListWithProfile:weakSelf response:response request:request];
+                     }];
+        NSString *getDirectoryRequestApiPath = [self apiPath: nil
+                                          attributeName: DPHostFileProfileAttrDirectory];
+        [self addGetPath: getDirectoryRequestApiPath
+                     api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+                         
+                        return [weakSelf fileListWithProfile:weakSelf response:response request:request];
+                     }];
+        // API登録(didReceivePostMkdirRequest相当)
+        NSString *postMkdirRequestApiPath = [self apiPath: nil
+                                            attributeName: DPHostFileProfileAttrDirectory];
+        [self addPostPath: postMkdirRequestApiPath
+                      api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+
+                          NSString *path = [DConnectFileProfile pathFromRequest:request];
+                          if ([weakSelf existNilForPath:path response:response]) {
+                              return YES;
+                          }
+
+                          
+                          NSFileManager *sysFileMgr = [NSFileManager defaultManager];
+                          
+                          // pathが絶対であれ相対であれベースURLに追加する。
+                          NSString *dstPath = [WEAKSELF_PLUGIN pathByAppendingPathComponent:path];
+                          if ([weakSelf checkPath:dstPath]) {
+                              dstPath = path;
+                          }
+                          if ([sysFileMgr fileExistsAtPath:dstPath]) {
+                              // ディレクトリが既に存在している
+                              [response setErrorToInvalidRequestParameterWithMessage:
+                               @"File/directory already exists at the specified path."];
+                          } else {
+                              BOOL result = [sysFileMgr createDirectoryAtPath:dstPath
+                                                  withIntermediateDirectories:YES attributes:nil error:nil];
+                              if (result) {
+                                  [response setResult:DConnectMessageResultTypeOk];
+                              } else {
+                                  [response setErrorToUnknownWithMessage:@"File creation failed"];
+                              }
+                          }
+                          
+                          return YES;
+                      }];
+
+        NSString *putMvdirRequestApiPath = [self apiPath:nil attributeName:DPHostFileProfileAttrDirectory];
+        [self addPutPath:putMvdirRequestApiPath api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
+            NSString *oldPath = [request stringForKey:DPHostFileProfileParamOldPath];
+            NSString *newPath = [request stringForKey:DPHostFileProfileParamNewPath];
+            BOOL forceOverwrite = [request boolForKey:DPHostFileProfileParamForceOverwrite];
+            if ([weakSelf existNilForPath:oldPath response:response]) {
+                return YES;
+            }
+            if ([weakSelf existNilForPath:newPath response:response]) {
+                return YES;
+            }
+            oldPath = [weakSelf removeSlashForPath:oldPath];
+            newPath = [weakSelf removeSlashForPath:newPath];
+            NSFileManager *sysFileMgr = [NSFileManager defaultManager];
+            NSError *error;
+            
+            // pathが絶対であれ相対であれベースURLに追加する。
+            NSString *dstOldPath = [WEAKSELF_PLUGIN pathByAppendingPathComponent:oldPath];
+            if ([weakSelf checkPath:dstOldPath]) {
+                dstOldPath = oldPath;
+            }
+            NSString *dstNewPath = [WEAKSELF_PLUGIN pathByAppendingPathComponent:newPath];
+            if ([weakSelf checkPath:dstNewPath]) {
+                dstNewPath = newPath;
+            }
+            BOOL isDirectory;
+            if (![sysFileMgr fileExistsAtPath:dstOldPath isDirectory:&isDirectory]) {
+                [response setErrorToInvalidRequestParameterWithMessage:@"OldPath File does not exist."];
+                return YES;
+            } else if (!isDirectory) {
+                [response setErrorToInvalidRequestParameterWithMessage:@"Directory can not be specified; use Move File API instead."];
+                return YES;
+            }
+            if ([sysFileMgr fileExistsAtPath:dstNewPath isDirectory:&isDirectory]
+                && ![[dstNewPath pathExtension] isEqualToString:@""]) {
+                [response setErrorToInvalidRequestParameterWithMessage:@"NewPath File already exist."];
+                return YES;
+            } else if (isDirectory) {
+                dstNewPath = [NSString stringWithFormat:@"%@/%@", dstNewPath, [dstOldPath lastPathComponent]];
+                if ([sysFileMgr fileExistsAtPath:dstNewPath isDirectory:&isDirectory]
+                    && !forceOverwrite) {
+                    [response setErrorToInvalidRequestParameterWithMessage:@"NewPath Directory already exist."];
+                    return YES;
+                } else if (![[dstNewPath pathExtension] isEqualToString:@""]) {
+                    [response setErrorToUnknownWithMessage:@"File can not be specified; use Move File API instead."];
+                    return YES;
+                }
+            }
+            [sysFileMgr moveItemAtPath:dstOldPath toPath:dstNewPath error:&error];
+            if (![sysFileMgr fileExistsAtPath:dstNewPath] || error) {
+                [response setErrorToUnknownWithMessage:@"File operation failed."];
+            } else {
+                [response setResult:DConnectMessageResultTypeOk];
+            }
+            return YES;
+        }];
+        
         // API登録(didReceiveDeleteRmdirRequest相当)
         NSString *deleteRmdirRequestApiPath = [self apiPath: nil
-                                              attributeName: DConnectFileProfileAttrRmdir];
+                                              attributeName: DPHostFileProfileAttrDirectory];
         [self addDeletePath: deleteRmdirRequestApiPath
                         api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
                             
                             NSString *path = [DConnectFileProfile pathFromRequest:request];
-                            BOOL force = [DConnectFileProfile forceFromRequest:request];
+                            BOOL force = [request boolForKey:DPHostFileProfileParamForceRemove];
                             
-                            if (!path) {
-                                [response setErrorToInvalidRequestParameterWithMessage:@"path must be specified."];
+                            if ([weakSelf existNilForPath:path response:response]) {
                                 return YES;
                             }
                             
@@ -328,6 +392,83 @@
 }
 
 #pragma mark - Private Methods
+
+
+- (BOOL)fileListWithProfile:(__weak DPHostFileProfile *)weakSelf response:(DConnectResponseMessage *)response request:(DConnectRequestMessage *)request
+{
+    NSString *path = [DConnectFileProfile pathFromRequest:request];
+    NSString *orderStr = [DConnectFileProfile orderFromRequest:request];
+    NSNumber *offset = [DConnectFileProfile offsetFromRequest:request];
+    NSNumber *limit = [DConnectFileProfile limitFromRequest:request];
+    NSString *mimeType = [DConnectFileProfile mimeTypeFromRequest:request];
+    NSArray *order = nil;
+    
+    if (orderStr) {
+        order = [orderStr componentsSeparatedByString:@","];
+    }
+    
+    DConnectFileManager *fileMgr = [WEAKSELF_PLUGIN fileMgr];
+    NSFileManager *sysFileMgr = [NSFileManager defaultManager];
+    
+    NSString *listPath;
+    NSString *sortTarget;
+    NSString *sortOrder;
+    listPath = [self checkParameters:request
+                            response:response
+                                path:path
+                             fileMgr:fileMgr
+                          sysFileMgr:sysFileMgr
+                           sortOrder:&sortOrder
+                          sortTarget:&sortTarget
+                               order:order];
+    if (!listPath) {
+        [response setErrorToInvalidRequestParameter];
+        return YES;
+    }
+    NSComparator comp;
+    [weakSelf compareOrderWithResponse:response sortTarget:sortTarget comp:&comp sortOrder:sortOrder];
+    if ([response integerForKey:DConnectMessageResult] == DConnectMessageResultTypeError) {
+        [response setErrorToInvalidRequestParameter];
+        return YES;
+    }
+    
+    if (offset && offset.integerValue < 0) {
+        [response setErrorToInvalidRequestParameterWithMessage:@"offset must be a non-negative value."];
+        return YES;
+    }
+    
+    if (limit && limit.integerValue < 0) {
+        [response setErrorToInvalidRequestParameterWithMessage:@"limit must be a positive value."];
+        return YES;
+    }
+    
+    NSMutableArray *fileArr;
+    fileArr = [self searchFilesWithFileManager:fileMgr listPath:listPath sysFileMgr:sysFileMgr mimeType:mimeType];
+    
+    if (offset && offset.integerValue >= fileArr.count) {
+        [response setErrorToInvalidRequestParameterWithMessage:@"offset exceeds the size of the media list."];
+        return YES;
+    }
+    
+    // 並び替えを実行
+    NSArray *tmpArr = [fileArr sortedArrayUsingComparator:comp];
+    
+    // ページングのために配列の一部分だけ抜き出し
+    if (offset || limit) {
+        NSUInteger offsetVal = offset ? offset.unsignedIntegerValue : 0;
+        NSUInteger limitVal = limit ? limit.unsignedIntegerValue : fileArr.count;
+        tmpArr = [tmpArr subarrayWithRange:
+                  NSMakeRange(offset.unsignedIntegerValue,
+                              MIN(fileArr.count - offsetVal, limitVal))];
+    }
+    
+    [DConnectFileProfile setCount:(int)tmpArr.count target:response];
+    [DConnectFileProfile setFiles:[DConnectArray initWithArray:tmpArr] target:response];
+    [response setResult:DConnectMessageResultTypeOk];
+    
+    return YES;
+}
+
 
 /*!
  @brief /file/listのパラメータチェック.
@@ -583,5 +724,26 @@
         }
     }
     return ([results count] >= 2);
+}
+
+// nilチェック YES:exist NO:no exist
+- (BOOL)existNilForPath:(NSString*)path response:(DConnectResponseMessage*)response
+{
+    if (!path || path.length == 0) {
+        [response setErrorToInvalidRequestParameterWithMessage:[NSString stringWithFormat:@"%@ must be specified.", path]];
+        return YES;
+    }
+    return NO;
+}
+
+
+// pathから/を削除する
+- (NSString*)removeSlashForPath:(NSString*)path
+{
+    NSRange range = [path rangeOfString:@"/"];
+    if (range.location == 0) {
+        return [path substringWithRange:NSMakeRange(1, path.length -1)];
+    }
+    return path;
 }
 @end

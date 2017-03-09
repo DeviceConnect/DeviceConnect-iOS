@@ -40,7 +40,7 @@
 		4450063619BD4D5100C9FF54 /* DPPebbleBatteryProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 4450060D19BD4D5100C9FF54 /* DPPebbleBatteryProfile.m */; };
 		4450063819BD4D5100C9FF54 /* DPPebbleDeviceOrientationProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 4450060F19BD4D5100C9FF54 /* DPPebbleDeviceOrientationProfile.m */; };
 		4450064019BD4D5100C9FF54 /* DPPebbleNotificationProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 4450061719BD4D5100C9FF54 /* DPPebbleNotificationProfile.m */; };
-		4450064219BD4D5100C9FF54 /* DPPebbleSettingsProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 4450061919BD4D5100C9FF54 /* DPPebbleSettingsProfile.m */; };
+		4450064219BD4D5100C9FF54 /* DPPebbleSettingProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 4450061919BD4D5100C9FF54 /* DPPebbleSettingProfile.m */; };
 		4450064419BD4D5100C9FF54 /* DPPebbleSystemProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 4450061B19BD4D5100C9FF54 /* DPPebbleSystemProfile.m */; };
 		4450064619BD4D5100C9FF54 /* DPPebbleVibrationProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 4450061D19BD4D5100C9FF54 /* DPPebbleVibrationProfile.m */; };
 		4450064A19BD4D5100C9FF54 /* PebbleSettingView01Controller.m in Sources */ = {isa = PBXBuildFile; fileRef = 4450062319BD4D5100C9FF54 /* PebbleSettingView01Controller.m */; };
@@ -121,8 +121,8 @@
 		4450060F19BD4D5100C9FF54 /* DPPebbleDeviceOrientationProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPPebbleDeviceOrientationProfile.m; sourceTree = "<group>"; };
 		4450061619BD4D5100C9FF54 /* DPPebbleNotificationProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPPebbleNotificationProfile.h; sourceTree = "<group>"; };
 		4450061719BD4D5100C9FF54 /* DPPebbleNotificationProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPPebbleNotificationProfile.m; sourceTree = "<group>"; };
-		4450061819BD4D5100C9FF54 /* DPPebbleSettingsProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPPebbleSettingsProfile.h; sourceTree = "<group>"; };
-		4450061919BD4D5100C9FF54 /* DPPebbleSettingsProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPPebbleSettingsProfile.m; sourceTree = "<group>"; };
+		4450061819BD4D5100C9FF54 /* DPPebbleSettingProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPPebbleSettingProfile.h; sourceTree = "<group>"; };
+		4450061919BD4D5100C9FF54 /* DPPebbleSettingProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPPebbleSettingProfile.m; sourceTree = "<group>"; };
 		4450061A19BD4D5100C9FF54 /* DPPebbleSystemProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPPebbleSystemProfile.h; sourceTree = "<group>"; };
 		4450061B19BD4D5100C9FF54 /* DPPebbleSystemProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPPebbleSystemProfile.m; sourceTree = "<group>"; };
 		4450061C19BD4D5100C9FF54 /* DPPebbleVibrationProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPPebbleVibrationProfile.h; sourceTree = "<group>"; };
@@ -316,8 +316,8 @@
 				4450060F19BD4D5100C9FF54 /* DPPebbleDeviceOrientationProfile.m */,
 				4450061619BD4D5100C9FF54 /* DPPebbleNotificationProfile.h */,
 				4450061719BD4D5100C9FF54 /* DPPebbleNotificationProfile.m */,
-				4450061819BD4D5100C9FF54 /* DPPebbleSettingsProfile.h */,
-				4450061919BD4D5100C9FF54 /* DPPebbleSettingsProfile.m */,
+				4450061819BD4D5100C9FF54 /* DPPebbleSettingProfile.h */,
+				4450061919BD4D5100C9FF54 /* DPPebbleSettingProfile.m */,
 				4450061C19BD4D5100C9FF54 /* DPPebbleVibrationProfile.h */,
 				4450061D19BD4D5100C9FF54 /* DPPebbleVibrationProfile.m */,
 				4450061A19BD4D5100C9FF54 /* DPPebbleSystemProfile.h */,
@@ -510,7 +510,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4450063819BD4D5100C9FF54 /* DPPebbleDeviceOrientationProfile.m in Sources */,
-				4450064219BD4D5100C9FF54 /* DPPebbleSettingsProfile.m in Sources */,
+				4450064219BD4D5100C9FF54 /* DPPebbleSettingProfile.m in Sources */,
 				4450064419BD4D5100C9FF54 /* DPPebbleSystemProfile.m in Sources */,
 				AB33D7771A7605540073A1BA /* DPPebbleDevicePlugin.m in Sources */,
 				4450065A19BD4D5100C9FF54 /* PebbleViewController.m in Sources */,

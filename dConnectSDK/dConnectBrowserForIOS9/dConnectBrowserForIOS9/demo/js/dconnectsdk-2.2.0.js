@@ -1,6 +1,6 @@
 /**
- @preserve Device Connect SDK Library v2.1.0
- Copyright (c) 2014 NTT DOCOMO,INC.
+ @preserve Device Connect SDK Library v2.2.0
+ Copyright (c) 2017 NTT DOCOMO,INC.
  Released under the MIT license
  http://opensource.org/licenses/mit-license.php
  */
@@ -202,7 +202,12 @@ var dConnect = (function(parent, global) {
       /** エラーコード: サーバの状態異常エラー. */
       ILLEGAL_SERVER_STATE: 17,
       /** エラーコード: 不正オリジンエラー. */
-      INVALID_ORIGIN: 18
+      INVALID_ORIGIN: 18,
+      /** エラーコード: 不正URLエラー. */
+      INVALID_URL: 19,
+      /** エラーコード: 不正Profileエラー. */
+      INVALID_PROFILE: 20
+
     },
 
     /**
@@ -319,14 +324,14 @@ var dConnect = (function(parent, global) {
     },
 
     /**
-     * Connectプロファイルの定数
+     * Connectionプロファイルの定数
      * @namespace
      * @type {Object.<String, String>}
      */
-    connect: {
+    connection: {
       // Profile Name
       /** プロファイル名。 */
-      PROFILE_NAME: 'connect',
+      PROFILE_NAME: 'connection',
 
       // Interface
       /** インターフェース: bluetooth */
@@ -398,56 +403,6 @@ var dConnect = (function(parent, global) {
       PARAM_ACCELERATION_INCLUDEING_GRAVITY: 'accelerationIncludingGravity'
     },
 
-    /**
-     * File Descriptorプロファイルの定数
-     * @namespace
-     * @type {Object.<String, String>}
-     */
-    file_descriptor: {
-      // Profile name
-      /** プロファイル名。 */
-      PROFILE_NAME: 'filedescriptor',
-
-      // Attribute
-      /** アトリビュート: open */
-      ATTR_OPEN: 'open',
-      /** アトリビュート: close */
-      ATTR_CLOSE: 'close',
-      /** アトリビュート: read */
-      ATTR_READ: 'read',
-      /** アトリビュート: write */
-      ATTR_WRITE: 'write',
-      /** アトリビュート: onwatchfile */
-      ATTR_ON_WATCH_FILE: 'onwatchfile',
-
-      // Parameter
-      /** パラメータ: flag */
-      PARAM_FLAG: 'flag',
-      /** パラメータ: position */
-      PARAM_POSITION: 'position',
-      /** パラメータ: length */
-      PARAM_LENGTH: 'length',
-      /** パラメータ: size */
-      PARAM_SIZE: 'size',
-      /** パラメータ: file */
-      PARAM_FILE: 'file',
-      /** パラメータ: curr */
-      PARAM_CURR: 'curr',
-      /** パラメータ: prev */
-      PARAM_PREV: 'prev',
-      /** パラメータ: fileData */
-      PARAM_FILE_DATA: 'fileData',
-      /** パラメータ: path */
-      PARAM_PATH: 'path',
-      /** パラメータ: media */
-      PARAM_MEDIA: 'media',
-
-      // ===== ファイルフラグ =====
-      /** ファイルフラグ: 読み込みのみ. */
-      FLAG_R: 'r',
-      /** ファイルフラグ: 読み込み書き込み */
-      FLAG_RW: 'rw'
-    },
 
     /**
      * Fileプロファイルの定数
@@ -460,20 +415,10 @@ var dConnect = (function(parent, global) {
       PROFILE_NAME: 'file',
 
       // Attribute
-      /** アトリビュート: receive */
-      ATTR_RECEIVE: 'receive',
-      /** アトリビュート: send */
-      ATTR_SEND: 'send',
       /** アトリビュート: list */
       ATTR_LIST: 'list',
-      /** アトリビュート: update */
-      ATTR_UPDATE: 'update',
-      /** アトリビュート: remove */
-      ATTR_REMOVE: 'remove',
-      /** アトリビュート: mkdir */
-      ATTR_MKDIR: 'mkdir',
-      /** アトリビュート: rmdir */
-      ATTR_RMDIR: 'rmdir',
+      /** アトリビュート: directory */
+      ATTR_DIRECTORY: 'directory',
 
       // Parameter
       /** パラメータ: mimeType */
@@ -517,7 +462,8 @@ var dConnect = (function(parent, global) {
       ATTR_ON_DOWN: 'ondown',
       /** アトリビュート: onup */
       ATTR_ON_UP: 'onup',
-
+      /** アトリビュート: onkeychange */
+      ATTR_ON_KEY_CHANGE: 'onkeychange',
       // Parameter
       /** パラメータ: keyevent */
       PARAM_KEY_EVENT: 'keyevent',
@@ -986,14 +932,14 @@ var dConnect = (function(parent, global) {
     },
 
     /**
-     * Settingsプロファイルの定数
+     * Settingプロファイルの定数
      * @namespace
      * @type {Object.<String, (String|Number)>}
      */
-    settings: {
+    setting: {
       // Profile name
       /** プロファイル名。 */
-      PROFILE_NAME: 'settings',
+      PROFILE_NAME: 'setting',
 
       // Interface
       /** インターフェース: sound */
@@ -1006,8 +952,8 @@ var dConnect = (function(parent, global) {
       ATTR_VOLUME: 'volume',
       /** アトリビュート: date */
       ATTR_DATE: 'date',
-      /** アトリビュート: light */
-      ATTR_LIGHT: 'light',
+      /** アトリビュート: brightness */
+      ATTR_BRIGHTNESS: 'brightness',
       /** アトリビュート: sleep */
       ATTR_SLEEP: 'sleep',
 
@@ -1102,6 +1048,8 @@ var dConnect = (function(parent, global) {
       ATTR_ON_TOUCH_CANCEL: 'ontouchcancel',
       /** アトリビュート: ondoubletap */
       ATTR_ON_DOUBLE_TAP: 'ondoubletap',
+      /** アトリビュート: ontouchchange */
+      ATTR_ON_TOUCH_CHANGE: 'ontouchchange',
 
       // Parameter
       /** パラメータ: touch */
@@ -1292,9 +1240,17 @@ var dConnect = (function(parent, global) {
     if (state === undefined) {
         state = '';
     }
-    url = uriSchemeName + '://start/' + state
-              + '?origin=' + origin
-              + '&key=' + _currentHmacKey;
+    if (isFirefox()) {
+        url = uriSchemeName + '://start/' + state
+                  + '?origin=' + origin
+                  + '&key=' + _currentHmacKey;
+    } else {
+       urlScheme.setPath('start/' + state);
+      urlScheme.addParameter('package', 'org.deviceconnect.android.manager');
+      urlScheme.addParameter('S.origin', origin);
+      urlScheme.addParameter('S.key', _currentHmacKey);
+      url = urlScheme.build();
+    }
     location.href = url;
   };
 
@@ -1342,9 +1298,17 @@ var dConnect = (function(parent, global) {
     if (state === undefined) {
         state = '';
     }
-    url = uriSchemeName + '://stop/' + state
+    if (isFirefox()) {
+        url = uriSchemeName + '://stop/' + state
               + '?origin=' + origin
               + '&key=' + _currentHmacKey;
+    } else {
+       urlScheme.setPath('stop/' + state);
+      urlScheme.addParameter('package', 'org.deviceconnect.android.manager');
+      urlScheme.addParameter('S.origin', origin);
+      urlScheme.addParameter('S.key', _currentHmacKey);
+      url = urlScheme.build();
+    }
     location.href = url;
   };
 
@@ -2150,7 +2114,7 @@ var dConnect = (function(parent, global) {
    * @return {String} URIスキームの文字列表現
    */
   AndroidURISchemeBuilder.prototype.build = function() {
-    var urlScheme = 'intent://' + this.path + '/#Intent;scheme=' +
+    var urlScheme = 'intent://' + this.path + '#Intent;scheme=' +
                             this.scheme + ';';
     for (var key in this.params) {
       urlScheme += key + '=' + this.params[key] + ';';

@@ -13,5 +13,5 @@
 
 @property (nonatomic) NSTimeInterval timeStamp;
 @property (nonatomic) float value;
-
+@property (nonatomic) int temperatureType;
 @end

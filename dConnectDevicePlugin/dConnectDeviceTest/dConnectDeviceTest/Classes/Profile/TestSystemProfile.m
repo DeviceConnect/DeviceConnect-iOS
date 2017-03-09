@@ -22,8 +22,8 @@ NSString *const TestSystemVersion = @"2.0.0";
         
         // API登録(didReceiveDeleteEventsRequest相当)
         NSString *getVolumeRequestApiPath =
-        [self apiPath: DConnectSettingsProfileInterfaceSound
-        attributeName: DConnectSettingsProfileAttrVolume];
+        [self apiPath: DConnectSettingProfileInterfaceSound
+        attributeName: DConnectSettingProfileAttrVolume];
         [self addGetPath: getVolumeRequestApiPath api: ^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
         
             response.result = DConnectMessageResultTypeOk;

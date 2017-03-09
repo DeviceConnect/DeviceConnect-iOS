@@ -77,11 +77,17 @@
 // KeyEvent onUp event registration.
 - (void)registOnUpEvent:(NSString*)serviceID callback:(void(^)(NSError *error))callback eventCallback:(void(^)(long attr, int keyId, int keyType))eventCallback;
 
+// KeyEvent onKeyChange event registration.
+- (void)registOnKeyChangeEvent:(NSString*)serviceID callback:(void(^)(NSError *error))callback eventCallback:(void(^)(long attr, int keyId, int keyType, int keyState))eventCallback;
+
 // KeyEvent onDown event unregistration.
 - (void)deleteOnDownEvent:(NSString*)serviceID callback:(void(^)(NSError *error))callback;
 
 // KeyEvent onUp event unregistration.
 - (void)deleteOnUpEvent:(NSString*)serviceID callback:(void(^)(NSError *error))callback;
+
+// KeyEvent onKeyChange event unregistration.
+- (void)deleteOnKeyChangeEvent:(NSString*)serviceID callback:(void(^)(NSError *error))callback;
 
 // Determined whether or not the decimal.
 - (BOOL)existDigitWithString:(NSString*)digit;

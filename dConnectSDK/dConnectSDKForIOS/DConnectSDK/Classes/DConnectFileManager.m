@@ -570,6 +570,8 @@ static dispatch_queue_t ext2mimeDictLoadQueue;
                                         withIntermediateDirectories:YES
                                                          attributes:nil
                             error:&error];
+    NSLog(@"fileURLWithPath:%@", [NSURL fileURLWithPath:path]);
+    NSLog(@"URLByAppendingPathComponent:%@", [self.URL URLByAppendingPathComponent:path]);
     if (error) {
         DCLogW(@"Failed to create intermediate directories.");
         return nil;

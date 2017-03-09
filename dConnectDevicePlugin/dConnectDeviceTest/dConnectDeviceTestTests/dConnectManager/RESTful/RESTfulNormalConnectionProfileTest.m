@@ -1,5 +1,5 @@
 //
-//  RESTfulNormalConnectProfileTest.m
+//  RESTfulNormalConnectionProfileTest.m
 //  dConnectDeviceTest
 //
 //  Copyright (c) 2014 NTT DOCOMO, INC.
@@ -9,23 +9,23 @@
 
 #import "RESTfulTestCase.h"
 
-@interface RESTfulNormalConnectProfileTest : RESTfulTestCase
+@interface RESTfulNormalConnectionProfileTest : RESTfulTestCase
 
 @end
 
 /*!
- * @class RESTfulNormalConnectProfileTest
+ * @class RESTfulNormalConnectionProfileTest
  * @brief Connectプロファイルの正常系テスト.
  * @author NTT DOCOMO, INC.
  */
-@implementation RESTfulNormalConnectProfileTest
+@implementation RESTfulNormalConnectionProfileTest
 
 /*!
  * @brief WiFi機能有効状態(ON/OFF)取得テストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: GET
- * Path: /connect/wifi?serviceId=xxxx
+ * Path: /connection/wifi?serviceId=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -33,9 +33,9 @@
  * ・powerがtrueで返ってくること。
  * </pre>
  */
-- (void) testHttpNormalConnectWifiGet
+- (void) testHttpNormalConnectionWifiGet
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/connect/wifi?serviceId=%@", self.serviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/connection/wifi?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
     
@@ -47,16 +47,16 @@
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /connect/wifi?serviceId=xxxx
+ * Path: /connection/wifi?serviceId=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultが0で返ってくること。
  * </pre>
  */
-- (void) testHttpNormalConnectWifiPut
+- (void) testHttpNormalConnectionWifiPut
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/connect/wifi?serviceId=%@", self.serviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/connection/wifi?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
@@ -68,16 +68,16 @@
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /connect/wifi?serviceId=xxxx
+ * Path: /connection/wifi?serviceId=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultが0で返ってくること。
  * </pre>
  */
-- (void) testHttpNormalConnectWifiDelete
+- (void) testHttpNormalConnectionWifiDelete
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/connect/wifi?serviceId=%@", self.serviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/connection/wifi?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     
@@ -89,16 +89,16 @@
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /connect/wifichange?serviceId=xxxx&session_key=xxxx
+ * Path: /connection/wifichange?serviceId=xxxx&session_key=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultが0で返ってくること。
  * </pre>
  */
-- (void) testHttpNormalConnectOnWifiChangePut
+- (void) testHttpNormalConnectionOnWifiChangePut
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/connect/onwifichange?accessToken=%@&serviceId=%@", self.clientId, self.serviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/connection/onwifichange?accessToken=%@&serviceId=%@", self.clientId, self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
@@ -111,16 +111,16 @@
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /connect/wifichange?serviceId=xxxx&session_key=xxxx
+ * Path: /connection/wifichange?serviceId=xxxx&session_key=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultが0で返ってくること。
  * </pre>
  */
-- (void) testHttpNormalConnectOnWifiChangeDelete
+- (void) testHttpNormalConnectionOnWifiChangeDelete
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/connect/onwifichange?accessToken=%@&serviceId=%@", self.clientId, self.serviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/connection/onwifichange?accessToken=%@&serviceId=%@", self.clientId, self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     
@@ -133,16 +133,16 @@
  * <pre>
  * 【HTTP通信】
  * Method: GET
- * Path: /connect/bluetooth?serviceId=xxxx
+ * Path: /connection/bluetooth?serviceId=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultが0で返ってくること。
  * ・powerがtrueで返ってくること。
  * </pre>
- */- (void) testHttpNormalConnectBluetoothGet
+ */- (void) testHttpNormalConnectionBluetoothGet
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/connect/bluetooth?serviceId=%@", self.serviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/connection/bluetooth?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
     
@@ -154,16 +154,16 @@
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /connect/bluetooth?serviceId=xxxx
+ * Path: /connection/bluetooth?serviceId=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultが0で返ってくること。
  * </pre>
  */
-- (void) testHttpNormalConnectBluetoothPut
+- (void) testHttpNormalConnectionBluetoothPut
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/connect/bluetooth?serviceId=%@", self.serviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/connection/bluetooth?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
@@ -175,16 +175,16 @@
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /connect/bluetooth?serviceId=xxxx
+ * Path: /connection/bluetooth?serviceId=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultが0で返ってくること。
  * </pre>
  */
-- (void) testHttpNormalConnectBluetoothDelete
+- (void) testHttpNormalConnectionBluetoothDelete
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/connect/bluetooth?serviceId=%@", self.serviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/connection/bluetooth?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     
@@ -196,16 +196,16 @@
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /connect/bluetoothchange?serviceId=xxxx&session_key=xxxx
+ * Path: /connection/bluetoothchange?serviceId=xxxx&session_key=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultが0で返ってくること。
  * </pre>
  */
-- (void) testHttpNormalConnectOnBluetoothChangePut
+- (void) testHttpNormalConnectionOnBluetoothChangePut
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/connect/onbluetoothchange?accessToken=%@&serviceId=%@", self.clientId, self.serviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/connection/onbluetoothchange?accessToken=%@&serviceId=%@", self.clientId, self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
@@ -218,16 +218,16 @@
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /connect/bluetoothchange?serviceId=xxxx&session_key=xxxx
+ * Path: /connection/bluetoothchange?serviceId=xxxx&session_key=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultが0で返ってくること。
  * </pre>
  */
-- (void) testHttpNormalConnectOnBluetoothChangeDelete
+- (void) testHttpNormalConnectionOnBluetoothChangeDelete
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/connect/onbluetoothchange?accessToken=%@&serviceId=%@", self.clientId, self.serviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/connection/onbluetoothchange?accessToken=%@&serviceId=%@", self.clientId, self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     
@@ -240,7 +240,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: GET
- * Path: /connect/nfc?serviceId=xxxx
+ * Path: /connection/nfc?serviceId=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -248,9 +248,9 @@
  * ・powerがtrueで返ってくること。
  * </pre>
  */
-- (void) testHttpNormalConnectNfcGet
+- (void) testHttpNormalConnectionNfcGet
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/connect/nfc?serviceId=%@", self.serviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/connection/nfc?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
     
@@ -262,16 +262,16 @@
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /connect/nfc?serviceId=xxxx
+ * Path: /connection/nfc?serviceId=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultが0で返ってくること。
  * </pre>
  */
-- (void) testHttpNormalConnectNfcPut
+- (void) testHttpNormalConnectionNfcPut
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/connect/nfc?serviceId=%@", self.serviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/connection/nfc?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
@@ -283,16 +283,16 @@
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /connect/nfc?serviceId=xxxx
+ * Path: /connection/nfc?serviceId=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultが0で返ってくること。
  * </pre>
  */
-- (void) testHttpNormalConnectNfcDelete
+- (void) testHttpNormalConnectionNfcDelete
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/connect/nfc?serviceId=%@", self.serviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/connection/nfc?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     
@@ -304,16 +304,16 @@
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /connect/onnfcchange?serviceId=xxxx&session_key=xxxx
+ * Path: /connection/onnfcchange?serviceId=xxxx&session_key=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultが0で返ってくること。
  * </pre>
  */
-- (void) testHttpNormalConnectOnNfcChangePut
+- (void) testHttpNormalConnectionOnNfcChangePut
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/connect/onnfcchange?accessToken=%@&serviceId=%@", self.clientId, self.serviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/connection/onnfcchange?accessToken=%@&serviceId=%@", self.clientId, self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
@@ -326,16 +326,16 @@
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /connect/onnfcchange?serviceId=xxxx&session_key=xxxx
+ * Path: /connection/onnfcchange?serviceId=xxxx&session_key=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultが0で返ってくること。
  * </pre>
  */
-- (void) testHttpNormalConnectOnNfcChangeDelete
+- (void) testHttpNormalConnectionOnNfcChangeDelete
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/connect/onnfcchange?accessToken=%@&serviceId=%@", self.clientId, self.serviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/connection/onnfcchange?accessToken=%@&serviceId=%@", self.clientId, self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     
@@ -348,7 +348,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: GET
- * Path: /connect/ble?serviceId=xxxx
+ * Path: /connection/ble?serviceId=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -356,9 +356,9 @@
  * ・powerがtrueで返ってくること。
  * </pre>
  */
-- (void) testHttpNormalConnectBleGet
+- (void) testHttpNormalConnectionBleGet
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/connect/ble?serviceId=%@", self.serviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/connection/ble?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
     
@@ -370,16 +370,16 @@
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /connect/ble?serviceId=xxxx
+ * Path: /connection/ble?serviceId=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultが0で返ってくること。
  * </pre>
  */
-- (void) testHttpNormalConnectBlePut
+- (void) testHttpNormalConnectionBlePut
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/connect/ble?serviceId=%@", self.serviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/connection/ble?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
@@ -391,16 +391,16 @@
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /connect/ble?serviceId=xxxx
+ * Path: /connection/ble?serviceId=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultが0で返ってくること。
  * </pre>
  */
-- (void) testHttpNormalConnectBleDelete
+- (void) testHttpNormalConnectionBleDelete
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/connect/ble?serviceId=%@", self.serviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/connection/ble?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     
@@ -412,16 +412,16 @@
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /connect/onblechange?serviceId=xxxx&session_key=xxxx
+ * Path: /connection/onblechange?serviceId=xxxx&session_key=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultが0で返ってくること。
  * </pre>
  */
-- (void) testHttpNormalConnectOnBleChangePut
+- (void) testHttpNormalConnectionOnBleChangePut
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/connect/onblechange?accessToken=%@&serviceId=%@", self.clientId, self.serviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/connection/onblechange?accessToken=%@&serviceId=%@", self.clientId, self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
@@ -434,16 +434,16 @@
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /connect/onblechange?serviceId=xxxx&session_key=xxxx
+ * Path: /connection/onblechange?serviceId=xxxx&session_key=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultが0で返ってくること。
  * </pre>
  */
-- (void) testHttpNormalConnectOnBleChangeDelete
+- (void) testHttpNormalConnectionOnBleChangeDelete
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/connect/onblechange?accessToken=%@&serviceId=%@", self.clientId, self.serviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/connection/onblechange?accessToken=%@&serviceId=%@", self.clientId, self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     

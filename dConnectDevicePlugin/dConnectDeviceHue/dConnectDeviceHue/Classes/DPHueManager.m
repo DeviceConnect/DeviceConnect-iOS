@@ -627,6 +627,7 @@ pushlinkAuthenticationSuccessSelector:(SEL)pushlinkAuthenticationSuccessSelector
                            completion:(void(^)())completion
 {
     PHBridgeSendAPI *bridgeSendAPI = [[PHBridgeSendAPI alloc] init];
+
     //メインスレッドで動作させる
     dispatch_sync(dispatch_get_main_queue(), ^{
         if (flashing && flashing.count > 0) {
@@ -640,20 +641,15 @@ pushlinkAuthenticationSuccessSelector:(SEL)pushlinkAuthenticationSuccessSelector
                 }];
             } off:^{
                 [bridgeSendAPI updateLightStateForId:lightId withLightState:offState completionHandler:^(NSArray *errors) {
-                    
-                    
                 }];
             }];
 
         } else {
             [bridgeSendAPI updateLightStateForId:lightId withLightState:lightState completionHandler:^(NSArray *errors) {
-                
                 [self setCompletionWithResponseCompletion:completion
                                                    errors:errors
                                                errorState:STATE_ERROR_UPDATE_FAIL_LIGHT_STATE];
-                
             }];
-
         }
     });
     
@@ -692,34 +688,31 @@ pushlinkAuthenticationSuccessSelector:(SEL)pushlinkAuthenticationSuccessSelector
     
     PHBridgeSendAPI *bridgeSendAPI = [[PHBridgeSendAPI alloc] init];
     PHBridgeResourcesCache *cache = [PHBridgeResourcesReader readBridgeResourcesCache];
-    //メインスレッドで動作させる
+
+    //　メインスレッドで動作させる
     dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
     dispatch_time_t timeout = dispatch_time(DISPATCH_TIME_NOW, NSEC_PER_SEC * 500);
     PHLightState* onState = [self getLightStateIsOn:YES brightness:brightness color:color];
     [self changeLightStatusWithLightId:lightId
-                            lightState:onState flashing:flashing completion:^(NSArray *errors) {
-                                
+                            lightState:onState
+                              flashing:flashing
+                            completion:^(NSArray *errors) {
 //                                [self setCompletionWithResponseCompletion:completion
 //                                                                   errors:errors
 //                                                               errorState:STATE_ERROR_CHANGE_FAIL_LIGHT_NAME];
-                                                    dispatch_semaphore_signal(semaphore);
+                                dispatch_semaphore_signal(semaphore);
                             }];
     dispatch_semaphore_wait(semaphore, timeout);
 
     dispatch_sync(dispatch_get_main_queue(), ^{
-        
         for (PHLight *light in cache.lights.allValues) {
             if ([light.identifier isEqualToString:lightId]) {
-                
                 [light setName:name];
-                
                 [bridgeSendAPI updateLightWithLight:light completionHandler:^(NSArray *errors) {
-                    
                     [self setCompletionWithResponseCompletion:completion
                                          errors:errors
                                    errorState:STATE_ERROR_CHANGE_FAIL_LIGHT_NAME];
                 }];
-                
                 break;
             }
         }
