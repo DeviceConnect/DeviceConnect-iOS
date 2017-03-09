@@ -65,37 +65,43 @@
 		6B4EEF611AAFF06700A92E0D /* DConnectOriginDao.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B4EEF601AAFF06700A92E0D /* DConnectOriginDao.m */; };
 		6B4EEF631AB06E2B00A92E0D /* DConnectOriginParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B4EEF621AB06E2B00A92E0D /* DConnectOriginParser.m */; };
 		6B4EEF6A1AB0823B00A92E0D /* DConnectWhitelistViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B4EEF691AB0823B00A92E0D /* DConnectWhitelistViewController.m */; };
-		6B7A29741E711C470071160E /* airconditioner.json in Resources */ = {isa = PBXBuildFile; fileRef = 6B7A29551E711C470071160E /* airconditioner.json */; };
-		6B7A29751E711C470071160E /* battery.json in Resources */ = {isa = PBXBuildFile; fileRef = 6B7A29561E711C470071160E /* battery.json */; };
-		6B7A29761E711C470071160E /* camera.json in Resources */ = {isa = PBXBuildFile; fileRef = 6B7A29571E711C470071160E /* camera.json */; };
-		6B7A29771E711C470071160E /* canvas.json in Resources */ = {isa = PBXBuildFile; fileRef = 6B7A29581E711C470071160E /* canvas.json */; };
-		6B7A29781E711C470071160E /* connect.json in Resources */ = {isa = PBXBuildFile; fileRef = 6B7A29591E711C470071160E /* connect.json */; };
-		6B7A29791E711C470071160E /* deviceorientation.json in Resources */ = {isa = PBXBuildFile; fileRef = 6B7A295A1E711C470071160E /* deviceorientation.json */; };
-		6B7A297A1E711C470071160E /* drivecontroller.json in Resources */ = {isa = PBXBuildFile; fileRef = 6B7A295B1E711C470071160E /* drivecontroller.json */; };
-		6B7A297B1E711C470071160E /* ecg.json in Resources */ = {isa = PBXBuildFile; fileRef = 6B7A295C1E711C470071160E /* ecg.json */; };
-		6B7A297C1E711C470071160E /* file.json in Resources */ = {isa = PBXBuildFile; fileRef = 6B7A295D1E711C470071160E /* file.json */; };
-		6B7A297D1E711C470071160E /* filedescriptor.json in Resources */ = {isa = PBXBuildFile; fileRef = 6B7A295E1E711C470071160E /* filedescriptor.json */; };
-		6B7A297E1E711C470071160E /* geolocation.json in Resources */ = {isa = PBXBuildFile; fileRef = 6B7A295F1E711C470071160E /* geolocation.json */; };
-		6B7A297F1E711C470071160E /* health.json in Resources */ = {isa = PBXBuildFile; fileRef = 6B7A29601E711C470071160E /* health.json */; };
-		6B7A29801E711C470071160E /* humandetect.json in Resources */ = {isa = PBXBuildFile; fileRef = 6B7A29611E711C470071160E /* humandetect.json */; };
-		6B7A29811E711C470071160E /* humidity.json in Resources */ = {isa = PBXBuildFile; fileRef = 6B7A29621E711C470071160E /* humidity.json */; };
-		6B7A29821E711C470071160E /* illuminance.json in Resources */ = {isa = PBXBuildFile; fileRef = 6B7A29631E711C470071160E /* illuminance.json */; };
-		6B7A29831E711C470071160E /* keyevent.json in Resources */ = {isa = PBXBuildFile; fileRef = 6B7A29641E711C470071160E /* keyevent.json */; };
-		6B7A29841E711C470071160E /* light.json in Resources */ = {isa = PBXBuildFile; fileRef = 6B7A29651E711C470071160E /* light.json */; };
-		6B7A29851E711C470071160E /* mediaplayer.json in Resources */ = {isa = PBXBuildFile; fileRef = 6B7A29661E711C470071160E /* mediaplayer.json */; };
-		6B7A29861E711C470071160E /* mediastreamrecording.json in Resources */ = {isa = PBXBuildFile; fileRef = 6B7A29671E711C470071160E /* mediastreamrecording.json */; };
-		6B7A29871E711C470071160E /* notification.json in Resources */ = {isa = PBXBuildFile; fileRef = 6B7A29681E711C470071160E /* notification.json */; };
-		6B7A29881E711C470071160E /* phone.json in Resources */ = {isa = PBXBuildFile; fileRef = 6B7A29691E711C470071160E /* phone.json */; };
-		6B7A29891E711C470071160E /* poseestimation.json in Resources */ = {isa = PBXBuildFile; fileRef = 6B7A296A1E711C470071160E /* poseestimation.json */; };
-		6B7A298A1E711C470071160E /* powermeter.json in Resources */ = {isa = PBXBuildFile; fileRef = 6B7A296B1E711C470071160E /* powermeter.json */; };
-		6B7A298B1E711C470071160E /* proximity.json in Resources */ = {isa = PBXBuildFile; fileRef = 6B7A296C1E711C470071160E /* proximity.json */; };
-		6B7A298C1E711C470071160E /* settings.json in Resources */ = {isa = PBXBuildFile; fileRef = 6B7A296D1E711C470071160E /* settings.json */; };
-		6B7A298D1E711C470071160E /* sphero.json in Resources */ = {isa = PBXBuildFile; fileRef = 6B7A296E1E711C470071160E /* sphero.json */; };
-		6B7A298E1E711C470071160E /* stressestimation.json in Resources */ = {isa = PBXBuildFile; fileRef = 6B7A296F1E711C470071160E /* stressestimation.json */; };
-		6B7A298F1E711C470071160E /* temperature.json in Resources */ = {isa = PBXBuildFile; fileRef = 6B7A29701E711C470071160E /* temperature.json */; };
-		6B7A29901E711C470071160E /* touch.json in Resources */ = {isa = PBXBuildFile; fileRef = 6B7A29711E711C470071160E /* touch.json */; };
-		6B7A29911E711C470071160E /* vibration.json in Resources */ = {isa = PBXBuildFile; fileRef = 6B7A29721E711C470071160E /* vibration.json */; };
-		6B7A29921E711C470071160E /* walkstate.json in Resources */ = {isa = PBXBuildFile; fileRef = 6B7A29731E711C470071160E /* walkstate.json */; };
+		6B7A29B81E711E060071160E /* airconditioner.json in Resources */ = {isa = PBXBuildFile; fileRef = 6B7A29931E711E060071160E /* airconditioner.json */; };
+		6B7A29B91E711E060071160E /* authorization.json in Resources */ = {isa = PBXBuildFile; fileRef = 6B7A29941E711E060071160E /* authorization.json */; };
+		6B7A29BA1E711E060071160E /* battery.json in Resources */ = {isa = PBXBuildFile; fileRef = 6B7A29951E711E060071160E /* battery.json */; };
+		6B7A29BB1E711E060071160E /* camera.json in Resources */ = {isa = PBXBuildFile; fileRef = 6B7A29961E711E060071160E /* camera.json */; };
+		6B7A29BC1E711E060071160E /* canvas.json in Resources */ = {isa = PBXBuildFile; fileRef = 6B7A29971E711E060071160E /* canvas.json */; };
+		6B7A29BD1E711E060071160E /* connection.json in Resources */ = {isa = PBXBuildFile; fileRef = 6B7A29981E711E060071160E /* connection.json */; };
+		6B7A29BE1E711E060071160E /* deviceorientation.json in Resources */ = {isa = PBXBuildFile; fileRef = 6B7A29991E711E060071160E /* deviceorientation.json */; };
+		6B7A29BF1E711E060071160E /* drivecontroller.json in Resources */ = {isa = PBXBuildFile; fileRef = 6B7A299A1E711E060071160E /* drivecontroller.json */; };
+		6B7A29C01E711E060071160E /* ecg.json in Resources */ = {isa = PBXBuildFile; fileRef = 6B7A299B1E711E060071160E /* ecg.json */; };
+		6B7A29C11E711E060071160E /* echonetlite.json in Resources */ = {isa = PBXBuildFile; fileRef = 6B7A299C1E711E060071160E /* echonetlite.json */; };
+		6B7A29C21E711E060071160E /* file.json in Resources */ = {isa = PBXBuildFile; fileRef = 6B7A299D1E711E060071160E /* file.json */; };
+		6B7A29C31E711E060071160E /* filedescriptor.json in Resources */ = {isa = PBXBuildFile; fileRef = 6B7A299E1E711E060071160E /* filedescriptor.json */; };
+		6B7A29C41E711E060071160E /* geolocation.json in Resources */ = {isa = PBXBuildFile; fileRef = 6B7A299F1E711E060071160E /* geolocation.json */; };
+		6B7A29C51E711E060071160E /* health.json in Resources */ = {isa = PBXBuildFile; fileRef = 6B7A29A01E711E060071160E /* health.json */; };
+		6B7A29C61E711E060071160E /* humandetection.json in Resources */ = {isa = PBXBuildFile; fileRef = 6B7A29A11E711E060071160E /* humandetection.json */; };
+		6B7A29C71E711E060071160E /* humidity.json in Resources */ = {isa = PBXBuildFile; fileRef = 6B7A29A21E711E060071160E /* humidity.json */; };
+		6B7A29C81E711E060071160E /* illuminance.json in Resources */ = {isa = PBXBuildFile; fileRef = 6B7A29A31E711E060071160E /* illuminance.json */; };
+		6B7A29C91E711E060071160E /* keyevent.json in Resources */ = {isa = PBXBuildFile; fileRef = 6B7A29A41E711E060071160E /* keyevent.json */; };
+		6B7A29CA1E711E060071160E /* light.json in Resources */ = {isa = PBXBuildFile; fileRef = 6B7A29A51E711E060071160E /* light.json */; };
+		6B7A29CB1E711E060071160E /* mediaplayer.json in Resources */ = {isa = PBXBuildFile; fileRef = 6B7A29A61E711E060071160E /* mediaplayer.json */; };
+		6B7A29CC1E711E060071160E /* mediastreamrecording.json in Resources */ = {isa = PBXBuildFile; fileRef = 6B7A29A71E711E060071160E /* mediastreamrecording.json */; };
+		6B7A29CD1E711E060071160E /* notification.json in Resources */ = {isa = PBXBuildFile; fileRef = 6B7A29A81E711E060071160E /* notification.json */; };
+		6B7A29CE1E711E060071160E /* phone.json in Resources */ = {isa = PBXBuildFile; fileRef = 6B7A29A91E711E060071160E /* phone.json */; };
+		6B7A29CF1E711E060071160E /* poseestimation.json in Resources */ = {isa = PBXBuildFile; fileRef = 6B7A29AA1E711E060071160E /* poseestimation.json */; };
+		6B7A29D01E711E060071160E /* power.json in Resources */ = {isa = PBXBuildFile; fileRef = 6B7A29AB1E711E060071160E /* power.json */; };
+		6B7A29D11E711E060071160E /* powermeter.json in Resources */ = {isa = PBXBuildFile; fileRef = 6B7A29AC1E711E060071160E /* powermeter.json */; };
+		6B7A29D21E711E060071160E /* proximity.json in Resources */ = {isa = PBXBuildFile; fileRef = 6B7A29AD1E711E060071160E /* proximity.json */; };
+		6B7A29D31E711E060071160E /* servicediscovery.json in Resources */ = {isa = PBXBuildFile; fileRef = 6B7A29AE1E711E060071160E /* servicediscovery.json */; };
+		6B7A29D41E711E060071160E /* serviceinformation.json in Resources */ = {isa = PBXBuildFile; fileRef = 6B7A29AF1E711E060071160E /* serviceinformation.json */; };
+		6B7A29D51E711E060071160E /* setting.json in Resources */ = {isa = PBXBuildFile; fileRef = 6B7A29B01E711E060071160E /* setting.json */; };
+		6B7A29D61E711E060071160E /* sphero.json in Resources */ = {isa = PBXBuildFile; fileRef = 6B7A29B11E711E060071160E /* sphero.json */; };
+		6B7A29D71E711E060071160E /* stressestimation.json in Resources */ = {isa = PBXBuildFile; fileRef = 6B7A29B21E711E060071160E /* stressestimation.json */; };
+		6B7A29D81E711E060071160E /* system.json in Resources */ = {isa = PBXBuildFile; fileRef = 6B7A29B31E711E060071160E /* system.json */; };
+		6B7A29D91E711E060071160E /* temperature.json in Resources */ = {isa = PBXBuildFile; fileRef = 6B7A29B41E711E060071160E /* temperature.json */; };
+		6B7A29DA1E711E060071160E /* touch.json in Resources */ = {isa = PBXBuildFile; fileRef = 6B7A29B51E711E060071160E /* touch.json */; };
+		6B7A29DB1E711E060071160E /* vibration.json in Resources */ = {isa = PBXBuildFile; fileRef = 6B7A29B61E711E060071160E /* vibration.json */; };
+		6B7A29DC1E711E060071160E /* walkstate.json in Resources */ = {isa = PBXBuildFile; fileRef = 6B7A29B71E711E060071160E /* walkstate.json */; };
 		6B9B12C21AB3042D00CC99E1 /* DConnectSDK-iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3056BF0F19BC340D003B62E1 /* DConnectSDK-iPhone.storyboard */; };
 		6BC64F771AB199C80095BFC9 /* DConnectWhitelistUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BC64F761AB199C80095BFC9 /* DConnectWhitelistUtil.m */; };
 		6BD474901AAF0B2D0014FB15 /* DConnectWebAppOrigin.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BD4748F1AAF0B2D0014FB15 /* DConnectWebAppOrigin.m */; };
@@ -359,37 +365,43 @@
 		6B4EEF621AB06E2B00A92E0D /* DConnectOriginParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DConnectOriginParser.m; path = policy/DConnectOriginParser.m; sourceTree = "<group>"; };
 		6B4EEF681AB081B100A92E0D /* DConnectWhitelistViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DConnectWhitelistViewController.h; path = policy/DConnectWhitelistViewController.h; sourceTree = "<group>"; };
 		6B4EEF691AB0823B00A92E0D /* DConnectWhitelistViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DConnectWhitelistViewController.m; path = policy/DConnectWhitelistViewController.m; sourceTree = "<group>"; };
-		6B7A29551E711C470071160E /* airconditioner.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = airconditioner.json; path = api/airconditioner.json; sourceTree = "<group>"; };
-		6B7A29561E711C470071160E /* battery.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = battery.json; path = api/battery.json; sourceTree = "<group>"; };
-		6B7A29571E711C470071160E /* camera.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = camera.json; path = api/camera.json; sourceTree = "<group>"; };
-		6B7A29581E711C470071160E /* canvas.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = canvas.json; path = api/canvas.json; sourceTree = "<group>"; };
-		6B7A29591E711C470071160E /* connect.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = connect.json; path = api/connect.json; sourceTree = "<group>"; };
-		6B7A295A1E711C470071160E /* deviceorientation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = deviceorientation.json; path = api/deviceorientation.json; sourceTree = "<group>"; };
-		6B7A295B1E711C470071160E /* drivecontroller.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = drivecontroller.json; path = api/drivecontroller.json; sourceTree = "<group>"; };
-		6B7A295C1E711C470071160E /* ecg.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = ecg.json; path = api/ecg.json; sourceTree = "<group>"; };
-		6B7A295D1E711C470071160E /* file.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = file.json; path = api/file.json; sourceTree = "<group>"; };
-		6B7A295E1E711C470071160E /* filedescriptor.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = filedescriptor.json; path = api/filedescriptor.json; sourceTree = "<group>"; };
-		6B7A295F1E711C470071160E /* geolocation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = geolocation.json; path = api/geolocation.json; sourceTree = "<group>"; };
-		6B7A29601E711C470071160E /* health.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = health.json; path = api/health.json; sourceTree = "<group>"; };
-		6B7A29611E711C470071160E /* humandetect.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = humandetect.json; path = api/humandetect.json; sourceTree = "<group>"; };
-		6B7A29621E711C470071160E /* humidity.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = humidity.json; path = api/humidity.json; sourceTree = "<group>"; };
-		6B7A29631E711C470071160E /* illuminance.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = illuminance.json; path = api/illuminance.json; sourceTree = "<group>"; };
-		6B7A29641E711C470071160E /* keyevent.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = keyevent.json; path = api/keyevent.json; sourceTree = "<group>"; };
-		6B7A29651E711C470071160E /* light.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = light.json; path = api/light.json; sourceTree = "<group>"; };
-		6B7A29661E711C470071160E /* mediaplayer.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = mediaplayer.json; path = api/mediaplayer.json; sourceTree = "<group>"; };
-		6B7A29671E711C470071160E /* mediastreamrecording.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = mediastreamrecording.json; path = api/mediastreamrecording.json; sourceTree = "<group>"; };
-		6B7A29681E711C470071160E /* notification.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = notification.json; path = api/notification.json; sourceTree = "<group>"; };
-		6B7A29691E711C470071160E /* phone.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = phone.json; path = api/phone.json; sourceTree = "<group>"; };
-		6B7A296A1E711C470071160E /* poseestimation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = poseestimation.json; path = api/poseestimation.json; sourceTree = "<group>"; };
-		6B7A296B1E711C470071160E /* powermeter.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = powermeter.json; path = api/powermeter.json; sourceTree = "<group>"; };
-		6B7A296C1E711C470071160E /* proximity.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = proximity.json; path = api/proximity.json; sourceTree = "<group>"; };
-		6B7A296D1E711C470071160E /* settings.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = settings.json; path = api/settings.json; sourceTree = "<group>"; };
-		6B7A296E1E711C470071160E /* sphero.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = sphero.json; path = api/sphero.json; sourceTree = "<group>"; };
-		6B7A296F1E711C470071160E /* stressestimation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = stressestimation.json; path = api/stressestimation.json; sourceTree = "<group>"; };
-		6B7A29701E711C470071160E /* temperature.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = temperature.json; path = api/temperature.json; sourceTree = "<group>"; };
-		6B7A29711E711C470071160E /* touch.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = touch.json; path = api/touch.json; sourceTree = "<group>"; };
-		6B7A29721E711C470071160E /* vibration.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = vibration.json; path = api/vibration.json; sourceTree = "<group>"; };
-		6B7A29731E711C470071160E /* walkstate.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = walkstate.json; path = api/walkstate.json; sourceTree = "<group>"; };
+		6B7A29931E711E060071160E /* airconditioner.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = airconditioner.json; path = api/airconditioner.json; sourceTree = "<group>"; };
+		6B7A29941E711E060071160E /* authorization.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = authorization.json; path = api/authorization.json; sourceTree = "<group>"; };
+		6B7A29951E711E060071160E /* battery.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = battery.json; path = api/battery.json; sourceTree = "<group>"; };
+		6B7A29961E711E060071160E /* camera.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = camera.json; path = api/camera.json; sourceTree = "<group>"; };
+		6B7A29971E711E060071160E /* canvas.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = canvas.json; path = api/canvas.json; sourceTree = "<group>"; };
+		6B7A29981E711E060071160E /* connection.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = connection.json; path = api/connection.json; sourceTree = "<group>"; };
+		6B7A29991E711E060071160E /* deviceorientation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = deviceorientation.json; path = api/deviceorientation.json; sourceTree = "<group>"; };
+		6B7A299A1E711E060071160E /* drivecontroller.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = drivecontroller.json; path = api/drivecontroller.json; sourceTree = "<group>"; };
+		6B7A299B1E711E060071160E /* ecg.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = ecg.json; path = api/ecg.json; sourceTree = "<group>"; };
+		6B7A299C1E711E060071160E /* echonetlite.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = echonetlite.json; path = api/echonetlite.json; sourceTree = "<group>"; };
+		6B7A299D1E711E060071160E /* file.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = file.json; path = api/file.json; sourceTree = "<group>"; };
+		6B7A299E1E711E060071160E /* filedescriptor.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = filedescriptor.json; path = api/filedescriptor.json; sourceTree = "<group>"; };
+		6B7A299F1E711E060071160E /* geolocation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = geolocation.json; path = api/geolocation.json; sourceTree = "<group>"; };
+		6B7A29A01E711E060071160E /* health.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = health.json; path = api/health.json; sourceTree = "<group>"; };
+		6B7A29A11E711E060071160E /* humandetection.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = humandetection.json; path = api/humandetection.json; sourceTree = "<group>"; };
+		6B7A29A21E711E060071160E /* humidity.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = humidity.json; path = api/humidity.json; sourceTree = "<group>"; };
+		6B7A29A31E711E060071160E /* illuminance.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = illuminance.json; path = api/illuminance.json; sourceTree = "<group>"; };
+		6B7A29A41E711E060071160E /* keyevent.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = keyevent.json; path = api/keyevent.json; sourceTree = "<group>"; };
+		6B7A29A51E711E060071160E /* light.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = light.json; path = api/light.json; sourceTree = "<group>"; };
+		6B7A29A61E711E060071160E /* mediaplayer.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = mediaplayer.json; path = api/mediaplayer.json; sourceTree = "<group>"; };
+		6B7A29A71E711E060071160E /* mediastreamrecording.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = mediastreamrecording.json; path = api/mediastreamrecording.json; sourceTree = "<group>"; };
+		6B7A29A81E711E060071160E /* notification.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = notification.json; path = api/notification.json; sourceTree = "<group>"; };
+		6B7A29A91E711E060071160E /* phone.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = phone.json; path = api/phone.json; sourceTree = "<group>"; };
+		6B7A29AA1E711E060071160E /* poseestimation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = poseestimation.json; path = api/poseestimation.json; sourceTree = "<group>"; };
+		6B7A29AB1E711E060071160E /* power.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = power.json; path = api/power.json; sourceTree = "<group>"; };
+		6B7A29AC1E711E060071160E /* powermeter.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = powermeter.json; path = api/powermeter.json; sourceTree = "<group>"; };
+		6B7A29AD1E711E060071160E /* proximity.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = proximity.json; path = api/proximity.json; sourceTree = "<group>"; };
+		6B7A29AE1E711E060071160E /* servicediscovery.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = servicediscovery.json; path = api/servicediscovery.json; sourceTree = "<group>"; };
+		6B7A29AF1E711E060071160E /* serviceinformation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = serviceinformation.json; path = api/serviceinformation.json; sourceTree = "<group>"; };
+		6B7A29B01E711E060071160E /* setting.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = setting.json; path = api/setting.json; sourceTree = "<group>"; };
+		6B7A29B11E711E060071160E /* sphero.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = sphero.json; path = api/sphero.json; sourceTree = "<group>"; };
+		6B7A29B21E711E060071160E /* stressestimation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = stressestimation.json; path = api/stressestimation.json; sourceTree = "<group>"; };
+		6B7A29B31E711E060071160E /* system.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = system.json; path = api/system.json; sourceTree = "<group>"; };
+		6B7A29B41E711E060071160E /* temperature.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = temperature.json; path = api/temperature.json; sourceTree = "<group>"; };
+		6B7A29B51E711E060071160E /* touch.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = touch.json; path = api/touch.json; sourceTree = "<group>"; };
+		6B7A29B61E711E060071160E /* vibration.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = vibration.json; path = api/vibration.json; sourceTree = "<group>"; };
+		6B7A29B71E711E060071160E /* walkstate.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = walkstate.json; path = api/walkstate.json; sourceTree = "<group>"; };
 		6B96959E1A9DCB5200D25A4B /* DConnectServiceInformationProfile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DConnectServiceInformationProfile.h; sourceTree = "<group>"; };
 		6B9B12C01AB302FD00CC99E1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = "Base.lproj/DConnectSDK-iPhone.storyboard"; sourceTree = "<group>"; };
 		6BC64F751AB199C80095BFC9 /* DConnectWhitelistUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DConnectWhitelistUtil.h; path = policy/DConnectWhitelistUtil.h; sourceTree = "<group>"; };
@@ -2232,37 +2244,43 @@
 		6B7A29541E7118F80071160E /* api */ = {
 			isa = PBXGroup;
 			children = (
-				6B7A29551E711C470071160E /* airconditioner.json */,
-				6B7A29561E711C470071160E /* battery.json */,
-				6B7A29571E711C470071160E /* camera.json */,
-				6B7A29581E711C470071160E /* canvas.json */,
-				6B7A29591E711C470071160E /* connect.json */,
-				6B7A295A1E711C470071160E /* deviceorientation.json */,
-				6B7A295B1E711C470071160E /* drivecontroller.json */,
-				6B7A295C1E711C470071160E /* ecg.json */,
-				6B7A295D1E711C470071160E /* file.json */,
-				6B7A295E1E711C470071160E /* filedescriptor.json */,
-				6B7A295F1E711C470071160E /* geolocation.json */,
-				6B7A29601E711C470071160E /* health.json */,
-				6B7A29611E711C470071160E /* humandetect.json */,
-				6B7A29621E711C470071160E /* humidity.json */,
-				6B7A29631E711C470071160E /* illuminance.json */,
-				6B7A29641E711C470071160E /* keyevent.json */,
-				6B7A29651E711C470071160E /* light.json */,
-				6B7A29661E711C470071160E /* mediaplayer.json */,
-				6B7A29671E711C470071160E /* mediastreamrecording.json */,
-				6B7A29681E711C470071160E /* notification.json */,
-				6B7A29691E711C470071160E /* phone.json */,
-				6B7A296A1E711C470071160E /* poseestimation.json */,
-				6B7A296B1E711C470071160E /* powermeter.json */,
-				6B7A296C1E711C470071160E /* proximity.json */,
-				6B7A296D1E711C470071160E /* settings.json */,
-				6B7A296E1E711C470071160E /* sphero.json */,
-				6B7A296F1E711C470071160E /* stressestimation.json */,
-				6B7A29701E711C470071160E /* temperature.json */,
-				6B7A29711E711C470071160E /* touch.json */,
-				6B7A29721E711C470071160E /* vibration.json */,
-				6B7A29731E711C470071160E /* walkstate.json */,
+				6B7A29931E711E060071160E /* airconditioner.json */,
+				6B7A29941E711E060071160E /* authorization.json */,
+				6B7A29951E711E060071160E /* battery.json */,
+				6B7A29961E711E060071160E /* camera.json */,
+				6B7A29971E711E060071160E /* canvas.json */,
+				6B7A29981E711E060071160E /* connection.json */,
+				6B7A29991E711E060071160E /* deviceorientation.json */,
+				6B7A299A1E711E060071160E /* drivecontroller.json */,
+				6B7A299B1E711E060071160E /* ecg.json */,
+				6B7A299C1E711E060071160E /* echonetlite.json */,
+				6B7A299D1E711E060071160E /* file.json */,
+				6B7A299E1E711E060071160E /* filedescriptor.json */,
+				6B7A299F1E711E060071160E /* geolocation.json */,
+				6B7A29A01E711E060071160E /* health.json */,
+				6B7A29A11E711E060071160E /* humandetection.json */,
+				6B7A29A21E711E060071160E /* humidity.json */,
+				6B7A29A31E711E060071160E /* illuminance.json */,
+				6B7A29A41E711E060071160E /* keyevent.json */,
+				6B7A29A51E711E060071160E /* light.json */,
+				6B7A29A61E711E060071160E /* mediaplayer.json */,
+				6B7A29A71E711E060071160E /* mediastreamrecording.json */,
+				6B7A29A81E711E060071160E /* notification.json */,
+				6B7A29A91E711E060071160E /* phone.json */,
+				6B7A29AA1E711E060071160E /* poseestimation.json */,
+				6B7A29AB1E711E060071160E /* power.json */,
+				6B7A29AC1E711E060071160E /* powermeter.json */,
+				6B7A29AD1E711E060071160E /* proximity.json */,
+				6B7A29AE1E711E060071160E /* servicediscovery.json */,
+				6B7A29AF1E711E060071160E /* serviceinformation.json */,
+				6B7A29B01E711E060071160E /* setting.json */,
+				6B7A29B11E711E060071160E /* sphero.json */,
+				6B7A29B21E711E060071160E /* stressestimation.json */,
+				6B7A29B31E711E060071160E /* system.json */,
+				6B7A29B41E711E060071160E /* temperature.json */,
+				6B7A29B51E711E060071160E /* touch.json */,
+				6B7A29B61E711E060071160E /* vibration.json */,
+				6B7A29B71E711E060071160E /* walkstate.json */,
 			);
 			name = api;
 			sourceTree = "<group>";
@@ -4522,42 +4540,48 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6B7A29801E711C470071160E /* humandetect.json in Resources */,
-				6B7A298A1E711C470071160E /* powermeter.json in Resources */,
-				6B7A29771E711C470071160E /* canvas.json in Resources */,
 				6B9B12C21AB3042D00CC99E1 /* DConnectSDK-iPhone.storyboard in Resources */,
-				6B7A297A1E711C470071160E /* drivecontroller.json in Resources */,
-				6B7A298F1E711C470071160E /* temperature.json in Resources */,
-				6B7A298D1E711C470071160E /* sphero.json in Resources */,
-				6B7A29881E711C470071160E /* phone.json in Resources */,
-				6B7A29781E711C470071160E /* connect.json in Resources */,
-				6B7A29821E711C470071160E /* illuminance.json in Resources */,
+				6B7A29D11E711E060071160E /* powermeter.json in Resources */,
+				6B7A29C21E711E060071160E /* file.json in Resources */,
+				6B7A29CA1E711E060071160E /* light.json in Resources */,
+				6B7A29D61E711E060071160E /* sphero.json in Resources */,
 				3056BF1119BC3425003B62E1 /* DConnectSDK-iPad.storyboard in Resources */,
-				6B7A297C1E711C470071160E /* file.json in Resources */,
+				6B7A29CB1E711E060071160E /* mediaplayer.json in Resources */,
+				6B7A29D01E711E060071160E /* power.json in Resources */,
+				6B7A29BF1E711E060071160E /* drivecontroller.json in Resources */,
+				6B7A29BE1E711E060071160E /* deviceorientation.json in Resources */,
+				6B7A29DC1E711E060071160E /* walkstate.json in Resources */,
 				30E9A16419AC6A850013F545 /* Localizable.strings in Resources */,
-				6B7A29901E711C470071160E /* touch.json in Resources */,
-				6B7A29791E711C470071160E /* deviceorientation.json in Resources */,
-				6B7A29741E711C470071160E /* airconditioner.json in Resources */,
-				6B7A29761E711C470071160E /* camera.json in Resources */,
-				6B7A29871E711C470071160E /* notification.json in Resources */,
-				6B7A29751E711C470071160E /* battery.json in Resources */,
-				6B7A298B1E711C470071160E /* proximity.json in Resources */,
+				6B7A29CE1E711E060071160E /* phone.json in Resources */,
+				6B7A29D21E711E060071160E /* proximity.json in Resources */,
+				6B7A29C11E711E060071160E /* echonetlite.json in Resources */,
+				6B7A29D81E711E060071160E /* system.json in Resources */,
+				6B7A29BC1E711E060071160E /* canvas.json in Resources */,
+				6B7A29C41E711E060071160E /* geolocation.json in Resources */,
+				6B7A29B81E711E060071160E /* airconditioner.json in Resources */,
+				6B7A29C31E711E060071160E /* filedescriptor.json in Resources */,
+				6B7A29C91E711E060071160E /* keyevent.json in Resources */,
+				6B7A29D91E711E060071160E /* temperature.json in Resources */,
 				D6ECC6DE19A4B7C800FE3161 /* Info.plist in Resources */,
-				6B7A298C1E711C470071160E /* settings.json in Resources */,
-				6B7A297F1E711C470071160E /* health.json in Resources */,
-				6B7A29891E711C470071160E /* poseestimation.json in Resources */,
-				6B7A297E1E711C470071160E /* geolocation.json in Resources */,
-				6B7A297D1E711C470071160E /* filedescriptor.json in Resources */,
-				6B7A297B1E711C470071160E /* ecg.json in Resources */,
-				6B7A29861E711C470071160E /* mediastreamrecording.json in Resources */,
+				6B7A29C51E711E060071160E /* health.json in Resources */,
 				D6ECC6D919A4B78900FE3161 /* InfoPlist.strings in Resources */,
-				6B7A29911E711C470071160E /* vibration.json in Resources */,
-				6B7A29811E711C470071160E /* humidity.json in Resources */,
-				6B7A29841E711C470071160E /* light.json in Resources */,
-				6B7A29831E711C470071160E /* keyevent.json in Resources */,
-				6B7A298E1E711C470071160E /* stressestimation.json in Resources */,
-				6B7A29921E711C470071160E /* walkstate.json in Resources */,
-				6B7A29851E711C470071160E /* mediaplayer.json in Resources */,
+				6B7A29C71E711E060071160E /* humidity.json in Resources */,
+				6B7A29C01E711E060071160E /* ecg.json in Resources */,
+				6B7A29D51E711E060071160E /* setting.json in Resources */,
+				6B7A29DB1E711E060071160E /* vibration.json in Resources */,
+				6B7A29C61E711E060071160E /* humandetection.json in Resources */,
+				6B7A29B91E711E060071160E /* authorization.json in Resources */,
+				6B7A29DA1E711E060071160E /* touch.json in Resources */,
+				6B7A29BD1E711E060071160E /* connection.json in Resources */,
+				6B7A29CD1E711E060071160E /* notification.json in Resources */,
+				6B7A29CC1E711E060071160E /* mediastreamrecording.json in Resources */,
+				6B7A29C81E711E060071160E /* illuminance.json in Resources */,
+				6B7A29CF1E711E060071160E /* poseestimation.json in Resources */,
+				6B7A29D41E711E060071160E /* serviceinformation.json in Resources */,
+				6B7A29BB1E711E060071160E /* camera.json in Resources */,
+				6B7A29BA1E711E060071160E /* battery.json in Resources */,
+				6B7A29D71E711E060071160E /* stressestimation.json in Resources */,
+				6B7A29D31E711E060071160E /* servicediscovery.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

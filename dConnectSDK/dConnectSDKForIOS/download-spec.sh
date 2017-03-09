@@ -2,7 +2,7 @@
 
 PROJECT_DIR=$(cd $(dirname $0) && pwd)
 TEMP_DIR=${PROJECT_DIR}/temp-`date +%s`
-REVISION=142f49da15ce351a7e2ab5fad8efe97a27aa474a
+REVISION=feature_plugin_sdk_2.0.0
 SPEC_ZIP_NAME=${REVISION}.zip
 SPEC_ZIP_URL=https://github.com/TakayukiHoshi1984/DeviceConnect-Spec/archive/${SPEC_ZIP_NAME}
 SPEC_DIR=${PROJECT_DIR}/DConnectSDK_resources/api
