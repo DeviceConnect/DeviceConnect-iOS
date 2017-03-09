@@ -1,9 +1,4 @@
-# DeviceConnect-iOS
-* 日本語説明はこちら
-https://github.com/DeviceConnect/DeviceConnect-iOS/blob/master/readme.ja.md
-
-# About DeviceConnect WebAPI
-"DeviceConnect WebAPI" is WebAPI which operates as a virtual server on a smart phone. It can use easily various wearable devices and an IoT device by unific description from a web browser or an application.
+日本語説明は[こちら](README.md)
 
 # About DeviceConnect iOS
 
@@ -12,14 +7,33 @@ Device Connect iOS will be the platform of DeviceConnect of iOS version.
 
 In this guide I will continue to discuss the following.
 
-* [Project description](#section1)
-* [Build and start-up of dConnectBrowser](#section2)
-* [Operation check](#section3)
-* [Development of DeviceConnect app](#section4)
-* [Xcode version to support](#section5)
+* Build Device Connect SDK
+* Project description
+* Development of Device Connect app
+* Generate a Doxygen of Device Connect SDK
+* Build Manuals
+* Xcode version to support
 
 
-# <a name="section1">Project description</a>
+# Build Device Connect SDK
+Download DeviceConnect-Android source code.
+
+```
+$ curl -LkO https://github.com/DeviceConnect/DeviceConnect-iOS/archive/master.zip
+$ unzip master.zip
+```
+
+Build Device Connect SDK
+
+```sh
+$ cd DeviceConnect-iOS-master/dConnectSDK/dConnectSDKForIOS/
+$ xcodebuild -scheme DConnectSDK_framework -configuration Release
+```
+
+The framework and bundle are generated in `DeviceConnect-iOS-master / dConnectSDK / dConnectSDKForIOS / bin` folder.
+
+
+# Project description
 ## dConnectDevicePlugin
 | Project Name|Content  |
 |:-----------|:---------|
@@ -46,7 +60,26 @@ In this guide I will continue to discuss the following.
 |dConnectSDKForIOS|DeviceConnect library for the platform body. Want to use this library when you want to create a device plug-ins and native apps.|
 |dConnectSDKSample|App to execute JavaScript for testing DeviceConnect.|
 
-# <a name="section2">Build and start-up of dConnectBrowser</a>
+
+# Development of Device Connect app
+Application and using the DeviceConnect, regard the development of the application, please refer to the following pages.
+
+* [Application Development Manual](https://github.com/DeviceConnect/DeviceConnect-iOS/wiki/ApplicationManual-20)<br>
+If you want to develop an application that uses the Device Connect Manager, please refer to this device plug-in development manual.
+
+* [Device plug-in development manual](https://github.com/DeviceConnect/DeviceConnect-iOS/wiki/DevicePluginManual-20)<br>
+If you want to develop a plug-in device that corresponds to the Device Connect Manager, please refer to this device plug-in development manual.
+
+
+# Generate a Doxygen of Device Connect SDK
+Execute the following command to output Doxygen.
+
+```
+$ cd DeviceConnect-iOS-master/dConnectSDK/dConnectSDKForIOS
+$ doxygen Doxyfile
+```
+
+# Build Manuals
 To install the dConnectBrowser to iOS terminal, first finished the Developer registration of Xcode installation and iOS, please keep in create an environment that can actual transfer.<br>
 
 In this state, please start the DeviceConnect.xcworkspace. In the workspace that is started, a list of device plug-ins and dConnectBrowser of projects that have been implemented in the dConnectBrowser appears.<br>
@@ -69,48 +102,8 @@ Basically, you work with start-up of dConnectBrowser only, such as when you make
 * [AWSIoT](https://github.com/DeviceConnect/DeviceConnect-iOS/wiki/AWSIoT-Build)
 
 
-# <a name="section3">Operation check</a>
- To dConnectBrowser the address bar `http://localhost:4035/gotapi/availability` Please enter the.<br>
-If this response is returned in the following, such as JSON, you will be able to make sure that DeviceConnect is running.<br>
-
-  <center><a href="./assets/availability.PNG" target="_blank">
-<img src="./assets/availability.PNG" border="0"
- width="375" height="667" alt="" /></a></center>
-
- Request
-
- ```
- GET http://localhost:4035/gotapi/availability
- ```
-
- Response
-
- ```
- {
-     "product":"dConnectBrowser",
-     "version":"x.x",
-     "name":"Manager-0702",
-     "uuid":"xxxx-yyyyy-zzz-aaaa",
-     "result":0,
-}
- ```
-
-The API of the non-availability, you will not be able to easily check is basically to dConnectBrowser of address in order to access token is required to.
-If you want to create an application using the API of Device Connect, please refer to us a sample of [here] (https://github.com/DeviceConnect/DeviceConnect-iOS/wiki/ApplicationManual).
-
-# <a name="section4">Development of DeviceConnect app</a>
-Application and using the DeviceConnect, regard the development of the application, please refer to the following pages.
-
-* [Application Development Manual](https://github.com/DeviceConnect/DeviceConnect-iOS/wiki/ApplicationManual)
- <br>
-If you want to develop an application that uses the Device Connect Manager, please refer to this device plug-in development manual.
-* [Device plug-in development manual](https://github.com/DeviceConnect/DeviceConnect-iOS/wiki/DevicePluginManual)<br>
-If you want to develop a plug-in device that corresponds to the Device Connect Manager, please refer to this device plug-in development manual.
-
-
-# <a name="section5">Xcode version to support</a>
+# Xcode version to support
 Device plug-ins DeviceConnect does not support the build execution other than Xcode referred to below.
-
 
 |Device Plug-in Name|Xcode version|
 |:--|:--|
