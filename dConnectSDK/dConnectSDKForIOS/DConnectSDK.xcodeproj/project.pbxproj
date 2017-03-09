@@ -65,6 +65,37 @@
 		6B4EEF611AAFF06700A92E0D /* DConnectOriginDao.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B4EEF601AAFF06700A92E0D /* DConnectOriginDao.m */; };
 		6B4EEF631AB06E2B00A92E0D /* DConnectOriginParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B4EEF621AB06E2B00A92E0D /* DConnectOriginParser.m */; };
 		6B4EEF6A1AB0823B00A92E0D /* DConnectWhitelistViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B4EEF691AB0823B00A92E0D /* DConnectWhitelistViewController.m */; };
+		6B7A29741E711C470071160E /* airconditioner.json in Resources */ = {isa = PBXBuildFile; fileRef = 6B7A29551E711C470071160E /* airconditioner.json */; };
+		6B7A29751E711C470071160E /* battery.json in Resources */ = {isa = PBXBuildFile; fileRef = 6B7A29561E711C470071160E /* battery.json */; };
+		6B7A29761E711C470071160E /* camera.json in Resources */ = {isa = PBXBuildFile; fileRef = 6B7A29571E711C470071160E /* camera.json */; };
+		6B7A29771E711C470071160E /* canvas.json in Resources */ = {isa = PBXBuildFile; fileRef = 6B7A29581E711C470071160E /* canvas.json */; };
+		6B7A29781E711C470071160E /* connect.json in Resources */ = {isa = PBXBuildFile; fileRef = 6B7A29591E711C470071160E /* connect.json */; };
+		6B7A29791E711C470071160E /* deviceorientation.json in Resources */ = {isa = PBXBuildFile; fileRef = 6B7A295A1E711C470071160E /* deviceorientation.json */; };
+		6B7A297A1E711C470071160E /* drivecontroller.json in Resources */ = {isa = PBXBuildFile; fileRef = 6B7A295B1E711C470071160E /* drivecontroller.json */; };
+		6B7A297B1E711C470071160E /* ecg.json in Resources */ = {isa = PBXBuildFile; fileRef = 6B7A295C1E711C470071160E /* ecg.json */; };
+		6B7A297C1E711C470071160E /* file.json in Resources */ = {isa = PBXBuildFile; fileRef = 6B7A295D1E711C470071160E /* file.json */; };
+		6B7A297D1E711C470071160E /* filedescriptor.json in Resources */ = {isa = PBXBuildFile; fileRef = 6B7A295E1E711C470071160E /* filedescriptor.json */; };
+		6B7A297E1E711C470071160E /* geolocation.json in Resources */ = {isa = PBXBuildFile; fileRef = 6B7A295F1E711C470071160E /* geolocation.json */; };
+		6B7A297F1E711C470071160E /* health.json in Resources */ = {isa = PBXBuildFile; fileRef = 6B7A29601E711C470071160E /* health.json */; };
+		6B7A29801E711C470071160E /* humandetect.json in Resources */ = {isa = PBXBuildFile; fileRef = 6B7A29611E711C470071160E /* humandetect.json */; };
+		6B7A29811E711C470071160E /* humidity.json in Resources */ = {isa = PBXBuildFile; fileRef = 6B7A29621E711C470071160E /* humidity.json */; };
+		6B7A29821E711C470071160E /* illuminance.json in Resources */ = {isa = PBXBuildFile; fileRef = 6B7A29631E711C470071160E /* illuminance.json */; };
+		6B7A29831E711C470071160E /* keyevent.json in Resources */ = {isa = PBXBuildFile; fileRef = 6B7A29641E711C470071160E /* keyevent.json */; };
+		6B7A29841E711C470071160E /* light.json in Resources */ = {isa = PBXBuildFile; fileRef = 6B7A29651E711C470071160E /* light.json */; };
+		6B7A29851E711C470071160E /* mediaplayer.json in Resources */ = {isa = PBXBuildFile; fileRef = 6B7A29661E711C470071160E /* mediaplayer.json */; };
+		6B7A29861E711C470071160E /* mediastreamrecording.json in Resources */ = {isa = PBXBuildFile; fileRef = 6B7A29671E711C470071160E /* mediastreamrecording.json */; };
+		6B7A29871E711C470071160E /* notification.json in Resources */ = {isa = PBXBuildFile; fileRef = 6B7A29681E711C470071160E /* notification.json */; };
+		6B7A29881E711C470071160E /* phone.json in Resources */ = {isa = PBXBuildFile; fileRef = 6B7A29691E711C470071160E /* phone.json */; };
+		6B7A29891E711C470071160E /* poseestimation.json in Resources */ = {isa = PBXBuildFile; fileRef = 6B7A296A1E711C470071160E /* poseestimation.json */; };
+		6B7A298A1E711C470071160E /* powermeter.json in Resources */ = {isa = PBXBuildFile; fileRef = 6B7A296B1E711C470071160E /* powermeter.json */; };
+		6B7A298B1E711C470071160E /* proximity.json in Resources */ = {isa = PBXBuildFile; fileRef = 6B7A296C1E711C470071160E /* proximity.json */; };
+		6B7A298C1E711C470071160E /* settings.json in Resources */ = {isa = PBXBuildFile; fileRef = 6B7A296D1E711C470071160E /* settings.json */; };
+		6B7A298D1E711C470071160E /* sphero.json in Resources */ = {isa = PBXBuildFile; fileRef = 6B7A296E1E711C470071160E /* sphero.json */; };
+		6B7A298E1E711C470071160E /* stressestimation.json in Resources */ = {isa = PBXBuildFile; fileRef = 6B7A296F1E711C470071160E /* stressestimation.json */; };
+		6B7A298F1E711C470071160E /* temperature.json in Resources */ = {isa = PBXBuildFile; fileRef = 6B7A29701E711C470071160E /* temperature.json */; };
+		6B7A29901E711C470071160E /* touch.json in Resources */ = {isa = PBXBuildFile; fileRef = 6B7A29711E711C470071160E /* touch.json */; };
+		6B7A29911E711C470071160E /* vibration.json in Resources */ = {isa = PBXBuildFile; fileRef = 6B7A29721E711C470071160E /* vibration.json */; };
+		6B7A29921E711C470071160E /* walkstate.json in Resources */ = {isa = PBXBuildFile; fileRef = 6B7A29731E711C470071160E /* walkstate.json */; };
 		6B9B12C21AB3042D00CC99E1 /* DConnectSDK-iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3056BF0F19BC340D003B62E1 /* DConnectSDK-iPhone.storyboard */; };
 		6BC64F771AB199C80095BFC9 /* DConnectWhitelistUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BC64F761AB199C80095BFC9 /* DConnectWhitelistUtil.m */; };
 		6BD474901AAF0B2D0014FB15 /* DConnectWebAppOrigin.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BD4748F1AAF0B2D0014FB15 /* DConnectWebAppOrigin.m */; };
@@ -73,9 +104,7 @@
 		971BC07B1924A8A000D21FE3 /* DConnectBatteryProfileTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 971BC07A1924A8A000D21FE3 /* DConnectBatteryProfileTest.m */; };
 		97A999BB19545237006F8474 /* DConnectFilesProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 97A999BA19545237006F8474 /* DConnectFilesProfile.m */; };
 		97FE24BC191CBB77007C4769 /* multipart_parser.c in Sources */ = {isa = PBXBuildFile; fileRef = 97FE24B8191CBB77007C4769 /* multipart_parser.c */; };
-		AB24217C1E67CBDD005887C8 /* fileDescriptor.json in Resources */ = {isa = PBXBuildFile; fileRef = AB24217B1E67CBDC005887C8 /* fileDescriptor.json */; };
 		AB24217F1E67CC1F005887C8 /* DConnectFileDescriptorProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = AB24217E1E67CC1F005887C8 /* DConnectFileDescriptorProfile.m */; };
-		AB5555B71E56B2F10086E5D5 /* power.json in Resources */ = {isa = PBXBuildFile; fileRef = AB5555B61E56B2F10086E5D5 /* power.json */; };
 		AB67AAE61C642A7900B4C62C /* GCDAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = AB67AAE51C642A7900B4C62C /* GCDAsyncSocket.m */; };
 		AB67AB0E1C642AB200B4C62C /* DDData.m in Sources */ = {isa = PBXBuildFile; fileRef = AB67AAEB1C642AB200B4C62C /* DDData.m */; };
 		AB67AB0F1C642AB200B4C62C /* DDNumber.m in Sources */ = {isa = PBXBuildFile; fileRef = AB67AAED1C642AB200B4C62C /* DDNumber.m */; };
@@ -233,40 +262,7 @@
 		D64EF65A1D7D4481005AC8B2 /* DConnectServiceListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D64EF6591D7D4481005AC8B2 /* DConnectServiceListViewController.m */; };
 		D64EF6621D7D9200005AC8B2 /* DConnectServiceListViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D64EF6611D7D9200005AC8B2 /* DConnectServiceListViewCell.m */; };
 		D65381871D8BEC8200F531FD /* DConnectEventBroker.m in Sources */ = {isa = PBXBuildFile; fileRef = D65381861D8BEC8200F531FD /* DConnectEventBroker.m */; };
-		D65E24CA1D1A5E8C00312134 /* battery.json in Resources */ = {isa = PBXBuildFile; fileRef = D65E24C91D1A5E8C00312134 /* battery.json */; };
-		D65E24D31D1B956500312134 /* health.json in Resources */ = {isa = PBXBuildFile; fileRef = D65E24D21D1B956500312134 /* health.json */; };
-		D65E24D51D1B959900312134 /* vibration.json in Resources */ = {isa = PBXBuildFile; fileRef = D65E24D41D1B959900312134 /* vibration.json */; };
-		D65F83181D28FBBC0024685D /* deviceorientation.json in Resources */ = {isa = PBXBuildFile; fileRef = D65F83171D28FBBC0024685D /* deviceorientation.json */; };
-		D65F831A1D28FC390024685D /* humidity.json in Resources */ = {isa = PBXBuildFile; fileRef = D65F83191D28FC390024685D /* humidity.json */; };
-		D65F831C1D28FC6B0024685D /* keyevent.json in Resources */ = {isa = PBXBuildFile; fileRef = D65F831B1D28FC6B0024685D /* keyevent.json */; };
-		D65F831E1D28FC9F0024685D /* light.json in Resources */ = {isa = PBXBuildFile; fileRef = D65F831D1D28FC9F0024685D /* light.json */; };
-		D65F83201D28FCCE0024685D /* notification.json in Resources */ = {isa = PBXBuildFile; fileRef = D65F831F1D28FCCE0024685D /* notification.json */; };
-		D65F83221D28FD170024685D /* proximity.json in Resources */ = {isa = PBXBuildFile; fileRef = D65F83211D28FD170024685D /* proximity.json */; };
-		D65F83241D28FD490024685D /* setting.json in Resources */ = {isa = PBXBuildFile; fileRef = D65F83231D28FD490024685D /* setting.json */; };
-		D65F83261D28FD840024685D /* temperature.json in Resources */ = {isa = PBXBuildFile; fileRef = D65F83251D28FD840024685D /* temperature.json */; };
-		D662E9BB1D4AEAA000919C69 /* airconditioner.json in Resources */ = {isa = PBXBuildFile; fileRef = D662E9A61D4AEA9F00919C69 /* airconditioner.json */; };
-		D662E9BC1D4AEAA000919C69 /* authorization.json in Resources */ = {isa = PBXBuildFile; fileRef = D662E9A71D4AEA9F00919C69 /* authorization.json */; };
-		D662E9BD1D4AEAA000919C69 /* camera.json in Resources */ = {isa = PBXBuildFile; fileRef = D662E9A81D4AEA9F00919C69 /* camera.json */; };
-		D662E9BE1D4AEAA000919C69 /* canvas.json in Resources */ = {isa = PBXBuildFile; fileRef = D662E9A91D4AEA9F00919C69 /* canvas.json */; };
-		D662E9BF1D4AEAA000919C69 /* connection.json in Resources */ = {isa = PBXBuildFile; fileRef = D662E9AA1D4AEA9F00919C69 /* connection.json */; };
-		D662E9C01D4AEAA000919C69 /* drivecontroller.json in Resources */ = {isa = PBXBuildFile; fileRef = D662E9AB1D4AEA9F00919C69 /* drivecontroller.json */; };
-		D662E9C11D4AEAA000919C69 /* file.json in Resources */ = {isa = PBXBuildFile; fileRef = D662E9AC1D4AEA9F00919C69 /* file.json */; };
-		D662E9C41D4AEAA000919C69 /* humandetect.json in Resources */ = {isa = PBXBuildFile; fileRef = D662E9AF1D4AEA9F00919C69 /* humandetect.json */; };
-		D662E9C51D4AEAA000919C69 /* illuminance.json in Resources */ = {isa = PBXBuildFile; fileRef = D662E9B01D4AEA9F00919C69 /* illuminance.json */; };
-		D662E9C61D4AEAA000919C69 /* mediaplayer.json in Resources */ = {isa = PBXBuildFile; fileRef = D662E9B11D4AEA9F00919C69 /* mediaplayer.json */; };
-		D662E9C71D4AEAA000919C69 /* mediastreamrecording.json in Resources */ = {isa = PBXBuildFile; fileRef = D662E9B21D4AEA9F00919C69 /* mediastreamrecording.json */; };
-		D662E9C91D4AEAA000919C69 /* phone.json in Resources */ = {isa = PBXBuildFile; fileRef = D662E9B41D4AEA9F00919C69 /* phone.json */; };
-		D662E9CA1D4AEAA000919C69 /* powermeter.json in Resources */ = {isa = PBXBuildFile; fileRef = D662E9B51D4AEA9F00919C69 /* powermeter.json */; };
-		D662E9CC1D4AEAA000919C69 /* servicediscovery.json in Resources */ = {isa = PBXBuildFile; fileRef = D662E9B71D4AEA9F00919C69 /* servicediscovery.json */; };
-		D662E9CD1D4AEAA000919C69 /* serviceinformation.json in Resources */ = {isa = PBXBuildFile; fileRef = D662E9B81D4AEAA000919C69 /* serviceinformation.json */; };
-		D662E9CE1D4AEAA000919C69 /* system.json in Resources */ = {isa = PBXBuildFile; fileRef = D662E9B91D4AEAA000919C69 /* system.json */; };
-		D662E9CF1D4AEAA000919C69 /* touch.json in Resources */ = {isa = PBXBuildFile; fileRef = D662E9BA1D4AEAA000919C69 /* touch.json */; };
 		D66AC06A1D96CFBB009316D6 /* DConnectMessageEventSession.m in Sources */ = {isa = PBXBuildFile; fileRef = D66AC0691D96CFBB009316D6 /* DConnectMessageEventSession.m */; };
-		D68563C11DA65401003818F2 /* ecg.json in Resources */ = {isa = PBXBuildFile; fileRef = D68563BC1DA65401003818F2 /* ecg.json */; };
-		D68563C21DA65401003818F2 /* poseestimation.json in Resources */ = {isa = PBXBuildFile; fileRef = D68563BD1DA65401003818F2 /* poseestimation.json */; };
-		D68563C31DA65401003818F2 /* sphero.json in Resources */ = {isa = PBXBuildFile; fileRef = D68563BE1DA65401003818F2 /* sphero.json */; };
-		D68563C41DA65401003818F2 /* stressestimation.json in Resources */ = {isa = PBXBuildFile; fileRef = D68563BF1DA65401003818F2 /* stressestimation.json */; };
-		D68563C51DA65401003818F2 /* walkstate.json in Resources */ = {isa = PBXBuildFile; fileRef = D68563C01DA65401003818F2 /* walkstate.json */; };
 		D68ED35B199BBA4800D8BF71 /* LocalOAuthClientPackageInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = D68ED35A199BBA4800D8BF71 /* LocalOAuthClientPackageInfo.m */; };
 		D6960ED3199FAEB400BE4D1B /* LocalOAuthSQLiteProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = D6960ED2199FAEB400BE4D1B /* LocalOAuthSQLiteProfile.m */; };
 		D6960ED619A0759200BE4D1B /* LocalOAuthSQLiteScopeInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = D6960ED519A0759200BE4D1B /* LocalOAuthSQLiteScopeInfo.m */; };
@@ -287,7 +283,6 @@
 		D6FF6C811D8FDA9D00B9165B /* DConnectEventProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = D6FF6C801D8FDA9D00B9165B /* DConnectEventProtocol.m */; };
 		D6FF6C8C1D9101C300B9165B /* DConnectVersionName.m in Sources */ = {isa = PBXBuildFile; fileRef = D6FF6C8B1D9101C300B9165B /* DConnectVersionName.m */; };
 		EF19A2471E44647500F00439 /* DConnectGeolocationProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = EF19A2461E44647400F00439 /* DConnectGeolocationProfile.m */; };
-		EF19A24D1E446B1C00F00439 /* geolocation.json in Resources */ = {isa = PBXBuildFile; fileRef = EF19A24C1E446B1C00F00439 /* geolocation.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -364,6 +359,37 @@
 		6B4EEF621AB06E2B00A92E0D /* DConnectOriginParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DConnectOriginParser.m; path = policy/DConnectOriginParser.m; sourceTree = "<group>"; };
 		6B4EEF681AB081B100A92E0D /* DConnectWhitelistViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DConnectWhitelistViewController.h; path = policy/DConnectWhitelistViewController.h; sourceTree = "<group>"; };
 		6B4EEF691AB0823B00A92E0D /* DConnectWhitelistViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DConnectWhitelistViewController.m; path = policy/DConnectWhitelistViewController.m; sourceTree = "<group>"; };
+		6B7A29551E711C470071160E /* airconditioner.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = airconditioner.json; path = api/airconditioner.json; sourceTree = "<group>"; };
+		6B7A29561E711C470071160E /* battery.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = battery.json; path = api/battery.json; sourceTree = "<group>"; };
+		6B7A29571E711C470071160E /* camera.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = camera.json; path = api/camera.json; sourceTree = "<group>"; };
+		6B7A29581E711C470071160E /* canvas.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = canvas.json; path = api/canvas.json; sourceTree = "<group>"; };
+		6B7A29591E711C470071160E /* connect.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = connect.json; path = api/connect.json; sourceTree = "<group>"; };
+		6B7A295A1E711C470071160E /* deviceorientation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = deviceorientation.json; path = api/deviceorientation.json; sourceTree = "<group>"; };
+		6B7A295B1E711C470071160E /* drivecontroller.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = drivecontroller.json; path = api/drivecontroller.json; sourceTree = "<group>"; };
+		6B7A295C1E711C470071160E /* ecg.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = ecg.json; path = api/ecg.json; sourceTree = "<group>"; };
+		6B7A295D1E711C470071160E /* file.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = file.json; path = api/file.json; sourceTree = "<group>"; };
+		6B7A295E1E711C470071160E /* filedescriptor.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = filedescriptor.json; path = api/filedescriptor.json; sourceTree = "<group>"; };
+		6B7A295F1E711C470071160E /* geolocation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = geolocation.json; path = api/geolocation.json; sourceTree = "<group>"; };
+		6B7A29601E711C470071160E /* health.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = health.json; path = api/health.json; sourceTree = "<group>"; };
+		6B7A29611E711C470071160E /* humandetect.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = humandetect.json; path = api/humandetect.json; sourceTree = "<group>"; };
+		6B7A29621E711C470071160E /* humidity.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = humidity.json; path = api/humidity.json; sourceTree = "<group>"; };
+		6B7A29631E711C470071160E /* illuminance.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = illuminance.json; path = api/illuminance.json; sourceTree = "<group>"; };
+		6B7A29641E711C470071160E /* keyevent.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = keyevent.json; path = api/keyevent.json; sourceTree = "<group>"; };
+		6B7A29651E711C470071160E /* light.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = light.json; path = api/light.json; sourceTree = "<group>"; };
+		6B7A29661E711C470071160E /* mediaplayer.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = mediaplayer.json; path = api/mediaplayer.json; sourceTree = "<group>"; };
+		6B7A29671E711C470071160E /* mediastreamrecording.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = mediastreamrecording.json; path = api/mediastreamrecording.json; sourceTree = "<group>"; };
+		6B7A29681E711C470071160E /* notification.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = notification.json; path = api/notification.json; sourceTree = "<group>"; };
+		6B7A29691E711C470071160E /* phone.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = phone.json; path = api/phone.json; sourceTree = "<group>"; };
+		6B7A296A1E711C470071160E /* poseestimation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = poseestimation.json; path = api/poseestimation.json; sourceTree = "<group>"; };
+		6B7A296B1E711C470071160E /* powermeter.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = powermeter.json; path = api/powermeter.json; sourceTree = "<group>"; };
+		6B7A296C1E711C470071160E /* proximity.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = proximity.json; path = api/proximity.json; sourceTree = "<group>"; };
+		6B7A296D1E711C470071160E /* settings.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = settings.json; path = api/settings.json; sourceTree = "<group>"; };
+		6B7A296E1E711C470071160E /* sphero.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = sphero.json; path = api/sphero.json; sourceTree = "<group>"; };
+		6B7A296F1E711C470071160E /* stressestimation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = stressestimation.json; path = api/stressestimation.json; sourceTree = "<group>"; };
+		6B7A29701E711C470071160E /* temperature.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = temperature.json; path = api/temperature.json; sourceTree = "<group>"; };
+		6B7A29711E711C470071160E /* touch.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = touch.json; path = api/touch.json; sourceTree = "<group>"; };
+		6B7A29721E711C470071160E /* vibration.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = vibration.json; path = api/vibration.json; sourceTree = "<group>"; };
+		6B7A29731E711C470071160E /* walkstate.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = walkstate.json; path = api/walkstate.json; sourceTree = "<group>"; };
 		6B96959E1A9DCB5200D25A4B /* DConnectServiceInformationProfile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DConnectServiceInformationProfile.h; sourceTree = "<group>"; };
 		6B9B12C01AB302FD00CC99E1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = "Base.lproj/DConnectSDK-iPhone.storyboard"; sourceTree = "<group>"; };
 		6BC64F751AB199C80095BFC9 /* DConnectWhitelistUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DConnectWhitelistUtil.h; path = policy/DConnectWhitelistUtil.h; sourceTree = "<group>"; };
@@ -387,11 +413,9 @@
 		AB0A87751A8067860016FF77 /* DConnectAvailabilityProfile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DConnectAvailabilityProfile.h; sourceTree = "<group>"; };
 		AB0A87761A8067860016FF77 /* DConnectCanvasProfile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DConnectCanvasProfile.h; sourceTree = "<group>"; };
 		AB0A87771A808BFC0016FF77 /* DConnectServiceDiscoveryProfile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DConnectServiceDiscoveryProfile.h; sourceTree = "<group>"; };
-		AB24217B1E67CBDC005887C8 /* fileDescriptor.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = fileDescriptor.json; sourceTree = "<group>"; };
 		AB24217D1E67CBF0005887C8 /* DConnectFileDescriptorProfile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DConnectFileDescriptorProfile.h; sourceTree = "<group>"; };
 		AB24217E1E67CC1F005887C8 /* DConnectFileDescriptorProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DConnectFileDescriptorProfile.m; sourceTree = "<group>"; };
 		AB3520C31BAD4BA90010FF55 /* DConnectLightProfile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DConnectLightProfile.h; sourceTree = "<group>"; };
-		AB5555B61E56B2F10086E5D5 /* power.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = power.json; sourceTree = "<group>"; };
 		AB67AAE41C642A7900B4C62C /* GCDAsyncSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GCDAsyncSocket.h; path = CocoaAsyncSocket/GCDAsyncSocket.h; sourceTree = "<group>"; };
 		AB67AAE51C642A7900B4C62C /* GCDAsyncSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GCDAsyncSocket.m; path = CocoaAsyncSocket/GCDAsyncSocket.m; sourceTree = "<group>"; };
 		AB67AAEA1C642AB200B4C62C /* DDData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDData.h; sourceTree = "<group>"; };
@@ -2013,47 +2037,14 @@
 		D64EF6691D7E8A35005AC8B2 /* DConnectServiceListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DConnectServiceListener.h; sourceTree = "<group>"; };
 		D65381851D8BEC8200F531FD /* DConnectEventBroker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DConnectEventBroker.h; sourceTree = "<group>"; };
 		D65381861D8BEC8200F531FD /* DConnectEventBroker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DConnectEventBroker.m; sourceTree = "<group>"; };
-		D65E24C91D1A5E8C00312134 /* battery.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = battery.json; sourceTree = "<group>"; };
-		D65E24D21D1B956500312134 /* health.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = health.json; sourceTree = "<group>"; };
-		D65E24D41D1B959900312134 /* vibration.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = vibration.json; sourceTree = "<group>"; };
-		D65F83171D28FBBC0024685D /* deviceorientation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = deviceorientation.json; sourceTree = "<group>"; };
-		D65F83191D28FC390024685D /* humidity.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = humidity.json; sourceTree = "<group>"; };
-		D65F831B1D28FC6B0024685D /* keyevent.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = keyevent.json; sourceTree = "<group>"; };
-		D65F831D1D28FC9F0024685D /* light.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = light.json; sourceTree = "<group>"; };
-		D65F831F1D28FCCE0024685D /* notification.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = notification.json; sourceTree = "<group>"; };
-		D65F83211D28FD170024685D /* proximity.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = proximity.json; sourceTree = "<group>"; };
-		D65F83231D28FD490024685D /* setting.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = setting.json; sourceTree = "<group>"; };
-		D65F83251D28FD840024685D /* temperature.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = temperature.json; sourceTree = "<group>"; };
 		D662DFD51D52318900C0F476 /* DConnectProfileProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DConnectProfileProvider.h; sourceTree = "<group>"; };
 		D662DFD91D52FDC900C0F476 /* DConnectProfileSpec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DConnectProfileSpec.h; sourceTree = "<group>"; };
 		D662DFDA1D52FDC900C0F476 /* DConnectSpecConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DConnectSpecConstants.h; sourceTree = "<group>"; };
-		D662E9A61D4AEA9F00919C69 /* airconditioner.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = airconditioner.json; sourceTree = "<group>"; };
-		D662E9A71D4AEA9F00919C69 /* authorization.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = authorization.json; sourceTree = "<group>"; };
-		D662E9A81D4AEA9F00919C69 /* camera.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = camera.json; sourceTree = "<group>"; };
-		D662E9A91D4AEA9F00919C69 /* canvas.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = canvas.json; sourceTree = "<group>"; };
-		D662E9AA1D4AEA9F00919C69 /* connection.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = connection.json; sourceTree = "<group>"; };
-		D662E9AB1D4AEA9F00919C69 /* drivecontroller.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = drivecontroller.json; sourceTree = "<group>"; };
-		D662E9AC1D4AEA9F00919C69 /* file.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = file.json; sourceTree = "<group>"; };
-		D662E9AF1D4AEA9F00919C69 /* humandetect.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = humandetect.json; sourceTree = "<group>"; };
-		D662E9B01D4AEA9F00919C69 /* illuminance.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = illuminance.json; sourceTree = "<group>"; };
-		D662E9B11D4AEA9F00919C69 /* mediaplayer.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = mediaplayer.json; sourceTree = "<group>"; };
-		D662E9B21D4AEA9F00919C69 /* mediastreamrecording.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = mediastreamrecording.json; sourceTree = "<group>"; };
-		D662E9B41D4AEA9F00919C69 /* phone.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = phone.json; sourceTree = "<group>"; };
-		D662E9B51D4AEA9F00919C69 /* powermeter.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = powermeter.json; sourceTree = "<group>"; };
-		D662E9B71D4AEA9F00919C69 /* servicediscovery.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = servicediscovery.json; sourceTree = "<group>"; };
-		D662E9B81D4AEAA000919C69 /* serviceinformation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = serviceinformation.json; sourceTree = "<group>"; };
-		D662E9B91D4AEAA000919C69 /* system.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = system.json; sourceTree = "<group>"; };
-		D662E9BA1D4AEAA000919C69 /* touch.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = touch.json; sourceTree = "<group>"; };
 		D66AC0681D96CFBB009316D6 /* DConnectMessageEventSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DConnectMessageEventSession.h; sourceTree = "<group>"; };
 		D66AC0691D96CFBB009316D6 /* DConnectMessageEventSession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DConnectMessageEventSession.m; sourceTree = "<group>"; };
 		D67225EA1D34B566008641EA /* DConnectService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DConnectService.h; sourceTree = "<group>"; };
 		D67225EB1D34B566008641EA /* DConnectServiceManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DConnectServiceManager.h; sourceTree = "<group>"; };
 		D67225EC1D34B566008641EA /* DConnectServiceProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DConnectServiceProvider.h; sourceTree = "<group>"; };
-		D68563BC1DA65401003818F2 /* ecg.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ecg.json; sourceTree = "<group>"; };
-		D68563BD1DA65401003818F2 /* poseestimation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = poseestimation.json; sourceTree = "<group>"; };
-		D68563BE1DA65401003818F2 /* sphero.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = sphero.json; sourceTree = "<group>"; };
-		D68563BF1DA65401003818F2 /* stressestimation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = stressestimation.json; sourceTree = "<group>"; };
-		D68563C01DA65401003818F2 /* walkstate.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = walkstate.json; sourceTree = "<group>"; };
 		D68ED359199BBA4800D8BF71 /* LocalOAuthClientPackageInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LocalOAuthClientPackageInfo.h; path = localoauth/LocalOAuthClientPackageInfo.h; sourceTree = "<group>"; };
 		D68ED35A199BBA4800D8BF71 /* LocalOAuthClientPackageInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LocalOAuthClientPackageInfo.m; path = localoauth/LocalOAuthClientPackageInfo.m; sourceTree = "<group>"; };
 		D6960ED1199FAEB400BE4D1B /* LocalOAuthSQLiteProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LocalOAuthSQLiteProfile.h; path = localoauth/LocalOAuthSQLiteProfile.h; sourceTree = "<group>"; };
@@ -2110,7 +2101,6 @@
 		D6FF6C8B1D9101C300B9165B /* DConnectVersionName.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DConnectVersionName.m; path = utils/DConnectVersionName.m; sourceTree = "<group>"; };
 		EF19A2461E44647400F00439 /* DConnectGeolocationProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DConnectGeolocationProfile.m; sourceTree = "<group>"; };
 		EF19A2481E4464C400F00439 /* DConnectGeolocationProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DConnectGeolocationProfile.h; sourceTree = "<group>"; };
-		EF19A24C1E446B1C00F00439 /* geolocation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = geolocation.json; sourceTree = "<group>"; };
 		EF8B64951AAC78F2007C590B /* DConnectKeyEventProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DConnectKeyEventProfile.h; sourceTree = "<group>"; };
 		EFC27C2C1AB5B96B0029B257 /* DConnectTouchProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DConnectTouchProfile.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -2237,6 +2227,44 @@
 				D66AC0691D96CFBB009316D6 /* DConnectMessageEventSession.m */,
 			);
 			path = event;
+			sourceTree = "<group>";
+		};
+		6B7A29541E7118F80071160E /* api */ = {
+			isa = PBXGroup;
+			children = (
+				6B7A29551E711C470071160E /* airconditioner.json */,
+				6B7A29561E711C470071160E /* battery.json */,
+				6B7A29571E711C470071160E /* camera.json */,
+				6B7A29581E711C470071160E /* canvas.json */,
+				6B7A29591E711C470071160E /* connect.json */,
+				6B7A295A1E711C470071160E /* deviceorientation.json */,
+				6B7A295B1E711C470071160E /* drivecontroller.json */,
+				6B7A295C1E711C470071160E /* ecg.json */,
+				6B7A295D1E711C470071160E /* file.json */,
+				6B7A295E1E711C470071160E /* filedescriptor.json */,
+				6B7A295F1E711C470071160E /* geolocation.json */,
+				6B7A29601E711C470071160E /* health.json */,
+				6B7A29611E711C470071160E /* humandetect.json */,
+				6B7A29621E711C470071160E /* humidity.json */,
+				6B7A29631E711C470071160E /* illuminance.json */,
+				6B7A29641E711C470071160E /* keyevent.json */,
+				6B7A29651E711C470071160E /* light.json */,
+				6B7A29661E711C470071160E /* mediaplayer.json */,
+				6B7A29671E711C470071160E /* mediastreamrecording.json */,
+				6B7A29681E711C470071160E /* notification.json */,
+				6B7A29691E711C470071160E /* phone.json */,
+				6B7A296A1E711C470071160E /* poseestimation.json */,
+				6B7A296B1E711C470071160E /* powermeter.json */,
+				6B7A296C1E711C470071160E /* proximity.json */,
+				6B7A296D1E711C470071160E /* settings.json */,
+				6B7A296E1E711C470071160E /* sphero.json */,
+				6B7A296F1E711C470071160E /* stressestimation.json */,
+				6B7A29701E711C470071160E /* temperature.json */,
+				6B7A29711E711C470071160E /* touch.json */,
+				6B7A29721E711C470071160E /* vibration.json */,
+				6B7A29731E711C470071160E /* walkstate.json */,
+			);
+			name = api;
 			sourceTree = "<group>";
 		};
 		6BD4748A1AAF061F0014FB15 /* policy */ = {
@@ -4365,45 +4393,10 @@
 		D6ECC6D519A4B78900FE3161 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				AB24217B1E67CBDC005887C8 /* fileDescriptor.json */,
-				AB5555B61E56B2F10086E5D5 /* power.json */,
-				EF19A24C1E446B1C00F00439 /* geolocation.json */,
-				D68563BC1DA65401003818F2 /* ecg.json */,
-				D68563BD1DA65401003818F2 /* poseestimation.json */,
-				D68563BE1DA65401003818F2 /* sphero.json */,
-				D68563BF1DA65401003818F2 /* stressestimation.json */,
-				D68563C01DA65401003818F2 /* walkstate.json */,
-				D662E9A61D4AEA9F00919C69 /* airconditioner.json */,
-				D662E9A71D4AEA9F00919C69 /* authorization.json */,
-				D662E9A81D4AEA9F00919C69 /* camera.json */,
-				D662E9A91D4AEA9F00919C69 /* canvas.json */,
-				D662E9AA1D4AEA9F00919C69 /* connection.json */,
-				D662E9AB1D4AEA9F00919C69 /* drivecontroller.json */,
-				D662E9AC1D4AEA9F00919C69 /* file.json */,
-				D662E9AF1D4AEA9F00919C69 /* humandetect.json */,
-				D662E9B01D4AEA9F00919C69 /* illuminance.json */,
-				D662E9B11D4AEA9F00919C69 /* mediaplayer.json */,
-				D662E9B21D4AEA9F00919C69 /* mediastreamrecording.json */,
-				D662E9B41D4AEA9F00919C69 /* phone.json */,
-				D662E9B51D4AEA9F00919C69 /* powermeter.json */,
-				D662E9B71D4AEA9F00919C69 /* servicediscovery.json */,
-				D662E9B81D4AEAA000919C69 /* serviceinformation.json */,
-				D662E9B91D4AEAA000919C69 /* system.json */,
-				D662E9BA1D4AEAA000919C69 /* touch.json */,
+				6B7A29541E7118F80071160E /* api */,
 				D6ECC6D619A4B78900FE3161 /* DConnectSDK_resources-Info.plist */,
 				D6ECC6D719A4B78900FE3161 /* InfoPlist.strings */,
 				D6ECC6DA19A4B78900FE3161 /* DConnectSDK_resources-Prefix.pch */,
-				D65E24C91D1A5E8C00312134 /* battery.json */,
-				D65E24D21D1B956500312134 /* health.json */,
-				D65E24D41D1B959900312134 /* vibration.json */,
-				D65F83171D28FBBC0024685D /* deviceorientation.json */,
-				D65F83191D28FC390024685D /* humidity.json */,
-				D65F831B1D28FC6B0024685D /* keyevent.json */,
-				D65F831D1D28FC9F0024685D /* light.json */,
-				D65F831F1D28FCCE0024685D /* notification.json */,
-				D65F83211D28FD170024685D /* proximity.json */,
-				D65F83231D28FD490024685D /* setting.json */,
-				D65F83251D28FD840024685D /* temperature.json */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -4529,48 +4522,42 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6B7A29801E711C470071160E /* humandetect.json in Resources */,
+				6B7A298A1E711C470071160E /* powermeter.json in Resources */,
+				6B7A29771E711C470071160E /* canvas.json in Resources */,
 				6B9B12C21AB3042D00CC99E1 /* DConnectSDK-iPhone.storyboard in Resources */,
-				D662E9CA1D4AEAA000919C69 /* powermeter.json in Resources */,
+				6B7A297A1E711C470071160E /* drivecontroller.json in Resources */,
+				6B7A298F1E711C470071160E /* temperature.json in Resources */,
+				6B7A298D1E711C470071160E /* sphero.json in Resources */,
+				6B7A29881E711C470071160E /* phone.json in Resources */,
+				6B7A29781E711C470071160E /* connect.json in Resources */,
+				6B7A29821E711C470071160E /* illuminance.json in Resources */,
 				3056BF1119BC3425003B62E1 /* DConnectSDK-iPad.storyboard in Resources */,
-				D65F831E1D28FC9F0024685D /* light.json in Resources */,
-				D662E9CC1D4AEAA000919C69 /* servicediscovery.json in Resources */,
-				D662E9BE1D4AEAA000919C69 /* canvas.json in Resources */,
-				D662E9C51D4AEAA000919C69 /* illuminance.json in Resources */,
-				D662E9C61D4AEAA000919C69 /* mediaplayer.json in Resources */,
-				D662E9C01D4AEAA000919C69 /* drivecontroller.json in Resources */,
-				AB24217C1E67CBDD005887C8 /* fileDescriptor.json in Resources */,
-				D65F83241D28FD490024685D /* setting.json in Resources */,
-				D65E24D31D1B956500312134 /* health.json in Resources */,
-				D662E9BB1D4AEAA000919C69 /* airconditioner.json in Resources */,
-				EF19A24D1E446B1C00F00439 /* geolocation.json in Resources */,
-				D662E9CF1D4AEAA000919C69 /* touch.json in Resources */,
+				6B7A297C1E711C470071160E /* file.json in Resources */,
 				30E9A16419AC6A850013F545 /* Localizable.strings in Resources */,
-				D65F83261D28FD840024685D /* temperature.json in Resources */,
-				AB5555B71E56B2F10086E5D5 /* power.json in Resources */,
-				D662E9C21D4AEAA000919C69 /* filedescriptor.json in Resources */,
-				D662E9BF1D4AEAA000919C69 /* connection.json in Resources */,
-				D65E24D51D1B959900312134 /* vibration.json in Resources */,
+				6B7A29901E711C470071160E /* touch.json in Resources */,
+				6B7A29791E711C470071160E /* deviceorientation.json in Resources */,
+				6B7A29741E711C470071160E /* airconditioner.json in Resources */,
+				6B7A29761E711C470071160E /* camera.json in Resources */,
+				6B7A29871E711C470071160E /* notification.json in Resources */,
+				6B7A29751E711C470071160E /* battery.json in Resources */,
+				6B7A298B1E711C470071160E /* proximity.json in Resources */,
 				D6ECC6DE19A4B7C800FE3161 /* Info.plist in Resources */,
-				D662E9CE1D4AEAA000919C69 /* system.json in Resources */,
-				D65F831A1D28FC390024685D /* humidity.json in Resources */,
-				D662E9C41D4AEAA000919C69 /* humandetect.json in Resources */,
+				6B7A298C1E711C470071160E /* settings.json in Resources */,
+				6B7A297F1E711C470071160E /* health.json in Resources */,
+				6B7A29891E711C470071160E /* poseestimation.json in Resources */,
+				6B7A297E1E711C470071160E /* geolocation.json in Resources */,
+				6B7A297D1E711C470071160E /* filedescriptor.json in Resources */,
+				6B7A297B1E711C470071160E /* ecg.json in Resources */,
+				6B7A29861E711C470071160E /* mediastreamrecording.json in Resources */,
 				D6ECC6D919A4B78900FE3161 /* InfoPlist.strings in Resources */,
-				D68563C11DA65401003818F2 /* ecg.json in Resources */,
-				D65F83181D28FBBC0024685D /* deviceorientation.json in Resources */,
-				D65E24CA1D1A5E8C00312134 /* battery.json in Resources */,
-				D662E9CD1D4AEAA000919C69 /* serviceinformation.json in Resources */,
-				D65F83221D28FD170024685D /* proximity.json in Resources */,
-				D68563C41DA65401003818F2 /* stressestimation.json in Resources */,
-				D662E9C71D4AEAA000919C69 /* mediastreamrecording.json in Resources */,
-				D68563C31DA65401003818F2 /* sphero.json in Resources */,
-				D68563C51DA65401003818F2 /* walkstate.json in Resources */,
-				D662E9C11D4AEAA000919C69 /* file.json in Resources */,
-				D65F83201D28FCCE0024685D /* notification.json in Resources */,
-				D65F831C1D28FC6B0024685D /* keyevent.json in Resources */,
-				D662E9BD1D4AEAA000919C69 /* camera.json in Resources */,
-				D662E9C91D4AEAA000919C69 /* phone.json in Resources */,
-				D662E9BC1D4AEAA000919C69 /* authorization.json in Resources */,
-				D68563C21DA65401003818F2 /* poseestimation.json in Resources */,
+				6B7A29911E711C470071160E /* vibration.json in Resources */,
+				6B7A29811E711C470071160E /* humidity.json in Resources */,
+				6B7A29841E711C470071160E /* light.json in Resources */,
+				6B7A29831E711C470071160E /* keyevent.json in Resources */,
+				6B7A298E1E711C470071160E /* stressestimation.json in Resources */,
+				6B7A29921E711C470071160E /* walkstate.json in Resources */,
+				6B7A29851E711C470071160E /* mediaplayer.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4602,7 +4589,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Environment Variables\nFRAMEWORK_NAME=${PROJECT_NAME}\nFRAMEWORK_VERSION=A\nFRAMEWORK_VERSION_NUMBER=1.0\nCONFIGURATION=\"Release\"\nFRAMEWORK_BUILD_PATH=\"${SRCROOT}/build/${CONFIGURATION}-framework\"\nFRAMEWORK_DIR=\"${FRAMEWORK_BUILD_PATH}/${FRAMEWORK_NAME}.framework\"\nSTATICLIB_BUILD_PATH=\"${SRCROOT}/build/${CONFIGURATION}-universal\"\n\n# Clean directories\nrm -rf \"${FRAMEWORK_BUILD_PATH}\"\n\n# Build simulator and device binaries.\n# A target to build a static library *must* have the name ${PROJECT_NAME}.\nxcodebuild -project ${PROJECT_NAME}.xcodeproj -sdk iphonesimulator -target ${PROJECT_NAME} -configuration ${CONFIGURATION} clean build\nxcodebuild -project ${PROJECT_NAME}.xcodeproj -sdk iphoneos -target ${PROJECT_NAME} -configuration ${CONFIGURATION} clean build\n# A target to build a bundle *must* have the name ${PROJECT_NAME}_resources. This target is optional.\nxcodebuild -project ${PROJECT_NAME}.xcodeproj -sdk iphonesimulator -target ${PROJECT_NAME}_resources -configuration ${CONFIGURATION} clean build || true\nxcodebuild -project ${PROJECT_NAME}.xcodeproj -sdk iphoneos -target ${PROJECT_NAME}_resources -configuration ${CONFIGURATION} clean build || true\n\n# create directories.\nmkdir -p ${FRAMEWORK_DIR}/Versions/${FRAMEWORK_VERSION}/Headers\n#mkdir -p ${FRAMEWORK_DIR}/Versions/${FRAMEWORK_VERSION}/Resources\nmkdir -p ${STATICLIB_BUILD_PATH}\n# create symlinks\ncd ${FRAMEWORK_DIR}\nln -s ../Versions/${FRAMEWORK_VERSION} Versions/Current\nln -s Versions/Current/Headers Headers\n#ln -s Versions/Current/Resources Resources\nln -s Versions/Current/${FRAMEWORK_NAME} ${FRAMEWORK_NAME}\ncd ${SRCROOT}\n\n# create the universal library, and strip internal symbols from it\nlipo ${SRCROOT}/build/${CONFIGURATION}-iphoneos/lib${FRAMEWORK_NAME}.a ${SRCROOT}/build/${CONFIGURATION}-iphonesimulator/lib${FRAMEWORK_NAME}.a -create -output \"${STATICLIB_BUILD_PATH}/lib${FRAMEWORK_NAME}.a\"\n#strip -x \"${STATICLIB_BUILD_PATH}/lib${FRAMEWORK_NAME}.a\"\ncp \"${STATICLIB_BUILD_PATH}/lib${FRAMEWORK_NAME}.a\" \"${FRAMEWORK_DIR}/Versions/Current/${FRAMEWORK_NAME}\"\n\n# copy files\ncp -r ${SRCROOT}/${PROJECT_NAME}/DConnectSDK/ ${FRAMEWORK_DIR}/Headers/\n\n# copy binary to bin folder\ncd ${SRCROOT}\n\ncd bin\nls | grep -v -E '.gitignore$' | xargs rm -rf\ncd ..\ncp -R ${FRAMEWORK_DIR} bin\ncp -r build/${CONFIGURATION}-resources/${PROJECT_NAME}_resources.bundle bin";
+			shellScript = "# Environment Variables\nFRAMEWORK_NAME=${PROJECT_NAME}\nFRAMEWORK_VERSION=A\nFRAMEWORK_VERSION_NUMBER=1.0\nCONFIGURATION=\"Release\"\nFRAMEWORK_BUILD_PATH=\"${SRCROOT}/build/${CONFIGURATION}-framework\"\nFRAMEWORK_DIR=\"${FRAMEWORK_BUILD_PATH}/${FRAMEWORK_NAME}.framework\"\nSTATICLIB_BUILD_PATH=\"${SRCROOT}/build/${CONFIGURATION}-universal\"\n\n# Download Device Connect Profile Specifications\n./download-spec.sh\n\n# Clean directories\nrm -rf \"${FRAMEWORK_BUILD_PATH}\"\n\n# Build simulator and device binaries.\n# A target to build a static library *must* have the name ${PROJECT_NAME}.\nxcodebuild -project ${PROJECT_NAME}.xcodeproj -sdk iphonesimulator -target ${PROJECT_NAME} -configuration ${CONFIGURATION} clean build\nxcodebuild -project ${PROJECT_NAME}.xcodeproj -sdk iphoneos -target ${PROJECT_NAME} -configuration ${CONFIGURATION} clean build\n# A target to build a bundle *must* have the name ${PROJECT_NAME}_resources. This target is optional.\nxcodebuild -project ${PROJECT_NAME}.xcodeproj -sdk iphonesimulator -target ${PROJECT_NAME}_resources -configuration ${CONFIGURATION} clean build || true\nxcodebuild -project ${PROJECT_NAME}.xcodeproj -sdk iphoneos -target ${PROJECT_NAME}_resources -configuration ${CONFIGURATION} clean build || true\n\n# create directories.\nmkdir -p ${FRAMEWORK_DIR}/Versions/${FRAMEWORK_VERSION}/Headers\n#mkdir -p ${FRAMEWORK_DIR}/Versions/${FRAMEWORK_VERSION}/Resources\nmkdir -p ${STATICLIB_BUILD_PATH}\n# create symlinks\ncd ${FRAMEWORK_DIR}\nln -s ../Versions/${FRAMEWORK_VERSION} Versions/Current\nln -s Versions/Current/Headers Headers\n#ln -s Versions/Current/Resources Resources\nln -s Versions/Current/${FRAMEWORK_NAME} ${FRAMEWORK_NAME}\ncd ${SRCROOT}\n\n# create the universal library, and strip internal symbols from it\nlipo ${SRCROOT}/build/${CONFIGURATION}-iphoneos/lib${FRAMEWORK_NAME}.a ${SRCROOT}/build/${CONFIGURATION}-iphonesimulator/lib${FRAMEWORK_NAME}.a -create -output \"${STATICLIB_BUILD_PATH}/lib${FRAMEWORK_NAME}.a\"\n#strip -x \"${STATICLIB_BUILD_PATH}/lib${FRAMEWORK_NAME}.a\"\ncp \"${STATICLIB_BUILD_PATH}/lib${FRAMEWORK_NAME}.a\" \"${FRAMEWORK_DIR}/Versions/Current/${FRAMEWORK_NAME}\"\n\n# copy files\ncp -r ${SRCROOT}/${PROJECT_NAME}/DConnectSDK/ ${FRAMEWORK_DIR}/Headers/\n\n# copy binary to bin folder\ncd ${SRCROOT}\n\ncd bin\nls | grep -v -E '.gitignore$' | xargs rm -rf\ncd ..\ncp -R ${FRAMEWORK_DIR} bin\ncp -r build/${CONFIGURATION}-resources/${PROJECT_NAME}_resources.bundle bin";
 		};
 		C29D3316191B253E001015CC /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
