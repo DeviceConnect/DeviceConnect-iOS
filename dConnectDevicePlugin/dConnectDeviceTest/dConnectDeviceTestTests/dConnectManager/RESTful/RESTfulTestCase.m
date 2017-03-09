@@ -23,7 +23,7 @@
 - (void)setUp
 {
     [super setUp];
-    
+
     // serviceIdを検索しておく
     if (!self.serviceId) {
         [self searchTestDevicePlugin];
@@ -146,7 +146,7 @@
         event = nil;
         _semaphore = dispatch_semaphore_create(0);
         if (!socket) {
-            socket = [[SRWebSocket new] initWithURLRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"ws://localhost:4035/websocket"]]];
+            socket = [[SRWebSocket new] initWithURLRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"ws://localhost:4035/gotapi/websocket"]]];
             [socket setDelegateOperationQueue:[NSOperationQueue new]];
             [socket setDelegate:self];
             [socket open];
@@ -210,11 +210,11 @@
 #pragma mark - SRWebSocketDelegate
 
 - (void) webSocketDidOpen:(SRWebSocket *)webSocket {
-    [webSocket send:[NSString stringWithFormat:@"{\"sessionKey\":\"%@\"}", self.clientId]];
+    [webSocket send:[NSString stringWithFormat:@"{\"accessToken\":\"%@\"}", self.clientId]];
 }
 
 - (void) webSocket:(SRWebSocket *)webSocket didFailWithError:(NSError *)error {
-    
+    NSLog(@"error:%@", error);
 }
 
 - (void) webSocket:(SRWebSocket *)webSocket didCloseWithCode:(NSInteger)code reason:(NSString *)reason wasClean:(BOOL)wasClean {
@@ -222,6 +222,7 @@
 }
 
 - (void) webSocket:(SRWebSocket *)webSocket didReceiveMessage:(id)message {
+
     if(!message) {
         return;
     }
@@ -230,7 +231,11 @@
         return;
     }
     event = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+    if ([event[@"result"] intValue] == 0) {
+        return;
+    }
     dispatch_semaphore_signal(_semaphore);
+    
 }
 
 @end

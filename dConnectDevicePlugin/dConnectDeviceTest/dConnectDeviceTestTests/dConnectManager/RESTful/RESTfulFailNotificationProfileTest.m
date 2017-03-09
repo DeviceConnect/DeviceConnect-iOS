@@ -7,6 +7,7 @@
 //  http://opensource.org/licenses/mit-license.php
 //
 
+#import <DConnectSDK/DConnectSDK.h>
 #import "RESTfulTestCase.h"
 
 @interface RESTfulFailNotificationProfileTest : RESTfulTestCase
@@ -198,7 +199,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /notification/onclick?sessionKey=xxxx
+ * Path: /notification/onclick?accessToken=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -219,7 +220,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /notification/onclick?serviceId=&sessionKey=xxxx
+ * Path: /notification/onclick?serviceId=&accessToken=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -240,7 +241,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /notification/onclick?serviceId=123456789&sessionKey=xxxx
+ * Path: /notification/onclick?serviceId=123456789&accessToken=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -261,22 +262,26 @@
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /notification/onclick?sessionKey=xxxx
+ * Path: /notification/onclick?accessToken=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailNotificationOnClickPutNoSessionKey
+- (void) testHttpFailNotificationOnClickPutNoAccessToken
 {
+    [DConnectManager sharedManager].settings.useLocalOAuth = YES;
+    [DConnectManager sharedManager].settings.useOriginEnable = YES;
     NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:
                                        @"http://localhost:4035/gotapi/notification/onclick?"
                                        "serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":10}", request);
+    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":13}", request);
+    [DConnectManager sharedManager].settings.useLocalOAuth = NO;
+    [DConnectManager sharedManager].settings.useOriginEnable = NO;
 }
 
 /*!
@@ -284,7 +289,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /notification/onclick?sessionKey=xxxx
+ * Path: /notification/onclick?accessToken=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -305,7 +310,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /notification/onclick?serviceId=&sessionKey=xxxx
+ * Path: /notification/onclick?serviceId=&accessToken=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -326,7 +331,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /notification/onclick?serviceId=123456789&sessionKey=xxxx
+ * Path: /notification/onclick?serviceId=123456789&accessToken=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -347,7 +352,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: GET
- * Path: /notification/onclick?serviceId=xxxx&sessionKey=xxxx
+ * Path: /notification/onclick?serviceId=xxxx&accessToken=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -370,7 +375,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: POST
- * Path: /notification/onclick?serviceId=xxxx&sessionKey=xxxx
+ * Path: /notification/onclick?serviceId=xxxx&accessToken=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -393,7 +398,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /notification/onshow?sessionKey=xxxx
+ * Path: /notification/onshow?accessToken=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -414,7 +419,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /notification/onshow?serviceId=&sessionKey=xxxx
+ * Path: /notification/onshow?serviceId=&accessToken=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -435,7 +440,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /notification/onshow?serviceId=123456789&sessionKey=xxxx
+ * Path: /notification/onshow?serviceId=123456789&accessToken=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -452,7 +457,7 @@
 }
 
 /*!
- * @brief sessionKeyが無い状態でonshow属性のコールバック登録テストを行う.
+ * @brief accessTokenが無い状態でonshow属性のコールバック登録テストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: PUT
@@ -463,15 +468,19 @@
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailNotificationOnShowPutNoSessionKey
+- (void) testHttpFailNotificationOnShowPutNoAccessToken
 {
+    [DConnectManager sharedManager].settings.useLocalOAuth = YES;
+    [DConnectManager sharedManager].settings.useOriginEnable = YES;
     NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:
                                        @"http://localhost:4035/gotapi/notification/onshow?serviceId=%@",
                                        self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":10}", request);
+    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":13}", request);
+    [DConnectManager sharedManager].settings.useLocalOAuth = NO;
+    [DConnectManager sharedManager].settings.useOriginEnable = NO;
 }
 
 /*!
@@ -479,7 +488,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /notification/onshow?sessionKey=xxxx
+ * Path: /notification/onshow?accessToken=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -500,7 +509,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /notification/onshow?serviceId=&sessionKey=xxxx
+ * Path: /notification/onshow?serviceId=&accessToken=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -521,7 +530,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /notification/onshow?serviceId=123456789&sessionKey=xxxx
+ * Path: /notification/onshow?serviceId=123456789&accessToken=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -538,7 +547,7 @@
 }
 
 /*!
- * @brief sessionKeyが無い状態でonshow属性のコールバック解除テストを行う.
+ * @brief accessTokenが無い状態でonshow属性のコールバック解除テストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: PUT
@@ -549,15 +558,19 @@
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailNotificationOnShowDeleteNoSessionKey
+- (void) testHttpFailNotificationOnShowDeleteNoAccessToken
 {
+    [DConnectManager sharedManager].settings.useLocalOAuth = YES;
+    [DConnectManager sharedManager].settings.useOriginEnable = YES;
     NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:
                                        @"http://localhost:4035/gotapi/notification/onshow?serviceId=%@",
                                        self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":10}", request);
+    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":13}", request);
+    [DConnectManager sharedManager].settings.useLocalOAuth = NO;
+    [DConnectManager sharedManager].settings.useOriginEnable = NO;
 }
 
 /*!
@@ -565,7 +578,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: GET
- * Path: /notification/onshow?serviceId=xxxx&sessionKey=xxxx
+ * Path: /notification/onshow?serviceId=xxxx&accessToken=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -588,7 +601,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: POST
- * Path: /notification/onshow?serviceId=xxxx&sessionKey=xxxx
+ * Path: /notification/onshow?serviceId=xxxx&accessToken=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -611,7 +624,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /notification/onclose?sessionKey=xxxx
+ * Path: /notification/onclose?accessToken=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -632,7 +645,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /notification/onclose?serviceId=&sessionKey=xxxx
+ * Path: /notification/onclose?serviceId=&accessToken=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -653,7 +666,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /notification/onclose?serviceId=123456789&sessionKey=xxxx
+ * Path: /notification/onclose?serviceId=123456789&accessToken=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -670,7 +683,7 @@
 }
 
 /*!
- * @brief sessionKeyが無い状態でonclose属性のコールバック登録テストを行う.
+ * @brief accessTokenが無い状態でonclose属性のコールバック登録テストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: PUT
@@ -681,15 +694,19 @@
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailNotificationOnClosePutNoSessionKey
+- (void) testHttpFailNotificationOnClosePutNoAccessToken
 {
+    [DConnectManager sharedManager].settings.useLocalOAuth = YES;
+    [DConnectManager sharedManager].settings.useOriginEnable = YES;
     NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:
                                        @"http://localhost:4035/gotapi/notification/onclose?serviceId=%@",
                                        self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":10}", request);
+    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":13}", request);
+    [DConnectManager sharedManager].settings.useLocalOAuth = NO;
+    [DConnectManager sharedManager].settings.useOriginEnable = NO;
 }
 
 /*!
@@ -697,7 +714,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /notification/onclose?sessionKey=xxxx
+ * Path: /notification/onclose?accessToken=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -718,7 +735,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /notification/onclose?serviceId=&sessionKey=xxxx
+ * Path: /notification/onclose?serviceId=&accessToken=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -739,7 +756,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /notification/onclose?serviceId=123456789&sessionKey=xxxx
+ * Path: /notification/onclose?serviceId=123456789&accessToken=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -756,7 +773,7 @@
 }
 
 /*!
- * @brief sessionKeyが無い状態でonclose属性のコールバック解除テストを行う.
+ * @brief accessTokenが無い状態でonclose属性のコールバック解除テストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
@@ -767,15 +784,19 @@
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailNotificationOnCloseDeleteNoSessionKey
+- (void) testHttpFailNotificationOnCloseDeleteNoAccessToken
 {
+    [DConnectManager sharedManager].settings.useLocalOAuth = YES;
+    [DConnectManager sharedManager].settings.useOriginEnable = YES;
     NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:
                                        @"http://localhost:4035/gotapi/notification/onclose?serviceId=%@",
                                        self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":10}", request);
+    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":13}", request);
+    [DConnectManager sharedManager].settings.useLocalOAuth = NO;
+    [DConnectManager sharedManager].settings.useOriginEnable = NO;
 }
 
 /*!
@@ -783,7 +804,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: GET
- * Path: /notification/onclose?serviceId=xxxx&sessionKey=xxxx
+ * Path: /notification/onclose?serviceId=xxxx&accessToken=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -806,7 +827,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: POST
- * Path: /notification/onclose?serviceId=xxxx&sessionKey=xxxx
+ * Path: /notification/onclose?serviceId=xxxx&accessToken=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -829,7 +850,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /notification/onerror?sessionKey=xxxx
+ * Path: /notification/onerror?accessToken=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -850,7 +871,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /notification/onerror?serviceId=&sessionKey=xxxx
+ * Path: /notification/onerror?serviceId=&accessToken=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -871,7 +892,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /notification/onerror?serviceId=123456789&sessionKey=xxxx
+ * Path: /notification/onerror?serviceId=123456789&accessToken=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -888,7 +909,7 @@
 }
 
 /*!
- * @brief sessionKeyが無い状態でonerror属性のコールバック登録テストを行う.
+ * @brief accessTokenが無い状態でonerror属性のコールバック登録テストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: PUT
@@ -899,15 +920,19 @@
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailNotificationOnErrorPutNoSessionKey
+- (void) testHttpFailNotificationOnErrorPutNoAccessToken
 {
+    [DConnectManager sharedManager].settings.useLocalOAuth = YES;
+    [DConnectManager sharedManager].settings.useOriginEnable = YES;
     NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:
                                        @"http://localhost:4035/gotapi/notification/onerror?serviceId=%@",
                                        self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":10}", request);
+    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":13}", request);
+    [DConnectManager sharedManager].settings.useLocalOAuth = NO;
+    [DConnectManager sharedManager].settings.useOriginEnable = NO;
 }
 
 /*!
@@ -915,7 +940,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /notification/onerror?sessionKey=xxxx
+ * Path: /notification/onerror?accessToken=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -936,7 +961,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /notification/onerror?serviceId=&sessionKey=xxxx
+ * Path: /notification/onerror?serviceId=&accessToken=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -957,7 +982,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /notification/onerror?serviceId=123456789&sessionKey=xxxx
+ * Path: /notification/onerror?serviceId=123456789&accessToken=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -974,7 +999,7 @@
 }
 
 /*!
- * @brief sessionKeyが無い状態でonerror属性のコールバック解除テストを行う.
+ * @brief accessTokenが無い状態でonerror属性のコールバック解除テストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
@@ -985,15 +1010,19 @@
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailNotificationOnErrorDeleteNoSessionKey
+- (void) testHttpFailNotificationOnErrorDeleteNoAccessToken
 {
+    [DConnectManager sharedManager].settings.useLocalOAuth = YES;
+    [DConnectManager sharedManager].settings.useOriginEnable = YES;
     NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:
                                        @"http://localhost:4035/gotapi/notification/onerror?serviceId=%@",
                                        self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":10}", request);
+    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":13}", request);
+    [DConnectManager sharedManager].settings.useLocalOAuth = NO;
+    [DConnectManager sharedManager].settings.useOriginEnable = NO;
 }
 
 /*!
@@ -1001,7 +1030,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: GET
- * Path: /notification/onerror?serviceId=xxxx&sessionKey=xxxx
+ * Path: /notification/onerror?serviceId=xxxx&accessToken=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -1024,7 +1053,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: POST
- * Path: /notification/onerror?serviceId=xxxx&sessionKey=xxxx
+ * Path: /notification/onerror?serviceId=xxxx&accessToken=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】

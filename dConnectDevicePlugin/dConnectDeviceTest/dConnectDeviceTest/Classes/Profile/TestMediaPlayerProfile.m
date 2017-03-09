@@ -286,13 +286,13 @@
         [self addPutPath: putOnStatusChangeRequestApiPath api: ^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
             
             NSString *serviceId = [request serviceId];
-            NSString *sessionkey = [request sessionKey];
+            NSString *sessionkey = [request accessToken];
             
             CheckDIDAndSK(response, serviceId, sessionkey) {
                 response.result = DConnectMessageResultTypeOk;
                 
                 DConnectMessage *event = [DConnectMessage message];
-                [event setString:sessionkey forKey:DConnectMessageSessionKey];
+                [event setString:sessionkey forKey:DConnectMessageAccessToken];
                 [event setString:serviceId forKey:DConnectMessageServiceId];
                 [event setString:[weakSelf profileName] forKey:DConnectMessageProfile];
                 [event setString:DConnectMediaPlayerProfileAttrOnStatusChange forKey:DConnectMessageAttribute];
@@ -367,7 +367,7 @@
         [self addDeletePath: deleteOnStatusChangeRequestApiPath api: ^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
             
             NSString *serviceId = [request serviceId];
-            NSString *sessionkey = [request sessionKey];
+            NSString *sessionkey = [request accessToken];
             
             CheckDIDAndSK(response, serviceId, sessionkey) {
                 response.result = DConnectMessageResultTypeOk;

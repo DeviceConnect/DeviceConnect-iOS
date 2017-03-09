@@ -64,13 +64,13 @@
         [self addPutPath: putOnConnectRequestApiPath api: ^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
 
             NSString *serviceId = [request serviceId];
-            NSString *sessionKey = [request sessionKey];
+            NSString *accessToken = [request accessToken];
             
-            CheckDIDAndSK(response, serviceId, sessionKey) {
+            CheckDIDAndSK(response, serviceId, accessToken) {
                 response.result = DConnectMessageResultTypeOk;
                 
                 DConnectMessage *event = [DConnectMessage message];
-                [event setString:sessionKey forKey:DConnectMessageSessionKey];
+                [event setString:accessToken forKey:DConnectMessageAccessToken];
                 [event setString:weakSelf.profileName forKey:DConnectMessageProfile];
                 [event setString:serviceId forKey:DConnectMessageServiceId];
                 [event setString:DConnectPhoneProfileAttrOnConnect forKey:DConnectMessageAttribute];
@@ -93,9 +93,9 @@
         [self addDeletePath: deleteOnConnectRequestApiPath api: ^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
 
             NSString *serviceId = [request serviceId];
-            NSString *sessionKey = [request sessionKey];
+            NSString *accessToken = [request accessToken];
             
-            CheckDIDAndSK(response, serviceId, sessionKey) {
+            CheckDIDAndSK(response, serviceId, accessToken) {
                 response.result = DConnectMessageResultTypeOk;
             }
             

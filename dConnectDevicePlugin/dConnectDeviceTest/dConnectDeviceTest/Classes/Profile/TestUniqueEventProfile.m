@@ -39,7 +39,7 @@ NSString *const UniqueEventProfileProfileAttributeUnique = @"unique";
             [NSThread sleepForTimeInterval:1.0];
             for (int i = 0; i < [count intValue]; i++) {
                 DConnectMessage *event = [DConnectMessage message];
-                [event setString:[request sessionKey] forKey:DConnectMessageSessionKey];
+                [event setString:[request accessToken] forKey:DConnectMessageAccessToken];
                 [event setString:[request serviceId] forKey:DConnectMessageServiceId];
                 
                 NSString *attribute = [request attribute];

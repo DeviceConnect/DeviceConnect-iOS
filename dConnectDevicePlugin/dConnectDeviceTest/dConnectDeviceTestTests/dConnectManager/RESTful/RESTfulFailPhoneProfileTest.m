@@ -7,6 +7,7 @@
 //  http://opensource.org/licenses/mit-license.php
 //
 
+#import <DConnectSDK/DConnectSDK.h>
 #import "RESTfulTestCase.h"
 
 @interface RESTfulFailPhoneProfileTest : RESTfulTestCase
@@ -289,7 +290,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /phone/onconnect?sessionKey=xxxx
+ * Path: /phone/onconnect?accessToken=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -310,7 +311,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /phone/onconnect?serviceId=&sessionKey=xxxx
+ * Path: /phone/onconnect?serviceId=&accessToken=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -331,7 +332,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /phone/onconnect?serviceId=123456789&sessionKey=xxxx
+ * Path: /phone/onconnect?serviceId=123456789&accessToken=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -348,7 +349,7 @@
 }
 
 /*!
- * @brief sessionKeyが無い状態でonconnect属性のコールバック登録テストを行う.
+ * @brief accessTokenが無い状態でonconnect属性のコールバック登録テストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: PUT
@@ -359,15 +360,19 @@
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailPhoneOnConnectPutNoSessionKey
+- (void) testHttpFailPhoneOnConnectPutNoAccessToken
 {
+    [DConnectManager sharedManager].settings.useLocalOAuth = YES;
+    [DConnectManager sharedManager].settings.useOriginEnable = YES;
     NSURL *uri = [NSURL URLWithString:
                   [NSString stringWithFormat:@"http://localhost:4035/gotapi/phone/onconnect?serviceId=%@",
                    self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":10}", request);
+    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":13}", request);
+    [DConnectManager sharedManager].settings.useLocalOAuth = NO;
+    [DConnectManager sharedManager].settings.useOriginEnable = NO;
 }
 
 /*!
@@ -375,7 +380,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /phone/onconnect?sessionKey=xxxx
+ * Path: /phone/onconnect?accessToken=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -396,7 +401,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /phone/onconnect?serviceId=&sessionKey=xxxx
+ * Path: /phone/onconnect?serviceId=&accessToken=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -417,7 +422,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /phone/onconnect?serviceId=123456789&sessionKey=xxxx
+ * Path: /phone/onconnect?serviceId=123456789&accessToken=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -434,7 +439,7 @@
 }
 
 /*!
- * @brief sessionKeyが無い状態でonconnect属性のコールバック解除テストを行う.
+ * @brief accessTokenが無い状態でonconnect属性のコールバック解除テストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
@@ -445,13 +450,17 @@
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailPhoneOnConnectDeleteNoSessionKey
+- (void) testHttpFailPhoneOnConnectDeleteNoAccessToken
 {
+    [DConnectManager sharedManager].settings.useLocalOAuth = YES;
+    [DConnectManager sharedManager].settings.useOriginEnable = YES;
     NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/phone/onconnect?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":10}", request);
+    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":13}", request);
+    [DConnectManager sharedManager].settings.useLocalOAuth = NO;
+    [DConnectManager sharedManager].settings.useOriginEnable = NO;
 }
 
 /*!
@@ -459,7 +468,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: GET
- * Path: /phone/onconnect?serviceId=xxxx&sessionKey=xxxx
+ * Path: /phone/onconnect?serviceId=xxxx&accessToken=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -480,7 +489,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: POST
- * Path: /phone/onconnect?serviceId=xxxx&sessionKey=xxxx
+ * Path: /phone/onconnect?serviceId=xxxx&accessToken=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】

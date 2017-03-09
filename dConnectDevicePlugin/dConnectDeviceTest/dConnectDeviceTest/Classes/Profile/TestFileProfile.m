@@ -37,7 +37,7 @@ NSString *const TestFilePath = @"/test.png";
         // API登録(didReceiveGetReceiveRequest相当)
         NSString *getReceiveRequestApiPath =
                 [self apiPath: nil
-                attributeName: DConnectFileProfileAttrReceive];
+                attributeName: nil];
         [self addGetPath: getReceiveRequestApiPath api: ^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
 
             NSString *serviceId = request.serviceId;
@@ -92,7 +92,7 @@ NSString *const TestFilePath = @"/test.png";
         // API登録(didReceivePostSendRequest相当)
         NSString *postSendRequestApiPath =
                 [self apiPath: nil
-                attributeName: DConnectFileProfileAttrSend];
+                attributeName: nil];
         [self addPostPath: postSendRequestApiPath api: ^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
             
             NSData *data = [DConnectFileProfile dataFromRequest:request];
@@ -120,7 +120,7 @@ NSString *const TestFilePath = @"/test.png";
         // API登録(didReceiveDeleteRemoveRequest相当)
         NSString *deleteRemoveRequestApiPath =
                 [self apiPath: nil
-                attributeName: DConnectFileProfileAttrRemove];
+                attributeName: nil];
         [self addDeletePath: deleteRemoveRequestApiPath api: ^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
             
             NSString *serviceId = [request serviceId];

@@ -8,7 +8,7 @@
 //
 
 #import "RESTfulTestCase.h"
-
+#import <DConnectSDK/DConnectSDK.h>
 @interface RESTfulFailBatteryProfileTest : RESTfulTestCase
 
 @end
@@ -619,7 +619,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /battery/onchargingchange?sessionKey=xxxx&sessionKey=xxxx
+ * Path: /battery/onchargingchange
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -641,7 +641,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /battery/onchargingchange?devicdid=&sessionKey=xxxx
+ * Path: /battery/onchargingchange?devicdid=&accessToken=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -663,7 +663,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /battery/onchargingchange?devicdid=123456789&sessionKey=xxxx
+ * Path: /battery/onchargingchange?devicdid=123456789&accessToken=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -681,7 +681,7 @@
 
 /*!
  * @brief
- * sessionKeyが無い状態でonchargingchange属性のコールバック登録テストを行う.
+ * accessTokenが無い状態でonchargingchange属性のコールバック登録テストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: PUT
@@ -692,13 +692,19 @@
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailBatteryOnChargingChangePutNoSessionKey
+- (void) testHttpFailBatteryOnChargingChangePutNoAccessToken
 {
+    [DConnectManager sharedManager].settings.useLocalOAuth = YES;
+    [DConnectManager sharedManager].settings.useOriginEnable = YES;
+    
     NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/battery/onchargingchange?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
 
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":10}", request);
+    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":13}", request);
+    [DConnectManager sharedManager].settings.useLocalOAuth = NO;
+    [DConnectManager sharedManager].settings.useOriginEnable = NO;
+
 }
 
 /*!
@@ -707,7 +713,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /battery/onchargingchange?sessionKey=xxxx
+ * Path: /battery/onchargingchange?accessToken=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -729,7 +735,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /battery/onchargingchange?devicdid=&sessionKey=xxxx
+ * Path: /battery/onchargingchange?devicdid=&accessToken=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -751,7 +757,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /battery/onchargingchange?devicdid=123456789&sessionKey=xxxx
+ * Path: /battery/onchargingchange?devicdid=123456789&accessToken=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -780,13 +786,18 @@
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailBatteryOnChargingChangeDeleteNoSessionKey
+- (void) testHttpFailBatteryOnChargingChangeDeleteNoAccessToken
 {
+    [DConnectManager sharedManager].settings.useLocalOAuth = YES;
+    [DConnectManager sharedManager].settings.useOriginEnable = YES;
+
     NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/battery/onchargingchange?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
 
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":10}", request);
+    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":13}", request);
+    [DConnectManager sharedManager].settings.useLocalOAuth = NO;
+    [DConnectManager sharedManager].settings.useOriginEnable = NO;
 }
 
 /*!
@@ -795,7 +806,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: GET
- * Path: /battery/onchargingchange?serviceId=xxxx&sessionKey=xxxx
+ * Path: /battery/onchargingchange?serviceId=xxxx&accessToken=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -817,7 +828,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: POST
- * Path: /battery/onchargingchange?serviceId=xxxx&sessionKey=xxxx
+ * Path: /battery/onchargingchange?serviceId=xxxx&accessToken=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -839,7 +850,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /battery/onchargingtimechange?sessionKey=xxxx&sessionKey=xxxx
+ * Path: /battery/onchargingtimechange?accessToken=xxxx&accessToken=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -861,7 +872,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /battery/onbatterychage?devicdid=&sessionKey=xxxx
+ * Path: /battery/onbatterychage?devicdid=&accessToken=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -883,7 +894,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /battery/onbatterychage?devicdid=123456789&sessionKey=xxxx
+ * Path: /battery/onbatterychage?devicdid=123456789&accessToken=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -901,7 +912,7 @@
 
 /*!
  * @brief
- * sessionKeyが無い状態でonbatterychage属性のコールバック登録テストを行う.
+ * accessTokenが無い状態でonbatterychage属性のコールバック登録テストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: PUT
@@ -912,13 +923,19 @@
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailBatteryOnBatteryChangePutNoSessionKey
+- (void) testHttpFailBatteryOnBatteryChangePutNoAccessToken
 {
+    [DConnectManager sharedManager].settings.useLocalOAuth = YES;
+    [DConnectManager sharedManager].settings.useOriginEnable = YES;
+
     NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/battery/onbatterychange?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
 
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":10}", request);
+    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":13}", request);
+    [DConnectManager sharedManager].settings.useLocalOAuth = NO;
+    [DConnectManager sharedManager].settings.useOriginEnable = NO;
+
 }
 
 /*!
@@ -927,7 +944,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /battery/onchargingtimechange?sessionKey=xxxx&sessionKey=xxxx
+ * Path: /battery/onchargingtimechange?accessToken=xxxx&accessToken=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -949,7 +966,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /battery/onbatterychage?devicdid=&sessionKey=xxxx
+ * Path: /battery/onbatterychage?devicdid=&accessToken=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -971,7 +988,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /battery/onbatterychage?devicdid=123456789&sessionKey=xxxx
+ * Path: /battery/onbatterychage?devicdid=123456789&accessToken=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -989,7 +1006,7 @@
 
 /*!
  * @brief
- * sessionKeyが無い状態でonbatterychage属性のコールバック解除テストを行う.
+ * accessTokenが無い状態でonbatterychage属性のコールバック解除テストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
@@ -1000,13 +1017,19 @@
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailBatteryOnBatteryChangeDeleteNoSessionKey
+- (void) testHttpFailBatteryOnBatteryChangeDeleteNoAccessToken
 {
+    [DConnectManager sharedManager].settings.useLocalOAuth = YES;
+    [DConnectManager sharedManager].settings.useOriginEnable = YES;
+
     NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/battery/onbatterychange?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
 
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":10}", request);
+    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":13}", request);
+    [DConnectManager sharedManager].settings.useLocalOAuth = NO;
+    [DConnectManager sharedManager].settings.useOriginEnable = NO;
+
 }
 
 /*!
@@ -1015,7 +1038,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: GET
- * Path: /battery/onchargingtimechange?serviceId=xxxx&sessionKey=xxxx
+ * Path: /battery/onchargingtimechange?serviceId=xxxx&accessToken=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -1037,7 +1060,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: POST
- * Path: /battery/onchargingtimechange?serviceId=xxxx&sessionKey=xxxx
+ * Path: /battery/onchargingtimechange?serviceId=xxxx&accessToken=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】

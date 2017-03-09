@@ -7,6 +7,7 @@
 //  http://opensource.org/licenses/mit-license.php
 //
 
+#import <DConnectSDK/DConnectSDK.h>
 #import "RESTfulTestCase.h"
 
 @interface RESTfulFailProximityProfileTest : RESTfulTestCase
@@ -25,7 +26,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /proximity/ondeviceproximity?sessionKey=xxxx
+ * Path: /proximity/ondeviceproximity?accessToken=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -46,7 +47,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /proximity/ondeviceproximity?serviceId=&sessionKey=xxxx
+ * Path: /proximity/ondeviceproximity?serviceId=&accessToken=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -67,7 +68,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /proximity/ondeviceproximity?serviceId=123456789&sessionKey=xxxx
+ * Path: /proximity/ondeviceproximity?serviceId=123456789&accessToken=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -84,7 +85,7 @@
 }
 
 /*!
- * @brief sessionKeyが無い状態でondeviceproximity属性のコールバック登録テストを行う.
+ * @brief accessTokenが無い状態でondeviceproximity属性のコールバック登録テストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: PUT
@@ -95,13 +96,17 @@
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailProximityOnDeviceProximityPutNoSessionKey
+- (void) testHttpFailProximityOnDeviceProximityPutNoAccessToken
 {
+    [DConnectManager sharedManager].settings.useLocalOAuth = YES;
+    [DConnectManager sharedManager].settings.useOriginEnable = YES;
     NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/proximity/ondeviceproximity?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":10}", request);
+    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":13}", request);
+    [DConnectManager sharedManager].settings.useLocalOAuth = NO;
+    [DConnectManager sharedManager].settings.useOriginEnable = NO;
 }
 
 /*!
@@ -109,7 +114,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /proximity/ondeviceproximity?sessionKey=xxxx
+ * Path: /proximity/ondeviceproximity?accessToken=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -130,7 +135,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /proximity/ondeviceproximity?serviceId=&sessionKey=xxxx
+ * Path: /proximity/ondeviceproximity?serviceId=&accessToken=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -151,7 +156,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /proximity/ondeviceproximity?serviceId=123456789&sessionKey=xxxx
+ * Path: /proximity/ondeviceproximity?serviceId=123456789&accessToken=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -168,7 +173,7 @@
 }
 
 /*!
- * @brief sessionKeyが無い状態でondeviceproximity属性のコールバック解除テストを行う.
+ * @brief accessTokenが無い状態でondeviceproximity属性のコールバック解除テストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
@@ -179,13 +184,17 @@
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailProximityOnDeviceProximityDeleteNoSessionKey
+- (void) testHttpFailProximityOnDeviceProximityDeleteNoAccessToken
 {
+    [DConnectManager sharedManager].settings.useLocalOAuth = YES;
+    [DConnectManager sharedManager].settings.useOriginEnable = YES;
     NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/proximity/ondeviceproximity?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":10}", request);
+    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":13}", request);
+    [DConnectManager sharedManager].settings.useLocalOAuth = NO;
+    [DConnectManager sharedManager].settings.useOriginEnable = NO;
 }
 
 /*!
@@ -193,7 +202,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: POST
- * Path: /proximity/ondeviceproximity?serviceId=xxxx&sessionKey=xxxx
+ * Path: /proximity/ondeviceproximity?serviceId=xxxx&accessToken=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -214,7 +223,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /proximity/onuserproximity?sessionKey=xxxx
+ * Path: /proximity/onuserproximity?accessToken=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -235,7 +244,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /proximity/onuserproximity?serviceId=&sessionKey=xxxx
+ * Path: /proximity/onuserproximity?serviceId=&accessToken=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -256,7 +265,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /proximity/onuserproximity?serviceId=123456789&sessionKey=xxxx
+ * Path: /proximity/onuserproximity?serviceId=123456789&accessToken=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -273,7 +282,7 @@
 }
 
 /*!
- * @brief sessionKeyが無い状態でonuserproximity属性のコールバック登録テストを行う.
+ * @brief accessTokenが無い状態でonuserproximity属性のコールバック登録テストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: PUT
@@ -284,13 +293,17 @@
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailProximityOnUserProximityPutNoSessionKey
+- (void) testHttpFailProximityOnUserProximityPutNoAccessToken
 {
+    [DConnectManager sharedManager].settings.useLocalOAuth = YES;
+    [DConnectManager sharedManager].settings.useOriginEnable = YES;
     NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/proximity/onuserproximity?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":10}", request);
+    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":13}", request);
+    [DConnectManager sharedManager].settings.useLocalOAuth = NO;
+    [DConnectManager sharedManager].settings.useOriginEnable = NO;
 }
 
 /*!
@@ -298,7 +311,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /proximity/onuserproximity?sessionKey=xxxx
+ * Path: /proximity/onuserproximity?accessToken=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -319,7 +332,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /proximity/onuserproximity?serviceId=&sessionKey=xxxx
+ * Path: /proximity/onuserproximity?serviceId=&accessToken=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -340,7 +353,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /proximity/onuserproximity?serviceId=123456789&sessionKey=xxxx
+ * Path: /proximity/onuserproximity?serviceId=123456789&accessToken=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -357,7 +370,7 @@
 }
 
 /*!
- * @brief sessionKeyが無い状態でonuserproximity属性のコールバック解除テストを行う.
+ * @brief accessTokenが無い状態でonuserproximity属性のコールバック解除テストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
@@ -368,13 +381,17 @@
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailProximityOnUserProximityDeleteNoSessionKey
+- (void) testHttpFailProximityOnUserProximityDeleteNoAccessToken
 {
+    [DConnectManager sharedManager].settings.useLocalOAuth = YES;
+    [DConnectManager sharedManager].settings.useOriginEnable = YES;
     NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/proximity/onuserproximity?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":10}", request);
+    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":13}", request);
+    [DConnectManager sharedManager].settings.useLocalOAuth = NO;
+    [DConnectManager sharedManager].settings.useOriginEnable = NO;
 }
 
 /*!
@@ -382,7 +399,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: POST
- * Path: /proximity/onuserproximity?serviceId=xxxx&sessionKey=xxxx
+ * Path: /proximity/onuserproximity?serviceId=xxxx&accessToken=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
