@@ -1,15 +1,19 @@
+Click [here](readme.en.md) for description of English. 
+
 # DeviceConnect-iOS について
 
 DeviceConnect-iOSはiOS版のDeviceConnectのプラットフォームになります。
 
 このガイドでは以下のことについて解説していきます。
 
-* プロジェクトの説明]
-* dConnectBrowserのビルドと起動
-* DeviceConnectアプリの開発
+* Device Connect SDKのビルド
+* プロジェクトの説明
+* Device Connectアプリケーションの開発
+* Device Connect SDKのDoxygen出力
+* ビルドマニュアル
 * サポートするXcodeのバージョン
 
-# DeviceConnectSDKのビルド
+# Device Connect SDKのビルド
 
 DeviceConnect-iOS のソースコードをダウンロードし、解凍します。
 
@@ -18,7 +22,7 @@ $ curl -LkO https://github.com/DeviceConnect/DeviceConnect-iOS/archive/master.zi
 $ unzip master.zip
 ```
 
-DeviceConnectSDK をビルドします。
+Device Connect SDK をビルドします。
 
 ```sh
 $ cd DeviceConnect-iOS-master/dConnectSDK/dConnectSDKForIOS/
@@ -31,19 +35,19 @@ $ xcodebuild -scheme DConnectSDK_framework -configuration Release
 ## dConnectDevicePlugin
 | プロジェクト名|内容  |
 |:-----------|:---------|
-|dConnectDeviceAllJoyn|AllJoynのデバイスプラグイン。|
-|dConnectDeviceAWSIoT|AWSIoTのデバイスプラグイン。|
-|dConnectDeviceChromeCast|Chromecastのデバイスプラグイン。|
-|dConnectDeviceHitoe|Hitoeのデバイスプラグイン。|
-|dConnectDeviceHost|iOS端末のデバイスプラグイン。|
-|dConnectDeviceHue|Hueのデバイスプラグイン。|
-|dConnectDeviceIRKit|IRKitのデバイスプラグイン。|
-|dConnectDeviceLinking|Linkingのデバイスプラグイン。|
-|dConnectDevicePebble|Pebbleのデバイスプラグイン。|
-|dConnectDeviceSonyCamera|QX10などのSonyCameraのデバイスプラグイン。|
-|dConnectDeviceSphero|Spheroのデバイスプラグイン。|
-|dConnectDeviceTheta|THETAのデバイスプラグイン。|
-|dConnectDeviceTest|DeviceConnectのテスト用のデバイスプラグイン。|
+|dConnectDeviceAllJoyn|AllJoynのプラグイン。|
+|dConnectDeviceAWSIoT|AWSIoTのプラグイン。|
+|dConnectDeviceChromeCast|Chromecastのプラグイン。|
+|dConnectDeviceHitoe|Hitoeのプラグイン。|
+|dConnectDeviceHost|iOS端末のプラグイン。|
+|dConnectDeviceHue|Hueのプラグイン。|
+|dConnectDeviceIRKit|IRKitのプラグイン。|
+|dConnectDeviceLinking|Linkingのプラグイン。|
+|dConnectDevicePebble|Pebbleのプラグイン。|
+|dConnectDeviceSonyCamera|QX10などのSonyCameraのプラグイン。|
+|dConnectDeviceSphero|Spheroのプラグイン。|
+|dConnectDeviceTheta|THETAのプラグイン。|
+|dConnectDeviceTest|DeviceConnectのテスト用のプラグイン。|
 |DCMDevicePluginSDK|共通の独自拡張Profileライブラリ。 |
 
 ## dConnectSDK
@@ -51,8 +55,26 @@ $ xcodebuild -scheme DConnectSDK_framework -configuration Release
 |:-----------|:---------|
 |dConnectBrowser|DeviceConnect用のBrowserアプリ。|
 |dConnectBrowserForIOS9|DeviceConnect用のiOS9以降用Browserアプリ。|
-|dConnectSDKForIOS|DeviceConnectのプラットフォーム本体用ライブラリ。このライブラリをデバイスプラグインやネイティブアプリを作成するときに使用する。|
+|dConnectSDKForIOS|DeviceConnectのプラットフォーム本体用ライブラリ。このライブラリをプラグインやネイティブアプリを作成するときに使用する。|
 |dConnectSDKSample|DeviceConnectのJavaScript用テストを実行するためのアプリ。|
+
+
+# Device Connectアプリケーションの開発
+iOS版Device Connectを使用したアプリケーション開発および、プラグイン開発に関しましては、以下のページを参考にしてください。
+
+* [アプリケーション開発マニュアル](https://github.com/DeviceConnect/DeviceConnect-iOS/wiki/ApplicationManual-20)<br>
+Device Connect Managerを使用したアプリケーション開を開発したい場合には、こちらのアプリケーション開発マニュアルをご参照ください。
+
+* [プラグイン開発マニュアル](https://github.com/DeviceConnect/DeviceConnect-iOS/wiki/DevicePluginManual-20)<br>
+Device Connect Managerに対応したプラグインを開発したい場合には、こちらのプラグイン開発マニュアルをご参照ください。
+
+# Device Connect SDKのDoxygen出力
+以下のコマンドを実行することで、Doxygenを出力します。
+
+```
+$ cd DeviceConnect-iOS-master/dConnectSDK/dConnectSDKForIOS
+$ doxygen Doxyfile
+```
 
 # ビルドマニュアル
 
@@ -72,7 +94,7 @@ $ xcodebuild -scheme DConnectSDK_framework -configuration Release
 * [AWSIoT](https://github.com/DeviceConnect/DeviceConnect-iOS/wiki/AWSIoT-Build)
 
 # サポートするXcodeのバージョン
-DeviceConnectのデバイスプラグインは、下記に記すXcode以外でのビルド・実行をサポートしていません。
+DeviceConnectのプラグインは、下記に記すXcode以外でのビルド・実行をサポートしていません。
 
 |プラグイン名|Xcodeバージョン|
 |:--|:--|
