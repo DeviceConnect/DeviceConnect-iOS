@@ -75,6 +75,12 @@
                                @"Parameter 'flashing' invalid."];
                               return YES;
                           }
+                          NSString *brightnessString = [request stringForKey:@"brightness"];
+                          if ((brightnessString && [brightnessString length] == 0) || (brightness && ([brightness doubleValue] < 0.0 || [brightness doubleValue] > 1.0))) {
+                              [response setErrorToInvalidRequestParameterWithMessage:
+                               @"Parameter 'brightness' must be a value between 0 and 1.0."];
+                              return YES;
+                          }
                           if (![weakSelf checkFlash:response flashing:flashing]) {
                               return YES;
                           }
@@ -143,7 +149,7 @@
         [response setErrorToNotSupportProfile];
         return send;
     }
-    if (!lightId || (lightId && ![lightId isEqualToString:@"1"])) {
+    if ((lightId && ![lightId isEqualToString:@"1"])) {
         [response setErrorToInvalidRequestParameterWithMessage:@"Invalid lightId"];
         return send;
     }
