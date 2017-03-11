@@ -32,7 +32,7 @@
 - (void) didReceivedDevice:(DPLinkingDevice *)device humidity:(float)humidity
 {
     [self.response setResult:DConnectMessageResultTypeOk];
-    [DCMHumidityProfile setHumidity:humidity target:self.response];
+    [DCMHumidityProfile setHumidity:humidity / 100.0 target:self.response];
     [DCMHumidityProfile setTimeStamp:[NSDate date].timeIntervalSince1970 target:self.response];
     [[DConnectManager sharedManager] sendResponse:self.response];
     [self cleanup];
