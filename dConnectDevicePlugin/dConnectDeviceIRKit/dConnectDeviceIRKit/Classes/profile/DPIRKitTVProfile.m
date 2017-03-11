@@ -117,7 +117,7 @@
         
         // API登録(didReceivePutTVBroadcastWaveRequest相当)
         NSString *putTVBroadcastWaveRequestApiPath = [self apiPath: nil
-                                                     attributeName: DCMTVProfileAttrVolume];
+                                                     attributeName: DCMTVProfileAttrBroadcastwave];
         [self addPutPath: putTVBroadcastWaveRequestApiPath
                      api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
                          
