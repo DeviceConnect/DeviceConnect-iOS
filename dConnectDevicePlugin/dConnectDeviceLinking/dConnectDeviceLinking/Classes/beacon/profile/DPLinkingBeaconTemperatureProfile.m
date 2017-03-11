@@ -41,7 +41,7 @@
     float temp = beacon.temperatureData.value;
     int type = [request integerForKey:DCMTemperatureProfileParamType];
     if (type == DCMTemperatureProfileEnumCelsiusFahrenheit) {
-        temp = [DCMTemperatureProfile convertFahrenheitToCelsius:temp];
+        temp = [DCMTemperatureProfile convertCelsiusToFahrenheit:temp];
     } else {
         // 1,2以外は摂氏とする。
         type = DCMTemperatureProfileEnumCelsius;
