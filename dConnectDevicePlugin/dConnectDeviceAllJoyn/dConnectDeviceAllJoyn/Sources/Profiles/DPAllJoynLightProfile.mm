@@ -813,7 +813,7 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
          MsgArg newStateArg("a{sv}", count, newStates);
          AJNMessageArgument *newState =
          [[AJNMessageArgument alloc] initWithHandle:&newStateArg];
-         [proxy transitionLampStateWithLampID:lightId
+         [proxy transitionLampStateWithLampID:_lightId
                                     lampState:newState
                              transitionPeriod:@10
                                  responseCode:&responseCode
@@ -1081,17 +1081,6 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
                              transitionPeriod:@10
                                  responseCode:&responseCode
                                        lampID:&ignored];
-         if (!responseCode) {
-             [response setErrorToUnknownWithMessage:@"Failed to change status."];
-         }
-         else if (responseCode.unsignedIntValue != DPAllJoynLightResponseCodeOK) {
-             [response setErrorToUnknownWithMessage:
-              [NSString stringWithFormat:@"Failed to change status (code: %@).",
-               responseCode]];
-         }
-         else {
-             [response setResult:DConnectMessageResultTypeOk];
-         }
          
          if (name) {
              NSString *ignored;
