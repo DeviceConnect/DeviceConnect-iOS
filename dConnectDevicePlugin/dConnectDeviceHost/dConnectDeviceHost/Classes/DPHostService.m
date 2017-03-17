@@ -57,7 +57,13 @@ NSString *const DPHostDevicePluginServiceId = @"host";
         [self addProfile:[DPHostCanvasProfile new]];
         [self addProfile:[DPHostTouchProfile new]];
         [self addProfile:[DPHostGeolocationProfile new]];
-        [self addProfile:[DPHostLightProfile new]];
+
+        AVCaptureDevice *captureDevice = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
+        if ([captureDevice isTorchAvailable]
+            && [captureDevice isTorchModeSupported:AVCaptureTorchModeOn]
+            && [captureDevice isTorchModeSupported:AVCaptureTorchModeOff]) {
+            [self addProfile:[DPHostLightProfile new]];
+        }
     }
     return self;
 }
