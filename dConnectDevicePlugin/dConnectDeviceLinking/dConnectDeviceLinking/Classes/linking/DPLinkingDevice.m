@@ -40,6 +40,7 @@ static NSString *const kConnectFlag = @"connectFlag";
         DCLogInfo(@"    id: %@", self.identifier);
         DCLogInfo(@"    led: %d", self.ledOffPatternId);
         DCLogInfo(@"    vibration: %d", self.vibrationOffPatternId);
+        DCLogInfo(@"    connectFlag: %@", self.connectFlag ? @"YES" : @"NO");
     }
     return self;
 }

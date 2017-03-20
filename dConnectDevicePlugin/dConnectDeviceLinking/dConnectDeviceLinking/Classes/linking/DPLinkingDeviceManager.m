@@ -204,6 +204,7 @@ static DPLinkingDeviceManager* _sharedInstance = nil;
     
     [[BLEConnecter sharedInstance] disconnectByDeviceUUID:device.peripheral.identifier.UUIDString];
     device.connectFlag = NO;
+    device.peripheral = nil;
     [self saveDPLinkingDevice];
 }
 
@@ -800,12 +801,18 @@ static DPLinkingDeviceManager* _sharedInstance = nil;
 }
 
 - (void) failToConnect:(CBPeripheral *)peripheral {
-    DCLogInfo(@"AAAAA failToConnect: %@", peripheral);
+    BLEDeviceSetting *setting = [[BLEConnecter sharedInstance] getDeviceByPeripheral:peripheral];
+    
+    DCLogInfo(@"@@ failToConnect: [デバイス：%@ との接続に失敗しました。]", setting.name);
+    DCLogInfo(@"    setting.notifyDeviceInitial: %@", setting.notifyDeviceInitial ? @"YES" : @"NO");
+    DCLogInfo(@"    setting.initialDeviceSettingFinished: %@", setting.initialDeviceSettingFinished ? @"YES" : @"NO");
+    DCLogInfo(@"    setting.saved: %@", setting.saved ? @"YES" : @"NO");
+    DCLogInfo(@"    setting.connectionStatus: %@", setting.connectionStatus);
     
     if ([self isEqualDeviceUuid:peripheral]) {
         DPLinkingDevice *device = [self findDPLinkingDeviceByPeripheral:peripheral];
         if (device) {
-            device.setting = [[BLEConnecter sharedInstance] getDeviceByPeripheral:peripheral];
+            device.setting = setting;
             device.online = NO;
             
             [self notifyFailToConnectDevice:device];
@@ -821,17 +828,15 @@ static DPLinkingDeviceManager* _sharedInstance = nil;
     if (device) {
         device.peripheral = peripheral;
 
-        if (_initFlag) {
-            if (device.connectFlag) {
-                [self connectDPLinkingDevice:device];
+        if ([self isEqualDeviceUuid:peripheral]) {
+            if (_scanTimerCancelBlock) {
+                _scanTimerCancelBlock();
+                _scanTimerCancelBlock = nil;
             }
-        } else {
-            if ([self isEqualDeviceUuid:peripheral]) {
-                if (_scanTimerCancelBlock) {
-                    _scanTimerCancelBlock();
-                    _scanTimerCancelBlock = nil;
-                }
-                [self stopScan];
+            [self stopScan];
+            [self connectDPLinkingDevice:device];
+        } else if (_initFlag) {
+            if (device.connectFlag) {
                 [self connectDPLinkingDevice:device];
             }
         }
@@ -850,7 +855,12 @@ static DPLinkingDeviceManager* _sharedInstance = nil;
 }
 
 - (void)didConnectDevice:(BLEDeviceSetting *)setting {
-    DCLogInfo(@"@@ didConnectDevice [デバイス：%@ と接続されました。]: %@", setting.name, setting.initialDeviceSettingFinished ? @"true" : @"false");
+    DCLogInfo(@"@@ didConnectDevice: [デバイス：%@ と接続されました。]", setting.name);
+    DCLogInfo(@"    setting.notifyDeviceInitial: %@", setting.notifyDeviceInitial ? @"YES" : @"NO");
+    DCLogInfo(@"    setting.initialDeviceSettingFinished: %@", setting.initialDeviceSettingFinished ? @"YES" : @"NO");
+    DCLogInfo(@"    setting.saved: %@", setting.saved ? @"YES" : @"NO");
+    DCLogInfo(@"    setting.connectionStatus: %@", setting.connectionStatus);
+
     setting.isInDistanceThreshold = YES;
 }
 
@@ -859,7 +869,7 @@ static DPLinkingDeviceManager* _sharedInstance = nil;
     
     BLEDeviceSetting *setting = [[BLEConnecter sharedInstance] getDeviceByPeripheral:peripheral];
 
-    DCLogInfo(@"デバイスを発見しました。");
+    DCLogInfo(@"デバイスの初期化が完了しました");
     DCLogInfo(@"    name : %@", setting.peripheral.name);
     DCLogInfo(@"    device id : %d", setting.deviceId);
     DCLogInfo(@"    device uid : %d", setting.deviceUid);
@@ -887,7 +897,7 @@ static DPLinkingDeviceManager* _sharedInstance = nil;
 }
 
 - (void)didDisconnectPeripheral:(CBPeripheral *)peripheral {
-    DCLogInfo(@"@@ didDisconnectPeripheral");
+    DCLogInfo(@"@@ didDisconnectPeripheral: %@", peripheral);
 
     DPLinkingDevice *device = [self findDPLinkingDeviceByPeripheral:peripheral];
     if (device) {
@@ -896,7 +906,7 @@ static DPLinkingDeviceManager* _sharedInstance = nil;
 }
 
 - (void) didDisconnectDevice:(BLEDeviceSetting *)setting {
-    DCLogInfo(@"@@ didDisconnectDevice");
+    DCLogInfo(@"@@ didDisconnectDevice: %@", setting.peripheral);
 
     DPLinkingDevice *device = [self findDPLinkingDeviceByPeripheral:setting.peripheral];
     if (device) {
