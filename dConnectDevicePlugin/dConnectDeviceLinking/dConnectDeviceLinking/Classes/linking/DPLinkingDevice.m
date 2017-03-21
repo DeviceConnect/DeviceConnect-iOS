@@ -34,12 +34,14 @@ static NSString *const kConnectFlag = @"connectFlag";
         self.vibrationOffPatternId = [[coder decodeObjectForKey:kVibrationOffPatternId] intValue];
         self.connectFlag = [[coder decodeObjectForKey:kConnectFlag] boolValue];
         self.temperatureType = DCMTemperatureProfileEnumCelsius;
+        self.online = NO;
 
         DCLogInfo(@"LDPDevice");
         DCLogInfo(@"    name: %@", self.name);
         DCLogInfo(@"    id: %@", self.identifier);
         DCLogInfo(@"    led: %d", self.ledOffPatternId);
         DCLogInfo(@"    vibration: %d", self.vibrationOffPatternId);
+        DCLogInfo(@"    connectFlag: %@", self.connectFlag ? @"YES" : @"NO");
     }
     return self;
 }

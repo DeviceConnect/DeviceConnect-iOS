@@ -72,6 +72,8 @@
 - (void) stopScan;
 - (BOOL) isStartScan;
 
+- (void) restart;
+
 - (NSArray *) getDPLinkingDevices;
 
 - (DPLinkingDevice *) createDPLinkingDevice:(CBPeripheral *)peripheral;

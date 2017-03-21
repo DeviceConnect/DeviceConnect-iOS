@@ -10,6 +10,7 @@
 #import "DPLinkingDevicePlugin.h"
 #import "DPLinkingServiceDiscoveryProfile.h"
 #import "DPLinkingSystemProfile.h"
+#import "DPLinkingDeviceManager.h"
 
 @implementation DPLinkingDevicePlugin
 
@@ -24,9 +25,25 @@
 
         [self addProfile:[[DPLinkingServiceDiscoveryProfile alloc] initWithServiceProvider: self.serviceProvider]];
         [self addProfile:[DPLinkingSystemProfile systemProfileWithVersion:@"1.0"]];
+
+        __weak typeof(self) weakSelf = self;
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
+            UIApplication *application = [UIApplication sharedApplication];
+            [notificationCenter addObserver:weakSelf
+                                   selector:@selector(enterForeground)
+                                       name:UIApplicationWillEnterForegroundNotification
+                                     object:application];
+        });
     }
     return self;
 }
+
+- (void) enterForeground {
+    [[DPLinkingDeviceManager sharedInstance] restart];
+}
+
 #pragma mark - DevicePlugin's icon image
 
 - (NSString*)iconFilePath:(BOOL)isOnline
