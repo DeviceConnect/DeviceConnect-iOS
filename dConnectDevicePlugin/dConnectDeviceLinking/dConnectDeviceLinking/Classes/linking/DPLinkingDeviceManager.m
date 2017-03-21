@@ -102,6 +102,10 @@ static DPLinkingDeviceManager* _sharedInstance = nil;
     return [[BLEConnecter sharedInstance] isScanning];
 }
 
+- (void) restart {
+    [self startScanWithTimeout:20];
+}
+
 - (DPLinkingDevice *) findDPLinkingDeviceByPeripheral:(CBPeripheral *)peripheral {
     __block DPLinkingDevice *result = nil;
     [self.devices enumerateObjectsUsingBlock:^(DPLinkingDevice *obj, NSUInteger idx, BOOL *stop) {
@@ -635,6 +639,7 @@ static DPLinkingDeviceManager* _sharedInstance = nil;
 
 - (void) startScanWithTimeout:(NSTimeInterval)timeout {
     if ([BLEConnecter sharedInstance].canDiscovery) {
+        DCLogInfo(@"DPLinkingDeviceManager::startScanWithTimeout");
         [DPLinkingUtil asyncAfterDelay:timeout block:^{
             DCLogWarn(@"Timeout.");
             _initFlag = NO;
@@ -836,7 +841,7 @@ static DPLinkingDeviceManager* _sharedInstance = nil;
             [self stopScan];
             [self connectDPLinkingDevice:device];
         } else if (_initFlag) {
-            if (device.connectFlag) {
+            if (device.connectFlag && !device.online) {
                 [self connectDPLinkingDevice:device];
             }
         }
