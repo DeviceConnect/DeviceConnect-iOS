@@ -731,9 +731,9 @@ static int const _timeout = 500;
     }
     
     // デバイス管理情報更新
-//    dispatch_queue_t updateQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
-//    dispatch_async(updateQueue, ^{
-//        [self updateManageServices: online];
-//    });
+    dispatch_queue_t updateQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    dispatch_async(updateQueue, ^{
+        [self updateManageServices: online];
+    });
 }
 @end
