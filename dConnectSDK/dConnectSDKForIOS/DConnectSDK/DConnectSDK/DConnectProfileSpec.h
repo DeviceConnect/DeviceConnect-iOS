@@ -16,6 +16,9 @@
 
 @property (nonatomic, strong) NSDictionary * bundle;
 
+@property (nonatomic, strong) NSString * api;
+
+@property (nonatomic, strong) NSString * profile;
 
 @property (nonatomic, strong) NSMutableDictionary * allApiSpecs;    // Map<String, Map<Method, DConnectApiSpec>>
 

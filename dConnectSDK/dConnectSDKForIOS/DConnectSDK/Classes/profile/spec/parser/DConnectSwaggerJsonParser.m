@@ -27,6 +27,7 @@
 
 #import "DConnectSpecErrorFactory.h"
 
+static NSString * const KEY_BASE_PATH = @"basePath";
 static NSString * const KEY_PATHS = @"paths";
 
 NSString * const OperationObjectParserKeyXType = @"x-type";
@@ -432,6 +433,18 @@ typedef DConnectParameterSpec * (^ParameterObjectParser)(NSDictionary *json, NSE
 - (DConnectProfileSpec *) parseJson: (NSDictionary *) json error:(NSError **) error {
     DConnectProfileSpecBuilder *builder = [[DConnectProfileSpecBuilder alloc] init];
     [builder setBundle: json];        // JSONパースでNSDictionary,NSArrayに変換されるのでtoBundle()処理は不要。そのままjsonを代入する。
+    
+    
+    NSString *basePath = json[KEY_BASE_PATH];
+    if (basePath) {
+        NSArray *parts = [basePath componentsSeparatedByString:@"/"];
+        if (parts.count != 3) {
+            *error = [DConnectSpecErrorFactory createError: [NSString stringWithFormat: @"basePath is invalid: %@", basePath]];
+            return nil;
+        }
+        [builder setApi:parts[1]];
+        [builder setProfile:parts[2]];
+    }
     
     NSDictionary *pathsObj = json[KEY_PATHS];
     for (NSString *path in pathsObj.allKeys) {

@@ -29,7 +29,7 @@ var util = (function(parent, global) {
             'canvas',
             'health',
             'touch',
-            'humandetect',
+            'humandetection',
             'keyevent',
             'omnidirectionalimage',
             'tv',
@@ -44,7 +44,7 @@ var util = (function(parent, global) {
             'stressEstimation',
             'walkState',
             'gpio',
-            'geolocation' );
+            'geolocation');
 
     function init(callback) {
         dConnect.setHost(mHost);
@@ -84,7 +84,6 @@ var util = (function(parent, global) {
                 for (var i = 0; i < services.length; i++) {
                     if (serviceId === services[i].id) {
                         var service = services[i];
-                        
                         serviceInformation(function(json) {
                             openWebSocketIfNeeded();
                             callback(service.name, json);
@@ -102,7 +101,6 @@ var util = (function(parent, global) {
             function(clientId, accessToken) {
                 mAccessToken = accessToken;
                 openWebSocketIfNeeded();
-                               console.log("accessToken:" + mAccessToken);
                 setCookie('accessToken', mAccessToken);
                 callback();
             },
@@ -144,44 +142,17 @@ var util = (function(parent, global) {
             if (!dConnect.isConnectedWebSocket()) {
                 var accessToken = mAccessToken ? mAccessToken : mSessionKey;
                 dConnect.connectWebSocket(accessToken, function(code, message) {
-                  if (code > 0) {
-                     alert('WebSocketが切れました。\n code=' + code + " message=" + message);
-                  }
-                  console.log("WebSocket: code=" + code + " message=" +message);
+                    if (code > 0) {
+                        alert('WebSocketが切れました。\n code=' + code + " message=" + message);
+                    }
+                    console.log("WebSocket: code=" + code + " message=" +message);
                 });
             }
-
         } catch (e) {
             alert("この端末は、WebSocketをサポートしていません。");
         }
     }
-    function doMediaPlayerMediaPut(serviceId, accessToken, id, callback) {
-        var builder = new dConnect.URIBuilder();
-        builder.setProfile('mediaplayer');
-        builder.setAttribute('media');
-        builder.setServiceId(serviceId);
-        builder.setAccessToken(accessToken);
-        builder.addParameter('mediaId', id);
-        var uri = builder.build();
-        dConnect.put(uri, null, null, function(json) {
-            var builder = new dConnect.URIBuilder();
-            builder.setProfile('mediaplayer');
-            builder.setAttribute('play');
-            builder.setServiceId(serviceId);
-            builder.setAccessToken(accessToken);
-            var uri = builder.build();
-            dConnect.put(uri, null, null, function(json) {
-            if (callback) {
-                callback();
-            }
-        }, function(errorCode, errorMessage) {
-            console.log("error:" + errorMessage);
-      });
-     }, function(errorCode, errorMessage) {
-         console.log("error:" + errorMessage);
-     });
-    }
-    parent.doMediaPlayerMediaPut = doMediaPlayerMediaPut;
+
     function setCookieInternal(key, value) {
         document.cookie = key + '=' + value;
     }
@@ -248,13 +219,11 @@ var util = (function(parent, global) {
         elm.href = uri;
 
         var p = elm.pathname.split('/');
-        for (var i = 0; i < p.length; i++) {
-            if (p[i] != '' && p[i] != 'gotapi') {
-                if (!containsScope(p[i])) {
-                    mScopes.push(p[i]);
-                }
-                break;
-            }
+        if (p.length < 3) {
+            return;
+        }
+        if (!containsScope(p[2])) {
+            mScopes.push(p[2]);
         }
     }
 
@@ -310,7 +279,6 @@ var util = (function(parent, global) {
          xhr.onreadystatechange = function() {
              switch (xhr.readyState) {
              case 1: {
-                 console.log("サーバ接続を確立しました。\n xhr.readyState=" + xhr.readyState + "\n xhr.statusText=" + xhr.statusText);
                  try {
                      xhr.setRequestHeader("X-GotAPI-Origin".toLowerCase(), "file://");
                  } catch (e) {
@@ -324,10 +292,8 @@ var util = (function(parent, global) {
                  break;
              }
              case 2:
-                 console.log("リクエストを送信しました。\n xhr.readyState=" + xhr.readyState + "\n xhr.statusText=" + xhr.statusText);
                  break;
              case 3:
-                 console.log("リクエストの処理中。\n xhr.readyState=" + xhr.readyState + "\n xhr.statusText=" + xhr.statusText);
                 break;
              case 4: {
                  if (xhr.status == 200) {
@@ -390,15 +356,7 @@ var util = (function(parent, global) {
     }
     parent.getAccessToken = getAccessToken;
 
-    function getAccessTokenQuery() {
-        return getQuery('accessToken');
-    }
-    parent.getAccessTokenQuery = getAccessTokenQuery;
 
-    function getProfileQuery() {
-        return getQuery('profile');
-    }
-    parent.getProfileQuery = getProfileQuery;
     function getSessionKey() {
         return mSessionKey;
     }
@@ -452,6 +410,42 @@ var util = (function(parent, global) {
         return text.replace(/</g, "&lt;").replace(/>/g, "&gt;");
     }
     parent.escapeText = escapeText;
+    function doMediaPlayerMediaPut(serviceId, accessToken, id, callback) {
+        var builder = new dConnect.URIBuilder();
+        builder.setProfile('mediaplayer');
+        builder.setAttribute('media');
+        builder.setServiceId(serviceId);
+        builder.setAccessToken(accessToken);
+        builder.addParameter('mediaId', id);
+        var uri = builder.build();
+        dConnect.put(uri, null, null, function(json) {
+            var builder = new dConnect.URIBuilder();
+            builder.setProfile('mediaplayer');
+            builder.setAttribute('play');
+            builder.setServiceId(serviceId);
+            builder.setAccessToken(accessToken);
+            var uri = builder.build();
+            dConnect.put(uri, null, null, function(json) {
+            if (callback) {
+                callback();
+            }
+        }, function(errorCode, errorMessage) {
+            console.log("error:" + errorMessage);
+      });
+     }, function(errorCode, errorMessage) {
+         console.log("error:" + errorMessage);
+     });
+    }
+    parent.doMediaPlayerMediaPut = doMediaPlayerMediaPut;
+    function getAccessTokenQuery() {
+        return getQuery('accessToken');
+    }
+    parent.getAccessTokenQuery = getAccessTokenQuery;
+
+    function getProfileQuery() {
+        return getQuery('profile');
+    }
+    parent.getProfileQuery = getProfileQuery;
 
     return parent;
 })(util || {}, this.self || global);

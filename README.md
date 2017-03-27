@@ -1,57 +1,82 @@
-# DeviceConnect-iOS
-* 日本語説明はこちら
-https://github.com/DeviceConnect/DeviceConnect-iOS/blob/master/readme.ja.md
+Click [here](readme.en.md) for description of English. 
 
-# About DeviceConnect WebAPI
-"DeviceConnect WebAPI" is WebAPI which operates as a virtual server on a smart phone. It can use easily various wearable devices and an IoT device by unific description from a web browser or an application.
+# DeviceConnect-iOS について
 
-# About DeviceConnect iOS
+DeviceConnect-iOSはiOS版のDeviceConnectのプラットフォームになります。
 
-Device Connect WebAPI in WebAPI which operates as a virtual server on the smartphone, it can be easy to use in a uniform description of various wearable devices and IoT devices from a Web browser and apps.
-Device Connect iOS will be the platform of DeviceConnect of iOS version.
+このガイドでは以下のことについて解説していきます。
 
-In this guide I will continue to discuss the following.
+* Device Connect SDKのビルド
+* プロジェクトの説明
+* Device Connectアプリケーションの開発
+* Device Connect SDKのDoxygen出力
+* ビルドマニュアル
+* サポートするXcodeのバージョン
 
-* [Project description](#section1)
-* [Build and start-up of dConnectBrowser](#section2)
-* [Operation check](#section3)
-* [Development of DeviceConnect app](#section4)
-* [Xcode version to support](#section5)
+# Device Connect SDKのビルド
 
+DeviceConnect-iOS のソースコードをダウンロードし、解凍します。
 
-# <a name="section1">Project description</a>
+```
+$ curl -LkO https://github.com/DeviceConnect/DeviceConnect-iOS/archive/master.zip
+$ unzip master.zip
+```
+
+Device Connect SDK をビルドします。
+
+```sh
+$ cd DeviceConnect-iOS-master/dConnectSDK/dConnectSDKForIOS/
+$ xcodebuild -scheme DConnectSDK_framework -configuration Release
+```
+
+`DeviceConnect-iOS-master/dConnectSDK/dConnectSDKForIOS/bin` フォルダに framework と bundle が生成されます。
+
+# プロジェクトの説明
 ## dConnectDevicePlugin
-| Project Name|Content  |
+| プロジェクト名|内容  |
 |:-----------|:---------|
-|dConnectDeviceAllJoyn|Device Plug-in for AllJoyn.|
-|dConnectDeviceAWSIoT|Device Plug-in for AWSIoT|
-|dConnectDeviceChromeCast|Device Plug-in for Chromecast.|
-|dConnectDeviceHitoe|Device Plug-in for Hitoe.|
-|dConnectDeviceHost|Device Plug-in for iOS.|
-|dConnectDeviceHue|Device Plug-in for Hue.|
-|dConnectDeviceIRKit|Device Plug-in for IRKit.|
-|dConnectDeviceLinking|Device Plug-in for Linking.|
-|dConnectDevicePebble|Device Plug-in for Pebble.|
-|dConnectDeviceSonyCamera|Device Plug-in for SonyCamera such as QX10.|
-|dConnectDeviceSphero|Device Plug-in for Sphero.|
-|dConnectDeviceTheta|Device Plug-in for THETA.|
-|dConnectDeviceTest|Device plug-in for test of DeviceConnect.|
-|DCMDevicePluginSDK|Common proprietary extension Profile library. |
+|dConnectDeviceAllJoyn|AllJoynのプラグイン。|
+|dConnectDeviceAWSIoT|AWSIoTのプラグイン。|
+|dConnectDeviceChromeCast|Chromecastのプラグイン。|
+|dConnectDeviceHitoe|Hitoeのプラグイン。|
+|dConnectDeviceHost|iOS端末のプラグイン。|
+|dConnectDeviceHue|Hueのプラグイン。|
+|dConnectDeviceIRKit|IRKitのプラグイン。|
+|dConnectDeviceLinking|Linkingのプラグイン。|
+|dConnectDevicePebble|Pebbleのプラグイン。|
+|dConnectDeviceSonyCamera|QX10などのSonyCameraのプラグイン。|
+|dConnectDeviceSphero|Spheroのプラグイン。|
+|dConnectDeviceTheta|THETAのプラグイン。|
+|dConnectDeviceTest|DeviceConnectのテスト用のプラグイン。|
+|DCMDevicePluginSDK|共通の独自拡張Profileライブラリ。 |
 
 ## dConnectSDK
-| Project Name|Content  |
+| プロジェクト名|内容  |
 |:-----------|:---------|
-|dConnectBrowser| Browser app for DeviceConnect.|
-|dConnectBrowserForIOS9| Browser app for DeviceConnect. For iOS9 after.|
-|dConnectSDKForIOS|DeviceConnect library for the platform body. Want to use this library when you want to create a device plug-ins and native apps.|
-|dConnectSDKSample|App to execute JavaScript for testing DeviceConnect.|
+|dConnectBrowser|DeviceConnect用のBrowserアプリ。|
+|dConnectBrowserForIOS9|DeviceConnect用のiOS9以降用Browserアプリ。|
+|dConnectSDKForIOS|DeviceConnectのプラットフォーム本体用ライブラリ。このライブラリをプラグインやネイティブアプリを作成するときに使用する。|
+|dConnectSDKSample|DeviceConnectのJavaScript用テストを実行するためのアプリ。|
 
-# <a name="section2">Build and start-up of dConnectBrowser</a>
-To install the dConnectBrowser to iOS terminal, first finished the Developer registration of Xcode installation and iOS, please keep in create an environment that can actual transfer.<br>
 
-In this state, please start the DeviceConnect.xcworkspace. In the workspace that is started, a list of device plug-ins and dConnectBrowser of projects that have been implemented in the dConnectBrowser appears.<br>
+# Device Connectアプリケーションの開発
+iOS版Device Connectを使用したアプリケーション開発および、プラグイン開発に関しましては、以下のページを参考にしてください。
 
-Basically, you work with start-up of dConnectBrowser only, such as when you make changes to the other device plug-ins please refer to the following build instructions.
+* [アプリケーション開発マニュアル](https://github.com/DeviceConnect/DeviceConnect-iOS/wiki/ApplicationManual-20)<br>
+Device Connect Managerを使用したアプリケーション開を開発したい場合には、こちらのアプリケーション開発マニュアルをご参照ください。
+
+* [プラグイン開発マニュアル](https://github.com/DeviceConnect/DeviceConnect-iOS/wiki/DevicePluginManual-20)<br>
+Device Connect Managerに対応したプラグインを開発したい場合には、こちらのプラグイン開発マニュアルをご参照ください。
+
+# Device Connect SDKのDoxygen出力
+以下のコマンドを実行することで、Doxygenを出力します。
+
+```
+$ cd DeviceConnect-iOS-master/dConnectSDK/dConnectSDKForIOS
+$ doxygen Doxyfile
+```
+
+# ビルドマニュアル
 
 * [dConnectBrowser](https://github.com/DeviceConnect/DeviceConnect-iOS/wiki/dConnectBrowser-Build)
 * [dConnectBrowserForIOS9](https://github.com/DeviceConnect/DeviceConnect-iOS/wiki/dConnectBrowserForIOS9-Build)
@@ -68,51 +93,10 @@ Basically, you work with start-up of dConnectBrowser only, such as when you make
 * [Hitoe](https://github.com/DeviceConnect/DeviceConnect-iOS/wiki/Hitoe-Build)
 * [AWSIoT](https://github.com/DeviceConnect/DeviceConnect-iOS/wiki/AWSIoT-Build)
 
+# サポートするXcodeのバージョン
+DeviceConnectのプラグインは、下記に記すXcode以外でのビルド・実行をサポートしていません。
 
-# <a name="section3">Operation check</a>
- To dConnectBrowser the address bar `http://localhost:4035/gotapi/availability` Please enter the.<br>
-If this response is returned in the following, such as JSON, you will be able to make sure that DeviceConnect is running.<br>
-
-  <center><a href="./assets/availability.PNG" target="_blank">
-<img src="./assets/availability.PNG" border="0"
- width="375" height="667" alt="" /></a></center>
-
- Request
-
- ```
- GET http://localhost:4035/gotapi/availability
- ```
-
- Response
-
- ```
- {
-     "product":"dConnectBrowser",
-     "version":"x.x",
-     "name":"Manager-0702",
-     "uuid":"xxxx-yyyyy-zzz-aaaa",
-     "result":0,
-}
- ```
-
-The API of the non-availability, you will not be able to easily check is basically to dConnectBrowser of address in order to access token is required to.
-If you want to create an application using the API of Device Connect, please refer to us a sample of [here] (https://github.com/DeviceConnect/DeviceConnect-iOS/wiki/ApplicationManual).
-
-# <a name="section4">Development of DeviceConnect app</a>
-Application and using the DeviceConnect, regard the development of the application, please refer to the following pages.
-
-* [Application Development Manual](https://github.com/DeviceConnect/DeviceConnect-iOS/wiki/ApplicationManual)
- <br>
-If you want to develop an application that uses the Device Connect Manager, please refer to this device plug-in development manual.
-* [Device plug-in development manual](https://github.com/DeviceConnect/DeviceConnect-iOS/wiki/DevicePluginManual)<br>
-If you want to develop a plug-in device that corresponds to the Device Connect Manager, please refer to this device plug-in development manual.
-
-
-# <a name="section5">Xcode version to support</a>
-Device plug-ins DeviceConnect does not support the build execution other than Xcode referred to below.
-
-
-|Device Plug-in Name|Xcode version|
+|プラグイン名|Xcodeバージョン|
 |:--|:--|
 |ChromeCast|8.0|
 |Host|8.0|
@@ -124,5 +108,5 @@ Device plug-ins DeviceConnect does not support the build execution other than Xc
 |Theta|8.0|
 |AllJoyn|8.0|
 |Linking|8.0|
-|Hitoe|7.2.1 or under|
+|Hitoe|7.2.1以下|
 |AWSIoT|8.0|
