@@ -10,18 +10,16 @@
 #import "DeviceTestPlugin.h"
 #import "TestBatteryProfile.h"
 
+
 const double TestBatteryChargingTime = 50000.0;
 const double TestBatteryDischargingTime = 10000.0;
 const double TestBatteryLevel = 0.5;
 const BOOL TestBatteryCharging = NO;
-
 @implementation TestBatteryProfile
-
 - (id) init {
     self = [super init];
     
     if (self) {
-        
         __weak TestBatteryProfile *weakSelf = self;
         
         // API登録(didReceiveGetAllRequest相当)
@@ -108,24 +106,22 @@ const BOOL TestBatteryCharging = NO;
         [self addPutPath: putOnChargingChangeRequestApiPath api: ^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
             
             NSString *serviceId = [request serviceId];
-            NSString *sessionKey = [request sessionKey];
+            NSString *accessToken = [request accessToken];
             
-            CheckDIDAndSK(response, serviceId, sessionKey) {
+            CheckDIDAndSK(response, serviceId, accessToken) {
                 response.result = DConnectMessageResultTypeOk;
-                
                 DConnectMessage *event = [DConnectMessage message];
-                [event setString:sessionKey forKey:DConnectMessageSessionKey];
+                [event setString:accessToken forKey:DConnectMessageAccessToken];
                 [event setString:serviceId forKey:DConnectMessageServiceId];
                 [event setString:weakSelf.profileName forKey:DConnectMessageProfile];
                 [event setString:DConnectBatteryProfileAttrOnChargingChange forKey:DConnectMessageAttribute];
                 
                 DConnectMessage *battery = [DConnectMessage message];
                 [DConnectBatteryProfile setCharging:TestBatteryCharging target:battery];
-                
                 [DConnectBatteryProfile setBattery:battery target:event];
                 [weakSelf.plugin asyncSendEvent:event];
             }
-            
+        
             return YES;
         }];
     
@@ -135,13 +131,12 @@ const BOOL TestBatteryCharging = NO;
         [self addPutPath: putOnBatteryChangeRequestApiPath api: ^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
 
             NSString *serviceId = [request serviceId];
-            NSString *sessionKey = [request sessionKey];
-            
-            CheckDIDAndSK(response, serviceId, sessionKey) {
+            NSString *accessToken = [request accessToken];
+            CheckDIDAndSK(response, serviceId, accessToken) {
                 response.result = DConnectMessageResultTypeOk;
                 
                 DConnectMessage *event = [DConnectMessage message];
-                [event setString:sessionKey forKey:DConnectMessageSessionKey];
+                [event setString:accessToken forKey:DConnectMessageAccessToken];
                 [event setString:serviceId forKey:DConnectMessageServiceId];
                 [event setString:weakSelf.profileName forKey:DConnectMessageProfile];
                 [event setString:DConnectBatteryProfileAttrOnBatteryChange forKey:DConnectMessageAttribute];
@@ -165,9 +160,9 @@ const BOOL TestBatteryCharging = NO;
         [self addDeletePath: deleteOnChargingChangeRequestApiPath api: ^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
             
             NSString *serviceId = [request serviceId];
-            NSString *sessionKey = [request sessionKey];
+            NSString *accessToken = [request accessToken];
             
-            CheckDIDAndSK(response, serviceId, sessionKey) {
+            CheckDIDAndSK(response, serviceId, accessToken) {
                 response.result = DConnectMessageResultTypeOk;
             }
             
@@ -179,9 +174,8 @@ const BOOL TestBatteryCharging = NO;
         [self addDeletePath: deleteOnBatteryChangeRequestApiPath api: ^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
             
             NSString *serviceId = [request serviceId];
-            NSString *sessionKey = [request sessionKey];
-            
-            CheckDIDAndSK(response, serviceId, sessionKey) {
+            NSString *accessToken = [request accessToken];
+            CheckDIDAndSK(response, serviceId, accessToken) {
                 response.result = DConnectMessageResultTypeOk;
             }
             

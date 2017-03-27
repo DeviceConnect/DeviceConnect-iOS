@@ -7,6 +7,7 @@
 //  http://opensource.org/licenses/mit-license.php
 //
 
+#import <DConnectSDK/DConnectSDK.h>
 #import "RESTfulTestCase.h"
 
 @interface RESTfulFailDeviceOrientationProfileTest : RESTfulTestCase
@@ -83,7 +84,7 @@
 }
 
 /*!
- * @brief sessionKey無しでondeviceorientation属性のコールバック登録テストを行う.
+ * @brief accessToken無しでondeviceorientation属性のコールバック登録テストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: PUT
@@ -94,13 +95,17 @@
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailDeviceOrientationOnDeviceOrientationPutNoSessionKey
+- (void) testHttpFailDeviceOrientationOnDeviceOrientationPutNoAccessToken
 {
+    [DConnectManager sharedManager].settings.useLocalOAuth = YES;
+    [DConnectManager sharedManager].settings.useOriginEnable = YES;
     NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/deviceorientation/ondeviceorientation?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":10}", request);
+    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":13}", request);
+    [DConnectManager sharedManager].settings.useLocalOAuth = NO;
+    [DConnectManager sharedManager].settings.useOriginEnable = NO;
 }
 
 /*!
@@ -167,7 +172,7 @@
 }
 
 /*!
- * @brief sessionKey無しでondeviceorientation属性のコールバック解除テストを行う.
+ * @brief accessToken無しでondeviceorientation属性のコールバック解除テストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
@@ -178,13 +183,17 @@
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailDeviceOrientationOnDeviceOrientationDeleteNoSessionKey
+- (void) testHttpFailDeviceOrientationOnDeviceOrientationDeleteNoAccessToken
 {
+    [DConnectManager sharedManager].settings.useLocalOAuth = YES;
+    [DConnectManager sharedManager].settings.useOriginEnable = YES;
     NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/deviceorientation/ondeviceorientation?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":10}", request);
+    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":13}", request);
+    [DConnectManager sharedManager].settings.useLocalOAuth = NO;
+    [DConnectManager sharedManager].settings.useOriginEnable = NO;
 }
 
 /*!
@@ -192,7 +201,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: POST
- * Path: /deviceorientation/ondeviceorientation?serviceId=xxxx&sessionKey=xxxx
+ * Path: /deviceorientation/ondeviceorientation?serviceId=xxxx&accessToken=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】

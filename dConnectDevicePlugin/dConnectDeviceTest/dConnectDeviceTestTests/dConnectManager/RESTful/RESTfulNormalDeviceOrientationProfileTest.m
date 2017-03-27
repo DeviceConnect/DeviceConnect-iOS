@@ -25,7 +25,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: GET
- * Path: /deviceorientation/ondeviceorientation?serviceId=xxxx&sessionKey=xxxx
+ * Path: /deviceorientation/ondeviceorientation?serviceId=xxxx&accessToken=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -46,7 +46,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /deviceorientation/ondeviceorientation?serviceId=xxxx&sessionKey=xxxx
+ * Path: /deviceorientation/ondeviceorientation?serviceId=xxxx&accessToken=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -56,7 +56,7 @@
  */
 - (void) testHttpNormalDeviceOrientationOnDeviceOrientationPut
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/deviceorientation/ondeviceorientation?sessionKey=%@&serviceId=%@", self.clientId, self.serviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/deviceorientation/ondeviceorientation?accessToken=%@&serviceId=%@", self.clientId, self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
 
@@ -69,7 +69,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /deviceorientation/ondeviceorientation?serviceId=xxxx&sessionKey=xxxx
+ * Path: /deviceorientation/ondeviceorientation?serviceId=xxxx&accessToken=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -78,7 +78,7 @@
  */
 - (void) testHttpNormalDeviceOrientationOnDeviceOrientationDelete
 {
-    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/deviceorientation/ondeviceorientation?sessionKey=%@&serviceId=%@", self.clientId, self.serviceId]];
+    NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/deviceorientation/ondeviceorientation?accessToken=%@&serviceId=%@", self.clientId, self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
 

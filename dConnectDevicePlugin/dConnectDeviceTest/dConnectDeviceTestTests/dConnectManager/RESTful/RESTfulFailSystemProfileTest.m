@@ -217,7 +217,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: GET
- * Path: /system/device/events?sessionKey=xxxx
+ * Path: /system/device/events?accessToken=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -226,7 +226,7 @@
  */
 - (void) testHttpFailSystemEventsDeleteInvalidMethodGet
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/system/events?sessionKey=test"];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/system/events?accessToken=test"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
     
@@ -238,7 +238,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: POST
- * Path: /system/device/events?sessionKey=xxxx
+ * Path: /system/device/events?accessToken=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -247,7 +247,7 @@
  */
 - (void) testHttpFailSystemEventsDeleteInvalidMethodPost
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/system/events?sessionKey=test"];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/system/events?accessToken=test"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"POST"];
     
@@ -259,7 +259,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /system/device/events?sessionKey=xxxx
+ * Path: /system/device/events?accessToken=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -268,7 +268,7 @@
  */
 - (void) testHttpFailSystemEventsDeleteInvalidMethodPut
 {
-    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/system/events?sessionKey=test"];
+    NSURL *uri = [NSURL URLWithString:@"http://localhost:4035/gotapi/system/events?accessToken=test"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     

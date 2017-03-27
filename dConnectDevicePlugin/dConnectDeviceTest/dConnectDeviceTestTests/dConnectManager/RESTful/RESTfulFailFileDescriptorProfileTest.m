@@ -7,6 +7,7 @@
 //  http://opensource.org/licenses/mit-license.php
 //
 
+#import <DConnectSDK/DConnectSDK.h>
 #import "RESTfulTestCase.h"
 
 @interface RESTfulFailFileDescriptorProfileTest : RESTfulTestCase
@@ -535,7 +536,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /fileDescriptor/onwatchfile?sessionKey=xxxx
+ * Path: /fileDescriptor/onwatchfile?accessToken=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -556,7 +557,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /fileDescriptor/onwatchfile?serviceId=&sessionKey=xxxx
+ * Path: /fileDescriptor/onwatchfile?serviceId=&accessToken=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -577,7 +578,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /fileDescriptor/onwatchfile?serviceId=123456789&sessionKey=xxxx
+ * Path: /fileDescriptor/onwatchfile?serviceId=123456789&accessToken=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -594,24 +595,28 @@
 }
 
 /*!
- * @brief sessionKey無しでonwatchfile属性のコールバック解除テストを行う.
+ * @brief accessToken無しでonwatchfile属性のコールバック解除テストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /fileDescriptor/onwatchfile?serviceId=123456789&sessionKey=xxxx
+ * Path: /fileDescriptor/onwatchfile?serviceId=123456789&accessToken=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailFileDescriptorOnWatchFilePutNoSessionKey
+- (void) testHttpFailFileDescriptorOnWatchFilePutNoAccessToken
 {
+    [DConnectManager sharedManager].settings.useLocalOAuth = YES;
+    [DConnectManager sharedManager].settings.useOriginEnable = YES;
     NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/fileDescriptor/onwatchfile?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
     
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":10}", request);
+    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":13}", request);
+    [DConnectManager sharedManager].settings.useLocalOAuth = NO;
+    [DConnectManager sharedManager].settings.useOriginEnable = NO;
 }
 
 /*!
@@ -619,7 +624,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /fileDescriptor/onwatchfile?sessionKey=xxxx
+ * Path: /fileDescriptor/onwatchfile?accessToken=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -640,7 +645,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /fileDescriptor/onwatchfile?serviceId=&sessionKey=xxxx
+ * Path: /fileDescriptor/onwatchfile?serviceId=&accessToken=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -661,7 +666,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /fileDescriptor/onwatchfile?serviceId=123456789&sessionKey=xxxx
+ * Path: /fileDescriptor/onwatchfile?serviceId=123456789&accessToken=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -678,7 +683,7 @@
 }
 
 /*!
- * @brief sessionKey無しでonwatchfile属性のコールバック解除テストを行う.
+ * @brief accessToken無しでonwatchfile属性のコールバック解除テストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
@@ -689,13 +694,17 @@
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailFileDescriptorOnWatchFileDeleteNoSessionKey
+- (void) testHttpFailFileDescriptorOnWatchFileDeleteNoAccessToken
 {
+    [DConnectManager sharedManager].settings.useLocalOAuth = YES;
+    [DConnectManager sharedManager].settings.useOriginEnable = YES;
     NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/fileDescriptor/onwatchfile?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
     
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":10}", request);
+    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":13}", request);
+    [DConnectManager sharedManager].settings.useLocalOAuth = NO;
+    [DConnectManager sharedManager].settings.useOriginEnable = NO;
 }
 
 /*!
@@ -703,7 +712,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: GET
- * Path: /fileDescriptor/onwatchfile?serviceId=xxxx&sessionKey=xxxx
+ * Path: /fileDescriptor/onwatchfile?serviceId=xxxx&accessToken=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -724,7 +733,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: POST
- * Path: /fileDescriptor/onwatchfile?serviceId=xxxx&sessionKey=xxxx
+ * Path: /fileDescriptor/onwatchfile?serviceId=xxxx&accessToken=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】

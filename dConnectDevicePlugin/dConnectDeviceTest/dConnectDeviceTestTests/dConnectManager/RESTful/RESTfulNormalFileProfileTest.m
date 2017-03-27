@@ -24,7 +24,7 @@
  * @brief ファイルの送信を行う.
  * <pre>
  * Method: POST
- * Path: /file/send?serviceId=xxxx&filename=xxxx
+ * Path: /file?serviceId=xxxx&filename=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -34,7 +34,7 @@
 - (void) testHttpNormalFileSendPost
 {
     NSURL *uri = [NSURL URLWithString:
-                  [NSString stringWithFormat:@"http://localhost:4035/gotapi/file/send?serviceId=%@&path=%%2Ftest%%2Ftest%%2Epng",
+                  [NSString stringWithFormat:@"http://localhost:4035/gotapi/file?serviceId=%@&path=%%2Ftest%%2Ftest%%2Epng",
                    self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"POST"];
@@ -50,7 +50,7 @@
  * @brief 0byteのファイルの送信を行う.
  * <pre>
  * Method: POST
- * Path: /file/send?serviceId=xxxx&filename=xxxx
+ * Path: /file?serviceId=xxxx&filename=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -60,7 +60,7 @@
 - (void) testHttpNormalFileSendPostZeroByte
 {
     NSURL *uri = [NSURL URLWithString:
-                  [NSString stringWithFormat:@"http://localhost:4035/gotapi/file/send?serviceId=%@&path=%%2Ftest%%2Fzero%%2Edat",
+                  [NSString stringWithFormat:@"http://localhost:4035/gotapi/file?serviceId=%@&path=%%2Ftest%%2Fzero%%2Edat",
                    self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"POST"];
@@ -77,7 +77,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: GET
- * Path: /file/receive?serviceId=xxxx&mediaid=xxxxx
+ * Path: /file?serviceId=xxxx&mediaid=xxxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -89,7 +89,7 @@
     [self testHttpNormalFileSendPost];
     
     NSURL *uri = [NSURL URLWithString:
-                  [NSString stringWithFormat:@"http://localhost:4035/gotapi/file/receive?serviceId=%@&path=%%2Ftest%%2Ftest%%2Epng",
+                  [NSString stringWithFormat:@"http://localhost:4035/gotapi/file?serviceId=%@&path=%%2Ftest%%2Ftest%%2Epng",
                    self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
@@ -133,7 +133,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: GET
- * Path: /file/receive?serviceId=xxxx&mediaid=xxxxx
+ * Path: /file?serviceId=xxxx&mediaid=xxxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -146,7 +146,7 @@
     
     NSURL *uri = [NSURL URLWithString:
                   [NSString stringWithFormat:
-                    @"http://localhost:4035/gotapi/file/receive?serviceId=%@&path=%%2Ftest%%2Fzero%%2Edat",
+                    @"http://localhost:4035/gotapi/file?serviceId=%@&path=%%2Ftest%%2Fzero%%2Edat",
                    self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"GET"];
@@ -230,7 +230,7 @@
     [self testHttpNormalFileSendPost];
     
     NSURL *uri = [NSURL URLWithString:
-                  [NSString stringWithFormat:@"http://localhost:4035/gotapi/file/remove?"
+                  [NSString stringWithFormat:@"http://localhost:4035/gotapi/file?"
                    "serviceId=%@&path=%%2Ftest%%2Ftest%%2Epng", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];

@@ -6,7 +6,7 @@
 //  Released under the MIT license
 //  http://opensource.org/licenses/mit-license.php
 //
-
+#import <DConnectSDK/DConnectSDK.h>
 #import "RESTfulTestCase.h"
 
 /*!
@@ -1554,7 +1554,7 @@
 }
 
 /*!
- * @brief sessionKeyを指定せずコンテンツ再生状態の変化通知要求を送信するテスト.
+ * @brief accessTokenを指定せずコンテンツ再生状態の変化通知要求を送信するテスト.
  * <pre>
  * 【HTTP通信】
  * Method: PUT
@@ -1565,13 +1565,17 @@
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailMediaPlayerOnStatusChangePutNoSessionKey
+- (void) testHttpFailMediaPlayerOnStatusChangePutNoAccessToken
 {
+    [DConnectManager sharedManager].settings.useLocalOAuth = YES;
+    [DConnectManager sharedManager].settings.useOriginEnable = YES;
     NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/mediaPlayer/onstatuschange?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
 
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":10}", request);
+    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":13}", request);
+    [DConnectManager sharedManager].settings.useLocalOAuth = NO;
+    [DConnectManager sharedManager].settings.useOriginEnable = NO;
 }
 
 /*!
@@ -1638,7 +1642,7 @@
 }
 
 /*!
- * @brief sessionKeyを指定せずコンテンツ再生状態の変化通知解除要求を送信するテスト.
+ * @brief accessTokenを指定せずコンテンツ再生状態の変化通知解除要求を送信するテスト.
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
@@ -1649,13 +1653,17 @@
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailMediaPlayerOnStatusChangeDeleteNoSessionKey
+- (void) testHttpFailMediaPlayerOnStatusChangeDeleteNoAccessToken
 {
+    [DConnectManager sharedManager].settings.useLocalOAuth = YES;
+    [DConnectManager sharedManager].settings.useOriginEnable = YES;
     NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:@"http://localhost:4035/gotapi/mediaPlayer/onstatuschange?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
 
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":10}", request);
+    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":13}", request);
+    [DConnectManager sharedManager].settings.useLocalOAuth = NO;
+    [DConnectManager sharedManager].settings.useOriginEnable = NO;
 }
 
 /*!
@@ -1663,7 +1671,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: GET
- * Path: /mediaPlayer/onstatuschange?serviceId=xxx&sessionKey=xxx
+ * Path: /mediaPlayer/onstatuschange?serviceId=xxx&accessToken=xxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -1684,7 +1692,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: POST
- * Path: /mediaPlayer/onstatuschange?serviceId=xxx&sessionKey=xxx
+ * Path: /mediaPlayer/onstatuschange?serviceId=xxx&accessToken=xxx
  * </pre>
  * <pre>
  * 【期待する動作】

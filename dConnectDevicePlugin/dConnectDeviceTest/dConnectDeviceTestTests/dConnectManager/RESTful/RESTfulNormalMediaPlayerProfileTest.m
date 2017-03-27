@@ -388,7 +388,7 @@
 {
     NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:
                                        @"http://localhost:4035/gotapi/mediaPlayer/onstatuschange?"
-                                       "sessionKey=%@&serviceId=%@",
+                                       "accessToken=%@&serviceId=%@",
                                        self.clientId, self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
@@ -414,7 +414,7 @@
 {
     NSURL *uri = [NSURL URLWithString:[NSString stringWithFormat:
                                        @"http://localhost:4035/gotapi/mediaPlayer/onstatuschange?"
-                                       "sessionKey=%@&serviceId=%@",
+                                       "accessToken=%@&serviceId=%@",
                                        self.clientId, self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];

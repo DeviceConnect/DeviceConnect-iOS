@@ -7,6 +7,7 @@
 //  http://opensource.org/licenses/mit-license.php
 //
 
+#import <DConnectSDK/DConnectSDK.h>
 #import "RESTfulTestCase.h"
 
 /*!
@@ -1278,7 +1279,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /mediaStreamRecording/onphoto?sessionKey=xxxx
+ * Path: /mediaStreamRecording/onphoto?accessToken=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -1299,7 +1300,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /mediaStreamRecording/onphoto?serviceId=&sessionKey=xxxx
+ * Path: /mediaStreamRecording/onphoto?serviceId=&accessToken=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -1320,7 +1321,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /mediaStreamRecording/onphoto?serviceId=123456789&sessionKey=xxxx
+ * Path: /mediaStreamRecording/onphoto?serviceId=123456789&accessToken=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -1337,7 +1338,7 @@
 }
 
 /*!
- * @brief sessionKey無しでonphoto属性のコールバック登録テストを行う.
+ * @brief accessToken無しでonphoto属性のコールバック登録テストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: PUT
@@ -1348,15 +1349,19 @@
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailMediaStreamRecordingOnPhotoPutNoSessionKey
+- (void) testHttpFailMediaStreamRecordingOnPhotoPutNoAccessToken
 {
+    [DConnectManager sharedManager].settings.useLocalOAuth = YES;
+    [DConnectManager sharedManager].settings.useOriginEnable = YES;
     NSURL *uri = [NSURL URLWithString:
                     [NSString stringWithFormat:@"http://localhost:4035/gotapi/mediaStreamRecording/onphoto?serviceId=%@",
                             self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
 
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":10}", request);
+    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":13}", request);
+    [DConnectManager sharedManager].settings.useLocalOAuth = NO;
+    [DConnectManager sharedManager].settings.useOriginEnable = NO;
 }
 
 /*!
@@ -1364,7 +1369,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /mediaStreamRecording/onphoto?sessionKey=xxxx
+ * Path: /mediaStreamRecording/onphoto?accessToken=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -1385,7 +1390,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /mediaStreamRecording/onphoto?serviceId=&sessionKey=xxxx
+ * Path: /mediaStreamRecording/onphoto?serviceId=&accessToken=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -1406,7 +1411,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /mediaStreamRecording/onphoto?serviceId=123456789&sessionKey=xxxx
+ * Path: /mediaStreamRecording/onphoto?serviceId=123456789&accessToken=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -1423,7 +1428,7 @@
 }
 
 /*!
- * @brief sessionKey無しでonphoto属性のコールバック解除テストを行う.
+ * @brief accessToken無しでonphoto属性のコールバック解除テストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
@@ -1434,15 +1439,19 @@
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailMediaStreamRecordingOnPhotoDeleteNoSessionKey
+- (void) testHttpFailMediaStreamRecordingOnPhotoDeleteNoAccessToken
 {
+    [DConnectManager sharedManager].settings.useLocalOAuth = YES;
+    [DConnectManager sharedManager].settings.useOriginEnable = YES;
     NSURL *uri = [NSURL URLWithString:
                   [NSString stringWithFormat:
                    @"http://localhost:4035/gotapi/mediaStreamRecording/onphoto?serviceId=%@", self.serviceId]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
 
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":10}", request);
+    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":13}", request);
+    [DConnectManager sharedManager].settings.useLocalOAuth = NO;
+    [DConnectManager sharedManager].settings.useOriginEnable = NO;
 }
 
 /*!
@@ -1450,7 +1459,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: GET
- * Path: /mediaStreamRecording/onphoto?serviceId=xxxx&sessionKey=xxxx
+ * Path: /mediaStreamRecording/onphoto?serviceId=xxxx&accessToken=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -1474,7 +1483,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: POST
- * Path: /mediaStreamRecording/onphoto?serviceId=xxxx&sessionKey=xxxx
+ * Path: /mediaStreamRecording/onphoto?serviceId=xxxx&accessToken=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -1498,7 +1507,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /mediaStreamRecording/onrecordingchange?sessionKey=xxxx
+ * Path: /mediaStreamRecording/onrecordingchange?accessToken=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -1519,7 +1528,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /mediaStreamRecording/onrecordingchange?serviceId=&sessionKey=xxxx
+ * Path: /mediaStreamRecording/onrecordingchange?serviceId=&accessToken=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -1541,7 +1550,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: PUT
- * Path: /mediaStreamRecording/onrecordingchange?serviceId=123456789&sessionKey=xxxx
+ * Path: /mediaStreamRecording/onrecordingchange?serviceId=123456789&accessToken=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -1559,7 +1568,7 @@
 }
 
 /*!
- * @brief sessionKey無しでonrecordingchange属性のコールバック登録テストを行う.
+ * @brief accessToken無しでonrecordingchange属性のコールバック登録テストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: PUT
@@ -1570,8 +1579,10 @@
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailMediaStreamRecordingOnRecordingChangePutNoSessionKey
+- (void) testHttpFailMediaStreamRecordingOnRecordingChangePutNoAccessToken
 {
+    [DConnectManager sharedManager].settings.useLocalOAuth = YES;
+    [DConnectManager sharedManager].settings.useOriginEnable = YES;
     NSURL *uri = [NSURL URLWithString:
                     [NSString stringWithFormat:
                         @"http://localhost:4035/gotapi/"
@@ -1580,7 +1591,9 @@
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"PUT"];
 
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":10}", request);
+    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":13}", request);
+    [DConnectManager sharedManager].settings.useLocalOAuth = NO;
+    [DConnectManager sharedManager].settings.useOriginEnable = NO;
 }
 
 /*!
@@ -1588,7 +1601,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /mediaStreamRecording/onrecordingchange?sessionKey=xxxx
+ * Path: /mediaStreamRecording/onrecordingchange?accessToken=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -1609,7 +1622,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /mediaStreamRecording/onrecordingchange?serviceId=&sessionKey=xxxx
+ * Path: /mediaStreamRecording/onrecordingchange?serviceId=&accessToken=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -1631,7 +1644,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
- * Path: /mediaStreamRecording/onrecordingchange?serviceId=123456789&sessionKey=xxxx
+ * Path: /mediaStreamRecording/onrecordingchange?serviceId=123456789&accessToken=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -1650,7 +1663,7 @@
 }
 
 /*!
- * @brief sessionKey無しでonrecordingchange属性のコールバック解除テストを行う.
+ * @brief accessToken無しでonrecordingchange属性のコールバック解除テストを行う.
  * <pre>
  * 【HTTP通信】
  * Method: DELETE
@@ -1661,8 +1674,10 @@
  * ・resultに1が返ってくること。
  * </pre>
  */
-- (void) testHttpFailMediaStreamRecordingOnRecordingChangeDeleteNoSessionKey
+- (void) testHttpFailMediaStreamRecordingOnRecordingChangeDeleteNoAccessToken
 {
+    [DConnectManager sharedManager].settings.useLocalOAuth = YES;
+    [DConnectManager sharedManager].settings.useOriginEnable = YES;
     NSURL *uri = [NSURL URLWithString:
                     [NSString stringWithFormat:
                         @"http://localhost:4035/gotapi/"
@@ -1670,7 +1685,9 @@
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
     [request setHTTPMethod:@"DELETE"];
 
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":10}", request);
+    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":13}", request);
+    [DConnectManager sharedManager].settings.useLocalOAuth = NO;
+    [DConnectManager sharedManager].settings.useOriginEnable = NO;
 }
 
 /*!
@@ -1678,7 +1695,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: GET
- * Path: /mediaStreamRecording/onrecordingchange?serviceId=xxxx&sessionKey=xxxx
+ * Path: /mediaStreamRecording/onrecordingchange?serviceId=xxxx&accessToken=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
@@ -1699,7 +1716,7 @@
  * <pre>
  * 【HTTP通信】
  * Method: POST
- * Path: /mediaStreamRecording/onrecordingchange?serviceId=xxxx&sessionKey=xxxx
+ * Path: /mediaStreamRecording/onrecordingchange?serviceId=xxxx&accessToken=xxxx
  * </pre>
  * <pre>
  * 【期待する動作】
