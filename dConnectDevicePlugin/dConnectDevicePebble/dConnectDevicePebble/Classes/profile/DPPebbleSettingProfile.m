@@ -1,5 +1,5 @@
 //
-//  DPPebbleSettingsProfile.m
+//  DPPebbleSettingProfile.m
 //  dConnectDevicePebble
 //
 //  Copyright (c) 2014 NTT DOCOMO, INC.
@@ -7,15 +7,15 @@
 //  http://opensource.org/licenses/mit-license.php
 //
 
-#import "DPPebbleSettingsProfile.h"
+#import "DPPebbleSettingProfile.h"
 #import "DPPebbleManager.h"
 #import "DPPebbleProfileUtil.h"
 
-@interface DPPebbleSettingsProfile ()
+@interface DPPebbleSettingProfile ()
 @end
 
 
-@implementation DPPebbleSettingsProfile
+@implementation DPPebbleSettingProfile
 
 // 初期化
 - (id)init
@@ -25,7 +25,7 @@
         
         // API登録(didReceiveGetDateRequest相当)
         NSString *getDateRequestApiPath = [self apiPath: nil
-                                          attributeName: DConnectSettingsProfileAttrDate];
+                                          attributeName: DConnectSettingProfileAttrDate];
         [self addGetPath: getDateRequestApiPath
                      api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
                          
@@ -35,7 +35,7 @@
                              // エラーチェック
                              if ([DPPebbleProfileUtil handleError:error response:response]) {
                                  if (date) {
-                                     [DConnectSettingsProfile setDate:date target:response];
+                                     [DConnectSettingProfile setDate:date target:response];
                                      [response setResult:DConnectMessageResultTypeOk];
                                  } else {
                                      [response setErrorToUnknown];

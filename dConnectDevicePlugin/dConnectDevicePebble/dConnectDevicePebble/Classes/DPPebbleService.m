@@ -10,7 +10,7 @@
 #import "DPPebbleService.h"
 #import "DPPebbleBatteryProfile.h"
 #import "DPPebbleVibrationProfile.h"
-#import "DPPebbleSettingsProfile.h"
+#import "DPPebbleSettingProfile.h"
 #import "DPPebbleDeviceOrientationProfile.h"
 #import "DPPebbleNotificationProfile.h"
 #import "DPPebbleCanvasProfile.h"
@@ -27,7 +27,7 @@
         
         [self addProfile:[DPPebbleNotificationProfile new]];
         [self addProfile:[DPPebbleBatteryProfile new]];
-        [self addProfile:[DPPebbleSettingsProfile new]];
+        [self addProfile:[DPPebbleSettingProfile new]];
         [self addProfile:[DPPebbleVibrationProfile new]];
         [self addProfile:[DPPebbleDeviceOrientationProfile new]];
         [self addProfile:[DPPebbleCanvasProfile new]];

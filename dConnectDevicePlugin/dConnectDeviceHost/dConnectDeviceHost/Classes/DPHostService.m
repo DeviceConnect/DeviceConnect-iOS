@@ -19,7 +19,7 @@
 #import "DPHostNotificationProfile.h"
 #import "DPHostPhoneProfile.h"
 #import "DPHostProximityProfile.h"
-#import "DPHostSettingsProfile.h"
+#import "DPHostSettingProfile.h"
 #import "DPHostVibrationProfile.h"
 #import "DPHostConnectionProfile.h"
 #import "DPHostCanvasProfile.h"
@@ -53,7 +53,7 @@ NSString *const DPHostDevicePluginServiceId = @"host";
         [self addProfile:[DPHostNotificationProfile new]];
         [self addProfile:[DPHostPhoneProfile new]];
         [self addProfile:[DPHostProximityProfile new]];
-        [self addProfile:[DPHostSettingsProfile new]];
+        [self addProfile:[DPHostSettingProfile new]];
         [self addProfile:[DPHostVibrationProfile new]];
         [self addProfile:[DPHostConnectionProfile new]];
         [self addProfile:[DPHostCanvasProfile new]];
