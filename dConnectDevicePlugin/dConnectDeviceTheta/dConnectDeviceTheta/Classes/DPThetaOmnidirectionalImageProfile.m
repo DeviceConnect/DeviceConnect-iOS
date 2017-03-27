@@ -32,22 +32,6 @@
         _server = [DPThetaMixedReplaceMediaServer new];
         _server.delegate = self;
         
-        // API登録(didReceiveGetRoiRequest相当)
-        NSString *getRoiRequestApiPath = [self apiPath: nil
-                                         attributeName: DPOmnidirectionalImageProfileAttrROI];
-        [self addGetPath: getRoiRequestApiPath
-                     api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
-                         
-                         NSString *serviceId = [request serviceId];
-                         NSString *source = [request stringForKey:DPOmnidirectionalImageProfileParamSource];
-
-                         return [weakSelf requestViewWithRequest:request
-                                                        response:response
-                                                       serviceId:serviceId
-                                                          source:source
-                                                           isGet:YES];
-                     }];
-        
         // API登録(didReceivePutRoiRequest相当)
         NSString *putRoiRequestApiPath = [self apiPath: nil
                                          attributeName: DPOmnidirectionalImageProfileAttrROI];
