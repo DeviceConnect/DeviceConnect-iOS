@@ -1,5 +1,5 @@
 //
-//  TestConnectProfile.h
+//  TestConnectionProfile.h
 //  dConnectDeviceTest
 //
 //  Copyright (c) 2014 NTT DOCOMO, INC.
@@ -11,6 +11,6 @@
 
 @class DeviceTestPlugin;
 
-@interface TestConnectProfile : DConnectConnectProfile
+@interface TestConnectionProfile : DConnectConnectionProfile
 
 @end
