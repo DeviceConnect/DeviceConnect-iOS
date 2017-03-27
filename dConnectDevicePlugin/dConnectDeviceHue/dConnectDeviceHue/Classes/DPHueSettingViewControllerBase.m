@@ -16,6 +16,8 @@ static DPHueItemBridge *mSelectedItemBridge;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    portConstraints = [NSArray array];
+    landConstraints = [NSArray array];
     manager = [DPHueManager sharedManager];
     [manager initHue];
     _bundle = DPHueBundle();
@@ -28,6 +30,20 @@ static DPHueItemBridge *mSelectedItemBridge;
     //起動時の位置合わせ
     [self setLayoutConstraint];
 
+}
+- (void)viewDidLayoutSubviews
+{
+    [super viewDidLayoutSubviews];
+    UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
+    if(orientation == UIInterfaceOrientationLandscapeLeft
+       || orientation == UIInterfaceOrientationLandscapeRight)
+    {
+        [NSLayoutConstraint deactivateConstraints:portConstraints];
+        [NSLayoutConstraint activateConstraints:landConstraints];
+    } else {
+        [NSLayoutConstraint deactivateConstraints:landConstraints];
+        [NSLayoutConstraint activateConstraints:portConstraints];
+    }
 }
 
 - (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -77,19 +93,19 @@ static DPHueItemBridge *mSelectedItemBridge;
     [alert show];
 }
 
-- (BOOL)isIpad
+- (BOOL)ipad
 {
     return (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad);
 }
 
-- (BOOL)isIphone
+- (BOOL)iphone
 {
     return (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone);
 }
 
-- (BOOL)isIpadMini
+- (BOOL)ipadMini
 {
-    if (!self.isIpad) {
+    if (!self.ipad) {
         return false;
     }
     
@@ -98,18 +114,40 @@ static DPHueItemBridge *mSelectedItemBridge;
     return ((int)rect.size.height <= 1024);
 }
 
-- (BOOL)isIphoneLong
+- (BOOL)iphone5
 {
-    if (!self.isIphone) {
+    if (!self.iphone) {
         return false;
     }
     
     CGRect rect = [[UIScreen mainScreen] bounds];
 
-    return ((int)rect.size.height > 480);
+    return ((int)rect.size.height == 568);
+    
+}
+- (BOOL)iphone6
+{
+    if (!self.iphone) {
+        return false;
+    }
+    
+    CGRect rect = [[UIScreen mainScreen] bounds];
+    
+    return ((int)rect.size.height == 667);
     
 }
 
+- (BOOL)iphone6p
+{
+    if (!self.iphone) {
+        return false;
+    }
+    
+    CGRect rect = [[UIScreen mainScreen] bounds];
+    
+    return ((int)rect.size.height == 736);
+    
+}
 
 - (void)setSelectedItemBridge:(DPHueItemBridge*)itemBridge
 {
@@ -135,9 +173,7 @@ static DPHueItemBridge *mSelectedItemBridge;
 
 - (BOOL)isSelectedItemBridge
 {
-    if (mSelectedItemBridge == nil
-        || mSelectedItemBridge.ipAddress.length < 7
-        || mSelectedItemBridge.macAddress.length < 17) {
+    if (mSelectedItemBridge == nil) {
         return NO;
     }
     return YES;
@@ -171,6 +207,10 @@ static DPHueItemBridge *mSelectedItemBridge;
 - (void)showLightListPage
 {
     [self showPage:3];
+}
+
+- (void) setCloseBtn:(BOOL)closeEnable {
+    self.root.navigationItem.leftBarButtonItem.enabled = closeEnable;
 }
 
 @end

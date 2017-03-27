@@ -17,12 +17,22 @@
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *searchingBridgeIndicator;
 @property (weak, nonatomic) IBOutlet UIView *searchingView;
 @property (weak, nonatomic) IBOutlet UILabel *processingLabel;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *bridgeIconYConstraint;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *bridgeIconXConstraint;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *searchButtonYConstraint;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *searchButtonXConstraint;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *bridgeListYConstraint;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *bridgeListXConstraint;
+
+
+#pragma mark - Portrait Constraints
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *portCenterTopX;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *portCenterMiddleX;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *portBottomRight;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *portBottomBottom;
+#pragma mark - Landscape Constraints
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *landLeftCenterY;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *landRightRight;
+
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *landRightTop;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *landLeftBottom;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *landLeftBottomBottom;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *landImageLeft;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *landMessageLeft;
 
 @end
 
@@ -51,6 +61,26 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    if ([super iphone]) {
+        portConstraints = [NSArray arrayWithObjects:
+                               _portCenterTopX, _portCenterMiddleX,  _portBottomRight, _portBottomBottom, nil];
+
+        landConstraints = [NSArray arrayWithObjects:
+                           _landLeftCenterY,
+                           _landRightRight,
+                           _landRightTop,
+                           _landLeftBottom,
+                           _landLeftBottomBottom,
+                           _landImageLeft,
+                           _landMessageLeft, nil];
+    } else {
+        portConstraints = [NSArray arrayWithObjects:
+                           _portCenterTopX, _portCenterMiddleX, _portBottomBottom, nil];
+        
+        landConstraints = [NSArray arrayWithObjects:
+                           _landRightRight,
+                           _landRightTop, nil];
+    }
     _bridgeListTableView.delegate = self;
     _bridgeListTableView.dataSource = self;
 
@@ -75,7 +105,7 @@
         // Check for results
         if (bridgesFound.count > 0) {
             for (id key in [bridgesFound keyEnumerator]) {
-                [self addItem:[bridgesFound valueForKey:key] macAdress:key];
+                [self addItem:bridgesFound[key] macAdress:key];
             }
         }
         [self stopIndicator];
@@ -85,67 +115,43 @@
 //縦向き座標調整
 - (void)setLayoutConstraintPortrait
 {
-    //iPadの時だけ回転時座標調整する
-    if (self.isIpad) {
-    
-        _bridgeIconXConstraint.constant = 128;
-        _bridgeIconYConstraint.constant = 110;
-        
-        _searchButtonXConstraint.constant = 128;
-        _searchButtonYConstraint.constant = 2;
-        
-        _bridgeListXConstraint.constant = 184;
-        _bridgeListYConstraint.constant = 89;
-
-        if (self.isIpadMini) {
-            _bridgeListYConstraint.constant = _bridgeListYConstraint.constant- 50;
+    if ([super iphone]) {
+        if ([super iphone5]) {
+            _portBottomRight.constant = 35;
+        } else if ([super iphone6]) {
+            _portBottomRight.constant = 60;
+        } else if ([super iphone6p]) {
+            _portBottomRight.constant = 80;
+            _portBottomBottom.constant = 80;
         }
-    }else{
-        
-        _bridgeIconXConstraint.constant = 32;
-        
-        _searchButtonXConstraint.constant = 32;
-        
-        _bridgeListXConstraint.constant = 44;
-        _bridgeListYConstraint.constant = 7;
-        
-        if ([self isIphoneLong]) {
-            _bridgeListYConstraint.constant = _bridgeListYConstraint.constant + 50;
+    } else {
+        if ([super ipadMini]) {
+            _landImageLeft.constant = 214;
+        } else {
+            _landImageLeft.constant = 350;
         }
     }
-
 }
 
 //横向き座標調整
 - (void)setLayoutConstraintLandscape
 {
-    if (self.isIpad) {
-
-        _bridgeIconXConstraint.constant = 50;
-        _bridgeIconYConstraint.constant = 150;
-
-        _searchButtonXConstraint.constant = 50;
-        _searchButtonYConstraint.constant = 80;
-
-        _bridgeListXConstraint.constant = 60;
-        _bridgeListYConstraint.constant = 200;
-
-    }else{
-
-        _bridgeIconXConstraint.constant = 0;
-
-        _searchButtonXConstraint.constant = 0;
-
-        _bridgeListXConstraint.constant = 20;
-
-        _bridgeListYConstraint.constant = 30;
-
-        if ([self isIphoneLong]) {
-            _bridgeIconXConstraint.constant = _bridgeIconXConstraint.constant + 25;
-            _searchButtonXConstraint.constant = _searchButtonXConstraint.constant + 25;
-
-            _bridgeListXConstraint.constant = _bridgeListXConstraint.constant + 10;
-
+    if ([super iphone]) {
+        if ([super iphone5]) {
+            _landRightRight.constant = 29;
+            _landRightTop.constant = 33;
+        } else if ([super iphone6]) {
+            _landRightRight.constant = 70;
+            _landRightTop.constant = 15;
+        } else if ([super iphone6p]) {
+            _landRightRight.constant = 140;
+            _landRightTop.constant = 5;
+        }
+    } else {
+        if ([super ipadMini]) {
+            _landImageLeft.constant = 80;
+        } else {
+            _landImageLeft.constant = 220;
         }
 
     }
@@ -173,7 +179,7 @@
     // セルを設定する
     DPHueItemBridge *item = self.bridgeItems[indexPath.row];
     
-    cell.textLabel.text = [NSString stringWithFormat:@"%@\n ( %@ )",item.macAddress ,item.ipAddress];
+    cell.textLabel.text = [NSString stringWithFormat:@"%@\n ( %@ )",item.bridgeId ,item.ipAddress];
     return cell;
 }
 
@@ -199,7 +205,7 @@ canEditRowAtIndexPath:(NSIndexPath *)indexPath {
     DPHueItemBridge *newItem = [[DPHueItemBridge alloc] init];
     
     newItem.ipAddress = ipAdress;
-    newItem.macAddress = macAdress;
+    newItem.bridgeId = macAdress;
     
     NSIndexPath *indexPathToInsert =
     [NSIndexPath indexPathForRow:self.bridgeItems.count inSection:0];
@@ -216,7 +222,7 @@ canEditRowAtIndexPath:(NSIndexPath *)indexPath {
     _processingLabel.text = DPHueLocalizedString(_bundle, @"HueBridgeConnecting");
     [self startIndicator];
     [manager startAuthenticateBridgeWithIpAddress:selectedItemBridge.ipAddress
-                                       macAddress:selectedItemBridge.macAddress
+                                       bridgeId:selectedItemBridge.bridgeId
                                         receiver:self
                    localConnectionSuccessSelector:@selector(didLocalConnectionSuccess)
                                 noLocalConnection:@selector(didNoLocalConnection)

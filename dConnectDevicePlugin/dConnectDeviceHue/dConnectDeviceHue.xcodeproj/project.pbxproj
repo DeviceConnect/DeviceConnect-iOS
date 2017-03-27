@@ -68,6 +68,9 @@
 		AB3A3FCC1B145B5000C40A88 /* hue_small_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = AB3A3FCA1B142C8200C40A88 /* hue_small_icon.png */; };
 		AB4E025319EE4C9900F385D0 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = AB4E025519EE4C9900F385D0 /* Localizable.strings */; };
 		AB85126B19E77C760038AD54 /* DPHueManager.m in Sources */ = {isa = PBXBuildFile; fileRef = AB85126A19E77C760038AD54 /* DPHueManager.m */; };
+		ABCA82911DDB0786000B1C81 /* DPHueDeviceRepeatExecutor.m in Sources */ = {isa = PBXBuildFile; fileRef = ABCA828C1DDB0786000B1C81 /* DPHueDeviceRepeatExecutor.m */; };
+		ABCA82921DDB0786000B1C81 /* DPHueTimeoutSchedule.m in Sources */ = {isa = PBXBuildFile; fileRef = ABCA828E1DDB0786000B1C81 /* DPHueTimeoutSchedule.m */; };
+		ABCA82931DDB0786000B1C81 /* DPHueUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = ABCA82901DDB0786000B1C81 /* DPHueUtil.m */; };
 		D6C860281D390C0300232EEF /* DPHueService.m in Sources */ = {isa = PBXBuildFile; fileRef = D6C860271D390C0300232EEF /* DPHueService.m */; };
 		D6D172811D647B7200444337 /* DPHueReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = D6D172801D647B7200444337 /* DPHueReachability.m */; };
 /* End PBXBuildFile section */
@@ -150,6 +153,12 @@
 		AB4E025819EE4CB000F385D0 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		AB85126919E77C760038AD54 /* DPHueManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHueManager.h; sourceTree = "<group>"; };
 		AB85126A19E77C760038AD54 /* DPHueManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHueManager.m; sourceTree = "<group>"; };
+		ABCA828B1DDB0786000B1C81 /* DPHueDeviceRepeatExecutor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHueDeviceRepeatExecutor.h; sourceTree = "<group>"; };
+		ABCA828C1DDB0786000B1C81 /* DPHueDeviceRepeatExecutor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHueDeviceRepeatExecutor.m; sourceTree = "<group>"; };
+		ABCA828D1DDB0786000B1C81 /* DPHueTimeoutSchedule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHueTimeoutSchedule.h; sourceTree = "<group>"; };
+		ABCA828E1DDB0786000B1C81 /* DPHueTimeoutSchedule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHueTimeoutSchedule.m; sourceTree = "<group>"; };
+		ABCA828F1DDB0786000B1C81 /* DPHueUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHueUtil.h; sourceTree = "<group>"; };
+		ABCA82901DDB0786000B1C81 /* DPHueUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHueUtil.m; sourceTree = "<group>"; };
 		D6C860261D390C0300232EEF /* DPHueService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHueService.h; sourceTree = "<group>"; };
 		D6C860271D390C0300232EEF /* DPHueService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHueService.m; sourceTree = "<group>"; };
 		D6D1727F1D647B7200444337 /* DPHueReachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHueReachability.h; sourceTree = "<group>"; };
@@ -293,6 +302,7 @@
 		AB1815EA196A387A000BE265 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				ABCA828A1DDB0758000B1C81 /* util */,
 				AB8913B81974D2400069CDA3 /* setting */,
 				AB8913B71974D2210069CDA3 /* profile */,
 				AB1815EB196A388B000BE265 /* DPHueDevicePlugin.h */,
@@ -369,6 +379,19 @@
 				64A3E56619B93DD700B83DAF /* SettingPage */,
 			);
 			name = setting;
+			sourceTree = "<group>";
+		};
+		ABCA828A1DDB0758000B1C81 /* util */ = {
+			isa = PBXGroup;
+			children = (
+				ABCA828B1DDB0786000B1C81 /* DPHueDeviceRepeatExecutor.h */,
+				ABCA828C1DDB0786000B1C81 /* DPHueDeviceRepeatExecutor.m */,
+				ABCA828D1DDB0786000B1C81 /* DPHueTimeoutSchedule.h */,
+				ABCA828E1DDB0786000B1C81 /* DPHueTimeoutSchedule.m */,
+				ABCA828F1DDB0786000B1C81 /* DPHueUtil.h */,
+				ABCA82901DDB0786000B1C81 /* DPHueUtil.m */,
+			);
+			path = util;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -539,7 +562,10 @@
 				D6C860281D390C0300232EEF /* DPHueService.m in Sources */,
 				AB181737196BE431000BE265 /* DPHueLightProfile.m in Sources */,
 				AB181669196A3E89000BE265 /* DPHueSystemProfile.m in Sources */,
+				ABCA82921DDB0786000B1C81 /* DPHueTimeoutSchedule.m in Sources */,
+				ABCA82911DDB0786000B1C81 /* DPHueDeviceRepeatExecutor.m in Sources */,
 				64A6938A19BBEBBC0084D904 /* DPHueItemBridge.m in Sources */,
+				ABCA82931DDB0786000B1C81 /* DPHueUtil.m in Sources */,
 				AB85126B19E77C760038AD54 /* DPHueManager.m in Sources */,
 				AB1815ED196A388B000BE265 /* DPHueDevicePlugin.m in Sources */,
 			);
@@ -684,7 +710,6 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 					"$(PROJECT_DIR)/../../dConnectSDK/dConnectSDKForIOS/bin",
-					"$(PROJECT_DIR)/deps/PhilipsHueSDK-iOS-OSX",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "dConnectDeviceHue/dConnectDeviceHue-Prefix.pch";
@@ -692,6 +717,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -704,7 +730,6 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 					"$(PROJECT_DIR)/../../dConnectSDK/dConnectSDKForIOS/bin",
-					"$(PROJECT_DIR)/deps/PhilipsHueSDK-iOS-OSX",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "dConnectDeviceHue/dConnectDeviceHue-Prefix.pch";
@@ -712,6 +737,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
@@ -734,6 +760,7 @@
 				INFOPLIST_FILE = "dConnectDeviceHueTests/dConnectDeviceHueTests-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = xctest;
 			};
 			name = Debug;
@@ -753,6 +780,7 @@
 				INFOPLIST_FILE = "dConnectDeviceHueTests/dConnectDeviceHueTests-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = xctest;
 			};
 			name = Release;
@@ -776,6 +804,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = bundle;
 			};
 			name = Debug;
@@ -796,6 +825,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = bundle;
 			};
 			name = Release;
@@ -806,6 +836,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -815,6 +846,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};

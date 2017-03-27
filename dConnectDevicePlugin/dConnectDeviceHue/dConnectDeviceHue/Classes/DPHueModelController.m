@@ -13,19 +13,20 @@
 
 @interface DPHueModelController()
 @property (readonly, strong, nonatomic) NSArray *pageData;
+@property (nonatomic, weak) UIViewController *root;
 
 @end
 
 @implementation DPHueModelController
 
-- (id)init
+- (id)initWithRootViewController:(UIViewController *)root
 {
     self = [super init];
     if (self) {
         // Create the data model.
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
         _pageData = [[dateFormatter monthSymbols] copy];
-        
+        _root = root;
     }
     return self;
 }
@@ -51,6 +52,7 @@
     viewController.objectIndex = index;
     
     viewController.hueViewController = self.hueViewController;
+    viewController.root = self.root;
 
     return viewController;
 }

@@ -8,7 +8,11 @@
 //
 #import "DPHueSettingViewController4.h"
 
-
+#define PutPresentedViewController(top) \
+top = [UIApplication sharedApplication].keyWindow.rootViewController; \
+while (top.presentedViewController) { \
+top = top.presentedViewController; \
+}
 @interface DPHueSettingViewController4 () {
     int lightCount;
     int retryCount;
@@ -23,6 +27,8 @@
 - (IBAction)searchAutomatic:(id)sender;
 - (IBAction)searchManual:(id)sender;
 
+@property (weak, nonatomic) IBOutlet UIButton *autoSearchBtn;
+@property (weak, nonatomic) IBOutlet UIButton *manualSearchBtn;
 
 
 @end
@@ -45,6 +51,12 @@
     if ([_foundLightListView respondsToSelector:@selector(setSeparatorInset:)]) {
         [_foundLightListView setSeparatorInset:UIEdgeInsetsZero];
     }
+    void (^roundCorner)(UIView*) = ^void(UIView *v) {
+        CALayer *layer = v.layer;
+        layer.masksToBounds = YES;
+        layer.cornerRadius = 4.;
+    };
+    roundCorner(_indicator);
 }
 
 
@@ -86,14 +98,23 @@
 
 -(void)startIndicator
 {
+    _lightSearchingIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhiteLarge;
+    [_lightSearchingIndicator.layer setValue:[NSNumber numberWithFloat:1.39f] forKeyPath:@"transform.scale"];
+
     [_lightSearchingIndicator startAnimating];
     _lightSearchingIndicator.hidden = NO;
+    _autoSearchBtn.enabled = NO;
+    _manualSearchBtn.enabled = NO;
+    [super setCloseBtn:NO];
 }
 
 -(void)stopIndicator
 {
     [_lightSearchingIndicator stopAnimating];
     _lightSearchingIndicator.hidden = YES;
+    _autoSearchBtn.enabled = YES;
+    _manualSearchBtn.enabled = YES;
+    [super setCloseBtn:YES];
 }
 
 
@@ -191,7 +212,7 @@ shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)strin
     DPHueItemBridge *item = [self getSelectedItemBridge];
     [[DPHueManager sharedManager] initHue];
     [[DPHueManager sharedManager] startAuthenticateBridgeWithIpAddress:item.ipAddress
-                                                            macAddress:item.macAddress
+                                                            bridgeId:item.bridgeId
                                                               receiver:self
                                         localConnectionSuccessSelector:@selector(didBridgeSuccess)
                                                      noLocalConnection:@selector(didBridgeFailed)
