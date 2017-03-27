@@ -273,7 +273,7 @@ NSString * const DConnectSpecBoolTrue = @"true";
 }
 
 + (BOOL)isDigit:(NSString *)text {
-    NSString *expression = @"^[-+]?([0-9]*)?$";
+    NSString *expression = @"^[-+]?([0-9]+)$";
     NSError *error = nil;
     
     NSRegularExpression *regex =
@@ -291,7 +291,7 @@ NSString * const DConnectSpecBoolTrue = @"true";
 }
 
 + (BOOL)isNumber:(NSString *)text {
-    NSString *expression = @"^[-+]?([0-9]*)?(\\.)?([0-9]*)?$";
+    NSString *expression = @"^[-+]?([0-9]+)((\\.)[0-9]+)?$";
     NSError *error = nil;
     
     NSRegularExpression *regex =
