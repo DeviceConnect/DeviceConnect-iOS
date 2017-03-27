@@ -73,7 +73,12 @@
 		971BC07B1924A8A000D21FE3 /* DConnectBatteryProfileTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 971BC07A1924A8A000D21FE3 /* DConnectBatteryProfileTest.m */; };
 		97A999BB19545237006F8474 /* DConnectFilesProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 97A999BA19545237006F8474 /* DConnectFilesProfile.m */; };
 		97FE24BC191CBB77007C4769 /* multipart_parser.c in Sources */ = {isa = PBXBuildFile; fileRef = 97FE24B8191CBB77007C4769 /* multipart_parser.c */; };
+<<<<<<< HEAD
+		AB24217C1E67CBDD005887C8 /* fileDescriptor.json in Resources */ = {isa = PBXBuildFile; fileRef = AB24217B1E67CBDC005887C8 /* fileDescriptor.json */; };
+		AB24217F1E67CC1F005887C8 /* DConnectFileDescriptorProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = AB24217E1E67CC1F005887C8 /* DConnectFileDescriptorProfile.m */; };
+=======
 		AB5555B71E56B2F10086E5D5 /* power.json in Resources */ = {isa = PBXBuildFile; fileRef = AB5555B61E56B2F10086E5D5 /* power.json */; };
+>>>>>>> master
 		AB67AAE61C642A7900B4C62C /* GCDAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = AB67AAE51C642A7900B4C62C /* GCDAsyncSocket.m */; };
 		AB67AB0E1C642AB200B4C62C /* DDData.m in Sources */ = {isa = PBXBuildFile; fileRef = AB67AAEB1C642AB200B4C62C /* DDData.m */; };
 		AB67AB0F1C642AB200B4C62C /* DDNumber.m in Sources */ = {isa = PBXBuildFile; fileRef = AB67AAED1C642AB200B4C62C /* DDNumber.m */; };
@@ -119,7 +124,6 @@
 		BE71FE031DA3B25B00B5E209 /* DConnectCanvasProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = BE71FD9D1DA3B25B00B5E209 /* DConnectCanvasProfile.m */; };
 		BE71FE041DA3B25B00B5E209 /* DConnectConnectionProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = BE71FD9E1DA3B25B00B5E209 /* DConnectConnectionProfile.m */; };
 		BE71FE051DA3B25B00B5E209 /* DConnectDeviceOrientationProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = BE71FD9F1DA3B25B00B5E209 /* DConnectDeviceOrientationProfile.m */; };
-		BE71FE061DA3B25B00B5E209 /* DConnectFileDescriptorProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = BE71FDA01DA3B25B00B5E209 /* DConnectFileDescriptorProfile.m */; };
 		BE71FE071DA3B25B00B5E209 /* DConnectFileProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = BE71FDA11DA3B25B00B5E209 /* DConnectFileProfile.m */; };
 		BE71FE081DA3B25B00B5E209 /* DConnectKeyEventProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = BE71FDA21DA3B25B00B5E209 /* DConnectKeyEventProfile.m */; };
 		BE71FE091DA3B25B00B5E209 /* DConnectLightProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = BE71FDA31DA3B25B00B5E209 /* DConnectLightProfile.m */; };
@@ -250,7 +254,6 @@
 		D662E9BF1D4AEAA000919C69 /* connection.json in Resources */ = {isa = PBXBuildFile; fileRef = D662E9AA1D4AEA9F00919C69 /* connection.json */; };
 		D662E9C01D4AEAA000919C69 /* drivecontroller.json in Resources */ = {isa = PBXBuildFile; fileRef = D662E9AB1D4AEA9F00919C69 /* drivecontroller.json */; };
 		D662E9C11D4AEAA000919C69 /* file.json in Resources */ = {isa = PBXBuildFile; fileRef = D662E9AC1D4AEA9F00919C69 /* file.json */; };
-		D662E9C21D4AEAA000919C69 /* filedescriptor.json in Resources */ = {isa = PBXBuildFile; fileRef = D662E9AD1D4AEA9F00919C69 /* filedescriptor.json */; };
 		D662E9C41D4AEAA000919C69 /* humandetect.json in Resources */ = {isa = PBXBuildFile; fileRef = D662E9AF1D4AEA9F00919C69 /* humandetect.json */; };
 		D662E9C51D4AEAA000919C69 /* illuminance.json in Resources */ = {isa = PBXBuildFile; fileRef = D662E9B01D4AEA9F00919C69 /* illuminance.json */; };
 		D662E9C61D4AEAA000919C69 /* mediaplayer.json in Resources */ = {isa = PBXBuildFile; fileRef = D662E9B11D4AEA9F00919C69 /* mediaplayer.json */; };
@@ -387,6 +390,9 @@
 		AB0A87751A8067860016FF77 /* DConnectAvailabilityProfile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DConnectAvailabilityProfile.h; sourceTree = "<group>"; };
 		AB0A87761A8067860016FF77 /* DConnectCanvasProfile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DConnectCanvasProfile.h; sourceTree = "<group>"; };
 		AB0A87771A808BFC0016FF77 /* DConnectServiceDiscoveryProfile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DConnectServiceDiscoveryProfile.h; sourceTree = "<group>"; };
+		AB24217B1E67CBDC005887C8 /* fileDescriptor.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = fileDescriptor.json; sourceTree = "<group>"; };
+		AB24217D1E67CBF0005887C8 /* DConnectFileDescriptorProfile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DConnectFileDescriptorProfile.h; sourceTree = "<group>"; };
+		AB24217E1E67CC1F005887C8 /* DConnectFileDescriptorProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DConnectFileDescriptorProfile.m; sourceTree = "<group>"; };
 		AB3520C31BAD4BA90010FF55 /* DConnectLightProfile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DConnectLightProfile.h; sourceTree = "<group>"; };
 		AB5555B61E56B2F10086E5D5 /* power.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = power.json; sourceTree = "<group>"; };
 		AB67AAE41C642A7900B4C62C /* GCDAsyncSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GCDAsyncSocket.h; path = CocoaAsyncSocket/GCDAsyncSocket.h; sourceTree = "<group>"; };
@@ -1787,7 +1793,6 @@
 		BE6F931F1A70DB0400BFA51F /* DConnectEventHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DConnectEventHelper.h; sourceTree = "<group>"; };
 		BE6F93201A70DB0400BFA51F /* DConnectEventManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DConnectEventManager.h; sourceTree = "<group>"; };
 		BE6F93211A70DB0400BFA51F /* DConnectFileCacheController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DConnectFileCacheController.h; sourceTree = "<group>"; };
-		BE6F93221A70DB0400BFA51F /* DConnectFileDescriptorProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DConnectFileDescriptorProfile.h; sourceTree = "<group>"; };
 		BE6F93231A70DB0400BFA51F /* DConnectFileManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DConnectFileManager.h; sourceTree = "<group>"; };
 		BE6F93241A70DB0400BFA51F /* DConnectFileProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DConnectFileProfile.h; sourceTree = "<group>"; };
 		BE6F93251A70DB0400BFA51F /* DConnectManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DConnectManager.h; sourceTree = "<group>"; };
@@ -1831,7 +1836,6 @@
 		BE71FD9D1DA3B25B00B5E209 /* DConnectCanvasProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DConnectCanvasProfile.m; sourceTree = "<group>"; };
 		BE71FD9E1DA3B25B00B5E209 /* DConnectConnectionProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DConnectConnectionProfile.m; sourceTree = "<group>"; };
 		BE71FD9F1DA3B25B00B5E209 /* DConnectDeviceOrientationProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DConnectDeviceOrientationProfile.m; sourceTree = "<group>"; };
-		BE71FDA01DA3B25B00B5E209 /* DConnectFileDescriptorProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DConnectFileDescriptorProfile.m; sourceTree = "<group>"; };
 		BE71FDA11DA3B25B00B5E209 /* DConnectFileProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DConnectFileProfile.m; sourceTree = "<group>"; };
 		BE71FDA21DA3B25B00B5E209 /* DConnectKeyEventProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DConnectKeyEventProfile.m; sourceTree = "<group>"; };
 		BE71FDA31DA3B25B00B5E209 /* DConnectLightProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DConnectLightProfile.m; sourceTree = "<group>"; };
@@ -2033,7 +2037,6 @@
 		D662E9AA1D4AEA9F00919C69 /* connection.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = connection.json; sourceTree = "<group>"; };
 		D662E9AB1D4AEA9F00919C69 /* drivecontroller.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = drivecontroller.json; sourceTree = "<group>"; };
 		D662E9AC1D4AEA9F00919C69 /* file.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = file.json; sourceTree = "<group>"; };
-		D662E9AD1D4AEA9F00919C69 /* filedescriptor.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = filedescriptor.json; sourceTree = "<group>"; };
 		D662E9AF1D4AEA9F00919C69 /* humandetect.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = humandetect.json; sourceTree = "<group>"; };
 		D662E9B01D4AEA9F00919C69 /* illuminance.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = illuminance.json; sourceTree = "<group>"; };
 		D662E9B11D4AEA9F00919C69 /* mediaplayer.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = mediaplayer.json; sourceTree = "<group>"; };
@@ -3839,6 +3842,7 @@
 		BE6F93151A70DB0400BFA51F /* DConnectSDK */ = {
 			isa = PBXGroup;
 			children = (
+				AB24217D1E67CBF0005887C8 /* DConnectFileDescriptorProfile.h */,
 				EF19A2481E4464C400F00439 /* DConnectGeolocationProfile.h */,
 				D64EF6691D7E8A35005AC8B2 /* DConnectServiceListener.h */,
 				D64EF65B1D7D44EE005AC8B2 /* DConnectServiceListViewController.h */,
@@ -3868,7 +3872,6 @@
 				BE6F931F1A70DB0400BFA51F /* DConnectEventHelper.h */,
 				BE6F93201A70DB0400BFA51F /* DConnectEventManager.h */,
 				BE6F93211A70DB0400BFA51F /* DConnectFileCacheController.h */,
-				BE6F93221A70DB0400BFA51F /* DConnectFileDescriptorProfile.h */,
 				BE6F93231A70DB0400BFA51F /* DConnectFileManager.h */,
 				BE6F93241A70DB0400BFA51F /* DConnectFileProfile.h */,
 				BE6F93251A70DB0400BFA51F /* DConnectManager.h */,
@@ -3918,6 +3921,7 @@
 		BE71FD961DA3B25B00B5E209 /* profile */ = {
 			isa = PBXGroup;
 			children = (
+				AB24217E1E67CC1F005887C8 /* DConnectFileDescriptorProfile.m */,
 				EF19A2461E44647400F00439 /* DConnectGeolocationProfile.m */,
 				BE71FD971DA3B25B00B5E209 /* api */,
 				BE71FDB11DA3B25B00B5E209 /* spec */,
@@ -3928,7 +3932,6 @@
 				BE71FD9D1DA3B25B00B5E209 /* DConnectCanvasProfile.m */,
 				BE71FD9E1DA3B25B00B5E209 /* DConnectConnectionProfile.m */,
 				BE71FD9F1DA3B25B00B5E209 /* DConnectDeviceOrientationProfile.m */,
-				BE71FDA01DA3B25B00B5E209 /* DConnectFileDescriptorProfile.m */,
 				BE71FDA11DA3B25B00B5E209 /* DConnectFileProfile.m */,
 				BE71FDA21DA3B25B00B5E209 /* DConnectKeyEventProfile.m */,
 				BE71FDA31DA3B25B00B5E209 /* DConnectLightProfile.m */,
@@ -4365,6 +4368,7 @@
 		D6ECC6D519A4B78900FE3161 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				AB24217B1E67CBDC005887C8 /* fileDescriptor.json */,
 				AB5555B61E56B2F10086E5D5 /* power.json */,
 				EF19A24C1E446B1C00F00439 /* geolocation.json */,
 				D68563BC1DA65401003818F2 /* ecg.json */,
@@ -4379,7 +4383,6 @@
 				D662E9AA1D4AEA9F00919C69 /* connection.json */,
 				D662E9AB1D4AEA9F00919C69 /* drivecontroller.json */,
 				D662E9AC1D4AEA9F00919C69 /* file.json */,
-				D662E9AD1D4AEA9F00919C69 /* filedescriptor.json */,
 				D662E9AF1D4AEA9F00919C69 /* humandetect.json */,
 				D662E9B01D4AEA9F00919C69 /* illuminance.json */,
 				D662E9B11D4AEA9F00919C69 /* mediaplayer.json */,
@@ -4538,6 +4541,7 @@
 				D662E9C51D4AEAA000919C69 /* illuminance.json in Resources */,
 				D662E9C61D4AEAA000919C69 /* mediaplayer.json in Resources */,
 				D662E9C01D4AEAA000919C69 /* drivecontroller.json in Resources */,
+				AB24217C1E67CBDD005887C8 /* fileDescriptor.json in Resources */,
 				D65F83241D28FD490024685D /* setting.json in Resources */,
 				D65E24D31D1B956500312134 /* health.json in Resources */,
 				D662E9BB1D4AEAA000919C69 /* airconditioner.json in Resources */,
@@ -4789,7 +4793,6 @@
 				BE71FE191DA3B25B00B5E209 /* DConnectArrayDataSpec.m in Sources */,
 				D62866B61D2F899A00C0C2D6 /* DConnectServiceManager.m in Sources */,
 				30318AF519AAE908008A42C3 /* DConnectDevicePlugin+Private.m in Sources */,
-				BE71FE061DA3B25B00B5E209 /* DConnectFileDescriptorProfile.m in Sources */,
 				D62622E9199232BC004F01E6 /* LocalOAuthToken.m in Sources */,
 				D6FD01F4199943D9000DB674 /* LocalOAuthScope.m in Sources */,
 				AB67AB2F1C642AC500B4C62C /* RouteResponse.m in Sources */,
@@ -4809,6 +4812,7 @@
 				BE71FE331DA3B25B00B5E209 /* DConnectSpecErrorFactory.m in Sources */,
 				BE71FE271DA3B25B00B5E209 /* DConnectIntegerParameterSpec.m in Sources */,
 				BE71FE101DA3B25B00B5E209 /* DConnectProximityProfile.m in Sources */,
+				AB24217F1E67CC1F005887C8 /* DConnectFileDescriptorProfile.m in Sources */,
 				6B4EEF5C1AAF2A1800A92E0D /* DConnectWhitelist.m in Sources */,
 				BE71FE091DA3B25B00B5E209 /* DConnectLightProfile.m in Sources */,
 				AB67AB301C642AC500B4C62C /* RoutingConnection.m in Sources */,

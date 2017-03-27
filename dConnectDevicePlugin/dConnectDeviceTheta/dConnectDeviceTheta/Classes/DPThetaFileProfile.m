@@ -20,7 +20,7 @@
         
         // API登録(didReceiveGetReceiveRequest相当)
         NSString *getReceiveRequestApiPath = [self apiPath: nil
-                                             attributeName: DConnectFileProfileAttrReceive];
+                                             attributeName: nil];
         [self addGetPath: getReceiveRequestApiPath
                      api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
                          
@@ -128,7 +128,7 @@
         
         // API登録(didReceiveDeleteRemoveRequest相当)
         NSString *deleteRemoveRequestApiPath = [self apiPath: nil
-                                               attributeName: DConnectFileProfileAttrRemove];
+                                               attributeName: nil];
         [self addDeletePath: deleteRemoveRequestApiPath
                         api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
                             

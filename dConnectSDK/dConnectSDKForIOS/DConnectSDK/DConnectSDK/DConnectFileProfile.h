@@ -23,32 +23,6 @@ extern NSString *const DConnectFileProfileName;
  @brief アトリビュート: list。
  */
 extern NSString *const DConnectFileProfileAttrList;
-
-/*!
- @brief アトリビュート: receive。
- */
-extern NSString *const DConnectFileProfileAttrReceive;
-
-/*!
- @brief アトリビュート: remove。
- */
-extern NSString *const DConnectFileProfileAttrRemove;
-
-/*!
- @brief アトリビュート: send。
- */
-extern NSString *const DConnectFileProfileAttrSend;
-
-/*!
- @brief アトリビュート: mkdir。
- */
-extern NSString *const DConnectFileProfileAttrMkdir;
-
-/*!
- @brief アトリビュート: rmdir。
- */
-extern NSString *const DConnectFileProfileAttrRmdir;
-
 /*!
  @brief パラメータ: mimetype。
  */
@@ -90,11 +64,6 @@ extern NSString *const DConnectFileProfileParamFileType;
  @brief パラメータ: order。
  */
 extern NSString *const DConnectFileProfileParamOrder;
-
-/*!
- @brief パラメータ: order。
- */
-extern NSString *const DConnectFileProfileParamForce;
 
 /*!
  @brief パラメータ: offset。
