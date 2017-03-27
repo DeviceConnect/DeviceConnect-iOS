@@ -17,4 +17,8 @@
 - (BOOL)sendIRWithServiceId:(NSString *)serviceId
                     message:(NSString *)message
                    response:(DConnectResponseMessage *)response;
+- (BOOL)sendTVIRRequestWithServiceId:(NSString *)serviceId
+                              method:(NSString *)method
+                                 uri:(NSString *)uri
+                            response:(DConnectResponseMessage *)response;
 @end

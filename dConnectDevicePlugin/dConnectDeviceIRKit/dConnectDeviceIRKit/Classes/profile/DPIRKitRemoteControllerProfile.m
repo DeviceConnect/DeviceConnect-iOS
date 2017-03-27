@@ -125,7 +125,7 @@ NSString *const DPIRKitRemoteControllerProfileParamMessage = @"message";
     return [request stringForKey:DPIRKitRemoteControllerProfileParamMessage];
 }
 
-#pragma mark - DConnectProfile Override
+#pragma mark - DConnectProfile Delegate
 
 - (NSString *) profileName {
     return DPIRKitRemoteControllerProfileName;

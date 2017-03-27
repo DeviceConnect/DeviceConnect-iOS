@@ -13,6 +13,7 @@
 #import <DConnectSDK/DConnectLightProfile.h>
 #import "DPIRKitRemoteControllerProfile.h"
 #import "DPIRKitTVProfile.h"
+#import "DPIRKitPowerProfile.h"
 #import "DPIRKitLightProfile.h"
 #import "DPIRKitDialog.h"
 @implementation DPIRKitVirtualService
@@ -31,6 +32,7 @@
             [self addProfile: [[DPIRKitLightProfile alloc] initWithDevicePlugin:plugin]];
         } else {
             [self addProfile: [[DPIRKitTVProfile alloc] initWithDevicePlugin:plugin]];
+            [self addProfile: [[DPIRKitPowerProfile alloc] initWithDevicePlugin:plugin]];
         }
     }
     return self;
