@@ -70,7 +70,7 @@
 }
 
 - (void) paringPeripheral:(CBPeripheral *)peripheral {
-    DCLogInfo(@"paringPeripheral");
+    DCLogInfo(@"paringPeripheral: %@", peripheral);
     
     _disconnectCount = 0;
     
