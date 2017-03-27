@@ -165,13 +165,7 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
                              [response setErrorToNotFoundService];
                              return YES;
                          }
-                         
-                         if (!lightId) {
-                             [response setErrorToInvalidRequestParameterWithMessage:
-                              @"Parameter 'lightId' must be specified."];
-                             return YES;
-                         }
-                        
+
                          if (color
                              && (color.length != 6
                                  || ![[NSScanner scannerWithString:color] scanHexInt:nil]))
@@ -239,11 +233,6 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
                               return YES;
                           }
                           
-                          if (!lightId) {
-                              [response setErrorToInvalidRequestParameterWithMessage:
-                               @"Parameter 'lightId' must be specified."];
-                              return YES;
-                          }
                           
                           if (color
                               && (color.length != 6
@@ -309,11 +298,6 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
                              return YES;
                          }
                          
-                         if (!lightId) {
-                             [response setErrorToInvalidRequestParameterWithMessage:
-                              @"Parameter 'lightId' must be specified."];
-                             return YES;
-                         }
                          
                          switch ([weakSelf serviceTypeFromService:service]) {
                                  
@@ -595,15 +579,7 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
                                                        color:(NSString *)color
                                                     flashing:(NSArray *)flashing
 {
-    //////////////////////////////////////////////////
-    // Validity check
-    //
-    if (![lightId isEqualToString:DPAllJoynLightProfileLightIDSelf]) {
-        [response setErrorToInvalidRequestParameterWithMessage:
-         @"A light with ID specified by 'lightId' not found."];
-        [[DConnectManager sharedManager] sendResponse:response];
-        return;
-    }
+
     
     //////////////////////////////////////////////////
     // Querying
@@ -769,18 +745,22 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
          }
          NSArray *lampIDs =
          [DPAllJoynMessageConverter objectWithAJNMessageArgument:lampIDsArg];
-         if (!lampIDs || ![lampIDs containsObject:lightId]) {
+         NSString *_lightId = lightId;
+         if (!_lightId) {
+             _lightId = lampIDs[0];
+         } else if (!lampIDs || ![lampIDs containsObject:_lightId]) {
              [response setErrorToInvalidRequestParameterWithMessage:
               @"A light with ID specified by 'lightId' not found."];
              [[DConnectManager sharedManager] sendResponse:response];
              return;
          }
+
          responseCode = nil;
          
          NSDictionary *functionality =
          [self checkFunctionalityWithService:service
                                    sessionID:sessionId.unsignedIntValue
-                                     lightID:lightId
+                                     lightID:_lightId
                                         type:DPAllJoynLightServiceTypeLampController];
          
          // MsgArg lacks copy operator, so std::vector can not be used for
@@ -868,15 +848,7 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
     //////////////////////////////////////////////////
     // Validity check
     //
-    if (![lightId isEqualToString:DPAllJoynLightProfileLightIDSelf]) {
-        [response setErrorToInvalidRequestParameterWithMessage:
-         @"A light with ID specified by 'lightId' not found."];
-        [[DConnectManager sharedManager] sendResponse:response];
-        return;
-    }
-    if (name) {
-        DCLogWarn(@"Parameter 'name' is not supported. Ignored...");
-    }
+
     
     //////////////////////////////////////////////////
     // Querying
@@ -1040,7 +1012,10 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
          }
          NSArray *lampIDs =
          [DPAllJoynMessageConverter objectWithAJNMessageArgument:lampIDsArg];
-         if (!lampIDs || ![lampIDs containsObject:lightId]) {
+         NSString *_lightId = lightId;
+         if (!_lightId) {
+             _lightId = lampIDs[0];
+         } else if (!lampIDs || ![lampIDs containsObject:_lightId]) {
              [response setErrorToInvalidRequestParameterWithMessage:
               @"A light with ID specified by 'lightId' not found."];
              [[DConnectManager sharedManager] sendResponse:response];
@@ -1051,7 +1026,7 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
          NSDictionary *functionality =
          [self checkFunctionalityWithService:service
                                    sessionID:sessionId.unsignedIntValue
-                                     lightID:lightId
+                                     lightID:_lightId
                                         type:DPAllJoynLightServiceTypeLampController];
          
          // MsgArg lacks copy operator, so std::vector can not be used for
@@ -1101,7 +1076,7 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
          MsgArg newStateArg("a{sv}", count, newStates);
          AJNMessageArgument *newState =
          [[AJNMessageArgument alloc] initWithHandle:&newStateArg];
-         [proxy transitionLampStateWithLampID:lightId
+         [proxy transitionLampStateWithLampID:_lightId
                                     lampState:newState
                              transitionPeriod:@10
                                  responseCode:&responseCode
@@ -1120,7 +1095,7 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
          
          if (name) {
              NSString *ignored;
-             [proxy setLampNameWithLampID:lightId
+             [proxy setLampNameWithLampID:_lightId
                                  lampName:name
                                  language:service.defaultLanguage
                              responseCode:&responseCode
@@ -1151,12 +1126,7 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
     //////////////////////////////////////////////////
     // Validity check
     //
-    if (![lightId isEqualToString:DPAllJoynLightProfileLightIDSelf]) {
-        [response setErrorToInvalidRequestParameterWithMessage:
-         @"A light with ID specified by 'lightId' not found."];
-        [[DConnectManager sharedManager] sendResponse:response];
-        return;
-    }
+
     
     //////////////////////////////////////////////////
     // Querying
@@ -1237,7 +1207,10 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
          }
          NSArray *lampIDs =
          [DPAllJoynMessageConverter objectWithAJNMessageArgument:lampIDsArg];
-         if (!lampIDs || ![lampIDs containsObject:lightId]) {
+         NSString *_lightId = lightId;
+         if (!_lightId) {
+             _lightId = lampIDs[0];
+         } else if (!lampIDs || ![lampIDs containsObject:_lightId]) {
              [response setErrorToInvalidRequestParameterWithMessage:
               @"A light with ID specified by 'lightId' not found."];
              [[DConnectManager sharedManager] sendResponse:response];
@@ -1254,7 +1227,7 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
          AJNMessageArgument *newState =
          [[AJNMessageArgument alloc] initWithHandle:&newStateArg];
          
-         [proxy transitionLampStateWithLampID:lightId
+         [proxy transitionLampStateWithLampID:_lightId
                                     lampState:newState
                              transitionPeriod:@10
                                  responseCode:&responseCode
