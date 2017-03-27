@@ -637,6 +637,41 @@ static NSString * const kDPPebbleRegexCSV = @"^([^,]*,)+";
         }
     }];
 }
+// KeyEvent onKeyChange event registration.
+- (void)registOnKeyChangeEvent:(NSString*)serviceID
+                      callback:(void(^)(NSError *error))callback
+                 eventCallback:(void(^)(long attr, int keyId, int keyType, int keyState))eventCallback
+{
+    if (!callback) return;
+    
+    NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+    dic[@(KEY_PROFILE)] = @(PROFILE_KEY_EVENT);
+    dic[@(KEY_ATTRIBUTE)] = @(KEY_EVENT_ATTRIBUTE_ON_KEY_CHANGE);
+    dic[@(KEY_ACTION)] = @(ACTION_PUT);
+    [self sendCommand:serviceID request:dic callback:^(NSDictionary *data, NSError *error) {
+        // Error.
+        if (!data || error) {
+            callback(error);
+            return;
+        }
+        // Set KeyEvent data.
+        NSNumber *action = data[@(KEY_ACTION)];
+        if ([action intValue] == ACTION_EVENT) {
+            NSNumber *Attr = data[@(KEY_ATTRIBUTE)];
+            NSNumber *KeyId = data[@(KEY_PARAM_KEY_EVENT_ID)];
+            NSNumber *KeyType = data[@(KEY_PARAM_KEY_EVENT_KEY_TYPE)];
+            NSNumber *KeyState = data[@(KEY_PARAM_KEY_EVENT_KEY_STATE)];
+            long attr = Attr.longValue;
+            int keyId = KeyId.intValue;
+            int keyType = KeyType.intValue;
+            int keyState = KeyState.intValue;
+            eventCallback(attr, keyId, keyType, keyState);
+        } else {
+            callback(nil);
+        }
+    }];
+
+}
 
 // KeyEvent OnDown event unregistration.
 - (void)deleteOnDownEvent:(NSString*)serviceID
@@ -657,7 +692,14 @@ static NSString * const kDPPebbleRegexCSV = @"^([^,]*,)+";
                  attr:KEY_EVENT_ATTRIBUTE_ON_UP
              callback:callback];
 }
-
+// KeyEvent onKeyChange event unregistration.
+- (void)deleteOnKeyChangeEvent:(NSString*)serviceID callback:(void(^)(NSError *error))callback
+{
+    [self deleteEvent:serviceID
+              profile:PROFILE_KEY_EVENT
+                 attr:KEY_EVENT_ATTRIBUTE_ON_KEY_CHANGE
+             callback:callback];
+}
 #pragma mark - Common
 
 // イベント削除共通
@@ -799,6 +841,11 @@ static NSString * const kDPPebbleRegexCSV = @"^([^,]*,)+";
 		if (callback) {
 			callback(update, nil);
 		}
+        callback = _eventCallbackDict[@[watch.serialNumber,
+                               update[@(KEY_PROFILE)], @(KEY_EVENT_ATTRIBUTE_ON_KEY_CHANGE)]];
+        if (callback) {
+            callback(update, nil);
+        }
 	} else {
 		// SerialNumber==ServiceIDなので、ServiceIDにキーにコールバックを呼び出す
 		void (^callback)(NSDictionary*, NSError*)  = _callbackDict[watch.serialNumber];

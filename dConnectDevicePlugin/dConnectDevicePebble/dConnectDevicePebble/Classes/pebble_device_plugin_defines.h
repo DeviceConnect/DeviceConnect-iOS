@@ -62,7 +62,8 @@
 #define KEY_PARAM_KEY_EVENT_ID 700
 /** Key number of KeyType.*/
 #define KEY_PARAM_KEY_EVENT_KEY_TYPE 701
-
+/** Key number of KeyState.*/
+#define KEY_PARAM_KEY_EVENT_KEY_STATE 702
 ///////////////////////////////////////////////////////////////////
 
 /*! @define GETアクション。 */
@@ -141,6 +142,9 @@
 
 /** key event attribute onup. */
 #define KEY_EVENT_ATTRIBUTE_ON_UP 2
+
+/** key event attribute onup. */
+#define KEY_EVENT_ATTRIBUTE_ON_KEY_CHANGE 3
 
 /** key event action down. */
 #define KEY_EVENT_ACTION_DOWN 1
