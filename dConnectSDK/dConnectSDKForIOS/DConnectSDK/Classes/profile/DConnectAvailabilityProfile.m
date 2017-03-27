@@ -8,12 +8,11 @@
 //
 
 #import "DConnectAvailabilityProfile.h"
-#import "DConnectManager+Private.h"
+#import "DConnectManager.h"
 
 // Profile Name
 NSString *const DConnectAvailabilityProfileName = @"availability";
 NSString *const DConnectAvailabilityProfileParamName = @"name";
-NSString *const DConnectAvailabilityProfileParamUUID = @"uuid";
 
 
 @implementation DConnectAvailabilityProfile
@@ -26,11 +25,12 @@ NSString *const DConnectAvailabilityProfileParamUUID = @"uuid";
                                attributeName: nil];
         [self addGetPath: getApiPath
                      api:^(DConnectRequestMessage *request, DConnectResponseMessage *response) {
-                         NSString *name = [[DConnectManager sharedManager] managerName];
-                         NSString *uuid = [[DConnectManager sharedManager] managerUUID];
                          [response setResult:DConnectMessageResultTypeOk];
-                         [DConnectAvailabilityProfile setName:name target:response];
-                         [DConnectAvailabilityProfile setUUID:uuid target:response];
+                         BOOL useManagerName = [DConnectManager sharedManager].settings.useManagerName;
+                         if (useManagerName) {
+                             NSString *name = [[DConnectManager sharedManager] managerName];
+                             [DConnectAvailabilityProfile setName:name target:response];
+                         }
                          return YES;
                      }];
     }
@@ -43,10 +43,6 @@ NSString *const DConnectAvailabilityProfileParamUUID = @"uuid";
 
 + (void) setName:(NSString *)name target:(DConnectMessage *)message {
     [message setString:name forKey:DConnectAvailabilityProfileParamName];
-}
-
-+ (void) setUUID:(NSString *)uuid target:(DConnectMessage *)message {
-    [message setString:uuid forKey:DConnectAvailabilityProfileParamUUID];
 }
 
 @end

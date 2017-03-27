@@ -25,6 +25,8 @@ NSString *const DConnectSystemProfileParamPluginId = @"pluginId";
 NSString *const DConnectSystemProfileParamId = @"id";
 NSString *const DConnectSystemProfileParamName = @"name";
 NSString *const DConnectSystemProfileParamVersion = @"version";
+NSString *const DConnectSystemProfileParamUUID = @"uuid";
+
 
 @implementation DConnectSystemProfile
 
@@ -77,6 +79,9 @@ NSString *const DConnectSystemProfileParamVersion = @"version";
 
 + (void) setName:(NSString *)name target:(DConnectMessage *)message {
     [message setString:name forKey:DConnectSystemProfileParamName];
+}
++ (void) setUUID:(NSString *)uuid target:(DConnectMessage *)message {
+    [message setString:uuid forKey:DConnectSystemProfileParamUUID];
 }
 
 #pragma mark - Getter Methods
