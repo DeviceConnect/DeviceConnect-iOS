@@ -16,6 +16,7 @@ NSString *const DConnectTouchProfileAttrOnTouchEnd = @"ontouchend";
 NSString *const DConnectTouchProfileAttrOnDoubleTap = @"ondoubletap";
 NSString *const DConnectTouchProfileAttrOnTouchMove = @"ontouchmove";
 NSString *const DConnectTouchProfileAttrOnTouchCancel = @"ontouchcancel";
+NSString *const DConnectTouchProfileParamState = @"state";
 NSString *const DConnectTouchProfileParamTouch = @"touch";
 NSString *const DConnectTouchProfileParamTouches = @"touches";
 NSString *const DConnectTouchProfileParamId = @"id";
@@ -47,5 +48,6 @@ NSString *const DConnectTouchProfileParamY = @"y";
 + (void) setY:(int)y target:(DConnectMessage *)message {
     [message setInteger:y forKey:DConnectTouchProfileParamY];
 }
+
 
 @end
