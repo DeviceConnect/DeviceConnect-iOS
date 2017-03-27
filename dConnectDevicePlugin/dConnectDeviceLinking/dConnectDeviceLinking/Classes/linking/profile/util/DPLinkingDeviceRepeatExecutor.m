@@ -22,7 +22,9 @@
 {
     self = [super init];
     if (self) {
-        _pattern = pattern;
+        NSMutableArray *replaceArray = [pattern mutableCopy];
+        [replaceArray insertObject:[NSNumber numberWithLong:0L] atIndex:0];
+        _pattern = [replaceArray copy];
         _index = 0;
         _onBlock = [onBlock copy];
         _offBlock = [offBlock copy];
@@ -48,7 +50,7 @@
     }
     _index++;
 
-    if (_index >= _pattern.count) {
+    if (_index >= _pattern.count - 1) {
         return;
     }
     
