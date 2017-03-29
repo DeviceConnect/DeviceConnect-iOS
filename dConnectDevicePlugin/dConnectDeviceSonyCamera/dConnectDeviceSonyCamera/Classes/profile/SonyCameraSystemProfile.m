@@ -71,7 +71,7 @@ NSString *const SonyDevicePluginVersion = @"2.0.0";
                                     
                                     // 削除した時にイベントが残っていなければ、プレビューを止める
                                     SonyCameraManager *manager = [SonyCameraManager sharedManager];
-                                    if (![self hasDataAvaiableEvent] && [[manager remoteApi] isStartedLiveView]) {
+                                    if ([[manager remoteApi] isStartedLiveView]) {
                                         [[manager remoteApi] actStopLiveView];
                                     }
                                 } else {
@@ -160,17 +160,6 @@ NSString *const SonyDevicePluginVersion = @"2.0.0";
         }
     }
     return viewController;
-}
-
-
-#pragma mark - Primate Methods.
-
-- (BOOL) hasDataAvaiableEvent {
-    DConnectEventManager *mgr = [DConnectEventManager sharedManagerForClass:[SonyCameraDevicePlugin class]];
-    NSArray *evts = [mgr eventListForServiceId:SERVICE_ID
-                                       profile:DConnectMediaStreamRecordingProfileName
-                                     attribute:DConnectMediaStreamRecordingProfileAttrOnDataAvailable];
-    return evts.count > 0;
 }
 
 @end

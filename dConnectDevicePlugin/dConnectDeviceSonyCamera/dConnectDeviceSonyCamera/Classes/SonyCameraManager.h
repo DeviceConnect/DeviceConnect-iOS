@@ -12,20 +12,7 @@
 #import "SonyCameraRemoteApiUtil.h"
 #import "SonyCameraDevicePlugin.h"
 
-/*!
- @define サービスID.
- */
-#define SERVICE_ID @"0"
-
-/*!
- @brief IDのプレフィックス。
- */
-extern NSString *const SonyServiceId;
-
-/*!
- @brief デバイス名。
- */
-extern NSString *const SonyDeviceName;
+@class SonyCameraService;
 
 /*!
  @brief ファイルのプレフィックス。
@@ -33,13 +20,60 @@ extern NSString *const SonyDeviceName;
 extern NSString *const SonyFilePrefix;
 
 
-
-@interface SonyCameraManager : NSObject/*<SonyCameraRemoteApiUtilDelegate>*/
+/*!
+ @brief Sonyカメラへの命令の結果を通知するブロック定義.
+ */
+typedef void (^SonyCameraBlock)(int errorCode, NSString *errorMessage);
 
 /*!
- @brief ServiceProvider.
+ @brief 写真撮影の結果を通知するブロック定義.
  */
-@property (nonatomic, weak) DConnectServiceProvider *serviceProvider;
+typedef void (^SonyCameraTakePictureBlock)(NSString *uri);
+
+/*!
+ @brief プレビューの結果を通知するブロック定義.
+ */
+typedef void (^SonyCameraPreviewBlock)(NSString *uri);
+
+/*!
+ @brief カメラ状態の取得を通知するブロック定義.
+ */
+typedef void (^SonyCameraStateBlock)(NSString *state, int width, int height);
+
+
+/*!
+ @brief SonyCameraデバイスプラグインのデリゲート。
+ */
+@protocol SonyCameraManagerDelegate <NSObject>
+@optional
+
+/*!
+ @brief 写真撮影が行われた時の通知.
+ 
+ @param[in] postImageUrl 撮影された画像へのURL
+ */
+- (void) didTakePicture:(NSString *)postImageUrl;
+
+/*!
+ @brief デバイスの発見通知。
+ @param[in] service 発見されたサービス
+ */
+- (void) didAddedService:(SonyCameraService *)service;
+
+@end
+
+
+
+
+/*!
+ @brief Sonyカメラを制御するためのクラス.
+ */
+@interface SonyCameraManager : NSObject
+
+/*!
+ @brief Sonyカメラからのイベントを通知するデリゲート.
+ */
+@property (nonatomic, weak) id<SonyCameraManagerDelegate> delegate;
 
 /*!
  @brief Service生成時に登録するプロファイル(DConnectProfile *)の配列
@@ -57,19 +91,14 @@ extern NSString *const SonyFilePrefix;
 @property (nonatomic, strong) DConnectFileManager *mFileManager;
 
 /*!
+ @brief Sonyカメラサービスのリスト.
+ */
+@property (nonatomic, strong) NSMutableArray *sonyCameraServices;
+
+/*!
  @brief タイムスライス。
  */
 @property (nonatomic) UInt64 timeslice;
-
-/*!
- @brief タイムスライス開始時刻。
- */
-@property (nonatomic) UInt64 previewStart;
-
-/*!
- @brief プレビューカウント。
- */
-@property (nonatomic) int mPreviewCount;
 
 /*!
  @brief サーチフラグ.
@@ -77,25 +106,17 @@ extern NSString *const SonyFilePrefix;
 @property (nonatomic) BOOL searchFlag;
 
 /*!
- @brief liveViewDelegate.
- */
-@property (nonatomic, weak) id<SampleLiveviewDelegate> liveViewDelegate;
-
-/*!
- @brief remoteApiUtilDelegate.
- */
-@property (nonatomic, weak) id<SonyCameraRemoteApiUtilDelegate> remoteApiUtilDelegate;
-
-
-/*!
  @brief SonyCameraManagerの共有インスタンスを返す。
  @return SonyCameraManagerの共有インスタンス。
  */
 + (instancetype)sharedManager;
 
-- (instancetype)initWithPlugin: (SonyCameraDevicePlugin *) plugin
-              liveViewDelegate: (id<SampleLiveviewDelegate>) liveViewDelegate
-         remoteApiUtilDelegate: (id<SonyCameraRemoteApiUtilDelegate>) remoteApiUtilDelegate;
+/*!
+ @brief SonyCameraを初期化します.
+ 
+ @param[in] plugin SonyCameraデバイスプラグインのインスタンス
+ */
+- (instancetype)initWithPlugin:(SonyCameraDevicePlugin *) plugin;
 
 /*!
  @brief 指定されたURLからデータをダウンロードする。
@@ -118,28 +139,116 @@ extern NSString *const SonyFilePrefix;
  */
 - (NSString *) saveFile:(NSData *)data;
 
+/*!
+ @brief 現在接続されているWiFiのSSIDを取得します.
+ 
+ @retval 接続中のWiFiのSSID
+ @retval nil 取得に失敗した場合
+ */
+- (NSString *)getCurrentWifiName;
 
 /*!
- @brief 選択されたサービスIDに対応するカメラを選択する.
+ @brief Sonyカメラに接続を行います.
+ */
+- (void) connectSonyCamera;
+
+/*!
+ @brief Sonyカメラから切断します.
+ */
+- (void) disconnectSonyCamera;
+
+/*!
+ @brief 指定されたサービスIDに接続されているか確認を行う.
+ 
  @param serviceId サービスID
- @param response レスポンス
- @retval YES 選択できた場合
- @retval NO 選択できなかった場合
+ @retval YES 接続されている
+ @retval NO 接続されていない
  */
-- (BOOL) selectServiceId:(NSString *)serviceId response:(DConnectResponseMessage *)response;
-
+- (BOOL) isConnectedService:(NSString *)serviceId;
 
 /*!
- @brief プレビューイベントを持っているかをチェックする.
- @retval YES 持っている
- @retval NO 持っていない
+ @brief Sonyカメラの撮影中か確認を行う.
+ 
+ @retval YES 撮影中
+ @retval NO IDLE
  */
-- (BOOL) hasDataAvaiableEvent;
+- (BOOL) isRecording;
 
 /*!
- @brief デバイス管理情報更新
+ @brief ズームをサポートしているかを確認します.
+ 
+ @retval YES サポートしている
+ @retval NO サポートしていない
  */
-- (void) updateManageServices;
+- (BOOL) isSupportedZoom;
+
+/*!
+ @brief 写真撮影をサポートしているか確認します.
+ 
+ @retval YES サポートしている
+ @retval NO サポートしていない
+ */
+- (BOOL) isSupportedPicture;
+
+/*!
+ @brief 動画撮影をサポートしているか確認します.
+ 
+ @retval YES サポートしている
+ @retval NO サポートしていない
+ */
+- (BOOL) isSupportedRecording;
+
+/*!
+ @brief カメラ状態の取得を要求します.
+ 
+ @param block カメラ状態の取得の結果を通知するブロック.
+ */
+- (void) getCameraState:(SonyCameraStateBlock)block;
+
+/*!
+ @brief 写真撮影を要求します.
+ 
+ 写真撮影の結果をブロックに通知します.
+ @param block 写真撮影の結果を通知するブロック.
+ */
+- (void) takePicture:(SonyCameraTakePictureBlock)block;
+
+/*!
+ @brief プレビューを開始します.
+ */
+- (void) startPreview:(SonyCameraPreviewBlock)block;
+
+/*!
+ @brief プレビューを停止します.
+ */
+- (void) stopPreview;
+
+/*!
+ @brief 動画撮影を開始要求を行います.
+ 
+ @param block 動画撮影開始要求の結果を通知するブロック
+ */
+- (void) startMovieRec:(SonyCameraBlock)block;
+
+/*!
+ @brief 動画撮影を停止要求を行います.
+ 
+ @param block 動画撮影停止要求の結果を通知するブロック
+ */
+- (void) stopMovieRec:(SonyCameraBlock)block;
+
+/*!
+ @brief ズームを要求します.
+ 
+ @param direction ズームイン・ズームアウト(in,out)
+ @param movement ズームする単位 (max, 1shot, min)
+ @param block 結果を通知するブロック
+ */
+- (void) setZoomByDirection:(NSString *)direction
+                   movement:(NSString *)movement
+                      block:(SonyCameraBlock)block;
+
+- (double) getZoom;
 
 @end
 
