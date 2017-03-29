@@ -378,30 +378,13 @@ DPIRKitManagerDetectionDelegate
     DPIRKitVirtualDeviceViewController *view = (DPIRKitVirtualDeviceViewController*) top.viewControllers[0];
     DPIRKitDevice *irkit = _devices[service.serviceId];
     
-    if (irkit) {
-        [view setDetailItem:irkit];
+    if (service.serviceId) {
+        [view setDetailName:service.serviceId];
         [view setProvider:super.serviceProvider];
         [rootView presentViewController:top animated:YES completion:nil];
     } else {
         NSString *title = nil;
         NSString *message = nil;
-        DConnectService *service_ = [self.serviceProvider service:service.serviceId];
-        if (service_) {
-            if ([service_ isMemberOfClass: [DPIRKitService class]] ) {
-                if (!service_.online) {
-                    title = @"オフライン";
-                    message = @"このデバイスはオフラインです";
-                }
-            } else if ([service_ isMemberOfClass: [DPIRKitVirtualService class]] ) {
-                if (!service_.online) {
-                    title = @"仮想デバイス";
-                    message = @"このデバイスは仮想デバイスです";
-                }
-            }
-        } else {
-            title = @"認識されていないデバイス";
-            message = @"このデバイスは認識されていません";
-        }
         if (!title) {
             title = @"不明なデバイス";
             message = @"このデバイスは不明です";

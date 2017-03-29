@@ -19,7 +19,7 @@
     DConnectServiceProvider *_serviceProvider;
     NSBundle *bundle;
     NSMutableDictionary *_virtuals;
-    DPIRKitDevice *_virtual;
+    NSString *_irkitName;
     NSArray *_devices;
     BOOL _isRemoved;
 }
@@ -155,9 +155,9 @@
 }
 
 
-- (void)setDetailItem:(id)newDetailItem
+- (void)setDetailName:(id)detailName
 {
-    _virtual = newDetailItem;
+    _irkitName = detailName;
 }
 
 - (void)setProvider:(id)provider
@@ -180,7 +180,7 @@
                selector:@selector(mergeChanges:)
                    name:DPIRKitVirtualDeviceCreateNotification
                  object:nil];
-        [DPIRKitCategorySelectDialog showWithServiceId:_virtual.name];
+        [DPIRKitCategorySelectDialog showWithServiceId:_irkitName];
     } else {
         //削除モード時はキャンセルボタンになる
         [self switchButton];
