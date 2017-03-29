@@ -340,21 +340,6 @@ DPIRKitManagerDetectionDelegate
     DConnectServiceListViewController *serviceListViewController = (DConnectServiceListViewController *) top.viewControllers[0];
     serviceListViewController.delegate = self;
     return top;
-    /*
-     NSBundle *bundle = DPIRBundle();
-     
-     // iphoneとipadでストーリーボードを切り替える
-     UIStoryboard *storyBoard;
-     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
-     storyBoard = [UIStoryboard storyboardWithName:[NSString stringWithFormat:@"%@iPhone", DPIRKitStoryBoardName]
-     bundle:bundle];
-     } else{
-     storyBoard = [UIStoryboard storyboardWithName:[NSString stringWithFormat:@"%@iPad", DPIRKitStoryBoardName]
-     bundle:bundle];
-     }
-     UINavigationController *viewController = [storyBoard instantiateInitialViewController];
-     return viewController;
-     */
 }
 
 - (void)didSelectService:(DConnectService *)service {
@@ -376,22 +361,25 @@ DPIRKitManagerDetectionDelegate
     UIViewController *rootView;
     DCPutPresentedViewController(rootView);
     DPIRKitVirtualDeviceViewController *view = (DPIRKitVirtualDeviceViewController*) top.viewControllers[0];
-    DPIRKitDevice *irkit = _devices[service.serviceId];
-    
     if (service.serviceId) {
+        // IRKitのServiceIdに.がある場合は仮想デバイスとみなす
+        NSRange range = [service.serviceId rangeOfString:@"."];
+        if (range.location != NSNotFound) {
+            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"仮想デバイス"
+                                                                                     message:@"このデバイスは仮想デバイスのため、さらに仮想デバイスを作ることはできません。"
+                                                                              preferredStyle:UIAlertControllerStyleAlert];
+            [alertController addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil]];
+            [rootView presentViewController:alertController animated:YES completion:nil];
+            return;
+        }
+        
+        
         [view setDetailName:service.serviceId];
         [view setProvider:super.serviceProvider];
         [rootView presentViewController:top animated:YES completion:nil];
     } else {
-        NSString *title = nil;
-        NSString *message = nil;
-        if (!title) {
-            title = @"不明なデバイス";
-            message = @"このデバイスは不明です";
-        }
-        
-        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:title
-                                                                                 message:message
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"不明なデバイス"
+                                                                                 message:@"このデバイスは不明です"
                                                                           preferredStyle:UIAlertControllerStyleAlert];
         [alertController addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil]];
         [rootView presentViewController:alertController animated:YES completion:nil];
@@ -426,19 +414,6 @@ DPIRKitManagerDetectionDelegate
     UINavigationController *top = [storyBoard instantiateViewControllerWithIdentifier:@"setting"];
 
     return top;
-}
-
-- (NSArray *) displayServiceFilter:(NSArray *)services {
-    
-    NSMutableArray *filterServices = [NSMutableArray array];
-    
-    // 仮想デバイスを表示しないので、それを除いたservicesを作成して返す
-    for (DConnectService *service in services) {
-        if (![service isMemberOfClass: [DPIRKitVirtualService class]]) {
-            [filterServices addObject: service];
-        }
-    }
-    return filterServices;
 }
 
 #pragma mark DConnectInformationProfileDataSource
