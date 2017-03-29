@@ -373,7 +373,6 @@ DPIRKitManagerDetectionDelegate
     }
     UINavigationController *top = [storyBoard instantiateViewControllerWithIdentifier:@"virtualDeviceList"];
     
-    
     UIViewController *rootView;
     DCPutPresentedViewController(rootView);
     DPIRKitVirtualDeviceViewController *view = (DPIRKitVirtualDeviceViewController*) top.viewControllers[0];
@@ -381,6 +380,7 @@ DPIRKitManagerDetectionDelegate
     
     if (irkit) {
         [view setDetailItem:irkit];
+        [view setProvider:super.serviceProvider];
         [rootView presentViewController:top animated:YES completion:nil];
     } else {
         NSString *title = nil;
@@ -441,6 +441,7 @@ DPIRKitManagerDetectionDelegate
                                                bundle:bundle];
     }
     UINavigationController *top = [storyBoard instantiateViewControllerWithIdentifier:@"setting"];
+
     return top;
 }
 

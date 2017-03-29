@@ -6,6 +6,7 @@
 //  Released under the MIT license
 //  http://opensource.org/licenses/mit-license.php
 //
+#import <DConnectSDK/DConnectSDK.h>
 #import "DPIRKitVirtualDeviceViewController.h"
 #import "DPIRKitManager.h"
 #import "DPIRKitConst.h"
@@ -13,7 +14,9 @@
 #import "DPIRKitDBManager.h"
 #import "DPIRKitVirtualProfileViewController.h"
 
+
 @interface DPIRKitVirtualDeviceViewController () {
+    DConnectServiceProvider *_serviceProvider;
     NSBundle *bundle;
     NSMutableDictionary *_virtuals;
     DPIRKitDevice *_virtual;
@@ -157,7 +160,10 @@
     _virtual = newDetailItem;
 }
 
-
+- (void)setProvider:(id)provider
+{
+    _serviceProvider = provider;
+}
 
 - (void)mergeChanges:(NSNotification*)notification
 {
@@ -243,6 +249,8 @@
     BOOL isDelete = NO;
     for (NSIndexPath *c in cells) {
         DPIRKitVirtualDevice *device = _devices[c.row];
+        DConnectService *service = [_serviceProvider service:device.serviceId];
+        [_serviceProvider removeService:service];
         BOOL isDeleteVirtualDevice = [mgr deleteVirtualDevice:device.serviceId];
         BOOL isDeleteVirtualProfile = [mgr deleteRESTfulRequestForServiceId:device.serviceId];
         if (isDeleteVirtualDevice || isDeleteVirtualProfile) {
