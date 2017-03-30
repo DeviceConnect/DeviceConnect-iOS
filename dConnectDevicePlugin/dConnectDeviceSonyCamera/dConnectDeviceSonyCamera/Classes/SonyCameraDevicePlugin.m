@@ -51,7 +51,10 @@
         self.sonyCameraManager = [[SonyCameraManager alloc] initWithPlugin:self];
         self.sonyCameraManager.delegate = self;
         
-        [self.sonyCameraManager setPlugin:self];
+        for (SonyCameraService *service in self.sonyCameraManager.sonyCameraServices) {
+            [self.serviceProvider addService:service];
+        }
+
         [self addProfile:[SonyCameraSystemProfile new]];
         
         if ([self checkSSID]) {
@@ -74,6 +77,11 @@
 
 - (BOOL) isConnectedSonyCamera {
     return [self checkSSID];
+}
+
+- (void) removeSonyCamera:(SonyCameraService *)service
+{
+    [self.sonyCameraManager removeSonyCamera:service];
 }
 
 #pragma mark - Private Methods

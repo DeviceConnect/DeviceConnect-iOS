@@ -12,12 +12,8 @@
 #import "SonyCameraRemoteApiUtil.h"
 #import "SonyCameraDevicePlugin.h"
 
-@class SonyCameraService;
 
-/*!
- @brief ファイルのプレフィックス。
- */
-extern NSString *const SonyFilePrefix;
+@class SonyCameraService;
 
 
 /*!
@@ -147,6 +143,13 @@ typedef void (^SonyCameraStateBlock)(NSString *state, int width, int height);
  @retval nil 取得に失敗した場合
  */
 - (NSString *)getCurrentWifiName;
+
+/*!
+ @brief 指定されたサービスを削除します.
+ 
+ @param[in] service 削除するサービス
+ */
+- (void) removeSonyCamera:(SonyCameraService *)service;
 
 /*!
  @brief Sonyカメラに接続を行います.

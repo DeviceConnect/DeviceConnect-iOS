@@ -128,4 +128,9 @@ NSString *const SonyDevicePluginVersion = @"2.0.0";
     return viewController;
 }
 
+- (void)didRemovedService:(DConnectService *)service
+{
+    [self.plugin removeSonyCamera:service];
+}
+
 @end

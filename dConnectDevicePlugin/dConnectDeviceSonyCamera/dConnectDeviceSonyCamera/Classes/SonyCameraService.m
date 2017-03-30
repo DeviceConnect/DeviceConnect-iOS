@@ -20,17 +20,18 @@
 - (instancetype) initWithServiceId:(NSString *) serviceId
                         deviceName:(NSString *) deviceName
                             plugin:(id) plugin {
-    self = [super initWithServiceId: serviceId plugin: plugin];
+    self = [super initWithServiceId:serviceId plugin:plugin];
     if (self) {
         [self setName:deviceName];
         [self setNetworkType:DConnectServiceDiscoveryProfileNetworkTypeWiFi];
-        [self setOnline:YES];
+        [self setOnline:NO];
         [self addProfile:[DConnectSystemProfile new]];
         [self addProfile:[SonyCameraMediaStreamRecordingProfile new]];
         [self addProfile:[SonyCameraCameraProfile new]];
     }
     return self;
 }
+
 
 #pragma mark - DConnectServiceInformationProfileDataSource Implement.
 

@@ -11,6 +11,8 @@
 
 
 @class SonyCameraManager;
+@class SonyCameraService;
+
 
 /*!
  @brief SonyCameraデバイスプラグインのデリゲート。
@@ -48,5 +50,12 @@
  @retval NO Sonyカメラに接続されていない
  */
 - (BOOL) isConnectedSonyCamera;
+
+/*!
+ @brief 指定されたサービスを削除します.
+ 
+ @param[in] servie 削除するサービス
+ */
+- (void) removeSonyCamera:(SonyCameraService *)service;
 
 @end

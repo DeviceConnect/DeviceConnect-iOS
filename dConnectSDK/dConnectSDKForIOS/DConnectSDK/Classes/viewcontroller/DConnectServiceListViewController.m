@@ -283,6 +283,10 @@
         [self setEditing:NO animated:YES];
     }
     
+    if ([self.delegate respondsToSelector:@selector(didRemovedService:)]) {
+        [self.delegate didRemovedService:service];
+    }
+    
     // サービスが追加されたらtableViewを更新する
     [self.tableView reloadData];
     

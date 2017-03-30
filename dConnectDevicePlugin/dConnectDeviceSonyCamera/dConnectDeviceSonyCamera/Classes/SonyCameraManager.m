@@ -20,7 +20,44 @@
 /*!
  @brief ファイルのプレフィックス。
  */
-NSString *const SonyFilePrefix = @"sony";
+#define SonyFilePrefix @"sony"
+
+/*!
+ @brief サービスIDを保存するキー名.
+ */
+#define SONY_CAMERA_ID @"sony_came_id"
+
+/*!
+ @brief サービス名を保存するキー名.
+ */
+#define SONY_CAMERA_NAME @"sony_came_name"
+
+
+@interface SonyCameraDevice : NSObject
+
+@property (nonatomic) NSString *serviceId;
+@property (nonatomic) NSString *deviceName;
+
+@end
+
+@implementation SonyCameraDevice
+
+- (id) initWithCoder:(NSCoder *)coder {
+    self = [super init];
+    if (self) {
+        self.serviceId = [coder decodeObjectForKey:SONY_CAMERA_ID];
+        self.deviceName = [coder decodeObjectForKey:SONY_CAMERA_NAME];
+    }
+    return self;
+}
+
+- (void) encodeWithCoder:(NSCoder *)coder {
+    [coder encodeObject:self.serviceId forKey:SONY_CAMERA_ID];
+    [coder encodeObject:self.deviceName forKey:SONY_CAMERA_NAME];
+}
+
+@end
+
 
 
 @interface SonyCameraManager() <SampleDiscoveryDelegate, SonyCameraRemoteApiUtilDelegate>
@@ -44,6 +81,8 @@ NSString *const SonyFilePrefix = @"sony";
         self.plugin = plugin;
         self.sonyCameraServices = [NSMutableArray array];
         self.sonyCameraPreview = nil;
+
+        [self loadSonyCameraDevices];
 
         // Reachabilityの初期処理
         self.reachability = [SonyCameraReachability reachabilityWithHostName: @"www.google.com"];
@@ -72,6 +111,12 @@ NSString *const SonyFilePrefix = @"sony";
         }
     }
     return wifiName;
+}
+
+- (void) removeSonyCamera:(SonyCameraService *)service
+{
+    [self.sonyCameraServices removeObject:service];
+    [self saveSonyCameraDevices];
 }
 
 - (void) connectSonyCamera {
@@ -387,6 +432,7 @@ NSString *const SonyFilePrefix = @"sony";
                                                        plugin:self.plugin];
         [self.sonyCameraServices addObject:result];
         [self.delegate didAddedService:result];
+        [self saveSonyCameraDevices];
     }
     
     return result;
@@ -411,11 +457,59 @@ NSString *const SonyFilePrefix = @"sony";
     return [self.mFileManager createFileForPath:fileName contents:data];
 }
 
-
 // 通知を受け取るメソッド
 -(void) notifiedNetworkStatus:(NSNotification *)notification {
     [self setOnlineStatus];
 }
+
+
+- (void) saveSonyCameraDevices
+{
+    NSMutableArray *array = [NSMutableArray array];
+    for (SonyCameraService *service in self.sonyCameraServices) {
+        SonyCameraDevice *device = [SonyCameraDevice new];
+        device.serviceId = service.serviceId;
+        device.deviceName = service.name;
+        [array addObject:device];
+    }
+    
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentDirectory = [paths objectAtIndex:0];
+    NSString *path = [documentDirectory stringByAppendingPathComponent:@"SonyCamera.dat"];
+    
+    if (array.count == 0) {
+        [[NSFileManager new] removeItemAtPath:path error:NULL];
+    } else {
+        NSMutableData *data = [NSMutableData data];
+        
+        NSKeyedArchiver *encoder = [[NSKeyedArchiver alloc] initForWritingWithMutableData:data];
+        [encoder encodeObject:array forKey:@"devices"];
+        [encoder finishEncoding];
+        
+        [data writeToFile:path atomically:YES];
+    }
+}
+
+- (void) loadSonyCameraDevices
+{
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentDirectory = [paths objectAtIndex:0];
+    NSString *path = [documentDirectory stringByAppendingPathComponent:@"SonyCamera.dat"];
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    if ([fileManager fileExistsAtPath:path]) {
+        NSMutableData *data  = [NSMutableData dataWithContentsOfFile:path];
+        NSKeyedUnarchiver *decoder = [[NSKeyedUnarchiver alloc] initForReadingWithData:data];
+        NSArray *array = [decoder decodeObjectForKey:@"devices"];
+        
+        for (SonyCameraDevice *device in array) {
+            SonyCameraService *service = [[SonyCameraService alloc] initWithServiceId:device.serviceId
+                                                                           deviceName:device.deviceName
+                                                                               plugin:self.plugin];
+            [self.sonyCameraServices addObject:service];
+        }
+    }
+}
+
 
 #pragma mark - SampleDiscoveryDelegate
 

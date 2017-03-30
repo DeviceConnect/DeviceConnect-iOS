@@ -88,7 +88,19 @@ extern NSString *const DConnectSystemProfileParamVersion;
 
 @optional
 
+/*!
+ @brief サービスが選択された時に呼び出します.
+ 
+ @param[in] service 選択されたサービス
+ */
 - (void) didSelectService: (DConnectService *) service;
+
+/*!
+ @brief サービスが削除された時に呼び出します.
+ 
+ @param[in] service 削除されたサービス
+ */
+- (void) didRemovedService:(DConnectService *) service;
 
 - (void) serviceListViewControllerDidWillAppear;
 
