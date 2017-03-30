@@ -165,7 +165,8 @@
     _serviceProvider = provider;
 }
 
-- (void)mergeChanges:(NSNotification*)notification
+// 仮想デバイスのリストを更新する
+- (void)updateChanges:(NSNotification*)notification
 {
     _devices = [[DPIRKitDBManager sharedInstance] queryVirtualDevice:nil];
     [_virtualDeviceList reloadData];
@@ -174,10 +175,11 @@
 
 - (IBAction)addVirtualDevice:(id)sender {
     if (!_isRemoved) {
+        // ダイアログでの操作を受け取るNotification
         NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
 
         [nc addObserver:self
-               selector:@selector(mergeChanges:)
+               selector:@selector(updateChanges:)
                    name:DPIRKitVirtualDeviceCreateNotification
                  object:nil];
         [DPIRKitCategorySelectDialog showWithServiceId:_irkitName];

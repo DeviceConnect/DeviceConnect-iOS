@@ -248,22 +248,22 @@ DPIRKitManagerDetectionDelegate
             if (virtuals.count > 0) {
                 for (DPIRKitVirtualDevice *virtual in virtuals) {
                     NSRange range = [virtual.serviceId rangeOfString:device.name];
-                    if (range.location != NSNotFound
-                        && [self existIRForServiceId:virtual.serviceId]) {
-                        if (online) {
+                    if (range.location != NSNotFound) {
+                        
+                        if ([self existIRForServiceId:virtual.serviceId]) {
                             // オンライン遷移の場合、デバイスが未登録なら登録し、登録済ならフラグをオンラインにする
                             NSString *serviceId = virtual.serviceId;
                             if ([self.serviceProvider service: serviceId]) {
                                 DConnectService *service = [self.serviceProvider service: serviceId];
-                                [service setOnline: YES];
+                                [service setOnline: online];
                             } else {
-                                NSString *profileName = virtual.categoryName;
                                 DPIRKitVirtualService *service = [[DPIRKitVirtualService alloc] initWithServiceId: serviceId
                                                                                                              name:virtual.deviceName
                                                                                                            plugin:self
-                                                                                                      profileName:profileName];
+                                                                                                      profileName:virtual.categoryName];
+                                [service setOnline: online];
                                 [self.serviceProvider addService: service bundle: DPIRBundle()];
-                                [service setOnline: YES];
+
                             }
                         } else {
                             // オフライン遷移の場合、デバイスが登録済ならフラグをオフラインにする
@@ -271,6 +271,14 @@ DPIRKitManagerDetectionDelegate
                             DConnectService *service = [self.serviceProvider service: serviceId];
                             if (service) {
                                 [service setOnline: NO];
+                                [self.serviceProvider addService: service bundle: DPIRBundle()];
+                            } else {
+                                service = [[DPIRKitVirtualService alloc] initWithServiceId: serviceId
+                                                                                      name:virtual.deviceName
+                                                                                    plugin:self
+                                                                               profileName:virtual.categoryName];
+                                [service setOnline: NO];
+                                [self.serviceProvider addService: service bundle: DPIRBundle()];
                             }
                         }
                         
@@ -341,8 +349,15 @@ DPIRKitManagerDetectionDelegate
     serviceListViewController.delegate = self;
     return top;
 }
-
-- (void)didSelectService:(DConnectService *)service {
+- (void)didRemoveService:(DConnectService *)service
+{
+    //サービス一覧画面で仮想デバイスが削除されたら、DBからも仮想デバイスを削除する。
+    DPIRKitDBManager *mgr = [DPIRKitDBManager sharedInstance];
+    [mgr deleteVirtualDevice:service.serviceId];
+    [mgr deleteRESTfulRequestForServiceId:service.serviceId];
+}
+- (void)didSelectService:(DConnectService *)service
+{
     
     // サービスが選択されたら、仮想デバイス一覧画面を表示する
     

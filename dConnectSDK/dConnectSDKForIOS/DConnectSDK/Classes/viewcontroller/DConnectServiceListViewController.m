@@ -171,6 +171,9 @@
                 [tableView beginUpdates];
                 [self.delegate.serviceProvider removeService: service];
                 [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+                if ([self.delegate respondsToSelector:@selector(didRemoveService:)]) {
+                    [self.delegate didRemoveService: service];
+                }
                 [tableView endUpdates];
                 
                 // 削除後にオフラインのサービスが1件以上あればRemoveボタンを有効にする
