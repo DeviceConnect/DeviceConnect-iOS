@@ -13,6 +13,7 @@
 #import "DeviceList.h"
 #import "SampleLiveviewManager.h"
 #import "SonyCameraRemoteApiUtil.h"
+#import "SonyCameraSimpleHttpServer.h"
 
 
 @interface SonyCameraPreview () <SampleLiveviewDelegate>
@@ -22,6 +23,7 @@
 
 @implementation SonyCameraPreview {
     SonyCameraRemoteApiUtil *_remoteApi;
+    SonyCameraSimpleHttpServer *_httpServer;
 }
 
 - (instancetype)initWithRemoteApi:(SonyCameraRemoteApiUtil *)remoteApi
@@ -29,8 +31,69 @@
     self = [super init];
     if (self) {
         _remoteApi = remoteApi;
+        _httpServer = nil;
     }
     return self;
+}
+
+#pragma mark - Public Methods
+
+- (BOOL) startPreview
+{
+    if (_httpServer) {
+        [_httpServer stop];
+        _httpServer = nil;
+    }
+
+    _httpServer = [SonyCameraSimpleHttpServer new];
+    _httpServer.listenPort = 8080;
+    [_httpServer start];
+    
+    BOOL result = [self startLiveView];
+    if (!result) {
+        return NO;
+    }
+
+    return YES;
+}
+
+- (void) stopPreview
+{
+    if (_httpServer) {
+        [_httpServer stop];
+        _httpServer = nil;
+    }
+
+    [_remoteApi actStopLiveView];
+}
+
+- (NSString *)getUrl
+{
+    if (_httpServer) {
+        return [_httpServer getUrl];
+    }
+    return nil;
+}
+
+
+#pragma mark - Private Methods
+
+- (BOOL) startLiveView {
+    return [_remoteApi actStartLiveView:self];
+}
+
+#pragma mark - SampleLiveviewDelegate Methods
+
+- (void) didReceivedData:(NSData *)imageData
+{
+    if (_httpServer) {
+        [_httpServer offerData:imageData];
+    }
+}
+
+- (void) didReceivedError
+{
+    NSLog(@"Preview occurred an error.");
 }
 
 @end

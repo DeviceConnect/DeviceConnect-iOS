@@ -79,7 +79,7 @@
     return self;
 }
 
-#pragma mark - Private Methods -
+#pragma mark - Private Methods
 
 - (BOOL) didReceivedGetMediaRecorderRequest:(DConnectRequestMessage *)request response:(DConnectResponseMessage *)response
 {
@@ -316,8 +316,17 @@
         return YES;
     }
     
-    [response setErrorToNotSupportAttribute];
-    return YES;
+    [manager startPreview:^(NSString *uri) {
+        if (uri) {
+            [response setResult:DConnectMessageResultTypeOk];
+            [response setString:uri forKey:@"uri"];
+        } else {
+            [response setErrorToUnknown];
+        }
+        [[DConnectManager sharedManager] sendResponse:response];
+    }];
+    
+    return NO;
 }
 
 - (BOOL) didReceiveDeletePreviewRequest:(DConnectRequestMessage *)request response:(DConnectResponseMessage *)response
@@ -333,7 +342,9 @@
         return YES;
     }
     
-    [response setErrorToNotSupportAttribute];
+    [manager stopPreview];
+
+    [response setResult:DConnectMessageResultTypeOk];
     return YES;
 }
 

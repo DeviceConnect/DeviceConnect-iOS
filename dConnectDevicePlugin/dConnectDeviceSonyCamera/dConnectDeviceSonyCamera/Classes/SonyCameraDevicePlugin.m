@@ -76,16 +76,7 @@
     return [self checkSSID];
 }
 
-#pragma mark - Private Methods -
-
-- (void) applicationWillEnterForeground
-{
-    if ([self checkSSID]) {
-        [self.sonyCameraManager connectSonyCamera];
-    } else {
-        [self.sonyCameraManager disconnectSonyCamera];
-    }
-}
+#pragma mark - Private Methods
 
 - (UInt64) getEpochMilliSeconds
 {
@@ -115,7 +106,7 @@
     return NO;
 }
 
-#pragma mark - SonyCameraManagerDelegate
+#pragma mark - SonyCameraManagerDelegate Methods
 
 - (void) didDiscoverDeviceList:(BOOL)discovery {
     [self.delegate didReceiveDeviceList:discovery];
@@ -147,6 +138,17 @@
 
 - (void) didAddedService:(SonyCameraService *)service {
     [self.serviceProvider addService:service];
+}
+
+#pragma mark - DConnectDevicePlugin Methods
+
+- (void) applicationWillEnterForeground
+{
+    if ([self checkSSID]) {
+        [self.sonyCameraManager connectSonyCamera];
+    } else {
+        [self.sonyCameraManager disconnectSonyCamera];
+    }
 }
 
 - (NSString*)iconFilePath:(BOOL)isOnline

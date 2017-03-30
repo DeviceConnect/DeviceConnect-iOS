@@ -15,7 +15,9 @@
 
 - (instancetype)initWithRemoteApi:(SonyCameraRemoteApiUtil *)remoteApi;
 
-- (void) startPreview;
+- (BOOL) startPreview;
 - (void) stopPreview;
+
+- (NSString *)getUrl;
 
 @end

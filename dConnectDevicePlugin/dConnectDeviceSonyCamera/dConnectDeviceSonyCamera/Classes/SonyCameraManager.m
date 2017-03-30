@@ -75,7 +75,12 @@ NSString *const SonyFilePrefix = @"sony";
 }
 
 - (void) connectSonyCamera {
-    [DeviceList reset];
+    if (self.searchFlag) {
+        return;
+    }
+    self.searchFlag = YES;
+
+    [self disconnectSonyCamera];
     
     SampleDeviceDiscovery* discovery = [SampleDeviceDiscovery new];
     [discovery performSelectorInBackground:@selector(discover:) withObject:self];
@@ -84,8 +89,12 @@ NSString *const SonyFilePrefix = @"sony";
 - (void) disconnectSonyCamera {
     [self setOnlineStatus];
 
-    [self.remoteApi destroy];
-    self.remoteApi = nil;
+    if (self.remoteApi) {
+        [self.remoteApi destroy];
+        self.remoteApi = nil;
+    }
+
+    [DeviceList reset];
 }
 
 - (BOOL) isConnectedService:(NSString *)serviceId {
@@ -242,7 +251,12 @@ NSString *const SonyFilePrefix = @"sony";
         }
         
         weakSelf.sonyCameraPreview = [[SonyCameraPreview alloc] initWithRemoteApi:weakSelf.remoteApi];
-        [weakSelf.sonyCameraPreview startPreview];
+        BOOL result = [weakSelf.sonyCameraPreview startPreview];
+        if (result) {
+            block([weakSelf.sonyCameraPreview getUrl]);
+        } else {
+            block(nil);
+        }
     });
 }
 
@@ -325,7 +339,7 @@ NSString *const SonyFilePrefix = @"sony";
 }
 
 
-#pragma mark - Private Methods -
+#pragma mark - Private Methods
 
 - (void) setShootMode:(NSString *)mode block:(SonyCameraBlock)block {
     if ([self.remoteApi actSetShootMode:mode]) {
@@ -338,12 +352,12 @@ NSString *const SonyFilePrefix = @"sony";
 - (void) setOnlineStatus {
     __block NSString *ssid = [self getCurrentWifiName];
     
-    if (!ssid) {
-        return;
-    }
-    
     [self.sonyCameraServices enumerateObjectsUsingBlock:^(SonyCameraService *obj, NSUInteger idx, BOOL *stop) {
-        [obj setOnline:[obj.serviceId isEqualToString:ssid]];
+        if (ssid) {
+            [obj setOnline:[obj.serviceId isEqualToString:ssid]];
+        } else {
+            [obj setOnline:NO];
+        }
     }];
 }
 
@@ -404,8 +418,6 @@ NSString *const SonyFilePrefix = @"sony";
 - (void) didReceiveDeviceList:(BOOL)discovery {
     self.searchFlag = NO;
     
-    [self disconnectSonyCamera];
-
     if (discovery) {
         SonyCameraService *service = [self foundSonyCamera];
         if (service) {

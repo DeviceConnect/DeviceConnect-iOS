@@ -47,6 +47,11 @@ typedef void (^SonyCameraStateBlock)(NSString *state, int width, int height);
 @protocol SonyCameraManagerDelegate <NSObject>
 @optional
 
+/*!
+ @brief デバイスの検索結果を通知.
+ 
+ @param[in] discovery YESの場合は発見、NOの場合は未発見
+ */
 - (void) didDiscoverDeviceList:(BOOL)discovery;
 
 /*!
