@@ -137,7 +137,7 @@ DPIRKitManagerDetectionDelegate
 
 - (DPIRKitDevice *) deviceForServiceId:(NSString *)serviceId {
     @synchronized (_devices) {
-        return [_devices objectForKey:serviceId];
+        return _devices[serviceId];
     }
 }
 
@@ -425,7 +425,7 @@ DPIRKitManagerDetectionDelegate
     DConnectServiceInformationProfileConnectState state = DConnectServiceInformationProfileConnectStateOff;
     @synchronized (_devices) {
         if (_devices.count > 0) {
-            DPIRKitDevice *device = [_devices objectForKey:serviceId];
+            DPIRKitDevice *device = _devices[serviceId];
             if (device) {
                 state = DConnectServiceInformationProfileConnectStateOn;
             }
