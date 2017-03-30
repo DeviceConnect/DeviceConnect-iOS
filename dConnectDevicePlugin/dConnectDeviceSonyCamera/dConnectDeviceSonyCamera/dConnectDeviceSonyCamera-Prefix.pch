@@ -17,3 +17,9 @@
 #ifndef DEBUG
 #define NSLog(...)
 #endif
+
+#define DCBundle() \
+[NSBundle bundleWithPath:[[NSBundle mainBundle] pathForResource:@"DConnectSDK_resources" ofType:@"bundle"]]
+
+#define DPSonyCameraBundle() \
+[NSBundle bundleWithPath:[[NSBundle mainBundle] pathForResource:@"dConnectDeviceSonyCamera_resources" ofType:@"bundle"]]

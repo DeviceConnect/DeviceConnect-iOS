@@ -390,8 +390,7 @@ NSString *const SonyFilePrefix = @"sony";
     NSString *fileName = [NSString stringWithFormat:@"%@_%@.png", SonyFilePrefix, dateStr];
     
     // ファイルを保存
-    SonyCameraManager *manager = [SonyCameraManager sharedManager];
-    return [manager.mFileManager createFileForPath:fileName contents:data];
+    return [self.mFileManager createFileForPath:fileName contents:data];
 }
 
 
@@ -418,6 +417,8 @@ NSString *const SonyFilePrefix = @"sony";
         self.remoteApi = [SonyCameraRemoteApiUtil new];
         self.remoteApi.delegate = self;
     }
+
+    [self.delegate didDiscoverDeviceList:discovery];
 }
 
 #pragma mark - SonyCameraRemoteApiUtilDelegate

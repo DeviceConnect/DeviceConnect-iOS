@@ -41,4 +41,12 @@
  */
 @property (strong, nonatomic) SonyCameraManager *sonyCameraManager;
 
+/*!
+ @brief Sonyカメラに接続されているか確認を行う.
+ 
+ @retval YES Sonyカメラに接続されている
+ @retval NO Sonyカメラに接続されていない
+ */
+- (BOOL) isConnectedSonyCamera;
+
 @end

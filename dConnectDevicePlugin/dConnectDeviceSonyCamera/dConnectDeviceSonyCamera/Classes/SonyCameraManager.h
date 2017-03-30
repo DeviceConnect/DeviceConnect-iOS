@@ -47,6 +47,8 @@ typedef void (^SonyCameraStateBlock)(NSString *state, int width, int height);
 @protocol SonyCameraManagerDelegate <NSObject>
 @optional
 
+- (void) didDiscoverDeviceList:(BOOL)discovery;
+
 /*!
  @brief 写真撮影が行われた時の通知.
  
@@ -104,12 +106,6 @@ typedef void (^SonyCameraStateBlock)(NSString *state, int width, int height);
  @brief サーチフラグ.
  */
 @property (nonatomic) BOOL searchFlag;
-
-/*!
- @brief SonyCameraManagerの共有インスタンスを返す。
- @return SonyCameraManagerの共有インスタンス。
- */
-+ (instancetype)sharedManager;
 
 /*!
  @brief SonyCameraを初期化します.

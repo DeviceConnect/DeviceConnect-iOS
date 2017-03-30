@@ -15,9 +15,6 @@
 #import "SonyCameraMediaStreamRecordingProfile.h"
 #import <SystemConfiguration/CaptiveNetwork.h>
 
-#define DPSonyCameraBundle() \
-[NSBundle bundleWithPath:[[NSBundle mainBundle] pathForResource:@"dConnectDeviceSonyCamera_resources" ofType:@"bundle"]]
-
 /*!
  @brief Sony Remote Camera用デバイスプラグイン。
  */
@@ -75,6 +72,9 @@
     return self;
 }
 
+- (BOOL) isConnectedSonyCamera {
+    return [self checkSSID];
+}
 
 #pragma mark - Private Methods -
 
@@ -116,6 +116,10 @@
 }
 
 #pragma mark - SonyCameraManagerDelegate
+
+- (void) didDiscoverDeviceList:(BOOL)discovery {
+    [self.delegate didReceiveDeviceList:discovery];
+}
 
 - (void) didTakePicture:(NSString *)postImageUrl {
     SonyCameraManager *manager = self.sonyCameraManager;

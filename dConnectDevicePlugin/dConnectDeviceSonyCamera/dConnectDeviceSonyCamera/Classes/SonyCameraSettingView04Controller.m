@@ -31,7 +31,7 @@
     self.searchBtn.layer.cornerRadius = 16;
     
     // Sony Cameraに接続されているかチェックする
-    BOOL exist = NO;//[self.deviceplugin isStarted];
+    BOOL exist =[self.deviceplugin isConnectedSonyCamera];
     if (exist) {
         self.ssidLabel.text = @"Sony Camera Connected.";
     } else {
@@ -64,10 +64,7 @@
 
 - (IBAction) searchBtnDidPushed:(id)sender
 {
-    /*
-    if (![self.deviceplugin isStarted]) {
-        [self.deviceplugin searchSonyCameraDevice];
-        
+    if (![self.deviceplugin isConnectedSonyCamera]) {        
         self.progressView.hidden = NO;
         self.progressView.layer.cornerRadius = 20;
         self.progressView.clipsToBounds = true;
@@ -76,7 +73,6 @@
         // viewDidLoadの時点ではデバイスを認識できておらずその後認識された場合は、ボタンがタップされたタイミングでConnectedと表示する
         self.ssidLabel.text = @"Sony Camera Connected.";
     }
-     */
 }
 
 #pragma mark - SonyCameraDevicePluginDelegate delegate methods
