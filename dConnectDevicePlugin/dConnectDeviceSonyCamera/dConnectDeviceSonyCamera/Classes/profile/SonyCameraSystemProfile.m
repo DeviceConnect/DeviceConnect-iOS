@@ -64,7 +64,6 @@ NSString *const SonyDevicePluginVersion = @"2.0.0";
 
 - (BOOL) didReceiveDeleteEventsRequest:(DConnectRequestMessage *)request response:(DConnectResponseMessage *)response
 {
-    
     NSString *origin = [request origin];
     
     if (origin == nil) {
@@ -73,14 +72,6 @@ NSString *const SonyDevicePluginVersion = @"2.0.0";
         DConnectEventManager *mgr = [DConnectEventManager sharedManagerForClass:[SonyCameraDevicePlugin class]];
         if ([mgr removeEventsForOrigin:origin]) {
             [response setResult:DConnectMessageResultTypeOk];
-            
-            /*
-             // 削除した時にイベントが残っていなければ、プレビューを止める
-             SonyCameraManager *manager = [SonyCameraManager sharedManager];
-             if ([[manager remoteApi] isStartedLiveView]) {
-             [[manager remoteApi] actStopLiveView];
-             }
-             */
         } else {
             [response setErrorToUnknownWithMessage:@"Cannot delete events."];
         }

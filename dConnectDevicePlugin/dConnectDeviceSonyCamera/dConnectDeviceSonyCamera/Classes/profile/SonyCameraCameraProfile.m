@@ -50,8 +50,8 @@ NSString *const SonyCameraCameraProfileParamZoomdiameter = @"zoomPosition";
 -(BOOL) didReceiveGetZoomRequest:(DConnectRequestMessage *)request response:(DConnectResponseMessage *)response
 {
     SonyCameraDevicePlugin *plugin = (SonyCameraDevicePlugin *)self.plugin;
-    __block SonyCameraManager *manager = plugin.sonyCameraManager;
-    __block NSString *serviceId = [request serviceId];
+    SonyCameraManager *manager = plugin.sonyCameraManager;
+    NSString *serviceId = [request serviceId];
     
     // サービスIDのチェック
     if (![manager isConnectedService:serviceId]) {
@@ -103,33 +103,7 @@ NSString *const SonyCameraCameraProfileParamZoomdiameter = @"zoomPosition";
         }
         [[DConnectManager sharedManager] sendResponse:response];
     }];
-    /*
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        NSDictionary *dict = [manager.remoteApi actZoom:direction movement:movement];
-        if (dict == nil) {
-            [response setErrorToTimeout];
-        } else {
-            NSString *errorMessage = @"";
-            NSInteger errorCode = -1;
-            NSArray *resultArray = dict[@"result"];
-            NSArray *errorArray = dict[@"error"];
-            if (errorArray && errorArray.count > 0) {
-                errorCode = (NSInteger) errorArray[0];
-                errorMessage = errorArray[1];
-            }
-            
-            // レスポンス作成
-            if (resultArray.count <= 0 && errorCode >= 0) {
-                [response setErrorToInvalidRequestParameter];
-            } else {
-                [response setResult:DConnectMessageResultTypeOk];
-            }
-        }
-        
-        // レスポンスを返却
-        [[DConnectManager sharedManager] sendResponse:response];
-    });
-    */
+    
     // レスポンスは非同期で返却するので
     return NO;
 }

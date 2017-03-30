@@ -134,7 +134,7 @@
     
     // ターゲットチェック
     if (target && ![target isEqualToString:@"SonyCamera"]) {
-        [response setErrorToInvalidRequestParameter];
+        [response setErrorToInvalidRequestParameterWithMessage:@"target is invalid."];
         return YES;
     }
 
@@ -180,7 +180,7 @@
     
     // ターゲットチェック
     if (target && ![target isEqualToString:@"SonyCamera"]) {
-        [response setErrorToInvalidRequestParameter];
+        [response setErrorToInvalidRequestParameterWithMessage:@"target is invalid."];
         return YES;
     }
     
@@ -224,19 +224,19 @@
     
     // ターゲットチェック
     if (target && ![target isEqualToString:@"SonyCamera"]) {
-        [response setErrorToInvalidRequestParameter];
-        return YES;
-    }
-    
-    // 撮影が開始されていないので、エラーを返す。
-    if (![manager isRecording]) {
-        [response setErrorToIllegalDeviceState];
+        [response setErrorToInvalidRequestParameterWithMessage:@"target is invalid."];
         return YES;
     }
     
     // サポートしていない
     if (![manager isSupportedRecording]) {
         [response setErrorToNotSupportAttribute];
+        return YES;
+    }
+    
+    // 撮影が開始されていないので、エラーを返す。
+    if (![manager isRecording]) {
+        [response setErrorToIllegalDeviceState];
         return YES;
     }
     
@@ -264,7 +264,13 @@
         [response setErrorToIllegalDeviceStateWithMessage:@"Sony's camera is not ready."];
         return YES;
     }
-    
+
+    // ターゲットチェック
+    if (target && ![target isEqualToString:@"SonyCamera"]) {
+        [response setErrorToInvalidRequestParameterWithMessage:@"target is invalid."];
+        return YES;
+    }
+
     DConnectEventManager *mgr = [DConnectEventManager sharedManagerForClass:[self.plugin class]];
     DConnectEventError error = [mgr addEventForRequest:request];
     if (error == DConnectEventErrorNone) {
@@ -289,7 +295,13 @@
         [response setErrorToIllegalDeviceStateWithMessage:@"Sony's camera is not ready."];
         return YES;
     }
-    
+
+    // ターゲットチェック
+    if (target && ![target isEqualToString:@"SonyCamera"]) {
+        [response setErrorToInvalidRequestParameterWithMessage:@"target is invalid."];
+        return YES;
+    }
+
     DConnectEventManager *mgr = [DConnectEventManager sharedManagerForClass:[self.plugin class]];
     DConnectEventError error = [mgr removeEventForRequest:request];
     if (error == DConnectEventErrorNone) {
@@ -315,7 +327,13 @@
         [response setErrorToIllegalDeviceStateWithMessage:@"Sony's camera is not ready."];
         return YES;
     }
-    
+
+    // ターゲットチェック
+    if (target && ![target isEqualToString:@"SonyCamera"]) {
+        [response setErrorToInvalidRequestParameterWithMessage:@"target is invalid."];
+        return YES;
+    }
+
     [manager startPreview:^(NSString *uri) {
         if (uri) {
             [response setResult:DConnectMessageResultTypeOk];
@@ -342,6 +360,18 @@
         return YES;
     }
     
+    // ターゲットチェック
+    if (target && ![target isEqualToString:@"SonyCamera"]) {
+        [response setErrorToInvalidRequestParameterWithMessage:@"target is invalid."];
+        return YES;
+    }
+    
+    // プレビューチェック
+    if (![manager isPreview]) {
+        [response setErrorToIllegalDeviceStateWithMessage:@"Sony's camera is not running a preview."];
+        return YES;
+    }
+
     [manager stopPreview];
 
     [response setResult:DConnectMessageResultTypeOk];

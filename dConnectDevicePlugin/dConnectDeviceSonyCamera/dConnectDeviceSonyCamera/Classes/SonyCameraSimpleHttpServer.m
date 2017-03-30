@@ -11,10 +11,29 @@
 #import "GCDAsyncSocket.h"
 
 
+// HTTP通信のタイムアウトを定義
 #define HTTP_TIMEOUT 3.0
 
 
+@interface SonyCameraConnection : NSObject
+
+@property (nonatomic, strong) GCDAsyncSocket *fromSocket;
+@property (nonatomic) BOOL ready;
+
+@end
+
+
 @implementation SonyCameraConnection
+
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        self.fromSocket = nil;
+        self.ready = NO;
+    }
+    return self;
+}
 
 @end
 
@@ -50,8 +69,6 @@
 
 - (void)socket:(GCDAsyncSocket *)sock didAcceptNewSocket:(GCDAsyncSocket *)newSocket
 {
-    NSLog(@"Accept:%p", sock);
-    
     SonyCameraConnection *connection = [SonyCameraConnection new];
     connection.fromSocket = newSocket;
     connection.ready = NO;
@@ -65,20 +82,16 @@
 
 - (void)socketDidDisconnect:(GCDAsyncSocket *)sock withError:(NSError *)err
 {
-    NSLog(@"Disconnect:%p %@", sock, err);
-    
     @synchronized(self) {
-        SonyCameraConnection *c = [self foundConnection:sock];
-        if (c) {
-            [_connections removeObject:c];
+        SonyCameraConnection *connection = [self foundConnection:sock];
+        if (connection) {
+            [_connections removeObject:connection];
         }
     }
 }
 
 - (void)socket:(GCDAsyncSocket *)sock didReadData:(NSData *)data withTag:(long)tag
 {
-    NSLog(@"ReadData:%p", sock);
- 
     NSString *headerData = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
     if ([self parseHttpHeader:headerData]) {
         [self writeHeadersToSocket:sock];
@@ -142,8 +155,7 @@
                     "Expires: 0\r\n"
                     "Cache-Control: no-store, no-cache, must-revalidate, pre-check=0, post-check=0, max-age=0\r\n"
                     "Pragma: no-cache\r\n"
-                    "Content-Type: multipart/x-mixed-replace; "
-                    "boundary=%@\r\n"
+                    "Content-Type: multipart/x-mixed-replace; boundary=%@\r\n"
                     "\r\n"
                     "--%@\r\n";
     
@@ -188,11 +200,18 @@
 
 #pragma mark - Public Methods
 
-- (void) start
+- (BOOL) start
 {
     NSError *error = nil;
-    _listenSocket = [[GCDAsyncSocket alloc] initWithDelegate:self delegateQueue:dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)];
+    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    _listenSocket = [[GCDAsyncSocket alloc] initWithDelegate:self delegateQueue:queue];
     [_listenSocket acceptOnPort:self.listenPort error:&error];
+    if (error) {
+        DCLogInfo(@"Failed to start a server. error=%@", error);
+        [self stop];
+        return NO;
+    }
+    return YES;
 }
 
 - (void) stop

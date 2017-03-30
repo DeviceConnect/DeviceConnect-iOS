@@ -47,9 +47,12 @@
 
     _httpServer = [SonyCameraSimpleHttpServer new];
     _httpServer.listenPort = 8080;
-    [_httpServer start];
+    BOOL result = [_httpServer start];
+    if (!result) {
+        return NO;
+    }
     
-    BOOL result = [self startLiveView];
+    result = [self startLiveView];
     if (!result) {
         return NO;
     }
@@ -65,6 +68,11 @@
     }
 
     [_remoteApi actStopLiveView];
+}
+
+- (BOOL) isRunning
+{
+    return _httpServer && [_remoteApi isStartedLiveView];
 }
 
 - (NSString *)getUrl
@@ -93,7 +101,7 @@
 
 - (void) didReceivedError
 {
-    NSLog(@"Preview occurred an error.");
+    DCLogInfo(@"Preview occurred an error.");
 }
 
 @end

@@ -106,6 +106,10 @@ NSString *const SonyFilePrefix = @"sony";
     return [SonyCameraStatusMovieRecording isEqualToString:self.remoteApi.cameraStatus];
 }
 
+- (BOOL) isPreview {
+    return self.sonyCameraPreview && [self.sonyCameraPreview isRunning];
+}
+
 - (BOOL) isSupportedZoom {
     return [self.remoteApi isApiAvailable:API_actZoom];
 }

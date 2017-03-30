@@ -9,26 +9,43 @@
 
 #import <Foundation/Foundation.h>
 
-@class GCDAsyncSocket;
 
-
-@interface SonyCameraConnection : NSObject
-
-@property (nonatomic, strong) GCDAsyncSocket *fromSocket;
-@property (nonatomic) BOOL ready;
-
-@end
-
-
+/*!
+ @brief Sonyカメラからの画像を配信するための簡易サーバ.
+ */
 @interface SonyCameraSimpleHttpServer : NSObject
 
+/*!
+ @brief ポート番号
+ */
 @property (nonatomic) NSInteger listenPort;
 
-- (void) start;
+/*!
+ @brief サーバを起動します.
+ 
+ @retval YSE サーバの起動に成功
+ @retval NO サーバの起動に失敗
+ */
+- (BOOL) start;
+
+/*!
+ @brief サーバを停止します.
+ */
 - (void) stop;
 
+/*!
+ @brief サーバのURLを取得します.
+ 
+ @retval サーバのURL
+ */
 - (NSString *) getUrl;
 
+
+/*!
+ @brief 配信する画像を設定します.
+ 
+ @param[in] data 画像データ
+ */
 - (void) offerData:(NSData *)data;
 
 @end

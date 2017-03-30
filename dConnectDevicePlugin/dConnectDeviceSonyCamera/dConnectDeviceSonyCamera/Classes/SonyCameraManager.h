@@ -176,6 +176,14 @@ typedef void (^SonyCameraStateBlock)(NSString *state, int width, int height);
 - (BOOL) isRecording;
 
 /*!
+ @brief Sonyカメラがプレビューを表示中か確認を行う.
+ 
+ @retval YES 撮影中
+ @retval NO IDLE
+ */
+- (BOOL) isPreview;
+
+/*!
  @brief ズームをサポートしているかを確認します.
  
  @retval YES サポートしている
