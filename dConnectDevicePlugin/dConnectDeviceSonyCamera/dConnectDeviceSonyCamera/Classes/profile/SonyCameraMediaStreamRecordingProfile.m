@@ -153,7 +153,6 @@
     [manager takePicture:^(NSString *uri) {
         if (uri) {
             [response setResult:DConnectMessageResultTypeOk];
-            [DConnectMediaStreamRecordingProfile setPath:[uri lastPathComponent] target:response];
             [DConnectMediaStreamRecordingProfile setUri:uri target:response];
         } else {
             [response setErrorToUnknown];
