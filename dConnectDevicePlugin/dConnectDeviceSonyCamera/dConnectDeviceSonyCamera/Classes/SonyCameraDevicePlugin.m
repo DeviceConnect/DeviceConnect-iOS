@@ -85,8 +85,7 @@
     // イベント作成
     DConnectMessage *photo = [DConnectMessage message];
     [DConnectMediaStreamRecordingProfile setUri:postImageUrl target:photo];
-    [DConnectMediaStreamRecordingProfile setPath:[postImageUrl lastPathComponent] target:photo];
-    [DConnectMediaStreamRecordingProfile setMIMEType:@"image/png" target:photo];
+    [DConnectMediaStreamRecordingProfile setMIMEType:@"image/jpg" target:photo];
     
     // イベントの取得
     DConnectEventManager *mgr = [DConnectEventManager sharedManagerForClass:[self class]];
