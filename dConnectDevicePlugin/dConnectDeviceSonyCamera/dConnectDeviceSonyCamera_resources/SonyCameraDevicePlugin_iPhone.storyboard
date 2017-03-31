@@ -227,7 +227,7 @@ QXの場合は、バッテリーカバーの裏に書かれています。他の
                                                     <constraint firstAttribute="width" constant="275" id="JaH-sG-iZw"/>
                                                     <constraint firstAttribute="height" constant="41" id="Zjj-qu-abT"/>
                                                 </constraints>
-                                                <state key="normal" title="カメラの検索">
+                                                <state key="normal" title="WiFi設定を開く">
                                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <color key="titleShadowColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </state>
