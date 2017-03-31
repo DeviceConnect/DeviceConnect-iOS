@@ -1,9 +1,13 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="jlY-bb-rwW">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES" initialViewController="jlY-bb-rwW">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--IRKit-->
@@ -15,13 +19,13 @@
                         <viewControllerLayoutGuide type="bottom" id="5Pj-ZO-VIu"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="0lF-LL-Ycf">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
                     <navigationItem key="navigationItem" title="IRKit" id="arg-jR-Ycd">
                         <barButtonItem key="leftBarButtonItem" title="＜CLOSE" id="uDT-fu-1vU">
-                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
                                 <action selector="closeBtnDidPushed:" destination="MKE-yl-RSz" id="1RG-oJ-Ihp"/>
                             </connections>
@@ -44,7 +48,7 @@
                         <viewControllerLayoutGuide type="bottom" id="riR-5v-tAR"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="ap6-0r-8vv">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3.IRKitXXXXとの接続" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UDK-Y8-JeY">
@@ -57,14 +61,14 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="irkit03.png" translatesAutoresizingMaskIntoConstraints="NO" id="Zc5-Mb-7MO">
-                                <rect key="frame" x="30" y="104" width="260" height="220"/>
+                                <rect key="frame" x="30" y="104" width="260" height="269.5"/>
                                 <constraints>
                                     <constraint firstAttribute="height" priority="999" constant="220" id="Q8B-E8-fzS"/>
                                     <constraint firstAttribute="width" constant="260" id="mhK-rw-4q6"/>
                                 </constraints>
                             </imageView>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ホームキーでアプリを中断し、iOSのメニューの設定に移動し、IRKit○○○○本体とWi-Fiで接続します。" lineBreakMode="tailTruncation" numberOfLines="8" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="260" translatesAutoresizingMaskIntoConstraints="NO" id="uGP-4A-7bB">
-                                <rect key="frame" x="30" y="328" width="260" height="220"/>
+                                <rect key="frame" x="30" y="377.5" width="315" height="269.5"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" priority="999" constant="170" id="dcj-DO-Pks"/>
                                 </constraints>
@@ -72,13 +76,13 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LXS-zZ-Vjb">
-                                <rect key="frame" x="76" y="210" width="168" height="148"/>
+                                <rect key="frame" x="103.5" y="259.5" width="168" height="148"/>
                                 <subviews>
                                     <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="kZ2-mf-BFm">
                                         <rect key="frame" x="66" y="55" width="37" height="37"/>
                                     </activityIndicatorView>
                                 </subviews>
-                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.70000000000000007" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.70000000000000007" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="centerX" secondItem="kZ2-mf-BFm" secondAttribute="centerX" id="BVb-pR-UHx"/>
                                     <constraint firstAttribute="width" constant="168" id="K2o-jt-Iwd"/>
@@ -93,7 +97,7 @@
                                 </userDefinedRuntimeAttributes>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="uGP-4A-7bB" firstAttribute="leading" secondItem="Zc5-Mb-7MO" secondAttribute="leading" id="10X-Cb-EHx"/>
                             <constraint firstItem="UDK-Y8-JeY" firstAttribute="leading" secondItem="ap6-0r-8vv" secondAttribute="leading" constant="35" id="24o-Kl-3di"/>
@@ -131,11 +135,11 @@
                         <viewControllerLayoutGuide type="bottom" id="4DK-XP-uJ7"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="jS9-P4-juD">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="irkit01.png" translatesAutoresizingMaskIntoConstraints="NO" id="rjE-v5-XCD">
-                                <rect key="frame" x="30" y="104" width="260" height="220"/>
+                                <rect key="frame" x="30" y="104" width="260" height="269.5"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="260" id="EYL-hW-Fjf"/>
                                     <constraint firstAttribute="height" priority="999" constant="220" id="vvo-BQ-qtY"/>
@@ -151,42 +155,42 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="15" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="260" translatesAutoresizingMaskIntoConstraints="NO" id="EgO-cw-jA7">
-                                <rect key="frame" x="30" y="328" width="260" height="220"/>
+                                <rect key="frame" x="30" y="377.5" width="315" height="269.5"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" priority="999" constant="190" id="RNx-hg-aly"/>
                                 </constraints>
                                 <attributedString key="attributedText">
                                     <fragment content="IRKit">
                                         <attributes>
-                                            <color key="NSColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="NSColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <font key="NSFont" size="14" name="HelveticaNeue"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
                                         </attributes>
                                     </fragment>
                                     <fragment content="に">
                                         <attributes>
-                                            <color key="NSColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="NSColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <font key="NSFont" size="14" name="HiraKakuProN-W3"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
                                         </attributes>
                                     </fragment>
                                     <fragment content="PC">
                                         <attributes>
-                                            <color key="NSColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="NSColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <font key="NSFont" size="14" name="HelveticaNeue"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
                                         </attributes>
                                     </fragment>
                                     <fragment content="やアダプタからなど、電力を供給できる状態にした">
                                         <attributes>
-                                            <color key="NSColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="NSColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <font key="NSFont" size="14" name="HiraKakuProN-W3"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
                                         </attributes>
                                     </fragment>
                                     <fragment content="microUSB">
                                         <attributes>
-                                            <color key="NSColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="NSColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <font key="NSFont" size="14" name="HelveticaNeue"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
                                         </attributes>
@@ -196,14 +200,14 @@
 
 </string>
                                         <attributes>
-                                            <color key="NSColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="NSColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <font key="NSFont" size="14" name="HiraKakuProN-W3"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
                                         </attributes>
                                     </fragment>
                                     <fragment content="赤いランプが点滅しない場合は、USBの横にあるリセットボタンを7秒押してリセットします。">
                                         <attributes>
-                                            <color key="NSColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="NSColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <font key="NSFont" size="14" name="HiraKakuProN-W3"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
                                         </attributes>
@@ -212,7 +216,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="4DK-XP-uJ7" firstAttribute="top" secondItem="EgO-cw-jA7" secondAttribute="bottom" constant="20" id="1Hx-uT-7I1"/>
                             <constraint firstItem="4DK-XP-uJ7" firstAttribute="top" relation="greaterThanOrEqual" secondItem="rjE-v5-XCD" secondAttribute="bottom" constant="20" id="5gh-76-CdD"/>
@@ -246,7 +250,7 @@
                         <viewControllerLayoutGuide type="bottom" id="0p6-5B-5P4"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="IOH-UE-dwP">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="4.IRKitへの設定値の送信" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I8g-KI-56e">
@@ -259,14 +263,14 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="15" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="260" translatesAutoresizingMaskIntoConstraints="NO" id="0Qo-gO-xeq">
-                                <rect key="frame" x="30" y="328" width="260" height="220"/>
+                                <rect key="frame" x="30" y="377.5" width="315" height="269.5"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" priority="999" constant="170" id="43q-i2-DAM"/>
                                 </constraints>
                                 <attributedString key="attributedText">
                                     <fragment content="青いランプが点滅し続けている場合、設定したWi-Fiスポットに、IRKitが接続できていない状態です。SSID、Passwordの設定ミスが考えられますので、再設定し、1-4の手順を再度やりなおしてください。">
                                         <attributes>
-                                            <color key="NSColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="NSColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <font key="NSFont" size="14" name="HiraKakuProN-W3"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
                                         </attributes>
@@ -275,7 +279,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yip-yu-8nz">
-                                <rect key="frame" x="30" y="104" width="260" height="220"/>
+                                <rect key="frame" x="30" y="104" width="260" height="269.5"/>
                                 <subviews>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="IRKitにWiFiの接続情報を送信します。" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="244" translatesAutoresizingMaskIntoConstraints="NO" id="V0m-ou-3TW">
                                         <rect key="frame" x="8" y="7" width="244" height="37"/>
@@ -292,14 +296,14 @@
                                             <constraint firstAttribute="height" constant="43" id="xRb-sz-BQc"/>
                                         </constraints>
                                         <state key="normal" image="irkit09.png">
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
                                         <connections>
                                             <action selector="sendButtonPressed:" destination="amU-kJ-I2E" eventType="touchUpInside" id="A46-Vk-gOv"/>
                                         </connections>
                                     </button>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="送信に成功すると、IRKitのLEDが青い点滅に変わり、Wi-Fi情報で送信したWi-Fiスポットに接続します。" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="244" translatesAutoresizingMaskIntoConstraints="NO" id="saR-Mh-saX">
-                                        <rect key="frame" x="8" y="138" width="244" height="82"/>
+                                        <rect key="frame" x="8" y="187.5" width="244" height="82"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="82" id="pC4-IB-gS0"/>
                                         </constraints>
@@ -307,7 +311,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstItem="gnh-PW-zbm" firstAttribute="top" secondItem="V0m-ou-3TW" secondAttribute="bottom" priority="999" constant="8" id="0iC-ST-NNG"/>
                                     <constraint firstItem="V0m-ou-3TW" firstAttribute="leading" secondItem="yip-yu-8nz" secondAttribute="leading" constant="8" id="3fI-Sv-GVn"/>
@@ -323,13 +327,13 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aD8-YB-58D">
-                                <rect key="frame" x="76" y="210" width="168" height="148"/>
+                                <rect key="frame" x="103.5" y="259.5" width="168" height="148"/>
                                 <subviews>
                                     <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="Naw-HH-Yuv">
                                         <rect key="frame" x="65" y="56" width="37" height="37"/>
                                     </activityIndicatorView>
                                 </subviews>
-                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.70000000000000007" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.70000000000000007" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="centerX" secondItem="Naw-HH-Yuv" secondAttribute="centerX" id="2Qh-rY-2gq"/>
                                     <constraint firstAttribute="width" constant="168" id="5Hl-cK-tj7"/>
@@ -344,7 +348,7 @@
                                 </userDefinedRuntimeAttributes>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="0p6-5B-5P4" firstAttribute="top" secondItem="0Qo-gO-xeq" secondAttribute="bottom" constant="20" id="Add-fK-aL6"/>
                             <constraint firstItem="0Qo-gO-xeq" firstAttribute="top" secondItem="yip-yu-8nz" secondAttribute="bottom" constant="4" id="CiJ-sq-Jwd"/>
@@ -383,7 +387,7 @@
                         <viewControllerLayoutGuide type="bottom" id="lVF-C1-C8U"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="3Qe-Ef-wRc">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2.WiFiの設定" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SCu-AM-vFE">
@@ -396,7 +400,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="23" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="260" translatesAutoresizingMaskIntoConstraints="NO" id="zn7-qn-DDR">
-                                <rect key="frame" x="30" y="328" width="260" height="220"/>
+                                <rect key="frame" x="30" y="377.5" width="315" height="269.5"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" priority="999" constant="170" id="cfx-zK-sxC"/>
                                 </constraints>
@@ -407,13 +411,14 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BQs-UX-fZH">
-                                <rect key="frame" x="30" y="104" width="260" height="220"/>
+                                <rect key="frame" x="30" y="104" width="260" height="269.5"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XzO-t5-MhV">
-                                        <rect key="frame" x="-2" y="26" width="264" height="168"/>
+                                        <rect key="frame" x="-2" y="51" width="264" height="168"/>
                                         <subviews>
                                             <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="2" translatesAutoresizingMaskIntoConstraints="NO" id="K9q-D4-kMT">
                                                 <rect key="frame" x="20" y="70" width="224" height="29"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <segments>
                                                     <segment title="None"/>
                                                     <segment title="WEP"/>
@@ -422,6 +427,7 @@
                                             </segmentedControl>
                                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="aSU-yI-vVw">
                                                 <rect key="frame" x="72" y="118" width="170" height="30"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <nil key="textColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                 <textInputTraits key="textInputTraits" returnKeyType="done" secureTextEntry="YES"/>
@@ -431,17 +437,20 @@
                                             </textField>
                                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Pass:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sit-u1-1kg">
                                                 <rect key="frame" x="20" y="122" width="43" height="21"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="SSID:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3h3-NC-hNB">
                                                 <rect key="frame" x="20" y="24" width="44" height="21"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="tJt-ix-GHD">
                                                 <rect key="frame" x="72" y="20" width="170" height="30"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits" returnKeyType="done"/>
                                                 <connections>
@@ -449,7 +458,7 @@
                                                 </connections>
                                             </textField>
                                         </subviews>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="168" id="GQj-au-vQW"/>
                                             <constraint firstAttribute="width" constant="264" id="bzw-5f-ffm"/>
@@ -466,7 +475,7 @@
                                 </constraints>
                             </scrollView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="SCu-AM-vFE" firstAttribute="top" secondItem="3Qe-Ef-wRc" secondAttribute="top" constant="75" id="7SO-iw-8Te"/>
                             <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="zn7-qn-DDR" secondAttribute="trailing" constant="5" id="8vK-QO-kXN"/>
@@ -494,111 +503,6 @@
             </objects>
             <point key="canvasLocation" x="1876" y="-24"/>
         </scene>
-        <!--Kit Tutorial Top View Controller-->
-        <scene sceneID="cua-rr-vdU">
-            <objects>
-                <viewController id="pXU-hx-a2b" customClass="DPIRKitTutorialTopViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="hgR-kz-uyZ"/>
-                        <viewControllerLayoutGuide type="bottom" id="EKQ-gW-1TX"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="dxl-JY-Ozs">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <view hidden="YES" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xBb-cg-Eev">
-                                <rect key="frame" x="10" y="74" width="168" height="148"/>
-                                <subviews>
-                                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="Kcu-rg-clq">
-                                        <rect key="frame" x="66" y="55" width="37" height="37"/>
-                                    </activityIndicatorView>
-                                </subviews>
-                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.69999999999999996" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="centerY" secondItem="Kcu-rg-clq" secondAttribute="centerY" id="CPg-I2-g90"/>
-                                    <constraint firstAttribute="height" constant="148" id="Gsl-vU-TNy"/>
-                                    <constraint firstAttribute="width" constant="168" id="Qr1-gv-ryy"/>
-                                    <constraint firstAttribute="centerX" secondItem="Kcu-rg-clq" secondAttribute="centerX" id="Zc9-ds-kMq"/>
-                                </constraints>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                        <integer key="value" value="10"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
-                                </userDefinedRuntimeAttributes>
-                            </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="IRKit一覧" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ee4-p2-VeE">
-                                <rect key="frame" x="125" y="30" width="71" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2S2-vp-5eR">
-                                <rect key="frame" x="7" y="26" width="64" height="30"/>
-                                <state key="normal" title="&lt; CLOSE">
-                                    <color key="titleColor" red="0.94650441765095972" green="1" blue="0.99506703244178962" alpha="1" colorSpace="calibratedRGB"/>
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="closeSettings:" destination="pXU-hx-a2b" eventType="touchUpInside" id="gEB-D4-4Bi"/>
-                                </connections>
-                            </button>
-                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5Yc-06-q64">
-                                <rect key="frame" x="0.0" y="524" width="320" height="44"/>
-                                <color key="backgroundColor" red="0.98514646765850289" green="0.95044657694217582" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="44" id="dPc-wz-JAY"/>
-                                </constraints>
-                                <items>
-                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="2hR-qx-YG8"/>
-                                    <barButtonItem title="IRKit検索" id="B6q-Tx-eFW">
-                                        <connections>
-                                            <action selector="searchIRKit:" destination="pXU-hx-a2b" id="lSd-PW-yje"/>
-                                        </connections>
-                                    </barButtonItem>
-                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="3z2-qy-gkf"/>
-                                    <barButtonItem title="IRKit登録" id="Tx2-3u-KRv"/>
-                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="iLX-JJ-Pge"/>
-                                </items>
-                                <color key="tintColor" red="0.98532261264001542" green="1" blue="0.98412206763554044" alpha="1" colorSpace="calibratedRGB"/>
-                                <color key="barTintColor" red="0.09992029320462581" green="0.57549031261152028" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                            </toolbar>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="cellIRKit" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="x9E-cA-mGo">
-                                <rect key="frame" x="0.0" y="64" width="320" height="460"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            </tableView>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="x9E-cA-mGo" firstAttribute="leading" secondItem="dxl-JY-Ozs" secondAttribute="leadingMargin" constant="-16" id="0MN-OR-p0n"/>
-                            <constraint firstItem="EKQ-gW-1TX" firstAttribute="top" secondItem="x9E-cA-mGo" secondAttribute="bottom" id="1nx-X1-hPe"/>
-                            <constraint firstItem="2S2-vp-5eR" firstAttribute="top" secondItem="dxl-JY-Ozs" secondAttribute="topMargin" constant="26" id="66o-jM-OLO"/>
-                            <constraint firstAttribute="centerX" secondItem="xBb-cg-Eev" secondAttribute="centerX" id="Cm8-gE-h5z"/>
-                            <constraint firstAttribute="centerY" secondItem="xBb-cg-Eev" secondAttribute="centerY" id="Cvh-oC-D7U"/>
-                            <constraint firstItem="2S2-vp-5eR" firstAttribute="leading" secondItem="dxl-JY-Ozs" secondAttribute="leadingMargin" constant="-9" id="Wip-fV-lgT"/>
-                            <constraint firstAttribute="centerX" secondItem="ee4-p2-VeE" secondAttribute="centerX" id="bfg-5g-GbJ"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="x9E-cA-mGo" secondAttribute="trailing" constant="-16" id="g2f-Zg-QZD"/>
-                            <constraint firstItem="5Yc-06-q64" firstAttribute="bottom" secondItem="dxl-JY-Ozs" secondAttribute="bottomMargin" id="hMH-ZD-olu"/>
-                            <constraint firstItem="5Yc-06-q64" firstAttribute="leading" secondItem="dxl-JY-Ozs" secondAttribute="leadingMargin" constant="-16" id="q6U-UZ-wLh"/>
-                            <constraint firstItem="x9E-cA-mGo" firstAttribute="top" secondItem="dxl-JY-Ozs" secondAttribute="topMargin" constant="64" id="w8S-qZ-eTc"/>
-                            <constraint firstItem="ee4-p2-VeE" firstAttribute="top" secondItem="dxl-JY-Ozs" secondAttribute="topMargin" constant="30" id="wrg-nC-cN5"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="5Yc-06-q64" secondAttribute="trailing" constant="-16" id="ykf-ez-MPr"/>
-                        </constraints>
-                    </view>
-                    <toolbarItems/>
-                    <navigationItem key="navigationItem" id="FWx-1u-WSx"/>
-                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
-                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
-                    <connections>
-                        <outlet property="foundIRKitList" destination="x9E-cA-mGo" id="ead-oe-jNO"/>
-                        <outlet property="indicatorView" destination="Kcu-rg-clq" id="evw-iD-Ca6"/>
-                        <outlet property="progressView" destination="xBb-cg-Eev" id="U5L-nx-7TP"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="10X-Um-CoU" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="224" y="-24"/>
-        </scene>
         <!--Kit Virtual Device View Controller-->
         <scene sceneID="bpv-w3-hY1">
             <objects>
@@ -608,16 +512,16 @@
                         <viewControllerLayoutGuide type="bottom" id="e4m-YB-66I"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="Lb6-Y4-q3c">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="cellVirtualDevice" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="iXG-uC-lfN">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="524"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="623"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </tableView>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4Tp-8o-Iiu">
                                 <rect key="frame" x="0.0" y="524" width="320" height="44"/>
-                                <color key="backgroundColor" red="0.92948921668113893" green="0.95337431840641318" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0.92948921668113893" green="0.95337431840641318" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="mG0-Va-4H3"/>
                                 </constraints>
@@ -636,11 +540,11 @@
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="F6z-zw-hlJ"/>
                                 </items>
-                                <color key="tintColor" red="0.92948921669999995" green="0.95337431839999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <color key="barTintColor" red="0.19607843137254902" green="0.58039215686274515" blue="0.98039215686274506" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="tintColor" red="0.92948921669999995" green="0.95337431839999998" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="barTintColor" red="0.19607843137254902" green="0.58039215686274515" blue="0.98039215686274506" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </toolbar>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="4Tp-8o-Iiu" firstAttribute="leading" secondItem="Lb6-Y4-q3c" secondAttribute="leadingMargin" constant="-20" id="5zK-H9-RgY"/>
                             <constraint firstItem="iXG-uC-lfN" firstAttribute="top" secondItem="Lb6-Y4-q3c" secondAttribute="topMargin" id="62C-VT-yHu"/>
@@ -657,12 +561,12 @@
                                 <rect key="frame" x="16" y="7" width="71" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="&lt; CLOSE">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                             </button>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="CLOSE" id="6h1-Ky-wYC">
-                            <color key="tintColor" red="0.99553721699999997" green="1" blue="0.97946144160000004" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="tintColor" red="0.99553721699999997" green="1" blue="0.97946144160000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
                                 <action selector="closeDeviceSetting:" destination="Jed-es-tTO" id="Kw8-3u-ToR"/>
                             </connections>
@@ -690,15 +594,15 @@
                         <viewControllerLayoutGuide type="bottom" id="ffq-0H-w8M"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="OES-sh-L3o">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="cellVirtualProfile" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="lR0-26-Yu3">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </tableView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="lR0-26-Yu3" firstAttribute="bottom" secondItem="OES-sh-L3o" secondAttribute="bottomMargin" id="CRn-7E-ddY"/>
                             <constraint firstItem="lR0-26-Yu3" firstAttribute="top" secondItem="OES-sh-L3o" secondAttribute="topMargin" id="Khp-TI-DON"/>
@@ -708,7 +612,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="1y5-M8-cj6">
                         <barButtonItem key="rightBarButtonItem" title="CLOSE" id="amb-ZU-yhE">
-                            <color key="tintColor" red="0.99553721699999997" green="1" blue="0.97946144160000004" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="tintColor" red="0.99553721699999997" green="1" blue="0.97946144160000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
                                 <action selector="closeProfileSettings:" destination="Fxv-zx-dGn" id="r6L-xb-Qef"/>
                             </connections>
@@ -733,13 +637,13 @@
                         <viewControllerLayoutGuide type="bottom" id="Seh-uU-52g"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="UhZ-P3-580">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="IRKitと赤外線の準備が完了したら、受信ボタンを押してください。" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4iM-nB-Rjc">
                                 <rect key="frame" x="27" y="188" width="277" height="74"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="1" green="0.098723787859882006" blue="0.067934493412554531" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="textColor" red="1" green="0.098723787859882006" blue="0.067934493412554531" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LQl-mi-W8I">
@@ -748,14 +652,14 @@
                                     <constraint firstAttribute="height" constant="30" id="2X6-hd-ncY"/>
                                 </constraints>
                                 <state key="normal" title="受信">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
                                     <action selector="receiveIR:" destination="Lwl-P4-j2K" eventType="touchUpInside" id="5IW-IA-4Po"/>
                                 </connections>
                             </button>
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8iq-1O-pfa">
-                                <rect key="frame" x="16" y="210" width="288" height="148"/>
+                                <rect key="frame" x="44" y="260" width="288" height="148"/>
                                 <subviews>
                                     <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="kpc-wT-feS">
                                         <rect key="frame" x="125" y="56" width="37" height="37"/>
@@ -763,11 +667,11 @@
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="赤外線をIRKitに照射してください" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SBc-hM-smJ">
                                         <rect key="frame" x="22" y="-6" width="258" height="54"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
-                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.69999999999999996" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.69999999999999996" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstItem="SBc-hM-smJ" firstAttribute="top" secondItem="8iq-1O-pfa" secondAttribute="top" constant="8" id="070-3z-jhd"/>
                                     <constraint firstAttribute="height" constant="148" id="1GL-34-TPW"/>
@@ -788,14 +692,14 @@
                                 </userDefinedRuntimeAttributes>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g0Z-Vy-joI">
-                                <rect key="frame" x="16" y="83" width="288" height="58"/>
-                                <color key="backgroundColor" red="0.99553721698543196" green="1" blue="0.97946144161161142" alpha="1" colorSpace="calibratedRGB"/>
+                                <rect key="frame" x="16" y="83" width="343" height="108"/>
+                                <color key="backgroundColor" red="0.99553721698543196" green="1" blue="0.97946144161161142" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="26"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstAttribute="centerY" secondItem="8iq-1O-pfa" secondAttribute="centerY" id="80J-Lj-wBo"/>
                             <constraint firstItem="LQl-mi-W8I" firstAttribute="centerX" secondItem="8iq-1O-pfa" secondAttribute="centerX" id="EN6-ww-PHJ"/>
@@ -815,7 +719,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="HIX-Mc-5Kq">
                         <barButtonItem key="rightBarButtonItem" title="CLOSE" id="JYQ-EQ-h62">
-                            <color key="tintColor" red="0.99553721699999997" green="1" blue="0.97946144160000004" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="tintColor" red="0.99553721699999997" green="1" blue="0.97946144160000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
                                 <action selector="closeDeviceSettings:" destination="Lwl-P4-j2K" id="fM9-kw-nqo"/>
                             </connections>
@@ -861,9 +765,6 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="pXU-hx-a2b" kind="relationship" relationship="rootViewController" id="auA-Ef-5c1"/>
-                    </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RXq-ZW-EnD" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -877,8 +778,8 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="FQD-5l-D7Z">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="tintColor" red="0.92948921669999995" green="0.95337431839999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                        <color key="barTintColor" red="0.19607843137254902" green="0.58039215686274503" blue="0.98039215686274506" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="tintColor" red="0.92948921669999995" green="0.95337431839999998" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="barTintColor" red="0.19607843137254902" green="0.58039215686274503" blue="0.98039215686274506" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
@@ -895,4 +796,9 @@
         <image name="irkit03.png" width="620" height="269"/>
         <image name="irkit09.png" width="580" height="113"/>
     </resources>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination" type="retina4_7.fullscreen"/>
+    </simulatedMetricsContainer>
 </document>
