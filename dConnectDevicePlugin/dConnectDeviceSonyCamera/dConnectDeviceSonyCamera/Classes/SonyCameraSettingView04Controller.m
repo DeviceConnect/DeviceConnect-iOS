@@ -60,17 +60,31 @@
 */
 
 
+// WiFi設定画面を開く確認を行う
+- (void) confirmOpenWiFiSettings
+{
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Sonyカメラ設定"
+                                                                   message:@"WiFi設定画面でSonyカメラに接続してください。"
+                                                            preferredStyle:UIAlertControllerStyleAlert];
+    
+    [alert addAction:[UIAlertAction actionWithTitle:@"閉じる" style:UIAlertActionStyleDefault handler:nil]];
+    [alert addAction:[UIAlertAction actionWithTitle:@"設定を開く" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+        NSURL *url = [NSURL URLWithString:@"App-Prefs:root=WIFI"];
+        [[UIApplication sharedApplication] openURL:url];
+    }]];
+    
+    [self presentViewController:alert animated:YES completion:nil];
+}
+
 #pragma mark - Action methods
 
 - (IBAction) searchBtnDidPushed:(id)sender
 {
-    if (![self.deviceplugin isConnectedSonyCamera]) {        
-        self.progressView.hidden = NO;
-        self.progressView.layer.cornerRadius = 20;
-        self.progressView.clipsToBounds = true;
-        [self.indicator startAnimating];
+    if (![self.deviceplugin isConnectedSonyCamera]) {
+        [self confirmOpenWiFiSettings];
     } else {
-        // viewDidLoadの時点ではデバイスを認識できておらずその後認識された場合は、ボタンがタップされたタイミングでConnectedと表示する
+        // viewDidLoadの時点ではデバイスを認識できておらずその後認識された場合は、
+        // ボタンがタップされたタイミングでConnectedと表示する
         self.ssidLabel.text = @"Sony Camera Connected.";
     }
 }
