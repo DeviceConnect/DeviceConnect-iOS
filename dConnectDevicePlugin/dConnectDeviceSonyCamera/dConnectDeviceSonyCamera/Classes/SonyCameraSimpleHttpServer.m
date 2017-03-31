@@ -9,16 +9,40 @@
 
 #import "SonyCameraSimpleHttpServer.h"
 #import "GCDAsyncSocket.h"
+#import <mach/mach_time.h>
 
 
 // HTTP通信のタイムアウトを定義
 #define HTTP_TIMEOUT 3.0
 
 
+/*!
+ @brief 現在時刻をミリ秒で取得します.
+ @retval 現在時刻
+ */
+static uint64_t getUptimeInMilliseconds()
+{
+    const int64_t kOneMillion = 1000 * 1000;
+    static mach_timebase_info_data_t s_timebase_info;
+    
+    if (s_timebase_info.denom == 0) {
+        (void) mach_timebase_info(&s_timebase_info);
+    }
+    
+    // mach_absolute_time() returns billionth of seconds,
+    // so divide by one million to get milliseconds
+    return ((mach_absolute_time() * s_timebase_info.numer) / (kOneMillion * s_timebase_info.denom));
+}
+
+
+#pragma mark - SonyCameraConnection
+
+
 @interface SonyCameraConnection : NSObject
 
 @property (nonatomic, strong) GCDAsyncSocket *fromSocket;
 @property (nonatomic) BOOL ready;
+@property (nonatomic) uint64_t startTime;
 
 @end
 
@@ -31,11 +55,15 @@
     if (self) {
         self.fromSocket = nil;
         self.ready = NO;
+        self.startTime = 0;
     }
     return self;
 }
 
 @end
+
+
+#pragma mark - SonyCameraSimpleHttpServer
 
 
 @interface SonyCameraSimpleHttpServer () <GCDAsyncSocketDelegate>
@@ -55,6 +83,7 @@
     self = [super init];
     if (self) {
         self.listenPort = 8080;
+        self.timeSlice = 100;
 
         _listenSocket = nil;
         _connections = [NSMutableArray array];
@@ -232,8 +261,10 @@
     __block typeof(self) weakSelf = self;
 
     [_connections enumerateObjectsWithOptions:NSEnumerationReverse usingBlock:^(SonyCameraConnection *connection, NSUInteger idx, BOOL *stop) {
-        if (connection.ready) {
+        uint64_t elapsed = getUptimeInMilliseconds() - connection.startTime;
+        if (connection.ready && elapsed > weakSelf.timeSlice) {
             [weakSelf sendImageData:data toSocket:connection.fromSocket];
+            connection.startTime = getUptimeInMilliseconds();
         }
     }];
 }

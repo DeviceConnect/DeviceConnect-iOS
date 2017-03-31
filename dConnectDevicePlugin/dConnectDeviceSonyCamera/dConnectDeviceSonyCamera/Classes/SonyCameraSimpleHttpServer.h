@@ -21,6 +21,11 @@
 @property (nonatomic) NSInteger listenPort;
 
 /*!
+ @brief プレビューを送信するためのタイムスライス.
+ */
+@property (nonatomic) NSInteger timeSlice;
+
+/*!
  @brief サーバを起動します.
  
  @retval YSE サーバの起動に成功

@@ -46,7 +46,7 @@
     }
 
     _httpServer = [SonyCameraSimpleHttpServer new];
-    _httpServer.listenPort = 8080;
+    _httpServer.listenPort = 10000;
     BOOL result = [_httpServer start];
     if (!result) {
         return NO;
@@ -54,6 +54,8 @@
     
     result = [self startLiveView];
     if (!result) {
+        [_httpServer stop];
+        _httpServer = nil;
         return NO;
     }
 
@@ -67,7 +69,9 @@
         _httpServer = nil;
     }
 
-    [_remoteApi actStopLiveView];
+    if ([_remoteApi isStartedLiveView]) {
+        [_remoteApi actStopLiveView];
+    }
 }
 
 - (BOOL) isRunning
