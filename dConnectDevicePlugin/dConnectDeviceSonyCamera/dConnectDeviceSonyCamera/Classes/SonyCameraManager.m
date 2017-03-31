@@ -74,7 +74,6 @@
 {
     self = [super init];
     if (self) {
-        self.timeslice = 100;
         self.remoteApi = nil;
         self.searchFlag = NO;
         self.mFileManager = [DConnectFileManager fileManagerForPlugin:plugin];
@@ -98,6 +97,29 @@
 - (void)dealloc {
     // Reachabilityの終了処理
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kReachabilityChangedNotification object:nil];
+}
+
+- (BOOL) checkSSID {
+    CFArrayRef interfaces = CNCopySupportedInterfaces();
+    if (!interfaces) return NO;
+    if (CFArrayGetCount(interfaces)==0) return NO;
+    CFDictionaryRef dicRef = CNCopyCurrentNetworkInfo(CFArrayGetValueAtIndex(interfaces, 0));
+    if (dicRef) {
+        NSString *ssid = CFDictionaryGetValue(dicRef, kCNNetworkInfoKeySSID);
+        if ([ssid hasPrefix:@"DIRECT-"]) {
+            NSArray *array = @[@"HDR-AS100", @"ILCE-6000", @"DSC-HC60V", @"DSC-HX400",
+                               @"ILCE-5000", @"DSC-QX10", @"DSC-QX100", @"HDR-AS15",
+                               @"HDR-AS30", @"HDR-MV1", @"NEX-5R", @"NEX-5T", @"NEX-6",
+                               @"ILCE-7R/B", @"ILCE-7/B"];
+            for (NSString *name in array) {
+                NSRange searchResult = [ssid rangeOfString:name];
+                if (searchResult.location != NSNotFound) {
+                    return YES;
+                }
+            }
+        }
+    }
+    return NO;
 }
 
 - (NSString *)getCurrentWifiName {
@@ -290,7 +312,7 @@
     });
 }
 
-- (void) startPreview:(SonyCameraPreviewBlock)block {
+- (void) startPreviewWithTimeSlice:(NSNumber *)timeSlice block:(SonyCameraPreviewBlock)block {
     __block typeof(self) weakSelf = self;
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
@@ -300,7 +322,7 @@
         }
         
         weakSelf.sonyCameraPreview = [[SonyCameraPreview alloc] initWithRemoteApi:weakSelf.remoteApi];
-        BOOL result = [weakSelf.sonyCameraPreview startPreview];
+        BOOL result = [weakSelf.sonyCameraPreview startPreviewWithTimeSlice:timeSlice];
         if (result) {
             block([weakSelf.sonyCameraPreview getUrl]);
         } else {
@@ -408,6 +430,10 @@
             [obj setOnline:NO];
         }
     }];
+    
+    if (self.delegate && [self.delegate respondsToSelector:@selector(didReceiveWiFiStatus)]) {
+        [self.delegate didReceiveWiFiStatus];
+    }
 }
 
 - (SonyCameraService *) foundSonyCamera {
@@ -457,12 +483,6 @@
     return [self.mFileManager createFileForPath:fileName contents:data];
 }
 
-// 通知を受け取るメソッド
--(void) notifiedNetworkStatus:(NSNotification *)notification {
-    [self setOnlineStatus];
-}
-
-
 - (void) saveSonyCameraDevices
 {
     NSMutableArray *array = [NSMutableArray array];
@@ -510,12 +530,23 @@
     }
 }
 
+#pragma mark - SonyCameraReachability Methods
+
+// 通知を受け取るメソッド
+-(void) notifiedNetworkStatus:(NSNotification *)notification {
+    if ([self checkSSID]) {
+        [self connectSonyCamera];
+    } else {
+        [self disconnectSonyCamera];
+    }
+}
+
 
 #pragma mark - SampleDiscoveryDelegate
 
 - (void) didReceiveDeviceList:(BOOL)discovery {
     self.searchFlag = NO;
-    
+
     if (discovery) {
         SonyCameraService *service = [self foundSonyCamera];
         if (service) {

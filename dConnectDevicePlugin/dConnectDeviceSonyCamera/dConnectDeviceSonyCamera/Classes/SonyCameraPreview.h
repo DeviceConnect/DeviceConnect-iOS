@@ -24,7 +24,7 @@
  @retval YES プレビューの開始に成功
  @retval NO プレビューの開始に失敗
  */
-- (BOOL) startPreview;
+- (BOOL) startPreviewWithTimeSlice:(NSNumber *)timeSlice;
 
 /*!
  @brief プレビューを停止します.

@@ -322,9 +322,6 @@ NSString *const SonyCameraShootModePicture = @"still";
 	NSInteger errorCode = -1;
     NSInteger apiId = -1;
 	if (error) {
-        NSString *responseText = [[NSString alloc] initWithData:response encoding:NSUTF8StringEncoding];
-        NSLog(@"@@@@@ %@", responseText);
-        NSLog(@"QX10DevicePlugin parseMessage error parsing JSON string");
         return;
 	} else {
         apiId = (NSInteger) dict[@"id"];

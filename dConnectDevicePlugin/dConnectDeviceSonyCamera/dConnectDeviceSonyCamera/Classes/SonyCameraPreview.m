@@ -38,7 +38,7 @@
 
 #pragma mark - Public Methods
 
-- (BOOL) startPreview
+- (BOOL) startPreviewWithTimeSlice:(NSNumber *)timeSlice
 {
     if (_httpServer) {
         [_httpServer stop];
@@ -47,6 +47,9 @@
 
     _httpServer = [SonyCameraSimpleHttpServer new];
     _httpServer.listenPort = 10000;
+    if (timeSlice) {
+        _httpServer.timeSlice = [timeSlice integerValue];
+    }
     BOOL result = [_httpServer start];
     if (!result) {
         return NO;

@@ -63,6 +63,11 @@ typedef void (^SonyCameraStateBlock)(NSString *state, int width, int height);
  */
 - (void) didAddedService:(SonyCameraService *)service;
 
+/*!
+ @brief Wifiの状態が更新されたことを通知.
+ */
+- (void) didReceiveWiFiStatus;
+
 @end
 
 
@@ -99,11 +104,6 @@ typedef void (^SonyCameraStateBlock)(NSString *state, int width, int height);
 @property (nonatomic, strong) NSMutableArray *sonyCameraServices;
 
 /*!
- @brief タイムスライス。
- */
-@property (nonatomic) UInt64 timeslice;
-
-/*!
  @brief サーチフラグ.
  */
 @property (nonatomic) BOOL searchFlag;
@@ -135,6 +135,14 @@ typedef void (^SonyCameraStateBlock)(NSString *state, int width, int height);
  @retval nil 保存に失敗した場合
  */
 - (NSString *) saveFile:(NSData *)data;
+
+/*!
+ @brief 現在接続されているWiFiアクセスポイントがSonyカメラのSSIDか確認を行う.
+ 
+ @retval YES Sonyカメラのアクセスポイントの場合
+ @retval NO Sonyカメラ以外のアクセスポイントの場合
+ */
+- (BOOL) checkSSID;
 
 /*!
  @brief 現在接続されているWiFiのSSIDを取得します.
@@ -227,8 +235,11 @@ typedef void (^SonyCameraStateBlock)(NSString *state, int width, int height);
 
 /*!
  @brief プレビューを開始します.
+ 
+ @param timeSlice タイムスライス
+ @param block プレビューの通知を行うブロック
  */
-- (void) startPreview:(SonyCameraPreviewBlock)block;
+- (void) startPreviewWithTimeSlice:(NSNumber *)timeSlice block:(SonyCameraPreviewBlock)block;
 
 /*!
  @brief プレビューを停止します.

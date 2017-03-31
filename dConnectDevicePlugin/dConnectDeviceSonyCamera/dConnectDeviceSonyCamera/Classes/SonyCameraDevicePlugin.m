@@ -20,19 +20,6 @@
  */
 @interface SonyCameraDevicePlugin() <SonyCameraManagerDelegate>
 
-/*!
- @brief 1970/1/1からの時間を取得する。
- @return 時間
- */
-- (UInt64) getEpochMilliSeconds;
-
-/*!
- @brief 現在接続されているWifiのSSIDからSony Cameraかチェックする.
- @retval YES Sony Cameraの場合
- @retval NO Sony Camera以外
- */
-- (BOOL) checkSSID;
-
 @end
 
 
@@ -57,7 +44,7 @@
 
         [self addProfile:[SonyCameraSystemProfile new]];
         
-        if ([self checkSSID]) {
+        if ([self.sonyCameraManager checkSSID]) {
             [self.sonyCameraManager connectSonyCamera];
         }
         
@@ -76,42 +63,12 @@
 }
 
 - (BOOL) isConnectedSonyCamera {
-    return [self checkSSID];
+    return [self.sonyCameraManager checkSSID];
 }
 
 - (void) removeSonyCamera:(SonyCameraService *)service
 {
     [self.sonyCameraManager removeSonyCamera:service];
-}
-
-#pragma mark - Private Methods
-
-- (UInt64) getEpochMilliSeconds
-{
-    return (UInt64)floor((CFAbsoluteTimeGetCurrent() + kCFAbsoluteTimeIntervalSince1970) * 1000.0);
-}
-
-- (BOOL) checkSSID {
-    CFArrayRef interfaces = CNCopySupportedInterfaces();
-    if (!interfaces) return NO;
-    if (CFArrayGetCount(interfaces)==0) return NO;
-    CFDictionaryRef dicRef = CNCopyCurrentNetworkInfo(CFArrayGetValueAtIndex(interfaces, 0));
-    if (dicRef) {
-        NSString *ssid = CFDictionaryGetValue(dicRef, kCNNetworkInfoKeySSID);
-        if ([ssid hasPrefix:@"DIRECT-"]) {
-            NSArray *array = @[@"HDR-AS100", @"ILCE-6000", @"DSC-HC60V", @"DSC-HX400",
-                               @"ILCE-5000", @"DSC-QX10", @"DSC-QX100", @"HDR-AS15",
-                               @"HDR-AS30", @"HDR-MV1", @"NEX-5R", @"NEX-5T", @"NEX-6",
-                               @"ILCE-7R/B", @"ILCE-7/B"];
-            for (NSString *name in array) {
-                NSRange searchResult = [ssid rangeOfString:name];
-                if (searchResult.location != NSNotFound) {
-                    return YES;
-                }
-            }
-        }
-    }
-    return NO;
 }
 
 #pragma mark - SonyCameraManagerDelegate Methods
@@ -148,14 +105,24 @@
     [self.serviceProvider addService:service];
 }
 
+- (void) didReceiveWiFiStatus {
+    if (self.delegate && [self.delegate respondsToSelector:@selector(didReceiveUpdateDevice)]) {
+        [self.delegate didReceiveUpdateDevice];
+    }
+}
+
 #pragma mark - DConnectDevicePlugin Methods
 
 - (void) applicationWillEnterForeground
 {
-    if ([self checkSSID]) {
+    if ([self.sonyCameraManager checkSSID]) {
         [self.sonyCameraManager connectSonyCamera];
     } else {
         [self.sonyCameraManager disconnectSonyCamera];
+    }
+    
+    if (self.delegate && [self.delegate respondsToSelector:@selector(didReceiveUpdateDevice)]) {
+        [self.delegate didReceiveUpdateDevice];
     }
 }
 

@@ -320,6 +320,7 @@
     SonyCameraDevicePlugin *plugin = (SonyCameraDevicePlugin *)self.plugin;
     SonyCameraManager *manager = plugin.sonyCameraManager;
     NSString *serviceId = [request serviceId];
+    NSNumber *timeSlice = [request numberForKey:@"timeSlice"];
     NSString *target = [DConnectMediaStreamRecordingProfile targetFromRequest:request];
 
     // サービスIDのチェック
@@ -334,7 +335,7 @@
         return YES;
     }
 
-    [manager startPreview:^(NSString *uri) {
+    [manager startPreviewWithTimeSlice:timeSlice block:^(NSString *uri) {
         if (uri) {
             [response setResult:DConnectMessageResultTypeOk];
             [response setString:uri forKey:@"uri"];

@@ -26,6 +26,11 @@
  */
 - (void) didReceiveDeviceList:(BOOL)discover;
 
+/*!
+ @brief WiFiの状態が更新されたことを通知.
+ */
+- (void) didReceiveUpdateDevice;
+
 @end
 
 /**

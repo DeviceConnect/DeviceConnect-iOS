@@ -30,13 +30,8 @@
     // 角丸にする
     self.searchBtn.layer.cornerRadius = 16;
     
-    // Sony Cameraに接続されているかチェックする
-    BOOL exist =[self.deviceplugin isConnectedSonyCamera];
-    if (exist) {
-        self.ssidLabel.text = @"Sony Camera Connected.";
-    } else {
-        self.ssidLabel.text = @"Not Found Sony Camera.";
-    }
+    // 接続状態を確認
+    [self checkConnectSonyCamera];
     
     // デリゲートを設定
     self.deviceplugin.delegate = self;
@@ -46,6 +41,10 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
 }
 
 /*
@@ -59,6 +58,14 @@
 }
 */
 
+
+- (void) checkConnectSonyCamera {
+    if (![self.deviceplugin isConnectedSonyCamera]) {
+        self.ssidLabel.text = @"Not Found Sony Camera.";
+    } else {
+        self.ssidLabel.text = @"Sony Camera Connected.";
+    }
+}
 
 // WiFi設定画面を開く確認を行う
 - (void) confirmOpenWiFiSettings
@@ -80,13 +87,7 @@
 
 - (IBAction) searchBtnDidPushed:(id)sender
 {
-    if (![self.deviceplugin isConnectedSonyCamera]) {
-        [self confirmOpenWiFiSettings];
-    } else {
-        // viewDidLoadの時点ではデバイスを認識できておらずその後認識された場合は、
-        // ボタンがタップされたタイミングでConnectedと表示する
-        self.ssidLabel.text = @"Sony Camera Connected.";
-    }
+    [self confirmOpenWiFiSettings];
 }
 
 #pragma mark - SonyCameraDevicePluginDelegate delegate methods
@@ -94,19 +95,17 @@
 - (void) didReceiveDeviceList:(BOOL) discovery
 {
     if (discovery) {
-        CFArrayRef interfaces = CNCopySupportedInterfaces();
-        CFDictionaryRef dicRef = CNCopyCurrentNetworkInfo(CFArrayGetValueAtIndex(interfaces, 0));
-        if (dicRef) {
-            NSString *ssid = CFDictionaryGetValue(dicRef, kCNNetworkInfoKeySSID);
-            self.ssidLabel.text = ssid;
-            self.ssidLabel.text = @"Sony Camera Connected.";
-        }
+        self.ssidLabel.text = @"Sony Camera Connected.";
     } else {
-        // 発見できず
         self.ssidLabel.text = @"Not Found Sony Camera.";
     }
     self.progressView.hidden = YES;
     [self.indicator stopAnimating];
+}
+
+- (void) didReceiveUpdateDevice
+{
+    [self checkConnectSonyCamera];
 }
 
 @end
