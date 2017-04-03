@@ -349,12 +349,16 @@ DPIRKitManagerDetectionDelegate
     serviceListViewController.delegate = self;
     return top;
 }
-- (void)didRemoveService:(DConnectService *)service
+- (void)didRemovedService:(DConnectService *)service
 {
-    //サービス一覧画面で仮想デバイスが削除されたら、DBからも仮想デバイスを削除する。
-    DPIRKitDBManager *mgr = [DPIRKitDBManager sharedInstance];
-    [mgr deleteVirtualDevice:service.serviceId];
-    [mgr deleteRESTfulRequestForServiceId:service.serviceId];
+    // IRKitのServiceIdに.がある場合は仮想デバイスとみなす
+    NSRange range = [service.serviceId rangeOfString:@"."];
+    if (range.location != NSNotFound) {
+        //サービス一覧画面で仮想デバイスが削除されたら、DBからも仮想デバイスを削除する。
+        DPIRKitDBManager *mgr = [DPIRKitDBManager sharedInstance];
+        [mgr deleteVirtualDevice:service.serviceId];
+        [mgr deleteRESTfulRequestForServiceId:service.serviceId];
+    }
 }
 - (void)didSelectService:(DConnectService *)service
 {

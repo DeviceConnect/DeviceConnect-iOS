@@ -20,7 +20,7 @@
 	// Do any additional setup after loading the view, typically from a nib.
 
     UIScrollView *scrollView = (UIScrollView *)self.mainView;
-    scrollView.contentInset = UIEdgeInsetsMake(64, 0.0, 0.0, 0);
+    scrollView.contentInset = UIEdgeInsetsMake(0, 0.0, 0.0, 0);
 }
 
 - (void)didReceiveMemoryWarning
