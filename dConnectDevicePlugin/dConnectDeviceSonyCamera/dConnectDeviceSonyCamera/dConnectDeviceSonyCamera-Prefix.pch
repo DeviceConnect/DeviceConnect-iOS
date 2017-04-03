@@ -14,6 +14,29 @@
     #import <Foundation/Foundation.h>
 #endif
 
-#ifndef DEBUG
-#define NSLog(...)
+
+#ifdef DEBUG
+#define DCLogInfo(fmt, ...) NSLog((@"%s:INFO: " fmt), class_getName([self class]), ##__VA_ARGS__)
+#define DCLogInfo2(tag, fmt, ...) NSLog((@"%@:INFO: " fmt), (tag), ##__VA_ARGS__)
+#else
+#define DCLogInfo(...)
+#define DCLogInfo2(...)
 #endif
+
+#ifdef DEBUG
+#define DCLogWarn(fmt, ...) NSLog((@"%s:WARN: " fmt), class_getName([self class]), ##__VA_ARGS__)
+#define DCLogWarn2(tag, fmt, ...) NSLog((@"%@:WARN: " fmt), (tag), ##__VA_ARGS__)
+#else
+#define DCLogWarn(...)
+#define DCLogWarn2(...)
+#endif
+
+#define DCLogError(fmt, ...) NSLog((@"%s:ERROR: " fmt), class_getName([self class]), ##__VA_ARGS__)
+#define DCLogError2(tag, fmt, ...) NSLog((@"%@:ERROR: " fmt), (tag), ##__VA_ARGS__)
+
+
+#define DCBundle() \
+[NSBundle bundleWithPath:[[NSBundle mainBundle] pathForResource:@"DConnectSDK_resources" ofType:@"bundle"]]
+
+#define DPSonyCameraBundle() \
+[NSBundle bundleWithPath:[[NSBundle mainBundle] pathForResource:@"dConnectDeviceSonyCamera_resources" ofType:@"bundle"]]

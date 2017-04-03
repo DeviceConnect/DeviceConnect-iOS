@@ -60,7 +60,8 @@ extern NSString *const SonyCameraShootModePicture;
  */
 @property (nonatomic) NSString *cameraStatus;
 
-/*! @brief カメラの撮影モード.
+/*!
+ @brief カメラの撮影モード.
  */
 @property (nonatomic) NSString *shootMode;
 
@@ -69,7 +70,13 @@ extern NSString *const SonyCameraShootModePicture;
  */
 @property (nonatomic) double zoomPosition;
 
-/*! @brief APIリストを取得する.
+/*!
+ @brief SampleCameraEventObserverを破棄します.
+ */
+- (void) destroy;
+
+/*! 
+ @brief APIリストを取得する.
  */
 - (void) actGetApiList;
 

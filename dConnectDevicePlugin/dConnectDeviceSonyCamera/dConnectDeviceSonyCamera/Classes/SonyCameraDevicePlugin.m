@@ -8,39 +8,17 @@
 //
 
 #import "SonyCameraDevicePlugin.h"
-#import "SonyCameraRemoteApiUtil.h"
-#import "SampleRemoteApi.h"
-#import "RemoteApiList.h"
-#import "DeviceList.h"
 #import "SonyCameraViewController.h"
-#import "SampleLiveviewManager.h"
 #import "SonyCameraService.h"
 #import "SonyCameraManager.h"
 #import "SonyCameraSystemProfile.h"
+#import "SonyCameraMediaStreamRecordingProfile.h"
 #import <SystemConfiguration/CaptiveNetwork.h>
-
-#define DPSonyCameraBundle() \
-[NSBundle bundleWithPath:[[NSBundle mainBundle] pathForResource:@"dConnectDeviceSonyCamera_resources" ofType:@"bundle"]]
 
 /*!
  @brief Sony Remote Camera用デバイスプラグイン。
  */
-@interface SonyCameraDevicePlugin() <SampleDiscoveryDelegate,
-                            SampleLiveviewDelegate,
-                            SonyCameraRemoteApiUtilDelegate>
-
-/*!
- @brief 1970/1/1からの時間を取得する。
- @return 時間
- */
-- (UInt64) getEpochMilliSeconds;
-
-/*!
- @brief 現在接続されているWifiのSSIDからSony Cameraかチェックする.
- @retval YES Sony Cameraの場合
- @retval NO Sony Camera以外
- */
-- (BOOL) checkSSID;
+@interface SonyCameraDevicePlugin() <SonyCameraManagerDelegate>
 
 @end
 
@@ -52,219 +30,100 @@
 - (instancetype) init {
     self = [super initWithObject: self];
     if (self) {
-        self.pluginName = @"Sony Camera (Device Connect Device Plug-in)";
-        
-        (void)[[SonyCameraManager sharedManager] initWithPlugin:self liveViewDelegate:self remoteApiUtilDelegate:self];
-        
         Class key = [self class];
         [[DConnectEventManager sharedManagerForClass:key] setController:[DConnectMemoryCacheController new]];
+
+        self.pluginName = @"Sony Camera (Device Connect Device Plug-in)";
+
+        self.sonyCameraManager = [[SonyCameraManager alloc] initWithPlugin:self];
+        self.sonyCameraManager.delegate = self;
         
-        [[SonyCameraManager sharedManager] setServiceProvider: self.serviceProvider];
-        [[SonyCameraManager sharedManager] setPlugin:self];
-        
-        // System Profileの追加
+        for (SonyCameraService *service in self.sonyCameraManager.sonyCameraServices) {
+            [self.serviceProvider addService:service];
+        }
+
         [self addProfile:[SonyCameraSystemProfile new]];
         
-        
-        if ([self checkSSID]) {
-            [self searchSonyCameraDevice];
+        if ([self.sonyCameraManager checkSSID]) {
+            [self.sonyCameraManager connectSonyCamera];
         }
-        __weak typeof(self) _self = self;
+        
+        __weak typeof(self) weakSelf = self;
+        
         dispatch_async(dispatch_get_main_queue(), ^{
             NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
             UIApplication *application = [UIApplication sharedApplication];
-            
-            [notificationCenter addObserver:_self selector:@selector(applicationWillEnterForeground)
-                       name:UIApplicationWillEnterForegroundNotification
-                     object:application];
-            
+            [notificationCenter addObserver:weakSelf
+                                   selector:@selector(applicationWillEnterForeground)
+                                       name:UIApplicationWillEnterForegroundNotification
+                                     object:application];
         });
     }
     return self;
 }
 
+- (BOOL) isConnectedSonyCamera {
+    return [self.sonyCameraManager checkSSID];
+}
 
-#pragma mark - Public Methods -
+- (void) removeSonyCamera:(SonyCameraService *)service
+{
+    [self.sonyCameraManager removeSonyCamera:service];
+}
 
-- (void) searchSonyCameraDevice {
-    SonyCameraManager *manager = [SonyCameraManager sharedManager];
-    if (manager.searchFlag) {
-        return;
-    }
-    manager.searchFlag = YES;
+#pragma mark - SonyCameraManagerDelegate Methods
+
+- (void) didDiscoverDeviceList:(BOOL)discovery {
+    [self.delegate didReceiveDeviceList:discovery];
+}
+
+- (void) didTakePicture:(NSString *)postImageUrl {
+    SonyCameraManager *manager = self.sonyCameraManager;
     
-    // 検索する前にリセットをしておく
-    [DeviceList reset];
-    [[SampleCameraEventObserver getInstance] destroy];
-	// Sony Camera デバイスの探索
-	SampleDeviceDiscovery* discovery = [SampleDeviceDiscovery new];
-	[discovery performSelectorInBackground:@selector(discover:) withObject:self];
-}
-
-- (void) stop {
-    [DeviceList reset];
-    [[SampleCameraEventObserver getInstance] destroy];
-    SonyCameraManager *manager = [SonyCameraManager sharedManager];
-    if ([manager.remoteApi isStartedLiveView]) {
-        [manager.remoteApi actStopLiveView];
+    NSString *ssid = [manager getCurrentWifiName];
+    
+    // イベント作成
+    DConnectMessage *photo = [DConnectMessage message];
+    [DConnectMediaStreamRecordingProfile setUri:postImageUrl target:photo];
+    [DConnectMediaStreamRecordingProfile setMIMEType:@"image/jpg" target:photo];
+    
+    // イベントの取得
+    DConnectEventManager *mgr = [DConnectEventManager sharedManagerForClass:[self class]];
+    NSArray *evts = [mgr eventListForServiceId:ssid
+                                       profile:DConnectMediaStreamRecordingProfileName
+                                     attribute:DConnectMediaStreamRecordingProfileAttrOnPhoto];
+    // イベント送信
+    for (DConnectEvent *evt in evts) {
+        DConnectMessage *eventMsg = [DConnectEventManager createEventMessageWithEvent:evt];
+        [eventMsg setMessage:photo forKey:DConnectMediaStreamRecordingProfileParamPhoto];
+        [manager.plugin sendEvent:eventMsg];
     }
-    manager.remoteApi = nil;
 }
 
-- (BOOL) isStarted {
-    SonyCameraManager *manager = [SonyCameraManager sharedManager];
-    return manager.remoteApi != nil;
+- (void) didAddedService:(SonyCameraService *)service {
+    [self.serviceProvider addService:service];
 }
 
-#pragma mark - Private Methods -
+- (void) didReceiveWiFiStatus {
+    if (self.delegate && [self.delegate respondsToSelector:@selector(didReceiveUpdateDevice)]) {
+        [self.delegate didReceiveUpdateDevice];
+    }
+}
+
+#pragma mark - DConnectDevicePlugin Methods
 
 - (void) applicationWillEnterForeground
 {
-    // バックグラウンドから復帰したときの処理
-    if ([self checkSSID]) {
-        SonyCameraManager *manager = [SonyCameraManager sharedManager];
-        if (manager.remoteApi == nil) {
-            [self searchSonyCameraDevice];
-        } else {
-            NSLog(@"TEST: %d",  [[SampleCameraEventObserver getInstance] isStarted]);
-        }
+    if ([self.sonyCameraManager checkSSID]) {
+        [self.sonyCameraManager connectSonyCamera];
     } else {
-        [self stop];
-    }
-}
-
-- (UInt64) getEpochMilliSeconds
-{
-    return (UInt64)floor((CFAbsoluteTimeGetCurrent() + kCFAbsoluteTimeIntervalSince1970) * 1000.0);
-}
-
-- (BOOL) checkSSID {
-    CFArrayRef interfaces = CNCopySupportedInterfaces();
-    if (!interfaces) return NO;
-    if (CFArrayGetCount(interfaces)==0) return NO;
-    CFDictionaryRef dicRef = CNCopyCurrentNetworkInfo(CFArrayGetValueAtIndex(interfaces, 0));
-    if (dicRef) {
-        NSString *ssid = CFDictionaryGetValue(dicRef, kCNNetworkInfoKeySSID);
-        if ([ssid hasPrefix:@"DIRECT-"]) {
-            NSArray *array = @[@"HDR-AS100", @"ILCE-6000", @"DSC-HC60V", @"DSC-HX400",
-                               @"ILCE-5000", @"DSC-QX10", @"DSC-QX100", @"HDR-AS15",
-                               @"HDR-AS30", @"HDR-MV1", @"NEX-5R", @"NEX-5T", @"NEX-6",
-                               @"ILCE-7R/B", @"ILCE-7/B"];
-            for (NSString *name in array) {
-                NSRange searchResult = [ssid rangeOfString:name];
-                if (searchResult.location != NSNotFound) {
-                    return YES;
-                }
-            }
-        }
-    }
-    return NO;
-}
-
-#pragma mark - SampleDiscoveryDelegate
-
-- (void) didReceiveDeviceList:(BOOL) discovery {
-    SonyCameraManager *manager = [SonyCameraManager sharedManager];
-    manager.searchFlag = NO;
-
-    if (discovery) {
-        manager.remoteApi = [SonyCameraRemoteApiUtil new];
-        manager.remoteApi.delegate = self;
-        
-        // プレビューイベントを持っている場合は、プレビューを再開させる
-        if ([manager hasDataAvaiableEvent] && ![manager.remoteApi isStartedLiveView]) {
-            [manager.remoteApi actStartLiveView:self];
-        }
+        [self.sonyCameraManager disconnectSonyCamera];
     }
     
-    // デバイス管理情報更新
-    [manager updateManageServices];
-
-    [self.delegate didReceiveDeviceList:discovery];
-
-}
-
-#pragma mark - SampleLiveviewDelegate -
-
-- (void) didReceivedData:(NSData *)imageData
-{
-    SonyCameraManager *manager = [SonyCameraManager sharedManager];
-    
-    // プレビューのタイムスライス時間に満たない場合には無視する
-    UInt64 time = [self getEpochMilliSeconds];
-    if (time - manager.previewStart < manager.timeslice) {
-        return;
-    }
-    manager.previewStart = time;
-    
-    manager.mPreviewCount++;
-    manager.mPreviewCount %= 10;
-    
-    // ファイル名を作成
-    NSString *fileName = [NSString stringWithFormat:@"preview%d.jpg", manager.mPreviewCount];
-    // ファイルを保存
-    NSString *uri = [manager.mFileManager createFileForPath:fileName contents:imageData];
-    if (uri) {
-        // イベントの作成
-        DConnectMessage *media = [DConnectMessage message];
-        [DConnectMediaStreamRecordingProfile setUri:uri target:media];
-        [DConnectMediaStreamRecordingProfile setPath:fileName target:media];
-        
-        // イベントの取得
-        DConnectEventManager *mgr = [DConnectEventManager sharedManagerForClass:[self class]];
-        NSArray *evts = [mgr eventListForServiceId:SERVICE_ID
-                                          profile:DConnectMediaStreamRecordingProfileName
-                                        attribute:DConnectMediaStreamRecordingProfileAttrOnDataAvailable];
-        // イベント送信
-        for (DConnectEvent *evt in evts) {
-            DConnectMessage *eventMsg = [DConnectEventManager createEventMessageWithEvent:evt];
-            [eventMsg setMessage:media forKey:DConnectMediaStreamRecordingProfileParamMedia];
-            [self sendEvent:eventMsg];
-        }
+    if (self.delegate && [self.delegate respondsToSelector:@selector(didReceiveUpdateDevice)]) {
+        [self.delegate didReceiveUpdateDevice];
     }
 }
-
-- (void) didReceivedError {
-    [self stop];
-    [self searchSonyCameraDevice];
-}
-
-
-#pragma mark - SonyCameraRemoteApiUtilDelegate
-
-- (void) didReceivedImage:(NSString *)imageUrl
-{
-    SonyCameraManager *manager = [SonyCameraManager sharedManager];
-    
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        NSData *picture = [manager download:imageUrl];
-        if (picture) {
-            NSString *uri = [manager saveFile:picture];
-            if (!uri) {
-                return;
-            }
-            
-            // イベント作成
-            DConnectMessage *photo = [DConnectMessage message];
-            [DConnectMediaStreamRecordingProfile setUri:uri target:photo];
-            [DConnectMediaStreamRecordingProfile setPath:[uri lastPathComponent] target:photo];
-            [DConnectMediaStreamRecordingProfile setMIMEType:@"image/png" target:photo];
-            
-            // イベントの取得
-            DConnectEventManager *mgr = [DConnectEventManager sharedManagerForClass:[self class]];
-            NSArray *evts = [mgr eventListForServiceId:SERVICE_ID
-                                              profile:DConnectMediaStreamRecordingProfileName
-                                            attribute:DConnectMediaStreamRecordingProfileAttrOnPhoto];
-            // イベント送信
-            for (DConnectEvent *evt in evts) {
-                DConnectMessage *eventMsg = [DConnectEventManager createEventMessageWithEvent:evt];
-                [eventMsg setMessage:photo forKey:DConnectMediaStreamRecordingProfileParamPhoto];
-                [manager.plugin sendEvent:eventMsg];
-            }
-        }
-    });
-}
-
 
 - (NSString*)iconFilePath:(BOOL)isOnline
 {

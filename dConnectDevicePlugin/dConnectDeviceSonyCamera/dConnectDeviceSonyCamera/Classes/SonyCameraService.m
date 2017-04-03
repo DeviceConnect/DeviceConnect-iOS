@@ -17,20 +17,21 @@
 
 @implementation SonyCameraService
 
-- (instancetype) initWithServiceId: (NSString *) serviceId deviceName: (NSString *) deviceName plugin: (id) plugin liveViewDelegate: (id<SampleLiveviewDelegate>) liveViewDelegate remoteApiUtilDelegate:(id<SonyCameraRemoteApiUtilDelegate>) remoteApiUtilDelegate {
-    
-    self = [super initWithServiceId: serviceId plugin: plugin];
+- (instancetype) initWithServiceId:(NSString *) serviceId
+                        deviceName:(NSString *) deviceName
+                            plugin:(id) plugin {
+    self = [super initWithServiceId:serviceId plugin:plugin];
     if (self) {
-        [self setName: deviceName];
-        [self setNetworkType: DConnectServiceDiscoveryProfileNetworkTypeWiFi];
-        [self setOnline: YES];
-        
-        [self addProfile: [DConnectSystemProfile new]];
-        [self addProfile: [[SonyCameraMediaStreamRecordingProfile alloc] initWithLiveViewDelegate: liveViewDelegate remoteApiUtilDelegate: remoteApiUtilDelegate]];
-        [self addProfile: [SonyCameraCameraProfile new]];
+        [self setName:deviceName];
+        [self setNetworkType:DConnectServiceDiscoveryProfileNetworkTypeWiFi];
+        [self setOnline:NO];
+        [self addProfile:[DConnectSystemProfile new]];
+        [self addProfile:[SonyCameraMediaStreamRecordingProfile new]];
+        [self addProfile:[SonyCameraCameraProfile new]];
     }
     return self;
 }
+
 
 #pragma mark - DConnectServiceInformationProfileDataSource Implement.
 

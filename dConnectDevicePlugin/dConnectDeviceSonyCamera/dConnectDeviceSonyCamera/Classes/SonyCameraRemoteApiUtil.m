@@ -63,6 +63,11 @@ NSString *const SonyCameraShootModePicture = @"still";
 
 #pragma mark - Public Methods -
 
+- (void) destroy
+{
+    [[SampleCameraEventObserver getInstance] destroy];
+}
+
 - (void) actGetApiList
 {
     [SampleRemoteApi getAvailableApiList:self isSync:NO];
@@ -308,8 +313,6 @@ NSString *const SonyCameraShootModePicture = @"still";
 #pragma mark - HttpAsynchronousRequestParserDelegate Methods -
 
 - (void) parseMessage:(NSData *)response apiName:(NSString *)apiName {
-//	NSString *responseText = [[NSString alloc] initWithData:response encoding:NSUTF8StringEncoding];
-	
 	NSError *error;
 	NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:response
 														 options:NSJSONReadingMutableContainers
@@ -319,7 +322,7 @@ NSString *const SonyCameraShootModePicture = @"still";
 	NSInteger errorCode = -1;
     NSInteger apiId = -1;
 	if (error) {
-        NSLog(@"QX10DevicePlugin parseMessage error parsing JSON string");
+        return;
 	} else {
         apiId = (NSInteger) dict[@"id"];
 		resultArray = dict[@"result"];
