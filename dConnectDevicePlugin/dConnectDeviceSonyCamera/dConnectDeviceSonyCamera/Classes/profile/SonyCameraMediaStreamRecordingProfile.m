@@ -12,6 +12,16 @@
 #import "SonyCameraManager.h"
 #import "RemoteApiList.h"
 
+/*!
+ @brief ターゲットIDを定義.
+ */
+#define SONY_TARGET_ID @"sonycamera"
+
+/*!
+ @brief ターゲット名を定義.
+ */
+#define SONY_TARGET_NAME @"Sony Camera"
+
 @implementation SonyCameraMediaStreamRecordingProfile
 
 - (instancetype) init {
@@ -96,10 +106,10 @@
     [manager getCameraState:^(NSString *state, int width, int height) {
         if (state) {
             DConnectMessage *recorder = [DConnectMessage message];
-            [DConnectMediaStreamRecordingProfile setRecorderId:@"SonyCamera" target:recorder];
-            [DConnectMediaStreamRecordingProfile setRecorderName:@"SonyCamera" target:recorder];
+            [DConnectMediaStreamRecordingProfile setRecorderId:SONY_TARGET_ID target:recorder];
+            [DConnectMediaStreamRecordingProfile setRecorderName:SONY_TARGET_NAME target:recorder];
             [DConnectMediaStreamRecordingProfile setRecorderState:state target:recorder];
-            [DConnectMediaStreamRecordingProfile setRecorderMIMEType:@"image/png" target:recorder];
+            [DConnectMediaStreamRecordingProfile setRecorderMIMEType:@"image/jpg" target:recorder];
             if (width > 0 && height > 0) {
                 [DConnectMediaStreamRecordingProfile setRecorderImageWidth:width target:recorder];
                 [DConnectMediaStreamRecordingProfile setRecorderImageHeight:height target:recorder];
@@ -133,7 +143,7 @@
     }
     
     // ターゲットチェック
-    if (target && ![target isEqualToString:@"SonyCamera"]) {
+    if (target && ![target isEqualToString:SONY_TARGET_ID]) {
         [response setErrorToInvalidRequestParameterWithMessage:@"target is invalid."];
         return YES;
     }
@@ -178,7 +188,7 @@
     }
     
     // ターゲットチェック
-    if (target && ![target isEqualToString:@"SonyCamera"]) {
+    if (target && ![target isEqualToString:SONY_TARGET_ID]) {
         [response setErrorToInvalidRequestParameterWithMessage:@"target is invalid."];
         return YES;
     }
@@ -222,7 +232,7 @@
     }
     
     // ターゲットチェック
-    if (target && ![target isEqualToString:@"SonyCamera"]) {
+    if (target && ![target isEqualToString:SONY_TARGET_ID]) {
         [response setErrorToInvalidRequestParameterWithMessage:@"target is invalid."];
         return YES;
     }
@@ -265,7 +275,7 @@
     }
 
     // ターゲットチェック
-    if (target && ![target isEqualToString:@"SonyCamera"]) {
+    if (target && ![target isEqualToString:SONY_TARGET_ID]) {
         [response setErrorToInvalidRequestParameterWithMessage:@"target is invalid."];
         return YES;
     }
@@ -296,7 +306,7 @@
     }
 
     // ターゲットチェック
-    if (target && ![target isEqualToString:@"SonyCamera"]) {
+    if (target && ![target isEqualToString:SONY_TARGET_ID]) {
         [response setErrorToInvalidRequestParameterWithMessage:@"target is invalid."];
         return YES;
     }
@@ -329,7 +339,7 @@
     }
 
     // ターゲットチェック
-    if (target && ![target isEqualToString:@"SonyCamera"]) {
+    if (target && ![target isEqualToString:SONY_TARGET_ID]) {
         [response setErrorToInvalidRequestParameterWithMessage:@"target is invalid."];
         return YES;
     }
@@ -361,7 +371,7 @@
     }
     
     // ターゲットチェック
-    if (target && ![target isEqualToString:@"SonyCamera"]) {
+    if (target && ![target isEqualToString:SONY_TARGET_ID]) {
         [response setErrorToInvalidRequestParameterWithMessage:@"target is invalid."];
         return YES;
     }

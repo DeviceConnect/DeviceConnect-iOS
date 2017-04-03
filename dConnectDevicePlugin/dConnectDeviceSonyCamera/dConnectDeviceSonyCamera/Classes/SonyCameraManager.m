@@ -32,7 +32,6 @@
  */
 #define SONY_CAMERA_NAME @"sony_came_name"
 
-
 @interface SonyCameraDevice : NSObject
 
 @property (nonatomic) NSString *serviceId;
@@ -216,6 +215,8 @@
                    [cameraStatus isEqualToString:@"IntervalWaitRecStart"] ||
                    [cameraStatus isEqualToString:@"IntervalWaitRecStop"]) {
             status = DConnectMediaStreamRecordingProfileRecorderStatePaused;
+        } else {
+            status = DConnectMediaStreamRecordingProfileRecorderStateUnknown;
         }
         
         NSDictionary *dic = [weakSelf.remoteApi getStillSize];
@@ -301,9 +302,9 @@
                 block(nil);
             } else {
                 NSArray *arr = resultArray[0];
-                NSString *uri = arr[0];
-                if (uri) {
-                    block(uri);
+                NSString *postImageUrl = arr[0];
+                if (postImageUrl) {
+                    block([weakSelf saveFileFromURL:postImageUrl]);
                 } else {
                     block(nil);
                 }
@@ -472,15 +473,22 @@
 
 - (NSString *) saveFile:(NSData *)data
 {
+    if (!data) {
+        return nil;
+    }
+
     // ファイル名作成
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     [formatter setTimeZone:[NSTimeZone timeZoneWithAbbreviation:@"JST"]];
     [formatter setDateFormat:@"yyyyMMdd_HHmmss"];
     NSString *dateStr = [formatter stringFromDate:[NSDate date]];
-    NSString *fileName = [NSString stringWithFormat:@"%@_%@.png", SonyFilePrefix, dateStr];
-    
+    NSString *fileName = [NSString stringWithFormat:@"%@_%@.jpg", SonyFilePrefix, dateStr];
     // ファイルを保存
     return [self.mFileManager createFileForPath:fileName contents:data];
+}
+
+- (NSString *) saveFileFromURL:(NSString *)requestURL {
+    return [self saveFile:[self download:requestURL]];
 }
 
 - (void) saveSonyCameraDevices
