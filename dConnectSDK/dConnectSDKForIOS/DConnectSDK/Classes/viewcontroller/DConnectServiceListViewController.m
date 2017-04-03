@@ -49,7 +49,13 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-    
+    // 他のデバイスプラグインで全てのナビゲーションバーの色が変えられた時のために色を設定する
+    self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:0.00
+                                                                           green:0.63
+                                                                            blue:0.91
+                                                                           alpha:1.0];
+    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
+    self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName: [UIColor whiteColor]};
     // 再表示(バックグラウンド中に通知されたDConnectServiceListener(サービス追加／削除／状態変化)がTableViewに適用されていないので再表示する)
     [self.tableView reloadData];
     
