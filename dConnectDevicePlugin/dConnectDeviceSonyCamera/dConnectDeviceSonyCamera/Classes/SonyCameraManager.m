@@ -384,7 +384,12 @@
     __block typeof(self) weakSelf = self;
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        NSDictionary *dict = [weakSelf.remoteApi actZoom:direction movement:movement];
+        NSString *tmpMovement = movement;
+        if ([movement isEqualToString:@"max"]) {
+            tmpMovement = @"start";
+        }
+        
+        NSDictionary *dict = [weakSelf.remoteApi actZoom:direction movement:tmpMovement];
         if (dict == nil) {
             block(1, @"timeout");
         } else {
