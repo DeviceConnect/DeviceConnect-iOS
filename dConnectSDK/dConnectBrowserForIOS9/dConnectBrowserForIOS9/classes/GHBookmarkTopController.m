@@ -57,11 +57,16 @@
     self.folderBtn.tintColor = [UIColor colorWithWhite:0 alpha:0];
     isEditing = NO;
 }
-
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
+- (void)viewWillAppear:(BOOL)animated {
+    // デバイスプラグインの設定画面で、全体のナビゲーションバーの色を変えられた時のために、Browserデフォルトの色に戻す。
+    self.navigationController.navigationBar.barTintColor =[UIColor whiteColor];
+    self.navigationController.navigationBar.tintColor =  [UIColor colorWithRed:0.000 green:0.549 blue:0.890 alpha:1.000];
+    self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName: [UIColor blackColor]};
+    [UINavigationBar appearance].barTintColor = [UIColor whiteColor];
+    [UINavigationBar appearance].tintColor = [UIColor colorWithRed:0.000 green:0.549 blue:0.890 alpha:1.000];
+    [UITabBar appearance].translucent = NO;
+    [UITabBar appearance].barTintColor = [UIColor whiteColor];
+    [[UITabBar appearance] setTintColor:[UIColor colorWithRed:0.000 green:0.549 blue:0.890 alpha:1.000]];
     //ツールバーのボタン非表示
     self.navigationController.toolbarHidden = NO;
     [self setEdiMode:isEditing];
