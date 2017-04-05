@@ -80,30 +80,48 @@ extern NSString *const DConnectSystemProfileParamVersion;
 
 @class DConnectSystemProfile;
 
+/*!
+ @protocol DConnectSystemProfileDelegate
+ @brief Systemプロファイルのデリゲート。
+ */
 @protocol DConnectSystemProfileDelegate <NSObject>
 
+/*!
+ @brief サービス管理機能のインスタンスを取得する。
+ @return DConnectServiceProviderのインスタンス。
+ */
 - (DConnectServiceProvider *) serviceProvider;
 
+/*!
+ @brief 設定画面のUI管理クラスのインスタンスを取得する。
+ @return UIViewControllerのインスタンス。
+ */
 - (UIViewController *) settingViewController;
 
 @optional
 
 /*!
- @brief サービスが選択された時に呼び出します.
- 
+ @brief サービスが選択された時に呼び出される。
  @param[in] service 選択されたサービス
  */
 - (void) didSelectService: (DConnectService *) service;
 
 /*!
- @brief サービスが削除された時に呼び出します.
- 
+ @brief サービスが削除された時に呼び出される。
  @param[in] service 削除されたサービス
  */
 - (void) didRemovedService:(DConnectService *) service;
 
+/*!
+ @brief サービス一覧画面が表示された時に呼び出される。
+ */
 - (void) serviceListViewControllerDidWillAppear;
 
+/*!
+ @brief 指定されたサービス一覧をフィルタリングし、画面中に表示するサービスの配列を返す。
+ @param[in] サービスの配列
+ @return 実際に画面上に表示するサービスの配列
+ */
 - (NSArray *) displayServiceFilter: (NSArray *) services;
 
 @end

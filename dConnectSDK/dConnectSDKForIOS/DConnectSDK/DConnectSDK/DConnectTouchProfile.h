@@ -86,6 +86,10 @@ extern NSString *const DConnectTouchProfileParamY;
  
  Receive request to the Touch Profile API.
  The received request is reported to the delegate for each API.
+ 
+ @deprecated
+ 本クラスで定義していた定数はSwagger形式の定義ファイルで管理することになったので、このクラスは使用しないこととする。
+ プロファイルを実装する際は本クラスではなく、@link DConnectProfile @endlink クラスを継承すること。
  */
 @interface DConnectTouchProfile : DConnectProfile
 

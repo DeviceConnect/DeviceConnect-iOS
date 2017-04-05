@@ -113,6 +113,10 @@ typedef NS_ENUM(NSUInteger, DConnectFileProfileFileType) {
  
  File Profileの各APIへのリクエストを受信する。
  受信したリクエストは各API毎にデリゲートに通知される。
+ 
+ @deprecated
+ 本クラスで定義していた定数はSwagger形式の定義ファイルで管理することになったので、このクラスは使用しないこととする。
+ プロファイルを実装する際は本クラスではなく、@link DConnectProfile @endlink クラスを継承すること。
  */
 @interface DConnectFileProfile : DConnectProfile
 

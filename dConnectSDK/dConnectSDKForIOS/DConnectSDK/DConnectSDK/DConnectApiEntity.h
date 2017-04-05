@@ -14,10 +14,30 @@
 
 typedef BOOL (^DConnectApiFunction)(DConnectRequestMessage*, DConnectResponseMessage*);
 
+/*!
+ @class DConnectApiEntity
+ @brief Device Connect APIを実装するオブジェクト。
+ */
 @interface DConnectApiEntity : NSObject<NSCopying>
+
+/*!
+ @brief APIのメソッド名。
+ */
 @property (nonatomic, strong) NSString *method;
+
+/*!
+ @brief APIのパス名。
+ */
 @property (nonatomic, strong) NSString *path;
+
+/*!
+ @brief APIを実装するブロック。
+ */
 @property (nonatomic, strong) DConnectApiFunction api;
+
+/*!
+ @brief APIの仕様を定義するオブジェクトのインスタンス。
+ */
 @property (nonatomic, strong) DConnectApiSpec *apiSpec;
 
 @end

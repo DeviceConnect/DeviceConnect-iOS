@@ -12,14 +12,32 @@
 #import "DConnectSpecConstants.h"
 #import "DConnectProfileSpec.h"
 
+/*!
+ @class DConnectProfileSpec
+ @brief プロファイルについての仕様を保持するクラス。
+ 
+ 当該プロファイル上で定義されるAPIの仕様のリストを持つ。
+ */
 @interface DConnectProfileSpec : NSObject
 
+/*!
+ @brief API仕様定義ファイルの元データ。
+ */
 @property (nonatomic, strong) NSDictionary * bundle;
 
+/*!
+ @brief API名。
+ */
 @property (nonatomic, strong) NSString * api;
 
+/*!
+ @brief プロファイル名.
+ */
 @property (nonatomic, strong) NSString * profile;
 
+/*!
+ @brief 当該プロファイルのもつDConnectApiSpec一覧。
+ */
 @property (nonatomic, strong) NSMutableDictionary * allApiSpecs;    // Map<String, Map<Method, DConnectApiSpec>>
 
 
