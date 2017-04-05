@@ -21,6 +21,13 @@ extern NSString *const DConnectAvailabilityProfileName;
 
 extern NSString *const DConnectAvailabilityProfileParamName;
 
+/*!
+ @class DConnectAvailabilityProfile
+ @brief Availabilityプロファイル。
+ 
+ Managerと通信可能であることを確認するためのプロファイル。
+ プラグイン側では実装する必要はない。
+ */
 @interface DConnectAvailabilityProfile : DConnectProfile
 
 - (id) init;
