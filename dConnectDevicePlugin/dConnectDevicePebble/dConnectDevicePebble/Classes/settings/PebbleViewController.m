@@ -43,7 +43,12 @@
     
     [self addChildViewController:self.pageViewController];
     [self.view addSubview:self.pageViewController.view];
-    
+    // バー背景色
+    self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:0.00
+                                                                           green:0.63
+                                                                            blue:0.91
+                                                                           alpha:1.0];
+
 
     [self addChildViewController:self.pageViewController];
     [self.view addSubview:self.pageViewController.view];
