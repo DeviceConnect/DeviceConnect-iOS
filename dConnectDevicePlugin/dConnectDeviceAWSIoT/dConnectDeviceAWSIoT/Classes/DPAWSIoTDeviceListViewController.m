@@ -26,6 +26,13 @@
 
 // View表示時
 - (void)viewWillAppear:(BOOL)animated {
+    // バー背景色
+    self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:0.00
+                                                                           green:0.63
+                                                                            blue:0.91
+                                                                           alpha:1.0];
+    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
+
 	// アカウントの設定がない場合はログイン画面へ
 	if (![DPAWSIoTUtils hasAccount]) {
         // ログイン画面から戻ってきた時には画面を閉じる

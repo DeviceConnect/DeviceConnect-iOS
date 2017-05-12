@@ -59,6 +59,18 @@
 	}
 }
 
+- (void)viewDidLoad
+{
+    // バー背景色
+    self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:0.00
+                                                                           green:0.63
+                                                                            blue:0.91
+                                                                           alpha:1.0];
+    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
+    //Title文字色指定
+    self.navigationController.navigationBar.titleTextAttributes
+    = @{NSForegroundColorAttributeName: [UIColor whiteColor]};
+}
 #pragma mark - Picker
 
 // Pickerコンポーネント数

@@ -24,12 +24,18 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    [UINavigationBar appearance].barTintColor = [UIColor colorWithRed:0.000 green:0.549 blue:0.890 alpha:1.000];
+    [UINavigationBar appearance].barTintColor = [UIColor colorWithRed:0.00
+                                                                green:0.63
+                                                                 blue:0.91
+                                                                alpha:1.0];
     [UINavigationBar appearance].tintColor = [UIColor whiteColor];
     
     
     [UITabBar appearance].translucent = NO;
-    [UITabBar appearance].barTintColor = [UIColor colorWithRed:0.000 green:0.549 blue:0.890 alpha:1.000];
+    [UITabBar appearance].barTintColor = [UIColor colorWithRed:0.00
+                                                         green:0.63
+                                                          blue:0.91
+                                                         alpha:1.0];
     [[UITabBar appearance] setTintColor:[UIColor whiteColor]];
     
     UIFont *font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:10.0f];
