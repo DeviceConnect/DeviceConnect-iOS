@@ -101,6 +101,8 @@
 }
 
 - (void) didAddedService:(SonyCameraService *)service {
+    
+    // NSLog(@"didAddedService:%@", service.name);
     [self.serviceProvider addService:service];
 }
 
@@ -114,13 +116,16 @@
 
 - (void) applicationWillEnterForeground
 {
+    // NSLog(@"applicationWillEnterForeground");
     if ([self.sonyCameraManager checkSSID]) {
+        // NSLog(@"checkSSID YES");
         [self.sonyCameraManager connectSonyCamera];
     } else {
+        // NSLog(@"checkSSID NO");
         [self.sonyCameraManager disconnectSonyCamera];
     }
-    
     if (self.delegate && [self.delegate respondsToSelector:@selector(didReceiveUpdateDevice)]) {
+        // NSLog(@"didReceiveUpdateDevice");
         [self.delegate didReceiveUpdateDevice];
     }
 }

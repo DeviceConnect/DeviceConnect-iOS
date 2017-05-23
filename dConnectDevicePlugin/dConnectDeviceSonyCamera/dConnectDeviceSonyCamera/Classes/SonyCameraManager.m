@@ -59,7 +59,7 @@
 
 
 
-@interface SonyCameraManager() <SampleDiscoveryDelegate, SonyCameraRemoteApiUtilDelegate>
+@interface SonyCameraManager() <SampleDeviceDiscoveryDelegate, SonyCameraRemoteApiUtilDelegate>
 
 @property (nonatomic, strong) SonyCameraReachability *reachability;
 @property (nonatomic, strong) SonyCameraPreview *sonyCameraPreview;
@@ -112,6 +112,7 @@
                                @"ILCE-7R/B", @"ILCE-7/B"];
             for (NSString *name in array) {
                 NSRange searchResult = [ssid rangeOfString:name];
+
                 if (searchResult.location != NSNotFound) {
                     return YES;
                 }
@@ -145,7 +146,6 @@
         return;
     }
     self.searchFlag = YES;
-
     [self disconnectSonyCamera];
     
     SampleDeviceDiscovery* discovery = [SampleDeviceDiscovery new];
@@ -456,7 +456,7 @@
             *stop = YES;
         }
     }];
-
+    // NSLog(@"foundSonyCamera:%@", ssid);
     // リストにSonyCameraが存在しない場合
     if (!result) {
         result = [[SonyCameraService alloc] initWithServiceId:ssid
@@ -559,7 +559,7 @@
 
 - (void) didReceiveDeviceList:(BOOL)discovery {
     self.searchFlag = NO;
-
+    // NSLog(@"didReceiveDeviceList");
     if (discovery) {
         SonyCameraService *service = [self foundSonyCamera];
         if (service) {

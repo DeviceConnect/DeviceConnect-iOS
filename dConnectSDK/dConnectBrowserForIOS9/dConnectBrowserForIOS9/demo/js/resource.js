@@ -2,11 +2,19 @@
 var main = (function(parent, global) {
     function init() {
         var mimeType = decodeURIComponent(util.getMimeType());
-        var uri = decodeURIComponent(util.getResourceUri());
+        var uri = util.getResourceUri();
         if (mimeType.indexOf('image') != -1 && uri.indexOf('mp4') == -1) {
-            var elem = document.getElementById('image');
-            elem.src = util.getResourceUri();
-            elem.crossorigin = "anonymous";
+            var elem;
+            if (uri.indexOf(':4035/') != -1) {
+               elem = document.getElementById('image');
+               var disable = document.getElementById('preview');
+               disable.style.display = "none";
+            } else {
+               elem = document.getElementById('preview');
+               var disable = document.getElementById('image');
+               disable.style.display = "none";
+            }
+            elem.src = uri;
             elem.onload = function() {
                 console.log("onload: " + decodeURIComponent(util.getResourceUri()));
             }
