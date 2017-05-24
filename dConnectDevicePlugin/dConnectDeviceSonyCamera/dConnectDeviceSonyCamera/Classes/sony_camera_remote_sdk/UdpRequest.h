@@ -1,10 +1,10 @@
-//
-//  UdpRequest.h
-//  CameraRemoteSampleApp
-//  Copyright 2014 Sony Corporation
-//
+/**
+ * @file  UdpRequest.h
+ * @brief CameraRemoteSampleApp
+ *
+ * Copyright 2014 Sony Corporation
+ */
 
-#import <Foundation/Foundation.h>
 #import <CoreFoundation/CoreFoundation.h>
 #import <sys/socket.h>
 #import <netinet/in.h>
@@ -16,11 +16,13 @@
 #include <netdb.h>
 
 @protocol UdpRequestDelegate <NSObject>
-- (void) didReceiveDdUrl:(NSString*) ddUrl;
+
+- (void)didReceiveDdUrl:(NSString *)ddUrl;
+
 @end
 
 @interface UdpRequest : NSObject
 
-- (void) search:(id<UdpRequestDelegate>)delegate;
+- (void)search:(id<UdpRequestDelegate>)delegate;
 
 @end

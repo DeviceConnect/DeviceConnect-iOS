@@ -27,7 +27,7 @@
         _liveviewUrl = liveviewUrl;
         _delegate = delegate;
         _receiveData = [[NSMutableData alloc] init];
-//        NSLog(@"SampleLiveviewManager : start : _url = %@", _liveviewUrl);
+//        // NSLog(@"SampleLiveviewManager : start : _url = %@", _liveviewUrl);
         _url = [NSURL URLWithString:_liveviewUrl];
         [self readStream:_url];
     }
@@ -35,7 +35,7 @@
 
 -(void) readStream:(NSURL*)url
 {
-//    NSLog(@"SampleLiveviewManager : readStream : url = %@", url);
+//    // NSLog(@"SampleLiveviewManager : readStream : url = %@", url);
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url
                                                            cachePolicy:NSURLRequestUseProtocolCachePolicy
                                                        timeoutInterval:60.0];
@@ -63,13 +63,13 @@
 
 -(void) connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
 {
-    NSLog(@"@@@@@@@ didFailWithError %@", error);
+    // NSLog(@"@@@@@@@ didFailWithError %@", error);
     [_delegate didReceivedError];
 }
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection
 {
-//    NSLog(@"@@@@@@@ connectionDidFinishLoading");
+//    // NSLog(@"@@@@@@@ connectionDidFinishLoading");
 }
 
 /*

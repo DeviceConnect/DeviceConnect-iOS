@@ -1,74 +1,71 @@
-//
-//  SampleCameraEventObserver.h
-//  CameraRemoteSampleApp
-//  Copyright 2014 Sony Corporation
-//
+/**
+ * @file  SampleCameraEventObserver.h
+ * @brief CameraRemoteSampleApp
+ *
+ * Copyright 2014 Sony Corporation
+ */
 
-#import <Foundation/Foundation.h>
 #import "HttpAsynchronousRequest.h"
 
 @protocol SampleEventObserverDelegate <NSObject>
 
-// It is a singleton class.
+@optional
 
 /**
  * Delegate function called when available API lists changes.
  */
-- (void) didApiListModified:(NSArray*) api_list;
+- (void)didAvailableApiListChanged:(NSArray *)API_CAMERA_list;
 
 /**
  * Delegate function called when camera status is changed.
  */
-- (void) didCameraStatusChanged:(NSString*) status;
+- (void)didCameraStatusChanged:(NSString *)status;
 
 /**
  * Delegate function called when liveview status is changed.
  */
-- (void) didLiveviewStatusChanged:(BOOL) status;
+- (void)didLiveviewStatusChanged:(BOOL)status;
 
 /**
  * Delegate function called when shoot mode is chnaged.
  */
-- (void) didShootModeChanged:(NSString*) shootMode;
+- (void)didShootModeChanged:(NSString *)shootMode;
 
 /**
  * Delegate function called when zoom position is changed.
  */
-- (void) didZoomPositionChanged:(int) zoomPosition;
+- (void)didZoomPositionChanged:(int)zoomPosition;
 
-/*!
- @brief 追加: 写真撮影されたイベント.
- 
+/**
+ * Delegate function called when storage information is changed.
  */
-- (void) didTakePicture:(NSString *)imageUri;
+- (void)didStorageInformationChanged:(NSString *)storagId;
+
+/**
+ * Delegate function called when parsing message error occurred.
+ */
+- (void)didFailParseMessageWithError:(NSError *)error;
 
 @end
 
-@interface SampleCameraEventObserver : NSObject<HttpAsynchronousRequestParserDelegate>
+// It is a singleton class.
+@interface SampleCameraEventObserver
+    : NSObject <HttpAsynchronousRequestParserDelegate>
 
 /**
  * get the instance of Event observer
  */
-+(SampleCameraEventObserver*) getInstance;
++ (SampleCameraEventObserver *)getInstance;
 
 /**
- * Start the getEvent API. The API continues using long polling.
+ * Start the getEvent API if not already started. The API continues using long
+ * polling.
  */
--(void) start:(id<SampleEventObserverDelegate>)eventDelegate;
+- (BOOL)startWithDelegate:(id<SampleEventObserverDelegate>)eventDelegate;
 
 /**
  * Stop the polling of getEvent API
  */
--(void) stop;
-
-/**
- * get status of event observer
- */
--(BOOL) isStarted;
-
-/**
- * To destroy the instance of this class.
- */
--(void) destroy;
+- (void)stop;
 
 @end

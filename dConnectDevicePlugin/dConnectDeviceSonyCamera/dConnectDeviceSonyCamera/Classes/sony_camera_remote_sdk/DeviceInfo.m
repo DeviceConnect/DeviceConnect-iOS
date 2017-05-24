@@ -17,7 +17,7 @@
 // set friendly name of the device
 - (void)setFriendlyName:(NSString *)friendlyName
 {
-//    NSLog(@"DeviceInfo setFriendlyName = %@", friendlyName);
+    NSLog(@"DeviceInfo setFriendlyName = %@", friendlyName);
     _friendlyName = friendlyName;
 }
 
@@ -30,7 +30,7 @@
 // set version of the device
 - (void)setVersion:(NSString *)version
 {
-//   NSLog(@"DeviceInfo setVersion = %@", version);
+    NSLog(@"DeviceInfo setVersion = %@", version);
     _version = version;
 }
 
@@ -43,7 +43,7 @@
 // adds service to the list
 - (void)addService:(NSString *)serviceName serviceUrl:(NSString *)serviceUrl
 {
-//    NSLog(@"DeviceInfo addService = %@:%@", serviceName, serviceUrl);
+    NSLog(@"DeviceInfo addService = %@:%@", serviceName, serviceUrl);
     if (_serviceNameArray == NULL || _serviceNameArray.count == 0) {
         _serviceNameArray = [[NSMutableArray alloc] init];
     }
@@ -53,8 +53,8 @@
     [_serviceNameArray addObject:serviceName];
     [_serviceURLArray
         addObject:[serviceUrl stringByAppendingFormat:@"/%@", serviceName]];
-//   NSLog(@"DeviceInfo _serviceNameArray size = %lu",
-//          (unsigned long)_serviceNameArray.count);
+    NSLog(@"DeviceInfo _serviceNameArray size = %lu",
+          (unsigned long)_serviceNameArray.count);
 }
 
 // finds the ActionListURL for a given service

@@ -1,18 +1,21 @@
-//
-//  SampleDeviceDiscovery.h
-//  CameraRemoteSampleApp
-//  Copyright 2014 Sony Corporation
-//
+/**
+ * @file  SampleDeviceDiscovery.h
+ * @brief CameraRemoteSampleApp
+ *
+ * Copyright 2014 Sony Corporation
+ */
 
-#import <Foundation/Foundation.h>
 #import "UdpRequest.h"
 
-@protocol SampleDiscoveryDelegate <NSObject>
-- (void) didReceiveDeviceList:(BOOL) discovery;
+@protocol SampleDeviceDiscoveryDelegate
+
+- (void)didReceiveDeviceList:(BOOL)isReceived;
+
 @end
 
-@interface SampleDeviceDiscovery : NSObject<UdpRequestDelegate, NSXMLParserDelegate>
+@interface SampleDeviceDiscovery
+    : NSObject <UdpRequestDelegate, NSXMLParserDelegate>
 
--(void) discover:(id<SampleDiscoveryDelegate>)delegate;
+- (void)discover:(id<SampleDeviceDiscoveryDelegate>)delegate;
 
 @end

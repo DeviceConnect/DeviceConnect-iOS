@@ -70,8 +70,8 @@ static const int LocalOAuthConfirmAuthViewControllerCellLabelTag = 1;
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    
-    
+    [UINavigationBar appearance].barTintColor = [UIColor whiteColor];
+    [UINavigationBar appearance].tintColor = [UIColor colorWithRed:0.000 green:0.549 blue:0.890 alpha:1.000];
     /* 言語環境(書式)の設定に合わせたフォーマットで日付文字列を取得 */
     NSDate *expirePeriod = [NSDate dateWithTimeIntervalSinceNow:
                             LocalOAuth2Settings_DEFAULT_TOKEN_EXPIRE_PERIOD];
