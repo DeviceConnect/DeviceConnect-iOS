@@ -56,7 +56,7 @@ NSString *const SonyCameraShootModePicture = @"still";
         
         // SonyCameraの監視を開始する.
         SampleCameraEventObserver *observer = [SampleCameraEventObserver getInstance];
-        [observer start:self];
+        [observer startWithDelegate:self];
     }
     return self;
 }
@@ -65,7 +65,7 @@ NSString *const SonyCameraShootModePicture = @"still";
 
 - (void) destroy
 {
-    [[SampleCameraEventObserver getInstance] destroy];
+    [[SampleCameraEventObserver getInstance] stop];
 }
 
 - (void) actGetApiList
@@ -332,7 +332,6 @@ NSString *const SonyCameraShootModePicture = @"still";
 			errorMessage = errorArray[1];
 		}
 	}
-	
     // レスポンス格納用のdictionaryにデータをつめる
 	if([apiName isEqualToString:API_getAvailableApiList]) {
         [self.responseDic setObject:dict forKey:API_getAvailableApiList];
@@ -358,8 +357,8 @@ NSString *const SonyCameraShootModePicture = @"still";
 
 #pragma mark - SampleEventObserverDelegate Methods -
 
-- (void) didApiListModified:(NSArray*) api_list {
-    self.apiList = api_list;
+- (void) didAvailableApiListChanged:(NSArray*) API_CAMERA_list {
+    self.apiList = API_CAMERA_list;
 }
 
 - (void) didCameraStatusChanged:(NSString*) status {
@@ -378,9 +377,9 @@ NSString *const SonyCameraShootModePicture = @"still";
     self.zoomPosition = zoomPosition / (double) 100;
 }
 
-- (void) didTakePicture:(NSString *)imageUri {
+- (void) didStorageInformationChanged:(NSString *)storagId {
     if (self.delegate) {
-        [self.delegate didReceivedImage:imageUri];
+        [self.delegate didReceivedImage:storagId];
     }
 }
 

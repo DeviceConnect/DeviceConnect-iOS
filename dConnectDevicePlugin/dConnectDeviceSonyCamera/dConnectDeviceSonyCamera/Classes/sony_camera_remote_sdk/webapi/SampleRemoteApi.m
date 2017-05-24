@@ -40,7 +40,7 @@ int idVal = 1;
     NSString* requestJson = [NSString stringWithFormat:@"{ \"method\":\"%@\",\"params\":%@,\"version\":\"%@\",\"id\":%d }",aMethod,aParams,aVersion,[self getId]];
     NSString* url = [[DeviceList getSelectedDevice] findActionListUrl:aService];
         
-//    NSLog(@"SampleRemoteApi Request: %@ ", requestJson);
+//    // NSLog(@"SampleRemoteApi Request: %@ ", requestJson);
     if(isSync)
     {
         return [[[HttpSynchronousRequest alloc] init]call:url postParams:requestJson];
@@ -76,7 +76,7 @@ int idVal = 1;
     NSString* requestJson = [NSString stringWithFormat:@"{ \"method\":\"%@\",\"params\":%@,\"version\":\"%@\",\"id\":%d }",aMethod,aParams,aVersion,[self getId]];
     NSString* url = [[DeviceList getSelectedDevice] findActionListUrl:aService];
     
-//    NSLog(@"SampleRemoteApi Request: %@ ", requestJson);
+//    // NSLog(@"SampleRemoteApi Request: %@ ", requestJson);
     if(isSync)
     {
         return [[[HttpSynchronousRequest alloc] init]call:url postParams:requestJson];
@@ -112,7 +112,7 @@ int idVal = 1;
     NSString* requestJson = [NSString stringWithFormat:@"{ \"method\":\"%@\",\"params\":%@,\"version\":\"%@\",\"id\":%d }",aMethod,aParams,aVersion,[self getId]];
     NSString* url = [[DeviceList getSelectedDevice] findActionListUrl:aService];
     
-//    NSLog(@"SampleRemoteApi Request: %@ ", requestJson);
+//    // NSLog(@"SampleRemoteApi Request: %@ ", requestJson);
     [[[HttpAsynchronousRequest alloc]init]call:url postParams:requestJson apiName:aMethod parserDelegate:parserDelegate];
 }
 
@@ -142,7 +142,7 @@ int idVal = 1;
     NSString* requestJson = [NSString stringWithFormat:@"{ \"method\":\"%@\",\"params\":%@,\"version\":\"%@\",\"id\":%d }",aMethod,aParams,aVersion, (int)id];
     NSString* url = [[DeviceList getSelectedDevice] findActionListUrl:aService];
     
-//    NSLog(@"SampleRemoteApi Request: %@ ", requestJson);
+//    // NSLog(@"SampleRemoteApi Request: %@ ", requestJson);
     [[[HttpAsynchronousRequest alloc]init]call:url postParams:requestJson apiName:aMethod parserDelegate:parserDelegate];
     return  id;
 }
@@ -171,7 +171,7 @@ int idVal = 1;
     NSString* requestJson = [NSString stringWithFormat:@"{ \"method\":\"%@\",\"params\":%@,\"version\":\"%@\",\"id\":%d }",aMethod,aParams,aVersion,[self getId]];
     NSString* url = [[DeviceList getSelectedDevice] findActionListUrl:aService];
     
-//    NSLog(@"SampleRemoteApi Request: %@ ", requestJson);
+//    // NSLog(@"SampleRemoteApi Request: %@ ", requestJson);
     [[[HttpAsynchronousRequest alloc]init]call:url postParams:requestJson apiName:aMethod parserDelegate:parserDelegate];
 }
 
@@ -199,7 +199,7 @@ int idVal = 1;
     NSString* requestJson = [NSString stringWithFormat:@"{ \"method\":\"%@\",\"params\":%@,\"version\":\"%@\",\"id\":%d }",aMethod,aParams,aVersion,[self getId]];
     NSString* url = [[DeviceList getSelectedDevice] findActionListUrl:aService];
     
-//    NSLog(@"SampleRemoteApi Request: %@ ", requestJson);
+//    // NSLog(@"SampleRemoteApi Request: %@ ", requestJson);
     [[[HttpAsynchronousRequest alloc]init]call:url postParams:requestJson apiName:aMethod parserDelegate:parserDelegate];
 }
 
@@ -227,7 +227,7 @@ int idVal = 1;
     NSString* requestJson = [NSString stringWithFormat:@"{ \"method\":\"%@\",\"params\":%@,\"version\":\"%@\",\"id\":%d }",aMethod,aParams,aVersion,[self getId]];
     NSString* url = [[DeviceList getSelectedDevice] findActionListUrl:aService];
     
-//    NSLog(@"SampleRemoteApi Request: %@ ", requestJson);
+//    // NSLog(@"SampleRemoteApi Request: %@ ", requestJson);
     [[[HttpAsynchronousRequest alloc]init]call:url postParams:requestJson apiName:aMethod parserDelegate:parserDelegate];
 }
 
@@ -255,7 +255,7 @@ int idVal = 1;
     NSString* requestJson = [NSString stringWithFormat:@"{ \"method\":\"%@\",\"params\":%@,\"version\":\"%@\",\"id\":%d }",aMethod,aParams,aVersion,[self getId]];
     NSString* url = [[DeviceList getSelectedDevice] findActionListUrl:aService];
     
-//    NSLog(@"SampleRemoteApi Request: %@ ", requestJson);
+//    // NSLog(@"SampleRemoteApi Request: %@ ", requestJson);
     [[[HttpAsynchronousRequest alloc]init]call:url postParams:requestJson apiName:aMethod parserDelegate:parserDelegate];
 }
 
@@ -283,7 +283,7 @@ int idVal = 1;
     NSString* requestJson = [NSString stringWithFormat:@"{ \"method\":\"%@\",\"params\":%@,\"version\":\"%@\",\"id\":%d }",aMethod,aParams,aVersion,[self getId]];
     NSString* url = [[DeviceList getSelectedDevice] findActionListUrl:aService];
 
-//    NSLog(@"SampleRemoteApi Request: %@ ", requestJson);
+//    // NSLog(@"SampleRemoteApi Request: %@ ", requestJson);
     if(isSync)
     {
         return [[[HttpSynchronousRequest alloc] init]call:url postParams:requestJson];
@@ -319,7 +319,7 @@ int idVal = 1;
     NSString* requestJson = [NSString stringWithFormat:@"{ \"method\":\"%@\",\"params\":%@,\"version\":\"%@\",\"id\":%d }",aMethod,aParams,aVersion,[self getId]];
     NSString* url = [[DeviceList getSelectedDevice] findActionListUrl:aService];
     
-//    NSLog(@"SampleRemoteApi Request: %@ ", requestJson);
+//    // NSLog(@"SampleRemoteApi Request: %@ ", requestJson);
     [[[HttpAsynchronousRequest alloc]init]call:url postParams:requestJson apiName:aMethod parserDelegate:parserDelegate];
 }
 
@@ -348,7 +348,7 @@ int idVal = 1;
     NSString* requestJson = [NSString stringWithFormat:@"{ \"method\":\"%@\",\"params\":%@,\"version\":\"%@\",\"id\":%d }",aMethod,aParams,aVersion,(int)aid];
     NSString* url = [[DeviceList getSelectedDevice] findActionListUrl:aService];
     
-//    NSLog(@"SampleRemoteApi Request: %@ ", requestJson);
+//    // NSLog(@"SampleRemoteApi Request: %@ ", requestJson);
     [[[HttpAsynchronousRequest alloc] init] call:url
                                       postParams:requestJson
                                          apiName:aMethod
@@ -381,7 +381,7 @@ int idVal = 1;
     NSString* requestJson = [NSString stringWithFormat:@"{ \"method\":\"%@\",\"params\":%@,\"version\":\"%@\",\"id\":%d }",aMethod,aParams,aVersion,[self getId]];
     NSString* url = [[DeviceList getSelectedDevice] findActionListUrl:aService];
     
-//    NSLog(@"SampleRemoteApi Request: %@ ", requestJson);
+//    // NSLog(@"SampleRemoteApi Request: %@ ", requestJson);
     [[[HttpAsynchronousRequest alloc]init]call:url postParams:requestJson apiName:aMethod parserDelegate:parserDelegate];
 }
 
@@ -409,7 +409,7 @@ int idVal = 1;
     NSString* requestJson = [NSString stringWithFormat:@"{ \"method\":\"%@\",\"params\":%@,\"version\":\"%@\",\"id\":%d }",aMethod,aParams,aVersion,[self getId]];
     NSString* url = [[DeviceList getSelectedDevice] findActionListUrl:aService];
     
-//    NSLog(@"SampleRemoteApi Request: %@ ", requestJson);
+//    // NSLog(@"SampleRemoteApi Request: %@ ", requestJson);
     [[[HttpAsynchronousRequest alloc]init]call:url postParams:requestJson apiName:aMethod parserDelegate:parserDelegate];
 }
 
@@ -437,7 +437,7 @@ int idVal = 1;
     NSString* requestJson = [NSString stringWithFormat:@"{ \"method\":\"%@\",\"params\":%@,\"version\":\"%@\",\"id\":%d }",aMethod,aParams,aVersion,[self getId]];
     NSString* url = [[DeviceList getSelectedDevice] findActionListUrl:aService];
     
-//    NSLog(@"SampleRemoteApi Request: %@ ", requestJson);
+//    // NSLog(@"SampleRemoteApi Request: %@ ", requestJson);
     [[[HttpAsynchronousRequest alloc]init]call:url postParams:requestJson apiName:aMethod parserDelegate:parserDelegate];
 }
 
@@ -466,7 +466,7 @@ int idVal = 1;
     NSString* requestJson = [NSString stringWithFormat:@"{ \"method\":\"%@\",\"params\":%@,\"version\":\"%@\",\"id\":%d }",aMethod,aParams,aVersion,[self getId]];
     NSString* url = [[DeviceList getSelectedDevice] findActionListUrl:aService];
     
-//    NSLog(@"SampleRemoteApi Request: %@ ", requestJson);
+//    // NSLog(@"SampleRemoteApi Request: %@ ", requestJson);
     [[[HttpAsynchronousRequest alloc]init]call:url postParams:requestJson apiName:aMethod parserDelegate:parserDelegate];
 }
 
@@ -479,7 +479,7 @@ int idVal = 1;
     NSString* requestJson = [NSString stringWithFormat:@"{ \"method\":\"%@\",\"params\":%@,\"version\":\"%@\",\"id\":%d }",aMethod,aParams,aVersion,[self getId]];
     NSString* url = [[DeviceList getSelectedDevice] findActionListUrl:aService];
     
-//    NSLog(@"SampleRemoteApi Request: %@ ", requestJson);
+//    // NSLog(@"SampleRemoteApi Request: %@ ", requestJson);
     [[[HttpAsynchronousRequest alloc]init]call:url postParams:requestJson apiName:aMethod parserDelegate:parserDelegate];
 }
 
@@ -493,7 +493,7 @@ int idVal = 1;
     NSString* requestJson = [NSString stringWithFormat:@"{ \"method\":\"%@\",\"params\":%@,\"version\":\"%@\",\"id\":%d }",aMethod,aParams,aVersion,[self getId]];
     NSString* url = [[DeviceList getSelectedDevice] findActionListUrl:aService];
     
-//    NSLog(@"SampleRemoteApi Request: %@ ", requestJson);
+//    // NSLog(@"SampleRemoteApi Request: %@ ", requestJson);
     [[[HttpAsynchronousRequest alloc]init]call:url postParams:requestJson apiName:aMethod parserDelegate:parserDelegate];
 }
 
