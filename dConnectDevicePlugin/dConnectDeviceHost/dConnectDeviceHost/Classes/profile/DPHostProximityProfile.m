@@ -41,7 +41,8 @@ typedef void (^DPHostProximityBlock)(DConnectMessage *);
             // プロファイルが表示されない様にする。
             return nil;
         }
-        
+        [UIDevice currentDevice].proximityMonitoringEnabled = NO;
+
         // YESを設定してYES；近接センサーがサポートされている。
         __weak DPHostProximityProfile *weakSelf = self;
         self.proximityBlock = nil;
