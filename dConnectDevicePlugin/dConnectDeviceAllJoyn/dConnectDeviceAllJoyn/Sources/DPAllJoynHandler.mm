@@ -436,6 +436,7 @@ static size_t const DPAllJoynJoinRetryMax = 5;
         for (DPAllJoynServiceEntity *serviceEntity in [self.discoveredAllJoynServices allValues]) {
             DConnectService *service = [_serviceProvider service: serviceEntity.appId];
             if (service) {
+                [service setName:serviceEntity.serviceName];
                 [service setOnline: YES];
             } else {
                 service = [[DPAllJoynService alloc] initWithServiceId:serviceEntity.appId
