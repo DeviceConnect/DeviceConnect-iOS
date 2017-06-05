@@ -672,10 +672,10 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
                  int delay = [flashing[i] intValue];
                  if (i % 2 == 0) {
                      proxy.OnOff = YES;
-                     sleep(delay / 1000);
+                     usleep(delay * 1000);
                  } else {
                      proxy.OnOff = NO;
-                     sleep(delay / 1000);
+                     usleep(delay * 1000);
                  }
              }
          }
@@ -832,14 +832,14 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
                                          transitionPeriod:@10
                                              responseCode:&responseCode
                                                    lampID:&ignored];
-                     sleep(delay / 1000);
+                     usleep(delay * 1000);
                  } else {
                      [proxy transitionLampStateWithLampID:_lightId
                                                 lampState:offState
                                          transitionPeriod:@10
                                              responseCode:&responseCode
                                                    lampID:&ignored];
-                     sleep(delay / 1000);
+                     usleep(delay * 1000);
                  }
              }
          } else {
@@ -969,10 +969,10 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
                  int delay = [flashing[i] intValue];
                  if (i % 2 == 0) {
                      proxy.OnOff = YES;
-                     sleep(delay / 1000);
+                     usleep(delay * 1000);
                  } else {
                      proxy.OnOff = NO;
-                     sleep(delay / 1000);
+                     usleep(delay * 1000);
                  }
              }
          }
@@ -1126,14 +1126,14 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
                                          transitionPeriod:@10
                                              responseCode:&responseCode
                                                    lampID:&ignored];
-                     sleep(delay / 1000);
+                     usleep(delay * 1000);
                  } else {
                      [proxy transitionLampStateWithLampID:_lightId
                                                 lampState:offState
                                          transitionPeriod:@10
                                              responseCode:&responseCode
                                                    lampID:&ignored];
-                     sleep(delay / 1000);
+                     usleep(delay * 1000);
                  }
              }
          } else {
