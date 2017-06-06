@@ -36,25 +36,6 @@ typedef NS_ENUM(NSUInteger, NotificationIndex) {
 /// 通知に関する情報を管理するオブジェクト
 @property NSMutableDictionary *notificationInfoDict;
 
-/*!
- OnClickイベントメッセージを送信する
- @param notificationId イベントが発生した通知の通知ID
- @param serviceId サービスID
- */
-- (void) sendOnClickEventWithNotificaitonId:(NSString *)notificationId serviceId:(NSString *)serviceId;
-/*!
- OnShowイベントメッセージを送信する
- @param notificationId イベントが発生した通知の通知ID
- @param serviceId サービスID
- */
-- (void) sendOnShowEventWithNotificaitonId:(NSString *)notificationId serviceId:(NSString *)serviceId;
-/*!
- OnCloseイベントメッセージを送信する
- @param notificationId イベントが発生した通知の通知ID
- @param serviceId サービスID
- */
-- (void) sendOnCloseEventWithNotificaitonId:(NSString *)notificationId serviceId:(NSString *)serviceId;
-
 @end
 
 @implementation DPHostNotificationProfile
@@ -71,27 +52,18 @@ typedef NS_ENUM(NSUInteger, NotificationIndex) {
         _notificationInfoDict = @{}.mutableCopy;
         
         [self setNotificationIdLength: 3];
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [[NSNotificationCenter defaultCenter] addObserver:weakSelf
-                                                     selector:@selector(didReceiveLocalNotification:)
-                                                         name:@"UIApplicationDidReceiveLocalNotification"
-                                                       object:nil];
-        });
+
+        UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
+        center.delegate = self;
 
         // API登録(didReceivePostNotifyRequest相当)
         NSString *postNotifyRequestApiPath = [self apiPath: nil
                                              attributeName: DConnectNotificationProfileAttrNotify];
         [self addPostPath: postNotifyRequestApiPath
                      api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
-                         
-                         NSData *icon = [DConnectNotificationProfile iconFromRequest:request];
+
                          NSNumber *type = [DConnectNotificationProfile typeFromRequest:request];
-                         NSString *dir = [DConnectNotificationProfile dirFromRequest:request];
-                         NSString *lang = [DConnectNotificationProfile langFromRequest:request];
                          NSString *body = [DConnectNotificationProfile bodyFromRequest:request];
-                         NSString *tag = [DConnectNotificationProfile tagFromRequest:request];
-                         NSString *serviceId = [request serviceId];
                          
                          if (!body) {
                              [response setError:100 message:@"body is nill"];
@@ -105,7 +77,6 @@ typedef NS_ENUM(NSUInteger, NotificationIndex) {
                          do {
                              notificationId = [DPHostUtils randomStringWithLength:[weakSelf NotificationIdLength]];
                          } while ([weakSelf notificationInfoDict][notificationId]);
-                         UILocalNotification *notification;
                          NSString *status = @"EVENT \n";
                          switch ([type intValue]) {
                              case DConnectNotificationProfileNotificationTypePhone:
@@ -124,23 +95,31 @@ typedef NS_ENUM(NSUInteger, NotificationIndex) {
                                  [response setErrorToInvalidRequestParameterWithMessage:@"Not support type"];
                                  return YES;
                          }
-                         notification = [self scheduleWithAlertBody:[status stringByAppendingString:body]
-                                                           userInfo:@{@"id":notificationId,@"serviceId":serviceId}];
+                      
+                         UNMutableNotificationContent* content = [[UNMutableNotificationContent alloc] init];
+                         content.title    = [NSString localizedUserNotificationStringForKey:status
+                                                                                  arguments:nil];
+                         content.body     = [NSString localizedUserNotificationStringForKey:body
+                                                                                  arguments:nil];
+                         content.subtitle = [NSString localizedUserNotificationStringForKey:[status stringByAppendingString:body]
+                                                                                  arguments:nil];
+                         content.sound    = [UNNotificationSound defaultSound];
+                         // Deliver the notification in five seconds.
+                         UNTimeIntervalNotificationTrigger* trigger = [UNTimeIntervalNotificationTrigger
+                                                                       triggerWithTimeInterval:1
+                                                                       repeats:NO];
+                         UNNotificationRequest* nRequest = [UNNotificationRequest requestWithIdentifier:notificationId
+                                                                                               content:content
+                                                                                               trigger:trigger];
                          
-                         // 通知情報を生成し、notificationInfoDictにて管理
-                         NSMutableArray *notificationInfo =
-                         @[type,
-                           dir  ? dir  : [NSNull null],
-                           lang ? lang : [NSNull null],
-                           body ? body : [NSNull null],
-                           tag  ? tag  : [NSNull null],
-                           icon ? icon : [NSNull null],
-                           notification,
-                           serviceId].mutableCopy;
-                         [weakSelf notificationInfoDict][notificationId] = notificationInfo;
-                         [weakSelf sendOnShowEventWithNotificaitonId:notificationId
-                                                           serviceId:[weakSelf notificationInfoDict][notificationId][NotificationIndexServiceId]];
-                         [response setString:notificationId forKey:DConnectNotificationProfileParamNotificationId];
+                         // Schedule the notification.
+                         UNUserNotificationCenter* center = [UNUserNotificationCenter currentNotificationCenter];
+                        
+                         [center addNotificationRequest:nRequest
+                                  withCompletionHandler:^(NSError * _Nullable error) {
+                                  }];
+                         [weakSelf sendOnShowEventWithNotificaitonId:nRequest.identifier];
+                         [response setString:nRequest.identifier forKey:DConnectNotificationProfileParamNotificationId];
                          [response setResult:DConnectMessageResultTypeOk];
                          
                          return YES;
@@ -217,27 +196,30 @@ typedef NS_ENUM(NSUInteger, NotificationIndex) {
                                                attributeName: DConnectNotificationProfileAttrNotify];
         [self addDeletePath: deleteNotifyRequestApiPath
                         api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
-                         
-                            NSString *serviceId = [request serviceId];
                             NSString *notificationId = [DConnectNotificationProfile notificationIdFromRequest:request];
                             
                             if (!notificationId) {
                                 [response setErrorToInvalidRequestParameterWithMessage:@"notificationId must be specified."];
                                 return YES;
                             }
-                            if (![weakSelf notificationInfoDict][notificationId]) {
+                            UNUserNotificationCenter* center = [UNUserNotificationCenter currentNotificationCenter];
+                            [center getDeliveredNotificationsWithCompletionHandler:^(NSArray<UNNotification *> * _Nonnull notifications) {
+                                for (UNNotification *notification in notifications) {
+                                    NSString *currentId = notification.request.identifier;
+                                    if ([currentId isEqualToString:notificationId]) {
+                                        [center removeDeliveredNotificationsWithIdentifiers:@[notificationId]];
+                                        [weakSelf sendOnCloseEventWithNotificaitonId:notificationId];
+                                        [[weakSelf notificationInfoDict] removeObjectForKey:notificationId];
+                                        [response setResult:DConnectMessageResultTypeOk];
+                                        [[DConnectManager sharedManager] sendResponse:response];
+                                        return;
+                                    }
+                                }
                                 [response setErrorToInvalidRequestParameterWithMessage:@"Specified notificationId does not exist."];
-                                return YES;
-                            }
+                                [[DConnectManager sharedManager] sendResponse:response];
+                            }];
                             
-                            
-                            UILocalNotification *notification =  [weakSelf notificationInfoDict][notificationId][NotificationIndexNotifiation];
-                            [[UIApplication sharedApplication] cancelLocalNotification:notification];
-                            [weakSelf sendOnCloseEventWithNotificaitonId:notificationId serviceId:serviceId];
-                            [[weakSelf notificationInfoDict] removeObjectForKey:notificationId];
-                            [response setResult:DConnectMessageResultTypeOk];
-                            
-                            return YES;
+                            return NO;
                         }];
         
         // API登録(didReceiveDeleteOnClickRequest相当)
@@ -310,22 +292,8 @@ typedef NS_ENUM(NSUInteger, NotificationIndex) {
 }
 
 
--(void)didReceiveLocalNotification:(NSNotification*)notification {
-    NSDictionary *userInfo = [notification userInfo];
-    if (userInfo) {
-        [self sendOnClickEventWithNotificaitonId:userInfo[@"id"] serviceId:userInfo[@"serviceId"]];
-    }
-}
-
-- (void)dealloc {
-    [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:@"UIApplicationDidReceiveLocalNotification"
-                                                  object:nil];
-}
-
-
-
-- (void) sendOnClickEventWithNotificaitonId:(NSString *)notificationId serviceId:(NSString *)serviceId
+#pragma mark - Send Event
+- (void) sendOnClickEventWithNotificaitonId:(NSString *)notificationId
 {
     // イベントの取得
     NSArray *evts = [_eventMgr eventListForServiceId:DPHostDevicePluginServiceId
@@ -340,7 +308,7 @@ typedef NS_ENUM(NSUInteger, NotificationIndex) {
     }
 }
 
-- (void) sendOnShowEventWithNotificaitonId:(NSString *)notificationId serviceId:(NSString *)serviceId
+- (void) sendOnShowEventWithNotificaitonId:(NSString *)notificationId
 {
     // イベントの取得
     NSArray *evts = [_eventMgr eventListForServiceId:DPHostDevicePluginServiceId
@@ -355,7 +323,7 @@ typedef NS_ENUM(NSUInteger, NotificationIndex) {
     }
 }
 
-- (void) sendOnCloseEventWithNotificaitonId:(NSString *)notificationId serviceId:(NSString *)serviceId
+- (void) sendOnCloseEventWithNotificaitonId:(NSString *)notificationId
 {
     // イベントの取得
     NSArray *evts = [_eventMgr eventListForServiceId:DPHostDevicePluginServiceId
@@ -370,19 +338,20 @@ typedef NS_ENUM(NSUInteger, NotificationIndex) {
     }
 }
 
-#pragma mark - private method
 
-
-// ローカル通知を作成する
-- (UILocalNotification *)scheduleWithAlertBody:(NSString *)alertBody userInfo:(NSDictionary *) userInfo {
-    UILocalNotification *notification = [[UILocalNotification alloc] init];
-    [notification setUserInfo:userInfo];
-    [notification setTimeZone:[NSTimeZone systemTimeZone]];
-    [notification setAlertBody:alertBody];
-    [notification setUserInfo:userInfo];
-    [notification setAlertAction:@"Open"];
-    [[UIApplication sharedApplication] scheduleLocalNotification:notification];
-    return notification;
+#pragma mark - Notification Delegate
+- (void)userNotificationCenter:(UNUserNotificationCenter *)center
+didReceiveNotificationResponse:(UNNotificationResponse *)response
+         withCompletionHandler:(void (^)())completionHandler {
+    completionHandler();
+    [self sendOnClickEventWithNotificaitonId:response.notification.request.identifier];
 }
 
+- (void)userNotificationCenter:(UNUserNotificationCenter *)center
+       willPresentNotification:(UNNotification *)notification
+         withCompletionHandler:(void (^)(UNNotificationPresentationOptions))completionHandler {
+    completionHandler(UNNotificationPresentationOptionBadge |
+                      UNNotificationPresentationOptionSound |
+                      UNNotificationPresentationOptionAlert);
+};
 @end
