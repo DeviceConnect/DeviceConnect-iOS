@@ -48,7 +48,10 @@ NSString *const DPHostDevicePluginServiceId = @"host";
         [self addProfile:[DPHostFileProfile new]];
         [self addProfile:[DPHostMediaPlayerProfile new]];
         [self addProfile:[DPHostMediaStreamRecordingProfile new]];
-        [self addProfile:[DPHostNotificationProfile new]];
+        float iOSVersion = [[[UIDevice currentDevice] systemVersion] floatValue];
+        if(iOSVersion >= 10.0) {
+            [self addProfile:[DPHostNotificationProfile new]];
+        }
         [self addProfile:[DPHostPhoneProfile new]];
         [self addProfile:[DPHostProximityProfile new]];
         [self addProfile:[DPHostSettingProfile new]];

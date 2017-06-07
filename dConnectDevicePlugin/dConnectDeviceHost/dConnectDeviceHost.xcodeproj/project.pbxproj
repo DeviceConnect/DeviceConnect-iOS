@@ -62,6 +62,7 @@
 		97FE1A21192B6DA400808FA5 /* DPHostSystemProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 97FE1A20192B6DA400808FA5 /* DPHostSystemProfile.m */; };
 		AB3B2C281BCF311000C5E3A2 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB3B2C261BCF311000C5E3A2 /* AVFoundation.framework */; };
 		AB3B2C291BCF311000C5E3A2 /* AVKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB3B2C271BCF311000C5E3A2 /* AVKit.framework */; };
+		ABA43AC41EE562ED0019FE35 /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABA43AC31EE562ED0019FE35 /* UserNotifications.framework */; };
 		ABDA3C6D1A0C58F3001F30A0 /* DPHostConnectionProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = ABDA3C6C1A0C58F3001F30A0 /* DPHostConnectionProfile.m */; };
 		ABDA3C701A0C743A001F30A0 /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABDA3C6F1A0C743A001F30A0 /* CoreBluetooth.framework */; };
 		D62F0D1A1AA6E2CB00BC0ADA /* close_small_button_focus.png in Resources */ = {isa = PBXBuildFile; fileRef = D62F0D171AA6E2CB00BC0ADA /* close_small_button_focus.png */; };
@@ -150,6 +151,7 @@
 		97FE1A20192B6DA400808FA5 /* DPHostSystemProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHostSystemProfile.m; sourceTree = "<group>"; };
 		AB3B2C261BCF311000C5E3A2 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		AB3B2C271BCF311000C5E3A2 /* AVKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVKit.framework; path = System/Library/Frameworks/AVKit.framework; sourceTree = SDKROOT; };
+		ABA43AC31EE562ED0019FE35 /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
 		ABDA3C6B1A0C58F3001F30A0 /* DPHostConnectionProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHostConnectionProfile.h; sourceTree = "<group>"; };
 		ABDA3C6C1A0C58F3001F30A0 /* DPHostConnectionProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHostConnectionProfile.m; sourceTree = "<group>"; };
 		ABDA3C6F1A0C743A001F30A0 /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
@@ -201,6 +203,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ABA43AC41EE562ED0019FE35 /* UserNotifications.framework in Frameworks */,
 				EF19A24F1E446BDD00F00439 /* CoreLocation.framework in Frameworks */,
 				AB3B2C281BCF311000C5E3A2 /* AVFoundation.framework in Frameworks */,
 				AB3B2C291BCF311000C5E3A2 /* AVKit.framework in Frameworks */,
@@ -290,6 +293,7 @@
 		97FE19E9192B2FB400808FA5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				ABA43AC31EE562ED0019FE35 /* UserNotifications.framework */,
 				EF19A24E1E446BDD00F00439 /* CoreLocation.framework */,
 				AB3B2C261BCF311000C5E3A2 /* AVFoundation.framework */,
 				AB3B2C271BCF311000C5E3A2 /* AVKit.framework */,
@@ -371,7 +375,6 @@
 				EF36CA041E383B56008E6F3E /* DPHostLightProfile.m */,
 				EF19A2491E4467B200F00439 /* DPHostGeolocationProfile.h */,
 				EF19A24A1E4467B200F00439 /* DPHostGeolocationProfile.m */,
-				AB0B13221A80A07900D655D5 /* DPHostFileDescriptor */,
 				D6384EA71A7625BD00384167 /* DPHostCanvasProfile.h */,
 				D6384EA81A7625BD00384167 /* DPHostCanvasProfile.m */,
 				D6384EAA1A7625CF00384167 /* DPHostCanvas */,
