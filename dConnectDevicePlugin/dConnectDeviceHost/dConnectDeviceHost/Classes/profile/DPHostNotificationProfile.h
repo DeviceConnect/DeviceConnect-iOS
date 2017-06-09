@@ -8,7 +8,8 @@
 //
 
 #import <DConnectSDK/DConnectSDK.h>
+#import <UserNotifications/UserNotifications.h>
 
-@interface DPHostNotificationProfile : DConnectNotificationProfile
+@interface DPHostNotificationProfile : DConnectNotificationProfile<UNUserNotificationCenterDelegate>
 
 @end
