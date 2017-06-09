@@ -672,10 +672,10 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
                  int delay = [flashing[i] intValue];
                  if (i % 2 == 0) {
                      proxy.OnOff = YES;
-                     sleep(delay / 1000);
+                     usleep(delay * 1000);
                  } else {
                      proxy.OnOff = NO;
-                     sleep(delay / 1000);
+                     usleep(delay * 1000);
                  }
              }
          }
@@ -813,12 +813,44 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
          MsgArg newStateArg("a{sv}", count, newStates);
          AJNMessageArgument *newState =
          [[AJNMessageArgument alloc] initWithHandle:&newStateArg];
-         [proxy transitionLampStateWithLampID:_lightId
-                                    lampState:newState
-                             transitionPeriod:@10
-                                 responseCode:&responseCode
-                                       lampID:&ignored];
          
+         if (flashing && flashing.count > 0) {
+             MsgArg offStates[1];
+             MsgArg offTmp1;
+             MsgArg offTmp2("b", NO);
+             offTmp1.Set("{sv}", "OnOff", &offTmp2);
+             offStates[0] = offTmp1;
+             MsgArg offStateArg("a{sv}", 1, offStates);
+             AJNMessageArgument *offState =
+             [[AJNMessageArgument alloc] initWithHandle:&offStateArg];
+             
+             for (int i = 0; i < flashing.count; i++) {
+                 int delay = [flashing[i] intValue];
+                 if (i % 2 == 0) {
+                     [proxy transitionLampStateWithLampID:_lightId
+                                                lampState:newState
+                                         transitionPeriod:@10
+                                             responseCode:&responseCode
+                                                   lampID:&ignored];
+                     usleep(delay * 1000);
+                 } else {
+                     [proxy transitionLampStateWithLampID:_lightId
+                                                lampState:offState
+                                         transitionPeriod:@10
+                                             responseCode:&responseCode
+                                                   lampID:&ignored];
+                     usleep(delay * 1000);
+                 }
+             }
+         } else {
+             [proxy transitionLampStateWithLampID:_lightId
+                                        lampState:newState
+                                 transitionPeriod:@10
+                                     responseCode:&responseCode
+                                           lampID:&ignored];
+
+         }
+
          if (!responseCode) {
              [response setErrorToUnknownWithMessage:@"Failed to change status."];
          }
@@ -937,10 +969,10 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
                  int delay = [flashing[i] intValue];
                  if (i % 2 == 0) {
                      proxy.OnOff = YES;
-                     sleep(delay / 1000);
+                     usleep(delay * 1000);
                  } else {
                      proxy.OnOff = NO;
-                     sleep(delay / 1000);
+                     usleep(delay * 1000);
                  }
              }
          }
@@ -1076,11 +1108,43 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
          MsgArg newStateArg("a{sv}", count, newStates);
          AJNMessageArgument *newState =
          [[AJNMessageArgument alloc] initWithHandle:&newStateArg];
-         [proxy transitionLampStateWithLampID:_lightId
-                                    lampState:newState
-                             transitionPeriod:@10
-                                 responseCode:&responseCode
-                                       lampID:&ignored];
+         if (flashing && flashing.count > 0) {
+             MsgArg offStates[1];
+             MsgArg offTmp1;
+             MsgArg offTmp2("b", NO);
+             offTmp1.Set("{sv}", "OnOff", &offTmp2);
+             offStates[0] = offTmp1;
+             MsgArg offStateArg("a{sv}", 1, offStates);
+             AJNMessageArgument *offState =
+             [[AJNMessageArgument alloc] initWithHandle:&offStateArg];
+             
+             for (int i = 0; i < flashing.count; i++) {
+                 int delay = [flashing[i] intValue];
+                 if (i % 2 == 0) {
+                     [proxy transitionLampStateWithLampID:_lightId
+                                                lampState:newState
+                                         transitionPeriod:@10
+                                             responseCode:&responseCode
+                                                   lampID:&ignored];
+                     usleep(delay * 1000);
+                 } else {
+                     [proxy transitionLampStateWithLampID:_lightId
+                                                lampState:offState
+                                         transitionPeriod:@10
+                                             responseCode:&responseCode
+                                                   lampID:&ignored];
+                     usleep(delay * 1000);
+                 }
+             }
+         } else {
+             [proxy transitionLampStateWithLampID:_lightId
+                                        lampState:newState
+                                 transitionPeriod:@10
+                                     responseCode:&responseCode
+                                           lampID:&ignored];
+             
+         }
+
          
          if (name) {
              NSString *ignored;
