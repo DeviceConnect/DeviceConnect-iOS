@@ -142,6 +142,10 @@ static NSString *const DPHostFileProfileParamNewPath = @"newPath";
                           }
                           oldPath = [weakSelf removeSlashForPath:oldPath];
                           newPath = [weakSelf removeSlashForPath:newPath];
+                          if ([oldPath isEqualToString:newPath]) {
+                              [response setErrorToInvalidRequestParameterWithMessage:@"Same file."];
+                              return YES;
+                          }
                           NSFileManager *sysFileMgr = [NSFileManager defaultManager];
                           NSError *error;
                           
@@ -295,6 +299,10 @@ static NSString *const DPHostFileProfileParamNewPath = @"newPath";
             }
             oldPath = [weakSelf removeSlashForPath:oldPath];
             newPath = [weakSelf removeSlashForPath:newPath];
+            if ([oldPath isEqualToString:newPath]) {
+                [response setErrorToInvalidRequestParameterWithMessage:@"Same directory."];
+                return YES;
+            }
             NSFileManager *sysFileMgr = [NSFileManager defaultManager];
             NSError *error;
             
