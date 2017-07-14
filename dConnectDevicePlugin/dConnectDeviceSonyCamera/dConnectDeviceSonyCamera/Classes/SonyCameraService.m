@@ -25,7 +25,6 @@
         [self setName:deviceName];
         [self setNetworkType:DConnectServiceDiscoveryProfileNetworkTypeWiFi];
         [self setOnline:NO];
-        [self addProfile:[DConnectSystemProfile new]];
         [self addProfile:[SonyCameraMediaStreamRecordingProfile new]];
         [self addProfile:[SonyCameraCameraProfile new]];
     }
