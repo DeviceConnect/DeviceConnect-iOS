@@ -166,8 +166,11 @@ static NSString *const DPHostFileProfileParamNewPath = @"newPath";
                               [response setErrorToInvalidRequestParameterWithMessage:@"Directory can not be specified; use Move Directory API instead."];
                               return YES;
                           }
-                          if ([sysFileMgr fileExistsAtPath:dstNewPath isDirectory:&isDirectory]
-                               && ![[dstNewPath pathExtension] isEqualToString:@""] && !forceOverwrite) {
+                          if (![sysFileMgr fileExistsAtPath:dstNewPath isDirectory:&isDirectory]) {
+                              [response setErrorToInvalidRequestParameterWithMessage:@"NewPath not exist."];
+                              return YES;
+                          } else if ([sysFileMgr fileExistsAtPath:dstNewPath isDirectory:&isDirectory]
+                                   && ![[dstNewPath pathExtension] isEqualToString:@""] && !forceOverwrite) {
                               [response setErrorToInvalidRequestParameterWithMessage:@"NewPath File already exist."];
                               return YES;
                           } else if (isDirectory) {
@@ -323,7 +326,10 @@ static NSString *const DPHostFileProfileParamNewPath = @"newPath";
                 [response setErrorToInvalidRequestParameterWithMessage:@"Directory can not be specified; use Move File API instead."];
                 return YES;
             }
-            if ([sysFileMgr fileExistsAtPath:dstNewPath isDirectory:&isDirectory]
+            if (![sysFileMgr fileExistsAtPath:dstNewPath isDirectory:&isDirectory]) {
+                [response setErrorToInvalidRequestParameterWithMessage:@"NewPath not exist."];
+                return YES;
+            } else if ([sysFileMgr fileExistsAtPath:dstNewPath isDirectory:&isDirectory]
                 && ![[dstNewPath pathExtension] isEqualToString:@""]) {
                 [response setErrorToInvalidRequestParameterWithMessage:@"NewPath File already exist."];
                 return YES;
