@@ -74,7 +74,6 @@
 // リクエスト処理
 - (BOOL)executeRequest:(DConnectRequestMessage *)request response:(DConnectResponseMessage *)response
 {
-	//NSLog(@"*********** executeRequest: %@, %@,%@,%@", [request serviceId], [request profile], [request interface], [request attribute]);
 	// リクエストコード生成
 	u_int32_t requestCode = arc4random();
 	

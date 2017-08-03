@@ -9,7 +9,7 @@
 
 #import <AssetsLibrary/AssetsLibrary.h>
 #import <DConnectSDK/DConnectFileManager.h>
-
+#import <ImageIO/ImageIO.h>
 #import "DPHostDevicePlugin.h"
 #import "DPHostService.h"
 #import "DPHostMediaStreamRecordingProfile.h"
@@ -405,7 +405,7 @@ typedef NS_ENUM(NSUInteger, OptionIndex) {
                      api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
                          
                          NSString *target = [DConnectMediaStreamRecordingProfile targetFromRequest:request];
-                         NSLog(@"target :%@", target);
+
                          unsigned long long idx;
                          if (target || (target && target.length > 0)) {
                              if ([target isEqualToString:@"video"]) {
@@ -466,6 +466,9 @@ typedef NS_ENUM(NSUInteger, OptionIndex) {
                          }
                          
                          __block BOOL isSync = YES;
+                         if (recorder.videoConnection.supportsVideoOrientation) {
+                             recorder.videoConnection.videoOrientation = videoOrientationFromDeviceOrientation([UIDevice currentDevice].orientation);
+                         }
                          [recorder performWriting:
                           ^{
                               if (recorder.type != RecorderTypePhoto) {
@@ -483,6 +486,7 @@ typedef NS_ENUM(NSUInteger, OptionIndex) {
                               __block AVCaptureDevice *captureDevice = [AVCaptureDevice deviceWithUniqueID:recorder.videoDevice.uniqueId];
                               NSError *error;
                               [captureDevice lockForConfiguration:&error];
+                              
                               if (error) {
                                   NSLog(@"Failed to acquire a configuration lock for %@.", captureDevice.uniqueID);
                               } else {
@@ -538,6 +542,7 @@ typedef NS_ENUM(NSUInteger, OptionIndex) {
                                    NSData *jpegData;
                                    @try {
                                        jpegData = [AVCaptureStillImageOutput jpegStillImageNSDataRepresentation:imageDataSampleBuffer];
+ 
                                    }
                                    @catch (NSException *exception) {
                                        NSString *message;
@@ -1656,6 +1661,35 @@ typedef NS_ENUM(NSUInteger, OptionIndex) {
         
         [SELF_PLUGIN sendEvent:eventMsg];
     }
+}
+
+AVCaptureVideoOrientation videoOrientationFromDeviceOrientation(UIDeviceOrientation deviceOrientation)
+{
+    AVCaptureVideoOrientation orientation;
+    switch (deviceOrientation) {
+        case UIDeviceOrientationUnknown:
+            orientation = AVCaptureVideoOrientationPortrait;
+            break;
+        case UIDeviceOrientationPortrait:
+            orientation = AVCaptureVideoOrientationPortrait;
+            break;
+        case UIDeviceOrientationPortraitUpsideDown:
+            orientation = AVCaptureVideoOrientationPortraitUpsideDown;
+            break;
+        case UIDeviceOrientationLandscapeLeft:
+            orientation = AVCaptureVideoOrientationLandscapeRight;
+            break;
+        case UIDeviceOrientationLandscapeRight:
+            orientation = AVCaptureVideoOrientationLandscapeLeft;
+            break;
+        case UIDeviceOrientationFaceUp:
+            orientation = AVCaptureVideoOrientationPortrait;
+            break;
+        case UIDeviceOrientationFaceDown:
+            orientation = AVCaptureVideoOrientationPortrait;
+            break;
+    }
+    return orientation;
 }
 
 #pragma mark - AVCapture{Audio,Video}DataOutputSampleBufferDelegate

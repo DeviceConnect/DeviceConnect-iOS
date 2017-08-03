@@ -159,7 +159,7 @@ static UIViewController *loadingHUD;
                                        @"serviceinformation",
                                        @"system",
                                        @"battery",
-                                       @"connect",
+                                       @"connection",
                                        @"deviceorientation",
                                        @"filedescriptor",
                                        @"file",
@@ -168,7 +168,7 @@ static UIViewController *loadingHUD;
                                        @"notification",
                                        @"phone",
                                        @"proximity",
-                                       @"settings",
+                                       @"setting",
                                        @"vibration",
                                        @"light",
                                        @"remotecontroller",
@@ -195,7 +195,8 @@ static UIViewController *loadingHUD;
                                        @"poseEstimation",
                                        @"stressEstimation",
                                        @"walkState",
-                                       @"gpio"] mutableCopy];
+                                       @"gpio",
+                                       @"geolocation"] mutableCopy];
     if (profile && ![requestScopes containsObject:profile]) {
         [requestScopes addObject:profile];
     }
