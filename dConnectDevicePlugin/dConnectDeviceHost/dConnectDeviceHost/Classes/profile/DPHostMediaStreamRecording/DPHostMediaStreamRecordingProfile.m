@@ -556,12 +556,17 @@ typedef NS_ENUM(NSUInteger, OptionIndex) {
                                        return;
                                    }
                                    
-                                   // 新たな画像アセットとしてカメラロールに保存
-                                   CFDictionaryRef attachments = CMCopyDictionaryOfAttachments(kCFAllocatorDefault,
-                                                                                               imageDataSampleBuffer,
-                                                                                               kCMAttachmentMode_ShouldPropagate);
-                                   [[weakSelf library] writeImageDataToSavedPhotosAlbum:jpegData metadata:(__bridge id)attachments
-                                                              completionBlock:
+                                   // EXIF情報を水平に統一する。ブラウザによってはEXIF情報により画像の向きが変わるため。
+                                   CGImageSourceRef source = CGImageSourceCreateWithData((__bridge CFDataRef)jpegData, NULL);
+                                   NSDictionary *metadata = (__bridge NSDictionary*) CGImageSourceCopyPropertiesAtIndex(source, 0, NULL);
+                                   NSMutableDictionary *meta = [NSMutableDictionary dictionaryWithDictionary:metadata];
+                                   NSMutableDictionary *tiff = meta[(NSString*) kCGImagePropertyTIFFDictionary];
+                                   tiff[(NSString*) kCGImagePropertyTIFFOrientation] = @(kCGImagePropertyOrientationUp);
+                                   meta[(NSString*) kCGImagePropertyTIFFDictionary] = tiff;
+                                   meta[(NSString*) kCGImagePropertyOrientation] = @(kCGImagePropertyOrientationUp);
+                                   UIImage *jpeg = [[UIImage alloc] initWithData:jpegData];
+                                   UIImage *fixJpeg = [weakSelf fixOrientationWithImage:jpeg position:recorder.videoDevice.position];
+                                   [[weakSelf library] writeImageToSavedPhotosAlbum:fixJpeg.CGImage metadata:meta completionBlock:
                                     ^(NSURL *assetURL, NSError *error) {
                                         if (!assetURL || error) {
                                             [response setErrorToUnknownWithMessage:@"Failed to save a photo to camera roll."];
@@ -1691,7 +1696,87 @@ AVCaptureVideoOrientation videoOrientationFromDeviceOrientation(UIDeviceOrientat
     }
     return orientation;
 }
+- (UIImage *)fixOrientationWithImage:(UIImage *)image position:(AVCaptureDevicePosition) position{
+    
+    if (image.imageOrientation == UIImageOrientationUp && position != AVCaptureDevicePositionFront) return image;
 
+    CGAffineTransform transform = CGAffineTransformIdentity;
+    
+    switch (image.imageOrientation) {
+        case UIImageOrientationDown:
+        case UIImageOrientationDownMirrored:
+            transform = CGAffineTransformTranslate(transform, image.size.width, image.size.height);
+            transform = CGAffineTransformRotate(transform, M_PI);
+            break;
+            
+        case UIImageOrientationLeft:
+        case UIImageOrientationLeftMirrored:
+            transform = CGAffineTransformTranslate(transform, image.size.width, 0);
+            transform = CGAffineTransformRotate(transform, M_PI_2);
+            break;
+            
+        case UIImageOrientationRight:
+        case UIImageOrientationRightMirrored:
+            transform = CGAffineTransformTranslate(transform, 0, image.size.height);
+            transform = CGAffineTransformRotate(transform, -M_PI_2);
+            break;
+        case UIImageOrientationUp:
+        case UIImageOrientationUpMirrored:
+            break;
+    }
+    
+    switch (position) {
+        case AVCaptureDevicePositionFront:
+            switch (image.imageOrientation) {
+                    
+                case UIImageOrientationLeft:
+                case UIImageOrientationLeftMirrored:
+                case UIImageOrientationRight:
+                case UIImageOrientationRightMirrored:
+                    transform = CGAffineTransformTranslate(transform, 0, image.size.width);
+                    transform = CGAffineTransformScale(transform, 1, -1);
+                    break;
+                case UIImageOrientationDown:
+                case UIImageOrientationDownMirrored:
+                case UIImageOrientationUp:
+                case UIImageOrientationUpMirrored:
+                default:
+                    transform = CGAffineTransformTranslate(transform, image.size.width, 0);
+                    transform = CGAffineTransformScale(transform, -1, 1);
+                    break;
+            }
+
+            break;
+        case AVCaptureDevicePositionUnspecified:
+        case AVCaptureDevicePositionBack:
+        default:
+            break;
+    }
+
+    CGContextRef ctx = CGBitmapContextCreate(NULL, image.size.width, image.size.height,
+                                             CGImageGetBitsPerComponent(image.CGImage), 0,
+                                             CGImageGetColorSpace(image.CGImage),
+                                             CGImageGetBitmapInfo(image.CGImage));
+    CGContextConcatCTM(ctx, transform);
+    switch (image.imageOrientation) {
+        case UIImageOrientationLeft:
+        case UIImageOrientationLeftMirrored:
+        case UIImageOrientationRight:
+        case UIImageOrientationRightMirrored:
+
+            CGContextDrawImage(ctx, CGRectMake(0,0,image.size.height,image.size.width), image.CGImage);
+            break;
+            
+        default:
+            CGContextDrawImage(ctx, CGRectMake(0,0,image.size.width,image.size.height), image.CGImage);
+            break;
+    }
+    CGImageRef cgimg = CGBitmapContextCreateImage(ctx);
+    UIImage *img = [UIImage imageWithCGImage:cgimg];
+    CGContextRelease(ctx);
+    CGImageRelease(cgimg);
+    return img;
+}
 #pragma mark - AVCapture{Audio,Video}DataOutputSampleBufferDelegate
 
 - (void)captureOutput:(AVCaptureOutput *)captureOutput
