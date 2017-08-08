@@ -57,6 +57,7 @@
 
 - (void) didReceivedSignaling:(NSString *)signaling
 {
+
     _connection = [self createP2PConnection:signaling delegate:self];
     if (!_connection) {
         __weak typeof(self) weakSelf = self;
@@ -76,7 +77,6 @@
 {
     NSString *address = nil;
     int port = 0;
-    
     int headerSize = [self findHeaderEnd:data length:length];
     if (headerSize == 0) {
         NSLog(@"DPAWSIoTWebClient::openSocket: Not found the http header.");
@@ -105,6 +105,7 @@
     if ([uri hasPrefix:@"/contentProvider"]) {
         NSURL *url =  [NSURL URLWithString:uri];
         NSData *data = [self.dataSource getData:[url query]];
+        
         _socketAdapter = [[DPAWSIoTFileSocketAdapter alloc] initWithData:data timeout:30];
         _socketAdapter.connection = _connection;
         return [_socketAdapter openSocket];
@@ -182,8 +183,6 @@
 
 - (void) connection:(DPAWSIoTP2PConnection *)conn didRetrievedAddress:(NSString *)address port:(int)port
 {
-    NSLog(@"connection:didRetrievedAddress:%@:%d", address, port);
-    
     NSData *data = [DPAWSIoTP2PManager createSignaling:conn.connectionId address:address port:port];
     NSString *signaling = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
     if ([_delegate respondsToSelector:@selector(client:didNotifiedSignaling:)]) {
@@ -193,8 +192,6 @@
 
 - (void) connection:(DPAWSIoTP2PConnection *)conn didConnectedAddress:(NSString *)address port:(int)port
 {
-    NSLog(@"connection:didConnectedAddress:%@:%d", address, port);
-
     if ([_delegate respondsToSelector:@selector(clientDidConnected:)]) {
         [_delegate clientDidConnected:self];
     }
@@ -202,9 +199,6 @@
 
 - (void) connection:(DPAWSIoTP2PConnection *)conn didReceivedData:(const char *)data length:(int)length
 {
-    NSLog(@"connection:didReceivedData");
-    NSLog(@"data=%s length=%d", data, length);
-    
     if (!_socketAdapter) {
         [_httpHeaderData appendBytes:data length:length];
         
@@ -224,9 +218,7 @@
 
 - (void) connection:(DPAWSIoTP2PConnection *)conn didDisconnetedAdderss:(NSString *)address port:(int)port
 {
-    NSLog(@"connection:didDisconnetedAdderss:%@:%d", address, port);
-
-    if ([_delegate respondsToSelector:@selector(clientDidDisconnected:)]) {
+   if ([_delegate respondsToSelector:@selector(clientDidDisconnected:)]) {
         [_delegate clientDidDisconnected:self];
     }
     
@@ -235,13 +227,10 @@
 
 - (void) connectionDidNotConnect:(DPAWSIoTP2PConnection *)conn
 {
-    NSLog(@"connectionDidNotConnect");
-}
+ }
 
 - (void) connectionDidTimeout:(DPAWSIoTP2PConnection *)conn
 {
-    NSLog(@"connectionDidTimeout");
-    
     if ([_delegate respondsToSelector:@selector(clientDidTimeout:)]) {
         [_delegate clientDidTimeout:self];
     }

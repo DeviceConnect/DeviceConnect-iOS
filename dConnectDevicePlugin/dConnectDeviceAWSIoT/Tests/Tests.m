@@ -62,9 +62,6 @@
 // Shadow取得
 - (void)fetchShadow:(XCTestExpectation*)expectation {
 	[[DPAWSIoTManager sharedManager] fetchShadowWithName:kShadowName completionHandler:^(id json, NSError *error) {
-		NSLog(@"%@", json);
-		NSLog(@"%@", error);
-		
 		XCTAssertNil(error, @"error");
 		[expectation fulfill];
 	}];
@@ -81,7 +78,6 @@
 // MQTT/Sub
 - (void)subscribeMQTT:(XCTestExpectation*)expectation {
 	[[DPAWSIoTManager sharedManager] subscribeWithTopic:@"tp" messageHandler:^(id json, NSError *error) {
-		NSLog(@"%@", json);
 		XCTAssertNil(error, @"error");
 		[expectation fulfill];
 	}];
@@ -96,7 +92,6 @@
 // HTTP
 - (void)http:(XCTestExpectation*)expectation {
 	[DPAWSIoTNetworkManager sendRequestWithPath:@"http://gclue.com" method:@"get" params:@{@"test": @"param"} handler:^(NSData *data, NSURLResponse *response, NSError *error) {
-		NSLog(@"%@", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
 		XCTAssertNil(error, @"error");
 		[expectation fulfill];
 	}];

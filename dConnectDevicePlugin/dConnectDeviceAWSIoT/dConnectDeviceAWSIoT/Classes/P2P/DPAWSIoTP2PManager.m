@@ -50,7 +50,6 @@ NSString *const kPort = @"port";
         NSLog(@"error: %@", error);
         return nil;
     }
-
     DPAWSIoTP2PConnection *connection = [DPAWSIoTP2PConnection new];
     connection.delegate = delegate;
 

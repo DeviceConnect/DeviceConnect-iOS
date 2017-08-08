@@ -397,20 +397,12 @@
                                                  [[DConnectManager sharedManager] sendResponse:response];
 
                                              };
-                                             NSLog(@"play movie Main Thread? start");
                                              if ([NSThread isMainThread]) {
-                                                 NSLog(@"play movie Main Thread? YES");
-                                                 
                                                  block();
                                              } else {
-                                                 NSLog(@"play movie Main Thread? NO");
-                                                 
-                                                 dispatch_sync(dispatch_get_main_queue(), block);
+                                                dispatch_sync(dispatch_get_main_queue(), block);
                                              }
-                                             NSLog(@"play movie Main Thread? end");
-                                             
-
-                                             return NO;
+                                              return NO;
                                          }
                                          [response setErrorToUnknownWithMessage:
                                           @"Media cannot be played; media is not specified."];

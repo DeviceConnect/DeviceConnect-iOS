@@ -62,9 +62,6 @@
     if (!address || port == 0) {
         return NO;
     }
-    
-    NSLog(@"DPAWSIoTP2PConnection::connectToAddress:%@ port:%@", address, @(port));
-
     _client = [DPAWSIoTRelayClient new];
     _client.delegate = self;
     return [_client connect:address port:port];
@@ -130,8 +127,6 @@
 
 - (void) onTimeout
 {
-    NSLog(@"DPAWSIoTP2PConnection::onTimeout");
-
     if ([_delegate respondsToSelector:@selector(connectionDidTimeout:)]) {
         [_delegate connectionDidTimeout:self];
     }

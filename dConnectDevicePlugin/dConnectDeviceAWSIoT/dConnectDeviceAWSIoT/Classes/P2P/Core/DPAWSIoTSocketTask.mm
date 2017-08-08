@@ -54,7 +54,7 @@ char const HEADER[4] = {
 - (void) sendData:(const char *)data offset:(int)offset length:(int)length
 {
     if (offset < 0 || length < 0) {
-        NSLog(@"DPAWSIoTSocketTask send error 1.");
+        NSLog(@"DPAWSIoTSocketTask send error .");
         return;
     }
     
@@ -65,12 +65,12 @@ char const HEADER[4] = {
     [self intToByte:length to:_sendBuffer];
     
     if (UDT::ERROR == UDT::send(_socket, HEADER, 4, 0)) {
-        NSLog(@"DPAWSIoTSocketTask send error 2.");
+        NSLog(@"DPAWSIoTSocketTask send error .");
         return;
     }
     
     if (UDT::ERROR == UDT::send(_socket, _sendBuffer, 4, 0)) {
-        NSLog(@"DPAWSIoTSocketTask send error 3.");
+        NSLog(@"DPAWSIoTSocketTask send error .");
         return;
     }
     
@@ -82,7 +82,7 @@ char const HEADER[4] = {
             _length = BUFFER_SIZE;
         }
         if (UDT::ERROR == UDT::send(_socket, data + _offset, _length, 0)) {
-            NSLog(@"DPAWSIoTSocketTask send error 4.");
+            NSLog(@"DPAWSIoTSocketTask send error .");
             return;
         }
         _offset += _length;
@@ -129,8 +129,6 @@ char const HEADER[4] = {
 
 - (void) close
 {
-    NSLog(@"DPAWSIoTSocketTask::close.");
-    
     if (_closeFlag) {
         return;
     }
