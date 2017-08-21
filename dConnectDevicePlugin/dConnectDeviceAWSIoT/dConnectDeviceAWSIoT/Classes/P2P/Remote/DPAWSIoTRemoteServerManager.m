@@ -71,12 +71,10 @@
 
 - (void) serverDidConnected:(DPAWSIoTWebServer *)server
 {
-    NSLog(@"DPAWSIoTRemoteServerManager::serverDidConnected");
 }
 
 - (void) serverDidDisconnected:(DPAWSIoTWebServer *)server
 {
-    NSLog(@"DPAWSIoTRemoteServerManager::serverDidDisconnected");
     [_serverList removeObject:server];
 }
 

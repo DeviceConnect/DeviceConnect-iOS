@@ -127,8 +127,6 @@
 
 - (void) connection:(DPAWSIoTP2PConnection *)conn didRetrievedAddress:(NSString *)address port:(int)port
 {
-    NSLog(@"DPAWSIoTWebServer::connection:didRetrievedAddress:%@:%d", address, port);
-    
     NSData *data = [DPAWSIoTP2PManager createSignaling:conn.connectionId address:address port:port];
     NSString *signaling = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
     if ([_delegate respondsToSelector:@selector(server:didNotifiedSignaling:)]) {
@@ -138,8 +136,6 @@
 
 - (void) connection:(DPAWSIoTP2PConnection *)conn didConnectedAddress:(NSString *)address port:(int)port
 {
-    NSLog(@"DPAWSIoTWebServer::connection:didConnectedAddress:%@:%d", address, port);
-    
     if ([_delegate respondsToSelector:@selector(serverDidConnected:)]) {
         [_delegate serverDidConnected:self];
     }
@@ -152,8 +148,6 @@
 
 - (void) connection:(DPAWSIoTP2PConnection *)conn didReceivedData:(const char *)data length:(int)length
 {
-    NSLog(@"DPAWSIoTWebServer::connection:didReceivedData: %d", length);
-
     DPAWSIoTServerRunnable *serverRunnable = [self findServerRunnableByConn:conn];
     if (serverRunnable) {
         [serverRunnable w:[NSData dataWithBytes:data length:length]];
@@ -162,8 +156,6 @@
 
 - (void) connection:(DPAWSIoTP2PConnection *)conn didDisconnetedAdderss:(NSString *)address port:(int)port
 {
-    NSLog(@"DPAWSIoTWebServer::connection:didDisconnetedAdderss:%@:%d", address, port);
-
     if ([_delegate respondsToSelector:@selector(serverDidDisconnected:)]) {
         [_delegate serverDidDisconnected:self];
     }
@@ -176,8 +168,6 @@
 
 - (void) connectionDidTimeout:(DPAWSIoTP2PConnection *)conn
 {
-    NSLog(@"DPAWSIoTWebServer::connectionDidTimeout");
-    
     DPAWSIoTServerRunnable *serverRunnable = [self findServerRunnableByConn:conn];
     if (serverRunnable) {
         [_serverRunnableList removeObject:serverRunnable];
@@ -194,7 +184,6 @@
 
 - (void)socket:(GCDAsyncSocket *)sock didAcceptNewSocket:(GCDAsyncSocket *)newSocket
 {
-    NSLog(@"DPAWSIoTWebServer::socket:didAcceptNewSocket: * %@ -> %@", [newSocket connectedHost], [newSocket localHost]);
     
     DPAWSIoTServerRunnable *serverRunnable = [DPAWSIoTServerRunnable new];
     serverRunnable.host = self.host;
@@ -208,13 +197,10 @@
 
 - (void)socketDidCloseReadStream:(GCDAsyncSocket *)sock
 {
-    NSLog(@"DPAWSIoTWebServer::socketDidCloseReadStream: %p", sock);
 }
 
 - (void)socketDidDisconnect:(GCDAsyncSocket *)sock withError:(NSError *)err
 {
-    NSLog(@"DPAWSIoTWebServer::socketDidDisconnect: %p", sock);
-    
     DPAWSIoTServerRunnable *serverRunnable = [self findServerRunnableBySocket:sock];
     if (serverRunnable) {
         [_serverRunnableList removeObject:serverRunnable];
@@ -228,12 +214,10 @@
 
 - (void)socket:(GCDAsyncSocket *)sock didConnectToHost:(NSString *)host port:(uint16_t)port
 {
-    NSLog(@"DPAWSIoTWebServer::socket:didConnectToHost: %@", host);
 }
 
 - (void)socket:(GCDAsyncSocket *)sock didReadData:(NSData *)data withTag:(long)tag
 {
-    NSLog(@"DPAWSIoTWebServer::socket:didReadData:%p %@", sock, @([data length]));
     
     DPAWSIoTServerRunnable *serverRunnable = [self findServerRunnableBySocket:sock];
     if (serverRunnable) {
@@ -245,9 +229,7 @@
                  elapsed:(NSTimeInterval)elapsed
                bytesDone:(NSUInteger)length
 {
-    NSLog(@"shouldTimeoutReadWithTag: %@", @(tag));
-    
-    DPAWSIoTServerRunnable *serverRunnable = [self findServerRunnableBySocket:sock];
+   DPAWSIoTServerRunnable *serverRunnable = [self findServerRunnableBySocket:sock];
     if (serverRunnable) {
         if (![serverRunnable isRetry]) {
             [serverRunnable close];
@@ -260,8 +242,6 @@
                  elapsed:(NSTimeInterval)elapsed
                bytesDone:(NSUInteger)length
 {
-    NSLog(@"shouldTimeoutWriteWithTag: %@", @(tag));
-
     DPAWSIoTServerRunnable *serverRunnable = [self findServerRunnableBySocket:sock];
     if (serverRunnable) {
         if (![serverRunnable isRetry]) {

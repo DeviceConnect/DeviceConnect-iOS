@@ -6,7 +6,6 @@
 //  Released under the MIT license
 //  http://opensource.org/licenses/mit-license.php
 //
-
 #import "DPAWSIoTHttpSocketAdapter.h"
 #import "GCDAsyncSocket.h"
 
@@ -36,7 +35,6 @@
     NSError *error = nil;
     _socket = [[GCDAsyncSocket alloc] initWithDelegate:self delegateQueue:dispatch_get_main_queue()];
     if (![_socket connectToHost:self.hostname onPort:self.port error:&error]) {
-        NSLog(@"DPAWSIoTSocketAdapter::openSocket: %@", error);
         return NO;
     }
     return YES;
@@ -76,14 +74,11 @@
 
 - (void)socket:(GCDAsyncSocket *)sock didConnectToHost:(NSString *)host port:(uint16_t)port
 {
-    NSLog(@"DPAWSIoTSocketAdapter::socket:didConnectToHost: %@", host);
     [_socket readDataWithTimeout:5 tag:0];
 }
 
 - (void)socket:(GCDAsyncSocket *)sock didReadData:(NSData *)data withTag:(long)tag
 {
-    NSLog(@"DPAWSIoTSocketAdapter::socket:didReadData:%p %d", sock, (int)[data length]);
-    
     if (self.connection) {
         [self.connection sendData:[data bytes] length:(int)[data length]];
         [_socket readDataWithTimeout:5 tag:0];
@@ -92,8 +87,6 @@
 
 - (void)socketDidDisconnect:(GCDAsyncSocket *)sock withError:(NSError *)err
 {
-    NSLog(@"DPAWSIoTSocketAdapter::socketDidDisconnect");
-    
     // TODO UDPが送り終わっていないのにcloseしてしまうと問題があるので、一旦保留
     //    if (self.connection) {
     //        [self.connection close];
@@ -104,8 +97,6 @@
                  elapsed:(NSTimeInterval)elapsed
                bytesDone:(NSUInteger)length
 {
-    NSLog(@"DPAWSIoTSocketAdapter::shouldTimeoutReadWithTag: %@", @(tag));
-    
     if (![self isRetry]) {
         [self closeSocket];
     }
@@ -116,8 +107,6 @@
                  elapsed:(NSTimeInterval)elapsed
                bytesDone:(NSUInteger)length
 {
-    NSLog(@"DPAWSIoTSocketAdapter::shouldTimeoutWriteWithTag: %@", @(tag));
-    
     if (![self isRetry]) {
         [self closeSocket];
     }

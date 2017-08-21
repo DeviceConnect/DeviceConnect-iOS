@@ -522,8 +522,6 @@ static NSString *const kTopicEvent = @"event";
             }
         }
         // URI変換 ここまで
-        
-        
 		// MQTTからHTTPへ
         [DPAWSIoTUtils sendRequestDictionary:requestDic callback:^(DConnectResponseMessage *response) {
             // 返却形式にフォーマット
@@ -547,7 +545,6 @@ static NSString *const kTopicEvent = @"event";
 // EventTopic購読
 - (void)subscribeEvent:(NSString*)uuid {
     NSString *topic = [DPAWSIoTController topic:kTopicEvent uuid:uuid];
-    NSLog(@"subscribeEvent: topic = %@", topic);
 	[[DPAWSIoTManager sharedManager] subscribeWithTopic:topic messageHandler:^(id json, NSError *error) {
 		if (error) {
 			NSLog(@"Error on SubscribeWithTopic: [%@] %@", topic, error);
@@ -566,8 +563,7 @@ static NSString *const kTopicEvent = @"event";
 // EventTopic購読解除
 - (void)unsubscribeEvent:(NSString*)uuid {
     NSString *topic = [DPAWSIoTController topic:kTopicEvent uuid:uuid];
-    NSLog(@"unsubscribeEvent: topic = %@", topic);
-	[[DPAWSIoTManager sharedManager] unsubscribeWithTopic:topic];
+    [[DPAWSIoTManager sharedManager] unsubscribeWithTopic:topic];
 }
 
 // 生存報告
@@ -720,7 +716,7 @@ static NSString *const kTopicEvent = @"event";
     
     // P2Pの処理
     if (json[@"p2p_local"]) {
-        NSDictionary *p2pLocalJson = json[@"p2p_local"];
+       NSDictionary *p2pLocalJson = json[@"p2p_local"];
         if (p2pLocalJson) {
             NSError *error = nil;
             NSData *jsonData = [NSJSONSerialization dataWithJSONObject:p2pLocalJson options:0 error:&error];

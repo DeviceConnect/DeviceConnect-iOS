@@ -38,7 +38,6 @@
 	_syncText.text = [@([DPAWSIoTUtils eventSyncInterval]) stringValue];
 	[DPAWSIoTController fetchManagerInfoWithHandler:^(NSDictionary *managers, NSDictionary *myInfo, NSError *error) {
 		if (myInfo) {
-			//NSLog(@"myInfo:%@", myInfo);
 			_statusSwitch.on = [myInfo[@"online"] boolValue];
 			_syncText.enabled = !_statusSwitch.on;
 		}

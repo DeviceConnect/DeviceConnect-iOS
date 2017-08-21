@@ -101,8 +101,6 @@
 }
 
 - (void)webSocket:(PSWebSocket *)webSocket didFailWithError:(NSError *)error {
-	NSLog(@"The websocket handshake/connection failed with an error: %@, %zd", error, webSocket.retryCount);
-    
     if (_retryCount-- > 0) {
         [self openWebSocketWithAccessToken:webSocket.key];
     } else {
@@ -111,7 +109,6 @@
 }
 
 - (void)webSocket:(PSWebSocket *)webSocket didCloseWithCode:(NSInteger)code reason:(NSString *)reason wasClean:(BOOL)wasClean {
-	NSLog(@"The websocket closed with code: %@, reason: %@, wasClean: %@", @(code), reason, (wasClean) ? @"YES" : @"NO");
 }
 
 @end

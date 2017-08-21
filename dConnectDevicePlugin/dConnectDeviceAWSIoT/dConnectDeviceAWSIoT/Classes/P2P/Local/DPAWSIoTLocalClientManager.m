@@ -53,18 +53,15 @@
 
 - (void) clientDidConnected:(DPAWSIoTWebClient *)client
 {
-    NSLog(@"DPAWSIoTLocalClientManager::clientDidConnected");
 }
 
 - (void) clientDidTimeout:(DPAWSIoTWebClient *)client
 {
-    NSLog(@"DPAWSIoTLocalClientManager::clientDidTimeout");
     [_clientList removeObject:client];
 }
 
 - (void) clientDidDisconnected:(DPAWSIoTWebClient *)client
 {
-    NSLog(@"DPAWSIoTLocalClientManager::clientDidDisconnected");
     [_clientList removeObject:client];
 }
 
