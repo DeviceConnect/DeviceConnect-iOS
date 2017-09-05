@@ -16,6 +16,7 @@
 #import <DConnectSDK/DConnectRequestMessage.h>
 #import <DConnectSDK/DConnectResponseMessage.h>
 #import <DConnectSDK/DConnectServiceProvider.h>
+#import <DConnectSDK/DConnectEventCacheController.h>
 
 
 /*! 
@@ -114,6 +115,8 @@
  @brief アプリケーションがフォアグランドへの遷移時に呼び出される。
  */
 - (void)applicationWillEnterForeground;
+
+- (id<DConnectEventCacheController>) eventCacheController;
 
 - (NSArray *) serviceProfilesWithServiceId: (NSString *) serviceId;
 
