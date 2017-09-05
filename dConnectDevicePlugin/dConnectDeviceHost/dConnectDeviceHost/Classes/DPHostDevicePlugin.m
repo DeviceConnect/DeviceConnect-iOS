@@ -9,7 +9,6 @@
 
 #import <DConnectSDK/DConnectFileManager.h>
 #import <DConnectSDK/DConnectEventManager.h>
-#import <DConnectSDK/DConnectMemoryCacheController.h>
 #import <DConnectSDK/DConnectServiceManager.h>
 
 #import "DPHostDevicePlugin.h"
@@ -22,11 +21,6 @@
 @implementation DPHostDevicePlugin
 
 + (void) initialize {
-    // イベントマネージャの準備
-    Class clazz = [DPHostDevicePlugin class];
-    DConnectEventManager *eventMgr =
-    [DConnectEventManager sharedManagerForClass:clazz];
-    [eventMgr setController:[DConnectMemoryCacheController new]];
 }
 
 - (id) init {

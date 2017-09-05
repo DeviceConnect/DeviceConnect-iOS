@@ -50,10 +50,15 @@
         self.pluginVersionName = @"1.0.0";
         self.pluginId = [md5Proc generateSignature: self.pluginName];
 
+        // DeviceConnectサービス管理クラスの初期化
         DConnectServiceManager *serviceManager = [DConnectServiceManager sharedForClass: [object class]];
         [serviceManager setPlugin: self];
         [self setServiceProvider: serviceManager];
         
+        // イベント管理クラスの初期化
+        id<DConnectEventCacheController> ctrl = [self eventCacheController];
+        [[DConnectEventManager sharedManagerForClass:[self class]] setController:ctrl];
+
         // プロファイル追加
         [self addProfile:[[DConnectAuthorizationProfile alloc] initWithObject:self]];
         [self addProfile:[[DConnectServiceDiscoveryProfile alloc] initWithServiceProvider: self.serviceProvider]];
@@ -226,6 +231,11 @@
         return serviceProfiles;
     }
     return nil;
+}
+
+- (id<DConnectEventCacheController>) eventCacheController
+{
+    return [[DConnectMemoryCacheController alloc] init];
 }
 
 
