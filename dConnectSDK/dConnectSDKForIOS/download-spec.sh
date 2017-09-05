@@ -2,9 +2,9 @@
 
 PROJECT_DIR=$(cd $(dirname $0) && pwd)
 TEMP_DIR=${PROJECT_DIR}/temp-`date +%s`
-REVISION=feature_plugin_sdk_2.0.0
+REVISION=master
 SPEC_ZIP_NAME=${REVISION}.zip
-SPEC_ZIP_URL=https://github.com/TakayukiHoshi1984/DeviceConnect-Spec/archive/${SPEC_ZIP_NAME}
+SPEC_ZIP_URL=https://github.com/DeviceConnect/DeviceConnect-Spec/archive/${SPEC_ZIP_NAME}
 SPEC_DIR=${PROJECT_DIR}/DConnectSDK_resources/api
 
 if [ -e ${SPEC_DIR} ]; then
@@ -18,8 +18,8 @@ cd ${TEMP_DIR}
 echo "Download URL: ${SPEC_ZIP_URL}"
 curl -L -O -k ${SPEC_ZIP_URL}
 
-unzip -d . ${SPEC_ZIP_NAME}
-cp ${TEMP_DIR}/DeviceConnect-Spec-${REVISION}/api/*.json ${SPEC_DIR}
+unzip -d . ${SPEC_ZIP_NAME} "*.json"
+cp -r ${TEMP_DIR}/DeviceConnect-Spec-${REVISION}/api/*.json ${SPEC_DIR}
 rm -rf ${TEMP_DIR}
 
 # ファイル名を小文字に統一
