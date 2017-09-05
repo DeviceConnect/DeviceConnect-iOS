@@ -11,7 +11,6 @@
 #import "DPSpheroManager.h"
 #import <RobotUIKit/RobotUIKit.h>
 #import <RobotKit/RobotKit.h>
-#import <RobotKit/RKGetUserRGBLEDColorCommand.h>
 #import <DConnectSDK/DConnectService.h>
 #import "DPSpheroService.h"
 
@@ -34,7 +33,7 @@ static NSString * const CONNECTION_STATE_OFFLINE = @"offline";
 NSDate *_prevDate;
 RKDataStreamingMask _streamingMask;
 BOOL _startedCollisionSensor;
-
+NSMutableDictionary *deviceList;
 // 共有インスタンス
 + (instancetype)sharedManager
 {
@@ -53,13 +52,17 @@ BOOL _startedCollisionSensor;
     if (self) {
         // 初期状態で有効化済み
        _isActivated = YES;
-        
+       deviceList = [NSMutableDictionary dictionary];
         // Sphero接続処理
+        __weak typeof(self) _self = self;
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            for (NSDictionary *device in [self deviceList]) {
-                [self connectDeviceWithID:device[@"id"]];
+            for (id key in [deviceList keyEnumerator]) {
+                RKConvenienceRobot *device = deviceList[key];
+                [_self connectDeviceWithID:device.robot.identifier];
                 
             }
+//             //hook up for robot state changes
+//            [[RKRobotDiscoveryAgent sharedAgent] addNotificationObserver:_self selector:@selector(handleRobotStateChangeNotification:)];
         });
     }
     return self;
@@ -68,10 +71,12 @@ BOOL _startedCollisionSensor;
 // アプリがバックグラウンドに入った
 - (void)applicationDidEnterBackground
 {
-    [self removeResponseObserver];
-    // センサーのマスクを保持
-    _streamingMask = [RKSetDataStreamingCommand currentMask];
-
+//    [self removeResponseObserver];
+//    // センサーのマスクを保持
+//    _streamingMask = [RKSetDataStreamingCommand currentMask];
+    [RKRobotDiscoveryAgent stopDiscovery];
+    [RKRobotDiscoveryAgent disconnectAll];
+    [[RKRobotDiscoveryAgent sharedAgent] removeNotificationObserver:self];
 }
 
 // アプリがフォアグラウンドに入った
@@ -79,26 +84,30 @@ BOOL _startedCollisionSensor;
 {
 
     // すぐは復帰できないので。
+    __weak typeof(self) _self = self;
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        
-        // Sphero接続処理
-        for (NSDictionary *device in [self deviceList]) {
-            [self connectDeviceWithID:device[@"id"]];
-        }
+        // hook up for robot state changes
+        [[RKRobotDiscoveryAgent sharedAgent] addNotificationObserver:_self selector:@selector(handleRobotStateChangeNotification:)];
+        [RKRobotDiscoveryAgent startDiscovery];
 
-        [self addResponseObserver];
-        // センサーを復帰
-        [self startSensor:_streamingMask divisor:kSensorDivisor];
-        if (_startedCollisionSensor) {
-            [self startSensorCollision];
-        }
+//        // Sphero接続処理
+//        for (NSDictionary *device in [self deviceList]) {
+//            [self connectDeviceWithID:device[@"id"]];
+//        }
+//
+//        [self addResponseObserver];
+//        // センサーを復帰
+//        [self startSensor:_streamingMask divisor:kSensorDivisor];
+//        if (_startedCollisionSensor) {
+//            [self startSensorCollision];
+//        }
     });
 }
 
 // 有効化
 - (BOOL)activate
 {
-    return [[[RKRobotProvider sharedRobotProvider] robots] count] > 0;
+    return deviceList.count > 0;
 }
 
 // 無効化
@@ -108,42 +117,40 @@ BOOL _startedCollisionSensor;
 }
 
 // 接続中のサービスID取得
-- (NSString*)currentServiceID
-{
-    if (!_isActivated) return nil;
-    
-    return [[[RKRobotProvider sharedRobotProvider] robot] bluetoothAddress];
-}
+//- (NSString*)currentServiceID
+//{
+//    if (!_isActivated) return nil;
+//    
+//    return [[[RKRobotProvider sharedRobotProvider] robot] bluetoothAddress];
+//}
 
 // デバイスに接続
 - (BOOL)connectDeviceWithID:(NSString*)serviceID
 {
     if (!_isActivated) return NO;
     
-    RKRobotProvider *provider = [RKRobotProvider sharedRobotProvider];
-    NSString *oldID = [provider robot].bluetoothAddress;
-    // FIXME: これをやると動きがおかしくなる
-    // 接続済みチェック
-    if ([oldID isEqualToString:serviceID]) {
-        [provider openRobotConnection];
-        return YES;
-    }
-    
-    // 検索して接続
-    [provider closeRobotConnection];
-    NSArray *robots = [provider robots];
-    for (int i=0; i<[robots count]; i++) {
-        RKRobot *robo = robots[i];
-        if ([robo.bluetoothAddress isEqualToString:serviceID]
-            && [provider controlRobotAtIndex:i]) {
+//    RKRobotProvider *provider = [RKRobotProvider sharedRobotProvider];
+//    NSString *oldID = [provider robot].bluetoothAddress;
+//    // FIXME: これをやると動きがおかしくなる
+//    // 接続済みチェック
+//    if ([oldID isEqualToString:serviceID]) {
+//        [provider openRobotConnection];
+//        return YES;
+//    }
+//    
+//    // 検索して接続
+//    [provider closeRobotConnection];
+    for (id key in [deviceList keyEnumerator]) {
+        RKConvenienceRobot *device = deviceList[key];
+        if ([device.robot.identifier isEqualToString:serviceID]) {
             
             // 現在設定されているLED色を取得
-            if (![oldID isEqualToString:serviceID]) {
-                [[RKDeviceMessenger sharedMessenger] addResponseObserver:self
-                                                                selector:
-                                                @selector(handleResponse:)];
-                [RKGetUserRGBLEDColorCommand sendCommand];
-            }
+//            if (![oldID isEqualToString:serviceID]) {
+//                [[RKDeviceMessenger sharedMessenger] addResponseObserver:self
+//                                                                selector:
+//                                                @selector(handleResponse:)];
+//                [RKGetUserRGBLEDColorCommand sendCommand];
+//            }
             // キャリブレーションLEDの明るさをリセット
             // FIXME: キャリブレーションLEDの明るさを取得する命令がないので、
             // LEDを付けたまま接続するとズレが生じる。
@@ -170,19 +177,20 @@ BOOL _startedCollisionSensor;
     // 現在オンラインのデバイスは、robo.connection.connectionStateに
     // RKConnectionStateJumpMainAppまたはRKConnectionStateOnlineが設定されるようである。
     // オフラインのデバイスは、RKConnectionStateOfflineが設定されるようである。
-    NSMutableArray *array = [NSMutableArray array];
-    for (RKRobot *robo in [[RKRobotProvider sharedRobotProvider] robots]) {
-        //NSLog(@"%@", robo);
-        //NSLog(@"%@", robo.accessory.name);
-        //NSLog(@"%@", robo.bluetoothAddress);
-        NSString *connectionState = CONNECTION_STATE_OFFLINE;
-        if (robo.connection.connectionState != RKConnectionStateOffline) {
-            connectionState = CONNECTION_STATE_ONLINE;
-        }
-        
-        [array addObject:@{@"name": robo.accessory.name, @"id": robo.bluetoothAddress, CONNECTION_STATE:connectionState}];
-    }
-    return array;
+//    NSMutableArray *array = [NSMutableArray array];
+//    for (RKRobot *robo in [[RKRobotProvider sharedRobotProvider] robots]) {
+//        //NSLog(@"%@", robo);
+//        //NSLog(@"%@", robo.accessory.name);
+//        //NSLog(@"%@", robo.bluetoothAddress);
+//        NSString *connectionState = CONNECTION_STATE_OFFLINE;
+//        if (robo.connection.connectionState != RKConnectionStateOffline) {
+//            connectionState = CONNECTION_STATE_ONLINE;
+//        }
+//        
+//        [array addObject:@{@"name": robo.accessory.name, @"id": robo.bluetoothAddress, CONNECTION_STATE:connectionState}];
+//    }
+//    return array;
+    return deviceList.mutableCopy;
 }
 
 
@@ -195,19 +203,18 @@ BOOL _startedCollisionSensor;
             return;
         }
         
-        NSArray *deviceList = [self deviceList];
-        
         // ServiceProviderに存在するサービスがdeviceListに存在する場合は、deviceのオンライン／オフライン状態を参照して設定する
         // 存在しない場合は、オフラインにする
         for (DConnectService *service in [self.serviceProvider services]) {
             NSString *serviceId = [service serviceId];
             BOOL isFindDevice = NO;
             BOOL isOnline = NO;
-            for (NSDictionary *device in deviceList) {
-                NSString *deviceServiceId = device[@"id"];
+            for (id key in [deviceList keyEnumerator]) {
+                RKConvenienceRobot *device = deviceList[key];
+                NSString *deviceServiceId = device.robot.identifier;
                 if (deviceServiceId && [serviceId localizedCaseInsensitiveCompare: deviceServiceId] == NSOrderedSame) {
                     isFindDevice = YES;
-                    if ([device[CONNECTION_STATE] isEqualToString: CONNECTION_STATE_ONLINE]) {
+                    if ([device isOnline]) {
                         isOnline = YES;
                     } else {
                         isOnline = NO;
@@ -224,11 +231,12 @@ BOOL _startedCollisionSensor;
         }
         
         // サービス未登録なら登録する
-        for (NSDictionary *device in deviceList) {
-            NSString *serviceId = device[@"id"];
-            NSString *deviceName = device[@"name"];
+        for (id key in [deviceList keyEnumerator]) {
+            RKConvenienceRobot *device = deviceList[key];
+            NSString *serviceId = device.robot.identifier;
+            NSString *deviceName = device.robot.name;
             BOOL isOnline = NO;
-            if ([device[CONNECTION_STATE] isEqualToString: CONNECTION_STATE_ONLINE]) {
+            if ([device isOnline]) {
                 isOnline = YES;
             } else {
                 isOnline = NO;
@@ -249,6 +257,31 @@ BOOL _startedCollisionSensor;
 }
 
 #pragma mark - Observer
+- (void)handleRobotStateChangeNotification:(RKRobotChangedStateNotification*)n {
+    // Do not allow the robot to connect if the application is not running
+    RKConvenienceRobot *convenience = [RKConvenienceRobot convenienceWithRobot:n.robot];
+    switch(n.type) {
+        case RKRobotConnecting:
+        break;
+        case RKRobotOnline: {
+            if ([[UIApplication sharedApplication] applicationState] != UIApplicationStateActive) {
+                [convenience disconnect];
+                return;
+            }
+            deviceList[convenience.robot.identifier] = convenience;
+            [self updateManageServices];
+            break;
+        }
+        case RKRobotDisconnected: {
+            [deviceList removeObjectForKey:convenience.robot.identifier];
+            [self updateManageServices];
+            [RKRobotDiscoveryAgent startDiscovery];
+            break;
+        }
+        default:
+        break;
+    }
+}
 
 // レスポンスハンドラ
 - (void)handleResponse:(RKDeviceResponse *)response
@@ -344,26 +377,28 @@ BOOL _startedCollisionSensor;
 #pragma mark - Light
 
 // キャリブレーションライトの点灯
-- (void)setCalibrationLightBright:(float)calibrationLightBright
+- (void)setCalibrationLightBright:(float)calibrationLightBright serviceId:(NSString*)serviceId
 {
     if (!_isActivated) return;
     
     _calibrationLightBright = calibrationLightBright;
-    [RKBackLEDOutputCommand sendCommandWithBrightness:_calibrationLightBright];
+    RKConvenienceRobot *robot = deviceList[serviceId];
+    
+    [robot setBackLEDBrightness:_calibrationLightBright];
 }
 
 // LEDライトの色変更
-- (void)setLEDLightColor:(UIColor*)color
+- (void)setLEDLightColor:(UIColor*)color serviceId:(NSString*)serviceId
 {
     if (!_isActivated) return;
     
     _LEDLightColor = color;
     CGFloat red, green, blue, alpha;
     [color getRed:&red green:&green blue:&blue alpha:&alpha];
-    [RKRGBLEDOutputCommand sendCommandWithRed:red * alpha
-                                        green:green * alpha
-                                         blue:blue * alpha
-                                  userDefault:YES];
+    RKConvenienceRobot *robot = deviceList[serviceId];
+    [robot setLEDWithRed:red * alpha
+                   green:green * alpha
+                    blue:blue * alpha];
     //NSLog(@"rgb:%f, %f, %f", r, g, b);
 }
 
@@ -383,26 +418,28 @@ BOOL _startedCollisionSensor;
 #pragma mark - Move
 
 // 移動
-- (void)move:(float)angle velocity:(float)velocity
+- (void)move:(float)angle velocity:(float)velocity serviceId:(NSString*)serviceId
 {
     if (!_isActivated) return;
-    [RKRollCommand sendCommandWithHeading:angle velocity:velocity];
+    RKConvenienceRobot *robot = deviceList[serviceId];
+    [robot driveWithHeading:angle andVelocity:velocity];
 }
 
 // 回転
-- (void)rotate:(float)angle
+- (void)rotate:(float)angle serviceId:(NSString*)serviceId
 {
     if (!_isActivated) return;
-    [RKRollCommand sendCommandWithHeading:angle velocity:0.0];
+    RKConvenienceRobot *robot = deviceList[serviceId];
+    [robot driveWithHeading:angle andVelocity:0.0];
 }
 
 // 停止
-- (void)stop
+- (void)stopWithServiceId:(NSString*)serviceId
 {
     if (!_isActivated) return;
-    
-    [RKRollCommand sendStop];
-    [RKAbortMacroCommand sendCommand];
+
+    RKConvenienceRobot *robot = deviceList[serviceId];
+    [robot stop];
 }
 
 
@@ -461,7 +498,7 @@ BOOL _startedCollisionSensor;
     RKDataStreamingMask mask = RKDataStreamingMaskLocatorAll;
     mask = [RKSetDataStreamingCommand currentMask] | mask;
     [self startSensor:mask divisor:kSensorDivisor];
-    [RKConfigureLocatorCommand sendCommandForFlag:0 newX:0 newY:0 newYaw:0];
+//    [RKConfigureLocatorCommand initForFlag:0 newX:0 newY:0 newYaw:0];
 }
 
 // 位置センサー停止
@@ -485,14 +522,15 @@ BOOL _startedCollisionSensor;
     int xSpeedThreshold = 130;
     int ySpeedThreshold = 130;
     int deadZone = 1000;
-    [RKConfigureCollisionDetectionCommand sendCommandForMethod:RKCollisionDetectionMethod1
-                                                    xThreshold:xThreshold
-                                               xSpeedThreshold:xSpeedThreshold
-                                                    yThreshold:yThreshold
-                                               ySpeedThreshold:ySpeedThreshold
-                                              postTimeDeadZone:deadZone];
+//    [RKConfigureCollisionDetectionCommand initForMethod:RKCollisionDetectionMethod1
+//                                                    xThreshold:xThreshold
+//                                               xSpeedThreshold:xSpeedThreshold
+//                                                    yThreshold:yThreshold
+//                                               ySpeedThreshold:ySpeedThreshold
+//                                              postTimeDeadZone:deadZone];
     ////Register for asynchronise data streaming packets
-    [[RKDeviceMessenger sharedMessenger] addDataStreamingObserver:self selector:@selector(handleDataStreaming:)];
+    // TODO robotごとにセンサーを起動する
+//    [[RKDeviceMessenger sharedMessenger] addDataStreamingObserver:self selector:@selector(handleDataStreaming:)];
 }
 
 // 衝突センサー停止
@@ -501,7 +539,7 @@ BOOL _startedCollisionSensor;
     if (!_isActivated) return;
     _startedCollisionSensor = NO;
     
-    [RKConfigureCollisionDetectionCommand sendCommandToStopDetection];
+//    [RKConfigureCollisionDetectionCommand sendCommandToStopDetection];
     [self stopSensor:0];
 }
 
@@ -512,13 +550,13 @@ BOOL _startedCollisionSensor;
     
     _startedCollisionSensor = NO;
     
-    [RKConfigureCollisionDetectionCommand sendCommandToStopDetection];
+//    [RKConfigureCollisionDetectionCommand sendCommandToStopDetection];
     // Turn off data streaming
-    [RKSetDataStreamingCommand sendCommandStopStreaming];
+    [RKSetDataStreamingCommand commandWithStop];
     // Unregister for async data packets
-    [[RKDeviceMessenger sharedMessenger] removeDataStreamingObserver:self];
+//    [[RKDeviceMessenger sharedMessenger] removeDataStreamingObserver:self];
     // スタビライザーを再開
-    [RKStabilizationCommand sendCommandWithState:RKStabilizationStateOn];
+    [RKStabilizationCommand commandWithState:RKStabilizationStateOn];
 }
 
 // センサー停止
@@ -537,17 +575,17 @@ BOOL _startedCollisionSensor;
     if (!(streamingMask & RKDataStreamingMaskAccelerometerFilteredAll) &&
         !(streamingMask & RKDataStreamingMaskQuaternionAll)) {
         // 姿勢センサーとクォータニオンセンサーが無い場合はスタビライザーを再開
-        [RKStabilizationCommand sendCommandWithState:RKStabilizationStateOn];
+        [RKStabilizationCommand commandWithState:RKStabilizationStateOn];
     }
 
     if (streamingMask == RKDataStreamingMaskOff) {
         if (!_startedCollisionSensor) {
             // Turn off data streaming
-            [RKSetDataStreamingCommand sendCommandStopStreaming];
+            [RKSetDataStreamingCommand commandWithStop];
             // Unregister for async data packets
-            [[RKDeviceMessenger sharedMessenger] removeDataStreamingObserver:self];
+//            [[RKDeviceMessenger sharedMessenger] removeDataStreamingObserver:self];
             // スタビライザーを再開
-            [RKStabilizationCommand sendCommandWithState:RKStabilizationStateOn];
+            [RKStabilizationCommand commandWithState:RKStabilizationStateOn];
         }
     } else {
         // まだセンサーが残ってる
@@ -563,22 +601,22 @@ BOOL _startedCollisionSensor;
     _prevDate = [NSDate date];
     
     // 一旦止める
-    [RKSetDataStreamingCommand sendCommandStopStreaming];
+    [RKSetDataStreamingCommand commandWithStop];
     
     if (mask & RKDataStreamingMaskAccelerometerFilteredAll ||
         mask & RKDataStreamingMaskQuaternionAll) {
         // 姿勢センサーとクォータニオンセンサーの場合はスタビライザーを停止
-        [RKStabilizationCommand sendCommandWithState:RKStabilizationStateOff];
+        [RKStabilizationCommand commandWithState:RKStabilizationStateOff];
     }
     
     // Send command to Sphero
-    [RKSetDataStreamingCommand sendCommandWithSampleRateDivisor:kSensorDivisor
-                                                   packetFrames:1
-                                                     sensorMask:mask
-                                                    packetCount:0];
+//    [RKSetDataStreamingCommand initWithSampleRateDivisor:kSensorDivisor
+//                                                   packetFrames:1
+//                                                     sensorMask:mask
+//                                                    packetCount:0];
     
     ////Register for asynchronise data streaming packets
-    [[RKDeviceMessenger sharedMessenger] addDataStreamingObserver:self selector:@selector(handleDataStreaming:)];
+//    [[RKDeviceMessenger sharedMessenger] addDataStreamingObserver:self selector:@selector(handleDataStreaming:)];
     
 }
 
@@ -603,16 +641,15 @@ BOOL _startedCollisionSensor;
 
 
 - (void)addResponseObserver {
-    [[RKDeviceMessenger sharedMessenger] addResponseObserver:self
-                                                    selector:@selector(handleResponse:)];
+//    [[RKDeviceMessenger sharedMessenger] addResponseObserver:self
+//                                                    selector:@selector(handleResponse:)];
 
 }
 
 
 - (void)removeResponseObserver {
-    [[RKDeviceMessenger sharedMessenger] removeDataStreamingObserver:self];
-
-    [[RKDeviceMessenger sharedMessenger] removeResponseObserver:self];
+//    [[RKDeviceMessenger sharedMessenger] removeDataStreamingObserver:self];
+//    [[RKDeviceMessenger sharedMessenger] removeResponseObserver:self];
 
 }
 

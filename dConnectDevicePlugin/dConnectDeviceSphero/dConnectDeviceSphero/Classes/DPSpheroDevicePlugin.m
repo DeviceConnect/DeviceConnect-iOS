@@ -44,28 +44,25 @@
             UIApplication *application = [UIApplication sharedApplication];
             
             [notificationCenter addObserver:_self selector:@selector(enterForeground)
-                       name:UIApplicationWillEnterForegroundNotification
+                       name:UIApplicationDidBecomeActiveNotification
                      object:application];
             
             [notificationCenter addObserver:_self selector:@selector(enterBackground)
-                       name:UIApplicationDidEnterBackgroundNotification
+                       name:UIApplicationWillResignActiveNotification
                      object:application];
-            [notificationCenter addObserver:_self selector:@selector(enterNoLongerAvailable)
-                                       name:RKRobotIsNoLongerAvailableNotification
-                                     object:application];
 
             /* Regained connection noitification */
-            [notificationCenter addObserver:_self
-                                   selector:@selector(handleRobotOnline)
-                                       name:RKRobotDidGainControlNotification
-                                     object:nil];
-            
-            // Takes ~20 seconds to recognize a ball going offline
-            // Recognizes immediately when we close the connection to the ball
-            [notificationCenter addObserver:_self
-                                   selector:@selector(handleRobotOffline)
-                                       name:RKRobotIsNoLongerAvailableNotification
-                                     object:nil];
+//            [notificationCenter addObserver:_self
+//                                   selector:@selector(handleRobotOnline)
+//                                       name:kRobotDidChangeStateNotification
+//                                     object:nil];
+//            
+//            // Takes ~20 seconds to recognize a ball going offline
+//            // Recognizes immediately when we close the connection to the ball
+//            [notificationCenter addObserver:_self
+//                                   selector:@selector(handleRobotOffline)
+//                                       name:kRobotIsAvailableNotification
+//                                     object:nil];
         });
     }
     
@@ -77,9 +74,6 @@
 
 - (void)enterForeground {
     [[DPSpheroManager sharedManager] applicationWillEnterForeground];
-}
-- (void)enterNoLongerAvailable {
-    [[DPSpheroManager sharedManager] applicationDidEnterBackground];
 }
 
 - (void)handleRobotOnline {
@@ -103,8 +97,7 @@
     
     [notificationCenter removeObserver:self name:UIApplicationDidBecomeActiveNotification object:application];
     [notificationCenter removeObserver:self name:UIApplicationDidEnterBackgroundNotification object:application];
-    [notificationCenter removeObserver:self name:RKRobotIsNoLongerAvailableNotification object:application];
-    [notificationCenter removeObserver:self name:RKRobotDidGainControlNotification object:application];
-    [notificationCenter removeObserver:self name:RKRobotIsNoLongerAvailableNotification object:application];
+    [notificationCenter removeObserver:self name:kRobotIsAvailableNotification object:application];
+    [notificationCenter removeObserver:self name:kRobotDidChangeStateNotification object:application];
 }
 @end

@@ -180,20 +180,33 @@ typedef struct DPGyroData_ {
 - (BOOL)connectDeviceWithID:(NSString*)serviceID;
 
 /*!
+ @brief CalibrationのライトON/OFF。
+ */
+- (void)setCalibrationLightBright:(float)calibrationLightBright serviceId:(NSString*)serviceId;
+
+/*!
+ @breif LEDライトの色変更。
+ */
+- (void)setLEDLightColor:(UIColor*)color serviceId:(NSString*)serviceId;
+
+
+/*!
  @brief 移動。
  */
 - (void)move:(float)angle
-    velocity:(float)velocity;
+    velocity:(float)velocity
+   serviceId:(NSString*)serviceId;
 
 /*!
  @brief 回転。
  */
-- (void)rotate:(float)angle;
+- (void)rotate:(float)angle
+     serviceId:(NSString*)serviceId;
 
 /*!
  @brief 停止。
  */
-- (void)stop;
+- (void)stopWithServiceId:(NSString*)serviceId;
 
 
 /*!
