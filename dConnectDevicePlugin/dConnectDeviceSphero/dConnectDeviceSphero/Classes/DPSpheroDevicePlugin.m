@@ -41,28 +41,20 @@
         __weak typeof(self) _self = self;
         dispatch_async(dispatch_get_main_queue(), ^{
             NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
-            UIApplication *application = [UIApplication sharedApplication];
-            
             [notificationCenter addObserver:_self selector:@selector(enterForeground)
-                       name:UIApplicationDidBecomeActiveNotification
-                     object:application];
-            
+                                       name:UIApplicationWillEnterForegroundNotification
+                                     object:nil];
             [notificationCenter addObserver:_self selector:@selector(enterBackground)
-                       name:UIApplicationWillResignActiveNotification
-                     object:application];
-
-            /* Regained connection noitification */
-//            [notificationCenter addObserver:_self
-//                                   selector:@selector(handleRobotOnline)
-//                                       name:kRobotDidChangeStateNotification
-//                                     object:nil];
-//            
-//            // Takes ~20 seconds to recognize a ball going offline
-//            // Recognizes immediately when we close the connection to the ball
-//            [notificationCenter addObserver:_self
-//                                   selector:@selector(handleRobotOffline)
-//                                       name:kRobotIsAvailableNotification
-//                                     object:nil];
+                                       name:UIApplicationDidEnterBackgroundNotification
+                                     object:nil];
+            
+            // Takes ~20 seconds to recognize a ball going offline
+            // Recognizes immediately when we close the connection to the ball
+            [notificationCenter addObserver:_self
+                                   selector:@selector(handleRobotOffline)
+                                       name:kRobotIsAvailableNotification
+                                     object:nil];
+            [[DPSpheroManager sharedManager] applicationWillEnterForeground];
         });
     }
     
