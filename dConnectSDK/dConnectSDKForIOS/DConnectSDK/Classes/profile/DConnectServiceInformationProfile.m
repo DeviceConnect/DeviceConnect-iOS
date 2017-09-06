@@ -24,7 +24,15 @@ NSString *const DConnectServiceInformationProfileParamBluetooth = @"bluetooth";
 NSString *const DConnectServiceInformationProfileParamNFC = @"nfc";
 NSString *const DConnectServiceInformationProfileParamBLE = @"ble";
 
-static NSString *const KEY_PATHS = @"paths";
+static NSString *const DConnectServiceInformationProfileKeyPaths = @"paths";
+
+static NSString *const DConnectServiceInformationProfileKeyInfo = @"info";
+static NSString *const DConnectServiceInformationProfileKeyDefinitions = @"definitions";
+static NSString *const DConnectServiceInformationProfileKeyResponses = @"responses";
+static NSString *const DConnectServiceInformationProfileKeyParameters = @"parameters";
+static NSString *const DConnectServiceInformationProfileKeyXEvent = @"x-event";
+static NSString *const DConnectServiceInformationProfileKeySummary = @"summary";
+static NSString *const DConnectServiceInformationProfileKeyDescription = @"description";
 
 @interface DConnectServiceInformationProfile()
 
@@ -115,6 +123,8 @@ static NSString *const KEY_PATHS = @"paths";
             if (![DConnectServiceInformationProfile createSupportApisBundle: profileSpec profile: profile outBundle:&bundle error:error]) {
                 return NO;
             }
+            // 送信しない情報はここで削除
+            [DConnectServiceInformationProfile reduceInformationForApi:bundle outApi:&bundle];
             NSString *profileName = [profile profileName];
             supportApis[profileName] = bundle;
         }
@@ -135,7 +145,7 @@ static NSString *const KEY_PATHS = @"paths";
     NSMutableDictionary *tmpBundle = CFBridgingRelease(tmpBundle_);
     
     // API定義(JSONファイルから読み取ったデータ)のうち、プロファイルにAPIが未実装のものは削除する
-    NSMutableDictionary *pathsObj = tmpBundle[KEY_PATHS];
+    NSMutableDictionary *pathsObj = tmpBundle[DConnectServiceInformationProfileKeyPaths];
     if (!pathsObj) {
         *outBundle = tmpBundle;
         return YES;
@@ -169,6 +179,45 @@ static NSString *const KEY_PATHS = @"paths";
     return YES;
 }
 
++ (void) reduceInformationForApi:(NSDictionary*)api outApi:(NSDictionary**)outApi {
+    CFPropertyListRef *tmpBundle_ = (CFPropertyListRef *)CFPropertyListCreateDeepCopy(kCFAllocatorDefault,
+                                                                                      (CFDictionaryRef)api,
+                                                                                      kCFPropertyListMutableContainersAndLeaves);
+    NSMutableDictionary *supportApi = CFBridgingRelease(tmpBundle_);
+    NSMutableDictionary* infoObj = supportApi[DConnectServiceInformationProfileKeyInfo];
+    if (infoObj != nil) {
+        [infoObj removeObjectForKey:DConnectServiceInformationProfileKeyDescription];
+    }
+    NSMutableDictionary *pathsObj = supportApi[DConnectServiceInformationProfileKeyPaths];
+    if (pathsObj != nil) {
+        for (NSString *pathName in [pathsObj keyEnumerator]) {
+            NSMutableDictionary *pathObj = pathsObj[pathName];
+            if (pathObj == nil) {
+                continue;
+            }
+            for (NSString *method in DConnectSpecMethods()) {
+                NSMutableDictionary *methodObj = pathObj[[method lowercaseString]];
+                if (methodObj == nil) {
+                    continue;
+                }
+                [methodObj removeObjectForKey:DConnectServiceInformationProfileKeyResponses];
+                [methodObj removeObjectForKey:DConnectServiceInformationProfileKeyXEvent];
+                [methodObj removeObjectForKey:DConnectServiceInformationProfileKeySummary];
+                [methodObj removeObjectForKey:DConnectServiceInformationProfileKeyDescription];
+
+                NSMutableArray *parameters = methodObj[DConnectServiceInformationProfileKeyParameters];
+                if (parameters != nil) {
+                    for (NSMutableDictionary *parameter in parameters) {
+                        [parameter removeObjectForKey:DConnectServiceInformationProfileKeyDescription];
+                    }
+                }
+            }
+        }
+    }
+    [supportApi removeObjectForKey:DConnectServiceInformationProfileKeyDefinitions];
+
+    *outApi = supportApi;
+}
 // NSDictionaryをDConnectMessageに変換
 + (DConnectMessage *) convertToDConnectMessageFromNSDictionary: (NSDictionary *)dictionary {
     
