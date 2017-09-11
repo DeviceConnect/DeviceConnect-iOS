@@ -169,7 +169,7 @@ static NSString *const DPHostFileProfileParamNewPath = @"newPath";
                           BOOL isExtension = ([dstNewPath pathExtension] && [dstNewPath pathExtension].length > 0)?YES:NO;
                           if (![sysFileMgr fileExistsAtPath:dstNewPath isDirectory:&isDirectory]
                               && !isExtension && !isDirectory) { //拡張子がない存在しないファイルが指定された場合
-                              [response setErrorToInvalidRequestParameterWithMessage:@"NewPath not exist."];
+                              [response setErrorToInvalidRequestParameterWithMessage:@"NewPath has unsupported filename extension."];
                               return YES;
                           } else if ([sysFileMgr fileExistsAtPath:dstNewPath isDirectory:&isDirectory]
                                      && ![[dstNewPath pathExtension] isEqualToString:@""] && !forceOverwrite) {
