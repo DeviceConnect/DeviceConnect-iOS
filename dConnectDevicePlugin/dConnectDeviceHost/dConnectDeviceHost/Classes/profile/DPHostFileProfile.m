@@ -166,11 +166,13 @@ static NSString *const DPHostFileProfileParamNewPath = @"newPath";
                               [response setErrorToInvalidRequestParameterWithMessage:@"Directory can not be specified; use Move Directory API instead."];
                               return YES;
                           }
-                          if (![sysFileMgr fileExistsAtPath:dstNewPath isDirectory:&isDirectory]) {
-                              [response setErrorToInvalidRequestParameterWithMessage:@"NewPath not exist."];
+                          BOOL isExtension = ([dstNewPath pathExtension] && [dstNewPath pathExtension].length > 0)?YES:NO;
+                          if (![sysFileMgr fileExistsAtPath:dstNewPath isDirectory:&isDirectory]
+                              && !isExtension && !isDirectory) { //拡張子がない存在しないファイルが指定された場合
+                              [response setErrorToInvalidRequestParameterWithMessage:@"NewPath has unsupported filename extension."];
                               return YES;
                           } else if ([sysFileMgr fileExistsAtPath:dstNewPath isDirectory:&isDirectory]
-                                   && ![[dstNewPath pathExtension] isEqualToString:@""] && !forceOverwrite) {
+                                     && ![[dstNewPath pathExtension] isEqualToString:@""] && !forceOverwrite) {
                               [response setErrorToInvalidRequestParameterWithMessage:@"NewPath File already exist."];
                               return YES;
                           } else if (isDirectory) {
