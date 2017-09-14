@@ -70,15 +70,14 @@ static GHDeviceUtil* mgr = nil;
 - (void)updateDeviceList
 {
     __weak GHDeviceUtil *_self = self;
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self callRequestAccessTokenAPI];
+    // タイミングによりアクセストークンが保存されない
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self callRequestAccessTokenAPI];
 
-            [self discoverDevices:^(DConnectArray *result) {
-                _self.currentDevices = result;
-                _self.recieveDeviceList(result);
-            }];
-        });
+        [self discoverDevices:^(DConnectArray *result) {
+            _self.currentDevices = result;
+            _self.recieveDeviceList(result);
+        }];
     });
 }
 
@@ -103,31 +102,22 @@ static GHDeviceUtil* mgr = nil;
                 if (completion) {
                     completion(services);
                 }
-            } else {
-                LOG(@" - response - errorCode: %d", [response errorCode]);
-                NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
-                [def removeObjectForKey:ACCESS_TOKEN];
-                [def synchronize];
-
-                if (completion) {
-                    completion(nil);
-                }
-            }
-        } else {
-            NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
-            [def removeObjectForKey:ACCESS_TOKEN];
-            [def synchronize];
-            if (completion) {
-                completion(nil);
+                return;
             }
         }
+        NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
+        [def removeObjectForKey:ACCESS_TOKEN];
+        [def synchronize];
+        [self callRequestAccessTokenAPI];
+        [self discoverDevices:completion];
+
     }];
 }
 
 - (void)callRequestAccessTokenAPI {
     NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
     NSString *accessToken = [def stringForKey:ACCESS_TOKEN];
-    if (accessToken) {
+    if (accessToken)  {
         return;
     }    
     NSArray *scopes = [@[DConnectServiceDiscoveryProfileName]
@@ -148,13 +138,11 @@ static GHDeviceUtil* mgr = nil;
                                        NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
                                        [def setObject:accessToken forKey:ACCESS_TOKEN];
                                        [def synchronize];
-                                       NSLog(@" - response - accessToken: %@", accessToken);
                                        /* Wait解除 */
                                        dispatch_semaphore_signal(semaphore);
                                        
                                    }
                                      error:^(DConnectMessageErrorCodeType errorCode){
-                                         NSLog(@" - response - errorCode: %d", errorCode);
                                          /* Wait解除 */
                                          dispatch_semaphore_signal(semaphore);
                                          
