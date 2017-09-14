@@ -196,8 +196,6 @@ NSMutableDictionary *deviceList;
                 return;
             }
             deviceList[convenience.robot.identifier] = convenience;
-            // バックグラウンドから復帰した時にライトが光るため、再びファアグラウンドになったときのために一度消灯する。
-            [self setLEDLightColor:[UIColor blackColor] serviceId:convenience.robot.identifier];
             [self startSensor:_streamingMask divisor:kSensorDivisor serviceId:convenience.robot.identifier];
             if (_startedCollisionSensor) {
                 [self startSensorCollisionForServiceId:convenience.robot.identifier];
@@ -205,6 +203,8 @@ NSMutableDictionary *deviceList;
             __weak typeof(self) _self = self;
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 [_self updateManageServices];
+                // バックグラウンドから復帰した時にライトが光るため、再びファアグラウンドになったときのために一度消灯する。
+                [self setLEDLightColor:[UIColor blackColor] serviceId:convenience.robot.identifier];
             });
             break;
         }
