@@ -20,7 +20,7 @@ var main = (function(parent, global) {
             }
         } else  if (mimeType.indexOf('image') != -1 && uri.indexOf('mp4') != -1) {
            var mediaId = uri.replace("http://localhost:4035/gotapi/files?uri=", "");
-           util.doMediaPlayerMediaPut(util.getServiceId(), util.getAccessTokenQuery(), mediaId,null);
+           util.doMediaPlayerMediaPut(util.getServiceId(), util.getAccessTokenQuery(), decodeURIComponent(mediaId),null);
         } else {
             sendRequest('GET', uri, null, function(status, responseText) {
                 var elem = document.getElementById('text');
@@ -60,7 +60,7 @@ var main = (function(parent, global) {
              switch (xhr.readyState) {
              case 1:
                  try {
-                     xhr.setRequestHeader("X-GotAPI-Origin".toLowerCase(), "http://ios_assets");
+                     xhr.setRequestHeader("X-GotAPI-Origin".toLowerCase(), "file://");
                  } catch (e) {
                      return;
                  }

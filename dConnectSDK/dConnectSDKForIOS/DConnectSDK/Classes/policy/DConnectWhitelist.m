@@ -10,8 +10,11 @@
 #import "DConnectWhitelist.h"
 #import "DConnectSQLiteOpenHelper.h"
 #import "DConnectOriginDao.h"
+#import "DConnectOriginParser.h"
 
 NSString *const DConnectWhitelistDBName = @"__dconnect_whitelist.db";
+static NSString *const DConnectWhitelistDefaultURL = @"http://localhost:80";
+static NSString *const DConnectWhitelistDefaultTitle = @"Manager(HTTP)";
 const int DCONNECT_WHITELIST_DB_VERSION = 1;
 
 @interface DConnectWhitelist () <DConnectSQLiteOpenHelperDelegate>
@@ -42,6 +45,10 @@ const int DCONNECT_WHITELIST_DB_VERSION = 1;
     dispatch_once(&onceToken, ^{
         sharedWhitelist = [[DConnectWhitelist alloc] init];
     });
+    id<DConnectOrigin> origin = [DConnectOriginParser parse:DConnectWhitelistDefaultURL];
+    if (![sharedWhitelist existOrigin:origin title:DConnectWhitelistDefaultTitle]) {
+        [sharedWhitelist addOrigin:origin title:DConnectWhitelistDefaultTitle];
+    }
     return sharedWhitelist;
 }
 
@@ -93,7 +100,20 @@ const int DCONNECT_WHITELIST_DB_VERSION = 1;
                                      onDatabase:database];
     }];
 }
-
+- (BOOL) existOrigin:(id<DConnectOrigin>) origin
+               title:(NSString *)title
+{
+    NSMutableArray *result = [NSMutableArray array];
+    [_helper execQueryInQueue:^(DConnectSQLiteDatabase *database) {
+        if (!database) {
+            return;
+        }
+        [result addObjectsFromArray:[DConnectOriginDao queryWithOrigin:origin
+                                                                 title:title
+                                                            toDatabase:database]];
+    }];
+    return [result count] > 0;
+}
 - (void) removeOrigin:(DConnectOriginInfo *) info
 {
     [_helper execQueryInQueue:^(DConnectSQLiteDatabase *database) {

@@ -95,7 +95,7 @@ static GHDeviceUtil* mgr = nil;
     [request setApi: DConnectMessageDefaultAPI];
     [request setProfile: DConnectServiceDiscoveryProfileName];
     [request setAccessToken:accessToken];
-    [request setString:@"file://" forKey:DConnectMessageOrigin];
+    [request setString:@"http://localhost" forKey:DConnectMessageOrigin];
     [manager sendRequest: request callback:^(DConnectResponseMessage *response) {
         if (response != nil) {
             if ([response result] == DConnectMessageResultTypeOk) {
@@ -129,7 +129,7 @@ static GHDeviceUtil* mgr = nil;
     
     
 
-    [DConnectUtil asyncAuthorizeWithOrigin: @"file://"
+    [DConnectUtil asyncAuthorizeWithOrigin: @"http://localhost"
                                    appName: @"Browser"
                                     scopes: scopes
                                    success: ^(NSString *clientId, NSString *accessToken) {
