@@ -70,14 +70,14 @@ static GHDeviceUtil* mgr = nil;
 - (void)updateDeviceList
 {
     __weak GHDeviceUtil *_self = self;
-    // タイミングによりアクセストークンが保存されない
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [self callRequestAccessTokenAPI];
-
-        [self discoverDevices:^(DConnectArray *result) {
-            _self.currentDevices = result;
-            _self.recieveDeviceList(result);
+        [self callRequestAccessTokenAPI:^(DConnectArray *result) {
+            [self discoverDevices:^(DConnectArray *result) {
+                _self.currentDevices = result;
+                _self.recieveDeviceList(result);
+            }];
         }];
+
     });
 }
 
@@ -85,7 +85,8 @@ static GHDeviceUtil* mgr = nil;
 {
     NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
     NSString *accessToken = [def stringForKey:ACCESS_TOKEN];
-    if (!accessToken) {
+    BOOL isLocalOAuth = [def boolForKey:IS_USE_LOCALOAUTH];
+    if (!accessToken && isLocalOAuth) {
         completion(nil);
         return;
     }
@@ -105,31 +106,28 @@ static GHDeviceUtil* mgr = nil;
                 return;
             }
         }
-        NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
-        [def removeObjectForKey:ACCESS_TOKEN];
-        [def synchronize];
-        [self callRequestAccessTokenAPI];
-        [self discoverDevices:completion];
-
+        if (isLocalOAuth) {
+            NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
+            [def removeObjectForKey:ACCESS_TOKEN];
+            [def synchronize];
+            [self callRequestAccessTokenAPI:^(DConnectArray *result) {
+                [self discoverDevices:completion];
+            }];
+        }
     }];
 }
 
-- (void)callRequestAccessTokenAPI {
+- (void)callRequestAccessTokenAPI:(DiscoverDeviceCompletion)completion {
     NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
     NSString *accessToken = [def stringForKey:ACCESS_TOKEN];
     if (accessToken)  {
+        completion(nil);
         return;
     }    
     NSArray *scopes = [@[DConnectServiceDiscoveryProfileName]
                        sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];;
     
     
-    /* セマフォ準備 */
-    dispatch_semaphore_t semaphore = dispatch_semaphore_create(1);
-    dispatch_time_t timeout = dispatch_time(DISPATCH_TIME_NOW, NSEC_PER_SEC * DPSemaphoreTimeout);
-    
-    /* 応答が返るまでWait */
-    dispatch_semaphore_wait(semaphore, timeout);
 
     [DConnectUtil asyncAuthorizeWithOrigin: [self packageName]
                                    appName: @"Browser"
@@ -138,13 +136,11 @@ static GHDeviceUtil* mgr = nil;
                                        NSUserDefaults *def = [NSUserDefaults standardUserDefaults];
                                        [def setObject:accessToken forKey:ACCESS_TOKEN];
                                        [def synchronize];
-                                       /* Wait解除 */
-                                       dispatch_semaphore_signal(semaphore);
+                                       completion(nil);
                                        
                                    }
                                      error:^(DConnectMessageErrorCodeType errorCode){
-                                         /* Wait解除 */
-                                         dispatch_semaphore_signal(semaphore);
+                                         completion(nil);
                                          
                                      }];
 }
