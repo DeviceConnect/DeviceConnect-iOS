@@ -349,7 +349,7 @@
 //--------------------------------------------------------------//
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return [[viewModel.datasource objectAtIndex:section]count];
+    return [(NSMutableArray*)[viewModel.datasource objectAtIndex:section] count];
 }
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
@@ -381,7 +381,7 @@
             if ([viewModel.datasource count] < indexPath.section) {
                 break;
             }
-            if ([[viewModel.datasource objectAtIndex:indexPath.section] count] < indexPath.row) {
+            if ([(NSMutableArray*)[viewModel.datasource objectAtIndex:indexPath.section] count] < indexPath.row) {
                 break;
             }
             DConnectMessage* message = [[viewModel.datasource objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
