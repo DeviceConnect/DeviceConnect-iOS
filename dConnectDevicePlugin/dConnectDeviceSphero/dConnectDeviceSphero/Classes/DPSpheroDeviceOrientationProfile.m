@@ -123,7 +123,7 @@ typedef void (^OrientationBlock)(NSString *serviceId, DPGyroData gyroData, DPPoi
 - (void)handleRequest:(DConnectRequestMessage *)request
              response:(DConnectResponseMessage *)response
              isRemove:(BOOL)isRemove
-             callback:(void(^)())callback
+             callback:(void(^)(void))callback
 {
     DConnectEventManager *mgr = [DConnectEventManager sharedManagerForClass:[DPSpheroDevicePlugin class]];
     DConnectEventError error;
