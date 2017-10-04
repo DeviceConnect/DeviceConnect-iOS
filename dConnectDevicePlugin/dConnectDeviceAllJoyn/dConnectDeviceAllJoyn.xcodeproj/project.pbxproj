@@ -752,7 +752,7 @@
 					"$(PROJECT_DIR)/deps/AllJoyn/darwin/$(CURRENT_ARCH)/$(PLATFORM_NAME)/$(CONFIGURATION)/dist/cpp/inc/alljoyn",
 					"$(PROJECT_DIR)/deps/AllJoynFramework",
 				);
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/deps/CocoaPods/Pods/OpenSSL-Static/lib-ios",
@@ -823,7 +823,7 @@
 					"$(PROJECT_DIR)/deps/AllJoyn/darwin/$(CURRENT_ARCH)/$(PLATFORM_NAME)/$(CONFIGURATION)/dist/cpp/inc/alljoyn",
 					"$(PROJECT_DIR)/deps/AllJoynFramework",
 				);
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/deps/CocoaPods/Pods/OpenSSL-Static/lib-ios",
