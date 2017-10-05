@@ -60,7 +60,7 @@ NSMutableDictionary *deviceList;
 // アプリがバックグラウンドに入った
 - (void)applicationDidEnterBackground
 {
-//    // センサーのマスクを保持
+    // センサーのマスクを保持
     _streamingMask = [RKSetDataStreamingCommand currentMask];
     [RKRobotDiscoveryAgent stopDiscovery];
     [RKRobotDiscoveryAgent disconnectAll];
@@ -210,7 +210,9 @@ NSMutableDictionary *deviceList;
         }
         case RKRobotDisconnected: {
             [self updateManageServices];
-            [RKRobotDiscoveryAgent startDiscovery];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [RKRobotDiscoveryAgent startDiscovery];
+            });
             break;
         }
         default:
