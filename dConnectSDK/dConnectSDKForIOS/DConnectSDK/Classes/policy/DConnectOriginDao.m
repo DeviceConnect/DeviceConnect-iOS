@@ -62,6 +62,37 @@ NSString *const DConnectOriginDaoClmDate = @"date";
     return result;
 }
 
++ (NSArray *) queryWithOrigin:(id<DConnectOrigin>)origin
+                                    title:(NSString *)title
+                               toDatabase:(DConnectSQLiteDatabase *)database
+{
+    NSString *sql = DCEForm(@"SELECT %@, %@, %@, %@ FROM %@ WHERE %@='%@' AND %@='%@'",
+                            DConnectOriginDaoClmId,
+                            DConnectOriginDaoClmOrigin,
+                            DConnectOriginDaoClmTitle,
+                            DConnectOriginDaoClmDate,
+                            DConnectOriginDaoTableName,
+                            DConnectOriginDaoClmOrigin,
+                            origin.stringify,
+                            DConnectOriginDaoClmTitle,
+                            title);
+    DConnectSQLiteCursor *cursor = [database queryWithSQL:sql];
+    NSMutableArray *result = [NSMutableArray array];
+    if ([cursor moveToFirst]) {
+        do {
+            DConnectOriginInfo *info = [DConnectOriginInfo new];
+            info.rowId = [cursor longLongValueAtIndex:0];
+            info.origin = [DConnectOriginParser parse:[cursor stringValueAtIndex:1]];
+            info.title = [cursor stringValueAtIndex:2];
+            info.date = [cursor longLongValueAtIndex:3];
+            [result addObject:info];
+        } while ([cursor moveToNext]);
+    }
+    [cursor close];
+    return result;
+}
+
+
 + (DConnectOriginInfo *) insertWithOrigin:(id<DConnectOrigin>)origin
                                     title:(NSString *)title
                                toDatabase:(DConnectSQLiteDatabase *)database

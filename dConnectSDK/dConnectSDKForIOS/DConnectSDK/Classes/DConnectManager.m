@@ -514,8 +514,7 @@ NSString *const DConnectAttributeNameRequestAccessToken = @"requestAccessToken";
     dispatch_async(_requestQueue, ^{
         // 指定されたプロファイルを取得する
         NSString *profileName = [request profile];
-        
-        if (![_self allowsOriginOfRequest:request]) {
+        if (![_self allowsOriginOfRequest:request] && ![@"files" isEqualToString:profileName]) {
             [response setErrorToInvalidOrigin];
             DConnectProfile *profile = [_self profileWithName:profileName];
             if (profile && [profile isKindOfClass:[DConnectManagerAuthorizationProfile class]]) {
