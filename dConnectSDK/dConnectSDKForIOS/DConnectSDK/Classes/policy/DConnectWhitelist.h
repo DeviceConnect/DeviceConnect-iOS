@@ -17,7 +17,8 @@
 - (NSArray *) origins;
 
 - (BOOL) allows:(id<DConnectOrigin>) origin;
-
+- (BOOL) existOrigin:(id<DConnectOrigin>) origin
+               title:(NSString *)title;
 - (DConnectOriginInfo *) addOrigin:(id<DConnectOrigin>) origin title:(NSString *)title;
 
 - (void) updateOrigin:(DConnectOriginInfo *) info;

@@ -141,13 +141,6 @@
         self.folderBtn.enabled = NO;
         [self.editBtn setTitle:@"編集"];
     }
-
-    //iPadは常に完了ボタンを非表示
-    if ([GHUtils isiPad]) {
-        self.doneBtn.enabled = NO;
-        self.doneBtn.tintColor = nil;
-        self.navigationItem.rightBarButtonItem = nil;
-    }
 }
 
 

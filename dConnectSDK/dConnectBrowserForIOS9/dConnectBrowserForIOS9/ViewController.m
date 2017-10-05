@@ -342,6 +342,13 @@
              }
          }];
     }
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [viewModel updateDeviceList];
+        [viewModel updateDatasource];
+        [self.collectionView reloadData];
+        [self addEmptyLabelIfNeeded];
+    });
 }
 
 //--------------------------------------------------------------//

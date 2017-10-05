@@ -17,7 +17,9 @@
 + (void) createWithDatabase:(DConnectSQLiteDatabase *)database;
 
 + (NSArray *) originsWithDatabase:(DConnectSQLiteDatabase *)database;
-
++ (NSArray *) queryWithOrigin:(id<DConnectOrigin>)origin
+                        title:(NSString *)title
+                   toDatabase:(DConnectSQLiteDatabase *)database;
 + (DConnectOriginInfo *) insertWithOrigin:(id<DConnectOrigin>)origin
                                     title:(NSString *)title
                                toDatabase:(DConnectSQLiteDatabase *)database;
