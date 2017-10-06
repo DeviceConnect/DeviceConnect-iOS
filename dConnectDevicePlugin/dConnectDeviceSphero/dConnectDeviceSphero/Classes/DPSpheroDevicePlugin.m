@@ -54,7 +54,6 @@
                                    selector:@selector(handleRobotOffline)
                                        name:kRobotIsAvailableNotification
                                      object:nil];
-            [[DPSpheroManager sharedManager] applicationWillEnterForeground];
         });
     }
     
