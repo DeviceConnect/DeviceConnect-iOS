@@ -76,7 +76,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [[viewModel.datasource objectAtIndex:section] count];
+    return [(NSMutableArray*)[viewModel.datasource objectAtIndex:section] count];
 }
 
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath

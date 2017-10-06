@@ -293,12 +293,16 @@ static DPLinkingBeaconManager* _sharedInstance = nil;
 
 - (void) startBeaconScanInternal {
     DCLogInfo(@"startBeaconScanInternal");
-    [[BLEConnecter sharedInstance] startPartialScanDevice];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [[BLEConnecter sharedInstance] startPartialScanDevice];
+    });
 }
 
 - (void) stopBeaconScanInternal {
     DCLogInfo(@"stopBeaconScanInternal");
-    [[BLEConnecter sharedInstance] stopPartialScanDevice];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [[BLEConnecter sharedInstance] stopPartialScanDevice];
+    });
 }
 
 - (void) startCheckConnectionOfBeacon {

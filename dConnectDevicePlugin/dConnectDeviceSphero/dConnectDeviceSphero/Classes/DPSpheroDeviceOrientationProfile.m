@@ -11,7 +11,7 @@
 #import "DPSpheroDevicePlugin.h"
 #import "DPSpheroManager.h"
 
-typedef void (^OrientationBlock)(DPGyroData gyroData, DPPoint3D accel, int interval);
+typedef void (^OrientationBlock)(NSString *serviceId, DPGyroData gyroData, DPPoint3D accel, int interval);
 
 @interface DPSpheroDeviceOrientationProfile() <DPSpheroManagerOrientationDelegate>
 
@@ -22,7 +22,7 @@ typedef void (^OrientationBlock)(DPGyroData gyroData, DPPoint3D accel, int inter
  @retval YES イベント登録が存在する場合
  @retval NO イベント登録が存在しない場合
  */
-- (BOOL) hasEventList;
+- (BOOL) hasEventListForServiceId:(NSString*)serviceId;
 
 @end
 
@@ -36,16 +36,16 @@ typedef void (^OrientationBlock)(DPGyroData gyroData, DPPoint3D accel, int inter
         self.orientationBlkArray = [NSMutableArray new];
         __weak DPSpheroDeviceOrientationProfile *weakSelf = self;
 
-        OrientationBlock blk = ^(DPGyroData gyroData, DPPoint3D accel, int interval) {
+        OrientationBlock blk = ^(NSString *serviceId, DPGyroData gyroData, DPPoint3D accel, int interval) {
             DConnectMessage *message = [weakSelf createOrientationWithAttitude:gyroData accel:accel interval:interval];
             
             DConnectEventManager *mgr = [DConnectEventManager sharedManagerForClass:[DPSpheroDevicePlugin class]];
             
-            NSArray *events  = [mgr eventListForServiceId:[DPSpheroManager sharedManager].currentServiceID
+            NSArray *events  = [mgr eventListForServiceId:serviceId
                                                   profile:DConnectDeviceOrientationProfileName
                                                 attribute:DConnectDeviceOrientationProfileAttrOnDeviceOrientation];
             if (events == 0) {
-                [[DPSpheroManager sharedManager] stopSensorOrientation];
+                [[DPSpheroManager sharedManager] stopSensorOrientationForServiceId:serviceId];
             }
             for (DConnectEvent *msg in events) {
                 DConnectMessage *eventMsg = [DConnectEventManager createEventMessageWithEvent:msg];
@@ -67,7 +67,7 @@ typedef void (^OrientationBlock)(DPGyroData gyroData, DPPoint3D accel, int inter
                          // 接続確認
                          CONNECT_CHECK();
                          
-                         OrientationBlock blk = ^(DPGyroData gyroData, DPPoint3D accel, int interval) {
+                         OrientationBlock block = ^(NSString *serviceId, DPGyroData gyroData, DPPoint3D accel, int interval) {
                              DConnectMessage *orientation = [weakSelf createOrientationWithAttitude:gyroData accel:accel interval:interval];
                              [response setResult:DConnectMessageResultTypeOk];
                              [DConnectDeviceOrientationProfile setOrientation:orientation target:response];
@@ -75,12 +75,12 @@ typedef void (^OrientationBlock)(DPGyroData gyroData, DPPoint3D accel, int inter
                              DConnectManager *mgr = [DConnectManager sharedManager];
                              [mgr sendResponse:response];
                              [weakSelf.orientationBlkArray removeObject:blk];
-                             if (![weakSelf hasEventList]) {
-                                 [[DPSpheroManager sharedManager] stopSensorOrientation];
+                             if (![weakSelf hasEventListForServiceId:serviceId]) {
+                                 [[DPSpheroManager sharedManager] stopSensorOrientationForServiceId:serviceId];
                              }
                          };
-                         [[weakSelf orientationBlkArray] addObject:blk];
-                         [[DPSpheroManager sharedManager] startSensorOrientation];
+                         [[weakSelf orientationBlkArray] addObject:block];
+                         [[DPSpheroManager sharedManager] startSensorOrientationForServiceId:serviceId];
                          return NO;
                      }];
         
@@ -95,7 +95,7 @@ typedef void (^OrientationBlock)(DPGyroData gyroData, DPPoint3D accel, int inter
                          CONNECT_CHECK();
                          
                          [weakSelf handleRequest:request response:response isRemove:NO callback:^{
-                             [[DPSpheroManager sharedManager] startSensorOrientation];
+                             [[DPSpheroManager sharedManager] startSensorOrientationForServiceId:serviceId];
                          }];
                          return YES;
                      }];
@@ -111,7 +111,7 @@ typedef void (^OrientationBlock)(DPGyroData gyroData, DPPoint3D accel, int inter
                             CONNECT_CHECK();
                             
                             [weakSelf handleRequest:request response:response isRemove:YES callback:^{
-                                [[DPSpheroManager sharedManager] stopSensorOrientation];
+                                [[DPSpheroManager sharedManager] stopSensorOrientationForServiceId:serviceId];
                             }];
                             return YES;
                         }];
@@ -123,7 +123,7 @@ typedef void (^OrientationBlock)(DPGyroData gyroData, DPPoint3D accel, int inter
 - (void)handleRequest:(DConnectRequestMessage *)request
              response:(DConnectResponseMessage *)response
              isRemove:(BOOL)isRemove
-             callback:(void(^)())callback
+             callback:(void(^)(void))callback
 {
     DConnectEventManager *mgr = [DConnectEventManager sharedManagerForClass:[DPSpheroDevicePlugin class]];
     DConnectEventError error;
@@ -164,9 +164,9 @@ typedef void (^OrientationBlock)(DPGyroData gyroData, DPPoint3D accel, int inter
     return message;
 }
 
-- (BOOL) hasEventList {
+- (BOOL) hasEventListForServiceId:(NSString*)serviceId {
     DConnectEventManager *mgr = [DConnectEventManager sharedManagerForClass:[DPSpheroDevicePlugin class]];
-    NSArray *events  = [mgr eventListForServiceId:[DPSpheroManager sharedManager].currentServiceID
+    NSArray *events  = [mgr eventListForServiceId:serviceId
                                           profile:DConnectDeviceOrientationProfileName
                                         attribute:DConnectDeviceOrientationProfileAttrOnDeviceOrientation];
     return events != nil && events.count > 0;
@@ -175,12 +175,13 @@ typedef void (^OrientationBlock)(DPGyroData gyroData, DPPoint3D accel, int inter
 #pragma mark - DPSpheroManagerOrientationDelegate
 
 // Orientationのイベント処理
-- (void)spheroManagerStreamingOrientation:(DPGyroData)gyroData
-                                    accel:(DPPoint3D)accel
-                                 interval:(int)interval
+- (void)spheroManagerStreamingOrientationForServiceId:(NSString*)serviceId
+                                             gyroData:(DPGyroData)gyroData
+                                                accel:(DPPoint3D)accel
+                                             interval:(int)interval
 {
     for (OrientationBlock blk in [self.orientationBlkArray reverseObjectEnumerator]) {
-        blk(gyroData, accel, interval);
+        blk(serviceId, gyroData, accel, interval);
     }
 }
 

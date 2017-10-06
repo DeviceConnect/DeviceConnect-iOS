@@ -39,7 +39,7 @@
                               [response setErrorToInvalidRequestParameterWithMessage:@"invalid angle value."];
                               return YES;
                           }
-                          if (![[DPSpheroManager sharedManager] existDigitWithString:angleString] || angle < 0 || angle > 360 ) {
+                          if (![[DPSpheroManager sharedManager] existDecimalWithString:angleString] || angle < 0 || angle > 360 ) {
                               [response setErrorToInvalidRequestParameterWithMessage:@"invalid angle value."];
                               return YES;
                           }
@@ -54,7 +54,7 @@
                           }
                           
                           // 移動
-                          [[DPSpheroManager sharedManager] move:angle velocity:speed];
+                          [[DPSpheroManager sharedManager] move:angle velocity:speed serviceId:serviceId];
                           
                           [response setResult:DConnectMessageResultTypeOk];
                           return YES;
@@ -78,14 +78,14 @@
                               [response setErrorToInvalidRequestParameterWithMessage:@"invalid angle value."];
                               return YES;
                           }
-                          if(![[DPSpheroManager sharedManager] existDigitWithString:angleString]
+                          if(![[DPSpheroManager sharedManager] existDecimalWithString:angleString]
                              || angle < 0 || angle > 360) {
                               [response setErrorToInvalidRequestParameterWithMessage:@"invalid angle value."];
                               return YES;
                           }
                           
                           // 回転
-                          [[DPSpheroManager sharedManager] rotate:angle];
+                          [[DPSpheroManager sharedManager] rotate:angle serviceId:serviceId];
                           
                           [response setResult:DConnectMessageResultTypeOk];
                           return YES;
@@ -103,7 +103,7 @@
                           CONNECT_CHECK();
                           
                           // 停止
-                          [[DPSpheroManager sharedManager] stop];
+                          [[DPSpheroManager sharedManager] stopWithServiceId:serviceId];
                           
                           [response setResult:DConnectMessageResultTypeOk];
                           return YES;

@@ -9,6 +9,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <RobotKit/RobotKit.h>
 #import <DConnectSDK/DConnectServiceProvider.h>
 
 /*!
@@ -43,8 +44,9 @@ typedef struct DPGyroData_ {
  @param[in] q Quaternion
  @param[in] interval Quaternionを通知する間隔
  */
-- (void)spheroManagerStreamingQuaternion:(DPQuaternion)q
-                                interval:(int)interval;
+- (void)spheroManagerStreamingQuaternionForServiceId:(NSString*)serviceId
+                                          quaternion:(DPQuaternion)q
+                                            interval:(int)interval;
 
 /*!
  @brief SpheroのLocatorを通知する。
@@ -53,9 +55,10 @@ typedef struct DPGyroData_ {
  @param[in] velocity Locatorの速度座標
  @param[in] interval Locatorを通知する間隔
  */
-- (void)spheroManagerStreamingLocatorPos:(CGPoint)pos
-                                velocity:(CGPoint)velocity
-                                interval:(int)interval;
+- (void)spheroManagerStreamingLocatorForServiceId:(NSString*)serviceId
+                                              pos:(CGPoint)pos
+                                         velocity:(CGPoint)velocity
+                                         interval:(int)interval;
 /*!
  @brief SpheroのCollisionを通知する。
  
@@ -65,11 +68,12 @@ typedef struct DPGyroData_ {
  @param[in] speed Collisionの速度
  @param[in] time Collisionを通知する間隔
  */
-- (void)spheroManagerStreamingCollisionImpactAcceleration:(DPPoint3D)accel
-                                                     axis:(CGPoint)axis
-                                                    power:(CGPoint)power
-                                                    speed:(float)speed
-                                                     time:(NSTimeInterval)time;
+- (void)spheroManagerStreamingCollisionForServiceId:(NSString*)serviceId
+                                 impactAcceleration:(DPPoint3D)accel
+                                               axis:(CGPoint)axis
+                                              power:(CGPoint)power
+                                              speed:(float)speed
+                                               time:(NSTimeInterval)time;
 @end
 
 /*!
@@ -83,9 +87,10 @@ typedef struct DPGyroData_ {
  @param[in] accel 加速度
  @param[in] interval このセンサー値を通知する間隔
  */
-- (void)spheroManagerStreamingOrientation:(DPGyroData)gyroData
-                                    accel:(DPPoint3D)accel
-                                 interval:(int)interval;
+- (void)spheroManagerStreamingOrientationForServiceId:(NSString*)serviceId
+                                             gyroData:(DPGyroData)gyroData
+                                                accel:(DPPoint3D)accel
+                                             interval:(int)interval;
 @end
 
 
@@ -93,7 +98,7 @@ typedef struct DPGyroData_ {
 /*!
  @brief Spheroの制御クラス
  */
-@interface DPSpheroManager : NSObject
+@interface DPSpheroManager : NSObject<RKResponseObserver>
 
 /*!
  @brief ServiceProvider.
@@ -180,61 +185,74 @@ typedef struct DPGyroData_ {
 - (BOOL)connectDeviceWithID:(NSString*)serviceID;
 
 /*!
+ @brief CalibrationのライトON/OFF。
+ */
+- (void)setCalibrationLightBright:(float)calibrationLightBright serviceId:(NSString*)serviceId;
+
+/*!
+ @breif LEDライトの色変更。
+ */
+- (void)setLEDLightColor:(UIColor*)color serviceId:(NSString*)serviceId;
+
+
+/*!
  @brief 移動。
  */
 - (void)move:(float)angle
-    velocity:(float)velocity;
+    velocity:(float)velocity
+   serviceId:(NSString*)serviceId;
 
 /*!
  @brief 回転。
  */
-- (void)rotate:(float)angle;
+- (void)rotate:(float)angle
+     serviceId:(NSString*)serviceId;
 
 /*!
  @brief 停止。
  */
-- (void)stop;
+- (void)stopWithServiceId:(NSString*)serviceId;
 
 
 /*!
  @brief 姿勢センサーのスタート。
  */
-- (void)startSensorOrientation;
+- (void)startSensorOrientationForServiceId:(NSString*)serviceId;
 
 /*!
  @brief 姿勢センサーのストップ。
  */
-- (void)stopSensorOrientation;
+- (void)stopSensorOrientationForServiceId:(NSString*)serviceId;
 
 /*!
  @brief Quaternionセンサーのスタート。
  */
-- (void)startSensorQuaternion;
+- (void)startSensorQuaternionForServiceId:(NSString*)serviceId;
 
 /*!
  @brief Quaternionセンサーのストップ。
  */
-- (void)stopSensorQuaternion;
+- (void)stopSensorQuaternionForServiceId:(NSString*)serviceId;
 
 /*!
  @brief Locatorセンサーのスタート。
  */
-- (void)startSensorLocator;
+- (void)startSensorLocatorForServiceId:(NSString*)serviceId;
 
 /*!
  @brief Locatorセンサーのストップ。
  */
-- (void)stopSensorLocator;
+- (void)stopSensorLocatorForServiceId:(NSString*)serviceId;
 
 /*!
  @brief Collisionセンサーのスタート。
  */
-- (void)startSensorCollision;
+- (void)startSensorCollisionForServiceId:(NSString*)serviceId;
 
 /*!
  @brief Collisionセンサーのストップ。
  */
-- (void)stopSensorCollision;
+- (void)stopSensorCollisionForServiceId:(NSString*)serviceId;
 
 /*!
  @brief 全センサー停止。
@@ -251,16 +269,6 @@ typedef struct DPGyroData_ {
  */
 - (BOOL)existDecimalWithString:(NSString*)decimal;
 
-
-
-/*!
- @brief Observerの登録。
- */
-- (void)addResponseObserver;
-/*!
- @brief Observerの削除。
- */
-- (void)removeResponseObserver;
 
 
 /*!
