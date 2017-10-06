@@ -9,8 +9,8 @@
 
 #import <Foundation/Foundation.h>
 
-typedef void (^DPSpheroUtilTimerBlock)();
-typedef void (^DPSpheroUtilTimerCancelBlock)();
+typedef void (^DPSpheroUtilTimerBlock)(void);
+typedef void (^DPSpheroUtilTimerCancelBlock)(void);
 
 @interface DPSpheroUtil : NSObject
 
