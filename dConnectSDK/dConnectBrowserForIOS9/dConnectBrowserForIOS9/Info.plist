@@ -59,6 +59,8 @@
 	<string>アプリ使用時のみ位置情報を使用します。</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>電話をかけることができます。</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>撮影した写真を保存します。</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>写真を参照することができます。</string>
 	<key>UILaunchStoryboardName</key>
