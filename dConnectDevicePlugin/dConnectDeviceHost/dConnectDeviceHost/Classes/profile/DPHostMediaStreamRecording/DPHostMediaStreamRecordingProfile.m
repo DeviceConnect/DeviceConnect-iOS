@@ -482,6 +482,9 @@ typedef NS_ENUM(NSUInteger, OptionIndex) {
                                   [recorder.session startRunning];
                               }
                               
+                              // ライトが点いていたら消灯する。
+                              [weakSelf setLightOff];
+                              
                               // 写真を撮影する。
                               __block AVCaptureDevice *captureDevice = [AVCaptureDevice deviceWithUniqueID:recorder.videoDevice.uniqueId];
                               NSError *error;
@@ -698,6 +701,9 @@ typedef NS_ENUM(NSUInteger, OptionIndex) {
                                    return;
                                }
                                
+                               // ライトが点いていたら消灯する。
+                               [weakSelf setLightOff];
+
                                recorder.videoOrientation = [recorder.videoConnection videoOrientation];
                                
                                AVCaptureDevice *captureDevice = [AVCaptureDevice deviceWithUniqueID:recorder.videoDevice.uniqueId];
@@ -2060,6 +2066,16 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
     if ( UIDeviceOrientationIsPortrait(orientation) || UIDeviceOrientationIsLandscape(orientation) ) {
         _referenceOrientation = orientation;
     }
+}
+
+- (void)setLightOff
+{
+    AVCaptureDevice *captureDevice = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
+    [captureDevice lockForConfiguration:NULL];
+    if (captureDevice.torchMode == AVCaptureTorchModeOn) {
+        captureDevice.torchMode = AVCaptureTorchModeOff;
+    }
+    [captureDevice unlockForConfiguration];
 }
 
 @end
