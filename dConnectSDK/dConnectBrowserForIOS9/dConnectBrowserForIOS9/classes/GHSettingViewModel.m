@@ -238,8 +238,8 @@
 - (void)checkOriginAndLocalOAuth:(BOOL)isOn type:(int)type copmletion:(void (^)())completion
 {
     if (type == SecurityCellTypeOrigin
-        && [[NSUserDefaults standardUserDefaults] boolForKey:IS_USE_LOCALOAUTH]
-        && [[NSUserDefaults standardUserDefaults] boolForKey:IS_ORIGIN_ENABLE]) {
+        && [DConnectManager sharedManager].settings.useLocalOAuth
+        && [DConnectManager sharedManager].settings.useOriginEnable) {
         NSString *message = @"下記の機能がアプリのOriginを参照するため下記もOFFに切り替わります。\n- LocalOAuth\nよろしいですか？";
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"警告" message:message preferredStyle:UIAlertControllerStyleAlert];
         [alertController addAction:[UIAlertAction actionWithTitle:@"はい" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
@@ -261,8 +261,8 @@
     
         [[self rootViewController] presentViewController:alertController animated:YES completion:nil];
     } else if (type == SecurityCellTypeLocalOAuth
-               && ![[NSUserDefaults standardUserDefaults] boolForKey:IS_USE_LOCALOAUTH]
-               && ![[NSUserDefaults standardUserDefaults] boolForKey:IS_ORIGIN_ENABLE]) {
+               && ![DConnectManager sharedManager].settings.useLocalOAuth
+               && ![DConnectManager sharedManager].settings.useOriginEnable) {
         NSString *message = @"本機能はアプリのOriginを参照するため、下記もONに切り替わります。\n- Origin(有効/無効)\nよろしいでしょうか？";
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"警告" message:message preferredStyle:UIAlertControllerStyleAlert];
         [alertController addAction:[UIAlertAction actionWithTitle:@"はい" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {

@@ -418,6 +418,7 @@ var util = (function(parent, global) {
         builder.setAccessToken(accessToken);
         builder.addParameter('mediaId', id);
         var uri = builder.build();
+        dConnect.setExtendedOrigin("file://");
         dConnect.put(uri, null, null, function(json) {
             var builder = new dConnect.URIBuilder();
             builder.setProfile('mediaplayer');
@@ -430,10 +431,10 @@ var util = (function(parent, global) {
                 callback();
             }
         }, function(errorCode, errorMessage) {
-            console.log("error:" + errorMessage);
+            console.log("Play error:" + errorMessage);
       });
      }, function(errorCode, errorMessage) {
-         console.log("error:" + errorMessage);
+         console.log("Set Media error:" + errorMessage);
      });
     }
     parent.doMediaPlayerMediaPut = doMediaPlayerMediaPut;

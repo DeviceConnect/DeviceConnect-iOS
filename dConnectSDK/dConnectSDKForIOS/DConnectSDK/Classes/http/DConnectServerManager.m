@@ -104,7 +104,7 @@ typedef NS_ENUM(NSInteger, RequestExceptionType) {
     NSArray *keys = [response allKeys];
     for (NSString *key in keys) {
         NSObject *obj = [response objectForKey:key];
-        if ([key isEqualToString:@"uri"]) {
+        if ([obj isKindOfClass:[NSString class]] && [key isEqualToString:@"uri"]) {
             NSString *uri = (NSString *)obj;
             
             // http, httpsで指定されているURLは直接アクセスできるのでFilesAPIを利用しない

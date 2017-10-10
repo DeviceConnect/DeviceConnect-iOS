@@ -11,7 +11,7 @@
 #define DC_SYNC_END }
 
 #define DCBundle() \
-[NSBundle bundleWithPath:[[NSBundle mainBundle] pathForResource:@"DConnectSDK_resources" ofType:@"bundle"]]
+[NSBundle bundleWithPath:[[NSBundle bundleForClass:NSClassFromString(@"DConnectManager")] pathForResource:@"DConnectSDK_resources" ofType:@"bundle"]]
 
 #define DCLocalizedString(bundle, key) \
 [bundle localizedStringForKey:key value:@"" table:nil]
