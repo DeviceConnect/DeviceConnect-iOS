@@ -62,6 +62,10 @@
 		97FE1A21192B6DA400808FA5 /* DPHostSystemProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 97FE1A20192B6DA400808FA5 /* DPHostSystemProfile.m */; };
 		AB3B2C281BCF311000C5E3A2 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB3B2C261BCF311000C5E3A2 /* AVFoundation.framework */; };
 		AB3B2C291BCF311000C5E3A2 /* AVKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB3B2C271BCF311000C5E3A2 /* AVKit.framework */; };
+		AB912A791F8F174B002ABE36 /* DPHostMediaPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = AB912A781F8F174B002ABE36 /* DPHostMediaPlayer.m */; };
+		AB912A7C1F8F3081002ABE36 /* DPHostIPodAudioPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = AB912A7B1F8F3081002ABE36 /* DPHostIPodAudioPlayer.m */; };
+		AB912A7F1F8F4092002ABE36 /* DPHostMoviePlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = AB912A7E1F8F4092002ABE36 /* DPHostMoviePlayer.m */; };
+		AB912A821F8F5AD9002ABE36 /* DPHostMediaPlayerFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = AB912A811F8F5AD9002ABE36 /* DPHostMediaPlayerFactory.m */; };
 		ABA43AC41EE562ED0019FE35 /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABA43AC31EE562ED0019FE35 /* UserNotifications.framework */; };
 		ABDA3C6D1A0C58F3001F30A0 /* DPHostConnectionProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = ABDA3C6C1A0C58F3001F30A0 /* DPHostConnectionProfile.m */; };
 		ABDA3C701A0C743A001F30A0 /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABDA3C6F1A0C743A001F30A0 /* CoreBluetooth.framework */; };
@@ -151,6 +155,14 @@
 		97FE1A20192B6DA400808FA5 /* DPHostSystemProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHostSystemProfile.m; sourceTree = "<group>"; };
 		AB3B2C261BCF311000C5E3A2 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		AB3B2C271BCF311000C5E3A2 /* AVKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVKit.framework; path = System/Library/Frameworks/AVKit.framework; sourceTree = SDKROOT; };
+		AB912A771F8F174B002ABE36 /* DPHostMediaPlayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DPHostMediaPlayer.h; sourceTree = "<group>"; };
+		AB912A781F8F174B002ABE36 /* DPHostMediaPlayer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DPHostMediaPlayer.m; sourceTree = "<group>"; };
+		AB912A7A1F8F3081002ABE36 /* DPHostIPodAudioPlayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DPHostIPodAudioPlayer.h; sourceTree = "<group>"; };
+		AB912A7B1F8F3081002ABE36 /* DPHostIPodAudioPlayer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DPHostIPodAudioPlayer.m; sourceTree = "<group>"; };
+		AB912A7D1F8F4092002ABE36 /* DPHostMoviePlayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DPHostMoviePlayer.h; sourceTree = "<group>"; };
+		AB912A7E1F8F4092002ABE36 /* DPHostMoviePlayer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DPHostMoviePlayer.m; sourceTree = "<group>"; };
+		AB912A801F8F5AD9002ABE36 /* DPHostMediaPlayerFactory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DPHostMediaPlayerFactory.h; sourceTree = "<group>"; };
+		AB912A811F8F5AD9002ABE36 /* DPHostMediaPlayerFactory.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DPHostMediaPlayerFactory.m; sourceTree = "<group>"; };
 		ABA43AC31EE562ED0019FE35 /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
 		ABDA3C6B1A0C58F3001F30A0 /* DPHostConnectionProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHostConnectionProfile.h; sourceTree = "<group>"; };
 		ABDA3C6C1A0C58F3001F30A0 /* DPHostConnectionProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHostConnectionProfile.m; sourceTree = "<group>"; };
@@ -261,6 +273,7 @@
 		25F0BC31199310C10095C333 /* DPHostMediaPlayer */ = {
 			isa = PBXGroup;
 			children = (
+				AB912A761F8F13A4002ABE36 /* Players */,
 				25F0BC3F199343600095C333 /* DPHostMediaContext.h */,
 				25F0BC40199343600095C333 /* DPHostMediaContext.m */,
 				25E0296F1991BD3400AFC171 /* DPHostMediaPlayerProfile.h */,
@@ -405,6 +418,21 @@
 				25DF80D8196CE622003F6FF3 /* DPHostVibrationProfile.m */,
 			);
 			path = profile;
+			sourceTree = "<group>";
+		};
+		AB912A761F8F13A4002ABE36 /* Players */ = {
+			isa = PBXGroup;
+			children = (
+				AB912A771F8F174B002ABE36 /* DPHostMediaPlayer.h */,
+				AB912A781F8F174B002ABE36 /* DPHostMediaPlayer.m */,
+				AB912A7A1F8F3081002ABE36 /* DPHostIPodAudioPlayer.h */,
+				AB912A7B1F8F3081002ABE36 /* DPHostIPodAudioPlayer.m */,
+				AB912A7D1F8F4092002ABE36 /* DPHostMoviePlayer.h */,
+				AB912A7E1F8F4092002ABE36 /* DPHostMoviePlayer.m */,
+				AB912A801F8F5AD9002ABE36 /* DPHostMediaPlayerFactory.h */,
+				AB912A811F8F5AD9002ABE36 /* DPHostMediaPlayerFactory.m */,
+			);
+			path = Players;
 			sourceTree = "<group>";
 		};
 		D6384EAA1A7625CF00384167 /* DPHostCanvas */ = {
@@ -633,6 +661,7 @@
 				EFA3EC4E1E45DD95007E559E /* DPHostGeolocationProfile.m in Sources */,
 				97FE19F2192B2FB400808FA5 /* DPHostDevicePlugin.m in Sources */,
 				D6384EA91A7625BD00384167 /* DPHostCanvasProfile.m in Sources */,
+				AB912A7C1F8F3081002ABE36 /* DPHostIPodAudioPlayer.m in Sources */,
 				D6C860251D38D3AF00232EEF /* DPHostService.m in Sources */,
 				D69997451A7E210D00EF934F /* DPHostCanvasView.m in Sources */,
 				D6384EAD1A7625CF00384167 /* DPHostCanvasUIViewController.m in Sources */,
@@ -640,8 +669,10 @@
 				25FF1DB7196A9B8000EA7F72 /* DPHostNotificationProfile.m in Sources */,
 				25F0BC41199343600095C333 /* DPHostMediaContext.m in Sources */,
 				25FF1DB1196A89A700EA7F72 /* DPHostFileProfile.m in Sources */,
+				AB912A821F8F5AD9002ABE36 /* DPHostMediaPlayerFactory.m in Sources */,
 				25DF80D6196CCD7D003F6FF3 /* DPHostBatteryProfile.m in Sources */,
 				25FF1DBA196AA53400EA7F72 /* DPHostDeviceOrientationProfile.m in Sources */,
+				AB912A791F8F174B002ABE36 /* DPHostMediaPlayer.m in Sources */,
 				EFDD96A71AB805F70068E984 /* DPHostTouchUIViewController.m in Sources */,
 				EFDD96A11AB805980068E984 /* DPHostTouchProfile.m in Sources */,
 				25B42C6519865F1000B65E83 /* DPHostRecorderContext.m in Sources */,
@@ -654,6 +685,7 @@
 				EFF228D01E3A05DF0006F100 /* DPHostDeviceRepeatExecutor.m in Sources */,
 				EFF228D31E3A05DF0006F100 /* DPHostTimeoutSchedule.m in Sources */,
 				EFF228D61E3A05DF0006F100 /* DPHostUtil.m in Sources */,
+				AB912A7F1F8F4092002ABE36 /* DPHostMoviePlayer.m in Sources */,
 				D69997481A7F1AD800EF934F /* DPHostCanvasDrawObject.m in Sources */,
 				2585BB941980D89F00AAE43C /* DPHostSettingProfile.m in Sources */,
 				ABDA3C6D1A0C58F3001F30A0 /* DPHostConnectionProfile.m in Sources */,

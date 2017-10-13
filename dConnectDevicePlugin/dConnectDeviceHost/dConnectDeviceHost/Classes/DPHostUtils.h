@@ -11,6 +11,7 @@
 
 #define SELF_PLUGIN ((DPHostDevicePlugin *)self.plugin)
 #define WEAKSELF_PLUGIN ((DPHostDevicePlugin *)weakSelf.plugin)
+#define SUPER_PLUGIN ((DPHostDevicePlugin *)super.plugin)
 
 @interface DPHostUtils : NSObject
 
