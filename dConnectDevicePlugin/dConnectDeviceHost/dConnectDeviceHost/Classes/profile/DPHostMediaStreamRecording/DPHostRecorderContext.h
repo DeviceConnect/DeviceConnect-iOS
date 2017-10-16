@@ -11,6 +11,8 @@
 #import <CoreMedia/CoreMedia.h>
 #import <UIKit/UIKit.h>
 
+#import "DPHostMediaStreamRecordingProfile.h"
+#import "DPHostDevicePlugin.h"
 typedef NS_ENUM(NSUInteger, RecorderDataSourceType) {
     RecorderDataSourceTypePhoto, ///< 写真（静止画）
     RecorderDataSourceTypeAudio, ///< オーディオ（動画における音声）
@@ -27,6 +29,7 @@ typedef NS_ENUM(NSUInteger, RecorderState) {
     RecorderStatePaused,    ///< 撮影状態「撮影一時停止中 ("paused")」
     RecorderStateRecording, ///< 撮影状態「撮影中 ("recording")」
 };
+
 
 /*!
  入力デバイス管理クラス
@@ -87,7 +90,8 @@ typedef NS_ENUM(NSUInteger, RecorderState) {
 @property (nonatomic) AVCaptureVideoOrientation videoOrientation; ///< 録画開始時のビデオの向き
 
 @property (nonatomic) AVAssetWriter *writer; ///< レコーディング内容の書き出しを行うオブジェクト
-@property (nonatomic) DConnectResponseMessage *response; ///< AVAssetWriterの初期化および書き出し成功を確認した際に用いるHTTPレスポンス。
+/// @brief イベントマネージャ
+@property DConnectEventManager *eventMgr;
 
 /*!
  キャプチャーセッション。
@@ -106,10 +110,9 @@ typedef NS_ENUM(NSUInteger, RecorderState) {
 @property (nonatomic) BOOL videoReady; ///< ビデオ入力デバイスのレコーディング準備が整っているかどうか
 
 /*!
- @param[in] profile このコンテキストを所有しているDPHostMediaStreamRecordingProfile
  @return レコーディングコンテキスト
  */
-- (instancetype)initWithProfile:(DPHostMediaStreamRecordingProfile *)profile;
+- (instancetype)init;
 
 /*!
  キャプチャーセッションに指定されたデバイスが既にInputとして追加されているかどうかをチェックする
@@ -158,14 +161,10 @@ typedef NS_ENUM(NSUInteger, RecorderState) {
  @retval YES アセットライターのインスタンス化に成功
  @retval NO アセットライターのインスタンス化に失敗
  */
-- (BOOL) setupAssetWriterWithResponse:(DConnectResponseMessage *)response;
+- (BOOL) setupAssetWriter;
 
-/*!
- HTTPレスポンスを返却する。
- 既にHTTPレスポンスを返却済みの場合は何もおこらない。
- */
-- (void) sendResponse;
 
 - (void) sendOnRecordingChangeEventWithStatus:(NSNotification *)notification;
+
 
 @end

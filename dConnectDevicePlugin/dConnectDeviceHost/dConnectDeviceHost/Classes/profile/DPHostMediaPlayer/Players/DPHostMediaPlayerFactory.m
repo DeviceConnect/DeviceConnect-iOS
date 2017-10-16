@@ -23,7 +23,7 @@
     DPHostMediaPlayer *player = nil;
     DPHostMediaContext *ctx = [DPHostMediaContext contextWithURL:url];
     if (!ctx) {
-        *error = [DPHostMediaPlayer throwsErrorCode:DConnectMessageErrorCodeInvalidRequestParameter message:@"MediaId is Invalid"];
+        *error = [DPHostUtils throwsErrorCode:DConnectMessageErrorCodeInvalidRequestParameter message:@"MediaId is Invalid"];
         return nil;
     }
     BOOL isIPodAudioMedia = [url.scheme isEqualToString:MediaContextMediaIdSchemeIPodAudio];
@@ -63,22 +63,22 @@
     }
     
     if (offset && offset.integerValue < 0) {
-        *error = [DPHostMediaPlayer throwsErrorCode:DConnectMessageErrorCodeInvalidRequestParameter message:@"offset must be a non-negative value."];
+        *error = [DPHostUtils throwsErrorCode:DConnectMessageErrorCodeInvalidRequestParameter message:@"offset must be a non-negative value."];
         return nil;
     }
     if (limit && limit.integerValue < 0) {
-        *error = [DPHostMediaPlayer throwsErrorCode:DConnectMessageErrorCodeInvalidRequestParameter message:@"limit must be a positive value."];
+        *error = [DPHostUtils throwsErrorCode:DConnectMessageErrorCodeInvalidRequestParameter message:@"limit must be a positive value."];
         return nil;
     }
     NSString *limitString = [limit stringValue];
     NSString *offsetString = [offset stringValue];
     if (![DPHostUtils existDigitWithString:limitString]) {
-        *error = [DPHostMediaPlayer throwsErrorCode:DConnectMessageErrorCodeInvalidRequestParameter
+        *error = [DPHostUtils throwsErrorCode:DConnectMessageErrorCodeInvalidRequestParameter
                                             message:@"limit must be a digit number."];
         return nil;
     }
     if (![DPHostUtils existDigitWithString:offsetString]) {
-        *error = [DPHostMediaPlayer throwsErrorCode:DConnectMessageErrorCodeInvalidRequestParameter
+        *error = [DPHostUtils throwsErrorCode:DConnectMessageErrorCodeInvalidRequestParameter
                                             message:@"offset must be a digit number."];
         return nil;
     }
@@ -86,7 +86,7 @@
     [ctxArr addObjectsFromArray:[self contextsBySearchingAssetsLibraryWithQuery:query mimeType:mimeType]];
     [ctxArr addObjectsFromArray:[self contextsBySearchingIPodLibraryWithQuery:query mimeType:mimeType]];
     if (offset && offset.integerValue >= ctxArr.count) {
-        *error = [DPHostMediaPlayer throwsErrorCode:DConnectMessageErrorCodeInvalidRequestParameter
+        *error = [DPHostUtils throwsErrorCode:DConnectMessageErrorCodeInvalidRequestParameter
                                             message:@"offset exceeds the size of the media list."];
         return nil;
     }
@@ -265,7 +265,7 @@
             *sortOrder = order[1];
         }
         if (!(*sortTarget) || !(*sortOrder)) {
-            *error = [DPHostMediaPlayer throwsErrorCode:DConnectMessageErrorCodeInvalidRequestParameter message:@"order is invalid."];
+            *error = [DPHostUtils throwsErrorCode:DConnectMessageErrorCodeInvalidRequestParameter message:@"order is invalid."];
         }
     } else {
         *sortTarget = DConnectMediaPlayerProfileParamTitle;
@@ -338,7 +338,7 @@
             return [obj1 localizedCaseInsensitiveCompare: obj2];
         };
     } else {
-        *error = [DPHostMediaPlayer throwsErrorCode:DConnectMessageErrorCodeInvalidRequestParameter message:@"order is invalid."];
+        *error = [DPHostUtils throwsErrorCode:DConnectMessageErrorCodeInvalidRequestParameter message:@"order is invalid."];
     }
     
     
@@ -357,7 +357,7 @@
         };
     } else if (![sortOrder isEqualToString:DConnectMediaPlayerProfileOrderASC]
                && ![sortOrder isEqualToString:DConnectMediaPlayerProfileOrderDESC]) {
-        *error = [DPHostMediaPlayer throwsErrorCode:DConnectMessageErrorCodeInvalidRequestParameter message:@"order is invalid."];
+        *error = [DPHostUtils throwsErrorCode:DConnectMessageErrorCodeInvalidRequestParameter message:@"order is invalid."];
     }
 }
 

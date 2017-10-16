@@ -7,10 +7,11 @@
 //  http://opensource.org/licenses/mit-license.php
 //
 
+#import <DConnectSDK/DConnectSDK.h>
 #import "DPHostMediaStreamRecordingProfile.h"
 #import "DPHostService.h"
 #import "DPHostRecorderContext.h"
-
+#import "DPHostDevicePlugin.h"
 const char * const AudioCaptureQueueName = "org.deviceconnect.ios.host.mediastream_recording.audio_capture";
 const char * const VideoCaptureQueueName = "org.deviceconnect.ios.host.mediastream_recording.video_capture";
 
@@ -84,11 +85,11 @@ const char * const VideoCaptureQueueName = "org.deviceconnect.ios.host.mediastre
 @implementation DPHostRecorderContext
 
 
-- (instancetype)initWithProfile:(DPHostMediaStreamRecordingProfile *)profile
+- (instancetype)init
 {
     self = [super init];
     if (self) {
-        self.profile = profile;
+        self.eventMgr = [DConnectEventManager sharedManagerForClass:[DPHostDevicePlugin class]];
         self.isMuted = NO;
         self.videoOrientation = AVCaptureVideoOrientationPortrait;
         
@@ -285,10 +286,9 @@ const char * const VideoCaptureQueueName = "org.deviceconnect.ios.host.mediastre
     }
 }
 
-- (BOOL) setupAssetWriterWithResponse:(DConnectResponseMessage *)response;
+- (BOOL) setupAssetWriter
 {
     // AVAssetWriterの初期化および書き出し成功を確認した際に用いるHTTPレスポンス。
-    _response = response;
     NSString *fileName = [NSString stringWithFormat:@"%@_%@",
                           [[NSProcessInfo processInfo] globallyUniqueString],
                           @"movie.mp4"];
@@ -300,18 +300,10 @@ const char * const VideoCaptureQueueName = "org.deviceconnect.ios.host.mediastre
     return _writer != nil;
 }
 
-- (void) sendResponse
-{
-    if (_response) {
-        [[DConnectManager sharedManager] sendResponse:_response];
-        _response = nil;
-    }
-}
-
 - (void) sendOnRecordingChangeEventWithStatus:(NSNotification *)notification
 {
     // イベントの取得
-    NSArray *evts = [_profile.eventMgr eventListForServiceId:DPHostDevicePluginServiceId
+    NSArray *evts = [self.eventMgr eventListForServiceId:DPHostDevicePluginServiceId
                                                     profile:DConnectMediaStreamRecordingProfileName
                                                   attribute:DConnectMediaStreamRecordingProfileAttrOnPhoto];
     // イベント送信

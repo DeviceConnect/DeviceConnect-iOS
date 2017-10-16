@@ -15,6 +15,8 @@
 static NSString * const kDPHostRegexDecimalPoint = @"^[-+]?([0-9]*)?(\\.)?([0-9]*)?$";
 static NSString * const kDPHostRegexDigit = @"^([0-9]*)?$";
 static NSString * const kDPHostRegexCSV = @"^([^,]*,)+";
+// Error Domain
+static NSString *const kDPHostMediaPlayerErrorDomain = @"org.deviceconnect.ios.deviceplugin.host.mediaplayer.error";
 
 @implementation DPHostUtils
 
@@ -66,4 +68,30 @@ static NSString * const kDPHostRegexCSV = @"^([^,]*,)+";
     return [self existNumberWithString:csv Regex:kDPHostRegexCSV];
 }
 
++ (NSError*)throwsErrorCode:(NSInteger)code message:(NSString *)message
+{
+    NSMutableDictionary *errorDetail = [NSMutableDictionary dictionary];
+    errorDetail[NSLocalizedDescriptionKey] = message;
+    return [NSError errorWithDomain:kDPHostMediaPlayerErrorDomain code:code userInfo:errorDetail.mutableCopy].copy;
+}
+
++ (UIViewController*)topViewController
+{
+    return [self topViewController:[UIApplication sharedApplication].keyWindow.rootViewController];
+}
+
++ (UIViewController*)topViewController:(UIViewController *)rootViewController
+{
+    if (!rootViewController.presentedViewController) {
+        return rootViewController;
+    }
+    if ([rootViewController.presentedViewController isMemberOfClass:[UINavigationController class]]) {
+        UINavigationController *navigationController = (UINavigationController*) rootViewController.presentedViewController;
+        UIViewController *lastViewController = [[navigationController viewControllers] lastObject];
+        return [self topViewController:lastViewController];
+    }
+    
+    UIViewController *presentedViewController = (UIViewController*) rootViewController.presentedViewController;
+    return [self topViewController:presentedViewController];
+}
 @end

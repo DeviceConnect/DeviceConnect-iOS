@@ -12,7 +12,6 @@
 
 @interface DPHostMediaStreamRecordingProfile : DConnectMediaStreamRecordingProfile<DConnectMediaStreamRecordingProfileDelegate, AVCaptureAudioDataOutputSampleBufferDelegate, AVCaptureVideoDataOutputSampleBufferDelegate>
 
-/// @brief イベントマネージャ
-@property DConnectEventManager *eventMgr;
+
 
 @end

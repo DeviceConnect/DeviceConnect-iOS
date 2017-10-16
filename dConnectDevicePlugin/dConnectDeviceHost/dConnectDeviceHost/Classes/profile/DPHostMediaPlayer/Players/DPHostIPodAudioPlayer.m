@@ -39,7 +39,7 @@
         [mediaQuery addFilterPredicate:[MPMediaPropertyPredicate predicateWithValue:persistentId forProperty:MPMediaItemPropertyPersistentID]];
         NSArray *items = [mediaQuery items];
         if (items.count == 0) {
-            *error = [DPHostMediaPlayer throwsErrorCode:DConnectMessageErrorCodeInvalidRequestParameter message:@"Media specified by mediaId does not found"];
+            *error = [DPHostUtils throwsErrorCode:DConnectMessageErrorCodeInvalidRequestParameter message:@"Media specified by mediaId does not found"];
             return nil;
         }
         self.currentItem = items[0];
@@ -86,7 +86,7 @@
             // （つまりiOSデバイス側にまだダウンロードされていない）で、
             // 尚かつインターネット接続が無い場合は
             // 再生できない。
-            *error = [DPHostMediaPlayer throwsErrorCode:DConnectMessageErrorCodeUnknown message:
+            *error = [DPHostUtils throwsErrorCode:DConnectMessageErrorCodeUnknown message:
              @"Internet is not reachable; the specified audio media item "
              "is an iClould item and its playback requires an Internet connection."];
             return block;
@@ -154,7 +154,7 @@
             [weakSelf.musicPlayer pause];
         };
     } else {
-        *error = [DPHostMediaPlayer throwsErrorCode:DConnectMessageErrorCodeUnknown message:@"Media cannnot be paused; media is not playing."];
+        *error = [DPHostUtils throwsErrorCode:DConnectMessageErrorCodeUnknown message:@"Media cannnot be paused; media is not playing."];
     }
     return block;
 }
@@ -174,7 +174,7 @@
                 //（つまりiOSデバイス側にまだダウンロードされていない）で、
                 //尚かつインターネット接続が無い場合は
                 // 再生できない。
-                *error = [DPHostMediaPlayer throwsErrorCode:DConnectMessageErrorCodeUnknown message:
+                *error = [DPHostUtils throwsErrorCode:DConnectMessageErrorCodeUnknown message:
                  @"Internet is not reachable;"
                  " the specified audio media item is an iClould "
                  "item and its playback requires an Internet connection."];
@@ -190,7 +190,7 @@
             [weakSelf.musicPlayer play];
         };
     } else {
-        *error = [DPHostMediaPlayer throwsErrorCode:DConnectMessageErrorCodeUnknown message:@"Media cannot be resumed; media is not paused."];
+        *error = [DPHostUtils throwsErrorCode:DConnectMessageErrorCodeUnknown message:@"Media cannot be resumed; media is not paused."];
     }
     return block;
 }
@@ -206,7 +206,7 @@
     MPMediaItem *nowPlayingItem = self.musicPlayer.nowPlayingItem;
     NSNumber *playbackDuration = [nowPlayingItem valueForProperty:MPMediaItemPropertyPlaybackDuration];
     if ([playbackDuration unsignedIntegerValue] < [position unsignedIntegerValue]) {
-        *error = [DPHostMediaPlayer throwsErrorCode:DConnectMessageErrorCodeInvalidRequestParameter message:@"pos exceeds the playback duration."];
+        *error = [DPHostUtils throwsErrorCode:DConnectMessageErrorCodeInvalidRequestParameter message:@"pos exceeds the playback duration."];
         return block;
     }
     __weak DPHostIPodAudioPlayer *weakSelf = self;

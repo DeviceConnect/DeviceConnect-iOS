@@ -39,7 +39,7 @@
             [mediaQuery addFilterPredicate:[MPMediaPropertyPredicate predicateWithValue:persistentId forProperty:MPMediaItemPropertyPersistentID]];
             NSArray *items = [mediaQuery items];
             if (items.count == 0) {
-                *error = [DPHostMediaPlayer throwsErrorCode:DConnectMessageErrorCodeInvalidRequestParameter message:@"Media specified by mediaId does not found."];
+                *error = [DPHostUtils throwsErrorCode:DConnectMessageErrorCodeInvalidRequestParameter message:@"Media specified by mediaId does not found."];
                 return nil;
             }
             mediaItem = items[0];
@@ -84,7 +84,7 @@
             [mediaQuery addFilterPredicate:[MPMediaPropertyPredicate predicateWithValue:persistentId forProperty:MPMediaItemPropertyPersistentID]];
             NSArray *items = [mediaQuery items];
             if (items.count == 0) {
-                *error = [DPHostMediaPlayer throwsErrorCode:DConnectMessageErrorCodeInvalidRequestParameter
+                *error = [DPHostUtils throwsErrorCode:DConnectMessageErrorCodeInvalidRequestParameter
                                                     message:@"Media specified by mediaId does not found."];
                 return block;
             }
@@ -107,7 +107,7 @@
             };
             return block;
         }
-        *error = [DPHostMediaPlayer throwsErrorCode:DConnectMessageErrorCodeUnknown message:@"Media cannot be played; media is not specified."];
+        *error = [DPHostUtils throwsErrorCode:DConnectMessageErrorCodeUnknown message:@"Media cannot be played; media is not specified."];
     }
     return block;
 }
@@ -119,7 +119,7 @@
         return block;
     }
     if (![self moviePlayerViewControllerIsPresented]) {
-        *error = [DPHostMediaPlayer throwsErrorCode:DConnectMessageErrorCodeUnknown message:
+        *error = [DPHostUtils throwsErrorCode:DConnectMessageErrorCodeUnknown message:
          @"Movie player view controller is not presented;"
          "please perform Media PUT API first to present the view controller."];
     } else {
@@ -142,7 +142,7 @@
 {
     DPHostPlayerBlock block = ^{};
     if (![self moviePlayerViewControllerIsPresented]) {
-        *error = [DPHostMediaPlayer throwsErrorCode:DConnectMessageErrorCodeUnknown message:
+        *error = [DPHostUtils throwsErrorCode:DConnectMessageErrorCodeUnknown message:
          @"Movie player view controller is not presented;"
          " please perform Media PUT API first to present the view controller."];
     } else {
@@ -156,7 +156,7 @@
                 [weakSelf.viewController.moviePlayer pause];
             };
         } else {
-            *error = [DPHostMediaPlayer throwsErrorCode:DConnectMessageErrorCodeUnknown message:@"Media cannnot be paused; media is not playing."];
+            *error = [DPHostUtils throwsErrorCode:DConnectMessageErrorCodeUnknown message:@"Media cannnot be paused; media is not playing."];
         }
     }
     return block;
@@ -166,7 +166,7 @@
 {
     DPHostPlayerBlock block = ^{};
     if (![self moviePlayerViewControllerIsPresented]) {
-        *error = [DPHostMediaPlayer throwsErrorCode:DConnectMessageErrorCodeUnknown message:
+        *error = [DPHostUtils throwsErrorCode:DConnectMessageErrorCodeUnknown message:
          @"Movie player view controller is not presented;"
          "please perform Media PUT API first to present the view controller."];
     } else {
@@ -180,7 +180,7 @@
                 [weakSelf.viewController.moviePlayer play];
             };
         } else {
-            *error = [DPHostMediaPlayer throwsErrorCode:DConnectMessageErrorCodeUnknown message:@"Media cannot be resumed; media is not paused."];
+            *error = [DPHostUtils throwsErrorCode:DConnectMessageErrorCodeUnknown message:@"Media cannot be resumed; media is not paused."];
         }
     }
     return block;
@@ -189,7 +189,7 @@
 - (NSTimeInterval)seekStatusWithError:(NSError **)error
 {
     if (!self.viewController) {
-        *error = [DPHostMediaPlayer throwsErrorCode:DConnectMessageErrorCodeUnknown message:
+        *error = [DPHostUtils throwsErrorCode:DConnectMessageErrorCodeUnknown message:
          @"Movie player view controller is not presented;"
          "please perform Media PUT API first to present the view controller."];
         return -1.0f;
@@ -201,14 +201,14 @@
 {
     DPHostPlayerBlock block = ^{};
     if (![self moviePlayerViewControllerIsPresented]) {
-        *error = [DPHostMediaPlayer throwsErrorCode:DConnectMessageErrorCodeUnknown message:
+        *error = [DPHostUtils throwsErrorCode:DConnectMessageErrorCodeUnknown message:
          @"Movie player view controller is not presented; "
          "please perform Media PUT API first to present the view controller."];
         return block;
     }
     NSTimeInterval playbackDuration = self.viewController.moviePlayer.duration;
     if (playbackDuration < [position unsignedIntegerValue]) {
-        *error = [DPHostMediaPlayer throwsErrorCode:DConnectMessageErrorCodeUnknown message:@"pos exceeds the playback duration."];
+        *error = [DPHostUtils throwsErrorCode:DConnectMessageErrorCodeUnknown message:@"pos exceeds the playback duration."];
         return block;
     }
     __weak DPHostMoviePlayer *weakSelf = self;
@@ -235,7 +235,7 @@
     if (isIPodMovieMedia) {
         NSNumber *isCloudItem = [mediaItem valueForProperty:MPMediaItemPropertyIsCloudItem];
         if ([isCloudItem boolValue]) {
-            *error = [DPHostMediaPlayer throwsErrorCode:DConnectMessageErrorCodeUnknown message:
+            *error = [DPHostUtils throwsErrorCode:DConnectMessageErrorCodeUnknown message:
              @"Media item specified is an iTunes movie item,"
              "and it must be downloaded into the iOS device before playing."];
             return;
@@ -245,7 +245,7 @@
         // MoviePlayerではメディアのURLが必要なので、MPMediaItemからAssetURLを取得する。
         movieURL = [mediaItem valueForProperty:MPMediaItemPropertyAssetURL];
         if (!movieURL) {
-            *error = [DPHostMediaPlayer throwsErrorCode:DConnectMessageErrorCodeUnknown message:
+            *error = [DPHostUtils throwsErrorCode:DConnectMessageErrorCodeUnknown message:
              @"Failed to pass the specified media item to the movie player;"
              "perhaps this media item is a protected media only playable "
              "in the official apps like \"Music\" and \"Videos\"."];
@@ -275,7 +275,7 @@
                  weakSelf.viewController = [weakSelf viewControllerWithURL:movieURL];
                  self.viewController.moviePlayer.shouldAutoplay = YES;
                  block();
-                 [[DPHostMediaPlayer topViewController] presentMoviePlayerViewControllerAnimated:weakSelf.viewController];
+                 [[DPHostUtils topViewController] presentMoviePlayerViewControllerAnimated:weakSelf.viewController];
              });
          }
          dispatch_semaphore_signal(semaphore);
@@ -288,8 +288,8 @@
     dispatch_time_t timeout = dispatch_time(DISPATCH_TIME_NOW, NSEC_PER_SEC * 3);
     __block UIViewController *rootView = nil;
     dispatch_async(dispatch_get_main_queue(), ^{
-        rootView = [DPHostMediaPlayer topViewController];
-        [DPHostMediaPlayer topViewController:rootView];
+        rootView = [DPHostUtils topViewController];
+        [DPHostUtils topViewController:rootView];
         dispatch_semaphore_signal(semaphore);
     });
     dispatch_semaphore_wait(semaphore, timeout);

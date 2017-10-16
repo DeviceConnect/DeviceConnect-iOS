@@ -59,12 +59,6 @@ typedef void (^DPHostPlayerBlock)(void);
 // PUT /mediaPlayer/seek
 - (DPHostPlayerBlock)seekPosition:(NSNumber*)position error:(NSError**)error;
 
-//NSErrorを生成
-+ (NSError*)throwsErrorCode:(NSInteger)code message:(NSString*)message;
-
-// TOPにあるViewControllerを返す
-+ (UIViewController*)topViewController;
-+ (UIViewController*)topViewController:(UIViewController*)rootViewController;
 
 
 @end
