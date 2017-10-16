@@ -9,7 +9,7 @@
 
 #import <UIKit/UIKit.h>
 
-typedef void (^CloseButtonCallback)();
+typedef void (^CloseButtonCallback)(void);
 @interface GuideDataViewController : UIViewController
 
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;

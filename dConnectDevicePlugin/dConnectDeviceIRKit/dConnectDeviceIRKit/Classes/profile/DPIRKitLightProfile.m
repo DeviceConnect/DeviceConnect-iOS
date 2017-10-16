@@ -92,7 +92,7 @@
 
                           int myBlightness;
                           NSString *uicolor;
-                          unsigned int redValue, greenValue, blueValue;
+                          unsigned int redValue = 0, greenValue = 0, blueValue = 0;
                           [weakSelf checkColor:[brightness doubleValue] blueValue:blueValue greenValue:greenValue
                                   redValue:redValue color:color myBlightnessPointer:&myBlightness uicolorPointer:&uicolor];
                           

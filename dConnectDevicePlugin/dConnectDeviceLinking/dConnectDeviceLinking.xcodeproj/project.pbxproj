@@ -23,6 +23,7 @@
 /* Begin PBXBuildFile section */
 		AB77BC151DA63BF800959525 /* dconnect_icon_off.png in Resources */ = {isa = PBXBuildFile; fileRef = AB77BC131DA63BF800959525 /* dconnect_icon_off.png */; };
 		AB77BC161DA63BF800959525 /* dconnect_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = AB77BC141DA63BF800959525 /* dconnect_icon.png */; };
+		ABDC5BDE1F94A8F7007201D9 /* LinkingLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE2859FA1D630B6C00CB9F95 /* LinkingLibrary.framework */; };
 		BE145CA41D8E8A4D0005D926 /* DPLinkingDeviceTemperatureOnce.m in Sources */ = {isa = PBXBuildFile; fileRef = BE145CA31D8E8A4D0005D926 /* DPLinkingDeviceTemperatureOnce.m */; };
 		BE145CA71D8E8B710005D926 /* DPLinkingDeviceHumidityOnce.m in Sources */ = {isa = PBXBuildFile; fileRef = BE145CA61D8E8B710005D926 /* DPLinkingDeviceHumidityOnce.m */; };
 		BE145CAB1D8F92670005D926 /* DPLinkingDeviceAtmosphericPressureOnce.m in Sources */ = {isa = PBXBuildFile; fileRef = BE145CAA1D8F92670005D926 /* DPLinkingDeviceAtmosphericPressureOnce.m */; };
@@ -75,7 +76,6 @@
 		BE2859F51D630B2800CB9F95 /* DPLinkingUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = BE2859BF1D630B2800CB9F95 /* DPLinkingUtil.m */; };
 		BE2859F71D630B5900CB9F95 /* DConnectSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE2859F61D630B5900CB9F95 /* DConnectSDK.framework */; };
 		BE2859F91D630B6200CB9F95 /* DCMDevicePluginSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE2859F81D630B6100CB9F95 /* DCMDevicePluginSDK.framework */; };
-		BE2859FB1D630B6C00CB9F95 /* LinkingLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE2859FA1D630B6C00CB9F95 /* LinkingLibrary.framework */; };
 		BE285A041D630C1000CB9F95 /* LinkingLibrary.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = BE2859FA1D630B6C00CB9F95 /* LinkingLibrary.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		BE285A3B1D63160E00CB9F95 /* Linking.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BE2859C61D630B2800CB9F95 /* Linking.storyboard */; };
 		BE58BE761D645E3800354F08 /* DPLinkingBeaconHumidityOnce.m in Sources */ = {isa = PBXBuildFile; fileRef = BE58BE751D645E3800354F08 /* DPLinkingBeaconHumidityOnce.m */; };
@@ -250,7 +250,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BE2859FB1D630B6C00CB9F95 /* LinkingLibrary.framework in Frameworks */,
+				ABDC5BDE1F94A8F7007201D9 /* LinkingLibrary.framework in Frameworks */,
 				BE2859F91D630B6200CB9F95 /* DCMDevicePluginSDK.framework in Frameworks */,
 				BE2859F71D630B5900CB9F95 /* DConnectSDK.framework in Frameworks */,
 			);

@@ -359,8 +359,23 @@ static const long long MaximumAgeMilliSec = 0;
                 break;
         }
         if (message) {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"" message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-            [alert show];
+            UIAlertController * alert = [UIAlertController
+                                         alertControllerWithTitle:@""
+                                         message:message
+                                         preferredStyle:UIAlertControllerStyleAlert];
+            
+            
+            
+            UIAlertAction* okButton = [UIAlertAction
+                                        actionWithTitle:@"OK"
+                                        style:UIAlertActionStyleDefault
+                                        handler:^(UIAlertAction * action) {
+                                            //Handle your yes please button action here
+                                        }];
+            
+            [alert addAction:okButton];
+            UIViewController *top = [DPHostUtils topViewController];
+            [top presentViewController:alert animated:YES completion:nil];
         }
     }
 }

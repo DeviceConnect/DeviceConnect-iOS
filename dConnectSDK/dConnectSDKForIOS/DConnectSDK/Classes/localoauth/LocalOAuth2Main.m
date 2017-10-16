@@ -855,7 +855,7 @@ static NSObject *_lockForRequstQueue = nil;
 
 - (void) startConfirmAuthViewController: (LocalOAuthConfirmAuthRequest *)request {
     
-    void (^blk)() = ^() {
+    void (^blk)(void) = ^() {
         /* StoryboardからUIViewControllerを取り出してパラメータを設定し表示する */
         UIViewController *topViewController;
         DCPutPresentedViewController(topViewController);

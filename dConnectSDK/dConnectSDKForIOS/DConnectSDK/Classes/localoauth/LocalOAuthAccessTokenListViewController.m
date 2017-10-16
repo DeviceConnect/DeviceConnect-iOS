@@ -34,12 +34,12 @@
     /*!
      アクセストークン全削除ボタン押下時の確認AlertViewポインタ
      */
-    UIAlertView *_accessTokenAllDeleteAlertView;
+    UIAlertController *_accessTokenAllDeleteAlertView;
     
     /*!
      アクセストークン削除ボタン押下時の確認AlertViewポインタ
      */
-    UIAlertView *_accessTokenDeleteAlertView;
+    UIAlertController *_accessTokenDeleteAlertView;
     
     /*!
      アクセストークン削除ボタン押下時の対象データインデックス
@@ -114,13 +114,27 @@
     
     NSBundle *bundle = DCBundle();
     
-    _accessTokenAllDeleteAlertView =
-    [[UIAlertView alloc] initWithTitle:DCLocalizedString(bundle, @"alert_title_all_delete")
-                               message:DCLocalizedString(bundle, @"alert_message_all_delete")
-                              delegate:self
-                     cancelButtonTitle:DCLocalizedString(bundle, @"alert_btn_cancel")
-                     otherButtonTitles:DCLocalizedString(bundle, @"alert_btn_delete"), nil];
-    [_accessTokenAllDeleteAlertView show];
+    _accessTokenAllDeleteAlertView = [UIAlertController
+                                      alertControllerWithTitle:DCLocalizedString(bundle, @"alert_title_all_delete")
+                                      message:DCLocalizedString(bundle, @"alert_message_all_delete")
+                                      preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction* yesButton = [UIAlertAction
+                                actionWithTitle:DCLocalizedString(bundle, @"alert_btn_delete")
+                                style:UIAlertActionStyleDefault
+                                handler:^(UIAlertAction * action) {
+                                    /* 全削除処理 */
+                                    [self deleteAllToken];
+                                }];
+    
+    UIAlertAction* noButton = [UIAlertAction
+                               actionWithTitle:DCLocalizedString(bundle, @"alert_btn_cancel")
+                               style:UIAlertActionStyleDefault
+                               handler:nil];
+    [_accessTokenAllDeleteAlertView addAction:yesButton];
+    [_accessTokenAllDeleteAlertView addAction:noButton];
+    UIViewController *top = nil;
+    DCPutPresentedViewController(top);
+    [top presentViewController:_accessTokenAllDeleteAlertView animated:YES completion:nil];
 }
 
 /*!
@@ -257,36 +271,27 @@
         
         NSBundle *bundle = DCBundle();
         
-        _accessTokenDeleteAlertViewDataIndex = indexPath.row;
-        _accessTokenDeleteAlertView =
-        [[UIAlertView alloc] initWithTitle:[sqliteToken applicationName]
-                                   message:DCLocalizedString(bundle, @"alert_message_delete")
-                                  delegate:self
-                         cancelButtonTitle:DCLocalizedString(bundle, @"alert_btn_cancel")
-                         otherButtonTitles:DCLocalizedString(bundle, @"alert_btn_delete"), nil];
-        [_accessTokenDeleteAlertView show];
-    }
-}
-
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    /* アクセストークン全削除確認画面からの応答 */
-    if (_accessTokenAllDeleteAlertView == alertView) {
+        _accessTokenDeleteAlertView = [UIAlertController
+                                      alertControllerWithTitle:[sqliteToken applicationName]
+                                      message:DCLocalizedString(bundle, @"alert_message_delete")
+                                      preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction* yesButton = [UIAlertAction
+                                    actionWithTitle:DCLocalizedString(bundle, @"alert_btn_delete")
+                                    style:UIAlertActionStyleDefault
+                                    handler:^(UIAlertAction * action) {
+                                        /* トークン削除 */
+                                        [self deleteToken: indexPath.row];
+                                    }];
         
-        /* 確認画面で削除ボタンが押された */
-        if (buttonIndex == 1) {
-            
-            /* 全削除処理 */
-            [self deleteAllToken];
-        }
-        
-        /* アクセストークン個別削除確認画面からの応答 */
-    } else if (_accessTokenDeleteAlertView == alertView
-            && (buttonIndex == 1
-            && _accessTokenDeleteAlertViewDataIndex < [_accessTokens count])) {
-            
-            /* トークン削除 */
-            [self deleteToken: _accessTokenDeleteAlertViewDataIndex];
+        UIAlertAction* noButton = [UIAlertAction
+                                   actionWithTitle:DCLocalizedString(bundle, @"alert_btn_cancel")
+                                   style:UIAlertActionStyleDefault
+                                   handler:nil];
+        [_accessTokenAllDeleteAlertView addAction:yesButton];
+        [_accessTokenAllDeleteAlertView addAction:noButton];
+        UIViewController *top = nil;
+        DCPutPresentedViewController(top);
+        [top presentViewController:_accessTokenAllDeleteAlertView animated:YES completion:nil];
     }
 }
 

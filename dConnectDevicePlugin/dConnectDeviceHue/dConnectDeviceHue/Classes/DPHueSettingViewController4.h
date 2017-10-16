@@ -19,6 +19,6 @@
  @class DPHueSettingViewController4
  @brief Hueの設定画面の4ページ目。
  */
-@interface DPHueSettingViewController4 : DPHueSettingViewControllerBase<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate,UIAlertViewDelegate>
+@interface DPHueSettingViewController4 : DPHueSettingViewControllerBase<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate>
 
 @end

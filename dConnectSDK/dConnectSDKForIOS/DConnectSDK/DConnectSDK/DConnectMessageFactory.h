@@ -35,7 +35,7 @@
  @param[in] request リクエストデータ
  @return NSURLRequestの設定内容に沿うDConnectRequestMessageのオブジェクト
  */
-+ (DConnectRequestMessage *) messageForRequest:(NSURLRequest *)request;
+//+ (DConnectRequestMessage *) messageForRequest:(NSURLRequest *)request;
 
 /*!
  @brief NSURLResponseをDConnectResponseMessageへ変換する。

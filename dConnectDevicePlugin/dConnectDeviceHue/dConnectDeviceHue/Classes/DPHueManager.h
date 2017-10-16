@@ -211,7 +211,7 @@ pushlinkAuthenticationSuccessSelector:(SEL)pushlinkAuthenticationSuccessSelector
 -(BOOL)changeLightStatusWithLightId:(NSString *)lightId
                          lightState:(PHLightState*)lightState
                            flashing:(NSArray*)flashing
-                         completion:(void(^)())completion;
+                         completion:(void(^)(void))completion;
 
 
 /*!
@@ -230,7 +230,7 @@ pushlinkAuthenticationSuccessSelector:(SEL)pushlinkAuthenticationSuccessSelector
                             color:(NSString *)color
                        brightness:(NSNumber *)brightness
                          flashing:(NSArray*)flashing
-                       completion:(void(^)())completion;
+                       completion:(void(^)(void))completion;
 
 /*!
  @brief ライトグループのステータスを変更する。
@@ -242,7 +242,7 @@ pushlinkAuthenticationSuccessSelector:(SEL)pushlinkAuthenticationSuccessSelector
  */
 - (BOOL)changeGroupStatusWithGroupId:(NSString *)groupId
                           lightState:(PHLightState*)lightState
-                          completion:(void(^)())completion;
+                          completion:(void(^)(void))completion;
 
 
 /*!
@@ -255,7 +255,7 @@ pushlinkAuthenticationSuccessSelector:(SEL)pushlinkAuthenticationSuccessSelector
  */
 -(BOOL)changeGroupNameWithGroupId:(NSString *)groupId
                                name:(NSString *)name
-                         completion:(void(^)())completion;
+                         completion:(void(^)(void))completion;
 
 
 /*!
@@ -279,7 +279,7 @@ pushlinkAuthenticationSuccessSelector:(SEL)pushlinkAuthenticationSuccessSelector
  @retval NO レスポンスパラメータを返却しないので、@link DConnectManager::sendResponse: @endlinkで返却すること。
  */
 -(BOOL)removeLightGroupWithWithGroupId:(NSString*)groupId
-                            completion:(void(^)())completion;
+                            completion:(void(^)(void))completion;
 
 /*!
  @brief 文字列の実数判定。

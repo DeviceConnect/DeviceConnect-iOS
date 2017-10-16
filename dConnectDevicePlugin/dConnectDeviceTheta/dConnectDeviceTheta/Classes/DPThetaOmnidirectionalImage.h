@@ -17,7 +17,7 @@
 @property NSString *uri;
 @property NSData *image;
 
-typedef void (^DPOmniBlock)();
+typedef void (^DPOmniBlock)(void);
 
 
 - (instancetype)initWithURL:(NSURL*)url origin:(NSString*)origin callback:(DPOmniBlock)callback;

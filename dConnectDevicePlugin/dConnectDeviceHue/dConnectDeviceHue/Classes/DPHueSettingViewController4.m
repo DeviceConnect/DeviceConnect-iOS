@@ -131,67 +131,33 @@ top = top.presentedViewController; \
 }
 
 - (IBAction)searchManual:(id)sender {
-    float osVersion = [[[UIDevice currentDevice] systemVersion] floatValue];
-    if (osVersion > 8.0) {
-        UIAlertController *serialAlert = [UIAlertController alertControllerWithTitle:DPHueLocalizedString(_bundle, @"HueSerialNoTitle")
-                                                                             message:DPHueLocalizedString(_bundle, @"HueSerialNoDesc")
-                                                                      preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertController *serialAlert = [UIAlertController alertControllerWithTitle:DPHueLocalizedString(_bundle, @"HueSerialNoTitle")
+                                                                         message:DPHueLocalizedString(_bundle, @"HueSerialNoDesc")
+                                                                  preferredStyle:UIAlertControllerStyleAlert];
 
-        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleDestructive handler:nil];
-        [serialAlert addAction:cancelAction];
-        _okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-            _indicator.hidden = NO;
-            [self startIndicator];
-            NSArray *serials = @[_serial];
-            [manager registerLightForSerialNo:serials completion:^(NSArray *errors) {
-                retryCount = 2;
-                lightCount = (int) [[DPHueManager sharedManager] getLightStatus].allValues.count;
-                [self  reloadHue];
-            }];
-        }];
-        _okAction.enabled = NO;
-        [serialAlert addAction:_okAction];
-
-        [serialAlert addTextFieldWithConfigurationHandler:^(UITextField *textField) {
-            
-            textField.placeholder = DPHueLocalizedString(_bundle, @"HueSerialNoHint");
-            textField.delegate = self;
-            textField.keyboardType = UIKeyboardTypeAlphabet;
-        }];
-        [self presentViewController:serialAlert animated:YES completion:nil];
-    } else {
-        UIAlertView* alert = [[UIAlertView alloc] initWithTitle:DPHueLocalizedString(_bundle, @"HueSerialNoTitle")
-                                                        message:DPHueLocalizedString(_bundle, @"HueSerialNoDesc")
-                                                       delegate:self
-                                              cancelButtonTitle:@"Cancel"
-                                              otherButtonTitles:@"OK", nil];
-        alert.delegate       = self;
-        alert.alertViewStyle = UIAlertViewStylePlainTextInput;
-        [alert textFieldAtIndex:0].placeholder = DPHueLocalizedString(_bundle, @"HueSerialNoHint");
-        [alert textFieldAtIndex:0].delegate = self;
-        [alert textFieldAtIndex:0].keyboardType = UIKeyboardTypeAlphabet;
-        [alert show];
-    }
-}
-
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    if( buttonIndex == alertView.cancelButtonIndex ) { return; }
-    
-    NSString* textValue = [[alertView textFieldAtIndex:0] text];
-    if( [textValue length] >= 6 )
-    {
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleDestructive handler:nil];
+    [serialAlert addAction:cancelAction];
+    _okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         _indicator.hidden = NO;
         [self startIndicator];
-        NSArray *serials = @[textValue];
+        NSArray *serials = @[_serial];
         [manager registerLightForSerialNo:serials completion:^(NSArray *errors) {
             retryCount = 2;
             lightCount = (int) [[DPHueManager sharedManager] getLightStatus].allValues.count;
             [self  reloadHue];
         }];
-    }
-}
+    }];
+    _okAction.enabled = NO;
+    [serialAlert addAction:_okAction];
 
+    [serialAlert addTextFieldWithConfigurationHandler:^(UITextField *textField) {
+        
+        textField.placeholder = DPHueLocalizedString(_bundle, @"HueSerialNoHint");
+        textField.delegate = self;
+        textField.keyboardType = UIKeyboardTypeAlphabet;
+    }];
+    [self presentViewController:serialAlert animated:YES completion:nil];
+}
 
 - (BOOL)textField:(UITextField *)textField
 shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string

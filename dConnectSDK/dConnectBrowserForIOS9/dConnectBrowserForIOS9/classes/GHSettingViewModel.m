@@ -235,7 +235,7 @@
  @param[in] type 設定項目
  @param[out] completion コールバックオブジェクト
  */
-- (void)checkOriginAndLocalOAuth:(BOOL)isOn type:(int)type copmletion:(void (^)())completion
+- (void)checkOriginAndLocalOAuth:(BOOL)isOn type:(int)type copmletion:(void (^)(void))completion
 {
     if (type == SecurityCellTypeOrigin
         && [DConnectManager sharedManager].settings.useLocalOAuth

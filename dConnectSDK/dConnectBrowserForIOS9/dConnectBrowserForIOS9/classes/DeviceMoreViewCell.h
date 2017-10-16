@@ -8,7 +8,7 @@
 //
 #import <UIKit/UIKit.h>
 
-typedef void (^DidDeviceMorelected)();
+typedef void (^DidDeviceMorelected)(void);
 
 @interface DeviceMoreViewCell : UICollectionViewCell
 @property (nonatomic, copy) DidDeviceMorelected didDeviceMorelected;

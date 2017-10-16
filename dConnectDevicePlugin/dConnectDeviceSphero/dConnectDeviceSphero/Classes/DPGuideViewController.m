@@ -65,13 +65,21 @@
     NSString* disconnectTitle = [bundle localizedStringForKey:titleKey value:nil table:nil];
     NSString* failMessage = [bundle localizedStringForKey:messageKey value:nil table:nil];
     
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:disconnectTitle
-                                                    message:failMessage
-                                                   delegate:nil
-                                          cancelButtonTitle:nil
-                                          otherButtonTitles:@"OK", nil];
-    [alert show];
+    UIAlertController * alert = [UIAlertController
+                                 alertControllerWithTitle:disconnectTitle
+                                 message:failMessage
+                                 preferredStyle:UIAlertControllerStyleAlert];
     
+    
+    
+    UIAlertAction* okButton = [UIAlertAction
+                                actionWithTitle:@"OK"
+                                style:UIAlertActionStyleDefault
+                                handler:nil];
+    
+    [alert addAction:okButton];
+    
+    [self presentViewController:alert animated:YES completion:nil];
 }
 
 @end

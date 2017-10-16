@@ -106,7 +106,7 @@
 - (BOOL)handleRequest:(DConnectRequestMessage *)request
              response:(DConnectResponseMessage *)response
              serviceId:(NSString *)serviceId
-             callback:(void(^)())callback
+             callback:(void(^)(void))callback
 {
     // パラメータチェック
     if (serviceId == nil) {

@@ -609,7 +609,7 @@
 - (BOOL)handleRequest:(DConnectRequestMessage *)request
              response:(DConnectResponseMessage *)response
              serviceId:(NSString *)serviceId
-             callback:(void(^)())callback
+             callback:(void(^)(void))callback
 {
     // パラメータチェック
     if (serviceId == nil) {
@@ -812,7 +812,7 @@
 - (void)handleEventRequest:(DConnectRequestMessage *)request
 				  response:(DConnectResponseMessage *)response
 				  isRemove:(BOOL)isRemove
-				  callback:(void(^)())callback
+				  callback:(void(^)(void))callback
 {
 	DConnectEventManager *mgr = [DConnectEventManager sharedManagerForClass:[DPChromecastDevicePlugin class]];
 	DConnectEventError error;

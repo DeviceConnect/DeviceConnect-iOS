@@ -19,7 +19,7 @@ typedef NS_ENUM(NSUInteger, DPIRKitConnectionState) {
     DPIRKitConnectionStateConnected,
 };
 
-@interface DPIRKitConnectionGuideViewController ()<UIAlertViewDelegate>
+@interface DPIRKitConnectionGuideViewController ()
 {
     DPIRKitConnectionState _state;
     NSString *_serviceId;
@@ -39,8 +39,7 @@ typedef NS_ENUM(NSUInteger, DPIRKitConnectionState) {
 
 - (void) showAlertWithTileKey:(NSString *)titleKey
                   messsageKey:(NSString *)messageKey
-               closeButtonKey:(NSString *)closeButtonKey
-                     delegate:(id<UIAlertViewDelegate>)delegate;
+               closeButtonKey:(NSString *)closeButtonKey;
 - (void) enterForeground;
 
 @end
@@ -83,14 +82,12 @@ typedef NS_ENUM(NSUInteger, DPIRKitConnectionState) {
              if (success) {
                  [_self showAlertWithTileKey:@"AlertTitleConnection"
                                  messsageKey:@"AlertMessageConnectedWithWiFi"
-                              closeButtonKey:@"AlertBtnClose"
-                                    delegate:_self];
+                              closeButtonKey:@"AlertBtnClose"];
              } else {
                  _state = DPIRKitConnectionStateIdling;
                  [_self showAlertWithTileKey:@"AlertTitleError"
                                  messsageKey:@"AlertMessageNetworkError"
-                              closeButtonKey:@"AlertBtnClose"
-                                    delegate:_self];
+                              closeButtonKey:@"AlertBtnClose"];
              }
          }
      }];
@@ -130,15 +127,13 @@ typedef NS_ENUM(NSUInteger, DPIRKitConnectionState) {
                      _state = DPIRKitConnectionStateConnected;
                      [_self showAlertWithTileKey:@"AlertTitleConnection"
                                      messsageKey:@"AlertMessageConnectedSuccess"
-                                  closeButtonKey:@"AlertBtnClose"
-                                        delegate:_self];
+                                  closeButtonKey:@"AlertBtnClose"];
                      
                  } else {
                      _state = DPIRKitConnectionStateIdling;
                      [_self showAlertWithTileKey:@"AlertTitleError"
                                      messsageKey:@"AlertMessageNetworkError"
-                                  closeButtonKey:@"AlertBtnClose"
-                                        delegate:_self];
+                                  closeButtonKey:@"AlertBtnClose"];
                  }
                  
              }];
@@ -166,39 +161,39 @@ typedef NS_ENUM(NSUInteger, DPIRKitConnectionState) {
 - (void) showAlertWithTileKey:(NSString *)titleKey
                   messsageKey:(NSString *)messageKey
                closeButtonKey:(NSString *)closeButtonKey
-                     delegate:(id<UIAlertViewDelegate>)delegate
 {
-    UIAlertView *alert
-    = [[UIAlertView alloc] initWithTitle:DPIRLocalizedString(_bundle, titleKey)
+    UIAlertController * alert = [UIAlertController
+                                 alertControllerWithTitle:DPIRLocalizedString(_bundle, titleKey)
                                  message:DPIRLocalizedString(_bundle, messageKey)
-                                delegate:delegate
-                       cancelButtonTitle:nil
-                       otherButtonTitles:DPIRLocalizedString(_bundle, closeButtonKey), nil];
+                                 preferredStyle:UIAlertControllerStyleAlert];
+    
     
     __weak typeof(self) _self = self;
+    UIAlertAction* closeButton = [UIAlertAction
+                                actionWithTitle:DPIRLocalizedString(_bundle, closeButtonKey)
+                                style:UIAlertActionStyleDefault
+                                handler:^(UIAlertAction * action) {
+                                    @synchronized (_self) {
+                                        if (_state == DPIRKitConnectionStateConnectingToIRKit) {
+                                            _state = DPIRKitConnectionStateWaitingForLAN;
+                                        } else if (_state == DPIRKitConnectionStateConnected) {
+                                            [self dismissViewControllerAnimated:YES completion:^{
+                                                [[DPIRKitManager sharedInstance] stopDetection];
+                                                [[DPIRKitManager sharedInstance] startDetection];
+                                            }];
+                                        } else {
+                                            _sendButton.enabled = YES;
+                                        }
+                                    }
+                                }];
+    
+    [alert addAction:closeButton];
+    
+    [self presentViewController:alert animated:YES completion:nil];
     dispatch_async(dispatch_get_main_queue(), ^{
         [_self stopLoading];
-        [alert show];
+        [_self presentViewController:alert animated:YES completion:nil];
     });
     
 }
-
-#pragma mark - UIAlertView Delegate
-
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    @synchronized (self) {
-        if (_state == DPIRKitConnectionStateConnectingToIRKit) {
-            _state = DPIRKitConnectionStateWaitingForLAN;
-        } else if (_state == DPIRKitConnectionStateConnected) {
-            [self dismissViewControllerAnimated:YES completion:^{
-                [[DPIRKitManager sharedInstance] stopDetection];
-                [[DPIRKitManager sharedInstance] startDetection];
-            }];
-        } else {
-            _sendButton.enabled = YES;
-        }
-    }
-}
-
 @end
