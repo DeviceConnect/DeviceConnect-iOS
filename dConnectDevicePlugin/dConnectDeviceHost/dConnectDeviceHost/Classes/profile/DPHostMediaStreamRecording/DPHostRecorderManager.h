@@ -25,7 +25,7 @@
 - (void)takephotoForTarget:(NSString*)target completionHandler:(void (^)(NSURL *assetURL, NSError *error))completionHandler;
 
 // POST /mediastreamrecording/record
-- (void)recordForTarget:(NSString*)target timeSlice:(NSNumber*)timeSlice response:(DConnectResponseMessage *)response completionHandler:(void (^)(NSError *error))completionHandler;;
+- (void)recordForTarget:(NSString*)target timeSlice:(NSNumber*)timeSlice completionHandler:(void (^)(NSError *error))completionHandler;;
 
 // PUT /mediastreamrecording/stop
 - (void)stopForTarget:(NSString*)target completionHandler:(void (^)(NSURL *assetURL, NSError *error))completionHandler;
@@ -43,8 +43,8 @@
 - (void)unmuteTrackForTarget:(NSString*)target error:(NSError**)error;
 
 // PUT /mediaStreamRecording/preview
-- (NSString*)startPreviewForTarget:(NSString*)target;
+- (NSString*)startPreviewForTarget:(NSString*)target error:(NSError**)error;
 
 // DELETE /mediaStreamRecording/preview
-- (void)stopPreviewForTarget:(NSString*)target;
+- (void)stopPreviewForTarget:(NSString*)target error:(NSError**)error;
 @end

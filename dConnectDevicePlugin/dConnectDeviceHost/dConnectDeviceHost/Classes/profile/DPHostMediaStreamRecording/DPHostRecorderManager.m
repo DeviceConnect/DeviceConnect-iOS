@@ -15,8 +15,14 @@
 #import "DPHostRecorderContext.h"
 #import "DPHostUtils.h"
 #import "DPHostRecorderManager.h"
+#import "DPHostSimpleHttpServer.h"
 
 @interface DPHostRecorderManager ()
+
+/*!
+ @brief Preview用のHTTPサーバ。
+ */
+@property (nonatomic) DPHostSimpleHttpServer *httpServer;
 
 /*!
  デフォルトの静止画レコーダーのID
@@ -39,7 +45,10 @@
  */
 @property (nonatomic) NSNumber *currentRecorderId;
 
-
+/*!
+ 現在実行中のPreview
+ */
+@property (nonatomic) NSMutableArray *nowCurrentRecorders;
 /// レコーダーで使用できる静止画入力データ
 @property (nonatomic) NSMutableArray *photoDataSourceArr;
 /// レコーダーで使用できる動画入力データ
@@ -162,7 +171,7 @@
 }
 
 // POST /mediastreamrecording/record
-- (void)recordForTarget:(NSString*)target timeSlice:(NSNumber*)timeSlice  response:(DConnectResponseMessage *)response completionHandler:(void (^)(NSError *))completionHandler
+- (void)recordForTarget:(NSString*)target timeSlice:(NSNumber*)timeSlice completionHandler:(void (^)(NSError *))completionHandler
 {
     __block NSError *error = nil;
     DPHostRecorderContext *recorder = [self recorderForTarget:target recorderType:RecorderTypeMovie error:&error];
@@ -343,16 +352,97 @@
 }
 
 // PUT /mediaStreamRecording/preview
-- (NSString*)startPreviewForTarget:(NSString*)target
+- (NSString*)startPreviewForTarget:(NSString*)target error:(NSError**)error
 {
-    // TODO:
-    return nil;
+    if (self.httpServer) {
+        [self.httpServer stop];
+        self.httpServer = nil;
+    }
+    
+    self.httpServer = [DPHostSimpleHttpServer new];
+    self.httpServer.listenPort = 10000;
+    BOOL result = [self.httpServer start];
+    if (!result) {
+        *error = [DPHostUtils throwsErrorCode:DConnectMessageErrorCodeIllegalDeviceState message:@"MJPEG Server cannot running."];
+        return nil;
+    }
+    dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
+    dispatch_time_t timeout = dispatch_time(DISPATCH_TIME_NOW, NSEC_PER_SEC * 5);
+    DPHostRecorderContext *recorder = [self recorderForTarget:target recorderType:RecorderTypeMovie error:error];
+    // Recording startはMovie用のtargetを指定しなければならないため、置き換える必要がある。
+    NSRange photoBackRange = [recorder.name rangeOfString:@"photo_back"];
+    NSRange photoFrontRange = [recorder.name rangeOfString:@"photo_front"];
+    if (photoBackRange.location != NSNotFound && photoFrontRange.location == NSNotFound) {
+        target = @"2";  // movie_audio_video_back_0
+    } else if (photoBackRange.location == NSNotFound && photoFrontRange.location != NSNotFound) {
+        target = @"3"; // movie_audio_video_front_0
+    } else if (!target) {
+        target = @"2"; //指定されていない場合はデフォルト
+    } else {
+        *error = [DPHostUtils throwsErrorCode:DConnectMessageErrorCodeIllegalDeviceState message:@"This target does not support preview."];
+        return nil;
+    }
+    __block NSError *blockError = nil;
+    [self recordForTarget:target timeSlice:nil completionHandler:^(NSError *err) {
+        if (err) {
+            blockError = [DPHostUtils throwsErrorCode:err.code message:err.localizedDescription];
+        }
+        dispatch_semaphore_signal(semaphore);
+    }];
+    dispatch_semaphore_wait(semaphore, timeout);
+    *error = blockError;
+    [self.nowCurrentRecorders addObject:target];
+    // プレビュー画像URIの配送処理が開始されていないのなら、開始する。
+    self.sendPreview = YES;
+    NSString *url = [self.httpServer getUrl];
+    if (!url) {
+        [self.httpServer stop];
+        self.httpServer = nil;
+        *error = [DPHostUtils throwsErrorCode:DConnectMessageErrorCodeIllegalDeviceState message:@"MJPEG Server cannot running."];
+        return nil;
+    }
+    return url;
 }
 
 // DELETE /mediaStreamRecording/preview
-- (void)stopPreviewForTarget:(NSString*)target
+- (void)stopPreviewForTarget:(NSString*)target error:(NSError**)error
 {
-    // TODO:
+    if (self.httpServer) {
+        [self.httpServer stop];
+        self.httpServer = nil;
+    }
+    dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
+    dispatch_time_t timeout = dispatch_time(DISPATCH_TIME_NOW, NSEC_PER_SEC * 5);
+    DPHostRecorderContext *recorder = [self recorderForTarget:target recorderType:RecorderTypeMovie error:error];
+
+    // Recording startはMovie用のtargetを指定しなければならないため、置き換える必要がある。
+    NSRange photoBackRange = [recorder.name rangeOfString:@"photo_back"];
+    NSRange photoFrontRange = [recorder.name rangeOfString:@"photo_front"];
+    if (photoBackRange.location != NSNotFound && photoFrontRange.location == NSNotFound) {
+        target = @"2";  // movie_audio_video_back_0
+    } else if (photoBackRange.location == NSNotFound && photoFrontRange.location != NSNotFound) {
+        target = @"3"; // movie_audio_video_front_0
+    } else if (!target) {
+        target = @"2"; //指定されていない場合はデフォルト
+    } else {
+        *error = [DPHostUtils throwsErrorCode:DConnectMessageErrorCodeIllegalDeviceState message:@"This target does not support preview."];
+        return;
+    }
+    __block NSError *blockError = nil;
+    [self stopForTarget:target completionHandler:^(NSURL *assetURL, NSError *err) {
+        if (err) {
+            blockError = [DPHostUtils throwsErrorCode:err.code message:err.localizedDescription];
+        }
+        dispatch_semaphore_signal(semaphore);
+    }];
+    dispatch_semaphore_wait(semaphore, timeout);
+    *error = blockError;
+    [self.nowCurrentRecorders removeObject:target];
+
+    // イベント受領先が存在しないなら、プレビュー画像URIの配送処理を停止する。
+    self.sendPreview = NO;
+    // 次回プレビュー開始時に影響を与えない為に、初期値（無効値）を設定する。
+    self.lastPreviewTimestamp = kCMTimeInvalid;
 }
 
 
@@ -360,6 +450,8 @@
 #pragma mark - MediaStreamRecording Profile Init Internal
 - (void)initVariables
 {
+    self.httpServer = nil;
+    self.nowCurrentRecorders = [NSMutableArray array];
     self.recorderArr = [NSMutableArray array];
     NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
     [notificationCenter addObserver:self selector:@selector(deviceOrientationDidChange)
@@ -878,6 +970,9 @@ AVCaptureVideoOrientation videoOrientationFromDeviceOrientation(UIDeviceOrientat
     // ライトが点いていたら消灯する。
     [self setLightOff];
     
+    if (recorder.videoConnection.supportsVideoOrientation) {
+        recorder.videoConnection.videoOrientation = videoOrientationFromDeviceOrientation([UIDevice currentDevice].orientation);
+    }
     recorder.videoOrientation = [recorder.videoConnection videoOrientation];
     
     AVCaptureDevice *captureDevice = [AVCaptureDevice deviceWithUniqueID:recorder.videoDevice.uniqueId];
@@ -970,7 +1065,7 @@ AVCaptureVideoOrientation videoOrientationFromDeviceOrientation(UIDeviceOrientat
           }];
      }];
 }
-#pragma mark - OnDataAvailable(old)
+#pragma mark - Preview Internal
 
 - (BOOL) setupAssetWriterAudioInputForRecorderContext:(DPHostRecorderContext *)recorderCtx
                                           description:(CMFormatDescriptionRef)currentFormatDescription
@@ -1120,6 +1215,36 @@ AVCaptureVideoOrientation videoOrientationFromDeviceOrientation(UIDeviceOrientat
     
     return transform;
 }
+
+- (void) sendPreviewDataWithSampleBuffer:(CMSampleBufferRef)sampleBuffer
+                             orientation:(AVCaptureDevicePosition)orientation
+{
+    @autoreleasepool {
+        CVImageBufferRef imageBuffer = CMSampleBufferGetImageBuffer(sampleBuffer);
+        if (!imageBuffer) {
+            return;
+        }
+        CIImage *ciImage = [CIImage imageWithCVPixelBuffer:imageBuffer];
+        if (!ciImage) {
+            return;
+        }
+        
+        UIImage *image = [UIImage imageWithCIImage:ciImage];
+        CGSize size = image.size;
+        double scale = 320000.0 / (size.width * size.height);
+        size = CGSizeMake((int)(size.width * scale), (int)(size.height * scale));
+        UIGraphicsBeginImageContext(size);
+        [image drawInRect:CGRectMake(0, 0, size.width, size.height)];
+        image = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
+        NSData *jpegData = UIImageJPEGRepresentation(image, 1.0);
+
+        [self.httpServer offerData:jpegData];
+    }
+
+}
+
+
 #pragma mark - AVCapture{Audio,Video}DataOutputSampleBufferDelegate
 
 - (void)captureOutput:(AVCaptureOutput *)captureOutput
@@ -1249,21 +1374,23 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
                 initMuteSample = NO;
             }
             
-            if (!isAudio && _sendPreview &&
-                // デフォルトカメラの時だけ
-                recorder == _recorderArr[[_defaultVideoRecorderId intValue]]) {
-                if (CMTIME_IS_INVALID(_lastPreviewTimestamp)) {
-                    // まだプレビューの配送を行っていないのであれば、プレビューを配信する。
-//                    [self sendOnDataAvailableEventWithSampleBuffer:sampleBuffer];
-                } else if (CMTIME_IS_NUMERIC(_lastPreviewTimestamp)) {
-                    CMTime elapsedTime =
-                    CMTimeSubtract(_lastPreviewTimestamp, originalSampleBufferTimestamp);
-                    if (CMTIME_COMPARE_INLINE(elapsedTime, >=, _secPerFrame)) {
-                        // 規定時間が経過したのであれば、プレビューを配信する。
-//                        [self sendOnDataAvailableEventWithSampleBuffer:sampleBuffer];
+            if (!isAudio && _sendPreview) {
+                for (NSString *previewId in self.nowCurrentRecorders) {
+                    if (recorder == self.recorderArr[[previewId intValue]]) {
+                        if (CMTIME_IS_INVALID(_lastPreviewTimestamp)) {
+                            // まだプレビューの配送を行っていないのであれば、プレビューを配信する。
+                            [self sendPreviewDataWithSampleBuffer:sampleBuffer orientation:recorder.videoDevice.position];
+                        } else if (CMTIME_IS_NUMERIC(_lastPreviewTimestamp)) {
+                            CMTime elapsedTime =
+                            CMTimeSubtract(_lastPreviewTimestamp, originalSampleBufferTimestamp);
+                            if (CMTIME_COMPARE_INLINE(elapsedTime, >=, _secPerFrame)) {
+                                // 規定時間が経過したのであれば、プレビューを配信する。
+                                [self sendPreviewDataWithSampleBuffer:sampleBuffer orientation:recorder.videoDevice.position];
+                            }
+                        } else {
+                            self.lastPreviewTimestamp = originalSampleBufferTimestamp;
+                        }
                     }
-                } else {
-                    _lastPreviewTimestamp = originalSampleBufferTimestamp;
                 }
             }
             

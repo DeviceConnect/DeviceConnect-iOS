@@ -69,6 +69,7 @@
 		ABA43AC41EE562ED0019FE35 /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABA43AC31EE562ED0019FE35 /* UserNotifications.framework */; };
 		ABDA3C6D1A0C58F3001F30A0 /* DPHostConnectionProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = ABDA3C6C1A0C58F3001F30A0 /* DPHostConnectionProfile.m */; };
 		ABDA3C701A0C743A001F30A0 /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABDA3C6F1A0C743A001F30A0 /* CoreBluetooth.framework */; };
+		ABDC5BDD1F945AEE007201D9 /* DPHostSimpleHttpServer.m in Sources */ = {isa = PBXBuildFile; fileRef = ABDC5BDC1F945AEE007201D9 /* DPHostSimpleHttpServer.m */; };
 		ABED44AB1F92396B00598460 /* DPHostRecorderManager.m in Sources */ = {isa = PBXBuildFile; fileRef = ABED44AA1F92396B00598460 /* DPHostRecorderManager.m */; };
 		D62F0D1A1AA6E2CB00BC0ADA /* close_small_button_focus.png in Resources */ = {isa = PBXBuildFile; fileRef = D62F0D171AA6E2CB00BC0ADA /* close_small_button_focus.png */; };
 		D62F0D1B1AA6E2CB00BC0ADA /* close_small_button_normal.png in Resources */ = {isa = PBXBuildFile; fileRef = D62F0D181AA6E2CB00BC0ADA /* close_small_button_normal.png */; };
@@ -168,6 +169,8 @@
 		ABDA3C6B1A0C58F3001F30A0 /* DPHostConnectionProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPHostConnectionProfile.h; sourceTree = "<group>"; };
 		ABDA3C6C1A0C58F3001F30A0 /* DPHostConnectionProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPHostConnectionProfile.m; sourceTree = "<group>"; };
 		ABDA3C6F1A0C743A001F30A0 /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
+		ABDC5BDB1F945AED007201D9 /* DPHostSimpleHttpServer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DPHostSimpleHttpServer.h; sourceTree = "<group>"; };
+		ABDC5BDC1F945AEE007201D9 /* DPHostSimpleHttpServer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DPHostSimpleHttpServer.m; sourceTree = "<group>"; };
 		ABED44A91F92396B00598460 /* DPHostRecorderManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DPHostRecorderManager.h; sourceTree = "<group>"; };
 		ABED44AA1F92396B00598460 /* DPHostRecorderManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DPHostRecorderManager.m; sourceTree = "<group>"; };
 		D62F0D171AA6E2CB00BC0ADA /* close_small_button_focus.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = close_small_button_focus.png; path = dConnectDeviceHost_resources/close_small_button_focus.png; sourceTree = SOURCE_ROOT; };
@@ -245,6 +248,8 @@
 		25B42C6219865EC400B65E83 /* DPHostMediaStreamRecording */ = {
 			isa = PBXGroup;
 			children = (
+				ABDC5BDB1F945AED007201D9 /* DPHostSimpleHttpServer.h */,
+				ABDC5BDC1F945AEE007201D9 /* DPHostSimpleHttpServer.m */,
 				25C710E91981E578004C6484 /* DPHostMediaStreamRecordingProfile.h */,
 				25C710EA1981E578004C6484 /* DPHostMediaStreamRecordingProfile.m */,
 				25B42C6319865F1000B65E83 /* DPHostRecorderContext.h */,
@@ -668,6 +673,7 @@
 				D6384EA91A7625BD00384167 /* DPHostCanvasProfile.m in Sources */,
 				AB912A7C1F8F3081002ABE36 /* DPHostIPodAudioPlayer.m in Sources */,
 				D6C860251D38D3AF00232EEF /* DPHostService.m in Sources */,
+				ABDC5BDD1F945AEE007201D9 /* DPHostSimpleHttpServer.m in Sources */,
 				D69997451A7E210D00EF934F /* DPHostCanvasView.m in Sources */,
 				D6384EAD1A7625CF00384167 /* DPHostCanvasUIViewController.m in Sources */,
 				252F870319736DEB00142BAE /* DPHostPhoneProfile.m in Sources */,
@@ -886,6 +892,7 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "dConnectDeviceHost/DPHostDevicePlugin-Prefix.pch";
+				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/../../dConnectSDK/dConnectSDKForIOS/DConnectSDK/Dependencies/CocoaAsyncSocket";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = dConnectDeviceHost;
 				SKIP_INSTALL = YES;
@@ -903,6 +910,7 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "dConnectDeviceHost/DPHostDevicePlugin-Prefix.pch";
+				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/../../dConnectSDK/dConnectSDKForIOS/DConnectSDK/Dependencies/CocoaAsyncSocket";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = dConnectDeviceHost;
 				SKIP_INSTALL = YES;

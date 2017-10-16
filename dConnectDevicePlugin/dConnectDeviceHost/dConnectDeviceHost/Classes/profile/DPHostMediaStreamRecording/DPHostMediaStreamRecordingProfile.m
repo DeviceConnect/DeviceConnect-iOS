@@ -125,7 +125,7 @@
                                @"timeslice is not supported; please omit this parameter."];
                               return YES;
                           }
-                          [weakSelf.manager recordForTarget:target timeSlice:timeslice response:response completionHandler:^(NSError *error) {
+                          [weakSelf.manager recordForTarget:target timeSlice:timeslice completionHandler:^(NSError *error) {
                               if (!error) {
                                   [response setResult:DConnectMessageResultTypeOk];
                                   [weakSelf sendOnRecordingChangeEventWithStatus:DConnectMediaStreamRecordingProfileRecordingStateRecording
@@ -209,7 +209,6 @@
                      api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
 
                          NSString *target = [DConnectMediaStreamRecordingProfile targetFromRequest:request];
-                         
                          NSError *error = nil;
                          [weakSelf.manager unmuteTrackForTarget:target error:&error];
                          [weakSelf runMediaStreamRecordingWithError:error
@@ -261,37 +260,19 @@
                      }];
         
         // API登録(didReceivePutOnDataAvailableRequest相当)
-        NSString *putOnDataAvailableRequestApiPath = [self apiPath: nil
-                                                     attributeName: DConnectMediaStreamRecordingProfileAttrOnDataAvailable];
-        [self addPutPath: putOnDataAvailableRequestApiPath
+        NSString *putPreviewRequestApiPath = [self apiPath: nil
+                                                     attributeName: DConnectMediaStreamRecordingProfileAttrPreview];
+        [self addPutPath: putPreviewRequestApiPath
                      api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
-
-                         NSString *serviceId = [request serviceId];
-
-                         NSArray *evts = [[weakSelf eventMgr] eventListForServiceId:serviceId
-                                                                  profile:DConnectMediaStreamRecordingProfileName
-                                                                attribute:DConnectMediaStreamRecordingProfileAttrOnDataAvailable];
-                         if (evts.count == 0) {
-                             [weakSelf profile:weakSelf didReceivePostRecordRequest:nil response:[response copy]
-                                 serviceId:serviceId target:nil timeslice:nil];
-                             
-                             // プレビュー画像URIの配送処理が開始されていないのなら、開始する。
-//                             _sendPreview = YES;
+                         NSString *target = [DConnectMediaStreamRecordingProfile targetFromRequest:request];
+                         NSError *error = nil;
+                         NSString *uri = [weakSelf.manager startPreviewForTarget:target error:&error];
+                         if (!error) {
+                             [DConnectMediaStreamRecordingProfile setUri:uri target:response];
+                             [response setResult:DConnectMessageResultTypeOk];
+                         } else {
+                             [response setError:error.code message:error.localizedDescription];
                          }
-                         
-                         switch ([[weakSelf eventMgr] addEventForRequest:request]) {
-                             case DConnectEventErrorNone:             // エラー無し.
-                                 [response setResult:DConnectMessageResultTypeOk];
-                                 break;
-                             case DConnectEventErrorInvalidParameter: // 不正なパラメータ.
-                                 [response setErrorToInvalidRequestParameter];
-                                 break;
-                             case DConnectEventErrorNotFound:         // マッチするイベント無し.
-                             case DConnectEventErrorFailed:           // 処理失敗.
-                                 [response setErrorToUnknown];
-                                 break;
-                         }
-                         
                          return YES;
                      }];
         
@@ -338,39 +319,18 @@
                         }];
         
         // API登録(didReceiveDeleteOnDataAvailableRequest相当)
-        NSString *deleteOnDataAvailableRequestApiPath = [self apiPath: nil
-                                                        attributeName: DConnectMediaStreamRecordingProfileAttrOnDataAvailable];
-        [self addDeletePath: deleteOnDataAvailableRequestApiPath
+        NSString *deletePreviewRequestApiPath = [self apiPath: nil
+                                                        attributeName: DConnectMediaStreamRecordingProfileAttrPreview];
+        [self addDeletePath: deletePreviewRequestApiPath
                         api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
-
-                            NSString *serviceId = [request serviceId];
-                            
-                            switch ([[weakSelf eventMgr] removeEventForRequest:request]) {
-                                case DConnectEventErrorNone:             // エラー無し.
-                                    [response setResult:DConnectMessageResultTypeOk];
-                                    break;
-                                case DConnectEventErrorInvalidParameter: // 不正なパラメータ.
-                                    [response setErrorToInvalidRequestParameter];
-                                    break;
-                                case DConnectEventErrorNotFound:         // マッチするイベント無し.
-                                case DConnectEventErrorFailed:           // 処理失敗.
-                                    [response setErrorToUnknown];
-                                    break;
+                            NSString *target = [DConnectMediaStreamRecordingProfile targetFromRequest:request];
+                            NSError *error = nil;
+                            [weakSelf.manager stopPreviewForTarget:target error:&error];
+                            if (!error) {
+                                [response setResult:DConnectMessageResultTypeOk];
+                            } else {
+                                [response setError:error.code message:error.localizedDescription];
                             }
-                            
-                            NSArray *evts = [[weakSelf eventMgr] eventListForServiceId:serviceId
-                                                                     profile:DConnectMediaStreamRecordingProfileName
-                                                                   attribute:DConnectMediaStreamRecordingProfileAttrOnDataAvailable];
-                            if (evts.count == 0) {
-                                [weakSelf profile:weakSelf didReceivePutStopRequest:nil response:[response copy]
-                                    serviceId:serviceId target:nil];
-                                
-                                // イベント受領先が存在しないなら、プレビュー画像URIの配送処理を停止する。
-//                                _sendPreview = NO;
-                                // 次回プレビュー開始時に影響を与えない為に、初期値（無効値）を設定する。
-//                                _lastPreviewTimestamp = kCMTimeInvalid;
-                            }
-                            
                             return YES;
                         }];
         
@@ -448,67 +408,7 @@
 }
 
 
-- (void) sendOnDataAvailableEventWithSampleBuffer:(CMSampleBufferRef)sampleBuffer
-{
-    NSURL *fileURL;
-    NSArray *evts;
-    @autoreleasepool {
-        CVImageBufferRef imageBuffer = CMSampleBufferGetImageBuffer(sampleBuffer);
-        if (!imageBuffer) {
-            return;
-        }
-        CIImage *ciImage = [CIImage imageWithCVPixelBuffer:imageBuffer];
-        if (!ciImage) {
-            return;
-        }
-        
-        // イベントの取得
-        evts = [_eventMgr eventListForServiceId:DPHostDevicePluginServiceId
-                                       profile:DConnectMediaStreamRecordingProfileName
-                                     attribute:DConnectMediaStreamRecordingProfileAttrOnDataAvailable];
-        
-        // プレビュー画像の書き出し。
-        if (evts.count > 0) {
-            UIImage *image = [UIImage imageWithCIImage:ciImage];
-            CGSize size = image.size;
-            double scale = 160000.0 / (size.width * size.height);
-            size = CGSizeMake((int)(size.width * scale), (int)(size.height * scale));
-            UIGraphicsBeginImageContext(size);
-            [image drawInRect:CGRectMake(0, 0, size.width, size.height)];
-            image = UIGraphicsGetImageFromCurrentImageContext();
-            UIGraphicsEndImageContext();
-            NSData *jpegData = UIImageJPEGRepresentation(image, 1.0);
-            
-//            NSString *fileName = [NSString stringWithFormat:@"preview_%02d", _curPreviewImageEnumerator];
-//            fileURL = [NSURL fileURLWithPath:[NSTemporaryDirectory() stringByAppendingPathComponent:fileName]];
-//            if (!fileURL || ![jpegData writeToURL:fileURL atomically:NO]) {
-//                return;
-//            }
-        } else {
-            return;
-        }
-    }
-//    _curPreviewImageEnumerator = (_curPreviewImageEnumerator + 1) % 100;
-    
-    DConnectURIBuilder *builder = [DConnectURIBuilder new];
-    builder.profile = @"files";
-    [builder addParameter:[NSString stringWithFormat:@"%@",
-                           [DPHostUtils percentEncodeString:[fileURL path]
-                                               withEncoding:NSUTF8StringEncoding]]
-                  forName:@"uri"];
-    NSString *uri = builder.build.absoluteString;
-    // イベント送信
-    for (DConnectEvent *evt in evts) {
-        DConnectMessage *eventMsg = [DConnectEventManager createEventMessageWithEvent:evt];
-        DConnectMessage *media = [DConnectMessage message];
-        
-        [DConnectMediaStreamRecordingProfile setUri:uri target:media];
-        [DConnectMediaStreamRecordingProfile setMIMEType:@"image/jpeg" target:media];
-        [DConnectMediaStreamRecordingProfile setMedia:media target:eventMsg];
-        
-        [SELF_PLUGIN sendEvent:eventMsg];
-    }
-}
+
 
 #pragma mark - Private Methods
 
