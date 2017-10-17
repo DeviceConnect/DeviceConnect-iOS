@@ -765,7 +765,7 @@ static NSString *const DPAllJoynLightProfileLightIDSelf = @"self";
          
          // MsgArg lacks copy operator, so std::vector can not be used for
          // storing new states...
-         MsgArg newStates[3];
+         MsgArg newStates[4];
          size_t count = 0;
          MsgArg tmp1;
          MsgArg tmp2 = MsgArg("b", YES);
