@@ -137,15 +137,6 @@ extern NSString *const DConnectSystemProfileParamVersion;
 @required
 
 /*!
- @brief データソースにデバイスプラグインのバージョンを要求する。
- 
- @param[in] profile プロファイル
- 
- @retval NSString* バージョン
- */
-- (NSString *) versionOfSystemProfile:(DConnectSystemProfile *)profile;
-
-/*!
  @brief データソースにデバイスプラグインの設定画面用のUIViewControllerを要求する。
  @attention このメソッドはUIスレッドで呼び出される。
  

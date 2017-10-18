@@ -110,10 +110,6 @@ didReceiveGetServicesRequest:(DConnectRequestMessage *)request
 
 #pragma mark - DConnectSystemProfileDataSource
 
-- (NSString *) versionOfSystemProfile:(DConnectSystemProfile *)profile {
-    return TestDevicePluginSystemVersion;
-}
-
 - (UIViewController *) profile:(DConnectSystemProfile *)sender
          settingPageForRequest:(DConnectRequestMessage *)request
 {
