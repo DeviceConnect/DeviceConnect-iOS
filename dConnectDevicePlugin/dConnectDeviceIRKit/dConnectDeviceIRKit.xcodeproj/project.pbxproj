@@ -68,6 +68,7 @@
 		AB056FA11B6B1A2800E1482F /* DCMDevicePluginSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB056FA01B6B1A2800E1482F /* DCMDevicePluginSDK.framework */; };
 		AB056FA71B6B51DE00E1482F /* DPIRKitLightProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = AB056FA61B6B51DE00E1482F /* DPIRKitLightProfile.m */; };
 		AB056FAA1B6B5D0200E1482F /* DPIRKitTVProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = AB056FA91B6B5D0200E1482F /* DPIRKitTVProfile.m */; };
+		AB4A50A01F96EECA0074912E /* dConnectDeviceIRKit-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 30A0A33219A5932700822B73 /* dConnectDeviceIRKit-Info.plist */; };
 		AB4B68FC19B4671D009939C9 /* irkit01.png in Resources */ = {isa = PBXBuildFile; fileRef = AB4B68F419B4671D009939C9 /* irkit01.png */; };
 		AB4B68FD19B4671D009939C9 /* irkit02.png in Resources */ = {isa = PBXBuildFile; fileRef = AB4B68F519B4671D009939C9 /* irkit02.png */; };
 		AB4B68FE19B4671D009939C9 /* irkit03.png in Resources */ = {isa = PBXBuildFile; fileRef = AB4B68F619B4671D009939C9 /* irkit03.png */; };
@@ -642,6 +643,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AB4A50A01F96EECA0074912E /* dConnectDeviceIRKit-Info.plist in Resources */,
 				8EB8544D1D42403E0035C0DC /* dconnect_icon.png in Resources */,
 				AB8658021B82FF4900A0F896 /* light.png in Resources */,
 				AB8658031B82FF4900A0F896 /* tv.png in Resources */,
