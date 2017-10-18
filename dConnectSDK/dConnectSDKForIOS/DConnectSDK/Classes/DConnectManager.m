@@ -874,7 +874,43 @@ NSString *const DConnectAttributeNameRequestAccessToken = @"requestAccessToken";
 
 - (NSArray*)devicePluginsList
 {
-    return [self.mDeviceManager devicePluginList];
+    self.settings.useLocalOAuth = NO;
+    self.settings.useOriginEnable = NO;
+    DConnectRequestMessage *request = [DConnectRequestMessage new];
+    [request setAction: DConnectMessageActionTypeGet];
+    [request setProfile: DConnectSystemProfileName];
+    [request setOrigin:@"http://localhost:8080"];
+    __block NSMutableArray *devicePlugins = [NSMutableArray array];
+    __block DConnectDevicePluginManager *dMgr = self.mDeviceManager;
+    NSArray *list = [self.mDeviceManager devicePluginList];
+    dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
+    dispatch_time_t timeout = dispatch_time(DISPATCH_TIME_NOW, NSEC_PER_SEC * HTTP_REQUEST_TIMEOUT);
+    [self sendRequest: request callback:^(DConnectResponseMessage *response) {
+        if (response != nil) {
+            if ([response result] == DConnectMessageResultTypeOk) {
+                DConnectArray *plugins = [response arrayForKey:DConnectSystemProfileParamPlugins];
+                for (int i = 0; i < plugins.count; i++) {
+                    DConnectMessage *message = [plugins messageAtIndex:i];
+                    NSString *version = [message stringForKey:DConnectMessageVersion];
+                    NSString *pluginId = [message stringForKey:DConnectSystemProfileParamId];
+                    pluginId = [pluginId stringByReplacingOccurrencesOfString:@".dconnect" withString:@""];
+                    DConnectDevicePlugin *devicePlugin = (DConnectDevicePlugin *) [dMgr devicePluginForPluginId:pluginId];
+                    [devicePlugin setPluginVersionName:version];
+                    [devicePlugins addObject:devicePlugin];
+                }
+            }
+            
+        }
+        self.settings.useLocalOAuth = YES;
+        self.settings.useOriginEnable = YES;
+        dispatch_semaphore_signal(semaphore);
+    }];
+    long result = dispatch_semaphore_wait(semaphore, timeout);
+    if (result != 0) {
+        return [self.mDeviceManager devicePluginList];
+    } else {
+        return devicePlugins;
+    }
 }
 
 - (NSString *)devicePluginIdForServiceId:(NSString *)serviceId
