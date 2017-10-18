@@ -14,10 +14,6 @@
 #import "SonyCameraViewController.h"
 #import "SonyCameraManager.h"
 
-/*!
- @brief バージョン。
- */
-NSString *const SonyDevicePluginVersion = @"2.0.0";
 
 
 @interface SonyCameraSystemProfile ()
@@ -80,10 +76,6 @@ NSString *const SonyDevicePluginVersion = @"2.0.0";
 }
 
 #pragma mark - DConnectSystemProfileDataSource
-
-- (NSString *) versionOfSystemProfile:(DConnectSystemProfile *)profile {
-    return SonyDevicePluginVersion;
-}
 
 - (UIViewController *) profile:(DConnectSystemProfile *)sender
          settingPageForRequest:(DConnectRequestMessage *)request

@@ -12,7 +12,6 @@
 @interface TestSystemProfile : DConnectSystemProfile<DConnectSystemProfileDataSource>
 
 #pragma mark - DConnectSystemProfileDataSource
-- (NSString *) versionOfSystemProfile:(DConnectSystemProfile *)profile;
 - (UIViewController *) profile:(DConnectSystemProfile *)sender settingPageForRequest:(DConnectRequestMessage *)request;
 
 @end

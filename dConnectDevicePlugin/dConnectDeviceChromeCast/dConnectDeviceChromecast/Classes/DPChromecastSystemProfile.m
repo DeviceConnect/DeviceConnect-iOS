@@ -56,11 +56,6 @@
     return self;
 }
 
-// デバイスプラグインのバージョン
--(NSString *) versionOfSystemProfile:(DConnectSystemProfile *)profile
-{
-    return @"2.0.0";
-}
 
 // デバイスプラグインの設定画面用のUIViewControllerを要求する
 -(UIViewController *) profile:(DConnectSystemProfile *)sender

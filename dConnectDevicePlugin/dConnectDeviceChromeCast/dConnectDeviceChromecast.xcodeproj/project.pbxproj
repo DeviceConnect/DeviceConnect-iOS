@@ -55,6 +55,7 @@
 		ABA304001D7FC84F00B1CEEB /* GoogleCastResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = ABA303FF1D7FC84F00B1CEEB /* GoogleCastResources.bundle */; };
 		ABAC40451D7E9E2600BBDD34 /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABAC40441D7E9E2600BBDD34 /* CoreBluetooth.framework */; };
 		ABAC40471D7E9E3600BBDD34 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABAC40461D7E9E3600BBDD34 /* Accelerate.framework */; };
+		ABC49C401F97436300DC9339 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = ABC5E3D31A9736F9003D2634 /* Info.plist */; };
 		ABC5E3E41A973741003D2634 /* DPChromecastDevicePlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = ABC5E3E11A973741003D2634 /* DPChromecastDevicePlugin.m */; };
 		ABC5E3EA1A97375D003D2634 /* DPChromecastGuideViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABC5E3E71A97375D003D2634 /* DPChromecastGuideViewController.m */; };
 		ABC5E3EB1A97375D003D2634 /* DPChromecastSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABC5E3E91A97375D003D2634 /* DPChromecastSettingViewController.m */; };
@@ -624,6 +625,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ABC49C401F97436300DC9339 /* Info.plist in Resources */,
 				ABCB4A511AB53E0100805F25 /* icon-cast-connected.png in Resources */,
 				AB311FDA1D7E879100B2D886 /* CastComponents.storyboard in Resources */,
 				ABCB4A521AB53E0100805F25 /* icon-cast-identified.png in Resources */,

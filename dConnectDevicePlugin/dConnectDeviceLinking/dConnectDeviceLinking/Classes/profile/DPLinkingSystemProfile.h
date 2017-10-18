@@ -11,6 +11,6 @@
 
 @interface DPLinkingSystemProfile : DConnectSystemProfile
 
-+ (instancetype) systemProfileWithVersion:(NSString *)version;
++ (instancetype) systemProfile;
 
 @end

@@ -24,7 +24,7 @@
         [[DConnectEventManager sharedManagerForClass:[self class]] setController:ctl];
 
         [self addProfile:[[DPLinkingServiceDiscoveryProfile alloc] initWithServiceProvider: self.serviceProvider]];
-        [self addProfile:[DPLinkingSystemProfile systemProfileWithVersion:@"1.0"]];
+        [self addProfile:[DPLinkingSystemProfile systemProfile]];
 
         __weak typeof(self) weakSelf = self;
         
@@ -54,4 +54,9 @@
     return nil;
 }
 
+#pragma mark - DevicePlugin's bundle
+- (NSBundle*)pluginBundle
+{
+    return [NSBundle bundleWithPath:[[NSBundle mainBundle] pathForResource:@"dConnectDeviceLinking_resources" ofType:@"bundle"]];
+}
 @end

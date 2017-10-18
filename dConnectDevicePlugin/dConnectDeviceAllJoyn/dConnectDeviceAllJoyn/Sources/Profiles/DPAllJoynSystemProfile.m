@@ -59,11 +59,6 @@
 #pragma mark DConnectSystemProfileDataSource
 
 
-- (NSString *) versionOfSystemProfile:(DConnectSystemProfile *)profile
-{
-    return _version;
-}
-
 
 - (UIViewController *) profile:(DConnectSystemProfile *)sender
          settingPageForRequest:(DConnectRequestMessage *)request

@@ -88,7 +88,7 @@ DPIRKitManagerDetectionDelegate
         [_eventManager setController:controller];
         NSString* path = [DPIRBundle() pathForResource:DPIRKitInfoPlistName ofType:@"plist"];
         NSDictionary *info = [NSDictionary dictionaryWithContentsOfFile:path];
-        _version = info[DPIRKitInfoVersion];
+//        _version = info[DPIRKitInfoVersion];
         __weak typeof(self) _self = self;
         dispatch_async(dispatch_get_main_queue(), ^{
             NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
@@ -334,10 +334,6 @@ DPIRKitManagerDetectionDelegate
 
 #pragma mark DConnectSystemProfileDataSource
 
-- (NSString *) versionOfSystemProfile:(DConnectSystemProfile *)profile {
-    return _version;
-}
-
 - (UIViewController *) profile:(DConnectSystemProfile *)sender
          settingPageForRequest:(DConnectRequestMessage *)request
 {
@@ -488,4 +484,10 @@ DPIRKitManagerDetectionDelegate
     NSString* filename = isOnline ? @"dconnect_icon" : @"dconnect_icon_off";
     return [bundle pathForResource:filename ofType:@"png"];
 }
+#pragma mark - DevicePlugin's bundle
+- (NSBundle*)pluginBundle
+{
+    return [NSBundle bundleWithPath:[[NSBundle mainBundle] pathForResource:@"dConnectDeviceIRKit_resources" ofType:@"bundle"]];
+}
+
 @end

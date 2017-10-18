@@ -31,7 +31,7 @@
 		// EventManagerの初期化
 		Class key = [self class];
 		[[DConnectEventManager sharedManagerForClass:key] setController:[DConnectMemoryCacheController new]];
-		
+
         // DPPebbleManagerへServiceProviderを渡す
         [[DPPebbleManager sharedManager] setServiceProvider: self.serviceProvider];
         [[DPPebbleManager sharedManager] setPlugin: self];
@@ -82,6 +82,11 @@
     NSBundle *bundle = DCPebbleBundle();
     NSString* filename = isOnline ? @"dconnect_icon" : @"dconnect_icon_off";
     return [bundle pathForResource:filename ofType:@"png"];
+}
+#pragma mark - DevicePlugin's bundle
+- (NSBundle*)pluginBundle
+{
+    return [NSBundle bundleWithPath:[[NSBundle mainBundle] pathForResource:@"dConnectDevicePebble_resources" ofType:@"bundle"]];
 }
 
 @end
