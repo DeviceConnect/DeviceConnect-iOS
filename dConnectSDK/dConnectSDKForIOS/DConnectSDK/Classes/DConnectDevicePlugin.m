@@ -47,7 +47,12 @@
         self.useLocalOAuth = YES;
         self.mProfileMap = [NSMutableDictionary dictionary];
         self.pluginName = NSStringFromClass([self class]);
-        self.pluginVersionName = @"1.0.0";
+        NSString *version = [[[self pluginBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
+        if (version) {
+            self.pluginVersionName = version;
+        } else {
+            self.pluginVersionName = @"1.0.0";
+        }
         self.pluginId = [md5Proc generateSignature: self.pluginName];
 
         // DeviceConnectサービス管理クラスの初期化
@@ -244,4 +249,8 @@
     return nil; //should be overrided
 }
 
+- (NSBundle*)pluginBundle
+{
+    return nil; //should be overrided
+}
 @end

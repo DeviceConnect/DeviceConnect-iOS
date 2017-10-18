@@ -59,11 +59,6 @@
 
 #pragma mark - DConnectSystemProfileDelegate & DataSource
 
-// デバイスプラグインのバージョン
-- (NSString *) versionOfSystemProfile:(DConnectSystemProfile *)profile {
-	return @"2.0.0";
-}
-
 // 設定画面用のUIViewController
 - (UIViewController *) profile:(DConnectSystemProfile *)sender
          settingPageForRequest:(DConnectRequestMessage *)request

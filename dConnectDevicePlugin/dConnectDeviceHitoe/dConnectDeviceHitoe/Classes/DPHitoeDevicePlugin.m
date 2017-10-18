@@ -228,5 +228,10 @@ int const DPHitoeDataKeyExtension = 0x04;
     return [bundle pathForResource:filename ofType:@"png"];
     return nil;
 }
+#pragma mark - DevicePlugin's bundle
+- (NSBundle*)pluginBundle
+{
+    return [NSBundle bundleWithPath:[[NSBundle mainBundle] pathForResource:@"dConnectDeviceHitoe_resources" ofType:@"bundle"]];
+}
 
 @end

@@ -36,17 +36,13 @@
     return self;
 }
 
-+ (instancetype) systemProfileWithVersion:(NSString *)version
++ (instancetype) systemProfile
 {
-    return [[DPLinkingSystemProfile alloc] initWithVersion:version];
+    return [[DPLinkingSystemProfile alloc] init];
 }
 
 #pragma mark - DConnectSystemProfileDataSource
 
-- (NSString *) versionOfSystemProfile:(DConnectSystemProfile *)profile
-{
-    return _version;
-}
 
 - (UIViewController *) profile:(DConnectSystemProfile *)sender
          settingPageForRequest:(DConnectRequestMessage *)request
