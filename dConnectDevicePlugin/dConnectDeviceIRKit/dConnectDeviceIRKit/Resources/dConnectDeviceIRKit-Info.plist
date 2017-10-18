@@ -2,10 +2,12 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>DPIRKitVersion</key>
+	<key>CFBundleShortVersionString</key>
 	<string>2.0.0</string>
 	<key>DPIRKitAPIKey</key>
 	<string>[YOUR APPLICATION KEY]</string>
+	<key>DPIRKitVersion</key>
+	<string>2.0.0</string>
 	<key>NSHumanReadableCopyright</key>
 	<string>Copyright (c) 2014 NTT DOCOMO, INC. Released under the MIT license.</string>
 </dict>
