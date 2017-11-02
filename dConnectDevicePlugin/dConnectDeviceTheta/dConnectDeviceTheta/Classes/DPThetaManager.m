@@ -427,9 +427,6 @@ static int const DPThetaManagerInactive = 0xFFFFFFFF;
     NSFileManager *sysFileMgr = [NSFileManager defaultManager];
     
     NSString *dstPath = [self pathByAppendingPathComponent:path];
-    if ([sysFileMgr fileExistsAtPath:dstPath]) {
-        return nil;
-    }
     NSData *data = [self getDataWithPtpObject:ptpIp
                     session:session];
     NSString *resultPath = [self.fileMgr createFileForPath:dstPath contents:data];
