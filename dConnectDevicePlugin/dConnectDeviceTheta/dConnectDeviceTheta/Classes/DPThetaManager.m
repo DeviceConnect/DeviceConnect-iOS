@@ -614,7 +614,14 @@ static int const DPThetaManagerInactive = 0xFFFFFFFF;
 
 // デバイス管理情報更新
 - (void) updateManageServices: (BOOL) onlineForSet {
-
+    // ROI接続中(常時)
+    // サービス未登録なら登録する
+    if (![self.serviceProvider service: DPThetaRoiServiceId]) {
+        DPThetaService *service = [[DPThetaService alloc] initWithServiceId: DPThetaRoiServiceId plugin: self.plugin];
+        [service setName: ROI_IMAGE_SERVICE];
+        [self.serviceProvider addService: service bundle: DPThetaBundle()];
+        [service setOnline:YES];
+    }
     // 実行中に呼び出されたらなにもしないで終了
     if (_isUpdateManageServicesRunning) {
         return;
@@ -669,14 +676,7 @@ static int const DPThetaManagerInactive = 0xFFFFFFFF;
             }
         }
 
-        // ROI接続中(常時)
-        // サービス未登録なら登録する
-        if (![self.serviceProvider service: DPThetaRoiServiceId]) {
-            DPThetaService *service = [[DPThetaService alloc] initWithServiceId: DPThetaRoiServiceId plugin: self.plugin];
-            [service setName: ROI_IMAGE_SERVICE];
-            [self.serviceProvider addService: service bundle: DPThetaBundle()];
-            [service setOnline:YES];
-        }
+
         
         _isUpdateManageServicesRunning = NO;
     }
