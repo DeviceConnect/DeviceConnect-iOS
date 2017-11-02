@@ -72,7 +72,7 @@ typedef void (^DPThetaOnPhotoBlock)(NSString *path);
  @param[out] status 動画撮影中のステータス
  @param[out] message エラーメッセージがある場合
  */
-typedef void (^DPThetaOnStatusChangeCallback)(PtpIpObjectInfo *object, NSString *status, NSString *message);
+typedef void (^DPThetaOnStatusChangeCallback)(NSString *status, NSString *message);
 
 /*!
  @brief DPSpheroManagerの共有インスタンスを返す。
@@ -159,7 +159,7 @@ typedef void (^DPThetaOnStatusChangeCallback)(PtpIpObjectInfo *object, NSString 
  @param[in] callback イベントを送信する
  */
 - (void)addOnStatusEventCallbackWithID:(NSString*)serviceId
-                              callback:(void (^)(PtpIpObjectInfo *object, NSString *status, NSString *message))callback;
+                              callback:(void (^)(NSString *status, NSString *message))callback;
 
 /*!
  @brief OnPhotoのイベントを解除する。
