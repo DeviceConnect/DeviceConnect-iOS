@@ -84,7 +84,7 @@ static int const DPThetaManagerInactive = 0xFFFFFFFF;
         [_ptpConnection setLoglevel:PTPIP_LOGLEVEL_ERROR];
         [_ptpConnection setEventListener:self];
 
-        [self updateManageServices: YES];
+
         _session =nil;
         
         // Reachabilityの初期処理
@@ -196,6 +196,7 @@ static int const DPThetaManagerInactive = 0xFFFFFFFF;
 - (BOOL)connect
 {
     if ([_ptpConnection connected]) {
+        [self updateManageServices: YES];
         return YES;
     }
     __block BOOL result = NO;
@@ -215,7 +216,7 @@ static int const DPThetaManagerInactive = 0xFFFFFFFF;
     dispatch_semaphore_wait(semaphore, timeout);
     
     [self setImageSize:CGSizeMake(2048,1024)];
-
+    [self updateManageServices: YES];
     return result;
 
 }
@@ -230,7 +231,7 @@ static int const DPThetaManagerInactive = 0xFFFFFFFF;
         dispatch_semaphore_signal(semaphore);
     }];
     dispatch_semaphore_wait(semaphore, timeout);
-    
+    [self updateManageServices: NO];
 }
 
 // 初期値の更新
