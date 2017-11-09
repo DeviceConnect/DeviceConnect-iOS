@@ -744,6 +744,9 @@ typedef NS_ENUM(NSUInteger, OptionIndex) {
                                    [recorder.session startRunning];
                                }
                                isSync = NO;
+                               [weakSelf sendOnRecordingChangeEventWithStatus:DConnectMediaStreamRecordingProfileRecordingStateRecording
+                                                                         path:nil mimeType:recorder.mimeType
+                                                                 errorMessage:nil];
                            }];
                           
                           return isSync;
@@ -1554,6 +1557,7 @@ typedef NS_ENUM(NSUInteger, OptionIndex) {
         DConnectMessage *media = [DConnectMessage message];
         [DConnectMediaStreamRecordingProfile setStatus:status target:media];
         if (path) {
+            [DConnectMediaStreamRecordingProfile setUri:path target:media];
             [DConnectMediaStreamRecordingProfile setPath:path target:media];
         }
         if (mimeType) {
