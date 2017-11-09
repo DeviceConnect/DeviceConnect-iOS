@@ -34,6 +34,8 @@ static NSString * const ROI_IMAGE_SERVICE = @"ROI Image Service";
     NSMutableDictionary* _onStatusEventList;
     CGSize _imageSize;
     BOOL _isUpdateManageServicesRunning;
+    NSInteger _transactionId;
+    PtpIpSession *_session;
 }
 
 @property (nonatomic, strong) DPThetaReachability *reachability;
@@ -45,7 +47,12 @@ static NSString * const ROI_IMAGE_SERVICE = @"ROI Image Service";
 /*!
  セマフォのタイムアウト時間[秒]
  */
-static int const _timeout = 500;
+static int const _timeout = 120;
+
+/**
+ 動画停止状態
+ */
+static int const DPThetaManagerInactive = 0xFFFFFFFF;
 
 // share instance
 + (instancetype)sharedManager
@@ -71,14 +78,14 @@ static int const _timeout = 500;
         _onPhotoEventList = [NSMutableDictionary new];
         _onStatusEventList = [NSMutableDictionary new];
         _isUpdateManageServicesRunning = NO;
-        
+        _transactionId = DPThetaManagerInactive;
         // Ready to PTP/IP.
-        _ptpConnection = [[PtpConnection alloc] init];
-        [_ptpConnection setLoglevel:PTPIP_LOGLEVEL_WARN];
+        _ptpConnection = [PtpConnection new];
+        [_ptpConnection setLoglevel:PTPIP_LOGLEVEL_ERROR];
         [_ptpConnection setEventListener:self];
 
-        [self updateManageServices: YES];
-        
+
+        _session =nil;
         
         // Reachabilityの初期処理
         self.reachability = [DPThetaReachability reachabilityWithHostName: @"www.google.com"];
@@ -96,8 +103,11 @@ static int const _timeout = 500;
 
 -(void)ptpip_eventReceived:(int)code :(uint32_t)param1 :(uint32_t)param2 :(uint32_t)param3
 {
-    // PTP/IP-Event callback.
+   // PTP/IP-Event callback.
     if (code == PTPIP_OBJECT_ADDED) {
+        if (!_session) {
+            _session = [self session];
+        }
         [_ptpConnection operateSession:^(PtpIpSession *session) {
             PtpIpObjectInfo *objectInfo = [self loadObject:param1 session:session];
             if (objectInfo.object_format == PTPIP_FORMAT_JPEG) {
@@ -109,30 +119,19 @@ static int const _timeout = 500;
                 }
                 //OnPhotoのコールバック
                 for (id key in [_onPhotoEventList keyEnumerator]) {
-                    DPThetaBlock callback = _onPhotoEventList[key];
+                    DPThetaOnPhotoBlock callback = _onPhotoEventList[key];
                     if (callback) {
-                        callback(filePath, objectInfo.filename);
+                        callback(filePath);
                     }
-                }
-            } else {
-                //OnStatusChangeのコールバック
-                for (id key in [_onStatusEventList keyEnumerator]) {
-                    DPThetaOnStatusChangeCallback callback = _onStatusEventList[key];
-                    if (callback) {
-                        callback(objectInfo, @"stop", nil);
-                    }
-                    // デバイス管理情報更新
-                    [self updateManageServices: YES];
                 }
             }
-            
+
         }];
-        
     } else {
         for (id key in [_onStatusEventList keyEnumerator]) {
             DPThetaOnStatusChangeCallback callback = _onStatusEventList[key];
             if (callback) {
-                callback(nil, @"recording", nil);
+                callback(@"recording", nil);
             }
         }
     }
@@ -163,14 +162,13 @@ static int const _timeout = 500;
     if ((PTPIP_PROTOCOL_SOCKET_CLOSED<=error) && (err<=PTPIP_PROTOCOL_WATCHDOG_EXPIRED)) {
         desc = errTexts[error - PTPIP_PROTOCOL_SOCKET_CLOSED];
     }
-    
     if (closed) {
         [_objects removeAllObjects];
     }
     for (id key in [_onStatusEventList keyEnumerator]) {
         DPThetaOnStatusChangeCallback callback = _onStatusEventList[key];
         if (callback) {
-            callback(nil, @"error", desc);
+            callback(@"error", desc);
         }
     }
     if (_imageCallback) {
@@ -180,14 +178,27 @@ static int const _timeout = 500;
 
 }
 
+// Sessionオブジェクトを取得する
+- (PtpIpSession*)session {
+    __block PtpIpSession* sess = nil;
+    dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
+    dispatch_time_t timeout = dispatch_time(DISPATCH_TIME_NOW, NSEC_PER_SEC * _timeout);
+    [_ptpConnection operateSession:^(PtpIpSession *session)
+     {
+         sess = session;
+         dispatch_semaphore_signal(semaphore);
+     }];
+    dispatch_semaphore_wait(semaphore, timeout);
+    return sess;
+}
 
 // 接続
 - (BOOL)connect
 {
     if ([_ptpConnection connected]) {
+        [self updateManageServices: YES];
         return YES;
     }
-
     __block BOOL result = NO;
     // Setup `target IP`(camera IP).
     // Product default is "192.168.1.1".
@@ -201,10 +212,11 @@ static int const _timeout = 500;
         dispatch_semaphore_signal(semaphore);
 
     }];
+
     dispatch_semaphore_wait(semaphore, timeout);
     
     [self setImageSize:CGSizeMake(2048,1024)];
-
+    [self updateManageServices: YES];
     return result;
 
 }
@@ -219,6 +231,7 @@ static int const _timeout = 500;
         dispatch_semaphore_signal(semaphore);
     }];
     dispatch_semaphore_wait(semaphore, timeout);
+    [self updateManageServices: NO];
 }
 
 // 初期値の更新
@@ -231,22 +244,22 @@ static int const _timeout = 500;
         _deviceInfo = info.serial_number;
     }];
     
-    [_ptpConnection operateSession:^(PtpIpSession *session) {
-        [session setDateTime:[NSDate dateWithTimeIntervalSinceNow:0]];
-        _storageInfo = [session getStorageInfo];
-        
-        _batteryLevel = [session getBatteryLevel];
-        
-        NSArray* objectHandles = [session getObjectHandles];
-        
-        for (NSNumber* it in objectHandles) {
-            uint32_t objectHandle = (uint32_t)it.integerValue;
-            PtpIpObjectInfo *obj = [self loadObject:objectHandle session:session];
-            if (obj) {
-                [_objects addObject:obj];
-            }
+    if (!_session) {
+        _session = [self session];
+    }
+    [_session setDateTime:[NSDate dateWithTimeIntervalSinceNow:0]];
+    _storageInfo = [_session getStorageInfo];
+    _batteryLevel = [_session getBatteryLevel];
+    
+    NSArray* objectHandles = [_session getObjectHandles];
+    
+    for (NSNumber* it in objectHandles) {
+        uint32_t objectHandle = (uint32_t)it.integerValue;
+        PtpIpObjectInfo *obj = [self loadObject:objectHandle session:_session];
+        if (obj) {
+            [_objects addObject:obj];
         }
-    }];
+    }
 }
 
 - (PtpIpObjectInfo*)loadObject:(uint32_t)objectHandle session:(PtpIpSession*)session
@@ -272,86 +285,78 @@ static int const _timeout = 500;
                           fileMgr:(DConnectFileManager*)fileMgr
 {
     self.fileMgr = fileMgr;
-    __block BOOL result = NO;
-    dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
-    dispatch_time_t timeout = dispatch_time(DISPATCH_TIME_NOW, NSEC_PER_SEC * _timeout);
+    BOOL result = NO;
+    if (!_session) {
+        _session = [self session];
+    }
 
-    [_ptpConnection operateSession:^(PtpIpSession *session)
-     {
-         // Single shot mode or Interval shooting mode.
-         if ([session getStillCaptureMode] == 1
-             || [session getStillCaptureMode] == 3) {
-             result = YES;
-             _imageCallback = completion;
-             [session setAudioVolume: 1];
-             [session initiateCapture];
-         } else {
-             result = NO;
-         }
-         dispatch_semaphore_signal(semaphore);
-     }];
-    dispatch_semaphore_wait(semaphore, timeout);
-    
+    if (_imageCallback) {
+        return NO;
+    }
+     // Single shot mode or Interval shooting mode.
+     if ([_session getStillCaptureMode] == 1
+         || [_session getStillCaptureMode] == 3) {
+         result = YES;
+         _imageCallback = completion;
+         [_session initiateCapture];
+     } else {
+         result = NO;
+     }
     return result;
 }
 
 // 動画を撮影する
 - (BOOL)recordingMovie {
-    __block BOOL result = NO;
-    dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
-    dispatch_time_t timeout = dispatch_time(DISPATCH_TIME_NOW, NSEC_PER_SEC * _timeout);
-    
-    [_ptpConnection operateSession:^(PtpIpSession *session)
-     {
-         // Single shot mode or Interval shooting mode.
-         if ([session getStillCaptureMode] == 0) {
-             result = YES;
-             [session setAudioVolume: 1];
-             [session initiateOpenCapture];
-         } else {
-             result = NO;
-         }
-         dispatch_semaphore_signal(semaphore);
-     }];
-    dispatch_semaphore_wait(semaphore, timeout);
-    
+    BOOL result = NO;
+    if (!_session) {
+        _session = [self session];
+    }
+    if (_transactionId != DPThetaManagerInactive) {
+        return result;
+    }
+    // Single shot mode or Interval shooting mode.
+     if ([_session getStillCaptureMode] == 0) {
+         result = YES;
+         [_session setAudioVolume: 1];
+         _transactionId = [_session initiateOpenCapture];
+     } else {
+         result = NO;
+     }
     return result;
 }
 
 // 動画を撮影を停止する
 - (BOOL)stopMovie {
-    __block BOOL result = NO;
-    dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
-    dispatch_time_t timeout = dispatch_time(DISPATCH_TIME_NOW, NSEC_PER_SEC * _timeout);
-    
-    [_ptpConnection operateSession:^(PtpIpSession *session)
-     {
-         // Single shot mode or Interval shooting mode.
-         if ([session getStillCaptureMode] == 0) {
-             result = [session terminateOpenCapture: 0xFFFFFFFF];
-         } else {
-             result = NO;
+    BOOL result = NO;
+    if (!_session) {
+        _session = [self session];
+    }
+    // Single shot mode or Interval shooting mode.
+     if ([_session getStillCaptureMode] == 0) {
+         //OnStatusChangeのコールバック
+         for (id key in [_onStatusEventList keyEnumerator]) {
+             DPThetaOnStatusChangeCallback callback = _onStatusEventList[key];
+             if (callback) {
+                 callback(@"stop", nil);
+             }
+             // デバイス管理情報更新
+             [self updateManageServices: YES];
          }
-         dispatch_semaphore_signal(semaphore);
-     }];
-    dispatch_semaphore_wait(semaphore, timeout);
-    
+         result = [_session terminateOpenCapture: _transactionId];
+         _transactionId = DPThetaManagerInactive;
+         [self disconnect];
+         _session = nil;
+
+     } else {
+         result = NO;
+     }
     return result;
 }
 
 // BatteryのLevelを返す
 - (NSUInteger)getBatteryLevel {
-    dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
-    dispatch_time_t timeout = dispatch_time(DISPATCH_TIME_NOW, NSEC_PER_SEC * _timeout);
-
-    [_ptpConnection operateSession:^(PtpIpSession *session) {
-        _batteryLevel = [session getBatteryLevel];
-        dispatch_semaphore_signal(semaphore);
-
-    }];
-    dispatch_semaphore_wait(semaphore, timeout);
-
-    return _batteryLevel;
+    _session = [self session];
+    return [_session getBatteryLevel];
 }
 
 //シリアルNoを返す
@@ -378,19 +383,10 @@ static int const _timeout = 500;
 //カメラのステータスを返す
 - (NSUInteger)getCameraStatus {
     __block NSUInteger status = 0;
-    dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
-    dispatch_time_t timeout = dispatch_time(DISPATCH_TIME_NOW, NSEC_PER_SEC * _timeout);
-    
-    [_ptpConnection operateSession:^(PtpIpSession *session)
-     {
-         // Single shot mode or Interval shooting mode.
-         status = [session getStillCaptureMode];
-         dispatch_semaphore_signal(semaphore);
-     }];
-    dispatch_semaphore_wait(semaphore, timeout);
-    
+    _session = [self session];
+    // Single shot mode or Interval shooting mode.
+     status = [_session getStillCaptureMode];
     return status;
-    
 }
 
 
@@ -405,7 +401,7 @@ static int const _timeout = 500;
 }
 
 - (void)addOnStatusEventCallbackWithID:(NSString*)serviceId
-                              callback:(void (^)(PtpIpObjectInfo *object, NSString *status, NSString *message))callback
+                              callback:(void (^)(NSString *status, NSString *message))callback
 {
     _onStatusEventList[serviceId] = callback;
 }
@@ -432,13 +428,9 @@ static int const _timeout = 500;
     NSFileManager *sysFileMgr = [NSFileManager defaultManager];
     
     NSString *dstPath = [self pathByAppendingPathComponent:path];
-    if ([sysFileMgr fileExistsAtPath:dstPath]) {
-        return nil;
-    }
     NSData *data = [self getDataWithPtpObject:ptpIp
                     session:session];
     NSString *resultPath = [self.fileMgr createFileForPath:dstPath contents:data];
-    
     return resultPath;
 }
 
@@ -450,24 +442,15 @@ static int const _timeout = 500;
 {
     NSMutableData* imageData = [NSMutableData data];
     uint32_t objectHandle = (uint32_t)ptpInfo.object_handle;
-    NSInteger imageWidth = 2048;
-    NSInteger imageHeight = 1024;
-    if (((_imageSize.width != imageWidth)
-         && (_imageSize.width != imageHeight))
-        && ((_imageSize.width > 0)
-            && (_imageSize.width > 0))) {
-        imageWidth = _imageSize.width;
-        imageHeight = _imageSize.height;
-    }
     [session getResizedImageObject:objectHandle
-                                       width:imageWidth
-                                      height:imageHeight
-                                 onStartData:^(NSUInteger totalLength) {
-                                 } onChunkReceived:^BOOL(NSData *data) {
-                                     // Callback for each chunks.
-                                     [imageData appendData:data];
-                                     return YES;
-                                 }];
+                             width:2048
+                            height:1024
+                       onStartData:^(NSUInteger totalLength) {
+                       } onChunkReceived:^BOOL(NSData *data) {
+                           // Callback for each chunks.
+                           [imageData appendData:data];
+                           return YES;
+                       }];
     return (NSData*) imageData;
 
 }
@@ -480,26 +463,19 @@ static int const _timeout = 500;
 {
     self.fileMgr = fileMgr;
     __block BOOL isSuccess = NO;
-    dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
-    dispatch_time_t timeout = dispatch_time(DISPATCH_TIME_NOW, NSEC_PER_SEC * _timeout);
-
-    [_ptpConnection operateSession:^(PtpIpSession *session) {
-        NSArray* objectHandles = [session getObjectHandles];
+    if (!_session) {
+        _session = [self session];
+    }
+    NSArray* objectHandles = [_session getObjectHandles];
         
-        for (NSNumber* it in objectHandles) {
-            uint32_t objectHandle = (uint32_t)it.integerValue;
-            PtpIpObjectInfo *obj = [self loadObject:objectHandle session:session];
-            if ([fileName isEqualToString:obj.filename]) {
-                [session deleteObject: objectHandle];
-                dispatch_semaphore_signal(semaphore);
-                isSuccess = YES;
-                return;
-            }
+    for (NSNumber* it in objectHandles) {
+        uint32_t objectHandle = (uint32_t)it.integerValue;
+        PtpIpObjectInfo *obj = [self loadObject:objectHandle session:_session];
+        if ([fileName isEqualToString:obj.filename]) {
+            [_session deleteObject: objectHandle];
+            isSuccess = YES;
         }
-        dispatch_semaphore_signal(semaphore);
-    }];
-    dispatch_semaphore_wait(semaphore, timeout);
-
+    }
     return isSuccess;
 }
 
@@ -508,30 +484,22 @@ static int const _timeout = 500;
                                   fileMgr:(DConnectFileManager*)fileMgr
 {
     self.fileMgr = fileMgr;
-    __block PtpIpObjectInfo *ptpInfo;
-    __block NSString *path = nil;
-    dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
-    dispatch_time_t timeout = dispatch_time(DISPATCH_TIME_NOW, NSEC_PER_SEC * _timeout);
+    PtpIpObjectInfo *ptpInfo;
+    NSString *path = nil;
+    if (!_session) {
+        _session = [self session];
+    }
+    NSArray* objectHandles = [_session getObjectHandles];
     
-    [_ptpConnection operateSession:^(PtpIpSession *session) {
-        NSArray* objectHandles = [session getObjectHandles];
-        
-        for (NSNumber* it in objectHandles) {
-            uint32_t objectHandle = (uint32_t)it.integerValue;
-            PtpIpObjectInfo *obj = [self loadObject:objectHandle session:session];
-            if ([fileName isEqualToString:obj.filename]) {
-                ptpInfo = obj;
-                path = [self saveImageFileWithPtpIpObjectInfo:ptpInfo
-                                  session:session];
-
-                dispatch_semaphore_signal(semaphore);
-                return;
-            }
+    for (NSNumber* it in objectHandles) {
+        uint32_t objectHandle = (uint32_t)it.integerValue;
+        PtpIpObjectInfo *obj = [self loadObject:objectHandle session:_session];
+        if ([fileName isEqualToString:obj.filename]) {
+            ptpInfo = obj;
+            path = [self saveImageFileWithPtpIpObjectInfo:ptpInfo
+                              session:_session];
         }
-        dispatch_semaphore_signal(semaphore);
-    }];
-    dispatch_semaphore_wait(semaphore, timeout);
-    
+    }
     return path;
 }
 
@@ -540,24 +508,19 @@ static int const _timeout = 500;
 // ファイルを取得する
 - (NSMutableArray*)getAllFiles
 {
-    __block NSMutableArray *images = [NSMutableArray array];
-    dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
-    dispatch_time_t timeout = dispatch_time(DISPATCH_TIME_NOW, NSEC_PER_SEC * _timeout);
-    
-    [_ptpConnection operateSession:^(PtpIpSession *session) {
-        NSArray* objectHandles = [session getObjectHandles];
+    NSMutableArray *images = [NSMutableArray array];
+    if (!_session) {
+        _session = [self session];
+    }
+    NSArray* objectHandles = [_session getObjectHandles];
         
-        for (NSNumber* it in objectHandles) {
-            uint32_t objectHandle = (uint32_t)it.integerValue;
-            PtpIpObjectInfo *obj = [self loadObject:objectHandle session:session];
-            if (obj.object_format == PTPIP_FORMAT_JPEG) {
-                [images addObject:obj];
-            }
+    for (NSNumber* it in objectHandles) {
+        uint32_t objectHandle = (uint32_t)it.integerValue;
+        PtpIpObjectInfo *obj = [self loadObject:objectHandle session:_session];
+        if (obj.object_format == PTPIP_FORMAT_JPEG) {
+            [images addObject:obj];
         }
-        dispatch_semaphore_signal(semaphore);
-    }];
-    dispatch_semaphore_wait(semaphore, timeout);
-    
+    }
     return images;
 }
 
@@ -652,7 +615,14 @@ static int const _timeout = 500;
 
 // デバイス管理情報更新
 - (void) updateManageServices: (BOOL) onlineForSet {
-
+    // ROI接続中(常時)
+    // サービス未登録なら登録する
+    if (![self.serviceProvider service: DPThetaRoiServiceId]) {
+        DPThetaService *service = [[DPThetaService alloc] initWithServiceId: DPThetaRoiServiceId plugin: self.plugin];
+        [service setName: ROI_IMAGE_SERVICE];
+        [self.serviceProvider addService: service bundle: DPThetaBundle()];
+        [service setOnline:YES];
+    }
     // 実行中に呼び出されたらなにもしないで終了
     if (_isUpdateManageServicesRunning) {
         return;
@@ -707,14 +677,7 @@ static int const _timeout = 500;
             }
         }
 
-        // ROI接続中(常時)
-        // サービス未登録なら登録する
-        if (![self.serviceProvider service: DPThetaRoiServiceId]) {
-            DPThetaService *service = [[DPThetaService alloc] initWithServiceId: DPThetaRoiServiceId plugin: self.plugin];
-            [service setName: ROI_IMAGE_SERVICE];
-            [self.serviceProvider addService: service bundle: DPThetaBundle()];
-            [service setOnline:YES];
-        }
+
         
         _isUpdateManageServicesRunning = NO;
     }
