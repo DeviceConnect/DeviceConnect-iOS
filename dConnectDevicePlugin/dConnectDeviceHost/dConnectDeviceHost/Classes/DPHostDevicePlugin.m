@@ -52,4 +52,9 @@
     return [bundle pathForResource:filename ofType:@"png"];
 }
 
+#pragma mark - DevicePlugin's bundle
+- (NSBundle*)pluginBundle
+{
+    return [NSBundle bundleWithPath:[[NSBundle mainBundle] pathForResource:@"dConnectDeviceHost_resources" ofType:@"bundle"]];
+}
 @end

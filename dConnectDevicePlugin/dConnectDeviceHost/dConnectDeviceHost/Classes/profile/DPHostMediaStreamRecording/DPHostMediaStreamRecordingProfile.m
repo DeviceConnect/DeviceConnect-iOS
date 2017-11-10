@@ -149,6 +149,7 @@
                                 [[DConnectManager sharedManager] sendResponse:response];
                           }];
                           return NO;
+
                       }];
         // API登録(didReceivePutStopRequest相当)
         NSString *putStopRequestApiPath = [self apiPath: nil
@@ -441,6 +442,7 @@
         DConnectMessage *media = [DConnectMessage message];
         [DConnectMediaStreamRecordingProfile setStatus:status target:media];
         if (path) {
+            [DConnectMediaStreamRecordingProfile setUri:path target:media];
             [DConnectMediaStreamRecordingProfile setPath:path target:media];
         }
         if (mimeType) {

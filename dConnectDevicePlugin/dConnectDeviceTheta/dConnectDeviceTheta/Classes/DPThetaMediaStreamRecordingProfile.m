@@ -31,7 +31,7 @@ static NSString *const DPThetaMovieMimeType = @"video/mov";
 /// @brief イベントマネージャ
 @property DConnectEventManager *eventMgr;
 @property DPThetaMixedReplaceMediaServer *server;
-
+@property DPThetaManager *thetaManager;
 @end
 @implementation DPThetaMediaStreamRecordingProfile
 
@@ -40,6 +40,7 @@ static NSString *const DPThetaMovieMimeType = @"video/mov";
     self = [super init];
     if (self) {
         self.delegate = self;
+        self.thetaManager = [DPThetaManager sharedManager];
         __weak DPThetaMediaStreamRecordingProfile *weakSelf = self;
         
         // イベントマネージャを取得
@@ -64,7 +65,7 @@ static NSString *const DPThetaMovieMimeType = @"video/mov";
                          [DConnectMediaStreamRecordingProfile setRecorderImageWidth:DPThetaMinWidth target:recorder];
                          [DConnectMediaStreamRecordingProfile setRecorderImageHeight:DPThetaMinHeight target:recorder];
                          [DConnectMediaStreamRecordingProfile setRecorderConfig:@"[]" target:recorder];
-                         if ([[DPThetaManager sharedManager] getCameraStatus] == 0) {
+                         if ([weakSelf.thetaManager getCameraStatus] == 0) {
                              [DConnectMediaStreamRecordingProfile setRecorderId:@"1" target:recorder];
                              [DConnectMediaStreamRecordingProfile setRecorderMIMEType:DPThetaMovieMimeType
                                                                                target:recorder];
@@ -99,7 +100,7 @@ static NSString *const DPThetaMovieMimeType = @"video/mov";
                               [response setErrorToInvalidRequestParameterWithMessage:@"Invalid target"];
                               return YES;
                           }
-                          BOOL isSuccess = [[DPThetaManager sharedManager] takePictureWithCompletion:^(NSString *uri, NSString* path) {
+                          BOOL isSuccess = [weakSelf.thetaManager takePictureWithCompletion:^(NSString *uri, NSString* path) {
                               [response setResult:DConnectMessageResultTypeOk];
                               
                               [DConnectMediaStreamRecordingProfile setUri:uri
@@ -136,7 +137,7 @@ static NSString *const DPThetaMovieMimeType = @"video/mov";
                                @"timeslice is not supported; please omit this parameter."];
                               return YES;
                           }
-                          BOOL isSuccess = [[DPThetaManager sharedManager] recordingMovie];
+                          BOOL isSuccess = [weakSelf.thetaManager recordingMovie];
                           if (isSuccess) {
                               [response setResult:DConnectMessageResultTypeOk];
                           } else {
@@ -153,7 +154,7 @@ static NSString *const DPThetaMovieMimeType = @"video/mov";
                      api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
                           
                          CONNECT_CHECK();
-                         BOOL isSuccess = [[DPThetaManager sharedManager] stopMovie];
+                         BOOL isSuccess = [weakSelf.thetaManager stopMovie];
                          if (isSuccess) {
                              [response setResult:DConnectMessageResultTypeOk];
                          } else {
@@ -173,7 +174,7 @@ static NSString *const DPThetaMovieMimeType = @"video/mov";
                          
                          CONNECT_CHECK();
                          [weakSelf handleEventRequest:request response:response isRemove:NO callback:^{
-                             [[DPThetaManager sharedManager] addOnPhotoEventCallbackWithID:serviceId
+                             [weakSelf.thetaManager addOnPhotoEventCallbackWithID:serviceId
                                                                                    fileMgr:[WEAKSELF_PLUGIN fileMgr]
                                                                                   callback:^(NSString *path) {
                                                                                       [weakSelf sendOnPhotoEventWithPath:path mimeType:DPThetaImageMimeType];
@@ -189,20 +190,14 @@ static NSString *const DPThetaMovieMimeType = @"video/mov";
                      api:^BOOL(DConnectRequestMessage *request, DConnectResponseMessage *response) {
                          
                          NSString *serviceId = [request serviceId];
-                         
                          CONNECT_CHECK();
                          [weakSelf handleEventRequest:request response:response isRemove:NO callback:^{
-                             [[DPThetaManager sharedManager] addOnStatusEventCallbackWithID:serviceId
-                                                                                   callback:^(PtpIpObjectInfo *object,
-                                                                                              NSString *status,
+                             [weakSelf.thetaManager addOnStatusEventCallbackWithID:serviceId
+                                                                                   callback:^(NSString *status,
                                                                                               NSString *message) {
-                                                                                       NSString *path = nil;
-                                                                                       if (object) {
-                                                                                           path = object.filename;
-                                                                                       }
-                                                                                       [weakSelf sendOnRecordingChangeEventWithStatus:status
-                                                                                                                             path:path
-                                                                                                                         mimeType:DPThetaMovieMimeType
+                                                                                       [weakSelf sendOnRecordingChangeEventWithServiceId:serviceId
+                                                                                                                                  status:status
+                                                                                                                                mimeType:DPThetaMovieMimeType
                                                                                                                      errorMessage:message];
                                                                                    }];
                              
@@ -220,7 +215,7 @@ static NSString *const DPThetaMovieMimeType = @"video/mov";
                             
                             CONNECT_CHECK();
                             [weakSelf handleEventRequest:request response:response isRemove:YES callback:^{
-                                [[DPThetaManager sharedManager] removeOnPhotoEventCallbackWithID:serviceId];
+                                [weakSelf.thetaManager removeOnPhotoEventCallbackWithID:serviceId];
                             }];
                             return YES;
                         }];
@@ -235,7 +230,7 @@ static NSString *const DPThetaMovieMimeType = @"video/mov";
                             
                             CONNECT_CHECK();
                             [weakSelf handleEventRequest:request response:response isRemove:YES callback:^{
-                                [[DPThetaManager sharedManager] removeOnStatusEventCallbackWithID:serviceId];
+                                [weakSelf.thetaManager removeOnStatusEventCallbackWithID:serviceId];
                             }];
                             return YES;
                         }];
@@ -247,7 +242,7 @@ static NSString *const DPThetaMovieMimeType = @"video/mov";
 - (void)handleEventRequest:(DConnectRequestMessage *)request
                   response:(DConnectResponseMessage *)response
                   isRemove:(BOOL)isRemove
-                  callback:(void(^)())callback
+                  callback:(void(^)(void))callback
 {
     DConnectEventManager *mgr = [DConnectEventManager sharedManagerForClass:[DPThetaDevicePlugin class]];
     DConnectEventError error;
@@ -299,8 +294,8 @@ static NSString *const DPThetaMovieMimeType = @"video/mov";
     }
 }
 
-- (void) sendOnRecordingChangeEventWithStatus:(NSString *)status
-                                         path:(NSString *)path
+- (void) sendOnRecordingChangeEventWithServiceId:(NSString*)serviceId
+                                          status:(NSString *)status
                                      mimeType:(NSString *)mimeType
                                  errorMessage:(NSString *)errorMsg
 {
@@ -314,9 +309,6 @@ static NSString *const DPThetaMovieMimeType = @"video/mov";
         DConnectMessage *eventMsg = [DConnectEventManager createEventMessageWithEvent:evt];
         DConnectMessage *media = [DConnectMessage message];
         [DConnectMediaStreamRecordingProfile setStatus:status target:media];
-        if (path) {
-            [DConnectMediaStreamRecordingProfile setPath:path target:media];
-        }
         if (mimeType) {
             [DConnectMediaStreamRecordingProfile setMIMEType:mimeType target:media];
         }

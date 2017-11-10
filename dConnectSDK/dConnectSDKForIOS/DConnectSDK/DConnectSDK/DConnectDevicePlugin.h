@@ -122,4 +122,8 @@
 
 - (NSString*)iconFilePath:(BOOL)isOnline;
 
+/*!
+ @brief プラグインのInfo.plistを取得する。
+ */
+- (NSBundle*)pluginBundle;
 @end

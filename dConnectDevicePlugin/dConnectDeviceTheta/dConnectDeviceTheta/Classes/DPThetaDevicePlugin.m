@@ -21,26 +21,51 @@
         self.pluginName = @"Theta (Device Connect Device Plug-in)";
         [[DPThetaManager sharedManager] setServiceProvider: self.serviceProvider];
         [[DPThetaManager sharedManager] setPlugin:self];
-        [[DPThetaManager sharedManager] init];
         
         self.fileMgr = [DConnectFileManager fileManagerForPlugin:self];
         [self addProfile:[DPThetaSystemProfile new]];
-        
-        // イベントマネージャの準備
-        Class key = [self class];
-        [[DConnectEventManager sharedManagerForClass:key]
-         setController:[DConnectDBCacheController
-                        controllerWithClass:key]];
+        __weak typeof(self) _self = self;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
+            UIApplication *application = [UIApplication sharedApplication];
+            [notificationCenter addObserver:_self selector:@selector(applicationWillEnterForeground)
+                                       name:UIApplicationWillEnterForegroundNotification
+                                     object:application];
+            [notificationCenter addObserver:_self selector:@selector(applicationDidEnterBackground)
+                                       name:UIApplicationDidEnterBackgroundNotification
+                                     object:application];
+        });
     }
     
     return self;
 }
+- (void) dealloc {
+    NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
+    UIApplication *application = [UIApplication sharedApplication];
+    
+    [notificationCenter removeObserver:self name:UIApplicationDidBecomeActiveNotification object:application];
+    [notificationCenter removeObserver:self name:UIApplicationDidEnterBackgroundNotification object:application];
+}
+
+- (void) applicationWillEnterForeground {
+    [[DPThetaManager sharedManager] applicationWillEnterForeground];
+}
+
+- (void) applicationDidEnterBackground {
+    [[DPThetaManager sharedManager] applicationDidEnterBackground];
+}
+
 
 - (NSString*)iconFilePath:(BOOL)isOnline
 {
     NSBundle *bundle = DPThetaBundle();
     NSString* filename = isOnline ? @"dconnect_icon" : @"dconnect_icon_off";
     return [bundle pathForResource:filename ofType:@"png"];
+}
+#pragma mark - DevicePlugin's bundle
+- (NSBundle*)pluginBundle
+{
+    return [NSBundle bundleWithPath:[[NSBundle mainBundle] pathForResource:@"dConnectDeviceTheta_resources" ofType:@"bundle"]];
 }
 
 @end

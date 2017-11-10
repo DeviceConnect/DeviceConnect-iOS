@@ -70,4 +70,10 @@ static NSString *const VERSION = @"2.0.0";
     NSString* filename = isOnline ? @"dconnect_icon" : @"dconnect_icon_off";
     return [bundle pathForResource:filename ofType:@"png"];
 }
+#pragma mark - DevicePlugin's bundle
+- (NSBundle*)pluginBundle
+{
+    return [NSBundle bundleWithPath:[[NSBundle mainBundle] pathForResource:@"dConnectDeviceAllJoyn_resources" ofType:@"bundle"]];
+}
+
 @end

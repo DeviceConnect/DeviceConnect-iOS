@@ -35,10 +35,6 @@
     return self;
 }
 
-- (NSString *) versionOfSystemProfile:(DConnectSystemProfile *)profile
-{
-    return @"2.0.0";
-}
 
 - (UIViewController *) profile:(DConnectSystemProfile *)sender
          settingPageForRequest:(DConnectRequestMessage *)request

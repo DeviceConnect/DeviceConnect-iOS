@@ -146,9 +146,9 @@
             [profileNames addString:[profile profileName]];
             if (profile.profileName && [profile.profileName localizedCaseInsensitiveCompare:@"system"] == NSOrderedSame) {
                 DConnectSystemProfile *sysProfile = (DConnectSystemProfile *) profile;
-                if (sysProfile.dataSource) {
-                    NSString *v = [sysProfile.dataSource versionOfSystemProfile:sysProfile];
-                    [message setString:v forKey:DConnectSystemProfileParamVersion];
+                if (sysProfile.dataSource) { //バージョンに変更がある場合は、各プラグインで変更する
+                    DConnectDevicePlugin *devicePlugin = [pluginMgr devicePluginForPluginId:className];
+                    [message setString:devicePlugin.pluginVersionName forKey:DConnectSystemProfileParamVersion];
                 }
             }
         }
