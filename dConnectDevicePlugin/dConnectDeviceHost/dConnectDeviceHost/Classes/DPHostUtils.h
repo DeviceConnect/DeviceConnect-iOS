@@ -24,7 +24,6 @@
 
 //NSErrorを生成
 + (NSError*)throwsErrorCode:(NSInteger)code message:(NSString*)message;
-
 // TOPにあるViewControllerを返す
 + (UIViewController*)topViewController;
 + (UIViewController*)topViewController:(UIViewController*)rootViewController;
