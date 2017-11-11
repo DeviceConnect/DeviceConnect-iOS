@@ -28,7 +28,7 @@
     self = [super initWithMediaContext:ctx plugin:plugin error:error];
     if (self) {
         // iPodプレイヤーを取得
-        self.musicPlayer = [MPMusicPlayerController iPodMusicPlayer];
+        self.musicPlayer = [MPMusicPlayerController systemMusicPlayer];
         self.musicPlayer.shuffleMode = MPMusicShuffleModeOff;
         self.musicPlayer.repeatMode = MPMusicRepeatModeOne;
         self.defaultMediaQuery = [MPMediaQuery songsQuery];

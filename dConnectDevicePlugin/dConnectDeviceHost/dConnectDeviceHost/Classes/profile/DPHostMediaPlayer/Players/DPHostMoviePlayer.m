@@ -7,12 +7,16 @@
 //  http://opensource.org/licenses/mit-license.php
 //
 
+#import <AVKit/AVKit.h>
+#import <AVFoundation/AVFoundation.h>
 
 #import "DPHostMoviePlayer.h"
 #import "DPHostUtils.h"
 @interface DPHostMoviePlayer()
 // 動画再生用ビューコントローラー
-@property MPMoviePlayerViewController *viewController;
+@property AVPlayerViewController *playerController;
+@property AVPlayer *player;
+@property AVAudioSession *session;
 // iPodプレイヤーのクエリー
 @property MPMediaQuery *defaultMediaQuery;
 
@@ -44,24 +48,23 @@
             }
             mediaItem = items[0];
         }
+        
         self.currentContentURL = url;
         [self setIpodMovieMediaWithUrl:url mediaItem:mediaItem isIPodMovieMedia:isIPodMovieMedia error:error];
     }
     return self;
 }
-
 - (NSString*)playStatus
 {
     NSString *status;
-    // MoviePlayer
-    switch (self.viewController.moviePlayer.playbackState) {
-        case MPMoviePlaybackStateStopped:
+    switch (self.playerController.player.timeControlStatus) {
+        case AVPlayerTimeControlStatusWaitingToPlayAtSpecifiedRate:
             status = DConnectMediaPlayerProfileStatusStop;
             break;
-        case MPMoviePlaybackStatePlaying:
+        case AVPlayerTimeControlStatusPlaying:
             status = DConnectMediaPlayerProfileStatusPlay;
             break;
-        case MPMoviePlaybackStatePaused:
+        case AVPlayerTimeControlStatusPaused:
             status = DConnectMediaPlayerProfileStatusPause;
             break;
         default:
@@ -93,17 +96,17 @@
         [self setIpodMovieMediaWithUrl:contentURL mediaItem:mediaItem isIPodMovieMedia:isIPodMovieMedia error:error];
         return block;
     }
-    if (self.viewController.moviePlayer.playbackState != MPMoviePlaybackStatePlaying) {
-        if (self.viewController.moviePlayer.contentURL) {
+    if (self.playerController.player.timeControlStatus != AVPlayerTimeControlStatusPlaying) {
+      if (self.currentContentURL) {
             __weak DPHostMoviePlayer *weakSelf = self;
             block = ^{
                 DConnectMessage *mediaPlayer = [DConnectMessage message];
                 NSString *status = DConnectMediaPlayerProfileStatusPlay;
                 [DConnectMediaPlayerProfile setStatus:status target:mediaPlayer];
                 [weakSelf sendEventMovieWithMessage:mediaPlayer];
-                [weakSelf.viewController.moviePlayer setCurrentPlaybackRate:0.0f];
-                [weakSelf.viewController.moviePlayer play];
-                
+                CMTimeScale playerScale = weakSelf.playerController.player.currentTime.timescale;
+                [weakSelf.playerController.player seekToTime:CMTimeMake(0, playerScale)];
+                [weakSelf.playerController.player play];
             };
             return block;
         }
@@ -115,7 +118,7 @@
 - (DPHostPlayerBlock)stopWithError:(NSError **)error
 {
     DPHostPlayerBlock block = ^{};
-    if (self.viewController.moviePlayer.playbackState == MPMoviePlaybackStateStopped) {
+    if (self.playerController.player.timeControlStatus == AVPlayerTimeControlStatusPaused) {
         return block;
     }
     if (![self moviePlayerViewControllerIsPresented]) {
@@ -125,14 +128,10 @@
     } else {
         __weak DPHostMoviePlayer *weakSelf = self;
         block = ^{
-            DConnectMessage *mediaPlayer = [DConnectMessage message];
-            NSString *status = DConnectMediaPlayerProfileStatusStop;
-            [DConnectMediaPlayerProfile setStatus:status target:mediaPlayer];
-            [weakSelf sendEventMovieWithMessage:mediaPlayer];
             // ムービープレイヤーを閉じる。
-            [weakSelf.viewController.moviePlayer stop];
-            [weakSelf.viewController dismissMoviePlayerViewControllerAnimated];
-            weakSelf.viewController = nil;
+            [weakSelf.playerController.player pause];
+            [weakSelf closeMoviePlayerViewController];
+            weakSelf.playerController = nil;
         };
     }
     return block;
@@ -146,14 +145,14 @@
          @"Movie player view controller is not presented;"
          " please perform Media PUT API first to present the view controller."];
     } else {
-        if (self.viewController.moviePlayer.playbackState == MPMusicPlaybackStatePlaying) {
+        if (self.playerController.player.timeControlStatus == AVPlayerTimeControlStatusPlaying) {
             __weak DPHostMoviePlayer *weakSelf =self;
             block = ^{
                 DConnectMessage *mediaPlayer = [DConnectMessage message];
                 NSString *status = DConnectMediaPlayerProfileStatusPause;
                 [DConnectMediaPlayerProfile setStatus:status target:mediaPlayer];
                 [weakSelf sendEventMovieWithMessage:mediaPlayer];
-                [weakSelf.viewController.moviePlayer pause];
+                [weakSelf.playerController.player pause];
             };
         } else {
             *error = [DPHostUtils throwsErrorCode:DConnectMessageErrorCodeUnknown message:@"Media cannnot be paused; media is not playing."];
@@ -170,14 +169,14 @@
          @"Movie player view controller is not presented;"
          "please perform Media PUT API first to present the view controller."];
     } else {
-        if (self.viewController.moviePlayer.playbackState == MPMoviePlaybackStatePaused) {
+        if (self.playerController.player.timeControlStatus == AVPlayerTimeControlStatusPaused) {
             __weak DPHostMoviePlayer *weakSelf = self;
             block = ^{
                 DConnectMessage *mediaPlayer = [DConnectMessage message];
                 NSString *status = DConnectMediaPlayerProfileStatusResume;
                 [DConnectMediaPlayerProfile setStatus:status target:mediaPlayer];
                 [weakSelf sendEventMovieWithMessage:mediaPlayer];
-                [weakSelf.viewController.moviePlayer play];
+                [weakSelf.playerController.player play];
             };
         } else {
             *error = [DPHostUtils throwsErrorCode:DConnectMessageErrorCodeUnknown message:@"Media cannot be resumed; media is not paused."];
@@ -188,13 +187,15 @@
 
 - (NSTimeInterval)seekStatusWithError:(NSError **)error
 {
-    if (!self.viewController) {
+    if (!self.playerController) {
         *error = [DPHostUtils throwsErrorCode:DConnectMessageErrorCodeUnknown message:
          @"Movie player view controller is not presented;"
          "please perform Media PUT API first to present the view controller."];
         return -1.0f;
     }
-    return self.viewController.moviePlayer.playableDuration;
+    Float64 dur = CMTimeGetSeconds(self.playerController.player.currentTime);
+    Float64 durInMiliSec = 1000 * dur;
+    return durInMiliSec;
 }
 
 - (DPHostPlayerBlock)seekPosition:(NSNumber *)position error:(NSError **)error
@@ -206,14 +207,12 @@
          "please perform Media PUT API first to present the view controller."];
         return block;
     }
-    NSTimeInterval playbackDuration = self.viewController.moviePlayer.duration;
-    if (playbackDuration < [position unsignedIntegerValue]) {
-        *error = [DPHostUtils throwsErrorCode:DConnectMessageErrorCodeUnknown message:@"pos exceeds the playback duration."];
-        return block;
-    }
+    Float64 dur = CMTimeGetSeconds(self.playerController.player.currentTime);
+    Float64 durInMiliSec = 1000 * dur;
     __weak DPHostMoviePlayer *weakSelf = self;
     block = ^{
-        weakSelf.viewController.moviePlayer.currentPlaybackTime = [position doubleValue];
+        CMTimeScale timeScale = weakSelf.playerController.player.currentTime.timescale;
+        [weakSelf.playerController.player seekToTime:CMTimeMake([position intValue], timeScale)];
     };
     return block;
 }
@@ -221,8 +220,11 @@
 #pragma mark - ETC public method
 - (void)closeMoviePlayerViewController
 {
-    [self.viewController dismissMoviePlayerViewControllerAnimated];
-    [self.viewController dismissViewControllerAnimated:YES completion:nil];
+    [self.playerController dismissViewControllerAnimated:YES completion:nil];
+    DConnectMessage *mediaPlayer = [DConnectMessage message];
+    NSString *status = DConnectMediaPlayerProfileStatusStop;
+    [DConnectMediaPlayerProfile setStatus:status target:mediaPlayer];
+    [self sendEventMovieWithMessage:mediaPlayer];
 }
 
 #pragma mark - Private Method
@@ -252,35 +254,26 @@
             return;
         }
     }
-    dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
-    dispatch_time_t timeout = dispatch_time(DISPATCH_TIME_NOW, NSEC_PER_SEC * 5);
-    AVURLAsset *asset = [AVURLAsset URLAssetWithURL:movieURL options:nil];
-    __weak DPHostMoviePlayer *weakSelf = self;
-    [asset loadValuesAsynchronouslyForKeys:@[@"hasProtectedContent", @"playable"] completionHandler:
-     ^{
-         void(^block)(void) = ^{
-             weakSelf.viewController.moviePlayer.movieSourceType = MPMovieSourceTypeFile;
-             // 再生項目変更は、2度目以降ではprepareToPlayする
-             [weakSelf.viewController.moviePlayer prepareToPlay];
-             DConnectMessage *mediaPlayer = [DConnectMessage message];
-             NSString *status = DConnectMediaPlayerProfileStatusMedia;
-             [DConnectMediaPlayerProfile setStatus:status target:mediaPlayer];
-             [weakSelf sendEventMovieWithMessage:mediaPlayer];
+    
 
-         };
-         if ([weakSelf moviePlayerViewControllerIsPresented]) {
-             block();
-         } else {
-             dispatch_async(dispatch_get_main_queue(), ^{
-                 weakSelf.viewController = [weakSelf viewControllerWithURL:movieURL];
-                 self.viewController.moviePlayer.shouldAutoplay = YES;
-                 block();
-                 [[DPHostUtils topViewController] presentMoviePlayerViewControllerAnimated:weakSelf.viewController];
-             });
-         }
-         dispatch_semaphore_signal(semaphore);
-     }];
-    dispatch_semaphore_wait(semaphore, timeout);
+    __weak DPHostMoviePlayer *weakSelf = self;
+    void(^block)(void) = ^{
+        DConnectMessage *mediaPlayer = [DConnectMessage message];
+        NSString *status = DConnectMediaPlayerProfileStatusMedia;
+        [DConnectMediaPlayerProfile setStatus:status target:mediaPlayer];
+        [weakSelf sendEventMovieWithMessage:mediaPlayer];
+    };
+    if ([self moviePlayerViewControllerIsPresented]) {
+        AVPlayerItem *item = [AVPlayerItem playerItemWithURL:movieURL];
+        [self.playerController.player replaceCurrentItemWithPlayerItem:item];
+        block();
+    } else {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [weakSelf viewControllerWithURL:movieURL];
+            block();
+            [[DPHostUtils topViewController] presentViewController:weakSelf.playerController animated:YES completion:nil];
+        });
+    }
 }
 - (BOOL)moviePlayerViewControllerIsPresented
 {
@@ -293,7 +286,7 @@
         dispatch_semaphore_signal(semaphore);
     });
     dispatch_semaphore_wait(semaphore, timeout);
-    return (rootView && [rootView isKindOfClass:[MPMoviePlayerViewController class]]);
+    return (rootView && [rootView isKindOfClass:[AVPlayerViewController class]]);
 }
 -(void)sendEventMovieWithMessage:(DConnectMessage*)message
 {
@@ -302,10 +295,8 @@
     NSArray *evts = [super.eventMgr eventListForServiceId:DPHostDevicePluginServiceId
                                              profile:DConnectMediaPlayerProfileName
                                            attribute:DConnectMediaPlayerProfileAttrOnStatusChange];
-    
-    NSURL *contentURL = self.viewController.moviePlayer.contentURL;
-    if (contentURL) {
-        DPHostMediaContext *mediaCtx = [DPHostMediaContext contextWithURL:contentURL];
+    if (self.currentContentURL) {
+        DPHostMediaContext *mediaCtx = [DPHostMediaContext contextWithURL:self.currentContentURL];
         if (mediaCtx.mediaId) {
             [DConnectMediaPlayerProfile setMediaId:mediaCtx.mediaId target:message];
             
@@ -313,8 +304,10 @@
         if (mediaCtx.mimeType) {
             [DConnectMediaPlayerProfile setMIMEType:mediaCtx.mimeType target:message];
         }
-        
-        [DConnectMediaPlayerProfile setPos:_viewController.moviePlayer.currentPlaybackTime target:message];
+        Float64 dur = CMTimeGetSeconds(self.playerController.player.currentTime);
+        Float64 durInMiliSec = 1000*dur;
+
+        [DConnectMediaPlayerProfile setPos:durInMiliSec target:message];
     }
     
     // イベント送信
@@ -326,108 +319,45 @@
     }
 }
 
-- (MPMoviePlayerViewController *)viewControllerWithURL:(NSURL *)url
+- (void)viewControllerWithURL:(NSURL *)url
 {
-    MPMoviePlayerViewController *viewController = [[MPMoviePlayerViewController alloc] initWithContentURL:url];
-    viewController.moviePlayer.shouldAutoplay = NO;
-    
+    self.session = [AVAudioSession sharedInstance];
+    [self.session setCategory:AVAudioSessionCategoryPlayback error:nil];
+    AVPlayerItem *item = [AVPlayerItem playerItemWithURL:url];
     // 再生完了通知をさせない様にする
-    // MPMoviePlayerViewControllerの初期動作だと、再生完了時に閉じる。
     // 再生完了時に閉じる処理を実行させたくないので、再生完了通知を一旦消す。
-    [[NSNotificationCenter defaultCenter] removeObserver:self.viewController
-                                                    name:MPMoviePlayerPlaybackDidFinishNotification
-                                                  object:self.viewController.moviePlayer];
+    [[NSNotificationCenter defaultCenter] removeObserver:self.playerController
+                                                    name:AVPlayerItemDidPlayToEndTimeNotification
+                                                  object:nil];
     // 再生完了の通知；独自の再生完了時に処理を行わせる。
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(videoFinished:)
-                                                 name:MPMoviePlayerPlaybackDidFinishNotification
-                                               object:self.viewController.moviePlayer];
-    // 再生項目変更の通知
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(nowPlayingItemChangedInMoviePlayer:)
-                                                 name:MPMoviePlayerNowPlayingMovieDidChangeNotification
-                                               object:self.viewController.moviePlayer];
-    
-    return viewController;
+                                                 name:AVPlayerItemDidPlayToEndTimeNotification
+                                               object:nil];
+
+    self.player = [AVPlayer playerWithPlayerItem:item];
+    self.playerController = [AVPlayerViewController new];
+    self.playerController.player = self.player;
+    self.playerController.videoGravity = AVLayerVideoGravityResizeAspect;
+    self.playerController.allowsPictureInPicturePlayback = NO;
+    self.playerController.showsPlaybackControls = YES;
 }
 
 #pragma mark - Movie Notification
 - (void) videoFinished:(NSNotification*)notification
 {
-    
-    int value = [[notification.userInfo valueForKey:MPMoviePlayerPlaybackDidFinishReasonUserInfoKey] intValue];
-    if (value == MPMovieFinishReasonUserExited) {
-        __weak DPHostMoviePlayer *weakSelf = self;
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [weakSelf.viewController.moviePlayer stop];
-            [weakSelf.viewController dismissMoviePlayerViewControllerAnimated];
-            weakSelf.viewController = nil;
-            [weakSelf nowPlayingItemChangedInMoviePlayer:notification];
-            
-            // 一度閉じたら次回動画再生時には
-            // 別のMPMoviePlayerViewControllerインスタンスを使うので、
-            // オブザーバーを削除しておく。
-            [[NSNotificationCenter defaultCenter] removeObserver:weakSelf];
-        });
-    }
+    __weak DPHostMoviePlayer *weakSelf = self;
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [weakSelf closeMoviePlayerViewController];
+        weakSelf.playerController = nil;
+        // 一度閉じたら次回動画再生時には
+        // オブザーバーを削除しておく。
+        [[NSNotificationCenter defaultCenter] removeObserver:weakSelf];
+    });
     DConnectMessage *mediaPlayer = [DConnectMessage message];
     NSString *status = DConnectMediaPlayerProfileStatusComplete;
     [DConnectMediaPlayerProfile setStatus:status target:mediaPlayer];
     [self sendEventMovieWithMessage:mediaPlayer];
-    
-}
 
-- (void) nowPlayingItemChangedInMoviePlayer:(NSNotification *)notification
-{
-    // イベントの取得
-    NSArray *evts = [super.eventMgr eventListForServiceId:DPHostDevicePluginServiceId
-                                             profile:DConnectMediaPlayerProfileName
-                                           attribute:DConnectMediaPlayerProfileAttrOnStatusChange];
-    
-    DConnectMessage *mediaPlayer = [DConnectMessage message];
-    
-    // 再生コンテンツ変更
-    NSString *status;
-    NSURL *contentURL = [notification.object contentURL];
-    MPMoviePlaybackState playbackState = self.viewController.moviePlayer.playbackState;
-    switch (playbackState) {
-        case MPMoviePlaybackStateStopped:
-            status = DConnectMediaPlayerProfileStatusStop;
-            break;
-        case MPMoviePlaybackStatePlaying:
-            status = DConnectMediaPlayerProfileStatusPlay;
-            break;
-        case MPMoviePlaybackStatePaused:
-            status = DConnectMediaPlayerProfileStatusPause;
-            break;
-        default:
-            status = DConnectMediaPlayerProfileStatusMedia;
-            break;
-    }
-    
-    [DConnectMediaPlayerProfile setStatus:status target:mediaPlayer];
-    
-    if (contentURL) {
-        DPHostMediaContext *mediaCtx = [DPHostMediaContext contextWithURL:contentURL];
-        if (mediaCtx) {
-            if (mediaCtx.mediaId) {
-                [DConnectMediaPlayerProfile setMediaId:mediaCtx.mediaId target:mediaPlayer];
-            }
-            if (mediaCtx.mimeType) {
-                [DConnectMediaPlayerProfile setMIMEType:mediaCtx.mimeType target:mediaPlayer];
-            }
-        }
-        
-        [DConnectMediaPlayerProfile setPos:self.viewController.moviePlayer.currentPlaybackTime target:mediaPlayer];
-    }
-    
-    // イベント送信
-    for (DConnectEvent *evt in evts) {
-        DConnectMessage *eventMsg = [DConnectEventManager createEventMessageWithEvent:evt];
-        
-        [DConnectMediaPlayerProfile setMediaPlayer:mediaPlayer target:eventMsg];
-        
-        [SUPER_PLUGIN sendEvent:eventMsg];
-    }
 }
 @end

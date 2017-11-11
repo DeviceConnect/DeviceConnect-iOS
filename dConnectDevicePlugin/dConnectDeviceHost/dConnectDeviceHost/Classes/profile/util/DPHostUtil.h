@@ -9,8 +9,8 @@
 
 #import <Foundation/Foundation.h>
 
-typedef void (^DPHostUtilTimerBlock)();
-typedef void (^DPHostUtilTimerCancelBlock)();
+typedef void (^DPHostUtilTimerBlock)(void);
+typedef void (^DPHostUtilTimerCancelBlock)(void);
 
 @interface DPHostUtil : NSObject
 

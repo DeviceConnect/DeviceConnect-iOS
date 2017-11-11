@@ -195,14 +195,12 @@ static int const DPThetaManagerInactive = 0xFFFFFFFF;
 // 接続
 - (BOOL)connect
 {
-    NSLog(@"record connecting");
     if (!_ptpConnection) {
         _ptpConnection = [PtpConnection new];
         [_ptpConnection setLoglevel:PTPIP_LOGLEVEL_ERROR];
         [_ptpConnection setEventListener:self];
     }
     if ([_ptpConnection connected]) {
-        NSLog(@"record already Connected");
         [self updateManageServices: YES];
         return YES;
     }
@@ -231,7 +229,6 @@ static int const DPThetaManagerInactive = 0xFFFFFFFF;
 // 接続断
 - (void)disconnect
 {
-    NSLog(@"record disconnecting");
     dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
     dispatch_time_t timeout = dispatch_time(DISPATCH_TIME_NOW, NSEC_PER_SEC * _timeout);
 
@@ -319,7 +316,6 @@ static int const DPThetaManagerInactive = 0xFFFFFFFF;
 - (BOOL)recordingMovie {
     BOOL result = NO;
     if (!_session) {
-        NSLog(@"record already Session");
         _session = [self session];
     }
     if (_transactionId != DPThetaManagerInactive) {
