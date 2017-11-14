@@ -102,17 +102,18 @@ NSString *GRANT_TYPE = @"authorization_code";
  */
 - (void) testHttpFailRequestAccessTokenGetNoClientId
 {
-    NSArray *client = [self createClient];
-    XCTAssertNotNil(client);
-    XCTAssertNotNil(client[0]);
-    
-    NSURL *uri = [NSURL URLWithString:
-                  @"http://localhost:4035/gotapi/authorization/accesstoken?"
-                  "scope=battery&applicationName=test"];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
-    [request setHTTPMethod:@"GET"];
-    
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":10}", request);
+    [self createClientWithCompletion:^(NSArray *client) {
+        XCTAssertNotNil(client);
+        XCTAssertNotNil(client[0]);
+        
+        NSURL *uri = [NSURL URLWithString:
+                      @"http://localhost:4035/gotapi/authorization/accesstoken?"
+                      "scope=battery&applicationName=test"];
+        NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
+        [request setHTTPMethod:@"GET"];
+        
+        CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":10}", request);
+    }];
 }
 
 /*!
@@ -130,17 +131,18 @@ NSString *GRANT_TYPE = @"authorization_code";
  */
 - (void) testHttpFailRequestAccessTokenGetEmptyClientId
 {
-    NSArray *client = [self createClient];
-    XCTAssertNotNil(client);
-    XCTAssertNotNil(client[0]);
-    
-    NSURL *uri = [NSURL URLWithString:
-                  @"http://localhost:4035/gotapi/authorization/accesstoken?"
-                  "clientId=&scope=battery&applicationName=test"];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
-    [request setHTTPMethod:@"GET"];
-    
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":10}", request);
+    [self createClientWithCompletion:^(NSArray *client) {
+        XCTAssertNotNil(client);
+        XCTAssertNotNil(client[0]);
+        
+        NSURL *uri = [NSURL URLWithString:
+                      @"http://localhost:4035/gotapi/authorization/accesstoken?"
+                      "clientId=&scope=battery&applicationName=test"];
+        NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
+        [request setHTTPMethod:@"GET"];
+        
+        CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":10}", request);
+    }];
 }
 
 /*!
@@ -158,19 +160,20 @@ NSString *GRANT_TYPE = @"authorization_code";
  */
 - (void) testHttpFailRequestAccessTokenGetNoScope
 {
-    NSArray *client = [self createClient];
-    XCTAssertNotNil(client);
-    XCTAssertNotNil(client[0]);
-    
-    NSURL *uri = [NSURL URLWithString:
-                    [NSString stringWithFormat:
-                        @"http://localhost:4035/gotapi/authorization/accesstoken?"
-                            "clientId=%@&applicationName=test",
-                                client[0]]];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
-    [request setHTTPMethod:@"GET"];
-    
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":10}", request);
+    [self createClientWithCompletion:^(NSArray *client) {
+        XCTAssertNotNil(client);
+        XCTAssertNotNil(client[0]);
+        
+        NSURL *uri = [NSURL URLWithString:
+                        [NSString stringWithFormat:
+                            @"http://localhost:4035/gotapi/authorization/accesstoken?"
+                                "clientId=%@&applicationName=test",
+                                    client[0]]];
+        NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
+        [request setHTTPMethod:@"GET"];
+        
+        CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":10}", request);
+    }];
 }
 
 /*!
@@ -189,19 +192,20 @@ NSString *GRANT_TYPE = @"authorization_code";
  */
 - (void) testHttpFailRequestAccessTokenGetEmptyScope
 {
-    NSArray *client = [self createClient];
-    XCTAssertNotNil(client);
-    XCTAssertNotNil(client[0]);
-    
-    NSURL *uri = [NSURL URLWithString:
-                    [NSString stringWithFormat:
-                            @"http://localhost:4035/gotapi/authorization/accesstoken?"
-                                "clientId=%@&scope=&applicationName=test",
-                                    client[0]]];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
-    [request setHTTPMethod:@"GET"];
-    
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":10}", request);
+    [self createClientWithCompletion:^(NSArray *client) {
+        XCTAssertNotNil(client);
+        XCTAssertNotNil(client[0]);
+        
+        NSURL *uri = [NSURL URLWithString:
+                        [NSString stringWithFormat:
+                                @"http://localhost:4035/gotapi/authorization/accesstoken?"
+                                    "clientId=%@&scope=&applicationName=test",
+                                        client[0]]];
+        NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
+        [request setHTTPMethod:@"GET"];
+        
+        CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":10}", request);
+    }];
 }
 
 /*!
@@ -219,19 +223,20 @@ NSString *GRANT_TYPE = @"authorization_code";
  */
 - (void) testHttpFailRequestAccessTokenGetNoApplicationName
 {
-    NSArray *client = [self createClient];
-    XCTAssertNotNil(client);
-    XCTAssertNotNil(client[0]);
-    
-    NSURL *uri = [NSURL URLWithString:
-                    [NSString stringWithFormat:
-                        @"http://localhost:4035/gotapi/authorization/accesstoken?"
-                             "clientId=%@&scope=battery",
-                        client[0]]];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
-    [request setHTTPMethod:@"GET"];
-    
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":10}", request);
+    [self createClientWithCompletion:^(NSArray *client) {
+        XCTAssertNotNil(client);
+        XCTAssertNotNil(client[0]);
+        
+        NSURL *uri = [NSURL URLWithString:
+                        [NSString stringWithFormat:
+                            @"http://localhost:4035/gotapi/authorization/accesstoken?"
+                                 "clientId=%@&scope=battery",
+                            client[0]]];
+        NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
+        [request setHTTPMethod:@"GET"];
+        
+        CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":10}", request);
+    }];
 }
 
 /*!
@@ -250,19 +255,20 @@ NSString *GRANT_TYPE = @"authorization_code";
  */
 - (void) testHttpFailRequestAccessTokenGetEmptyApplicationName
 {
-    NSArray *client = [self createClient];
-    XCTAssertNotNil(client);
-    XCTAssertNotNil(client[0]);
-    
-    NSURL *uri = [NSURL URLWithString:
-                    [NSString stringWithFormat:
-                        @"http://localhost:4035/gotapi/authorization/accesstoken?"
-                            "clientId=%@&scope=battery&applicationName=",
-                                client[0]]];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
-    [request setHTTPMethod:@"GET"];
-    
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":10}", request);
+    [self createClientWithCompletion:^(NSArray *client) {
+        XCTAssertNotNil(client);
+        XCTAssertNotNil(client[0]);
+        
+        NSURL *uri = [NSURL URLWithString:
+                        [NSString stringWithFormat:
+                            @"http://localhost:4035/gotapi/authorization/accesstoken?"
+                                "clientId=%@&scope=battery&applicationName=",
+                                    client[0]]];
+        NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
+        [request setHTTPMethod:@"GET"];
+        
+        CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":10}", request);
+    }];
 }
 
 /*!
@@ -281,19 +287,20 @@ NSString *GRANT_TYPE = @"authorization_code";
  */
 - (void) testHttpFailRequestAccessTokenGetInvalidMethodPost
 {
-    NSArray *client = [self createClient];
-    XCTAssertNotNil(client);
-    XCTAssertNotNil(client[0]);
-    
-    NSURL *uri = [NSURL URLWithString:
-                    [NSString stringWithFormat:
-                            @"http://localhost:4035/gotapi/authorization/accesstoken?"
-                                "clientId=%@&scope=battery&applicationName=test",
-                                    client[0]]];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
-    [request setHTTPMethod:@"POST"];
-    
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":3}", request);
+    [self createClientWithCompletion:^(NSArray *client) {
+        XCTAssertNotNil(client);
+        XCTAssertNotNil(client[0]);
+        
+        NSURL *uri = [NSURL URLWithString:
+                        [NSString stringWithFormat:
+                                @"http://localhost:4035/gotapi/authorization/accesstoken?"
+                                    "clientId=%@&scope=battery&applicationName=test",
+                                        client[0]]];
+        NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
+        [request setHTTPMethod:@"POST"];
+        
+        CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":3}", request);
+    }];
 }
 
 /*!
@@ -312,19 +319,20 @@ NSString *GRANT_TYPE = @"authorization_code";
  */
 - (void) testHttpFailRequestAccessTokenGetInvalidMethodPut
 {
-    NSArray *client = [self createClient];
-    XCTAssertNotNil(client);
-    XCTAssertNotNil(client[0]);
-    
-    NSURL *uri = [NSURL URLWithString:
-                        [NSString stringWithFormat:
-                                @"http://localhost:4035/gotapi/authorization/accesstoken?"
-                                    "clientId=%@&scope=battery&applicationName=test",
-                                        client[0]]];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
-    [request setHTTPMethod:@"PUT"];
-    
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":3}", request);
+    [self createClientWithCompletion:^(NSArray *client) {
+        XCTAssertNotNil(client);
+        XCTAssertNotNil(client[0]);
+        
+        NSURL *uri = [NSURL URLWithString:
+                            [NSString stringWithFormat:
+                                    @"http://localhost:4035/gotapi/authorization/accesstoken?"
+                                        "clientId=%@&scope=battery&applicationName=test",
+                                            client[0]]];
+        NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
+        [request setHTTPMethod:@"PUT"];
+        
+        CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":3}", request);
+    }];
 }
 
 /*!
@@ -343,19 +351,20 @@ NSString *GRANT_TYPE = @"authorization_code";
  */
 - (void) testHttpFailRequestAccessTokenGetInvalidMethodDelete
 {
-    NSArray *client = [self createClient];
-    XCTAssertNotNil(client);
-    XCTAssertNotNil(client[0]);
-    
-    NSURL *uri = [NSURL URLWithString:
-                    [NSString stringWithFormat:
-                            @"http://localhost:4035/gotapi/authorization/accesstoken?"
-                                "clientId=%@&scope=battery&applicationName=test",
-                                    client[0]]];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
-    [request setHTTPMethod:@"DELETE"];
-    
-    CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":3}", request);
+    [self createClientWithCompletion:^(NSArray *client) {
+        XCTAssertNotNil(client);
+        XCTAssertNotNil(client[0]);
+        
+        NSURL *uri = [NSURL URLWithString:
+                        [NSString stringWithFormat:
+                                @"http://localhost:4035/gotapi/authorization/accesstoken?"
+                                    "clientId=%@&scope=battery&applicationName=test",
+                                        client[0]]];
+        NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:uri];
+        [request setHTTPMethod:@"DELETE"];
+        
+        CHECK_RESPONSE(@"{\"result\":1,\"errorCode\":3}", request);
+    }];
 }
 
 @end

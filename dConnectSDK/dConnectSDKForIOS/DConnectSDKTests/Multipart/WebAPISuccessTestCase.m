@@ -51,13 +51,17 @@
     [request setHTTPBody:multi.body];
     NSURLResponse *response = nil;
     NSError *error = nil;
-    [NSURLConnection sendSynchronousRequest:request
-                          returningResponse:&response
-                                      error:&error];
-    
-    NSLog(@"response: %@\n\nerror: %@", [response description], [error description]);
-    
-    XCTFail(@"No implementation for \"%s\"", __PRETTY_FUNCTION__);
+    NSURLSession *session = [NSURLSession sharedSession];
+    dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
+    [[session dataTaskWithRequest:request  completionHandler: ^(NSData *data, NSURLResponse *response, NSError *error) {
+
+        NSLog(@"response: %@\n\nerror: %@", [response description], [error description]);
+        
+        XCTFail(@"No implementation for \"%s\"", __PRETTY_FUNCTION__);
+        dispatch_semaphore_signal(semaphore);
+    }] resume];
+    dispatch_semaphore_wait(semaphore, dispatch_time(DISPATCH_TIME_NOW, 3 * NSEC_PER_SEC));
+
 }
 
 @end

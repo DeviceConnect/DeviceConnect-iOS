@@ -11,7 +11,7 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-@interface DPThetaOmnidirectionalImage : NSObject <NSURLConnectionDelegate, NSURLConnectionDataDelegate>
+@interface DPThetaOmnidirectionalImage : NSObject
 
 @property (nonatomic) NSString *mimeType;
 @property NSString *uri;

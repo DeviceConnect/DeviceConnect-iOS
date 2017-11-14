@@ -41,29 +41,30 @@
     [request setHTTPMethod:@"GET"];
     [request setValue:@"org.deviceconnect.test" forHTTPHeaderField:@"X-GotAPI-Origin"];
     
-    NSURLResponse *response = nil;
-    NSError *error = nil;
-    NSData *data = [NSURLConnection sendSynchronousRequest:request
-                                         returningResponse:&response
-                                                     error:&error];
-    XCTAssertNotNil(data);
-    XCTAssertNil(error);
-    NSDictionary *actualResponse = [NSJSONSerialization JSONObjectWithData:data
-                                                                   options:NSJSONReadingMutableContainers
-                                                                     error:nil];
-    XCTAssertNotNil(actualResponse);
-    
-    NSArray *lights = actualResponse[DConnectLightProfileParamLights];
-    XCTAssertTrue(lights.count > 0);
-    BOOL found = NO;
-    for (NSDictionary *light in lights) {
-        NSString *lightName = light[DConnectLightProfileParamName];
-        if ([lightName isEqualToString:@"照明"]) {
-            found = YES;
-            break;
+    NSURLSession *session = [NSURLSession sharedSession];
+    dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
+    [[session dataTaskWithRequest:request  completionHandler: ^(NSData *data, NSURLResponse *response, NSError *error) {
+        XCTAssertNotNil(data);
+        XCTAssertNil(error);
+        NSDictionary *actualResponse = [NSJSONSerialization JSONObjectWithData:data
+                                                                       options:NSJSONReadingMutableContainers
+                                                                         error:nil];
+        XCTAssertNotNil(actualResponse);
+        
+        NSArray *lights = actualResponse[DConnectLightProfileParamLights];
+        XCTAssertTrue(lights.count > 0);
+        BOOL found = NO;
+        for (NSDictionary *light in lights) {
+            NSString *lightName = light[DConnectLightProfileParamName];
+            if ([lightName isEqualToString:@"照明"]) {
+                found = YES;
+                break;
+            }
         }
-    }
-    XCTAssertTrue(found == YES);
+        XCTAssertTrue(found == YES);
+        dispatch_semaphore_signal(semaphore);
+    }] resume];
+    dispatch_semaphore_wait(semaphore, dispatch_time(DISPATCH_TIME_NOW, 3 * NSEC_PER_SEC));
 }
 
 /*!
