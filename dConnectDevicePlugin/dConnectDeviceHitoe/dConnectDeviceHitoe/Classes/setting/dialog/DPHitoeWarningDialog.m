@@ -10,7 +10,7 @@
 #import "DPHitoeWarningDialog.h"
 #import "DPHitoeConsts.h"
 NSString *const DPHitoeWarningNever = @"IS_WARNING_HITOE";
-static void (^okCallback)();
+static void (^okCallback)(void);
 static BOOL isChecked = NO;
 @interface DPHitoeWarning : UIWindow
 
@@ -55,7 +55,7 @@ static BOOL isChecked = NO;
     [self.nextAbridgement setSelected:isChecked];
 }
 
-+ (void)showHitoeWarningDialogWithComplition:(void(^)())completion  {
++ (void)showHitoeWarningDialogWithComplition:(void(^)(void))completion  {
     NSString *bundleName;
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
         bundleName = @"HitoeWarningDialog_iPhone";

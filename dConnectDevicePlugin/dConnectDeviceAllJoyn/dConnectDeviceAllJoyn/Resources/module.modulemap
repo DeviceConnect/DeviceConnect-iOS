@@ -1,0 +1,6 @@
+module dConnectDeviceAllJoyn {
+    umbrella ""
+    explicit module * {
+        export *
+    }
+}

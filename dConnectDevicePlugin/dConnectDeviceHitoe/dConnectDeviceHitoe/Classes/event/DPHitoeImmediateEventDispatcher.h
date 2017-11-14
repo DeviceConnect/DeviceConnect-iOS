@@ -1,5 +1,5 @@
 //
-//  DPHItoeImmediateEventDispatcher.h
+//  DPHitoeImmediateEventDispatcher.h
 //  dConnectDeviceHitoe
 //
 //  Copyright (c) 2016 NTT DOCOMO, INC.
@@ -9,6 +9,6 @@
 
 #import "DPHitoeEventDispatcher.h"
 
-@interface DPHItoeImmediateEventDispatcher : DPHitoeEventDispatcher
+@interface DPHitoeImmediateEventDispatcher : DPHitoeEventDispatcher
 
 @end

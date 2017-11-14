@@ -10,6 +10,6 @@
 #import "DPHitoeDialog.h"
 
 @interface DPHitoeSetShirtDialog : DPHitoeDialog
-+ (void)showHitoeSetShirtDialogWithComplition:(void(^)())completion;
++ (void)showHitoeSetShirtDialogWithComplition:(void(^)(void))completion;
 
 @end

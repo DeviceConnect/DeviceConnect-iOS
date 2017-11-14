@@ -9,7 +9,7 @@
 
 #import "DPHitoeSetShirtDialog.h"
 
-static void (^okCallback)();
+static void (^okCallback)(void);
 
 @interface DPHitoeSetShirt : UIWindow
 
@@ -48,7 +48,7 @@ static void (^okCallback)();
 
 }
 
-+ (void)showHitoeSetShirtDialogWithComplition:(void(^)())completion {
++ (void)showHitoeSetShirtDialogWithComplition:(void(^)(void))completion {
     NSString *bundleName;
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
         bundleName = @"HitoeShirtDialog_iPhone";

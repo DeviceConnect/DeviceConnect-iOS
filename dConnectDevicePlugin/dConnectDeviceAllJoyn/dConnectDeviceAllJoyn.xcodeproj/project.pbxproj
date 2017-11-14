@@ -168,6 +168,7 @@
 		25F136481B67112600ADD8CB /* DPAllJoynColorUtility.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DPAllJoynColorUtility.mm; sourceTree = "<group>"; };
 		AB6F63171D8699A80027A2A2 /* dconnect_icon_off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dconnect_icon_off.png; sourceTree = "<group>"; };
 		AB6F63181D8699A80027A2A2 /* dconnect_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dconnect_icon.png; sourceTree = "<group>"; };
+		AB9F67801FBACF98003A8EA0 /* module.modulemap */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.module-map"; path = module.modulemap; sourceTree = "<group>"; };
 		ABC861A51BDA2B4A00E86FA9 /* libAllJoynFramework_iOS.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libAllJoynFramework_iOS.a; path = deps/AllJoyn/darwin/arm/iphoneos/release/dist/about/lib/libAllJoynFramework_iOS.a; sourceTree = "<group>"; };
 		D6C860301D3A1D2000232EEF /* DPAllJoynService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DPAllJoynService.h; sourceTree = "<group>"; };
 		D6C860311D3A1D2000232EEF /* DPAllJoynService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DPAllJoynService.m; sourceTree = "<group>"; };
@@ -372,6 +373,7 @@
 				25851BF81B57CF3D00CB732E /* Download_on_the_App_Store_Badge_US-UK_135x40@2x.png */,
 				25851BF91B57CF3D00CB732E /* Download_on_the_App_Store_JP_135x40@2x.png */,
 				25851BF01B57C47900CB732E /* LIFX_Logo@2.jpg */,
+				AB9F67801FBACF98003A8EA0 /* module.modulemap */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -517,7 +519,7 @@
 		25A06BF31B562C07005B6F8A /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0900;
+				LastUpgradeCheck = 0910;
 				ORGANIZATIONNAME = "NTT DOCOMO, INC.";
 				TargetAttributes = {
 					25A06BFB1B562C07005B6F8A = {
@@ -759,12 +761,13 @@
 					"$(PROJECT_DIR)/deps/AllJoyn/darwin/arm/$(PLATFORM_NAME)/$(CONFIGURATION)/dist/about/lib",
 					"$(PROJECT_DIR)/deps/AllJoyn/darwin/$(CURRENT_ARCH)/$(PLATFORM_NAME)/$(CONFIGURATION)/dist/cpp/lib",
 				);
+				MODULEMAP_FILE = dConnectDeviceAllJoyn/Resources/module.modulemap;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/dConnectDeviceAllJoyn/Headers";
-				VALID_ARCHS = "arm64 i386 armv7s armv7";
+				VALID_ARCHS = "arm64 armv7s armv7 i386";
 				VERSIONING_SYSTEM = "";
 				VERSION_INFO_PREFIX = "";
 			};
@@ -830,12 +833,13 @@
 					"$(PROJECT_DIR)/deps/AllJoyn/darwin/arm/$(PLATFORM_NAME)/$(CONFIGURATION)/dist/about/lib",
 					"$(PROJECT_DIR)/deps/AllJoyn/darwin/$(CURRENT_ARCH)/$(PLATFORM_NAME)/$(CONFIGURATION)/dist/cpp/lib",
 				);
+				MODULEMAP_FILE = dConnectDeviceAllJoyn/Resources/module.modulemap;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "$(inherited) $(SRCROOT)/dConnectDeviceAllJoyn/Headers";
 				VALIDATE_PRODUCT = YES;
-				VALID_ARCHS = "arm64 i386 armv7s armv7";
+				VALID_ARCHS = "arm64 armv7s armv7 i386";
 				VERSIONING_SYSTEM = "";
 				VERSION_INFO_PREFIX = "";
 			};
@@ -872,7 +876,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				STRIP_STYLE = "non-global";
-				VALID_ARCHS = "arm64 i386 armv7s armv7";
+				VALID_ARCHS = "arm64 armv7s armv7 i386";
 			};
 			name = Debug;
 		};
@@ -908,7 +912,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				STRIP_STYLE = "non-global";
-				VALID_ARCHS = "arm64 i386 armv7s armv7";
+				VALID_ARCHS = "arm64 armv7s armv7 i386";
 			};
 			name = Release;
 		};

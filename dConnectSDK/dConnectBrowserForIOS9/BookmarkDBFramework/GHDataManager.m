@@ -367,7 +367,7 @@ static GHDataManager* mgr = nil;
 - (NSEntityDescription *)createEntity:(NSManagedObjectContext *)moc withClassName:(NSString*)classname
 {
     Class class = NSClassFromString(classname);
-	return [NSEntityDescription insertNewObjectForEntityForName:NSStringFromClass([class class])
+	return (NSEntityDescription *) [NSEntityDescription insertNewObjectForEntityForName:NSStringFromClass([class class])
                                          inManagedObjectContext:moc];
 }
 

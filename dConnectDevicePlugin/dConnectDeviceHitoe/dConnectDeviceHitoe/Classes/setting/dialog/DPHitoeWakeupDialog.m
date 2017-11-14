@@ -12,7 +12,7 @@
 
 
 NSString *const DPHitoeWakeUpNever = @"IS_WAKEUP_HITOE";
-static void (^okCallback)();
+static void (^okCallback)(void);
 static BOOL isChecked = NO;
 @interface DPHitoeWakeup : UIWindow
 
@@ -57,7 +57,7 @@ static BOOL isChecked = NO;
     [self.nextAbridgement setSelected:isChecked];
 }
 
-+ (void)showHitoeWakeupDialogWithComplition:(void(^)())completion  {
++ (void)showHitoeWakeupDialogWithComplition:(void(^)(void))completion  {
     NSString *bundleName;
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
         bundleName = @"HitoeWakeupDialog_iPhone";

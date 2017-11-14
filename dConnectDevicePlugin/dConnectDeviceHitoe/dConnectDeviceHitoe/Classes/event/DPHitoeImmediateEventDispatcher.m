@@ -1,5 +1,5 @@
 //
-//  DPHItoeImmediateEventDispatcher.m
+//  DPHitoeImmediateEventDispatcher.m
 //  dConnectDeviceHitoe
 //
 //  Copyright (c) 2016 NTT DOCOMO, INC.
@@ -7,9 +7,9 @@
 //  http://opensource.org/licenses/mit-license.php
 //
 
-#import "DPHItoeImmediateEventDispatcher.h"
+#import "DPHitoeImmediateEventDispatcher.h"
 
-@implementation DPHItoeImmediateEventDispatcher
+@implementation DPHitoeImmediateEventDispatcher
 - (instancetype)initWithDevicePlugin:(DConnectDevicePlugin *)devicePlugin {
     return [super initWithDevicePlugin:devicePlugin];
 }
